@@ -28,7 +28,7 @@ class BxBaseModProfileMenuView extends BxBaseModGeneralMenuView
             $iContentId = BxDolProfile::getInstance(bx_process_input(bx_get('profile_id'), BX_DATA_INT))->getContentId();
 
         if(!empty($iContentId))
-            $this->setContentId($iContentId);       
+            $this->setContentId($iContentId);
     }
 
     public function setContentId($iContentId)

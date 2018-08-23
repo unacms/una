@@ -75,10 +75,11 @@ p.bx-base-pofile-unit-ava {
 	color: #ffffff;
 }
 p.bx-base-pofile-unit-ava {
-	line-height: 94px;
+    line-height: 94px;
     line-height: 5.9rem;
 
-	font-size: 48px;
+    text-align: center;
+    font-size: 48px;
     font-size: 3.0rem;
     font-weight: 700;
 }

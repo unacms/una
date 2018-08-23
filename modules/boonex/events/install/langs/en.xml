@@ -147,6 +147,7 @@
 	<string name="_bx_events_page_block_title_system_manage_administration"><![CDATA[Manage All Events]]></string>
 	<string name="_bx_events_page_block_title_manage"><![CDATA[Manage Events]]></string>
     <string name="_bx_events_page_block_title_top_profiles"><![CDATA[Top Events]]></string>
+    <string name="_bx_events_page_block_title_entry_all_actions"><![CDATA[All Actions]]></string>
     <string name="_bx_events_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
     <string name="_bx_events_page_block_title_categories"><![CDATA[Event categories]]></string>
     <string name="_bx_events_page_block_title_calendar"><![CDATA[Events calendar]]></string>

@@ -147,6 +147,7 @@
 	<string name="_bx_events_page_block_title_system_manage_administration"><![CDATA[Управление всеми событиями]]></string>
 	<string name="_bx_events_page_block_title_manage"><![CDATA[Управление]]></string>
     <string name="_bx_events_page_block_title_top_profiles"><![CDATA[Популярные события]]></string>
+    <string name="_bx_events_page_block_title_entry_all_actions"><![CDATA[Все действия]]></string>
     <string name="_bx_events_page_block_title_entry_social_sharing"><![CDATA[Поделиться]]></string>
     <string name="_bx_events_page_block_title_categories"><![CDATA[Категории событий]]></string>
     <string name="_bx_events_page_block_title_calendar"><![CDATA[Календарь событий]]></string>

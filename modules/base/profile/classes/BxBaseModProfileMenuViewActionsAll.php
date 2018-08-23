@@ -17,6 +17,9 @@ class BxBaseModProfileMenuViewActionsAll extends BxBaseModGeneralMenuViewActions
     public function __construct($aObject, $oTemplate = false)
     {
         parent::__construct($aObject, $oTemplate);
+
+        if(empty($this->_iContentId) && bx_get('profile_id') !== false)
+            $this->setContentId(BxDolProfile::getInstance(bx_process_input(bx_get('profile_id'), BX_DATA_INT))->getContentId());
     }
 
     protected function _getMenuItemProfileFriendAdd($aItem)
