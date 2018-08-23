@@ -208,6 +208,7 @@ a.bx-base-pofile-cover-image:hover,
 .bx-base-pofile-cover-user a.bx-def-unit-image img {
     border:2px solid #fff;
     border:0.15rem solid #fff;
+    background-color: #fff;
 }
 
 .bx-base-pofile-cover-user h1.bx-def-unit-info {

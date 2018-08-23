@@ -122,6 +122,7 @@
 	<string name="_bx_groups_page_block_title_system_manage_administration"><![CDATA[Manage All Groups]]></string>
 	<string name="_bx_groups_page_block_title_manage"><![CDATA[Manage Groups]]></string>
     <string name="_bx_groups_page_block_title_top_profiles"><![CDATA[Top Groups]]></string>
+    <string name="_bx_groups_page_block_title_entry_all_actions"><![CDATA[All Actions]]></string>
     <string name="_bx_groups_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
     <string name="_bx_groups_page_block_title_categories"><![CDATA[Groups Categories]]></string>
     <string name="_bx_groups_page_block_title_invite_to_group"><![CDATA[Invite Members to the Group]]></string>

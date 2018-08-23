@@ -122,6 +122,7 @@
 	<string name="_bx_groups_page_block_title_system_manage_administration"><![CDATA[Управление всеми группами]]></string>
 	<string name="_bx_groups_page_block_title_manage"><![CDATA[Управление]]></string>
     <string name="_bx_groups_page_block_title_top_profiles"><![CDATA[Популярные группы]]></string>
+    <string name="_bx_groups_page_block_title_entry_all_actions"><![CDATA[Все действия]]></string>
     <string name="_bx_groups_page_block_title_entry_social_sharing"><![CDATA[Поделиться]]></string>
     <string name="_bx_groups_page_block_title_categories"><![CDATA[Категории групп]]></string>
     <string name="_bx_groups_page_block_title_invite_to_group"><![CDATA[Пригласить участников в группу]]></string>
