@@ -95,6 +95,7 @@ class BxCnlConfig extends BxBaseModProfileConfig
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_channel_delete',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_channels_view_actions', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE' => 'bx_channels_view_actions_more', // actions menu on view entry page for "more" popup
+            'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_channels_view_actions_all', // all actions menu on view entry page
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_channels_my', // actions menu on profile entries page
             'OBJECT_MENU_SUBMENU' => 'bx_channels_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_channels_view_submenu',  // view entry submenu
