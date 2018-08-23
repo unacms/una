@@ -209,6 +209,25 @@ class BxCnlModule extends BxBaseModGroupsModule
         return true;
     }
 
+    public function serviceGetFollowingChannelsNames($iProfileId)
+    {
+        if (!($oConn = BxDolConnection::getObjectInstance('sys_profiles_subscriptions')))
+            return array();
+
+        if (!($aIds = $oConn->getConnectedContent($iProfileId)))
+            return array();
+
+        $a = array();
+        foreach ($aIds as $iId) {
+            if (!($oProfile = BxDolProfile::getInstance($iId)))
+                continue;
+            if ($oProfile->getModule() != $this->getName())
+                continue;
+            $a[] = $oProfile->getDisplayName();
+        }
+        return $a;
+    }
+
     public function followLabels($sModule, $iContentId)
     {
         if (!getParam('bx_channels_labels_autofollow'))

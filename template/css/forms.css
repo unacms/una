@@ -558,14 +558,22 @@
 .bx-form-value .bx-form-input-autotoken-labels b {
     padding-left: 1em;
 }
+.bx-form-value .bx-form-input-autotoken-labels-show-more,
 .bx-form-value .bx-form-input-autotoken-labels-sel b {
-    padding-right: 1em;
-    margin-top: 0.625rem;
+    display:inline-block;
+    line-height:1.5rem;
+    font-size:85%;    
+    padding-right:1em;
+    margin-top:0.625rem;
+    font-style:normal;
+}
+.bx-form-value .bx-form-input-autotoken-labels-show-more {
+    margin-left:0.1em;
+    margin-right:0.1em;
 }
 .bx-form-value .bx-form-input-autotoken-labels-sel b:after {
     display:none;
 }
-.bx-form-value .bx-form-input-autotoken-labels-sel b {
-    line-height:1.5rem;
-    font-size:85%;
+.bx-form-input-autotoken-labels-more {
+    display:none;
 }
