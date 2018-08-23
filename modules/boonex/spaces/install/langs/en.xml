@@ -125,6 +125,7 @@
 	<string name="_bx_spaces_page_block_title_system_manage_administration"><![CDATA[Manage All Spaces]]></string>
 	<string name="_bx_spaces_page_block_title_manage"><![CDATA[Manage Spaces]]></string>
 	<string name="_bx_spaces_page_block_title_top_profiles"><![CDATA[Top Spaces]]></string>
+        <string name="_bx_spaces_page_block_title_entry_all_actions"><![CDATA[All Actions]]></string>
 	<string name="_bx_spaces_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
 	<string name="_bx_spaces_page_block_title_categories"><![CDATA[Spaces Categories]]></string>
 	<string name="_bx_spaces_page_block_title_invite_to_space"><![CDATA[Invite Members to the Space]]></string>

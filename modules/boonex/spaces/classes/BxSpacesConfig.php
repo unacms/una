@@ -106,6 +106,7 @@ class BxSpacesConfig extends BxBaseModProfileConfig
             'OBJECT_FORM_ENTRY_DISPLAY_INVITE' => 'bx_space_invite',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_spaces_view_actions', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE' => 'bx_spaces_view_actions_more', // actions menu on view entry page for "more" popup
+            'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_spaces_view_actions_all', // all actions menu on view entry page
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_spaces_my', // actions menu on profile entries page
             'OBJECT_MENU_SUBMENU' => 'bx_spaces_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_spaces_view_submenu',  // view entry submenu
