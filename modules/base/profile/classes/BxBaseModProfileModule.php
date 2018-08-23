@@ -172,10 +172,16 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     public function serviceGetMenuSetNameForMenuTrigger ($sMenuTriggerName)
     {
         $CNF = &$this->_oConfig->CNF;
+
         if ($CNF['TRIGGER_MENU_PROFILE_VIEW_SUBMENU'] == $sMenuTriggerName)
             return $CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'];
-        elseif ($CNF['TRIGGER_MENU_PROFILE_VIEW_ACTIONS'] == $sMenuTriggerName)
-            return $CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY'];
+        else if ($CNF['TRIGGER_MENU_PROFILE_VIEW_ACTIONS'] == $sMenuTriggerName) {
+            if(empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL']))
+                return $CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY'];
+            else
+                return array($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY'], $CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL']);
+        }
+
         return '';
     }
 
@@ -580,7 +586,8 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return $this->_entityComments($CNF['OBJECT_COMMENTS'], $oProfile->getContentId());
     }
 
-	/**
+    //TODO: Remove this at the end.
+    /**
      * Entry social sharing block
      */
     public function serviceEntitySocialSharing ($iContentId = 0)

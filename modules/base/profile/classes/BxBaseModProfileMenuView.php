@@ -15,7 +15,6 @@
 class BxBaseModProfileMenuView extends BxBaseModGeneralMenuView
 {
     protected $_oProfile;
-    protected $_aContentInfo;
     protected $_aProfileInfo;
 
     public function __construct($aObject, $oTemplate = false)
@@ -24,31 +23,38 @@ class BxBaseModProfileMenuView extends BxBaseModGeneralMenuView
 
         $CNF = $this->_oModule->_oConfig->CNF;
 
-        $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
         $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if ($iProfileId)
-            $this->_oProfile = BxDolProfile::getInstance($iProfileId);
-        if (!$this->_oProfile && $iContentId)
-            $this->_oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->MODULE);
+        if(empty($iContentId) && bx_get('profile_id') !== false)
+            $iContentId = BxDolProfile::getInstance(bx_process_input(bx_get('profile_id'), BX_DATA_INT))->getContentId();
 
-        if ($this->_oProfile) {
-            $this->_aProfileInfo = $this->_oProfile->getInfo();
-
-            $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_aProfileInfo['content_id']);
-
-            $this->addMarkers($this->_aProfileInfo);
-            $this->addMarkers(array('profile_id' => $this->_oProfile->id()));
-
-            $aTitles = $this->_oModule->serviceGetConnectionButtonsTitles($this->_oProfile->id());
-            if ($aTitles) {
-                $this->addMarkers(array(
-                    'title_add_friend' => $aTitles['add'],
-                    'title_remove_friend' => $aTitles['remove'],
-                ));
-            }
-        }
+        if(!empty($iContentId))
+            $this->setContentId($iContentId);       
     }
 
+    public function setContentId($iContentId)
+    {
+        $this->_iContentId = (int)$iContentId;
+        $this->_oProfile = BxDolProfile::getInstanceByContentAndType($this->_iContentId, $this->MODULE);
+
+        if(!$this->_oProfile) 
+            return;
+
+        $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_iContentId);
+        $this->_aProfileInfo = $this->_oProfile->getInfo();     
+
+        $this->addMarkers($this->_aProfileInfo);
+        $this->addMarkers(array(
+            'profile_id' => $this->_oProfile->id()
+        ));
+
+        $aTitles = $this->_oModule->serviceGetConnectionButtonsTitles($this->_oProfile->id());
+        if($aTitles) {
+            $this->addMarkers(array(
+                'title_add_friend' => $aTitles['add'],
+                'title_remove_friend' => $aTitles['remove'],
+            ));
+        }
+    }
 }
 
 /** @} */

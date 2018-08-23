@@ -14,9 +14,6 @@
  */
 class BxBaseModTextMenu extends BxBaseModGeneralMenuView
 {
-    protected $_iContentId;
-    protected $_aContentInfo;
-
     public function __construct($aObject, $oTemplate = false)
     {
         parent::__construct($aObject, $oTemplate);

@@ -211,7 +211,11 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             )), true, true);
         }
 
-        $oMenu = BxTemplMenu::getObjectInstance($this->_oConfig->CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY']);
+        $sMenu = $CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY'];
+        if(!empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL']))
+            $sMenu = $CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL'];
+
+        $oMenu = BxTemplMenu::getObjectInstance($sMenu);
 
         // generate html
         $aVars = array (

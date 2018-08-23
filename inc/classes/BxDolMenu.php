@@ -181,11 +181,20 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
                 if (!BxDolRequest::serviceExists($aModule['name'], 'get_menu_set_name_for_menu_trigger'))
                     continue;
 
-                if (!($sMenuSet = BxDolService::call($aModule['name'], 'get_menu_set_name_for_menu_trigger', array($sMenuTriggerName))))
+                $mixedMenuSet = BxDolService::call($aModule['name'], 'get_menu_set_name_for_menu_trigger', array($sMenuTriggerName));
+                if(empty($mixedMenuSet))
                     continue;
 
-                $aMenuItem['set_name'] = $sMenuSet;
-                BxDolMenuQuery::addMenuItemToSet($aMenuItem);
+                if(is_string($mixedMenuSet))
+                    $mixedMenuSet = array($mixedMenuSet);
+
+                foreach($mixedMenuSet as $sMenuSet) {
+                    if(empty($sMenuSet))
+                        continue;
+
+                    $aMenuItem['set_name'] = $sMenuSet;
+                    BxDolMenuQuery::addMenuItemToSet($aMenuItem);
+                }
             }
         }
 

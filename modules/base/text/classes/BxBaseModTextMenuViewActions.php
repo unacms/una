@@ -10,7 +10,7 @@
  */
 
 /**
- * View entry social actions menu
+ * View entry all actions menu
  */
 class BxBaseModTextMenuViewActions extends BxBaseModGeneralMenuViewActions
 {

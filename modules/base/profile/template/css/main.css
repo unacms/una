@@ -125,12 +125,8 @@ p.bx-base-pofile-unit-ava {
     float:right;
 }
 
-/* profile cover */
 
-.bx-base-pofile-menu {
-    text-align:center;
-}
-
+/* --- Profile Cover --- */
 .bx-base-pofile-cover {
     position:relative;
     min-height:10rem;
@@ -156,43 +152,139 @@ a.bx-base-pofile-cover-image:hover,
     position:relative;
     display: -webkit-flex;
     display: flex;
-    -webkit-align-items: center;
-    align-items: center;
+    -webkit-align-items: flex-end;
+    align-items: flex-end;
     min-height: 40vh;
 
     cursor:pointer; 
-    cursor:hand;
+    cursor:hand;	
 }
 
 .bx-base-pofile-cover-info {
-	width: 100%;
-    text-align:center;
-}
-.bx-base-pofile-cover-info .bx-def-ava,
-.bx-base-pofile-cover-info h1,
-.bx-base-pofile-cover-info .bx-base-pofile-cover-actions {
-    display:block;
-    text-align:center;
-}
-.bx-base-pofile-cover-info .bx-def-ava,
-.bx-base-pofile-cover-info .bx-base-pofile-cover-actions {
-    display:inline-block;
+    position: relative;
+
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+
+    width: 100%;
+
+    background-color: rgba(255, 255, 255, 1.0);
 }
 
-.bx-base-pofile-cover-actions ul li:last-child a {
-    margin-right:0;
+.bx-base-pofile-cover-user {
+    -webkit-flex: 0 3 auto; 
+    -ms-flex:  0 3 auto; 
+    flex: 0 3 auto;
+
+    position: relative;
+    z-index: 2;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+
+    height: 100%;
+}
+.bx-base-pofile-cover-user div.bx-def-unit-image {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: flex-end;
+    align-items: flex-end;
+    height: 4rem;
+}
+.bx-base-pofile-cover-user a.bx-def-unit-image,
+.bx-base-pofile-cover-user a.bx-def-unit-image img {
+    position: relative;
+    display: block;
 }
 
-.bx-base-pofile-cover-info img,
-.bx-base-pofile-cover-info .bx-base-pofile-unit-ava {
+.bx-base-pofile-cover-user a.bx-def-unit-image img {
     border:2px solid #fff;
     border:0.15rem solid #fff;
 }
 
-.bx-base-pofile-cover-info h1.bx-def-unit-info {
-    padding:0;
-    text-shadow: 0px 0px 0.125rem #000;
+.bx-base-pofile-cover-user h1.bx-def-unit-info {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0 0 0 1rem;
+
     line-height:normal;
+    text-align: left;
+    text-shadow: none;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: rgba(29,75,96,1);
+}
+
+.bx-base-pofile-cover-actions {
+    position: relative;
+
+    -webkit-flex: 1 1 auto; 
+    -ms-flex:  1 1 auto; 
+    flex: 1 1 auto;
+
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: right;
+    justify-content: right;
+
+    height: 4rem;
+    max-width: 50%;
+}
+
+.bx-base-pofile-cover-actions ul.bx-menu-hor.bx-menu-more-auto {
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+}
+
+.bx-base-pofile-cover-actions .bx-menu-hor li.bx-menu-item {
+    white-space: nowrap;
+}
+
+.bx-base-pofile-cover-actions .cmt,
+.bx-base-pofile-cover-actions .bx-view,
+.bx-base-pofile-cover-actions .bx-vote,
+.bx-base-pofile-cover-actions .bx-score,
+.bx-base-pofile-cover-actions .bx-favorite,
+.bx-base-pofile-cover-actions .bx-feature,
+.bx-base-pofile-cover-actions .bx-report,
+.bx-base-pofile-cover-actions .bx-tl-repost,
+.bx-base-pofile-cover-actions .bx-menu-btns-hor.bx-menu-object-sys_social_sharing,
+.bx-base-pofile-cover-actions .bx-base-general-entity-action {
+    position: relative;
+    float: none;
+    display: inline-block;
+    vertical-align: top;
+
+    margin: 0;
+    padding: 0;
+}
+
+.bx-base-pofile-cover-actions .bx-menu-hor li.bx-menu-item .cmt-element-holder,
+.bx-base-pofile-cover-actions .bx-menu-hor li.bx-menu-item .cmt-counter-holder,
+.bx-base-pofile-cover-actions .bx-menu-hor li.bx-menu-item .bx-view-element-holder,
+.bx-base-pofile-cover-actions .bx-menu-hor li.bx-menu-item .bx-view-counter-holder,
+.bx-base-pofile-cover-actions .bx-menu-hor li.bx-menu-item .bx-vote-element-holder, 
+.bx-base-pofile-cover-actions .bx-menu-hor li.bx-menu-item .bx-vote-counter-holder, 
+.bx-base-pofile-cover-actions .bx-menu-hor li.bx-menu-item .bx-score-element-holder, 
+.bx-base-pofile-cover-actions .bx-menu-hor li.bx-menu-item .bx-score-counter-holder, 
+.bx-base-pofile-cover-actions .bx-menu-hor li.bx-menu-item .bx-favorite-element-holder,
+.bx-base-pofile-cover-actions .bx-menu-hor li.bx-menu-item .bx-favorite-counter-holder,
+.bx-base-pofile-cover-actions .bx-menu-hor li.bx-menu-item .bx-report-element-holder,
+.bx-base-pofile-cover-actions .bx-menu-hor li.bx-menu-item .bx-report-counter-holder,
+.bx-base-pofile-cover-actions .bx-menu-hor li.bx-menu-item .bx-tl-repost-element-holder,
+.bx-base-pofile-cover-actions .bx-menu-hor li.bx-menu-item .bx-tl-repost-counter-holder {
+    float: none;
+    display: inline-block;
+    vertical-align: top;
 }
 
 .bx-base-pofile-popup-wrapper {
@@ -204,7 +296,6 @@ a.bx-base-pofile-cover-image:hover,
     top:0;
     right:0;
 }
-
 
 /* flexbox */
 .bx-base-pofile-units-wrapper {
