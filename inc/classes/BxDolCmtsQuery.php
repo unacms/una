@@ -104,18 +104,11 @@ class BxDolCmtsQuery extends BxDolDb
     function getComments ($iId, $iCmtVParentId = 0, $iAuthorId = 0, $sFilter = '', $aOrder = array(), $iStart = 0, $iCount = -1)
     {
     	$aBindings = array(
-    		'cmt_object_id' => $iId
+    		'cmt_object_id' => $iId,
+            'system_id' => $this->_oMain->getSystemId()
     	);
         $sFields = $sJoin = "";
-
-        $oVote = $this->_oMain->getVoteObject(0);
-        if($oVote !== false) {
-            $aSql = $oVote->getSqlParts($this->_sTable, 'cmt_id');
-
-            $sFields .= $aSql['fields'];
-            $sJoin .= $aSql['join'];
-        }
-
+        
         $sWhereParent = '';
         if((int)$iCmtVParentId >= 0) {
         	$aBindings['cmt_vparent_id'] = $iCmtVParentId;
@@ -130,21 +123,33 @@ class BxDolCmtsQuery extends BxDolDb
             $sJoin .= ' ' . $aQueryParts['join'];
         }
 
-        $sOder = " ORDER BY `{$this->_sTable}`.`cmt_time` ASC";
+        $sOrder = " ORDER BY `{$this->_sTable}`.`cmt_time` ASC";
         if(isset($aOrder['by']) && isset($aOrder['way'])) {
             $aOrder['way'] = strtoupper(in_array($aOrder['way'], array(BX_CMT_ORDER_WAY_ASC, BX_CMT_ORDER_WAY_DESC)) ? $aOrder['way'] : BX_CMT_ORDER_WAY_ASC);
 
             switch($aOrder['by']) {
                 case BX_CMT_ORDER_BY_DATE:
-                    $sOder = " ORDER BY `{$this->_sTable}`.`cmt_time` " . $aOrder['way'];
+                    $sOrder = " ORDER BY `{$this->_sTable}`.`cmt_time` " . $aOrder['way'];
                     break;
 
                 case BX_CMT_ORDER_BY_POPULAR:
-                    $sOder = " ORDER BY `{$this->_sTable}`.`cmt_rate` " . $aOrder['way'];
+                    $oVote = $this->_oMain->getVoteObject(0);
+                    $oScore = $this->_oMain->getScoreObject(0);
+                    $aSortFields = array();
+                    if($oVote !== false) {
+                        array_push($aSortFields, '`' . $this->_sTableIds . '`.`votes`');
+                    }
+                    if($oScore !== false) {
+                        array_push($aSortFields, '`' . $this->_sTableIds . '`.`score`');
+                    }
+                    if (count($aSortFields) == 0)
+                        array_push($aSortFields, '`' . $this->_sTable . '`.`id`');
+                    
+                    $sOrder = " ORDER BY " . implode(',', $aSortFields) . " " . $aOrder['way'];
                     break;
             }
         }
-
+        
        	$sLimit = $iCount != -1 ? $this->prepareAsString(" LIMIT ?, ?", (int)$iStart, (int)$iCount) : '';
 
         $sQuery = "SELECT
@@ -159,9 +164,9 @@ class BxDolCmtsQuery extends BxDolDb
                 `{$this->_sTable}`.`cmt_time`
                 $sFields
             FROM `{$this->_sTable}`
+            LEFT JOIN `{$this->_sTableIds}` ON (`{$this->_sTable}`.`cmt_id` = `{$this->_sTableIds}`.`cmt_id` AND `{$this->_sTableIds}`.`system_id` = :system_id)
             $sJoin
-            WHERE `{$this->_sTable}`.`cmt_object_id` = :cmt_object_id" . $sWhereParent . $sOder . $sLimit;
-
+            WHERE `{$this->_sTable}`.`cmt_object_id` = :cmt_object_id" . $sWhereParent . $sOrder . $sLimit;
         return $this->getAll($sQuery, $aBindings);
     }
 
