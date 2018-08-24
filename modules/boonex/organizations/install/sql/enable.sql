@@ -302,8 +302,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_organizations_view_actions_all', 'bx_organizations', 'edit-organization-profile', '_bx_organizations_menu_item_title_system_edit_profile', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 410),
 ('bx_organizations_view_actions_all', 'bx_organizations', 'invite-to-organization', '_bx_organizations_menu_item_title_system_invite', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 420),
 ('bx_organizations_view_actions_all', 'bx_organizations', 'delete-organization-profile', '_bx_organizations_menu_item_title_system_delete_profile', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 430),
-('bx_organizations_view_actions_all', 'bx_organizations', 'delete-organization-account', '_bx_orgs_menu_item_title_system_delete_account', '', '', '', '', '', '', '', 0, 128, 1, 0, 450),
-('bx_organizations_view_actions_all', 'bx_organizations', 'delete-organization-account-content', '_bx_orgs_menu_item_title_system_delete_account_content', '', '', '', '', '', '', '', 0, 128, 1, 0, 460),
+('bx_organizations_view_actions_all', 'bx_organizations', 'delete-organization-account', '_bx_orgs_menu_item_title_system_delete_account', '', '', '', '', '', '', '', 0, 128, 1, 0, 440),
+('bx_organizations_view_actions_all', 'bx_organizations', 'delete-organization-account-content', '_bx_orgs_menu_item_title_system_delete_account_content', '', '', '', '', '', '', '', 0, 128, 1, 0, 450),
 ('bx_organizations_view_actions_all', 'bx_organizations', 'more-auto', '_sys_menu_item_title_system_va_more_auto', '_sys_menu_item_title_va_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', '', 0, 2147483647, 1, 0, 9999);
 
 -- MENU: actions menu for my entries
