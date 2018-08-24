@@ -61,6 +61,10 @@
     <string name="_bx_orgs_form_profile_input_profile_status"><![CDATA[Status]]></string>
     <string name="_bx_orgs_form_profile_input_sys_profile_ip"><![CDATA[IP]]></string>
     <string name="_bx_orgs_form_profile_input_profile_ip"><![CDATA[IP]]></string>
+    <string name="_bx_orgs_form_profile_input_sys_date_added"><![CDATA[Added]]></string>
+    <string name="_bx_orgs_form_profile_input_date_added"><![CDATA[Added]]></string>
+    <string name="_bx_orgs_form_profile_input_sys_date_changed"><![CDATA[Updated]]></string>
+    <string name="_bx_orgs_form_profile_input_date_changed"><![CDATA[Updated]]></string>
 
 	<string name="_bx_orgs_acl_action_create_profile"><![CDATA[Create Organization's Profile]]></string>
 	<string name="_bx_orgs_acl_action_delete_profile"><![CDATA[Delete Organization's Profile]]></string>

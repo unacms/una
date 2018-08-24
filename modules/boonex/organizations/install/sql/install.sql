@@ -236,8 +236,9 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_organization', 'bx_organizations', 'profile_email', '', '', 0, 'text', '_bx_orgs_form_profile_input_sys_profile_email', '_bx_orgs_form_profile_input_profile_email', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_organization', 'bx_organizations', 'profile_status', '', '', 0, 'custom', '_bx_orgs_form_profile_input_sys_profile_status', '_bx_orgs_form_profile_input_profile_status', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_organization', 'bx_organizations', 'profile_ip', '', '', 0, 'text', '_bx_orgs_form_profile_input_sys_profile_ip', '_bx_orgs_form_profile_input_profile_ip', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
-('bx_organization', 'bx_organizations', 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
-
+('bx_organization', 'bx_organizations', 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_organization', 'bx_organizations', 'added', '', '', 0, 'datetime', '_bx_orgs_form_profile_input_sys_date_added', '_bx_orgs_form_profile_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_organization', 'bx_organizations', 'changed', '', '', 0, 'datetime', '_bx_orgs_form_profile_input_sys_date_changed', '_bx_orgs_form_profile_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
 ('bx_organization_add', 'initial_members', 2147483647, 1, 1),
@@ -273,6 +274,8 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_organization_view', 'profile_email', 192, 1, 3),
 ('bx_organization_view', 'profile_status', 192, 1, 4),
 ('bx_organization_view', 'profile_ip', 192, 1, 5),
+('bx_organization_view', 'added', 192, 1, 6),
+('bx_organization_view', 'changed', 192, 1, 7),
 
 ('bx_organization_view_full', 'org_name', 2147483647, 1, 1),
 ('bx_organization_view_full', 'org_cat', 2147483647, 1, 2),
