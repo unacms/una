@@ -326,32 +326,26 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     /**
      * Entry social sharing block
      */
-    public function serviceEntitySocialSharing ($iContentId = 0)
+    public function serviceEntitySocialSharing ($mixedContent = false, $aParams = array())
     {
-        if (!$iContentId)
-            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iContentId)
-            return false;
-        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if (!$aContentInfo)
-            return false;
+        if(!empty($mixedContent)) {
+            if(!is_array($mixedContent))
+               $mixedContent = array((int)$mixedContent, array());
+        }
+        else {
+            $mixedContent = $this->_getContent();
+            if($mixedContent === false)
+                return false;
+        }
+
+        list($iContentId, $aContentInfo) = $mixedContent;
+
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType((int)$iContentId, $this->getName());
-        if (!$oGroupProfile)
+        if(!$oGroupProfile)
             return false;
 
-        $CNF = &$this->_oConfig->CNF;
-        return $this->_entitySocialSharing ($iContentId, array(
-            'id_timeline' => $iContentId,
-            'id_thumb' => 0,
-            'title' => $oGroupProfile->getDisplayName(),
-            'object_storage' => false,
-            'object_transcoder' => false,
-            'object_vote' => $CNF['OBJECT_VOTES'],
-        	'object_score' => !empty($CNF['OBJECT_SCORES']) ? $CNF['OBJECT_SCORES'] : '',
-        	'object_favorite' => $CNF['OBJECT_FAVORITES'],
-        	'object_feature' => $CNF['OBJECT_FEATURED'],
-        	'object_report' => $CNF['OBJECT_REPORTS'],
-            'uri_view_entry' => $CNF['URI_VIEW_ENTRY']
+        return parent::serviceEntitySocialSharing(array($iContentId, $aContentInfo), array(
+            'title' => $oGroupProfile->getDisplayName()
         ));
     }
 

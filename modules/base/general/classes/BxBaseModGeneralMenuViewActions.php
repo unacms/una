@@ -66,11 +66,19 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         return parent::_getMenuItemDefault ($aItem);
     }
 
-    protected function _getMenuItemView($aItem)
+    protected function _getMenuItemView($aItem, $aParams = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $oObject = !empty($CNF['OBJECT_VIEWS']) ? BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $this->_iContentId) : false;
+        $sObject = !empty($aParams['object']) ? $aParams['object'] : '';
+        if(empty($sObject) && !empty($CNF['OBJECT_VIEWS']))
+            $sObject = $CNF['OBJECT_VIEWS'];
+
+        $iId = !empty($aParams['id']) ? (int)$aParams['id'] : '';
+        if(empty($iId))
+            $iId = $this->_iContentId;
+
+        $oObject = !empty($sObject) ? BxDolView::getObjectInstance($sObject, $iId) : false;
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
@@ -81,11 +89,19 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         ));
     }
 
-    protected function _getMenuItemComment($aItem)
+    protected function _getMenuItemComment($aItem, $aParams = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $oObject = !empty($CNF['OBJECT_COMMENTS']) ? BxTemplCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $this->_iContentId) : false;
+        $sObject = !empty($aParams['object']) ? $aParams['object'] : '';
+        if(empty($sObject) && !empty($CNF['OBJECT_COMMENTS']))
+            $sObject = $CNF['OBJECT_COMMENTS'];
+
+        $iId = !empty($aParams['id']) ? (int)$aParams['id'] : '';
+        if(empty($iId))
+            $iId = $this->_iContentId;
+
+        $oObject = !empty($sObject) ? BxTemplCmts::getObjectInstance($sObject, $iId) : false;
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
@@ -96,11 +112,19 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         ));
     }
 
-    protected function _getMenuItemVote($aItem)
+    protected function _getMenuItemVote($aItem, $aParams = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $oObject = !empty($CNF['OBJECT_VOTES']) ? BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $this->_iContentId) : false;
+        $sObject = !empty($aParams['object']) ? $aParams['object'] : '';
+        if(empty($sObject) && !empty($CNF['OBJECT_VOTES']))
+            $sObject = $CNF['OBJECT_VOTES'];
+
+        $iId = !empty($aParams['id']) ? (int)$aParams['id'] : '';
+        if(empty($iId))
+            $iId = $this->_iContentId;
+
+        $oObject = !empty($sObject) ? BxDolVote::getObjectInstance($sObject, $iId) : false;
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
@@ -111,11 +135,19 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         ));
     }
     
-    protected function _getMenuItemScore($aItem)
+    protected function _getMenuItemScore($aItem, $aParams = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $oObject = !empty($CNF['OBJECT_SCORES']) ? BxDolScore::getObjectInstance($CNF['OBJECT_SCORES'], $this->_iContentId) : false;
+        $sObject = !empty($aParams['object']) ? $aParams['object'] : '';
+        if(empty($sObject) && !empty($CNF['OBJECT_SCORES']))
+            $sObject = $CNF['OBJECT_SCORES'];
+
+        $iId = !empty($aParams['id']) ? (int)$aParams['id'] : '';
+        if(empty($iId))
+            $iId = $this->_iContentId;
+
+        $oObject = !empty($sObject) ? BxDolScore::getObjectInstance($sObject, $iId) : false;
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
@@ -126,11 +158,19 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         ));
     }
 
-    protected function _getMenuItemFavorite($aItem)
+    protected function _getMenuItemFavorite($aItem, $aParams = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $oObject = !empty($CNF['OBJECT_FAVORITES']) ? BxDolFavorite::getObjectInstance($CNF['OBJECT_FAVORITES'], $this->_iContentId) : false;
+        $sObject = !empty($aParams['object']) ? $aParams['object'] : '';
+        if(empty($sObject) && !empty($CNF['OBJECT_FAVORITES']))
+            $sObject = $CNF['OBJECT_FAVORITES'];
+
+        $iId = !empty($aParams['id']) ? (int)$aParams['id'] : '';
+        if(empty($iId))
+            $iId = $this->_iContentId;
+
+        $oObject = !empty($sObject) ? BxDolFavorite::getObjectInstance($sObject, $iId) : false;
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
@@ -141,11 +181,19 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         ));
     }
 
-    protected function _getMenuItemFeature($aItem)
+    protected function _getMenuItemFeature($aItem, $aParams = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $oObject = !empty($CNF['OBJECT_FEATURED']) ? BxDolFeature::getObjectInstance($CNF['OBJECT_FEATURED'], $this->_iContentId) : false;
+        $sObject = !empty($aParams['object']) ? $aParams['object'] : '';
+        if(empty($sObject) && !empty($CNF['OBJECT_FEATURED']))
+            $sObject = $CNF['OBJECT_FEATURED'];
+
+        $iId = !empty($aParams['id']) ? (int)$aParams['id'] : '';
+        if(empty($iId))
+            $iId = $this->_iContentId;
+
+        $oObject = !empty($sObject) ? BxDolFeature::getObjectInstance($sObject, $iId) : false;
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
@@ -156,24 +204,40 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         ));
     }
 
-    protected function _getMenuItemRepost($aItem)
+    protected function _getMenuItemRepost($aItem, $aParams = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $sAction = !empty($aParams['action']) ? $aParams['action'] : '';
+        if(empty($sAction))
+            $sAction = 'added';
+
+        $iId = !empty($aParams['id']) ? (int)$aParams['id'] : '';
+        if(empty($iId))
+            $iId = $this->_iContentId;
 
         if(!BxDolRequest::serviceExists('bx_timeline', 'get_repost_element_block'))
             return '';
 
-    	return BxDolService::call('bx_timeline', 'get_repost_element_block', array(bx_get_logged_profile_id(), $this->_oModule->_oConfig->getName(), 'added', $this->_iContentId, array(
+    	return BxDolService::call('bx_timeline', 'get_repost_element_block', array(bx_get_logged_profile_id(), $this->_oModule->_oConfig->getName(), $sAction, $iId, array(
             'show_do_repost_as_button' => $this->_bShowAsButton,
             'show_do_repost_text' => $this->_bShowTitle
         )));
     }
 
-    protected function _getMenuItemReport($aItem)
+    protected function _getMenuItemReport($aItem, $aParams = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $oObject = !empty($CNF['OBJECT_REPORTS']) ? BxDolReport::getObjectInstance($CNF['OBJECT_REPORTS'], $this->_iContentId) : false;
+        $sObject = !empty($aParams['object']) ? $aParams['object'] : '';
+        if(empty($sObject) && !empty($CNF['OBJECT_REPORTS']))
+            $sObject = $CNF['OBJECT_REPORTS'];
+
+        $iId = !empty($aParams['id']) ? (int)$aParams['id'] : '';
+        if(empty($iId))
+            $iId = $this->_iContentId;
+
+        $oObject = !empty($sObject) ? BxDolReport::getObjectInstance($sObject, $iId) : false;
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
@@ -204,15 +268,19 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         return $this->_getMenuItemByNameSocialSharing($aItem);
     }
 
-    protected function _getMenuItemByNameActions($aItem)
+    protected function _getMenuItemByNameActions($aItem, $aParams = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if(empty($this->_oMenuActions)) {
-            if(empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY']))
+            $sObjectMenu = !empty($aParams['object_menu']) ? $aParams['object_menu'] : '';
+            if(empty($sObjectMenu) && !empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY']))
+                $sObjectMenu = $CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY'];
+
+            if(empty($sObjectMenu))
                 return '';
 
-            $this->_oMenuActions = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY']);
+            $this->_oMenuActions = BxDolMenu::getObjectInstance($sObjectMenu);
             $this->_oMenuActions->setContentId($this->_iContentId);
         }
 
@@ -223,14 +291,11 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         return $this->_getMenuItemDefault($aItem);
     }
 
-    protected function _getMenuItemByNameSocialSharing($aItem)
+    protected function _getMenuItemByNameSocialSharing($aItem, $aParams = array())
     {
         if(empty($this->_oMenuSocialSharing)) {
             $this->_oMenuSocialSharing = BxDolMenu::getObjectInstance('sys_social_sharing');
-            $this->_oMenuSocialSharing->addMarkers(array_merge($this->_aMarkers, array(
-                'id' => $this->_iContentId,
-                'module' => $this->_oModule->_oConfig->getName(),
-            )));
+            $this->_oMenuSocialSharing->addMarkers($this->_aMarkers);
         }
 
         $aItem = $this->_oMenuSocialSharing->getMenuItem($aItem['name']);

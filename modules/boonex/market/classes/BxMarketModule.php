@@ -1249,14 +1249,6 @@ class BxMarketModule extends BxBaseModTextModule
         $this->checkAllowedHide($aDataEntry, true);
         return echoJson(array('reload' => 1));
     }
-
-    protected function _entitySocialSharing ($iId, $aParams = array())
-    {
-        $CNF = &$this->_oConfig->CNF;
-        return parent::_entitySocialSharing($iId, array_merge($aParams, array(
-        	'object_vote' => ''
-        )));
-    }
 }
 
 /** @} */

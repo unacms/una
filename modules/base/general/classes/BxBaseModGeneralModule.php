@@ -559,59 +559,75 @@ class BxBaseModGeneralModule extends BxDolModule
     /**
      * Entry actions and social sharing block
      */
-    public function serviceEntityAllActions ($iContentId = 0, $aParams = array())
+    public function serviceEntityAllActions ($mixedContent = false, $aParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $iContentId = $this->_getContent($iContentId, false);
-        if($iContentId === false)
-            return false;
-
-        if(!empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL'])) {
-            $sEntryTitle = !empty($aParams['entry_title']) ? $aParams['entry_title'] : '';
-            if(empty($sEntryTitle) && !empty($CNF['FIELD_TITLE']) && !empty($aContentInfo[$CNF['FIELD_TITLE']]))
-                $sEntryTitle = $aContentInfo[$CNF['FIELD_TITLE']];
-            
-            $sEntryUrl = !empty($aParams['entry_url']) ? $aParams['entry_url'] : '';
-            if(empty($sEntryUrl) && !empty($CNF['URI_VIEW_ENTRY']))
-                $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);
-
-            $iEntryThumb = !empty($aParams['entry_thumb']) ? (int)$aParams['entry_thumb'] : 0;
-            if(empty($iEntryThumb) && !empty($CNF['FIELD_THUMB']) && !empty($aContentInfo[$CNF['FIELD_THUMB']]))
-                $iEntryThumb = (int)$aContentInfo[$CNF['FIELD_THUMB']];
-
-            $sObjectStorage = !empty($aParams['object_storage']) ? $aParams['object_storage'] : false;
-            if(empty($sObjectStorage) && !empty($CNF['OBJECT_STORAGE']))
-                $sObjectStorage = $CNF['OBJECT_STORAGE'];
-            
-            $sObjectTranscoder = !empty($aParams['object_transcoder']) ? $aParams['object_transcoder'] : false;
-
-            $aMarkers = array();
-            if(!empty($sEntryTitle))
-                $aMarkers['title'] = $sEntryTitle;
-
-            if(!empty($sEntryUrl))
-                $aMarkers['url'] = $sEntryUrl;
-
-            if(!empty($iEntryThumb)) {
-                if(!empty($sObjectTranscoder))
-                    $o = BxDolTranscoder::getObjectInstance($sObjectTranscoder);
-                else if(!empty($sObjectStorage))
-                    $o = BxDolStorage::getObjectInstance($sObjectStorage);
-
-                $sImageUrl = $o ? $o->getFileUrlById($iEntryThumb) : '';
-                if(!empty($sImageUrl))
-                    $aMarkers['img_url'] = $sImageUrl;
-            }
-
-            //TODO: 'at the end': check $oSocialActions after creation.
-            $oSocialActions = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL']);
-            $oSocialActions->addMarkers($aMarkers);
-            return $this->_oTemplate->entryAllActions($oSocialActions->getCode());
+        if(!empty($mixedContent)) {
+            if(!is_array($mixedContent))
+               $mixedContent = array((int)$mixedContent, array());
+        }
+        else {
+            $mixedContent = $this->_getContent();
+            if($mixedContent === false)
+                return false;
         }
 
-        //TODO: Remove this at the end.
-        return $this->serviceEntityActions($iContentId) . $this->serviceEntitySocialSharing($iContentId);
+        list($iContentId, $aContentInfo) = $mixedContent;
+
+        $sObjectMenu = !empty($aParams['object_menu']) ? $aParams['object_menu'] : '';
+        if(empty($sObjectMenu) && !empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL']))
+            $sObjectMenu = $CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL'];
+
+        if(empty($sObjectMenu))
+            return false;
+
+        $sEntryTitle = !empty($aParams['entry_title']) ? $aParams['entry_title'] : '';
+        if(empty($sEntryTitle) && !empty($CNF['FIELD_TITLE']) && !empty($aContentInfo[$CNF['FIELD_TITLE']]))
+            $sEntryTitle = $aContentInfo[$CNF['FIELD_TITLE']];
+
+        $sEntryUrl = !empty($aParams['entry_url']) ? $aParams['entry_url'] : '';
+        if(empty($sEntryUrl) && !empty($CNF['URI_VIEW_ENTRY']))
+            $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);
+
+        $iEntryThumb = !empty($aParams['entry_thumb']) ? (int)$aParams['entry_thumb'] : 0;
+        if(empty($iEntryThumb) && !empty($CNF['FIELD_THUMB']) && !empty($aContentInfo[$CNF['FIELD_THUMB']]))
+            $iEntryThumb = (int)$aContentInfo[$CNF['FIELD_THUMB']];
+
+        $sObjectStorage = !empty($aParams['object_storage']) ? $aParams['object_storage'] : false;
+        if(empty($sObjectStorage) && !empty($CNF['OBJECT_STORAGE']))
+            $sObjectStorage = $CNF['OBJECT_STORAGE'];
+
+        $sObjectTranscoder = !empty($aParams['object_transcoder']) ? $aParams['object_transcoder'] : false;
+
+        $aMarkers = array(
+            'id' => $iContentId,
+            'module' => $this->_oConfig->getName(),
+        );
+        if(!empty($sEntryTitle))
+            $aMarkers['title'] = $sEntryTitle;
+
+        if(!empty($sEntryUrl))
+            $aMarkers['url'] = $sEntryUrl;
+
+        if(!empty($iEntryThumb)) {
+            if(!empty($sObjectTranscoder))
+                $o = BxDolTranscoder::getObjectInstance($sObjectTranscoder);
+            else if(!empty($sObjectStorage))
+                $o = BxDolStorage::getObjectInstance($sObjectStorage);
+
+            $sImageUrl = $o ? $o->getFileUrlById($iEntryThumb) : '';
+            if(!empty($sImageUrl))
+                $aMarkers['img_url'] = $sImageUrl;
+        }
+
+        $oActions = BxDolMenu::getObjectInstance($sObjectMenu);
+        if(!$oActions)
+            return false;
+
+        $oActions->setContentId($iContentId);
+        $oActions->addMarkers($aMarkers);
+        return $this->_oTemplate->entryAllActions($oActions->getCode());
     }
 
     /**
@@ -628,31 +644,73 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
     /**
-     * Entry social sharing block
+     * Entry social sharing block.
+     * @param type $mixedContent integer content ID or array with integer content ID and array with content info, or false.
+     * @param type $aParams array with additional custom params which may overwrite some default values.
+     * @return boolean|string string with block content or false if something went wrong.
      */
-    //TODO: Update to work with Social Sharing menu only.
-    public function serviceEntitySocialSharing ($iContentId = 0)
+    public function serviceEntitySocialSharing($mixedContent = false, $aParams = array())
     {
-        $mixedContent = $this->_getContent($iContentId);
-        if($mixedContent === false)
-            return false;
+        if(!empty($mixedContent)) {
+            if(!is_array($mixedContent))
+               $mixedContent = array((int)$mixedContent, array());
+        }
+        else {
+            $mixedContent = $this->_getContent();
+            if($mixedContent === false)
+                return false;
+        }
 
         list($iContentId, $aContentInfo) = $mixedContent;
 
         $CNF = &$this->_oConfig->CNF;
-        return $this->_entitySocialSharing ($iContentId, array(
-            'id_timeline' => $iContentId,
-        	'id_thumb' => !empty($CNF['FIELD_THUMB']) && !empty($aContentInfo[$CNF['FIELD_THUMB']]) ? $aContentInfo[$CNF['FIELD_THUMB']] : '',
-        	'title' => !empty($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
-        	'object_storage' => !empty($CNF['OBJECT_STORAGE']) ? $CNF['OBJECT_STORAGE'] : '',
-            'object_transcoder' => false,
-        	'object_view' => !empty($CNF['OBJECT_VIEWS']) ? $CNF['OBJECT_VIEWS'] : '',
-        	'object_vote' => !empty($CNF['OBJECT_VOTES']) ? $CNF['OBJECT_VOTES'] : '',
-        	'object_score' => !empty($CNF['OBJECT_SCORES']) ? $CNF['OBJECT_SCORES'] : '',
-        	'object_favorite' => !empty($CNF['OBJECT_FAVORITES']) ? $CNF['OBJECT_FAVORITES'] : '',
-            'object_feature' => !empty($CNF['OBJECT_FEATURED']) ? $CNF['OBJECT_FEATURED'] : '',
-        	'object_report' => !empty($CNF['OBJECT_REPORTS']) ? $CNF['OBJECT_REPORTS'] : '',
-        	'uri_view_entry' => !empty($CNF['URI_VIEW_ENTRY']) ? $CNF['URI_VIEW_ENTRY'] : '',
+
+        $sUri = !empty($aParams['uri']) ? $aParams['uri'] : '';
+        if(empty($sUri) && !empty($CNF['URI_VIEW_ENTRY']))
+            $sUri = $CNF['URI_VIEW_ENTRY'];
+
+        $sUrl = !empty($sUri) ? BxDolPermalinks::getInstance()->permalink('page.php?i=' . $sUri . '&id=' . $iContentId) : '';
+
+        $sTitle = !empty($aParams['title']) ? $aParams['title'] : '';
+        if(empty($sTitle) && !empty($aContentInfo[$CNF['FIELD_TITLE']]))
+            $sTitle = $aContentInfo[$CNF['FIELD_TITLE']];
+
+        $aMarkers = array(
+            'id' => $iContentId,
+            'module' => $this->_aModule['name'],
+            'url' => BX_DOL_URL_ROOT . $sUrl,
+            'title' => $sTitle,
+        );
+
+        $iIdThumb = !empty($aParams['id_thumb']) ? (int)$aParams['id_thumb'] : 0;
+        if(empty($iIdThumb) && !empty($CNF['FIELD_THUMB']) && !empty($aContentInfo[$CNF['FIELD_THUMB']]))
+            $iIdThumb = (int)$aContentInfo[$CNF['FIELD_THUMB']];
+
+        if ($iIdThumb) {
+            $sTranscoder = !empty($aParams['object_transcoder']) ? $aParams['object_transcoder'] : '';
+            $sStorage = !empty($aParams['object_storage']) ? $aParams['object_storage'] : '';
+            if(empty($sStorage) && !empty($CNF['OBJECT_STORAGE']))
+                $sStorage = $CNF['OBJECT_STORAGE'];
+
+            if(!empty($sTranscoder))
+                $o = BxDolTranscoder::getObjectInstance($sTranscoder);
+            else if(!empty($sStorage))
+                $o = BxDolStorage::getObjectInstance($sStorage);
+
+            $sImgUrl = $o ? $o->getFileUrlById($iIdThumb) : '';
+            if($sImgUrl)
+                $aMarkers['img_url'] = $sImgUrl;
+        }
+
+        $oMenu = BxDolMenu::getObjectInstance('sys_social_sharing');
+        $oMenu->addMarkers($aMarkers);
+        $sMenu = $oMenu->getCode();
+
+        if(empty($sMenu))
+            return '';
+
+        return $this->_oTemplate->parseHtmlByName('entry-share.html', array(
+            'menu' => $sMenu
         ));
     }
 
@@ -1387,124 +1445,6 @@ class BxBaseModGeneralModule extends BxDolModule
             return false;
 
         return $oCmts->getCommentsBlock(array(), array('in_designbox' => false, 'show_empty' => true));
-    }
-
-    protected function _entitySocialSharing ($iId, $aParams = array())
-    {
-        $CNF = &$this->_oConfig->CNF;
-
-        $bShowAsButton = !isset($aParams['show_as_button']) || $aParams['show_as_button'] === true;
-
-        $sUrl = !empty($aParams['uri_view_entry']) ? BxDolPermalinks::getInstance()->permalink('page.php?i=' . $aParams['uri_view_entry'] . '&id=' . $iId) : '';
-        $sTitle = !empty($aParams['title']) ? $aParams['title'] : '';
-
-        $aMarkers = array();
-        $bSocialSharing = isset($aParams['social_sharing']) ? (bool)$aParams['social_sharing'] : true;
-        if($bSocialSharing) {
-            $aMarkers = array(
-                'id' => $iId,                           //TODO: Can be removed later
-                'module' => $this->_aModule['name'],    //TODO: Can be removed later
-                'url' => BX_DOL_URL_ROOT . $sUrl,
-                'title' => $sTitle,
-            );
-
-            $iIdThumb = isset($aParams['id_thumb']) ? (int)$aParams['id_thumb'] : 0;
-            if ($iIdThumb) {
-                if(!empty($aParams['object_transcoder']))
-                    $o = BxDolTranscoder::getObjectInstance($aParams['object_transcoder']);
-                else if(!empty($aParams['object_storage']))
-                    $o = BxDolStorage::getObjectInstance($aParams['object_storage']);
-
-                $sImgUrl = $o ? $o->getFileUrlById($iIdThumb) : '';
-                if($sImgUrl)
-                    $aMarkers['img_url'] = $sImgUrl;
-            }
-        }
-
-        //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Share, etc.
-        //--- Views
-        $sViews = '';
-        $oViews = !empty($aParams['object_view']) ? BxDolView::getObjectInstance($aParams['object_view'], $iId) : false;
-        if ($oViews && $oViews->isEnabled())
-            $sViews = $oViews->getElementBlock(array('show_do_view_as_button' => $bShowAsButton));
-
-        //--- Comments
-        $sComments = '';
-        $oComments = !empty($aParams['object_comments']) ? BxTemplCmts::getObjectInstance($aParams['object_comments'], $iId) : false;
-        if ($oComments) {
-            $iNum = $oComments->getCommentsCountAll();
-            $sComments = $this->_oTemplate->parseHtmlByName('comments-item.html', array (
-                'class' => 'bx-base-general-comments-' . ($bShowAsButton ? 'button' : 'link'),
-                'class_do' => $bShowAsButton ? ' bx-btn' : '',
-            	'class_counter' => $bShowAsButton ? ' bx-btn-height' : '',
-                'url' => $sUrl . $oComments->getListAnchor(true),
-                'bx_if:comments' => array (
-                    'condition' => $iNum,
-                    'content' => array (
-                        'num' => $iNum,
-                    ),
-                ),
-            ));
-        }
-
-        //--- Votes
-        $sVotes = '';
-        $oVotes = !empty($aParams['object_vote']) ? BxDolVote::getObjectInstance($aParams['object_vote'], $iId) : false;
-        if ($oVotes && $oVotes->isEnabled())
-            $sVotes = $oVotes->getElementBlock(array('show_do_vote_as_button' => $bShowAsButton));
-
-        //--- Scores
-        $sScores = '';
-        $oScores = !empty($aParams['object_score']) ? BxDolScore::getObjectInstance($aParams['object_score'], $iId) : false;
-        if ($oScores && $oScores->isEnabled())
-            $sScores = $oScores->getElementBlock(array('show_do_vote_as_button' => $bShowAsButton));
-
-        //--- Favorite
-        $sFavorites = '';
-        $oFavorites = !empty($aParams['object_favorite']) ? BxDolFavorite::getObjectInstance($aParams['object_favorite'], $iId) : false;
-        if ($oFavorites && $oFavorites->isEnabled())
-            $sFavorites = $oFavorites->getElementBlock(array('show_do_favorite_as_button' => $bShowAsButton));
-
-        //--- Featured
-        $sFeatured = '';
-        $oFeatured = !empty($aParams['object_feature']) ? BxDolFeature::getObjectInstance($aParams['object_feature'], $iId) : false;
-        if ($oFeatured && $oFeatured->isEnabled())
-            $sFeatured = $oFeatured->getElementBlock(array('show_do_feature_as_button' => $bShowAsButton));
-
-        //--- Timeline Repost
-        $sRepost = '';
-        $iIdTimeline = isset($aParams['id_timeline']) ? (int)$aParams['id_timeline'] : $iId;
-        if ($iIdTimeline && BxDolRequest::serviceExists('bx_timeline', 'get_repost_element_block'))
-            $sRepost = BxDolService::call('bx_timeline', 'get_repost_element_block', array(bx_get_logged_profile_id(), $this->_aModule['name'], 'added', $iIdTimeline, array('show_do_repost_as_button' => $bShowAsButton)));
-
-        //--- Report
-		$sReport = '';
-        $oReport = !empty($aParams['object_report']) ? BxDolReport::getObjectInstance($aParams['object_report'], $iId) : false;
-        if ($oReport)
-            $sReport = $oReport->getElementBlock(array('show_do_report_as_button' => $bShowAsButton));
-
-        $sSocialSharing = '';
-        if($bSocialSharing) {
-            $oSocial = BxDolMenu::getObjectInstance('sys_social_sharing');
-            $oSocial->addMarkers($aMarkers);
-            $sSocialSharing = $oSocial->getCode();
-        }
-
-        if(empty($sComments)  && empty($sViews) && empty($sVotes) && empty($sScores) && empty($sFavorites)  && empty($sFeatured) && empty($sRepost) && empty($sReport) && empty($sSocial))
-            return '';
-
-        return $this->_oTemplate->parseHtmlByName('entry-share.html', array(
-            'comments' => $sComments,
-            'view' => $sViews,
-            'vote' => $sVotes,
-            'score' => $sScores,
-            'favorite' => $sFavorites,
-            'feature' => $sFeatured,
-            'repost' => $sRepost,
-            'report' => $sReport,
-            'social' => $sSocialSharing,
-        ));
-        //TODO: Rebuild using menus engine when it will be ready for such elements like Vote, Repost, etc.
     }
 
     protected function _getFields($iContentId)

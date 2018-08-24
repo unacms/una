@@ -586,32 +586,25 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return $this->_entityComments($CNF['OBJECT_COMMENTS'], $oProfile->getContentId());
     }
 
-    //TODO: Remove this at the end.
     /**
      * Entry social sharing block
      */
-    public function serviceEntitySocialSharing ($iContentId = 0)
+    public function serviceEntitySocialSharing ($mixedContent = false, $aParams = array())
     {
-        $mixedContent = $this->_getContent($iContentId);
-        if($mixedContent === false)
-            return false;
+        if(!empty($mixedContent)) {
+            if(!is_array($mixedContent))
+               $mixedContent = array((int)$mixedContent, array());
+        }
+        else {
+            $mixedContent = $this->_getContent();
+            if($mixedContent === false)
+                return false;
+        }
 
-        list($iContentId, $aContentInfo) = $mixedContent;
+        list($iContentId, $aContentInfo) = $mixedContent;    
 
-        $CNF = &$this->_oConfig->CNF;
-        return $this->_entitySocialSharing ($iContentId, array(
-            'id_timeline' => 0,
-        	'id_thumb' => !empty($CNF['FIELD_PICTURE']) && !empty($aContentInfo[$CNF['FIELD_PICTURE']]) ? $aContentInfo[$CNF['FIELD_PICTURE']] : '',
-        	'title' => !empty($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
-        	'object_storage' => !empty($CNF['OBJECT_STORAGE']) ? $CNF['OBJECT_STORAGE'] : '',
-            'object_transcoder' => false,
-        	'object_vote' => '',
-        	'object_score' => !empty($CNF['OBJECT_SCORES']) ? $CNF['OBJECT_SCORES'] : '',
-        	'object_favorite' => !empty($CNF['OBJECT_FAVORITES']) ? $CNF['OBJECT_FAVORITES'] : '',
-        	'object_feature' => !empty($CNF['OBJECT_FEATURED']) ? $CNF['OBJECT_FEATURED'] : '',
-        	'object_report' => !empty($CNF['OBJECT_REPORTS']) ? $CNF['OBJECT_REPORTS'] : '',
-        	'uri_view_entry' => !empty($CNF['URI_VIEW_ENTRY']) ? $CNF['URI_VIEW_ENTRY'] : '',
-        	'social_sharing' => false
+        return parent::serviceEntitySocialSharing(array($iContentId, $aContentInfo), array(
+            'id_thumb' => !empty($CNF['FIELD_PICTURE']) && !empty($aContentInfo[$CNF['FIELD_PICTURE']]) ? $aContentInfo[$CNF['FIELD_PICTURE']] : 0, 
         ));
     }
 

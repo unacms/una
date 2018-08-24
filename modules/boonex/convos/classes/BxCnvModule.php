@@ -320,7 +320,7 @@ class BxCnvModule extends BxBaseModTextModule
     /**
      * No social sharing for private conversations
      */
-    public function serviceEntitySocialSharing ($iContentId = 0)
+    public function serviceEntitySocialSharing ($mixedContent = false, $aParams = array())
     {
         return '';
     }
