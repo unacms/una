@@ -26,6 +26,7 @@
 }
 
 /* unit meta */
+.sys-author ul.bx-menu-custom li .bx-base-profile-unit-meta-item,
 .bx-base-general-unit-meta ul.bx-menu-custom li .bx-base-profile-unit-meta-item {
 	height: 1.625rem;
 	padding-left: 0.5rem;
@@ -33,6 +34,7 @@
 	line-height: 1.625rem;	
 }
 
+.sys-author ul.bx-menu-custom li:first-child .bx-base-profile-unit-meta-item,
 .bx-base-general-unit-meta ul.bx-menu-custom li:first-child .bx-base-profile-unit-meta-item {
     padding-left: 0px;
 }

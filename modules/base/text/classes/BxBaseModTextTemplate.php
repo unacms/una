@@ -51,7 +51,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             return '';
 
         $sName = $oProfile->getDisplayName();
-        $sAddon = $sFuncAuthorAddon ? $this->$sFuncAuthorAddon($aData, $oProfile) : '';
+        $sAddon = $sFuncAuthorAddon ? $this->$sFuncAuthorAddon($aData, $oProfile) : '';        
 
         $aVars = array (
             'author_url' => $oProfile->getUrl(),
@@ -135,7 +135,9 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
     function getAuthorDesc ($aData)
     {
-        return '';
+        if (!($a = $this->getAuthorSnippetMenu($aData)) || !isset($a['meta']))
+            return '';
+        return $a['meta'];
     }
     
     function getContextDesc ($aData)
@@ -143,6 +145,14 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         return '';
     }
 
+    function getAuthorSnippetMenu ($aData)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+        if (!($oProfile = BxDolProfile::getInstance($aData[$CNF['FIELD_AUTHOR']])))
+            return array();
+        return bx_srv($oProfile->getModule(), 'get_snippet_menu_vars', array($oProfile->id()));
+    }
+    
     function getAuthorAddon ($aData, $oProfile)
     {
         $CNF = &$this->getModule()->_oConfig->CNF;

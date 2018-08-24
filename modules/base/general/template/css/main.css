@@ -148,13 +148,23 @@ div.bx-base-general-comments div.bx-base-general-comments-counter-holder {
     text-overflow: ellipsis;
     text-align: left;
 }
+.sys-author ul.bx-menu-custom {
+    margin-top:0.1rem;
+    margin-bottom:0.2rem;
+}
+.sys-author ul.bx-menu-custom.bx-menu-hor > li > span,
 .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-hor > li > span {
 	margin-right: 0;
 }
+.sys-author ul.bx-menu-custom li:first-child .bx-base-general-unit-meta-div,
 .bx-base-general-unit-meta ul.bx-menu-custom li:first-child .bx-base-general-unit-meta-div {
     display: none;
 }
 
+.sys-author ul.bx-menu-custom li .bx-base-general-unit-meta-item,
+.sys-author ul.bx-menu-custom li .bx-base-general-unit-meta-div,
+.sys-author ul.bx-menu-custom li .bx-btn,
+.sys-author ul.bx-menu-custom li .bx-vote.bx-vote-stars,
 .bx-base-general-unit-meta ul.bx-menu-custom li .bx-base-general-unit-meta-item,
 .bx-base-general-unit-meta ul.bx-menu-custom li .bx-base-general-unit-meta-div,
 .bx-base-general-unit-meta ul.bx-menu-custom li .bx-btn,
@@ -165,11 +175,13 @@ div.bx-base-general-comments div.bx-base-general-comments-counter-holder {
     vertical-align: middle;
 }
 
+.sys-author ul.bx-menu-custom li .bx-vote.bx-vote-stars,
 .bx-base-general-unit-meta ul.bx-menu-custom li .bx-vote.bx-vote-stars {
     margin-top: 0px;
     margin-bottom: 0px;
 }
 
+.sys-author ul.bx-menu-custom li .bx-metatags-keyword,
 .bx-base-general-unit-meta ul.bx-menu-custom li .bx-metatags-keyword {
     margin: 0px;
     line-height: normal;
