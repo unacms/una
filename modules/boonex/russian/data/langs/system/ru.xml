@@ -2520,6 +2520,7 @@
 	<string name="_sys_select"><![CDATA[Выбрать]]></string>
 	<string name="_sys_send"><![CDATA[Послать]]></string>
     <string name="_sys_search_placeholder"><![CDATA[Поиск...]]></string>
+    <string name="_sys_show_more"><![CDATA[Показать ещё]]></string>
 	<string name="_sys_spam_detected"><![CDATA[Ваше действие привело к блокировке]]></string>
 	<string name="_sys_spam_detected_contact"><![CDATA[Ваше действие привело к блокировке, сзяжитесь с нами для проверки происходящего: {0}]]></string>
 	<string name="_sys_splash_btn_start"><![CDATA[Начало]]></string>

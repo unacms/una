@@ -48,12 +48,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $oModule = $this->getModule();
         $iContentId = (int)$aData[$CNF['FIELD_ID']];
 
-        $bPublic = true;
-        if($isCheckPrivateContent && !empty($CNF['OBJECT_PRIVACY_VIEW'])) {
-            $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
-            if ($oPrivacy && !$oPrivacy->check($iContentId) && !$oPrivacy->isPartiallyVisible($aData[$CNF['FIELD_ALLOW_VIEW_TO']]))
-                $bPublic = false;
-        }
+        $bPublic = $isCheckPrivateContent && !empty($CNF['OBJECT_PRIVACY_VIEW']) ? $this->isProfilePublic($aData) : true;
 
         $bPublicThumb = true;
         if($isCheckPrivateContent && $oModule->checkAllowedViewProfileImage($aData) !== CHECK_ACTION_RESULT_ALLOWED)
@@ -86,17 +81,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         if(empty($sCoverUrl))
             $sCoverUrl = $this->getImageUrl('cover.jpg');
 
-        $aTmplVarsMeta = array();
-        if(!empty($CNF['OBJECT_MENU_SNIPPET_META'])) {
-            $oMenuMeta = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this);
-            if($oMenuMeta) {
-                $oMenuMeta->setContentId($iContentId);
-                $oMenuMeta->setContentPublic($bPublic);
-                $aTmplVarsMeta = array(
-                    'meta' => $oMenuMeta->getCode()
-                );
-            }
-        }
+        $aTmplVarsMeta = $this->getSnippetMenuVars ($iProfile, $bPublic);
 
         // generate html
         return array (
@@ -140,6 +125,43 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                 'content' => $aTmplVarsMeta
             )
         );
+    }
+
+    function isProfilePublic($aData)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
+        if ($oPrivacy && !$oPrivacy->check($aData[$CNF['FIELD_ID']]) && !$oPrivacy->isPartiallyVisible($aData[$CNF['FIELD_ALLOW_VIEW_TO']]))
+            return false;
+        return true;
+    }
+
+    function getSnippetMenuVars ($iProfileId, $bPublic = null)
+    {
+        if (!($oProfile = BxDolProfile::getInstance($iProfileId)))
+            return array();
+        
+        $CNF = &$this->_oConfig->CNF;
+        
+        if (null === $bPublic) {
+            $aData = $this->getModule()->serviceGetContentInfoById($oProfile->getContentId());
+            $bPublic = $this->isProfilePublic($aData);
+        }
+        
+        $aTmplVarsMeta = array();
+        if (!empty($CNF['OBJECT_MENU_SNIPPET_META'])) {
+            $oMenuMeta = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this);
+            if($oMenuMeta) {
+                $oMenuMeta->setContentId($oProfile->getContentId());
+                $oMenuMeta->setContentPublic($bPublic);
+                $aTmplVarsMeta = array(
+                    'meta' => $oMenuMeta->getCode()
+                );
+            }
+        }
+
+        return $aTmplVarsMeta;
     }
 
     /**

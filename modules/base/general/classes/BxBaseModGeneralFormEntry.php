@@ -66,7 +66,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         }
 
         if (isset($CNF['FIELD_LABELS']) && isset($this->aInputs[$CNF['FIELD_LABELS']])) {
-            $this->aInputs[$CNF['FIELD_LABELS']]['values'] = array_map('trim', explode(',', getParam($CNF['PARAM_LABELS'])));
+            $this->aInputs[$CNF['FIELD_LABELS']]['values'] = array_map('trim', getParam($CNF['PARAM_LABELS']) ? explode(',', getParam($CNF['PARAM_LABELS'])) : array());
         }
     }
 

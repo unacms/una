@@ -185,6 +185,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return '';
     }
 
+    public function serviceGetSnippetMenuVars($iProfileId, $bPublic = null)
+    {
+        return $this->_oTemplate->getSnippetMenuVars($iProfileId, $bPublic);
+    }
+        
 	public function serviceGetPageObjectForPageTrigger ($sPageTriggerName)
     {
         if (isset($this->_oConfig->CNF['TRIGGER_PAGE_VIEW_ENTRY']) && $this->_oConfig->CNF['TRIGGER_PAGE_VIEW_ENTRY'] == $sPageTriggerName)

@@ -27,8 +27,8 @@
   <string name="_bx_analytics_txt_item"><![CDATA[Item]]></string>
   <string name="_bx_analytics_txt_date"><![CDATA[Date]]></string>
   <string name="_bx_analytics_txt_value"><![CDATA[Value]]></string>
-  <string name="_bx_analytics_txt_total_count"><![CDATA[ - total number]]></string>
-  <string name="_bx_analytics_txt_count"><![CDATA[ - number]]></string>
+  <string name="_bx_analytics_txt_total_count"><![CDATA[{0} - total number]]></string>
+  <string name="_bx_analytics_txt_count"><![CDATA[{0} - number]]></string>
   <string name="_bx_analytics_txt_accounts"><![CDATA[Accounts]]></string>
   <string name="_bx_analytics_txt_total_content"><![CDATA[All content]]></string>
   <string name="_bx_analytics_type_top_by_views_label"><![CDATA[Number of views]]></string>

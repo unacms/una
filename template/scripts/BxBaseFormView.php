@@ -1120,23 +1120,49 @@ BLAH;
     
     protected function genCustomInputLabels ($aInput)
     {
+        // generate currently selected labels
         $sValue = '';
         if (!empty($aInput['value']) && is_array($aInput['value'])) {
+            sort($aInput['value'], SORT_LOCALE_STRING);
             foreach ($aInput['value'] as $sVal) {
                $sValue .= '<b class="val bx-def-color-bg-hl bx-def-round-corners">' . trim($sVal) . '<input type="hidden" name="' . $aInput['name'] . '[]" value="' . trim($sVal) . '" /></b>';
             }
             $sValue = trim($sValue, ',');
         }
 
+        // generate "following" labels
+
+        $aFollowingLabels = bx_srv('bx_channels', 'get_following_channels_names', array(bx_get_logged_profile_id()));
+        if (!is_array($aFollowingLabels))
+            $aFollowingLabels = array();
+        $aFollowingLabels = array_intersect($aFollowingLabels, $aInput['values']);
+        $aFollowingLabels = array_diff($aFollowingLabels, !empty($aInput['value']) && is_array($aInput['value']) ? $aInput['value'] : array());
+        $aValues = array_diff($aInput['values'], 
+            !empty($aInput['value']) && is_array($aInput['value']) ? $aInput['value'] : array(), 
+            !empty($aFollowingLabels) && is_array($aFollowingLabels) ? $aFollowingLabels : array());
+
         $sValues = '';
-        if (!empty($aInput['values']) && is_array($aInput['values'])) {
-            $a = array_diff($aInput['values'], !empty($aInput['value']) && is_array($aInput['value']) ? $aInput['value'] : array());
-            foreach ($a as $sVal) {
+        if (!empty($aFollowingLabels)) {
+            sort($aFollowingLabels, SORT_LOCALE_STRING);
+            foreach ($aFollowingLabels as $sVal) {
+               $sValues .= '<b class="val bx-def-color-bg-hl bx-def-round-corners">' . trim($sVal) . '</b>';
+            }
+            if (!empty($aValues))
+                $sValues .= '<a href="#" class="bx-form-input-autotoken-labels-show-more">' . _t('_sys_show_more') . '</a><i class="bx-form-input-autotoken-labels-more">';
+        }
+
+        // generate all possible labels 
+        if (!empty($aValues)) {
+            sort($aValues, SORT_LOCALE_STRING);
+            foreach ($aValues as $sVal) {
                $sValues .= '<b class="val bx-def-color-bg-hl bx-def-round-corners">' . trim($sVal) . '</b>';
             }
             $sValues = trim($sValues, ',');
         }
-        
+
+        if (!empty($aFollowingLabels) && !empty($aValues))
+            $sValues .= '</i>';
+
         return $this->oTemplate->parseHtmlByName('form_field_labels.html', array(
             'id' => $aInput['name'] . time() . mt_rand(0, 100),
             'name' => $aInput['name'],

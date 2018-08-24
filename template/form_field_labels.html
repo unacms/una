@@ -22,4 +22,11 @@
         }
     };
     $("#__id__wrapper b").on('click', fCallack);
+
+    // show more
+    $("#__id__wrapper .bx-form-input-autotoken-labels-show-more").on('click', function () {
+        $(this).hide();
+        $("#__id__wrapper .bx-form-input-autotoken-labels-more").show();
+        return false;
+    });
 </script>

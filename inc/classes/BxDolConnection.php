@@ -652,7 +652,7 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
         $oConnection = $this->_oQuery->getConnection ($iInitiator, $iContent);
         if (!$oConnection)
             return false;
-        return false === $isMutual ? true : $oConnection['mutual'];
+        return false === $isMutual ? true : (isset($oConnection['mutual']) ? $oConnection['mutual'] : false);
     }
 
     /**
