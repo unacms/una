@@ -114,9 +114,38 @@ class BxAlbumsModule extends BxBaseModTextModule
     /**
      * Entry actions and social sharing block
      */
-    public function serviceMediaAllActions ($iContentId = 0)
+    public function serviceMediaAllActions ($mixedContent = false, $aParams = array())
     {
-        return $this->_oTemplate->entryAllActions($this->serviceMediaActions($iContentId), $this->serviceMediaSocialSharing($iContentId));
+        $iMediaId = 0;
+        $aMediaInfo = array();
+
+        $bContent = !empty($mixedContent);
+        if($bContent && is_array($mixedContent))
+            list($iMediaId, $aMediaInfo) = $mixedContent;
+        else {
+            if($bContent)
+                $iMediaId = (int)$mixedContent;
+            else
+                $iMediaId = bx_process_input(bx_get('id'), BX_DATA_INT);
+
+            if(!$iMediaId)
+                return false;
+
+            $aMediaInfo = $this->_oDb->getMediaInfoById($iMediaId);
+        }
+
+        if(!$iMediaId || !$aMediaInfo)
+            return false;
+
+        $CNF = &$this->_oConfig->CNF;
+
+        return parent::serviceEntityAllActions (array($iMediaId, $aMediaInfo), array_merge(array(
+            'object_menu' => $CNF['OBJECT_MENU_ACTIONS_VIEW_MEDIA_ALL'],
+            'object_transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_BIG'],
+            'entry_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $iMediaId),
+            'entry_title' => $aMediaInfo['title'],
+            'entry_thumb' => $aMediaInfo['file_id']
+        ), $aParams));
     }
 
     /**
@@ -137,32 +166,24 @@ class BxAlbumsModule extends BxBaseModTextModule
      * @param $iMediaId media ID, if it's omitted then it's taken from 'id' GET variable.
      * @return HTML string with block content. On error false or empty string is returned.
      */
-    public function serviceMediaSocialSharing ($iMediaId = 0, $bEnableCommentsBtn = false, $bEnableSocialSharing = true, $bShowAsButton = true)
+    public function serviceMediaSocialSharing ($iMediaId = 0)
     {
-        if (!$iMediaId)
+        if(!$iMediaId)
             $iMediaId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iMediaId)
+        if(!$iMediaId)
             return false;
+
         $aMediaInfo = $this->_oDb->getMediaInfoById($iMediaId);
-        if (!$aMediaInfo)
+        if(!$aMediaInfo)
             return false;
 
         $CNF = &$this->_oConfig->CNF;
-        return $this->_entitySocialSharing ($iMediaId, array(
-            'show_as_button' => $bShowAsButton,
-            'id_timeline' => 0,
-        	'id_thumb' => $aMediaInfo['file_id'],
-        	'title' => $aMediaInfo['title'],
-        	'object_storage' => false,
-            'object_transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_BIG'],
-        	'object_vote' => $CNF['OBJECT_VOTES_MEDIA'],
-        	'object_score' => $CNF['OBJECT_SCORES_MEDIA'],
-        	'object_favorite' => $CNF['OBJECT_FAVORITES_MEDIA'],
-        	'object_report' => '',
-        	'object_comments' => $bEnableCommentsBtn ? $CNF['OBJECT_COMMENTS_MEDIA'] : '',
-        	'object_feature' => $CNF['OBJECT_FEATURED_MEDIA'],
-        	'uri_view_entry' => $CNF['URI_VIEW_MEDIA'],
-            'social_sharing' => $bEnableSocialSharing
+
+        return $this->serviceEntitySocialSharing(array($iMediaId, $aMediaInfo), array(
+            'uri' => $CNF['URI_VIEW_MEDIA'],
+            'title' => $aMediaInfo['title'],
+            'id_thumb' => $aMediaInfo['file_id'],
+            'object_transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_BIG']
         ));
     }
 

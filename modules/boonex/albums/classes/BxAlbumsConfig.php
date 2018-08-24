@@ -107,6 +107,8 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_albums_view', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_albums_view_actions', // all actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_MEDIA' => 'bx_albums_view_media', // actions menu on view media page
+            'OBJECT_MENU_ACTIONS_VIEW_MEDIA_ALL' => 'bx_albums_view_actions_media', // all actions menu on view media page
+            'OBJECT_MENU_ACTIONS_VIEW_MEDIA_UNIT' => 'bx_albums_view_actions_media_unit', // actions menu on media unit
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_albums_my', // actions menu on my entries page
             'OBJECT_MENU_SUBMENU' => 'bx_albums_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_albums_view_submenu', // view entry submenu
