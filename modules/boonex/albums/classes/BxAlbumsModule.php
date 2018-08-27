@@ -276,12 +276,10 @@ class BxAlbumsModule extends BxBaseModTextModule
 
         $aResult = parent::serviceGetTimelineData();
         $aResult['handlers'] = array_merge($aResult['handlers'], array(
-            array('group' => $sModule . '_object_media', 'type' => 'insert', 'alert_unit' => $sModule . '_media', 'alert_action' => 'added', 'module_name' => $sModule, 'module_method' => 'get_timeline_media', 'module_class' => 'Module',  'groupable' => 0, 'group_by' => ''),
-            array('group' => $sModule . '_object_media', 'type' => 'delete', 'alert_unit' => $sModule . '_media', 'alert_action' => 'deleted')
+            array('group' => $sModule . '_object_media', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'medias_added', 'module_name' => $sModule, 'module_method' => 'get_timeline_media', 'module_class' => 'Module',  'groupable' => 0, 'group_by' => ''),
         ));
         $aResult['alerts'] = array_merge($aResult['alerts'], array(
-            array('unit' => $sModule . '_media', 'action' => 'added'),
-            array('unit' => $sModule . '_media', 'action' => 'deleted'),
+            array('unit' => $sModule, 'action' => 'medias_added')
         ));
 
         return $aResult;
@@ -289,73 +287,91 @@ class BxAlbumsModule extends BxBaseModTextModule
 
     public function serviceGetTimelineMedia($aEvent, $aBrowseParams = array())
     {
-        $iMediaId = (int)$aEvent['object_id'];
-        $aMediaInfo = $this->_oDb->getMediaInfoById($iMediaId);
-        if(empty($aMediaInfo) || !is_array($aMediaInfo))
+        if(empty($aEvent['content']))
+            return '';
+
+        $aEvent['content'] = unserialize($aEvent['content']);
+        if(empty($aEvent['content']['medias_added']) || !is_array($aEvent['content']['medias_added']))
+            return '';
+
+        $iContentId = (int)$aEvent['object_id'];
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
             return '';
 
         $CNF = &$this->_oConfig->CNF;
         
         //--- Views
-        $oViews = isset($CNF['OBJECT_VIEWS_MEDIA']) ? BxDolView::getObjectInstance($CNF['OBJECT_VIEWS_MEDIA'], $iMediaId) : null;
+        $oViews = isset($CNF['OBJECT_VIEWS']) ? BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $iContentId) : null;
 
         $aViews = array();
         if ($oViews && $oViews->isEnabled())
             $aViews = array(
-                'system' => $CNF['OBJECT_VIEWS_MEDIA'],
-                'object_id' => $iMediaId,
-                'count' => $aMediaInfo['views']
+                'system' => $CNF['OBJECT_VIEWS'],
+                'object_id' => $iContentId,
+                'count' => $aContentInfo['views']
             );
 
         //--- Votes
-        $oVotes = isset($CNF['OBJECT_VOTES_MEDIA']) ? BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_MEDIA'], $iMediaId) : null;
+        $oVotes = isset($CNF['OBJECT_VOTES']) ? BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $iContentId) : null;
 
         $aVotes = array();
         if ($oVotes && $oVotes->isEnabled())
             $aVotes = array(
-                'system' => $CNF['OBJECT_VOTES_MEDIA'],
-                'object_id' => $iMediaId,
-                'count' => $aMediaInfo['votes']
+                'system' => $CNF['OBJECT_VOTES'],
+                'object_id' => $iContentId,
+                'count' => $aContentInfo['votes']
             );
 
         //--- Scores
-        $oScores = isset($CNF['OBJECT_SCORES_MEDIA']) ? BxDolScore::getObjectInstance($CNF['OBJECT_SCORES_MEDIA'], $iMediaId) : null;
+        $oScores = isset($CNF['OBJECT_SCORES']) ? BxDolScore::getObjectInstance($CNF['OBJECT_SCORES'], $iContentId) : null;
 
         $aScores = array();
         if ($oScores && $oScores->isEnabled())
             $aScores = array(
-                'system' => $CNF['OBJECT_SCORES_MEDIA'],
-                'object_id' => $iMediaId,
-                'score' => $aMediaInfo['score']
+                'system' => $CNF['OBJECT_SCORES'],
+                'object_id' => $iContentId,
+                'score' => $aContentInfo['score']
+            );
+
+        //--- Reports
+        $oReports = isset($CNF['OBJECT_REPORTS']) ? BxDolReport::getObjectInstance($CNF['OBJECT_REPORTS'], $aEvent['object_id']) : null;
+
+        $aReports = array();
+        if ($oReports && $oReports->isEnabled())
+            $aReports = array(
+                'system' => $CNF['OBJECT_REPORTS'],
+                'object_id' => $iContentId,
+                'count' => $aContentInfo['reports']
             );
 
         //--- Comments
-        $oCmts = isset($CNF['OBJECT_COMMENTS_MEDIA']) ? BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS_MEDIA'], $iMediaId) : null;
+        $oCmts = isset($CNF['OBJECT_COMMENTS']) ? BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $iContentId) : null;
 
         $aComments = array();
         if($oCmts && $oCmts->isEnabled())
             $aComments = array(
-                'system' => $CNF['OBJECT_COMMENTS_MEDIA'],
-                'object_id' => $iMediaId,
-                'count' => $aMediaInfo['comments']
+                'system' => $CNF['OBJECT_COMMENTS'],
+                'object_id' => $iContentId,
+                'count' => $aContentInfo['comments']
             );
 
         //--- Title & Description
-        $sTitle = !empty($aMediaInfo['title']) ? $aMediaInfo['title'] : '';
+        $sTitle = isset($CNF['FIELD_TITLE']) && isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : (isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]) ? strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...') : '');
 
         return array(
-            'owner_id' => $aMediaInfo['author'],
+            'owner_id' => $aContentInfo['author'],
             'icon' => !empty($CNF['ICON']) ? $CNF['ICON'] : '',
-            'sample' => isset($CNF['T']['txt_media_single_with_article']) ? $CNF['T']['txt_media_single_with_article'] : $CNF['T']['txt_media_single'],
-            'sample_wo_article' => $CNF['T']['txt_media_single'],
-    	    'sample_action' => isset($CNF['T']['txt_sample_action']) ? $CNF['T']['txt_sample_action'] : '',
-            'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $iMediaId),
-            'content' => $this->_getContentForTimelineMedia($aEvent, $aMediaInfo, $aBrowseParams), //a string to display or array to parse default template before displaying.
-            'date' => $aMediaInfo['data'],
+            'sample' => isset($CNF['T']['txt_sample_single_with_article']) ? $CNF['T']['txt_sample_single_with_article'] : $CNF['T']['txt_sample_single'],
+            'sample_wo_article' => $CNF['T']['txt_sample_single'],
+    	    'sample_action' => $CNF['T']['txt_sample_action_changed'],
+            'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId),
+            'content' => $this->_getContentForTimelineMedia($aEvent, $aContentInfo, $aBrowseParams), //a string to display or array to parse default template before displaying.
+            'date' => $aContentInfo[$CNF['FIELD_ADDED']],
             'views' => $aViews,
             'votes' => $aVotes,
             'scores' => $aScores,
-            'reports' => '',
+            'reports' => $aReports,
             'comments' => $aComments,
             'title' => $sTitle, //may be empty.
             'description' => '' //may be empty.
@@ -549,21 +565,22 @@ class BxAlbumsModule extends BxBaseModTextModule
         return $aOutput;
     }
 
-    protected function _getContentForTimelineMedia($aEvent, $aMediaInfo, $aBrowseParams = array())
+    protected function _getContentForTimelineMedia($aEvent, $aContentInfo, $aBrowseParams = array())
     {
     	$CNF = &$this->_oConfig->CNF;
 
-    	$sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $aMediaInfo['id']);
+        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+        $sTitle = isset($CNF['FIELD_TITLE']) && isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : (isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]) ? strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...') : '');
 
     	//--- Image(s)
-        $aImages = $this->_getImagesForTimelineMedia($aEvent, $aMediaInfo, $sUrl, $aBrowseParams);
+        $aImages = $this->_getImagesForTimelineMedia($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
 
     	return array(
-            'sample' => isset($CNF['T']['txt_media_single_with_article']) ? $CNF['T']['txt_media_single_with_article'] : $CNF['T']['txt_media_single'],
-            'sample_wo_article' => $CNF['T']['txt_media_single'],
-            'sample_action' => isset($CNF['T']['txt_sample_action']) ? $CNF['T']['txt_sample_action'] : '',
+            'sample' => isset($CNF['T']['txt_sample_single_with_article']) ? $CNF['T']['txt_sample_single_with_article'] : $CNF['T']['txt_sample_single'],
+            'sample_wo_article' => $CNF['T']['txt_sample_single'],
+            'sample_action' => isset($CNF['T']['txt_sample_action_changed']),
             'url' => $sUrl,
-            'title' => isset($aMediaInfo['title']) ? $aMediaInfo['title'] : '',
+            'title' => $sTitle,
             'text' => '',
             'images' => $aImages,
             'videos' => array()
@@ -572,17 +589,31 @@ class BxAlbumsModule extends BxBaseModTextModule
 
     protected function _getImagesForTimelineMedia($aEvent, $aMediaInfo, $sUrl, $aBrowseParams = array())
     {
-        $sImage = $this->_oConfig->getImageUrl($aMediaInfo['file_id'], array('OBJECT_TRANSCODER_BROWSE'));
-        if(empty($sImage))
-            return array();
+        $CNF = &$this->_oConfig->CNF;
 
-        $sImageOrig = $this->_oConfig->getImageUrl($aMediaInfo['file_id'], array('OBJECT_IMAGES_TRANSCODER_BIG'));
-        if(empty($sImageOrig))
-            $sImageOrig = $sImage;
+        $aImages = array();
 
-        return array(
-            array('url' => $sUrl, 'src' => $sImage, 'src_orig' => $sImageOrig),
-        );
+        foreach($aEvent['content']['medias_added'] as $iMediaId) {
+            $aMediaInfo = $this->_oDb->getMediaInfoById($iMediaId);
+            if(empty($aMediaInfo) || !is_array($aMediaInfo))
+                continue;
+
+            $sImage = $this->_oConfig->getImageUrl($aMediaInfo['file_id'], array('OBJECT_TRANSCODER_BROWSE'));
+            if(empty($sImage))
+                continue;
+
+            $sImageOrig = $this->_oConfig->getImageUrl($aMediaInfo['file_id'], array('OBJECT_IMAGES_TRANSCODER_BIG'));
+            if(empty($sImageOrig))
+                $sImageOrig = $sImage;
+
+            $aImages[] = array(
+                'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $aMediaInfo['id']), 
+                'src' => $sImage, 
+                'src_orig' => $sImageOrig
+            );
+        }
+
+        return $aImages;
     }
 }
 
