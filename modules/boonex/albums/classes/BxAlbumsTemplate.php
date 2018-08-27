@@ -326,12 +326,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
         if (!($aAlbumInfo = $oModule->_oDb->getContentInfoById($aMediaInfo['content_id'])))
             return '';
 
-        return $this->entryAuthor ($aMediaInfo, $aAlbumInfo[$CNF['FIELD_AUTHOR']], 'getMediaDesc');
-    }
-
-    function getMediaDesc ($aData)
-    {
-        return _t('_sys_txt_n_by', bx_time_js($aData['added'], BX_FORMAT_DATE));
+        return $this->entryAuthor ($aMediaInfo, $aAlbumInfo[$CNF['FIELD_AUTHOR']]);
     }
 
     function getMediaTitle ($aMediaInfo)
