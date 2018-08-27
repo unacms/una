@@ -34,6 +34,10 @@
 	<string name="_bx_forum_form_entry_input_sys_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_forum_form_entry_input_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_forum_form_entry_input_picture_use_as_thumb"><![CDATA[Изображение обложки]]></string>
+    <string name="_bx_forum_form_entry_input_sys_date_added"><![CDATA[Дата создания]]></string>
+    <string name="_bx_forum_form_entry_input_date_added"><![CDATA[Дата создания]]></string>
+    <string name="_bx_forum_form_entry_input_sys_date_changed"><![CDATA[Дата изменения]]></string>
+    <string name="_bx_forum_form_entry_input_date_changed"><![CDATA[Дата изменения]]></string>
     <string name="_bx_forum_form_entry_input_sys_title"><![CDATA[Тема]]></string>
     <string name="_bx_forum_form_entry_input_title"><![CDATA[Тема]]></string>
     <string name="_bx_forum_form_entry_input_title_err"><![CDATA[Необходимо указать тему]]></string>

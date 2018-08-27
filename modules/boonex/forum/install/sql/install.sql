@@ -236,6 +236,8 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 (@sName, @sName, 'attachments', 'a:1:{i:0;s:14:"bx_forum_html5";}', 'a:2:{s:15:"bx_forum_simple";s:26:"_sys_uploader_simple_title";s:14:"bx_forum_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_forum_form_entry_input_sys_attachments', '_bx_forum_form_entry_input_attachments', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 (@sName, @sName, 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 (@sName, @sName, 'anonymous', '', '', 0, 'switcher', '_sys_form_input_sys_anonymous', '_sys_form_input_anonymous', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+(@sName, @sName, 'added', '', '', 0, 'datetime', '_bx_forum_form_entry_input_sys_date_added', '_bx_forum_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+(@sName, @sName, 'changed', '', '', 0, 'datetime', '_bx_forum_form_entry_input_sys_date_changed', '_bx_forum_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 
 ('bx_forum_search', @sName, 'author', '', '', 0, 'custom', '_bx_forum_form_search_input_sys_author', '_bx_forum_form_search_input_author', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_forum_search', @sName, 'category', '', '#!bx_forum_cats', 0, 'select', '_bx_forum_form_search_input_sys_category', '_bx_forum_form_search_input_category', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
