@@ -145,7 +145,7 @@ class BxDolCmtsQuery extends BxDolDb
                     if (count($aSortFields) == 0)
                         array_push($aSortFields, '`' . $this->_sTable . '`.`id`');
                     
-                    $sOrder = " ORDER BY " . implode(',', $aSortFields) . " " . $aOrder['way'];
+                    $sOrder = " ORDER BY " . implode($aOrder['way'] . ', ', $aSortFields) . " " . $aOrder['way'];
                     break;
             }
         }
