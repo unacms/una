@@ -33,7 +33,7 @@ class BxBaseMenuCustom extends BxTemplMenu
         $this->_sTmplNameCustomItemMorePopup = 'menu_custom_item_more_popup.html';
 
         $this->_bMoreAuto = false;
-        $this->_sJsObjectMoreAuto = 'oMenuMoreAuto';
+        $this->_sJsObjectMoreAuto = 'oMenuMoreAuto' . bx_gen_method_name($this->_sObject);
 
         $sPrefix = str_replace('_', '-', $this->_sObject);
         $this->_aHtmlIds = array(

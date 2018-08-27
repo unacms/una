@@ -24,6 +24,10 @@ function BxDolMenuMoreAuto(options)
         $(window).on('resize', function() {
            $this.update();
         });
+
+        $($this._sClassItem).on('resize', function() {
+            $this.update(true);
+        });
     });
 }
 
@@ -53,7 +57,7 @@ BxDolMenuMoreAuto.prototype.init = function() {
     });
 };
 
-BxDolMenuMoreAuto.prototype.update = function()
+BxDolMenuMoreAuto.prototype.update = function(bForceCalculate)
 {
     var $this = this;
 
@@ -64,7 +68,7 @@ BxDolMenuMoreAuto.prototype.update = function()
 
         var iMenu = 0;
         oMenu.children($this._sClassItem + ':visible').each(function() {
-            iMenu += $this._getWidth($(this));
+            iMenu += $this._getWidth($(this), bForceCalculate);
         });
 
         var iParent = oMenu.parent().width();
@@ -143,10 +147,10 @@ BxDolMenuMoreAuto.prototype._moveFromSubmenu = function(oMenu, oItemMore, oItemM
         oItemMore.hide();
 };
 
-BxDolMenuMoreAuto.prototype._getWidth = function(oItem)
+BxDolMenuMoreAuto.prototype._getWidth = function(oItem, bForceCalculate)
 {
     var iItem = parseInt(oItem.attr(this._sKeyWidth));
-    if(iItem)
+    if(!bForceCalculate && iItem)
         return iItem;
 
     iItem = oItem.outerWidth(true);
