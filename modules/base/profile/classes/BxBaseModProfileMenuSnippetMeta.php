@@ -183,6 +183,17 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
 
         return !empty($sAction) && !empty($aResult[$sAction]) ? $aResult[$sAction] : $aResult;
     }
+
+    protected function _getMenuItemMembership($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!$this->_bContentPublic || !$this->_oContentProfile)
+            return false;
+
+        $aMembership = BxDolAcl::getInstance()->getMemberMembershipInfo($this->_oContentProfile->id());
+        return $aMembership ? $this->_oTemplate->getUnitMetaItemText(_t($aMembership['name'])) : false;
+    }
 }
 
 /** @} */
