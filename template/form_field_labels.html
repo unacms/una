@@ -9,7 +9,7 @@
 <script>
     var fCallack = function () {
         // adding label
-        if ($(this).parent('.bx-form-input-autotoken-labels-sel').length) {
+        if ($(this).parents('.bx-form-input-autotoken-labels-sel').length) {
             var e = $(this).remove().on('click', fCallack);
             e.append('<input type="hidden" name="__name__[]" value="' + e.text() + '">');
             $("#__id__").append(e);
