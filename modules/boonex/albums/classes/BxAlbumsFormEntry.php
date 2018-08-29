@@ -22,6 +22,9 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
 
     public function processFiles ($sFieldFile, $iContentId = 0, $isAssociateWithContent = false)
     {
+        if ($isAssociateWithContent)
+            return parent::processFiles ($sFieldFile, $iContentId, $isAssociateWithContent);
+
         $aMediasOld = $this->_oModule->_oDb->getMediaListByContentId($iContentId);                
         
         if ($b = parent::processFiles ($sFieldFile, $iContentId, $isAssociateWithContent)) {
