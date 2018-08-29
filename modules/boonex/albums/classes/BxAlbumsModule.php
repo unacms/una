@@ -602,14 +602,9 @@ class BxAlbumsModule extends BxBaseModTextModule
             if(empty($sImage))
                 continue;
 
-            $sImageOrig = $this->_oConfig->getImageUrl($aMediaInfo['file_id'], array('OBJECT_IMAGES_TRANSCODER_BIG'));
-            if(empty($sImageOrig))
-                $sImageOrig = $sImage;
-
             $aImages[] = array(
                 'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $aMediaInfo['id']), 
-                'src' => $sImage, 
-                'src_orig' => $sImageOrig
+                'src' => $sImage
             );
         }
 
