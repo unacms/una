@@ -7,7 +7,6 @@
 	<string name="_bx_channels_option_per_page_browse"><![CDATA[Number of items per page]]></string>
 	<string name="_bx_channels_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
 	<string name="_bx_channels_option_searchable_fields"><![CDATA[Searchable fields]]></string>
-	<string name="_bx_channels_option_labels_autofollow"><![CDATA[Auto-follow channels when used as labels in profiles]]></string>
 	
 	<string name="_bx_channels_form_profile"><![CDATA[Channels]]></string>
 	<string name="_bx_channels_form_profile_display_add"><![CDATA[Add Channel]]></string>
@@ -24,7 +23,7 @@
 	<string name="_bx_channels_form_profile_input_allow_view_to_desc"><![CDATA[Closed - anyone can find the channel and see who's in it, only members can see posts. Secret - only members can find the channel and see posts.]]></string>
 	<string name="_bx_channels_form_profile_input_sys_initial_members"><![CDATA[Invite Members]]></string>
 	<string name="_bx_channels_form_profile_input_initial_members"><![CDATA[Invite Members]]></string>
-  <string name="_bx_channels_form_profile_input_sys_channel_name"><![CDATA[Channel Name]]></string>
+  	<string name="_bx_channels_form_profile_input_sys_channel_name"><![CDATA[Channel Name]]></string>
 	<string name="_bx_channels_form_profile_input_channel_name"><![CDATA[Channel Name]]></string>
 	<string name="_bx_channels_form_profile_input_channel_name_err"><![CDATA[This information is essential. Please, fill in this field.]]></string>
 	<string name="_bx_channels_form_profile_input_sys_picture"><![CDATA[Channel Picture]]></string>
@@ -73,8 +72,6 @@
 	<string name="_bx_channels_page_title_manage"><![CDATA[Manage Channels]]></string>
 	<string name="_bx_channels_page_title_sys_top"><![CDATA[Top Channels]]></string>
 	<string name="_bx_channels_page_title_top"><![CDATA[Top Channels]]></string>
-	<string name="_bx_channels_page_title_sys_invite_to_channel"><![CDATA[Invite Members to the Channel]]></string>
-	<string name="_bx_channels_page_title_invite_to_channel"><![CDATA[Invite Members to the Channel]]></string>
 	<string name="_bx_channels_page_title_sys_entries_search"><![CDATA[Search]]></string>
 	<string name="_bx_channels_page_title_entries_search"><![CDATA[Search]]></string>
   <string name="_bx_channels_page_title_sys_entries_my"><![CDATA[My Channels]]></string>
@@ -110,7 +107,6 @@
         <string name="_bx_channels_page_block_title_entry_all_actions"><![CDATA[All Actions]]></string>
 	<string name="_bx_channels_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
 	<string name="_bx_channels_page_block_title_categories"><![CDATA[Channels Categories]]></string>
-	<string name="_bx_channels_page_block_title_invite_to_channel"><![CDATA[Invite Members to the Channel]]></string>
 	<string name="_bx_channels_page_block_title_search_form"><![CDATA[Search Form]]></string>
   <string name="_bx_channels_page_block_title_entries_my"><![CDATA[My Channels]]></string>  
   <string name="_bx_channels_page_block_title_search_results"><![CDATA[Search Results]]></string>
@@ -179,8 +175,6 @@
 	<string name="_bx_channels_menu_item_title_more_actions"><![CDATA[]]></string>
 	<string name="_bx_channels_menu_item_title_system_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_channels_menu_item_title_friends"><![CDATA[Friends]]></string>
-	<string name="_bx_channels_menu_item_title_system_friend_requests"><![CDATA[Friend requests number]]></string>
-	<string name="_bx_channels_menu_item_title_friend_requests"><![CDATA[{addon} friend requests]]></string>
 	<string name="_bx_channels_menu_item_title_system_manage_my_channels"><![CDATA[My channels]]></string>
 	<string name="_bx_channels_menu_item_title_manage_my_channels"><![CDATA[{addon} channels]]></string>
 	<string name="_bx_channels_menu_item_title_system_entries_recent"><![CDATA[New]]></string>
@@ -220,15 +214,12 @@
 	<string name="_bx_channels_search_extended"><![CDATA[Channels Search]]></string>
 	<string name="_bx_channels_search_extended_cmts"><![CDATA[Channels Comments Search]]></string>
 
-  <string name="_bx_channels_err_delete_child_presend"><![CDATA[Cannot delete this channel because there are child elements.]]></string>
 	<string name="_bx_channels_txt_account_pending"><![CDATA[This channel is pending approval, please wait until it is activated.]]></string>
 	<string name="_bx_channels_txt_account_suspended"><![CDATA[This channel is suspended.]]></string>
 	<string name="_bx_channels_txt_sample_single"><![CDATA[channel]]></string>
 	<string name="_bx_channels_txt_sample_single_with_article"><![CDATA[a channel]]></string>
 	<string name="_bx_channels_txt_sample_comment_single"><![CDATA[comment to channel]]></string>
 	<string name="_bx_channels_txt_sample_vote_single"><![CDATA[vote to channel]]></string>
-	<string name="_bx_channels_txt_to_admins"><![CDATA[To Admins]]></string>
-	<string name="_bx_channels_txt_from_admins"><![CDATA[From Admins]]></string>
 
   <string name="_bx_channels_txt_ntfs_timeline_post_common"><![CDATA[New post <b class="bx-ntfs-content-entry">{subentry_sample}</b> in <b class="bx-ntfs-content-profile">{owner_name}</b> channel timeline]]></string>
   <string name="_bx_channels_ntfs_txt_subobject_added"><![CDATA[<b class="bx-ntfs-content-entry">{entry_caption}</b> was added to channel <b class="bx-ntfs-content-profile">{owner_name}</b>]]></string>

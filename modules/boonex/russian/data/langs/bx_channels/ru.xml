@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
-
 	<string name="_bx_channels"><![CDATA[Каналы]]></string>
 	<string name="_bx_channels_cmts"><![CDATA[Каналы - Комментарии]]></string>
 
@@ -19,24 +18,15 @@
     <string name="_bx_channels_form_profile_display_invite"><![CDATA[Приглашение в канал]]></string>
     <string name="_bx_channels_form_entry_input_author"><![CDATA[Автор]]></string>
 	<string name="_bx_channels_form_profile_input_sys_do_submit"><![CDATA[Выполнить]]></string>
-    <string name="_bx_channels_form_profile_input_sys_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
-    <string name="_bx_channels_form_profile_input_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
     <string name="_bx_channels_form_profile_input_sys_allow_view_to"><![CDATA[Конфиденциальность]]></string>
     <string name="_bx_channels_form_profile_input_allow_view_to"><![CDATA[Конфиденциальность]]></string>
     <string name="_bx_channels_form_profile_input_allow_view_to_desc"><![CDATA[Закрытый - все могут найти канал и видеть кто в ней состоит, только участники могут видеть сообщения. Секретный - только участники могут найти канал и видеть сообщения.]]></string>
     <string name="_bx_channels_form_profile_input_sys_initial_members"><![CDATA[Пригласить участников]]></string>
-	<string name="_bx_channels_form_profile_input_sys_parent_space"><![CDATA[Родительский канал]]></string>
-  	<string name="_bx_channels_form_profile_input_parent_space"><![CDATA[Родительский канал]]></string>
-    <string name="_bx_channels_form_profile_input_initial_members"><![CDATA[Пригласить участников]]></string>
-    <string name="_bx_channels_form_profile_input_sys_group_name"><![CDATA[Название канала]]></string>
-    <string name="_bx_channels_form_profile_input_group_name"><![CDATA[Название канала]]></string>
-    <string name="_bx_channels_form_profile_input_group_name_err"><![CDATA[Эта информация необходима. Пожалуйста, заполните это поле.]]></string>
-    <string name="_bx_channels_form_profile_input_sys_group_desc"><![CDATA[Описание]]></string>
-    <string name="_bx_channels_form_profile_input_group_desc"><![CDATA[Описание]]></string>
-    <string name="_bx_channels_form_profile_input_sys_group_cat"><![CDATA[Категория]]></string>
-	<string name="_bx_channels_form_profile_input_group_cat"><![CDATA[Категория]]></string>
-    <string name="_bx_channels_form_profile_input_group_cat_err"><![CDATA[Поле категории необходимо]]></string>
-	<string name="_bx_channels_form_profile_input_sys_picture"><![CDATA[Картинка канала]]></string>
+	<string name="_bx_channels_form_profile_input_initial_members"><![CDATA[Пригласить участников]]></string>
+	<string name="_bx_channels_form_profile_input_sys_channel_name"><![CDATA[Название канала]]></string>
+	<string name="_bx_channels_form_profile_input_channel_name"><![CDATA[Название канала]]></string>
+	<string name="_bx_channels_form_profile_input_channel_name_err"><![CDATA[Эта информация необходима. Пожалуйста, заполните это поле.]]></string>
+    <string name="_bx_channels_form_profile_input_sys_picture"><![CDATA[Картинка канала]]></string>
 	<string name="_bx_channels_form_profile_input_picture"><![CDATA[Загрузить новую картинку канала]]></string>
 	<string name="_bx_channels_form_profile_input_picture_err"><![CDATA[Необходима картинка канала.]]></string>
 	<string name="_bx_channels_form_profile_input_sys_cover"><![CDATA[Картинка обложки]]></string>
@@ -51,8 +41,6 @@
 	<string name="_bx_channels_acl_action_view_profile"><![CDATA[Просмотреть канал]]></string>
 	<string name="_bx_channels_acl_action_edit_any_profile"><![CDATA[Редактировать любой канал]]></string>
 
-	<string name="_bx_channels_page_title_sys_joined_entries"><![CDATA[Каналы профиля]]></string>
-	<string name="_bx_channels_page_title_joined_entries"><![CDATA[Каналы профиля]]></string>
 	<string name="_bx_channels_page_title_sys_create_profile"><![CDATA[Создать канал]]></string>
 	<string name="_bx_channels_page_title_create_profile"><![CDATA[Создать канал]]></string>
 	<string name="_bx_channels_page_title_sys_edit_profile"><![CDATA[Редактировать канал]]></string>
@@ -73,8 +61,6 @@
 	<string name="_bx_channels_page_title_browse_connections_mutual"><![CDATA[{0} и {1} обоюдных связей]]></string>
 	<string name="_bx_channels_page_title_sys_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_channels_page_title_profile_friends"><![CDATA[Друзья]]></string>
-	<string name="_bx_channels_page_title_sys_group_fans"><![CDATA[Участники]]></string>
-	<string name="_bx_channels_page_title_group_fans"><![CDATA[Участники]]></string>
 	<string name="_bx_channels_page_title_sys_profile_comments"><![CDATA[Комментарии]]></string>
     <string name="_bx_channels_page_title_profile_comments"><![CDATA[Комментарии]]></string>
 	<string name="_bx_channels_page_title_sys_profile_info"><![CDATA[Инфо каналы]]></string>
@@ -86,10 +72,10 @@
 	<string name="_bx_channels_page_title_manage"><![CDATA[Управление]]></string>
 	<string name="_bx_channels_page_title_sys_top"><![CDATA[Популярные каналы]]></string>
     <string name="_bx_channels_page_title_top"><![CDATA[Популярные каналы]]></string>
-    <string name="_bx_channels_page_title_sys_invite_to_group"><![CDATA[Пригласить участников в канал]]></string>
-    <string name="_bx_channels_page_title_invite_to_group"><![CDATA[Пригласить участников в канал]]></string>
     <string name="_bx_channels_page_title_sys_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_channels_page_title_entries_search"><![CDATA[Поиск]]></string>
+	<string name="_bx_channels_page_title_sys_entries_my"><![CDATA[Мои каналы]]></string>
+	<string name="_bx_channels_page_title_entries_my"><![CDATA[Мои каналы]]></string>
 
     <string name="_bx_channels_page_block_title_sys_entries_actions"><![CDATA[Каналы - Действия]]></string>
     <string name="_bx_channels_page_block_title_entries_actions"><![CDATA[Каналы - Действия]]></string>
@@ -97,8 +83,6 @@
     <string name="_bx_channels_page_block_title_entries_of_author"><![CDATA[{display_name} - каналы]]></string>
 	<string name="_bx_channels_page_block_title_favorites_of_author"><![CDATA[Избранные каналы]]></string>   
     <string name="_bx_channels_page_block_title_sys_favorites_of_author"><![CDATA[Избранные каналы]]></string>
-	<string name="_bx_channels_page_block_title_sys_joined_entries"><![CDATA[Участие в каналах]]></string>
-	<string name="_bx_channels_page_block_title_joined_entries"><![CDATA[Участие в каналах]]></string>
 	<string name="_bx_channels_page_block_title_create_profile"><![CDATA[Создать канал]]></string>
 	<string name="_bx_channels_page_block_title_edit_profile"><![CDATA[Редактировать канал]]></string>
 	<string name="_bx_channels_page_block_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
@@ -111,9 +95,6 @@
 	<string name="_bx_channels_page_block_title_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_channels_page_block_title_system_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_channels_page_block_title_admins"><![CDATA[Администраторы]]></string>
-	<string name="_bx_channels_page_block_title_fans_link"><![CDATA[Участники канала: <a href="{profile_link}">{display_name}</a>]]></string>
-	<string name="_bx_channels_page_block_title_fans"><![CDATA[Участники]]></string>
-	<string name="_bx_channels_page_block_title_system_fans"><![CDATA[Участники]]></string>
 	<string name="_bx_channels_page_block_title_profile_comments"><![CDATA[Комментарии]]></string>
     <string name="_bx_channels_page_block_title_profile_comments_link"><![CDATA[Комментарии к <a href="{entry_link}">{title}</a>]]></string>
 	<string name="_bx_channels_page_block_title_profile_actions"><![CDATA[Действия]]></string>
@@ -123,11 +104,13 @@
 	<string name="_bx_channels_page_block_title_system_manage_administration"><![CDATA[Управление всеми каналами]]></string>
 	<string name="_bx_channels_page_block_title_manage"><![CDATA[Управление]]></string>
     <string name="_bx_channels_page_block_title_top_profiles"><![CDATA[Популярные каналы]]></string>
+	<string name="_bx_channels_page_block_title_entry_all_actions"><![CDATA[Все действия]]></string>
     <string name="_bx_channels_page_block_title_entry_social_sharing"><![CDATA[Поделиться]]></string>
     <string name="_bx_channels_page_block_title_categories"><![CDATA[Категории каналов]]></string>
-    <string name="_bx_channels_page_block_title_invite_to_group"><![CDATA[Пригласить участников в канал]]></string>
     <string name="_bx_channels_page_block_title_search_form"><![CDATA[Форма поиска]]></string>
+	<string name="_bx_channels_page_block_title_entries_my"><![CDATA[Мои каналы]]></string>  
     <string name="_bx_channels_page_block_title_search_results"><![CDATA[Результаты поиска]]></string>
+	<string name="_bx_channels_page_block_title_search_results_by_hashtag"><![CDATA[Результаты поиска по хештегу]]></string>
     <string name="_bx_channels_page_block_title_search_form_cmts"><![CDATA[Форма поиска комментариев]]></string>
     <string name="_bx_channels_page_block_title_search_results_cmts"><![CDATA[Результаты поиска комментариев]]></string>
     <string name="_bx_channels_page_block_title_sys_featured_entries_view_showcase"><![CDATA[Продвинутые каналы]]></string>
@@ -165,10 +148,6 @@
     <string name="_bx_channels_menu_item_title_create_profile"><![CDATA[Канал]]></string>
     <string name="_bx_channels_menu_item_title_system_view_profile_friends"><![CDATA[Друзья]]></string>
     <string name="_bx_channels_menu_item_title_view_profile_friends"><![CDATA[Друзья]]></string>
-    <string name="_bx_channels_menu_item_title_system_view_joined_groups"><![CDATA[Каналы]]></string>
-    <string name="_bx_channels_menu_item_title_view_joined_groups"><![CDATA[Каналы]]></string>
-    <string name="_bx_channels_menu_item_title_system_view_fans"><![CDATA[Участники]]></string>
-    <string name="_bx_channels_menu_item_title_view_fans"><![CDATA[Участники]]></string>
     <string name="_bx_channels_menu_item_title_system_view_profile_comments"><![CDATA[Комментарии]]></string>
     <string name="_bx_channels_menu_item_title_view_profile_comments"><![CDATA[Комментарии]]></string>
     <string name="_bx_channels_menu_item_title_system_view_profile_info"><![CDATA[Инфо]]></string>
@@ -187,15 +166,6 @@
     <string name="_bx_channels_menu_item_title_unfriend_cancel_request"><![CDATA[Отменить запрос о дружбе]]></string>
     <string name="_bx_channels_menu_item_title_unfriend_reject_request"><![CDATA[Отвергнуть запрос о дружбе]]></string>
 
-    <string name="_bx_channels_menu_item_title_system_become_fan"><![CDATA[Присоединиться]]></string>
-    <string name="_bx_channels_menu_item_title_become_fan"><![CDATA[Присоединиться]]></string>
-    <string name="_bx_channels_menu_item_title_become_fan_sent"><![CDATA[Присоединение запрошено]]></string>
-    <string name="_bx_channels_menu_item_title_become_fan_confirm"><![CDATA[Одобрить присоединение]]></string>
-    <string name="_bx_channels_menu_item_title_system_leave_group"><![CDATA[Покинуть канал]]></string>
-    <string name="_bx_channels_menu_item_title_leave_group"><![CDATA[Покинуть канал]]></string>
-    <string name="_bx_channels_menu_item_title_leave_group_cancel_request"><![CDATA[Отменить присоединение]]></string>
-    <string name="_bx_channels_menu_item_title_leave_group_reject_request"><![CDATA[Отвергнуть присоединение]]></string>
-
     <string name="_bx_channels_menu_item_title_system_subscribe"><![CDATA[Получать уведомления]]></string>
     <string name="_bx_channels_menu_item_title_subscribe"><![CDATA[Получать уведомления]]></string>
     <string name="_bx_channels_menu_item_title_system_unsubscribe"><![CDATA[Отключить уведомления]]></string>
@@ -204,19 +174,21 @@
     <string name="_bx_channels_menu_item_title_more_actions"><![CDATA[]]></string>
     <string name="_bx_channels_menu_item_title_system_friends"><![CDATA[Друзья]]></string>
     <string name="_bx_channels_menu_item_title_friends"><![CDATA[Друзья]]></string>
-    <string name="_bx_channels_menu_item_title_system_manage_my_groups"><![CDATA[Мои каналы]]></string>
-    <string name="_bx_channels_menu_item_title_manage_my_groups"><![CDATA[Каналы]]></string>
+	<string name="_bx_channels_menu_item_title_system_manage_my_channels"><![CDATA[Мои каналы]]></string>
+	<string name="_bx_channels_menu_item_title_manage_my_channels"><![CDATA[{addon} каналы]]></string>
     <string name="_bx_channels_menu_item_title_system_entries_recent"><![CDATA[Новые]]></string>
     <string name="_bx_channels_menu_item_title_entries_recent"><![CDATA[Новые]]></string>
     <string name="_bx_channels_menu_item_title_system_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_channels_menu_item_title_entries_search"><![CDATA[Поиск]]></string>
+	<string name="_bx_channels_menu_item_title_system_entries_my"><![CDATA[Мои каналы]]></string>
+	<string name="_bx_channels_menu_item_title_entries_my"><![CDATA[Мои каналы]]></string>
     <string name="_bx_channels_menu_item_title_system_entries_manage"><![CDATA[Управление]]></string>
     <string name="_bx_channels_menu_item_title_entries_manage"><![CDATA[Управление]]></string>
     <string name="_bx_channels_menu_item_title_system_entries_home"><![CDATA[Каналы]]></string>
     <string name="_bx_channels_menu_item_title_entries_home"><![CDATA[Каналы]]></string>
-    <string name="_bx_channels_menu_item_title_system_admt_groups"><![CDATA[Каналы]]></string>
-	<string name="_bx_channels_menu_item_title_admt_groups"><![CDATA[Каналы - {addon} неодобрено]]></string>
-	<string name="_bx_channels_menu_item_title_manage_my"><![CDATA[Мои каналы]]></string>
+	<string name="_bx_channels_menu_item_title_system_admt_channels"><![CDATA[Каналы]]></string>
+	<string name="_bx_channels_menu_item_title_admt_channels"><![CDATA[Каналы - {addon} неодобрено]]></string>
+    <string name="_bx_channels_menu_item_title_manage_my"><![CDATA[Мои каналы]]></string>
 	<string name="_bx_channels_menu_item_title_manage_all"><![CDATA[Все каналы]]></string>
 	<string name="_bx_channels_menu_item_title_system_entries_top"><![CDATA[Популярные]]></string>
 	<string name="_bx_channels_menu_item_title_entries_top"><![CDATA[Популярные]]></string>
@@ -243,69 +215,11 @@
 
     <string name="_bx_channels_txt_account_pending"><![CDATA[Эта канал ожидает одобрения. Пожалуйста, дождитесь ее активации.]]></string>
     <string name="_bx_channels_txt_account_suspended"><![CDATA[Эта канал заблокирован.]]></string>
-    <string name="_bx_channels_txt_N_fans"><![CDATA[{0} участников]]></string>
     <string name="_bx_channels_txt_sample_single"><![CDATA[канал]]></string>
     <string name="_bx_channels_txt_sample_single_with_article"><![CDATA[Канал]]></string>
     <string name="_bx_channels_txt_sample_comment_single"><![CDATA[комментарий к каналу]]></string>
     <string name="_bx_channels_txt_sample_vote_single"><![CDATA[голос за канал]]></string>
-    <string name="_bx_channels_txt_to_admins"><![CDATA[В админы]]></string>
-    <string name="_bx_channels_txt_from_admins"><![CDATA[Из админов]]></string>
-    <string name="_bx_channels_txt_private_group"><![CDATA[Приватный канал]]></string>
-
-	<string name="_bx_channels_alert_action_fan_added"><![CDATA[присоединение нового участника]]></string>
-    <string name="_bx_channels_txt_ntfs_fan_added"><![CDATA[В канал <b class="bx-ntfs-content-profile">{owner_name}</b> вступил <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
-    <string name="_bx_channels_alert_action_join_request"><![CDATA[запрос на присоединение к каналу]]></string>
-    <string name="_bx_channels_txt_ntfs_join_request"><![CDATA[В канал <b class="bx-ntfs-content-profile">{owner_name}</b> хочет вступить <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
+	
     <string name="_bx_channels_txt_ntfs_timeline_post_common"><![CDATA[В канале <b class="bx-ntfs-content-profile">{owner_name}</b> новая публикация <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
-
-    <string name="_bx_channels_pre_lists_cats"><![CDATA[Категории каналов]]></string>
-    <string name="_bx_channels_cat_General"><![CDATA[Обобщение]]></string>
-    <string name="_bx_channels_cat_Business"><![CDATA[Бизнес]]></string>
-    <string name="_bx_channels_cat_Interests"><![CDATA[Увлечение]]></string>
-    <string name="_bx_channels_cat_Causes"><![CDATA[Движение]]></string>
-    <string name="_bx_channels_cat_Fun"><![CDATA[Юмор]]></string>
-    <string name="_bx_channels_cat_Uncategorised"><![CDATA[Без категории]]></string>
-
-    <string name="_bx_channels_email_join_request"><![CDATA[Запрос на присоединение к каналу]]></string>
-    <string name="_bx_channels_email_join_request_subject"><![CDATA[Запрос на присоединение к каналу]]></string>
-    <string name="_bx_channels_email_join_request_body"><![CDATA[{email_header}
-<p>Получен запрос на присоединение к каналу <a href="{EntryUrl}">{EntryTitle}</a> от <a href="{NewMemberUrl}">{NewMemberDisplayName}</a></p>
-{email_footer}]]></string>
-
-    <string name="_bx_channels_email_join_reject"><![CDATA[Отклонение запроса на присоединение к каналу]]></string>
-    <string name="_bx_channels_email_join_reject_subject"><![CDATA[Ваш запрос на присоединение к каналу был отклонен]]></string>
-    <string name="_bx_channels_email_join_reject_body"><![CDATA[{email_header}
-<p>Ваш запрос на присоединение к каналу <a href="{EntryUrl}">{EntryTitle}</a> был отклонен администратором канала.</p>
-{email_footer}]]></string>
-
-    <string name="_bx_channels_email_join_confirm"><![CDATA[Одобрение запроса на присоединение к каналу]]></string>
-    <string name="_bx_channels_email_join_confirm_subject"><![CDATA[Ваш запрос на присоединение к каналу был одобрен]]></string>
-    <string name="_bx_channels_email_join_confirm_body"><![CDATA[{email_header}
-<p>Ваш запрос на присоединение к каналу <a href="{EntryUrl}">{EntryTitle}</a> был одобрен.</p>
-{email_footer}]]></string>
-
-    <string name="_bx_channels_email_fan_remove"><![CDATA[Удаление из канала]]></string>
-    <string name="_bx_channels_email_fan_remove_subject"><![CDATA[Вы были удалены из канала]]></string>
-    <string name="_bx_channels_email_fan_remove_body">
-      <![CDATA[{email_header}
-<p>Ваш профиль был удален из Каналы <a href="{EntryUrl}">{EntryTitle}</a> администратором канала.</p>
-{email_footer}]]></string>
-
-    <string name="_bx_channels_email_fan_become_admin"><![CDATA[Получение статуса администратора канала]]></string>
-    <string name="_bx_channels_email_fan_become_admin_subject"><![CDATA[Вы стали администратором канала]]></string>
-    <string name="_bx_channels_email_fan_become_admin_body"><![CDATA[{email_header}
-<p>Вы получили статус администратора Каналы <a href="{EntryUrl}">{EntryTitle}</a>.</p>
-{email_footer}]]></string>
-
-    <string name="_bx_channels_email_admin_become_fan"><![CDATA[Лишение статуса администратора канала]]></string>
-    <string name="_bx_channels_email_admin_become_fan_subject"><![CDATA[Вы были лишены статуса администратора канала]]></string>
-    <string name="_bx_channels_email_admin_become_fan_body"><![CDATA[{email_header}
-<p>Вы были лишены статуса администратора Каналы <a href="{EntryUrl}">{EntryTitle}</a></p>
-{email_footer}]]></string>
-
-    <string name="_bx_channels_email_invitation"><![CDATA[Приглашение в канал]]></string>
-    <string name="_bx_channels_email_invitation_subject"><![CDATA[Приглашение в канал "{EntryTitle}"]]></string>
-    <string name="_bx_channels_email_invitation_body"><![CDATA[{email_header}
-<p><a href="{InviterUrl}">{InviterDisplayName}</a> пригласил Вас в канал <a href="{EntryUrl}">{EntryTitle}</a>.</p>
-{email_footer}]]></string>
+	<string name="_bx_channels_ntfs_txt_subobject_added"><![CDATA[В канале <b class="bx-ntfs-content-profile">{owner_name}</b> новая публикация <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
 </resources>
