@@ -32,10 +32,11 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
             $aIdsOld = array_column($aMediasOld, 'id');
             $aIdsNew = array_column($aMediasNew, 'id');
             $aIdsAdded = array_diff($aIdsNew, $aIdsOld);
-
+            
+            $iProfileId = $this->getContentOwnerProfileId($iContentId);
             if (!empty($aIdsAdded))
                 bx_alert($this->_oModule->getName(), 'medias_added', $iContentId, $iProfileId, array(
-                    'object_author_id' => $this->getContentOwnerProfileId($iContentId),
+                    'object_author_id' => $iProfileId,
                     'medias_added' => $aIdsAdded,
                 ));
         }
