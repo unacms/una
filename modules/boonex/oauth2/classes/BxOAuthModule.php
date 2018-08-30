@@ -19,6 +19,11 @@ class BxOAuthUserCredentialsStorage implements OAuth2\Storage\UserCredentialsInt
         return ($sErrorMsg = bx_check_password($sLogin, $sPassword)) ? false : true;
     }
 
+    public function getUser($sLogin)
+    {
+        return $this->getUserDetails($sLogin);
+    }
+    
     public function getUserDetails($sLogin)
     {
         if (!($oAccount = BxDolAccount::getInstance($sLogin)))
@@ -39,19 +44,75 @@ class BxOAuthModule extends BxDolModule
 
     function __construct(&$aModule)
     {
-        parent::__construct($aModule);
+        parent::__construct($aModule);        
+    }
 
+    public function initOAuth($sClientId)
+    {
+        if ($this->_oStorage)
+            return;
+
+        // get the client data
+         
+        $aClient = $sClientId ? $this->_oDb->getClientsBy(array('type' => 'client_id', 'client_id' => $sClientId)) : false;
+        if (!$aClient)
+            $aClient = array(
+                'cors' => '',
+                'grant_types' => 'authorization_code',
+            );
+        
+        if (!$aClient['grant_types'])
+            $aClient['grant_types'] = 'authorization_code';
+        
+        $aGrantTypes = explode(',', $aClient['grant_types']);
+
+        // send CORS headers if necessary
+
+        $_SERVER['HTTP_ORIGIN'] = 'http://una.io';
+
+        if (!empty($aClient['cors']) && isset($_SERVER['HTTP_ORIGIN'])) {
+            
+            if ('*' == trim($aClient['cors']) || ($a = explode(',', $aClient['cors']) && in_array($_SERVER['HTTP_ORIGIN'], $a))) {
+                $sACAO = $_SERVER['HTTP_ORIGIN'];
+            }
+            else {
+                header('HTTP/1.0 403 Forbidden');
+                echo _t("_Access denied");
+                exit;
+            }
+
+            if ("OPTIONS" == $_SERVER['REQUEST_METHOD']) {
+                header('Access-Control-Allow-Origin: ' . $sACAO);
+                header('Access-Control-Allow-Methods: POST, GET');
+                header('Access-Control-Allow-Credentials: true');
+                header('Access-Control-Allow-Headers: Authorization, Content-Type, X-Custom-Header, X-Requested-With');
+                header('Access-Control-Max-Age: 1');  //1728000
+                header("Content-Length: 0");
+                header("Content-Type: application/json");
+                exit(0);
+            }
+
+            header('Access-Control-Allow-Origin: '. $sACAO);
+        }
+
+        // configure OAuth storage and server
+                
         $aConfig = array (
             'client_table' => 'bx_oauth_clients',
             'access_token_table' => 'bx_oauth_access_tokens',
             'refresh_token_table' => 'bx_oauth_refresh_tokens',
             'code_table' => 'bx_oauth_authorization_codes',
-            'user_table' => 'Profiles',
+            'user_table' => 'sys_accounts',
             'jwt_table'  => '',
             'jti_table'  => '',
             'scope_table'  => 'bx_oauth_scopes',
             'public_key_table'  => '',
         );
+        if (in_array('refresh_token', $aGrantTypes)) {
+            $aConfig['refresh_token'] = '';
+            $aConfig['always_issue_new_refresh_token'] = true;
+            $aConfig['unset_refresh_token_after_use'] = false;
+        }
 
         $this->_oStorage = new OAuth2\Storage\Pdo(BxDolDb::getLink(), $aConfig);
 
@@ -60,17 +121,26 @@ class BxOAuthModule extends BxDolModule
             'refresh_token_lifetime' => 7776000, // set lifetime to 90 days
         ));
 
+        // add grand types
+                
         // Add the "Client Credentials" grant type (it is the simplest of the grant types)
-        $this->_oServer->addGrantType(new OAuth2\GrantType\ClientCredentials($this->_oStorage));
+        if (in_array('client_credentials', $aGrantTypes))
+            $this->_oServer->addGrantType(new OAuth2\GrantType\ClientCredentials($this->_oStorage));
 
         // Add the "Authorization Code" grant type (this is where the oauth magic happens)
-        $this->_oServer->addGrantType(new OAuth2\GrantType\AuthorizationCode($this->_oStorage));
+        if (in_array('authorization_code', $aGrantTypes))
+            $this->_oServer->addGrantType(new OAuth2\GrantType\AuthorizationCode($this->_oStorage));
 
         // Add the "Password" grant type (generate client_id with empty client_secret)
-        // Example: curl http://example.com/path-to-una/m/oauth2/token -d 'grant_type=password&username=user@example.com&password=pwd&client_id=aefygahcgw'
-        $oStorage = new BxOAuthUserCredentialsStorage();
-        $this->_oServer->addGrantType(new OAuth2\GrantType\UserCredentials($oStorage));
-    }
+        if (in_array('password', $aGrantTypes)) {
+            $oStorage = new BxOAuthUserCredentialsStorage();
+            $this->_oServer->addGrantType(new OAuth2\GrantType\UserCredentials($oStorage));
+        }
+
+        // Add the "Refresh Token" grant type
+        if (in_array('refresh_token', $aGrantTypes))
+            $this->_oServer->addGrantType(new OAuth2\GrantType\RefreshToken($this->_oStorage));
+    }    
 
     /**
      * @page public_api API Public
@@ -108,12 +178,16 @@ class BxOAuthModule extends BxDolModule
      */     
     function actionToken ()
     {
+        $this->initOAuth(bx_get('client_id'));
+        
         // Handle a request for an OAuth2.0 Access Token and send the response to the client
         $this->_oServer->handleTokenRequest(OAuth2\Request::createFromGlobals())->send();
     }
 
     function actionApi ($sAction)
     {
+        $this->initOAuth($this->getClientIdFromAccessTokenHeader());
+        
         // Handle a request to a resource and authenticate the access token
         if (!$this->_oServer->verifyResourceRequest(OAuth2\Request::createFromGlobals())) {
             $this->_oServer->getResponse()->send();
@@ -144,6 +218,8 @@ class BxOAuthModule extends BxDolModule
 
     function actionAuth ()
     {
+        $this->initOAuth(bx_get('client_id'));
+        
         $oRequest = OAuth2\Request::createFromGlobals();
         $oResponse = new OAuth2\Response();
 
@@ -253,6 +329,21 @@ class BxOAuthModule extends BxDolModule
             return $oGrid->getCode();
 
         return '';
+    }
+
+    function getClientIdFromAccessTokenHeader()
+    {
+        if (isset($_SERVER['HTTP_AUTHORIZATION']))
+            $sAuthHeader = $_SERVER['HTTP_AUTHORIZATION'];
+        elseif (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION']))
+            $sAuthHeader = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
+        if (empty($sAuthHeader))
+            return false;
+        
+        if (false === stripos($sAuthHeader, 'Bearer'))
+            return false;
+
+        return $this->_oDb->getClientIdByAccessToken(trim(substr($sAuthHeader, 6)));
     }
 }
 
