@@ -1754,7 +1754,7 @@
 <p>Привет, {name}.</p>
 <p>Пожалуйста, подтвердите ваш имейл, нажав по ссылке:</p>
 <p> </p>
-<p><a href="{conf_link}">Подтвердить мой имейл</a>.</p>
+<p><a href="{conf_link}">{conf_link}</a></p>
 <p> </p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_delayed_module_uninstall"><![CDATA[{email_header}

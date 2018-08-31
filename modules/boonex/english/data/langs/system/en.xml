@@ -1756,7 +1756,7 @@ If it is not enabled then please consider implement this optimization, since it 
 <p>Hello, {name}.</p>
 <p>Click the link below to verify your email address, please:</p>
 <p> </p>
-<p><a href="{conf_link}">Verify my email address</a>.</p>
+<p><a href="{conf_link}">{conf_link}</a></p>
 <p> </p>
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_delayed_module_uninstall"><![CDATA[{email_header}
