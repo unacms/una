@@ -489,7 +489,7 @@ INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations
 
 -- CATEGORY
 INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
-('bx_forum_cats', @sName, @sName, 'bx_forum_cats', 'bx_forum_discussions', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `bx_forum_discussions`.`author`)', 'AND `sys_profiles`.`status` = ''active''', 'BxForumCategory', 'modules/boonex/forum/classes/BxForumCategory.php');
+('bx_forum_cats', @sName, @sName, 'bx_forum_cats', 'bx_forum_discussions', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `bx_forum_discussions`.`author` OR `sys_profiles`.`id` = -`bx_forum_discussions`.`author`)', 'AND `sys_profiles`.`status` = ''active''', 'BxForumCategory', 'modules/boonex/forum/classes/BxForumCategory.php');
 
 
 -- COMMENTS

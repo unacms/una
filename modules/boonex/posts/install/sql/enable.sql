@@ -397,7 +397,7 @@ INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations
 
 -- CATEGORY
 INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
-('bx_posts_cats', 'bx_posts', 'bx_posts', 'bx_posts_cats', 'bx_posts_posts', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `bx_posts_posts`.`author`)', 'AND `sys_profiles`.`status` = ''active''', '', '');
+('bx_posts_cats', 'bx_posts', 'bx_posts', 'bx_posts_cats', 'bx_posts_posts', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `bx_posts_posts`.`author` OR `sys_profiles`.`id` = -`bx_posts_posts`.`author`)', 'AND `sys_profiles`.`status` = ''active''', '', '');
 
 -- STATS
 SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);
