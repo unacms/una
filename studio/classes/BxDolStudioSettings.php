@@ -213,6 +213,7 @@ class BxDolStudioSettings extends BxTemplStudioPage
     {
     	$iMixId = $oForm->getCleanValue('mix_id');
         $aCategories = explode(',', $oForm->getCleanValue('categories'));
+        $sEvalRenewToken = '$("#' . $oForm->getId() . ' input[name=csrf_token]").val("' . $oForm->getCsrfToken() . '");';        
 
         foreach ($aCategories as $sCategory) {
             $aOptions = array();
@@ -223,7 +224,7 @@ class BxDolStudioSettings extends BxTemplStudioPage
                 $aData[$aOption['name']] = $this->getSubmittedValue($aOption, $oForm);
                 if($aData[$aOption['name']] === false && !empty($this->sErrorMessage)) {
                 	$this->sCategory = $sCategory;
-					return $this->getJsResult(_t('_adm_stg_err_save_error_message', _t($aOption['caption']), _t($this->sErrorMessage)), false);
+					return $this->getJsResult(_t('_adm_stg_err_save_error_message', _t($aOption['caption']), _t($this->sErrorMessage)), false, false, '', $sEvalRenewToken);
                 }
 
                 if(!empty($aOption['check'])) {
@@ -244,7 +245,7 @@ class BxDolStudioSettings extends BxTemplStudioPage
 
                     if(is_callable($aCheckFunction) && !call_user_func_array($aCheckFunction, $aCheckFunctionParams)) {
                         $this->sCategory = $sCategory;
-                        return $this->getJsResult(_t('_adm_stg_err_save_error_message', _t($aOption['caption']), _t($aOption['check_error'])), false);
+                        return $this->getJsResult(_t('_adm_stg_err_save_error_message', _t($aOption['caption']), _t($aOption['check_error'])), false, false, '', $sEvalRenewToken);
                     }
                 }
 
@@ -262,7 +263,7 @@ class BxDolStudioSettings extends BxTemplStudioPage
             }
         }
 
-        return $this->getJsResult('_adm_stg_scs_save');
+        return $this->getJsResult('_adm_stg_scs_save', true, false, '', $sEvalRenewToken);
     }
 
     protected function isReadOnly()
