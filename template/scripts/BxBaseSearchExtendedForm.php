@@ -40,30 +40,32 @@ class BxBaseSearchExtendedForm extends BxTemplFormView
             $sMethod = $this->aFormAttrs['method'];
             $sValue = self::getSubmittedValue($sName, $sMethod);
 
-            $aMatches = array();
-            if(!preg_match("/^([0-9]+)-([0-9]+)$/i", $sValue, $aMatches))
-                return array();
+            if(!empty($sValue) && is_string($sValue)) {
+                $aMatches = array();
+                if(!preg_match("/^([0-9]+)-([0-9]+)$/i", $sValue, $aMatches))
+                    return array();
 
-            $aArgs = array("%s-%s-%s", date('Y'), date('m'), date('d'));
-            if($bTypeDateTime) {
-                $aArgs[0] = "%s-%s-%s %s:%s:%s";
-                $aArgs = array_merge($aArgs, array(date('H'), date('i'), date('s')));
+                $aArgs = array("%s-%s-%s", date('Y'), date('m'), date('d'));
+                if($bTypeDateTime) {
+                    $aArgs[0] = "%s-%s-%s %s:%s:%s";
+                    $aArgs = array_merge($aArgs, array(date('H'), date('i'), date('s')));
+                }
+
+                $aArgsFrom = $aArgs;
+                $aArgsFrom[1] -= ($aMatches[2] + 1);
+                if($bTypeDateTime)
+                    $aArgsFrom[6] += 1;
+                else
+                    $aArgsFrom[3] += 1;
+
+                $aArgsTo = $aArgs;
+                $aArgsTo[1] -= $aMatches[1];
+
+                self::setSubmittedValue($sName, array(
+                    call_user_func_array('sprintf', $aArgsFrom),
+                    call_user_func_array('sprintf', $aArgsTo)
+                ), $sMethod);
             }
-
-            $aArgsFrom = $aArgs;
-            $aArgsFrom[1] -= ($aMatches[2] + 1);
-            if($bTypeDateTime)
-                $aArgsFrom[6] += 1;
-            else
-                $aArgsFrom[3] += 1;
-
-            $aArgsTo = $aArgs;
-            $aArgsTo[1] -= $aMatches[1];
-
-            self::setSubmittedValue($sName, array(
-                call_user_func_array('sprintf', $aArgsFrom),
-                call_user_func_array('sprintf', $aArgsTo)
-            ), $sMethod);
         }
 
         return parent::getCleanValue($sName);
