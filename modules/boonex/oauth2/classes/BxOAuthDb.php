@@ -71,6 +71,12 @@ class BxOAuthDb extends BxDolModuleDb
         return $this->getOne($sQuery);
     }
 
+    function getClientIdByAccessToken($sToken)
+    {
+        $sQuery = $this->prepare("SELECT `client_id` FROM `bx_oauth_access_tokens` WHERE `access_token` = ?", $sToken);
+        return $this->getOne($sQuery);
+    }
+    
 	function addClient($aClient)
     {
         $mixedResult = $this->query("INSERT INTO `bx_oauth_clients` SET " . $this->arrayToSQL($aClient));

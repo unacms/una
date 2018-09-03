@@ -135,8 +135,20 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuCustom
 
     protected function _getMenuItemDefault($aItem)
     {
-        $sResult = '';
+        $sResult = false;
 
+        bx_alert($this->_sModule, 'menu_custom_item', 0, 0, array(
+            'res' => &$sResult, 
+            'menu' => $this->_sObject, 
+            'menu_object' => $this, 
+            'item' => $aItem,
+            'content_id' => $this->_iContentId,
+            'content_data' => $this->_aContentInfo,
+        ));
+        
+        if (false !== $sResult)
+            return $sResult;
+        
         if(!empty($aItem['link']))
             $sResult = $this->_oTemplate->getUnitMetaItemLink($aItem['title'], array(
                 'href' => $aItem['link']

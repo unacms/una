@@ -17,11 +17,6 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
     public function __construct($aInfo, $oTemplate = false)
     {
         parent::__construct($aInfo, $oTemplate);
-
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        if (isset($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]))
-            $this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']] = array_merge($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']], BxDolPrivacy::getGroupChooser($CNF['OBJECT_PRIVACY_VIEW']));
     }
 }
 

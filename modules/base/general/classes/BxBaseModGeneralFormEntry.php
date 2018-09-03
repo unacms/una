@@ -68,6 +68,19 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         if (isset($CNF['FIELD_LABELS']) && isset($this->aInputs[$CNF['FIELD_LABELS']])) {
             $this->aInputs[$CNF['FIELD_LABELS']]['values'] = array_map('trim', getParam($CNF['PARAM_LABELS']) ? explode(',', getParam($CNF['PARAM_LABELS'])) : array());
         }
+
+        if (isset($CNF['FIELD_ALLOW_VIEW_TO']) && isset($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]) && $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) {
+
+            $aSave = array('db' => array('pass' => 'Xss'));
+            array_walk($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']], function ($a, $k, $aSave) {
+                if (in_array($k, array('info', 'caption', 'value')))
+                    $aSave[0][$k] = $a;
+            }, array(&$aSave));
+            
+            $aGroupChooser = $oPrivacy->getGroupChooser($CNF['OBJECT_PRIVACY_VIEW']);
+            
+            $this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']] = array_merge($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']], $aGroupChooser, $aSave);
+		}        
     }
 
     function initChecker ($aValues = array (), $aSpecificValues = array())

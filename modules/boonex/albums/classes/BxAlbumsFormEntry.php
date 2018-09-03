@@ -22,6 +22,9 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
 
     public function processFiles ($sFieldFile, $iContentId = 0, $isAssociateWithContent = false)
     {
+        if ($isAssociateWithContent)
+            return parent::processFiles ($sFieldFile, $iContentId, $isAssociateWithContent);
+
         $aMediasOld = $this->_oModule->_oDb->getMediaListByContentId($iContentId);                
         
         if ($b = parent::processFiles ($sFieldFile, $iContentId, $isAssociateWithContent)) {
@@ -29,10 +32,11 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
             $aIdsOld = array_column($aMediasOld, 'id');
             $aIdsNew = array_column($aMediasNew, 'id');
             $aIdsAdded = array_diff($aIdsNew, $aIdsOld);
-
+            
+            $iProfileId = $this->getContentOwnerProfileId($iContentId);
             if (!empty($aIdsAdded))
                 bx_alert($this->_oModule->getName(), 'medias_added', $iContentId, $iProfileId, array(
-                    'object_author_id' => $this->getContentOwnerProfileId($iContentId),
+                    'object_author_id' => $iProfileId,
                     'medias_added' => $aIdsAdded,
                 ));
         }

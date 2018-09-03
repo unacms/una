@@ -55,6 +55,7 @@ class BxFroalaEditor extends BxDolEditor
                 toolbarSticky: false,
                 quickInsertTags: [],
                 pastePlain: true,
+                entities: '',
                 imageUpload: true,
                 imageUploadURL: '{bx_var_image_upload_url}',
                 videoUpload: false,

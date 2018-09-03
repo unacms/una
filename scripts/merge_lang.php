@@ -122,7 +122,7 @@ class BxDolLangsMergeCmd
     protected function getHelp()
     {
         $n = 21;
-        $s = "Usage: php check_unused_lang.php [options]\n";
+        $s = "Usage: php merge_lang.php [options]\n";
 
         $s .= str_pad("\t -h", $n) . "Print this help\n";
         $s .= str_pad("\t -s", $n) . "Sort output\n";

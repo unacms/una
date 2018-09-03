@@ -43,11 +43,17 @@ class BxDolCategoryQuery extends BxDolDb
         return $aObject;
     }
 
-    static public function getItemsNumInCategory ($aObject, $sCategoryValue)
+    static public function getItemsNumInCategory ($aObject, $sCategoryValue, $bPublicOnly = true)
     {
         $oDb = BxDolDb::getInstance();
-        $sQuery = $oDb->prepare("SELECT COUNT(*) FROM `" . $aObject['table'] . "` " . $aObject['join'] . " WHERE `" . $aObject['field'] . "` = ? " . $aObject['where'], $sCategoryValue);
-        return $oDb->getOne($sQuery);
+        $sWhere = '';
+        // TODO: in the future add 'module' field to categories object
+        if ($bPublicOnly && ($oModule = BxDolModule::getInstance($aObject['search_object'])) && isset($oModule->_oConfig->CNF['FIELD_ALLOW_VIEW_TO'])) {
+            bx_import('BxDolPrivacy');
+            $a = isLogged() ? array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS) : array(BX_DOL_PG_ALL);
+            $sWhere = ' AND `' . $aObject['table'] . '`.`' . $oModule->_oConfig->CNF['FIELD_ALLOW_VIEW_TO'] . '` IN(' . $oDb->implode_escape($a) . ') ';
+        }
+        return $oDb->getOne("SELECT COUNT(*) FROM `" . $aObject['table'] . "` " . $aObject['join'] . " WHERE `" . $aObject['field'] . "` = :cat " . $aObject['where'] . $sWhere, array('cat' => $sCategoryValue));
     }
 }
 

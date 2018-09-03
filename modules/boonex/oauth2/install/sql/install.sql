@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS `bx_oauth_clients` (
   `redirect_uri` varchar(255) NOT NULL,
   `grant_types` varchar(80) DEFAULT NULL,
   `scope` varchar(255) DEFAULT NULL,
+  `cors` text NOT NULL,
   `parent_id` int(10) unsigned DEFAULT 0,
   `user_id` int(10) unsigned DEFAULT 0,
   PRIMARY KEY (`id`),
