@@ -252,7 +252,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_market_view', 'bx_market', 'download', '_bx_market_menu_item_title_system_download', '_bx_market_menu_item_title_download', 'page.php?i=download-product&id={content_id}', '', '', 'download', '', 0, 2147483647, 1, 0, 10),
 ('bx_market_view', 'bx_market', 'add-to-cart', '_bx_market_menu_item_title_system_add_to_cart', '{add_to_cart_title}', 'javascript:void(0);', 'javascript:{add_to_cart_onclick}', '', 'cart-plus', '', 0, 2147483647, 1, 0, 20),
 ('bx_market_view', 'bx_market', 'subscribe', '_bx_market_menu_item_title_system_subscribe', '{subscribe_title}', 'javascript:void(0);', 'javascript:{subscribe_onclick}', '', 'credit-card', '', 0, 2147483647, 1, 0, 30),
-('bx_market_view', 'bx_market', 'unhide-product', '_bx_market_menu_item_title_system_unhide_entry', '_bx_market_menu_item_title_unhide_entry', 'javascript:void(0);', 'javascript:{js_object}.perform(this, ''unhide-product'', {content_id});', '', 'eye', '', 0, 2147483647, 1, 0, 40),
+('bx_market_view', 'bx_market', 'unhide-product', '_bx_market_menu_item_title_system_unhide_entry', '_bx_market_menu_item_title_unhide_entry', 'javascript:void(0);', 'javascript:{js_object}.perform(this, ''unhide-product'', {content_id});', '', 'play-circle', '', 0, 2147483647, 1, 0, 40),
 ('bx_market_view', 'bx_market', 'product-more', '_bx_market_menu_item_title_system_product_more', '_bx_market_menu_item_title_product_more', 'javascript:void(0)', 'bx_menu_popup(''bx_market_view_more'', this, {}, {id:{content_id}});', '', 'cog', 'bx_market_view_more', 1, 2147483647, 1, 0, 9999);
 
 -- MENU: actions more menu for view entry
@@ -263,7 +263,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_market_view_more', 'bx_market', '_bx_market_menu_set_title_view_entry_more', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_market_view_more', 'bx_market', 'hide-product', '_bx_market_menu_item_title_system_hide_entry', '_bx_market_menu_item_title_hide_entry', 'javascript:void(0);', 'javascript:{js_object}.perform(this, ''hide-product'', {content_id});', '', 'eye-slash', '', 2147483647, 1, 0, 10),
+('bx_market_view_more', 'bx_market', 'hide-product', '_bx_market_menu_item_title_system_hide_entry', '_bx_market_menu_item_title_hide_entry', 'javascript:void(0);', 'javascript:{js_object}.perform(this, ''hide-product'', {content_id});', '', 'stop-circle', '', 2147483647, 1, 0, 10),
 ('bx_market_view_more', 'bx_market', 'edit-product', '_bx_market_menu_item_title_system_edit_entry', '_bx_market_menu_item_title_edit_entry', 'page.php?i=edit-product&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 20),
 ('bx_market_view_more', 'bx_market', 'delete-product', '_bx_market_menu_item_title_system_delete_entry', '_bx_market_menu_item_title_delete_entry', 'page.php?i=delete-product&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 30);
 

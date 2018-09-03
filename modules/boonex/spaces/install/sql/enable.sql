@@ -204,7 +204,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_spaces_view_actions', 'bx_spaces', '_bx_spaces_menu_set_title_view_profile_actions', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
-('bx_spaces_view_actions', 'bx_spaces', 'profile-fan-add', '_bx_spaces_menu_item_title_system_become_fan', '{title_add_fan}', 'javascript:void(0)', 'bx_conn_action(this, \'bx_spaces_fans\', \'add\', \'{profile_id}\')', '', 'user-plus', '', 0, 2147483647, 1, 0, 0, 5),
+('bx_spaces_view_actions', 'bx_spaces', 'profile-fan-add', '_bx_spaces_menu_item_title_system_become_fan', '{title_add_fan}', 'javascript:void(0)', 'bx_conn_action(this, \'bx_spaces_fans\', \'add\', \'{profile_id}\')', '', 'sign-in-alt', '', 0, 2147483647, 1, 0, 0, 5),
 ('bx_spaces_view_actions', 'bx_spaces', 'profile-subscribe-add', '_bx_spaces_menu_item_title_system_subscribe', '_bx_spaces_menu_item_title_subscribe', 'javascript:void(0)', 'bx_conn_action(this, \'sys_profiles_subscriptions\', \'add\', \'{profile_id}\')', '', 'check', '', 0, 2147483647, 1, 0, 1, 20),
 ('bx_spaces_view_actions', 'bx_spaces', 'profile-actions-more', '_bx_spaces_menu_item_title_system_more_actions', '_bx_spaces_menu_item_title_more_actions', 'javascript:void(0)', 'bx_menu_popup(''bx_spaces_view_actions_more'', this, {}, {profile_id:{profile_id}});', '', 'cog', 'bx_spaces_view_actions_more', 1, 2147483647, 1, 0, 1, 9999);
 
@@ -217,11 +217,11 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_spaces_view_actions_more', 'bx_spaces', '_bx_spaces_menu_set_title_view_profile_actions_more', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_spaces_view_actions_more', 'bx_spaces', 'profile-fan-remove', '_bx_spaces_menu_item_title_system_leave_space', '{title_remove_fan}', 'javascript:void(0)', 'bx_conn_action(this, \'bx_spaces_fans\', \'remove\', \'{profile_id}\')', '', 'user-times', '', 2147483647, 1, 0, 10),
+('bx_spaces_view_actions_more', 'bx_spaces', 'profile-fan-remove', '_bx_spaces_menu_item_title_system_leave_space', '{title_remove_fan}', 'javascript:void(0)', 'bx_conn_action(this, \'bx_spaces_fans\', \'remove\', \'{profile_id}\')', '', 'sign-out-alt', '', 2147483647, 1, 0, 10),
 ('bx_spaces_view_actions_more', 'bx_spaces', 'profile-subscribe-remove', '_bx_spaces_menu_item_title_system_unsubscribe', '_bx_spaces_menu_item_title_unsubscribe', 'javascript:void(0)', 'bx_conn_action(this, \'sys_profiles_subscriptions\', \'remove\', \'{profile_id}\')', '', 'check', '', 2147483647, 1, 0, 20),
-('bx_spaces_view_actions_more', 'bx_spaces', 'edit-space-cover', '_bx_spaces_menu_item_title_system_edit_cover', '_bx_spaces_menu_item_title_edit_cover', 'page.php?i=edit-space-cover&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 30),
+('bx_spaces_view_actions_more', 'bx_spaces', 'edit-space-cover', '_bx_spaces_menu_item_title_system_edit_cover', '_bx_spaces_menu_item_title_edit_cover', 'page.php?i=edit-space-cover&id={content_id}', '', '', 'edit', '', 2147483647, 1, 0, 30),
 ('bx_spaces_view_actions_more', 'bx_spaces', 'edit-space-profile', '_bx_spaces_menu_item_title_system_edit_profile', '_bx_spaces_menu_item_title_edit_profile', 'page.php?i=edit-space-profile&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 40),
-('bx_spaces_view_actions_more', 'bx_spaces', 'invite-to-space', '_bx_spaces_menu_item_title_system_invite', '_bx_spaces_menu_item_title_invite', 'page.php?i=invite-to-space&id={content_id}', '', '', 'user-plus', '', 2147483647, 1, 0, 42),
+('bx_spaces_view_actions_more', 'bx_spaces', 'invite-to-space', '_bx_spaces_menu_item_title_system_invite', '_bx_spaces_menu_item_title_invite', 'page.php?i=invite-to-space&id={content_id}', '', '', 'user-friends', '', 2147483647, 1, 0, 42),
 ('bx_spaces_view_actions_more', 'bx_spaces', 'delete-space-profile', '_bx_spaces_menu_item_title_system_delete_profile', '_bx_spaces_menu_item_title_delete_profile', 'page.php?i=delete-space-profile&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 50);
 
 -- MENU: all actions menu for view entry 
