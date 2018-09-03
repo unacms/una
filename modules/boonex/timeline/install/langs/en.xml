@@ -164,7 +164,7 @@
     <string name="_bx_timeline_menu_item_title_system_item_more"><![CDATA[More Actions]]></string>
     <string name="_bx_timeline_menu_item_title_item_more"><![CDATA[]]></string>
 
-	<string name="_bx_timeline_menu_title_post_attachments"><![CDATA[Form Attachments]]></string>
+    <string name="_bx_timeline_menu_title_post_attachments"><![CDATA[Form Attachments]]></string>
     <string name="_bx_timeline_menu_set_title_post_attachments"><![CDATA[Form Attachments]]></string>
     <string name="_bx_timeline_menu_item_title_system_add_emoji"><![CDATA[Add Emoji]]></string>
     <string name="_bx_timeline_menu_item_title_add_emoji"><![CDATA[Add Emoji]]></string>
@@ -174,15 +174,12 @@
     <string name="_bx_timeline_menu_item_title_add_photo"><![CDATA[Add Photo]]></string>
     <string name="_bx_timeline_menu_item_title_system_add_video"><![CDATA[Add Video]]></string>
     <string name="_bx_timeline_menu_item_title_add_video"><![CDATA[Add Video]]></string>
-
     <string name="_bx_timeline_menu_item_title_system_timeline"><![CDATA[Timeline]]></string>
     <string name="_bx_timeline_menu_item_title_timeline"><![CDATA[Timeline]]></string>
-    
     <string name="_bx_timeline_menu_item_title_system_create_entry"><![CDATA[Update]]></string>
     <string name="_bx_timeline_menu_item_title_create_entry"><![CDATA[Update]]></string>
-
-	<string name="_bx_timeline_menu_item_title_system_view_timeline_view"><![CDATA[Timeline]]></string>
-	<string name="_bx_timeline_menu_item_title_view_timeline_view"><![CDATA[Timeline]]></string>
+    <string name="_bx_timeline_menu_item_title_system_view_timeline_view"><![CDATA[Timeline]]></string>
+    <string name="_bx_timeline_menu_item_title_view_timeline_view"><![CDATA[Timeline]]></string>
 
   <string name="_bx_timeline_grid_column_title_adm_active"><![CDATA[Active]]></string>
   <string name="_bx_timeline_grid_column_title_adm_description"><![CDATA[Event]]></string>
@@ -191,11 +188,15 @@
   <string name="_bx_timeline_grid_action_title_adm_delete"><![CDATA[Delete]]></string>
   <string name="_bx_timeline_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
   
-	<string name="_bx_timeline_alert_module_timeline_common_post"><![CDATA[Timeline (post)]]></string>
-	<string name="_bx_timeline_alert_module_timeline_common_repost"><![CDATA[Timeline (repost)]]></string>
-	<string name="_bx_timeline_alert_action_added"><![CDATA[add]]></string>
-	<string name="_bx_timeline_alert_action_post_common"><![CDATA[add post]]></string>
-	<string name="_bx_timeline_alert_action_repost"><![CDATA[repost]]></string>
+    <string name="_bx_timeline_alert_module_timeline_common_post"><![CDATA[Timeline (post)]]></string>
+    <string name="_bx_timeline_alert_module_timeline_common_repost"><![CDATA[Timeline (repost)]]></string>
+    <string name="_bx_timeline_alert_action_added"><![CDATA[add]]></string>
+    <string name="_bx_timeline_alert_action_post_common"><![CDATA[add post]]></string>
+    <string name="_bx_timeline_alert_action_repost"><![CDATA[repost]]></string>
+    <string name="_bx_timeline_alert_action_post_common_follow_member"><![CDATA[New content]]></string>
+    <string name="_bx_timeline_alert_action_post_common_follow_context"><![CDATA[New content]]></string>
+    <string name="_bx_timeline_alert_action_repost_follow_member"><![CDATA[New content repost]]></string>
+    <string name="_bx_timeline_alert_action_repost_follow_context"><![CDATA[New content repost]]></string>
 
 	<string name="_bx_timeline_txt_msg_no_results"><![CDATA[Empty]]></string>
 	<string name="_bx_timeline_txt_msg_performed_action"><![CDATA[The action was successfully performed.]]></string>

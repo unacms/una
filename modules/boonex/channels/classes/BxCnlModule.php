@@ -140,15 +140,17 @@ class BxCnlModule extends BxBaseModGroupsModule
     public function serviceGetNotificationsData()
     {      
         $a = parent::serviceGetNotificationsData();
-        
+
         $sModule = $this->_aModule['name'];
 
         $a['handlers'][] = array('group' => $sModule . '_hastag_notif', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'hashtag_added_notif', 'module_name' => $sModule, 'module_method' => 'get_notifications_post_hashtag', 'module_class' => 'Module');
         $a['handlers'][] = array('group' => $sModule . '_hastag_notif', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'hashtag_deleted_notif');
 
+        $a['settings'][] = array('group' => 'hastag', 'unit' => $sModule, 'action' => 'hashtag_added_notif', 'types' => array('follow_context'));
+
         $a['alerts'][] = array('unit' => $sModule, 'action' => 'hashtag_added_notif');
         $a['alerts'][] = array('unit' => $sModule, 'action' => 'hashtag_deleted_notif');
-        
+
         return $a;
     }
 

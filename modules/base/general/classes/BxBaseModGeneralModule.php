@@ -714,7 +714,7 @@ class BxBaseModGeneralModule extends BxDolModule
         ));
     }
 
-	/**
+    /**
      * Data for Notifications module
      */
     public function serviceGetNotificationsData()
@@ -739,6 +739,12 @@ class BxBaseModGeneralModule extends BxDolModule
 
                 array('group' => $sModule . '_vote', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVote', 'module_name' => $sModule, 'module_method' => 'get_notifications_vote', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
                 array('group' => $sModule . '_vote', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVote'),
+            ),
+            'settings' => array(
+                array('group' => 'content', 'unit' => $sModule, 'action' => 'added', 'types' => array('follow_member', 'follow_context')),
+                array('group' => 'comment', 'unit' => $sModule, 'action' => 'commentPost', 'types' => array('personal', 'follow_member', 'follow_context')),
+                array('group' => 'reply', 'unit' => $sModule, 'action' => 'replyPost', 'types' => array('personal')),
+                array('group' => 'vote', 'unit' => $sModule, 'action' => 'doVote', 'types' => array('personal', 'follow_member', 'follow_context'))
             ),
             'alerts' => array(
                 array('unit' => $sModule, 'action' => 'added'),

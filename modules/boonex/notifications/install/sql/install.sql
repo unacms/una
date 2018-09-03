@@ -39,16 +39,64 @@ CREATE TABLE IF NOT EXISTS `bx_notifications_handlers` (
   UNIQUE `alert` (`alert_unit`, `alert_action`)
 );
 
-INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES
-('profile', 'delete', 'profile', 'delete', ''),
+CREATE TABLE IF NOT EXISTS `bx_notifications_settings` (
+  `id` int(11) NOT NULL auto_increment,
+  `group` varchar(64) NOT NULL default '',
+  `handler_id` int(11) NOT NULL DEFAULT '0',
+  `delivery` enum('site','email','push') NOT NULL DEFAULT 'site',
+  `type` enum('personal','follow_member','follow_context','other') NOT NULL DEFAULT 'personal',
+  `title` varchar(64) NOT NULL default '',
+  `active` tinyint(4) NOT NULL default '1',
+  `order` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  UNIQUE `setting` (`handler_id`, `type`, `delivery`)
+);
 
-('mention', 'insert', 'meta_mention', 'added', 'a:3:{s:11:"module_name";s:6:"system";s:13:"module_method";s:30:"get_notifications_post_mention";s:12:"module_class";s:20:"TemplServiceMetatags";}'),
+CREATE TABLE IF NOT EXISTS `bx_notifications_settings2users` (
+  `id` int(11) NOT NULL auto_increment,
+  `user_id` int(11) NOT NULL DEFAULT '0',
+  `setting_id` int(11) NOT NULL DEFAULT '0',
+  `active` tinyint(4) NOT NULL default '1',
+  PRIMARY KEY (`id`),
+  UNIQUE `setting` (`user_id`, `setting_id`)
+);
 
-('friendship', 'insert', 'sys_profiles_friends', 'connection_added', 'a:3:{s:11:"module_name";s:6:"system";s:13:"module_method";s:33:"get_notifications_post_friendship";s:12:"module_class";s:23:"TemplServiceConnections";}'),
-('friendship', 'delete', 'sys_profiles_friends', 'connection_removed', ''),
+INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES 
+('profile', 'delete', 'profile', 'delete', '');
 
-('subscription', 'insert', 'sys_profiles_subscriptions', 'connection_added', 'a:3:{s:11:"module_name";s:6:"system";s:13:"module_method";s:22:"get_notifications_post";s:12:"module_class";s:23:"TemplServiceConnections";}'),
+INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES 
+('mention', 'insert', 'meta_mention', 'added', 'a:3:{s:11:"module_name";s:6:"system";s:13:"module_method";s:30:"get_notifications_post_mention";s:12:"module_class";s:20:"TemplServiceMetatags";}');
+SET @iHandlerId = LAST_INSERT_ID();
+
+INSERT INTO `bx_notifications_settings`(`group`, `handler_id`, `delivery`, `type`, `title`, `order`) VALUES
+('mention', @iHandlerId, 'site', 'personal', '_bx_ntfs_alert_action_mention_added_personal', 1),
+('mention', @iHandlerId, 'email', 'personal', '_bx_ntfs_alert_action_mention_added_personal', 1),
+('mention', @iHandlerId, 'push', 'personal', '_bx_ntfs_alert_action_mention_added_personal', 1);
+
+INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES 
+('friendship', 'insert', 'sys_profiles_friends', 'connection_added', 'a:3:{s:11:"module_name";s:6:"system";s:13:"module_method";s:33:"get_notifications_post_friendship";s:12:"module_class";s:23:"TemplServiceConnections";}');
+SET @iHandlerId = LAST_INSERT_ID();
+
+INSERT INTO `bx_notifications_settings`(`group`, `handler_id`, `delivery`, `type`, `title`, `order`) VALUES
+('friendship', @iHandlerId, 'site', 'personal', '_bx_ntfs_alert_action_friendship_added_personal', 2),
+('friendship', @iHandlerId, 'email', 'personal', '_bx_ntfs_alert_action_friendship_added_personal', 2),
+('friendship', @iHandlerId, 'push', 'personal', '_bx_ntfs_alert_action_friendship_added_personal', 2);
+
+INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES 
+('friendship', 'delete', 'sys_profiles_friends', 'connection_removed', '');
+
+INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES 
+('subscription', 'insert', 'sys_profiles_subscriptions', 'connection_added', 'a:3:{s:11:"module_name";s:6:"system";s:13:"module_method";s:22:"get_notifications_post";s:12:"module_class";s:23:"TemplServiceConnections";}');
+SET @iHandlerId = LAST_INSERT_ID();
+
+INSERT INTO `bx_notifications_settings`(`group`, `handler_id`, `delivery`, `type`, `title`, `order`) VALUES
+('subscription', @iHandlerId, 'site', 'personal', '_bx_ntfs_alert_action_subscription_added_personal', 3),
+('subscription', @iHandlerId, 'email', 'personal', '_bx_ntfs_alert_action_subscription_added_personal', 3),
+('subscription', @iHandlerId, 'push', 'personal', '_bx_ntfs_alert_action_subscription_added_personal', 3);
+
+INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES 
 ('subscription', 'delete', 'sys_profiles_subscriptions', 'connection_removed', '');
+
 
 -- STUDIO PAGE & WIDGET
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES

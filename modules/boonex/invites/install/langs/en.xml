@@ -151,5 +151,7 @@
   <string name="_bx_invites_request_status_for_filter_joined"><![CDATA[Joined]]></string>
   <string name="_bx_invites_title_date_invite_sent"><![CDATA[Date sent]]></string>
   <string name="_bx_invites_title_date_invite_seen"><![CDATA[Date seen]]></string>
+  
   <string name="_bx_invites_alert_action_request"><![CDATA[<b class="bx-ntfs-content-profile">{entry_sample}</b> request invitation - <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
+  <string name="_bx_invites_alert_action_request_notify_personal"><![CDATA[New requests]]></string>
 </resources>

@@ -16,14 +16,16 @@ define('BX_NTFS_TYPE_OBJECT_OWNER_AND_CONNECTIONS', 'obj_own_and_con');
 define('BX_NTFS_TYPE_DEFAULT', BX_NTFS_TYPE_OBJECT_OWNER_AND_CONNECTIONS);
 
 /**
- * DTYPE - Delivery Type:
- * 1. by Onsite notification,
- * 2. by Email message,
- * 3. by Push notification.
+ * STYPE - Setting Type:
+ * 1. personal - related to you;
+ * 2. follow_member - related to members you follow;
+ * 3. follow_context - related to contexts you follow;
+ * 4. other - others.
  */
-define('BX_NTFS_DTYPE_SITE', 'site');
-define('BX_NTFS_DTYPE_EMAIL', 'email');
-define('BX_NTFS_DTYPE_PUSH', 'push');
+define('BX_NTFS_STYPE_PERSONAL', 'personal');
+define('BX_NTFS_STYPE_FOLLOW_MEMBER', 'follow_member');
+define('BX_NTFS_STYPE_FOLLOW_CONTEXT', 'follow_context');
+define('BX_NTFS_STYPE_OTHER', 'other');
 
 class BxNtfsModule extends BxBaseModNotificationsModule
 {
@@ -72,6 +74,45 @@ class BxNtfsModule extends BxBaseModNotificationsModule
     public function serviceGetInclude($bIncludeCss = true, $mixedIncludeJs = false)
     {
         return $this->_oTemplate->getInclude($bIncludeCss, $mixedIncludeJs);
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_notifications Notifications
+     * @subsection bx_notifications-page_blocks Page Blocks
+     * @subsubsection bx_notifications-get_block_settings get_block_settings
+     * 
+     * @code bx_srv('bx_notifications', 'get_block_settings', [...]); @endcode
+     * 
+     * Get Settings block for a separate page.
+     *
+     * @return a string with block content to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxNtfsModule::serviceGetBlockSettings
+     */
+    /** 
+     * @ref bx_notifications-get_block_settings "get_block_settings"
+     */
+    public function serviceGetBlockSettings($sDeliveryType = '', $aParams = array())
+    {
+        if(!isLogged())
+            return '';
+
+        if(empty($sDeliveryType) && bx_get('delivery') !== false)
+            $sDeliveryType = bx_process_input(bx_get('delivery'));
+
+        if(empty($sDeliveryType))
+            $sDeliveryType = BX_BASE_MOD_NTFS_DTYPE_SITE;
+
+        $this->_oDb->initSettingUser(bx_get_logged_profile_id());
+
+        $oMenu = BxDolMenu::getObjectInstance($this->_oConfig->CNF['OBJECT_MENU_SETTINGS']);
+        $oMenu->setSelected($this->_oConfig->getName(), 'notifications-' . $sDeliveryType);
+
+        return array(
+            'content' => $this->getBlockSettings($sDeliveryType, $aParams),
+            'menu' => $oMenu
+        );
     }
 
     /**
@@ -275,13 +316,18 @@ class BxNtfsModule extends BxBaseModNotificationsModule
     /*
      * COMMON METHODS
      */
+    public function getBlockSettings($sDeliveryType, $aParams = array())
+    {
+        return $this->_oTemplate->getSettingsBlock($sDeliveryType, $aParams);
+    }
+
     public function setSubmenu($sSelected)
     {
     	$oSubmenuSystem = BxDolMenu::getObjectInstance('sys_site_submenu');
         if(!$oSubmenuSystem)
-			return;
+            return;
 
-		$CNF = &$this->_oConfig->CNF;
+        $CNF = &$this->_oConfig->CNF;
 
         $oSubmenuSystem->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU'], array (
             'title' => _t('_bx_ntfs'),
@@ -291,7 +337,7 @@ class BxNtfsModule extends BxBaseModNotificationsModule
 
         $oSubmenuModule = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SUBMENU']);
         if($oSubmenuModule)
-			$oSubmenuModule->setSelected($this->_oConfig->getName(), $sSelected);
+            $oSubmenuModule->setSelected($this->_oConfig->getName(), $sSelected);
     }
 
     public function onPost($iId)
@@ -300,6 +346,36 @@ class BxNtfsModule extends BxBaseModNotificationsModule
         $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'post', $iId);
         $oAlert->alert();
         //--- Event -> Post for Alerts Engine ---//
+    }
+
+    public function enableSettingsLike($iId, $bValue, $bAdministration = false)
+    {
+        $aSetting = $this->_oDb->getSetting(array(
+            'by' => $bAdministration ? 'id' : 'tsu_id', 
+            'id' => (int)$iId
+        ));
+        if(empty($aSetting) || !is_array($aSetting))
+            return false;
+
+        $aSettingsIds = $this->_oDb->getSetting(array(
+            'by' => 'group_type_delivery', 
+            'group' => $aSetting['group'], 
+            'delivery' => $aSetting['delivery'], 
+            'type' => $aSetting['type'], 
+            'active' => !$bAdministration
+        ));
+        if(empty($aSettingsIds) || !is_array($aSettingsIds))
+            return false;
+
+        $iUserId = bx_get_logged_profile_id();
+
+        $mixedResult = false;
+        if($bAdministration)
+            $mixedResult =  $this->_oDb->activateSettingById($bValue, $aSettingsIds);
+        else
+            $mixedResult = $this->_oDb->activateSettingByIdUser($bValue, $iUserId, $aSettingsIds);
+
+        return $mixedResult;
     }
 
     protected function _prepareParams($sType = '', $iOwnerId = 0, $iStart = -1, $iPerPage = -1, $aModules = array())

@@ -1220,20 +1220,32 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'handlers' => array(
                 array('group' => $sModule . '_object', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'post_common', 'module_name' => $sModule, 'module_method' => 'get_notifications_post', 'module_class' => 'Module'),
                 array('group' => $sModule . '_object', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'delete'),
+
                 array('group' => $sModule . '_repost', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'repost', 'module_name' => $sModule, 'module_method' => 'get_notifications_repost', 'module_class' => 'Module'),
                 array('group' => $sModule . '_repost', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'delete_repost'),
+
                 array('group' => $sModule . '_comment', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'commentPost', 'module_name' => $sModule, 'module_method' => 'get_notifications_comment', 'module_class' => 'Module'),
                 array('group' => $sModule . '_comment', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'commentRemoved'),
+
                 array('group' => $sModule . '_vote', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVote', 'module_name' => $sModule, 'module_method' => 'get_notifications_vote', 'module_class' => 'Module'),
-				array('group' => $sModule . '_vote', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVote'),
+                array('group' => $sModule . '_vote', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVote'),
+            ),
+            'settings' => array(
+                array('group' => 'content', 'unit' => $sModule, 'action' => 'post_common', 'types' => array('follow_member', 'follow_context')),
+                array('group' => 'content', 'unit' => $sModule, 'action' => 'repost', 'types' => array('follow_member', 'follow_context')),
+                array('group' => 'comment', 'unit' => $sModule, 'action' => 'commentPost', 'types' => array('personal', 'follow_member', 'follow_context')),
+                array('group' => 'vote', 'unit' => $sModule, 'action' => 'doVote', 'types' => array('personal', 'follow_member', 'follow_context'))
             ),
             'alerts' => array(
                 array('unit' => $sModule, 'action' => 'post_common'),
                 array('unit' => $sModule, 'action' => 'delete'),
+                
                 array('unit' => $sModule, 'action' => 'repost'),
                 array('unit' => $sModule, 'action' => 'delete_repost'),
+                
                 array('unit' => $sModule, 'action' => 'commentPost'),
                 array('unit' => $sModule, 'action' => 'commentRemoved'),
+                
                 array('unit' => $sModule, 'action' => 'doVote'),
                 array('unit' => $sModule, 'action' => 'undoVote'),
             )

@@ -398,6 +398,12 @@ class BxAlbumsModule extends BxBaseModTextModule
             array('group' => $sModule . '_vote_media', 'type' => 'delete', 'alert_unit' => $sModule . '_media', 'alert_action' => 'undoVote'),
         ));
 
+        $aResult['settings'] = array_merge($aResult['settings'], array(
+            array('group' => 'content', 'unit' => $sModule, 'action' => 'media_added', 'types' => array('follow_member', 'follow_context')),
+            array('group' => 'comment', 'unit' => $sModule . '_media', 'action' => 'commentPost', 'types' => array('personal', 'follow_member', 'follow_context')),
+            array('group' => 'vote', 'unit' => $sModule . '_media', 'action' => 'doVote', 'types' => array('personal', 'follow_member', 'follow_context'))
+        ));
+
         $aResult['alerts'] = array_merge($aResult['alerts'], array(
             array('unit' => $sModule, 'action' => 'media_added'),
             array('unit' => $sModule, 'action' => 'media_deleted'),

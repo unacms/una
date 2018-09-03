@@ -313,4 +313,6 @@
     <string name="_bx_channels_email_invitation_body"><![CDATA[{email_header}
 <p><a href="{InviterUrl}">{InviterDisplayName}</a> пригласил Вас в канал <a href="{EntryUrl}">{EntryTitle}</a>.</p>
 {email_footer}]]></string>
+
+    <string name="_bx_channels_alert_action_hashtag_added_notif_follow_context"><![CDATA[Новые хештеги]]></string>
 </resources>

@@ -164,7 +164,7 @@
     <string name="_bx_timeline_menu_item_title_system_item_more"><![CDATA[Дополнительные действия]]></string>
     <string name="_bx_timeline_menu_item_title_item_more"><![CDATA[]]></string>
 
-	<string name="_bx_timeline_menu_title_post_attachments"><![CDATA[Форма - Прикрепления]]></string>
+    <string name="_bx_timeline_menu_title_post_attachments"><![CDATA[Форма - Прикрепления]]></string>
     <string name="_bx_timeline_menu_set_title_post_attachments"><![CDATA[Форма - Прикрепления]]></string>
     <string name="_bx_timeline_menu_item_title_system_add_emoji"><![CDATA[Добавить Emoji]]></string>
     <string name="_bx_timeline_menu_item_title_add_emoji"><![CDATA[Добавить Emoji]]></string>
@@ -174,6 +174,12 @@
     <string name="_bx_timeline_menu_item_title_add_photo"><![CDATA[Добавить фото]]></string>
     <string name="_bx_timeline_menu_item_title_system_add_video"><![CDATA[Добавить видео]]></string>
     <string name="_bx_timeline_menu_item_title_add_video"><![CDATA[Добавить видео]]></string>
+    <string name="_bx_timeline_menu_item_title_system_timeline"><![CDATA[Лента]]></string>
+    <string name="_bx_timeline_menu_item_title_timeline"><![CDATA[Лента]]></string>
+    <string name="_bx_timeline_menu_item_title_system_create_entry"><![CDATA[Статус]]></string>
+    <string name="_bx_timeline_menu_item_title_create_entry"><![CDATA[Статус]]></string>
+    <string name="_bx_timeline_menu_item_title_system_view_timeline_view"><![CDATA[Лента]]></string>
+    <string name="_bx_timeline_menu_item_title_view_timeline_view"><![CDATA[Лента]]></string>
 
     <string name="_bx_timeline_grid_column_title_adm_active"><![CDATA[Активные]]></string>
     <string name="_bx_timeline_grid_column_title_adm_description"><![CDATA[Событие]]></string>
@@ -183,22 +189,15 @@
     <string name="_bx_timeline_grid_action_err_delete"><![CDATA[Невозможно удалить выбранную(ные) событие(я) ленты.]]></string>
     <string name="_bx_timeline_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 
-  <string name="_bx_timeline_menu_item_title_system_timeline"><![CDATA[Лента]]></string>
-    <string name="_bx_timeline_menu_item_title_timeline"><![CDATA[Лента]]></string>
-
-    <string name="_bx_timeline_menu_item_title_system_create_entry"><![CDATA[Статус]]></string>
-    <string name="_bx_timeline_menu_item_title_create_entry"><![CDATA[Статус]]></string>
-
-	<string name="_bx_timeline_menu_item_title_system_view_timeline_view"><![CDATA[Лента]]></string>
-	<string name="_bx_timeline_menu_item_title_view_timeline_view"><![CDATA[Лента]]></string>
-  
-  
-
-	<string name="_bx_timeline_alert_module_timeline_common_post"><![CDATA[Лента (разместить)]]></string>
-	<string name="_bx_timeline_alert_module_timeline_common_repost"><![CDATA[Лента (сделать репост)]]></string>
-	<string name="_bx_timeline_alert_action_added"><![CDATA[добавить]]></string>
-	<string name="_bx_timeline_alert_action_post_common"><![CDATA[добавить сообщение]]></string>
+    <string name="_bx_timeline_alert_module_timeline_common_post"><![CDATA[Лента (разместить)]]></string>
+    <string name="_bx_timeline_alert_module_timeline_common_repost"><![CDATA[Лента (сделать репост)]]></string>
+    <string name="_bx_timeline_alert_action_added"><![CDATA[добавить]]></string>
+    <string name="_bx_timeline_alert_action_post_common"><![CDATA[добавить сообщение]]></string>
     <string name="_bx_timeline_alert_action_repost"><![CDATA[добавить репост]]></string>
+    <string name="_bx_timeline_alert_action_post_common_follow_member"><![CDATA[Новый контент]]></string>
+    <string name="_bx_timeline_alert_action_post_common_follow_context"><![CDATA[Новый контент]]></string>
+    <string name="_bx_timeline_alert_action_repost_follow_member"><![CDATA[Новый репост контента]]></string>
+    <string name="_bx_timeline_alert_action_repost_follow_context"><![CDATA[Новый репост контента]]></string>
 
 	<string name="_bx_timeline_txt_msg_no_results"><![CDATA[Пусто]]></string>
 	<string name="_bx_timeline_txt_msg_performed_action"><![CDATA[Действие было успешно выполнено.]]></string>

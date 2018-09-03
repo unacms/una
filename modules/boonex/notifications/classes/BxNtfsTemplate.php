@@ -50,6 +50,21 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
+    public function getSettingsBlock($sDeliveryType, $aParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sGrid = !empty($aParams['grid']) ? $aParams['grid'] : $CNF['OBJECT_GRID_SETTINGS_COMMON'];
+        $oTemplate = !empty($aParams['template']) ? $aParams['template'] : $this;
+
+        $oGrid = BxDolGrid::getObjectInstance($sGrid, $oTemplate);
+        if(!$oGrid)
+            return '';
+
+        $oGrid->setDeliveryType($sDeliveryType);
+        return $oGrid->getCode();
+    }
+
     public function getPosts($aParams)
     {
     	$sJsObject = $this->_oConfig->getJsObject('view');

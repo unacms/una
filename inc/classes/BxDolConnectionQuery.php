@@ -54,10 +54,13 @@ class BxDolConnectionQuery extends BxDolDb
     public function getConnectedContentSQLParts ($sContentTable, $sContentField, $iInitiator, $isMutual = false)
     {
         $aResult = $this->getConnectedContentSQLPartsExt($sContentTable, $sContentField, $iInitiator, $isMutual);
+
+        $aFields = array();
+        foreach($aResult['fields'] as $sFieldAlias => $aField)
+            $aFields[$sFieldAlias] = "`" . $aField['table_alias'] . "`.`" . $aField['name'] . "`";
+
         return array(
-            'fields' => array(
-                'added' => "`" . $aResult['join']['table_alias'] . "`.`added`"
-            ),
+            'fields' => $aFields,
             'join' => $aResult['join']['type'] . " JOIN `" . $aResult['join']['table'] . "` AS `" . $aResult['join']['table_alias'] . "` ON (" . $aResult['join']['condition'] . ")",
         );
     }
@@ -69,9 +72,12 @@ class BxDolConnectionQuery extends BxDolDb
             $sWhere .= $this->prepareAsString(" AND `c`.`mutual` = ?", $isMutual);
 
         return array(
+            'fields' => array(
+                'added' => array('table_alias' => 'c', 'name' => 'added')
+            ),
             'join' => array(
                 'type' => 'INNER',
-				'table' => $this->_sTable,
+                'table' => $this->_sTable,
                 'table_alias' => 'c',
             	'condition' => "`c`.`content` = `" . $sContentTable . "`.`" . $sContentField . "`" . $sWhere
             )

@@ -356,6 +356,10 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     {
     	$sModule = $this->_aModule['name'];
 
+        $aSettingsTypes = array('follow_context');
+        if($this->serviceActAsProfile())
+            $aSettingsTypes[] = 'follow_member';
+
         return array(
             'handlers' => array(
                 array('group' => $sModule . '_vote', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVote', 'module_name' => $sModule, 'module_method' => 'get_notifications_vote', 'module_class' => 'Module'),
@@ -367,11 +371,23 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
                 
                 array('group' => $sModule . '_timeline_post_common', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'timeline_post_common', 'module_name' => $sModule, 'module_method' => 'get_notifications_timeline_post_common', 'module_class' => 'Module'),
             ),
+            'settings' => array(
+                array('group' => 'vote', 'unit' => $sModule, 'action' => 'doVote', 'types' => $aSettingsTypes),
+                
+                array('group' => 'fan', 'unit' => $sModule, 'action' => 'fan_added', 'types' => $aSettingsTypes),
+
+                array('group' => 'join', 'unit' => $sModule, 'action' => 'join_request', 'types' => $aSettingsTypes),
+
+                array('group' => 'timeline_post', 'unit' => $sModule, 'action' => 'timeline_post_common', 'types' => $aSettingsTypes)
+            ),
             'alerts' => array(
                 array('unit' => $sModule, 'action' => 'doVote'),
                 array('unit' => $sModule, 'action' => 'undoVote'),
+
                 array('unit' => $sModule, 'action' => 'fan_added'),
+
                 array('unit' => $sModule, 'action' => 'join_request'),
+
                 array('unit' => $sModule, 'action' => 'timeline_post_common'),
             )
         );

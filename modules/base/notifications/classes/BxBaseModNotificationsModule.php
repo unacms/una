@@ -19,6 +19,16 @@ define('BX_BASE_MOD_NTFS_TYPE_CONNECTIONS', 'connections');
 define('BX_BASE_MOD_NTFS_TYPE_PUBLIC', 'public');
 
 /**
+ * DTYPE - Delivery Type:
+ * 1. by Onsite notification,
+ * 2. by Email message,
+ * 3. by Push notification.
+ */
+define('BX_BASE_MOD_NTFS_DTYPE_SITE', 'site');
+define('BX_BASE_MOD_NTFS_DTYPE_EMAIL', 'email');
+define('BX_BASE_MOD_NTFS_DTYPE_PUSH', 'push');
+
+/**
  * Base module class.
  */
 class BxBaseModNotificationsModule extends BxBaseModGeneralModule
@@ -127,20 +137,11 @@ class BxBaseModNotificationsModule extends BxBaseModGeneralModule
             if($aHandler['type'] != BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT)
                 continue;
 
-			$_sUnit = '_' . $aHandler['alert_unit'];
-			$sUnit = _t($_sUnit);
-			if(strcmp($_sUnit, $sUnit) === 0)
-				$sUnit = _t($sLangPrefix . '_alert_module_' . $aHandler['alert_unit']);
+            $sUnit = _t($this->_oConfig->getHandlersUnitTitle($aHandler['alert_unit']));
 
-			$sAction = '';
-            if(!empty($aHandler['alert_action'])) {
-            	$_sAction = '_' . $aHandler['alert_unit'] . '_alert_action_' . $aHandler['alert_action'];
-            	$sAction = _t($_sAction);
-            	if(strcmp($_sAction, $sAction) === 0)
-					$sAction = _t($sLangPrefix . '_alert_action_' . $aHandler['alert_action']);
-
-            	$sAction = ' (' . $sAction . ')';
-            }
+            $sAction = '';
+            if(!empty($aHandler['alert_action']))
+            	$sAction = ' (' . _t($this->_oConfig->getHandlersActionTitle($aHandler['alert_unit'], $aHandler['alert_action'])) . ')';
 
             $aResults[$aHandler['id']] = $sUnit . $sAction;
         }

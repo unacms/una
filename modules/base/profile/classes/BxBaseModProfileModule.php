@@ -706,6 +706,8 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         
         $a['handlers'][] = array('group' => $sModule . '_timeline_post_common', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'timeline_post_common', 'module_name' => $sModule, 'module_method' => 'get_notifications_timeline_post_common', 'module_class' => 'Module');
 
+        $a['settings'][] = array('group' => 'timeline_post', 'unit' => $sModule, 'action' => 'timeline_post_common', 'types' => array('follow_member'));
+
         $a['alerts'][] = array('unit' => $sModule, 'action' => 'timeline_post_common');
 
         return $a;

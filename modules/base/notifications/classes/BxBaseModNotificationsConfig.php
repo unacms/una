@@ -11,11 +11,11 @@
 
 class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
 {
-	protected $_oDb;
+    protected $_oDb;
 
     protected $_aObjects;
 
-	protected $_aHandlerDescriptor;
+    protected $_aHandlerDescriptor;
     protected $_sHandlersMethod;
     protected $_aHandlers;
     protected $_aHandlersHidden;
@@ -32,36 +32,36 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
     {
         parent::__construct($aModule);
 
-		$this->_aPrefixes = array();
-		$this->_aObjects = array(
-			'alert' => $this->_sName,
+        $this->_aPrefixes = array();
+        $this->_aObjects = array(
+            'alert' => $this->_sName,
 
-			'privacy_view' => $this->_sName . '_privacy_view',
+            'privacy_view' => $this->_sName . '_privacy_view',
 
-			'conn_subscriptions' => 'sys_profiles_subscriptions'
-		);
+            'conn_subscriptions' => 'sys_profiles_subscriptions'
+        );
 
         $this->_aHandlerDescriptor = array();
         $this->_sHandlersMethod = '';
         $this->_aHandlersHidden = array();
         $this->_aHandlers = array();
 
-		$this->_aJsClasses = array();
-		$this->_aJsObjects = array();
+        $this->_aJsClasses = array();
+        $this->_aJsObjects = array();
 
-		$this->_aPerPage = array();
-		$this->_aHtmlIds = array();
+        $this->_aPerPage = array();
+        $this->_aHtmlIds = array();
 
-		$this->_sAnimationEffect = 'fade';
+        $this->_sAnimationEffect = 'fade';
         $this->_iAnimationSpeed = 'slow';
 
         $this->_aPrivacyViewDefault = array(
-        	'object' => BX_DOL_PG_ALL,
-        	'event' => BX_DOL_PG_ALL
+            'object' => BX_DOL_PG_ALL,
+            'event' => BX_DOL_PG_ALL
         );
     }
 
-	public function init(&$oDb)
+    public function init(&$oDb)
     {
         $this->_oDb = &$oDb;
         $sOptionPrefix = $this->getPrefix('option');
@@ -82,13 +82,34 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
             $this->_aHandlersHidden = explode(',', $sHideTimeline);
     }
 
-	public function getHandlerDescriptor()
+    public function getHandlerDescriptor()
     {
     	return $this->_aHandlerDescriptor;
     }
+
     public function getHandlersMethod()
     {
     	return $this->_sHandlersMethod;
+    }
+
+    public function getHandlersUnitTitle($sUnit)
+    {
+        $sKey = '_' . $sUnit;
+        if(strcmp($sKey, _t($sKey)) === 0)
+            $sKey = $this->getPrefix('language') . '_alert_module_' . $sUnit;
+
+        return $sKey;
+    }
+
+    public function getHandlersActionTitle($sUnit, $sAction, $sType = '')
+    {
+        $sKeyMask = '_%s_alert_action_%s' . (!empty($sType) ? '_%s' : '');
+
+        $sKey = sprintf($sKeyMask, $sUnit, $sAction, $sType);
+        if(strcmp($sKey, _t($sKey)) === 0)
+            $sKey = sprintf($sKeyMask, trim($this->getPrefix('language'), '_'), $sAction, $sType);
+
+        return $sKey;
     }
 
     public function isHandler($sKey = '')

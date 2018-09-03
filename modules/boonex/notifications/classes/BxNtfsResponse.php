@@ -221,7 +221,7 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
         if(empty($aEvent) || !is_array($aEvent))
             return;
 
-        $aTypes = array(BX_NTFS_DTYPE_EMAIL, BX_NTFS_DTYPE_PUSH);
+        $aTypes = array(BX_BASE_MOD_NTFS_DTYPE_EMAIL, BX_BASE_MOD_NTFS_DTYPE_PUSH);
         $aTypesToSend = array();
         foreach($aTypes as $sType) {
             $aHidden = $this->_oModule->_oConfig->getHandlersHidden($sType);

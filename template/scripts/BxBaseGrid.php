@@ -397,29 +397,44 @@ class BxBaseGrid extends BxDolGrid
     protected function _getRowsDataDesign (&$aData)
     {
         $aGrid = array();
-        if (empty($aData)) {
 
+        if(empty($aData))
             $aGrid[] = array(
-                'row' => '<td class="bx-def-padding-sec-bottom bx-def-padding-sec-top" colspan="' . count($this->_aOptions['fields']) . '">' . MsgBox(_t('_Empty')) . '</td>',
                 'id_row' => 0,
                 'row_class' => 'bx-grid-table-row-empty',
+                'row' => '<td class="bx-def-padding-sec-topbottom" colspan="' . count($this->_aOptions['fields']) . '">' . MsgBox(_t('_Empty')) . '</td>'
             );
-
-        } else {
-
-            foreach ($aData as $aRow) {
-                $sRow = '';
-                foreach ($this->_aOptions['fields'] as $sKey => $aField)
-                    $sRow .= $this->_getCellDesign($sKey, $aField, $aRow);
-
+        else
+            foreach ($aData as $aRow)
                 $aGrid[] = array(
-                    'row' => $sRow,
-                    'id_row' => $this->_sObject . '_row_' . $aRow[$this->_aOptions['field_id']],
+                    'id_row' => $this->_getRowId($aRow),
                     'row_class' => $this->_isRowDisabled($aRow) ? 'bx-grid-table-row-disabled bx-def-font-grayed' : '',
+                    'row' => $this->_getRowDesign($aRow)
                 );
-            }
-        }
+
         return $aGrid;
+    }
+
+    protected function _getRowId($mixedRow)
+    {
+        if(is_string($mixedRow))
+            $sId = rand(1, getrandmax());
+        else
+            $sId = $mixedRow[$this->_aOptions['field_id']];
+
+        return $this->_sObject . '_row_' . $sId;
+    }
+
+    protected function _getRowDesign($mixedRow)
+    {
+        $sRow = '';
+        if(is_string($mixedRow))
+            $sRow = '<td class="bx-def-padding-sec-topbottom bx-def-font-bold" colspan="' . count($this->_aOptions['fields']) . '">' . $mixedRow . '</td>';
+        else
+            foreach($this->_aOptions['fields'] as $sKey => $aField)
+                $sRow .= $this->_getCellDesign($sKey, $aField, $mixedRow);
+
+        return $sRow;
     }
 
     protected function _getCellDesign($sKey, $aField, $aRow)

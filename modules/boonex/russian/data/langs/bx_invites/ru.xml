@@ -140,5 +140,7 @@
 	<string name="_bx_invites_request_status_for_filter_joined"><![CDATA[Присоединился]]></string>
 	<string name="_bx_invites_title_date_invite_sent"><![CDATA[Дата отправки]]></string>
 	<string name="_bx_invites_title_date_invite_seen"><![CDATA[Дата просмотра]]></string>
+
 	<string name="_bx_invites_alert_action_request"><![CDATA[<b class="bx-ntfs-content-profile">{entry_sample}</b> запросил приглашение - <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
+        <string name="_bx_invites_alert_action_request_notify_personal"><![CDATA[Новые запросы]]></string>
 </resources>

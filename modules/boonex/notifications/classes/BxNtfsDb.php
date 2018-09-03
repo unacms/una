@@ -19,6 +19,13 @@ class BxNtfsDb extends BxBaseModNotificationsDb
     function __construct(&$oConfig)
     {
         parent::__construct($oConfig);
+
+        $this->_aDeliveryTypes = array(
+            BX_BASE_MOD_NTFS_DTYPE_SITE, 
+            BX_BASE_MOD_NTFS_DTYPE_EMAIL, 
+            BX_BASE_MOD_NTFS_DTYPE_PUSH
+        );
+
         $this->_sTableEvt2Usr = $this->_sPrefix . 'events2users';
     }
 
@@ -35,76 +42,101 @@ class BxNtfsDb extends BxBaseModNotificationsDb
         ));
     }
 
-	protected function _getSqlPartsEventsList($aParams)
-	{
-		$sJoinClause = $sWhereClause = "";
+    protected function _getSqlPartsEvents($aParams)
+    {
+        list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause) = parent::_getSqlPartsEvents($aParams);
 
-		if(isset($aParams['active']))
-			$sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`active`=? ", (int)$aParams['active']);
+        $sJoinClause .= " INNER JOIN `{$this->_sTableSettings}` ON `{$this->_sTableHandlers}`.`id`=`{$this->_sTableSettings}`.`handler_id` AND `{$this->_sTableSettings}`.`delivery`='" . BX_BASE_MOD_NTFS_DTYPE_SITE . "' AND `{$this->_sTableSettings}`.`active`='1'";
+        $sJoinClause .= "LEFT JOIN `{$this->_sTableSettings2Users}` ON `{$this->_sTableSettings}`.`id`=`{$this->_sTableSettings2Users}`.`setting_id` ";
 
-		//--- Apply modules or handlers filter
-		$sWhereModuleFilter = '';
-		if(!empty($aParams['modules']) && is_array($aParams['modules']))
-			$sWhereModuleFilter = "AND `" . $this->_sTable . "`.`type` IN (" . $this->implode_escape($aParams['modules']) . ") ";
+        return array($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);
+    }
 
-		if($sWhereModuleFilter == '') {
-			$aHidden = $this->_oConfig->getHandlersHidden();
-			$sWhereModuleFilter = !empty($aHidden) && is_array($aHidden) ? "AND `" . $this->_sTableHandlers . "`.`id` NOT IN (" . $this->implode_escape($aHidden) . ") " : "";
-		}
+    protected function _getSqlPartsEventsList($aParams)
+    {
+        $sJoinClause = $sWhereClause = "";
 
-		if($sWhereModuleFilter != '')
-			$sWhereClause .= $sWhereModuleFilter;
+        if(isset($aParams['active']))
+            $sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`active`=? ", (int)$aParams['active']);
 
-		//--- Check flag 'New'
-		if(!empty($aParams['new']) && !empty($aParams['owner_id']))
-			$sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`id`>? ", $this->getLastRead((int)$aParams['owner_id']));
+        //--- Apply modules or handlers filter
+        $sWhereModuleFilter = '';
+        if(!empty($aParams['modules']) && is_array($aParams['modules']))
+            $sWhereModuleFilter = "AND `" . $this->_sTable . "`.`type` IN (" . $this->implode_escape($aParams['modules']) . ") ";
 
-		//--- Apply privacy filter
-		$aPrivacy = array(BX_DOL_PG_ALL);
-		if(isLogged())
-			$aPrivacy[] = BX_DOL_PG_MEMBERS;
+        if($sWhereModuleFilter == '') {
+            $aHidden = $this->_oConfig->getHandlersHidden();
+            $sWhereModuleFilter = !empty($aHidden) && is_array($aHidden) ? "AND `" . $this->_sTableHandlers . "`.`id` NOT IN (" . $this->implode_escape($aHidden) . ") " : "";
+        }
 
-		$oPrivacy = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'));
-		$aQueryParts = $oPrivacy->getContentByGroupAsSQLPart($aPrivacy);
-		$sWhereClause .= $aQueryParts['where'] . " ";
+        if($sWhereModuleFilter != '')
+            $sWhereClause .= $sWhereModuleFilter;
 
-		//--- Check type
-		if(!empty($aParams['owner_id']))
-			switch($aParams['type']) {
-				case BX_BASE_MOD_NTFS_TYPE_OWNER:
-					$sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`owner_id`=? ", $aParams['owner_id']);
-					break;
+        //--- Check flag 'New'
+        if(!empty($aParams['new']) && !empty($aParams['owner_id']))
+            $sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`id`>? ", $this->getLastRead((int)$aParams['owner_id']));
 
-				case BX_BASE_MOD_NTFS_TYPE_OBJECT_OWNER:
-					$sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`owner_id`<>`{$this->_sTable}`.`object_owner_id` AND `{$this->_sTable}`.`object_owner_id`=? ", $aParams['owner_id']);
-					break;
+        //--- Apply privacy filter
+        $aPrivacy = array(BX_DOL_PG_ALL);
+        if(isLogged())
+            $aPrivacy[] = BX_DOL_PG_MEMBERS;
 
-				case BX_BASE_MOD_NTFS_TYPE_CONNECTIONS:
-					$oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
+        $oPrivacy = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'));
+        $aQueryParts = $oPrivacy->getContentByGroupAsSQLPart($aPrivacy);
+        $sWhereClause .= $aQueryParts['where'] . " ";
 
-					$aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sPrefix . "events", 'owner_id', $aParams['owner_id']);
-					if(!empty($aQueryParts['join']))
-					    $sJoinClause .= ' ' . $aQueryParts['join'];
-					if(!empty($aQueryParts['fields']['added']))
-					    $sWhereClause .= "AND `{$this->_sTable}`.`date` > " . $aQueryParts['fields']['added'];
+        //--- Check type
+        if(!empty($aParams['owner_id']))
+                switch($aParams['type']) {
+                    case BX_BASE_MOD_NTFS_TYPE_OWNER:
+                        $sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`owner_id`=? ", $aParams['owner_id']);
+                        break;
 
-					$sWhereClause .= "AND `{$this->_sTable}`.`action` <> 'replyPost' ";
-					break;
+                    case BX_BASE_MOD_NTFS_TYPE_OBJECT_OWNER:
+                        $sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`owner_id`<>`{$this->_sTable}`.`object_owner_id` AND `{$this->_sTable}`.`object_owner_id`=? ", $aParams['owner_id']);
+                        $this->prepareAsString("AND `{$this->_sTableSettings}`.`type`=? AND `{$this->_sTableSettings}`.`active`='1' AND (ISNULL(`{$this->_sTableSettings2Users}`.`active`) OR `{$this->_sTableSettings2Users}`.`active`='1') ", BX_NTFS_STYPE_PERSONAL);
+                        break;
 
-                case BX_NTFS_TYPE_OBJECT_OWNER_AND_CONNECTIONS:
-                    $oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
+                    case BX_BASE_MOD_NTFS_TYPE_CONNECTIONS:
+                        $oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
+                        $aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sPrefix . "events", 'owner_id', $aParams['owner_id']);
+                        if(empty($aQueryParts) || !is_array($aQueryParts) || empty($aQueryParts['join']))
+                            break;
 
-					$aQueryParts = $oConnection->getConnectedContentAsSQLParts($this->_sPrefix . "events", 'owner_id', $aParams['owner_id']);
-					if(!empty($aQueryParts['join']))
-					    $sJoinClause .= ' ' . str_replace('INNER', 'LEFT', $aQueryParts['join']);
+                        $sJoinClause .= " LEFT JOIN `sys_profiles` AS `tsp` ON `{$this->_sTable}`.`owner_id`=`tsp`.`id` " . $aQueryParts['join'];
 
-					$sWhereClause .= $this->prepareAsString("AND ((NOT ISNULL(`c`.`content`)" . (!empty($aQueryParts['fields']['added']) ? " AND `{$this->_sTable}`.`date` > " . $aQueryParts['fields']['added'] : "") . " AND `{$this->_sTable}`.`action` <> 'replyPost') || (`{$this->_sTable}`.`owner_id` <> `{$this->_sTable}`.`object_owner_id` AND `{$this->_sTable}`.`object_owner_id`=?)) ", $aParams['owner_id']);
-                    break;
-			}
-            
+                        if(!empty($aQueryParts['fields']['added']))
+                            $sWhereClause .= "AND `{$this->_sTable}`.`date` > " . $aQueryParts['fields']['added'];
 
-		return array($sJoinClause, $sWhereClause);
-	}
+                        list($aModulesProfiles, $aModulesContexts) = $this->_oConfig->getProfileBasedModules();
+                        $sWhereClause .= $this->prepareAsString("AND ((`{$this->_sTableSettings}`.`type`=? AND `tsp`.`type` IN (" . $this->implode_escape($aModulesProfiles) . ")) || (`{$this->_sTableSettings}`.`type`=? AND `tsp`.`type` IN (" . $this->implode_escape($aModulesContexts) . "))) ", BX_NTFS_STYPE_FOLLOW_MEMBER, BX_NTFS_STYPE_FOLLOW_CONTEXT);
+                        break;
+
+                    case BX_NTFS_TYPE_OBJECT_OWNER_AND_CONNECTIONS:
+                        $sWhereClauseObjectOwner = $this->prepareAsString("`{$this->_sTable}`.`owner_id` <> `{$this->_sTable}`.`object_owner_id` AND `{$this->_sTable}`.`object_owner_id`=? ", $aParams['owner_id']);
+                        $sWhereClauseObjectOwner .= $this->prepareAsString("AND `{$this->_sTableSettings}`.`type`=?", BX_NTFS_STYPE_PERSONAL);
+
+                        $sWhereClauseConnections = '0';
+                        $oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
+                        $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($this->_sTable, 'owner_id', $aParams['owner_id']);
+                        if(!empty($aQueryParts) && is_array($aQueryParts) && !empty($aQueryParts['join'])) {
+                            $sJoinClause .= " LEFT JOIN `sys_profiles` AS `tsp` ON `{$this->_sTable}`.`owner_id`=`tsp`.`id`";
+                            $sJoinClause .= " LEFT JOIN `" . $aQueryParts['join']['table'] . "` AS `" . $aQueryParts['join']['table_alias'] . "` ON (" . $aQueryParts['join']['condition'] . ")";
+
+                            $sWhereClauseConnections = "NOT ISNULL(`c`.`content`) ";
+                            if(!empty($aQueryParts['fields']['added']))
+                                $sWhereClauseConnections .= "AND `{$this->_sTable}`.`date` > `" . $aQueryParts['fields']['added']['table_alias'] . "`.`" . $aQueryParts['fields']['added']['name'] . "` ";
+
+                            list($aModulesProfiles, $aModulesContexts) = $this->_oConfig->getProfileBasedModules();
+                            $sWhereClauseConnections .= $this->prepareAsString("AND ((`{$this->_sTableSettings}`.`type`=? AND `tsp`.`type` IN (" . $this->implode_escape($aModulesProfiles) . ")) || (`{$this->_sTableSettings}`.`type`=? AND `tsp`.`type` IN (" . $this->implode_escape($aModulesContexts) . "))) ", BX_NTFS_STYPE_FOLLOW_MEMBER, BX_NTFS_STYPE_FOLLOW_CONTEXT);
+                        }
+
+                        $sWhereClause .= "AND ((" . $sWhereClauseObjectOwner . ") || (" . $sWhereClauseConnections . ")) AND `{$this->_sTableSettings}`.`active`='1' AND (ISNULL(`{$this->_sTableSettings2Users}`.`active`) OR `{$this->_sTableSettings2Users}`.`active`='1') ";
+                        break;
+                }
+
+        return array($sJoinClause, $sWhereClause);
+    }
 }
 
 /** @} */

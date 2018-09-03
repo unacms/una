@@ -13,12 +13,21 @@ bx_import('BxDolPrivacy');
 
 class BxNtfsConfig extends BxBaseModNotificationsConfig
 {
-	protected $_iOwnerNameMaxLen;
-	protected $_iContentMaxLen;
+    protected $_iOwnerNameMaxLen;
+    protected $_iContentMaxLen;
     protected $_iPushMaxLen;
 
     protected $_aHandlersHiddenEmail;
     protected $_aHandlersHiddenPush;
+
+    /**
+     * Group settings by action. Enabled by default.
+     */
+    protected $_bSettingsGrouped;
+    protected $_aSettingsTypes;
+
+    protected $_aModulesProfiles;
+    protected $_aModulesContexts;
 
     /**
      * Constructor
@@ -28,15 +37,25 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
         parent::__construct($aModule);
 
         $this->CNF = array (
-        	'URL_HOME' => 'page.php?i=notifications-view',
+            'URL_HOME' => 'page.php?i=notifications-view',
 
-        	'OBJECT_MENU_SUBMENU' => 'bx_notifications_submenu', // main module submenu
+            'OBJECT_MENU_SUBMENU' => 'bx_notifications_submenu', // main module submenu
+            'OBJECT_MENU_SETTINGS' => 'bx_notifications_settings', // settings submenu
+            'OBJECT_GRID_SETTINGS_ADMINISTRATION' => 'bx_notifications_settings_administration',
+            'OBJECT_GRID_SETTINGS_COMMON' => 'bx_notifications_settings_common',
+
+            'T' => array(
+                'setting_personal' => '_bx_ntfs_setting_type_personal',
+                'setting_follow_member' => '_bx_ntfs_setting_type_follow_member',
+                'setting_follow_context' => '_bx_ntfs_setting_type_follow_context',
+                'setting_other' => '_bx_ntfs_setting_type_other',
+            )
         );
-        
-		$this->_aPrefixes = array(
-        	'style' => 'bx-ntfs',
-        	'language' => '_bx_ntfs',
-        	'option' => 'bx_notifications_'
+
+        $this->_aPrefixes = array(
+            'style' => 'bx-ntfs',
+            'language' => '_bx_ntfs',
+            'option' => 'bx_notifications_'
         );
 
         $this->_iOwnerNameMaxLen = 21;
@@ -48,22 +67,33 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
         $this->_aHandlersHiddenEmail = array();
         $this->_aHandlersHiddenPush = array();
 
+        $this->_bSettingsGrouped = true;
+        $this->_aSettingsTypes = array(
+            BX_NTFS_STYPE_PERSONAL,
+            BX_NTFS_STYPE_FOLLOW_MEMBER,
+            BX_NTFS_STYPE_FOLLOW_CONTEXT,
+            //BX_NTFS_STYPE_OTHER           //TODO: May be it can be removed, because there is no events(alerts) for this type.
+        );
+
+        $this->_aModulesProfiles = false;
+        $this->_aModulesContexts = false;
+
         $this->_aJsClasses = array(
             'main' => 'BxNtfsMain',
-        	'view' => 'BxNtfsView',
+            'view' => 'BxNtfsView',
         );
         $this->_aJsObjects = array(
-        	'main' => 'oBxNtfsMain',
+            'main' => 'oBxNtfsMain',
             'view' => 'oBxNtfsView',
         );
 
         $sHtmlPrefix = str_replace('_', '-', $this->_sName);
         $this->_aHtmlIds = array(
-        	'view' => array(
-        		'block' => $sHtmlPrefix,
-        		'events' => $sHtmlPrefix . '-events',
-        		'event' => $sHtmlPrefix . '-event-'
-        	)
+            'view' => array(
+                'block' => $sHtmlPrefix,
+                'events' => $sHtmlPrefix . '-events',
+                'event' => $sHtmlPrefix . '-event-'
+            )
         );
     }
 
@@ -73,9 +103,11 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
 
     	$sOptionPrefix = $this->getPrefix('option');
     	$this->_aPerPage = array(
-    		'default' => (int)getParam($sOptionPrefix . 'events_per_page'),
+            'default' => (int)getParam($sOptionPrefix . 'events_per_page'),
     	    'preview' => (int)getParam($sOptionPrefix . 'events_per_preview')
     	);
+
+        $this->_bSettingsGrouped = getParam($sOptionPrefix . 'enable_group_settings') == 'on';
 
     	$aSettings = array(
     	    'site' => '',
@@ -89,12 +121,12 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
     	}
     }
 
-	public function getOwnerNameMaxLen()
+    public function getOwnerNameMaxLen()
     {
         return $this->_iOwnerNameMaxLen;
     }
 
-	public function getContentMaxLen()
+    public function getContentMaxLen()
     {
         return $this->_iContentMaxLen;
     }
@@ -112,12 +144,43 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
         return $this->{'_aHandlersHidden' . ucfirst($sType)};
     }
 
+    public function isSettingsGrouped()
+    {
+        return $this->_bSettingsGrouped;
+    }
+
+    public function getSettingsTypes()
+    {
+        return $this->_aSettingsTypes;
+    }
+
     /**
      * Ancillary functions
      */
     public function getViewUrl()
     {
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=notifications-view');
+    }
+
+    public function getProfileBasedModules() {
+        if($this->_aModulesProfiles !== false && $this->_aModulesContexts !== false)
+            return array($this->_aModulesProfiles, $this->_aModulesContexts);
+
+        $this->_aModulesProfiles = array();
+        $this->_aModulesContexts = array();
+
+        $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules'));
+        foreach($aModules as $aModule) {
+            if(!BxDolRequest::serviceExists($aModule['name'], 'act_as_profile'))
+                continue;
+
+            if(BxDolService::call($aModule['name'], 'act_as_profile'))
+                $this->_aModulesProfiles[] = $aModule['name'];
+            else
+                $this->_aModulesContexts[] = $aModule['name'];
+        }
+
+        return array($this->_aModulesProfiles, $this->_aModulesContexts);
     }
 }
 

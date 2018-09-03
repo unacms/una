@@ -232,4 +232,5 @@
 
   <string name="_bx_channels_txt_ntfs_timeline_post_common"><![CDATA[New post <b class="bx-ntfs-content-entry">{subentry_sample}</b> in <b class="bx-ntfs-content-profile">{owner_name}</b> channel timeline]]></string>
   <string name="_bx_channels_ntfs_txt_subobject_added"><![CDATA[<b class="bx-ntfs-content-entry">{entry_caption}</b> added new content to channel <b class="bx-ntfs-content-profile">{owner_name}</b>]]></string>
+  <string name="_bx_channels_alert_action_hashtag_added_notif_follow_context"><![CDATA[New hashtags]]></string>
 </resources>

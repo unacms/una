@@ -310,6 +310,9 @@ class BxInvModule extends BxDolModule
             'handlers' => array(
                 array('group' => $sModule . '_object', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'request_notify', 'module_name' => $sModule, 'module_method' => 'get_notifications_request', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
             ),
+            'settings' => array(
+                array('group' => 'request', 'unit' => $sModule, 'action' => 'request_notify', 'types' => array('personal')),
+            ),
             'alerts' => array(
                 array('unit' => $sModule, 'action' => 'request_notify'),
             )
