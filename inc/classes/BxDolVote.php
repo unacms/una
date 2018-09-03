@@ -305,7 +305,7 @@ class BxDolVote extends BxDolObject
      */
     protected function _getIconDoLike($bVoted)
     {
-    	return $bVoted && $this->isUndo() ?  'thumbs-down' : 'thumbs-up';
+    	return $bVoted && $this->isUndo() ?  'thumbs-up' : 'thumbs-up';
     }
 
     protected function _getTitleDoLike($bVoted)
