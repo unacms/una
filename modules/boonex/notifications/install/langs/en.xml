@@ -51,7 +51,7 @@
     <string name="_bx_ntfs_alert_action_doVote"><![CDATA[add vote]]></string>
     <string name="_bx_ntfs_alert_action_timeline_post_common"><![CDATA[post to timeline]]></string> 
 
-    <string name="_bx_ntfs_alert_action_mention_added_personal"><![CDATA[Someone Mentions you]]></string>
+    <string name="_bx_ntfs_alert_action_mention_added_personal"><![CDATA[Someone mentions you]]></string>
     <string name="_bx_ntfs_alert_action_friendship_added_personal"><![CDATA[You get a new friend]]></string>
     <string name="_bx_ntfs_alert_action_subscription_added_personal"><![CDATA[You get a new follower]]></string>
     <string name="_bx_ntfs_alert_action_added_follow_member"><![CDATA[New content]]></string>
