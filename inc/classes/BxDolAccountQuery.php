@@ -327,6 +327,14 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton
 
     			$sWhereClause = " AND `ta`.`added` > :date AND `ta`.`added` < UNIX_TIMESTAMP()";
     			break;
+                
+            case 'confirmed':
+    			$sWhereClause = " AND (`ta`.`email_confirmed` = 1 OR `ta`.`phone_confirmed` = 1)";
+    			break;
+                
+            case 'unconfirmed':
+    			$sWhereClause = " AND (`ta`.`email_confirmed` = 0 AND `ta`.`phone_confirmed` = 0)";
+    			break;
     	}
 
     	$sGroupClause = $sGroupClause ? "GROUP BY " . $sGroupClause : "";
