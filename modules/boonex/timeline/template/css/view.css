@@ -136,6 +136,27 @@ div.bx-tl-item div.bx-tl-owner-actions .bx-btn {
 	vertical-align: middle;
 }
 
+/*--- Item Meta Info Style ---*/
+.bx-tl-item-meta {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+}
+.bx-tl-item-meta ul.bx-menu-custom.bx-menu-hor > li > span {
+        margin-right: 0;
+}
+.bx-tl-item-meta ul.bx-menu-custom li:first-child .bx-tl-item-meta-div {
+    display: none;
+}
+.bx-tl-item-meta ul.bx-menu-custom li .bx-tl-item-meta-item,
+.bx-tl-item-meta ul.bx-menu-custom li .bx-tl-item-meta-div,
+.bx-tl-item-meta ul.bx-menu-custom li .bx-btn {
+    position: relative;
+    float: none;
+    display: inline-block;
+    vertical-align: middle;
+}
 
 /*--- Item Content Style ---*/
 div.bx-tl-item-content {

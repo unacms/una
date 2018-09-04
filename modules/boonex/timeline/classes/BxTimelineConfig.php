@@ -135,6 +135,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
         	'menu_item_manage' => $this->_sName . '_menu_item_manage',
         	'menu_item_actions' => $this->_sName . '_menu_item_actions',
+                'menu_item_meta' => $this->_sName . '_menu_item_meta',
         	'menu_post_attachments' => $this->_sName . '_menu_post_attachments',
 
         	'form_post' => $this->_sName . '_post',

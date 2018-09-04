@@ -942,6 +942,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $aTmplVarsNote = $this->_getTmplVarsNote($aEvent);
         $aTmplVarsMenuItemActions = $this->_getTmplVarsMenuItemActions($aEvent, $aBrowseParams);
+        $aTmplVarsMenuItemMeta = $this->_getTmplVarsMenuItemMeta($aEvent, $aBrowseParams);
 
         $aTmplVarsOwnerActions = $this->_getTmplVarsOwnerActions($aEvent);
         $bTmplVarsOwnerActions = !empty($aTmplVarsOwnerActions); 
@@ -1051,6 +1052,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'condition' => !empty($aTmplVarsMenuItemActions),
                 'content' => $aTmplVarsMenuItemActions
             ),
+            'bx_if:show_menu_item_meta' => array(
+                'condition' => !empty($aTmplVarsMenuItemMeta),
+                'content' => $aTmplVarsMenuItemMeta
+            ),
             'comments' => '',
         );
 
@@ -1126,6 +1131,21 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'style_prefix' => $this->_oConfig->getPrefix('style'),
             'js_object' => $this->_oConfig->getJsObject('view'),
             'menu_item_actions' => $sMenu
+        );
+    }
+
+    protected function _getTmplVarsMenuItemMeta(&$aEvent, $aBrowseParams = array())
+    {
+        $oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_meta'));
+        $oMenu->setEvent($aEvent);
+
+        $sMenu = $oMenu->getCode();
+        if(empty($sMenu))
+            return array();
+
+        return array(
+            'style_prefix' => $this->_oConfig->getPrefix('style'),
+            'meta' => $sMenu
         );
     }
 
