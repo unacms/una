@@ -84,7 +84,8 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
                 $this->aCurrent['title'] = _t('_bx_albums_page_title_browse_media_in_album');
                 $this->aCurrent['rss']['link'] = 'modules/?r=albums/rss_media/' . $sMode . '/' . (int)$aParams['album_id'];
                 $this->aCurrent['sorting'] = 'order';
-                $this->sOrderDirection = 'ASC';                
+                $this->sOrderDirection = 'ASC';
+                $this->setProcessPrivateContent(true);
                 break;
 
             case 'favorite':
@@ -92,6 +93,7 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
                     $this->isError = true;
                     break;
                 }
+                $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
                 break;
 
             case 'recent':
@@ -99,6 +101,7 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
                 $this->aCurrent['title'] = _t('_bx_albums_page_title_browse_recent_media');
                 $this->aCurrent['rss']['link'] = 'modules/?r=albums/rss_media/' . $sMode; 
                 $this->aCurrent['sorting'] = 'last';
+                $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
                 break;
 
             case 'featured':
@@ -107,6 +110,7 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
                 $this->aCurrent['restriction']['featured']['value'] = '0';
                 $this->aCurrent['rss']['link'] = 'modules/?r=albums/rss_media/' . $sMode;
                 $this->aCurrent['sorting'] = 'featured';
+                $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
                 break;
 
             case 'popular':
@@ -114,6 +118,7 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
                 $this->aCurrent['title'] = _t('_bx_albums_page_title_browse_popular_media');
                 $this->aCurrent['rss']['link'] = BxDolPermalinks::getInstance()->permalink('modules/?r=albums/rss_media/' . $sMode);
                 $this->aCurrent['sorting'] = 'popular';
+                $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
                 break;
 
             case '': // search results
@@ -127,9 +132,7 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
         }
 
         $this->sBrowseUrl = $this->_replaceMarkers($this->sBrowseUrl);
-        $this->aCurrent['title'] = $this->_replaceMarkers($this->aCurrent['title']);
-
-        $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
+        $this->aCurrent['title'] = $this->_replaceMarkers($this->aCurrent['title']); 
 
         $this->removeContainerClass('bx-def-margin-bottom-neg');
         $this->addContainerClass(array('bx-def-margin-sec-lefttopright-neg', 'bx-def-margin-sec-bottom-neg', 'bx-albums-medias-wrapper'));
@@ -163,6 +166,12 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
         $this->aCurrent['paginate']['perPage'] = 1;
         $this->aCurrent['restriction']['next_prev2'] = array('value' => $aMediaInfo['id'], 'field' => 'id', 'operator' => '!=');
 
+        $this->setProcessPrivateContent(true);
+        $aRestrictions = array_keys($this->aCurrent['restriction']);
+        foreach ($aRestrictions as $sKey) 
+            if (0 === strpos($sKey, 'privacy_'))
+                unset($this->aCurrent['restriction'][$sKey]);
+        
         switch ($this->aCurrent['sorting']) {
             case 'order':
                 $this->sOrderDirection = $isNext ? 'ASC' : 'DESC';
