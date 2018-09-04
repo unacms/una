@@ -257,8 +257,19 @@ class BxBaseCmts extends BxDolCmts
             $sReplies = $this->getComments(array('parent_id' => $aCmt['cmt_id'], 'vparent_id' => $aCmt['cmt_id'], 'type' => $aBp['type']), $aDp);
         }
 
-		$sAgo = bx_time_js($aCmt['cmt_time']);
-        $bObjectTitle = !empty($this->_aSystem['trigger_field_title']);
+        $aTmplVarsMeta = array();
+        if(!empty($this->_sMenuObjMeta)) {
+            $oMenuMeta = BxDolMenu::getObjectInstance($this->_sMenuObjMeta, $this->_oTemplate);
+            if($oMenuMeta) {
+                $oMenuMeta->setCmtsData($this, $aCmt['cmt_id']);
+
+                $aTmplVarsMeta = array(
+                    'style_prefix' => $this->_sStylePrefix,
+                    'meta' => $oMenuMeta->getCode()
+                );
+            }
+        }
+
         return $this->_oTemplate->parseHtmlByName('comment.html', array_merge(array(
             'system' => $this->_sSystem,
             'style_prefix' => $this->_sStylePrefix,
@@ -271,19 +282,9 @@ class BxBaseCmts extends BxDolCmts
                 'condition' => !empty($aTmplReplyTo),
                 'content' => $aTmplReplyTo
             ),
-            'bx_if:show_ago_link' => array(
-                'condition' => $bObjectTitle,
-                'content' => array(
-                    'style_prefix' => $this->_sStylePrefix,
-                    'view_link' => $this->getViewUrl($aCmt['cmt_id']),
-                    'ago' => $sAgo
-                )
-            ),
-            'bx_if:show_ago_text' => array(
-                'condition' => !$bObjectTitle,
-                'content' => array(
-                    'ago' => $sAgo
-                )
+            'bx_if:meta' => array(
+                'condition' => !empty($aTmplVarsMeta),
+                'content' => $aTmplVarsMeta
             ),
             'bx_if:show_attached' => array(
                 'condition' => !empty($sAttachments),

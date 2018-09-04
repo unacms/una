@@ -93,8 +93,7 @@
     	background-color: rgb(255, 244, 213);
     	background-color: rgba(255, 234, 193, 0.5);
     }
-	div.cmt-head,
-	div.cmt-subhead {
+	div.cmt-head {
 		text-align: left;
     	text-overflow: ellipsis;
 		white-space: nowrap;
@@ -108,6 +107,32 @@
     }
 	span.cmt-points {
         text-transform: lovercase;
+    }
+
+    /*--- unit meta ---*/
+    .cmt-meta {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: left;
+    }
+    .cmt-meta ul.bx-menu-custom.bx-menu-hor > li > span {
+            margin-right: 0;
+    }
+    .cmt-meta ul.bx-menu-custom li:first-child .cmt-meta-div {
+        display: none;
+    }
+    .cmt-meta ul.bx-menu-custom li .cmt-meta-item,
+    .cmt-meta ul.bx-menu-custom li .cmt-meta-div,
+    .cmt-meta ul.bx-menu-custom li .bx-btn {
+        position: relative;
+        float: none;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .cmt-meta ul.bx-menu-custom li .cmt-meta-item .cmt-meta-ago {
+        font-size: 12px;
+        font-size: .75rem;
     }
 
     /*--- Comment Body ---*/
@@ -158,7 +183,7 @@
 		position: relative;
 		text-align: left;
 	}
-	div.cmt-ago,
+	div.cmt-meta-ago,
 	div.cmt-comment-manage-link, 
 	div.cmt-actions ul.bx-menu-hor,
 	div.cmt-points-wrp {

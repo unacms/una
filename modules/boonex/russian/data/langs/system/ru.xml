@@ -2298,6 +2298,7 @@
 	<string name="_sys_menu_set_title_add_profile"><![CDATA[Добавить профиль]]></string>
 	<string name="_sys_menu_set_title_cmts_item_actions"><![CDATA[Комментарий - Действия]]></string>
 	<string name="_sys_menu_set_title_cmts_item_manage"><![CDATA[Комментарий - Управление]]></string>
+        <string name="_sys_menu_set_title_cmts_item_meta"><![CDATA[Комментарий - Мета инфо]]></string>
 	<string name="_sys_menu_set_title_switch_language"><![CDATA[Переключить язык]]></string>
 	<string name="_sys_menu_set_title_switch_template"><![CDATA[Переключить тему]]></string>
 	<string name="_sys_menu_set_title_sys_social_sharing"><![CDATA[Социальные сети]]></string>
@@ -2342,6 +2343,7 @@
 	<string name="_sys_menu_title_add_profile_vertical"><![CDATA[Добавить профиль - Меню вертикальное]]></string>
 	<string name="_sys_menu_title_cmts_item_actions"><![CDATA[Комментарий - Действия]]></string>
 	<string name="_sys_menu_title_cmts_item_manage"><![CDATA[Комментарий - Управление]]></string>
+        <string name="_sys_menu_title_cmts_item_meta"><![CDATA[Комментарий - Мета инфо]]></string>
 	<string name="_sys_menu_title_footer"><![CDATA[Основание - Ссылки]]></string>
 	<string name="_sys_menu_title_main"><![CDATA[Сайт - Навигация]]></string>
 	<string name="_sys_menu_title_homepage"><![CDATA[Меню на главной странице]]></string>

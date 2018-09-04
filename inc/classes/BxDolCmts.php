@@ -140,6 +140,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     protected $_sMenuObjManage;
     protected $_sMenuObjActions;
+    protected $_sMenuObjMeta;
 
     protected $_sViewUrl = '';
     protected $_sBaseUrl = '';
@@ -230,6 +231,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
         $this->_sMenuObjManage = 'sys_cmts_item_manage';
         $this->_sMenuObjActions = 'sys_cmts_item_actions';
+        $this->_sMenuObjMeta = 'sys_cmts_item_meta';
 
         $this->_sMetatagsObj = 'sys_cmts';
 
@@ -1254,6 +1256,11 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return $this->_oQuery->getCommentsBy(array('type' => 'search_ids', 'search_params' => $aParams, 'start' => $iStart, 'per_page' => $iPerPage));
     }
 
+    public function getAuthorInfo($iAuthorId = 0)
+    {
+        return $this->_getAuthorInfo($iAuthorId);
+    }
+
     /**
      * Internal functions
      */
@@ -1271,7 +1278,6 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     {
         return getVisitorIP();
     }
-
 
     protected function _getAuthorInfo($iAuthorId = 0)
     {
