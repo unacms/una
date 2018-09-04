@@ -1,7 +1,7 @@
 
 -- TABLES
 
-DROP TABLE IF EXISTS `bx_froala_files`;
+DROP TABLE IF EXISTS `bx_froala_files`, `bx_froala_images_resized`;
 
 -- STORAGES & TRANSCODERS
 
