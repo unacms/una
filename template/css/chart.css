@@ -35,8 +35,8 @@ div.bx-chart-stats-items {
 div.bx-chart-stats-items div.bx-cs-item {
 	display: inline-block;
 	vertical-align: top;
-	width: 30%;
-
+	width: 33%;
+    float:left;
 	text-align: left;
 	text-overflow: ellipsis;
 	white-space: nowrap;
