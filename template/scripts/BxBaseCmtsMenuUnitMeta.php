@@ -79,8 +79,8 @@ class BxBaseCmtsMenuUnitMeta extends BxTemplMenuUnitMeta
             return '';
 
         return $this->getUnitMetaItemText(_t($aMembership['name']), array(
-                'class' => $this->_sStylePrefix . '-membership'
-            ));
+            'class' => $this->_sStylePrefix . '-membership'
+        ));
     }
 }
 

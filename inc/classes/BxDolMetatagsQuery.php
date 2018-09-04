@@ -57,7 +57,7 @@ class BxDolMetatagsQuery extends BxDolDb
 
     public function keywordsGet($mixedContentId)
     {
-        $sQuery = $this->prepare("SELECT `keyword` FROM `{$this->_aObject['table_keywords']}` WHERE `object_id` = ? ORDER BY CHAR_LENGTH(`keyword`) DESC LIMIT ?", $mixedContentId, BX_METATAGS_KEYWORDS_MAX);
+        $sQuery = $this->prepare("SELECT `keyword` FROM `{$this->_aObject['table_keywords']}` WHERE `object_id` = ? ORDER BY CHAR_LENGTH(`keyword`) DESC LIMIT ?", $mixedContentId, (int)getParam('sys_metatags_hashtags_max'));
         return $this->getColumn($sQuery);
     }
 

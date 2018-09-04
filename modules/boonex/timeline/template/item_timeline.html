@@ -23,7 +23,9 @@
                         <i class="sys-icon caret-right"></i> <a href="__owner_url__" class="__style_prefix__-timeline-owner-name">__owner_username__</a> 
                     </bx_if:show_timeline_owner>
                     <span class="bx-def-font-small"> __item_owner_action__ </span><br /> 
-                    <a class="__style_prefix__-date bx-base-text-unit-date bx-def-font-small" href="__item_view_url__"> __item_date__ </a> 
+                    <bx_if:show_menu_item_meta>
+                        <span class="__style_prefix__-item-meta bx-def-font-small">__meta__</span>
+                    </bx_if:show_menu_item_meta>
                     <bx_if:show_pinned>
                         <span class="__style_prefix__-pinned bx-def-margin-thd-left">
                             <i class="sys-icon thumbtack bx-def-margin-thd-left" title="<bx_text_attribute:_bx_timeline_txt_pinned />"></i>
