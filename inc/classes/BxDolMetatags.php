@@ -7,9 +7,6 @@
  * @{
  */
 
-define('BX_METATAGS_KEYWORDS_MAX', 9);
-define('BX_METATAGS_MENTIONS_MAX', 9);
-
 /**
  * Meta-tags for different content. It can handle \#keywords, \@mentions, locations and meta image for the content.
  *
@@ -314,7 +311,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      */
     public function keywordsAdd($iId, $s) 
     {
-        return $this->_metaAdd($iId, ' ' . strip_tags(str_replace(array('<br>', '<br />', '<hr>', '<hr />', '</p>'), "\n", $s)), '/[\PL\PN]\#(\pL[\pL\pN_]+)/u', 'keywordsDelete', 'keywordsAdd', BX_METATAGS_KEYWORDS_MAX, 'keyword');
+        return $this->_metaAdd($iId, ' ' . strip_tags(str_replace(array('<br>', '<br />', '<hr>', '<hr />', '</p>'), "\n", $s)), '/[\PL\PN]\#(\pL[\pL\pN_]+)/u', 'keywordsDelete', 'keywordsAdd', (int)getParam('sys_metatags_hashtags_max'), 'keyword');
     }
 
     /**
@@ -789,7 +786,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      */
     public function mentionsAdd($iId, $s) 
     {
-        return $this->_metaAdd($iId, $s, '/data\-profile\-id="(\d+)"/u', 'mentionsDelete', 'mentionsAdd', BX_METATAGS_MENTIONS_MAX, 'mention');
+        return $this->_metaAdd($iId, $s, '/data\-profile\-id="(\d+)"/u', 'mentionsDelete', 'mentionsAdd', (int)getParam('sys_metatags_mentions_max'), 'mention');
     }
 
     /**
