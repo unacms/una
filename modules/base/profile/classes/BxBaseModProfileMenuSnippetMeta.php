@@ -90,7 +90,7 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         if(!$iFriends && !$this->_bShowZeros)
             return false;
 
-        return $this->_oTemplate->getUnitMetaItemText(_t('_sys_menu_item_title_sm_friends', $iFriends));
+        return $this->getUnitMetaItemText(_t('_sys_menu_item_title_sm_friends', $iFriends));
     }
 
     protected function _getMenuItemSubscribers($aItem)
@@ -108,7 +108,7 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         if(!$iSubscribers && !$this->_bShowZeros)
             return false;
 
-        return $this->_oTemplate->getUnitMetaItemText(_t('_sys_menu_item_title_sm_subscribers', $iSubscribers));
+        return $this->getUnitMetaItemText(_t('_sys_menu_item_title_sm_subscribers', $iSubscribers));
     }
 
     protected function _getMenuItemConnection($sConnection, $sAction, &$aItem)
@@ -129,7 +129,7 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         if(empty($sTitle))
             return false;
 
-        return $this->_oTemplate->getUnitMetaItemButtonSmall($sTitle, array(
+        return $this->getUnitMetaItemButtonSmall($sTitle, array(
         	'onclick' => "bx_conn_action(this, '" . $sConnection . "', '" . $sAction . "', '" . $iContentProfile . "')"
         ));
     }
@@ -192,7 +192,7 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
             return false;
 
         $aMembership = BxDolAcl::getInstance()->getMemberMembershipInfo($this->_oContentProfile->id());
-        return $aMembership ? $this->_oTemplate->getUnitMetaItemText(_t($aMembership['name'])) : false;
+        return $aMembership ? $this->getUnitMetaItemText(_t($aMembership['name'])) : false;
     }
 }
 

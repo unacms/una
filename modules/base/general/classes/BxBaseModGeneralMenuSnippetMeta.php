@@ -9,9 +9,9 @@
  * @{
  */
 
-class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuCustom
+class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
 {
-	protected $_bShowZeros;
+    protected $_bShowZeros;
 
     protected $_sModule;
     protected $_oModule;
@@ -21,11 +21,14 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuCustom
 
     public function __construct($aObject, $oTemplate = false)
     {
+        $this->_oModule = BxDolModule::getInstance($this->_sModule);
+        if(empty($oTemplate))
+            $oTemplate = $this->_oModule->_oTemplate;
+
         parent::__construct($aObject, $oTemplate);
 
+        $this->_sStylePrefix = 'bx-base-general-unit-meta';
         $this->_bShowZeros = false;
-
-        $this->_oModule = BxDolModule::getInstance($this->_sModule);
     }
 
     public function getCode()
@@ -51,7 +54,7 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuCustom
 
         $oProfile = BxDolProfile::getInstanceMagic($this->_aContentInfo[$CNF['FIELD_AUTHOR']]);
 
-        return $this->_oTemplate->getUnitMetaItemLink($oProfile->getDisplayName(), array(
+        return $this->getUnitMetaItemLink($oProfile->getDisplayName(), array(
             'href' => $oProfile->getUrl(),
             'class' => 'bx-base-text-unit-author'
         ));
@@ -61,7 +64,7 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuCustom
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        return $this->_oTemplate->getUnitMetaItemText(bx_time_js($this->_aContentInfo[$CNF['FIELD_ADDED']], BX_FORMAT_DATE));
+        return $this->getUnitMetaItemText(bx_time_js($this->_aContentInfo[$CNF['FIELD_ADDED']], BX_FORMAT_DATE));
     }
 
     protected function _getMenuItemCategory($aItem)
@@ -76,7 +79,7 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuCustom
             return false;
 
         $sTitle = $oCategory->getCategoryTitle($this->_aContentInfo[$CNF['FIELD_CATEGORY']]);
-        return $this->_oTemplate->getUnitMetaItemCustom($oCategory->getCategoryLink($sTitle, $this->_aContentInfo[$CNF['FIELD_CATEGORY']]));
+        return $this->getUnitMetaItemCustom($oCategory->getCategoryLink($sTitle, $this->_aContentInfo[$CNF['FIELD_CATEGORY']]));
     }
 
     protected function _getMenuItemTags($aItem)
@@ -90,7 +93,7 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuCustom
         if(!$oMetatags || !$oMetatags->keywordsIsEnabled())
             return false;
 
-        return $this->_oTemplate->getUnitMetaItemCustom($oMetatags->getKeywordsList($this->_aContentInfo[$CNF['FIELD_ID']], 3));
+        return $this->getUnitMetaItemCustom($oMetatags->getKeywordsList($this->_aContentInfo[$CNF['FIELD_ID']], 3));
     }
 
     protected function _getMenuItemViews($aItem)
@@ -100,7 +103,7 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuCustom
         if(empty($CNF['FIELD_VIEWS']) || (empty($this->_aContentInfo[$CNF['FIELD_VIEWS']]) && !$this->_bShowZeros))
             return false;
 
-        return $this->_oTemplate->getUnitMetaItemText(_t('_view_n_views', $this->_aContentInfo[$CNF['FIELD_VIEWS']]));
+        return $this->getUnitMetaItemText(_t('_view_n_views', $this->_aContentInfo[$CNF['FIELD_VIEWS']]));
     }
 
     protected function _getMenuItemRating($aItem)
@@ -114,7 +117,7 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuCustom
         if(!$oVotes)
             return false;
 
-        return $this->_oTemplate->getUnitMetaItemCustom($oVotes->getElementInline(array('show_counter' => true)));
+        return $this->getUnitMetaItemCustom($oVotes->getElementInline(array('show_counter' => true)));
     }
 
     protected function _getMenuItemComments($aItem)
@@ -128,7 +131,7 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuCustom
         if(!$oComments || !$oComments->isEnabled())
             return false;
 
-        return $this->_oTemplate->getUnitMetaItemLink(_t('_cmt_txt_n_comments', $this->_aContentInfo[$CNF['FIELD_COMMENTS']]), array(
+        return $this->getUnitMetaItemLink(_t('_cmt_txt_n_comments', $this->_aContentInfo[$CNF['FIELD_COMMENTS']]), array(
             'href' => $oComments->getListUrl()
         ));
     }
@@ -150,15 +153,15 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuCustom
             return $sResult;
         
         if(!empty($aItem['link']))
-            $sResult = $this->_oTemplate->getUnitMetaItemLink($aItem['title'], array(
+            $sResult = $this->getUnitMetaItemLink($aItem['title'], array(
                 'href' => $aItem['link']
             ));
         else if(!empty($aItem['onclick']))
-            $sResult = $this->_oTemplate->getUnitMetaItemButtonSmall($aItem['title'], array(
+            $sResult = $this->getUnitMetaItemButtonSmall($aItem['title'], array(
             	'onclick' => $aItem['onclick']
             ));
         else 
-            $sResult = $this->_oTemplate->getUnitMetaItemText($aItem['title']);
+            $sResult = $this->getUnitMetaItemText($aItem['title']);
         
         return $sResult;
     }

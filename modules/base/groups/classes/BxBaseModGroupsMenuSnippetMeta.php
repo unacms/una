@@ -53,7 +53,7 @@ class BxBaseModGroupsMenuSnippetMeta extends BxBaseModProfileMenuSnippetMeta
         if(!$iFriends)
             return false;
 
-        return $this->_oTemplate->getUnitMetaItemText(_t('_sys_menu_item_title_sm_members', $iFriends));
+        return $this->getUnitMetaItemText(_t('_sys_menu_item_title_sm_members', $iFriends));
     }
 
     protected function _getMenuItemConnectionsTitle($sAction, &$oConnection)
@@ -110,7 +110,7 @@ class BxBaseModGroupsMenuSnippetMeta extends BxBaseModProfileMenuSnippetMeta
         if (!($sLocation = $oMeta->locationsString($this->_iContentId, false, $bCountryOnly ? array('country_only' => 1) : array('country_city_only' => 1))))
             return false;
 
-        return $this->_oTemplate->getUnitMetaItemText($sLocation);
+        return $this->getUnitMetaItemText($sLocation);
     }
 }
 

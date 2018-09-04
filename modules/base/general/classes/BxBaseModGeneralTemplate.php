@@ -60,31 +60,6 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         return ($mixedWrap === true || (is_array($mixedWrap) && isset($mixedWrap['wrap']) && $mixedWrap['wrap'] === true)) ? $this->_wrapInTagJsCode($sContent) : $sContent;
     }
 
-    public function getUnitMetaItemLink($sContent, $aAttrs = array())
-    {
-        return $this->getUnitMetaItem('a', $sContent, $aAttrs);
-    }
-
-    public function getUnitMetaItemText($sContent, $aAttrs = array())
-    {
-        return $this->getUnitMetaItem('span', $sContent, $aAttrs);
-    }
-
-    public function getUnitMetaItemButton($sContent, $aAttrs = array())
-    {
-        return $this->getUnitMetaItem('button', $sContent, $aAttrs);
-    }
-
-    public function getUnitMetaItemButtonSmall($sContent, $aAttrs = array())
-    {
-        return $this->getUnitMetaItem('sbutton', $sContent, $aAttrs);
-    }
-
-    public function getUnitMetaItemCustom($sContent)
-    {
-        return $this->getUnitMetaItem('custom', $sContent);
-    }
-
     public function getProfileLink($mixedProfile)
     {
     	if(!is_array($mixedProfile))
@@ -220,47 +195,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         ));
     }
 
-    protected function getUnitMetaItem($sName, $sContent, $aAttrs = array(), $sTemplate = 'unit_meta_item.html')
-    {
-        if(empty($sContent))
-            return '';
-
-        if(!is_array($aAttrs))
-            $aAttrs = array();
-
-        $aTags = array('span', 'a', 'button', 'sbutton', 'custom');
-
-        $sTmplVarsClass = ''; 
-        if(!empty($aAttrs['class'])) {
-            $sTmplVarsClass = $aAttrs['class'];
-            unset($aAttrs['class']);
-        }
-
-        $aTmplVarsAttrs = array();
-        foreach($aAttrs as $sKey => $sValue)
-            $aTmplVarsAttrs[] = array('key' => $sKey, 'value' => bx_html_attribute($sValue));
-
-        $aTmplVars = array();
-        foreach($aTags as $sTag) {
-            $aTmplVarsTag = array();
-            $bTmplVarsTag = $sTag == $sName;
-            if($bTmplVarsTag)
-                $aTmplVarsTag = array(
-                    'class' => $sTmplVarsClass,
-                    'content' => $sContent,
-                    'bx_repeat:attrs' => $aTmplVarsAttrs
-                );
-
-            $aTmplVars['bx_if:' . $sTag] = array(
-            	'condition' => $bTmplVarsTag,
-                'content' => $aTmplVarsTag
-            );
-        }
-
-        return $this->parseHtmlByName($sTemplate, $aTmplVars);
-    }
-
-	protected function getAttachments ($sStorage, $aData, $aParams = array())
+    protected function getAttachments ($sStorage, $aData, $aParams = array())
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 

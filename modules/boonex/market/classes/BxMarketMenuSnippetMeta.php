@@ -26,7 +26,7 @@ class BxMarketMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
         if(!$oProfile) 
             $oProfile = BxDolProfileUndefined::getInstance();
 
-        return $this->_oTemplate->getUnitMetaItemText($oProfile->getDisplayName());
+        return $this->getUnitMetaItemText($oProfile->getDisplayName());
     }
 }
 

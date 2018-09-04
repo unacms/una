@@ -40,7 +40,7 @@ class BxPollsMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
             ),
         ));
 
-        return $this->_oTemplate->getUnitMetaItemCustom($sContent);
+        return $this->getUnitMetaItemCustom($sContent);
     }
 }
 
