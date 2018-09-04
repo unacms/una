@@ -130,7 +130,8 @@
         display: inline-block;
         vertical-align: middle;
     }
-    .cmt-meta ul.bx-menu-custom li .cmt-meta-item .cmt-meta-ago {
+    .cmt-meta ul.bx-menu-custom li .cmt-meta-item .cmt-meta-ago,
+    .cmt-meta ul.bx-menu-custom li .cmt-meta-item .cmt-meta-membership {
         font-size: 12px;
         font-size: .75rem;
     }

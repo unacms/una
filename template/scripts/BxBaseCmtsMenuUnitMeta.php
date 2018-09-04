@@ -71,6 +71,17 @@ class BxBaseCmtsMenuUnitMeta extends BxTemplMenuUnitMeta
                 'class' => $this->_sStylePrefix . '-ago'
             ));
     }
+
+    protected function _getMenuItemMembership($aItem)
+    {
+        $aMembership = BxDolAcl::getInstance()->getMemberMembershipInfo($this->_aCmt['cmt_author_id']);
+        if(empty($aMembership) || !is_array($aMembership))
+            return '';
+
+        return $this->getUnitMetaItemText(_t($aMembership['name']), array(
+                'class' => $this->_sStylePrefix . '-membership'
+            ));
+    }
 }
 
 /** @} */
