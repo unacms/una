@@ -9,10 +9,11 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 ('bx_notifications_view', 1, @sName, '_bx_ntfs_page_block_title_view', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:14:"get_block_view";}', 0, 1, 1);
 
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_notifications_settings', '_bx_ntfs_page_title_system_settings', '_bx_ntfs_page_title_settings', @sName, 5, 2147483647, 1, 'notifications-settings', 'page.php?i=notifications-settings', '', '', '', 0, 1, 0, 'BxNtfsPageSettings', 'modules/boonex/notifications/classes/BxNtfsPageSettings.php');
+('bx_notifications_settings', '_bx_ntfs_page_title_system_settings', '_bx_ntfs_page_title_settings', @sName, 1, 2147483647, 1, 'notifications-settings', 'page.php?i=notifications-settings', '', '', '', 0, 1, 0, 'BxNtfsPageSettings', 'modules/boonex/notifications/classes/BxNtfsPageSettings.php');
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
-('bx_notifications_settings', 1, @sName, '_bx_ntfs_page_block_title_settings', 11, 2147483644, 'service', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:18:"get_block_settings";}', 0, 1, 1);
+('bx_notifications_settings', 1, @sName, '_bx_ntfs_page_block_title_delivery', 13, 2147483644, 'menu', 'bx_notifications_settings', 0, 0, 1),
+('bx_notifications_settings', 2, @sName, '_bx_ntfs_page_block_title_settings', 13, 2147483644, 'service', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:18:"get_block_settings";}', 0, 1, 1);
 
 -- PAGES: add page block on dashboard
 SET @iPBCellDashboard = 3;

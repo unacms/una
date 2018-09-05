@@ -21,6 +21,15 @@ class BxNtfsPageSettings extends BxTemplPage
     	$this->_sModule = 'bx_notifications';
         $this->_oModule = BxDolModule::getInstance($this->_sModule);
 
+        if(empty($sDeliveryType) && bx_get('delivery') !== false)
+            $sDeliveryType = bx_process_input(bx_get('delivery'));
+
+        if(empty($sDeliveryType))
+            $sDeliveryType = BX_BASE_MOD_NTFS_DTYPE_SITE;
+
+        $oMenu = BxDolMenu::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_MENU_SETTINGS']);
+        $oMenu->setSelected($this->_oModule->_oConfig->getName(), 'notifications-' . $sDeliveryType);
+
         $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
         if($oMenuSubmenu) {
             $sSubmenu = 'sys_account_settings_submenu';

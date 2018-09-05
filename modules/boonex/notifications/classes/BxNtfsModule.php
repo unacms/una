@@ -106,12 +106,8 @@ class BxNtfsModule extends BxBaseModNotificationsModule
 
         $this->_oDb->initSettingUser(bx_get_logged_profile_id());
 
-        $oMenu = BxDolMenu::getObjectInstance($this->_oConfig->CNF['OBJECT_MENU_SETTINGS']);
-        $oMenu->setSelected($this->_oConfig->getName(), 'notifications-' . $sDeliveryType);
-
         return array(
             'content' => $this->getBlockSettings($sDeliveryType, $aParams),
-            'menu' => $oMenu
         );
     }
 
