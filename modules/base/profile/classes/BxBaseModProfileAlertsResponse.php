@@ -42,24 +42,34 @@ class BxBaseModProfileAlertsResponse extends BxBaseModGeneralAlertsResponse
                 $this->sendMailFriendRequest($oAlert);
         }
 
-        // re-translate timeline alert for timeline in this module for posts made by other profiles
-        if ('bx_timeline' == $oAlert->sUnit && 'post_common' == $oAlert->sAction && ($oGroupProfile = BxDolProfile::getInstance($oAlert->aExtras['object_author_id'])) && $oGroupProfile->getModule() == $this->_oModule->getName() && $oGroupProfile->id() != $oAlert->iSender) {            
-            $aContentInfo = $this->_oModule->serviceGetContentInfoById($oGroupProfile->getContentId());
+        /*
+         * Re-translate timeline alert for timeline posts made by other profiles.
+         * It's used with Notifications module in the following circumstances:
+         * 1. User1 follow User2.
+         * 2. User1 doesn't follow User3.
+         * 3. User3 posts something on User2's timeline.
+         * Result: User1 would be notifiend when the timeline of following profile (User2) was update by 3d party user.
+         */
+        if($oAlert->sUnit == 'bx_timeline' && $oAlert->sAction == 'post_common') {
+            $oTimelineOwner = BxDolProfile::getInstance($oAlert->aExtras['object_author_id']);
+            if($oTimelineOwner && $oTimelineOwner->getModule() == $this->_oModule->getName() && $oTimelineOwner->id() != $oAlert->iSender) {
+                $aContentInfo = $this->_oModule->serviceGetContentInfoById($oTimelineOwner->getContentId());
 
-            /*
-             * Note. Group Profile ID is used as alert sender and also a content (group) owner (author).
-             */
-            $iSenderId = $iObjectAuthorId = $oGroupProfile->id(); 
-            bx_alert($this->_oModule->getName(), 'timeline_post_common', $aContentInfo[$CNF['FIELD_ID']], $iSenderId, array(
-            	'object_author_id' => $iObjectAuthorId,
-            	'timeline_post_id' => $oAlert->iObject, 
-                'timeline_post_author_id' => $oAlert->iSender,
+                /*
+                 * Note. Timeline owner profile ID is used as alert sender and also a content (group) owner (author).
+                 */
+                $iSenderId = $iObjectAuthorId = $oTimelineOwner->id(); 
+                bx_alert($this->_oModule->getName(), 'timeline_post_common', $aContentInfo[$CNF['FIELD_ID']], $iSenderId, array(
+                    'object_author_id' => $iObjectAuthorId,
+                    'timeline_post_id' => $oAlert->iObject, 
+                    'timeline_post_author_id' => $oAlert->iSender,
 
-            	'content' => $aContentInfo,
+                    'content' => $aContentInfo,
 
-            	'group_profile' => $oGroupProfile->id(), 
-            	'profile' => $oAlert->iSender,
-            ));
+                    'group_profile' => $oTimelineOwner->id(), 
+                    'profile' => $oAlert->iSender,
+                ));
+            }
         }
 
         if ($this->MODULE != $oAlert->sUnit)
@@ -85,8 +95,8 @@ class BxBaseModProfileAlertsResponse extends BxBaseModGeneralAlertsResponse
             $this->processTimelineEventsCheckResult($oAlert, $oAlert->iObject, 'checkAllowedEdit');
             break;
 
-        case 'timeline_share':
-            $this->processTimelineShare($oAlert, $oAlert->iObject);
+        case 'timeline_repost':
+            $this->processTimelineRepost($oAlert, $oAlert->iObject);
             break;
         }
 
@@ -165,7 +175,7 @@ class BxBaseModProfileAlertsResponse extends BxBaseModGeneralAlertsResponse
         $oAlert->aExtras['result'] = (CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->$sFunc($aContentInfo)) ? true : false;
     }
 
-    protected function processTimelineShare ($oAlert, $iGroupProfileId)
+    protected function processTimelineRepost ($oAlert, $iGroupProfileId)
     {
         if ($oAlert->aExtras['check_result'][CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
             return;

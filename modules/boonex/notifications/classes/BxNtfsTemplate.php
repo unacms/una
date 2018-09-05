@@ -115,13 +115,17 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
     	$oModule = $this->getModule();
 
     	if((int)$aEvent['processed'] == 0)
-    		$this->_processContent($aEvent);
+            $this->_processContent($aEvent);
 
         $aEvent['content'] = unserialize($aEvent['content']);
 
-    	$oPrivacy = $oModule->_oConfig->getPrivacyObject($aEvent['type'] . '_' . $aEvent['action']);
-    	if($oPrivacy !== false && !$oPrivacy->check($aEvent['id'])) 
-    		return '';
+        $oPrivacyInt = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'));
+        if(!$oPrivacyInt->check($aEvent['id']))
+            return '';
+
+    	$oPrivacyExt = $oModule->_oConfig->getPrivacyObject($aEvent['type'] . '_' . $aEvent['action']);
+    	if($oPrivacyExt !== false && !$oPrivacyExt->check($aEvent['id']))
+            return '';
 
         $sService = 'check_allowed_with_content';
         if(BxDolRequest::serviceExists($aEvent['type'], $sService) && BxDolService::call($aEvent['type'], $sService, array('view', $this->_getContentObjectId($aEvent))) !== CHECK_ACTION_RESULT_ALLOWED)

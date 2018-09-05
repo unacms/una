@@ -1231,7 +1231,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 array('group' => $sModule . '_vote', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVote'),
             ),
             'settings' => array(
-                array('group' => 'content', 'unit' => $sModule, 'action' => 'post_common', 'types' => array('follow_member', 'follow_context')),
+                array('group' => 'content', 'unit' => $sModule, 'action' => 'post_common', 'types' => array('personal', 'follow_member', 'follow_context')),
                 array('group' => 'content', 'unit' => $sModule, 'action' => 'repost', 'types' => array('follow_member', 'follow_context')),
                 array('group' => 'comment', 'unit' => $sModule, 'action' => 'commentPost', 'types' => array('personal', 'follow_member', 'follow_context')),
                 array('group' => 'vote', 'unit' => $sModule, 'action' => 'doVote', 'types' => array('personal', 'follow_member', 'follow_context'))
