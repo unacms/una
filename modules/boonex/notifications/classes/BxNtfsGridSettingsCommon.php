@@ -19,6 +19,11 @@ class BxNtfsGridSettingsCommon extends BxNtfsGridSettingsAdministration
 
         $this->_bAdministration = false;
     }
+
+    protected function _updateSettingTitle($sTitle, &$aRow)
+    {
+        return $this->_oModule->_oDb->updateSetting(array('title' => $sTitle), array('id' => $aRow['setting_id']));
+    }
 }
 
 /** @} */

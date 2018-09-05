@@ -65,11 +65,6 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
             $this->init();
     }
 
-    public function setType($sType)
-    {
-        $this->_sType = $sType;
-    }
-
     public function setDeliveryType($sType)
     {
         $this->_sDeliveryType = $sType;
@@ -118,6 +113,14 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
 
     protected function _getCellTitle($mixedValue, $sKey, $aField, $aRow)
     {
+        if(empty($mixedValue)) {
+            $mixedValueKey = $this->_oModule->_oConfig->getHandlersActionTitle($aRow['unit'], $aRow['action'], $aRow['type']);
+            $mixedValue = _t($mixedValueKey);
+
+            if(strcmp($mixedValueKey, $mixedValue) !== 0)
+                $this->_updateSettingTitle($mixedValueKey, $aRow);
+        }
+
         if($this->_bGrouped && $aRow['type'] == BX_NTFS_STYPE_OTHER)
             $mixedValue = sprintf($this->_sTitleMask, _t($this->_oModule->_oConfig->getHandlersUnitTitle($aRow['unit'])), $mixedValue);
 
@@ -162,6 +165,11 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
         }
 
         return $aResult;
+    }
+
+    protected function _updateSettingTitle($sTitle, &$aRow)
+    {
+        return $this->_oModule->_oDb->updateSetting(array('title' => $sTitle), array('id' => $aRow['id']));
     }
 }
 

@@ -89,15 +89,18 @@ class BxBaseModNotificationsDb extends BxBaseModGeneralDb
                 foreach($this->_aDeliveryTypes as $sDeliveryType) {
                     $iOrder = (int)$this->getSetting(array('by' => 'delivery_max_order', 'delivery' => $sDeliveryType));
 
-                    foreach($aSetting['types'] as $sType)
+                    foreach($aSetting['types'] as $sType) {
+                        $sTitle = $this->_oConfig->getHandlersActionTitle($aSetting['unit'], $aSetting['action'], $sType);
+
                         $this->query("INSERT INTO `{$this->_sTableSettings}` SET `group`=:group, `handler_id`=:handler_id, `type`=:type, `delivery`=:delivery, `title`=:title, `order`=:order", array(
                             'group' => $aSetting['group'],
                             'handler_id' => (int)$aHandlers[$sHandler],
                             'type' => $sType,
                             'delivery' => $sDeliveryType,
-                            'title' => $this->_oConfig->getHandlersActionTitle($aSetting['unit'], $aSetting['action'], $sType),
+                            'title' => strcmp($sTitle, _t($sTitle)) !== 0 ? $sTitle : '',
                             'order' => ++$iOrder
                         ));
+                    }
                 }
             }
 
@@ -226,6 +229,20 @@ class BxBaseModNotificationsDb extends BxBaseModGeneralDb
                 $sWhereClause = " AND `tsu`.`id`=:id";
                 break;
 
+            case 'tsu_allowed':
+                $aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = array(
+                    'handler_id' => $aParams['handler_id'], 
+                    'delivery' => $aParams['delivery'], 
+                    'type' => $aParams['type'], 
+                    'user_id' => $aParams['user_id']
+                );
+
+                $sSelectClause = "`ts`.`active` AS `active_adm`, IF(NOT ISNULL(`tsu`.`active`), `tsu`.`active`, 1) AS `active_pnl`";
+                $sJoinClause = "LEFT JOIN `" . $this->_sTableSettings2Users . "` AS `tsu` ON `ts`.`id`=`tsu`.`setting_id`";
+                $sWhereClause = " AND `ts`.`handler_id`=:handler_id AND `ts`.`delivery`=:delivery AND `ts`.`type`=:type AND `tsu`.`user_id`=:user_id";
+                break;
+
             case 'delivery_max_order':
                 $aMethod['name'] = 'getOne';
                 $aMethod['params'][1] = array(
@@ -284,6 +301,15 @@ class BxBaseModNotificationsDb extends BxBaseModGeneralDb
             WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
 
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+
+    public function updateSetting($aParamsSet, $aParamsWhere)
+    {
+        if(empty($aParamsSet) || empty($aParamsWhere))
+            return false;
+
+        $sSql = "UPDATE `{$this->_sTableSettings}` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $this->arrayToSQL($aParamsWhere, " AND ");
+        return $this->query($sSql);
     }
 
     public function activateSettingById($bActive, $mixedId)

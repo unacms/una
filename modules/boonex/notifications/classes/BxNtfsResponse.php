@@ -221,14 +221,14 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
         if(empty($aEvent) || !is_array($aEvent))
             return;
 
-        $aTypes = array(BX_BASE_MOD_NTFS_DTYPE_EMAIL, BX_BASE_MOD_NTFS_DTYPE_PUSH);
-        $aTypesToSend = array();
-        foreach($aTypes as $sType) {
-            $aHidden = $this->_oModule->_oConfig->getHandlersHidden($sType);
+        $aSendUsing = array();
+        $aDeliveryTypes = array(BX_BASE_MOD_NTFS_DTYPE_EMAIL, BX_BASE_MOD_NTFS_DTYPE_PUSH);
+        foreach($aDeliveryTypes as $sDeliveryType) {
+            $aHidden = $this->_oModule->_oConfig->getHandlersHidden($sDeliveryType);
             if(in_array($aHandler['id'], $aHidden))
                 continue;
 
-            $sMethodPostfix = bx_gen_method_name($sType);
+            $sMethodPostfix = bx_gen_method_name($sDeliveryType);
             $sMethodGet = 'getNotification' . $sMethodPostfix;
             $sMethodSend = 'sendNotification' . $sMethodPostfix;
             if(!method_exists($this->_oModule->_oTemplate, $sMethodGet) || !method_exists($this, $sMethodSend))
@@ -238,27 +238,38 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
             if($mixedContent === false)
                 continue;
 
-            //--- Get event.
-            $aTypesToSend[$sType] = array(
+            $aSendUsing[$sDeliveryType] = array(
             	'method' => $sMethodSend,
                 'content' => $mixedContent
             );
         }
 
-        if(empty($aTypesToSend) || !is_array($aTypesToSend))
+        if(empty($aSendUsing) || !is_array($aSendUsing))
             return;
 
-        //--- Get subscribers.
+        $iOwner = (int)$aEvent['owner_id'];
+        $aRecipients = array();
+
+        //--- Get recipients: Subscribers.
         $oConnection = BxDolConnection::getObjectInstance($this->_oModule->_oConfig->getObject('conn_subscriptions'));
-        $aRecipients = $oConnection->getConnectedInitiators($aEvent['owner_id']);
+        $aSubscribers = $oConnection->getConnectedInitiators($iOwner);
+        if(!empty($aSubscribers) && is_array($aSubscribers)) {
+            $oOwner = BxDolProfile::getInstance($iOwner);
+            $sSettingType = bx_srv($oOwner->getModule(), 'act_as_profile') ? BX_NTFS_STYPE_FOLLOW_MEMBER : BX_NTFS_STYPE_FOLLOW_CONTEXT;
 
-        //--- Get content owner.
-        if((int)$aEvent['owner_id'] != (int)$aEvent['object_owner_id'] && !in_array($aEvent['object_owner_id'], $aRecipients))
-            $aRecipients[] = $aEvent['object_owner_id'];
+            foreach($aSubscribers as $iSubscriber) 
+                $this->_addRecipient($iSubscriber, $sSettingType, $aRecipients);
+        }
 
+        //--- Get recipients: Content owner.
+        $iObjectOwner = (int)$aEvent['object_owner_id'];
+        if($iOwner != $iObjectOwner)
+            $this->_addRecipient($iObjectOwner, BX_NTFS_STYPE_PERSONAL, $aRecipients);
+
+        //--- Check recipients and send notifications.
         $oPrivacyInt = BxDolPrivacy::getObjectInstance($this->_oModule->_oConfig->getObject('privacy_view'));
         $oPrivacyExt = $this->_oModule->_oConfig->getPrivacyObject($aEvent['type'] . '_' . $aEvent['action']);
-        foreach($aRecipients as $iRecipient) {
+        foreach($aRecipients as $iRecipient => $aSettingTypes) {
             $oProfile = BxDolProfile::getInstance($iRecipient);
             if(!$oProfile)
                 continue;
@@ -267,19 +278,29 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
                 continue;
 
             if($oPrivacyExt !== false && !$oPrivacyExt->check($aEvent['id'], $iRecipient)) 
-    		    continue;
+                continue;
 
             if($oPrivacyInt !== false && !$oPrivacyInt->check($aEvent['id'], $iRecipient))
                 continue;
 
-            foreach($aTypesToSend as $aType)
-                $this->{$aType['method']}($oProfile, $aType['content']);
+            foreach($aSendUsing as $sDeliveryType => $aDeliveryType)
+                foreach($aSettingTypes as $sSettingType) {
+                    $aSetting = $this->_oModule->_oDb->getSetting(array('by' => 'tsu_allowed', 'handler_id' => $aHandler['id'], 'delivery' => $sDeliveryType, 'type' => $sSettingType, 'user_id' => $iRecipient));
+                    if(empty($aSetting) || !is_array($aSetting))
+                        continue;
+
+                    if((int)$aSetting['active_adm'] == 0 || (int)$aSetting['active_pnl'] == 0)
+                        continue;
+
+                    if($this->{$aDeliveryType['method']}($oProfile, $aDeliveryType['content']) !== false)
+                        break;
+                }
         }
     }
 
     protected function sendNotificationEmail($oProfile, $sContent)
     {
-        sendMailTemplate('bx_notifications_new_event', $oProfile->getAccountId(), $oProfile->id(), array('content' => $sContent), BX_EMAIL_NOTIFY, true);
+        return sendMailTemplate('bx_notifications_new_event', $oProfile->getAccountId(), $oProfile->id(), array('content' => $sContent), BX_EMAIL_NOTIFY, true);
     }
 
     protected function sendNotificationPush($oProfile, $aContent)
@@ -287,16 +308,15 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
         $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
 
         return BxDolPush::getInstance()->send($oProfile->id(), array(
-		    'contents' => array(
-    			 $sLanguage => $aContent['message']
-    		),
-			'headings' => array(
-				 $sLanguage => _t('_bx_ntfs_push_new_event_subject', getParam('site_title'))
-			),
-			'url' => $aContent['url'],
-			'icon' => $aContent['icon']
-		
-		), true);
+            'contents' => array(
+                $sLanguage => $aContent['message']
+            ),
+            'headings' => array(
+                $sLanguage => _t('_bx_ntfs_push_new_event_subject', getParam('site_title'))
+            ),
+            'url' => $aContent['url'],
+            'icon' => $aContent['icon']
+        ), true);
     }
 
     protected function _getObjectOwnerId($aExtras)
@@ -309,6 +329,14 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
             return (int)$aExtras['meta'];
 
         return 0;
+    }
+
+    protected function _addRecipient($iUser, $sSettingType, &$aRecipients)
+    {
+        if(!isset($aRecipients[$iUser]))
+            $aRecipients[$iUser] = array();
+
+        $aRecipients[$iUser][] = $sSettingType;
     }
 }
 
