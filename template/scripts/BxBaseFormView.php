@@ -257,7 +257,11 @@ BLAH;
                         if ($sContFields)
                             $sCont .= $sContHeader . $sContFields;
                         else
-                            $this->_isSectionOpened = false;
+                            $sContHeader = '';
+                        $sContFields = '';
+                    } 
+                    else {
+                        $sCont .= $sContFields;
                         $sContFields = '';
                     }
                     $sContHeader = $this->$sFuncGenRow($aInput);
