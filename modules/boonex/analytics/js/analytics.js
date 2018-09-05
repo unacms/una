@@ -119,7 +119,7 @@ BxAnalytics.prototype.dataToTable = function (oDataIn) {
         else{
             sTxt = oData.datasets[0].data[iDx].x;
         }
-        if (oDataIn.links && count(oDataIn.links) > 0) {
+        if (oDataIn.links && oDataIn.links.length > 0) {
             sTxt = "<a href='" + oDataIn.links[iDx] + "'>" + sTxt + "</a>"
         }
         sHtml += '<tr><td>&nbsp;'+  sTxt + '</td>';
