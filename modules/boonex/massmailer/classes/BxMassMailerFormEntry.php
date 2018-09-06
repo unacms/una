@@ -9,6 +9,20 @@
  * @{
  */
 
+class BxMassMailerFormCheckerHelper extends BxDolFormCheckerHelper
+{
+    static public function checkEmailOrEmpty($s)
+    {
+        if (trim($s) == '')
+            return true;
+        
+        if (!$this->checkEmail($s))
+            return false;
+
+        return true;
+    }
+}
+
 /**
  * Create/Edit entry form
  */
@@ -22,7 +36,7 @@ class BxMassMailerFormEntry extends BxTemplFormView
         
         $CNF = &$this->_oModule->_oConfig->CNF;
         if (isset( $this->aInputs[$CNF['FIELD_SEGMENTS']]))
-            $this->aInputs[$CNF['FIELD_SEGMENTS']]['values'] = $this->_oModule->getSegmentValues();
+            $this->aInputs[$CNF['FIELD_SEGMENTS']]['values'] = $this->_oModule->getSegments();
     }
 
     public function insert ($aValsToAdd = array(), $isIgnore = false)

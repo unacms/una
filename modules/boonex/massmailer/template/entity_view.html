@@ -1,0 +1,23 @@
+<div style="width:100%;" class="bx-def-padding bx_massmailer_table">
+    <table style="width:100%;">
+        <thead>
+            <tr>
+                <th>__email_title__</th>
+                <th>__date_sent_title__</th>
+                <th>__date_seen_title__</th>
+            </tr>
+        </thead>
+        <bx_repeat:items>
+            <tr>
+                <td>__email__</td>
+                <td>__date_sent__</td>
+                <td>__date_seen__</td>
+            </tr>
+        </bx_repeat:items>
+    </table>
+</div>
+<script type="text/javascript">
+$(document).ready(function () {
+    $('.bx_massmailer_table table').DataTable({ dom: '<"top"i>rt<"bottom"flp><"clear">', paging: true, searching: false, ordering: true, order: [] });
+});
+</script>

@@ -9,14 +9,14 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 
 -- PAGE: edit campaign
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_massmailer_edit_campaign', '_bx_massmailer_page_title_sys_edit_campaign', '_bx_massmailer_page_title_edit_campaign', 'bx_massmailer', 5, 192, 1, 'edit-campaign', '', '', '', '', 0, 1, 0, 'BxMassMailerPageBrowse', 'modules/boonex/massmailer/classes/BxMassMailerPageBrowse.php');
+('bx_massmailer_edit_campaign', '_bx_massmailer_page_title_sys_edit_campaign', '_bx_massmailer_page_title_edit_campaign', 'bx_massmailer', 5, 192, 1, 'edit-campaign', '', '', '', '', 0, 1, 0, 'BxMassMailerPageEntry', 'modules/boonex/massmailer/classes/BxMassMailerPageEntry.php');
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('bx_massmailer_edit_campaign', 1, 'bx_massmailer', '_bx_massmailer_page_block_title_edit_campaign', 11, 192, 'service', 'a:2:{s:6:"module";s:13:"bx_massmailer";s:6:"method";s:11:"entity_edit";}', 0, 0, 0);
 
 -- PAGE: view campaign
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_massmailer_view_campaign', '_bx_massmailer_page_title_sys_view_campaign', '_bx_massmailer_page_title_view_campaign', 'bx_massmailer', 5, 192, 1, 'view-campaign', '', '', '', '', 0, 1, 0, 'BxMassMailerPageBrowse', 'modules/boonex/massmailer/classes/BxMassMailerPageBrowse.php');
+('bx_massmailer_view_campaign', '_bx_massmailer_page_title_sys_view_campaign', '_bx_massmailer_page_title_view_campaign', 'bx_massmailer', 5, 192, 1, 'view-campaign', '', '', '', '', 0, 1, 0, 'BxMassMailerPageEntry', 'modules/boonex/massmailer/classes/BxMassMailerPageEntry.php');
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('bx_massmailer_view_campaign', 1, 'bx_massmailer', '_bx_massmailer_page_block_title_view_campaign', 11, 192, 'service', 'a:2:{s:6:"module";s:13:"bx_massmailer";s:6:"method";s:11:"entity_view";}', 0, 0, 0);
@@ -28,24 +28,12 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_massmailer_campaigns', 1, @sName, '_bx_massmailer_page_block_title_system_manage_campaigns', '_bx_massmailer_page_block_title_manage_campaigns', 11, 192, 'service', 'a:3:{s:6:\"module\";s:13:\"bx_massmailer\";s:6:\"method\";s:12:\"manage_tools\";s:6:\"params\";a:1:{i:0;s:9:\"campaigns\";}}', 0, 1, 0);
 
--- PAGE: segments administration
-INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_massmailer_segments', '_bx_massmailer_page_title_sys_manage_segments', '_bx_massmailer_page_title_manage_segments', @sName, 5, 192, 1, 'massmailer-segments', 'page.php?i=massmailer-segments', '', '', '', 0, 1, 0, 'BxMassMailerPageBrowse', 'modules/boonex/massmailer/classes/BxMassMailerPageBrowse.php');
-
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_massmailer_segments', 1, @sName, '_bx_massmailer_page_block_title_system_manage_segments', '_bx_massmailer_page_block_title_manage_segments', 11, 192, 'service', 'a:3:{s:6:\"module\";s:13:\"bx_massmailer\";s:6:\"method\";s:12:\"manage_tool1\";s:6:\"params\";a:1:{i:0;s:8:\"segments\";}}', 0, 1, 0);
-
-
 -- MENU: module sub-menu
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_massmailer_submenu', '_bx_massmailer_menu_title_submenu', 'bx_massmailer_submenu', 'bx_massmailer', 8, 0, 1, '', '');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_massmailer_submenu', 'bx_massmailer', '_bx_massmailer_menu_set_title_submenu', 0);
-
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_massmailer_submenu', 'bx_massmailer', 'massmailer-campaigns', '_bx_massmailer_menu_item_title_system_campaigns', '_bx_massmailer_menu_item_title_campaigns', 'page.php?i=massmailer-campaigns', '', '', '', '', 192, 1, 1, 1),
-('bx_massmailer_submenu', 'bx_massmailer', 'massmailer-segments', '_bx_massmailer_menu_item_title_system_segments', '_bx_massmailer_menu_item_title_segments', 'page.php?i=massmailer-segments', '', '', '', '', 192, 1, 1, 3);
 
 -- MENU: add to "add content" menu
 SET @iAddMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_add_content_links' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
@@ -63,11 +51,12 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_massmailer_campaigns', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
-('bx_massmailer_campaigns', 'title', '_bx_massmailer_grid_column_title_adm_title', '33%', 0, '22', '', 2),
-('bx_massmailer_campaigns', 'author', '_bx_massmailer_grid_column_title_adm_author', '20%', 0, '22', '', 3),
-('bx_massmailer_campaigns', 'date_created', '_bx_massmailer_grid_column_title_adm_date_created', '10%', 0, '15', '', 4),
-('bx_massmailer_campaigns', 'date_sent', '_bx_massmailer_grid_column_title_adm_date_sent', '10%', 0, '22', '', 5),
-('bx_massmailer_campaigns', 'actions', '', '25%', 0, '', '', 6);
+('bx_massmailer_campaigns', 'title', '_bx_massmailer_grid_column_title_adm_title', '30%', 0, '22', '', 2),
+('bx_massmailer_campaigns', 'author', '_bx_massmailer_grid_column_title_adm_author', '10%', 0, '22', '', 3),
+('bx_massmailer_campaigns', 'segments', '_bx_massmailer_grid_column_title_adm_segment', '10%', 0, '22', '', 4),
+('bx_massmailer_campaigns', 'date_created', '_bx_massmailer_grid_column_title_adm_date_created', '14%', 0, '15', '', 5),
+('bx_massmailer_campaigns', 'date_sent', '_bx_massmailer_grid_column_title_adm_date_sent', '10%', 0, '22', '', 6),
+('bx_massmailer_campaigns', 'actions', '', '24%', 0, '', '', 7);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_massmailer_campaigns', 'bulk', 'delete', '_bx_massmailer_grid_action_title_adm_delete', '', 0, 1, 1),
@@ -119,3 +108,56 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 -- entry view
 (@iModerator, @iIdActionEntryView),
 (@iAdministrator, @iIdActionEntryView);
+
+-- FORMS
+INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) 
+VALUES(@sName, @sName, '_bx_massmailer_form_campaign', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', 'a:2:{i:0;s:9:"do_submit";i:1;s:7:"do_send";}', 'bx_massmailer_campaigns', 'id', '', '', 'a:1:{s:14:"checker_helper";s:29:"BxMassMailerFormCheckerHelper";}', 0, 1, 'BxMassMailerFormEntry', 'modules/boonex/massmailer/classes/BxMassMailerFormEntry.php');
+
+INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
+('bx_massmailer_campaign_add', @sName, @sName, '_bx_massmailer_form_campaign_add_display', 0),
+('bx_massmailer_campaign_edit', @sName, @sName, '_bx_massmailer_form_campaign_edit_display', 0),
+('bx_massmailer_campaign_send_test', @sName, @sName, '_bx_massmailer_form_campaign_send_test_display', 0),
+('bx_massmailer_campaign_send_all', @sName, @sName, '_bx_massmailer_form_campaign_send_all_display', 0);
+
+INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `unique`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
+(@sName, @sName, 'do_submit', '_bx_massmailer_form_entry_input_do_submit', '', 0, 'submit', '_bx_massmailer_form_entry_input_sys_do_submit', '', '', 0, 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+(@sName, @sName, 'do_send', '_bx_massmailer_form_entry_input_do_send', '', 0, 'submit', '_bx_massmailer_form_entry_input_sys_do_send', '', '', 0, 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+(@sName, @sName, 'title', '', '', 0, 'text', '_bx_massmailer_form_campaign_input_sys_title', '_bx_massmailer_form_campaign_input_title', '', 1, 0, 0, 2, '', '', '', 'Avail', '', '_bx_massmailer_form_campaign_input_title_err', 'XssHtml', '', 1, 0),
+(@sName, @sName, 'segments', '', '', 0, 'select', '_bx_massmailer_form_campaign_input_sys_segments', '_bx_massmailer_form_campaign_input_segments', '', 1, 0, 0, 2, '', '', '', 'Avail', '', '_bx_massmailer_form_campaign_input_segments_err', 'XssHtml', '', 1, 0),
+(@sName, @sName, 'subject', '', '', 0, 'text', '_bx_massmailer_form_campaign_input_sys_subject', '_bx_massmailer_form_campaign_input_subject', '', 1, 0, 0, 2, '', '', '', 'Avail', '', '_bx_massmailer_form_campaign_input_subject_err', 'XssHtml', '', 1, 0),
+(@sName, @sName, 'from_name', '', '', 0, 'text', '_bx_massmailer_form_campaign_input_sys_from_name', '_bx_massmailer_form_campaign_input_from_name', '_bx_massmailer_form_campaign_input_from_name_info', 1, 0, 0, 2, '', '', '', '', '', '', 'XssHtml', '', 1, 0),
+(@sName, @sName, 'reply_to', '', '', 0, 'text', '_bx_massmailer_form_campaign_input_sys_reply_to', '_bx_massmailer_form_campaign_input_reply_to', '_bx_massmailer_form_campaign_input_reply_to_info', 1, 0, 0, 2, '', '', '', 'EmailOrEmpty', '', '_bx_massmailer_form_campaign_input_reply_to_err', 'XssHtml', '', 1, 0),
+(@sName, @sName, 'body', '', '', 0, 'textarea', '_bx_massmailer_form_campaign_input_sys_body', '_bx_massmailer_form_campaign_input_body', '', 1, 0, 0, 2, '', '', '', 'Avail', '', '_bx_massmailer_form_campaign_input_body_err', 'XssHtml', '', 1, 0),
+(@sName, @sName, 'email', '', '', 0, 'text', '_bx_massmailer_form_campaign_input_sys_test_email', '_bx_massmailer_form_campaign_input_email', '', 1, 0, 0, 2, '', '', '', 'Email', '', '_sys_form_account_input_email_error', 'XssHtml', '', 1, 0),
+(@sName, @sName, 'campaign_info', '_bx_massmailer_form_campaign_input_from_name_info_value', '', 0, 'value', '_bx_massmailer_form_campaign_input_sys_campaign_info', '', '', 0, 0, 0, 2, '', '', '', '', '', '', 'XssHtml', '', 1, 0),
+(@sName, @sName, 'cancel', '_bx_massmailer_form_entry_input_cancel', '', 0, 'button', '_bx_dev_bp_btn_sys_block_cancel', '', '', 0, 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', 'Avail', '', '', '', '', 0, 0),
+(@sName, @sName, 'controls', '', 'do_submit,cancel', 0, 'input_set', '', '', '', 0, 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+(@sName, @sName, 'controls2', '', 'do_send,cancel', 0, 'input_set', '', '', '', 0, 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
+
+INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
+('bx_massmailer_campaign_add', 'title', 2147483647, 1, 1),
+('bx_massmailer_campaign_add', 'segments', 2147483647, 1, 2),
+('bx_massmailer_campaign_add', 'subject', 2147483647, 1, 3),
+('bx_massmailer_campaign_add', 'from_name', 2147483647, 1, 4),
+('bx_massmailer_campaign_add', 'reply_to', 2147483647, 1, 5),
+('bx_massmailer_campaign_add', 'body', 2147483647, 1, 6),
+('bx_massmailer_campaign_add', 'controls', 2147483647, 1, 7),
+('bx_massmailer_campaign_add', 'do_submit', 2147483647, 1, 8),
+('bx_massmailer_campaign_add', 'cancel', 2147483647, 1, 9),
+('bx_massmailer_campaign_edit', 'title', 2147483647, 1, 1),
+('bx_massmailer_campaign_edit', 'segments', 2147483647, 1, 2),
+('bx_massmailer_campaign_edit', 'subject', 2147483647, 1, 3),
+('bx_massmailer_campaign_edit', 'from_name', 2147483647, 1, 4),
+('bx_massmailer_campaign_edit', 'reply_to', 2147483647, 1, 5),
+('bx_massmailer_campaign_edit', 'body', 2147483647, 1, 6),
+('bx_massmailer_campaign_edit', 'controls', 2147483647, 1, 7),
+('bx_massmailer_campaign_edit', 'do_submit', 2147483647, 1, 8),
+('bx_massmailer_campaign_edit', 'cancel', 2147483647, 1, 9),
+('bx_massmailer_campaign_send_test', 'email', 2147483647, 1, 1),
+('bx_massmailer_campaign_send_test', 'controls2', 2147483647, 1, 2),
+('bx_massmailer_campaign_send_test', 'do_send', 2147483647, 1, 3),
+('bx_massmailer_campaign_send_test', 'cancel', 2147483647, 1, 4),
+('bx_massmailer_campaign_send_all', 'campaign_info', 2147483647, 1, 1),
+('bx_massmailer_campaign_send_all', 'controls2', 2147483647, 1, 2),
+('bx_massmailer_campaign_send_all', 'do_send', 2147483647, 1, 3),
+('bx_massmailer_campaign_send_all', 'cancel', 2147483647, 1, 4);

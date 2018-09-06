@@ -18,6 +18,7 @@ class BxMassMailerConfig extends BxBaseModGeneralConfig
             // database tables
             'TABLE_CAMPAIGNS' => $aModule['db_prefix'] . 'campaigns',
             'TABLE_SEGMENTS' => $aModule['db_prefix'] . 'segments',
+            'TABLE_LETTERS' => $aModule['db_prefix'] . 'letters',
             
              // database fields
             'FIELD_ID' => 'id',
@@ -32,8 +33,12 @@ class BxMassMailerConfig extends BxBaseModGeneralConfig
             'FIELD_DATE_CREATED' => 'date_created',
             'FIELD_DATE_SENT' => 'date_sent',
             'FIELD_CAMPAIGN_ID' => 'campaign_id',
+            'FIELD_EMAIL' => 'email',
+            'FIELD_CODE' => 'code',
+            'FIELD_DATE_SEEN' => 'date_seen',
             
             // page URIs
+            'URI_MANAGE_COMMON' => 'massmailer-campaigns',
             'URI_MANAGE_CAMPAIGNS' => 'massmailer-campaigns',
             'URI_ADD_CAMPAIGN' => 'create-campaign',
             'URI_EDIT_CAMPAIGN' => 'edit-campaign',
