@@ -45,7 +45,8 @@
   <string name="_bx_massmailer_grid_action_title_adm_send_test"><![CDATA[Send test]]></string>
   <string name="_bx_massmailer_grid_action_title_adm_send_all"><![CDATA[Send All]]></string>
   <string name="_bx_massmailer_grid_action_title_adm_add"><![CDATA[Add new campaign]]></string>
-
+  <string name="_bx_massmailer_grid_column_title_adm_segment"><![CDATA[Segment]]></string>
+  
   <string name="_bx_massmailer_campaign_form_add_title"><![CDATA[New campaign]]></string>
   <string name="_bx_massmailer_campaign_form_edit_title"><![CDATA[Edit campaign]]></string>
   <string name="_bx_massmailer_campaign_form_send_test_title"><![CDATA[Send test letter]]></string>
@@ -77,18 +78,23 @@
   <string name="_bx_massmailer_form_campaign_input_sys_reply_to"><![CDATA[Reply to Email]]></string>
   <string name="_bx_massmailer_form_campaign_input_reply_to"><![CDATA[Reply to Email]]></string>
   <string name="_bx_massmailer_form_campaign_input_reply_to_info"><![CDATA[If empty, Site Email is used]]></string>
-  
+  <string name="_bx_massmailer_form_campaign_input_reply_to_err"><![CDATA[Email is not valid]]></string>
+  <string name="_bx_massmailer_form_campaign_input_from_name_info_value"><![CDATA[The message will be sent to {0} addresses.]]></string>
+  <string name="_bx_massmailer_form_campaign_input_sys_campaign_info"><![CDATA[Campaign info]]></string> 
   <string name="_bx_massmailer_form_entry_input_cancel"><![CDATA[Cancel]]></string>
 
-  <string name="_bx_massmailer_txt_never_sent"><![CDATA[Draft]]></string>
+  <string name="_bx_massmailer_txt_never_sent"><![CDATA[Never]]></string>
+  <string name="_bx_massmailer_txt_title_email"><![CDATA[Email]]></string>
+  <string name="_bx_massmailer_txt_title_date_sent"><![CDATA[Date sent]]></string>
+  <string name="_bx_massmailer_txt_title_date_seen"><![CDATA[Date seen]]></string>
   <string name="_bx_massmailer_txt_copy_title"><![CDATA[ - Copy]]></string>
-  
-  
-  <string name="_bx_massmailer_segments_all"><![CDATA[All]]></string>
+  <string name="_bx_massmailer_segments_all"><![CDATA[All subscribers]]></string>
   <string name="_bx_massmailer_email_name"><![CDATA[Mass Mailer message]]></string>
   <string name="_bx_massmailer_email_subject"><![CDATA[Mass Mailer message]]></string>
-  <string name="_bx_massmailer_email_body"><![CDATA[{email_header}
-  <br />{Content} <br />
+  <string name="_bx_massmailer_email_body">
+    <![CDATA[{email_header}
+  <br />{content} <br />
+  <img src="{seen_image_url}" width="1" height="1">
   {email_footer}]]></string>
 
 </resources>

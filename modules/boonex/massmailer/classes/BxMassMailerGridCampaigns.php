@@ -18,11 +18,98 @@ class BxMassMailerGridCampaigns extends BxTemplGrid
         parent::__construct ($aOptions, $oTemplate);
     }
     
+    public function performActionDelete()
+    {
+        $aIds = bx_get('ids');
+        foreach ($aIds as $iId){
+            $this->_oModule->_oDb->deleteLettersForCampaign($iId);
+        }
+        parent::performActionDelete();
+    }
+    
+    public function performActionSendTest()
+    {
+        $sAction = 'send_test';
+        $aIds = bx_get('ids');
+        $iId = $aIds[0];
+        $oForm = BxDolForm::getObjectInstance('bx_massmailer', 'bx_massmailer_campaign_send_test');
+        if (!$oForm)
+            return '';
+        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?' . bx_encode_url_params($_GET, array('_r'));
+        $aContentInfo = array('email' => BxDolProfile::getInstance()->getAccountObject()->getEmail());
+        $oForm->initChecker($aContentInfo, array());
+        if($oForm->isSubmittedAndValid()) {
+            $mixedResult = $this->_oModule->sendTest($oForm->aInputs['email']['value'], $iId);
+            if($mixedResult !== false)
+                $aRes = array('grid' => $this->getCode(false), 'blink' => $mixedResult);
+            else
+                $aRes = array('msg' => $mixedResult);
+            echoJson($aRes);
+        }
+        else {
+            
+            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx_massmailer_campaign_send_test', _t('_bx_massmailer_campaign_form_send_test_title'), $this->_oModule->_oTemplate->parseHtmlByName('manage_item.html', array(
+                'form_id' => $oForm->id,
+                'form' => $oForm->getCode(true),
+                'object' => $this->_sObject,
+                'action' => $sAction
+            )));
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
+        }
+    }
+    
+    public function performActionSendAll()
+    {
+        $sAction = 'send_all';
+        $aIds = bx_get('ids');
+        $iId = $aIds[0];
+        $oForm = BxDolForm::getObjectInstance('bx_massmailer', 'bx_massmailer_campaign_send_all');
+        if (!$oForm)
+            return '';
+        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?' . bx_encode_url_params($_GET, array('_r'));
+        $oForm->initChecker(array(), array());
+        $oForm->aInputs['campaign_info']['value'] =  _t($oForm->aInputs['campaign_info']['value'] , $this->_oModule->getEmailCountInSegment($iId));
+        if($oForm->isSubmittedAndValid()) {
+            $mixedResult = $this->_oModule->sendAll($iId);
+            if($mixedResult !== false)
+                $aRes = array('grid' => $this->getCode(false), 'blink' => $mixedResult);
+            else
+                $aRes = array('msg' => $mixedResult);
+            echoJson($aRes);
+        }
+        else {
+            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx_massmailer_campaign_send_all', _t('_bx_massmailer_campaign_form_send_all_title'), $this->_oModule->_oTemplate->parseHtmlByName('manage_item.html', array(
+                'form_id' => $oForm->id,
+                'form' => $oForm->getCode(true),
+                'object' => $this->_sObject,
+                'action' => $sAction
+            )));
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
+        }
+    }
+    
+    public function performActionCopy()
+    {
+        $aIds = bx_get('ids');
+        $iId = $aIds[0];
+        $mixedResult = $this->_oModule->_oDb->copyCampaign($iId);
+        if($mixedResult !== false)
+            $aRes = array('grid' => $this->getCode(false), 'blink' => $mixedResult);
+        else
+            $aRes = array('msg' => $mixedResult);
+        echoJson($aRes);
+    }
+    
     protected function _getCellDateCreated($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
     }
     
+    protected function _getCellSegments($mixedValue, $sKey, $aField, $aRow)
+    {
+        return parent::_getCellDefault($this->_oModule->getSegments($mixedValue), $sKey, $aField, $aRow);
+    }
+
     protected function _getCellDateSent($mixedValue, $sKey, $aField, $aRow)
     {
         $sValue = bx_time_js($mixedValue);
@@ -104,80 +191,7 @@ class BxMassMailerGridCampaigns extends BxTemplGrid
         if (!$oProfile)
             $oProfile = BxDolProfileUndefined::getInstance();
         return parent::_getCellDefault($oProfile->getDisplayName(), $sKey, $aField, $aRow);
-    }
-
-    public function performActionSendTest()
-    {
-        $sAction = 'send_test';
-        $aIds = bx_get('ids');
-        $iId = $aIds[0];
-        $oForm = BxDolForm::getObjectInstance('bx_massmailer', 'bx_massmailer_campaign_send_test');
-        if (!$oForm)
-            return '';
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?' . bx_encode_url_params($_GET, array('_r'));
-        $aContentInfo = array('email' => BxDolProfile::getInstance()->getAccountObject()->getEmail());
-        $oForm->initChecker($aContentInfo, array());
-        if($oForm->isSubmittedAndValid()) {
-            $mixedResult = $this->_oModule->sendTest($oForm->aInputs['email']['value'], $iId);
-            if($mixedResult !== false)
-                $aRes = array('grid' => $this->getCode(false), 'blink' => $mixedResult);
-            else
-                $aRes = array('msg' => $mixedResult);
-            echoJson($aRes);
-        }
-        else {
-            
-            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx_massmailer_campaign_send_test', _t('_bx_massmailer_campaign_form_send_test_title'), $this->_oModule->_oTemplate->parseHtmlByName('manage_item.html', array(
-                'form_id' => $oForm->id,
-                'form' => $oForm->getCode(true),
-                'object' => $this->_sObject,
-                'action' => $sAction
-            )));
-            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
-        }
-    }
-    
-    public function performActionSendAll()
-    {
-        $sAction = 'send_all';
-        $aIds = bx_get('ids');
-        $iId = $aIds[0];
-        $oForm = BxDolForm::getObjectInstance('bx_massmailer', 'bx_massmailer_campaign_send_all');
-        if (!$oForm)
-            return '';
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?' . bx_encode_url_params($_GET, array('_r'));
-        $oForm->initChecker(array(), array());
-        if($oForm->isSubmittedAndValid()) {
-            $mixedResult = $this->_oModule->sendAll($iId);
-            if($mixedResult !== false)
-                $aRes = array('grid' => $this->getCode(false), 'blink' => $mixedResult);
-            else
-                $aRes = array('msg' => $mixedResult);
-            echoJson($aRes);
-        }
-        else {
-            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx_massmailer_campaign_send_all', _t('_bx_massmailer_campaign_form_send_all_title'), $this->_oModule->_oTemplate->parseHtmlByName('manage_item.html', array(
-                'form_id' => $oForm->id,
-                'form' => $oForm->getCode(true),
-                'object' => $this->_sObject,
-                'action' => $sAction
-            )));
-            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
-        }
-    }
-    
-    public function performActionCopy()
-    {
-        $aIds = bx_get('ids');
-        $iId = $aIds[0];
-        $mixedResult = $this->_oModule->_oDb->copyCampaign($iId);
-        if($mixedResult !== false)
-            $aRes = array('grid' => $this->getCode(false), 'blink' => $mixedResult);
-        else
-            $aRes = array('msg' => $mixedResult);
-        echoJson($aRes);
-    }
-    
+    }    
 }
 
 /** @} */

@@ -20,3 +20,9 @@ DELETE FROM `sys_acl_actions` WHERE `Module` = @sName;
 
 -- EMAIL TEMPLATES
 DELETE FROM `sys_email_templates` WHERE `module` = @sName;
+
+-- FORMS
+DELETE FROM `sys_objects_form` WHERE `module` = @sName;
+DELETE FROM `sys_form_displays` WHERE `module` = @sName;
+DELETE FROM `sys_form_inputs` WHERE `module` = @sName;
+DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN ('bx_massmailer_campaign_add', 'bx_massmailer_campaign_edit', 'bx_massmailer_campaign_send_test', 'bx_massmailer_campaign_send_all');

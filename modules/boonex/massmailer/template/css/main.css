@@ -1,0 +1,14 @@
+.bx_massmailer_table th, .bx_massmailer_table td {
+    text-align: left;
+}
+.bx_massmailer_table .odd
+{
+    background-color: rgba(210, 230, 250, 0.3);
+}
+.bx_massmailer_table .bottom {
+    margin-top:1rem;
+}
+
+.bx_massmailer_table .dataTables_info {
+    display: none;
+}
