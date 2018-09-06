@@ -151,6 +151,10 @@ class BxDolModuleTemplate extends BxDolTemplate
             return $sRet;
         }
     }
+
+    public function addCssJs()
+    {
+    }
 }
 
 /** @} */
