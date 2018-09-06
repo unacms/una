@@ -140,6 +140,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         $aEvent['content']['owner_name'] = strmaxtextlen($oOwner->getDisplayName(), $this->_oConfig->getOwnerNameMaxLen());
         $aEvent['content']['owner_link'] = $oOwner->getUrl();
         $aEvent['content']['owner_icon'] = $oOwner->getThumb();
+
         if(!empty($aEvent['content']['entry_caption'])) {
             $sEntryCaption = bx_process_output($aEvent['content']['entry_caption'], BX_DATA_TEXT);
             if(get_mb_substr($sEntryCaption, 0, 1) == '_')
@@ -148,20 +149,31 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
             $aEvent['content']['entry_caption'] = strmaxtextlen($sEntryCaption, $this->_oConfig->getContentMaxLen());
         }
 
+        $iObjectOwner = (int)$aEvent['object_owner_id'];
+        if(empty($iObjectOwner) || !empty($aEvent['content']['entry_author']))
+            $iObjectOwner = (int)$aEvent['content']['entry_author'];
+
+        $oObjectOwner = $oModule->getObjectUser($iObjectOwner);
+        if($oObjectOwner) {
+            $aEvent['content']['object_owner_name'] = strmaxtextlen($oObjectOwner->getDisplayName(), $this->_oConfig->getOwnerNameMaxLen());
+            $aEvent['content']['object_owner_link'] = $oObjectOwner->getUrl();
+            $aEvent['content']['object_owner_icon'] = $oObjectOwner->getThumb();
+        }
+
         foreach($aEvent['content'] as $sKey => $sValue)
-        	if(substr($sValue, 0, 1) == '_')
-        		$aEvent['content'][$sKey] = _t($sValue);        
+            if(substr($sValue, 0, 1) == '_')
+                    $aEvent['content'][$sKey] = _t($sValue);        
 
     	$aEvent['content_parsed'] = _t(!empty($aEvent['content']['lang_key']) ? $aEvent['content']['lang_key'] : $this->_getContentLangKey($aEvent));
     	$aEvent['content_parsed'] = $this->parseHtmlByContent($aEvent['content_parsed'], $aEvent['content'], array('{', '}'));
 
         return $this->parseHtmlByName('event.html', array (
-        	'html_id' => $this->_oConfig->getHtmlIds('view', 'event') . $aEvent['id'],
+            'html_id' => $this->_oConfig->getHtmlIds('view', 'event') . $aEvent['id'],
             'style_prefix' => $this->_oConfig->getPrefix('style'),
             'js_object' => $this->_oConfig->getJsObject('view'),
             'class' => !empty($aBrowseParams['last_read']) && $aEvent['id'] > $aBrowseParams['last_read'] ? ' bx-def-color-bg-box-active' : '', 
             'id' => $aEvent['id'],
-            'author_unit' => $oOwner->getUnit(0, array('template' => 'unit_wo_info_links')),
+            'author_unit' => $this->_isInContext($aEvent) && $oObjectOwner ? $oObjectOwner->getUnit(0, array('template' => 'unit_wo_info_links')) : $oOwner->getUnit(0, array('template' => 'unit_wo_info_links')),
             'link' => $this->_getContentLink($aEvent),
             'content' => $aEvent['content_parsed'],
             'date' => bx_time_js($aEvent['date']),
@@ -263,12 +275,23 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 
     protected function _getContentLangKey(&$aEvent)
     {
-    	return !empty($aEvent['subobject_id']) ? '_bx_ntfs_txt_subobject_added' : '_bx_ntfs_txt_object_added';
+        if(!empty($aEvent['subobject_id']))
+            return '_bx_ntfs_txt_subobject_added';
+
+        if($this->_isInContext($aEvent))
+            return '_bx_ntfs_txt_object_added_in_context';
+
+    	return '_bx_ntfs_txt_object_added';
     }
 
     protected function _getContentLink(&$aEvent)
     {
         return !empty($aEvent['subobject_id']) && !empty($aEvent['content']['subentry_url']) ? $aEvent['content']['subentry_url'] : $aEvent['content']['entry_url'];
+    }
+
+    protected function _isInContext(&$aEvent)
+    {
+        return (int)$aEvent['object_privacy_view'] < 0;
     }
 }
 

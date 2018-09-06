@@ -72,20 +72,26 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
 
     protected function getInsertData(&$oAlert, &$aHandler)
     {
+        $iOwnerId = $oAlert->iSender;
+        $iObjectPrivacyView = $this->_getObjectPrivacyView($oAlert->aExtras);
+
+        if($iObjectPrivacyView < 0)
+            $iOwnerId = abs($iObjectPrivacyView);
+
     	return array(
     	    array(
-    			'owner_id' => $oAlert->iSender,
-    			'type' => $oAlert->sUnit,
-    			'action' => $oAlert->sAction,
-    			'object_id' => $oAlert->iObject,
-    			'object_owner_id' => $this->_getObjectOwnerId($oAlert->aExtras),
-    			'object_privacy_view' => $this->_getObjectPrivacyView($oAlert->aExtras),
-    			'subobject_id' => $this->_getSubObjectId($oAlert->aExtras),
-    			'content' => '',
-        		'allow_view_event_to' => $this->_oModule->_oConfig->getPrivacyViewDefault('event'),
-    			'processed' => 0
+                'owner_id' => $iOwnerId,
+                'type' => $oAlert->sUnit,
+                'action' => $oAlert->sAction,
+                'object_id' => $oAlert->iObject,
+                'object_owner_id' => $this->_getObjectOwnerId($oAlert->aExtras),
+                'object_privacy_view' => $iObjectPrivacyView,
+                'subobject_id' => $this->_getSubObjectId($oAlert->aExtras),
+                'content' => '',
+                'allow_view_event_to' => $this->_oModule->_oConfig->getPrivacyViewDefault('event'),
+                'processed' => 0
     	    )
-		);
+        );
     }
 
     protected function getDeleteData(&$oAlert, &$aHandler)
