@@ -54,6 +54,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
     {
         $CNF = &$this->_oConfig->CNF;
 
+        $iUserId = !empty($aParams['user_id']) ? (int)$aParams['user_id'] : bx_get_logged_profile_id();
         $sGrid = !empty($aParams['grid']) ? $aParams['grid'] : $CNF['OBJECT_GRID_SETTINGS_COMMON'];
         $oTemplate = !empty($aParams['template']) ? $aParams['template'] : $this;
 
@@ -62,6 +63,9 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
             return '';
 
         $oGrid->setDeliveryType($sDeliveryType);
+        if(method_exists($oGrid, 'setUserId'))
+            $oGrid->setUserId($iUserId);
+
         return $oGrid->getCode();
     }
 

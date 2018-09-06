@@ -17,7 +17,6 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
     protected $_oModule;
 
     protected $_bAdministration;
-    protected $_sSource;
 
     protected $_bGrouped;
     protected $_sDeliveryType;
@@ -32,9 +31,7 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $this->_bAdministration = true;
-        $this->_sSource = $this->_aOptions['source'];
-        
+        $this->_bAdministration = true;      
 
         $this->_bGrouped = $this->_oModule->_oConfig->isSettingsGrouped();
         $this->_sDeliveryType = BX_BASE_MOD_NTFS_DTYPE_SITE;
@@ -158,7 +155,7 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
         foreach($aTypes as $sType) {
             $aResult[] = _t($CNF['T']['setting_' . $sType]);
 
-            $this->_aOptions['source'] = $this->_sSource . $this->_oModule->_oDb->prepareAsString(" AND `ts`.`type`=? AND `ts`.`delivery`=?", $sType, $this->_sDeliveryType) . " GROUP BY `group`";
+            $this->_aOptions['source'] = $sSource . $this->_oModule->_oDb->prepareAsString(" AND `ts`.`type`=?", $sType) . " GROUP BY `group`";
 
             $aRows = parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
             $aResult = array_merge($aResult, $aRows);

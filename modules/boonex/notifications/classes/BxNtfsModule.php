@@ -104,7 +104,13 @@ class BxNtfsModule extends BxBaseModNotificationsModule
         if(empty($sDeliveryType))
             $sDeliveryType = BX_BASE_MOD_NTFS_DTYPE_SITE;
 
-        $this->_oDb->initSettingUser(bx_get_logged_profile_id());
+        $iUserId = bx_get_logged_profile_id();
+        if(!empty($aParams['user_id']))
+            $iUserId = (int)$aParams['user_id'];
+        else
+            $aParams['user_id'] = $iUserId;
+
+        $this->_oDb->initSettingUser($iUserId);
 
         return array(
             'content' => $this->getBlockSettings($sDeliveryType, $aParams),

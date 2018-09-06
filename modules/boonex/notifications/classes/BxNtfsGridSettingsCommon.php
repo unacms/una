@@ -13,11 +13,31 @@ require_once('BxNtfsGridSettingsAdministration.php');
 
 class BxNtfsGridSettingsCommon extends BxNtfsGridSettingsAdministration
 {
+    protected $_iUserId;
+
     public function __construct ($aOptions, $oTemplate = false)
     {
         parent::__construct ($aOptions, $oTemplate);
 
         $this->_bAdministration = false;
+        $this->_iUserId = 0;
+
+        $iUserId = bx_get('user_id');
+        if(!empty($iUserId))
+            $this->setUserId($iUserId);
+    }
+
+    public function setUserId($iUserId)
+    {
+        $this->_iUserId = (int)$iUserId;
+        $this->_aQueryAppend['user_id'] = $this->_iUserId;
+    }
+
+    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    {
+        $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tsu`.`user_id`=?", $this->_iUserId);
+
+        return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
 
     protected function _updateSettingTitle($sTitle, &$aRow)
