@@ -1555,6 +1555,7 @@
         <string name="_cmt_txt_do"><![CDATA[Comment]]></string>
         <string name="_cmt_txt_counter"><![CDATA[{0}]]></string>
 	<string name="_cmt_txt_counter_empty"><![CDATA[Comment]]></string>
+        <string name="_cmt_txt_min_form_placeholder"><![CDATA[{0}, leave your comment here.]]></string>
 	<string name="_copyright"><![CDATA[&copy; {0} Company]]></string>
 	<string name="_delete"><![CDATA[delete]]></string>
 	<string name="_error occured"><![CDATA[Error occurred]]></string>

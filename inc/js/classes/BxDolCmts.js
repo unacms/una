@@ -15,6 +15,7 @@ function BxDolCmts (options) {
     this._iObjId = options.iObjId; // this object id comments
     this._sBaseUrl = options.sBaseUrl; // base url to view comment's listing.
 
+    this._iMinPostForm = undefined == options.iMinPostForm ? 0 : options.iMinPostForm;
     this._sPostFormPosition = undefined == options.sPostFormPosition ? 'top' : options.sPostFormPosition;
     this._sDisplayType = undefined == options.sDisplayType ? 'threaded' : options.sDisplayType;
     this._sBrowseType = undefined == options.sBrowseType ? 'tail' : options.sBrowseType;
@@ -52,6 +53,23 @@ BxDolCmts.prototype.cmtInitFormPost = function(sCmtFormId)
         success: function (oData) {
         	window[$this._sObjName].cmtAfterPostSubmit(oCmtForm, oData);
         }
+    });
+};
+
+BxDolCmts.prototype.cmtShowForm = function(oElement)
+{
+    var oForm = $(oElement).parents('.cmt-reply.cmt-reply-min:first');
+    oForm.find('.cmt-body-min').bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
+        oForm.find('.cmt-body').show(function() {
+            var oTextarea = oForm.find("[name='cmt_text']");
+            if(typeof bx_editor_get_htmleditable === 'function')
+                oTextarea = bx_editor_get_htmleditable(oTextarea);
+
+            if(!oTextarea || oTextarea.length == 0)
+                return;
+
+            oTextarea.focus();
+        });
     });
 };
 
@@ -550,14 +568,14 @@ BxDolCmts.prototype._getCmts = function (oElement, oRequestParams, onLoad)
 
 BxDolCmts.prototype._getForm = function (e, iCmtParentId, onLoad)
 {
-	var $this = this;
-
+    var $this = this;
     var oData = this._getDefaultActions();
     oData['action'] = 'GetFormPost';
     oData['CmtType'] = 'reply';
     oData['CmtParent'] = iCmtParentId;
     oData['CmtBrowse'] = this._sBrowseType;
     oData['CmtDisplay'] = this._sDisplayType;
+    oData['CmtMinPostForm'] = this._iMinPostForm;
 
     if(e)
     	this._loadingInContent(e, true);

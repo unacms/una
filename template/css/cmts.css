@@ -240,7 +240,30 @@
     div.cmts-uploader-file-preview img {
 		background-position: center center;
 		background-repeat: no-repeat;
-    }  
+    } 
+    
+    /*--- Minified Post Form ---*/
+    div.cmt-reply.cmt-reply-min div.cmt-body {
+        display: none;
+    }
+    div.cmt-reply div.cmt-body-min {
+        position: relative;
+        display: none;
+    }
+    div.cmt-reply.cmt-reply-min div.cmt-body-min {
+        display: block;
+    }
+    div.cmt-reply div.cmt-body-min .cmt-bm-user {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    div.cmt-reply div.cmt-body-min .cmt-bm-content {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-align-items: center;
+        align-items: center;
+    }
 
     /*--- Comment Styles in Live Update Notification ---*/
 	div.cmt-notif-comment {

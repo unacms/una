@@ -131,6 +131,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     protected $_oQuery = null;
     protected $_oTemplate = null;
 
+    protected $_bMinPostForm;
     protected $_sFormObject;
     protected $_sFormDisplayPost;
     protected $_sFormDisplayEdit;
@@ -222,6 +223,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
         $this->_oQuery = new BxDolCmtsQuery($this);
 
+        $this->_bMinPostForm = true;
         $this->_sFormObject = 'sys_comment';
         $this->_sFormDisplayPost = 'sys_comment_post';
         $this->_sFormDisplayEdit = 'sys_comment_edit';
@@ -835,11 +837,19 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         if (!$this->isEnabled())
             return '';
 
-        $iCmtParentId= isset($_REQUEST['CmtParent']) ? bx_process_input($_REQUEST['CmtParent'], BX_DATA_INT) : 0;
-        $sCmtBrowse = isset($_REQUEST['CmtBrowse']) ? bx_process_input($_REQUEST['CmtBrowse'], BX_DATA_TEXT) : '';
-        $sCmtDisplay = isset($_REQUEST['CmtDisplay']) ? bx_process_input($_REQUEST['CmtDisplay'], BX_DATA_TEXT) : '';
+        $iCmtParentId = bx_get('CmtParent');
+        $iCmtParentId = $iCmtParentId !== false ? bx_process_input($iCmtParentId, BX_DATA_INT) : 0;
+        
+        $sCmtBrowse = bx_get('CmtBrowse');
+        $sCmtBrowse = $sCmtBrowse !== false ? bx_process_input($sCmtBrowse, BX_DATA_TEXT) : '';
 
-        return $this->getFormBoxPost(array('parent_id' => $iCmtParentId, 'type' => $sCmtBrowse), array('type' => $sCmtDisplay, 'dynamic_mode' => true));
+        $sCmtDisplay = bx_get('CmtDisplay');
+        $sCmtDisplay = $sCmtDisplay !== false ? bx_process_input($sCmtDisplay, BX_DATA_TEXT) : '';
+
+        $bMinPostForm = bx_get('CmtMinPostForm');
+        $bMinPostForm = $bMinPostForm !== false ? bx_process_input($bMinPostForm, BX_DATA_INT) == 1 : $this->_bMinPostForm;
+
+        return $this->getFormBoxPost(array('parent_id' => $iCmtParentId, 'type' => $sCmtBrowse), array('type' => $sCmtDisplay, 'dynamic_mode' => true, 'min_post_form' => $bMinPostForm));
     }
 
     public function actionGetFormEdit ()
@@ -1344,10 +1354,13 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         if(bx_get('CmtBlink') !== false) 
             $aDp['blink'] = bx_process_input($_REQUEST['CmtBlink'], BX_DATA_TEXT);
 
+        $aDp['min_post_form'] = isset($aDp['min_post_form']) ? (bool)$aDp['min_post_form'] : $this->_bMinPostForm;
+        if(bx_get('CmtMinPostForm') !== false)
+            $aDp['min_post_form'] = bx_process_input(bx_get('CmtMinPostForm'), BX_DATA_INT) == 1;
+
         $aDp['in_designbox'] = isset($aDp['in_designbox']) ? (bool)$aDp['in_designbox'] : true;
         $aDp['dynamic_mode'] = isset($aDp['dynamic_mode']) ? (bool)$aDp['dynamic_mode'] : false;
         $aDp['show_empty'] = isset($aDp['show_empty']) ? (bool)$aDp['show_empty'] : false;
-            
     }
 
     protected function _prepareTextForOutput ($s, $iCmtId = 0)
@@ -1366,18 +1379,20 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     protected function _prepareParams(&$aBp, &$aDp)
     {
-        $aBp['type'] = isset($aBp['type']) && !empty($aBp['type']) ? $aBp['type'] : $this->_sBrowseType;
-        $aBp['filter'] = isset($aBp['filter']) && !empty($aBp['filter']) ? $aBp['filter'] : $this->_sBrowseFilter;
+        $aBp['type'] = !empty($aBp['type']) ? $aBp['type'] : $this->_sBrowseType;
+        $aBp['filter'] = !empty($aBp['filter']) ? $aBp['filter'] : $this->_sBrowseFilter;
         $aBp['parent_id'] = isset($aBp['parent_id']) ? $aBp['parent_id'] : 0;
         $aBp['start'] = isset($aBp['start']) ? $aBp['start'] : -1;
         $aBp['per_view'] = isset($aBp['per_view']) ? $aBp['per_view'] : -1;
         $aBp['order']['by'] = isset($aBp['order_by']) ? $aBp['order_by'] : $this->_aOrder['by'];
         $aBp['order']['way'] = isset($aBp['order_way']) ? $aBp['order_way'] : $this->_aOrder['way'];
 
-        $aDp['type'] = isset($aDp['type']) && !empty($aDp['type']) ? $aDp['type'] : $this->_sDisplayType;
-        $aDp['blink'] = isset($aDp['blink']) && !empty($aDp['blink']) ? $aDp['blink'] : array();
+        $aDp['type'] = !empty($aDp['type']) ? $aDp['type'] : $this->_sDisplayType;
+        $aDp['blink'] = !empty($aDp['blink']) ? $aDp['blink'] : array();
         if(!is_array($aDp['blink']))
-        	$aDp['blink'] = explode(',', $aDp['blink']);
+            $aDp['blink'] = explode(',', $aDp['blink']);
+        if(!isset($aDp['min_post_form']))
+            $aDp['min_post_form'] = $this->_bMinPostForm;
 
         switch($aDp['type']) {
             case BX_CMT_DISPLAY_FLAT:

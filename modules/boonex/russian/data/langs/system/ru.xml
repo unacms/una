@@ -1553,6 +1553,7 @@
         <string name="_cmt_txt_do"><![CDATA[Комментировать]]></string>
         <string name="_cmt_txt_counter"><![CDATA[{0}]]></string>
 	<string name="_cmt_txt_counter_empty"><![CDATA[Комментировать]]></string>
+        <string name="_cmt_txt_min_form_placeholder"><![CDATA[{0}, здесь Вы можете оставить комментарий.]]></string>
 	<string name="_copyright"><![CDATA[&copy; {0} Компания]]></string>
 	<string name="_delete"><![CDATA[удалить]]></string>
 	<string name="_error occured"><![CDATA[Произошла ошибка]]></string>
