@@ -17,10 +17,11 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
     protected $MODULE;
     protected $_oModule;
 
+    public $aMethodsToCallAddJsCss = array('entry', 'unit');
+
     function __construct(&$oConfig, &$oDb)
     {
-        parent::__construct($oConfig, $oDb);        
-        $this->addCss ('main.css');
+        parent::__construct($oConfig, $oDb);
     }
 
     public function getModule()
@@ -273,6 +274,11 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         }
 
         return $aAttachmnts;
+    }
+
+    public function addCssJs()
+    {
+        $this->addCss('main.css');
     }
 }
 

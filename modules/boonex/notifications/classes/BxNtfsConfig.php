@@ -162,10 +162,30 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=notifications-view');
     }
 
-    public function getProfileBasedModules() {
-        if($this->_aModulesProfiles !== false && $this->_aModulesContexts !== false)
+    public function getProfileBasedModules() 
+    {
+        if ($this->_aModulesProfiles !== false && $this->_aModulesContexts !== false)
             return array($this->_aModulesProfiles, $this->_aModulesContexts);
 
+        if (getParam('sys_db_cache_enable')) {
+            $oDb = BxDolDb::getInstance();
+            $oCache = $oDb->getDbCacheObject();
+            $sCacheKey = $oDb->genDbCacheKey('bx_ntfs_profile_based_modules');
+            $aData = $oCache->getData($sCacheKey);
+            if (null === $aData) {
+                $aData = $this->_getProfileBasedModulesData();
+                $oCache->setData ($sCacheKey, $aData);
+            }
+        } 
+        else {
+            $aData = $this->_getProfileBasedModulesData();
+        }
+
+        return $aData;
+    }
+
+    protected function _getProfileBasedModulesData() 
+    {
         $this->_aModulesProfiles = array();
         $this->_aModulesContexts = array();
 
@@ -180,7 +200,7 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
                 $this->_aModulesContexts[] = $aModule['name'];
         }
 
-        return array($this->_aModulesProfiles, $this->_aModulesContexts);
+        return array($this->_aModulesProfiles, $this->_aModulesContexts);        
     }
 }
 

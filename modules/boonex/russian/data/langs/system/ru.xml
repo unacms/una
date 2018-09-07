@@ -1646,7 +1646,7 @@
 	<string name="_sys_audit_msg_hardware_requirements"><![CDATA[Требования к "железу" невозможно установить автоматически - может быть необходим <a href="#manual_audit">ручной аудит сервера</a>.]]></string>
 	<string name="_sys_audit_msg_mail_send_failed"><![CDATA[не удалось отослать письмо]]></string>
 	<string name="_sys_audit_msg_mail_sending"><![CDATA[<span id="bx-sys-adm-audit-test-email"><a href="javascript:void(0);" onclick="bx_sys_adm_audit_test_email()">нажмите здесь</a>, чтобы отослать тестовое сообщение</span>]]></string>
-	<string name="_sys_audit_msg_mail_sent"><![CDATA[нестовое сообщение отослано, пожалуйста, проверьте {0} эл. ящик]]></string>
+	<string name="_sys_audit_msg_mail_sent"><![CDATA[тестовое сообщение отослано, пожалуйста, проверьте {0} эл. ящик]]></string>
 	<string name="_sys_audit_msg_manual_audit"><![CDATA[<p>
 Некоторые пункты не могут быть автоматически определены, ручной аудит сервера необходим для проверки. 
 Если Вы не знаете, как провести его самостоятельно, Вы можете запросить <a target="_blank" href="mailto:team@boonex.com?subject=Ручной аудит сервера">ручной аудит сервера</a>.
