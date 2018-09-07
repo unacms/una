@@ -22,7 +22,9 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_iRssLength;
     protected $_iLiveUpdateLength;
     protected $_iCharsDisplayMaxTitle;
+
     protected $_sVideosAutoplay;
+    protected $_iPreloadComments;
 
     protected $_bHot;
     protected $_iHotInterval;
@@ -57,35 +59,35 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'events',
 
-	        // database fields
-        	'FIELD_ID' => 'id',
+            // database fields
+            'FIELD_ID' => 'id',
             'FIELD_OWNER_ID' => 'owner_id',
-        	'FIELD_OBJECT_ID' => 'object_id',
-        	'FIELD_OBJECT_PRIVACY_VIEW' => 'object_privacy_view',
-        	'FIELD_ADDED' => 'date',
-        	'FIELD_TITLE' => 'title',
-        	'FIELD_TEXT' => 'description',
-        	'FIELD_CONTROLS' => 'controls',
-        	'FIELD_LOCATION_PREFIX' => 'location',
+            'FIELD_OBJECT_ID' => 'object_id',
+            'FIELD_OBJECT_PRIVACY_VIEW' => 'object_privacy_view',
+            'FIELD_ADDED' => 'date',
+            'FIELD_TITLE' => 'title',
+            'FIELD_TEXT' => 'description',
+            'FIELD_CONTROLS' => 'controls',
+            'FIELD_LOCATION_PREFIX' => 'location',
 
             // page URIs
             'URI_VIEW_LIST' => 'timeline-view',
             'URI_VIEW_ENTRY' => 'item',
 
-        	'URL_HOME' => 'page.php?i=timeline-view-home',
+            'URL_HOME' => 'page.php?i=timeline-view-home',
 
-        	// objects
-        	'OBJECT_STORAGE' => $this->_sName . '_photos',
+            // objects
+            'OBJECT_STORAGE' => $this->_sName . '_photos',
             'OBJECT_GRID_ADMINISTRATION' => $this->_sName . '_administration',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => $this->_sName . '_photos_preview',
-        	'OBJECT_METATAGS' => $this->_sName,
+            'OBJECT_METATAGS' => $this->_sName,
             'OBJECT_COMMENTS' => $this->_sName,
-        	'OBJECT_VIEWS' => $this->_sName,
-        	'OBJECT_VOTES' => $this->_sName,
-        	'OBJECT_SCORES' => $this->_sName,
-        	'OBJECT_REPORTS' => $this->_sName,
+            'OBJECT_VIEWS' => $this->_sName,
+            'OBJECT_VOTES' => $this->_sName,
+            'OBJECT_SCORES' => $this->_sName,
+            'OBJECT_REPORTS' => $this->_sName,
 
-        	// some language keys
+            // some language keys
             'T' => array (
                 'txt_sample_single' => '_bx_timeline_txt_sample',
                 'txt_sample_single_ext' => '_bx_timeline_txt_sample_ext',
@@ -107,44 +109,44 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         );
 
         $this->_aPrefixes = array(
-        	'style' => 'bx-tl',
-        	'language' => '_bx_timeline',
-        	'option' => 'bx_timeline_',
-        	'common_post' => 'timeline_common_'
+            'style' => 'bx-tl',
+            'language' => '_bx_timeline',
+            'option' => 'bx_timeline_',
+            'common_post' => 'timeline_common_'
         );
 
         $this->_aObjects = array_merge($this->_aObjects, array(
-        	'comment' => $this->CNF['OBJECT_COMMENTS'],
-        	'view' => $this->CNF['OBJECT_VIEWS'],
-        	'vote' => $this->CNF['OBJECT_VOTES'],
-        	'score' => $this->CNF['OBJECT_SCORES'],
-        	'report' => $this->CNF['OBJECT_REPORTS'],
-        	'metatags' => $this->_sName,
+            'comment' => $this->CNF['OBJECT_COMMENTS'],
+            'view' => $this->CNF['OBJECT_VIEWS'],
+            'vote' => $this->CNF['OBJECT_VOTES'],
+            'score' => $this->CNF['OBJECT_SCORES'],
+            'report' => $this->CNF['OBJECT_REPORTS'],
+            'metatags' => $this->_sName,
 
-        	'storage_photos' => $this->CNF['OBJECT_STORAGE'],
-        	'storage_videos' => $this->_sName . '_videos',
-        	'transcoder_photos_preview' => $this->CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW'],
-        	'transcoder_photos_view' => $this->_sName . '_photos_view',
-        	'transcoder_photos_medium' => $this->_sName . '_photos_medium',
-        	'transcoder_photos_big' => $this->_sName . '_photos_big',
-        	'transcoder_videos_poster' => $this->_sName . '_videos_poster',
-        	'transcoder_videos_mp4' => $this->_sName . '_videos_mp4',
-        	'transcoder_videos_webm' => $this->_sName . '_videos_webm',
+            'storage_photos' => $this->CNF['OBJECT_STORAGE'],
+            'storage_videos' => $this->_sName . '_videos',
+            'transcoder_photos_preview' => $this->CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW'],
+            'transcoder_photos_view' => $this->_sName . '_photos_view',
+            'transcoder_photos_medium' => $this->_sName . '_photos_medium',
+            'transcoder_photos_big' => $this->_sName . '_photos_big',
+            'transcoder_videos_poster' => $this->_sName . '_videos_poster',
+            'transcoder_videos_mp4' => $this->_sName . '_videos_mp4',
+            'transcoder_videos_webm' => $this->_sName . '_videos_webm',
 
-        	'page_item_brief' => $this->_sName . '_item_brief',
+            'page_item_brief' => $this->_sName . '_item_brief',
 
-        	'menu_item_manage' => $this->_sName . '_menu_item_manage',
-        	'menu_item_actions' => $this->_sName . '_menu_item_actions',
-                'menu_item_meta' => $this->_sName . '_menu_item_meta',
-        	'menu_post_attachments' => $this->_sName . '_menu_post_attachments',
+            'menu_item_manage' => $this->_sName . '_menu_item_manage',
+            'menu_item_actions' => $this->_sName . '_menu_item_actions',
+            'menu_item_meta' => $this->_sName . '_menu_item_meta',
+            'menu_post_attachments' => $this->_sName . '_menu_post_attachments',
 
-        	'form_post' => $this->_sName . '_post',
-        	'form_attach_link' => $this->_sName . '_attach_link',
-        	'form_display_post_add' => $this->_sName . '_post_add',
-        	'form_display_post_add_public' => $this->_sName . '_post_add_public',
-        	'form_display_post_add_profile' => $this->_sName . '_post_add_profile',
+            'form_post' => $this->_sName . '_post',
+            'form_attach_link' => $this->_sName . '_attach_link',
+            'form_display_post_add' => $this->_sName . '_post_add',
+            'form_display_post_add_public' => $this->_sName . '_post_add_public',
+            'form_display_post_add_profile' => $this->_sName . '_post_add_profile',
             'form_display_post_edit' => $this->_sName . '_post_edit',
-        	'form_display_attach_link_add' => $this->_sName . '_attach_link_add'
+            'form_display_attach_link_add' => $this->_sName . '_attach_link_add'
         ));
 
         $this->_aHandlerDescriptor = array('module_name' => '', 'module_method' => '', 'module_class' => '', 'groupable' => '', 'group_by' => '');
@@ -167,10 +169,9 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'repost' => 'oTimelineRepost',
             'manage_tools' => 'oBxTimelineManageTools'
         );
-        
+
         $this->_aGridObjects = array(
-        	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION']
-        	
+            'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION']
         );
 
         $sHp = str_replace('_', '-', $this->_sName);
@@ -179,43 +180,43 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $sHpO = BX_TIMELINE_VIEW_OUTLINE;
         $sHpS = BX_TIMELINE_VIEW_SEARCH;
         $this->_aHtmlIds = array(
-        	'view' => array(
+            'view' => array(
                 'edit_form' => $sHp . '-edit-',
-                
-        		'main_' . $sHpI => $sHp . '-' . $sHpI,
-        		'item_' . $sHpI => $sHp . '-item-' . $sHpI . '-',
+
+                'main_' . $sHpI => $sHp . '-' . $sHpI,
+                'item_' . $sHpI => $sHp . '-item-' . $sHpI . '-',
                 'item_popup_' . $sHpI => $sHp . '-item-popup-' . $sHpI,
                 'photo_popup_' . $sHpI => $sHp . '-photo-popup-' . $sHpI,
 
                 'main_' . $sHpT => $sHp . '-' . $sHpT,
-        		'item_' . $sHpT => $sHp . '-item-' . $sHpT . '-',
-        		'item_popup_' . $sHpT => $sHp . '-item-popup-' . $sHpT,
+                'item_' . $sHpT => $sHp . '-item-' . $sHpT . '-',
+                'item_popup_' . $sHpT => $sHp . '-item-popup-' . $sHpT,
                 'photo_popup_' . $sHpT => $sHp . '-photo-popup-' . $sHpT,
 
-        		'main_' . $sHpO => $sHp . '-' . $sHpO,
-        		'item_' . $sHpO => $sHp . '-item-' . $sHpO . '-',
-        		'item_popup_' . $sHpO => $sHp . '-item-popup-' . $sHpO,
+                'main_' . $sHpO => $sHp . '-' . $sHpO,
+                'item_' . $sHpO => $sHp . '-item-' . $sHpO . '-',
+                'item_popup_' . $sHpO => $sHp . '-item-popup-' . $sHpO,
                 'photo_popup_' . $sHpO => $sHp . '-photo-popup-' . $sHpO,
 
-        		'main_' . $sHpS => $sHp . '-' . $sHpS,
-        		'photo_popup_' . $sHpS => $sHp . '-photo-popup-' . $sHpS,
+                'main_' . $sHpS => $sHp . '-' . $sHpS,
+                'photo_popup_' . $sHpS => $sHp . '-photo-popup-' . $sHpS,
 
-        		'main_item' => $sHp . '-item',
-				'menu_popup' => $sHp . '-menu-popup-',
+                'main_item' => $sHp . '-item',
+                'menu_popup' => $sHp . '-menu-popup-',
 
-        		'video_iframe' => $sHp . '-video-iframe-',
+                'video_iframe' => $sHp . '-video-iframe-',
                 'video' => $sHp . '-video-',
-        
+
                 'live_update_popup' => $sHp . '-live-update-popup-',
             ),
             'post' => array(
                 'attach_link_popup' =>  $sHp . '-attach-link-popup',
                 'attach_link_form_field' => $sHp . '-attach-link-form_field',
                 'attach_link_item' => $sHp . '-attach-link-item-',
-            	'textarea' => $sHp . '-textarea-',
+                'textarea' => $sHp . '-textarea-',
 
-            	'main_' . $sHpT => $sHp . '-' . $sHpT,
-            	'main_' . $sHpO => $sHp . '-' . $sHpO,
+                'main_' . $sHpT => $sHp . '-' . $sHpT,
+                'main_' . $sHpO => $sHp . '-' . $sHpO,
             ),
             'repost' => array(
                 'main' => $sHp . '-repost-',
@@ -227,23 +228,23 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_aRepostDefaults = array(
             'show_do_repost_as_button' => false,
             'show_do_repost_as_button_small' => false,
-        	'show_do_repost_image' => false,
+            'show_do_repost_image' => false,
             'show_do_repost_icon' => true,
             'show_do_repost_text' => false,
             'show_counter' => true,
 
-        	//--- Images
-        	'image_do_repost' => '',
-        	
-        	//--- Icons
-        	'icon_do_repost' => 'sync-alt',
+            //--- Images
+            'image_do_repost' => '',
 
-        	//--- Texts
-        	'text_do_repost' => '_bx_timeline_txt_do_repost',
+            //--- Icons
+            'icon_do_repost' => 'sync-alt',
 
-        	//--- Templates
-        	'template_do_repost_label' => '',
-        	'template_do_repost_label_name' => 'repost_do_repost_label.html',
+            //--- Texts
+            'text_do_repost' => '_bx_timeline_txt_do_repost',
+
+            //--- Templates
+            'template_do_repost_label' => '',
+            'template_do_repost_label_name' => 'repost_do_repost_label.html',
         );
 
         $this->_iTimelineVisibilityThreshold = 0;
@@ -265,16 +266,18 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_bShowAll = getParam($sOptionPrefix . 'enable_show_all') == 'on';
 
         $this->_aPerPage = array(
-    		'default' => (int)getParam($sOptionPrefix . 'events_per_page'),
-        	'profile' => (int)getParam($sOptionPrefix . 'events_per_page_profile'),
-        	'account' => (int)getParam($sOptionPrefix . 'events_per_page_account'),
-        	'home' => (int)getParam($sOptionPrefix . 'events_per_page_home')
+            'default' => (int)getParam($sOptionPrefix . 'events_per_page'),
+            'profile' => (int)getParam($sOptionPrefix . 'events_per_page_profile'),
+            'account' => (int)getParam($sOptionPrefix . 'events_per_page_account'),
+            'home' => (int)getParam($sOptionPrefix . 'events_per_page_home')
     	);
 
         $this->_iRssLength = (int)getParam($sOptionPrefix . 'rss_length');
         $this->_iLiveUpdateLength = 10;
         $this->_iCharsDisplayMaxTitle = 20;
+
         $this->_sVideosAutoplay = getParam($sOptionPrefix . 'videos_autoplay');
+        $this->_iPreloadComments = (int)getParam($sOptionPrefix . 'preload_comments');
 
         $this->_bHot = getParam($sOptionPrefix . 'enable_hot') == 'on';
         $this->_iHotInterval = (int)getParam($sOptionPrefix . 'hot_interval');
@@ -343,7 +346,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         return $this->_iRssLength;
     }
 
-	public function getLiveUpdateLength()
+    public function getLiveUpdateLength()
     {
         return $this->_iLiveUpdateLength;
     }
@@ -356,6 +359,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function getVideosAutoplay()
     {
         return $this->_sVideosAutoplay;
+    }
+
+    public function getPreloadComments()
+    {
+        return $this->_iPreloadComments;
     }
 
     public function getHotInterval()
@@ -419,9 +427,9 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     }
 
     public function getLiveUpdateKey($sType, $iOwnerId)
-	{
-		return $this->getName() . '_live_update_' . $sType . '_' . $iOwnerId;
-	}
+    {
+        return $this->getName() . '_live_update_' . $sType . '_' . $iOwnerId;
+    }
 
     public function isCommon($sType, $sAction)
     {
@@ -436,23 +444,23 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
     public function getSystemData(&$aEvent, $aBrowseParams = array())
     {
-		$sHandler = $aEvent['type'] . '_' . $aEvent['action'];
+        $sHandler = $aEvent['type'] . '_' . $aEvent['action'];
         if(!$this->isHandler($sHandler))
             return false;
 
         $aHandler = $this->getHandlers($sHandler);
         if(empty($aHandler['module_name']) || empty($aHandler['module_class']) || empty($aHandler['module_method']))
-        	return false; 
+            return false; 
 
-		return BxDolService::call($aHandler['module_name'], $aHandler['module_method'], array($aEvent, $aBrowseParams), $aHandler['module_class']);
+        return BxDolService::call($aHandler['module_name'], $aHandler['module_method'], array($aEvent, $aBrowseParams), $aHandler['module_class']);
     }
 
     public function getSystemDataByDescriptor($sType, $sAction, $iObjectId)
     {
     	$aDescriptor = array(
-    		'type' => $sType, 
-    		'action' => $sAction,
-    		'object_id' => $iObjectId
+            'type' => $sType, 
+            'action' => $sAction,
+            'object_id' => $iObjectId
     	);
     	return $this->getSystemData($aDescriptor);
     }

@@ -323,7 +323,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $sSystem = bx_process_input(bx_get('system'), BX_DATA_TEXT);
         $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        $sComments = $this->_oTemplate->getComments($sSystem, $iId, true);
+        $sComments = $this->_oTemplate->getComments($sSystem, $iId, array('dynamic_mode' => true));
 
         echoJson(array('content' => $sComments));
     }

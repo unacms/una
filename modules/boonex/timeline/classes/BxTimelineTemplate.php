@@ -508,7 +508,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return $this->parseHtmlByName('load_more.html', $aTmplVars);
     }
 
-    public function getComments($sSystem, $iId, $bDynamic = false)
+    public function getComments($sSystem, $iId, $aBrowseParams = array())
     {
         $oModule = $this->getModule();
         $sStylePrefix = $this->_oConfig->getPrefix('style');
@@ -517,7 +517,18 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($oCmts === false)
             return '';
 
-        $aComments = $oCmts->getCommentsBlock(array(), array('in_designbox' => false, 'dynamic_mode' => $bDynamic));
+        $aCmtsBp = array();
+        if(!empty($aBrowseParams['cmts_preload_number']))
+            $aCmtsBp['per_view'] = $aBrowseParams['cmts_preload_number'];
+
+        $aCmtsDp = array(
+            'in_designbox' => false, 
+            'dynamic_mode' => isset($aBrowseParams['dynamic_mode']) && $aBrowseParams['dynamic_mode'] === true
+        );
+        if(!empty($aBrowseParams['cmts_min_post_form']))
+            $aCmtsDp['min_post_form'] = $aBrowseParams['cmts_min_post_form'];
+
+        $aComments = $oCmts->getCommentsBlock($aCmtsBp, $aCmtsDp);
         return $this->parseHtmlByName('comments.html', array(
             'style_prefix' => $sStylePrefix,
             'id' => $iId,
@@ -982,15 +993,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sClassOwner = $bTmplVarsOwnerActions ? $sStylePrefix . '-io-with-actions' : '';
 
         $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
- 		$sLocation = $oMetatags->locationsString($aEvent['id']);
+        $sLocation = $oMetatags->locationsString($aEvent['id']);
  
         $aTmplVars = array (
             'style_prefix' => $sStylePrefix,
             'js_object' => $sJsObject,
-        	'html_id' => $this->_oConfig->getHtmlIds('view', 'item_' . $aBrowseParams['view']) . $aEvent['id'],
+            'html_id' => $this->_oConfig->getHtmlIds('view', 'item_' . $aBrowseParams['view']) . $aEvent['id'],
             'class' => $sClass,
             'class_owner' => $sClassOwner,
-        	'class_content' => $bViewItem ? 'bx-def-color-bg-block' : 'bx-def-color-bg-box',
+            'class_content' => $bViewItem ? 'bx-def-color-bg-block' : 'bx-def-color-bg-box',
             'id' => $aEvent['id'],
             'bx_if:show_note' => array(
                 'condition' => !empty($aTmplVarsNote),
@@ -1025,27 +1036,27 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'bx_if:show_pinned' => array(
             	'condition' => $bPinned,
             	'content' => array(
-            		'style_prefix' => $sStylePrefix,
+                    'style_prefix' => $sStylePrefix,
             	)
             ),
             'bx_if:show_sticked' => array(
             	'condition' => $bSticked,
             	'content' => array(
-            		'style_prefix' => $sStylePrefix,
+                    'style_prefix' => $sStylePrefix,
             	)
             ),
             'bx_if:show_hot' => array(
             	'condition' => isset($aBrowseParams['hot']) && is_array($aBrowseParams['hot']) && in_array($aEvent['id'], $aBrowseParams['hot']),
             	'content' => array(
-            		'style_prefix' => $sStylePrefix,
+                    'style_prefix' => $sStylePrefix,
             	)
             ),
             'content' => is_string($aEvent['content']) ? $aEvent['content'] : $this->_getContent($sType, $aEvent, $aBrowseParams),
             'bx_if:show_location' => array(
             	'condition' => !empty($sLocation),
             	'content' => array(
-            		'style_prefix' => $sStylePrefix,
-            		'location' => $sLocation
+                    'style_prefix' => $sStylePrefix,
+                    'location' => $sLocation
             	)
             ),
             'bx_if:show_menu_item_actions' => array(
@@ -1058,6 +1069,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             ),
             'comments' => '',
         );
+
+        $iPreloadComments = $this->_oConfig->getPreloadComments();
+        if($iPreloadComments > 0 && in_array($aBrowseParams['view'], array(BX_TIMELINE_VIEW_TIMELINE, BX_TIMELINE_VIEW_OUTLINE)))
+            $aTmplVars['comments'] = $this->_getComments($aEvent['comments'], array_merge($aBrowseParams, array(
+                'cmts_preload_number' => $iPreloadComments,
+                'cmts_min_post_form' => true
+            )));
 
         $sVariable = '_sTmplContentItem' . bx_gen_method_name($aBrowseParams['view']);
         if(empty(self::$$sVariable))
@@ -1079,14 +1097,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 		return $this->parseHtmlByContent(self::$$sVariable, $this->$sMethod($aEvent, $aBrowseParams));
     }
 
-    protected function _getComments($aComments)
+    protected function _getComments($aComments, $aBrowseParams = array())
     {
         $mixedComments = $this->getModule()->getCommentsData($aComments);
         if($mixedComments === false)
             return '';
 
         list($sSystem, $iObjectId, $iCount) = $mixedComments;
-        return $this->getComments($sSystem, $iObjectId);
+        return $this->getComments($sSystem, $iObjectId, $aBrowseParams);
     }
 
     protected function _getShowMore($aParams)
