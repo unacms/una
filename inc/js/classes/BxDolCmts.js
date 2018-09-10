@@ -28,9 +28,12 @@ function BxDolCmts (options) {
     this._sRootId = '#cmts-box-' + this._sSystem + '-' + this._iObjId;
 
     // init post comment form
-    if ($(this._sRootId + ' .cmt-post-reply form').length) {
-    	var sFormId = $(this._sRootId + ' .cmt-post-reply form').attr('id');
-    	this.cmtInitFormPost(sFormId);
+    var $this = this;
+    var sFormId = this._sRootId + ' .cmt-post-reply form';
+    if ($(sFormId).length) {
+    	$(sFormId).each(function() {
+            $this.cmtInitFormPost($(this));
+        });
     }
 
     // blink (highlight) necessary comments
@@ -40,18 +43,17 @@ function BxDolCmts (options) {
 }
 
 /*--- Main layout functionality ---*/
-BxDolCmts.prototype.cmtInitFormPost = function(sCmtFormId)
+BxDolCmts.prototype.cmtInitFormPost = function(oCmtForm)
 {
-	var $this = this;
-	var oCmtForm = $('#' + sCmtFormId);
+    var $this = this;
 
-	oCmtForm.ajaxForm({
+    oCmtForm.ajaxForm({
         dataType: "json",
         beforeSubmit: function (formData, jqForm, options) {
-        	window[$this._sObjName].cmtBeforePostSubmit(oCmtForm);
+            window[$this._sObjName].cmtBeforePostSubmit(oCmtForm);
         },
         success: function (oData) {
-        	window[$this._sObjName].cmtAfterPostSubmit(oCmtForm, oData);
+            window[$this._sObjName].cmtAfterPostSubmit(oCmtForm, oData);
         }
     });
 };
@@ -75,43 +77,45 @@ BxDolCmts.prototype.cmtShowForm = function(oElement)
 
 BxDolCmts.prototype.cmtBeforePostSubmit = function(oCmtForm)
 {
-	this._loadingInButton($(oCmtForm).children().find(':submit'), true);
+    this._loadingInButton($(oCmtForm).children().find(':submit'), true);
 };
 
 BxDolCmts.prototype.cmtAfterPostSubmit = function (oCmtForm, oData)
 {
 	var $this = this;
 	var fContinue = function() {
-		if(oData && oData.id != undefined) {
-			var iCmtId = parseInt(oData.id);
-	        if(iCmtId > 0) {
-	            $this._getCmt(oCmtForm, iCmtId);
-	            $this._getForm(undefined, parseInt(oData.parent_id), function(sForm) {
-	            	var oForm = $(sForm);
-	            	oCmtForm.parents('.cmt-reply:first').hide().html(oForm.html()).show();
+            var oParent = oCmtForm.parents('.cmt-reply:first');
 
-	            	var sFormId = oForm.find('form').attr('id');
-	            	$this.cmtInitFormPost(sFormId);
-	            });
-	        }
+            if(oData && oData.id != undefined) {
+                var iCmtId = parseInt(oData.id);
+                if(iCmtId > 0) {
+                    $this._getCmt(oCmtForm, iCmtId);
+                    $this._getForm(undefined, parseInt(oData.parent_id), function(sFormWrp) {
+                        var oFormWrp = $(sFormWrp);
+                        oParent.hide().html(oFormWrp.html()).show();
 
-	        return;
-		}
+                        $this.cmtInitFormPost(oParent.find('form'));
+                    });
+                }
 
-		if(oData && oData.form != undefined && oData.form_id != undefined) {
-			$('#' + oData.form_id).replaceWith(oData.form);
-			$this.cmtInitFormPost(oData.form_id);
+                return;
+            }
 
-			return;
-		}
+            if(oData && oData.form != undefined && oData.form_id != undefined) {
+                oParent.find('form').replaceWith(oData.form);
+
+                $this.cmtInitFormPost(oParent.find('form'));
+
+                return;
+            }
 	};
 
 	this._loadingInButton($(oCmtForm).children().find(':submit'), false);
 
 	if(oData && oData.msg != undefined)
-        bx_alert(oData.msg, fContinue);
-	else 
-		fContinue();	
+            bx_alert(oData.msg, fContinue);
+        else 
+            fContinue();
 };
 
 BxDolCmts.prototype.cmtInitFormEdit = function(sCmtFormId)
@@ -340,36 +344,36 @@ BxDolCmts.prototype.showImage = function(oLink, sUrl) {
 
 BxDolCmts.prototype.toggleReply = function(e, iCmtParentId)
 {
-	var $this = this;
-	var sParentId = this._sRootId + ' #cmt' + iCmtParentId;
-	var fOnShow = function() {
-		$(this).find('textarea:first').focus();
-	};
+    var $this = this;
+    var sParentId = this._sRootId + ' #cmt' + iCmtParentId;
+    var fOnShow = function() {
+        $(this).find('textarea:first').focus();
+    };
 
-	var sReplyId = sParentId + ' > .cmt-reply';
+    var sReplyId = sParentId + ' > .cmt-reply';
     if ($(sReplyId).length) {
-		$(sReplyId).bx_anim('toggle', this._sAnimationEffect, this._iAnimationSpeed, fOnShow);
-		return;
+        $(sReplyId).bx_anim('toggle', this._sAnimationEffect, this._iAnimationSpeed, fOnShow);
+        return;
     }
 
-	this._getForm(e, iCmtParentId, function(sForm) {
-		var oForm = $(sForm).hide().addClass('cmt-reply-' + $this._sPostFormPosition).addClass('cmt-reply-margin');
+    this._getForm(e, iCmtParentId, function(sForm) {
+        var oForm = $(sForm).hide().addClass('cmt-reply-' + $this._sPostFormPosition).addClass('cmt-reply-margin');
         var oFormSibling = $(sParentId + ' > ul.cmts:first');
         switch($this._sPostFormPosition) {
-        	case 'top':
-        		oFormSibling.before(oForm);
-        		break;
+            case 'top':
+                oFormSibling.before(oForm);
+                break;
 
-        	case 'bottom':
-        		oFormSibling.after(oForm);
-        		break;
+            case 'bottom':
+                oFormSibling.after(oForm);
+                break;
         }
 
         var sFormId = oForm.find('form').attr('id');
         $this.cmtInitFormPost(sFormId);
 
-    	$(sParentId).children('.cmt-reply').bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed, fOnShow);    		
-	});
+        $(sParentId).children('.cmt-reply').bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed, fOnShow);
+    });
 };
 
 BxDolCmts.prototype.goTo = function(oLink, sGoToId, sBlinkIds, onLoad)
@@ -584,11 +588,11 @@ BxDolCmts.prototype._getForm = function (e, iCmtParentId, onLoad)
         this._sActionsUrl,
         oData,
         function (s) {
-        	if(e)
-        		$this._loadingInContent(e, false);
+            if(e)
+                $this._loadingInContent(e, false);
 
             if(typeof onLoad == 'function')
-    			onLoad(s);
+                onLoad(s);
         }
     );
 };

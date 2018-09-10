@@ -62,7 +62,7 @@ class BxBaseCmts extends BxDolCmts
         if(empty(self::$_sTmplContentCounter))
             self::$_sTmplContentCounter = $this->_oTemplate->getHtml('comment_counter.html');
 
-        BxDolTemplate::getInstance()->addJsTranslation('_sys_txt_cmt_loading');
+        $this->_oTemplate->addJsTranslation('_sys_txt_cmt_loading');
     }
 
     /**
@@ -102,7 +102,7 @@ class BxBaseCmts extends BxDolCmts
         );
 
         $this->addCssJs();
-        return BxDolTemplate::getInstance()->_wrapInTagJsCode("var " . $this->_sJsObjName . " = new BxDolCmts(" . json_encode($aParams) . ");");
+        return $this->_oTemplate->_wrapInTagJsCode("if(window['" . $this->_sJsObjName . "'] == undefined) var " . $this->_sJsObjName . " = new BxDolCmts(" . json_encode($aParams) . ");");
     }
 
     /**
@@ -120,7 +120,7 @@ class BxBaseCmts extends BxDolCmts
         //add live update
 
         $sCaption = _t($this->_aT['block_comments_title'], $this->getCommentsCountAll());
-        $sContent = BxDolTemplate::getInstance()->parseHtmlByName('comments_block.html', array(
+        $sContent = $this->_oTemplate->parseHtmlByName('comments_block.html', array(
             'system' => $this->_sSystem,
             'list_anchor' => $this->getListAnchor(),
             'id' => $this->getId(),
@@ -182,7 +182,7 @@ class BxBaseCmts extends BxDolCmts
         if (!$sComment)
             return '';
 
-        return BxDolTemplate::getInstance()->parseHtmlByName('comment_block.html', array(
+        return $this->_oTemplate->parseHtmlByName('comment_block.html', array(
             'system' => $this->_sSystem,
             'id' => $this->getId(),
             'comment' => $sComment,
@@ -310,7 +310,7 @@ class BxBaseCmts extends BxDolCmts
         if(empty($sAddon))
             $sAddon = $this->getJsScript($aBp, $aDp);
 
-        return BxDolTemplate::getInstance()->parseHtmlByName('comment_search.html', array(
+        return $this->_oTemplate->parseHtmlByName('comment_search.html', array(
             'comment' => $this->getComment($iCmtId, $aBp, $aDp),
             'view_image_popup' => $this->_getViewImagePopup(), 
         )); 
@@ -333,7 +333,7 @@ class BxBaseCmts extends BxDolCmts
         if(empty($sViewLink))
             $sViewLink = '#';
 
-        return BxDolTemplate::getInstance()->parseHtmlByName('comment_live_search.html', array(
+        return $this->_oTemplate->parseHtmlByName('comment_live_search.html', array(
             'bx_if:show_icon' => array(
                 'condition' => $bAuthorIcon,
                 'content' => array(
@@ -385,7 +385,6 @@ class BxBaseCmts extends BxDolCmts
 			return '';
 
 		$sJsObject = $this->getJsObjectName();
-		$oTemplate = BxDolTemplate::getInstance();
 
 		$aComments = array_reverse($aComments);
 		$iComments = count($aComments);
@@ -402,7 +401,7 @@ class BxBaseCmts extends BxDolCmts
 	    			'condition' => $iIndex < ($iComments - 1),
 	    			'content' => array(),
 	    		),
-	    		'item' => $oTemplate->parseHtmlByName('comments_notification.html', array_merge(array(
+	    		'item' => $this->_oTemplate->parseHtmlByName('comments_notification.html', array_merge(array(
 	    			'style_prefix' => $this->_sStylePrefix,
 	    			'onclick_show' => $sShowOnClick,
 	    			'onclick_reply' => $sReplyOnClick,
@@ -417,7 +416,7 @@ class BxBaseCmts extends BxDolCmts
 			);
 		}
 
-		return $oTemplate->parseHtmlByName('popup_chain.html', array(
+		return $this->_oTemplate->parseHtmlByName('popup_chain.html', array(
 			'html_id' => $this->getNotificationId(),
 			'bx_repeat:items' => $aTmplVarsNotifs
 		));
@@ -699,7 +698,7 @@ class BxBaseCmts extends BxDolCmts
         $sMethod = '_getForm' . ucfirst($sType);
         $aForm = $this->$sMethod($iCmtParentId, $aDp);
 
-        return BxDolTemplate::getInstance()->parseHtmlByName('comment_reply_box.html', array(
+        return $this->_oTemplate->parseHtmlByName('comment_reply_box.html', array(
             'js_object' => $this->_sJsObjName,
             'style_prefix' => $this->_sStylePrefix,
             'class' => $sClass,
@@ -870,7 +869,7 @@ class BxBaseCmts extends BxDolCmts
 
         $bRoot = (int)$aBp['vparent_id'] <= 0;
 
-        $sMore = BxDolTemplate::getInstance()->parseHtmlByName('comment_more.html', array(
+        $sMore = $this->_oTemplate->parseHtmlByName('comment_more.html', array(
             'js_object' => $this->_sJsObjName,
             'style_prefix' => $this->_sStylePrefix,
             'bx_if:is_root' => array(
@@ -900,7 +899,7 @@ class BxBaseCmts extends BxDolCmts
 
     protected function _getEmpty()
     {
-        return BxDolTemplate::getInstance()->parseHtmlByName('comment_empty.html', array(
+        return $this->_oTemplate->parseHtmlByName('comment_empty.html', array(
             'style_prefix' => $this->_sStylePrefix,
             'content' => MsgBox(_t('_Empty'))
         ));
@@ -909,7 +908,7 @@ class BxBaseCmts extends BxDolCmts
     protected function _getViewImagePopup()
     {
     	$sViewImagePopupId = 'cmts-box-' . $this->_sSystem . '-' . $this->getId() . '-view-image-popup' ;
-        $sViewImagePopupContent = BxDolTemplate::getInstance()->parseHtmlByName('popup_image.html', array(
+        $sViewImagePopupContent = $this->_oTemplate->parseHtmlByName('popup_image.html', array(
     		'image_url' => ''
     	));
 
