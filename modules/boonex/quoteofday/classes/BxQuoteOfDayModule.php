@@ -196,19 +196,19 @@ class BxQuoteOfDayModule extends BxDolModule
     public function putQuoteToCache($quoteText)
     {
         $oCachObject = $this->_oDb->getDbCacheObject();
-        $oCachObject->setData($this->_oConfig->CNF['CACHEKEY'], $quoteText, BX_QOD_LIFETIME_IN_SECONDS);
+        $oCachObject->setData($this->_oDb->genDbCacheKey($this->_oConfig->CNF['CACHEKEY']), $quoteText, BX_QOD_LIFETIME_IN_SECONDS);
     }
     
     public function getQuoteFromCache()
     {
         $oCachObject = $this->_oDb->getDbCacheObject();
-        return $oCachObject->getData($this->_oConfig->CNF['CACHEKEY'], BX_QOD_LIFETIME_IN_SECONDS);
+        return $oCachObject->getData($this->_oDb->genDbCacheKey($this->_oConfig->CNF['CACHEKEY']), BX_QOD_LIFETIME_IN_SECONDS);
     }
     
     public function removeQuoteFromCache()
     {
         $oCachObject = $this->_oDb->getDbCacheObject();
-        $oCachObject->delData($this->_oConfig->CNF['CACHEKEY']);
+        $oCachObject->delData($this->_oDb->genDbCacheKey($this->_oConfig->CNF['CACHEKEY']));
     }
     
     private function getInternalData()
