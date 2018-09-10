@@ -39,7 +39,7 @@ class BxCnlModule extends BxBaseModGroupsModule
                     $mixedCnlId = $aContent['content']['id'];
             }
         }
-        
+
         if (!empty($mixedCnlId)){
             if (0 == (int) $this->_oDb->checkContentInChannel($iContentId, $mixedCnlId, $sModuleName, $iAuthorId)){
                 $iId = $this->_oDb->addContentToChannel($iContentId, $mixedCnlId, $sModuleName, $iAuthorId);
@@ -50,12 +50,8 @@ class BxCnlModule extends BxBaseModGroupsModule
                         $oDolProfileQuery = BxDolProfileQuery::getInstance();
                         $iProfileInfo = $oDolProfileQuery->getProfileByContentAndType($mixedCnlId, $this->_aModule['name']);
                         if(is_array($iProfileInfo)){
-                            $sPrivacyKey = 'allow_view_to';
-                            if ($sModuleName == 'bx_timeline'){
-                                $sPrivacyKey ='object_privacy_view';
-                            }
-                            bx_alert($this->_aModule['name'], 'hashtag_added', $iId, $iProfileInfo['id'], array('object_author_id' => $iAuthorId, 'privacy_view' => $aInfo[1][$sPrivacyKey]));
-                            bx_alert($this->_aModule['name'], 'hashtag_added_notif', $mixedCnlId, $iProfileInfo['id'], array('object_author_id' => $iAuthorId, 'privacy_view' => $aInfo[1][$sPrivacyKey], 'subobject_id' => $iId));
+                            bx_alert($this->_aModule['name'], 'hashtag_added', $iId, $iProfileInfo['id'], array('object_author_id' => $iAuthorId, 'privacy_view' => -$iProfileInfo['id']));
+                            bx_alert($this->_aModule['name'], 'hashtag_added_notif', $mixedCnlId, $iProfileInfo['id'], array('object_author_id' => $iAuthorId, 'privacy_view' => -$iProfileInfo['id'], 'subobject_id' => $iId));
                         }
                     }
                 }
