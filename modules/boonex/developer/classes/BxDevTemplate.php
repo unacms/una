@@ -18,7 +18,7 @@ class BxDevTemplate extends BxDolModuleTemplate
         $this->addStudioCss(array('main.css'));
     }
 
-    function displayPageContent($sPage, &$oContent)
+    function displayPageContent($sPage, $oContent)
     {
         $this->addStudioCss($oContent->getPageCss(), false, false);
         $this->addStudioJs($oContent->getPageJs(), false, false);
