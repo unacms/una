@@ -200,6 +200,13 @@ class BxBaseModGeneralDb extends BxDolModuleDb
 
         $sWhereClause .= " AND (" . $sWhereConditions . ")"; 
 
+        $this->_getEntriesBySearchIdsOrder($aParams, $sOrderClause);
+    }
+
+    protected function _getEntriesBySearchIdsOrder($aParams, &$sOrderClause)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
         $sOrderClause .=  "`" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ADDED'] . "` ASC";
     }
 }
