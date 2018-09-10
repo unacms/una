@@ -25,6 +25,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
     protected $_sVideosAutoplay;
     protected $_iPreloadComments;
+    protected $_iPreloadCommentsMax;
 
     protected $_bHot;
     protected $_iHotInterval;
@@ -277,7 +278,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_iCharsDisplayMaxTitle = 20;
 
         $this->_sVideosAutoplay = getParam($sOptionPrefix . 'videos_autoplay');
+
+        $this->_iPreloadCommentsMax = 7;
         $this->_iPreloadComments = (int)getParam($sOptionPrefix . 'preload_comments');
+        if($this->_iPreloadComments > $this->_iPreloadCommentsMax)
+            $this->_iPreloadComments = $this->_iPreloadCommentsMax;
 
         $this->_bHot = getParam($sOptionPrefix . 'enable_hot') == 'on';
         $this->_iHotInterval = (int)getParam($sOptionPrefix . 'hot_interval');

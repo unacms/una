@@ -50,7 +50,6 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
         if (!$oEditor)
             return false;
 
-            
         if(in_array($this->aParams['display'], array($this->_oModule->_oConfig->getObject('form_display_post_add'), $this->_oModule->_oConfig->getObject('form_display_post_add_public'))))
             $oEditor->setCustomConf("
                 placeholderText: '" . _t('_bx_timeline_txt_some_text_here') . "',

@@ -75,13 +75,13 @@ BxTimelinePost.prototype.initEmoji = function(sEditorSelector)
 
 BxTimelinePost.prototype.initFormPost = function(sFormId)
 {
-	var $this = this;
-	var oForm = $('#' + sFormId);
-	var oTextarea = oForm.find('textarea');
+    var $this = this;
+    var oForm = $('#' + sFormId);
+    var oTextarea = oForm.find('textarea');
 
-	autosize(oTextarea);
+    autosize(oTextarea);
 
-	oForm.ajaxForm({
+    oForm.ajaxForm({
         dataType: "json",
         beforeSubmit: function (formData, jqForm, options) {
         	window[$this._sObjName].beforeFormPostSubmit(oForm);
@@ -91,38 +91,38 @@ BxTimelinePost.prototype.initFormPost = function(sFormId)
         }
     });
 
-	if(typeof window.glOnSpaceEnterInEditor === 'undefined')
-	    window.glOnSpaceEnterInEditor = [];
+    if(typeof window.glOnSpaceEnterInEditor === 'undefined')
+        window.glOnSpaceEnterInEditor = [];
 
-	window.glOnSpaceEnterInEditor.push(function (sData, sSelector) {
-		if(!oTextarea.is(sSelector))
-			return;
+    window.glOnSpaceEnterInEditor.push(function (sData, sSelector) {
+        if(!oTextarea.is(sSelector))
+            return;
 
-		var oExp, aMatch = null;
+        var oExp, aMatch = null;
 
-		oExp = new RegExp($this._sPregTag , "ig");
-		sData = sData.replace(oExp, '');
+        oExp = new RegExp($this._sPregTag , "ig");
+        sData = sData.replace(oExp, '');
 
-		oExp = new RegExp($this._sPregMention , "ig");
-		sData = sData.replace(oExp, '');
+        oExp = new RegExp($this._sPregMention , "ig");
+        sData = sData.replace(oExp, '');
 
-		oExp = new RegExp($this._sPregUrl , "ig");
-		while(aMatch = oExp.exec(sData)) {
-			var sUrl = aMatch[0];
-			if(!sUrl.length || $this._oAttachedLinks[sUrl] != undefined)
-				continue;
+        oExp = new RegExp($this._sPregUrl , "ig");
+        while(aMatch = oExp.exec(sData)) {
+            var sUrl = aMatch[0];
+            if(!sUrl.length || $this._oAttachedLinks[sUrl] != undefined)
+                continue;
 
-			//--- Mark that 'attach link' process was started.
-			$this._oAttachedLinks[sUrl] = 0;
+            //--- Mark that 'attach link' process was started.
+            $this._oAttachedLinks[sUrl] = 0;
 
-			$this.addAttachLink(oForm, sUrl);
-		}
-	});
+            $this.addAttachLink(oForm, sUrl);
+        }
+    });
 };
 
 BxTimelinePost.prototype.beforeFormPostSubmit = function(oForm)
 {
-	this.loadingInButton($(oForm).children().find(':submit'), true);
+    this.loadingInButton($(oForm).children().find(':submit'), true);
 };
 
 BxTimelinePost.prototype.afterFormPostSubmit = function (oForm, oData)
