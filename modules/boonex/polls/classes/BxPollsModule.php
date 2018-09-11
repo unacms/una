@@ -20,7 +20,7 @@ class BxPollsModule extends BxBaseModTextModule
 
         $CNF = &$this->_oConfig->CNF;
         $this->_aSearchableNamesExcept = array_merge($this->_aSearchableNamesExcept, array(
-             $CNF['FIELD_ANONYMOUS'],
+             $CNF['FIELD_ANONYMOUS_VOTING'],
              $CNF['FIELD_HIDDEN_RESULTS']
         ));
     }

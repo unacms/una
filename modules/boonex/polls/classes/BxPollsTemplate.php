@@ -145,7 +145,7 @@ class BxPollsTemplate extends BxBaseModTextTemplate
             'html_id' => $this->_oConfig->getHtmlIds('content') . $aData[$CNF['FIELD_ID']],
             'bx_repeat:subentries' => $aTmplVarsSubentries,
             'bx_if:show_public' => array(
-                'condition' => (int)$aData[$CNF['FIELD_ANONYMOUS']] == 0,
+                'condition' => (int)$aData[$CNF['FIELD_ANONYMOUS_VOTING']] == 0,
                 'content' => array()
             )
         ));
@@ -155,7 +155,7 @@ class BxPollsTemplate extends BxBaseModTextTemplate
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
-        $bAnonymous = (int)$aData[$CNF['FIELD_ANONYMOUS']] == 1;
+        $bAnonymous = (int)$aData[$CNF['FIELD_ANONYMOUS_VOTING']] == 1;
 
         $aSubentries = $this->_oDb->getSubentries(array('type' => 'entry_id', 'entry_id' => $aData[$CNF['FIELD_ID']]));
         if(empty($aSubentries) || !is_array($aSubentries))

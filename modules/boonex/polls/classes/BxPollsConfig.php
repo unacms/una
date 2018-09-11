@@ -42,7 +42,7 @@ class BxPollsConfig extends BxBaseModTextConfig
         	'FIELD_CATEGORY' => 'cat',
         	'FIELD_SUBENTRIES' => 'subentries',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
-        	'FIELD_ANONYMOUS' => 'anonymous',
+        	'FIELD_ANONYMOUS_VOTING' => 'anonymous',
         	'FIELD_HIDDEN_RESULTS' => 'hidden_results',
             'FIELD_PHOTO' => 'pictures',
             'FIELD_THUMB' => 'thumb',
