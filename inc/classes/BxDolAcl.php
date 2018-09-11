@@ -389,7 +389,7 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
      *                                  - there is at least one pricing option for the membership
      * @return array( membershipID_1 => membershipName_1,  membershipID_2 => membershipName_2, ...) if no such memberships, then just array()
      */
-    function getMemberships($bPurchasableOnly = false, $bActiveOnly = false, $isTranslate = true)
+    function getMemberships($bPurchasableOnly = false, $bActiveOnly = false, $isTranslate = true, $bFilterOutSystemAutomaticLevels = false)
     {
         $sType = 'all_pair';
         if($bPurchasableOnly)
@@ -402,6 +402,15 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
         if ($isTranslate)
             foreach ($aLevels as $k => $s)
                 $aLevels[$k] = _t($s);
+
+        if ($bFilterOutSystemAutomaticLevels) {
+            unset($aLevels[MEMBERSHIP_ID_NON_MEMBER]);
+            unset($aLevels[MEMBERSHIP_ID_ACCOUNT]);
+            unset($aLevels[MEMBERSHIP_ID_UNCONFIRMED]);
+            unset($aLevels[MEMBERSHIP_ID_PENDING]);
+            unset($aLevels[MEMBERSHIP_ID_SUSPENDED]);
+        }
+
         return $aLevels;
     }
 

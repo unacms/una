@@ -12,7 +12,7 @@ SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 ('bx_organizations_autoapproval', 'on', @iCategId, '_bx_orgs_option_autoapproval', 'checkbox', '', '', '', 1),
-('bx_organizations_default_acl_level', '3', @iCategId, '_bx_orgs_option_default_acl_level', 'select', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"get_memberships";s:6:"params";a:2:{i:0;b:0;i:1;b:1;}s:5:"class";s:16:"TemplAclServices";}', '', '', 2),
+('bx_organizations_default_acl_level', '3', @iCategId, '_bx_orgs_option_default_acl_level', 'select', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"get_memberships";s:6:"params";a:4:{s:11:"purchasable";b:0;s:6:"active";b:1;s:9:"translate";b:1;s:22:"filter_out_auto_levels";b:1;}s:5:"class";s:16:"TemplAclServices";}', '', '', 2),
 ('bx_organizations_redirect_aadd', 'profile', @iCategId, '_bx_orgs_option_redirect_aadd', 'select', 'a:2:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:30:"get_options_redirect_after_add";}', '', '', 3),
 ('bx_organizations_redirect_aadd_custom_url', '', @iCategId, '_bx_orgs_option_redirect_aadd_custom_url', 'digit', '', '', '', 4),
 ('bx_organizations_num_connections_quick', '6', @iCategId, '_bx_orgs_option_num_connections_quick', 'digit', '', '', '', 10),
