@@ -363,11 +363,50 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($bViewTimeline && $iEvents <= 0)
         	$sContent .= $this->getDividerToday();
 
+        //--- Check for Visual Grouping
+        $aGroups = array();
+        foreach($aEvents as $iIndex => $aEvent) {
+            $aContent = unserialize($aEvent['content']);
+            if(!isset($aContent['timeline_group']))
+                continue;
+
+            $aGroup = $aContent['timeline_group'];
+            $sGroup = $aGroup['by'];
+            if(!isset($aGroups[$sGroup]))
+               $aGroups[$sGroup] = array('field' => $aGroup['field'], 'indexes' => array(), 'processed' => false);
+
+            $aGroups[$sGroup]['indexes'][] = $iIndex;
+        }
+
+        //--- Perform Visual Grouping
+        foreach($aGroups as $sGroup => $aGroup) {
+            if(empty($aGroup['field']) || empty($aGroup['indexes']))
+                continue;
+
+            switch($aGroup['field']) {
+                case 'owner_id':
+                    $aOwnerIds = array();
+                    foreach($aGroup['indexes'] as $iIndex)
+                        $aOwnerIds[] = $aEvents[$iIndex]['owner_id'];
+
+                    $iGroupIndex = (int)array_shift($aGroup['indexes']);
+                    if(is_null($iGroupIndex))
+                        break;
+
+                    foreach($aGroup['indexes'] as $iIndex)
+                        unset($aEvents[$iIndex]);
+
+                    $aEvents[$iGroupIndex]['owner_id'] = $aOwnerIds;
+                    break;
+            }
+        }
+
         $bFirst = true;
         foreach($aEvents as $aEvent) {
+            $iEvent = (int)$aEvent['id'];
+
             $sEvent = $this->getPost($aEvent, $aParams);
-            $bEvent = !empty($sEvent);
-            if(!$bEvent)
+            if(empty($sEvent))
                 continue;
 
             if($bViewTimeline && $bFirst) {
@@ -375,7 +414,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $bFirst = false;
             }
 
-            $sContent .= $bViewTimeline && $bEvent ? $this->getDivider($iDays, $aEvent) : '';
+            $sContent .= $bViewTimeline ? $this->getDivider($iDays, $aEvent) : '';
             $sContent .= $sEvent;
         }
 
@@ -1169,47 +1208,60 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     protected function _getTmplVarsTimelineOwner(&$aEvent)
     {
-        $iOwnerId = (int)$aEvent['owner_id'];
-        if($iOwnerId == 0 || $iOwnerId == (int)$aEvent['object_owner_id'])
-            return array();
-
         $sStylePrefix = $this->_oConfig->getPrefix('style');
         $iUser = bx_get_logged_profile_id();
-
         $oModule = $this->getModule();
-        list($sTaName, $sTaUrl, $sTaThumb, $sTaUnit, $sTaUnitWoInfo) = $oModule->getUserInfo($aEvent['owner_id']);
-        $sTaType = $oModule->getObjectUser($aEvent['owner_id'])->getModule();
 
-        $aTmplVarsActions = array();
-        if(!empty($iUser) && !empty($aEvent['owner_id']) && $iUser != $aEvent['owner_id']) {
-            $sConnection = $this->_oConfig->getObject('conn_subscriptions');
-            if(BxDolConnection::getObjectInstance($sConnection)->checkAllowedConnect($iUser, $aEvent['owner_id']) === CHECK_ACTION_RESULT_ALLOWED) {
-                $sContent = _t('_sys_menu_item_title_sm_subscribe');
+        $sConnection = $this->_oConfig->getObject('conn_subscriptions');
+        $oConnection = BxDolConnection::getObjectInstance($sConnection);
+        $sConnectionTitle = _t('_sys_menu_item_title_sm_subscribe');
+
+        $aOwnerIds = is_array($aEvent['owner_id']) ? $aEvent['owner_id'] : array($aEvent['owner_id']);
+
+        $aTmplVarsOwners = array();
+        foreach($aOwnerIds as $iOwnerId) {
+            $iOwnerId = (int)$iOwnerId;
+            if($iOwnerId == 0 || $iOwnerId == (int)$aEvent['object_owner_id'])
+                continue;
+
+            list($sToName, $sToUrl, $sToThumb, $sToUnit, $sToUnitWoInfo) = $oModule->getUserInfo($iOwnerId);
+            $sToType = $oModule->getObjectUser($iOwnerId)->getModule();
+
+            $aTmplVarsActions = array();
+            if(!empty($iUser) && $iUser != $iOwnerId && $oConnection->checkAllowedConnect($iUser, $iOwnerId) === CHECK_ACTION_RESULT_ALLOWED) {
                 $aTmplVarsActions[] = array(
                     'href' => "javascript:void(0)",
-                    'onclick' => "bx_conn_action(this, '" . $sConnection . "', 'add', '" . $aEvent['owner_id'] . "')",
-                	'title' => bx_html_attribute($sContent),
-                    'content' => $sContent,
+                    'onclick' => "bx_conn_action(this, '" . $sConnection . "', 'add', '" . $iOwnerId . "')",
+                    'title' => bx_html_attribute($sConnectionTitle),
+                    'content' => $sConnectionTitle,
                     'icon' => 'check'
                 );
             }
+
+            $aTmplVarsOwners[] =  array(
+                'style_prefix' => $sStylePrefix,
+                'owner_type' => _t('_' . $sToType),
+                'owner_url' => $sToUrl,
+                'owner_username' => $sToName,
+                'owner_thumb' => $sToThumb,
+                'owner_unit' => $sToUnit,
+                'owner_unit_wo_info' => $sToUnitWoInfo,
+                'bx_if:show_timeline_owner_actions' => array(
+                    'condition' => !empty($aTmplVarsActions),
+                    'content' => array(
+                        'style_prefix' => $sStylePrefix,
+                        'bx_repeat:timeline_owner_actions' => $aTmplVarsActions
+                    )
+                )
+            );
         }
 
+        if(empty($aTmplVarsOwners))
+            return array();
+
         return array(
-        	'style_prefix' => $sStylePrefix,
-			'owner_type' => _t('_' . $sTaType),
-            'owner_url' => $sTaUrl,
-            'owner_username' => $sTaName,
-            'owner_thumb' => $sTaThumb,
-            'owner_unit' => $sTaUnit,
-            'owner_unit_wo_info' => $sTaUnitWoInfo,
-            'bx_if:show_timeline_owner_actions' => array(
-                'condition' => !empty($aTmplVarsActions),
-                'content' => array(
-                    'style_prefix' => $sStylePrefix,
-                    'bx_repeat:timeline_owner_actions' => $aTmplVarsActions
-                )
-            )
+            'style_prefix' => $sStylePrefix,
+            'bx_repeat:owners' => $aTmplVarsOwners
         );
     }
 

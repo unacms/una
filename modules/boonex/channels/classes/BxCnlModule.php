@@ -40,23 +40,37 @@ class BxCnlModule extends BxBaseModGroupsModule
             }
         }
 
-        if (!empty($mixedCnlId)){
-            if (0 == (int) $this->_oDb->checkContentInChannel($iContentId, $mixedCnlId, $sModuleName, $iAuthorId)){
-                $iId = $this->_oDb->addContentToChannel($iContentId, $mixedCnlId, $sModuleName, $iAuthorId);
-                $oModule = BxDolModule::getInstance($sModuleName);
-                if ($oModule){
-                    $aInfo = $oModule->_getContent($iContentId);
-                    if (is_array($aInfo)){
-                        $oDolProfileQuery = BxDolProfileQuery::getInstance();
-                        $iProfileInfo = $oDolProfileQuery->getProfileByContentAndType($mixedCnlId, $this->_aModule['name']);
-                        if(is_array($iProfileInfo)){
-                            bx_alert($this->_aModule['name'], 'hashtag_added', $iId, $iProfileInfo['id'], array('object_author_id' => $iAuthorId, 'privacy_view' => -$iProfileInfo['id']));
-                            bx_alert($this->_aModule['name'], 'hashtag_added_notif', $mixedCnlId, $iProfileInfo['id'], array('object_author_id' => $iAuthorId, 'privacy_view' => -$iProfileInfo['id'], 'subobject_id' => $iId));
-                        }
-                    }
-                }
-            }
-        }
+        if(empty($mixedCnlId) || (int)$this->_oDb->checkContentInChannel($iContentId, $mixedCnlId, $sModuleName, $iAuthorId) != 0)
+            return;
+
+        $iId = (int)$this->_oDb->addContentToChannel($iContentId, $mixedCnlId, $sModuleName, $iAuthorId);
+        if($iId == 0)
+            return;
+
+        $oCnlProfile = BxDolProfile::getInstanceByContentAndType($mixedCnlId, $this->_oConfig->getName());
+        if(!$oCnlProfile)
+            return;
+
+        $iCnlProfileId = $oCnlProfile->id();
+
+        bx_alert($this->_aModule['name'], 'hashtag_added', $iId, $iCnlProfileId, array(
+            'object_author_id' => $iAuthorId, 
+            'privacy_view' => -$iCnlProfileId,
+
+            'timeline_group' => array(
+                'by' => $sModuleName . '_' . $iAuthorId . '_' . $iContentId,
+                'field' => 'owner_id'
+            )
+        ));
+
+        bx_alert($this->_aModule['name'], 'hashtag_added_notif', $mixedCnlId, $iCnlProfileId, array(
+            'object_author_id' => $iAuthorId, 
+            'privacy_view' => -$iCnlProfileId, 
+            'subobject_id' => $iId,
+
+            'content_id' => $iContentId,
+            'content_author_id' => $iAuthorId
+        ));
     }
     
     function removeContentFromChannel($iContentId, $sModuleName)

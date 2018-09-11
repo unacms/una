@@ -109,8 +109,11 @@ div.bx-tl-item div.bx-tl-owner-name {
     overflow: hidden;
 }
 div.bx-tl-item div.bx-tl-owner-name a.bx-tl-owner-name,
-div.bx-tl-item div.bx-tl-owner-name a.bx-tl-timeline-owner-name {
+div.bx-tl-item div.bx-tl-owner-name .bx-tl-timeline-owner-name a.bx-tl-ton-item {
     font-weight: 700;
+}
+div.bx-tl-item div.bx-tl-owner-name .bx-tl-timeline-owner-name .bx-tl-ton-div:first-child {
+    display: none;
 }
 div.bx-tl-item div.bx-tl-owner-name .bx-tl-date,
 div.bx-tl-item div.bx-tl-owner-name .bx-tl-pinned .sys-icon,
