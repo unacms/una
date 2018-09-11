@@ -62,7 +62,7 @@ class BxPollsVoteSubentries extends BxTemplVote
             if(!$this->isPerformed($iObjectId, $iAuthorId))
                 return '';
 
-        if((int)$this->_aContentInfo[$CNF['FIELD_ANONYMOUS']] == 1)
+        if((int)$this->_aContentInfo[$CNF['FIELD_ANONYMOUS_VOTING']] == 1)
             $this->_sTmplNameCounter = 'subentries_vc_text.html';
 
         $sResult = parent::getCounter($aParams);
