@@ -477,7 +477,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
      */
     public function checkAllowedPost ($aDataEntry, $isPerformAction = false)
     {
-        if ($this->isFan($aDataEntry[$this->_oConfig->CNF['FIELD_ID']]) || ($aDataEntry[$this->_oConfig->CNF['FIELD_ID']] == BxDolProfile::getInstance()->getContentId() && BxDolProfile::getInstance()->getModule() == $this->getName()))
+        if (isLogged() && ($this->isFan($aDataEntry[$this->_oConfig->CNF['FIELD_ID']]) || ($aDataEntry[$this->_oConfig->CNF['FIELD_ID']] == BxDolProfile::getInstance()->getContentId() && BxDolProfile::getInstance()->getModule() == $this->getName())))
             return CHECK_ACTION_RESULT_ALLOWED;
 
         return _t('_sys_txt_access_denied');
