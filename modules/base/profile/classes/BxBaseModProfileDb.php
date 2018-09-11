@@ -96,13 +96,6 @@ class BxBaseModProfileDb extends BxBaseModGeneralDb
 
         parent::_getEntriesBySearchIds($aParams, $aMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);        
     }
-
-    protected function _getEntriesBySearchIdsOrder($aParams, &$sOrderClause)
-    {
-        $CNF = &$this->_oConfig->CNF;
-
-        $sOrderClause .=  "`" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ADDED'] . "` DESC";
-    }
 }
 
 /** @} */

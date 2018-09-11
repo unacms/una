@@ -207,7 +207,7 @@ class BxBaseModGeneralDb extends BxDolModuleDb
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $sOrderClause .=  "`" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ADDED'] . "` ASC";
+        $sOrderClause .=  "`" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ADDED'] . "` DESC";
     }
 }
 
