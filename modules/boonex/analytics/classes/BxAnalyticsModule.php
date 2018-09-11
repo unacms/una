@@ -207,12 +207,12 @@ class BxAnalyticsModule extends BxDolModule
                   
             case BX_ANALYTICS_TOP_BY_LIKES:
                 $bDefaultFillData = false;
-                $sRv = $this->getViewsOrVotes(BxDolVote::getSystems(), 'OBJECT_VOTES', $sModuleName, $iDateFrom, $iDateTo, $aValues, $iMaxValueY, $iMinValueY);
+                $this->getViewsOrVotes(BxDolVote::getSystems(), 'OBJECT_VOTES', $sModuleName, $iDateFrom, $iDateTo, $aValues, $iMaxValueY, $iMinValueY);
                 break;
                   
             case BX_ANALYTICS_TOP_BY_VIEWS:
                 $bDefaultFillData = false;
-                $sRv = $this->getViewsOrVotes(BxDolView::getSystems(), 'OBJECT_VIEWS', $sModuleName, $iDateFrom, $iDateTo, $aValues, $iMaxValueY, $iMinValueY);
+                $this->getViewsOrVotes(BxDolView::getSystems(), 'OBJECT_VIEWS', $sModuleName, $iDateFrom, $iDateTo, $aValues, $iMaxValueY, $iMinValueY);
                 break;
                   
             case BX_ANALYTICS_MOST_FOLLOWED_PROFILES:
@@ -329,40 +329,7 @@ class BxAnalyticsModule extends BxDolModule
             'strings' => $aValues['strings'],
         );
         
-
         echo json_encode($aDataForChart);
-        return;
-        
-        $sRv = '{"type": "' . $sType . '", "data": {"labels":' . json_encode($aValues['labels']) . ',"datasets": [';
-        for($i = 0; $i < count($aValues['values']); $i++){
-            $sRv .= '{"label": "' . $aValues['values'][$i]['legend'] . '", "fill": false, "backgroundColor": "' . $this->aColors[$i] . '","borderColor": "' . $this->aColors[$i] . '","borderWidth": 1,"data": ' . json_encode($aValues['values'][$i]['data']) . '}';
-            if ($i != count($aValues['values']) - 1)
-                $sRv .= ',';
-        }
-        $sRv .= ']}, "options": {"legend": {"position": "bottom" ' . (count($aValues['values']) == 1 ? ', "display": false' : '') . '}, "scales": {';
-              
-        
-        $sRv .= '"yAxes": [{"ticks": { "max": ' . $iMaxValueY . ',"min": ' . $iMinValueY . ', "stepSize": ' . $this->getStep($iMinValueY, $iMaxValueY) . ', "autoSkip": true }}]';
-              
-        if ($bIsTimeX){
-            $sUnit = 'day';
-            $iInterval = ($iDateTo - $iDateFrom) / 86400;
-            if ($iInterval > 50)
-                $sUnit = 'week';
-            if ($iInterval > 100)
-                $sUnit = 'month';
-            $sRv .= ', "xAxes": [{"type": "time", "time": {"tooltipFormat": "DD.MM.YYYY", "unit" : "' . $sUnit . '"}, "ticks": {"autoSkip": true}, "display": "true", "distribution": "linear" }]';
-        }
-        else{
-            $sRv .= ', "xAxes": [{"ticks": {"autoSkip": false}, "display": "true" }]';
-        }
-        $sRv .= '}}';
-
-        if (count($aValues['links']) > 0)
-            $sRv .= ', "links": ' . json_encode($aValues['links']);
-        $sRv .= ', "strings": ' . json_encode($aValues['strings']);
-        $sRv .= '}';
-        echo $sRv;
     }
           
     public function getSelectedModules()

@@ -68,9 +68,7 @@ BxAnalytics.prototype.reloadData = function () {
                 bottom: 20
             }
         }
-
-       
-
+		
         Chart.defaults.scale.ticks.callback = function (label, index, labels) {
             if (label.length > 10)
                 return label.slice(0, 10) + '...';
