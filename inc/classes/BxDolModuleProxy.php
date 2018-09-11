@@ -30,7 +30,7 @@ class BxDolModuleProxy
             // check if we need to include css&js files
             if ('module_template' == $this->_sObjectType && !empty($this->_oProxifiedObject->aMethodsToCallAddJsCss)) {
                 foreach ($this->_oProxifiedObject->aMethodsToCallAddJsCss as $s) {
-                    if (0 === strpos($s, $sMethodName)) {
+                    if (0 === strpos($sMethodName, $s)) {
                         $this->_oProxifiedObject->addCssJs();
                         break;
                     }
