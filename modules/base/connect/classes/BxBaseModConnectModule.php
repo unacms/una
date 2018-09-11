@@ -132,7 +132,7 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
 
         // check fields existence in Account
         $oFormHelperAccount = BxDolService::call('system', 'forms_helper');
-        $oFormAccount = $oFormHelperAccount->getObjectFormAdd();
+        $oFormAccount = $oFormHelperAccount->getObjectFormEdit();
         foreach ($aFieldsAccount as $sKey => $mValue) {
             if (!$oFormAccount->isFieldExist($sKey))
                 unset($aFieldsAccount[$sKey]);
