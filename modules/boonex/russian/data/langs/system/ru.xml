@@ -1546,6 +1546,7 @@
 	<string name="_cmt_load_more_replies_popular"><![CDATA[Увидеть ещё ответы...]]></string>
 	<string name="_cmt_txt_link_show"><![CDATA[Прочитать]]></string>
 	<string name="_cmt_txt_link_reply"><![CDATA[Ответить]]></string>
+        <string name="_cmt_txt_added_sample"><![CDATA[добавил новый комментарий]]></string>
 	<string name="_cmt_txt_or"><![CDATA[или]]></string>
 	<string name="_cmt_txt_sample_comment_single"><![CDATA[комментарий]]></string>
 	<string name="_cmt_txt_sample_reply_to"><![CDATA[ответ на комментарий]]></string>

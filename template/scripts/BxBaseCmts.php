@@ -376,50 +376,66 @@ class BxBaseCmts extends BxDolCmts
 
     function getNotification($iCountOld = 0, $iCountNew = 0)
     {
-    	$iCount = (int)$iCountNew - (int)$iCountOld;
-    	if($iCount < 0)
-    	    return '';
+        $bShowAll = true;
+        $bShowActions = false;
 
-		$aComments = $this->_oQuery->getCommentsBy(array('type' => 'latest', 'object_id' => $this->_iId, 'author' => $this->_getAuthorId(), 'others' => 1, 'start' => '0', 'per_page' => $iCount));
-		if(empty($aComments) || !is_array($aComments))
-			return '';
+        $iCount = (int)$iCountNew - (int)$iCountOld;
+        if($iCount < 0)
+            return '';
 
-		$sJsObject = $this->getJsObjectName();
+        $aComments = $this->_oQuery->getCommentsBy(array('type' => 'latest', 'object_id' => $this->_iId, 'author' => $this->_getAuthorId(), 'others' => 1, 'start' => '0', 'per_page' => $iCount));
+        if(empty($aComments) || !is_array($aComments))
+            return '';
 
-		$aComments = array_reverse($aComments);
-		$iComments = count($aComments);
+        $sJsObject = $this->getJsObjectName();
 
-		$aTmplVarsNotifs = array();
-		foreach($aComments as $iIndex => $aComment) {
-			$iCommentId = $aComment['cmt_id'];
+        $aComments = array_reverse($aComments);
+        $iComments = count($aComments);
 
-			$sShowOnClick = "javascript:" . $sJsObject . ".goTo(this, '" . $this->_sSystem . $iCommentId . "', '" . $iCommentId . "');";
-			$sReplyOnClick = "javascript:" . $sJsObject . ".goToAndReply(this, '" . $this->_sSystem . $iCommentId . "', '" . $iCommentId . "');";
+        $aTmplVarsNotifs = array();
+        foreach($aComments as $iIndex => $aComment) {
+            $iCommentId = $aComment['cmt_id'];
 
-	    	$aTmplVarsNotifs[] = array(
-	    		'bx_if:show_as_hidden' => array(
-	    			'condition' => $iIndex < ($iComments - 1),
-	    			'content' => array(),
-	    		),
-	    		'item' => $this->_oTemplate->parseHtmlByName('comments_notification.html', array_merge(array(
-	    			'style_prefix' => $this->_sStylePrefix,
-	    			'onclick_show' => $sShowOnClick,
-	    			'onclick_reply' => $sReplyOnClick,
-	    		), $this->_getTmplVarsAuthor($aComment), $this->_getTmplVarsText($aComment))),
-	    		'bx_if:show_previous' => array(
-	    			'condition' => $iIndex > 0,
-	    			'content' => array(
-	    				'onclick_previous' => $sJsObject . '.previousLiveUpdate(this)'
-	    			)
-	    		),
-	    		'onclick_close' => $sJsObject . '.hideLiveUpdate(this)'
-			);
-		}
+            $sShowOnClick = "javascript:" . $sJsObject . ".goTo(this, '" .  $this->getItemAnchor($iCommentId) . "', '" . $iCommentId . "');";
+            $sReplyOnClick = "javascript:" . $sJsObject . ".goToAndReply(this, '" . $this->getItemAnchor($iCommentId) . "', '" . $iCommentId . "');";
 
-		return $this->_oTemplate->parseHtmlByName('popup_chain.html', array(
-			'html_id' => $this->getNotificationId(),
-			'bx_repeat:items' => $aTmplVarsNotifs
-		));
+            $oAuthor = $this->_getAuthorObject($aComment['cmt_author_id']);
+            $sAuthorName = $oAuthor->getDisplayName();
+
+            $aTmplVarsNotifs[] = array(
+                'bx_if:show_as_hidden' => array(
+                    'condition' => !$bShowAll && $iIndex < ($iComments - 1),
+                    'content' => array(),
+                ),
+                'item' => $this->_oTemplate->parseHtmlByName('comments_notification.html', array(
+                    'style_prefix' => $this->_sStylePrefix,
+                    'onclick_show' => $sShowOnClick,
+                    'onclick_reply' => $sReplyOnClick,
+                    'author_link' => $oAuthor->getUrl(), 
+                    'author_title' => bx_html_attribute($sAuthorName),
+                    'author_name' => $sAuthorName,
+                    'author_unit' => $oAuthor->getUnit(0, array('template' => 'unit_wo_info_links')), 
+                    'text' => _t('_cmt_txt_added_sample')
+                )),
+                'bx_if:show_previous' => array(
+                    'condition' => $bShowActions && $iIndex > 0,
+                    'content' => array(
+                        'onclick_previous' => $sJsObject . '.previousLiveUpdate(this)'
+                    )
+                ),
+                'bx_if:show_close' => array(
+                    'condition' => $bShowActions,
+                    'content' => array(
+                        'onclick_close' => $sJsObject . '.hideLiveUpdate(this)'
+                    )
+                )
+            );
+        }
+
+        return $this->_oTemplate->parseHtmlByName('popup_chain.html', array(
+            'html_id' => $this->getNotificationId(),
+            'bx_repeat:items' => $aTmplVarsNotifs
+        ));
     }
 
     public function getElementBlock($aParams = array())

@@ -417,7 +417,7 @@ BxDolCmts.prototype.showLiveUpdate = function(oData)
 	 * Note. oData.count_old and oData.count_new are also available and can be checked or used in notification popup.  
 	 */
 	if(!oData.code)
-		return;
+            return;
 
 	var $this = this;
 
@@ -435,8 +435,13 @@ BxDolCmts.prototype.showLiveUpdate = function(oData)
     	},
     	onBeforeHide: function() {
     	},
+        onShow: function() {
+            setTimeout(function() {
+                $('.bx-popup-chain.bx-popup-applied:visible:first').dolPopupHide();
+            }, 5000);
+        },
     	onHide: function() {
-    		$this.resumeLiveUpdates();
+            $this.resumeLiveUpdates();
     	}
     });
 };

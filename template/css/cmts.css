@@ -266,30 +266,31 @@
     }
 
     /*--- Comment Styles in Live Update Notification ---*/
-	div.cmt-notif-comment {
-		position: relative;
-	}
-	div.cmt-notif-avatar {
-		position: absolute;
-		top: 0px;
-		left: 0px;
-    	text-align: center;
+    .cmt-notif-comment {
+        position: relative;
+        display: block;
     }
-    div.cmt-notif-avatar .sys-icon {
-    	font-size: 60px;
-		font-size: 3.75rem;
+    div.cmt-notif-cnt {
+        position: relative;
+    }
+    div.cmt-notif-avatar {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        text-align: center;
     }
     div.cmt-notif-info {
-    	position: realtive;
-	}
-	div.cmt-notifi-username {
-		line-height: 24px;
-		line-height: 1.5rem;
-
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		overflow: hidden;
-	}
+        position: realtive;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-align-items: center;
+        align-items: center;
+    }
+    div.cmt-notifi-username {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
         
 /*--- Comment Element Styles ---*/
 div.cmt div.cmt-element-holder,
