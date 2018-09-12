@@ -82,20 +82,9 @@ class BxForumTemplate extends BxBaseModTextTemplate
         foreach ($aParticipants as $iProfileId => $iComments) {
             $oProfile = BxDolProfile::getInstanceMagic($iProfileId);
 
-            $sInfo = '';
-            if ($iAuthorId == $iProfileId)
-                $sInfo = _t('_bx_forum_participant_author');
-            if ($aContentInfo['lr_profile_id'] == $iProfileId)
-                $sInfo .= ', ' . _t('_bx_forum_participant_last_replier');
-            $sInfo = trim($sInfo, ', ');
-            $sInfo = $sInfo ? _t('_bx_forum_participant_info', $oProfile->getDisplayName(), $sInfo) : $oProfile->getDisplayName();
-
             $aParticipant = array (
                 'id' => $oProfile->id(),
-                'url' => $oProfile->getUrl(),
-                'thumb_url' => $oProfile->getThumb(),
-                'title' => $oProfile->getDisplayName(),
-                'title_attr' =>  bx_html_attribute($sInfo),
+                'unit' => $oProfile->getUnit(0, array('template' => 'unit_wo_info')),
                 'float' => $sFloat,
                 'class' => $iAuthorId == $iProfileId ? 'bx-forum-participant-author' : '',
             	'bx_if:replies_count' => array(
@@ -108,12 +97,14 @@ class BxForumTemplate extends BxBaseModTextTemplate
                     'condition' => ($aContentInfo['lr_profile_id'] == $iProfileId),
                     'content' => array (
                         'id' => $oProfile->id(),
+                        'title' => bx_html_attribute(_t('_bx_forum_participant_last_replier')),
                     ),
                 ),
                 'bx_if:author'  => array (
                     'condition' => $iAuthorId == $iProfileId,
                     'content' => array (
                         'id' => $oProfile->id(),
+                        'title' => bx_html_attribute(_t('_bx_forum_participant_author')),
                     ),
                 ),
             );

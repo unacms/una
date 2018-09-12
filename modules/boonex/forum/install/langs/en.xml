@@ -262,7 +262,6 @@
 
     <string name="_bx_forum_err_not_found"><![CDATA[Discussion wasn't found.]]></string>
     <string name="_bx_forum_more"><![CDATA[{0} more]]></string>
-    <string name="_bx_forum_participant_info"><![CDATA[{0} ({1})]]></string>
     <string name="_bx_forum_participant_author"><![CDATA[author]]></string>
     <string name="_bx_forum_participant_last_replier"><![CDATA[last replier]]></string>
     <string name="_bx_forum_txt_entry_locked"><![CDATA[Locked discussion]]></string>

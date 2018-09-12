@@ -263,7 +263,6 @@
 
     <string name="_bx_forum_err_not_found"><![CDATA[Обсуждение не найдено.]]></string>
     <string name="_bx_forum_more"><![CDATA[{0} ещё]]></string>
-    <string name="_bx_forum_participant_info"><![CDATA[{0} ({1})]]></string>
     <string name="_bx_forum_participant_author"><![CDATA[автор]]></string>
     <string name="_bx_forum_participant_last_replier"><![CDATA[последний ответивший]]></string>
     <string name="_bx_forum_txt_entry_locked"><![CDATA[Заблокированное обсуждение]]></string>
