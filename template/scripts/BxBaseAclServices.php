@@ -17,9 +17,9 @@ class BxBaseAclServices extends BxDol
         parent::__construct();
     }
 
-    public function serviceGetMemberships($bPurchasableOnly = false, $bActiveOnly = false, $isTranslate = true)
+    public function serviceGetMemberships($bPurchasableOnly = false, $bActiveOnly = false, $isTranslate = true, $bFilterOutSystemAutomaticLevels = false)
     {
-        return BxDolAcl::getInstance()->getMemberships($bPurchasableOnly, $bActiveOnly, $isTranslate);
+        return BxDolAcl::getInstance()->getMemberships($bPurchasableOnly, $bActiveOnly, $isTranslate, $bFilterOutSystemAutomaticLevels);
     }
 }
 
