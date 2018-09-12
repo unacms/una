@@ -422,7 +422,11 @@ div.bx-tl-item-comments-holder .cmts.cmts-margin {
 
 
 /*--- Comment Styles in Live Update Notification ---*/
-div.bx-tl-live-update-item {
+.bx-tl-live-update-item {
+    position: relative;
+    display: block;
+}
+div.bx-tl-lui-cnt {
     position: relative;
 }
 div.bx-tl-lui-avatar {
@@ -431,17 +435,14 @@ div.bx-tl-lui-avatar {
     left: 0px;
     text-align: center;
 }
-div.bx-tl-lui-avatar .sys-icon {
-    font-size: 60px;
-    font-size: 3.75rem;
-}
 div.bx-tl-lui-info {
     position: realtive;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
 }
 div.bx-tl-luii-username {
-    line-height: 24px;
-    line-height: 1.5rem;
-
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;

@@ -581,30 +581,31 @@ BxTimelineView.prototype.onDeletePost = function(oData) {
 /*----------------------------*/
 BxTimelineView.prototype.goTo = function(oLink, sGoToId, sBlinkIds, onLoad)
 {
-	var $this = this;
+    var $this = this;
 
-	var sView = '';
-	var oView = $(this.sIdViewTimeline);
-	if(oView.length)
-		sView = 'timeline';
-	else {
-		oView = $(this.sIdViewOutline);
-		if(oView.length)
-			sView = 'outline';
-		else
-			return;
-	}
+    var sView = '';
+    var oView = $(this.sIdViewTimeline);
+    if(oView.length)
+        sView = 'timeline';
+    else {
+        oView = $(this.sIdViewOutline);
+        if(oView.length)
+            sView = 'outline';
+        else
+            return;
+    }
 
-	this.loadingInButton(oLink, true);
+    this.loadingInPopup(oLink, true);
 
     this._oRequestParams[sView].start = 0;
     this._oRequestParams[sView].blink = sBlinkIds;
     this._getPosts(oView, function(oData) {
-    	$this.loadingInButton(oLink, false);
-    	$(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide();
+        $this.loadingInPopup(oLink, false);
 
-    	oData.go_to = sGoToId;
-    	processJsonData(oData);
+        $(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide();
+
+        oData.go_to = sGoToId;
+        processJsonData(oData);
     });
 };
 
@@ -613,28 +614,33 @@ BxTimelineView.prototype.goTo = function(oLink, sGoToId, sBlinkIds, onLoad)
  */
 BxTimelineView.prototype.showLiveUpdate = function(oData)
 {
-	if(!oData.code)
-		return;
+    if(!oData.code)
+        return;
 
-	var $this = this;
+    var $this = this;
 
-	var oItems = $(oData.code);
-	var sId = oItems.attr('id');
-	$('#' + sId).remove();
+    var oItems = $(oData.code);
+    var sId = oItems.attr('id');
+    $('#' + sId).remove();
 
-	oItems.prependTo('body').dolPopup({
-    	position: 'fixed',
-    	left: '1rem',
-    	top: 'auto',
-    	bottom: '1rem',
-    	fog: false,
-    	onBeforeShow: function() {
-    	},
-    	onBeforeHide: function() {
-    	},
-    	onHide: function() {
-    		$this.resumeLiveUpdates();
-    	}
+    oItems.prependTo('body').dolPopup({
+        position: 'fixed',
+        left: '1rem',
+        top: 'auto',
+        bottom: '1rem',
+        fog: false,
+        onBeforeShow: function() {
+        },
+        onBeforeHide: function() {
+        },
+        onShow: function() {
+            setTimeout(function() {
+                $('.bx-popup-chain.bx-popup-applied:visible:first').dolPopupHide();
+            }, 5000);
+        },
+        onHide: function() {
+            $this.resumeLiveUpdates();
+        }
     });
 };
 

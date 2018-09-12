@@ -905,78 +905,74 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     function getLiveUpdateNotification($sType, $iOwnerId, $iProfileId, $iCountOld = 0, $iCountNew = 0)
     {
+        $bShowAll = true;
+        $bShowActions = false;
         $oModule = $this->getModule();
 
     	$iCount = (int)$iCountNew - (int)$iCountOld;
     	if($iCount < 0)
-    	    return '';
+            return '';
 
-		$iCountMax = $this->_oConfig->getLiveUpdateLength();
-		if($iCount > $iCountMax)
-			$iCount = $iCountMax;
+        $iCountMax = $this->_oConfig->getLiveUpdateLength();
+        if($iCount > $iCountMax)
+            $iCount = $iCountMax;
 
         $aParams = $oModule->getParams(BX_TIMELINE_VIEW_DEFAULT, $sType, $iOwnerId, 0, $iCount, BX_TIMELINE_FILTER_OTHER_VIEWER);
         $aEvents = $this->_oDb->getEvents($aParams);
         if(empty($aEvents) || !is_array($aEvents))
-			return '';
+            return '';
 
-		$sJsObject = $this->_oConfig->getJsObject('view');
-		$sStylePrefix = $this->_oConfig->getPrefix('style');
+        $sJsObject = $this->_oConfig->getJsObject('view');
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
 
-		$aEvents = array_reverse($aEvents);
-		$iEvents = count($aEvents);
+        $aEvents = array_reverse($aEvents);
+        $iEvents = count($aEvents);
 
-		$aTmplVarsItems = array();
-		foreach($aEvents as $iIndex => $aEvent) {
-		    $aData = $this->getData($aEvent);
+        $aTmplVarsItems = array();
+        foreach($aEvents as $iIndex => $aEvent) {
+            $aData = $this->getData($aEvent);
             if($aData === false)
                 continue;
 
-			$iEventId = $aEvent['id'];
-			$iEventAuthorId = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $aEvent['owner_id'] : $aEvent['object_id'];
+            $iEventId = $aEvent['id'];
+            $iEventAuthorId = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $aEvent['owner_id'] : $aEvent['object_id'];
 
-			list($sAuthorName, $sAuthorLink, $sAuthorIcon, $sAuthorUnit) = $oModule->getUserInfo($iEventAuthorId);
-    	    $bAuthorIcon = !empty($sAuthorIcon);
- 
-			$sShowOnClick = "javascript:" . $sJsObject . ".goTo(this, 'timeline-event-" . $iEventId . "', '" . $iEventId . "');";
+            $oAuthor = $oModule->getObjectUser($iEventAuthorId);
+            $sAuthorName = $oAuthor->getDisplayName();
 
-	    	$aTmplVarsItems[] = array(
-	    		'bx_if:show_as_hidden' => array(
-	    			'condition' => $iIndex < ($iEvents - 1),
-	    			'content' => array(),
-	    		),
-	    		'item' => $this->parseHtmlByName('live_update_notification.html', array(
-	    			'style_prefix' => $sStylePrefix,
-	    			'onclick_show' => $sShowOnClick,
-	    		    'author_link' => $sAuthorLink, 
-	    		    'author_title' => bx_html_attribute($sAuthorName),
-	    		    'author_name' => $sAuthorName,
-	    		    'bx_if:show_icon' => array(
-                        'condition' => $bAuthorIcon,
-                        'content' => array(
-                            'author_icon' => $sAuthorIcon
-                        )
-                    ),
-                    'bx_if:show_icon_empty' => array(
-                        'condition' => !$bAuthorIcon,
-                        'content' => array()
-                    ),
+            $aTmplVarsItems[] = array(
+                'bx_if:show_as_hidden' => array(
+                    'condition' => !$bShowAll && $iIndex < ($iEvents - 1),
+                    'content' => array(),
+                ),
+                'item' => $this->parseHtmlByName('live_update_notification.html', array(
+                    'style_prefix' => $sStylePrefix,
+                    'onclick_show' => "javascript:" . $sJsObject . ".goTo(this, 'timeline-event-" . $iEventId . "', '" . $iEventId . "');",
+                    'author_link' => $oAuthor->getUrl(), 
+                    'author_title' => bx_html_attribute($sAuthorName),
+                    'author_name' => $sAuthorName,
+                    'author_unit' => $oAuthor->getUnit(0, array('template' => 'unit_wo_info_links')), 
                     'text' => _t($aData['sample_action'], _t($aData['sample'])),
-	    		)),
-	    		'bx_if:show_previous' => array(
-	    			'condition' => $iIndex > 0,
-	    			'content' => array(
-	    				'onclick_previous' => $sJsObject . '.previousLiveUpdate(this)'
-	    			)
-	    		),
-	    		'onclick_close' => $sJsObject . '.hideLiveUpdate(this)'
-			);
-		}
+                )),
+                'bx_if:show_previous' => array(
+                    'condition' => $bShowActions && $iIndex > 0,
+                    'content' => array(
+                        'onclick_previous' => $sJsObject . '.previousLiveUpdate(this)'
+                    )
+                ),
+                'bx_if:show_close' => array(
+                    'condition' => $bShowActions,
+                    'content' => array(
+                        'onclick_close' => $sJsObject . '.hideLiveUpdate(this)'
+                    )
+                )
+            );
+        }
 
-		return $this->parseHtmlByName('popup_chain.html', array(
-			'html_id' => $this->_oConfig->getHtmlIds('view', 'live_update_popup') . $sType,
-			'bx_repeat:items' => $aTmplVarsItems
-		));
+        return $this->parseHtmlByName('popup_chain.html', array(
+            'html_id' => $this->_oConfig->getHtmlIds('view', 'live_update_popup') . $sType,
+            'bx_repeat:items' => $aTmplVarsItems
+        ));
     }
 
     protected function _getPost($sType, $aEvent, $aBrowseParams = array())
