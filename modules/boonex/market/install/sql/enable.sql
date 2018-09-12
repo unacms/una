@@ -632,3 +632,8 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 -- CRON
 INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
 ('bx_market_pruning', '0 0 * * *', 'BxMarketCronPruning', 'modules/boonex/market/classes/BxMarketCronPruning.php', '');
+
+
+-- EMAIL TEMPLATES
+INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES 
+('bx_market', '_bx_market_et_txt_name_purchased', 'bx_market_purchased', '_bx_market_et_txt_subject_purchased', '_bx_market_et_txt_body_purchased');

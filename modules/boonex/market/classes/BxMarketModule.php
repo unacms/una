@@ -713,11 +713,11 @@ class BxMarketModule extends BxBaseModTextModule
     	$CNF = &$this->_oConfig->CNF;
 
         if(!$iItemId)
-			return array();
+            return array();
 
-		$aItem = $this->_oDb->getContentInfoById($iItemId);
+        $aItem = $this->_oDb->getContentInfoById($iItemId);
         if(empty($aItem) || !is_array($aItem))
-			return array();
+            return array();
 
         return array (
             'id' => $aItem[$CNF['FIELD_ID']],
@@ -977,16 +977,20 @@ class BxMarketModule extends BxBaseModTextModule
 
     protected function _serviceRegisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense, $sType)
     {
+        $CNF = &$this->_oConfig->CNF;
+
     	$aItem = $this->serviceGetCartItem($iItemId);
         if(empty($aItem) || !is_array($aItem))
+            return array();
+
+        $aProduct = $this->_oDb->getContentInfoById($iItemId);
+        if(empty($aProduct) || !is_array($aProduct))
             return array();
 
         $iTrial = 0;
         $sDuration = '';
         $sAction = 'register';
         if($sType == BX_MARKET_LICENSE_TYPE_RECURRING) {
-            $aProduct = $this->_oDb->getContentInfoById($iItemId);
-
             $iTrial = $aProduct[$this->_oConfig->CNF['FIELD_TRIAL_RECURRING']];
             $sDuration = $aProduct[$this->_oConfig->CNF['FIELD_DURATION_RECURRING']];
             
@@ -1008,6 +1012,19 @@ class BxMarketModule extends BxBaseModTextModule
             'trial' => $iTrial
         ));
 
+        $oClient = BxDolProfile::getInstanceMagic($iClientId);
+        $oSeller = BxDolProfile::getInstanceMagic($iSellerId);
+
+        sendMailTemplate($CNF['ETEMPLATE_PURCHASED'], 0, $iClientId, array(
+            'client_name' => $oClient->getDisplayName(),
+            'product_name' => $aProduct[$CNF['FIELD_TITLE']],
+            'product_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-product&id=' . $aProduct[$CNF['FIELD_ID']]),
+            'vendor_url' => $oSeller->getUrl(),
+            'vendor_name' => $oSeller->getDisplayName(),
+            'license' => $sLicense,
+            'notes' => $aProduct[$CNF['FIELD_NOTES_PURCHASED']],
+        ));
+
         return $aItem;
     }
 
@@ -1015,21 +1032,21 @@ class BxMarketModule extends BxBaseModTextModule
     {
         $aItemNew = $this->serviceGetCartItem($iItemIdNew);
         if(empty($aItemNew) || !is_array($aItemNew))
-			return array();
+            return array();
 
         if(!$this->_oDb->hasLicenseByOrder($iClientId, $iItemIdOld, $sOrder))
             return array();
-        
+
         if(!$this->_oDb->updateLicense(array('product_id' => $iItemIdNew), array('profile_id' => $iClientId, 'product_id' => $iItemIdOld, 'order' => $sOrder)))
             return array();
 
         bx_alert($this->getName(), 'license_reregister', 0, false, array(
-			'product_id_old' => $iItemIdOld,
-        	'product_id_new' => $iItemIdNew,
-			'profile_id' => $iClientId,
-			'order' => $sOrder,
-			'type' => $sType
-		));
+            'product_id_old' => $iItemIdOld,
+            'product_id_new' => $iItemIdNew,
+            'profile_id' => $iClientId,
+            'order' => $sOrder,
+            'type' => $sType
+        ));
 
         return $aItemNew;
     }
@@ -1039,14 +1056,14 @@ class BxMarketModule extends BxBaseModTextModule
     	if(!$this->_oDb->unregisterLicense($iClientId, $iItemId, $sOrder, $sLicense, $sType))
     		return false;
 
-    	bx_alert($this->getName(), 'license_unregister', 0, false, array(
-			'product_id' => $iItemId,
-			'profile_id' => $iClientId,
-			'order' => $sOrder,
-			'license' => $sLicense,
-			'type' => $sType,
-			'count' => $iItemCount
-		));
+        bx_alert($this->getName(), 'license_unregister', 0, false, array(
+            'product_id' => $iItemId,
+            'profile_id' => $iClientId,
+            'order' => $sOrder,
+            'license' => $sLicense,
+            'type' => $sType,
+            'count' => $iItemCount
+        ));
 
     	return true;
     }

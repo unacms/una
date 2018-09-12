@@ -55,3 +55,6 @@ DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandler;
 
 -- CRON
 DELETE FROM `sys_cron_jobs` WHERE `name` LIKE 'bx_market%';
+
+-- EMAIL TEMPLATES
+DELETE FROM `sys_email_templates` WHERE `Module` = 'bx_market';
