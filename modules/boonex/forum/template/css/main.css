@@ -2,14 +2,10 @@
 
 /*-- Participants --*/
 
-.bx-popup-content .bx-forum-participants {
-    margin-right: 0px;
-}
-
 .bx-forum-participant {
     position:relative;
-    display: inline;
-    display: inline-block;
+    display:block;
+    float:right;
 }
 
 /*-- Replies --*/
