@@ -418,18 +418,13 @@ div.bx-popup-chain {
     position: relative;
     max-width: 22.5rem;
 }
+div.bx-popup-chain-cnt {
+    position: relative;
+}
 div.bx-popup-chain-item {
     position: relative;
-
     width: 100%;
-
-    border-color: rgba(0, 0, 0, 0.2);
-    background-color: #ffffff;
-
-    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
-}
-div.bx-popup-chain-item-cnt {
-	padding: 1.25rem;
+    overflow: hidden;
 }
 div.bx-popup-chain-item-actions {
     position: absolute;
@@ -451,6 +446,9 @@ div.bx-popup-chain-item-actions .sys-icon {
 	height: 1.5rem;
 	line-height: 1.5rem;
 	text-align: center;
+}
+div.bx-popup-chain-item .bx-loading-ajax {
+    height: auto;
 }
 
 /* --------------- message box */

@@ -34,46 +34,51 @@ html.bx-media-phone {
 
 /* shadow */
 .bx-shadow-header {
-	-webkit-box-shadow: @bx-shadow-header;
-	-moz-box-shadow: @bx-shadow-header;
-	box-shadow: @bx-shadow-header;
+    -webkit-box-shadow: @bx-shadow-header;
+    -moz-box-shadow: @bx-shadow-header;
+    box-shadow: @bx-shadow-header;
 }
 .bx-shadow-footer {
-	-webkit-box-shadow: @bx-shadow-footer;
-	-moz-box-shadow: @bx-shadow-footer;
-	box-shadow: @bx-shadow-footer;
+    -webkit-box-shadow: @bx-shadow-footer;
+    -moz-box-shadow: @bx-shadow-footer;
+    box-shadow: @bx-shadow-footer;
 }
 .bx-shadow-block {
-	-webkit-box-shadow: @bx-shadow-block;
-	-moz-box-shadow: @bx-shadow-block;
-	box-shadow: @bx-shadow-block;
+    -webkit-box-shadow: @bx-shadow-block;
+    -moz-box-shadow: @bx-shadow-block;
+    box-shadow: @bx-shadow-block;
 }
 .bx-def-box {
-	-webkit-box-shadow: @bx-shadow-card;
-	-moz-box-shadow: @bx-shadow-card;
-	box-shadow: @bx-shadow-card;
+    -webkit-box-shadow: @bx-shadow-card;
+    -moz-box-shadow: @bx-shadow-card;
+    box-shadow: @bx-shadow-card;
 }
 .bx-popup-applied {
-	.radius(@bx-border-radius-popup);
-
-	-webkit-box-shadow: @bx-shadow-popup;
-	-moz-box-shadow: @bx-shadow-popup;
-	box-shadow: @bx-shadow-popup;
+    .radius(@bx-border-radius-popup);
+}
+.bx-popup-applied:not(.bx-popup-chain),
+.bx-popup-applied.bx-popup-chain .bx-popup-chain-item {
+    -webkit-box-shadow: @bx-shadow-popup;
+    -moz-box-shadow: @bx-shadow-popup;
+    box-shadow: @bx-shadow-popup;
+}
+.bx-popup-applied.bx-popup-chain .bx-popup-chain-item a:hover {
+    background-color: @bx-color-hl;
 }
 .bx-popup-wrapper.bx-popup-slide-wrapper {
-	-webkit-box-shadow: @bx-shadow-menu-slide;
-	-moz-box-shadow: @bx-shadow-menu-slide;
-	box-shadow: @bx-shadow-menu-slide;
+    -webkit-box-shadow: @bx-shadow-menu-slide;
+    -moz-box-shadow: @bx-shadow-menu-slide;
+    box-shadow: @bx-shadow-menu-slide;
 }
 .bx-btn {
-	-webkit-box-shadow: @bx-shadow-button;
-	-moz-box-shadow: @bx-shadow-button;
-	box-shadow: @bx-shadow-button;
+    -webkit-box-shadow: @bx-shadow-button;
+    -moz-box-shadow: @bx-shadow-button;
+    box-shadow: @bx-shadow-button;
 }
 .bx-btn.bx-btn-small {
-	-webkit-box-shadow: @bx-shadow-button-small;
-	-moz-box-shadow: @bx-shadow-button-small;
-	box-shadow: @bx-shadow-button-small;
+    -webkit-box-shadow: @bx-shadow-button-small;
+    -moz-box-shadow: @bx-shadow-button-small;
+    box-shadow: @bx-shadow-button-small;
 }
 
 
