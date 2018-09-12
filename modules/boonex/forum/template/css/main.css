@@ -1,23 +1,11 @@
 @import url(../../../../base/text/template/css/main.css);
 
 /*-- Participants --*/
-.bx-forum-participants {
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.bx-popup-content .bx-forum-participants {
-    margin-right: 0px;
-}
 
 .bx-forum-participant {
-    display: inline;
-    display: inline-block;
-}
-
-.bx-forum-participant-author {
-    display: inline;
-    display: inline-block;
+    position:relative;
+    display:block;
+    float:right;
 }
 
 /*-- Replies --*/

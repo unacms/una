@@ -132,7 +132,7 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
 
         // check fields existence in Account
         $oFormHelperAccount = BxDolService::call('system', 'forms_helper');
-        $oFormAccount = $oFormHelperAccount->getObjectFormEdit();
+        $oFormAccount = $oFormHelperAccount->getObjectFormAdd();
         foreach ($aFieldsAccount as $sKey => $mValue) {
             if (!$oFormAccount->isFieldExist($sKey))
                 unset($aFieldsAccount[$sKey]);
@@ -140,7 +140,7 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
 
         // check fields existence in Profile
         if ('system' != $this->_oConfig->sProfilesModule && $oFormHelperProfile = BxDolService::call($this->_oConfig->sProfilesModule, 'forms_helper')) {
-            $oFormProfile = $oFormHelperProfile->getObjectFormAdd();
+            $oFormProfile = $oFormHelperProfile->getObjectFormEdit();
             foreach ($aFieldsProfile as $sKey => $mValue) {
                 if (!$oFormProfile->isFieldExist($sKey))
                     unset($aFieldsProfile[$sKey]);
