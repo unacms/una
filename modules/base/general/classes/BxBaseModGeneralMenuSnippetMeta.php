@@ -151,19 +151,8 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
         
         if (false !== $sResult)
             return $sResult;
-        
-        if(!empty($aItem['link']))
-            $sResult = $this->getUnitMetaItemLink($aItem['title'], array(
-                'href' => $aItem['link']
-            ));
-        else if(!empty($aItem['onclick']))
-            $sResult = $this->getUnitMetaItemButtonSmall($aItem['title'], array(
-            	'onclick' => $aItem['onclick']
-            ));
-        else 
-            $sResult = $this->getUnitMetaItemText($aItem['title']);
-        
-        return $sResult;
+
+        return parent::_getMenuItemDefault($aItem);
     }
 }
 

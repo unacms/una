@@ -87,6 +87,26 @@ class BxBaseCmtsMenuUnitMeta extends BxTemplMenuUnitMeta
             'class' => $this->_sStylePrefix . '-membership'
         ));
     }
+
+    protected function _getMenuItemDefault($aItem)
+    {
+        $sResult = false;
+
+        bx_alert('comment', 'menu_custom_item', 0, 0, array(
+            'res' => &$sResult, 
+            'menu' => $this->_sObject, 
+            'menu_object' => $this, 
+            'item' => $aItem,
+            'content_id' => $this->_aCmt['cmt_id'],
+            'content_data' => $this->_aCmt,
+            'cmts_object' => $this->_oCmts
+        ));
+
+        if (false !== $sResult)
+            return $sResult;
+
+        return parent::_getMenuItemDefault($aItem);
+    }
 }
 
 /** @} */
