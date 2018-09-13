@@ -16,7 +16,7 @@ class BxMassMailerFormCheckerHelper extends BxDolFormCheckerHelper
         if (trim($s) == '')
             return true;
         
-        if (!$this->checkEmail($s))
+        if (!self::checkEmail($s))
             return false;
 
         return true;
@@ -26,7 +26,7 @@ class BxMassMailerFormCheckerHelper extends BxDolFormCheckerHelper
 /**
  * Create/Edit entry form
  */
-class BxMassMailerFormEntry extends BxTemplFormView
+class BxMassMailerFormEntry extends BxBaseModTextFormEntry
 {
     public function __construct($aInfo, $oTemplate = false)
     {
@@ -42,7 +42,6 @@ class BxMassMailerFormEntry extends BxTemplFormView
     public function insert ($aValsToAdd = array(), $isIgnore = false)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
-        $aValsToAdd[$CNF['FIELD_DATE_CREATED']] = time();
         $aValsToAdd[$CNF['FIELD_AUTHOR']] = bx_get_logged_profile_id();
         return parent::insert ($aValsToAdd, $isIgnore);
     }
