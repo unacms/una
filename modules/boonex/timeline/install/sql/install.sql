@@ -167,7 +167,7 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_comments` (
   `cmt_parent_id` int(11) NOT NULL DEFAULT '0',
   `cmt_vparent_id` int(11) NOT NULL DEFAULT '0',
   `cmt_object_id` int(11) NOT NULL DEFAULT '0',
-  `cmt_author_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `cmt_author_id` int(10) NOT NULL DEFAULT '0',
   `cmt_level` int(11) NOT NULL DEFAULT '0',
   `cmt_text` text NOT NULL,
   `cmt_time` int(11) unsigned NOT NULL DEFAULT '0',

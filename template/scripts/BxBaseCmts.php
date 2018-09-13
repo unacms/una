@@ -389,6 +389,9 @@ class BxBaseCmts extends BxDolCmts
 
         $sJsObject = $this->getJsObjectName();
 
+        $iUserId = $this->_getAuthorId();
+        $bModerator = $this->isModerator();
+
         $aComments = array_reverse($aComments);
         $iComments = count($aComments);
 
@@ -399,7 +402,15 @@ class BxBaseCmts extends BxDolCmts
             $sShowOnClick = "javascript:" . $sJsObject . ".goTo(this, '" .  $this->getItemAnchor($iCommentId) . "', '" . $iCommentId . "');";
             $sReplyOnClick = "javascript:" . $sJsObject . ".goToAndReply(this, '" . $this->getItemAnchor($iCommentId) . "', '" . $iCommentId . "');";
 
-            $oAuthor = $this->_getAuthorObject($aComment['cmt_author_id']);
+            $iAuthorId = (int)$aComment['cmt_author_id'];
+            if($iAuthorId < 0) {
+                if(abs($iAuthorId) == $iUserId)
+                    continue;
+                else if($bModerator)
+                    $iAuthorId *= -1;
+            }
+
+            $oAuthor = $this->_getAuthorObject($iAuthorId);
             $sAuthorName = $oAuthor->getDisplayName();
 
             $aTmplVarsNotifs[] = array(
@@ -1013,6 +1024,7 @@ class BxBaseCmts extends BxDolCmts
             ),
     	);
     }
+
     protected function _getTmplVarsText($aCmt)
     {
     	$sText = $aCmt['cmt_text'];

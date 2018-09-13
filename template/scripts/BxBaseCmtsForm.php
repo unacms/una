@@ -56,6 +56,32 @@ class BxBaseCmtsForm extends BxTemplFormView
     {
     	return isset($this->aInputs['cmt_image']['images_transcoder']) ? $this->aInputs['cmt_image']['images_transcoder'] : '';
     }
+    
+    function initChecker ($aValues = array (), $aSpecificValues = array())
+    {
+        if (isset($this->aInputs['cmt_anonymous']) && isset($aValues['cmt_author_id']))
+            $this->aInputs['cmt_anonymous']['checked'] = $aValues['cmt_author_id'] < 0;
+        
+        parent::initChecker ($aValues, $aSpecificValues);
+    }
+    
+    public function insert ($aValsToAdd = array(), $isIgnore = false)
+    {
+        $aValsToAdd['cmt_author_id'] *= isset($this->aInputs['cmt_anonymous']) && $this->getCleanValue('cmt_anonymous') ? -1 : 1;
+
+        return parent::insert ($aValsToAdd, $isIgnore);
+    }
+
+    function update ($iCmtId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
+    {
+        if (isset($this->aInputs['cmt_anonymous'])) {
+            $aCmt = BxDolCmts::getObjectInstance($this->getCleanValue('sys'), $this->getCleanValue('id'))->getCommentRow($iCmtId);
+
+            $aValsToAdd['cmt_author_id'] = ($this->getCleanValue('cmt_anonymous') ? -1 : 1) * abs($aCmt['cmt_author_id']);
+        }
+
+        return parent::update ($iCmtId, $aValsToAdd, $aTrackTextFieldsChanges);
+    }
 }
 
 /** @} */

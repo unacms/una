@@ -74,7 +74,12 @@ class BxBaseCmtsMenuUnitMeta extends BxTemplMenuUnitMeta
 
     protected function _getMenuItemMembership($aItem)
     {
-        $aMembership = BxDolAcl::getInstance()->getMemberMembershipInfo($this->_aCmt['cmt_author_id']);
+        $iUserId = bx_get_logged_profile_id();
+        $iAuthorId = (int)$this->_aCmt['cmt_author_id'];
+        if($iAuthorId < 0  && (abs($iAuthorId) == $iUserId || $this->_oCmts->isModerator()))
+            $iAuthorId *= -1;
+
+        $aMembership = BxDolAcl::getInstance()->getMemberMembershipInfo($iAuthorId);
         if(empty($aMembership) || !is_array($aMembership))
             return '';
 

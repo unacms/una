@@ -791,14 +791,14 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         if(isAdmin())
             return true;
 
-        if($this->checkAction('comments edit all', $isPerformAction))
+        if($this->isEditAllowedAll($isPerformAction))
             return true;
-            
+
         $mixedResult = BxDolService::call($this->_aSystem['module'], 'check_allowed_comments_post', array($this->getId(), $this->getSystemName()));
         if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
             return false;
 
-        return $aCmt['cmt_author_id'] == $this->_getAuthorId() && $this->checkAction ('comments edit own', $isPerformAction);
+        return abs($aCmt['cmt_author_id']) == $this->_getAuthorId() && $this->checkAction ('comments edit own', $isPerformAction);
     }
 
     public function msgErrEditAllowed ()
@@ -806,14 +806,24 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return $this->checkActionErrorMsg ('comments edit own');
     }
 
+    public function isEditAllowedAll ($isPerformAction = false)
+    {
+        return $this->checkAction('comments edit all', $isPerformAction);
+    }
+
     public function isRemoveAllowed ($aCmt, $isPerformAction = false)
     {
         if(isAdmin())
             return true;
 
-        if($aCmt['cmt_author_id'] == $this->_getAuthorId() && $this->checkAction ('comments remove own', $isPerformAction))
+        if($this->isRemoveAllowedAll($isPerformAction))
             return true;
 
+        return abs($aCmt['cmt_author_id']) == $this->_getAuthorId() && $this->checkAction ('comments remove own', $isPerformAction);
+    }
+
+    public function isRemoveAllowedAll ($isPerformAction = false)
+    {
         return $this->checkAction ('comments remove all', $isPerformAction);
     }
 
@@ -827,6 +837,11 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $oMenuManage = BxDolMenu::getObjectInstance($this->_sMenuObjManage);
 	    $oMenuManage->setCmtsData($this, $aCmt['cmt_id']);
     	return $oMenuManage->isVisible();
+    }
+
+    public function isModerator()
+    {
+        return $this->isEditAllowedAll() || $this->isRemoveAllowedAll();
     }
 
     /**
@@ -1291,6 +1306,11 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     protected function _getAuthorInfo($iAuthorId = 0)
     {
+        $iUserId = $this->_getAuthorId();
+        $iAuthorId = (int)$iAuthorId;
+        if($iAuthorId < 0  && (abs($iAuthorId) == $iUserId || $this->isModerator()))
+            $iAuthorId *= -1;
+
         $oProfile = $this->_getAuthorObject($iAuthorId);
 
         return array(
@@ -1303,14 +1323,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     protected function _getAuthorObject($iAuthorId = 0)
     {
-        if(empty($iAuthorId))
-            return BxDolProfileUndefined::getInstance();
-
-        $oProfile = BxDolProfile::getInstance($iAuthorId);
-        if (!$oProfile)
-            $oProfile = BxDolProfileUndefined::getInstance();
-
-        return $oProfile;
+        return BxDolProfile::getInstanceMagic($iAuthorId);
     }
 
 	protected function _getFormObject($sAction = BX_CMT_ACTION_POST)

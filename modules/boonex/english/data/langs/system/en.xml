@@ -1963,8 +1963,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_display_account_settings_email"><![CDATA[Email Settings]]></string>
 	<string name="_sys_form_display_account_settings_info"><![CDATA[Edit Account]]></string>
 	<string name="_sys_form_display_account_settings_password"><![CDATA[Change Password]]></string>
-	<string name="_sys_form_display_comment_edit"><![CDATA[Comment From Edit]]></string>
-	<string name="_sys_form_display_comment_post"><![CDATA[Comment From Post]]></string>
+	<string name="_sys_form_display_comment_edit"><![CDATA[Comment Edit Form]]></string>
+	<string name="_sys_form_display_comment_post"><![CDATA[Comment Post Form]]></string>
 	<string name="_sys_form_display_confirm_email"><![CDATA[Email Confirmation]]></string>
 	<string name="_sys_form_display_confirm_phone_set_phone"><![CDATA[Set phone]]></string>
 	<string name="_sys_form_display_confirm_phone_confirmation"><![CDATA[Phone confirmation]]></string>

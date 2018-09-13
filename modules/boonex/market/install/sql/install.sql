@@ -178,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `bx_market_cmts` (
   `cmt_parent_id` int(11) NOT NULL DEFAULT '0',
   `cmt_vparent_id` int(11) NOT NULL DEFAULT '0',
   `cmt_object_id` int(11) NOT NULL DEFAULT '0',
-  `cmt_author_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `cmt_author_id` int(10) NOT NULL DEFAULT '0',
   `cmt_level` int(11) NOT NULL DEFAULT '0',
   `cmt_text` text NOT NULL,
   `cmt_mood` tinyint(4) NOT NULL DEFAULT '0',
