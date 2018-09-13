@@ -42,6 +42,38 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
     	));
     }
 
+    function initChecker($aValues = array (), $aSpecificValues = array())
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(isset($CNF['FIELD_ANONYMOUS']) && isset($this->aInputs[$CNF['FIELD_ANONYMOUS']]) && isset($aValues[$CNF['FIELD_OBJECT_ID']]))
+            $this->aInputs[$CNF['FIELD_ANONYMOUS']]['checked'] = $aValues[$CNF['FIELD_OBJECT_ID']] < 0;
+
+        parent::initChecker ($aValues, $aSpecificValues);
+    }
+
+    public function insert($aValsToAdd = array(), $isIgnore = false)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $aValsToAdd[$CNF['FIELD_OBJECT_ID']] *= isset($CNF['FIELD_ANONYMOUS']) && isset($this->aInputs[$CNF['FIELD_ANONYMOUS']]) && $this->getCleanValue($CNF['FIELD_ANONYMOUS']) ? -1 : 1;
+
+        return parent::insert ($aValsToAdd, $isIgnore);
+    }
+
+    function update($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if (isset($CNF['FIELD_ANONYMOUS']) && isset($this->aInputs[$CNF['FIELD_ANONYMOUS']])) {
+            $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
+
+            $aValsToAdd[$CNF['FIELD_OBJECT_ID']] = ($this->getCleanValue($CNF['FIELD_ANONYMOUS']) ? -1 : 1) * abs($aContentInfo[$CNF['FIELD_OBJECT_ID']]);
+        }
+
+        return parent::update($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
+    }
+
     public function addHtmlEditor($iViewMode, &$aInput)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;

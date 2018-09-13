@@ -2041,6 +2041,22 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     }
 
     //--- Check permissions methods ---//
+    public function isModerator()
+    {
+        $sModule = $this->getName();
+        $iUserId = (int)$this->getUserId();
+
+        $aCheckResult = checkActionModule($iUserId, 'edit', $sModule);
+        if($aCheckResult[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
+            return true;
+
+        $aCheckResult = checkActionModule($iUserId, 'delete', $sModule);
+        if($aCheckResult[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
+            return true;
+
+        return false;
+    }
+
     public function isAllowedPost($bPerform = false)
     {
         if(isAdmin())
@@ -2085,7 +2101,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $iUserId = (int)$this->getUserId();
         $iOwnerId = (int)$aEvent['owner_id'];
-        $iObjectId = (int)$aEvent['object_id'];
+        $iObjectId = abs((int)$aEvent['object_id']);
         if($iObjectId == $iUserId && $this->_oConfig->isAllowEdit())
            return true;
 
@@ -2108,7 +2124,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $iUserId = (int)$this->getUserId();
         $iOwnerId = (int)$aEvent['owner_id'];
-        $iObjectId = (int)$aEvent['object_id'];
+        $iObjectId = abs((int)$aEvent['object_id']);
         if((($iOwnerId == $iUserId && $this->_oConfig->isAllowDelete()) || ($this->_oConfig->isCommon($aEvent['type'], $aEvent['action']) && $iObjectId == $iUserId)))
            return true;
 
@@ -2554,6 +2570,16 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return false;
 
         return array($sSystem, $iObjectId, $iCount);
+    }
+
+    public function getUserInfo($iUserId = 0)
+    {
+        $iLoggedId = $this->getUserId();
+        $iUserId = (int)$iUserId;
+        if($iUserId < 0  && (abs($iUserId) == $iLoggedId || $this->isModerator()))
+            $iUserId *= -1;
+
+        return parent::getUserInfo($iUserId);
     }
 
     /**

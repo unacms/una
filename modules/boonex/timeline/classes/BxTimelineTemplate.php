@@ -925,6 +925,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sJsObject = $this->_oConfig->getJsObject('view');
         $sStylePrefix = $this->_oConfig->getPrefix('style');
 
+        $iUserId = $oModule->getUserId();
+        $bModerator = $oModule->isModerator();
+
         $aEvents = array_reverse($aEvents);
         $iEvents = count($aEvents);
 
@@ -935,7 +938,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 continue;
 
             $iEventId = $aEvent['id'];
-            $iEventAuthorId = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $aEvent['owner_id'] : $aEvent['object_id'];
+            $iEventAuthorId = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? (int)$aEvent['owner_id'] : (int)$aEvent['object_id'];
+            if($iEventAuthorId < 0) {
+                if(abs($iEventAuthorId) == $iUserId)
+                    continue;
+                else if($bModerator)
+                    $iEventAuthorId *= -1;
+            }
 
             $oAuthor = $oModule->getObjectUser($iEventAuthorId);
             $sAuthorName = $oAuthor->getDisplayName();
@@ -1217,7 +1226,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aTmplVarsOwners = array();
         foreach($aOwnerIds as $iOwnerId) {
             $iOwnerId = (int)$iOwnerId;
-            if($iOwnerId == 0 || $iOwnerId == (int)$aEvent['object_owner_id'])
+            if($iOwnerId == 0 || $iOwnerId == (int)abs($aEvent['object_owner_id']))
                 continue;
 
             list($sToName, $sToUrl, $sToThumb, $sToUnit, $sToUnitWoInfo) = $oModule->getUserInfo($iOwnerId);
@@ -1556,17 +1565,17 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     protected function _getSystemData(&$aEvent, $aBrowseParams = array())
     {
         $mixedResult = $this->_oConfig->getSystemData($aEvent, $aBrowseParams);
-		if($mixedResult === false) {
-    		$sMethod = 'display' . bx_gen_method_name($aEvent['type'] . '_' . $aEvent['action']);
-    		if(method_exists($this, $sMethod))
-    		    $mixedResult = $this->$sMethod($aEvent);
-		}
-		
-		if($mixedResult === false)
+        if($mixedResult === false) {
+            $sMethod = 'display' . bx_gen_method_name($aEvent['type'] . '_' . $aEvent['action']);
+            if(method_exists($this, $sMethod))
+                $mixedResult = $this->$sMethod($aEvent);
+        }
+
+        if($mixedResult === false)
             return '';
 
         $this->_preparetDataActions($aEvent, $mixedResult);
-		return $mixedResult;
+        return $mixedResult;
     }
 
     protected function _getCommonData(&$aEvent, $aBrowseParams = array())

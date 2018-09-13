@@ -438,7 +438,7 @@ BxDolCmts.prototype.showLiveUpdate = function(oData)
         onShow: function() {
             setTimeout(function() {
                 $('.bx-popup-chain.bx-popup-applied:visible:first').dolPopupHide();
-            }, 50000);
+            }, 5000);
         },
     	onHide: function() {
             $this.resumeLiveUpdates();
