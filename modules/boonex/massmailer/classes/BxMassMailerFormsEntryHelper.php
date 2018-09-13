@@ -30,6 +30,7 @@ class BxMassMailerFormsEntryHelper extends BxBaseModTextFormsEntryHelper
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
         $this->_redirectAndExit('page.php?i=' . $CNF['URI_MANAGE_CAMPAIGNS']);
+        return parent::onDataEditAfter($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm);
     }
     
     public function onDataAddAfter($iAccountId, $iContentId)

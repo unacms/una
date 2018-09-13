@@ -22,7 +22,7 @@ class BxMassMailerGridCampaigns extends BxTemplGrid
     {
         $aIds = bx_get('ids');
         foreach ($aIds as $iId){
-            $this->_oModule->_oDb->deleteLettersForCampaign($iId);
+            $this->_oModule->_oDb->deleteCampaignData($iId);
         }
         parent::performActionDelete();
     }
@@ -68,7 +68,7 @@ class BxMassMailerGridCampaigns extends BxTemplGrid
             return '';
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?' . bx_encode_url_params($_GET, array('_r'));
         $oForm->initChecker(array(), array());
-        $oForm->aInputs['campaign_info']['value'] =  _t($oForm->aInputs['campaign_info']['value'] , $this->_oModule->getEmailCountInSegment($iId));
+        $oForm->aInputs['campaign_info']['value'] = _t($oForm->aInputs['campaign_info']['value'], $this->_oModule->getEmailCountInSegment($iId));
         if($oForm->isSubmittedAndValid()) {
             $mixedResult = $this->_oModule->sendAll($iId);
             if($mixedResult !== false)
@@ -191,7 +191,7 @@ class BxMassMailerGridCampaigns extends BxTemplGrid
         if (!$oProfile)
             $oProfile = BxDolProfileUndefined::getInstance();
         return parent::_getCellDefault($oProfile->getDisplayName(), $sKey, $aField, $aRow);
-    }    
+    }
 }
 
 /** @} */

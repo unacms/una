@@ -15,10 +15,15 @@ class BxMassMailerConfig extends BxBaseModGeneralConfig
     {
         parent::__construct($aModule);
         $this->CNF = array (
+             // module icon
+            'ICON' => 'far envelope col-red2',
+            
             // database tables
             'TABLE_CAMPAIGNS' => $aModule['db_prefix'] . 'campaigns',
             'TABLE_SEGMENTS' => $aModule['db_prefix'] . 'segments',
             'TABLE_LETTERS' => $aModule['db_prefix'] . 'letters',
+            'TABLE_LINKS' => $aModule['db_prefix'] . 'links',
+            'TABLE_UNSUBSCRIBE' => $aModule['db_prefix'] . 'unsubscribe',
             
              // database fields
             'FIELD_ID' => 'id',
@@ -30,12 +35,18 @@ class BxMassMailerConfig extends BxBaseModGeneralConfig
             'FIELD_BODY' => 'body',
             'FIELD_EMAIL_LIST' => 'email_list',
             'FIELD_SEGMENTS' => 'segments',
-            'FIELD_DATE_CREATED' => 'date_created',
+            'FIELD_ADDED' => 'added',
+            'FIELD_CHANGED' => 'changed',
             'FIELD_DATE_SENT' => 'date_sent',
             'FIELD_CAMPAIGN_ID' => 'campaign_id',
             'FIELD_EMAIL' => 'email',
-            'FIELD_CODE' => 'code',
+            'FIELD_HASH' => 'hash',
             'FIELD_DATE_SEEN' => 'date_seen',
+            'FIELD_DATE_CLICK' => 'date_click',
+            'FIELD_LETTER_HASH' => 'letter_hash',
+            'FIELD_LINK' => 'link',
+            'FIELD_DATE_UNSUBSCRIBED' => 'unsubscribed',
+            'FIELD_ACCOUNT_ID' => 'account_id',
             
             // page URIs
             'URI_MANAGE_COMMON' => 'massmailer-campaigns',
@@ -56,11 +67,13 @@ class BxMassMailerConfig extends BxBaseModGeneralConfig
         );
         
         $this->_aJsClasses = array(
-            'manage_tools' => 'BxMassMailerManageTools'
+            'manage_tools' => 'BxMassMailerManageTools',
+            'chart' => 'BxMassMailerChart'
         );
 
         $this->_aJsObjects = array(
-            'manage_tools' => 'oBxMassMailerManageTools'
+            'manage_tools' => 'oBxMassMailerManageTools',
+            'chart' => 'oBxMassMailerChart',
         );
 
         $this->_aGridObjects = array(
