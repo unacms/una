@@ -3389,7 +3389,7 @@
 .sys-icon.user-times:before, .fa-user-times:before {
   content: "\f235"; }
 
-.sys-icon.users:before, .fa-users:before {
+.sys-icon.users:before, .sys-icon.group:before, .fa-users:before {
   content: "\f0c0"; }
 
 .sys-icon.users-cog:before, .fa-users-cog:before {
