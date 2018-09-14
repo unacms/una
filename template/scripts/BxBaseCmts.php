@@ -714,11 +714,23 @@ class BxBaseCmts extends BxDolCmts
         if($bFormMin) {
             list($sAuthorName, $sAuthorLink, $sAuthorIcon, $sAuthorUnit) = $this->_getAuthorInfo($this->_getAuthorId());
 
+            $oForm = new BxTemplFormView(array());
+            $aInputPlaceholder = array(
+                'type' => 'text',
+                'name' => 'comment',
+                'caption' => '',
+                'attrs' => array(
+                    'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtShowForm(this)',
+                    'placeholder' => _t('_cmt_txt_min_form_placeholder', $sAuthorName)
+                ),
+                'value' => '',
+            );
+
             $aTmplVarsFormMin = array(
                 'js_object' => $this->_sJsObjName,
                 'style_prefix' => $this->_sStylePrefix,
                 'author_unit' => $sAuthorUnit,
-                'placeholder' => _t('_cmt_txt_min_form_placeholder', $sAuthorName)
+                'placeholder' => $oForm->genRow($aInputPlaceholder)
             );
         }
 

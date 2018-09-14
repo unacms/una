@@ -263,6 +263,12 @@
         display: flex;
         -webkit-align-items: center;
         align-items: center;
+        -webkit-justify-content: stretch;
+        justify-content: stretch;
+    }
+    div.cmt-reply div.cmt-body-min .cmt-bm-content .bx-form-element-wrapper {
+        position: relative;
+        width: 100%;
     }
 
     /*--- Comment Styles in Live Update Notification ---*/
