@@ -526,10 +526,13 @@ class BxMassMailerModule extends BxBaseModGeneralModule
         $aTemplate['Subject'] = $aCampaign['subject'];
               
         $aCustomHeaders = array();
-        if ($aCampaign['from_name'] != '')
-            $aCustomHeaders['From'] = $aCampaign['from_name'] . " <" . getParam('site_email_notify') . ">" ;
-        if ($aCampaign['reply_to'] != '')
-            $aCustomHeaders['Reply-To'] = $aCampaign['reply_to'];
+        $sFrom = $aCampaign['from_name'] != '' ? $aCampaign['from_name'] : getParam('bx_massmailer_initial_from_email');
+        $aCustomHeaders['From'] = "=?UTF-8?B?" . base64_encode($sFrom) . "?= <" . getParam('site_email_notify') . ">" ;
+        if ($aCampaign['reply_to'] != ''){
+            $sFrom = $aCampaign['from_name'] != '' ? $aCampaign['from_name'] : getParam('site_title');
+            $aCustomHeaders['Reply-To'] = "=?UTF-8?B?" . base64_encode($sFrom) . '?= <' . bx_process_output($aCampaign['reply_to']) . '>';
+            $aCustomHeaders['X-Original-From'] = "=?UTF-8?B?" . base64_encode($sFrom) . '?= <' . bx_process_output($aCampaign['reply_to']) . '>';
+        }
               
         return array($aTemplate, $aCustomHeaders, $aCampaign);
     }
