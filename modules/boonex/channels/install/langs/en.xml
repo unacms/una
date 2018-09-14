@@ -126,8 +126,6 @@
 	<string name="_bx_channels_menu_set_title_view_profile_actions_more"><![CDATA[Channel More Actions]]></string>
 	<string name="_bx_channels_menu_title_view_profile_actions_more"><![CDATA[Channel More Actions]]></string>
 	<string name="_bx_channels_menu_set_title_view_profile_submenu"><![CDATA[View Channel Submenu]]></string>
-	<string name="_bx_channels_menu_title_view_profile_submenu"><![CDATA[View Channel Submenu]]></string>
-	<string name="_bx_channels_menu_title_view_profile_submenu_cover"><![CDATA[Channel Cover Submenu]]></string>
 	<string name="_bx_channels_menu_title_entries_my"><![CDATA[Profile Channels Action Menu]]></string>
 	<string name="_bx_channels_menu_set_title_entries_my"><![CDATA[Profile Channels Menu]]></string>
 	<string name="_bx_channels_menu_set_title_manage_tools"><![CDATA[Manage Tools Submenu]]></string>
