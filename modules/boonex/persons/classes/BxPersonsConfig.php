@@ -180,6 +180,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             	'filter_item_active' => '_bx_persons_grid_filter_item_title_adm_active',
             	'filter_item_pending' => '_bx_persons_grid_filter_item_title_adm_pending',
             	'filter_item_suspended' => '_bx_persons_grid_filter_item_title_adm_suspended',
+                'filter_item_unconfirmed' => '_bx_persons_grid_filter_item_title_adm_unconfirmed',
             	'filter_item_select_one_filter1' => '_bx_persons_grid_filter_item_title_adm_select_one_filter1',
                 'filter_item_select_one_filter2' => '_bx_persons_grid_filter_item_title_adm_select_one_filter2',
             	'menu_item_manage_my' => '_bx_persons_menu_item_title_manage_my',
