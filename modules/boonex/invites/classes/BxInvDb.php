@@ -116,6 +116,12 @@ class BxInvDb extends BxDolModuleDb
         return $this->query($sSql);
     }
     
+    public function deleteInvitesByAccount($aParams)
+    {
+        $sSql = "DELETE FROM `{$this->_sTableInvites}` WHERE " . $this->arrayToSQL($aParams, " AND ");
+        return $this->query($sSql);
+    }
+    
     public function attachInviteToRequest($iReqestId, $iInviteId)
     {
         $aBindings = array(

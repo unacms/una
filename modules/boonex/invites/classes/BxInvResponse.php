@@ -71,6 +71,11 @@ class BxInvResponse extends BxDolAlertsResponse
     {
         $this->_oModule->_oDb->deleteInvites(array('profile_id' => $oAlert->iObject));
     }
+    
+    protected function _processAccountDelete($oAlert)
+    {
+        $this->_oModule->_oDb->deleteInvitesByAccount(array('joined_account_id' => $oAlert->iObject));
+    }
 }
 
 /** @} */
