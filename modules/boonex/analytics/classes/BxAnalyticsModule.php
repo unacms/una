@@ -136,7 +136,7 @@ class BxAnalyticsModule extends BxDolModule
         header('Content-Type: application/json');
               
         $iDateFrom = strtotime($sDateFrom);
-        $iDateTo = strtotime($sDateTo);
+        $iDateTo = strtotime($sDateTo) + 86400;
         $sType = "bar";
         $bIsTimeX = false;
         $iMinValueY = 0;
@@ -187,12 +187,13 @@ class BxAnalyticsModule extends BxDolModule
                     for ($i = $iDateFrom; $i < $iDateTo ; $i = $i + 86400 ){
                         $sX = date('Y-m-d', $i);
                         if (!array_key_exists($sX, $aTmpDates)){
-                        array_push($aValues['values'][0]['data'], array('x' => $sX, 'y' => $sReportName == BX_ANALYTICS_CONTENT_TOTAL ? $iValuePrev : 0));
+                            array_push($aValues['values'][0]['data'], array('x' => $sX, 'y' => $sReportName == BX_ANALYTICS_CONTENT_TOTAL ? $iValuePrev : 0));
                         }
                         else{
-                            array_push($aValues['values'][0]['data'], array('x' => $sX, 'y' => $sReportName == BX_ANALYTICS_CONTENT_TOTAL ? $iValuePrev : $aTmpDates[$sX]));
+                            array_push($aValues['values'][0]['data'], array('x' => $sX, 'y' => $sReportName == BX_ANALYTICS_CONTENT_TOTAL ? ($iValuePrev + $aTmpDates[$sX]) : $aTmpDates[$sX]));
                             $iValuePrev += $aTmpDates[$sX];
                         }
+                        array_push($aValues['labels'], $sX);
                         if ($sReportName == BX_ANALYTICS_CONTENT_TOTAL){
                             if ($iValuePrev > $iMaxValueY)
                                 $iMaxValueY = $iValuePrev;
@@ -200,7 +201,7 @@ class BxAnalyticsModule extends BxDolModule
                         else{
                             if (array_key_exists($sX, $aTmpDates) && $aTmpDates[$sX] > $iMaxValueY)
                                 $iMaxValueY = $aTmpDates[$sX];
-                        }
+                        } 
                     }
                 }
                 break;
