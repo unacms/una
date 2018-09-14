@@ -1,5 +1,20 @@
 SET @sName = 'bx_massmailer';
 
+-- SETTINGS
+SET @iTypeOrder = (SELECT IFNULL(MAX(`order`), 0) + 1 FROM `sys_options_types` WHERE `group` = 'modules');
+
+INSERT INTO `sys_options_types` (`group`, `name`, `caption`, `icon`, `order`) 
+VALUES('modules', @sName, '_bx_massmailer_adm_stg_cpt_type', 'bx_massmailer@modules/boonex/massmailer/|std-icon.svg', IF(ISNULL(@iTypeOrder), 1, @iTypeOrder + 1));
+
+SET @iTypeId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `hidden`, `order`) VALUES(@iTypeId,  'bx_massmailer_general', '_bx_massmailer_adm_stg_cpt_category_general', 0, 1);
+SET @iCategoryId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options` (`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_params`, `check_error`, `order`) VALUES
+(@iCategoryId, 'bx_massmailer_initial_from_email', '_bx_massmailer_initial_from_name', 'UNA Mass mailer', 'digit', '', '', '', '', 1);
+
+
 -- PAGE: create campaign
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_massmailer_create_campaign', '_bx_massmailer_page_title_sys_create_campaign', '_bx_massmailer_page_title_create_campaign', 'bx_massmailer', 7, 128, 1, 'create-campaign', 'page.php?i=create-campaign', '', '', '', 0, 1, 0, 'BxMassMailerPageBrowse', 'modules/boonex/massmailer/classes/BxMassMailerPageBrowse.php');
