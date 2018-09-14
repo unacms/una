@@ -178,6 +178,7 @@ interface iBxDolProfile
     public function getEditUrl();
     public function isActive();
     public function isOnline();
+    public function getModule();
 
     /**
      * Check profile visibility

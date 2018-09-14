@@ -182,6 +182,11 @@ class BxDolProfileUndefined extends BxDolFactory implements iBxDolSingleton, iBx
     {
         return false;
     }
+
+    public function getModule($iProfileId = false)
+    {
+        return 'system';
+    }
 }
 
 /** @} */
