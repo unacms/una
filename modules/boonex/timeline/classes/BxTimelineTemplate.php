@@ -1680,11 +1680,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     $aReposted = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $aContent['object_id']));
                     $aReposted = $this->_getCommonData($aReposted, $aBrowseParams);
                 } 
-                else
-                	$aReposted = $this->_getSystemData($aContent, $aBrowseParams);
+                else {
+                    $aReposted = $this->_oDb->getEvents(array_merge(array('browse' => 'descriptor'), $aContent));
+                    $aReposted = $this->_getSystemData($aReposted, $aBrowseParams);
+                }
 
-				if(empty($aReposted) || !is_array($aReposted))
-					return array();
+                if(empty($aReposted) || !is_array($aReposted))
+                    return array();
 
                 $aResult['content'] = array_merge($aContent, $aReposted['content']);
                 $aResult['content']['parse_type'] = !empty($aReposted['content_type']) ? $aReposted['content_type'] : BX_TIMELINE_PARSE_TYPE_DEFAULT;

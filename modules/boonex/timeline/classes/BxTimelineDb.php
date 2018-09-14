@@ -441,12 +441,12 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
                 if(isset($aParams['type']))
                     $sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`type`=? ", $aParams['type']);
-                        if(isset($aParams['action']))
-                                $sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`action`=? ", $aParams['action']);
-                        if(isset($aParams['object_id']))
-                                $sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`object_id`=? ", $aParams['object_id']);
+                if(isset($aParams['action']))
+                    $sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`action`=? ", $aParams['action']);
+                if(isset($aParams['object_id']))
+                    $sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`object_id`=? ", $aParams['object_id']);
 
-                        $sLimitClause = "LIMIT 1";
+                $sLimitClause = "LIMIT 1";
                 break;
 
             case 'reposted_by_descriptor':
