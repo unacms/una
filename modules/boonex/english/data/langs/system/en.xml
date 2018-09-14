@@ -2359,6 +2359,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_title_rss"><![CDATA[RSS]]></string>
 	<string name="_sys_menu_title_set_acl_level"><![CDATA[ACL Levels]]></string>
 	<string name="_sys_menu_title_social_sharing"><![CDATA[Social Sharing]]></string>
+        <string name="_sys_menu_title_create_post"><![CDATA[Create Post Menu]]></string>
 	<string name="_sys_menu_title_submenu"><![CDATA[Site Submenu]]></string>
 	<string name="_sys_menu_title_toolbar_member"><![CDATA[Member Toolbar]]></string>
 	<string name="_sys_menu_title_toolbar_site"><![CDATA[Site Toolbar]]></string>

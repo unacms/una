@@ -121,6 +121,8 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
             exit;
         }
 
+        $this->_oTemplate->addCss('main.css');
+
         return parent::getCode();
     }
 
