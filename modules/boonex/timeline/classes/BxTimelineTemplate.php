@@ -1226,7 +1226,11 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aTmplVarsOwners = array();
         foreach($aOwnerIds as $iOwnerId) {
             $iOwnerId = (int)$iOwnerId;
-            if($iOwnerId == 0 || $iOwnerId == (int)abs($aEvent['object_owner_id']))
+            $iObjectOwner = (int)$aEvent['object_owner_id'];
+            if($iObjectOwner < 0 && abs($iObjectOwner) == $iUser)
+                $iObjectOwner *= -1;
+
+            if($iOwnerId == 0 || $iOwnerId == $iObjectOwner)
                 continue;
 
             list($sToName, $sToUrl, $sToThumb, $sToUnit, $sToUnitWoInfo) = $oModule->getUserInfo($iOwnerId);
