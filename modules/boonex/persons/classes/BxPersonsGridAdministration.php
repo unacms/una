@@ -45,7 +45,7 @@ class BxPersonsGridAdministration extends BxBaseModProfileGridAdministration
             list($this->_sFilter1Value, $this->_sFilter2Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
 
     	if(!empty($this->_sFilter1Value)){
-            if ($this->_sFilter1Value =='unconfirmed'){
+            if ($this->_sFilter1Value == 'unconfirmed'){
                 switch ($this->_sConfirmationType) {
                     case BX_ACCOUNT_CONFIRMATION_EMAIL:
                         $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `ta`.`email_confirmed` = 0 ");
