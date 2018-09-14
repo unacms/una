@@ -83,7 +83,7 @@ class BxBaseCmtsMenuUnitMeta extends BxTemplMenuUnitMeta
         if(empty($aMembership) || !is_array($aMembership))
             return '';
 
-        return $this->getUnitMetaItemText(_t($aMembership['name']), array(
+        return $this->getUnitMetaItemText($iAuthorId < 0 ? _t('_anonymous') : _t($aMembership['name']), array(
             'class' => $this->_sStylePrefix . '-membership'
         ));
     }

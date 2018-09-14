@@ -591,7 +591,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
         $oPrivacy = BxDolPrivacy::getObjectInstance($this->_oConfig->CNF['OBJECT_PRIVACY_VIEW']);
 
-        if (CHECK_ACTION_RESULT_ALLOWED !== $sResult && !$oPrivacy->isPartiallyVisible($aDataEntry[$this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']]))
+        if (CHECK_ACTION_RESULT_ALLOWED !== $sResult && !in_array($aDataEntry[$this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']], array('c', 's')))
             return $sResult;
 
         return parent::_checkAllowedConnect ($aDataEntry, $isPerformAction, $sObjConnection, $isMutual, $isInvertResult, $isSwap);
