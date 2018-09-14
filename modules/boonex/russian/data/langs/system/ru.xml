@@ -2356,6 +2356,7 @@
 	<string name="_sys_menu_title_rss"><![CDATA[RSS]]></string>
 	<string name="_sys_menu_title_set_acl_level"><![CDATA[Уровни доступа]]></string>
 	<string name="_sys_menu_title_social_sharing"><![CDATA[Социальные сети]]></string>
+        <string name="_sys_menu_title_create_post"><![CDATA[Создать Пост - Меню]]></string>
 	<string name="_sys_menu_title_submenu"><![CDATA[Подменю сайта]]></string>
 	<string name="_sys_menu_title_toolbar_member"><![CDATA[Панель инструментов - Пользователь]]></string>
 	<string name="_sys_menu_title_toolbar_site"><![CDATA[Панель инструментов - Сайт]]></string>
