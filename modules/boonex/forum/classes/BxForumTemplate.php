@@ -135,7 +135,8 @@ class BxForumTemplate extends BxBaseModTextTemplate
 
 	function getEntryLabel($aRow, $aParams = array())
     {
-    	$bShowCount = isset($aParams['show_count']) ? (int)$aParams['show_count'] == 1 : false;
+        $bShowCount = isset($aParams['show_count']) ? (int)$aParams['show_count'] == 1 : false;
+        $bShowLastReplier = isset($aParams['last_replier']) ? (int)$aParams['last_replier'] == 1 : true;
 
         $oProfileLast = BxDolProfile::getInstanceMagic($aRow['lr_profile_id']);
 
@@ -147,7 +148,7 @@ class BxForumTemplate extends BxBaseModTextTemplate
 				)
         	),
             'bx_if:show_viewer_is_last_replier' => array(
-                'condition' => $oProfileLast->id() == bx_get_logged_profile_id(),
+                'condition' => $bShowLastReplier && $oProfileLast->id() == bx_get_logged_profile_id(),
                 'content' => array (),
             )
         ));
@@ -187,7 +188,7 @@ class BxForumTemplate extends BxBaseModTextTemplate
     protected function getUnit ($aData, $aParams = array())
     {
     	$aUnit = parent::getUnit($aData, $aParams);
-		$aUnit['label'] = $this->getEntryLabel($aData, array('show_count' => 0));
+		$aUnit['label'] = $this->getEntryLabel($aData, array('show_count' => 0, 'last_replier' => 0));
     	return $aUnit;
     }
 }
