@@ -34,6 +34,19 @@ class BxOAuthUserCredentialsStorage implements OAuth2\Storage\UserCredentialsInt
 
         return array('user_id' => $oProfile->id());
     }
+
+    public function checkRestrictedGrantType($iClientId, $sGrantType)
+    {
+        $aDetails = $this->getClientDetails($iClientId);
+        if (isset($aDetails['grant_types'])) {
+            $aGrantTypes = explode(',', $aDetails['grant_types']);
+
+            return in_array($sGrantType, (array) $aGrantTypes);
+        }
+
+        // if grant_types are not defined, then none are restricted
+        return true;
+    }
 }
 
 class BxOAuthModule extends BxDolModule
