@@ -81,8 +81,6 @@ class BxOAuthModule extends BxDolModule
 
         // send CORS headers if necessary
 
-        $_SERVER['HTTP_ORIGIN'] = 'http://una.io';
-
         if (!empty($aClient['cors']) && isset($_SERVER['HTTP_ORIGIN'])) {
             
             if ('*' == trim($aClient['cors']) || ($a = explode(',', $aClient['cors']) && in_array($_SERVER['HTTP_ORIGIN'], $a))) {
