@@ -66,6 +66,14 @@ class BxDolModuleProxy
     {
         return $this->_oProxifiedObject->getPost($aEvent, $aBrowseParams);
     }
+
+    /**
+     * Dirty fix for pass by reference to BxMessengerTemplate::getTalkBlock
+     */    
+    public function getTalkBlock($iProfileId, $iLotId = BX_IM_EMPTY, $iJotId = BX_IM_EMPTY, $iType = BX_IM_TYPE_PUBLIC, $bShowMessanger = false, &$sReturnTitle = '')
+    {
+        return $this->_oProxifiedObject->getTalkBlock($iProfileId, $iLotId, $iJotId, $iType, $bShowMessanger, $sReturnTitle);
+    }
 }
 
 /** @} */
