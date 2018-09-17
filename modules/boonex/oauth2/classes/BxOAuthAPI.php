@@ -101,8 +101,11 @@ class BxOAuthAPI extends BxDol
 
         if (!($oProfile = $this->_getProfileWithAccessChecking($iProfileId)))
             return;
-        
-        $this->output($this->_prepareProfileArray($oProfile, !isAdmin($aToken['user_id'])));
+
+        if (!($oProfile = BxDolProfile::getInstance($aToken['user_id'])))
+            return;
+
+        $this->output($this->_prepareProfileArray($oProfile, !isAdmin($oProfile->getAccountId())));
     }
 
     /**
@@ -228,7 +231,12 @@ class BxOAuthAPI extends BxDol
      */
     function service($aToken) 
     {
-        bx_login($aToken['user_id'], false, false);
+        if (!($oProfile = BxDolProfile::getInstance($aToken['user_id']))) {
+            $this->errorOutput('404', 'not_found', 'Profile was not found');
+            return;
+        }
+        
+        bx_login($oProfile->getAccountId(), false, false);
 
         $sModule = bx_get('module');
         $sMethod = bx_get('method');
