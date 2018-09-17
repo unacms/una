@@ -3430,7 +3430,7 @@ INSERT INTO `sys_menu_templates` (`id`, `template`, `title`, `visible`) VALUES
 (5, 'menu_toolbar.html', '_sys_menu_template_title_toolbar', 0),
 (6, 'menu_vertical.html', '_sys_menu_template_title_ver', 1),
 (7, 'menu_floating_blocks.html', '_sys_menu_template_title_floating_blocks', 1),
-(8, 'menu_main_submenu.html', '_sys_menu_template_title_main_submenu', 0),
+(8, 'menu_main_submenu.html', '_sys_menu_template_title_main_submenu', 8),
 (9, 'menu_buttons_hor.html', '_sys_menu_template_title_buttons_hor', 1),
 (10, 'menu_inline.html', '_sys_menu_template_title_inline', 1),
 (11, 'menu_interactive_vertical.html', '_sys_menu_template_title_interactive_vertical', 1),
