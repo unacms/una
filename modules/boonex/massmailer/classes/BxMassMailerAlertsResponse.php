@@ -20,8 +20,16 @@ class BxMassMailerAlertsResponse extends BxDolAlertsResponse
     {
         if ($oAlert->sUnit == 'account' && $oAlert->sAction == 'change_receive_news'){
             $oModule = BxDolModule::getInstance('bx_massmailer');
-            if ($oAlert->aExtras['account_id'] != '' && $oAlert->aExtras['old_value'] != $oAlert->aExtras['new_value'])
-                $oModule->_oDb->updateUnsubscribe($oAlert->aExtras['account_id'], $oAlert->aExtras['new_value']);
+            if ($oAlert->aExtras['account_id'] != '' && $oAlert->aExtras['old_value'] != $oAlert->aExtras['new_value']){
+                $sHash = bx_get('lhash');
+                $iCampagn_Id = 0; 
+                if ($sHash){
+                    $aLetter = $oModule->_oDb->getLetterByCode($sHash);
+                    if (isset($aLetter['campaign_id']))
+                        $iCampagn_Id = $aLetter['campaign_id'];
+                }    
+                $oModule->_oDb->updateUnsubscribe($oAlert->aExtras['account_id'], $oAlert->aExtras['new_value'], $iCampagn_Id);
+            }
         }
     }
 }

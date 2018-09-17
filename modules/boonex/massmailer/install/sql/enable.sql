@@ -17,13 +17,12 @@ INSERT INTO `sys_options` (`category_id`, `name`, `caption`, `value`, `type`, `e
 
 -- PAGE: create campaign
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_massmailer_create_campaign', '_bx_massmailer_page_title_sys_create_campaign', '_bx_massmailer_page_title_create_campaign', 'bx_massmailer', 7, 128, 1, 'create-campaign', 'page.php?i=create-campaign', '', '', '', 0, 1, 0, 'BxMassMailerPageBrowse', 'modules/boonex/massmailer/classes/BxMassMailerPageBrowse.php');
+('bx_massmailer_create_campaign', '_bx_massmailer_page_title_sys_create_campaign', '_bx_massmailer_page_title_create_campaign', 'bx_massmailer', 7, 128, 1, 'create-campaign', 'page.php?i=create-campaign', '', '', '', 0, 1, 0, 'BxMassMailerPageEntry', 'modules/boonex/massmailer/classes/BxMassMailerPageEntry.php');
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('bx_massmailer_create_campaign', 1, @sName, '_bx_massmailer_page_block_title_entry_breadcrumb', 13, 128, 'service', 'a:2:{s:6:"module";s:13:"bx_massmailer";s:6:"method";s:17:"entity_breadcrumb";}', 0, 0, 0),
 ('bx_massmailer_create_campaign', 2, @sName, '_bx_massmailer_page_block_title_create_campaign', 11, 128, 'service', 'a:2:{s:6:"module";s:13:"bx_massmailer";s:6:"method";s:13:"entity_create";}', 0, 1, 1),
 ('bx_massmailer_create_campaign', 3, @sName, '_bx_massmailer_page_block_title_attributes', 11, 128, 'service', 'a:2:{s:6:"module";s:13:"bx_massmailer";s:6:"method";s:10:"attributes";}', 0, 0, 1);
-
 
 -- PAGE: edit campaign
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -43,7 +42,6 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 ('bx_massmailer_view_campaign', 1, @sName, '_bx_massmailer_page_block_title_view_campaign_info', 11, 128, 'service', 'a:2:{s:6:"module";s:13:"bx_massmailer";s:6:"method";s:12:"campagn_info";}', 0, 0, 1),
 ('bx_massmailer_view_campaign', 1, @sName, '_bx_massmailer_page_block_title_view_campaign_subscribers', 11, 128, 'service', 'a:2:{s:6:"module";s:13:"bx_massmailer";s:6:"method";s:19:"campagn_subscribers";}', 0, 0, 2),
 ('bx_massmailer_view_campaign', 1, @sName, '_bx_massmailer_page_block_title_view_campaign_links', 11, 128, 'service', 'a:2:{s:6:"module";s:13:"bx_massmailer";s:6:"method";s:13:"campagn_links";}', 0, 0, 3);
-
 
 -- PAGE: campaigns administration
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -97,42 +95,6 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES
 (@sName, '_bx_massmailer_email_name', 'bx_massmailer_email', '_bx_massmailer_email_subject', '_bx_massmailer_email_body');
 
--- ACL
-INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_massmailer', 'create entry', NULL, '_bx_massmailer_acl_action_create_entry', '', 1, 3);
-SET @iIdActionEntryCreate = LAST_INSERT_ID();
-
-INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_massmailer', 'delete entry', NULL, '_bx_massmailer_acl_action_delete_entry', '', 1, 3);
-SET @iIdActionEntryDelete = LAST_INSERT_ID();
-
-INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_massmailer', 'view entry', NULL, '_bx_massmailer_acl_action_view_entry', '', 1, 0);
-SET @iIdActionEntryView = LAST_INSERT_ID();
-
-SET @iUnauthenticated = 1;
-SET @iAccount = 2;
-SET @iStandard = 3;
-SET @iUnconfirmed = 4;
-SET @iPending = 5;
-SET @iSuspended = 6;
-SET @iModerator = 7;
-SET @iAdministrator = 8;
-SET @iPremium = 9;
-
-INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
-
--- entry create
-(@iModerator, @iIdActionEntryCreate),
-(@iAdministrator, @iIdActionEntryCreate),
-
--- entry delete
-(@iModerator, @iIdActionEntryDelete),
-(@iAdministrator, @iIdActionEntryDelete),
-
--- entry view
-(@iModerator, @iIdActionEntryView),
-(@iAdministrator, @iIdActionEntryView);
 
 -- ALERTS
 INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 

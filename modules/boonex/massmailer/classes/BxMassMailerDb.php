@@ -163,7 +163,9 @@ class BxMassMailerDb extends BxBaseModGeneralDb
         $q = "
         SELECT COUNT(*) AS `count`, 'total' AS `title` FROM `" . $CNF['TABLE_LETTERS'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` = :campaign_id UNION
         SELECT COUNT(*), 'seen' FROM `" . $CNF['TABLE_LETTERS'] . "`  WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` = :campaign_id AND `" . $CNF['FIELD_DATE_SEEN'] . "` > 0 UNION
-        SELECT COUNT(*), 'clicked' FROM `" . $CNF['TABLE_LETTERS'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` = :campaign_id AND `" . $CNF['FIELD_DATE_CLICK'] . "` > 0";
+        SELECT COUNT(*), 'clicked' FROM `" . $CNF['TABLE_LETTERS'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` = :campaign_id AND `" . $CNF['FIELD_DATE_CLICK'] . "` > 0 UNION 
+        SELECT COUNT(*), 'unsubscribed' FROM `" . $CNF['TABLE_UNSUBSCRIBE'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` = :campaign_id 
+        ";
         return $this->getPairs($q, 'title', 'count', $aBindings);
     }
     
@@ -206,15 +208,16 @@ class BxMassMailerDb extends BxBaseModGeneralDb
     }
     
     
-    public function updateUnsubscribe($iAccountId, $iValue)
+    public function updateUnsubscribe($iAccountId, $iValue, $iCampaignId)
     {
         $CNF = &$this->_oConfig->CNF;
         if ($iValue != 1){
             $aBindings = array(
                 'account_id' => $iAccountId,
+                'campaign_id' => $iCampaignId,
                 'date_unsubscribed' => time()
             );
-            $this->query("INSERT INTO `" . $CNF['TABLE_UNSUBSCRIBE'] . "` (`" . $CNF['FIELD_DATE_UNSUBSCRIBED'] . "`, `" . $CNF['FIELD_ACCOUNT_ID'] . "`) VALUES (:date_unsubscribed, :account_id)", $aBindings);
+            $this->query("INSERT INTO `" . $CNF['TABLE_UNSUBSCRIBE'] . "` (`" . $CNF['FIELD_DATE_UNSUBSCRIBED'] . "`, `" . $CNF['FIELD_ACCOUNT_ID'] . "`, `" . $CNF['FIELD_CAMPAIGN_ID'] . "`) VALUES (:date_unsubscribed, :account_id, :campaign_id)", $aBindings);
         }
         else{
             $aBindings = array(
