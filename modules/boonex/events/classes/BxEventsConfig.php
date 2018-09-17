@@ -142,6 +142,7 @@ class BxEventsConfig extends BxBaseModProfileConfig
             'MENU_ITEM_TO_METHOD' => array (
                 'bx_events_view_actions' => $aMenuItems2Methods,
                 'bx_events_view_actions_more' => $aMenuItems2Methods,
+                'bx_events_view_actions_all' => $aMenuItems2Methods,
             ),
 
             // informer messages

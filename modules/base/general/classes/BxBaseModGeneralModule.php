@@ -565,7 +565,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
         if(!empty($mixedContent)) {
             if(!is_array($mixedContent))
-               $mixedContent = array((int)$mixedContent, array());
+                $mixedContent = array((int)$mixedContent, (method_exists($this->_oDb, 'getContentInfoById')) ? $this->_oDb->getContentInfoById((int)$mixedContent) : array());
         }
         else {
             $mixedContent = $this->_getContent();
@@ -1305,6 +1305,26 @@ class BxBaseModGeneralModule extends BxDolModule
             $oProfile->getUnit(),
             $oProfile->getUnit(0, array('template' => 'unit_wo_info'))
         );
+    }
+
+    public function isMenuItemVisible($sObject, &$aItem, &$aContentInfo)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        // default visible settings
+        if(!BxDolAcl::getInstance()->isMemberLevelInSet($aItem['visible_for_levels']))
+            return false;
+
+        // get custom function name to check menu item visibility
+        $sFuncCheckAccess = false;
+        if(isset($CNF['MENU_ITEM_TO_METHOD'][$sObject][$aItem['name']]))
+            $sFuncCheckAccess = $CNF['MENU_ITEM_TO_METHOD'][$sObject][$aItem['name']];
+
+        // check custom visibility settings defined in module config class
+        if($sFuncCheckAccess && CHECK_ACTION_RESULT_ALLOWED !== call_user_func_array(array($this, $sFuncCheckAccess), isset($aContentInfo) ? array(&$aContentInfo) : array()))
+            return false;
+
+        return true;
     }
 
     public function _isModerator ($isPerformAction = false)

@@ -135,6 +135,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
                 'bx_persons_view_submenu' => $this->_aMenuItems2MethodsSubmenu,
                 'bx_persons_view_actions' => $this->_aMenuItems2MethodsActions,
                 'bx_persons_view_actions_more' => $this->_aMenuItems2MethodsActions,
+                'bx_persons_view_actions_all' => $this->_aMenuItems2MethodsActions,
             ),
 
             // informer messages

@@ -233,11 +233,14 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             )), true, true);
         }
 
-        $sMenu = $CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY'];
-        if(!empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL']))
-            $sMenu = $CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL'];
-
-        $oMenu = BxTemplMenu::getObjectInstance($sMenu);
+        $sActionsMenu = '';
+        if(empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL'])) {
+            $oMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY']);
+            if($oMenu)
+                $sActionsMenu = $oMenu->getCode();
+        }
+        else 
+            $sActionsMenu = $this->getModule()->serviceEntityAllActions();
 
         // generate html
         $aVars = array (
@@ -246,7 +249,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'title' => $sTitle,
             //'menu' => BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY_COVER'])->getCode(), // TODO: check if menu is used somewhere
 
-            'action_menu' => $oMenu ? $oMenu->getCode() : '',
+            'action_menu' => $sActionsMenu,
 
         	'bx_if:show_ava_image' => array(
                 'condition' => $bUrlAvatar,

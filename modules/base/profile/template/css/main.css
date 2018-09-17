@@ -244,6 +244,11 @@ a.bx-base-pofile-cover-image:hover,
     max-width: 50%;
 }
 
+.bx-base-pofile-cover-actions div.bx-base-general-entity-actions {
+    position: relative;
+    width: 100%;
+}
+
 .bx-base-pofile-cover-actions ul.bx-menu-hor.bx-menu-more-auto {
     -webkit-flex-wrap: nowrap;
     flex-wrap: nowrap;

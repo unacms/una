@@ -35,22 +35,7 @@ class BxBaseModGeneralMenuView extends BxTemplMenu
      */
     protected function _isVisible ($a)
     {
-        // default visible settings
-        if (!BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']))
-            return false;
-
-        $CNF = $this->_oModule->_oConfig->CNF;
-
-        // get custom function name to check menu item visibility
-        $sFuncCheckAccess = false;
-        if (isset($CNF['MENU_ITEM_TO_METHOD'][$this->_sObject][$a['name']]))
-            $sFuncCheckAccess = $CNF['MENU_ITEM_TO_METHOD'][$this->_sObject][$a['name']];
-
-        // check custom visibility settings defined in module config class
-        if ($sFuncCheckAccess && CHECK_ACTION_RESULT_ALLOWED !== call_user_func_array(array($this->_oModule, $sFuncCheckAccess), isset($this->_aContentInfo) ? array(&$this->_aContentInfo) : array()))
-            return false;
-
-        return true;
+        return $this->_oModule->isMenuItemVisible($this->_sObject, $a, $this->_aContentInfo);
     }
 
     protected function _getMenuItemsCombined ()

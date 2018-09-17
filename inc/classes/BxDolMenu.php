@@ -242,6 +242,15 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     }
 
     /**
+     * Get an arrey of replacable markers.
+     * @return an array with markers
+     */
+    public function getMarkers()
+    {
+        return $this->_aMarkers;
+    }
+    
+    /**
      * Add replace markers.
      * @param $a array of markers as key => value
      * @return true on success or false on error

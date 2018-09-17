@@ -141,6 +141,7 @@ class BxSpacesConfig extends BxBaseModProfileConfig
             'MENU_ITEM_TO_METHOD' => array (
                 'bx_spaces_view_actions' => $aMenuItems2Methods,
                 'bx_spaces_view_actions_more' => $aMenuItems2Methods,
+                'bx_spaces_view_actions_all' => $aMenuItems2Methods,
             ),
 
             // informer messages

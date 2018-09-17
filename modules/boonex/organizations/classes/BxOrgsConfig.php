@@ -151,9 +151,10 @@ class BxOrgsConfig extends BxBaseModProfileConfig
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
-        		'bx_organizations_view_submenu' => $this->_aMenuItems2MethodsSubmenu,
+                'bx_organizations_view_submenu' => $this->_aMenuItems2MethodsSubmenu,
                 'bx_organizations_view_actions' => $this->_aMenuItems2MethodsActions,
                 'bx_organizations_view_actions_more' => $this->_aMenuItems2MethodsActions,
+                'bx_organizations_view_actions_all' => $this->_aMenuItems2MethodsActions,
             ),
 
             // informer messages
