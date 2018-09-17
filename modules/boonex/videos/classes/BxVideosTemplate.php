@@ -25,16 +25,15 @@ class BxVideosTemplate extends BxBaseModTextTemplate
 
     public function entryText ($aData, $sTemplateName = 'entry-text.html')
     {
-        $mixedResult = parent::entryText($aData, $sTemplateName);
-        if($mixedResult === false)
-            return $this->entryVideo($aData);
+        $aVars = $this->getTmplVarsText($aData);        
+        $mixedResult = $this->parseHtmlByName($sTemplateName, $aVars);
 
-        $mixedVideo = $this->getVideo($aData);
-        if($mixedVideo === false)
+        $sVideoPlayer = $this->entryVideo($aData);
+        if($sVideoPlayer === false)
             return $mixedResult;
 
         return $this->parseHtmlByContent($mixedResult, array(
-            'entry_video' => $mixedVideo['player'] 
+            'entry_video' => $sVideoPlayer, 
         ));
     }
 
