@@ -905,14 +905,14 @@ class BxBaseModGeneralModule extends BxDolModule
     {
         $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);
         if(empty($aContentInfo) || !is_array($aContentInfo))
-            return '';
+            return false;
 
         $CNF = &$this->_oConfig->CNF;
 
         $iUserId = $this->getUserId();
         $iAuthorId = $aContentInfo[$CNF['FIELD_AUTHOR']];
         if($iAuthorId < 0 && abs($iAuthorId) != $iUserId)
-            return '';
+            return false;
 
         //--- Views
         $oViews = isset($CNF['OBJECT_VIEWS']) ? BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $aEvent['object_id']) : null;

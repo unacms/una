@@ -463,12 +463,14 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     public function serviceGetTimelinePost($aEvent, $aBrowseParams = array())
     {
         $a = parent::serviceGetTimelinePost($aEvent, $aBrowseParams);
+        if($a === false)
+            return false;
 
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aEvent['object_id'], $this->getName());
 
         $a['content']['url'] = $oGroupProfile->getUrl();
         $a['content']['title'] = $oGroupProfile->getDisplayName();
-        
+
         return $a;
     }
 

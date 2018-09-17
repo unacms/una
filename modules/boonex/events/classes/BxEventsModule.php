@@ -141,12 +141,15 @@ class BxEventsModule extends BxBaseModGroupsModule
     public function serviceGetTimelinePost($aEvent, $aBrowseParams = array())
     {
         $a = parent::serviceGetTimelinePost($aEvent, $aBrowseParams);
+        if($a === false)
+            return false;
 
-        if (!($aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id'])))
+        $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id'];
+        if(empty($aContentInfo) || !is_array($aContentInfo)))
             return $a;
 
         $CNF = $this->_oConfig->CNF;
-        
+
         $oDateStart = date_create('@' . $aContentInfo['date_start'], new DateTimeZone($aContentInfo['timezone'] ? $aContentInfo['timezone'] : 'UTC'));
         $oDateEnd = date_create('@' . ($aContentInfo['date_start'] > $aContentInfo['repeat_stop'] ? $aContentInfo['date_start'] : $aContentInfo['repeat_stop']), new DateTimeZone($aContentInfo['timezone'] ? $aContentInfo['timezone'] : 'UTC'));
 

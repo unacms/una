@@ -33,7 +33,7 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
         $aHandler = $this->_oModule->_oConfig->getHandlers($oAlert->sUnit . '_' . $oAlert->sAction);
         switch($aHandler['type']) {
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT:
-                $iOwnerId = $oAlert->iSender;
+                $iOwnerId = abs($oAlert->iSender);
                 if($iObjectPrivacyView < 0)
                     $iOwnerId = abs($iObjectPrivacyView);
 

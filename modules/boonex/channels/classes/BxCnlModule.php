@@ -127,11 +127,11 @@ class BxCnlModule extends BxBaseModGroupsModule
     public function serviceGetTimelinePostHashtag($aEvent, $aBrowseParams = array())
     {
         if(empty($aEvent) || !is_array($aEvent))
-            return '';
+            return false;
         
         $aContentEvent = $this->_oDb->getContentById($aEvent['object_id']);
         if(empty($aContentEvent) || !is_array($aContentEvent))
-            return '';
+            return false;
 
         $oModule = BxDolModule::getInstance($aContentEvent['module_name']);
         if ($oModule){
@@ -140,8 +140,8 @@ class BxCnlModule extends BxBaseModGroupsModule
                 $aTmp['owner_id'] =  $aEvent['owner_id'];
              return $aTmp;
         }
-        
-        return '';
+
+        return false;
     }
     
     /**

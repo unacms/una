@@ -1139,15 +1139,15 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
         $aFileInfo = BxDolStorage::getObjectInstance($CNF[$aBuildParams['stg']])->getFile((int)$aEvent['object_id']);
         if(empty($aFileInfo) || !is_array($aFileInfo))
-            return '';
+            return false;
             
         $aEventContent = unserialize($aEvent['content']);
         if(!is_array($aEventContent) || empty($aEventContent['content']))
-            return '';
+            return false;
 
         $aContentInfo = $this->_oDb->getContentInfoById($aEventContent['content']);
         if(empty($aContentInfo) || !is_array($aContentInfo))
-            return '';
+            return false;
 
         list($sUserName) = $this->getUserInfo($aContentInfo['profile_id']);
 
@@ -1163,15 +1163,15 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return array(
             'owner_id' => $aContentInfo['profile_id'],
             'icon' => !empty($CNF['ICON']) ? $CNF['ICON'] : '',
-        	'sample' => $sSample,
-        	'sample_wo_article' => $CNF['T'][$aBuildParams['txt_ss']],
-    	    'sample_action' => isset($CNF['T'][$aBuildParams['txt_sa']]) ? $CNF['T'][$aBuildParams['txt_sa']] : '',
+            'sample' => $sSample,
+            'sample_wo_article' => $CNF['T'][$aBuildParams['txt_ss']],
+            'sample_action' => isset($CNF['T'][$aBuildParams['txt_sa']]) ? $CNF['T'][$aBuildParams['txt_sa']] : '',
             'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
             'content' => $this->_getContentForTimelineProfileImage($aEvent, $aBrowseParams, $aBuildParams, $aContentInfo, $aFileInfo), //a string to display or array to parse default template before displaying.
             'date' => $aContentInfo[$CNF['FIELD_ADDED']],
             'views' => '',
             'votes' => '',
-        	'scores' => '',
+            'scores' => '',
             'reports' => '',
             'comments' => '',
             'title' => $sTitle, //may be empty.

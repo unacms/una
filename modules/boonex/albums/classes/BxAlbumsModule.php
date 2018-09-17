@@ -288,16 +288,16 @@ class BxAlbumsModule extends BxBaseModTextModule
     public function serviceGetTimelineMedia($aEvent, $aBrowseParams = array())
     {
         if(empty($aEvent['content']))
-            return '';
+            return false;
 
         $aEvent['content'] = unserialize($aEvent['content']);
         if(empty($aEvent['content']['medias_added']) || !is_array($aEvent['content']['medias_added']))
-            return '';
+            return false;
 
         $iContentId = (int)$aEvent['object_id'];
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if(empty($aContentInfo) || !is_array($aContentInfo))
-            return '';
+            return false;
 
         $CNF = &$this->_oConfig->CNF;
         
