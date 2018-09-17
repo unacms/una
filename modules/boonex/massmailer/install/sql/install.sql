@@ -50,6 +50,7 @@ CREATE TABLE `bx_massmailer_links` (
 CREATE TABLE `bx_massmailer_unsubscribe` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `account_id` int(11) DEFAULT NULL,
+  `campaign_id` int(11) DEFAULT NULL,
   `unsubscribed` int(11) NOT NULL default '0',
   PRIMARY KEY (`id`)
 );

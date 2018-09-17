@@ -115,7 +115,7 @@
   <string name="_bx_massmailer_txt_opened_total_title"><![CDATA[Opened - {0}]]></string>
   <string name="_bx_massmailer_txt_unopened_total_title"><![CDATA[Unopened - {0}]]></string>
   <string name="_bx_massmailer_txt_clicked_total_title"><![CDATA[Clicked - {0}]]></string>
-
+  <string name="_bx_massmailer_txt_unsubscribed_total_title"><![CDATA[Unsubscribed - {0}]]></string>
 
   <string name="_bx_massmailer_txt_attribute_global"><![CDATA[Account]]></string>
   <string name="_bx_massmailer_txt_attribute_email"><![CDATA[Email]]></string>

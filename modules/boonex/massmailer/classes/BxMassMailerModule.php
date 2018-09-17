@@ -136,6 +136,7 @@ class BxMassMailerModule extends BxBaseModGeneralModule
                 $aValues['values'][1] = array('legend' => _t('_bx_massmailer_txt_opened_total_title', $aDataStat['seen']) , 'data' => array($aDataStat['seen']));
                 $aValues['values'][2] = array('legend' => _t('_bx_massmailer_txt_unopened_total_title', $aDataStat['total'] - $aDataStat['seen']), 'data' => array($aDataStat['total'] - $aDataStat['seen']));
                 $aValues['values'][3] = array('legend' => _t('_bx_massmailer_txt_clicked_total_title', $aDataStat['clicked']), 'data' => array($aDataStat['clicked']));
+                $aValues['values'][4] = array('legend' => _t('_bx_massmailer_txt_unsubscribed_total_title', $aDataStat['unsubscribed']), 'data' => array($aDataStat['unsubscribed']));
                 $iMaxValueY = $aDataStat['total'];
                 break;
         }
@@ -412,6 +413,14 @@ class BxMassMailerModule extends BxBaseModGeneralModule
         }
         return $this->_oTemplate->getAttributes($aAttributesParts);
     }
+    
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
+     */
+    public function checkAllowedAdd ($isPerformAction = false)
+    {
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
           
     public function getSegments($sKey = "")
     {
@@ -556,7 +565,7 @@ class BxMassMailerModule extends BxBaseModGeneralModule
             }
             
             $aMarkers['seen_image_url'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'track/seen/' . $sLetterCode . "/";
-            $aMarkers['unsubscribe_url'] = BX_DOL_URL_ROOT . $oAccount->getUnsubscribeLink(BX_EMAIL_MASS);
+            $aMarkers['unsubscribe_url'] = BX_DOL_URL_ROOT . $oAccount->getUnsubscribeLink(BX_EMAIL_MASS) . "&lhash=" . $sLetterCode;
             
         }
         return $aMarkers;
