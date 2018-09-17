@@ -144,8 +144,8 @@ class BxEventsModule extends BxBaseModGroupsModule
         if($a === false)
             return false;
 
-        $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id'];
-        if(empty($aContentInfo) || !is_array($aContentInfo)))
+        $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
             return $a;
 
         $CNF = $this->_oConfig->CNF;
