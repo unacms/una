@@ -419,7 +419,23 @@ class BxMassMailerModule extends BxBaseModGeneralModule
      */
     public function checkAllowedAdd ($isPerformAction = false)
     {
-        return CHECK_ACTION_RESULT_ALLOWED;
+        return $this->checkAllowed($isPerformAction);
+    }
+    
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
+     */
+    public function checkAllowedEdit ($aDataEntry, $isPerformAction = false)
+    {
+        return $this->checkAllowed($isPerformAction);
+    }
+
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
+     */
+    public function checkAllowedDelete (&$aDataEntry, $isPerformAction = false)
+    {
+        return $this->checkAllowed($isPerformAction);
     }
           
     public function getSegments($sKey = "")
@@ -498,6 +514,15 @@ class BxMassMailerModule extends BxBaseModGeneralModule
     {
         return $this->_oDb->getAccountsByTerms($this->getSqlBySegment($sSegment));
     }
+    
+    private function checkAllowed($isPerformAction = false)
+    {
+        $aCheck = checkActionModule($this->_iProfileId, 'use massmailer', $this->getName(), $isPerformAction);
+        if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
+             return _t('_sys_txt_access_denied');
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+    
     private function getSqlBySegment($sSegment)
     {
         $sRv = '';
@@ -511,10 +536,10 @@ class BxMassMailerModule extends BxBaseModGeneralModule
                     $sRv = " AND `ta`.`email_confirmed` = 0 AND `ta`.`phone_confirmed` = 0 ";
                     break;
                 case MEMBERSHIP_ID_SUSPENDED:
-                    $sRv = $this->_oDb->prepareAsString(" AND `tp`.`status`=?", 'suspended');
+                    $sRv = " AND `tp`.`status` = 'suspended' ";
                     break;
                 case MEMBERSHIP_ID_PENDING:
-                    $sRv = $this->_oDb->prepareAsString(" AND `tp`.`status`=?", 'pending');
+                    $sRv = " AND `tp`.`status` = 'pending' ";
                     break;
                 case MEMBERSHIP_ID_STANDARD:
                     $sRv = "  AND `tp`.`id` NOT IN (SELECT `IDMember` FROM `sys_acl_levels_members`) ";
@@ -557,7 +582,6 @@ class BxMassMailerModule extends BxBaseModGeneralModule
             $aMarkers['account_name'] = $oAccount->getDisplayName();
             $aMarkers['account_id'] = $oProfile->getAccountId();
             $oModule = BxDolModule::getInstance($oProfile->getModule());
-            $oModule->serviceGetInfo($oProfile->getContentId());
             $aProfileInfo = $oModule->serviceGetInfo($oProfile->getContentId(), false);
             foreach ($aProfileInfo as $sKey => $sValue){
                 if (!isset($aMarkers[$sKey]))
