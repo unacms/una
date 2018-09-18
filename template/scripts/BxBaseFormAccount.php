@@ -144,6 +144,13 @@ class BxBaseFormAccount extends BxTemplFormView
             array (self::$FIELD_CHANGED => time()),
             $sPwd ? array (self::$FIELD_PASSWORD => $sPasswordHash, self::$FIELD_SALT => $sSalt) : array()
         );
+        
+        $oAccount = BxDolAccount::getInstance($val);
+        if ($oAccount) { 
+            $aAccountInfo = $oAccount->getInfo();
+            bx_alert('account', 'change_receive_news', 0, false, array('account_id' => $val,'old_value' =>  $aAccountInfo['receive_news'],'new_value' =>  $this->getCleanValue('receive_news'),'email' =>  $aAccountInfo['email']));
+        }
+
         return parent::update ($val, $aValsToAdd, $aTrackTextFieldsChanges);
     }
 
