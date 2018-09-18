@@ -274,7 +274,7 @@ class BxAnalyticsModule extends BxDolModule
                  ),
                 'display' => true,
                 'distribution' => 'linear',
-                'ticks' =>  array(
+                'ticks' => array(
                     'display' => true, 
                     'autoSkip' => true, 
                 )
@@ -282,19 +282,19 @@ class BxAnalyticsModule extends BxDolModule
         }
         else{
             $aDataForChartXAxes = array(
-                'ticks' =>  array(
+                'ticks' => array(
                     'autoSkip' => false
                 ),
                 'display' => true
             );
         }
        
-        $aDataForChartDatasets = array();    
+        $aDataForChartDatasets = array();
         for($i = 0; $i < count($aValues['values']); $i++){
             $aDataForChartDatasets[] = array(
                 'label' => $aValues['values'][$i]['legend'],
                 'fill' => false,
-                'backgroundColor' =>  $this->aColors[$i],
+                'backgroundColor' => $this->aColors[$i],
                 'borderColor' => $this->aColors[$i],
                 'borderWidth' => 1,
                 'data' => $aValues['values'][$i]['data']
@@ -302,8 +302,8 @@ class BxAnalyticsModule extends BxDolModule
         }
             
         $aDataForChart = array(
-            'type' =>  $sType,
-            'data' =>  array(
+            'type' => $sType,
+            'data' => array(
                 'labels' => $aValues['labels'], 
                 'datasets' => $aDataForChartDatasets
             ),
@@ -313,9 +313,9 @@ class BxAnalyticsModule extends BxDolModule
                     'display' => count($aValues['values']) == 1 ? false :true
                 ),
                 'scales' => array(
-                    'yAxes' =>  array(
+                    'yAxes' => array(
                         array(
-                            'ticks' =>  array(
+                            'ticks' => array(
                                 'max' => $iMaxValueY, 
                                 'min' => $iMinValueY, 
                                 'stepSize' => $this->getStep($iMinValueY, $iMaxValueY), 
@@ -323,7 +323,7 @@ class BxAnalyticsModule extends BxDolModule
                             )
                         )
                     ),
-                    'xAxes' =>  array($aDataForChartXAxes)
+                    'xAxes' => array($aDataForChartXAxes)
                 )
             ),
             'links' => $aValues['links'],
