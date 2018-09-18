@@ -37,7 +37,7 @@ class BxAnonFollowAlertsResponse extends BxDolAlertsResponse
         if ($oAlert->sAction == 'menu_custom_item'){
             if($oAlert->aExtras['item']['module'] == 'bx_anon_follow' && $oAlert->aExtras['item']['name'] == 'anon-follow'){
                 $oModule = BxDolModule::getInstance('bx_anon_follow');
-                $oAlert->aExtras['res'] = 'xcvxc';
+                $oAlert->aExtras['res'] = '';
                 $bIsSubscribed = $oModule->checkIsSubscribed($oAlert->aExtras['content_data']['profile_id']);
                 if ($bIsSubscribed){
                     $oAlert->aExtras['res'] = '';

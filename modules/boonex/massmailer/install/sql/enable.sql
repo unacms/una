@@ -61,7 +61,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 -- MENU: add to "add content" menu
 SET @iAddMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_add_content_links' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_add_content_links', @sName, 'create-campaign', '_bx_massmailer_menu_item_title_system_create_entry', '_bx_massmailer_menu_item_title_create_entry', 'page.php?i=create-campaign', '', '', 'envelope col-red2', '', 2147483647, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
+('sys_add_content_links', @sName, 'create-campaign', '_bx_massmailer_menu_item_title_system_create_entry', '_bx_massmailer_menu_item_title_create_entry', 'page.php?i=create-campaign', '', '', 'envelope col-red2', '', 128, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
 
 -- MENU: dashboard manage tools
 SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);
