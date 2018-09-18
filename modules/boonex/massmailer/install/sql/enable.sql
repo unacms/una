@@ -95,6 +95,15 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES
 (@sName, '_bx_massmailer_email_name', 'bx_massmailer_email', '_bx_massmailer_email_subject', '_bx_massmailer_email_body');
 
+-- ACL
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_massmailer', 'use massmailer', NULL, '_bx_massmailer_acl_action_use_massmailer', '', 1, 3);
+SET @iIdActionUseMassmailer = LAST_INSERT_ID();
+
+SET @iAdministrator = 8;
+
+INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
+(@iAdministrator, @iIdActionUseMassmailer);
 
 -- ALERTS
 INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 
