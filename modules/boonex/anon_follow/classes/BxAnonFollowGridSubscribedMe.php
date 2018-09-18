@@ -60,12 +60,12 @@ class BxAnonFollowGridSubscribedMe extends BxDolGridSubscribedMe
         {
             $sTitle = _t('_bx_anon_follow_txt_grid_title_default');
         }
-        return parent::_getCellDefault ($sTitle, $sKey, $aField, $aRow);
+        return parent::_getCellDefault($sTitle, $sKey, $aField, $aRow);
     }
     
     protected function _getCellActions($mixedValue, $sKey, $aField, $aRow)
     {
-        return parent::_getCellDefault ('', $sKey, $aField, $aRow);
+        return parent::_getCellDefault('', $sKey, $aField, $aRow);
     }
 }
 
