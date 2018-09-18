@@ -696,12 +696,17 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($bShowDoRepostAsButton)
             $sClass .= ' bx-btn-height';
 
-        return $this->parseLink('javascript:void(0)', !empty($aEvent['reposts']) && (int)$aEvent['reposts'] > 0 ? $aEvent['reposts'] : '', array(
-        	'id' => $this->_oConfig->getHtmlIds('repost', 'counter') . $aEvent['id'],
-        	'class' => $sClass,
+        return $this->parseLink('javascript:void(0)', !empty($aEvent['reposts']) && (int)$aEvent['reposts'] > 0 ? $this->getRepostCounterLabel($aEvent['reposts']) : '', array(
+            'id' => $this->_oConfig->getHtmlIds('repost', 'counter') . $aEvent['id'],
+            'class' => $sClass,
             'title' => _t('_bx_timeline_txt_reposted_by'),
-        	'onclick' => 'javascript:' . $sJsObject . '.toggleByPopup(this, ' . $aEvent['id'] . ')'
+            'onclick' => 'javascript:' . $sJsObject . '.toggleByPopup(this, ' . $aEvent['id'] . ')'
         ));
+    }
+
+    public function getRepostCounterLabel($iCount)
+    {
+        return $iCount;
     }
 
     public function getRepostedBy($iId)
