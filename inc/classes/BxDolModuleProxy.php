@@ -64,12 +64,27 @@ class BxDolModuleProxy
     {
         return $this->_oProxifiedObject->getData($aEvent, $aBrowseParams);
     }
+
     /**
      * Dirty fix for pass by reference to BxNtfsTemplate::getPost
      */
     public function getPost(&$aEvent, $aBrowseParams = array())
     {
         return $this->_oProxifiedObject->getPost($aEvent, $aBrowseParams);
+    }
+    /**
+     * Dirty fix for pass by reference to BxNtfsTemplate::getNotificationEmail
+     */
+    public function getNotificationEmail(&$aEvent)
+    {
+        return $this->_oProxifiedObject->getNotificationEmail($aEvent);
+    }
+    /**
+     * Dirty fix for pass by reference to BxNtfsTemplate::getNotificationPush
+     */
+    public function getNotificationPush(&$aEvent)
+    {
+        return $this->_oProxifiedObject->getNotificationPush($aEvent);
     }
 
     /**
