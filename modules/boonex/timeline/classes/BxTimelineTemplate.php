@@ -899,7 +899,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return $aResult;
     }
 
-    public function getVideo(&$aEvent, &$aVideo)
+    public function getVideo($aEvent, $aVideo)
     {
         $sVideoId = $this->_oConfig->getHtmlIds('view', 'video') . $aEvent['id'] . '-' . $aVideo['id'];
         return $this->parseHtmlByName('video_player.html', array(
