@@ -603,12 +603,10 @@ class BxBaseModGeneralModule extends BxDolModule
         $aMarkers = array(
             'id' => $iContentId,
             'module' => $this->_oConfig->getName(),
+            'title' => !empty($sEntryTitle) ? $sEntryTitle : '',
+            'url' => !empty($sEntryUrl) ? $sEntryUrl : '',
+            'img_url' => ''
         );
-        if(!empty($sEntryTitle))
-            $aMarkers['title'] = $sEntryTitle;
-
-        if(!empty($sEntryUrl))
-            $aMarkers['url'] = $sEntryUrl;
 
         if(!empty($iEntryThumb)) {
             if(!empty($sObjectTranscoder))
