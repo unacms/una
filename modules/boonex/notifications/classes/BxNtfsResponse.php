@@ -237,7 +237,7 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
             $sMethodPostfix = bx_gen_method_name($sDeliveryType);
             $sMethodGet = 'getNotification' . $sMethodPostfix;
             $sMethodSend = 'sendNotification' . $sMethodPostfix;
-            if(!method_exists($this->_oModule->_oTemplate, $sMethodGet) || !method_exists($this, $sMethodSend))
+            if(!$this->_oModule->_oTemplate->isMethodExists($sMethodGet) || !method_exists($this, $sMethodSend))
                 continue;
 
             $mixedContent = $this->_oModule->_oTemplate->$sMethodGet($aEvent);

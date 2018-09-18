@@ -180,7 +180,7 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $sMethod = 'displayBlockSbs' . bx_gen_method_name($sType);
-        if(!method_exists($this->_oModule->_oTemplate, $sMethod))
+        if(!$this->_oModule->_oTemplate->isMethodExists($sMethod))
             return array(
         		'content' => MsgBox(_t('_Empty'))
             );

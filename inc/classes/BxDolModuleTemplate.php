@@ -155,6 +155,11 @@ class BxDolModuleTemplate extends BxDolTemplate
     public function addCssJs()
     {
     }
+
+    public function isMethodExists($s)
+    {
+        return method_exists($this->_oProxifiedObject, $s);
+    }    
 }
 
 /** @} */

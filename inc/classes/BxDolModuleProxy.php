@@ -52,6 +52,11 @@ class BxDolModuleProxy
         }
     }
 
+    public function isMethodExists($s)
+    {
+        return method_exists($this->_oProxifiedObject, $s);
+    }
+
     /**
      * Dirty fix for pass by reference to BxTimelineTemplate::getData
      */
