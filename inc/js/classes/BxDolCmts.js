@@ -369,8 +369,7 @@ BxDolCmts.prototype.toggleReply = function(e, iCmtParentId)
                 break;
         }
 
-        var sFormId = oForm.find('form').attr('id');
-        $this.cmtInitFormPost(sFormId);
+        $this.cmtInitFormPost(oForm.find('form'));
 
         $(sParentId).children('.cmt-reply').bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed, fOnShow);
     });
