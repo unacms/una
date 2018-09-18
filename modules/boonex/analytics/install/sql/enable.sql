@@ -26,4 +26,4 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 -- MENU: account dashboard
 SET @iMoAccountDashboard = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard' LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES
-('sys_account_dashboard', 'bx_analytics', 'dashboard-analytics', '_bx_analytics_item_title_system_analytics', '_bx_analytics_item_title_analytics', 'page.php?i=analytics', '', '', 'certificate col-red', '', '', 2147483646, 1, 0, 1, @iMoAccountDashboard + 1);
+('sys_account_dashboard', @sName, 'dashboard-analytics', '_bx_analytics_item_title_system_analytics', '_bx_analytics_item_title_analytics', 'page.php?i=analytics', '', '', 'certificate col-red', '', '', 192, 1, 0, 1, @iMoAccountDashboard + 1);
