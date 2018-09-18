@@ -3534,6 +3534,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu_items` (
   `submenu_object` varchar(64) NOT NULL,
   `submenu_popup` tinyint(4) NOT NULL DEFAULT '0',
   `visible_for_levels` int(11) NOT NULL DEFAULT '2147483647',
+  `visibility_custom` text NOT NULL,
   `hidden_on` varchar(255) NOT NULL DEFAULT '',
   `active` tinyint(4) NOT NULL DEFAULT '1',
   `copyable` tinyint(4) NOT NULL DEFAULT '1',
