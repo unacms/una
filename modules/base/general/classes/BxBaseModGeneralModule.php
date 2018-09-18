@@ -1315,6 +1315,12 @@ class BxBaseModGeneralModule extends BxDolModule
         if(!BxDolAcl::getInstance()->isMemberLevelInSet($aItem['visible_for_levels']))
             return false;
 
+        if (!empty($aItem['visibility_custom'])) {
+            $oMenu = BxDolMenu::getObjectInstance($sObject);
+            if ($oMenu && !BxDolService::callSerialized($aItem['visibility_custom'], $this->_aMarkers))
+                return false;
+        }
+        
         // get custom function name to check menu item visibility
         $sFuncCheckAccess = false;
         if(isset($CNF['MENU_ITEM_TO_METHOD'][$sObject][$aItem['name']]))
