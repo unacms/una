@@ -7,10 +7,13 @@
 	font-weight:bold;
 	color:red;
 }
-table.bx-grid-table td{
+table#bx-grid-table-bx_dolphin_migration_transfers td{
 	text-align:center;
 }
 
 .bx-grid-header-cnt > div{
 	width:50%;	
+}
+.bx-form-input-wrapper-input_set > button{
+	margin-right:2rem;
 }

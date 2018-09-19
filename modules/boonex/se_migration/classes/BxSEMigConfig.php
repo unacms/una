@@ -58,19 +58,7 @@ class BxSEMigConfig extends BxBaseModGeneralConfig {
 						'bx_persons'	=> 'Persons',
 						'bx_albums'		=> 'Albums'	
 			        ),
-                ),
-                
-                /*'videos' => array(
-                    'table_name'     => 'video_videos',
-                    'migration_class' => 'BxSEMigVideos',
-			        'dependencies' => array(
-                		'profiles',
-                     ),
-					 'plugins' => array(
-						'bx_persons'	=> 'Persons',
-						'bx_albums'		=> 'Albums'	
-			        ),
-                ),*/                
+                )               
              );
 			 
    public function __construct($aModule){

@@ -18,7 +18,7 @@
 	<string name="_bx_dolphin_migration_defined_path"><![CDATA[Path to Dolphin script]]></string>
 	<string name="_bx_dolphin_migration_start_transfer"><![CDATA[Start transfer]]></string>
 	<string name="_bx_dolphin_migration_start_transfer_confirmation"><![CDATA[Please don't reload or close the page during data transferring]]></string>  
-	<string name="_bx_dolphin_migration_reupload_data"><![CDATA[If you update path to config file, all information from table below will be lost, but all transferred data will be saved.]]></string>  
+	<string name="_bx_dolphin_migration_reupload_data"><![CDATA[If you update path, all information from table below will be lost, but it will not influence on already transferred data.]]></string>
 	<string name="_bx_dolphin_migration_already_transfer"><![CDATA[Module {0} already transferred]]></string>
 	<string name="_bx_dolphin_migration_install_before"><![CDATA[Please transfer {0} first!]]></string>
 	<string name="_bx_dolphin_migration_install_plugin"><![CDATA[You need to install {0} plugin(s), before {1} transfer]]></string>
@@ -93,7 +93,7 @@
 	<string name="_bx_dolphin_migration_started_migration_forum_finished"><![CDATA[{0} topics with posts and comments were transferred]]></string>
 	<string name="_bx_dolphin_migration_started_migration_forum_error"><![CDATA[Error occurred. Record Id is {0}]]></string>
 	<string name="_bx_dolphin_migration_started_migration_polls"><![CDATA[Polls migration was started]]></string>
-	<string name="_bx_dolphin_migration_started_migration_polls_finished"><![CDATA[Polls were transferred]]></string>
+	<string name="_bx_dolphin_migration_started_migration_polls_finished"><![CDATA[{0} Polls were transferred]]></string>
 	<string name="_bx_dolphin_migration_started_migration_polls_error"><![CDATA[Error occurred. Record Id is {0}]]></string>
 	<string name="_bx_dolphin_migration_started_migration_timeline"><![CDATA[Wall Migration was started]]></string>
 	<string name="_bx_dolphin_migration_started_migration_timeline_finished"><![CDATA[{0} wall posts with comments were transferred]]></string>
@@ -112,4 +112,10 @@
 	<string name="_bx_dolphin_migration_successfully_removed"><![CDATA[{0} records were successfully removed!]]></string>
 	<string name="_bx_dolphin_migration_nothing_removed"><![CDATA[Nothing was removed!]]></string>
 	<string name="_bx_dolphin_migration_remove_profile_content_confirmation"><![CDATA[If you remove profiles, it will remove all transferred profiles' content also. Continue?]]></string>
+	<string name="_bx_dolphin_migration_cpt_overwrite"><![CDATA[If account with the same NickName already exists, overwrite its info.
+	<br/><b>This option is useful if you already have account on current version with the same Nickname as in Dolphin. If you enable this option all existed on UNA accounts will be updated using profiles' info from Dolphin and don't forget that info of your current logged member may be also updated and you can be logged out.</b>]]></string>
+	<string name="_bx_dolphin_migration_cpt_clean"><![CDATA[Clean]]></string>
+	<string name="_bx_dolphin_migration_cpt_use_nickname"><![CDATA[Use NickName instead of Profile's FullName]]></string>
+	<string name="_bx_dolphin_migration_cpt_empty_albums"><![CDATA[Transfer photo albums even if they are empty]]></string>
+	<string name="_bx_dolphin_migration_cpt_clean_warning"><![CDATA[Path to the Dolphin root and information from table below will be lost, Continue?]]></string>
 </resources>

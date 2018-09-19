@@ -103,8 +103,7 @@ class BxDolMPolls extends BxDolMData
 			
 			$this -> trasnferTags($aValue['id_poll'], $iPollId, $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['type'], $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['keywords']);
         }      	
-        
-		//$this -> dropMID();
+
 
         // set as finished;
         $this -> setResultStatus(_t('_bx_dolphin_migration_started_migration_polls_finished', $this -> _iTransferred));

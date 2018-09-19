@@ -29,7 +29,7 @@ class BxDolMTimeline extends BxDolMData
 	
 	public function getTotalRecords()
 	{
-		return (int)$this -> _mDb -> getOne("SELECT COUNT(*) FROM `" . $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['table_name'] . "` ORDER BY `id`");
+	    return (int)$this -> _mDb -> getOne("SELECT COUNT(*) FROM `" . $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['table_name'] . "` ORDER BY `id`");
 	}
 	/**
 	 *  Returns data from the module into which data was added
@@ -40,7 +40,8 @@ class BxDolMTimeline extends BxDolMData
 	 */
 	private function getModuleItemInfo($iModuleItemId, $sModule = 'forum')
 	{
-		switch($sModule)
+        $sTable = '';
+	    switch($sModule)
 		{
 			case 'events':
 					$sTable = 'bx_events_data';
@@ -85,9 +86,6 @@ class BxDolMTimeline extends BxDolMData
 		$iObjectId = $this -> getProfileId($aInfo['object_id']);
 		$iTime	= time();
 		$sTitle = '';
-		$sUrl = '';
-		$iMediaId = 0;
-		$sMediaType = 0;
 		$aData = array();
 		
 		$mixedTransferred = $this -> isModuleContentTransferred($aInfo['type']);
@@ -114,6 +112,7 @@ class BxDolMTimeline extends BxDolMData
 				$sType = $aInfo['type'];
 				$iObjectId = $aItemInfo['id'];
 				$iTime = $aInfo['date'];
+
 				switch($sModule)
 				{
 					case 'events':
@@ -186,10 +185,11 @@ class BxDolMTimeline extends BxDolMData
 				if (isset($aInfo['content']))
 					$aItemInfo = @unserialize($aInfo['content']);
 				
-				if (!isset($aItemInfo['action']) || !($aItemInfo['action'] == 'add' || $aItemInfo['action'] == 'create'))
+				if (!isset($aItemInfo['action']) || !($aItemInfo['action'] == 'add' || $aItemInfo['action'] == 'create')  || !isset($this -> _oConfig -> _aModulesAliases[$aItemInfo['type']]))
 					break;
 				else
 					$sSubAction = 'added';
+
 
 				$aSubInfo = $this -> getModuleItemInfo($aItemInfo['object_id'], $this -> _oConfig -> _aModulesAliases[$aItemInfo['type']]);
 				if (empty($aSubInfo))

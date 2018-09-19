@@ -43,8 +43,8 @@ class BxDolMModule extends BxBaseModGeneralModule
 			echo json_encode(array('code' => 1, 'message' => _t('_bx_dolphin_migration_successfully_finished')));
 			exit;
 		}
-		
-		$this -> initDb();		
+
+		$this -> initDb();
 		header('Content-Type:text/javascript');			
 		
 		foreach($aModules as $iKey => $sModule){
@@ -86,11 +86,9 @@ class BxDolMModule extends BxBaseModGeneralModule
                 $oModule = new $this -> _oConfig -> _aMigrationModules[$sModule]['migration_class']($this, $this -> _oMDb);
                 if($oModule -> runMigration()) 
 	                $this -> _oDb -> updateTransferStatus($sModule, 'finished');                
-                else {                    
+                else
                     $this -> _oDb -> updateTransferStatus($sModule, 'error');
-					return _t('_bx_dolphin_migration_successfully_failed');					
-                }
-            }		
+            }
 	     }
 		
 		return _t('_bx_dolphin_migration_successfully_finished');	
@@ -98,14 +96,13 @@ class BxDolMModule extends BxBaseModGeneralModule
 	
 	/** 
 	* Creates date for migration
-	* @param ref $oMDb Dolphin database connect
 	*/
 	public function createMigration()
 	{
 		if (is_null($this -> _oMDb)) 
 			$this -> initDb();
 
-		$this -> _oDb -> cleanTrasnfersTable();
+		$this -> _oDb -> cleanTransfersTable();
 		foreach ($this -> _oConfig -> _aMigrationModules as $sName => $aModule)
 		{			
 			if ($this -> _oMDb -> isTableExists($aModule['table_name']))

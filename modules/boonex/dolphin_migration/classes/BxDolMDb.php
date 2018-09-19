@@ -21,6 +21,7 @@ class BxDolMDb extends BxBaseModGeneralDb
 	/** 
 	* Save Dolphin configuration 
 	* @param array $aConfig parameters
+    * @return boolean if requests are successful
 	*/ 
 	public function saveConfig($aConfig)
 	{
@@ -39,9 +40,19 @@ class BxDolMDb extends BxBaseModGeneralDb
 		}
 		
 		return $bRecords;
-	} 
-	
-	/** 
+	}
+
+	/**
+     * Removes Dolphin's transfer settings
+     * @return boolean if requests are successful
+     */
+    public function removeConfig()
+    {
+        $this -> query("TRUNCATE TABLE `bx_dolphin_config`");
+        $this -> query("TRUNCATE TABLE `bx_dolphin_transfers`");
+    }
+
+    /**
 	* Get config parameter value
 	* @param string $sConfigName param's name 
 	* @return string 
@@ -111,7 +122,7 @@ class BxDolMDb extends BxBaseModGeneralDb
 	*/
 	 public function isConfigInstalled()
 	 {
-		return $this -> getExtraParam('dbname') && $this -> getExtraParam('username');
+		return $this -> getOne('SELECT COUNT(*) FROM `bx_dolphin_config`');
 	 }
 	
 	/** 
@@ -139,10 +150,18 @@ class BxDolMDb extends BxBaseModGeneralDb
 		return (int)$this -> getOne($sQuery) == 1;
 	}
 	
-	public function cleanTrasnfersTable()
+	public function cleanTransfersTable()
 	{
 		return $this -> query("TRUNCATE TABLE `{$this -> _sPrefix}transfers`");
 	}
+
+	public function isFinished($aElements){
+	    if (empty($aElements))
+	        return false;
+
+	    $sList = implode("','", $aElements);
+	    return $this -> getOne("SELECT COUNT(*) FROM `{$this -> _sPrefix}transfers` WHERE `module` IN (:list) AND `status` != 'finished'", array('list' => $sList)) == 0;
+    }
 }
 
 /** @} */

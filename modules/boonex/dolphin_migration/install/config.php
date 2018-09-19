@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_dolphin_migration',
     'title' => 'Dolphin Migration',
     'note' => 'Migration Tool',
-    'version' => '9.0.3.DEV',
+    'version' => '9.0.4.DEV',
     'vendor' => 'Boonex',
 	'help_url' => 'http://feed.una.io/?section={module_name}',
 

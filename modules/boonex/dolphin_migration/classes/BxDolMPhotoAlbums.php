@@ -39,11 +39,16 @@ class BxDolMPhotoAlbums extends BxDolMData
 			  $this -> setResultStatus(_t('_bx_dolphin_migration_no_data_to_transfer'));
 	          return BX_MIG_SUCCESSFUL;
 		}
-		
+
+		$sWhereCount = '';
+		if ($this -> _oConfig -> _bTransferEmpty)
+            $sWhereCount = " AND `ObjCount` <> 0";
+
 		$this -> setResultStatus(_t('_bx_dolphin_migration_started_migration_photos'));
 		
 		$this -> createMIdField();
-		$aResult = $this -> _mDb -> getAll("SELECT * FROM `" . $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['table_name_albums'] ."` WHERE `Type` = 'bx_photos' AND `Uri` <> 'Hidden' ORDER BY `ID` ASC");
+		$aResult = $this -> _mDb -> getAll("SELECT * FROM `" . $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['table_name_albums'] ."` 
+		                                    WHERE `Type` = 'bx_photos' AND `Uri` <> 'Hidden' {$sWhereCount} ORDER BY `ID` ASC");
 		foreach($aResult as $iKey => $aValue)
 		{ 			
 			$iProfileId = $this -> getProfileId((int)$aValue['Owner']);
@@ -129,6 +134,7 @@ class BxDolMPhotoAlbums extends BxDolMData
 					if ($iId)
 					{ 
 						$oStorage -> afterUploadCleanup($iId, $iProfileId);
+                        $this -> updateFilesDate($iId, $aValue['Date']);
 						
 						$sQuery = $this -> _oDb -> prepare("INSERT INTO `bx_albums_files2albums` SET `content_id` = ?, `file_id` = ?, `data` = ?, `title` = ?", $iNewAlbumID, $iId, $aValue['Size'], $aValue['Title']);
 						$this -> _oDb -> query($sQuery);
@@ -151,6 +157,11 @@ class BxDolMPhotoAlbums extends BxDolMData
 	private function isFileExisted($iAuthor, $sTitle, $iDate){    	
     	$sQuery  = $this -> _oDb ->  prepare("SELECT COUNT(*) FROM `bx_albums_files` WHERE `profile_id` = ? AND `file_name` = ? AND `added` = ? LIMIT 1", $iAuthor, $sTitle, $iDate);
         return (bool)$this -> _oDb -> getOne($sQuery);
+    }
+
+    private function updateFilesDate($iId, $iDate){
+        $sQuery  = $this -> _oDb ->  prepare("UPDATE `bx_albums_files` SET `added`=? WHERE `id` = ?", $iDate, $iId);
+        return $this -> _oDb -> query($sQuery);
     }
 	
 	public function removeContent()

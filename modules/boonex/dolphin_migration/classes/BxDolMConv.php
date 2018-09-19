@@ -23,7 +23,7 @@ class BxDolMConv extends BxDolMData
 	
 	public function getTotalRecords()
 	{
-		return (int)$this -> _mDb -> getOne("SELECT COUNT(*) FROM  `" . $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['table_name'] . "` WHERE `Type` = 'letter' ORDER BY `ID`");			
+		return (int)$this -> _mDb -> getOne("SELECT COUNT(*) FROM  `" . $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['table_name'] . "` WHERE `Type` = 'letter' AND `Sender` <> `Recipient` ORDER BY `ID`");
 	}
 	
 	public function runMigration()
@@ -44,10 +44,10 @@ class BxDolMConv extends BxDolMData
 			$iSenderId = $this -> getProfileId((int)$aValue['Sender']);
 			$iRecipientId = $this -> getProfileId((int)$aValue['Recipient']);			
 			$iDate = isset($aValue['Date']) ? strtotime($aValue['Date']) : time();				
-			if (!$iSenderId || !$iRecipientId)
+			if (!$iSenderId || !$iRecipientId || ($iSenderId == $iRecipientId))
 				continue;
 			
-			$iConvId = $this -> isConvExisted($aValue['Subject'], $iSenderId, $iRecipientId);		
+			$iConvId = $this -> isConvExisted($aValue['Subject'], $iSenderId, $iRecipientId);
 			if (!$iConvId)
 			{
 				$sQuery = $this -> _oDb -> prepare( 
@@ -72,42 +72,14 @@ class BxDolMConv extends BxDolMData
 		
 				$this -> _oDb -> query($sQuery);
 				
-				$iConvId = $this -> _oDb -> lastId();			
+				$iConvId = $this -> _oDb -> lastId();
 				if (!$iConvId){
 					$this -> setResultStatus(_t('_bx_dolphin_migration_started_migration_conv_error', (int)$aValue['ID']));
 					return BX_MIG_FAILED;
-				}	
-								
+				}
 
-				$sQuery = $this -> _oDb -> prepare( 
-						"
-							INSERT INTO
-								`bx_convos_conv2folder`
-							SET
-								`conv_id`      		= ?,
-								`folder_id`   		= ?,
-								`collaborator`		= ?
-						", 
-						$iConvId,
-						stripos($aValue['Trash'], 'sender') !== FALSE ? 4 : 1,
-						$iSenderId
-						);
-				$this -> _oDb -> query($sQuery);
-				
-				$sQuery = $this -> _oDb -> prepare( 
-						"
-							INSERT INTO
-								`bx_convos_conv2folder`
-							SET
-								`conv_id`      		= ?,
-								`folder_id`   		= ?,
-								`collaborator`		= ?
-						", 
-						$iConvId,
-						stripos($aValue['Trash'], 'recipient') !== FALSE ? 4 : 1,
-						$iRecipientId
-						);
-				$this -> _oDb -> query($sQuery);
+                $this -> updateConvFolder($iSenderId, stripos($aValue['Trash'], 'sender') !== FALSE ? 4 : 1, $iConvId);
+                $this -> updateConvFolder($iRecipientId, stripos($aValue['Trash'], 'recipient') !== FALSE ? 4 : 1, $iConvId);
 			}
 			
 			$this -> createMIdField();
@@ -150,7 +122,28 @@ class BxDolMConv extends BxDolMData
         $this -> setResultStatus(_t('_bx_dolphin_migration_started_migration_conv_finished', $this -> _iTransferred));
         return BX_MIG_SUCCESSFUL;
     }
-	
+	private function updateConvFolder($iCollaborator, $iFolder, $iConvId){
+	    $iId = $this -> _oDb -> getOne("SELECT `id` FROM `bx_convos_conv2folder` WHERE `collaborator` = :coll AND `folder_id` = :folder AND `conv_id` = :id",
+            array('coll' => $iCollaborator, 'folder' => $iFolder, 'id' => $iConvId));
+	    if($iId)
+	        return $iId;
+
+	    $sQuery = $this -> _oDb -> prepare(
+                        "
+							INSERT INTO
+								`bx_convos_conv2folder`
+							SET
+								`conv_id`      		= ?,
+								`folder_id`   		= ?,
+								`collaborator`		= ?
+						",
+                $iConvId,
+                $iFolder,
+                $iCollaborator
+            );
+
+	    return $this -> _oDb -> query($sQuery);
+    }
 	protected function isConvExisted($sSubject, $iSenderId, $iRecipientId)
 	{
 		$sSubject = preg_replace('/^Re.*:\s+(.*)$/i', '\\1', $sSubject);

@@ -50,11 +50,22 @@ class BxDolMTransfers extends BxTemplGrid
 	{
 		$aElements = bx_get('ids');
 		echoJson(array(
-			'msg' => $this-> _oModule -> actionStartTransfer($aElements), 
-			'grid' => $this -> getCode(false),
-			'blink' => $aElements,
+            'msg' => $this-> _oModule -> actionStartTransfer($aElements),
+		    'grid' => $this -> getCode(false),
+			'blink' => $aElements
 		));		   
 	}
+
+    public function performActionFinished()
+    {
+        $aElements = explode(',', bx_get('modules'));
+        if (!empty($aElements) && $this-> _oModule -> _oDb -> isFinished($aElements))
+          echoJson(array(
+            'grid' => $this -> getCode(false),
+            'blink' => $aElements,
+            'eval' => 'clearInterval(glGrids.bx_dolphin_migration_transfers.iMigInterval);'
+        ));
+    }
 	
 	protected function _getFilterControls ()
     {

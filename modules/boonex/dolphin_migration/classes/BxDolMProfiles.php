@@ -31,14 +31,14 @@ class BxDolMProfiles extends BxDolMData
 	
 	public function runMigration()
 	{
-		if (!$this -> getTotalRecords())
+	    if (!$this -> getTotalRecords())
 		{
 			  $this -> setResultStatus(_t('_bx_dolphin_migration_no_data_to_transfer'));
 	          return BX_MIG_SUCCESSFUL;
 		}	
 		
 		$this -> setResultStatus(_t('_bx_dolphin_migration_started_migration_profiles'));
-        $sError = $this -> profilesMigrtion();
+        $sError = $this -> profilesMigration();
         if($sError) {
               $this -> setResultStatus($sError);
               return BX_MIG_FAILED;
@@ -51,40 +51,49 @@ class BxDolMProfiles extends BxDolMData
 	/**
 	* Check if profile with the same nickname already exists
 	* @param string $sNickName name of the user
-	* @return string
-         */ 	 
-	private function isProfileExisted($sNickName, $sEmail)
-	{
-         $sQuery  = $this -> _oDb -> prepare("SELECT COUNT(*) FROM `sys_accounts` WHERE `name` = ? OR `email` = ?", $sNickName, $sEmail);
-         return $this -> _oDb -> getOne($sQuery) ? true : false;
-	} 
-	
-	function profilesMigrtion()
+	* @return integer account id
+     */
+	private function isProfileExisted($sNickName, $sEmail){
+        $sQuery  = $this -> _oDb -> prepare("SELECT `id` FROM `sys_accounts` WHERE `name` = ? OR `email` = ?", $sNickName, $sEmail);
+        return $this -> _oDb -> getOne($sQuery);
+	}
+
+	function profilesMigration()
     {
 			$this -> createMIdField();
-		
-			// get ID of the latest transferred profile from Dolphin
+
+			// get IDs of the latest transferred profile for UNA Accounts and Dolphin Profiles
 			$iProfileID = $this -> getLastMIDField();
 			$sStart = '';
-			if ($iProfileID) 				
+			if ($iProfileID[$this -> _sTransferFieldIdent])
 				$sStart = "WHERE `ID` > {$iProfileID}";
 			else 
 				$this -> addPreValues('Sex', true, 2); // transfer all sex values more then 2 value
 
 			$aResult = $this -> _mDb -> getAll("SELECT * FROM `"  . $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['table_name'] . "` {$sStart} ORDER BY `ID` ASC");			
-
-			$aAdditionalProfileFields = $this -> getAssocFields();
 			$aSex = $this -> getPreValuesBy('Sex', 'Value', 'Order');
-				
-			$oLanguage = BxDolLanguages::getInstance();
-			foreach($aResult as $iKey => $aValue)
-			{                  
 
-				if($aValue['NickName'] && !$this -> isProfileExisted($aValue['NickName'], $aValue['Email'])) 
-				  {					
-					$sQuery = $this -> _oDb -> prepare( 
+			foreach($aResult as $iKey => $aValue)
+			{
+
+				if($aValue['NickName'])
+				{
+                     $sAction = "INSERT INTO";
+                     $sWhere  = "";
+                     $iAccountId = $this -> isProfileExisted($aValue['NickName'], $aValue['Email']);
+                     if ($iAccountId)
+                     {
+                         if ($this -> _oConfig -> _bIsOverwrite) {
+                             $sAction = "UPDATE";
+                             $sWhere = "WHERE `id` = '{$iAccountId}'";
+                         }
+                         else
+                             continue;
+				     }
+
+                      $sQuery = $this -> _oDb -> prepare(
                      "
-                     	INSERT INTO
+                     	{$sAction}
                      		`sys_accounts`
                      	SET
                      		`name`   			= ?,
@@ -99,7 +108,7 @@ class BxDolMProfiles extends BxDolMData
 							`email_confirmed`	= ?,
 							`receive_updates`	= ?,	
 							`receive_news`		= ?
-							
+						{$sWhere}	
                      ", 
 						$aValue['NickName'], 
 						$aValue['Email'], 
@@ -116,17 +125,23 @@ class BxDolMProfiles extends BxDolMData
 						);
 						
 					$this -> _oDb -> query($sQuery);										
-					$iAccountId = $this -> _oDb -> lastId();
+
+					$iAccountId = $iAccountId ? $iAccountId : $this -> _oDb -> lastId();
 					if (!$iAccountId) 
 						continue;
 					
 					$this -> setMID($iAccountId, $aValue['ID']);
-					
-					$sFullName = isset($aValue['FullName']) ? $aValue['FullName'] : "{$aValue['FirstName']} {$aValue['LastName']}";
+
+                    if ($this -> _oConfig -> _bUseNickName)
+                        $sFullName = $aValue['NickName'];
+					else
+					    {
+                        $sFullName = isset($aValue['FullName']) ? $aValue['FullName'] : "{$aValue['FirstName']} {$aValue['LastName']}";
+                        $sFullName = $sFullName ? $sFullName : $aValue['NickName'];
+                    }
 					
 					$sQuery = $this -> _oDb -> prepare( 
-	                     "
-	                     	INSERT INTO
+	                     "INSERT INTO
 	                     		`bx_persons_data`
 	                     	SET
 	                     		`author`   			= 0,
@@ -137,17 +152,17 @@ class BxDolMProfiles extends BxDolMData
 								`fullname`			= ?,
 								`birthday`			= ?,
 								`gender`			= ?,
-								`allow_view_to`		= ?,
+								`allow_view_to`		= 3,
 								`featured`			= ?,
 								`views`				= ?,
 								`description`		= ?
-	                     ", 						
+	                     ",
 							strtotime($aValue['DateReg']),
 							strtotime($aValue['DateLastEdit']),
 							$sFullName,
 							isset($aValue['DateOfBirth']) ? $aValue['DateOfBirth'] : 'NULL',
 							isset($aValue['Sex']) && $aValue['Sex'] ? $aSex[$aValue['Sex']] : 1,
-							isset($aValue['allow_view_to']) ? $aValue['allow_view_to'] : 3,
+							//isset($aValue['allow_view_to']) ? $aValue['allow_view_to'] : 3,
 							isset($aValue['Featured']) ? (int)$aValue['Featured'] : 0,
 							isset($aValue['Views']) ? (int)$aValue['Views'] : 0,
 							isset($aValue['DescriptionMe']) ? $aValue['DescriptionMe'] : ''
@@ -201,7 +216,9 @@ class BxDolMProfiles extends BxDolMData
 			$aInfo = $this -> _mDb -> getRow("SELECT `bx_photos_main`.*  FROM `bx_photos_main`
 					LEFT JOIN `sys_albums_objects` ON `sys_albums_objects`.`id_object`=`bx_photos_main`.`ID` 
 					LEFT JOIN `sys_albums` ON `sys_albums`.`ID`=`sys_albums_objects`.`id_album` 
-					WHERE `bx_photos_main`.`Status` ='approved' AND `bx_photos_main`.`Owner` =:id AND `sys_albums`.`Status` ='active' AND `sys_albums`.`Type` ='bx_photos' AND `sys_albums`.`Uri` = :uri LIMIT 1", array('uri' => $sAlbumName, 'id' => $aProfileInfo['ID']));
+					WHERE `bx_photos_main`.`Status` ='approved' AND `bx_photos_main`.`Owner` =:id AND `sys_albums`.`Status` ='active' AND `sys_albums`.`Type` ='bx_photos' AND `sys_albums`.`Uri` = :uri 
+					ORDER BY `obj_order` ASC, `id_object`
+					LIMIT 1", array('uri' => $sAlbumName, 'id' => $aProfileInfo['ID']));
 			
 			if (!empty($aInfo) && isset($aInfo['ID']))
 				$sImagePath = $sImagePath . "photos" . DIRECTORY_SEPARATOR . "data" . DIRECTORY_SEPARATOR . "files" . DIRECTORY_SEPARATOR ."{$aInfo['ID']}.{$aInfo['Ext']}";
@@ -240,7 +257,7 @@ class BxDolMProfiles extends BxDolMData
 						   `content`    = ?,
 						   `mutual`     = ?,
 						   `added`     	= UNIX_TIMESTAMP()
-				   ", $iUserId, $iFriendId, (int)($aValue['status'] == 'active'));
+				   ", $iUserId, $iFriendId, (int)($aValue['Check']));
 
 				   $iResult = (int) $this -> _oDb -> query($sQuery);
 				   if($iResult <= 0) {

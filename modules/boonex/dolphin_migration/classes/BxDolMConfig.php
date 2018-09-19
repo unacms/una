@@ -22,16 +22,36 @@ class BxDolMConfig extends BxBaseModGeneralConfig
 		'bx_groups' => 'groups',		
 		'bx_blogs' => 'blogs'
 	);
-	
+
+    /**
+     * @var bool allows to overwrite existed members profile data
+     */
+	public $_bIsOverwrite = false;
+
 	/**
-	 *  @var array modules for transfer from Dolphin to una with parameters
-	 *  	[table_name] -  (string) table from which to get data
-	 *  	[migration_class] - (string) class name/file name for data migration
-	 *  	[dependencies] -  (array) list of the modules which should be migrated before transferring selected module 
-	 *  	[plugins] - (array) list of the modules which should be installed on UNA before transferring selected module
-	 */
-	 
-	public $_aMigrationModules = array(
+     * @var bool allows to transfer photo albums even if they are empty
+     */
+    public $_bTransferEmpty = true;
+
+    /**
+     * @var bool allows to use members NickName instead of FullName
+     */
+    public $_bUseNickName = false;
+
+    /**
+     * @var int interval in milliseconds for checking if the data already transferred but script still works.
+     */
+    public $_iCheckInterval = 60000;
+
+    /**
+     *  @var array modules for transfer from Dolphin to UNA with parameters
+     *  	[table_name] -  (string) table from which to get data
+     *  	[migration_class] - (string) class name/file name for data migration
+     *  	[dependencies] -  (array) list of the modules which should be migrated before transferring selected module
+     *  	[plugins] - (array) list of the modules which should be installed on UNA before transferring selected module
+     */
+
+    public $_aMigrationModules = array(
 				'profiles' => array(
                     'table_name'     => 'Profiles', 
                     'migration_class' => 'BxDolMProfiles',
@@ -237,7 +257,11 @@ class BxDolMConfig extends BxBaseModGeneralConfig
 			 
 	public function __construct($aModule)
 	{
-		parent::__construct($aModule);		
+        $this -> _bIsOverwrite = getParam('bx_dolphin_migration_overwrite');
+        $this -> _bTransferEmpty = getParam('bx_dolphin_migration_empty_albums');
+        $this -> _bUseNickName = getParam('bx_dolphin_migration_use_nickname');
+
+        parent::__construct($aModule);
 	}
 
 }

@@ -265,7 +265,7 @@ class BxDolMData
 						`Key`	= ?, 
 						`Value`	= ?,
 						`Order`	= ?,
-						`LKey`	= ?", $sName, 0, 0, '_sys_please_select');
+						`LKey`	= ?", $sName, '', 0, '_sys_please_select');
 				$this -> _oDb -> query($sQuery);
 			}
 			else
@@ -381,7 +381,14 @@ class BxDolMData
 		foreach($aTags as $aTag)
 			$this -> _oDb -> query("INSERT IGNORE INTO `{$sTableKeywords}` SET `keyword`=:keyword, `object_id`=:id", array('keyword' => $aTag['Tag'], 'id' => $iNewObjectId));
 	}
-	
+	private function addCmtsIds($sCmtsTable, $iId, $iRate){
+        $iSystem = $this -> _oDb -> getOne("SELECT `ID` FROM `sys_objects_cmts` WHERE `Table`=:table LIMIT 1", array('table' => $sCmtsTable));
+        if (!$iSystem)
+            return false;
+
+        return $this -> _oDb -> query("INSERT INTO `sys_cmts_ids` SET `system_id` = :id, `rate`=:rate, `cmt_id`=:cmt_id",
+                                       array('id' => $iSystem, 'rate' => $iRate, 'cmt_id' => $iId));
+    }
 	/**
 	 *  Transfer comments for module's items
 	 *  
@@ -443,7 +450,7 @@ class BxDolMData
 		
 		$aComments = $this -> _mDb -> getAll("SELECT * FROM `{$sCmtsTable}` WHERE `cmt_object_id` = :id ORDER BY `cmt_id` ASC", array('id' => $iEntryId));
 		
-		$iCommnets = 0;
+		$iComments = 0;
 		$aCommentsArray = array();
 		foreach($aComments as $iKey => $aValue)
 		{
@@ -451,8 +458,8 @@ class BxDolMData
 			if ($iProfileId)
 			{
 				$bIscmtsArray = $aValue['cmt_parent_id'] && isset($aCommentsArray[$aValue['cmt_parent_id']]);
-				$this -> _oDb -> query("INSERT INTO `{$sTable}` (`cmt_id`, `cmt_parent_id`, `cmt_vparent_id`, `cmt_object_id`, `cmt_author_id`, `cmt_level`, `cmt_text`, `cmt_time`, `cmt_replies`, `cmt_rate`, `cmt_rate_count`)
-									VALUES	(NULL, :parent_id, :vparent_id, :object, :user, :level, :message, :time, :replies, :rate, :rate_count)", 
+				$this -> _oDb -> query("INSERT INTO `{$sTable}` (`cmt_id`, `cmt_parent_id`, `cmt_vparent_id`, `cmt_object_id`, `cmt_author_id`, `cmt_level`, `cmt_text`, `cmt_time`, `cmt_replies`)
+									VALUES	(NULL, :parent_id, :vparent_id, :object, :user, :level, :message, :time, :replies)",
 									array(
 											'parent_id'	=> $bIscmtsArray ? $aCommentsArray[$aValue['cmt_parent_id']]['id'] : 0,
 											'vparent_id' => $bIscmtsArray ? ($aCommentsArray[$aValue['cmt_parent_id']]['vparent'] ? $aCommentsArray[$aValue['cmt_parent_id']]['vparent'] : $aCommentsArray[$aValue['cmt_parent_id']]['id']) : 0,
@@ -461,13 +468,14 @@ class BxDolMData
 											'message' => $aValue['cmt_text'], 
 											'time' => strtotime($aValue['cmt_time']),
 											'replies' => $aValue['cmt_replies'],
-											'rate' => $aValue['cmt_rate'],
-											'rate_count' => $aValue['cmt_rate_count'],
 											'level' => isset($aCommentsArray[$aValue['cmt_parent_id']]) && $aCommentsArray[$aValue['cmt_parent_id']] ? $aCommentsArray[$aValue['cmt_parent_id']]['level'] + 1 : 0
 										));
-				
+
+				$iLastInsertId = $this -> _oDb -> lastId();
+
+				$this -> addCmtsIds($sTable, $iLastInsertId, $aValue['cmt_rate'], $aValue['cmt_rate_count']);
 				$aCommentsArray[$aValue['cmt_id']] = array(
-																'id' => $this -> _oDb -> lastId(),
+																'id' => $iLastInsertId,
 																'level' => $bIscmtsArray ? (int)$aCommentsArray[$aValue['cmt_parent_id']]['level'] + 1 : 0,
 																'vparent' => 
 																			$bIscmtsArray ? 
@@ -475,11 +483,11 @@ class BxDolMData
 																				$aCommentsArray[$aValue['cmt_parent_id']]['vparent'] ? $aCommentsArray[$aValue['cmt_parent_id']]['vparent'] :  $aCommentsArray[$aValue['cmt_parent_id']]['id']
 																			) : 0 
 															);
-				$iCommnets++;				
+				$iComments++;
 			}
 		}
 		
-		return $iCommnets;
+		return $iComments;
 	}
 
 	
@@ -509,7 +517,7 @@ class BxDolMData
 		if (!$this -> _sTableWithTransKey)
 			return false;
 
-		return (int)$this -> _oDb -> getOne("SELECT `{$this -> _sTransferFieldIdent}` FROM `{$this -> _sTableWithTransKey}` WHERE `{$this -> _sTransferFieldIdent}` <> 0 ORDER BY `ID` DESC LIMIT 1");
+		return (int)$this -> _oDb -> getOne("SELECT `{$this -> _sTransferFieldIdent}` FROM `{$this -> _sTableWithTransKey}` WHERE `{$this -> _sTransferFieldIdent}` <> 0 ORDER BY `{$this -> _sTransferFieldIdent}` DESC LIMIT 1");
 	}
 
 	/**

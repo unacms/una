@@ -27,13 +27,12 @@ class BxSEMigStudioPage extends BxTemplStudioModule
             array('name' => 'config', 'icon' => 'exchange-alt', 'title' => '_bx_se_migration_cpt_transfer_data'),
         );	
 		
-		$this -> _oModule -> _oTemplate -> addStudioJs(array('transfer.js', 'BxDolGrid.js'));
+		$this -> _oModule -> _oTemplate -> addStudioJs(array('jquery-ui/jquery-ui.custom.min.js', 'transfer.js', 'BxDolGrid.js'));
 		$this -> _oModule -> _oTemplate -> addStudioCss(array('main.css'));	
      } 
 	
 	public function saveData($sPath){
 		$isDbDefined = false;
-        $isDirDefined = false;
 
 		if ( substr($sPath, strlen($sPath) - 1 ) != DIRECTORY_SEPARATOR ) {
                 $sPath .= DIRECTORY_SEPARATOR;
