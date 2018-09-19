@@ -25,8 +25,24 @@ class BxCnlModule extends BxBaseModGroupsModule
         return parent::_checkAllowedSubscribeAdd ($aDataEntry, $isPerformAction);
     }
     
+    /**
+     * Process Hash Tag
+     * 
+     * @param string $sHashtag - hashtag to be processed.
+     * @param string $sModuleName - module name.
+     * @param integer $iContentId - ID of the content which has the hashtag.
+     * @param integer $iAuthorId - action's author id.
+     */
     function processHashtag($sHashtag, $sModuleName, $iContentId, $iAuthorId)
     {
+        /*
+         * Note! For now metatag object name is used here as module name, because usually it's equal to module's name. This should be changed in Ticket #1596
+         * For now if module cannot be created then a channel for such tag shouldn't be created too.
+         */
+        $oModule = BxDolModule::getInstance($sModuleName);
+        if(empty($oModule))
+            return;
+
         $mixedCnlId = $this->_oDb->getChannelIdByName($sHashtag);
         if (empty($mixedCnlId)){
             $CNF = &$this->_oConfig->CNF;
@@ -128,20 +144,20 @@ class BxCnlModule extends BxBaseModGroupsModule
     {
         if(empty($aEvent) || !is_array($aEvent))
             return false;
-        
+
         $aContentEvent = $this->_oDb->getContentById($aEvent['object_id']);
         if(empty($aContentEvent) || !is_array($aContentEvent))
             return false;
 
         $oModule = BxDolModule::getInstance($aContentEvent['module_name']);
-        if ($oModule){
-             $aTmp = $oModule->serviceGetTimelinePost(array('object_id' => $aContentEvent['content_id']));
-             if ($aContentEvent['module_name'] == 'bx_timeline')
-                $aTmp['owner_id'] =  $aEvent['owner_id'];
-             return $aTmp;
-        }
+        if(empty($oModule))
+            return false;
 
-        return false;
+        $aTimelinePost = $oModule->serviceGetTimelinePost(array('object_id' => $aContentEvent['content_id']));
+        if($aContentEvent['module_name'] == 'bx_timeline')
+            $aTimelinePost['owner_id'] = $aEvent['owner_id'];
+
+        return $aTimelinePost;
     }
     
     /**
