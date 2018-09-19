@@ -1,0 +1,5 @@
+@import url(../../../../../../../template/css/homepage.css);
+
+html .shepherd-step.shepherd-theme-default .shepherd-content footer .shepherd-buttons li .shepherd-button {
+    background: #55a892; 
+}

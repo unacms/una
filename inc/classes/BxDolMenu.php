@@ -242,6 +242,15 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     }
 
     /**
+     * Get an arrey of replacable markers.
+     * @return an array with markers
+     */
+    public function getMarkers()
+    {
+        return $this->_aMarkers;
+    }
+    
+    /**
      * Add replace markers.
      * @param $a array of markers as key => value
      * @return true on success or false on error
@@ -282,7 +291,13 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
      */
     protected function _isVisible ($a)
     {
-        return BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']);
+        if (!BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']))
+            return false;
+
+        if (!empty($a['visibility_custom']))
+            return BxDolService::callSerialized($a['visibility_custom'], $this->_aMarkers);
+        
+        return true;
     }
 
     /**

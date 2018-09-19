@@ -14,7 +14,8 @@ CREATE TABLE `bx_massmailer_campaigns` (
   `changed` int(11) NOT NULL default '0',
   `date_sent` int(11) NOT NULL default '0',
   `email_list` text DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  FULLTEXT KEY `title_text` (`title`, `subject`)
 );
 
 CREATE TABLE `bx_massmailer_segments` (
@@ -33,7 +34,9 @@ CREATE TABLE `bx_massmailer_letters` (
   `date_seen` int(11) NOT NULL default '0',
   `date_click` int(11) NOT NULL default '0',
   `hash` varchar(35) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  INDEX `campaign_id` (`campaign_id`),
+  INDEX `hash` (`hash`)
 );
 
 CREATE TABLE `bx_massmailer_links` (
@@ -44,14 +47,19 @@ CREATE TABLE `bx_massmailer_links` (
   `title` varchar(255) DEFAULT NULL,
   `campaign_id` int(11) DEFAULT NULL,
   `date_click` int(11) NOT NULL default '0',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  INDEX `campaign_id` (`campaign_id`),
+  INDEX `hash` (`hash`),
+  INDEX `letter_hash` (`letter_hash`)
 );
 
 CREATE TABLE `bx_massmailer_unsubscribe` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `account_id` int(11) DEFAULT NULL,
+  `campaign_id` int(11) DEFAULT NULL,
   `unsubscribed` int(11) NOT NULL default '0',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  INDEX `campaign_id` (`campaign_id`)
 );
 
 -- STUDIO: page & widget
@@ -85,8 +93,8 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 (@sName, @sName, 'title', '', '', 0, 'text', '_bx_massmailer_form_campaign_input_sys_title', '_bx_massmailer_form_campaign_input_title', '', 1, 0, 0, 2, '', '', '', 'Avail', '', '_bx_massmailer_form_campaign_input_title_err', 'XssHtml', '', 1, 0),
 (@sName, @sName, 'segments', '', '', 0, 'select', '_bx_massmailer_form_campaign_input_sys_segments', '_bx_massmailer_form_campaign_input_segments', '', 1, 0, 0, 2, '', '', '', 'Avail', '', '_bx_massmailer_form_campaign_input_segments_err', 'XssHtml', '', 1, 0),
 (@sName, @sName, 'subject', '', '', 0, 'text', '_bx_massmailer_form_campaign_input_sys_subject', '_bx_massmailer_form_campaign_input_subject', '', 1, 0, 0, 2, '', '', '', 'Avail', '', '_bx_massmailer_form_campaign_input_subject_err', 'XssHtml', '', 1, 0),
-(@sName, @sName, 'from_name', '', '', 0, 'text', '_bx_massmailer_form_campaign_input_sys_from_name', '_bx_massmailer_form_campaign_input_from_name', '_bx_massmailer_form_campaign_input_from_name_info', 1, 0, 0, 2, '', '', '', '', '', '', 'XssHtml', '', 1, 0),
-(@sName, @sName, 'reply_to', '', '', 0, 'text', '_bx_massmailer_form_campaign_input_sys_reply_to', '_bx_massmailer_form_campaign_input_reply_to', '_bx_massmailer_form_campaign_input_reply_to_info', 1, 0, 0, 2, '', '', '', 'EmailOrEmpty', '', '_bx_massmailer_form_campaign_input_reply_to_err', 'XssHtml', '', 1, 0),
+(@sName, @sName, 'from_name', '', '', 0, 'text', '_bx_massmailer_form_campaign_input_sys_from_name', '_bx_massmailer_form_campaign_input_from_name', '_bx_massmailer_form_campaign_input_from_name_info', 0, 0, 0, 2, '', '', '', '', '', '', 'XssHtml', '', 1, 0),
+(@sName, @sName, 'reply_to', '', '', 0, 'text', '_bx_massmailer_form_campaign_input_sys_reply_to', '_bx_massmailer_form_campaign_input_reply_to', '_bx_massmailer_form_campaign_input_reply_to_info', 0, 0, 0, 2, '', '', '', 'EmailOrEmpty', '', '_bx_massmailer_form_campaign_input_reply_to_err', 'XssHtml', '', 1, 0),
 (@sName, @sName, 'body', '', '', 0, 'textarea', '_bx_massmailer_form_campaign_input_sys_body', '_bx_massmailer_form_campaign_input_body', '', 1, 0, 0, 2, '', '', '', 'Avail', '', '_bx_massmailer_form_campaign_input_body_err', 'XssHtml', '', 1, 0),
 (@sName, @sName, 'email', '', '', 0, 'text', '_bx_massmailer_form_campaign_input_sys_test_email', '_bx_massmailer_form_campaign_input_email', '', 1, 0, 0, 2, '', '', '', 'Email', '', '_sys_form_account_input_email_error', 'XssHtml', '', 1, 0),
 (@sName, @sName, 'campaign_info', '_bx_massmailer_form_campaign_input_from_name_info_value', '', 0, 'value', '_bx_massmailer_form_campaign_input_sys_campaign_info', '', '', 0, 0, 0, 2, '', '', '', '', '', '', 'XssHtml', '', 1, 0),

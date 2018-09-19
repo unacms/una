@@ -132,6 +132,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'EMAIL_JOIN_REJECT' => 'bx_groups_join_reject',
 
             'TRIGGER_MENU_PROFILE_VIEW_SUBMENU' => 'trigger_group_view_submenu',
+            'TRIGGER_MENU_PROFILE_SNIPPET_META' => 'trigger_group_snippet_meta',
             'TRIGGER_MENU_PROFILE_VIEW_ACTIONS' => 'trigger_group_view_actions',
         	'TRIGGER_PAGE_VIEW_ENTRY' => 'trigger_page_group_view_entry',
 
@@ -139,6 +140,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'MENU_ITEM_TO_METHOD' => array (
                 'bx_groups_view_actions' => $aMenuItems2Methods,
                 'bx_groups_view_actions_more' => $aMenuItems2Methods,
+                'bx_groups_view_actions_all' => $aMenuItems2Methods,
             ),
 
             // informer messages

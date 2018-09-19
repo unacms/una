@@ -3,7 +3,7 @@
 * Copyright (c) UNA, Inc - https://una.io
 * MIT License - https://opensource.org/licenses/MIT
 *
-* @defgroup    Mass mailer
+* @defgroup    MassMailer Mass Mailer
 * @ingroup     UnaModules
 *
 * @{
@@ -136,6 +136,7 @@ class BxMassMailerModule extends BxBaseModGeneralModule
                 $aValues['values'][1] = array('legend' => _t('_bx_massmailer_txt_opened_total_title', $aDataStat['seen']) , 'data' => array($aDataStat['seen']));
                 $aValues['values'][2] = array('legend' => _t('_bx_massmailer_txt_unopened_total_title', $aDataStat['total'] - $aDataStat['seen']), 'data' => array($aDataStat['total'] - $aDataStat['seen']));
                 $aValues['values'][3] = array('legend' => _t('_bx_massmailer_txt_clicked_total_title', $aDataStat['clicked']), 'data' => array($aDataStat['clicked']));
+                $aValues['values'][4] = array('legend' => _t('_bx_massmailer_txt_unsubscribed_total_title', $aDataStat['unsubscribed']), 'data' => array($aDataStat['unsubscribed']));
                 $iMaxValueY = $aDataStat['total'];
                 break;
         }
@@ -412,6 +413,30 @@ class BxMassMailerModule extends BxBaseModGeneralModule
         }
         return $this->_oTemplate->getAttributes($aAttributesParts);
     }
+    
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
+     */
+    public function checkAllowedAdd ($isPerformAction = false)
+    {
+        return $this->checkAllowed($isPerformAction);
+    }
+    
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
+     */
+    public function checkAllowedEdit ($aDataEntry, $isPerformAction = false)
+    {
+        return $this->checkAllowed($isPerformAction);
+    }
+
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
+     */
+    public function checkAllowedDelete (&$aDataEntry, $isPerformAction = false)
+    {
+        return $this->checkAllowed($isPerformAction);
+    }
           
     public function getSegments($sKey = "")
     {
@@ -489,6 +514,15 @@ class BxMassMailerModule extends BxBaseModGeneralModule
     {
         return $this->_oDb->getAccountsByTerms($this->getSqlBySegment($sSegment));
     }
+    
+    private function checkAllowed($isPerformAction = false)
+    {
+        $aCheck = checkActionModule($this->_iProfileId, 'use massmailer', $this->getName(), $isPerformAction);
+        if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
+             return _t('_sys_txt_access_denied');
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+    
     private function getSqlBySegment($sSegment)
     {
         $sRv = '';
@@ -502,10 +536,10 @@ class BxMassMailerModule extends BxBaseModGeneralModule
                     $sRv = " AND `ta`.`email_confirmed` = 0 AND `ta`.`phone_confirmed` = 0 ";
                     break;
                 case MEMBERSHIP_ID_SUSPENDED:
-                    $sRv = $this->_oDb->prepareAsString(" AND `tp`.`status`=?", 'suspended');
+                    $sRv = " AND `tp`.`status` = 'suspended' ";
                     break;
                 case MEMBERSHIP_ID_PENDING:
-                    $sRv = $this->_oDb->prepareAsString(" AND `tp`.`status`=?", 'pending');
+                    $sRv = " AND `tp`.`status` = 'pending' ";
                     break;
                 case MEMBERSHIP_ID_STANDARD:
                     $sRv = "  AND `tp`.`id` NOT IN (SELECT `IDMember` FROM `sys_acl_levels_members`) ";
@@ -526,10 +560,13 @@ class BxMassMailerModule extends BxBaseModGeneralModule
         $aTemplate['Subject'] = $aCampaign['subject'];
               
         $aCustomHeaders = array();
-        if ($aCampaign['from_name'] != '')
-            $aCustomHeaders['From'] = $aCampaign['from_name'] . " <" . getParam('site_email_notify') . ">" ;
-        if ($aCampaign['reply_to'] != '')
-            $aCustomHeaders['Reply-To'] = $aCampaign['reply_to'];
+        $sFrom = $aCampaign['from_name'] != '' ? $aCampaign['from_name'] : getParam('bx_massmailer_initial_from_email');
+        $aCustomHeaders['From'] = "=?UTF-8?B?" . base64_encode($sFrom) . "?= <" . getParam('site_email_notify') . ">" ;
+        if ($aCampaign['reply_to'] != ''){
+            $sFrom = $aCampaign['from_name'] != '' ? $aCampaign['from_name'] : getParam('site_title');
+            $aCustomHeaders['Reply-To'] = "=?UTF-8?B?" . base64_encode($sFrom) . '?= <' . bx_process_output($aCampaign['reply_to']) . '>';
+            $aCustomHeaders['X-Original-From'] = "=?UTF-8?B?" . base64_encode($sFrom) . '?= <' . bx_process_output($aCampaign['reply_to']) . '>';
+        }
               
         return array($aTemplate, $aCustomHeaders, $aCampaign);
     }
@@ -545,7 +582,6 @@ class BxMassMailerModule extends BxBaseModGeneralModule
             $aMarkers['account_name'] = $oAccount->getDisplayName();
             $aMarkers['account_id'] = $oProfile->getAccountId();
             $oModule = BxDolModule::getInstance($oProfile->getModule());
-            $oModule->serviceGetInfo($oProfile->getContentId());
             $aProfileInfo = $oModule->serviceGetInfo($oProfile->getContentId(), false);
             foreach ($aProfileInfo as $sKey => $sValue){
                 if (!isset($aMarkers[$sKey]))
@@ -553,7 +589,7 @@ class BxMassMailerModule extends BxBaseModGeneralModule
             }
             
             $aMarkers['seen_image_url'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'track/seen/' . $sLetterCode . "/";
-            $aMarkers['unsubscribe_url'] = BX_DOL_URL_ROOT . $oAccount->getUnsubscribeLink(BX_EMAIL_MASS);
+            $aMarkers['unsubscribe_url'] = BX_DOL_URL_ROOT . $oAccount->getUnsubscribeLink(BX_EMAIL_MASS) . "&lhash=" . $sLetterCode;
             
         }
         return $aMarkers;

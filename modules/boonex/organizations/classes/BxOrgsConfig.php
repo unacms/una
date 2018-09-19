@@ -146,14 +146,16 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'EMAIL_JOIN_REJECT' => 'bx_organizations_join_reject',
 
             'TRIGGER_MENU_PROFILE_VIEW_SUBMENU' => 'trigger_profile_view_submenu',
+            'TRIGGER_MENU_PROFILE_SNIPPET_META' => 'trigger_profile_snippet_meta',
             'TRIGGER_MENU_PROFILE_VIEW_ACTIONS' => 'trigger_profile_view_actions',
         	'TRIGGER_PAGE_VIEW_ENTRY' => 'trigger_page_profile_view_entry',
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
-        		'bx_organizations_view_submenu' => $this->_aMenuItems2MethodsSubmenu,
+                'bx_organizations_view_submenu' => $this->_aMenuItems2MethodsSubmenu,
                 'bx_organizations_view_actions' => $this->_aMenuItems2MethodsActions,
                 'bx_organizations_view_actions_more' => $this->_aMenuItems2MethodsActions,
+                'bx_organizations_view_actions_all' => $this->_aMenuItems2MethodsActions,
             ),
 
             // informer messages

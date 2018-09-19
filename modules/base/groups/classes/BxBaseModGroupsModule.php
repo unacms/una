@@ -119,6 +119,33 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     }
 
     /**
+     * Entry actions and social sharing block
+     */
+    public function serviceEntityAllActions ($mixedContent = false, $aParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!empty($mixedContent)) {
+            if(!is_array($mixedContent))
+                $mixedContent = array((int)$mixedContent, (method_exists($this->_oDb, 'getContentInfoById')) ? $this->_oDb->getContentInfoById((int)$mixedContent) : array());
+        }
+        else {
+            $mixedContent = $this->_getContent();
+            if($mixedContent === false)
+                return false;
+        }
+
+        list($iContentId, $aContentInfo) = $mixedContent;
+
+        if(!empty($CNF['FIELD_PICTURE']) && !empty($aContentInfo[$CNF['FIELD_PICTURE']]))
+            $aParams = array_merge(array(
+                'entry_thumb' => (int)$aContentInfo[$CNF['FIELD_PICTURE']]
+            ), $aParams); 
+
+        return parent::serviceEntityAllActions ($mixedContent, $aParams);
+    }
+    
+    /**
      * Reset group's author when author profile is deleted
      * @param $iProfileId profile id 
      * @return number of changed items
@@ -463,12 +490,14 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     public function serviceGetTimelinePost($aEvent, $aBrowseParams = array())
     {
         $a = parent::serviceGetTimelinePost($aEvent, $aBrowseParams);
+        if($a === false)
+            return false;
 
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aEvent['object_id'], $this->getName());
 
         $a['content']['url'] = $oGroupProfile->getUrl();
         $a['content']['title'] = $oGroupProfile->getDisplayName();
-        
+
         return $a;
     }
 

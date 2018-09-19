@@ -125,8 +125,6 @@
     <string name="_bx_channels_menu_set_title_view_profile_actions_more"><![CDATA[Канал - Дополнительные действия]]></string>
     <string name="_bx_channels_menu_title_view_profile_actions_more"><![CDATA[Канал - Дополнительные действия]]></string>
     <string name="_bx_channels_menu_set_title_view_profile_submenu"><![CDATA[Подменю просмотра канала]]></string>
-    <string name="_bx_channels_menu_title_view_profile_submenu"><![CDATA[Подменю просмотра канала]]></string>
-    <string name="_bx_channels_menu_title_view_profile_submenu_cover"><![CDATA[Подменю канала на обложке]]></string>
     <string name="_bx_channels_menu_title_entries_my"><![CDATA[Каналы профиля - Меню действий]]></string>
     <string name="_bx_channels_menu_set_title_entries_my"><![CDATA[Каналы профиля - Меню]]></string>
 	<string name="_bx_channels_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>

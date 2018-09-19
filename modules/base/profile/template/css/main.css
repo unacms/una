@@ -237,16 +237,23 @@ a.bx-base-pofile-cover-image:hover,
     display: flex;
     -webkit-align-items: center;
     align-items: center;
-    -webkit-justify-content: flex-end;
-    justify-content: flex-end;
 
     height: 4rem;
     max-width: 50%;
 }
 
+.bx-base-pofile-cover-actions div.bx-base-general-entity-actions {
+    position: relative;
+    width: 100%;
+}
+
 .bx-base-pofile-cover-actions ul.bx-menu-hor.bx-menu-more-auto {
+    display: -webkit-flex;
+    display: flex;
     -webkit-flex-wrap: nowrap;
     flex-wrap: nowrap;
+    -webkit-justify-content: flex-end;
+    justify-content: flex-end;
 }
 
 .bx-base-pofile-cover-actions .bx-menu-hor li.bx-menu-item {

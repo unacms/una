@@ -127,6 +127,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
         	'EMAIL_FRIEND_REQUEST' => 'bx_persons_friend_request',
 
             'TRIGGER_MENU_PROFILE_VIEW_SUBMENU' => 'trigger_profile_view_submenu',
+            'TRIGGER_MENU_PROFILE_SNIPPET_META' => 'trigger_profile_snippet_meta',
             'TRIGGER_MENU_PROFILE_VIEW_ACTIONS' => 'trigger_profile_view_actions',
         	'TRIGGER_PAGE_VIEW_ENTRY' => 'trigger_page_profile_view_entry',
 
@@ -135,6 +136,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
                 'bx_persons_view_submenu' => $this->_aMenuItems2MethodsSubmenu,
                 'bx_persons_view_actions' => $this->_aMenuItems2MethodsActions,
                 'bx_persons_view_actions_more' => $this->_aMenuItems2MethodsActions,
+                'bx_persons_view_actions_all' => $this->_aMenuItems2MethodsActions,
             ),
 
             // informer messages

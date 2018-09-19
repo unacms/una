@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string name="_bx_anon_follow"><![CDATA[Anonymous Follow]]></string>
+  <string name="_bx_anon_follow_page_block_title_sys_anon_follow"><![CDATA[Followers]]></string>
+  <string name="_bx_anon_follow_page_block_title_anon_follow"><![CDATA[Followers]]></string>
+  <string name="_bx_anon_follow_menu_item_title_system_follow"><![CDATA[Follow anonymously]]></string>
+  <string name="_bx_anon_follow_menu_item_title_follow"><![CDATA[Follow anonymously]]></string>
+  <string name="_bx_anon_follow_persons_fields"><![CDATA[Persons filelds]]></string>
+  <string name="_bx_anon_follow_orgs_fields"><![CDATA[Organisations filelds]]></string>
+  <string name="_bx_anon_follow_fields_separator"><![CDATA[Filelds separator]]></string>
+  
+  <string name="_bx_anon_follow_txt_button"><![CDATA[Follow anonimus]]></string>
+  <string name="_bx_anon_follow_txt_grid_title_default"><![CDATA[Follow anonimus]]></string>
+</resources>

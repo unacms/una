@@ -52,6 +52,11 @@ class BxDolModuleProxy
         }
     }
 
+    public function isMethodExists($s)
+    {
+        return method_exists($this->_oProxifiedObject, $s);
+    }
+
     /**
      * Dirty fix for pass by reference to BxTimelineTemplate::getData
      */
@@ -59,12 +64,35 @@ class BxDolModuleProxy
     {
         return $this->_oProxifiedObject->getData($aEvent, $aBrowseParams);
     }
+
     /**
      * Dirty fix for pass by reference to BxNtfsTemplate::getPost
      */
     public function getPost(&$aEvent, $aBrowseParams = array())
     {
         return $this->_oProxifiedObject->getPost($aEvent, $aBrowseParams);
+    }
+    /**
+     * Dirty fix for pass by reference to BxNtfsTemplate::getNotificationEmail
+     */
+    public function getNotificationEmail(&$aEvent)
+    {
+        return $this->_oProxifiedObject->getNotificationEmail($aEvent);
+    }
+    /**
+     * Dirty fix for pass by reference to BxNtfsTemplate::getNotificationPush
+     */
+    public function getNotificationPush(&$aEvent)
+    {
+        return $this->_oProxifiedObject->getNotificationPush($aEvent);
+    }
+
+    /**
+     * Dirty fix for pass by reference to BxMessengerTemplate::getTalkBlock
+     */    
+    public function getTalkBlock($iProfileId, $iLotId = BX_IM_EMPTY, $iJotId = BX_IM_EMPTY, $iType = BX_IM_TYPE_PUBLIC, $bShowMessanger = false, &$sReturnTitle = '')
+    {
+        return $this->_oProxifiedObject->getTalkBlock($iProfileId, $iLotId, $iJotId, $iType, $bShowMessanger, $sReturnTitle);
     }
 }
 

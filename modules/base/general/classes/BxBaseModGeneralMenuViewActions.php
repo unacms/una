@@ -44,6 +44,15 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         $this->_bShowTitle = false;
     }
 
+    public function addMarkers ($a)
+    {
+        $bResult = parent::addMarkers($a);
+        if($bResult && !empty($this->_oMenuSocialSharing))
+            $this->_oMenuSocialSharing->addMarkers($a);
+
+        return $bResult;
+    }
+
     public function setContentId($iContentId)
     {
         $this->_iContentId = (int)$iContentId;
@@ -51,6 +60,19 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_iContentId);
         if($this->_aContentInfo)
             $this->addMarkers(array('content_id' => (int)$this->_iContentId));
+    }
+
+    /**
+     * Check if menu items is visible with extended checking linked to "allow*" method of particular module
+     * Associated "allow*" method with particular menu item is stored in module config in MENU_ITEM_TO_METHOD array.
+     * @param $a menu item array
+     * @return boolean
+     */
+    protected function _isVisible ($a)
+    {
+        if(!parent::_isVisible($a))
+            return false;
+        return $this->_oModule->isMenuItemVisible($this->_sObject, $a, $this->_aContentInfo);
     }
 
     protected function _getMenuItemDefault ($aItem)
@@ -281,7 +303,12 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
                 return '';
 
             $this->_oMenuActions = BxDolMenu::getObjectInstance($sObjectMenu);
+            if(!$this->_oMenuActions)
+                return '';
+
             $this->_oMenuActions->setContentId($this->_iContentId);
+
+            $this->addMarkers($this->_oMenuActions->getMarkers());
         }
 
         $aItem = $this->_oMenuActions->getMenuItem($aItem['name']);
@@ -314,7 +341,12 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
                 return '';
 
             $this->_oMenuActionsMore = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE']);
+            if(!$this->_oMenuActionsMore)
+                return '';
+
             $this->_oMenuActionsMore->setContentId($this->_iContentId);
+            
+            $this->addMarkers($this->_oMenuActionsMore->getMarkers());
         }
 
         $aItem = $this->_oMenuActionsMore->getMenuItem($aItem['name']);

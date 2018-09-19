@@ -24,6 +24,35 @@ class BxAlbumsModule extends BxBaseModTextModule
     }
 
     /**
+     * Entry actions and social sharing block
+     */
+    public function serviceEntityAllActions ($mixedContent = false, $aParams = array())
+    {
+        if(!empty($mixedContent)) {
+            if(!is_array($mixedContent))
+               $mixedContent = array((int)$mixedContent, array());
+        }
+        else {
+            $mixedContent = $this->_getContent();
+            if($mixedContent === false)
+                return false;
+        }
+        
+        list($iContentId, $aContentInfo) = $mixedContent;
+
+        $aMedias = $this->_oDb->getMediaListByContentId($iContentId);
+        if(!empty($aMedias) && is_array($aMedias)) {
+            $aMedia = array_shift($aMedias);
+            if(!empty($aMedia['file_id']))
+                $aParams = array_merge(array(
+                    'entry_thumb' => $aMedia['file_id']
+                ), $aParams);
+        }
+
+        return parent::serviceEntityAllActions(array($iContentId, $aContentInfo), $aParams);
+    }
+    
+    /**
      * Display form for adding media to the album.
      * @param $iContentId album content id where media will be added, if it's not provided then it's determined from 'id' GET variable
      * @return HTML string with form, all necessary CSS and JS files are automatically added to the HEAD section of the site HTML. On error false or empty string is returned.
@@ -288,16 +317,16 @@ class BxAlbumsModule extends BxBaseModTextModule
     public function serviceGetTimelineMedia($aEvent, $aBrowseParams = array())
     {
         if(empty($aEvent['content']))
-            return '';
+            return false;
 
         $aEvent['content'] = unserialize($aEvent['content']);
         if(empty($aEvent['content']['medias_added']) || !is_array($aEvent['content']['medias_added']))
-            return '';
+            return false;
 
         $iContentId = (int)$aEvent['object_id'];
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if(empty($aContentInfo) || !is_array($aContentInfo))
-            return '';
+            return false;
 
         $CNF = &$this->_oConfig->CNF;
         

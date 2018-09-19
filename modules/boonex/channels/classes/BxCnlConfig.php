@@ -98,8 +98,8 @@ class BxCnlConfig extends BxBaseModProfileConfig
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_channels_view_actions_all', // all actions menu on view entry page
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_channels_my', // actions menu on profile entries page
             'OBJECT_MENU_SUBMENU' => 'bx_channels_submenu', // main module submenu
-            'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => 'bx_channels_view_submenu',  // view entry submenu
-            'OBJECT_MENU_SUBMENU_VIEW_ENTRY_COVER' => 'bx_channels_view_submenu_cover',  // view entry submenu displayed in cover
+            'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => '',  // view entry submenu
+            'OBJECT_MENU_SUBMENU_VIEW_ENTRY_COVER' => '',  // view entry submenu displayed in cover
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'channels-home', // first item in view entry submenu from main module submenu
             'OBJECT_MENU_SNIPPET_META' => 'bx_channels_snippet_meta', // menu for snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_channels_menu_manage_tools', //manage menu in content administration tools
@@ -113,6 +113,7 @@ class BxCnlConfig extends BxBaseModProfileConfig
       
 
             'TRIGGER_MENU_PROFILE_VIEW_SUBMENU' => 'trigger_group_view_submenu',
+            'TRIGGER_MENU_PROFILE_SNIPPET_META' => 'trigger_group_snippet_meta',
             'TRIGGER_MENU_PROFILE_VIEW_ACTIONS' => 'trigger_group_view_actions',
             'TRIGGER_PAGE_VIEW_ENTRY' => 'trigger_page_group_view_entry',
 

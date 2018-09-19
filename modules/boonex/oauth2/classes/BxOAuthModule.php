@@ -34,6 +34,19 @@ class BxOAuthUserCredentialsStorage implements OAuth2\Storage\UserCredentialsInt
 
         return array('user_id' => $oProfile->id());
     }
+
+    public function checkRestrictedGrantType($iClientId, $sGrantType)
+    {
+        $aDetails = $this->getClientDetails($iClientId);
+        if (isset($aDetails['grant_types'])) {
+            $aGrantTypes = explode(',', $aDetails['grant_types']);
+
+            return in_array($sGrantType, (array) $aGrantTypes);
+        }
+
+        // if grant_types are not defined, then none are restricted
+        return true;
+    }
 }
 
 class BxOAuthModule extends BxDolModule
@@ -68,11 +81,9 @@ class BxOAuthModule extends BxDolModule
 
         // send CORS headers if necessary
 
-        $_SERVER['HTTP_ORIGIN'] = 'http://una.io';
-
         if (!empty($aClient['cors']) && isset($_SERVER['HTTP_ORIGIN'])) {
             
-            if ('*' == trim($aClient['cors']) || ($a = explode(',', $aClient['cors']) && in_array($_SERVER['HTTP_ORIGIN'], $a))) {
+            if ('*' == trim($aClient['cors']) || (($a = explode(',', $aClient['cors'])) && in_array($_SERVER['HTTP_ORIGIN'], $a))) {
                 $sACAO = $_SERVER['HTTP_ORIGIN'];
             }
             else {

@@ -22,7 +22,7 @@ class BxTimelineSearchResult extends BxBaseModNotificationsSearchResult
             'title' => _t('_bx_timeline_page_title_browse'),
             'table' => 'bx_timeline_events',
             'ownFields' => array('id', 'owner_id', 'type', 'action', 'object_id', 'object_privacy_view', 'content', 'title', 'description', 'views', 'rate', 'votes', 'score', 'sc_up', 'sc_down', 'comments', 'reports', 'reposts', 'date', 'active', 'hidden', 'pinned', 'sticked', 'promoted'),
-            'searchFields' => array('title', 'description'),
+            'searchFields' => array('title'),
             'restriction' => array(
                 'internal' => array('value' => 'timeline_common_post', 'field' => 'type', 'operator' => '='),
                 'active' => array('value' => '1', 'field' => 'active', 'operator' => '='),

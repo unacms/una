@@ -565,7 +565,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
         if(!empty($mixedContent)) {
             if(!is_array($mixedContent))
-               $mixedContent = array((int)$mixedContent, array());
+                $mixedContent = array((int)$mixedContent, (method_exists($this->_oDb, 'getContentInfoById')) ? $this->_oDb->getContentInfoById((int)$mixedContent) : array());
         }
         else {
             $mixedContent = $this->_getContent();
@@ -603,12 +603,10 @@ class BxBaseModGeneralModule extends BxDolModule
         $aMarkers = array(
             'id' => $iContentId,
             'module' => $this->_oConfig->getName(),
+            'title' => !empty($sEntryTitle) ? $sEntryTitle : '',
+            'url' => !empty($sEntryUrl) ? $sEntryUrl : '',
+            'img_url' => ''
         );
-        if(!empty($sEntryTitle))
-            $aMarkers['title'] = $sEntryTitle;
-
-        if(!empty($sEntryUrl))
-            $aMarkers['url'] = $sEntryUrl;
 
         if(!empty($iEntryThumb)) {
             if(!empty($sObjectTranscoder))
@@ -905,14 +903,14 @@ class BxBaseModGeneralModule extends BxDolModule
     {
         $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);
         if(empty($aContentInfo) || !is_array($aContentInfo))
-            return '';
+            return false;
 
         $CNF = &$this->_oConfig->CNF;
 
         $iUserId = $this->getUserId();
         $iAuthorId = $aContentInfo[$CNF['FIELD_AUTHOR']];
         if($iAuthorId < 0 && abs($iAuthorId) != $iUserId)
-            return '';
+            return false;
 
         //--- Views
         $oViews = isset($CNF['OBJECT_VIEWS']) ? BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $aEvent['object_id']) : null;
@@ -1305,6 +1303,32 @@ class BxBaseModGeneralModule extends BxDolModule
             $oProfile->getUnit(),
             $oProfile->getUnit(0, array('template' => 'unit_wo_info'))
         );
+    }
+
+    public function isMenuItemVisible($sObject, &$aItem, &$aContentInfo)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        // default visible settings
+        if(!BxDolAcl::getInstance()->isMemberLevelInSet($aItem['visible_for_levels']))
+            return false;
+
+        if (!empty($aItem['visibility_custom'])) {
+            $oMenu = BxDolMenu::getObjectInstance($sObject);
+            if ($oMenu && !BxDolService::callSerialized($aItem['visibility_custom'], $this->_aMarkers))
+                return false;
+        }
+        
+        // get custom function name to check menu item visibility
+        $sFuncCheckAccess = false;
+        if(isset($CNF['MENU_ITEM_TO_METHOD'][$sObject][$aItem['name']]))
+            $sFuncCheckAccess = $CNF['MENU_ITEM_TO_METHOD'][$sObject][$aItem['name']];
+
+        // check custom visibility settings defined in module config class
+        if($sFuncCheckAccess && CHECK_ACTION_RESULT_ALLOWED !== call_user_func_array(array($this, $sFuncCheckAccess), isset($aContentInfo) ? array(&$aContentInfo) : array()))
+            return false;
+
+        return true;
     }
 
     public function _isModerator ($isPerformAction = false)

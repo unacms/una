@@ -25,10 +25,10 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `e
 -- PAGE: create profile
 
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_channels_create_profile', 'create-channel-profile', '_bx_channels_page_title_sys_create_profile', '_bx_channels_page_title_create_profile', 'bx_channels', 5, 2147483647, 1, 'page.php?i=create-channel-profile', '', '', '', 0, 1, 0, '', '');
+('bx_channels_create_profile', 'create-channel-profile', '_bx_channels_page_title_sys_create_profile', '_bx_channels_page_title_create_profile', 'bx_channels', 5, 128, 1, 'page.php?i=create-channel-profile', '', '', '', 0, 1, 0, '', '');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_channels_create_profile', 1, 'bx_channels', '_bx_channels_page_block_title_create_profile', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:13:\"entity_create\";}', 0, 1, 1);
+('bx_channels_create_profile', 1, 'bx_channels', '_bx_channels_page_block_title_create_profile', 11, 128, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:13:\"entity_create\";}', 0, 1, 1);
 
 -- PAGE: view profile
 
@@ -153,7 +153,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 SET @iAddMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_add_content_links' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_add_content_links', 'bx_channels', 'create-channel-profile', '_bx_channels_menu_item_title_system_create_profile', '_bx_channels_menu_item_title_create_profile', 'page.php?i=create-channel-profile', '', '', 'hashtag col-red2', '', 2147483647, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
+('sys_add_content_links', 'bx_channels', 'create-channel-profile', '_bx_channels_menu_item_title_system_create_profile', '_bx_channels_menu_item_title_create_profile', 'page.php?i=create-channel-profile', '', '', 'hashtag col-red2', '', 128, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
 
 
 -- MENU: view actions
@@ -222,7 +222,6 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_channels_my', 'bx_channels', 'create-channel-profile', '_bx_channels_menu_item_title_system_create_profile', '_bx_channels_menu_item_title_create_profile', 'page.php?i=create-channel-profile', '', '', 'plus', '', 2147483647, 1, 0, 0);
 
 -- MENU: module sub-menu
-
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_channels_submenu', '_bx_channels_menu_title_submenu', 'bx_channels_submenu', 'bx_channels', 8, 0, 1, '', '');
 
@@ -234,10 +233,6 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_channels_submenu', 'bx_channels', 'channels-top', '_bx_channels_menu_item_title_system_entries_top', '_bx_channels_menu_item_title_entries_top', 'page.php?i=channels-top', '', '', '', '', 2147483647, 1, 1, 2),
 ('bx_channels_submenu', 'bx_channels', 'channels-search', '_bx_channels_menu_item_title_system_entries_search', '_bx_channels_menu_item_title_entries_search', 'page.php?i=channels-search', '', '', '', '', 2147483647, 1, 1, 3),
 ('bx_channels_submenu', 'bx_channels', 'channels-my', '_bx_channels_menu_item_title_system_entries_my', '_bx_channels_menu_item_title_entries_my', 'page.php?i=channels-my', '', '', '', '', 2147483646, 1, 1, 4);
--- MENU: view submenu
-
-INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_channels_view_submenu_cover', '_bx_channels_menu_title_view_profile_submenu_cover', 'bx_channels_view_submenu', 'bx_channels', 7, 0, 1, 'BxCnlMenuView', 'modules/boonex/channels/classes/BxCnlMenuView.php');
 
 -- MENU: custom menu for snippet meta info
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 

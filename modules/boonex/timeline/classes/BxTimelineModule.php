@@ -228,22 +228,23 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         ));
 
         if(empty($iId)) {
-	        echoJson(array('code' => 4, 'message' => _t('_bx_timeline_txt_err_cannot_repost')));        
-	        return;
+            echoJson(array('code' => 4, 'message' => _t('_bx_timeline_txt_err_cannot_repost')));        
+            return;
         }
 
         $this->onRepost($iId, $aReposted);
 
         $aReposted = $this->_oDb->getReposted($aContent['type'], $aContent['action'], $aContent['object_id']);
-		$sCounter = $this->_oTemplate->getRepostCounter($aReposted);
+        $sCounter = $this->_oTemplate->getRepostCounter($aReposted);
 
-		echoJson(array(
-			'code' => 0, 
-			'message' => _t('_bx_timeline_txt_msg_success_repost'), 
-			'count' => $aReposted['reposts'], 
-			'counter' => $sCounter,
-			'disabled' => !$bReposted
-		));
+        echoJson(array(
+            'code' => 0, 
+            'message' => _t('_bx_timeline_txt_msg_success_repost'), 
+            'count' => $aReposted['reposts'], 
+            'countf' => (int)$aReposted['reposts'] > 0 ? $this->_oTemplate->getRepostCounterLabel($aReposted['reposts']) : '',
+            'counter' => $sCounter,
+            'disabled' => !$bReposted
+        ));
     }
 
     function actionGetPost()
