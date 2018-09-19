@@ -15,8 +15,9 @@ class BxBaseVote extends BxDolVote
     protected static $_sTmplContentElementBlock;
     protected static $_sTmplContentElementInline;
     protected static $_sTmplContentDoVoteLikesLabel;
+    protected static $_sTmplContentCounter;
 
-	protected $_bCssJsAdded;
+    protected $_bCssJsAdded;
 
     protected $_sJsObjName;
     protected $_sStylePrefix;
@@ -44,15 +45,15 @@ class BxBaseVote extends BxDolVote
             'main_likes' => 'bx-vote-likes-' . $sHtmlId,
             'counter' => 'bx-vote-counter-' . $sHtmlId,
             'by_popup' => 'bx-vote-by-popup-' . $sHtmlId,
-        	'legend_stars' => 'bx-vote-stars-legend-' . $sHtmlId,
+            'legend_stars' => 'bx-vote-stars-legend-' . $sHtmlId,
         );
 
         $this->_aElementDefaults = array(
             'stars' => array(
                 'show_do_vote_legend' => false,
                 'show_counter' => true,
-        		'show_counter_empty' => false,
-        		'show_legend' => false
+                'show_counter_empty' => false,
+                'show_legend' => false
             ),
             'likes' => array(
                 'show_do_vote_as_button' => false,
@@ -60,8 +61,8 @@ class BxBaseVote extends BxDolVote
                 'show_do_vote_icon' => true,
                 'show_do_vote_label' => false,
                 'show_counter' => true,
-            	'show_counter_empty' => false,
-            	'show_legend' => false
+                'show_counter_empty' => false,
+                'show_legend' => false
             )
         );
 
@@ -77,6 +78,9 @@ class BxBaseVote extends BxDolVote
 
         if(empty(self::$_sTmplContentDoVoteLikesLabel))
             self::$_sTmplContentDoVoteLikesLabel = $this->_oTemplate->getHtml('vote_do_vote_likes_label.html');
+
+        if(empty(self::$_sTmplContentCounter))
+            self::$_sTmplContentCounter = $this->_oTemplate->getHtml('vote_counter.html');
     }
 
     public function getJsObjectName()
@@ -129,11 +133,15 @@ class BxBaseVote extends BxDolVote
         if($bShowDoVoteAsButton)
             $sClass .= ' bx-btn-height';
 
-        return $this->_oTemplate->parseLink('javascript:void(0)', $bShowEmpty || (int)$aVote['count'] > 0 ? $this->_getLabelCounter($aVote['count']) : '', array(
-            'id' => $this->_aHtmlIds['counter'],
-            'class' => $sClass,
-            'title' => _t($this->_getTitleDoBy()),
-            'onclick' => 'javascript:' . $this->getJsClickCounter() 
+        return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentCounter(), array(
+            'bx_repeat:attrs' => array(
+                array('key' => 'href', 'value' => 'javascript:void(0)'),
+                array('key' => 'id', 'value' => $this->_aHtmlIds['counter']),
+                array('key' => 'class', 'value' => $sClass),
+                array('key' => 'title', 'value' => _t($this->_getTitleDoBy())),
+                array('key' => 'onclick', 'value' => 'javascript:' . $this->getJsClickCounter())
+            ),
+            'content' => $bShowEmpty || (int)$aVote['count'] > 0 ? $this->_getLabelCounter($aVote['count']) : ''
         ));
     }
 
@@ -248,8 +256,8 @@ class BxBaseVote extends BxDolVote
 		if(!$bTmplVarsDoVote && !$bTmplVarsCounter && !$bTmplVarsLegend)
 			return '';
 
-        $sTmplName = self::${'_sTmplContentElement' . bx_gen_method_name(!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_VOTE_USAGE_DEFAULT)};
-        return $this->_oTemplate->parseHtmlByContent($sTmplName, array(
+        $sMethod = '_getTmplContentElement' . bx_gen_method_name(!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_VOTE_USAGE_DEFAULT);
+        return $this->_oTemplate->parseHtmlByContent($this->$sMethod(), array(
             'style_prefix' => $this->_sStylePrefix,
             'html_id' => $this->_aHtmlIds['main_' . $this->_sType],
             'class' => $this->_sStylePrefix . '-' . $this->_sType . ($bShowDoVoteAsButton ? '-button' : '') . ($bShowDoVoteAsButtonSmall ? '-button-small' : ''),
@@ -402,6 +410,21 @@ class BxBaseVote extends BxDolVote
     protected function _isShowLegend($aParams, $isAllowedVote, $bCount)
     {
         return !$this->_bLike && isset($aParams['show_legend']) && $aParams['show_legend'] === true;
+    }
+
+    protected function _getTmplContentElementBlock()
+    {
+        return self::$_sTmplContentElementBlock;
+    }
+
+    protected function _getTmplContentElementInline()
+    {
+        return self::$_sTmplContentElementInline;
+    }
+
+    protected function _getTmplContentCounter()
+    {
+        return self::$_sTmplContentCounter;
     }
 }
 

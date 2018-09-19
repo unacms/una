@@ -11,11 +11,14 @@
 
 class BxPollsVoteSubentries extends BxTemplVote
 {
-	protected $_sModule;
-	protected $_oModule;
+    protected $_sModule;
+    protected $_oModule;
 
-	protected $_aObjectInfo;
-	protected $_aContentInfo;
+    protected $_aObjectInfo;
+    protected $_aContentInfo;
+
+    protected $_sTmplNameElementBlock;
+    protected $_sTmplNameCounterText;
 
     function __construct($sSystem, $iId, $iInit = 1)
     {
@@ -28,13 +31,14 @@ class BxPollsVoteSubentries extends BxTemplVote
 
         $this->_aElementDefaults['likes'] = array_merge($this->_aElementDefaults['likes'], array(
             'show_do_vote_label' => true,
-        	'show_counter' => false
+            'show_counter' => false
         ));
 
         $this->_aObjectInfo = $this->_oModule->_oDb->getSubentries(array('type' => 'id', 'id' => $iId));
         $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoBySubentryId($iId);
 
         $this->_sTmplNameElementBlock = 'subentries_ve_block.html';
+        $this->_sTmplNameCounterText = 'subentries_vc_text.html';
     }
 
     public function getJsClick()
@@ -57,13 +61,10 @@ class BxPollsVoteSubentries extends BxTemplVote
         $bShowInBrackets = !isset($aParams['show_counter_in_brackets']) || $aParams['show_counter_in_brackets'] == true;
 
         $iObjectId = $this->getId();
-		$iAuthorId = $this->_getAuthorId();
+        $iAuthorId = $this->_getAuthorId();
         if((int)$this->_aContentInfo[$CNF['FIELD_HIDDEN_RESULTS']] == 1)
             if(!$this->isPerformed($iObjectId, $iAuthorId))
                 return '';
-
-        if((int)$this->_aContentInfo[$CNF['FIELD_ANONYMOUS_VOTING']] == 1)
-            $this->_sTmplNameCounter = 'subentries_vc_text.html';
 
         $sResult = parent::getCounter($aParams);
         if($bShowInBrackets)
@@ -122,6 +123,21 @@ class BxPollsVoteSubentries extends BxTemplVote
     protected function _isShowDoVote($aParams, $isAllowedVote, $bCount)
     {
         return !isset($aParams['show_do_vote']) || $aParams['show_do_vote'] == true;
+    }
+
+    protected function _getTmplContentElementBlock()
+    {
+        return $this->_oTemplate->getHtml($this->_sTmplNameElementBlock);
+    }
+
+    protected function _getTmplContentCounter()
+    {
+        $CNF = $this->_oModule->_oConfig->CNF;
+
+        if((int)$this->_aContentInfo[$CNF['FIELD_ANONYMOUS_VOTING']] == 1)
+            return $this->_oTemplate->getHtml($this->_sTmplNameCounterText);
+
+        return self::$_sTmplContentCounter;
     }
 }
 
