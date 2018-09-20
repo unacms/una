@@ -1315,7 +1315,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
         if (!empty($aItem['visibility_custom'])) {
             $oMenu = BxDolMenu::getObjectInstance($sObject);
-            if ($oMenu && !BxDolService::callSerialized($aItem['visibility_custom'], $this->_aMarkers))
+            if ($oMenu && !BxDolService::callSerialized($aItem['visibility_custom'], $oMenu->getMarkers()))
                 return false;
         }
         
