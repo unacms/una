@@ -129,11 +129,10 @@ class BxDolMPhotoAlbums extends BxDolMData
 				$sImagePath = $this -> _sImagePhotoFiles . "{$aValue['ID']}.{$aValue['Ext']}";				
 				if (file_exists($sImagePath))
 				{
-					$oStorage = BxDolStorage::getObjectInstance('bx_albums_files'); 
-					$iId = $oStorage -> storeFileFromPath($sImagePath, false, $iProfileId);					
+					$oStorage = BxDolStorage::getObjectInstance('bx_albums_files');
+					$iId = $oStorage -> storeFileFromPath($sImagePath, false, $iProfileId, $iNewAlbumID);
 					if ($iId)
 					{ 
-						$oStorage -> afterUploadCleanup($iId, $iProfileId);
                         $this -> updateFilesDate($iId, $aValue['Date']);
 						
 						$sQuery = $this -> _oDb -> prepare("INSERT INTO `bx_albums_files2albums` SET `content_id` = ?, `file_id` = ?, `data` = ?, `title` = ?", $iNewAlbumID, $iId, $aValue['Size'], $aValue['Title']);
