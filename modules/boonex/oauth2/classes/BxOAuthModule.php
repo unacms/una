@@ -12,7 +12,7 @@
 require_once (BX_DIRECTORY_PATH_PLUGINS . 'OAuth2/Autoloader.php');
 OAuth2\Autoloader::register();
 
-class BxOAuthUserCredentialsStorage implements OAuth2\Storage\UserCredentialsInterface
+class BxOAuthUserCredentialsStorage extends OAuth2\Storage\Pdo implements OAuth2\Storage\UserCredentialsInterface
 {
     public function checkUserCredentials($sLogin, $sPassword)
     {
@@ -77,13 +77,14 @@ class BxOAuthModule extends BxDolModule
                 echo _t("_Access denied");
                 exit;
             } 
+
+            header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
             
             if ('OPTIONS' == $_SERVER['REQUEST_METHOD']) {
                 header('Access-Control-Allow-Methods: POST, GET');
                 header('Access-Control-Allow-Headers: Authorization, Content-Type, X-Custom-Header, X-Requested-With');                    
                 exit(0);
-            }
-            header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
+            }            
         }
 
         // get the client data if it wasn't set before
@@ -117,9 +118,9 @@ class BxOAuthModule extends BxDolModule
             $aConfig['refresh_token'] = '';
             $aConfig['always_issue_new_refresh_token'] = true;
             $aConfig['unset_refresh_token_after_use'] = false;
-        }
-
-        $this->_oStorage = new OAuth2\Storage\Pdo(BxDolDb::getLink(), $aConfig);
+        }        
+        
+        $this->_oStorage = new BxOAuthUserCredentialsStorage(BxDolDb::getLink(), $aConfig);
 
         $this->_oServer = new OAuth2\Server($this->_oStorage, array(
             'require_exact_redirect_uri' => false,
@@ -137,10 +138,8 @@ class BxOAuthModule extends BxDolModule
             $this->_oServer->addGrantType(new OAuth2\GrantType\AuthorizationCode($this->_oStorage));
 
         // Add the "Password" grant type (generate client_id with empty client_secret)
-        if (in_array('password', $aGrantTypes)) {
-            $oStorage = new BxOAuthUserCredentialsStorage();
-            $this->_oServer->addGrantType(new OAuth2\GrantType\UserCredentials($oStorage));
-        }
+        if (in_array('password', $aGrantTypes))
+            $this->_oServer->addGrantType(new OAuth2\GrantType\UserCredentials($this->_oStorage));
 
         // Add the "Refresh Token" grant type
         if (in_array('refresh_token', $aGrantTypes))
