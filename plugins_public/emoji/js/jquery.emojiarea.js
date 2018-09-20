@@ -772,15 +772,14 @@
   };
 
   EmojiMenu.prototype.show = function(emojiarea) {
-	var position = typeof emojiarea.options.popup_position == 'function' ? emojiarea.options.popup_position() : emojiarea.options.popup_position || {left:'0'};	
+	let position = typeof emojiarea.options.popup_position == 'function' ? emojiarea.options.popup_position() : emojiarea.options.popup_position;
 	if (this.visible)
       return this.hide();
     
 	$(this.$menu).css('z-index', ++EmojiMenu.menuZIndexcss);	
 	
 	this.$menu
-		.css(position)
-		.css({top:this.$menu.parent().height() + 10})
+		.css(position ? position : {top:this.$menu.parent().height() + 10})
 		.fadeIn();
 
     if (!this.currentCategory) {
