@@ -63,48 +63,42 @@ class BxOAuthModule extends BxDolModule
     public function initOAuth($sClientId)
     {
         if ($this->_oStorage)
-            return;
+            return;        
 
-        // get the client data
-         
-        $aClient = $sClientId ? $this->_oDb->getClientsBy(array('type' => 'client_id', 'client_id' => $sClientId)) : false;
+        $aClient = array();
+
+        // check cross origin request
+        
+        if (isset($_SERVER['HTTP_ORIGIN']) && parse_url($_SERVER['HTTP_ORIGIN'], PHP_URL_HOST) != parse_url(BX_DOL_URL_ROOT, PHP_URL_HOST)) {
+
+            $aClient = $this->_oDb->getClientByAllowedOriginUrl($_SERVER['HTTP_ORIGIN']);
+            if (!$aClient) {
+                header('HTTP/1.0 403 Forbidden');
+                echo _t("_Access denied");
+                exit;
+            } 
+            
+            if ('OPTIONS' == $_SERVER['REQUEST_METHOD']) {
+                header('Access-Control-Allow-Methods: POST, GET');
+                header('Access-Control-Allow-Headers: Authorization, Content-Type, X-Custom-Header, X-Requested-With');                    
+                exit(0);
+            }
+            header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
+        }
+
+        // get the client data if it wasn't set before
+        
+        if (empty($aClient))
+            $aClient = $sClientId ? $this->_oDb->getClientsBy(array('type' => 'client_id', 'client_id' => $sClientId)) : false;
+        
         if (!$aClient)
-            $aClient = array(
-                'cors' => '',
-                'grant_types' => 'authorization_code',
-            );
+            $aClient = array('grant_types' => 'authorization_code');
         
         if (!$aClient['grant_types'])
             $aClient['grant_types'] = 'authorization_code';
         
         $aGrantTypes = explode(',', $aClient['grant_types']);
 
-        // send CORS headers if necessary
-
-        if (!empty($aClient['cors']) && isset($_SERVER['HTTP_ORIGIN'])) {
-            
-            if ('*' == trim($aClient['cors']) || (($a = explode(',', $aClient['cors'])) && in_array($_SERVER['HTTP_ORIGIN'], $a))) {
-                $sACAO = $_SERVER['HTTP_ORIGIN'];
-            }
-            else {
-                header('HTTP/1.0 403 Forbidden');
-                echo _t("_Access denied");
-                exit;
-            }
-
-            if ("OPTIONS" == $_SERVER['REQUEST_METHOD']) {
-                header('Access-Control-Allow-Origin: ' . $sACAO);
-                header('Access-Control-Allow-Methods: POST, GET');
-                header('Access-Control-Allow-Credentials: true');
-                header('Access-Control-Allow-Headers: Authorization, Content-Type, X-Custom-Header, X-Requested-With');
-                header('Access-Control-Max-Age: 1');  //1728000
-                header("Content-Length: 0");
-                header("Content-Type: application/json");
-                exit(0);
-            }
-
-            header('Access-Control-Allow-Origin: '. $sACAO);
-        }
 
         // configure OAuth storage and server
                 
@@ -133,7 +127,7 @@ class BxOAuthModule extends BxDolModule
         ));
 
         // add grand types
-                
+
         // Add the "Client Credentials" grant type (it is the simplest of the grant types)
         if (in_array('client_credentials', $aGrantTypes))
             $this->_oServer->addGrantType(new OAuth2\GrantType\ClientCredentials($this->_oStorage));

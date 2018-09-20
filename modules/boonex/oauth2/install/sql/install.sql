@@ -27,11 +27,18 @@ CREATE TABLE IF NOT EXISTS `bx_oauth_clients` (
   `redirect_uri` varchar(255) NOT NULL,
   `grant_types` varchar(80) DEFAULT NULL,
   `scope` varchar(255) DEFAULT NULL,
-  `cors` text NOT NULL,
   `parent_id` int(10) unsigned DEFAULT 0,
   `user_id` int(10) unsigned DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `client_id` (`client_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_oauth_allowed_origins` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `client_id` int(11) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `url` (`url`(191))
 );
 
 CREATE TABLE IF NOT EXISTS `bx_oauth_refresh_tokens` (

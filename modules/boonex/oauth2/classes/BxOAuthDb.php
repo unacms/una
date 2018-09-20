@@ -113,6 +113,10 @@ class BxOAuthDb extends BxDolModuleDb
         return $this->getOne("SELECT `user_id` FROM `bx_oauth_refresh_tokens` WHERE `client_id` = ? AND `user_id` IN (" . $this->implode_escape($aIds) . ") LIMIT 1", array($sClientId));
     }
 
+    function getClientByAllowedOriginUrl($sUrl)
+    {
+        return $this->getRow("SELECT `c`.* FROM `bx_oauth_clients` AS `c` INNER JOIN `bx_oauth_allowed_origins` AS `o` ON (`o`.`client_id` = `c`.`id`) WHERE `o`.`url` = :url", array('url' => $sUrl));
+    }    
 }
 
 /** @} */
