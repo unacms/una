@@ -71,20 +71,6 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
         parent::initChecker($aValues, $aSpecificValues);
     }
 
-    public function insert ($aValsToAdd = array(), $isIgnore = false)
-    {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        return parent::insert ($aValsToAdd, $isIgnore);
-    }
-
-    function update ($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
-    {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        return parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
-    }
-
     function delete ($iContentId, $aContentInfo = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
