@@ -1,0 +1,5 @@
+@import url(../../../../../../../template/css/cmts.css);
+
+div.cmt-head .cmt-meta-username {
+    font-weight: bold;
+}
