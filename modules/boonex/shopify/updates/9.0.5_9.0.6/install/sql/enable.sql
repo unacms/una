@@ -1,5 +1,5 @@
 -- PAGES
-UPDATE `sys_objects_page` SET `layout_id`='12' WHERE `object`='bx_shopify_view_entry';
+UPDATE `sys_objects_page` SET `layout_id`='12' WHERE `object`='bx_shopify_view_entry' AND `layout_id`='10';
 
 UPDATE `sys_pages_blocks` SET `cell_id`='2', `order`='1' WHERE `object`='bx_shopify_view_entry' AND `title`='_bx_shopify_page_block_title_entry_text' AND `cell_id`='1' AND `order`='0';
 UPDATE `sys_pages_blocks` SET `cell_id`='2', `order`='2' WHERE `object`='bx_shopify_view_entry' AND `title`='_bx_shopify_page_block_title_entry_attachments' AND `cell_id`='1' AND `order`='1';

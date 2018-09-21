@@ -1,5 +1,5 @@
 -- PAGES
-UPDATE `sys_objects_page` SET `layout_id`='12' WHERE `object`='bx_videos_view_entry';
+UPDATE `sys_objects_page` SET `layout_id`='12' WHERE `object`='bx_videos_view_entry' AND `layout_id`='10';
 
 UPDATE `sys_pages_blocks` SET `cell_id`='2', `active`='0' WHERE `object`='bx_videos_view_entry' AND `title`='_bx_videos_page_block_title_entry_video' AND `cell_id`='1';
 UPDATE `sys_pages_blocks` SET `cell_id`='2' WHERE `object`='bx_videos_view_entry' AND `title`='_bx_videos_page_block_title_entry_text' AND `cell_id`='1';

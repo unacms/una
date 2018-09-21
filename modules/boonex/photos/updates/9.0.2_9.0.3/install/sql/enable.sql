@@ -1,5 +1,5 @@
 -- PAGES
-UPDATE `sys_objects_page` SET `layout_id`='12' WHERE `object`='bx_photos_view_entry';
+UPDATE `sys_objects_page` SET `layout_id`='12' WHERE `object`='bx_photos_view_entry' AND `layout_id`='10';
 
 UPDATE `sys_pages_blocks` SET `active`='0', `order`='0' WHERE `object`='bx_photos_view_entry' AND `title` IN ('_bx_photos_page_block_title_entry_photo', '_bx_photos_page_block_title_entry_rating', '_bx_photos_page_block_title_entry_actions', '_bx_photos_page_block_title_entry_social_sharing', '_bx_photos_page_block_title_entry_attachments');
 UPDATE `sys_pages_blocks` SET `cell_id`='2' WHERE `object`='bx_photos_view_entry' AND `title`='_bx_photos_page_block_title_entry_text' AND `cell_id`='1';

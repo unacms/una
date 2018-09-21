@@ -1,5 +1,5 @@
 -- PAGES
-UPDATE `sys_objects_page` SET `layout_id`='12' WHERE `object`='bx_market_view_entry';
+UPDATE `sys_objects_page` SET `layout_id`='12' WHERE `object`='bx_market_view_entry' AND `layout_id`='7';
 
 UPDATE `sys_pages_blocks` SET `order`='1' WHERE `object`='bx_market_view_entry' AND `title`='_bx_market_page_block_title_entry_breadcrumb' AND `order`='0';
 UPDATE `sys_pages_blocks` SET `designbox_id`='13', `order`='1' WHERE `object`='bx_market_view_entry' AND `title`='_bx_market_page_block_title_entry_text' AND `designbox_id`='11' AND `order`='0';

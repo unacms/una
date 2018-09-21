@@ -6,7 +6,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 
 
 -- PAGES
-UPDATE `sys_objects_page` SET `layout_id`='12' WHERE `object`='bx_posts_view_entry';
+UPDATE `sys_objects_page` SET `layout_id`='12' WHERE `object`='bx_posts_view_entry' AND `layout_id`='10';
 
 UPDATE `sys_pages_blocks` SET `cell_id`='2', `order`='2' WHERE `object`='bx_posts_view_entry' AND `title`='_bx_posts_page_block_title_entry_text' AND `cell_id`='1' AND `order`='0';
 UPDATE `sys_pages_blocks` SET `order`='1' WHERE `object`='bx_posts_view_entry' AND `title`='_bx_posts_page_block_title_entry_author' AND `order`='0';
