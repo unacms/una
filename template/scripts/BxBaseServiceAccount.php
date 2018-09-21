@@ -292,8 +292,6 @@ class BxBaseServiceAccount extends BxDol
 
         // redirect with success message
         $sUrl = getParam('sys_redirect_after_email_confirmation');
-        if(empty($sUrl))
-            $sUrl = 'page.php?i=account-settings-info';
 
         $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->setPageNameIndex (BX_PAGE_TRANSITION);
