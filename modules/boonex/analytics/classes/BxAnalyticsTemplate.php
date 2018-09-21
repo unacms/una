@@ -21,8 +21,7 @@ class BxAnalyticsTemplate extends BxBaseModGeneralTemplate
     
     function getCanvas()
     {
-        $this->getModule();
-        $aTmp = $this->_oModule->getSelectedModules();
+        $aTmp = $this->getModule()->getSelectedModules();
         $aModules = $aTmp[0];
         $aModulesList = $aTmp[1];
         $aModulesList2 = array();
