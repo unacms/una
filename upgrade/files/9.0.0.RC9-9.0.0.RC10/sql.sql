@@ -15,6 +15,8 @@ DELETE FROM `sys_queue_email` WHERE `params` LIKE "-f%";
 
 -- Settings
 
+UPDATE `sys_options` SET `value` = '' WHERE `name` = 'sys_redirect_after_email_confirmation' AND `value` = 'page.php?i=account-settings-info';
+
 DELETE FROM `sys_options` WHERE `name` IN('sys_revision', 'sys_metatags_hashtags_max', 'sys_metatags_mentions_max', 'sys_eq_send_per_start_to_recipient', 'sys_push_queue_send_per_start_to_recipient');
 
 SET @iCategoryIdHidden = (SELECT `id` FROM `sys_options_categories` WHERE `name` = 'hidden');
