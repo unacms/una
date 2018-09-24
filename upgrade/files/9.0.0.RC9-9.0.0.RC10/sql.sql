@@ -15,6 +15,8 @@ DELETE FROM `sys_queue_email` WHERE `params` LIKE "-f%";
 
 -- Settings
 
+UPDATE `sys_options` SET `value` = '' WHERE `name` = 'sys_redirect_after_email_confirmation' AND `value` = 'page.php?i=account-settings-info';
+
 DELETE FROM `sys_options` WHERE `name` IN('sys_revision', 'sys_metatags_hashtags_max', 'sys_metatags_mentions_max', 'sys_eq_send_per_start_to_recipient', 'sys_push_queue_send_per_start_to_recipient');
 
 SET @iCategoryIdHidden = (SELECT `id` FROM `sys_options_categories` WHERE `name` = 'hidden');
@@ -41,6 +43,7 @@ UPDATE `sys_acl_actions` SET `Countable` = 1 WHERE `Module` = 'system' AND `Name
 
 -- Forms
 
+DELETE FROM `sys_form_inputs` WHERE `object` = 'sys_comment' AND `name` = 'cmt_anonymous';
 INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
 ('sys_comment', 'system', 'cmt_anonymous', '', '', 0, 'switcher', '_sys_form_input_sys_anonymous', '_sys_form_input_anonymous', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
@@ -50,11 +53,13 @@ UPDATE `sys_form_pre_lists` SET `extendable` = '1' WHERE `key` = 'Country';
 
 -- Menu
 
-DELETE FROM `sys_objects_menu` SET `object` = 'sys_cmts_item_meta';
+UPDATE `sys_menu_templates` SET `visible` = 8 WHERE `id` = 8;
+
+DELETE FROM `sys_objects_menu` WHERE `object` = 'sys_cmts_item_meta';
 INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('sys_cmts_item_meta', '_sys_menu_title_cmts_item_meta', 'sys_cmts_item_meta', 'system', 15, 0, 1, 'BxTemplCmtsMenuUnitMeta', '');
 
-DELETE FROM `sys_menu_sets` SET `set_name` = 'sys_cmts_item_meta';
+DELETE FROM `sys_menu_sets` WHERE `set_name` = 'sys_cmts_item_meta';
 INSERT INTO `sys_menu_sets` (`set_name`, `module`, `title`, `deletable`) VALUES
 ('sys_cmts_item_meta', 'system', '_sys_menu_set_title_cmts_item_meta', 0);
 

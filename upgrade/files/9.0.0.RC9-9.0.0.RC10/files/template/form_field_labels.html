@@ -1,0 +1,32 @@
+<div id="__id__wrapper">
+    <div id="__id__" class="bx-form-input-autotoken bx-form-input-autotoken-labels bx-def-font-inputs bx-form-input-text">
+        __value__
+    </div>
+    <div class="bx-form-input-autotoken bx-form-input-autotoken-labels bx-form-input-autotoken-labels-sel">
+        __values__
+    </div>
+</div>
+<script>
+    var fCallack = function () {
+        // adding label
+        if ($(this).parents('.bx-form-input-autotoken-labels-sel').length) {
+            var e = $(this).remove().on('click', fCallack);
+            e.append('<input type="hidden" name="__name__[]" value="' + e.text() + '">');
+            $("#__id__").append(e);
+        }
+        // removing label
+        else if ($(this).parent('#__id__').length) {
+            var e = $(this).remove().on('click', fCallack);
+            e.find('input').remove();
+            $("#__id__wrapper .bx-form-input-autotoken-labels-sel").prepend(e);
+        }
+    };
+    $("#__id__wrapper b").on('click', fCallack);
+
+    // show more
+    $("#__id__wrapper .bx-form-input-autotoken-labels-show-more").on('click', function () {
+        $(this).hide();
+        $("#__id__wrapper .bx-form-input-autotoken-labels-more").show();
+        return false;
+    });
+</script>
