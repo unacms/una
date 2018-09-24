@@ -5,6 +5,7 @@
 
     // update language keys in custom search table
 
+    BxDolLanguages::getInstance();
     $oLang = BxDolStudioLanguagesUtils::getInstance();
     $aLangIds = array_keys($oLang->getLanguages(true));
     $fProcessKey = function ($sKey) use ($oLang, $aLangIds) {
