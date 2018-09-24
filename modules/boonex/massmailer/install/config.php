@@ -18,7 +18,7 @@ $aConfig = array(
     'name' => 'bx_massmailer',
     'title' => 'Mass mailer',
     'note' => 'Mass mailer module.',
-    'version' => '1.0.0.DEV',
+    'version' => '9.0.1.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 

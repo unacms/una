@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_developer',
     'title' => 'Developer',
     'note' => 'Developer tools...',
-    'version' => '9.0.8.DEV',
+    'version' => '9.0.9.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.una.io/?section={module_name}',
 
