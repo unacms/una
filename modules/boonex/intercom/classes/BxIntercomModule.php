@@ -32,6 +32,7 @@ class BxIntercomModule extends BxDolModule
             'vertical_padding' => getParam('bx_intercom_option_vertical_padding'),
         );
 
+        $oProfile = null;
         if (isLogged() && ($oProfile = BxDolProfile::getInstance()) && ($oAccountObject = $oProfile->getAccountObject())) {
             $aInfoProfile = $oProfile->getInfo();
             $aInfoAccount = $oAccountObject->getInfo();
