@@ -14,7 +14,7 @@ function BxMassMailerChart(oOptions) {
     this._sReportName = oOptions.sReportName;
     this._sReportSelector = '#' + this._sContainerId + " .bx_massmailer_report_selector";
     this._sSegmentsSelector = '#' + this._sContainerId + " .bx_massmailer_segments_selector";
-    this._sContainerDataSelector = '#' + this._sContainerId + " .bx_analytics_data";
+    this._sContainerDataSelector = '#' + this._sContainerId + " .bx_massmailer_data";
     this._sCanvasSelector = '#' + this._sContainerId + " .bx_massmailer_chart";
     this._sDatePickerSelector = '#' + this._sContainerId + " .bx_massmailer_date_picker";
     this._sActionsUri = oOptions.sActionUri;

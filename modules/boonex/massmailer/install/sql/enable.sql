@@ -77,7 +77,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_massmailer_campaigns', 'title', '_bx_massmailer_grid_column_title_adm_title', '30%', 0, '22', '', 2),
 ('bx_massmailer_campaigns', 'author', '_bx_massmailer_grid_column_title_adm_author', '10%', 0, '22', '', 3),
 ('bx_massmailer_campaigns', 'segments', '_bx_massmailer_grid_column_title_adm_segment', '10%', 0, '22', '', 4),
-('bx_massmailer_campaigns', 'date_created', '_bx_massmailer_grid_column_title_adm_date_created', '14%', 0, '15', '', 5),
+('bx_massmailer_campaigns', 'added', '_bx_massmailer_grid_column_title_adm_date_created', '14%', 0, '15', '', 5),
 ('bx_massmailer_campaigns', 'date_sent', '_bx_massmailer_grid_column_title_adm_date_sent', '10%', 0, '22', '', 6),
 ('bx_massmailer_campaigns', 'actions', '', '24%', 0, '', '', 7);
 

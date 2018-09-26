@@ -70,14 +70,14 @@ class BxMassMailerModule extends BxBaseModGeneralModule
         $bIsTimeX = false;
         $iMinValueY = 0;
         $iMaxValueY = 0;
-        $aValues = array('labels' => array(), 'values' => array(array('legend' => '', 'data' => array())), 'links' => array(), 'strings' => array(0 => _t('_bx_analytics_txt_item'), 1 => _t('_bx_analytics_txt_value')));
+        $aValues = array('labels' => array(), 'values' => array(array('legend' => '', 'data' => array())), 'links' => array(), 'strings' => array(0 => _t('_bx_massmailer_txt_item'), 1 => _t('_bx_massmailer_txt_value')));
         
         switch ($sReportName) {
             case "SUBSCRIBERS_INFO":
                 $sType = "line";
                 $bIsTimeX = true;
-                $aValues['strings'][0] = _t('_bx_analytics_txt_date');
-                $aValues['strings'][1] = 'ohz';
+                $aValues['strings'][0] = _t('_bx_massmailer_txt_date');
+                $aValues['strings'][1] = '';
                 $sSql = $this->getSqlBySegment($sSegment);
                 $aData = $this->_oDb->getAccountsByTermsStat($iDateFrom, $iDateTo, $sSql);
                 $aData2 = $this->_oDb->getAccountsByTermsStatUnsubscribe($iDateFrom, $iDateTo, $sSql);
@@ -499,7 +499,7 @@ class BxMassMailerModule extends BxBaseModGeneralModule
                 }
             },
             $aTemplate['Body']);
-            return sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, $this->addMarkers($iProfileId, $sLetterCode), BX_EMAIL_MASS, 'html', false, $aCustomHeaders, $bAddToQueue);
+        return sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, $this->addMarkers($iProfileId, $sLetterCode), BX_EMAIL_MASS, 'html', false, $aCustomHeaders, $bAddToQueue);
     }
 
     public function getEmailCountInSegment($iCampaignId)
@@ -582,14 +582,16 @@ class BxMassMailerModule extends BxBaseModGeneralModule
             $aMarkers['account_name'] = $oAccount->getDisplayName();
             $aMarkers['account_id'] = $oProfile->getAccountId();
             $oModule = BxDolModule::getInstance($oProfile->getModule());
-            $aProfileInfo = $oModule->serviceGetInfo($oProfile->getContentId(), false);
-            foreach ($aProfileInfo as $sKey => $sValue){
-                if (!isset($aMarkers[$sKey]))
-                $aMarkers[$sKey] = $sValue;
-            }
+            if (BxDolRequest::serviceExists($oProfile->getModule(), 'get_info')){
+                $aProfileInfo = $oModule->serviceGetInfo($oProfile->getContentId(), false);
+                foreach ($aProfileInfo as $sKey => $sValue){
+                    if (!isset($aMarkers[$sKey]))
+                    $aMarkers[$sKey] = $sValue;
+                }
             
-            $aMarkers['seen_image_url'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'track/seen/' . $sLetterCode . "/";
-            $aMarkers['unsubscribe_url'] = BX_DOL_URL_ROOT . $oAccount->getUnsubscribeLink(BX_EMAIL_MASS) . "&lhash=" . $sLetterCode;
+                $aMarkers['seen_image_url'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'track/seen/' . $sLetterCode . "/";
+                $aMarkers['unsubscribe_url'] = BX_DOL_URL_ROOT . $oAccount->getUnsubscribeLink(BX_EMAIL_MASS) . "&lhash=" . $sLetterCode;
+            }
             
         }
         return $aMarkers;

@@ -92,7 +92,7 @@
   <string name="_bx_massmailer_form_campaign_input_reply_to"><![CDATA[Reply to Email]]></string>
   <string name="_bx_massmailer_form_campaign_input_reply_to_info"><![CDATA[If empty, Site Email is used]]></string>
   <string name="_bx_massmailer_form_campaign_input_reply_to_err"><![CDATA[Email is not valid]]></string>
-  <string name="_bx_massmailer_form_campaign_input_from_name_info_value"><![CDATA[The message will be sent to {0} addresses.]]></string>
+  <string name="_bx_massmailer_form_campaign_input_from_name_info_value"><![CDATA[The message will be sent to {0} profiles.]]></string>
   <string name="_bx_massmailer_form_campaign_input_sys_campaign_info"><![CDATA[Campaign info]]></string>
   <string name="_bx_massmailer_form_campaign_input_sys_receive_news"><![CDATA[Receive Newsletterso]]></string>
   <string name="_bx_massmailer_form_campaign_input_receive_news"><![CDATA[Receive Newsletters]]></string>
@@ -118,6 +118,9 @@
   <string name="_bx_massmailer_txt_unsubscribed_total_title"><![CDATA[Unsubscribed - {0}]]></string>
 
   <string name="_bx_massmailer_txt_attribute_global"><![CDATA[Account]]></string>
+  <string name="_bx_massmailer_txt_item"><![CDATA[Item]]></string>
+  <string name="_bx_massmailer_txt_value"><![CDATA[Value]]></string>
+  <string name="_bx_massmailer_txt_date"><![CDATA[Date]]></string>
   <string name="_bx_massmailer_txt_attribute_email"><![CDATA[Email]]></string>
   <string name="_bx_massmailer_txt_attribute_account_name"><![CDATA[Account name]]></string>
   <string name="_bx_massmailer_txt_attribute_account_id"><![CDATA[Account id]]></string>

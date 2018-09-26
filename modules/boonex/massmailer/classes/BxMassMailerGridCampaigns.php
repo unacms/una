@@ -100,7 +100,7 @@ class BxMassMailerGridCampaigns extends BxTemplGrid
         echoJson($aRes);
     }
     
-    protected function _getCellDateCreated($mixedValue, $sKey, $aField, $aRow)
+    protected function _getCellAdded($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
     }
