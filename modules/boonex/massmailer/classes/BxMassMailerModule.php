@@ -542,14 +542,28 @@ class BxMassMailerModule extends BxBaseModGeneralModule
                     $sRv = " AND `tp`.`status` = 'pending' ";
                     break;
                 case MEMBERSHIP_ID_STANDARD:
-                    $sRv = "  AND `tp`.`id` NOT IN (SELECT `IDMember` FROM `sys_acl_levels_members`) ";
+                    $sRv = " AND `tp`.`id` NOT IN (SELECT `IDMember` FROM `sys_acl_levels_members`) ";
                     break;
                 default:
                     $sRv = $this->_oDb->prepareAsString(" AND `tp`.`id` IN (SELECT `IDMember` FROM `sys_acl_levels_members` WHERE IDLevel = ?) ", $sLvl);
                     break;
             }
+            $sRv .= " AND `tp`.`type` IN ('" . implode("','", $this->getProfileModules()) . "')"; 
         }
         return $sRv;
+    }
+    
+    private function getProfileModules()
+    {
+        $aResult = array();
+        $BxDolModuleQuery = BxDolModuleQuery::getInstance();
+        $aModules = $BxDolModuleQuery->getModulesBy(array('type' => 'modules', 'active' => 1));
+        foreach($aModules as $aModule){
+            if(BxDolRequest::serviceExists($aModule['name'], 'act_as_profile') && BxDolService::call($aModule['name'], 'act_as_profile') == true){
+                array_push($aResult, $aModule['name']);
+            }
+        }
+        return $aResult;
     }
           
     private function getDataForCampaign($iCampaignId)
