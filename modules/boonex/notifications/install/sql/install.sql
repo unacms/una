@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `bx_notifications_settings2users` (
   `setting_id` int(11) NOT NULL DEFAULT '0',
   `active` tinyint(4) NOT NULL default '1',
   PRIMARY KEY (`id`),
-  UNIQUE `setting` (`user_id`, `setting_id`)
+  UNIQUE `setting` (`setting_id`, `user_id`)
 );
 
 INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES 
