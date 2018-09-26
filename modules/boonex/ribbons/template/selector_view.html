@@ -1,0 +1,25 @@
+﻿<div class="bx-def-margin" id="bx_ribbons_selector">
+    <table class="bx_ribbons_list">
+        <bx_repeat:items>
+            <tr>
+                <td>
+                    <input type="checkbox" __selected__ value="__id__">
+                </td>
+                <td>
+                    <div class="bx_ribbons_item bx-def-margin-sec-bottom">
+                        <bx_if:title>
+                            <strong>__title__</strong>
+                        </bx_if:title>
+                        <bx_if:image>
+                            <img class="bx-base-text-unit-cover bx-def-round-corners" alt="__title__" src="__thumb_url__" />
+                        </bx_if:image>
+                        <bx_if:text>
+                            <div>__text__</div>
+                        </bx_if:text>
+                    </div>
+                </td>
+            </tr>
+        </bx_repeat:items>
+    </table>
+    <button onclick="__js_object__.saveRibbons()" class="bx-def-font-inputs bx-form-input-submit bx-btn bx-btn-primary">__button_title__</button>
+</div>

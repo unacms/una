@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+  <string name="_bx_ribbons"><![CDATA[Ribbons]]></string>
+  <string name="_bx_ribbons_modules_list"><![CDATA[Modules list]]></string>
+  <string name="_bx_ribbons_acl_action_use_ribbons"><![CDATA[Use ribbons]]></string>
+  
+  <string name="_bx_ribbons_adm_stg_cpt_category_general"><![CDATA[General]]></string>
+  <string name="_bx_ribbons_lmi_cpt_quotes"><![CDATA[Ribbons List]]></string>
+  <string name="_bx_ribbons_page_title_manage"><![CDATA[Ribbons management]]></string>
+  <string name="_bx_ribbons_page_title_sys_manage"><![CDATA[Ribbons management]]></string>
+  <string name="_bx_ribbons_page_block_title_sys_manage"><![CDATA[Ribbons management]]></string>
+  <string name="_bx_ribbons_page_block_title_manage"><![CDATA[Ribbons management]]></string>
+  <string name="_bx_ribbons_page_block_title_sys_ribbons"><![CDATA[Ribbons]]></string>
+  <string name="_bx_ribbons_page_block_title_ribbons"><![CDATA[Ribbons]]></string>
+  <string name="_bx_ribbons_page_title_sys_edit_entry"><![CDATA[Edit Ribbon]]></string>
+  <string name="_bx_ribbons_page_title_edit_entry"><![CDATA[Edit Ribbon]]></string>
+  <string name="_bx_ribbons_page_block_title_edit_entry"><![CDATA[Edit Ribbon]]></string>
+  <string name="_bx_ribbons_page_title_sys_create_entry"><![CDATA[Create Ribbon]]></string>
+  <string name="_bx_ribbons_page_title_create_entry"><![CDATA[Create Ribbon]]></string>
+  <string name="_bx_ribbons_page_block_title_create_entry"><![CDATA[Create Ribbon]]></string>
+
+  <string name="_bx_ribbons_form_entry"><![CDATA[Ribbons]]></string>
+  <string name="_bx_ribbons_form_entry_display_add"><![CDATA[Add Ribbon]]></string>
+  <string name="_bx_ribbons_form_entry_display_edit"><![CDATA[Edit Ribbon]]></string>
+  <string name="_bx_ribbons_form_entry_input_do_submit"><![CDATA[Submit]]></string>
+  <string name="_bx_ribbons_form_entry_input_sys_do_submit"><![CDATA[Submit]]></string>
+  <string name="_bx_ribbons_form_entry_input_sys_title"><![CDATA[Title]]></string>
+  <string name="_bx_ribbons_form_entry_input_title"><![CDATA[Title]]></string>
+  <string name="_bx_ribbons_form_entry_input_sys_image"><![CDATA[Image]]></string>
+  <string name="_bx_ribbons_form_entry_input_image"><![CDATA[Image]]></string>
+  <string name="_bx_ribbons_form_entry_input_sys_text"><![CDATA[Text]]></string>
+  <string name="_bx_ribbons_form_entry_input_text"><![CDATA[Text]]></string>
+  <string name="_bx_ribbons_form_entry_input_cancel"><![CDATA[Cancel]]></string>
+  <string name="_bx_ribbons_form_entry_input_sys_cancel"><![CDATA[Cancel]]></string>
+
+  <string name="_bx_ribbons_grid_column_title_adm_active"><![CDATA[Active]]></string>
+  <string name="_bx_ribbons_grid_column_title_adm_text"><![CDATA[Text]]></string>
+  <string name="_bx_ribbons_grid_column_title_adm_title"><![CDATA[Title]]></string>  
+  <string name="_bx_ribbons_grid_action_title_adm_edit"><![CDATA[Edit]]></string>
+  <string name="_bx_ribbons_grid_action_title_adm_delete"><![CDATA[Delete]]></string>
+  <string name="_bx_ribbons_grid_action_title_adm_add"><![CDATA[Add]]></string>
+  <string name="_bx_ribbons_menu_item_title_system_follow"><![CDATA[Ribbons]]></string>
+  <string name="_bx_ribbons_menu_item_title_follow"><![CDATA[Ribbons]]></string>
+
+  <string name="_bx_ribbons_txt_button_set_ribbons"><![CDATA[Set Ribbons]]></string>
+</resources>

@@ -1,0 +1,27 @@
+.bx_ribbons_list
+{
+	display:block;
+}
+.bx_ribbons_item 
+{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-height:50px;
+    max-width:200px;
+}
+.bx_ribbons_item img
+{
+	float:left;
+	max-width:50px;
+	max-height:50px;
+	margin-right:0.5rem;
+}
+.bx_ribbons_item P
+{
+	margin:0px;
+	padding:0px;
+}
+#bx_ribbons_selector button
+{
+	float:none;
+}
