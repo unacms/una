@@ -521,7 +521,7 @@ class BxMarketDb extends BxBaseModTextDb
     			`profile_id` = ? AND 
     			`product_id` = ? AND 
     			`order` = ? 
-    		LIMIT ?", $iProfileId, $iProductId, $sOrder, $iCount);
+    		LIMIT ?", $iProfileId, $iProductId, $sOrder, (int)$iCount);
 
         return (int)$this->query($sQuery) > 0;
     }

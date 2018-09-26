@@ -226,7 +226,7 @@ INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attr
 ('bx_photos_upload', 'bx_photos', '_bx_photos_form_upload', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', 'bx_photos_entries', 'id', '', '', 'do_submit', '', 0, 1, 'BxPhotosFormUpload', 'modules/boonex/photos/classes/BxPhotosFormUpload.php');
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
-('bx_photos_upload', 'bx_photos_entry_upload', 'bx_photos', 0, '_bx_photos_form_entry_display_add'),
+('bx_photos_upload', 'bx_photos_entry_upload', 'bx_photos', 0, '_bx_photos_form_upload_display_upload'),
 ('bx_photos', 'bx_photos_entry_delete', 'bx_photos', 0, '_bx_photos_form_entry_display_delete'),
 ('bx_photos', 'bx_photos_entry_edit', 'bx_photos', 0, '_bx_photos_form_entry_display_edit'),
 ('bx_photos', 'bx_photos_entry_view', 'bx_photos', 1, '_bx_photos_form_entry_display_view');
