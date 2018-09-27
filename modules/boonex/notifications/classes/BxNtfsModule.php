@@ -265,17 +265,19 @@ class BxNtfsModule extends BxBaseModNotificationsModule
      */
     public function serviceGetUnreadNotificationsNum($iOwnerId = 0)
     {
-    	if(!$iOwnerId)
-			$iOwnerId = $this->getUserId();
+        if(!$iOwnerId)
+            $iOwnerId = $this->getUserId();
 
-		if(!$iOwnerId)
-			return 0;
+        if(!$iOwnerId)
+            return 0;
 
-		$aParams = $this->_prepareParams(BX_NTFS_TYPE_DEFAULT, $iOwnerId);
-		$aParams['new'] = 1;
+        $aParams = $this->_prepareParams(BX_NTFS_TYPE_DEFAULT, $iOwnerId);
+        $aParams = array_merge($aParams, array(
+            'new' => 1,
+            'count_only' => 1
+        ));
 
-		list($aEvent, $iCount) = $this->_oDb->getEvents($aParams, true);
-		return $iCount;
+        return (int)$this->_oDb->getEvents($aParams);
     }
 
     /**
