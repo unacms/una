@@ -17,12 +17,12 @@ $aConfig = array(
     'name' => 'bx_intercom',
     'title' => 'Intercom',
     'note' => 'Intercom integration.',
-    'version' => '9.0.7.DEV',
+    'version' => '9.0.6',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '9.0.x'
+        '9.0.0-RC10'
     ),
 
     /**
