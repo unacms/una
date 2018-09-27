@@ -62,7 +62,7 @@ class BxMassMailerDb extends BxBaseModGeneralDb
     
     public function getAccountsByTerms($sTerms = "")
     {
-        $sSql = "SELECT `ta`.`email`, `tp`.`id` AS `profile_id` FROM `sys_accounts` AS `ta` INNER JOIN `sys_profiles` AS `tp` ON `tp`.`account_id`=`ta`.`id` " . $sTerms . " AND `tp`.`type` <> 'system' WHERE `ta`.`receive_news` <> 0";
+        $sSql = "SELECT `ta`.`email`, `tp`.`id` AS `profile_id` FROM `sys_accounts` AS `ta` INNER JOIN `sys_profiles` AS `tp` ON `tp`.`account_id`=`ta`.`id` " . $sTerms . "  WHERE `ta`.`receive_news` <> 0";
         return $this->getAll($sSql);
     }
     
@@ -72,7 +72,7 @@ class BxMassMailerDb extends BxBaseModGeneralDb
            'datefrom' => $iDateFrom,
            'dateto' => $iDateTo
        );
-        $sSql = "SELECT DATE(FROM_UNIXTIME(`ta`.`added`)) AS `period`, YEAR(FROM_UNIXTIME(`ta`.`added`)) AS `year`, COUNT(*) AS `count` FROM `sys_accounts` AS `ta` INNER JOIN `sys_profiles` AS `tp` ON `tp`.`account_id`=`ta`.`id` AND `tp`.`type` <> 'system' " . $sTerms . " WHERE `ta`.`receive_news` <> 0 AND `ta`.`added` >= :datefrom AND `ta`.`added` <= :dateto GROUP BY `period`, `year` ORDER BY `year`, `period` ASC";
+        $sSql = "SELECT DATE(FROM_UNIXTIME(`ta`.`added`)) AS `period`, YEAR(FROM_UNIXTIME(`ta`.`added`)) AS `year`, COUNT(*) AS `count` FROM `sys_accounts` AS `ta` INNER JOIN `sys_profiles` AS `tp` ON `tp`.`account_id`=`ta`.`id` " . $sTerms . " WHERE `ta`.`receive_news` <> 0 AND `ta`.`added` >= :datefrom AND `ta`.`added` <= :dateto GROUP BY `period`, `year` ORDER BY `year`, `period` ASC";
         return $this->getAll($sSql, $aBindings);
     }
     
@@ -83,7 +83,7 @@ class BxMassMailerDb extends BxBaseModGeneralDb
            'datefrom' => $iDateFrom,
            'dateto' => $iDateTo
        );
-        $sSql = "SELECT DATE(FROM_UNIXTIME(`tu`.`unsubscribed`)) AS `period`, YEAR(FROM_UNIXTIME(`tu`.`unsubscribed`)) AS `year`, COUNT(*) AS `count` FROM `sys_accounts` AS `ta` INNER JOIN `" . $CNF['TABLE_UNSUBSCRIBE'] . "` AS `tu` ON `tu`.`account_id`=`ta`.`id` INNER JOIN `sys_profiles` AS `tp` ON `tp`.`account_id`=`ta`.`id` AND `tp`.`type` <> 'system' " . $sTerms . " WHERE `tu`.`unsubscribed` >= :datefrom AND `tu`.`unsubscribed` <= :dateto GROUP BY `period`, `year` ORDER BY `year`, `period` ASC";
+        $sSql = "SELECT DATE(FROM_UNIXTIME(`tu`.`unsubscribed`)) AS `period`, YEAR(FROM_UNIXTIME(`tu`.`unsubscribed`)) AS `year`, COUNT(*) AS `count` FROM `sys_accounts` AS `ta` INNER JOIN `" . $CNF['TABLE_UNSUBSCRIBE'] . "` AS `tu` ON `tu`.`account_id`=`ta`.`id` INNER JOIN `sys_profiles` AS `tp` ON `tp`.`account_id`=`ta`.`id` " . $sTerms . " WHERE `tu`.`unsubscribed` >= :datefrom AND `tu`.`unsubscribed` <= :dateto GROUP BY `period`, `year` ORDER BY `year`, `period` ASC";
         return $this->getAll($sSql, $aBindings);
     }
     
@@ -92,7 +92,7 @@ class BxMassMailerDb extends BxBaseModGeneralDb
         $aBindings = array(
             'datefrom' => $iDateFrom
         );
-        $sQuery = "SELECT COUNT(`ta`.`id`) AS `count` FROM `sys_accounts` AS `ta` INNER JOIN `sys_profiles` AS `tp` ON `tp`.`account_id`=`ta`.`id` AND `tp`.`type` <> 'system' " . $sTerms . " WHERE `ta`.`added` < :datefrom ";
+        $sQuery = "SELECT COUNT(`ta`.`id`) AS `count` FROM `sys_accounts` AS `ta` INNER JOIN `sys_profiles` AS `tp` ON `tp`.`account_id`=`ta`.`id` " . $sTerms . " WHERE `ta`.`added` < :datefrom ";
         return $this->getOne($sQuery, $aBindings);
     }
     
@@ -102,7 +102,7 @@ class BxMassMailerDb extends BxBaseModGeneralDb
         $aBindings = array(
             'datefrom' => $iDateFrom
         );
-        $sQuery = "SELECT COUNT(`tu`.`id`) AS `count` FROM `sys_accounts` AS `ta` INNER JOIN `" . $CNF['TABLE_UNSUBSCRIBE'] . "` AS `tu` ON `tu`.`account_id`=`ta`.`id` INNER JOIN `sys_profiles` AS `tp` ON `tp`.`account_id`=`ta`.`id`  AND `tp`.`type` <> 'system' " . $sTerms . " WHERE `tu`.`unsubscribed` < :datefrom ";
+        $sQuery = "SELECT COUNT(`tu`.`id`) AS `count` FROM `sys_accounts` AS `ta` INNER JOIN `" . $CNF['TABLE_UNSUBSCRIBE'] . "` AS `tu` ON `tu`.`account_id`=`ta`.`id` INNER JOIN `sys_profiles` AS `tp` ON `tp`.`account_id`=`ta`.`id` " . $sTerms . " WHERE `tu`.`unsubscribed` < :datefrom ";
         return $this->getOne($sQuery, $aBindings);
     }
     
@@ -151,7 +151,7 @@ class BxMassMailerDb extends BxBaseModGeneralDb
     public function getClicksByCampaignId ($iCampaignId)
     {
         $CNF = &$this->_oConfig->CNF;
-        $sQuery = $this->prepare ("SELECT `" . $CNF['FIELD_LINK'] . "`, `" . $CNF['FIELD_TITLE'] . "`, COUNT( `" . $CNF['FIELD_ID'] . "`) AS `click_count`, MAX( `" . $CNF['FIELD_DATE_CLICK'] . "`) AS `last_click`  FROM `" . $CNF['TABLE_LINKS'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` = ? AND `" . $CNF['FIELD_DATE_CLICK'] . "` IS NOT NULL GROUP BY `" . $CNF['FIELD_LINK'] . "`, `" . $CNF['FIELD_TITLE'] . "` ORDER BY COUNT( `" . $CNF['FIELD_ID'] . "`)  DESC", $iCampaignId);
+        $sQuery = $this->prepare ("SELECT `" . $CNF['FIELD_LINK'] . "`, `" . $CNF['FIELD_TITLE'] . "`, COUNT( `" . $CNF['FIELD_ID'] . "`) AS `click_count`, MAX( `" . $CNF['FIELD_DATE_CLICK'] . "`) AS `last_click` FROM `" . $CNF['TABLE_LINKS'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` = ? AND `" . $CNF['FIELD_DATE_CLICK'] . "` IS NOT NULL GROUP BY `" . $CNF['FIELD_LINK'] . "`, `" . $CNF['FIELD_TITLE'] . "` ORDER BY COUNT( `" . $CNF['FIELD_ID'] . "`)  DESC", $iCampaignId);
         return $this->getAll($sQuery);
     }
     
