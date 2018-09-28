@@ -223,7 +223,7 @@ class BxCnlModule extends BxBaseModGroupsModule
                 }
             }
             if (count($aVars) > 0){
-                return $this->_oTemplate->parseHtmlByName('followers_list.html', 
+                return $this->_oTemplate->parseHtmlByName('my_channels.html', 
                     array('bx_if:show_list' => array(
                     'condition' => count($aVars) > 0,
                     'content' => array('bx_repeat:items' => $aVars))
