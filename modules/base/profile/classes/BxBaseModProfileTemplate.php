@@ -170,6 +170,8 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     function setCover ($oPage, $aData, $sTemplateName = 'cover.html')
     {
         $CNF = &$this->_oConfig->CNF;
+        
+        $bProfileViewAllowed = CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedView($aData);
 
         if (CHECK_ACTION_RESULT_ALLOWED !== $this->getModule()->checkAllowedViewProfileImage($aData)) {
             $CNF = &$this->_oConfig->CNF;
@@ -207,7 +209,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
         $sCoverPopup = '';
         $sCoverPopupId = $this->MODULE . '-popup-cover';
-        if ($aData[$CNF['FIELD_COVER']]) {
+        if ($bProfileViewAllowed && $aData[$CNF['FIELD_COVER']]) {
             $sCoverPopup = BxTemplFunctions::getInstance()->transBox($sCoverPopupId, $this->parseHtmlByName('image_popup.html', array (
                 'image_url' => $sUrlCover,
                 'bx_if:owner' => array (
@@ -221,7 +223,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
         $sPicturePopup = '';
         $sPicturePopupId = $this->MODULE . '-popup-picture';
-        if ($aData[$CNF['FIELD_PICTURE']]) {
+        if ($bProfileViewAllowed && $aData[$CNF['FIELD_PICTURE']]) {
             $sPicturePopup = BxTemplFunctions::getInstance()->transBox($sPicturePopupId, $this->parseHtmlByName('image_popup.html', array (
                 'image_url' => $sUrlPicture,
                 'bx_if:owner' => array (

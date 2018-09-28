@@ -45,6 +45,10 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
             exit;
         }
 
+        $oCover = BxDolCover::getInstance($this->_oModule->_oTemplate);        
+        if ($oCover)
+            $oCover->setCoverClass($this->_sCoverClass);
+
         // permissions check 
         $this->_processPermissionsCheck ();
 
@@ -53,9 +57,6 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
         if (!empty($CNF['OBJECT_VIEWS'])) {
             BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $this->_aContentInfo[$CNF['FIELD_ID']])->doView();
         }
-
-        $oCover = BxDolCover::getInstance($this->_oModule->_oTemplate);
-        $oCover->setCoverClass($this->_sCoverClass);
 
         // set cover image
         $mixedCover = method_exists($this, '_getImageForPageCover') ? $this->_getImageForPageCover() : $this->_getThumbForMetaObject();
