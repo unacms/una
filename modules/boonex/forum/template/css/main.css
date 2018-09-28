@@ -8,6 +8,18 @@
     float:right;
 }
 
+.bx-forum-participant-alert-last-replier {
+    left:0;
+    right:auto;
+}
+
+.bx-forum-participant-alert-author {
+    left:0;
+    right:auto;
+    top:auto;
+    bottom:0;
+}
+
 /*-- Replies --*/
 .cmt.bx-def-box .cmts.cmts-margin {
 	margin-top: 0px;
