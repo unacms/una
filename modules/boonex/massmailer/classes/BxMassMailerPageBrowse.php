@@ -16,13 +16,13 @@ class BxMassMailerPageBrowse extends BxBaseModGroupsPageBrowse
 {
     public function __construct($aObject, $oTemplate = false)
     {
-        $this->MODULE = 'bx_analytics';
+        $this->MODULE = 'bx_massmailer';
         parent::__construct($aObject, $oTemplate);
         $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
         if($oMenuSubmenu) {
             $sMenuSubmenu = 'sys_account_dashboard';
             $oMenuSubmenu->setObjectSubmenu($sMenuSubmenu, array('title' => _t('_sys_menu_item_title_account_dashboard'), 'link' => '', 'icon' => ''));
-            BxDolMenu::getObjectInstance($sMenuSubmenu)->setSelected($this->MODULE, 'analytics');
+            BxDolMenu::getObjectInstance($sMenuSubmenu)->setSelected($this->MODULE, 'dashboard-massmailer');
         }
         
     }
