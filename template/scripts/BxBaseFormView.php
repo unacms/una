@@ -857,6 +857,9 @@ BLAH;
                 break;
         }
 
+        if ('doublerange' == $aAttrs['type'] && (!isset($aInput['value']) || !$aInput['value']) && !empty($aAttrs['min']) && !empty($aAttrs['max'])) {
+            $aInput['value'] = $aAttrs['min'] . '-' . $aAttrs['max'];
+        }
 
         if (isset($aInput['name'])) $aAttrs['name'] = $aInput['name'];
         if (isset($aInput['value'])) $aAttrs['value'] = $aInput['value'];
