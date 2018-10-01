@@ -24,7 +24,7 @@ VALUES('bx_quoteofday_internal', 'Sql', 'SELECT * FROM `bx_quoteofday_internal` 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_quoteofday_internal', 'checkbox', '_sys_select', '2%', 0, 0, '', 1),
 ('bx_quoteofday_internal', 'switcher', '_bx_quoteofday_grid_column_title_adm_active', '8%', 0, 0, '', 2),
-('bx_quoteofday_internal', 'text', '_bx_quoteofday_grid_column_title_adm_text', '70%', 0, 35, '', 3),
+('bx_quoteofday_internal', 'text', '_bx_quoteofday_grid_column_title_adm_text', '70%', 0, 100, '', 3),
 ('bx_quoteofday_internal', 'actions', '', '20%', 0, 0, '', 5);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
