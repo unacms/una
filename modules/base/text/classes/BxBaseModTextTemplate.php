@@ -38,20 +38,10 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
         if (!$iProfileId)
             $iProfileId = $aData[$CNF['FIELD_AUTHOR']];
-
-        // if post is anonymous then don't show author block for regular members
-        if ($aData[$CNF['FIELD_AUTHOR']] < 0 && !$this->getModule()->_isModerator())
-            return '';
         
-        $oProfile = BxDolProfile::getInstance($iProfileId >= 0 ? $iProfileId : -$iProfileId);
-        if (!$oProfile || !$iProfileId) 
-            $oProfile = BxDolProfileUndefined::getInstance();
-
-        if (!$oProfile)
-            return '';
-
+        $oProfile = BxDolProfile::getInstanceMagic($iProfileId);
         $sName = $oProfile->getDisplayName();
-        $sAddon = $sFuncAuthorAddon ? $this->$sFuncAuthorAddon($aData, $oProfile) : '';        
+        $sAddon = $sFuncAuthorAddon && is_a($oProfile, 'BxDolProfile') ? $this->$sFuncAuthorAddon($aData, $oProfile) : '';        
 
         $aVars = array (
             'author_url' => $oProfile->getUrl(),

@@ -25,23 +25,17 @@ class BxPhotosTemplate extends BxBaseModTextTemplate
 
     public function entryText ($aData, $sTemplateName = 'entry-text.html')
     {
-        $mixedResult = parent::entryText($aData, $sTemplateName);
-        if($mixedResult === false)
-            return $this->entryPhoto($aData);
-
-        $aPhoto = $this->entryPhoto($aData, true);
-        if(empty($aPhoto))
-            return $mixedResult;
-
-        return $this->parseHtmlByContent($mixedResult, $aPhoto);
+        return $this->entryPhoto($aData);
     }
 
     public function entryPhoto ($aContentInfo, $bAsArray = false)
     {
+        $aTmplVars = BxBaseModGeneralTemplate::getTmplVarsText($aContentInfo);
+
         $CNF = &$this->getModule()->_oConfig->CNF;
 
         if(empty($aContentInfo[$CNF['FIELD_THUMB']]))
-            return $bAsArray ? array() : '';
+            return $bAsArray ? array() : false;
 
         $iImage = (int)$aContentInfo[$CNF['FIELD_THUMB']];
 
@@ -58,12 +52,10 @@ class BxPhotosTemplate extends BxBaseModTextTemplate
         if(empty($sImage))
             return $bAsArray ? array() : '';
 
-        $aTmplVars = array(
+        $aTmplVars = array_merge($aTmplVars, array(
             'entry_photo' => $sImage,
-            'entry_title' => bx_process_output($aContentInfo['title']),
             'entry_title_attr' => bx_html_attribute($aContentInfo['title']),
-            'entry_text' => ''
-        );
+        ));
 
         return $bAsArray ? $aTmplVars : $this->parseHtmlByName('entry-photo.html', $aTmplVars);
     }

@@ -101,7 +101,7 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
     public static function getInstanceMagic($mixedProfileId = false, $bClearCache = false)
     {
         if ($mixedProfileId < 0)
-            return BxDolProfileAnonymous::getInstance();
+            return BxDolProfileAnonymous::getInstance($mixedProfileId);
 
         if (0 == $mixedProfileId || !($oProfile = self::getInstance($mixedProfileId, $bClearCache)))
             return BxDolProfileUndefined::getInstance();

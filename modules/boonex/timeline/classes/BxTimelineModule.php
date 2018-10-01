@@ -2577,9 +2577,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
         $iLoggedId = $this->getUserId();
         $iUserId = (int)$iUserId;
-        if($iUserId < 0  && (abs($iUserId) == $iLoggedId || $this->isModerator()))
-            $iUserId *= -1;
-
         return parent::getUserInfo($iUserId);
     }
 

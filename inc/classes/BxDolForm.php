@@ -1457,7 +1457,21 @@ class BxDolFormCheckerHelper
     }
     static public function checkEmail($s)
     {
-        return self::checkPreg ($s, "/(([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?/");
+        if (false === strpos($s, '@')) // simple check
+            return false;
+
+        if (!preg_match("/^\pL/u", $s)) // must start with letter
+            return false;
+
+        if (!preg_match("/@[\pL\pNd\.\-]+$/u", $s)) // validate domain
+            return false;
+
+        $s = str_replace(array('@', '.', '-', '+'), '', $s); // allowed symbols
+        if (preg_match("/[^\pL^\pNd]/u", $s)) // check for undesirable chars
+            return false;
+
+        return true;
+        // return self::checkPreg ($s, "/(([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?/");
     }
     static public function checkCaptcha($s)
     {
