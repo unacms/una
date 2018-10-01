@@ -44,6 +44,11 @@ class BxSpacesModule extends BxBaseModGroupsModule
         return $this->_serviceTemplateFunc ('entryChilds', $iContentId);
     }
     
+    public function serviceBrowseTopLevel ($bDisplayEmptyMsg = false)
+    {
+        return $this->_serviceBrowse ('top_level', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
+    }
+    
     /**
      * Get possible recipients for start conversation form
      */

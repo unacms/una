@@ -161,6 +161,10 @@ class BxSpacesSearchResult extends BxBaseModGroupsSearchResult
                 $this->sBrowseUrl = 'page.php?i=spaces-top';
                 break;
 
+            case 'top_level':
+                $this->aCurrent['restriction']['level'] = array('value' => '0', 'field' => 'level', 'operator' => '=', 'table' => 'bx_spaces_data');
+                break;
+                
             case '': // search results
                 $this->sBrowseUrl = BX_DOL_SEARCH_KEYWORD_PAGE;
                 $this->aCurrent['title'] = _t('_bx_spaces');

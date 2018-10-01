@@ -138,7 +138,7 @@
     <string name="_bx_spaces_page_block_title_featured_entries_view_showcase"><![CDATA[Продвинутые пространства (Витринный просмотр)]]></string>
     <string name="_bx_spaces_page_block_title_sys_recommended_entries_view_showcase"><![CDATA[Рекомендованные пространства (Витринный просмотр)]]></string>
     <string name="_bx_spaces_page_block_title_recommended_entries_view_showcase"><![CDATA[Рекомендованные пространства]]></string>
-
+	<string name="_bx_spaces_page_block_title_top_level_spaces"><![CDATA[Пространства верхнего уровня]]></string>
 
   <string name="_bx_spaces_menu_title_submenu"><![CDATA[Пространства - Подменю]]></string>
     <string name="_bx_spaces_menu_set_title_submenu"><![CDATA[Пространства - Подменю]]></string>
