@@ -389,7 +389,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
 	/**
      * Add entry using provided fields' values.
-     * @return HTML string
+     * @return array with result: 'code' is 0 on success or non-zero on error, 'message' is error message in case of error, 'content' is content info array in case of success
      */
     public function serviceEntityAdd ($iProfile, $aValues)
     {

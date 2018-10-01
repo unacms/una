@@ -1151,7 +1151,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         if(empty($aContentInfo) || !is_array($aContentInfo))
             return false;
 
-        list($sUserName) = $this->getUserInfo($aContentInfo['profile_id']);
+        $oProfile = BxDolProfile::getInstanceMagic($aContentInfo['profile_id']);
+        if (!$oProfile->isActive())
+            return false;
+            
+        $sUserName = $oProfile->getDisplayName();
 
         $sSample = isset($CNF['T'][$aBuildParams['txt_sswa']]) ? $CNF['T'][$aBuildParams['txt_sswa']] : $CNF['T'][$aBuildParams['txt_ss']];
 
