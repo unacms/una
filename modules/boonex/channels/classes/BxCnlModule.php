@@ -43,14 +43,16 @@ class BxCnlModule extends BxBaseModGroupsModule
         if(empty($oModule))
             return;
 
+        $aCheck = checkActionModule($this->_iProfileId, 'create channel auto', $this->getName(), false);
         $mixedCnlId = $this->_oDb->getChannelIdByName($sHashtag);
-        if (empty($mixedCnlId)){
+        if (empty($mixedCnlId) && ($aCheck[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED)){
             $CNF = &$this->_oConfig->CNF;
             $oAccountQuery = BxDolAccountQuery::getInstance();
             $aOperators = $oAccountQuery->getOperators();
             if(count($aOperators) > 0){
                 $oProfile = BxDolProfile::getInstanceByAccount($aOperators[0]);
                 $aContent = $this->serviceEntityAdd($oProfile->id(), array($CNF['FIELD_NAME'] => $sHashtag));
+                checkActionModule($this->_iProfileId, 'create channel auto', $this->getName(), true);
                 if (isset($aContent['content']) && isset($aContent['content']['id']))
                     $mixedCnlId = $aContent['content']['id'];
             }

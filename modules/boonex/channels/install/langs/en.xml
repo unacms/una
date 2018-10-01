@@ -41,8 +41,9 @@
 	<string name="_bx_channels_acl_action_delete_profile"><![CDATA[Delete Channel]]></string>
 	<string name="_bx_channels_acl_action_view_profile"><![CDATA[View Channel]]></string>
 	<string name="_bx_channels_acl_action_edit_any_profile"><![CDATA[Edit Any Channel]]></string>
-	
-	<string name="_bx_channels_page_title_sys_create_profile"><![CDATA[Create Channel]]></string>
+  <string name="_bx_channels_acl_action_create_channel_auto"><![CDATA[Create Channel Auto]]></string>
+
+  <string name="_bx_channels_page_title_sys_create_profile"><![CDATA[Create Channel]]></string>
 	<string name="_bx_channels_page_title_create_profile"><![CDATA[Create Channel]]></string>
 	<string name="_bx_channels_page_title_sys_edit_profile"><![CDATA[Edit Channel]]></string>
 	<string name="_bx_channels_page_title_edit_profile"><![CDATA[Edit Channel]]></string>

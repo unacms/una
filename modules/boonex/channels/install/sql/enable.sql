@@ -285,6 +285,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 ('bx_channels', 'edit any entry', NULL, '_bx_channels_acl_action_edit_any_profile', '', 1, 3);
 SET @iIdActionProfileEditAny = LAST_INSERT_ID();
 
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_channels', 'create channel auto', NULL, '_bx_channels_acl_action_create_channel_auto', '', 1, 1);
+SET @iIdActionCreateChannelAuto = LAST_INSERT_ID();
+
 SET @iUnauthenticated = 1;
 SET @iAccount = 2;
 SET @iStandard = 3;
@@ -327,7 +331,16 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 -- any profile edit
 (@iModerator, @iIdActionProfileEditAny),
-(@iAdministrator, @iIdActionProfileEditAny);
+(@iAdministrator, @iIdActionProfileEditAny),
+
+-- create channel auto
+(@iAccount, @iIdActionCreateChannelAuto),
+(@iStandard, @iIdActionCreateChannelAuto),
+(@iUnconfirmed, @iIdActionCreateChannelAuto),
+(@iPending, @iIdActionCreateChannelAuto),
+(@iModerator, @iIdActionCreateChannelAuto),
+(@iAdministrator, @iIdActionCreateChannelAuto),
+(@iPremium, @iIdActionCreateChannelAuto);
 
 
 -- COMMENTS
