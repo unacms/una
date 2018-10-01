@@ -1308,9 +1308,6 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     {
         $iUserId = $this->_getAuthorId();
         $iAuthorId = (int)$iAuthorId;
-        if($iAuthorId < 0  && (abs($iAuthorId) == $iUserId || $this->isModerator()))
-            $iAuthorId *= -1;
-
         $oProfile = $this->_getAuthorObject($iAuthorId);
 
         return array(
