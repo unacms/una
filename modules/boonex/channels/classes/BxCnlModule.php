@@ -215,8 +215,9 @@ class BxCnlModule extends BxBaseModGroupsModule
             $aVars = array();
             foreach ($aProfile as $iProfileId) {
                 $oProfile = BxDolProfile::getInstance($iProfileId);
-                if ($oProfile){
+                if ($oProfile && $oProfile->getModule() == $this->getName()){
                     $iContentId = $oProfile->getContentId();
+                    
                     $aContentInfo = $this->_oDb->getContentInfoById($oProfile->getContentId());
                     if (isset($aContentInfo[$CNF['FIELD_NAME']]))
                         array_push($aVars, array('title' => $aContentInfo[$CNF['FIELD_NAME']], 'link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId)));
