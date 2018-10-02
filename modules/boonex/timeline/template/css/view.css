@@ -108,6 +108,9 @@ div.bx-tl-item div.bx-tl-owner-name {
     text-overflow: ellipsis;
     overflow: hidden;
 }
+div.bx-tl-item div.bx-tl-owner-name > * {
+    vertical-align: middle;
+}
 div.bx-tl-item div.bx-tl-owner-name a.bx-tl-owner-name,
 div.bx-tl-item div.bx-tl-owner-name .bx-tl-timeline-owner-name a.bx-tl-ton-item {
     font-weight: 700;
@@ -145,6 +148,10 @@ div.bx-tl-item div.bx-tl-owner-actions .bx-btn {
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: left;
+}
+.bx-tl-item-meta ul.bx-menu-custom.bx-menu-hor {
+    position: relative;
+    display: inline-block;
 }
 .bx-tl-item-meta ul.bx-menu-custom.bx-menu-hor > li > span {
         margin-right: 0;
