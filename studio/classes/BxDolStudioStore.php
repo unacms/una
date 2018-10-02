@@ -163,24 +163,34 @@ class BxDolStudioStore extends BxTemplStudioPage
                     break;
             }
 
-            if(!empty($aResult['message']))
-				$aResult['message'] = BxDolStudioTemplate::getInstance()->parseHtmlByName('popup_chain.html', array(
-					'html_id' => 'mod_action_result',
-				    'bx_repeat:items' => array(array(
-				        'bx_if:show_as_hidden' => array(
-        	    			'condition' => false,
-        	    			'content' => array(),
-        	    		),
-        	    		'item' => $aResult['message'],
-        	    		'bx_if:show_previous' => array(
-        	    			'condition' => false,
-        	    			'content' => array(
-        	    		        'onclick_previous' => ''
-        	    		    )
-        	    		),
-        	    		'onclick_close' => '$(this).parents(\'.bx-popup-applied:visible:first\').dolPopupHide();'
-				    ))
-				));
+            if(!empty($aResult['message'])) {
+                $oTemplate = BxDolStudioTemplate::getInstance();
+
+                $aResult['message'] = $oTemplate->parseHtmlByName('popup_chain.html', array(
+                    'html_id' => 'mod_action_result',
+                    'bx_repeat:items' => array(array(
+                        'bx_if:show_as_hidden' => array(
+                            'condition' => false,
+                            'content' => array(),
+                        ),
+                        'item' => $oTemplate->parseHtmlByName('str_notification.html', array(
+                            'content' => $aResult['message']
+                        )),
+                        'bx_if:show_previous' => array(
+                            'condition' => false,
+                            'content' => array(
+                                'onclick_previous' => ''
+                            )
+                        ),
+                        'bx_if:show_close' => array(
+                           'condition' => false,
+                            'content' => array(
+                                'onclick_close' => ''
+                            )
+                        )
+                    ))
+                ));
+            }
 
             echo json_encode($aResult);
             exit;

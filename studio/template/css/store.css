@@ -344,6 +344,19 @@ div.bx-std-pvs-item {
 }
 
 
+/*--- Notification style ---*/
+.bx-std-notification {
+    position: relative;
+    display: block;
+}
+a.bx-std-notification:hover {
+    background-color: rgba(210, 230, 250, 0.3);
+}
+div.bx-std-notification-cnt {
+    position: relative;
+}
+
+
 /*--- Mobile Optimization style ---*/
 @media (min-width:533px) and (max-width:720px) {
     .bx-std-categories .bx-std-category {
