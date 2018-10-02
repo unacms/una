@@ -17,12 +17,12 @@ $aConfig = array(
     'name' => 'bx_notifications',
     'title' => 'Notifications',
     'note' => 'Notifications module.',
-    'version' => '9.0.12.DEV',
+    'version' => '9.0.11',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '9.0.x'
+        '9.0.0-RC10'
     ),
 
     /**
