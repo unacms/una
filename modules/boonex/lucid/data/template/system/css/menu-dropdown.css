@@ -1,6 +1,6 @@
 
 /*--- Login ---*/
-li.bx-cnc-mdd-login div.bx-cnc-login {
+li.bx-lcd-mdd-login div.bx-lcd-login {
 	width: 70%;
 	margin-left: auto;
 	margin-right: auto;
@@ -10,43 +10,43 @@ li.bx-cnc-mdd-login div.bx-cnc-login {
 	background-color: transparent;
 	border-radius: 0;
 }
-li.bx-cnc-mdd-login .bx-cnc-login-cnt,
-li.bx-cnc-mdd-login .bx-cnc-login-scnt,
-li.bx-cnc-mdd-login .bx-cnc-login-form {
+li.bx-lcd-mdd-login .bx-lcd-login-cnt,
+li.bx-lcd-mdd-login .bx-lcd-login-scnt,
+li.bx-lcd-mdd-login .bx-lcd-login-form {
 	padding: 0;
 }
 
 /*--- Profile --- */
-.cd-dropdown .cd-dropdown-content .bx-cnc-mddt-account > a {
+.cd-dropdown .cd-dropdown-content .bx-lcd-mddt-account > a {
 	display: -webkit-flex;
     display: flex;
     -webkit-align-items: center;
     align-items: center;
 }
-.bx-cnc-mddt-account .bx-base-pofile-unit-wo-info {
+.bx-lcd-mddt-account .bx-base-pofile-unit-wo-info {
     width: 1.875rem;
     height: 1.875rem;
     border: 1px solid rgba(0, 147, 205, 1);
     border-radius: 1.5rem;
 }
-.bx-cnc-mddt-account  .bx-base-pofile-unit-wo-info .bx-base-pofile-unit-thumb,
-.bx-cnc-mdd-profile .bx-cnc-mddp .bx-base-pofile-unit-wo-info .bx-base-pofile-unit-thumb {
+.bx-lcd-mddt-account  .bx-base-pofile-unit-wo-info .bx-base-pofile-unit-thumb,
+.bx-lcd-mdd-profile .bx-lcd-mddp .bx-base-pofile-unit-wo-info .bx-base-pofile-unit-thumb {
     width: 1.875rem;
     height: 1.875rem;
     line-height: 1.875rem;
 }
 
 /*+++ Activity Feed item +++*/
-.cd-dropdown .cd-dropdown-content .bx-cnc-mddt-activity-feed > a {
+.cd-dropdown .cd-dropdown-content .bx-lcd-mddt-activity-feed > a {
 	font-weight: 900;
 }
 
 /*+++ Notifications item +++*/
-.cd-dropdown .cd-dropdown-content .bx-cnc-mddt-notifications-notifications .bx-ntfs-event {
+.cd-dropdown .cd-dropdown-content .bx-lcd-mddt-notifications-notifications .bx-ntfs-event {
 	margin: 0.3125rem 0.625rem;
 	background-color: rgba(255, 255, 255, 0.1);
 }
-.cd-dropdown .cd-dropdown-content .bx-cnc-mddt-notifications-notifications .bx-ntfs-event a {
+.cd-dropdown .cd-dropdown-content .bx-lcd-mddt-notifications-notifications .bx-ntfs-event a {
 	height: auto;
 	line-height: normal;
 	font-weight: normal;
@@ -347,14 +347,14 @@ li.bx-cnc-mdd-login .bx-cnc-login-form {
   border-top-width: 0;
 }
 .cd-dropdown .cd-dropdown-content a, 
-.cd-dropdown .cd-dropdown-content .bx-cnc-mdd-search, 
-.cd-dropdown .cd-dropdown-content .bx-cnc-login,
-.cd-dropdown .cd-dropdown-content .bx-cnc-mdd-profile,
+.cd-dropdown .cd-dropdown-content .bx-lcd-mdd-search, 
+.cd-dropdown .cd-dropdown-content .bx-lcd-login,
+.cd-dropdown .cd-dropdown-content .bx-lcd-mdd-profile,
 .cd-dropdown .cd-dropdown-content .cd-divider, 
 .cd-dropdown .cd-dropdown-content ul a, 
-.cd-dropdown .cd-dropdown-content ul .bx-cnc-mdd-search, 
-.cd-dropdown .cd-dropdown-content ul .bx-cnc-login,
-.cd-dropdown .cd-dropdown-content ul .bx-cnc-mdd-profile,
+.cd-dropdown .cd-dropdown-content ul .bx-lcd-mdd-search, 
+.cd-dropdown .cd-dropdown-content ul .bx-lcd-login,
+.cd-dropdown .cd-dropdown-content ul .bx-lcd-mdd-profile,
 .cd-dropdown .cd-dropdown-content ul .cd-divider {
   /* Force Hardware Acceleration */
   -webkit-transform: translateZ(0);
@@ -378,37 +378,37 @@ li.bx-cnc-mdd-login .bx-cnc-login-form {
   transform: translateX(100%);
 }
 .cd-dropdown .cd-dropdown-content.is-hidden > li > a, 
-.cd-dropdown .cd-dropdown-content.is-hidden > li > .bx-cnc-login,
-.cd-dropdown .cd-dropdown-content.is-hidden > .bx-cnc-mdd-search, 
-.cd-dropdown .cd-dropdown-content.is-hidden > .bx-cnc-mdd-profile,  
+.cd-dropdown .cd-dropdown-content.is-hidden > li > .bx-lcd-login,
+.cd-dropdown .cd-dropdown-content.is-hidden > .bx-lcd-mdd-search, 
+.cd-dropdown .cd-dropdown-content.is-hidden > .bx-lcd-mdd-profile,  
 .cd-dropdown .cd-dropdown-content.is-hidden > .cd-divider, 
 .cd-dropdown .cd-dropdown-content.move-out > li > a, 
-.cd-dropdown .cd-dropdown-content.move-out > li > .bx-cnc-login,
-.cd-dropdown .cd-dropdown-content.move-out > .bx-cnc-mdd-search, 
-.cd-dropdown .cd-dropdown-content.move-out > .bx-cnc-mdd-profile,  
+.cd-dropdown .cd-dropdown-content.move-out > li > .bx-lcd-login,
+.cd-dropdown .cd-dropdown-content.move-out > .bx-lcd-mdd-search, 
+.cd-dropdown .cd-dropdown-content.move-out > .bx-lcd-mdd-profile,  
 .cd-dropdown .cd-dropdown-content.move-out > .cd-divider, 
 .cd-dropdown .cd-dropdown-content ul.is-hidden > li > a, 
-.cd-dropdown .cd-dropdown-content ul.is-hidden > li > .bx-cnc-login,
-.cd-dropdown .cd-dropdown-content ul.is-hidden > .bx-cnc-mdd-search,
-.cd-dropdown .cd-dropdown-content ul.is-hidden > .bx-cnc-mdd-profile,
+.cd-dropdown .cd-dropdown-content ul.is-hidden > li > .bx-lcd-login,
+.cd-dropdown .cd-dropdown-content ul.is-hidden > .bx-lcd-mdd-search,
+.cd-dropdown .cd-dropdown-content ul.is-hidden > .bx-lcd-mdd-profile,
 .cd-dropdown .cd-dropdown-content ul.is-hidden > .cd-divider, 
 .cd-dropdown .cd-dropdown-content ul.move-out > li > a, 
-.cd-dropdown .cd-dropdown-content ul.move-out > li > .bx-cnc-login,
-.cd-dropdown .cd-dropdown-content ul.move-out > .bx-cnc-mdd-search, 
-.cd-dropdown .cd-dropdown-content ul.move-out > .bx-cnc-mdd-profile,  
+.cd-dropdown .cd-dropdown-content ul.move-out > li > .bx-lcd-login,
+.cd-dropdown .cd-dropdown-content ul.move-out > .bx-lcd-mdd-search, 
+.cd-dropdown .cd-dropdown-content ul.move-out > .bx-lcd-mdd-profile,  
 .cd-dropdown .cd-dropdown-content ul.move-out > .cd-divider {
   /* lower down the dropdown items opacity - when secondary dropdown slides in or for dropdown items hidden on the right */
   opacity: 0;
 }
 .cd-dropdown .cd-dropdown-content.move-out > li > a, 
-.cd-dropdown .cd-dropdown-content.move-out > li > .bx-cnc-login,
-.cd-dropdown .cd-dropdown-content.move-out > .bx-cnc-mdd-search,
-.cd-dropdown .cd-dropdown-content.move-out > .bx-cnc-mdd-profile,
+.cd-dropdown .cd-dropdown-content.move-out > li > .bx-lcd-login,
+.cd-dropdown .cd-dropdown-content.move-out > .bx-lcd-mdd-search,
+.cd-dropdown .cd-dropdown-content.move-out > .bx-lcd-mdd-profile,
 .cd-dropdown .cd-dropdown-content.move-out > .cd-divider, 
 .cd-dropdown .cd-dropdown-content ul.move-out > li > a, 
-.cd-dropdown .cd-dropdown-content ul.move-out > li > .bx-cnc-login,
-.cd-dropdown .cd-dropdown-content ul.move-out > .bx-cnc-mdd-search,
-.cd-dropdown .cd-dropdown-content ul.move-out > .bx-cnc-mdd-profile,
+.cd-dropdown .cd-dropdown-content ul.move-out > li > .bx-lcd-login,
+.cd-dropdown .cd-dropdown-content ul.move-out > .bx-lcd-mdd-search,
+.cd-dropdown .cd-dropdown-content ul.move-out > .bx-lcd-mdd-profile,
 .cd-dropdown .cd-dropdown-content ul.move-out > .cd-divider {
   /* push the dropdown items to the left when secondary dropdown slides in */
   -webkit-transform: translateX(-100%);
@@ -454,24 +454,24 @@ li.bx-cnc-mdd-login .bx-cnc-login-form {
     border-top-width: 1px;
   }
   .cd-dropdown .cd-dropdown-content.is-hidden > li > a, 
-    .cd-dropdown .cd-dropdown-content.is-hidden > li > .bx-cnc-login,
-  .cd-dropdown .cd-dropdown-content.is-hidden > .bx-cnc-mdd-search,
-  .cd-dropdown .cd-dropdown-content.is-hidden > .bx-cnc-mdd-profile,
+    .cd-dropdown .cd-dropdown-content.is-hidden > li > .bx-lcd-login,
+  .cd-dropdown .cd-dropdown-content.is-hidden > .bx-lcd-mdd-search,
+  .cd-dropdown .cd-dropdown-content.is-hidden > .bx-lcd-mdd-profile,
   .cd-dropdown .cd-dropdown-content.is-hidden > .cd-divider, 
   .cd-dropdown .cd-dropdown-content.move-out > li > a, 
-    .cd-dropdown .cd-dropdown-content.move-out > li > .bx-cnc-login,
-  .cd-dropdown .cd-dropdown-content.move-out > .bx-cnc-mdd-search,
-  .cd-dropdown .cd-dropdown-content.move-out > .bx-cnc-mdd-profile,
+    .cd-dropdown .cd-dropdown-content.move-out > li > .bx-lcd-login,
+  .cd-dropdown .cd-dropdown-content.move-out > .bx-lcd-mdd-search,
+  .cd-dropdown .cd-dropdown-content.move-out > .bx-lcd-mdd-profile,
   .cd-dropdown .cd-dropdown-content.move-out > .cd-divider, 
   .cd-dropdown .cd-dropdown-content ul.is-hidden > li > a, 
-  .cd-dropdown .cd-dropdown-content ul.is-hidden > li > .bx-cnc-login,
-  .cd-dropdown .cd-dropdown-content ul.is-hidden > .bx-cnc-mdd-search,
-  .cd-dropdown .cd-dropdown-content ul.is-hidden > .bx-cnc-mdd-profile,
+  .cd-dropdown .cd-dropdown-content ul.is-hidden > li > .bx-lcd-login,
+  .cd-dropdown .cd-dropdown-content ul.is-hidden > .bx-lcd-mdd-search,
+  .cd-dropdown .cd-dropdown-content ul.is-hidden > .bx-lcd-mdd-profile,
   .cd-dropdown .cd-dropdown-content ul.is-hidden > .cd-divider, 
   .cd-dropdown .cd-dropdown-content ul.move-out > li > a, 
-  .cd-dropdown .cd-dropdown-content ul.move-out > li > .bx-cnc-login,
-  .cd-dropdown .cd-dropdown-content ul.move-out > .bx-cnc-mdd-search,
-  .cd-dropdown .cd-dropdown-content ul.move-out > .bx-cnc-mdd-profile,
+  .cd-dropdown .cd-dropdown-content ul.move-out > li > .bx-lcd-login,
+  .cd-dropdown .cd-dropdown-content ul.move-out > .bx-lcd-mdd-search,
+  .cd-dropdown .cd-dropdown-content ul.move-out > .bx-lcd-mdd-profile,
   .cd-dropdown .cd-dropdown-content ul.move-out > .cd-divider {
     /* reset mobile style */
     opacity: 1;
@@ -581,9 +581,9 @@ li.bx-cnc-mdd-login .bx-cnc-login-form {
     color: #3f8654;
   }
   .cd-dropdown .cd-dropdown-content.move-out > li > a, 
-  .cd-dropdown .cd-dropdown-content.move-out > li > .bx-cnc-login,
-  .cd-dropdown .cd-dropdown-content.move-out > .bx-cnc-mdd-search,
-  .cd-dropdown .cd-dropdown-content.move-out > .bx-cnc-mdd-profile,
+  .cd-dropdown .cd-dropdown-content.move-out > li > .bx-lcd-login,
+  .cd-dropdown .cd-dropdown-content.move-out > .bx-lcd-mdd-search,
+  .cd-dropdown .cd-dropdown-content.move-out > .bx-lcd-mdd-profile,
   .cd-dropdown .cd-dropdown-content.move-out > .cd-divider {
     /* reset mobile style */
     -webkit-transform: translateX(0);
@@ -926,11 +926,11 @@ li.bx-cnc-mdd-login .bx-cnc-login-form {
   }
 }
 
-.bx-cnc-mdd-search .bx-page-block-container {
+.bx-lcd-mdd-search .bx-page-block-container {
 	padding: 0;
 }
 
-.bx-cnc-mdd-search .bx-page-block-container input[type="text"] {
+.bx-lcd-mdd-search .bx-page-block-container input[type="text"] {
   width: 100%;
   height: 50px;
   padding: 0 20px;
@@ -944,49 +944,49 @@ li.bx-cnc-mdd-login .bx-cnc-login-form {
   border: none;
   border-radius: 0;
 }
-.bx-cnc-mdd-search .bx-page-block-container input[type="text"]::-webkit-input-placeholder {
+.bx-lcd-mdd-search .bx-page-block-container input[type="text"]::-webkit-input-placeholder {
   color: #ffffff;
 }
-.bx-cnc-mdd-search .bx-page-block-container input[type="text"]::-moz-placeholder {
+.bx-lcd-mdd-search .bx-page-block-container input[type="text"]::-moz-placeholder {
   color: #ffffff;
 }
-.bx-cnc-mdd-search .bx-page-block-container input[type="text"]:-moz-placeholder {
+.bx-lcd-mdd-search .bx-page-block-container input[type="text"]:-moz-placeholder {
   color: #ffffff;
 }
-.bx-cnc-mdd-search .bx-page-block-container input[type="text"]:-ms-input-placeholder {
+.bx-lcd-mdd-search .bx-page-block-container input[type="text"]:-ms-input-placeholder {
   color: #ffffff;
 }
-.bx-cnc-mdd-search .bx-page-block-container input[type="text"]:focus {
+.bx-lcd-mdd-search .bx-page-block-container input[type="text"]:focus {
   background: #ffffff;
   color: #111433;
   outline: none;
 }
-.bx-cnc-mdd-search .bx-page-block-container input[type="text"]:focus::-webkit-input-placeholder {
+.bx-lcd-mdd-search .bx-page-block-container input[type="text"]:focus::-webkit-input-placeholder {
   color: rgba(17, 20, 51, 0.4);
 }
-.bx-cnc-mdd-search .bx-page-block-container input[type="text"]:focus::-moz-placeholder {
+.bx-lcd-mdd-search .bx-page-block-container input[type="text"]:focus::-moz-placeholder {
   color: rgba(17, 20, 51, 0.4);
 }
-.bx-cnc-mdd-search .bx-page-block-container input[type="text"]:focus:-moz-placeholder {
+.bx-lcd-mdd-search .bx-page-block-container input[type="text"]:focus:-moz-placeholder {
   color: rgba(17, 20, 51, 0.4);
 }
-.bx-cnc-mdd-search .bx-page-block-container input[type="text"]:focus:-ms-input-placeholder {
+.bx-lcd-mdd-search .bx-page-block-container input[type="text"]:focus:-ms-input-placeholder {
   color: rgba(17, 20, 51, 0.4);
 }
 @media only screen and (min-width: 1024px) {
-  .bx-cnc-mdd-search .bx-page-block-container input[type="text"] {
+  .bx-lcd-mdd-search .bx-page-block-container input[type="text"] {
     background-color: #ebebeb;
   }
-  .bx-cnc-mdd-search .bx-page-block-container input[type="text"]::-webkit-input-placeholder {
+  .bx-lcd-mdd-search .bx-page-block-container input[type="text"]::-webkit-input-placeholder {
     color: #b3b3b3;
   }
-  .bx-cnc-mdd-search .bx-page-block-container input[type="text"]::-moz-placeholder {
+  .bx-lcd-mdd-search .bx-page-block-container input[type="text"]::-moz-placeholder {
     color: #b3b3b3;
   }
-  .bx-cnc-mdd-search .bx-page-block-container input[type="text"]:-moz-placeholder {
+  .bx-lcd-mdd-search .bx-page-block-container input[type="text"]:-moz-placeholder {
     color: #b3b3b3;
   }
-  .bx-cnc-mdd-search .bx-page-block-container input[type="text"]:-ms-input-placeholder {
+  .bx-lcd-mdd-search .bx-page-block-container input[type="text"]:-ms-input-placeholder {
     color: #b3b3b3;
   }
 }
