@@ -172,7 +172,7 @@ class BxDolView extends BxDolObject
             return true;
 
         $iObjectAuthorId = $this->_oQuery->getObjectAuthorId($this->_iId);
-        return $iObjectAuthorId != 0 && $iObjectAuthorId == $this->_getAuthorId() && $this->checkAction('view_view_viewers', $isPerformAction);
+        return $iObjectAuthorId != 0 && $iObjectAuthorId == $this->_getAuthorId() && $this->checkAction('view_view_viewers_own', $isPerformAction);
     }
 
 	/**

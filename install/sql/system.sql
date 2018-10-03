@@ -654,7 +654,7 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionViewView = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('system', 'view_view_viewers', NULL, '_sys_acl_action_view_view_viewers', '', 0, 0);
+('system', 'view_view_viewers_own', NULL, '_sys_acl_action_view_view_viewers_own', '', 0, 0);
 SET @iIdActionViewViewViewers = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
