@@ -12,6 +12,7 @@ class BxDolModuleTemplate extends BxDolTemplate
     protected $_oDb;
     protected $_oConfig;
     protected $_bObStarted = 0;
+    protected $_oModule;
 
     /*
      * Constructor.
@@ -31,6 +32,15 @@ class BxDolModuleTemplate extends BxDolTemplate
         $this->addLocationJs($sName, $sHomePath . 'js/', $sHomeUrl . 'js/');
     }
 
+    public function getModule()
+    {
+        if (!$this->_oModule) {
+            $sName = $this->_oConfig->getName();
+            $this->_oModule = BxDolModule::getInstance($sName);
+        }
+        return $this->_oModule;
+    }
+    
     /**
      * Initialize module template engine.
      * Note. The method is executed with the system, you shouldn't execute it in your subclasses.
