@@ -76,8 +76,6 @@ div.bx-vote div.bx-vote-counter-holder {
 /*--- Stars Styles ---*/
 div.bx-vote-element {
     position: relative;
-}
-span.bx-vote-stars div.bx-vote-element {
     display: inline-block;
 }
 div.bx-vote-underlay {}
@@ -89,9 +87,9 @@ div.bx-vote-slider {
     white-space: nowrap;
     overflow: hidden;
 }
-.bx-vote-stars div.bx-vote-element-holder a.bx-vote-button,
-.bx-vote-stars div.bx-vote-element-holder i.bx-vote-star,
-.bx-vote-stars div.bx-vote-element-holder span.bx-vote-star {
+.bx-vote-stars .bx-vote-element-holder a.bx-vote-button,
+.bx-vote-stars .bx-vote-element-holder i.bx-vote-star,
+.bx-vote-stars .bx-vote-element-holder span.bx-vote-star {
     position: relative;
     display: inline-block;
     vertical-align: top;
