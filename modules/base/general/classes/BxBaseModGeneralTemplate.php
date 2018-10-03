@@ -15,22 +15,12 @@
 class BxBaseModGeneralTemplate extends BxDolModuleTemplate
 {
     protected $MODULE;
-    protected $_oModule;
-
+    
     public $aMethodsToCallAddJsCss = array('entry', 'unit');
 
     function __construct(&$oConfig, &$oDb)
     {
         parent::__construct($oConfig, $oDb);
-    }
-
-    public function getModule()
-    {
-        if (!$this->_oModule) {
-            $sName = $this->_oConfig->getName();
-            $this->_oModule = BxDolModule::getInstance($sName);
-        }
-        return $this->_oModule;
     }
 
 	public function getJsCode($sType, $aParams = array(), $mixedWrap = true)
