@@ -39,7 +39,7 @@ class BxDolModuleProxy
 
             // make it possible to override the call or arguments
             $res = null;
-            bx_alert($this->_sObjectType . '_method_call', $sMethodName, 0, 0, array('args' => &$aArguments, 'override_result' => &$res));
+            bx_alert($this->_sObjectType . '_method_call', $sMethodName, 0, 0, array('module' => $this->_oProxifiedObject->getModule(), 'args' => &$aArguments, 'override_result' => &$res));
             if (null !== $res)
                 return $res;
 
