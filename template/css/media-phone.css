@@ -80,7 +80,7 @@ html.bx-media-phone {
     bottom:0 !important;
     right:0 !important;
     width:100%;
-	width:100vw;
+    width:100vw;
     height:100%;
     height:100vh;
     overflow:auto;
@@ -109,6 +109,12 @@ html.bx-media-phone {
 
 .bx-media-phone .bx-popup-width {
     width:100%;
+}
+
+.bx-media-phone .bx-popup-responsive#bx-popup-alert,
+.bx-media-phone .bx-popup-responsive#bx-popup-confirm,
+.bx-media-phone .bx-popup-responsive#bx-popup-prompt {
+    max-width: none;
 }
 
 /* page layouts */
