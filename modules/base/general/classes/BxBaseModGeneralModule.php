@@ -908,8 +908,9 @@ class BxBaseModGeneralModule extends BxDolModule
         $CNF = &$this->_oConfig->CNF;
 
         $iUserId = $this->getUserId();
-        $iAuthorId = $aContentInfo[$CNF['FIELD_AUTHOR']];
-        if($iAuthorId < 0 && abs($iAuthorId) != $iUserId)
+        $iAuthorId = (int)$aContentInfo[$CNF['FIELD_AUTHOR']];
+        $iAuthorIdAbs = abs($iAuthorId);
+        if($iAuthorId < 0 && $iAuthorIdAbs == (int)$aEvent['owner_id'] && $iAuthorIdAbs != $iUserId)
             return false;
 
         //--- Views
@@ -973,17 +974,17 @@ class BxBaseModGeneralModule extends BxDolModule
             $sTitle = $aContentInfo[$CNF['FIELD_TEXT']];
 
         return array(
-            'owner_id' => $aContentInfo[$CNF['FIELD_AUTHOR']],
+            'owner_id' => $iAuthorId,
             'icon' => !empty($CNF['ICON']) ? $CNF['ICON'] : '',
-        	'sample' => isset($CNF['T']['txt_sample_single_with_article']) ? $CNF['T']['txt_sample_single_with_article'] : $CNF['T']['txt_sample_single'],
-        	'sample_wo_article' => $CNF['T']['txt_sample_single'],
-    	    'sample_action' => isset($CNF['T']['txt_sample_action']) ? $CNF['T']['txt_sample_action'] : '',
+            'sample' => isset($CNF['T']['txt_sample_single_with_article']) ? $CNF['T']['txt_sample_single_with_article'] : $CNF['T']['txt_sample_single'],
+            'sample_wo_article' => $CNF['T']['txt_sample_single'],
+            'sample_action' => isset($CNF['T']['txt_sample_action']) ? $CNF['T']['txt_sample_action'] : '',
             'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
             'content' => $this->_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams), //a string to display or array to parse default template before displaying.
             'date' => $aContentInfo[$CNF['FIELD_ADDED']],
             'views' => $aViews,
             'votes' => $aVotes,
-        	'scores' => $aScores,
+            'scores' => $aScores,
             'reports' => $aReports,
             'comments' => $aComments,
             'title' => $sTitle, //may be empty.

@@ -561,7 +561,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     public function serviceGetTimelinePost($aEvent, $aBrowseParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
-        $CNF['FIELD_AUTHOR'] = $CNF['FIELD_OWNER_ID'];
+
+        /*
+         * Note. For 'Direct Timeline Posts' FIELD_OBJECT_ID contains post's author profile ID.
+         */
+        $CNF['FIELD_AUTHOR'] = $CNF['FIELD_OBJECT_ID'];
         return parent::serviceGetTimelinePost($aEvent, $aBrowseParams);
     }
 
@@ -1800,7 +1804,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             }
 
             $sTitle = $bText ? $this->_oConfig->getTitle($sText) : $this->_oConfig->getTitleDefault($bLinkIds, $bPhotoIds, $bVideoIds);
-            $sDescription = _t('_bx_timeline_txt_user_added_sample', $sUserName, _t('_bx_timeline_txt_sample_with_article'));
+            $sDescription = _t('_bx_timeline_txt_user_added_sample', '{profile_name}', _t('_bx_timeline_txt_sample_with_article'));
 
             //--- Process Date ---//
             $iDate = 0;
@@ -2700,30 +2704,31 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     	$sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
 
-    	//--- Text
-        $sText = isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]) ? $aContentInfo[$CNF['FIELD_TEXT']] : '';
-        if(!empty($CNF['OBJECT_METATAGS']) && is_string($sText)) {
-        	$oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
-        	$sText = $oMetatags->metaParse($aContentInfo[$CNF['FIELD_ID']], $sText);
-        }
-        
-        $sTextForTimeline = ""; 
-        if (isset($aContentInfo['content'])){
+        $sText = ''; 
+        if(isset($aContentInfo['content'])){
             $aTmp = unserialize($aContentInfo['content']);
-            if (isset($aTmp['text']))
-                $sTextForTimeline = $aTmp['text'];
+            if(isset($aTmp['text']))
+                $sText = $aTmp['text'];
         }
-        
-    	return array(
-    		'sample' => isset($CNF['T']['txt_sample_single_with_article']) ? $CNF['T']['txt_sample_single_with_article'] : $CNF['T']['txt_sample_single'],
-    		'sample_wo_article' => $CNF['T']['txt_sample_single'],
-    	    'sample_action' => isset($CNF['T']['txt_sample_action']) ? $CNF['T']['txt_sample_action'] : '',
-			'url' => $sUrl,
-			'title' => $sText,
-			'text' => $sTextForTimeline,
-			'images' => array(),
+
+        if(empty($sText) && !empty($aContentInfo[$CNF['FIELD_TITLE']]))
+            $sText = $aContentInfo[$CNF['FIELD_TITLE']];
+
+        if(!empty($CNF['OBJECT_METATAGS']) && !empty($sText)) {
+            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+            $sText = $oMetatags->metaParse($aContentInfo[$CNF['FIELD_ID']], $sText);
+        }
+
+        return array(
+            'sample' => isset($CNF['T']['txt_sample_single_with_article']) ? $CNF['T']['txt_sample_single_with_article'] : $CNF['T']['txt_sample_single'],
+            'sample_wo_article' => $CNF['T']['txt_sample_single'],
+            'sample_action' => isset($CNF['T']['txt_sample_action']) ? $CNF['T']['txt_sample_action'] : '',
+            'url' => $sUrl,
+            'title' => '',
+            'text' => $sText,
+            'images' => array(),
             'videos' => array()
-		);
+        );
     }
 
 	protected function _isAllowedPin($aEvent, $bPerform = false)

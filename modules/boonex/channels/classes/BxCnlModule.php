@@ -147,19 +147,16 @@ class BxCnlModule extends BxBaseModGroupsModule
         if(empty($aEvent) || !is_array($aEvent))
             return false;
 
-        $aContentEvent = $this->_oDb->getContentById($aEvent['object_id']);
-        if(empty($aContentEvent) || !is_array($aContentEvent))
+        $aEventContent = $this->_oDb->getContentById($aEvent['object_id']);
+        if(empty($aEventContent) || !is_array($aEventContent))
             return false;
 
-        $oModule = BxDolModule::getInstance($aContentEvent['module_name']);
-        if(empty($oModule))
-            return false;
+        if(!BxDolRequest::serviceExists($aEventContent['module_name'], 'get_timeline_post'))
+            return false;      
 
-        $aTimelinePost = $oModule->serviceGetTimelinePost(array('object_id' => $aContentEvent['content_id']));
-        if($aContentEvent['module_name'] == 'bx_timeline')
-            $aTimelinePost['owner_id'] = $aEvent['owner_id'];
+        $iEventOwnerId = (int)(is_array($aEvent['owner_id']) ? array_shift($aEvent['owner_id']) : $aEvent['owner_id']);
 
-        return $aTimelinePost;
+        return BxDolService::call($aEventContent['module_name'], 'get_timeline_post', array(array('owner_id' => $iEventOwnerId, 'object_id' => $aEventContent['content_id'])));
     }
     
     /**

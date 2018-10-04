@@ -1596,17 +1596,19 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sPrefix = $this->_oConfig->getPrefix('common_post');
         $sType = str_replace($sPrefix, '', $aEvent['type']);
 
+        $oOwner = BxDolProfile::getInstanceMagic($aEvent['object_id']);
+
         $aResult = array(
             'owner_id' => $aEvent['object_id'],
             'icon' => $CNF['ICON'],
-        	'sample' => '_bx_timeline_txt_sample_with_article',
+            'sample' => '_bx_timeline_txt_sample_with_article',
             'sample_wo_article' => '_bx_timeline_txt_sample',
-        	'sample_action' => '_bx_timeline_txt_added_sample',
+            'sample_action' => '_bx_timeline_txt_added_sample',
             'content_type' => $sType,
             'content' => array(
                 'sample' => '_bx_timeline_txt_sample_with_article',
-        		'sample_wo_article' => '_bx_timeline_txt_sample',
-        		'sample_action' => '_bx_timeline_txt_added_sample',
+                'sample_wo_article' => '_bx_timeline_txt_sample',
+                'sample_action' => '_bx_timeline_txt_added_sample',
                 'url' => $this->_oConfig->getItemViewUrl($aEvent)
             ), //a string to display or array to parse default template before displaying.
             'views' => '',
@@ -1615,7 +1617,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'reports' => '',
             'comments' => '',
             'title' => $aEvent['title'], //may be empty.
-            'description' => $aEvent['description'] //may be empty.
+            'description' => bx_replace_markers($aEvent['description'], array(
+                'profile_name' => $oOwner->getDisplayName()
+            )) //may be empty.
         );
 
         switch($sType) {
