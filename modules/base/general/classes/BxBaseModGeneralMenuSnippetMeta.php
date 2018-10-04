@@ -150,7 +150,7 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
             'content_data' => $this->_aContentInfo,
         );
         bx_alert($this->_sModule, 'menu_custom_item', 0, 0, $a);
-        bx_alert('system', 'menu_custom_item', 0, 0, $a);
+        bx_alert('menu', 'menu_custom_item', 0, 0, $a);
         
         if (false !== $sResult)
             return $sResult;
