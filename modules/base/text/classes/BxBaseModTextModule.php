@@ -179,6 +179,24 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         return CHECK_ACTION_RESULT_ALLOWED;
     }
 
+    // ====== COMMON METHODS
+    
+    public function isEntryActive($aContentInfo)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if($aContentInfo[$CNF['FIELD_AUTHOR']] == bx_get_logged_profile_id() || $this->_isModerator())
+            return true;
+
+        if(isset($CNF['FIELD_STATUS']) && $aContentInfo[$CNF['FIELD_STATUS']] != 'active')
+            return false;
+
+        if(isset($CNF['FIELD_STATUS_ADMIN']) && $aContentInfo[$CNF['FIELD_STATUS_ADMIN']] != 'active')
+            return false;
+
+        return true;        
+    }
+
     // ====== PROTECTED METHODS
 
     protected function _buildRssParams($sMode, $aArgs)
