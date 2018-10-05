@@ -106,6 +106,8 @@ BxDolMenuMoreAuto.prototype._moveToSubmenu = function(oMenu, oItemMore, oItemMor
         var oItem = $(this);
         var iItem = $this._getWidth(oItem);
         if(bRelocateOthers || iWidthTotal + iItem > iParent) {
+            oItem.addClass('bx-def-color-bg-hl-hover');
+
             if(!oSubmenuItemFirst.length)
                 oItemMoreSubmenu.append(oItem.detach());
             else
@@ -138,6 +140,8 @@ BxDolMenuMoreAuto.prototype._moveFromSubmenu = function(oMenu, oItemMore, oItemM
             bStopRelocation = true;
             return;
         }
+
+        oItem.removeClass('bx-def-color-bg-hl-hover');
 
         oItemMore.before(oItem.detach());
         iWidthTotal += iItem;

@@ -606,8 +606,8 @@ ul.bx-menu-btns-hor li:last-child .bx-btn {
     position: relative;
     display: block;
 
-    margin: 8px;
-    margin: 0.5rem;
+    padding: 8px;
+    padding: 0.5rem;
 }
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto > span {
     display: block;
@@ -624,7 +624,31 @@ ul.bx-menu-btns-hor li:last-child .bx-btn {
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto {
     display: none;
 }
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .bx-btn {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
 
+    height: auto;
+    line-height: auto;
+
+    margin: 0;
+    padding: 0;
+
+    background-color: transparent;
+    border-width: 0;
+    border-radius: 0;
+
+    box-shadow: none;
+    text-shadow: none;
+}
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item a,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .bx-btn,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .bx-btn .sys-icon {
+    color: inherit;
+}
 
 
 /*--- Vertical (Vertical Custom) Menus (in Popup) ---*/

@@ -69,6 +69,10 @@ html.bx-media-phone {
 /* common.css */
 
 /* make popup fullscreen */
+.bx-media-phone body.bx-popup-visible {
+    height: 100vh;
+    overflow: hidden;
+}
 
 .bx-media-phone .bx-popup-responsive.bx-popup-trans-wrapper:not(.bx-popup-image-wrapper),
 .bx-media-phone .bx-popup-responsive:not(.bx-popup-image-wrapper) .bx-popup-trans,

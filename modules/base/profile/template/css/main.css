@@ -229,9 +229,9 @@ a.bx-base-pofile-cover-image:hover,
 .bx-base-pofile-cover-actions {
     position: relative;
 
-    -webkit-flex: 1 1 auto; 
-    -ms-flex:  1 1 auto; 
-    flex: 1 1 auto;
+    -webkit-flex: 1 2 auto; 
+    -ms-flex:  1 2 auto; 
+    flex: 1 2 auto;
 
     display: -webkit-flex;
     display: flex;
@@ -239,12 +239,14 @@ a.bx-base-pofile-cover-image:hover,
     align-items: center;
 
     height: 4rem;
+    min-width: 3rem;
     max-width: 50%;
 }
 
 .bx-base-pofile-cover-actions div.bx-base-general-entity-actions {
-    position: relative;
+    position: absolute;
     width: 100%;
+    left: 0;
 }
 
 .bx-base-pofile-cover-actions ul.bx-menu-hor.bx-menu-more-auto {

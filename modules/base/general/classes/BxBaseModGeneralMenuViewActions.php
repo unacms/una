@@ -41,7 +41,7 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         $this->_oMenuSocialSharing = null;
 
         $this->_bShowAsButton = true;
-        $this->_bShowTitle = false;
+        $this->_bShowTitle = true;
     }
 
     public function addMarkers ($a)
