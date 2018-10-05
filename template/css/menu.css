@@ -650,6 +650,22 @@ ul.bx-menu-btns-hor li:last-child .bx-btn {
     color: inherit;
 }
 
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-view-element-holder a span,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-vote-element-holder a span,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-favorite-element-holder a span,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-feature-element-holder a span,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-report-element-holder a span,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-tl-repost-element-holder a span {
+    display: none;
+}
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-view-element-holder a span,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-vote-element-holder a span,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-favorite-element-holder a span,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-feature-element-holder a span,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-report-element-holder a span,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-tl-repost-element-holder a span {
+    display: inline;
+}
 
 /*--- Vertical (Vertical Custom) Menus (in Popup) ---*/
 .bx-popup .bx-menu-custom-ver li a {

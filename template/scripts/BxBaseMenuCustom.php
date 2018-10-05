@@ -99,17 +99,28 @@ class BxBaseMenuCustom extends BxTemplMenu
             if($aItem === false)
                 return false;
 
-            $sItem = $this->_getMenuItemDefault($aItem);
+            $mixedItem = $this->_getMenuItemDefault($aItem);
     	}
     	else
-            $sItem = $this->$sMethod($aItem);
+            $mixedItem = $this->$sMethod($aItem);
 
-    	if(empty($sItem))
+    	if(empty($mixedItem))
             return false;
+
+        $sItem = $sClass = '';
+        if(is_array($mixedItem)) 
+            list($sItem, $sClass) = $mixedItem;
+        else
+            $sItem = $mixedItem;
+
+        if(!empty($sClass))
+            $sClass = ' ' . $sClass;
+        if($this->_isSelected($aItem))
+            $sClass .= ' bx-menu-tab-active';
 
         return array(
             'name' => $aItem['name'],
-            'class' => $this->_isSelected($aItem) ? ' bx-menu-tab-active' : '',
+            'class' => $sClass,
             'item' => $sItem
         );
     }

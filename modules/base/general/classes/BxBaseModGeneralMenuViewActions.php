@@ -27,6 +27,7 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
     protected $_bDynamicMode;
     protected $_bShowAsButton;
     protected $_bShowTitle;
+    protected $_sClassMiSa; // Separate class for Social Actions (View, Vote, Comment, Report, etc) menu items.
 
     public function __construct($aObject, $oTemplate = false)
     {
@@ -42,9 +43,10 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
 
         $this->_bShowAsButton = true;
         $this->_bShowTitle = true;
+        $this->_sClassMiSa = 'bx-base-general-ea-sa';
     }
 
-    public function addMarkers ($a)
+    public function addMarkers($a)
     {
         $bResult = parent::addMarkers($a);
         if($bResult && !empty($this->_oMenuSocialSharing))
@@ -68,12 +70,12 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
      * @param $a menu item array
      * @return boolean
      */
-    protected function _isVisible ($a)
+    protected function _isVisible($a)
     {
         return $this->_oModule->isMenuItemVisible($this->_sObject, $a, $this->_aContentInfo);
     }
 
-    protected function _getMenuItemDefault ($aItem)
+    protected function _getMenuItemDefault($aItem)
     {
         $aItem['class_wrp'] = 'bx-base-general-entity-action' . (!empty($aItem['class_wrp']) ? ' ' . $aItem['class_wrp'] : '');
 
@@ -102,11 +104,11 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
-    	return $oObject->getElementBlock(array(
+    	return array($oObject->getElementBlock(array(
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_view_as_button' => $this->_bShowAsButton,
             'show_do_view_label' => $this->_bShowTitle
-        ));
+        )), $this->_sClassMiSa);
     }
 
     protected function _getMenuItemComment($aItem, $aParams = array())
@@ -125,11 +127,11 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
-        return $oObject->getElementBlock(array(
+        return array($oObject->getElementBlock(array(
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_comment_as_button' => $this->_bShowAsButton,
             'show_do_comment_label' => $this->_bShowTitle
-        ));
+        )), $this->_sClassMiSa);
     }
 
     protected function _getMenuItemVote($aItem, $aParams = array())
@@ -148,13 +150,13 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
-    	return $oObject->getElementBlock(array(
+    	return array($oObject->getElementBlock(array(
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_vote_as_button' => $this->_bShowAsButton,
             'show_do_vote_label' => $this->_bShowTitle
-        ));
+        )), $this->_sClassMiSa);
     }
-    
+
     protected function _getMenuItemScore($aItem, $aParams = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
@@ -171,11 +173,11 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
-    	return $oObject->getElementBlock(array(
+    	return array($oObject->getElementBlock(array(
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_vote_as_button' => $this->_bShowAsButton,
             'show_do_vote_label' => $this->_bShowTitle
-        ));
+        )), $this->_sClassMiSa);
     }
 
     protected function _getMenuItemFavorite($aItem, $aParams = array())
@@ -194,11 +196,11 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
-    	return $oObject->getElementBlock(array(
+    	return array($oObject->getElementBlock(array(
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_favorite_as_button' => $this->_bShowAsButton,
             'show_do_favorite_label' => $this->_bShowTitle
-        ));
+        )), $this->_sClassMiSa);
     }
 
     protected function _getMenuItemFeature($aItem, $aParams = array())
@@ -217,11 +219,11 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
-    	return $oObject->getElementBlock(array(
+    	return array($oObject->getElementBlock(array(
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_feature_as_button' => $this->_bShowAsButton,
             'show_do_feature_label' => $this->_bShowTitle
-        ));
+        )), $this->_sClassMiSa);
     }
 
     protected function _getMenuItemRepost($aItem, $aParams = array())
@@ -239,10 +241,10 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!BxDolRequest::serviceExists('bx_timeline', 'get_repost_element_block'))
             return '';
 
-    	return BxDolService::call('bx_timeline', 'get_repost_element_block', array(bx_get_logged_profile_id(), $this->_oModule->_oConfig->getName(), $sAction, $iId, array(
+    	return array(BxDolService::call('bx_timeline', 'get_repost_element_block', array(bx_get_logged_profile_id(), $this->_oModule->_oConfig->getName(), $sAction, $iId, array(
             'show_do_repost_as_button' => $this->_bShowAsButton,
             'show_do_repost_text' => $this->_bShowTitle
-        )));
+        ))), $this->_sClassMiSa);
     }
 
     protected function _getMenuItemReport($aItem, $aParams = array())
@@ -261,11 +263,11 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
-    	return $oObject->getElementBlock(array(
+    	return array($oObject->getElementBlock(array(
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_report_as_button' => $this->_bShowAsButton,
             'show_do_report_label' => $this->_bShowTitle
-        ));
+        )), $this->_sClassMiSa);
     }
 
     protected function _getMenuItemSocialSharingFacebook($aItem)
