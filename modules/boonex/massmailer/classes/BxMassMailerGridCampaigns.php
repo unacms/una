@@ -118,6 +118,14 @@ class BxMassMailerGridCampaigns extends BxTemplGrid
         return parent::_getCellDefault($sValue, $sKey, $aField, $aRow);
     }
     
+    protected function _getCellIsOnePerAccount($mixedValue, $sKey, $aField, $aRow)
+    {
+        $sValue = _t('_bx_massmailer_grid_column_title_adm_is_one_per_account_no');
+        if ($mixedValue == '1')
+            $sValue = _t('_bx_massmailer_grid_column_title_adm_is_one_per_account_yes');
+        return parent::_getCellDefault($sValue, $sKey, $aField, $aRow);
+    }
+    
     protected function _getActionCopy($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         if(isset($aRow["date_sent"]) && $aRow["date_sent"] == '0')

@@ -128,13 +128,71 @@ class BxAnalyticsModule extends BxDolModule
         echo json_encode($aRv);
     }
           
-    public function actionGetReportsData($sModuleName, $sReportName, $sDateFrom, $sDateTo)
+    public function actionGetReportsData($sModuleName, $sReportName, $sDateFrom, $sDateTo, $sType = '')
     {
         if(!BxDolAcl::getInstance()->isMemberLevelInSet(192))
             return '';
         
-        header('Content-Type: application/json');
-              
+        if ($sType == 'csv'){
+            header('Content-type: text/csv');
+            header('Content-disposition: attachment;filename=' . $sModuleName . '_' . $sReportName . '_' . $sDateFrom . '_' . $sDateTo . '.csv');
+            echo $this->actionGetReportsDataCsv($sModuleName, $sReportName, $sDateFrom, $sDateTo);
+            
+        }
+        
+        if ($sType == ''){
+            header('Content-Type: application/json');
+            echo $this->actionGetReportsDataJson($sModuleName, $sReportName, $sDateFrom, $sDateTo);
+        }
+            
+    }
+    
+    private function actionGetReportsDataCsv($sModuleName, $sReportName, $sDateFrom, $sDateTo)
+    {
+        $sRv = '';
+        $sColumn = ";";
+        $sRow = "\n";
+        $sData = $this->actionGetReportsDataJson($sModuleName, $sReportName, $sDateFrom, $sDateTo);
+        $oRv = json_decode($sData, true); 
+        $oData = $oRv['data'];
+        $sCol1 = $oRv['strings'][0];
+        $iColumnCount = count($oData['datasets']);
+        $sRv .= $sCol1 . $sColumn;
+        foreach($oData['datasets'] as $aItem){
+            $sRv .= ($aItem['label'] != '' ? $aItem['label'] : $oRv['strings'][1]) . $sColumn;
+        }
+   
+        $sRv .= $sRow;
+        $iK = 0;
+        foreach($oData['datasets'][0]['data'] as $sDx => $aItemData){
+            $sTxt = "";
+            if (is_array($oData['datasets'][0]['data'][$sDx]))
+                $sTxt = $oData['datasets'][0]['data'][$sDx]['x'];
+            else
+                $sTxt = $oData['labels'][$sDx];
+            if (isset($oRv['links']) && count($oRv['links'])>0) {
+                $sTxt .= ' (' . $oRv['links'][$sDx] . ')';
+            }
+            
+            $sRv .= $sTxt . $sColumn;
+            for ($i = 0; $i < $iColumnCount; $i++) {
+                $sText = '';
+                if (is_array($aItemData)) {
+                    $sText = $aItemData['y'];
+                }
+                else {
+                    $sText = $aItemData;
+                }
+                $sRv .= $sText . $sColumn;
+            }
+            $sRv .= $sRow;
+            $iK++;
+        }
+        echo $sRv;
+    }
+    
+    private function actionGetReportsDataJson($sModuleName, $sReportName, $sDateFrom, $sDateTo)
+    { 
         $iDateFrom = strtotime($sDateFrom);
         $iDateTo = strtotime($sDateTo) + 86400;
         $sType = "bar";
@@ -330,7 +388,7 @@ class BxAnalyticsModule extends BxDolModule
             'strings' => $aValues['strings'],
         );
         
-        echo json_encode($aDataForChart);
+        return json_encode($aDataForChart);
     }
           
     public function getSelectedModules()

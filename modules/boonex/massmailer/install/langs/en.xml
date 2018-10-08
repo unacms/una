@@ -59,6 +59,9 @@
   <string name="_bx_massmailer_grid_action_title_adm_send_all"><![CDATA[Send All]]></string>
   <string name="_bx_massmailer_grid_action_title_adm_add"><![CDATA[Add new campaign]]></string>
   <string name="_bx_massmailer_grid_column_title_adm_segment"><![CDATA[Segment]]></string>
+  <string name="_bx_massmailer_grid_column_title_adm_is_one_per_account"><![CDATA[One per account]]></string>
+  <string name="_bx_massmailer_grid_column_title_adm_is_one_per_account_yes"><![CDATA[Yes]]></string>
+  <string name="_bx_massmailer_grid_column_title_adm_is_one_per_account_no"><![CDATA[No]]></string>
   
   <string name="_bx_massmailer_campaign_form_add_title"><![CDATA[New campaign]]></string>
   <string name="_bx_massmailer_campaign_form_edit_title"><![CDATA[Edit campaign]]></string>
@@ -76,7 +79,8 @@
   <string name="_bx_massmailer_form_campaign_input_title_err"><![CDATA[Campaign name can't be empty]]></string>
   <string name="_bx_massmailer_form_campaign_input_sys_body"><![CDATA[Body]]></string>
   <string name="_bx_massmailer_form_campaign_input_body"><![CDATA[Body]]></string>
-  <string name="_bx_massmailer_form_campaign_input_body_err"><![CDATA[Body can't be empty]]></string>
+  <string name="_bx_massmailer_form_campaign_input_body_err"><![CDATA[Body can't be empty and {unsubscribe_url} marker must be present]]></string>
+  <string name="_bx_massmailer_form_campaign_input_is_one_per_account"><![CDATA[One letter per one account]]></string>
   <string name="_bx_massmailer_form_campaign_input_sys_test_email"><![CDATA[Email]]></string>
   <string name="_bx_massmailer_form_campaign_input_email"><![CDATA[Email]]></string>
   <string name="_bx_massmailer_form_campaign_input_sys_segments"><![CDATA[Segments]]></string>

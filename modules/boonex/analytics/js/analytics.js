@@ -15,6 +15,7 @@ function BxAnalytics(oOptions) {
     this._sContainerDataSelector = '#' + this._sContainerId + " .bx_analytics_data";
     this._sCanvasSelector = '#' + this._sContainerId + " .bx_analytics_grath";
     this._sDatePickerSelector = '#' + this._sContainerId + " .bx_analytics_date_picker";
+    this._sExportUrlSelector = '#' + this._sContainerId + " .bx_analytics_export_url";
     this._sActionsUri = oOptions.sActionUri;
     this._aStrings = oOptions.aStrings;
     var $this = this;
@@ -58,8 +59,9 @@ BxAnalytics.prototype.reloadReports = function () {
 BxAnalytics.prototype.reloadData = function () {
     var $this = this;
     bx_loading($($this._sContainerDataSelector), true);
-    $.getJSON($this._sActionsUri + 'GetReportsData/' + $($this._sModuleSelector).val() + '/' + $($this._sReportSelector).val() + '/' + $($this._sDatePickerSelector).data('daterangepicker').startDate.format('YYYY-MM-DD') + '/' + $($this._sDatePickerSelector).data('daterangepicker').endDate.format('YYYY-MM-DD') + '/', function (oData) {
-
+    $sUrl = $this._sActionsUri + 'GetReportsData/' + $($this._sModuleSelector).val() + '/' + $($this._sReportSelector).val() + '/' + $($this._sDatePickerSelector).data('daterangepicker').startDate.format('YYYY-MM-DD') + '/' + $($this._sDatePickerSelector).data('daterangepicker').endDate.format('YYYY-MM-DD') + '/';
+    $($this._sExportUrlSelector).attr('href', $sUrl + 'csv/');
+    $.getJSON($sUrl, function (oData) {
         Chart.defaults.global.layout = {
             padding: {
                 left: 40,

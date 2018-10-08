@@ -30,6 +30,7 @@
   <string name="_bx_analytics_txt_total_count"><![CDATA[{0} - общее количество]]></string>
   <string name="_bx_analytics_txt_count"><![CDATA[{0} - количество]]></string>
   <string name="_bx_analytics_txt_accounts"><![CDATA[Аккаунты]]></string>
+  <string name="_bx_analytics_txt_export_to_csv_title"><![CDATA[Экспорт в файл CSV]]></string>
   <string name="_bx_analytics_txt_total_content"><![CDATA[Весь контент]]></string>
   <string name="_bx_analytics_type_top_by_views_label"><![CDATA[Количество просмотров]]></string>
   <string name="_bx_analytics_type_top_by_likes_label"><![CDATA[Количество лайков]]></string>

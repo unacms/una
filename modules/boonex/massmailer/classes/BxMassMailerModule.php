@@ -473,7 +473,7 @@ class BxMassMailerModule extends BxBaseModGeneralModule
         if (!$aTemplate)
             return false;
         $this->_oDb->deleteCampaignData($iCampaignId);
-        $aAccounts = $this->getEmailsBySegment($aCampaign['segments']);
+        $aAccounts = $this->getEmailsBySegment($aCampaign['segments'], $aCampaign['is_one_per_account']);
         foreach ($aAccounts as $aAccountInfo){
             array_push($aEmails, $aAccountInfo['email']);
             $this->sendLetter($aAccountInfo['email'], $iCampaignId, $aCustomHeaders, $aAccountInfo['profile_id'], $aTemplate, true);
@@ -506,13 +506,17 @@ class BxMassMailerModule extends BxBaseModGeneralModule
     {
         $aTmp = $this->getDataForCampaign($iCampaignId);
         $aCampaign = $aTmp[2];
-        $aAccounts = $this->getEmailsBySegment($aCampaign['segments']);
+        $aAccounts = $this->getEmailsBySegment($aCampaign['segments'], $aCampaign['is_one_per_account']);
         return count($aAccounts);
     }
           
-    private function getEmailsBySegment($sSegment)
+    private function getEmailsBySegment($sSegment, $bIsOnePerAccount)
     {
-        return $this->_oDb->getAccountsByTerms($this->getSqlBySegment($sSegment));
+        $sTerms = $this->getSqlBySegment($sSegment);
+        if ($bIsOnePerAccount){
+            $sTerms .= "AND `tp`.`id` = `ta`.`profile_id` ";
+        }
+        return $this->_oDb->getAccountsByTerms($sTerms);
     }
     
     private function checkAllowed($isPerformAction = false)
