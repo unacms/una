@@ -554,10 +554,14 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     public function getObjectTitle ($iObjectId = 0)
     {
-    	if(empty($this->_aSystem['trigger_field_title']))
-    		return '';
+        if(empty($this->_aSystem['trigger_field_title']))
+            return '';
 
-        return $this->_oQuery->getObjectTitle ($iObjectId ? $iObjectId : $this->getId());
+        $sTitle = $this->_oQuery->getObjectTitle ($iObjectId ? $iObjectId : $this->getId());
+        if(get_mb_substr($sTitle, 0, 1) == '_')
+            $sTitle = _t($sTitle);
+
+        return $sTitle;
     }
 
     public function getCommentsCountAll ($iObjectId = 0)
