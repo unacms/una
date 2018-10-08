@@ -37,6 +37,9 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
             if (!empty($aIdsAdded))
                 bx_alert($this->_oModule->getName(), 'medias_added', $iContentId, $iProfileId, array(
                     'object_author_id' => $iProfileId,
+
+                    'subobjects_ids' => $aIdsAdded,
+
                     'medias_added' => $aIdsAdded,
                 ));
         }

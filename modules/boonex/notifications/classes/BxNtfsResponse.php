@@ -77,21 +77,27 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
 
         if($iObjectPrivacyView < 0)
             $iOwnerId = abs($iObjectPrivacyView);
+        
+        $mixedSubobjectId = $this->_getSubObjectId($oAlert->aExtras);
+        if(!is_array($mixedSubobjectId))
+            $mixedSubobjectId = array($mixedSubobjectId);
 
-    	return array(
-    	    array(
+        $aResult = array();
+        foreach($mixedSubobjectId as $iSubobjectId)
+            $aResult[] = array(
                 'owner_id' => $iOwnerId,
                 'type' => $oAlert->sUnit,
                 'action' => $oAlert->sAction,
                 'object_id' => $oAlert->iObject,
                 'object_owner_id' => $this->_getObjectOwnerId($oAlert->aExtras),
                 'object_privacy_view' => $iObjectPrivacyView,
-                'subobject_id' => $this->_getSubObjectId($oAlert->aExtras),
+                'subobject_id' => $iSubobjectId,
                 'content' => '',
                 'allow_view_event_to' => $this->_oModule->_oConfig->getPrivacyViewDefault('event'),
                 'processed' => 0
-    	    )
-        );
+    	    );
+
+    	return $aResult;
     }
 
     protected function getDeleteData(&$oAlert, &$aHandler)

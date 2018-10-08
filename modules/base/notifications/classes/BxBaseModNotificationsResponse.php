@@ -44,19 +44,19 @@ class BxBaseModNotificationsResponse extends BxDolAlertsResponse
     /**
      * Note. Check priprity is NOT IMPORTANT!
      */
-	protected function _getSubObjectId($aExtras)
+    protected function _getSubObjectId($aExtras)
     {
         if(!is_array($aExtras))
             return 0;
 
     	if(isset($aExtras['comment_id']))
-    		return (int)$aExtras['comment_id'];
+            return (int)$aExtras['comment_id'];
 
-   		if(isset($aExtras['vote_id']))
-    		return (int)$aExtras['vote_id'];
+        if(isset($aExtras['vote_id']))
+            return (int)$aExtras['vote_id'];
 
         if(isset($aExtras['repost_id']))
-    		return (int)$aExtras['repost_id'];
+            return (int)$aExtras['repost_id'];
 
         if(isset($aExtras['timeline_post_id']))
             return (int)$aExtras['timeline_post_id'];
@@ -66,6 +66,10 @@ class BxBaseModNotificationsResponse extends BxDolAlertsResponse
         
         if(isset($aExtras['subobject_id']))
             return (int)$aExtras['subobject_id'];
+
+        if(isset($aExtras['subobjects_ids']))
+            return is_array($aExtras['subobjects_ids']) ? $aExtras['subobjects_ids'] : array($aExtras['subobjects_ids']);
+
         return 0;
     }
 }

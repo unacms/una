@@ -412,12 +412,12 @@ class BxAlbumsModule extends BxBaseModTextModule
         $sModule = $this->_aModule['name'];
 
         $sEventPrivacy = $sModule . '_allow_view_event_to';
-		if(BxDolPrivacy::getObjectInstance($sEventPrivacy) === false)
-			$sEventPrivacy = '';
+        if(BxDolPrivacy::getObjectInstance($sEventPrivacy) === false)
+                $sEventPrivacy = '';
 
         $aResult = parent::serviceGetNotificationsData();
         $aResult['handlers'] = array_merge($aResult['handlers'], array(
-            array('group' => $sModule . '_object_media', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'media_added', 'module_name' => $sModule, 'module_method' => 'get_notifications_media', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
+            array('group' => $sModule . '_object_media', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'medias_added', 'module_name' => $sModule, 'module_method' => 'get_notifications_media', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
             array('group' => $sModule . '_object_media', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'media_deleted'),
 
             array('group' => $sModule . '_comment_media', 'type' => 'insert', 'alert_unit' => $sModule . '_media', 'alert_action' => 'commentPost', 'module_name' => $sModule, 'module_method' => 'get_notifications_comment_media', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
@@ -428,13 +428,13 @@ class BxAlbumsModule extends BxBaseModTextModule
         ));
 
         $aResult['settings'] = array_merge($aResult['settings'], array(
-            array('group' => 'content', 'unit' => $sModule, 'action' => 'media_added', 'types' => array('follow_member', 'follow_context')),
+            array('group' => 'content', 'unit' => $sModule, 'action' => 'medias_added', 'types' => array('follow_member', 'follow_context')),
             array('group' => 'comment', 'unit' => $sModule . '_media', 'action' => 'commentPost', 'types' => array('personal', 'follow_member', 'follow_context')),
             array('group' => 'vote', 'unit' => $sModule . '_media', 'action' => 'doVote', 'types' => array('personal', 'follow_member', 'follow_context'))
         ));
 
         $aResult['alerts'] = array_merge($aResult['alerts'], array(
-            array('unit' => $sModule, 'action' => 'media_added'),
+            array('unit' => $sModule, 'action' => 'medias_added'),
             array('unit' => $sModule, 'action' => 'media_deleted'),
 
             array('unit' => $sModule . '_media', 'action' => 'commentPost'),
