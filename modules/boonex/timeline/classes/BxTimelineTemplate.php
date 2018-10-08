@@ -170,10 +170,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         }
 
         $aParams = array(
-        	'view' => BX_TIMELINE_VIEW_ITEM, 
-        	'type' => BX_TIMELINE_TYPE_ITEM
+            'view' => BX_TIMELINE_VIEW_ITEM, 
+            'type' => BX_TIMELINE_TYPE_ITEM
         );
         $sContent = $this->getPost($aEvent, $aParams);
+
+        $sKey = 'allowed_view';
+        if(isset($aEvent[$sKey]) && $aEvent[$sKey] !== CHECK_ACTION_RESULT_ALLOWED) 
+            return array('content' => MsgBox($aEvent[$sKey]), 'designbox_id' => 13);
 
         $oModule = $this->getModule();
         if($oModule->isAllowedViewCounter($aEvent) !== true)
@@ -311,6 +315,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aEvent['sample'] = !empty($aResult['sample']) ? $aResult['sample'] : '_bx_timeline_txt_sample';
         $aEvent['sample_action'] = !empty($aResult['sample_action']) ? $aResult['sample_action'] : '_bx_timeline_txt_added_sample';
         $aEvent['content'] = $aResult['content'];
+        $aEvent['allowed_view'] = isset($aResult['allowed_view']) ? $aResult['allowed_view'] : CHECK_ACTION_RESULT_ALLOWED;
         $aEvent['views'] = $aResult['views'];
         $aEvent['votes'] = $aResult['votes'];
         $aEvent['scores'] = $aResult['scores'];

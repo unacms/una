@@ -133,6 +133,18 @@ class BxPhotosModule extends BxBaseModTextModule
     {
         return $iContentId > 0 ? CHECK_ACTION_RESULT_ALLOWED : CHECK_ACTION_RESULT_NOT_ALLOWED;
     }
+    
+    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
+    {
+        $aImages = parent::_getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
+
+        $bView = $this->checkAllowedView($aContentInfo) === CHECK_ACTION_RESULT_ALLOWED;
+        foreach($aImages as $iKey => $aImage)
+            if(!$bView)
+                unset($aImages[$iKey]['src_orig']);
+
+        return $aImages;
+    }
 }
 
 /** @} */

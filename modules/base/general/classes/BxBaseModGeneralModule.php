@@ -981,6 +981,7 @@ class BxBaseModGeneralModule extends BxDolModule
             'sample_action' => isset($CNF['T']['txt_sample_action']) ? $CNF['T']['txt_sample_action'] : '',
             'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
             'content' => $this->_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams), //a string to display or array to parse default template before displaying.
+            'allowed_view' => method_exists($this, 'checkAllowedView') ? $this->checkAllowedView($aContentInfo) : CHECK_ACTION_RESULT_ALLOWED,
             'date' => $aContentInfo[$CNF['FIELD_ADDED']],
             'views' => $aViews,
             'votes' => $aVotes,
