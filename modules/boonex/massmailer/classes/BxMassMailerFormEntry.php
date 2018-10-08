@@ -21,6 +21,17 @@ class BxMassMailerFormCheckerHelper extends BxDolFormCheckerHelper
 
         return true;
     }
+    
+    static public function checkUnsubscribeUrl($s)
+    {
+        if (trim($s) == '')
+            return false;
+        
+        if (substr_count($s,'{unsubscribe_url}') == 0)
+            return false;
+        
+        return true;
+    }
 }
 
 /**

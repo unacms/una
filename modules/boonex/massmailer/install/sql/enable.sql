@@ -79,12 +79,13 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_massmailer_campaigns', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
-('bx_massmailer_campaigns', 'title', '_bx_massmailer_grid_column_title_adm_title', '30%', 0, '22', '', 2),
-('bx_massmailer_campaigns', 'author', '_bx_massmailer_grid_column_title_adm_author', '10%', 0, '22', '', 3),
+('bx_massmailer_campaigns', 'title', '_bx_massmailer_grid_column_title_adm_title', '26%', 0, '22', '', 2),
+('bx_massmailer_campaigns', 'author', '_bx_massmailer_grid_column_title_adm_author', '8%', 0, '22', '', 3),
 ('bx_massmailer_campaigns', 'segments', '_bx_massmailer_grid_column_title_adm_segment', '10%', 0, '22', '', 4),
-('bx_massmailer_campaigns', 'added', '_bx_massmailer_grid_column_title_adm_date_created', '14%', 0, '15', '', 5),
-('bx_massmailer_campaigns', 'date_sent', '_bx_massmailer_grid_column_title_adm_date_sent', '10%', 0, '22', '', 6),
-('bx_massmailer_campaigns', 'actions', '', '24%', 0, '', '', 7);
+('bx_massmailer_campaigns', 'is_one_per_account', '_bx_massmailer_grid_column_title_adm_is_one_per_account', '10%', 0, '0', '', 5),
+('bx_massmailer_campaigns', 'added', '_bx_massmailer_grid_column_title_adm_date_created', '10%', 0, '15', '', 6),
+('bx_massmailer_campaigns', 'date_sent', '_bx_massmailer_grid_column_title_adm_date_sent', '10%', 0, '22', '', 7),
+('bx_massmailer_campaigns', 'actions', '', '24%', 0, '', '', 8);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_massmailer_campaigns', 'bulk', 'delete', '_bx_massmailer_grid_action_title_adm_delete', '', 0, 1, 1),
