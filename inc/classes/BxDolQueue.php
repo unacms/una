@@ -11,6 +11,8 @@ class BxDolQueue extends BxDolFactory
 {
     protected $_oQuery;
 
+    protected $_bBusy;
+
     protected $_iLimitSend;
     protected $_iLimitSendPerRecipient;
 
@@ -22,6 +24,8 @@ class BxDolQueue extends BxDolFactory
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
         parent::__construct();
+
+        $this->_bBusy = false;
     }
 
     /**
@@ -37,10 +41,15 @@ class BxDolQueue extends BxDolFactory
      * Send some number of items (email/push) from queue
      *
      * @param int $iLimit - number of queue items to send
-     * @return real number of sent queue items
+     * @return real number of sent queue items or false, if sending process was already started with a previous call and wasn't finished yet.
      */
     public function send($iLimit = 0)
     {
+        if($this->_bBusy)
+            return false;
+
+        $this->_bBusy = true;
+
         $aSent = array();
 
         if(empty($iLimit))
@@ -48,11 +57,13 @@ class BxDolQueue extends BxDolFactory
 
     	$aItems = $this->_oQuery->getItems(array('type' => 'to_send', 'start' => 0, 'per_page' => $iLimit));
     	foreach($aItems as $iId => $aItem)
-    	    if(call_user_func_array(array($this, '_send'), array_slice($aItem, 1)))
-    	        $aSent[] = $iId;
+    	    if(call_user_func_array(array($this, '_send'), array_slice($aItem, 1))) {
+                $this->_oQuery->deleteItem($iId);
 
-        if(!empty($aSent) && is_array($aSent))
-            $this->_oQuery->deleteItem($aSent);
+    	        $aSent[] = $iId;
+            }            
+
+        $this->_bBusy = false;
 
     	return count($aSent);
     }
