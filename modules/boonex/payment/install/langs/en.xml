@@ -53,8 +53,10 @@
 	<string name="_bx_payment_page_title_join"><![CDATA[Join]]></string>
 	<string name="_bx_payment_page_block_title_join"><![CDATA[Join]]></string>
 
-	<!-- MENUS -->
-	<string name="_bx_payment_menu_title_orders_submenu"><![CDATA[Orders Submenu]]></string>
+    <!-- MENUS -->
+    <string name="_bx_payment_lmi_cpt_providers"><![CDATA[Providers]]></string>
+
+    <string name="_bx_payment_menu_title_orders_submenu"><![CDATA[Orders Submenu]]></string>
     <string name="_bx_payment_menu_set_title_orders_submenu"><![CDATA[Orders Submenu]]></string>
     <string name="_bx_payment_menu_item_title_system_orders_processed"><![CDATA[Processed Orders]]></string>
     <string name="_bx_payment_menu_item_title_orders_processed"><![CDATA[Processed]]></string>
@@ -63,7 +65,7 @@
     <string name="_bx_payment_menu_item_title_system_details"><![CDATA[Payments Details]]></string>
     <string name="_bx_payment_menu_item_title_details"><![CDATA[Payments]]></string>
 
-	<string name="_bx_payment_menu_title_cart_submenu"><![CDATA[Cart Submenu]]></string>
+    <string name="_bx_payment_menu_title_cart_submenu"><![CDATA[Cart Submenu]]></string>
     <string name="_bx_payment_menu_set_title_cart_submenu"><![CDATA[Cart Submenu]]></string>
     <string name="_bx_payment_menu_item_title_system_cart"><![CDATA[Cart]]></string>
     <string name="_bx_payment_menu_item_title_cart"><![CDATA[Cart]]></string>
@@ -87,6 +89,11 @@
     <string name="_bx_payment_menu_item_title_sbs_cancel"><![CDATA[Cancel Subscription]]></string>
 
 	<!-- GRIDS -->
+        <string name="_bx_payment_grid_column_title_pdrs_caption"><![CDATA[Caption]]></string>
+        <string name="_bx_payment_grid_column_title_pdrs_description"><![CDATA[Description]]></string>
+        <string name="_bx_payment_grid_column_title_pdrs_for_visitor"><![CDATA[For visitors]]></string>
+        <string name="_bx_payment_grid_column_title_pdrs_for_single"><![CDATA[One Time]]></string>
+        <string name="_bx_payment_grid_column_title_pdrs_for_recurring"><![CDATA[Recurring]]></string>
 	<string name="_bx_payment_grid_column_title_ods_client_id"><![CDATA[Client]]></string>
 	<string name="_bx_payment_grid_column_title_ods_seller_id"><![CDATA[Seller]]></string>
 	<string name="_bx_payment_grid_column_title_ods_transaction"><![CDATA[Transaction]]></string>

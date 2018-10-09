@@ -11,6 +11,8 @@ CREATE TABLE IF NOT EXISTS `bx_payment_providers` (
   `for_visitor` tinyint(4) NOT NULL default '0',
   `for_single` tinyint(4) NOT NULL default '0',
   `for_recurring` tinyint(4) NOT NULL default '0',
+  `active` tinyint(4) NOT NULL default '0',
+  `order` tinyint(4) NOT NULL default '0',
   `class_name` varchar(128) NOT NULL default '',
   `class_file` varchar(255) NOT NULL  default '',
   PRIMARY KEY(`id`)
@@ -111,8 +113,8 @@ CREATE TABLE IF NOT EXISTS `bx_payment_modules` (
 
 
 -- PayPal payment provider
-INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `class_name`) VALUES
-('paypal', '_bx_payment_pp_cpt', '_bx_payment_pp_dsc', 'pp_', 1, 1, 0, 'BxPaymentProviderPayPal');
+INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `active`, `order`, `class_name`) VALUES
+('paypal', '_bx_payment_pp_cpt', '_bx_payment_pp_dsc', 'pp_', 1, 1, 0, 1, 1, 'BxPaymentProviderPayPal');
 SET @iProviderId = LAST_INSERT_ID();
 
 INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
@@ -126,8 +128,8 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 
 
 -- 2Checkout payment provider
-INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `class_name`) VALUES
-('2checkout', '_bx_payment_2co_cpt', '_bx_payment_2co_dsc', '2co_', 1, 1, 0, 'BxPaymentProvider2Checkout');
+INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `active`, `order`, `class_name`) VALUES
+('2checkout', '_bx_payment_2co_cpt', '_bx_payment_2co_dsc', '2co_', 1, 1, 0, 0, 2, 'BxPaymentProvider2Checkout');
 SET @iProviderId = LAST_INSERT_ID();
 
 INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
@@ -140,8 +142,8 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 
 
 -- BitPay payment provider
-INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `class_name`) VALUES
-('bitpay', '_bx_payment_bp_cpt', '_bx_payment_bp_dsc', 'bp_', 0, 1, 0, 'BxPaymentProviderBitPay');
+INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `active`, `order`, `class_name`) VALUES
+('bitpay', '_bx_payment_bp_cpt', '_bx_payment_bp_dsc', 'bp_', 0, 1, 0, 0, 3, 'BxPaymentProviderBitPay');
 SET @iProviderId = LAST_INSERT_ID();
 
 INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
@@ -153,8 +155,8 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 
 
 -- Chargebee payment provider
-INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `class_name`) VALUES
-('chargebee', '_bx_payment_cbee_cpt', '_bx_payment_cbee_dsc', 'cbee_', 1, 0, 1, 'BxPaymentProviderChargebee');
+INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `active`, `order`, `class_name`) VALUES
+('chargebee', '_bx_payment_cbee_cpt', '_bx_payment_cbee_dsc', 'cbee_', 1, 0, 1, 1, 4, 'BxPaymentProviderChargebee');
 SET @iProviderId = LAST_INSERT_ID();
 
 INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
@@ -171,8 +173,8 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 (@iProviderId, 'cbee_notify_url', 'value', '_bx_payment_cbee_notify_url_cpt', '', '', '', '', '', 11);
 
 -- Chargebee V3 payment provider
-INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `class_name`) VALUES
-('chargebee_v3', '_bx_payment_cbee_v3_cpt', '_bx_payment_cbee_v3_dsc', 'cbee_v3_', 1, 0, 1, 'BxPaymentProviderChargebeeV3');
+INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `active`, `order`, `class_name`) VALUES
+('chargebee_v3', '_bx_payment_cbee_v3_cpt', '_bx_payment_cbee_v3_dsc', 'cbee_v3_', 1, 0, 1, 1, 5, 'BxPaymentProviderChargebeeV3');
 SET @iProviderId = LAST_INSERT_ID();
 
 INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
@@ -189,8 +191,8 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 (@iProviderId, 'cbee_v3_notify_url', 'value', '_bx_payment_cbee_notify_url_cpt', '', '', '', '', '', 11);
 
 -- Recurly payment provider
-INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `class_name`) VALUES
-('recurly', '_bx_payment_rcrl_cpt', '_bx_payment_rcrl_dsc', 'rcrl_', 1, 0, 1, 'BxPaymentProviderRecurly');
+INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `active`, `order`, `class_name`) VALUES
+('recurly', '_bx_payment_rcrl_cpt', '_bx_payment_rcrl_dsc', 'rcrl_', 1, 0, 1, 0, 6, 'BxPaymentProviderRecurly');
 SET @iProviderId = LAST_INSERT_ID();
 
 INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
@@ -204,8 +206,8 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 (@iProviderId, 'rcrl_notify_url', 'value', '_bx_payment_rcrl_notify_url_cpt', '', '', '', '', '', 8);
 
 -- Stripe payment provider
-INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `class_name`) VALUES
-('stripe', '_bx_payment_strp_cpt', '_bx_payment_strp_dsc', 'strp_', 1, 1, 1, 'BxPaymentProviderStripe');
+INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `active`, `order`, `class_name`) VALUES
+('stripe', '_bx_payment_strp_cpt', '_bx_payment_strp_dsc', 'strp_', 1, 1, 1, 1, 7, 'BxPaymentProviderStripe');
 SET @iProviderId = LAST_INSERT_ID();
 
 INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
@@ -224,6 +226,8 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 
 -- GRIDS
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
+('bx_payment_grid_providers', 'Sql', 'SELECT * FROM `bx_payment_providers` WHERE 1 ', 'bx_payment_providers', 'id', 'order', 'active', '', 100, NULL, 'start', '', 'name', 'caption,description', 'auto', '', '', 192, 'BxPaymentGridProviders', 'modules/boonex/payment/classes/BxPaymentGridProviders.php'),
+
 ('bx_payment_grid_carts', 'Array', '', '', 'vendor_id', '', '', '', 20, NULL, 'start', '', '', '', 'like', '', '', 2147483647, 'BxPaymentGridCarts', 'modules/boonex/payment/classes/BxPaymentGridCarts.php'),
 ('bx_payment_grid_cart', 'Array', '', '', 'descriptor', '', '', '', 20, NULL, 'start', '', 'title,description', '', 'like', '', '', 2147483647, 'BxPaymentGridCart', 'modules/boonex/payment/classes/BxPaymentGridCart.php'),
 
@@ -236,6 +240,14 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 ('bx_payment_grid_orders_pending', 'Sql', 'SELECT `tt`.`id` AS `id`, `tt`.`client_id` AS `client_id`, `tt`.`seller_id` AS `seller_id`, `tt`.`items` AS `items`, `tt`.`amount` AS `amount`, `tt`.`order` AS `transaction`, `tt`.`error_msg` AS `error_msg`, `tt`.`provider` AS `provider`, `tt`.`date` AS `date` FROM `bx_payment_transactions_pending` AS `tt` WHERE 1 AND (ISNULL(`tt`.`order`) OR (NOT ISNULL(`tt`.`order`) AND `tt`.`error_code`<>''0'')) ', 'bx_payment_transactions_pending', 'id', 'date', '', '', 100, NULL, 'start', '', 'tt`.`order,tt`.`amount,tt`.`date', '', 'auto', '', '', 2147483647, 'BxPaymentGridPending', 'modules/boonex/payment/classes/BxPaymentGridPending.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
+('bx_payment_grid_providers', 'order', '', '2%', 0, '', '', 1),
+('bx_payment_grid_providers', 'switcher', '', '8%', 0, '', '', 2),
+('bx_payment_grid_providers', 'caption', '_bx_payment_grid_column_title_pdrs_caption', '25%', 1, '16', '', 3),
+('bx_payment_grid_providers', 'description', '_bx_payment_grid_column_title_pdrs_description', '35%', 1, '32', '', 4),
+('bx_payment_grid_providers', 'for_visitor', '_bx_payment_grid_column_title_pdrs_for_visitor', '10%', 0, '8', '', 5),
+('bx_payment_grid_providers', 'for_single', '_bx_payment_grid_column_title_pdrs_for_single', '10%', 0, '8', '', 6),
+('bx_payment_grid_providers', 'for_recurring', '_bx_payment_grid_column_title_pdrs_for_recurring', '10%', 0, '8', '', 7),
+
 ('bx_payment_grid_carts', 'checkbox', '', '2%', 0, '', '', 1),
 ('bx_payment_grid_carts', 'vendor_id', '_bx_payment_grid_column_title_crts_vendor_id', '40%', 0, '36', '', 2),
 ('bx_payment_grid_carts', 'items_count', '_bx_payment_grid_column_title_crts_items_count', '20%', 0, '16', '', 3),

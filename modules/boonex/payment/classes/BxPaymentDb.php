@@ -38,7 +38,8 @@ class BxPaymentDb extends BxBaseModPaymentDb
                 `tpo`.`check_error` AS `check_error`
             FROM `" . $this->_sPrefix . "providers` AS `tp`
             LEFT JOIN `" . $this->_sPrefix . "providers_options` AS `tpo` ON `tp`.`id`=`tpo`.`provider_id`
-            ORDER BY `tp`.`id` ASC, `tpo`.`order` ASC";
+            WHERE `tp`.`active`='1' 
+            ORDER BY `tp`.`order` ASC, `tpo`.`order` ASC";
 
         return $this->getAll($sQuery);
     }
