@@ -11,7 +11,8 @@ class BxDolQueue extends BxDolFactory
 {
     protected $_oQuery;
 
-    protected $_bBusy;
+    protected $_sParamTime;
+    protected $_iExecutionLiveTime;
 
     protected $_iLimitSend;
     protected $_iLimitSendPerRecipient;
@@ -25,7 +26,8 @@ class BxDolQueue extends BxDolFactory
 
         parent::__construct();
 
-        $this->_bBusy = false;
+        $this->_sParamTime = '';
+        $this->_iExecutionLiveTime = 86400;
     }
 
     /**
@@ -37,6 +39,28 @@ class BxDolQueue extends BxDolFactory
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
 
+    public function getBusy()
+    {
+        return (int)getParam($this->_sParamTime);
+    }
+
+    public function setBusy($iTime = 0)
+    {
+        setParam($this->_sParamTime, $iTime);
+    }
+
+    public function isBusy()
+    {
+        $iNow = time();
+        $iTime = $this->getBusy();
+
+        $bBusy = !empty($iTime) && ($iNow - $iTime) < $this->_iExecutionLiveTime;
+        if(!$bBusy)
+            $this->setBusy($iNow);
+
+        return $bBusy;
+    }
+
     /**
      * Send some number of items (email/push) from queue
      *
@@ -45,10 +69,8 @@ class BxDolQueue extends BxDolFactory
      */
     public function send($iLimit = 0)
     {
-        if($this->_bBusy)
+        if($this->isBusy())
             return false;
-
-        $this->_bBusy = true;
 
         $aSent = array();
 
@@ -63,7 +85,7 @@ class BxDolQueue extends BxDolFactory
     	        $aSent[] = $iId;
             }            
 
-        $this->_bBusy = false;
+        $this->setBusy();
 
     	return count($aSent);
     }
