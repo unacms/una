@@ -68,11 +68,17 @@ class BxSpacesModule extends BxBaseModGroupsModule
     
     public function getListSpacesForParent ($sTerm, $iContentId, $iLimit)
     {
+        $CNF = &$this->_oConfig->CNF;
+
         if (!isLogged())
             return false;
-        
+
+        $iLevelsLimit = BX_SPS_LEVELS_LIMIT;
+        if(getParam($CNF['PARAM_MULTILEVEL_HIERARCHY']) == 'on')
+            $iLevelsLimit = 0;
+
         $aRv = array();
-        $aTmp = $this->_oDb->searchByTermForParentSpace(bx_get_logged_profile_id(), $iContentId, BX_SPS_LEVELS_LIMIT, $sTerm, $iLimit);
+        $aTmp = $this->_oDb->searchByTermForParentSpace(bx_get_logged_profile_id(), $iContentId, $iLevelsLimit, $sTerm, $iLimit);
         foreach ($aTmp as $aSpace) {
             $oProfile = BxDolProfile::getInstance($aSpace['profile_id']);
 
