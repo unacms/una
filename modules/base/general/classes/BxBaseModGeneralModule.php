@@ -1070,6 +1070,12 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function checkAllowedBrowse ()
     {
+        // check alert to allow custom checks
+        $mixedResult = null;
+        bx_alert('system', 'check_allowed_browse', 0, 0, array('module' => $this->getName(), 'profile_id' => $this->_iProfileId, 'override_result' => &$mixedResult));
+        if($mixedResult !== null)
+            return $mixedResult;
+
         return CHECK_ACTION_RESULT_ALLOWED;
     }
 
@@ -1103,6 +1109,12 @@ class BxBaseModGeneralModule extends BxDolModule
             if ($oPrivacy && !$oPrivacy->check($aDataEntry[$CNF['FIELD_ID']], $iProfileId))
                 return _t('_sys_access_denied_to_private_content');
         }
+
+        // check alert to allow custom checks
+        $mixedResult = null;
+        bx_alert('system', 'check_allowed_view', 0, 0, array('module' => $this->getName(), 'content_info' => $aDataEntry, 'profile_id' => $iProfileId, 'override_result' => &$mixedResult));
+        if($mixedResult !== null)
+            return $mixedResult;
 
         return CHECK_ACTION_RESULT_ALLOWED;
     }
