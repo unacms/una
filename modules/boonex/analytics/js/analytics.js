@@ -77,6 +77,8 @@ BxAnalytics.prototype.reloadData = function () {
             else
                 return label;
         };
+
+        
         
         bx_loading($($this._sContainerDataSelector), false);
         var oDataForChart = oData.data || false;
@@ -94,7 +96,7 @@ BxAnalytics.prototype.reloadData = function () {
 
 BxAnalytics.prototype.dataToTable = function (oDataIn) {
     var $this = this;
-    oData = oDataIn.data
+    oData = oDataIn.data.clone();
     var sHtml = '<table>';
     var sCol1 = oDataIn.strings[0];
 
@@ -107,17 +109,16 @@ BxAnalytics.prototype.dataToTable = function (oDataIn) {
 
     sHtml += '</tr></thead>';
     var iK = 0;
-
-    if (oData.labels.length == 0) {
+    console.log(oDataIn.options.scales.xAxes[0].type == 'time');
+    if (oDataIn.options.scales.xAxes[0].type == 'time') {
         oData.datasets[0].data.reverse();
     }
-
-    $.each(oData.datasets[0].data, function (iDx, oItemData) {
+    oData.datasets[0].data.forEach(function (oItemData, iDx) {
         var sTxt = "";
-        if (oData.labels.length > 0)
-            sTxt = oData.labels[iDx];
-        else{
+        if (oDataIn.options.scales.xAxes[0].type == 'time')
             sTxt = oData.datasets[0].data[iDx].x;
+        else{
+            sTxt = oData.labels[iDx];
         }
         if (oDataIn.links && oDataIn.links.length > 0) {
             sTxt = "<a href='" + oDataIn.links[iDx] + "'>" + sTxt + "</a>"

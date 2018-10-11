@@ -175,7 +175,7 @@ class BxAnalyticsModule extends BxDolModule
             }
             
             $sRv .= $sTxt . $sColumn;
-            for ($i = 0; $i < $iColumnCount; $i++) {
+            for ($i = 0; $i < $iColumnCount; $i++){
                 $sText = '';
                 if (is_array($aItemData)) {
                     $sText = $aItemData['y'];
@@ -251,7 +251,7 @@ class BxAnalyticsModule extends BxDolModule
                             array_push($aValues['values'][0]['data'], array('x' => $sX, 'y' => $sReportName == BX_ANALYTICS_CONTENT_TOTAL ? ($iValuePrev + $aTmpDates[$sX]) : $aTmpDates[$sX]));
                             $iValuePrev += $aTmpDates[$sX];
                         }
-                        array_push($aValues['labels'], $sX);
+                        //array_push($aValues['labels'], $sX);
                         if ($sReportName == BX_ANALYTICS_CONTENT_TOTAL){
                             if ($iValuePrev > $iMaxValueY)
                                 $iMaxValueY = $iValuePrev;
