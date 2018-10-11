@@ -442,7 +442,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             if ($oMetatags->locationsIsEnabled() && $aContentInfo)
                 $oMetatags->locationsAddFromForm($aContentInfo[$CNF['FIELD_ID']], $CNF['FIELD_LOCATION_PREFIX']);
 
-            if (!empty($CNF['FIELD_LABELS']) && ($aLabels = bx_get($CNF['FIELD_LABELS'])) && $oMetatags->keywordsIsEnabled()) {
+            if ($aContentInfo && !empty($CNF['FIELD_LABELS']) && ($aLabels = bx_get($CNF['FIELD_LABELS'])) && $oMetatags->keywordsIsEnabled()) {
                 foreach ($aLabels as $sLabel)
                     $oMetatags->keywordsAddOne($aContentInfo[$CNF['FIELD_ID']], $sLabel, false);
             }
