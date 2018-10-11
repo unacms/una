@@ -178,11 +178,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     {
         $CNF = &$this->_oConfig->CNF;
 
-        if ($CNF['TRIGGER_MENU_PROFILE_VIEW_SUBMENU'] == $sMenuTriggerName)
+        if (isset($CNF['TRIGGER_MENU_PROFILE_VIEW_SUBMENU']) && $CNF['TRIGGER_MENU_PROFILE_VIEW_SUBMENU'] == $sMenuTriggerName)
             return $CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'];
-        elseif ($CNF['TRIGGER_MENU_PROFILE_SNIPPET_META'] == $sMenuTriggerName)
+        elseif (isset($CNF['TRIGGER_MENU_PROFILE_SNIPPET_META']) && $CNF['TRIGGER_MENU_PROFILE_SNIPPET_META'] == $sMenuTriggerName)
             return $CNF['OBJECT_MENU_SNIPPET_META'];
-        else if ($CNF['TRIGGER_MENU_PROFILE_VIEW_ACTIONS'] == $sMenuTriggerName) {
+        else if (isset($CNF['TRIGGER_MENU_PROFILE_VIEW_ACTIONS']) && $CNF['TRIGGER_MENU_PROFILE_VIEW_ACTIONS'] == $sMenuTriggerName) {
             if(empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL']))
                 return $CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY'];
             else
