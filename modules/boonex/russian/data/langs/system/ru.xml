@@ -1302,7 +1302,7 @@
     <string name="_adm_stg_cpt_option_sys_embedly_api_key"><![CDATA[Ключ Embed.ly API (заполните, чтобы использовать вместо Iframely)]]></string>
     <string name="_adm_stg_cpt_option_sys_embedly_api_pattern"><![CDATA[Шаблон Embed.ly API (заполните, чтобы использовать вместо Iframely)]]></string>
     <string name="_adm_stg_cpt_option_sys_iframely_api_key"><![CDATA[Ключ Iframely API]]></string>
-    <string name="_adm_stg_cpt_option_sys_eq_time"><![CDATA[Дата последнего запуска имейл очереди]]></string>
+    <string name="_adm_stg_cpt_option_sys_eq_time"><![CDATA[Флаг выполнения имейл очереди]]></string>
     <string name="_adm_stg_cpt_option_sys_eq_send_per_start"><![CDATA[Количество сообщенией, отправляемое из имейл очереди при каждом запуске]]></string>
     <string name="_adm_stg_cpt_option_sys_eq_send_per_start_to_recipient"><![CDATA[Количество сообщенией, отправляемое из имейл очереди одному и тому же получателю при каждом запуске]]></string>
 	<string name="_adm_stg_cpt_option_sys_oauth_key"><![CDATA[UNA-аккаунт - Key (ключ)]]></string>
@@ -1317,7 +1317,7 @@
     <string name="_adm_stg_cpt_option_sys_push_rest_api"><![CDATA[REST API Key]]></string>
     <string name="_adm_stg_cpt_option_sys_push_short_name"><![CDATA[Короткое имя (требуется только если у вас https сайт. Оно должно совпадать с поддоменом, введёным, в настройках пуш оповещений на OneSignal)]]></string>
     <string name="_adm_stg_cpt_option_sys_push_safari_id"><![CDATA[Apple Safari Web ID в натройках Web Push]]></string>
-    <string name="_adm_stg_cpt_option_sys_push_queue_time"><![CDATA[Дата последнего запуска Push очереди]]></string>
+    <string name="_adm_stg_cpt_option_sys_push_queue_time"><![CDATA[Флаг выполнения Push очереди]]></string>
     <string name="_adm_stg_cpt_option_sys_push_queue_send_per_start"><![CDATA[Количество сообщенией, отправляемое из Push очереди при каждом запуске]]></string>
     <string name="_adm_stg_cpt_option_sys_push_queue_send_per_start_to_recipient"><![CDATA[Количество сообщенией, отправляемое из Push очереди одному и тому же получателю при каждом запуске]]></string>
 	<string name="_adm_stg_cpt_option_sys_twilio_gate_sid"><![CDATA[Account SID]]></string>
