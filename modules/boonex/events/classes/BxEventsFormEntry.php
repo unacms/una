@@ -213,6 +213,11 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
         ));
     }
 
+    protected function genCustomViewRowValueTimezone ($aInput)
+    {
+        return $aInput['value'];
+    }
+
     public function insert ($aValsToAdd = array(), $isIgnore = false)
     {
         $iContentId = parent::insert ($aValsToAdd, $isIgnore);
