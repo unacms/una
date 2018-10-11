@@ -189,22 +189,20 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
 
     function getModulesUri()
     {
-        $sSql = "SELECT `uri` FROM `sys_modules` ORDER BY `uri`";
-        return $this->fromMemory('sys_modules_uri', 'getColumn', $sSql);
+        return $this->fromMemory('sys_modules_uri', 'getColumn', 'SELECT `uri` FROM `sys_modules` ORDER BY `uri`');
     }
 
-    function getDependent($sUri)
+    function getDependent($sName, $sUri)
     {
-        $sSql = "SELECT `id`, `title`, `enabled` FROM `sys_modules` WHERE `dependencies` LIKE " . $this->escape('%' . $sUri . '%') . " AND `enabled`='1'";
-        return $this->getAll($sSql);
+        return $this->getAll("SELECT `id`, `title`, `enabled` FROM `sys_modules` WHERE (`dependencies` LIKE " . $this->escape('%' . $sName . '%') . " OR `dependencies` LIKE " . $this->escape('%' . $sUri . '%') . ") AND `enabled`='1'");
     }
 
-	public function updateModule($aParamsSet, $aParamsWhere = array())
+    public function updateModule($aParamsSet, $aParamsWhere = array())
     {
         if(empty($aParamsSet))
             return false;
 
-		$sWhereClause = !empty($aParamsWhere) ? $this->arrayToSQL($aParamsWhere, " AND ") : "1";
+        $sWhereClause = !empty($aParamsWhere) ? $this->arrayToSQL($aParamsWhere, " AND ") : "1";
 
         $sSql = "UPDATE `sys_modules` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $sWhereClause;
         return $this->query($sSql);

@@ -75,19 +75,20 @@ class BxBaseFormLogin extends BxTemplFormView
 
     function isValid ()
     {
-        $bIsValid = parent::isValid ();
-        if (! $bIsValid)
+        if (!parent::isValid())
             return false;
         
 		$sId = trim($this->getCleanValue('ID'));
-		$sPassword = $this->getCleanValue('Password');
+        $sPassword = $this->getCleanValue('Password');
+
         if ($sId != ''){
             $sErrorString = bx_check_password($sId, $sPassword, $this->getRole());
             $this->_setCustomError ($sErrorString);
             return $sErrorString ? false : true;
         }
-        else{
-            return $bIsValid;
+        else {
+            $this->_setCustomError (_t('_sys_txt_error_occured'));
+            return false;
         }
     }
 

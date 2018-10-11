@@ -77,6 +77,25 @@ class BxAlbumsModule extends BxBaseModTextModule
         if (!$this->_oDb->deassociateFileWithContent(0, $iFileId))
             return false;
 
+        $aContentInfo = $this->_oDb->getContentInfoById($aMediaInfo['content_id']);
+        $iSender = isLogged() ? bx_get_logged_profile_id() : $aMediaInfo['author'];
+        $iAuthor = isset($aContentInfo[$CNF['FIELD_AUTHOR']]) ? $aContentInfo[$CNF['FIELD_AUTHOR']] : $aMediaInfo['author'];
+        bx_alert($this->getName(), 'media_deleted', $aMediaInfo['content_id'], $iSender, array(
+            'object_author_id' => $iAuthor,
+
+            'subobject_id' => $aMediaInfo['id'],
+
+            'media_id' => $aMediaInfo['id'], 
+            'media_info' => $aMediaInfo,
+        ));
+
+        bx_alert($this->getName() . '_media', 'deleted', $aMediaInfo['id'], $iSender, array(
+            'object_id' => $aMediaInfo['content_id'],
+            'object_author_id' => $iAuthor,
+
+            'media_info' => $aMediaInfo,
+        ));        
+
         if (!empty($CNF['OBJECT_VIEWS_MEDIA'])) {
             $o = BxDolView::getObjectInstance($CNF['OBJECT_VIEWS_MEDIA'], $aMediaInfo['id']);
             if ($o) $o->onObjectDelete();

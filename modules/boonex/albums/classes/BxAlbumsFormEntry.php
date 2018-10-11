@@ -110,41 +110,6 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
         ));
     }
 
-    function _deleteFile ($iFileId, $sStorage = '')
-    {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        if (!($bRet = parent::_deleteFile ($iFileId)))
-            return false;
-
-        $aMediaInfo = $this->_oModule->_oDb->getMediaInfoSimpleByFileId($iFileId);
-        
-        $this->_oModule->serviceDeleteFileAssociations ($iFileId);
-
-        if ($aMediaInfo) {
-            $aContentInfo = $this->_oModule->_oDb->getContentInfoById($aMediaInfo['content_id']);
-
-            $iSender = isLogged() ? bx_get_logged_profile_id() : $aMediaInfo['author'];
-            bx_alert($this->_oModule->getName(), 'media_deleted', $aContentInfo[$CNF['FIELD_ID']], $iSender, array(
-                'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']],
-
-                'subobject_id' => $aMediaInfo['id'],
-
-                'media_id' => $aMediaInfo['id'], 
-                'media_info' => $aMediaInfo,
-            ));
-
-            bx_alert($this->_oModule->getName() . '_media', 'deleted', $aMediaInfo['id'], $iSender, array(
-                'object_id' => $aContentInfo[$CNF['FIELD_ID']],
-                'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']],
-
-                'media_info' => $aMediaInfo,
-            ));
-        }
-        
-        return true;
-    }
-
     function delete ($iContentId, $aContentInfo = array())
     {
         if (!($bRet = parent::delete ($iContentId, $aContentInfo)))
@@ -153,10 +118,8 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
         if (!($aMediaList = $this->_oModule->_oDb->getMediaListByContentId($iContentId)))
             return $bRet;
 
-        foreach ($aMediaList as $aMediaInfo) {
+        foreach ($aMediaList as $aMediaInfo)
             $this->_oModule->serviceDeleteFileAssociations($aMediaInfo['file_id']);
-            bx_alert($this->_oModule->getName(), 'media_deleted', $aMediaInfo['id'], $aMediaInfo['author'], array('media_info' => $aMediaInfo));
-        }
         
         return $bRet;
     }

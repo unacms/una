@@ -82,7 +82,7 @@ class BxBaseServiceLogin extends BxDol
 
         $sCustomHtmlBefore = '';
         $sCustomHtmlAfter = '';
-        bx_alert('profile', 'show_login_form', 0, 0, array('oForm' => $oForm, 'sParams' => &$sParams, 'sCustomHtmlBefore' => &$sCustomHtmlBefore, 'sCustomHtmlAfter' => &$sCustomHtmlAfter, 'aAuthTypes' => &$aAuthTypes));
+        bx_alert('profile', 'show_login_form', 0, 0, array('oForm' => &$oForm, 'sParams' => &$sParams, 'sCustomHtmlBefore' => &$sCustomHtmlBefore, 'sCustomHtmlAfter' => &$sCustomHtmlAfter, 'aAuthTypes' => &$aAuthTypes));
 
         if ($sForceRelocate && 0 === mb_stripos($sForceRelocate, BX_DOL_URL_ROOT))
             $oForm->aInputs['relocate']['value'] = $sForceRelocate;

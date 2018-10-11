@@ -71,9 +71,9 @@ class BxSpacesConfig extends BxBaseModProfileConfig
             'URL_MANAGE_COMMON' => 'page.php?i=spaces-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=spaces-administration',
 
+            'PARAM_MULTILEVEL_HIERARCHY' => 'bx_spaces_enable_multilevel_hierarchy',
             'PARAM_NUM_RSS' => 'bx_spaces_num_rss',
             'PARAM_NUM_CONNECTIONS_QUICK' => 'bx_spaces_num_connections_quick',
-
             'PARAM_SEARCHABLE_FIELDS' => 'bx_spaces_searchable_fields',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_spaces_per_page_browse_showcase',
             'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_spaces_per_page_browse_recommended',
