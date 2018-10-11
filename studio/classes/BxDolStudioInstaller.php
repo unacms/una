@@ -213,10 +213,6 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         //--- Check actions ---//
         $aResult = $this->_perform('install', $aParams);
         if($aResult['result']) {
-            $sDependencies = "";
-            if(isset($this->_aConfig['install']['check_dependencies']) && (int)$this->_aConfig['install']['check_dependencies'] == 1 && isset($this->_aConfig['dependencies']) && is_array($this->_aConfig['dependencies']))
-                $this->_aConfig['dependencies'] = array_keys($this->_aConfig['dependencies']);
-
             $iModuleId = $this->oDb->insertModule($this->_aConfig);
 
             $sTitleKey = BxDolModule::getTitleKey($this->_aConfig['home_uri']);
@@ -282,7 +278,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
         //--- Check for dependent modules ---//
         $bDependent = false;
-        $aDependents = $this->oDb->getDependent($this->_aConfig['home_uri']);
+        $aDependents = $this->oDb->getDependent($this->_aConfig['name'], $this->_aConfig['home_uri']);
         if(is_array($aDependents) && !empty($aDependents)) {
             $bDependent = true;
 
@@ -474,7 +470,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
         //--- Check for dependent modules ---//
         $bDependent = false;
-        $aDependents = $this->oDb->getDependent($this->_aConfig['home_uri']);
+        $aDependents = $this->oDb->getDependent($this->_aConfig['name'], $this->_aConfig['home_uri']);
         if(is_array($aDependents) && !empty($aDependents)) {
             $bDependent = true;
 
@@ -547,9 +543,15 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             if(!isset($this->_aConfig['dependencies']) || !is_array($this->_aConfig['dependencies']))
                 return BX_DOL_STUDIO_INSTALLER_SUCCESS;
 
-            foreach($this->_aConfig['dependencies'] as $sModuleUri => $sModuleTitle)
-                if(!$this->oDb->isModule($sModuleUri) || !$this->oDb->isEnabled($sModuleUri))
-                    $sContent .= $sModuleTitle . '<br />';
+            foreach($this->_aConfig['dependencies'] as $sModule => $sModuleTitle) {
+                if($this->oDb->isModule($sModule) && $this->oDb->isEnabled($sModule))
+                    continue;
+
+                if($this->oDb->isModuleByName($sModule) && $this->oDb->isEnabledByName($sModule))
+                    continue;
+
+                $sContent .= $sModuleTitle . '<br />';
+            }
 
             if(!empty($sContent))
                 $sContent = '<br />' . _t('_adm_err_modules_wrong_dependency_install') . '<br />' . $sContent;
