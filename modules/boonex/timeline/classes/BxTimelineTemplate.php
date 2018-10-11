@@ -1529,7 +1529,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $iOwner = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $aEvent['owner_id'] : $aEvent['object_id'];
 
         $aTmplVars = array();
-        if(!empty($aEvent['promoted']) && $iUser != $iOwner) {
+        if(!empty($aEvent['promoted'])) {
             $sConnection = $this->_oConfig->getObject('conn_subscriptions');
             $oConnection = BxDolConnection::getObjectInstance($sConnection);
             if(!$oConnection->isConnected($iUser, $iOwner))
