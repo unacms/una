@@ -59,36 +59,25 @@ class BxCnvTemplate extends BxBaseModTextTemplate
         );
         $i = 0;
         foreach ($aCollaborators as $iProfileId => $iReadComments) {
-            $oProfile = BxDolProfile::getInstance($iProfileId);
-            if (!$oProfile)
-                continue;
-
-            $sInfo = '';
-            if ($aContentInfo[$CNF['FIELD_AUTHOR']] == $iProfileId)
-                $sInfo = _t('_bx_cnv_collaborator_author');
-            if ($aContentInfo['last_reply_profile_id'] == $iProfileId)
-                $sInfo .= ', ' . _t('_bx_cnv_collaborator_last_replier');
-            $sInfo = trim($sInfo, ', ');
-            $sInfo = $sInfo ? _t('_bx_cnv_collaborator_info', $oProfile->getDisplayName(), $sInfo) : $oProfile->getDisplayName();
+            $oProfile = BxDolProfile::getInstanceMagic($iProfileId);
 
             $aCollaborator = array (
                 'id' => $oProfile->id(),
-                'url' => $oProfile->getUrl(),
-                'thumb_url' => $oProfile->getThumb(),
-                'title' => $oProfile->getDisplayName(),
-                'title_attr' =>  bx_html_attribute($sInfo),
+                'unit' => $oProfile->getUnit(0, array('template' => 'unit_wo_info')),
                 'float' => $sFloat,
                 'class' => $aContentInfo[$CNF['FIELD_AUTHOR']] == $iProfileId ? 'bx-cnv-collaborator-author' : '',
                 'bx_if:last_replier' => array (
                     'condition' => ($aContentInfo['last_reply_profile_id'] == $iProfileId),
                     'content' => array (
                         'id' => $oProfile->id(),
+                        'title' => bx_html_attribute(_t('_bx_cnv_collaborator_last_replier')),
                     ),
                 ),
                 'bx_if:author'  => array (
                     'condition' => $aContentInfo[$CNF['FIELD_AUTHOR']] == $iProfileId,
                     'content' => array (
                         'id' => $oProfile->id(),
+                        'title' => bx_html_attribute(_t('_bx_cnv_collaborator_author')),
                     ),
                 ),
             );

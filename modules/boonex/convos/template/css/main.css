@@ -4,12 +4,18 @@
 .bx-cnv-collaborators {
     white-space:nowrap;
 }
-.bx-popup-content .bx-cnv-collaborators {
-    margin-right:0px;
-}
 .bx-cnv-collaborator {
-	display:inline;
-    display:inline-block;
+	position:relative;
+    display:block;
+}
+.bx-cnv-collaborator.bx-def-margin-sec-left-auto {
+    float:left;
+}
+.bx-cnv-collaborator.bx-def-margin-sec-right-auto {
+    float:right;
+}
+.bx-cnv-collaborator-last-replier {
+    left:0; right:auto;
 }
 
 .bx-grid-table .bx-cnv-collaborator,
