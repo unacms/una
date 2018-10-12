@@ -25,7 +25,8 @@ class BxPhotosTemplate extends BxBaseModTextTemplate
 
     public function entryText ($aData, $sTemplateName = 'entry-text.html')
     {
-        return $this->entryPhoto($aData);
+        $aTmplVars = BxBaseModGeneralTemplate::getTmplVarsText($aData);
+        return $this->parseHtmlByName($sTemplateName, $aTmplVars);
     }
 
     public function entryPhoto ($aContentInfo, $bAsArray = false)
@@ -163,6 +164,9 @@ class BxPhotosTemplate extends BxBaseModTextTemplate
             $sMode = $aParams['context'];
             unset($aParams['context']);
         }
+
+        if (empty($aData['title']))
+            $aData['title'] = _t('_bx_photos_txt_no_title');
 
         $aResult = parent::getUnit($aData, $aParams);
         $aResult['bx_if:thumb']['content']['content_onclick'] = !empty($sMode) ? $this->_oConfig->getJsObject('main') . ".viewEntry(" . $aData[$CNF['FIELD_ID']] . ", '" . $sMode . "', " . bx_html_attribute(json_encode($aParams)) . "); return false;" : "";
