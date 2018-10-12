@@ -34,11 +34,13 @@
     <string name="_bx_photos_form_entry_input_delete_confirm"><![CDATA[I am sure I want to delete this photo]]></string>
     <string name="_bx_photos_form_entry_input_delete_confirm_info"><![CDATA[This action can not be undone]]></string>
     <string name="_bx_photos_form_entry_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete the photo]]></string>
-    <string name="_bx_photos_form_entry_input_sys_pictures"><![CDATA[Photo]]></string>
-    <string name="_bx_photos_form_entry_input_pictures"><![CDATA[Photo]]></string>
+    <string name="_bx_photos_form_entry_input_sys_pictures"><![CDATA[Photos]]></string>
+    <string name="_bx_photos_form_entry_input_pictures"><![CDATA[Photos]]></string>
+    <string name="_bx_photos_form_entry_input_pictures_err"><![CDATA[Photo is essential. Please, upload some photo(s).]]></string>
     <string name="_bx_photos_form_entry_input_pictures_upload"><![CDATA[Upload]]></string>
-    <string name="_bx_photos_form_entry_input_sys_attachment"><![CDATA[Photo]]></string>
-    <string name="_bx_photos_form_entry_input_attachment"><![CDATA[Photo]]></string>
+    <string name="_bx_photos_form_entry_input_sys_picture"><![CDATA[Photo]]></string>
+    <string name="_bx_photos_form_entry_input_picture"><![CDATA[Photo]]></string>
+    <string name="_bx_photos_form_entry_input_picture_err"><![CDATA[Photo is essential. Please, upload a photo.]]></string>
     <string name="_bx_photos_form_entry_input_sys_allow_view_to"><![CDATA[Visibility]]></string>
     <string name="_bx_photos_form_entry_input_allow_view_to"><![CDATA[Visibility]]></string>
     <string name="_bx_photos_form_entry_input_picture_use_as_thumb"><![CDATA[Cover Image]]></string>
@@ -56,9 +58,9 @@
 	<string name="_bx_photos_acl_action_set_thumb"><![CDATA[Set Photo Thumbnail]]></string>
 	<string name="_bx_photos_acl_action_edit_any_entry"><![CDATA[Edit Any Photo]]></string>
 
-	<string name="_bx_photos_page_title_sys_create_entry"><![CDATA[New Photo]]></string>
-	<string name="_bx_photos_page_title_create_entry"><![CDATA[New Photo]]></string>
-	<string name="_bx_photos_page_block_title_create_entry"><![CDATA[New Photo]]></string>
+	<string name="_bx_photos_page_title_sys_create_entry"><![CDATA[Upload Photos]]></string>
+	<string name="_bx_photos_page_title_create_entry"><![CDATA[Upload Photos]]></string>
+	<string name="_bx_photos_page_block_title_create_entry"><![CDATA[Upload Photos]]></string>
 	<string name="_bx_photos_page_title_sys_edit_entry"><![CDATA[Edit]]></string>
 	<string name="_bx_photos_page_title_edit_entry"><![CDATA[Edit]]></string>
 	<string name="_bx_photos_page_block_title_edit_entry"><![CDATA[Edit]]></string>

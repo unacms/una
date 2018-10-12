@@ -36,9 +36,11 @@
 	<string name="_bx_files_form_entry_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено]]></string>
 	<string name="_bx_files_form_entry_input_delete_confirm_error"><![CDATA[Нужно подтвердить удаление файла]]></string>
 	<string name="_bx_files_form_entry_input_sys_attachment"><![CDATA[Файл]]></string>
-    <string name="_bx_files_form_entry_input_attachment"><![CDATA[Файл]]></string>
+        <string name="_bx_files_form_entry_input_attachment"><![CDATA[Файл]]></string>
+        <string name="_bx_files_form_entry_input_attachment_err"><![CDATA[Файл обязателен. Пожалуйста, загрузите файл.]]></string>
 	<string name="_bx_files_form_entry_input_sys_attachments"><![CDATA[Файлы]]></string>
-	<string name="_bx_files_form_entry_input_attachments"><![CDATA[Файлы]]></string>    
+	<string name="_bx_files_form_entry_input_attachments"><![CDATA[Файлы]]></string>
+        <string name="_bx_files_form_entry_input_attachments_err"><![CDATA[Файл обязателен. Пожалуйста, загрузите один или более файлов.]]></string>
     <string name="_bx_files_form_entry_input_sys_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_files_form_entry_input_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_files_form_entry_input_picture_use_as_thumb"><![CDATA[Обложка]]></string>

@@ -34,11 +34,13 @@
     <string name="_bx_photos_form_entry_input_delete_confirm"><![CDATA[Я уверен(а), что хочу удалить это фото]]></string>
     <string name="_bx_photos_form_entry_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено]]></string>
     <string name="_bx_photos_form_entry_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если действительно хотите удалить фото]]></string>
-    <string name="_bx_photos_form_entry_input_sys_pictures"><![CDATA[Картинки]]></string>
-    <string name="_bx_photos_form_entry_input_pictures"><![CDATA[Картинки]]></string>
+    <string name="_bx_photos_form_entry_input_sys_pictures"><![CDATA[Фото]]></string>
+    <string name="_bx_photos_form_entry_input_pictures"><![CDATA[Фото]]></string>
+    <string name="_bx_photos_form_entry_input_pictures_err"><![CDATA[Фото обязательно. Пожалуйста, загрузите одно или более фото.]]></string>
     <string name="_bx_photos_form_entry_input_pictures_upload"><![CDATA[Загрузить]]></string>
-    <string name="_bx_photos_form_entry_input_sys_attachment"><![CDATA[Фото]]></string>
-    <string name="_bx_photos_form_entry_input_attachment"><![CDATA[Фото]]></string>
+    <string name="_bx_photos_form_entry_input_sys_picture"><![CDATA[Фото]]></string>
+    <string name="_bx_photos_form_entry_input_picture"><![CDATA[Фото]]></string>
+    <string name="_bx_photos_form_entry_input_picture_err"><![CDATA[Фото обязательно. Пожалуйста, загрузите фото.]]></string>
     <string name="_bx_photos_form_entry_input_sys_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_photos_form_entry_input_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_photos_form_entry_input_picture_use_as_thumb"><![CDATA[Изображение обложки]]></string>
@@ -56,9 +58,9 @@
 	<string name="_bx_photos_acl_action_set_thumb"><![CDATA[Назначить значок фото]]></string>
 	<string name="_bx_photos_acl_action_edit_any_entry"><![CDATA[Редактировать любое фото]]></string>
 
-	<string name="_bx_photos_page_title_sys_create_entry"><![CDATA[Новое фото]]></string>
-	<string name="_bx_photos_page_title_create_entry"><![CDATA[Новое фото]]></string>
-	<string name="_bx_photos_page_block_title_create_entry"><![CDATA[Новое фото]]></string>
+	<string name="_bx_photos_page_title_sys_create_entry"><![CDATA[Загрузить фото]]></string>
+	<string name="_bx_photos_page_title_create_entry"><![CDATA[Загрузить фото]]></string>
+	<string name="_bx_photos_page_block_title_create_entry"><![CDATA[Загрузить фото]]></string>
 	<string name="_bx_photos_page_title_sys_edit_entry"><![CDATA[Редактировать фото]]></string>
 	<string name="_bx_photos_page_title_edit_entry"><![CDATA[Редактировать фото]]></string>
 	<string name="_bx_photos_page_block_title_edit_entry"><![CDATA[Редактировать фото]]></string>

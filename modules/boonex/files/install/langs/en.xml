@@ -36,9 +36,11 @@
 	<string name="_bx_files_form_entry_input_delete_confirm_info"><![CDATA[This action can not be undone]]></string>
 	<string name="_bx_files_form_entry_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete the file]]></string>
 	<string name="_bx_files_form_entry_input_sys_attachment"><![CDATA[File]]></string>
-    <string name="_bx_files_form_entry_input_attachment"><![CDATA[File]]></string>
+        <string name="_bx_files_form_entry_input_attachment"><![CDATA[File]]></string>
+        <string name="_bx_files_form_entry_input_attachment_err"><![CDATA[File is essential. Please, upload a file.]]></string>
 	<string name="_bx_files_form_entry_input_sys_attachments"><![CDATA[Files]]></string>
-	<string name="_bx_files_form_entry_input_attachments"><![CDATA[Files]]></string>    
+	<string name="_bx_files_form_entry_input_attachments"><![CDATA[Files]]></string>
+        <string name="_bx_files_form_entry_input_attachments_err"><![CDATA[File is essential. Please, upload some file(s).]]></string>    
     <string name="_bx_files_form_entry_input_sys_allow_view_to"><![CDATA[Visibility]]></string>
     <string name="_bx_files_form_entry_input_allow_view_to"><![CDATA[Visibility]]></string>
     <string name="_bx_files_form_entry_input_picture_use_as_thumb"><![CDATA[Cover Image]]></string>
