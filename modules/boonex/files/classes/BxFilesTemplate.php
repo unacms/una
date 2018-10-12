@@ -36,24 +36,27 @@ class BxFilesTemplate extends BxBaseModTextTemplate
     
     function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html', $aParams = array())
     {
-    	$sResult = $this->checkPrivacy ($aData, $isCheckPrivateContent, $this->getModule(), $sTemplateName);
+        $oModule = $this->getModule();
+
+    	$sResult = $this->checkPrivacy ($aData, $isCheckPrivateContent, $oModule, $sTemplateName);
     	if($sResult)
             return $sResult;
 
-        $CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
+        $CNF = &$oModule->_oConfig->CNF;
+
+        $aFile = $oModule->getContentFile($aData);
+        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+
+        if(isset($CNF['FIELD_TITLE']) && empty($aData[$CNF['FIELD_TITLE']]))
+            $aData[$CNF['FIELD_TITLE']] = _t('_sys_txt_no_title');
 
         $aParams['template_name'] = $sTemplateName;
         $aVars = $this->getUnit($aData, $aParams);
-
-        $aFile = BxDolModule::getInstance($this->MODULE)->getContentFile($aData);
-        
-        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
-
         $aVars['icon'] = $oStorage ? $oStorage->getFontIconNameByFileName($aFile['file_name']) : 'far file';
-        if ($sTemplateName == 'unit_gallery.html') 
+        if($sTemplateName == 'unit_gallery.html') 
             $aVars['bx_if:no_thumb']['content']['icon'] = $aVars['icon'];
 
-		return $this->parseHtmlByName($sTemplateName, $aVars);
+        return $this->parseHtmlByName($sTemplateName, $aVars);
     }
 
     public function entryFilePreview ($aData)

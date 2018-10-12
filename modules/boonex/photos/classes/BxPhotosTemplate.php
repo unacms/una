@@ -165,8 +165,8 @@ class BxPhotosTemplate extends BxBaseModTextTemplate
             unset($aParams['context']);
         }
 
-        if (empty($aData['title']))
-            $aData['title'] = _t('_bx_photos_txt_no_title');
+        if(isset($CNF['FIELD_TITLE']) && empty($aData[$CNF['FIELD_TITLE']]))
+            $aData[$CNF['FIELD_TITLE']] = _t('_sys_txt_no_title');
 
         $aResult = parent::getUnit($aData, $aParams);
         $aResult['bx_if:thumb']['content']['content_onclick'] = !empty($sMode) ? $this->_oConfig->getJsObject('main') . ".viewEntry(" . $aData[$CNF['FIELD_ID']] . ", '" . $sMode . "', " . bx_html_attribute(json_encode($aParams)) . "); return false;" : "";

@@ -2669,6 +2669,7 @@
     <string name="_sys_txt_my_profiles"><![CDATA[Создать новый профайл]]></string>
     <string name="_sys_txt_new_picture"><![CDATA[Новая картинка]]></string>
     <string name="_sys_txt_no_picture_uploaded"><![CDATA[Картинка не загружена]]></string>
+    <string name="_sys_txt_no_title"><![CDATA[Без заголовка]]></string>
     <string name="_sys_txt_n_by"><![CDATA[{0}]]></string>
     <string name="_sys_txt_n_friends"><![CDATA[{0} друзей]]></string>
     <string name="_sys_txt_n_mutual_friends"><![CDATA[{0} общих друзей]]></string>
