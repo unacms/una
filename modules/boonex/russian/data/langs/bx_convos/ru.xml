@@ -102,7 +102,6 @@
     <string name="_bx_cnv_grid_action_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_cnv_grid_action_compose"><![CDATA[Новое сообщение]]></string>
 
-    <string name="_bx_cnv_collaborator_info"><![CDATA[{0} ({1})]]></string>
     <string name="_bx_cnv_collaborator_author"><![CDATA[автор]]></string>
     <string name="_bx_cnv_collaborator_last_replier"><![CDATA[последний ответивший]]></string>
     <string name="_bx_cnv_more"><![CDATA[{0} ещё]]></string>
