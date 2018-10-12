@@ -306,6 +306,9 @@
             if (!o)
                 return false;
 
+            if ($el.data('bx-popup-timer'))
+                clearInterval($el.data('bx-popup-timer'));
+                    
             $(window).off('resize.popupWindow');
             $(window).off('resize.popupPointer');
             $(window).off('resize.popupFog');
@@ -726,6 +729,15 @@
             	};
 
             	oPosition($el);
+
+                // reposition popup when its height is changed
+                $el.data('bx-popup-height', $el.height());
+                $el.data('bx-popup-timer', setInterval(function () {
+                    if ($el.height() > $el.data('bx-popup-height')) {
+                        oPosition($el);
+                        $el.data('bx-popup-height', $el.height());
+                    }
+                }, 500));
 
                 // attach window resize event
                 $(window).on('resize.popupWindow', function() {

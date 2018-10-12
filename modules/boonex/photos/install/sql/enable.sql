@@ -45,7 +45,7 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_photos_view_entry', '_bx_photos_page_title_sys_view_entry', '_bx_photos_page_title_view_entry', 'bx_photos', 12, 2147483647, 1, 'view-photo', '', '', '', '', 0, 1, 0, 'BxPhotosPageEntry', 'modules/boonex/photos/classes/BxPhotosPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
-('bx_photos_view_entry', 1, 'bx_photos', '', '_bx_photos_page_block_title_entry_photo', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_photos";s:6:"method";s:18:"entity_photo_block";}', 0, 0, 0, 0),
+('bx_photos_view_entry', 1, 'bx_photos', '', '_bx_photos_page_block_title_entry_photo', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_photos";s:6:"method";s:18:"entity_photo_block";}', 0, 0, 1, 0),
 ('bx_photos_view_entry', 2, 'bx_photos', '', '_bx_photos_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_photos";s:6:"method";s:17:"entity_text_block";}', 0, 0, 1, 1),
 ('bx_photos_view_entry', 2, 'bx_photos', '', '_bx_photos_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_photos";s:6:"method";s:13:"entity_author";}', 0, 0, 1, 3),
 ('bx_photos_view_entry', 2, 'bx_photos', '', '_bx_photos_page_block_title_entry_rating', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_photos";s:6:"method";s:13:"entity_rating";}', 0, 0, 0, 0),
