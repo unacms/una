@@ -2379,6 +2379,7 @@
     <string name="_sys_name"><![CDATA[Имя]]></string>
     <string name="_sys_next"><![CDATA[Ещё]]></string>
     <string name="_sys_notification_account"><![CDATA[Аккаунты, созданные за последние 24 часа:]]></string>
+    <string name="_sys_not_available"><![CDATA[н/д]]></string>
     <string name="_sys_not_specified"><![CDATA[Не указано]]></string>
     <string name="_sys_on"><![CDATA[вкл.]]></string>
     <string name="_sys_off"><![CDATA[выкл.]]></string>
