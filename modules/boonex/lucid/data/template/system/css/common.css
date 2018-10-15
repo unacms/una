@@ -31,7 +31,8 @@ div.bx-def-unit-img p.bx-base-pofile-unit-thumb {
         font-size: 1.5rem;
 }
 
-div.bx-base-pofile-unit div.bx-def-unit-img p.bx-base-pofile-unit-thumb {
+div.bx-base-pofile-unit div.bx-def-unit-img p.bx-base-pofile-unit-thumb,
+div.bx-base-pofile-unit-wo-info div.bx-def-unit-img p.bx-base-pofile-unit-thumb {
 	font-size: 1.5rem;
 }
 
