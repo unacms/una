@@ -104,11 +104,15 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
-    	return array($oObject->getElementBlock(array(
+        $sResult = $oObject->getElementBlock(array(
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_view_as_button' => $this->_bShowAsButton,
             'show_do_view_label' => $this->_bShowTitle
-        )), $this->_sClassMiSa);
+        ));
+        if(empty($sResult))
+            return '';
+
+    	return array($sResult, $this->_sClassMiSa);
     }
 
     protected function _getMenuItemComment($aItem, $aParams = array())
@@ -127,11 +131,15 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
-        return array($oObject->getElementBlock(array(
+        $sResult = $oObject->getElementBlock(array(
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_comment_as_button' => $this->_bShowAsButton,
             'show_do_comment_label' => $this->_bShowTitle
-        )), $this->_sClassMiSa);
+        ));
+        if(empty($sResult))
+            return '';
+
+        return array($sResult, $this->_sClassMiSa);
     }
 
     protected function _getMenuItemVote($aItem, $aParams = array())
@@ -150,11 +158,15 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
-    	return array($oObject->getElementBlock(array(
+        $sResult = $oObject->getElementBlock(array(
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_vote_as_button' => $this->_bShowAsButton,
             'show_do_vote_label' => $this->_bShowTitle
-        )), $this->_sClassMiSa);
+        ));
+        if(empty($sResult))
+            return '';
+
+    	return array($sResult, $this->_sClassMiSa);
     }
 
     protected function _getMenuItemScore($aItem, $aParams = array())
@@ -173,11 +185,15 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
-    	return array($oObject->getElementBlock(array(
+        $sResult = $oObject->getElementBlock(array(
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_vote_as_button' => $this->_bShowAsButton,
             'show_do_vote_label' => $this->_bShowTitle
-        )), $this->_sClassMiSa);
+        ));
+        if(empty($sResult))
+            return '';
+
+    	return array($sResult, $this->_sClassMiSa);
     }
 
     protected function _getMenuItemFavorite($aItem, $aParams = array())
@@ -196,11 +212,15 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
-    	return array($oObject->getElementBlock(array(
+        $sResult = $oObject->getElementBlock(array(
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_favorite_as_button' => $this->_bShowAsButton,
             'show_do_favorite_label' => $this->_bShowTitle
-        )), $this->_sClassMiSa);
+        ));
+        if(empty($sResult))
+            return '';
+
+    	return array($sResult, $this->_sClassMiSa);
     }
 
     protected function _getMenuItemFeature($aItem, $aParams = array())
@@ -219,11 +239,15 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
-    	return array($oObject->getElementBlock(array(
+        $sResult = $oObject->getElementBlock(array(
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_feature_as_button' => $this->_bShowAsButton,
             'show_do_feature_label' => $this->_bShowTitle
-        )), $this->_sClassMiSa);
+        ));
+        if(empty($sResult))
+            return '';
+
+    	return array($sResult, $this->_sClassMiSa);
     }
 
     protected function _getMenuItemRepost($aItem, $aParams = array())
@@ -241,10 +265,14 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!BxDolRequest::serviceExists('bx_timeline', 'get_repost_element_block'))
             return '';
 
-    	return array(BxDolService::call('bx_timeline', 'get_repost_element_block', array(bx_get_logged_profile_id(), $this->_oModule->_oConfig->getName(), $sAction, $iId, array(
+        $sResult = BxDolService::call('bx_timeline', 'get_repost_element_block', array(bx_get_logged_profile_id(), $this->_oModule->_oConfig->getName(), $sAction, $iId, array(
             'show_do_repost_as_button' => $this->_bShowAsButton,
             'show_do_repost_text' => $this->_bShowTitle
-        ))), $this->_sClassMiSa);
+        )));
+        if(empty($sResult))
+            return '';
+
+    	return array($sResult, $this->_sClassMiSa);
     }
 
     protected function _getMenuItemReport($aItem, $aParams = array())
@@ -263,11 +291,15 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(!$oObject || !$oObject->isEnabled())
             return '';
 
-    	return array($oObject->getElementBlock(array(
+        $sResult = $oObject->getElementBlock(array(
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_report_as_button' => $this->_bShowAsButton,
             'show_do_report_label' => $this->_bShowTitle
-        )), $this->_sClassMiSa);
+        ));
+        if(empty($sResult))
+            return '';
+
+    	return array($sResult, $this->_sClassMiSa);
     }
 
     protected function _getMenuItemSocialSharingFacebook($aItem)
