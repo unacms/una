@@ -513,25 +513,28 @@ BxTimelineView.prototype.editPostCancel = function(oButton, iId) {
 
 BxTimelineView.prototype.deletePost = function(oLink, iId) {
     var $this = this;
-    var oData = this._getDefaultData();
-    oData['id'] = iId;
 
     $(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide();
 
-    if(this.bViewTimeline)
-    	this.loadingInItem($(this.sIdItemTimeline + iId), true);
+    bx_confirm('', function() {
+        var oData = $this._getDefaultData();
+        oData['id'] = iId;
 
-    if(this.bViewOutline)
-    	this.loadingInItem($(this.sIdItemOutline + iId), true);
+        if($this.bViewTimeline)
+            $this.loadingInItem($($this.sIdItemTimeline + iId), true);
 
-    $.post(
-        this._sActionsUrl + 'delete/',
-        oData,
-        function(oData) {
-        	processJsonData(oData);
-        },
-        'json'
-    );
+        if($this.bViewOutline)
+            $this.loadingInItem($($this.sIdItemOutline + iId), true);
+
+        $.post(
+            $this._sActionsUrl + 'delete/',
+            oData,
+            function(oData) {
+                processJsonData(oData);
+            },
+            'json'
+        );
+    });
 };
 
 BxTimelineView.prototype.onDeletePost = function(oData) {
