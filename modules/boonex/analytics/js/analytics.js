@@ -109,7 +109,6 @@ BxAnalytics.prototype.dataToTable = function (oDataIn) {
 
     sHtml += '</tr></thead>';
     var iK = 0;
-    console.log(oDataIn.options.scales.xAxes[0].type == 'time');
     if (oDataIn.options.scales.xAxes[0].type == 'time') {
         oData.datasets[0].data.reverse();
     }
@@ -123,7 +122,7 @@ BxAnalytics.prototype.dataToTable = function (oDataIn) {
         if (oDataIn.links && oDataIn.links.length > 0) {
             sTxt = "<a href='" + oDataIn.links[iDx] + "'>" + sTxt + "</a>"
         }
-        sHtml += '<tr><td>&nbsp;'+  sTxt + '</td>';
+        sHtml += '<tr><td>&nbsp;'+ sTxt + '</td>';
         for (i = 0; i < iColumnCount; i++) {
             var sText = '';
             if (typeof oData.datasets[i].data[iDx] === 'object') {
