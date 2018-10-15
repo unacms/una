@@ -14,9 +14,9 @@ DELETE FROM `sys_pages_blocks` WHERE `module` = @sName;
 DELETE FROM `sys_menu_items` WHERE `module` = @sName;
 
 -- GRIDS
-DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_anon_follow_subscribed_me');
-DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_anon_follow_subscribed_me');
-DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_anon_follow_subscribed_me');
+DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_anon_follow_grid_subscribed_me', 'bx_anon_follow_grid_subscriptions');
+DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_anon_follow_grid_subscribed_me', 'bx_anon_follow_grid_subscriptions');
+DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_anon_follow_grid_subscribed_me', 'bx_anon_follow_grid_subscriptions');
 
 -- INJECTION
 DELETE FROM `sys_injections` WHERE `name`= @sName;

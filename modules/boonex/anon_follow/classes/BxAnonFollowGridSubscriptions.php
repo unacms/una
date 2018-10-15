@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxAnonFollowGridSubscribedMe extends BxDolGridSubscribedMe
+class BxAnonFollowGridSubscriptions extends BxDolGridSubscriptions
 {
     protected $MODULE;
     protected $_oModule;
@@ -56,7 +56,7 @@ class BxAnonFollowGridSubscribedMe extends BxDolGridSubscribedMe
         }
         $sTitle = implode(getParam('bx_anon_follow_fields_separator'), $aTitle);
         if ($aRow['anonimus'] == ''){
-            $sTitle = $this->_oModule->_oTemplate->parseHtmlByName('profile_link.html', array('href' => $oProfile->getUrl(), 'content' =>  $oProfile->getDisplayName() . getParam('bx_anon_follow_fields_separator') . $sTitle)); 
+            $sTitle = $this->_oModule->_oTemplate->parseHtmlByName('profile_link.html', array('href' => $oProfile->getUrl(), 'content' => $oProfile->getDisplayName() . getParam('bx_anon_follow_fields_separator') . $sTitle)); 
         } 
         else{
             $sTitle = _t('_bx_anon_follow_txt_grid_title_default') . $sTitle;
@@ -83,6 +83,7 @@ class BxAnonFollowGridSubscribedMe extends BxDolGridSubscribedMe
     {
         return "";
     }
+    
 }
 
 /** @} */

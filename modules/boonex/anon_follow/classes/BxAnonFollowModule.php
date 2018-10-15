@@ -22,7 +22,7 @@ class BxAnonFollowModule extends BxDolModule
     
     /**
      * @page service Service Calls
-     * @section bx_anon_follow Mass mailer
+     * @section bx_anon_follow Anonymous Follow
      * @subsection bx_anon_follow-page_blocks Page Blocks
      * @subsubsection bx_anon_follow-get_profile_fields get_profile_fields
      * 
@@ -42,7 +42,7 @@ class BxAnonFollowModule extends BxDolModule
     {
         $aResult = array();
         $oModule = BxDolModule::getInstance($sModule);
-        $aFields = $oModule->serviceGetSearchableFieldsExtended();
+        $aFields = BxDolRequest::serviceExists($sModule, 'get_searchable_fields_extended') ? BxDolService::call($sModule, 'get_searchable_fields_extended') : array();
         foreach($aFields as $sKey => $aField){
             if ($aField['type'] == 'text' || $aField['type'] == 'select')
             $aResult[$sKey] = _t($aField['caption']);
@@ -52,7 +52,7 @@ class BxAnonFollowModule extends BxDolModule
     
     /**
      * @page service Service Calls
-     * @section bx_anon_follow Mass mailer
+     * @section bx_anon_follow Anonymous Follow
      * @subsection bx_anon_follow-page_blocks Page Blocks
      * @subsubsection bx_anon_follow-check_is_subscribed check_is_subscribed
      * 
@@ -78,7 +78,7 @@ class BxAnonFollowModule extends BxDolModule
     
     /**
      * @page service Service Calls
-     * @section bx_anon_follow Mass mailer
+     * @section bx_anon_follow Anonymous Follow
      * @subsection bx_anon_follow-page_blocks Page Blocks
      * @subsubsection bx_anon_follow-subscribed_me_table subscribed_me_table
      * 
@@ -89,25 +89,71 @@ class BxAnonFollowModule extends BxDolModule
      * @param $aParams an array with search params.
      * @return HTML string with block content to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
      * 
-     * @see BxAnonFollowModule::SubscribedMeTable
+     * @see BxAnonFollowModule::serviceSubscribedMeTable
      */
     /** 
      * @ref bx_anon_follow-subscribed_me_table "subscribed_me_table"
      */
     public function serviceSubscribedMeTable ($iProfileId = 0)
     {
+       
         if(!$iProfileId && bx_get('profile_id') !== false)
             $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
 
         $aProfile = BxDolProfile::getInstance($iProfileId)->getInfo();
+       
         if(empty($aProfile) || !is_array($aProfile))
             return false;
 
-        $CNF = &BxDolModule::getInstance($aProfile['type'])->_oConfig->CNF;
-        if(getParam($CNF['PARAM_PUBLIC_SBSD']) != 'on' && $aProfile['id'] != bx_get_logged_profile_id())
+        $oGrid = BxDolGrid::getObjectInstance('bx_anon_follow_grid_subscribed_me');
+
+        if(!$oGrid)
+            return false;
+       
+        $oGrid->setProfileId($iProfileId);
+        $sContent = $oGrid->getCode();
+        if(empty($sContent))
             return false;
 
-        $oGrid = BxDolGrid::getObjectInstance('bx_anon_follow_subscribed_me');
+        
+        $iCount = BxDolService::call('system', 'get_connected_initiators_num', array('sys_profiles_subscriptions', $aProfile['id']), 'TemplServiceConnections');
+        return $this->_oTemplate->parseHtmlByName('connections_list.html', array(
+            'name' => 'subscribers',
+            'content' => $sContent,
+            'count_info' => _t('_bx_anon_follow_txt_followers_count_info', $iCount),
+        ));
+    }
+    
+    /**
+     * @page service Service Calls
+     * @section bx_anon_follow Anonymous Follow
+     * @subsection bx_anon_follow-page_blocks Page Blocks
+     * @subsubsection bx_anon_follow-subscriptions_table subscriptions_table
+     * 
+     * @code bx_srv('bx_anon_follow', 'subscriptions_table', [...]); @endcode
+     * 
+     * Get grid with subscriptions list
+     *
+     * @param $aParams an array with search params.
+     * @return HTML string with block content to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxAnonFollowModule::serviceSubscriptionsTable
+     */
+    /** 
+     * @ref bx_anon_follow-subscriptions_table "subscriptions_table"
+     */
+    public function serviceSubscriptionsTable ($iProfileId = 0)
+    {
+        
+        if(!$iProfileId && bx_get('profile_id') !== false)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+
+        $aProfile = BxDolProfile::getInstance($iProfileId)->getInfo();
+        
+        if(empty($aProfile) || !is_array($aProfile))
+            return false;
+
+        $oGrid = BxDolGrid::getObjectInstance('bx_anon_follow_grid_subscriptions');
 
         if(!$oGrid)
             return false;
@@ -117,15 +163,18 @@ class BxAnonFollowModule extends BxDolModule
         if(empty($sContent))
             return false;
 
+        
+        $iCount = BxDolService::call('system', 'get_connected_content_num', array('sys_profiles_subscriptions', $aProfile['id']), 'TemplServiceConnections');
         return $this->_oTemplate->parseHtmlByName('connections_list.html', array(
             'name' => 'subscribers',
-            'content' => $sContent
+            'content' => $sContent,
+            'count_info' => _t('_bx_anon_follow_txt_following_count_info', $iCount),
         ));
     }
     
     /**
      * @page service Service Calls
-     * @section bx_anon_follow Mass mailer
+     * @section bx_anon_follow Anonymous Follow
      * @subsection bx_anon_follow-page_blocks Page Blocks
      * @subsubsection bx_anon_follow-include_js include_js
      * 
@@ -149,15 +198,16 @@ class BxAnonFollowModule extends BxDolModule
     
     public function checkIsSubscribed($iProfileId)
     {
-        $bRv = false;
         $oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
         if(!$oConnection){
-            $bRv = false;
+            return false;
+        }
+		if($iProfileId == bx_get_logged_profile_id()){
+            return true;
         }
         if($oConnection->isConnected(bx_get_logged_profile_id(), $iProfileId)){
-            $bRv = true;
+            return true;
         }
-        return $bRv;
     }
 }
 
