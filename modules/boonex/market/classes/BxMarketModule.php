@@ -26,14 +26,15 @@ class BxMarketModule extends BxBaseModTextModule
 
         $CNF = &$this->_oConfig->CNF;
         $this->_aSearchableNamesExcept = array_merge($this->_aSearchableNamesExcept, array(
-             $CNF['FIELD_NAME'],
-             $CNF['FIELD_PRICE_SINGLE'],
-             $CNF['FIELD_PRICE_RECURRING'],
-             $CNF['FIELD_DURATION_RECURRING'],
-             $CNF['FIELD_TRIAL_RECURRING'],
-             $CNF['FIELD_ALLOW_PURCHASE_TO'],
-             $CNF['FIELD_ALLOW_COMMENT_TO'],
-             $CNF['FIELD_ALLOW_VOTE_TO']
+            $CNF['FIELD_NAME'],
+            $CNF['FIELD_PRICE_SINGLE'],
+            $CNF['FIELD_PRICE_RECURRING'],
+            $CNF['FIELD_DURATION_RECURRING'],
+            $CNF['FIELD_TRIAL_RECURRING'],
+            $CNF['FIELD_ALLOW_PURCHASE_TO'],
+            $CNF['FIELD_ALLOW_COMMENT_TO'],
+            $CNF['FIELD_ALLOW_VOTE_TO'],
+            $CNF['FIELD_NOTES_PURCHASED']
         ));
     }
 

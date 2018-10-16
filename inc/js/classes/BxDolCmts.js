@@ -27,22 +27,28 @@ function BxDolCmts (options) {
     this._oSavedTexts = {};
     this._sRootId = '#cmts-box-' + this._sSystem + '-' + this._iObjId;
 
-    // init post comment form
-    var $this = this;
-    var sFormId = this._sRootId + ' .cmt-post-reply form';
-    if ($(sFormId).length) {
-    	$(sFormId).each(function() {
-            $this.cmtInitFormPost($(this));
-        });
-    }
-
-    // blink (highlight) necessary comments
-    this._cmtsBlink($(this._sRootId));
-
     this._bLiveUpdatePaused = false;
 }
 
 /*--- Main layout functionality ---*/
+BxDolCmts.prototype.cmtInit = function()
+{
+    var $this = this;
+
+    $(document).ready(function() {
+        // init post comment form    
+        var sFormId = $this._sRootId + ' .cmt-post-reply form';
+        if ($(sFormId).length) {
+            $(sFormId).each(function() {
+                $this.cmtInitFormPost($(this));
+            });
+        }
+
+        // blink (highlight) necessary comments
+        $this._cmtsBlink($($this._sRootId));
+    });
+};
+
 BxDolCmts.prototype.cmtInitFormPost = function(oCmtForm)
 {
     var $this = this;
@@ -536,12 +542,14 @@ BxDolCmts.prototype._getCmt = function (e, iCmtId)
             if($(sReplyFormId).length)
             	$(sReplyFormId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed);
 
-            //--- Some number of comments already loaded ---//
-            if($(sListId + ' > li.cmt').length)
-                $(sListId + ' > li.cmt:last').after($(oData.content).hide()).next('li.cmt:hidden').bxProcessHtml().bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed);
-            //-- There is no comments at all ---//
-            else
-            	$(sListId).hide().html(oData.content).bxProcessHtml().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
+            $(sListId).each(function() {
+                //--- Some number of comments already loaded ---//
+                if($(this).children('li.cmt').length)
+                    $(this).children('li.cmt:last').after($(oData.content).hide()).next('li.cmt:hidden').bxProcessHtml().bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed);
+                //-- There is no comments at all ---//
+                else
+                    $(this).hide().html(oData.content).bxProcessHtml().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
+            });
         },
         'json'
     );

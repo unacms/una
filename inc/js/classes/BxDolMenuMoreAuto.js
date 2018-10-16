@@ -16,11 +16,36 @@ function BxDolMenuMoreAuto(options)
     this._sClassItem = '.bx-menu-item';
     this._sClassItemMore = this._sClassItem + '.bx-menu-item-more-auto';
     this._sClassItemMoreSubmenu = '.bx-menu-submenu-more-auto';
+}
 
+BxDolMenuMoreAuto.prototype.init = function() {
     var $this = this;
-    $(document).ready(function () {
-        $this.init();
 
+    $(document).ready(function() {
+        //--- Initialize ---//
+        $('.bx-menu-object-' + $this._sObject).each(function() {
+            var oMenu = $(this);
+            var oItemMore = oMenu.find($this._sClassItemMore);
+            var oItemMoreSubmenu = oItemMore.find($this._sClassItemMoreSubmenu);
+
+            var iMenu = 0;
+            oMenu.children($this._sClassItem + ':visible').each(function() {
+                iMenu += $this._getWidth($(this));
+            });
+
+            var iParent = oMenu.parent().width();
+
+            var iItemMore = oItemMore.outerWidth(true);
+
+            oMenu.css('overflow', 'visible');
+
+            if(iMenu < iParent)
+                return;
+
+            $this._moveToSubmenu(oMenu, oItemMore, oItemMoreSubmenu, iParent, iItemMore);
+        });
+
+        //--- Add event handlers ---//
         $(window).on('resize', function() {
            $this.update();
         });
@@ -28,32 +53,6 @@ function BxDolMenuMoreAuto(options)
         $($this._sClassItem).on('resize', function() {
             $this.update(true);
         });
-    });
-}
-
-BxDolMenuMoreAuto.prototype.init = function() {
-    var $this = this;
-
-    $('.bx-menu-object-' + this._sObject).each(function() {
-        var oMenu = $(this);
-        var oItemMore = oMenu.find($this._sClassItemMore);
-        var oItemMoreSubmenu = oItemMore.find($this._sClassItemMoreSubmenu);
-
-        var iMenu = 0;
-        oMenu.children($this._sClassItem + ':visible').each(function() {
-            iMenu += $this._getWidth($(this));
-        });
-
-        var iParent = oMenu.parent().width();
-
-        var iItemMore = oItemMore.outerWidth(true);
-
-        oMenu.css('overflow', 'visible');
-
-        if(iMenu < iParent)
-            return;
-
-        $this._moveToSubmenu(oMenu, oItemMore, oItemMoreSubmenu, iParent, iItemMore);
     });
 };
 

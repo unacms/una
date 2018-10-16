@@ -220,11 +220,26 @@ div.bx-tl-view.bx-tl-view-item div.bx-tl-item-image {
 .bx-tl-view div.bx-tl-item div.bx-tl-item-activity .bx-menu-hor li a {
     font-size: 1.25rem;
 }
-.bx-tl-view div.bx-tl-item div.bx-tl-item-activity .bx-menu-hor li .sys-icon,
-.bx-tl-view div.bx-tl-item div.bx-tl-item-activity .bx-menu-hor li a .sys-icon {
+.bx-tl-view div.bx-tl-item div.bx-tl-item-activity .bx-menu-hor li .sys-icon:not(.bx-vote-star),
+.bx-tl-view div.bx-tl-item div.bx-tl-item-activity .bx-menu-hor li a .sys-icon:not(.bx-vote-star) {
     vertical-align: baseline;
     font-size: 1.5rem;
     color: rgba(0,147,205,1);
+}
+.bx-tl-view div.bx-tl-item div.bx-tl-item-activity .bx-vote-stars, .bx-vote-stars .bx-vote-do, 
+.bx-tl-view div.bx-tl-item div.bx-tl-item-activity .bx-vote-stars .bx-vote-element-holder, 
+.bx-tl-view div.bx-tl-item div.bx-tl-item-activity .bx-vote-stars .bx-vote-counter-holder {
+    vertical-align: baseline;
+    line-height: 1.5rem;
+    font-size: 1.5rem;
+}
+.bx-tl-view div.bx-tl-item div.bx-tl-item-activity .bx-vote-stars .bx-vote-element-holder a.bx-vote-button, 
+.bx-tl-view div.bx-tl-item div.bx-tl-item-activity .bx-vote-stars .bx-vote-element-holder i.bx-vote-star, 
+.bx-tl-view div.bx-tl-item div.bx-tl-item-activity .bx-vote-stars .bx-vote-element-holder span.bx-vote-star {
+    width: 24px;
+    width: 1.5rem;
+    height: 24px;
+    height: 1.5rem;
 }
 .bx-tl-view div.bx-tl-item div.bx-tl-item-activity .bx-menu-hor li .bx-vote-disabled .sys-icon,
 .bx-tl-view div.bx-tl-item div.bx-tl-item-activity .bx-menu-hor li a.bx-vote-disabled .sys-icon,

@@ -81,7 +81,7 @@ class BxBaseMenuCustom extends BxTemplMenu
             'sObject' => $this->_sObject,
             'aHtmlIds' => $this->_aHtmlIds
         );
-        return $this->_oTemplate->_wrapInTagJsCode("if(!" . $this->_sJsObjectMoreAuto . ") var " . $this->_sJsObjectMoreAuto . " = new BxDolMenuMoreAuto(" . json_encode($aParams) . ");");
+        return $this->_oTemplate->_wrapInTagJsCode("if(!" . $this->_sJsObjectMoreAuto . ") var " . $this->_sJsObjectMoreAuto . " = new BxDolMenuMoreAuto(" . json_encode($aParams) . "); " . $this->_sJsObjectMoreAuto . ".init();");
     }
 
     protected function _getMenuItem ($aItem)
