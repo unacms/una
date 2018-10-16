@@ -22,7 +22,7 @@ class BxAnonFollowGridSubscribedMe extends BxDolGridSubscribedMe
         $CNF = $this->_oModule->_oConfig->CNF;
         
         $this->addMarkers(array(
-            'join_connections2' => 'INNER JOIN `' . $CNF['TABLE_ENTRIES'] . '` AS `c2` ON `c`.`' . $CNF['FIELD_INITIATOR'] . '` = `c2`.`' . $CNF['FIELD_INITIATOR'] . '` AND `c`.`' . $CNF['FIELD_CONTENT'] . '` = `c2`.`' . $CNF['FIELD_CONTENT'] . '` '
+            'join_connections2' => 'LEFT JOIN `' . $CNF['TABLE_ENTRIES'] . '` AS `c2` ON `c`.`' . $CNF['FIELD_INITIATOR'] . '` = `c2`.`' . $CNF['FIELD_INITIATOR'] . '` AND `c`.`' . $CNF['FIELD_CONTENT'] . '` = `c2`.`' . $CNF['FIELD_CONTENT'] . '` '
         ));
     }
     
@@ -40,10 +40,9 @@ class BxAnonFollowGridSubscribedMe extends BxDolGridSubscribedMe
         $sTitle = '';
         foreach($aShowFields as $aField){
             $sValue = "";
-            if (isset($aProfileData[$aField]))
-            {
+            if (isset($aProfileData[$aField])){
                 if (isset($aFields[$aField]) && $aFields[$aField]['type'] == 'select' && substr_count($aFields[$aField]['values'], '#!')){
-                    $aValuesList = BxDolForm::getDataItems(str_replace('#!', '', 'mylist'));
+                    $aValuesList = BxDolForm::getDataItems(str_replace('#!', '', $aFields[$aField]['values']));
                     if (isset($aValuesList[$aProfileData[$aField]])){
                         $sValue = $aValuesList[$aProfileData[$aField]];
                     }
@@ -56,16 +55,33 @@ class BxAnonFollowGridSubscribedMe extends BxDolGridSubscribedMe
                 $aTitle[] = $sValue;
         }
         $sTitle = implode(getParam('bx_anon_follow_fields_separator'), $aTitle);
-        if ($sTitle == '')
-        {
-            $sTitle = _t('_bx_anon_follow_txt_grid_title_default');
+        if ($aRow['anonimus'] == ''){
+            $sTitle = $this->_oModule->_oTemplate->parseHtmlByName('profile_link.html', array('href' => $oProfile->getUrl(), 'content' =>  $oProfile->getDisplayName() . getParam('bx_anon_follow_fields_separator') . $sTitle)); 
+        } 
+        else{
+            $sTitle = _t('_bx_anon_follow_txt_grid_title_default') . $sTitle;
         }
+        
         return parent::_getCellDefault($sTitle, $sKey, $aField, $aRow);
     }
     
-    protected function _getCellActions($mixedValue, $sKey, $aField, $aRow)
+    protected function _getActionSubscribe ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-        return parent::_getCellDefault('', $sKey, $aField, $aRow);
+        $iViewerId = bx_get_logged_profile_id();
+        if(!isLogged() || $iViewerId == $aRow['id'] || $this->_oConnection->isConnected($iViewerId, $aRow['id']) || $aRow['anonimus'] != '')
+            return '';
+
+        return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    }
+    
+    protected function _getRowHead ()
+    {
+        return "";
+    }
+    
+    protected function _getFilterControls ()
+    {
+        return "";
     }
 }
 

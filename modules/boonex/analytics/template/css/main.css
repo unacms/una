@@ -54,3 +54,10 @@
 .bx_analytics_data .bottom {
     margin-top:1rem;
 }
+/* datatables fix*/
+table.dataTable thead .sorting:after { margin-left:10px; font-family: "sys-user", "sys-user-fal", sans-serif; content: "\f0dc"; display:inline-block }
+table.dataTable thead .sorting_asc:after{ margin-left:10px;font-family: "sys-user", "sys-user-fal", sans-serif; content: "\f0de"; display:inline-block}
+table.dataTable thead .sorting_desc:after{ margin-left:10px; font-family: "sys-user", "sys-user-fal", sans-serif; content: "\f0dd"; display:inline-block}
+table.dataTable.no-footer {border-bottom:none !important}
+table.dataTable thead th{border-bottom:none !important; padding: 10px 10px !important}
+table.dataTable thead .sorting {background-image: none !important}

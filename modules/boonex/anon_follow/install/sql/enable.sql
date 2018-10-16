@@ -18,7 +18,8 @@ INSERT INTO `sys_options` (`category_id`, `name`, `caption`, `value`, `type`, `e
 
 -- PAGES
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
-('', 2, @sName, '_bx_anon_follow_page_block_title_sys_anon_follow', '_bx_anon_follow_page_block_title_anon_follow', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:14:"bx_anon_follow";s:6:"method";s:19:"subscribed_me_table";}', 0, 1, 1, 0);
+('', 2, @sName, '_bx_anon_follow_page_block_title_sys_anon_follow', '_bx_anon_follow_page_block_title_anon_follow', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:14:"bx_anon_follow";s:6:"method";s:19:"subscribed_me_table";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}}', 0, 1, 1, 0),
+('', 2, @sName, '_bx_anon_follow_page_block_title_sys_anon_follow_subscriptions', '_bx_anon_follow_page_block_title_anon_follow_subscriptions', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:14:"bx_anon_follow";s:6:"method";s:19:"subscriptions_table";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}}', 0, 1, 1, 0);
 
 -- MENU: add menu item to profiles modules actions menu (trigger* menu sets are processed separately upon modules enable/disable)
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visibility_custom`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
@@ -27,14 +28,20 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 -- GRID: connections
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('bx_anon_follow_subscribed_me', 'Sql', 'SELECT `p`.`id`, `c`.`added` FROM `sys_profiles` AS `p` INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` = `p`.`account_id`) {join_connections} {join_connections2}', 'sys_profiles', 'id', 'c`.`added', '', '', 10, NULL, 'start', '', 'name,email', '', 'auto', '', '', 2147483647, 'BxAnonFollowGridSubscribedMe', 'modules/boonex/anon_follow/classes/BxAnonFollowGridSubscribedMe.php');
+('bx_anon_follow_grid_subscribed_me', 'Sql', 'SELECT `p`.`id`, `c`.`added`, `c2`.`id` AS `anonimus` FROM `sys_profiles` AS `p` INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` = `p`.`account_id`) {join_connections} {join_connections2}', 'sys_profiles', 'id', 'c`.`added', '', '', 10, NULL, 'start', '', 'name,email', '', 'auto', '', '', 2147483647, 'BxAnonFollowGridSubscribedMe', 'modules/boonex/anon_follow/classes/BxAnonFollowGridSubscribedMe.php'),
+('bx_anon_follow_grid_subscriptions', 'Sql', 'SELECT `p`.`id`, `c`.`added`, `c2`.`id` AS `anonimus` FROM `sys_profiles` AS `p` INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` = `p`.`account_id`) {join_connections} {join_connections2}', 'sys_profiles', 'id', 'c`.`added', '', '', 10, NULL, 'start', '', 'name,email', '', 'auto', '', '', 2147483647, 'BxAnonFollowGridSubscriptions', 'modules/boonex/anon_follow/classes/BxAnonFollowGridSubscriptions.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
-('bx_anon_follow_subscribed_me', 'name', '_sys_name', '70%', '', 1),
-('bx_anon_follow_subscribed_me', 'actions', '', '30%', '', 2);
+('bx_anon_follow_grid_subscribed_me', 'name', '_sys_name', '70%', '', 1),
+('bx_anon_follow_grid_subscribed_me', 'actions', '', '30%', '', 2),
+('bx_anon_follow_grid_subscriptions', 'name', '_sys_name', '70%', '', 1),
+('bx_anon_follow_grid_subscriptions', 'actions', '', '30%', '', 2);
+
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
-('bx_anon_follow_subscribed_me', 'single', 'subscribe', '_sys_subscribe', 'check', 0, 1);
+('bx_anon_follow_grid_subscribed_me', 'single', 'subscribe', '_sys_subscribe', 'check', 0, 1),
+('bx_anon_follow_grid_subscriptions', 'single', 'subscribe', '_sys_subscribe', 'check', 0, 1),
+('bx_anon_follow_grid_subscriptions', 'single', 'delete', '', 'remove', 1, 2);
 
 -- ALERTS
 INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 

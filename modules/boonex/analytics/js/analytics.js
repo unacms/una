@@ -96,7 +96,7 @@ BxAnalytics.prototype.reloadData = function () {
 
 BxAnalytics.prototype.dataToTable = function (oDataIn) {
     var $this = this;
-    oData = oDataIn.data.clone();
+    var oData = oDataIn.data;
     var sHtml = '<table>';
     var sCol1 = oDataIn.strings[0];
 
@@ -109,10 +109,7 @@ BxAnalytics.prototype.dataToTable = function (oDataIn) {
 
     sHtml += '</tr></thead>';
     var iK = 0;
-    console.log(oDataIn.options.scales.xAxes[0].type == 'time');
-    if (oDataIn.options.scales.xAxes[0].type == 'time') {
-        oData.datasets[0].data.reverse();
-    }
+    
     oData.datasets[0].data.forEach(function (oItemData, iDx) {
         var sTxt = "";
         if (oDataIn.options.scales.xAxes[0].type == 'time')
@@ -142,6 +139,13 @@ BxAnalytics.prototype.dataToTable = function (oDataIn) {
     if ($this._oTable)
         $this._oTable.destroy();
     $('.bx_analytics_table').html(sHtml);
-    $this._oTable = $('.bx_analytics_table').DataTable({ dom: '<"top"i>rt<"bottom"flp><"clear">', paging: true, searching: false, ordering: true, order: [] });
+
+    var $aOrder = [];
+    if (oDataIn.options.scales.xAxes[0].type == 'time') {
+        $aOrder = [[0, 'desc']];
+    }
+    $this._oTable = $('.bx_analytics_table').DataTable({ dom: '<"top"i>rt<"bottom"flp><"clear">', paging: true, searching: false, ordering: true, order: $aOrder });
+   
 };
+
 /** @} */
