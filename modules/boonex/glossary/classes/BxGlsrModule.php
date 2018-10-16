@@ -17,8 +17,13 @@ class BxGlsrModule extends BxBaseModTextModule
     function __construct(&$aModule)
     {
         parent::__construct($aModule);
+
+        $CNF = &$this->_oConfig->CNF;
+        $this->_aSearchableNamesExcept = array_merge($this->_aSearchableNamesExcept, array(
+            $CNF['FIELD_STATUS_ADMIN']
+        ));
     }
-    
+
     /**
      * Display terms by Alphabetical index
      * @return HTML string
