@@ -102,7 +102,7 @@ class BxBaseCmts extends BxDolCmts
         );
 
         $this->addCssJs();
-        return $this->_oTemplate->_wrapInTagJsCode("if(window['" . $this->_sJsObjName . "'] == undefined) var " . $this->_sJsObjName . " = new BxDolCmts(" . json_encode($aParams) . ");");
+        return $this->_oTemplate->_wrapInTagJsCode("if(window['" . $this->_sJsObjName . "'] == undefined) var " . $this->_sJsObjName . " = new BxDolCmts(" . json_encode($aParams) . "); " . $this->_sJsObjName . ".cmtInit();");
     }
 
     /**
