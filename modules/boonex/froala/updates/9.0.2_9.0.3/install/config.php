@@ -84,6 +84,6 @@ $aConfig = array(
         'plugins/froala/js/third_party/embedly.js',
         'plugins/froala/js/third_party/image_aviary.js',
         'plugins/froala/js/third_party/spell_checker.js',
-        'plugins/froala/less/
+        'plugins/froala/less/'
     ),
 );
