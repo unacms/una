@@ -127,12 +127,15 @@ class BxBaseModNotificationsDb extends BxBaseModGeneralDb
             $sHandler = sprintf($this->_sHandlerMask, $aHandler['alert_unit'], $aHandler['alert_action']); 
             $aBindings = array(
                 'alert_unit' => $aHandler['alert_unit'],
-                'alert_action' => $aHandler['alert_action']
+                'alert_action' => $aHandler['alert_action'],
+
+                'group' => $aHandler['group'],
+                'type' => $aHandler['type']
             );
 
-            $aHandlers[$sHandler] = $this->getOne("SELECT `id` FROM `{$this->_sTableHandlers}` WHERE `alert_unit`=:alert_unit AND `alert_action`=:alert_action  LIMIT 1", $aBindings);
+            $aHandlers[$sHandler] = $this->getOne("SELECT `id` FROM `{$this->_sTableHandlers}` WHERE (`alert_unit`=:alert_unit AND `alert_action`=:alert_action) OR (`group`=:group AND `type`=:type) LIMIT 1", $aBindings);
 
-            $this->query("DELETE FROM `{$this->_sTableHandlers}` WHERE `alert_unit`=:alert_unit AND `alert_action`=:alert_action LIMIT 1", $aBindings);
+            $this->query("DELETE FROM `{$this->_sTableHandlers}` WHERE (`alert_unit`=:alert_unit AND `alert_action`=:alert_action) OR (`group`=:group AND `type`=:type) LIMIT 1", $aBindings);
         }
 
         //--- Update Settings ---//
