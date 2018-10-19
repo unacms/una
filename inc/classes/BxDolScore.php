@@ -256,9 +256,9 @@ class BxDolScore extends BxDolObject
 
         $this->_trigger();
 
-        $sAlertAction = 'doVote' . ucfirst($sType);
-        bx_alert($this->_sSystem, $sAlertAction, $iObjectId, $iAuthorId, array('score_id' => $iId, 'score_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId));
-        bx_alert('score', $sAlertAction, $iId, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId));
+        $sTypeUc = ucfirst($sType);
+        bx_alert($this->_sSystem, 'doVote' . $sTypeUc, $iObjectId, $iAuthorId, array('score_id' => $iId, 'score_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId));
+        bx_alert('score', 'do' . $sTypeUc, $iId, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId));
 
         $aScore = $this->_oQuery->getScore($iObjectId);
         $iCup = (int)$aScore['count_up'];
