@@ -1466,7 +1466,7 @@ class BxDolFormCheckerHelper
         if (!preg_match("/@[\pL\pNd\.\-]+$/u", $s)) // validate domain
             return false;
 
-        $s = str_replace(array('@', '.', '-', '+'), '', $s); // allowed symbols
+        $s = str_replace(array('@', '.', '-', '+', '_'), '', $s); // allowed symbols
         if (preg_match("/[^\pL^\pNd]/u", $s)) // check for undesirable chars
             return false;
 
