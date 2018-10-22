@@ -73,6 +73,8 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
     {
         $mixed = $this->_createProfileRaw($aProfileInfo, $sAlternativeName);
 
+        bx_alert($this->getName(), 'profile_created', 0, 0, array('override_result' => &$mixed, 'remote_profile_info' => $aProfileInfo));
+        
         // display error
         if (is_string($mixed)) {
             $this->_oTemplate->getPage(_t($this->_oConfig->sDefaultTitleLangKey), DesignBoxContent(_t($this->_oConfig->sDefaultTitleLangKey), MsgBox($mixed)));
@@ -123,6 +125,9 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
 
         // convert fields to unique format
         $aFieldsProfile = $aFieldsAccount = $this->_convertRemoteFields($aProfileInfo, $sAlternativeName);
+
+        bx_alert($this->getName(), 'fields_converted', 0, 0, array('override_profile_fields' => &$aFieldsProfile, 'override_account_fields' => &$aFieldsAccount, 'remote_profile_info' => $aProfileInfo));
+
         if (empty($aFieldsProfile['email']))
             return _t('_Incorrect Email');
 
