@@ -611,19 +611,19 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 		else if($bShowDoRepostAsButtonSmall)
 			$sClass .= ' bx-btn bx-btn-small';
 
-		$sOnClick = '';
-		if(!$bDisabled) {
-			$sCommonPrefix = $this->_oConfig->getPrefix('common_post');
-			if(str_replace($sCommonPrefix, '', $sType) == BX_TIMELINE_PARSE_TYPE_REPOST) {
-				$aRepostedData = $this->_getCommonData($aReposted);
-	
-	            $sOnClick = $this->_getRepostJsClick($iOwnerId, $aRepostedData['content']['type'], $aRepostedData['content']['action'], $aRepostedData['content']['object_id']);
-			}
-			else
-				$sOnClick = $this->_getRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId);
-		}
-		else
-			$sClass .= $bShowDoRepostAsButton || $bShowDoRepostAsButtonSmall ? ' bx-btn-disabled' : ' ' . $sStylePrefixRepost . 'disabled';
+                $sOnClick = '';
+                if(!$bDisabled) {
+                    $sCommonPrefix = $this->_oConfig->getPrefix('common_post');
+                    if(str_replace($sCommonPrefix, '', $sType) == BX_TIMELINE_PARSE_TYPE_REPOST) {
+                        $aRepostedData = unserialize($aReposted['content']);
+
+                        $sOnClick = $this->_getRepostJsClick($iOwnerId, $aRepostedData['type'], $aRepostedData['action'], $aRepostedData['object_id']);
+                    }
+                    else
+                        $sOnClick = $this->_getRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId);
+                }
+                else
+                    $sClass .= $bShowDoRepostAsButton || $bShowDoRepostAsButtonSmall ? ' bx-btn-disabled' : ' ' . $sStylePrefixRepost . 'disabled';
 
 		$aOnClickAttrs = array(
 			'title' => _t('_bx_timeline_txt_do_repost')
@@ -772,9 +772,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sResult = '';
         $sCommonPrefix = $this->_oConfig->getPrefix('common_post');
         if(str_replace($sCommonPrefix, '', $sType) == BX_TIMELINE_PARSE_TYPE_REPOST) {
-            $aRepostedData = $this->_getCommonData($aReposted);
+            $aRepostedData = unserialize($aReposted['content']);
 
-            $sResult = $this->_getRepostJsClick($iOwnerId, $aRepostedData['content']['type'], $aRepostedData['content']['action'], $aRepostedData['content']['object_id']);
+            $sResult = $this->_getRepostJsClick($iOwnerId, $aRepostedData['type'], $aRepostedData['action'], $aRepostedData['object_id']);
         }
         else
             $sResult = $this->_getRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId);
