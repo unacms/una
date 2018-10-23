@@ -1460,13 +1460,13 @@ class BxDolFormCheckerHelper
         if (false === strpos($s, '@')) // simple check
             return false;
 
-        if (!preg_match("/^\pL/u", $s)) // must start with letter
+        if (!preg_match("/^[\pL\pNd]/u", $s)) // must start with letter or number
             return false;
 
         if (!preg_match("/@[\pL\pNd\.\-]+$/u", $s)) // validate domain
             return false;
 
-        $s = str_replace(array('@', '.', '-', '+'), '', $s); // allowed symbols
+        $s = str_replace(array('@', '.', '-', '+', '_'), '', $s); // allowed symbols
         if (preg_match("/[^\pL^\pNd]/u", $s)) // check for undesirable chars
             return false;
 
