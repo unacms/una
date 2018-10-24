@@ -4,7 +4,7 @@
 	<string name="_bx_massmailer"><![CDATA[Mass Mailer]]></string>
   <string name="_bx_massmailer_adm_stg_cpt_type"><![CDATA[Mass Mailer]]></string>
   <string name="_bx_massmailer_adm_stg_cpt_category_general"><![CDATA[Основные]]></string>
-  <string name="_bx_massmailer_initial_from_name"><![CDATA[Заголовок письма "From"]]></string>
+  <string name="_bx_massmailer_delete_sent_email_in_days"><![CDATA[Удалить отправленные кампании старше (дней)]]></string>
   <string name="_bx_massmailer_page_title_sys_manage_campaigns"><![CDATA[Кампании]]></string>
   <string name="_bx_massmailer_page_title_manage_campaigns"><![CDATA[Кампании]]></string>
   <string name="_bx_massmailer_page_title_sys_manage_campaigns"><![CDATA[Кампании]]></string>
