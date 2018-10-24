@@ -27,7 +27,7 @@ class BxMassMailerFormCheckerHelper extends BxDolFormCheckerHelper
         if (trim($s) == '')
             return false;
         
-        if (substr_count($s,'{unsubscribe_url}') == 0)
+        if (substr_count($s, '{unsubscribe_url}') == 0)
             return false;
         
         return true;

@@ -28,6 +28,9 @@ DELETE FROM `sys_email_templates` WHERE `module` = @sName;
 DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matrix` WHERE `sys_acl_matrix`.`IDAction` = `sys_acl_actions`.`ID` AND `sys_acl_actions`.`Module` = @sName;
 DELETE FROM `sys_acl_actions` WHERE `Module` = @sName;
 
+-- CRON
+DELETE FROM `sys_cron_jobs` WHERE `name` LIKE 'bx_massmailer%';
+
 -- ALERTS
 SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = @sName LIMIT 1);
 DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandler;

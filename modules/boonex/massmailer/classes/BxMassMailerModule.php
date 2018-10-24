@@ -552,7 +552,7 @@ class BxMassMailerModule extends BxBaseModGeneralModule
                     $sRv = $this->_oDb->prepareAsString(" AND `tp`.`id` IN (SELECT `IDMember` FROM `sys_acl_levels_members` WHERE IDLevel = ?) ", $sLvl);
                     break;
             }
-            $sRv .= " AND `tp`.`type` IN ('" . implode("','", $this->getProfileModules()) . "')"; 
+            $sRv .= " AND `tp`.`type` IN ('" . implode("','", $this->getProfileModules()) . "')";
         }
         return $sRv;
     }
@@ -578,7 +578,7 @@ class BxMassMailerModule extends BxBaseModGeneralModule
         $aTemplate['Subject'] = $aCampaign['subject'];
               
         $aCustomHeaders = array();
-        $sFrom = $aCampaign['from_name'] != '' ? $aCampaign['from_name'] : getParam('bx_massmailer_initial_from_email');
+        $sFrom = $aCampaign['from_name'] != '' ? $aCampaign['from_name'] : getParam('site_title');
         $aCustomHeaders['From'] = "=?UTF-8?B?" . base64_encode($sFrom) . "?= <" . getParam('site_email_notify') . ">" ;
         if ($aCampaign['reply_to'] != ''){
             $sFrom = $aCampaign['from_name'] != '' ? $aCampaign['from_name'] : getParam('site_title');
