@@ -125,6 +125,17 @@ class BxPollsDb extends BxBaseModTextDb
         $sSql = "DELETE FROM `" . $CNF['TABLE_SUBENTRIES'] . "` WHERE " . $this->arrayToSQL($aParams, " AND ");
         return $this->query($sSql);
     }
+
+    public function deleteSubentryById($mixedId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!is_array($mixedId))
+            $mixedId = array($mixedId);
+
+        $sSql = "DELETE FROM `" . $CNF['TABLE_SUBENTRIES'] . "` WHERE `id` IN (" . $this->implode_escape($mixedId) . ")";
+        return $this->query($sSql);
+    }
 }
 
 /** @} */

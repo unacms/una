@@ -19,8 +19,16 @@ function BxPollsForm(oOptions) {
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
 }
 
-BxPollsForm.prototype.addMore = function(oButton) {
-	var oButton = $(oButton);
+BxPollsForm.prototype.subentryAdd = function(oButton, sName) {
+    var oButton = $(oButton);
 
-	oButton.before(oButton.siblings('.bx-form-input-text:first').clone().val(''));
+    var oSubentry = oButton.parents('#bx-form-element-' + sName).find('.bx-form-input-subentry:first').clone();
+    oSubentry.find("input[type = 'text']").val('');
+    oSubentry.find("input[type = 'hidden']").remove();
+
+    oButton.parents('.bx-form-input-subentry-add:first').before(oSubentry);
+};
+
+BxPollsForm.prototype.subentryDelete = function(oButton) {
+    $(oButton).parents('.bx-form-input-subentry:first').remove();
 };
