@@ -12,7 +12,7 @@ INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `hidden`, `o
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_params`, `check_error`, `order`) VALUES
-(@iCategoryId, 'bx_massmailer_initial_from_email', '_bx_massmailer_initial_from_name', 'UNA Mass mailer', 'digit', '', '', '', '', 1);
+(@iCategoryId, 'bx_massmailer_delete_sent_email_in_days', '_bx_massmailer_delete_sent_email_in_days', '365', 'digit', '', '', '', '', 1);
 
 
 -- PAGE: create campaign
@@ -110,6 +110,12 @@ SET @iAdministrator = 8;
 
 INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iAdministrator, @iIdActionUseMassmailer);
+
+
+-- CRON
+INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
+('bx_massmailer_cron', '0 1 * * *', 'BxMassMailerCron', 'modules/boonex/massmailer/classes/BxMassMailerCron.php', '');
+
 
 -- ALERTS
 INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 
