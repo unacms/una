@@ -235,10 +235,11 @@ class BxMassMailerDb extends BxBaseModGeneralDb
         $aBindings = array(
             'time_from' => (time() - $iDayBefore * 86400)
         );
-        $this->query("DELETE FROM `" . $CNF['TABLE_LETTERS'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` IN (SELECT `" . $CNF['FIELD_ID'] . "` FROM `" . $CNF['TABLE_CAMPAIGNS'] . "` WHERE `" . $CNF['FIELD_DATE_SENT'] . "` < :time_from AND `" . $CNF['FIELD_DATE_SENT'] . "` > 0)", $aBindings);
-        $this->query("DELETE FROM `" . $CNF['TABLE_LINKS'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` IN (SELECT `" . $CNF['FIELD_ID'] . "` FROM `" . $CNF['TABLE_CAMPAIGNS'] . "` WHERE `" . $CNF['FIELD_DATE_SENT'] . "` < :time_from AND `" . $CNF['FIELD_DATE_SENT'] . "` > 0)", $aBindings);
-        $this->query("DELETE FROM `" . $CNF['TABLE_UNSUBSCRIBE'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` IN (SELECT `" . $CNF['FIELD_ID'] . "` FROM `" . $CNF['TABLE_CAMPAIGNS'] . "` WHERE `" . $CNF['FIELD_DATE_SENT'] . "` < :time_from AND `" . $CNF['FIELD_DATE_SENT'] . "` > 0)", $aBindings);
-        $this->query("DELETE FROM `" . $CNF['TABLE_CAMPAIGNS'] . "` WHERE `" . $CNF['FIELD_DATE_SENT'] . "` < :time_from AND `" . $CNF['FIELD_DATE_SENT'] . "` > 0", $aBindings);
+        $sIdList = $this->implode_escape($this->getColumn("SELECT `" . $CNF['FIELD_ID'] . "` FROM `" . $CNF['TABLE_CAMPAIGNS'] . "` WHERE `" . $CNF['FIELD_DATE_SENT'] . "` < :time_from AND `" . $CNF['FIELD_DATE_SENT'] . "` > 0", $aBindings));
+        $this->query("DELETE FROM `" . $CNF['TABLE_LETTERS'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` IN (" . $sIdList . ")", $aBindings);
+        $this->query("DELETE FROM `" . $CNF['TABLE_LINKS'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` IN (" . $sIdList . ")", $aBindings);
+        $this->query("DELETE FROM `" . $CNF['TABLE_UNSUBSCRIBE'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` IN (" . $sIdList . ")", $aBindings);
+        $this->query("DELETE FROM `" . $CNF['TABLE_CAMPAIGNS'] . "` WHERE `" . $CNF['FIELD_ID'] . "` IN (" . $sIdList . ")", $aBindings);
     }
 }
 

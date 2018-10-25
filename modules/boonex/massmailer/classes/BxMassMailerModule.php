@@ -43,7 +43,7 @@ class BxMassMailerModule extends BxBaseModGeneralModule
             switch ($sActionName) {
                 case 'click':
                     $sLink = $this->_oDb->updateDateClickForLink($sHash);
-                    if (substr_count($sLink, '://') == 0)
+                    if (strpos($sLink, '://') === false)
                         $sLink = BX_DOL_URL_ROOT . $sLink;
                     header('Location: ' . $sLink);
                     break;
@@ -530,7 +530,7 @@ class BxMassMailerModule extends BxBaseModGeneralModule
     private function getSqlBySegment($sSegment)
     {
         $sRv = '';
-        if (substr_count($sSegment, 'lvl:') > 0){
+        if (strpos($sSegment, 'lvl:') !== false){
             $sLvl = str_replace('lvl:', '', $sSegment);
             switch ($sLvl) {
                 case 0:
@@ -552,7 +552,7 @@ class BxMassMailerModule extends BxBaseModGeneralModule
                     $sRv = $this->_oDb->prepareAsString(" AND `tp`.`id` IN (SELECT `IDMember` FROM `sys_acl_levels_members` WHERE IDLevel = ?) ", $sLvl);
                     break;
             }
-            $sRv .= " AND `tp`.`type` IN ('" . implode("','", $this->getProfileModules()) . "')";
+            $sRv .= " AND `tp`.`type` IN (" . $this->_oDb->implode_escape($this->getProfileModules()) . ")";
         }
         return $sRv;
     }
