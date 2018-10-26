@@ -94,26 +94,46 @@ class BxDolStudioFormsField extends BxDol
         return isset($this->aParams['table']) && !empty($this->aParams['table']);
     }
 
+    public function isField($sName)
+    {
+        if(!isset($this->aParams['table_alter']) || $this->aParams['table_alter'] !== true)
+            return false;
+
+        if(!isset($this->aParams['table']))
+            return false;
+
+        return $this->oDb->isFieldExists($this->aParams['table'], $sName);
+    }
+
     public function alterAdd($sName)
     {
-        if(!isset($this->aParams['table'], $this->aParams['table_alter'], $this->aParams['table_field_type']) || $this->aParams['table_alter'] !== true)
-            return '';
+        if(!isset($this->aParams['table_alter']) || $this->aParams['table_alter'] !== true)
+            return true;
+
+        if(!isset($this->aParams['table'], $this->aParams['table_field_type']))
+            return false;
 
         return $this->oDb->alterAdd($this->aParams['table'], $sName, $this->aParams['table_field_type']);
     }
 
-	public function alterChange($sNameOld, $sNameNew)
+    public function alterChange($sNameOld, $sNameNew)
     {
-        if(!isset($this->aParams['table'], $this->aParams['table_alter'], $this->aParams['table_field_type']) || $this->aParams['table_alter'] !== true)
-            return '';
+        if(!isset($this->aParams['table_alter']) || $this->aParams['table_alter'] !== true)
+            return true;
+
+        if(!isset($this->aParams['table'], $this->aParams['table_field_type']))
+            return false;
 
         return $this->oDb->alterChange($this->aParams['table'], $sNameOld, $sNameNew, $this->aParams['table_field_type']);
     }
 
     public function alterRemove($sName)
     {
-        if(!isset($this->aParams['table'], $this->aParams['table_alter']) || $this->aParams['table_alter'] !== true)
-            return '';
+        if(!isset($this->aParams['table_alter']) || $this->aParams['table_alter'] !== true)
+            return true;
+
+        if(!isset($this->aParams['table']))
+            return false;
 
         return $this->oDb->alterRemove($this->aParams['table'], $sName);
     }

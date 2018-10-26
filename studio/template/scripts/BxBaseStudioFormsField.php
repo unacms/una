@@ -111,20 +111,23 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
             //--- Process field name.
             $sInputName = $oForm->getCleanValue('name');
             if(empty($sInputName)) {
-            	$sInputObject = $oForm->getCleanValue('object');
+                $sInputObject = $oForm->getCleanValue('object');
 
-	            $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
-	            $sInputCaption = BxDolForm::getSubmittedValue('caption-' . $sLanguage, $aForm['form_attrs']['method']);
-	            if(empty($sInputCaption))
-	                $sInputCaption = BxDolForm::getSubmittedValue('caption_system-' . $sLanguage, $aForm['form_attrs']['method']);
+                $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
+                $sInputCaption = BxDolForm::getSubmittedValue('caption-' . $sLanguage, $aForm['form_attrs']['method']);
+                if(empty($sInputCaption))
+                    $sInputCaption = BxDolForm::getSubmittedValue('caption_system-' . $sLanguage, $aForm['form_attrs']['method']);
 
-	            $sInputName = $this->getFieldName($sInputObject, $sInputCaption);
-	            BxDolForm::setSubmittedValue('name', $sInputName, $oForm->aFormAttrs['method']);
+                $sInputName = $this->getFieldName($sInputObject, $sInputCaption);
+                BxDolForm::setSubmittedValue('name', $sInputName, $oForm->aFormAttrs['method']);
             }
 
             $sFieldName = strmaxtextlen($sInputName, $this->iFieldNameMaxLen, '');
             if(strcmp($sInputName, $sFieldName) !== 0)
             	BxDolForm::setSubmittedValue('name', $sFieldName, $oForm->aFormAttrs['method']);
+
+            if($this->isField($sFieldName))
+                return false;
 
             $this->onSubmitField($oForm);
             if(($iId = $oForm->insert()) === false)
@@ -155,7 +158,7 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
         if($oForm->isSubmittedAndValid()) {
             $sInputName = $oForm->getCleanValue('name');
 
-			$sFieldName = strmaxtextlen($sInputName, $this->iFieldNameMaxLen, '');
+            $sFieldName = strmaxtextlen($sInputName, $this->iFieldNameMaxLen, '');
             if(strcmp($sInputName, $sFieldName) !== 0)
             	BxDolForm::setSubmittedValue('name', $sFieldName, $oForm->aFormAttrs['method']);
 
@@ -163,9 +166,9 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
             if($oForm->update((int)$this->aField['id']) === false)
                 return false;
 
-			$sFieldNameOld = $this->aField['name'];
-			if($bAlter || strcmp($sFieldNameOld, $sFieldName) !== 0)
-				$this->alterChange($sFieldNameOld, $sFieldName);
+            $sFieldNameOld = $this->aField['name'];
+            if($bAlter || strcmp($sFieldNameOld, $sFieldName) !== 0)
+                $this->alterChange($sFieldNameOld, $sFieldName);
 
             return true;
         } 

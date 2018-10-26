@@ -678,20 +678,29 @@ class BxDolStudioFormsQuery extends BxDolDb
 
     function alterAdd($sTable, $sField, $sType)
     {
-        $sSql = "ALTER TABLE `" . $sTable . "` ADD `" . $sField . "` " . $sType;
-        $this->query($sSql);
+        if($this->isFieldExists($sTable, $sField))
+            return true;
+
+        return (int)$this->query("ALTER TABLE `" . $sTable . "` ADD `" . $sField . "` " . $sType) > 0;
     }
 
     function alterChange($sTable, $sFieldOld, $sFieldNew, $sTypeNew)
     {
-        $sSql = "ALTER TABLE `" . $sTable . "` CHANGE `" . $sFieldOld . "` `" . $sFieldNew . "` " . $sTypeNew;
-        $this->query($sSql);
+        if(!$this->isFieldExists($sTable, $sFieldOld))
+            return false;
+
+        if(strcmp($sFieldOld, $sFieldNew) !== 0 && $this->isFieldExists($sTable, $sFieldNew))
+            return false;
+
+        return (int)$this->query("ALTER TABLE `" . $sTable . "` CHANGE `" . $sFieldOld . "` `" . $sFieldNew . "` " . $sTypeNew) > 0;
     }
 
     function alterRemove($sTable, $sField)
     {
-        $sSql = "ALTER TABLE `" . $sTable . "` DROP `" . $sField . "`";
-        $this->query($sSql);
+        if(!$this->isFieldExists($sTable, $sField))
+            return true;
+
+        return (int)$this->query("ALTER TABLE `" . $sTable . "` DROP `" . $sField . "`") > 0;
     }
 }
 
