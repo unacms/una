@@ -259,44 +259,59 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     public function performModulesUpgrade($bDirectly = true, $bEmailNotify = true)
     {
-    	if(!defined('BX_DOL_CRON_EXECUTE') && !$bDirectly)
-    		return $this->addTransientJob(self::getNamePerformModulesUpgrade(), 'perform_modules_upgrade', array($bEmailNotify));   	
+        if(!defined('BX_DOL_CRON_EXECUTE') && !$bDirectly)
+            return $this->addTransientJob(self::getNamePerformModulesUpgrade(), 'perform_modules_upgrade', array($bEmailNotify));   	
+
+        $oLog = BxDolLog::getInstance();
+        $oLog->setName('upgrade_modules');
 
         $aFailed = array();
-		$aUpdates = $this->checkUpdates();
-		if(empty($aUpdates) || !is_array($aUpdates))
-			return true;
+        $aUpdates = $this->checkUpdates();
+        if(empty($aUpdates) || !is_array($aUpdates)) {
+            $oLog->write('Cannot get a list of modules which require to be updated.');
+            return true;
+        }
 
-	    foreach($aUpdates as $aUpdate) {
-	    	$mixedResult = $this->downloadUpdatePublic($aUpdate['name']);
-	        if($mixedResult !== true) {
-	        	$aFailed[$aUpdate['name']] = $mixedResult;
-				continue;
-			}
-		}
+        foreach($aUpdates as $aUpdate) {
+            $mixedResult = $this->downloadUpdatePublic($aUpdate['name']);
+            if($mixedResult !== true) {
+                $aFailed[$aUpdate['name']] = $mixedResult;
+                continue;
+            }
+        }
 
-		$aSuccess = array();
-		$aUpdates = $this->getUpdates();
-		if(empty($aUpdates) || !is_array($aUpdates))
-			return true;
+        $aSuccess = array();
+        $aUpdates = $this->getUpdates();
+        if(empty($aUpdates) || !is_array($aUpdates)) {
+            $oLog->write('Cannot find update scripts for modules. They are damaged or were not downloaded.');
+            return true;
+        }
 
-		foreach($aUpdates as $aUpdate) {
-			$aResult = $this->perform($aUpdate['dir'], 'update');
-			if((int)$aResult['code'] != 0) {
-				$aFailed[$aUpdate['module_name']] = $aResult['message'];
-				continue;
-			}
+        foreach($aUpdates as $aUpdate) {
+            $aResult = $this->perform($aUpdate['dir'], 'update');
+            if((int)$aResult['code'] != 0) {
+                $aFailed[$aUpdate['module_name']] = $aResult['message'];
+                continue;
+            }
 
-			$aSuccess[$aUpdate['module_name']] = $aUpdate['version_to'];
-		}
+            $aSuccess[$aUpdate['module_name']] = $aUpdate['version_to'];
+        }
 
-    	if($bEmailNotify && !empty($aSuccess))
-    		$this->emailNotifyModulesUpgrade('success', $aSuccess);
+        if(!empty($aFailed)) {
+            $oLog->write('Failed to update modules:', $aFailed);
 
-        if($bEmailNotify && !empty($aFailed))
-        	$this->emailNotifyModulesUpgrade('failed', $aFailed);
+            if($bEmailNotify)
+                $this->emailNotifyModulesUpgrade('failed', $aFailed);
+        }
 
-		return empty($aFailed);
+        if(!empty($aSuccess)) {
+            $oLog->write('Successfully updated modules:', $aSuccess);
+
+            if($bEmailNotify)
+                $this->emailNotifyModulesUpgrade('success', $aSuccess);
+        }
+
+        return empty($aFailed);
     }
 
     public function checkModules($bAuthorizedAccess = false)
