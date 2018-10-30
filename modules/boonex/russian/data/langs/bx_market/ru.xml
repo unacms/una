@@ -50,9 +50,15 @@
     <string name="_bx_market_form_entry_input_header_beg_recurring"><![CDATA[Подписка]]></string>
     <string name="_bx_market_form_entry_input_sys_header_beg_privacy"><![CDATA[Конфиденциальность: начало]]></string>
     <string name="_bx_market_form_entry_input_header_beg_privacy"><![CDATA[Конфиденциальность]]></string>
+    <string name="_bx_market_form_entry_input_sys_header_beg_notes"><![CDATA[Заметки: начало]]></string>
+    <string name="_bx_market_form_entry_input_header_beg_notes"><![CDATA[Заметки]]></string>
+    <string name="_bx_market_form_entry_input_sys_header_beg_other"><![CDATA[Остальные: начало]]></string>
+    <string name="_bx_market_form_entry_input_header_beg_other"><![CDATA[Остальные]]></string>
     <string name="_bx_market_form_entry_input_sys_header_end_single"><![CDATA[Разовая оплата: конец]]></string>
     <string name="_bx_market_form_entry_input_sys_header_end_recurring"><![CDATA[Подписка: конец]]></string>
     <string name="_bx_market_form_entry_input_sys_header_end_privacy"><![CDATA[Конфиденциальность: конец]]></string>
+    <string name="_bx_market_form_entry_input_sys_header_end_notes"><![CDATA[Заметки: конец]]></string>
+    <string name="_bx_market_form_entry_input_sys_header_end_other"><![CDATA[Остальные: конец]]></string>
 	<string name="_bx_market_form_entry_input_sys_text"><![CDATA[Текст]]></string>
 	<string name="_bx_market_form_entry_input_text"><![CDATA[Текст]]></string>
 	<string name="_bx_market_form_entry_input_text_err"><![CDATA[Поле Текст не может быть пустым]]></string>
