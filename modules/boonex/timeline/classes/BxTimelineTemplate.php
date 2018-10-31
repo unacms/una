@@ -32,9 +32,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $mixedResult = parent::getCss($bDynamic);
         $mixedResult .= $this->addCss(array(
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css',
-        	BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'emoji/css/|emoji.css',
+            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'emoji/css/|emoji.css',
             'jquery-ui/jquery-ui.css',
-			'cmts.css',
+            'cmts.css',
             'post.css',
             'repost.css',
         ), $bDynamic);
@@ -52,7 +52,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'jquery.ba-resize.min.js',
             'autosize.min.js',
             'masonry.pkgd.min.js',
-            'modernizr.min.js',
             'flickity/flickity.pkgd.min.js',
             'embedly-player.min.js',
             'BxDolCmts.js',            
