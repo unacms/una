@@ -63,39 +63,12 @@ class BxBaseMenuSwitchLanguage extends BxTemplMenu
 
     protected function getBaseUrlPopup()
     {
-        return $this->getBaseUrl($_SERVER['HTTP_REFERER']);
+        return bx_get_base_url_popup();
     }
 
     protected function getBaseUrlInline()
     {
-        $aBaseLink = parse_url(BX_DOL_URL_ROOT);
-        $sPageLink = (!empty($aBaseLink['scheme']) ? $aBaseLink['scheme'] : 'http') . '://' . $aBaseLink['host'] . $_SERVER['REQUEST_URI'];
-
-        list($sPageLink, $aPageParams) = $this->getBaseUrl($sPageLink);
-
-        $aPageParamsAdd = array();
-		if(!empty($_SERVER['QUERY_STRING'])) {
-			parse_str($_SERVER['QUERY_STRING'], $aPageParamsAdd);
-			if(!empty($aPageParamsAdd) && is_array($aPageParamsAdd))
-				$aPageParams = array_merge($aPageParams, $aPageParamsAdd);
-		}
-
-		return array($sPageLink, $aPageParams);
-    }
-
-    protected function getBaseUrl($sPageLink)
-    {
-        $sPageLink = BxDolPermalinks::getInstance()->unpermalink($sPageLink, false);
-
-        $sPageParams = '';
-        if(strpos($sPageLink, '?') !== false)
-        	list($sPageLink, $sPageParams) = explode('?', $sPageLink);
-
-        $aPageParams = array();
-        if(!empty($sPageParams))
-        	parse_str($sPageParams, $aPageParams);
-
-        return array($sPageLink, $aPageParams);
+        return bx_get_base_url_inline();
     }
 
     protected function getItemTitlePopup($sName, $sTitle)

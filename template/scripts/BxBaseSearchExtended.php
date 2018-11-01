@@ -20,6 +20,8 @@ class BxBaseSearchExtended extends BxDolSearchExtended
     protected $_oForm;
     protected $_oTemplate;
 
+    protected $_bJsMode;
+
     public function __construct ($aObject, $oTemplate = null)
     {
         parent::__construct ($aObject);
@@ -35,14 +37,16 @@ class BxBaseSearchExtended extends BxDolSearchExtended
         $this->_sFormClassPath = '';
 
         $this->_oForm = null;
+
+        $this->_bJsMode = false;
     }
 
-    public function getForm()
+    public function getForm($aParams = array())
     {
         if(!$this->isEnabled())
             return '';
 
-        $oForm = $this->prepareForm();
+        $oForm = $this->prepareForm($aParams);
         return $oForm->getCode();
     }
 
@@ -62,8 +66,8 @@ class BxBaseSearchExtended extends BxDolSearchExtended
         if(!$this->isEnabled())
             return '';
 
+        $bJsMode = isset($aParams['js_mode']) ? (bool)$aParams['js_mode'] : $this->_bJsMode;
         $bCondition = !empty($aParams['cond']) && is_array($aParams['cond']);
-        $aCondition = $bCondition ? $aParams['cond'] : array();
 
         $iStart = !empty($aParams['start']) ? $aParams['start'] : 0;
         $iPerPage = !empty($aParams['per_page']) ? $aParams['per_page'] : 0;
@@ -71,16 +75,17 @@ class BxBaseSearchExtended extends BxDolSearchExtended
 
         $sUnitTemplate = !empty($aParams['template']) ? $aParams['template'] : '';
 
-        $oForm = $this->prepareForm();
-        if(!empty($aCondition) && is_array($aCondition)) {
+        $oForm = $this->prepareForm($aParams);
+        if($bCondition) {
             $mixedSubmitName = $oForm->aParams['db']['submit_name'];
             if(is_array($mixedSubmitName))
                 $mixedSubmitName = array_pop($mixedSubmitName);
-            $aCondition[$mixedSubmitName] = 1;
+            $aParams['cond'][$mixedSubmitName] = 1;
+
             $oForm->aFormAttrs['method'] = BX_DOL_FORM_METHOD_SPECIFIC;
             $oForm->aParams['csrf']['disable'] = true;
 
-            $oForm->initChecker(array(), $aCondition);
+            $oForm->initChecker(array(), $aParams['cond']);
         }
 
         if(!$oForm->isSubmittedAndValid()) 
@@ -125,11 +130,18 @@ class BxBaseSearchExtended extends BxDolSearchExtended
         if(!empty($aParams['cond']) && is_array($aParams['cond']))
             $aParams['cond'] = urlencode(serialize($aParams['cond']));
 
-        $oPaginate = new BxTemplPaginate(array(
-            'on_change_page' => "return !loadDynamicBlockAutoPaginate(this, '{start}', '{per_page}', " . bx_js_string(json_encode($aParams)) . ");",
-            'start' => $iStart,
-            'per_page' => $iPerPage
-        ));
+        $aPaginate = array('start' => $iStart, 'per_page' => $iPerPage);
+        if(!$bJsMode) {
+            $aParams['start'] = '{start}';
+            $aParams['per_page'] = '{per_page}';
+            list($sPageLink, $aPageParams) = bx_get_base_url_inline($aParams);
+
+            $aPaginate['page_url'] = BxDolPermalinks::getInstance()->permalink(bx_append_url_params($sPageLink, $aPageParams));
+        }
+        else
+            $aPaginate['on_change_page'] = "return !loadDynamicBlockAutoPaginate(this, '{start}', '{per_page}', " . bx_js_string(json_encode($aParams)) . ");";            
+
+        $oPaginate = new BxTemplPaginate($aPaginate);
         $oPaginate->setNumFromDataArray($aResults);
 
         $bTmplVarsPaginate = $iStart || $oPaginate->getNum() > $iPerPage;
@@ -148,7 +160,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
         ));
     }
 
-    protected function &prepareForm()
+    protected function &prepareForm($aParams = array())
     {
         if(!empty($this->_oForm) && $this->_oForm instanceof BxDolForm)
             return $this->_oForm;
@@ -156,11 +168,13 @@ class BxBaseSearchExtended extends BxDolSearchExtended
         $sForm = 'sys_search_extended_' . $this->_sObject;
         $sFormSubmit = 'search' . $this->_sObject;
 
+        list($sPageLink, $aPageParams) = bx_get_base_url_inline();
+
         $aForm = array(
             'form_attrs' => array(
                 'id' => $sForm,
                 'name' => $sForm,
-                'action' => '',
+                'action' => BxDolPermalinks::getInstance()->permalink(bx_append_url_params($sPageLink, array('i' => $aPageParams['i']))),
                 'method' => 'post'
             ),
             'params' => array(
@@ -225,8 +239,11 @@ class BxBaseSearchExtended extends BxDolSearchExtended
                 require_once(BX_DIRECTORY_PATH_ROOT . $this->_sFormClassPath);
         }
 
+        $bJsMode = isset($aParams['js_mode']) ? (bool)$aParams['js_mode'] : $this->_bJsMode;
+        $bCondition = !empty($aParams['cond']) && is_array($aParams['cond']);
+
         $this->_oForm = new $sClass($aForm, $this->_oTemplate);
-        $this->_oForm->initChecker();
+        $this->_oForm->initChecker(!$bJsMode && $bCondition ? $aParams['cond'] : array());
 
         return $this->_oForm;
     }

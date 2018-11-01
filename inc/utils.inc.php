@@ -1070,6 +1070,51 @@ function bx_get ($sName, $sMethod = false)
         return false;
 }
 
+function bx_get_base_url_inline($aParams = array())
+{
+    $aBaseLink = parse_url(BX_DOL_URL_ROOT);
+    $sPageLink = (!empty($aBaseLink['scheme']) ? $aBaseLink['scheme'] : 'http') . '://' . $aBaseLink['host'] . $_SERVER['REQUEST_URI'];
+
+    list($sPageLink, $aPageParams) = bx_get_base_url($sPageLink);
+
+    if(!empty($_SERVER['QUERY_STRING'])) {
+        $aPageParamsAdd = array();
+        parse_str($_SERVER['QUERY_STRING'], $aPageParamsAdd);
+        if(!empty($aPageParamsAdd) && is_array($aPageParamsAdd))
+            $aPageParams = array_merge($aPageParams, $aPageParamsAdd);
+    }
+
+    if(!empty($aParams) && is_array($aParams))
+        $aPageParams = array_merge($aPageParams, $aParams);
+
+    return array($sPageLink, $aPageParams);
+}
+
+function bx_get_base_url_popup($aParams = array())
+{
+    list($sPageLink, $aPageParams) = bx_get_base_url($_SERVER['HTTP_REFERER']);
+
+    if(!empty($aParams) && is_array($aParams))
+        $aPageParams = array_merge($aPageParams, $aParams);
+
+    return array($sPageLink, $aPageParams);
+}
+
+function bx_get_base_url($sPageLink)
+{
+    $sPageLink = BxDolPermalinks::getInstance()->unpermalink($sPageLink, false);
+
+    $sPageParams = '';
+    if(strpos($sPageLink, '?') !== false)
+        list($sPageLink, $sPageParams) = explode('?', $sPageLink);
+
+    $aPageParams = array();
+    if(!empty($sPageParams))
+        parse_str($sPageParams, $aPageParams);
+
+    return array($sPageLink, $aPageParams);
+}
+
 function bx_encode_url_params ($a, $aExcludeKeys = array (), $aOnlyKeys = false)
 {
     $s = '';
