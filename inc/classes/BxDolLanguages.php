@@ -74,7 +74,17 @@ class BxDolLanguages extends BxDolFactory implements iBxDolSingleton
         if(!$sLang)
             $sLang = $this->tryToGetLang(BX_DOL_LANGUAGE_DEFAULT);
 
-        setlocale(LC_TIME, $sLang . '_' . strtoupper($sLang) . '.utf-8', $sLang . '_' . strtoupper($sLang) . '.utf8', $sLang . '.utf-8', $sLang . '.utf8', $sLang);
+        $sLocale = $this->getLangCountryCode($sLang);
+        if (!$sLocale)
+            $sLocale = $sLang . '_' . strtoupper($sLang);
+        
+        setlocale(LC_TIME,
+            $sLocale . '.utf-8',
+            $sLocale . '.utf8',
+            $sLang . '.utf-8',
+            $sLang . '.utf8',
+            $sLang);
+
         return $sLang;
     }
 
