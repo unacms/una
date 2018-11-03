@@ -43,16 +43,20 @@ class BxCnvFormsEntryHelper extends BxBaseModTextFormsEntryHelper
         if (!($aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId)))
             return MsgBox(_t('_sys_txt_error_occured'));
 
+        $CNF = $this->_oModule->_oConfig->CNF;
+
         // send notification to all collaborators
-        $oProfile = BxDolProfile::getInstance($aContentInfo[$this->_oModule->_oConfig->CNF['FIELD_AUTHOR']]);
-        $aCollaborators = $this->_oModule->_oDb->getCollaborators($aContentInfo[$this->_oModule->_oConfig->CNF['FIELD_ID']]);
+        $oProfile = BxDolProfile::getInstance($aContentInfo[$CNF['FIELD_AUTHOR']]);
+        $aCollaborators = $this->_oModule->_oDb->getCollaborators($aContentInfo[$CNF['FIELD_ID']]);
         foreach ($aCollaborators as $iCollaborator => $iReadComments) {
             if ($iCollaborator == $oProfile->id())
                 continue;
             sendMailTemplate('bx_cnv_new_message', 0, $iCollaborator, array(
                 'SenderDisplayName' => $oProfile->getDisplayName(),
                 'SenderUrl' => $oProfile->getUrl(),
-                'Message' => $aContentInfo[$this->_oModule->_oConfig->CNF['FIELD_TEXT']],
+                'Message' => $aContentInfo[$CNF['FIELD_TEXT']],
+                'PageUrl' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
+                'PageTitle' => strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 100),
             ), BX_EMAIL_NOTIFY);
         }
             

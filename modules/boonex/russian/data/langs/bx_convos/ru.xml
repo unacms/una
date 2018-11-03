@@ -119,7 +119,7 @@
     <string name="_bx_cnv_email_new_message"><![CDATA[Новое сообщение]]></string>
     <string name="_bx_cnv_email_new_message_subject"><![CDATA[Новое сообщение от {SenderDisplayName}]]></string>
     <string name="_bx_cnv_email_new_message_body"><![CDATA[{email_header}
-<p>Новое сообщение от <a href="{SenderUrl}">{SenderDisplayName}</a>:</p>
+<p><a href="{PageUrl}">Новое сообщение</a> от <a href="{SenderUrl}">{SenderDisplayName}</a>:</p>
 <hr />
 <p>{Message}</p>
 {email_footer}]]></string>
