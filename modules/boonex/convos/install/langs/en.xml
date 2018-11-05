@@ -119,7 +119,7 @@
     <string name="_bx_cnv_email_new_message"><![CDATA[New message]]></string>
     <string name="_bx_cnv_email_new_message_subject"><![CDATA[New message from {SenderDisplayName}]]></string>
     <string name="_bx_cnv_email_new_message_body"><![CDATA[{email_header}
-<p>New message from <a href="{SenderUrl}">{SenderDisplayName}</a>:</p>
+<p><a href="{PageUrl}">New message</a> from <a href="{SenderUrl}">{SenderDisplayName}</a>:</p>
 <hr />
 <p>{Message}</p>
 {email_footer}]]></string>
