@@ -242,7 +242,7 @@
     <string name="_bx_orgs_menu_item_title_become_fan"><![CDATA[Присоединиться]]></string>
     <string name="_bx_orgs_menu_item_title_become_fan_sent"><![CDATA[Присоединение запрошено]]></string>
     <string name="_bx_orgs_menu_item_title_become_fan_confirm"><![CDATA[Одобрить присоединение]]></string>
-    <string name="_bx_orgs_menu_item_title_system_leave_group"><![CDATA[Покинуть организацию]]></string>
+    <string name="_bx_orgs_menu_item_title_system_leave_organization"><![CDATA[Покинуть организацию]]></string>
     <string name="_bx_orgs_menu_item_title_leave_organization"><![CDATA[Покинуть организацию]]></string>
     <string name="_bx_orgs_menu_item_title_leave_organization_cancel_request"><![CDATA[Отменить присоединение]]></string>
     <string name="_bx_orgs_menu_item_title_leave_organization_reject_request"><![CDATA[Отвергнуть присоединение]]></string>
@@ -356,6 +356,7 @@
 
     <string name="_bx_orgs_txt_sample_single"><![CDATA[Организация]]></string>
     <string name="_bx_orgs_txt_sample_comment_single"><![CDATA[комментарий к организации]]></string>
+    <string name="_bx_orgs_txt_sample_vote_single"><![CDATA[голос за организацию]]></string>
     <string name="_bx_orgs_txt_sample_pp_single"><![CDATA[изображение профиля]]></string>
     <string name="_bx_orgs_txt_sample_pp_single_with_article"><![CDATA[изображение профиля]]></string>
     <string name="_bx_orgs_txt_sample_pc_single"><![CDATA[обложка профиля]]></string>

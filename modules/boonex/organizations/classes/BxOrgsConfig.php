@@ -16,16 +16,16 @@ class BxOrgsConfig extends BxBaseModProfileConfig
         parent::__construct($aModule);
 
         $this->_aMenuItems2MethodsSubmenu = array_merge($this->_aMenuItems2MethodsSubmenu, array(
-        	'organization-profile-subscriptions' => 'checkAllowedSubscriptionsView'
+            'organization-profile-subscriptions' => 'checkAllowedSubscriptionsView'
         ));
 
         $this->_aMenuItems2MethodsActions = array_merge($this->_aMenuItems2MethodsActions, array(
             'view-organization-profile' => 'checkAllowedView',
             'edit-organization-profile' => 'checkAllowedEdit',
             'edit-organization-cover' => 'checkAllowedChangeCover',
-        	'invite-to-organization' => 'checkAllowedInvite',
+            'invite-to-organization' => 'checkAllowedInvite',
             'delete-organization-profile' => 'checkAllowedDelete',
-        	'profile-fan-add' => 'checkAllowedFanAdd',
+            'profile-fan-add' => 'checkAllowedFanAdd',
             'profile-fan-remove' => 'checkAllowedFanRemove',
         ));
 
@@ -37,7 +37,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'data',
             'TABLE_ENTRIES_FULLTEXT' => 'search_fields',
-        	'TABLE_ADMINS' => $aModule['db_prefix'] . 'admins',
+            'TABLE_ADMINS' => $aModule['db_prefix'] . 'admins',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -45,13 +45,13 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'FIELD_ADDED' => 'added',
             'FIELD_CHANGED' => 'changed',
             'FIELD_NAME' => 'org_name',
-        	'FIELD_TITLE' => 'org_name',
-        	'FIELD_TEXT' => 'org_desc',
+            'FIELD_TITLE' => 'org_name',
+            'FIELD_TEXT' => 'org_desc',
             'FIELD_PICTURE' => 'picture',
             'FIELD_COVER' => 'cover',
-        	'FIELD_JOIN_CONFIRMATION' => 'join_confirmation',
+            'FIELD_JOIN_CONFIRMATION' => 'join_confirmation',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
-        	'FIELD_VIEWS' => 'views',
+            'FIELD_VIEWS' => 'views',
             'FIELD_COMMENTS' => 'comments',
             'FIELDS_QUICK_SEARCH' => array('org_name'),
             'FIELD_LOCATION_PREFIX' => 'location',
@@ -60,13 +60,13 @@ class BxOrgsConfig extends BxBaseModProfileConfig
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-organization-profile',
-        	'URI_VIEW_FRIENDS' => 'organization-profile-friends',
-        	'URI_VIEW_FRIEND_REQUESTS' => 'organization-friend-requests',
-        	'URI_VIEW_FAVORITES' => 'organization-profile-favorites',
+            'URI_VIEW_FRIENDS' => 'organization-profile-friends',
+            'URI_VIEW_FRIEND_REQUESTS' => 'organization-friend-requests',
+            'URI_VIEW_FAVORITES' => 'organization-profile-favorites',
             'URI_EDIT_ENTRY' => 'edit-organization-profile',
             'URI_EDIT_COVER' => 'edit-organization-cover',
-        	'URI_JOINED_ENTRIES' => 'joined-organizations',
-        	'URI_MANAGE_COMMON' => 'organizations-manage',
+            'URI_JOINED_ENTRIES' => 'joined-organizations',
+            'URI_MANAGE_COMMON' => 'organizations-manage',
 
             'URL_HOME' => 'page.php?i=organizations-home',
             'URL_CREATE' => 'page.php?i=create-organization-profile',
@@ -83,9 +83,9 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'PARAM_SEARCHABLE_FIELDS' => 'bx_organizations_searchable_fields',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_organizations_per_page_browse_showcase',
             'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_organizations_per_page_browse_recommended',
-        	'PARAM_PUBLIC_SBSN' => 'bx_organizations_public_subscriptions',
+            'PARAM_PUBLIC_SBSN' => 'bx_organizations_public_subscriptions',
             'PARAM_PUBLIC_SBSD' => 'bx_organizations_public_subscribed_me',
-        	'PARAM_REDIRECT_AADD' => 'bx_organizations_redirect_aadd',
+            'PARAM_REDIRECT_AADD' => 'bx_organizations_redirect_aadd',
             'PARAM_REDIRECT_AADD_CUSTOM_URL' => 'bx_organizations_redirect_aadd_custom_url',
             'PARAM_LABELS' => 'bx_organizations_labels',
 
@@ -98,23 +98,23 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'OBJECT_IMAGES_TRANSCODER_PICTURE' => 'bx_organizations_picture',
             'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_organizations_cover',
             'OBJECT_IMAGES_TRANSCODER_COVER_THUMB' => 'bx_organizations_cover_thumb',
-        	'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_organizations_gallery',
+            'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_organizations_gallery',
             'OBJECT_VIEWS' => 'bx_organizations',
-        	'OBJECT_VOTES' => '',
-        	'OBJECT_SCORES' => 'bx_organizations',
-        	'OBJECT_FAVORITES' => 'bx_organizations',
-        	'OBJECT_FEATURED' => 'bx_organizations',
+            'OBJECT_VOTES' => 'bx_organizations',
+            'OBJECT_SCORES' => 'bx_organizations',
+            'OBJECT_FAVORITES' => 'bx_organizations',
+            'OBJECT_FEATURED' => 'bx_organizations',
             'OBJECT_COMMENTS' => 'bx_organizations',
-        	'OBJECT_REPORTS' => 'bx_organizations',
+            'OBJECT_REPORTS' => 'bx_organizations',
             'OBJECT_METATAGS' => 'bx_organizations',
             'OBJECT_FORM_ENTRY' => 'bx_organization',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_organization_view',
-        	'OBJECT_FORM_ENTRY_DISPLAY_VIEW_FULL' => 'bx_organization_view_full', // for "info" tab on view profile page
+            'OBJECT_FORM_ENTRY_DISPLAY_VIEW_FULL' => 'bx_organization_view_full', // for "info" tab on view profile page
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_organization_add',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_organization_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER' => 'bx_organization_edit_cover',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_organization_delete',
-        	'OBJECT_FORM_ENTRY_DISPLAY_INVITE' => 'bx_organization_invite',
+            'OBJECT_FORM_ENTRY_DISPLAY_INVITE' => 'bx_organization_invite',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_organizations_view_actions', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE' => 'bx_organizations_view_actions_more', // actions menu on view entry page for "more" popup
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_organizations_view_actions_all', // all actions menu on view entry page
@@ -128,16 +128,16 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'OBJECT_PAGE_VIEW_ENTRY' => 'bx_organizations_view_profile',
             'OBJECT_PAGE_VIEW_ENTRY_CLOSED' => 'bx_organizations_view_profile_closed',
             'OBJECT_PRIVACY_VIEW' => 'bx_organizations_allow_view_to',
-        	'OBJECT_PRIVACY_VIEW_NOTIFICATION_EVENT' => 'bx_organizations_allow_view_notification_to',
+            'OBJECT_PRIVACY_VIEW_NOTIFICATION_EVENT' => 'bx_organizations_allow_view_notification_to',
             'OBJECT_GRID_ADMINISTRATION' => 'bx_organizations_administration',
             'OBJECT_GRID_COMMON' => 'bx_organizations_common',
-        	'OBJECT_GRID_CONNECTIONS' => 'bx_organizations_fans',
-        	'OBJECT_CONNECTIONS' => 'bx_organizations_fans',
+            'OBJECT_GRID_CONNECTIONS' => 'bx_organizations_fans',
+            'OBJECT_CONNECTIONS' => 'bx_organizations_fans',
             'OBJECT_UPLOADERS_COVER' => array('bx_organizations_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_organizations_picture_crop'),
 
             'EMAIL_FRIEND_REQUEST' => 'bx_organizations_friend_request',
-        	'EMAIL_INVITATION' => 'bx_organizations_invitation',
+            'EMAIL_INVITATION' => 'bx_organizations_invitation',
             'EMAIL_JOIN_REQUEST' => 'bx_organizations_join_request',
             'EMAIL_JOIN_CONFIRM' => 'bx_organizations_join_confirm',
             'EMAIL_FAN_BECOME_ADMIN' => 'bx_organizations_fan_become_admin',
@@ -148,7 +148,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'TRIGGER_MENU_PROFILE_VIEW_SUBMENU' => 'trigger_profile_view_submenu',
             'TRIGGER_MENU_PROFILE_SNIPPET_META' => 'trigger_profile_snippet_meta',
             'TRIGGER_MENU_PROFILE_VIEW_ACTIONS' => 'trigger_profile_view_actions',
-        	'TRIGGER_PAGE_VIEW_ENTRY' => 'trigger_page_profile_view_entry',
+            'TRIGGER_PAGE_VIEW_ENTRY' => 'trigger_page_profile_view_entry',
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
@@ -180,6 +180,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'T' => array (
                 'txt_sample_single' => '_bx_orgs_txt_sample_single',
             	'txt_sample_comment_single' => '_bx_orgs_txt_sample_comment_single',
+                'txt_sample_vote_single' => '_bx_orgs_txt_sample_vote_single',
             	'txt_sample_pp_single' => '_bx_orgs_txt_sample_pp_single',
             	'txt_sample_pp_single_with_article' => '_bx_orgs_txt_sample_pp_single_with_article',
                 'txt_sample_pc_single' => '_bx_orgs_txt_sample_pc_single',

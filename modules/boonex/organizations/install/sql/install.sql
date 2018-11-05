@@ -13,6 +13,8 @@ CREATE TABLE IF NOT EXISTS `bx_organizations_data` (
   `org_cat` int(11) NOT NULL,
   `org_desc` text NOT NULL,
   `views` int(11) NOT NULL default '0',
+  `rate` float NOT NULL default '0',
+  `votes` int(11) NOT NULL default '0',
   `score` int(11) NOT NULL default '0',
   `sc_up` int(11) NOT NULL default '0',
   `sc_down` int(11) NOT NULL default '0',
@@ -85,6 +87,25 @@ CREATE TABLE IF NOT EXISTS `bx_organizations_views_track` (
   `viewer_nip` int(11) unsigned NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
   KEY `id` (`object_id`,`viewer_id`,`viewer_nip`)
+);
+
+-- TABLE: VOTES
+CREATE TABLE IF NOT EXISTS `bx_organizations_votes` (
+  `object_id` int(11) NOT NULL default '0',
+  `count` int(11) NOT NULL default '0',
+  `sum` int(11) NOT NULL default '0',
+  UNIQUE KEY `object_id` (`object_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_organizations_votes_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `author_nip` int(11) unsigned NOT NULL default '0',
+  `value` tinyint(4) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  KEY `vote` (`object_id`, `author_nip`)
 );
 
 -- TABLE: favorites
