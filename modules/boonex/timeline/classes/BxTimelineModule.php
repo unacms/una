@@ -391,20 +391,25 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 $sRssLink = $this->_oConfig->getHomeViewUrl();
                 break;
         }
-        
 
         $aParams = $this->_prepareParams(BX_TIMELINE_VIEW_DEFAULT, $sType, $iOwnerId, 0, $this->_oConfig->getRssLength(), '', array(), 0);
         $aEvents = $this->_oDb->getEvents($aParams);
 
         $aRssData = array();
         foreach($aEvents as $aEvent) {
-            if(empty($aEvent['title'])) continue;
+            if(empty($aEvent['title'])) 
+                continue;
+
+            $iOwner = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $aEvent['owner_id'] : $aEvent['object_id'];
+            $oOwner = BxDolProfile::getInstanceMagic($iOwner);
 
             $aRssData[$aEvent['id']] = array(
                'UnitID' => $aEvent['id'],
                'UnitTitle' => $aEvent['title'],
                'UnitLink' => $this->_oConfig->getItemViewUrl($aEvent),
-               'UnitDesc' => $aEvent['description'],
+               'UnitDesc' => bx_replace_markers($aEvent['description'], array(
+                    'profile_name' => $oOwner->getDisplayName()
+                )),
                'UnitDateTimeUTS' => $aEvent['date'],
             );
         }
