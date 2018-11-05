@@ -419,8 +419,8 @@ INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `Char
 ('bx_persons', 'bx_persons', 'bx_persons_cmts', 1, 5000, 1000, 3, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-persons-profile&id={object_id}', '', 'bx_persons_data', 'id', 'author', 'fullname', 'comments', '', '');
 
 -- VIEWS
-INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_persons', 'bx_persons_views_track', '86400', '1', 'bx_persons_data', 'id', 'author', 'views', '', '');
+INSERT INTO `sys_objects_view` (`name`, `module`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_persons', 'bx_persons', 'bx_persons_views_track', '86400', '1', 'bx_persons_data', 'id', 'author', 'views', '', '');
 
 -- SCORES
 INSERT INTO `sys_objects_score` (`name`, `module`, `table_main`, `table_track`, `post_timeout`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_score`, `trigger_field_cup`, `trigger_field_cdown`, `class_name`, `class_file`) VALUES 

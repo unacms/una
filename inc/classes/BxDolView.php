@@ -95,6 +95,7 @@ class BxDolView extends BxDolObject
                 SELECT
                     `id` as `id`,
                     `name` AS `name`,
+                    `module` AS `module`,
                     `table_track` AS `table_track`,
                     `period` AS `period`,
                     `is_on` AS `is_on`,
@@ -171,7 +172,11 @@ class BxDolView extends BxDolObject
         if(isAdmin() || $oAcl->isMemberLevelInSet(array(MEMBERSHIP_ID_MODERATOR, MEMBERSHIP_ID_ADMINISTRATOR)))
             return true;
 
-        $iObjectAuthorId = $this->_oQuery->getObjectAuthorId($this->_iId);
+        if(!empty($this->_aSystem['module']) && BxDolRequest::serviceExists($this->_aSystem['module'], 'act_as_profile') && BxDolService::call($this->_aSystem['module'], 'act_as_profile') === true)
+            $iObjectAuthorId = BxDolProfile::getInstanceByContentAndType($this->_iId, $this->_aSystem['module'])->id();
+        else
+            $iObjectAuthorId = $this->_oQuery->getObjectAuthorId($this->_iId);
+
         return $iObjectAuthorId != 0 && $iObjectAuthorId == $this->_getAuthorId() && $this->checkAction('view_view_viewers_own', $isPerformAction);
     }
 

@@ -1490,6 +1490,7 @@ INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, 
 CREATE TABLE `sys_objects_view` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(64) NOT NULL,
+  `module` varchar(32) NOT NULL default '',
   `table_track` varchar(32) NOT NULL,
   `period` int(11) NOT NULL default '86400',
   `is_on` tinyint(4) NOT NULL default '1',
