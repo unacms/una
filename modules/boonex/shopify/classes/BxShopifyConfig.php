@@ -164,7 +164,7 @@ class BxShopifyConfig extends BxBaseModTextConfig
         );
     }
 
-	public function getHtmlIds($sKey = '')
+    public function getHtmlIds($sKey = '')
     {
         if(empty($sKey))
             return $this->_aHtmlIds;

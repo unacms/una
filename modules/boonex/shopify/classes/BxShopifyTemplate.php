@@ -31,7 +31,7 @@ class BxShopifyTemplate extends BxBaseModTextTemplate
 
         $sProto = bx_proto();
         $this->addJs(array(
-            $sProto . '://sdks.shopifycdn.com/js-buy-sdk/v0/latest/shopify-buy.umd.polyfilled.min.js',
+            $sProto . '://sdks.shopifycdn.com/js-buy-sdk/v1/latest/index.umd.min.js',
             'shop.js'
         ));
     }
@@ -42,9 +42,8 @@ class BxShopifyTemplate extends BxBaseModTextTemplate
             return '';
 
         $sCode = $this->getJsCode('shop', array(
-            'sAPIKey' => $aSettings['api_key'],
             'sDomain' => $aSettings['domain'],
-            'sAppId' => $aSettings['app_id'],
+            'sAccessToken' => $aSettings['access_token'],
         ));
 
         $this->addJsTranslation(array(
@@ -59,8 +58,12 @@ class BxShopifyTemplate extends BxBaseModTextTemplate
 
     public function entryBuy($aData)
     {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
         return $this->parseHtmlByName('entry-buy.html', array(
-        	'html_id' => $this->_oConfig->getHtmlIds('entry_buy')
+            'js_object' => $this->_oConfig->getJsObjectShop($aData[$CNF['FIELD_AUTHOR']]),
+            'html_id' => $this->_oConfig->getHtmlIds('entry_buy'),
+            'entry_code' => $aData[$CNF['FIELD_CODE']]
         ));
     }
 
@@ -82,7 +85,7 @@ class BxShopifyTemplate extends BxBaseModTextTemplate
         return $this->parseHtmlByName('attachments.html', array(
             'html_id' => $this->_oConfig->getHtmlIds('entry_attachments'),
             'html_id_sample' => $this->_oConfig->getHtmlIds('entry_attachment_sample'),
-        	'popup_id' => $sPopupId,
+            'popup_id' => $sPopupId,
             'popup' => BxTemplFunctions::getInstance()->transBox($sPopupId, '<img class="bx-spf-attachment-popup-img" src="" />', true, true),
         ));
     }
@@ -102,12 +105,12 @@ class BxShopifyTemplate extends BxBaseModTextTemplate
 
         $iProfileId = $aData[$CNF['FIELD_AUTHOR']];
         $sCode = $aData[$CNF['FIELD_CODE']];
-		$sClass = $this->_getUnitClass($aData,(isset($aParams['template_name']) ? $aParams['template_name'] : ''));
+        $sClass = $this->_getUnitClass($aData,(isset($aParams['template_name']) ? $aParams['template_name'] : ''));
         return array_merge(parent::getUnit($aData, $aParams), array(
             'js_object' => $this->_oConfig->getJsObjectShop($iProfileId),
             'js_content' => $this->_oModule->serviceIncludeCode($iProfileId),
-        	'class' => $this->_oConfig->getHtmlIds('unit') . $sClass,
-            'entry_code' => $sCode,
+            'class' => (!empty($sClass) ? $sClass . ' ' : '') . $this->_oConfig->getHtmlIds('unit') . $sCode,
+            'entry_code' => $sCode
         ));
     }
 }

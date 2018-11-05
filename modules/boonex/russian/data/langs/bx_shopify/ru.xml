@@ -20,9 +20,9 @@
 	<string name="_bx_shopify_form_entry_input_sys_do_publish"><![CDATA[Опубликовать]]></string>
 	<string name="_bx_shopify_form_entry_input_do_publish"><![CDATA[Опубликовать]]></string>
 	<string name="_bx_shopify_form_entry_input_sys_code"><![CDATA[ID продукта]]></string>
-    <string name="_bx_shopify_form_entry_input_code"><![CDATA[ID продукта]]></string>
-    <string name="_bx_shopify_form_entry_input_code_inf"><![CDATA[ID продукта Вы можете получить из URL продукта, когда просматриваете продукт в секции Продукты в Панели администрирования вашего Shopify магазина.]]></string>
-    <string name="_bx_shopify_form_entry_input_code_err"><![CDATA[ID продукта обязателен. Пожалуйста, заполните это поле.]]></string>
+    <string name="_bx_shopify_form_entry_input_code"><![CDATA[Идентификатор продукта]]></string>
+    <string name="_bx_shopify_form_entry_input_code_inf"><![CDATA[Идентификатор продукта Вы можете в секции 'Предварительный просмотр в поисковых системах', когда редактируете продукт в секции Продукты в Панели администрирования вашего Shopify магазина.]]></string>
+    <string name="_bx_shopify_form_entry_input_code_err"><![CDATA[Идентификатор продукта обязателен. Пожалуйста, заполните это поле.]]></string>
 	<string name="_bx_shopify_form_entry_input_sys_title"><![CDATA[Заголовок]]></string>
 	<string name="_bx_shopify_form_entry_input_title"><![CDATA[Заголовок]]></string>
 	<string name="_bx_shopify_form_entry_input_title_err"><![CDATA[Заголовок обязателен. Пожалуйста, заполните это поле]]></string>
@@ -43,15 +43,12 @@
 
     <string name="_bx_shopify_form_settings"><![CDATA[Настройки]]></string>
     <string name="_bx_shopify_form_settings_display_edit"><![CDATA[Редактировать настройки]]></string>
-    <string name="_bx_shopify_form_settings_input_sys_api_key"><![CDATA[API ключ]]></string>
-    <string name="_bx_shopify_form_settings_input_api_key"><![CDATA[API ключ (Маркер доступа)]]></string>
-    <string name="_bx_shopify_form_settings_input_api_key_err"><![CDATA[Поле API ключ не может быть пустым]]></string>
     <string name="_bx_shopify_form_settings_input_sys_domain"><![CDATA[Домен]]></string>
     <string name="_bx_shopify_form_settings_input_domain"><![CDATA[Домен]]></string>
-    <string name="_bx_shopify_form_settings_input_domain_err"><![CDATA[Поле домен не может быть пустым]]></string>
-    <string name="_bx_shopify_form_settings_input_sys_app_id"><![CDATA[App ID]]></string>
-    <string name="_bx_shopify_form_settings_input_app_id"><![CDATA[App ID]]></string>
-    <string name="_bx_shopify_form_settings_input_app_id_err"><![CDATA[Поле App ID не может быть пустым]]></string>
+    <string name="_bx_shopify_form_settings_input_domain_err"><![CDATA[Это поле не может быть пустым]]></string>
+    <string name="_bx_shopify_form_settings_input_sys_access_token"><![CDATA[Токен доступа к витрине]]></string>
+    <string name="_bx_shopify_form_settings_input_access_token"><![CDATA[Токен доступа к витрине]]></string>
+    <string name="_bx_shopify_form_settings_input_access_token_err"><![CDATA[Это поле не может быть пустым]]></string>
     <string name="_bx_shopify_form_settings_input_sys_do_submit"><![CDATA[Выполнить]]></string>
     <string name="_bx_shopify_form_settings_input_do_submit"><![CDATA[Выполнить]]></string>
 
@@ -151,6 +148,8 @@
     <string name="_bx_shopify_menu_title_view_entry"><![CDATA[Товар - Действия]]></string>
     <string name="_bx_shopify_menu_title_submenu"><![CDATA[Товары - Подменю]]></string>
     <string name="_bx_shopify_menu_set_title_submenu"><![CDATA[Товары - Подменю]]></string>
+    <string name="_bx_shopify_menu_item_title_system_buy_entry"><![CDATA[Купить]]></string>
+    <string name="_bx_shopify_menu_item_title_buy_entry"><![CDATA[Купить]]></string>
     <string name="_bx_shopify_menu_item_title_system_create_entry"><![CDATA[Товар]]></string>
     <string name="_bx_shopify_menu_item_title_create_entry"><![CDATA[Товар]]></string>
     <string name="_bx_shopify_menu_item_title_system_edit_entry"><![CDATA[Редактировать товар]]></string>
@@ -229,8 +228,9 @@
     <string name="_bx_shopify_msg_save_settings"><![CDATA[Настройки сохранены.]]></string>
     <string name="_bx_shopify_err_save_settings"><![CDATA[Невозможно сохранить настройки.]]></string>
     <string name="_bx_shopify_err_not_configured"><![CDATA[Сначала вам необходимо настроить магазин. <a href="{0}">Нажмите здесь</a>.]]></string>
-    <string name="_bx_shopify_err_load_product"><![CDATA[Невозможно загрузить продукт. Пожалуйста, проверьте настройки вашего магазина и ID продукта.]]></string>
+    <string name="_bx_shopify_err_load_product"><![CDATA[Невозможно загрузить продукт. Пожалуйста, проверьте настройки вашего магазина и идентификатор продукта.]]></string>
     <string name="_bx_shopify_err_load_collection"><![CDATA[Невозможно загрузить коллекцию. Пожалуйста, проверьте настройки вашего магазина.]]></string>
+    <string name="_bx_shopify_err_purchase_product"><![CDATA[Невозможно купить продукт.]]></string>
 
     <string name="_bx_shopify_txt_all_entries_by"><![CDATA[<a href="{0}">Все товары от {1} ({2})</a>]]></string>
     <string name="_bx_shopify_txt_all_entries_in"><![CDATA[<a href="{0}">Все альбомы в {1} ({2})</a>]]></string>
