@@ -1095,7 +1095,7 @@ class BxBaseModGeneralModule extends BxDolModule
         $CNF = &$this->_oConfig->CNF;
 
         // moderator and owner always have access
-        if (!empty($iProfileId) && ((int)$aDataEntry[$CNF['FIELD_AUTHOR']] == (int)$iProfileId || $this->_isModerator($isPerformAction)))
+        if (!empty($iProfileId) && (abs($aDataEntry[$CNF['FIELD_AUTHOR']]) == (int)$iProfileId || $this->_isModerator($isPerformAction)))
             return CHECK_ACTION_RESULT_ALLOWED;
 
         // check ACL
