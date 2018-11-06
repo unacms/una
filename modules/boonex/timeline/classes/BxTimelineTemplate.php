@@ -321,6 +321,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aEvent['reports'] = $aResult['reports'];
         $aEvent['comments'] = $aResult['comments'];
 
+        $sKey = 'allowed_view';
+        if(isset($aEvent[$sKey]) && $aEvent[$sKey] !== CHECK_ACTION_RESULT_ALLOWED) 
+            return '';
+
         $sType = !empty($aResult['content_type']) ? $aResult['content_type'] : BX_TIMELINE_PARSE_TYPE_DEFAULT;
         return $this->_getPost($sType, $aEvent, $aBrowseParams);
     }
