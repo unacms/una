@@ -38,7 +38,7 @@ class BxDolMShoutBox extends BxDolMData
 		if (!$this -> getTotalRecords())
 		{
 			  $this -> setResultStatus(_t('_bx_dolphin_migration_no_data_to_transfer'));
-	          return BX_SEMIG_SUCCESSFUL;
+	          return BX_MIG_SUCCESSFUL;
 		}	
 		
 		$this -> setResultStatus(_t('_bx_dolphin_migration_started_migration_shoutbox'));
@@ -98,7 +98,7 @@ class BxDolMShoutBox extends BxDolMData
 
 		// set as finished;
 		$this -> setResultStatus(_t('_bx_dolphin_migration_started_migration_shoutbox_finished', $this -> _iTransferred));
-        return BX_SEMIG_SUCCESSFUL;
+        return BX_MIG_SUCCESSFUL;
     }
 
 	public function removeContent()
