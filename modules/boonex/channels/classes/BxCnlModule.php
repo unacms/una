@@ -204,32 +204,37 @@ class BxCnlModule extends BxBaseModGroupsModule
          return '';
     }
     
-    public function serviceBrowseMyChannels()
-    {   
-        $iMyProfileId = bx_get_logged_profile_id();
-        if ($iMyProfileId){
-            $CNF = &$this->_oConfig->CNF;
-            $oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
-            $aProfile = $oConnection->getConnectedContent($iMyProfileId);
-            $aVars = array();
-            foreach ($aProfile as $iProfileId) {
-                $oProfile = BxDolProfile::getInstance($iProfileId);
-                if ($oProfile && $oProfile->getModule() == $this->getName()){
-                    $iContentId = $oProfile->getContentId();
-                    
-                    $aContentInfo = $this->_oDb->getContentInfoById($oProfile->getContentId());
-                    if (isset($aContentInfo[$CNF['FIELD_NAME']]))
-                        array_push($aVars, array('title' => $aContentInfo[$CNF['FIELD_NAME']], 'link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId)));
-                }
-            }
-            if (count($aVars) > 0){
-                return $this->_oTemplate->parseHtmlByName('my_channels.html', 
-                    array('bx_if:show_list' => array(
-                    'condition' => count($aVars) > 0,
-                    'content' => array('bx_repeat:items' => $aVars))
-                ));
-            }
+    public function serviceBrowseMyChannels($aParams = array())
+    {
+        $sResult = isset($aParams['empty_message']) && (bool)$aParams['empty_message'] === true ? MsgBox(_t('_Empty')) : '';
+
+        if(!isLogged())
+            return $sResult;
+
+        $CNF = &$this->_oConfig->CNF;
+
+        $oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
+        $aProfile = $oConnection->getConnectedContent(bx_get_logged_profile_id());
+        $aVars = array();
+        foreach ($aProfile as $iProfileId) {
+            $oProfile = BxDolProfile::getInstance($iProfileId);
+            if (!$oProfile || $oProfile->getModule() != $this->getName())
+                continue;
+
+            $iContentId = $oProfile->getContentId();
+            $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+            if (isset($aContentInfo[$CNF['FIELD_NAME']]))
+                array_push($aVars, array('title' => $aContentInfo[$CNF['FIELD_NAME']], 'link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId)));
         }
+
+        if(empty($aVars) || !is_array($aVars))
+            return $sResult;
+
+        return $this->_oTemplate->parseHtmlByName('my_channels.html', 
+            array('bx_if:show_list' => array(
+            'condition' => count($aVars) > 0,
+            'content' => array('bx_repeat:items' => $aVars))
+        ));
     }
     
     public function serviceDeleteProfileFromFansAndAdmins ($iProfileId)
