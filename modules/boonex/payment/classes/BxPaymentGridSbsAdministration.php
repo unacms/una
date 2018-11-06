@@ -61,7 +61,7 @@ class BxPaymentGridSbsAdministration extends BxBaseModPaymentGridOrders
                 'href' => bx_replace_markers($aInfo['url_browse_order_' . $this->_sManageType], array(
                     'order' => $mixedValue
                 )),
-                'title' => $mixedValue,
+                'title' => bx_html_attribute($mixedValue),
                 'content' => $mixedValue
             ));
 

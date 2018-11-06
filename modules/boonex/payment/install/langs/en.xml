@@ -98,6 +98,7 @@
 	<string name="_bx_payment_grid_column_title_ods_seller_id"><![CDATA[Seller]]></string>
 	<string name="_bx_payment_grid_column_title_ods_transaction"><![CDATA[Transaction]]></string>
 	<string name="_bx_payment_grid_column_title_ods_license"><![CDATA[License]]></string>
+        <string name="_bx_payment_grid_column_title_ods_item"><![CDATA[Product]]></string>
 	<string name="_bx_payment_grid_column_title_ods_amount"><![CDATA[Amount]]></string>
 	<string name="_bx_payment_grid_column_title_ods_date"><![CDATA[Date]]></string>
 	<string name="_bx_payment_grid_column_title_sbs_seller_id"><![CDATA[Seller]]></string>
@@ -240,6 +241,7 @@
 	<string name="_bx_payment_txt_checkout_to"><![CDATA[Continue checkouting to {0}]]></string>
 	<string name="_bx_payment_txt_checkout_with"><![CDATA[Checkout with {0}]]></string>
 	<string name="_bx_payment_txt_client"><![CDATA[Client]]></string>
+        <string name="_bx_payment_txt_license"><![CDATA[License]]></string>
 	<string name="_bx_payment_txt_seller"><![CDATA[Seller]]></string>
 	<string name="_bx_payment_txt_order"><![CDATA[Order ID]]></string>
 	<string name="_bx_payment_txt_processed_with"><![CDATA[Processed with]]></string>

@@ -98,6 +98,7 @@
 	<string name="_bx_payment_grid_column_title_ods_seller_id"><![CDATA[Продавец]]></string>
 	<string name="_bx_payment_grid_column_title_ods_transaction"><![CDATA[Транзакция]]></string>
 	<string name="_bx_payment_grid_column_title_ods_license"><![CDATA[Лицензия]]></string>
+        <string name="_bx_payment_grid_column_title_ods_item"><![CDATA[Продукт]]></string>
 	<string name="_bx_payment_grid_column_title_ods_amount"><![CDATA[Сумма]]></string>
 	<string name="_bx_payment_grid_column_title_ods_date"><![CDATA[Дата]]></string>
 	<string name="_bx_payment_grid_column_title_sbs_seller_id"><![CDATA[Продавец]]></string>
@@ -240,6 +241,7 @@
 	<string name="_bx_payment_txt_checkout_to"><![CDATA[Продолжить оплату в пользу {0}]]></string>
 	<string name="_bx_payment_txt_checkout_with"><![CDATA[Заплатить используя {0}]]></string>
 	<string name="_bx_payment_txt_client"><![CDATA[Покупатель]]></string>
+        <string name="_bx_payment_txt_license"><![CDATA[Лицензия]]></string>
 	<string name="_bx_payment_txt_seller"><![CDATA[Продавец]]></string>
 	<string name="_bx_payment_txt_order"><![CDATA[ID заказа]]></string>
 	<string name="_bx_payment_txt_processed_with"><![CDATA[Обработан используя]]></string>
