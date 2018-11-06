@@ -313,7 +313,6 @@ class BxDolMProfilesFields extends BxDolMData
 	 */
 	public function getFieldValues($sField, $bGetKeyIfExists = true)
 	{
-		$aItems = array();
 		$sValues = $this -> _mDb -> getOne("SELECT `Values` FROM `sys_profile_fields` WHERE `name` = :name", array('name' => $sField));
 		if (empty($sValues))
 			return '';

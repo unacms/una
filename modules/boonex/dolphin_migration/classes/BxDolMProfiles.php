@@ -49,14 +49,25 @@ class BxDolMProfiles extends BxDolMData
     }
 	
 	/**
-	* Check if profile with the same nickname already exists
+	* Check if account with the same nickname or email already exists
 	* @param string $sNickName name of the user
+	* @param string $sEmail user email
 	* @return integer account id
      */
-	private function isProfileExisted($sNickName, $sEmail){
+	private function isAccountExisted($sNickName, $sEmail){
         $sQuery  = $this -> _oDb -> prepare("SELECT `id` FROM `sys_accounts` WHERE `name` = ? OR `email` = ?", $sNickName, $sEmail);
         return $this -> _oDb -> getOne($sQuery);
 	}
+
+    /**
+     * Check if profile with the same nickname already exists
+     * @param string $sFullName name of the user
+     * @return integer profile id
+     */
+    private function isProfileExisted($sFullName){
+        $sQuery  = $this -> _oDb -> prepare("SELECT `id` FROM `bx_persons_data` WHERE `fullname` = ? ", $sFullName);
+        return $this -> _oDb -> getOne($sQuery);
+    }
 
 	function profilesMigration()
     {
@@ -70,7 +81,7 @@ class BxDolMProfiles extends BxDolMData
 			else 
 				$this -> addPreValues('Sex', true, 2); // transfer all sex values more then 2 value
 
-			$aResult = $this -> _mDb -> getAll("SELECT * FROM `"  . $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['table_name'] . "` {$sStart} ORDER BY `ID` ASC");			
+			$aResult = $this -> _mDb -> getAll("SELECT * FROM `"  . $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['table_name'] . "` {$sStart} ORDER BY `ID` ASC LIMIT 10");
 			$aSex = $this -> getPreValuesBy('Sex', 'Value', 'Order');
 
 			foreach($aResult as $iKey => $aValue)
@@ -80,7 +91,7 @@ class BxDolMProfiles extends BxDolMData
 				{
                      $sAction = "INSERT INTO";
                      $sWhere  = "";
-                     $iAccountId = $this -> isProfileExisted($aValue['NickName'], $aValue['Email']);
+                     $iAccountId = $this -> isAccountExisted($aValue['NickName'], $aValue['Email']);
                      if ($iAccountId)
                      {
                          if ($this -> _oConfig -> _bIsOverwrite) {
@@ -139,9 +150,19 @@ class BxDolMProfiles extends BxDolMData
                         $sFullName = isset($aValue['FullName']) ? $aValue['FullName'] : "{$aValue['FirstName']} {$aValue['LastName']}";
                         $sFullName = $sFullName ? $sFullName : $aValue['NickName'];
                     }
-					
+
+                    $sAction = "INSERT INTO";
+                    $sWhere = '';
+                    $iProfID = 0;
+                    if ($this -> _oConfig -> _bIsOverwrite && $iProfID = $this -> isProfileExisted($sFullName)) {
+                        $sAction = "UPDATE";
+                        $sWhere = "WHERE `id` = '{$iProfID}'";
+                    }
+
+                    $iDateReg = strtotime($aValue['DateReg']);
+                    $iDateEdit = strtotime($aValue['DateLastEdit']);
 					$sQuery = $this -> _oDb -> prepare( 
-	                     "INSERT INTO
+	                     "{$sAction}
 	                     		`bx_persons_data`
 	                     	SET
 	                     		`author`   			= 0,
@@ -152,56 +173,54 @@ class BxDolMProfiles extends BxDolMData
 								`fullname`			= ?,
 								`birthday`			= ?,
 								`gender`			= ?,
-								`allow_view_to`		= 3,
+								`allow_view_to`		= ?,
 								`featured`			= ?,
 								`views`				= ?,
 								`description`		= ?
+							{$sWhere}
 	                     ",
-							strtotime($aValue['DateReg']),
-							strtotime($aValue['DateLastEdit']),
+                            $iDateReg ? $iDateReg : 0,
+                            $iDateEdit ? $iDateEdit : 0,
 							$sFullName,
 							isset($aValue['DateOfBirth']) ? $aValue['DateOfBirth'] : 'NULL',
 							isset($aValue['Sex']) && $aValue['Sex'] ? $aSex[$aValue['Sex']] : 1,
-							//isset($aValue['allow_view_to']) ? $aValue['allow_view_to'] : 3,
+							isset($aValue['allow_view_to']) ? $aValue['allow_view_to'] : 3,
 							isset($aValue['Featured']) ? (int)$aValue['Featured'] : 0,
 							isset($aValue['Views']) ? (int)$aValue['Views'] : 0,
 							isset($aValue['DescriptionMe']) ? $aValue['DescriptionMe'] : ''
 							);
 						
 						$this -> _oDb -> query($sQuery);	
-						$iContentId = $this -> _oDb -> lastId();
-						
-						$this -> _oDb -> query("INSERT INTO `sys_profiles` SET `account_id` = {$iAccountId}, `type` = 'system', `content_id` = {$iContentId}, `status` = 'active'");
-						$this -> _oDb -> query("INSERT INTO `sys_profiles` SET `account_id` = {$iAccountId}, `type` = 'bx_persons', `content_id` = {$iContentId}, `status` = 'active'");
-						$iProfile = $this -> _oDb -> lastId();
+						$iContentId = $iProfID ? $iProfID : $this -> _oDb -> lastId();
 
-						if($iProfile)
-							BxDolAccountQuery::getInstance() -> updateCurrentProfile($iAccountId, $iProfile);
-						
-						$sQuery = $this -> _oDb -> prepare("UPDATE `bx_persons_data` SET `author` = ? WHERE `id` = ?", $iProfile, $iContentId);						
-						$this -> _oDb -> query($sQuery);
+						if (!$iProfID) {
+                            $this->_oDb->query("INSERT INTO `sys_profiles` SET `account_id` = {$iAccountId}, `type` = 'system', `content_id` = {$iContentId}, `status` = 'active'");
+                            $this->_oDb->query("INSERT INTO `sys_profiles` SET `account_id` = {$iAccountId}, `type` = 'bx_persons', `content_id` = {$iContentId}, `status` = 'active'");
+                            $iProfile = $this->_oDb->lastId();
 
-						$this -> exportAvatar($iContentId, $aValue);                   
-						
-						$sResult = $this -> exportFriends($aValue['ID']);
-						if($sResult)
-							return $sResult;                     
+                            if ($iProfile)
+                                BxDolAccountQuery::getInstance()->updateCurrentProfile($iAccountId, $iProfile);
 
-						 $this -> _iTransferred++;
+                            $sQuery = $this->_oDb->prepare("UPDATE `bx_persons_data` SET `author` = ? WHERE `id` = ?", $iProfile, $iContentId);
+                            $this->_oDb->query($sQuery);
+                        }
+
+                        $this->exportAvatar($iContentId, $aValue);
+                        $this->exportFriends($aValue['ID']);
+
+						$this -> _iTransferred++;
                   }
              }
         }
 
 	/**
 	* Get Avatar's image  path
-	* @param int $iImgId image ID
+	* @param array $aProfileInfo profile information
 	* @return string
          */ 	
 	private function getProfileImage($aProfileInfo)
 	{	   
-       $iProfileId = $aProfileInfo['ID'];	   
-	   
-	   $sAvatarType = $this -> _mDb -> getParam('sys_member_info_thumb');
+       $sAvatarType = $this -> _mDb -> getParam('sys_member_info_thumb');
 	   $sImagePath = $this -> _oDb -> getExtraParam('root') . 'modules' . DIRECTORY_SEPARATOR . 'boonex' . DIRECTORY_SEPARATOR;
 	   if ($sAvatarType == 'bx_photos_thumb')
 		{
@@ -324,20 +343,20 @@ class BxDolMProfiles extends BxDolMData
 			}
 					
 			if ($iNumber)
-			foreach ($this -> _oConfig -> _aMigrationModules as $sName => $aModule)
-			{
-				//Create transferring class object
-				require_once($aModule['migration_class'] . '.php');			
-				$oObject = new $aModule['migration_class']($this -> _oMainModule, $this -> _mDb);			
-				$oObject -> removeContent();				
-			}
+                foreach ($this -> _oConfig -> _aMigrationModules as $sName => $aModule)
+                {
+                    //Create transferring class object
+                    require_once($aModule['migration_class'] . '.php');
+                    $oObject = new $aModule['migration_class']($this -> _oMainModule, $this -> _mDb);
+                    $oObject -> removeContent();
+                }
 		}	
 		
 		parent::removeContent();
 		return $iNumber;
 	}
 	/**
-	 *  Adds fields list ()if doesn't exist or value to existed fields list 
+	 *  Adds fields list if doesn't exist or value to existed fields list
 	 *  
 	 *  @param string $sName list name
 	 *  @param boolean $bUseOrder use Order field instead of Value as value for profile
