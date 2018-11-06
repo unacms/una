@@ -325,7 +325,7 @@ class BxDolMProfilesFields extends BxDolMData
 			if ($this -> isKeyPreKeyExits($sKey) && $bGetKeyIfExists)
 				return $sValues;
 			
-			$aValues = $this -> getPreValuesBy();
+			$aValues = $this -> getPreValuesBy($sKey);
 			foreach($aValues as $iKey => $sValue)
 				$aItems[$iKey] = $this -> getLKeyTranslations($sValue);
 		}
