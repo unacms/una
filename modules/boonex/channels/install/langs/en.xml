@@ -76,13 +76,13 @@
 	<string name="_bx_channels_page_title_top"><![CDATA[Top Channels]]></string>
 	<string name="_bx_channels_page_title_sys_entries_search"><![CDATA[Search]]></string>
 	<string name="_bx_channels_page_title_entries_search"><![CDATA[Search]]></string>
-  <string name="_bx_channels_page_title_sys_entries_my"><![CDATA[My Channels]]></string>
-  <string name="_bx_channels_page_title_entries_my"><![CDATA[My Channels]]></string>
+        <string name="_bx_channels_page_title_sys_entries_of_author"><![CDATA[Сhannels of author]]></string>
+        <string name="_bx_channels_page_title_entries_of_author"><![CDATA[Сhannels by {display_name}]]></string>
 
-  <string name="_bx_channels_page_block_title_sys_entries_actions"><![CDATA[Channels actions]]></string>
+        <string name="_bx_channels_page_block_title_sys_entries_actions"><![CDATA[Channels actions]]></string>
 	<string name="_bx_channels_page_block_title_entries_actions"><![CDATA[Channels actions]]></string>
-	<string name="_bx_channels_page_block_title_sys_entries_of_author"><![CDATA[Channels of author]]></string>
-	<string name="_bx_channels_page_block_title_entries_of_author"><![CDATA[Channels by {display_name}]]></string>
+	<string name="_bx_channels_page_block_title_sys_entries_of_author"><![CDATA[Followed Сhannels]]></string>
+	<string name="_bx_channels_page_block_title_entries_of_author"><![CDATA[Followed Сhannels]]></string>
 	<string name="_bx_channels_page_block_title_favorites_of_author"><![CDATA[Favorite Channels]]></string>
 	<string name="_bx_channels_page_block_title_sys_favorites_of_author"><![CDATA[Favorite Channels]]></string>
   <string name="_bx_channels_page_block_title_create_profile"><![CDATA[Create Channel]]></string>
@@ -109,7 +109,8 @@
         <string name="_bx_channels_page_block_title_entry_all_actions"><![CDATA[All Actions]]></string>
 	<string name="_bx_channels_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
 	<string name="_bx_channels_page_block_title_search_form"><![CDATA[Search Form]]></string>
-  <string name="_bx_channels_page_block_title_entries_my"><![CDATA[My Channels]]></string>  
+  <string name="_bx_channels_page_block_title_entries_my"><![CDATA[My Folloved Channels]]></string>
+  <string name="_bx_channels_page_trigger_block_title_entries_my"><![CDATA[My Folloved Channels]]></string>
   <string name="_bx_channels_page_block_title_search_results"><![CDATA[Search Results]]></string>
   <string name="_bx_channels_page_block_title_search_results_by_hashtag"><![CDATA[Search Results By Hashtag]]></string>
 	<string name="_bx_channels_page_block_title_search_form_cmts"><![CDATA[Comments Search Form]]></string>
@@ -180,9 +181,7 @@
 	<string name="_bx_channels_menu_item_title_entries_recent"><![CDATA[New]]></string>
 	<string name="_bx_channels_menu_item_title_system_entries_search"><![CDATA[Search]]></string>
 	<string name="_bx_channels_menu_item_title_entries_search"><![CDATA[Search]]></string>
-  <string name="_bx_channels_menu_item_title_system_entries_my"><![CDATA[My channels]]></string>
-  <string name="_bx_channels_menu_item_title_entries_my"><![CDATA[My channels]]></string>
-  <string name="_bx_channels_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
+        <string name="_bx_channels_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
 	<string name="_bx_channels_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
 	<string name="_bx_channels_menu_item_title_system_entries_home"><![CDATA[Channels]]></string>
 	<string name="_bx_channels_menu_item_title_entries_home"><![CDATA[Channels]]></string>
@@ -192,7 +191,9 @@
 	<string name="_bx_channels_menu_item_title_manage_all"><![CDATA[All Channels]]></string>
 	<string name="_bx_channels_menu_item_title_system_entries_top"><![CDATA[Top]]></string>
 	<string name="_bx_channels_menu_item_title_entries_top"><![CDATA[Top]]></string>
-	
+        <string name="_bx_channels_menu_item_title_system_view_entries_author"><![CDATA[Channels]]></string>
+        <string name="_bx_channels_menu_item_title_view_entries_author"><![CDATA[Channels]]></string>
+
 	<string name="_bx_channels_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
 	<string name="_bx_channels_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
 	<string name="_bx_channels_grid_filter_item_title_adm_pending"><![CDATA[Pending]]></string>

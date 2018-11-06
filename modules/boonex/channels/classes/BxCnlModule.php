@@ -204,17 +204,17 @@ class BxCnlModule extends BxBaseModGroupsModule
          return '';
     }
     
-    public function serviceBrowseMyChannels($aParams = array())
+    public function serviceBrowseAuthor($iProfileId = 0, $aParams = array())
     {
-        $sResult = isset($aParams['empty_message']) && (bool)$aParams['empty_message'] === true ? MsgBox(_t('_Empty')) : '';
-
-        if(!isLogged())
-            return $sResult;
-
         $CNF = &$this->_oConfig->CNF;
 
+        if(empty($iProfileId))
+            $iProfileId = bx_get_logged_profile_id();
+
+        $sResult = isset($aParams['empty_message']) && (bool)$aParams['empty_message'] === true ? MsgBox(_t('_Empty')) : '';
+
         $oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
-        $aProfile = $oConnection->getConnectedContent(bx_get_logged_profile_id());
+        $aProfile = $oConnection->getConnectedContent($iProfileId);
         $aVars = array();
         foreach ($aProfile as $iProfileId) {
             $oProfile = BxDolProfile::getInstance($iProfileId);
@@ -230,10 +230,13 @@ class BxCnlModule extends BxBaseModGroupsModule
         if(empty($aVars) || !is_array($aVars))
             return $sResult;
 
-        return $this->_oTemplate->parseHtmlByName('my_channels.html', 
-            array('bx_if:show_list' => array(
-            'condition' => count($aVars) > 0,
-            'content' => array('bx_repeat:items' => $aVars))
+        return $this->_oTemplate->parseHtmlByName('my_channels.html', array(
+            'bx_if:show_list' => array(
+                'condition' => count($aVars) > 0,
+                'content' => array(
+                    'bx_repeat:items' => $aVars
+                )
+            )
         ));
     }
     

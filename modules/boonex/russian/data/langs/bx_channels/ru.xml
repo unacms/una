@@ -76,13 +76,13 @@
     <string name="_bx_channels_page_title_top"><![CDATA[Популярные каналы]]></string>
     <string name="_bx_channels_page_title_sys_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_channels_page_title_entries_search"><![CDATA[Поиск]]></string>
-	<string name="_bx_channels_page_title_sys_entries_my"><![CDATA[Мои каналы]]></string>
-	<string name="_bx_channels_page_title_entries_my"><![CDATA[Мои каналы]]></string>
+    <string name="_bx_channels_page_title_sys_entries_of_author"><![CDATA[Каналы автора]]></string>
+    <string name="_bx_channels_page_title_entries_of_author"><![CDATA[{display_name} - Каналы]]></string>
 
     <string name="_bx_channels_page_block_title_sys_entries_actions"><![CDATA[Каналы - Действия]]></string>
     <string name="_bx_channels_page_block_title_entries_actions"><![CDATA[Каналы - Действия]]></string>
-    <string name="_bx_channels_page_block_title_sys_entries_of_author"><![CDATA[Каналы автора]]></string>
-    <string name="_bx_channels_page_block_title_entries_of_author"><![CDATA[{display_name} - каналы]]></string>
+    <string name="_bx_channels_page_block_title_sys_entries_of_author"><![CDATA[Просматриваемые каналы]]></string>
+    <string name="_bx_channels_page_block_title_entries_of_author"><![CDATA[Просматриваемые каналы]]></string>
 	<string name="_bx_channels_page_block_title_favorites_of_author"><![CDATA[Избранные каналы]]></string>   
     <string name="_bx_channels_page_block_title_sys_favorites_of_author"><![CDATA[Избранные каналы]]></string>
 	<string name="_bx_channels_page_block_title_create_profile"><![CDATA[Создать канал]]></string>
@@ -109,7 +109,8 @@
 	<string name="_bx_channels_page_block_title_entry_all_actions"><![CDATA[Все действия]]></string>
     <string name="_bx_channels_page_block_title_entry_social_sharing"><![CDATA[Поделиться]]></string>
     <string name="_bx_channels_page_block_title_search_form"><![CDATA[Форма поиска]]></string>
-	<string name="_bx_channels_page_block_title_entries_my"><![CDATA[Мои каналы]]></string>  
+	<string name="_bx_channels_page_block_title_entries_my"><![CDATA[Мои просматриваемые каналы]]></string>
+        <string name="_bx_channels_page_trigger_block_title_entries_my"><![CDATA[Мои просматриваемые каналы]]></string>
     <string name="_bx_channels_page_block_title_search_results"><![CDATA[Результаты поиска]]></string>
 	<string name="_bx_channels_page_block_title_search_results_by_hashtag"><![CDATA[Результаты поиска по хештегу]]></string>
     <string name="_bx_channels_page_block_title_search_form_cmts"><![CDATA[Форма поиска комментариев]]></string>
@@ -179,8 +180,6 @@
     <string name="_bx_channels_menu_item_title_entries_recent"><![CDATA[Новые]]></string>
     <string name="_bx_channels_menu_item_title_system_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_channels_menu_item_title_entries_search"><![CDATA[Поиск]]></string>
-	<string name="_bx_channels_menu_item_title_system_entries_my"><![CDATA[Мои каналы]]></string>
-	<string name="_bx_channels_menu_item_title_entries_my"><![CDATA[Мои каналы]]></string>
     <string name="_bx_channels_menu_item_title_system_entries_manage"><![CDATA[Управление]]></string>
     <string name="_bx_channels_menu_item_title_entries_manage"><![CDATA[Управление]]></string>
     <string name="_bx_channels_menu_item_title_system_entries_home"><![CDATA[Каналы]]></string>
@@ -191,6 +190,8 @@
 	<string name="_bx_channels_menu_item_title_manage_all"><![CDATA[Все каналы]]></string>
 	<string name="_bx_channels_menu_item_title_system_entries_top"><![CDATA[Популярные]]></string>
 	<string name="_bx_channels_menu_item_title_entries_top"><![CDATA[Популярные]]></string>
+        <string name="_bx_channels_menu_item_title_system_view_entries_author"><![CDATA[Каналы]]></string>
+        <string name="_bx_channels_menu_item_title_view_entries_author"><![CDATA[Каналы]]></string>
 
 	<string name="_bx_channels_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
 	<string name="_bx_channels_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
@@ -223,55 +224,4 @@
     <string name="_bx_channels_ntfs_txt_subobject_added"><![CDATA[В канале <b class="bx-ntfs-content-profile">{owner_name}</b> новая публикация <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
     <string name="_bx_channels_alert_action_hashtag_added"><![CDATA[Новые хештеги]]></string>
     <string name="_bx_channels_alert_action_hashtag_added_notif_follow_context"><![CDATA[Новые хештеги]]></string>
-
-    <string name="_bx_channels_pre_lists_cats"><![CDATA[Категории каналов]]></string>
-    <string name="_bx_channels_cat_General"><![CDATA[Обобщение]]></string>
-    <string name="_bx_channels_cat_Business"><![CDATA[Бизнес]]></string>
-    <string name="_bx_channels_cat_Interests"><![CDATA[Увлечение]]></string>
-    <string name="_bx_channels_cat_Causes"><![CDATA[Движение]]></string>
-    <string name="_bx_channels_cat_Fun"><![CDATA[Юмор]]></string>
-    <string name="_bx_channels_cat_Uncategorised"><![CDATA[Без категории]]></string>
-
-    <string name="_bx_channels_email_join_request"><![CDATA[Запрос на присоединение к каналу]]></string>
-    <string name="_bx_channels_email_join_request_subject"><![CDATA[Запрос на присоединение к каналу]]></string>
-    <string name="_bx_channels_email_join_request_body"><![CDATA[{email_header}
-<p>Получен запрос на присоединение к каналу <a href="{EntryUrl}">{EntryTitle}</a> от <a href="{NewMemberUrl}">{NewMemberDisplayName}</a></p>
-{email_footer}]]></string>
-
-    <string name="_bx_channels_email_join_reject"><![CDATA[Отклонение запроса на присоединение к каналу]]></string>
-    <string name="_bx_channels_email_join_reject_subject"><![CDATA[Ваш запрос на присоединение к каналу был отклонен]]></string>
-    <string name="_bx_channels_email_join_reject_body"><![CDATA[{email_header}
-<p>Ваш запрос на присоединение к каналу <a href="{EntryUrl}">{EntryTitle}</a> был отклонен администратором канала.</p>
-{email_footer}]]></string>
-
-    <string name="_bx_channels_email_join_confirm"><![CDATA[Одобрение запроса на присоединение к каналу]]></string>
-    <string name="_bx_channels_email_join_confirm_subject"><![CDATA[Ваш запрос на присоединение к каналу был одобрен]]></string>
-    <string name="_bx_channels_email_join_confirm_body"><![CDATA[{email_header}
-<p>Ваш запрос на присоединение к каналу <a href="{EntryUrl}">{EntryTitle}</a> был одобрен.</p>
-{email_footer}]]></string>
-
-    <string name="_bx_channels_email_fan_remove"><![CDATA[Удаление из Каналы]]></string>
-    <string name="_bx_channels_email_fan_remove_subject"><![CDATA[Вы были удалены из канала]]></string>
-    <string name="_bx_channels_email_fan_remove_body">
-      <![CDATA[{email_header}
-<p>Ваш профиль был удален из Каналы <a href="{EntryUrl}">{EntryTitle}</a> администратором канала.</p>
-{email_footer}]]></string>
-
-    <string name="_bx_channels_email_fan_become_admin"><![CDATA[Получение статуса администратора канала]]></string>
-    <string name="_bx_channels_email_fan_become_admin_subject"><![CDATA[Вы стали администратором канала]]></string>
-    <string name="_bx_channels_email_fan_become_admin_body"><![CDATA[{email_header}
-<p>Вы получили статус администратора Каналы <a href="{EntryUrl}">{EntryTitle}</a>.</p>
-{email_footer}]]></string>
-
-    <string name="_bx_channels_email_admin_become_fan"><![CDATA[Лишение статуса администратора канала]]></string>
-    <string name="_bx_channels_email_admin_become_fan_subject"><![CDATA[Вы были лишены статуса администратора канала]]></string>
-    <string name="_bx_channels_email_admin_become_fan_body"><![CDATA[{email_header}
-<p>Вы были лишены статуса администратора Каналы <a href="{EntryUrl}">{EntryTitle}</a></p>
-{email_footer}]]></string>
-
-    <string name="_bx_channels_email_invitation"><![CDATA[Приглашение в канал]]></string>
-    <string name="_bx_channels_email_invitation_subject"><![CDATA[Приглашение в канал "{EntryTitle}"]]></string>
-    <string name="_bx_channels_email_invitation_body"><![CDATA[{email_header}
-<p><a href="{InviterUrl}">{InviterDisplayName}</a> пригласил Вас в канал <a href="{EntryUrl}">{EntryTitle}</a>.</p>
-{email_footer}]]></string>
 </resources>

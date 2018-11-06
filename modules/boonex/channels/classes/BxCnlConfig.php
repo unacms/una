@@ -30,7 +30,7 @@ class BxCnlConfig extends BxBaseModProfileConfig
         $this->CNF = array (
 
             // module icon
-            'ICON' => 'hubspot col-red2',
+            'ICON' => 'hashtag col-red2',
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'data',
@@ -56,6 +56,7 @@ class BxCnlConfig extends BxBaseModProfileConfig
             'URI_VIEW_ENTRY' => 'view-channel-profile',
             'URI_EDIT_ENTRY' => 'edit-channel-profile',
             'URI_EDIT_COVER' => 'edit-channel-cover',
+            'URI_JOINED_ENTRIES' => 'channels-author',
 
             'URL_HOME' => 'page.php?i=channels-home',
             'URL_MANAGE_COMMON' => 'page.php?i=channels-manage',
