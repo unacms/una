@@ -47,21 +47,23 @@ class BxSpacesFormEntry extends BxBaseModGroupsFormEntry
     function defineLevelById(&$aValsToAdd)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
-        $mixedParentId = "";
-        $iLevel = 0;
-        if (isset($this->aInputs[$CNF['FIELD_PARENT']])){
-            if (is_array($this->aInputs[$CNF['FIELD_PARENT']]['value'])){
-                $mixedParentId = $this->aInputs[$CNF['FIELD_PARENT']]['value'][0];
-            }
-            else{
-                $mixedParentId = $this->aInputs[$CNF['FIELD_PARENT']]['value'];
+
+        $iParentId = 0;
+        if(isset($this->aInputs[$CNF['FIELD_PARENT']])){
+            $iParentId = $this->aInputs[$CNF['FIELD_PARENT']]['value'];
+            if(is_array($iParentId))
+                $iParentId = array_shift($iParentId);
+        }
+        $aValsToAdd[$CNF['FIELD_PARENT']] = $iParentId;
+
+        if(isset($CNF['FIELD_LEVEL']) && empty($aValsToAdd[$CNF['FIELD_LEVEL']])) {
+            $aValsToAdd[$CNF['FIELD_LEVEL']] = 0;
+            if(!empty($iParentId)) {
+                $oParent = BxDolProfile::getInstance($iParentId);
+                if($oParent)
+                    $aValsToAdd[$CNF['FIELD_LEVEL']] = $this->_oModule->_oDb->getLevelById($oParent->getContentId()) + 1;
             }
         }
-        if ($mixedParentId != "")
-            $iLevel = $this->_oModule->_oDb->getLevelById($mixedParentId) + 1;
-        if (isset($CNF['FIELD_LEVEL']) && empty($aValsToAdd[$CNF['FIELD_LEVEL']]))
-            $aValsToAdd[$CNF['FIELD_LEVEL']] = $iLevel;
-        $aValsToAdd[$CNF['FIELD_PARENT']] = $mixedParentId;
     }
 }
 

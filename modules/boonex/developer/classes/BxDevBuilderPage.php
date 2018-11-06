@@ -314,7 +314,7 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
 
     protected function getBlockModule($aBlock)
     {
-        return $this->aPageRebuild['module'];
+        return $aBlock['module'] != BX_DOL_STUDIO_BP_SKELETONS ? $aBlock['module'] : $this->aPageRebuild['module'];
     }
 
     protected function getBlockContent($aBlock)

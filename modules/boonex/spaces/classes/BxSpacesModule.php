@@ -44,6 +44,11 @@ class BxSpacesModule extends BxBaseModGroupsModule
         return $this->_serviceTemplateFunc ('entryChilds', $iContentId);
     }
     
+    public function serviceBrowseTopLevel ($bDisplayEmptyMsg = false)
+    {
+        return $this->_serviceBrowse ('top_level', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
+    }
+    
     /**
      * Get possible recipients for start conversation form
      */
@@ -55,7 +60,15 @@ class BxSpacesModule extends BxBaseModGroupsModule
         header('Content-Type:text/javascript; charset=utf-8');
         echo(json_encode($a));
     }
-     
+
+    public function checkAllowedPost ($aDataEntry, $isPerformAction = false)
+    {
+        if(isLogged())
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        return _t('_sys_txt_access_denied');
+    }
+
     public function checkAllowedSubscribeAdd (&$aDataEntry, $isPerformAction = false)
     {
         return parent::_checkAllowedSubscribeAdd ($aDataEntry, $isPerformAction);
@@ -63,11 +76,17 @@ class BxSpacesModule extends BxBaseModGroupsModule
     
     public function getListSpacesForParent ($sTerm, $iContentId, $iLimit)
     {
+        $CNF = &$this->_oConfig->CNF;
+
         if (!isLogged())
             return false;
-        
+
+        $iLevelsLimit = BX_SPS_LEVELS_LIMIT;
+        if(getParam($CNF['PARAM_MULTILEVEL_HIERARCHY']) == 'on')
+            $iLevelsLimit = 0;
+
         $aRv = array();
-        $aTmp = $this->_oDb->searchByTermForParentSpace(bx_get_logged_profile_id(), $iContentId, BX_SPS_LEVELS_LIMIT, $sTerm, $iLimit);
+        $aTmp = $this->_oDb->searchByTermForParentSpace(bx_get_logged_profile_id(), $iContentId, $iLevelsLimit, $sTerm, $iLimit);
         foreach ($aTmp as $aSpace) {
             $oProfile = BxDolProfile::getInstance($aSpace['profile_id']);
 

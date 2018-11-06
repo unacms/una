@@ -74,3 +74,7 @@ DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_timeline', 'bx_timel
 
 -- CRON
 DELETE FROM `sys_cron_jobs` WHERE `name` LIKE 'bx_timeline%';
+
+
+-- PRELOADER
+DELETE FROM `sys_preloader` WHERE `module` = 'bx_timeline';

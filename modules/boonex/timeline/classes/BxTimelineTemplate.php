@@ -32,9 +32,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $mixedResult = parent::getCss($bDynamic);
         $mixedResult .= $this->addCss(array(
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css',
-        	BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'emoji/css/|emoji.css',
+            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'emoji/css/|emoji.css',
             'jquery-ui/jquery-ui.css',
-			'cmts.css',
+            'cmts.css',
             'post.css',
             'repost.css',
         ), $bDynamic);
@@ -52,7 +52,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'jquery.ba-resize.min.js',
             'autosize.min.js',
             'masonry.pkgd.min.js',
-            'modernizr.min.js',
             'flickity/flickity.pkgd.min.js',
             'embedly-player.min.js',
             'BxDolCmts.js',            
@@ -170,10 +169,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         }
 
         $aParams = array(
-        	'view' => BX_TIMELINE_VIEW_ITEM, 
-        	'type' => BX_TIMELINE_TYPE_ITEM
+            'view' => BX_TIMELINE_VIEW_ITEM, 
+            'type' => BX_TIMELINE_TYPE_ITEM
         );
         $sContent = $this->getPost($aEvent, $aParams);
+
+        $sKey = 'allowed_view';
+        if(isset($aEvent[$sKey]) && $aEvent[$sKey] !== CHECK_ACTION_RESULT_ALLOWED) 
+            return array('content' => MsgBox($aEvent[$sKey]), 'designbox_id' => 13);
 
         $oModule = $this->getModule();
         if($oModule->isAllowedViewCounter($aEvent) !== true)
@@ -311,6 +314,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aEvent['sample'] = !empty($aResult['sample']) ? $aResult['sample'] : '_bx_timeline_txt_sample';
         $aEvent['sample_action'] = !empty($aResult['sample_action']) ? $aResult['sample_action'] : '_bx_timeline_txt_added_sample';
         $aEvent['content'] = $aResult['content'];
+        $aEvent['allowed_view'] = isset($aResult['allowed_view']) ? $aResult['allowed_view'] : CHECK_ACTION_RESULT_ALLOWED;
         $aEvent['views'] = $aResult['views'];
         $aEvent['votes'] = $aResult['votes'];
         $aEvent['scores'] = $aResult['scores'];
@@ -606,19 +610,19 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 		else if($bShowDoRepostAsButtonSmall)
 			$sClass .= ' bx-btn bx-btn-small';
 
-		$sOnClick = '';
-		if(!$bDisabled) {
-			$sCommonPrefix = $this->_oConfig->getPrefix('common_post');
-			if(str_replace($sCommonPrefix, '', $sType) == BX_TIMELINE_PARSE_TYPE_REPOST) {
-				$aRepostedData = $this->_getCommonData($aReposted);
-	
-	            $sOnClick = $this->_getRepostJsClick($iOwnerId, $aRepostedData['content']['type'], $aRepostedData['content']['action'], $aRepostedData['content']['object_id']);
-			}
-			else
-				$sOnClick = $this->_getRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId);
-		}
-		else
-			$sClass .= $bShowDoRepostAsButton || $bShowDoRepostAsButtonSmall ? ' bx-btn-disabled' : ' ' . $sStylePrefixRepost . 'disabled';
+                $sOnClick = '';
+                if(!$bDisabled) {
+                    $sCommonPrefix = $this->_oConfig->getPrefix('common_post');
+                    if(str_replace($sCommonPrefix, '', $sType) == BX_TIMELINE_PARSE_TYPE_REPOST) {
+                        $aRepostedData = unserialize($aReposted['content']);
+
+                        $sOnClick = $this->_getRepostJsClick($iOwnerId, $aRepostedData['type'], $aRepostedData['action'], $aRepostedData['object_id']);
+                    }
+                    else
+                        $sOnClick = $this->_getRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId);
+                }
+                else
+                    $sClass .= $bShowDoRepostAsButton || $bShowDoRepostAsButtonSmall ? ' bx-btn-disabled' : ' ' . $sStylePrefixRepost . 'disabled';
 
 		$aOnClickAttrs = array(
 			'title' => _t('_bx_timeline_txt_do_repost')
@@ -767,9 +771,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sResult = '';
         $sCommonPrefix = $this->_oConfig->getPrefix('common_post');
         if(str_replace($sCommonPrefix, '', $sType) == BX_TIMELINE_PARSE_TYPE_REPOST) {
-            $aRepostedData = $this->_getCommonData($aReposted);
+            $aRepostedData = unserialize($aReposted['content']);
 
-            $sResult = $this->_getRepostJsClick($iOwnerId, $aRepostedData['content']['type'], $aRepostedData['content']['action'], $aRepostedData['content']['object_id']);
+            $sResult = $this->_getRepostJsClick($iOwnerId, $aRepostedData['type'], $aRepostedData['action'], $aRepostedData['object_id']);
         }
         else
             $sResult = $this->_getRepostJsClick($iOwnerId, $sType, $sAction, $iObjectId);
@@ -1524,7 +1528,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $iOwner = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $aEvent['owner_id'] : $aEvent['object_id'];
 
         $aTmplVars = array();
-        if(!empty($aEvent['promoted']) && $iUser != $iOwner) {
+        if(!empty($aEvent['promoted'])) {
             $sConnection = $this->_oConfig->getObject('conn_subscriptions');
             $oConnection = BxDolConnection::getObjectInstance($sConnection);
             if(!$oConnection->isConnected($iUser, $iOwner))
@@ -1596,17 +1600,19 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sPrefix = $this->_oConfig->getPrefix('common_post');
         $sType = str_replace($sPrefix, '', $aEvent['type']);
 
+        $oOwner = BxDolProfile::getInstanceMagic($aEvent['object_id']);
+
         $aResult = array(
             'owner_id' => $aEvent['object_id'],
             'icon' => $CNF['ICON'],
-        	'sample' => '_bx_timeline_txt_sample_with_article',
+            'sample' => '_bx_timeline_txt_sample_with_article',
             'sample_wo_article' => '_bx_timeline_txt_sample',
-        	'sample_action' => '_bx_timeline_txt_added_sample',
+            'sample_action' => '_bx_timeline_txt_added_sample',
             'content_type' => $sType,
             'content' => array(
                 'sample' => '_bx_timeline_txt_sample_with_article',
-        		'sample_wo_article' => '_bx_timeline_txt_sample',
-        		'sample_action' => '_bx_timeline_txt_added_sample',
+                'sample_wo_article' => '_bx_timeline_txt_sample',
+                'sample_action' => '_bx_timeline_txt_added_sample',
                 'url' => $this->_oConfig->getItemViewUrl($aEvent)
             ), //a string to display or array to parse default template before displaying.
             'views' => '',
@@ -1615,7 +1621,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'reports' => '',
             'comments' => '',
             'title' => $aEvent['title'], //may be empty.
-            'description' => $aEvent['description'] //may be empty.
+            'description' => bx_replace_markers($aEvent['description'], array(
+                'profile_name' => $oOwner->getDisplayName()
+            )) //may be empty.
         );
 
         switch($sType) {

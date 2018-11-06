@@ -100,7 +100,7 @@ class BxMassMailerGridCampaigns extends BxTemplGrid
         echoJson($aRes);
     }
     
-    protected function _getCellDateCreated($mixedValue, $sKey, $aField, $aRow)
+    protected function _getCellAdded($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
     }
@@ -115,6 +115,14 @@ class BxMassMailerGridCampaigns extends BxTemplGrid
         $sValue = bx_time_js($mixedValue);
         if ($mixedValue == '0')
             $sValue = _t('_bx_massmailer_txt_never_sent');
+        return parent::_getCellDefault($sValue, $sKey, $aField, $aRow);
+    }
+    
+    protected function _getCellIsOnePerAccount($mixedValue, $sKey, $aField, $aRow)
+    {
+        $sValue = _t('_bx_massmailer_grid_column_title_adm_is_one_per_account_no');
+        if ($mixedValue == '1')
+            $sValue = _t('_bx_massmailer_grid_column_title_adm_is_one_per_account_yes');
         return parent::_getCellDefault($sValue, $sKey, $aField, $aRow);
     }
     

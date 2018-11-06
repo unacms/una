@@ -2,12 +2,13 @@
 <resources name="en" flag="gb" title="English">
 	<string name="_bx_spaces"><![CDATA[Spaces]]></string>
 	<string name="_bx_spaces_cmts"><![CDATA[Spaces' Comments]]></string>
-	
+
+        <string name="_bx_spaces_option_enable_multilevel_hierarchy"><![CDATA[Allow multilevel hierarchy (experimental)]]></string>
 	<string name="_bx_spaces_option_num_connections_quick"><![CDATA[Number of items in friends block]]></string>
 	<string name="_bx_spaces_option_per_page_browse"><![CDATA[Number of items per page]]></string>
 	<string name="_bx_spaces_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
 	<string name="_bx_spaces_option_searchable_fields"><![CDATA[Searchable fields]]></string>
-	
+
 	<string name="_bx_spaces_form_profile"><![CDATA[Spaces]]></string>
 	<string name="_bx_spaces_form_profile_display_add"><![CDATA[Add Space]]></string>
 	<string name="_bx_spaces_form_profile_display_edit"><![CDATA[Edit Space]]></string>
@@ -137,8 +138,9 @@
 	<string name="_bx_spaces_page_block_title_featured_entries_view_showcase"><![CDATA[Featured Spaces]]></string>
 	<string name="_bx_spaces_page_block_title_sys_recommended_entries_view_showcase"><![CDATA[Recommended Spaces (Showcase View)]]></string>
 	<string name="_bx_spaces_page_block_title_recommended_entries_view_showcase"><![CDATA[Recommended Spaces]]></string>
-	
-	<string name="_bx_spaces_menu_title_submenu"><![CDATA[Spaces Submenu]]></string>
+  <string name="_bx_spaces_page_block_title_top_level_spaces"><![CDATA[Top Level Spaces]]></string>
+
+  <string name="_bx_spaces_menu_title_submenu"><![CDATA[Spaces Submenu]]></string>
 	<string name="_bx_spaces_menu_set_title_submenu"><![CDATA[Spaces Submenu]]></string>
 	<string name="_bx_spaces_menu_set_title_view_profile_actions"><![CDATA[Space Actions]]></string>
 	<string name="_bx_spaces_menu_title_view_profile_actions"><![CDATA[Space Actions]]></string>

@@ -189,6 +189,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_shopify_view_actions', 'bx_shopify', '_sys_menu_set_title_view_actions', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('bx_shopify_view_actions', 'bx_shopify', 'buy-shopify-entry', '_bx_shopify_menu_item_title_system_buy_entry', '_bx_shopify_menu_item_title_buy_entry', '', '', '', '', '', '', 0, 2147483647, 1, 0, 0),
 ('bx_shopify_view_actions', 'bx_shopify', 'edit-shopify-entry', '_bx_shopify_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 10),
 ('bx_shopify_view_actions', 'bx_shopify', 'delete-shopify-entry', '_bx_shopify_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 20),
 ('bx_shopify_view_actions', 'bx_shopify', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 200),

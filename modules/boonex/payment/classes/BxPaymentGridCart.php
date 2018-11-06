@@ -50,9 +50,9 @@ class BxPaymentGridCart extends BxBaseModPaymentGridCarts
     protected function _getCellTitle($mixedValue, $sKey, $aField, $aRow)
     {
     	return parent::_getCellDefault($this->_oModule->_oTemplate->displayLink('link', array(
-    		'href' => $aRow['url'],
-    		'title' => $aRow['title'],
-    		'content' => $aRow['title']
+            'href' => $aRow['url'],
+            'title' => bx_html_attribute($aRow['title']),
+            'content' => $aRow['title']
     	)), $sKey, $aField, $aRow);
     }
 

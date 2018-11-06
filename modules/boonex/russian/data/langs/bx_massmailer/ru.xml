@@ -4,7 +4,7 @@
 	<string name="_bx_massmailer"><![CDATA[Mass Mailer]]></string>
   <string name="_bx_massmailer_adm_stg_cpt_type"><![CDATA[Mass Mailer]]></string>
   <string name="_bx_massmailer_adm_stg_cpt_category_general"><![CDATA[Основные]]></string>
-  <string name="_bx_massmailer_initial_from_name"><![CDATA[Заголовок письма "From"]]></string>
+  <string name="_bx_massmailer_delete_sent_email_in_days"><![CDATA[Удалить отправленные кампании старше (дней)]]></string>
   <string name="_bx_massmailer_page_title_sys_manage_campaigns"><![CDATA[Кампании]]></string>
   <string name="_bx_massmailer_page_title_manage_campaigns"><![CDATA[Кампании]]></string>
   <string name="_bx_massmailer_page_title_sys_manage_campaigns"><![CDATA[Кампании]]></string>
@@ -60,6 +60,9 @@
   <string name="_bx_massmailer_grid_action_title_adm_send_all"><![CDATA[Отправить всем]]></string>
   <string name="_bx_massmailer_grid_action_title_adm_add"><![CDATA[Добавить новую кампанию]]></string>
   <string name="_bx_massmailer_grid_column_title_adm_segment"><![CDATA[Сегмент]]></string>
+  <string name="_bx_massmailer_grid_column_title_adm_is_one_per_account"><![CDATA[Одно на акккаунт]]></string>
+  <string name="_bx_massmailer_grid_column_title_adm_is_one_per_account_yes"><![CDATA[Да]]></string>
+  <string name="_bx_massmailer_grid_column_title_adm_is_one_per_account_no"><![CDATA[Нет]]></string>
   
   <string name="_bx_massmailer_campaign_form_add_title"><![CDATA[Новая кампания]]></string>
   <string name="_bx_massmailer_campaign_form_edit_title"><![CDATA[Редактировать кампанию]]></string>
@@ -77,7 +80,8 @@
   <string name="_bx_massmailer_form_campaign_input_title_err"><![CDATA[Название кампании не может быть пустым]]></string>
   <string name="_bx_massmailer_form_campaign_input_sys_body"><![CDATA[Тело письма]]></string>
   <string name="_bx_massmailer_form_campaign_input_body"><![CDATA[Тело письма]]></string>
-  <string name="_bx_massmailer_form_campaign_input_body_err"><![CDATA[Тело письма не может быть пустым]]></string>
+  <string name="_bx_massmailer_form_campaign_input_body_err"><![CDATA[Тело письма не может быть пустым и в нем должен обязательно присутствовать маркер {unsubscribe_url}]]></string>
+  <string name="_bx_massmailer_form_campaign_input_is_one_per_account"><![CDATA[Одно письмо на один аккаунт]]></string>
   <string name="_bx_massmailer_form_campaign_input_sys_test_email"><![CDATA[Email]]></string>
   <string name="_bx_massmailer_form_campaign_input_email"><![CDATA[Email]]></string>
   <string name="_bx_massmailer_form_campaign_input_sys_segments"><![CDATA[Сегменты]]></string>

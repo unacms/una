@@ -31,9 +31,8 @@ CREATE TABLE IF NOT EXISTS `bx_shopify_entries` (
 CREATE TABLE IF NOT EXISTS `bx_shopify_settings` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `author` int(10) unsigned NOT NULL,
-  `api_key` varchar(255) NOT NULL,
   `domain` varchar(255) NOT NULL,
-  `app_id` tinyint(4) unsigned NOT NULL,
+  `access_token` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `author` (`author`)
 );
@@ -186,9 +185,8 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_shopify', 'bx_shopify', 'added', '', '', 0, 'datetime', '_bx_shopify_form_entry_input_sys_date_added', '_bx_shopify_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_shopify', 'bx_shopify', 'changed', '', '', 0, 'datetime', '_bx_shopify_form_entry_input_sys_date_changed', '_bx_shopify_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 
-('bx_shopify_settings', 'bx_shopify', 'api_key', '', '', 0, 'text', '_bx_shopify_form_settings_input_sys_api_key', '_bx_shopify_form_settings_input_api_key', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_shopify_form_settings_input_api_key_err', 'Xss', '', 1, 0),
 ('bx_shopify_settings', 'bx_shopify', 'domain', '', '', 0, 'text', '_bx_shopify_form_settings_input_sys_domain', '_bx_shopify_form_settings_input_domain', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_shopify_form_settings_input_domain_err', 'Xss', '', 1, 0),
-('bx_shopify_settings', 'bx_shopify', 'app_id', '', '', 0, 'text', '_bx_shopify_form_settings_input_sys_app_id', '_bx_shopify_form_settings_input_app_id', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_shopify_form_settings_input_app_id_err', 'Int', '', 1, 0),
+('bx_shopify_settings', 'bx_shopify', 'access_token', '', '', 0, 'text', '_bx_shopify_form_settings_input_sys_access_token', '_bx_shopify_form_settings_input_access_token', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_shopify_form_settings_input_access_token_err', 'Xss', '', 1, 0),
 ('bx_shopify_settings', 'bx_shopify', 'do_submit', '_bx_shopify_form_settings_input_do_submit', '', 0, 'submit', '_bx_shopify_form_settings_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
@@ -218,10 +216,9 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_shopify_entry_view_full', 'changed', 2147483647, 1, 3),
 
 ('bx_shopify_settings_edit', 'mode', 2147483647, 1, 1),
-('bx_shopify_settings_edit', 'api_key', 2147483647, 1, 2),
-('bx_shopify_settings_edit', 'domain', 2147483647, 1, 3),
-('bx_shopify_settings_edit', 'app_id', 2147483647, 1, 4),
-('bx_shopify_settings_edit', 'do_submit', 2147483647, 1, 5);
+('bx_shopify_settings_edit', 'domain', 2147483647, 1, 2),
+('bx_shopify_settings_edit', 'access_token', 2147483647, 1, 3),
+('bx_shopify_settings_edit', 'do_submit', 2147483647, 1, 4);
 
 
 -- PRE-VALUES

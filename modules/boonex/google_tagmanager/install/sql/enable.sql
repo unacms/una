@@ -2,7 +2,7 @@
 -- OPTIONS
 SET @iTypeOrder = (SELECT MAX(`order`) FROM `sys_options_types` WHERE `group` = 'modules');
 INSERT INTO `sys_options_types` (`group`, `name`, `caption`, `icon`, `order`) VALUES 
-('modules', 'bx_googletagman', '_bx_unacon_adm_stg_cpt_type', 'bx_googletagman@modules/boonex/google_tagmanager/|std-icon.svg', IF(NOT ISNULL(@iTypeOrder), @iTypeOrder + 1, 1));
+('modules', 'bx_googletagman', '_bx_googletagman_adm_stg_cpt_type', 'bx_googletagman@modules/boonex/google_tagmanager/|std-icon.svg', IF(NOT ISNULL(@iTypeOrder), @iTypeOrder + 1, 1));
 SET @iTypeId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order` )  

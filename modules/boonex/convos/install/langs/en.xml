@@ -102,7 +102,6 @@
     <string name="_bx_cnv_grid_action_delete"><![CDATA[Delete]]></string>
     <string name="_bx_cnv_grid_action_compose"><![CDATA[New conversation]]></string>
 
-    <string name="_bx_cnv_collaborator_info"><![CDATA[{0} ({1})]]></string>
     <string name="_bx_cnv_collaborator_author"><![CDATA[author]]></string>
     <string name="_bx_cnv_collaborator_last_replier"><![CDATA[last replier]]></string>
     <string name="_bx_cnv_more"><![CDATA[{0} more]]></string>
@@ -120,7 +119,7 @@
     <string name="_bx_cnv_email_new_message"><![CDATA[New message]]></string>
     <string name="_bx_cnv_email_new_message_subject"><![CDATA[New message from {SenderDisplayName}]]></string>
     <string name="_bx_cnv_email_new_message_body"><![CDATA[{email_header}
-<p>New message from <a href="{SenderUrl}">{SenderDisplayName}</a>:</p>
+<p><a href="{PageUrl}">New message</a> from <a href="{SenderUrl}">{SenderDisplayName}</a>:</p>
 <hr />
 <p>{Message}</p>
 {email_footer}]]></string>

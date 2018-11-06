@@ -274,6 +274,8 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_cron_time', '_adm_stg_cpt_option_sys_cron_time', '0', 'digit', '', '', '', 2),
 (@iCategoryId, 'sys_install_time', '_adm_stg_cpt_option_sys_install_time', '0', 'digit', '', '', '', 3),
 (@iCategoryId, 'sys_revision', '_adm_stg_cpt_option_sys_revision', '0', 'digit', '', '', '', 5),
+(@iCategoryId, 'sys_eq_time', '_adm_stg_cpt_option_sys_eq_time', '0', 'digit', '', '', '', 6),
+(@iCategoryId, 'sys_push_queue_time', '_adm_stg_cpt_option_sys_push_queue_time', '0', 'digit', '', '', '', 7),
 
 (@iCategoryId, 'sys_ftp_login', '_adm_stg_cpt_option_sys_ftp_login', '', 'digit', '', '', '', 10),
 (@iCategoryId, 'sys_ftp_password', '_adm_stg_cpt_option_sys_ftp_password', '', 'digit', '', '', '', 11),
@@ -654,7 +656,7 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionViewView = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('system', 'view_view_viewers', NULL, '_sys_acl_action_view_view_viewers', '', 0, 0);
+('system', 'view_view_viewers_own', NULL, '_sys_acl_action_view_view_viewers_own', '', 0, 0);
 SET @iIdActionViewViewViewers = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
@@ -1488,6 +1490,7 @@ INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, 
 CREATE TABLE `sys_objects_view` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(64) NOT NULL,
+  `module` varchar(32) NOT NULL default '',
   `table_track` varchar(32) NOT NULL,
   `period` int(11) NOT NULL default '86400',
   `is_on` tinyint(4) NOT NULL default '1',

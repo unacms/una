@@ -50,9 +50,15 @@
     <string name="_bx_market_form_entry_input_header_beg_recurring"><![CDATA[Recurring payment]]></string>
     <string name="_bx_market_form_entry_input_sys_header_beg_privacy"><![CDATA[Privacy: begin]]></string>
     <string name="_bx_market_form_entry_input_header_beg_privacy"><![CDATA[Privacy]]></string>
+    <string name="_bx_market_form_entry_input_sys_header_beg_notes"><![CDATA[Notes: begin]]></string>
+    <string name="_bx_market_form_entry_input_header_beg_notes"><![CDATA[Notes]]></string>
+    <string name="_bx_market_form_entry_input_sys_header_beg_other"><![CDATA[Other: begin]]></string>
+    <string name="_bx_market_form_entry_input_header_beg_other"><![CDATA[Other]]></string>
     <string name="_bx_market_form_entry_input_sys_header_end_single"><![CDATA[One-time payment: end]]></string>
     <string name="_bx_market_form_entry_input_sys_header_end_recurring"><![CDATA[Recurring payment: end]]></string>
     <string name="_bx_market_form_entry_input_sys_header_end_privacy"><![CDATA[Privacy: end]]></string>
+    <string name="_bx_market_form_entry_input_sys_header_end_notes"><![CDATA[Notes: end]]></string>
+    <string name="_bx_market_form_entry_input_sys_header_end_other"><![CDATA[Other: end]]></string>
 	<string name="_bx_market_form_entry_input_sys_text"><![CDATA[Text]]></string>
 	<string name="_bx_market_form_entry_input_text"><![CDATA[Text]]></string>
 	<string name="_bx_market_form_entry_input_text_err"><![CDATA[Text field can't be empty]]></string>

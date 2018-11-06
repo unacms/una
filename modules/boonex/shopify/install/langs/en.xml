@@ -19,9 +19,9 @@
 	<string name="_bx_shopify_form_entry_input_do_submit"><![CDATA[Submit]]></string>
 	<string name="_bx_shopify_form_entry_input_sys_do_publish"><![CDATA[Publish]]></string>
 	<string name="_bx_shopify_form_entry_input_do_publish"><![CDATA[Publish]]></string>
-	<string name="_bx_shopify_form_entry_input_sys_code"><![CDATA[Product ID]]></string>
-    <string name="_bx_shopify_form_entry_input_code"><![CDATA[Product ID]]></string>
-    <string name="_bx_shopify_form_entry_input_code_inf"><![CDATA[The Product ID can be taken from product's URL when you are viewing the product in Products section of your Shopify dashboard.]]></string>
+	<string name="_bx_shopify_form_entry_input_sys_code"><![CDATA[Product handle]]></string>
+    <string name="_bx_shopify_form_entry_input_code"><![CDATA[Product handle]]></string>
+    <string name="_bx_shopify_form_entry_input_code_inf"><![CDATA[The Product handle can be found in 'Search engine listing preview' section when you are editing the product in Products section of your Shopify dashboard.]]></string>
     <string name="_bx_shopify_form_entry_input_code_err"><![CDATA[Product ID is essential. Please, fill in this field.]]></string>
 	<string name="_bx_shopify_form_entry_input_sys_title"><![CDATA[Title]]></string>
 	<string name="_bx_shopify_form_entry_input_title"><![CDATA[Title]]></string>
@@ -43,15 +43,12 @@
 
     <string name="_bx_shopify_form_settings"><![CDATA[Settings]]></string>
     <string name="_bx_shopify_form_settings_display_edit"><![CDATA[Edit Settings]]></string>
-    <string name="_bx_shopify_form_settings_input_sys_api_key"><![CDATA[API Key]]></string>
-    <string name="_bx_shopify_form_settings_input_api_key"><![CDATA[API Key (Access Token)]]></string>
-    <string name="_bx_shopify_form_settings_input_api_key_err"><![CDATA[API Key field can't be empty]]></string>
     <string name="_bx_shopify_form_settings_input_sys_domain"><![CDATA[Domain]]></string>
     <string name="_bx_shopify_form_settings_input_domain"><![CDATA[Domain]]></string>
-    <string name="_bx_shopify_form_settings_input_domain_err"><![CDATA[Domain field can't be empty]]></string>
-    <string name="_bx_shopify_form_settings_input_sys_app_id"><![CDATA[App ID]]></string>
-    <string name="_bx_shopify_form_settings_input_app_id"><![CDATA[App ID]]></string>
-    <string name="_bx_shopify_form_settings_input_app_id_err"><![CDATA[App ID field can't be empty]]></string>
+    <string name="_bx_shopify_form_settings_input_domain_err"><![CDATA[This field can't be empty]]></string>
+    <string name="_bx_shopify_form_settings_input_sys_access_token"><![CDATA[Storefront access token]]></string>
+    <string name="_bx_shopify_form_settings_input_access_token"><![CDATA[Storefront access token]]></string>
+    <string name="_bx_shopify_form_settings_input_access_token_err"><![CDATA[This field can't be empty]]></string>
     <string name="_bx_shopify_form_settings_input_sys_do_submit"><![CDATA[Submit]]></string>
     <string name="_bx_shopify_form_settings_input_do_submit"><![CDATA[Submit]]></string>
 
@@ -150,6 +147,8 @@
     <string name="_bx_shopify_menu_title_view_entry"><![CDATA[Goods Actions]]></string>
     <string name="_bx_shopify_menu_title_submenu"><![CDATA[Goods Submenu]]></string>
     <string name="_bx_shopify_menu_set_title_submenu"><![CDATA[Goods Submenu]]></string>
+    <string name="_bx_shopify_menu_item_title_system_buy_entry"><![CDATA[Buy]]></string>
+    <string name="_bx_shopify_menu_item_title_buy_entry"><![CDATA[Buy]]></string>
     <string name="_bx_shopify_menu_item_title_system_create_entry"><![CDATA[Goods]]></string>
     <string name="_bx_shopify_menu_item_title_create_entry"><![CDATA[Goods]]></string>
     <string name="_bx_shopify_menu_item_title_system_edit_entry"><![CDATA[Edit]]></string>
@@ -228,8 +227,9 @@
     <string name="_bx_shopify_msg_save_settings"><![CDATA[Settings were successfully saved.]]></string>
     <string name="_bx_shopify_err_save_settings"><![CDATA[Cannot save settings.]]></string>
     <string name="_bx_shopify_err_not_configured"><![CDATA[You need to configure shop settings first. <a href="{0}">Click here</a>.]]></string>
-    <string name="_bx_shopify_err_load_product"><![CDATA[Cannot load product. Please check your shop settings and product ID.]]></string>
+    <string name="_bx_shopify_err_load_product"><![CDATA[Cannot load product. Please check your shop settings and product handle.]]></string>
     <string name="_bx_shopify_err_load_collection"><![CDATA[Cannot load collection. Please check your shop settings.]]></string>
+    <string name="_bx_shopify_err_purchase_product"><![CDATA[Cannot purchase the product.]]></string>
 
     <string name="_bx_shopify_txt_all_entries_by"><![CDATA[<a href="{0}">All Goods by {1} ({2})</a>]]></string>
     <string name="_bx_shopify_txt_all_entries_in"><![CDATA[<a href="{0}">All Goods in {1} ({2})</a>]]></string>

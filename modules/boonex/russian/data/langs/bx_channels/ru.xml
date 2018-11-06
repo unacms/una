@@ -41,6 +41,7 @@
 	<string name="_bx_channels_acl_action_delete_profile"><![CDATA[Удалить канал]]></string>
 	<string name="_bx_channels_acl_action_view_profile"><![CDATA[Просмотреть канал]]></string>
 	<string name="_bx_channels_acl_action_edit_any_profile"><![CDATA[Редактировать любой канал]]></string>
+	<string name="_bx_channels_acl_action_create_channel_auto"><![CDATA[Создавать канал автоматически]]></string>
 
 	<string name="_bx_channels_page_title_sys_create_profile"><![CDATA[Создать канал]]></string>
 	<string name="_bx_channels_page_title_create_profile"><![CDATA[Создать канал]]></string>
@@ -107,7 +108,6 @@
     <string name="_bx_channels_page_block_title_top_profiles"><![CDATA[Популярные каналы]]></string>
 	<string name="_bx_channels_page_block_title_entry_all_actions"><![CDATA[Все действия]]></string>
     <string name="_bx_channels_page_block_title_entry_social_sharing"><![CDATA[Поделиться]]></string>
-    <string name="_bx_channels_page_block_title_categories"><![CDATA[Категории каналов]]></string>
     <string name="_bx_channels_page_block_title_search_form"><![CDATA[Форма поиска]]></string>
 	<string name="_bx_channels_page_block_title_entries_my"><![CDATA[Мои каналы]]></string>  
     <string name="_bx_channels_page_block_title_search_results"><![CDATA[Результаты поиска]]></string>
@@ -220,7 +220,8 @@
     <string name="_bx_channels_txt_sample_vote_single"><![CDATA[голос за канал]]></string>
 	
     <string name="_bx_channels_txt_ntfs_timeline_post_common"><![CDATA[В канале <b class="bx-ntfs-content-profile">{owner_name}</b> новая публикация <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
-	<string name="_bx_channels_ntfs_txt_subobject_added"><![CDATA[В канале <b class="bx-ntfs-content-profile">{owner_name}</b> новая публикация <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
+    <string name="_bx_channels_ntfs_txt_subobject_added"><![CDATA[В канале <b class="bx-ntfs-content-profile">{owner_name}</b> новая публикация <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
+    <string name="_bx_channels_alert_action_hashtag_added"><![CDATA[Новые хештеги]]></string>
     <string name="_bx_channels_alert_action_hashtag_added_notif_follow_context"><![CDATA[Новые хештеги]]></string>
 
     <string name="_bx_channels_pre_lists_cats"><![CDATA[Категории каналов]]></string>

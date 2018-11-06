@@ -35,7 +35,8 @@ class BxAnalyticsTemplate extends BxBaseModGeneralTemplate
         $this->addCss(array('main.css', BX_DIRECTORY_PATH_MODULES . 'boonex/analytics/plugins/daterangepicker/|daterangepicker.css', BX_DIRECTORY_PATH_MODULES . 'boonex/analytics/plugins/datatables/|datatables.min.css'));
         return $this->getJsCode('analytics') . $this->parseHtmlByName('canvas.html', array(
              'bx_repeat:items' => $aModulesList2,
-             'interval' => $sDate
+             'interval' => $sDate,
+             'export_to_csv_title' => _t('_bx_analytics_txt_export_to_csv_title')
             ));
     }
 }

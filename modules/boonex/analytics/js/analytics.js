@@ -15,6 +15,7 @@ function BxAnalytics(oOptions) {
     this._sContainerDataSelector = '#' + this._sContainerId + " .bx_analytics_data";
     this._sCanvasSelector = '#' + this._sContainerId + " .bx_analytics_grath";
     this._sDatePickerSelector = '#' + this._sContainerId + " .bx_analytics_date_picker";
+    this._sExportUrlSelector = '#' + this._sContainerId + " .bx_analytics_export_url";
     this._sActionsUri = oOptions.sActionUri;
     this._aStrings = oOptions.aStrings;
     var $this = this;
@@ -58,8 +59,9 @@ BxAnalytics.prototype.reloadReports = function () {
 BxAnalytics.prototype.reloadData = function () {
     var $this = this;
     bx_loading($($this._sContainerDataSelector), true);
-    $.getJSON($this._sActionsUri + 'GetReportsData/' + $($this._sModuleSelector).val() + '/' + $($this._sReportSelector).val() + '/' + $($this._sDatePickerSelector).data('daterangepicker').startDate.format('YYYY-MM-DD') + '/' + $($this._sDatePickerSelector).data('daterangepicker').endDate.format('YYYY-MM-DD') + '/', function (oData) {
-
+    $sUrl = $this._sActionsUri + 'GetReportsData/' + $($this._sModuleSelector).val() + '/' + $($this._sReportSelector).val() + '/' + $($this._sDatePickerSelector).data('daterangepicker').startDate.format('YYYY-MM-DD') + '/' + $($this._sDatePickerSelector).data('daterangepicker').endDate.format('YYYY-MM-DD') + '/';
+    $($this._sExportUrlSelector).attr('href', $sUrl + 'csv/');
+    $.getJSON($sUrl, function (oData) {
         Chart.defaults.global.layout = {
             padding: {
                 left: 40,
@@ -75,6 +77,8 @@ BxAnalytics.prototype.reloadData = function () {
             else
                 return label;
         };
+
+        
         
         bx_loading($($this._sContainerDataSelector), false);
         var oDataForChart = oData.data || false;
@@ -92,7 +96,7 @@ BxAnalytics.prototype.reloadData = function () {
 
 BxAnalytics.prototype.dataToTable = function (oDataIn) {
     var $this = this;
-    oData = oDataIn.data
+    var oData = oDataIn.data;
     var sHtml = '<table>';
     var sCol1 = oDataIn.strings[0];
 
@@ -105,17 +109,13 @@ BxAnalytics.prototype.dataToTable = function (oDataIn) {
 
     sHtml += '</tr></thead>';
     var iK = 0;
-
-    if (oData.labels.length == 0) {
-        oData.datasets[0].data.reverse();
-    }
-
-    $.each(oData.datasets[0].data, function (iDx, oItemData) {
+    
+    oData.datasets[0].data.forEach(function (oItemData, iDx) {
         var sTxt = "";
-        if (oData.labels.length > 0)
-            sTxt = oData.labels[iDx];
-        else{
+        if (oDataIn.options.scales.xAxes[0].type == 'time')
             sTxt = oData.datasets[0].data[iDx].x;
+        else{
+            sTxt = oData.labels[iDx];
         }
         if (oDataIn.links && oDataIn.links.length > 0) {
             sTxt = "<a href='" + oDataIn.links[iDx] + "'>" + sTxt + "</a>"
@@ -139,6 +139,13 @@ BxAnalytics.prototype.dataToTable = function (oDataIn) {
     if ($this._oTable)
         $this._oTable.destroy();
     $('.bx_analytics_table').html(sHtml);
-    $this._oTable = $('.bx_analytics_table').DataTable({ dom: '<"top"i>rt<"bottom"flp><"clear">', paging: true, searching: false, ordering: true, order: [] });
+
+    var $aOrder = [];
+    if (oDataIn.options.scales.xAxes[0].type == 'time') {
+        $aOrder = [[0, 'desc']];
+    }
+    $this._oTable = $('.bx_analytics_table').DataTable({ dom: '<"top"i>rt<"bottom"flp><"clear">', paging: true, searching: false, ordering: true, order: $aOrder });
+   
 };
+
 /** @} */

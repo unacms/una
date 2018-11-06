@@ -47,6 +47,7 @@ class BxMassMailerConfig extends BxBaseModGeneralConfig
             'FIELD_LINK' => 'link',
             'FIELD_DATE_UNSUBSCRIBED' => 'unsubscribed',
             'FIELD_ACCOUNT_ID' => 'account_id',
+            'FIELD_PER_ACCOUNT' => 'is_one_per_account',
             
             // page URIs
             'URI_MANAGE_COMMON' => 'massmailer-campaigns',

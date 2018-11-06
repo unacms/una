@@ -355,7 +355,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_event_view', 'date_start', 2147483647, 1, 11),
 ('bx_event_view', 'date_end', 2147483647, 1, 12),
 ('bx_event_view', 'time', 2147483647, 1, 13),
-('bx_event_view', 'timezone', 0, 1, 14),
+('bx_event_view', 'timezone', 2147483647, 1, 14),
 ('bx_event_view', 'event_desc', 2147483647, 0, 15),
 
 ('bx_event_view_full', 'allow_view_to', 2147483647, 0, 1),
@@ -371,7 +371,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_event_view_full', 'date_start', 2147483647, 1, 11),
 ('bx_event_view_full', 'date_end', 2147483647, 1, 12),
 ('bx_event_view_full', 'time', 2147483647, 1, 13),
-('bx_event_view_full', 'timezone', 0, 1, 14),
+('bx_event_view_full', 'timezone', 2147483647, 1, 14),
 ('bx_event_view_full', 'event_desc', 2147483647, 0, 15);
 
 -- PRE-VALUES

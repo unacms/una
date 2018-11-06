@@ -21,6 +21,11 @@ class BxShopifyMenuViewActions extends BxBaseModTextMenuViewActions
         parent::__construct($aObject, $oTemplate);
     }
 
+    protected function _getMenuItemBuyShopifyEntry($aItem)
+    {
+        return $this->_oModule->_oTemplate->entryBuy($this->_aContentInfo);
+    }
+
     protected function _getMenuItemEditShopifyEntry($aItem)
     {
         return $this->_getMenuItemByNameActions($aItem);

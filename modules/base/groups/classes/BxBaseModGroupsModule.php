@@ -190,7 +190,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return false;
     }
 
-    public function serviceAddMutualConnection ($iGroupProfileId, $iInitiatorId, $iIgnoreJoinConfirmation = false)
+    public function serviceAddMutualConnection ($iGroupProfileId, $iInitiatorId, $bSendInviteOnly = false)
     {        
         $CNF = &$this->_oConfig->CNF;
 
@@ -208,13 +208,13 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
 
         // send invitation to the group 
-        if ($iIgnoreJoinConfirmation && !$oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id()) && !$oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId) && bx_get_logged_profile_id() != $iProfileId) {
+        if ($bSendInviteOnly && !$oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id()) && !$oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId) && bx_get_logged_profile_id() != $iProfileId) {
 
             bx_alert($this->getName(), 'join_invitation', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array('content' => $aContentInfo, 'entry_title' => $sEntryTitle, 'entry_url' => $sEntryUrl, 'group_profile' => $iGroupProfileId, 'profile' => $iProfileId, 'notification_subobject_id' => $iProfileId, 'object_author_id' => $iGroupProfileId));
 
         }
         // send notification to group's admins that new connection is pending confirmation 
-        elseif (!$iIgnoreJoinConfirmation && $oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id()) && !$oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId) && $aContentInfo['join_confirmation']) {
+        elseif (!$bSendInviteOnly && $oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id()) && !$oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId) && $aContentInfo['join_confirmation']) {
 
             bx_alert($this->getName(), 'join_request', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array(
             	'object_author_id' => $iGroupProfileId,
@@ -229,7 +229,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             ));
         }
         // send notification that join request was accepted 
-        else if (!$iIgnoreJoinConfirmation && $oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id(), true) && $oGroupProfile->getModule() != $this->getName() && bx_get_logged_profile_id() != $iProfileId) {
+        else if (!$bSendInviteOnly && $oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id(), true) && $oGroupProfile->getModule() != $this->getName() && bx_get_logged_profile_id() != $iProfileId) {
             bx_alert($this->getName(), 'join_request_accepted', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array(
             	'object_author_id' => $iGroupProfileId,
             	'performer_id' => $iProfileId,
@@ -258,6 +258,17 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             ));
             return false;
         }
+
+        // don't automatically add connection (mutual) if group requires manual join confirmation
+        if ($bSendInviteOnly || $aContentInfo['join_confirmation'])
+            return false;
+
+        // check if connection already exists
+        if ($oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId, true) || $oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId))
+            return false;
+
+        if (!$oConnection->addConnection($oGroupProfile->id(), (int)$iInitiatorId))
+            return false;
 
         return true;
     }

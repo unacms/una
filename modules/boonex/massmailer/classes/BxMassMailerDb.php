@@ -24,7 +24,7 @@ class BxMassMailerDb extends BxBaseModGeneralDb
             'date_created' => time(),
             'copy_title' => _t('_bx_massmailer_txt_copy_title')
         );
-        $this->query("INSERT INTO `" . $CNF['TABLE_CAMPAIGNS'] . "` (`" . $CNF['FIELD_AUTHOR'] . "`, `" . $CNF['FIELD_TITLE'] . "`, `" . $CNF['FIELD_BODY'] . "`, `" . $CNF['FIELD_SEGMENTS'] . "`, `" . $CNF['FIELD_ADDED'] . "`, `" . $CNF['FIELD_SUBJECT'] . "`, `" . $CNF['FIELD_FROM_NAME'] . "`, `" . $CNF['FIELD_REPLY_TO'] . "`) SELECT `" . $CNF['FIELD_AUTHOR'] . "`, CONCAT(`" . $CNF['FIELD_TITLE'] . "`, :copy_title), `" . $CNF['FIELD_BODY'] . "`, `" . $CNF['FIELD_SEGMENTS'] . "`, :date_created, `" . $CNF['FIELD_SUBJECT'] . "`, `" . $CNF['FIELD_FROM_NAME'] . "`, `" . $CNF['FIELD_REPLY_TO'] . "` FROM `" . $CNF['TABLE_CAMPAIGNS'] . "` WHERE `" . $CNF['FIELD_ID'] . "` = :campaign_id", $aBindings);
+        $this->query("INSERT INTO `" . $CNF['TABLE_CAMPAIGNS'] . "` (`" . $CNF['FIELD_AUTHOR'] . "`, `" . $CNF['FIELD_TITLE'] . "`, `" . $CNF['FIELD_BODY'] . "`, `" . $CNF['FIELD_SEGMENTS'] . "`, `" . $CNF['FIELD_ADDED'] . "`, `" . $CNF['FIELD_SUBJECT'] . "`, `" . $CNF['FIELD_FROM_NAME'] . "`, `" . $CNF['FIELD_REPLY_TO'] . "`, `" . $CNF['FIELD_PER_ACCOUNT'] . "`) SELECT `" . $CNF['FIELD_AUTHOR'] . "`, CONCAT(`" . $CNF['FIELD_TITLE'] . "`, :copy_title), `" . $CNF['FIELD_BODY'] . "`, `" . $CNF['FIELD_SEGMENTS'] . "`, :date_created, `" . $CNF['FIELD_SUBJECT'] . "`, `" . $CNF['FIELD_FROM_NAME'] . "`, `" . $CNF['FIELD_REPLY_TO'] . "`, `" . $CNF['FIELD_PER_ACCOUNT'] . "` FROM `" . $CNF['TABLE_CAMPAIGNS'] . "` WHERE `" . $CNF['FIELD_ID'] . "` = :campaign_id", $aBindings);
         return $this->lastId();
     }
         
@@ -62,7 +62,7 @@ class BxMassMailerDb extends BxBaseModGeneralDb
     
     public function getAccountsByTerms($sTerms = "")
     {
-        $sSql = "SELECT `ta`.`email`, `tp`.`id` AS `profile_id` FROM `sys_accounts` AS `ta` INNER JOIN `sys_profiles` AS `tp` ON `tp`.`account_id`=`ta`.`id` " . $sTerms . " WHERE `ta`.`receive_news` <> 0";
+        $sSql = "SELECT `ta`.`email`, `tp`.`id` AS `profile_id` FROM `sys_accounts` AS `ta` INNER JOIN `sys_profiles` AS `tp` ON `tp`.`account_id`=`ta`.`id` " . $sTerms . "  WHERE `ta`.`receive_news` <> 0 AND `ta`.`email_confirmed` = 1";
         return $this->getAll($sSql);
     }
     
@@ -72,7 +72,7 @@ class BxMassMailerDb extends BxBaseModGeneralDb
            'datefrom' => $iDateFrom,
            'dateto' => $iDateTo
        );
-        $sSql = "SELECT DATE(FROM_UNIXTIME(`ta`.`added`)) AS `period`, YEAR(FROM_UNIXTIME(`ta`.`added`)) AS `year`, COUNT(*) AS `count` FROM `sys_accounts` AS `ta` INNER JOIN `sys_profiles` AS `tp` ON `tp`.`account_id`=`ta`.`id` " . $sTerms . " WHERE `ta`.`receive_news` <> 0 AND `ta`.`added` >= :datefrom AND `ta`.`added` <= :dateto GROUP BY `period`, `year` ORDER BY `year`, `period` ASC";
+        $sSql = "SELECT DATE(FROM_UNIXTIME(`ta`.`added`)) AS `period`, YEAR(FROM_UNIXTIME(`ta`.`added`)) AS `year`, COUNT(*) AS `count` FROM `sys_accounts` AS `ta` INNER JOIN `sys_profiles` AS `tp` ON `tp`.`account_id`=`ta`.`id` " . $sTerms . " WHERE `ta`.`receive_news` <> 0  AND `ta`.`email_confirmed` = 1 AND `ta`.`added` >= :datefrom AND `ta`.`added` <= :dateto GROUP BY `period`, `year` ORDER BY `year`, `period` ASC";
         return $this->getAll($sSql, $aBindings);
     }
     
@@ -139,6 +139,7 @@ class BxMassMailerDb extends BxBaseModGeneralDb
         );
         $this->query("DELETE FROM `" . $CNF['TABLE_LETTERS'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` = :campaign_id", $aBindings);
         $this->query("DELETE FROM `" . $CNF['TABLE_LINKS'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` = :campaign_id", $aBindings);
+        $this->query("DELETE FROM `" . $CNF['TABLE_UNSUBSCRIBE'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` = :campaign_id", $aBindings);
     }
     
     public function getLettersByCampaignId ($iCampaignId)
@@ -151,7 +152,7 @@ class BxMassMailerDb extends BxBaseModGeneralDb
     public function getClicksByCampaignId ($iCampaignId)
     {
         $CNF = &$this->_oConfig->CNF;
-        $sQuery = $this->prepare ("SELECT `" . $CNF['FIELD_LINK'] . "`, `" . $CNF['FIELD_TITLE'] . "`, COUNT( `" . $CNF['FIELD_ID'] . "`) AS `click_count`, MAX( `" . $CNF['FIELD_DATE_CLICK'] . "`) AS `last_click`  FROM `" . $CNF['TABLE_LINKS'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` = ? AND `" . $CNF['FIELD_DATE_CLICK'] . "` IS NOT NULL GROUP BY `" . $CNF['FIELD_LINK'] . "`, `" . $CNF['FIELD_TITLE'] . "` ORDER BY COUNT( `" . $CNF['FIELD_ID'] . "`)  DESC", $iCampaignId);
+        $sQuery = $this->prepare ("SELECT `" . $CNF['FIELD_LINK'] . "`, `" . $CNF['FIELD_TITLE'] . "`, COUNT( `" . $CNF['FIELD_ID'] . "`) AS `click_count`, MAX( `" . $CNF['FIELD_DATE_CLICK'] . "`) AS `last_click` FROM `" . $CNF['TABLE_LINKS'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` = ? AND `" . $CNF['FIELD_DATE_CLICK'] . "` > 0 GROUP BY `" . $CNF['FIELD_LINK'] . "`, `" . $CNF['FIELD_TITLE'] . "` ORDER BY COUNT( `" . $CNF['FIELD_ID'] . "`)  DESC", $iCampaignId);
         return $this->getAll($sQuery);
     }
     
@@ -225,6 +226,22 @@ class BxMassMailerDb extends BxBaseModGeneralDb
                 'account_id' => $iAccountId
             );
             $this->query("DELETE FROM `" . $CNF['TABLE_UNSUBSCRIBE'] . "` WHERE `" . $CNF['FIELD_ACCOUNT_ID'] . "` = :account_id", $aBindings);
+        }
+    }
+    
+    public function deleteOldCampagns($iDayBefore)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        $aBindings = array(
+            'time_from' => (time() - $iDayBefore * 86400)
+        );
+        $aTmp = $this->getColumn("SELECT `" . $CNF['FIELD_ID'] . "` FROM `" . $CNF['TABLE_CAMPAIGNS'] . "` WHERE `" . $CNF['FIELD_DATE_SENT'] . "` < :time_from AND `" . $CNF['FIELD_DATE_SENT'] . "` > 0", $aBindings);
+        if (count($aTmp) > 0){
+            $sIdList = $this->implode_escape($aTmp);
+            $this->query("DELETE FROM `" . $CNF['TABLE_LETTERS'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` IN (" . $sIdList . ")", $aBindings);
+            $this->query("DELETE FROM `" . $CNF['TABLE_LINKS'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` IN (" . $sIdList . ")", $aBindings);
+            $this->query("DELETE FROM `" . $CNF['TABLE_UNSUBSCRIBE'] . "` WHERE `" . $CNF['FIELD_CAMPAIGN_ID'] . "` IN (" . $sIdList . ")", $aBindings);
+            $this->query("DELETE FROM `" . $CNF['TABLE_CAMPAIGNS'] . "` WHERE `" . $CNF['FIELD_ID'] . "` IN (" . $sIdList . ")", $aBindings);
         }
     }
 }

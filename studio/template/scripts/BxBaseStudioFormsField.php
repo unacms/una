@@ -111,20 +111,23 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
             //--- Process field name.
             $sInputName = $oForm->getCleanValue('name');
             if(empty($sInputName)) {
-            	$sInputObject = $oForm->getCleanValue('object');
+                $sInputObject = $oForm->getCleanValue('object');
 
-	            $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
-	            $sInputCaption = BxDolForm::getSubmittedValue('caption-' . $sLanguage, $aForm['form_attrs']['method']);
-	            if(empty($sInputCaption))
-	                $sInputCaption = BxDolForm::getSubmittedValue('caption_system-' . $sLanguage, $aForm['form_attrs']['method']);
+                $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
+                $sInputCaption = BxDolForm::getSubmittedValue('caption-' . $sLanguage, $aForm['form_attrs']['method']);
+                if(empty($sInputCaption))
+                    $sInputCaption = BxDolForm::getSubmittedValue('caption_system-' . $sLanguage, $aForm['form_attrs']['method']);
 
-	            $sInputName = $this->getFieldName($sInputObject, $sInputCaption);
-	            BxDolForm::setSubmittedValue('name', $sInputName, $oForm->aFormAttrs['method']);
+                $sInputName = $this->getFieldName($sInputObject, $sInputCaption);
+                BxDolForm::setSubmittedValue('name', $sInputName, $oForm->aFormAttrs['method']);
             }
 
             $sFieldName = strmaxtextlen($sInputName, $this->iFieldNameMaxLen, '');
             if(strcmp($sInputName, $sFieldName) !== 0)
             	BxDolForm::setSubmittedValue('name', $sFieldName, $oForm->aFormAttrs['method']);
+
+            if($this->isField($sFieldName))
+                return false;
 
             $this->onSubmitField($oForm);
             if(($iId = $oForm->insert()) === false)
@@ -155,7 +158,7 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
         if($oForm->isSubmittedAndValid()) {
             $sInputName = $oForm->getCleanValue('name');
 
-			$sFieldName = strmaxtextlen($sInputName, $this->iFieldNameMaxLen, '');
+            $sFieldName = strmaxtextlen($sInputName, $this->iFieldNameMaxLen, '');
             if(strcmp($sInputName, $sFieldName) !== 0)
             	BxDolForm::setSubmittedValue('name', $sFieldName, $oForm->aFormAttrs['method']);
 
@@ -163,9 +166,9 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
             if($oForm->update((int)$this->aField['id']) === false)
                 return false;
 
-			$sFieldNameOld = $this->aField['name'];
-			if($bAlter || strcmp($sFieldNameOld, $sFieldName) !== 0)
-				$this->alterChange($sFieldNameOld, $sFieldName);
+            $sFieldNameOld = $this->aField['name'];
+            if($bAlter || strcmp($sFieldNameOld, $sFieldName) !== 0)
+                $this->alterChange($sFieldNameOld, $sFieldName);
 
             return true;
         } 
@@ -1217,19 +1220,19 @@ class BxBaseStudioFormsFieldFiles extends BxBaseStudioFormsFieldFile
     protected $sType = 'files';
 
     public function init()
-	{
-		parent::init();
+    {
+        parent::init();
 
         $aFields = array(
-        	'values' => array(
+            'values' => array(
                 'type' => 'hidden',
                 'name' => 'values',
-                'value' => '',
+                'value' => array(),
                 'db' => array (
                     'pass' => 'Xss',
                 )
             ),
-        	'value' => array(
+            'value' => array(
                 'type' => 'checkbox_set',
                 'name' => 'value',
                 'caption' => _t('_adm_form_txt_field_value_files'),
@@ -1244,20 +1247,18 @@ class BxBaseStudioFormsFieldFiles extends BxBaseStudioFormsFieldFile
         );
 
         $aUploaders = array(
-        	'sys_simple' => '_sys_uploader_simple_title', 
-        	'sys_html5' => '_sys_uploader_html5_title'
+            'sys_simple' => '_sys_uploader_simple_title', 
+            'sys_html5' => '_sys_uploader_html5_title'
         );
         foreach($aUploaders as $sObject => $sTitle) {
-        	$aUploader = BxDolUploaderQuery::getUploaderObject($sObject);
-        	if(empty($aUploader) || !is_array($aUploader) || (int)$aUploader['active'] == 0)
-        		continue;
+            $aUploader = BxDolUploaderQuery::getUploaderObject($sObject);
+            if(empty($aUploader) || !is_array($aUploader) || (int)$aUploader['active'] == 0)
+                continue;
 
-			$aFields['values']['value'][$sObject] = $sTitle;
-        	$aFields['value']['values'][$sObject] = _t($sTitle);
+            $aFields['values']['value'][$sObject] = $sTitle;
+            $aFields['value']['values'][$sObject] = _t($sTitle);
         }
-
-        if(!empty($aFields['values']['value']) && is_array($aFields['values']['value']))
-        	$aFields['values']['value'] = serialize($aFields['values']['value']);
+        $aFields['values']['value'] = !empty($aFields['values']['value']) && is_array($aFields['values']['value']) ? serialize($aFields['values']['value']) : '';
 
         $this->aForm['inputs'] = $this->addInArray($this->aForm['inputs'], 'required', $aFields);
     }

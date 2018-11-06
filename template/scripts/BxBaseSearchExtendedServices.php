@@ -30,7 +30,7 @@ class BxBaseSearchExtendedServices extends BxDol
         if(!$oSearch || !$oSearch->isEnabled())
             return '';
 
-        return $oSearch->getForm();
+        return $oSearch->getForm($aParams);
     }
 
     public function serviceGetResults($aParams)

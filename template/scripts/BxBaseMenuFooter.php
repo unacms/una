@@ -51,11 +51,16 @@ class BxBaseMenuFooter extends BxTemplMenu
                     break;
             }
 
-            if (!isset($aItems[$iKey]['title_attr'])) {
+            $bTitleAttr = isset($aItems[$iKey]['title_attr']);
+            $bTitleAttrImage = isset($aItems[$iKey]['bx_if:image']['content']['title_attr']);
+            if(!$bTitleAttr || !$bTitleAttrImage) {
                 $sTitleAttr = bx_html_attribute(strip_tags($aItems[$iKey]['title']));
 
-                $aItems[$iKey]['title_attr'] = $sTitleAttr;
-                $aItems[$iKey]['bx_if:image']['content']['title_attr'] = $sTitleAttr;
+                if(!$bTitleAttr)
+                    $aItems[$iKey]['title_attr'] = $sTitleAttr;
+
+                if(!$bTitleAttrImage)
+                    $aItems[$iKey]['bx_if:image']['content']['title_attr'] = $sTitleAttr;
             }
         }
 

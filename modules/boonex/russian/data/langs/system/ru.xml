@@ -13,6 +13,7 @@
 	<string name="_Allowed Until"><![CDATA[Разрешено до]]></string>
     <string name="_Allowed actions"><![CDATA[Разрешённые действия]]></string>
     <string name="_anonymous"><![CDATA[Аноним]]></string>
+    <string name="_anonymous_f"><![CDATA[Аноним ({0})]]></string>
 	<string name="_Are_you_sure"><![CDATA[Вы уверены?]]></string>
 	<string name="_Auth type"><![CDATA[Тип авторизации]]></string>
 	<string name="_Basic"><![CDATA[Базовая]]></string>
@@ -1301,6 +1302,7 @@
     <string name="_adm_stg_cpt_option_sys_embedly_api_key"><![CDATA[Ключ Embed.ly API (заполните, чтобы использовать вместо Iframely)]]></string>
     <string name="_adm_stg_cpt_option_sys_embedly_api_pattern"><![CDATA[Шаблон Embed.ly API (заполните, чтобы использовать вместо Iframely)]]></string>
     <string name="_adm_stg_cpt_option_sys_iframely_api_key"><![CDATA[Ключ Iframely API]]></string>
+    <string name="_adm_stg_cpt_option_sys_eq_time"><![CDATA[Флаг выполнения имейл очереди]]></string>
     <string name="_adm_stg_cpt_option_sys_eq_send_per_start"><![CDATA[Количество сообщенией, отправляемое из имейл очереди при каждом запуске]]></string>
     <string name="_adm_stg_cpt_option_sys_eq_send_per_start_to_recipient"><![CDATA[Количество сообщенией, отправляемое из имейл очереди одному и тому же получателю при каждом запуске]]></string>
 	<string name="_adm_stg_cpt_option_sys_oauth_key"><![CDATA[UNA-аккаунт - Key (ключ)]]></string>
@@ -1315,6 +1317,7 @@
     <string name="_adm_stg_cpt_option_sys_push_rest_api"><![CDATA[REST API Key]]></string>
     <string name="_adm_stg_cpt_option_sys_push_short_name"><![CDATA[Короткое имя (требуется только если у вас https сайт. Оно должно совпадать с поддоменом, введёным, в настройках пуш оповещений на OneSignal)]]></string>
     <string name="_adm_stg_cpt_option_sys_push_safari_id"><![CDATA[Apple Safari Web ID в натройках Web Push]]></string>
+    <string name="_adm_stg_cpt_option_sys_push_queue_time"><![CDATA[Флаг выполнения Push очереди]]></string>
     <string name="_adm_stg_cpt_option_sys_push_queue_send_per_start"><![CDATA[Количество сообщенией, отправляемое из Push очереди при каждом запуске]]></string>
     <string name="_adm_stg_cpt_option_sys_push_queue_send_per_start_to_recipient"><![CDATA[Количество сообщенией, отправляемое из Push очереди одному и тому же получателю при каждом запуске]]></string>
 	<string name="_adm_stg_cpt_option_sys_twilio_gate_sid"><![CDATA[Account SID]]></string>
@@ -1607,7 +1610,7 @@
 	<string name="_sys_acl_action_favorite_view"><![CDATA[Избранное - Просматривать]]></string>
 	<string name="_sys_acl_action_feature"><![CDATA[Продвинутое - Добавлять]]></string>
 	<string name="_sys_acl_action_view_view"><![CDATA[Просмотры - Просматривать]]></string>
-	<string name="_sys_acl_action_view_view_viewers"><![CDATA[Просмотры - Просматривать смотревших]]></string>
+	<string name="_sys_acl_action_view_view_viewers_own"><![CDATA[Просмотры - Просматривать смотревших для своего контента]]></string>
 	<string name="_sys_acl_action_limit_reached"><![CDATA[Вы достигли лимита. Ваше текущее членство ({2}) позволяет {1} не более {3} раз]]></string>
 	<string name="_sys_acl_action_not_allowed"><![CDATA[Ваше текущее членство ({2}) не позволяет '{1}'.]]></string>
 	<string name="_sys_acl_action_not_allowed_after"><![CDATA[Ваше текущее членство ({2}) более не позволяет '{1}' {5}.]]></string>
@@ -2376,6 +2379,7 @@
     <string name="_sys_name"><![CDATA[Имя]]></string>
     <string name="_sys_next"><![CDATA[Ещё]]></string>
     <string name="_sys_notification_account"><![CDATA[Аккаунты, созданные за последние 24 часа:]]></string>
+    <string name="_sys_not_available"><![CDATA[н/д]]></string>
     <string name="_sys_not_specified"><![CDATA[Не указано]]></string>
     <string name="_sys_on"><![CDATA[вкл.]]></string>
     <string name="_sys_off"><![CDATA[выкл.]]></string>
@@ -2666,6 +2670,7 @@
     <string name="_sys_txt_my_profiles"><![CDATA[Создать новый профайл]]></string>
     <string name="_sys_txt_new_picture"><![CDATA[Новая картинка]]></string>
     <string name="_sys_txt_no_picture_uploaded"><![CDATA[Картинка не загружена]]></string>
+    <string name="_sys_txt_no_title"><![CDATA[Без заголовка]]></string>
     <string name="_sys_txt_n_by"><![CDATA[{0}]]></string>
     <string name="_sys_txt_n_friends"><![CDATA[{0} друзей]]></string>
     <string name="_sys_txt_n_mutual_friends"><![CDATA[{0} общих друзей]]></string>

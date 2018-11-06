@@ -13,10 +13,7 @@ class BxPollsFormEntryCheckerHelper extends BxDolFormCheckerHelper
 {
     static public function checkAvailSubentries ($s)
     {
-        if(!self::_isFullArray($s))
-            return false;
-
-        return count($s) >= 2;
+        return !self::_isEmptyArray($s) && count($s) >= 2;
     }
 }
 /**
@@ -112,9 +109,14 @@ class BxPollsFormEntry extends BxBaseModTextFormEntry
         if(!isset($this->aInputs[$sField]))
             return true;
 
-        //--- Update existed and remove empty
         $aSubentriesIds = $this->getCleanValue($sField . '_ids');
         $aSubentriesValues = $this->getCleanValue($sField);
+
+        //--- Remove deleted
+        $aSubentriesDb = $this->_oModule->_oDb->getSubentries(array('type' => 'entry_id_pairs', 'entry_id' => $iContentId));
+        $this->_oModule->_oDb->deleteSubentryById(array_diff(array_keys($aSubentriesDb), $aSubentriesIds));
+
+        //--- Update existed and remove empty
         foreach($aSubentriesIds as $iIndex => $iId)
             if(!empty($aSubentriesValues[$iIndex]))
                 $this->_oModule->_oDb->updateSubentry(array('title' => bx_process_input($aSubentriesValues[$iIndex])), array('id' => (int)$iId));
@@ -142,22 +144,28 @@ class BxPollsFormEntry extends BxBaseModTextFormEntry
 
     protected function genCustomInputSubentries(&$aInput)
     {
-        $sResult = '';
+        $sJsObject = $this->_oModule->_oConfig->getJsObject('form');
 
-        if(empty($aInput['value']) || !is_array($aInput['value'])) {
-            $sResult .= $this->genCustomInputSubentriesText($aInput);
-            $sResult .= $this->genCustomInputSubentriesText($aInput);
-        }
-        else
+        if(!empty($aInput['value']) && is_array($aInput['value'])) {
+            $aTmplVarsSubentries = array();
             foreach($aInput['value'] as $iKey => $sValue) {
-                $sResult .= $this->genCustomInputSubentriesText($aInput, $sValue);
+                $sInput = $this->genCustomInputSubentriesText($aInput, $sValue);
                 if(!empty($aInput['value_ids'][$iKey]))
-                    $sResult .= $this->genCustomInputSubentriesHidden($aInput, (int)$aInput['value_ids'][$iKey]);
+                    $sInput .= $this->genCustomInputSubentriesHidden($aInput, (int)$aInput['value_ids'][$iKey]);
+
+                $aTmplVarsSubentries[] = array('js_object' => $sJsObject, 'input_text' => $sInput);
             }
+        }
+        else 
+            $aTmplVarsSubentries = array(
+                array('js_object' => $sJsObject, 'input_text' => $this->genCustomInputSubentriesText($aInput)),
+                array('js_object' => $sJsObject, 'input_text' => $this->genCustomInputSubentriesText($aInput))
+            );
 
-        $sResult .= $this->genCustomInputSubentriesButton($aInput);
-
-        return $sResult;
+        return $this->_oModule->_oTemplate->parseHtmlByName('form_subentries.html', array(
+            'bx_repeat:subentries' => $aTmplVarsSubentries,
+            'btn_add' => $this->genCustomInputSubentriesButton($aInput)
+        ));
     }
     
     protected function genCustomInputSubentriesText($aInput, $mixedValue = '')
@@ -181,11 +189,13 @@ class BxPollsFormEntry extends BxBaseModTextFormEntry
 
     protected function genCustomInputSubentriesButton($aInput)
     {
+        $sName = $aInput['name'];
+
         $aInput['type'] = 'button';
         $aInput['name'] .= '_add';
         $aInput['value'] = _t('_bx_polls_form_entry_input_subentries_add');
         $aInput['attrs']['class'] = 'bx-def-margin-sec-top';
-        $aInput['attrs']['onclick'] = $this->_oModule->_oConfig->getJsObject('form') . '.addMore(this);';
+        $aInput['attrs']['onclick'] = $this->_oModule->_oConfig->getJsObject('form') . ".subentryAdd(this, '" . $sName . "');";
 
         return $this->genInputButton($aInput);
     }

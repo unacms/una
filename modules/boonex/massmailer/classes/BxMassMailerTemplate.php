@@ -61,8 +61,8 @@ class BxMassMailerTemplate extends BxBaseModGeneralTemplate
         $aData = $this->_oModule->_oDb->getCampaignInfoById($CampaignId);
         $aDataStat = $this->_oModule->_oDb->getStatByCampaignId($CampaignId);
         
-        $this->addJs(array('chart.min.js', 'chart.js', BX_DIRECTORY_PATH_MODULES . 'boonex/analytics/plugins/daterangepicker/|daterangepicker.js'));
-        $this->addCss(array('main.css', BX_DIRECTORY_PATH_MODULES . 'boonex/analytics/plugins/daterangepicker/|daterangepicker.css'));
+        $this->addJs(array('chart.min.js', 'chart.js', BX_DIRECTORY_PATH_MODULES . 'boonex/massmailer/plugins/daterangepicker/|daterangepicker.js'));
+        $this->addCss(array('main.css', BX_DIRECTORY_PATH_MODULES . 'boonex/massmailer/plugins/daterangepicker/|daterangepicker.css'));
         
         return $this->getJsCode('chart', array('sChartName' => 'CAMPAIGN_REPORT', 'sReportName' => $CampaignId)) . $this->parseHtmlByName('campaign_info.html', array(
             'created_title' => _t('_bx_massmailer_txt_created_title'),
@@ -105,8 +105,8 @@ class BxMassMailerTemplate extends BxBaseModGeneralTemplate
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
         
-        $this->addJs(array('chart.min.js', 'chart.js', BX_DIRECTORY_PATH_MODULES . 'boonex/analytics/plugins/daterangepicker/|daterangepicker.js'));
-        $this->addCss(array('main.css', BX_DIRECTORY_PATH_MODULES . 'boonex/analytics/plugins/daterangepicker/|daterangepicker.css'));
+        $this->addJs(array('chart.min.js', 'chart.js', BX_DIRECTORY_PATH_MODULES . 'boonex/massmailer/plugins/daterangepicker/|daterangepicker.js'));
+        $this->addCss(array('main.css', BX_DIRECTORY_PATH_MODULES . 'boonex/massmailer/plugins/daterangepicker/|daterangepicker.css'));
         $sDate = date('d/m/Y', time() - 90 * 86400) . ' - ' . date('d/m/Y');
         
         $aSegments = $this->_oModule->getSegments();

@@ -4,7 +4,7 @@
   <string name="_bx_massmailer_acl_action_use_massmailer"><![CDATA[Use Massmailer]]></string>
   <string name="_bx_massmailer_adm_stg_cpt_type"><![CDATA[Mass Mailer]]></string>
   <string name="_bx_massmailer_adm_stg_cpt_category_general"><![CDATA[General]]></string>
-  <string name="_bx_massmailer_initial_from_name"><![CDATA[Letter's header "From"]]></string>
+  <string name="_bx_massmailer_delete_sent_email_in_days"><![CDATA[Delete sent email campaigns older than (days)]]></string>
   <string name="_bx_massmailer_page_title_sys_manage_campaigns"><![CDATA[Campaigns]]></string>
   <string name="_bx_massmailer_page_title_manage_campaigns"><![CDATA[Campaigns]]></string>
   <string name="_bx_massmailer_page_title_sys_manage_campaigns"><![CDATA[Campaigns]]></string>
@@ -59,6 +59,9 @@
   <string name="_bx_massmailer_grid_action_title_adm_send_all"><![CDATA[Send All]]></string>
   <string name="_bx_massmailer_grid_action_title_adm_add"><![CDATA[Add new campaign]]></string>
   <string name="_bx_massmailer_grid_column_title_adm_segment"><![CDATA[Segment]]></string>
+  <string name="_bx_massmailer_grid_column_title_adm_is_one_per_account"><![CDATA[One per account]]></string>
+  <string name="_bx_massmailer_grid_column_title_adm_is_one_per_account_yes"><![CDATA[Yes]]></string>
+  <string name="_bx_massmailer_grid_column_title_adm_is_one_per_account_no"><![CDATA[No]]></string>
   
   <string name="_bx_massmailer_campaign_form_add_title"><![CDATA[New campaign]]></string>
   <string name="_bx_massmailer_campaign_form_edit_title"><![CDATA[Edit campaign]]></string>
@@ -76,7 +79,8 @@
   <string name="_bx_massmailer_form_campaign_input_title_err"><![CDATA[Campaign name can't be empty]]></string>
   <string name="_bx_massmailer_form_campaign_input_sys_body"><![CDATA[Body]]></string>
   <string name="_bx_massmailer_form_campaign_input_body"><![CDATA[Body]]></string>
-  <string name="_bx_massmailer_form_campaign_input_body_err"><![CDATA[Body can't be empty]]></string>
+  <string name="_bx_massmailer_form_campaign_input_body_err"><![CDATA[Body can't be empty and {unsubscribe_url} marker must be present]]></string>
+  <string name="_bx_massmailer_form_campaign_input_is_one_per_account"><![CDATA[One letter per one account]]></string>
   <string name="_bx_massmailer_form_campaign_input_sys_test_email"><![CDATA[Email]]></string>
   <string name="_bx_massmailer_form_campaign_input_email"><![CDATA[Email]]></string>
   <string name="_bx_massmailer_form_campaign_input_sys_segments"><![CDATA[Segments]]></string>
@@ -92,7 +96,7 @@
   <string name="_bx_massmailer_form_campaign_input_reply_to"><![CDATA[Reply to Email]]></string>
   <string name="_bx_massmailer_form_campaign_input_reply_to_info"><![CDATA[If empty, Site Email is used]]></string>
   <string name="_bx_massmailer_form_campaign_input_reply_to_err"><![CDATA[Email is not valid]]></string>
-  <string name="_bx_massmailer_form_campaign_input_from_name_info_value"><![CDATA[The message will be sent to {0} addresses.]]></string>
+  <string name="_bx_massmailer_form_campaign_input_from_name_info_value"><![CDATA[The message will be sent to {0} profiles.]]></string>
   <string name="_bx_massmailer_form_campaign_input_sys_campaign_info"><![CDATA[Campaign info]]></string>
   <string name="_bx_massmailer_form_campaign_input_sys_receive_news"><![CDATA[Receive Newsletterso]]></string>
   <string name="_bx_massmailer_form_campaign_input_receive_news"><![CDATA[Receive Newsletters]]></string>
@@ -118,6 +122,9 @@
   <string name="_bx_massmailer_txt_unsubscribed_total_title"><![CDATA[Unsubscribed - {0}]]></string>
 
   <string name="_bx_massmailer_txt_attribute_global"><![CDATA[Account]]></string>
+  <string name="_bx_massmailer_txt_item"><![CDATA[Item]]></string>
+  <string name="_bx_massmailer_txt_value"><![CDATA[Value]]></string>
+  <string name="_bx_massmailer_txt_date"><![CDATA[Date]]></string>
   <string name="_bx_massmailer_txt_attribute_email"><![CDATA[Email]]></string>
   <string name="_bx_massmailer_txt_attribute_account_name"><![CDATA[Account name]]></string>
   <string name="_bx_massmailer_txt_attribute_account_id"><![CDATA[Account id]]></string>

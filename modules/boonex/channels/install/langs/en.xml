@@ -41,8 +41,9 @@
 	<string name="_bx_channels_acl_action_delete_profile"><![CDATA[Delete Channel]]></string>
 	<string name="_bx_channels_acl_action_view_profile"><![CDATA[View Channel]]></string>
 	<string name="_bx_channels_acl_action_edit_any_profile"><![CDATA[Edit Any Channel]]></string>
-	
-	<string name="_bx_channels_page_title_sys_create_profile"><![CDATA[Create Channel]]></string>
+  <string name="_bx_channels_acl_action_create_channel_auto"><![CDATA[Create Channel Auto]]></string>
+
+  <string name="_bx_channels_page_title_sys_create_profile"><![CDATA[Create Channel]]></string>
 	<string name="_bx_channels_page_title_create_profile"><![CDATA[Create Channel]]></string>
 	<string name="_bx_channels_page_title_sys_edit_profile"><![CDATA[Edit Channel]]></string>
 	<string name="_bx_channels_page_title_edit_profile"><![CDATA[Edit Channel]]></string>
@@ -107,7 +108,6 @@
 	<string name="_bx_channels_page_block_title_top_profiles"><![CDATA[Top Channels]]></string>
         <string name="_bx_channels_page_block_title_entry_all_actions"><![CDATA[All Actions]]></string>
 	<string name="_bx_channels_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
-	<string name="_bx_channels_page_block_title_categories"><![CDATA[Channels Categories]]></string>
 	<string name="_bx_channels_page_block_title_search_form"><![CDATA[Search Form]]></string>
   <string name="_bx_channels_page_block_title_entries_my"><![CDATA[My Channels]]></string>  
   <string name="_bx_channels_page_block_title_search_results"><![CDATA[Search Results]]></string>
@@ -221,6 +221,7 @@
 	<string name="_bx_channels_txt_sample_vote_single"><![CDATA[vote to channel]]></string>
 
   <string name="_bx_channels_txt_ntfs_timeline_post_common"><![CDATA[New post <b class="bx-ntfs-content-entry">{subentry_sample}</b> in <b class="bx-ntfs-content-profile">{owner_name}</b> channel timeline]]></string>
-  <string name="_bx_channels_ntfs_txt_subobject_added"><![CDATA[New post <b class="bx-ntfs-content-entry">{entry_caption}</b> in <b class="bx-ntfs-content-profile">{owner_name}</b> channel]]></string>
+  <string name="_bx_channels_ntfs_txt_subobject_added"><![CDATA[New content <b class="bx-ntfs-content-entry">{entry_caption}</b> in <b class="bx-ntfs-content-profile">{owner_name}</b> channel]]></string>
+  <string name="_bx_channels_alert_action_hashtag_added"><![CDATA[New hashtags]]></string>
   <string name="_bx_channels_alert_action_hashtag_added_notif_follow_context"><![CDATA[New hashtags]]></string>
 </resources>

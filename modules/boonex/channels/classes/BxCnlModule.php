@@ -43,14 +43,16 @@ class BxCnlModule extends BxBaseModGroupsModule
         if(empty($oModule))
             return;
 
+        $aCheck = checkActionModule($this->_iProfileId, 'create channel auto', $this->getName(), false);
         $mixedCnlId = $this->_oDb->getChannelIdByName($sHashtag);
-        if (empty($mixedCnlId)){
+        if (empty($mixedCnlId) && ($aCheck[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED)){
             $CNF = &$this->_oConfig->CNF;
             $oAccountQuery = BxDolAccountQuery::getInstance();
             $aOperators = $oAccountQuery->getOperators();
             if(count($aOperators) > 0){
                 $oProfile = BxDolProfile::getInstanceByAccount($aOperators[0]);
                 $aContent = $this->serviceEntityAdd($oProfile->id(), array($CNF['FIELD_NAME'] => $sHashtag));
+                checkActionModule($this->_iProfileId, 'create channel auto', $this->getName(), true);
                 if (isset($aContent['content']) && isset($aContent['content']['id']))
                     $mixedCnlId = $aContent['content']['id'];
             }
@@ -145,19 +147,16 @@ class BxCnlModule extends BxBaseModGroupsModule
         if(empty($aEvent) || !is_array($aEvent))
             return false;
 
-        $aContentEvent = $this->_oDb->getContentById($aEvent['object_id']);
-        if(empty($aContentEvent) || !is_array($aContentEvent))
+        $aEventContent = $this->_oDb->getContentById($aEvent['object_id']);
+        if(empty($aEventContent) || !is_array($aEventContent))
             return false;
 
-        $oModule = BxDolModule::getInstance($aContentEvent['module_name']);
-        if(empty($oModule))
-            return false;
+        if(!BxDolRequest::serviceExists($aEventContent['module_name'], 'get_timeline_post'))
+            return false;      
 
-        $aTimelinePost = $oModule->serviceGetTimelinePost(array('object_id' => $aContentEvent['content_id']));
-        if($aContentEvent['module_name'] == 'bx_timeline')
-            $aTimelinePost['owner_id'] = $aEvent['owner_id'];
+        $iEventOwnerId = (int)(is_array($aEvent['owner_id']) ? array_shift($aEvent['owner_id']) : $aEvent['owner_id']);
 
-        return $aTimelinePost;
+        return BxDolService::call($aEventContent['module_name'], 'get_timeline_post', array(array('owner_id' => $iEventOwnerId, 'object_id' => $aEventContent['content_id'])));
     }
     
     /**
@@ -215,15 +214,16 @@ class BxCnlModule extends BxBaseModGroupsModule
             $aVars = array();
             foreach ($aProfile as $iProfileId) {
                 $oProfile = BxDolProfile::getInstance($iProfileId);
-                if ($oProfile){
+                if ($oProfile && $oProfile->getModule() == $this->getName()){
                     $iContentId = $oProfile->getContentId();
+                    
                     $aContentInfo = $this->_oDb->getContentInfoById($oProfile->getContentId());
                     if (isset($aContentInfo[$CNF['FIELD_NAME']]))
                         array_push($aVars, array('title' => $aContentInfo[$CNF['FIELD_NAME']], 'link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId)));
                 }
             }
             if (count($aVars) > 0){
-                return $this->_oTemplate->parseHtmlByName('followers_list.html', 
+                return $this->_oTemplate->parseHtmlByName('my_channels.html', 
                     array('bx_if:show_list' => array(
                     'condition' => count($aVars) > 0,
                     'content' => array('bx_repeat:items' => $aVars))

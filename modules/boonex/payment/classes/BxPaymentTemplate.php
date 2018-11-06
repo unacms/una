@@ -222,7 +222,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         return $this->displayJsCode($sType) . $oGrid->getCode();
     }
 
-	public function displayOrder($sType, $iId)
+    public function displayOrder($sType, $iId)
     {
         $sMethodName = 'getOrder' . bx_gen_method_name($sType);
         $aOrder = $this->_oDb->$sMethodName(array('type' => 'id', 'id' => $iId));
@@ -231,14 +231,21 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         $aSeller = $oModule->getVendorInfo((int)$aOrder['seller_id']);
         $aClient = $oModule->getProfileInfo((int)$aOrder['client_id']);
 
+        $aTmplVarsLicense = array();
+        if(in_array($sType, array(BX_PAYMENT_ORDERS_TYPE_PROCESSED, BX_PAYMENT_ORDERS_TYPE_HISTORY)))
+            $aTmplVarsLicense = array(
+                'txt_license' => _t($this->_sLangsPrefix . 'txt_license'),
+                'license' => $aOrder['license']
+            );
+
         $aResult = array(
-        	'txt_client' => _t($this->_sLangsPrefix . 'txt_client'),
-        	'txt_seller' => _t($this->_sLangsPrefix . 'txt_seller'),
-        	'txt_order' => _t($this->_sLangsPrefix . 'txt_order'),
-        	'txt_processed_with' => _t($this->_sLangsPrefix . 'txt_processed_with'),
-        	'txt_message' => _t($this->_sLangsPrefix . 'txt_message'),
-        	'txt_date' => _t($this->_sLangsPrefix . 'txt_date'),
-        	'txt_products' => _t($this->_sLangsPrefix . 'txt_products'),
+            'txt_client' => _t($this->_sLangsPrefix . 'txt_client'),
+            'txt_seller' => _t($this->_sLangsPrefix . 'txt_seller'),
+            'txt_order' => _t($this->_sLangsPrefix . 'txt_order'),
+            'txt_processed_with' => _t($this->_sLangsPrefix . 'txt_processed_with'),
+            'txt_message' => _t($this->_sLangsPrefix . 'txt_message'),
+            'txt_date' => _t($this->_sLangsPrefix . 'txt_date'),
+            'txt_products' => _t($this->_sLangsPrefix . 'txt_products'),
             'client_name' => $aClient['name'],
             'client_url' => $aClient['link'],
             'bx_if:show_link' => array(
@@ -253,6 +260,10 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
                 'content' => array(
                     'seller_name' => $aSeller['name']
                 )
+            ),
+            'bx_if:show_license' => array(
+                'condition' => !empty($aTmplVarsLicense),
+                'content' => $aTmplVarsLicense
             ),
             'order' => $aOrder['order'],
             'provider' => _t('_bx_payment_txt_name_' . $aOrder['provider']),

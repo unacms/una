@@ -53,8 +53,10 @@
 	<string name="_bx_payment_page_title_join"><![CDATA[Присоединиться]]></string>
 	<string name="_bx_payment_page_block_title_join"><![CDATA[Присоединиться]]></string>
 
-	<!-- MENUS -->
-	<string name="_bx_payment_menu_title_orders_submenu"><![CDATA[Подменю заказов]]></string>
+    <!-- MENUS -->
+    <string name="_bx_payment_lmi_cpt_providers"><![CDATA[Провайдеры]]></string>
+
+    <string name="_bx_payment_menu_title_orders_submenu"><![CDATA[Подменю заказов]]></string>
     <string name="_bx_payment_menu_set_title_orders_submenu"><![CDATA[Подменю заказов]]></string>
     <string name="_bx_payment_menu_item_title_system_orders_processed"><![CDATA[Обработанные заказы]]></string>
     <string name="_bx_payment_menu_item_title_orders_processed"><![CDATA[Обработанные]]></string>
@@ -63,7 +65,7 @@
     <string name="_bx_payment_menu_item_title_system_details"><![CDATA[Детали платежных систем]]></string>
     <string name="_bx_payment_menu_item_title_details"><![CDATA[Платежные системы]]></string>
 
-	<string name="_bx_payment_menu_title_cart_submenu"><![CDATA[Подменю корзины]]></string>
+    <string name="_bx_payment_menu_title_cart_submenu"><![CDATA[Подменю корзины]]></string>
     <string name="_bx_payment_menu_set_title_cart_submenu"><![CDATA[Подменю корзины]]></string>
     <string name="_bx_payment_menu_item_title_system_cart"><![CDATA[Корзина]]></string>
     <string name="_bx_payment_menu_item_title_cart"><![CDATA[Корзина]]></string>
@@ -87,10 +89,16 @@
     <string name="_bx_payment_menu_item_title_sbs_cancel"><![CDATA[Отменить подписку]]></string>
 
 	<!-- GRIDS -->
+        <string name="_bx_payment_grid_column_title_pdrs_caption"><![CDATA[Название]]></string>
+        <string name="_bx_payment_grid_column_title_pdrs_description"><![CDATA[Описание]]></string>
+        <string name="_bx_payment_grid_column_title_pdrs_for_visitor"><![CDATA[Для посетителей]]></string>
+        <string name="_bx_payment_grid_column_title_pdrs_for_single"><![CDATA[Разовые]]></string>
+        <string name="_bx_payment_grid_column_title_pdrs_for_recurring"><![CDATA[Периодические]]></string>
 	<string name="_bx_payment_grid_column_title_ods_client_id"><![CDATA[Покупатель]]></string>
 	<string name="_bx_payment_grid_column_title_ods_seller_id"><![CDATA[Продавец]]></string>
 	<string name="_bx_payment_grid_column_title_ods_transaction"><![CDATA[Транзакция]]></string>
 	<string name="_bx_payment_grid_column_title_ods_license"><![CDATA[Лицензия]]></string>
+        <string name="_bx_payment_grid_column_title_ods_item"><![CDATA[Продукт]]></string>
 	<string name="_bx_payment_grid_column_title_ods_amount"><![CDATA[Сумма]]></string>
 	<string name="_bx_payment_grid_column_title_ods_date"><![CDATA[Дата]]></string>
 	<string name="_bx_payment_grid_column_title_sbs_seller_id"><![CDATA[Продавец]]></string>
@@ -233,6 +241,7 @@
 	<string name="_bx_payment_txt_checkout_to"><![CDATA[Продолжить оплату в пользу {0}]]></string>
 	<string name="_bx_payment_txt_checkout_with"><![CDATA[Заплатить используя {0}]]></string>
 	<string name="_bx_payment_txt_client"><![CDATA[Покупатель]]></string>
+        <string name="_bx_payment_txt_license"><![CDATA[Лицензия]]></string>
 	<string name="_bx_payment_txt_seller"><![CDATA[Продавец]]></string>
 	<string name="_bx_payment_txt_order"><![CDATA[ID заказа]]></string>
 	<string name="_bx_payment_txt_processed_with"><![CDATA[Обработан используя]]></string>

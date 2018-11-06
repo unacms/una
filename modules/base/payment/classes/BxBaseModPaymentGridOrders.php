@@ -11,13 +11,13 @@
 
 class BxBaseModPaymentGridOrders extends BxTemplGrid
 {
-	protected $MODULE;
-	protected $_oModule;
+    protected $MODULE;
+    protected $_oModule;
 
-	protected $_sOrdersType;
+    protected $_sOrdersType;
 
-	protected $_sLangsPrefix;
-	protected $_sCurrencySign;
+    protected $_sLangsPrefix;
+    protected $_sCurrencySign;
 
     public function __construct ($aOptions, $oTemplate = false)
     {
@@ -82,22 +82,40 @@ class BxBaseModPaymentGridOrders extends BxTemplGrid
         echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aAffected) : array('msg' => _t($this->_sLangsPrefix . 'err_cannot_perform')));
     }
 
-	protected function _getCellClientId($mixedValue, $sKey, $aField, $aRow)
+    protected function _getCellClientId($mixedValue, $sKey, $aField, $aRow)
     {
-    	return parent::_getCellDefault($this->_oModule->_oTemplate->displayProfileLink($mixedValue), $sKey, $aField, $aRow);
+        return parent::_getCellDefault($this->_oModule->_oTemplate->displayProfileLink($mixedValue), $sKey, $aField, $aRow);
     }
 
-	protected function _getCellSellerId($mixedValue, $sKey, $aField, $aRow)
+    protected function _getCellSellerId($mixedValue, $sKey, $aField, $aRow)
     {
-    	return parent::_getCellDefault($this->_oModule->_oTemplate->displayProfileLink($mixedValue), $sKey, $aField, $aRow);
+        return parent::_getCellDefault($this->_oModule->_oTemplate->displayProfileLink($mixedValue), $sKey, $aField, $aRow);
     }
 
-	protected function _getCellAmount($mixedValue, $sKey, $aField, $aRow)
+    protected function _getCellItem($mixedValue, $sKey, $aField, $aRow)
+    {
+        $sTxtUnknown = _t('_uknown');
+
+        if(empty($aRow['module_id']) || empty($aRow['item_id']))
+            return $sTxtUnknown;
+
+        $aItemInfo = $this->_oModule->callGetCartItem((int)$aRow['module_id'], array((int)$aRow['item_id']));
+        if(empty($aItemInfo) || !is_array($aItemInfo))
+            return $sTxtUnknown;
+
+        return parent::_getCellDefault($this->_oModule->_oTemplate->displayLink('link', array(
+            'href' => $aItemInfo['url'],
+            'title' => bx_html_attribute($aItemInfo['title']),
+            'content' => $aItemInfo['title']
+    	)), $sKey, $aField, $aRow);
+    }
+
+    protected function _getCellAmount($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault($this->_sCurrencySign . $mixedValue, $sKey, $aField, $aRow);
     }
 
-	protected function _getCellDate($mixedValue, $sKey, $aField, $aRow)
+    protected function _getCellDate($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
     }

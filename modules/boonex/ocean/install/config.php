@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_ocean',
     'title' => 'Ocean',
     'note' => 'Design template',
-    'version' => '9.0.10.DEV',
+    'version' => '9.0.11.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.una.io/?section={module_name}',
 

@@ -23,7 +23,7 @@ class BxQuoteOfDayGridInternal extends BxTemplGrid
     
     protected function _getCellText($mixedValue, $sKey, $aField, $aRow)
     {
-        $mixedValue = strip_tags(htmlspecialchars_decode($mixedValue));
+        $mixedValue = $this->_limitMaxLength(strip_tags(htmlspecialchars_decode($aRow['text'])), $sKey, $aField, $aRow, $this->_isDisplayPopupOnTextOverflow);
         return parent::_getCellDefault ($mixedValue, $sKey, $aField, $aRow);
     }
     

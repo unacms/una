@@ -130,7 +130,7 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
             return false;
 
         return $this->getUnitMetaItemButtonSmall($sTitle, array(
-        	'onclick' => "bx_conn_action(this, '" . $sConnection . "', '" . $sAction . "', '" . $iContentProfile . "')"
+            'onclick' => 'bx_conn_action(this, \'' . $sConnection . '\', \'' . $sAction . '\', \'' . $iContentProfile . '\', false, function(oData, eLink) {$(eLink).parents(\'.bx-menu-item:first\').remove();})'
         ));
     }
 

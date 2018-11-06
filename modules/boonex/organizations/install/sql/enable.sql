@@ -280,15 +280,16 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_organizations_view_actions_all', 'bx_organizations', '_sys_menu_set_title_view_actions', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_organizations_view_actions_all', 'bx_organizations', 'profile-fan-add', '_bx_organizations_menu_item_title_system_become_fan', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 10),
-('bx_organizations_view_actions_all', 'bx_organizations', 'profile-fan-remove', '_bx_organizations_menu_item_title_system_leave_group', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 20),
+('bx_organizations_view_actions_all', 'bx_organizations', 'profile-fan-add', '_bx_orgs_menu_item_title_system_become_fan', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 10),
+('bx_organizations_view_actions_all', 'bx_organizations', 'profile-fan-remove', '_bx_orgs_menu_item_title_system_leave_organization', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 20),
 ('bx_organizations_view_actions_all', 'bx_organizations', 'profile-friend-add', '_bx_orgs_menu_item_title_system_befriend', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 30),
 ('bx_organizations_view_actions_all', 'bx_organizations', 'profile-friend-remove', '_bx_orgs_menu_item_title_system_unfriend', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 40),
-('bx_organizations_view_actions_all', 'bx_organizations', 'profile-subscribe-add', '_bx_organizations_menu_item_title_system_subscribe', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 50),
-('bx_organizations_view_actions_all', 'bx_organizations', 'profile-subscribe-remove', '_bx_organizations_menu_item_title_system_unsubscribe', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 60),
+('bx_organizations_view_actions_all', 'bx_organizations', 'profile-subscribe-add', '_bx_orgs_menu_item_title_system_subscribe', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 50),
+('bx_organizations_view_actions_all', 'bx_organizations', 'profile-subscribe-remove', '_bx_orgs_menu_item_title_system_unsubscribe', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 60),
 ('bx_organizations_view_actions_all', 'bx_organizations', 'profile-set-acl-level', '_sys_menu_item_title_system_set_acl_level', '', '', '', '', '', '', '', 0, 192, 1, 0, 70),
 ('bx_organizations_view_actions_all', 'bx_organizations', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 200),
 ('bx_organizations_view_actions_all', 'bx_organizations', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 210),
+('bx_organizations_view_actions_all', 'bx_organizations', 'vote', '_sys_menu_item_title_system_va_vote', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 215),
 ('bx_organizations_view_actions_all', 'bx_organizations', 'score', '_sys_menu_item_title_system_va_score', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 220),
 ('bx_organizations_view_actions_all', 'bx_organizations', 'favorite', '_sys_menu_item_title_system_va_favorite', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 230),
 ('bx_organizations_view_actions_all', 'bx_organizations', 'feature', '_sys_menu_item_title_system_va_feature', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 240),
@@ -473,8 +474,13 @@ INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `Char
 
 
 -- VIEWS
-INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_organizations', 'bx_organizations_views_track', '86400', '1', 'bx_organizations_data', 'id', 'author', 'views', '', '');
+INSERT INTO `sys_objects_view` (`name`, `module`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_organizations', 'bx_organizations', 'bx_organizations_views_track', '86400', '1', 'bx_organizations_data', 'id', 'author', 'views', '', '');
+
+
+-- VOTES
+INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
+('bx_organizations', 'bx_organizations_votes', 'bx_organizations_votes_track', '604800', '1', '1', '0', '1', 'bx_organizations_data', 'id', 'author', 'rate', 'votes', '', '');
 
 
 -- SCORES

@@ -131,9 +131,8 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 -- PAGE: service blocks
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = '' AND `cell_id` = 0 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
-('', 0, 'bx_channels', '', '_bx_channels_page_block_title_categories', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"categories_list";s:6:"params";a:2:{i:0;s:16:"bx_channels_cats";i:1;a:2:{s:10:\"show_empty\";b:1;s:21:\"show_empty_categories\";b:1;}}s:5:"class";s:20:"TemplServiceCategory";}', 1, 1, 1, IFNULL(@iBlockOrder, 0) + 1),
-('', 0, 'bx_channels', '_bx_channels_page_block_title_sys_featured_entries_view_showcase', '_bx_channels_page_block_title_featured_entries_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:15:\"browse_featured\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"showcase\";s:13:\"empty_message\";b:0;s:13:\"ajax_paginate\";b:0;}}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 2),
-('', 0, 'bx_channels', '_bx_channels_page_block_title_sys_recommended_entries_view_showcase', '_bx_channels_page_block_title_recommended_entries_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:18:\"browse_recommended\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"showcase\";s:13:\"empty_message\";b:0;s:13:\"ajax_paginate\";b:0;}}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 3);
+('', 0, 'bx_channels', '_bx_channels_page_block_title_sys_featured_entries_view_showcase', '_bx_channels_page_block_title_featured_entries_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:15:\"browse_featured\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"showcase\";s:13:\"empty_message\";b:0;s:13:\"ajax_paginate\";b:0;}}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 1),
+('', 0, 'bx_channels', '_bx_channels_page_block_title_sys_recommended_entries_view_showcase', '_bx_channels_page_block_title_recommended_entries_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:18:\"browse_recommended\";s:6:\"params\";a:3:{s:9:\"unit_view\";s:8:\"showcase\";s:13:\"empty_message\";b:0;s:13:\"ajax_paginate\";b:0;}}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 2);
 
 -- MENU
 
@@ -199,8 +198,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_channels_view_actions_all', 'bx_channels', 'score', '_sys_menu_item_title_system_va_score', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 230),
 ('bx_channels_view_actions_all', 'bx_channels', 'favorite', '_sys_menu_item_title_system_va_favorite', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 240),
 ('bx_channels_view_actions_all', 'bx_channels', 'feature', '_sys_menu_item_title_system_va_feature', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 250),
-('bx_channels_view_actions_all', 'bx_channels', 'repost', '_sys_menu_item_title_system_va_repost', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 260),
-('bx_channels_view_actions_all', 'bx_channels', 'report', '_sys_menu_item_title_system_va_report', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 270),
+('bx_channels_view_actions_all', 'bx_channels', 'report', '_sys_menu_item_title_system_va_report', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 260),
 ('bx_channels_view_actions_all', 'bx_channels', 'social-sharing-facebook', '_sys_menu_item_title_system_social_sharing_facebook', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 300),
 ('bx_channels_view_actions_all', 'bx_channels', 'social-sharing-googleplus', '_sys_menu_item_title_system_social_sharing_googleplus', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 310),
 ('bx_channels_view_actions_all', 'bx_channels', 'social-sharing-twitter', '_sys_menu_item_title_system_social_sharing_twitter', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 320),
@@ -286,6 +284,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 ('bx_channels', 'edit any entry', NULL, '_bx_channels_acl_action_edit_any_profile', '', 1, 3);
 SET @iIdActionProfileEditAny = LAST_INSERT_ID();
 
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_channels', 'create channel auto', NULL, '_bx_channels_acl_action_create_channel_auto', '', 1, 1);
+SET @iIdActionCreateChannelAuto = LAST_INSERT_ID();
+
 SET @iUnauthenticated = 1;
 SET @iAccount = 2;
 SET @iStandard = 3;
@@ -328,7 +330,16 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 -- any profile edit
 (@iModerator, @iIdActionProfileEditAny),
-(@iAdministrator, @iIdActionProfileEditAny);
+(@iAdministrator, @iIdActionProfileEditAny),
+
+-- create channel auto
+(@iAccount, @iIdActionCreateChannelAuto),
+(@iStandard, @iIdActionCreateChannelAuto),
+(@iUnconfirmed, @iIdActionCreateChannelAuto),
+(@iPending, @iIdActionCreateChannelAuto),
+(@iModerator, @iIdActionCreateChannelAuto),
+(@iAdministrator, @iIdActionCreateChannelAuto),
+(@iPremium, @iIdActionCreateChannelAuto);
 
 
 -- COMMENTS
