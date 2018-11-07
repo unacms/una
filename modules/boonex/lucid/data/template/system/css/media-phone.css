@@ -41,16 +41,6 @@
 .bx-media-phone #bx-menu-toolbar-2-container ul.bx-menu-toolbar li a.bx-btn span.bx-menu-toolbar-item-title {
     display: inline;
 }
-.bx-media-phone #bx-menu-toolbar-2-container .bx-menu-toolbar li.bx-menu-toolbar-item {
-    display: none;
-}
-.bx-media-phone #bx-menu-toolbar-2-container .bx-menu-toolbar li.bx-menu-item-account,
-.bx-media-phone #bx-menu-toolbar-2-container .bx-menu-toolbar li.bx-menu-item-notifications-messenger,
-.bx-media-phone #bx-menu-toolbar-2-container .bx-menu-toolbar li.bx-menu-item-notifications-notifications,
-.bx-media-phone #bx-menu-toolbar-2-container .bx-menu-toolbar li.bx-menu-item-bx_lucid_login,
-.bx-media-phone #bx-menu-toolbar-2-container .bx-menu-toolbar li.bx-menu-item-bx_lucid_join {
-    display: block;
-}
 
 /*--- Menu ---*/
 .bx-media-phone .bx-header .bx-toolbar-content .bx-toolbar-item.bx-ti-menu .bx-sliding-smenu-main {

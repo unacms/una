@@ -24,10 +24,10 @@ INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `templat
 
 -- MENU: member toolbar
 SET @iMIOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_toolbar_member' LIMIT 1);
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('sys_toolbar_member', 'system', 'bx_lucid_search', '_bx_lucid_menu_item_title_system_search', '', 'javascript:void(0);', 'bx_menu_slide_inline(''#bx-sliding-menu-search'', this, ''site'');', '', 'search', '', '', 0, 2147483647, 1, 0, 0),
-('sys_toolbar_member', 'system', 'bx_lucid_login', '_bx_lucid_menu_item_title_system_login', '_bx_lucid_menu_item_title_login', 'page.php?i=login', '', '', '',  '', '', 0, 1, 1, 0, @iMIOrder + 1),
-('sys_toolbar_member', 'system', 'bx_lucid_join', '_bx_lucid_menu_item_title_system_join', '_bx_lucid_menu_item_title_join', 'page.php?i=create-account', '', '', '',  '', '', 0, 1, 1, 0, @iMIOrder + 2);
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `hidden_on`, `active`, `copyable`, `order`) VALUES
+('sys_toolbar_member', 'system', 'bx_lucid_search', '_bx_lucid_menu_item_title_system_search', '', 'javascript:void(0);', 'bx_menu_slide_inline(''#bx-sliding-menu-search'', this, ''site'');', '', 'search', '', '', 0, 2147483647, 7, 1, 0, 0),
+('sys_toolbar_member', 'system', 'bx_lucid_login', '_bx_lucid_menu_item_title_system_login', '_bx_lucid_menu_item_title_login', 'page.php?i=login', '', '', '',  '', '', 0, 1, 7, 1, 0, @iMIOrder + 1),
+('sys_toolbar_member', 'system', 'bx_lucid_join', '_bx_lucid_menu_item_title_system_join', '_bx_lucid_menu_item_title_join', 'page.php?i=create-account', '', '', '',  '', '', 0, 1, 7, 1, 0, @iMIOrder + 2);
 
 -- MENU: home page submenu
 INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES

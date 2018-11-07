@@ -42,16 +42,21 @@ class BxTemplMenuToolbar extends BxBaseMenuToolbar
 
         $a['class_add_a'] = '';
         switch ($a['name']) {
-        	case 'bx_lucid_join':
-        	case 'bx_lucid_login':
-        		$a['class_add_a'] = ' bx-btn ' . str_replace('_', '-', $a['name']);
-        		break;
+            case 'bx_lucid_search':
+                $a['class_add'] = 'bx-def-media-phone-hide';
+                break;
 
-        	case 'main-menu':
-        		$a['class_add_a'] = ' cd-dropdown-trigger';
-        		$a['link'] = 'javascript:void(0)';
-        		$a['onclick'] = '';
-        		break;
+            case 'bx_lucid_join':
+            case 'bx_lucid_login':
+                $a['class_add'] = '';
+                $a['class_add_a'] = ' bx-btn ' . str_replace('_', '-', $a['name']);
+                break;
+
+            case 'main-menu':
+                $a['class_add_a'] = ' cd-dropdown-trigger';
+                $a['link'] = 'javascript:void(0)';
+                $a['onclick'] = '';
+                break;
         }
 
         return $a;
