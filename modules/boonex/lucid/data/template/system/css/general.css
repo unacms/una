@@ -134,7 +134,7 @@
 /*--- Header ---*/
 .cd-main-header {
   position: absolute;
-  z-index: 1000;
+  z-index: 999;
   top: 0;
   left: 0;
   height: 45px;

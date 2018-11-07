@@ -101,6 +101,7 @@ html.bx-media-phone {
 .bx-media-phone .bx-popup-responsive.bx-popup-trans-wrapper:not(.foo) .bx-popup-border,
 .bx-media-phone .bx-popup-responsive.bx-popup-box-wrapper:not(.foo) .bx-popup-border {
     border:none;
+    border-radius:0;
 }
 
 .bx-media-phone .bx-popup-responsive.bx-popup-image-wrapper .bx-popup,
