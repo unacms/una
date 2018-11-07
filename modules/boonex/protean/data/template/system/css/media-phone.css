@@ -1,10 +1,5 @@
 @import url(../../../../../../../template/css/media-phone.css);
 
-.bx-media-phone #bx-logo-container {
-    text-align: center;
-}
-
-
 /* default.css */ 
 
 .bx-media-phone #bx-content-container .bx-db-container.bx-def-border-block {

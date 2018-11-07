@@ -90,11 +90,12 @@ html.bx-media-phone {
     overflow:auto;
 }
 
+.bx-media-phone .bx-popup-responsive,
 .bx-media-phone .bx-popup-responsive .bx-popup-trans > div,
 .bx-media-phone .bx-popup-responsive .bx-popup-box > div {
-	border-radius:0;
-	-moz-border-radius:0;
-	-webkit-border-radius:0;
+    border-radius:0;
+    -moz-border-radius:0;
+    -webkit-border-radius:0;
 }
 
 .bx-media-phone .bx-popup-responsive.bx-popup-image-wrapper:not(.foo) .bx-popup-border,
@@ -102,6 +103,8 @@ html.bx-media-phone {
 .bx-media-phone .bx-popup-responsive.bx-popup-box-wrapper:not(.foo) .bx-popup-border {
     border:none;
     border-radius:0;
+    -moz-border-radius:0;
+    -webkit-border-radius:0;
 }
 
 .bx-media-phone .bx-popup-responsive.bx-popup-image-wrapper .bx-popup,
