@@ -111,7 +111,7 @@ class BxDolMMarket extends BxDolMData
 											`package`		= :file_id
 									WHERE `id` = :id", array('thumb' => $iPic, 'id' => $iProductId, 'cmts' => $iCmts, 'price' => $aInfo['price'], 'file_id' => $aInfo['file_id']));
 			
-			$this -> trasnferTags($aValue['id'], $iProductId, $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['type'], $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['keywords']);
+			$this -> transferTags($aValue['id'], $iProductId, $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['type'], $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['keywords']);
 		}      	
 
         // set as finished;

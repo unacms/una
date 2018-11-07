@@ -35,7 +35,6 @@ class BxDolMEvents extends BxDolMData
 		}	
 		
 		$this -> setResultStatus(_t('_bx_dolphin_migration_started_migration_events'));
-		
 			
 		$this -> createMIdField();
 		$iEventId = $this -> getLastMIDField();						
@@ -112,7 +111,7 @@ class BxDolMEvents extends BxDolMData
 											`comments` = :cmts 
 									WHERE `id` = :id", array('pic' => $iPic, 'id' => $iEventId, 'cmts' => $iCmts));
 			
-			$this -> trasnferTags((int)$aValue['ID'], $iEventId, $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['type'], $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['keywords']);
+			$this -> transferTags((int)$aValue['ID'], $iEventId, $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['type'], $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['keywords']);
         }      	
         
 		// set as finished;

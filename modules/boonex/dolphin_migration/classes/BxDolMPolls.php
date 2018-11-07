@@ -101,7 +101,7 @@ class BxDolMPolls extends BxDolMData
 			
 			$this -> _iTransferred++;
 			
-			$this -> trasnferTags($aValue['id_poll'], $iPollId, $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['type'], $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['keywords']);
+			$this -> transferTags($aValue['id_poll'], $iPollId, $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['type'], $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['keywords']);
         }      	
 
 

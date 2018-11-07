@@ -99,7 +99,7 @@ class BxDolMBlogs extends BxDolMData
 						
 			$this -> _oDb ->  query("UPDATE `{$this -> _sTableWithTransKey}` SET `allow_view_to` = :privacy, `comments` = :cmts WHERE `id` = :id", array('privacy' => $aValue['allowView'], 'id' => $iBlogId, 'cmts' => $iCmts));
 			
-			$this -> trasnferTags((int)$aValue['PostID'], $iBlogId, $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['type'], $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['keywords']);
+			$this -> transferTags((int)$aValue['PostID'], $iBlogId, $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['type'], $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['keywords']);
         }
 
         $this -> setResultStatus(_t('_bx_dolphin_migration_started_migration_blogs_finished', $this -> _iTransferred));

@@ -108,7 +108,7 @@ class BxDolMFiles extends BxDolMData
 											`comments` = :cmts 
 									WHERE `id` = :id", array('id' => $iFileId, 'cmts' => $iCmts));
 			
-			$this -> trasnferTags((int)$aValue['ID'], $iFileId, $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['type'], $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['keywords']);
+			$this -> transferTags((int)$aValue['ID'], $iFileId, $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['type'], $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['keywords']);
         }      	
 
         // set as finished;

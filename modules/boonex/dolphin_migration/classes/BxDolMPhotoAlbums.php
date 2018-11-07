@@ -145,7 +145,7 @@ class BxDolMPhotoAlbums extends BxDolMData
 						$this -> _iTransferred++;
 						$iTransferred++;
 						
-						$this -> trasnferTags((int)$aValue['ID'], $iId, $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['type'], $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['keywords']);
+						$this -> transferTags((int)$aValue['ID'], $iId, $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['type'], $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['keywords']);
 					}
 				}
 			}	

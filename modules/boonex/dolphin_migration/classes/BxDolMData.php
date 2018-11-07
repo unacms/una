@@ -118,7 +118,7 @@ class BxDolMData
 	* Set Migration Status
 	* @param string $sStatus message
 	*/         
-	protected function setResultStatus($sStatus, $sModule = '')
+	protected function setResultStatus($sStatus)
 	{
 	    $sQuery = $this -> _oDb -> prepare("UPDATE `{$this -> _sPrefix}transfers` SET `status_text` = ? WHERE `module` = ? ", $sStatus, $this -> _sModuleName);
 	    $this -> _oDb -> query($sQuery);
@@ -349,20 +349,7 @@ class BxDolMData
 										LEFT JOIN `sys_localization_languages` as `l` ON `s`.`IDLanguage` = `l`.`ID`
 										WHERE `k`.`Key` = :key", 'Name', 'String', array('key' => $LKey));
 	}
-	
-	/**
-	 *  Returns pre values field value of defined field, by Key and Value
-	 *  
-	 *  @param string $sKey Key name
-	 *  @param mixed $mixedValue Value 
-	 *  @param string $sField field name
-	 *  @return mixed value
-	 */
-	public function getPreValuesFieldBy($sKey, $mixedValue, $sField = 'Order')
-	{
-		return $this -> _mDb -> getOne("SELECT `{$sField}` FROM `sys_pre_values` WHERE `Key` = ? AND `Value` = ? LIMIT 1", $sName, $mixedValue);
-	}
-	
+
 	/**
 	 *  Transfer Tags from the module, to meta 
 	 *  
@@ -372,7 +359,7 @@ class BxDolMData
 	 *  @param int $sTableKeywords table name in UNA for tags migration
 	 *  @return void
 	 */
-	protected function trasnferTags($iObjectId, $iNewObjectId, $sType, $sTableKeywords)
+	protected function transferTags($iObjectId, $iNewObjectId, $sType, $sTableKeywords)
 	{
 		$aTags = $this -> _mDb -> getAll("SELECT `Tag` FROM `sys_tags` WHERE `ObjID`=:id AND `Type`=:type", array('id' => $iObjectId, 'type' => $sType));
 		if (empty($aTags))
@@ -490,26 +477,29 @@ class BxDolMData
 		return $iComments;
 	}
 
-	
-	
-	/**
-	* Create migration field in main table for transferring content from Dolphin to UNA and contains id of the object in Dolphin 
-	* @return mixed
-         */
-	protected function createMIDField()
-	{
-		if (!$this -> _sTableWithTransKey)
-			return false;
-		
-		if ($this -> _oDb -> isFieldExists($this -> _sTableWithTransKey, $this -> _sTransferFieldIdent))
-			return true;
-		
-		return $this -> _oDb -> query("ALTER TABLE `{$this -> _sTableWithTransKey}` ADD `{$this -> _sTransferFieldIdent}` int(11) unsigned NOT NULL default '0'");
-	}
-	
+    /**
+     * Create migration field in main table for transferring content from Dolphin to UNA and contains id of the object in Dolphin
+     * @param string $sTableName name of the table to add the index field
+     * @param string $sIdentFieldName
+     * @return mixed
+     */
+    protected function createMIDField($sTableName = '', $sIdentFieldName = '')
+    {
+        if (!$this -> _sTableWithTransKey)
+            return false;
+
+        $sIdentFieldName = $sIdentFieldName ? $sIdentFieldName : $this -> _sTransferFieldIdent;
+        $sTableName = $sTableName ? $sTableName : $this -> _sTableWithTransKey;
+
+        if ($this -> _oDb -> isFieldExists($sTableName, $sIdentFieldName))
+            return true;
+
+        return $this -> _oDb -> query("ALTER TABLE `{$sTableName}` ADD `{$sIdentFieldName}` int(11) unsigned NOT NULL default '0'");
+    }
+
 	/**
 	 *  Returns last migration field value
-	 *  
+	 *
 	 *  @return int
 	 */
 	protected function getLastMIDField()
@@ -550,18 +540,23 @@ class BxDolMData
 
 		return (int)$this -> _oDb -> query("UPDATE `{$this -> _sTableWithTransKey}` SET `{$this -> _sTransferFieldIdent}` = :item WHERE `{$sField}` = :id", array('id' => $iId, 'item' => $iItemId));
 	}
-	/**
-	 *  Drop migration field from the table
-	 *  
-	 *  @return int affected rows
-	 */
-	public function dropMID()
-	{
-		if (!$this -> _sTableWithTransKey || !$this -> _oDb -> isFieldExists($this -> _sTableWithTransKey, $this -> _sTransferFieldIdent))
-			return false;
 
-		return (int)$this -> _oDb -> query("ALTER TABLE `{$this -> _sTableWithTransKey}` DROP `{$this -> _sTransferFieldIdent}`");
-	}
+    /**
+     *  Drop migration field from the table
+     *  @param string $sIdentFieldName field name to store id from original table (in case if you don't want to use default field)
+     *  @param string $sTableName table name in which to create the field
+     *  @return int affected rows
+     */
+    public function dropMID($sTableName = '', $sIdentFieldName = '')
+    {
+        $sIdentFieldName = $sIdentFieldName ? $sIdentFieldName : $this -> _sTransferFieldIdent;
+        $sTableName = $sTableName ? $sTableName : $this -> _sTableWithTransKey;
+
+        if (!$sTableName || !$this -> _oDb -> isFieldExists($sTableName, $sIdentFieldName))
+            return false;
+
+        return (int)$this -> _oDb -> query("ALTER TABLE `{$sTableName}` DROP `{$sIdentFieldName}`");
+    }
 	
 	/**
 	 *  Removes all transferred content from UNA

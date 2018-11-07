@@ -98,6 +98,10 @@
 	<string name="_bx_dolphin_migration_started_migration_timeline"><![CDATA[Wall Migration was started]]></string>
 	<string name="_bx_dolphin_migration_started_migration_timeline_finished"><![CDATA[{0} wall posts with comments were transferred]]></string>
 	<string name="_bx_dolphin_migration_started_migration_timeline_error"><![CDATA[Error occurred. Record Id is {0}]]></string>
+	<string name="_bx_dolphin_migration_data_membership_levels"><![CDATA[Paid Memberships levels, Members info]]></string>
+	<string name="_bx_dolphin_migration_started_migration_membership_levels"><![CDATA[Membership levels migration was started]]></string>
+	<string name="_bx_dolphin_migration_started_migration_membership_levels_finished"><![CDATA[{0} membership levels and {1} members' info were transferred]]></string>
+	<string name="_bx_dolphin_migration_started_migration_membership_levels_error"><![CDATA[Error occurred. Record Id is {0}]]></string>
 	<string name="_bx_dolphin_migration_define_total_method"><![CDATA[Please define how to calculate total records number for this Data]]></string>
 	<string name="_bx_dolphin_migration_salt"><![CDATA[Dolphin Secret]]></string>
 	<string name="_bx_dolphin_migration_installation_problem"><![CDATA[Seems like module was installed not correct. Please reinstall it.]]></string>

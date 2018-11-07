@@ -17,9 +17,9 @@ require_once('BxDolMData.php');
 	
 class BxDolMProfiles extends BxDolMData
 {
-    public function __construct(&$oMigrationModule, &$seDb)
+    public function __construct(&$oMigrationModule, &$mDb)
     {
-		parent::__construct($oMigrationModule, $seDb);
+		parent::__construct($oMigrationModule, $mDb);
 		$this -> _sModuleName = 'profiles';
 		$this -> _sTableWithTransKey = 'sys_accounts';
     }
@@ -81,7 +81,7 @@ class BxDolMProfiles extends BxDolMData
 			else 
 				$this -> addPreValues('Sex', true, 2); // transfer all sex values more then 2 value
 
-			$aResult = $this -> _mDb -> getAll("SELECT * FROM `"  . $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['table_name'] . "` {$sStart} ORDER BY `ID` ASC LIMIT 10");
+			$aResult = $this -> _mDb -> getAll("SELECT * FROM `"  . $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['table_name'] . "` {$sStart} ORDER BY `ID` ASC");
 			$aSex = $this -> getPreValuesBy('Sex', 'Value', 'Order');
 
 			foreach($aResult as $iKey => $aValue)
@@ -353,6 +353,7 @@ class BxDolMProfiles extends BxDolMData
 		}	
 		
 		parent::removeContent();
+
 		return $iNumber;
 	}
 	/**
@@ -380,7 +381,6 @@ class BxDolMProfiles extends BxDolMData
 
 		return $this -> transferPreValues($sName, $sName, $aValues, true);	
 	}
-	
 }
 
 	

@@ -34,9 +34,9 @@ class BxDolMProfilesFields extends BxDolMData
 	 */	
 	private $_oAssocFields = null;
 
-    public function __construct($oMigrationModule, &$seDb)
+    public function __construct($oMigrationModule, &$mDb)
     {
-        parent::__construct($oMigrationModule, $seDb);  
+        parent::__construct($oMigrationModule, $mDb);
 		$this -> _sModuleName = 'profile_fields';
 		$this -> _sTableWithTransKey = 'sys_form_inputs';	
     }

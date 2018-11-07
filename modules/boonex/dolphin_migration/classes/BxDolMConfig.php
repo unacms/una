@@ -252,6 +252,16 @@ class BxDolMConfig extends BxBaseModGeneralConfig
 						'bx_persons'	=> 'Persons',
 						'bx_timeline'	=> 'Timeline'		
 			        ),
+                ),
+                'membership_levels' => array(
+                    'table_name'		=> 'sys_acl_levels',
+                    'migration_class'	=> 'BxDolMMemLevels',
+                    'dependencies' => array(
+                        'profiles',
+                    ),
+                    'plugins' => array(
+                        'bx_acl'	=> 'Paid Levels'
+                    ),
                 )
              );
 			 

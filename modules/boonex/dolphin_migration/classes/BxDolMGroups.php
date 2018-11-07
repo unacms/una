@@ -108,7 +108,7 @@ class BxDolMGroups extends BxDolMData
 											`comments` = :cmts 
 									WHERE `id` = :id", array('pic' => $iPic, 'id' => $iGroupId, 'cmts' => $iCmts));
 			
-			$this -> trasnferTags((int)$aValue['id'], $iGroupId, $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['type'], $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['keywords']);
+			$this -> transferTags((int)$aValue['id'], $iGroupId, $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['type'], $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['keywords']);
         }      	
 
         // set as finished;
