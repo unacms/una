@@ -172,9 +172,13 @@ div.bx-tl-view.bx-tl-view-item div.bx-tl-item-image {
 }
 
 /*+++ Activity and Comments +++*/
+.bx-tl-view div.bx-tl-item div.bx-tl-item-activity {
+    padding: 0.5rem 1rem;
+}
 .bx-tl-view div.bx-tl-item div.bx-tl-item-activity,
 .bx-tl-view div.bx-tl-item div.bx-tl-item-comments-holder .bx-tl-item-comments-wrp {
-	padding: 0.5rem 1rem;
+	padding-left: 1rem;
+        padding-right: 1rem;
 	border-top: 1px solid rgba(238, 241, 244, 1.0);
 }
 .bx-tl-view div.bx-tl-item div.bx-tl-item-comments-holder .bx-tl-item-comments {
