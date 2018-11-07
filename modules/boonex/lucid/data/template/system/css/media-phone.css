@@ -26,9 +26,10 @@
     flex-grow: 1;
 
     margin-left: 0.625rem;
-    margin-right: 0;
+    margin-right: 0.625rem;
 
     text-align: center;
+    overflow: hidden;
 }
 .bx-media-phone #bx-toolbar-content .bx-toolbar-item.bx-ti-menu {
     -webkit-flex-grow: 0; 
