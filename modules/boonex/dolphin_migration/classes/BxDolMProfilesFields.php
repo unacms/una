@@ -313,7 +313,6 @@ class BxDolMProfilesFields extends BxDolMData
 	 */
 	public function getFieldValues($sField, $bGetKeyIfExists = true)
 	{
-		$aItems = array();
 		$sValues = $this -> _mDb -> getOne("SELECT `Values` FROM `sys_profile_fields` WHERE `name` = :name", array('name' => $sField));
 		if (empty($sValues))
 			return '';
@@ -325,7 +324,7 @@ class BxDolMProfilesFields extends BxDolMData
 			if ($this -> isKeyPreKeyExits($sKey) && $bGetKeyIfExists)
 				return $sValues;
 			
-			$aValues = $this -> getPreValuesBy();
+			$aValues = $this -> getPreValuesBy($sKey);
 			foreach($aValues as $iKey => $sValue)
 				$aItems[$iKey] = $this -> getLKeyTranslations($sValue);
 		}

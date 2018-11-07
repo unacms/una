@@ -112,7 +112,7 @@
 	<string name="_bx_dolphin_migration_successfully_removed"><![CDATA[{0} records were successfully removed!]]></string>
 	<string name="_bx_dolphin_migration_nothing_removed"><![CDATA[Nothing was removed!]]></string>
 	<string name="_bx_dolphin_migration_remove_profile_content_confirmation"><![CDATA[If you remove profiles, it will remove all transferred profiles' content also. Continue?]]></string>
-	<string name="_bx_dolphin_migration_cpt_overwrite"><![CDATA[If account with the same NickName already exists, overwrite its info.
+	<string name="_bx_dolphin_migration_cpt_overwrite"><![CDATA[If account with the same NickName or Email already exists, then to overwrite its info.
 	<br/><b>This option is useful if you already have account on current version with the same Nickname as in Dolphin. If you enable this option all existed on UNA accounts will be updated using profiles' info from Dolphin and don't forget that info of your current logged member may be also updated and you can be logged out.</b>]]></string>
 	<string name="_bx_dolphin_migration_cpt_clean"><![CDATA[Clean]]></string>
 	<string name="_bx_dolphin_migration_cpt_use_nickname"><![CDATA[Use NickName instead of Profile's FullName]]></string>
