@@ -11,8 +11,8 @@
 
 class BxAclResponse extends BxDolAlertsResponse
 {
-	protected $MODULE;
-	protected $_oModule;
+    protected $MODULE;
+    protected $_oModule;
 
     public function __construct()
     {
@@ -29,14 +29,21 @@ class BxAclResponse extends BxDolAlertsResponse
      */
     public function response($oAlert)
     {
-    	if($oAlert->sUnit != 'system' || !in_array($oAlert->sAction, array('page_output_block_acl_level')))
-    		return;
+        $sMethod = '_process' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);           	
+        if(!method_exists($this, $sMethod))
+            return;
 
-		switch($oAlert->sAction) {
-			case 'page_output_block_acl_level':
-				$oAlert->aExtras['block_code'] .= $this->_oModule->serviceGetMembershipActions((int)$oAlert->aExtras['block_owner']);
-				break;
-		}
+        $this->$sMethod($oAlert);
+    }
+
+    protected function _processSystemPageOutputBlockAclLevel($oAlert)
+    {
+        $oAlert->aExtras['block_code'] .= $this->_oModule->serviceGetMembershipActions((int)$oAlert->aExtras['block_owner']);
+    }
+
+    protected function _processAclDeleted($oAlert)
+    {
+        $this->_oModule->_oDb->deletePrices(array('level_id' => $oAlert->iObject));
     }
 }
 

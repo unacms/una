@@ -28,6 +28,12 @@ class BxDolStudioPermissionsLevels extends BxTemplStudioGrid
         if($aLevel['removable'] != 'yes' || $this->oDb->isLevelUsed($aLevel['id']))
             return false;
 
+        // create system event before deletion
+        $isStopDeletion = false;
+        bx_alert('acl', 'before_delete', $aLevel['id'], 0, array('level' => $aLevel, 'stop_deletion' => &$isStopDeletion));
+        if($isStopDeletion)
+            return false;
+
         if(is_numeric($aLevel['icon'])) {
             if(!BxDolStorage::getObjectInstance(BX_DOL_STORAGE_OBJ_IMAGES)->deleteFile((int)$aLevel['icon'], 0))
                 return false;
@@ -37,7 +43,13 @@ class BxDolStudioPermissionsLevels extends BxTemplStudioGrid
         $oLanguage->deleteLanguageString($aLevel['name']);
         $oLanguage->deleteLanguageString($aLevel['description']);
 
-        return $this->oDb->deleteLevel(array('type' => 'by_id', 'value' => $aLevel['id']));
+        $bResult = $this->oDb->deleteLevel(array('type' => 'by_id', 'value' => $aLevel['id']));
+        if($bResult) {
+            // create system event
+            bx_alert('acl', 'deleted', $aLevel['id'], 0, array('level' => $aLevel));
+        }
+
+        return $bResult;
     }
 
     protected function _switcherChecked2State($isChecked)

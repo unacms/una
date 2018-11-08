@@ -66,6 +66,9 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
 
             $iId = (int)$oForm->insert(array('ID' => $iId, 'Icon' => $mixedIcon, 'Order' => $this->oDb->getLevelOrderMax() + 1));
             if($iId != 0) {
+                $aLevel = array();
+                $this->oDb->getLevels(array('type' => 'by_id', 'value' => (int)$iId), $aLevel, false);
+
             	$iActionsFrom = (int)$oForm->getCleanValue('Actions');
             	if($iActionsFrom > 0) {
             		$aActions = array();
@@ -79,6 +82,9 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
             				'AdditionalParamValue' => $aAction['additional_param_value']
             			));
             	}
+
+                // create system event
+                bx_alert('acl', 'added', $iId, 0, array('level' => $aLevel));
 
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
             }
@@ -162,8 +168,15 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
             $fQuotaMaxFileSize = round($oForm->getCleanValue('QuotaMaxFileSize'), 1);
             BxDolForm::setSubmittedValue('QuotaMaxFileSize', self::$iBinMB * $fQuotaMaxFileSize, $oForm->aFormAttrs['method']);
 
-            if($oForm->update($iId) !== false)
+            if($oForm->update($iId) !== false) {
+                $aLevel = array();
+                $this->oDb->getLevels(array('type' => 'by_id', 'value' => (int)$iId), $aLevel, false);
+
+                // create system event
+                bx_alert('acl', 'edited', $iId, 0, array('level' => $aLevel));
+
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
+            }
             else
                 $aRes = array('msg' => _t('_adm_prm_err_level_edit'));
 
