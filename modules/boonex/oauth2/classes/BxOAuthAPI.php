@@ -236,7 +236,8 @@ class BxOAuthAPI extends BxDol
             return;
         }
         
-        bx_login($oProfile->getAccountId(), false, false);
+        bx_login($oProfile->getAccountId(), false);
+        check_logged();
 
         $sModule = bx_get('module');
         $sMethod = bx_get('method');
