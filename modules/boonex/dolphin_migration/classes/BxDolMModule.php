@@ -123,19 +123,19 @@ class BxDolMModule extends BxBaseModGeneralModule
 	* @return mixed
 	*/	
 	public function initDb()
-	{
-		$aConfig = array(
-                'host'    => $this -> _oDb -> getExtraParam('host'),
-                'user'	  => $this -> _oDb -> getExtraParam('user'),
-            	'pwd'     => $this -> _oDb -> getExtraParam('passwd'),
-                'name' 	  => $this -> _oDb -> getExtraParam('db'),
-				'port'    => $this -> _oDb -> getExtraParam('port'),
-				'sock'	  => $this -> _oDb -> getExtraParam('sock'),
-			);
-					
-		$this -> _oMDb = new BxMDb($aConfig);		
-		return $this -> _oMDb -> connect(); 
-	}	
+    {
+        $aConfig = array(
+            'host' => $this->_oDb->getExtraParam('host'),
+            'user' => $this->_oDb->getExtraParam('user'),
+            'pwd' => $this->_oDb->getExtraParam('passwd'),
+            'name' => $this->_oDb->getExtraParam('db'),
+            'port' => $this->_oDb->getExtraParam('port'),
+            'sock' => $this->_oDb->getExtraParam('sock'),
+        );
+
+        $this->_oMDb = new BxMDb($aConfig);
+        return $this->_oMDb->connect();
+    }
 }
 
 /** @} */
