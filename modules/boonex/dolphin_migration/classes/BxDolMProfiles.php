@@ -61,11 +61,15 @@ class BxDolMProfiles extends BxDolMData
 
     /**
      * Check if profile with the same nickname already exists
+     * @param $iAccountId account id
      * @param string $sFullName name of the user
      * @return integer profile id
      */
-    private function isProfileExisted($sFullName){
-        $sQuery  = $this -> _oDb -> prepare("SELECT `id` FROM `bx_persons_data` WHERE `fullname` = ? ", $sFullName);
+    private function isProfileExisted($iAccountId, $sFullName){
+       $sQuery  = $this -> _oDb -> prepare("SELECT `p`.`id` 
+                                             FROM `bx_persons_data` as `p`
+                                             LEFT JOIN `sys_profiles` as `s` ON `s`.`id` = `p`.`author` AND `s`.`type` = 'bx_persons' 
+                                             WHERE `s`.`account_id` = ? AND `p`.`fullname` = ?", $iAccountId, $sFullName);
         return $this -> _oDb -> getOne($sQuery);
     }
 
@@ -91,12 +95,14 @@ class BxDolMProfiles extends BxDolMData
 				{
                      $sAction = "INSERT INTO";
                      $sWhere  = "";
+                     $bAccountExists = false;
                      $iAccountId = $this -> isAccountExisted($aValue['NickName'], $aValue['Email']);
                      if ($iAccountId)
                      {
                          if ($this -> _oConfig -> _bIsOverwrite) {
                              $sAction = "UPDATE";
                              $sWhere = "WHERE `id` = '{$iAccountId}'";
+                             $bAccountExists = true;
                          }
                          else
                              continue;
@@ -146,15 +152,15 @@ class BxDolMProfiles extends BxDolMData
                     if ($this -> _oConfig -> _bUseNickName)
                         $sFullName = $aValue['NickName'];
 					else
-					    {
-                        $sFullName = isset($aValue['FullName']) ? $aValue['FullName'] : "{$aValue['FirstName']} {$aValue['LastName']}";
-                        $sFullName = $sFullName ? $sFullName : $aValue['NickName'];
+					{
+                       $sFullName = isset($aValue['FullName']) ? $aValue['FullName'] : "{$aValue['FirstName']} {$aValue['LastName']}";
+                       $sFullName = $sFullName ? $sFullName : $aValue['NickName'];
                     }
 
                     $sAction = "INSERT INTO";
                     $sWhere = '';
                     $iProfID = 0;
-                    if ($this -> _oConfig -> _bIsOverwrite && $iProfID = $this -> isProfileExisted($sFullName)) {
+                    if ($bAccountExists && ($iProfID = $this -> isProfileExisted($iAccountId, $sFullName))) {
                         $sAction = "UPDATE";
                         $sWhere = "WHERE `id` = '{$iProfID}'";
                     }
