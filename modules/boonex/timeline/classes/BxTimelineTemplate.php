@@ -1562,10 +1562,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(!empty($iUser) && !empty($iOwner) && $iUser != $iOwner) {
             $sConnection = $this->_oConfig->getObject('conn_subscriptions');
             if(BxDolConnection::getObjectInstance($sConnection)->checkAllowedConnect($iUser, $iOwner) === CHECK_ACTION_RESULT_ALLOWED) {
+                $sJsObject = $this->_oConfig->getJsObject('view');
+
                 $sContent = _t('_sys_menu_item_title_sm_subscribe');
                 $aTmplVarsActions[] = array(
                     'href' => "javascript:void(0)",
-                    'onclick' => "bx_conn_action(this, '" . $sConnection . "', 'add', '" . $iOwner . "')",
+                    'onclick' => "bx_conn_action(this, '" . $sConnection . "', 'add', '" . $iOwner . "', false, function(oData, eElement) {" . $sJsObject . ".onConnect(eElement, oData);})",
                 	'title' => bx_html_attribute($sContent),
                     'content' => $sContent,
                     'icon' => 'check'
