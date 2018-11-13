@@ -225,8 +225,7 @@ class BxMailchimpModule extends BxDolModule
 
         return array (
             'email_address' => $oAccount->getEmail(),
-            'status' => $aInfoAccount['receive_news'] ? 'subscribed' : 'unsubscribed',
-            'timestamp_signup' => $aInfoAccount['added'], // TODO: check the date/time format
+            'status' => $aInfoAccount['receive_news'] ? 'subscribed' : 'unsubscribed',            
             'merge_fields' => array(
                 'FNAME' => $oProfile->getDisplayName(),
                 'ACCOUNT_ID' => $oAccount->id(),
