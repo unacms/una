@@ -486,20 +486,27 @@ class BxMassMailerModule extends BxBaseModGeneralModule
     private function sendLetter($sEmail, $iCampaignId, $aCustomHeaders, $iProfileId, $aTemplate, $bAddToQueue)
     {
         $sLetterCode = $this->_oDb->addLetter($iCampaignId, $sEmail);
-       
+        
+        $aMarkers = $this->addMarkers($iProfileId, $sLetterCode);
+        bx_alert($this->_aModule['name'], 'user_fields', $iCampaignId, $iProfileId, array('email' => $sEmail, 'markers' => &$aMarkers));
+        
+        $oTemplate = BxDolTemplate::getInstance();
+        
         $regexp = "<a\s[^>]*href=(\"??)([^\" >]*?)\\1[^>]*>(.*)<\/a>";
         $aTemplate['Body'] = preg_replace_callback("/$regexp/siU",
-            function ($aMatch) use ($iCampaignId, $sLetterCode) {
+            function ($aMatch) use ($iCampaignId, $sLetterCode, $oTemplate, $aMarkers) {
                 if ($aMatch[2] != '{unsubscribe_url}'){
-                    $sLinkCode = $this->_oDb->addLink($sLetterCode, $aMatch[2], $aMatch[3], $iCampaignId);
-                    return str_replace($aMatch[2], BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'track/click/' . $sLinkCode . "/", $aMatch[0]);
+                    $sUrl = $oTemplate->parseHtmlByContent($aMatch[2], $aMarkers, array('{', '}'));
+                    $sLinkCode = $this->_oDb->addLink($sLetterCode, $sUrl, $aMatch[3], $iCampaignId);
+                    return str_replace($sUrl, BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'track/click/' . $sLinkCode . "/", $aMatch[0]);
                 }
                 else{
                     return $aMatch[0];
                 }
             },
             $aTemplate['Body']);
-        return sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, $this->addMarkers($iProfileId, $sLetterCode), BX_EMAIL_MASS, 'html', false, $aCustomHeaders, $bAddToQueue);
+        
+        return sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, $aMarkers, BX_EMAIL_MASS, 'html', false, $aCustomHeaders, $bAddToQueue);
     }
 
     public function getEmailCountInSegment($iCampaignId)
