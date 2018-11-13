@@ -174,28 +174,28 @@ class BxForumGrid extends BxTemplGrid
 
     protected function _getSqlJoinGroup($aGrp)
     {
-    	if(!isset($aGrp['grp']) || (bool)$aGrp['grp'] !== true)
-			return $this->_getSqlJoinCondition($aGrp);
+        if(!isset($aGrp['grp']) || (bool)$aGrp['grp'] !== true)
+            return $this->_getSqlJoinCondition($aGrp);
 
-		$sResult = "";
-    	if(empty($aGrp['cnds']) || !is_array($aGrp['cnds']))
-    		return $sResult;
+        $sResult = "";
+        if(empty($aGrp['cnds']) || !is_array($aGrp['cnds']))
+            return $sResult;
 
-		$sOprGrp = " ";
-    	foreach($aGrp['cnds'] as $aCnd) {
-    		$sResultCnd = $this->_getSqlJoinCondition($aCnd);
-    		if(!empty($sResultCnd))
-				$sResult .= $sOprGrp . $sResultCnd;
-    	}
+        $sOprGrp = " ";
+        foreach($aGrp['cnds'] as $aCnd) {
+            $sResultCnd = $this->_getSqlJoinCondition($aCnd);
+            if(!empty($sResultCnd))
+                $sResult .= $sOprGrp . $sResultCnd;
+        }
 
-    	return trim($sResult, $sOprGrp);
+        return trim($sResult, $sOprGrp);
     }
 
     protected function _getSqlJoinCondition($aCnd)
     {
     	$sResult = "";
     	if(!isset($aCnd['tp'], $aCnd['tbl1'], $aCnd['fld1'], $aCnd['fld2']))
-    		return $sResult;
+            return $sResult;
 
         $sField1 = "`" . $aCnd['tbl1'] . "`.`" . $aCnd['fld1'] . "`";
 
@@ -203,60 +203,87 @@ class BxForumGrid extends BxTemplGrid
         if(!empty($aCnd['tbl2']))
             $sField2 = "`" . $aCnd['tbl2'] . "`." . $sField2;
 
-		return $aCnd['tp'] . " JOIN `" . $aCnd['tbl1'] . "` ON (" . $sField1 . " = " . $sField2 . ")";
+        return $aCnd['tp'] . " JOIN `" . $aCnd['tbl1'] . "` ON (" . $sField1 . " = " . $sField2 . ")";
     }
 
     protected function _getSqlWhereFromGroup($aGrp)
     {
-    	if(!isset($aGrp['grp']) || (bool)$aGrp['grp'] !== true)
-			return $this->_getSqlWhereFromCondition($aGrp);
+        if(!isset($aGrp['grp']) || (bool)$aGrp['grp'] !== true)
+            return $this->_getSqlWhereFromCondition($aGrp);
 
-		$sResult = "";
-    	if(!isset($aGrp['opr'], $aGrp['cnds']) || empty($aGrp['cnds']) || !is_array($aGrp['cnds']))
-    		return $sResult;
+        $sResult = "";
+        if(!isset($aGrp['opr'], $aGrp['cnds']) || empty($aGrp['cnds']) || !is_array($aGrp['cnds']))
+            return $sResult;
 
-		$sOprGrp = " " . $aGrp['opr'] . " ";
-    	foreach($aGrp['cnds'] as $aCnd) {
-    		$sMethod = '_getSqlWhereFrom' . (isset($aGrp['grp']) && (bool)$aGrp['grp'] === true ? 'Group' : 'Condition');
-    		$sResultCnd = $this->$sMethod($aCnd);
-    		if(!empty($sResultCnd))
-				$sResult .= $sOprGrp . $sResultCnd;
-    	}
+        $sOprGrp = " " . $aGrp['opr'] . " ";
+        foreach($aGrp['cnds'] as $aCnd) {
+            $sMethod = '_getSqlWhereFrom' . (isset($aGrp['grp']) && (bool)$aGrp['grp'] === true ? 'Group' : 'Condition');
+            $sResultCnd = $this->$sMethod($aCnd);
+            if(!empty($sResultCnd))
+                $sResult .= $sOprGrp . $sResultCnd;
+        }
 
-    	$sResult = trim($sResult, $sOprGrp);
-    	if(!empty($sResult))
-    		$sResult = "(" . $sResult . ")";
+        $sResult = trim($sResult, $sOprGrp);
+        if(!empty($sResult))
+            $sResult = "(" . $sResult . ")";
 
     	return $sResult;
     }
 
     protected function _getSqlWhereFromCondition($aCnd)
     {
-    	$sResult = "";
-    	if(!isset($aCnd['fld'], $aCnd['val'], $aCnd['opr']))
-    		return $sResult;
+        $sResult = "";
+        if(!isset($aCnd['fld'], $aCnd['val'], $aCnd['opr']))
+            return $sResult;
 
+        $sMethod = '_getSqlWhereFromCondition' . bx_gen_method_name($aCnd['fld']);
+        if(method_exists($this, $sMethod)) {
+            $mixedResult = $this->$sMethod($aCnd);
+            if(is_array($mixedResult) && isset($mixedResult['fld'], $mixedResult['val'], $mixedResult['opr']))
+                $aCnd = $mixedResult;
+            else
+                return $mixedResult;
+        }
+        
         $sField = "`" . $aCnd['fld'] . "`";
         if(!empty($aCnd['tbl']))
             $sField = "`" . $aCnd['tbl'] . "`." . $sField;
 
-		switch($aCnd['opr']) {
-			case 'IN':
-				if(empty($aCnd['val']) || !is_array($aCnd['val']))
-					break;
+        switch($aCnd['opr']) {
+            case 'IN':
+                if(empty($aCnd['val']) || !is_array($aCnd['val']))
+                    break;
 
-				$sResult .= $sField . " IN (" . $this->_oModule->_oDb->implode_escape($aCnd['val']) . ")";
-				break;
+                $sResult .= $sField . " IN (" . $this->_oModule->_oDb->implode_escape($aCnd['val']) . ")";
+                break;
 
-			case 'LIKE':
-				$sResult .= $sField . " LIKE " . $this->_oModule->_oDb->escape('%' . $aCnd['val'] . '%');
-				break;
+            case 'LIKE':
+                $sResult .= $sField . " LIKE " . $this->_oModule->_oDb->escape('%' . $aCnd['val'] . '%');
+                break;
 
-			default:
-			    $sResult .= $sField . " " . $aCnd['opr'] . " " . $this->_oModule->_oDb->escape($aCnd['val']);
-		}
+            default:
+                $sResult .= $sField . " " . $aCnd['opr'] . " " . $this->_oModule->_oDb->escape($aCnd['val']);
+        }
 
-		return $sResult;
+        return $sResult;
+    }
+
+    protected function _getSqlWhereFromConditionAuthorComment($aCnd)
+    {
+        $aEntriesIds = $this->_oModule->_oDb->getComments(array('type' => 'entries_author_search', 'author' => $aCnd['val']));
+        if(!empty($aEntriesIds) && is_array($aEntriesIds))
+            return array('fld' => 'id', 'val' => $aEntriesIds, 'opr' => 'IN');
+
+        return '';
+    }
+
+    protected function _getSqlWhereFromConditionKeywordComment($aCnd)
+    {
+        $aEntriesIds = $this->_oModule->_oDb->getComments(array('type' => 'entries_keyword_search', 'keyword' => $aCnd['val']));
+        if(!empty($aEntriesIds) && is_array($aEntriesIds))
+            return array('fld' => 'id', 'val' => $aEntriesIds, 'opr' => 'IN');
+
+        return '';
     }
 }
 

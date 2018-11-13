@@ -860,29 +860,19 @@ class BxForumModule extends BxBaseModTextModule
 
     protected function _getSearchAuthorDescriptor($aAutor)
     {
-        $aWhereGroupOr = array('grp' => true, 'opr' => 'OR', 'cnds' => array(
-            array('fld' => 'author', 'val' => $aAutor, 'opr' => 'IN')
+        return array('grp' => true, 'opr' => 'OR', 'cnds' => array(
+            array('fld' => 'author', 'val' => $aAutor, 'opr' => 'IN'),
+            array('fld' => 'author_comment', 'val' => $aAutor, 'opr' => 'IN'),
         ));
-
-        $aEntriesIds = $this->_oDb->getComments(array('type' => 'entries_author_search', 'author' => $aAutor));
-		if(!empty($aEntriesIds) && is_array($aEntriesIds))
-			$aWhereGroupOr['cnds'][] = array('fld' => 'id', 'val' => $aEntriesIds, 'opr' => 'IN');
-
-        return $aWhereGroupOr;
     }
 
     protected function _getSearchKeywordDescriptor($sKeyword)
     {
-		$aWhereGroupOr = array('grp' => true, 'opr' => 'OR', 'cnds' => array(
-			array('fld' => 'title', 'val' => $sKeyword, 'opr' => 'LIKE'),
-			array('fld' => 'text', 'val' => $sKeyword, 'opr' => 'LIKE')
-		));
-		
-		$aEntriesIds = $this->_oDb->getComments(array('type' => 'entries_keyword_search', 'keyword' => $sKeyword));
-		if(!empty($aEntriesIds) && is_array($aEntriesIds))
-			$aWhereGroupOr['cnds'][] = array('fld' => 'id', 'val' => $aEntriesIds, 'opr' => 'IN');
-			
-		return $aWhereGroupOr;
+        return array('grp' => true, 'opr' => 'OR', 'cnds' => array(
+            array('fld' => 'title', 'val' => $sKeyword, 'opr' => 'LIKE'),
+            array('fld' => 'text', 'val' => $sKeyword, 'opr' => 'LIKE'),
+            array('fld' => 'text_comments', 'val' => $sKeyword, 'opr' => 'LIKE')
+        ));
     }
 }
 
