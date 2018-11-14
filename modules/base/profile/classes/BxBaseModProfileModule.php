@@ -720,6 +720,19 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return $a;
     }
 
+    public function serviceGetNotificationsVote($aEvent)
+    {
+        $aResult = parent::serviceGetNotificationsVote($aEvent);
+        if(empty($aResult) || !is_array($aResult) || !$this->serviceActAsProfile())
+            return $aResult;
+
+        $oProfile = BxDolProfile::getInstanceByContentAndType((int)$aEvent['object_id'], $this->_oConfig->getName());
+        if($oProfile !== false)
+            $aResult['entry_author'] = $oProfile->id();
+
+        return $aResult;
+    }
+
     /**
      * Notification about new member requst in the group
      */

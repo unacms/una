@@ -290,7 +290,7 @@ function sendMailTemplate($sTemplateName, $iAccountId = 0, $iProfileId = 0, $aRe
     if (!$oAccount || !$oProfile || !$oEmailTemplates)
         return false;
 
-    $aTemplate = $oEmailTemplates->parseTemplate($sTemplateName, $aReplaceVars, $iAccountId, (int)$iProfileId);
+    $aTemplate = $oEmailTemplates->parseTemplate($sTemplateName, $aReplaceVars, $oAccount ? $oAccount->id() : 0, (int)$iProfileId);
     if (!$aTemplate)
         return false;
 
