@@ -1275,20 +1275,20 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
     	$CNF = &$this->_oConfig->CNF;
 
-    	$iContent = (int)$aEvent['object_id'];
-		$aContent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContent));
+        $iContent = (int)$aEvent['object_id'];
+        $aContent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContent));
         if(empty($aContent) || !is_array($aContent))
             return array();
 
-        $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : $this->_oConfig->getTitle($aContent['description']);
+        $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : $this->_oConfig->getTitle($aContent['description'], $aContent['object_id']);
 
-		return array(
-			'entry_sample' => $CNF['T']['txt_sample_single_ext'],
-			'entry_url' => $this->_oConfig->getItemViewUrl($aContent),
-			'entry_caption' => $sEntryCaption,
-			'entry_author' => $aContent['owner_id'],
-			'lang_key' => '_bx_timeline_ntfs_txt_object_added', //may be empty or not specified. In this case the default one from Notification module will be used.
-		);
+        return array(
+            'entry_sample' => $CNF['T']['txt_sample_single_ext'],
+            'entry_url' => $this->_oConfig->getItemViewUrl($aContent),
+            'entry_caption' => $sEntryCaption,
+            'entry_author' => $aContent['owner_id'],
+            'lang_key' => '_bx_timeline_ntfs_txt_object_added', //may be empty or not specified. In this case the default one from Notification module will be used.
+        );
     }
 
     /**
@@ -1313,26 +1313,26 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
     	$CNF = &$this->_oConfig->CNF;
 
-    	$iContent = (int)$aEvent['object_id'];
-    	$aContent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContent));
+        $iContent = (int)$aEvent['object_id'];
+        $aContent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContent));
         if(empty($aContent) || !is_array($aContent))
             return array();
 
-		$oComment = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $iContent);
+        $oComment = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $iContent);
         if(!$oComment || !$oComment->isEnabled())
             return array();
 
-        $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : $this->_oConfig->getTitle($aContent['description']);
+        $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : $this->_oConfig->getTitle($aContent['description'], $aContent['object_id']);
 
-		return array(
-			'entry_sample' => $CNF['T']['txt_sample_single'],
-			'entry_url' => $this->_oConfig->getItemViewUrl($aContent),
-			'entry_caption' => $sEntryCaption,
-			'entry_author' => $aContent['owner_id'],
-			'subentry_sample' => $CNF['T']['txt_sample_comment_single'],
-			'subentry_url' => $oComment->getViewUrl((int)$aEvent['subobject_id']),
-			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
-		);
+        return array(
+            'entry_sample' => $CNF['T']['txt_sample_single'],
+            'entry_url' => $this->_oConfig->getItemViewUrl($aContent),
+            'entry_caption' => $sEntryCaption,
+            'entry_author' => $aContent['owner_id'],
+            'subentry_sample' => $CNF['T']['txt_sample_comment_single'],
+            'subentry_url' => $oComment->getViewUrl((int)$aEvent['subobject_id']),
+            'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+        );
     }
 
     /**
@@ -1357,25 +1357,25 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
     	$CNF = &$this->_oConfig->CNF;
 
-    	$iContent = (int)$aEvent['object_id'];
-    	$aContent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContent));
+        $iContent = (int)$aEvent['object_id'];
+        $aContent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContent));
         if(empty($aContent) || !is_array($aContent))
             return array();
 
-		$oVote = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $iContent);
+        $oVote = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $iContent);
         if(!$oVote || !$oVote->isEnabled())
             return array();
 
-        $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : $this->_oConfig->getTitle($aContent['description']);
+        $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : $this->_oConfig->getTitle($aContent['description'], $aContent['object_id']);
 
-		return array(
-			'entry_sample' => $CNF['T']['txt_sample_single'],
-			'entry_url' => $this->_oConfig->getItemViewUrl($aContent),
-			'entry_caption' => $sEntryCaption,
-			'entry_author' => $aContent['owner_id'],
-			'subentry_sample' => $CNF['T']['txt_sample_vote_single'],
-			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
-		);
+        return array(
+            'entry_sample' => $CNF['T']['txt_sample_single'],
+            'entry_url' => $this->_oConfig->getItemViewUrl($aContent),
+            'entry_caption' => $sEntryCaption,
+            'entry_author' => $aContent['owner_id'],
+            'subentry_sample' => $CNF['T']['txt_sample_vote_single'],
+            'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+        );
     }
 
     /**
