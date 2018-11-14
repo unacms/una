@@ -490,13 +490,11 @@ class BxMassMailerModule extends BxBaseModGeneralModule
         $aMarkers = $this->addMarkers($iProfileId, $sLetterCode);
         bx_alert($this->_aModule['name'], 'user_fields', $iCampaignId, $iProfileId, array('email' => $sEmail, 'markers' => &$aMarkers));
         
-        $oTemplate = BxDolTemplate::getInstance();
-        
         $regexp = "<a\s[^>]*href=(\"??)([^\" >]*?)\\1[^>]*>(.*)<\/a>";
         $aTemplate['Body'] = preg_replace_callback("/$regexp/siU",
-            function ($aMatch) use ($iCampaignId, $sLetterCode, $oTemplate, $aMarkers) {
+            function ($aMatch) use ($iCampaignId, $sLetterCode, $aMarkers) {
                 if ($aMatch[2] != '{unsubscribe_url}'){
-                    $sUrl = $oTemplate->parseHtmlByContent($aMatch[2], $aMarkers, array('{', '}'));
+                    $sUrl = bx_replace_markers($aMatch[2], $aMarkers);
                     $sLinkCode = $this->_oDb->addLink($sLetterCode, $sUrl, $aMatch[3], $iCampaignId);
                     return str_replace($sUrl, BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'track/click/' . $sLinkCode . "/", $aMatch[0]);
                 }
