@@ -127,7 +127,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
                 $sSubmitName = $oForm->aParams['db']['submit_name'];
             }
             if ($sSubmitName && isset($oForm->aInputs[$sSubmitName]))
-                $aValues[$oForm->aParams['db']['submit_name']] = $oForm->aInputs[$sSubmitName]['value'];
+                $aValues[$sSubmitName] = $oForm->aInputs[$sSubmitName]['value'];
         }
 
         $oForm->initChecker(array(), $aValues);
