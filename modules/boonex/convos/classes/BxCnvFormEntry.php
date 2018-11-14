@@ -93,19 +93,29 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
 
     protected function _updateParticipants ($iContentId, $iFolder, $bDraft) 
     {
+        $iSender = bx_get_logged_profile_id();
         $aRecipientsOld = $this->_oModule->_oDb->getCollaborators($iContentId);
 
         // place conversation to "inbox" (or "spam" - in case of spam) folder
-        $aRecipients = array_unique(array_merge($this->getCleanValue('recipients'), array(bx_get_logged_profile_id())), SORT_NUMERIC);
+        $aRecipients = array_unique(array_merge($this->getCleanValue('recipients'), array($iSender)), SORT_NUMERIC);
         foreach ($aRecipients as $iProfile) {
             $oProfile = BxDolProfile::getInstance($iProfile);
-            if (!$oProfile)
+            if(!$oProfile)
                 continue;
 
-            if ($bDraft && $oProfile->id() == bx_get_logged_profile_id())
-                $this->_oModule->_oDb->moveConvo($iContentId, $oProfile->id(), $iFolder);
-            else
-                $this->_oModule->_oDb->conversationToFolder($iContentId, $iFolder, $oProfile->id(), $oProfile->id() == bx_get_logged_profile_id() ? 0 : -1);
+            $iRecipient = $oProfile->id();
+            if($bDraft && $iRecipient == $iSender)
+                $this->_oModule->_oDb->moveConvo($iContentId, $iRecipient, $iFolder);
+            else {
+                if($iRecipient != $iSender) {
+                    $bCanContact = true;
+                    bx_alert('profile', 'check_contact', 0, false, array('can_contact' => &$bCanContact, 'sender' => $iSender, 'recipient' => $iRecipient, 'where' => $this->MODULE));
+                    if(!$bCanContact)
+                        $iFolder = BX_CNV_FOLDER_SPAM;
+                }
+
+                $this->_oModule->_oDb->conversationToFolder($iContentId, $iFolder, $iRecipient, $iRecipient == $iSender ? 0 : -1);
+            }
         }
 
         // remove participants
