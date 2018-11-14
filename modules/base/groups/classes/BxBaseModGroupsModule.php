@@ -396,7 +396,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
         $aSettingsTypes = array('follow_context');
         if($this->serviceActAsProfile())
-            $aSettingsTypes[] = 'follow_member';
+            $aSettingsTypes = array('personal', 'follow_member');
 
         return array(
             'handlers' => array(

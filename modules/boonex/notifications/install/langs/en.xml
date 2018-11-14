@@ -64,10 +64,13 @@
     <string name="_bx_ntfs_alert_action_doVote_personal"><![CDATA[Someone adds a like to your content]]></string>
     <string name="_bx_ntfs_alert_action_doVote_follow_member"><![CDATA[New likes]]></string>
     <string name="_bx_ntfs_alert_action_doVote_follow_context"><![CDATA[New likes]]></string>
+    <string name="_bx_ntfs_alert_action_fan_added_personal"><![CDATA[New fans]]></string>
     <string name="_bx_ntfs_alert_action_fan_added_follow_member"><![CDATA[New fans]]></string>
     <string name="_bx_ntfs_alert_action_fan_added_follow_context"><![CDATA[New fans]]></string>
+    <string name="_bx_ntfs_alert_action_join_request_personal"><![CDATA[New join requests]]></string>
     <string name="_bx_ntfs_alert_action_join_request_follow_member"><![CDATA[New join requests]]></string>
     <string name="_bx_ntfs_alert_action_join_request_follow_context"><![CDATA[New join requests]]></string>
+    <string name="_bx_ntfs_alert_action_timeline_post_common_personal"><![CDATA[New posts on Timeline]]></string>
     <string name="_bx_ntfs_alert_action_timeline_post_common_follow_member"><![CDATA[New posts on Timeline]]></string>
     <string name="_bx_ntfs_alert_action_timeline_post_common_follow_context"><![CDATA[New posts on Timeline]]></string>
 
