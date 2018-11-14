@@ -113,8 +113,22 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
 
         $oForm->aFormAttrs['method'] = BX_DOL_FORM_METHOD_SPECIFIC;
         $oForm->aParams['csrf']['disable'] = true;
-        if(!empty($oForm->aParams['db']['submit_name']))
-            $aValues[$oForm->aParams['db']['submit_name']] = $oForm->aInputs[$oForm->aParams['db']['submit_name']]['value'];
+        if(!empty($oForm->aParams['db']['submit_name'])) {            
+            $sSubmitName = false;
+            if (is_array($oForm->aParams['db']['submit_name'])) {
+                foreach ($oForm->aParams['db']['submit_name'] as $sVal) {
+                    if (isset($oForm->aInputs[$sVal])) {
+                        $sSubmitName = $sVal;
+                        break;
+                    }
+                }
+            } 
+            else {
+                $sSubmitName = $oForm->aParams['db']['submit_name'];
+            }
+            if ($sSubmitName && isset($oForm->aInputs[$sSubmitName]))
+                $aValues[$oForm->aParams['db']['submit_name']] = $oForm->aInputs[$sSubmitName]['value'];
+        }
 
         $oForm->initChecker(array(), $aValues);
         if (!$oForm->isSubmittedAndValid())

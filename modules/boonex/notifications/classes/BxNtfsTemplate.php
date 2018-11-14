@@ -9,6 +9,8 @@
  * @{
  */
 
+require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
+
 class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 {
     function __construct(&$oConfig, &$oDb)
