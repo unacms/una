@@ -578,6 +578,9 @@ BxTimelineView.prototype.onDeletePost = function(oData) {
 		document.location = this._sReferrer;
 };
 
+BxTimelineView.prototype.onConnect = function(eElement, oData) {
+    $(eElement).remove();
+};
 
 /*----------------------------*/
 /*--- Live Updates methods ---*/

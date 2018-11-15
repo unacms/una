@@ -58,10 +58,13 @@
     <string name="_bx_ntfs_alert_action_doVote_personal"><![CDATA[Кто-то отдал голос вашему контенту]]></string>
     <string name="_bx_ntfs_alert_action_doVote_follow_member"><![CDATA[Новые голоса]]></string>
     <string name="_bx_ntfs_alert_action_doVote_follow_context"><![CDATA[Новые голоса]]></string>
+    <string name="_bx_ntfs_alert_action_fan_added_personal"><![CDATA[Новые фанаты]]></string>
     <string name="_bx_ntfs_alert_action_fan_added_follow_member"><![CDATA[Новые фанаты]]></string>
     <string name="_bx_ntfs_alert_action_fan_added_follow_context"><![CDATA[Новые фанаты]]></string>
+    <string name="_bx_ntfs_alert_action_join_request_personal"><![CDATA[Новые запросы на присоединение]]></string>
     <string name="_bx_ntfs_alert_action_join_request_follow_member"><![CDATA[Новые запросы на присоединение]]></string>
     <string name="_bx_ntfs_alert_action_join_request_follow_context"><![CDATA[Новые запросы на присоединение]]></string>
+    <string name="_bx_ntfs_alert_action_timeline_post_common_personal"><![CDATA[Новые сообщения на Ленте]]></string>
     <string name="_bx_ntfs_alert_action_timeline_post_common_follow_member"><![CDATA[Новые сообщения на Ленте]]></string>
     <string name="_bx_ntfs_alert_action_timeline_post_common_follow_context"><![CDATA[Новые сообщения на Ленте]]></string>
 

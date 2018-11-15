@@ -222,21 +222,27 @@ class BxMailchimpModule extends BxDolModule
             $sProfiles .= $o->getDisplayName() . ', ';
         }
         $sProfiles = trim($sProfiles, ', ');
-
+        $sEmail = $oAccount->getEmail();
+		$iAccountId = $oAccount->id();
+		$iProfileId = $oProfile->id();
+        $aMarkers = array (
+            'FNAME' => $oProfile->getDisplayName(),
+            'ACCOUNT_ID' => $iAccountId,
+            'PROFILE_ID' => $iProfileId,
+            'MEMBERSHIP' => _t($aMembership['name']) . (isset($aMembership['date_expires']) && $aMembership['date_expires'] ? ' (expires:' . bx_time_utc($aMembership['date_expires']) . ')' : ''),
+            'STATUS' => $aInfoProfile['status'],
+            'TYPE' => $aInfoProfile['type'],
+            'PROFILES' => $sProfiles,
+            'PROFILEURL' => $oProfile->getUrl(),
+            'IMAGE_URL' => $oProfile->getAvatar(),
+        );
+		
+		bx_alert($this->_aModule['name'], 'user_fields', $iAccountId, $iProfileId, array('email' => $sEmail, 'markers' => &$aMarkers));	
+        
         return array (
             'email_address' => $oAccount->getEmail(),
             'status' => $aInfoAccount['receive_news'] ? 'subscribed' : 'unsubscribed',            
-            'merge_fields' => array(
-                'FNAME' => $oProfile->getDisplayName(),
-                'ACCOUNT_ID' => $oAccount->id(),
-                'PROFILE_ID' => $oProfile->id(),
-                'MEMBERSHIP' => _t($aMembership['name']) . (isset($aMembership['date_expires']) && $aMembership['date_expires'] ? ' (expires:' . bx_time_utc($aMembership['date_expires']) . ')' : ''),
-                'STATUS' => $aInfoProfile['status'],
-                'TYPE' => $aInfoProfile['type'],
-                'PROFILES' => $sProfiles,
-                'PROFILE_URL' => $oProfile->getUrl(),
-                'IMAGE_URL' => $oProfile->getAvatar(),
-            ),
+            'merge_fields' => $aMarkers
         );
     }
 

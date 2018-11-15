@@ -80,6 +80,8 @@ class BxBaseModFilesFormUpload extends BxBaseModTextFormEntry
 
         $aContentIds = array();
         foreach ($aGhostFiles as $aFile) {
+            if (CHECK_ACTION_RESULT_ALLOWED !== $this->_oModule->checkAllowedAdd())
+                continue;
             if (is_array($mixedFileIds) && !in_array($aFile['id'], $mixedFileIds))
                 continue;
             $iContentId = 0;
@@ -95,8 +97,11 @@ class BxBaseModFilesFormUpload extends BxBaseModTextFormEntry
             
             if ($aFile['private'] || (isset($aFormValues[$CNF['FIELD_ALLOW_VIEW_TO']]) && BX_DOL_PG_ALL !== $aFormValues[$CNF['FIELD_ALLOW_VIEW_TO']]))
                 $oStorage->setFilePrivate ($aFile['id'], true);
-            if ($iContentId)
-                $this->_associalFileWithContent($oStorage, $aFile['id'], $iProfileId, $iContentId, $sFieldFile);
+            if (!$iContentId)
+                continue;
+
+            $this->_associalFileWithContent($oStorage, $aFile['id'], $iProfileId, $iContentId, $sFieldFile);
+            $this->_oModule->checkAllowedAdd(true);
         }
 
         return $aContentIds;
