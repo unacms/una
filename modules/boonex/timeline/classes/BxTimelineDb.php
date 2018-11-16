@@ -603,6 +603,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                         //--- Exclude Own (Direct) posts on timelines of following members.
                         //--- Note. Disabled for now.
                         //$sWhereSubclause = $this->prepareAsString("IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> ?, 1)", $aParams['owner_id']);
+                        $sWhereSubclause = "0";
 
                         //--- Select Promoted posts.
                         $sWhereSubclause .= " OR `{$this->_sTable}`.`promoted` <> '0'";
