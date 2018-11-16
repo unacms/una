@@ -125,17 +125,20 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 
         $aEvent['content'] = unserialize($aEvent['content']);
 
-        $oPrivacyInt = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'));
-        if(!$oPrivacyInt->check($aEvent['id']))
-            return '';
+        $sParam = 'perform_privacy_check';
+        if(!isset($aBrowseParams[$sParam]) || $aBrowseParams[$sParam] === true) {
+            $oPrivacyInt = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'));
+            if(!$oPrivacyInt->check($aEvent['id']))
+                return '';
 
-    	$oPrivacyExt = $oModule->_oConfig->getPrivacyObject($aEvent['type'] . '_' . $aEvent['action']);
-    	if($oPrivacyExt !== false && !$oPrivacyExt->check($aEvent['id']))
-            return '';
+            $oPrivacyExt = $oModule->_oConfig->getPrivacyObject($aEvent['type'] . '_' . $aEvent['action']);
+            if($oPrivacyExt !== false && !$oPrivacyExt->check($aEvent['id']))
+                return '';
 
-        $sService = 'check_allowed_with_content';
-        if(BxDolRequest::serviceExists($aEvent['type'], $sService) && BxDolService::call($aEvent['type'], $sService, array('view', $this->_getContentObjectId($aEvent))) !== CHECK_ACTION_RESULT_ALLOWED)
-            return '';
+            $sService = 'check_allowed_with_content';
+            if(BxDolRequest::serviceExists($aEvent['type'], $sService) && BxDolService::call($aEvent['type'], $sService, array('view', $this->_getContentObjectId($aEvent))) !== CHECK_ACTION_RESULT_ALLOWED)
+                return '';
+        }
 
         $oOwner = $oModule->getObjectUser($aEvent['owner_id']);
 
@@ -184,7 +187,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 
     public function getNotificationEmail(&$aEvent)
     {
-        $sEvent = $this->getPost($aEvent);
+        $sEvent = $this->getPost($aEvent, array('perform_privacy_check' => false));
         if(empty($sEvent) || empty($aEvent['content_parsed']))
             return false;
 
@@ -198,7 +201,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 
     public function getNotificationPush(&$aEvent)
     {
-        $sEvent = $this->getPost($aEvent);
+        $sEvent = $this->getPost($aEvent, array('perform_privacy_check' => false));
         if(empty($sEvent) || empty($aEvent['content_parsed']))
             return false;
 
