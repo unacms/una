@@ -109,8 +109,8 @@
         <string name="_bx_channels_page_block_title_entry_all_actions"><![CDATA[All Actions]]></string>
 	<string name="_bx_channels_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
 	<string name="_bx_channels_page_block_title_search_form"><![CDATA[Search Form]]></string>
-  <string name="_bx_channels_page_block_title_entries_my"><![CDATA[My Folloved Channels]]></string>
-  <string name="_bx_channels_page_trigger_block_title_entries_my"><![CDATA[My Folloved Channels]]></string>
+  <string name="_bx_channels_page_block_title_entries_my"><![CDATA[My Followed Channels]]></string>
+  <string name="_bx_channels_page_trigger_block_title_entries_my"><![CDATA[My Followed Channels]]></string>
   <string name="_bx_channels_page_block_title_search_results"><![CDATA[Search Results]]></string>
   <string name="_bx_channels_page_block_title_search_results_by_hashtag"><![CDATA[Search Results By Hashtag]]></string>
 	<string name="_bx_channels_page_block_title_search_form_cmts"><![CDATA[Comments Search Form]]></string>
