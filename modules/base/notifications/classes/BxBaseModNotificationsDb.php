@@ -242,8 +242,8 @@ class BxBaseModNotificationsDb extends BxBaseModGeneralDb
                 );
 
                 $sSelectClause = "`ts`.`active` AS `active_adm`, IF(NOT ISNULL(`tsu`.`active`), `tsu`.`active`, 1) AS `active_pnl`";
-                $sJoinClause = "LEFT JOIN `" . $this->_sTableSettings2Users . "` AS `tsu` ON `ts`.`id`=`tsu`.`setting_id`";
-                $sWhereClause = " AND `ts`.`handler_id`=:handler_id AND `ts`.`delivery`=:delivery AND `ts`.`type`=:type AND `tsu`.`user_id`=:user_id";
+                $sJoinClause = "LEFT JOIN `" . $this->_sTableSettings2Users . "` AS `tsu` ON `ts`.`id`=`tsu`.`setting_id` AND `tsu`.`user_id`=:user_id";
+                $sWhereClause = " AND `ts`.`handler_id`=:handler_id AND `ts`.`delivery`=:delivery AND `ts`.`type`=:type";
                 break;
 
             case 'delivery_max_order':
