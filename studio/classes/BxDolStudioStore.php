@@ -38,9 +38,7 @@ class BxDolStudioStore extends BxTemplStudioPage
         if(is_string($sPage) && !empty($sPage))
             $this->sPage = $sPage;
 
-        $this->iClient = BxDolStudioOAuth::getAuthorizedClient();
-        if(!empty($this->iClient))
-        	$this->sClientKey = $this->oDb->getParam('sys_oauth_key');
+        $this->initClient();
 
         //--- Check actions ---//
         if(($sAction = bx_get('str_action')) !== false) {
@@ -195,6 +193,22 @@ class BxDolStudioStore extends BxTemplStudioPage
             echo json_encode($aResult);
             exit;
         }
+    }
+
+    protected function initClient()
+    {
+        $this->iClient = BxDolStudioOAuth::getAuthorizedClient();
+        if(!empty($this->iClient))
+            $this->sClientKey = $this->oDb->getParam('sys_oauth_key');
+    }
+
+    protected function authorizeClient()
+    {
+        $mixedResult = BxDolStudioInstallerUtils::getInstance()->getAccessObject(true)->doAuthorize();
+        if($mixedResult === true)
+            $this->initClient();
+
+        return $mixedResult;
     }
 
     protected function loadGoodies()

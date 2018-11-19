@@ -60,12 +60,12 @@ class BxDolStudioOAuth extends BxDolFactory
 
     public function doAuthorize()
     {
-    	if(empty($this->sKey) || empty($this->sSecret))
+        if(empty($this->sKey) || empty($this->sSecret))
             return _t('_adm_err_oauth_empty_key_secret');
 
-		$mixedResult = $this->authorize();
-		if($mixedResult !== true)
-		    return $this->onAuthorizeFailed($mixedResult);
+        $mixedResult = $this->authorize();
+        if($mixedResult !== true)
+            return $this->onAuthorizeFailed($mixedResult);
 
         BxDolStudioInstallerUtils::getInstance()->checkModules(true);
         return $mixedResult;

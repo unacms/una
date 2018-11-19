@@ -98,7 +98,7 @@ class BxBaseStudioStore extends BxDolStudioStore
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
-        $mixedResult = BxDolStudioInstallerUtils::getInstance()->getAccessObject(true)->doAuthorize();
+        $mixedResult = $this->authorizeClient();
         if($mixedResult === true) {
 	        $aProducts = $this->loadGoodies();
 
@@ -157,7 +157,7 @@ class BxBaseStudioStore extends BxDolStudioStore
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
-        $mixedResult = BxDolStudioInstallerUtils::getInstance()->getAccessObject(true)->doAuthorize();
+        $mixedResult = $this->authorizeClient();
         if($mixedResult === true) {
 	        $iStart = (int)bx_get('str_start');
 	        $iPerPage = (int)bx_get('str_per_page');
@@ -228,7 +228,7 @@ class BxBaseStudioStore extends BxDolStudioStore
 
     protected function getLabelsList($sType, $bWrapInBlock = true)
     {
-        $mixedResult = BxDolStudioInstallerUtils::getInstance()->getAccessObject(true)->doAuthorize();
+        $mixedResult = $this->authorizeClient();
         if($mixedResult === true) {
             $aLabels = $this->{'load' . bx_gen_method_name($sType)}();
             $sContent = $this->{'display' . bx_gen_method_name($sType)}($aLabels);
@@ -294,7 +294,7 @@ class BxBaseStudioStore extends BxDolStudioStore
         $sJsObject = $this->getPageJsObject();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
-        $mixedResult = BxDolStudioInstallerUtils::getInstance()->getAccessObject(true)->doAuthorize();
+        $mixedResult = $this->authorizeClient();
         if($mixedResult === true) {
             //--- Search form
             $aForm = array(
