@@ -106,6 +106,10 @@ div.mce-fullscreen {
     z-index: 1200;
 }
 
+.bx-acl-err-msg {
+    padding: 0 10%
+}
+
 /* --------------- design boxes */
 
 .bx-db-container {
