@@ -604,7 +604,7 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 
 		return $oSubscription;
 	}
-//TODO: Continue from here!
+
 	protected function _cancelSubscription($sCustomerId, $sSubscriptionId)
 	{
 	    try {

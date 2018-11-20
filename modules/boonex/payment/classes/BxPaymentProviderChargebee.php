@@ -98,8 +98,13 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
 
     public function notify()
     {
-		$iResult = $this->_processEvent();
-		http_response_code($iResult);
+        $iResult = $this->_processEvent();
+        http_response_code($iResult);
+    }
+
+    public function cancelRecurring($iPendingId, $sCustomerId, $sSubscriptionId)
+    {
+        return $this->deleteSubscription($sSubscriptionId);
     }
 
 	public function createHostedPage($aItem, $aClient, $aVendor = array(), $iPendingId = 0) {
@@ -185,24 +190,29 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
 
 	public function deleteSubscription($sSubscriptionId)
 	{
-		try {
-			ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
-			$oResult = ChargeBee_Subscription::cancel($sSubscriptionId);
+            try {
+                ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
+                $oResult = ChargeBee_Subscription::cancel($sSubscriptionId);
 
-			$oSubscription = $oResult->subscription();
-			if($oSubscription->status != 'cancelled')
-				return false;
-		}
-		catch (Exception $oException) {
-			$aError = $oException->getJsonBody();
+                $oSubscription = $oResult->subscription();
+                if($oSubscription->status != 'cancelled')
+                    return false;
+            }
+            catch (Exception $oException) {
+                $aError = $oException->getJsonBody();
 
-			$this->log('Delete Subscription Error: ' . $aError['error']['message']);
-			$this->log($aError);
+                $this->log('Delete Subscription Error: ' . $aError['error']['message']);
+                $this->log($aError);
 
-			return false;
-		}
+                return false;
+            }
 
-		return true;
+            bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_cancel_subscription', 0, false, array(
+                'subscription_id' => $sSubscriptionId,
+                'subscription_object' => &$oSubscription
+            ));
+
+            return true;
 	}
 
     public function retrieveCustomer($sCustomerId)
