@@ -365,7 +365,7 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
                 $aLangFileParams[CHECK_ACTION_LANG_FILE_PERIOD] = $iPeriodLen;
 
                 $aResult[CHECK_ACTION_RESULT] = CHECK_ACTION_RESULT_LIMIT_REACHED;
-                $aResult[CHECK_ACTION_MESSAGE] = '<div style="width: 80%">' . _t_ext(CHECK_ACTION_MESSAGE_LIMIT_REACHED, $aLangFileParams) . ($iPeriodLen > 0 ? _t_ext(CHECK_ACTION_MESSAGE_MESSAGE_EVERY_PERIOD, $aLangFileParams) : '') . '.</div>';
+                $aResult[CHECK_ACTION_MESSAGE] = '<div style="padding: 0 10%">' . _t_ext(CHECK_ACTION_MESSAGE_LIMIT_REACHED, $aLangFileParams) . ($iPeriodLen > 0 ? _t_ext(CHECK_ACTION_MESSAGE_MESSAGE_EVERY_PERIOD, $aLangFileParams) : '') . '.</div>';
 
                 return $aResult;
             }
