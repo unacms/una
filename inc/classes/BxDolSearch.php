@@ -739,7 +739,7 @@ class BxDolSearchResult implements iBxDolReplaceable
         }
 
         // category
-        if ($this->_sCategoryObject && $o = BxDolCategory::getObjectInstance($this->_sCategoryObject)) {
+        if ($this->_sCategoryObject && $o = BxDolCategory::getObjectInstance($this->_sCategoryObject) && $this->_bSingleSearch) {
             unset($this->aCurrent['restriction']['keyword']);
             $o->setSearchCondition($this, $sKeyword);
         }
