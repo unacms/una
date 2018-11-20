@@ -576,7 +576,7 @@
 	<string name="_adm_dbd_txt_htools_status"><![CDATA[{0} - <b>{1}</b>]]></string>
 	<string name="_adm_dbd_txt_installed"><![CDATA[Установлено:]]></string>
 	<string name="_adm_dbd_txt_version"><![CDATA[Версия:]]></string>
-	<string name="_adm_dbd_msg_upgrade_started"><![CDATA[Сайт будет обновлён через минуту]]></string>
+	<string name="_adm_dbd_msg_upgrade_started"><![CDATA[Сайт будет обновлён через минуту. <br />После этого нужно <a href="{0}store.php?page=updates">проверить обновления для модулей</a>.]]></string>
 	<string name="_adm_dbd_txt_su_database"><![CDATA[База данных]]></string>
 	<string name="_adm_dbd_txt_su_system"><![CDATA[Система]]></string>
 	<string name="_adm_dbd_txt_su_system_media"><![CDATA[Системные медиа]]></string>
@@ -1831,6 +1831,7 @@
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_upgrade_success"><![CDATA[{email_header}
 <p>Сайт был удачно обновлён до {new_version}.</p>
+<p>Нужно зайти в <b>Студию &gt; Магазин Приложений &gt; Обновления</b>, чтобы проверить обновления для модулей.</p>
 <p> </p>
 {conclusion}
 <p> </p>
