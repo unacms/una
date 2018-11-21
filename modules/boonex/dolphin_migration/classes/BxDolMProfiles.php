@@ -17,6 +17,9 @@ require_once('BxDolMData.php');
 	
 class BxDolMProfiles extends BxDolMData
 {
+    private $_sProfileCoverName = '';
+    private $_sProfileInfoName = '';
+
     public function __construct(&$oMigrationModule, &$mDb)
     {
 		parent::__construct($oMigrationModule, $mDb);
@@ -31,6 +34,9 @@ class BxDolMProfiles extends BxDolMData
 	
 	public function runMigration()
 	{
+        $this -> _sProfileCoverName = $this -> _mDb -> getParam('bx_photos_profile_cover_album_name');
+        $this -> _sProfileInfoName = $this -> _mDb -> getParam('sys_member_info_name');
+
         if (!$this -> getTotalRecords())
 		{
 			  $this -> setResultStatus(_t('_bx_dolphin_migration_no_data_to_transfer'));
@@ -211,8 +217,9 @@ class BxDolMProfiles extends BxDolMData
                             $this->_oDb->query($sQuery);
                         }
 
-                       $this->exportAvatar($iContentId, $aValue);
-                       $this->exportFriends($aValue['ID']);
+                        $this->exportCover($aValue);
+                        $this->exportAvatar($aValue);
+                        $this->exportFriends($aValue['ID']);
 
 						$this -> _iTransferred++;
                   }
@@ -246,7 +253,7 @@ class BxDolMProfiles extends BxDolMData
 					LIMIT 1", array('uri' => $sAlbumName, 'id' => $aProfileInfo['ID']));
 			
 			if (!empty($aInfo) && isset($aInfo['ID']))
-				$sImagePath = $sImagePath . "photos" . DIRECTORY_SEPARATOR . "data" . DIRECTORY_SEPARATOR . "files" . DIRECTORY_SEPARATOR ."{$aInfo['ID']}.{$aInfo['Ext']}";
+				$sImagePath = $this -> _sImagePhotoFiles ."{$aInfo['ID']}.{$aInfo['Ext']}";
 		}
 		else
 		{
@@ -260,6 +267,59 @@ class BxDolMProfiles extends BxDolMData
 
 	   return false;	 
 	}
+
+
+	private function exportCover($aProfileInfo){
+	    if (!$this -> _sProfileCoverName)
+            return FALSE;
+
+        $iProfileId = $this-> getProfileId($aProfileInfo['ID']);
+        $iContentId = $this-> getContentId($aProfileInfo['ID']);
+
+        $sUserName = $aProfileInfo['NickName'];
+        switch ($this -> _sProfileInfoName) {
+                case 'sys_username':
+                    $sUserName = $aProfileInfo['NickName'];
+                    break;
+                case 'sys_full_name':
+                    $sUserName = htmlspecialchars_adv($aProfileInfo['FullName'] ? $aProfileInfo['FullName'] : $aProfileInfo['NickName']);
+                    break;
+                case 'sys_first_name':
+                    $sUserName = $aProfileInfo['FirstName'] ? $aProfileInfo['FirstName'] : $aProfileInfo['NickName'];
+                    break;
+                case 'sys_first_name_last_name':
+                    $sUserName = $aProfileInfo['FirstName'] || $aProfileInfo['LastName'] ? $aProfileInfo['FirstName'] . ' ' . $aProfileInfo['LastName'] : $aProfileInfo['NickName'];
+                    break;
+                case 'sys_last_name_firs_name':
+                    $sUserName = $aProfileInfo['FirstName'] || $aProfileInfo['LastName'] ? $aProfileInfo['LastName'] . ' ' . $aProfileInfo['FirstName'] : $aProfileInfo['NickName'];
+        }
+
+        $aReplacement = array(
+            '{nickname}' => $sUserName,
+            '{fullname}' => $aProfileInfo['NickName']
+        );
+
+       $sAlbumName = uriFilter(str_replace(array_keys($aReplacement), array_values($aReplacement), $this -> _sProfileCoverName));
+       $aCoverInfo = $this -> _mDb -> getRow("SELECT `bx_photos_main`.* FROM `bx_photos_main` 
+          LEFT JOIN `sys_albums_objects` ON `sys_albums_objects`.`id_object`=`bx_photos_main`.`ID` 
+          LEFT JOIN `sys_albums` ON `sys_albums`.`ID`=`sys_albums_objects`.`id_album` AND `sys_albums`.`LastObjId` = `bx_photos_main`.`ID`  
+          WHERE  `bx_photos_main`.`Owner` = :owner AND `sys_albums`.`Status` ='active' AND `sys_albums`.`Type` ='bx_photos' AND `sys_albums`.`Uri` =:album", array('owner' => $aProfileInfo['ID'],'album' => $sAlbumName));
+
+       if (!empty($aCoverInfo))
+       {
+           $sImagePath = $this->_sImagePhotoFiles . "{$aCoverInfo['ID']}.{$aCoverInfo['Ext']}";
+           if (file_exists($sImagePath)) {
+               $oStorage = BxDolStorage::getObjectInstance('bx_persons_pictures');
+               $iId = $oStorage->storeFileFromPath($sImagePath, false, $iProfileId, $iContentId);
+               if ($iId) {
+                   $sQuery = $this->_oDb->prepare("UPDATE `bx_persons_data` SET `Cover` = ? WHERE `id` = ?", $iId, $iContentId);
+                   $this->_oDb->query($sQuery);
+               }
+           }
+       }
+
+       return false;
+    }
 
 	private function exportFriends($iProfileId)
     {
@@ -306,19 +366,20 @@ class BxDolMProfiles extends BxDolMData
 		}	    
 	}
 
-	private function exportAvatar($iProfileId, $aProfileInfo)
+	private function exportAvatar($aProfileInfo)
     {
-       $iProfileId = (int) $iProfileId;
+       $iProfileId = $this-> getProfileId($aProfileInfo['ID']);
+       $iContentId = $this-> getContentId($aProfileInfo['ID']);
        $sAvatarPath = $this -> getProfileImage($aProfileInfo);
        if($sAvatarPath)
 		{
 			$oStorage = BxDolStorage::getObjectInstance('bx_persons_pictures'); 				
-				$iId = $oStorage->storeFileFromPath($sAvatarPath, false, $iProfileId); 
-				if ($iId)
-				{ 
-					$sQuery = $this -> _oDb -> prepare("UPDATE `bx_persons_data` SET `Picture` = ? WHERE `id` = ?", $iId, $iProfileId);
-					$this -> _oDb -> query($sQuery);								
-				}
+			$iId = $oStorage->storeFileFromPath($sAvatarPath, false, $iProfileId, $iContentId);
+			if ($iId)
+			{
+				$sQuery = $this -> _oDb -> prepare("UPDATE `bx_persons_data` SET `Picture` = ? WHERE `id` = ?", $iId, $iContentId);
+				$this -> _oDb -> query($sQuery);
+			}
 		}
     }
 
