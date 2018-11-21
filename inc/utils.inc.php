@@ -1017,7 +1017,6 @@ function genRndPwd($iLength = 8, $bSpecialCharacters = true)
     if($bSpecialCharacters === true)
         $sChars .= "!?=/&+,.";
 
-    srand((double)microtime()*1000000);
     for($i = 0; $i < $iLength; $i++) {
         $x = mt_rand(0, strlen($sChars) -1);
         $sPassword .= $sChars{$x};
