@@ -50,7 +50,7 @@ class BxBaseModProfileAlertsResponse extends BxBaseModGeneralAlertsResponse
          * 3. User3 posts something on User2's timeline.
          * Result: User1 would be notifiend when the timeline of following profile (User2) was update by 3d party user.
          */
-        if($oAlert->sUnit == 'bx_timeline' && $oAlert->sAction == 'post_common') {
+        if($oAlert->sUnit == 'bx_timeline' && $oAlert->sAction == 'post_common' && !empty($oAlert->aExtras['object_author_id'])) {
             $oTimelineOwner = BxDolProfile::getInstance($oAlert->aExtras['object_author_id']);
             if($oTimelineOwner && $oTimelineOwner->getModule() == $this->_oModule->getName() && $oTimelineOwner->id() != $oAlert->iSender) {
                 $aContentInfo = $this->_oModule->serviceGetContentInfoById($oTimelineOwner->getContentId());
