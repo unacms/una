@@ -578,7 +578,7 @@
 	<string name="_adm_dbd_txt_htools_status"><![CDATA[{0} - <b>{1}</b>]]></string>
 	<string name="_adm_dbd_txt_installed"><![CDATA[Installed:]]></string>
 	<string name="_adm_dbd_txt_version"><![CDATA[Version:]]></string>
-	<string name="_adm_dbd_msg_upgrade_started"><![CDATA[Site will be upgraded within a minute]]></string>
+    <string name="_adm_dbd_msg_upgrade_started"><![CDATA[Site will be upgraded within a minute.<br />Don't forget to <a href="{0}store.php?page=updates">check for modules updates</a> after that.]]></string>
 	<string name="_adm_dbd_txt_su_database"><![CDATA[Database]]></string>
 	<string name="_adm_dbd_txt_su_system"><![CDATA[System]]></string>
 	<string name="_adm_dbd_txt_su_system_media"><![CDATA[System Media]]></string>
@@ -1655,7 +1655,7 @@
 	<string name="_sys_audit_msg_mail_sent"><![CDATA[test mail was send, please check {0} mailbox]]></string>
 	<string name="_sys_audit_msg_manual_audit"><![CDATA[<p>
 Some things can not be determined automatically, manual server audit is required to check it. 
-If you don't know how to do it by yourself you can submit <a target="_blank" href="mailto:team@boonex.com?subject=Server Audit Request">BoonEx Server Audit Request</a>.
+If you don't know how to do it by yourself you can submit <a target="_blank" href="mailto:support@una.io?subject=Server Audit Request">Server Audit Request</a>.
 </p>]]></string>
 	<string name="_sys_audit_msg_must_be"><![CDATA[must be {0} {1}]]></string>
 	<string name="_sys_audit_msg_optimization_apache_module"><![CDATA[To apply this optimization you need to have <b>{0}</b> - {1}]]></string>
@@ -1832,6 +1832,7 @@ If it is not enabled then please consider implement this optimization, since it 
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_upgrade_success"><![CDATA[{email_header}
 <p>Site was successfully upgraded to {new_version}.</p>
+<p>Please go to <b>Studio &gt; Apps Market &gt; Updates</b> to check for modules updates.</p>
 <p> </p>
 {conclusion}
 <p> </p>
