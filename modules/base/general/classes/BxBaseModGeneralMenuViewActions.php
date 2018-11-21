@@ -9,6 +9,8 @@
  * @{
  */
 
+bx_import('BxDolPrivacy');
+
 /**
  * View entry social actions menu
  */
@@ -261,6 +263,12 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         $iId = !empty($aParams['id']) ? (int)$aParams['id'] : '';
         if(empty($iId))
             $iId = $this->_iContentId;
+
+        if(!empty($CNF['FIELD_ALLOW_VIEW_TO'])) {
+            $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iId);
+            if(isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) && (int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] != BX_DOL_PG_ALL)
+                return '';
+        }
 
         if(!BxDolRequest::serviceExists('bx_timeline', 'get_repost_element_block'))
             return '';
