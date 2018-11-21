@@ -31,7 +31,7 @@ class BxDolMProfiles extends BxDolMData
 	
 	public function runMigration()
 	{
-	    if (!$this -> getTotalRecords())
+        if (!$this -> getTotalRecords())
 		{
 			  $this -> setResultStatus(_t('_bx_dolphin_migration_no_data_to_transfer'));
 	          return BX_MIG_SUCCESSFUL;
@@ -61,7 +61,7 @@ class BxDolMProfiles extends BxDolMData
 
     /**
      * Check if profile with the same nickname already exists
-     * @param $iAccountId account id
+     * @param integer $iAccountId account id
      * @param string $sFullName name of the user
      * @return integer profile id
      */
@@ -211,8 +211,8 @@ class BxDolMProfiles extends BxDolMData
                             $this->_oDb->query($sQuery);
                         }
 
-                        $this->exportAvatar($iContentId, $aValue);
-                        $this->exportFriends($aValue['ID']);
+                       $this->exportAvatar($iContentId, $aValue);
+                       $this->exportFriends($aValue['ID']);
 
 						$this -> _iTransferred++;
                   }
@@ -260,7 +260,7 @@ class BxDolMProfiles extends BxDolMData
 
 	   return false;	 
 	}
- 
+
 	private function exportFriends($iProfileId)
     {
        $iProfileId = (int) $iProfileId;
@@ -271,7 +271,7 @@ class BxDolMProfiles extends BxDolMData
 		{
 			$iUserId = $this -> getProfileId($aValue['ID']);
 			$iFriendId = $this -> getProfileId($aValue['Profile']);
-			if( !$this -> isFriendExists($iUserId, $iFriendId))
+			if($iUserId && $iFriendId && !$this -> isFriendExists($iUserId, $iFriendId))
 			{
 
 				   $sQuery =  $this -> _oDb -> prepare("
@@ -282,9 +282,22 @@ class BxDolMProfiles extends BxDolMData
 						   `content`    = ?,
 						   `mutual`     = ?,
 						   `added`     	= UNIX_TIMESTAMP()
-				   ", $iUserId, $iFriendId, (int)($aValue['Check']));
+				   ", $iUserId, $iFriendId, $aValue['Check']);
+                $iResult = $this -> _oDb -> query($sQuery);
 
-				   $iResult = (int) $this -> _oDb -> query($sQuery);
+				if ($iResult && (int)$aValue['Check']){
+		        $sQuery = $this->_oDb->prepare("
+						INSERT IGNORE INTO
+							`sys_profiles_conn_friends`
+						SET
+						   `initiator`	= ?,
+						   `content`    = ?,
+						   `mutual`     = ?,
+						   `added`     	= UNIX_TIMESTAMP()
+				   ", $iFriendId, $iUserId, 1);
+                    $iResult = $this->_oDb->query($sQuery);
+                }
+
 				   if($iResult <= 0) {
 					   return _t('_bx_dolphin_migration_friends_exports_error');
 				   }
@@ -311,20 +324,13 @@ class BxDolMProfiles extends BxDolMData
 
 	private function isFriendExists($iProfileId, $iFriendId)
     {
-            $iProfileId = (int) $iProfileId;
-            $iFriendId  = (int) $iFriendId;
-
             $sQuery =  "
             	SELECT 
             		COUNT(*) 
             	FROM 
             		`sys_profiles_conn_friends` 
             	WHERE
-            		(
-            			(`initiator` = {$iProfileId} AND `content` = {$iFriendId})
-            				OR
-            			(`initiator` = {$iFriendId} AND `content` = {$iProfileId})	
-            		)
+            		`initiator` = {$iProfileId} AND `content` = {$iFriendId}          
             ";
 
             return $this -> _oDb -> getOne($sQuery) ? true : false;
