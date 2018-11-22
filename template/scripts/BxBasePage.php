@@ -68,21 +68,23 @@ class BxBasePage extends BxDolPage
 
         $this->_setSubmenu(array());
 
-        if (!getParam('sys_page_cache_enable') || !$this->_aObject['cache_lifetime'])
-            return $this->_getPageCode();
-
-        $oCache = $this->_getPageCacheObject();
-        $sKey = $this->_getPageCacheKey();
-
-        $mixedRet = $oCache->getData($sKey, $this->_aObject['cache_lifetime']);
-
-        if ($mixedRet !== null) {
-            return $mixedRet;
-        } else {
+        if (!getParam('sys_page_cache_enable') || !$this->_aObject['cache_lifetime']) {
             $sPageCode = $this->_getPageCode();
-            $oCache->setData($sKey, $sPageCode, $this->_aObject['cache_lifetime']);
         }
+        else {
+            $oCache = $this->_getPageCacheObject();
+            $sKey = $this->_getPageCacheKey();
 
+            $mixedRet = $oCache->getData($sKey, $this->_aObject['cache_lifetime']);
+
+            if ($mixedRet !== null) {
+                $sPageCode = $mixedRet;
+            } else {
+                $sPageCode = $this->_getPageCode();
+                $oCache->setData($sKey, $sPageCode, $this->_aObject['cache_lifetime']);
+            }
+        }
+        
         bx_alert('system', 'page_output', 0, false, array(
             'page_name' => $this->_sObject,
             'page_object' => $this,
