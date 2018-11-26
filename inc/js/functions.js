@@ -485,6 +485,14 @@ function bx_menu_slide_inline (sMenu, e, sPosition) {
 
     var eIcon = $(e).find('.sys-icon-a');    
 
+    var fPositionElement = function (oElement) {
+        eSlider.css({
+            position: 'absolute',
+            top: oElement.outerHeight(true),
+            left: 0
+        });
+    };
+
     var fPositionBlock = function () {
         var eBlock = eSlider.parents('.bx-page-block-container');
         eSlider.css({
@@ -516,11 +524,13 @@ function bx_menu_slide_inline (sMenu, e, sPosition) {
             (new Marka(eIcon[0])).set('times');
         }
 
-        if ('block' == sPosition)
+        if(typeof sPosition == 'object')
+            fPositionElement(sPosition);
+        else if(typeof sPosition == 'string' && sPosition == 'block')
             fPositionBlock();
         else
             fPositionSite();
-        
+
         eSlider.slideDown();
 
         eSlider.data('data-control-btn', e);        

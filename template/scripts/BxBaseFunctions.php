@@ -249,9 +249,18 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
             }
 
             if ($sMenu) {
-                $sId = 'bx-menu-db-' . time() . rand(0, PHP_INT_MAX);
+                $bButtonMenu = !empty($aButtons['menu']) && is_array($aButtons['menu']);
+
+                $sId = $bButtonMenu && !empty($aButtons['menu']['id']) ? $aButtons['menu']['id'] : 'bx-menu-db-' . time() . rand(0, PHP_INT_MAX);
                 $sCode .= $this->slideBox($sId, $sMenu, true);
-                $aButtonMenu = array ('icon-a' => $this->_sDesignBoxIcon, 'onclick' => "bx_menu_slide_inline('#" . $sId . "', this)");
+
+                $aButtonMenu = array('icon-a' => $this->_sDesignBoxIcon, 'onclick' => "bx_menu_slide_inline('#" . $sId . "', this)");
+                if($bButtonMenu) {
+                    $aButtonMenu = array_merge($aButtonMenu, $aButtons['menu']);
+                    $aButtons[] = array('menu' => 1);
+
+                    unset($aButtons['menu']);
+                }
             }
 
         }
@@ -262,6 +271,7 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
                 if (isset($aButton['menu']) && $aButton['menu']) {
                     if (!$aButtonMenu)
                         continue;
+
                     $aButton = $aButtonMenu;
                 }
 
