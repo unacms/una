@@ -160,7 +160,15 @@ class BxBaseModNotificationsModule extends BxBaseModGeneralModule
     	return $this->_iOwnerId;
     }
 
-	protected function _updateModuleData($sAction, $sModuleUri)
+    /*
+     * Retrieve the Privacy from an array (Alert's Extras or Content field from DB) 
+     */
+    public function getObjectPrivacyView($aData)
+    {
+        return is_array($aData) && isset($aData['privacy_view']) ? (int)$aData['privacy_view'] : $this->_oConfig->getPrivacyViewDefault('object');
+    }
+
+    protected function _updateModuleData($sAction, $sModuleUri)
     {
     	$sMethod = $this->_oConfig->getHandlersMethod();
 

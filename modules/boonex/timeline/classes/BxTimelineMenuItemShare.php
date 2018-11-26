@@ -77,11 +77,11 @@ class BxTimelineMenuItemShare extends BxTemplMenu
 
         $aMarkers = array(
             'id' => $this->_iEvent,
-        	'module' => $this->_oModule->_oConfig->getName(),
-        	'url' => $this->_aEvent['url'],
-        	'title' => $this->_aEvent['title'],
-        	'img_url' => '',
-        	'img_url_encoded' => ''
+            'module' => $this->_oModule->_oConfig->getName(),
+            'url' => $this->_aEvent['url'],
+            'title' => $this->_aEvent['title'],
+            'img_url' => '',
+            'img_url_encoded' => ''
         );
 
         $aEventData = $this->_oModule->_oTemplate->getData($this->_aEvent);
@@ -91,8 +91,8 @@ class BxTimelineMenuItemShare extends BxTemplMenu
             $sImgUrl = isset($aImage['src_medium']) ? $aImage['src_medium'] : $aImage['src'];;
             if(!empty($sImgUrl))
                 $aMarkers = array_merge($aMarkers, array(
-                	'img_url' => $sImgUrl,
-    				'img_url_encoded' => rawurlencode($sImgUrl),
+                    'img_url' => $sImgUrl,
+                    'img_url_encoded' => rawurlencode($sImgUrl),
                 ));
         }
 
