@@ -196,7 +196,7 @@ class BxDolMProfiles extends BxDolMData
 							$sFullName,
 							isset($aValue['DateOfBirth']) ? $aValue['DateOfBirth'] : 'NULL',
 							isset($aValue['Sex']) && $aValue['Sex'] ? $aSex[$aValue['Sex']] : 1,
-							isset($aValue['allow_view_to']) ? $aValue['allow_view_to'] : 3,
+                            $this -> getPrivacy($aValue),
 							isset($aValue['Featured']) ? (int)$aValue['Featured'] : 0,
 							isset($aValue['Views']) ? (int)$aValue['Views'] : 0,
 							isset($aValue['DescriptionMe']) ? $aValue['DescriptionMe'] : ''
@@ -249,7 +249,7 @@ class BxDolMProfiles extends BxDolMData
 					LEFT JOIN `sys_albums_objects` ON `sys_albums_objects`.`id_object`=`bx_photos_main`.`ID` 
 					LEFT JOIN `sys_albums` ON `sys_albums`.`ID`=`sys_albums_objects`.`id_album` 
 					WHERE `bx_photos_main`.`Status` ='approved' AND `bx_photos_main`.`Owner` =:id AND `sys_albums`.`Status` ='active' AND `sys_albums`.`Type` ='bx_photos' AND `sys_albums`.`Uri` = :uri 
-					ORDER BY `obj_order` ASC, `id_object`
+					ORDER BY `obj_order` ASC, `id_object` DESC
 					LIMIT 1", array('uri' => $sAlbumName, 'id' => $aProfileInfo['ID']));
 			
 			if (!empty($aInfo) && isset($aInfo['ID']))
@@ -454,6 +454,10 @@ class BxDolMProfiles extends BxDolMData
 
 		return $this -> transferPreValues($sName, $sName, $aValues, true);	
 	}
+
+	private function getPrivacy($aProfile){
+	    return $aProfile['allow_to_view'] > 1 && $aProfile['allow_to_view'] <= 5 ? $aProfile['allow_to_view'] : $aProfile['PrivacyDefaultGroup'];
+    }
 }
 
 	
