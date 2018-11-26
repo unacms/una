@@ -132,6 +132,41 @@ class BxPollsModule extends BxBaseModTextModule
     }
 
     /**
+     * @page service Service Calls
+     * @section bx_polls Polls
+     * @subsection bx_polls-page_blocks Page Blocks
+     * @subsubsection bx_polls-get_block_text_and_subentries get_block_text_and_subentries
+     * 
+     * @code bx_srv('bx_polls', 'get_block_text_and_subentries', [...]); @endcode
+     * 
+     * Get page block with poll question and answers with possibility to switch to results.
+     *
+     * @param $iContentId (optional) poll's ID. If empty value is provided, an attempt to get it from GET/POST arrays will be performed.
+     * @param $bForceDisplay (optional) if true is passed then the block will be displayed as is (without checking whether user answered the poll or not).
+     * @return HTML string with block content to display on the site or false if there is no enough input data. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxPollsModule::serviceGetBlockTextAndSubentries
+     */
+    /** 
+     * @ref bx_polls-get_block_text_and_subentries "get_block_text_and_subentries"
+     */
+    public function serviceGetBlockTextAndSubentries($iContentId = 0, $bForceDisplaySubentries = false)
+    {
+        if (!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if (!$iContentId)
+            return false;
+
+        $mixedContent = $this->_getContent($iContentId);
+        if($mixedContent === false)
+            return false;
+
+        list($iContentId, $aContentInfo) = $mixedContent;
+
+        return $this->_oTemplate->entryTextAndSubentries($aContentInfo, $bForceDisplaySubentries);
+    }
+    
+    /**
      * PERMISSION METHODS
      */
     public function isAllowedVote($isPerformAction = false)

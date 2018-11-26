@@ -32,32 +32,38 @@ BxPollsEntry.prototype.changeBlockSnippet = function(oLink, sBlock, iContentId) 
 };
 
 BxPollsEntry.prototype.changeBlock = function(oLink, sBlock, iContentId, onComplete) {
-	var $this = this;
+    var $this = this;
 
     this.loadingInBlock(oLink, true);
 
     if(typeof onComplete !== 'function')
-    	onComplete = function(iContentId, oData) {
-			$('#' + $this._aHtmlIds['content'] + iContentId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-	    		$(this).replaceWith(oData.content);
-	    	});
-		};
+        onComplete = function(iContentId, oData) {
+            var oContent = $(oLink).parents('.bx-db-container:first').find('.bx-polls-content');
+            if(!oContent.length)
+                oContent = $('#' + $this._aHtmlIds['content'] + iContentId);
+            if(!oContent.length)
+                return;
+
+            oContent.bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+                $(this).replaceWith(oData.content);
+            });
+        };
 
     jQuery.get (
         this._sActionsUrl + 'get_block',
         {
-        	block: sBlock,
-        	content_id: iContentId
+            block: sBlock,
+            content_id: iContentId
         },
         function(oData) {
-        	if(oLink)
-        		$this.loadingInBlock(oLink, false);
+            if(oLink)
+                $this.loadingInBlock(oLink, false);
 
-        	if(!oData.content)
-        		return;
+            if(!oData.content)
+                return;
 
-        	if(typeof onComplete === 'function')
-    			onComplete(iContentId, oData);
+            if(typeof onComplete === 'function')
+                onComplete(iContentId, oData);
         },
         'json'
     );

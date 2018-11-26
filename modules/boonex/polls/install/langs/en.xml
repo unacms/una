@@ -69,6 +69,7 @@
 	<string name="_bx_polls_page_title_view_entry"><![CDATA[{title}]]></string>
 	<string name="_bx_polls_page_block_title_entry_subentries"><![CDATA[Answers]]></string>
 	<string name="_bx_polls_page_block_title_entry_text"><![CDATA[Description]]></string>
+        <string name="_bx_polls_page_block_title_entry_text_and_subentries"><![CDATA[Description and Answers]]></string>
 	<string name="_bx_polls_page_title_browse"><![CDATA[Polls]]></string>
 	<string name="_bx_polls_page_title_search_results"><![CDATA[Polls matching "{0}"]]></string>
 	<string name="_bx_polls_page_title_browse_by_author"><![CDATA[Polls of {display_name}]]></string>

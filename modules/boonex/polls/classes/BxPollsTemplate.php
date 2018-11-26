@@ -32,24 +32,6 @@ class BxPollsTemplate extends BxBaseModTextTemplate
         return parent::getJsCode($sType, $aParams, $bWrap);
     }
 
-    public function getTmplVarsText($aData)
-    {
-        $CNF = &$this->getModule()->_oConfig->CNF;
-
-        $aVars = parent::getTmplVarsText($aData);
-
-        $sMethod = '_getGetBlockContent' . (!$this->_oDb->isPerformed($aData[$CNF['FIELD_ID']], bx_get_logged_profile_id()) ? 'Subentries' : 'Results');
-        $sSubentries = $this->$sMethod($aData);
-
-        $aVars['bx_if:show_subentries'] = array(
-            'condition' => !empty($sSubentries),
-            'content' => array(
-                'entry_subentries' => $sSubentries
-            )
-        );
-        return $aVars;
-    }
-
     public function entrySubentries ($aData, $bDynamic = false)
     {
         $sContent = $this->_getGetBlockContentSubentries($aData, $bDynamic);
@@ -71,6 +53,50 @@ class BxPollsTemplate extends BxBaseModTextTemplate
         return array(
             'content' => $sContent,
             'menu' => $this->_getGetBlockMenu($aData, 'results')
+        );
+    }
+
+    public function entryTextAndSubentries($aData, $bForceDisplaySubentries = false)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $sMethod = '_getGetBlockContent';
+        $sMenuItem = '';
+        if(!$bForceDisplaySubentries && $this->_oDb->isPerformed($aData[$CNF['FIELD_ID']], bx_get_logged_profile_id())) {
+            $sMethod .= 'Results';
+            $sMenuItem = 'results';
+        }
+        else {
+            $sMethod .= 'Subentries';
+            $sMenuItem = 'subentries';
+        };
+
+        $sSubentries = $this->$sMethod($aData);
+        $oMenu = $this->_getGetBlockMenu($aData, $sMenuItem);
+
+        $sMenu = str_replace('_', '-', $this->_oConfig->getName()) . '-menu-db';
+        $sMenuId = $sMenu . '-' . time() . rand(0, PHP_INT_MAX);        
+
+        $aTmplVars = parent::getTmplVarsText($aData);
+        $aTmplVars = array_merge($aTmplVars, array(
+            'menu' => BxTemplFunctions::getInstance()->designBoxMenu($oMenu, array(
+                'menu' => array(
+                    'id' => $sMenuId, 
+                    'class' => $sMenu, 
+                    'onclick' => "bx_menu_slide_inline('#" . $sMenuId . "', this, $(this).parents('.bx-db-menu:first'))"
+                )
+            )),
+            'bx_if:show_subentries' => array(
+                'condition' => !empty($sSubentries),
+                'content' => array(
+                    'entry_subentries' => $sSubentries
+                )
+            )
+        ));
+
+        return array(
+            'content' => $this->parseHtmlByName('entry-text-subentries.html', $aTmplVars),
+            'menu' => $oMenu
         );
     }
 
@@ -97,27 +123,33 @@ class BxPollsTemplate extends BxBaseModTextTemplate
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
+        $sPostfix = '-' . time() . rand(0, PHP_INT_MAX);
         $sJsObject = $this->_oConfig->getJsObject('entry');
         $iContentId = $aData[$CNF['FIELD_ID']];
 
         $aBlocks = array(
-        	'subentries' => true, 
-        	'results' => (int)$aData[$CNF['FIELD_HIDDEN_RESULTS']] == 0 || $this->_oDb->isPerformed($iContentId, bx_get_logged_profile_id())
+            'subentries' => true, 
+            'results' => (int)$aData[$CNF['FIELD_HIDDEN_RESULTS']] == 0 || $this->_oDb->isPerformed($iContentId, bx_get_logged_profile_id())
         );
 
         $aMenu = array();
-        foreach($aBlocks as $sBlock => $bActive)
-            if($bActive) {
-                $sId = $this->_oConfig->getHtmlIds('block_link_' . $sBlock);
-                $aMenu[] = array('id' => $sId, 'name' => $sId, 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeBlock(this, \'' . $sBlock . '\', ' . $iContentId . ')', 'target' => '_self', 'title' => _t('_bx_polls_menu_item_view_' . $sBlock));
-            }
+        foreach($aBlocks as $sBlock => $bActive) {
+            if(!$bActive) 
+                continue;
+
+            $sId = $this->_oConfig->getHtmlIds('block_link_' . $sBlock) . $sPostfix;
+            if(!empty($sSelected) && $sSelected == $sBlock)
+                $sSelected = $sId;
+
+            $aMenu[] = array('id' => $sId, 'name' => $sId, 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeBlock(this, \'' . $sBlock . '\', ' . $iContentId . ')', 'target' => '_self', 'title' => _t('_bx_polls_menu_item_view_' . $sBlock));
+        }
 
         if(count($aMenu) <= 1)
             return '';
 
-        $oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id'=> $this->_oConfig->getHtmlIds('block_menu'), 'menu_items' => $aMenu));
+        $oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id' => $this->_oConfig->getHtmlIds('block_menu') . $sPostfix, 'menu_items' => $aMenu));
         if(!empty($sSelected))
-            $oMenu->setSelected('', $this->_oConfig->getHtmlIds('block_link_' . $sSelected));
+            $oMenu->setSelected('', $sSelected);
 
         return $oMenu;
     }

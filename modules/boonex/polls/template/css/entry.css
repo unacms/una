@@ -1,4 +1,25 @@
-/*--- Subentries ---*/
+/*--- Text and Subentries ---*/
+.bx-polls-entity-actions {
+    position: relative;
+    width: 100%;
+}
+.bx-polls-entity-actions .bx-db-menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    line-height: normal;
+}
+.bx-polls-entity-actions .bx-db-menu-tab {
+    display: inline-block;
+    float: none;
+    margin: 0;
+}
+.bx-polls-entity-actions .bx-polls-menu-db {
+    position: relative;
+    display: block;
+    margin: 0;
+    padding: 1rem;
+}
 
 /*--- Results ---*/
 div.bx-polls-result-graph {
