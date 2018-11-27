@@ -21,6 +21,11 @@
     padding: 1rem;
 }
 
+.bx-pull-combined-entity-content {
+    padding-right: 3.5rem;
+}
+
+
 /*--- Results ---*/
 div.bx-polls-result-graph {
 	display: table;
