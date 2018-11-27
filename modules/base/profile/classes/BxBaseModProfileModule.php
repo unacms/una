@@ -445,25 +445,25 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             return '';
         return $this->_serviceBrowse ('recommended', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
     }
-    
-    public function serviceBrowseRecentProfiles ($bDisplayEmptyMsg = false)
+
+    public function serviceBrowseRecentProfiles ($bDisplayEmptyMsg = false, $bAjaxPaginate = true)
     {
-        return $this->_serviceBrowse ('recent', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
+        return $this->_serviceBrowse ('recent', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
     }
 
-    public function serviceBrowseActiveProfiles ($sUnitView = false, $bEmptyMessage = false, $bAjaxPaginate = true)
+    public function serviceBrowseActiveProfiles ($sUnitView = false, $bEmptyMessage = false, $bAjaxPaginate = false)
     {
         return $this->_serviceBrowse ('active', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
     }
 
-    public function serviceBrowseTopProfiles ($bDisplayEmptyMsg = false)
+    public function serviceBrowseTopProfiles ($bDisplayEmptyMsg = false, $bAjaxPaginate = false)
     {
-        return $this->_serviceBrowse ('top', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
+        return $this->_serviceBrowse ('top', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
     }
-    
-	public function serviceBrowseOnlineProfiles ($bDisplayEmptyMsg = false)
+
+    public function serviceBrowseOnlineProfiles ($bDisplayEmptyMsg = false, $bAjaxPaginate = false)
     {
-        return $this->_serviceBrowse ('online', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
+        return $this->_serviceBrowse ('online', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
     }
 
     public function serviceBrowseConnections ($iProfileId, $sObjectConnections = 'sys_profiles_friends', $sConnectionsType = 'content', $iMutual = false, $iDesignBox = BX_DB_PADDING_DEF, $iProfileId2 = 0)
