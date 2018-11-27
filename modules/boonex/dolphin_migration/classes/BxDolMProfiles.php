@@ -210,8 +210,11 @@ class BxDolMProfiles extends BxDolMData
                             $this->_oDb->query("INSERT INTO `sys_profiles` SET `account_id` = {$iAccountId}, `type` = 'bx_persons', `content_id` = {$iContentId}, `status` = 'active'");
                             $iProfile = $this->_oDb->lastId();
 
-                            if ($iProfile)
+                            if ($iProfile) {
                                 BxDolAccountQuery::getInstance()->updateCurrentProfile($iAccountId, $iProfile);
+                                if ($aValue['Role'] == 3)
+                                    BxDolAcl::getInstance()->setMembership($iProfile, MEMBERSHIP_ID_ADMINISTRATOR);
+                            }
 
                             $sQuery = $this->_oDb->prepare("UPDATE `bx_persons_data` SET `author` = ? WHERE `id` = ?", $iProfile, $iContentId);
                             $this->_oDb->query($sQuery);
@@ -456,7 +459,7 @@ class BxDolMProfiles extends BxDolMData
 	}
 
 	private function getPrivacy($aProfile){
-	    return $aProfile['allow_to_view'] > 1 && $aProfile['allow_to_view'] <= 5 ? $aProfile['allow_to_view'] : $aProfile['PrivacyDefaultGroup'];
+	    return isset($aProfile['allow_to_view']) && $aProfile['allow_to_view'] > 1 && $aProfile['allow_to_view'] <= 5 ? $aProfile['allow_to_view'] : $aProfile['PrivacyDefaultGroup'];
     }
 }
 
