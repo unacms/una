@@ -32,6 +32,20 @@ class BxPostsTemplate extends BxBaseModTextTemplate
 
         return array($sPhotoGallery, $sPhotoGallery);
     }
+
+    protected function getAttachmentsImagesTranscoders ()
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS']);
+
+        return array($oTranscoder, null);
+    }
+    
+    function entryAttachments ($aData, $aParams = array())
+    {
+        return $this->entryAttachmentsByStorage($this->getModule()->_oConfig->CNF['OBJECT_STORAGE_PHOTOS'], $aData, $aParams);
+    }
 }
 
 /** @} */

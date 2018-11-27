@@ -186,21 +186,38 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         ));
     }
 
+    protected function getAttachmentsImagesTranscoders ()
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
+        $oTranscoderPreview = isset($CNF['OBJECT_IMAGES_TRANSCODER_PICTURE']) && $CNF['OBJECT_IMAGES_TRANSCODER_PICTURE'] ? BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PICTURE']) : null;
+
+        return array($oTranscoder, $oTranscoderPreview);
+    }
+
+    protected function getAttachmentsVideoTranscoders ()
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        if (isset($CNF['OBJECT_VIDEOS_TRANSCODERS']) && $CNF['OBJECT_VIDEOS_TRANSCODERS'])
+            return array (
+                'poster' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']),
+                'mp4' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']),
+                'webm' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['webm']),
+            );
+
+        return false;
+    }
+    
     protected function getAttachments ($sStorage, $aData, $aParams = array())
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
         $oStorage = BxDolStorage::getObjectInstance($sStorage);
-        $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
-        $oTranscoderPreview = isset($CNF['OBJECT_IMAGES_TRANSCODER_PICTURE']) && $CNF['OBJECT_IMAGES_TRANSCODER_PICTURE'] ? BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PICTURE']) : null;
-        $aTranscodersVideo = false;
 
-        if (isset($CNF['OBJECT_VIDEOS_TRANSCODERS']) && $CNF['OBJECT_VIDEOS_TRANSCODERS'])
-            $aTranscodersVideo = array (
-                'poster' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']),
-                'mp4' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']),
-                'webm' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['webm']),
-            );
+        list($oTranscoder, $oTranscoderPreview) = $this->getAttachmentsImagesTranscoders();
+        $aTranscodersVideo = $this->getAttachmentsVideoTranscoders();
 
         $aGhostFiles = $oStorage->getGhosts ($this->getModule()->serviceGetContentOwnerProfileId($aData[$CNF['FIELD_ID']]), $aData[$CNF['FIELD_ID']]);
         if (!$aGhostFiles)
