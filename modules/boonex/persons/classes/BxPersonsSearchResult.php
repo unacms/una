@@ -49,7 +49,7 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
                 ),
             ),
             'paginate' => array('perPage' => getParam('bx_persons_per_page_browse'), 'start' => 0),
-            'sorting' => 'none',
+            'sorting' => 'active',
             'rss' => array(
                 'title' => '',
                 'link' => '',
@@ -175,8 +175,8 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
                 return array('order' => ' ORDER BY `bx_persons_data`.`featured` DESC ');
             case 'recommended':
                 return array('order' => ' ORDER BY RAND() ');
-	        case 'none':
-	            return array();
+            case 'none':
+                return array();
 	        case 'active':
 	            return array('order' => ' ORDER BY `sys_accounts`.`logged` DESC ');
 			case 'online':

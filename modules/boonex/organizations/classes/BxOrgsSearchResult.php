@@ -50,7 +50,7 @@ class BxOrgsSearchResult extends BxBaseModGroupsSearchResult
                 ),
             ),
             'paginate' => array('perPage' => getParam('bx_organizations_per_page_browse'), 'start' => 0),
-            'sorting' => 'none',
+            'sorting' => 'active',
             'rss' => array(
                 'title' => '',
                 'link' => '',
@@ -207,8 +207,8 @@ class BxOrgsSearchResult extends BxBaseModGroupsSearchResult
                 return array('order' => ' ORDER BY `bx_organizations_data`.`featured` DESC ');
             case 'recommended':
                 return array('order' => ' ORDER BY RAND() ');
-	        case 'none':
-	            return array('order' => ' ORDER BY `sys_accounts`.`logged` DESC ');
+            case 'none':
+                return array();
 			case 'active':
 	            return array('order' => ' ORDER BY `sys_accounts`.`logged` DESC ');
 			case 'online':

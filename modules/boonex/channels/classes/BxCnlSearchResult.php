@@ -48,7 +48,7 @@ class BxCnlSearchResult extends BxBaseModGroupsSearchResult
                 ),
             ),
             'paginate' => array('perPage' => getParam('bx_channels_per_page_browse'), 'start' => 0),
-            'sorting' => 'none',
+            'sorting' => 'last',
             'rss' => array(
                 'title' => '',
                 'link' => '',
@@ -161,7 +161,7 @@ class BxCnlSearchResult extends BxBaseModGroupsSearchResult
         case 'recommended':
             return array('order' => ' ORDER BY RAND() ');
         case 'none':
-            return array('order' => ' ORDER BY `sys_accounts`.`logged` DESC ');
+            return array();
         case 'top':
             return array('order' => ' ORDER BY `bx_cnl_data`.`views` DESC ');
         case 'last':
