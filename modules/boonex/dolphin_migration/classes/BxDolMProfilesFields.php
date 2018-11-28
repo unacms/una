@@ -373,7 +373,8 @@ class BxDolMProfilesFields extends BxDolMData
 					$iNumber++;
 				}
 			}
-		}				
+		}
+
 		parent::removeContent();			
 		return $iNumber;
 	}

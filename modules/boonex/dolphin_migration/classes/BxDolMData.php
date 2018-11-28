@@ -479,11 +479,11 @@ class BxDolMData
 
     /**
      * Create migration field in main table for transferring content from Dolphin to UNA and contains id of the object in Dolphin
-     * @param string $sTableName name of the table to add the index field
      * @param string $sIdentFieldName
+     * @param string $sTableName name of the table to add the index field
      * @return mixed
      */
-    protected function createMIDField($sTableName = '', $sIdentFieldName = '')
+    protected function createMIDField($sIdentFieldName = '', $sTableName = '')
     {
         if (!$this -> _sTableWithTransKey)
             return false;
@@ -499,30 +499,39 @@ class BxDolMData
 
 	/**
 	 *  Returns last migration field value
-	 *
-	 *  @return int
+     * @param string $sIdentFieldName
+     * @param string $sTableName name of the table to add the index field
+	 * @return int
 	 */
-	protected function getLastMIDField()
+	protected function getLastMIDField($sIdentFieldName = '', $sTableName = '')
 	{
 		if (!$this -> _sTableWithTransKey)
 			return false;
 
-		return (int)$this -> _oDb -> getOne("SELECT `{$this -> _sTransferFieldIdent}` FROM `{$this -> _sTableWithTransKey}` WHERE `{$this -> _sTransferFieldIdent}` <> 0 ORDER BY `{$this -> _sTransferFieldIdent}` DESC LIMIT 1");
+        $sIdentFieldName = $sIdentFieldName ? $sIdentFieldName : $this -> _sTransferFieldIdent;
+        $sTableName = $sTableName ? $sTableName : $this -> _sTableWithTransKey;
+
+		return (int)$this -> _oDb -> getOne("SELECT `{$sIdentFieldName}` FROM `{$sTableName}` WHERE `{$sIdentFieldName}` <> 0 ORDER BY `{$sIdentFieldName}` DESC LIMIT 1");
 	}
 
 	/**
 	 *  Check if this record was already transferred
 	 *  
-	 *  @param int $iItemId object id in Dolphin 
-	 *  @param string $sField field name with id values in Dolphin
-	 *  @return int 
+	 * @param int $iItemId object id in Dolphin
+	 * @param string $sField field name with id values in Dolphin
+     * @param string $sIdentFieldName
+     * @param string $sTableName name of the table to add the index field
+	 * @return int
 	 */	
-	protected function isItemExisted($iItemId, $sField = 'id')
+	protected function isItemExisted($iItemId, $sField = 'id', $sIdentFieldName = '', $sTableName = '')
 	{
 		if (!$this -> _sTableWithTransKey)
 			return false;
 
-		return (int)$this -> _oDb -> getOne("SELECT `{$sField}` FROM `{$this -> _sTableWithTransKey}` WHERE `{$this -> _sTransferFieldIdent}` = :item LIMIT 1", array('item' => $iItemId));
+		$sIdentFieldName = $sIdentFieldName ? $sIdentFieldName : $this -> _sTransferFieldIdent;
+        $sTableName = $sTableName ? $sTableName : $this -> _sTableWithTransKey;
+
+		return (int)$this -> _oDb -> getOne("SELECT `{$sField}` FROM `{$sTableName}` WHERE `{$sIdentFieldName}` = :item LIMIT 1", array('item' => $iItemId));
 	}	
 	
 	/**
@@ -530,15 +539,18 @@ class BxDolMData
 	 *  
 	 *  @param int $iId object id in UNA
 	 *  @param int $iItemId object id in Dolphin
-	 *  @param string $sField id field name 
+	 *  @param string $sField id field name
+     * @param string $sIdentFieldName
 	 *  @return int affected rows
 	 */
-	protected function setMID($iId, $iItemId, $sField ='id')
+	protected function setMID($iId, $iItemId, $sField ='id', $sIdentFieldName = '')
 	{
 		if (!$this -> _sTableWithTransKey)
 			return false;
 
-		return (int)$this -> _oDb -> query("UPDATE `{$this -> _sTableWithTransKey}` SET `{$this -> _sTransferFieldIdent}` = :item WHERE `{$sField}` = :id", array('id' => $iId, 'item' => $iItemId));
+        $sIdentFieldName = $sIdentFieldName ? $sIdentFieldName : $this -> _sTransferFieldIdent;
+
+		return (int)$this -> _oDb -> query("UPDATE `{$this -> _sTableWithTransKey}` SET `{$sIdentFieldName}` = :item WHERE `{$sField}` = :id", array('id' => $iId, 'item' => $iItemId));
 	}
 
     /**
@@ -547,7 +559,7 @@ class BxDolMData
      *  @param string $sTableName table name in which to create the field
      *  @return int affected rows
      */
-    public function dropMID($sTableName = '', $sIdentFieldName = '')
+    public function dropMID($sIdentFieldName = '', $sTableName = '')
     {
         $sIdentFieldName = $sIdentFieldName ? $sIdentFieldName : $this -> _sTransferFieldIdent;
         $sTableName = $sTableName ? $sTableName : $this -> _sTableWithTransKey;
@@ -560,15 +572,37 @@ class BxDolMData
 	
 	/**
 	 *  Removes all transferred content from UNA
-	 *  
 	 *  @return void
 	 */
 	public function removeContent()
 	{
-		$this -> dropMID();
-		$this -> _oDb -> updateTransferStatus($this -> _sModuleName, 'not_started');
+        $this -> dropMID();
+	    $this -> _oDb -> updateTransferStatus($this -> _sModuleName, 'not_started');
 		$this -> setResultStatus('');
 	}
+
+    protected function getDefaultPrivacy($iDolProfileId, $sModule, $sAction){
+	    $iPrivacy = $this->_mDb->getOne("SELECT IF (`d`.`group_id` IS NULL, `a`.`default_group`, `d`.`group_id`)
+                                         FROM `sys_privacy_actions` as `a` 
+                                         LEFT JOIN `sys_privacy_defaults` as `d` ON `a`.`id` = `d`.`action_id` AND `d`.`owner_id` = :owner
+                                         WHERE `a`.`module_uri`=:module AND `a`.`name`=:action
+                                         ", array('owner' => $iDolProfileId, 'module' => $sModule, 'action' => $sAction));
+
+        $aProfileInfo = $this->_mDb->getRow("SELECT * FROM `Profiles` WHERE `ID`=:id LIMIT 1", array('id' => $iDolProfileId));
+        return $iPrivacy == 1 && isset($aProfileInfo['PrivacyDefaultGroup']) ? $this -> getValidPrivacy((int)$aProfileInfo['PrivacyDefaultGroup']) : $this -> getValidPrivacy($iPrivacy);
+    }
+
+    protected function getValidPrivacy($iPrivacy)
+    {
+        return $iPrivacy > 1 && $iPrivacy <= 5 ? $iPrivacy : $this->_oConfig->_iDefaultPrivacyGroup;
+    }
+
+    protected function getPrivacy($iDolProfileId, $iPrivacy, $sModule = '', $sAction = '', $iDefaultPrivacy = 0){
+        if ((int)$iPrivacy == 1)
+            return $iDefaultPrivacy ? $this -> getValidPrivacy($iDefaultPrivacy) : $this -> getDefaultPrivacy($iDolProfileId, $sModule, $sAction);
+
+        return $this -> getValidPrivacy($iPrivacy);
+    }
 }
    
 /** @} */

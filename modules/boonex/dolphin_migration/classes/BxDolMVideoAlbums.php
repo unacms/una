@@ -22,13 +22,13 @@ class BxDolMVideoAlbums extends BxDolMData {
 	 *  @var $_sVideoFilesPath path to the video albums files
 	 */	
 	private $_sVideoFilesPath;
-    
+	private $_sVideoMigField = 'vid_id';
+
 	public function __construct(&$oMigrationModule, &$oDb)
 	{
         parent::__construct($oMigrationModule, $oDb);
 		$this -> _sModuleName = 'videos';
 		$this -> _sTableWithTransKey = 'bx_albums_albums';
-		$this -> _sTransferFieldIdent = 'vid_id';
 		$this -> _sVideoFilesPath = $this -> _oDb -> getExtraParam('root') . 'flash' . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . "video" . DIRECTORY_SEPARATOR . "files" . DIRECTORY_SEPARATOR;
     }
 	
@@ -48,7 +48,8 @@ class BxDolMVideoAlbums extends BxDolMData {
 		
 		$this -> setResultStatus(_t('_bx_dolphin_migration_started_migration_videos'));
 		
-		$this -> createMIdField();
+		$this -> createMIdField($this -> _sVideoMigField);
+
 
 		$aResult = $this -> _mDb -> getAll("SELECT * FROM `" . $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['table_name_albums'] ."` WHERE `Type` = 'bx_videos' AND `Uri` <> 'Hidden' ORDER BY `ID` ASC");		
 		foreach($aResult as $iKey => $aValue)
@@ -57,7 +58,7 @@ class BxDolMVideoAlbums extends BxDolMData {
 			if (!$iProfileId) 
 				continue;
 			
-			$iAlbumId = $this -> isItemExisted($aValue['ID']);			
+			$iAlbumId = $this -> isItemExisted($aValue['ID'], 'id', $this -> _sVideoMigField);
 			if (!$iAlbumId)
 			{
 				$sAlbumTitle = isset($aValue['Caption']) && $aValue['Caption'] ? $aValue['Caption'] : 'Profile Videos';			
@@ -79,7 +80,7 @@ class BxDolMVideoAlbums extends BxDolMData {
 								$aValue['Date'] ? $aValue['Date'] : time(), 
 								$aValue['Date'] ? $aValue['Date'] : time(), 
 								$sAlbumTitle,
-								$aValue['AllowAlbumView'],
+                                $this -> getPrivacy($aValue['Owner'], (int)$aValue['AllowAlbumView'], 'videos', 'album_view'),
 								$aValue['Description'],
 								$aValue['Status'] == 'active' ? 'active' : 'hidden'
 								);			
@@ -93,7 +94,7 @@ class BxDolMVideoAlbums extends BxDolMData {
 						return BX_MIG_FAILED;
 					}
 					
-				$this -> setMID($iAlbumId, $aValue['ID']);
+				$this -> setMID($iAlbumId, $aValue['ID'], 'id', $this -> _sVideoMigField);
 				
 			}
 			
@@ -155,7 +156,12 @@ class BxDolMVideoAlbums extends BxDolMData {
 				  
 	  return $iTransferred;
    }
-       	
+
+    public function dropMID($sIdentFieldName = '', $sTableName = '')
+    {
+        return parent::dropMID($this -> _sVideoMigField);
+    }
+
 	private function isFileExisted($iAuthor, $sTitle, $iDate)
 	{    	
     	$sQuery  = $this -> _oDb ->  prepare("SELECT COUNT(*) FROM `bx_albums_files` WHERE `profile_id` = ? AND `file_name` = ? AND `added` = ? LIMIT 1", $iAuthor, $sTitle, $iDate);
@@ -164,10 +170,10 @@ class BxDolMVideoAlbums extends BxDolMData {
 	
 	public function removeContent()
 	{
-		if (!$this -> _oDb -> isTableExists($this -> _sTableWithTransKey) || !$this -> _oDb -> isFieldExists($this -> _sTableWithTransKey, $this -> _sTransferFieldIdent))
+		if (!$this -> _oDb -> isTableExists($this -> _sTableWithTransKey) || !$this -> _oDb -> isFieldExists($this -> _sTableWithTransKey, $this -> _sVideoMigField))
 			return false;
 		
-		$aRecords = $this -> _oDb -> getAll("SELECT * FROM `{$this -> _sTableWithTransKey}` WHERE `{$this -> _sTransferFieldIdent}` !=0");
+		$aRecords = $this -> _oDb -> getAll("SELECT * FROM `{$this -> _sTableWithTransKey}` WHERE `{$this -> _sVideoMigField}` !=0");
 		
 		$iNumber = 0;
 		if (!empty($aRecords))
@@ -178,8 +184,8 @@ class BxDolMVideoAlbums extends BxDolMData {
 				$iNumber++;
 			}
 		}
-		
-		parent::removeContent();		
+
+		parent::removeContent();
 		return $iNumber;
 	}
 }

@@ -74,7 +74,7 @@ class BxDolMPolls extends BxDolMData
 						isset($aValue['poll_question']) ? $aValue['poll_question'] : '',
 						$this -> transferCategory($aValue['poll_categories']),
 						isset($aValue['poll_featured']) ? (int)$aValue['poll_featured'] : 0,
-						isset($aValue['allow_view_to']) ? (int)$aValue['allow_view_to'] : 3,
+                        $this -> getPrivacy((int)$aValue['id_profile'], isset($aValue['allow_view_to']) ? (int)$aValue['allow_view_to'] : 0, 'poll', 'view'),
 						$aValue['poll_status'] = 'active' && $aValue['poll_approval'] ? 'active' : 'hidden'
 						);			
 		
@@ -172,6 +172,7 @@ class BxDolMPolls extends BxDolMData
 				$iNumber++;
 			}
 		}
+
 		parent::removeContent();		
 		return $iNumber;
 	}

@@ -77,7 +77,7 @@ class BxDolMPhotoAlbums extends BxDolMData
 								$aValue['Date'] ? $aValue['Date'] : time(), 
 								$aValue['Date'] ? $aValue['Date'] : time(), 
 								$sAlbumTitle,
-								$aValue['AllowAlbumView'],
+                                $this -> getPrivacy($aValue['Owner'], (int)$aValue['AllowAlbumView'], 'photos', 'album_view'),
 								$aValue['Description'],
 								$aValue['Status'] == 'active' ? 'active' : 'hidden'
 								);			
@@ -178,7 +178,7 @@ class BxDolMPhotoAlbums extends BxDolMData
 				$iNumber++;
 			}
 		}
-		
+
 		parent::removeContent();
 		return $iNumber;
 	}

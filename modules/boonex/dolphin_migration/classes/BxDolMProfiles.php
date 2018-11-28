@@ -196,7 +196,7 @@ class BxDolMProfiles extends BxDolMData
 							$sFullName,
 							isset($aValue['DateOfBirth']) ? $aValue['DateOfBirth'] : 'NULL',
 							isset($aValue['Sex']) && $aValue['Sex'] ? $aSex[$aValue['Sex']] : 1,
-                            $this -> getPrivacy($aValue),
+                            $this -> getPrivacy($aValue['ID'], isset($aValue['allow_view_to']) ? $aValue['allow_view_to'] : 0, '', '', $aValue['PrivacyDefaultGroup']),
 							isset($aValue['Featured']) ? (int)$aValue['Featured'] : 0,
 							isset($aValue['Views']) ? (int)$aValue['Views'] : 0,
 							isset($aValue['DescriptionMe']) && $aValue['DescriptionMe'] ? nl2br(htmlspecialchars_adv($aValue['DescriptionMe'])) : ''
@@ -426,10 +426,9 @@ class BxDolMProfiles extends BxDolMData
                     $oObject = new $aModule['migration_class']($this -> _oMainModule, $this -> _mDb);
                     $oObject -> removeContent();
                 }
-		}	
-		
-		parent::removeContent();
+		}
 
+		parent::removeContent();
 		return $iNumber;
 	}
 	/**
@@ -458,9 +457,9 @@ class BxDolMProfiles extends BxDolMData
 		return $this -> transferPreValues($sName, $sName, $aValues, true);	
 	}
 
-	private function getPrivacy($aProfile){
+	/*private function getPrivacy($aProfile){
 	    return isset($aProfile['allow_to_view']) && $aProfile['allow_to_view'] > 1 && $aProfile['allow_to_view'] <= 5 ? $aProfile['allow_to_view'] : $aProfile['PrivacyDefaultGroup'];
-    }
+    }*/
 }
 
 	

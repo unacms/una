@@ -11,10 +11,11 @@ VALUES (@iTypeId,  @sName, '_bx_dolphin_migration_wgt_cpt', 1);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
-('bx_dolphin_migration_salt', '', 0, '_bx_dolphin_migration_salt', 'digit', '', '', '', 0),
-('bx_dolphin_migration_overwrite', '', @iCategId, '_bx_dolphin_migration_cpt_overwrite', 'checkbox', '', '', '', 0),
-('bx_dolphin_migration_use_nickname', '', @iCategId, '_bx_dolphin_migration_cpt_use_nickname', 'checkbox', '', '', '', 0),
-('bx_dolphin_migration_empty_albums', 'on', @iCategId, '_bx_dolphin_migration_cpt_empty_albums', 'checkbox', '', '', '', 0);
+('bx_dolphin_migration_salt', '', 0, '_bx_dolphin_migration_salt', 'digit', '', '', '', 1),
+('bx_dolphin_migration_overwrite', '', @iCategId, '_bx_dolphin_migration_cpt_overwrite', 'checkbox', '', '', '', 2),
+('bx_dolphin_migration_use_nickname', '', @iCategId, '_bx_dolphin_migration_cpt_use_nickname', 'checkbox', '', '', '', 3),
+('bx_dolphin_migration_empty_albums', 'on', @iCategId, '_bx_dolphin_migration_cpt_empty_albums', 'checkbox', '', '', '', 4),
+('bx_dolphin_migration_default_privacy', '3', @iCategId, '_bx_dolphin_migration_cpt_default_privacy', 'select', '', '', 'a:2:{s:6:"module";s:20:"bx_dolphin_migration";s:6:"method";s:18:"get_privacy_groups";}', 5);
 
 -- GRIDS:
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES

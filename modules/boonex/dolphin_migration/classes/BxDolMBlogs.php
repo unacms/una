@@ -67,7 +67,8 @@ class BxDolMBlogs extends BxDolMData
                      		`text`				= ?,							
 							`cat`				= ?,
 							`views`				= ?,
-							`featured`			= ?
+							`featured`			= ?,
+                     	    `allow_view_to`     = ?
 							
                      ", 
 						$iProfileId, 
@@ -77,7 +78,8 @@ class BxDolMBlogs extends BxDolMData
 						isset($aValue['PostText']) ? $aValue['PostText'] : '',						
 						$this -> transferCategory($aValue['Categories']),						
 						isset($aValue['Views']) ? (int)$aValue['Views'] : 0,
-						isset($aValue['Featured']) ? (int)$aValue['Featured'] : 0
+						isset($aValue['Featured']) ? (int)$aValue['Featured'] : 0,
+                        $this -> getPrivacy((int)$aValue['OwnerID'], isset($aValue['allowView']) ? (int)$aValue['allowView'] : 0, 'blogs', 'view')
 						);			
 		
 				$this -> _oDb -> query($sQuery);

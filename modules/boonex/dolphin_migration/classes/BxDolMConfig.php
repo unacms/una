@@ -39,6 +39,11 @@ class BxDolMConfig extends BxBaseModGeneralConfig
     public $_bUseNickName = false;
 
     /**
+     * @var integer contains default privacy value
+     */
+    public $_iDefaultPrivacyGroup = 3;
+
+    /**
      * @var int interval in milliseconds for checking if the data already transferred but script still works.
      */
     public $_iCheckInterval = 60000;
@@ -270,6 +275,7 @@ class BxDolMConfig extends BxBaseModGeneralConfig
         $this -> _bIsOverwrite = getParam('bx_dolphin_migration_overwrite');
         $this -> _bTransferEmpty = getParam('bx_dolphin_migration_empty_albums');
         $this -> _bUseNickName = getParam('bx_dolphin_migration_use_nickname');
+        $this -> _iDefaultPrivacyGroup = (int)getParam('bx_dolphin_migration_default_privacy');
 
         parent::__construct($aModule);
 	}

@@ -340,8 +340,7 @@ class BxDolMTimeline extends BxDolMData
 			$sStart = " WHERE `id` > {$iFeedsId}";
 													 
 		$aResult = $this -> _mDb -> getAll("SELECT * FROM `". $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['table_name'] . "` {$sStart} ORDER BY `id`");
-		
-		$iCounter = 0;
+
 		foreach($aResult as $iKey => $aValue)
 		{
 			$aInfo = $this -> getFormatedData($aValue);
@@ -372,7 +371,7 @@ class BxDolMTimeline extends BxDolMData
 							$aInfo['type'],
 							$aInfo['action'],
 							$aInfo['object_id'],
-							$aInfo['privacy'],
+                            $this -> getValidPrivacy($aInfo['privacy']),
 							$aInfo['content'],
 							$aInfo['title'],
 							$aInfo['description'],
@@ -467,8 +466,8 @@ class BxDolMTimeline extends BxDolMData
 				$iNumber++;
 			}
 		}
+
 		parent::removeContent();
-		
 		return $iNumber;
 	}	
 }

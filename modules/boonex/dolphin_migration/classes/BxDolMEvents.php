@@ -79,7 +79,7 @@ class BxDolMEvents extends BxDolMData
 						$this -> transferCategory($aValue['Categories']),
 						isset($aValue['Views']) ? (int)$aValue['Views'] : 0,
 						isset($aValue['Featured']) ? (int)$aValue['Featured'] : 0,
-						isset($aValue['allow_view_event_to']) ? (int)$aValue['allow_view_event_to'] : 0,
+						$this -> getPrivacy((int)$aValue['ResponsibleID'], isset($aValue['allow_view_event_to']) ? (int)$aValue['allow_view_event_to'] : 0, 'events', 'view_event'),
 						isset($aValue['JoinConfirmation']) ? (int)$aValue['JoinConfirmation'] : 0,
 						isset($aValue['EventStart']) ? $aValue['EventStart'] : time(), 
 						isset($aValue['EventEnd']) ? $aValue['EventEnd'] : time()
@@ -224,7 +224,7 @@ class BxDolMEvents extends BxDolMData
 				BxDolService::call('bx_events', 'delete_entity_service', array($aValue['id'], true));
 				$iNumber++;
 			}
-		}		
+		}
 		parent::removeContent();
 		return $iNumber;
 	}

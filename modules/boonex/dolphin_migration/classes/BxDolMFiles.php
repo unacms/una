@@ -83,7 +83,7 @@ class BxDolMFiles extends BxDolMData
 						$this -> transferCategory($aValue['Categories']),
 						isset($aValue['Views']) ? (int)$aValue['Views'] : 0,
 						isset($aValue['Featured']) ? (int)$aValue['Featured'] : 0,
-						isset($aValue['AllowDownload']) ? (int)$aValue['AllowDownload'] : 0
+                    	$this -> getPrivacy((int)$aValue['Owner'], isset($aValue['AllowDownload']) ? (int)$aValue['AllowDownload'] : 0, 'files', 'download')
 						);			
 		
 				$this -> _oDb -> query($sQuery);
@@ -159,6 +159,7 @@ class BxDolMFiles extends BxDolMData
 				$iNumber++;
 			}
 		}
+
 		parent::removeContent();
 		return $iNumber;
 	}

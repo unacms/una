@@ -82,14 +82,13 @@ class BxDolMQuotes extends BxDolMData
 		
 		$aRecords = $this -> _oDb -> getAll("SELECT * FROM `{$this -> _sTableWithTransKey}` WHERE `{$this -> _sTransferFieldIdent}` !=0 ");	
 		$iNumber = 0;		
-		if (!empty($aRecords))
-		{
-			foreach($aRecords as $iKey => $aValue)
-			{
-				$this -> _oDb -> query("DELETE FROM `{$this -> _sTableWithTransKey}` WHERE `id`=:id", array('id' => $aValue['id']));
-				$iNumber++;
-			}
-		}	
+		if (!empty($aRecords)) {
+            foreach ($aRecords as $iKey => $aValue) {
+                $this->_oDb->query("DELETE FROM `{$this -> _sTableWithTransKey}` WHERE `id`=:id", array('id' => $aValue['id']));
+                $iNumber++;
+            }
+        }
+
 		parent::removeContent();
 		return $iNumber;
 	}

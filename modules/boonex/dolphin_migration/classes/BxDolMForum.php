@@ -80,8 +80,8 @@ class BxDolMForum extends BxDolMData
 							$sStatus,
 							$iCategory,
 							$aTopic['topic_locked'],
-							$aTopic['topic_sticky']							
-							);			
+							$aTopic['topic_sticky']
+							);
 			
 					$this -> _oDb -> query($sQuery);
 					
@@ -310,6 +310,7 @@ class BxDolMForum extends BxDolMData
 				$iNumber++;
 			}
 		}
+
 		parent::removeContent();
 		return $iNumber;
 	}

@@ -162,6 +162,17 @@ class BxDolMDb extends BxBaseModGeneralDb
 	    $sList = implode("','", $aElements);
 	    return $this -> getOne("SELECT COUNT(*) FROM `{$this -> _sPrefix}transfers` WHERE `module` IN (:list) AND `status` != 'finished'", array('list' => $sList)) == 0;
     }
+
+    public function getPrivacyList()
+    {
+        return $this -> getAll("SELECT
+                   `id`,
+                   `title`,
+                   `check`,
+                   `active`
+                FROM `sys_privacy_groups`
+                WHERE `active`='1' AND `visible`='1'");
+    }
 }
 
 /** @} */

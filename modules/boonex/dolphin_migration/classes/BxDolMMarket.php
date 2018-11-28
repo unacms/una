@@ -83,7 +83,7 @@ class BxDolMMarket extends BxDolMData
 						$this -> transferCategory($aValue['categories']),
 						isset($aValue['views']) ? (int)$aValue['views'] : 0,
 						isset($aValue['featured']) ? (int)$aValue['featured'] : 0,
-						isset($aValue['allow_view_product_to']) ? (int)$aValue['allow_view_product_to'] : 0
+                        $this -> getPrivacy((int)$aValue['author_id'], isset($aValue['allow_view_product_to']) ? (int)$aValue['allow_view_product_to'] : 0, 'store', 'view_product')
 					);			
 		
 				$this -> _oDb -> query($sQuery);				
@@ -209,6 +209,7 @@ class BxDolMMarket extends BxDolMData
 				$iNumber++;
 			}
 		}
+
 		parent::removeContent();
 		return $iNumber;
 	}

@@ -136,6 +136,15 @@ class BxDolMModule extends BxBaseModGeneralModule
         $this->_oMDb = new BxMDb($aConfig);
         return $this->_oMDb->connect();
     }
+
+    public function serviceGetPrivacyGroups(){
+        $aPrivacyList = $this -> _oDb -> getPrivacyList();
+        $aValues = array();
+        foreach($aPrivacyList as $aGroup)
+            $aValues[] = array('key' => $aGroup['id'], 'value' => _t($aGroup['title']));
+
+        return $aValues;
+    }
 }
 
 /** @} */

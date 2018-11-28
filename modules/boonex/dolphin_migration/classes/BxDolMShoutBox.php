@@ -19,14 +19,13 @@ class BxDolMShoutBox extends BxDolMData
 	 *  @var shout box Lot id in Jot Messenger
 	 */
 	private $_iLotID = 2;
-	
+    private $_sMigField = 'shoutbx_id';
 	public function __construct(&$oMigrationModule, &$oDb)
 	{
         parent::__construct($oMigrationModule, $oDb);
 		$this -> _sModuleName = 'shoutbox';
 		$this -> _sTableWithTransKey = 'bx_messenger_jots';
-		$this -> _sTransferFieldIdent = 'shoutbx_id';
-    }    
+    }
 	
 	public function getTotalRecords()
 	{
@@ -43,7 +42,7 @@ class BxDolMShoutBox extends BxDolMData
 		
 		$this -> setResultStatus(_t('_bx_dolphin_migration_started_migration_shoutbox'));
 		
-		$this -> createMIdField();
+		$this -> createMIdField($this -> _sMigField);
 		
 		$aMessages = $this -> _mDb -> getAll("SELECT * FROM `" . $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['table_name'] . "` WHERE `HandlerID` = 0 AND `OwnerID` != 0 ORDER BY `ID`");
 		$aParticipantsList = array();
@@ -83,7 +82,7 @@ class BxDolMShoutBox extends BxDolMData
 				if (!in_array($iProfileId, $aParticipantsList))
 					array_push($aParticipantsList, $iProfileId);
 				
-				$this -> setMID($iMessageId, $aMessage['ID']);
+				$this -> setMID($iMessageId, $aMessage['ID'], 'id', $this -> _sMigField);
 			}	
 		
 			$this -> _iTransferred++;
@@ -101,12 +100,17 @@ class BxDolMShoutBox extends BxDolMData
         return BX_MIG_SUCCESSFUL;
     }
 
+    public function dropMID($sIdentFieldName = '', $sTableName = '')
+    {
+        return parent::dropMID($this -> _sMigField);
+    }
+    
 	public function removeContent()
 	{
-		if (!$this -> _oDb -> isTableExists($this -> _sTableWithTransKey) || !$this -> _oDb -> isFieldExists($this -> _sTableWithTransKey, $this -> _sTransferFieldIdent))
+		if (!$this -> _oDb -> isTableExists($this -> _sTableWithTransKey) || !$this -> _oDb -> isFieldExists($this -> _sTableWithTransKey, $this -> _sMigField))
 			return false;
 		
-		$aRecords = $this -> _oDb -> getAll("SELECT * FROM `{$this -> _sTableWithTransKey}` WHERE `{$this -> _sTransferFieldIdent}` !=0 ");
+		$aRecords = $this -> _oDb -> getAll("SELECT * FROM `{$this -> _sTableWithTransKey}` WHERE `{$this -> _sMigField}` !=0 ");
 		$iNumber = 0;
 		if (!empty($aRecords))
 		{

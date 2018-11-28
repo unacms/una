@@ -121,5 +121,6 @@
 	<string name="_bx_dolphin_migration_cpt_clean"><![CDATA[Clean]]></string>
 	<string name="_bx_dolphin_migration_cpt_use_nickname"><![CDATA[Use NickName instead of Profile's FullName]]></string>
 	<string name="_bx_dolphin_migration_cpt_empty_albums"><![CDATA[Transfer photo albums even if they are empty]]></string>
+	<string name="_bx_dolphin_migration_cpt_default_privacy"><![CDATA[This privacy group will be set in case if you have not standard privacy groups in Dolphin and transferring item's privacy doesn't exist in UNA]]></string>
 	<string name="_bx_dolphin_migration_cpt_clean_warning"><![CDATA[Path to the Dolphin root and information from table below will be lost, Continue?]]></string>
 </resources>

@@ -78,7 +78,7 @@ class BxDolMGroups extends BxDolMData
 						$this -> transferCategory($aValue['categories']),
 						isset($aValue['views']) ? (int)$aValue['views'] : 0,
 						isset($aValue['featured']) ? (int)$aValue['featured'] : 0,
-						isset($aValue['allow_view_group_to']) ? (int)$aValue['allow_view_group_to'] : 0,
+                        $this -> getPrivacy((int)$aValue['author_id'], isset($aValue['allow_view_group_to']) ? (int)$aValue['allow_view_group_to'] : 0, 'groups', 'view_group'),
 						isset($aValue['join_confirmation']) ? (int)$aValue['join_confirmation'] : 0
 						);			
 		

@@ -13,14 +13,14 @@ require_once('BxDolMData.php');
 bx_import('BxDolStorage');
 	
 class BxDolMChat extends BxDolMData 
-{	
-	public function __construct(&$oMigrationModule, &$oDb)
+{
+    private $_sMigField = 'c_mig_id';
+    public function __construct(&$oMigrationModule, &$oDb)
 	{
         parent::__construct($oMigrationModule, $oDb);
 		$this -> _sModuleName = 'chat';
 		$this -> _sTableWithTransKey = 'bx_messenger_jots';
-		$this -> _sTransferFieldIdent = 'c_mig_id';
-    }    
+    }
 	
 	public function getTotalRecords()
 	{
@@ -85,7 +85,7 @@ class BxDolMChat extends BxDolMData
 		$this -> setResultStatus(_t('_bx_dolphin_migration_started_migration_simple_messanger'));		
 	
 
-		$this -> createMIdField();
+		$this -> createMIdField($this -> _sMigField);
 		$aMessages = $this -> _mDb -> getAll("SELECT * FROM `" . $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['table_name'] . "` ORDER BY `ID`");
 		foreach($aMessages as $iMes => $aMessage)
 		{
@@ -118,7 +118,7 @@ class BxDolMChat extends BxDolMData
 						return BX_MIG_FAILED;					
 					}
 					
-					$this -> setMID($iMessageId, $aMessage['ID']);
+					$this -> setMID($iMessageId, $aMessage['ID'], 'id', $this -> _sMigField);
 				
 				$this -> _iTransferred++;
 			}	
@@ -129,13 +129,18 @@ class BxDolMChat extends BxDolMData
         return BX_MIG_SUCCESSFUL;
     }
 
+    public function dropMID($sIdentFieldName = '', $sTableName = '')
+    {
+        return parent::dropMID($this -> _sMigField);
+    }
+
 	public function removeContent()
 	{
-		if (!$this -> _oDb -> isTableExists($this -> _sTableWithTransKey) || !$this -> _oDb -> isFieldExists($this -> _sTableWithTransKey, $this -> _sTransferFieldIdent))
+		if (!$this -> _oDb -> isTableExists($this -> _sTableWithTransKey) || !$this -> _oDb -> isFieldExists($this -> _sTableWithTransKey, $this -> _sMigField))
 			return false;		
 		
-		$aRecords = $this -> _oDb -> getAll("SELECT * FROM `{$this -> _sTableWithTransKey}` WHERE `{$this -> _sTransferFieldIdent}` !=0");
-		$aLots = $this -> _oDb -> getPairs("SELECT `lot_id` FROM `{$this -> _sTableWithTransKey}` WHERE `{$this -> _sTransferFieldIdent}` !=0 GROUP BY `lot_id`", 'lot_id', 'lot_id');
+		$aRecords = $this -> _oDb -> getAll("SELECT * FROM `{$this -> _sTableWithTransKey}` WHERE `{$this -> _sMigField}` !=0");
+		$aLots = $this -> _oDb -> getPairs("SELECT `lot_id` FROM `{$this -> _sTableWithTransKey}` WHERE `{$this -> _sMigField}` !=0 GROUP BY `lot_id`", 'lot_id', 'lot_id');
 		
 		$iNumber = 0;		
 		if (!empty($aRecords))
