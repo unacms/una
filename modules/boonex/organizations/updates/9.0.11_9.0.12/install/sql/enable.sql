@@ -3,4 +3,4 @@ UPDATE `sys_pages_blocks` SET `content`='a:3:{s:6:"module";s:16:"bx_organization
 
 
 -- VOTES
-UPDATE `sys_objects_vote` SET `ClassName`='BxOrgsVote', `ClassFile`='modules/boonex/organizations/classes/BxOrgsVote.php' WHERE `Name`='bx_organizations';
+UPDATE `sys_objects_vote` SET `TriggerFieldAuthor`='', `ClassName`='BxOrgsVote', `ClassFile`='modules/boonex/organizations/classes/BxOrgsVote.php' WHERE `Name`='bx_organizations';
