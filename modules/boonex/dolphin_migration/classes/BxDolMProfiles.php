@@ -199,7 +199,7 @@ class BxDolMProfiles extends BxDolMData
                             $this -> getPrivacy($aValue),
 							isset($aValue['Featured']) ? (int)$aValue['Featured'] : 0,
 							isset($aValue['Views']) ? (int)$aValue['Views'] : 0,
-							isset($aValue['DescriptionMe']) ? $aValue['DescriptionMe'] : ''
+							isset($aValue['DescriptionMe']) && $aValue['DescriptionMe'] ? nl2br(htmlspecialchars_adv($aValue['DescriptionMe'])) : ''
 							);
 						
 						$this -> _oDb -> query($sQuery);	
