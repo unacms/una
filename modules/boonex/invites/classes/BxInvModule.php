@@ -410,9 +410,7 @@ class BxInvModule extends BxDolModule
 
         $mixedAllowed = $this->isAllowedInvite($iProfileId);
         if($mixedAllowed !== true)
-            return array(
-                'content' => MsgBox($mixedAllowed)
-            );
+            return $mixedAllowed;
 
         $mixedInvites = false;
         if(!isAdmin($iAccountId)) {
