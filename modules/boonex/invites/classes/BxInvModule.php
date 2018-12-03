@@ -417,9 +417,7 @@ class BxInvModule extends BxDolModule
             $iInvited = (int)$this->_oDb->getInvites(array('type' => 'count_by_account', 'value' => $iAccountId));
             $mixedInvites = $this->_oConfig->getCountPerUser() - $iInvited;
             if($mixedInvites <= 0)
-                return array(
-                    'content' => MsgBox(_t('_bx_invites_err_limit_reached'))
-                );
+                return _t('_bx_invites_err_limit_reached');
         }
         
         $sEmails = bx_process_input($oForm->getCleanValue('emails'));
