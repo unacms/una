@@ -169,8 +169,12 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
             if(substr($sValue, 0, 1) == '_')
                     $aEvent['content'][$sKey] = _t($sValue);        
 
-    	$aEvent['content_parsed'] = _t(!empty($aEvent['content']['lang_key']) ? $aEvent['content']['lang_key'] : $this->_getContentLangKey($aEvent));
-    	$aEvent['content_parsed'] = $this->parseHtmlByContent($aEvent['content_parsed'], $aEvent['content'], array('{', '}'));
+    	$bEventParsed = false;
+        bx_alert($this->_oConfig->getName(), 'get_notification', 0, 0, array('event' => &$aEvent, 'event_parsed' => &$bEventParsed, 'owner' => &$oOwner));
+        if (!$bEventParsed){
+    	    $aEvent['content_parsed'] = _t(!empty($aEvent['content']['lang_key']) ? $aEvent['content']['lang_key'] : $this->_getContentLangKey($aEvent));
+    	    $aEvent['content_parsed'] = $this->parseHtmlByContent($aEvent['content_parsed'], $aEvent['content'], array('{', '}'));
+        }
 
         return $this->parseHtmlByName('event.html', array (
             'html_id' => $this->_oConfig->getHtmlIds('view', 'event') . $aEvent['id'],
