@@ -56,6 +56,10 @@ class BxContactModule extends BxDolModule
         $sResult = '';
 
         $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_contact'), $this->_oConfig->getObject('form_display_contact_send'), $this->_oTemplate);
+        if (isLogged()) {
+            $oForm->aInputs['name']['value'] = BxDolProfile::getInstance()->getDisplayName();
+            $oForm->aInputs['email']['value'] = BxDolAccount::getInstance()->getEmail();
+        }
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
@@ -100,7 +104,7 @@ class BxContactModule extends BxDolModule
                     $this->onContact();
 
                     foreach($oForm->aInputs as $iKey => $aInput) 
-                        if(in_array($aInput['type'], array('text', 'textarea')))
+                        if(in_array($aInput['type'], array('text', 'textarea')) && !in_array($aInput['name'], array('name', 'email')))
                             $oForm->aInputs[$iKey]['value'] = '';
 
                     $sResult = '_ADM_PROFILE_SEND_MSG';
