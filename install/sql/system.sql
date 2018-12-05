@@ -926,7 +926,8 @@ CREATE TABLE `sys_accounts` (
   `locked` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`(191)),
-  KEY `added` (`added`)
+  KEY `added` (`added`),
+  KEY `profile_id` (`profile_id`)
 );
 
 
