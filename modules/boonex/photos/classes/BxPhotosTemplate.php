@@ -47,7 +47,7 @@ class BxPhotosTemplate extends BxBaseModTextTemplate
         if(empty($sImage)) {
             $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_PHOTOS']);
             if($oStorage)
-                $sImage = $oStorage->getFileUrl($iImage);
+                $sImage = $oStorage->getFileUrlById($iImage);
         }
 
         if(empty($sImage))
