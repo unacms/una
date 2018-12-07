@@ -826,9 +826,11 @@ function bx_append_url_params (sUrl, mixedParams) {
 }
 
 function bx_search_on_type (e, n, sFormSel, sResultsContSel, sLoadingContSel, bSortResults) {
+    
     if ('undefined' != typeof(e) && 13 == e.keyCode) {
-        $(sFormSel).find('input[name=live_search]').val(0);
-        $(sFormSel).submit();
+        var oForm = $(e.target).parents(sFormSel + ':first');
+        oForm.find('input[name=live_search]').val(0);
+        oForm.submit();
         return false;
     }
 
