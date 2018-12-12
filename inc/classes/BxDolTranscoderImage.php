@@ -106,9 +106,10 @@ class BxDolTranscoderImage extends BxDolTranscoder implements iBxDolFactoryObjec
         return BX_DOL_URL_ROOT . 'image_transcoder.php?o=' . $this->_aObject['object'] . '&h=' . $mixedHandler . '&dpx=' . $this->getDevicePixelRatio() . '&t=' . time();
     }
 
-    public function isFileReady ($mixedHandler, $isCheckOutdated = true)
+    public function isFileReady ($mixedHandlerOrig, $isCheckOutdated = true)
     {
         if (isAdmin() && false !== $this->getFilterParams('ResizeVar')) { // only operators can apply new image size
+            $mixedHandler = $this->processHandlerForRetinaDevice($mixedHandlerOrig); 
             $aTranscodedFileData = $this->_oDb->getTranscodedFileData ($mixedHandler);
             $x = $this->getCustomResizeDimension ('x');
             $y = $this->getCustomResizeDimension ('y');
@@ -125,7 +126,7 @@ class BxDolTranscoderImage extends BxDolTranscoder implements iBxDolFactoryObjec
                     return false;
             }
         }
-        return parent::isFileReady ($mixedHandler, $isCheckOutdated);
+        return parent::isFileReady ($mixedHandlerOrig, $isCheckOutdated);
     }
 
     protected function getCustomResizeDimension ($sName)
@@ -143,9 +144,10 @@ class BxDolTranscoderImage extends BxDolTranscoder implements iBxDolFactoryObjec
 
         $x = $this->getCustomResizeDimension ('x');
         $y = $this->getCustomResizeDimension ('y');
-
-        if ($x || $y)
+        if ($x || $y) {
+            $mixedHandler = $this->processHandlerForRetinaDevice($mixedHandler);
             $this->_oDb->updateTranscodedFileData($mixedHandler, array('x' => $x, 'y' => $y));
+        }
 
         return $bRet;
     }
