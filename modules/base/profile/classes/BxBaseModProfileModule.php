@@ -1065,9 +1065,13 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     {
         $CNF = &$this->_oConfig->CNF;
 
+        $sResult = _t('_sys_txt_access_denied');
+        if(empty($aDataEntry) || !is_array($aDataEntry))
+            return $sResult;
+
         $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$CNF['FIELD_ID']], $this->_aModule['name']);
         if(!$oProfile || ($oProfile->id() != $this->_iProfileId && $this->_oDb->getParam($CNF['PARAM_PUBLIC_SBSN']) != 'on' && $this->_oDb->getParam($CNF['PARAM_PUBLIC_SBSD']) != 'on'))
-            return _t('_sys_txt_access_denied');
+            return $sResult;
 
         return CHECK_ACTION_RESULT_ALLOWED;
     }

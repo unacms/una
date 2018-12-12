@@ -1339,7 +1339,10 @@ class BxBaseModGeneralModule extends BxDolModule
             $sFuncCheckAccess = $CNF['MENU_ITEM_TO_METHOD'][$sObject][$aItem['name']];
 
         // check custom visibility settings defined in module config class
-        if($sFuncCheckAccess && CHECK_ACTION_RESULT_ALLOWED !== call_user_func_array(array($this, $sFuncCheckAccess), isset($aContentInfo) ? array(&$aContentInfo) : array()))
+        if(!isset($aContentInfo))
+            $aContentInfo = array();
+
+        if($sFuncCheckAccess && CHECK_ACTION_RESULT_ALLOWED !== call_user_func_array(array($this, $sFuncCheckAccess), array(&$aContentInfo)))
             return false;
 
         return true;
