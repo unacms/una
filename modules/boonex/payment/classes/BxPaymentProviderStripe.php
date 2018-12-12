@@ -263,9 +263,18 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
         if(empty($aSubscription) || !is_array($aSubscription))
             return '';
 
+        $sName = '';
+        if(!empty($aSubscription['plan']['name']))
+            $sName = $aSubscription['plan']['name'];
+        else if(!empty($aSubscription['plan']['product'])){
+            $oProduct = $this->_retrieveProduct($aSubscription['plan']['product']);
+            if($oProduct !== false) 
+                $sName = $oProduct->name;
+        }
+
         $sNone = _t('_bx_payment_txt_none');
         return $this->_oModule->_oTemplate->parseHtmlByName('strp_details_recurring.html', array(
-            'plan' => $aSubscription['plan']['name'],
+            'plan' => $sName,
             'cost' => _t('_bx_payment_strp_txt_cost_mask', (int)$aSubscription['plan']['amount'] / 100, $aSubscription['plan']['currency'], $aSubscription['plan']['interval']),
             'status' => $aSubscription['status'],
         	'created' => bx_time_js($aSubscription['created']),
@@ -463,6 +472,27 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 		}
 
 		return $oCustomer;
+	}
+
+        protected function _retrieveProduct($sId)
+	{
+	    $oProduct = null;
+	    bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_product', 0, false, array(
+	    	'product_id' => &$sId,
+                'product_object' => &$oProduct
+            ));
+
+            if(!empty($oProduct))
+                return $oProduct;
+
+            try {
+                $oProduct = \Stripe\Product::retrieve($sId);
+            }
+            catch (Exception $oException) {
+                return $this->_processException('Retrieve Product Error: ', $oException);
+            }
+
+            return $oProduct;
 	}
 
 	protected function _createCharge($sToken, $iPendingId, &$aClient, &$aCartInfo) {
