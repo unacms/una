@@ -345,8 +345,8 @@ a.bx-def-font-h3:hover {
     border-style: @bx-border-type;
     border-color: @bx-color-border-cover;
 
-	border-radius: @bx-border-radius-cover;
-	background-clip: padding-box;
+    border-radius: @bx-border-radius-cover;
+    background-clip: padding-box;
 
     -webkit-box-shadow: @bx-shadow-cover;
     -moz-box-shadow: @bx-shadow-cover;
@@ -367,8 +367,8 @@ a.bx-def-font-h3:hover {
     border-style: @bx-border-type;
     border-color: @bx-color-border-cover-icon;
 
-	border-radius: @bx-border-radius-cover-icon;
-	background-clip: padding-box;
+    border-radius: @bx-border-radius-cover-icon;
+    background-clip: padding-box;
     
     -webkit-box-shadow: @bx-shadow-cover-icon;
     -moz-box-shadow: @bx-shadow-cover-icon;
@@ -393,24 +393,25 @@ a.bx-def-font-h3:hover {
 
 /* block */
 .bx-def-border-block {
-	border-width: @bx-border-width-block;
-	border-style: @bx-border-type;
-	border-color: @bx-color-border-block;
+    border-width: @bx-border-width-block;
+    border-style: @bx-border-type;
+    border-color: @bx-color-border-block;
 
-	border-radius: @bx-border-radius-block;
-	background-clip: padding-box;    
+    border-radius: @bx-border-radius-block;
+    background-clip: padding-box;
 }
 .bx-def-border-radius-block {
-    .radius(@bx-border-radius-block);
+    border-radius: @bx-border-radius-block;
+    background-clip: padding-box;
 }
 .bx-db-header {
-	padding: @bx-title-padding-block;
+    padding: @bx-title-padding-block;
 
-	border-width: @bx-border-width-block-title;
-	border-style: solid;
-	border-color: @bx-color-border-block-title;
+    border-width: @bx-border-width-block-title;
+    border-style: solid;
+    border-color: @bx-color-border-block-title;
 
-	border-radius: @bx-border-radius-block-title;
+    border-radius: @bx-border-radius-block-title;
 }
 .bx-def-color-bg-block .bx-db-header,
 .bx-def-image-bg-block .bx-db-header {
@@ -432,40 +433,48 @@ a.bx-def-font-h3:hover {
 
 /* box */
 .bx-def-box {
-	border-width: @bx-border-width-box;
-	border-style: @bx-border-type;
-	border-color: @bx-color-border-box;
+    border-width: @bx-border-width-box;
+    border-style: @bx-border-type;
+    border-color: @bx-color-border-box;
 }
 .bx-def-box.bx-def-padding {
-	padding: @bx-content-padding-card;
+    padding: @bx-content-padding-card;
 }
 .bx-def-box.bx-def-color-bg-box {
-	.background-color (@bx-color-box);
+    .background-color (@bx-color-box);
 }
 .bx-def-box.bx-def-color-bg-box-active,
 .bx-def-box.bx-def-color-bg-box-hover:hover {
     .background-color (@bx-color-box-hover);
 }
 .bx-def-box.bx-def-round-corners {
-	border-radius: @bx-border-radius-box;
-	background-clip: padding-box;
+    border-radius: @bx-border-radius-box;
+    background-clip: padding-box;
+}
+.bx-base-text-unit.bx-base-text-unit-ext.bx-def-round-corners img.bx-base-text-unit-cover.bx-def-round-corners,
+.bx-base-text-unit.bx-base-text-unit-ext .bx-def-round-corners img.bx-base-text-unit-cover.bx-def-round-corners {
+    border-radius: @bx-border-radius-box-tl @bx-border-radius-box-tr 0 0;
+}
+.bx-base-text-unit.bx-base-text-unit-gallery.bx-def-round-corners .bx-base-text-unit-thumb.bx-def-round-corners,
+.bx-base-text-unit.bx-base-text-unit-gallery .bx-def-round-corners .bx-base-text-unit-thumb.bx-def-round-corners {
+    border-radius: 0 0 @bx-border-radius-box-br @bx-border-radius-box-bl;
 }
 
 /* popup */
 .bx-popup-border {
-	border-width: @bx-border-width-popup;
-	border-style: solid;
-	border-color: @bx-color-border-popup;
+    border-width: @bx-border-width-popup;
+    border-style: solid;
+    border-color: @bx-color-border-popup;
 
-	border-radius: @bx-border-radius-popup;
-	background-clip: padding-box;
+    border-radius: @bx-border-radius-popup;
+    background-clip: padding-box;
 }
 .bx-popup-color-bg {
-	background-color: @bx-color-popup;
+    background-color: @bx-color-popup;
 
-	background-image: @bx-image-bg-popup;
-	background-repeat: @bx-image-bg-popup-repeat;
-	background-attachment: @bx-image-bg-popup-attachment;
+    background-image: @bx-image-bg-popup;
+    background-repeat: @bx-image-bg-popup-repeat;
+    background-attachment: @bx-image-bg-popup-attachment;
     background-size: @bx-image-bg-popup-size;
 }
 .bx-popup-content-indent {

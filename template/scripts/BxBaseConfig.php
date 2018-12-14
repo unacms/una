@@ -89,14 +89,205 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton
 
     protected function setPageWidth($sParamName)
     {
-    	if(!class_exists('BxDolDb') || !BxDolDb::getInstance() || empty($sParamName)) 
-    		return;
+        if(!class_exists('BxDolDb') || !BxDolDb::getInstance() || empty($sParamName)) 
+            return;
 
-		$mixedWidth = getParam($sParamName);
-		if(is_numeric($mixedWidth))
-			$mixedWidth .= 'px';
+        $mixedWidth = getParam($sParamName);
+        if(is_numeric($mixedWidth))
+            $mixedWidth .= 'px';
 
-		$this->_aConfig['aLessConfig']['bx-page-width'] = $mixedWidth;
+        $this->_aConfig['aLessConfig']['bx-page-width'] = $mixedWidth;
+    }
+
+    protected function _setValue($sKey, $sDefault = '')
+    {
+        $sValue = trim(getParam($sKey));
+        if(!$this->_isModule || empty($sValue))
+            $sValue = $sDefault;
+
+        return $sValue;
+    }
+
+    protected function _setSize($sKey, $sDefault = '')
+    {
+        if(empty($sDefault))
+            $sDefault = '0px';
+
+        $sPattern = "/([0-9\.]+\s*((px)|(rem)|(vh))){1}/";
+
+        $sValue = trim(getParam($sKey));
+        if(!$this->_isModule || empty($sValue) || !preg_match($sPattern, $sValue))
+            $sValue = $sDefault;
+
+        return $sValue;
+    }
+
+    protected function _setSizeDivided($sValue)
+    {
+        $aEmpty = array(0, 0, 0, 0);
+
+        $aValues = explode(' ', $sValue);
+        if(empty($aValues) || !is_array($aValues))
+            return $aEmpty;
+
+        $aResult = $aEmpty;
+        switch(count($aValues)) {
+            case 1:
+                $aResult = array($aValues[0], $aValues[0], $aValues[0], $aValues[0]);
+                break;
+
+            case 2:
+                $aResult = array($aValues[0], $aValues[1], $aValues[0], $aValues[1]);
+                break;
+
+            case 3:
+                $aResult = array($aValues[0], $aValues[1], $aValues[2], $aValues[1]);
+                break;
+
+            case 4:
+                $aResult = array($aValues[0], $aValues[1], $aValues[2], $aValues[3]);
+                break;
+        }
+
+        return $aResult;
+    }
+
+    protected function _setMargin($sKey, $sDefault = '')
+    {
+        if(empty($sDefault))
+            $sDefault = '0px';
+
+        $sPattern = "/([0-9\.]+\s*((px)|(rem))\s*){1,4}/";
+
+        $sValue = trim(getParam($sKey));
+        if(!$this->_isModule || empty($sValue) || ($sValue != 'inherit' && !preg_match($sPattern, $sValue)))
+            $sValue = $sDefault;
+
+        return $sValue;
+    }
+
+    protected function _setColorRgb($sKey, $sDefault = '')
+    {
+        if(empty($sDefault))
+            $sDefault = 'rgb(51, 51, 51)';
+
+        $sPattern = "/rgb\s*\(\s*[0-9]{1,3}\s*,\s*[0-9]{1,3}\s*,\s*[0-9]{1,3}\s*\)/";
+
+        $sValue = trim(getParam($sKey));
+        if(!$this->_isModule || empty($sValue) || !preg_match($sPattern, $sValue))
+            $sValue = $sDefault;
+
+        return $sValue;
+    }
+
+    protected function _setColorRgba($sKey, $sDefault = '')
+    {
+        if(empty($sDefault))
+            $sDefault = 'rgba(51, 51, 51, 1.0)';
+
+        $sPattern = "/rgba?\s*\(\s*([0-9]{1,3}\s*,?\s*){3}\s*([0-9\.]+)?\s*\)/";
+
+        $sValue = trim(getParam($sKey));
+        if(!$this->_isModule || empty($sValue) || !preg_match($sPattern, $sValue))
+            $sValue = $sDefault;
+
+        return $sValue;
+    }
+
+    protected function _setBgUrl($sKey, $oStorage = null)
+    {
+        if(empty($oStorage))
+            $oStorage = BxDolStorage::getObjectInstance('sys_images_custom');
+
+        $iImageId = (int)getParam($sKey);
+        if(empty($iImageId))
+            return "none";
+
+        $sImageUrl = $oStorage->getFileUrlById($iImageId);
+        if(empty($sImageUrl))
+            return "none";
+
+        return "url('" . $sImageUrl . "')";
+    }
+
+    protected function _setBgRepeat($sKey, $sDefault = '')
+    {
+        if(empty($sDefault))
+            $sDefault = 'repeat';
+
+        $sValue = trim(getParam($sKey));
+        if(!$this->_isModule || empty($sValue) || !in_array($sValue, array('no-repeat', 'repeat', 'repeat-x', 'repeat-y')))
+            $sValue = $sDefault;
+
+        return $sValue;
+    }
+
+    protected function _setBgAttachment($sKey, $sDefault = '')
+    {
+        if(empty($sDefault))
+            $sDefault = 'scroll';
+
+        $sValue = trim(getParam($sKey));
+        if(!$this->_isModule || empty($sValue) || !in_array($sValue, array('fixed', 'scroll', 'local')))
+            $sValue = $sDefault;
+
+        return $sValue;
+    }
+
+    protected function _setBgSize($sKey, $sDefault = '')
+    {
+        if(empty($sDefault))
+            $sDefault = 'auto';
+
+        $sValue = trim(getParam($sKey));
+        if(!$this->_isModule || empty($sValue) || !in_array($sValue, array('auto', 'cover', 'contain')))
+            $sValue = $sDefault;
+
+        return $sValue;
+    }
+
+    protected function _setShadow($sKey, $sDefault = '')
+    {
+        if(empty($sDefault))
+            $sDefault = '0px 1px 3px 0px rgba(0, 0, 0, 0.25)';
+
+        $sPattern = "/((-?[0-9]+\s*px\s*){4}\s*rgba\s*\(\s*([0-9]{1,3}\s*,\s*){3}\s*[0-9\.]+\s*\)\s*,?\s*)+/";
+
+        $sValue = trim(getParam($sKey));
+        if(!$this->_isModule || empty($sValue) || $sValue == 'none')
+            $sValue = 'none';
+        else if(!preg_match($sPattern, $sValue))
+            $sValue = $sDefault;
+
+        return $sValue;
+    }
+
+    protected function _setShadowFont($sKey, $sDefault = '')
+    {
+        if(empty($sDefault))
+            $sDefault = '0px 1px 3px rgba(0, 0, 0, 0.25)';
+
+        $sPattern = "/(-?[0-9]+\s*px\s*){3}\s*rgba\s*\(\s*([0-9]{1,3}\s*,\s*){3}\s*[0-9\.]+\s*\)/";
+
+        $sValue = trim(getParam($sKey));
+        if(!$this->_isModule || empty($sValue) || $sValue == 'none')
+            $sValue = 'none';
+        else if(!preg_match($sPattern, $sValue))
+            $sValue = $sDefault;
+
+        return $sValue;
+    }
+
+    protected function _setAlign($sKey, $sDefault = '')
+    {
+        if(empty($sDefault))
+            $sDefault = 'left';
+
+        $sValue = trim(getParam($sKey));
+        if(!$this->_isModule || empty($sValue) || !in_array($sValue, array('left', 'center', 'right')))
+            $sValue = $sDefault;
+
+        return $sValue;
     }
 }
 

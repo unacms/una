@@ -63,7 +63,8 @@ html.bx-media-phone {
     box-shadow: @bx-shadow-card;
 }
 .bx-popup-applied {
-    .radius(@bx-border-radius-popup);
+    border-radius: @bx-border-radius-popup;
+    background-clip: padding-box;
 }
 .bx-popup-applied:not(.bx-popup-chain),
 .bx-popup-applied.bx-popup-chain .bx-popup-chain-item {
@@ -359,7 +360,8 @@ a.bx-def-font-h3:hover {
     border-style: @bx-border-type;
     border-color: @bx-color-border-cover;
 
-    .radius(@bx-border-radius-cover);
+    border-radius: @bx-border-radius-cover;
+    background-clip: padding-box;
 
     -webkit-box-shadow: @bx-shadow-cover;
     -moz-box-shadow: @bx-shadow-cover;
@@ -380,7 +382,8 @@ a.bx-def-font-h3:hover {
     border-style: @bx-border-type;
     border-color: @bx-color-border-cover-icon;
 
-    .radius(@bx-border-radius-cover-icon);
+    border-radius: @bx-border-radius-cover-icon;
+    background-clip: padding-box;
 
     -webkit-box-shadow: @bx-shadow-cover-icon;
     -moz-box-shadow: @bx-shadow-cover-icon;
@@ -405,23 +408,25 @@ a.bx-def-font-h3:hover {
 
 /* block */
 .bx-def-border-block {
-	border-width: @bx-border-width-block;
-	border-style: @bx-border-type;
-	border-color: @bx-color-border-block;
+    border-width: @bx-border-width-block;
+    border-style: @bx-border-type;
+    border-color: @bx-color-border-block;
 
-	.radius(@bx-border-radius-block);
+    border-radius: @bx-border-radius-block;
+    background-clip: padding-box;
 }
 .bx-def-border-radius-block {
-    .radius(@bx-border-radius-block);
+    border-radius: @bx-border-radius-block;
+    background-clip: padding-box;
 }
 .bx-db-header {
-	padding: @bx-title-padding-block;
+    padding: @bx-title-padding-block;
 
-	border-width: @bx-border-width-block-title;
-	border-style: solid;
-	border-color: @bx-color-border-block-title;
+    border-width: @bx-border-width-block-title;
+    border-style: solid;
+    border-color: @bx-color-border-block-title;
 
-	.radius(@bx-border-radius-block-title);	
+    border-radius: @bx-border-radius-block-title;
 }
 .bx-def-color-bg-block .bx-db-header,
 .bx-def-image-bg-block .bx-db-header {
@@ -457,31 +462,37 @@ a.bx-def-font-h3:hover {
     .background-color (@bx-color-box-hover);
 }
 .bx-def-box.bx-def-round-corners {
-	.radius(@bx-border-radius-box);
-	overflow: hidden;
+    border-radius: @bx-border-radius-box;
+    background-clip: padding-box;
+}
+.bx-base-text-unit.bx-base-text-unit-ext.bx-def-round-corners img.bx-base-text-unit-cover.bx-def-round-corners,
+.bx-base-text-unit.bx-base-text-unit-ext .bx-def-round-corners img.bx-base-text-unit-cover.bx-def-round-corners {
+    border-radius: @bx-border-radius-box-tl @bx-border-radius-box-tr 0 0;
+}
+.bx-base-text-unit.bx-base-text-unit-gallery.bx-def-round-corners .bx-base-text-unit-thumb.bx-def-round-corners,
+.bx-base-text-unit.bx-base-text-unit-gallery .bx-def-round-corners .bx-base-text-unit-thumb.bx-def-round-corners {
+    border-radius: 0 0 @bx-border-radius-box-br @bx-border-radius-box-bl;
 }
 
 /* box: timeline */
 .bx-tl-view div.bx-tl-item div.bx-tl-item-footer {
-    .radius(@bx-border-radius-box);
-
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;    
+    border-radius: 0 0 @bx-border-radius-box-br @bx-border-radius-box-bl;
 }
 
 /* popup */
 .bx-popup-border {
-	border-width: @bx-border-width-popup;
-	border-style: solid;
-	border-color: @bx-color-border-popup;
+    border-width: @bx-border-width-popup;
+    border-style: solid;
+    border-color: @bx-color-border-popup;
 
-	.radius(@bx-border-radius-popup);
+    border-radius: @bx-border-radius-popup;
+    background-clip: padding-box;
 }
 .bx-popup-color-bg {
-	background-color: @bx-color-popup;
+    background-color: @bx-color-popup;
 
-	background-image: @bx-image-bg-popup;
-	background-repeat: @bx-image-bg-popup-repeat;
+    background-image: @bx-image-bg-popup;
+    background-repeat: @bx-image-bg-popup-repeat;
     background-size: @bx-image-bg-popup-size;
 }
 .bx-popup-content-indent {
@@ -718,15 +729,17 @@ a.bx-def-font-h3:hover {
 .bx-form-value .bx-form-input-textarea,
 .bx-form-value .bx-form-input-password,
 .bx-form-value .bx-form-input-text {
-	border-color: @bx-color-border-form-input;
-	border-width: @bx-border-width-form-input;
-	.radius(@bx-border-radius-form-input);
+    border-color: @bx-color-border-form-input;
+    border-width: @bx-border-width-form-input;
 
-	background-color: @bx-color-form-input;
+    border-radius: @bx-border-radius-form-input;
+    background-clip: padding-box;
 
-	-webkit-box-shadow: @bx-shadow-form-input;
-	-moz-box-shadow: @bx-shadow-form-input;
-	box-shadow: @bx-shadow-form-input;
+    background-color: @bx-color-form-input;
+
+    -webkit-box-shadow: @bx-shadow-form-input;
+    -moz-box-shadow: @bx-shadow-form-input;
+    box-shadow: @bx-shadow-form-input;
 }
 .bx-form-value .bx-form-input-slider,
 .bx-form-value .bx-form-input-doublerange,
@@ -794,7 +807,8 @@ a.bx-def-font-h3:hover {
 	border-style: solid;
 	border-color: @bx-color-border-button;
 
-	.radius(@bx-border-radius-button);
+        border-radius: @bx-border-radius-button;
+	background-clip: padding-box;
 
 	-webkit-box-shadow: @bx-shadow-button;
 	-moz-box-shadow: @bx-shadow-button;
@@ -819,7 +833,8 @@ a.bx-def-font-h3:hover {
 	border-style: solid;
 	border-color: @bx-color-border-button-primary;
 
-	.radius(@bx-border-radius-button-primary);
+        border-radius: @bx-border-radius-button-primary;
+	background-clip: padding-box;
 
 	-webkit-box-shadow: @bx-shadow-button-primary;
 	-moz-box-shadow: @bx-shadow-button-primary;
@@ -898,7 +913,8 @@ a.bx-def-font-h3:hover {
 	border-style: solid;
 	border-color: @bx-color-border-button-large;
 
-	.radius(@bx-border-radius-button-large);
+        border-radius: @bx-border-radius-button-large;
+	background-clip: padding-box;
 
 	-webkit-box-shadow: @bx-shadow-button-large;
 	-moz-box-shadow: @bx-shadow-button-large;
@@ -923,7 +939,8 @@ a.bx-def-font-h3:hover {
 	border-style: solid;
 	border-color: @bx-color-border-button-large-primary;
 
-	.radius(@bx-border-radius-button-large-primary);
+        border-radius: @bx-border-radius-button-large-primary;
+	background-clip: padding-box;
 
 	-webkit-box-shadow: @bx-shadow-button-large-primary;
 	-moz-box-shadow: @bx-shadow-button-large-primary;
@@ -1002,7 +1019,8 @@ a.bx-def-font-h3:hover {
 	border-style: solid;
 	border-color: @bx-color-border-button-small;
 
-	.radius(@bx-border-radius-button-small);
+        border-radius: @bx-border-radius-button-small;
+        background-clip: padding-box;
 
 	-webkit-box-shadow: @bx-shadow-button-small;
 	-moz-box-shadow: @bx-shadow-button-small;
@@ -1027,7 +1045,8 @@ a.bx-def-font-h3:hover {
 	border-style: solid;
 	border-color: @bx-color-border-button-small-primary;
 
-	.radius(@bx-border-radius-button-small-primary);
+        border-radius: @bx-border-radius-button-small-primary;
+        background-clip: padding-box;
 
 	-webkit-box-shadow: @bx-shadow-button-small-primary;
 	-moz-box-shadow: @bx-shadow-button-small-primary;
