@@ -44,18 +44,6 @@ html.bx-media-phone {
 	padding-right: 0px;
 }
 
-.bx-media-phone #bx-content-container.bx-def-padding-sec-left {
-	padding-left: 0px;
-}
-
-.bx-media-phone #bx-content-container.bx-def-padding-sec-right {
-	padding-right: 0px;
-}
-
-.bx-media-phone #bx-content-container .bx-db-container.bx-def-border-block {
-	border-left-width: 0px;
-	border-right-width: 0px;
-}
 
 /* general.css */
 
