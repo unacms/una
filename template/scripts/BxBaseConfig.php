@@ -152,6 +152,63 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton
         return $aResult;
     }
 
+    protected function _setInnerSizeDivided($sValue, $aReductor = array('px' => 1, 'rem' => 0.0625))
+    {
+        $aEmpty = array(0, 0, 0, 0);
+
+        $aValues = explode(' ', $sValue);
+        if(empty($aValues) || !is_array($aValues))
+            return $aEmpty;
+
+        $aResult = $aEmpty;
+        switch(count($aValues)) {
+            case 1:
+                $sValue0 = $this->_decreaseValue($aValues[0], $aReductor);
+                $aResult = array($sValue0, $sValue0, $sValue0, $sValue0);
+                break;
+
+            case 2:
+                $sValue0 = $this->_decreaseValue($aValues[0], $aReductor);
+                $sValue1 = $this->_decreaseValue($aValues[1], $aReductor);
+                $aResult = array($sValue0, $sValue1, $sValue0, $sValue1);
+                break;
+
+            case 3:
+                $sValue0 = $this->_decreaseValue($aValues[0], $aReductor);
+                $sValue1 = $this->_decreaseValue($aValues[1], $aReductor);
+                $sValue2 = $this->_decreaseValue($aValues[2], $aReductor);
+                $aResult = array($sValue0, $sValue1, $sValue2, $sValue1);
+                break;
+
+            case 4:
+                $sValue0 = $this->_decreaseValue($aValues[0], $aReductor);
+                $sValue1 = $this->_decreaseValue($aValues[1], $aReductor);
+                $sValue2 = $this->_decreaseValue($aValues[2], $aReductor);
+                $sValue3 = $this->_decreaseValue($aValues[3], $aReductor);
+                $aResult = array($sValue0, $sValue1, $sValue2, $sValue3);
+                break;
+        }
+
+        return $aResult;
+    }
+
+    protected function _decreaseValue($sValue, $aReductor = array('px' => 1, 'rem' => 0.0625))
+    {
+        $sPattern = "/(([0-9\.]+)\s*((px)|(rem))){1}/";
+
+        $aMatches = array();
+        if(!preg_match($sPattern, $sValue, $aMatches))
+            return $sValue;
+
+        if(!isset($aMatches[2]) || empty($aMatches[4]))
+            return $sValue;
+
+        if(!isset($aReductor[$aMatches[4]]))
+            return $sValue;
+
+        return ($aMatches[2] - $aReductor[$aMatches[4]]) . $aMatches[4];
+    }
+
     protected function _setMargin($sKey, $sDefault = '')
     {
         if(empty($sDefault))

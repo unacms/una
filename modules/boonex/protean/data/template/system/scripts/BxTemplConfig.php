@@ -213,6 +213,12 @@ class BxTemplConfig extends BxBaseConfig
             $this->_aConfig['aLessConfig']['bx-border-radius-box-br'],
             $this->_aConfig['aLessConfig']['bx-border-radius-box-bl']
         ) = $this->_setSizeDivided($this->_aConfig['aLessConfig']['bx-border-radius-box']);
+        list(
+            $this->_aConfig['aLessConfig']['bx-border-radius-box-itl'],
+            $this->_aConfig['aLessConfig']['bx-border-radius-box-itr'],
+            $this->_aConfig['aLessConfig']['bx-border-radius-box-ibr'],
+            $this->_aConfig['aLessConfig']['bx-border-radius-box-ibl']
+        ) = $this->_setInnerSizeDivided($this->_aConfig['aLessConfig']['bx-border-radius-box']);
         $this->_aConfig['aLessConfig']['bx-border-radius-popup'] = $this->_setSize($sName . '_popup_border_radius', '3px');
         list(
             $this->_aConfig['aLessConfig']['bx-border-radius-popup-tl'],
