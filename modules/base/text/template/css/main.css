@@ -90,11 +90,12 @@ div.bx-base-text-breadcrumb i {
 }
 
 .bx-base-text-unit-gallery h2 {
-	margin-bottom: 0;
-	max-height: 3.75em;
+    margin-bottom: 0;
+    max-height: 3.75em;
     line-height: 1.25em;
     white-space: nowrap;
     text-overflow: ellipsis;
+    text-align: left;
     overflow: hidden;
 }
 
