@@ -159,6 +159,16 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
     	return $this->_oModule->getReportObject($sReportsSystem, $iReportsObject)->getElementInline($aReportsParams);
     }
 
+    protected function _getMenuItemDefault ($aItem)
+    {
+        if(!isset($aItem['class_link']))
+            $aItem['class_link'] = '';
+
+        $aItem['class_link'] = 'bx-menu-item-link' . (!empty($aItem['class_link']) ? ' ' : '') . $aItem['class_link'];
+
+        return parent::_getMenuItemDefault ($aItem);
+    }
+
     /**
      * Check if menu items is visible.
      * @param $a menu item array
