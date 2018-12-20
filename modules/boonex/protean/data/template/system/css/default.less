@@ -809,3 +809,13 @@ a.bx-def-font-h3:hover {
 .bx-btn.bx-btn-small:active .sys-icon {
 	color: @bx-font-color-button-small-hover;
 }
+
+/* colors */
+.bx-def-color-bg-hl,
+.bx-def-color-bg-hl-even:nth-child(even),
+.bx-def-color-bg-hl-hover:hover {
+    -webkit-transition: background .1s ease,color .1s ease, -webkit-box-shadow .1s ease;
+    transition: background .1s ease, color .1s ease,-webkit-box-shadow .1s ease;
+    transition: background .1s ease, box-shadow .1s ease,color .1s ease;
+    transition: background .1s ease, box-shadow .1s ease,color .1s ease,-webkit-box-shadow .1s ease;
+}

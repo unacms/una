@@ -18,6 +18,18 @@ class BxTemplConfig extends BxBaseConfig
         $sName = 'bx_protean';
         $this->_isModule = BxDolModuleQuery::getInstance()->isModuleByName($sName);
 
+        //--- Defaults
+        $this->_aConfig['aLessConfig'] = array_merge($this->_aConfig['aLessConfig'], array(
+            'bx-margin' => '16px',
+            'bx-margin-sec' => '8px',
+            'bx-margin-thd' => '4px',
+
+            'bx-padding' => '16px',
+            'bx-padding-sec' => '8px',
+            'bx-padding-thd' => '4px',
+
+            'bx-size-avatar' => '60px'
+        ));
 
         //--- Images
         $oStorage = BxDolStorage::getObjectInstance('sys_images_custom');
