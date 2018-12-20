@@ -35,6 +35,8 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton
             'bx-color-block' => '#fff',
             'bx-color-box' => 'rgba(242, 242, 242, 1.0)',
             'bx-color-box-hover' => 'rgba(242, 242, 242, 0.8)',
+            'bx-color-label' => '#e8e8e8',
+            'bx-color-label-menu' => '#999999',
             'bx-color-sec' => '#f2f2f2',
             'bx-color-hl' => 'rgba(196, 248, 156, 0.2)',
             'bx-color-active' => 'rgba(196, 248, 156, 0.4)',
@@ -56,6 +58,7 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton
             'bx-font-color-contrasted' => '#fff',
 
             'bx-round-corners-radius' => '3px',
+            'bx-round-corners-radius-label' => '4px',
         ),
     );
 

@@ -616,6 +616,39 @@ h3,
     .box-sizing();
 }
 
+
+/* label */
+
+.bx-def-label {
+    .padding-top(@bx-padding-thd);
+    .padding-bottom(@bx-padding-thd);
+    .padding-left(@bx-padding-sec);
+    .padding-right(@bx-padding-sec);
+
+    .radius(@bx-round-corners-radius-label);
+
+    background-color: @bx-color-label;
+    
+    font-size: @bx-font-size-small;
+    
+}
+.bx-def-label,
+.bx-def-label a,
+.bx-def-label .sys-icon {
+    color: @bx-font-color-grayed;
+}
+
+.bx-def-label.menu {
+    background-color: @bx-color-label-menu;
+}
+
+.bx-def-label.menu,
+.bx-def-label.menu a,
+.bx-def-label.menu .sys-icon {
+    color: @bx-font-color-contrasted;
+}
+
+
 /* z-index */
 
 .bx-def-z-index-front {

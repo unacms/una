@@ -174,9 +174,13 @@
 
 
 /* --------------- Profile Stats */
-
-.bx-profile-stats .bx-ps-acl span {
-	text-transform: uppercase;
+.bx-profile-stats .bx-def-unit-info-cnt {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+    -webkit-flex-direction: column;
+    flex-direction: column;
 }
 
 
