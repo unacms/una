@@ -61,3 +61,7 @@ table.dataTable thead .sorting_desc:after{ margin-left:10px; font-family: "sys-u
 table.dataTable.no-footer {border-bottom:none !important}
 table.dataTable thead th{border-bottom:none !important; padding: 10px 10px !important}
 table.dataTable thead .sorting {background-image: none !important}
+.bx-media-phone #bx_analytics_container .bx-grid-table 
+{
+	min-width: inherit !important;
+}

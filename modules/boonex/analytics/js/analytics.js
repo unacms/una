@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
@@ -64,10 +64,10 @@ BxAnalytics.prototype.reloadData = function () {
     $.getJSON($sUrl, function (oData) {
         Chart.defaults.global.layout = {
             padding: {
-                left: 40,
-                right: 40,
-                top: 40,
-                bottom: 20
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0
             }
         }
 		
