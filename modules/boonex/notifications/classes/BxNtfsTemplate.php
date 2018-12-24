@@ -155,7 +155,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         }
 
         $iObjectOwner = (int)$aEvent['object_owner_id'];
-        if(empty($iObjectOwner) || !empty($aEvent['content']['entry_author']))
+        if(empty($iObjectOwner) && !empty($aEvent['content']['entry_author']))
             $iObjectOwner = (int)$aEvent['content']['entry_author'];
 
         $oObjectOwner = $oModule->getObjectUser($iObjectOwner);
