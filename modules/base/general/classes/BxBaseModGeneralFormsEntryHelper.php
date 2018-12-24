@@ -207,7 +207,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             $oForm->processFiles ($CNF['FIELD_PHOTO'], $iContentId, true);
 
         // perform action
-        $this->_oModule->checkAllowedAdd(true);
+        $this->_oModule->$sCheckFunction(true);
 
         // redirect
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
@@ -278,7 +278,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             $oForm->processFiles ($CNF['FIELD_PHOTO'], $iContentId, false);
 
         // perform action
-        $this->_oModule->checkAllowedEdit($aContentInfo, true);
+        $this->_oModule->$sCheckFunction($aContentInfo, true);
         
         // redirect
         $this->redirectAfterEdit($aContentInfo);
@@ -320,7 +320,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             return MsgBox($sError);
 
         // perform action
-        $this->_oModule->checkAllowedDelete($aContentInfo, true);
+        $this->_oModule->$sCheckFunction($aContentInfo, true);
 
         // redirect
         $this->redirectAfterDelete($aContentInfo);
