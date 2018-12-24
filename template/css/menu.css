@@ -730,13 +730,15 @@ ul.bx-menu-btns-hor li:last-child .bx-btn {
     align-items: center;
     -webkit-justify-content: flex-start;
     justify-content: flex-start;
+
+    line-height: 1.5rem;
 }
 .bx-menu-ver.bx-menu-object-sys_profile_stats li img, 
 .bx-menu-ver.bx-menu-object-sys_profile_stats li .sys-icon {
     display: inline-block;
     vertical-align: top;
-    width: 1.5rem;
-    height: 1.5rem;
-    line-height: 1.5rem;
-    font-size: 1.5rem;
+    width: 1.0rem;
+    height: 1.0rem;
+    line-height: 1.0rem;
+    font-size: 1.0rem;
 }

@@ -44,6 +44,7 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton
             'bx-border-width' => '1px',
             'bx-border-type' => 'solid',
             'bx-border-color' => '#d0d0d0',
+            'bx-border-color-hr' => 'rgba(232, 232, 232, 0.8)',
 
             'bx-font-size-default' => '18px',
             'bx-font-size-small' => '14px',
@@ -59,6 +60,7 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton
 
             'bx-round-corners-radius' => '3px',
             'bx-round-corners-radius-label' => '4px',
+            'bx-round-corners-radius-label-menu' => '12px',
         ),
     );
 
