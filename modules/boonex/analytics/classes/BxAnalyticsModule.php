@@ -341,7 +341,7 @@ class BxAnalyticsModule extends BxDolModule
         else{
             $aDataForChartXAxes = array(
                 'ticks' => array(
-                    'autoSkip' => false
+                    'autoSkip' => true
                 ),
                 'display' => true
             );
@@ -354,7 +354,7 @@ class BxAnalyticsModule extends BxDolModule
                 'fill' => false,
                 'backgroundColor' => $this->aColors[$i],
                 'borderColor' => $this->aColors[$i],
-                'borderWidth' => 1,
+                'borderWidth' => 2,
                 'data' => $aValues['values'][$i]['data']
             );
         }
@@ -369,6 +369,11 @@ class BxAnalyticsModule extends BxDolModule
                 'legend' => array(
                     'position' => 'bottom', 
                     'display' => count($aValues['values']) == 1 ? false :true
+                ),
+                'elements' => array(
+                    'point'=> array(
+                        'radius' => 0
+                    )
                 ),
                 'scales' => array(
                     'yAxes' => array(
@@ -436,7 +441,7 @@ class BxAnalyticsModule extends BxDolModule
           
     private function getStep($iMin, $iMax)
     {
-        $iCount = 10;
+        $iCount = 8;
         return ceil(($iMax - $iMin) / $iCount);
     }
           
