@@ -2481,7 +2481,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
         $CNF = $this->_oConfig->CNF;
 
-        $mixedResult = BxDolProfile::getInstance($aContentInfo[$CNF['FIELD_OWNER_ID']])->checkAllowedProfileView();
+        $iOwner = (int)$aContentInfo[$CNF['FIELD_OWNER_ID']];
+        if($iOwner == 0) //--- in case of Public Timeline.
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        $oOwner = BxDolProfile::getInstance($iOwner);
+        if(!$oOwner) //--- in case of non-existed Timeline owner.
+            return _t('_sys_txt_access_denied');
+
+        $mixedResult = $oOwner->checkAllowedProfileView();
         if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
             return $mixedResult;
 
