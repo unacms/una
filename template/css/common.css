@@ -91,6 +91,11 @@ blockquote {
     color: #999999;
 }
 
+.bx-tag s {
+    text-decoration: none;
+    font-weight: bold;
+}
+
 .sys-icon-a {
     width:1.5rem;
     height:1.5rem;
