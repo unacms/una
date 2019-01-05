@@ -11,3 +11,17 @@
 .bx-profile-stats .bx-def-unit-cnt {
     position: relative;
 }
+.bx-profile-stats .bx-def-unit-cnt .bx-def-ava-size {
+    width: 3.75rem;
+    height: 3.75rem;
+    line-height: 3.75rem;
+}
+.bx-profile-stats .bx-def-unit-cnt .bx-def-ava-size-left-indent {
+    margin-left: 4.75rem;
+}
+.bx-profile-stats .bx-def-unit-cnt .bx-def-ava-size-min-height {
+    min-height: 3.75rem;
+}
+.bx-profile-stats .bx-def-unit-cnt .bx-def-ava-size-max-height {
+    max-height: 3.75rem;
+}

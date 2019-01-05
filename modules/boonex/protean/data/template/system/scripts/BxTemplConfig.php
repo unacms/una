@@ -26,9 +26,7 @@ class BxTemplConfig extends BxBaseConfig
 
             'bx-padding' => '16px',
             'bx-padding-sec' => '8px',
-            'bx-padding-thd' => '4px',
-
-            'bx-size-avatar' => '60px'
+            'bx-padding-thd' => '4px'
         ));
 
         //--- Images
