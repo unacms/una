@@ -91,59 +91,70 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         echoJson($this->getFormPost());
     }
 
+    //TODO: Continue from here! 'type' has event's type instead of Browsing type.
     public function actionEdit($iId)
     {
         $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
+
+        $aBrowseParams = array();
+        if(bx_get('bp') !== false)
+            $aBrowseParams = $this->_oConfig->getBrowseParams(bx_process_input(bx_get('bp')));
 
         $mixedAllowed = $this->isAllowedPost(true);
         if($mixedAllowed !== true)
             return echoJson(array('message' => strip_tags($mixedAllowed)));
 
-        echoJson($this->getFormEdit($iId, array('dynamic_mode' => true)));
+        echoJson($this->getFormEdit($iId, array('dynamic_mode' => true), $aBrowseParams));
     }
 
-	function actionPin()
+    function actionPin()
     {
-        $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
-
         $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
+        if(empty($aEvent) || !is_array($aEvent))
+            return echoJson(array('code' => 1));
 
+        $aParams = $this->_prepareParamsGet();
+        $this->_iOwnerId = $aParams['owner_id'];
+        
         $mixedAllowed = $this->{'isAllowed' . ((int)$aEvent['pinned'] == 0 ? 'Pin' : 'Unpin')}($aEvent, true);
         if($mixedAllowed !== true)
-            return echoJson(array('code' => 1, 'message' => strip_tags($mixedAllowed)));
+            return echoJson(array('code' => 2, 'message' => strip_tags($mixedAllowed)));
 
-		$aEvent['pinned'] = (int)$aEvent['pinned'] == 0 ? time() : 0;
+        $aEvent['pinned'] = (int)$aEvent['pinned'] == 0 ? time() : 0;
         if(!$this->_oDb->updateEvent(array('pinned' => $aEvent['pinned']), array('id' => $iId)))
-        	return echoJson(array('code' => 2));
+            return echoJson(array('code' => 3));
 
-		echoJson(array(
-			'code' => 0, 
-			'id' => $iId, 
-			'eval' => $this->_oConfig->getJsObject('view') . '.onPinPost(oData)'
-		));
+        echoJson(array(
+            'code' => 0, 
+            'id' => $iId, 
+            'eval' => $this->_oConfig->getJsObjectView($aParams) . '.onPinPost(oData)'
+        ));
     }
 
     function actionStick()
     {
-    	$this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
-
     	$iId = bx_process_input(bx_get('id'), BX_DATA_INT);
     	$aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
+        if(empty($aEvent) || !is_array($aEvent))
+            return echoJson(array('code' => 1));
+
+        $aParams = $this->_prepareParamsGet();
+        $this->_iOwnerId = $aParams['owner_id'];
 
     	$mixedAllowed = $this->{'isAllowed' . ((int)$aEvent['sticked'] == 0 ? 'Stick' : 'Unstick')}($aEvent, true);
     	if($mixedAllowed !== true)
-    		return echoJson(array('code' => 1, 'message' => strip_tags($mixedAllowed)));
+            return echoJson(array('code' => 2, 'message' => strip_tags($mixedAllowed)));
 
     	$aEvent['sticked'] = (int)$aEvent['sticked'] == 0 ? time() : 0;
     	if(!$this->_oDb->updateEvent(array('sticked' => $aEvent['sticked']), array('id' => $iId)))
-    		return echoJson(array('code' => 2));
+            return echoJson(array('code' => 3));
 
     	echoJson(array(
-	    	'code' => 0,
-	    	'id' => $iId,
-	    	'eval' => $this->_oConfig->getJsObject('view') . '.onStickPost(oData)'
-		));
+            'code' => 0,
+            'id' => $iId,
+            'eval' => $this->_oConfig->getJsObjectView($aParams) . '.onStickPost(oData)'
+        ));
     }
 
     function actionPromote()
@@ -169,21 +180,25 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     function actionDelete()
     {
-        $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
+        $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
+        if(empty($aEvent) || !is_array($aEvent))
+            return echoJson(array('code' => 1));
 
-        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => bx_process_input(bx_get('id'), BX_DATA_INT)));
+        $aParams = $this->_prepareParamsGet();
+        $this->_iOwnerId = $aParams['owner_id'];
 
         $mixedAllowed = $this->isAllowedDelete($aEvent, true);
         if($mixedAllowed !== true)
-            return echoJson(array('code' => 1, 'message' => strip_tags($mixedAllowed)));
+            return echoJson(array('code' => 2, 'message' => strip_tags($mixedAllowed)));
 
         if(!$this->deleteEvent($aEvent))
-            return echoJson(array('code' => 2));
+            return echoJson(array('code' => 3));
 
         echoJson(array(
-        	'code' => 0, 
-        	'id' => $aEvent['id'], 
-        	'eval' => $this->_oConfig->getJsObject('view') . '.onDeletePost(oData)'
+            'code' => 0, 
+            'id' => $aEvent['id'], 
+            'eval' => $this->_oConfig->getJsObjectView($aParams) . '.onDeletePost(oData)'
         ));
     }
 
@@ -214,19 +229,18 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     function actionGetPost()
     {
-        $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
+        $aParams = $this->_prepareParamsGet();
+        $aParams['dynamic_mode'] = true;
 
-        $sJsObject = bx_process_input(bx_get('js_object'));
+        $this->_iOwnerId = $aParams['owner_id'];
+
+        $sJsObject = ''; 
+        if(bx_get('js_object') !== false)
+            $sJsObject = bx_process_input(bx_get('js_object'));
         if(empty($sJsObject))
             $sJsObject = $this->_oConfig->getJsObject('post');
 
-        $sView = bx_process_input(bx_get('view'));
-        $sType = bx_process_input(bx_get('type'));
-        $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
-
-        $bAfpsLoading = (int)bx_get('afps_loading') === 1;
-
-        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
+        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => bx_process_input(bx_get('id'), BX_DATA_INT)));
         if(empty($aEvent) || !is_array($aEvent))
             return echoJson(array());
 
@@ -234,18 +248,18 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
          * Note. Disabled for now, because Own posts on Timelines of Following members 
          * became visible on posts' author Dashboard Timeline.
          */
-        //if($bAfpsLoading && $this->_iOwnerId != $aEvent['owner_id'])
-        //    return echoJson(array('message' => _t('_bx_timeline_txt_msg_posted')));
-            
+        /*
+        $bAfpsLoading = (int)bx_get('afps_loading') === 1;
+        if($bAfpsLoading && $this->_iOwnerId != $aEvent['owner_id'])
+            return echoJson(array('message' => _t('_bx_timeline_txt_msg_posted')));
+        */
+
         echoJson(array(
             'id' => $aEvent['id'],
-            'view' => $sView,
-        	'item' => $this->_oTemplate->getPost($aEvent, array(
-        		'view' => $sView, 
-        		'type' => !empty($sType) ? $sType : BX_TIMELINE_TYPE_DEFAULT,
-        		'owner_id' => $this->_iOwnerId, 
-        		'dynamic_mode' => true
-            )),
+            'name' => $aParams['name'],
+            'view' => $aParams['view'],
+            'type' => $aParams['type'],
+            'item' => $this->_oTemplate->getPost($aEvent, $aParams),
             'eval' => $sJsObject . "._onGetPost(oData)"
         ));
     }
@@ -256,12 +270,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         list($sItems, $sLoadMore, $sBack, $sEmpty) = $this->_oTemplate->getPosts($aParams);
 
         echoJson(array(
-        	'view' => $aParams['view'],
-        	'items' => $sItems, 
-        	'load_more' => $sLoadMore, 
-        	'back' => $sBack,
+            'view' => $aParams['view'],
+            'items' => $sItems, 
+            'load_more' => $sLoadMore, 
+            'back' => $sBack,
             'empty' => $sEmpty,
-        	'eval' => $this->_oConfig->getJsObject('view') . "._onGetPosts(oData)"
+            'eval' => $this->_oConfig->getJsObjectView($aParams) . "._onGetPosts(oData)"
         ));
     }
 
@@ -278,9 +292,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function actionGetEditForm($iId)
     {
-        $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
+        $aParams = $this->_prepareParamsGet();
+        $this->_iOwnerId = $aParams['owner_id'];
 
-        echoJson($this->getFormEdit($iId, array('dynamic_mode' => true)));
+        echoJson($this->getFormEdit($iId, array('dynamic_mode' => true), $aParams));
     }
 
     public function actionGetComments()
@@ -354,17 +369,19 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         echo BxDolPage::getObjectInstance($this->_oConfig->getObject('page_item_brief'), $this->_oTemplate)->getCode();
     }
 
-    public function actionResumeLiveUpdate($sType, $iOwnerId)
+    public function actionResumeLiveUpdate()
     {
-    	$sKey = $this->_oConfig->getLiveUpdateKey($sType, $iOwnerId);
+        $aParams = $this->_prepareParamsGet();
+    	$sKey = $this->_oConfig->getLiveUpdateKey($aParams);
 
     	bx_import('BxDolSession');
-    	BxDolSession::getInstance()->unsetValue($sKey, $iOwnerId);
+    	BxDolSession::getInstance()->unsetValue($sKey);
     }
 
-	public function actionPauseLiveUpdate($sType, $iOwnerId)
+    public function actionPauseLiveUpdate()
     {
-    	$sKey = $this->_oConfig->getLiveUpdateKey($sType, $iOwnerId);
+        $aParams = $this->_prepareParamsGet();
+    	$sKey = $this->_oConfig->getLiveUpdateKey($aParams);
 
     	bx_import('BxDolSession');
     	BxDolSession::getInstance()->setValue($sKey, 1);
@@ -392,7 +409,16 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 break;
         }
 
-        $aParams = $this->_prepareParams(BX_TIMELINE_VIEW_DEFAULT, $sType, $iOwnerId, 0, $this->_oConfig->getRssLength(), '', array(), 0);
+        $aParams = $this->_prepareParams(array(
+            'view' => BX_TIMELINE_VIEW_DEFAULT,
+            'type' => $sType,
+            'owner_id' => $iOwnerId,
+            'start' => 0, 
+            'per_page' => $this->_oConfig->getRssLength(), 
+            'timeline' => 0, 
+            'filter' => '', 
+            'modules' => array()
+        ));
         $aEvents = $this->_oDb->getEvents($aParams);
 
         $aRssData = array();
@@ -723,18 +749,18 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     public function serviceGetBlockPost($iProfileId = 0)
     {
     	if(empty($iProfileId) && bx_get('profile_id') !== false)
-			$iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
 
-		if(empty($iProfileId) && isLogged())
-			$iProfileId = bx_get_logged_profile_id();
+        if(empty($iProfileId) && isLogged())
+            $iProfileId = bx_get_logged_profile_id();
 
         if(!$iProfileId)
             return array();
 
         $sType = BX_BASE_MOD_NTFS_TYPE_OWNER;
         return $this->_getBlockPost($iProfileId, array(
-        	'type' => $sType,
-        	'form_display' => $this->_oConfig->getPostFormDisplay($sType)
+            'type' => $sType,
+            'form_display' => $this->_oConfig->getPostFormDisplay($sType)
         ));
     }
 
@@ -760,21 +786,21 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     public function serviceGetBlockPostProfile($sProfileModule = 'bx_persons', $iProfileContentId = 0)
     {
         if(empty($sProfileModule))
-    		return array();
+            return array();
 
     	if(empty($iProfileContentId) && bx_get('id') !== false)
-    		$iProfileContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+            $iProfileContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
 
-		$oProfile = BxDolProfile::getInstanceByContentAndType($iProfileContentId, $sProfileModule);
-		if(empty($oProfile))
-			return array();
+        $oProfile = BxDolProfile::getInstanceByContentAndType($iProfileContentId, $sProfileModule);
+        if(empty($oProfile))
+            return array();
 
         $iProfileId = $oProfile->id();
         $sType = BX_BASE_MOD_NTFS_TYPE_OWNER;
-		return $this->_getBlockPost($iProfileId, array(
-		    'type' => $sType,
-			'form_display' => $this->_oConfig->getPostFormDisplay($sType)
-		));
+        return $this->_getBlockPost($iProfileId, array(
+            'type' => $sType,
+            'form_display' => $this->_oConfig->getPostFormDisplay($sType)
+        ));
     }
 
     /**
@@ -799,7 +825,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $iProfileId = 0;
         $sType = BX_BASE_MOD_NTFS_TYPE_PUBLIC;
         return $this->_getBlockPost($iProfileId, array(
-        	'type' => $sType,
+            'type' => $sType,
             'form_display' => $this->_oConfig->getPostFormDisplay($sType)
         ));
     }
@@ -828,10 +854,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $iProfileId = $this->getProfileId();
         $sType = BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS;
-		return $this->_getBlockPost($iProfileId, array(
-		    'type' => $sType,
-			'form_display' => $this->_oConfig->getPostFormDisplay($sType)
-		));
+        return $this->_getBlockPost($iProfileId, array(
+            'type' => $sType,
+            'form_display' => $this->_oConfig->getPostFormDisplay($sType)
+        ));
     }
 
     /**
@@ -854,7 +880,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      */
     public function serviceGetBlockView($iProfileId = 0)
     {
-    	return $this->_serviceGetBlockView($iProfileId, BX_TIMELINE_VIEW_TIMELINE);
+    	return $this->_serviceGetBlockView($iProfileId, array(
+            'view' => BX_TIMELINE_VIEW_TIMELINE, 
+            'type' => BX_BASE_MOD_NTFS_TYPE_OWNER, 
+            'start' => -1, 
+            'per_page' => -1, 
+            'timeline' => -1, 
+            'filter' => '', 
+            'modules' => array()
+        ));
     }
 
     /**
@@ -877,7 +911,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      */
     public function serviceGetBlockViewOutline($iProfileId = 0)
     {
-        return $this->_serviceGetBlockView($iProfileId, BX_TIMELINE_VIEW_OUTLINE);
+        return $this->_serviceGetBlockView($iProfileId, array(
+            'view' => BX_TIMELINE_VIEW_OUTLINE, 
+            'type' => BX_BASE_MOD_NTFS_TYPE_OWNER, 
+            'start' => -1, 
+            'per_page' => -1, 
+            'timeline' => -1, 
+            'filter' => '', 
+            'modules' => array()
+        ));
     }
 
     /**
@@ -906,9 +948,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      */
     public function serviceGetBlockViewProfile($sProfileModule = 'bx_persons', $iProfileContentId = 0, $iStart = -1, $iPerPage = -1, $sFilter = '', $aModules = array(), $iTimeline = -1)
     {
-        $sView = BX_TIMELINE_VIEW_TIMELINE;
-
-        return $this->_serviceGetBlockViewProfile($sProfileModule, $iProfileContentId, $sView, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
+        return $this->_serviceGetBlockViewProfile($sProfileModule, $iProfileContentId, array(
+            'view' => BX_TIMELINE_VIEW_TIMELINE, 
+            'type' => BX_BASE_MOD_NTFS_TYPE_OWNER, 
+            'start' => $iStart, 
+            'per_page' => $iPerPage, 
+            'timeline' => $iTimeline, 
+            'filter' => $sFilter, 
+            'modules' => $aModules
+        ));
     }
 
     /**
@@ -935,11 +983,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     /** 
      * @ref bx_timeline-get_block_view_profile_outline "get_block_view_profile_outline"
      */
-	public function serviceGetBlockViewProfileOutline($sProfileModule = 'bx_persons', $iProfileContentId = 0, $iStart = -1, $iPerPage = -1, $sFilter = '', $aModules = array(), $iTimeline = -1)
+    public function serviceGetBlockViewProfileOutline($sProfileModule = 'bx_persons', $iProfileContentId = 0, $iStart = -1, $iPerPage = -1, $sFilter = '', $aModules = array(), $iTimeline = -1)
     {
-        $sView = BX_TIMELINE_VIEW_OUTLINE;
-
-        return $this->_serviceGetBlockViewProfile($sProfileModule, $iProfileContentId, $sView, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
+        return $this->_serviceGetBlockViewProfile($sProfileModule, $iProfileContentId, array(
+            'view' => BX_TIMELINE_VIEW_OUTLINE, 
+            'type' => BX_BASE_MOD_NTFS_TYPE_OWNER, 
+            'start' => $iStart, 
+            'per_page' => $iPerPage, 
+            'timeline' => $iTimeline, 
+            'filter' => $sFilter, 
+            'modules' => $aModules
+        ));
     }
 
     /**
@@ -967,7 +1021,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      */
     public function serviceGetBlockViewHome($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
     {
-        return $this->_serviceGetBlockViewHome($iProfileId, BX_TIMELINE_VIEW_TIMELINE, $iStart, $iPerPage, $this->_oConfig->getPerPage('home'), $iTimeline, $sFilter, $aModules);
+        return $this->_serviceGetBlockViewHome(array(
+            'view' => BX_TIMELINE_VIEW_TIMELINE, 
+            'type' => BX_BASE_MOD_NTFS_TYPE_PUBLIC,
+            'owner_id' => $iProfileId,
+            'start' => $iStart, 
+            'per_page' => $iPerPage, 
+            'per_page_default' => $this->_oConfig->getPerPage('home'), 
+            'timeline' => $iTimeline, 
+            'filter' => $sFilter, 
+            'modules' => $aModules
+        ));
     }
 
     /**
@@ -993,9 +1057,19 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     /** 
      * @ref bx_timeline-get_block_view_home_outline "get_block_view_home_outline"
      */
-	public function serviceGetBlockViewHomeOutline($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
+    public function serviceGetBlockViewHomeOutline($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
     {
-        return $this->_serviceGetBlockViewHome($iProfileId, BX_TIMELINE_VIEW_OUTLINE, $iStart, $iPerPage, $this->_oConfig->getPerPage('home'), $iTimeline, $sFilter, $aModules);
+        return $this->_serviceGetBlockViewHome(array(
+            'view' => BX_TIMELINE_VIEW_OUTLINE, 
+            'type' => BX_BASE_MOD_NTFS_TYPE_PUBLIC,
+            'owner_id' => $iProfileId,
+            'start' => $iStart, 
+            'per_page' => $iPerPage, 
+            'per_page_default' => $this->_oConfig->getPerPage('home'), 
+            'timeline' => $iTimeline, 
+            'filter' => $sFilter, 
+            'modules' => $aModules
+        ));
     }
 
 	/**
@@ -1023,7 +1097,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      */
     public function serviceGetBlockViewHot($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
     {
-        return $this->_serviceGetBlockViewHot($iProfileId, BX_TIMELINE_VIEW_TIMELINE, $iStart, $iPerPage, $this->_oConfig->getPerPage('home'), $iTimeline, $sFilter, $aModules);
+        return $this->_serviceGetBlockViewHot(array(
+            'view' => BX_TIMELINE_VIEW_TIMELINE, 
+            'type' => BX_TIMELINE_TYPE_HOT,
+            'owner_id' => $iProfileId,
+            'start' => $iStart, 
+            'per_page' => $iPerPage, 
+            'per_page_default' => $this->_oConfig->getPerPage('home'), 
+            'timeline' => $iTimeline, 
+            'filter' => $sFilter, 
+            'modules' => $aModules
+        ));
     }
 
     /**
@@ -1051,7 +1135,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      */
 	public function serviceGetBlockViewHotOutline($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
     {
-        return $this->_serviceGetBlockViewHot($iProfileId, BX_TIMELINE_VIEW_OUTLINE, $iStart, $iPerPage, $this->_oConfig->getPerPage('home'), $iTimeline, $sFilter, $aModules);
+        return $this->_serviceGetBlockViewHot(array(
+            'view' => BX_TIMELINE_VIEW_OUTLINE, 
+            'type' => BX_TIMELINE_TYPE_HOT, 
+            'owner_id' => $iProfileId, 
+            'start' => $iStart, 
+            'per_page' => $iPerPage, 
+            'per_page_default' => $this->_oConfig->getPerPage('home'), 
+            'timeline' => $iTimeline, 
+            'filter' => $sFilter, 
+            'modules' => $aModules
+        ));
     }
 
     /**
@@ -1082,7 +1176,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(!isLogged())
             return '';
 
-        return $this->_serviceGetBlockViewByType($iProfileId, BX_TIMELINE_VIEW_TIMELINE, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS, $iStart, $iPerPage, $this->_oConfig->getPerPage('account'), $iTimeline, $sFilter, $aModules);
+        return $this->_serviceGetBlockViewByType(array(
+            'view' => BX_TIMELINE_VIEW_TIMELINE, 
+            'type' => BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS, 
+            'owner_id' => $iProfileId, 
+            'start' => $iStart, 
+            'per_page' => $iPerPage, 
+            'per_page_default' => $this->_oConfig->getPerPage('account'), 
+            'timeline' => $iTimeline, 
+            'filter' => $sFilter, 
+            'modules' => $aModules
+        ));
     }
 
     /**
@@ -1113,7 +1217,40 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(!isLogged())
             return '';
 
-        return $this->_serviceGetBlockViewByType($iProfileId, BX_TIMELINE_VIEW_OUTLINE, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS, $iStart, $iPerPage, $this->_oConfig->getPerPage('account'), $iTimeline, $sFilter, $aModules);
+        return $this->_serviceGetBlockViewByType(array(
+            'view' => BX_TIMELINE_VIEW_OUTLINE, 
+            'type' => BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS,
+            'owner_id' => $iProfileId, 
+            'start' => $iStart, 
+            'per_page' => $iPerPage, 
+            'per_page_default' => $this->_oConfig->getPerPage('account'), 
+            'timeline' => $iTimeline, 
+            'filter' => $sFilter, 
+            'modules' => $aModules
+        ));
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-page_blocks Page Blocks
+     * @subsubsection bx_timeline-get_block_view_custom get_block_view_custom
+     * 
+     * @code bx_srv('bx_timeline', 'get_block_view_custom', [...]); @endcode
+     * 
+     * Get custom Timeline View block.
+     *
+     * @param $aParams (optional) an array with block parameneters.
+     * @return an array describing a block to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxTimelineModule::serviceGetBlockViewCustom
+     */
+    /** 
+     * @ref bx_timeline-get_block_view_custom "get_block_view_custom"
+     */
+    public function serviceGetBlockViewCustom($aParams = array())
+    {
+    	return $this->_serviceGetBlockViewByType($aParams);
     }
 
     /**
@@ -1139,7 +1276,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(!$iItemId)
             return array();
 
-        return $this->_oTemplate->getItemBlock($iItemId);
+        $aParams = array(
+            'view' => BX_TIMELINE_VIEW_ITEM, 
+            'type' => BX_TIMELINE_TYPE_ITEM
+        );
+        $aParams = $this->_prepareParams($aParams);
+
+        return $this->_oTemplate->getItemBlock($iItemId, $aParams);
     }
 
     public function serviceGetBlockItemContent()
@@ -1646,7 +1789,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     /** 
      * @ref bx_timeline-get_menu_item_addon_comment "get_menu_item_addon_comment"
      */
-    public function serviceGetMenuItemAddonComment($sSystem, $iObjectId)
+    public function serviceGetMenuItemAddonComment($sSystem, $iObjectId, $aBrowseParams = array())
     {
         if(empty($sSystem) || empty($iObjectId))
             return '';
@@ -1662,7 +1805,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return  $this->_oTemplate->parseLink('javascript:void(0)', $iCounter, array(
             'class' => 'bx-menu-item-addon',
             'title' => _t('_bx_timeline_menu_item_title_item_comment'),
-            'onclick' => "javascript:" . $this->_oConfig->getJsObject('view') . ".commentItem(this, '" . $sSystem . "', " . $iObjectId . ")" 
+            'onclick' => "javascript:" . $this->_oConfig->getJsObjectView($aBrowseParams) . ".commentItem(this, '" . $sSystem . "', " . $iObjectId . ")" 
         ));
     }
 
@@ -1737,31 +1880,32 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     /** 
      * @ref bx_timeline-get_live_updates "get_live_updates"
      */
-    public function serviceGetLiveUpdates($sType, $iOwnerId, $iProfileId, $iCount = 0, $iInit = 0)
+    public function serviceGetLiveUpdates($aBrowseParams, $iProfileId, $iCount = 0, $iInit = 0)
     {
-		$sKey = $this->_oConfig->getLiveUpdateKey($sType, $iOwnerId);
+        $sKey = $this->_oConfig->getLiveUpdateKey($aBrowseParams);
 
-		bx_import('BxDolSession');
-    	if((int)BxDolSession::getInstance()->getValue($sKey) == 1)
-    		return false;
+        bx_import('BxDolSession');
+        if((int)BxDolSession::getInstance()->getValue($sKey) == 1)
+            return false;
 
-        $aParams = $this->_prepareParams(BX_TIMELINE_VIEW_DEFAULT, $sType, $iOwnerId, false, false, BX_TIMELINE_FILTER_OTHER_VIEWER);
+        $aParams = $this->_prepareParams($aBrowseParams);
+        $aParams['filter'] = BX_TIMELINE_FILTER_OTHER_VIEWER;
         $aParams['count'] = true;
 
-		$iCountNew = $this->_oDb->getEvents($aParams);
-		if($iCountNew == $iCount)
-			return false;
+        $iCountNew = $this->_oDb->getEvents($aParams);
+        if($iCountNew == $iCount)
+            return false;
 
-		if((int)$iInit != 0)
-			return array('count' => $iCountNew);
+        if((int)$iInit != 0)
+            return array('count' => $iCountNew);
 
-    	return array(
-			'count' => $iCountNew, // required (for initialization and visualization)
-			'method' => $this->_oConfig->getJsObject('view') . '.showLiveUpdate(oData)', // required (for visualization)
-			'data' => array(
-				'code' => $this->_oTemplate->getLiveUpdateNotification($sType, $iOwnerId, $iProfileId, $iCount, $iCountNew)
-			),  // optional, may have some additional data to be passed in JS method provided using 'method' param above.
-		);
+        return array(
+            'count' => $iCountNew, // required (for initialization and visualization)
+            'method' => $this->_oConfig->getJsObjectView($aBrowseParams) . '.showLiveUpdate(oData)', // required (for visualization)
+            'data' => array(
+                'code' => $this->_oTemplate->getLiveUpdateNotification($aBrowseParams, $iProfileId, $iCount, $iCountNew)
+            ),  // optional, may have some additional data to be passed in JS method provided using 'method' param above.
+        );
     }
     
     /**
@@ -1969,9 +2113,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $this->_prepareResponse(array('form' => $oForm->getCode($bDynamicMode), 'form_id' => $oForm->id), $bAjaxMode && $oForm->isSubmitted());
     }
 
-    public function getFormEdit($iId, $aParams = array())
+    public function getFormEdit($iId, $aParams = array(), $aBrowseParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
+        $sJsObjectView = $this->_oConfig->getJsObjectView($aBrowseParams);
 
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
         if(empty($aEvent) || !is_array($aEvent))
@@ -1981,19 +2126,22 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(is_array($aContent) && !empty($aContent['text']))
             $aEvent['text'] = $aContent['text'];
 
-		$bDynamicMode = isset($aParams['dynamic_mode']) ? (bool)$aParams['dynamic_mode'] : false;
+        $bDynamicMode = isset($aParams['dynamic_mode']) ? (bool)$aParams['dynamic_mode'] : false;
         $sFormObject = !empty($aParams['form_object']) ? $aParams['form_object'] : 'form_post';
         $sFormDisplay = !empty($aParams['form_display']) ? $aParams['form_display'] : 'form_display_post_edit';
         $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject($sFormObject), $this->_oConfig->getObject($sFormDisplay), $this->_oTemplate);
         $oForm->setId($this->_oConfig->getHtmlIds('view', 'edit_form') . $iId);
 
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'edit/' . $iId ;
+        if(!empty($aBrowseParams) && is_array($aBrowseParams))
+            $oForm->aFormAttrs['action'] = $this->_oConfig->addBrowseParams($oForm->aFormAttrs['action'], $aBrowseParams);
+
         foreach($oForm->aInputs[$CNF['FIELD_CONTROLS']] as $mixedIndex => $aInput) {
             if(!is_numeric($mixedIndex))
                 continue;
 
             $oForm->aInputs[$CNF['FIELD_CONTROLS']][$mixedIndex]['attrs'] = bx_replace_markers($aInput['attrs'], array(
-                'js_object_view' => $this->_oConfig->getJsObject('view'),
+                'js_object_view' => $sJsObjectView,
             	'content_id' => $iId
             ));
         }
@@ -2041,21 +2189,20 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 return array('message' => _t('_bx_timeline_txt_err_cannot_perform_action'));
 
             $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
-        	if($bText)
-				$oMetatags->metaAdd($iId, $sText);
-			$oMetatags->locationsAddFromForm($iId, $this->_oConfig->CNF['FIELD_LOCATION_PREFIX']);
+            if($bText)
+                $oMetatags->metaAdd($iId, $sText);
+            $oMetatags->locationsAddFromForm($iId, $this->_oConfig->CNF['FIELD_LOCATION_PREFIX']);
 
             return array(
-                'id' => $iId,
-            	'eval' => $this->_oConfig->getJsObject('view') . '.onEditPostSubmit(oData)'
+                'id' => $iId
             );
         }
 
         return array(
             'id' => $iId, 
-        	'form' => $oForm->getCode($bDynamicMode), 
-        	'form_id' => $oForm->id,
-        	'eval' => $this->_oConfig->getJsObject('view') . '.onEditPost(oData)'
+            'form' => $oForm->getCode($bDynamicMode), 
+            'form_id' => $oForm->id,
+            'eval' => $sJsObjectView . '.onEditPost(oData)'
         );
     }
 
@@ -2624,7 +2771,21 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function getParams($sView = '', $sType = '', $iOwnerId = 0, $iStart = 0, $iPerPage = 0, $sFilter = BX_TIMELINE_FILTER_ALL, $aModules = array(), $iTimeline = 0)
     {
-        return $this->_prepareParams($sView, $sType, $iOwnerId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
+        return $this->_prepareParams(array(
+            'view' => $sView,
+            'type' => $sType,
+            'owner_id' => $iOwnerId,
+            'start' => $iStart, 
+            'per_page' => $iPerPage, 
+            'timeline' => $iTimeline, 
+            'filter' => $sFilter, 
+            'modules' => $aModules
+        ));
+    }
+
+    public function getParamsExt($aParams = array())
+    {
+        return $this->_prepareParams($aParams);
     }
 
     public function getViewsData(&$aViews)
@@ -2707,63 +2868,67 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     /**
      * Protected Methods 
      */
-    protected function _serviceGetBlockView($iProfileId = 0, $sView = BX_TIMELINE_VIEW_DEFAULT)
+    protected function _serviceGetBlockView($iProfileId = 0, $aBrowseParams = array())
     {
         if(empty($iProfileId) && bx_get('profile_id') !== false)
-			$iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
 
-		if(empty($iProfileId) && isLogged())
-			$iProfileId = bx_get_logged_profile_id();
+        if(empty($iProfileId) && isLogged())
+            $iProfileId = bx_get_logged_profile_id();
 
-        $aBlock = $this->_getBlockView($iProfileId, $sView);
+        $aBrowseParams['owner_id'] = $iProfileId;
+
+        $aBlock = $this->_getBlockView($aBrowseParams);
         if(!empty($aBlock))
             return $aBlock;
 
         return array('content' => MsgBox(_t('_bx_timeline_txt_msg_no_results')));
     }
 
-    protected function _serviceGetBlockViewProfile($sProfileModule = 'bx_persons', $iProfileContentId = 0, $sView = BX_TIMELINE_VIEW_DEFAULT, $iStart = -1, $iPerPage = -1, $sFilter = '', $aModules = array(), $iTimeline = -1)
+    protected function _serviceGetBlockViewProfile($sProfileModule = 'bx_persons', $iProfileContentId = 0, $aBrowseParams = array())
     {
-    	if(empty($sProfileModule))
-    		return array();
+        if(empty($sProfileModule))
+            return array();
 
-    	if(empty($iProfileContentId) && bx_get('id') !== false)
-    		$iProfileContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if(empty($iProfileContentId) && bx_get('id') !== false)
+            $iProfileContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
 
-		$oProfile = BxDolProfile::getInstanceByContentAndType($iProfileContentId, $sProfileModule);
-		if(empty($oProfile))
-			return array();
+        $oProfile = BxDolProfile::getInstanceByContentAndType($iProfileContentId, $sProfileModule);
+        if(empty($oProfile))
+            return array();
 
-        return $this->_getBlockView($oProfile->id(), $sView, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
+        $aBrowseParams['owner_id'] = $oProfile->id();
+
+        return $this->_getBlockView($aBrowseParams);
     }
 
-    protected function _serviceGetBlockViewHome($iProfileId = 0, $sView = BX_TIMELINE_VIEW_DEFAULT, $iStart = -1, $iPerPage = -1, $iPerPageDefault = -1,  $iTimeline = -1, $sFilter = '', $aModules = array())
+    protected function _serviceGetBlockViewHome($aBrowseParams = array())
     {
-        $sRssUrl = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'rss/' . BX_BASE_MOD_NTFS_TYPE_PUBLIC . '/';
+        $sRssUrl = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'rss/' . $aBrowseParams['type'] . '/';
         BxDolTemplate::getInstance()->addPageRssLink(_t('_bx_timeline_page_title_view_home'), $sRssUrl);
 
-        return $this->_serviceGetBlockViewByType($iProfileId, $sView, BX_BASE_MOD_NTFS_TYPE_PUBLIC, $iStart, $iPerPage, $iPerPageDefault, $iTimeline, $sFilter, $aModules);
+        return $this->_serviceGetBlockViewByType($aBrowseParams);
     }
 
-    protected function _serviceGetBlockViewHot($iProfileId = 0, $sView = BX_TIMELINE_VIEW_DEFAULT, $iStart = -1, $iPerPage = -1, $iPerPageDefault = -1,  $iTimeline = -1, $sFilter = '', $aModules = array())
+    protected function _serviceGetBlockViewHot($aBrowseParams = array())
     {
-        $sRssUrl = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'rss/' . BX_TIMELINE_TYPE_HOT . '/';
+        $sRssUrl = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'rss/' . $aBrowseParams['type'] . '/';
         BxDolTemplate::getInstance()->addPageRssLink(_t('_bx_timeline_page_title_view_hot'), $sRssUrl);
 
-        return $this->_serviceGetBlockViewByType($iProfileId, $sView, BX_TIMELINE_TYPE_HOT, $iStart, $iPerPage, $iPerPageDefault, $iTimeline, $sFilter, $aModules);
+        return $this->_serviceGetBlockViewByType($aBrowseParams);
     }
 
-    protected function _serviceGetBlockViewByType($iProfileId = 0, $sView = BX_TIMELINE_VIEW_DEFAULT, $sType = BX_TIMELINE_TYPE_DEFAULT, $iStart = -1, $iPerPage = -1, $iPerPageDefault = -1,  $iTimeline = -1, $sFilter = '', $aModules = array())
+    protected function _serviceGetBlockViewByType($aBrowseParams = array())
     {
-        $aParams = $this->_prepareParams($sView, $sType, $iProfileId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
-
-        $aParams['view'] = $sView;
-        $aParams['per_page'] = (int)$iPerPage > 0 ? $iPerPage : ((int)$iPerPageDefault > 0 ? $iPerPageDefault : $this->_oConfig->getPerPage());
+        $aParams = $this->_prepareParams($aBrowseParams);
+        if((int)$aParams['per_page'] <= 0)
+            $aParams['per_page'] = (int)$aBrowseParams['per_page_default'] > 0 ? $aBrowseParams['per_page_default'] : $this->_oConfig->getPerPage();
 
         $this->_iOwnerId = $aParams['owner_id'];
 
-        $sContent = $this->_oTemplate->getViewBlock($aParams);
-        return array('content' => $sContent);
+        return array(
+            'content' => $this->_oTemplate->getViewBlock($aParams)
+        );
     }
 
     protected function _getBlockPost($iProfileId, $aParams = array())
@@ -2773,18 +2938,19 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if($this->isAllowedPost() !== true)
             return array();
 
-		$sContent = $this->_oTemplate->getPostBlock($this->_iOwnerId, $aParams);
-        return array('content' => $sContent);
+        return array(
+            'content' => $this->_oTemplate->getPostBlock($this->_iOwnerId, $aParams)
+        );
     }
 
-    protected function _getBlockView($iProfileId, $sView = BX_TIMELINE_VIEW_DEFAULT, $iStart = -1, $iPerPage = -1, $sFilter = '', $aModules = array(), $iTimeline = -1)
+    protected function _getBlockView($aBrowseParams = array())
     {
-        if(!$iProfileId)
-			return array();
+        if(empty($aBrowseParams['owner_id']))
+            return array();
 
-        $aParams = $this->_prepareParams($sView, BX_BASE_MOD_NTFS_TYPE_OWNER, $iProfileId, $iStart, $iPerPage, $sFilter, $aModules, $iTimeline);
-        $aParams['view'] = $sView;
-        $aParams['per_page'] = (int)$iPerPage > 0 ? $iPerPage : $this->_oConfig->getPerPage('profile');
+        $aParams = $this->_prepareParams($aBrowseParams);
+        if(empty($aParams['per_page']))
+            $aParams['per_page'] = $this->_oConfig->getPerPage('profile');
 
         $this->_iOwnerId = $aParams['owner_id'];
         $oProfileOwner = BxDolProfile::getInstance($this->_iOwnerId);
@@ -2793,10 +2959,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
             return array('content' => MsgBox($mixedResult));
 
-        list($sUserName, $sUserUrl) = $this->getUserInfo($aParams['owner_id']);
+        list($sUserName) = $this->getUserInfo($aParams['owner_id']);
 
-        $sRssUrl = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'rss/' . BX_BASE_MOD_NTFS_TYPE_OWNER . '/' . $iProfileId . '/';
-        $sJsObject = $this->_oConfig->getJsObject('view');
+        $sView = $aParams['view'];
+        $sRssUrl = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'rss/' . BX_BASE_MOD_NTFS_TYPE_OWNER . '/' . $this->_iOwnerId . '/';
+        $sJsObject = $this->_oConfig->getJsObjectView($aParams);
         $aMenu = array(
             array('id' => $sView . '-view-all', 'name' => $sView . '-view-all', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeFilter(this)', 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_view_all'), 'active' => 1),
             array('id' => $sView . '-view-owner', 'name' => $sView . '-view-owner', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeFilter(this)', 'target' => '_self', 'title' => _t('_bx_timeline_menu_item_view_owner', $sUserName)),
@@ -2806,7 +2973,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $sContent = '';
         bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_view', $this->_iOwnerId, $this->getUserId(), array('override_content' => &$sContent, 'params' => &$aParams, 'menu' => &$aMenu));
-
+//TODO: Refuctor THIS!
         $oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id'=> $sView . '-view-all', 'menu_items' => $aMenu));
         $oMenu->setSelected('', $sView . '-view-all');
 
@@ -2988,40 +3155,56 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 		$this->_oDb->deleteMedia($sType, $iId);
     }
 
-    protected function _prepareParams($sView, $sType, $iOwnerId, $iStart, $iPerPage, $sFilter = BX_TIMELINE_FILTER_ALL, $aModules = array(), $iTimeline = 0, $aBlink = array())
+    protected function _prepareParams($aParams)
     {
-         $aParams = array(
-            'view' => !empty($sView) ? $sView : BX_TIMELINE_VIEW_DEFAULT,
+        if(empty($aParams['name']))
+            $aParams['name'] = '';
+        
+        if(empty($aParams['view']))
+            $aParams['view'] = BX_TIMELINE_VIEW_DEFAULT;
 
-            'browse' => 'list',
-            'type' => !empty($sType) ? $sType : BX_TIMELINE_TYPE_DEFAULT,
-            'owner_id' => (int)$iOwnerId != 0 ? $iOwnerId : $this->getUserId(),
-            'filter' => !empty($sFilter) ? $sFilter : BX_TIMELINE_FILTER_ALL,
-            'modules' => is_array($aModules) && !empty($aModules) ? $aModules : array(),
-            'timeline' => (int)$iTimeline > 0 ? $iTimeline : 0,
-         	'blink' => is_array($aBlink) && !empty($aBlink) ? $aBlink : array(),
-            'active' => 1,
-            'hidden' => 0
-        );
+        if(empty($aParams['type']))
+            $aParams['type'] = BX_TIMELINE_TYPE_DEFAULT;
 
-        if($iStart !== false)
-            $aParams['start'] = (int)$iStart > 0 ? $iStart : 0;
+        if(empty($aParams['owner_id']))
+            $aParams['owner_id'] = $this->getUserId();
 
-        if($iPerPage !== false)
-            $aParams['per_page'] = (int)$iPerPage > 0 ? $iPerPage : $this->_oConfig->getPerPage();
+        if(isset($aParams['start']) && (int)$aParams['start'] < 0)
+            $aParams['start'] = 0;
+
+        if(isset($aParams['per_page']) && (int)$aParams['per_page'] <= 0)
+            $aParams['per_page'] = $this->_oConfig->getPerPage();
+
+        if(empty($aParams['timeline']) || (int)$aParams['timeline'] < 0)
+            $aParams['timeline'] = 0;
+
+        if(empty($aParams['filter']))
+            $aParams['filter'] = BX_TIMELINE_FILTER_ALL;
+
+        if(empty($aParams['modules']) || !is_array($aParams['modules']))
+            $aParams['modules'] = array();
+
+        if(empty($aParams['blink']) || !is_array($aParams['blink']))
+            $aParams['blink'] = array();
 
         if($this->_oConfig->isHot())
             $aParams['hot'] = $this->_oDb->getHot();
+
+        $aParams = array_merge($aParams, array(
+            'browse' => 'list',
+            'active' => 1,
+            'hidden' => 0
+        ));
 
         return $aParams;
     }
 
     protected function _prepareParamsGet()
     {
-        $aParams = array(
-            'browse' => 'list',
-            'dynamic_mode' => true,
-        );
+        $aParams = array();
+
+        $aParams['name'] = bx_get('name');
+        $aParams['name'] = $aParams['name'] !== false ? bx_process_input($aParams['name'], BX_DATA_TEXT) : '';
 
         $aParams['view'] = bx_get('view');
         $aParams['view'] = $aParams['view'] !== false ? bx_process_input($aParams['view'], BX_DATA_TEXT) : BX_TIMELINE_VIEW_DEFAULT;
@@ -3038,23 +3221,27 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $aParams['per_page'] = bx_get('per_page');
         $aParams['per_page'] = $aParams['per_page'] !== false ? bx_process_input($aParams['per_page'], BX_DATA_INT) : $this->_oConfig->getPerPage();
 
+        $aParams['timeline'] = bx_get('timeline');
+        $aParams['timeline'] = $aParams['timeline'] !== false ? bx_process_input($aParams['timeline'], BX_DATA_INT) : 0;
+
         $aParams['filter'] = bx_get('filter');
         $aParams['filter'] = $aParams['filter'] !== false ? bx_process_input($aParams['filter'], BX_DATA_TEXT) : BX_TIMELINE_FILTER_ALL;
 
         $aParams['modules'] = bx_get('modules');
         $aParams['modules'] = $aParams['modules'] !== false ? bx_process_input($aParams['modules'], BX_DATA_TEXT) : array();
 
-        $aParams['timeline'] = bx_get('timeline');
-        $aParams['timeline'] = $aParams['timeline'] !== false ? bx_process_input($aParams['timeline'], BX_DATA_INT) : 0;
-
         $aParams['blink'] = bx_get('blink');
         $aParams['blink'] = $aParams['blink'] !== false ? explode(',', bx_process_input($aParams['blink'], BX_DATA_TEXT)) : array();
 
-        $aParams['active'] = 1;
-        $aParams['hidden'] = 0;
-
         if($this->_oConfig->isHot())
             $aParams['hot'] = $this->_oDb->getHot();
+
+        $aParams = array_merge($aParams, array(
+            'browse' => 'list',
+            'active' => 1,
+            'hidden' => 0,
+            'dynamic_mode' => true,
+        ));
 
         return $aParams;
     }

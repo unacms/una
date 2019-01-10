@@ -68,8 +68,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return $this->getJsCode('post', array(
             'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
             'oRequestParams' => array_merge(array(
-                    'type' => isset($aParams['type']) ? $aParams['type'] : BX_TIMELINE_TYPE_DEFAULT, 
-                    'owner_id' => $iOwnerId
+                'type' => isset($aParams['type']) ? $aParams['type'] : BX_TIMELINE_TYPE_DEFAULT, 
+                'owner_id' => $iOwnerId
             ), $aParams)
         ));
     }
@@ -91,17 +91,18 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $oModule = $this->getModule();
 
         //--- Add live update
-		$oModule->actionResumeLiveUpdate($aParams['type'], $aParams['owner_id']);
+        $oModule->actionResumeLiveUpdate($aParams['type'], $aParams['owner_id']);
 
-		$sServiceCall = BxDolService::getSerializedService($this->_oConfig->getName(), 'get_live_updates', array($aParams['type'], $aParams['owner_id'], $oModule->getUserId(), '{count}', '{init}'));
-		$sLiveUpdatesCode = BxDolLiveUpdates::getInstance()->add($this->_oConfig->getLiveUpdateKey($aParams['type'], $aParams['owner_id']), 1, $sServiceCall);
-		//--- Add live update
+        $sServiceCall = BxDolService::getSerializedService($this->_oConfig->getName(), 'get_live_updates', array($aParams, $oModule->getUserId(), '{count}', '{init}'));
+        $sLiveUpdatesCode = BxDolLiveUpdates::getInstance()->add($this->_oConfig->getLiveUpdateKey($aParams), 1, $sServiceCall);
+        //--- Add live update
 
         list($sContent, $sLoadMore, $sBack, $sEmpty) = $this->getPosts($aParams);
 
+        $sJsObject = $this->_oConfig->getJsObjectView($aParams);
         return $sLiveUpdatesCode . $this->parseHtmlByName('block_view.html', array(
             'style_prefix' => $this->_oConfig->getPrefix('style'),
-        	'html_id' => $this->_oConfig->getHtmlIds('view', 'main_' . $aParams['view']),
+            'html_id' => $this->_oConfig->getHtmlIdView('main', $aParams),
             'view' => $aParams['view'],
             'back' => $sBack,
             'empty' => $sEmpty, 
@@ -110,16 +111,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'show_more' => $this->_getShowMore($aParams),
             'view_image_popup' => $this->_getImagePopup($aParams),
             'js_content' => $this->getJsCode('view', array(
+                'sObjName' => $sJsObject,
                 'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
-            	'oRequestParams' => array(
-	                'type' => $aParams['type'],
-	                'owner_id' => $aParams['owner_id'],
-	                'start' => $aParams['start'],
-	                'per_page' => $aParams['per_page'],
-	                'filter' => $aParams['filter'],
-	                'modules' => $aParams['modules'],
-	                'timeline' => $aParams['timeline'],
-        		)
+            	'oRequestParams' => $aParams
+            ), array(
+                'wrap' => true,
+                'mask_markers' => array('object' => $sJsObject)
             )) . $this->getJsCode('repost')
         ));
     }
@@ -131,25 +128,17 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         return $this->parseHtmlByName('block_search.html', array(
             'style_prefix' => $this->_oConfig->getPrefix('style'),
-        	'html_id' => $this->_oConfig->getHtmlIds('view', 'main_' . $aParams['view']),
+            'html_id' => $this->_oConfig->getHtmlIdView('main', $aParams),
             'view' => $aParams['view'],
             'content' => $sContent,
-        	'view_image_popup' => $this->_getImagePopup($aParams),
+            'view_image_popup' => $this->_getImagePopup($aParams),
             'js_content' => $this->getJsCode('view', array(
-            	'oRequestParams' => array(
-	                'type' => $aParams['type'],
-	                'owner_id' => $aParams['owner_id'],
-	                'start' => $aParams['start'],
-	                'per_page' => $aParams['per_page'],
-	                'filter' => $aParams['filter'],
-	                'modules' => $aParams['modules'],
-	                'timeline' => $aParams['timeline'],
-        		)
+            	'oRequestParams' => $aParams
             ))
         ));
     }
 
-    public function getItemBlock($iId)
+    public function getItemBlock($iId, $aBrowseParams = array())
     {
         $CNF = $this->_oConfig->CNF;
 
@@ -168,11 +157,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 return array('content' => MsgBox($mixedResult), 'designbox_id' => 13);
         }
 
-        $aParams = array(
-            'view' => BX_TIMELINE_VIEW_ITEM, 
-            'type' => BX_TIMELINE_TYPE_ITEM
-        );
-        $sContent = $this->getPost($aEvent, $aParams);
+        $sContent = $this->getPost($aEvent, $aBrowseParams);
 
         $sKey = 'allowed_view';
         if(isset($aEvent[$sKey]) && $aEvent[$sKey] !== CHECK_ACTION_RESULT_ALLOWED) 
@@ -206,15 +191,21 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         else 
             $sReferrer = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->_oConfig->CNF['URL_HOME']);
 
+        $sJsObject = $this->_oConfig->getJsObjectView($aBrowseParams);
         return array('content' => $this->parseHtmlByName('block_item.html', array(
             'style_prefix' => $this->_oConfig->getPrefix('style'),
-            'html_id' => $this->_oConfig->getHtmlIds('view', 'main_item'),
+            'html_id' => $this->_oConfig->getHtmlIdView('main', $aBrowseParams),
             'content' => $sContent,
-            'show_more' => $this->_getShowMore($aParams),
-            'view_image_popup' => $this->_getImagePopup($aParams),
+            'show_more' => $this->_getShowMore($aBrowseParams),
+            'view_image_popup' => $this->_getImagePopup($aBrowseParams),
             'js_content' => $this->getJsCode('view', array(
+                'sObjName' => $sJsObject,
                 'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
-                'sReferrer' => $sReferrer
+                'sReferrer' => $sReferrer,
+                'oRequestParams' => $aBrowseParams
+            ), array(
+                'wrap' => true,
+                'mask_markers' => array('object' => $sJsObject)
             )) . $this->getJsCode('repost')
         )));
     }
@@ -497,7 +488,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             return '';
 
         $sStylePrefix = $this->_oConfig->getPrefix('style');
-        $sJsObject = $this->_oConfig->getJsObject('view');
+        $sJsObject = $this->_oConfig->getJsObjectView($aParams);
 
         $iYearNow = date('Y', time());
         return $this->parseHtmlByName('back.html', array(
@@ -517,7 +508,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $iYearMin = $this->_oDb->getMaxDuration($aParams);
 
         $sStylePrefix = $this->_oConfig->getPrefix('style');
-        $sJsObject = $this->_oConfig->getJsObject('view');
+        $sJsObject = $this->_oConfig->getJsObjectView($aParams);
 
         $sYears = '';
         if(!empty($iYearMin)) {
@@ -916,7 +907,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
-    function getLiveUpdateNotification($sType, $iOwnerId, $iProfileId, $iCountOld = 0, $iCountNew = 0)
+    function getLiveUpdateNotification($aBrowseParams, $iProfileId, $iCountOld = 0, $iCountNew = 0)
     {
         $bShowAll = true;
         $bShowActions = false;
@@ -930,12 +921,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($iCount > $iCountMax)
             $iCount = $iCountMax;
 
-        $aParams = $oModule->getParams(BX_TIMELINE_VIEW_DEFAULT, $sType, $iOwnerId, 0, $iCount, BX_TIMELINE_FILTER_OTHER_VIEWER);
+        $aParams = $oModule->getParamsExt($aBrowseParams);
+        $aParams['start'] = 0;
+        $aParams['per_page'] = $iCount;
+        $aParams['filter'] = BX_TIMELINE_FILTER_OTHER_VIEWER;
         $aEvents = $this->_oDb->getEvents($aParams);
         if(empty($aEvents) || !is_array($aEvents))
             return '';
 
-        $sJsObject = $this->_oConfig->getJsObject('view');
+        $sJsObject = $this->_oConfig->getJsObjectView($aParams);
         $sStylePrefix = $this->_oConfig->getPrefix('style');
 
         $iUserId = $oModule->getUserId();
@@ -1003,7 +997,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $oModule = $this->getModule();
         $sStylePrefix = $this->_oConfig->getPrefix('style');
-        $sJsObject = $this->_oConfig->getJsObject('view');
+        $sJsObject = $this->_oConfig->getJsObjectView($aBrowseParams);
 
         list($sAuthorName, $sAuthorUrl, $sAuthorIcon, $sAuthorUnit, $sAuthorUnitShort) = $oModule->getUserInfo($aEvent['object_owner_id']);
         $bAuthorIcon = !empty($sAuthorIcon);
@@ -1012,7 +1006,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aTmplVarsMenuItemActions = $this->_getTmplVarsMenuItemActions($aEvent, $aBrowseParams);
         $aTmplVarsMenuItemMeta = $this->_getTmplVarsMenuItemMeta($aEvent, $aBrowseParams);
 
-        $aTmplVarsOwnerActions = $this->_getTmplVarsOwnerActions($aEvent);
+        $aTmplVarsOwnerActions = $this->_getTmplVarsOwnerActions($aEvent, $aBrowseParams);
         $bTmplVarsOwnerActions = !empty($aTmplVarsOwnerActions); 
 
         $aTmplVarsTimelineOwner = $this->_getTmplVarsTimelineOwner($aEvent);
@@ -1055,7 +1049,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aTmplVars = array (
             'style_prefix' => $sStylePrefix,
             'js_object' => $sJsObject,
-            'html_id' => $this->_oConfig->getHtmlIds('view', 'item_' . $aBrowseParams['view']) . $aEvent['id'],
+            'html_id' => $this->_oConfig->getHtmlIdView('item', $aBrowseParams, false) . $aEvent['id'],
             'class' => $sClass,
             'class_owner' => $sClassOwner,
             'class_content' => $bViewItem ? 'bx-def-color-bg-block' : 'bx-def-color-bg-box',
@@ -1167,16 +1161,16 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     protected function _getShowMore($aParams)
     {
         return $this->parseHtmlByName('show_more.html', array(
-        	'style_prefix' => $this->_oConfig->getPrefix('style'),
-            'js_object' => $this->_oConfig->getJsObject('view'),
+            'style_prefix' => $this->_oConfig->getPrefix('style'),
+            'js_object' => $this->_oConfig->getJsObjectView($aParams),
         ));
     }
 
     protected function _getImagePopup($aParams)
     {
-        $sViewImagePopupId = $this->_oConfig->getHtmlIds('view', 'photo_popup_' . $aParams['view']);
+        $sViewImagePopupId = $this->_oConfig->getHtmlIdView('photo_popup', $aParams);
         $sViewImagePopupContent = $this->parseHtmlByName('popup_image.html', array(
-    		'image_url' => ''
+            'image_url' => ''
     	));
 
     	return BxTemplFunctions::getInstance()->transBox($sViewImagePopupId, $sViewImagePopupContent, true);
@@ -1194,8 +1188,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     protected function _getTmplVarsMenuItemActions(&$aEvent, $aBrowseParams = array())
     {
         $oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_actions'));
-        $oMenu->setEvent($aEvent);
-        $oMenu->setBrowseParams($aBrowseParams['type'], $aBrowseParams['view']);
+        $oMenu->setEvent($aEvent, $aBrowseParams);
         $oMenu->setDynamicMode(isset($aBrowseParams['dynamic_mode']) && $aBrowseParams['dynamic_mode'] === true);
 
         $sMenu = $oMenu->getCode();
@@ -1204,7 +1197,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         return array(
             'style_prefix' => $this->_oConfig->getPrefix('style'),
-            'js_object' => $this->_oConfig->getJsObject('view'),
+            'js_object' => $this->_oConfig->getJsObjectView($aBrowseParams),
             'menu_item_actions' => $sMenu
         );
     }
@@ -1291,7 +1284,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     {
     	$aContent = &$aEvent['content'];
         $sStylePrefix = $this->_oConfig->getPrefix('style');
-        $sJsObject = $this->_oConfig->getJsObject('view');
+        $sJsObject = $this->_oConfig->getJsObjectView($aBrowseParams);
 
         $bViewItem = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_ITEM;
 
@@ -1551,7 +1544,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return $aTmplVars;
     }
 
-    protected function _getTmplVarsOwnerActions(&$aEvent)
+    protected function _getTmplVarsOwnerActions(&$aEvent, $aBrowseParams = array())
     {
         $sStylePrefix = $this->_oConfig->getPrefix('style');
 
@@ -1562,13 +1555,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(!empty($iUser) && !empty($iOwner) && $iUser != $iOwner) {
             $sConnection = $this->_oConfig->getObject('conn_subscriptions');
             if(BxDolConnection::getObjectInstance($sConnection)->checkAllowedConnect($iUser, $iOwner) === CHECK_ACTION_RESULT_ALLOWED) {
-                $sJsObject = $this->_oConfig->getJsObject('view');
+                $sJsObject = $this->_oConfig->getJsObjectView($aBrowseParams);
 
                 $sContent = _t('_sys_menu_item_title_sm_subscribe');
                 $aTmplVarsActions[] = array(
                     'href' => "javascript:void(0)",
                     'onclick' => "bx_conn_action(this, '" . $sConnection . "', 'add', '" . $iOwner . "', false, function(oData, eElement) {" . $sJsObject . ".onConnect(eElement, oData);})",
-                	'title' => bx_html_attribute($sContent),
+                    'title' => bx_html_attribute($sContent),
                     'content' => $sContent,
                     'icon' => 'check'
                 );
@@ -1602,7 +1595,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $CNF = $this->_oConfig->CNF;
 
         $oModule = $this->getModule();
-        $sJsObject = $this->_oConfig->getJsObject('view');
+        $sJsObject = $this->_oConfig->getJsObjectView($aBrowseParams);
         $sPrefix = $this->_oConfig->getPrefix('common_post');
         $sType = str_replace($sPrefix, '', $aEvent['type']);
 

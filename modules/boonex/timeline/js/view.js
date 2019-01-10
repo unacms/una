@@ -9,20 +9,16 @@
  */
 
 function BxTimelineView(oOptions) {
-	this._sActionsUri = oOptions.sActionUri;
+    this._sActionsUri = oOptions.sActionUri;
     this._sActionsUrl = oOptions.sActionUrl;
     this._sObjName = oOptions.sObjName == undefined ? 'oTimelineView' : oOptions.sObjName;
     this._iOwnerId = oOptions.iOwnerId == undefined ? 0 : oOptions.iOwnerId;
     this._sReferrer = oOptions.sReferrer == undefined ? '' : oOptions.sReferrer;
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'slide' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
-    this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
     this._sVideosAutoplay = oOptions.sVideosAutoplay == undefined ? 'off' : oOptions.sVideosAutoplay;
-    this._oRequestParams = {
-    	timeline: null,
-    	outline: null,
-    	general: oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams
-    };
+    this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
+    this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
 
     this._fOutsideOffset = 0.8;
     this._oSaved = {};
@@ -41,275 +37,263 @@ function BxTimelineView(oOptions) {
 
 BxTimelineView.prototype = new BxTimelineMain();
 
-BxTimelineView.prototype.init = function() {
-	var $this = this;
+BxTimelineView.prototype.init = function()
+{
+    var $this = this;
 
-	this.oViewTimeline = $('#' + this._aHtmlIds['main_timeline']);
-	this.bViewTimeline = this.oViewTimeline.length > 0;
+    this.oView = $(this._getHtmlId('main', this._oRequestParams));
+    if(this.oView.length > 0) {
+        if(this.oView.hasClass(this.sClassView + '-timeline'))
+            this.bViewTimeline = true;
+        else if(this.oView.hasClass(this.sClassView + '-outline'))
+            this.bViewOutline = true;
+        else if(this.oView.hasClass(this.sClassView + '-item'))
+            this.bViewItem = true;
+    }
 
-	this.oViewOutline = $('#' + this._aHtmlIds['main_outline']);
-	this.bViewOutline = this.oViewOutline.length > 0;
+    if(this.bViewTimeline) {
+        var oItems = this.oView.find('.' + this.sClassItem);
+        oItems.find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight(this.sSP + '-overflow', function(oElement) {
+            $this.onFindOverflow(oElement);
+        });
 
-	this.oViewItem = $('#' + this._aHtmlIds['main_item']);
-	this.bViewItem = this.oViewItem.length > 0;	
+        //--- Hide timeline Events which are outside the viewport
+        this.hideEvents(oItems, this._fOutsideOffset);
 
-	if(this.bViewTimeline) {
-		this._oRequestParams['timeline'] = jQuery.extend({}, this._oRequestParams['general']);
+        //--- on scolling, show/animate timeline Events when enter the viewport
+        $(window).on('scroll', function() {
+            if(!window.requestAnimationFrame) 
+                setTimeout(function() {
+                    $this.showEvents(oItems, $this._fOutsideOffset);
+                }, 100);
+            else
+                window.requestAnimationFrame(function() {
+                    $this.showEvents(oItems, $this._fOutsideOffset);
+                });
+        });
 
-		var oItems = this.oViewTimeline.find('.' + this.sClassItem);
-		oItems.find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight(this.sSP + '-overflow', function(oElement) {
-			$this.onFindOverflow(oElement);
-		});
+        //--- Init Video Autoplay
+        if(this._sVideosAutoplay != 'off') {
+            this.initVideosAutoplay(this.oView);
 
-		//--- Hide timeline Events which are outside the viewport
-		this.hideEvents(oItems, this._fOutsideOffset);
+            $(window).on('scroll', function() {
+                var oItems = $this.oView.find('.' + $this.sClassItem);
 
-		//--- on scolling, show/animate timeline Events when enter the viewport
-		$(window).on('scroll', function() {
-			if(!window.requestAnimationFrame) 
-				setTimeout(function() {
-					$this.showEvents(oItems, $this._fOutsideOffset);
-				}, 100);
-			else
-				window.requestAnimationFrame(function() {
-					$this.showEvents(oItems, $this._fOutsideOffset);
-				});
-		});
-
-		//--- Init Video Autoplay
-		if(this._sVideosAutoplay != 'off') { 
-
-			this.initVideosAutoplay(this.oViewTimeline);
-
-			$(window).on('scroll', function() {
-				var oItems = $this.oViewTimeline.find('.' + $this.sClassItem);
-
-				if(!window.requestAnimationFrame) 
-					setTimeout(function() {
-						$this.playVideos(oItems, $this._fVapOffsetStart, $this._fVapOffsetStop);
-					}, 100);
-				else
-					window.requestAnimationFrame(function() {
-						$this.playVideos(oItems, $this._fVapOffsetStart, $this._fVapOffsetStop);
-					});
-			});
-		}
-
-	    //--- Blink (highlight) necessary items
-	    this.blink(this.oViewTimeline);
-	}
-
-	if(this.bViewOutline) {
-		this._oRequestParams['outline'] = jQuery.extend({}, this._oRequestParams['general']);
-
-    	this.initMasonry();
-
-    	this.oViewOutline.find('.' + this.sClassItem).resize(function() {
-    		$this.reloadMasonry();
-    	});
-    	this.oViewOutline.find('img.' + this.sClassItemImage).load(function() {
-    		$this.reloadMasonry();
-    	});
-
-    	//--- Init Video Layout
-    	if(this._sVideosAutoplay != 'off')
-    		this.initVideos(this.oViewOutline);
-
-    	//--- Blink (highlight) necessary items
-	    this.blink(this.oViewOutline);
-	}
-
-	if(this.bViewItem) {
-            this.oViewItem.find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight(this.sSP + '-overflow', function(oElement) {
-                $this.onFindOverflow(oElement);
+                if(!window.requestAnimationFrame) 
+                    setTimeout(function() {
+                        $this.playVideos(oItems, $this._fVapOffsetStart, $this._fVapOffsetStop);
+                    }, 100);
+                else
+                    window.requestAnimationFrame(function() {
+                        $this.playVideos(oItems, $this._fVapOffsetStart, $this._fVapOffsetStop);
+                    });
             });
+        }
 
-            //--- Init Video Layout
-            if(this._sVideosAutoplay != 'off')
-                this.initVideos(this.oViewItem);
-	}
+        //--- Blink (highlight) necessary items
+        this.blink(this.oView);
+    }
 
-	this.initFlickity();
+    if(this.bViewOutline) {
+        this.initMasonry();
+
+        this.oView.find('.' + this.sClassItem).resize(function() {
+            $this.reloadMasonry();
+        });
+        this.oView.find('img.' + this.sClassItemImage).load(function() {
+            $this.reloadMasonry();
+        });
+
+        //--- Init Video Layout
+        if(this._sVideosAutoplay != 'off')
+            this.initVideos(this.oView);
+
+        //--- Blink (highlight) necessary items
+        this.blink(this.oView);
+    }
+
+    if(this.bViewItem) {
+        this.oView.find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight(this.sSP + '-overflow', function(oElement) {
+            $this.onFindOverflow(oElement);
+        });
+
+        //--- Init Video Layout
+        if(this._sVideosAutoplay != 'off')
+            this.initVideos(this.oView);
+    }
+
+    this.initFlickity();
 };
 
-BxTimelineView.prototype.initVideosAutoplay = function(oParent) {
-	var $this = this;
+BxTimelineView.prototype.initVideosAutoplay = function(oParent)
+{
+    var $this = this;
 
-	if(this._sVideosAutoplay == 'off')
-		return;
+    if(this._sVideosAutoplay == 'off')
+        return;
 
-	this.initVideos(oParent);
+    this.initVideos(oParent);
 
-	oParent.find('iframe').each(function() {
-		var sPlayer = $(this).attr('id');
-		if($this._oVapPlayers[sPlayer])
-			return;
+    oParent.find('iframe').each(function() {
+        var sPlayer = $(this).attr('id');
+        if($this._oVapPlayers[sPlayer])
+            return;
 
-		var oPlayer = new playerjs.Player(this);
-		if($this._sVideosAutoplay == 'on_mute')
-			oPlayer.mute();
+        var oPlayer = new playerjs.Player(this);
+        if($this._sVideosAutoplay == 'on_mute')
+            oPlayer.mute();
 
         var fFixHeight = function () {
             $('#' + sPlayer).height(($('#' + sPlayer).contents().find('video').height()) + 'px');
         };
         oPlayer.on('ready', fFixHeight);
         oPlayer.on('play', fFixHeight);
-        
-		$this._oVapPlayers[sPlayer] = oPlayer;
-	});
-};
 
-BxTimelineView.prototype.hideEvents = function(oEvents, fOffset) {
-	oEvents.each(function(iIndex, oElement) {
-		(iIndex >=3 && $(this).offset().top > $(window).scrollTop() + $(window).height() * fOffset ) && $(this).find('.bx-tl-item-type, .bx-tl-item-cnt').addClass('is-hidden');
-	});
-};
-
-BxTimelineView.prototype.showEvents = function(oEvents, fOffset) {
-	oEvents.each(function() {
-		( $(this).offset().top <= $(window).scrollTop() + $(window).height() * fOffset && $(this).find('.bx-tl-item-type').hasClass('is-hidden') ) && $(this).find('.bx-tl-item-type, .bx-tl-item-cnt').removeClass('is-hidden').addClass('bounce-in');
-	});
-};
-
-BxTimelineView.prototype.playVideos = function(oEvents, fOffsetStart, fOffsetStop) {
-	var $this = this;
-
-	oEvents.each(function() {
-		$(this).find('iframe').each(function() {
-			var oFrame = $(this);
-			var oPlayer = $this._oVapPlayers[oFrame.attr('id')];
-			if(!oPlayer)
-				return;
-
-			var iFrameTop = oFrame.offset().top;
-			var iFrameBottom = iFrameTop + oFrame.height();
-			var iWindowTop = $(window).scrollTop();
-			var iWindowHeight = $(window).height();
-			if(iFrameTop <= iWindowTop + iWindowHeight * fOffsetStart && iFrameBottom >= iWindowTop + iWindowHeight * fOffsetStop)
-				oPlayer.play();
-			else
-				oPlayer.pause();
-		});
-	});
-};
-
-BxTimelineView.prototype.changePage = function(oLink, iStart, iPerPage) {
-	var $this = this;
-	var sView = this._getView(oLink);
-
-	this.loadingInButton(oLink, true);
-
-	this._oRequestParams[sView].start = iStart;
-    this._oRequestParams[sView].per_page = iPerPage;
-    this._getPosts(oLink, function(oData) {
-    	$this.loadingInButton(oLink, false);
-
-    	var oView = null;
-    	var sItems = $.trim(oData.items);
-    	switch(sView) {
-            case 'timeline':
-                oView = $this.oViewTimeline;
-                oView.find('.' + $this.sClassItems).append($(sItems).hide()).find('.' + $this.sClassItem + ':hidden').bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-                    $(this).bxProcessHtml().find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
-                        $this.onFindOverflow(oElement);
-                    });
-
-                    $this.initFlickity();
-
-                    //--- Init Video Autoplay
-                    $this.initVideosAutoplay(oView);
-                });
-                break;
-
-    		case 'outline':
-                    oView = $this.oViewOutline;
-                    $this.appendMasonry($(sItems).bxProcessHtml(), function(oItems) {
-                        oItems.find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
-                            $this.onFindOverflow(oElement);
-                        });
-
-                        $this.initFlickity();
-
-                        //--- Init Video Layout
-                        if($this._sVideosAutoplay != 'off') 
-                            $this.initVideos(oView);
-                    });
-                    break;
-    	}
-
-    	if(oView && oData && oData.load_more != undefined)
-    		oView.find('.' + $this.sSP + '-load-more-holder').html($.trim(oData.load_more));
-
-    	if(oView && oData && oData.back != undefined)
-    		oView.find('.' + $this.sSP + '-back-holder').html($.trim(oData.back));
-
-    	if(oData && oData.empty != undefined)
-			oView.find('.' + $this.sSP + '-empty-holder').html($.trim(oData.empty));
+        $this._oVapPlayers[sPlayer] = oPlayer;
     });
 };
 
-BxTimelineView.prototype.changeFilter = function(oLink) {
-	var sView = this._getView(oLink);
+BxTimelineView.prototype.hideEvents = function(oEvents, fOffset)
+{
+    oEvents.each(function(iIndex, oElement) {
+        (iIndex >=3 && $(this).offset().top > $(window).scrollTop() + $(window).height() * fOffset ) && $(this).find('.bx-tl-item-type, .bx-tl-item-cnt').addClass('is-hidden');
+    });
+};
 
+BxTimelineView.prototype.showEvents = function(oEvents, fOffset)
+{
+    oEvents.each(function() {
+        ( $(this).offset().top <= $(window).scrollTop() + $(window).height() * fOffset && $(this).find('.bx-tl-item-type').hasClass('is-hidden') ) && $(this).find('.bx-tl-item-type, .bx-tl-item-cnt').removeClass('is-hidden').addClass('bounce-in');
+    });
+};
+
+BxTimelineView.prototype.playVideos = function(oEvents, fOffsetStart, fOffsetStop)
+{
+    var $this = this;
+
+    oEvents.each(function() {
+        $(this).find('iframe').each(function() {
+            var oFrame = $(this);
+            var oPlayer = $this._oVapPlayers[oFrame.attr('id')];
+            if(!oPlayer)
+                    return;
+
+            var iFrameTop = oFrame.offset().top;
+            var iFrameBottom = iFrameTop + oFrame.height();
+            var iWindowTop = $(window).scrollTop();
+            var iWindowHeight = $(window).height();
+            if(iFrameTop <= iWindowTop + iWindowHeight * fOffsetStart && iFrameBottom >= iWindowTop + iWindowHeight * fOffsetStop)
+                oPlayer.play();
+            else
+                oPlayer.pause();
+        });
+    });
+};
+
+BxTimelineView.prototype.changePage = function(oLink, iStart, iPerPage)
+{
+    var $this = this;
+
+    this.loadingInButton(oLink, true);
+
+    this._oRequestParams.start = iStart;
+    this._oRequestParams.per_page = iPerPage;
+    this._getPosts(oLink, function(oData) {
+    	$this.loadingInButton(oLink, false);
+
+    	var sItems = $.trim(oData.items);
+
+        if($this.bViewTimeline)
+            $this.oView.find('.' + $this.sClassItems).append($(sItems).hide()).find('.' + $this.sClassItem + ':hidden').bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+                $(this).bxProcessHtml().find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
+                    $this.onFindOverflow(oElement);
+                });
+
+                $this.initFlickity();
+
+                //--- Init Video Autoplay
+                $this.initVideosAutoplay($this.oView);
+            });
+
+        if($this.bViewOutline)
+            $this.appendMasonry($(sItems).bxProcessHtml(), function(oItems) {
+                oItems.find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
+                    $this.onFindOverflow(oElement);
+                });
+
+                $this.initFlickity();
+
+                //--- Init Video Layout
+                if($this._sVideosAutoplay != 'off') 
+                    $this.initVideos($this.oView);
+            });
+
+    	if(oData && oData.load_more != undefined)
+            $this.oView.find('.' + $this.sSP + '-load-more-holder').html($.trim(oData.load_more));
+
+    	if(oData && oData.back != undefined)
+            $this.oView.find('.' + $this.sSP + '-back-holder').html($.trim(oData.back));
+
+    	if(oData && oData.empty != undefined)
+            $this.oView.find('.' + $this.sSP + '-empty-holder').html($.trim(oData.empty));
+    });
+};
+
+BxTimelineView.prototype.changeFilter = function(oLink)
+{
     var sId = $(oLink).attr('id');
     sId = sId.substr(sId.lastIndexOf('-') + 1, sId.length);
 
     this.loadingInBlock(oLink, true);
 
-    this._oRequestParams[sView].start = 0;
-    this._oRequestParams[sView].filter = sId;
+    this._oRequestParams.start = 0;
+    this._oRequestParams.filter = sId;
     this._getPosts(oLink);
 };
 
-BxTimelineView.prototype.changeTimeline = function(oLink, iYear) {
-	var sView = this._getView(oLink);
+BxTimelineView.prototype.changeTimeline = function(oLink, iYear)
+{
+    this.loadingInBlock(oLink, true);
 
-	this.loadingInBlock(oLink, true);
-
-	this._oRequestParams[sView].start = 0;
-    this._oRequestParams[sView].timeline = iYear;
-	this._getPosts(oLink);
+    this._oRequestParams.start = 0;
+    this._oRequestParams.timeline = iYear;
+    this._getPosts(oLink);
 };
 
-BxTimelineView.prototype.showMore = function(oLink) {
-	var sView = this._getView(oLink);
-	var sClassOverflow = this.sSP + '-overflow';
+BxTimelineView.prototype.showMore = function(oLink)
+{
+    var sClassOverflow = this.sSP + '-overflow';
 
-	$(oLink).parents('.' + this.sClassItem + ':first').find('.' + sClassOverflow).css('max-height', 'none').removeClass(sClassOverflow);
-	$(oLink).parents('.' + this.sSP + '-content-show-more:first').remove();
+    $(oLink).parents('.' + this.sClassItem + ':first').find('.' + sClassOverflow).css('max-height', 'none').removeClass(sClassOverflow);
+    $(oLink).parents('.' + this.sSP + '-content-show-more:first').remove();
 
-	switch(sView) {
-		case 'timeline':
-			break;
-	
-		case 'outline':
-			this.reloadMasonry();
-			break;
-	}	
+    if(this.bViewOutline)
+        this.reloadMasonry();
 };
 
-BxTimelineView.prototype.showItem = function(oLink, iId, sMode, oParams) {
-	var sView = this._getView(oLink);
-	var oData = $.extend({}, this._getDefaultData(), {id: iId, mode: sMode}, (oParams != undefined ? oParams : {}));
+BxTimelineView.prototype.showItem = function(oLink, iId, sMode, oParams)
+{
+    var oData = $.extend({}, this._getDefaultData(), {id: iId, mode: sMode}, (oParams != undefined ? oParams : {}));
 
-	$(".bx-popup-full-screen.bx-popup-applied:visible").dolPopupHide();
+    $(".bx-popup-full-screen.bx-popup-applied:visible").dolPopupHide();
 
-	$(window).dolPopupAjax({
-		id: {
-			value: this._aHtmlIds['item_popup_' + sView] + iId, 
-			force: true
-		},
-		url: bx_append_url_params(this._sActionsUrl + 'get_item_brief', oData),
-		closeOnOuterClick: false,
-		removeOnClose: true,
-		fullScreen: true
-	});
+    $(window).dolPopupAjax({
+        id: {
+            value: this._getHtmlId('item_popup', this._oRequestParams, false) + iId, 
+            force: true
+        },
+        url: bx_append_url_params(this._sActionsUrl + 'get_item_brief', oData),
+        closeOnOuterClick: false,
+        removeOnClose: true,
+        fullScreen: true
+    });
 
-	return false;
+    return false;
 };
 
-BxTimelineView.prototype.commentItem = function(oLink, sSystem, iId) {
-	var $this = this;
+BxTimelineView.prototype.commentItem = function(oLink, sSystem, iId)
+{
+    var $this = this;
     var oData = this._getDefaultData(oLink);
     oData['system'] = sSystem;
     oData['id'] = iId;
@@ -327,50 +311,51 @@ BxTimelineView.prototype.commentItem = function(oLink, sSystem, iId) {
         this._sActionsUrl + 'get_comments',
         oData,
         function(oData) {
-        	if(oLink)
-        		$this.loadingInItem(oLink, false);
+            if(oLink)
+                $this.loadingInItem(oLink, false);
 
-        	if(!oData.content)
-        		return;
+            if(!oData.content)
+                return;
 
-        	oComments.html($(oData.content).hide()).children(':hidden').bxProcessHtml().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
+            oComments.html($(oData.content).hide()).children(':hidden').bxProcessHtml().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
         },
         'json'
     );
 };
 
-BxTimelineView.prototype.pinPost = function(oLink, iId, iWay) {
-	this._markPost(oLink, iId, iWay, 'pin');
+BxTimelineView.prototype.pinPost = function(oLink, iId, iWay)
+{
+    this._markPost(oLink, iId, iWay, 'pin');
 };
 
-BxTimelineView.prototype.onPinPost = function(oData) {
-	this._onMarkPost(oData, 'pin');
+BxTimelineView.prototype.onPinPost = function(oData)
+{
+    this._onMarkPost(oData, 'pin');
 };
 
-BxTimelineView.prototype.stickPost = function(oLink, iId, iWay) {
-	this._markPost(oLink, iId, iWay, 'stick');
+BxTimelineView.prototype.stickPost = function(oLink, iId, iWay)
+{
+    this._markPost(oLink, iId, iWay, 'stick');
 };
 
-BxTimelineView.prototype.onStickPost = function(oData) {
-	this._onMarkPost(oData, 'stick');
+BxTimelineView.prototype.onStickPost = function(oData)
+{
+    this._onMarkPost(oData, 'stick');
 };
 
-BxTimelineView.prototype.promotePost = function(oLink, iId, iWay) {
-	var $this = this;
+BxTimelineView.prototype.promotePost = function(oLink, iId, iWay)
+{
+    var $this = this;
     var oData = this._getDefaultData();
     oData['id'] = iId;
 
     $(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide({
-		onHide: function(oPopup) {
-			$(oPopup).remove();
-		}
-	});
+        onHide: function(oPopup) {
+            $(oPopup).remove();
+        }
+    });
 
-    var oLoadingContainer = null;
-    if(this.bViewTimeline)
-    	oLoadingContainer = $(this.sIdItemTimeline + iId);
-    if(this.bViewOutline)
-    	oLoadingContainer = $(this.sIdItemOutline + iId);
+    var oLoadingContainer = $(this._getHtmlId('item', this._oRequestParams, false) + iId);
 
     this.loadingInItem(oLoadingContainer, true);
 
@@ -378,9 +363,9 @@ BxTimelineView.prototype.promotePost = function(oLink, iId, iWay) {
         this._sActionsUrl + 'promote/',
         oData,
         function(oData) {
-        	$this.loadingInItem(oLoadingContainer, false);
+            $this.loadingInItem(oLoadingContainer, false);
 
-        	processJsonData(oData);
+            processJsonData(oData);
         },
         'json'
     );
@@ -388,77 +373,64 @@ BxTimelineView.prototype.promotePost = function(oLink, iId, iWay) {
 
 BxTimelineView.prototype.initFormEdit = function(sFormId)
 {
-	var $this = this;
-	var oForm = $('#' + sFormId);
+    var $this = this;
+    var oForm = $('#' + sFormId);
 
-	autosize(oForm.find('textarea'));
-	oForm.ajaxForm({
+    autosize(oForm.find('textarea'));
+    oForm.ajaxForm({
         dataType: "json",
         beforeSubmit: function (formData, jqForm, options) {
-        	window[$this._sObjName].beforeFormEditSubmit(oForm);
+            window[$this._sObjName].beforeFormEditSubmit(oForm);
         },
         success: function (oData) {
-        	window[$this._sObjName].afterFormEditSubmit(oForm, oData);
+            window[$this._sObjName].afterFormEditSubmit(oForm, oData);
         }
     });
 };
 
 BxTimelineView.prototype.beforeFormEditSubmit = function(oForm)
 {
-	this.loadingInButton($(oForm).children().find(':submit'), true);
+    this.loadingInButton($(oForm).children().find(':submit'), true);
 };
 
 BxTimelineView.prototype.afterFormEditSubmit = function (oForm, oData)
 {
-	var $this = this;
-	var fContinue = function() {
-            if(oData && oData.id != undefined) {
-                var iId = parseInt(oData.id);
-                if(iId <= 0) 
-                    return;
-
-                if($('#' + $this._aHtmlIds['main_timeline']).length)
-                    $this._getPost(oForm, iId, 'timeline');
-
-                if($('#' + $this._aHtmlIds['main_outline']).length)
-                    $this._getPost(oForm, iId, 'outline');
-
-                if($('#' + $this._aHtmlIds['main_item']).length)
-                    $this._getPost(oForm, iId, 'item');
-
+    var $this = this;
+    var fContinue = function() {
+        if(oData && oData.id != undefined) {
+            var iId = parseInt(oData.id);
+            if(iId <= 0) 
                 return;
-            }
 
-            if(oData && oData.form != undefined && oData.form_id != undefined) {
-                $('#' + oData.form_id).replaceWith(oData.form);
-                $this.initFormEdit(oData.form_id);
+            $this._getPost($this.oView, iId, $this._oRequestParams);
+            return;
+        }
 
-                return;
-            }
-	};
+        if(oData && oData.form != undefined && oData.form_id != undefined) {
+            $('#' + oData.form_id).replaceWith(oData.form);
+            $this.initFormEdit(oData.form_id);
 
-	this.loadingInButton($(oForm).children().find(':submit'), false);
+            return;
+        }
+    };
 
-	if(oData && oData.message != undefined)
-            bx_alert(oData.message, fContinue);
-	else
-            fContinue();
+    this.loadingInButton($(oForm).children().find(':submit'), false);
+
+    if(oData && oData.message != undefined)
+        bx_alert(oData.message, fContinue);
+    else
+        fContinue();
 };
 
-BxTimelineView.prototype.editPost = function(oLink, iId) {
-	var $this = this;
-    var oData = this._getDefaultData();
+BxTimelineView.prototype.editPost = function(oLink, iId)
+{
+    var $this = this;
+    var oData = this._getDefaultData(oLink);
     oData['id'] = iId;
 
     $(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide();
 
-    var oItem = null;
-    if(this.bViewTimeline)
-    	oItem = $(this.sIdItemTimeline + iId);
-    if(this.bViewOutline)
-    	oItem = $(this.sIdItemOutline + iId);
-    if(this.bViewItem)
-    	oItem = $(this.sIdItemItem + iId);
+    var oItem = this.oView.find(this._getHtmlId('item', this._oRequestParams, false) + iId);
 
     var oContent = oItem.find('.' + this.sClassItemContent);
     if(oContent.find('form').length) {
@@ -473,28 +445,23 @@ BxTimelineView.prototype.editPost = function(oLink, iId) {
     this.loadingInItem(oItem, true);
 
     jQuery.post (
-		this._sActionsUrl + 'get_edit_form/' + iId + '/',
-		oData,
+        this._sActionsUrl + 'get_edit_form/' + iId + '/',
+        oData,
         function (oData) {
-			processJsonData(oData);
+            processJsonData(oData);
         },
         'json'
     );
 };
 
-BxTimelineView.prototype.onEditPost = function(oData) {
-	var $this = this;
+BxTimelineView.prototype.onEditPost = function(oData)
+{
+    var $this = this;
 
-	if(!oData || !oData.id)
-		return;
+    if(!oData || !oData.id)
+        return;
 
-	var oItem = null;
-	if(this.bViewTimeline)
-		oItem = $(this.sIdItemTimeline + oData.id);
-    if(this.bViewOutline)
-    	oItem = $(this.sIdItemOutline + oData.id);
-    if(this.bViewItem)
-    	oItem = $(this.sIdItemItem + oData.id);
+    var oItem = $(this._getHtmlId('item', this._oRequestParams, false) + oData.id);
 
     this.loadingInItem(oItem, false);
 
@@ -507,11 +474,13 @@ BxTimelineView.prototype.onEditPost = function(oData) {
     }
 };
 
-BxTimelineView.prototype.editPostCancel = function(oButton, iId) {
-	this.editPost(oButton, iId);
+BxTimelineView.prototype.editPostCancel = function(oButton, iId)
+{
+    this.editPost(oButton, iId);
 };
 
-BxTimelineView.prototype.deletePost = function(oLink, iId) {
+BxTimelineView.prototype.deletePost = function(oLink, iId)
+{
     var $this = this;
 
     $(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide();
@@ -520,11 +489,7 @@ BxTimelineView.prototype.deletePost = function(oLink, iId) {
         var oData = $this._getDefaultData();
         oData['id'] = iId;
 
-        if($this.bViewTimeline)
-            $this.loadingInItem($($this.sIdItemTimeline + iId), true);
-
-        if($this.bViewOutline)
-            $this.loadingInItem($($this.sIdItemOutline + iId), true);
+        $this.loadingInItem($($this._getHtmlId('item', $this._oRequestParams, false) + iId), true);
 
         $.post(
             $this._sActionsUrl + 'delete/',
@@ -537,48 +502,51 @@ BxTimelineView.prototype.deletePost = function(oLink, iId) {
     });
 };
 
-BxTimelineView.prototype.onDeletePost = function(oData) {
-	var $this = this;
+BxTimelineView.prototype.onDeletePost = function(oData)
+{
+    var $this = this;
+    var oItem = $(this._getHtmlId('item', this._oRequestParams, false) + oData.id);
 
-	//--- Delete from 'Timeline' (if available)
-	if(this.bViewTimeline) {
-		$(this.sIdItemTimeline + oData.id).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
-	        $(this).remove();
+    //--- Delete from 'Timeline' (if available)
+    if(this.bViewTimeline) {
+        oItem.bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
+            $(this).remove();
 
-	        if($this.oViewTimeline.find('.' + $this.sClassItem).length == 0) {
-	        	$this.oViewTimeline.find('.' + $this.sClassDividerToday).hide();
-	        	$this.oViewTimeline.find('.' + $this.sSP + '-load-more').hide();
-	        	$this.oViewTimeline.find('.' + $this.sSP + '-empty').show();
-	        }
-	    });
+            if($this.oView.find('.' + $this.sClassItem).length == 0) {
+                $this.oView.find('.' + $this.sClassDividerToday).hide();
+                $this.oView.find('.' + $this.sSP + '-load-more').hide();
+                $this.oView.find('.' + $this.sSP + '-empty').show();
+            }
+        });
 
-		return;
-	}
+        return;
+    }
 
-	//--- Delete from 'Outline' (if available)
-	if(this.bViewOutline) {
-		$(this.sIdItemOutline + oData.id).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
-	        $(this).remove();
+    //--- Delete from 'Outline' (if available)
+    if(this.bViewOutline) {
+        oItem.bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
+            $(this).remove();
 
-	        if($this.oViewOutline.find('.' + $this.sClassItem).length == 0) {
-	        	$this.destroyMasonry();
+            if($this.oView.find('.' + $this.sClassItem).length == 0) {
+                $this.destroyMasonry();
 
-	        	$this.oViewOutline.find('.' + $this.sSP + '-load-more').hide();
-	        	$this.oViewOutline.find('.' + $this.sSP + '-empty').show();
-	        } 
-	        else
-	        	$this.reloadMasonry();
-	    });
+                $this.oView.find('.' + $this.sSP + '-load-more').hide();
+                $this.oView.find('.' + $this.sSP + '-empty').show();
+            } 
+            else
+                $this.reloadMasonry();
+        });
 
-		return;
-	}
+        return;
+    }
 
-	//--- Delete from 'View Item' page.
-	if(this._sReferrer.length != 0)
-		document.location = this._sReferrer;
+    //--- Delete from 'View Item' page.
+    if(this._sReferrer.length != 0)
+        document.location = this._sReferrer;
 };
 
-BxTimelineView.prototype.onConnect = function(eElement, oData) {
+BxTimelineView.prototype.onConnect = function(eElement, oData)
+{
     $(eElement).remove();
 };
 
@@ -589,23 +557,11 @@ BxTimelineView.prototype.goTo = function(oLink, sGoToId, sBlinkIds, onLoad)
 {
     var $this = this;
 
-    var sView = '';
-    var oView = $(this.sIdViewTimeline);
-    if(oView.length)
-        sView = 'timeline';
-    else {
-        oView = $(this.sIdViewOutline);
-        if(oView.length)
-            sView = 'outline';
-        else
-            return;
-    }
-
     this.loadingInPopup(oLink, true);
 
-    this._oRequestParams[sView].start = 0;
-    this._oRequestParams[sView].blink = sBlinkIds;
-    this._getPosts(oView, function(oData) {
+    this._oRequestParams.start = 0;
+    this._oRequestParams.blink = sBlinkIds;
+    this._getPosts(this.oView, function(oData) {
         $this.loadingInPopup(oLink, false);
 
         $(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide();
@@ -652,66 +608,66 @@ BxTimelineView.prototype.showLiveUpdate = function(oData)
 
 BxTimelineView.prototype.previousLiveUpdate = function(oLink)
 {
-	var fPrevious = function() {
-		var sClass = 'bx-popup-chain-item';
-		$(oLink).parents('.' + sClass + ':first').hide().prev('.' + sClass).show();
-	};
+    var fPrevious = function() {
+        var sClass = 'bx-popup-chain-item';
+        $(oLink).parents('.' + sClass + ':first').hide().prev('.' + sClass).show();
+    };
 
-	if(!this.pauseLiveUpdates(fPrevious));
-		fPrevious();
+    if(!this.pauseLiveUpdates(fPrevious));
+        fPrevious();
 };
 
 BxTimelineView.prototype.hideLiveUpdate = function(oLink)
 {
-	$(oLink).parents('.bx-popup-applied:visible:first').dolPopupHide();
+    $(oLink).parents('.bx-popup-applied:visible:first').dolPopupHide();
 };
 
 BxTimelineView.prototype.resumeLiveUpdates = function(onLoad)
 {
-	if(!this._bLiveUpdatePaused)
-		return false;
+    if(!this._bLiveUpdatePaused)
+        return false;
 
-	var $this = this;
-	this.changeLiveUpdates('resume_live_update', function() {
-		$this._bLiveUpdatePaused = false;
+    var $this = this;
+    this.changeLiveUpdates('resume_live_update', function() {
+        $this._bLiveUpdatePaused = false;
 
-		if(typeof onLoad == 'function')
-			onLoad();
-	});
+        if(typeof onLoad == 'function')
+            onLoad();
+    });
 
-	return true;
+    return true;
 };
 
 BxTimelineView.prototype.pauseLiveUpdates = function(onLoad)
 {
-	if(this._bLiveUpdatePaused)
-		return false;
+    if(this._bLiveUpdatePaused)
+        return false;
 
-	var $this = this;
-	this.changeLiveUpdates('pause_live_update', function() {
-		$this._bLiveUpdatePaused = true;
+    var $this = this;
+    this.changeLiveUpdates('pause_live_update', function() {
+        $this._bLiveUpdatePaused = true;
 
-		if(typeof onLoad == 'function')
-			onLoad();
-	});
+        if(typeof onLoad == 'function')
+            onLoad();
+    });
 
-	return true;
+    return true;
 };
 
 BxTimelineView.prototype.changeLiveUpdates = function(sAction, onLoad)
 {
-	var $this = this;
+    var $this = this;
     var oParams = this._getDefaultActions();
     oParams['action'] = sAction;
 
-	jQuery.get(
-	    this._sActionsUrl + sAction + '/',
-	    oParams,
-	    function() {
-	    	if(typeof onLoad == 'function')
-				onLoad();
-	    }
-	);
+    jQuery.get(
+        this._sActionsUrl + sAction + '/',
+        oParams,
+        function() {
+            if(typeof onLoad == 'function')
+                onLoad();
+        }
+    );
 };
 
 BxTimelineView.prototype.blink = function(oParent)
@@ -729,128 +685,106 @@ BxTimelineView.prototype.blink = function(oParent)
 /*------------------------------------*/
 /*--- Internal (protected) methods ---*/
 /*------------------------------------*/
-BxTimelineView.prototype._getPosts = function(oElement, onComplete) {
-	var $this = this;
-	var oData = this._getDefaultData(oElement);
+BxTimelineView.prototype._getPosts = function(oElement, onComplete)
+{
+    var $this = this;
+    var oData = this._getDefaultData(oElement);
 
-	jQuery.get(
+    jQuery.get(
         this._sActionsUrl + 'get_posts/',
         oData,
         function(oData) {
-        	if(typeof onComplete === 'function')
-        		return onComplete(oData);
+            if(typeof onComplete === 'function')
+                return onComplete(oData);
 
-        	$this.loadingInBlock(oElement, false);
+            $this.loadingInBlock(oElement, false);
 
-        	processJsonData(oData);
+            processJsonData(oData);
         },
         'json'
     );
 };
 
-BxTimelineView.prototype._onGetPosts = function(oData) {
-	var $this = this;
-	var oView = $('#' + this._aHtmlIds['main_' + oData.view]);
+BxTimelineView.prototype._onGetPosts = function(oData)
+{
+    var $this = this;
 
-	var onComplete = function() {
-		if(oData && oData.go_to != undefined)
-			location.hash = oData.go_to;
+    var onComplete = function() {
+        if(oData && oData.go_to != undefined)
+            location.hash = oData.go_to;
 
-		if(oData && oData.load_more != undefined)
-			oView.find('.' + $this.sSP + '-load-more-holder').html($.trim(oData.load_more));
+        if(oData && oData.load_more != undefined)
+            $this.oView.find('.' + $this.sSP + '-load-more-holder').html($.trim(oData.load_more));
 
-		if(oData && oData.back != undefined)
-			oView.find('.' + $this.sSP + '-back-holder').html($.trim(oData.back));
+        if(oData && oData.back != undefined)
+            $this.oView.find('.' + $this.sSP + '-back-holder').html($.trim(oData.back));
 
-		if(oData && oData.empty != undefined)
-			oView.find('.' + $this.sSP + '-empty-holder').html($.trim(oData.empty));
-	};
+        if(oData && oData.empty != undefined)
+            $this.oView.find('.' + $this.sSP + '-empty-holder').html($.trim(oData.empty));
+    };
 
-	if(oData && oData.items != undefined) {
-		var sItems = $.trim(oData.items);
+    if(oData && oData.items != undefined) {
+        var sItems = $.trim(oData.items);
 
-		switch(oData.view) {
-			case 'timeline':
-				oView.find('.' + this.sClassItems).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
-					$(this).html(sItems).show().bxProcessHtml();
+        if(this.bViewTimeline) {
+            this.oView.find('.' + this.sClassItems).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
+                $(this).html(sItems).show().bxProcessHtml();
 
-					$this.blink($(this));
-					$this.initFlickity();
+                $this.blink($(this));
+                $this.initFlickity();
 
-					onComplete();
-			    });
-				break;
+                onComplete();
+            });
 
-			case 'outline':
-				oView.find('.' + this.sClassItems).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
-			        $(this).html(sItems).show().bxProcessHtml();
+            return;
+        }
 
-			        if($this.isMasonry())
-			        	$this.destroyMasonry();
+        if(this.bViewOutline) {
+            this.oView.find('.' + this.sClassItems).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
+                $(this).html(sItems).show().bxProcessHtml();
 
-			        if(!$this.isMasonryEmpty())
-			        	$this.initMasonry();
+                if($this.isMasonry())
+                    $this.destroyMasonry();
 
-			        $this.blink($(this));
-			        $this.initFlickity();
+                if(!$this.isMasonryEmpty())
+                    $this.initMasonry();
 
-			        onComplete();
-			    });
-				break;
-		}
-	}	
+                $this.blink($(this));
+                $this.initFlickity();
+
+                onComplete();
+            });
+
+            return;
+        }
+    }
 };
 
-
-BxTimelineView.prototype._onGetPost = function(oData) {
+BxTimelineView.prototype._onGetPost = function(oData)
+{
     if(!$.trim(oData.item).length) 
         return;
 
     var $this = this;
-    var sItem = '';
-    var oItem = $(oData.item).bxProcessHtml();
-    var oView = $('#' + this._aHtmlIds['main_' + oData.view]);
-
-    switch(oData.view) {
-        case 'timeline':
-            sItem = this.sIdItemTimeline + oData.id;
-            oView.find(sItem).replaceWith(oItem);
-            break;
-
-        case 'outline':
-            sItem = this.sIdItemOutline + oData.id;
-            oView.find(sItem).replaceWith(oItem);
-
-            this.reloadMasonry();
-            break;
-
-        case 'item':
-            sItem = this.sIdItemItem + oData.id;
-            oView.find(sItem).replaceWith(oItem);
-            break;
-    }
-    
-    oView.find(sItem).find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight(this.sSP + '-overflow', function(oElement) {
+    var sItem = this._getHtmlId('item', this._oRequestParams, false) + oData.id;
+    this.oView.find(sItem).replaceWith($(oData.item).bxProcessHtml());
+    this.oView.find(sItem).find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight(this.sSP + '-overflow', function(oElement) {
         $this.onFindOverflow(oElement);
-    })
+    });
 };
 
-BxTimelineView.prototype._markPost = function(oLink, iId, iWay, sAction) {
-	var $this = this;
+BxTimelineView.prototype._markPost = function(oLink, iId, iWay, sAction)
+{
     var oData = this._getDefaultData();
     oData['id'] = iId;
 
     $(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide({
-		onHide: function(oPopup) {
-			$(oPopup).remove();
-		}
-	});
+        onHide: function(oPopup) {
+            $(oPopup).remove();
+        }
+    });
 
-    if(this.bViewTimeline)
-    	this.loadingInItem($(this.sIdItemTimeline + iId), true);
-
-    if(this.bViewOutline)
-    	this.loadingInItem($(this.sIdItemOutline + iId), true);
+    this.loadingInItem($(this._getHtmlId('item', this._oRequestParams, false) + iId), true);
 
     $.post(
         this._sActionsUrl + sAction + '/',
@@ -862,32 +796,28 @@ BxTimelineView.prototype._markPost = function(oLink, iId, iWay, sAction) {
     );
 };
 
-BxTimelineView.prototype._onMarkPost = function(oData, sAction) {
-	var $this = this;
+BxTimelineView.prototype._onMarkPost = function(oData, sAction)
+{
+    var $this = this;
+    var sItem = this._getHtmlId('item', this._oRequestParams, false) + oData.id;
 
-	//--- Mark on Timeline (if available)
-	if(this.bViewTimeline) {
-		var sItemTimeline = this.sIdItemTimeline + oData.id;
+    this._oRequestParams.start = 0;
 
-		this._oRequestParams['timeline'].start = 0;
-        this._getPosts(this.oViewTimeline, function(oData) {
-        	$(sItemTimeline).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-    	        $(this).remove();
+    //--- Mark on Timeline (if available)
+    if(this.bViewTimeline)
+        this._getPosts(this.oView, function(oData) {
+            $(sItem).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+                $(this).remove();
 
-    	        processJsonData(oData);
-        	});
+                processJsonData(oData);
+            });
         });
-	}
 
-	//--- Mark on Outline (if available)
-	if(this.bViewOutline) {
-		var sItemOutline = this.sIdItemOutline + oData.id;
-
-		this._oRequestParams['outline'].start = 0;
-        this._getPosts(this.oViewOutline, function(oData) {
-        	$this.removeMasonry(sItemOutline, function() {
-        		processJsonData(oData);
-    		});
+    //--- Mark on Outline (if available)
+    if(this.bViewOutline)
+        this._getPosts(this.oView, function(oData) {
+            $this.removeMasonry(sItem, function() {
+                processJsonData(oData);
+            });
         });
-	}
 };

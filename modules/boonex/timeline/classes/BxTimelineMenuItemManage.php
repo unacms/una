@@ -20,14 +20,18 @@ class BxTimelineMenuItemManage extends BxTimelineMenuItemActions
     {
         parent::__construct($aObject, $oTemplate);
 
-        if(bx_get('content_id') !== false)
-            $this->setEventById((int)bx_get('content_id'));
-
-        $sType = bx_get('type') !== false ? bx_process_input(bx_get('type')) : '';
-        $sView = bx_get('view') !== false ? bx_process_input(bx_get('view')) : '';
-        $this->setBrowseParams($sType, $sView);
-
         $this->setDynamicMode(true);
+
+        $iContentId = 0;
+        if(bx_get('content_id') !== false)
+            $iContentId = bx_process_input(bx_get('content_id'), BX_DATA_INT);
+
+        $aBrowseParams = array('name' => '', 'view' => '', 'type' => '');
+        foreach($aBrowseParams as $sKey => $sValue)
+            if(bx_get($sKey) !== false)
+                $aBrowseParams[$sKey] = bx_process_input(bx_get($sKey));
+
+        $this->setEventById($iContentId, $aBrowseParams);
 
         $this->_bShowTitles = true;
     }

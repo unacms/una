@@ -177,33 +177,12 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         );
 
         $sHp = str_replace('_', '-', $this->_sName);
-        $sHpI = BX_TIMELINE_VIEW_ITEM;
         $sHpT = BX_TIMELINE_VIEW_TIMELINE;
         $sHpO = BX_TIMELINE_VIEW_OUTLINE;
-        $sHpS = BX_TIMELINE_VIEW_SEARCH;
         $this->_aHtmlIds = array(
             'view' => array(
                 'edit_form' => $sHp . '-edit-',
 
-                'main_' . $sHpI => $sHp . '-' . $sHpI,
-                'item_' . $sHpI => $sHp . '-item-' . $sHpI . '-',
-                'item_popup_' . $sHpI => $sHp . '-item-popup-' . $sHpI,
-                'photo_popup_' . $sHpI => $sHp . '-photo-popup-' . $sHpI,
-
-                'main_' . $sHpT => $sHp . '-' . $sHpT,
-                'item_' . $sHpT => $sHp . '-item-' . $sHpT . '-',
-                'item_popup_' . $sHpT => $sHp . '-item-popup-' . $sHpT,
-                'photo_popup_' . $sHpT => $sHp . '-photo-popup-' . $sHpT,
-
-                'main_' . $sHpO => $sHp . '-' . $sHpO,
-                'item_' . $sHpO => $sHp . '-item-' . $sHpO . '-',
-                'item_popup_' . $sHpO => $sHp . '-item-popup-' . $sHpO,
-                'photo_popup_' . $sHpO => $sHp . '-photo-popup-' . $sHpO,
-
-                'main_' . $sHpS => $sHp . '-' . $sHpS,
-                'photo_popup_' . $sHpS => $sHp . '-photo-popup-' . $sHpS,
-
-                'main_item' => $sHp . '-item',
                 'menu_popup' => $sHp . '-menu-popup-',
 
                 'video_iframe' => $sHp . '-video-iframe-',
@@ -291,6 +270,43 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_bEditorToolbar = getParam($sOptionPrefix . 'enable_editor_toolbar') == 'on';
 
         $this->_bUnhideRestored = false;
+    }
+
+    protected function getNameView($aParams, $bWithOwner = false, $sGlue = '_')
+    {
+        $aAddons = array();
+        if(!empty($aParams['name']))
+            $aAddons[] = $aParams['name'];
+        else {
+            if(!empty($aParams['view']))
+                $aAddons[] = $aParams['view'];
+
+            if(!empty($aParams['type']))
+                $aAddons[] = $aParams['type'];
+        }
+
+        if($bWithOwner)
+            $aAddons[] = $aParams['owner_id'];
+
+        return !empty($aAddons) ? implode('_', $aAddons) : '';
+    }
+
+    /**
+     * Generates unique JS object name for View events block.
+     * 
+     * @param array $aParams - an array with browsing params received in View block service method
+     * @return string with JS object name
+     */
+    public function getJsObjectView($aParams = array())
+    {
+        return parent::getJsObject('view') . bx_gen_method_name($this->getNameView($aParams));
+    }
+
+    public function getHtmlIdView($sKey, $aParams, $bWhole = true)
+    {
+        $sDiv = '_';
+
+        return str_replace($sDiv, '-', $this->_sName  . $sDiv . $sKey . $sDiv . $this->getNameView($aParams) . (!$bWhole ? $sDiv : ''));
     }
 
     public function isAllowEdit()
@@ -442,9 +458,9 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         ));
     }
 
-    public function getLiveUpdateKey($sType, $iOwnerId)
+    public function getLiveUpdateKey($aParams)
     {
-        return $this->getName() . '_live_update_' . $sType . '_' . $iOwnerId;
+        return $this->getName() . '_live_update_' . $this->getNameView($aParams, true);
     }
 
     public function isCommon($sType, $sAction)
@@ -487,6 +503,16 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $sUrl2 = trim($sUrl2, "/");
 
         return strncmp($sUrl1, $sUrl2, strlen($sUrl1)) === 0;
+    }
+
+    public function addBrowseParams($sUrl, $aParams, $sKey = 'bp')
+    {
+        return bx_append_url_params($sUrl, array($sKey => urlencode(base64_encode(serialize($aParams)))));
+    }
+
+    public function getBrowseParams($sValue)
+    {
+        return unserialize(base64_decode(urldecode($sValue)));
     }
 }
 

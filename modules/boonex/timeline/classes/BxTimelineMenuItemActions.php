@@ -29,25 +29,12 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 
         parent::__construct($aObject, $this->_oModule->_oTemplate);
 
+        $this->_setBrowseParams();
+
         $this->_bShowTitles = false;
-
-        $this->addMarkers(array(
-            'js_object_view' => $this->_oModule->_oConfig->getJsObject('view')
-        ));
     }
 
-    public function setBrowseParams($sType, $sView)
-    {
-        $this->_sType = !empty($sType) ? $sType : BX_TIMELINE_TYPE_DEFAULT;
-        $this->_sView = !empty($sView) ? $sView : BX_TIMELINE_VIEW_DEFAULT;
-
-        $this->addMarkers(array(
-            'type' => $this->_sType,
-            'view' => $this->_sView
-        ));
-    }
-
-    public function setEvent($aEvent)
+    public function setEvent($aEvent, $aBrowseParams = array())
     {
         if(empty($aEvent) || !is_array($aEvent))
             return;
@@ -55,12 +42,14 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         $this->_aEvent = $aEvent;
         $this->_iEvent = (int)$this->_aEvent['id'];
 
+        $this->_setBrowseParams($aBrowseParams);
+
         $iCommentsObject = 0;
         $sCommentsSystem = $sCommentsOnclick = '';
         if(isset($aEvent['comments']) && is_array($aEvent['comments']) && isset($aEvent['comments']['system'])) {
             $sCommentsSystem = $aEvent['comments']['system'];
             $iCommentsObject = $aEvent['comments']['object_id'];
-            $sCommentsOnclick = $this->_oModule->_oConfig->getJsObject('view') . ".commentItem(this, '" . $sCommentsSystem . "', " . $iCommentsObject . ")";
+            $sCommentsOnclick = bx_replace_markers("{js_object_view}.commentItem(this, '" . $sCommentsSystem . "', " . $iCommentsObject . ")", $this->_aMarkers);
         }
 
         $this->addMarkers(array(
@@ -72,7 +61,7 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         ));
     }
 
-    public function setEventById($iEventId)
+    public function setEventById($iEventId, $aBrowseParams = array())
     {
     	$aEvent = $this->_oModule->_oDb->getEvents(array('browse' => 'id', 'value' => $iEventId));
     	if(empty($aEvent) || !is_array($aEvent))
@@ -88,7 +77,23 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         $aEvent['reports'] = $aEventData['reports'];
         $aEvent['comments'] = $aEventData['comments'];
 
-    	$this->setEvent($aEvent);
+    	$this->setEvent($aEvent, $aBrowseParams);
+    }
+
+    protected function _setBrowseParams($aBrowseParams = array())
+    {
+        $this->_sType = !empty($aBrowseParams['type']) ? $aBrowseParams['type'] : BX_TIMELINE_TYPE_DEFAULT;
+        $this->_sView = !empty($aBrowseParams['view']) ? $aBrowseParams['view'] : BX_TIMELINE_VIEW_DEFAULT;
+
+        $aMarkers = array();
+        foreach($aBrowseParams as $sKey => $mixedValue)
+            if(!is_array($mixedValue))
+                $aMarkers[$sKey] = $mixedValue;
+
+        $this->addMarkers($aMarkers);
+        $this->addMarkers(array(
+            'js_object_view' => $this->_oModule->_oConfig->getJsObjectView($aBrowseParams)
+        ));
     }
 
     protected function _getMenuItemItemView($aItem)

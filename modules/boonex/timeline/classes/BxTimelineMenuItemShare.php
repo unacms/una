@@ -16,8 +16,8 @@ class BxTimelineMenuItemShare extends BxTemplMenu
 {
     protected $_oModule;
 
-	protected $_iEvent;
-	protected $_aEvent;
+    protected $_iEvent;
+    protected $_aEvent;
 
     public function __construct($aObject, $oTemplate = false)
     {
@@ -25,14 +25,24 @@ class BxTimelineMenuItemShare extends BxTemplMenu
 
         $this->_oModule = BxDolModule::getInstance('bx_timeline');
 
+        $iContentId = 0;
         if(bx_get('content_id') !== false)
-        	$this->setEventId((int)bx_get('content_id'));
+            $iContentId = bx_process_input(bx_get('content_id'), BX_DATA_INT);
+
+        $aBrowseParams = array('name' => '', 'view' => '', 'type' => '');
+        foreach($aBrowseParams as $sKey => $sValue)
+            if(bx_get($sKey) !== false)
+                $aBrowseParams[$sKey] = bx_process_input(bx_get($sKey));
+
+        $this->setEventById($iContentId, $aBrowseParams);
     }
 
-    public function setEventId($iEventId)
+    public function setEventById($iEventId, $aBrowseParams = array())
     {
     	$this->_iEvent = $iEventId;
     	$this->_aEvent = $this->_oModule->_oDb->getEvents(array('browse' => 'id', 'value' => $this->_iEvent));
+
+        $this->_setBrowseParams($aBrowseParams);
 
         $sRepostOnclick = $sEtSend = '';
         if(!empty($this->_aEvent) && is_array($this->_aEvent)) {
@@ -61,13 +71,11 @@ class BxTimelineMenuItemShare extends BxTemplMenu
         }
 
     	$this->addMarkers(array(
-        	'js_object_view' => $this->_oModule->_oConfig->getJsObject('view'),
+            'content_id' => $this->_iEvent,
+            'content_url' => $this->_aEvent['url'],
 
-        	'content_id' => $this->_iEvent,
-    	    'content_url' => $this->_aEvent['url'],
-
-    	    'js_onclick_repost' => $sRepostOnclick,
-    		'et_send' => $sAetSend
+            'js_onclick_repost' => $sRepostOnclick,
+            'et_send' => $sAetSend
     	));
     }
 
@@ -101,6 +109,19 @@ class BxTimelineMenuItemShare extends BxTemplMenu
         return array_merge($aItems, $oSocial->getMenuItems());
     }
 
+    protected function _setBrowseParams($aBrowseParams = array())
+    {
+        $aMarkers = array();
+        foreach($aBrowseParams as $sKey => $mixedValue)
+            if(!is_array($aMarkers))
+                $aMarkers[$sKey] = $mixedValue;
+
+        $this->addMarkers($aMarkers);
+        $this->addMarkers(array(
+            'js_object_view' => $this->_oModule->_oConfig->getJsObjectView($aBrowseParams)
+        ));
+    }
+
     /**
      * Check if menu items is visible.
      * @param $a menu item array
@@ -111,20 +132,20 @@ class BxTimelineMenuItemShare extends BxTemplMenu
         if(!parent::_isVisible($a))
             return false;
 
-		if(empty($this->_aEvent) || !is_array($this->_aEvent))
-			return false;
+        if(empty($this->_aEvent) || !is_array($this->_aEvent))
+            return false;
 
         $sCheckFuncName = '';
         $aCheckFuncParams = array();
         switch ($a['name']) {
-        	case 'item-repost':
+            case 'item-repost':
                 $sCheckFuncName = 'isAllowedRepost';
-				$aCheckFuncParams = array($this->_aEvent);
+                $aCheckFuncParams = array($this->_aEvent);
                 break;
 
-			case 'item-send':
+            case 'item-send':
                 $sCheckFuncName = 'isAllowedSend';
-				$aCheckFuncParams = array($this->_aEvent);
+                $aCheckFuncParams = array($this->_aEvent);
                 break;
         }
 
