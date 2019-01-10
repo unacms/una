@@ -23,11 +23,17 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         parent::__construct($oConfig, $oDb);
     }
 
-	public function getJsCode($sType, $aParams = array(), $mixedWrap = true)
+    public function getJsCode($sType, $aParams = array(), $mixedWrap = true)
     {
         $sMask = "{var} {object} = new {class}({params});";
-        if(is_array($mixedWrap) && !empty($mixedWrap['mask']))
-            $sMask = $mixedWrap['mask'];
+        $aMaskMarkers = array();
+        if(is_array($mixedWrap)) {
+            if(!empty($mixedWrap['mask']))
+                $sMask = $mixedWrap['mask'];
+
+            if(!empty($mixedWrap['mask_markers']) && is_array($mixedWrap['mask_markers']))
+                $aMaskMarkers = $mixedWrap['mask_markers'];
+        }
 
         $sBaseUri = $this->_oConfig->getBaseUri();
         $sJsClass = $this->_oConfig->getJsClass($sType);
@@ -37,16 +43,16 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             'sActionUri' => $sBaseUri,
             'sActionUrl' => BX_DOL_URL_ROOT . $sBaseUri,
             'sObjName' => $sJsObject,
-        	'aHtmlIds' => array(),
+            'aHtmlIds' => array(),
             'oRequestParams' => array()
         ), $aParams);
 
-        $sContent = bx_replace_markers($sMask, array(
+        $sContent = bx_replace_markers($sMask, array_merge(array(
             'var' => 'var',
             'object' => $sJsObject, 
             'class' => $sJsClass,
             'params' => json_encode($aParams)
-        ));
+        ), $aMaskMarkers));
 
         return ($mixedWrap === true || (is_array($mixedWrap) && isset($mixedWrap['wrap']) && $mixedWrap['wrap'] === true)) ? $this->_wrapInTagJsCode($sContent) : $sContent;
     }
