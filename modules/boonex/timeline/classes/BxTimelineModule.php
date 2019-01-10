@@ -91,7 +91,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         echoJson($this->getFormPost());
     }
 
-    //TODO: Continue from here! 'type' has event's type instead of Browsing type.
     public function actionEdit($iId)
     {
         $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
@@ -2921,8 +2920,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     protected function _serviceGetBlockViewByType($aBrowseParams = array())
     {
         $aParams = $this->_prepareParams($aBrowseParams);
-        if((int)$aParams['per_page'] <= 0)
-            $aParams['per_page'] = (int)$aBrowseParams['per_page_default'] > 0 ? $aBrowseParams['per_page_default'] : $this->_oConfig->getPerPage();
+        if(isset($aParams['per_page']) && (int)$aParams['per_page'] <= 0)
+            $aParams['per_page'] = isset($aBrowseParams['per_page_default']) && (int)$aBrowseParams['per_page_default'] > 0 ? $aBrowseParams['per_page_default'] : $this->_oConfig->getPerPage();
 
         $this->_iOwnerId = $aParams['owner_id'];
 
@@ -2973,7 +2972,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $sContent = '';
         bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_view', $this->_iOwnerId, $this->getUserId(), array('override_content' => &$sContent, 'params' => &$aParams, 'menu' => &$aMenu));
-//TODO: Refuctor THIS!
+
         $oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id'=> $sView . '-view-all', 'menu_items' => $aMenu));
         $oMenu->setSelected('', $sView . '-view-all');
 
@@ -3169,10 +3168,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(empty($aParams['owner_id']))
             $aParams['owner_id'] = $this->getUserId();
 
-        if(isset($aParams['start']) && (int)$aParams['start'] < 0)
+        if(!isset($aParams['start']) || (int)$aParams['start'] < 0)
             $aParams['start'] = 0;
 
-        if(isset($aParams['per_page']) && (int)$aParams['per_page'] <= 0)
+        if(!isset($aParams['per_page']) || (int)$aParams['per_page'] <= 0)
             $aParams['per_page'] = $this->_oConfig->getPerPage();
 
         if(empty($aParams['timeline']) || (int)$aParams['timeline'] < 0)

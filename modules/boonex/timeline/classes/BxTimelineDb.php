@@ -495,6 +495,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         if(isset($aParams['count']) && $aParams['count'] === true) {
             $sMethod = 'getOne';
             $sSelectClause = "COUNT(`{$this->_sTable}`.`id`)";
+            $sLimitClause = "";
         }
 
         return array($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);
