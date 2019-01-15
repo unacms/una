@@ -794,6 +794,7 @@
 	<string name="_adm_form_txt_field_object"><![CDATA[Форма]]></string>
 	<string name="_adm_form_txt_field_required"><![CDATA[Необходимое]]></string>
 	<string name="_adm_form_txt_field_show_to_popup"><![CDATA[Показывать "{0}" поле формы для: ]]></string>
+        <string name="_adm_form_txt_field_type_block_end"><![CDATA[конец блока]]></string>
 	<string name="_adm_form_txt_field_type_block_header"><![CDATA[заголовок блока]]></string>
 	<string name="_adm_form_txt_field_type_button"><![CDATA[кнопка]]></string>
 	<string name="_adm_form_txt_field_type_captcha"><![CDATA[капча]]></string>

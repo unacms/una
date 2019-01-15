@@ -32,6 +32,7 @@ class BxDolStudioFormsField extends BxDol
 
         $this->aTypes = array(
         	'block_header' => array('add' => 1), 
+                'block_end' => array('add' => 1), 
         	'text' => array('add' => 1), 
         	'datepicker' => array('add' => 1), 
         	'datetime' => array('add' => 1), 

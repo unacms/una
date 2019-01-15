@@ -35,6 +35,16 @@ class BxDevFormsFieldBlockHeader extends BxTemplStudioFormsFieldBlockHeader
     }
 }
 
+class BxDevFormsFieldBlockEnd extends BxTemplStudioFormsFieldBlockEnd
+{
+    public function init()
+	{
+		parent::init();
+
+        BxDevFunctions::changeFormField($this->aParams, $this->aForm['inputs'], $this->oDb);
+    }
+}
+
 class BxDevFormsFieldValue extends BxTemplStudioFormsFieldValue
 {
     public function init()

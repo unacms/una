@@ -921,7 +921,114 @@ class BxBaseStudioFormsFieldBlockHeader extends BxBaseStudioFormsField
                 )
             )
         );
-	}
+    }
+}
+
+class BxBaseStudioFormsFieldBlockEnd extends BxBaseStudioFormsField
+{
+    protected $sType = 'block_end';
+
+    public function init()
+    {
+        parent::init();
+
+        $this->aForm = array(
+            'form_attrs' => array(
+                'id' => '',
+                'action' => '',
+                'method' => 'post'
+            ),
+            'params' => array (
+                'db' => array(
+                    'table' => 'sys_form_inputs',
+                    'key' => 'id',
+                    'uri' => '',
+                    'uri_title' => '',
+                    'submit_name' => 'do_submit'
+                ),
+            ),
+            'inputs' => array (
+                'module' => array(
+                    'type' => 'hidden',
+                    'name' => 'module',
+                    'caption' => _t('_adm_form_txt_field_module'),
+                    'value' => 'custom',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                ),
+                'object' => array(
+                    'type' => 'hidden',
+                    'name' => 'object',
+                    'caption' => _t('_adm_form_txt_field_object'),
+                    'value' => '',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                ),
+                'name' => array(
+                    'type' => 'hidden',
+                    'name' => 'name',
+                    'caption' => _t('_adm_form_txt_field_name'),
+                    'value' => '',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    )
+                ),
+                'type' => array(
+                    'type' => 'hidden',
+                    'name' => 'type',
+                    'value' => $this->sType,
+                    'db' => array (
+                        'pass' => 'Xss',
+                    )
+                ),
+                'db_pass' => array(
+                    'type' => 'hidden',
+                    'name' => 'db_pass',
+                    'value' => $this->sDbPass,
+                    'db' => array (
+                        'pass' => 'Xss',
+                    )
+                ),
+                'type_display' => $this->getFieldTypesSelector('type_display', $this->sType),
+                'caption_system' => array(
+                    'type' => 'text_translatable',
+                    'name' => 'caption_system',
+                    'caption' => _t('_adm_form_txt_field_caption_system'),
+                    'info' => _t('_adm_form_dsc_field_caption_system'),
+                    'value' => '_sys_form_txt_field',
+                    'required' => '1',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                    'checker' => array (
+                        'func' => 'LengthTranslatable',
+                        'params' => array(3,100, 'caption_system'),
+                        'error' => _t('_adm_form_err_field_caption_system'),
+                    ),
+                ),
+                'controls' => array(
+                    'name' => 'controls',
+                    'type' => 'input_set',
+                    array(
+                        'type' => 'submit',
+                        'name' => 'do_submit',
+                        'value' => _t('_adm_form_btn_field_add'),
+                    ),
+                    array (
+                        'type' => 'reset',
+                        'name' => 'close',
+                        'value' => _t('_adm_form_btn_field_cancel'),
+                        'attrs' => array(
+                            'onclick' => "$('.bx-popup-applied:visible').dolPopupHide()",
+                            'class' => 'bx-def-margin-sec-left',
+                        ),
+                    )
+                )
+            )
+        );
+    }
 }
 
 class BxBaseStudioFormsFieldValue extends BxBaseStudioFormsFieldBlockHeader

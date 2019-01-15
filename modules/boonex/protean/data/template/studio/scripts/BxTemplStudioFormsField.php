@@ -17,6 +17,10 @@ class BxTemplStudioFormsFieldBlockHeader extends BxBaseStudioFormsFieldBlockHead
 {
 }
 
+class BxTemplStudioFormsFieldBlockEnd extends BxBaseStudioFormsFieldBlockEnd
+{
+}
+
 class BxTemplStudioFormsFieldValue extends BxBaseStudioFormsFieldValue
 {
 }
