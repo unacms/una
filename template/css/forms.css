@@ -105,10 +105,10 @@
 }
 
 .bx-form-section-toggler .sys-icon {
-	display: inline-block;
-	vertical-align: top;
+    display: inline-block;
+    vertical-align: top;
     margin: 0 0 0 5px;
-    font-size:1.2rem;
+    font-size:0.875rem;
     line-height:1.2rem;
 }
 
