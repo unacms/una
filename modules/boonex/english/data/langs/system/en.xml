@@ -484,7 +484,7 @@
 	<string name="_adm_bp_err_block_edit"><![CDATA[Cannot update block]]></string>
 	<string name="_adm_bp_err_block_not_deletable"><![CDATA[The requested block cannot be deleted.]]></string>
 	<string name="_adm_bp_err_block_not_found"><![CDATA[The requested block cannot be found.]]></string>
-	<string name="_adm_bp_err_block_title"><![CDATA[Enter title, more then 3 characters]]></string>
+	<string name="_adm_bp_err_block_title"><![CDATA[Enter title, more than 3 characters]]></string>
 	<string name="_adm_bp_err_cannot_process_action"><![CDATA[Cannot process action. It does not have an associated handler.]]></string>
 	<string name="_adm_bp_err_nothing_changed"><![CDATA[Nothing was changed or an error occurred.]]></string>
 	<string name="_adm_bp_err_page_create"><![CDATA[Cannot create the page.]]></string>
@@ -719,7 +719,7 @@
     <string name="_adm_form_dsc_search_forms_title"><![CDATA[Name of the search form. Displayed in Studio only.]]></string>
 	<string name="_adm_form_err_cannot_process_action"><![CDATA[Cannot process action. It does not have an associated handler.]]></string>
 	<string name="_adm_form_err_displays_edit"><![CDATA[Cannot update display]]></string>
-	<string name="_adm_form_err_displays_title"><![CDATA[Enter title, more then 3 characters]]></string>
+	<string name="_adm_form_err_displays_title"><![CDATA[Enter title, more than 3 characters]]></string>
 	<string name="_adm_form_err_field_add"><![CDATA[Cannot add new field]]></string>
 	<string name="_adm_form_err_field_add_not_allowed"><![CDATA[Fields cannot be added in this form]]></string>
 	<string name="_adm_form_err_field_caption_system"><![CDATA[A name with at least 3 characters is required.]]></string>
@@ -734,11 +734,11 @@
 	<string name="_adm_form_err_field_value_number"><![CDATA[Use numeric characters only]]></string>
 	<string name="_adm_form_err_field_values"><![CDATA[You need to select a data set from the list.]]></string>
 	<string name="_adm_form_err_forms_edit"><![CDATA[Cannot update form]]></string>
-	<string name="_adm_form_err_forms_title"><![CDATA[Enter name, more then 3 characters]]></string>
+	<string name="_adm_form_err_forms_title"><![CDATA[Enter name, more than 3 characters]]></string>
 	<string name="_adm_form_err_missing_params"><![CDATA[The required parameters are missing.]]></string>
 	<string name="_adm_form_err_pre_lists_create"><![CDATA[Cannot add list]]></string>
 	<string name="_adm_form_err_pre_lists_edit"><![CDATA[Cannot update list]]></string>
-	<string name="_adm_form_err_pre_lists_title"><![CDATA[Enter title, more then 3 characters]]></string>
+	<string name="_adm_form_err_pre_lists_title"><![CDATA[Enter title, more than 3 characters]]></string>
 	<string name="_adm_form_err_pre_values_create"><![CDATA[Cannot add item]]></string>
 	<string name="_adm_form_err_pre_values_create_forbidden"><![CDATA[This list is already used. It's impossible to add non-numeric, or less than 1, or more than {0} values in it.]]></string>
 	<string name="_adm_form_err_pre_values_delete"><![CDATA[Cannot delete item]]></string>
@@ -748,7 +748,7 @@
     <string name="_adm_form_err_search_forms_fields_edit"><![CDATA[Cannot update the search form field.]]></string>
     <string name="_adm_from_err_search_forms_fields_reset"><![CDATA[Cannot reset the search form.]]></string>
     <string name="_adm_form_err_search_forms_edit"><![CDATA[Cannot update the selected search form.]]></string>
-    <string name="_adm_form_err_search_forms_title"><![CDATA[Enter name, more then 3 characters]]></string>
+    <string name="_adm_form_err_search_forms_title"><![CDATA[Enter name, more than 3 characters]]></string>
 	<string name="_adm_form_txt_all_modules"><![CDATA[All Modules]]></string>
 	<string name="_adm_form_txt_confirm_delete"><![CDATA[Are you sure you want to delete this field? It will be deleted from all Displays! You may just turn it off instead.]]></string>
 	<string name="_adm_form_txt_displays_edit_popup"><![CDATA[Edit "{0}" Display]]></string>
@@ -1111,7 +1111,7 @@
 	<string name="_adm_pgt_err_deactivate_default"><![CDATA[You cannot deactivate language which was selected as Default]]></string>
 	<string name="_adm_pgt_err_etemplates_body"><![CDATA[Enter body]]></string>
 	<string name="_adm_pgt_err_etemplates_edit"><![CDATA[Cannot update template]]></string>
-	<string name="_adm_pgt_err_etemplates_name_system"><![CDATA[Enter name, more then 3 characters]]></string>
+	<string name="_adm_pgt_err_etemplates_name_system"><![CDATA[Enter name, more than 3 characters]]></string>
 	<string name="_adm_pgt_err_etemplates_subject"><![CDATA[Enter subject]]></string>
 	<string name="_adm_pgt_err_last_active"><![CDATA[You need to have at least one active language.]]></string>
 	<string name="_adm_pgt_err_save"><![CDATA[Cannot save changes]]></string>
