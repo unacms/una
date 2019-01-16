@@ -67,6 +67,12 @@ class BxAlbumsDb extends BxBaseModTextDb
         return $this->getRow($sQuery);
     }
 
+    public function getMediaCountByContentId($iContentId)
+    {
+        $sQuery = $this->prepare ("SELECT COUNT(*) FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` WHERE `content_id` = ? LIMIT 1", $iContentId);
+        return $this->getOne($sQuery);
+    }
+
     public function getMediaListByContentId($iContentId)
     {
         $sQuery = $this->prepare ("SELECT * FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` WHERE `content_id` = ? ORDER BY `order`", $iContentId);

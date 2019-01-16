@@ -198,6 +198,8 @@
 	<string name="_bx_albums_menu_item_title_admt_albums"><![CDATA[Albums - {addon} hidden]]></string>
 	<string name="_bx_albums_menu_item_title_manage_my"><![CDATA[My Albums]]></string>
 	<string name="_bx_albums_menu_item_title_manage_all"><![CDATA[All Albums]]></string>
+        <string name="_bx_albums_menu_item_title_system_sm_items"><![CDATA[Items]]></string>
+        <string name="_bx_albums_menu_item_title_sm_items"><![CDATA[{0} items]]></string>
 
 	<string name="_bx_albums_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
 	<string name="_bx_albums_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>

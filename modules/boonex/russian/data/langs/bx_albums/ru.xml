@@ -196,6 +196,8 @@
 	<string name="_bx_albums_menu_item_title_admt_albums"><![CDATA[Альбомы - {addon} спрятан]]></string>
 	<string name="_bx_albums_menu_item_title_manage_my"><![CDATA[Мои альбомы]]></string>
 	<string name="_bx_albums_menu_item_title_manage_all"><![CDATA[Все альбомы]]></string>
+        <string name="_bx_albums_menu_item_title_system_sm_items"><![CDATA[Элементы]]></string>
+        <string name="_bx_albums_menu_item_title_sm_items"><![CDATA[элементов: {0}]]></string>
 
 	<string name="_bx_albums_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
 	<string name="_bx_albums_grid_filter_item_title_adm_active"><![CDATA[Активный]]></string>

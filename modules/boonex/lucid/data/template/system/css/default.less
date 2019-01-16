@@ -461,8 +461,21 @@ a.bx-def-font-h3:hover {
 .bx-def-color-bg-box-hover:hover {
     .background-color (@bx-color-box-hover);
 }
+.bx-def-box-round-corners,
 .bx-def-box.bx-def-round-corners {
     border-radius: @bx-border-radius-box;
+    background-clip: padding-box;
+}
+.bx-def-box-round-corners-int {
+    border-radius: @bx-border-radius-box-itl @bx-border-radius-box-itr @bx-border-radius-box-ibr @bx-border-radius-box-ibl;
+    background-clip: padding-box;
+}
+.bx-def-box-round-corners-int-top {
+    border-radius: @bx-border-radius-box-itl @bx-border-radius-box-itr 0 0;
+    background-clip: padding-box;
+}
+.bx-def-box-round-corners-int-bottom {
+    border-radius: 0 0 @bx-border-radius-box-ibr @bx-border-radius-box-ibl;
     background-clip: padding-box;
 }
 .bx-base-pofile-unit-with-cover .bx-def-round-corners .bx-base-pofile-unit-cover {
@@ -470,11 +483,11 @@ a.bx-def-font-h3:hover {
 }
 .bx-base-text-unit.bx-base-text-unit-ext.bx-def-round-corners img.bx-base-text-unit-cover.bx-def-round-corners,
 .bx-base-text-unit.bx-base-text-unit-ext .bx-def-round-corners img.bx-base-text-unit-cover.bx-def-round-corners {
-    border-radius: @bx-border-radius-box-tl @bx-border-radius-box-tr 0 0;
+    border-radius: @bx-border-radius-box-itl @bx-border-radius-box-itr 0 0;
 }
 .bx-base-text-unit.bx-base-text-unit-gallery.bx-def-round-corners .bx-base-text-unit-thumb.bx-def-round-corners,
 .bx-base-text-unit.bx-base-text-unit-gallery .bx-def-round-corners .bx-base-text-unit-thumb.bx-def-round-corners {
-    border-radius: @bx-border-radius-box-tl @bx-border-radius-box-tr 0 0;
+    border-radius: @bx-border-radius-box-itl @bx-border-radius-box-itr 0 0;
 }
 
 /* box: timeline */

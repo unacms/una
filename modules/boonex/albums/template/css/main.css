@@ -144,10 +144,14 @@
 .bx-albums-unit-image img {
     height: 11.25rem;
 }
-
-.bx-base-text-unit-gallery .bx-albums-unit-image { 
-	width: 100%;
-	text-align: center;
+.bx-base-text-unit-gallery .bx-albums-unit-images-cont {
+    padding: 0.125rem 0.125rem 0 0.125rem;
+}
+.bx-base-text-unit-gallery .bx-albums-unit-text-cont {
+    line-height: 150%;
+}
+.bx-base-text-unit-gallery .bx-albums-unit-text-cont .bx-base-text-unit-title {
+    text-align: left;
 }
 
 .bx-albums-media-file {

@@ -25,12 +25,13 @@ function BxAlbumsMain(oOptions) {
 }
 
 BxAlbumsMain.prototype.init = function() {
-	$('.bx-albums-unit-images').flickity({
-		cellSelector: '.bx-albums-unit-image',
-		cellAlign: 'left',
-		pageDots: false,
-		imagesLoaded: true
-	});
+    $('.bx-albums-unit-images').flickity({
+        cellSelector: '.bx-albums-unit-image',
+        cellAlign: 'center',
+        imagesLoaded: true,
+        wrapAround: true,
+        pageDots: false
+    });
 };
 
 /** @} */

@@ -17,6 +17,15 @@ class BxAlbumsMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
 
         parent::__construct($aObject, $oTemplate);
     }
+
+    protected function _getMenuItemItems($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $iCount = $this->_oModule->_oDb->getMediaCountByContentId($this->_aContentInfo[$CNF['FIELD_ID']]);
+
+        return $this->getUnitMetaItemText(_t($aItem['title'], $iCount));
+    }
 }
 
 /** @} */
