@@ -19,7 +19,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
     public function serviceProfileUnit ($iContentId, $aParams = array())
     {
-        return $this->_serviceProfileFunc('getUnit', $iContentId);
+        return $this->_serviceProfileFunc('getUnit', $iContentId, $aParams);
     }
 
     public function serviceHasImage ($iContentId)
@@ -210,13 +210,14 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return $oSearch->response();
     }
     
-    public function _serviceProfileFunc ($sFunc, $iContentId)
+    public function _serviceProfileFunc ($sFunc, $iContentId, $aParams = array())
     {
         if (!$iContentId)
             return false;
         if (!($oAccount = BxDolAccount::getInstance($iContentId)))
             return false;
-        return $oAccount->$sFunc();
+
+        return $oAccount->$sFunc(false, $aParams);
     }
 
     public function serviceAlertResponseProcessInstalled()

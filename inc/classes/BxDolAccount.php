@@ -330,12 +330,21 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
     /**
      * Get account url
      */
-    public function getUnit($iAccountId = false)
+    public function getUnit($iAccountId = false, $aParams = array())
     {
+        $sTemplate = 'account_' . (!empty($aParams['template']) ? $aParams['template'] : 'unit') . '.html';
+
         $sTitle = $this->getDisplayName($iAccountId);
-        return BxDolTemplate::getInstance()->parseHtmlByName('unit_account.html', array(
+        return BxDolTemplate::getInstance()->parseHtmlByName($sTemplate, array(
             'color' => implode(', ', BxDolTemplate::getColorCode(($iAccountId ? $iAccountId : $this->_iAccountID), 1.0)),
-			'letter' => mb_strtoupper(mb_substr($sTitle, 0, 1))
+            'letter' => mb_strtoupper(mb_substr($sTitle, 0, 1)),
+            'content_url' => $this->getUrl($iAccountId),
+            'title' => $sTitle,
+            'title_attr' => bx_html_attribute($sTitle),
+            'bx_if:show_online' => array(
+                'condition' => $this->isOnline($iAccountId),
+                'content' => array()
+            )
         ));
     }
 

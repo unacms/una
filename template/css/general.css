@@ -333,3 +333,11 @@
 	right: 1.25rem;
 	bottom: 1.25rem;
 }
+
+
+/* --------------- Account Unit */
+.bx-account-unit .bx-def-unit-img, 
+.bx-account-unit-wo-info .bx-def-unit-img {
+    position: relative;
+    overflow: visible;
+}
