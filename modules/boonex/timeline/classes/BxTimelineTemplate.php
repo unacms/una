@@ -1132,6 +1132,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(empty(self::$$sVariable))
             self::$$sVariable = $this->getHtml('item_' . $aBrowseParams['view'] . '.html');
 
+        $sTmplCode = self::$$sVariable;
+        bx_alert($this->_oConfig->getName(), 'get_post', 0, 0, array(
+            'type' => $sType,
+            'event' => $aEvent,
+            'browse_params' => $aBrowseParams,
+            'tmpl_code' => &$sTmplCode,
+            'tmpl_vars' => &$aTmplVars
+        ));
+
         return $this->parseHtmlByContent(self::$$sVariable, $aTmplVars);
     }
 
