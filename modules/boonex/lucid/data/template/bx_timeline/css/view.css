@@ -56,7 +56,6 @@ div.bx-tl-view div.bx-tl-item div.bx-tl-item-owner div.bx-tl-owner-info {
 }
 div.bx-tl-view div.bx-tl-item div.bx-tl-owner-name a.bx-tl-owner-name, 
 div.bx-tl-view div.bx-tl-item div.bx-tl-owner-name .bx-tl-timeline-owner-name a.bx-tl-ton-item {
-    font-size: 1rem;
     font-weight: bold;
 }
 div.bx-tl-view div.bx-tl-item div.bx-tl-owner-actions {

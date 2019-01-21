@@ -207,6 +207,7 @@
 	<string name="_bx_timeline_txt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
 	<string name="_bx_timeline_txt_err_empty_post"><![CDATA[The post is empty.]]></string>
 
+        <string name="_bx_timeline_txt_to"><![CDATA[to]]></string>
 	<string name="_bx_timeline_txt_load_more"><![CDATA[Load More]]></string>
 	<string name="_bx_timeline_txt_or_jump_to"><![CDATA[... or jump to:]]></string>
 	<string name="_bx_timeline_txt_jump_to_n_year"><![CDATA[Jump to {0} year]]></string>

@@ -221,14 +221,24 @@ div.bx-tl-item div.bx-tl-item-image {
     display: inline-block;
 }
 
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom {
+    position: realtive;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+}
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom::before,
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom::after {
+    display: none;
+}
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li > span {
-	margin-right: 1.25rem;
-} 
-
+    margin-right: 0;
+}
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li > span img {
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
 /*--- Item Style: Timeline ---*/
