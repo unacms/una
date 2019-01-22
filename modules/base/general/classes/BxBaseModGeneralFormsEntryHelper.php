@@ -220,7 +220,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
 
     	$sUrl = 'page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']];
         if($this->_bAjaxMode)
-        	$this->prepareResponse($sUrl, $this->_bAjaxMode, 'redirect');
+        	$this->prepareResponse(BX_DOL_URL_ROOT . $sUrl, $this->_bAjaxMode, 'redirect');
 		else
         	$this->_redirectAndExit($sUrl);
     }
