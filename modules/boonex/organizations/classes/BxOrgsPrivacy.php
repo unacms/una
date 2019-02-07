@@ -18,6 +18,11 @@ class BxOrgsPrivacy extends BxBaseModGroupsPrivacy
 
         parent::__construct($aOptions, $oTemplate);
     }
+    
+    protected function getGroups() 
+    {
+        return BxBaseModProfilePrivacy::getGroups();
+    }
 }
 
 /** @} */
