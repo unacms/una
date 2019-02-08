@@ -401,6 +401,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         }
 
         $bFirst = true;
+        $sEvents = '';
         foreach($aEvents as $aEvent) {
             $iEvent = (int)$aEvent['id'];
 
@@ -409,17 +410,20 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 continue;
 
             if($bViewTimeline && $bFirst) {
-                $sContent .= $this->getDividerToday($aEvent);
+                $sEvents .= $this->getDividerToday($aEvent);
                 $bFirst = false;
             }
 
-            $sContent .= $bViewTimeline ? $this->getDivider($iDays, $aEvent) : '';
-            $sContent .= $sEvent;
+            $sEvents .= $bViewTimeline ? $this->getDivider($iDays, $aEvent) : '';
+            $sEvents .= $sEvent;
         }
+        $sContent .= $sEvents;
+
+        $bEvents = !empty($sEvents);
 
         $sBack = $this->getBack($aParams);
-        $sLoadMore = $this->getLoadMore($aParams, $bNext, $iEvents > 0);
-        $sEmpty = $this->getEmpty($iEvents <= 0);
+        $sLoadMore = $this->getLoadMore($aParams, $bNext, $iEvents > 0 && $bEvents);
+        $sEmpty = $this->getEmpty($iEvents <= 0 || !$bEvents);
         return array($sContent, $sLoadMore, $sBack, $sEmpty);
     }
 
@@ -1141,7 +1145,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'tmpl_vars' => &$aTmplVars
         ));
 
-        return $this->parseHtmlByContent(self::$$sVariable, $aTmplVars);
+        return $this->parseHtmlByContent($sTmplCode, $aTmplVars);
     }
 
     protected function _getContent($sType, $aEvent, $aBrowseParams = array())

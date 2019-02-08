@@ -356,6 +356,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
                 $aRet[] = $iConnectedProfileId;
         }
 
+        bx_alert('system', 'get_participating_profiles', $iProfileId, false, array(
+            'module' => $this->_oConfig->getName(),
+            'profiles' => &$aRet
+        ));
+
         return $aRet;
     }
     
