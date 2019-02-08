@@ -333,6 +333,12 @@ class BxBaseServiceAccount extends BxDol
                 $bNeedCheckEmailAndPhone = false;
             }
         }
+        if ((BxDolAccount::isNeedConfirmPhone() && BxDolAccount::isNeedConfirmEmail()) || (!BxDolAccount::isNeedConfirmPhone() && !BxDolAccount::isNeedConfirmEmail())){
+            if (isset($oForm->aInputs['phone']))
+                $oForm->aInputs['phone']['required'] = false;
+            if (isset($oForm->aInputs['email']))
+                $oForm->aInputs['email']['required'] = false;
+        }
         
         $oForm->initChecker();
 

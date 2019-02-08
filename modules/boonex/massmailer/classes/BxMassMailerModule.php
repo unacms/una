@@ -535,11 +535,13 @@ class BxMassMailerModule extends BxBaseModGeneralModule
     private function getSqlBySegment($sSegment)
     {
         $sRv = '';
+        $sJoin = ' INNER ';
         if (strpos($sSegment, 'lvl:') !== false){
             $sLvl = str_replace('lvl:', '', $sSegment);
             switch ($sLvl) {
                 case 0:
                     $sRv = '';
+                    $sJoin = ' LEFT ';
                     break;
                 case MEMBERSHIP_ID_UNCONFIRMED:
                     $sRv = " AND `ta`.`email_confirmed` = 0 AND `ta`.`phone_confirmed` = 0 ";
@@ -559,7 +561,7 @@ class BxMassMailerModule extends BxBaseModGeneralModule
             }
             $sRv .= " AND `tp`.`type` IN (" . $this->_oDb->implode_escape($this->getProfileModules()) . ")";
         }
-        return $sRv;
+        return $sJoin . " JOIN `sys_profiles` AS `tp` ON `tp`.`account_id`=`ta`.`id` " . $sRv;
     }
     
     private function getProfileModules()
