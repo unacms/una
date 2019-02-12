@@ -190,7 +190,9 @@ class BxPaymentProviderPayPal extends BxBaseModPaymentProvider implements iBxBas
             if((int)$aResponse['code'] !== 0)
                return $aResponse;
 
-            array_walk($aResponse['content'], create_function('&$arg', "\$arg = trim(\$arg);"));
+            foreach($aResponse['content'] as $iLine => $sLine)
+                $aResponse['content'][$iLine] = trim($sLine);
+
             if(strcmp($aResponse['content'][0], "INVALID") === 0)
                 return array('code' => 6, 'message' => $this->_sLangsPrefix . 'pp_err_wrong_transaction');
             else if(strcmp($aResponse['content'][0], "VERIFIED") !== 0)
