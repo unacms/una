@@ -13,7 +13,7 @@ DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_posts' OR `object` IN('bx_po
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_posts';
 DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_posts';
-DELETE FROM `sys_menu_items` WHERE `module` = 'bx_posts' OR `set_name` IN('bx_posts_view', 'bx_posts_view_actions', 'bx_posts_submenu', 'bx_posts_view_submenu', 'bx_posts_snippet_meta', 'bx_posts_my', 'bx_posts_menu_manage_tools');
+DELETE FROM `sys_menu_items` WHERE `module` = 'bx_posts' OR `set_name` IN('bx_posts_create_post_attachments', 'bx_posts_view', 'bx_posts_view_actions', 'bx_posts_submenu', 'bx_posts_view_submenu', 'bx_posts_snippet_meta', 'bx_posts_my', 'bx_posts_menu_manage_tools');
 
 -- PRIVACY 
 DELETE FROM `sys_objects_privacy` WHERE `object` = 'bx_posts_allow_view_to';
@@ -43,7 +43,7 @@ DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_posts_administration', 'bx_
 DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_posts_administration', 'bx_posts_common');
 
 -- UPLOADERS
-DELETE FROM `sys_objects_uploader` WHERE `object` IN('bx_posts_simple', 'bx_posts_html5');
+DELETE FROM `sys_objects_uploader` WHERE `object` LIKE 'bx_posts_%';
 
 -- ALERTS
 SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = 'bx_posts' LIMIT 1);

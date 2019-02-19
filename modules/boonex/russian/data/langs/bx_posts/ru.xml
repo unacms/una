@@ -1,45 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
 
-	<string name="_bx_posts"><![CDATA[Публикации]]></string>
-	<string name="_bx_posts_cmts"><![CDATA[Публикации - Комментарии]]></string>
+    <string name="_bx_posts"><![CDATA[Публикации]]></string>
+    <string name="_bx_posts_cmts"><![CDATA[Публикации - Комментарии]]></string>
 
-	<string name="_bx_posts_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к публикациям]]></string>
-	<string name="_bx_posts_option_plain_summary_chars"><![CDATA[Количество символов в описании публикации при отсутствующей картинке публикации]]></string>
+    <string name="_bx_posts_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к публикациям]]></string>
+    <string name="_bx_posts_option_plain_summary_chars"><![CDATA[Количество символов в описании публикации при отсутствующей картинке публикации]]></string>
     <string name="_bx_posts_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
     <string name="_bx_posts_option_per_page_profile"><![CDATA[Количество элементов на странице профайла]]></string>
-	<string name="_bx_posts_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
-	<string name="_bx_posts_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
+    <string name="_bx_posts_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
+    <string name="_bx_posts_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
 
-	<string name="_bx_posts_form_entry"><![CDATA[Публикации]]></string>
-	<string name="_bx_posts_form_entry_display_add"><![CDATA[Добавить публикацию]]></string>
-	<string name="_bx_posts_form_entry_display_edit"><![CDATA[Редактировать публикацию]]></string>
-	<string name="_bx_posts_form_entry_display_delete"><![CDATA[Удалить публикацию]]></string>
-	<string name="_bx_posts_form_entry_display_view"><![CDATA[Просмотреть публикацию]]></string>
-	<string name="_bx_posts_form_entry_input_author"><![CDATA[Автор]]></string>
-	<string name="_bx_posts_form_entry_input_sys_do_submit"><![CDATA[Выполнить]]></string>
-	<string name="_bx_posts_form_entry_input_do_submit"><![CDATA[Выполнить]]></string>
-	<string name="_bx_posts_form_entry_input_sys_do_publish"><![CDATA[Опубликовать]]></string>
-	<string name="_bx_posts_form_entry_input_do_publish"><![CDATA[Опубликовать]]></string>
-	<string name="_bx_posts_form_entry_input_sys_title"><![CDATA[Заголовок]]></string>
-	<string name="_bx_posts_form_entry_input_title"><![CDATA[Заголовок]]></string>
-	<string name="_bx_posts_form_entry_input_title_err"><![CDATA[Заголовок обязателен. Пожалуйста, заполните это поле]]></string>
-	<string name="_bx_posts_form_entry_input_sys_cat"><![CDATA[Категория]]></string>
-	<string name="_bx_posts_form_entry_input_cat"><![CDATA[Категория]]></string>
-	<string name="_bx_posts_form_entry_input_cat_err"><![CDATA[Нужно обязательно выбрать категорию]]></string>
-	<string name="_bx_posts_form_entry_input_sys_text"><![CDATA[Текст]]></string>
-	<string name="_bx_posts_form_entry_input_text"><![CDATA[Текст]]></string>
-	<string name="_bx_posts_form_entry_input_text_err"><![CDATA[Поле для Текста не может быть пустым]]></string>
-	<string name="_bx_posts_form_entry_input_sys_delete_confirm"><![CDATA[Удалить подтверждение]]></string>
-	<string name="_bx_posts_form_entry_input_delete_confirm"><![CDATA[Я уверен(а), что хочу удалить эту публикацию]]></string>
-	<string name="_bx_posts_form_entry_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено]]></string>
-	<string name="_bx_posts_form_entry_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если действительно хотите удалить публикацию]]></string>
-        <string name="_bx_posts_form_entry_input_sys_covers"><![CDATA[Изображение заголовка]]></string>
-	<string name="_bx_posts_form_entry_input_covers"><![CDATA[Изображение заголовка]]></string>
-	<string name="_bx_posts_form_entry_input_covers_uploader_simple_title"><![CDATA[Загрузить]]></string>
-	<string name="_bx_posts_form_entry_input_covers_uploader_html5_title"><![CDATA[Загрузить]]></string>
-	<string name="_bx_posts_form_entry_input_sys_pictures"><![CDATA[Картинки]]></string>
-	<string name="_bx_posts_form_entry_input_pictures"><![CDATA[Картинки]]></string>
+    <string name="_bx_posts_form_entry"><![CDATA[Публикации]]></string>
+    <string name="_bx_posts_form_entry_display_add"><![CDATA[Добавить публикацию]]></string>
+    <string name="_bx_posts_form_entry_display_edit"><![CDATA[Редактировать публикацию]]></string>
+    <string name="_bx_posts_form_entry_display_delete"><![CDATA[Удалить публикацию]]></string>
+    <string name="_bx_posts_form_entry_display_view"><![CDATA[Просмотреть публикацию]]></string>
+    <string name="_bx_posts_form_entry_input_author"><![CDATA[Автор]]></string>
+    <string name="_bx_posts_form_entry_input_sys_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_posts_form_entry_input_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_posts_form_entry_input_sys_do_publish"><![CDATA[Опубликовать]]></string>
+    <string name="_bx_posts_form_entry_input_do_publish"><![CDATA[Опубликовать]]></string>
+    <string name="_bx_posts_form_entry_input_sys_title"><![CDATA[Заголовок]]></string>
+    <string name="_bx_posts_form_entry_input_title"><![CDATA[Заголовок]]></string>
+    <string name="_bx_posts_form_entry_input_title_err"><![CDATA[Заголовок обязателен. Пожалуйста, заполните это поле]]></string>
+    <string name="_bx_posts_form_entry_input_sys_cat"><![CDATA[Категория]]></string>
+    <string name="_bx_posts_form_entry_input_cat"><![CDATA[Категория]]></string>
+    <string name="_bx_posts_form_entry_input_cat_err"><![CDATA[Нужно обязательно выбрать категорию]]></string>
+    <string name="_bx_posts_form_entry_input_sys_text"><![CDATA[Текст]]></string>
+    <string name="_bx_posts_form_entry_input_text"><![CDATA[Текст]]></string>
+    <string name="_bx_posts_form_entry_input_text_err"><![CDATA[Поле для Текста не может быть пустым]]></string>
+    <string name="_bx_posts_form_entry_input_sys_delete_confirm"><![CDATA[Удалить подтверждение]]></string>
+    <string name="_bx_posts_form_entry_input_delete_confirm"><![CDATA[Я уверен(а), что хочу удалить эту публикацию]]></string>
+    <string name="_bx_posts_form_entry_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено]]></string>
+    <string name="_bx_posts_form_entry_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если действительно хотите удалить публикацию]]></string>
+    <string name="_bx_posts_form_entry_input_sys_covers"><![CDATA[Изображение заголовка]]></string>
+    <string name="_bx_posts_form_entry_input_covers"><![CDATA[Изображение заголовка]]></string>
+    <string name="_bx_posts_form_entry_input_covers_uploader_simple_title"><![CDATA[Загрузить]]></string>
+    <string name="_bx_posts_form_entry_input_covers_uploader_html5_title"><![CDATA[Загрузить]]></string>
+    <string name="_bx_posts_form_entry_input_sys_pictures"><![CDATA[Изображения]]></string>
+    <string name="_bx_posts_form_entry_input_pictures"><![CDATA[]]></string>
+    <string name="_bx_posts_form_entry_input_sys_videos"><![CDATA[Видео]]></string>
+    <string name="_bx_posts_form_entry_input_videos"><![CDATA[]]></string>
+    <string name="_bx_posts_form_entry_input_sys_polls"><![CDATA[Голосования]]></string>
     <string name="_bx_posts_form_entry_input_sys_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_posts_form_entry_input_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_posts_form_entry_input_picture_use_as_thumb"><![CDATA[Изображение обложки]]></string>
@@ -50,30 +53,45 @@
     <string name="_bx_posts_form_entry_input_sys_date_published"><![CDATA[Опубликовано]]></string>
     <string name="_bx_posts_form_entry_input_date_published"><![CDATA[Опубликовано]]></string>
     <string name="_bx_posts_form_entry_input_date_published_info"><![CDATA[Оставьте пустым, чтобы опубликовать немедленно.]]></string>
+    <string name="_bx_posts_form_entry_input_sys_attachments"><![CDATA[Вложения]]></string>
 
-	<string name="_bx_posts_acl_action_create_entry"><![CDATA[Создать публикацию]]></string>
-	<string name="_bx_posts_acl_action_delete_entry"><![CDATA[Удалить публикацию]]></string>
-	<string name="_bx_posts_acl_action_view_entry"><![CDATA[Просмотреть публикацию]]></string>
-	<string name="_bx_posts_acl_action_set_thumb"><![CDATA[Назначить значок публикации]]></string>
-	<string name="_bx_posts_acl_action_edit_any_entry"><![CDATA[Редактировать любую публикацию]]></string>
+    <string name="_bx_posts_form_poll"><![CDATA[Голосования]]></string>
+    <string name="_bx_posts_form_poll_display_add"><![CDATA[Добавить голосование]]></string>
+    <string name="_bx_posts_form_poll_input_sys_text"><![CDATA[Вопрос]]></string>
+    <string name="_bx_posts_form_poll_input_text"><![CDATA[Вопрос]]></string>
+    <string name="_bx_posts_form_poll_input_text_err"><![CDATA[Вопрос обязателен. Пожалуйста, заполните это поле]]></string>
+    <string name="_bx_posts_form_poll_input_sys_answers"><![CDATA[Ответы]]></string>
+    <string name="_bx_posts_form_poll_input_answers"><![CDATA[Ответы]]></string>
+    <string name="_bx_posts_form_poll_input_answers_inf"><![CDATA[Оставьте текстовое поле пустым, чтобы удалить ответ.]]></string>
+    <string name="_bx_posts_form_poll_input_answers_err"><![CDATA[Голосование должно иметь как минимум 2 не пустых ответа.]]></string>
+    <string name="_bx_posts_form_poll_input_answers_add"><![CDATA[Добавить ещё]]></string>    
+    <string name="_bx_posts_form_poll_input_sys_do_submit"><![CDATA[Добавить]]></string>
+    <string name="_bx_posts_form_poll_input_do_submit"><![CDATA[Добавить]]></string>
+    <string name="_bx_posts_form_poll_input_do_cancel"><![CDATA[Закрыть]]></string>
 
-	<string name="_bx_posts_page_title_sys_create_entry"><![CDATA[Новая публикация]]></string>
-	<string name="_bx_posts_page_title_create_entry"><![CDATA[Новая публикация]]></string>
-	<string name="_bx_posts_page_block_title_create_entry"><![CDATA[Новая публикация]]></string>
-	<string name="_bx_posts_page_title_sys_edit_entry"><![CDATA[Редактировать публикацию]]></string>
-	<string name="_bx_posts_page_title_edit_entry"><![CDATA[Редактировать публикацию]]></string>
-	<string name="_bx_posts_page_block_title_edit_entry"><![CDATA[Редактировать публикацию]]></string>
+    <string name="_bx_posts_acl_action_create_entry"><![CDATA[Создать публикацию]]></string>
+    <string name="_bx_posts_acl_action_delete_entry"><![CDATA[Удалить публикацию]]></string>
+    <string name="_bx_posts_acl_action_view_entry"><![CDATA[Просмотреть публикацию]]></string>
+    <string name="_bx_posts_acl_action_set_thumb"><![CDATA[Назначить значок публикации]]></string>
+    <string name="_bx_posts_acl_action_edit_any_entry"><![CDATA[Редактировать любую публикацию]]></string>
+
+    <string name="_bx_posts_page_title_sys_create_entry"><![CDATA[Новая публикация]]></string>
+    <string name="_bx_posts_page_title_create_entry"><![CDATA[Новая публикация]]></string>
+    <string name="_bx_posts_page_block_title_create_entry"><![CDATA[Новая публикация]]></string>
+    <string name="_bx_posts_page_title_sys_edit_entry"><![CDATA[Редактировать публикацию]]></string>
+    <string name="_bx_posts_page_title_edit_entry"><![CDATA[Редактировать публикацию]]></string>
+    <string name="_bx_posts_page_block_title_edit_entry"><![CDATA[Редактировать публикацию]]></string>
     <string name="_bx_posts_page_title_sys_delete_entry"><![CDATA[Удалить публикацию]]></string>
     <string name="_bx_posts_page_title_delete_entry"><![CDATA[Удалить публикацию]]></string>
     <string name="_bx_posts_page_block_title_delete_entry"><![CDATA[Удалить публикацию]]></string>
-	<string name="_bx_posts_page_title_sys_view_entry"><![CDATA[Просмотреть публикацию]]></string>
-	<string name="_bx_posts_page_title_view_entry"><![CDATA[{title}]]></string>
-	<string name="_bx_posts_page_block_title_entry_text"><![CDATA[Текст публикации]]></string>
-	<string name="_bx_posts_page_title_browse"><![CDATA[Публикации]]></string>
-	<string name="_bx_posts_page_title_search_results"><![CDATA[Публикации, соответствующие "{0}"]]></string>
-	<string name="_bx_posts_page_title_browse_by_author"><![CDATA[Публикации {display_name}]]></string>
-	<string name="_bx_posts_page_title_browse_by_context"><![CDATA[Публикации в контексте: {display_name}]]></string>
-	<string name="_bx_posts_page_title_browse_featured"><![CDATA[Продвинутые публикации]]></string>
+    <string name="_bx_posts_page_title_sys_view_entry"><![CDATA[Просмотреть публикацию]]></string>
+    <string name="_bx_posts_page_title_view_entry"><![CDATA[{title}]]></string>
+    <string name="_bx_posts_page_block_title_entry_text"><![CDATA[Текст публикации]]></string>
+    <string name="_bx_posts_page_title_browse"><![CDATA[Публикации]]></string>
+    <string name="_bx_posts_page_title_search_results"><![CDATA[Публикации, соответствующие "{0}"]]></string>
+    <string name="_bx_posts_page_title_browse_by_author"><![CDATA[Публикации {display_name}]]></string>
+    <string name="_bx_posts_page_title_browse_by_context"><![CDATA[Публикации в контексте: {display_name}]]></string>
+    <string name="_bx_posts_page_title_browse_featured"><![CDATA[Продвинутые публикации]]></string>
     <string name="_bx_posts_page_title_browse_recent"><![CDATA[Недавние публикации]]></string>
     <string name="_bx_posts_page_title_browse_popular"><![CDATA[Популярные публикации]]></string>
     <string name="_bx_posts_page_title_browse_updated"><![CDATA[Обновлённые публикации]]></string>
@@ -90,6 +108,7 @@
     <string name="_bx_posts_page_block_title_entry_comments_link"><![CDATA[Комментарии к <a href="{entry_link}">{title}</a>]]></string>
     <string name="_bx_posts_page_block_title_entry_location"><![CDATA[Расположение]]></string>
     <string name="_bx_posts_page_block_title_entry_attachments"><![CDATA[Прикрепления]]></string>
+    <string name="_bx_posts_page_block_title_entry_polls"><![CDATA[Голосования]]></string>
     <string name="_bx_posts_page_block_title_entry_all_actions"><![CDATA[Все действия]]></string>
     <string name="_bx_posts_page_title_sys_entries_popular"><![CDATA[Популярные публикации]]></string>
     <string name="_bx_posts_page_title_entries_popular"><![CDATA[Популярные публикации]]></string>
@@ -138,7 +157,16 @@
     <string name="_bx_posts_page_block_title_sys_entry_context"><![CDATA[Опубликовано в]]></string>
     <string name="_bx_posts_page_block_title_entry_context"><![CDATA[Опубликовано в]]></string>
 
-  <string name="_bx_posts_menu_set_title_view_entry"><![CDATA[Публикация - Действия]]></string>
+    <string name="_bx_posts_menu_title_entry_attachments"><![CDATA[Форма - Прикрепления]]></string>
+    <string name="_bx_posts_menu_set_title_entry_attachments"><![CDATA[Форма - Прикрепления]]></string>
+    <string name="_bx_posts_menu_item_title_system_cpa_photo"><![CDATA[Добавить фото]]></string>
+    <string name="_bx_posts_menu_item_title_cpa_photo"><![CDATA[Добавить фото]]></string>
+    <string name="_bx_posts_menu_item_title_system_cpa_video"><![CDATA[Добавить видео]]></string>
+    <string name="_bx_posts_menu_item_title_cpa_video"><![CDATA[Добавить видео]]></string>
+    <string name="_bx_posts_menu_item_title_system_cpa_poll"><![CDATA[Добавить голосование]]></string>
+    <string name="_bx_posts_menu_item_title_cpa_poll"><![CDATA[Добавить голосование]]></string>
+
+    <string name="_bx_posts_menu_set_title_view_entry"><![CDATA[Публикация - Действия]]></string>
     <string name="_bx_posts_menu_title_view_entry"><![CDATA[Публикация - Действия]]></string>
     <string name="_bx_posts_menu_title_submenu"><![CDATA[Публикации - Подменю]]></string>
     <string name="_bx_posts_menu_set_title_submenu"><![CDATA[Публикации - Подменю]]></string>
@@ -240,4 +268,12 @@
     <string name="_bx_posts_txt_sample_single_with_article"><![CDATA[публикация]]></string>
     <string name="_bx_posts_txt_sample_comment_single"><![CDATA[комментарий к публикации]]></string>
     <string name="_bx_posts_txt_sample_vote_single"><![CDATA[голос за публикацию]]></string>
+
+    <string name="_bx_posts_txt_err_cannot_perform_action"><![CDATA[Невозможно выполнить действие. Пожалуйста, оповестите нас об этой проблеме.]]></string>
+
+    <string name="_bx_posts_txt_poll_answers"><![CDATA[опрос]]></string>
+    <string name="_bx_posts_txt_poll_results"><![CDATA[результаты]]></string>
+    <string name="_bx_posts_txt_poll_answer_vote_do_by"><![CDATA[Проголосовали за]]></string>
+    <string name="_bx_posts_txt_poll_answer_vote_counter"><![CDATA[{0} голосов]]></string>
+    <string name="_bx_posts_txt_poll_answer_vote_percent"><![CDATA[({0}%)]]></string>
 </resources>
