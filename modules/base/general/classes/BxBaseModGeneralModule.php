@@ -50,16 +50,22 @@ class BxBaseModGeneralModule extends BxDolModule
     
     public function actionGetCreatePostForm()
     {
+        $sName = $this->_oConfig->getName();
+
     	$aParams = bx_process_input(array_intersect_key($_GET, $this->_aFormParams));
     	$aParams = array_merge($this->_aFormParams, $aParams);
 
-    	$sForm = $this->serviceGetCreatePostForm($aParams);
-    	if(empty($sForm))
+    	$mixedResponse = $this->serviceGetCreatePostForm($aParams);
+    	if(empty($mixedResponse))
             return echoJson(array());
+        else if(is_array($mixedResponse)) {
+            $mixedResponse['module'] = $sName;
+            return echoJson($mixedResponse);
+        }
 
         return echoJson(array(
-            'module' => $this->_oConfig->getName(),
-            'content' => $sForm
+            'module' => $sName,
+            'content' => $mixedResponse
     	));
     }
 

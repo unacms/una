@@ -34,18 +34,23 @@ class BxBaseModFilesFormsEntryHelper extends BxBaseModTextFormsEntryHelper
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        // check access
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedAdd()))
-            return $this->prepareResponse(MsgBox($sMsg), $this->_bAjaxMode, 'msg');
+        $bAsJson = false;
 
-        // check and display form
+        // get form object
         $oForm = $this->getObjectFormAdd();
         if (!$oForm)
-            return $this->prepareResponse(MsgBox(_t('_sys_txt_error_occured')), $this->_bAjaxMode, 'msg');
+            return $this->prepareResponse(MsgBox(_t('_sys_txt_error_occured')), $bAsJson, 'msg');
 
+        $bAsJson = $this->_bAjaxMode && $oForm->isSubmitted();
+
+        // check access
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedAdd()))
+            return $this->prepareResponse(MsgBox($sMsg), $bAsJson, 'msg');       
+
+        // check and display form
         $oForm->initChecker();
         if (!$oForm->isSubmittedAndValid())
-            return $this->prepareResponse($oForm->getCode($this->_bDynamicMode), $this->_bAjaxMode && $oForm->isSubmitted(), 'form', array(
+            return $this->prepareResponse($oForm->getCode($this->_bDynamicMode), $bAsJson, 'form', array(
             	'form_id' => $oForm->getId()
             ));
 
@@ -54,11 +59,11 @@ class BxBaseModFilesFormsEntryHelper extends BxBaseModTextFormsEntryHelper
         $aContentIds = $oForm->insert ($aValsToAdd);
         if (false === $aContentIds || !is_array($aContentIds)) {
             if (!$oForm->isValid() || !is_array($aContentIds))
-                return $this->prepareResponse($oForm->getCode($this->_bDynamicMode), $this->_bAjaxMode, 'form', array(
+                return $this->prepareResponse($oForm->getCode($this->_bDynamicMode), $bAsJson, 'form', array(
                 	'form_id' => $oForm->getId()
                 ));
             else
-                return $this->prepareResponse(MsgBox(_t('_sys_txt_error_entry_creation')), $this->_bAjaxMode, 'msg');
+                return $this->prepareResponse(MsgBox(_t('_sys_txt_error_entry_creation')), $bAsJson, 'msg');
         }
 
         foreach ($aContentIds as $iContentId) {
