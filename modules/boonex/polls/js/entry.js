@@ -38,9 +38,11 @@ BxPollsEntry.prototype.changeBlock = function(oLink, sBlock, iContentId, onCompl
 
     if(typeof onComplete !== 'function')
         onComplete = function(iContentId, oData) {
-            var oContent = $(oLink).parents('.bx-db-container:first').find('.bx-polls-content');
+            var sContentId = $this._aHtmlIds['content'] + iContentId;
+
+            var oContent = $(oLink).parents('.bx-db-container:first').find('#' + sContentId);
             if(!oContent.length)
-                oContent = $('#' + $this._aHtmlIds['content'] + iContentId);
+                oContent = $('#' + sContentId);
             if(!oContent.length)
                 return;
 
