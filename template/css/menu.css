@@ -524,16 +524,21 @@ li.bx-menu-inter-hidden {
 /* --------------- horizontal buttons menu */
 
 ul.bx-menu-btns-ver,
-ul.bx-menu-btns-hor {
-	padding:0;
+ul.bx-menu-btns-hor,
+ul.bx-menu-btns-icon-hor {
+    padding:0;
     margin:0;
-	list-style:none;
+    list-style:none;
+}
+ul.bx-menu-btns-ver,
+ul.bx-menu-btns-hor {
     text-align:center;
 }
-ul.bx-menu-btns-hor li {
+ul.bx-menu-btns-hor li,
+ul.bx-menu-btns-icon-hor li {
     display:inline;
     display:inline-block;
-	vertical-align: bottom;
+    vertical-align: bottom;
 }
 ul.bx-menu-btns-ver li {
     text-align:center;
@@ -542,8 +547,8 @@ ul.bx-menu-btns-ver li .bx-btn {
     float:none;
     display:inline-block;
 }
-
-ul.bx-menu-btns-hor li:last-child .bx-btn {
+ul.bx-menu-btns-hor li:last-child .bx-btn,
+ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
     margin-right:0;
 }
 

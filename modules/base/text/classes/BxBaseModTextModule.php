@@ -19,7 +19,69 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         parent::__construct($aModule);
     }
 
+    // ====== ACTIONS METHODS
+    public function actionGetPoll()
+    {
+        $iPollId = (int)bx_get('poll_id');
+        $sView = bx_process_input(bx_get('view'));
+
+        $sMethod = 'serviceGetBlockPoll' . bx_gen_method_name($sView);
+        if(!method_exists($this, $sMethod))
+            return echoJson(array());
+
+        $aBlock = $this->$sMethod($iPollId, true);
+        if(empty($aBlock) || !is_array($aBlock))
+            return echoJson(array());
+
+        return echoJson(array(
+            'content' => $aBlock['content']
+        ));
+    }
+    public function actionDeletePoll()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if(empty($iId))
+            return echoJson(array());
+
+        $aResult = array();
+        if($this->_oDb->deletePolls(array($CNF['FIELD_POLL_ID'] => $iId)))
+            $aResult = array('code' => 0);
+        else
+            $aResult = array('code' => 1, 'message' => _t($CNF['txt_err_cannot_perform_action']));
+
+        echoJson($aResult);
+    }
+
+    public function actionGetPollForm()
+    {
+        echo $this->_oTemplate->getPollForm();
+    }
+
+    public function actionSubmitPollForm()
+    {
+        echoJson($this->getPollForm());
+    }
+
+
     // ====== SERVICE METHODS
+    public function serviceGetBlockPollAnswers($iPollId, $bForceDisplay = false)
+    {
+        if(!$iPollId)
+            return false;
+
+        if(!$bForceDisplay && $this->_oDb->isPollPerformed($iPollId, bx_get_logged_profile_id()))
+            return $this->serviceGetBlockPollResults($iPollId);
+
+        return $this->_serviceTemplateFunc('entryPollAnswers', $iPollId, 'getPollInfoById');
+    }
+
+    public function serviceGetBlockPollResults($iPollId)
+    {
+        return $this->_serviceTemplateFunc('entryPollResults', $iPollId, 'getPollInfoById');
+    }
+
     public function serviceGetThumb ($iContentId, $sTranscoder = '') 
     {
         $CNF = &$this->_oConfig->CNF;
@@ -133,6 +195,14 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     {
         return $this->_serviceTemplateFunc ('entryContext', $iContentId);
     }
+    
+    /**
+     * Entry polls block
+     */
+    public function serviceEntityPolls ($iContentId = 0)
+    {
+        return $this->_serviceTemplateFunc ('entryPolls', $iContentId);
+    }
 
     public function serviceEntityBreadcrumb ($iContentId = 0)
     {
@@ -197,7 +267,142 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         return true;        
     }
 
+    public function getPollForm()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($CNF['OBJECT_FORM_POLL']))
+            return array('code' => 1, 'message' => '_sys_txt_error_occured');
+
+        $iProfileId = bx_get_logged_profile_id();
+
+        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_POLL'], $CNF['OBJECT_FORM_POLL_DISPLAY_ADD'], $this->_oTemplate);
+        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'submit_poll_form/';
+
+        $oForm->initChecker();
+        if($oForm->isSubmittedAndValid()) {
+            $iId = $oForm->insert();
+            if($iId)
+                return array('code' => 0, 'id' => $iId, 'item' => $this->_oTemplate->getPollItem($iId, $iProfileId, array(
+                    'manage' => true
+                )));
+            else
+                return array('code' => 2, 'message' => '_sys_txt_error_entry_creation');
+        }
+
+        return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
+    }
+
+    
     // ====== PROTECTED METHODS
+    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$this->_oConfig->isAttachmentsInTimeline() || empty($CNF['OBJECT_STORAGE_PHOTOS']) || empty($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY_PHOTOS']))
+            return parent::_getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
+
+        $iContentId = (int)$aContentInfo[$CNF['FIELD_ID']];
+        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_PHOTOS']);
+
+        $aGhostFiles = $oStorage->getGhosts($this->serviceGetContentOwnerProfileId($iContentId), $iContentId);
+        if(!$aGhostFiles)
+            return array();
+
+        $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS']);
+
+        $aResults = array();
+        foreach ($aGhostFiles as $k => $a) {
+            $sPhotoSrc = $oTranscoder->getFileUrl($a['id']);
+            if(empty($sPhotoSrc))
+                continue;
+
+            $aResults[] = array(
+                'src' => $sPhotoSrc,
+                'src_medium' => $sPhotoSrc,
+                'src_orig' => $oStorage->getFileUrlById($a['id']),
+            );
+        }
+
+        return $aResults;
+    }
+    
+    protected function _getVideosForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$this->_oConfig->isAttachmentsInTimeline() || empty($CNF['OBJECT_STORAGE_VIDEOS']) || empty($CNF['OBJECT_VIDEOS_TRANSCODERS']))
+            return parent::_getVideosForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
+
+        $iContentId = (int)$aContentInfo[$CNF['FIELD_ID']];
+        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_VIDEOS']);
+
+        $aGhostFiles = $oStorage->getGhosts($this->serviceGetContentOwnerProfileId($iContentId), $iContentId);
+        if(!$aGhostFiles)
+            return array();
+
+        $oTcPoster = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']);
+        $oTcMp4 = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']);
+        $oTcWebm = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['webm']);
+        if(!$oTcPoster || !$oTcMp4 || !$oTcWebm)
+            return array();
+
+        $aResults = array();
+        foreach ($aGhostFiles as $k => $a) {
+
+            $aResults[$a['id']] = array(
+                'id' => $a['id'],
+                'src_poster' => $oTcPoster->getFileUrl($a['id']),
+                'src_mp4' => $oTcMp4->getFileUrl($a['id']),
+                'src_webm' => $oTcWebm->getFileUrl($a['id']),
+            );
+        }
+
+        return $aResults;
+    }
+
+    protected function _getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams = array())
+    {
+        $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams);
+        if(!$this->_oConfig->isAttachmentsInTimeline())
+            return $aResult;
+
+        $CNF = &$this->_oConfig->CNF;
+
+        $iProfile = bx_get_logged_profile_id();
+        $bDynamic = isset($aBrowseParams['dynamic_mode']) && $aBrowseParams['dynamic_mode'] === true;
+
+        $sPolls = '';
+        $aPolls = $this->_oDb->getPolls(array('type' => 'content_id', 'content_id' => (int)$aContentInfo[$CNF['FIELD_ID']]));
+        if(!empty($aPolls) && is_array($aPolls)) {
+            foreach($aPolls as $aPoll) {
+                $sPoll = $this->_oTemplate->getPollItem($aPoll, $iProfile, array(
+                    'dynamic' => $bDynamic,
+                    'switch_menu' => false
+                ));
+                if(empty($sPoll))
+                    continue;
+
+                $sPolls .= $sPoll;
+            }
+        
+            if(!empty($sPolls)) {
+                $sInclude = '';
+                $sInclude .= $this->_oTemplate->addJs(array('polls.js'), $bDynamic);
+                $sInclude .= $this->_oTemplate->addCss(array('polls.css'), $bDynamic);
+
+                $aResult['raw'] = ($bDynamic ? $sInclude : '') . $this->_oTemplate->parseHtmlByName('poll_items.html', array(
+                    'bx_if:show_autosizing' => array(
+                        'condition' => false,
+                        'content' => array()
+                    ),
+                    'polls' => $sPolls
+                )) . $this->_oTemplate->getJsCode('poll');
+            }
+        }
+
+        return $aResult;
+    }
 
     protected function _buildRssParams($sMode, $aArgs)
     {

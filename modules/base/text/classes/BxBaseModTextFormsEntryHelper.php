@@ -69,6 +69,12 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         if (!($aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId)))
             return MsgBox(_t('_sys_txt_error_occured'));
 
+        if (isset($CNF['FIELD_VIDEO']))
+            $oForm->processFiles($CNF['FIELD_VIDEO'], $iContentId, false);
+
+        if (isset($CNF['FIELD_POLL']))
+            $oForm->processPolls($CNF['FIELD_POLL'], $iContentId);
+
         // change profile to 'pending' only if profile is 'active'
         if ($oProfile->isActive() && !empty($aTrackTextFieldsChanges['changed_fields']))
             $oProfile->disapprove(BX_PROFILE_ACTION_AUTO);
@@ -84,11 +90,32 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         if ($s = parent::onDataAddAfter($iAccountId, $iContentId))
             return $s;
 
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
         if (!($aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId)))
             return MsgBox(_t('_sys_txt_error_occured'));
 
+        if(($oForm = $this->getObjectFormAdd()) !== false) {
+            if (isset($CNF['FIELD_VIDEO']))
+                $oForm->processFiles($CNF['FIELD_VIDEO'], $iContentId, true);
+
+            if (isset($CNF['FIELD_POLL']))
+                $oForm->processPolls($CNF['FIELD_POLL'], $iContentId);
+        }
+
         // alert
         $this->_alertAfterAdd($aContentInfo);
+
+        return '';
+    }
+
+    public function onDataDeleteAfter($iContentId, $aContentInfo, $oProfile)
+    {
+        $sResult = parent::onDataDeleteAfter ($iContentId, $aContentInfo, $oProfile);
+        if(!empty($sResult))
+            return $sResult;
+
+        $aPolls = $this->_oModule->_oDb->deletePolls(array('content_id' => $iContentId));
 
         return '';
     }

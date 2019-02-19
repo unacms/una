@@ -23,6 +23,15 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         $this->_sUnitClassShowCase = 'bx-base-unit-showcase bx-base-text-unit-showcase bx-def-margin-sec-bottom';
     }
 
+    public function getJsCode($sType, $aParams = array(), $bWrap = true)
+    {
+        $aParams = array_merge(array(
+            'aHtmlIds' => $this->_oConfig->getHtmlIds()
+        ), $aParams);
+
+        return parent::getJsCode($sType, $aParams, $bWrap);
+    }
+
     function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html', $aParams = array())
     {
     	$sResult = $this->checkPrivacy ($aData, $isCheckPrivateContent, $this->getModule(), $sTemplateName);
@@ -30,6 +39,20 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             return $sResult;
         $aParams['template_name'] = $sTemplateName;
 		return $this->parseHtmlByName($sTemplateName, $this->getUnit($aData, $aParams));
+    }
+
+    function entryAttachments ($aData, $aParams = array())
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $aStoragesKeys = array('OBJECT_STORAGE_PHOTOS', 'OBJECT_STORAGE_VIDEOS');
+
+        $aStorages = array();
+        foreach($aStoragesKeys as $sKey)
+            if(!empty($CNF[$sKey]))
+                $aStorages[] = $CNF[$sKey];
+
+        return $this->entryAttachmentsByStorage($aStorages, $aData, $aParams);
     }
 
     function entryAuthor ($aData, $iProfileId = false, $sFuncAuthorDesc = 'getAuthorDesc', $sTemplateName = 'author.html', $sFuncAuthorAddon = 'getAuthorAddon')
@@ -95,6 +118,247 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             ),
         );
         return $this->parseHtmlByName($sTemplateName, $aVars);
+    }
+
+    public function entryPolls($aData)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+        
+        $aPolls = $this->_oDb->getPolls(array(
+            'type' => 'content_id', 
+            'content_id' => $aData[$CNF['FIELD_ID']], 
+        ));
+        if(empty($aPolls) || !is_array($aPolls))
+            return;
+
+        $iProfileId = bx_get_logged_profile_id();
+
+        $sPolls = '';
+        foreach($aPolls as $aPoll)
+            $sPolls .= $this->getPollItem($aPoll, $iProfileId);
+
+        if(empty($sPolls))
+            return '';
+
+        $this->addCss(array('polls.css'));
+        $this->addJs(array('polls.js'));
+        return $this->parseHtmlByName('poll_items.html', array(
+            'bx_if:show_autosizing' => array(
+                'condition' => true,
+                'content' => array()
+            ),
+            'polls' => $sPolls
+        ));
+    }
+
+    public function entryPollAnswers($aPoll, $bDynamic = false)
+    {
+        $sContent = $this->_getPollAnswers($aPoll, $bDynamic);
+        if(empty($sContent))
+            return '';
+
+    	return array(
+            'content' => $sContent,
+            'menu' => $this->_getPollBlockMenu($aPoll, 'answers')
+        ); 
+    }
+
+    public function entryPollResults($aPoll, $bDynamic = false)
+    {
+        $sContent = $this->_getPollResults($aPoll, $bDynamic);
+        if(empty($sContent))
+            return '';
+
+        return array(
+            'content' => $sContent,
+            'menu' => $this->_getPollBlockMenu($aPoll, 'results')
+        );  
+    }
+
+    public function getPollForm()
+    {
+        $aForm = $this->getModule()->getPollForm();
+
+        return $this->parseHtmlByName('poll_form.html', array(
+            'js_object' => $this->_oConfig->getJsObject('poll'),
+            'form_id' => $aForm['form_id'],
+            'form' => $aForm['form'],
+        ));
+    }
+    
+    public function getPollField($iContentId = 0, $iProfileId = 0)
+    {
+        if(empty($iProfileId))
+            $iProfileId = bx_get_logged_profile_id();
+
+        $aPolls = array();
+        if(!empty($iContentId))
+            $aPolls = array_merge($aPolls, $this->_oDb->getPolls(array(
+                'type' => 'content_id', 
+                'content_id' => $iContentId, 
+            )));
+
+        $aPolls = array_merge($aPolls, $this->_oDb->getPolls(array(
+            'type' => 'author_id', 
+            'author_id' => $iProfileId, 
+            'unused' => true
+        )));
+
+        $sPolls = '';
+        foreach($aPolls as $aPoll)
+            $sPolls .= $this->getPollItem($aPoll, $iProfileId, array(
+                'manage' => true
+            ));
+
+        return $this->parseHtmlByName('poll_form_field.html', array(
+            'html_id' => $this->_oConfig->getHtmlIds('add_poll_form_field'),
+            'polls' => $sPolls
+        ));
+    }
+
+    public function getPollItem($mixedPoll, $iProfileId = 0, $aParams = array())
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $aPoll = is_array($mixedPoll) ? $mixedPoll : $this->_oDb->getPolls(array('type' => 'id', 'id' => (int)$mixedPoll));
+        if(empty($aPoll) || !is_array($aPoll))
+            return '';
+
+        $sJsObject = $this->_oConfig->getJsObject('poll');
+
+        $bDynamic = isset($aParams['dynamic']) && $aParams['dynamic'] === true;
+        $bManage = isset($aParams['manage']) && $aParams['manage'] === true;
+        $bSwitchMenu = isset($aParams['switch_menu']) ? (bool)$aParams['switch_menu'] : true;
+        $bForceDisplayAnswers = isset($aParams['force_display_answers']) && (bool)$aParams['force_display_answers'] === true;
+
+        $iPollId = (int)$aPoll[$CNF['FIELD_POLL_ID']];
+        $sPollView = !$bForceDisplayAnswers && $this->_oDb->isPollPerformed($iPollId, $iProfileId) ? 'results' : 'answers';
+        
+        $sMethod = '_getPoll' . ucfirst($sPollView);
+        if(!method_exists($this, $sMethod))
+            return '';
+
+        $mixedMenu = '';
+        if($bSwitchMenu)
+            $mixedMenu = $this->_getPollBlockMenu($aPoll, $sPollView, array('template' => 'menu_interactive.html'));
+
+        return $this->parseHtmlByName('poll_item.html', array(
+            'html_id' => $this->_oConfig->getHtmlIds('poll') . $iPollId,
+            'bx_if:show_input_hidden' => array(
+                'condition' => $bManage,
+                'content' => array(
+                    'name' => $CNF['FIELD_POLL'],
+                    'id' => $iPollId
+                )
+            ),
+            'action_menu' => !empty($mixedMenu) ? $mixedMenu->getCode() : '',
+            'bx_if:show_action_delete' => array(
+                'condition' => $bManage,
+                'content' => array(
+                    'js_object' => $sJsObject,
+                    'id' => $iPollId
+                )
+            ),
+            'text' => bx_process_output($aPoll[$CNF['FIELD_POLL_TEXT']], BX_DATA_HTML),
+            'content' => $this->$sMethod($aPoll, $bDynamic)
+        ));
+    }
+    
+    protected function _getPollAnswers($aPoll, $bDynamic = false)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+        
+        $aAnswers = $this->_oDb->getPollAnswers(array('type' => 'poll_id', 'poll_id' => $aPoll[$CNF['FIELD_POLL_ID']]));
+        if(empty($aAnswers) || !is_array($aAnswers))
+            return '';
+
+        $aTmplVarsAnswers = array();
+        foreach($aAnswers as $aAnswer) {
+            $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_POLL_ANSWERS'], $aAnswer['id']);
+
+            $aTmplVarsAnswers[] = array(
+                'answer' => $oVotes->getElementBlock(array(
+                    'dynamic_mode' => $bDynamic
+                ))
+            );
+        }
+
+    	return $this->parseHtmlByName('poll_item_answers.html', array(
+            'html_id' => $this->_oConfig->getHtmlIds('poll_content') . $aPoll[$CNF['FIELD_POLL_ID']],
+            'bx_repeat:answers' => $aTmplVarsAnswers
+        ));
+    }
+    
+    protected function _getPollResults($aPoll, $bDynamic = false)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $aAnswers = $this->_oDb->getPollAnswers(array('type' => 'poll_id', 'poll_id' => $aPoll[$CNF['FIELD_POLL_ID']]));
+        if(empty($aAnswers) || !is_array($aAnswers))
+            return '';
+
+        $iTotal = 0;
+        foreach($aAnswers as $aAnswer)
+            $iTotal += $aAnswer['votes'];
+
+        $aTmplVarsAnswers = array();
+        foreach($aAnswers as $aAnswer) {
+            $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_POLL_ANSWERS'], $aAnswer['id']);
+
+            $fPercent = $iTotal > 0 ? 100 * (float)$aAnswer['votes']/$iTotal : 0;
+            $aTmplVarsAnswers[] = array(
+                'title' => bx_process_output($aAnswer['title']),
+                'width' => (int)round($fPercent) . '%',
+                'votes' => $oVotes->getCounter(array('show_counter_empty' => true, 'show_counter_in_brackets' => false)),
+                'percent' => _t($CNF['T']['txt_poll_answer_vote_percent'], $iTotal > 0 ? round($fPercent, 2) : 0),
+                'js_code' => $oVotes->getJsScript($bDynamic)
+            );
+        }
+
+        return $this->parseHtmlByName('poll_item_results.html', array(
+            'html_id' => $this->_oConfig->getHtmlIds('poll_content') . $aPoll[$CNF['FIELD_POLL_ID']],
+            'bx_repeat:answers' => $aTmplVarsAnswers,
+        ));
+    }
+
+    protected function _getPollBlockMenu($aPoll, $sSelected = '', $aParams = array())
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $sPostfix = '-' . time() . rand(0, PHP_INT_MAX);
+        $sJsObject = $this->_oConfig->getJsObject('poll');
+        $iPollId = $aPoll[$CNF['FIELD_POLL_ID']];
+
+        $aViews = array(
+            'answers' => true, 
+            'results' => $CNF['PARAM_POLL_HIDDEN_RESULTS'] === false || $this->_oDb->isPollPerformed($iPollId, bx_get_logged_profile_id())
+        );
+
+        $aMenu = array();
+        foreach($aViews as $sView => $bActive) {
+            if(!$bActive) 
+                continue;
+
+            $sId = $this->_oConfig->getHtmlIds('poll_view_link_' . $sView) . $iPollId . $sPostfix;
+            if(!empty($sSelected) && $sSelected == $sView)
+                $sSelected = $sId;
+
+            $aMenu[] = array('id' => $sId, 'name' => $sId, 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changePollView(this, \'' . $sView . '\', ' . $iPollId . ')', 'target' => '_self', 'title' => _t('_bx_posts_txt_poll_view_' . $sView));
+        }
+
+        if(count($aMenu) <= 1)
+            return '';
+
+        $oMenu = new BxTemplMenuInteractive(array(
+            'template' => !empty($aParams['template']) ? $aParams['template'] : 'menu_interactive_vertical.html', 
+            'menu_id' => $this->_oConfig->getHtmlIds('poll_view_menu') . $sPostfix, 
+            'menu_items' => $aMenu
+        ));
+
+        if(!empty($sSelected))
+            $oMenu->setSelected('', $sSelected);
+
+        return $oMenu;
     }
 
     public function getTmplVarsText($aData)
@@ -204,7 +468,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         return array($sPhotoThumb, $sPhotoGallery);
     }
 
-	protected function getUnit ($aData, $aParams = array())
+    protected function getUnit ($aData, $aParams = array())
     {
         $CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
 
@@ -306,7 +570,22 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         $sLinkMore = ' <a title="' . bx_html_attribute(_t('_sys_read_more', $sTitle)) . '" href="' . $sUrl . '"><i class="sys-icon ellipsis-h"></i></a>';
         return  strmaxtextlen($sText, (int)getParam($CNF['PARAM_CHARS_SUMMARY']), $sLinkMore);
     }
-    
+
+    protected function getAttachmentsImagesTranscoders ()
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $oTranscoder = null;
+        if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS']))
+            $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS']);
+
+        $oTranscoderView = null; 
+        if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_PICTURE_PHOTOS']))
+            $oTranscoderView = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PICTURE_PHOTOS']);
+
+        return array($oTranscoder, $oTranscoderView);
+    }
+
     protected function _getUnitClass($aData, $sTemplateName = 'unit.html')
     {
         $sResult = '';

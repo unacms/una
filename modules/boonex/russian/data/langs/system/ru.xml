@@ -1923,7 +1923,7 @@
 	<string name="_sys_form_account_input_password_confirm_error"><![CDATA[Не удалось подтвердить пароль]]></string>
 	<string name="_sys_form_account_input_password_current"><![CDATA[Текущий пароль]]></string>
 	<string name="_sys_form_account_input_password_current_error"><![CDATA[Неправильный текущий пароль. Введите пароль, который Вы используете для доступа к этому сайту.]]></string>
-	<string name="_sys_form_account_input_password_error"><![CDATA[Пароль должен иметь как минимум 8 символов, и содержать по крайней мере 1 заглавную латинскую букву, 1 строчную латинскую букву и 1 число.]]></string>
+	<string name="_sys_form_account_input_password_error"><![CDATA[Пароль должен иметь как минимум 8 символов, и содержать по крайней мере 1 прописную латинскую букву, 1 строчную латинскую букву и 1 число.]]></string>
 	<string name="_sys_form_account_input_phone_error"><![CDATA[Это обязательное поле.]]></string>
 	<string name="_sys_form_account_input_receive_news"><![CDATA[Получать новости]]></string>
 	<string name="_sys_form_account_input_receive_updates"><![CDATA[Получать обновления сайта]]></string>
@@ -2320,6 +2320,7 @@
 	<string name="_sys_menu_set_title_toolbar_site"><![CDATA[Панель инструментов - Сайт]]></string>
 	<string name="_sys_menu_set_title_snippet_meta"><![CDATA[Мета информация в карточке]]></string>
 	<string name="_sys_menu_template_title_buttons_hor"><![CDATA[Горизонтальные кнопки]]></string>
+        <string name="_sys_menu_template_title_buttons_icon_hor"><![CDATA[Горизонтальные кнопки (только иконки)]]></string>
 	<string name="_sys_menu_template_title_buttons_ver"><![CDATA[Вертикальные кнопки]]></string>
 	<string name="_sys_menu_template_title_floating_blocks"><![CDATA[Подвесные блоки]]></string>
 	<string name="_sys_menu_template_title_floating_blocks_wide"><![CDATA[Широкие подвесные блоки с оповещениями]]></string>
