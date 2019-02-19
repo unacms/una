@@ -498,6 +498,21 @@ class BxTimelineDb extends BxBaseModNotificationsDb
             $sLimitClause = "";
         }
 
+        $aAlertParams = $aParams;
+        unset($aAlertParams['browse']);
+
+        bx_alert($this->_oConfig->getName(), 'get_events', 0, 0, array(
+            'browse' => $aParams['browse'],
+            'params' => $aAlertParams,
+            'table' => $this->_sTable,
+            'method' => &$sMethod,
+            'select_clause' => &$sSelectClause,
+            'join_clause' => &$sJoinClause,
+            'where_clause' => &$sWhereClause,
+            'order_clause' => &$sOrderClause,
+            'limit_clause' => &$sLimitClause
+        ));
+
         return array($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);
     }
 

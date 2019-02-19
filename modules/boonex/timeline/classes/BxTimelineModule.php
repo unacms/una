@@ -539,7 +539,16 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 $aParams['form_display'] = 'form_display_post_add_profile';
         }
 
-    	return $this->getFormPostObject($aParams);
+        $oForm = $this->getFormPostObject($aParams);
+
+        bx_alert('system', 'get_object_form', 0, 0, array(
+            'module' => $this->_oConfig->getName(),
+            'type' => $sType,
+            'params' => $aParams,
+            'form' => &$oForm
+        ));
+
+    	return $oForm;
     }
     
     /**

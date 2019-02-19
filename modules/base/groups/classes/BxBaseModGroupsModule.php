@@ -77,7 +77,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     }
 
     /**
-     * check if provided profile is member if the group 
+     * check if provided profile is member of the group 
      */ 
     public function serviceIsFan ($iGroupProfileId, $iProfileId = false) 
     {
@@ -85,6 +85,24 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return $this->isFan($oGroupProfile->getContentId(), $iProfileId);
     }
 
+    /**
+     * check if provided profile is admin of the group 
+     */ 
+    public function serviceIsAdmin ($iGroupProfileId, $iProfileId = false) 
+    {
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+
+        $oGroupProfile = BxDolProfile::getInstance($iGroupProfileId);
+
+        $iGroupContentId = $oGroupProfile->getContentId();
+        if(!$this->isFan($iGroupContentId, $iProfileId))
+            return false;
+
+        $aGroupContentInfo = $this->_oDb->getContentInfoById($iGroupContentId);
+        return $this->_oDb->isAdmin($iGroupProfileId, $iProfileId, $aGroupContentInfo);
+    }
+    
     /**
      * Delete profile from fans and admins tables
      * @param $iProfileId profile id 

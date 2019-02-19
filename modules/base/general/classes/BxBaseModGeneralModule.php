@@ -36,6 +36,7 @@ class BxBaseModGeneralModule extends BxDolModule
             'absolute_action_url' => false,
             'visibility_autoselect' => false,
             'context_id' => 0,
+            'custom' => array()
         );
     }
 
@@ -54,11 +55,11 @@ class BxBaseModGeneralModule extends BxDolModule
 
     	$sForm = $this->serviceGetCreatePostForm($aParams);
     	if(empty($sForm))
-    		return echoJson(array());
+            return echoJson(array());
 
-	   	return echoJson(array(
-    		'module' => $this->_oConfig->getName(),
-    		'content' => $sForm
+        return echoJson(array(
+            'module' => $this->_oConfig->getName(),
+            'content' => $sForm
     	));
     }
 
@@ -69,7 +70,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
     	$oForm = $this->serviceGetObjectForm('add', $aParams);
     	if(!$oForm)
-    		return ''; 	
+            return ''; 	
 
     	return $this->serviceEntityCreate($aParams);
     }
@@ -422,7 +423,7 @@ class BxBaseModGeneralModule extends BxDolModule
         if (!in_array($sType, array('add', 'edit', 'view', 'delete')))
             return false;
 
-		$CNF = &$this->_oConfig->CNF;
+        $CNF = &$this->_oConfig->CNF;
 
         bx_import('FormsEntryHelper', $this->_aModule);
         $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
@@ -435,24 +436,31 @@ class BxBaseModGeneralModule extends BxDolModule
 
         $sParamsKey = 'absolute_action_url';
         if(isset($aParams[$sParamsKey]) && (bool)$aParams[$sParamsKey] === true) {
-        	$sKeyUri = 'URI_' . strtoupper($sType) . '_ENTRY';
-        	if(!empty($this->_oConfig->CNF[$sKeyUri]))
-        		$oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oConfig->CNF[$sKeyUri]);
+            $sKeyUri = 'URI_' . strtoupper($sType) . '_ENTRY';
+            if(!empty($this->_oConfig->CNF[$sKeyUri]))
+                $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oConfig->CNF[$sKeyUri]);
         }
 
         $sParamsKey = 'ajax_mode';
         if(isset($aParams[$sParamsKey]) && is_bool($aParams[$sParamsKey]))
         	$oForm->setAjaxMode((bool)$aParams[$sParamsKey]);
 
-		$sKey = 'FIELD_ALLOW_VIEW_TO';
-		if(!empty($aParams['context_id']) && !empty($CNF[$sKey]) && !empty($oForm->aInputs[$CNF[$sKey]])) {
-			foreach($oForm->aInputs[$CNF[$sKey]]['values'] as $aValue)
-				if(isset($aValue['key']) && (int)$aValue['key'] == -(int)$aParams['context_id']) {
-					$oForm->aInputs[$CNF[$sKey]]['value'] = -(int)$aParams['context_id'];
-					$oForm->aInputs[$CNF[$sKey]]['type'] = 'hidden';
-					break;
-				}
-		}
+        $sKey = 'FIELD_ALLOW_VIEW_TO';
+        if(!empty($aParams['context_id']) && !empty($CNF[$sKey]) && !empty($oForm->aInputs[$CNF[$sKey]])) {
+            foreach($oForm->aInputs[$CNF[$sKey]]['values'] as $aValue)
+                if(isset($aValue['key']) && (int)$aValue['key'] == -(int)$aParams['context_id']) {
+                    $oForm->aInputs[$CNF[$sKey]]['value'] = -(int)$aParams['context_id'];
+                    $oForm->aInputs[$CNF[$sKey]]['type'] = 'hidden';
+                    break;
+                }
+        }
+
+        bx_alert('system', 'get_object_form', 0, 0, array(
+            'module' => $this->_oConfig->getName(),
+            'type' => $sType,
+            'params' => $aParams,
+            'form' => &$oForm
+        ));
 
         return $oForm;
     }
