@@ -280,13 +280,13 @@ INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `
 ('bx_posts_videos', @sStorageEngine, '', 360, 2592000, 3, 'bx_posts_videos', 'allow-deny', 'avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,divx,xvid,3gp,webm,jpg', '', 0, 0, 0, 0, 0, 0),
 ('bx_posts_videos_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_posts_videos_resized', 'allow-deny', 'avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,divx,xvid,3gp,webm,jpg', '', 0, 0, 0, 0, 0, 0);
 
-INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`) VALUES 
-('bx_posts_preview', 'bx_posts_photos_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_posts_files";}', 'no', '1', '2592000', '0'),
-('bx_posts_gallery', 'bx_posts_photos_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_posts_files";}', 'no', '1', '2592000', '0'),
-('bx_posts_cover', 'bx_posts_photos_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_posts_files";}', 'no', '1', '2592000', '0'),
+INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`, `override_class_name`, `override_class_file`) VALUES 
+('bx_posts_preview', 'bx_posts_photos_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_posts_files";}', 'no', '1', '2592000', '0', '', ''),
+('bx_posts_gallery', 'bx_posts_photos_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_posts_files";}', 'no', '1', '2592000', '0', '', ''),
+('bx_posts_cover', 'bx_posts_photos_resized', 'Storage', 'a:1:{s:6:"object";s:14:"bx_posts_files";}', 'no', '1', '2592000', '0', '', ''),
 
-('bx_posts_preview_photos', 'bx_posts_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_posts_photos";}', 'no', '1', '2592000', '0'),
-('bx_posts_gallery_photos', 'bx_posts_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_posts_photos";}', 'no', '1', '2592000', '0'),
+('bx_posts_preview_photos', 'bx_posts_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_posts_photos";}', 'no', '1', '2592000', '0', '', ''),
+('bx_posts_gallery_photos', 'bx_posts_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_posts_photos";}', 'no', '1', '2592000', '0', '', ''),
 
 ('bx_posts_videos_poster', 'bx_posts_videos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_posts_videos";}', 'no', '0', '0', '0', 'BxDolTranscoderVideo', ''),
 ('bx_posts_videos_poster_preview', 'bx_posts_videos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_posts_videos";}', 'no', '0', '0', '0', 'BxDolTranscoderVideo', ''),
