@@ -92,7 +92,7 @@ class BxPollsFormEntry extends BxBaseModTextFormEntry
             return true;
 
         foreach($aSubentries as $iIndex => $sSubentry)
-            if(!empty($sSubentry))
+            if($sSubentry != '' && get_mb_len($sSubentry) > 0)
                 $this->_oModule->_oDb->insertSubentry(array(
                     'entry_id' => $iContentId,
                     'title' => bx_process_input($sSubentry),
@@ -118,7 +118,7 @@ class BxPollsFormEntry extends BxBaseModTextFormEntry
 
         //--- Update existed and remove empty
         foreach($aSubentriesIds as $iIndex => $iId)
-            if(!empty($aSubentriesValues[$iIndex]))
+            if($aSubentriesValues[$iIndex] != '' && get_mb_len($aSubentriesValues[$iIndex]) > 0)
                 $this->_oModule->_oDb->updateSubentry(array('title' => bx_process_input($aSubentriesValues[$iIndex])), array('id' => (int)$iId));
             else 
                 $this->_oModule->_oDb->deleteSubentry(array('id' => (int)$iId));
@@ -131,7 +131,7 @@ class BxPollsFormEntry extends BxBaseModTextFormEntry
 
             $aSubentriesValues = array_slice($aSubentriesValues, $iSubentriesIds);
             foreach($aSubentriesValues as $sSubentriesValue)
-                if(!empty($sSubentriesValue))
+                if($sSubentriesValue != '' && get_mb_len($sSubentriesValue) > 0)
                     $this->_oModule->_oDb->insertSubentry(array(
                         'entry_id' => $iContentId,
                         'title' => bx_process_input($sSubentriesValue),
