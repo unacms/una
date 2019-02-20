@@ -250,10 +250,12 @@ BxTimelineMain.prototype._getName = function(oData)
     return aAddons.length > 0 ? aAddons.join('_') : '';
 };
 
-BxTimelineMain.prototype._getHtmlId = function(sKey, oData, bWhole)
+BxTimelineMain.prototype._getHtmlId = function(sKey, oData, bWhole, bHash)
 {
     var sDiv = '_';
     var sHtmlId = this.sId  + sDiv + sKey + sDiv + this._getName(oData) + (bWhole != undefined && !bWhole ? sDiv : '');
+    if(bHash != undefined && !bHash)
+        sHtmlId = sHtmlId.substr(1);
 
     return sHtmlId.replace(new RegExp(sDiv,'g'), '-');
 };

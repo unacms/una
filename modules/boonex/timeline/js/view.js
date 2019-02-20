@@ -279,7 +279,7 @@ BxTimelineView.prototype.showItem = function(oLink, iId, sMode, oParams)
 
     $(window).dolPopupAjax({
         id: {
-            value: this._getHtmlId('item_popup', this._oRequestParams, false) + iId, 
+            value: this._getHtmlId('item_popup', this._oRequestParams, false, false) + iId, 
             force: true
         },
         url: bx_append_url_params(this._sActionsUrl + 'get_item_brief', oData),
