@@ -103,7 +103,7 @@ class BxBaseModTextFormPoll extends BxTemplFormView
 
         //--- Update existed and remove empty
         foreach($aAnswersIds as $iIndex => $iId)
-            if(!empty($aAnswersValues[$iIndex]))
+            if($aAnswersValues[$iIndex] != '' && get_mb_len($aAnswersValues[$iIndex]) > 0)
                 $this->_oModule->_oDb->updatePollAnswers(array('title' => bx_process_input($aAnswersValues[$iIndex])), array('id' => (int)$iId));
             else 
                 $this->_oModule->_oDb->deletePollAnswers(array('id' => (int)$iId));
