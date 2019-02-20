@@ -45,6 +45,7 @@ class BxPostsFormEntry extends BxBaseModTextFormEntry
             $this->aInputs[$CNF['FIELD_PHOTO']]['multiple'] = true;
             $this->aInputs[$CNF['FIELD_PHOTO']]['content_id'] = 0;
             $this->aInputs[$CNF['FIELD_PHOTO']]['ghost_template'] = '';
+            $this->aInputs[$CNF['FIELD_PHOTO']]['tr_attrs'] = array('class'=> 'bx-base-text-attachment-item');
         }
 
         if(isset($this->aInputs[$CNF['FIELD_VIDEO']])) {
@@ -55,6 +56,11 @@ class BxPostsFormEntry extends BxBaseModTextFormEntry
             $this->aInputs[$CNF['FIELD_VIDEO']]['multiple'] = true;
             $this->aInputs[$CNF['FIELD_VIDEO']]['content_id'] = 0;
             $this->aInputs[$CNF['FIELD_VIDEO']]['ghost_template'] = '';
+            $this->aInputs[$CNF['FIELD_VIDEO']]['tr_attrs'] = array('class'=> 'bx-base-text-attachment-item');
+        }
+
+        if(isset($this->aInputs[$CNF['FIELD_POLL']])) {
+            $this->aInputs[$CNF['FIELD_POLL']]['tr_attrs'] = array('class'=> 'bx-base-text-attachment-item');
         }
     }
 

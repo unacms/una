@@ -131,21 +131,6 @@ BxPostsPolls.prototype.changePollView = function(oLink, sView, iPollId, onComple
 
     this.loadingInBox(oLink, true);
 
-    if(typeof onComplete !== 'function')
-        onComplete = function(iPollId, oData) {
-            var sContentId = $this._aHtmlIds['poll_content'] + iPollId;
-
-            var oContent = $(oLink).parents('.bx-db-container:first').find('#' + sContentId);
-            if(!oContent.length)
-                oContent = $('#' + sContentId);
-            if(!oContent.length)
-                return;
-
-            oContent.bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-                $(this).replaceWith(oData.content);
-            });
-        };
-
     jQuery.get (
         this._sActionsUrl + 'get_poll',
         {
@@ -159,8 +144,29 @@ BxPostsPolls.prototype.changePollView = function(oLink, sView, iPollId, onComple
             if(!oData.content)
                 return;
 
-            if(typeof onComplete === 'function')
-                onComplete(iPollId, oData);
+            var sPollId = $this._aHtmlIds['poll'] + iPollId;
+            var sContentId = $this._aHtmlIds['poll_content'] + iPollId;
+
+            var oPoll = $(oLink).parents('.bx-db-container:first').find('#' + sPollId);
+            if(!oPoll.length)
+                oPoll = $('#' + sPollId);
+            if(!oPoll.length)
+                return;
+
+            var oContent = $(oLink).parents('.bx-db-container:first').find('#' + sContentId);
+            if(!oContent.length)
+                oContent = $('#' + sContentId);
+            if(!oContent.length)
+                return;
+
+            oContent.bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+                $(this).replaceWith(oData.content);
+                
+                if(typeof onComplete === 'function')
+                    onComplete(oPoll, iPollId, oData);
+            });
+            
+            
         },
         'json'
     );
@@ -178,7 +184,14 @@ BxPostsPolls.prototype.deletePollAnswer = function(oButton) {
 };
 
 BxPostsPolls.prototype.onPollAnswerVote = function(oLink, oData, iPollId) {
-    this.changePollView(oLink, 'results', iPollId);
+    var $this = this;
+
+    this.changePollView(oLink, 'results', iPollId, function(oPoll, iPollId, oData) {
+        var sMenuLink = $this._aHtmlIds['poll_view_link_results'] + iPollId;
+        var oMenuLink = $(oPoll).find('.bx-menu-inter:first #' + sMenuLink);
+        if(oMenuLink.length > 0)
+            oMenuLink.parent().siblings('.bx-menu-inter-act:visible').hide().siblings('.bx-menu-inter-pas:hidden').show().siblings('#' + sMenuLink + '-pas:visible').hide().siblings('#' + sMenuLink + '-act:hidden').show();
+    });
 };
 
 BxPostsPolls.prototype.loadingInButton = function(e, bShow) {

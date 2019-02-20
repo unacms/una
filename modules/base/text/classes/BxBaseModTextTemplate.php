@@ -339,7 +339,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             if(!$bActive) 
                 continue;
 
-            $sId = $this->_oConfig->getHtmlIds('poll_view_link_' . $sView) . $iPollId . $sPostfix;
+            $sId = $this->_oConfig->getHtmlIds('poll_view_link_' . $sView) . $iPollId;
             if(!empty($sSelected) && $sSelected == $sView)
                 $sSelected = $sId;
 

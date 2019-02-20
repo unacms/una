@@ -26,14 +26,17 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $sResult = parent::getCode($bDynamicMode);
-        $sResult .= $this->_oModule->_oTemplate->getJsCode('poll');
-
         if(!empty($CNF['OBJECT_MENU_ENTRY_ATTACHMENTS']))
             $sResult = $this->_oModule->_oTemplate->parseHtmlByContent($sResult, array(
                 'attachments_menu' => BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_ENTRY_ATTACHMENTS'])->getCode()
             ));
 
-        $this->_oModule->_oTemplate->addJs(array('polls.js'));
+        if(isset($CNF['PARAM_POLL_ENABLED']) && $CNF['PARAM_POLL_ENABLED'] === true) {
+            $sResult .= $this->_oModule->_oTemplate->getJsCode('poll');
+
+            $this->_oModule->_oTemplate->addJs(array('polls.js'));
+        }           
+
     	return $sResult;
     }
 

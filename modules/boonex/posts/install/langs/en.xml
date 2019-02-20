@@ -62,7 +62,6 @@
     <string name="_bx_posts_form_poll_input_text_err"><![CDATA[Question is essential. Please, fill in this field]]></string>
     <string name="_bx_posts_form_poll_input_sys_answers"><![CDATA[Answers]]></string>
     <string name="_bx_posts_form_poll_input_answers"><![CDATA[Answers]]></string>
-    <string name="_bx_posts_form_poll_input_answers_inf"><![CDATA[Leave text box empty to remove an answer.]]></string>
     <string name="_bx_posts_form_poll_input_answers_err"><![CDATA[Poll should have at least 2 non-empty answers.]]></string>
     <string name="_bx_posts_form_poll_input_answers_add"><![CDATA[Add More]]></string>
     <string name="_bx_posts_form_poll_input_sys_do_submit"><![CDATA[Add]]></string>

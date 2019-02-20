@@ -76,11 +76,11 @@ class BxBaseModTextFormPoll extends BxTemplFormView
         if(empty($aAnswers) || !is_array($aAnswers))
             return true;
 
-        foreach($aAnswers as $iIndex => $sSubentry)
-            if(!empty($sSubentry))
+        foreach($aAnswers as $iIndex => $sAnswer)
+            if($sAnswer != '' && get_mb_len($sAnswer) > 0)
                 $this->_oModule->_oDb->insertPollAnswer(array(
                     'poll_id' => $iContentId,
-                    'title' => bx_process_input($sSubentry),
+                    'title' => bx_process_input($sAnswer),
                     'order' => $iIndex
                 ));
 
@@ -116,7 +116,7 @@ class BxBaseModTextFormPoll extends BxTemplFormView
 
             $aAnswersValues = array_slice($aAnswersValues, $iAnswersIds);
             foreach($aAnswersValues as $sAnswersValue)
-                if(!empty($sAnswersValue))
+                if($sAnswersValue != '' && get_mb_len($sAnswersValue) > 0)
                     $this->_oModule->_oDb->insertPollAnswer(array(
                         'poll_id' => $iContentId,
                         'title' => bx_process_input($sAnswersValue),

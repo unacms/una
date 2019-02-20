@@ -62,7 +62,6 @@
     <string name="_bx_posts_form_poll_input_text_err"><![CDATA[Вопрос обязателен. Пожалуйста, заполните это поле]]></string>
     <string name="_bx_posts_form_poll_input_sys_answers"><![CDATA[Ответы]]></string>
     <string name="_bx_posts_form_poll_input_answers"><![CDATA[Ответы]]></string>
-    <string name="_bx_posts_form_poll_input_answers_inf"><![CDATA[Оставьте текстовое поле пустым, чтобы удалить ответ.]]></string>
     <string name="_bx_posts_form_poll_input_answers_err"><![CDATA[Голосование должно иметь как минимум 2 не пустых ответа.]]></string>
     <string name="_bx_posts_form_poll_input_answers_add"><![CDATA[Добавить ещё]]></string>    
     <string name="_bx_posts_form_poll_input_sys_do_submit"><![CDATA[Добавить]]></string>

@@ -299,8 +299,9 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     {
         $CNF = &$this->_oConfig->CNF;
 
+        $aResults = parent::_getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
         if(!$this->_oConfig->isAttachmentsInTimeline() || empty($CNF['OBJECT_STORAGE_PHOTOS']) || empty($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY_PHOTOS']))
-            return parent::_getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
+            return $aResults;
 
         $iContentId = (int)$aContentInfo[$CNF['FIELD_ID']];
         $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_PHOTOS']);
@@ -311,7 +312,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 
         $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS']);
 
-        $aResults = array();
         foreach ($aGhostFiles as $k => $a) {
             $sPhotoSrc = $oTranscoder->getFileUrl($a['id']);
             if(empty($sPhotoSrc))

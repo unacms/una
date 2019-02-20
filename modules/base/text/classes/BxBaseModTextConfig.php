@@ -15,7 +15,7 @@ class BxBaseModTextConfig extends BxBaseModGeneralConfig
 
     /**
      * Determine whether Timeline post will use common content (header image + text)
-     * or content received from attachments (images + videos + polls + text).
+     * or content received from attachments (header image + images + videos + polls + text).
      * By default the first variant is used.
      */
     protected $_bAttachmentsInTimeline;
@@ -39,6 +39,7 @@ class BxBaseModTextConfig extends BxBaseModGeneralConfig
             'FIELD_POLL_ANSWERS' => 'answers',
 
             // some params
+            'PARAM_POLL_ENABLED' => true,
             'PARAM_POLL_HIDDEN_RESULTS' => false,
             'PARAM_POLL_ANONYMOUS_VOTING' => true,
 
