@@ -379,25 +379,29 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
 
 /*--- Sliding Menu ---*/
 .bx-sliding-menu, .bx-sliding-menu-main {
-	left: auto !important;
-	right: 0 !important;
-	max-width: 31.25rem;
+    left: auto !important;
+    right: 0 !important;
+    max-width: 31.25rem;
 }
 
+/*--- Search Popup ---*/
+#bx-sliding-menu-search.bx-sliding-menu-main .bx-def-page-width {
+    width: 100%;
+}
 
 /*--- Account Popup ---*/
 @media (min-width:720px) {
-	#bx-sliding-menu-account.bx-sliding-menu-main {
-		left: auto !important;
-		right: 0px !important;
-		width: auto !important;
-	}
+    #bx-sliding-menu-account.bx-sliding-menu-main {
+        left: auto !important;
+        right: 0px !important;
+        width: auto !important;
+    }
 }
 #bx-sliding-menu-account.bx-sliding-menu-main.bx-sliding-menu-fullheight {
     height: calc(100% - 3.75rem);
 }
 .bx-menu-account-popup .bx-menu-account-popup-profile {
-	margin-right: 4rem;
+    margin-right: 4rem;
 }
 
 
