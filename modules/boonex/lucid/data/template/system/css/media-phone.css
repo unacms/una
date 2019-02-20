@@ -77,26 +77,7 @@
     text-align: center;
 }
 
-/*--- Cover ---*/
-.bx-media-phone .bx-base-pofile-cover .bx-base-pofile-cover-info {
-    -webkit-flex-direction: column;
-    flex-direction: column;
-    -webkit-align-items: center;
-    align-items: center;
-}
-.bx-media-phone .bx-base-pofile-cover .bx-base-pofile-cover-info .bx-base-pofile-cover-user {
-    -webkit-flex-direction: column;
-    flex-direction: column;
-    margin-left: 0;
-    padding-left: 0;
-}
-.bx-media-phone .bx-base-pofile-cover .bx-base-pofile-cover-info .bx-base-pofile-cover-user h1.bx-def-unit-info {
-    padding-left: 0;
-}
-.bx-media-phone .bx-base-pofile-cover .bx-base-pofile-cover-info .bx-base-pofile-cover-actions {
-    margin-right: 0;
-    padding-right: 0;
-}
-.bx-media-phone .bx-base-pofile-cover .bx-base-pofile-cover-info .bx-base-pofile-cover-actions .bx-btn u {
-    display: none;
+/*--- Profile Cover ---*/
+.bx-media-phone .bx-base-pofile-cover-info-container {
+    min-height: 50vh;
 }

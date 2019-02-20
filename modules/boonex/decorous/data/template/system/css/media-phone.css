@@ -3,3 +3,8 @@
 .bx-media-phone #bx-logo-container {
     text-align: center;
 }
+
+/*--- Profile Cover ---*/
+.bx-media-phone .bx-base-pofile-cover-info-container {
+    min-height: 50vh;
+}
