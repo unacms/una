@@ -22,6 +22,8 @@ class BxDolGridConnections extends BxTemplGrid
         parent::__construct ($aOptions, $oTemplate);
         $this->_sDefaultSortingOrder = 'DESC';
 
+        $this->_aQueryAppendExclude[] = 'join_connections';
+
         if(($iProfileId = bx_get('profile_id')) !== false)
             $this->setProfile($iProfileId);
     }

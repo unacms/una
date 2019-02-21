@@ -16,6 +16,7 @@ class BxBaseGrid extends BxDolGrid
     protected $_oTemplate;
     protected $_aPopupOptions = false;
     protected $_aQueryAppend = false;
+    protected $_aQueryAppendExclude = false; // an array of keys which shouldn't be pathed in http requests, but can be stored (used) in 'Query Append' array.
     protected $_aQueryReset = false;
     protected $_aConfirmMessages = false;
     protected $_bSelectAll = false;
@@ -29,6 +30,9 @@ class BxBaseGrid extends BxDolGrid
             $this->_oTemplate = $oTemplate;
         else
             $this->_oTemplate = BxDolTemplate::getInstance();
+
+        $this->_aQueryAppend = array();
+        $this->_aQueryAppendExclude = array();
 
         $this->_aQueryReset = array($this->_aOptions['filter_get'], $this->_aOptions['order_get_field'], $this->_aOptions['order_get_dir'], $this->_aOptions['paginate_get_start'], $this->_aOptions['paginate_get_per_page']);
     }
@@ -174,6 +178,9 @@ class BxBaseGrid extends BxDolGrid
             $sPopupOptions = json_encode($this->_aPopupOptions);
 
         $aQueryAppend = array_merge(is_array($this->_aQueryAppend) ? $this->_aQueryAppend : array(), is_array($this->_aMarkers) ? $this->_aMarkers : array());
+        if(!empty($this->_aQueryAppendExclude) && is_array($this->_aQueryAppendExclude))
+            $aQueryAppend = array_diff_key($aQueryAppend, array_flip($this->_aQueryAppendExclude));
+
         $sQueryAppend = '{}';
         if (!empty($aQueryAppend) && is_array($aQueryAppend))
             $sQueryAppend = json_encode($aQueryAppend);
