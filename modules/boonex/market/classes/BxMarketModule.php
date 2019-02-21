@@ -1015,15 +1015,21 @@ class BxMarketModule extends BxBaseModTextModule
 
         $oClient = BxDolProfile::getInstanceMagic($iClientId);
         $oSeller = BxDolProfile::getInstanceMagic($iSellerId);
+        $sSellerUrl = $oSeller->getUrl();
+        $sSellerName = $oSeller->getDisplayName();
+
+        $sNote = $aProduct[$CNF['FIELD_NOTES_PURCHASED']];
+        if(empty($sNote))
+            $sNote = _t('_bx_market_txt_purchased_note', $sSellerUrl, $sSellerName);
 
         sendMailTemplate($CNF['ETEMPLATE_PURCHASED'], 0, $iClientId, array(
             'client_name' => $oClient->getDisplayName(),
             'product_name' => $aProduct[$CNF['FIELD_TITLE']],
             'product_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=view-product&id=' . $aProduct[$CNF['FIELD_ID']]),
-            'vendor_url' => $oSeller->getUrl(),
-            'vendor_name' => $oSeller->getDisplayName(),
+            'vendor_url' => $sSellerUrl,
+            'vendor_name' => $sSellerName,
             'license' => $sLicense,
-            'notes' => $aProduct[$CNF['FIELD_NOTES_PURCHASED']],
+            'notes' => $sNote,
         ));
 
         return $aItem;

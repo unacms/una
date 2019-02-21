@@ -435,6 +435,7 @@
     <string name="_bx_market_txt_per_year"><![CDATA[год]]></string>
     <string name="_bx_market_txt_per_year_short"><![CDATA[год]]></string>
     <string name="_bx_market_txt_get_for_free"><![CDATA[Скачать бесплатно]]></string>
+    <string name="_bx_market_txt_purchased_note"><![CDATA[Свяжитесь с <a href="{0}">{1}</a>, если у вас есть какие-либо вопросы или нужна помощь.]]></string>
 
     <!-- EMAIL TEMPLATES -->
     <string name="_bx_market_et_txt_name_purchased"><![CDATA[Продукт приобретен.]]></string>
