@@ -147,17 +147,27 @@
 }
 
 /* --------------- Account */
-.bx-account-unit p {
-	display: block;
+p.bx-account-unit-thumb {
+    display: block;
     margin: 0px;
 
     line-height: 46px;
     line-height: 2.9rem;
 
-    font-size: 20px;
-    font-size: 1.2rem;
+    font-size: 32px;
+    font-size: 2.0rem;
     font-weight: 700;
     color: #d0d0d0;
+}
+div.bx-account-unit-online {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 0.625rem;
+    height: 0.625rem;
+    border: 1px solid #ffffff;
+    border-radius: 0.625rem;
+    background-color: #7ed321;
 }
 
 /* --------------- Mentions */
