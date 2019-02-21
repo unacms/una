@@ -300,26 +300,25 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
      */
     function getMainLogoUrl()
     {
-		$oDesigns = BxDolDesigns::getInstance();
+        $oDesigns = BxDolDesigns::getInstance();
 
         $iFileId = (int)$oDesigns->getSiteLogo();
-        if (!$iFileId) 
+        if(!$iFileId) 
             return false;
 
-        $oStorage = BxDolTranscoder::getObjectInstance('sys_custom_images');
-        $sFileUrl = $oStorage->getFileUrl($iFileId);
-        if (!$sFileUrl) 
-            return false;
+        $aParams = array();
+        if(($iLogoWidth = (int)$oDesigns->getSiteLogoWidth()) > 0)
+            $aParams['x'] = $iLogoWidth;
 
-		$iLogoWidth = (int)$oDesigns->getSiteLogoWidth();
-        if($iLogoWidth > 0)
-            $sFileUrl = bx_append_url_params($sFileUrl, array('x' => $iLogoWidth));
+        if(($iLogoHeight = (int)$oDesigns->getSiteLogoHeight()) > 0)
+            $aParams['y'] = $iLogoHeight;
 
-		$iLogoHeight = (int)$oDesigns->getSiteLogoHeight();
-        if($iLogoHeight > 0)
-            $sFileUrl = bx_append_url_params($sFileUrl, array('y' => $iLogoHeight));
+        if(!empty($aParams))
+            $sFileUrl = BX_DOL_URL_ROOT . bx_append_url_params('image_transcoder.php', array_merge(array('o' => 'sys_custom_images', 'h' => $iFileId), $aParams));
+        else 
+            $sFileUrl = BxDolTranscoder::getObjectInstance('sys_custom_images')->getFileUrl($iFileId);
 
-        return $sFileUrl;
+        return !empty($sFileUrl) ? $sFileUrl : false;
     }
 
     /**
