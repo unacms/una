@@ -918,7 +918,7 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
         foreach($aArgs as $mixedArg) {
         	if(is_null($mixedArg))
 				$iValueType = PDO::PARAM_NULL;
-            else if(is_numeric($mixedArg))
+            else if(is_numeric($mixedArg) && is_int($mixedArg))
                 $iValueType = PDO::PARAM_INT;
             else
                 $iValueType = PDO::PARAM_STR;
@@ -1051,7 +1051,7 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
     		foreach($aBindings as $sKey => $mixedValue) {
 	    		if(is_null($mixedValue))
 		    		$oStatement->bindValue(":{$sKey}", $mixedValue, PDO::PARAM_NULL);
-                else if(is_numeric($mixedValue))
+                else if(is_numeric($mixedValue) && is_int($mixedValue))
                     $oStatement->bindValue(":{$sKey}", $mixedValue, PDO::PARAM_INT);
                 else
                     $oStatement->bindValue(":{$sKey}", $mixedValue, PDO::PARAM_STR);
