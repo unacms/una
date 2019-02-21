@@ -25,6 +25,7 @@
 	<string name="_bx_forum_form_entry_input_sys_text"><![CDATA[Text]]></string>
 	<string name="_bx_forum_form_entry_input_text"><![CDATA[Text]]></string>
 	<string name="_bx_forum_form_entry_input_text_err"><![CDATA[Text field can't be empty]]></string>
+        <string name="_bx_forum_form_entry_input_text_comments"><![CDATA[Comments Text]]></string>
 	<string name="_bx_forum_form_entry_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
 	<string name="_bx_forum_form_entry_input_delete_confirm"><![CDATA[I am sure I want to delete this discussion]]></string>
 	<string name="_bx_forum_form_entry_input_delete_confirm_info"><![CDATA[This action can not be undone]]></string>
@@ -42,7 +43,7 @@
     <string name="_bx_forum_form_entry_input_title"><![CDATA[Topic]]></string>
     <string name="_bx_forum_form_entry_input_title_err"><![CDATA[Topic is mandatory]]></string>
     <string name="_bx_forum_form_entry_input_sys_cat"><![CDATA[Category]]></string>
-	<string name="_bx_forum_form_entry_input_cat"><![CDATA[Category]]></string>
+    <string name="_bx_forum_form_entry_input_cat"><![CDATA[Category]]></string>
     <string name="_bx_forum_form_entry_input_cat_err"><![CDATA[Please select category]]></string>
     <string name="_bx_forum_form_search"><![CDATA[Search]]></string>
 	<string name="_bx_forum_form_search_display_full"><![CDATA[Full Search]]></string>

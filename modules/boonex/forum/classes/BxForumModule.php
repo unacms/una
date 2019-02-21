@@ -78,6 +78,36 @@ class BxForumModule extends BxBaseModTextModule
      * @page service Service Calls
      * @section bx_forum Discussions
      * @subsection bx_forum-other Other
+     * @subsubsection bx_forum-get_searchable_fields get_searchable_fields
+     * 
+     * @code bx_srv('bx_forum', 'get_searchable_fields', [...]); @endcode
+     * 
+     * Get searchable fields for Studio settings.
+     * 
+     * @return an array with key-value pairs to be used in settings dropdown field.
+     * 
+     * @see BxForumModule::serviceGetSearchableFields
+     */
+    /** 
+     * @ref bx_forum-get_searchable_fields "get_searchable_fields"
+     */
+    public function serviceGetSearchableFields ()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aResult = parent::serviceGetSearchableFields();
+        $aResult[$CNF['FIELD_TEXT_COMMENTS']] = _t('_bx_forum_form_entry_input_text_comments');
+
+        return $aResult;
+    }
+
+    /**
+     * Service methods
+     */
+    /**
+     * @page service Service Calls
+     * @section bx_forum Discussions
+     * @subsection bx_forum-other Other
      * @subsubsection bx_forum-get_info get_info
      * 
      * @code bx_srv('bx_forum', 'get_info', [...]); @endcode

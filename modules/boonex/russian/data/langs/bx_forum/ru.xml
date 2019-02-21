@@ -25,6 +25,7 @@
 	<string name="_bx_forum_form_entry_input_sys_text"><![CDATA[Текст]]></string>
 	<string name="_bx_forum_form_entry_input_text"><![CDATA[Текст]]></string>
 	<string name="_bx_forum_form_entry_input_text_err"><![CDATA[Поле для текста не может быть пустым]]></string>
+        <string name="_bx_forum_form_entry_input_text_comments"><![CDATA[Текст комментариев]]></string>
 	<string name="_bx_forum_form_entry_input_sys_delete_confirm"><![CDATA[Удалить подтверждение]]></string>
 	<string name="_bx_forum_form_entry_input_delete_confirm"><![CDATA[Я уверен, что хочу удалить это обсуждение]]></string>
 	<string name="_bx_forum_form_entry_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено]]></string>
