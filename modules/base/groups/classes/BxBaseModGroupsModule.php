@@ -649,7 +649,10 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
         $oPrivacy = BxDolPrivacy::getObjectInstance($this->_oConfig->CNF['OBJECT_PRIVACY_VIEW']);
 
-        if (CHECK_ACTION_RESULT_ALLOWED !== $sResult && !in_array($aDataEntry[$this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']], array('c', 's')))
+        // if profile view isn't allowed but visibility is in partially visible groups 
+        // then display buttons to connect (befriend, join) to profile, 
+        // if other conditions (in parent::_checkAllowedConnect) are met as well
+        if (CHECK_ACTION_RESULT_ALLOWED !== $sResult && !in_array($aDataEntry[$this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']], array_merge($oPrivacy->getPartiallyVisiblePrivacyGroups(), array('s'))))
             return $sResult;
 
         return parent::_checkAllowedConnect ($aDataEntry, $isPerformAction, $sObjConnection, $isMutual, $isInvertResult, $isSwap);
