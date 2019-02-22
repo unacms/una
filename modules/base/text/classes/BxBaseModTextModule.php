@@ -331,6 +331,8 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     {
         $CNF = &$this->_oConfig->CNF;
 
+        $iMaxNumber = 1;
+
         if(!$this->_oConfig->isAttachmentsInTimeline() || empty($CNF['OBJECT_STORAGE_VIDEOS']) || empty($CNF['OBJECT_VIDEOS_TRANSCODERS']))
             return parent::_getVideosForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
 
@@ -341,6 +343,9 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         if(!$aGhostFiles)
             return array();
 
+        if($iMaxNumber > 0)
+            $aGhostFiles = array_slice($aGhostFiles, 0, $iMaxNumber);
+
         $oTcPoster = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']);
         $oTcMp4 = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']);
         $oTcWebm = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['webm']);
@@ -348,15 +353,13 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
             return array();
 
         $aResults = array();
-        foreach ($aGhostFiles as $k => $a) {
-
+        foreach ($aGhostFiles as $k => $a) 
             $aResults[$a['id']] = array(
                 'id' => $a['id'],
                 'src_poster' => $oTcPoster->getFileUrl($a['id']),
                 'src_mp4' => $oTcMp4->getFileUrl($a['id']),
                 'src_webm' => $oTcWebm->getFileUrl($a['id']),
             );
-        }
 
         return $aResults;
     }
@@ -385,17 +388,15 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 
                 $sPolls .= $sPoll;
             }
-        
+
             if(!empty($sPolls)) {
                 $sInclude = '';
                 $sInclude .= $this->_oTemplate->addJs(array('polls.js'), $bDynamic);
                 $sInclude .= $this->_oTemplate->addCss(array('polls.css'), $bDynamic);
 
-                $aResult['raw'] = ($bDynamic ? $sInclude : '') . $this->_oTemplate->parseHtmlByName('poll_items.html', array(
-                    'bx_if:show_autosizing' => array(
-                        'condition' => false,
-                        'content' => array()
-                    ),
+                $aResult['raw'] = ($bDynamic ? $sInclude : '') . $this->_oTemplate->parseHtmlByName('poll_items_showcase.html', array(
+                    'js_object' => $this->_oConfig->getJsObject('poll'),
+                    'html_id' => $this->_oConfig->getHtmlIds('polls_showcase') . $aEvent['id'],
                     'polls' => $sPolls
                 )) . $this->_oTemplate->getJsCode('poll');
             }

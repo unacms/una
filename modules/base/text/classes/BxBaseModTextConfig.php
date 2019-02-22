@@ -59,6 +59,7 @@ class BxBaseModTextConfig extends BxBaseModGeneralConfig
         $this->_aHtmlIds = array(
             'add_poll_popup' =>  $sPrefix . '-add-poll-popup',
             'add_poll_form_field' => $sPrefix . '-add-poll-form-field',
+            'polls_showcase' => $sPrefix . '-polls-showcase-',
             'poll' => $sPrefix . '-poll-',
             'poll_content' => $sPrefix . '-poll-content-',
             'poll_view_menu' => $sPrefix . '-poll-view-menu',

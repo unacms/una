@@ -19,6 +19,28 @@ function BxPostsPolls(oOptions) {
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
 }
 
+BxPostsPolls.prototype.initFlickity = function(oParent) {
+    if(!oParent)
+        return;
+
+    if(typeof(oParent) == 'string')
+        oParent = $(oParent);
+
+    var sItemClass = 'bx-base-text-poll';
+    var sItemsClass = 'bx-base-text-polls-showcase';
+
+    var oItems = $(oParent).hasClass(sItemsClass) ? oParent : oParent.find('.' + sItemsClass);
+    if(oItems.find('.' + sItemClass).length <= 1)
+        return;
+
+    oItems.flickity({
+        cellSelector: 'div.' + sItemClass,
+        cellAlign: 'left',
+        pageDots: false,
+        imagesLoaded: true
+    });
+};
+
 BxPostsPolls.prototype.initPollForm = function(sFormId)
 {
     var $this = this;
