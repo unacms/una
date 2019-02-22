@@ -133,27 +133,6 @@ class BxForumTemplate extends BxBaseModTextTemplate
     	));
     }
 
-	function getEntryLabel($aRow, $aParams = array())
-    {
-        $bShowCount = isset($aParams['show_count']) ? (int)$aParams['show_count'] == 1 : false;
-        $bShowLastReplier = isset($aParams['last_replier']) ? (int)$aParams['last_replier'] == 1 : true;
-
-        $oProfileLast = BxDolProfile::getInstanceMagic($aRow['lr_profile_id']);
-
-        return $this->parseHtmlByName('entry-label.html', array(
-        	'bx_if:show_count' => array(
-        		'condition' => $bShowCount,
-        		'content' => array(
-        			'count' => (int)$aRow['comments'] + 1
-				)
-        	),
-            'bx_if:show_viewer_is_last_replier' => array(
-                'condition' => $bShowLastReplier && $oProfileLast->id() == bx_get_logged_profile_id(),
-                'content' => array (),
-            )
-        ));
-    }
-
     function getEntryPreview($aRow)
     {
         $oModule = BxDolModule::getInstance($this->MODULE);
@@ -161,22 +140,56 @@ class BxForumTemplate extends BxBaseModTextTemplate
 
         $oProfileLast = BxDolProfile::getInstanceMagic($aRow['lr_profile_id']);
 
-		$sTitle = strmaxtextlen($aRow['title'], 100);
-        $sText = strmaxtextlen(!empty($aRow['cmt_text']) ? $aRow['cmt_text'] : $aRow['text'], 100);
+        $sTitle = strmaxtextlen($aRow[$CNF['FIELD_TITLE']], 100);
+        $sText = strmaxtextlen($aRow[$CNF['FIELD_TEXT']], 100);
+
+        $aMetas = array('main' => false, 'counters' => false, 'reply' => false);
+        foreach(array_keys($aMetas) as $sMeta) {
+            $sKey = 'OBJECT_MENU_SNIPPET_META_' . strtoupper($sMeta);
+            if(empty($CNF[$sKey]))
+                continue;
+
+            $oMenuMeta = BxDolMenu::getObjectInstance($CNF[$sKey], $this);
+            if(!$oMenuMeta) 
+                continue;
+
+            $oMenuMeta->setContentId($aRow[$CNF['FIELD_ID']]);
+            $sMenuMeta = $oMenuMeta->getCode();
+            if(empty($sMenuMeta))
+                continue;
+
+            $aMetas[$sMeta] = array(
+                'content' => $sMenuMeta
+            );
+        }
 
         return $this->parseHtmlByName('entry-preview.html', array(
-        	'bx_if:show_stick' => array(
-        		'condition' => (int)$aRow[$CNF['FIELD_STICK']] == 1,
-        		'content' => array()
-        	),
-        	'bx_if:show_lock' => array(
-        		'condition' => (int)$aRow[$CNF['FIELD_LOCK']] == 1,
-        		'content' => array()
-        	),
+            'bx_if:show_stick' => array(
+                'condition' => (int)$aRow[$CNF['FIELD_STICK']] == 1,
+                'content' => array()
+            ),
+            'bx_if:show_lock' => array(
+                'condition' => (int)$aRow[$CNF['FIELD_LOCK']] == 1,
+                'content' => array()
+            ),
             'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $oModule->_oConfig->CNF['URI_VIEW_ENTRY'] . '&id=' . $aRow['id']),
             'title' => $sTitle ? $sTitle : _t('_Empty'),
             'text' => $sText,
-            'lr_time_and_replier' => _t('_bx_forum_x_date_by_x_replier', bx_time_js($aRow['lr_timestamp'], BX_FORMAT_DATE), $oProfileLast->getDisplayName()),
+            'bx_if:meta_main' => array(
+                'condition' => $aMetas['main'] !== false,
+                'content' => $aMetas['main']
+            ),
+            'bx_if:meta_counters' => array(
+                'condition' => $aMetas['counters'] !== false,
+                'content' => $aMetas['counters']
+            ),
+            'bx_if:meta_reply' => array(
+                'condition' => $aMetas['reply'] !== false,
+                'content' => $aMetas['reply']
+            ),
+            
+            
+            //'lr_time_and_replier' => _t('_bx_forum_x_date_by_x_replier', bx_time_js($aRow['lr_timestamp'], BX_FORMAT_DATE), $oProfileLast->getDisplayName()),
         ));
     }
 

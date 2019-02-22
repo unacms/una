@@ -90,19 +90,40 @@
     line-height:1.15em;
 }
 
-.bx-forum-grid-author .bx-base-pofile-unit-wo-info {
+.bx-grid-table-cell-author {
+    vertical-align: top;
+}
+
+.bx-grid-table-cell-author .bx-base-pofile-unit-wo-info {
 	display: inline-block;
 }
 
-.bx-forum-grid-preview div {
-    white-space:nowrap;
-    text-overflow:ellipsis;
-    overflow:hidden;
-    line-height:1.4em;
+.bx-forum-grid-preview .bx-forum-gp-title,
+.bx-forum-grid-preview .bx-forum-gp-text {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
-/*--- Snippet ---*/
-.bx-base-text-unit .bx-forum-grid-field-replies {
-	display: inline-block;
-	vertical-align: middle;
+.bx-forum-grid-preview .bx-forum-gp-meta {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-top {
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+}
+
+.bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-bottom .bx-forum-gpm-reply i,
+.bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-bottom .bx-forum-gpm-reply ul {
+    display: inline-block;
+    vertical-align: middle;
+}
+.bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-bottom .bx-forum-gpm-reply .bx-forum-gpm-reply-text {
+    color: 
 }

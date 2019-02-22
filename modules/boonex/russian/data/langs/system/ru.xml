@@ -2206,6 +2206,7 @@
     <string name="_sys_menu_item_title_sm_category"><![CDATA[Категория]]></string>
     <string name="_sys_menu_item_title_sm_tags"><![CDATA[Тэги]]></string>
     <string name="_sys_menu_item_title_sm_views"><![CDATA[Просмотры]]></string>
+    <string name="_sys_menu_item_title_sm_votes"><![CDATA[Голоса]]></string>
     <string name="_sys_menu_item_title_sm_rating"><![CDATA[Рейтинг]]></string>
     <string name="_sys_menu_item_title_sm_comments"><![CDATA[Комментарии]]></string>
     <string name="_sys_menu_item_title_sm_actions"><![CDATA[Действия]]></string>
@@ -2284,6 +2285,7 @@
     <string name="_sys_menu_item_title_system_sm_category"><![CDATA[Категория]]></string>
     <string name="_sys_menu_item_title_system_sm_tags"><![CDATA[Тэги]]></string>
     <string name="_sys_menu_item_title_system_sm_views"><![CDATA[Просмотры]]></string>
+    <string name="_sys_menu_item_title_system_sm_votes"><![CDATA[Голоса]]></string>
     <string name="_sys_menu_item_title_system_sm_rating"><![CDATA[Рейтинг]]></string>
     <string name="_sys_menu_item_title_system_sm_comments"><![CDATA[Комментарии]]></string>
     <string name="_sys_menu_item_title_system_sm_actions"><![CDATA[Действия]]></string>
@@ -2749,6 +2751,7 @@
 	<string name="_vote_do_by"><![CDATA[Поблагодарили]]></string>
 	<string name="_vote_err_not_enabled"><![CDATA[Ваш голос не может быть принят в данный момент. Пожалуйста, попробуйте позднее.]]></string>
 	<string name="_vote_err_duplicate_vote"><![CDATA[Повторный голос]]></string>
+        <string name="_vote_n_votes"><![CDATA[{0} голосов]]></string>
 	<string name="_week_fri"><![CDATA[Пятница]]></string>
 	<string name="_week_mon"><![CDATA[Понедельник]]></string>
 	<string name="_week_sat"><![CDATA[Суббота]]></string>

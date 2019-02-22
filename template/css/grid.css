@@ -70,6 +70,10 @@
 .bx-grid-table td:first-child {
     padding-left:10px;
 }
+.bx-grid-table th:last-child,
+.bx-grid-table td:last-child {
+    padding-right:10px;
+}
 
 .bx-grid-actions-divider {
     float:left;

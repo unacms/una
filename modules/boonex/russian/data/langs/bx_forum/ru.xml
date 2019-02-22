@@ -202,7 +202,7 @@
     <string name="_bx_forum_menu_item_title_entries_top"><![CDATA[ТОП]]></string>
     <string name="_bx_forum_menu_item_title_system_entries_categories"><![CDATA[Категории]]></string>
     <string name="_bx_forum_menu_item_title_entries_categories"><![CDATA[Категории]]></string>
-	<string name="_bx_forum_menu_item_title_system_entries_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_forum_menu_item_title_system_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_forum_menu_item_title_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_forum_menu_set_title_view_entry"><![CDATA[Действия для тем]]></string>
     <string name="_bx_forum_menu_title_view_entry"><![CDATA[Действия для тем]]></string>
@@ -212,24 +212,32 @@
     <string name="_bx_forum_menu_item_title_view_entries_author"><![CDATA[Обсуждения]]></string>
     <string name="_bx_forum_menu_item_title_system_view_entries_in_context"><![CDATA[Обсуждения]]></string>
     <string name="_bx_forum_menu_item_title_view_entries_in_context"><![CDATA[Обсуждения]]></string>
-  <string name="_bx_forum_menu_title_entries_my"><![CDATA[Мои Обсуждения - Меню действий]]></string>
+    <string name="_bx_forum_menu_title_entries_my"><![CDATA[Мои Обсуждения - Меню действий]]></string>
     <string name="_bx_forum_menu_set_title_entries_my"><![CDATA[Мои Обсуждения - Меню]]></string>
     <string name="_bx_forum_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_forum_menu_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_forum_menu_item_title_system_manage_account"><![CDATA[Управление аккаунтом]]></string>
     <string name="_bx_forum_menu_item_title_manage_account"><![CDATA[Управление аккаунтом]]></string>
-	<string name="_bx_forum_menu_item_title_system_admt_discussions"><![CDATA[Обсуждения]]></string>
-	<string name="_bx_forum_menu_item_title_admt_discussions"><![CDATA[Обсуждения - {addon} спрятано]]></string>
-	<string name="_bx_forum_menu_item_title_manage_my"><![CDATA[Мои обсуждения]]></string>
-	<string name="_bx_forum_menu_item_title_manage_all"><![CDATA[Все обсуждения]]></string>
+    <string name="_bx_forum_menu_item_title_system_admt_discussions"><![CDATA[Обсуждения]]></string>
+    <string name="_bx_forum_menu_item_title_admt_discussions"><![CDATA[Обсуждения - {addon} спрятано]]></string>
+    <string name="_bx_forum_menu_item_title_manage_my"><![CDATA[Мои обсуждения]]></string>
+    <string name="_bx_forum_menu_item_title_manage_all"><![CDATA[Все обсуждения]]></string>
     <string name="_bx_forum_menu_item_title_system_discussions"><![CDATA[Количество дискуссий]]></string>
     <string name="_bx_forum_menu_item_title_discussions"><![CDATA[Дискуссий]]></string>
     <string name="_bx_forum_lmi_cpt_categories"><![CDATA[Категории]]></string>
+    <string name="_bx_forum_menu_title_snippet_meta_main"><![CDATA[Мета информация в карточке: Главное]]></string>
+    <string name="_bx_forum_menu_set_title_snippet_meta_main"><![CDATA[Мета информация в карточке: Главное]]></string>
+    <string name="_bx_forum_menu_title_snippet_meta_conters"><![CDATA[Мета информация в карточке: Счетчики]]></string>
+    <string name="_bx_forum_menu_set_title_snippet_meta_conters"><![CDATA[Мета информация в карточке: Счетчики]]></string>
+    <string name="_bx_forum_menu_title_snippet_meta_reply"><![CDATA[Мета информация в карточке: Ответ]]></string>
+    <string name="_bx_forum_menu_set_title_snippet_meta_reply"><![CDATA[Мета информация в карточке: Ответ]]></string>
+    <string name="_bx_forum_menu_item_title_system_sm_reply_text"><![CDATA[Текст ответа]]></string>
+    <string name="_bx_forum_menu_item_title_sm_reply_text"><![CDATA[Текст ответа]]></string>
 
-	<string name="_bx_forum_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
-	<string name="_bx_forum_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
-	<string name="_bx_forum_grid_filter_item_title_adm_hidden"><![CDATA[Спрятанные]]></string>
-	<string name="_bx_forum_grid_column_title_adm_active"><![CDATA[Активные]]></string>
+    <string name="_bx_forum_grid_filter_item_title_adm_select_one_filter1"><![CDATA[Все статусы]]></string>
+    <string name="_bx_forum_grid_filter_item_title_adm_active"><![CDATA[Активные]]></string>
+    <string name="_bx_forum_grid_filter_item_title_adm_hidden"><![CDATA[Спрятанные]]></string>
+    <string name="_bx_forum_grid_column_title_adm_active"><![CDATA[Активные]]></string>
     <string name="_bx_forum_grid_column_title_adm_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_forum_grid_column_title_adm_added"><![CDATA[Добавленные]]></string>
     <string name="_bx_forum_grid_column_title_adm_author"><![CDATA[Автор]]></string>
@@ -242,16 +250,16 @@
     <string name="_bx_forum_grid_action_title_show_to"><![CDATA[Показать]]></string>
     <string name="_bx_forum_grid_action_err_delete"><![CDATA[Невозможно удалить выбранное(ные) обсуждение(ния).]]></string>
     <string name="_bx_forum_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
-	<string name="_bx_forum_grid_txt_manage_visibility"><![CDATA[Управление настройками видимости.]]></string>
-	<string name="_bx_forum_grid_show_to_popup"><![CDATA[Категория видна:]]></string>
+    <string name="_bx_forum_grid_txt_manage_visibility"><![CDATA[Управление настройками видимости.]]></string>
+    <string name="_bx_forum_grid_show_to_popup"><![CDATA[Категория видна:]]></string>
     <string name="_bx_forum_grid_txt_visible_for"><![CDATA[Видимо для]]></string>
     <string name="_bx_forum_grid_txt_visible_for_all"><![CDATA[Всех]]></string>
-	<string name="_bx_forum_grid_txt_visible_for_levels"><![CDATA[Выбрать уровни]]></string>
-	<string name="_bx_forum_grid_txt_visible_for_selected"><![CDATA[Выбранные уровни]]></string>
-	<string name="_bx_forum_grid_inf_visible_for_levels"><![CDATA[Выбрать членства, которым разрешено просматривать данную категорию.]]></string>
-	<string name="_bx_forum_grid_err_show_to"><![CDATA[Невозможно обновить категорию.]]></string>
-	<string name="_bx_forum_grid_btn_save"><![CDATA[Сохранить]]></string>
-	<string name="_bx_forum_grid_btn_cancel"><![CDATA[Отменить]]></string>
+    <string name="_bx_forum_grid_txt_visible_for_levels"><![CDATA[Выбрать уровни]]></string>
+    <string name="_bx_forum_grid_txt_visible_for_selected"><![CDATA[Выбранные уровни]]></string>
+    <string name="_bx_forum_grid_inf_visible_for_levels"><![CDATA[Выбрать членства, которым разрешено просматривать данную категорию.]]></string>
+    <string name="_bx_forum_grid_err_show_to"><![CDATA[Невозможно обновить категорию.]]></string>
+    <string name="_bx_forum_grid_btn_save"><![CDATA[Сохранить]]></string>
+    <string name="_bx_forum_grid_btn_cancel"><![CDATA[Отменить]]></string>
 
     <string name="_bx_forum_pre_lists_cats"><![CDATA[Категории обсуждений]]></string>
     <string name="_bx_forum_cat_General"><![CDATA[Общие]]></string>
@@ -267,14 +275,13 @@
     <string name="_bx_forum_participant_author"><![CDATA[автор]]></string>
     <string name="_bx_forum_participant_last_replier"><![CDATA[последний ответивший]]></string>
     <string name="_bx_forum_txt_entry_locked"><![CDATA[Заблокированное обсуждение]]></string>
-	<string name="_bx_forum_txt_entry_sticked"><![CDATA[Закрепленное обсуждение]]></string>
-	<string name="_bx_forum_txt_sample_comment_single"><![CDATA[комментарий к обсуждению]]></string>
-	<string name="_bx_forum_txt_sample_vote_single"><![CDATA[голос за обсуждение]]></string>
-  <string name="_bx_forum_txt_all_entries_in"><![CDATA[<a href="{0}">Все обсуждения в {1} ({2})</a>]]></string>
-	<string name="_bx_forum_txt_sample_single"><![CDATA[обсуждение]]></string>
-	<string name="_bx_forum_txt_sample_single_with_article"><![CDATA[обсуждение]]></string>
+    <string name="_bx_forum_txt_entry_sticked"><![CDATA[Закрепленное обсуждение]]></string>
+    <string name="_bx_forum_txt_sample_comment_single"><![CDATA[комментарий к обсуждению]]></string>
+    <string name="_bx_forum_txt_sample_vote_single"><![CDATA[голос за обсуждение]]></string>
+    <string name="_bx_forum_txt_all_entries_in"><![CDATA[<a href="{0}">Все обсуждения в {1} ({2})</a>]]></string>
+    <string name="_bx_forum_txt_sample_single"><![CDATA[обсуждение]]></string>
+    <string name="_bx_forum_txt_sample_single_with_article"><![CDATA[обсуждение]]></string>
     <string name="_bx_forum_x_date_by_x_replier"><![CDATA[{0} {1}]]></string>
-    <string name="_bx_forum_you_are_last_replier"><![CDATA[Вы - последний ответивший]]></string>
 
     <string name="_bx_forum_email_new_reply"><![CDATA[Новый ответ]]></string>
     <string name="_bx_forum_email_new_reply_subject"><![CDATA[Новый ответ в "{PageTitle}" дискуссии]]></string>

@@ -95,25 +95,25 @@ class BxForumGrid extends BxTemplGrid
     	return array();
     }
 
+    protected function _getCellDefault ($mixedValue, $sKey, $aField, $aRow)
+    {
+        $aField['attr_cell']['class'] = 'bx-grid-table-cell-' . $sKey;
+
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
+
     protected function _getCellAuthor($mixedValue, $sKey, $aField, $aRow)
     {
     	$mixedValue = $this->_oModule->_oTemplate->getEntryAuthor($aRow);
 
-        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+        return self::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
-    protected function _getCellLrTimestamp($mixedValue, $sKey, $aField, $aRow)
+    protected function _getCellText($mixedValue, $sKey, $aField, $aRow)
     {
         $mixedValue = $this->_oModule->_oTemplate->getEntryPreview($aRow);
 
-        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
-    }
-
-    protected function _getCellComments($mixedValue, $sKey, $aField, $aRow)
-    {
-        $mixedValue = $this->_oModule->_oTemplate->getEntryLabel($aRow, array('show_count' => 1));
-
-        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+        return self::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
     protected function _addJsCss()
@@ -121,7 +121,7 @@ class BxForumGrid extends BxTemplGrid
         parent::_addJsCss();
 
         $this->_oModule->_oTemplate->addJs(array('main.js'));
-        $this->_oModule->_oTemplate->addCss(array('main-media-tablet.css', 'main-media-desktop.css'));
+        $this->_oModule->_oTemplate->addCss(array('main.css', 'main-media-phone.css', 'main-media-tablet.css', 'main-media-desktop.css'));
     }
 
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)

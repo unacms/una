@@ -18,13 +18,13 @@ class BxForumConfig extends BxBaseModTextConfig
         $aMenuItems2Methods = array (
             'subscribe-discussion' => 'checkAllowedSubscribe',
             'unsubscribe-discussion' => 'checkAllowedUnsubscribe',
-        	'stick-discussion' => 'checkAllowedStickAnyEntry',
-        	'unstick-discussion' => 'checkAllowedUnstickAnyEntry',
-        	'lock-discussion' => 'checkAllowedLockAnyEntry',
-        	'unlock-discussion' => 'checkAllowedUnlockAnyEntry',
-        	'hide-discussion' => 'checkAllowedHideAnyEntry',
-        	'unhide-discussion' => 'checkAllowedUnhideAnyEntry',
-        	'edit-discussion' => 'checkAllowedEdit',
+            'stick-discussion' => 'checkAllowedStickAnyEntry',
+            'unstick-discussion' => 'checkAllowedUnstickAnyEntry',
+            'lock-discussion' => 'checkAllowedLockAnyEntry',
+            'unlock-discussion' => 'checkAllowedUnlockAnyEntry',
+            'hide-discussion' => 'checkAllowedHideAnyEntry',
+            'unhide-discussion' => 'checkAllowedUnhideAnyEntry',
+            'edit-discussion' => 'checkAllowedEdit',
             'delete-discussion' => 'checkAllowedDelete'
         );
 
@@ -46,36 +46,41 @@ class BxForumConfig extends BxBaseModTextConfig
             'FIELD_TEXT' => 'text',
             'FIELD_TEXT_ID' => 'discussion-text',
             'FIELD_TEXT_COMMENTS' => 'text_comments',
-        	'FIELD_CATEGORY' => 'cat',
+            'FIELD_CATEGORY' => 'cat',
+            'FIELD_LR_AUTHOR' => 'lr_profile_id',
+            'FIELD_LR_ADDED' => 'lr_timestamp',
+            'FIELD_LR_COMMENT_ID' => 'lr_comment_id',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_PHOTO' => 'attachments',
             'FIELD_THUMB' => 'thumb',
+            'FIELD_VIEWS' => 'views',
+            'FIELD_VOTES' => 'votes',
             'FIELD_COMMENTS' => 'comments',
-        	'FIELD_STICK' => 'stick',
-        	'FIELD_LOCK' => 'lock',
-        	'FIELD_STATUS' => 'status',
+            'FIELD_STICK' => 'stick',
+            'FIELD_LOCK' => 'lock',
+            'FIELD_STATUS' => 'status',
             'FIELD_STATUS_ADMIN' => 'status_admin',
             'FIELD_LABELS' => 'labels',
             'FIELD_ANONYMOUS' => 'anonymous',
-	        'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
+            'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-discussion',
             'URI_AUTHOR_ENTRIES' => 'discussions-author',
             'URI_ENTRIES_BY_CONTEXT' => 'discussions-context',
-        	'URI_CATEGORY_ENTRIES' => 'discussions-category',
-        	'URI_KEYWORD_ENTRIES' => 'discussions-keyword',
+            'URI_CATEGORY_ENTRIES' => 'discussions-category',
+            'URI_KEYWORD_ENTRIES' => 'discussions-keyword',
             'URI_ADD_ENTRY' => 'create-discussion',
-        	'URI_EDIT_ENTRY' => 'edit-discussion',
-        	'URI_MANAGE_COMMON' => 'discussions-manage',
+            'URI_EDIT_ENTRY' => 'edit-discussion',
+            'URI_MANAGE_COMMON' => 'discussions-manage',
 
             'URL_HOME' => 'page.php?i=discussions-home',
-        	'URL_UPDATED' => 'page.php?i=discussions-updated',
-        	'URL_NEW' => 'page.php?i=discussions-new',
+            'URL_UPDATED' => 'page.php?i=discussions-updated',
+            'URL_NEW' => 'page.php?i=discussions-new',
             'URL_TOP' => 'page.php?i=discussions-top',
-        	'URL_POPULAR' => 'page.php?i=discussions-popular',
-        	'URL_MANAGE_COMMON' => 'page.php?i=discussions-manage',
-        	'URL_MANAGE_ADMINISTRATION' => 'page.php?i=discussions-administration',
+            'URL_POPULAR' => 'page.php?i=discussions-popular',
+            'URL_MANAGE_COMMON' => 'page.php?i=discussions-manage',
+            'URL_MANAGE_ADMINISTRATION' => 'page.php?i=discussions-administration',
 
             // some params
             'PARAM_CHARS_SUMMARY' => 'bx_forum_summary_chars',
@@ -88,39 +93,42 @@ class BxForumConfig extends BxBaseModTextConfig
 
             // objects
             'OBJECT_GRID' => 'bx_forum',
-        	'OBJECT_GRID_FAVORITE' => 'bx_forum_favorite',
+            'OBJECT_GRID_FAVORITE' => 'bx_forum_favorite',
             'OBJECT_GRID_FEATURE' => 'bx_forum_feature',
-        	'OBJECT_GRID_ADMINISTRATION' => 'bx_forum_administration',
-        	'OBJECT_GRID_COMMON' => 'bx_forum_common',
-        	'OBJECT_GRID_CATEGORIES' => 'bx_forum_categories',
+            'OBJECT_GRID_ADMINISTRATION' => 'bx_forum_administration',
+            'OBJECT_GRID_COMMON' => 'bx_forum_common',
+            'OBJECT_GRID_CATEGORIES' => 'bx_forum_categories',
             'OBJECT_STORAGE' => 'bx_forum_files',
-        	'OBJECT_STORAGE_CMTS' => 'bx_forum_files_cmts',
+            'OBJECT_STORAGE_CMTS' => 'bx_forum_files_cmts',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_forum_preview',
-        	'OBJECT_IMAGES_TRANSCODER_PREVIEW_CMTS' => 'bx_forum_preview_cmts',
+            'OBJECT_IMAGES_TRANSCODER_PREVIEW_CMTS' => 'bx_forum_preview_cmts',
             'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_forum_gallery',
-        	'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_forum_cover',
+            'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_forum_cover',
             'OBJECT_VIDEOS_TRANSCODERS' => array(),
             'OBJECT_REPORTS' => 'bx_forum',
             'OBJECT_VIEWS' => 'bx_forum',
             'OBJECT_VOTES' => 'bx_forum',
-        	'OBJECT_SCORES' => 'bx_forum',
-        	'OBJECT_FAVORITES' => 'bx_forum',
-        	'OBJECT_FEATURED' => 'bx_forum',
-        	'OBJECT_CATEGORY' => 'bx_forum_cats',
+            'OBJECT_SCORES' => 'bx_forum',
+            'OBJECT_FAVORITES' => 'bx_forum',
+            'OBJECT_FEATURED' => 'bx_forum',
+            'OBJECT_CATEGORY' => 'bx_forum_cats',
             'OBJECT_COMMENTS' => 'bx_forum',
-        	'OBJECT_METATAGS' => 'bx_forum',
+            'OBJECT_METATAGS' => 'bx_forum',
             'OBJECT_PRIVACY_VIEW' => 'bx_forum_allow_view_to',
             'OBJECT_FORM_ENTRY' => 'bx_forum',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_forum_entry_view',
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_forum_entry_add',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_forum_entry_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_forum_entry_delete',
-        	'OBJECT_FORM_SEARCH' => 'bx_forum_search',
+            'OBJECT_FORM_SEARCH' => 'bx_forum_search',
             'OBJECT_FORM_SEARCH_DISPLAY_FULL' => 'bx_forum_search_full',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_forum_view', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE' => 'bx_forum_view_more', // more actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_forum_view_actions', // all actions menu on view entry page
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_forum_my', // actions menu on my entries page
+            'OBJECT_MENU_SNIPPET_META_MAIN' => 'bx_forum_snippet_meta_main', // menu for 'main' snippet meta info
+            'OBJECT_MENU_SNIPPET_META_COUNTERS' => 'bx_forum_snippet_meta_counters', // menu for 'counters' snippet meta info
+            'OBJECT_MENU_SNIPPET_META_REPLY' => 'bx_forum_snippet_meta_reply', // menu for 'reply' snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_forum_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_MENU_SUBMENU' => 'bx_forum_submenu', // main module submenu
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY' => '', // view entry submenu

@@ -106,6 +106,16 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
         return $this->getUnitMetaItemText(_t('_view_n_views', $this->_aContentInfo[$CNF['FIELD_VIEWS']]));
     }
 
+    protected function _getMenuItemVotes($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(empty($CNF['OBJECT_VOTES']) || (empty($this->_aContentInfo[$CNF['FIELD_VOTES']]) && !$this->_bShowZeros))
+            return false;
+        
+        return $this->getUnitMetaItemText(_t('_vote_n_votes', $this->_aContentInfo[$CNF['FIELD_VOTES']]));
+    }
+
     protected function _getMenuItemRating($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
