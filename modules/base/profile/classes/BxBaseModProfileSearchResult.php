@@ -17,8 +17,8 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
     {
         parent::__construct($sMode, $aParams);
         $this->aUnitViews = array('gallery' => 'unit_with_cover.html', 'showcase' => 'unit_with_cover_showcase.html', 'showcase_wo_info' => 'unit_wo_info_showcase.html', 'simple' => 'unit_wo_links.html');
-        if (!empty($aParams['unit_views']))
-            $this->aUnitViews = $aParams['unit_views'];
+        if (!empty($aParams['unit_views']) && is_array($aParams['unit_views']))
+            $this->aUnitViews = array_merge ($this->aUnitViews, $aParams['unit_views']);
         if (!empty($aParams['unit_view']))
             $this->sUnitViewDefault = $aParams['unit_view'];
         

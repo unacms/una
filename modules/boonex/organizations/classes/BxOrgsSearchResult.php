@@ -13,7 +13,9 @@ class BxOrgsSearchResult extends BxBaseModGroupsSearchResult
 {    
     function __construct($sMode = '', $aParams = false)
     {
-        $aParams['unit_views'] = array('gallery' => 'unit_with_cover.html', 'showcase' => 'unit_with_cover_showcase.html');
+        if(!empty($aParams['unit_views']) && is_array($aParams['unit_views']))
+            $aParams['unit_views'] = array_merge(array('gallery' => 'unit_with_cover.html', 'showcase' => 'unit_with_cover_showcase.html'), $aParams['unit_views']);
+
         parent::__construct($sMode, $aParams);
 
         $this->aCurrent =  array(
