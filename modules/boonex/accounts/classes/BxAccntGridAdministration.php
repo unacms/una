@@ -19,10 +19,13 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
     {
     	$this->MODULE = 'bx_accounts';
         parent::__construct ($aOptions, $oTemplate);
-        
+
         $CNF = &$this->_oModule->_oConfig->CNF;
-        $this->_aFilter1Values['locked'] = $CNF['T']['filter_item_locked'];
-       
+        $this->_aFilter1Values = array_merge($this->_aFilter1Values, array(
+            'unconfirmed' => $CNF['T']['filter_item_unconfirmed'],
+            'locked' => $CNF['T']['filter_item_locked'],
+        ));
+
         $this->_sFilter2Name = 'filter2';
         $this->_aFilter2Values = array(
             'operators' => $CNF['T']['filter_item_operators']
@@ -40,13 +43,31 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
         if(strpos($sFilter, $this->_sParamsDivider) !== false)
             list($this->_sFilter1Value, $this->_sFilter2Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
 
-    	if(!empty($this->_sFilter1Value)){
-            if ($this->_sFilter1Value != 'locked')
+    	if(!empty($this->_sFilter1Value))
+            switch($this->_sFilter1Value) {
+                case 'unconfirmed':
+                    $sCnfnType = getParam('sys_account_confirmation_type');
+                    switch($sCnfnType) {
+                        case 'email':
+                            $this->_aOptions['source'] .= " AND `ta`.`email_confirmed`='0'";
+                            break;
+                        case 'phone':
+                            $this->_aOptions['source'] .= " AND `ta`.`phone_confirmed`='0'";
+                            break;
+                        case 'email_and_phone':
+                            $this->_aOptions['source'] .= " AND (`ta`.`email_confirmed`='0' OR `ta`.`phone_confirmed`='0')";
+                            break;
+                    }
+                    break;
+
+                case 'locked':
+                    $this->_aOptions['source'] .= " AND `ta`.`locked` = 1";
+                    break;
+
+                default:
         	    $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tp`.`status`=?", $this->_sFilter1Value);
-            else
-                $this->_aOptions['source'] .= " AND `ta`.`locked` = 1";
-        }
-        
+            }
+
         if(!empty($this->_sFilter2Value))
         	$this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `ta`.`role` & " . BX_DOL_ROLE_ADMIN ." = " . BX_DOL_ROLE_ADMIN);
 
