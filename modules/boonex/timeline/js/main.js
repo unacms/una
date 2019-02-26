@@ -24,6 +24,10 @@ function BxTimelineMain() {
     this.sClassItemComments = this.sSP + '-item-comments-holder';
     this.sClassItemImages = this.sSP + '-item-images';
     this.sClassItemImage = this.sSP + '-item-image';
+    this.sClassItemVideos = this.sSP + '-item-videos';
+    this.sClassItemVideo = this.sSP + '-item-video';
+    this.sClassItemAttachments = this.sSP + '-item-attachments';
+    this.sClassItemAttachment = this.sSP + '-item-attachment';
     this.sClassBlink = this.sSP + '-blink';
 
     this.oView = null;
@@ -33,9 +37,9 @@ function BxTimelineMain() {
 }
 
 BxTimelineMain.prototype.initVideos = function(oParent) {
-	oParent.find('iframe').load(function() {
-		$(this).height(($(this).contents().find('video').height()) + 'px');
-	});
+    oParent.find('iframe').load(function() {
+        $(this).height(($(this).contents().find('video').height()) + 'px');
+    });
 };
 
 BxTimelineMain.prototype.isMasonry = function() {
@@ -43,7 +47,7 @@ BxTimelineMain.prototype.isMasonry = function() {
 };
 
 BxTimelineMain.prototype.isMasonryEmpty = function() {
-	return this.oView.find('.' + this.sClassItems + ' .' + this.sClassItem).length == 0;
+    return this.oView.find('.' + this.sClassItems + ' .' + this.sClassItem).length == 0;
 };
 
 BxTimelineMain.prototype.initMasonry = function(onComplete) {
@@ -133,7 +137,8 @@ BxTimelineMain.prototype.reloadMasonry = function() {
 BxTimelineMain.prototype.initFlickity = function() {
     var $this = this;
 
-    $('.' + this.sClassItem + ' .' + this.sClassItemImages).each(function() {
+    //--- init Flickity for images (may be used in header section)
+    $('.' + this.sClassItem + ' .' + this.sClassItemImages + '.' + this.sSP + '-ii-gallery').each(function() {
         if($(this).find('div.' + $this.sClassItemImage).length <= 1)
             return;
 
@@ -143,6 +148,48 @@ BxTimelineMain.prototype.initFlickity = function() {
             pageDots: false,
             imagesLoaded: true
         });
+    });
+
+    //--- init Flickity for videos (may be used in header section)
+    $('.' + this.sClassItem + ' .' + this.sClassItemVideos + '.' + this.sSP + '-iv-gallery').each(function() {
+        if($(this).find('div.' + $this.sClassItemVideo).length <= 1)
+            return;
+
+        var oCarousel = $(this);
+
+        oCarousel.flickity({
+            cellSelector: 'div.' + $this.sClassItemVideo,
+            cellAlign: 'left',
+            pageDots: false,
+            imagesLoaded: true
+        });
+
+       oCarousel.find('div.' + $this.sClassItemVideo + ' video').each(function() {
+           this.addEventListener('loadedmetadata', function() {
+               oCarousel.flickity('resize');
+           }, true);
+       });
+    });
+
+    //--- init Flickity for attachments (images and video in attachments seation)
+    $('.' + this.sClassItem + ' .' + this.sClassItemAttachments + '.' + this.sSP + '-ia-gallery').each(function() {
+        if($(this).find('div.' + $this.sClassItemAttachment).length <= 1)
+            return;
+
+        var oCarousel = $(this);
+
+        oCarousel.flickity({
+            cellSelector: 'div.' + $this.sClassItemAttachment,
+            cellAlign: 'left',
+            pageDots: false,
+            imagesLoaded: true
+        });
+
+       oCarousel.find('div.' + $this.sClassItemAttachment + ' video').each(function() {
+           this.addEventListener('loadedmetadata', function() {
+               oCarousel.flickity('resize');
+           }, true);
+       });
     });
 };
 

@@ -1441,28 +1441,38 @@ class BxBaseModGeneralModule extends BxDolModule
 
     	//--- Image(s)
         $aImages = $this->_getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
+        $aImagesAttach = $this->_getImagesForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
 
         //--- Video(s)
         $aVideos = $this->_getVideosForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
+        $aVideosAttach = $this->_getVideosForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
+
+        //--- Title
+        $sTitle = '';
+        if(isset($CNF['FIELD_TITLE']) && isset($aContentInfo[$CNF['FIELD_TITLE']]))
+            $sTitle = $aContentInfo[$CNF['FIELD_TITLE']];
+        else if(isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]))
+            $sTitle = strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
 
         //--- Text
         $sText = isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]) ? $aContentInfo[$CNF['FIELD_TEXT']] : '';
         if(!empty($CNF['OBJECT_METATAGS']) && is_string($sText)) {
-        	$oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
-        	$sText = $oMetatags->metaParse($aContentInfo[$CNF['FIELD_ID']], $sText);
+            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+            $sText = $oMetatags->metaParse($aContentInfo[$CNF['FIELD_ID']], $sText);
         }
 
     	return array(
-    		'sample' => isset($CNF['T']['txt_sample_single_with_article']) ? $CNF['T']['txt_sample_single_with_article'] : $CNF['T']['txt_sample_single'],
-    		'sample_wo_article' => $CNF['T']['txt_sample_single'],
-    	    'sample_action' => isset($CNF['T']['txt_sample_action']) ? $CNF['T']['txt_sample_action'] : '',
-			'url' => $sUrl,
-			'title' => isset($CNF['FIELD_TITLE']) && isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : 
-			(isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]) ? strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...') : ''),
-			'text' => $sText,
-			'images' => $aImages,
-            'videos' => $aVideos
-		);
+            'sample' => isset($CNF['T']['txt_sample_single_with_article']) ? $CNF['T']['txt_sample_single_with_article'] : $CNF['T']['txt_sample_single'],
+            'sample_wo_article' => $CNF['T']['txt_sample_single'],
+            'sample_action' => isset($CNF['T']['txt_sample_action']) ? $CNF['T']['txt_sample_action'] : '',
+            'url' => $sUrl,
+            'title' => $sTitle,
+            'text' => $sText,
+            'images' => $aImages,
+            'images_attach' => $aImagesAttach,
+            'videos' => $aVideos,
+            'videos_attach' => $aVideosAttach
+        );
     }
 
     protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
@@ -1489,11 +1499,21 @@ class BxBaseModGeneralModule extends BxDolModule
             $sImageOrig = $sImage;
 
         return array(
-		    array('url' => $sUrl, 'src' => $sImage, 'src_orig' => $sImageOrig),
-		);
+            array('url' => $sUrl, 'src' => $sImage, 'src_orig' => $sImageOrig),
+        );
+    }
+
+    protected function _getImagesForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
+    {
+        return array();
     }
 
     protected function _getVideosForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
+    {
+        return array();
+    }
+
+    protected function _getVideosForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {
         return array();
     }

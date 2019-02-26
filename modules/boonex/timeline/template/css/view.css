@@ -337,29 +337,71 @@ div.bx-tl-view-search div.bx-tl-item-image {
 div.bx-tl-view-timeline div.bx-tl-item-image,
 div.bx-tl-view-outline div.bx-tl-item-image,
 div.bx-tl-view-item div.bx-tl-item-image {
-	width: 100%;
+    width: 100%;
     text-align: center;
     overflow: hidden;
 }
 div.bx-tl-view-search div.bx-tl-item-image img {
-	height: 12.5rem;
+    height: 12.5rem;
 }
 div.bx-tl-view-timeline div.bx-tl-item-images.bx-tl-ii-gallery div.bx-tl-item-image img,
 div.bx-tl-view-item div.bx-tl-item-images.bx-tl-ii-gallery div.bx-tl-item-image img,
 div.bx-tl-view-timeline div.bx-tl-item-images.bx-tl-ii-single div.bx-tl-item-image img,
 div.bx-tl-view-item  div.bx-tl-item-images.bx-tl-ii-single div.bx-tl-item-image img {
-	max-width: 100%;
+    position: relative;
+    display: block;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
 div.bx-tl-view-outline div.bx-tl-item-image img {
-	max-width: 100%;
-	object-fit: cover;
-	object-position: center center;
+    max-width: 100%;
+    object-fit: cover;
+    object-position: center center;
 }
 
 /*+++ Item Video +++*/
+div.bx-tl-view-timeline div.bx-tl-item-video,
+div.bx-tl-view-outline div.bx-tl-item-video,
+div.bx-tl-view-item div.bx-tl-item-video {
+    width: 100%;
+}
 .bx-tl-video-iframe {
-	width: 100%;
-	border: none;
+    width: 100%;
+    border: none;
+}
+
+/*+++ Item Attachment +++*/
+div.bx-tl-view-timeline div.bx-tl-item-attachment,
+div.bx-tl-view-outline div.bx-tl-item-attachment,
+div.bx-tl-view-item div.bx-tl-item-attachment {
+    width: 100%;
+}
+div.bx-tl-view-timeline div.bx-tl-item-attachments.bx-tl-ia-gallery div.bx-tl-item-attachment img,
+div.bx-tl-view-item div.bx-tl-item-attachments.bx-tl-ia-gallery div.bx-tl-item-attachment img {
+    position: relative;
+    display: block;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+div.bx-tl-view-outline div.bx-tl-item-attachment img {
+    max-width: 100%;
+    object-fit: cover;
+    object-position: center center;
+}
+div.bx-tl-view-search div.bx-tl-item-attachment img {
+    height: 12.5rem;
+}
+
+/*+++ Slider Styles  +++*/
+div.bx-tl-item-images .flickity-slider,
+div.bx-tl-item-videos .flickity-slider,
+div.bx-tl-item-attachments .flickity-slider {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
 }
 
 /*+++ Item Link +++*/
