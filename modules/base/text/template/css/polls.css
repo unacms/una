@@ -59,6 +59,8 @@
 .bx-base-text-polls-showcase .bx-base-text-poll {
     position: relative;
     width: 100%;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 /* Media: phone2 */

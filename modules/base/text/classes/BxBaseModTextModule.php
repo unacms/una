@@ -295,11 +295,11 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 
     
     // ====== PROTECTED METHODS
-    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
+    protected function _getImagesForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $aResults = parent::_getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
+        $aResults = parent::_getImagesForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
         if(!$this->_oConfig->isAttachmentsInTimeline() || empty($CNF['OBJECT_STORAGE_PHOTOS']) || empty($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY_PHOTOS']))
             return $aResults;
 
@@ -326,15 +326,14 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 
         return $aResults;
     }
-    
-    protected function _getVideosForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
+
+    protected function _getVideosForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $iMaxNumber = 1;
-
+        $aResults = parent::_getVideosForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams); 
         if(!$this->_oConfig->isAttachmentsInTimeline() || empty($CNF['OBJECT_STORAGE_VIDEOS']) || empty($CNF['OBJECT_VIDEOS_TRANSCODERS']))
-            return parent::_getVideosForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
+            return $aResults;
 
         $iContentId = (int)$aContentInfo[$CNF['FIELD_ID']];
         $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_VIDEOS']);
@@ -342,9 +341,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         $aGhostFiles = $oStorage->getGhosts($this->serviceGetContentOwnerProfileId($iContentId), $iContentId);
         if(!$aGhostFiles)
             return array();
-
-        if($iMaxNumber > 0)
-            $aGhostFiles = array_slice($aGhostFiles, 0, $iMaxNumber);
 
         $oTcPoster = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']);
         $oTcMp4 = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']);

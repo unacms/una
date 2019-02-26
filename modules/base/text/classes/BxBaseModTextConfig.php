@@ -15,8 +15,10 @@ class BxBaseModTextConfig extends BxBaseModGeneralConfig
 
     /**
      * Determine whether Timeline post will use common content (header image + text)
-     * or content received from attachments (header image + images + videos + polls + text).
-     * By default the first variant is used.
+     * or content received from attachments (header image + text + images + videos + polls).
+     * By default the first variant is used. 
+     * Note. The variable can be removed in future, when all Text Based modules 
+     * implement 'attachments' related parameters. 
      */
     protected $_bAttachmentsInTimeline;
 
