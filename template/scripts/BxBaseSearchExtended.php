@@ -120,7 +120,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
         }
 
         $aResults = false;
-        bx_alert('search', 'get_data', 0, false, array('object' => $this->_aObject, 'search_params' => $aParamsSearch, 'search_results' => &$aResults));
+        bx_alert('search', 'get_data', 0, false, array('object' => $this->_aObject, 'search_params' => &$aParamsSearch, 'search_results' => &$aResults));
     	if($aResults === false)
     	    $aResults = $oContentInfo->getSearchResultExtended($aParamsSearch, $iStart, $iPerPage + 1);
 
