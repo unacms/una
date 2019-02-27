@@ -300,7 +300,9 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_tinymce_plugins_standard', '_adm_stg_cpt_option_sys_tinymce_plugins_standard', 'advlist,autolink,autosave,code,hr,image,link,lists,media,paste,fullscreen', 'digit', '', '', '', 73),
 (@iCategoryId, 'sys_tinymce_toolbar_standard', '_adm_stg_cpt_option_sys_tinymce_toolbar_standard', 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | fullscreen', 'digit', '', '', '', 74),
 (@iCategoryId, 'sys_tinymce_plugins_full', '_adm_stg_cpt_option_sys_tinymce_plugins_full', 'advlist,anchor,autolink,autoresize,autosave,charmap,code,emoticons,hr,image,link,lists,media,nonbreaking,pagebreak,preview,paste,save,searchreplace,table,textcolor,visualblocks,fullscreen', 'digit', '', '', '', 76),
-(@iCategoryId, 'sys_tinymce_toolbar_full', '_adm_stg_cpt_option_sys_tinymce_toolbar_full', 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image, preview media | forecolor emoticons | fullscreen', 'digit', '', '', '', 77);
+(@iCategoryId, 'sys_tinymce_toolbar_full', '_adm_stg_cpt_option_sys_tinymce_toolbar_full', 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image, preview media | forecolor emoticons | fullscreen', 'digit', '', '', '', 77),
+
+(@iCategoryId, 'sys_search_keyword_min_len', '_adm_stg_cpt_option_sys_search_keyword_min_len', '1', 'digit', '', '', '', 80);
 
 
 --

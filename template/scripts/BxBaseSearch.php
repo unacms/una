@@ -41,10 +41,18 @@ class BxBaseSearch extends BxDolSearch
         else
             $aValue = '';
 
-        $sIdForm = $this->_sIdForm . ($this->_bLiveSearch ? $this->_sSuffixLiveSearch : '');
-        $sIdResults = $this->_sIdResults . ($this->_bLiveSearch ? $this->_sSuffixLiveSearch : '');
-        $sIdLoadingContainer = $this->_bLiveSearch ? $sIdResults : $sIdForm;
-        $sJsParams = "5, '#{$sIdForm}', '#{$sIdResults}', '#{$sIdLoadingContainer}', '{$this->_bLiveSearch}'";
+        
+        $sIdForm = $this->_sIdForm;
+        $sIdResults = $this->_sIdResults;
+        $sIdLoadingContainer = $sIdForm;
+        $iKeywordMinLenth = 0;
+        if($this->_bLiveSearch) {
+            $sIdForm .= $this->_sSuffixLiveSearch;
+            $sIdResults .= $this->_sSuffixLiveSearch;
+            $sIdLoadingContainer = $sIdResults;
+            $iKeywordMinLenth = (int)getParam('sys_search_keyword_min_len');
+        }
+        $sJsParams = "5, '#{$sIdForm}', '#{$sIdResults}', '#{$sIdLoadingContainer}', '{$this->_bLiveSearch}', {$iKeywordMinLenth}";
 
         $aForm = array(
             'form_attrs' => array(

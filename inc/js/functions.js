@@ -825,14 +825,18 @@ function bx_append_url_params (sUrl, mixedParams) {
     return sUrl + sParams;
 }
 
-function bx_search_on_type (e, n, sFormSel, sResultsContSel, sLoadingContSel, bSortResults) {
-    
+function bx_search_on_type (e, n, sFormSel, sResultsContSel, sLoadingContSel, bSortResults, iMinLen) {
+    var oForm = $(e.target).parents(sFormSel + ':first');
+
     if ('undefined' != typeof(e) && 13 == e.keyCode) {
-        var oForm = $(e.target).parents(sFormSel + ':first');
         oForm.find('input[name=live_search]').val(0);
         oForm.submit();
         return false;
     }
+
+    iMinLen = typeof(iMinLen) != 'undefined' ? parseInt(iMinLen) : 0;
+    if(iMinLen > 0 && iMinLen > (oForm.find('input[name=keyword]').val().length + 1))
+        return true;
 
     if ('undefined' != typeof(glBxSearchTimeoutHandler) && glBxSearchTimeoutHandler)
         clearTimeout(glBxSearchTimeoutHandler);
