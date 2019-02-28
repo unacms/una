@@ -31,11 +31,13 @@ class BxBaseMenuCreatePost extends BxTemplMenuInteractive
 
     	$aMenuItems = $this->_oQuery->getMenuItems();
     	foreach($aMenuItems as $iKey => $aMenuItem) {
-    		$sModule = $aMenuItem['module'];
+            $sModule = $aMenuItem['module'];
+            if(!isset($aModules[$sModule]))
+                continue;
 
-    		$aMenuItems[$iKey]['id'] = $sModule;
-    		$aMenuItems[$iKey]['name'] = $sModule;
-    		$aMenuItems[$iKey]['onclick'] = "return " . $this->_sJsObject . ".getForm('" . $sModule . "', '" . $aModules[$sModule] . "', this)";
+            $aMenuItems[$iKey]['id'] = $sModule;
+            $aMenuItems[$iKey]['name'] = $sModule;
+            $aMenuItems[$iKey]['onclick'] = "return " . $this->_sJsObject . ".getForm('" . $sModule . "', '" . $aModules[$sModule] . "', this)";
     	}
 
         return $aMenuItems;
