@@ -30,6 +30,9 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
             return;
 
         $aHandler = $this->_oModule->_oConfig->getHandlers($oAlert->sUnit . '_' . $oAlert->sAction);
+        if(empty($aHandler) || !is_array($aHandler))
+            return;
+
         switch($aHandler['type']) {
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT:
             	$sMethod = 'getInsertData' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);           	
