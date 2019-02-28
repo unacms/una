@@ -626,7 +626,7 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
         return is_array(self::$_aParams) && isset(self::$_aParams[$sKey]);
     }
 
-    public function cacheParams($bForceCacheInvalidate = false)
+    public function cacheParams($bForceCacheInvalidate = false, $bForceCacheInvalidateMixed = false)
     {
         if ($bForceCacheInvalidate)
             $this->cacheParamsClear();
@@ -637,18 +637,20 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
         if(!empty($sTmplCode) && !empty($sTmplName)) {
             $sCacheNameMixed = self::$_sParamsCacheNameMixed . $sTmplCode;
 
-            if ($bForceCacheInvalidate)
+            if ($bForceCacheInvalidateMixed)
                 $this->cacheParamsClear($sCacheNameMixed);
 
             $aMixed = $this->fromCache($sCacheNameMixed, 'getPairs', "SELECT `tmo`.`option` AS `option`, `tmo`.`value` AS `value` FROM `sys_options_mixes2options` AS `tmo` INNER JOIN `sys_options_mixes` AS `tm` ON `tmo`.`mix_id`=`tm`.`id` AND `tm`.`type`=:type AND `tm`.`active`='1'", "option", "value", array(
-    			'type' => $sTmplName
+                'type' => $sTmplName
             ));
+
             if(!empty($aMixed))
             	self::$_aParams = array_merge(self::$_aParams, $aMixed);
         }
 
         if (empty(self::$_aParams)) {
-            self::$_aParams = array ();
+            self::$_aParams = array();
+
             return false;
         }
 
@@ -702,14 +704,14 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
     public function setParam($sKey, $mixedValue, $iMixId = 0)
     {
     	if(empty($iMixId))
-        	$sQuery = $this->prepare("UPDATE `sys_options` SET `value` = ? WHERE `name` = ? LIMIT 1", $mixedValue, $sKey);
+            $sQuery = $this->prepare("UPDATE `sys_options` SET `value` = ? WHERE `name` = ? LIMIT 1", $mixedValue, $sKey);
         else
-        	$sQuery = $this->prepare("REPLACE INTO `sys_options_mixes2options` SET `option` = ?, `mix_id` = ?, `value` = ?", $sKey, $iMixId, $mixedValue);
+            $sQuery = $this->prepare("REPLACE INTO `sys_options_mixes2options` SET `option` = ?, `mix_id` = ?, `value` = ?", $sKey, $iMixId, $mixedValue);
 
         $bResult = (int)$this->query($sQuery) > 0;
 
         // renew params cache
-        $bResult &= $this->cacheParams(true);
+        $bResult &= $this->cacheParams(true, !empty($iMixId));
 
         return $bResult;
     }
