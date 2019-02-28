@@ -181,9 +181,7 @@ BxTimelinePost.prototype.afterFormAttachLinkSubmit = function (oForm, oData)
     var $this = this;
     var fContinue = function() {
         if(oData && oData.item != undefined) {
-            $('#' + $this._aHtmlIds['attach_link_popup']).dolPopupHide({onHide: function() {
-                $(oForm).find('.bx-form-warn').hide();
-            }});
+            $('#' + $this._aHtmlIds['attach_link_popup']).dolPopupHide({});
 
             if(!$.trim(oData.item).length)
                 return;
@@ -283,7 +281,8 @@ BxTimelinePost.prototype.showAttachLink = function(oLink)
     $(window).dolPopupAjax({
         id: {value: this._aHtmlIds['attach_link_popup'], force: true},
         url: bx_append_url_params(this._sActionsUri + 'get_attach_link_form/', oData),
-        closeOnOuterClick: false
+        closeOnOuterClick: false,
+        removeOnClose: true
     });
 
     return false;
