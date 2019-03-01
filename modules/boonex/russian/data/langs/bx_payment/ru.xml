@@ -223,7 +223,7 @@
 	<string name="_bx_payment_err_incorrect_provider"><![CDATA[Неправильная или недоступная платежная система.]]></string>
 	<string name="_bx_payment_err_not_accept_payments"><![CDATA[Продавец не принимает платежи.]]></string>
 	<string name="_bx_payment_err_nothing_selected"><![CDATA[Вам нужно выбрать как минимум один товар.]]></string>
-	<string name="_bx_payment_err_self_purchase"><![CDATA[Вы не можете купить свой собственный товар. Вам просто не повезло, знаете ли.]]></string>
+	<string name="_bx_payment_err_self_purchase"><![CDATA[Покупка из собственного магазина не возможна.]]></string>
 	<string name="_bx_payment_err_required_login"><![CDATA[Вам нужно войти.]]></string>
 	<string name="_bx_payment_err_unknown_vendor"><![CDATA[Неизвестный продавец.]]></string>
 	<string name="_bx_payment_err_wrong_data"><![CDATA[Неверные входные данные.]]></string>
