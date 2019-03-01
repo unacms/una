@@ -957,6 +957,7 @@
 	<string name="_adm_msg_modules_success_install"><![CDATA[The package was installed successfully]]></string>
 	<string name="_adm_msg_modules_success_uninstall"><![CDATA[The package was uninstalled successfully]]></string>
 	<string name="_adm_msg_oauth_need_authorize"><![CDATA[You need to to login into your <b>UNA</b> account to get data. Click <a href="{0}">here</a> to login.]]></string>
+        <string name="_adm_msg_oauth_non_owner_logged"><![CDATA[WARNING: You are logged in to an <a href="{0}">UNA.IO</a> account which is different from the account that generated UNA Key & Secret for your domain.]]></string>
 	<string name="_adm_nav_btn_current_icon_image_delete"><![CDATA[Delete]]></string>
 	<string name="_adm_nav_btn_items_add"><![CDATA[Add]]></string>
 	<string name="_adm_nav_btn_items_cancel"><![CDATA[Cancel]]></string>

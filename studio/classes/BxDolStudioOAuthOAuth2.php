@@ -13,9 +13,9 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
     protected $sSessionKeyCsrfToken;
     protected $sSessionKeyCsrfTokenTime;
 
-	protected $sApiUrl;
-	protected $sScope;
-	protected $sPageHandle;
+    protected $sApiUrl;
+    protected $sScope;
+    protected $sPageHandle;
 
     protected function __construct()
     {
@@ -94,7 +94,7 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
             'grant_type'    => 'authorization_code',
             'code' => $sCode,
             'redirect_uri'  => $this->sPageHandle,
-    		'scope' => $this->sScope,
+            'scope' => $this->sScope,
         ), $this->sDataRetrieveMethod);
 
         if (!$sResponse || ($aResponse = json_decode($sResponse, true)) === NULL || !isset($aResponse['access_token']) || isset($aResponse['error']))
@@ -112,11 +112,12 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
         if (!$sResponse || ($aResponse = json_decode($sResponse, true)) === NULL || !$aResponse || isset($aResponse['error']))
             return isset($aResponse['error_description']) ? $aResponse['error_description'] : _t('_error occured');
 
-		$this->oSession->setValue('sys_oauth_token', $sAccessToken);
-		$this->oSession->setValue('sys_oauth_authorized', 1);
-		$this->oSession->setValue('sys_oauth_authorized_user', $aResponse['id']);
+        $this->oSession->setValue(self::$sSessionKeyToken, $sAccessToken);
+        $this->oSession->setValue(self::$sSessionKeyAuthorized, 1);
+        $this->oSession->setValue(self::$sSessionKeyAuthorizedUser, (int)$aResponse['id']);
+        $this->oSession->setValue(self::$sSessionKeyAuthorizedOwner, (bool)$aResponse['owner'] ? 1 : 0);
 
-		return true;
+        return true;
     }
 
     protected function fetch($aParams = array())
@@ -131,8 +132,8 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
         }
 
         $sHttpCode = null;
-		$sResponse = bx_file_get_contents($this->sApiUrl . 'api/market', $aParams, 'get', array(
-            'Authorization: Bearer ' . $this->oSession->getValue('sys_oauth_token'),
+        $sResponse = bx_file_get_contents($this->sApiUrl . 'api/market', $aParams, 'get', array(
+            'Authorization: Bearer ' . $this->oSession->getValue(self::$sSessionKeyToken),
         ), $sHttpCode, array(), $iTimeout);
 
         //echo $sResponse; exit;		//--- Uncomment to debug

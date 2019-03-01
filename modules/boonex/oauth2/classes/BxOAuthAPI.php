@@ -75,8 +75,13 @@ class BxOAuthAPI extends BxDol
             $this->errorOutput('404', 'not_found', 'Profile was not found');
             return;
         }
-    
-        $this->output($this->_prepareProfileArray($oProfile, false));
+
+        $aClient = $this->_oDb->getClientsBy(array('type' => 'client_id', 'client_id' => $aToken['client_id']));
+
+        $aProfile = $this->_prepareProfileArray($oProfile, false);
+        $aProfile['owner'] = (int)$aProfile['id'] == (int)$aClient['user_id'];
+
+        $this->output($aProfile);
     }
 
     /**

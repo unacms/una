@@ -955,6 +955,7 @@
 	<string name="_adm_msg_modules_success_install"><![CDATA[Пакет удачно установлен]]></string>
 	<string name="_adm_msg_modules_success_uninstall"><![CDATA[Пакет удачно отменён]]></string>
 	<string name="_adm_msg_oauth_need_authorize"><![CDATA[Вам нужно зайти в свой <b>UNA</b> аккаунт, чтобы запросить данные. Нажмите <a href="{0}">здесь</a> для входа.]]></string>
+        <string name="_adm_msg_oauth_non_owner_logged"><![CDATA[Заметьте. Вы вошли в систему, используя UNA аккаунт, который не является владельцем пары Key&Secret.]]></string>
 	<string name="_adm_nav_btn_current_icon_image_delete"><![CDATA[Удалить]]></string>
 	<string name="_adm_nav_btn_items_add"><![CDATA[Добавить]]></string>
 	<string name="_adm_nav_btn_items_cancel"><![CDATA[Отменить]]></string>

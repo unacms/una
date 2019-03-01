@@ -61,9 +61,9 @@ class BxDolStudioOAuthPlugin extends BxDolStudioOAuthOAuth1 implements iBxDolSin
 
         try {
             $bToken = bx_get('oauth_token') !== false;
-            $mixedSecret = $this->oSession->getValue('sys_oauth_secret');
+            $mixedSecret = $this->oSession->getValue(self::$sSessionKeySecret);
             if(!$bToken && $mixedSecret !== false) {
-                $this->oSession->unsetValue('sys_oauth_secret');
+                $this->oSession->unsetValue(self::$sSessionKeySecret);
                 $mixedSecret = false;
             }
 
@@ -103,7 +103,7 @@ class BxDolStudioOAuthPlugin extends BxDolStudioOAuthOAuth1 implements iBxDolSin
 		if(empty($oToken))
 			return $sError;
 
-		$this->oSession->setValue('sys_oauth_secret', $oToken->getRequestTokenSecret());
+		$this->oSession->setValue(self::$sSessionKeySecret, $oToken->getRequestTokenSecret());
 
 		$oUrl = $oService->getAuthorizationUri(array('oauth_token' => $oToken->getRequestToken()));
 		$sUrl = bx_append_url_params($oUrl, array('sid' => bx_site_hash()));
@@ -137,10 +137,10 @@ class BxDolStudioOAuthPlugin extends BxDolStudioOAuthOAuth1 implements iBxDolSin
 		if(empty($oAccessToken))
 			return $sError;
 
-		$this->oSession->setValue('sys_oauth_token', $oAccessToken->getAccessToken());
-		$this->oSession->setValue('sys_oauth_secret', $oAccessToken->getAccessTokenSecret());
-		$this->oSession->setValue('sys_oauth_authorized', 1);
-		$this->oSession->setValue('sys_oauth_authorized_user', $iUser);
+		$this->oSession->setValue(self::$sSessionKeyToken, $oAccessToken->getAccessToken());
+		$this->oSession->setValue(self::$sSessionKeySecret, $oAccessToken->getAccessTokenSecret());
+		$this->oSession->setValue(self::$sSessionKeyAuthorized, 1);
+		$this->oSession->setValue(self::$sSessionKeyAuthorizedUser, $iUser);
 
 		return true;
     }

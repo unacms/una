@@ -21,12 +21,12 @@ class BxDolStudioOAuthOAuth1 extends BxDolStudioOAuth
     	parent::__construct();
     }
 
-	protected function unsetAuthorizedUser()
-	{
-		$this->oSession->unsetValue('sys_oauth_secret');
+    protected function unsetAuthorizedUser()
+    {
+        $this->oSession->unsetValue(self::$sSessionKeySecret);
 
-		parent::unsetAuthorizedUser();
-	}
+        parent::unsetAuthorizedUser();
+    }
 }
 
 /** @} */

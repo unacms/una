@@ -11,12 +11,18 @@ bx_import('BxDolStudioInstallerUtils');
 
 class BxDolStudioOAuth extends BxDolFactory
 {
+    protected static $sSessionKeyToken = 'sys_oauth_token';
+    protected static $sSessionKeySecret = 'sys_oauth_secret';
+    protected static $sSessionKeyAuthorized = 'sys_oauth_authorized';
+    protected static $sSessionKeyAuthorizedUser = 'sys_oauth_authorized_user';
+    protected static $sSessionKeyAuthorizedOwner = 'sys_oauth_authorized_owner';
+
     protected $oSession;
 
-	protected $sErrorCode;
+    protected $sErrorCode;
     protected $sErrorMessage;
 
-	protected $sKey;
+    protected $sKey;
     protected $sSecret;
     protected $sDataRetrieveMethod;
 
@@ -32,18 +38,23 @@ class BxDolStudioOAuth extends BxDolFactory
 
     static function isAuthorizedClient()
     {
-        return (int)BxDolSession::getInstance()->getValue('sys_oauth_authorized') == 1;
+        return (int)BxDolSession::getInstance()->getValue(self::$sSessionKeyAuthorized) == 1;
     }
 
     static function getAuthorizedClient()
     {
-        return (int)BxDolSession::getInstance()->getValue('sys_oauth_authorized_user');
+        return (int)BxDolSession::getInstance()->getValue(self::$sSessionKeyAuthorizedUser);
+    }
+
+    static function isAuthorizedOwner()
+    {
+        return (int)BxDolSession::getInstance()->getValue(self::$sSessionKeyAuthorizedOwner) == 1;
     }
 
     public function loadItems($aParams = array())
     {
         if(empty($this->sKey) || empty($this->sSecret))
-            return _t('_adm_err_oauth_empty_key_secret');
+            return MsgBox(_t('_adm_err_oauth_empty_key_secret'));
 
         $mixedResult = $this->authorize();
         if($mixedResult !== true)
@@ -51,9 +62,9 @@ class BxDolStudioOAuth extends BxDolFactory
 
         $aItems = $this->fetch($aParams);
         if(is_null($aItems))
-            return _t('_adm_err_oauth_cannot_read_answer');
+            return MsgBox(_t('_adm_err_oauth_cannot_read_answer'));
         else if(empty($aItems))
-            return _t('_Empty');
+            return MsgBox(_t('_Empty'));
 
         return $aItems;
     }
@@ -61,7 +72,7 @@ class BxDolStudioOAuth extends BxDolFactory
     public function doAuthorize()
     {
         if(empty($this->sKey) || empty($this->sSecret))
-            return _t('_adm_err_oauth_empty_key_secret');
+            return MsgBox(_t('_adm_err_oauth_empty_key_secret'));
 
         $mixedResult = $this->authorize();
         if($mixedResult !== true)
@@ -96,12 +107,13 @@ class BxDolStudioOAuth extends BxDolFactory
     	return self::getAuthorizedClient();
     }
 
-	protected function unsetAuthorizedUser()
-	{
-		$this->oSession->unsetValue('sys_oauth_token');
-        $this->oSession->unsetValue('sys_oauth_authorized');
-		$this->oSession->unsetValue('sys_oauth_authorized_user');
-	}
+    protected function unsetAuthorizedUser()
+    {
+        $this->oSession->unsetValue(self::$sSessionKeyToken);
+        $this->oSession->unsetValue(self::$sSessionKeyAuthorized);
+        $this->oSession->unsetValue(self::$sSessionKeyAuthorizedUser);
+        $this->oSession->unsetValue(self::$sSessionKeyAuthorizedOwner);
+    }
 
     protected function isServerError($aResult)
     {

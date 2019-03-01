@@ -23,6 +23,8 @@ class BxDolStudioStore extends BxTemplStudioPage
     protected $sStoreDataUrlPublic;
     protected $bAuthAccessUpdates;
 
+    protected $sSessionKeyNonOwnerNotified;
+
     function __construct($sPage = "")
     {
         parent::__construct('store');
@@ -33,6 +35,8 @@ class BxDolStudioStore extends BxTemplStudioPage
 
         $this->sStoreDataUrlPublic = BxDolStudioInstallerUtils::getInstance()->getStoreDataUrl();
         $this->bAuthAccessUpdates = false;
+
+        $this->sSessionKeyNonOwnerNotified = 'str_non_owner_notified';
 
         $this->sPage = BX_DOL_STUDIO_STR_TYPE_DEFAULT;
         if(is_string($sPage) && !empty($sPage))
@@ -363,7 +367,7 @@ class BxDolStudioStore extends BxTemplStudioPage
             $mixedParams = array('page' => $mixedParams);
 
         return bx_append_url_params($this->sBaseUrl, $mixedParams);
-    } 
+    }
 
     private function checkoutCart($iVendor)
     {

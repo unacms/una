@@ -46,9 +46,9 @@ class BxDolStudioOAuthLib extends BxDolStudioOAuthOAuth1 implements iBxDolSingle
 
         try {
             $bToken = bx_get('oauth_token') !== false;
-            $mixedSecret = $this->oSession->getValue('sys_oauth_secret');
+            $mixedSecret = $this->oSession->getValue(self::$sSessionKeySecret);
             if(!$bToken && $mixedSecret !== false) {
-                $this->oSession->unsetValue('sys_oauth_secret');
+                $this->oSession->unsetValue(self::$sSessionKeySecret);
                 $mixedSecret = false;
             }
 
@@ -79,7 +79,7 @@ class BxDolStudioOAuthLib extends BxDolStudioOAuthOAuth1 implements iBxDolSingle
 		if($this->isServerError($aRequestToken))
 			throw new OAuthException();
 
-		$this->oSession->setValue('sys_oauth_secret', $aRequestToken['oauth_token_secret']);
+		$this->oSession->setValue(self::$sSessionKeySecret, $aRequestToken['oauth_token_secret']);
 
 		$sUrl = bx_append_url_params(BX_DOL_OAUTH_URL_AUTHORIZE, array('oauth_token' => $aRequestToken['oauth_token'], 'sid' => bx_site_hash()));
 		return array(
@@ -90,20 +90,20 @@ class BxDolStudioOAuthLib extends BxDolStudioOAuthOAuth1 implements iBxDolSingle
 
     protected function getAccessToken($sToken, $mixedSecret, $sVerifier, $iUser,  $oConsumer)
     {
-		$oConsumer->setToken($sToken, $mixedSecret);
-		$aAccessToken = $oConsumer->getAccessToken(bx_append_url_params(BX_DOL_OAUTH_URL_ACCESS_TOKEN, array('oauth_verifier' => $sVerifier)));
-		if(empty($aAccessToken))
-			return _t('_adm_err_oauth_cannot_get_token');
+        $oConsumer->setToken($sToken, $mixedSecret);
+        $aAccessToken = $oConsumer->getAccessToken(bx_append_url_params(BX_DOL_OAUTH_URL_ACCESS_TOKEN, array('oauth_verifier' => $sVerifier)));
+        if(empty($aAccessToken))
+            return _t('_adm_err_oauth_cannot_get_token');
 
-		if($this->isServerError($aAccessToken))
-			throw new OAuthException();
+        if($this->isServerError($aAccessToken))
+            throw new OAuthException();
 
-		$this->oSession->setValue('sys_oauth_token', $aAccessToken['oauth_token']);
-		$this->oSession->setValue('sys_oauth_secret', $aAccessToken['oauth_token_secret']);
-		$this->oSession->setValue('sys_oauth_authorized', 1);
-		$this->oSession->setValue('sys_oauth_authorized_user', $iUser);
+        $this->oSession->setValue(self::$sSessionKeyToken, $aAccessToken['oauth_token']);
+        $this->oSession->setValue(self::$sSessionKeySecret, $aAccessToken['oauth_token_secret']);
+        $this->oSession->setValue(self::$sSessionKeyAuthorized, 1);
+        $this->oSession->setValue(self::$sSessionKeyAuthorizedUser, $iUser);
 
-		return true;
+        return true;
     }
     
     protected function fetch($aParams = array())
@@ -114,7 +114,7 @@ class BxDolStudioOAuthLib extends BxDolStudioOAuthOAuth1 implements iBxDolSingle
 		$oConsumer = $this->getServiceObject(false);
 
         try {
-            $oConsumer->setToken($this->oSession->getValue('sys_oauth_token'), $this->oSession->getValue('sys_oauth_secret'));
+            $oConsumer->setToken($this->oSession->getValue(self::$sSessionKeyToken), $this->oSession->getValue(self::$sSessionKeySecret));
             $oConsumer->fetch(BX_DOL_OAUTH_URL_FETCH_DATA, $aParams, $this->sDataRetrieveMethod);
 
             //echo $oConsumer->getLastResponse(); exit;	//--- Uncomment to debug
