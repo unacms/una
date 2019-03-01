@@ -282,6 +282,7 @@
 				
 			}
         });
+        $('form', this).addClass('bx-form-processed');
         return this;
     };
 
