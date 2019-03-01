@@ -77,7 +77,7 @@
     <string name="_bx_ntfs_setting_title_mask"><![CDATA[{0}: {1}]]></string>
     <string name="_bx_ntfs_setting_type_personal"><![CDATA[Activity related to you]]></string>
     <string name="_bx_ntfs_setting_type_follow_member"><![CDATA[Activity by members you follow]]></string>
-    <string name="_bx_ntfs_setting_type_follow_context"><![CDATA[Activity in spaces you follow]]></string>
+    <string name="_bx_ntfs_setting_type_follow_context"><![CDATA[Activity in spaces (groups, events, etc.) you follow]]></string>
     <string name="_bx_ntfs_setting_type_other"><![CDATA[Other Activity]]></string>
 
     <string name="_bx_ntfs_alert_module_meta_mention"><![CDATA[Profiles Mentions]]></string>
