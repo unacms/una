@@ -56,79 +56,86 @@ class BxMarketDb extends BxBaseModTextDb
     	}
 
     	//--- Exclude content by ids or names
-		if(!empty($aParams['exclude_by']) && in_array($aParams['exclude_by'], array('id', 'name')) && !empty($aParams['exclude_values']))
-			$sWhereClause .= " AND `te`.`" . $aParams['exclude_by'] . "` NOT IN (" . $this->implode_escape($aParams['exclude_values']) . ") ";
+        if(!empty($aParams['exclude_by']) && in_array($aParams['exclude_by'], array('id', 'name')) && !empty($aParams['exclude_values']))
+            $sWhereClause .= " AND `te`.`" . $aParams['exclude_by'] . "` NOT IN (" . $this->implode_escape($aParams['exclude_values']) . ") ";
+
+        //--- Attach custom queries described with field - value pairs.
+        if(!empty($aParams['custom_and']) && is_array($aParams['custom_and']))
+            $sWhereClause .= " AND (" . $this->arrayToSQL($aParams['custom_and'], ' AND ') . ") ";
+
+        if(!empty($aParams['custom_or']) && is_array($aParams['custom_or']))
+            $sWhereClause .= " AND (" . $this->arrayToSQL($aParams['custom_or'], ' OR ') . ") ";
 
     	if(isset($aParams['start']) && !empty($aParams['per_page']))
-    		$sLimitClause = $aParams['start'] . ", " . $aParams['per_page'];
+            $sLimitClause = $aParams['start'] . ", " . $aParams['per_page'];
 
-		switch($aParams['type']) {
-			case 'id':
-				$aMethod['name'] = 'getRow';
-				$sFieldsClause .= "";
-				$sJoinClause .= "";
-				$sWhereClause .= $this->prepareAsString(" AND `te`.`" . $CNF['FIELD_ID'] . "`=? ", $aParams['value']);
-				$sOrderClause .= "";
-				break;
+        switch($aParams['type']) {
+            case 'id':
+                    $aMethod['name'] = 'getRow';
+                    $sFieldsClause .= "";
+                    $sJoinClause .= "";
+                    $sWhereClause .= $this->prepareAsString(" AND `te`.`" . $CNF['FIELD_ID'] . "`=? ", $aParams['value']);
+                    $sOrderClause .= "";
+                    break;
 
-			case 'name':
-				$aMethod['name'] = 'getRow';
-				$sFieldsClause .= "";
-				$sJoinClause .= "";
-				$sWhereClause .= $this->prepareAsString(" AND `te`.`" . $CNF['FIELD_NAME'] . "`=? ", $aParams['value']);
-				$sOrderClause .= "";
-				break;
+            case 'name':
+                    $aMethod['name'] = 'getRow';
+                    $sFieldsClause .= "";
+                    $sJoinClause .= "";
+                    $sWhereClause .= $this->prepareAsString(" AND `te`.`" . $CNF['FIELD_NAME'] . "`=? ", $aParams['value']);
+                    $sOrderClause .= "";
+                    break;
 
-			case 'file_id':
-				$aMethod['name'] = 'getRow';
-				$sFieldsClause .= "";
-				$sJoinClause .= "";
-				$sWhereClause .= $this->prepareAsString(" AND `te`.`" . $CNF['FIELD_PACKAGE'] . "`=? ", $aParams['value']);
-				$sOrderClause .= "";
-				break;
+            case 'file_id':
+                    $aMethod['name'] = 'getRow';
+                    $sFieldsClause .= "";
+                    $sJoinClause .= "";
+                    $sWhereClause .= $this->prepareAsString(" AND `te`.`" . $CNF['FIELD_PACKAGE'] . "`=? ", $aParams['value']);
+                    $sOrderClause .= "";
+                    break;
 
-			case 'latest':
-				$sFieldsClause .= "";
-				$sJoinClause .= "";
-				$sWhereClause .= "";
-				$sOrderClause = "`te`.`added` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
-				break;
+            case 'latest':
+                    $sFieldsClause .= "";
+                    $sJoinClause .= "";
+                    $sWhereClause .= "";
+                    $sOrderClause = "`te`.`added` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
+                    break;
 
-			case 'featured':
-				$sFieldsClause .= "";
-				$sJoinClause .= "";
-				$sWhereClause .= " AND `te`.`" . $CNF['FIELD_FEATURED'] . "`<>0";
-				$sOrderClause = "`te`.`" . $CNF['FIELD_FEATURED'] . "` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
-				break;
+            case 'featured':
+                    $sFieldsClause .= "";
+                    $sJoinClause .= "";
+                    $sWhereClause .= " AND `te`.`" . $CNF['FIELD_FEATURED'] . "`<>0";
+                    $sOrderClause = "`te`.`" . $CNF['FIELD_FEATURED'] . "` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
+                    break;
 
             case 'popular':
-				$sFieldsClause .= "";
-				$sJoinClause .= "";
-				$sWhereClause .= "";
-				$sOrderClause = "`te`.`views` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
-				break;
+                    $sFieldsClause .= "";
+                    $sJoinClause .= "";
+                    $sWhereClause .= "";
+                    $sOrderClause = "`te`.`views` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
+                    break;
 
-			case 'selected':
-				$sFieldsClause .= "";
-				$sJoinClause .= "";
-				$sWhereClause .= " AND `te`.`id` IN (" . $this->implode_escape($aParams['selected']) . ") ";
-				$sOrderClause = "`te`.`added` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
-				break;
+            case 'selected':
+                    $sFieldsClause .= "";
+                    $sJoinClause .= "";
+                    $sWhereClause .= " AND `te`.`id` IN (" . $this->implode_escape($aParams['selected']) . ") ";
+                    $sOrderClause = "`te`.`added` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
+                    break;
 
-			case 'category':
-				if(!is_array($aParams['value']))
-					$aParams['value'] = array($aParams['value']);
+            case 'category':
+                    if(!is_array($aParams['value']))
+                            $aParams['value'] = array($aParams['value']);
 
-				$sFieldsClause .= "";
-				$sJoinClause .= "";
-				$sWhereClause .= " AND `te`.`" . $CNF['FIELD_CATEGORY'] . "` IN (" . $this->implode_escape($aParams['value']) . ")";
-				$sOrderClause = "`te`.`added` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
-				break;
+                    $sFieldsClause .= "";
+                    $sJoinClause .= "";
+                    $sWhereClause .= " AND `te`.`" . $CNF['FIELD_CATEGORY'] . "` IN (" . $this->implode_escape($aParams['value']) . ")";
+                    $sOrderClause = "`te`.`added` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
+                    break;
 
-			case 'tag':
-			    $sFieldsClause .= "";
+            case 'tag':
+                $sFieldsClause .= "";
 
-			    $aSql = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])->keywordsGetAsSQLPart('te', $CNF['FIELD_ID'], $aParams['value']);
+                $aSql = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])->keywordsGetAsSQLPart('te', $CNF['FIELD_ID'], $aParams['value']);
                 if(!empty($aSql['where'])) {
                     $sWhereClause .= $aSql['where'];
                 
@@ -136,59 +143,58 @@ class BxMarketDb extends BxBaseModTextDb
                         $sJoinClause .= $aSql['join'];
                 }
 
-				$sOrderClause = "`te`.`added` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
-				break;
+                $sOrderClause = "`te`.`added` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
+                break;
 
-			case 'vendor':
-				$sFieldsClause .= "";
-				$sJoinClause .= "";
+            case 'vendor':
+                    $sFieldsClause .= "";
+                    $sJoinClause .= "";
 
-				$sWhereClause .= $this->prepareAsString(" AND `te`.`" . $CNF['FIELD_AUTHOR'] . "`=? ", (int)$aParams['value']); 
-				if(isset($aParams['paid']) && (int)$aParams['paid'] == 1)
-					$sWhereClause .= " AND `te`.`" . $CNF['FIELD_PRICE_SINGLE'] . "`<>'0' AND `te`.`" . $CNF['FIELD_PRICE_RECURRING'] . "`<>'0'";
+                    $sWhereClause .= $this->prepareAsString(" AND `te`.`" . $CNF['FIELD_AUTHOR'] . "`=? ", (int)$aParams['value']); 
+                    if(isset($aParams['paid']) && (int)$aParams['paid'] == 1)
+                            $sWhereClause .= " AND `te`.`" . $CNF['FIELD_PRICE_SINGLE'] . "`<>'0' AND `te`.`" . $CNF['FIELD_PRICE_RECURRING'] . "`<>'0'";
 
-				$sOrderClause = "`te`.`" . (isset($aParams['order_by']) ? $aParams['order_by'] : "added") . "` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
-				break;
+                    $sOrderClause = "`te`.`" . (isset($aParams['order_by']) ? $aParams['order_by'] : "added") . "` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
+                    break;
 
-			case 'keyword':
-				$sFieldsClause .= $this->prepareAsString(" MATCH(`" . $CNF['FIELD_TITLE'] . "`, `" . $CNF['FIELD_TEXT'] . "`) AGAINST (?) AS `search_condition`, ", $aParams['value']);
-				$sJoinClause .= "";
-				$sWhereClause .= $this->prepareAsString(" AND MATCH(`" . $CNF['FIELD_TITLE'] . "`, `" . $CNF['FIELD_TEXT'] . "`) AGAINST (?) ", $aParams['value']);
-				$sOrderClause = "`search_condition` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
-				break;
+            case 'keyword':
+                    $sFieldsClause .= $this->prepareAsString(" MATCH(`" . $CNF['FIELD_TITLE'] . "`, `" . $CNF['FIELD_TEXT'] . "`) AGAINST (?) AS `search_condition`, ", $aParams['value']);
+                    $sJoinClause .= "";
+                    $sWhereClause .= $this->prepareAsString(" AND MATCH(`" . $CNF['FIELD_TITLE'] . "`, `" . $CNF['FIELD_TEXT'] . "`) AGAINST (?) ", $aParams['value']);
+                    $sOrderClause = "`search_condition` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
+                    break;
 
-			case 'granted':
-				$sFieldsClause .= " '" . $aParams['license']['license'] . "' AS `license`, '" . $aParams['license']['profile_id'] . "' AS `purchased_by`, '' AS `purchased_for`, '" . $aParams['license']['added'] . "' AS `purchased_on`, ";
-				$sWhereClause .= $this->prepareAsString(" AND `te`.`" . $CNF['FIELD_AUTHOR'] . "`=? AND (`te`.`" . $CNF['FIELD_PRICE_SINGLE'] . "`<>'0' OR `te`.`" . $CNF['FIELD_PRICE_RECURRING'] . "`<>'0') ", (int)$aParams['value']);
-				$sOrderClause = "`te`.`added` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
-				break;
+            case 'granted':
+                    $sFieldsClause .= " '" . $aParams['license']['license'] . "' AS `license`, '" . $aParams['license']['profile_id'] . "' AS `purchased_by`, '' AS `purchased_for`, '" . $aParams['license']['added'] . "' AS `purchased_on`, ";
+                    $sWhereClause .= $this->prepareAsString(" AND `te`.`" . $CNF['FIELD_AUTHOR'] . "`=? AND (`te`.`" . $CNF['FIELD_PRICE_SINGLE'] . "`<>'0' OR `te`.`" . $CNF['FIELD_PRICE_RECURRING'] . "`<>'0') ", (int)$aParams['value']);
+                    $sOrderClause = "`te`.`added` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
+                    break;
 
-			case 'purchased':
-				$sFieldsClause .= " `tl`.`license` AS `license`, `tl`.`profile_id` AS `purchased_by`, `tl`.`domain` AS `purchased_for`, `tl`.`added` AS `purchased_on`, ";
+            case 'purchased':
+                    $sFieldsClause .= " `tl`.`license` AS `license`, `tl`.`profile_id` AS `purchased_by`, `tl`.`domain` AS `purchased_for`, `tl`.`added` AS `purchased_on`, ";
 
-				if(isset($aParams['package']) && (int)$aParams['package'] == 1) {
-				    $oConnnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION_SUBENTRIES']);
-                    $aConnectionSql = $oConnnection->getConnectedContentAsSQLPartsMultiple('te', $CNF['FIELD_ID'], 'tl', 'product_id');
+                    if(isset($aParams['package']) && (int)$aParams['package'] == 1) {
+                        $oConnnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION_SUBENTRIES']);
+                        $aConnectionSql = $oConnnection->getConnectedContentAsSQLPartsMultiple('te', $CNF['FIELD_ID'], 'tl', 'product_id');
 
-                    $sJoinClause .= " " . $aConnectionSql['join'] . " LEFT JOIN `" . $CNF['TABLE_LICENSES'] . "` AS `tl` ON " . trim($aConnectionSql['where'], " AND ") . " ";
-				}
-				else
-    				$sJoinClause .= " LEFT JOIN `" . $CNF['TABLE_LICENSES'] . "` AS `tl` ON `te`.`" . $CNF['FIELD_ID'] . "`=`tl`.`product_id` ";
+                        $sJoinClause .= " " . $aConnectionSql['join'] . " LEFT JOIN `" . $CNF['TABLE_LICENSES'] . "` AS `tl` ON " . trim($aConnectionSql['where'], " AND ") . " ";
+                    }
+                    else
+                        $sJoinClause .= " LEFT JOIN `" . $CNF['TABLE_LICENSES'] . "` AS `tl` ON `te`.`" . $CNF['FIELD_ID'] . "`=`tl`.`product_id` ";
 
-				$sWhereClause .= $this->prepareAsString(" AND `tl`.`profile_id`=? AND (`tl`.`domain`=?" . (empty($aParams['key_assigned']) ? " OR `tl`.`domain`=''" : "") . ") ", (int)$aParams['client'], $aParams['key']);
-				$sGroupClause .= "`te`.`" . $CNF['FIELD_ID'] . "`";
-				$sOrderClause = "`tl`.`added` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
-				break;
-		}
+                    $sWhereClause .= $this->prepareAsString(" AND `tl`.`profile_id`=? AND (`tl`.`domain`=?" . (empty($aParams['key_assigned']) ? " OR `tl`.`domain`=''" : "") . ") ", (int)$aParams['client'], $aParams['key']);
+                    $sGroupClause .= "`te`.`" . $CNF['FIELD_ID'] . "`";
+                    $sOrderClause = "`tl`.`added` " . (isset($aParams['order_way']) ? $aOrderWay[$aParams['order_way']] : "DESC");
+                    break;
+        }
 
-		$sGroupClause = $sGroupClause ? "GROUP BY " . $sGroupClause : "";
-		$sOrderClause = $sOrderClause ? "ORDER BY " . $sOrderClause : "";
-		$sLimitClause = $sLimitClause ? "LIMIT " . $sLimitClause : "";
+        $sGroupClause = $sGroupClause ? "GROUP BY " . $sGroupClause : "";
+        $sOrderClause = $sOrderClause ? "ORDER BY " . $sOrderClause : "";
+        $sLimitClause = $sLimitClause ? "LIMIT " . $sLimitClause : "";
 
-		$aMethod['params'][0] = "SELECT
-        		" . $sFieldsClause . "`te`.*
-            FROM `" . $CNF['TABLE_ENTRIES'] . "` AS `te`" . $sJoinClause . "
-            WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
+        $aMethod['params'][0] = "SELECT " . $sFieldsClause . "`te`.*
+        FROM `" . $CNF['TABLE_ENTRIES'] . "` AS `te`" . $sJoinClause . "
+        WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
 
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
