@@ -25,11 +25,12 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
             'ownFields' => array(),
             'searchFields' => array(),
             'restriction' => array(
-        		'account_id' => array('value' => '', 'field' => 'account_id', 'operator' => '='),
+                'account_id' => array('value' => '', 'field' => 'account_id', 'operator' => '='),
                 'perofileStatus' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
                 'perofileType' => array('value' => 'bx_events', 'field' => 'type', 'operator' => '='),
                 'owner' => array('value' => '', 'field' => 'author', 'operator' => '=', 'table' => 'bx_events_data'),
-        		'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>', 'table' => 'bx_events_data'),
+                'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>', 'table' => 'bx_events_data'),
+                'past' => array('value' => '', 'field' => 'date_end', 'operator' => '<', 'table' => 'bx_events_data'),
             ),
             'join' => array (
                 'profile' => array(
@@ -162,6 +163,14 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
                 $this->sBrowseUrl = 'page.php?i=events-top';
                 break;
 
+            case 'past':
+                $this->aCurrent['rss']['link'] = 'modules/?r=events/rss/' . $sMode;
+                $this->aCurrent['title'] = _t('_bx_events_page_title_browse_past');
+                $this->aCurrent['restriction']['past']['value'] = time();
+                $this->aCurrent['sorting'] = 'past';
+                $this->sBrowseUrl = 'page.php?i=events-past';
+                break;
+
             case '': // search results
                 $this->sBrowseUrl = BX_DOL_SEARCH_KEYWORD_PAGE;
                 $this->aCurrent['title'] = _t('_bx_events');
@@ -189,6 +198,8 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
             return array();
         case 'top':
             return array('order' => ' ORDER BY `bx_events_data`.`views` DESC ');
+        case 'past':
+            return array('order' => ' ORDER BY `bx_events_data`.`date_start` DESC, `bx_events_data`.`date_end` DESC ');
         case 'last':
         default:                        
             return array('order' => ' ORDER BY `bx_events_data`.`added` DESC ');

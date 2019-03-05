@@ -90,6 +90,7 @@
 	<string name="_bx_events_page_title_browse_by_author"><![CDATA[Events of {display_name}]]></string>
 	<string name="_bx_events_page_title_browse_featured"><![CDATA[Featured Events]]></string>
 	<string name="_bx_events_page_title_browse_top"><![CDATA[Top Events]]></string>
+        <string name="_bx_events_page_title_browse_past"><![CDATA[Past Events]]></string>
 	<string name="_bx_events_page_title_browse_recent"><![CDATA[New Events]]></string>
 	<string name="_bx_events_page_title_browse_connections"><![CDATA[{0} connections]]></string>
 	<string name="_bx_events_page_title_browse_connections_mutual"><![CDATA[{0} and {1} mutual connections]]></string>
@@ -106,9 +107,11 @@
 	<string name="_bx_events_page_title_sys_manage"><![CDATA[Manage Own Events]]></string>
 	<string name="_bx_events_page_title_sys_manage_administration"><![CDATA[Manage All Events]]></string>
 	<string name="_bx_events_page_title_manage"><![CDATA[Manage Events]]></string>
-	<string name="_bx_events_page_title_sys_top"><![CDATA[Top Events]]></string>
+    <string name="_bx_events_page_title_sys_top"><![CDATA[Top Events]]></string>
     <string name="_bx_events_page_title_top"><![CDATA[Top Events]]></string>
-	<string name="_bx_events_page_title_sys_calendar"><![CDATA[Events Calendar]]></string>
+    <string name="_bx_events_page_title_sys_past"><![CDATA[Past Events]]></string>
+    <string name="_bx_events_page_title_past"><![CDATA[Past Events]]></string>
+    <string name="_bx_events_page_title_sys_calendar"><![CDATA[Events Calendar]]></string>
     <string name="_bx_events_page_title_calendar"><![CDATA[Events Calendar]]></string>
     <string name="_bx_events_page_title_sys_invite_to_group"><![CDATA[Invite Members to the Event]]></string>
 	<string name="_bx_events_page_title_invite_to_group"><![CDATA[Invite Members to the Event]]></string>
@@ -147,6 +150,7 @@
 	<string name="_bx_events_page_block_title_system_manage_administration"><![CDATA[Manage All Events]]></string>
 	<string name="_bx_events_page_block_title_manage"><![CDATA[Manage Events]]></string>
     <string name="_bx_events_page_block_title_top_profiles"><![CDATA[Top Events]]></string>
+    <string name="_bx_events_page_block_title_past_profiles"><![CDATA[Past Events]]></string>
     <string name="_bx_events_page_block_title_entry_all_actions"><![CDATA[All Actions]]></string>
     <string name="_bx_events_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
     <string name="_bx_events_page_block_title_categories"><![CDATA[Event categories]]></string>
@@ -217,18 +221,18 @@
     <string name="_bx_events_menu_item_title_unfriend_reject_request"><![CDATA[Reject friend request]]></string>
 
     <string name="_bx_events_menu_item_title_system_become_fan"><![CDATA[Join Event]]></string>
-    <string name="_bx_events_menu_item_title_become_fan"><![CDATA[Join Event]]></string>
-    <string name="_bx_events_menu_item_title_become_fan_sent"><![CDATA[Join Event (requested)]]></string>
-    <string name="_bx_events_menu_item_title_become_fan_confirm"><![CDATA[Accept Request]]></string>
+    <string name="_bx_events_menu_item_title_become_fan"><![CDATA[Going]]></string>
+    <string name="_bx_events_menu_item_title_become_fan_sent"><![CDATA[Requested]]></string>
+    <string name="_bx_events_menu_item_title_become_fan_confirm"><![CDATA[Confirm]]></string>
     <string name="_bx_events_menu_item_title_system_leave_group"><![CDATA[Leave Event]]></string>
-    <string name="_bx_events_menu_item_title_leave_group"><![CDATA[Leave Event]]></string>
-    <string name="_bx_events_menu_item_title_leave_group_cancel_request"><![CDATA[Cancel Request]]></string>
-    <string name="_bx_events_menu_item_title_leave_group_reject_request"><![CDATA[Reject Request]]></string>
+    <string name="_bx_events_menu_item_title_leave_group"><![CDATA[Not going]]></string>
+    <string name="_bx_events_menu_item_title_leave_group_cancel_request"><![CDATA[Cancel]]></string>
+    <string name="_bx_events_menu_item_title_leave_group_reject_request"><![CDATA[Decline]]></string>
 
     <string name="_bx_events_menu_item_title_system_subscribe"><![CDATA[Follow]]></string>
-    <string name="_bx_events_menu_item_title_subscribe"><![CDATA[Follow]]></string>
+    <string name="_bx_events_menu_item_title_subscribe"><![CDATA[Interested]]></string>
     <string name="_bx_events_menu_item_title_system_unsubscribe"><![CDATA[Unfollow]]></string>
-    <string name="_bx_events_menu_item_title_unsubscribe"><![CDATA[Unfollow]]></string>
+    <string name="_bx_events_menu_item_title_unsubscribe"><![CDATA[Not interested]]></string>
     <string name="_bx_events_menu_item_title_system_more_actions"><![CDATA[More Actions]]></string>
     <string name="_bx_events_menu_item_title_more_actions"><![CDATA[]]></string>
     <string name="_bx_events_menu_item_title_system_friends"><![CDATA[Friends]]></string>
@@ -249,6 +253,8 @@
 	<string name="_bx_events_menu_item_title_manage_all"><![CDATA[All Events]]></string>
 	<string name="_bx_events_menu_item_title_system_entries_top"><![CDATA[Top]]></string>
 	<string name="_bx_events_menu_item_title_entries_top"><![CDATA[Top]]></string>
+        <string name="_bx_events_menu_item_title_system_entries_past"><![CDATA[Past]]></string>
+	<string name="_bx_events_menu_item_title_entries_past"><![CDATA[Past]]></string>
 	<string name="_bx_events_menu_item_title_system_calendar"><![CDATA[Calendar]]></string>
     <string name="_bx_events_menu_item_title_calendar"><![CDATA[Calendar]]></string>
     

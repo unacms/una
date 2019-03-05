@@ -90,6 +90,7 @@
 	<string name="_bx_events_page_title_browse_by_author"><![CDATA[События {display_name}]]></string>
 	<string name="_bx_events_page_title_browse_featured"><![CDATA[Продвинутые события]]></string>
 	<string name="_bx_events_page_title_browse_top"><![CDATA[Лучшие события]]></string>
+        <string name="_bx_events_page_title_browse_past"><![CDATA[Прошедшие события]]></string>
 	<string name="_bx_events_page_title_browse_recent"><![CDATA[Новые события]]></string>
 	<string name="_bx_events_page_title_browse_connections"><![CDATA[{0} связей]]></string>
 	<string name="_bx_events_page_title_browse_connections_mutual"><![CDATA[{0} и {1} обоюдных связей]]></string>
@@ -108,6 +109,8 @@
 	<string name="_bx_events_page_title_manage"><![CDATA[Управление]]></string>
 	<string name="_bx_events_page_title_sys_top"><![CDATA[Популярные события]]></string>
     <string name="_bx_events_page_title_top"><![CDATA[Популярные события]]></string>
+    <string name="_bx_events_page_title_sys_past"><![CDATA[Прошедшие события]]></string>
+    <string name="_bx_events_page_title_past"><![CDATA[Прошедшие события]]></string>
 	<string name="_bx_events_page_title_sys_calendar"><![CDATA[Календарь событий]]></string>
     <string name="_bx_events_page_title_calendar"><![CDATA[Календарь событий]]></string>
     <string name="_bx_events_page_title_sys_invite_to_group"><![CDATA[Приглашение на событие]]></string>
@@ -147,6 +150,7 @@
 	<string name="_bx_events_page_block_title_system_manage_administration"><![CDATA[Управление всеми событиями]]></string>
 	<string name="_bx_events_page_block_title_manage"><![CDATA[Управление]]></string>
     <string name="_bx_events_page_block_title_top_profiles"><![CDATA[Популярные события]]></string>
+    <string name="_bx_events_page_block_title_past_profiles"><![CDATA[Прошедшие события]]></string>
     <string name="_bx_events_page_block_title_entry_all_actions"><![CDATA[Все действия]]></string>
     <string name="_bx_events_page_block_title_entry_social_sharing"><![CDATA[Поделиться]]></string>
     <string name="_bx_events_page_block_title_categories"><![CDATA[Категории событий]]></string>
@@ -218,18 +222,18 @@
     <string name="_bx_events_menu_item_title_unfriend_reject_request"><![CDATA[Отвергнуть запрос о дружбе]]></string>
 
     <string name="_bx_events_menu_item_title_system_become_fan"><![CDATA[Присоединиться]]></string>
-    <string name="_bx_events_menu_item_title_become_fan"><![CDATA[Присоединиться]]></string>
-    <string name="_bx_events_menu_item_title_become_fan_sent"><![CDATA[Присоединение запрошено]]></string>
-    <string name="_bx_events_menu_item_title_become_fan_confirm"><![CDATA[Одобрить присоединение]]></string>
+    <string name="_bx_events_menu_item_title_become_fan"><![CDATA[Пойду]]></string>
+    <string name="_bx_events_menu_item_title_become_fan_sent"><![CDATA[Запрошено]]></string>
+    <string name="_bx_events_menu_item_title_become_fan_confirm"><![CDATA[Одобрить]]></string>
     <string name="_bx_events_menu_item_title_system_leave_group"><![CDATA[Покинуть событие]]></string>
-    <string name="_bx_events_menu_item_title_leave_group"><![CDATA[Покинуть событие]]></string>
-    <string name="_bx_events_menu_item_title_leave_group_cancel_request"><![CDATA[Отменить присоединение]]></string>
-    <string name="_bx_events_menu_item_title_leave_group_reject_request"><![CDATA[Отвергнуть присоединение]]></string>
+    <string name="_bx_events_menu_item_title_leave_group"><![CDATA[Не пойду]]></string>
+    <string name="_bx_events_menu_item_title_leave_group_cancel_request"><![CDATA[Отменить]]></string>
+    <string name="_bx_events_menu_item_title_leave_group_reject_request"><![CDATA[Отклонить]]></string>
 
     <string name="_bx_events_menu_item_title_system_subscribe"><![CDATA[Получать уведомления]]></string>
-    <string name="_bx_events_menu_item_title_subscribe"><![CDATA[Получать уведомления]]></string>
+    <string name="_bx_events_menu_item_title_subscribe"><![CDATA[Заинтересован]]></string>
     <string name="_bx_events_menu_item_title_system_unsubscribe"><![CDATA[Отключить уведомления]]></string>
-    <string name="_bx_events_menu_item_title_unsubscribe"><![CDATA[Отключить уведомления]]></string>
+    <string name="_bx_events_menu_item_title_unsubscribe"><![CDATA[Не заинтересован]]></string>
     <string name="_bx_events_menu_item_title_system_more_actions"><![CDATA[Дополнительные действия]]></string>
     <string name="_bx_events_menu_item_title_more_actions"><![CDATA[]]></string>
     <string name="_bx_events_menu_item_title_system_friends"><![CDATA[Друзья]]></string>
@@ -250,6 +254,8 @@
 	<string name="_bx_events_menu_item_title_manage_all"><![CDATA[Все события]]></string>
 	<string name="_bx_events_menu_item_title_system_entries_top"><![CDATA[Популярные]]></string>
     <string name="_bx_events_menu_item_title_entries_top"><![CDATA[Популярные]]></string>
+    <string name="_bx_events_menu_item_title_system_entries_past"><![CDATA[Прошедшие]]></string>
+    <string name="_bx_events_menu_item_title_entries_past"><![CDATA[Прошедшие]]></string>
 	<string name="_bx_events_menu_item_title_system_calendar"><![CDATA[Календарь]]></string>
     <string name="_bx_events_menu_item_title_calendar"><![CDATA[Календарь]]></string>
 

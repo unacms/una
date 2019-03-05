@@ -50,6 +50,11 @@ class BxEventsModule extends BxBaseModGroupsModule
         echo json_encode($aEntries);
     }
 
+    public function serviceBrowsePastProfiles ($bDisplayEmptyMsg = false, $bAjaxPaginate = true)
+    {
+        return $this->_serviceBrowse ('past', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
+    }
+
     /**
      * @page service Service Calls
      * @section bx_events Events
