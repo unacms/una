@@ -30,18 +30,17 @@ class BxDolTranscoderProxy extends BxDolTranscoder implements iBxDolFactoryObjec
      */ 
     public function isMimeTypeSupported($sMimeType)
     {
-        if (!empty($this->_aObject['source_params']['image']))
+        if ($this->_isImage($sMimeType) && !empty($this->_aObject['source_params']['image']))
             $sTranscoder = $this->_aObject['source_params']['image'];
-        elseif (!empty($this->_aObject['source_params']['video_poster']))
+        elseif ($this->_isVideo($sMimeType) && !empty($this->_aObject['source_params']['video_poster']))
             $sTranscoder = $this->_aObject['source_params']['video_poster'];
-        elseif (!empty($this->_aObject['source_params']['video']))
-            $sTranscoder = $this->_aObject['source_params']['video'];
         else
             return false;
 
-        if (!($oTranscoder = BxDolTranscoder::getObjectInstance($sTranscoder)))
+        $oTranscoder = BxDolTranscoder::getObjectInstance($sTranscoder);
+        if (!$oTranscoder)
             return false;        
-        
+
         return $oTranscoder->isMimeTypeSupported($sMimeType);
     }
     
@@ -59,10 +58,10 @@ class BxDolTranscoderProxy extends BxDolTranscoder implements iBxDolFactoryObjec
             return false;
 
         $sTranscoder = '';
-        if (0 === strncmp($aFile['mime_type'], 'image/', 6) && !empty($this->_aObject['source_params']['image'])) {
+        if ($this->_isImage($aFile['mime_type']) && !empty($this->_aObject['source_params']['image'])) {
             $sTranscoder = $this->_aObject['source_params']['image'];
         } 
-        elseif (0 === strncmp($aFile['mime_type'], 'video/', 6) && !empty($this->_aObject['source_params']['video_poster'])) {
+        elseif ($this->_isVideo($aFile['mime_type']) && !empty($this->_aObject['source_params']['video_poster'])) {
             $sTranscoder = $this->_aObject['source_params']['video_poster'];
 
             // if additional video transcoders provided call it to force video conversion
@@ -82,6 +81,16 @@ class BxDolTranscoderProxy extends BxDolTranscoder implements iBxDolFactoryObjec
             return false;
         
         return $oTranscoder->getFileUrl($mixedHandler);
+    }
+
+    protected function _isImage($sMimeType)
+    {
+        return strncmp($sMimeType, 'image/', 6) === 0;
+    }
+
+    protected function _isVideo($sMimeType)
+    {
+        return strncmp($sMimeType, 'video/', 6) === 0;
     }
 }
 
