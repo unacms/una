@@ -1660,7 +1660,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     'style_prefix' => $sStylePrefix,
                     'item' => BxTemplFunctions::getInstance()->videoPlayer($aVideo['src_poster'], $aVideo['src_mp4'], $aVideo['src_webm'], array(
                         'preload' => 'auto'
-                    )) 
+                    ), '') 
                 );
             else 
                 $aTmplVarsVideos[] = array(
