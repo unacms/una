@@ -178,45 +178,47 @@ a.bx-base-pofile-cover-image:hover,
     background-color: rgba(255, 255, 255, 1.0);
 }
 
-.bx-base-pofile-cover-user {
-    -webkit-flex: 0 3 auto; 
-    -ms-flex:  0 3 auto; 
-    flex: 0 3 auto;
-
-    position: relative;
-    z-index: 2;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-align-items: center;
-    align-items: center;
-    -webkit-justify-content: space-between;
-    justify-content: space-between;
-
-    height: 100%;
-}
-.bx-base-pofile-cover-user div.bx-def-unit-image {
+div.bx-base-pofile-cover-thumb {
     display: -webkit-flex;
     display: flex;
     -webkit-align-items: flex-end;
     align-items: flex-end;
     height: 4rem;
 }
-.bx-base-pofile-cover-user a.bx-def-unit-image,
-.bx-base-pofile-cover-user a.bx-def-unit-image img {
+a.bx-base-pofile-cover-thumb,
+a.bx-base-pofile-cover-thumb img {
     position: relative;
     display: block;
 }
-
-.bx-base-pofile-cover-user a.bx-def-unit-image img {
+a.bx-base-pofile-cover-thumb img {
     border:2px solid #fff;
     border:0.15rem solid #fff;
     background-color: #fff;
 }
 
+.bx-base-pofile-cover-user {
+    -webkit-flex: 2 1 auto; 
+    -ms-flex:  2 1 auto; 
+    flex: 2 1 auto;
+
+    position: relative;
+    z-index: 2;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+
+    height: 100%;
+}
+
 .bx-base-pofile-cover-user h1.bx-def-unit-info {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: 0 0 0 1rem;
+    position: relative;
+    display: block;
+
+    margin: 0;
+    padding: 0;
 
     line-height:normal;
     text-align: left;
@@ -228,25 +230,19 @@ a.bx-base-pofile-cover-image:hover,
 
 .bx-base-pofile-cover-actions {
     position: relative;
-
-    -webkit-flex: 1 2 auto; 
-    -ms-flex:  1 2 auto; 
-    flex: 1 2 auto;
-
     display: -webkit-flex;
     display: flex;
     -webkit-align-items: center;
     align-items: center;
 
-    height: 4rem;
     min-width: 3rem;
-    max-width: 50%;
+    width: 100%;
+    height: 3.625rem;
 }
 
 .bx-base-pofile-cover-actions div.bx-base-general-entity-actions {
     position: absolute;
     width: 100%;
-    left: 0;
 }
 
 .bx-base-pofile-cover-actions ul.bx-menu-hor.bx-menu-more-auto {
@@ -254,8 +250,8 @@ a.bx-base-pofile-cover-image:hover,
     display: flex;
     -webkit-flex-wrap: nowrap;
     flex-wrap: nowrap;
-    -webkit-justify-content: flex-end;
-    justify-content: flex-end;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
 }
 
 .bx-base-pofile-cover-actions .bx-menu-hor li.bx-menu-item {
