@@ -22,7 +22,7 @@ class BxBaseModTextUploaderSimple extends BxTemplUploaderSimple
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_ENTRY_ATTACHMENTS'])->addMarkers(array(
+        BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_ENTRY_ATTACHMENTS'], $this->_oModule->_oTemplate)->addMarkers(array(
             'js_object_uploader' . str_replace($this->_sModule, '', $this->_aObject['object']) => $this->getNameJsInstanceUploader()
         ));
     }
