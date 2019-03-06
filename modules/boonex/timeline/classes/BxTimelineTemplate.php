@@ -1325,15 +1325,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aTmplVarsLinks = array();
         if(!empty($aContent['links']))
             foreach($aContent['links'] as $aLink) {
-                $bTmplVarsEmbed = false;
-                $aTmplVarsEmbed = array();
+                $sLink = '';
+
                 $oEmbed = BxDolEmbed::getObjectInstance();
                 if ($oEmbed) {
-                    $bTmplVarsEmbed = true;
-                    $aTmplVarsEmbed = array(
+                    $sLink = $this->parseHtmlByName('link_embed_provider.html', array(
                         'style_prefix' => $sStylePrefix,
                         'embed' => $oEmbed->getLinkHTML($aLink['url'], $aLink['title']),
-                    );
+                    ));
                 }
                 else {
                     $aLinkAttrs = array(
@@ -1350,7 +1349,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     foreach($aLinkAttrs as $sKey => $sValue)
                         $sLinkAttrs .= ' ' . $sKey . '="' . bx_html_attribute($sValue) . '"';
 
-                    $aTmplVarsEmbed = array(
+                    $sLink = $this->parseHtmlByName('link_embed_common.html', array(
                         'bx_if:show_thumbnail' => array(
                             'condition' => !empty($aLink['thumbnail']),
                             'content' => array(
@@ -1370,19 +1369,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                                 'text' => $aLink['text']
                             )
                         )
-                    );
+                    ));
                 }
 
                 $aTmplVarsLinks[] = array(
                     'style_prefix' => $sStylePrefix,
-                    'bx_if:show_embed_outer' => array(
-                            'condition' => $bTmplVarsEmbed,
-                            'content' => $aTmplVarsEmbed
-                        ),
-                        'bx_if:show_embed_inner' => array(
-                            'condition' => !$bTmplVarsEmbed,
-                            'content' => $aTmplVarsEmbed
-                    )
+                    'link' => $sLink
                 );
             }
 
