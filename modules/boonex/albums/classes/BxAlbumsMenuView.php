@@ -21,7 +21,10 @@ class BxAlbumsMenuView extends BxBaseModTextMenuView
 
         $sURI = bx_process_input(bx_get('i'));
         if ($sURI == 'view-album-media') {
-            $aMediaInfo = $this->_oModule->_oDb->getMediaInfoById((int)bx_get('id'));
+            $iMediaId = (int)bx_get('id');
+            $aMediaInfo = $this->_oModule->_oDb->getMediaInfoById($iMediaId);
+            $this->addMarkers(array('media_id' => $iMediaId));
+
             $this->_aContentInfo = $aMediaInfo ? $this->_oModule->_oDb->getContentInfoById($aMediaInfo['content_id']) : false;
             if ($this->_aContentInfo)
                 $this->addMarkers(array('content_id' => (int)$aMediaInfo['content_id']));

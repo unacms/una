@@ -23,7 +23,7 @@ class BxAlbumsUploaderCrop extends BxTemplUploaderCrop
     {
         $sTitle = $this->_oModule->_oDb->getFileTitle($aFile['id']);
         $a = array(
-            'file_title' => $sTitle ? $sTitle : $aFile['file_name']
+            'file_title' => $sTitle ? $sTitle : ''
         );
         $a['file_title_attr'] = bx_html_attribute($a['file_title']);
         return $a;

@@ -28,7 +28,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'albums',
-        	'TABLE_ENTRIES_FULLTEXT' => 'title_text',
+            'TABLE_ENTRIES_FULLTEXT' => 'title_text',
             'TABLE_FILES2ENTRIES' => $aModule['db_prefix'] . 'files2albums',
             'TABLE_FILES' => $aModule['db_prefix'] . 'files',
 
@@ -43,10 +43,10 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_PHOTO' => 'pictures',
             'FIELD_THUMB' => 'thumb',
-        	'FIELD_VIEWS' => 'views',
+            'FIELD_VIEWS' => 'views',
             'FIELD_COMMENTS' => 'comments',
-        	'FIELD_STATUS' => 'status',
-        	'FIELD_STATUS_ADMIN' => 'status_admin',
+            'FIELD_STATUS' => 'status',
+            'FIELD_STATUS_ADMIN' => 'status_admin',
             'FIELD_LOCATION_PREFIX' => 'location',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 

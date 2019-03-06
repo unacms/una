@@ -240,7 +240,8 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_albums_view_media', 'bx_albums', 'add-images-to-album', '_bx_albums_menu_item_title_system_add_images', '_bx_albums_menu_item_title_add_images', 'page.php?i=add-images&id={content_id}', '', '', 'plus', '', 2147483647, 1, 0, 10),
-('bx_albums_view_media', 'bx_albums', 'edit-album', '_bx_albums_menu_item_title_system_edit_album', '_bx_albums_menu_item_title_edit_album', 'page.php?i=edit-album&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 20);
+('bx_albums_view_media', 'bx_albums', 'edit-album', '_bx_albums_menu_item_title_system_edit_album', '_bx_albums_menu_item_title_edit_album', 'page.php?i=edit-album&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 20),
+('bx_albums_view_media', 'bx_albums', 'edit-image', '_bx_albums_menu_item_title_system_edit_image', '_bx_albums_menu_item_title_edit_image', 'page.php?i=edit-album&id={content_id}#album-media-{media_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 30);
 
 -- MENU: all actions menu for view media page 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -250,8 +251,9 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_albums_view_actions_media', 'bx_albums', '_bx_albums_menu_set_title_view_actions_media', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_albums_view_actions_media', 'bx_albums', 'add-images-to-album', '_bx_albums_menu_item_title_system_add_images', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 10),
-('bx_albums_view_actions_media', 'bx_albums', 'edit-album', '_bx_albums_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 20),
+('bx_albums_view_actions_media', 'bx_albums', 'add-images-to-album', '_bx_albums_menu_item_title_system_add_images', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 10),
+('bx_albums_view_actions_media', 'bx_albums', 'edit-album', '_bx_albums_menu_item_title_system_edit_album', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 20),
+('bx_albums_view_actions_media', 'bx_albums', 'edit-image', '_bx_albums_menu_item_title_system_edit_image', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 30),
 ('bx_albums_view_actions_media', 'bx_albums', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 200),
 ('bx_albums_view_actions_media', 'bx_albums', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 210),
 ('bx_albums_view_actions_media', 'bx_albums', 'vote', '_sys_menu_item_title_system_va_vote', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 220),

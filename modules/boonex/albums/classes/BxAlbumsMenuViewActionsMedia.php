@@ -40,14 +40,31 @@ class BxAlbumsMenuViewActionsMedia extends BxAlbumsMenuViewActions
 
     protected function _getMenuItemAddImagesToAlbum($aItem)
     {
-        return $this->_getMenuItemByNameActions($aItem);
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        return $this->_getMenuItemByNameActions($aItem, array(
+            'object_menu' => $CNF['OBJECT_MENU_ACTIONS_VIEW_MEDIA']
+        ));
     }
 
     protected function _getMenuItemEditAlbum($aItem)
     {
-        return $this->_getMenuItemByNameActions($aItem);
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        return $this->_getMenuItemByNameActions($aItem, array(
+            'object_menu' => $CNF['OBJECT_MENU_ACTIONS_VIEW_MEDIA']
+        ));
     }
-    
+
+    protected function _getMenuItemEditImage($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        return $this->_getMenuItemByNameActions($aItem, array(
+            'object_menu' => $CNF['OBJECT_MENU_ACTIONS_VIEW_MEDIA']
+        ));
+    }
+
     protected function _getMenuItemView($aItem, $aParams = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;

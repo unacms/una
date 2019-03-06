@@ -239,22 +239,28 @@ class BxAlbumsModule extends BxBaseModTextModule
      * Display media preview block.
      * @param $iMediaId media ID, if it's omitted then it's taken from 'id' GET variable.
      * @param $mixedContext current context to navigate to next and previous file, possible values: popular, public, author. If omitted then value from 'context' GTE variable is taken. Default context is 'album' - when nothin is specified.
+     * @param $aParams array of additional params. 
      * @return HTML string with block content. On error false or empty string is returned.
      */
-    public function serviceMediaView ($iMediaId = 0, $mixedContext = false)
+    public function serviceMediaView ($iMediaId = 0, $mixedContext = false, $aParams = array())
     {
-        if (!$iMediaId)
+        if(!$iMediaId)
             $iMediaId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iMediaId)
+        if(!$iMediaId)
             return false;
 
-        if (!$mixedContext) {
+        if(!$mixedContext) {
             $mixedContext = bx_process_input(bx_get('context'));
-            if (!in_array($mixedContext, $this->_aContexts)) // when no context specified, it is assumed that it is an album context
+            if(!in_array($mixedContext, $this->_aContexts)) // when no context specified, it is assumed that it is an album context
                 $mixedContext = bx_process_input($mixedContext, BX_DATA_INT); // numeric context is reserved for future use
         }
+        $aParams['context'] = $mixedContext;
 
-        return $this->_oTemplate->entryMediaView ($iMediaId, $mixedContext);
+        $iAutoplay = 0;
+        if(!isset($aParams['autoplay']) && ($iAutoplay = bx_get('autoplay')) !== false)
+            $aParams['autoplay'] = (int)$iAutoplay;
+
+        return $this->_oTemplate->entryMediaView ($iMediaId, $aParams);
     }
 
     public function checkAllowedSetThumb ($iContentId = 0)
@@ -582,6 +588,29 @@ class BxAlbumsModule extends BxBaseModTextModule
     {
         $aArgs = func_get_args();
         $this->_rss($aArgs, 'SearchResultMedia');
+    }
+
+    public function getMediaDuration($aMediaInfo) 
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($aMediaInfo) || !is_array($aMediaInfo))
+            return 0;
+
+        $sField = 'duration';
+        if(!empty($aMediaInfo[$sField]))
+            return (int)$aMediaInfo[$sField];
+
+        $iMedia = $aMediaInfo['id'];
+        $sMedia = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4'])->getFileUrl($iMedia);
+        if(empty($sMedia))
+            return 0;
+
+        $iDuration = (int)BxDolTranscoderVideo::getDuration($sMedia);
+        if(!empty($iDuration))
+            $this->_oDb->updateMedia(array($sField => $iDuration), array('id' => $iMedia));
+
+        return $iDuration;
     }
 
     protected function _buildRssParams($sMode, $aArgs)

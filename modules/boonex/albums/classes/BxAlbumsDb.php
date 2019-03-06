@@ -163,6 +163,17 @@ class BxAlbumsDb extends BxBaseModTextDb
         $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `{$CNF['TABLE_FILES2ENTRIES']}` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
 		return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
+    
+    public function updateMedia($aParamsSet, $aParamsWhere)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($aParamsSet) || empty($aParamsWhere))
+            return false;
+
+        $sSql = "UPDATE `" . $CNF['TABLE_FILES'] . "` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $this->arrayToSQL($aParamsWhere, " AND ");
+        return $this->query($sSql);
+    }
 }
 
 /** @} */
