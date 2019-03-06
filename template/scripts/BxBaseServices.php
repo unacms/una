@@ -249,6 +249,19 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         BxDolTemplate::getInstance()->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'cubiq-add-to-homescreen/style/|addtohomescreen.css');
         return "<script>addToHomescreen();</script>";
     }
+
+    public function serviceGetOptionsEmbedDefault()
+    {
+        $aResults = array(
+            '' => _t('_None')
+        );
+
+        $aObjects = BxDolEmbedQuery::getObjects();
+        foreach($aObjects as $aObject)
+            $aResults[$aObject['object']] = $aObject['title'];
+
+        return $aResults;
+    }
 }
 
 /** @} */
