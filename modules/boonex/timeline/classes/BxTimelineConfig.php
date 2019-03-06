@@ -82,6 +82,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'OBJECT_STORAGE' => $this->_sName . '_photos',
             'OBJECT_GRID_ADMINISTRATION' => $this->_sName . '_administration',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => $this->_sName . '_photos_preview',
+            'OBJECT_MENU_ENTRY_ATTACHMENTS' => $this->_sName . '_menu_post_attachments',
             'OBJECT_METATAGS' => $this->_sName,
             'OBJECT_COMMENTS' => $this->_sName,
             'OBJECT_VIEWS' => $this->_sName,
@@ -140,7 +141,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'menu_item_manage' => $this->_sName . '_menu_item_manage',
             'menu_item_actions' => $this->_sName . '_menu_item_actions',
             'menu_item_meta' => $this->_sName . '_menu_item_meta',
-            'menu_post_attachments' => $this->_sName . '_menu_post_attachments',
+            'menu_post_attachments' => $this->CNF['OBJECT_MENU_ENTRY_ATTACHMENTS'],
 
             'form_post' => $this->_sName . '_post',
             'form_attach_link' => $this->_sName . '_attach_link',

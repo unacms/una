@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxTimelineUploaderSimplePhoto extends BxBaseModTextUploaderSimple
+class BxTimelineUploaderHTML5Photo extends BxBaseModTextUploaderHTML5
 {
     public function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {

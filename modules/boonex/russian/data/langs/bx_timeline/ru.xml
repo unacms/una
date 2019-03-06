@@ -171,9 +171,11 @@
     <string name="_bx_timeline_menu_item_title_add_emoji"><![CDATA[Добавить Emoji]]></string>
     <string name="_bx_timeline_menu_item_title_system_add_link"><![CDATA[Добавить ссылку]]></string>
     <string name="_bx_timeline_menu_item_title_add_link"><![CDATA[Добавить ссылку]]></string>
-    <string name="_bx_timeline_menu_item_title_system_add_photo"><![CDATA[Добавить фото]]></string>
+    <string name="_bx_timeline_menu_item_title_system_add_photo_simple"><![CDATA[Добавить фото (Обычная загрузка)]]></string>
+    <string name="_bx_timeline_menu_item_title_system_add_photo_html5"><![CDATA[Добавить фото (Множественная загрузка)]]></string>
     <string name="_bx_timeline_menu_item_title_add_photo"><![CDATA[Добавить фото]]></string>
-    <string name="_bx_timeline_menu_item_title_system_add_video"><![CDATA[Добавить видео]]></string>
+    <string name="_bx_timeline_menu_item_title_system_add_video_simple"><![CDATA[Добавить видео (Обычная загрузка)]]></string>
+    <string name="_bx_timeline_menu_item_title_system_add_video_html5"><![CDATA[Добавить видео (Множественная загрузка)]]></string>
     <string name="_bx_timeline_menu_item_title_add_video"><![CDATA[Добавить видео]]></string>
     <string name="_bx_timeline_menu_item_title_system_timeline"><![CDATA[Лента]]></string>
     <string name="_bx_timeline_menu_item_title_timeline"><![CDATA[Лента]]></string>

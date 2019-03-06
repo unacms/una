@@ -9,18 +9,15 @@
  * @{
  */
 
-class BxTimelineUploaderSimpleVideo extends BxTemplUploaderSimple
+class BxTimelineUploaderSimpleVideo extends BxBaseModTextUploaderSimple
 {
     public function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
+        $this->_sModule = 'bx_timeline';
+
         parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate);
 
-        $oModule = BxDolModule::getInstance('bx_timeline');
-		$oModule->getAttachmentsMenuObject()->addMarkers(array(
-			'js_object_uploader_video' => $this->getNameJsInstanceUploader()
-		));
-
-		$this->_oTemplate = $oModule->_oTemplate;
+        $this->_oTemplate = $this->_oModule->_oTemplate;
     }
 }
 

@@ -287,7 +287,9 @@ SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_sto
 
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('bx_timeline_simple_photo', 1, 'BxTimelineUploaderSimplePhoto', 'modules/boonex/timeline/classes/BxTimelineUploaderSimplePhoto.php'),
-('bx_timeline_simple_video', 1, 'BxTimelineUploaderSimpleVideo', 'modules/boonex/timeline/classes/BxTimelineUploaderSimpleVideo.php');
+('bx_timeline_simple_video', 1, 'BxTimelineUploaderSimpleVideo', 'modules/boonex/timeline/classes/BxTimelineUploaderSimpleVideo.php'),
+('bx_timeline_html5_photo', 1, 'BxTimelineUploaderHTML5Photo', 'modules/boonex/timeline/classes/BxTimelineUploaderHTML5Photo.php'),
+('bx_timeline_html5_video', 1, 'BxTimelineUploaderHTML5Video', 'modules/boonex/timeline/classes/BxTimelineUploaderHTML5Video.php');
 
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
 ('bx_timeline_photos', @sStorageEngine, '', 360, 2592000, 3, 'bx_timeline_photos', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
@@ -338,8 +340,8 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('bx_timeline_post', @sName, 'object_privacy_view', '', '', 0, 'custom', '_bx_timeline_form_post_input_sys_object_privacy_view', '_bx_timeline_form_post_input_object_privacy_view', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_timeline_post', @sName, 'location', '', '', 0, 'location', '_sys_form_input_sys_location', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_timeline_post', @sName, 'link', '', '', 0, 'custom', '_bx_timeline_form_post_input_sys_link', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_timeline_post', @sName, 'photo', 'a:1:{i:0;s:24:"bx_timeline_simple_photo";}', 'a:1:{s:24:"bx_timeline_simple_photo";s:26:"_sys_uploader_simple_title";}', 0, 'files', '_bx_timeline_form_post_input_sys_photo', '_bx_timeline_form_post_input_photo', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_timeline_post', @sName, 'video', 'a:1:{i:0;s:24:"bx_timeline_simple_video";}', 'a:1:{s:24:"bx_timeline_simple_video";s:26:"_sys_uploader_simple_title";}', 0, 'files', '_bx_timeline_form_post_input_sys_video', '_bx_timeline_form_post_input_video', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_timeline_post', @sName, 'photo', 'a:1:{i:0;s:23:"bx_timeline_html5_photo";}', 'a:2:{s:24:"bx_timeline_simple_photo";s:26:"_sys_uploader_simple_title";s:23:"bx_timeline_html5_photo";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_timeline_form_post_input_sys_photo', '_bx_timeline_form_post_input_photo', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_timeline_post', @sName, 'video', 'a:1:{i:0;s:23:"bx_timeline_html5_video";}', 'a:2:{s:24:"bx_timeline_simple_video";s:26:"_sys_uploader_simple_title";s:23:"bx_timeline_html5_video";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_timeline_form_post_input_sys_video', '_bx_timeline_form_post_input_video', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_timeline_post', @sName, 'attachments', '', '', 0, 'custom', '_bx_timeline_form_post_input_sys_attachments', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_timeline_post', @sName, 'controls', '', 'tlb_do_submit,tlb_do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_timeline_post', @sName, 'tlb_do_submit', '_bx_timeline_form_post_input_do_submit', '', 0, 'submit', '_bx_timeline_form_post_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
