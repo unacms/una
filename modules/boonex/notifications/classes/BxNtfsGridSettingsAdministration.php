@@ -153,11 +153,13 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
 
         $aTypes = $this->_oModule->_oConfig->getSettingsTypes();
         foreach($aTypes as $sType) {
-            $aResult[] = _t($CNF['T']['setting_' . $sType]);
-
             $this->_aOptions['source'] = $sSource . $this->_oModule->_oDb->prepareAsString(" AND `ts`.`type`=?", $sType) . " GROUP BY `group`";
 
             $aRows = parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
+            if(empty($aRows) || !is_array($aRows)) 
+                continue;
+
+            $aResult[] = _t($CNF['T']['setting_' . $sType]);
             $aResult = array_merge($aResult, $aRows);
         }
 
