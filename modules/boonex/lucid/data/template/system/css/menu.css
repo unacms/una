@@ -389,6 +389,11 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
     width: 100%;
 }
 
+/*--- Notifications Popup ---*/
+#bx_notifications_preview.bx-sliding-menu .bx-def-page-width {
+    width: 100%;
+}
+
 /*--- Account Popup ---*/
 @media (min-width:720px) {
     #bx-sliding-menu-account.bx-sliding-menu-main {
