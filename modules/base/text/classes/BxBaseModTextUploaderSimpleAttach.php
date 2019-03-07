@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxBaseModTextUploaderSimple extends BxTemplUploaderSimple
+class BxBaseModTextUploaderSimpleAttach extends BxTemplUploaderSimple
 {
     protected $_sModule;
     protected $_oModule;
@@ -19,6 +19,14 @@ class BxBaseModTextUploaderSimple extends BxTemplUploaderSimple
         $this->_oModule = BxDolModule::getInstance($this->_sModule);
 
         parent::__construct($aObject, $sStorageObject, $sUniqId, $this->_oModule->_oTemplate);
+
+        $this->_sButtonTemplate = 'uploader_button_simple_attach.html';
+
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_ENTRY_ATTACHMENTS'], $this->_oModule->_oTemplate)->addMarkers(array(
+            'js_object_uploader' . str_replace($this->_sModule, '', $this->_aObject['object']) => $this->getNameJsInstanceUploader()
+        ));
     }
 }
 

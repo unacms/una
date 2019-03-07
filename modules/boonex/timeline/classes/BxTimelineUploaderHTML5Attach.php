@@ -9,15 +9,13 @@
  * @{
  */
 
-class BxTimelineUploaderHTML5Attach extends BxBaseModTextUploaderHTML5
+class BxTimelineUploaderHTML5Attach extends BxBaseModTextUploaderHTML5Attach
 {
     public function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
         $this->_sModule = 'bx_timeline';
 
         parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate);
-
-        $this->_sButtonTemplate = 'uploader_button_html5_attach.html';
     }
 }
 

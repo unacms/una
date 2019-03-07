@@ -9,15 +9,13 @@
  * @{
  */
 
-class BxPostsUploaderSimpleAttach extends BxBaseModTextUploaderSimple
+class BxPostsUploaderSimpleAttach extends BxBaseModTextUploaderSimpleAttach
 {
     public function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
         $this->_sModule = 'bx_posts';
 
         parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate);
-
-        $this->_sButtonTemplate = 'uploader_button_simple_attach.html';
     }
 
     protected function isAdmin ($iContentId = 0)

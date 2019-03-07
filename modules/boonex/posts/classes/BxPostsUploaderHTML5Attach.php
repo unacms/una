@@ -9,15 +9,13 @@
  * @{
  */
 
-class BxPostsUploaderHTML5Attach extends BxBaseModTextUploaderHTML5
+class BxPostsUploaderHTML5Attach extends BxBaseModTextUploaderHTML5Attach
 {
     public function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
         $this->_sModule = 'bx_posts';
 
         parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate);
-
-        $this->_sButtonTemplate = 'uploader_button_html5_attach.html';
     }
 
     protected function isAdmin ($iContentId = 0)
