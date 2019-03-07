@@ -286,10 +286,10 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_scores_track` (
 SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');
 
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
-('bx_timeline_simple_photo', 1, 'BxTimelineUploaderSimplePhoto', 'modules/boonex/timeline/classes/BxTimelineUploaderSimplePhoto.php'),
-('bx_timeline_simple_video', 1, 'BxTimelineUploaderSimpleVideo', 'modules/boonex/timeline/classes/BxTimelineUploaderSimpleVideo.php'),
-('bx_timeline_html5_photo', 1, 'BxTimelineUploaderHTML5Photo', 'modules/boonex/timeline/classes/BxTimelineUploaderHTML5Photo.php'),
-('bx_timeline_html5_video', 1, 'BxTimelineUploaderHTML5Video', 'modules/boonex/timeline/classes/BxTimelineUploaderHTML5Video.php');
+('bx_timeline_simple_photo', 1, 'BxTimelineUploaderSimpleAttach', 'modules/boonex/timeline/classes/BxTimelineUploaderSimpleAttach.php'),
+('bx_timeline_simple_video', 1, 'BxTimelineUploaderSimpleAttach', 'modules/boonex/timeline/classes/BxTimelineUploaderSimpleAttach.php'),
+('bx_timeline_html5_photo', 1, 'BxTimelineUploaderHTML5Attach', 'modules/boonex/timeline/classes/BxTimelineUploaderHTML5Attach.php'),
+('bx_timeline_html5_video', 1, 'BxTimelineUploaderHTML5Attach', 'modules/boonex/timeline/classes/BxTimelineUploaderHTML5Attach.php');
 
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
 ('bx_timeline_photos', @sStorageEngine, '', 360, 2592000, 3, 'bx_timeline_photos', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
