@@ -358,12 +358,10 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `or
 (@sName, 'text', '', '90%', '', 2),
 
 ('bx_forum_favorite', 'author', '', '10%', '', 1),
-('bx_forum_favorite', 'lr_timestamp', '', '85%', '', 2),
-('bx_forum_favorite', 'comments', '', '5%', '', 3),
+('bx_forum_favorite', 'text', '', '90%', '', 2),
 
 ('bx_forum_feature', 'author', '', '10%', '', 1),
-('bx_forum_feature', 'lr_timestamp', '', '85%', '', 2),
-('bx_forum_feature', 'comments', '', '5%', '', 3);
+('bx_forum_feature', 'text', '', '90%', '', 2);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
 (@sName, 'independent', 'add', '_bx_forum_grid_action_title_add', '', 0, 1);

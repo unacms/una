@@ -124,6 +124,21 @@
     display: inline-block;
     vertical-align: middle;
 }
-.bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-bottom .bx-forum-gpm-reply .bx-forum-gpm-reply-text {
-    color: 
+
+.bx-base-general-unit-meta ul.bx-menu-object-bx_forum_snippet_meta_counters li span {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    height: 1.5rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    border-width: 0px;
+    line-height: 1.5rem;
+}
+.bx-base-general-unit-meta ul.bx-menu-object-bx_forum_snippet_meta_counters li .sys-icon {
+    width: 1.0rem;
+    height: 1.0rem;
+    text-align: center;
+    line-height: 1.0rem;
+    vertical-align: baseline;
 }
