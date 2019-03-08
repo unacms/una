@@ -221,8 +221,9 @@
 	<string name="_bx_channels_txt_sample_comment_single"><![CDATA[comment to channel]]></string>
 	<string name="_bx_channels_txt_sample_vote_single"><![CDATA[vote to channel]]></string>
 
-  <string name="_bx_channels_txt_ntfs_timeline_post_common"><![CDATA[New post <b class="bx-ntfs-content-entry">{subentry_sample}</b> in <b class="bx-ntfs-content-profile">{owner_name}</b> channel timeline]]></string>
-  <string name="_bx_channels_ntfs_txt_subobject_added"><![CDATA[New content <b class="bx-ntfs-content-entry">{entry_caption}</b> in <b class="bx-ntfs-content-profile">{owner_name}</b> channel]]></string>
-  <string name="_bx_channels_alert_action_hashtag_added"><![CDATA[New hashtags]]></string>
-  <string name="_bx_channels_alert_action_hashtag_added_notif_follow_context"><![CDATA[New hashtags]]></string>
+    <string name="_bx_channels_txt_ntfs_timeline_post_common"><![CDATA[New post <b class="bx-ntfs-content-entry">{subentry_sample}</b> in <b class="bx-ntfs-content-profile">{owner_name}</b> channel timeline]]></string>
+    <string name="_bx_channels_ntfs_txt_subobject_added"><![CDATA[New content <b class="bx-ntfs-content-entry">{entry_caption}</b> in <b class="bx-ntfs-content-profile">{owner_name}</b> channel]]></string>
+    <string name="_bx_channels_ntfs_txt_subobject_added_profile"><![CDATA[<b class="bx-ntfs-content-entry">{entry_caption}</b> was added to <b class="bx-ntfs-content-profile">{owner_name}</b> channel]]></string>
+    <string name="_bx_channels_alert_action_hashtag_added"><![CDATA[New hashtags]]></string>
+    <string name="_bx_channels_alert_action_hashtag_added_notif_follow_context"><![CDATA[New hashtags]]></string>
 </resources>

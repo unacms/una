@@ -725,6 +725,19 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return $a;
     }
 
+    public function serviceGetNotificationsPost($aEvent)
+    {
+        $aResult = parent::serviceGetNotificationsVote($aEvent);
+        if(empty($aResult) || !is_array($aResult) || !$this->serviceActAsProfile())
+            return $aResult;
+
+        $oProfile = BxDolProfile::getInstanceByContentAndType((int)$aEvent['object_id'], $this->_oConfig->getName());
+        if($oProfile !== false)
+            $aResult['entry_author'] = $oProfile->id();
+
+        return $aResult;
+    }
+
     public function serviceGetNotificationsVote($aEvent)
     {
         $aResult = parent::serviceGetNotificationsVote($aEvent);
@@ -763,15 +776,15 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         if(empty($sSubentrySample))
             $sSubentrySample = strmaxtextlen($aSubcontentInfo['description'], 20, '...');
 
-		return array(
-			'entry_sample' => $CNF['T']['txt_sample_single'],
-			'entry_url' => $oGroupProfile->getUrl(),
-			'entry_caption' => $oGroupProfile->getDisplayName(),
-			'entry_author' => $oGroupProfile->id(),
-			'subentry_sample' => $sSubentrySample,
-			'subentry_url' => $sSubentryUrl,
-			'lang_key' => $CNF['T']['txt_ntfs_timeline_post_common'],
-		);
+        return array(
+            'entry_sample' => $CNF['T']['txt_sample_single'],
+            'entry_url' => $oGroupProfile->getUrl(),
+            'entry_caption' => $oGroupProfile->getDisplayName(),
+            'entry_author' => $oGroupProfile->id(),
+            'subentry_sample' => $sSubentrySample,
+            'subentry_url' => $sSubentryUrl,
+            'lang_key' => $CNF['T']['txt_ntfs_timeline_post_common'],
+        );
     }
 
 	/**
