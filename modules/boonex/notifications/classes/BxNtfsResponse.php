@@ -33,11 +33,19 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
         if(empty($aHandler) || !is_array($aHandler))
             return;
 
+        /**
+         * silent_mode is needed for alert sending module to tell that this alert
+         * should be ignored with Notifications module completely or partially.
+         * Currently Complete ignore is used only.
+         */
+        if(isset($oAlert->aExtras['silent_mode']) && (int)$oAlert->aExtras['silent_mode'] != 0)
+            return;
+
         switch($aHandler['type']) {
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT:
             	$sMethod = 'getInsertData' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);           	
             	if(!method_exists($this, $sMethod))
-            		$sMethod = 'getInsertData';
+                    $sMethod = 'getInsertData';
 
                 $aDataItems = $this->$sMethod($oAlert, $aHandler);
                 foreach($aDataItems as $aDataItem) {
@@ -48,7 +56,7 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
                         $this->_oModule->onPost($iId);
                     }
                 }
-				break;
+                break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_UPDATE:
                 $this->_oModule->_oDb->updateEvent(array('object_privacy_view' => $iObjectPrivacyView), array('type' => $oAlert->sUnit, 'object_id' => $oAlert->iObject));

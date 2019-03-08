@@ -123,6 +123,9 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
     	if((int)$aEvent['processed'] == 0)
             $this->_processContent($aEvent);
 
+        if(empty($aEvent['content']))
+            return '';
+
         $aEvent['content'] = unserialize($aEvent['content']);
 
         $sParam = 'perform_privacy_check';
