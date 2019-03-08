@@ -198,12 +198,16 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         if(empty($sEvent) || empty($aEvent['content_parsed']))
             return false;
 
-        return $this->parseHtmlByName('et_new_event.html', array(
-        	'icon_url' => !empty($aEvent['content']['owner_icon']) ? $aEvent['content']['owner_icon'] : $this->getIconUrl('std-icon.svg'),
-            'content_url' => $this->_getContentLink($aEvent),
-            'content' => $aEvent['content_parsed'],
-            'date' => bx_process_output($aEvent['date'], BX_DATA_DATETIME_TS),
-        ));
+        $aContent = &$aEvent['content'];
+        return array(
+            'content' => $this->parseHtmlByName('et_new_event.html', array(
+                'icon_url' => !empty($aContent['owner_icon']) ? $aContent['owner_icon'] : $this->getIconUrl('std-icon.svg'),
+                'content_url' => $this->_getContentLink($aEvent),
+                'content' => $aEvent['content_parsed'],
+                'date' => bx_process_output($aEvent['date'], BX_DATA_DATETIME_TS),
+            )),
+            'settings' => !empty($aContent['settings']['email']) ? $aContent['settings']['email'] : array()
+        );
     }
 
     public function getNotificationPush(&$aEvent)
@@ -213,16 +217,20 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
             return false;
 
         $sMessage = preg_replace('/<\/?[a-zA-Z0-9=\'":;\(\)\s_-]+>/i', '"', $aEvent['content_parsed']);
-		if($sMessage)
+        if($sMessage)
             $sMessage = BxTemplFunctions::getInstance()->getStringWithLimitedLength(html_entity_decode($sMessage), $this->_oConfig->getPushMaxLen());
 
         if(empty($sMessage))
             return false;
 
+        $aContent = &$aEvent['content'];
         return array(
-            'url' => $this->_getContentLink($aEvent),
-            'message' => $sMessage,
-            'icon' => !empty($aEvent['content']['owner_icon']) ? $aEvent['content']['owner_icon'] : ''
+            'content' => array(
+                'url' => $this->_getContentLink($aEvent),
+                'message' => $sMessage,
+                'icon' => !empty($aContent['owner_icon']) ? $aContent['owner_icon'] : ''
+            ),
+            'settings' => !empty($aContent['settings']['push']) ? $aContent['settings']['push'] : array()
         );
     }
 

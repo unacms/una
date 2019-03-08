@@ -107,8 +107,9 @@ class BxDolEmailTemplates extends BxDolFactory implements iBxDolSingleton
         if ($iAccountId) {
             $oAccount = BxDolAccount::getInstance($iAccountId);
             if ($oAccount) {
-                $aAccountInfo = $oAccount->getInfo();
-                $iUseLang = $aAccountInfo['lang_id'] ? $aAccountInfo['lang_id'] : $this->iDefaultLangId;
+                $iUseLang = $oAccount->getLanguageId();
+                if(empty($iUseLang))
+                    $iUseLang = $this->iDefaultLangId;
             }
         }
 

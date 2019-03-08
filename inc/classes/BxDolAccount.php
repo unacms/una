@@ -391,9 +391,19 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
     }
 
     /**
+     * Get account email
+     */
+    public function getLanguageId($iAccountId = false)
+    {
+        $iAccountId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
+        $aAccountInfo = $this->getInfo($iAccountId);
+        return $aAccountInfo['lang_id'];
+    }
+
+    /**
      * Is account online
      */
-	public function isOnline($iAccountId = false)
+    public function isOnline($iAccountId = false)
     {
         $iAccountId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
         return $this->_oQuery->isOnline($iAccountId);

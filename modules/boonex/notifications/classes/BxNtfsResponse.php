@@ -33,12 +33,8 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
         if(empty($aHandler) || !is_array($aHandler))
             return;
 
-        /**
-         * silent_mode is needed for alert sending module to tell that this alert
-         * should be ignored with Notifications module completely or partially.
-         * Currently Complete ignore is used only.
-         */
-        if(isset($oAlert->aExtras['silent_mode']) && (int)$oAlert->aExtras['silent_mode'] != 0)
+        $iSilentMode = $this->_getSilentMode($oAlert->aExtras);
+        if($iSilentMode == BX_NTFS_SLTMODE_ABSOLUTE)
             return;
 
         switch($aHandler['type']) {
@@ -51,7 +47,8 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
                 foreach($aDataItems as $aDataItem) {
                     $iId = $this->_oModule->_oDb->insertEvent($aDataItem);
                     if(!empty($iId)) {
-                        $this->sendNotifications($iId, $oAlert, $aHandler);
+                        if($iSilentMode != BX_NTFS_SLTMODE_SITE)
+                            $this->sendNotifications($iId, $oAlert, $aHandler);
 
                         $this->_oModule->onPost($iId);
                     }
@@ -63,16 +60,16 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
                 break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_DELETE:
-        		if($oAlert->sUnit == 'profile' && $oAlert->sAction == 'delete') {
-        			$this->_oModule->_oDb->deleteEvent(array('owner_id' => $oAlert->iObject));
+                if($oAlert->sUnit == 'profile' && $oAlert->sAction == 'delete') {
+                    $this->_oModule->_oDb->deleteEvent(array('owner_id' => $oAlert->iObject));
 
-        			$this->_oModule->_oDb->deleteEvent(array('action' => 'connection_added', 'object_id' => $oAlert->iObject));
-					break;
+                    $this->_oModule->_oDb->deleteEvent(array('action' => 'connection_added', 'object_id' => $oAlert->iObject));
+                        break;
             	}
 
             	$sMethod = 'getDeleteData' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);           	
             	if(!method_exists($this, $sMethod))
-            		$sMethod = 'getDeleteData';
+                    $sMethod = 'getDeleteData';
 
                 $aDataItems = $this->$sMethod($oAlert, $aHandler);
                 foreach($aDataItems as $aDataItem)
@@ -156,30 +153,30 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
 
     	return array(
     	    array(
-    			'owner_id' => $oAlert->aExtras['initiator'],
-    			'type' => $oAlert->sUnit,
-    			'action' => $oAlert->sAction,
-    			'object_id' => $oAlert->aExtras['content'],
-    			'object_owner_id' => $oAlert->aExtras['content'],
-    			'object_privacy_view' => $iObjectPrivacyView,
-    			'subobject_id' => 0,
-    			'content' => '',
-        		'allow_view_event_to' => $iPrivacyView,
-    			'processed' => 0
+                'owner_id' => $oAlert->aExtras['initiator'],
+                'type' => $oAlert->sUnit,
+                'action' => $oAlert->sAction,
+                'object_id' => $oAlert->aExtras['content'],
+                'object_owner_id' => $oAlert->aExtras['content'],
+                'object_privacy_view' => $iObjectPrivacyView,
+                'subobject_id' => 0,
+                'content' => '',
+                'allow_view_event_to' => $iPrivacyView,
+                'processed' => 0
     	    ),
     	    array(
-    			'owner_id' => $oAlert->aExtras['content'],
-    			'type' => $oAlert->sUnit,
-    			'action' => $oAlert->sAction,
-    			'object_id' => $oAlert->aExtras['initiator'],
-    			'object_owner_id' => $oAlert->aExtras['initiator'],
-    			'object_privacy_view' => $iObjectPrivacyView,
-    			'subobject_id' => 0,
-    			'content' => '',
-        		'allow_view_event_to' => $iPrivacyView,
-    			'processed' => 0
+                'owner_id' => $oAlert->aExtras['content'],
+                'type' => $oAlert->sUnit,
+                'action' => $oAlert->sAction,
+                'object_id' => $oAlert->aExtras['initiator'],
+                'object_owner_id' => $oAlert->aExtras['initiator'],
+                'object_privacy_view' => $iObjectPrivacyView,
+                'subobject_id' => 0,
+                'content' => '',
+                'allow_view_event_to' => $iPrivacyView,
+                'processed' => 0
     	    ),
-		);
+        );
     }
     
     protected function getDeleteDataSysProfilesFriendsConnectionRemoved(&$oAlert, &$aHandler)
@@ -210,18 +207,18 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
     {
     	return array(
     	    array(
-    			'owner_id' => $oAlert->aExtras['initiator'],
-    			'type' => $oAlert->sUnit,
-    			'action' => $oAlert->sAction,
-    			'object_id' => $oAlert->aExtras['content'],
-    			'object_owner_id' => $oAlert->aExtras['content'],
-    			'object_privacy_view' => $this->_getObjectPrivacyView($oAlert->aExtras),
-    			'subobject_id' => 0,
-    			'content' => '',
-        		'allow_view_event_to' => $this->_oModule->_oConfig->getPrivacyViewDefault('event'),
-    			'processed' => 0
+                'owner_id' => $oAlert->aExtras['initiator'],
+                'type' => $oAlert->sUnit,
+                'action' => $oAlert->sAction,
+                'object_id' => $oAlert->aExtras['content'],
+                'object_owner_id' => $oAlert->aExtras['content'],
+                'object_privacy_view' => $this->_getObjectPrivacyView($oAlert->aExtras),
+                'subobject_id' => 0,
+                'content' => '',
+                'allow_view_event_to' => $this->_oModule->_oConfig->getPrivacyViewDefault('event'),
+                'processed' => 0
     	    )
-		);
+        );
     }
 
     protected function getDeleteDataSysProfilesSubscriptionsConnectionRemoved(&$oAlert, &$aHandler)
@@ -240,12 +237,31 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
 
     protected function sendNotifications($iId, &$oAlert, &$aHandler)
     {
+        $aDeliveryTypes = array();
+
+        $iSilentMode = $this->_getSilentMode($oAlert->aExtras);
+        switch($iSilentMode) {
+            case BX_NTFS_SLTMODE_ABSOLUTE:
+            case BX_NTFS_SLTMODE_SITE:
+                return;
+
+            case BX_NTFS_SLTMODE_SITE_EMAIL:
+                $aDeliveryTypes[] = BX_BASE_MOD_NTFS_DTYPE_EMAIL;
+                break;
+
+            case BX_NTFS_SLTMODE_SITE_PUSH:
+                $aDeliveryTypes[] = BX_BASE_MOD_NTFS_DTYPE_PUSH;
+                break;
+
+            default:
+                $aDeliveryTypes = array(BX_BASE_MOD_NTFS_DTYPE_EMAIL, BX_BASE_MOD_NTFS_DTYPE_PUSH);
+        }
+
         $aEvent = $this->_oModule->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
         if(empty($aEvent) || !is_array($aEvent))
             return;
 
         $aSendUsing = array();
-        $aDeliveryTypes = array(BX_BASE_MOD_NTFS_DTYPE_EMAIL, BX_BASE_MOD_NTFS_DTYPE_PUSH);
         foreach($aDeliveryTypes as $sDeliveryType) {
             $aHidden = $this->_oModule->_oConfig->getHandlersHidden($sDeliveryType);
             if(in_array($aHandler['id'], $aHidden))
@@ -257,13 +273,13 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
             if(!$this->_oModule->_oTemplate->isMethodExists($sMethodGet) || !method_exists($this, $sMethodSend))
                 continue;
 
-            $mixedContent = $this->_oModule->_oTemplate->$sMethodGet($aEvent);
-            if($mixedContent === false)
+            $mixedNotification = $this->_oModule->_oTemplate->$sMethodGet($aEvent);
+            if($mixedNotification === false)
                 continue;
 
             $aSendUsing[$sDeliveryType] = array(
             	'method' => $sMethodSend,
-                'content' => $mixedContent
+                'notification' => $mixedNotification
             );
         }
 
@@ -315,27 +331,60 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
                     if((int)$aSetting['active_adm'] == 0 || (int)$aSetting['active_pnl'] == 0)
                         continue;
 
-                    if($this->{$aDeliveryType['method']}($oProfile, $aDeliveryType['content']) !== false)
+                    if($this->{$aDeliveryType['method']}($oProfile, $aDeliveryType['notification']) !== false)
                         break;
                 }
         }
     }
 
-    protected function sendNotificationEmail($oProfile, $sContent)
+    protected function sendNotificationEmail($oProfile, $aNotification)
     {
-        return sendMailTemplate('bx_notifications_new_event', $oProfile->getAccountId(), $oProfile->id(), array('content' => $sContent), BX_EMAIL_NOTIFY, true);
+        if(!$oProfile)
+            return false;
+
+        $oAccount = $oProfile->getAccountObject();
+        if(!$oAccount)
+            return false;
+
+        $aSettings = &$aNotification['settings'];
+
+        $sTemplate = !empty($aSettings['template']) ? $aSettings['template'] : 'bx_notifications_new_event';
+        $aTemplateMarkers = array('content' => $aNotification['content']);
+        if(!empty($aSettings['markers']) && is_array($aSettings['markers']))
+            $aTemplateMarkers = array_merge($aTemplateMarkers, $aSettings['markers']);              
+
+        $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate($sTemplate, $aTemplateMarkers, $oAccount->id(), $oProfile->id());
+        if(!$aTemplate)
+            return false;
+
+        $sSubject = !empty($aSettings['subject']) ? $aSettings['subject'] : $aTemplate['Subject'];
+        return sendMail($oAccount->getEmail(), $sSubject, $aTemplate['Body'], 0, array(), BX_EMAIL_NOTIFY, 'html', false, array(), true);
     }
 
-    protected function sendNotificationPush($oProfile, $aContent)
+    protected function sendNotificationPush($oProfile, $aNotification)
     {
-        $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
+        $oAccount = $oProfile->getAccountObject();
+        if(!$oAccount)
+            return false;
 
+        $oLanguage = BxDolLanguages::getInstance();
+
+        $iLanguage = $oAccount->getLanguageId();
+        if(empty($iLanguage))
+            $iLanguage = $oLanguage->getCurrentLangId();
+
+        $sLanguage = $oLanguage->getLangName($iLanguage);
+
+        $aContent = &$aNotification['content'];
+        $aSettings = &$aNotification['settings'];
+
+        $sSubject = !empty($aSettings['subject']) ? $aSettings['subject'] : _t('_bx_ntfs_push_new_event_subject', getParam('site_title'));
         return BxDolPush::getInstance()->send($oProfile->id(), array(
             'contents' => array(
                 $sLanguage => $aContent['message']
             ),
             'headings' => array(
-                $sLanguage => _t('_bx_ntfs_push_new_event_subject', getParam('site_title'))
+                $sLanguage => $sSubject
             ),
             'url' => $aContent['url'],
             'icon' => $aContent['icon']
@@ -352,6 +401,14 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
             return (int)$aExtras['meta'];
 
         return 0;
+    }
+
+    protected function _getSilentMode($aExtras)
+    {
+        if(isset($aExtras['silent_mode']))
+            return (int)$aExtras['silent_mode'];
+
+        return BX_NTFS_SLTMODE_DISABLED;
     }
 
     protected function _addRecipient($iUser, $sSettingType, &$aRecipients)

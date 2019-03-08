@@ -780,7 +780,7 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function serviceGetNotificationsPost($aEvent)
     {
-		$CNF = &$this->_oConfig->CNF;
+        $CNF = &$this->_oConfig->CNF;
 
         $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);
         if(empty($aContentInfo) || !is_array($aContentInfo))
@@ -789,14 +789,34 @@ class BxBaseModGeneralModule extends BxDolModule
         $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
         $sEntryCaption = isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
 
-		return array(
-			'entry_sample' => $CNF['T']['txt_sample_single'],
-			'entry_url' => $sEntryUrl,
-			'entry_caption' => $sEntryCaption,
-			'entry_author' => $aContentInfo[$CNF['FIELD_AUTHOR']],
-			'entry_privacy' => '', //may be empty or not specified. In this case Public privacy will be used.
-			'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
-		);
+        return array(
+            'entry_sample' => $CNF['T']['txt_sample_single'],
+            'entry_url' => $sEntryUrl,
+            'entry_caption' => $sEntryCaption,
+            'entry_author' => $aContentInfo[$CNF['FIELD_AUTHOR']],
+            'entry_privacy' => '', //may be empty or not specified. In this case Public privacy will be used.
+            'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+            'settings' => array(
+                'email' => array(
+                    'subject' => 'My Custom Subject for ' . $sEntryCaption
+                ),
+            )
+            /*
+             * Custom settings for email and/or push notifications can be provided here. 
+             * Only necessary parts of 'settings' array can be used.
+             * 
+            'settings' => array(
+                'email' => array(
+                    'template' => '',   //--- custom email template
+                    'markers' => '',    //--- markers to parse email parts (subject, body) with
+                    'subject' => ''     //--- custom email subject
+                ),
+                'push' => array(
+                    'subject' => ''     //--- custom push notification subject
+                )
+            )
+             */
+        );
     }
 
 	/**
