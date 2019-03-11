@@ -116,9 +116,20 @@ class BxNtfsDb extends BxBaseModNotificationsDb
                     break;
 
                 case BX_NTFS_TYPE_OBJECT_OWNER_AND_CONNECTIONS:
-                    $sWhereClauseObjectOwner = $this->prepareAsString("`{$this->_sTable}`.`owner_id` <> `{$this->_sTable}`.`object_owner_id` AND `{$this->_sTable}`.`object_owner_id`=? ", $aParams['owner_id']);
+                    /**
+                     * 'personal' notifications are taken by: 
+                     * 1. 'owner_id', in case of somebody performed an action in requested profile's context
+                     * 'object_privacy_view' < 0 AND 'owner_id' == ABS('object_privacy_view'))
+                     * Currently it happens when somebody posted a Direct Timeline post in requested profile.
+                     * 2. 'object_owner_id', in case of somebody performed an action with content 
+                     * owned by the requested profile.
+                     */
+                    $sWhereClauseObjectOwner = $this->prepareAsString("`{$this->_sTable}`.`owner_id` <> `{$this->_sTable}`.`object_owner_id` AND ((`{$this->_sTable}`.`owner_id`=? AND `{$this->_sTable}`.`object_privacy_view`<0 AND `{$this->_sTable}`.`owner_id`=ABS(`{$this->_sTable}`.`object_privacy_view`)) OR `{$this->_sTable}`.`object_owner_id`=?) ", $aParams['owner_id'], $aParams['owner_id']);
                     $sWhereClauseObjectOwner .= $this->prepareAsString("AND `{$this->_sTableSettings}`.`type`=?", BX_NTFS_STYPE_PERSONAL);
 
+                    /**
+                     * 'follow' notifications are taken by connection with `owner_id`
+                     */
                     $sWhereClauseConnections = '0';
                     $oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
                     $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($this->_sTable, 'owner_id', $aParams['owner_id']);

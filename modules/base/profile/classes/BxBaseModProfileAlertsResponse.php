@@ -50,15 +50,24 @@ class BxBaseModProfileAlertsResponse extends BxBaseModGeneralAlertsResponse
          * 3. User3 posts something on User2's timeline.
          * Result: User1 would be notifiend when the timeline of following profile (User2) was update by 3d party user.
          */
-        if($oAlert->sUnit == 'bx_timeline' && $oAlert->sAction == 'post_common' && !empty($oAlert->aExtras['object_author_id'])) {
-            $oTimelineOwner = BxDolProfile::getInstance($oAlert->aExtras['object_author_id']);
-            if($oTimelineOwner && $oTimelineOwner->getModule() == $this->_oModule->getName() && $oTimelineOwner->id() != $oAlert->iSender) {
+        /*
+         * The code was commented because it looks like the Retranslation of 
+         * Timeline Common Post is redundant. It's happened after system of Contexts was created.
+         * 
+         * TODO: If nothing happened, remove the code in UNA v.10.
+         * Don't forget to:
+         * 1. Stop listening 'bx_timeline' - 'post_common' alert.
+         * 2. Remove BxBaseModProfileModule::serviceGetNotificationsTimelinePostCommon method
+         * 3. Remove language keys from $CNF['T']['txt_ntfs_timeline_post_common']
+         * 
+        if($oAlert->sUnit == 'bx_timeline' && $oAlert->sAction == 'post_common' && !empty($oAlert->aExtras['owner_id'])) {
+            $iTimelineOwner = (int)$oAlert->aExtras['owner_id'];
+            $oTimelineOwner = BxDolProfile::getInstance($iTimelineOwner);
+            if($oTimelineOwner && $oTimelineOwner->getModule() == $this->_oModule->getName() && $iTimelineOwner != $oAlert->iSender) {
                 $aContentInfo = $this->_oModule->serviceGetContentInfoById($oTimelineOwner->getContentId());
 
-                /*
-                 * Note. Timeline owner profile ID is used as alert sender and also a content (group) owner (author).
-                 */
-                $iSenderId = $iObjectAuthorId = $oTimelineOwner->id(); 
+                //--- Note. Timeline owner profile ID is used as alert sender and also a content (group) owner (author).
+                $iSenderId = $iObjectAuthorId = $iTimelineOwner; 
                 bx_alert($this->_oModule->getName(), 'timeline_post_common', $aContentInfo[$CNF['FIELD_ID']], $iSenderId, array(
                     'object_author_id' => $iObjectAuthorId,
                     'timeline_post_id' => $oAlert->iObject, 
@@ -66,11 +75,12 @@ class BxBaseModProfileAlertsResponse extends BxBaseModGeneralAlertsResponse
 
                     'content' => $aContentInfo,
 
-                    'group_profile' => $oTimelineOwner->id(), 
+                    'group_profile' => $iTimelineOwner, 
                     'profile' => $oAlert->iSender,
                 ));
             }
         }
+        */
 
         if ($this->MODULE != $oAlert->sUnit)
             return;

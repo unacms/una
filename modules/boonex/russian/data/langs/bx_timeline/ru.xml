@@ -232,7 +232,6 @@
     <string name="_bx_timeline_txt_sample_with_image"><![CDATA[с изображением]]></string>
     <string name="_bx_timeline_txt_sample_with_video"><![CDATA[с видео]]></string>
     <string name="_bx_timeline_txt_sample_with_media"><![CDATA[с медиа]]></string>
-    <string name="_bx_timeline_ntfs_txt_object_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> - {entry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
     <string name="_bx_timeline_txt_today"><![CDATA[Сегодня]]></string>
     <string name="_bx_timeline_txt_some_text_here"><![CDATA[Поделитесь своими мыслями]]></string>
     <string name="_bx_timeline_txt_show"><![CDATA[Показать]]></string>

@@ -1431,14 +1431,19 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(empty($aContent) || !is_array($aContent))
             return array();
 
+        if($this->_oConfig->isSystem($aContent['type'], $aContent['action']))
+            $iEntryAuthor = (int)$aContent['owner_id'];
+        else
+            $iEntryAuthor = (int)$aContent['object_id'];
+
         $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : $this->_oConfig->getTitle($aContent['description'], $aContent['object_id']);
 
         return array(
             'entry_sample' => $CNF['T']['txt_sample_single_ext'],
             'entry_url' => $this->_oConfig->getItemViewUrl($aContent),
             'entry_caption' => $sEntryCaption,
-            'entry_author' => $aContent['owner_id'],
-            'lang_key' => '_bx_timeline_ntfs_txt_object_added', //may be empty or not specified. In this case the default one from Notification module will be used.
+            'entry_author' => $iEntryAuthor,
+            'lang_key' => '' //may be empty or not specified. In this case the default one from Notification module will be used.
         );
     }
 
@@ -2674,18 +2679,19 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $this->_oTemplate->getData($aEvent);
 
             $sPostType = 'system';
-            $iSenderId = $aEvent['owner_id'];
-        } else {
+            $iSenderId = $iObjectAuthorId = (int)$aEvent['owner_id'];
+        } 
+        else {
             $sPostType = 'common';
-            $iSenderId = $aEvent['object_id'];
+            $iSenderId = $iObjectAuthorId = (int)$aEvent['object_id'];
         }
 
         //--- Event -> Post for Alerts Engine ---//
-        $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'post_' . $sPostType, $iId, $iSenderId, array(
-        	'privacy_view' => $aEvent['object_privacy_view'],
-        	'object_author_id' => $aEvent['owner_id'],
+        bx_alert($this->_oConfig->getObject('alert'), 'post_' . $sPostType, $iId, $iSenderId, array(
+            'owner_id' => $aEvent['owner_id'],
+            'object_author_id' => $iObjectAuthorId,
+            'privacy_view' => $aEvent['object_privacy_view'],
         ));
-        $oAlert->alert();
         //--- Event -> Post for Alerts Engine ---//
     }
 

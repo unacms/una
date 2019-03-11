@@ -246,29 +246,29 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
     protected function _processContent(&$aEvent)
     {
     	$aContent = $this->_getContent($aEvent);
-		if(empty($aContent) || !is_array($aContent)) 
-			return;
+        if(empty($aContent) || !is_array($aContent)) 
+            return;
 
-		$aSet = array();
-		if(!empty($aContent['entry_author'])) {
-			$aSet['object_owner_id'] = (int)$aContent['entry_author'];
-			unset($aContent['entry_author']);
-		}
+        $aSet = array();
+        if(!empty($aContent['entry_author'])) {
+            $aSet['object_owner_id'] = (int)$aContent['entry_author'];
+            unset($aContent['entry_author']);
+        }
 
-		if(!empty($aContent['entry_privacy'])) {
-			$aSet['allow_view_event_to'] = $aContent['entry_privacy'];
-			$aEvent['allow_view_event_to'] = $aContent['entry_privacy'];
-			unset($aContent['entry_privacy']);
-		}
+        if(!empty($aContent['entry_privacy'])) {
+            $aSet['allow_view_event_to'] = $aContent['entry_privacy'];
+            $aEvent['allow_view_event_to'] = $aContent['entry_privacy'];
+            unset($aContent['entry_privacy']);
+        }
 
-		$aEvent['content'] = serialize($aContent);
-		$aSet = array_merge($aSet, array(
-			'content' => $aEvent['content'], 
-			'processed' => 1
-		));
+        $aEvent['content'] = serialize($aContent);
+        $aSet = array_merge($aSet, array(
+            'content' => $aEvent['content'], 
+            'processed' => 1
+        ));
 
-		$this->_oDb->updateEvent($aSet, array('id' => $aEvent['id']));
-		return;
+        $this->_oDb->updateEvent($aSet, array('id' => $aEvent['id']));
+        return;
     }
 
     protected function _getContent(&$aEvent)
