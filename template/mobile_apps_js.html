@@ -1,0 +1,29 @@
+<script>
+    function bx_mobile_apps_show_main_menu () {
+        if ($('.cd-side-nav').size())
+            $([$('.cd-side-nav'), $('.cd-nav-trigger')]).toggleClass('nav-is-visible');
+        else
+            bx_menu_slide_inline('#bx-sliding-menu-sys_site', null, 'site');
+    }
+
+    function bx_mobile_apps_show_profile_menu () {
+        bx_menu_slide_inline('#bx-sliding-menu-account', null, 'site');
+    }
+
+    function bx_mobile_apps_show_add_menu () {
+        bx_menu_slide_inline('#bx-sliding-menu-sys_add_content', null, 'site');
+    }
+
+    function bx_mobile_apps_home () {
+        if (window.history.length > 1)
+            window.history.go(-(window.history.length - 1));
+    }
+
+    console.log('Navigation History:' + window.history.length);
+    var sMsg = JSON.stringify(__msg__);
+    console.log(sMsg);
+    if ('undefined' !== typeof(window.ReactNativeWebView))
+        window.ReactNativeWebView.postMessage(sMsg);
+    else
+        window.postMessage(sMsg, '*');
+</script>

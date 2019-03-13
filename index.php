@@ -26,12 +26,27 @@ if (!file_exists("./inc/header.inc.php")) {
 require_once('./inc/header.inc.php');
 require_once(BX_DIRECTORY_PATH_INC . "profiles.inc.php");
 
+$_GET['i'] = 'home';
+
+if (!isLogged() && false !== strpos($_SERVER['HTTP_USER_AGENT'], 'UNAMobileApp')) {
+
+    require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
+    
+    $sLoginForm = BxDolService::call('system', 'login_form', array('ajax_form'), 'TemplServiceLogin');
+
+    $oTemplate = BxDolTemplate::getInstance();
+    $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
+    $oTemplate->setPageContent ('page_main_code', DesignBoxContent('', $sLoginForm, BX_DB_PADDING_NO_CAPTION)); 
+    $oTemplate->getPageCode();
+    
+    exit;
+}
+
 if (!isLogged() && getParam('sys_site_splash_enabled')) {
     require_once("./splash.php");
     exit;
 }
 
-$_GET['i'] = 'home';
 require_once("./page.php");
 
 /** @} */
