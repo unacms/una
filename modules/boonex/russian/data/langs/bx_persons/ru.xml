@@ -241,7 +241,7 @@
     <string name="_bx_persons_menu_item_title_relations"><![CDATA[Связи]]></string>
     <string name="_bx_persons_menu_item_title_system_related_me"><![CDATA[Связи со мной]]></string>
     <string name="_bx_persons_menu_item_title_related_me"><![CDATA[Связи со мной]]></string>
-    <string name="_bx_persons_menu_item_title_system_en_bx_persons_menu_item_title_subscribed_metries_public"><![CDATA[Публичные]]></string>
+    <string name="_bx_persons_menu_item_title_system_entries_public"><![CDATA[Публичные]]></string>
     <string name="_bx_persons_menu_item_title_entries_recent"><![CDATA[Новые]]></string>
     <string name="_bx_persons_menu_item_title_system_entries_recent"><![CDATA[Новые]]></string>
     <string name="_bx_persons_menu_item_title_system_entries_search"><![CDATA[Поиск]]></string>

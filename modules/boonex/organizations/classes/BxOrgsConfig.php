@@ -16,6 +16,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
         parent::__construct($aModule);
 
         $this->_aMenuItems2MethodsSubmenu = array_merge($this->_aMenuItems2MethodsSubmenu, array(
+            'organization-profile-relations' => 'checkAllowedRelationsView',
             'organization-profile-subscriptions' => 'checkAllowedSubscriptionsView'
         ));
 
