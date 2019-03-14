@@ -179,11 +179,15 @@ class BxDolFormQuery extends BxDolDb
 
     static public function getDataItems($sKey, $isUseForSet = false, $sUseValues = BX_DATA_VALUES_DEFAULT)
     {
-        if ($sUseValues != BX_DATA_VALUES_DEFAULT && $sUseValues != BX_DATA_VALUES_ADDITIONAL)
+        $oDb = BxDolDb::getInstance();
+
+        if(!in_array($sUseValues, array(BX_DATA_VALUES_DEFAULT, BX_DATA_VALUES_ADDITIONAL, BX_DATA_VALUES_ALL)))
             $sUseValues = BX_DATA_VALUES_DEFAULT;
 
-        $oDb = BxDolDb::getInstance();
-        $sQuery = $oDb->prepare("SELECT `Value`, `LKey`, `LKey2` FROM `sys_form_pre_values` WHERE `Key` = ? ORDER BY `Order` ASC", $sKey);
+        $sQuery = $oDb->prepare("SELECT `Value`, `LKey`, `LKey2`, `Data` FROM `sys_form_pre_values` WHERE `Key` = ? ORDER BY `Order` ASC", $sKey);
+        if($sUseValues == BX_DATA_VALUES_ALL)
+            return $oDb->getAllWithKey($sQuery, 'Value');
+
         $a = $oDb->getAll($sQuery);
 
         $iMaxValue = 0;

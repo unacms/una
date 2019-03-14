@@ -1635,6 +1635,7 @@
 	<string name="_sys_acl_expire"><![CDATA[Expire: ]]></string>
 	<string name="_sys_acl_expire_never"><![CDATA[never]]></string>
 	<string name="_sys_add_friend"><![CDATA[Add friend]]></string>
+        <string name="_sys_add_relation"><![CDATA[Add relation]]></string>
 	<string name="_sys_adm_installed"><![CDATA[Installed]]></string>
 	<string name="_sys_admin_apply"><![CDATA[Apply]]></string>
 	<string name="_sys_admin_filter"><![CDATA[Filter:]]></string>
@@ -1711,6 +1712,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_chart_accounts_growth"><![CDATA[Accounts: Growth]]></string>
 	<string name="_sys_chart_accounts_growth_speed"><![CDATA[Accounts: Growth Speed]]></string>
 	<string name="_sys_close"><![CDATA[Close]]></string>
+        <string name="_sys_confirm"><![CDATA[Confirm]]></string>
+        <string name="_sys_confirmed"><![CDATA[Confirmed]]></string>
 	<string name="_sys_conn_err_connection_already_exists"><![CDATA[Connection already exists]]></string>
 	<string name="_sys_conn_err_connection_does_not_exists"><![CDATA[Connection doesn't exist]]></string>
 	<string name="_sys_conn_err_connection_is_awaiting_confirmation"><![CDATA[Connection request is awaiting confirmation]]></string>
@@ -1729,6 +1732,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_connect_option_privacy"><![CDATA[Default privacy for created profiles]]></string>
 
 	<string name="_sys_currency"><![CDATA[{0}{1}]]></string>
+        <string name="_sys_decline"><![CDATA[Decline]]></string>
 	<string name="_sys_designbox_0"><![CDATA[Content]]></string>
 	<string name="_sys_designbox_1"><![CDATA[Content + Title + Background]]></string>
 	<string name="_sys_designbox_10"><![CDATA[Content + Padding]]></string>
@@ -2370,6 +2374,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_title_set_acl_level"><![CDATA[ACL Levels]]></string>
 	<string name="_sys_menu_title_social_sharing"><![CDATA[Social Sharing]]></string>
         <string name="_sys_menu_title_create_post"><![CDATA[Create Post Menu]]></string>
+        <string name="_sys_menu_title_add_relation"><![CDATA[Add Relation Menu]]></string>
 	<string name="_sys_menu_title_submenu"><![CDATA[Site Submenu]]></string>
 	<string name="_sys_menu_title_toolbar_member"><![CDATA[Member Toolbar]]></string>
 	<string name="_sys_menu_title_toolbar_site"><![CDATA[Site Toolbar]]></string>
@@ -2486,6 +2491,15 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_paginate_info"><![CDATA[{0}-{1}]]></string>
 	<string name="_sys_paginate_view_all"><![CDATA[View All]]></string>
 	<string name="_sys_please_select"><![CDATA[Please select...]]></string>
+        <string name="_sys_pre_lists_relations"><![CDATA[Relations]]></string>
+        <string name="_sys_pre_lists_relations_husband"><![CDATA[husband]]></string>
+        <string name="_sys_pre_lists_relations_wife"><![CDATA[wife]]></string>
+        <string name="_sys_pre_lists_relations_father"><![CDATA[father]]></string>
+        <string name="_sys_pre_lists_relations_mother"><![CDATA[mother]]></string>
+        <string name="_sys_pre_lists_relations_son"><![CDATA[son]]></string>
+        <string name="_sys_pre_lists_relations_daughter"><![CDATA[daughter]]></string>
+        <string name="_sys_pre_lists_relations_brother"><![CDATA[brother]]></string>
+        <string name="_sys_pre_lists_relations_sister"><![CDATA[sister]]></string>
 	<string name="_sys_pre_lists_report_types"><![CDATA[Report Types]]></string>
 	<string name="_sys_pre_lists_report_types_spam"><![CDATA[spam]]></string>
 	<string name="_sys_pre_lists_report_types_scam"><![CDATA[scam]]></string>
@@ -2520,10 +2534,11 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_ps_group_title_secret"><![CDATA[Secret]]></string>
     <string name="_sys_ps_ferr_incorrect_select"><![CDATA[You need to select some value]]></string>
     <string name="_sys_ps_space_title_friend"><![CDATA[friend]]></string>
-	<string name="_sys_push_notification_request"><![CDATA[Would you like to get notifications from {0}?]]></string>  
+    <string name="_sys_push_notification_request"><![CDATA[Would you like to get notifications from {0}?]]></string>  
     <string name="_sys_push_notification_request_yes"><![CDATA[Yes]]></string>  
     <string name="_sys_push_notification_request_no"><![CDATA[No, thanks]]></string>
     <string name="_sys_read_more"><![CDATA[Continue reading "{0}"]]></string>
+    <string name="_sys_relation"><![CDATA[Relation]]></string>
 	<string name="_sys_request_module_not_found_cpt"><![CDATA[Module was not found]]></string>
 	<string name="_sys_request_module_not_found_cnt"><![CDATA[Module({0}) was not found]]></string>
 	<string name="_sys_request_page_not_found_cpt"><![CDATA[Page was not found]]></string>
@@ -2551,6 +2566,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_splash_inp_placeholder"><![CDATA[site address]]></string>
 	<string name="_sys_splash_inp_postfix"><![CDATA[.online.me]]></string>
 	<string name="_sys_splash_slogan"><![CDATA[The easiest way to create your own social website.]]></string>
+        <string name="_sys_status"><![CDATA[Status]]></string>
 	<string name="_sys_storage_err_db"><![CDATA[database error]]></string>
 	<string name="_sys_storage_err_engine_add"><![CDATA[error occurred]]></string>
 	<string name="_sys_storage_err_engine_get"><![CDATA[error occurred]]></string>
@@ -2701,9 +2717,10 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_txt_unsubscribe_email_settings_update_success"><![CDATA[Your email preferences has been successfully updated.]]></string>
 	<string name="_sys_txt_unsubscribe_error_occured"><![CDATA[Error occurred, please login to your account and update email references there or contact site administrator to unsubscribe you manually.]]></string>
 	<string name="_sys_txt_unsubscribe_info"><![CDATA[Update email preferences for <b>{0}</b>]]></string>
-    <string name="_sys_txt_unsubscribe_wrong_link"><![CDATA[Unsubscribe link is wrong.]]></string>
-    <string name="_sys_txt_user_n"><![CDATA[User #{0}]]></string>
-  <string name="_sys_txt_reports_title"><![CDATA[Reports]]></string>
+        <string name="_sys_txt_unsubscribe_wrong_link"><![CDATA[Unsubscribe link is wrong.]]></string>
+        <string name="_sys_txt_user_n"><![CDATA[User #{0}]]></string>
+        <string name="_sys_txt_reports_title"><![CDATA[Reports]]></string>
+        <string name="_sys_unconfirmed"><![CDATA[Unconfirmed]]></string>
 	<string name="_sys_upgrade_conclusion"><![CDATA[<h3>Important info:</h3><p>{0}</p>]]></string>
 	<string name="_sys_upgrade_db_and_files_versions_different"><![CDATA[Database and files versions are different, probably previous patch wasn't applied correctly.]]></string>
 	<string name="_sys_upgrade_files_checksum_failed"><![CDATA[Can't apply upgrade because the following files were modified: {0}]]></string>

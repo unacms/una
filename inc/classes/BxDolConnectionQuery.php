@@ -253,6 +253,18 @@ class BxDolConnectionQuery extends BxDolDb
         return true;
     }
 
+    public function updateConnection ($iInitiator, $iContent, $aSet)
+    {
+        if(empty($aSet) || !is_array($aSet))
+            return false;
+
+        $sQuery = $this->prepare("UPDATE `" . $this->_sTable . "` SET " . $this->arrayToSQL($aSet) . " WHERE `initiator` = ? AND `content` = ?", $iInitiator, $iContent);
+        if ($bResult = $this->query($sQuery))
+            $this->cleanMemory('BxDolConnectionQuery::getConnection' . $this->_sTable . $iInitiator . $iContent);
+
+        return $bResult;
+    }
+
     public function updateConnectionMutual ($iInitiator, $iContent, $iMutual)
     {
         $sQuery = $this->prepare("UPDATE `" . $this->_sTable . "` SET `mutual` = ? WHERE `initiator` = ? AND `content` = ?", $iMutual, $iInitiator, $iContent);

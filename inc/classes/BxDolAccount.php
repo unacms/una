@@ -391,7 +391,7 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
     }
 
     /**
-     * Get account email
+     * Get language ID
      */
     public function getLanguageId($iAccountId = false)
     {

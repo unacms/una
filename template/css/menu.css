@@ -747,3 +747,16 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
     line-height: 1.0rem;
     font-size: 1.0rem;
 }
+
+/* --------------- add relation menu */
+.bx-popup .bx-menu-ver.bx-menu-object-sys_add_relation li a {
+    line-height: normal;
+}
+.bx-popup .bx-menu-ver.bx-menu-object-sys_add_relation li a span {
+    margin-left: 0;
+    text-transform: capitalize;
+}
+
+.bx-menu-add-relation-hidden {
+    display: none;
+}

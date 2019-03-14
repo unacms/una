@@ -538,6 +538,8 @@ class BxDolStudioFormsQuery extends BxDolDb
                 `tv`.`LKey` AS `LKey`,
                 `tv`.`LKey2` AS `lkey2`,
                 `tv`.`LKey2` AS `LKey2`,
+                `tv`.`Data` AS `data`,
+                `tv`.`Data` AS `Data`,
                 `tv`.`Order` AS `order`,
                 `tv`.`Order` AS `Order`" . $sSelectClause . "
             FROM `sys_form_pre_values` AS `tv` " . $sJoinClause . "

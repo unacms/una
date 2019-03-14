@@ -7,33 +7,23 @@
  * @{
  */
 
-require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
-
-class BxDolGridSubscriptions extends BxDolGridSubscribedMe
+class BxDolGridSubscriptions extends BxDolGridConnectionOut
 {
-    protected $_sConnectionMethod = 'getConnectedContentAsSQLParts';
-
     public function __construct ($aOptions, $oTemplate = false)
     {
         parent::__construct ($aOptions, $oTemplate);
+
+        $this->_sConnectionObject = 'sys_profiles_subscriptions';
     }
 
-    protected function _delete ($mixedId)
+    public function performActionSubscribe()
     {
-        list($iId, $iViewedId) = $this->_prepareIds();
-
-        if(!$this->_oConnection->isConnected($iViewedId, $iId))
-            return true;
-
-        return $this->_oConnection->removeConnection($iViewedId, $iId);
+        return parent::performActionAdd();
     }
 
-    protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    protected function _getActionSubscribe ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-        if (!isLogged() || !$this->_bOwner)
-            return '';
-
-        return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+        return $this->_getActionAdd ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 }
 

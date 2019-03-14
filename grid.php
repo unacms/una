@@ -23,6 +23,9 @@ if (!$oGrid) {
     exit;
 }
 
+if(method_exists($oGrid, 'init'))
+    $oGrid->init();
+
 $sAction = 'performAction' . bx_gen_method_name(bx_process_input(bx_get('a')));
 if (method_exists($oGrid, $sAction)) {
     $oGrid->$sAction();

@@ -141,7 +141,7 @@ class BxBaseServiceConnections extends BxDol
         return $i;
     }
 
-	/**
+    /**
      * get grid with subscriptions connections
      */
     public function serviceSubscriptionsTable ($iProfileId = 0)
@@ -172,7 +172,7 @@ class BxBaseServiceConnections extends BxDol
         ));
     }
 
-	/**
+    /**
      * get grid with subscribed me connections
      */
     public function serviceSubscribedMeTable ($iProfileId = 0)
@@ -199,6 +199,60 @@ class BxBaseServiceConnections extends BxDol
 
         return BxDolTemplate::getInstance()->parseHtmlByName('connections_list.html', array(
             'name' => 'subscribers',
+            'content' => $sContent
+        ));
+    }
+
+    /**
+     * get grid with 'relations' connections
+     */
+    public function serviceRelationsTable ($iProfileId = 0)
+    {
+        if(!$iProfileId && bx_get('profile_id') !== false)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+
+        $aProfile = BxDolProfile::getInstance($iProfileId)->getInfo();
+        if(empty($aProfile) || !is_array($aProfile))
+            return false;
+
+        $oGrid = BxDolGrid::getObjectInstance('sys_grid_relations');
+        if (!$oGrid)
+            return false;
+
+        $oGrid->setProfileId($iProfileId);
+        $sContent = $oGrid->getCode();
+        if(empty($sContent))
+            return false;
+
+        return BxDolTemplate::getInstance()->parseHtmlByName('connections_list.html', array(
+            'name' => 'relations',
+            'content' => $sContent
+        ));
+    }
+
+    /**
+     * get grid with 'related me' connections
+     */
+    public function serviceRelatedMeTable ($iProfileId = 0)
+    {
+        if(!$iProfileId && bx_get('profile_id') !== false)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+
+        $aProfile = BxDolProfile::getInstance($iProfileId)->getInfo();
+        if(empty($aProfile) || !is_array($aProfile))
+            return false;
+
+        $oGrid = BxDolGrid::getObjectInstance('sys_grid_related_me');
+        if(!$oGrid)
+            return false;
+
+        $oGrid->setProfileId($iProfileId);
+        $sContent = $oGrid->getCode();
+        if(empty($sContent))
+            return false;
+
+        return BxDolTemplate::getInstance()->parseHtmlByName('connections_list.html', array(
+            'name' => 'related-me',
             'content' => $sContent
         ));
     }
