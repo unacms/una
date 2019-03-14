@@ -169,8 +169,11 @@
     <string name="_bx_dev_frm_err_prevalues_lkey"><![CDATA[Здесь нужно ввести значение]]></string>
     <string name="_bx_dev_frm_txt_sys_prevalues_lkey2"><![CDATA[Дополнительный заголовок]]></string>
     <string name="_bx_dev_frm_txt_prevalues_lkey2"><![CDATA[Дополнительный заголовок]]></string>
+    <string name="_bx_dev_frm_txt_sys_prevalues_data"><![CDATA[Данные]]></string>
+    <string name="_bx_dev_frm_txt_prevalues_data"><![CDATA[Данные]]></string>
     <string name="_bx_dev_frm_btn_sys_prevalues_add"><![CDATA[Добавить]]></string>
     <string name="_bx_dev_frm_btn_prevalues_add"><![CDATA[Добавить]]></string>
+    <string name="_bx_dev_frm_btn_prevalues_save"><![CDATA[Сохранить]]></string>
     <string name="_bx_dev_frm_btn_sys_prevalues_cancel"><![CDATA[Отменить]]></string>
     <string name="_bx_dev_frm_btn_prevalues_cancel"><![CDATA[Отменить]]></string>
     <string name="_bx_dev_frm_err_prevalues_create_forbidden"><![CDATA[Этот список уже используется. Невозможно добавить в него нечисловое значение или значений меньше 1 или больше {0}.]]></string>

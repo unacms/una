@@ -79,6 +79,7 @@ class BxDevFormsPreValues extends BxTemplStudioFormsPreValues
 
         $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&list=' . $this->sList;
+        $oForm->aInputs['controls'][0]['value'] = _t('_bx_dev_frm_btn_prelists_save');
 
         $this->onLoad($oForm->aInputs);
 

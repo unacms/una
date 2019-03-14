@@ -263,6 +263,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('bx_developer_forms_prevalue', @sName, 'Value', '', '', 0, 'text', '_bx_dev_frm_txt_sys_prevalues_value', '_bx_dev_frm_txt_prevalues_value', '', 1, 0, 0, '', '', '', 'Length', 'a:2:{s:3:"min";i:1;s:3:"max";i:255;}', '_bx_dev_frm_err_prevalues_value', 'Xss', '', 0, 0),
 ('bx_developer_forms_prevalue', @sName, 'LKey', '', '', 0, 'text', '_bx_dev_frm_txt_sys_prevalues_lkey', '_bx_dev_frm_txt_prevalues_lkey', '', 1, 0, 0, '', '', '', 'Length', 'a:2:{s:3:"min";i:1;s:3:"max";i:100;}', '_bx_dev_frm_err_prevalues_lkey', 'Xss', '', 0, 0),
 ('bx_developer_forms_prevalue', @sName, 'LKey2', '', '', 0, 'text', '_bx_dev_frm_txt_sys_prevalues_lkey2', '_bx_dev_frm_txt_prevalues_lkey2', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('bx_developer_forms_prevalue', @sName, 'Data', '', '', 0, 'textarea', '_bx_dev_frm_txt_sys_prevalues_data', '_bx_dev_frm_txt_prevalues_data', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('bx_developer_forms_prevalue', @sName, 'controls', '', 'do_submit,cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_developer_forms_prevalue', @sName, 'do_submit', '_bx_dev_frm_btn_prevalues_add', '', 0, 'submit', '_bx_dev_frm_btn_sys_prevalues_add', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_developer_forms_prevalue', @sName, 'cancel', '_bx_dev_frm_btn_prevalues_cancel', '', 0, 'button', '_bx_dev_frm_btn_sys_prevalues_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0);
@@ -272,17 +273,20 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_developer_forms_prevalue_add', 'Value', 2147483647, 1, 2),
 ('bx_developer_forms_prevalue_add', 'LKey', 2147483647, 1, 3),
 ('bx_developer_forms_prevalue_add', 'LKey2', 2147483647, 1, 4),
-('bx_developer_forms_prevalue_add', 'controls', 2147483647, 1, 5),
-('bx_developer_forms_prevalue_add', 'do_submit', 2147483647, 1, 6),
-('bx_developer_forms_prevalue_add', 'cancel', 2147483647, 1, 7),
+('bx_developer_forms_prevalue_add', 'Data', 2147483647, 1, 5),
+('bx_developer_forms_prevalue_add', 'controls', 2147483647, 1, 6),
+('bx_developer_forms_prevalue_add', 'do_submit', 2147483647, 1, 7),
+('bx_developer_forms_prevalue_add', 'cancel', 2147483647, 1, 8),
+
 ('bx_developer_forms_prevalue_edit', 'id', 2147483647, 1, 1),
 ('bx_developer_forms_prevalue_edit', 'Key', 2147483647, 1, 2),
 ('bx_developer_forms_prevalue_edit', 'Value', 2147483647, 1, 3),
 ('bx_developer_forms_prevalue_edit', 'LKey', 2147483647, 1, 4),
 ('bx_developer_forms_prevalue_edit', 'LKey2', 2147483647, 1, 5),
-('bx_developer_forms_prevalue_edit', 'controls', 2147483647, 1, 6),
-('bx_developer_forms_prevalue_edit', 'do_submit', 2147483647, 1, 7),
-('bx_developer_forms_prevalue_edit', 'cancel', 2147483647, 1, 8);
+('bx_developer_forms_prevalue_edit', 'Data', 2147483647, 1, 6),
+('bx_developer_forms_prevalue_edit', 'controls', 2147483647, 1, 7),
+('bx_developer_forms_prevalue_edit', 'do_submit', 2147483647, 1, 8),
+('bx_developer_forms_prevalue_edit', 'cancel', 2147483647, 1, 9);
 
 --
 -- Forms Builder -> Search Forms.

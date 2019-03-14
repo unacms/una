@@ -169,8 +169,11 @@
     <string name="_bx_dev_frm_err_prevalues_lkey"><![CDATA[You need to enter a value here]]></string>
     <string name="_bx_dev_frm_txt_sys_prevalues_lkey2"><![CDATA[Title Additional]]></string>
     <string name="_bx_dev_frm_txt_prevalues_lkey2"><![CDATA[Title Additional]]></string>
+    <string name="_bx_dev_frm_txt_sys_prevalues_data"><![CDATA[Data]]></string>
+    <string name="_bx_dev_frm_txt_prevalues_data"><![CDATA[Data]]></string>
     <string name="_bx_dev_frm_btn_sys_prevalues_add"><![CDATA[Add]]></string>
     <string name="_bx_dev_frm_btn_prevalues_add"><![CDATA[Add]]></string>
+    <string name="_bx_dev_frm_btn_prevalues_save"><![CDATA[Save]]></string>
     <string name="_bx_dev_frm_btn_sys_prevalues_cancel"><![CDATA[Cancel]]></string>
     <string name="_bx_dev_frm_btn_prevalues_cancel"><![CDATA[Cancel]]></string>
     <string name="_bx_dev_frm_err_prevalues_create_forbidden"><![CDATA[This list is already used. It's impossible to add non-numeric, or less than 1, or more than {0} values in it.]]></string>
