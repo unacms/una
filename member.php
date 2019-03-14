@@ -25,8 +25,25 @@ if (isset($_POST['ID'])) { // login form is submitted
     $bAjxMode = (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') ? true : false;
     if ($bAjxMode) {
 
-        header( 'Content-type: text/html; charset=utf-8' );
-        echo $bLoginSuccess ? 'OK' : $oForm->getLoginError();
+        if ($bLoginSuccess) {
+            $s = 'OK';
+            $oAccount = BxDolAccount::getInstance(trim($oForm->getCleanValue('ID')));
+            $aAccount = bx_login($oAccount->id(), ($oForm->getCleanValue('rememberMe') ? true : false));
+        }
+        else {
+            $s = $oForm->getLoginError();
+        }
+
+        if (isset($_SERVER['HTTP_ACCEPT'])) {
+            if (false !== strpos($_SERVER['HTTP_ACCEPT'], 'application/json') || false !== strpos($_SERVER['HTTP_ACCEPT'], 'text/javascript')) {
+                header('Content-type: application/json; charset=utf-8');
+                echo json_encode(['res' => $s, 'form' => $oForm->getCode()]);
+                exit;
+            }
+        }
+
+        header('Content-type: text/html; charset=utf-8');
+        echo $s;
         exit;
 
     } 

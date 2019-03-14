@@ -101,7 +101,26 @@ class BxBaseServiceLogin extends BxDol
         if (strpos($sParams, 'no_auth_buttons') === false)
             $sAuth = $this->serviceMemberAuthCode();
 
-        return $sCustomHtmlBefore . $sAuth . $sFormCode . $sCustomHtmlAfter . $sJoinText;
+        $sAjaxForm = '';
+        if (strpos($sParams, 'ajax_form') !== false)
+            $sAjaxForm = "<script>
+                (bx_login_init_ajax_form = function () {
+                    $('#sys-form-login').ajaxForm({
+                        dataType: 'json',
+                        success: function (oData) {
+                            if ('undefined' !== typeof(oData['res']) && 'OK' == oData['res']) {
+                                location.reload();
+                            }
+                            else if ('undefined' !== typeof(oData['form'])) {
+                                $('#sys-form-login').replaceWith(oData['form']);
+                                bx_login_init_ajax_form();
+                            }
+                        }
+                    });
+                })();
+            </script>";
+        
+        return $sCustomHtmlBefore . $sAuth . $sFormCode . $sCustomHtmlAfter . $sJoinText . $sAjaxForm;
 
     }
     

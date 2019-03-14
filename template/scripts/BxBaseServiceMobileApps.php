@@ -26,7 +26,35 @@ class BxBaseServiceMobileApps extends BxDol
         if (false === strpos($_SERVER['HTTP_USER_AGENT'], 'UNAMobileApp')) 
             return '';
 
-        return BxDolTemplate::getInstance()->parseHtmlByName('mobile_apps_styles.html', array());
+        $this->mobileRedirects();
+
+        $s  = BxDolTemplate::getInstance()->parseHtmlByName('mobile_apps_styles.html', array());
+        $s .= BxDolTemplate::getInstance()->parseHtmlByName('mobile_apps_js.html', array(
+            'msg' => json_encode(array(
+                'loggedin' => isLogged(),
+            ))
+        ));
+        return $s;
+    }
+
+    protected function mobileRedirects()
+    {
+        $bLoggedIn = isLogged() ? 1 : 0;
+        $i = bx_get('i');
+
+        // only several pages are available for guest, for other pages user is redirected to login page        
+        $aI = array('forgot-password' => 1, 'create-account' => 1, 'terms' => 1, 'privacy' => 1, 'contact' => 1, 'about' => 1, 'home' => 1);
+        if (!$bLoggedIn && !preg_match('/searchKeyword.php$/', $_SERVER['PHP_SELF']) && !preg_match('/member.php$/', $_SERVER['PHP_SELF']) && !isset($aI[$i])) {
+            header("Location: " . BX_DOL_URL_ROOT);
+            exit;
+        }
+        
+        // for logged in members some pages aren't available as well
+        $aI = array('forgot-password' => 1, 'create-account' => 1, 'login' => 1);
+        if ($bLoggedIn && isset($aI[$i])) {
+            header("Location: " . BX_DOL_URL_ROOT);
+            exit;
+        }
     }
 }
 
