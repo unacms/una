@@ -234,9 +234,22 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         list($iContentId, $aContentInfo) = $mixedContent;
 
         $bCheckPrivateContent = isset($aParams['check_private_content']) ? (bool)$aParams['check_private_content'] : true;
-        $sTemplate = (!empty($aParams['template']) ? $aParams['template'] : 'unit') . '.html';
 
-        return $this->_oTemplate->unit($aContentInfo, $bCheckPrivateContent, $sTemplate);
+        $sTemplate = 'unit.html';
+        $aTemplateVars = array();
+        if(!empty($aParams['template'])) {
+            if(is_string($aParams['template']))
+                $sTemplate = $aParams['template'] . '.html';
+            else if(is_array($aParams['template'])) {
+                if(!empty($aParams['template']['name']))
+                    $sTemplate = $aParams['template']['name'] . '.html';
+
+                if(!empty($aParams['template']['vars']))
+                    $aTemplateVars = $aParams['template']['vars'];
+            }
+        }
+
+        return $this->_oTemplate->unit($aContentInfo, $bCheckPrivateContent, array($sTemplate, $aTemplateVars));
     }
 
     public function serviceHasImage ($iContentId)
@@ -485,6 +498,39 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         );
     }
 
+    public function serviceBrowseRelationsQuick ($iProfileId, $sObjectConnections = 'sys_profiles_friends', $sConnectionsType = 'content', $iMutual = false, $iProfileId2 = 0)
+    {
+        // get connections object
+        $oConnection = BxDolConnection::getObjectInstance($sObjectConnections);
+        if (!$oConnection)
+            return '';       
+
+        // set some vars
+        $iStart = (int)bx_get('start');
+        $iLimit = empty($this->_oConfig->CNF['PARAM_NUM_CONNECTIONS_QUICK']) ? 4 : getParam($this->_oConfig->CNF['PARAM_NUM_CONNECTIONS_QUICK']);
+        if (!$iLimit)
+            $iLimit = 4;
+
+        // get connections array
+        bx_import('BxDolConnection');
+        $aConnections = $oConnection->getConnectionsAsArrayExt($sConnectionsType, $iProfileId, $iProfileId2, $iMutual, $iStart, $iLimit + 1, BX_CONNECTIONS_ORDER_ADDED_DESC);
+        if(empty($aConnections) || !is_array($aConnections))
+            return '';
+
+        $aRelations = BxDolFormQuery::getDataItems('sys_relations');
+
+        $aResult = array();
+        foreach($aConnections as $iProfile => $aConnection)
+            $aResult[] = array(
+                'id' => $iProfile,
+                'info' => array(
+                    'addon' => _t($aRelations[$aConnection['relation']])
+                )
+            );
+
+        return $this->_serviceBrowseQuick($aResult, $iStart, $iLimit);
+    }
+
     public function serviceBrowseConnectionsQuick ($iProfileId, $sObjectConnections = 'sys_profiles_friends', $sConnectionsType = 'content', $iMutual = false, $iProfileId2 = 0)
     {
         // get connections object
@@ -689,7 +735,39 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
         return $s;
     }
-    
+
+    public function serviceProfileRelations ($iContentId = 0, $aParams = array())
+    {
+        $mixedContent = $this->_getContent($iContentId);
+        if($mixedContent === false)
+            return false;
+
+        list($iContentId, $aContentInfo) = $mixedContent;
+
+        bx_import('BxDolConnection');
+        $s = $this->serviceBrowseRelationsQuick ($aContentInfo['profile_id'], 'sys_profiles_relations', BX_CONNECTIONS_CONTENT_TYPE_CONTENT);
+        if (!$s)
+            return MsgBox(_t('_sys_txt_empty'));
+
+        return $s;
+    }
+
+    public function serviceProfileRelatedMe ($iContentId = 0)
+    {
+        $mixedContent = $this->_getContent($iContentId);
+        if($mixedContent === false)
+            return false;
+
+        list($iContentId, $aContentInfo) = $mixedContent;
+
+        bx_import('BxDolConnection');
+        $s = $this->serviceBrowseRelationsQuick ($aContentInfo['profile_id'], 'sys_profiles_relations', BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
+        if (!$s)
+            return MsgBox(_t('_sys_txt_empty'));
+
+        return $s;
+    }
+
     /**
      * check enabled profile activation letter
      */
@@ -1064,6 +1142,36 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */
+    public function checkAllowedRelationAdd (&$aDataEntry, $isPerformAction = false)
+    {
+        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->checkAllowedView($aDataEntry)))
+            return $sMsg;
+
+        return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_relations', false, false);
+    }
+
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
+     */
+    public function checkAllowedRelationRemove (&$aDataEntry, $isPerformAction = false)
+    {
+        return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_relations', false, true);
+    }
+
+    public function checkAllowedRelationsView (&$aDataEntry, $isPerformAction = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sResult = _t('_sys_txt_access_denied');
+        if(empty($aDataEntry) || !is_array($aDataEntry))
+            return $sResult;
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
+     */
     public function checkAllowedSubscribeAdd (&$aDataEntry, $isPerformAction = false)
     {
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->checkAllowedView($aDataEntry)))
@@ -1158,12 +1266,18 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
         // get profiles HTML
         $s = '';
-        foreach ($aProfiles as $iProfileId) {
-            $oProfile = BxDolProfile::getInstance($iProfileId);
+        foreach ($aProfiles as $mixedProfile) {
+            $bProfile = is_array($mixedProfile);
+
+            $oProfile = BxDolProfile::getInstance($bProfile ? (int)$mixedProfile['id'] : (int)$mixedProfile);
             if(!$oProfile)
                 continue;
 
-            $s .= $oProfile->getUnit();
+            $aUnitParams = array();
+            if($bProfile && is_array($mixedProfile['info']))
+                $aUnitParams = array('template' => array('vars' => $mixedProfile['info']));
+
+            $s .= $oProfile->getUnit(0, $aUnitParams);
         }
 
         // return profiles + paginate

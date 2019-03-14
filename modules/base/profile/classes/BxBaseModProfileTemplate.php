@@ -34,11 +34,15 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     /**
      * Get profile unit
      */
-    function unit ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html')
+    function unit ($aData, $isCheckPrivateContent = true, $mixedTemplate = 'unit.html')
     {
-        $aVars = $this->unitVars ($aData, $isCheckPrivateContent, $sTemplateName);
+        list($sTemplate, $aTemplateVars) = is_array($mixedTemplate) ? $mixedTemplate : array($mixedTemplate, array());
 
-        return $this->parseHtmlByName($sTemplateName, $aVars);
+        $aVars = $this->unitVars($aData, $isCheckPrivateContent, $sTemplate);
+        if(!empty($aTemplateVars) && is_array($aTemplateVars))
+            $aVars = array_merge($aVars, $aTemplateVars);
+
+        return $this->parseHtmlByName($sTemplate, $aVars);
     }
 
     function unitVars ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html')
@@ -118,6 +122,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'content_click' => !$bPublic ? 'javascript:bx_alert(' . bx_js_string('"' . _t('_sys_access_denied_to_private_content') . '"') . ');' : '',
             'title' => $sTitle,
             'title_attr' => bx_html_attribute($sTitle),
+            'addon' => !empty($aData['addon']) ? $aData['addon'] : '',
             'module_name' => _t($CNF['T']['txt_sample_single']),
             'ts' => $aData[$CNF['FIELD_ADDED']],
             'bx_if:meta' => array(

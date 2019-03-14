@@ -1633,6 +1633,7 @@
 	<string name="_sys_acl_expire"><![CDATA[Окончание: ]]></string>
 	<string name="_sys_acl_expire_never"><![CDATA[никогда]]></string>
 	<string name="_sys_add_friend"><![CDATA[Добавить друга]]></string>
+        <string name="_sys_add_relation"><![CDATA[Добавить связь]]></string>
 	<string name="_sys_adm_installed"><![CDATA[Установленные]]></string>
 	<string name="_sys_admin_apply"><![CDATA[Применить]]></string>
 	<string name="_sys_admin_filter"><![CDATA[Фильтр:]]></string>
@@ -1709,6 +1710,8 @@
     <string name="_sys_chart_accounts_growth"><![CDATA[Аккаунты: Развитие]]></string>
     <string name="_sys_chart_accounts_growth_speed"><![CDATA[Аккаунты: Скорость развития]]></string>
 	<string name="_sys_close"><![CDATA[Закрыть]]></string>
+        <string name="_sys_confirm"><![CDATA[Подтвердить]]></string>
+        <string name="_sys_confirmed"><![CDATA[Подтвержденный]]></string>
 	<string name="_sys_conn_err_connection_already_exists"><![CDATA[Связь уже существует]]></string>
 	<string name="_sys_conn_err_connection_does_not_exists"><![CDATA[Связь не существует]]></string>
 	<string name="_sys_conn_err_connection_is_awaiting_confirmation"><![CDATA[Запрос на связь ожидает подтверждения]]></string>
@@ -1727,6 +1730,7 @@
     <string name="_sys_connect_option_privacy"><![CDATA[Настройки конфиденциальности для созданных профилей]]></string>
 
 	<string name="_sys_currency"><![CDATA[{0}{1}]]></string>
+        <string name="_sys_decline"><![CDATA[Отклонить]]></string>
 	<string name="_sys_designbox_0"><![CDATA[Содержимое]]></string>
 	<string name="_sys_designbox_1"><![CDATA[Содержимое + заголовок + фон]]></string>
 	<string name="_sys_designbox_10"><![CDATA[Содержимое + отступ]]></string>
@@ -2366,7 +2370,8 @@
 	<string name="_sys_menu_title_rss"><![CDATA[RSS]]></string>
 	<string name="_sys_menu_title_set_acl_level"><![CDATA[Уровни доступа]]></string>
 	<string name="_sys_menu_title_social_sharing"><![CDATA[Социальные сети]]></string>
-        <string name="_sys_menu_title_create_post"><![CDATA[Создать Пост - Меню]]></string>
+        <string name="_sys_menu_title_create_post"><![CDATA[Создать пост - Меню]]></string>
+        <string name="_sys_menu_title_add_relation"><![CDATA[Добавить связь - Меню]]></string>
 	<string name="_sys_menu_title_submenu"><![CDATA[Подменю сайта]]></string>
 	<string name="_sys_menu_title_toolbar_member"><![CDATA[Панель инструментов - Пользователь]]></string>
 	<string name="_sys_menu_title_toolbar_site"><![CDATA[Панель инструментов - Сайт]]></string>
@@ -2483,6 +2488,15 @@
 	<string name="_sys_paginate_info"><![CDATA[{0}-{1}]]></string>
 	<string name="_sys_paginate_view_all"><![CDATA[Просмотреть все]]></string>
 	<string name="_sys_please_select"><![CDATA[Пожалуйста, выберите...]]></string>
+        <string name="_sys_pre_lists_relations"><![CDATA[Отношения]]></string>
+        <string name="_sys_pre_lists_relations_husband"><![CDATA[муж]]></string>
+        <string name="_sys_pre_lists_relations_wife"><![CDATA[жена]]></string>
+        <string name="_sys_pre_lists_relations_father"><![CDATA[отец]]></string>
+        <string name="_sys_pre_lists_relations_mother"><![CDATA[мать]]></string>
+        <string name="_sys_pre_lists_relations_son"><![CDATA[сын]]></string>
+        <string name="_sys_pre_lists_relations_daughter"><![CDATA[дочь]]></string>
+        <string name="_sys_pre_lists_relations_brother"><![CDATA[брат]]></string>
+        <string name="_sys_pre_lists_relations_sister"><![CDATA[сестра]]></string>
 	<string name="_sys_pre_lists_report_types"><![CDATA[Типы жалоб]]></string>
 	<string name="_sys_pre_lists_report_types_spam"><![CDATA[спам]]></string>
 	<string name="_sys_pre_lists_report_types_scam"><![CDATA[скам]]></string>
@@ -2517,10 +2531,11 @@
     <string name="_sys_ps_group_title_secret"><![CDATA[Секретная]]></string>
     <string name="_sys_ps_ferr_incorrect_select"><![CDATA[Вам нужно выбрать значение]]></string>
     <string name="_sys_ps_space_title_friend"><![CDATA[друг]]></string>
-	<string name="_sys_push_notification_request"><![CDATA[Хотите получать уведомления с сайта {0}?]]></string>   
+    <string name="_sys_push_notification_request"><![CDATA[Хотите получать уведомления с сайта {0}?]]></string>   
     <string name="_sys_push_notification_request_yes"><![CDATA[Да]]></string>   
     <string name="_sys_push_notification_request_no"><![CDATA[Нет, спасибо]]></string>
     <string name="_sys_read_more"><![CDATA[Продолжить чтение "{0}"]]></string>
+    <string name="_sys_relation"><![CDATA[Связь]]></string>
 	<string name="_sys_request_module_not_found_cpt"><![CDATA[Модуль не найден]]></string>
 	<string name="_sys_request_module_not_found_cnt"><![CDATA[Модуль({0}) не найден]]></string>
 	<string name="_sys_request_page_not_found_cpt"><![CDATA[Страница не найдена]]></string>
@@ -2548,6 +2563,7 @@
 	<string name="_sys_splash_inp_placeholder"><![CDATA[адрес сайта]]></string>
 	<string name="_sys_splash_inp_postfix"><![CDATA[.online.me]]></string>
 	<string name="_sys_splash_slogan"><![CDATA[Самый простой способ создать свой собственный социальный сайт.]]></string>
+        <string name="_sys_status"><![CDATA[Статус]]></string>
 	<string name="_sys_storage_err_db"><![CDATA[ошибка базы данных]]></string>
 	<string name="_sys_storage_err_engine_add"><![CDATA[произошла ошибка]]></string>
 	<string name="_sys_storage_err_engine_get"><![CDATA[произошла ошибка]]></string>
@@ -2691,14 +2707,15 @@
 	<string name="_sys_txt_splash_slide01_desc"><![CDATA[Истории, идеи, фотографии, видео, вопросы, шутки, обсуждения, что угодно.<br />Следите за интересными людьми и будьте интересными для других.]]></string>
 	<string name="_sys_txt_splash_slide02_txt"><![CDATA["Присядь на стул. Попробуй.<br />Зарегистрируйся. Жизнь такая<br />сладкая."]]></string>
 	<string name="_sys_txt_splash_slide03_txt"><![CDATA["Лучший способ завести друзей - быть кому-то другом."]]></string>
-    <string name="_sys_txt_splash_slide04_txt"><![CDATA[Уже один из нас?]]></string>
-    <string name="_sys_txt_switch_profile_context"><![CDATA[Переключиться]]></string>
+        <string name="_sys_txt_splash_slide04_txt"><![CDATA[Уже один из нас?]]></string>
+        <string name="_sys_txt_switch_profile_context"><![CDATA[Переключиться]]></string>
 	<string name="_sys_txt_unsubscribe_email_settings_update_success"><![CDATA[Ваши имейл-установки были удачно обновлены.]]></string>
 	<string name="_sys_txt_unsubscribe_error_occured"><![CDATA[Произошла ошибка, пожалуйста, зайдите в свой аккаунт и обновите имейл-установки или свяжитесь с администратором сайта, чтобы он Вас отписал вручную.]]></string>
 	<string name="_sys_txt_unsubscribe_info"><![CDATA[Обновить имейл-установки для <b>{0}</b>]]></string>
-    <string name="_sys_txt_unsubscribe_wrong_link"><![CDATA[Ссылка отписки неправильная.]]></string>
-    <string name="_sys_txt_user_n"><![CDATA[Пользователь #{0}]]></string>
-  <string name="_sys_txt_reports_title"><![CDATA[Жалобы]]></string>
+        <string name="_sys_txt_unsubscribe_wrong_link"><![CDATA[Ссылка отписки неправильная.]]></string>
+        <string name="_sys_txt_user_n"><![CDATA[Пользователь #{0}]]></string>
+        <string name="_sys_txt_reports_title"><![CDATA[Жалобы]]></string>
+        <string name="_sys_unconfirmed"><![CDATA[Неподтвержденный]]></string>
 	<string name="_sys_upgrade_conclusion"><![CDATA[<h3>Важная информация:</h3><p>{0}</p>]]></string>
 	<string name="_sys_upgrade_db_and_files_versions_different"><![CDATA[База данных и версии файлов отличаются, возможно, предыдущий патч не был правильно применён.]]></string>
 	<string name="_sys_upgrade_files_checksum_failed"><![CDATA[Невозможно применить обновление, так как следующие файлы были изменены: {0}]]></string>

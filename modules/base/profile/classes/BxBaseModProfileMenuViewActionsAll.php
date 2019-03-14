@@ -51,6 +51,16 @@ class BxBaseModProfileMenuViewActionsAll extends BxBaseModGeneralMenuViewActions
         return $this->_getMenuItemByNameActionsMore($aItem);
     }
 
+    protected function _getMenuItemProfileRelationAdd($aItem)
+    {
+        return $this->_getMenuItemByNameActions($aItem);
+    }
+
+    protected function _getMenuItemProfileRelationRemove($aItem)
+    {
+        return $this->_getMenuItemByNameActionsMore($aItem);
+    }
+
     protected function _getMenuItemProfileSubscribeAdd($aItem)
     {
         return $this->_getMenuItemByNameActions($aItem);
