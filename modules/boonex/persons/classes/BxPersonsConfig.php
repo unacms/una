@@ -16,7 +16,8 @@ class BxPersonsConfig extends BxBaseModProfileConfig
         parent::__construct($aModule);
 
         $this->_aMenuItems2MethodsSubmenu = array_merge($this->_aMenuItems2MethodsSubmenu, array(
-        	'persons-profile-subscriptions' => 'checkAllowedSubscriptionsView'
+            'persons-profile-relations' => 'checkAllowedRelationsView',
+            'persons-profile-subscriptions' => 'checkAllowedSubscriptionsView'
         ));
 
         $this->_aMenuItems2MethodsActions = array_merge($this->_aMenuItems2MethodsActions, array(
