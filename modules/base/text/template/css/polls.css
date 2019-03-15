@@ -56,6 +56,13 @@
     position: relative;
 }
 
+.bx-base-text-polls-showcase .flickity-slider {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
 .bx-base-text-polls-showcase .bx-base-text-poll {
     position: relative;
     width: 100%;
