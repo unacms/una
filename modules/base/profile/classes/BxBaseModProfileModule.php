@@ -517,14 +517,12 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         if(empty($aConnections) || !is_array($aConnections))
             return '';
 
-        $aRelations = BxDolFormQuery::getDataItems('sys_relations');
-
         $aResult = array();
         foreach($aConnections as $iProfile => $aConnection)
             $aResult[] = array(
                 'id' => $iProfile,
                 'info' => array(
-                    'addon' => _t($aRelations[$aConnection['relation']])
+                    'addon' => $oConnection->getRelationTranslation($aConnection['relation'])
                 )
             );
 
@@ -745,7 +743,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         list($iContentId, $aContentInfo) = $mixedContent;
 
         bx_import('BxDolConnection');
-        $s = $this->serviceBrowseRelationsQuick ($aContentInfo['profile_id'], 'sys_profiles_relations', BX_CONNECTIONS_CONTENT_TYPE_CONTENT);
+        $s = $this->serviceBrowseRelationsQuick ($aContentInfo['profile_id'], 'sys_profiles_relations', BX_CONNECTIONS_CONTENT_TYPE_CONTENT, 1);
         if (!$s)
             return MsgBox(_t('_sys_txt_empty'));
 
@@ -761,7 +759,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         list($iContentId, $aContentInfo) = $mixedContent;
 
         bx_import('BxDolConnection');
-        $s = $this->serviceBrowseRelationsQuick ($aContentInfo['profile_id'], 'sys_profiles_relations', BX_CONNECTIONS_CONTENT_TYPE_INITIATORS);
+        $s = $this->serviceBrowseRelationsQuick ($aContentInfo['profile_id'], 'sys_profiles_relations', BX_CONNECTIONS_CONTENT_TYPE_INITIATORS, 1);
         if (!$s)
             return MsgBox(_t('_sys_txt_empty'));
 

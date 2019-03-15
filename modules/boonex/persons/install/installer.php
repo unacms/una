@@ -15,6 +15,16 @@ class BxPersonsInstaller extends BxBaseModProfileInstaller
     {
         parent::__construct($aConfig);
     }
+
+    function enable($aParams)
+    {
+        $aResult = parent::enable($aParams);
+
+        if($aResult['result'] && getParam($this->_sParamRelations) == '')
+            setParam($this->_sParamRelations, $this->_aConfig['name'] . '_' . $this->_aConfig['name']);
+
+        return $aResult;
+    }
 }
 
 /** @} */

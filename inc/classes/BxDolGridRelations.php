@@ -18,9 +18,7 @@ class BxDolGridRelations extends BxDolGridConnectionOut
 
     protected function _getCellRelation ($mixedValue, $sKey, $aField, $aRow)
     {
-        $aRelations = BxDolFormQuery::getDataItems('sys_relations');
-
-        return parent::_getCellDefault ($aRelations[$mixedValue], $sKey, $aField, $aRow);
+        return parent::_getCellDefault($this->_oConnection->getRelationTranslation($mixedValue), $sKey, $aField, $aRow);
     }
 
     protected function _getCellMutual($mixedValue, $sKey, $aField, $aRow)

@@ -262,6 +262,27 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
         return $aResults;
     }
+
+    public function serviceGetOptionsRelations()
+    {
+        $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules', 'active' => 1));
+
+        $aProfiles = array();
+        foreach($aModules as $aModule) {
+            $sMethod = 'act_as_profile';
+            if(!BxDolRequest::serviceExists($aModule['name'], $sMethod) || !BxDolService::call($aModule['name'], $sMethod))
+                continue;
+
+            $aProfiles[$aModule['name']] = _t('_' . $aModule['name']);
+        }
+
+        $aResults = array();
+        foreach($aProfiles as $sName1 => $sTitle1)
+            foreach($aProfiles as $sName2 => $sTitle2)
+                $aResults[$sName1 . '_' . $sName2] = $sTitle1 . ' - ' . $sTitle2;
+
+        return $aResults;
+    }
 }
 
 /** @} */

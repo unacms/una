@@ -53,9 +53,7 @@ class BxDolGridRelatedMe extends BxDolGridConnectionIn
 
     protected function _getCellRelation($mixedValue, $sKey, $aField, $aRow)
     {
-        $aRelations = BxDolFormQuery::getDataItems('sys_relations');
-
-        return parent::_getCellDefault ($aRelations[$mixedValue], $sKey, $aField, $aRow);
+        return parent::_getCellDefault($this->_oConnection->getRelationTranslation($mixedValue), $sKey, $aField, $aRow);
     }
 
     protected function _getActionConfirm($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())

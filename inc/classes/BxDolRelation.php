@@ -9,11 +9,17 @@
 
 class BxDolRelation extends BxDolConnection
 {
+    protected $_sParamEnabled;
+    protected $_sPreList;
+
     protected function __construct($aObject)
     {
         parent::__construct($aObject);
 
         $this->_oQuery = new BxDolRelationQuery($aObject);
+
+        $this->_sParamEnabled = 'sys_relations';
+        $this->_sPreList = 'sys_relations';
     }
 
     /**
@@ -156,10 +162,61 @@ class BxDolRelation extends BxDolConnection
      */
     public function checkAllowedConnect($iInitiator, $iContent, $isPerformAction = false, $isMutual = false, $isInvertResult = false, $isSwap = false)
     {
+        if(!$this->isRelationAvailable($iInitiator, $iContent))
+            return _t('_sys_txt_access_denied');
+
+        $mixedResult = $this->checkAllowedConnectCustom($iInitiator, $iContent, $isPerformAction, $isMutual, $isInvertResult, $isSwap);
+        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+            return $mixedResult;
+
+        return parent::checkAllowedConnect($iInitiator, $iContent, $isPerformAction, $isMutual, $isInvertResult, $isSwap);
+    }
+
+    /**
+     * Custom check action method which can be overwritten.
+     * Currently only friends can establish relations.
+     */
+    public function checkAllowedConnectCustom($iInitiator, $iContent, $isPerformAction = false, $isMutual = false, $isInvertResult = false, $isSwap = false)
+    {
         if(!BxDolConnection::getObjectInstance('sys_profiles_friends')->isConnected($iInitiator, $iContent, true))
             return _t('_sys_txt_access_denied');
 
-        return parent::checkAllowedConnect($iInitiator, $iContent, $isPerformAction, $isMutual, $isInvertResult, $isSwap);
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    public function isRelationAvailable($iInitiator, $iContent)
+    {
+        $sParam = getParam($this->_sParamEnabled);
+        $oInitiator = BxDolProfile::getInstance($iInitiator);
+        $oContent = BxDolProfile::getInstance($iContent);
+        if(empty($sParam) || !$oInitiator || !$oContent)
+            return false;
+
+        $aParam = explode(',', $sParam);
+        if(!in_array($oInitiator->getModule() . '_' . $oContent->getModule(), $aParam))
+            return false;
+
+        return true;
+    }
+
+    public function getRelations($iInitiator, $iContent, &$aSuggestions = array())
+    {
+        $aRelations = BxDolFormQuery::getDataItems($this->_sPreList, false, BX_DATA_VALUES_ALL);
+
+        bx_alert($this->_sObject, 'get_relations', 0, bx_get_logged_profile_id(), array(
+            'initiator' => (int)$iInitiator,
+            'content' => (int)$iContent,
+            'pre_list' => $this->_sPreList,
+            'relations' => &$aRelations
+        ));
+
+        if($this->isConnected($iContent, $iInitiator)) {
+            $iRelation = $this->getRelation($iContent, $iInitiator);
+            if(!empty($iRelation) && !empty($aRelations[$iRelation]['Data']))
+                $aSuggestions = unserialize($aRelations[$iRelation]['Data']);
+        }
+
+        return $aRelations;
     }
 
     public function getRelation($iInitiator, $iContent)
@@ -169,5 +226,12 @@ class BxDolRelation extends BxDolConnection
             return 0;
 
         return (int)$aConnection['relation'];
+    }
+
+    public function getRelationTranslation($iValue, $sUseValues = BX_DATA_VALUES_DEFAULT)
+    {
+        $aRelations = BxDolFormQuery::getDataItems($this->_sPreList, false, $sUseValues);
+
+        return !empty($aRelations[$iValue]) ? $aRelations[$iValue] : _t('_uknown');
     }
 }
