@@ -90,16 +90,11 @@ class BxAlbumsPageMedia extends BxTemplPage
     protected function _getThumbForMetaObject ()
     {
         $CNF = &$this->_oModule->_oConfig->CNF;        
-
-        if (!($aMediaList = $this->_oModule->_oDb->getMediaListByContentId($this->_aAlbumInfo[$CNF['FIELD_ID']])))
-            return false;
-
-        $aMedia = array_shift($aMediaList);
         
-        if (!$aMedia['file_id'] || empty($CNF['OBJECT_TRANSCODER_COVER']))
+        if(empty($this->_aMediaInfo['file_id']) || empty($CNF['OBJECT_TRANSCODER_COVER']))
             return false;
 
-        return array('id' => $aMedia['file_id'], 'transcoder' => $CNF['OBJECT_TRANSCODER_COVER']);
+        return array('id' => $this->_aMediaInfo['file_id'], 'transcoder' => $CNF['OBJECT_TRANSCODER_COVER']);
     }
     
     protected function _addJsCss()
