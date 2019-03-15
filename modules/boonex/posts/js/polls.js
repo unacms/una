@@ -36,8 +36,9 @@ BxPostsPolls.prototype.initFlickity = function(oParent) {
     oItems.flickity({
         cellSelector: 'div.' + sItemClass,
         cellAlign: 'left',
-        pageDots: false,
-        imagesLoaded: true
+        imagesLoaded: true,
+        wrapAround: true,
+        pageDots: false
     });
 };
 

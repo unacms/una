@@ -145,8 +145,9 @@ BxTimelineMain.prototype.initFlickity = function() {
         $(this).flickity({
             cellSelector: 'div.' + $this.sClassItemImage,
             cellAlign: 'left',
-            pageDots: false,
-            imagesLoaded: true
+            imagesLoaded: true,
+            wrapAround: true,
+            pageDots: false
         });
     });
 
@@ -160,8 +161,9 @@ BxTimelineMain.prototype.initFlickity = function() {
         oCarousel.flickity({
             cellSelector: 'div.' + $this.sClassItemVideo,
             cellAlign: 'left',
-            pageDots: false,
-            imagesLoaded: true
+            imagesLoaded: true,
+            wrapAround: true,
+            pageDots: false
         });
 
        oCarousel.find('div.' + $this.sClassItemVideo + ' video').each(function() {
@@ -181,8 +183,9 @@ BxTimelineMain.prototype.initFlickity = function() {
         oCarousel.flickity({
             cellSelector: 'div.' + $this.sClassItemAttachment,
             cellAlign: 'left',
-            pageDots: false,
-            imagesLoaded: true
+            imagesLoaded: true,
+            wrapAround: true,
+            pageDots: false
         });
 
        oCarousel.find('div.' + $this.sClassItemAttachment + ' video').each(function() {

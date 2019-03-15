@@ -97,27 +97,28 @@ BxMarketEntry.prototype.changeFileType = function(oSelect) {
 BxMarketEntry.prototype.initScreenshots = function() {
 	var oItems = jQuery(".bx-market-screenshots .bx-market-ss-item");
 	if(oItems.length == 0)
-		return;
+            return;
 
 	var iWidth = oItems.width();
 	var iWidthOuter = oItems.outerWidth();
 	var bBusy = false;
 
 	oItems.find('a[rel=group]').fancybox({
-		transitionIn: 'elastic',
-		transitionOut: 'elastic',
-		speedIn: 600,
-		speedOut: 200
+            transitionIn: 'elastic',
+            transitionOut: 'elastic',
+            speedIn: 600,
+            speedOut: 200
 	});
 
 	if(oItems.length <= 2)
-		return;
+            return;
 
 	$('.bx-market-screenshots').flickity({
-		cellSelector: '.bx-market-ss-item',
-		cellAlign: 'left',
-		pageDots: false,
-		imagesLoaded: true
+            cellSelector: '.bx-market-ss-item',
+            cellAlign: 'left',
+            imagesLoaded: true,
+            wrapAround: true,
+            pageDots: false
 	});
 };
 
