@@ -32,26 +32,6 @@ DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandlerId;
 DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandlerId LIMIT 1;
 
 
--- COMMENTS
-DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_timeline' LIMIT 1;
-
-
--- VIEWS
-DELETE FROM `sys_objects_view` WHERE `name` = 'bx_timeline' LIMIT 1;
-
-
--- VOTES
-DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_timeline' LIMIT 1;
-
-
--- SCORES
-DELETE FROM `sys_objects_score` WHERE `name` = 'bx_timeline';
-
-
--- REPORTS
-DELETE FROM `sys_objects_report` WHERE `Name` = 'bx_timeline' LIMIT 1;
-
-
 -- SEARCH
 DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_timeline', 'bx_timeline_cmts');
 
@@ -66,10 +46,6 @@ DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_timeline';
 
 -- EMAIL TEMPLATES
 DELETE FROM `sys_email_templates` WHERE `Module` = 'bx_timeline';
-
-
--- CONTENT INFO
-DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_timeline', 'bx_timeline_cmts');
 
 
 -- CRON
