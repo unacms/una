@@ -43,6 +43,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'FIELD_COVER' => 'covers',
             'FIELD_PHOTO' => 'pictures',
             'FIELD_VIDEO' => 'videos',
+            'FIELD_FILE' => 'files',
             'FIELD_POLL' => 'polls',
             'FIELD_THUMB' => 'thumb',
             'FIELD_ATTACHMENTS' => 'attachments',
@@ -79,12 +80,15 @@ class BxPostsConfig extends BxBaseModTextConfig
             
 
             // objects
-            'OBJECT_STORAGE' => 'bx_posts_files',
+            'OBJECT_STORAGE' => 'bx_posts_covers',
+            'OBJECT_STORAGE_FILES' => 'bx_posts_files',
             'OBJECT_STORAGE_PHOTOS' => 'bx_posts_photos',
             'OBJECT_STORAGE_VIDEOS' => 'bx_posts_videos',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_posts_preview',
             'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_posts_gallery',
             'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_posts_cover',
+            'OBJECT_IMAGES_TRANSCODER_PREVIEW_FILES' => 'bx_posts_preview_files',
+            'OBJECT_IMAGES_TRANSCODER_GALLERY_FILES' => 'bx_posts_gallery_files',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS' => 'bx_posts_preview_photos',
             'OBJECT_IMAGES_TRANSCODER_GALLERY_PHOTOS' => 'bx_posts_gallery_photos',
             'OBJECT_VIDEOS_TRANSCODERS' => array(

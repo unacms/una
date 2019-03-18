@@ -42,6 +42,8 @@
     <string name="_bx_posts_form_entry_input_pictures"><![CDATA[]]></string>
     <string name="_bx_posts_form_entry_input_sys_videos"><![CDATA[Видео]]></string>
     <string name="_bx_posts_form_entry_input_videos"><![CDATA[]]></string>
+    <string name="_bx_posts_form_entry_input_sys_files"><![CDATA[Файлы]]></string>
+    <string name="_bx_posts_form_entry_input_files"><![CDATA[]]></string>
     <string name="_bx_posts_form_entry_input_sys_polls"><![CDATA[Голосования]]></string>
     <string name="_bx_posts_form_entry_input_sys_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_posts_form_entry_input_allow_view_to"><![CDATA[Видимость]]></string>
@@ -158,10 +160,18 @@
 
     <string name="_bx_posts_menu_title_entry_attachments"><![CDATA[Форма - Прикрепления]]></string>
     <string name="_bx_posts_menu_set_title_entry_attachments"><![CDATA[Форма - Прикрепления]]></string>
-    <string name="_bx_posts_menu_item_title_system_cpa_photo"><![CDATA[Добавить фото]]></string>
-    <string name="_bx_posts_menu_item_title_cpa_photo"><![CDATA[Добавить фото]]></string>
-    <string name="_bx_posts_menu_item_title_system_cpa_video"><![CDATA[Добавить видео]]></string>
-    <string name="_bx_posts_menu_item_title_cpa_video"><![CDATA[Добавить видео]]></string>
+    <string name="_bx_posts_menu_item_title_system_cpa_photo_simple"><![CDATA[Добавить фото (один)]]></string>
+    <string name="_bx_posts_menu_item_title_cpa_photo_simple"><![CDATA[Добавить фото]]></string>
+    <string name="_bx_posts_menu_item_title_system_cpa_photo_html5"><![CDATA[Добавить фото (много)]]></string>
+    <string name="_bx_posts_menu_item_title_cpa_photo_html5"><![CDATA[Добавить фото]]></string>
+    <string name="_bx_posts_menu_item_title_system_cpa_video_simple"><![CDATA[Добавить видео (один)]]></string>
+    <string name="_bx_posts_menu_item_title_cpa_video_simple"><![CDATA[Добавить видео]]></string>
+    <string name="_bx_posts_menu_item_title_system_cpa_video_html5"><![CDATA[Добавить видео (много)]]></string>
+    <string name="_bx_posts_menu_item_title_cpa_video_html5"><![CDATA[Добавить видео]]></string>
+    <string name="_bx_posts_menu_item_title_system_cpa_file_simple"><![CDATA[Добавить файл (один)]]></string>
+    <string name="_bx_posts_menu_item_title_cpa_file_simple"><![CDATA[Добавить файл]]></string>
+    <string name="_bx_posts_menu_item_title_system_cpa_file_html5"><![CDATA[Добавить файл (много)]]></string>
+    <string name="_bx_posts_menu_item_title_cpa_file_html5"><![CDATA[Добавить файл]]></string>
     <string name="_bx_posts_menu_item_title_system_cpa_poll"><![CDATA[Добавить голосование]]></string>
     <string name="_bx_posts_menu_item_title_cpa_poll"><![CDATA[Добавить голосование]]></string>
 

@@ -15,6 +15,7 @@
 class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
 {
     protected $_sGhostTemplateVideo = 'form_ghost_template_video.html';
+    protected $_sGhostTemplateFile = 'form_ghost_template_file.html';
 
     public function __construct($aInfo, $oTemplate = false)
     {
@@ -52,6 +53,13 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
                 $this->aInputs[$CNF['FIELD_VIDEO']]['content_id'] = $aValues['id'];
 
             $this->aInputs[$CNF['FIELD_VIDEO']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName($this->_sGhostTemplateVideo, $this->_getVideoGhostTmplVars($aContentInfo));
+        }
+
+        if (isset($CNF['FIELD_FILE']) && isset($this->aInputs[$CNF['FIELD_FILE']])) {
+            if ($bValues)
+                $this->aInputs[$CNF['FIELD_FILE']]['content_id'] = $aValues['id'];
+
+            $this->aInputs[$CNF['FIELD_FILE']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName($this->_sGhostTemplateFile, $this->_getFileGhostTmplVars($aContentInfo));
         }
 
         if (isset($CNF['FIELD_POLL']) && isset($this->aInputs[$CNF['FIELD_POLL']])) {
@@ -102,6 +110,17 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
         return true;
     }
 
+    protected function _getPhotoGhostTmplVars($aContentInfo = array())
+    {
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+
+    	return array (
+            'name' => $this->aInputs[$CNF['FIELD_PHOTO']]['name'],
+            'content_id' => (int)$this->aInputs[$CNF['FIELD_PHOTO']]['content_id'],
+            'editor_id' => isset($CNF['FIELD_TEXT_ID']) ? $CNF['FIELD_TEXT_ID'] : ''
+    	);
+    }
+
     protected function _getVideoGhostTmplVars($aContentInfo = array())
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
@@ -109,6 +128,17 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
     	return array (
             'name' => $this->aInputs[$CNF['FIELD_VIDEO']]['name'],
             'content_id' => (int)$this->aInputs[$CNF['FIELD_VIDEO']]['content_id'],
+            'editor_id' => isset($CNF['FIELD_TEXT_ID']) ? $CNF['FIELD_TEXT_ID'] : ''
+    	);
+    }
+
+    protected function _getFileGhostTmplVars($aContentInfo = array())
+    {
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+
+    	return array (
+            'name' => $this->aInputs[$CNF['FIELD_FILE']]['name'],
+            'content_id' => (int)$this->aInputs[$CNF['FIELD_FILE']]['content_id'],
             'editor_id' => isset($CNF['FIELD_TEXT_ID']) ? $CNF['FIELD_TEXT_ID'] : ''
     	);
     }

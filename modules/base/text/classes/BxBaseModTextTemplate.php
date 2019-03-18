@@ -45,7 +45,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
-        $aStoragesKeys = array('OBJECT_STORAGE_PHOTOS', 'OBJECT_STORAGE_VIDEOS');
+        $aStoragesKeys = array('OBJECT_STORAGE_PHOTOS', 'OBJECT_STORAGE_VIDEOS', 'OBJECT_STORAGE_FILES');
 
         $aStorages = array();
         foreach($aStoragesKeys as $sKey)
@@ -567,17 +567,27 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         return  strmaxtextlen($sText, (int)getParam($CNF['PARAM_CHARS_SUMMARY']), $sLinkMore);
     }
 
-    protected function getAttachmentsImagesTranscoders ()
+    protected function getAttachmentsImagesTranscoders ($sStorage = '')
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
         $oTranscoder = null;
-        if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS']))
-            $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS']);
+        $oTranscoderView = null;
+        switch($sStorage) {
+            case $CNF['OBJECT_STORAGE_PHOTOS']:
+                if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS']))
+                    $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS']);
+                if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY_PHOTOS']))
+                    $oTranscoderView = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY_PHOTOS']);
+                break;
 
-        $oTranscoderView = null; 
-        if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_PICTURE_PHOTOS']))
-            $oTranscoderView = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PICTURE_PHOTOS']);
+            case $CNF['OBJECT_STORAGE_FILES']:
+                if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_FILES']))
+                    $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_FILES']);
+                if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY_FILES']))
+                    $oTranscoderView = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY_FILES']);
+                break;
+        }
 
         return array($oTranscoder, $oTranscoderView);
     }

@@ -207,7 +207,9 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_posts_entry_attachments', 'bx_posts', 'photo_html5', '_bx_posts_menu_item_title_system_cpa_photo_html5', '_bx_posts_menu_item_title_cpa_photo_html5', 'javascript:void(0)', 'javascript:{js_object_uploader_photos_html5}.showUploaderForm();', '_self', 'camera', '', '', 2147483647, '', 1, 0, 1, 2),
 ('bx_posts_entry_attachments', 'bx_posts', 'video_simple', '_bx_posts_menu_item_title_system_cpa_video_simple', '_bx_posts_menu_item_title_cpa_video_simple', 'javascript:void(0)', 'javascript:{js_object_uploader_videos_simple}.showUploaderForm();', '_self', 'video', '', '', 2147483647, '', 0, 0, 1, 3),
 ('bx_posts_entry_attachments', 'bx_posts', 'video_html5', '_bx_posts_menu_item_title_system_cpa_video_html5', '_bx_posts_menu_item_title_cpa_video_html5', 'javascript:void(0)', 'javascript:{js_object_uploader_videos_html5}.showUploaderForm();', '_self', 'video', '', '', 2147483647, '', 1, 0, 1, 4),
-('bx_posts_entry_attachments', 'bx_posts', 'poll', '_bx_posts_menu_item_title_system_cpa_poll', '_bx_posts_menu_item_title_cpa_poll', 'javascript:void(0)', 'javascript:{js_object}.showPollForm(this);', '_self', 'tasks', '', '', 2147483647, '', 1, 0, 1, 5);
+('bx_posts_entry_attachments', 'bx_posts', 'file_simple', '_bx_posts_menu_item_title_system_cpa_file_simple', '_bx_posts_menu_item_title_cpa_file_simple', 'javascript:void(0)', 'javascript:{js_object_uploader_files_simple}.showUploaderForm();', '_self', 'file', '', '', 2147483647, '', 0, 0, 1, 5),
+('bx_posts_entry_attachments', 'bx_posts', 'file_html5', '_bx_posts_menu_item_title_system_cpa_file_html5', '_bx_posts_menu_item_title_cpa_file_html5', 'javascript:void(0)', 'javascript:{js_object_uploader_files_html5}.showUploaderForm();', '_self', 'file', '', '', 2147483647, '', 1, 0, 1, 6),
+('bx_posts_entry_attachments', 'bx_posts', 'poll', '_bx_posts_menu_item_title_system_cpa_poll', '_bx_posts_menu_item_title_cpa_poll', 'javascript:void(0)', 'javascript:{js_object}.showPollForm(this);', '_self', 'tasks', '', '', 2147483647, '', 1, 0, 1, 7);
 
 -- MENU: actions menu for view entry 
 
@@ -463,7 +465,9 @@ INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `
 ('bx_posts_photos_simple', 1, 'BxPostsUploaderSimpleAttach', 'modules/boonex/posts/classes/BxPostsUploaderSimpleAttach.php'),
 ('bx_posts_photos_html5', 1, 'BxPostsUploaderHTML5Attach', 'modules/boonex/posts/classes/BxPostsUploaderHTML5Attach.php'),
 ('bx_posts_videos_simple', 1, 'BxPostsUploaderSimpleAttach', 'modules/boonex/posts/classes/BxPostsUploaderSimpleAttach.php'),
-('bx_posts_videos_html5', 1, 'BxPostsUploaderHTML5Attach', 'modules/boonex/posts/classes/BxPostsUploaderHTML5Attach.php');
+('bx_posts_videos_html5', 1, 'BxPostsUploaderHTML5Attach', 'modules/boonex/posts/classes/BxPostsUploaderHTML5Attach.php'),
+('bx_posts_files_simple', 1, 'BxPostsUploaderSimpleAttach', 'modules/boonex/posts/classes/BxPostsUploaderSimpleAttach.php'),
+('bx_posts_files_html5', 1, 'BxPostsUploaderHTML5Attach', 'modules/boonex/posts/classes/BxPostsUploaderHTML5Attach.php');
 
 -- ALERTS
 

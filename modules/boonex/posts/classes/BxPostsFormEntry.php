@@ -59,6 +59,17 @@ class BxPostsFormEntry extends BxBaseModTextFormEntry
             $this->aInputs[$CNF['FIELD_VIDEO']]['tr_attrs'] = array('class'=> 'bx-base-text-attachment-item');
         }
 
+        if (isset($CNF['FIELD_FILE']) && isset($this->aInputs[$CNF['FIELD_FILE']])) {
+            $this->aInputs[$CNF['FIELD_FILE']]['storage_object'] = $CNF['OBJECT_STORAGE_FILES'];
+            $this->aInputs[$CNF['FIELD_FILE']]['uploaders'] = !empty($this->aInputs[$CNF['FIELD_FILE']]['value']) ? unserialize($this->aInputs[$CNF['FIELD_FILE']]['value']) : $CNF['OBJECT_UPLOADERS'];
+            $this->aInputs[$CNF['FIELD_FILE']]['images_transcoder'] = $CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_FILES'];
+            $this->aInputs[$CNF['FIELD_FILE']]['storage_private'] = 0;
+            $this->aInputs[$CNF['FIELD_FILE']]['multiple'] = true;
+            $this->aInputs[$CNF['FIELD_FILE']]['content_id'] = 0;
+            $this->aInputs[$CNF['FIELD_FILE']]['ghost_template'] = '';
+            $this->aInputs[$CNF['FIELD_FILE']]['tr_attrs'] = array('class'=> 'bx-base-text-attachment-item');
+        }
+
         if(isset($this->aInputs[$CNF['FIELD_POLL']])) {
             $this->aInputs[$CNF['FIELD_POLL']]['tr_attrs'] = array('class'=> 'bx-base-text-attachment-item');
         }
@@ -156,17 +167,6 @@ class BxPostsFormEntry extends BxBaseModTextFormEntry
                 ),
             ),
         );
-    }
-
-    protected function _getPhotoGhostTmplVars($aContentInfo = array())
-    {
-    	$CNF = &$this->_oModule->_oConfig->CNF;
-
-    	return array (
-            'name' => $this->aInputs[$CNF['FIELD_PHOTO']]['name'],
-            'content_id' => (int)$this->aInputs[$CNF['FIELD_PHOTO']]['content_id'],
-            'editor_id' => isset($CNF['FIELD_TEXT_ID']) ? $CNF['FIELD_TEXT_ID'] : ''
-    	);
     }
 }
 

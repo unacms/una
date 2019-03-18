@@ -204,7 +204,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         ));
     }
 
-    protected function getAttachmentsImagesTranscoders ()
+    protected function getAttachmentsImagesTranscoders ($sStorage = '')
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
@@ -214,7 +214,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         return array($oTranscoder, $oTranscoderPreview);
     }
 
-    protected function getAttachmentsVideoTranscoders ()
+    protected function getAttachmentsVideoTranscoders ($sStorage = '')
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
@@ -234,8 +234,8 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
 
         $oStorage = BxDolStorage::getObjectInstance($sStorage);
 
-        list($oTranscoder, $oTranscoderPreview) = $this->getAttachmentsImagesTranscoders();
-        $aTranscodersVideo = $this->getAttachmentsVideoTranscoders();
+        list($oTranscoder, $oTranscoderPreview) = $this->getAttachmentsImagesTranscoders($sStorage);
+        $aTranscodersVideo = $this->getAttachmentsVideoTranscoders($sStorage);
 
         $aGhostFiles = $oStorage->getGhosts ($this->getModule()->serviceGetContentOwnerProfileId($aData[$CNF['FIELD_ID']]), $aData[$CNF['FIELD_ID']]);
         if (!$aGhostFiles)
