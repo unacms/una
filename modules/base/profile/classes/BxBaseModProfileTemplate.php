@@ -258,7 +258,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
             'action_menu' => $sActionsMenu,
 
-        	'bx_if:show_ava_image' => array(
+            'bx_if:show_ava_image' => array(
                 'condition' => $bUrlAvatar,
                 'content' => array(
                     'ava_url' => $sUrlAvatar
@@ -270,6 +270,10 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             		'color' => implode(', ', BxDolTemplate::getColorCode($iProfile, 1.0)),
                     'letter' => mb_substr($sTitle, 0, 1)
                 )
+            ),
+            'bx_if:show_online' => array(
+                'condition' => $oProfile->isOnline(),
+            	'content' => array()
             ),
             'picture_avatar_url' => $bUrlAvatar ? $sUrlAvatar : $this->getImageUrl('no-picture-preview.png'),
             'picture_popup' => $sPicturePopup,

@@ -179,11 +179,18 @@ a.bx-base-pofile-cover-image:hover,
 }
 
 div.bx-base-pofile-cover-thumb {
+    position: relative;
     display: -webkit-flex;
     display: flex;
     -webkit-align-items: flex-end;
     align-items: flex-end;
     height: 4rem;
+}
+div.bx-base-pofile-cover-thumb .bx-base-pofile-unit-online {
+    width: 0.875rem;
+    height: 0.875rem;
+    right: 0.4rem;
+    bottom: 0.4rem;
 }
 a.bx-base-pofile-cover-thumb,
 a.bx-base-pofile-cover-thumb img {
