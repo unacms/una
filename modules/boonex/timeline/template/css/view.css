@@ -383,6 +383,12 @@ div.bx-tl-view div.bx-tl-item-videos.bx-tl-iv-single div.bx-tl-item-video video 
 div.bx-tl-view-timeline div.bx-tl-item-attachment,
 div.bx-tl-view-outline div.bx-tl-item-attachment,
 div.bx-tl-view-item div.bx-tl-item-attachment {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;  
+
     width: 100%;
 }
 div.bx-tl-view-timeline div.bx-tl-item-attachments.bx-tl-ia-gallery div.bx-tl-item-attachment img,

@@ -1462,6 +1462,10 @@ class BxBaseModGeneralModule extends BxDolModule
         $aVideos = $this->_getVideosForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
         $aVideosAttach = $this->_getVideosForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
 
+        //--- Files(s)
+        $aFiles = $this->_getFilesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
+        $aFilesAttach = $this->_getFilesForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
+
         //--- Title
         $sTitle = '';
         if(isset($CNF['FIELD_TITLE']) && isset($aContentInfo[$CNF['FIELD_TITLE']]))
@@ -1486,7 +1490,9 @@ class BxBaseModGeneralModule extends BxDolModule
             'images' => $aImages,
             'images_attach' => $aImagesAttach,
             'videos' => $aVideos,
-            'videos_attach' => $aVideosAttach
+            'videos_attach' => $aVideosAttach,
+            'files' => $aFiles,
+            'files_attach' => $aFilesAttach
         );
     }
 
@@ -1529,6 +1535,16 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
     protected function _getVideosForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
+    {
+        return array();
+    }
+
+    protected function _getFilesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
+    {
+        return array();
+    }
+
+    protected function _getFilesForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {
         return array();
     }

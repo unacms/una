@@ -1431,6 +1431,25 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $aTmplVarsAttachments = array_merge($aTmplVarsAttachments, $aVideosAttach['items']);
         }
 
+        //--- Process Files ---//
+        $bFiles = !empty($aContent['files']) && is_array($aContent['files']);
+        if($bFiles) {
+            $aFiles = $this->_getTmplVarsFiles($aContent['files'], $aEvent, $aBrowseParams);
+            if(!empty($aFiles))
+                $aTmplVarsFiles = array(
+                    'style_prefix' => $sStylePrefix,
+                    'display' => $aFiles['display'],
+                    'bx_repeat:items' => $aFiles['items']
+                );
+        }
+
+        $bFilesAttach = !empty($aContent['files_attach']) && is_array($aContent['files_attach']);
+        if($bFilesAttach) {
+            $aFilesAttach = $this->_getTmplVarsFiles($aContent['files_attach'], $aEvent, $aBrowseParams);
+            if(!empty($aFilesAttach))
+                $aTmplVarsAttachments = array_merge ($aTmplVarsAttachments, $aFilesAttach['items']);
+        }
+
         return array(
             'style_prefix' => $sStylePrefix,
             'bx_if:show_title' => array(
@@ -1667,6 +1686,59 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return array( 
             'display' => $sDisplay,
             'items' => $aTmplVarsVideos
+        );
+    }
+
+    protected function _getTmplVarsFiles($aFiles, &$aEvent, &$aBrowseParams)
+    {
+        if(empty($aFiles) || !is_array($aFiles))
+            return array();
+
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
+        $sJsObject = $this->_oConfig->getJsObjectView($aBrowseParams);
+
+        $bViewItem = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_ITEM;
+
+        $sDisplay = '';
+        $aTmplVarsFiles = array();
+
+        $sFileSrcKey = '';
+        $sFileSrcKeyDefault = 'src';
+        if(count($aFiles) == 1) {
+            $sDisplay = 'single';
+            $sFileSrcKey = $bViewItem ? 'src_orig' : 'src_medium';
+        }
+        else {
+            $sDisplay = 'gallery';
+            $sFileSrcKey = 'src';
+        }
+
+        foreach($aFiles as $aFile) {
+            $sFileSrc = !empty($aFile[$sFileSrcKey]) ? $aFile[$sFileSrcKey] : $aFile[$sFileSrcKeyDefault];
+            if(empty($sFileSrc))
+                continue;
+
+            $sImage = $this->parseImage($sFileSrc, array(
+                'class' => $sStylePrefix . '-item-file'
+            ));
+
+            $aAttrs = array();
+            if(isset($aFile['onclick']))
+                $aAttrs['onclick'] = $aFile['onclick'];
+            else if(!$bViewItem && !empty($aFile['src_orig']))
+                $aAttrs['onclick'] = 'return ' . $sJsObject . '.showItem(this, \'' . $aEvent['id'] . '\', \'photo\', ' . json_encode(array('src' => base64_encode($aFile['src_orig']))) . ')'; 
+
+            $sImage = $this->parseLink(isset($aFile['url']) ? $aFile['url'] : 'javascript:void(0)', $sImage, $aAttrs);
+
+            $aTmplVarsFiles[] = array(
+                'style_prefix' => $sStylePrefix,
+                'item' => $sImage
+            );
+        }
+        
+        return array(
+            'display' => $sDisplay,
+            'items' => $aTmplVarsFiles
         );
     }
 

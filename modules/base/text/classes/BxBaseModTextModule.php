@@ -310,7 +310,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         if(!$aGhostFiles)
             return array();
 
-        $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS']);
+        $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY_PHOTOS']);
 
         foreach ($aGhostFiles as $k => $a) {
             $sPhotoSrc = $oTranscoder->getFileUrl($a['id']);
@@ -356,6 +356,48 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
                 'src_mp4' => $oTcMp4->getFileUrl($a['id']),
                 'src_webm' => $oTcWebm->getFileUrl($a['id']),
             );
+
+        return $aResults;
+    }
+
+    protected function _getFilesForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aResults = parent::_getFilesForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
+        if(!$this->_oConfig->isAttachmentsInTimeline() || empty($CNF['OBJECT_STORAGE_FILES']))
+            return $aResults;
+
+        $iContentId = (int)$aContentInfo[$CNF['FIELD_ID']];
+        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_FILES']);
+
+        $aGhostFiles = $oStorage->getGhosts($this->serviceGetContentOwnerProfileId($iContentId), $iContentId);
+        if(!$aGhostFiles)
+            return array();
+
+        $oTranscoder = null;
+        if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY_FILES']))
+            $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY_FILES']);
+
+        foreach ($aGhostFiles as $k => $a) {
+            $bImage = in_array($a['ext'], array('jpg', 'jpeg', 'png', 'gif'));
+
+            $sPhotoSrc = '';
+            if($bImage && $oTranscoder)
+                $sPhotoSrc = $oTranscoder->getFileUrl($a['id']);
+
+            if(empty($sPhotoSrc) && $oStorage)
+                $sPhotoSrc = $this->_oTemplate->getIconUrl($oStorage->getIconNameByFileName($a['file_name']));
+
+            $sUrl = $oStorage->getFileUrlById($a['id']);
+
+            $aResults[] = array(
+                'src' => $sPhotoSrc,
+                'src_medium' => $sPhotoSrc,
+                'src_orig' => $bImage ? $sUrl : '',
+                'url' => !$bImage ? $sUrl : ''
+            );
+        }
 
         return $aResults;
     }
