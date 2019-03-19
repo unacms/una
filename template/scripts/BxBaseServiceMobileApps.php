@@ -28,10 +28,17 @@ class BxBaseServiceMobileApps extends BxDol
 
         $this->mobileRedirects();
 
+        $oMenu = BxDolMenu::getObjectInstance('sys_account_notifications'); // sys_toolbar_member
+        $a = $oMenu->getMenuItems();
+        $iBubbles = 0;
+        foreach ($a as $r)
+            $iBubbles += $r['bx_if:addon']['condition'] ? $r['bx_if:addon']['content']['addon'] : 0;
+
         $s  = BxDolTemplate::getInstance()->parseHtmlByName('mobile_apps_styles.html', array());
         $s .= BxDolTemplate::getInstance()->parseHtmlByName('mobile_apps_js.html', array(
             'msg' => json_encode(array(
                 'loggedin' => isLogged(),
+                'bubbles' => $iBubbles ? $iBubbles : '',
             ))
         ));
         return $s;
