@@ -9,13 +9,15 @@
 function BxDolMenuMoreAuto(options)
 {
     this._sObject = options.sObject;
-    this._aHtmlIds = undefined == options.aHtmlIds ? {} : options.aHtmlIds;
+    this._iItemsStatic = undefined == options.iItemsStatic ? 0 : options.iItemsStatic;
+    this._aHtmlIds = undefined == options.aHtmlIds ? {} : options.aHtmlIds;  
 
     this._sKeyWidth = 'bx-mma-width';
 
     this._sClassItem = '.bx-menu-item';
     this._sClassItemMore = this._sClassItem + '.bx-menu-item-more-auto';
     this._sClassItemMoreSubmenu = '.bx-menu-submenu-more-auto';
+    this._sClassItemStatic = 'bx-menu-item-static';
 }
 
 BxDolMenuMoreAuto.prototype.init = function() {
@@ -27,6 +29,9 @@ BxDolMenuMoreAuto.prototype.init = function() {
             var oMenu = $(this);
             var oItemMore = oMenu.find($this._sClassItemMore);
             var oItemMoreSubmenu = oItemMore.find($this._sClassItemMoreSubmenu);
+
+            for(var i = 0; i < $this._iItemsStatic; i++)
+                oItemMore.prevAll($this._sClassItem + ':not(.' + $this._sClassItemStatic + '):last').addClass($this._sClassItemStatic);
 
             var iMenu = 0;
             oMenu.children($this._sClassItem + ':visible').each(function() {
@@ -104,7 +109,7 @@ BxDolMenuMoreAuto.prototype._moveToSubmenu = function(oMenu, oItemMore, oItemMor
     oMenu.children(this._sClassItem + ':not(' + this._sClassItemMore + ')').each(function() {
         var oItem = $(this);
         var iItem = $this._getWidth(oItem);
-        if(bRelocateOthers || iWidthTotal + iItem > iParent) {
+        if((bRelocateOthers || iWidthTotal + iItem > iParent) && !oItem.hasClass($this._sClassItemStatic)) {
             oItem.addClass('bx-def-color-bg-hl-hover');
 
             if(!oSubmenuItemFirst.length)

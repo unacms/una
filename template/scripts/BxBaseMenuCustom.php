@@ -18,6 +18,7 @@ class BxBaseMenuCustom extends BxTemplMenu
     protected $_sTmplNameCustomItemMorePopup;
 
     protected $_bMoreAuto;
+    protected $_iMoreAutoItemsStatic;
     protected $_sJsObjectMoreAuto;
 
     protected $_aHtmlIds;
@@ -33,6 +34,7 @@ class BxBaseMenuCustom extends BxTemplMenu
         $this->_sTmplNameCustomItemMorePopup = 'menu_custom_item_more_popup.html';
 
         $this->_bMoreAuto = false;
+        $this->_iMoreAutoItemsStatic = 1;
         $this->_sJsObjectMoreAuto = 'oMenuMoreAuto' . bx_gen_method_name($this->_sObject);
 
         $sPrefix = str_replace('_', '-', $this->_sObject);
@@ -79,6 +81,7 @@ class BxBaseMenuCustom extends BxTemplMenu
     {
         $aParams = array(
             'sObject' => $this->_sObject,
+            'iItemsStatic' => $this->_iMoreAutoItemsStatic,
             'aHtmlIds' => $this->_aHtmlIds
         );
         return $this->_oTemplate->_wrapInTagJsCode("if(!" . $this->_sJsObjectMoreAuto . ") var " . $this->_sJsObjectMoreAuto . " = new BxDolMenuMoreAuto(" . json_encode($aParams) . "); " . $this->_sJsObjectMoreAuto . ".init();");
