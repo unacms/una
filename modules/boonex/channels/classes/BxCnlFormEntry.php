@@ -9,6 +9,22 @@
  * @{
  */
 
+
+class BxCnlFormCheckerHelper extends BxDolFormCheckerHelper
+{
+    static public function checkNameExistOrEmpty($s)
+    {
+        if (trim($s) == '')
+            return false;
+         
+       $oModule = BxDolModule::getInstance('bx_channels');       
+       if ($oModule->_oDb->getChannelIdByName($s) !== false)
+            return false;
+        
+        return true;
+    }
+}
+
 /**
  * Create/Edit Channel Form.
  */

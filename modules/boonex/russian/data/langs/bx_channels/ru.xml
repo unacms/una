@@ -26,7 +26,7 @@
 	<string name="_bx_channels_form_profile_input_initial_members"><![CDATA[Пригласить участников]]></string>
 	<string name="_bx_channels_form_profile_input_sys_channel_name"><![CDATA[Название канала]]></string>
 	<string name="_bx_channels_form_profile_input_channel_name"><![CDATA[Название канала]]></string>
-	<string name="_bx_channels_form_profile_input_channel_name_err"><![CDATA[Эта информация необходима. Пожалуйста, заполните это поле.]]></string>
+	<string name="_bx_channels_form_profile_input_channel_name_err"><![CDATA[Пожалуйста, заполните это поле. Имя канала должно быть уникальным.]]></string>
     <string name="_bx_channels_form_profile_input_sys_picture"><![CDATA[Картинка канала]]></string>
 	<string name="_bx_channels_form_profile_input_picture"><![CDATA[Загрузить новую картинку канала]]></string>
 	<string name="_bx_channels_form_profile_input_picture_err"><![CDATA[Необходима картинка канала.]]></string>
