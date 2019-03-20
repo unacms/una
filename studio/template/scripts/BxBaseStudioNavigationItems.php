@@ -415,14 +415,18 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
             $this->oDb->getMenus(array('type' => 'by_object', 'value' => $aRow['submenu_object']), $aMenu, false);
 
             $sPrefix = _t('_adm_nav_txt_items_gl_link_menu');
-            $aField['chars_limit'] -= strlen($sPrefix);
+            if(!empty($aMenu) && is_array($aMenu)) {
+                $aField['chars_limit'] -= strlen($sPrefix);
 
-            $aValue = $this->_limitMaxLength(_t($aMenu['title']), $sKey, $aField, $aRow, $this->_isDisplayPopupOnTextOverflow, false);
+                $aValue = $this->_limitMaxLength(_t($aMenu['title']), $sKey, $aField, $aRow, $this->_isDisplayPopupOnTextOverflow, false);
 
-            $sLink = sprintf($this->sUrlViewItems, $aMenu['module'], $aMenu['set_name']);
-            $mixedValue = $sPrefix . ' ' . $this->_oTemplate->parseLink($sLink, $aValue[0], array(
-                'title' => _t('_adm_nav_txt_manage_items') 
-            )) . (isset($aValue[1]) ? $aValue[1] : '');
+                $sLink = sprintf($this->sUrlViewItems, $aMenu['module'], $aMenu['set_name']);
+                $mixedValue = $sPrefix . ' ' . $this->_oTemplate->parseLink($sLink, $aValue[0], array(
+                    'title' => _t('_adm_nav_txt_manage_items') 
+                )) . (isset($aValue[1]) ? $aValue[1] : '');
+            }
+            else 
+                $mixedValue = $sPrefix . ' ' . _t('_undefined');
         } else if($aRow['submenu_object'] == "" && $aRow['onclick'] != "")
             $mixedValue = $this->_limitMaxLength(_t('_adm_nav_txt_items_gl_link_custom'), $sKey, $aField, $aRow, $this->_isDisplayPopupOnTextOverflow);
         else
