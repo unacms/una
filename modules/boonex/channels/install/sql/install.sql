@@ -203,7 +203,7 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 
 -- FORMS
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_channel', 'bx_channels', '_bx_channels_form_profile', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_cnl_data', 'id', '', '', 'do_submit', '', 0, 1, 'BxCnlFormEntry', 'modules/boonex/channels/classes/BxCnlFormEntry.php');
+('bx_channel', 'bx_channels', '_bx_channels_form_profile', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_cnl_data', 'id', '', '', 'do_submit', 'a:1:{s:14:"checker_helper";s:22:"BxCnlFormCheckerHelper";}', 0, 1, 'BxCnlFormEntry', 'modules/boonex/channels/classes/BxCnlFormEntry.php');
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
 ('bx_channel', 'bx_channel_add', 'bx_channels', 0, '_bx_channels_form_profile_display_add'),
@@ -216,7 +216,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
 ('bx_channel', 'bx_channels', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_channels_form_profile_input_sys_delete_confirm', '_bx_channels_form_profile_input_delete_confirm', '_bx_channels_form_profile_input_delete_confirm_info', 1, 0, 0, '', '', '', 'avail', '', '_bx_channels_form_profile_input_delete_confirm_error', '', '', 1, 0),
 ('bx_channel', 'bx_channels', 'do_submit', '_sys_form_account_input_submit', '', 0, 'submit', '_bx_channels_form_profile_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_channel', 'bx_channels', 'channel_name', '', '', 0, 'text', '_bx_channels_form_profile_input_sys_channel_name', '_bx_channels_form_profile_input_channel_name', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_channels_form_profile_input_channel_name_err', 'Xss', '', 1, 0),
+('bx_channel', 'bx_channels', 'channel_name', '', '', 0, 'text', '_bx_channels_form_profile_input_sys_channel_name', '_bx_channels_form_profile_input_channel_name', '', 1, 0, 0, '', '', '', 'NameExistOrEmpty', '', '_bx_channels_form_profile_input_channel_name_err', 'Xss', '', 1, 0),
 ('bx_channel', 'bx_channels', 'cover', 'a:1:{i:0;s:22:"bx_channels_cover_crop";}', 'a:1:{s:22:"bx_channels_cover_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_channels_form_profile_input_sys_cover', '_bx_channels_form_profile_input_cover', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_channel', 'bx_channels', 'picture', 'a:1:{i:0;s:24:"bx_channels_picture_crop";}', 'a:1:{s:24:"bx_channels_picture_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_channels_form_profile_input_sys_picture', '_bx_channels_form_profile_input_picture', '', 0, 0, 0, '', '', '', '', '', '_bx_channels_form_profile_input_picture_err', '', '', 1, 0);
 
