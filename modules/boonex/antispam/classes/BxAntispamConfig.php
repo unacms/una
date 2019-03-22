@@ -24,6 +24,7 @@ class BxAntispamConfig extends BxDolModuleConfig
         'akismet_enable' => 'bx_antispam_akismet_enable',
         'disposable_email_domains_mode' => 'bx_antispam_disposable_email_domains_mode',
         'disposable_email_domains_behaviour_join' => 'bx_antispam_disposable_email_domains_behaviour_join',
+        'profanity_enable' => 'bx_antispam_profanity_filter_enable',
     );
     /**
      * default local options, it is filled in with real system options in class contructor, @see restoreAntispamOptions
@@ -36,6 +37,7 @@ class BxAntispamConfig extends BxDolModuleConfig
         'dnsbl_behaviour_login' => 'block',
         'dnsbl_behaviour_join' => 'approval',
         'akismet_enable' => '',
+        'profanity_enable' => '',
     );
 
     public function __construct($aModule)

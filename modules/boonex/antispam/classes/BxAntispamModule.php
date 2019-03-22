@@ -65,17 +65,22 @@ class BxAntispamModule extends BxDolModule
      *          BX_SLASHES_NO_ACTION - do not perform any action with slashes
      * @return true if spam detected and content shouln't be recorded, false if content should be processed as usual.
      */
-    public function serviceIsSpam ($sContent, $sIp = '', $isStripSlashes = BX_SLASHES_AUTO)
-    {
+    public function serviceIsSpam (&$sContent, $sIp = '', $isStripSlashes = BX_SLASHES_AUTO)
+    {      
         if (defined('BX_DOL_CRON_EXECUTE') || isAdmin())
             return false;
+        
+        if ('on' == $this->_oConfig->getAntispamOption('profanity_enable')) {
+            $oProfanityFilter = bx_instance('BxAntispamProfanityFilter', array(), $this->_aModule);
+            $sContent = $oProfanityFilter->censorString($sContent);
+        }
 
         if ($this->serviceIsIpWhitelisted($sIp))
             return false;
 
         if (get_magic_quotes_gpc() && $isStripSlashes == BX_SLASHES_AUTO)
             $sContent = stripslashes($sContent);
-
+        
         $bRet = false;
         if ('on' == $this->_oConfig->getAntispamOption('uridnsbl_enable')) {
             $oDNSURIBlacklists = bx_instance('BxAntispamDNSURIBlacklists', array(), $this->_aModule);

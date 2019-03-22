@@ -31,10 +31,10 @@ class BxAntispamAlertsResponse extends BxDolAlertsResponse
 
             switch ($oAlert->sAction) {
                 case 'check_spam':
-                    $oAlert->aExtras['is_spam'] = BxDolService::call('bx_antispam', 'is_spam', array($oAlert->aExtras['content']));
+                    $oAlert->aExtras['is_spam'] = BxDolService::call('bx_antispam', 'is_spam', array(&$oAlert->aExtras['content']));
                     break;
             }
-
+            
         }
     }
 }

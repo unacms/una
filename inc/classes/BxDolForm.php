@@ -1269,9 +1269,11 @@ class BxDolFormChecker
                 if (!$val)
                     continue;
 
-                if (!$oChecker->checkIsSpam($val))
+                if (!$oChecker->checkIsSpam($val)){
+					BxDolForm::setSubmittedValue($a['name'], $val, $this->_sFormMethod, $this->_aSpecificValues);
                     continue;
-
+				}
+                
                 ++$iErrors;
 
                 $sErr = _t('_sys_spam_detected');
@@ -1481,10 +1483,10 @@ class BxDolFormCheckerHelper
             return true;
         return $oCaptcha->check ();
     }
-    static public function checkIsSpam($val)
+    static public function checkIsSpam(&$val)
     {
         $bSpam = false;
-        bx_alert('system', 'check_spam', 0, getLoggedId(), array('is_spam' => &$bSpam, 'content' => $val, 'where' => 'form'));
+        bx_alert('system', 'check_spam', 0, getLoggedId(), array('is_spam' => &$bSpam, 'content' => &$val, 'where' => 'form'));
         return $bSpam;
     }
 
