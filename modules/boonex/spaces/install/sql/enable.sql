@@ -531,7 +531,8 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 
 INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `spaces`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
 ('bx_spaces_allow_view_to', 'bx_spaces', 'view', '_bx_spaces_form_profile_input_allow_view_to', '3', '', 'bx_spaces_data', 'id', 'author', 'BxSpacesPrivacy', 'modules/boonex/spaces/classes/BxSpacesPrivacy.php'),
-('bx_spaces_allow_view_notification_to', 'bx_spaces', 'view_event', '_bx_spaces_form_profile_input_allow_view_notification_to', '3', '', 'bx_notifications_events', 'id', 'object_owner_id', 'BxSpacesPrivacyNotifications', 'modules/boonex/spaces/classes/BxSpacesPrivacyNotifications.php');
+('bx_spaces_allow_view_notification_to', 'bx_spaces', 'view_event', '_bx_spaces_form_profile_input_allow_view_notification_to', '3', '', 'bx_notifications_events', 'id', 'object_owner_id', 'BxSpacesPrivacyNotifications', 'modules/boonex/spaces/classes/BxSpacesPrivacyNotifications.php'),
+('bx_spaces_allow_post_to', 'bx_spaces', 'post', '_bx_spaces_form_profile_input_allow_post_to', '3', '', 'bx_spaces_data', 'id', 'author', 'BxSpacesPrivacyPost', 'modules/boonex/spaces/classes/BxSpacesPrivacyPost.php');
 
 -- EMAIL TEMPLATES
 

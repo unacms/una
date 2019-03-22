@@ -24,7 +24,8 @@ CREATE TABLE IF NOT EXISTS `bx_spaces_data` (
   `reports` int(11) NOT NULL default '0',
   `featured` int(11) NOT NULL default '0',
   `join_confirmation` tinyint(4) NOT NULL DEFAULT '1',
-  `allow_view_to` varchar(255) DEFAULT NULL,
+  `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
+  `allow_post_to` varchar(16) NOT NULL DEFAULT '3',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `search_fields` (`space_name`, `space_desc`)
 );
@@ -244,6 +245,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
 ('bx_space', 'bx_spaces', 'allow_view_to', 3, '', 0, 'custom', '_bx_spaces_form_profile_input_sys_allow_view_to', '_bx_spaces_form_profile_input_allow_view_to', '_bx_spaces_form_profile_input_allow_view_to_desc', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_space', 'bx_spaces', 'allow_post_to', 3, '', 0, 'custom', '_bx_spaces_form_profile_input_sys_allow_post_to', '_bx_spaces_form_profile_input_allow_post_to', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_space', 'bx_spaces', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_spaces_form_profile_input_sys_delete_confirm', '_bx_spaces_form_profile_input_delete_confirm', '_bx_spaces_form_profile_input_delete_confirm_info', 1, 0, 0, '', '', '', 'avail', '', '_bx_spaces_form_profile_input_delete_confirm_error', '', '', 1, 0),
 ('bx_space', 'bx_spaces', 'do_submit', '_sys_form_account_input_submit', '', 0, 'submit', '_bx_spaces_form_profile_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_space', 'bx_spaces', 'space_desc', '', '', 0, 'textarea', '_bx_spaces_form_profile_input_sys_space_desc', '_bx_spaces_form_profile_input_space_desc', '', 0, 0, 2, '', '', '', '', '', '', 'XssHtml', '', 1, 1),
@@ -268,7 +270,8 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_space_add', 'location', 2147483647, 1, 11),
 ('bx_space_add', 'join_confirmation', 2147483647, 1, 12),
 ('bx_space_add', 'allow_view_to', 2147483647, 1, 13),
-('bx_space_add', 'do_submit', 2147483647, 1, 14),
+('bx_space_add', 'allow_post_to', 2147483647, 1, 14),
+('bx_space_add', 'do_submit', 2147483647, 1, 15),
 
 ('bx_space_invite', 'initial_members', 2147483647, 1, 1),
 ('bx_space_invite', 'do_submit', 2147483647, 1, 2),
@@ -290,7 +293,8 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_space_edit', 'location', 2147483647, 1, 10),
 ('bx_space_edit', 'join_confirmation', 2147483647, 1, 11),
 ('bx_space_edit', 'allow_view_to', 2147483647, 1, 12),
-('bx_space_edit', 'do_submit', 2147483647, 1, 13),
+('bx_space_edit', 'allow_post_to', 2147483647, 1, 13),
+('bx_space_edit', 'do_submit', 2147483647, 1, 14),
 
 ('bx_space_edit_cover', 'join_confirmation', 2147483647, 0, 0),
 ('bx_space_edit_cover', 'space_desc', 2147483647, 0, 0),

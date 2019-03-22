@@ -22,7 +22,8 @@ CREATE TABLE IF NOT EXISTS `bx_groups_data` (
   `reports` int(11) NOT NULL default '0',
   `featured` int(11) NOT NULL default '0',
   `join_confirmation` tinyint(4) NOT NULL DEFAULT '1',
-  `allow_view_to` varchar(255) DEFAULT NULL,
+  `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
+  `allow_post_to` varchar(16) NOT NULL DEFAULT '3',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `search_fields` (`group_name`, `group_desc`)
 );
@@ -242,6 +243,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
 ('bx_group', 'bx_groups', 'allow_view_to', 3, '', 0, 'custom', '_bx_groups_form_profile_input_sys_allow_view_to', '_bx_groups_form_profile_input_allow_view_to', '_bx_groups_form_profile_input_allow_view_to_desc', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_group', 'bx_groups', 'allow_post_to', 3, '', 0, 'custom', '_bx_groups_form_profile_input_sys_allow_post_to', '_bx_groups_form_profile_input_allow_post_to', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_group', 'bx_groups', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_groups_form_profile_input_sys_delete_confirm', '_bx_groups_form_profile_input_delete_confirm', '_bx_groups_form_profile_input_delete_confirm_info', 1, 0, 0, '', '', '', 'avail', '', '_bx_groups_form_profile_input_delete_confirm_error', '', '', 1, 0),
 ('bx_group', 'bx_groups', 'do_submit', '_sys_form_account_input_submit', '', 0, 'submit', '_bx_groups_form_profile_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_group', 'bx_groups', 'group_desc', '', '', 0, 'textarea', '_bx_groups_form_profile_input_sys_group_desc', '_bx_groups_form_profile_input_group_desc', '', 0, 0, 2, '', '', '', '', '', '', 'XssHtml', '', 1, 1),
@@ -264,7 +266,8 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_group_add', 'location', 2147483647, 1, 10),
 ('bx_group_add', 'join_confirmation', 2147483647, 1, 11),
 ('bx_group_add', 'allow_view_to', 2147483647, 1, 12),
-('bx_group_add', 'do_submit', 2147483647, 1, 13),
+('bx_group_add', 'allow_post_to', 2147483647, 1, 13),
+('bx_group_add', 'do_submit', 2147483647, 1, 14),
 
 ('bx_group_invite', 'initial_members', 2147483647, 1, 1),
 ('bx_group_invite', 'do_submit', 2147483647, 1, 2),
@@ -285,7 +288,8 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_group_edit', 'location', 2147483647, 1, 9),
 ('bx_group_edit', 'join_confirmation', 2147483647, 1, 10),
 ('bx_group_edit', 'allow_view_to', 2147483647, 1, 11),
-('bx_group_edit', 'do_submit', 2147483647, 1, 12),
+('bx_group_edit', 'allow_post_to', 2147483647, 1, 12),
+('bx_group_edit', 'do_submit', 2147483647, 1, 13),
 
 ('bx_group_edit_cover', 'join_confirmation', 2147483647, 0, 0),
 ('bx_group_edit_cover', 'group_desc', 2147483647, 0, 0),

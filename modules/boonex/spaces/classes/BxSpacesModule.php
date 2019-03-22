@@ -61,14 +61,6 @@ class BxSpacesModule extends BxBaseModGroupsModule
         echo(json_encode($a));
     }
 
-    public function checkAllowedPost ($aDataEntry, $isPerformAction = false)
-    {
-        if(isLogged())
-            return CHECK_ACTION_RESULT_ALLOWED;
-
-        return _t('_sys_txt_access_denied');
-    }
-
     public function checkAllowedSubscribeAdd (&$aDataEntry, $isPerformAction = false)
     {
         return parent::_checkAllowedSubscribeAdd ($aDataEntry, $isPerformAction);
