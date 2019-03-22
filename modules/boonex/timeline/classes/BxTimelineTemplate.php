@@ -164,7 +164,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             return array('content' => MsgBox($aEvent[$sKey]), 'designbox_id' => 13);
 
         $oModule = $this->getModule();
-        if($oModule->isAllowedViewCounter($aEvent) !== true)
+        if($oModule->isAllowedView($aEvent) !== true)
             return array('content' => MsgBox(_t('_Access denied')), 'designbox_id' => 13);
 
         if(!$this->_oConfig->isSystem($aEvent['type'], $aEvent['action'])) {
