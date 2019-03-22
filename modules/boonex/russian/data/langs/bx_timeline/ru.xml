@@ -71,8 +71,8 @@
 	<string name="_bx_timeline_acl_action_vote"><![CDATA[Голосовать]]></string>
 	<string name="_bx_timeline_acl_action_repost"><![CDATA[Делать репост]]></string>
 	<string name="_bx_timeline_acl_action_send"><![CDATA[Послать]]></string>
-	<string name="_bx_timeline_acl_action_pin"><![CDATA[Прикреплять любое сообщение]]></string>
-	<string name="_bx_timeline_acl_action_stick"><![CDATA[Приклеивать любое сообщение]]></string>
+	<string name="_bx_timeline_acl_action_pin"><![CDATA['Приколоть тут' любое сообщение]]></string>
+	<string name="_bx_timeline_acl_action_stick"><![CDATA['Приколоть для всех' любое сообщение]]></string>
 	<string name="_bx_timeline_acl_action_promote"><![CDATA[Рекламировать любое сообщение]]></string>
 
 	<string name="_bx_timeline_page_title_sys_view"><![CDATA[Хроника новостей профайла]]></string>
