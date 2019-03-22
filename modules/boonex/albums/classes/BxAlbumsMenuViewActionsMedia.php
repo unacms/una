@@ -38,6 +38,28 @@ class BxAlbumsMenuViewActionsMedia extends BxAlbumsMenuViewActions
         }
     }
 
+    protected function _isContentPublic($iMediaId)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(empty($CNF['FIELD_ALLOW_VIEW_TO'])) 
+            return true;
+
+        $aContentInfo = array();
+        if($iMediaId != $this->_iMediaId) {
+            $aMediaInfo = $this->_oModule->_oDb->getMediaInfoById($iMediaId);
+            if(!empty($aMediaInfo['content_id']))
+                $aContentInfo = (int)$aMediaInfo['content_id'] == $this->_iContentId ? $this->_aContentInfo : $this->_oModule->_oDb->getContentInfoById((int)$aMediaInfo['content_id']);
+        }
+        else 
+            $aContentInfo = $this->_aContentInfo;
+
+        if(!isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
+            return true;
+
+        return in_array($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']], array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS));
+    }
+
     protected function _getMenuItemAddImagesToAlbum($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;

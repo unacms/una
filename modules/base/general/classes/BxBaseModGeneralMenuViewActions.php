@@ -77,6 +77,20 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         return $this->_oModule->isMenuItemVisible($this->_sObject, $a, $this->_aContentInfo);
     }
 
+    protected function _isContentPublic($iContentId)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(empty($CNF['FIELD_ALLOW_VIEW_TO'])) 
+            return true;
+
+        $aContentInfo = $iContentId == $this->_iContentId ? $this->_aContentInfo : $this->_oModule->_oDb->getContentInfoById($iContentId);
+        if(!isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
+            return true;
+
+        return in_array($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']], array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS));
+    }
+
     protected function _getMenuItemDefault($aItem)
     {
         $aItem['class_wrp'] = 'bx-base-general-entity-action' . (!empty($aItem['class_wrp']) ? ' ' . $aItem['class_wrp'] : '');
@@ -236,6 +250,9 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         $iId = !empty($aParams['id']) ? (int)$aParams['id'] : '';
         if(empty($iId))
             $iId = $this->_iContentId;
+
+        if(!$this->_isContentPublic($iId))
+            return '';
 
         $oObject = !empty($sObject) ? BxDolFeature::getObjectInstance($sObject, $iId) : false;
         if(!$oObject || !$oObject->isEnabled())
