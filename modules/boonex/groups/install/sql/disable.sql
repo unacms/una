@@ -19,27 +19,6 @@ DELETE FROM `sys_menu_items` WHERE `module` = 'bx_groups' OR `set_name` IN('bx_g
 DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matrix` WHERE `sys_acl_matrix`.`IDAction` = `sys_acl_actions`.`ID` AND `sys_acl_actions`.`Module` = 'bx_groups';
 DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_groups';
 
--- COMMENTS
-DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_groups';
-
--- VIEWS
-DELETE FROM `sys_objects_view` WHERE `name` = 'bx_groups';
-
--- VOTES
-DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_groups';
-
--- SCORES
-DELETE FROM `sys_objects_score` WHERE `name` = 'bx_groups';
-
--- REPORTS
-DELETE FROM `sys_objects_report` WHERE `name` = 'bx_groups';
-
--- FAFORITES
-DELETE FROM `sys_objects_favorite` WHERE `name` = 'bx_groups';
-
--- FEATURED
-DELETE FROM `sys_objects_feature` WHERE `name` = 'bx_groups';
-
 -- METATAGS
 DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_groups';
 

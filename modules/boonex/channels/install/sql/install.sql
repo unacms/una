@@ -203,7 +203,7 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 
 -- FORMS
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_channel', 'bx_channels', '_bx_channels_form_profile', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_cnl_data', 'id', '', '', 'do_submit', 'a:1:{s:14:"checker_helper";s:22:"BxCnlFormCheckerHelper";}', 0, 1, 'BxCnlFormEntry', 'modules/boonex/channels/classes/BxCnlFormEntry.php');
+('bx_channel', 'bx_channels', '_bx_channels_form_profile', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_cnl_data', 'id', '', '', 'do_submit', '', 0, 1, 'BxCnlFormEntry', 'modules/boonex/channels/classes/BxCnlFormEntry.php');
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
 ('bx_channel', 'bx_channel_add', 'bx_channels', 0, '_bx_channels_form_profile_display_add'),
@@ -216,7 +216,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
 ('bx_channel', 'bx_channels', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_channels_form_profile_input_sys_delete_confirm', '_bx_channels_form_profile_input_delete_confirm', '_bx_channels_form_profile_input_delete_confirm_info', 1, 0, 0, '', '', '', 'avail', '', '_bx_channels_form_profile_input_delete_confirm_error', '', '', 1, 0),
 ('bx_channel', 'bx_channels', 'do_submit', '_sys_form_account_input_submit', '', 0, 'submit', '_bx_channels_form_profile_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_channel', 'bx_channels', 'channel_name', '', '', 0, 'text', '_bx_channels_form_profile_input_sys_channel_name', '_bx_channels_form_profile_input_channel_name', '', 1, 0, 0, '', '', '', 'NameExistOrEmpty', '', '_bx_channels_form_profile_input_channel_name_err', 'Xss', '', 1, 0),
+('bx_channel', 'bx_channels', 'channel_name', '', '', 0, 'text', '_bx_channels_form_profile_input_sys_channel_name', '_bx_channels_form_profile_input_channel_name', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_channels_form_profile_input_channel_name_err', 'Xss', '', 1, 0),
 ('bx_channel', 'bx_channels', 'cover', 'a:1:{i:0;s:22:"bx_channels_cover_crop";}', 'a:1:{s:22:"bx_channels_cover_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_channels_form_profile_input_sys_cover', '_bx_channels_form_profile_input_cover', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_channel', 'bx_channels', 'picture', 'a:1:{i:0;s:24:"bx_channels_picture_crop";}', 'a:1:{s:24:"bx_channels_picture_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_channels_form_profile_input_sys_picture', '_bx_channels_form_profile_input_picture', '', 0, 0, 0, '', '', '', '', '', '_bx_channels_form_profile_input_picture_err', '', '', 1, 0);
 
@@ -253,6 +253,33 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 
 ('bx_channel_view_full', 'channel_name', 2147483647, 1, 1);
 
+-- COMMENTS
+INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Html`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
+('bx_channels', 'bx_channels', 'bx_cnl_cmts', 1, 5000, 1000, 3, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-channel-profile&id={object_id}', '', 'bx_cnl_data', 'id', 'author', 'channel_name', 'comments', '', '');
+
+-- VIEWS
+INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_channels', 'bx_cnl_views_track', '86400', '1', 'bx_cnl_data', 'id', 'author', 'views', '', '');
+
+-- VOTES
+INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
+('bx_channels', 'bx_cnl_votes', 'bx_cnl_votes_track', '604800', '1', '1', '0', '1', 'bx_cnl_data', 'id', 'author', 'rate', 'votes', '', '');
+
+-- SCORES
+INSERT INTO `sys_objects_score` (`name`, `module`, `table_main`, `table_track`, `post_timeout`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_score`, `trigger_field_cup`, `trigger_field_cdown`, `class_name`, `class_file`) VALUES 
+('bx_channels', 'bx_channels', 'bx_cnl_scores', 'bx_cnl_scores_track', '604800', '0', 'bx_cnl_data', 'id', 'author', 'score', 'sc_up', 'sc_down', '', '');
+
+-- REPORTS
+INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_channels', 'bx_cnl_reports', 'bx_cnl_reports_track', '1', 'page.php?i=view-channel-profile&id={object_id}', 'bx_cnl_data', 'id', 'author', 'reports', '', '');
+
+-- FAFORITES
+INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `is_on`, `is_undo`, `is_public`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_channels', 'bx_cnl_favorites_track', '1', '1', '1', 'page.php?i=view-channel-profile&id={object_id}', 'bx_cnl_data', 'id', 'author', 'favorites', '', '');
+
+-- FEATURED
+INSERT INTO `sys_objects_feature` (`name`, `is_on`, `is_undo`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_flag`, `class_name`, `class_file`) VALUES 
+('bx_channels', '1', '1', 'page.php?i=view-channel-profile&id={object_id}', 'bx_cnl_data', 'id', 'author', 'featured', '', '');
 
 -- CONTENT INFO
 INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_action_add`, `alert_action_update`, `alert_action_delete`, `class_name`, `class_file`) VALUES

@@ -19,6 +19,26 @@ DELETE FROM `sys_form_displays` WHERE `module` = 'bx_persons';
 DELETE FROM `sys_form_inputs` WHERE `module` = 'bx_persons';
 DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_person_add', 'bx_person_delete', 'bx_person_edit', 'bx_person_edit_cover', 'bx_person_view', 'bx_person_view_full');
 
+-- COMMENTS
+DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_persons';
+
+-- VIEWS
+DELETE FROM `sys_objects_view` WHERE `name` = 'bx_persons';
+
+-- VOTES
+DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_persons';
+
+-- SCORES
+DELETE FROM `sys_objects_score` WHERE `name` = 'bx_persons';
+
+-- FAFORITES
+DELETE FROM `sys_objects_favorite` WHERE `name` = 'bx_persons';
+
+-- FEATURED
+DELETE FROM `sys_objects_feature` WHERE `name` = 'bx_persons';
+
+-- REPORTS
+DELETE FROM `sys_objects_report` WHERE `name` = 'bx_persons';
 
 -- CONTENT INFO
 DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_persons', 'bx_persons_cmts');

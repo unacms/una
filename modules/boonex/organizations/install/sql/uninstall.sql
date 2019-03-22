@@ -24,6 +24,27 @@ DELETE FROM `sys_form_pre_lists` WHERE `module` = 'bx_organizations';
 
 DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_organizations_cats');
 
+-- COMMENTS
+DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_organizations';
+
+-- VIEWS
+DELETE FROM `sys_objects_view` WHERE `name` = 'bx_organizations';
+
+-- VOTES
+DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_organizations';
+
+-- SCORES
+DELETE FROM `sys_objects_score` WHERE `name` = 'bx_organizations';
+
+-- FAFORITES
+DELETE FROM `sys_objects_favorite` WHERE `name` = 'bx_organizations';
+
+-- FEATURED
+DELETE FROM `sys_objects_feature` WHERE `name` = 'bx_organizations';
+
+-- REPORTS
+DELETE FROM `sys_objects_report` WHERE `name` = 'bx_organizations';
+
 -- CONTENT INFO
 DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_organizations', 'bx_organizations_cmts');
 

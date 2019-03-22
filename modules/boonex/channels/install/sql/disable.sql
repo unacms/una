@@ -19,32 +19,8 @@ DELETE FROM `sys_menu_items` WHERE `module` = 'bx_channels' OR `set_name` IN('bx
 DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matrix` WHERE `sys_acl_matrix`.`IDAction` = `sys_acl_actions`.`ID` AND `sys_acl_actions`.`Module` = 'bx_channels';
 DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_channels';
 
--- COMMENTS
-DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_channels';
-
--- VIEWS
-DELETE FROM `sys_objects_view` WHERE `name` = 'bx_channels';
-
--- VOTES
-DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_channels';
-
--- SCORES
-DELETE FROM `sys_objects_score` WHERE `name` = 'bx_channels';
-
--- REPORTS
-DELETE FROM `sys_objects_report` WHERE `name` = 'bx_channels';
-
--- FAFORITES
-DELETE FROM `sys_objects_favorite` WHERE `name` = 'bx_channels';
-
--- FEATURED
-DELETE FROM `sys_objects_feature` WHERE `name` = 'bx_channels';
-
 -- METATAGS
 DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_channels';
-
--- CATEGORY
-DELETE FROM `sys_objects_category` WHERE `object` = 'bx_channels_cats';
 
 -- SEARCH
 DELETE FROM `sys_objects_search` WHERE `ObjectName` = 'bx_channels';

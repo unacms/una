@@ -23,11 +23,26 @@ DELETE FROM `sys_form_displays` WHERE `module` = 'bx_channels';
 DELETE FROM `sys_form_inputs` WHERE `module` = 'bx_channels';
 DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_channel_add', 'bx_channel_delete', 'bx_channel_edit', 'bx_channel_edit_cover', 'bx_channel_view', 'bx_channel_view_full');
 
--- PRE-VALUES
+-- COMMENTS
+DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_channels';
 
-DELETE FROM `sys_form_pre_lists` WHERE `module` = 'bx_channels';
+-- VIEWS
+DELETE FROM `sys_objects_view` WHERE `name` = 'bx_channels';
 
-DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_channels_cats');
+-- VOTES
+DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_channels';
+
+-- SCORES
+DELETE FROM `sys_objects_score` WHERE `name` = 'bx_channels';
+
+-- REPORTS
+DELETE FROM `sys_objects_report` WHERE `name` = 'bx_channels';
+
+-- FAFORITES
+DELETE FROM `sys_objects_favorite` WHERE `name` = 'bx_channels';
+
+-- FEATURED
+DELETE FROM `sys_objects_feature` WHERE `name` = 'bx_channels';
 
 -- CONTENT INFO
 DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_channels', 'bx_channels_cmts');

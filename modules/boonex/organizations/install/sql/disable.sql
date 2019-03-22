@@ -19,27 +19,6 @@ DELETE FROM `sys_menu_items` WHERE `module` = 'bx_organizations' OR `set_name` I
 DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matrix` WHERE `sys_acl_matrix`.`IDAction` = `sys_acl_actions`.`ID` AND `sys_acl_actions`.`Module` = 'bx_organizations';
 DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_organizations';
 
--- COMMENTS
-DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_organizations';
-
--- VIEWS
-DELETE FROM `sys_objects_view` WHERE `name` = 'bx_organizations';
-
--- VOTES
-DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_organizations';
-
--- SCORES
-DELETE FROM `sys_objects_score` WHERE `name` = 'bx_organizations';
-
--- REPORTS
-DELETE FROM `sys_objects_report` WHERE `name` = 'bx_organizations';
-
--- FAFORITES
-DELETE FROM `sys_objects_favorite` WHERE `name` = 'bx_organizations';
-
--- FEATURED
-DELETE FROM `sys_objects_feature` WHERE `name` = 'bx_organizations';
-
 -- METATAGS
 DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_organizations';
 

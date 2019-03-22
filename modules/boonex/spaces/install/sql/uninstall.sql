@@ -24,10 +24,30 @@ DELETE FROM `sys_form_inputs` WHERE `module` = 'bx_spaces';
 DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_space_add', 'bx_space_delete', 'bx_space_edit', 'bx_space_edit_cover', 'bx_space_view', 'bx_space_view_full', 'bx_space_invite');
 
 -- PRE-VALUES
-
 DELETE FROM `sys_form_pre_lists` WHERE `module` = 'bx_spaces';
 
 DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_spaces_cats');
+
+-- COMMENTS
+DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_spaces';
+
+-- VIEWS
+DELETE FROM `sys_objects_view` WHERE `name` = 'bx_spaces';
+
+-- VOTES
+DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_spaces';
+
+-- SCORES
+DELETE FROM `sys_objects_score` WHERE `name` = 'bx_spaces';
+
+-- REPORTS
+DELETE FROM `sys_objects_report` WHERE `name` = 'bx_spaces';
+
+-- FAFORITES
+DELETE FROM `sys_objects_favorite` WHERE `name` = 'bx_spaces';
+
+-- FEATURED
+DELETE FROM `sys_objects_feature` WHERE `name` = 'bx_spaces';
 
 -- CONTENT INFO
 DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_spaces', 'bx_spaces_cmts');

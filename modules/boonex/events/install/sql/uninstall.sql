@@ -24,6 +24,27 @@ DELETE FROM `sys_form_pre_lists` WHERE `module` = 'bx_events';
 
 DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_events_cats');
 
+-- COMMENTS
+DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_events';
+
+-- VIEWS
+DELETE FROM `sys_objects_view` WHERE `name` = 'bx_events';
+
+-- VOTES
+DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_events';
+
+-- SCORES
+DELETE FROM `sys_objects_score` WHERE `name` = 'bx_events';
+
+-- REPORTS
+DELETE FROM `sys_objects_report` WHERE `name` = 'bx_events';
+
+-- FAFORITES
+DELETE FROM `sys_objects_favorite` WHERE `name` = 'bx_events';
+
+-- FEATURED
+DELETE FROM `sys_objects_feature` WHERE `name` = 'bx_events';
+
 -- CONTENT INFO
 DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_events', 'bx_events_cmts');
 

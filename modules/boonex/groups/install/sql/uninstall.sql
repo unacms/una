@@ -29,6 +29,27 @@ DELETE FROM `sys_form_pre_lists` WHERE `module` = 'bx_groups';
 
 DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_groups_cats');
 
+-- COMMENTS
+DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_groups';
+
+-- VIEWS
+DELETE FROM `sys_objects_view` WHERE `name` = 'bx_groups';
+
+-- VOTES
+DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_groups';
+
+-- SCORES
+DELETE FROM `sys_objects_score` WHERE `name` = 'bx_groups';
+
+-- REPORTS
+DELETE FROM `sys_objects_report` WHERE `name` = 'bx_groups';
+
+-- FAFORITES
+DELETE FROM `sys_objects_favorite` WHERE `name` = 'bx_groups';
+
+-- FEATURED
+DELETE FROM `sys_objects_feature` WHERE `name` = 'bx_groups';
+
 -- CONTENT INFO
 DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_groups', 'bx_groups_cmts');
 

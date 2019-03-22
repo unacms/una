@@ -22,27 +22,6 @@ DELETE FROM `sys_menu_items` WHERE `module` = 'bx_persons' OR `set_name` IN('bx_
 DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matrix` WHERE `sys_acl_matrix`.`IDAction` = `sys_acl_actions`.`ID` AND `sys_acl_actions`.`Module` = 'bx_persons';
 DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_persons';
 
--- COMMENTS
-DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_persons';
-
--- VIEWS
-DELETE FROM `sys_objects_view` WHERE `name` = 'bx_persons';
-
--- VOTES
-DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_persons';
-
--- SCORES
-DELETE FROM `sys_objects_score` WHERE `name` = 'bx_persons';
-
--- FAFORITES
-DELETE FROM `sys_objects_favorite` WHERE `name` = 'bx_persons';
-
--- FEATURED
-DELETE FROM `sys_objects_feature` WHERE `name` = 'bx_persons';
-
--- REPORTS
-DELETE FROM `sys_objects_report` WHERE `name` = 'bx_persons';
-
 -- METATAGS
 DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_persons';
 
