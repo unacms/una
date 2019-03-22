@@ -2524,10 +2524,12 @@
             <li><b>{0}</b> всего</li>
             <li><b>{1}</b> удалено</li>
         </ul>]]></string>
+        <string name="_sys_ps_group_title_followers"><![CDATA[Подписчики]]></string>
 	<string name="_sys_ps_group_title_friends"><![CDATA[Друзья]]></string>
 	<string name="_sys_ps_group_title_me_only"><![CDATA[Только я]]></string>
 	<string name="_sys_ps_group_title_members"><![CDATA[Пользователей]]></string>
 	<string name="_sys_ps_group_title_public"><![CDATA[Публичные]]></string>
+        <string name="_sys_ps_group_title_participants"><![CDATA[Участники]]></string>
 	<string name="_sys_ps_group_title_closed"><![CDATA[Закрытая]]></string>
     <string name="_sys_ps_group_title_secret"><![CDATA[Секретная]]></string>
     <string name="_sys_ps_ferr_incorrect_select"><![CDATA[Вам нужно выбрать значение]]></string>

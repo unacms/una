@@ -9,16 +9,20 @@
  * @{
  */
 
+define('BX_BASE_MOD_GROUPS_PG_CLOSED', 'c');
+define('BX_BASE_MOD_GROUPS_PG_SECRET', 's');
+
 class BxBaseModGroupsPrivacy extends BxBaseModProfilePrivacy
-{    
+{
     public function __construct($aOptions, $oTemplate = false)
     {
         parent::__construct($aOptions, $oTemplate);
 
-        $this->_aPrivacyParticallyVisible = array_merge($this->_aPrivacyParticallyVisible, array('c', BX_DOL_PG_FRIENDS));
+        $this->_aGroupsExclude = array(BX_DOL_PG_FRIENDS);
+        $this->_aPrivacyParticallyVisible = array('c');
     }
 
-	/**
+    /**
      * Check whethere viewer is a member of dynamic group.
      *
      * @param  mixed   $mixedGroupId   dynamic group ID.
@@ -28,10 +32,10 @@ class BxBaseModGroupsPrivacy extends BxBaseModProfilePrivacy
      */
     public function isDynamicGroupMember($mixedGroupId, $iObjectOwnerId, $iViewerId, $iObjectId)
     {
-        if ('c' == $mixedGroupId)
+        if ($mixedGroupId == BX_BASE_MOD_GROUPS_PG_CLOSED)
             return $this->isClosedGroupAccess($iObjectOwnerId, $iViewerId, $iObjectId);
 
-        if ('s' == $mixedGroupId)
+        if ($mixedGroupId == BX_BASE_MOD_GROUPS_PG_SECRET)
             return $this->isSecretGroupAccess($iObjectOwnerId, $iViewerId, $iObjectId);
 
         return false;
@@ -54,29 +58,15 @@ class BxBaseModGroupsPrivacy extends BxBaseModProfilePrivacy
     static function getGroupChooser ($sObject, $iOwnerId = 0, $aParams = array())
     {
         if (!$iOwnerId)
-    		$iOwnerId = bx_get_logged_profile_id();
+            $iOwnerId = bx_get_logged_profile_id();
 
-		$aParams['dynamic_groups'] = array(
-			array ('key' => '', 'value' => '----'),
-			array ('key' => 'c', 'value' => _t('_sys_ps_group_title_closed')),
-			array ('key' => 's', 'value' => _t('_sys_ps_group_title_secret')),
-		);
+        $aParams['dynamic_groups'] = array(
+            array ('key' => '', 'value' => '----'),
+            array ('key' => BX_BASE_MOD_GROUPS_PG_CLOSED, 'value' => _t('_sys_ps_group_title_closed')),
+            array ('key' => BX_BASE_MOD_GROUPS_PG_SECRET, 'value' => _t('_sys_ps_group_title_secret')),
+        );
 
         return parent::getGroupChooser($sObject, $iOwnerId, $aParams);
-    }
-
-    protected function getGroups() 
-    {
-        $a = parent::getGroups();
-    
-        foreach ($a as $i => $r) {
-            if (BX_DOL_PG_FRIENDS == $r['key']) {
-                unset($a[$i]);
-                break;
-            }
-        }
-
-        return $a;
     }
 
     protected function getObjectInfo($sAction, $iObjectId)

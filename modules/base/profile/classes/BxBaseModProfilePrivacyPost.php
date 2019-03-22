@@ -9,35 +9,21 @@
  * @{
  */
 
-class BxBaseModProfilePrivacy extends BxTemplPrivacy
+class BxBaseModProfilePrivacyPost extends BxTemplPrivacy
 {
-    protected $MODULE;
+    protected $_sModule;
     protected $_oModule;
-
-    protected $_aPrivacyParticallyVisible;
 
     public function __construct($aOptions, $oTemplate = false)
     {
         parent::__construct($aOptions, $oTemplate);
 
-        $this->_oModule = BxDolModule::getInstance($this->MODULE);
-
-        $this->_aPrivacyParticallyVisible = array(BX_DOL_PG_FRIENDS);
-    }
-
-    public function isPartiallyVisible ($mixedPrivacy)
-    {
-        return in_array($mixedPrivacy, $this->_aPrivacyParticallyVisible);
-    }
-
-    public function getPartiallyVisiblePrivacyGroups ()
-    {
-        return $this->_aPrivacyParticallyVisible;
+        $this->_oModule = BxDolModule::getInstance($this->_sModule);
     }
 
     protected function getObjectInfo($sAction, $iObjectId)
     {
-        $oProfile = BxDolProfile::getInstanceByContentAndType($iObjectId, $this->MODULE);
+        $oProfile = BxDolProfile::getInstanceByContentAndType($iObjectId, $this->_sModule);
         if(!$oProfile)
             return false;
 

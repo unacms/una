@@ -530,17 +530,8 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return $a;
     }
 
-    /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
-     */
-    public function checkAllowedPost ($aDataEntry, $isPerformAction = false)
-    {
-        if (isLogged() && ($this->isFan($aDataEntry[$this->_oConfig->CNF['FIELD_ID']]) || ($aDataEntry[$this->_oConfig->CNF['FIELD_ID']] == BxDolProfile::getInstance()->getContentId() && BxDolProfile::getInstance()->getModule() == $this->getName())))
-            return CHECK_ACTION_RESULT_ALLOWED;
 
-        return _t('_sys_txt_access_denied');
-    }
-
+    // ====== PERMISSION METHODS
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */
@@ -553,6 +544,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     {
         if ($this->isFan($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $iProfileId))
             return CHECK_ACTION_RESULT_ALLOWED;
+
         return parent::serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction, $iProfileId);
     }
 

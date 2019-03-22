@@ -376,33 +376,6 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
         return $aRet;
     }
-    
-    /**
-     * @see iBxDolProfileService::serviceCheckSpacePrivacy
-     */ 
-    public function serviceCheckSpacePrivacy($iContentId)
-    {
-        return $this->serviceCheckAllowedProfileView($iContentId);
-    }
-    
-    /**
-     * @see iBxDolProfileService::serviceCheckAllowedProfileView
-     */ 
-    public function serviceCheckAllowedProfileView($iContentId)
-    {        
-        return $this->serviceCheckAllowedWithContent('View', $iContentId);
-    }
-
-    /**
-     * @see iBxDolProfileService::serviceCheckAllowedPostInProfile
-     */ 
-    public function serviceCheckAllowedPostInProfile($iContentId, $iProfileIdPoster = false)
-    {
-        if (!$iContentId || !($aContentInfo = $this->_oDb->getContentInfoById($iContentId)))
-            return _t('_sys_request_page_not_found_cpt');
-        
-        return $this->serviceCheckAllowedViewForProfile($aContentInfo, false, $iProfileIdPoster);
-    }
 
     /**
      * Prepare fields from some universal set of fields to fields in particular profile module. 
@@ -966,8 +939,102 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             );
         }
     }
-    
+
+
     // ====== PERMISSION METHODS
+    /**
+     * @see iBxDolProfileService::serviceCheckAllowedProfileView
+     */ 
+    public function serviceCheckAllowedProfileView($iContentId)
+    {        
+        return $this->serviceCheckAllowedWithContent('View', $iContentId);
+    }
+
+    /**
+     * @see iBxDolProfileService::serviceCheckAllowedPostInProfile
+     */
+    public function serviceCheckAllowedPostInProfile($iContentId)
+    {
+        return $this->serviceCheckAllowedWithContent('Post', $iContentId);
+    }
+
+    /**
+     * @see iBxDolProfileService::serviceCheckSpacePrivacy
+     */ 
+    public function serviceCheckSpacePrivacy($iContentId)
+    {
+        return $this->serviceCheckAllowedProfileView($iContentId);
+    }
+
+    /**
+     * Check if the profile can be viewed.
+     * 
+     * NOTE. This service should be used if it's needed to pass some specific values in 
+     * $isPerformAction and $iProfileId parameters, otherwise it's recommended to use 
+     * BxBaseModProfileModule::serviceCheckAllowedProfileView service method or 
+     * BxDolProfile::checkAllowedProfileView method.
+     * 
+     * @param type $aDataEntry - entry which the action will be performed for
+     * @param type $isPerformAction - perform or just check the action
+     * @param type $iProfileId - performer's profile ID
+     * @return integer - one of CHECK_ACTION_RESULT_XXX constants.
+     */
+    public function serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction = false, $iProfileId = false)
+    {
+        if (!$iProfileId)
+            $iProfileId = $this->_iProfileId;
+
+        $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->getName());
+        if ($oProfile && $oProfile->id() == $iProfileId)
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        return parent::serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction, $iProfileId);
+    }
+
+    /**
+     * Check if posting (comment, post in Timeline) is available.
+     * 
+     * NOTE. This service should be used if it's needed to pass some specific values in 
+     * $isPerformAction and $iProfileId parameters, otherwise it's recommended to use 
+     * BxBaseModProfileModule::serviceCheckAllowedPostInProfile service method or 
+     * BxDolProfile::checkAllowedPostInProfile method.
+     * 
+     * @param type $aDataEntry - entry which the action will be performed for
+     * @param type $isPerformAction - perform or just check the action
+     * @param type $iProfileId - performer's profile ID
+     * @return integer - one of CHECK_ACTION_RESULT_XXX constants.
+     */
+    public function serviceCheckAllowedPostForProfile ($aDataEntry, $isPerformAction = false, $iProfileId = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$iProfileId)
+            $iProfileId = $this->_iProfileId;
+
+        // check is view allowed
+        if(($mixedResult = $this->serviceCheckAllowedViewForProfile($aDataEntry, $isPerformAction, $iProfileId)) !== CHECK_ACTION_RESULT_ALLOWED)
+            return $mixedResult;
+
+        // moderator and owner always have access
+        $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$CNF['FIELD_ID']], $this->getName());
+        if(($oProfile && $oProfile->id() == $iProfileId) || $this->_isModerator($isPerformAction))
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        // check privacy
+        if(!empty($CNF['OBJECT_PRIVACY_POST'])) {
+            $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_POST']);
+            if($oPrivacy && !$oPrivacy->check($aDataEntry[$CNF['FIELD_ID']], $iProfileId))
+                return _t('_sys_access_denied_to_private_content');
+        }
+
+        // check alert to allow custom checks
+        $mixedResult = null;
+        bx_alert('system', 'check_allowed_post', 0, 0, array('module' => $this->getName(), 'content_info' => $aDataEntry, 'profile_id' => $iProfileId, 'override_result' => &$mixedResult));
+        if($mixedResult !== null)
+            return $mixedResult;
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
 
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
@@ -986,16 +1053,6 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     public function checkAllowedView ($aDataEntry, $isPerformAction = false)
     {
         return $this->serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction);
-    }
-
-    public function serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction = false, $iProfileId = false)
-    {
-        if (!$iProfileId)
-            $iProfileId = $this->_iProfileId;
-        $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->getName());
-        if ($oProfile && $oProfile->id() == $iProfileId)
-            return CHECK_ACTION_RESULT_ALLOWED;
-        return parent::serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction, $iProfileId);
     }
     
     /**
@@ -1029,7 +1086,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
      */
     public function checkAllowedPost ($aDataEntry, $isPerformAction = false)
     {
-        return $this->checkAllowedView ($aDataEntry, $isPerformAction);
+        return $this->serviceCheckAllowedPostForProfile ($aDataEntry, $isPerformAction);
     }
 
     /**

@@ -63,6 +63,8 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
     protected $_sObject;
     protected $_aObject;
 
+    protected $_aGroupsExclude;
+
     /**
      * Constructor
      * @param $aObject array of grid options
@@ -76,6 +78,8 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
 
         $this->_oDb = new BxDolPrivacyQuery();
         $this->_oDb->init($this->_aObject);
+
+        $this->_aGroupsExclude = array();
     }
 
     /**
@@ -423,7 +427,7 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         $aValues = array();
         $aGroups = $this->_oDb->getGroupsBy(array('type' => 'active'));
         foreach($aGroups as $aGroup) {
-            if((int)$aGroup['active'] == 0)
+            if((int)$aGroup['active'] == 0 || in_array($aGroup['id'], $this->_aGroupsExclude))
                continue;
 
             $aValues[] = array('key' => $aGroup['id'], 'value' => _t($aGroup['title']));

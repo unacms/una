@@ -1086,36 +1086,9 @@ class BxBaseModGeneralModule extends BxDolModule
 
         return $iProfileId;
     }
-    
+
+
     // ====== PERMISSION METHODS
-
-    public function checkAllowedSetThumb ($iContentId = 0)
-    {
-        return CHECK_ACTION_RESULT_ALLOWED;
-    }
-    
-    /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make "true === " checking.
-     */
-    public function checkAllowedBrowse ()
-    {
-        // check alert to allow custom checks
-        $mixedResult = null;
-        bx_alert('system', 'check_allowed_browse', 0, 0, array('module' => $this->getName(), 'profile_id' => $this->_iProfileId, 'override_result' => &$mixedResult));
-        if($mixedResult !== null)
-            return $mixedResult;
-
-        return CHECK_ACTION_RESULT_ALLOWED;
-    }
-
-    /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
-     */
-    public function checkAllowedView ($aDataEntry, $isPerformAction = false)
-    {
-        return $this->serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction);
-    }
-
     public function serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction = false, $iProfileId = false)
     {
         if (!$iProfileId)
@@ -1146,6 +1119,33 @@ class BxBaseModGeneralModule extends BxDolModule
             return $mixedResult;
 
         return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    public function checkAllowedSetThumb ($iContentId = 0)
+    {
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+    
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make "true === " checking.
+     */
+    public function checkAllowedBrowse ()
+    {
+        // check alert to allow custom checks
+        $mixedResult = null;
+        bx_alert('system', 'check_allowed_browse', 0, 0, array('module' => $this->getName(), 'profile_id' => $this->_iProfileId, 'override_result' => &$mixedResult));
+        if($mixedResult !== null)
+            return $mixedResult;
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
+     */
+    public function checkAllowedView ($aDataEntry, $isPerformAction = false)
+    {
+        return $this->serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction);
     }
 
     /**

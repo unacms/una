@@ -2527,10 +2527,12 @@ If it is not enabled then please consider implement this optimization, since it 
             <li><b>{0}</b> total</li>
             <li><b>{1}</b> deleted</li>
         </ul>]]></string>
+        <string name="_sys_ps_group_title_followers"><![CDATA[Followers]]></string>
 	<string name="_sys_ps_group_title_friends"><![CDATA[Friends]]></string>
 	<string name="_sys_ps_group_title_me_only"><![CDATA[Me only]]></string>
 	<string name="_sys_ps_group_title_members"><![CDATA[Members]]></string>
 	<string name="_sys_ps_group_title_public"><![CDATA[Public]]></string>
+        <string name="_sys_ps_group_title_participants"><![CDATA[Participants]]></string>
 	<string name="_sys_ps_group_title_closed"><![CDATA[Closed]]></string>
 	<string name="_sys_ps_group_title_secret"><![CDATA[Secret]]></string>
     <string name="_sys_ps_ferr_incorrect_select"><![CDATA[You need to select some value]]></string>
