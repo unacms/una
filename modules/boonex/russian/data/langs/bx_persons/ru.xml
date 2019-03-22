@@ -30,6 +30,8 @@
     <string name="_bx_persons_form_profile_input_submit"><![CDATA[Выполнить]]></string>
     <string name="_bx_persons_form_profile_input_sys_allow_view_to"><![CDATA[Доступен для]]></string>
     <string name="_bx_persons_form_profile_input_allow_view_to"><![CDATA[Доступен для]]></string>
+    <string name="_bx_persons_form_profile_input_sys_allow_post_to"><![CDATA[Оставлять сообщения в профиле могут]]></string>
+    <string name="_bx_persons_form_profile_input_allow_post_to"><![CDATA[Оставлять сообщения в профиле могут]]></string>
 	<string name="_bx_persons_form_profile_input_sys_fullname"><![CDATA[Полное имя]]></string>
 	<string name="_bx_persons_form_profile_input_fullname"><![CDATA[Полное имя]]></string>
 	<string name="_bx_persons_form_profile_input_fullname_err"><![CDATA[Эта информация необходима. Пожалуйста, заполните это поле.]]></string>

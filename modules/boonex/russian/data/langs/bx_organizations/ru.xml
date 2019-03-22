@@ -34,6 +34,8 @@
     <string name="_bx_orgs_form_profile_input_allow_view_to"><![CDATA[Доступен для]]></string>
     <string name="_bx_orgs_form_profile_input_allow_view_to_info"><![CDATA[Закрытая - все могут найти группу и видеть кто в ней состоит, только участники могут видеть сообщения. Секретная - только участники могут найти группу и видеть сообщения.]]></string>
     <string name="_bx_orgs_form_profile_input_allow_view_notification_to"><![CDATA[Оповещения доступены для]]></string>
+    <string name="_bx_orgs_form_profile_input_sys_allow_post_to"><![CDATA[Оставлять сообщения в профиле могут]]></string>
+    <string name="_bx_orgs_form_profile_input_allow_post_to"><![CDATA[Оставлять сообщения в профиле могут]]></string>
     <string name="_bx_orgs_form_profile_input_sys_initial_members"><![CDATA[Пригласить участников]]></string>
     <string name="_bx_orgs_form_profile_input_initial_members"><![CDATA[Пригласить участников]]></string>
     <string name="_bx_orgs_form_profile_input_sys_org_name"><![CDATA[Название организации]]></string>
@@ -385,6 +387,7 @@
     <string name="_bx_orgs_txt_to_admins"><![CDATA[В админы]]></string>
     <string name="_bx_orgs_txt_from_admins"><![CDATA[Из админов]]></string>
     <string name="_bx_orgs_txt_private_organization"><![CDATA[Приватная организация]]></string>
+    <string name="_bx_orgs_ps_group_title_participants"><![CDATA[Сотрудники]]></string>
 
     <string name="_bx_orgs_email_friend_request"><![CDATA[Запрос на добавление в друзья]]></string>
     <string name="_bx_orgs_email_friend_request_subject"><![CDATA[Подружиться]]></string>

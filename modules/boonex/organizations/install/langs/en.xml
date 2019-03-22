@@ -34,6 +34,8 @@
     <string name="_bx_orgs_form_profile_input_allow_view_to"><![CDATA[Visible to]]></string>
     <string name="_bx_orgs_form_profile_input_allow_view_to_info"><![CDATA[Closed - anyone can find the organization and see who's in it, only members can see posts. Secret - only members can find the organization and see posts.]]></string>
     <string name="_bx_orgs_form_profile_input_allow_view_notification_to"><![CDATA[Show notifications to]]></string>
+    <string name="_bx_orgs_form_profile_input_sys_allow_post_to"><![CDATA[Who can post]]></string>
+    <string name="_bx_orgs_form_profile_input_allow_post_to"><![CDATA[Who can post]]></string>
     <string name="_bx_orgs_form_profile_input_sys_initial_members"><![CDATA[Invite Members]]></string>
     <string name="_bx_orgs_form_profile_input_initial_members"><![CDATA[Invite Members]]></string>
     <string name="_bx_orgs_form_profile_input_sys_org_name"><![CDATA[Organization Name]]></string>
@@ -385,6 +387,7 @@
     <string name="_bx_orgs_txt_to_admins"><![CDATA[To Admins]]></string>
     <string name="_bx_orgs_txt_from_admins"><![CDATA[From Admins]]></string>
     <string name="_bx_orgs_txt_private_organization"><![CDATA[Private organization]]></string>
+    <string name="_bx_orgs_ps_group_title_participants"><![CDATA[Employees]]></string>
 
     <string name="_bx_orgs_email_friend_request"><![CDATA[Friend request]]></string>
     <string name="_bx_orgs_email_friend_request_subject"><![CDATA[Friendship Request]]></string>

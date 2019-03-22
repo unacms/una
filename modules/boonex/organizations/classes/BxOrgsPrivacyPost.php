@@ -9,17 +9,20 @@
  * @{
  */
 
-class BxOrgsPrivacyNotifications extends BxBaseModGroupsPrivacyNotifications
+class BxOrgsPrivacyPost extends BxBaseModGroupsPrivacyPost
 {
     function __construct($aOptions, $oTemplate = false)
     {
-    	$this->MODULE = 'bx_organizations';
+    	$this->_sModule = 'bx_organizations';
+
         parent::__construct($aOptions, $oTemplate);
+
+        $this->_aGroupsExclude = array();
     }
 
     protected function getObjectInfo($sAction, $iObjectId)
     {
-        return BxBaseModProfilePrivacy::getObjectInfo($sAction, $iObjectId);
+        return BxBaseModProfilePrivacyPost::getObjectInfo($sAction, $iObjectId);
     }
 }
 

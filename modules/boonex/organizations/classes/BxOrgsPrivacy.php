@@ -14,14 +14,16 @@ class BxOrgsPrivacy extends BxBaseModGroupsPrivacy
     function __construct($aOptions, $oTemplate = false)
     {
     	$this->MODULE = 'bx_organizations';
-    	$this->_aPrivacyParticallyVisible = array ('c', 5);
 
         parent::__construct($aOptions, $oTemplate);
+
+        $this->_aGroupsExclude = array();
+        $this->_aPrivacyParticallyVisible = array(BX_DOL_PG_FRIENDS, BX_BASE_MOD_GROUPS_PG_CLOSED);
     }
-    
-    protected function getGroups() 
+
+    protected function getObjectInfo($sAction, $iObjectId)
     {
-        return BxBaseModProfilePrivacy::getGroups();
+        return BxBaseModProfilePrivacy::getObjectInfo($sAction, $iObjectId);
     }
 }
 
