@@ -25,14 +25,6 @@ DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matr
 DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_convos';
 
 
--- COMMENTS
-DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_convos';
-
-
--- VIEWS
-DELETE FROM `sys_objects_view` WHERE `Name` = 'bx_convos';
-
-
 -- LIVE UPDATES
 DELETE FROM `sys_objects_live_updates` WHERE `name` = 'bx_convos';
 

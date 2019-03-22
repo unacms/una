@@ -51,30 +51,6 @@ DELETE FROM `sys_objects_metatags` WHERE `object` = @sName;
 DELETE FROM `sys_objects_category` WHERE `object` = 'bx_forum_cats';
 
 
--- COMMENTS
-DELETE FROM `sys_objects_cmts` WHERE `Name` = @sName;
-
-
--- VIEWS
-DELETE FROM `sys_objects_view` WHERE `Name` = @sName;
-
-
--- VOTES
-DELETE FROM `sys_objects_vote` WHERE `Name` = @sName;
-
-
--- SCORES
-DELETE FROM `sys_objects_score` WHERE `name` = @sName;
-
-
--- FAFORITES
-DELETE FROM `sys_objects_favorite` WHERE `Name` = @sName;
-
-
--- FEATURED
-DELETE FROM `sys_objects_feature` WHERE `name` = @sName;
-
-
 -- STATS
 DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_forum%';
 

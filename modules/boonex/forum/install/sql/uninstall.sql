@@ -26,6 +26,30 @@ DELETE FROM `sys_form_pre_lists` WHERE `module`=@sName;
 DELETE FROM `sys_form_pre_values` WHERE `Key` IN ('bx_forum_cats');
 
 
+-- COMMENTS
+DELETE FROM `sys_objects_cmts` WHERE `Name` = @sName;
+
+
+-- VIEWS
+DELETE FROM `sys_objects_view` WHERE `Name` = @sName;
+
+
+-- VOTES
+DELETE FROM `sys_objects_vote` WHERE `Name` = @sName;
+
+
+-- SCORES
+DELETE FROM `sys_objects_score` WHERE `name` = @sName;
+
+
+-- FAFORITES
+DELETE FROM `sys_objects_favorite` WHERE `Name` = @sName;
+
+
+-- FEATURED
+DELETE FROM `sys_objects_feature` WHERE `name` = @sName;
+
+
 -- CONTENT INFO
 DELETE FROM `sys_objects_content_info` WHERE `name` IN (@sName, 'bx_forum_cmts');
 

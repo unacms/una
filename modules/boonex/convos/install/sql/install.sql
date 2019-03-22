@@ -175,8 +175,18 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_convos_entry_delete', 'recipients', 2147483647, 0, 0),
 ('bx_convos_entry_delete', 'text', 2147483647, 0, 0);
 
--- STUDIO: page & widget
 
+-- COMMENTS
+INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Html`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
+('bx_convos', 'bx_convos', 'bx_convos_cmts', 1, 5000, 1000, 3, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-convo&id={object_id}', '', 'bx_convos_conversations', 'id', 'author', 'text', 'comments', 'BxCnvCmts', 'modules/boonex/convos/classes/BxCnvCmts.php');
+
+
+-- VIEWS
+INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_convos', 'bx_convos_views_track', '86400', '1', 'bx_convos_conversations', 'id', 'author', 'views', '', '');
+
+
+-- STUDIO: page & widget
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 (3, 'bx_convos', '_bx_cnv', '_bx_cnv', 'bx_convos@modules/boonex/convos/|std-icon.svg');
 SET @iPageId = LAST_INSERT_ID();
