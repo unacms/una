@@ -94,7 +94,8 @@ class BxAntispamModuleTest extends BxDolTestCase
         }
 
         // check result boolean value
-        $this->assertEquals($bRes, $this->_oModule->serviceIsSpam($this->anything(), $this->_sSampleIP));
+        $sContent = $this->anything();
+        $this->assertEquals($bRes, $this->_oModule->serviceIsSpam($sContent, $this->_sSampleIP));
     }
 
     public function providerForServiceCheckJoin()
