@@ -19,7 +19,11 @@
             window.history.go(-(window.history.length - 1));
     }
 
-    console.log('Navigation History:' + window.history.length);
+    function bx_mobile_apps_close_sliding_menus () {
+        if ($('.bx-sliding-menu-main:visible').size()) // hide sliding menu if they are open
+            bx_menu_slide_inline('.bx-sliding-menu-main');
+    }
+
     var sMsg = JSON.stringify(__msg__);
     console.log(sMsg);
     if ('undefined' !== typeof(window.ReactNativeWebView))
