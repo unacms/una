@@ -1261,7 +1261,7 @@ class BxDolFormChecker
 
             foreach ($aInputs as $k => $a) {
 
-                if ($a['type'] != 'textarea')
+                if ($a['type'] != 'textarea' && $a['type'] != 'text')
                     continue;
 
                 $a['name'] = str_replace('[]', '', $a['name']);
@@ -1269,7 +1269,7 @@ class BxDolFormChecker
                 if (!$val)
                     continue;
 
-                if (!$oChecker->checkIsSpam($val)){
+                if (!$oChecker->checkIsSpam($val, $a['type'])){
 					BxDolForm::setSubmittedValue($a['name'], $val, $this->_sFormMethod, $this->_aSpecificValues);
                     continue;
 				}
@@ -1483,10 +1483,10 @@ class BxDolFormCheckerHelper
             return true;
         return $oCaptcha->check ();
     }
-    static public function checkIsSpam(&$val)
+    static public function checkIsSpam(&$val, $sType = 'textarea')
     {
         $bSpam = false;
-        bx_alert('system', 'check_spam', 0, getLoggedId(), array('is_spam' => &$bSpam, 'content' => &$val, 'where' => 'form'));
+        bx_alert('system', 'check_spam', 0, getLoggedId(), array('is_spam' => &$bSpam, 'content' => &$val, 'where' => 'form', 'type' => $sType));
         return $bSpam;
     }
 

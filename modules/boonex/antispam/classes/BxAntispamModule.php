@@ -52,6 +52,26 @@ class BxAntispamModule extends BxDolModule
     }
 
     /**
+     * Filter undesired words
+     *
+     * @param $sContent content to filter
+     * @param $sIp IP address of content poster
+     * @return modified or the same content.
+     */
+    public function serviceFilterSpam ($sContent, $sIp = '')
+    {      
+        if (defined('BX_DOL_CRON_EXECUTE') || isAdmin())
+            return false;
+        
+        if ('on' == $this->_oConfig->getAntispamOption('profanity_enable')) {
+            $oProfanityFilter = bx_instance('BxAntispamProfanityFilter', array(), $this->_aModule);
+            $sContent = $oProfanityFilter->censorString($sContent);
+        }
+
+        return $sContent;
+    }
+    
+    /**
      * Check text for spam.
      * First it check if IP is whitelisted(or under cron execution or user is admin) - for whitelisted IPs check for spam isn't performed,
      * then it checks URLs found in text for DNSURI black lists (@see BxAntispamDNSURIBlacklists),
@@ -65,15 +85,10 @@ class BxAntispamModule extends BxDolModule
      *          BX_SLASHES_NO_ACTION - do not perform any action with slashes
      * @return true if spam detected and content shouln't be recorded, false if content should be processed as usual.
      */
-    public function serviceIsSpam (&$sContent, $sIp = '', $isStripSlashes = BX_SLASHES_AUTO)
+    public function serviceIsSpam ($sContent, $sIp = '', $isStripSlashes = BX_SLASHES_AUTO)
     {      
         if (defined('BX_DOL_CRON_EXECUTE') || isAdmin())
             return false;
-        
-        if ('on' == $this->_oConfig->getAntispamOption('profanity_enable')) {
-            $oProfanityFilter = bx_instance('BxAntispamProfanityFilter', array(), $this->_aModule);
-            $sContent = $oProfanityFilter->censorString($sContent);
-        }
 
         if ($this->serviceIsIpWhitelisted($sIp))
             return false;
