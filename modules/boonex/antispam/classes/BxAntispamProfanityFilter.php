@@ -28,7 +28,8 @@ class BxAntispamProfanityFilter extends BxDol
        
         $aTmp = explode(',', getParam('bx_antispam_profanity_filter_dicts'));
         foreach ($aTmp as $sLng) {
-            $this->oProfanityFilter->addDictionary($sLng);
+            if ($sLng != '')
+                $this->oProfanityFilter->addDictionary($sLng);
         }
         
         $Char = trim(getParam('bx_antispam_profanity_filter_char_replace'));
