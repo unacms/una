@@ -28,8 +28,8 @@ class BxAntispamAlertsResponse extends BxDolAlertsResponse
             }
 
         } elseif ('system' == $oAlert->sUnit) {
-
-            switch ($oAlert->sAction) {
+            
+            switch ($oAlert->sAction) {    
                 case 'check_spam':
                     $oAlert->aExtras['content'] = BxDolService::call('bx_antispam', 'filter_spam', array($oAlert->aExtras['content']));
                     if (!isset($oAlert->aExtras['type']) || 'textarea' == $oAlert->aExtras['type'])

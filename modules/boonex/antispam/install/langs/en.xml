@@ -139,6 +139,7 @@ This antispam method scan submitted content for the URLs and check them if any o
 	<string name="_bx_antispam_option_disposable_email_domains_mode"><![CDATA[Mode]]></string>
 	<string name="_bx_antispam_option_disposable_email_domains_behaviour_join"><![CDATA[Join behaviour]]></string>
   <string name="_bx_antispam_option_profanity_filter_enable"><![CDATA[Enable Profanity filter]]></string>
+  <string name="_bx_antispam_option_profanity_filter_dicts"><![CDATA[Dictionaries]]></string>
   <string name="_bx_antispam_option_profanity_filter_bad_words_list"><![CDATA[Bad words list (comma separated)]]></string>
   <string name="_bx_antispam_option_profanity_filter_char_replace"><![CDATA[Char to replace]]></string>
   <string name="_bx_antispam_option_profanity_filter_white_words_list"><![CDATA[White words list (comma separated)]]></string>

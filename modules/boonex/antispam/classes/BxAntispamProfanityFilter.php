@@ -10,33 +10,30 @@
  */
 
 /**
- * Profanity Filter based on https://github.com/developerdino/ProfanityFilter
+ * Profanity Filter based on https://github.com/snipe/banbuilder
  */
 class BxAntispamProfanityFilter extends BxDol
 {
     protected $oProfanityFilter = null;
-
+    protected $sPluginPath = BX_DIRECTORY_PATH_PLUGINS . 'banbuilder/src/';
+    protected $bIsFullWord = false;
+    
     public function __construct()
     {
         parent::__construct();
         
-        require_once (BX_DIRECTORY_PATH_PLUGINS . 'banbuilder/src/CensorWords.php');
+        require_once ($this->sPluginPath .'CensorWords.php');
         $sClassName = 'Snipe\BanBuilder\CensorWords';
         $this->oProfanityFilter = new $sClassName;
-        $this->oProfanityFilter->addDictionary('en-base');
-        $this->oProfanityFilter->addDictionary('en-uk');
-        
-        $aLng = BxDolLanguages::getInstance()->getLanguages();
-        try{
-            foreach ($aLng as $sKey => $sVal){
-                if ($sKey != 'en')
-                    $this->oProfanityFilter->addDictionary($sKey);
-            }
-        }
-        catch (Exception $oException) {
+       
+        $aTmp = explode(',', getParam('bx_antispam_profanity_filter_dicts'));
+        foreach ($aTmp as $sLng) {
+            $this->oProfanityFilter->addDictionary($sLng);
         }
         
-        $this->oProfanityFilter->setReplaceChar(getParam('bx_antispam_profanity_filter_char_replace'));
+        $Char = trim(getParam('bx_antispam_profanity_filter_char_replace'));
+        if ($Char != '')
+            $this->oProfanityFilter->setReplaceChar($Char);
         
         $sBadWords = trim(getParam('bx_antispam_profanity_filter_bad_words_list'));
         if ($sBadWords != '')
@@ -49,8 +46,23 @@ class BxAntispamProfanityFilter extends BxDol
 
     public function censorString ($s)
     {
-        $aTmp = $this->oProfanityFilter->censorString($s, false);
+        $aTmp = $this->oProfanityFilter->censorString($s, $this->bIsFullWord);
         return $aTmp['clean'];
+    } 
+    
+    public function getDicts ()
+    {
+        $aResult = array();
+        if ($oHandle = opendir($this->sPluginPath . 'dict')) {
+            while (false !== ($oEntry = readdir($oHandle))) {
+                if (!is_dir($oEntry)){
+                    $sTmp = str_replace('.php', '', $oEntry);
+                    $aResult[$sTmp] = $sTmp;
+                }
+            }
+            closedir($oHandle);
+        }
+        return $aResult;
     } 
 }
 

@@ -60,15 +60,11 @@ class BxAntispamModule extends BxDolModule
      */
     public function serviceFilterSpam ($sContent, $sIp = '')
     {      
-        if (defined('BX_DOL_CRON_EXECUTE') || isAdmin())
-            return false;
+        if (defined('BX_DOL_CRON_EXECUTE') || isAdmin() || 'on' != $this->_oConfig->getAntispamOption('profanity_enable'))
+            return $sContent;
         
-        if ('on' == $this->_oConfig->getAntispamOption('profanity_enable')) {
-            $oProfanityFilter = bx_instance('BxAntispamProfanityFilter', array(), $this->_aModule);
-            $sContent = $oProfanityFilter->censorString($sContent);
-        }
-
-        return $sContent;
+        $oProfanityFilter = bx_instance('BxAntispamProfanityFilter', array(), $this->_aModule);
+        return $oProfanityFilter->censorString($sContent); 
     }
     
     /**
@@ -312,6 +308,15 @@ class BxAntispamModule extends BxDolModule
                 $o = bx_instance('BxAntispamDisposableEmailDomains', array(), $this->_aModule);
                 return $o->getJoinBehaviourModes();                
         }
+    }
+    
+    /**
+     * @return array with avaliable dictionaries languages
+     */
+    public function serviceGetProfanityFilterDicts ()
+    {
+        $oProfanityFilter = bx_instance('BxAntispamProfanityFilter', array(), $this->_aModule);
+        return $oProfanityFilter->getDicts(); 
     }
 
     protected function getErrorMessageIpBlocked ()
