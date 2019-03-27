@@ -710,7 +710,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     static $TYPES_TEXT = array('text' => 1, 'textarea' => 1);
     static $TYPES_FILE = array('file' => 1);
 
-    static $FUNC_SKIP_DOMAIN_CHECK = array('email' => 1, 'emails' => 1, 'emailexist' => 1, 'emailuniq' => 1, 'hostdomain' => 1, 'hostdomainchat' => 1);
+    static $FUNC_SKIP_DOMAIN_CHECK = array('email' => 1, 'emails' => 1, 'emailexist' => 1, 'emailuniq' => 1, 'hostdomain' => 1, 'hostdomainchat' => 1 , 'emailexistorempty' => 1);
 
     protected $_aMarkers = array ();
 
