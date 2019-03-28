@@ -82,7 +82,11 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
 
             // check for spam
             $bSpam = false;
-            bx_alert('system', 'check_spam', 0, getLoggedId(), array('is_spam' => &$bSpam, 'content' => $this->getCleanValue('text'), 'where' => $this->MODULE));
+			$sVal = $this->getCleanValue('text');
+            bx_alert('system', 'check_spam', 0, getLoggedId(), array('is_spam' => &$bSpam, 'content' => &$sVal, 'where' => $this->MODULE));
+			if (isset($this->aInputs[$sName]))
+				$this->aInputs[$sName] = $sVal;
+				
             $iFolder = $bSpam ? BX_CNV_FOLDER_SPAM : BX_CNV_FOLDER_INBOX;
 
             $this->_updateParticipants ($iContentId, $iFolder, $bDraft);

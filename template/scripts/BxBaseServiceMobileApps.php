@@ -31,14 +31,21 @@ class BxBaseServiceMobileApps extends BxDol
         $oMenu = BxDolMenu::getObjectInstance('sys_account_notifications'); // sys_toolbar_member
         $a = $oMenu->getMenuItems();
         $iBubbles = 0;
-        foreach ($a as $r)
-            $iBubbles += $r['bx_if:addon']['condition'] ? $r['bx_if:addon']['content']['addon'] : 0;
+        $aBubbles = array();
+        foreach ($a as $r) {
+            if (!$r['bx_if:addon']['condition'])
+                continue;
+            $aBubbles[$r['name']] = $r['bx_if:addon']['content']['addon'];
+            $iBubbles += $r['bx_if:addon']['content']['addon'];
+        }
 
         $s  = BxDolTemplate::getInstance()->parseHtmlByName('mobile_apps_styles.html', array());
         $s .= BxDolTemplate::getInstance()->parseHtmlByName('mobile_apps_js.html', array(
             'msg' => json_encode(array(
-                'loggedin' => isLogged(),
-                'bubbles' => $iBubbles ? $iBubbles : '',
+                'loggedin' => isLogged(),                
+                'bubbles_num' => $iBubbles ? $iBubbles : '',
+                'bubbles' => $aBubbles,
+                'push_tags' => array('user' => bx_get_logged_profile_id())
             ))
         ));
         return $s;

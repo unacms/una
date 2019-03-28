@@ -3,13 +3,15 @@
 
 	<string name="_bx_antispam"><![CDATA[Antispam]]></string>
     <string name="_bx_antispam_help"><![CDATA[Help]]></string>
-    <string name="_bx_antispam_help_text"><![CDATA[This module allows to limit spam on the site, there are different build-in tools for this:
+    <string name="_bx_antispam_help_text">
+      <![CDATA[This module allows to limit spam on the site, there are different build-in tools for this:
 <ul>
     <li><b>IP table</b> - manual IP blocking/whitelisting</li>
     <li><b>DNSBL</b> - automatic blocking by IP from different block lists</li>
     <li><b>URI DNSBL</b> - automatic blocking of spam content by spam URLs in the text</li>
     <li><b>Akismet</b> - automatic spam content blocking using <a target="_blank" href="http://akismet.com">Akismet service</a></li>
     <li><b>StopForumSpam</b> - automatic spam content blocking using <a target="_blank" href="http://www.stopforumspam.com">StopForumSpam service</a></li>
+    <li><b>Profanity filter</b> - profanity filter, based on a predefined list of words with the ability to add to words this list</a></li>
 </ul>
 ]]></string>
     <string name="_bx_antispam_help_dnsbl"><![CDATA[
@@ -121,6 +123,7 @@ This antispam method scan submitted content for the URLs and check them if any o
     <string name="_bx_antispam_adm_stg_cpt_category_akismet"><![CDATA[Akismet]]></string>
     <string name="_bx_antispam_adm_stg_cpt_category_stopforumspam"><![CDATA[StopForumSpam]]></string>
     <string name="_bx_antispam_adm_stg_cpt_category_disposable_email_domains"><![CDATA[Disposable email domains]]></string>
+    <string name="_bx_antispam_adm_stg_cpt_category_profanity_filter"><![CDATA[Profanity filter]]></string>
     
 	<string name="_bx_antispam_option_block"><![CDATA[Total block all spam content]]></string>
 	<string name="_bx_antispam_option_report"><![CDATA[Send report to admin if spam content discovered]]></string>
@@ -135,8 +138,13 @@ This antispam method scan submitted content for the URLs and check them if any o
     <string name="_bx_antispam_option_stopforumspam_api_key"><![CDATA["Stop Forum Spam" API Key]]></string> 
 	<string name="_bx_antispam_option_disposable_email_domains_mode"><![CDATA[Mode]]></string>
 	<string name="_bx_antispam_option_disposable_email_domains_behaviour_join"><![CDATA[Join behaviour]]></string>
-    
-    <string name="_bx_antispam_spam_report_name"><![CDATA[Spam report message]]></string>
+  <string name="_bx_antispam_option_profanity_filter_enable"><![CDATA[Enable Profanity filter]]></string>
+  <string name="_bx_antispam_option_profanity_filter_dicts"><![CDATA[Dictionaries]]></string>
+  <string name="_bx_antispam_option_profanity_filter_bad_words_list"><![CDATA[Bad words list (comma separated)]]></string>
+  <string name="_bx_antispam_option_profanity_filter_char_replace"><![CDATA[Char to replace]]></string>
+  <string name="_bx_antispam_option_profanity_filter_white_words_list"><![CDATA[White words list (comma separated)]]></string>
+
+  <string name="_bx_antispam_spam_report_name"><![CDATA[Spam report message]]></string>
     <string name="_bx_antispam_spam_report_subject"><![CDATA[Automatic spam report]]></string>
     <string name="_bx_antispam_spam_report_body"><![CDATA[{email_header}
 <b>Profile:</b> <a href="{SpammerUrl}">{SpammerNickName}</a><br />

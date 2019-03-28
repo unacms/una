@@ -710,7 +710,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     static $TYPES_TEXT = array('text' => 1, 'textarea' => 1);
     static $TYPES_FILE = array('file' => 1);
 
-    static $FUNC_SKIP_DOMAIN_CHECK = array('email' => 1, 'emails' => 1, 'emailexist' => 1, 'emailuniq' => 1, 'hostdomain' => 1, 'hostdomainchat' => 1);
+    static $FUNC_SKIP_DOMAIN_CHECK = array('email' => 1, 'emails' => 1, 'emailexist' => 1, 'emailuniq' => 1, 'emailexistorempty' => 1, 'hostdomain' => 1, 'hostdomainchat' => 1);
 
     protected $_aMarkers = array ();
 
@@ -724,6 +724,8 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     public $aInputs; ///< form inputs
     public $aParams; ///< additional form parameters
     public $id; ///< Form element id
+
+    protected $aFieldsCheckForSpam = array(); ///< additional fields names to check for spam(profanity filter), now only fields with 'textarea' and 'text' are checked for spam, 'textarea' fields are checked for spam and filter for profanity, while 'text' fields are filtetered for profanity only
 
     public function __construct ($aInfo, $oTemplate)
     {
@@ -1261,17 +1263,20 @@ class BxDolFormChecker
 
             foreach ($aInputs as $k => $a) {
 
-                if ($a['type'] != 'textarea')
-                    continue;
-
                 $a['name'] = str_replace('[]', '', $a['name']);
+
+                if ($a['type'] != 'textarea' && $a['type'] != 'text' && !in_array($a['name'], $this->aFieldsCheckForSpam))
+                    continue;
+                
                 $val = BxDolForm::getSubmittedValue($a['name'], $this->_sFormMethod, $this->_aSpecificValues);
                 if (!$val)
                     continue;
 
-                if (!$oChecker->checkIsSpam($val))
+                if (!$oChecker->checkIsSpam($val, $a['type'])){
+					BxDolForm::setSubmittedValue($a['name'], $val, $this->_sFormMethod, $this->_aSpecificValues);
                     continue;
-
+				}
+                
                 ++$iErrors;
 
                 $sErr = _t('_sys_spam_detected');
@@ -1481,10 +1486,10 @@ class BxDolFormCheckerHelper
             return true;
         return $oCaptcha->check ();
     }
-    static public function checkIsSpam($val)
+    static public function checkIsSpam(&$val, $sType = 'textarea')
     {
         $bSpam = false;
-        bx_alert('system', 'check_spam', 0, getLoggedId(), array('is_spam' => &$bSpam, 'content' => $val, 'where' => 'form'));
+        bx_alert('system', 'check_spam', 0, getLoggedId(), array('is_spam' => &$bSpam, 'content' => &$val, 'where' => 'form', 'type' => $sType));
         return $bSpam;
     }
 

@@ -52,6 +52,22 @@ class BxAntispamModule extends BxDolModule
     }
 
     /**
+     * Filter undesired words
+     *
+     * @param $sContent content to filter
+     * @param $sIp IP address of content poster
+     * @return modified or the same content.
+     */
+    public function serviceFilterSpam ($sContent, $sIp = '')
+    {      
+        if (defined('BX_DOL_CRON_EXECUTE') || isAdmin() || 'on' != $this->_oConfig->getAntispamOption('profanity_enable'))
+            return $sContent;
+        
+        $oProfanityFilter = bx_instance('BxAntispamProfanityFilter', array(), $this->_aModule);
+        return $oProfanityFilter->censorString($sContent); 
+    }
+    
+    /**
      * Check text for spam.
      * First it check if IP is whitelisted(or under cron execution or user is admin) - for whitelisted IPs check for spam isn't performed,
      * then it checks URLs found in text for DNSURI black lists (@see BxAntispamDNSURIBlacklists),
@@ -66,7 +82,7 @@ class BxAntispamModule extends BxDolModule
      * @return true if spam detected and content shouln't be recorded, false if content should be processed as usual.
      */
     public function serviceIsSpam ($sContent, $sIp = '', $isStripSlashes = BX_SLASHES_AUTO)
-    {
+    {      
         if (defined('BX_DOL_CRON_EXECUTE') || isAdmin())
             return false;
 
@@ -75,7 +91,7 @@ class BxAntispamModule extends BxDolModule
 
         if (get_magic_quotes_gpc() && $isStripSlashes == BX_SLASHES_AUTO)
             $sContent = stripslashes($sContent);
-
+        
         $bRet = false;
         if ('on' == $this->_oConfig->getAntispamOption('uridnsbl_enable')) {
             $oDNSURIBlacklists = bx_instance('BxAntispamDNSURIBlacklists', array(), $this->_aModule);
@@ -292,6 +308,15 @@ class BxAntispamModule extends BxDolModule
                 $o = bx_instance('BxAntispamDisposableEmailDomains', array(), $this->_aModule);
                 return $o->getJoinBehaviourModes();                
         }
+    }
+    
+    /**
+     * @return array with avaliable dictionaries languages
+     */
+    public function serviceGetProfanityFilterDicts ()
+    {
+        $oProfanityFilter = bx_instance('BxAntispamProfanityFilter', array(), $this->_aModule);
+        return $oProfanityFilter->getDicts(); 
     }
 
     protected function getErrorMessageIpBlocked ()
