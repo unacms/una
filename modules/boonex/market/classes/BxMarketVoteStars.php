@@ -9,10 +9,10 @@
  * @{
  */
 
-class BxMarketVote extends BxTemplVote
+class BxMarketVoteStars extends BxTemplVoteStars
 {
-	protected $MODULE;
-	protected $_oModule;
+    protected $MODULE;
+    protected $_oModule;
 
     function __construct($sSystem, $iId, $iInit = 1)
     {
@@ -27,16 +27,16 @@ class BxMarketVote extends BxTemplVote
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
     	if($this->getObjectAuthorId() == $this->_getAuthorId())
-    		return false;
+            return false;
 
     	$oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VOTE']);
-		if($oPrivacy && !$oPrivacy->check($this->_iId))
-			return false;
+        if($oPrivacy && !$oPrivacy->check($this->_iId))
+            return false;
 
     	return parent::isAllowedVote($isPerformAction);
     }
 
-	protected function _getLabelCounter($iCount)
+    protected function _getLabelCounter($iCount, $aParams = array())
     {
         return _t('_bx_market_vote_counter', $iCount);
     }

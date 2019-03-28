@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxTimelineVote extends BxTemplVote
+class BxTimelineVoteLikes extends BxTemplVoteLikes
 {
     function __construct($sSystem, $iId, $iInit = 1)
     {
