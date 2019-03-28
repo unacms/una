@@ -71,6 +71,42 @@ class BxDolMenuQuery extends BxDolDb
         $sQuery = $this->prepare("SELECT * FROM `sys_menu_items` WHERE `set_name` = ? ORDER BY `order` ASC", $sSetName);
         return $this->getAllWithKey($sQuery, 'name');
     }
+
+    public function getMenuItemsBy($aParams = array())
+    {
+        $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+        $aBindings = array();
+
+    	$sSelectClause = '*';
+    	$sWhereClause = $sGroupClause = '';
+    	$sLimitClause = isset($aParams['start']) && !empty($aParams['per_page']) ? "LIMIT " . $aParams['start'] . ", " . $aParams['per_page'] : "";
+
+    	if(!empty($aParams['type']))
+            switch($aParams['type']) {
+                case 'set_name':
+                    $aBindings['set_name'] = $aParams['set_name'];
+
+                    $sWhereClause = 'AND `set_name` = :set_name';
+                    break;
+                    
+                case 'set_name_duplicates':
+                    $aMethod['name'] = 'getColumn';
+                    $aBindings['set_name'] = $aParams['set_name'];
+
+                    $sSelectClause = '`name`';
+                    $sWhereClause = 'AND `set_name` = :set_name';
+                    $sGroupClause = '`name` HAVING COUNT(`id`) > 1';
+                    break;
+            }
+
+        if(!empty($sGroupClause))
+            $sGroupClause = " GROUP BY " . $sGroupClause;
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `sys_menu_items` WHERE 1 " . $sWhereClause . " " . $sGroupClause . " " . $sLimitClause;
+        $aMethod['params'][] = $aBindings;
+
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
 }
 
 /** @} */

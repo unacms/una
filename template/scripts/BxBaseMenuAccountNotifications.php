@@ -18,8 +18,33 @@ class BxBaseMenuAccountNotifications extends BxTemplMenu
         parent::__construct ($aObject, $oTemplate);
 
         $this->addMarkers(array(
-        	'studio_url' => BX_DOL_URL_STUDIO
+            'studio_url' => BX_DOL_URL_STUDIO
         ));        
+    }
+
+    protected function getMenuItemsRaw ()
+    {
+        $aItems = $this->_oQuery->getMenuItemsBy(array(
+            'type' => 'set_name', 
+            'set_name' => $this->_aObject['set_name']
+        ));
+
+        $aDuplicates = $this->_oQuery->getMenuItemsBy(array(
+            'type' => 'set_name_duplicates', 
+            'set_name' => $this->_aObject['set_name']
+        ));
+
+        $sModule = BxDolProfile::getInstance()->getModule();
+
+        $aResult = array();
+        foreach($aItems as $aItem) {
+            if(in_array($aItem['name'], $aDuplicates) && $aItem['module'] != $sModule)
+                continue;
+            
+            $aResult[$aItem['name']] = $aItem;
+        }
+
+        return $aResult;
     }
 
     /**
@@ -32,33 +57,24 @@ class BxBaseMenuAccountNotifications extends BxTemplMenu
         // default visible settings
         if (!BxDolAcl::getInstance()->isMemberLevelInSet($a['visible_for_levels']))
             return false;
-        
+
         switch ($a['name']) {
             case 'studio':
                 if (!isAdmin())
                     return false;
                 break;
-        	case 'cart':
-        		$oPayments = BxDolPayments::getInstance();
-        		if(!$oPayments->isActive())
-        			return false;
-        		break;
 
-        	case 'orders':
-        		$oPayments = BxDolPayments::getInstance();
-        		if(!$oPayments->isActive())
-        			return false;
-        		break;
+            case 'cart':
+                $oPayments = BxDolPayments::getInstance();
+                if(!$oPayments->isActive())
+                    return false;
+                break;
 
-			// show only friends for currently active profile for friend request notification
-        	case 'notifications-friend-requests':
-        	case 'profile-stats-friend-requests':
-        	case 'profile-stats-subscriptions':
-            case 'profile-stats-subscribed-me':
-	            $aInfo = BxDolProfile::getInstance()->getInfo();
-	            if($a['module'] != $aInfo['type'])
-	                return false;
-				break;
+            case 'orders':
+                $oPayments = BxDolPayments::getInstance();
+                if(!$oPayments->isActive())
+                    return false;
+                break;
         }
 
         return true;
