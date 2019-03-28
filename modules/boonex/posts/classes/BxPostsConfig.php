@@ -101,6 +101,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'OBJECT_REPORTS' => 'bx_posts',
             'OBJECT_VIEWS' => 'bx_posts',
             'OBJECT_VOTES' => 'bx_posts',
+            'OBJECT_REACTIONS' => 'bx_posts_reactions',
             'OBJECT_SCORES' => 'bx_posts',
             'OBJECT_FAVORITES' => 'bx_posts',
             'OBJECT_FEATURED' => 'bx_posts',

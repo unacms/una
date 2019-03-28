@@ -11,6 +11,7 @@ bx_import('BxDolAcl');
 
 define('BX_DOL_VOTE_TYPE_STARS', 'stars');
 define('BX_DOL_VOTE_TYPE_LIKES', 'likes');
+define('BX_DOL_VOTE_TYPE_REACTIONS', 'reactions');
 
 define('BX_DOL_VOTE_USAGE_BLOCK', 'block');
 define('BX_DOL_VOTE_USAGE_INLINE', 'inline');
@@ -78,8 +79,8 @@ define('BX_DOL_VOTE_USAGE_DEFAULT', BX_DOL_VOTE_USAGE_BLOCK);
 
 class BxDolVote extends BxDolObject
 {
-	protected $_bLike = true;
-	protected $_sType = BX_DOL_VOTE_TYPE_LIKES;
+    protected $_sType;
+    protected $_aVote;
 
     protected function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
@@ -87,10 +88,7 @@ class BxDolVote extends BxDolObject
         if(empty($this->_sSystem))
             return;
 
-        $this->_oQuery = new BxDolVoteQuery($this);
-
-		$this->_bLike = $this->isLikeMode();
-        $this->_sType = $this->_bLike ? BX_DOL_VOTE_TYPE_LIKES : BX_DOL_VOTE_TYPE_STARS;
+        $this->_aVote = array();
     }
 
     /**
@@ -109,14 +107,17 @@ class BxDolVote extends BxDolObject
         if(!isset($aSystems[$sSys]))
             return null;
 
-        $sClassName = 'BxTemplVote';
+        $sClassName = 'BxTemplVoteLikes';
         if(!empty($aSystems[$sSys]['class_name'])) {
             $sClassName = $aSystems[$sSys]['class_name'];
             if(!empty($aSystems[$sSys]['class_file']))
                 require_once(BX_DIRECTORY_PATH_ROOT . $aSystems[$sSys]['class_file']);
         }
 
-        $o = new $sClassName($sSys, $iId, $iInit, $oTemplate);
+        $o = new $sClassName($sSys, $iId, false, $oTemplate);
+        if($iInit && method_exists($o, 'init'))
+            $o->init($iId);
+
         return ($GLOBALS['bxDolClasses']['BxDolVote!' . $sSys . $iId] = $o);
     }
 
@@ -157,17 +158,20 @@ class BxDolVote extends BxDolObject
         return true;
     }
 
+    public function getObjectAuthorId($iObjectId = 0)
+    {
+    	if(empty($this->_aSystem['trigger_field_author']))
+            return 0;
+
+        return $this->_oQuery->getObjectAuthorId($iObjectId ? $iObjectId : $this->getId());
+    }
+
+    /**
+     * Interface functions for outer usage
+     */
     public function isUndo()
     {
         return (int)$this->_aSystem['is_undo'] == 1;
-    }
-
-    public function isLikeMode()
-    {
-        $iMinValue = $this->getMinValue();
-        $iMaxValue = $this->getMaxValue();
-
-        return $iMinValue == $iMaxValue;
     }
 
     public function getMinValue()
@@ -180,26 +184,15 @@ class BxDolVote extends BxDolObject
         return (int)$this->_aSystem['max_value'];
     }
 
-	public function getObjectAuthorId($iObjectId = 0)
-    {
-    	if(empty($this->_aSystem['trigger_field_author']))
-    		return 0;
-
-        return $this->_oQuery->getObjectAuthorId($iObjectId ? $iObjectId : $this->getId());
-    }
-
-    /**
-     * Interface functions for outer usage
-     */
     public function getStatCounter()
     {
-        $aVote = $this->_oQuery->getVote($this->getId());
+        $aVote = $this->_getVote();
         return $aVote['count'];
     }
 
     public function getStatRate()
     {
-        $aVote = $this->_oQuery->getVote($this->getId());
+        $aVote = $this->_getVote();
         return $aVote['rate'];
     }
 
@@ -208,10 +201,8 @@ class BxDolVote extends BxDolObject
      */
     public function actionVote()
     {
-        if(!$this->isEnabled()) {
-            echoJson(array('code' => 1, 'message' => _t('_vote_err_not_enabled')));
-            return;
-        }
+        if(!$this->isEnabled())
+            return echoJson(array('code' => 1, 'message' => _t('_vote_err_not_enabled')));
 
         $iObjectId = $this->getId();
         $iObjectAuthorId = $this->getObjectAuthorId($iObjectId);
@@ -219,61 +210,32 @@ class BxDolVote extends BxDolObject
         $iAuthorIp = $this->_getAuthorIp();
 
         $bUndo = $this->isUndo();
-        $bLikeMode = $this->isLikeMode();
-
         $bVoted = $this->isPerformed($iObjectId, $iAuthorId);
-        $bPerformUndo = $bVoted && $bUndo ? true : false;
+        $bPerformUndo = $bVoted && $bUndo;
 
-        if(!$bPerformUndo && !$this->isAllowedVote(true)) {
-            echoJson(array('code' => 2, 'message' => $this->msgErrAllowedVote()));
-            return;
-        }
+        if(!$bPerformUndo && !$this->isAllowedVote())
+            return echoJson(array('code' => 2, 'message' => $this->msgErrAllowedVote()));
 
-        if((!$bLikeMode && !$this->_oQuery->isPostTimeoutEnded($iObjectId, $iAuthorIp)) || ($bLikeMode && $bVoted && !$bUndo)) {
-            echoJson(array('code' => 3, 'message' => _t('_vote_err_duplicate_vote')));
-            return;
-        }
+        if($this->_isDuplicate($iObjectId, $iAuthorId, $iAuthorIp, $bVoted))
+            return echoJson(array('code' => 3, 'message' => _t('_vote_err_duplicate_vote')));
 
-        $iValue = bx_get('value');
-        if($iValue === false) {
-            echoJson(array('code' => 4));
-            return;
-        }
+        $aData = $this->_getVoteData();
+        if($aData === false)
+            return echoJson(array('code' => 4));
 
-        $iValue = bx_process_input($iValue, BX_DATA_INT);
+        $iId = $this->_putVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aData, $bPerformUndo);
+        if($iId === false)
+            return echoJson(array('code' => 5));
 
-        $iMinValue = $this->getMinValue();
-        if($iValue < $iMinValue)
-            $iValue = $iMinValue;
-
-        $iMaxValue = $this->getMaxValue();
-        if($iValue > $iMaxValue)
-            $iValue = $iMaxValue;
-
-		$iId = $this->_oQuery->putVote($iObjectId, $iAuthorId, $iAuthorIp, $iValue, $bPerformUndo);
-        if($iId === false) {
-            echoJson(array('code' => 5));
-            return;
-        }
+        if(!$bPerformUndo)
+            $this->isAllowedVote(true);
 
         $this->_trigger();
 
-        $oZ = new BxDolAlerts($this->_sSystem, ($bPerformUndo ? 'un' : '') . 'doVote', $iObjectId, $iAuthorId, array('vote_id' => $iId, 'vote_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId, 'value' => $iValue));
-        $oZ->alert();
+        bx_alert($this->_sSystem, ($bPerformUndo ? 'un' : '') . 'doVote', $iObjectId, $iAuthorId, array_merge(array('vote_id' => $iId, 'vote_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId), $aData));
+        bx_alert('vote', ($bPerformUndo ? 'un' : '') . 'do', $iId, $iAuthorId, array_merge(array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId), $aData));
 
-        $oZ = new BxDolAlerts('vote', ($bPerformUndo ? 'un' : '') . 'do', $iId, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId, 'value' => $iValue));
-        $oZ->alert();
-
-        $aVote = $this->_oQuery->getVote($iObjectId);
-        echoJson(array(
-            'code' => 0,
-            'rate' => $aVote['rate'],
-            'count' => $aVote['count'],
-            'countf' => (int)$aVote['count'] > 0 ? $this->_getLabelCounter($aVote['count']) : '',
-        	'label_icon' => $bLikeMode ? $this->_getIconDoLike(!$bVoted) : '',
-        	'label_title' => $bLikeMode ? _t($this->_getTitleDoLike(!$bVoted)) : '',
-        	'disabled' => !$bVoted && !$bUndo,
-        ));
+        echoJson($this->_returnVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aData, !$bVoted));
     }
 
     public function actionGetVotedBy()
@@ -303,19 +265,89 @@ class BxDolVote extends BxDolObject
     /**
      * Internal functions
      */
-    protected function _getIconDoLike($bVoted)
+    protected function _isDuplicate($iObjectId, $iAuthorId, $iAuthorIp, $bVoted)
     {
-    	return $bVoted && $this->isUndo() ?  'thumbs-up' : 'thumbs-up';
+        return false;
     }
 
-    protected function _getTitleDoLike($bVoted)
+    protected function _isCount($aVote = array())
     {
-    	return $bVoted && $this->isUndo() ? '_vote_do_unlike' : '_vote_do_like';
+        if(empty($aVote))
+            $aVote = $this->_getVote();
+
+        return isset($aVote['count']) && (int)$aVote['count'] != 0;
     }
 
-    protected function _getTitleDoBy()
+    protected function _getVoteData()
     {
-    	return '_vote_do_by';
+        $iValue = bx_get('value');
+        if($iValue === false)
+            return false;
+
+        $iValue = bx_process_input($iValue, BX_DATA_INT);
+
+        $iMinValue = $this->getMinValue();
+        if($iValue < $iMinValue)
+            $iValue = $iMinValue;
+
+        $iMaxValue = $this->getMaxValue();
+        if($iValue > $iMaxValue)
+            $iValue = $iMaxValue;
+
+        return array('value' => $iValue);
+    }
+
+    protected function _putVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aData, $bPerformUndo)
+    {
+        return $this->_oQuery->putVote($iObjectId, $iAuthorId, $iAuthorIp, $aData, $bPerformUndo);
+    }
+
+    protected function _returnVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aData, $bVoted)
+    {
+        $bUndo = $this->isUndo();
+        $aVote = $this->_getVote($iObjectId, true);
+
+        return array(
+            'code' => 0,
+            'rate' => $aVote['rate'],
+            'count' => $aVote['count'],
+            'countf' => (int)$aVote['count'] > 0 ? $this->_getLabelCounter($aVote['count']) : '',
+            'label_icon' => $this->_getIconDo($bVoted),
+            'label_title' => _t($this->_getTitleDo($bVoted)),
+            'disabled' => $bVoted && !$bUndo,
+        );
+    }
+
+    protected function _getVote($iObjectId = 0, $bForceGet = false)
+    {
+        if(!empty($this->_aVote) && !$bForceGet)
+            return $this->_aVote;
+
+        if(empty($iObjectId))
+            $iObjectId = $this->getId();
+
+        $this->_aVote = $this->_oQuery->getVote($iObjectId);
+        return $this->_aVote;
+    }
+
+    protected function _getTrack($iObjectId, $iAuthorId)
+    {
+        return $this->_oQuery->getTrack($iObjectId, $iAuthorId);
+    }
+
+    protected function _getIconDo($bVoted)
+    {
+    	return '';
+    }
+
+    protected function _getTitleDo($bVoted)
+    {
+    	return '';
+    }
+
+    protected function _getTitleDoBy($aParams = array())
+    {
+    	return _t('_vote_do_by');
     }
 }
 

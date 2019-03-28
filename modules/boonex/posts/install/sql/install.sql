@@ -12,6 +12,8 @@ CREATE TABLE IF NOT EXISTS `bx_posts_posts` (
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',
+  `rrate` float NOT NULL default '0',
+  `rvotes` int(11) NOT NULL default '0',
   `score` int(11) NOT NULL default '0',
   `sc_up` int(11) NOT NULL default '0',
   `sc_down` int(11) NOT NULL default '0',
@@ -155,6 +157,26 @@ CREATE TABLE IF NOT EXISTS `bx_posts_votes_track` (
   `object_id` int(11) NOT NULL default '0',
   `author_id` int(11) NOT NULL default '0',
   `author_nip` int(11) unsigned NOT NULL default '0',
+  `value` tinyint(4) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  KEY `vote` (`object_id`, `author_nip`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_posts_reactions` (
+  `object_id` int(11) NOT NULL default '0',
+  `reaction` varchar(32) NOT NULL default '',
+  `count` int(11) NOT NULL default '0',
+  `sum` int(11) NOT NULL default '0',
+  UNIQUE KEY `reaction` (`object_id`, `reaction`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_posts_reactions_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `author_nip` int(11) unsigned NOT NULL default '0',
+  `reaction` varchar(32) NOT NULL default '',
   `value` tinyint(4) NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
   PRIMARY KEY (`id`),
@@ -472,6 +494,7 @@ INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `Char
 -- VOTES
 INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
 ('bx_posts', 'bx_posts_votes', 'bx_posts_votes_track', '604800', '1', '1', '0', '1', 'bx_posts_posts', 'id', 'author', 'rate', 'votes', '', ''),
+('bx_posts_reactions', 'bx_posts_reactions', 'bx_posts_reactions_track', '604800', '1', '1', '1', '1', 'bx_posts_posts', 'id', 'author', 'rrate', 'rvotes', 'BxTemplVoteReactions', ''),
 ('bx_posts_poll_answers', 'bx_posts_polls_answers_votes', 'bx_posts_polls_answers_votes_track', '604800', '1', '1', '0', '1', 'bx_posts_polls_answers', 'id', 'author_id', 'rate', 'votes', 'BxPostsVotePollAnswers', 'modules/boonex/posts/classes/BxPostsVotePollAnswers.php');
 
 -- SCORES

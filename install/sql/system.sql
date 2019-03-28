@@ -3093,6 +3093,7 @@ INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`, `exte
 ('Sex', '_adm_form_txt_pre_lists_sex', 'system', '1', '1'),
 ('Language', '_adm_form_txt_pre_lists_language', 'system', '0', '1'),
 ('sys_report_types', '_sys_pre_lists_report_types', 'system', '0', '0'),
+('sys_vote_reactions', '_sys_pre_lists_vote_reactions', 'system', '0', '0'),
 ('sys_relations', '_sys_pre_lists_relations', 'system', '0', '1');
 
 
@@ -3424,6 +3425,14 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('sys_report_types', 'other', 5, '_sys_pre_lists_report_types_other', '');
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`, `Data`) VALUES
+('sys_vote_reactions', 'like', 1, '_sys_pre_lists_vote_reactions_like', '', 'a:2:{s:4:"icon";s:9:"thumbs-up";s:6:"weight";s:1:"1";}'),
+('sys_vote_reactions', 'love', 2, '_sys_pre_lists_vote_reactions_love', '', 'a:2:{s:4:"icon";s:5:"heart";s:6:"weight";s:1:"1";}'),
+('sys_vote_reactions', 'joy', 3, '_sys_pre_lists_vote_reactions_joy', '', 'a:2:{s:4:"icon";s:11:"grin-squint";s:6:"weight";s:1:"1";}'),
+('sys_vote_reactions', 'surprise', 4, '_sys_pre_lists_vote_reactions_surprise', '', 'a:2:{s:4:"icon";s:8:"surprise";s:6:"weight";s:1:"1";}'),
+('sys_vote_reactions', 'sadness', 5, '_sys_pre_lists_vote_reactions_sadness', '', 'a:2:{s:4:"icon";s:8:"sad-tear";s:6:"weight";s:1:"1";}'),
+('sys_vote_reactions', 'anger', 6, '_sys_pre_lists_vote_reactions_anger', '', 'a:2:{s:4:"icon";s:5:"angry";s:6:"weight";s:1:"1";}');
+
+INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`, `Data`) VALUES
 ('sys_relations', '1', 1, '_sys_pre_lists_relations_husband', '', 'a:1:{i:0;s:1:"2";}'),
 ('sys_relations', '2', 2, '_sys_pre_lists_relations_wife', '', 'a:1:{i:0;s:1:"1";}'),
 ('sys_relations', '3', 3, '_sys_pre_lists_relations_father', '', 'a:2:{i:0;s:1:"5";i:1;s:1:"6";}'),
@@ -3433,6 +3442,7 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`, `Dat
 ('sys_relations', '7', 7, '_sys_pre_lists_relations_brother', '', 'a:2:{i:0;s:1:"7";i:1;s:1:"8";}'),
 ('sys_relations', '8', 8, '_sys_pre_lists_relations_sister', '', 'a:2:{i:0;s:1:"7";i:1;s:1:"8";}');
 
+sys_reactions
 -- --------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `sys_menu_templates` (
@@ -4526,6 +4536,9 @@ INSERT INTO `sys_preloader`(`module`, `type`, `content`, `active`, `order`) VALU
 ('system', 'js_system', 'BxDolScore.js', 1, 34),
 ('system', 'js_system', 'BxDolView.js', 1, 35),
 ('system', 'js_system', 'BxDolVote.js', 1, 36),
+('system', 'js_system', 'BxDolVoteLikes.js', 1, 37),
+('system', 'js_system', 'BxDolVoteReactions.js', 1, 38),
+('system', 'js_system', 'BxDolVoteStars.js', 1, 39),
 
 ('system', 'js_translation', '_Are_you_sure', 1, 1),
 ('system', 'js_translation', '_error occured', 1, 2),

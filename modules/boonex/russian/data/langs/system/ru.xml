@@ -2279,6 +2279,7 @@
         <string name="_sys_menu_item_title_system_va_score"><![CDATA[Проголосовать (за/против)]]></string>
         <string name="_sys_menu_item_title_system_va_favorite"><![CDATA[В избранное]]></string>
         <string name="_sys_menu_item_title_system_va_feature"><![CDATA[В продвинутые]]></string>
+        <string name="_sys_menu_item_title_system_va_reaction"><![CDATA[Отреагировать]]></string>
         <string name="_sys_menu_item_title_system_va_repost"><![CDATA[Сделать репост]]></string>
         <string name="_sys_menu_item_title_system_va_report"><![CDATA[Пожаловаться]]></string>
         <string name="_sys_menu_item_title_system_va_more_auto"><![CDATA[Еще]]></string>
@@ -2504,6 +2505,13 @@
 	<string name="_sys_pre_lists_report_types_fraud"><![CDATA[обман]]></string>
 	<string name="_sys_pre_lists_report_types_nude"><![CDATA[обнаженность]]></string>
 	<string name="_sys_pre_lists_report_types_other"><![CDATA[другое]]></string>
+        <string name="_sys_pre_lists_vote_reactions"><![CDATA[Реакции]]></string>
+        <string name="_sys_pre_lists_vote_reactions_like"><![CDATA[Нравится]]></string>
+        <string name="_sys_pre_lists_vote_reactions_love"><![CDATA[Люблю]]></string>
+        <string name="_sys_pre_lists_vote_reactions_joy"><![CDATA[Ха-ха]]></string>
+        <string name="_sys_pre_lists_vote_reactions_surprise"><![CDATA[Вау!]]></string>
+        <string name="_sys_pre_lists_vote_reactions_sadness"><![CDATA[Грустно]]></string>
+        <string name="_sys_pre_lists_vote_reactions_anger"><![CDATA[Злюсь]]></string>
 	<string name="_sys_profile_sample_single"><![CDATA[профиль]]></string>
 	<string name="_sys_profile_friendship_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> предложил дружбу <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
 	<string name="_sys_profile_subscription_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> следит за <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
@@ -2771,6 +2779,7 @@
 	<string name="_vote_do_like"><![CDATA[Спасибо!]]></string>
 	<string name="_vote_do_unlike"><![CDATA[Нет, спасибо]]></string>
 	<string name="_vote_do_by"><![CDATA[Поблагодарили]]></string>
+        <string name="_vote_do_by_reactions"><![CDATA["{0}" от]]></string>
 	<string name="_vote_err_not_enabled"><![CDATA[Ваш голос не может быть принят в данный момент. Пожалуйста, попробуйте позднее.]]></string>
 	<string name="_vote_err_duplicate_vote"><![CDATA[Повторный голос]]></string>
         <string name="_vote_n_votes"><![CDATA[{0} голосов]]></string>

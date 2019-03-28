@@ -163,18 +163,26 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
 
-        $mixedAllowed = $this->{'isAllowed' . ((int)$aEvent['promoted'] == 0 ? 'Promote' : 'Unpromote')}($aEvent, true);
+        $sAction = (int)$aEvent['promoted'] == 0 ? 'promote' : 'unpromote';
+
+        $mixedAllowed = $this->{'isAllowed' . ucfirst($sAction)}($aEvent, true);
         if($mixedAllowed !== true)
             return echoJson(array('code' => 1, 'message' => strip_tags($mixedAllowed)));
 
-		$aEvent['promoted'] = (int)$aEvent['promoted'] == 0 ? time() : 0;
+        $aEvent['promoted'] = (int)$aEvent['promoted'] == 0 ? time() : 0;
         if(!$this->_oDb->updateEvent(array('promoted' => $aEvent['promoted']), array('id' => $iId)))
-        	return echoJson(array('code' => 2));
+            return echoJson(array('code' => 2));
 
-		echoJson(array(
-			'code' => 0, 
-			'message' => _t('_bx_timeline_txt_msg_performed_action')
-		));
+        bx_alert($this->_oConfig->getObject('alert'), $sAction . 'd', $iId, (int)$this->getUserId(), array(
+            'owner_id' => $aEvent['owner_id'],
+            'object_id' => $aEvent['object_id'],
+            'object_author_id' => $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $aEvent['owner_id'] : $aEvent['object_id']
+        ));
+
+        echoJson(array(
+            'code' => 0, 
+            'message' => _t('_bx_timeline_txt_msg_performed_action')
+        ));
     }
 
     function actionDelete()

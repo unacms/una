@@ -1,6 +1,6 @@
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_posts_posts`, `bx_posts_covers`, `bx_posts_files`, `bx_posts_photos`, `bx_posts_photos_resized`, `bx_posts_videos`, `bx_posts_videos_resized`, `bx_posts_cmts`, `bx_posts_votes`, `bx_posts_votes_track`, `bx_posts_views_track`, `bx_posts_meta_keywords`, `bx_posts_meta_locations`, `bx_posts_meta_mentions`, `bx_posts_reports`, `bx_posts_reports_track`, `bx_posts_favorites_track`, `bx_posts_scores`, `bx_posts_scores_track`, `bx_posts_polls`, `bx_posts_polls_answers`, `bx_posts_polls_answers_votes`, `bx_posts_polls_answers_votes_track`;
+DROP TABLE IF EXISTS `bx_posts_posts`, `bx_posts_covers`, `bx_posts_files`, `bx_posts_photos`, `bx_posts_photos_resized`, `bx_posts_videos`, `bx_posts_videos_resized`, `bx_posts_cmts`, `bx_posts_votes`, `bx_posts_votes_track`, `bx_posts_reactions`, `bx_posts_reactions_track`, `bx_posts_views_track`, `bx_posts_meta_keywords`, `bx_posts_meta_locations`, `bx_posts_meta_mentions`, `bx_posts_reports`, `bx_posts_reports_track`, `bx_posts_favorites_track`, `bx_posts_scores`, `bx_posts_scores_track`, `bx_posts_polls`, `bx_posts_polls_answers`, `bx_posts_polls_answers_votes`, `bx_posts_polls_answers_votes_track`;
 
 -- STORAGES & TRANSCODERS
 DELETE FROM `sys_objects_storage` WHERE `object` LIKE 'bx_posts_%';
@@ -25,7 +25,7 @@ DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_posts_cats');
 DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_posts';
 
 -- VOTES
-DELETE FROM `sys_objects_vote` WHERE `Name` IN ('bx_posts', 'bx_posts_poll_answers');
+DELETE FROM `sys_objects_vote` WHERE `Name` IN ('bx_posts', 'bx_posts_reactions', 'bx_posts_poll_answers');
 
 -- SCORES
 DELETE FROM `sys_objects_score` WHERE `name` = 'bx_posts';

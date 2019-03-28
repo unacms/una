@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxPollsVoteSubentries extends BxTemplVote
+class BxPollsVoteSubentries extends BxTemplVoteLikes
 {
     protected $_sModule;
     protected $_oModule;
@@ -29,7 +29,7 @@ class BxPollsVoteSubentries extends BxTemplVote
 
         $CNF = $this->_oModule->_oConfig->CNF;
 
-        $this->_aElementDefaults['likes'] = array_merge($this->_aElementDefaults['likes'], array(
+        $this->_aElementDefaults = array_merge($this->_aElementDefaults, array(
             'show_do_vote_label' => true,
             'show_counter' => false
         ));
@@ -41,17 +41,14 @@ class BxPollsVoteSubentries extends BxTemplVote
         $this->_sTmplNameCounterText = 'subentries_vc_text.html';
     }
 
-    public function getJsClick()
+    public function getJsClick($iValue = 0)
     {
         $CNF = $this->_oModule->_oConfig->CNF;
-
-        if(!$this->isLikeMode())
-            return false;
 
         $sJsObjectVote = $this->getJsObjectName();
         $sJsObjectEntry = $this->_oModule->_oConfig->getJsObject('entry');
 
-        return $sJsObjectVote . '.vote(this, ' . $this->getMaxValue() . ', function(oLink, oData) {' . $sJsObjectEntry . '.onVote(oLink, oData, ' . $this->_aContentInfo[$CNF['FIELD_ID']] . ');})';
+        return $sJsObjectVote . '.vote(this, ' . $this->getValue() . ', function(oLink, oData) {' . $sJsObjectEntry . '.onVote(oLink, oData, ' . $this->_aContentInfo[$CNF['FIELD_ID']] . ');})';
     }
 
     public function getCounter($aParams = array())
@@ -110,12 +107,12 @@ class BxPollsVoteSubentries extends BxTemplVote
     	return bx_process_output($this->_aObjectInfo['title']);
     }
 
-    protected function _getTitleDoBy()
+    protected function _getTitleDoBy($aParams = array())
     {
-    	return '_bx_polls_txt_subentry_vote_do_by';
+    	return _t('_bx_polls_txt_subentry_vote_do_by');
     }
 
-    protected function _getLabelCounter($iCount)
+    protected function _getLabelCounter($iCount, $aParams = array())
     {
         return _t('_bx_polls_txt_subentry_vote_counter', $iCount);
     }

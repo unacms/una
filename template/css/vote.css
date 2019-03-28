@@ -53,6 +53,50 @@ div.bx-vote div.bx-vote-counter-holder {
     border-width: 0px;
 }
 
+/*--- Reactions based Element Styles ---*/
+.bx-vote-reactions .bx-vote-element-holder,
+.bx-vote-reactions .bx-vote-counter-holder {
+	line-height: 20px;
+	line-height: 1.25rem;
+}
+
+.bx-vote-reactions-button .bx-vote-element-holder,
+.bx-vote-reactions-button .bx-vote-counter-holder {
+	line-height: 36px;
+	line-height: 2.2rem;
+}
+
+.bx-vote-reactions-button-small .bx-vote-element-holder,
+.bx-vote-reactions-button-small .bx-vote-counter-holder {
+	line-height: 24px;
+	line-height: 1.6rem;
+}
+
+.bx-vote-reactions .bx-vote-element-holder .bx-vote-do-vote.bx-vote-disabled,
+.bx-vote-reactions .bx-vote-element-holder .bx-vote-do-vote.bx-vote-disabled .sys-icon {
+	color: #ddd;
+}
+
+.bx-vote-reactions-button .bx-vote-counter-holder,
+.bx-vote-reactions-button-small .bx-vote-counter-holder {
+	font-size: 1.5rem;
+}
+
+.bx-vote-reactions .bx-vote-counter-holder.bx-btn-border {
+    border-width: 0px;
+}
+
+.bx-vote-counter-wrapper-reactions .bx-vote-counter {
+    display: inline-block;
+}
+.bx-vote-counter-wrapper-reactions .bx-vote-counter.bx-vc-hidden {
+    display: none;
+}
+.bx-vote-counter-wrapper-reactions .bx-vote-counter i,
+.bx-vote-counter-wrapper-reactions .bx-vote-counter span {
+    vertical-align: middle;
+}
+
 /*--- Stars based Element Styles ---*/
 .bx-vote-stars,
 .bx-vote-stars .bx-vote-do,

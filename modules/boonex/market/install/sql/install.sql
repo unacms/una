@@ -509,7 +509,7 @@ INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `Char
 
 -- VOTES
 INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
-('bx_market', 'bx_market_votes', 'bx_market_votes_track', '604800', '1', '5', '0', '1', 'bx_market_products', 'id', 'author', 'rate', 'votes', 'BxMarketVote', 'modules/boonex/market/classes/BxMarketVote.php');
+('bx_market', 'bx_market_votes', 'bx_market_votes_track', '604800', '1', '5', '0', '1', 'bx_market_products', 'id', 'author', 'rate', 'votes', 'BxMarketVoteStars', 'modules/boonex/market/classes/BxMarketVoteStars.php');
 
 -- SCORES
 INSERT INTO `sys_objects_score` (`name`, `module`, `table_main`, `table_track`, `post_timeout`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_score`, `trigger_field_cup`, `trigger_field_cdown`, `class_name`, `class_file`) VALUES 

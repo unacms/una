@@ -185,6 +185,33 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
     	return array($sResult, $this->_sClassMiSa);
     }
 
+    protected function _getMenuItemReaction($aItem, $aParams = array())
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $sObject = !empty($aParams['object']) ? $aParams['object'] : '';
+        if(empty($sObject) && !empty($CNF['OBJECT_REACTIONS']))
+            $sObject = $CNF['OBJECT_REACTIONS'];
+
+        $iId = !empty($aParams['id']) ? (int)$aParams['id'] : '';
+        if(empty($iId))
+            $iId = $this->_iContentId;
+
+        $oObject = !empty($sObject) ? BxDolVote::getObjectInstance($sObject, $iId) : false;
+        if(!$oObject || !$oObject->isEnabled())
+            return '';
+
+        $sResult = $oObject->getElementBlock(array(
+            'dynamic_mode' => $this->_bDynamicMode,
+            'show_do_vote_as_button' => $this->_bShowAsButton,
+            'show_do_vote_label' => $this->_bShowTitle
+        ));
+        if(empty($sResult))
+            return '';
+
+    	return array($sResult, $this->_sClassMiSa);
+    }
+
     protected function _getMenuItemScore($aItem, $aParams = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;

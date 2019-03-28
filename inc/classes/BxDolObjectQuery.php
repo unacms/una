@@ -73,7 +73,7 @@ class BxDolObjectQuery extends BxDolDb
         );
     }
 
-	public function isPerformed($iObjectId, $iAuthorId)
+    public function isPerformed($iObjectId, $iAuthorId)
     {
         $sQuery = $this->prepare("SELECT `object_id` FROM `{$this->_sTableTrack}` WHERE `object_id` = ? AND `author_id` = ? LIMIT 1", $iObjectId, $iAuthorId);
         return (int)$this->getOne($sQuery) != 0;
@@ -85,18 +85,26 @@ class BxDolObjectQuery extends BxDolDb
         return $this->getColumn($sQuery);
     }
 
+    public function getTrack($iObjectId, $iAuthorId)
+    {
+        return $this->getRow("SELECT * FROM `{$this->_sTableTrack}` WHERE `object_id` = :object_id AND `author_id` = :author_id LIMIT 1", array(
+            'object_id' => $iObjectId,
+            'author_id' => $iAuthorId
+        ));
+    }
+
     public function deleteObjectEntries($iObjectId)
     {
     	if(!empty($this->_sTable)) {
-	        $sQuery = $this->prepare("DELETE FROM `{$this->_sTable}` WHERE `object_id` = ?", $iObjectId);
-	        if($this->query($sQuery))
-	        	$this->query("OPTIMIZE TABLE `{$this->_sTable}`");
+            $sQuery = $this->prepare("DELETE FROM `{$this->_sTable}` WHERE `object_id` = ?", $iObjectId);
+            if($this->query($sQuery))
+                $this->query("OPTIMIZE TABLE `{$this->_sTable}`");
     	}
 
     	if(!empty($this->_sTableTrack)) {
-	        $sQuery = $this->prepare("DELETE FROM `{$this->_sTableTrack}` WHERE `object_id` = ?", $iObjectId);
-	        if($this->query($sQuery))
-	        	$this->query ("OPTIMIZE TABLE `{$this->_sTableTrack}`");
+            $sQuery = $this->prepare("DELETE FROM `{$this->_sTableTrack}` WHERE `object_id` = ?", $iObjectId);
+            if($this->query($sQuery))
+                $this->query ("OPTIMIZE TABLE `{$this->_sTableTrack}`");
     	}
     }
     public function deleteAuthorEntries($iAuthorId)
@@ -124,10 +132,10 @@ class BxDolObjectQuery extends BxDolDb
 
         $sQuery = $this->prepare("DELETE FROM `{$this->_sTableTrack}` WHERE `{$this->_sTableTrackFieldAuthor}`=?", $iAuthorId);
         if($this->query($sQuery))
-        	$this->query("OPTIMIZE TABLE `{$this->_sTableTrack}`");
+            $this->query("OPTIMIZE TABLE `{$this->_sTableTrack}`");
     }
 
-	public function getObjectAuthorId($iId)
+    public function getObjectAuthorId($iId)
     {
         if(empty($this->_sTriggerFieldAuthor))
             return 0;
@@ -151,7 +159,7 @@ class BxDolObjectQuery extends BxDolDb
     public function updateTriggerTable($iObjectId)
     {
     	if(empty($this->_sMethodGetEntry))
-    		return false;
+            return false;
 
         $aEntry = $this->{$this->_sMethodGetEntry}($iObjectId);
         if(empty($aEntry) || !is_array($aEntry))
@@ -160,6 +168,11 @@ class BxDolObjectQuery extends BxDolDb
         return $this->_updateTriggerTable($iObjectId, $aEntry);
     }
 
+    /**
+     * Is used instead of 'updateTriggerTable' when trigger table contains 
+     * only one field related to this object (View, Vote, Comment, etc).
+     * For example, it's used in Favourite and Feature objects.
+     */
     public function updateTriggerTableValue($iObjectId, $iValue)
     {
         $sQuery = $this->prepare("UPDATE `{$this->_sTriggerTable}` SET `{$this->_sTriggerFieldCount}` = `{$this->_sTriggerFieldCount}` + ? WHERE `{$this->_sTriggerFieldId}` = ?", (int)$iValue, $iObjectId);

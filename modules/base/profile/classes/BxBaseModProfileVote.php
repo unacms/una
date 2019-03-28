@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxBaseModProfileVote extends BxTemplVote
+class BxBaseModProfileVote extends BxTemplVoteLikes
 {
     protected $_sModule;
     protected $_oModule;

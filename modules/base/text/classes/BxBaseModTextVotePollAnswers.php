@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxBaseModTextVotePollAnswers extends BxTemplVote
+class BxBaseModTextVotePollAnswers extends BxTemplVoteLikes
 {
     protected $_sModule;
     protected $_oModule;
@@ -31,7 +31,7 @@ class BxBaseModTextVotePollAnswers extends BxTemplVote
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $this->_aElementDefaults['likes'] = array_merge($this->_aElementDefaults['likes'], array(
+        $this->_aElementDefaults = array_merge($this->_aElementDefaults, array(
             'show_do_vote_label' => true,
             'show_counter' => false
         ));
@@ -46,17 +46,14 @@ class BxBaseModTextVotePollAnswers extends BxTemplVote
         $this->_sTmplNameCounterText = 'poll_answer_vc_text.html';
     }
 
-    public function getJsClick()
+    public function getJsClick($iValue = 0)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
-
-        if(!$this->isLikeMode())
-            return false;
 
         $sJsObjectVote = $this->getJsObjectName();
         $sJsObjectPoll = $this->_oModule->_oConfig->getJsObject('poll');
 
-        return $sJsObjectVote . '.vote(this, ' . $this->getMaxValue() . ', function(oLink, oData) {' . $sJsObjectPoll . '.onPollAnswerVote(oLink, oData, ' . $this->_aPollInfo[$CNF['FIELD_POLL_ID']] . ');})';
+        return $sJsObjectVote . '.vote(this, ' . $this->getValue() . ', function(oLink, oData) {' . $sJsObjectPoll . '.onPollAnswerVote(oLink, oData, ' . $this->_aPollInfo[$CNF['FIELD_POLL_ID']] . ');})';
     }
 
     public function getCounter($aParams = array())
@@ -128,14 +125,14 @@ class BxBaseModTextVotePollAnswers extends BxTemplVote
     	return bx_process_output($this->_aObjectInfo['title']);
     }
 
-    protected function _getTitleDoBy()
+    protected function _getTitleDoBy($aParams = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-    	return $CNF['T']['txt_poll_answer_vote_do_by'];
+    	return _t($CNF['T']['txt_poll_answer_vote_do_by']);
     }
 
-    protected function _getLabelCounter($iCount)
+    protected function _getLabelCounter($iCount, $aParams = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 

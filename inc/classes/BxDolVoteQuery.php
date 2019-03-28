@@ -12,7 +12,7 @@
  */
 class BxDolVoteQuery extends BxDolObjectQuery
 {
-	protected $_sTriggerFieldRate;
+    protected $_sTriggerFieldRate;
 
     protected $_iPostTimeout;
 
@@ -50,12 +50,14 @@ class BxDolVoteQuery extends BxDolObjectQuery
         return $aResult;
     }
 
-    public function putVote($iObjectId, $iAuthorId, $sAuthorIp, $iValue, $bUndo = false)
+    public function putVote($iObjectId, $iAuthorId, $sAuthorIp, $aData, $bUndo = false)
     {
         $sQuery = $this->prepare("SELECT `object_id` FROM `{$this->_sTable}` WHERE `object_id` = ? LIMIT 1", $iObjectId);
         $bExists = (int)$this->getOne($sQuery) != 0;
         if(!$bExists && $bUndo)
             return false;
+
+        $iValue = $aData['value'];
 
         if(!$bExists)
             $sQuery = $this->prepare("INSERT INTO {$this->_sTable} SET `object_id` = ?, `count` = '1', `sum` = ?", $iObjectId, $iValue);
@@ -65,21 +67,14 @@ class BxDolVoteQuery extends BxDolObjectQuery
         if((int)$this->query($sQuery) == 0)
             return false;
 
-        if($bUndo) {
-        	$sQuery = $this->prepare("SELECT `id` FROM `{$this->_sTableTrack}` WHERE `object_id` = ? AND `author_id` = ? LIMIT 1", $iObjectId, $iAuthorId);
-        	$iId = (int)$this->getOne($sQuery);
+        if($bUndo)
+            return $this->_deleteTrack($iObjectId, $iAuthorId);
 
-            $sQuery = $this->prepare("DELETE FROM `{$this->_sTableTrack}` WHERE `id` = ? LIMIT 1", $iId);
-            if((int)$this->query($sQuery) > 0)
-            	return $iId;
-        }
-        else {
-            $iNow = time();
-            $iAuthorNip = ip2long($sAuthorIp);
-            $sQuery = $this->prepare("INSERT INTO `{$this->_sTableTrack}` SET `object_id` = ?, `author_id` = ?, `author_nip` = ?, `value` = ?, `date` = ?", $iObjectId, $iAuthorId, $iAuthorNip, $iValue, $iNow);
-            if((int)$this->query($sQuery) > 0)
-            	return $this->lastId();
-        }
+        $iNow = time();
+        $iAuthorNip = ip2long($sAuthorIp);
+        $sQuery = $this->prepare("INSERT INTO `{$this->_sTableTrack}` SET `object_id` = ?, `author_id` = ?, `author_nip` = ?, `value` = ?, `date` = ?", $iObjectId, $iAuthorId, $iAuthorNip, $iValue, $iNow);
+        if((int)$this->query($sQuery) > 0)
+            return $this->lastId();
 
         return false;
     }
@@ -97,11 +92,28 @@ class BxDolVoteQuery extends BxDolObjectQuery
         if(empty($aResult))
             return $aResult;
 
-		$aResult['fields'] = ",`{$this->_sTable}`.`count` as `vote_count`, (`{$this->_sTable}`.`sum` / `{$this->_sTable}`.`count`) AS `vote_rate` ";
+        $aResult['fields'] = ", `{$this->_sTable}`.`count` as `vote_count`, (`{$this->_sTable}`.`sum` / `{$this->_sTable}`.`count`) AS `vote_rate` ";
         return $aResult;
     }
 
-	protected function _updateTriggerTable($iObjectId, $aEntry)
+    public function updateTriggerTableValue($iObjectId, $iValue)
+    {
+        return false;
+    }
+
+    protected function _deleteTrack($iObjectId, $iAuthorId)
+    {
+        $sQuery = $this->prepare("SELECT `id` FROM `{$this->_sTableTrack}` WHERE `object_id` = ? AND `author_id` = ? LIMIT 1", $iObjectId, $iAuthorId);
+        $iId = (int)$this->getOne($sQuery);
+
+        $sQuery = $this->prepare("DELETE FROM `{$this->_sTableTrack}` WHERE `id` = ? LIMIT 1", $iId);
+        if((int)$this->query($sQuery) > 0)
+            return $iId;
+
+        return false;
+    }
+    
+    protected function _updateTriggerTable($iObjectId, $aEntry)
     {
     	$sQuery = $this->prepare("UPDATE `{$this->_sTriggerTable}` SET `{$this->_sTriggerFieldCount}` = ?, `{$this->_sTriggerFieldRate}` = ? WHERE `{$this->_sTriggerFieldId}` = ?", $aEntry['count'], $aEntry['rate'], $iObjectId);
         return (int)$this->query($sQuery) > 0;
@@ -110,7 +122,7 @@ class BxDolVoteQuery extends BxDolObjectQuery
     protected function _deleteAuthorEntriesTableMain($aTrack)
     {
         return $this->query("UPDATE `{$this->_sTable}` SET `count`=`count`-1, `sum`=`sum`-:value WHERE `object_id`=:object_id", array(
-        	'object_id' => $aTrack['object_id'],
+            'object_id' => $aTrack['object_id'],
             'value' => $aTrack['value']
         ));
     }

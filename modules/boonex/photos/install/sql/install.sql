@@ -297,7 +297,7 @@ INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `Char
 -- VOTES
 INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
 ('bx_photos', 'bx_photos_votes', 'bx_photos_votes_track', '604800', '1', '1', '0', '1', 'bx_photos_entries', 'id', 'author', 'rate', 'votes', '', ''),
-('bx_photos_stars', 'bx_photos_svotes', 'bx_photos_svotes_track', '604800', '1', '5', '0', '1', 'bx_photos_entries', 'id', 'author', 'srate', 'svotes', '', '');
+('bx_photos_stars', 'bx_photos_svotes', 'bx_photos_svotes_track', '604800', '1', '5', '0', '1', 'bx_photos_entries', 'id', 'author', 'srate', 'svotes', 'BxPhotosVoteStars', 'modules/boonex/photos/classes/BxPhotosVoteStars.php');
 
 
 -- SCORES
