@@ -359,6 +359,8 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
     public function getTmplVarsText($aData)
     {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
         $aVars = parent::getTmplVarsText($aData);
 
         $sImage = '';
@@ -373,12 +375,22 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                 $sImage = $o->getFileUrlById($mixedImage['id']);
         }
 
+        $aVars['content_description_before'] = '';
+        $aVars['content_description_after'] = '';
         $aVars['bx_if:show_image'] = array(
             'condition' => !empty($sImage),
             'content' => array(
                 'entry_image' => $sImage
             )
         );
+
+        if(!empty($CNF['OBJECT_REACTIONS'])) {
+            $oReactions = BxDolVote::getObjectInstance($CNF['OBJECT_REACTIONS'], $aData[$CNF['FIELD_ID']]);
+            if($oReactions)
+                $aVars['content_description_after'] .= $oReactions->getCounter(array(
+                    'show_counter' => true
+                ));
+        }
 
         return $aVars;
     }

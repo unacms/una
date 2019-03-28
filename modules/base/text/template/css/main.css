@@ -212,6 +212,12 @@ div.bx-base-text-breadcrumb i {
 
     
 /* view page */
+.bx-content-description-after .bx-vote-counter-wrapper {
+    padding-top: 1rem;
+    line-height: 2.5rem;
+    font-size: 1.5rem;
+}
+
 .bx-base-text-entity-image img {
     max-width: 100%;
 }

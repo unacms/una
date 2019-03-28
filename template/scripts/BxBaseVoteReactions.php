@@ -34,7 +34,7 @@ class BxBaseVoteReactions extends BxDolVoteReactions
             'show_do_vote_as_button_small' => false,
             'show_do_vote_icon' => true,
             'show_do_vote_label' => false,
-            'show_counter' => true,
+            'show_counter' => false,
             'show_counter_empty' => true,
             'show_legend' => false
         );
@@ -82,7 +82,7 @@ class BxBaseVoteReactions extends BxDolVoteReactions
             $sClass .= ' bx-btn-small-height';
         else if(isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true)
             $sClass .= ' bx-btn-height';
-        $sClass .= ' bx-def-margin-sec-left-auto';
+        $sClass .= ' bx-def-margin-sec-right';
 
         $aParams['id_counter'] = '';
 
