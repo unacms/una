@@ -209,7 +209,6 @@ a.bx-base-pofile-cover-thumb img {
     flex: 2 1 auto;
 
     position: relative;
-    z-index: 2;
     display: -webkit-flex;
     display: flex;
     -webkit-flex-direction: column;
