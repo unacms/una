@@ -121,7 +121,7 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         if(!empty($sResult))
             return $sResult;
 
-        $aPolls = $this->_oModule->_oDb->deletePolls(array('content_id' => $iContentId));
+        $this->_oModule->_oDb->deletePolls(array('content_id' => $iContentId));
 
         return '';
     }

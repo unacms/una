@@ -59,6 +59,9 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
     {
         $CNF = &$this->_oConfig->CNF;
 
+        if(empty($CNF['TABLE_POLLS_ANSWERS_VOTES_TRACK']))
+            return false;
+
         if(empty($iAuthorId))
             $iAuthorId = bx_get_logged_profile_id();
 
@@ -72,6 +75,9 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
     public function getPolls($aParams)
     {
         $CNF = &$this->_oConfig->CNF;
+
+        if(empty($CNF['TABLE_POLLS']))
+            return false;
 
     	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sJoinClause = $sWhereClause = $sOrderByClause = "";
@@ -147,7 +153,7 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
     {
         $CNF = &$this->_oConfig->CNF;
 
-        if(empty($aParamsSet) || empty($aParamsWhere))
+        if(empty($CNF['TABLE_POLLS']) || empty($aParamsSet) || empty($aParamsWhere))
             return false;
 
         return $this->query("UPDATE `" . $CNF['TABLE_POLLS'] . "` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $this->arrayToSQL($aParamsWhere, " AND "));
@@ -156,6 +162,9 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
     public function deletePolls($aParams)
     {
         $CNF = &$this->_oConfig->CNF;
+
+        if(empty($CNF['TABLE_POLLS']))
+            return false;
 
         $sWhereClause = $this->arrayToSQL($aParams, " AND ");
         $aPolls = $this->getAll("SELECT * FROM `" . $CNF['TABLE_POLLS'] . "` WHERE " . $sWhereClause);
@@ -169,6 +178,9 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
     {
         $CNF = &$this->_oConfig->CNF;
 
+        if(empty($CNF['TABLE_POLLS']))
+            return false;
+
         $sWhereClause = "`id` IN (" . $this->implode_escape(is_array($mixedId) ? $mixedId : array($mixedId)) . ")";
         $aPolls = $this->getAll("SELECT * FROM `" . $CNF['TABLE_POLLS'] . "` WHERE " . $sWhereClause);
         if(empty($aPolls) || !is_array($aPolls))
@@ -180,6 +192,9 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
     public function getPollAnswers($aParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
+
+        if(empty($CNF['TABLE_POLLS_ANSWERS']))
+            return false;
 
     	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sWhereClause = $sOrderByClause = "";
@@ -240,7 +255,7 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
     {
         $CNF = &$this->_oConfig->CNF;
 
-        if(empty($aParamsSet))
+        if(empty($CNF['TABLE_POLLS_ANSWERS']) || empty($aParamsSet))
             return false;
 
         return $this->query("INSERT INTO `" . $CNF['TABLE_POLLS_ANSWERS'] . "` SET " . $this->arrayToSQL($aParamsSet));
@@ -250,7 +265,7 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
     {
         $CNF = &$this->_oConfig->CNF;
 
-        if(empty($aParamsSet) || empty($aParamsWhere))
+        if(empty($CNF['TABLE_POLLS_ANSWERS']) || empty($aParamsSet) || empty($aParamsWhere))
             return false;
 
         return $this->query("UPDATE `" . $CNF['TABLE_POLLS_ANSWERS'] . "` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $this->arrayToSQL($aParamsWhere, " AND "));
@@ -259,6 +274,9 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
     public function deletePollAnswers($aParams)
     {
         $CNF = &$this->_oConfig->CNF;
+
+        if(empty($CNF['TABLE_POLLS_ANSWERS']))
+            return false;
 
         $sWhereClause = $this->arrayToSQL($aParams, " AND ");
         $aAnswers = $this->getAll("SELECT * FROM `" . $CNF['TABLE_POLLS_ANSWERS'] . "` WHERE " . $sWhereClause);
@@ -271,6 +289,9 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
     public function deletePollAnswersByIds($mixedId)
     {
         $CNF = &$this->_oConfig->CNF;
+
+        if(empty($CNF['TABLE_POLLS_ANSWERS']))
+            return false;
 
         $sWhereClause = "`id` IN (" . $this->implode_escape(is_array($mixedId) ? $mixedId : array($mixedId)) . ")";
         $aAnswers = $this->getAll("SELECT * FROM `" . $CNF['TABLE_POLLS_ANSWERS'] . "` WHERE " . $sWhereClause);
