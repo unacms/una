@@ -3442,7 +3442,6 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`, `Dat
 ('sys_relations', '7', 7, '_sys_pre_lists_relations_brother', '', 'a:2:{i:0;s:1:"7";i:1;s:1:"8";}'),
 ('sys_relations', '8', 8, '_sys_pre_lists_relations_sister', '', 'a:2:{i:0;s:1:"7";i:1;s:1:"8";}');
 
-sys_reactions
 -- --------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `sys_menu_templates` (
