@@ -143,6 +143,7 @@ This antispam method scan submitted content for the URLs and check them if any o
   <string name="_bx_antispam_option_profanity_filter_bad_words_list"><![CDATA[Bad words list (comma separated)]]></string>
   <string name="_bx_antispam_option_profanity_filter_char_replace"><![CDATA[Char to replace]]></string>
   <string name="_bx_antispam_option_profanity_filter_white_words_list"><![CDATA[White words list (comma separated)]]></string>
+  <string name="_bx_antispam_option_profanity_filter_full_words_only"><![CDATA[Full words only]]></string>
 
   <string name="_bx_antispam_spam_report_name"><![CDATA[Spam report message]]></string>
     <string name="_bx_antispam_spam_report_subject"><![CDATA[Automatic spam report]]></string>

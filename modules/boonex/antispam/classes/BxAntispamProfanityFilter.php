@@ -16,7 +16,6 @@ class BxAntispamProfanityFilter extends BxDol
 {
     protected $oProfanityFilter = null;
     protected $sPluginPath = BX_DIRECTORY_PATH_PLUGINS . 'banbuilder/src/';
-    protected $bIsFullWord = false;
     
     public function __construct()
     {
@@ -25,7 +24,7 @@ class BxAntispamProfanityFilter extends BxDol
         require_once ($this->sPluginPath .'CensorWords.php');
         $sClassName = 'Snipe\BanBuilder\CensorWords';
         $this->oProfanityFilter = new $sClassName;
-       
+        
         $aTmp = explode(',', getParam('bx_antispam_profanity_filter_dicts'));
         foreach ($aTmp as $sLng) {
             if ($sLng != '')
@@ -45,10 +44,22 @@ class BxAntispamProfanityFilter extends BxDol
             $this->oProfanityFilter->addWhiteList(explode(',', $sWhiteWords));
     }
 
-    public function censorString ($s)
+    public function censor ($mValue)
     {
-        $aTmp = $this->oProfanityFilter->censorString($s, $this->bIsFullWord);
-        return $aTmp['clean'];
+        $bFullWord = getParam('bx_antispam_profanity_filter_full_words_only') =='on' ? true : false;
+        if (is_array($mValue)){
+            for ($i = 0; $i < count($mValue); $i++) {
+                if (is_string($mValue[$i])){
+                    $aTmp = $this->oProfanityFilter->censorString($mValue[$i], $bFullWord);
+                    $mValue[$i] = $aTmp['clean'];
+                }
+            }
+        }
+        else{
+            $aTmp = $this->oProfanityFilter->censorString($mValue, $bFullWord);
+            $mValue = $aTmp['clean'];
+        }
+        return $mValue;
     } 
     
     public function getDicts ()

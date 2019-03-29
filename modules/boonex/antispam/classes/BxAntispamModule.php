@@ -58,13 +58,13 @@ class BxAntispamModule extends BxDolModule
      * @param $sIp IP address of content poster
      * @return modified or the same content.
      */
-    public function serviceFilterSpam ($sContent, $sIp = '')
+    public function serviceFilterSpam ($mContent, $sIp = '')
     {      
         if (defined('BX_DOL_CRON_EXECUTE') || isAdmin() || 'on' != $this->_oConfig->getAntispamOption('profanity_enable'))
-            return $sContent;
+            return $mContent;
         
         $oProfanityFilter = bx_instance('BxAntispamProfanityFilter', array(), $this->_aModule);
-        return $oProfanityFilter->censorString($sContent); 
+        return $oProfanityFilter->censor($mContent); 
     }
     
     /**
