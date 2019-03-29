@@ -24,6 +24,7 @@ class BxPollsFormEntry extends BxBaseModTextFormEntry
     public function __construct($aInfo, $oTemplate = false)
     {
         $this->MODULE = 'bx_polls';
+        $this->_aFieldsCheckForSpam = array('subentries');
         parent::__construct($aInfo, $oTemplate);
     }
 
