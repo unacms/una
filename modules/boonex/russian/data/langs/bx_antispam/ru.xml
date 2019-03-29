@@ -143,8 +143,9 @@ URI DNSBL - это DNSBL, которые перечисляют доменные
   <string name="_bx_antispam_option_profanity_filter_char_replace"><![CDATA[Символ замены]]></string>
   <string name="_bx_antispam_option_profanity_filter_white_words_list"><![CDATA[Список слов исключений (разделенных запятой)]]></string>
   <string name="_bx_antispam_option_profanity_filter_dicts"><![CDATA[Словари]]></string>
-  
-    <string name="_bx_antispam_spam_report_name"><![CDATA[Сообщение отчёта о спаме]]></string>
+  <string name="_bx_antispam_option_profanity_filter_full_words_only"><![CDATA[Только слова целиком]]></string>
+
+  <string name="_bx_antispam_spam_report_name"><![CDATA[Сообщение отчёта о спаме]]></string>
     <string name="_bx_antispam_spam_report_subject"><![CDATA[Автоматический отчёт о спаме]]></string>
     <string name="_bx_antispam_spam_report_body"><![CDATA[{email_header}
 <b>Профиль:</b> <a href="{SpammerUrl}">{SpammerNickName}</a><br />
