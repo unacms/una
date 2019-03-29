@@ -17,7 +17,7 @@ class BxDolVoteReactions extends BxTemplVote
 
     protected $_sDefault; //--- Default reaction name.
 
-    protected function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
+    public function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
         parent::__construct($sSystem, $iId, $iInit, $oTemplate);
 

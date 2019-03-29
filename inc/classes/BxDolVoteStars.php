@@ -12,7 +12,7 @@
  */
 class BxDolVoteStars extends BxTemplVote
 {
-    protected function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
+    public function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
         parent::__construct($sSystem, $iId, $iInit, $oTemplate);
 
