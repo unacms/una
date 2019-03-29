@@ -125,26 +125,26 @@ html.bx-media-phone {
 
 /* body */
 a {
-	color: @bx-color-link-body; 
+    color: @bx-color-link-body; 
 }
 a:hover {
-	color: @bx-color-link-body-hover; 
+    color: @bx-color-link-body-hover; 
 }
-.sys-icon,
-.sys-icon-a {
-	color: @bx-color-icon-body; 
+.sys-icon:not(.sys-colored),
+.sys-icon-a:not(.sys-colored) {
+    color: @bx-color-icon-body; 
 }
-a:hover > .sys-icon,
-a:hover > .sys-icon-a {
-	color: @bx-color-icon-body-hover; 
+a:hover > .sys-icon:not(.sys-colored),
+a:hover > .sys-icon-a:not(.sys-colored) {
+    color: @bx-color-icon-body-hover; 
 }
 .sys-icon-a i {
-	.background-color (@bx-color-icon-body) !important;
-	color: @bx-color-icon-body;
+    .background-color (@bx-color-icon-body) !important;
+    color: @bx-color-icon-body;
 }
 a:hover > .sys-icon-a i {
-	.background-color (@bx-color-icon-body-hover) !important;
-	color: @bx-color-icon-body-hover;
+    .background-color (@bx-color-icon-body-hover) !important;
+    color: @bx-color-icon-body-hover;
 }
 
 /* header */
@@ -901,18 +901,18 @@ a.bx-def-font-h3:hover {
 
 	color: @bx-font-color-button-primary-hover;
 }
-.bx-btn .sys-icon {
+.bx-btn .sys-icon:not(.sys-colored) {
 	color: @bx-font-color-button;
 }
-.bx-btn.bx-btn-primary .sys-icon {
+.bx-btn.bx-btn-primary .sys-icon:not(.sys-colored) {
 	color: @bx-font-color-button-primary;
 }
-.bx-btn:hover .sys-icon,
-.bx-btn:active .sys-icon {
+.bx-btn:hover .sys-icon:not(.sys-colored),
+.bx-btn:active .sys-icon:not(.sys-colored) {
 	color: @bx-font-color-button-hover;
 }
-.bx-btn.bx-btn-primary:hover .sys-icon,
-.bx-btn.bx-btn-primary:active .sys-icon {
+.bx-btn.bx-btn-primary:hover .sys-icon:not(.sys-colored),
+.bx-btn.bx-btn-primary:active .sys-icon:not(.sys-colored) {
 	color: @bx-font-color-button-primary-hover;
 }
 
