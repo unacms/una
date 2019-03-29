@@ -14,7 +14,7 @@ class BxPostsFormPoll extends BxBaseModTextFormPoll
     public function __construct($aInfo, $oTemplate = false)
     {
         $this->_sModule = 'bx_posts';
-
+        $this->_aFieldsCheckForSpam = array('answers');
         parent::__construct($aInfo, $oTemplate);
     }
 }

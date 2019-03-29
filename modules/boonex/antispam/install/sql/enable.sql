@@ -75,7 +75,8 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'bx_antispam_profanity_filter_dicts', '_bx_antispam_option_profanity_filter_dicts', '', 'list', 'a:2:{s:6:"module";s:11:"bx_antispam";s:6:"method";s:26:"get_profanity_filter_dicts";}', '', '', 15),
 (@iCategoryId, 'bx_antispam_profanity_filter_bad_words_list', '_bx_antispam_option_profanity_filter_bad_words_list', '', 'text', '', '', '', 20),
 (@iCategoryId, 'bx_antispam_profanity_filter_char_replace', '_bx_antispam_option_profanity_filter_char_replace', '*', 'digit', '', '', '', 30),
-(@iCategoryId, 'bx_antispam_profanity_filter_white_words_list', '_bx_antispam_option_profanity_filter_white_words_list', '', 'text', '', '', '', 40);
+(@iCategoryId, 'bx_antispam_profanity_filter_white_words_list', '_bx_antispam_option_profanity_filter_white_words_list', '', 'text', '', '', '', 40),
+(@iCategoryId, 'bx_antispam_profanity_filter_full_words_only', '_bx_antispam_option_profanity_filter_full_words_only', 'on', 'checkbox', '', '', '', 50);
 
 
 -- page: DNSBL list
