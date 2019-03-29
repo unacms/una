@@ -725,7 +725,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     public $aParams; ///< additional form parameters
     public $id; ///< Form element id
 
-    protected $aFieldsCheckForSpam = array(); ///< additional fields names to check for spam(profanity filter), now only fields with 'textarea' and 'text' are checked for spam, 'textarea' fields are checked for spam and filter for profanity, while 'text' fields are filtetered for profanity only
+    protected $_aFieldsCheckForSpam = array(); ///< additional fields names to check for spam(profanity filter), now only fields with 'textarea' and 'text' are checked for spam, 'textarea' fields are checked for spam and filter for profanity, while 'text' fields are filtetered for profanity only
 
     public function __construct ($aInfo, $oTemplate)
     {
@@ -801,6 +801,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
         $oChecker = new BxDolFormChecker($this->_sCheckerHelper);
         $oChecker->setFormMethod($this->aFormAttrs['method'], $aSpecificValues);
         $oChecker->setFormParams($this->aParams);
+        $oChecker->setFieldsCheckForSpam($this->_aFieldsCheckForSpam);
 
         // init form with default values
 
@@ -1119,6 +1120,7 @@ class BxDolFormChecker
     protected $_aFormParams;
     protected $_bFormCsrfChecking;
     protected $_aSpecificValues;
+    protected $_aFieldsCheckForSpam;
 
     function __construct ($sHelper = '')
     {
@@ -1138,6 +1140,11 @@ class BxDolFormChecker
     function setFormParams($aParams)
     {
         $this->_aFormParams = $aParams;
+    }
+
+    function setFieldsCheckForSpam($a)
+    {
+        $this->_aFieldsCheckForSpam = $a;
     }
     
     function enableFormCsrfChecking($bFormCsrfChecking)
@@ -1265,7 +1272,7 @@ class BxDolFormChecker
 
                 $a['name'] = str_replace('[]', '', $a['name']);
 
-                if ($a['type'] != 'textarea' && $a['type'] != 'text' && !in_array($a['name'], $this->aFieldsCheckForSpam))
+                if ($a['type'] != 'textarea' && $a['type'] != 'text' && !in_array($a['name'], $this->_aFieldsCheckForSpam))
                     continue;
                 
                 $val = BxDolForm::getSubmittedValue($a['name'], $this->_sFormMethod, $this->_aSpecificValues);
