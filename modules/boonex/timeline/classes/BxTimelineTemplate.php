@@ -1127,7 +1127,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         );
 
         $iPreloadComments = $this->_oConfig->getPreloadComments();
-        if($iPreloadComments > 0 && in_array($aBrowseParams['view'], array(BX_TIMELINE_VIEW_TIMELINE, BX_TIMELINE_VIEW_OUTLINE)))
+        if($iPreloadComments > 0 && $oModule->isAllowedComment($aEvent) && in_array($aBrowseParams['view'], array(BX_TIMELINE_VIEW_TIMELINE, BX_TIMELINE_VIEW_OUTLINE)))
             $aTmplVars['comments'] = $this->_getComments($aEvent['comments'], array_merge($aBrowseParams, array(
                 'cmts_preload_number' => $iPreloadComments,
                 'cmts_min_post_form' => false
