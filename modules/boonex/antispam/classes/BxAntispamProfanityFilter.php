@@ -11,6 +11,11 @@
 
 /**
  * Profanity Filter based on https://github.com/snipe/banbuilder
+ * Need change 
+ * str_ireplace(array_keys($leet_replace), array_values($leet_replace), $badwords[$x]) . '\b/i'
+ * to 
+ * str_ireplace(array_keys($leet_replace), array_values($leet_replace), $badwords[$x]) . '\b/iu'
+ * in CensorWords.php
  */
 class BxAntispamProfanityFilter extends BxDol
 {
@@ -37,11 +42,11 @@ class BxAntispamProfanityFilter extends BxDol
         
         $sBadWords = trim(getParam('bx_antispam_profanity_filter_bad_words_list'));
         if ($sBadWords != '')
-            $this->oProfanityFilter->addFromArray(explode(',', $sBadWords));
-        
+            $this->oProfanityFilter->addFromArray(array_map('trim', explode(',', $sBadWords)));
+
         $sWhiteWords = getParam('bx_antispam_profanity_filter_white_words_list');
         if ($sWhiteWords != '')
-            $this->oProfanityFilter->addWhiteList(explode(',', $sWhiteWords));
+            $this->oProfanityFilter->addWhiteList(array_map('trim', explode(',', $sWhiteWords)));
     }
 
     public function censor ($mValue)
