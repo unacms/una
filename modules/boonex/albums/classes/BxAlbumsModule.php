@@ -414,7 +414,8 @@ class BxAlbumsModule extends BxBaseModTextModule
         $sTitle = isset($CNF['FIELD_TITLE']) && isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : (isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]) ? strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...') : '');
 
         return array(
-            'owner_id' => $aContentInfo['author'],
+            'owner_id' => $aEvent['owner_id'],
+            'object_owner_id' => $aContentInfo['author'],
             'icon' => !empty($CNF['ICON']) ? $CNF['ICON'] : '',
             'sample' => isset($CNF['T']['txt_sample_single_with_article']) ? $CNF['T']['txt_sample_single_with_article'] : $CNF['T']['txt_sample_single'],
             'sample_wo_article' => $CNF['T']['txt_sample_single'],

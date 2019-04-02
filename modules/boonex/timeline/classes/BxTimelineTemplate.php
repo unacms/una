@@ -255,7 +255,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($aResult === false)
             return '';
 
-        list($sAuthorName, $sAuthorUrl, $sAuthorIcon, $sAuthorUnit) = $this->getModule()->getUserInfo($aResult['owner_id']);
+        list($sAuthorName, $sAuthorUrl, $sAuthorIcon, $sAuthorUnit) = $this->getModule()->getUserInfo($aResult['object_owner_id']);
 
         return $this->parseHtmlByName('block_item_info.html', array(
             'style_prefix' => $this->_oConfig->getPrefix('style'),
@@ -300,7 +300,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($aResult === false)
             return '';
 
-        $aEvent['object_owner_id'] = $aResult['owner_id'];
+        $aEvent['owner_id'] = $aResult['owner_id'];
+        $aEvent['object_owner_id'] = $aResult['object_owner_id'];
         $aEvent['icon'] = !empty($aResult['icon']) ? $aResult['icon'] : '';
         $aEvent['sample'] = !empty($aResult['sample']) ? $aResult['sample'] : '_bx_timeline_txt_sample';
         $aEvent['sample_action'] = !empty($aResult['sample_action']) ? $aResult['sample_action'] : '_bx_timeline_txt_added_sample';
@@ -880,10 +881,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     public function getData(&$aEvent, $aBrowseParams = array())
     {
         $aResult = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $this->_getSystemData($aEvent, $aBrowseParams) : $this->_getCommonData($aEvent, $aBrowseParams);
-        if(empty($aResult) || empty($aResult['owner_id']) || empty($aResult['content']))
+        if(empty($aResult) || empty($aResult['object_owner_id']) || empty($aResult['content']))
             return false;
 
-        list($sUserName) = $this->getModule()->getUserInfo($aResult['owner_id']);
+        list($sUserName) = $this->getModule()->getUserInfo($aResult['object_owner_id']);
 
         $sSample = !empty($aResult['sample']) ? $aResult['sample'] : '_bx_timeline_txt_sample';
         if(empty($aEvent['title']) || empty($aEvent['description'])) {
@@ -1770,7 +1771,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $oOwner = BxDolProfile::getInstanceMagic($aEvent['object_id']);
 
         $aResult = array(
-            'owner_id' => $aEvent['object_id'],
+            'owner_id' => $aEvent['owner_id'],
+            'object_owner_id' => $aEvent['object_id'],
             'icon' => $CNF['ICON'],
             'sample' => '_bx_timeline_txt_sample_with_article',
             'sample_wo_article' => '_bx_timeline_txt_sample',
@@ -1800,15 +1802,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
                 $aLinks = $this->_oDb->getLinks($aEvent['id']);
                 if(!empty($aLinks) && is_array($aLinks))
-                	$oTranscoder = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_preview'));
+                    $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_preview'));
 
-                    foreach($aLinks as $aLink)
-                        $aResult['content']['links'][] = array(
-                            'url' => $aLink['url'],
-                            'title' => $aLink['title'],
-                            'text' => $aLink['text'],
-                        	'thumbnail' => (int)$aLink['media_id'] != 0 ? $oTranscoder->getFileUrl($aLink['media_id']) : ''
-                        );
+                foreach($aLinks as $aLink)
+                    $aResult['content']['links'][] = array(
+                        'url' => $aLink['url'],
+                        'title' => $aLink['title'],
+                        'text' => $aLink['text'],
+                        'thumbnail' => (int)$aLink['media_id'] != 0 ? $oTranscoder->getFileUrl($aLink['media_id']) : ''
+                    );
 
                 $aPhotos = $this->_oDb->getMedia(BX_TIMELINE_MEDIA_PHOTO, $aEvent['id']);
                 if(!empty($aPhotos) && is_array($aPhotos)) {
@@ -1870,8 +1872,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
                 $aResult['content'] = array_merge($aContent, $aReposted['content']);
                 $aResult['content']['parse_type'] = !empty($aReposted['content_type']) ? $aReposted['content_type'] : BX_TIMELINE_PARSE_TYPE_DEFAULT;
-                $aResult['content']['owner_id'] = $aReposted['owner_id'];
-                list($aResult['content']['owner_name'], $aResult['content']['owner_url']) = $oModule->getUserInfo($aReposted['owner_id']);
+                $aResult['content']['owner_id'] = $aReposted['object_owner_id'];
+                list($aResult['content']['owner_name'], $aResult['content']['owner_url']) = $oModule->getUserInfo($aReposted['object_owner_id']);
 
                 if(!empty($aReposted['sample']))
                     $aResult['content']['sample'] = $aReposted['sample'];

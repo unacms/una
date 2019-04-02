@@ -28,6 +28,10 @@ class BxCnlAlertsResponse extends BxBaseModGroupsAlertsResponse
 
         if ($oAlert->sUnit == 'meta_keyword' && $oAlert->sAction == 'added'){
             if (isset($oAlert->aExtras['meta']) && isset($oAlert->aExtras['object']) && isset($oAlert->iObject) && isset($oAlert->iSender)){
+                /*
+                 * TODO: $oAlert->aExtras['object'] - contains Metatags object name but further it's used as Module name.
+                 * It's working correctly while Metatags object name is equal to Module name.
+                 */
                 $this->_oModule->processHashtag($oAlert->aExtras['meta'], $oAlert->aExtras['object'], $oAlert->iObject, $oAlert->iSender);
             }
         }

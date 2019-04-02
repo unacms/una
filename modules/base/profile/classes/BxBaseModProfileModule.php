@@ -1371,7 +1371,8 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         $sDescription = _t($CNF['T'][$aBuildParams['txt_sau']], $sUserName, _t($sSample));
 
         return array(
-            'owner_id' => $aContentInfo['profile_id'],
+            'owner_id' => $aEvent['owner_id'],
+            'object_owner_id' => $aContentInfo['profile_id'],
             'icon' => !empty($CNF['ICON']) ? $CNF['ICON'] : '',
             'sample' => $sSample,
             'sample_wo_article' => $CNF['T'][$aBuildParams['txt_ss']],

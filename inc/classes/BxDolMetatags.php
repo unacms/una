@@ -323,6 +323,10 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
     public function keywordsAddOne($iId, $s, $bDeletePreviousKeywords = true)
     {
         if ($iRet = $this->_oQuery->keywordsAdd($iId, array($s), $bDeletePreviousKeywords)) {
+            /*
+             * TODO: Module name should be passed in Extras, because for now 'object' is used as module name.
+             * So, module field should be added in sys_objects_metatags table.
+             */
             bx_alert($this->_sObject, 'keyword_added', $iId, bx_get_logged_profile_id(), array('meta' => $s, 'content_id' => $iId));
             bx_alert('meta_keyword', 'added', $iId, bx_get_logged_profile_id(), array('meta' => $s, 'content_id' => $iId, 'object' => $this->_sObject));
         }

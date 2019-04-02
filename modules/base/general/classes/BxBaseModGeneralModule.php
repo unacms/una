@@ -1003,7 +1003,8 @@ class BxBaseModGeneralModule extends BxDolModule
             $sTitle = $aContentInfo[$CNF['FIELD_TEXT']];
 
         return array(
-            'owner_id' => $iAuthorId,
+            'owner_id' => $aEvent['owner_id'],
+            'object_owner_id' => $iAuthorId,
             'icon' => !empty($CNF['ICON']) ? $CNF['ICON'] : '',
             'sample' => isset($CNF['T']['txt_sample_single_with_article']) ? $CNF['T']['txt_sample_single_with_article'] : $CNF['T']['txt_sample_single'],
             'sample_wo_article' => $CNF['T']['txt_sample_single'],
