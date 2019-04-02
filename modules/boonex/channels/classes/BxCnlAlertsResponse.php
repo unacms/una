@@ -31,6 +31,7 @@ class BxCnlAlertsResponse extends BxBaseModGroupsAlertsResponse
                 /*
                  * TODO: $oAlert->aExtras['object'] - contains Metatags object name but further it's used as Module name.
                  * It's working correctly while Metatags object name is equal to Module name.
+                 * This should be changed in Ticket #1596
                  */
                 $this->_oModule->processHashtag($oAlert->aExtras['meta'], $oAlert->aExtras['object'], $oAlert->iObject, $oAlert->iSender);
             }

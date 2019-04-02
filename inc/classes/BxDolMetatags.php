@@ -326,6 +326,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
             /*
              * TODO: Module name should be passed in Extras, because for now 'object' is used as module name.
              * So, module field should be added in sys_objects_metatags table.
+             * This should be changed in Ticket #1596
              */
             bx_alert($this->_sObject, 'keyword_added', $iId, bx_get_logged_profile_id(), array('meta' => $s, 'content_id' => $iId));
             bx_alert('meta_keyword', 'added', $iId, bx_get_logged_profile_id(), array('meta' => $s, 'content_id' => $iId, 'object' => $this->_sObject));
