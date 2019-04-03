@@ -123,11 +123,12 @@ class BxBaseMenu extends BxDolMenu
 
 	protected function _getMenuItem ($a)
 	{
-        $aHiddenOn = array(
-			pow(2, BX_DB_HIDDEN_PHONE - 1) => 'bx-def-media-phone-hide',
-			pow(2, BX_DB_HIDDEN_TABLET - 1) => 'bx-def-media-tablet-hide',
-			pow(2, BX_DB_HIDDEN_DESKTOP - 1) => 'bx-def-media-desktop-hide'
-		);
+            $aHiddenOn = array(
+                pow(2, BX_DB_HIDDEN_PHONE - 1) => 'bx-def-media-phone-hide',
+                pow(2, BX_DB_HIDDEN_TABLET - 1) => 'bx-def-media-tablet-hide',
+                pow(2, BX_DB_HIDDEN_DESKTOP - 1) => 'bx-def-media-desktop-hide',
+                pow(2, BX_DB_HIDDEN_MOBILE - 1) => 'bx-def-mobile-app-hide'
+            );
         
 		if (isset($a['active']) && !$a['active'])
 			return false;

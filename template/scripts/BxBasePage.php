@@ -165,10 +165,11 @@ class BxBasePage extends BxDolPage
     protected function _getPageCode ()
     {
     	$aHiddenOn = array(
-			pow(2, BX_DB_HIDDEN_PHONE - 1) => 'bx-def-media-phone-hide',
-			pow(2, BX_DB_HIDDEN_TABLET - 1) => 'bx-def-media-tablet-hide',
-			pow(2, BX_DB_HIDDEN_DESKTOP - 1) => 'bx-def-media-desktop-hide'
-		);
+            pow(2, BX_DB_HIDDEN_PHONE - 1) => 'bx-def-media-phone-hide',
+            pow(2, BX_DB_HIDDEN_TABLET - 1) => 'bx-def-media-tablet-hide',
+            pow(2, BX_DB_HIDDEN_DESKTOP - 1) => 'bx-def-media-desktop-hide',
+            pow(2, BX_DB_HIDDEN_MOBILE - 1) => 'bx-def-mobile-app-hide'
+        );
 
         $aVars = array (
             'page_id' => 'bx-page-' . $this->_aObject['uri'],
@@ -180,12 +181,11 @@ class BxBasePage extends BxDolPage
                 $sContentWithBox = $this->_getBlockCode($aBlock);
 
             	$sHiddenOn = '';
-		    	if(!empty($aBlock['hidden_on']))
-		    		foreach($aHiddenOn as $iHiddenOn => $sClass)
-		    			if((int)$aBlock['hidden_on'] & $iHiddenOn)
-		    				$sHiddenOn .= ' ' . $sClass;
-    	
-    	
+                if(!empty($aBlock['hidden_on']))
+                    foreach($aHiddenOn as $iHiddenOn => $sClass)
+                        if((int)$aBlock['hidden_on'] & $iHiddenOn)
+                            $sHiddenOn .= ' ' . $sClass;
+
                 if ($sContentWithBox)
                     $sCell .= '<div class="bx-page-block-container bx-def-padding-sec-topbottom' . $sHiddenOn . '" id="bx-page-block-' . $aBlock['id'] . '">' . $sContentWithBox . '</div>';
             }
