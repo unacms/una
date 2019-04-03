@@ -55,7 +55,8 @@ class BxPostsConfig extends BxBaseModTextConfig
             'FIELD_LABELS' => 'labels',
             'FIELD_ANONYMOUS' => 'anonymous',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
-
+            'FIELD_DISABLE_COMMENTS' => 'disable_comments',
+            
             // page URIs
             'URI_VIEW_ENTRY' => 'view-post',
             'URI_AUTHOR_ENTRIES' => 'posts-author',

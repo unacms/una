@@ -110,6 +110,10 @@ class BxBaseCmts extends BxDolCmts
      */
     function getCommentsBlock($aBp = array(), $aDp = array())
     {
+        $mixedResult = $this->isViewAllowed();
+        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+            return $mixedResult;
+        
         $this->_getParams($aBp, $aDp);
 
         //add live update
