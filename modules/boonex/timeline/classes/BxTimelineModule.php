@@ -1814,7 +1814,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
         if(empty($sSystem) || empty($iObjectId))
             return '';
-
+        
         $oCmts = $this->getCmtsObject($sSystem, $iObjectId);
         if($oCmts === false)
             return '';
@@ -2426,6 +2426,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         list($sSystem, $iObjectId) = $mixedComments;
         $oCmts = $this->getCmtsObject($sSystem, $iObjectId);
+        
+        if($oCmts->isViewAllowed() !== CHECK_ACTION_RESULT_ALLOWED)
+            return false;
+        
         $oCmts->addCssJs();
 
         $bResult = true;
