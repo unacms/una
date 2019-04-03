@@ -212,9 +212,20 @@ BxDolGrid.prototype.action = function (sAction, oData, sData, isDisableLoading, 
         if (typeof(isDisableLoading) == 'undefined' || !isDisableLoading)
             $this.loading(true);
 
-        $.getJSON(sUrl, function (oData) {
-            $this.processJson(oData, sAction, isDisableLoading);
-        });
+        if(sUrl.length < 2048)
+            $.getJSON(sUrl, function(oResult) {
+                $this.processJson(oResult, sAction, isDisableLoading);
+            });
+        else {
+            var oUri = new URI(sUrl);
+
+            oData = oUri.query(true);
+            sUrl = oUri.query("").toString();
+
+            $.post(sUrl, oData, function(oResult) {
+                $this.processJson(oResult, sAction, isDisableLoading);
+            }, 'json');
+        }
     };
 
     if(typeof(isConfirm) != 'undefined' && parseInt(isConfirm) == 1)

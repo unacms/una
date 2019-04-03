@@ -662,6 +662,7 @@ class BxBaseGrid extends BxDolGrid
             $this->_oTemplate->addJs(array(
                 'jquery-ui/jquery-ui.custom.min.js',
                 'jquery-ui/i18n/jquery.ui.datepicker-' . $sUiLang . '.min.js',
+                'URI.js',
             ));
         
             $this->_oTemplate->addCss('jquery-ui/jquery-ui.css');
