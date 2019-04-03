@@ -284,7 +284,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_person_view_full', 'gender', 2147483647, 1, 1),
 ('bx_person_view_full', 'birthday', 2147483647, 1, 2),
 ('bx_person_view_full', 'fullname', 2147483647, 1, 3),
-('bx_person_view_full', 'description', 2147483647, 1, 4),
+('bx_person_view_full', 'description', 2147483647, 0, 4),
 ('bx_person_view_full', 'profile_email', 192, 1, 5),
 ('bx_person_view_full', 'profile_status', 192, 1, 6);
 

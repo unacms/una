@@ -304,7 +304,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 
 ('bx_organization_view_full', 'org_name', 2147483647, 1, 1),
 ('bx_organization_view_full', 'org_cat', 2147483647, 1, 2),
-('bx_organization_view_full', 'org_desc', 2147483647, 1, 3),
+('bx_organization_view_full', 'org_desc', 2147483647, 0, 3),
 ('bx_organization_view_full', 'profile_email', 192, 1, 4),
 ('bx_organization_view_full', 'profile_status', 192, 1, 5);
 
