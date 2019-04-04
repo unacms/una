@@ -215,6 +215,7 @@
 	<string name="_bx_payment_msg_successfully_performed"><![CDATA[Действие было успешно выполнено.]]></string>
 	<string name="_bx_payment_msg_successfully_processed_free"><![CDATA[Бесплатный товар был успешно обработан.]]></string>
 	<string name="_bx_payment_msg_cancelation_request_sent"><![CDATA[Запрос на отмену был отправлен. Пожалуйста, ждите.]]></string>
+        <string name="_bx_payment_msg_confirm_cancelation"><![CDATA[Вы уверены, что хотите отменить вашу подписку?]]></string>
 	<string name="_bx_payment_err_access_db"><![CDATA[Ошибка обращения к базе данных.]]></string>
 	<string name="_bx_payment_err_cannot_validate"><![CDATA[Не могу присоединиться к удаленному хосту для проверки данных.]]></string>
 	<string name="_bx_payment_err_empty_items"><![CDATA[Товары не выбраны.]]></string>
