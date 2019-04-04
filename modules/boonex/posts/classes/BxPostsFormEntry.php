@@ -168,6 +168,17 @@ class BxPostsFormEntry extends BxBaseModTextFormEntry
             ),
         );
     }
+
+    protected function _getPhotoGhostTmplVars($aContentInfo = array())
+    {
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+
+    	return array (
+            'name' => $this->aInputs[$CNF['FIELD_PHOTO']]['name'],
+            'content_id' => (int)$this->aInputs[$CNF['FIELD_PHOTO']]['content_id'],
+            'editor_id' => isset($CNF['FIELD_TEXT_ID']) ? $CNF['FIELD_TEXT_ID'] : ''
+    	);
+    }
 }
 
 /** @} */
