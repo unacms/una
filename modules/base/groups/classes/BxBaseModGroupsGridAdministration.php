@@ -18,7 +18,15 @@ class BxBaseModGroupsGridAdministration extends BxBaseModProfileGridAdministrati
 
     protected function _getCellName($mixedValue, $sKey, $aField, $aRow)
     {
-        return $this->_getCellFullname($mixedValue, $sKey, $aField, $aRow);
+    	$oProfile = $this->_getProfileObject($aRow['id']);
+
+        $mixedValue = $this->_oTemplate->parseHtmlByName('name_link.html', array(
+            'href' => $oProfile->getUrl(),
+            'title' => $mixedValue,
+            'content' => $mixedValue
+        ));
+
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 }
 

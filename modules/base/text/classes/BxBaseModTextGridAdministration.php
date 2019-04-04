@@ -87,28 +87,25 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
     	$oProfile = $this->_getProfileObject($aRow['author']);
     	$sProfile = $oProfile->getDisplayName();
 
-		$oAcl = BxDolAcl::getInstance();
+        $oAcl = BxDolAcl::getInstance();
 
     	$sAccountEmail = '';
     	$sManageAccountUrl = '';
     	if($oProfile && $oProfile instanceof BxDolProfile && $oAcl->isMemberLevelInSet(128)) {
-    		$sAccountEmail = $oProfile->getAccountObject()->getEmail();
-	    	$sManageAccountUrl = $this->_getManageAccountUrl($sAccountEmail);
+            $sAccountEmail = $oProfile->getAccountObject()->getEmail();
+            $sManageAccountUrl = $this->_getManageAccountUrl($sAccountEmail);
     	}
 
-        $mixedValue = $this->_oTemplate->parseHtmlByName('author_link.html', array(
-            'href' => $oProfile->getUrl(),
-            'title' => $sProfile,
-            'content' => $sProfile,
-        	'bx_if:show_account' => array(
-        		'condition' => !empty($sManageAccountUrl), 
-        		'content' => array(
-        			'href' => $sManageAccountUrl,
-		        	'title' => _t($this->_oModule->_oConfig->CNF['T']['grid_txt_account_manager']),
-		        	'content' => $sAccountEmail
-        		)
-        	)
-        ));
+        $sAddon = '';
+        if(!empty($sManageAccountUrl))
+            $sAddon = $this->_oTemplate->parseHtmlByName('account_link.html', array(
+                'href' => $sManageAccountUrl,
+                'title' => _t($this->_oModule->_oConfig->CNF['T']['grid_txt_account_manager']),
+                'content' => $sAccountEmail,
+                'class' => 'bx-def-font-grayed'
+            ));
+
+        $mixedValue = $oProfile->getUnit(0, array('template' => array('vars' => array('addon' => $sAddon))));
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }

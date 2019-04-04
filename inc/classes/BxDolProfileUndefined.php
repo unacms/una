@@ -79,11 +79,23 @@ class BxDolProfileUndefined extends BxDolFactory implements iBxDolSingleton, iBx
      */
     public function getUnit($iProfileId = 0, $aParams = array())
     {
-        $sTemplate = 'profile_' . (!empty($aParams['template']) ? $aParams['template'] : 'unit') . '.html';
+        $sTemplate = 'profile_unit.html';
+        $aTemplateVars = array();
+        if(!empty($aParams['template'])) {
+            if(is_string($aParams['template']))
+                $sTemplate = 'profile_' . $aParams['template'] . '.html';
+            else if(is_array($aParams['template'])) {
+                if(!empty($aParams['template']['name']))
+                    $sTemplate = 'profile_' . $aParams['template']['name'] . '.html';
 
-		return BxDolTemplate::getInstance()->parseHtmlByName($sTemplate, array(
-        	'thumb_url' => $this->getThumb(),
-        	'title' => $this->getDisplayName()
+                if(!empty($aParams['template']['vars']))
+                    $aTemplateVars = $aParams['template']['vars'];
+            }
+        }
+
+        return BxDolTemplate::getInstance()->parseHtmlByName($sTemplate, array(
+            'thumb_url' => $this->getThumb(),
+            'title' => $this->getDisplayName()
         ));
     }
 
