@@ -23,21 +23,25 @@ class BxPostsFormEntry extends BxBaseModTextFormEntry
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-    	if (isset($CNF['FIELD_COVER']) && isset($this->aInputs[$CNF['FIELD_COVER']])) {
-            $this->aInputs[$CNF['FIELD_COVER']]['storage_object'] = $CNF['OBJECT_STORAGE'];
-            $this->aInputs[$CNF['FIELD_COVER']]['uploaders'] = !empty($this->aInputs[$CNF['FIELD_COVER']]['value']) ? unserialize($this->aInputs[$CNF['FIELD_COVER']]['value']) : $CNF['OBJECT_UPLOADERS'];
-            $this->aInputs[$CNF['FIELD_COVER']]['upload_buttons_titles'] = array(
-            	'Simple' => _t('_bx_posts_form_entry_input_covers_uploader_simple_title'), 
-            	'HTML5' => _t('_bx_posts_form_entry_input_covers_uploader_html5_title')
-            );
-            $this->aInputs[$CNF['FIELD_COVER']]['images_transcoder'] = $CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW'];
-            $this->aInputs[$CNF['FIELD_COVER']]['storage_private'] = 0;
-            $this->aInputs[$CNF['FIELD_COVER']]['multiple'] = false;
-            $this->aInputs[$CNF['FIELD_COVER']]['content_id'] = 0;
-            $this->aInputs[$CNF['FIELD_COVER']]['ghost_template'] = '';
+    	if(isset($CNF['FIELD_COVER']) && isset($this->aInputs[$CNF['FIELD_COVER']])) {
+            if($this->_oModule->checkAllowedSetThumb() === CHECK_ACTION_RESULT_ALLOWED) {
+                $this->aInputs[$CNF['FIELD_COVER']]['storage_object'] = $CNF['OBJECT_STORAGE'];
+                $this->aInputs[$CNF['FIELD_COVER']]['uploaders'] = !empty($this->aInputs[$CNF['FIELD_COVER']]['value']) ? unserialize($this->aInputs[$CNF['FIELD_COVER']]['value']) : $CNF['OBJECT_UPLOADERS'];
+                $this->aInputs[$CNF['FIELD_COVER']]['upload_buttons_titles'] = array(
+                    'Simple' => _t('_bx_posts_form_entry_input_covers_uploader_simple_title'), 
+                    'HTML5' => _t('_bx_posts_form_entry_input_covers_uploader_html5_title')
+                );
+                $this->aInputs[$CNF['FIELD_COVER']]['images_transcoder'] = $CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW'];
+                $this->aInputs[$CNF['FIELD_COVER']]['storage_private'] = 0;
+                $this->aInputs[$CNF['FIELD_COVER']]['multiple'] = false;
+                $this->aInputs[$CNF['FIELD_COVER']]['content_id'] = 0;
+                $this->aInputs[$CNF['FIELD_COVER']]['ghost_template'] = '';
+            }
+            else
+                unset($this->aInputs[$CNF['FIELD_COVER']]);
         }
 
-        if (isset($CNF['FIELD_PHOTO']) && isset($this->aInputs[$CNF['FIELD_PHOTO']])) {
+        if(isset($CNF['FIELD_PHOTO']) && isset($this->aInputs[$CNF['FIELD_PHOTO']])) {
             $this->aInputs[$CNF['FIELD_PHOTO']]['storage_object'] = $CNF['OBJECT_STORAGE_PHOTOS'];
             $this->aInputs[$CNF['FIELD_PHOTO']]['uploaders'] = !empty($this->aInputs[$CNF['FIELD_PHOTO']]['value']) ? unserialize($this->aInputs[$CNF['FIELD_PHOTO']]['value']) : $CNF['OBJECT_UPLOADERS'];
             $this->aInputs[$CNF['FIELD_PHOTO']]['images_transcoder'] = $CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS'];
@@ -158,14 +162,7 @@ class BxPostsFormEntry extends BxBaseModTextFormEntry
             'content_id' => $this->aInputs[$CNF['FIELD_COVER']]['content_id'],
             'editor_id' => isset($CNF['FIELD_TEXT_ID']) ? $CNF['FIELD_TEXT_ID'] : '',
             'thumb_id' => isset($CNF['FIELD_THUMB']) && isset($aContentInfo[$CNF['FIELD_THUMB']]) ? $aContentInfo[$CNF['FIELD_THUMB']] : 0,
-            'name_thumb' => isset($CNF['FIELD_THUMB']) ? $CNF['FIELD_THUMB'] : '',
-            'bx_if:set_thumb' => array (
-                'condition' => CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb($this->aInputs[$CNF['FIELD_COVER']]['content_id']),
-                'content' => array (
-                    'name_thumb' => isset($CNF['FIELD_THUMB']) ? $CNF['FIELD_THUMB'] : '',
-                    'txt_pict_use_as_thumb' => _t(!empty($CNF['T']['txt_pict_use_as_thumb']) ? $CNF['T']['txt_pict_use_as_thumb'] : '_sys_txt_form_entry_input_picture_use_as_thumb')
-                ),
-            ),
+            'name_thumb' => isset($CNF['FIELD_THUMB']) ? $CNF['FIELD_THUMB'] : ''
         );
     }
 

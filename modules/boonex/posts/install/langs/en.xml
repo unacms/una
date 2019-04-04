@@ -47,7 +47,6 @@
     <string name="_bx_posts_form_entry_input_sys_polls"><![CDATA[Polls]]></string>
     <string name="_bx_posts_form_entry_input_sys_allow_view_to"><![CDATA[Visibility]]></string>
     <string name="_bx_posts_form_entry_input_allow_view_to"><![CDATA[Visibility]]></string>
-    <string name="_bx_posts_form_entry_input_picture_use_as_thumb"><![CDATA[Cover Image]]></string>
     <string name="_bx_posts_form_entry_input_sys_date_added"><![CDATA[Created]]></string>
     <string name="_bx_posts_form_entry_input_date_added"><![CDATA[Created]]></string>
     <string name="_bx_posts_form_entry_input_sys_date_changed"><![CDATA[Updated]]></string>
@@ -75,7 +74,7 @@
     <string name="_bx_posts_acl_action_create_entry"><![CDATA[Create Post]]></string>
     <string name="_bx_posts_acl_action_delete_entry"><![CDATA[Delete Post]]></string>
     <string name="_bx_posts_acl_action_view_entry"><![CDATA[View Post]]></string>
-    <string name="_bx_posts_acl_action_set_thumb"><![CDATA[Set Post Thumbnail]]></string>
+    <string name="_bx_posts_acl_action_set_thumb"><![CDATA[Set Post Header Image]]></string>
     <string name="_bx_posts_acl_action_edit_any_entry"><![CDATA[Edit Any Post]]></string>
 
     <string name="_bx_posts_page_title_sys_create_entry"><![CDATA[New Post]]></string>

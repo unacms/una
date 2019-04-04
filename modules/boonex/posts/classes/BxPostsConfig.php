@@ -156,7 +156,6 @@ class BxPostsConfig extends BxBaseModTextConfig
                 'txt_all_entries_in' => '_bx_posts_txt_all_entries_in',
                 'txt_all_entries_by_author' => '_bx_posts_page_title_browse_by_author',
                 'txt_all_entries_by_context' => '_bx_posts_page_title_browse_by_context',
-            	'txt_pict_use_as_thumb' => '_bx_posts_form_entry_input_picture_use_as_thumb',
                 'txt_err_cannot_perform_action' => '_bx_posts_txt_err_cannot_perform_action',
                 'txt_poll_answer_vote_do_by' => '_bx_posts_txt_poll_answer_vote_do_by',
                 'txt_poll_answer_vote_counter' => '_bx_posts_txt_poll_answer_vote_counter',
