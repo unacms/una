@@ -1001,31 +1001,34 @@ function bx_autocomplete_fields(iId, sUrl, sName, bShowImg, bOnlyOnce, onSelect)
 		$('#' + iId + '.bx-form-input-autotoken input').outerWidth('100%');
 };
 
-function bx_alert(sMessage, fOnClickOk)
+function bx_alert(sMessage, fOnClickOk, oParams)
 {
-	$(document).dolPopupAlert({
-		message: sMessage,
-		onClickOk: fOnClickOk
-	});
+    $(document).dolPopupAlert({
+        message: sMessage,
+        onClickOk: fOnClickOk,
+        params: oParams
+    });
 }
 
-function bx_confirm(sMessage, fOnClickYes, fOnClickNo)
+function bx_confirm(sMessage, fOnClickYes, fOnClickNo, oParams)
 {
-	$(document).dolPopupConfirm({
-		message: sMessage,
-		onClickYes: fOnClickYes,
-		onClickNo: fOnClickNo
-	});
+    $(document).dolPopupConfirm({
+        message: sMessage,
+        onClickYes: fOnClickYes,
+        onClickNo: fOnClickNo,
+        params: oParams
+    });
 }
 
-function bx_prompt(sMessage, sValue, fOnClickOk, fOnClickCancel)
+function bx_prompt(sMessage, sValue, fOnClickOk, fOnClickCancel, oParams)
 {
-	$(document).dolPopupPrompt({
-		message: sMessage,
-		value: sValue,
-		onClickOk: fOnClickOk,
-		onClickCancel: fOnClickCancel
-	});
+    $(document).dolPopupPrompt({
+        message: sMessage,
+        value: sValue,
+        onClickOk: fOnClickOk,
+        onClickCancel: fOnClickCancel,
+        params: oParams
+    });
 }
 
 function bx_get_scripts (aFiles, fCallback) 

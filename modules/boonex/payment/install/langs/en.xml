@@ -254,6 +254,8 @@
 	<string name="_bx_payment_txt_name_manual"><![CDATA[Manually]]></string>
 	<string name="_bx_payment_txt_yes"><![CDATA[Yes]]></string>
 	<string name="_bx_payment_txt_no"><![CDATA[No]]></string>
+        <string name="_bx_payment_txt_unsubscribe_yes"><![CDATA[Cancel automatically]]></string>
+        <string name="_bx_payment_txt_unsubscribe_no"><![CDATA[Do not cancel]]></string>
 
 	<!-- PayPal payment provider -->
 	<string name="_bx_payment_pp_cpt"><![CDATA[PayPal]]></string>

@@ -567,104 +567,186 @@
 
     $.fn.dolPopupAlert = function(options) {
     	var oAPopup = $('#bx-popup-alert');
+        var sDefMessage, sDefBtnOkTitle;
 
-    	if(options.message != undefined && options.message.length > 0)
-    		oAPopup.find('.popup_alert_text').html(options.message);
+        var oMessage = null;
+    	if(options.message != undefined && options.message.length > 0) {
+            oMessage = oAPopup.find('.popup_alert_text');
 
-    	oAPopup.find('.popup_alert_ok').bind('click', function() {
-			if(options.onClickOk && typeof(options.onClickOk) == 'function')
-				options.onClickOk(oAPopup);
+            sDefMessage = oMessage.html();
+            oMessage.html(options.message);
+        }
 
-			oAPopup.dolPopupHide();
-		});
+        var oBtnOk = oAPopup.find('.popup_alert_ok');
+        if(options.params.ok.title != undefined && options.params.ok.title.length > 0) {
+            sDefBtnOkTitle = oBtnOk.html();
+            oBtnOk.html(options.params.ok.title);
+        }
 
-		var fOnHide = options.onHide;
-		options.onHide = function(oPopup) {
-			if(typeof(fOnHide) == 'function')
-				fOnHide(oAPopup);
+    	oBtnOk.bind('click', function() {
+            if(options.onClickOk && typeof(options.onClickOk) == 'function')
+                options.onClickOk(oAPopup);
 
-			oAPopup.find('.bx-btn').unbind('click');
-		};
+            oAPopup.dolPopupHide();
+        });
 
-		oAPopup.dolPopup(options);
+        var fOnHide = options.onHide;
+        options.onHide = function(oPopup) {
+            if(typeof(fOnHide) == 'function')
+                fOnHide(oAPopup);
+
+            /**
+             * Restore default functions and layout 
+             * if the last one was customized.
+             */
+            oAPopup.find('.bx-btn').unbind('click');
+            if(sDefMessage.length > 0)
+                oMessage.html(sDefMessage);
+            if(sDefBtnYesTitle.length > 0)
+                oBtnYes.html(sDefBtnYesTitle);
+        };
+
+        oAPopup.dolPopup(options);
     };
 
     $.fn.dolPopupConfirm = function(options) {
     	var oCPopup = $('#bx-popup-confirm');
+        var sDefMessage, sDefBtnYesTitle, sDefBtnNoTitle;
 
-    	if(options.message != undefined && options.message.length > 0)
-    		oCPopup.find('.popup_confirm_text').html(options.message);
+        var oMessage = null;
+    	if(options.message != undefined && options.message.length > 0) {
+            oMessage = oCPopup.find('.popup_confirm_text');
 
-    	oCPopup.find('.popup_confirm_yes').bind('click', function(event) {
+            sDefMessage = oMessage.html();
+            oMessage.html(options.message);
+        }
+
+        var oBtnYes = oCPopup.find('.popup_confirm_yes');
+        if(options.params.yes.title != undefined && options.params.yes.title.length > 0) {
+            sDefBtnYesTitle = oBtnYes.html();
+            oBtnYes.html(options.params.yes.title);
+        }
+
+        var oBtnNo = oCPopup.find('.popup_confirm_no');
+        if(options.params.no.title != undefined && options.params.no.title.length > 0) {
+            sDefBtnNoTitle = oBtnNo.html();
+            oBtnNo.html(options.params.no.title);
+        }
+
+    	oBtnYes.bind('click', function(event) {
             event.stopPropagation();
 
-			if(options.onClickYes && typeof(options.onClickYes) == 'function')
-				options.onClickYes(oCPopup);
+            if(options.onClickYes && typeof(options.onClickYes) == 'function')
+                options.onClickYes(oCPopup);
 
-			oCPopup.dolPopupHide();
-		});
+            oCPopup.dolPopupHide();
+        });
 
-		oCPopup.find('.popup_confirm_no').bind('click', function(event) {
+        oBtnNo.bind('click', function(event) {
             event.stopPropagation();
 
-			if (options.onClickNo && typeof(options.onClickNo) == 'function')
-				options.onClickNo(oCPopup);
+            if (options.onClickNo && typeof(options.onClickNo) == 'function')
+                options.onClickNo(oCPopup);
 
-			oCPopup.dolPopupHide();
-		});
+            oCPopup.dolPopupHide();
+        });
 
-		var fOnHide = options.onHide;
-		options.onHide = function(oPopup) {
-			if(typeof(fOnHide) == 'function')
-				fOnHide(oCPopup);
+        var fOnHide = options.onHide;
+        options.onHide = function(oPopup) {
+            if(typeof(fOnHide) == 'function')
+                fOnHide(oCPopup);
 
-			oCPopup.find('.bx-btn').unbind('click');
-		};
+            /**
+             * Restore default functions and layout 
+             * if the last one was customized.
+             */
+            oCPopup.find('.bx-btn').unbind('click');
+            if(sDefMessage.length > 0)
+                oMessage.html(sDefMessage);
+            if(sDefBtnYesTitle.length > 0)
+                oBtnYes.html(sDefBtnYesTitle);
+            if(sDefBtnNoTitle.length > 0)
+                oBtnNo.html(sDefBtnNoTitle);
+        };
 
-		oCPopup.dolPopup(options);
+        oCPopup.dolPopup(options);
     };
 
     $.fn.dolPopupPrompt = function(options) {
     	var oPPopup = $('#bx-popup-prompt');
+        var sDefMessage, sDefValue, sDefBtnOkTitle, sDefBtnCancelTitle;
 
     	oPPopup.setValue = function(mixedValue) {
-    		return oPPopup.find('[name="bx-popup-prompt-value"]').val(mixedValue);
+            return oPPopup.find('[name="bx-popup-prompt-value"]').val(mixedValue);
     	};
 
     	oPPopup.getValue = function() {
-    		return oPPopup.find('[name="bx-popup-prompt-value"]').val();
+            return oPPopup.find('[name="bx-popup-prompt-value"]').val();
     	};   		
 
-    	if(options.message != undefined && options.message.length > 0)
-    		oPPopup.find('.popup_prompt_text').html(options.message);
+        var oMessage = null;
+    	if(options.message != undefined && options.message.length > 0) {
+            oMessage = oPPopup.find('.popup_prompt_text');
 
-    	if(options.value != undefined && options.value.length > 0)
-    		oPPopup.setValue(options.value);
+            sDefMessage = oMessage.html();
+            oMessage.html(options.message);
+        }
 
-    	oPPopup.find('.popup_prompt_ok').bind('click', function() {
-			if(options.onClickOk && typeof(options.onClickOk) == 'function')
-				options.onClickOk(oPPopup);
+    	if(options.value != undefined && options.value.length > 0) {
+            sDefValue = oPPopup.getValue();
+            oPPopup.setValue(options.value);
+        }
 
-			oPPopup.dolPopupHide();
-		});
+        var oBtnOk = oPPopup.find('.popup_prompt_ok');
+        if(options.params.ok.title != undefined && options.params.ok.title.length > 0) {
+            sDefBtnOkTitle = oBtnOk.html();
+            oBtnOk.html(options.params.ok.title);
+        }
 
-		oPPopup.find('.popup_prompt_cancel').bind('click', function() {
-			if(options.onClickCancel && typeof(options.onClickCancel) == 'function')
-				options.onClickCancel(oPPopup);
+        var oBtnCancel = oPPopup.find('.popup_prompt_cancel');
+        if(options.params.cancel.title != undefined && options.params.cancel.title.length > 0) {
+            sDefBtnCancelTitle = oBtnCancel.html();
+            oBtnCancel.html(options.params.cancel.title);
+        }
+        
+    	oBtnOk.bind('click', function() {
+            if(options.onClickOk && typeof(options.onClickOk) == 'function')
+                options.onClickOk(oPPopup);
 
-			oPPopup.dolPopupHide();
-		});
+            oPPopup.dolPopupHide();
+        });
 
-		var fOnHide = options.onHide;
-		options.onHide = function(oPopup) {
-			if(typeof(fOnHide) == 'function')
-				fOnHide(oPPopup);
+        oBtnCancel.bind('click', function() {
+            if(options.onClickCancel && typeof(options.onClickCancel) == 'function')
+                options.onClickCancel(oPPopup);
 
-			oPPopup.setValue('');
-			oPPopup.find('.bx-btn').unbind('click');
-		};
+            oPPopup.dolPopupHide();
+        });
 
-		oPPopup.dolPopup(options);
+        var fOnHide = options.onHide;
+        options.onHide = function(oPopup) {
+            if(typeof(fOnHide) == 'function')
+                fOnHide(oPPopup);
+
+            
+            /**
+             * Restore default functions and layout 
+             * if the last one was customized.
+             */
+            oPPopup.find('.bx-btn').unbind('click');
+            if(sDefMessage.length > 0)
+                oMessage.html(sDefMessage);
+            if(sDefValue.length > 0)
+                oPPopup.setValue(sDefValue);
+            else
+                oPPopup.setValue('');
+            if(sDefBtnOkTitle.length > 0)
+                oBtnOk.html(sDefBtnOkTitle);
+            if(sDefBtnCancelTitle.length > 0)
+                oBtnCancel.html(sDefBtnCancelTitle);
+        };
+
+        oPPopup.dolPopup(options);
     };
 
     $.fn._dolPopupSetPosition = function(options) {

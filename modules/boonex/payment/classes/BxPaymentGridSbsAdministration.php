@@ -77,7 +77,11 @@ class BxPaymentGridSbsAdministration extends BxBaseModPaymentGridOrders
     {
         parent::_addJsCss();
 
-        $this->_oTemplate->addJsTranslation('_bx_payment_msg_confirm_cancelation');
+        $this->_oTemplate->addJsTranslation(array(
+            '_bx_payment_msg_confirm_cancelation',
+            '_bx_payment_txt_unsubscribe_yes',
+            '_bx_payment_txt_unsubscribe_no'
+        ));
     }
 }
 

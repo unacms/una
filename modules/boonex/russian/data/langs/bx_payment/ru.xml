@@ -253,7 +253,9 @@
 	<string name="_bx_payment_txt_none"><![CDATA[нет]]></string>
 	<string name="_bx_payment_txt_name_manual"><![CDATA[Вручную]]></string>
 	<string name="_bx_payment_txt_yes"><![CDATA[Да]]></string>
-    <string name="_bx_payment_txt_no"><![CDATA[Нет]]></string>
+        <string name="_bx_payment_txt_no"><![CDATA[Нет]]></string>
+        <string name="_bx_payment_txt_unsubscribe_yes"><![CDATA[Отменить автоматически]]></string>
+        <string name="_bx_payment_txt_unsubscribe_no"><![CDATA[Не отменять]]></string>
 
 	<!-- PayPal payment provider -->
 	<string name="_bx_payment_pp_cpt"><![CDATA[PayPal]]></string>
