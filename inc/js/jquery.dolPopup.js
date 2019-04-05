@@ -567,7 +567,7 @@
 
     $.fn.dolPopupAlert = function(options) {
     	var oAPopup = $('#bx-popup-alert');
-        var sDefMessage, sDefBtnOkTitle;
+        var sDefMessage = '', sDefBtnOkTitle = '';
 
         var oMessage = null;
     	if(options.message != undefined && options.message.length > 0) {
@@ -578,7 +578,7 @@
         }
 
         var oBtnOk = oAPopup.find('.popup_alert_ok');
-        if(options.params.ok.title != undefined && options.params.ok.title.length > 0) {
+        if(options.params != undefined && options.params.ok != undefined && options.params.ok.title != undefined && options.params.ok.title.length > 0) {
             sDefBtnOkTitle = oBtnOk.html();
             oBtnOk.html(options.params.ok.title);
         }
@@ -602,8 +602,8 @@
             oAPopup.find('.bx-btn').unbind('click');
             if(sDefMessage.length > 0)
                 oMessage.html(sDefMessage);
-            if(sDefBtnYesTitle.length > 0)
-                oBtnYes.html(sDefBtnYesTitle);
+            if(sDefBtnOkTitle.length > 0)
+                oBtnOk.html(sDefBtnOkTitle);
         };
 
         oAPopup.dolPopup(options);
@@ -611,7 +611,7 @@
 
     $.fn.dolPopupConfirm = function(options) {
     	var oCPopup = $('#bx-popup-confirm');
-        var sDefMessage, sDefBtnYesTitle, sDefBtnNoTitle;
+        var sDefMessage = '', sDefBtnYesTitle = '', sDefBtnNoTitle = '';
 
         var oMessage = null;
     	if(options.message != undefined && options.message.length > 0) {
@@ -621,14 +621,15 @@
             oMessage.html(options.message);
         }
 
+        var bParams = options.params != undefined;
         var oBtnYes = oCPopup.find('.popup_confirm_yes');
-        if(options.params.yes.title != undefined && options.params.yes.title.length > 0) {
+        if(bParams && options.params.yes != undefined && options.params.yes.title != undefined && options.params.yes.title.length > 0) {
             sDefBtnYesTitle = oBtnYes.html();
             oBtnYes.html(options.params.yes.title);
         }
 
         var oBtnNo = oCPopup.find('.popup_confirm_no');
-        if(options.params.no.title != undefined && options.params.no.title.length > 0) {
+        if(bParams && options.params.no != undefined && options.params.no.title != undefined && options.params.no.title.length > 0) {
             sDefBtnNoTitle = oBtnNo.html();
             oBtnNo.html(options.params.no.title);
         }
@@ -674,7 +675,7 @@
 
     $.fn.dolPopupPrompt = function(options) {
     	var oPPopup = $('#bx-popup-prompt');
-        var sDefMessage, sDefValue, sDefBtnOkTitle, sDefBtnCancelTitle;
+        var sDefMessage = '', sDefValue = '', sDefBtnOkTitle = '', sDefBtnCancelTitle = '';
 
     	oPPopup.setValue = function(mixedValue) {
             return oPPopup.find('[name="bx-popup-prompt-value"]').val(mixedValue);
@@ -697,14 +698,15 @@
             oPPopup.setValue(options.value);
         }
 
+        var bParams = options.params != undefined;
         var oBtnOk = oPPopup.find('.popup_prompt_ok');
-        if(options.params.ok.title != undefined && options.params.ok.title.length > 0) {
+        if(bParams && options.params.ok != undefined && options.params.ok.title != undefined && options.params.ok.title.length > 0) {
             sDefBtnOkTitle = oBtnOk.html();
             oBtnOk.html(options.params.ok.title);
         }
 
         var oBtnCancel = oPPopup.find('.popup_prompt_cancel');
-        if(options.params.cancel.title != undefined && options.params.cancel.title.length > 0) {
+        if(bParams && options.params.cancel != undefined && options.params.cancel.title != undefined && options.params.cancel.title.length > 0) {
             sDefBtnCancelTitle = oBtnCancel.html();
             oBtnCancel.html(options.params.cancel.title);
         }
