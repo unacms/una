@@ -1001,6 +1001,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $CNF = &$this->_oConfig->CNF;
 
         $oModule = $this->getModule();
+        if(!empty($aEvent['views']) && is_array($aEvent['views']) && isset($aEvent['views']['system']))
+            $oModule->getViewObject($aEvent['views']['system'], $aEvent['views']['object_id'])->doView();
+
         $sStylePrefix = $this->_oConfig->getPrefix('style');
         $sJsObject = $this->_oConfig->getJsObjectView($aBrowseParams);
 
