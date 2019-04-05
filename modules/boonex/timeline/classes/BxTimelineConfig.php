@@ -18,6 +18,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_bAllowEdit;
     protected $_bAllowDelete;
     protected $_bShowAll;
+    protected $_bCountAllViews;
 
     protected $_iRssLength;
     protected $_iLiveUpdateLength;
@@ -246,6 +247,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     	$this->_bAllowEdit = getParam($sOptionPrefix . 'enable_edit') == 'on';
         $this->_bAllowDelete = getParam($sOptionPrefix . 'enable_delete') == 'on';
         $this->_bShowAll = getParam($sOptionPrefix . 'enable_show_all') == 'on';
+        $this->_bCountAllViews = getParam($sOptionPrefix . 'enable_count_all_views') == 'on';
 
         $this->_aPerPage = array(
             'default' => (int)getParam($sOptionPrefix . 'events_per_page'),
@@ -323,6 +325,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function isShowAll()
     {
         return $this->_bShowAll;
+    }
+
+    public function isCountAllViews()
+    {
+        return $this->_bCountAllViews;
     }
 
     public function isHot()

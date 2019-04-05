@@ -1001,14 +1001,17 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $CNF = &$this->_oConfig->CNF;
 
         $oModule = $this->getModule();
-        if(!empty($aEvent['views']) && is_array($aEvent['views']) && isset($aEvent['views']['system']))
-            $oModule->getViewObject($aEvent['views']['system'], $aEvent['views']['object_id'])->doView();
-
         $sStylePrefix = $this->_oConfig->getPrefix('style');
         $sJsObject = $this->_oConfig->getJsObjectView($aBrowseParams);
 
+        $bViewItem = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_ITEM;
+        $bViewOutline = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_OUTLINE;
+
         list($sAuthorName, $sAuthorUrl, $sAuthorIcon, $sAuthorUnit, $sAuthorUnitShort) = $oModule->getUserInfo($aEvent['object_owner_id']);
         $bAuthorIcon = !empty($sAuthorIcon);
+
+        if(($bViewItem || $this->_oConfig->isCountAllViews()) && !empty($aEvent['views']) && is_array($aEvent['views']) && isset($aEvent['views']['system']))
+            $oModule->getViewObject($aEvent['views']['system'], $aEvent['views']['object_id'])->doView();
 
         $aTmplVarsNote = $this->_getTmplVarsNote($aEvent);
         $aTmplVarsMenuItemActions = $this->_getTmplVarsMenuItemActions($aEvent, $aBrowseParams);
@@ -1018,9 +1021,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $bTmplVarsOwnerActions = !empty($aTmplVarsOwnerActions); 
 
         $aTmplVarsTimelineOwner = $this->_getTmplVarsTimelineOwner($aEvent);
-
-        $bViewItem = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_ITEM;
-        $bViewOutline = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_OUTLINE;
 
         $bPinned = (int)$aEvent['pinned'] > 0;
         $bSticked = (int)$aEvent['sticked'] > 0;

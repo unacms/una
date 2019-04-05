@@ -164,6 +164,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_timeline_enable_edit', 'on', @iCategId, '_bx_timeline_option_enable_edit', 'checkbox', '', '', '', '', 0),
 ('bx_timeline_enable_delete', 'on', @iCategId, '_bx_timeline_option_enable_delete', 'checkbox', '', '', '', '', 1),
 ('bx_timeline_enable_show_all', '', @iCategId, '_bx_timeline_option_enable_show_all', 'checkbox', '', '', '', '', 5),
+('bx_timeline_enable_count_all_views', '', @iCategId, '_bx_timeline_option_enable_count_all_views', 'checkbox', '', '', '', '', 6),
 ('bx_timeline_events_per_page_profile', '12', @iCategId, '_bx_timeline_option_events_per_page_profile', 'digit', '', '', '', '', 10),
 ('bx_timeline_events_per_page_account', '12', @iCategId, '_bx_timeline_option_events_per_page_account', 'digit', '', '', '', '', 11),
 ('bx_timeline_events_per_page_home', '24', @iCategId, '_bx_timeline_option_events_per_page_home', 'digit', '', '', '', '', 12),
