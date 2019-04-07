@@ -32,7 +32,7 @@ class BxSMTPModule extends BxDolModule
                 $mail->IsSMTP();
             // $mail->SMTPDebug = 2;
 
-            $mail->CharSet = 'utf8';
+            $mail->CharSet = 'UTF-8';
 
             // smtp server auth or not
             $mail->SMTPAuth = 'on' == getParam('bx_smtp_auth') ? true : false;
