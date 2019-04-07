@@ -23,97 +23,101 @@ class BxSMTPModule extends BxDolModule
     function serviceSend ($sRecipientEmail, $sMailSubject, $sMailBody, $sMailHeader, $sMailParameters, $isHtml, $aRecipientInfo = array(), $aCustomHeaders = array())
     {
         $iRet = true;
+        $sErrorMessage = '';
 
         if ($sRecipientEmail) {
 
-            $mail = new PHPMailer\PHPMailer\PHPMailer(true);
-
-            if ('on' == getParam('bx_smtp_on'))
-                $mail->IsSMTP();
-            // $mail->SMTPDebug = 2;
-
-            $mail->CharSet = 'UTF-8';
-
-            // smtp server auth or not
-            $mail->SMTPAuth = 'on' == getParam('bx_smtp_auth') ? true : false;
-
-            // from settings, smtp server secure ssl/tls
-            $sParamSecure = getParam('bx_smtp_secure');
-            if ('SSL' == $sParamSecure || 'TLS' == $sParamSecure) {
-
-                $mail->SMTPSecure = strtolower($sParamSecure);
-
-                if ('on' == getParam('bx_smtp_allow_selfsigned')) {
-                    $mail->SMTPOptions = array(
-                        'ssl' => array(
-                            'verify_peer' => false,
-                            'verify_peer_name' => false,
-                            'allow_self_signed' => true
-                        )
-                    );
-                }
-            }
-
-            // from settings, smtp server
-            $sParamHost = getParam('bx_smtp_host');
-            if ($sParamHost)
-                $mail->Host = $sParamHost;
-
-            // smtp port 25, 465
-            $sParamPort = getParam('bx_smtp_port');
-            if ((int)$sParamPort > 0)
-                $mail->Port = $sParamPort;
-
-            // from settings, username and passord of smtp server
-            $mail->Username = getParam ('bx_smtp_username');
-            $mail->Password = getParam ('bx_smtp_password');
-
-            if (!isset($aCustomHeaders['From'])) {
-                $sParamSender = trim(getParam('bx_smtp_from_email'));
-                if ($sParamSender)
-                    $mail->From = $sParamSender;
-                else
-                    $mail->From = getParam('site_email_notify');
-
-                // get site name or some other name as sender's name
-                $mail->FromName = getParam ('bx_smtp_from_name');
-            } 
-
-            if (!isset($aCustomHeaders['Subject']))
-                $mail->Subject = $sMailSubject;
-
-            if ($isHtml) {
-                $mail->Body = $sMailBody;
-                $mail->AltBody = $isHtml ? strip_tags($sMailBody) : $sMailBody;
-            } else {
-                $mail->Body = $sMailBody;
-            }
-
-            $mail->WordWrap = 50; // set word wrap
-
-            $mail->AddAddress($sRecipientEmail);
-
-            $mail->IsHTML($isHtml ? true : false);
-
-            foreach ($aCustomHeaders as $sHeaderName => $sHeaderValue) {
-                if ('From' == $sHeaderName) {
-                    if (preg_match('/(.+)<(.+)>/', $sHeaderValue, $m)) {
-                        $mail->setFrom($m[2], trim($m[1]), false);
-                    }
-                    else {
-                        $mail->setFrom($sHeaderValue, '', false);
-                    }
-                } 
-                else {
-                    $mail->addCustomHeader($sHeaderName, $sHeaderValue);
-                }
-            }
-
             try {
+
+                $mail = new PHPMailer\PHPMailer\PHPMailer(true);
+
+                if ('on' == getParam('bx_smtp_on'))
+                    $mail->IsSMTP();
+                // $mail->SMTPDebug = 2;
+
+                $mail->CharSet = 'UTF-8';
+
+                // smtp server auth or not
+                $mail->SMTPAuth = 'on' == getParam('bx_smtp_auth') ? true : false;
+
+                // from settings, smtp server secure ssl/tls
+                $sParamSecure = getParam('bx_smtp_secure');
+                if ('SSL' == $sParamSecure || 'TLS' == $sParamSecure) {
+
+                    $mail->SMTPSecure = strtolower($sParamSecure);
+
+                    if ('on' == getParam('bx_smtp_allow_selfsigned')) {
+                        $mail->SMTPOptions = array(
+                            'ssl' => array(
+                                'verify_peer' => false,
+                                'verify_peer_name' => false,
+                                'allow_self_signed' => true
+                            )
+                        );
+                    }
+                }
+
+                // from settings, smtp server
+                $sParamHost = getParam('bx_smtp_host');
+                if ($sParamHost)
+                    $mail->Host = $sParamHost;
+
+                // smtp port 25, 465
+                $sParamPort = getParam('bx_smtp_port');
+                if ((int)$sParamPort > 0)
+                    $mail->Port = $sParamPort;
+
+                // from settings, username and passord of smtp server
+                $mail->Username = getParam ('bx_smtp_username');
+                $mail->Password = getParam ('bx_smtp_password');
+
+                if (!isset($aCustomHeaders['From'])) {
+                    $sParamSender = trim(getParam('bx_smtp_from_email'));
+                    if ($sParamSender)
+                        $mail->From = $sParamSender;
+                    else
+                        $mail->From = getParam('site_email_notify');
+
+                    // get site name or some other name as sender's name
+                    $mail->FromName = getParam ('bx_smtp_from_name');
+                } 
+
+                if (!isset($aCustomHeaders['Subject']))
+                    $mail->Subject = $sMailSubject;
+
+                if ($isHtml) {
+                    $mail->Body = $sMailBody;
+                    $mail->AltBody = $isHtml ? strip_tags($sMailBody) : $sMailBody;
+                } else {
+                    $mail->Body = $sMailBody;
+                }
+
+                $mail->WordWrap = 50; // set word wrap
+
+                $mail->AddAddress($sRecipientEmail);
+
+                $mail->IsHTML($isHtml ? true : false);
+
+                foreach ($aCustomHeaders as $sHeaderName => $sHeaderValue) {
+                    if ('From' == $sHeaderName) {
+                        if (preg_match('/(.+)<(.+)>/', $sHeaderValue, $m)) {
+                            $mail->setFrom($m[2], trim($m[1]), false);
+                        }
+                        else {
+                            $mail->setFrom($sHeaderValue, '', false);
+                        }
+                    } 
+                    else {
+                        $mail->addCustomHeader($sHeaderName, $sHeaderValue);
+                    }
+                }
+
                 $mail->Send();
+                
             } catch (PHPMailer\PHPMailer\Exception $e) {
                 $iRet = false;
-                $this->log("Mailer Error ($sRecipientEmail): " . $e->getMessage());
+                $sErrorMessage = $e->getMessage();
+                $this->log("Mailer Error ($sRecipientEmail): " . $sErrorMessage);
             }
         }
 
@@ -126,6 +130,8 @@ class BxSMTPModule extends BxDolModule
             'params'    => $sMailParameters,
             'recipient' => $aRecipientInfo,
             'html'      => $isHtml,
+            'ret'       => $iRet,
+            'error_message' => $sErrorMessage,
         );
         bx_alert('profile', 'send_mail', $aRecipientInfo && isset($aRecipientInfo['ID']) ? $aRecipientInfo['ID'] : 0, '', $aAlertData);
         //--- create system event [ end ]
