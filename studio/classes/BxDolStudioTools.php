@@ -58,7 +58,7 @@ class BxDolStudioTools extends BxDolIO
         $sRet = <<<EOF
 <style type="text/css">
 
-    .hidden {
+    .bx-adm-hidden {
         display:none;
     }
 
@@ -175,12 +175,12 @@ EOF;
 </script>
 
 <div class="boxContent" id="adm_pages">
-    <div id="page0" class="visible">{$sAuditTab}</div>
-    <div id="page1" class="hidden">{$sPermissionsTab}</div>
-    <div id="page2" class="hidden">
+    <div id="page0" class="bx-adm-visible">{$sAuditTab}</div>
+    <div id="page1" class="bx-adm-hidden">{$sPermissionsTab}</div>
+    <div id="page2" class="bx-adm-hidden">
         <iframe frameborder="0" width="100%" height="800" scrolling="auto" src="host_tools.php?get_phpinfo=true"></iframe>
     </div>
-    <div id="page3" class="hidden">{$sCacheEnginesTab}</div>
+    <div id="page3" class="bx-adm-hidden">{$sCacheEnginesTab}</div>
 </div>
 EOF;
 
