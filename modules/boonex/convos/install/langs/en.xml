@@ -130,5 +130,7 @@
 <p>New reply in <a href="{PageUrl}">{PageTitle}</a> conversation from <a href="{SenderUrl}">{SenderDisplayName}</a>:</p>
 <hr />
 <p>{Message}</p>
+<hr />
+Don't reply to this email, to reply to the sender please go to <a href="{PageUrl}">conversation page</a>.
 {email_footer}]]></string>
 </resources>

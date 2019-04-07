@@ -130,5 +130,7 @@
 <p>Новый ответ в <a href="{PageUrl}">{PageTitle}</a> переписке от <a href="{SenderUrl}">{SenderDisplayName}</a>:</p>
 <hr />
 <p>{Message}</p>
+<hr />
+Не отвечайте на это письмо через email, чтобы ответить отправителю, нужно зайти на <a href="{PageUrl}">страницу с перепиской</a> и ответить там.
 {email_footer}]]></string>
 </resources>
