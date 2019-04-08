@@ -146,7 +146,7 @@ class BxSMTPModule extends BxDolModule
 
             $isHTML = bx_get('html') == 'on' ? true : false;
             $sRecipient = bx_process_pass(bx_get('recipient'));
-            $sSubj = bx_process_pass(bx_get('subject'));
+            $sSubj = bx_get('subject');
             $sBody = bx_process_pass(bx_get('body'), $isHTML ? BX_DATA_HTML : BX_DATA_TEXT);
 
             if (sendMail($sRecipient, $sSubj, $sBody, 0, array(), BX_EMAIL_SYSTEM, $isHTML ? 'html' : ''))
