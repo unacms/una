@@ -1961,6 +1961,7 @@
 	<string name="_sys_form_confirm_phone"><![CDATA[Подтверждение телефона]]></string>
 	<string name="_sys_form_confirm_phone_input_caption_system_phone"><![CDATA[Телефон]]></string>
 	<string name="_sys_form_confirm_phone_input_phone"><![CDATA[Телефон]]></string>
+  <string name="_sys_form_confirm_phone_input_phone_info"><![CDATA[Введите телефон с кодом страны]]></string>
 	<string name="_sys_form_confirm_phone_input_phone_error_format"><![CDATA[Телефон должен содержать только цифры и начинаться с '+']]></string>
 	<string name="_sys_form_confirm_phone_input_phone_error_not_unique"><![CDATA[Этот телефон уже кем-то используется]]></string>
 	<string name="_sys_form_confirm_phone_input_caption_system_code"><![CDATA[Код]]></string>
@@ -2036,6 +2037,7 @@
 	<string name="_sys_form_login_input_email"><![CDATA[Имейл]]></string>
 	<string name="_sys_form_login_input_password"><![CDATA[Пароль]]></string>
 	<string name="_sys_form_login_input_phone"><![CDATA[Телефон]]></string>
+  <string name="_sys_form_login_input_phone_info"><![CDATA[Введите телефон с кодом страны]]></string>
 	<string name="_sys_form_login_input_remember_me"><![CDATA[Запомнить меня]]></string>
 	<string name="_sys_form_login_input_sendsms"><![CDATA[Отправить SMS]]></string>
 	<string name="_sys_form_login_input_submit"><![CDATA[Вход]]></string>

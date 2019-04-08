@@ -1961,8 +1961,10 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_confirm_phone"><![CDATA[Phone Confirmation]]></string>
 	<string name="_sys_form_confirm_phone_input_caption_system_phone"><![CDATA[Phone]]></string>
 	<string name="_sys_form_confirm_phone_input_phone"><![CDATA[Phone]]></string>
+  <string name="_sys_form_confirm_phone_input_phone_info"><![CDATA[Enter your phone with country code]]></string>
 	<string name="_sys_form_confirm_phone_input_phone_error_format"><![CDATA[Wrong phone number, allowed digits only and start from '+']]></string>
 	<string name="_sys_form_confirm_phone_input_phone_error_not_unique"><![CDATA[This phone is already used by someone.]]></string>
+  
 	<string name="_sys_form_confirm_phone_input_caption_system_code"><![CDATA[Code]]></string>
 	<string name="_sys_form_confirm_phone_confirmation_input_code"><![CDATA[Code]]></string>
 	<string name="_sys_form_confirm_phone_input_submit"><![CDATA[Submit]]></string>
@@ -2037,6 +2039,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_login_input_email"><![CDATA[Email]]></string>
 	<string name="_sys_form_login_input_password"><![CDATA[Password]]></string>
 	<string name="_sys_form_login_input_phone"><![CDATA[Phone]]></string>
+  <string name="_sys_form_login_input_phone_info"><![CDATA[Enter your phone with country code]]></string>
 	<string name="_sys_form_login_input_remember_me"><![CDATA[Remember me]]></string>
 	<string name="_sys_form_login_input_sendsms"><![CDATA[Send SMS]]></string>
 	<string name="_sys_form_login_input_submit"><![CDATA[Log in]]></string>
