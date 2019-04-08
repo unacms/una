@@ -47,7 +47,8 @@ class BxDolPreloader extends BxDolFactory implements iBxDolSingleton
             $this->_aTypes[$sType] = 'add' . bx_gen_method_name($sType);
 
         $this->_aMarkers = array(
-            'dir_plugins_public' => BX_DIRECTORY_PATH_PLUGINS_PUBLIC
+            'dir_plugins_public' => BX_DIRECTORY_PATH_PLUGINS_PUBLIC,
+            'dir_plugins_modules' => BX_DIRECTORY_PATH_MODULES,
         );
     }
 

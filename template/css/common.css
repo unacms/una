@@ -37,6 +37,7 @@ blockquote {
     padding-left: 10px;
 }
 
+.bx-base-text-entity-content pre,
 .bx-content-description pre,
 .cmt-body pre {
     /* NOTE: this style was copied to editor.css */
