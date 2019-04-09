@@ -432,11 +432,11 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
                 $sInclude .= $this->_oTemplate->addJs(array('polls.js'), $bDynamic);
                 $sInclude .= $this->_oTemplate->addCss(array('polls.css'), $bDynamic);
 
-                $aResult['raw'] = ($bDynamic ? $sInclude : '') . $this->_oTemplate->parseHtmlByName('poll_items_showcase.html', array(
+                $aResult['raw'] = ($bDynamic ? $sInclude : '') . $this->_oTemplate->getJsCode('poll') . $this->_oTemplate->parseHtmlByName('poll_items_showcase.html', array(
                     'js_object' => $this->_oConfig->getJsObject('poll'),
                     'html_id' => $this->_oConfig->getHtmlIds('polls_showcase') . $aEvent['id'],
                     'polls' => $sPolls
-                )) . $this->_oTemplate->getJsCode('poll');
+                ));
             }
         }
 
