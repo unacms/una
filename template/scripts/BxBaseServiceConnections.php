@@ -310,8 +310,8 @@ class BxBaseServiceConnections extends BxDol
             return;
 
         $oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
-        $oConnection->addConnection((int)$oAlert->aExtras['initiator'], (int)$oAlert->aExtras['content']);
-        $oConnection->addConnection((int)$oAlert->aExtras['content'], (int)$oAlert->aExtras['initiator']);
+        $oConnection->addConnection((int)$oAlert->aExtras['initiator'], (int)$oAlert->aExtras['content'], array('alert_extras' => array('silent_mode' => 1)));
+        $oConnection->addConnection((int)$oAlert->aExtras['content'], (int)$oAlert->aExtras['initiator'], array('alert_extras' => array('silent_mode' => 1)));
     }
 
     protected function processSysProfilesFriendsConnectionRemoved(&$oAlert)
