@@ -454,7 +454,7 @@ class BxBaseServiceAccount extends BxDol
      */
     protected function generateUserNewPwd($iAccountId)
     {
-        $sPwd = genRndPwd();
+        $sPwd = genRndPwd(8, false);
         $sSalt = genRndSalt();
         $sPasswordHash = encryptUserPwd($sPwd, $sSalt);
 

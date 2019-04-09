@@ -16,6 +16,23 @@ class BxFroalaModule extends BxDolModule
         parent::__construct($aModule);
     }
 
+    public function serviceInjection()
+    {
+        return "
+        <script>
+            var fFroalaAddClass = function (s) {
+                $('.bx-content-description,.cmt-body,.bx-base-text-entity-content').addClass('fr-view');
+            };
+            
+            if (typeof glOnProcessHtml === 'undefined')
+                glOnProcessHtml = [];
+            if (glOnProcessHtml instanceof Array)
+                glOnProcessHtml.push(fFroalaAddClass);
+
+            fFroalaAddClass();
+        </script>";
+    }
+
     public function actionUpload()
     {
         header('Content-Type: application/json; charset=utf-8');

@@ -23,13 +23,13 @@ INSERT INTO `sys_objects_editor` (`object`, `title`, `skin`, `override_class_nam
 
 UPDATE `sys_options` SET `value` = 'bx_froala' WHERE `name` = 'sys_editor_default';
 
+-- Injections
 
--- Alerts
+INSERT INTO `sys_injections` (`name`, `page_index`, `key`, `type`, `data`, `replace`, `active`) VALUES
+('bx_froala', 0, 'injection_footer', 'service', 'a:2:{s:6:"module";s:9:"bx_froala";s:6:"method";s:9:"injection";}', 0, 1);
 
-INSERT INTO `sys_alerts_handlers` SET `name` = 'bx_froala', `class` = 'BxFroalaAlerts', `file` = 'modules/boonex/froala/classes/BxFroalaAlerts.php';
+-- Preloader
 
-SET @iHandlerId := (SELECT `id` FROM `sys_alerts_handlers`  WHERE `name` = 'bx_froala');
-
-INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
-('system', 'save_setting', @iHandlerId);
-
+SET @iMaxOrder = (SELECT `order` FROM `sys_preloader` WHERE `type` = 'css_system' ORDER BY `order` DESC LIMIT 1);
+INSERT INTO `sys_preloader`(`module`, `type`, `content`, `active`, `order`) VALUES
+('bx_froala', 'css_system', '{dir_plugins_modules}boonex/froala/plugins/froala/css/|froala_style.min.css',  '1',  @iMaxOrder + 1);

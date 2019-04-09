@@ -219,8 +219,8 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         }
 
         if (!empty($CNF['OBJECT_METATAGS'])) {
-            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
-            $oMetatags->onDeleteContent($iContentId);
+            $o = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+            if ($o) $o->onDeleteContent($iContentId);
         }
 
         // delete db record

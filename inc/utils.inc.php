@@ -390,7 +390,8 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
 
     $sMailParameters = isset($aCustomHeaders['Sender']) ? "-f{$aCustomHeaders['Sender']}" : "-f{$sEmailNotify}";
 
-    $sMailSubject = !isset($aCustomHeaders['Subject']) ? '=?UTF-8?B?' . base64_encode( $sMailSubject ) . '?=' : $aCustomHeaders['Subject'];
+    if (isset($aCustomHeaders['Subject']))
+        $sMailSubject = $aCustomHeaders['Subject'];
 
     // build data for alert handler
     $bResult = null;
@@ -421,6 +422,10 @@ function sendMail($sRecipientEmail, $sMailSubject, $sMailBody, $iRecipientID = 0
         $sMailHeader = "Content-type: text/plain; charset=UTF-8\r\n" . $sMailHeader;
         $sMailBody = html2txt($sMailBody);
     }
+
+    // encode subject
+    if (0 !== strncasecmp($sMailSubject, '=?UTF-8?B?', 10))
+        $sMailSubject = '=?UTF-8?B?' . base64_encode($sMailSubject) . '?=';
 
     // send mail or put it into queue
     $bResult = mail($sRecipientEmail, $sMailSubject, $sMailBody, $sMailHeader, $sMailParameters);

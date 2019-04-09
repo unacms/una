@@ -46,7 +46,7 @@ class BxDolStudioToolsAudit extends BxDol
             BX_DOL_AUDIT_OK => _t('_sys_audit_title_ok'),
         );
 
-        $this->sMinPhpVer = '5.5.10';
+        $this->sMinPhpVer = '5.6.0';
         $this->aPhpSettings = array (
             'allow_url_fopen' => array('op' => '=', 'val' => true, 'type' => 'bool'),
             'allow_url_include' => array('op' => '=', 'val' => false, 'type' => 'bool'),
@@ -57,7 +57,7 @@ class BxDolStudioToolsAudit extends BxDol
             'register_globals' => array('op' => '=', 'val' => false, 'type' => 'bool'),
             'safe_mode' => array('op' => '=', 'val' => false, 'type' => 'bool'),
             'short_open_tag' => array('op' => '=', 'val' => true, 'type' => 'bool'),
-            'disable_functions' => array('op' => 'without', 'val' => 'shell_exec,eval,assert,phpinfo,getenv,ini_set,mail,fsockopen,chmod,parse_ini_file'),
+            'disable_functions' => array('op' => 'without', 'val' => 'shell_exec,eval,assert,phpinfo,getenv,ini_set,mail,fsockopen,chmod,parse_ini_file,readfile'),
             'php module: curl' => array('op' => 'module', 'val' => 'curl'),
             'php module: gd' => array('op' => 'module', 'val' => 'gd'),
             'php module: mbstring' => array('op' => 'module', 'val' => 'mbstring'),

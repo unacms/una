@@ -47,7 +47,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
         $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_TRANSCODER_BROWSE']);
 
         $aBrowseUnits = array ();
-        $aMediaList = $oModule->_oDb->getMediaListByContentId($aData[$CNF['FIELD_ID']]);
+        $aMediaList = $oModule->_oDb->getMediaListByContentId($aData[$CNF['FIELD_ID']], getParam('bx_albums_album_browsing_unit'));
         foreach ($aMediaList as $k => $a) {
             $aBrowseUnits[] = array (
                 'img_url' => $oTranscoder->getFileUrl($a['file_id']),

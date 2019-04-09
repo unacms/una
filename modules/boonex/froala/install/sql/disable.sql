@@ -9,9 +9,10 @@ DELETE FROM `sys_objects_editor` WHERE `object` = 'bx_froala';
 
 UPDATE `sys_options` SET `value` = 'sys_tinymce' WHERE `name` = 'sys_editor_default';
 
--- Alerts
+-- Injections
 
-SET @iHandlerId := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = 'bx_froala');
+DELETE FROM `sys_injections` WHERE `name` IN('bx_froala');
 
-DELETE FROM `sys_alerts_handlers` WHERE `id`  = @iHandlerId;
-DELETE FROM `sys_alerts` WHERE `handler_id` =  @iHandlerId ;
+-- Preloader
+
+DELETE FROM `sys_preloader` WHERE `module` = 'bx_froala';

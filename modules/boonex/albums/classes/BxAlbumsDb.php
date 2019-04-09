@@ -73,10 +73,17 @@ class BxAlbumsDb extends BxBaseModTextDb
         return $this->getOne($sQuery);
     }
 
-    public function getMediaListByContentId($iContentId)
+    public function getMediaListByContentId($iContentId, $iLimit = false)
     {
-        $sQuery = $this->prepare ("SELECT * FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` WHERE `content_id` = ? ORDER BY `order`", $iContentId);
-        return $this->getAll($sQuery);
+        $sLimitQuery = '';
+        $aBindings = array('id' => $iContentId);
+        if ((int)$iLimit) {
+            $sLimitQuery = ' LIMIT :limit';
+            $aBindings = array_merge($aBindings, array('limit' => (int)$iLimit));
+        }
+            
+        $sQuery = "SELECT * FROM `" . $this->_oConfig->CNF['TABLE_FILES2ENTRIES'] . "` WHERE `content_id` = :id ORDER BY `order`" . $sLimitQuery;
+        return $this->getAll($sQuery, $aBindings);
     }
 
     function getMediaBy($aParams = array())

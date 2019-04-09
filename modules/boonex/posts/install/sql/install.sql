@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `bx_posts_posts` (
   `thumb` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `cat` int(11) NOT NULL,
-  `text` text NOT NULL,
+  `text` mediumtext NOT NULL,
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',
