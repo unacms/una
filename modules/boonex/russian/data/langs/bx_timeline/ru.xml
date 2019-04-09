@@ -22,6 +22,7 @@
     <string name="_bx_timeline_option_enable_hot"><![CDATA[Включить сбор данных для листа 'горячих' сообщений]]></string>
     <string name="_bx_timeline_option_hot_interval"><![CDATA[Интервал времени (в часах) для получения 'горячих' сообщений]]></string>
     <string name="_bx_timeline_option_enable_cache_item"><![CDATA[Включить кэш элемента]]></string>
+    <string name="_bx_timeline_option_cache_item_engine"><![CDATA[Механизм кэширования элемента (отличный от FileHtml может потребовать дополнительную настройку сервера)]]></string>
     <string name="_bx_timeline_option_cache_item_lifetime"><![CDATA[Время жизни кэша элемента]]></string>
     <string name="_bx_timeline_option_enable_cache_list"><![CDATA[Включить кэш хроники]]></string>
     <string name="_bx_timeline_option_enable_editor_toolbar"><![CDATA[Включить панель инструментов в форме создания сообщения]]></string>

@@ -21,6 +21,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_bCountAllViews;
 
     protected $_bCacheItem;
+    protected $_sCacheItemEngine;
     protected $_iCacheItemLifetime;
     protected $_bCacheList;
 
@@ -255,6 +256,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_bCountAllViews = getParam($sOptionPrefix . 'enable_count_all_views') == 'on';
 
         $this->_bCacheItem = getParam($sOptionPrefix . 'enable_cache_item') == 'on';
+        $this->_sCacheItemEngine = getParam($sOptionPrefix . 'cache_item_engine');
         $this->_iCacheItemLifetime = (int)getParam($sOptionPrefix . 'cache_item_lifetime');
         $this->_bCacheList = getParam($sOptionPrefix . 'enable_cache_list') == 'on';
 
@@ -364,6 +366,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function isCacheList()
     {
         return $this->_bCacheList;
+    }
+
+    public function getCacheItemEngine()
+    {
+        return $this->_sCacheItemEngine;
     }
 
     public function getCacheItemLifetime()

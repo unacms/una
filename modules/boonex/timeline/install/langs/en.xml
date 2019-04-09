@@ -22,6 +22,7 @@
 	<string name="_bx_timeline_option_enable_hot"><![CDATA[Enable Hot list aggregation]]></string>
 	<string name="_bx_timeline_option_hot_interval"><![CDATA[Interval of time (in hours) to get Hot events]]></string>
         <string name="_bx_timeline_option_enable_cache_item"><![CDATA[Enable item cache]]></string>
+        <string name="_bx_timeline_option_cache_item_engine"><![CDATA[Item cache engine (other than File option may require custom server setup)]]></string>
         <string name="_bx_timeline_option_cache_item_lifetime"><![CDATA[Item cache lifetime]]></string>
         <string name="_bx_timeline_option_enable_cache_list"><![CDATA[Enable feed cache]]></string>
 	<string name="_bx_timeline_option_enable_editor_toolbar"><![CDATA[Enable post form editor toolbar]]></string>
