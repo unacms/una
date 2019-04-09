@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
 
-	<string name="_bx_timeline"><![CDATA[Лента]]></string>
-	<string name="_bx_timeline_cmts"><![CDATA[Лента - Комментарии]]></string>
+    <string name="_bx_timeline"><![CDATA[Лента]]></string>
+    <string name="_bx_timeline_cmts"><![CDATA[Лента - Комментарии]]></string>
 
     <string name="_bx_timeline_option_enable_edit"><![CDATA[Разрешить пользователю изменять собственные сообщения]]></string>
-	<string name="_bx_timeline_option_enable_delete"><![CDATA[Разрешить владельцу ленты удалять сообщения]]></string>
-	<string name="_bx_timeline_option_enable_show_all"><![CDATA[Показывать все сообщения в 'Общей хронике', включая те, что были написаны в персональных Хрониках]]></string>
-        <string name="_bx_timeline_option_enable_count_all_views"><![CDATA[Считать просмотры для всех событий в хронике]]></string>
-	<string name="_bx_timeline_option_events_per_page_profile"><![CDATA[Количество элементов на странице профайла]]></string>
-	<string name="_bx_timeline_option_events_per_page_account"><![CDATA[Количество элементов на странице "панель аккаунта"]]></string>
-	<string name="_bx_timeline_option_events_per_page_home"><![CDATA[Количество элементов на главной странице сайта]]></string>
-	<string name="_bx_timeline_option_events_per_page"><![CDATA[Количество элементов на странице]]></string>
-	<string name="_bx_timeline_option_rss_length"><![CDATA[Количество элементов в RSS-ленте]]></string>
-	<string name="_bx_timeline_option_events_hide"><![CDATA[Показывать события]]></string>
+    <string name="_bx_timeline_option_enable_delete"><![CDATA[Разрешить владельцу ленты удалять сообщения]]></string>
+    <string name="_bx_timeline_option_enable_show_all"><![CDATA[Показывать все сообщения в 'Общей хронике', включая те, что были написаны в персональных Хрониках]]></string>
+    <string name="_bx_timeline_option_enable_count_all_views"><![CDATA[Считать просмотры для всех событий в хронике]]></string>
+    <string name="_bx_timeline_option_events_per_page_profile"><![CDATA[Количество элементов на странице профайла]]></string>
+    <string name="_bx_timeline_option_events_per_page_account"><![CDATA[Количество элементов на странице "панель аккаунта"]]></string>
+    <string name="_bx_timeline_option_events_per_page_home"><![CDATA[Количество элементов на главной странице сайта]]></string>
+    <string name="_bx_timeline_option_events_per_page"><![CDATA[Количество элементов на странице]]></string>
+    <string name="_bx_timeline_option_rss_length"><![CDATA[Количество элементов в RSS-ленте]]></string>
+    <string name="_bx_timeline_option_events_hide"><![CDATA[Показывать события]]></string>
     <string name="_bx_timeline_option_videos_autoplay"><![CDATA[Автоматически проигрывать видео ролики (доступно только для Ленты)]]></string>
     <string name="_bx_timeline_option_videos_autoplay_off"><![CDATA[Отключено]]></string>
     <string name="_bx_timeline_option_videos_autoplay_on_mute"><![CDATA[Включено (без звука)]]></string>
@@ -21,6 +21,9 @@
     <string name="_bx_timeline_option_preload_comments"><![CDATA[Количество предварительно загруженных комментариев (до 7 штук)]]></string>
     <string name="_bx_timeline_option_enable_hot"><![CDATA[Включить сбор данных для листа 'горячих' сообщений]]></string>
     <string name="_bx_timeline_option_hot_interval"><![CDATA[Интервал времени (в часах) для получения 'горячих' сообщений]]></string>
+    <string name="_bx_timeline_option_enable_cache_item"><![CDATA[Включить кэш элемента]]></string>
+    <string name="_bx_timeline_option_cache_item_lifetime"><![CDATA[Время жизни кэша элемента]]></string>
+    <string name="_bx_timeline_option_enable_cache_list"><![CDATA[Включить кэш хроники]]></string>
     <string name="_bx_timeline_option_enable_editor_toolbar"><![CDATA[Включить панель инструментов в форме создания сообщения]]></string>
 
 	<string name="_bx_timeline_form_post"><![CDATA[Сообщение]]></string>

@@ -20,6 +20,10 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_bShowAll;
     protected $_bCountAllViews;
 
+    protected $_bCacheItem;
+    protected $_iCacheItemLifetime;
+    protected $_bCacheList;
+
     protected $_iRssLength;
     protected $_iLiveUpdateLength;
     protected $_iCharsDisplayMaxTitle;
@@ -116,7 +120,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'style' => 'bx-tl',
             'language' => '_bx_timeline',
             'option' => 'bx_timeline_',
-            'common_post' => 'timeline_common_'
+            'common_post' => 'timeline_common_',
+            'cache_item' => 'bx_timeline_item_'
         );
 
         $this->_aObjects = array_merge($this->_aObjects, array(
@@ -249,6 +254,10 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_bShowAll = getParam($sOptionPrefix . 'enable_show_all') == 'on';
         $this->_bCountAllViews = getParam($sOptionPrefix . 'enable_count_all_views') == 'on';
 
+        $this->_bCacheItem = getParam($sOptionPrefix . 'enable_cache_item') == 'on';
+        $this->_iCacheItemLifetime = (int)getParam($sOptionPrefix . 'cache_item_lifetime');
+        $this->_bCacheList = getParam($sOptionPrefix . 'enable_cache_list') == 'on';
+
         $this->_aPerPage = array(
             'default' => (int)getParam($sOptionPrefix . 'events_per_page'),
             'profile' => (int)getParam($sOptionPrefix . 'events_per_page_profile'),
@@ -345,6 +354,26 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function isUnhideRestored()
     {
         return $this->_bUnhideRestored;
+    }
+
+    public function isCacheItem()
+    {
+        return $this->_bCacheItem;
+    }
+
+    public function isCacheList()
+    {
+        return $this->_bCacheList;
+    }
+
+    public function getCacheItemLifetime()
+    {
+        return $this->_iCacheItemLifetime;
+    }
+
+    public function getCacheItemKey($iId, $sPostfix = '')
+    {
+        return $this->_aPrefixes['cache_item'] . $iId . (!empty($sPostfix) ? '_' . $sPostfix : '') . '.php';
     }
 
     public function getPostFormDisplay($sType)

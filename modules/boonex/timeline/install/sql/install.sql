@@ -49,6 +49,15 @@ INSERT INTO `bx_timeline_handlers`(`group`, `type`, `alert_unit`, `alert_action`
 ('common_repost', 'insert', 'timeline_common_repost', '', ''),
 ('profile', 'delete', 'profile', 'delete', '');
 
+CREATE TABLE IF NOT EXISTS `bx_timeline_cache` (
+  `type` varchar(32) NOT NULL default '',
+  `context_id` int(11) NOT NULL default '0',
+  `profile_id` int(11) NOT NULL default '0',
+  `event_id` int(11) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  PRIMARY KEY `item` (`type`, `context_id`, `profile_id`, `event_id`)
+);
+
 -- TABLES: STORAGES, TRANSCODERS, UPLOADERS
 CREATE TABLE IF NOT EXISTS `bx_timeline_photos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

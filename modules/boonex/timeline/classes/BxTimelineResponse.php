@@ -25,6 +25,8 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
      */
     public function response($oAlert)
     {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
         $iObjectAuthorId = $this->_getObjectOwnerId($oAlert->aExtras);
     	$iObjectPrivacyView = $this->_getObjectPrivacyView($oAlert->aExtras);
         if($iObjectPrivacyView == BX_DOL_PG_HIDDEN)
@@ -58,8 +60,12 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_UPDATE:
+                $aEvent = $this->_oModule->_oDb->getEvents(array('browse' => 'descriptor', 'type' => $oAlert->sUnit, 'object_id' => $oAlert->iObject));
+                if(empty($aEvent) || !is_array($aEvent))
+                    break;
+
                 $aParamsSet = array(
-                	'content' => !empty($oAlert->aExtras) && is_array($oAlert->aExtras) ? serialize(bx_process_input($oAlert->aExtras)) : ''
+                    'content' => !empty($oAlert->aExtras) && is_array($oAlert->aExtras) ? serialize(bx_process_input($oAlert->aExtras)) : ''
                 );
 
                 if($iObjectPrivacyView > 0 && !empty($iObjectAuthorId) && $iObjectAuthorId == $oAlert->iSender)
@@ -74,31 +80,42 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                     ));
 
                 $this->_oModule->_oDb->updateEvent($aParamsSet, array('type' => $oAlert->sUnit, 'object_id' => $oAlert->iObject));
+
+                //--- Delete cached
+                $this->_oModule->_oDb->deleteCache(array('owner_id' => 0)); //--- Delete cache for Public feed
+                $this->_oModule->_oDb->deleteCache(array('owner_id' => $aEvent[$CNF['FIELD_OWNER_ID']])); //--- Delete cache for old context
+                $this->_oModule->_oDb->deleteCache(array('owner_id' => $aParamsSet['owner_id'])); //--- Delete cache for new context
                 break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_DELETE:
-            	if($oAlert->sUnit == 'profile' && $oAlert->sAction == 'delete') {
-            		$aEvents = $this->_oModule->_oDb->getEvents(array('browse' => 'owner_id', 'value' => $oAlert->iObject));
-            		foreach($aEvents as $aEvent)
-            			$this->_oModule->deleteEvent($aEvent);
+                if($oAlert->sUnit == 'profile' && $oAlert->sAction == 'delete') {
+                    $aEvents = $this->_oModule->_oDb->getEvents(array('browse' => 'owner_id', 'value' => $oAlert->iObject));
+                    foreach($aEvents as $aEvent)
+                        $this->_oModule->deleteEvent($aEvent);
 
-            		if(isset($oAlert->aExtras['delete_with_content']) && $oAlert->aExtras['delete_with_content']) {
-						$aEvents = $this->_oModule->_oDb->getEvents(array('browse' => 'common_by_object', 'value' => $oAlert->iObject));
-						foreach($aEvents as $aEvent)
-	            			$this->_oModule->deleteEvent($aEvent);
-            		}
-            		break;
-            	}
+                    if(isset($oAlert->aExtras['delete_with_content']) && $oAlert->aExtras['delete_with_content']) {
+                        $aEvents = $this->_oModule->_oDb->getEvents(array('browse' => 'common_by_object', 'value' => $oAlert->iObject));
+                        foreach($aEvents as $aEvent)
+                            $this->_oModule->deleteEvent($aEvent);
+                    }
+
+                    //--- Delete cached
+                    $this->_oModule->_oDb->deleteCache(array('owner_id' => $oAlert->iObject));
+                    $this->_oModule->_oDb->deleteCache(array('profile_id' => $oAlert->iObject));
+                    break;
+                }
 
             	$aHandlers = $this->_oModule->_oDb->getHandlers(array('type' => 'by_group_key_type', 'group' => $aHandler['group']));
 
             	$aEvent = $this->_oModule->_oDb->getEvents(array(
-            		'browse' => 'descriptor', 
-            		'type' => $oAlert->sUnit,
-            		'action' => $aHandlers[BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT]['alert_action'], 
-            		'object_id' => $oAlert->iObject
+                    'browse' => 'descriptor', 
+                    'type' => $oAlert->sUnit,
+                    'action' => $aHandlers[BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT]['alert_action'], 
+                    'object_id' => $oAlert->iObject
             	));
             	$this->_oModule->deleteEvent($aEvent);
+
+                $this->_oModule->_oDb->deleteCache(array('event_id' => $aEvent[$CNF['FIELD_ID']]));
                 break;
         }
     }

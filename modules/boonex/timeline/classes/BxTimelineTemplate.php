@@ -264,7 +264,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     }
 
     public function getItemBlockComments($iId) {
-        $CNF = $this->_oConfig->CNF;
+        $CNF = &$this->_oConfig->CNF;
 
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
         if(empty($aEvent))
@@ -289,14 +289,46 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     public function getPost(&$aEvent, $aBrowseParams = array())
     {
+        $CNF = &$this->_oConfig->CNF;
+
         $oPrivacy = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'));
         if($oPrivacy) {
             $oPrivacy->setTableFieldAuthor($this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? 'owner_id' : 'object_id');
-            if(!$oPrivacy->check($aEvent['id']))
+            if(!$oPrivacy->check($aEvent[$CNF['FIELD_ID']])) {
+                if($this->_oConfig->isCacheList())
+                    $this->_oDb->deleteCache(array(
+                        'type' => $aBrowseParams['type'], 
+                        'profile_id' => bx_get_logged_profile_id(),
+                        'event_id' => $aEvent[$CNF['FIELD_ID']]
+                    ));
+
                 return '';
+            }
         }
 
-        $aResult = $this->getData($aEvent, $aBrowseParams);
+        $aResult = false;
+        if($this->_oConfig->isCacheItem()) {
+            $oCache = $this->getTemplatesCacheObject();
+
+            /**
+             * For now parameters from $aBrowseParams array aren't used during data retrieving.
+             * If they will then the cache should be created depending on their values.
+             */
+            $sCacheKey = $this->_oConfig->getCacheItemKey($aEvent['id']);
+            $iCacheLifetime = $this->_oConfig->getCacheItemLifetime();
+
+            $aResult = $oCache->getData($sCacheKey, $iCacheLifetime);
+            if(empty($aResult)) {
+                $aResult = $this->getData($aEvent, $aBrowseParams);
+
+                $oCache->setData($sCacheKey, serialize($aResult), $iCacheLifetime);
+            }
+            else
+                $aResult = unserialize($aResult);
+        }
+        else
+            $aResult = $this->getData($aEvent, $aBrowseParams);
+
         if($aResult === false)
             return '';
 
@@ -330,7 +362,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $aParamsDb = $aParams;
 
-        //--- Check for Previous
+        //--- Before: Check for Previous
         $iDays = -1;
         $bPrevious = false;
         if($iStart - 1 >= 0) {
@@ -339,17 +371,18 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $bPrevious = true;
         }
 
-        //--- Check for Next
+        //--- Before: Check for Next
         $aParamsDb['per_page'] += 1;
-        $aEvents = $this->_oDb->getEvents($aParamsDb);
 
-        //--- Check for Previous
+        $aEvents = $this->_getPosts($aParamsDb);
+
+        //--- After: Check for Previous
         if($bPrevious) {
             $aEvent = array_shift($aEvents);
             $iDays = (int)$aEvent['days'];
         }
 
-        //--- Check for Next
+        //--- After: Check for Next
         $bNext = false;
         if(count($aEvents) > $iPerPage) {
             $aEvent = array_pop($aEvents);
@@ -994,6 +1027,100 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'html_id' => $this->_oConfig->getHtmlIds('view', 'live_update_popup') . $sType,
             'bx_repeat:items' => $aTmplVarsItems
         ));
+    }
+
+    protected function _cacheEvent($iProfileId, &$aParams, &$aEvent)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aParamsSet = array(
+            'type' => $aParams['type'],
+            'context_id' => $aEvent[$CNF['FIELD_OWNER_ID']], 
+            'profile_id' => $iProfileId, 
+            'event_id' => $aEvent[$CNF['FIELD_ID']], 
+            'date' => $aEvent[$CNF['FIELD_ADDED']]
+        );
+
+        switch ($aParams['type']) {
+            case BX_BASE_MOD_NTFS_TYPE_PUBLIC:
+                $aParamsSet['context_id'] = 0;
+                break;
+
+            case BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS:
+                $aParamsSet['context_id'] = $iProfileId;
+                break;
+        }
+
+        return $this->_oDb->insertCache($aParamsSet);
+    }
+
+    protected function _getCachedEvents($iProfileId, &$aParams)
+    {
+        return $this->_oDb->getCache(array(
+            'browse' => $aParams['browse'], 
+            'type' => $aParams['type'], 
+            'context_id' => $aParams['owner_id'], 
+            'profile_id' => $iProfileId, 
+            'start' => $aParams['start'], 
+            'per_page' => $aParams['per_page']
+        ));
+    }
+
+    protected function _getPosts($aParams)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$this->_oConfig->isCacheList())
+            return $this->_oDb->getEvents($aParams);
+
+        $iPerPage = (int)$aParams['per_page'];
+
+        $iProfileId = (int)bx_get_logged_profile_id(); 
+        $aCache = $this->_getCachedEvents($iProfileId, $aParams);
+        if(is_array($aCache) && count($aCache) == $iPerPage) {
+            /*
+             * Check if cache is valid
+             */
+            $bValid = false;
+            $bUpdated = false;
+            $aCachedItem = current($aCache);
+
+            while(!$bValid) {
+                $aEvents = $this->_oDb->getEvents($aParams);
+                foreach($aEvents as $aEvent) {
+                    if($aEvent[$CNF['FIELD_ID']] == $aCachedItem['event_id']) {
+                        $bValid = true;
+                        break;
+                    }
+
+                    if(!$this->_cacheEvent($iProfileId, $aParams, $aEvent))
+                        continue;
+
+                    $bUpdated = true;
+                }
+            }
+
+            if($bUpdated)
+                $aCache = $this->_getCachedEvents($iProfileId, $aParams);
+
+            return $this->_oDb->getEvents(array('browse' => 'ids', 'type' => $aParams['type'], 'ids' => array_keys($aCache)));
+        }
+
+        $aEvents = array();
+        while(count($aEvents) < $aParams['per_page']) {
+            $aEvents += $this->_oDb->getEvents($aParams);
+            $aParams['start'] += $aParams['per_page'];
+        }
+
+        $aIds = array();
+        foreach($aEvents as $aEvent) {
+            if(!$this->_cacheEvent($iProfileId, $aParams, $aEvent))
+                continue;
+
+            $aIds[] = $aEvent[$CNF['FIELD_ID']];
+        }
+
+        return $this->_oDb->getEvents(array('browse' => 'ids', 'type' => $aParams['type'], 'ids' => $aIds));
     }
 
     protected function _getPost($sType, $aEvent, $aBrowseParams = array())

@@ -1,19 +1,12 @@
 SET @sName = 'bx_timeline';
 
-DROP TABLE IF EXISTS `bx_timeline_events`;
+DROP TABLE IF EXISTS `bx_timeline_events`, `bx_timeline_handlers`, `bx_timeline_cache`;
 
-DROP TABLE IF EXISTS `bx_timeline_handlers`;
+DROP TABLE IF EXISTS `bx_timeline_photos`, `bx_timeline_photos_processed`, `bx_timeline_photos2events`;
 
-DROP TABLE IF EXISTS `bx_timeline_photos`;
-DROP TABLE IF EXISTS `bx_timeline_photos_processed`;
-DROP TABLE IF EXISTS `bx_timeline_photos2events`;
+DROP TABLE IF EXISTS `bx_timeline_videos`, `bx_timeline_videos_processed`, `bx_timeline_videos2events`;
 
-DROP TABLE IF EXISTS `bx_timeline_videos`;
-DROP TABLE IF EXISTS `bx_timeline_videos_processed`;
-DROP TABLE IF EXISTS `bx_timeline_videos2events`;
-
-DROP TABLE IF EXISTS `bx_timeline_links`;
-DROP TABLE IF EXISTS `bx_timeline_links2events`;
+DROP TABLE IF EXISTS `bx_timeline_links`, `bx_timeline_links2events`;
 
 DROP TABLE IF EXISTS `bx_timeline_reposts_track`;
 
@@ -21,20 +14,15 @@ DROP TABLE IF EXISTS `bx_timeline_comments`;
 
 DROP TABLE IF EXISTS `bx_timeline_views_track`;
 
-DROP TABLE IF EXISTS `bx_timeline_votes`;
-DROP TABLE IF EXISTS `bx_timeline_votes_track`;
+DROP TABLE IF EXISTS `bx_timeline_votes`, `bx_timeline_votes_track`;
 
-DROP TABLE IF EXISTS `bx_timeline_meta_keywords`;
-DROP TABLE IF EXISTS `bx_timeline_meta_locations`;
-DROP TABLE IF EXISTS `bx_timeline_meta_mentions`;
+DROP TABLE IF EXISTS `bx_timeline_meta_keywords`, `bx_timeline_meta_locations`, `bx_timeline_meta_mentions`;
 
-DROP TABLE IF EXISTS `bx_timeline_reports`;
-DROP TABLE IF EXISTS `bx_timeline_reports_track`;
+DROP TABLE IF EXISTS `bx_timeline_reports`, `bx_timeline_reports_track`;
 
 DROP TABLE IF EXISTS `bx_timeline_hot_track`;
 
-DROP TABLE IF EXISTS `bx_timeline_scores`;
-DROP TABLE IF EXISTS `bx_timeline_scores_track`;
+DROP TABLE IF EXISTS `bx_timeline_scores`, `bx_timeline_scores_track`;
 
 
 -- STORAGES, TRANSCODERS, UPLOADERS

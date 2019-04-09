@@ -11,6 +11,8 @@
 
 class BxTimelineDb extends BxBaseModNotificationsDb
 {
+    protected $_sTableCache;
+
     protected $_sTableEvent2User;
     protected $_sTablesRepostTrack;
     protected $_sTableHotTrack;
@@ -24,6 +26,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     function __construct(&$oConfig)
     {
         parent::__construct($oConfig);
+        $this->_sTableCache = $this->_sPrefix . 'cache';
+
         $this->_sTableEvent2User = $this->_sPrefix . 'events2users';
         $this->_sTableRepostsTrack = $this->_sPrefix . 'reposts_track';
         $this->_sTableHotTrack = $this->_sPrefix . 'hot_track';
@@ -54,7 +58,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     	}
     }
 
-	public function activateModuleEvents($aData, $bActivate = true)
+    public function activateModuleEvents($aData, $bActivate = true)
     {
     	$iActivate = $bActivate ? 1 : 0;
 
@@ -387,6 +391,68 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return (int)$this->query("REPLACE INTO `" . $this->_sTableHotTrack . "` SET " . $this->arrayToSQL($aTrack)) > 0;
     }
 
+    public function insertCache($aParamsSet)
+    {
+        if(empty($aParamsSet))
+            return false;
+
+        return (int)$this->query("REPLACE INTO `{$this->_sTableCache}` SET " . $this->arrayToSQL($aParamsSet)) > 0;
+    }
+
+    public function deleteCache($aParamsWhere)
+    {
+        if(empty($aParamsWhere))
+            return false;
+
+        return (int)$this->query("DELETE FROM `{$this->_sTableCache}` WHERE " . $this->arrayToSQL($aParamsWhere, ' AND ')) > 0;
+    }
+
+    public function getCache($aParams)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+        
+        $sFieldsClause = '*';
+        $sWhereClause = $sLimitClause = '';
+
+        if(isset($aParams['start']) && !empty($aParams['per_page']))
+            $sLimitClause = $aParams['start'] . ", " . $aParams['per_page'];
+
+        switch($aParams['browse']) {
+            case 'list': // by type + owner profile (context) + viewer profile
+                $aMethod['name'] = 'getAllWithKey';
+                $aMethod['params'][1] = 'event_id';
+                $aMethod['params'][2] = array(
+                    'type' => $aParams['type'],
+                    'context_id' => $aParams['context_id'],
+                    'profile_id' => $aParams['profile_id']
+                );
+
+                //--- Apply custom check depending on Type
+                switch($aParams['type']) {
+                    case BX_BASE_MOD_NTFS_TYPE_PUBLIC:
+                        $aMethod['params'][2]['context_id'] = 0;
+                        break;
+
+                    case BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS:
+                        $aMethod['params'][2]['context_id'] = $aParams['profile_id'];
+                        break;
+                }
+
+                $sWhereClause .= " AND `type`=:type AND `context_id`=:context_id  AND `profile_id`=:profile_id";
+                break;
+        }
+
+        $sLimitClause = $sLimitClause ? "LIMIT " . $sLimitClause : "";
+
+        $aMethod['params'][0] = "SELECT " . $sFieldsClause . " 
+        FROM `{$this->_sTableCache}` 
+        WHERE 1" . $sWhereClause . " ORDER BY `date` DESC " . $sLimitClause;
+
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+
     protected function _getFilterAddon($iOwnerId, $sFilter)
     {
         switch($sFilter) {
@@ -426,14 +492,14 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
 
         switch($aParams['browse']) {
-        	case 'owner_id':
-        		$sWhereClause = $this->prepareAsString("AND `{$this->_sTable}`.`owner_id`=? ", $aParams['value']);
-        		break;
+            case 'owner_id':
+                $sWhereClause = $this->prepareAsString("AND `{$this->_sTable}`.`owner_id`=? ", $aParams['value']);
+                break;
 
-        	case 'common_by_object':
-        		$sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
-        		$sWhereClause = $this->prepareAsString("AND SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ")='" . $sCommonPostPrefix . "' AND `{$this->_sTable}`.`object_id`=? ", $aParams['value']);
-        		break;
+            case 'common_by_object':
+                $sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
+                $sWhereClause = $this->prepareAsString("AND SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ")='" . $sCommonPostPrefix . "' AND `{$this->_sTable}`.`object_id`=? ", $aParams['value']);
+                break;
 
             case 'descriptor':
                 $sMethod = 'getRow';
@@ -465,32 +531,36 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                     $sSelectClause  = "DISTINCT " . $sSelectClause;
                 break;
 
+            case 'ids':
+                $sWhereClause = "AND `{$this->_sTable}`.`id` IN (" . $this->implode_escape($aParams['ids']) . ") ";
+                break;
+
             default:
             	list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause) = parent::_getSqlPartsEvents($aParams);
         }
 
-		$sSelectClause .= ", DAYOFYEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `days`, DAYOFYEAR(NOW()) AS `today`, ROUND((UNIX_TIMESTAMP() - `{$this->_sTable}`.`date`)/86400) AS `ago_days`, YEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `year`";
-		if($aParams['browse'] == 'list') {
-			$sOrderClause = "";
+        $sSelectClause .= ", DAYOFYEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `days`, DAYOFYEAR(NOW()) AS `today`, ROUND((UNIX_TIMESTAMP() - `{$this->_sTable}`.`date`)/86400) AS `ago_days`, YEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `year`";
+        if(in_array($aParams['browse'], array('list', 'ids'))) {
+            $sOrderClause = "";
 
-			switch($aParams['type']) {
-				case BX_TIMELINE_TYPE_HOT:
+            switch($aParams['type']) {
+                case BX_TIMELINE_TYPE_HOT:
                     $sOrderClause = "`{$this->_sTableHotTrack}`.`value` DESC, ";
                     break;
 
-				case BX_BASE_MOD_NTFS_TYPE_PUBLIC:
-				case BX_BASE_MOD_NTFS_TYPE_CONNECTIONS:
-				case BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS:
-					$sOrderClause = "`{$this->_sTable}`.`sticked` DESC, ";
-					break;
+                    case BX_BASE_MOD_NTFS_TYPE_PUBLIC:
+                    case BX_BASE_MOD_NTFS_TYPE_CONNECTIONS:
+                    case BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS:
+                        $sOrderClause = "`{$this->_sTable}`.`sticked` DESC, ";
+                        break;
 
-				case BX_BASE_MOD_NTFS_TYPE_OWNER:
-					$sOrderClause = "`{$this->_sTable}`.`pinned` DESC, ";
-					break;
-			}
+                    case BX_BASE_MOD_NTFS_TYPE_OWNER:
+                        $sOrderClause = "`{$this->_sTable}`.`pinned` DESC, ";
+                        break;
+            }
 
             $sOrderClause = "ORDER BY " . $sOrderClause . "`{$this->_sTable}`.`date` DESC";
-		}
+        }
 
         if(isset($aParams['count']) && $aParams['count'] === true) {
             $sMethod = 'getOne';
