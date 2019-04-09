@@ -148,8 +148,11 @@ function check_logged()
        BX_DOL_ROLE_MEMBER => 'member'
     );
 
-    $sID = isset($_COOKIE['memberID']) ? bx_process_input($_COOKIE['memberID']) : false;
-    $sPassword = isset($_COOKIE['memberPassword']) ? bx_process_input($_COOKIE['memberPassword']) : false;
+    $bID = isset($_COOKIE['memberID']);
+    $sID = $bID ? bx_process_input($_COOKIE['memberID']) : false;
+
+    $bPassword = isset($_COOKIE['memberPassword']);
+    $sPassword = $bPassword ? bx_process_input($_COOKIE['memberPassword']) : false;
 
     $bLogged = false;
     foreach ($aAccTypes as $iRole => $sValue) {
@@ -160,7 +163,10 @@ function check_logged()
         }
     }
 
-    if ((isset($_COOKIE['memberID']) || isset($_COOKIE['memberPassword'])) && !$bLogged)
+    if($bID && $bPassword && $bLogged)
+        bx_alert('account', 'logged', getLoggedId());
+
+    if(($bID || $bPassword) && !$bLogged)
         bx_logout(false);
 }
 

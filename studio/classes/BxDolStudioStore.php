@@ -316,7 +316,7 @@ class BxDolStudioStore extends BxTemplStudioPage
                 $aCounts[$aItem['item_id']] = $aItem['item_count'];
             }
 
-            $aProducts = $oJson->load($this->sStoreDataUrlPublic . 'json_browse_selected', array('products' => base64_encode(serialize($aIds))));
+            $aProducts = $oJson->load($this->sStoreDataUrlPublic . 'json_browse_selected', array('products' => base64_encode(serialize($aIds)), 'client' => $this->iClient, 'key' => $this->sClientKey));
             if(!empty($aProducts))
                 $aResult[$sVendor] = array(
                     'ids' => $aIds,
