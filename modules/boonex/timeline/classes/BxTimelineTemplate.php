@@ -1106,14 +1106,18 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             return $this->_oDb->getEvents(array('browse' => 'ids', 'type' => $aParams['type'], 'ids' => array_keys($aCache)));
         }
 
-        $aEvents = array();
-        while(count($aEvents) < $aParams['per_page']) {
-            $aEvents += $this->_oDb->getEvents($aParams);
+        $aEventsToCache = array();
+        while(count($aEventsToCache) < $aParams['per_page']) {
+            $aEvents = $this->_oDb->getEvents($aParams);
+            if(empty($aEvents))
+                break;
+
+            $aEventsToCache += $aEvents;
             $aParams['start'] += $aParams['per_page'];
         }
 
         $aIds = array();
-        foreach($aEvents as $aEvent) {
+        foreach($aEventsToCache as $aEvent) {
             if(!$this->_cacheEvent($iProfileId, $aParams, $aEvent))
                 continue;
 
