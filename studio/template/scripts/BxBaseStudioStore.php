@@ -445,16 +445,17 @@ class BxBaseStudioStore extends BxDolStudioStore
         foreach($aVendors as $iVendor => $aInfo) {
             $fTotal = 0;
             $sVendor = $sCurrency = '';
-            foreach($aInfo['products'] as $aProduct) {
-                $iCount = isset($aInfo['counts'][$aProduct['id']]) ? (int)$aInfo['counts'][$aProduct['id']] : 1;
-                $fTotal += $iCount * $aProduct['price_single'];
+            if(!empty($aInfo['products']) && is_array($aInfo['products']))
+                foreach($aInfo['products'] as $aProduct) {
+                    $iCount = isset($aInfo['counts'][$aProduct['id']]) ? (int)$aInfo['counts'][$aProduct['id']] : 1;
+                    $fTotal += $iCount * $aProduct['price_single'];
 
-                if($sVendor == '' && isset($aProduct['author_name']))
-                    $sVendor = $aProduct['author_name'];
+                    if($sVendor == '' && isset($aProduct['author_name']))
+                        $sVendor = $aProduct['author_name'];
 
-				if($sCurrency == '' && isset($aProduct['author_currency_sign']))
-                    $sCurrency = $aProduct['author_currency_sign'];
-            }
+                                    if($sCurrency == '' && isset($aProduct['author_currency_sign']))
+                        $sCurrency = $aProduct['author_currency_sign'];
+                }
 
             $aMenu = array(
                 array('id' => 'checkout-' . $iVendor, 'name' => 'checkout-' . $iVendor, 'link' => 'javascript:void(0)', 'onclick' => $sJsObject . ".checkoutCart(" . $iVendor . ", this);", 'target' => '_self', 'title' => '_adm_action_cpt_checkout', 'active' => 1),
