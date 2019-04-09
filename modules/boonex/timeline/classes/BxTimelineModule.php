@@ -2321,6 +2321,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_manage'), $this->_oTemplate);
     }
 
+    public function getCacheItemObject()
+    {
+        $oCacheEngine = bx_instance('BxDolCache' . $this->_oConfig->getCacheItemEngine());
+        if(!$oCacheEngine->isAvailable())
+            $oCacheEngine = bx_instance('BxDolCacheFileHtml');
+
+        return $oCacheEngine;
+    }
+
     //--- Check permissions methods ---//
     public function isModerator()
     {

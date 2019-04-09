@@ -308,7 +308,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $aResult = false;
         if($this->_oConfig->isCacheItem()) {
-            $oCache = $this->getTemplatesCacheObject();
+            $oCache = $this->getModule()->getCacheItemObject();
 
             /**
              * For now parameters from $aBrowseParams array aren't used during data retrieving.
