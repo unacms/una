@@ -122,7 +122,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'language' => '_bx_timeline',
             'option' => 'bx_timeline_',
             'common_post' => 'timeline_common_',
-            'cache_item' => 'bx_timeline_item_'
+            'cache_item' => 'bx_templ_bx_timeline_item_'
         );
 
         $this->_aObjects = array_merge($this->_aObjects, array(

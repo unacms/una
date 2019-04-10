@@ -251,7 +251,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(empty($aEvent))
             return '';
 
-        $aResult = $this->getData($aEvent);
+        $aResult = $this->getDataCached($aEvent);
         if($aResult === false)
             return '';
 
@@ -270,7 +270,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(empty($aEvent))
             return '';
 
-        $aResult = $this->getData($aEvent);
+        $aResult = $this->getDataCached($aEvent);
         if($aResult === false)
             return '';
             
@@ -306,29 +306,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             }
         }
 
-        $aResult = false;
-        if($this->_oConfig->isCacheItem()) {
-            $oCache = $this->getModule()->getCacheItemObject();
-
-            /**
-             * For now parameters from $aBrowseParams array aren't used during data retrieving.
-             * If they will then the cache should be created depending on their values.
-             */
-            $sCacheKey = $this->_oConfig->getCacheItemKey($aEvent['id']);
-            $iCacheLifetime = $this->_oConfig->getCacheItemLifetime();
-
-            $aResult = $oCache->getData($sCacheKey, $iCacheLifetime);
-            if(empty($aResult)) {
-                $aResult = $this->getData($aEvent, $aBrowseParams);
-
-                $oCache->setData($sCacheKey, serialize($aResult), $iCacheLifetime);
-            }
-            else
-                $aResult = unserialize($aResult);
-        }
-        else
-            $aResult = $this->getData($aEvent, $aBrowseParams);
-
+        $aResult = $this->getDataCached($aEvent, $aBrowseParams);
         if($aResult === false)
             return '';
 
@@ -936,6 +914,30 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return $aResult;
     }
 
+    public function getDataCached($aEvent, $aBrowseParams = array())
+    {
+        if(!$this->_oConfig->isCacheItem()) 
+            return $this->getData($aEvent, $aBrowseParams);
+
+        /**
+         * For now parameters from $aBrowseParams array aren't used during data retrieving.
+         * If they will then the cache should be created depending on their values.
+         */
+        $sCacheKey = $this->_oConfig->getCacheItemKey($aEvent['id']);
+        $iCacheLifetime = $this->_oConfig->getCacheItemLifetime();
+
+        $oCache = $this->getModule()->getCacheItemObject();
+        $aCached = $oCache->getData($sCacheKey, $iCacheLifetime);
+        if(!empty($aCached)) 
+            return unserialize($aCached);
+
+        $aBrowseParams['dynamic_mode'] = true;
+        $aResult = $this->getData($aEvent, $aBrowseParams);
+        $oCache->setData($sCacheKey, serialize($aResult), $iCacheLifetime);           
+
+        return $aResult;
+    }
+
     public function getVideo($aEvent, $aVideo)
     {
         $sVideoId = $this->_oConfig->getHtmlIds('view', 'video') . $aEvent['id'] . '-' . $aVideo['id'];
@@ -978,7 +980,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $aTmplVarsItems = array();
         foreach($aEvents as $iIndex => $aEvent) {
-            $aData = $this->getData($aEvent);
+            $aData = $this->getDataCached($aEvent);
             if($aData === false)
                 continue;
 

@@ -70,7 +70,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(empty($aEvent) || !is_array($aEvent))
             return;
 
-        $aData = $this->_oTemplate->getData($aEvent);
+        $aData = $this->_oTemplate->getDataCached($aEvent);
         if($aData === false || !isset($aData['content']['videos'][$iVideoId]))
             return;
 
@@ -2325,7 +2325,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
         $oCacheEngine = bx_instance('BxDolCache' . $this->_oConfig->getCacheItemEngine());
         if(!$oCacheEngine->isAvailable())
-            $oCacheEngine = bx_instance('BxDolCacheFileHtml');
+            $oCacheEngine = bx_instance('BxDolCacheFile');
 
         return $oCacheEngine;
     }
@@ -2681,7 +2681,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
         $sError = '_sys_txt_access_denied';
 
-        $aContentInfo = $this->_oTemplate->getData($aContentInfo);
+        $aContentInfo = $this->_oTemplate->getDataCached($aContentInfo);
         if($aContentInfo === false)
             return _t($sError);
 
@@ -2697,7 +2697,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         if($this->_oConfig->isSystem($aEvent['type'], $aEvent['action'])) {
             //--- Request event's data from content module and update it in the Timeline DB.
-            $this->_oTemplate->getData($aEvent);
+            $this->_oTemplate->getDataCached($aEvent);
 
             $sPostType = 'system';
             $iSenderId = $iObjectAuthorId = (int)$aEvent['owner_id'];

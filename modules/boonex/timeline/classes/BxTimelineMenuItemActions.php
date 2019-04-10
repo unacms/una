@@ -67,7 +67,7 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
     	if(empty($aEvent) || !is_array($aEvent))
             return;
 
-    	$aEventData = $this->_oModule->_oTemplate->getData($aEvent);
+    	$aEventData = $this->_oModule->_oTemplate->getDataCached($aEvent);
     	if($aEventData === false)
             return;
 

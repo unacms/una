@@ -92,7 +92,7 @@ class BxTimelineMenuItemShare extends BxTemplMenu
             'img_url_encoded' => ''
         );
 
-        $aEventData = $this->_oModule->_oTemplate->getData($this->_aEvent);
+        $aEventData = $this->_oModule->_oTemplate->getDataCached($this->_aEvent);
         if(!empty($aEventData['content']['images']) && is_array($aEventData['content']['images'])) {
             $aImage = array_shift($aEventData['content']['images']);
 
