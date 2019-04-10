@@ -327,6 +327,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(isset($aEvent[$sKey]) && $aEvent[$sKey] !== CHECK_ACTION_RESULT_ALLOWED) 
             return '';
 
+        if($this->_oConfig->isCacheList())
+            $this->_cacheEvent(bx_get_logged_profile_id(), $aEvent, $aBrowseParams);
+
         $sType = !empty($aResult['content_type']) ? $aResult['content_type'] : BX_TIMELINE_PARSE_TYPE_DEFAULT;
         return $this->_getPost($sType, $aEvent, $aBrowseParams);
     }
@@ -1031,7 +1034,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
-    protected function _cacheEvent($iProfileId, &$aParams, &$aEvent)
+    protected function _cacheEvent($iProfileId, &$aEvent, &$aParams)
     {
         $CNF = &$this->_oConfig->CNF;
 
@@ -1076,26 +1079,26 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             return $this->_oDb->getEvents($aParams);
 
         $iPerPage = (int)$aParams['per_page'];
-
         $iProfileId = (int)bx_get_logged_profile_id(); 
+
+        /*
+         * Get cached data and check it for relevance.
+         */
         $aCache = $this->_getCachedEvents($iProfileId, $aParams);
         if(is_array($aCache) && count($aCache) == $iPerPage) {
-            /*
-             * Check if cache is valid
-             */
-            $bValid = false;
             $bUpdated = false;
             $aCachedItem = current($aCache);
 
-            while(!$bValid) {
+            while(true) {
                 $aEvents = $this->_oDb->getEvents($aParams);
-                foreach($aEvents as $aEvent) {
-                    if($aEvent[$CNF['FIELD_ID']] == $aCachedItem['event_id']) {
-                        $bValid = true;
-                        break;
-                    }
+                if(empty($aEvents))
+                    break;
 
-                    if(!$this->_cacheEvent($iProfileId, $aParams, $aEvent))
+                foreach($aEvents as $aEvent) {
+                    if($aEvent[$CNF['FIELD_ID']] == $aCachedItem['event_id'])
+                        break 2;
+
+                    if($this->getPost($aEvent, $aParams) == '')
                         continue;
 
                     $bUpdated = true;
@@ -1108,23 +1111,26 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             return $this->_oDb->getEvents(array('browse' => 'ids', 'type' => $aParams['type'], 'ids' => array_keys($aCache)));
         }
 
-        $aEventsToCache = array();
-        while(count($aEventsToCache) < $aParams['per_page']) {
+        /*
+         * Cache data.
+         */
+        $aIds = array();
+        while(count($aIds) < $iPerPage) {
             $aEvents = $this->_oDb->getEvents($aParams);
             if(empty($aEvents))
                 break;
 
-            $aEventsToCache += $aEvents;
+            foreach($aEvents as $aEvent) {
+                if($this->getPost($aEvent, $aParams) == '')
+                    continue;
+
+                $aIds[] = $aEvent[$CNF['FIELD_ID']];
+                if(count($aIds) == $iPerPage)
+                    break 2;
+            }
+
             $aParams['start'] += $aParams['per_page'];
-        }
-
-        $aIds = array();
-        foreach($aEventsToCache as $aEvent) {
-            if(!$this->_cacheEvent($iProfileId, $aParams, $aEvent))
-                continue;
-
-            $aIds[] = $aEvent[$CNF['FIELD_ID']];
-        }
+        }        
 
         return $this->_oDb->getEvents(array('browse' => 'ids', 'type' => $aParams['type'], 'ids' => $aIds));
     }
