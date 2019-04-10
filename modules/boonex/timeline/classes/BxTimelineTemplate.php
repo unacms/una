@@ -11,6 +11,8 @@
 
 class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 {
+    protected static $_aMemoryCacheItems;
+
     protected static $_sTmplContentItemItem;
     protected static $_sTmplContentItemOutline;
     protected static $_sTmplContentItemTimeline;
@@ -25,6 +27,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         parent::__construct($oConfig, $oDb);
 
         $this->_bShowTimelineDividers = false;
+    }
+
+    public function init()
+    {
+        parent::init();
+
+        self::$_aMemoryCacheItems = array();
     }
 
     public function getCss($bDynamic = false)
@@ -291,15 +300,19 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     {
         $CNF = &$this->_oConfig->CNF;
 
+        $iEventId = (int)$aEvent[$CNF['FIELD_ID']];
+        if(array_key_exists($iEventId, self::$_aMemoryCacheItems))
+            return self::$_aMemoryCacheItems[$iEventId];
+
         $oPrivacy = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'));
         if($oPrivacy) {
             $oPrivacy->setTableFieldAuthor($this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? 'owner_id' : 'object_id');
-            if(!$oPrivacy->check($aEvent[$CNF['FIELD_ID']])) {
+            if(!$oPrivacy->check($iEventId)) {
                 if($this->_oConfig->isCacheList())
                     $this->_oDb->deleteCache(array(
                         'type' => $aBrowseParams['type'], 
                         'profile_id' => bx_get_logged_profile_id(),
-                        'event_id' => $aEvent[$CNF['FIELD_ID']]
+                        'event_id' => $iEventId
                     ));
 
                 return '';
@@ -331,7 +344,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $this->_cacheEvent(bx_get_logged_profile_id(), $aEvent, $aBrowseParams);
 
         $sType = !empty($aResult['content_type']) ? $aResult['content_type'] : BX_TIMELINE_PARSE_TYPE_DEFAULT;
-        return $this->_getPost($sType, $aEvent, $aBrowseParams);
+        self::$_aMemoryCacheItems[$iEventId] = $this->_getPost($sType, $aEvent, $aBrowseParams);
+
+        return self::$_aMemoryCacheItems[$iEventId];
     }
 
     public function getPosts($aParams)
