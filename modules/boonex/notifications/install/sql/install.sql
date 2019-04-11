@@ -97,6 +97,16 @@ INSERT INTO `bx_notifications_settings`(`group`, `handler_id`, `delivery`, `type
 INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES 
 ('subscription', 'delete', 'sys_profiles_subscriptions', 'connection_removed', '');
 
+CREATE TABLE IF NOT EXISTS `bx_notifications_queue` (
+  `id` int(11) NOT NULL auto_increment,
+  `profile_id` int(11) NOT NULL DEFAULT '0',
+  `event_id` int(11) NOT NULL DEFAULT '0',
+  `delivery` varchar(64) NOT NULL default '',
+  `content` text NOT NULL,
+  `date` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+);
+
 
 -- STUDIO PAGE & WIDGET
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES

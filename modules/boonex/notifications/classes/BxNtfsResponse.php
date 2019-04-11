@@ -259,7 +259,7 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
             $sMethodPostfix = bx_gen_method_name($sDeliveryType);
             $sMethodGet = 'getNotification' . $sMethodPostfix;
             $sMethodSend = 'sendNotification' . $sMethodPostfix;
-            if(!$this->_oModule->_oTemplate->isMethodExists($sMethodGet) || !method_exists($this, $sMethodSend))
+            if(!$this->_oModule->_oTemplate->isMethodExists($sMethodGet) || !method_exists($this->_oModule, $sMethodSend))
                 continue;
 
             $mixedNotification = $this->_oModule->_oTemplate->$sMethodGet($aEvent);
@@ -294,6 +294,8 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
         if($iOwner != $iObjectOwner)
             $this->_addRecipient($iObjectOwner, BX_NTFS_STYPE_PERSONAL, $aRecipients);
 
+        $bDeliveryTimeout = $this->_oModule->_oConfig->getDeliveryTimeout() > 0;
+
         //--- Check recipients and send notifications.
         $oPrivacyInt = BxDolPrivacy::getObjectInstance($this->_oModule->_oConfig->getObject('privacy_view'));
         $oPrivacyExt = $this->_oModule->_oConfig->getPrivacyObject($aEvent['type'] . '_' . $aEvent['action']);
@@ -320,64 +322,23 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
                     if((int)$aSetting['active_adm'] == 0 || (int)$aSetting['active_pnl'] == 0)
                         continue;
 
-                    if($this->{$aDeliveryType['method']}($oProfile, $aDeliveryType['notification']) !== false)
+                    /**
+                     * 'break' is essential in the next two conditions to avoid 
+                     * duplicate sending to the same recipient.
+                     */
+                    if($bDeliveryTimeout && $this->_oModule->_oDb->queueAdd(array(
+                        'profile_id' => $iRecipient, 
+                        'event_id' => $aEvent['id'], 
+                        'delivery' => $sDeliveryType,
+                        'content' => serialize($aDeliveryType['notification']),
+                        'date' => time()
+                    )) !== false)
+                        break;
+
+                    if($this->_oModule->{$aDeliveryType['method']}($oProfile, $aDeliveryType['notification']) !== false)
                         break;
                 }
         }
-    }
-
-    protected function sendNotificationEmail($oProfile, $aNotification)
-    {
-        if(!$oProfile)
-            return false;
-
-        $oAccount = $oProfile->getAccountObject();
-        if(!$oAccount)
-            return false;
-
-        $aSettings = &$aNotification['settings'];
-
-        $sTemplate = !empty($aSettings['template']) ? $aSettings['template'] : 'bx_notifications_new_event';
-        $aTemplateMarkers = array('content' => $aNotification['content']);
-        if(!empty($aSettings['markers']) && is_array($aSettings['markers']))
-            $aTemplateMarkers = array_merge($aTemplateMarkers, $aSettings['markers']);              
-
-        $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate($sTemplate, $aTemplateMarkers, $oAccount->id(), $oProfile->id());
-        if(!$aTemplate)
-            return false;
-
-        $sSubject = !empty($aSettings['subject']) ? $aSettings['subject'] : $aTemplate['Subject'];
-        return sendMail($oAccount->getEmail(), $sSubject, $aTemplate['Body'], 0, array(), BX_EMAIL_NOTIFY, 'html', false, array(), true);
-    }
-
-    protected function sendNotificationPush($oProfile, $aNotification)
-    {
-        $oAccount = $oProfile->getAccountObject();
-        if(!$oAccount)
-            return false;
-
-        $oLanguage = BxDolLanguages::getInstance();
-
-        $iLanguage = $oAccount->getLanguageId();
-        if(empty($iLanguage))
-            $iLanguage = $oLanguage->getCurrentLangId();
-
-        $sLanguage = $oLanguage->getLangName($iLanguage);
-
-        $aContent = &$aNotification['content'];
-        $aSettings = &$aNotification['settings'];
-
-        $sSubject = !empty($aSettings['subject']) ? $aSettings['subject'] : _t('_bx_ntfs_push_new_event_subject', getParam('site_title'));
-        return BxDolPush::getInstance()->send($oProfile->id(), array(
-            'contents' => array(
-                $sLanguage => $aContent['message']
-            ),
-            'headings' => array(
-                $sLanguage => $sSubject
-            ),
-            'url' => $aContent['url'],
-            'icon' => $aContent['icon']
-        ), true);
     }
 
     protected function _getObjectOwnerId($aExtras)

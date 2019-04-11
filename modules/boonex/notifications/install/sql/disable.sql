@@ -41,3 +41,7 @@ DELETE FROM `sys_email_templates` WHERE `Module` = @sName;
 DELETE FROM `sys_objects_grid` WHERE `object` LIKE 'bx_notifications%';
 DELETE FROM `sys_grid_fields` WHERE `object` LIKE 'bx_notifications%';
 DELETE FROM `sys_grid_actions` WHERE `object` LIKE 'bx_notifications%';
+
+
+-- CRON
+DELETE FROM `sys_cron_jobs` WHERE `name` LIKE 'bx_notifications%';

@@ -85,7 +85,8 @@ SET @iCategId = LAST_INSERT_ID();
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
 ('bx_notifications_events_per_page', '12', @iCategId, '_bx_ntfs_option_events_per_page', 'digit', '', '', '', '', 1),
 ('bx_notifications_events_per_preview', '5', @iCategId, '_bx_ntfs_option_events_per_preview', 'digit', '', '', '', '', 5),
-('bx_notifications_enable_group_settings', 'on', @iCategId, '_bx_ntfs_option_enable_group_settings', 'checkbox', '', '', '', '', 10);
+('bx_notifications_enable_group_settings', 'on', @iCategId, '_bx_ntfs_option_enable_group_settings', 'checkbox', '', '', '', '', 10), 
+('bx_notifications_delivery_timeout', '120', @iCategId, '_bx_ntfs_option_delivery_timeout', 'digit', '', '', '', '', 20);
 
 
 -- PRIVACY 
@@ -138,3 +139,8 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('bx_notifications_settings_administration', 'bulk', 'deactivate', '_bx_ntfs_grid_action_title_deactivate', '', 1, 0),
 
 ('bx_notifications_settings_common', 'bulk', 'deactivate', '_bx_ntfs_grid_action_title_deactivate', '', 1, 0);
+
+
+-- CRON
+INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
+('bx_notifications_queue', '* * * * *', 'BxNtfsCronQueue', 'modules/boonex/notifications/classes/BxNtfsCronQueue.php', '');

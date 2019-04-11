@@ -29,6 +29,8 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
     protected $_aModulesProfiles;
     protected $_aModulesContexts;
 
+    protected $_iDeliveryTimeout;
+
     /**
      * Constructor
      */
@@ -119,6 +121,8 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
             if(!empty($sHideTimeline))
                 $this->{'_aHandlersHidden' . $sVariable} = explode(',', $sHideTimeline);
     	}
+
+        $this->_iDeliveryTimeout = (int)getParam($sOptionPrefix . 'delivery_timeout');
     }
 
     public function getOwnerNameMaxLen()
@@ -152,6 +156,11 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
     public function getSettingsTypes()
     {
         return $this->_aSettingsTypes;
+    }
+
+    public function getDeliveryTimeout()
+    {
+        return $this->_iDeliveryTimeout;
     }
 
     /**

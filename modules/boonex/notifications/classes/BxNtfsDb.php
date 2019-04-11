@@ -12,6 +12,7 @@
 class BxNtfsDb extends BxBaseModNotificationsDb
 {
     protected $_sTableEvt2Usr;
+    protected $_sTableQueue;
 
     /*
      * Constructor.
@@ -27,12 +28,17 @@ class BxNtfsDb extends BxBaseModNotificationsDb
         );
 
         $this->_sTableEvt2Usr = $this->_sPrefix . 'events2users';
+        $this->_sTableQueue = $this->_sPrefix . 'queue';
     }
 
     public function markAsRead($iUserId, $iEventId)
     {
-    	$sSql = $this->prepare("REPLACE `" . $this->_sTableEvt2Usr . "` SET `user_id`=?, `event_id`=?", $iUserId, $iEventId);
-    	return (int)$this->query($sSql) > 0;
+        $this->queueDeleteByProfile($iUserId, $iEventId);
+
+        return (int)$this->query("REPLACE `" . $this->_sTableEvt2Usr . "` SET `user_id`=:user_id, `event_id`=:event_id", array(
+            'user_id' => $iUserId,
+            'event_id' => $iEventId
+        )) > 0;
     }
 
     public function getLastRead($iUserId)
@@ -150,6 +156,79 @@ class BxNtfsDb extends BxBaseModNotificationsDb
             }
 
         return array($sJoinClause, $sWhereClause);
+    }
+
+    public function queueGet($aParams)
+    {
+    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+
+    	$sSelectClause = "*";
+    	$sWhereClause = $sOrderClause = $sLimitClause = "";
+
+        switch($aParams['type']) {
+            case 'id':
+            	$aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = array(
+                    'id' => $aParams['id']
+                );
+
+                $sWhereClause = " AND `id`=:id";
+                break;
+
+            case 'all_to_send':
+                $aMethod['params'][1] = array(
+                    'timeout' => $aParams['timeout']
+                );
+
+                $sWhereClause = " AND `date`+:timeout < UNIX_TIMESTAMP()";
+                $sOrderClause = "`date` ASC";
+                break;
+        }
+
+        $sOrderClause = !empty($sOrderClause) ? "ORDER BY " . $sOrderClause : $sOrderClause;
+        $sLimitClause = !empty($sLimitClause) ? "LIMIT " . $sLimitClause : $sLimitClause;
+
+        $aMethod['params'][0] = "SELECT
+                " . $sSelectClause . "
+            FROM `" . $this->_sTableQueue . "`
+            WHERE 1" . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+
+    public function queueAdd($aSet)
+    {
+        if(empty($aSet))
+            return false;
+
+        return (int)$this->query("INSERT INTO `" . $this->_sTableQueue . "` SET " . $this->arrayToSQL($aSet)) > 0;
+    }
+
+    public function queueDelete($aWhere)
+    {
+    	if(empty($aWhere))
+            return false;
+
+        return (int)$this->query("DELETE FROM `" . $this->_sTableQueue . "` WHERE " . $this->arrayToSQL($aWhere, ' AND ')) > 0;
+    }
+
+    public function queueDeleteByProfile($iProfileId, $iEventId)
+    {
+        return (int)$this->query("DELETE FROM `" . $this->_sTableQueue . "` WHERE `profile_id`=:profile_id AND `event_id`<=:event_id", array(
+            'profile_id' => $iProfileId,
+            'event_id' => $iEventId
+        )) > 0;
+    }
+
+    public function queueDeleteByIds($mixedId)
+    {
+        if(empty($mixedId))
+            return false;
+
+        if(!is_array($mixedId))
+            $mixedId = array($mixedId);
+
+        return (int)$this->query("DELETE FROM `" . $this->_sTableQueue . "` WHERE `id` IN (" . $this->implode_escape($mixedId) . ")") > 0;
     }
 }
 
