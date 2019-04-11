@@ -279,22 +279,26 @@ class BxBaseServiceConnections extends BxDol
     /*
      * Get notification data for Notifications module - action Friend. 
      */
-	public function serviceGetNotificationsPostFriendship($aEvent)
+    public function serviceGetNotificationsPostFriendship($aEvent)
     {
     	$iProfile = (int)$aEvent['object_id'];
     	$oProfile = BxDolProfile::getInstance($iProfile);
         if(!$oProfile)
-			return array();
+            return array();
 
-		return array(
-			'entry_sample' => '_sys_profile_sample_single',
-			'entry_url' => $oProfile->getUrl(),
-			'entry_caption' => $oProfile->getDisplayName(),
-			'entry_author' => $oProfile->id(),
-			'lang_key' => '_sys_profile_friendship_added',
-		);
+        $sLangKey = '_sys_profile_friendship_added';
+        if(isset($aEvent['content']['request']) && (int)$aEvent['content']['request'] == 1)
+            $sLangKey = '_sys_profile_friend_request_added';
+
+        return array(
+            'entry_sample' => '_sys_profile_sample_single',
+            'entry_url' => $oProfile->getUrl(),
+            'entry_caption' => $oProfile->getDisplayName(),
+            'entry_author' => $oProfile->id(),
+            'lang_key' => $sLangKey,
+        );
     }
-    
+
     public function serviceAlertResponseConnections($oAlert)
     {
         $sMethod = 'process' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);

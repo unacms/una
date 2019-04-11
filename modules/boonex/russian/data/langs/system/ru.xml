@@ -1353,7 +1353,7 @@
 	<string name="_adm_stg_cpt_option_sys_template_cache_js_enable"><![CDATA[Задействовать кэш для файлов JS]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_minify_css_enable"><![CDATA[Задействовать уменьшение для файлов CSS (кэш должен быть задействован)]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_minify_js_enable"><![CDATA[Задействовать уменьшение для файлов JS (кэш должен быть задействован)]]></string>
-	<string name="_adm_stg_cpt_option_sys_transcoder_queue_storage"><![CDATA[Удалённая раскодировка видео (требуется дополнительная настройка)]]></string>
+	<string name="_adm_stg_cpt_option_sys_transcoder_queue_storage"><![CDATA[Удалённая раскодировка видео]]></string>
 	<string name="_adm_stg_cpt_option_template"><![CDATA[Основная тема]]></string>
 	<string name="_adm_stg_err_option_template"><![CDATA[Тема не может быть пустой и должна иметь приемлемое название.]]></string>
     <string name="_adm_stg_cpt_option_use_like_operator"><![CDATA[Использовать для поиска оператор LIKE (рекомендуется для небольшого содержимого)]]></string>
@@ -1961,7 +1961,6 @@
 	<string name="_sys_form_confirm_phone"><![CDATA[Подтверждение телефона]]></string>
 	<string name="_sys_form_confirm_phone_input_caption_system_phone"><![CDATA[Телефон]]></string>
 	<string name="_sys_form_confirm_phone_input_phone"><![CDATA[Телефон]]></string>
-  <string name="_sys_form_confirm_phone_input_phone_info"><![CDATA[Введите телефон с кодом страны]]></string>
 	<string name="_sys_form_confirm_phone_input_phone_error_format"><![CDATA[Телефон должен содержать только цифры и начинаться с '+']]></string>
 	<string name="_sys_form_confirm_phone_input_phone_error_not_unique"><![CDATA[Этот телефон уже кем-то используется]]></string>
 	<string name="_sys_form_confirm_phone_input_caption_system_code"><![CDATA[Код]]></string>
@@ -2037,7 +2036,6 @@
 	<string name="_sys_form_login_input_email"><![CDATA[Имейл]]></string>
 	<string name="_sys_form_login_input_password"><![CDATA[Пароль]]></string>
 	<string name="_sys_form_login_input_phone"><![CDATA[Телефон]]></string>
-  <string name="_sys_form_login_input_phone_info"><![CDATA[Введите телефон с кодом страны]]></string>
 	<string name="_sys_form_login_input_remember_me"><![CDATA[Запомнить меня]]></string>
 	<string name="_sys_form_login_input_sendsms"><![CDATA[Отправить SMS]]></string>
 	<string name="_sys_form_login_input_submit"><![CDATA[Вход]]></string>
@@ -2517,7 +2515,8 @@
         <string name="_sys_pre_lists_vote_reactions_sadness"><![CDATA[Грустно]]></string>
         <string name="_sys_pre_lists_vote_reactions_anger"><![CDATA[Злюсь]]></string>
 	<string name="_sys_profile_sample_single"><![CDATA[профиль]]></string>
-	<string name="_sys_profile_friendship_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> предложил дружбу <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
+        <string name="_sys_profile_friend_request_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> предложил дружбу <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
+	<string name="_sys_profile_friendship_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> и <b class="bx-ntfs-content-entry">{entry_caption}</b> теперь друзья]]></string>
 	<string name="_sys_profile_subscription_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> следит за <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
 	<string name="_sys_profile_status_active"><![CDATA[Активный]]></string>
     <string name="_sys_profile_status_pending"><![CDATA[В ожидании]]></string>

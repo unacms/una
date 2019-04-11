@@ -145,11 +145,12 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
      */
     protected function getInsertDataSysProfilesFriendsConnectionAdded(&$oAlert, &$aHandler)
     {
-        if(empty($oAlert->aExtras['mutual']))
-            return array();
-
         $iObjectPrivacyView = $this->_getObjectPrivacyView($oAlert->aExtras);
         $iPrivacyView = $this->_oModule->_oConfig->getPrivacyViewDefault('event');
+
+        $aContent = array(
+            'request' => empty($oAlert->aExtras['mutual']) ? 1 : 0
+        );
 
     	return array(
     	    array(
@@ -160,22 +161,10 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
                 'object_owner_id' => $oAlert->aExtras['content'],
                 'object_privacy_view' => $iObjectPrivacyView,
                 'subobject_id' => 0,
-                'content' => '',
+                'content' => serialize($aContent),
                 'allow_view_event_to' => $iPrivacyView,
                 'processed' => 0
-    	    ),
-    	    array(
-                'owner_id' => $oAlert->aExtras['content'],
-                'type' => $oAlert->sUnit,
-                'action' => $oAlert->sAction,
-                'object_id' => $oAlert->aExtras['initiator'],
-                'object_owner_id' => $oAlert->aExtras['initiator'],
-                'object_privacy_view' => $iObjectPrivacyView,
-                'subobject_id' => 0,
-                'content' => '',
-                'allow_view_event_to' => $iPrivacyView,
-                'processed' => 0
-    	    ),
+    	    )
         );
     }
     

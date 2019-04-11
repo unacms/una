@@ -120,13 +120,14 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
     {
     	$oModule = $this->getModule();
 
+        if(!empty($aEvent['content']) && is_string($aEvent['content']))
+            $aEvent['content'] = unserialize($aEvent['content']);
+
     	if((int)$aEvent['processed'] == 0)
             $this->_processContent($aEvent);
 
-        if(empty($aEvent['content']))
+        if((int)$aEvent['processed'] == 0 || empty($aEvent['content']))
             return '';
-
-        $aEvent['content'] = unserialize($aEvent['content']);
 
         $sParam = 'perform_privacy_check';
         if(!isset($aBrowseParams[$sParam]) || $aBrowseParams[$sParam] === true) {
@@ -261,9 +262,11 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
             unset($aContent['entry_privacy']);
         }
 
-        $aEvent['content'] = serialize($aContent);
+        $aEvent['content'] = $aContent;
+        $aEvent['processed'] = 1;
+
         $aSet = array_merge($aSet, array(
-            'content' => $aEvent['content'], 
+            'content' => serialize($aEvent['content']), 
             'processed' => 1
         ));
 
@@ -279,13 +282,13 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 
         $aHandler = $this->_oConfig->getHandlers($sHandler);
         if(!empty($aHandler['module_name']) && !empty($aHandler['module_class']) && !empty($aHandler['module_method']))
-        	return BxDolService::call($aHandler['module_name'], $aHandler['module_method'], array($aEvent), $aHandler['module_class']);
+            return BxDolService::call($aHandler['module_name'], $aHandler['module_method'], array($aEvent), $aHandler['module_class']);
 
         $sMethod = 'display' . bx_gen_method_name($aHandler['alert_unit'] . '_' . $aHandler['alert_action']);
-		if(!method_exists($this, $sMethod))
-        	return array();
+        if(!method_exists($this, $sMethod))
+            return array();
 
-		return $this->$sMethod($aEvent);
+        return $this->$sMethod($aEvent);
     }
 
     protected function _getContentObjectId(&$aEvent)
