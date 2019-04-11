@@ -2956,8 +2956,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     protected function _serviceGetBlockViewByType($aBrowseParams = array())
     {
         $aParams = $this->_prepareParams($aBrowseParams);
-        if(isset($aParams['per_page']) && (int)$aParams['per_page'] <= 0)
-            $aParams['per_page'] = isset($aBrowseParams['per_page_default']) && (int)$aBrowseParams['per_page_default'] > 0 ? $aBrowseParams['per_page_default'] : $this->_oConfig->getPerPage();
 
         $this->_iOwnerId = $aParams['owner_id'];
 
@@ -3208,7 +3206,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $aParams['start'] = 0;
 
         if(!isset($aParams['per_page']) || (int)$aParams['per_page'] <= 0)
-            $aParams['per_page'] = $this->_oConfig->getPerPage();
+            $aParams['per_page'] = isset($aParams['per_page_default']) && (int)$aParams['per_page_default'] > 0 ? $aParams['per_page_default'] : $this->_oConfig->getPerPage();
 
         if(empty($aParams['timeline']) || (int)$aParams['timeline'] < 0)
             $aParams['timeline'] = 0;

@@ -177,7 +177,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_timeline_hot_interval', '48', @iCategId, '_bx_timeline_option_hot_interval', 'digit', '', '', '', '', 61),
 ('bx_timeline_enable_cache_item', 'on', @iCategId, '_bx_timeline_option_enable_cache_item', 'checkbox', '', '', '', '', 70),
 ('bx_timeline_cache_item_engine', 'File', @iCategId, '_bx_timeline_option_cache_item_engine', 'select', '', '', '', 'File,Memcache,APC,XCache', 71),
-('bx_timeline_cache_item_lifetime', '300', @iCategId, '_bx_timeline_option_cache_item_lifetime', 'digit', '', '', '', '', 72),
+('bx_timeline_cache_item_lifetime', '604800', @iCategId, '_bx_timeline_option_cache_item_lifetime', 'digit', '', '', '', '', 72),
 ('bx_timeline_enable_cache_list', 'on', @iCategId, '_bx_timeline_option_enable_cache_list', 'checkbox', '', '', '', '', 73),
 
 -- Post related settings
