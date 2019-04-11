@@ -21,7 +21,7 @@ class BxFroalaModule extends BxDolModule
         return "
         <script>
             var fFroalaAddClass = function (s) {
-                $('.bx-content-description,.cmt-body,.bx-base-text-entity-content').addClass('fr-view');
+                $('.bx-content-description,.cmt-body,.bx-base-text-entity-content,.bx-tl-content').addClass('fr-view');
             };
             
             if (typeof glOnProcessHtml === 'undefined')
