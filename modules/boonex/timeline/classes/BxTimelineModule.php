@@ -202,6 +202,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(!$this->deleteEvent($aEvent))
             return echoJson(array('code' => 3));
 
+        $this->_oModule->_oDb->deleteCache(array('event_id' => $iId));
+
         echoJson(array(
             'code' => 0, 
             'id' => $aEvent['id'], 
@@ -901,6 +903,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'type' => BX_BASE_MOD_NTFS_TYPE_OWNER, 
             'start' => -1, 
             'per_page' => -1, 
+            'per_page_default' => $this->_oConfig->getPerPage('profile'), 
             'timeline' => -1, 
             'filter' => '', 
             'modules' => array()
@@ -932,6 +935,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'type' => BX_BASE_MOD_NTFS_TYPE_OWNER, 
             'start' => -1, 
             'per_page' => -1, 
+            'per_page_default' => $this->_oConfig->getPerPage('profile'), 
             'timeline' => -1, 
             'filter' => '', 
             'modules' => array()
@@ -969,6 +973,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'type' => BX_BASE_MOD_NTFS_TYPE_OWNER, 
             'start' => $iStart, 
             'per_page' => $iPerPage, 
+            'per_page_default' => $this->_oConfig->getPerPage('profile'), 
             'timeline' => $iTimeline, 
             'filter' => $sFilter, 
             'modules' => $aModules
@@ -1006,6 +1011,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'type' => BX_BASE_MOD_NTFS_TYPE_OWNER, 
             'start' => $iStart, 
             'per_page' => $iPerPage, 
+            'per_page_default' => $this->_oConfig->getPerPage('profile'), 
             'timeline' => $iTimeline, 
             'filter' => $sFilter, 
             'modules' => $aModules

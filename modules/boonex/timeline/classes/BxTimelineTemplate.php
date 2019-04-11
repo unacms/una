@@ -304,6 +304,11 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(array_key_exists($iEventId, self::$_aMemoryCacheItems))
             return self::$_aMemoryCacheItems[$iEventId];
 
+        /**
+         * Add all items in memory cache even if they are empty.
+         */
+        self::$_aMemoryCacheItems[$iEventId] = '';
+
         $oPrivacy = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'));
         if($oPrivacy) {
             $oPrivacy->setTableFieldAuthor($this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? 'owner_id' : 'object_id');
