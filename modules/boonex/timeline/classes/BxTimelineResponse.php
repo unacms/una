@@ -82,9 +82,9 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 $this->_oModule->_oDb->updateEvent($aParamsSet, array('type' => $oAlert->sUnit, 'object_id' => $oAlert->iObject));
 
                 //--- Delete cached
-                $this->_oModule->_oDb->deleteCache(array('owner_id' => 0)); //--- Delete cache for Public feed
-                $this->_oModule->_oDb->deleteCache(array('owner_id' => $aEvent[$CNF['FIELD_OWNER_ID']])); //--- Delete cache for old context
-                $this->_oModule->_oDb->deleteCache(array('owner_id' => $aParamsSet['owner_id'])); //--- Delete cache for new context
+                $this->_oModule->_oDb->deleteCache(array('context_id' => 0)); //--- Delete cache for Public feed
+                $this->_oModule->_oDb->deleteCache(array('context_id' => $aEvent[$CNF['FIELD_OWNER_ID']])); //--- Delete cache for old context
+                $this->_oModule->_oDb->deleteCache(array('context_id' => $aParamsSet['owner_id'])); //--- Delete cache for new context
                 break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_DELETE:
@@ -100,7 +100,7 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                     }
 
                     //--- Delete cached
-                    $this->_oModule->_oDb->deleteCache(array('owner_id' => $oAlert->iObject));
+                    $this->_oModule->_oDb->deleteCache(array('context_id' => $oAlert->iObject));
                     $this->_oModule->_oDb->deleteCache(array('profile_id' => $oAlert->iObject));
                     break;
                 }
