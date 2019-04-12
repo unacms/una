@@ -31,7 +31,7 @@
 	<string name="_Description"><![CDATA[Описание]]></string>
 	<string name="_EXPLANATION_H"><![CDATA[Объяснение]]></string>
 	<string name="_Edit"><![CDATA[Редактировать]]></string>
-	<string name="_Email"><![CDATA[Имейл]]></string>
+	<string name="_Email"><![CDATA[Email]]></string>
 	<string name="_Email sent failed"><![CDATA[Невозможно послать письмо]]></string>
 	<string name="_Empty"><![CDATA[Пусто]]></string>
 	<string name="_Enter_value_here"><![CDATA[Пожалуйста, введите значение]]></string>
@@ -53,7 +53,7 @@
 	<string name="_From"><![CDATA[От]]></string>
 	<string name="_Header"><![CDATA[Заголовок]]></string>
 	<string name="_Incorrect Captcha"><![CDATA[Неправильная капча]]></string>
-	<string name="_Incorrect Email"><![CDATA[Неправильный имейл]]></string>
+	<string name="_Incorrect Email"><![CDATA[Неправильный email]]></string>
 	<string name="_Info"><![CDATA[Инфо]]></string>
 	<string name="_Keyword"><![CDATA[Ключевое слово]]></string>
 	<string name="_LookinFemale"><![CDATA[Женщина]]></string>
@@ -771,7 +771,7 @@
 	<string name="_adm_form_txt_field_checker_date"><![CDATA[Дата (проверка правильного формата даты)]]></string>
   <string name="_adm_form_txt_field_checker_date_range"><![CDATA[Возрастной диапазон]]></string>
 	<string name="_adm_form_txt_field_checker_date_time"><![CDATA[Дата и время (проверка правильного формата даты и времени)]]></string>
-	<string name="_adm_form_txt_field_checker_email"><![CDATA[Имейл (формат правильного эл. адреса)]]></string>
+	<string name="_adm_form_txt_field_checker_email"><![CDATA[Email (формат правильного эл. адреса)]]></string>
 	<string name="_adm_form_txt_field_checker_empty"><![CDATA[Выбрать...]]></string>
 	<string name="_adm_form_txt_field_checker_error"><![CDATA[Сообщение об ошибке, если не прошло проверку]]></string>
 	<string name="_adm_form_txt_field_checker_func"><![CDATA[Проверить на]]></string>
@@ -917,8 +917,8 @@
 	<string name="_adm_lmi_cpt_splash"><![CDATA[Заставка]]></string>
 	<string name="_adm_lmi_cpt_displays"><![CDATA[Дисплеи]]></string>
 	<string name="_adm_lmi_cpt_downloaded"><![CDATA[Скачано]]></string>
-	<string name="_adm_lmi_cpt_etemplates"><![CDATA[Имейлы]]></string>
-	<string name="_adm_lmi_cpt_etemplates_hf"><![CDATA[Имейл-шаблон]]></string>
+	<string name="_adm_lmi_cpt_etemplates"><![CDATA[Email-ы]]></string>
+	<string name="_adm_lmi_cpt_etemplates_hf"><![CDATA[Email-шаблон]]></string>
 	<string name="_adm_lmi_cpt_featured"><![CDATA[Избранные]]></string>
 	<string name="_adm_lmi_cpt_fields"><![CDATA[Поля]]></string>
 	<string name="_adm_lmi_cpt_files"><![CDATA[Файлы]]></string>
@@ -1134,7 +1134,7 @@
 	<string name="_adm_pgt_txt_nkp_key_name"><![CDATA[Имя ключа]]></string>
 	<string name="_adm_pgt_txt_nkp_module"><![CDATA[Модуль]]></string>
 	<string name="_adm_pgt_txt_text"><![CDATA[Текст]]></string>
-    <string name="_adm_pgt_txt_et_hf_inf"><![CDATA[Внимание. Неправильное применение HTML может повредить дизайн имейл сообщения. Также убедитесь в том, что маркер {unsubscribe} присутствует хотя бы в одном из темплейтов (заголовок и/или основание).]]></string>
+    <string name="_adm_pgt_txt_et_hf_inf"><![CDATA[Внимание. Неправильное применение HTML может повредить дизайн email сообщения. Также убедитесь в том, что маркер {unsubscribe} присутствует хотя бы в одном из темплейтов (заголовок и/или основание).]]></string>
     <string name="_adm_pgt_btn_et_hf_submit"><![CDATA[Выполнить]]></string>
     <string name="_adm_pgt_scs_et_hf_save"><![CDATA[Изменения сохранены.]]></string>
     <string name="_adm_pgt_err_et_hf_save"><![CDATA[Невозможно сохранить изменения.]]></string>
@@ -1259,10 +1259,10 @@
 	<string name="_adm_stg_cpt_option_permalinks_modules"><![CDATA[Задействовать дружественные ссылки для модулей]]></string>
     <string name="_adm_stg_cpt_option_permalinks_pages"><![CDATA[Задействовать дружественные ссылки для страниц]]></string>
     <string name="_adm_stg_cpt_option_permalinks_storage"><![CDATA[Задействовать дружественные ссылки для локального хранилища]]></string>
-	<string name="_adm_stg_cpt_option_site_email"><![CDATA[Имейл для получения критических уведомлений от сайта]]></string>
-	<string name="_adm_stg_cpt_option_site_email_notify"><![CDATA[Имейл, с которого будут посылаться сообщения от сайта]]></string>
-	<string name="_adm_stg_cpt_option_site_email_html_template_header"><![CDATA[Заголовок имейл HTML шаблона]]></string>
-    <string name="_adm_stg_cpt_option_site_email_html_template_footer"><![CDATA[Основание имейл HTML шаблона]]></string>
+	<string name="_adm_stg_cpt_option_site_email"><![CDATA[Email для получения критических уведомлений от сайта]]></string>
+	<string name="_adm_stg_cpt_option_site_email_notify"><![CDATA[Email, с которого будут посылаться сообщения от сайта]]></string>
+	<string name="_adm_stg_cpt_option_site_email_html_template_header"><![CDATA[Заголовок HTML шаблона email сообщения]]></string>
+    <string name="_adm_stg_cpt_option_site_email_html_template_footer"><![CDATA[Основание HTML шаблона email сообщения]]></string>
     <string name="_adm_stg_cpt_option_site_login_social_compact"><![CDATA[Задействовать компактный вид входа через соц. сети]]></string>
 	<string name="_adm_stg_cpt_option_site_title"><![CDATA[Название сайта]]></string>
 	<string name="_adm_stg_cpt_option_site_tour_home"><![CDATA[Экскурсия по главной странице сайта]]></string>
@@ -1286,7 +1286,7 @@
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_host"><![CDATA[Memcached - адрес сервера]]></string>
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_port"><![CDATA[Memcached - порт сервера]]></string>
 	<string name="_adm_stg_cpt_option_sys_captcha_default"><![CDATA[Объект CAPTCHA]]></string>
-	<string name="_adm_stg_cpt_option_sys_email_attachable_email_templates"><![CDATA[Список присоединяемых имейл темплейтов]]></string>
+	<string name="_adm_stg_cpt_option_sys_email_attachable_email_templates"><![CDATA[Список присоединяемых email темплейтов]]></string>
 	<string name="_adm_stg_cpt_option_sys_db_cache_enable"><![CDATA[Задействовать кэш БД]]></string>
 	<string name="_adm_stg_cpt_option_sys_db_cache_engine"><![CDATA[Кэш-движок для БД (значение, отличное от File, может потребовать дополнительной настройки сервера)]]></string>
 	<string name="_adm_stg_cpt_option_sys_default_payment"><![CDATA[Модуль оплаты]]></string>
@@ -1306,9 +1306,9 @@
     <string name="_adm_stg_cpt_option_sys_embedly_api_key"><![CDATA[Ключ Embed.ly API (заполните, чтобы использовать вместо Iframely)]]></string>
     <string name="_adm_stg_cpt_option_sys_embedly_api_pattern"><![CDATA[Шаблон Embed.ly API (заполните, чтобы использовать вместо Iframely)]]></string>
     <string name="_adm_stg_cpt_option_sys_iframely_api_key"><![CDATA[Ключ Iframely API]]></string>
-    <string name="_adm_stg_cpt_option_sys_eq_time"><![CDATA[Флаг выполнения имейл очереди]]></string>
-    <string name="_adm_stg_cpt_option_sys_eq_send_per_start"><![CDATA[Количество сообщенией, отправляемое из имейл очереди при каждом запуске]]></string>
-    <string name="_adm_stg_cpt_option_sys_eq_send_per_start_to_recipient"><![CDATA[Количество сообщенией, отправляемое из имейл очереди одному и тому же получателю при каждом запуске]]></string>
+    <string name="_adm_stg_cpt_option_sys_eq_time"><![CDATA[Флаг выполнения email очереди]]></string>
+    <string name="_adm_stg_cpt_option_sys_eq_send_per_start"><![CDATA[Количество сообщенией, отправляемое из email очереди при каждом запуске]]></string>
+    <string name="_adm_stg_cpt_option_sys_eq_send_per_start_to_recipient"><![CDATA[Количество сообщенией, отправляемое из email очереди одному и тому же получателю при каждом запуске]]></string>
 	<string name="_adm_stg_cpt_option_sys_oauth_key"><![CDATA[UNA-аккаунт - Key (ключ)]]></string>
 	<string name="_adm_stg_cpt_option_sys_oauth_secret"><![CDATA[UNA-аккаунт - Secret (секретное слово)]]></string>
 	<string name="_adm_stg_cpt_option_sys_page_cache_enable"><![CDATA[Задействовать кэш для страниц]]></string>
@@ -1330,7 +1330,7 @@
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_private"><![CDATA[reCAPTCHA - приватный ключ]]></string>
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_public"><![CDATA[reCAPTCHA - публичный ключ]]></string>
 	<string name="_adm_stg_cpt_option_sys_redirect_after_account_added"><![CDATA[Перенаправлять после создания аккаунта на]]></string>
-    <string name="_adm_stg_cpt_option_sys_redirect_after_email_confirmation"><![CDATA[Перенаправлять после подтверждения имейла на]]></string>
+    <string name="_adm_stg_cpt_option_sys_redirect_after_email_confirmation"><![CDATA[Перенаправлять после подтверждения email-а на]]></string>
     <string name="_adm_stg_cpt_option_sys_relations"><![CDATA[Разрешить связи между]]></string>
     <string name="_adm_stg_cpt_option_sys_revision"><![CDATA[Номер ревизии]]></string>
 	<string name="_adm_stg_cpt_option_sys_security_form_token_enable"><![CDATA[Задействовать CSRF токен в формах]]></string>
@@ -1728,7 +1728,7 @@
     <string name="_sys_connect_adm_stg_cpt_category_general"><![CDATA[Общие]]></string>
     <string name="_sys_connect_option_redirect"><![CDATA[Перенаправление после захода на сайт]]></string>
     <string name="_sys_connect_option_module"><![CDATA[Модуль в котором создавать профили]]></string>
-    <string name="_sys_connect_option_confirm_email"><![CDATA[Всегда подтверждать имейл, когда заходят через это соединение]]></string>
+    <string name="_sys_connect_option_confirm_email"><![CDATA[Всегда подтверждать email, когда заходят через это соединение]]></string>
     <string name="_sys_connect_option_approve"><![CDATA[Всегда одобрять профиль, когда заходят через это соединение]]></string>
     <string name="_sys_connect_option_privacy"><![CDATA[Настройки конфиденциальности для созданных профилей]]></string>
 
@@ -1769,7 +1769,7 @@
 {email_footer}]]></string>
 	<string name="_sys_et_txt_body_confirmation"><![CDATA[{email_header}
 <p>Привет, {name}.</p>
-<p>Пожалуйста, подтвердите ваш имейл, нажав по ссылке:</p>
+<p>Пожалуйста, подтвердите ваш email, нажав по ссылке:</p>
 <p> </p>
 <p><a href="{conf_link}">{conf_link}</a></p>
 <p> </p>
@@ -1808,7 +1808,7 @@
 <p>Данные вашего аккаунта на сайте {site_name}:</p>
 <p> </p>
 <p>Имя: {account_name}</p>
-<p>Имейл: {account_email}</p>
+<p>Email: {account_email}</p>
 <p>URL: <a href="{site_url}">{site_url}</a></p>
 <p> </p>
 {email_footer}]]></string>
@@ -1882,7 +1882,7 @@
 	<string name="_sys_et_txt_subject_admin_email"><![CDATA[Сообщение от администратора сайта <SiteName>: <MessageSubject>]]></string>
 	<string name="_sys_et_txt_subject_comment_replied"><![CDATA[{sender_display_name} ответил на Ваш комментарий]]></string>
 	<string name="_sys_et_txt_subject_system_reported"><![CDATA[Уведомление о новой жалобе]]></string>
-	<string name="_sys_et_txt_subject_confirmation"><![CDATA[Пожалуйста, подтвердите свой имейл. (ОБЯЗАТЕЛЬНО)]]></string>
+	<string name="_sys_et_txt_subject_confirmation"><![CDATA[Пожалуйста, подтвердите свой email. (ОБЯЗАТЕЛЬНО)]]></string>
 	<string name="_sys_et_txt_subject_delayed_module_uninstall"><![CDATA[Отложенный демонтаж модуля {Module}: {Result}]]></string>
 	<string name="_sys_et_txt_subject_forgot"><![CDATA[Сбросьте свой пароль]]></string>
 	<string name="_sys_et_txt_subject_mem_changed"><![CDATA[Уровень Вашего членства был изменён]]></string>
@@ -1921,8 +1921,8 @@
 	<string name="_sys_form_account_input_delete_confirm"><![CDATA[Я уверен, что хочу удалить аккаунт вместе с содержимым.]]></string>
 	<string name="_sys_form_account_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если Вы действительно хотите удалить свой аккаунт вместе с содержимым.]]></string>
 	<string name="_sys_form_account_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено.]]></string>
-	<string name="_sys_form_account_input_email"><![CDATA[Имейл]]></string>
-	<string name="_sys_form_account_input_email_error"><![CDATA[Неправильный имейл]]></string>
+	<string name="_sys_form_account_input_email"><![CDATA[Email]]></string>
+	<string name="_sys_form_account_input_email_error"><![CDATA[Неправильный email]]></string>
 	<string name="_sys_form_account_input_email_uniq_error"><![CDATA[Этот эл. адрес уже зарегистрирован. Пожалуйста, воспользуйтесь ссылкой <a href="{0}">Забыли пароль?</a>, чтобы восстановить доступ к своему аккаунту.]]></string>
 	<string name="_sys_form_account_input_email_uniq_error_loggedin"><![CDATA[Этот эл. адрес уже кем-то используется.]]></string>
 	<string name="_sys_form_account_input_name"><![CDATA[Имя аккаунта]]></string>
@@ -1952,7 +1952,7 @@
 	<string name="_sys_form_comment_input_caption_system_id"><![CDATA[ID объекта]]></string>
 	<string name="_sys_form_comment_input_caption_system_sys"><![CDATA[Тип объекта]]></string>
 	<string name="_sys_form_comment_input_submit"><![CDATA[Сообщение]]></string>
-	<string name="_sys_form_confirm_email"><![CDATA[Подтверждение имейла]]></string>
+	<string name="_sys_form_confirm_email"><![CDATA[Подтверждение email-а]]></string>
 	<string name="_sys_form_confirm_email_input_caption_system_code"><![CDATA[Код верификации]]></string>
 	<string name="_sys_form_confirm_email_input_caption_system_do_submit"><![CDATA[Выполнить]]></string>
 	<string name="_sys_form_confirm_email_input_code"><![CDATA[Код верификации]]></string>
@@ -1974,12 +1974,12 @@
 	<string name="_sys_form_confirm_phone_input_code_error_invalid"><![CDATA[Неправильный код проверки. Пожалуйста, повторите код или  <a href="{0}">измените телефонный номер и начните сначала</a>.]]></string>
 	<string name="_sys_form_display_account_create"><![CDATA[Создать аккаунт]]></string>
 	<string name="_sys_form_display_account_settings_delete"><![CDATA[Удалить аккаунт]]></string>
-	<string name="_sys_form_display_account_settings_email"><![CDATA[Настройки имейла]]></string>
+	<string name="_sys_form_display_account_settings_email"><![CDATA[Настройки email-а]]></string>
 	<string name="_sys_form_display_account_settings_info"><![CDATA[Редактировать аккаунт]]></string>
 	<string name="_sys_form_display_account_settings_password"><![CDATA[Изменить пароль]]></string>
 	<string name="_sys_form_display_comment_edit"><![CDATA[Редактировать форму комментария]]></string>
 	<string name="_sys_form_display_comment_post"><![CDATA[Разместить форму комментария]]></string>
-	<string name="_sys_form_display_confirm_email"><![CDATA[Подтверждение имейла]]></string>
+	<string name="_sys_form_display_confirm_email"><![CDATA[Подтверждение email-а]]></string>
 	<string name="_sys_form_display_confirm_phone_set_phone"><![CDATA[Сохраниение телефона]]></string>
 	<string name="_sys_form_display_confirm_phone_confirmation"><![CDATA[Подтверждение телефона]]></string>
 	<string name="_sys_form_display_forgot_password"><![CDATA[Забыли пароль?]]></string>
@@ -1993,10 +1993,10 @@
 	<string name="_sys_form_forgot_password_email_not_recognized"><![CDATA[Этот эл. адрес не принадлежит ни одному аккаунту. Удостоверьтесь, что он введён правильно.]]></string>
 	<string name="_sys_form_forgot_password_phone_not_recognized"><![CDATA[Этот телефон не принадлежит ни одному аккаунту. Удостоверьтесь, что он введён правильно.]]></string>
 	<string name="_sys_form_forgot_password_phone_error_format"><![CDATA[Телефон должен содержать только цифры и начинаться с '+']]></string>
-	<string name="_sys_form_forgot_password_phone_and_email_empty_error"><![CDATA[Нужно ввести либо телефон, либо имейл]]></string>
+	<string name="_sys_form_forgot_password_phone_and_email_empty_error"><![CDATA[Нужно ввести либо телефон, либо email]]></string>
 	<string name="_sys_form_forgot_password_input_caption_system_do_submit"><![CDATA[Выполнить]]></string>
-	<string name="_sys_form_forgot_password_input_caption_system_email"><![CDATA[Имейл]]></string>
-	<string name="_sys_form_forgot_password_input_email"><![CDATA[Имейл]]></string>
+	<string name="_sys_form_forgot_password_input_caption_system_email"><![CDATA[Email]]></string>
+	<string name="_sys_form_forgot_password_input_email"><![CDATA[Email]]></string>
 	<string name="_sys_form_forgot_password_input_caption_system_phone"><![CDATA[Телефон]]></string>
 	<string name="_sys_form_forgot_password_input_phone"><![CDATA[Телефон]]></string>
 	<string name="_sys_form_forgot_password_input_submit"><![CDATA[Выполнить]]></string>
@@ -2016,7 +2016,7 @@
 	<string name="_sys_form_login_input_caption_system_delete_confirm"><![CDATA[Подтвердить удаление]]></string>
 	<string name="_sys_form_login_input_caption_system_delete_content"><![CDATA[Удалить с контентом]]></string>
 	<string name="_sys_form_login_input_caption_system_do_submit"><![CDATA[Присоединиться]]></string>
-	<string name="_sys_form_login_input_caption_system_email"><![CDATA[Имейл]]></string>
+	<string name="_sys_form_login_input_caption_system_email"><![CDATA[Email]]></string>
 	<string name="_sys_form_login_input_caption_system_id"><![CDATA[ID]]></string>
 	<string name="_sys_form_login_input_caption_system_name"><![CDATA[Имя аккаунта]]></string>
 	<string name="_sys_form_login_input_caption_system_password"><![CDATA[Пароль]]></string>
@@ -2034,7 +2034,7 @@
 	<string name="_sys_form_login_input_checkcode"><![CDATA[Выполнить]]></string>
 	<string name="_sys_form_login_input_code"><![CDATA[Код из SMS]]></string>
 	<string name="_sys_form_login_input_back"><![CDATA[<a href="javascript:history.back()">Отправить новый код</a>]]></string>
-	<string name="_sys_form_login_input_email"><![CDATA[Имейл]]></string>
+	<string name="_sys_form_login_input_email"><![CDATA[Email]]></string>
 	<string name="_sys_form_login_input_password"><![CDATA[Пароль]]></string>
 	<string name="_sys_form_login_input_phone"><![CDATA[Телефон]]></string>
         <string name="_sys_form_login_input_phone_info"><![CDATA[Введите телефон с кодом страны]]></string>
@@ -2079,7 +2079,7 @@
 	<string name="_sys_grid_search"><![CDATA[Поиск...]]></string>
   <string name="_sys_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 	<string name="_sys_inst_conf_desc"><![CDATA[{0}{1}<br />Пример: {2}]]></string>
-	<string name="_sys_inst_conf_desc_admin_email"><![CDATA[Администратор - имейл.]]></string>
+	<string name="_sys_inst_conf_desc_admin_email"><![CDATA[Администратор - email.]]></string>
 	<string name="_sys_inst_conf_desc_admin_pwd"><![CDATA[Администратор - пароль.]]></string>
 	<string name="_sys_inst_conf_desc_admin_username"><![CDATA[Администратор - имя.]]></string>
 	<string name="_sys_inst_conf_desc_db_host"><![CDATA[MySQL БД - имя хоста.]]></string>
@@ -2093,12 +2093,12 @@
 	<string name="_sys_inst_conf_desc_oauth_key_secret"><![CDATA[<a target="_blank" href="http://www.una.io/page/kands-manage">Получить UNA Key & Secret</a>]]></string>
 	<string name="_sys_inst_conf_desc_path_to_binary"><![CDATA[Если '{0}' программа не существует, нужно установить <a target="_blank" href="http://www.imagemagick.org/">ImageMagick</a>.]]></string>
 	<string name="_sys_inst_conf_desc_root_dir"><![CDATA[Путь к директории, где содержатся файлы UNA.]]></string>
-	<string name="_sys_inst_conf_desc_site_email"><![CDATA[Имейл, с которого будут отправляться сообщения от сайта.]]></string>
+	<string name="_sys_inst_conf_desc_site_email"><![CDATA[Email, с которого будут отправляться сообщения от сайта.]]></string>
 	<string name="_sys_inst_conf_desc_site_title"><![CDATA[Название Вашего сайта.]]></string>
 	<string name="_sys_inst_conf_desc_site_url"><![CDATA[URL Вашего сайта (косая черта в конце необходима).]]></string>
 	<string name="_sys_inst_conf_desc_template"><![CDATA[Тема для установки по умолчанию.]]></string>
 	<string name="_sys_inst_conf_error"><![CDATA[Тут нужно ввести верные данные]]></string>
-	<string name="_sys_inst_conf_field_admin_email"><![CDATA[Имейл админа]]></string>
+	<string name="_sys_inst_conf_field_admin_email"><![CDATA[Email админа]]></string>
 	<string name="_sys_inst_conf_field_admin_pwd"><![CDATA[Пароль админа]]></string>
 	<string name="_sys_inst_conf_field_admin_username"><![CDATA[Администратор - имя]]></string>
 	<string name="_sys_inst_conf_field_db_host"><![CDATA[База Данных - имя хоста]]></string>
@@ -2113,7 +2113,7 @@
 	<string name="_sys_inst_conf_field_oauth_secret"><![CDATA[UNA secret]]></string>
 	<string name="_sys_inst_conf_field_path_to_binary"><![CDATA[Путь к '{0}' программе]]></string>
 	<string name="_sys_inst_conf_field_root_dir"><![CDATA[Директория сайта]]></string>
-	<string name="_sys_inst_conf_field_site_email"><![CDATA[Имейл сайта]]></string>
+	<string name="_sys_inst_conf_field_site_email"><![CDATA[Email сайта]]></string>
 	<string name="_sys_inst_conf_field_site_title"><![CDATA[Заголовок сайта]]></string>
 	<string name="_sys_inst_conf_field_site_url"><![CDATA[URL сайта]]></string>
 	<string name="_sys_inst_conf_field_template"><![CDATA[Тема]]></string>
@@ -2187,7 +2187,7 @@
 	<string name="_sys_menu_item_title_account_dashboard_administration"><![CDATA[Администрация]]></string>
 	<string name="_sys_menu_item_title_account_settings"><![CDATA[Настройки]]></string>
 	<string name="_sys_menu_item_title_account_settings_delete"><![CDATA[Удалить]]></string>
-	<string name="_sys_menu_item_title_account_settings_email"><![CDATA[Имейл]]></string>
+	<string name="_sys_menu_item_title_account_settings_email"><![CDATA[Email]]></string>
 	<string name="_sys_menu_item_title_account_settings_info"><![CDATA[Аккаунт]]></string>
 	<string name="_sys_menu_item_title_account_settings_pwd"><![CDATA[Пароль]]></string>
 	<string name="_sys_menu_item_title_add_content"><![CDATA[Добавить...]]></string>
@@ -2249,7 +2249,7 @@
 	<string name="_sys_menu_item_title_system_account_dashboard_administration"><![CDATA[Администрация]]></string>
 	<string name="_sys_menu_item_title_system_account_settings"><![CDATA[Настройки]]></string>
 	<string name="_sys_menu_item_title_system_account_settings_delete"><![CDATA[Удалить]]></string>
-	<string name="_sys_menu_item_title_system_account_settings_email"><![CDATA[Имейл]]></string>
+	<string name="_sys_menu_item_title_system_account_settings_email"><![CDATA[Email]]></string>
 	<string name="_sys_menu_item_title_system_account_settings_info"><![CDATA[Аккаунт]]></string>
 	<string name="_sys_menu_item_title_system_account_settings_pwd"><![CDATA[Пароль]]></string>
 	<string name="_sys_menu_item_title_system_add_content"><![CDATA[Добавить Содержимое]]></string>
@@ -2405,7 +2405,7 @@
 	<string name="_sys_page_block_title_account_profile_create"><![CDATA[Создать профиль...]]></string>
 	<string name="_sys_page_block_title_account_profile_switcher"><![CDATA[Использовать сайт как ...]]></string>
 	<string name="_sys_page_block_title_account_settings_delete"><![CDATA[Удалить аккаунт]]></string>
-	<string name="_sys_page_block_title_account_settings_email"><![CDATA[Настройки имейла]]></string>
+	<string name="_sys_page_block_title_account_settings_email"><![CDATA[Настройки email-а]]></string>
 	<string name="_sys_page_block_title_account_settings_info"><![CDATA[Редактировать аккаунт]]></string>
 	<string name="_sys_page_block_title_account_settings_menu"><![CDATA[Аккаунт - Настройки]]></string>
 	<string name="_sys_page_block_title_account_settings_pwd"><![CDATA[Изменить пароль]]></string>
@@ -2413,7 +2413,7 @@
     <string name="_sys_page_block_title_chart_growth"><![CDATA[Диаграммы развития]]></string>
     <string name="_sys_page_block_title_chart_stats"><![CDATA[Содержимое]]></string>    
 	<string name="_sys_page_block_title_cmts_administration"><![CDATA[Управление комментариями]]></string>
-	<string name="_sys_page_block_title_confirm_email"><![CDATA[Имейл - Подтверждение]]></string>
+	<string name="_sys_page_block_title_confirm_email"><![CDATA[Email - Подтверждение]]></string>
 	<string name="_sys_page_block_title_confirm_phone"><![CDATA[Телефон - Подтверждение]]></string>
 	<string name="_sys_page_block_title_create_account"><![CDATA[Присоединиться]]></string>
 	<string name="_sys_page_block_title_sys_create_post_context"><![CDATA[Создать публикацию (в контекст)]]></string>
@@ -2448,12 +2448,12 @@
 	<string name="_sys_page_title_about"><![CDATA[Об...]]></string>
 	<string name="_sys_page_title_account_profile_switcher"><![CDATA[Мои профили]]></string>
 	<string name="_sys_page_title_account_settings_delete"><![CDATA[Удалить аккаунт]]></string>
-	<string name="_sys_page_title_account_settings_email"><![CDATA[Настройки имейла]]></string>
+	<string name="_sys_page_title_account_settings_email"><![CDATA[Настройки email-а]]></string>
 	<string name="_sys_page_title_account_settings_info"><![CDATA[Редактировать аккаунт]]></string>
 	<string name="_sys_page_title_account_settings_pwd"><![CDATA[Изменить пароль]]></string>
 	<string name="_sys_page_title_add_content"><![CDATA[Добавить содержимое]]></string>
   <string name="_sys_page_title_cmts_administration"><![CDATA[Управление комментариями]]></string>
-	<string name="_sys_page_title_confirm_email"><![CDATA[Имейл - Подтверждение]]></string>
+	<string name="_sys_page_title_confirm_email"><![CDATA[Email - Подтверждение]]></string>
 	<string name="_sys_page_title_confirm_phone"><![CDATA[Телефон - Подтверждение]]></string>
 	<string name="_sys_page_title_create_account"><![CDATA[Присоединиться]]></string>
 	<string name="_sys_page_title_dashboard"><![CDATA[Панель]]></string>
@@ -2467,12 +2467,12 @@
 	<string name="_sys_page_title_system_about"><![CDATA[Об...]]></string>
 	<string name="_sys_page_title_system_account_profile_switcher"><![CDATA[Мои профили]]></string>
 	<string name="_sys_page_title_system_account_settings_delete"><![CDATA[Удалить аккаунт]]></string>
-	<string name="_sys_page_title_system_account_settings_email"><![CDATA[Имейл настройки]]></string>
+	<string name="_sys_page_title_system_account_settings_email"><![CDATA[Email настройки]]></string>
 	<string name="_sys_page_title_system_account_settings_info"><![CDATA[Редактировать аккаунт]]></string>
 	<string name="_sys_page_title_system_account_settings_pwd"><![CDATA[Изменить пароль]]></string>
 	<string name="_sys_page_title_system_add_content"><![CDATA[Добавить содержимое]]></string>
   <string name="_sys_page_title_system_cmts_administration"><![CDATA[Управление комментариями]]></string>
-	<string name="_sys_page_title_system_confirm_email"><![CDATA[Имейл подтверждение]]></string>
+	<string name="_sys_page_title_system_confirm_email"><![CDATA[Email подтверждение]]></string>
 	<string name="_sys_page_title_system_confirm_phone"><![CDATA[Подтверждение телефона]]></string>
 	<string name="_sys_page_title_system_create_account"><![CDATA[Присоединиться]]></string>
 	<string name="_sys_page_title_system_dashboard"><![CDATA[Панель]]></string>
@@ -2642,13 +2642,13 @@
 	<string name="_sys_txt_account_profile_context_change_suggestion"><![CDATA[Это Ваш профиль, Вы можете <a href="{0}">изменить свой текущий профиль</a> на этот]]></string>
 	<string name="_sys_txt_account_profile_context_changed_success"><![CDATA[Текущий профиль удачно изменён на: <b>{0}</b>]]></string>
 	<string name="_sys_txt_account_suspended"><![CDATA[Ваш аккаунт заблокирован.]]></string>
-	<string name="_sys_txt_account_unconfirmed_email"><![CDATA[Ваш имейл не подтверждён. Пожалуйста, проверьте свой эл. ящик ({1}) на наличие письма подтверждения и перейдите по ссылке в нём. <br />Не можете найти письмо? Проверьте папку "спам" или <a href="{0}">снова запросите письмо верификации</a>.]]></string>
+	<string name="_sys_txt_account_unconfirmed_email"><![CDATA[Ваш email не подтверждён. Пожалуйста, проверьте свой эл. ящик ({1}) на наличие письма подтверждения и перейдите по ссылке в нём. <br />Не можете найти письмо? Проверьте папку "спам" или <a href="{0}">снова запросите письмо верификации</a>.]]></string>
 	<string name="_sys_txt_account_unconfirmed_phone"><![CDATA[Ваш телефон не подтверждён. Пожалуйста, подтвердите его на  <a href="{0}">странице верификации</a>.]]></string>
 	<string name="_sys_txt_account_profile_system"><![CDATA[Пожалуйста, <a href="{0}">создайте профиль</a>, чтобы начать пользоваться сайтом.]]></string>
 	<string name="_sys_txt_captcha_not_available"><![CDATA[CAPTCHA недоступна]]></string>
     <string name="_sys_txt_change_image"><![CDATA[Изменить картинку]]></string>
     <string name="_sys_txt_cmt_loading"><![CDATA[Загрузка...]]></string>
-	<string name="_sys_txt_confirm_email_already_confirmed"><![CDATA[Ваш имейл уже подтверждён.]]></string>
+	<string name="_sys_txt_confirm_email_already_confirmed"><![CDATA[Ваш email уже подтверждён.]]></string>
 	<string name="_sys_txt_confirm_email_desc"><![CDATA[Пожалуйста, введите код подтверждения, который был послан на Ваш эл. адрес, или просто перейдите по ссылке в присланном сообщении.]]></string>
 	<string name="_sys_txt_confirm_email_error_occured"><![CDATA[Произошла ошибка, пожалуйста, войдите в свой аккаунт и снова запросите письмо верификации.]]></string>
 	<string name="_sys_txt_confirm_email_sent"><![CDATA[Письмо верификации было отослано, пожалуйста, проверьте свой эл. ящик.]]></string>
@@ -2681,12 +2681,12 @@
 	<string name="_sys_txt_error_entry_update"><![CDATA[Ошибка обновления элемента]]></string>
 	<string name="_sys_txt_error_occured"><![CDATA[Произошла ошибка]]></string>
 	<string name="_sys_txt_forgot_pasword"><![CDATA[Забыли пароль?]]></string>
-	<string name="_sys_txt_forgot_pasword_check_email"><![CDATA[Имейл отослан, пожалуйста, следуйте инструкциям в нём.]]></string>
+	<string name="_sys_txt_forgot_pasword_check_email"><![CDATA[Email отослан, пожалуйста, следуйте инструкциям в нём.]]></string>
 	<string name="_sys_txt_forgot_pasword_check_phone"><![CDATA[SMS отослано, пожалуйста, следуйте инструкциям в нём.]]></string>
 	<string name="_sys_txt_forgot_pasword_desc"><![CDATA[Введите эл. адрес своего аккаунта, чтобы запросить ссылку на изменение пароля.]]></string>
 	<string name="_sys_txt_forgot_pasword_by_both_desc"><![CDATA[Введите эл. адрес или телефон своего аккаунта, чтобы запросить ссылку на изменение пароля.]]></string>
 	<string name="_sys_txt_forgot_pasword_by_phone_desc"><![CDATA[Введите телефон своего аккаунта, чтобы запросить ссылку на изменение пароля.]]></string>
-	<string name="_sys_txt_forgot_pasword_email_send_failed"><![CDATA[Не удалось отослать имейл, пожалуйста, попытайтесь позднее.]]></string>
+	<string name="_sys_txt_forgot_pasword_email_send_failed"><![CDATA[Не удалось отослать email, пожалуйста, попытайтесь позднее.]]></string>
 	<string name="_sys_txt_forgot_pasword_error_occured"><![CDATA[Произошла ошибка, пожалуйста, уведомите о ней администратора сайта.]]></string>
 	<string name="_sys_txt_forgot_pasword_sms_text"><![CDATA[Чтобы восстановить пароль нажмите на ссылку {0}]]></string>
 
@@ -2698,12 +2698,12 @@
 	<string name="_sys_txt_form_submission_error_csrf_expired"><![CDATA[Маркер устарел. Пожалуйста попробуйте снова.]]></string>
 
     <string name="_sys_txt_homepage_cover"><![CDATA[Сплоченность людей — нерушимая крепость.<br /><button class="bx-btn bx-hide-when-logged-in bx-def-margin-top" onclick="document.location='{0}'">Присоедениться!</button>]]></string>
-    <string name="_sys_txt_login_2fa_description"><![CDATA[Двухэтапная авторизация включена. В дополнении к имейлу и паролю, Вам нужно будет ввести код проверки, который мы вышлем вам в SMS.]]></string>
+    <string name="_sys_txt_login_2fa_description"><![CDATA[Двухэтапная авторизация включена. В дополнении к email-у и паролю, Вам нужно будет ввести код проверки, который мы вышлем вам в SMS.]]></string>
 	<string name="_sys_txt_login_2fa_sms_text"><![CDATA[Ваш код проверки {0}.]]></string>
 	<string name="_sys_txt_login_2fa_sms_error_occured"><![CDATA[Произошла ошибка, пожалуйста, уведомите о ней администратора сайта.]]></string>
 	<string name="_sys_txt_join_description"><![CDATA[Уже зарегистрировались? <a href="{0}">Заходите.</a>]]></string>
 	<string name="_sys_txt_login_description"><![CDATA[Ещё нет аккаунта? <a href="{0}">Зарегистрируйтесь.</a>]]></string>
-	<string name="_sys_txt_login_error"><![CDATA[Введённый имейл или пароль неправильны. Пожалуйста, попытайтесь снова.]]></string>
+	<string name="_sys_txt_login_error"><![CDATA[Введённый email или пароль неправильны. Пожалуйста, попытайтесь снова.]]></string>
   <string name="_sys_txt_login_locked"><![CDATA[Ваш аккаунт заблокирован, для разблокировки, пожалуйста, используйте  <a href="{0}">страницу сброса пароля</a>.]]></string>
 	<string name="_sys_txt_login_invalid_role"><![CDATA[Доступ запрещён]]></string>
     <string name="_sys_txt_my_profiles"><![CDATA[Создать новый профайл]]></string>
@@ -2725,9 +2725,9 @@
 	<string name="_sys_txt_splash_slide03_txt"><![CDATA["Лучший способ завести друзей - быть кому-то другом."]]></string>
         <string name="_sys_txt_splash_slide04_txt"><![CDATA[Уже один из нас?]]></string>
         <string name="_sys_txt_switch_profile_context"><![CDATA[Переключиться]]></string>
-	<string name="_sys_txt_unsubscribe_email_settings_update_success"><![CDATA[Ваши имейл-установки были удачно обновлены.]]></string>
-	<string name="_sys_txt_unsubscribe_error_occured"><![CDATA[Произошла ошибка, пожалуйста, зайдите в свой аккаунт и обновите имейл-установки или свяжитесь с администратором сайта, чтобы он Вас отписал вручную.]]></string>
-	<string name="_sys_txt_unsubscribe_info"><![CDATA[Обновить имейл-установки для <b>{0}</b>]]></string>
+	<string name="_sys_txt_unsubscribe_email_settings_update_success"><![CDATA[Ваши email-установки были удачно обновлены.]]></string>
+	<string name="_sys_txt_unsubscribe_error_occured"><![CDATA[Произошла ошибка, пожалуйста, зайдите в свой аккаунт и обновите email-установки или свяжитесь с администратором сайта, чтобы он Вас отписал вручную.]]></string>
+	<string name="_sys_txt_unsubscribe_info"><![CDATA[Обновить email-установки для <b>{0}</b>]]></string>
         <string name="_sys_txt_unsubscribe_wrong_link"><![CDATA[Ссылка отписки неправильная.]]></string>
         <string name="_sys_txt_user_n"><![CDATA[Пользователь #{0}]]></string>
         <string name="_sys_txt_reports_title"><![CDATA[Жалобы]]></string>

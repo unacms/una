@@ -53,8 +53,8 @@
     <string name="_bx_persons_form_profile_input_birthday_err"><![CDATA[Ваш возраст должен быть в интервале от 18 до 99 лет]]></string>
     <string name="_bx_persons_form_profile_input_sys_gender"><![CDATA[Пол]]></string>
     <string name="_bx_persons_form_profile_input_gender"><![CDATA[Пол]]></string>
-    <string name="_bx_persons_form_profile_input_sys_profile_email"><![CDATA[Имейл]]></string>
-    <string name="_bx_persons_form_profile_input_profile_email"><![CDATA[Имейл]]></string>
+    <string name="_bx_persons_form_profile_input_sys_profile_email"><![CDATA[Email]]></string>
+    <string name="_bx_persons_form_profile_input_profile_email"><![CDATA[Email]]></string>
     <string name="_bx_persons_form_profile_input_sys_profile_status"><![CDATA[Статус]]></string>
     <string name="_bx_persons_form_profile_input_profile_status"><![CDATA[Статус]]></string>
     <string name="_bx_persons_form_profile_input_sys_profile_ip"><![CDATA[IP]]></string>

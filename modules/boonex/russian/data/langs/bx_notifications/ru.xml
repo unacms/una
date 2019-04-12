@@ -34,7 +34,7 @@
     <string name="_bx_ntfs_option_events_per_page"><![CDATA[Количество элементов на странице]]></string>
     <string name="_bx_ntfs_option_events_per_preview"><![CDATA[Количество элементов в пред просмотре]]></string>
     <string name="_bx_ntfs_option_events_hide_site"><![CDATA[Уведомления на сайте]]></string>
-    <string name="_bx_ntfs_option_events_hide_email"><![CDATA[Уведомления через имейл]]></string>
+    <string name="_bx_ntfs_option_events_hide_email"><![CDATA[Уведомления через email]]></string>
     <string name="_bx_ntfs_option_events_hide_push"><![CDATA[Push-уведомления]]></string>
     <string name="_bx_ntfs_option_enable_group_settings"><![CDATA[Сгруппировать настройки]]></string>
     <string name="_bx_ntfs_option_delivery_timeout"><![CDATA[Задержка перед отправкой Email и/или Push уведомлений (в секундах)]]></string>
