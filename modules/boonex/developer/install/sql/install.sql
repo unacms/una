@@ -292,7 +292,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 -- Forms Builder -> Search Forms.
 --
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('bx_developer_forms_search_form', @sName, '_bx_dev_frm_txt_search_forms', '', '', 'do_submit', 'sys_objects_search_extended', 'id', '', '', '', 0, 1, 'BxDevFormView', 'modules/boonex/developer/classes/BxDevFormView.php');
+('bx_developer_forms_search_form', @sName, '_bx_dev_frm_txt_search_forms_form', '', '', 'do_submit', 'sys_objects_search_extended', 'id', '', '', '', 0, 1, 'BxDevFormView', 'modules/boonex/developer/classes/BxDevFormView.php');
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
 ('bx_developer_forms_search_form_add', @sName, 'bx_developer_forms_search_form', '_bx_dev_frm_txt_search_forms_display_add', 0),
@@ -518,7 +518,11 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('bx_developer_nav_item', @sName, 'onclick', '', '', 0, 'text', '_bx_dev_nav_txt_sys_items_onclick', '_bx_dev_nav_txt_items_onclick', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('bx_developer_nav_item', @sName, 'target', '', '', 0, 'text', '_bx_dev_nav_txt_sys_items_target', '_bx_dev_nav_txt_items_target', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('bx_developer_nav_item', @sName, 'icon', '', '', 0, 'text', '_bx_dev_nav_txt_sys_items_icon', '_bx_dev_nav_txt_items_icon', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('bx_developer_nav_item', @sName, 'addon', '', '', 0, 'textarea', '_bx_dev_nav_txt_sys_items_addon', '_bx_dev_nav_txt_items_addon', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('bx_developer_nav_item', @sName, 'submenu_object', '', '', 0, 'text', '_bx_dev_nav_txt_sys_items_submenu_object', '_bx_dev_nav_txt_items_submenu_object', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('bx_developer_nav_item', @sName, 'submenu_popup', '1', '', 0, 'switcher', '_bx_dev_nav_txt_sys_items_submenu_popup', '_bx_dev_nav_txt_items_submenu_popup', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('bx_developer_nav_item', @sName, 'visibility_custom', '', '', 0, 'textarea', '_bx_dev_nav_txt_sys_items_visibility_custom', '_bx_dev_nav_txt_items_visibility_custom', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('bx_developer_nav_item', @sName, 'hidden_on', '', '', 0, 'select_multiple', '_bx_dev_nav_txt_sys_items_hidden_on', '_bx_dev_nav_txt_items_hidden_on', '', 0, 0, 0, '', '', '', '', '', '', 'Set', '', 0, 0),
 ('bx_developer_nav_item', @sName, 'copyable', '1', '', 0, 'switcher', '_bx_dev_nav_txt_sys_items_copyable', '_bx_dev_nav_txt_items_copyable', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('bx_developer_nav_item', @sName, 'controls', '', 'do_submit,cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_developer_nav_item', @sName, 'do_submit', '_bx_dev_nav_btn_items_add', '', 0, 'submit', '_bx_dev_nav_btn_sys_items_add', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
@@ -534,11 +538,16 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_developer_nav_item_add', 'onclick', 2147483647, 1, 7),
 ('bx_developer_nav_item_add', 'target', 2147483647, 1, 8),
 ('bx_developer_nav_item_add', 'icon', 2147483647, 1, 9),
-('bx_developer_nav_item_add', 'submenu_object', 2147483647, 1, 10),
-('bx_developer_nav_item_add', 'copyable', 2147483647, 1, 11),
-('bx_developer_nav_item_add', 'controls', 2147483647, 1, 12),
-('bx_developer_nav_item_add', 'do_submit', 2147483647, 1, 13),
-('bx_developer_nav_item_add', 'cancel', 2147483647, 1, 14),
+('bx_developer_nav_item_add', 'addon', 2147483647, 1, 10),
+('bx_developer_nav_item_add', 'submenu_object', 2147483647, 1, 11),
+('bx_developer_nav_item_add', 'submenu_popup', 2147483647, 1, 12),
+('bx_developer_nav_item_add', 'visibility_custom', 2147483647, 1, 13),
+('bx_developer_nav_item_add', 'hidden_on', 2147483647, 1, 14),
+('bx_developer_nav_item_add', 'copyable', 2147483647, 1, 15),
+('bx_developer_nav_item_add', 'controls', 2147483647, 1, 16),
+('bx_developer_nav_item_add', 'do_submit', 2147483647, 1, 17),
+('bx_developer_nav_item_add', 'cancel', 2147483647, 1, 18),
+
 ('bx_developer_nav_item_edit', 'id', 2147483647, 1, 1),
 ('bx_developer_nav_item_edit', 'module', 2147483647, 1, 2),
 ('bx_developer_nav_item_edit', 'set_name', 2147483647, 1, 3),
@@ -549,11 +558,15 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_developer_nav_item_edit', 'onclick', 2147483647, 1, 8),
 ('bx_developer_nav_item_edit', 'target', 2147483647, 1, 9),
 ('bx_developer_nav_item_edit', 'icon', 2147483647, 1, 10),
-('bx_developer_nav_item_edit', 'submenu_object', 2147483647, 1, 11),
-('bx_developer_nav_item_edit', 'copyable', 2147483647, 1, 12),
-('bx_developer_nav_item_edit', 'controls', 2147483647, 1, 13),
-('bx_developer_nav_item_edit', 'do_submit', 2147483647, 1, 14),
-('bx_developer_nav_item_edit', 'cancel', 2147483647, 1, 15);
+('bx_developer_nav_item_edit', 'addon', 2147483647, 1, 11),
+('bx_developer_nav_item_edit', 'submenu_object', 2147483647, 1, 12),
+('bx_developer_nav_item_edit', 'submenu_popup', 2147483647, 1, 13),
+('bx_developer_nav_item_edit', 'visibility_custom', 2147483647, 1, 14),
+('bx_developer_nav_item_edit', 'hidden_on', 2147483647, 1, 15),
+('bx_developer_nav_item_edit', 'copyable', 2147483647, 1, 16),
+('bx_developer_nav_item_edit', 'controls', 2147483647, 1, 17),
+('bx_developer_nav_item_edit', 'do_submit', 2147483647, 1, 18),
+('bx_developer_nav_item_edit', 'cancel', 2147483647, 1, 19);
 
 --
 -- Page Builder -> Page.

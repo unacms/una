@@ -76,6 +76,9 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
             exit;
         }
 
+        $this->_prepareServiceEdit('addon', $aItem);
+        $this->_prepareServiceEdit('visibility_custom', $aItem);
+
         $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&set=' . $this->sSet;
         $oForm->aInputs['controls'][0]['value'] = _t('_bx_dev_nav_btn_items_save');
@@ -83,6 +86,9 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
 
         $oForm->initChecker($aItem);
         if($oForm->isSubmittedAndValid()) {
+            $this->_prepareServiceSave('addon', $oForm);
+            $this->_prepareServiceSave('visibility_custom', $oForm);
+
             if($oForm->update($aItem['id']) !== false)
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $aItem['id']);
             else
@@ -99,6 +105,21 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
 
             echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
+    }
+
+    protected function _prepareServiceEdit($sField, &$aItem)
+    {
+        if(empty($aItem[$sField]))
+            return;
+
+        $aItem[$sField] = BxDevFunctions::unserializeString($aItem[$sField]);
+    }
+
+    protected function _prepareServiceSave($sField, &$oForm)
+    {
+        $sValue = $oForm->getCleanValue($sField);
+        $sValue = BxDevFunctions::serializeString($sValue);
+        BxDolForm::setSubmittedValue($sField, $sValue, $oForm->aFormAttrs['method']);
     }
 
     protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
@@ -122,6 +143,13 @@ class BxDevNavigationItems extends BxTemplStudioNavigationItems
         $aInputs['module']['value'] = $this->sModule;
 
         $aInputs['set_name']['value'] = $this->sSet;
+
+        $aInputs['hidden_on']['values'] = array(
+            BX_DB_HIDDEN_PHONE => _t('_bx_dev_nav_txt_sys_items_hidden_on_phone'),
+            BX_DB_HIDDEN_TABLET => _t('_bx_dev_nav_txt_sys_items_hidden_on_tablet'),
+            BX_DB_HIDDEN_DESKTOP => _t('_bx_dev_nav_txt_sys_items_hidden_on_desktop'),
+            BX_DB_HIDDEN_MOBILE => _t('_bx_dev_nav_txt_sys_items_hidden_on_mobile')
+        );
     }
 }
 /** @} */
