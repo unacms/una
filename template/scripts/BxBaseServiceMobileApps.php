@@ -48,6 +48,9 @@ class BxBaseServiceMobileApps extends BxDol
                 'push_tags' => array('user' => bx_get_logged_profile_id())
             ))
         ));
+
+        BxDolTemplate::getInstance()->addJs('pulltorefresh.min.js');
+
         return $s;
     }
 
