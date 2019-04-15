@@ -1119,6 +1119,34 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return $this->_oDb->insertCache($aParamsSet);
     }
 
+    protected function _cacheEvents($aParams)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iPerPage = (int)$aParams['per_page'];
+        $aParamsCopy = $aParams;
+
+        $aIds = array();
+        while(count($aIds) < $iPerPage) {
+            $aEvents = $this->_oDb->getEvents($aParamsCopy);
+            if(empty($aEvents))
+                break;
+
+            foreach($aEvents as $aEvent) {
+                if($this->getPost($aEvent, $aParamsCopy) == '')
+                    continue;
+
+                $aIds[] = $aEvent[$CNF['FIELD_ID']];
+                if(count($aIds) == $iPerPage)
+                    break 2;
+            }
+
+            $aParamsCopy['start'] += $iPerPage;
+        }
+
+        return $aIds;
+    }
+            
     protected function _getCachedEvents($iProfileId, &$aParams)
     {
         return $this->_oDb->getCache(array(
@@ -1145,53 +1173,60 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
          * Get cached data and check it for relevance.
          */
         $aCache = $this->_getCachedEvents($iProfileId, $aParams);
-        if(is_array($aCache) && count($aCache) == $iPerPage) {
-            $bUpdated = false;
-            $aCachedItem = current($aCache);
+        if(is_array($aCache) && !empty($aCache)) {
+            if(($iCache = count($aCache)) != $iPerPage) {
+                $aRecachedIds = $this->_cacheEvents($aParams);
+                if(is_array($aRecachedIds) && count($aRecachedIds) > $iCache)
+                    $aCache = $this->_getCachedEvents($iProfileId, $aParams);
+            }
 
+            $bFound = false;
+            $bUpdated = false;
+
+            $aCachedItem = current($aCache);
+            $aCachedIds = array_keys($aCache);
+
+            $aParamsCopy = $aParams;
             while(true) {
-                $aEvents = $this->_oDb->getEvents($aParams);
+                $aEvents = $this->_oDb->getEvents($aParamsCopy);
                 if(empty($aEvents))
                     break;
 
                 foreach($aEvents as $aEvent) {
-                    if($aEvent[$CNF['FIELD_ID']] == $aCachedItem['event_id'])
+                    if($aEvent[$CNF['FIELD_ID']] == $aCachedItem['event_id']) {
+                        $bFound = true;
                         break 2;
+                    }
 
-                    if($this->getPost($aEvent, $aParams) == '')
+                    if(!in_array($aEvent[$CNF['FIELD_ID']], $aCachedIds) && $this->getPost($aEvent, $aParamsCopy) == '')
                         continue;
 
                     $bUpdated = true;
                 }
+
+                $aParamsCopy['start'] += $iPerPage;
+            }
+
+            /**
+             * If cached event wasn't found in real events list, 
+             * then clear cache and start the process from the beginning.
+             */
+            if(!$bFound) {
+                $this->_oModule->_oDb->deleteCache(array('type' => $aParams['type'], 'profile_id' => $iProfileId));
+
+                return $this->_getPosts($aParams);
             }
 
             if($bUpdated)
-                $aCache = $this->_getCachedEvents($iProfileId, $aParams);
+                $aCachedIds = array_keys($this->_getCachedEvents($iProfileId, $aParams));
 
-            return $this->_oDb->getEvents(array('browse' => 'ids', 'type' => $aParams['type'], 'ids' => array_keys($aCache)));
+            return $this->_oDb->getEvents(array('browse' => 'ids', 'type' => $aParams['type'], 'ids' => $aCachedIds));
         }
 
         /*
          * Cache data.
          */
-        $aIds = array();
-        while(count($aIds) < $iPerPage) {
-            $aEvents = $this->_oDb->getEvents($aParams);
-            if(empty($aEvents))
-                break;
-
-            foreach($aEvents as $aEvent) {
-                if($this->getPost($aEvent, $aParams) == '')
-                    continue;
-
-                $aIds[] = $aEvent[$CNF['FIELD_ID']];
-                if(count($aIds) == $iPerPage)
-                    break 2;
-            }
-
-            $aParams['start'] += $aParams['per_page'];
-        }        
-
+        $aIds = $this->_cacheEvents($aParams);
         return $this->_oDb->getEvents(array('browse' => 'ids', 'type' => $aParams['type'], 'ids' => $aIds));
     }
 

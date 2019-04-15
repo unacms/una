@@ -202,7 +202,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(!$this->deleteEvent($aEvent))
             return echoJson(array('code' => 3));
 
-        $this->_oModule->_oDb->deleteCache(array('event_id' => $iId));
+        $this->_oDb->deleteCache(array('event_id' => $iId));
 
         echoJson(array(
             'code' => 0, 
@@ -2267,6 +2267,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             if($bText)
                 $oMetatags->metaAdd($iId, $sText);
             $oMetatags->locationsAddFromForm($iId, $this->_oConfig->CNF['FIELD_LOCATION_PREFIX']);
+
+            $this->_oDb->deleteCache(array('event_id' => $iId));
 
             return array(
                 'id' => $iId
