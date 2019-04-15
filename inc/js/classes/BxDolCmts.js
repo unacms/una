@@ -418,6 +418,40 @@ BxDolCmts.prototype.goToAndReply = function(oLink, sGoToId, sBlinkIds)
 /*----------------------------*/
 BxDolCmts.prototype.showLiveUpdate = function(oData)
 {
+    /*
+     * Note. oData.count_old and oData.count_new are also available and can be checked or used in notification popup.  
+     */
+    if(!oData.code)
+        return;
+
+    var $this = this;
+
+    var oNotifs = $(oData.code);
+    var sId = oNotifs.attr('id');
+    $('#' + sId).remove();
+
+    oNotifs.prependTo('body').dolPopup({
+        position: 'fixed',
+        top: '5rem',
+        left: 'center',
+        fog: false,
+        onBeforeShow: function() {
+        },
+        onBeforeHide: function() {
+        },
+        onShow: function() {
+            setTimeout(function() {
+                $('.bx-popup-chain.bx-popup-applied:visible:first').dolPopupHide();
+            }, 5000);
+        },
+        onHide: function() {
+            $this.resumeLiveUpdates();
+        }
+    });
+};
+
+BxDolCmts.prototype.showLiveUpdates = function(oData)
+{
 	/*
 	 * Note. oData.count_old and oData.count_new are also available and can be checked or used in notification popup.  
 	 */

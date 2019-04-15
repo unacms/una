@@ -28,29 +28,54 @@ class BxBaseCmtsServices extends BxDol
         return '';
     }
 
-    public function serviceGetLiveUpdatesComments($sSystem, $iContentId, $iProfileId, $iCount = 0)
+    public function serviceGetLiveUpdate($sSystem, $iContentId, $iProfileId, $iCount = 0)
     {
         $oCmts = BxDolCmts::getObjectInstance($sSystem, $iContentId);
         if(!$oCmts || !$oCmts->isEnabled())
             return false;
 
-		$sKey = $oCmts->getNotificationId();
+        $sKey = $oCmts->getNotificationId();
 
-		bx_import('BxDolSession');
-    	if((int)BxDolSession::getInstance()->getValue($sKey) == 1)
-    		return false;
+        bx_import('BxDolSession');
+        if((int)BxDolSession::getInstance()->getValue($sKey) == 1)
+            return false;
 
-		$iCountNew = $oCmts->getCommentsCount($iContentId, -1, BX_CMT_FILTER_OTHERS);
-		if($iCountNew == $iCount)
-			return false;
+        $iCountNew = $oCmts->getCommentsCount($iContentId, -1, BX_CMT_FILTER_OTHERS);
+        if($iCountNew == $iCount)
+            return false;
 
-    	return array(
-    		'count' => $iCountNew, // required
-    		'method' => $oCmts->getJsObjectName() . '.showLiveUpdate(oData)', // required
-    		'data' => array(
-    			'code' => $oCmts->getNotification($iCount, $iCountNew)
-    		),  // optional, may have some additional data to be passed in JS method provided using 'method' param above.
-    	);
+        return array(
+            'count' => $iCountNew, // required
+            'method' => $oCmts->getJsObjectName() . '.showLiveUpdate(oData)', // required
+            'data' => array(
+                'code' => $oCmts->getLiveUpdate($iCount, $iCountNew)
+            ),  // optional, may have some additional data to be passed in JS method provided using 'method' param above.
+        );
+    }
+
+    public function serviceGetLiveUpdates($sSystem, $iContentId, $iProfileId, $iCount = 0)
+    {
+        $oCmts = BxDolCmts::getObjectInstance($sSystem, $iContentId);
+        if(!$oCmts || !$oCmts->isEnabled())
+            return false;
+
+        $sKey = $oCmts->getNotificationId();
+
+        bx_import('BxDolSession');
+        if((int)BxDolSession::getInstance()->getValue($sKey) == 1)
+            return false;
+
+        $iCountNew = $oCmts->getCommentsCount($iContentId, -1, BX_CMT_FILTER_OTHERS);
+        if($iCountNew == $iCount)
+            return false;
+
+        return array(
+            'count' => $iCountNew, // required
+            'method' => $oCmts->getJsObjectName() . '.showLiveUpdates(oData)', // required
+            'data' => array(
+                'code' => $oCmts->getLiveUpdates($iCount, $iCountNew)
+            ),  // optional, may have some additional data to be passed in JS method provided using 'method' param above.
+        );
     }
     
     public function serviceManageTools($sType = 'common')

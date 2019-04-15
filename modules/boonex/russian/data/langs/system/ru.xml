@@ -1553,6 +1553,7 @@
 	<string name="_cmt_load_more_replies_head"><![CDATA[Увидеть новые ответы...]]></string>
 	<string name="_cmt_load_more_replies_tail"><![CDATA[Увидеть старые ответы...]]></string>
 	<string name="_cmt_load_more_replies_popular"><![CDATA[Увидеть ещё ответы...]]></string>
+        <string name="_cmt_txt_new_content"><![CDATA[Новый контент]]></string>
 	<string name="_cmt_txt_link_show"><![CDATA[Прочитать]]></string>
 	<string name="_cmt_txt_link_reply"><![CDATA[Ответить]]></string>
         <string name="_cmt_txt_added_sample"><![CDATA[добавил новый комментарий]]></string>

@@ -271,7 +271,20 @@
         width: 100%;
     }
 
-    /*--- Comment Styles in Live Update Notification ---*/
+    /*--- Live Update Alert Styles ---*/
+    .cmt-alert-comment {
+        position: relative;
+        display: block;
+    }
+    div.cmt-alert-comment {
+        background-color: rgba(0, 0, 255, 0.4);
+        text-align: center;
+    }
+    div.cmt-ac-cnt {
+        position: relative;
+    }
+
+    /*--- Live Update Notifications Styles ---*/
     .cmt-notif-comment {
         position: relative;
         display: block;

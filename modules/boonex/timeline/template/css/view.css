@@ -506,8 +506,9 @@ div.bx-tl-item-comments-holder .cmts.cmts-margin {
 .bx-tl-live-update-alert {
     position: relative;
     display: block;
-
-    background-color: rgba(0, 0, 255, 0.2);
+}
+div.bx-tl-live-update-alert {
+    background-color: rgba(0, 0, 255, 0.4);
     text-align: center;
 }
 div.bx-tl-lua-cnt {
