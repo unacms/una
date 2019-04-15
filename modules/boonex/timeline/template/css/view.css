@@ -503,16 +503,20 @@ div.bx-tl-item-comments-holder .cmts.cmts-margin {
 }
 
 /*--- Live Update Alert Styles ---*/
-.bx-tl-live-update-alert {
+div.bx-tl-live-update-button {
     position: relative;
-    display: block;
-}
-div.bx-tl-live-update-alert {
-    background-color: rgba(0, 0, 255, 0.4);
     text-align: center;
 }
-div.bx-tl-lua-cnt {
-    position: relative;
+@supports(position:sticky) {
+    div.bx-tl-live-update-button {
+        position:sticky;
+        top: 1rem;
+        z-index: 1;
+    }
+}
+div.bx-tl-live-update-button .bx-btn {
+    display: inline-block;
+    float: none;
 }
 
 /*--- Live Update Notifications Styles ---*/

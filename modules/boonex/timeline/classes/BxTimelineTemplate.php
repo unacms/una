@@ -997,10 +997,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sJsObject = $this->_oConfig->getJsObjectView($aParams);
         $sStylePrefix = $this->_oConfig->getPrefix('style');
 
-        return $this->parseHtmlByName('live_update_alert.html', array(
+        return $this->parseHtmlByName('live_update_button.html', array(
             'style_prefix' => $sStylePrefix,
             'html_id' => $this->_oConfig->getHtmlIds('view', 'live_update_popup') . $aBrowseParams['type'],
-            'onclick_show' => "javascript:" . $sJsObject . ".goTo(this, 'timeline-event-" . $aEvent['id'] . "', '" . $aEvent['id'] . "');",
+            'onclick_show' => "javascript:" . $sJsObject . ".goToBtn(this, 'timeline-event-" . $aEvent['id'] . "', '" . $aEvent['id'] . "');",
         ));
     }
 

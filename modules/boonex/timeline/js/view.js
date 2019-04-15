@@ -571,6 +571,25 @@ BxTimelineView.prototype.goTo = function(oLink, sGoToId, sBlinkIds, onLoad)
     });
 };
 
+BxTimelineView.prototype.goToBtn = function(oLink, sGoToId, sBlinkIds, onLoad)
+{
+    var $this = this;
+
+    this.loadingInButton(oLink, true);
+
+    this._oRequestParams.start = 0;
+    this._oRequestParams.blink = sBlinkIds;
+    this._getPosts(this.oView, function(oData) {
+        oData.go_to = sGoToId;
+        processJsonData(oData);
+
+        $this.loadingInButton(oLink, false);
+        $(oLink).parents('.' + $this.sSP + '-live-update-button:first').remove();
+
+        $this.resumeLiveUpdates();
+    });
+};
+
 /*
  * Show only one live update notification for all new events.
  * 
@@ -581,30 +600,11 @@ BxTimelineView.prototype.showLiveUpdate = function(oData)
     if(!oData.code)
         return;
 
-    var $this = this;
-
-    var oAlert = $(oData.code);
-    var sId = oAlert.attr('id');
+    var oButton = $(oData.code);
+    var sId = oButton.attr('id');
     $('#' + sId).remove();
 
-    oAlert.prependTo('body').dolPopup({
-        position: 'fixed',
-        top: '5rem',
-        left: 'center',
-        fog: false,
-        onBeforeShow: function() {
-        },
-        onBeforeHide: function() {
-        },
-        onShow: function() {
-            setTimeout(function() {
-                $('.' + $this.sSP + '-live-update-alert.bx-popup-applied:visible:first').dolPopupHide();
-            }, 5000);
-        },
-        onHide: function() {
-            $this.resumeLiveUpdates();
-        }
-    });
+    oButton.prependTo(this.oView);
 };
 
 /*
@@ -768,34 +768,30 @@ BxTimelineView.prototype._onGetPosts = function(oData)
         var sItems = $.trim(oData.items);
 
         if(this.bViewTimeline) {
-            this.oView.find('.' + this.sClassItems).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
-                $(this).html(sItems).show().bxProcessHtml();
+            var oItems = this.oView.find('.' + this.sClassItems);
+            oItems.html(sItems).bxProcessHtml();
 
-                $this.blink($(this));
-                $this.initFlickity();
+            this.blink(oItems);
+            this.initFlickity();
 
-                onComplete();
-            });
-
+            onComplete();
             return;
         }
 
         if(this.bViewOutline) {
-            this.oView.find('.' + this.sClassItems).bx_anim('hide', this._sAnimationEffect, this._iAnimationSpeed, function() {
-                $(this).html(sItems).show().bxProcessHtml();
+            oItems = this.oView.find('.' + this.sClassItems);
+            oItems.html(sItems).bxProcessHtml();
 
-                if($this.isMasonry())
-                    $this.destroyMasonry();
+            if(this.isMasonry())
+                this.destroyMasonry();
 
-                if(!$this.isMasonryEmpty())
-                    $this.initMasonry();
+            if(!this.isMasonryEmpty())
+                this.initMasonry();
 
-                $this.blink($(this));
-                $this.initFlickity();
+            this.blink(oItems);
+            this.initFlickity();
 
-                onComplete();
-            });
-
+            onComplete();
             return;
         }
     }

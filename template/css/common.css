@@ -522,10 +522,11 @@ div.bx-popup-chain-item .bx-loading-ajax {
 }
 
 .bx-loading-ajax-btn {
-	position: relative;
+    position: relative;
     display: inline-block;
-
     vertical-align: top;
+
+    min-width: 2.0rem;
 
     margin-left: 5px;
 }
