@@ -11,9 +11,19 @@
 
 class BxDolCacheUtilities extends BxDol
 {
+    protected $_aCacheTypes = array();
+
     public function __construct ()
     {
         parent::__construct();
+        
+        $this->_aCacheTypes = array(
+            'db' => array('option' => 'sys_db_cache_enable'),
+            'template' => array('option' => 'sys_template_cache_enable'),
+            'css' => array('option' => 'sys_template_cache_css_enable'),
+            'js' => array('option' => 'sys_template_cache_js_enable'),
+            'custom' => array(),
+        );
     }
 
 	/**
@@ -25,6 +35,14 @@ class BxDolCacheUtilities extends BxDol
             $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolCacheUtilities();
 
         return $GLOBALS['bxDolClasses'][__CLASS__];
+    }
+
+    function isEnabled($sCache)
+    {
+        if(!isset($this->_aCacheTypes[$sCache]))
+            return false;
+
+        return !isset($this->_aCacheTypes[$sCache]['option']) || getParam($this->_aCacheTypes[$sCache]['option']) == 'on';
     }
 
     function clear($sCache)
@@ -40,38 +58,29 @@ class BxDolCacheUtilities extends BxDol
 
     protected function _action($sCache, $sMode = 'clear')
     {
+        $mixedResult = false;
+        if(!$this->isEnabled($sCache))
+            return $mixedResult;
+
         $sFuncCacheObject = $sMode == 'clear' ? '_clearObject' : '_getSizeObject';
         $sFuncCacheFile = $sMode == 'clear' ? '_clearFile' : '_getSizeFile';
 
-        $mixedResult = false;
         switch ($sCache) {
             case 'db':
-            	if(getParam('sys_db_cache_enable') != 'on')
-					break;
-
-				$oCacheDb = BxDolDb::getInstance()->getDbCacheObject();
+                $oCacheDb = BxDolDb::getInstance()->getDbCacheObject();
                 $mixedResult = $this->$sFuncCacheObject($oCacheDb, 'db_');
                 break;
 
             case 'template':
-				if(getParam('sys_template_cache_enable') != 'on') 
-					break;
-
-				$oCacheTemplates = BxDolTemplate::getInstance()->getTemplatesCacheObject();
+                $oCacheTemplates = BxDolTemplate::getInstance()->getTemplatesCacheObject();
                 $mixedResult = $this->$sFuncCacheObject($oCacheTemplates, BxDolStudioTemplate::getInstance()->getCacheFilePrefix($sCache));
                 break;
 
             case 'css':
-            	if(getParam('sys_template_cache_css_enable') != 'on')
-            		break;
-
                 $mixedResult = $this->$sFuncCacheFile(BxDolStudioTemplate::getInstance()->getCacheFilePrefix($sCache), BX_DIRECTORY_PATH_CACHE_PUBLIC);
                 break;
 
             case 'js':
-            	if(getParam('sys_template_cache_js_enable') != 'on')
-            		break;
-
                 $mixedResult = $this->$sFuncCacheFile(BxDolStudioTemplate::getInstance()->getCacheFilePrefix($sCache), BX_DIRECTORY_PATH_CACHE_PUBLIC);
                 break;
         }

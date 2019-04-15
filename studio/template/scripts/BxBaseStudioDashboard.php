@@ -245,38 +245,45 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 
 	public function serviceGetBlockCache()
 	{
-		$sJsObject = $this->getPageJsObject();
+            $sJsObject = $this->getPageJsObject();
+            $oCacheUtilities = BxDolCacheUtilities::getInstance();
 
-		$sChartData = $this->getCacheChartData();
-		$bChartData = $sChartData !== false;
+            $sChartData = $this->getCacheChartData();
+            $bChartData = $sChartData !== false;
 
-		$aMenu = array();
-		if($bChartData)
-		    foreach($this->aItemsCache as $aItem)
-				$aMenu[] = array(
-					'name' => $aItem['name'], 
-					'title' => _t('_adm_dbd_txt_c_clear_' . $aItem['name']), 
-					'link' => 'javascript:void(0)', 
-					'onclick' => $sJsObject . ".clearCache('" . $aItem['name'] . "')"
-				);
+            $aMenu = array();
+            foreach($this->aItemsCache as $aItem){
+                if($aItem['name'] != 'all' && !$oCacheUtilities->isEnabled($aItem['name']))
+                    continue;
 
-		$sContent = BxDolStudioTemplate::getInstance()->parseHtmlByName('dbd_cache.html', array(
-			'bx_if:show_chart' => array(
-				'condition' => $bChartData,
-				'content' => array(
-					'js_object' => $sJsObject,
-		        	'chart_data' => $sChartData,
-				)
-			),
-			'bx_if:show_empty' => array(
-				'condition' => !$bChartData,
-				'content' => array(
-					'message' => MsgBox(_t('_adm_dbd_msg_c_all_disabled'))
-				)
-			),
-		));
+                $aMenu[] = array(
+                    'name' => $aItem['name'], 
+                    'title' => _t('_adm_dbd_txt_c_clear_' . $aItem['name']), 
+                    'link' => 'javascript:void(0)', 
+                    'onclick' => $sJsObject . ".clearCache('" . $aItem['name'] . "')"
+                );
+            }
 
-		return array('content' => $sContent, 'menu' => $aMenu);
+            if(count($aMenu) == 2)
+                array_shift($aMenu);
+
+            $sContent = BxDolStudioTemplate::getInstance()->parseHtmlByName('dbd_cache.html', array(
+                'bx_if:show_chart' => array(
+                    'condition' => $bChartData,
+                    'content' => array(
+                        'js_object' => $sJsObject,
+                        'chart_data' => $sChartData,
+                    )
+                ),
+                'bx_if:show_empty' => array(
+                    'condition' => !$bChartData,
+                    'content' => array(
+                        'message' => MsgBox(_t('_adm_dbd_msg_c_all_disabled'))
+                    )
+                ),
+            ));
+
+            return array('content' => $sContent, 'menu' => $aMenu);
 	}
 
     private function getVersionUpgradeAvailable()
