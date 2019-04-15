@@ -240,14 +240,15 @@
     <string name="_bx_timeline_txt_today"><![CDATA[Сегодня]]></string>
     <string name="_bx_timeline_txt_some_text_here"><![CDATA[Поделитесь своими мыслями]]></string>
     <string name="_bx_timeline_txt_show"><![CDATA[Показать]]></string>
+    <string name="_bx_timeline_txt_new_content"><![CDATA[Новый контент]]></string>
 
-	<string name="_bx_timeline_txt_do_repost"><![CDATA[Сделать репост]]></string>
-	<string name="_bx_timeline_txt_reposted"><![CDATA[Сделал репост {0} {1}.]]></string>
-	<string name="_bx_timeline_txt_reposted_by"><![CDATA[Сделал репост]]></string>
-	<string name="_bx_timeline_txt_err_cannot_repost"><![CDATA[Невозможно сделать репост. Пожалуйста, сообщите нам об этой проблеме.]]></string>
-	<string name="_bx_timeline_txt_err_already_reposted"><![CDATA[Вы уже сделали репост этого элемента.]]></string>
-	<string name="_bx_timeline_txt_msg_success_repost"><![CDATA[Репост данного элемента был сделан успешно.]]></string>
-	<string name="_bx_timeline_txt_object_reposted"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> - {entry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]> (репост)</string>
+    <string name="_bx_timeline_txt_do_repost"><![CDATA[Сделать репост]]></string>
+    <string name="_bx_timeline_txt_reposted"><![CDATA[Сделал репост {0} {1}.]]></string>
+    <string name="_bx_timeline_txt_reposted_by"><![CDATA[Сделал репост]]></string>
+    <string name="_bx_timeline_txt_err_cannot_repost"><![CDATA[Невозможно сделать репост. Пожалуйста, сообщите нам об этой проблеме.]]></string>
+    <string name="_bx_timeline_txt_err_already_reposted"><![CDATA[Вы уже сделали репост этого элемента.]]></string>
+    <string name="_bx_timeline_txt_msg_success_repost"><![CDATA[Репост данного элемента был сделан успешно.]]></string>
+    <string name="_bx_timeline_txt_object_reposted"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> - {entry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]> (репост)</string>
 
     <!-- EMAIL TEMPLATES -->
     <string name="_bx_timeline_et_txt_name_send"><![CDATA[Послать другу.]]></string>

@@ -502,8 +502,19 @@ div.bx-tl-item-comments-holder .cmts.cmts-margin {
 	font-size: 0.75rem;
 }
 
+/*--- Live Update Alert Styles ---*/
+.bx-tl-live-update-alert {
+    position: relative;
+    display: block;
 
-/*--- Comment Styles in Live Update Notification ---*/
+    background-color: rgba(0, 0, 255, 0.2);
+    text-align: center;
+}
+div.bx-tl-lua-cnt {
+    position: relative;
+}
+
+/*--- Live Update Notifications Styles ---*/
 .bx-tl-live-update-item {
     position: relative;
     display: block;

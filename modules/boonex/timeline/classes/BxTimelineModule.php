@@ -1894,11 +1894,59 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      * @page service Service Calls
      * @section bx_timeline Timeline
      * @subsection bx_timeline-other Other
+     * @subsubsection bx_timeline-get_live_update get_live_update
+     * 
+     * @code bx_srv('bx_timeline', 'get_live_update', [...]); @endcode
+     * 
+     * Get an array with actual Live Update info. Only one live update notification for all new events.
+     *
+     * @return an array with Live Update info.
+     * 
+     * @see BxTimelineModule::serviceGetLiveUpdate
+     */
+    /** 
+     * @ref bx_timeline-get_live_update "get_live_update"
+     */
+    public function serviceGetLiveUpdate($aBrowseParams, $iProfileId, $iCount = 0, $iInit = 0)
+    {
+        $sKey = $this->_oConfig->getLiveUpdateKey($aBrowseParams);
+
+        bx_import('BxDolSession');
+        if((int)BxDolSession::getInstance()->getValue($sKey) == 1)
+            return false;
+
+        $aParams = $this->_prepareParams($aBrowseParams);
+        $aParams['filter'] = BX_TIMELINE_FILTER_OTHER_VIEWER;
+        $aParams['count'] = true;
+
+        $iCountNew = $this->_oDb->getEvents($aParams);
+        if($iCountNew == $iCount)
+            return false;
+
+        if((int)$iInit != 0)
+            return array('count' => $iCountNew);
+
+        return array(
+            'count' => $iCountNew, // required (for initialization and visualization)
+            'method' => $this->_oConfig->getJsObjectView($aBrowseParams) . '.showLiveUpdate(oData)', // required (for visualization)
+            'data' => array(
+                'code' => $this->_oTemplate->getLiveUpdate($aBrowseParams, $iProfileId, $iCount, $iCountNew)
+            ),  // optional, may have some additional data to be passed in JS method provided using 'method' param above.
+        );
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-other Other
      * @subsubsection bx_timeline-get_live_updates get_live_updates
      * 
      * @code bx_srv('bx_timeline', 'get_live_updates', [...]); @endcode
      * 
-     * Get an array with actual Live Update info.
+     * Get an array with actual Live Update info. Separate live update notification for each new Event.
+     * 
+     * Note. This way to display live update notifications isn't used for now. 
+     * See BxTimelineModule::serviceGetLiveUpdate method instead.
      *
      * @return an array with Live Update info.
      * 
@@ -1928,9 +1976,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         return array(
             'count' => $iCountNew, // required (for initialization and visualization)
-            'method' => $this->_oConfig->getJsObjectView($aBrowseParams) . '.showLiveUpdate(oData)', // required (for visualization)
+            'method' => $this->_oConfig->getJsObjectView($aBrowseParams) . '.showLiveUpdates(oData)', // required (for visualization)
             'data' => array(
-                'code' => $this->_oTemplate->getLiveUpdateNotification($aBrowseParams, $iProfileId, $iCount, $iCountNew)
+                'code' => $this->_oTemplate->getLiveUpdates($aBrowseParams, $iProfileId, $iCount, $iCountNew)
             ),  // optional, may have some additional data to be passed in JS method provided using 'method' param above.
         );
     }

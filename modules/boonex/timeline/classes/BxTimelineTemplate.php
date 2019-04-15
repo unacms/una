@@ -102,7 +102,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         //--- Add live update
         $oModule->actionResumeLiveUpdate($aParams['type'], $aParams['owner_id']);
 
-        $sServiceCall = BxDolService::getSerializedService($this->_oConfig->getName(), 'get_live_updates', array($aParams, $oModule->getUserId(), '{count}', '{init}'));
+        $sMethod = !empty($aParams['get_live_updates']) ? $aParams['get_live_updates'] : 'get_live_update';
+        $sServiceCall = BxDolService::getSerializedService($this->_oConfig->getName(), $sMethod, array($aParams, $oModule->getUserId(), '{count}', '{init}'));
         $sLiveUpdatesCode = BxDolLiveUpdates::getInstance()->add($this->_oConfig->getLiveUpdateKey($aParams), 1, $sServiceCall);
         //--- Add live update
 
@@ -970,7 +971,46 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
-    function getLiveUpdateNotification($aBrowseParams, $iProfileId, $iCountOld = 0, $iCountNew = 0)
+    /*
+     * Show only one Live Update notification for all new Events.
+     */
+    function getLiveUpdate($aBrowseParams, $iProfileId, $iCountOld = 0, $iCountNew = 0)
+    {
+        $oModule = $this->getModule();
+
+    	$iCount = (int)$iCountNew - (int)$iCountOld;
+    	if($iCount < 0)
+            return '';
+
+        $aParams = $oModule->getParamsExt($aBrowseParams);
+        $aParams['start'] = 0;
+        $aParams['per_page'] = 1;
+        $aParams['filter'] = BX_TIMELINE_FILTER_OTHER_VIEWER;
+        $aEvents = $this->_oDb->getEvents($aParams);
+        if(empty($aEvents) || !is_array($aEvents))
+            return '';
+
+        $aEvent = array_shift($aEvents);
+        if(empty($aEvent) || !is_array($aEvent))
+            return '';
+
+        $sJsObject = $this->_oConfig->getJsObjectView($aParams);
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
+
+        return $this->parseHtmlByName('live_update_alert.html', array(
+            'style_prefix' => $sStylePrefix,
+            'html_id' => $this->_oConfig->getHtmlIds('view', 'live_update_popup') . $aBrowseParams['type'],
+            'onclick_show' => "javascript:" . $sJsObject . ".goTo(this, 'timeline-event-" . $aEvent['id'] . "', '" . $aEvent['id'] . "');",
+        ));
+    }
+
+    /*
+     * Show Live Update notification separately for each new Event. Popup Chain is used here.
+     * 
+     * Note. This way to display live update notifications isn't used for now. 
+     * See BxTimelineTemplate::getLiveUpdate method instead.
+     */
+    function getLiveUpdates($aBrowseParams, $iProfileId, $iCountOld = 0, $iCountNew = 0)
     {
         $bShowAll = true;
         $bShowActions = false;
@@ -1049,7 +1089,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         }
 
         return $this->parseHtmlByName('popup_chain.html', array(
-            'html_id' => $this->_oConfig->getHtmlIds('view', 'live_update_popup') . $sType,
+            'html_id' => $this->_oConfig->getHtmlIds('view', 'live_update_popup') . $aBrowseParams['type'],
             'bx_repeat:items' => $aTmplVarsItems
         ));
     }

@@ -41,6 +41,12 @@
         this.css("left", Math.max(0, dx + $(window).scrollLeft()) + "px");
         return this;
     }
+    
+    $.fn.dolPopupCenterHor = function () {
+        var dx = $(window).width() > $(this).outerWidth() ? ($(window).width() - $(this).outerWidth()) / 2 : 0;
+        this.css("left", Math.max(0, dx + $(window).scrollLeft()) + "px");
+        return this;
+    }
 
     function _getScrollbarWidth () {
         if ($(document.body).height() <= $(window).height()) {
@@ -798,14 +804,41 @@
                 });
 
             } else if (o.position == 'fixed' || o.position == 'absolute') {
-
-                $el.css({
+                var bCenterHor = o.left != undefined && o.left == 'center';
+                var oCss = {
                     position: o.position,
                     left: o.left,
                     top: o.top,
                     bottom: o.bottom
-                });
+                };
+                if(!bCenterHor)
+                    oCss.left = o.left;
 
+                $el.css(oCss);
+
+                if(bCenterHor) {
+                    var fReposition = function(oElement) {
+                        oElement.dolPopupCenterHor();
+                    };
+
+                    fReposition($el);
+
+                    // reposition popup when its height is changed
+                    $el.data('bx-popup-height', $el.height());
+                    $el.data('bx-popup-timer', setInterval(function () {
+                        if ($el.height() > $el.data('bx-popup-height')) {
+                            fReposition($el);
+                            $el.data('bx-popup-height', $el.height());
+                        }
+                    }, 500));
+
+                    // attach window resize event
+                    $(window).on('resize.popupWindow', function() {
+                        fReposition($el);
+                    }).on('scroll', function() {
+                        fReposition($el);
+                    });
+                }
             } else if (o.position == 'centered') {
 
             	var oPosition = function(oElement) {

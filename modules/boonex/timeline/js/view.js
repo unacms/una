@@ -572,9 +572,50 @@ BxTimelineView.prototype.goTo = function(oLink, sGoToId, sBlinkIds, onLoad)
 };
 
 /*
+ * Show only one live update notification for all new events.
+ * 
  * Note. oData.count_old and oData.count_new are also available and can be checked or used in notification popup.  
  */
 BxTimelineView.prototype.showLiveUpdate = function(oData)
+{
+    if(!oData.code)
+        return;
+
+    var $this = this;
+
+    var oAlert = $(oData.code);
+    var sId = oAlert.attr('id');
+    $('#' + sId).remove();
+
+    oAlert.prependTo('body').dolPopup({
+        position: 'fixed',
+        top: '5rem',
+        left: 'center',
+        fog: false,
+        onBeforeShow: function() {
+        },
+        onBeforeHide: function() {
+        },
+        onShow: function() {
+            setTimeout(function() {
+                $('.' + $this.sSP + '-live-update-alert.bx-popup-applied:visible:first').dolPopupHide();
+            }, 5000);
+        },
+        onHide: function() {
+            $this.resumeLiveUpdates();
+        }
+    });
+};
+
+/*
+ * Show separate live update notification for each new Event.
+ * 
+ * Note. This way to display live update notifications isn't used for now. 
+ * See BxTimelineView::showLiveUpdate method instead.
+ * 
+ * Note. oData.count_old and oData.count_new are also available and can be checked or used in notification popup.  
+ */
+BxTimelineView.prototype.showLiveUpdates = function(oData)
 {
     if(!oData.code)
         return;
