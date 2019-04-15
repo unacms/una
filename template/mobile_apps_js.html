@@ -30,4 +30,12 @@
         window.ReactNativeWebView.postMessage(sMsg);
     else
         window.postMessage(sMsg, '*');
+
+    $(document).ready(function () {
+        PullToRefresh.init({
+            onRefresh() {
+                window.location.reload();
+            },
+        });
+    });
 </script>
