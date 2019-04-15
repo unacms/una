@@ -3,18 +3,17 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    UnaBaseView UNA Base Representation Classes
+ * @defgroup    MobileApps Mobile Apps
+ * @ingroup     UnaModules
+ *
  * @{
  */
 
-/**
- * System services for mobile apps.
- */
-class BxBaseServiceMobileApps extends BxDol
+class BxMobileAppsModule extends BxDolModule
 {
-    public function __construct()
+    function __construct(&$aModule)
     {
-        parent::__construct();
+        parent::__construct($aModule);
     }
 
     /**
@@ -39,17 +38,20 @@ class BxBaseServiceMobileApps extends BxDol
             $iBubbles += $r['bx_if:addon']['content']['addon'];
         }
 
-        $s  = BxDolTemplate::getInstance()->parseHtmlByName('mobile_apps_styles.html', array());
-        $s .= BxDolTemplate::getInstance()->parseHtmlByName('mobile_apps_js.html', array(
+        $s  = $this->_oTemplate->parseHtmlByName('mobile_apps_styles.html', array());
+        $s .= $this->_oTemplate->parseHtmlByName('mobile_apps_js.html', array(
             'msg' => json_encode(array(
                 'loggedin' => isLogged(),                
                 'bubbles_num' => $iBubbles ? $iBubbles : '',
                 'bubbles' => $aBubbles,
                 'push_tags' => array('user' => bx_get_logged_profile_id())
-            ))
+            )),
+            'txt_pull_to_refresh' => bx_js_string(_t('_bx_mobileapps_pull_to_refresh')),
+            'txt_release_to_refresh' => bx_js_string(_t('_bx_mobileapps_release_to_refresh')),
+            'txt_refreshing' => bx_js_string(_t('_bx_mobileapps_refreshing')),
         ));
 
-        BxDolTemplate::getInstance()->addJs('pulltorefresh.min.js');
+        $this->_oTemplate->addJs('pulltorefresh.min.js');
 
         return $s;
     }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources name="en" flag="gb" title="English">
+	<string name="_sys_module_mobileapps"><![CDATA[Mobile Apps]]></string>
+	<string name="_bx_mobileapps"><![CDATA[Mobile Apps]]></string>
+
+	<string name="_bx_mobileapps_setting"><![CDATA[Mobile Apps Setting]]></string>
+    <string name="_bx_mobileapps_adm_stg_cpt_type"><![CDATA[Mobile Apps]]></string>
+    <string name="_bx_mobileapps_adm_stg_cpt_category_general"><![CDATA[General]]></string>
+    <string name="_bx_mobileapps_option_qwerty"><![CDATA[Qwerty]]></string>
+
+	<string name="_bx_mobileapps_information"><![CDATA[Information]]></string>
+    <string name="_bx_mobileapps_information_block"><![CDATA[This module adds neccesary styles and functionalty for proper functionality of UNA mobile apps. Installing this module isn't enough, you need to get source code of mobile apps modify it for your needs and publish in Google and Apple stores.]]></string>
+
+    <string name="_bx_mobileapps_pull_to_refresh"><![CDATA[Pull to refresh]]></string> <!-- потяни, чтобы обновить -->
+    <string name="_bx_mobileapps_release_to_refresh"><![CDATA[Release to refresh]]></string> <!-- отпусти, чтобы обновить -->
+    <string name="_bx_mobileapps_refreshing"><![CDATA[Refreshing]]></string> <!-- обновление -->
+
+</resources>
