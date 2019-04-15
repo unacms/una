@@ -27,6 +27,10 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
+        $sMethod = '_process' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);           	
+        if(method_exists($this, $sMethod))
+            return $this->$sMethod($oAlert);
+
         $iObjectAuthorId = $this->_getObjectOwnerId($oAlert->aExtras);
     	$iObjectPrivacyView = $this->_getObjectPrivacyView($oAlert->aExtras);
         if($iObjectPrivacyView == BX_DOL_PG_HIDDEN)
@@ -118,6 +122,19 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 $this->_oModule->_oDb->deleteCache(array('event_id' => $aEvent[$CNF['FIELD_ID']]));
                 break;
         }
+    }
+
+    protected function _processSystemClearCache($oAlert)
+    {
+        if($oAlert->aExtras['type'] != 'custom')
+            return;
+
+        //--- Clear item cache.
+        $this->_oModule->getCacheItemObject()->removeAllByPrefix($this->_oModule->_oConfig->getPrefix('cache_item'));
+
+        //--- Clear feed cache.
+        $this->_oModule->_oDb->clearCache();
+                
     }
 }
 

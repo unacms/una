@@ -407,6 +407,11 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return (int)$this->query("DELETE FROM `{$this->_sTableCache}` WHERE " . $this->arrayToSQL($aParamsWhere, ' AND ')) > 0;
     }
 
+    public function clearCache()
+    {
+        return (int)$this->query("DELETE FROM `{$this->_sTableCache}` WHERE 1") > 0;
+    }
+
     public function getCache($aParams)
     {
         $CNF = &$this->_oConfig->CNF;

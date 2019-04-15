@@ -122,7 +122,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'language' => '_bx_timeline',
             'option' => 'bx_timeline_',
             'common_post' => 'timeline_common_',
-            'cache_item' => 'bx_templ_bx_timeline_item_'
+            'cache_item' => 'bx_timeline_item_'
         );
 
         $this->_aObjects = array_merge($this->_aObjects, array(
@@ -380,7 +380,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
     public function getCacheItemKey($iId, $sPostfix = '')
     {
-        return $this->_aPrefixes['cache_item'] . $iId . (!empty($sPostfix) ? '_' . $sPostfix : '') . '.php';
+        return $this->getPrefix('cache_item') . $iId . (!empty($sPostfix) ? '_' . $sPostfix : '') . '.php';
     }
 
     public function getPostFormDisplay($sType)
