@@ -383,34 +383,61 @@ BxDolCmts.prototype.toggleReply = function(e, iCmtParentId)
 
 BxDolCmts.prototype.goTo = function(oLink, sGoToId, sBlinkIds, onLoad)
 {
-	$(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide();
+    $(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide();
 
-	var $this = this;
-	this._getCmts(null, {
-		CmtParent: 0,
-		CmtBrowse: this._sBrowseType,
-		CmtFilter: this._sBrowseFilter,
-		CmtDisplay: this._sDisplayType,
-		CmtBlink: sBlinkIds
-	}, function(sListId, sContent) {
-		$this._cmtsReplaceContent($(sListId), sContent, function() {
-			location.hash = sGoToId;
+    var $this = this;
+    this._getCmts(null, {
+        CmtParent: 0,
+        CmtBrowse: this._sBrowseType,
+        CmtFilter: this._sBrowseFilter,
+        CmtDisplay: this._sDisplayType,
+        CmtBlink: sBlinkIds
+    }, function(sListId, sContent) {
+        $this._cmtsReplaceContent($(sListId), sContent, function() {
+            location.hash = sGoToId;
 
-			if(typeof onLoad == 'function')
-				onLoad();
-		});
-	});
+            if(typeof onLoad == 'function')
+                onLoad();
+        });
+    });
+};
+
+BxDolCmts.prototype.goToBtn = function(oLink, sGoToId, sBlinkIds, onLoad)
+{
+    var $this = this;
+
+    this._loadingInButton(oLink, true);
+
+    this._getCmts(null, {
+        CmtParent: 0,
+        CmtBrowse: this._sBrowseType,
+        CmtFilter: this._sBrowseFilter,
+        CmtDisplay: this._sDisplayType,
+        CmtBlink: sBlinkIds
+    }, function(sListId, sContent) {
+        $this._cmtsReplaceContent($(sListId), sContent, function() {
+            location.hash = sGoToId;
+
+            if(typeof onLoad == 'function')
+                onLoad();
+
+            $this._loadingInButton(oLink, false);
+            $(oLink).parents('.cmt-lu-button:first').remove();
+
+            $this.resumeLiveUpdates();
+        });
+    });
 };
 
 BxDolCmts.prototype.goToAndReply = function(oLink, sGoToId, sBlinkIds)
 {
-	var $this = this;
-	this.goTo(oLink, sGoToId, sBlinkIds, function() {
-		var aBlinkIds = sBlinkIds.split(",");
-		$.each(aBlinkIds, function(iIndex, iValue) {
-			$this.toggleReply(null, iValue);
-		});
-	});
+    var $this = this;
+    this.goTo(oLink, sGoToId, sBlinkIds, function() {
+        var aBlinkIds = sBlinkIds.split(",");
+        $.each(aBlinkIds, function(iIndex, iValue) {
+            $this.toggleReply(null, iValue);
+        });
+    });
 };
 
 /*----------------------------*/
@@ -418,36 +445,14 @@ BxDolCmts.prototype.goToAndReply = function(oLink, sGoToId, sBlinkIds)
 /*----------------------------*/
 BxDolCmts.prototype.showLiveUpdate = function(oData)
 {
-    /*
-     * Note. oData.count_old and oData.count_new are also available and can be checked or used in notification popup.  
-     */
     if(!oData.code)
         return;
 
-    var $this = this;
-
-    var oNotifs = $(oData.code);
-    var sId = oNotifs.attr('id');
+    var oButton = $(oData.code);
+    var sId = oButton.attr('id');
     $('#' + sId).remove();
 
-    oNotifs.prependTo('body').dolPopup({
-        position: 'fixed',
-        top: '5rem',
-        left: 'center',
-        fog: false,
-        onBeforeShow: function() {
-        },
-        onBeforeHide: function() {
-        },
-        onShow: function() {
-            setTimeout(function() {
-                $('.bx-popup-chain.bx-popup-applied:visible:first').dolPopupHide();
-            }, 5000);
-        },
-        onHide: function() {
-            $this.resumeLiveUpdates();
-        }
-    });
+    oButton.prependTo(this._sRootId);
 };
 
 BxDolCmts.prototype.showLiveUpdates = function(oData)
@@ -693,7 +698,7 @@ BxDolCmts.prototype._cmtsBlink = function(oParent)
 };
 
 BxDolCmts.prototype._getDefaultActions = function() {
-	var oDate = new Date();
+    var oDate = new Date();
     return {
         sys: this._sSystem,
         id: this._iObjId,
@@ -702,25 +707,25 @@ BxDolCmts.prototype._getDefaultActions = function() {
 };
 
 BxDolCmts.prototype._loading = function(e, bShow) {
-	var oParent = $(e).length ? $(e) : $('body'); 
-	bx_loading(oParent, bShow);
+    var oParent = $(e).length ? $(e) : $('body'); 
+    bx_loading(oParent, bShow);
 };
 
 BxDolCmts.prototype._loadingInBlock = function(e, bShow) {
-	var oParent = $(e).length ? $(e).parents('.bx-db-content:first') : $('body'); 
-	bx_loading(oParent, bShow);
+    var oParent = $(e).length ? $(e).parents('.bx-db-content:first') : $('body'); 
+    bx_loading(oParent, bShow);
 };
 
 BxDolCmts.prototype._loadingInContent = function(e, bShow) {
-	var oParent = $(e).length ? $(e).parents('li.cmt:first,.cmt-reply:first') : $('body'); 
-	bx_loading(oParent, bShow);
+    var oParent = $(e).length ? $(e).parents('li.cmt:first,.cmt-reply:first') : $('body'); 
+    bx_loading(oParent, bShow);
 };
 
 BxDolCmts.prototype._loadingInButton = function(e, bShow) {
-	if($(e).length)
-		bx_loading_btn($(e), bShow);
-	else
-		bx_loading($('body'), bShow);	
+    if($(e).length)
+        bx_loading_btn($(e), bShow);
+    else
+        bx_loading($('body'), bShow);
 };
 
 /** @} */

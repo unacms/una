@@ -393,10 +393,10 @@ class BxBaseCmts extends BxDolCmts
             return '';
 
         $sJsObject = $this->getJsObjectName();
-        return $this->_oTemplate->parseHtmlByName('comments_notification.html', array(
+        return $this->_oTemplate->parseHtmlByName('comments_lu_button.html', array(
             'style_prefix' => $this->_sStylePrefix,
             'html_id' => $this->getNotificationId(),
-            'onclick_show' => "javascript:" . $sJsObject . ".goTo(this, '" . $this->getItemAnchor($aComment['cmt_id']) . "', '" . $aComment['cmt_id'] . "');",
+            'onclick_show' => "javascript:" . $sJsObject . ".goToBtn(this, '" . $this->getItemAnchor($aComment['cmt_id']) . "', '" . $aComment['cmt_id'] . "');",
         ));
     }
 
@@ -444,7 +444,7 @@ class BxBaseCmts extends BxDolCmts
                     'condition' => !$bShowAll && $iIndex < ($iComments - 1),
                     'content' => array(),
                 ),
-                'item' => $this->_oTemplate->parseHtmlByName('comments_notifications.html', array(
+                'item' => $this->_oTemplate->parseHtmlByName('comments_lu_notifications.html', array(
                     'style_prefix' => $this->_sStylePrefix,
                     'onclick_show' => $sShowOnClick,
                     'onclick_reply' => $sReplyOnClick,
