@@ -75,7 +75,7 @@ class BxPollsTemplate extends BxBaseModTextTemplate
         $oMenu = $this->_getGetBlockMenu($aData, $sMenuItem);
 
         $sMenu = str_replace('_', '-', $this->_oConfig->getName()) . '-menu-db';
-        $sMenuId = $sMenu . '-' . time() . rand(0, PHP_INT_MAX);        
+        $sMenuId = $sMenu . '-' . $aData['salt'];        
 
         $aTmplVars = parent::getTmplVarsText($aData);
         $aTmplVars = array_merge($aTmplVars, array(
@@ -114,6 +114,29 @@ class BxPollsTemplate extends BxBaseModTextTemplate
         return $aBlock['content'];
     }
 
+    protected function getUnit ($aData, $aParams = array())
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $aResult = parent::getUnit($aData, $aParams);
+        
+        $oMenuMeta = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this);
+        if($oMenuMeta) {
+            $oMenuMeta->setContent($aData);
+
+            $aResult = array_merge($aResult, array(
+                'bx_if:meta' => array(
+                    'condition' => true,
+                    'content' => array(
+                        'meta' => $oMenuMeta->getCode()
+                    )
+                ),
+            ));
+        }
+
+        return $aResult;
+    }
+
     protected function getUnitThumbAndGallery ($aData)
     {
         return array('', '');
@@ -123,7 +146,6 @@ class BxPollsTemplate extends BxBaseModTextTemplate
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
-        $sPostfix = '-' . time() . rand(0, PHP_INT_MAX);
         $sJsObject = $this->_oConfig->getJsObject('entry');
         $iContentId = $aData[$CNF['FIELD_ID']];
 
@@ -137,17 +159,18 @@ class BxPollsTemplate extends BxBaseModTextTemplate
             if(!$bActive) 
                 continue;
 
-            $sId = $this->_oConfig->getHtmlIds('block_link_' . $sBlock) . $sPostfix;
+            $sId = $this->_oConfig->getHtmlIds('block_link_' . $sBlock) . $aData['salt'];
             if(!empty($sSelected) && $sSelected == $sBlock)
                 $sSelected = $sId;
 
-            $aMenu[] = array('id' => $sId, 'name' => $sId, 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeBlock(this, \'' . $sBlock . '\', ' . $iContentId . ')', 'target' => '_self', 'title' => _t('_bx_polls_menu_item_view_' . $sBlock));
+            $aMenu[] = array('id' => $sId, 'name' => $sId, 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeBlock(this, \'' . $sBlock . '\', ' . bx_js_string(json_encode(array('content_id' => $iContentId, 'salt' => $aData['salt']))) . ')', 'target' => '_self', 'title' => _t('_bx_polls_menu_item_view_' . $sBlock));
         }
 
         if(count($aMenu) <= 1)
             return '';
 
-        $oMenu = new BxTemplMenuInteractive(array('template' => 'menu_interactive_vertical.html', 'menu_id' => $this->_oConfig->getHtmlIds('block_menu') . $sPostfix, 'menu_items' => $aMenu));
+        $sMenu = $this->_oConfig->getHtmlIds('block_menu');
+        $oMenu = new BxTemplMenuInteractive(array('object' => $sMenu, 'menu_id' => $sMenu . '-' . $aData['salt'], 'menu_items' => $aMenu, 'template' => 'menu_interactive_vertical.html'));
         if(!empty($sSelected))
             $oMenu->setSelected('', $sSelected);
 
@@ -165,6 +188,7 @@ class BxPollsTemplate extends BxBaseModTextTemplate
         $aTmplVarsSubentries = array();
         foreach($aSubentries as $aSubentry) {
             $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_SUBENTRIES'], $aSubentry['id']);
+            $oVotes->setEntry($aData);
 
             $aTmplVarsSubentries[] = array(
                 'subentry' => $oVotes->getElementBlock(array(
@@ -200,6 +224,7 @@ class BxPollsTemplate extends BxBaseModTextTemplate
         $aTmplVarsSubentries = array();
         foreach($aSubentries as $aSubentry) {
             $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_SUBENTRIES'], $aSubentry['id']);
+            $oVotes->setEntry($aData);
 
             $fPercent = $iTotal > 0 ? 100 * (float)$aSubentry['votes']/$iTotal : 0;
             $aTmplVarsSubentries[] = array(

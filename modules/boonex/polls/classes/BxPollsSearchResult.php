@@ -120,6 +120,14 @@ class BxPollsSearchResult extends BxBaseModTextSearchResult
         $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
     }
 
+    function displaySearchUnit ($aData)
+    {
+        if(empty($aData['salt']))
+            $aData['salt'] = $this->oModule->_oConfig->getSalt();
+
+        return parent::displaySearchUnit($aData);
+    }
+
     function addCustomParts ()
     {
         $this->oModule->_oTemplate->addJs(array('entry.js'));

@@ -17,7 +17,7 @@ function BxDolVoteReactions(oOptions)
 BxDolVoteReactions.prototype = Object.create(BxDolVote.prototype);
 BxDolVoteReactions.prototype.constructor = BxDolVoteReactions;
 
-BxDolVote.prototype.vote = function(oLink, iValue, sReaction, onComplete)
+BxDolVoteReactions.prototype.vote = function(oLink, iValue, sReaction, onComplete)
 {
     var $this = this;
     var oParams = this._getDefaultParams();

@@ -140,27 +140,28 @@ class BxPollsConfig extends BxBaseModTextConfig
 
         $this->_aJsClasses = array(
             'form' => 'BxPollsForm',
-        	'entry' => 'BxPollsEntry',
-        	'manage_tools' => 'BxPollsManageTools'
+            'entry' => 'BxPollsEntry',
+            'manage_tools' => 'BxPollsManageTools'
         );
 
         $this->_aJsObjects = array(
-        	'form' => 'oBxPollsForm',
-        	'entry' => 'oBxPollsEntry',
-        	'manage_tools' => 'oBxPollsManageTools'
+            'form' => 'oBxPollsForm',
+            'entry' => 'oBxPollsEntry',
+            'manage_tools' => 'oBxPollsManageTools'
         );
 
         $this->_aGridObjects = array(
-        	'common' => $this->CNF['OBJECT_GRID_COMMON'],
-        	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
-        	
+            'common' => $this->CNF['OBJECT_GRID_COMMON'],
+            'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
         );
 
         $sHtmlPrefix = str_replace('_', '-', $this->_sName);
         $this->_aHtmlIds = array(
             'block_menu' => $sHtmlPrefix . '-block-menu',
-        	'block_link_subentries' => $sHtmlPrefix . '-block-subentries',
-        	'block_link_results' => $sHtmlPrefix . '-block-results',
+            'block_link_subentries' => $sHtmlPrefix . '-block-subentries-',
+            'block_link_results' => $sHtmlPrefix . '-block-results-',
+            'snippet_link_subentries' => $sHtmlPrefix . '-snippet-subentries-',
+            'snippet_link_results' => $sHtmlPrefix . '-snippet-results-',
             'content' => $sHtmlPrefix . '-content-',
         );
     }
@@ -176,6 +177,11 @@ class BxPollsConfig extends BxBaseModTextConfig
     public function getTitle($aData)
     {
         return BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($aData[$this->CNF['FIELD_TEXT']]), (int)getParam($this->CNF['PARAM_CHARS_TITLE']));
+    }
+    
+    public function getSalt()
+    {
+        return time() . rand(0, PHP_INT_MAX);
     }
 }
 

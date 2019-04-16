@@ -179,9 +179,21 @@ class BxPollsModule extends BxBaseModTextModule
     }
 
 
-	/**
+    /**
      * INTERNAL METHODS
      */
+    protected function _getContent($iContentId = 0, $sFuncGetContent = 'getContentInfoById')
+    {
+        $mixedResult = parent::_getContent($iContentId, $sFuncGetContent);
+        if(empty($mixedResult) || !is_array($mixedResult)) 
+            return $mixedResult;
+
+        list($iContentId, $aContentInfo) = $mixedResult;
+        $aContentInfo['salt'] = bx_get('salt') !== false ? bx_process_input(bx_get('salt')) : $this->_oConfig->getSalt();
+    
+        return array($iContentId, $aContentInfo);
+    }
+
     protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {
         return array();
