@@ -115,12 +115,12 @@ class BxBaseModTextVotePollAnswers extends BxTemplVoteLikes
     /**
      * Internal functions
      */
-    protected function _getIconDoLike($bVoted)
+    protected function _getIconDo($bVoted)
     {
     	return $bVoted ?  'far dot-circle' : 'far circle';
     }
 
-    protected function _getTitleDoLike($bVoted)
+    protected function _getTitleDo($bVoted)
     {
     	return bx_process_output($this->_aObjectInfo['title']);
     }
