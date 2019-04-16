@@ -509,7 +509,14 @@ div.bx-tl-live-update-button {
 }
 @supports(position:sticky) {
     div.bx-tl-live-update-button {
-        position:sticky;
+        position: sticky;
+        top: 1rem;
+        z-index: 1;
+    }
+}
+@supports(position:-webkit-sticky) {
+    div.bx-tl-live-update-button {
+        position: -webkit-sticky;
         top: 1rem;
         z-index: 1;
     }
