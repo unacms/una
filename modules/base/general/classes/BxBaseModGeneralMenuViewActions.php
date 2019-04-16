@@ -359,11 +359,6 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         return $this->_getMenuItemByNameSocialSharing($aItem);
     }
 
-    protected function _getMenuItemSocialSharingGoogleplus($aItem)
-    {
-        return $this->_getMenuItemByNameSocialSharing($aItem);
-    }
-
     protected function _getMenuItemSocialSharingTwitter($aItem)
     {
         return $this->_getMenuItemByNameSocialSharing($aItem);
