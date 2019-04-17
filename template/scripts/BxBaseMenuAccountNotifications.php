@@ -34,7 +34,11 @@ class BxBaseMenuAccountNotifications extends BxTemplMenu
             'set_name' => $this->_aObject['set_name']
         ));
 
-        $sModule = BxDolProfile::getInstance()->getModule();
+        $oProfile = BxDolProfile::getInstance();
+        if(!$oProfile)
+            return array();
+
+        $sModule = $oProfile->getModule();
 
         $aResult = array();
         foreach($aItems as $aItem) {

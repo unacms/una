@@ -97,6 +97,8 @@ class BxBaseServiceProfiles extends BxDol
             $iProfileId = bx_get_logged_profile_id();
 
         $oMenu = BxDolMenu::getObjectInstance('sys_account_notifications');
+        if(!$oMenu)
+            return 0;
 
         $iNum = 0;
         $aMenuItems = $oMenu->getMenuItems ();
