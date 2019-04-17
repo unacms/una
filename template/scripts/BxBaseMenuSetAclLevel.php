@@ -24,12 +24,11 @@ class BxBaseMenuSetAclLevel extends BxTemplMenu
     	$this->mixedProfileId = $mixedProfileId;
 
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' && ($mixedProfileId = bx_get('profile_id', 'post')) && ($iAclLevelId = bx_get('acl_level_id', 'post'))) {
-			$mixedProfileId = urldecode($mixedProfileId);
-			if(!is_numeric($mixedProfileId))
-				$mixedProfileId = unserialize($mixedProfileId);
+            $mixedProfileId = urldecode($mixedProfileId);
+            if(!is_numeric($mixedProfileId))
+                $mixedProfileId = unserialize($mixedProfileId);
 
-            header('Content-type: text/html; charset=utf-8');
-            echo $this->setMembership($mixedProfileId, $iAclLevelId);
+            echoJson($this->setMembership($mixedProfileId, $iAclLevelId, (int)bx_get('acl_card', 'post') > 0));
             exit;
         }
 
@@ -71,36 +70,48 @@ class BxBaseMenuSetAclLevel extends BxTemplMenu
                 'title' => $sTitle,
                 'icon' => '',
                 'link' => 'javascript:void(0);',
-                'onclick' => "bx_set_acl_level(" . (!$bBulk ? $mixedProfileId : "'" . urlencode(serialize($mixedProfileId)) . "'") . ", {$iId}, '.bx-popup-applied');"
+                'onclick' => "bx_set_acl_level(" . (!$bBulk ? $mixedProfileId : "'" . urlencode(serialize($mixedProfileId)) . "'") . ", {$iId}, " . bx_js_string("$(this).parents('.bx-popup-applied:first')") . ");"
             );
         }
 
         $this->_aObject['menu_items'] = $aItems;
     }
 
-    protected function setMembership($mixedProfileId, $iAclLevelId)
+    protected function setMembership($mixedProfileId, $iAclLevelId, $bAclCard = false)
     {
         bx_import('BxDolAcl');
 
         if(!is_array($mixedProfileId))
-        	$mixedProfileId = array($mixedProfileId);
+            $mixedProfileId = array($mixedProfileId);
 
 		$iPerformerId = bx_get_logged_profile_id();
         $aCheck = checkActionModule($iPerformerId, 'set acl level', 'system', false);
         if(!isAdmin() && $aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
-			return $aCheck[CHECK_ACTION_MESSAGE];
+            return array('code' => 1, 'msg' => $aCheck[CHECK_ACTION_MESSAGE]);
 
-		$iSet = 0;
-		$oAcl = BxDolAcl::getInstance();
-		foreach($mixedProfileId as $iProfileId) {
-        	if(!$oAcl->setMembership($iProfileId, $iAclLevelId, 0, true))
-        		continue;
+        $iSet = 0;
+        $aCards = array();
+        $oAcl = BxDolAcl::getInstance();
+        foreach($mixedProfileId as $iProfileId) {
+            if(!$oAcl->setMembership($iProfileId, $iAclLevelId, 0, true))
+                continue;
 
-			$iSet += 1;
-			checkActionModule($iPerformerId, 'set acl level', 'system', true); // perform action
-		}
+            $iSet += 1;
+            if($bAclCard)
+                $aCards[$iProfileId] = $oAcl->getProfileMembership($iProfileId);
 
-		return count($mixedProfileId) != $iSet ? _t('_error occured') : '';
+            checkActionModule($iPerformerId, 'set acl level', 'system', true); // perform action
+        }
+
+        if(count($mixedProfileId) != $iSet)
+            return array('code' => 2, 'msg' => _t('_error occured'));
+        
+        
+        $aResult = array('code' => 0);
+        if($bAclCard)
+            $aResult['card'] = $aCards;
+
+        return $aResult;
     }
 }
 

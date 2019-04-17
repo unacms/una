@@ -644,21 +644,31 @@ function bx_menu_show_live_update(oData) {
  * @param iAclLevel - acl level id to assign to a given rofile
  */
 function bx_set_acl_level (iProfileId, iAclLevel, mixedLoadingElement) {
+    var bBulk = !$.isNumeric(iProfileId);
+    var iAclCard = !bBulk && $('#sys-acl-profile-' + iProfileId).length > 0 ? 1 : 0;
 
-    if ('undefined' != typeof(mixedLoadingElement))
+    var bLoading = typeof(mixedLoadingElement) != 'undefined';
+    if(bLoading)
         bx_loading($(mixedLoadingElement), true);
 
-    $.post(sUrlRoot + 'menu.php', {o:'sys_set_acl_level', 'profile_id': iProfileId, 'acl_level_id': iAclLevel}, function(data) {
-
-        if ('undefined' != typeof(mixedLoadingElement))
+    $.post(sUrlRoot + 'menu.php', {o:'sys_set_acl_level', profile_id: iProfileId, acl_level_id: iAclLevel, acl_card:iAclCard}, function(oData) {
+        if(bLoading)
             bx_loading($(mixedLoadingElement), false);
 
-        if (data.length) {
-            bx_alert(data);
-        } else if ($(mixedLoadingElement).hasClass('bx-popup-applied')) {
-            $(mixedLoadingElement).dolPopupHide().remove();
+        if(oData.msg != undefined && oData.msg.length) {
+            bx_alert(oData.msg);
+            return;
         }
-    });
+
+        if($(mixedLoadingElement).hasClass('bx-popup-applied'))
+            $(mixedLoadingElement).dolPopupHide().remove();
+
+        if(typeof(oData.card) == 'object')
+            for(var iField in oData.card) {
+                var oCard = $(oData.card[iField]);
+                $('#' + oCard.attr('id')).replaceWith(oCard);
+            }
+    }, 'json');
 }
 
 function validateLoginForm(eForm) {

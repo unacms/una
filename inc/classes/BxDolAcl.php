@@ -543,7 +543,11 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
                 return true;
 
             // delete present and future memberships
-            return $this->oDb->deleteLevelByProfileId($iProfileId);
+            $bResult = $this->oDb->deleteLevelByProfileId($iProfileId);
+            if($bResult)
+                $this->oDb->cleanMemory('BxDolAclQuery::getLevelCurrent' . $iProfileId . time());
+
+            return $bResult;
         }
 
         if ((is_numeric($mixedPeriod) && (int)$mixedPeriod < 0) || (is_array($mixedPeriod) && (!isset($mixedPeriod['period']) || $mixedPeriod['period'] < 0)))
@@ -561,6 +565,7 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
             // Delete any profile's membership level and actions traces
             $this->oDb->deleteLevelByProfileId($iProfileId, true); 
             $this->oDb->clearActionsTracksForMember($iProfileId);
+            $this->oDb->cleanMemory('BxDolAclQuery::getLevelCurrent' . $iProfileId . time());
         }
 
         // set lifetime membership if 0 days is used.
