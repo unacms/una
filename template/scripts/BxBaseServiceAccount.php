@@ -26,6 +26,11 @@ class BxBaseServiceAccount extends BxDol
 
     public function serviceCreateAccountForm ($aParams = array())
     {   
+        if(isLogged()){
+            header('Location: ' . BX_DOL_URL_ROOT);
+            exit;
+        }
+        
         if (isset($_SERVER['HTTP_REFERER']) && 0 === mb_stripos($_SERVER['HTTP_REFERER'], BX_DOL_URL_ROOT)) { // remember referrer
             
             $sJoinReferrer = $_SERVER['HTTP_REFERER'];
@@ -308,6 +313,11 @@ class BxBaseServiceAccount extends BxDol
      */
     public function serviceForgotPassword()
     {
+        if(isLogged()){
+            header('Location: ' . BX_DOL_URL_ROOT);
+            exit;
+        }
+        
         if (bx_get('key'))
             return $this->resetPassword();
 
