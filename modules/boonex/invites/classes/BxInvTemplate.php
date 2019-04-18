@@ -162,8 +162,11 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
                 'sender_ip' => $sIp,
                 'manage_url' => $sManageUrl
             ));
-
-            sendMail($sRequestsEmail, $aMessage['Subject'], $aMessage['Body'], 0, array(), BX_EMAIL_SYSTEM);
+            
+            $aRequestsEmails = explode(',', $sRequestsEmail);
+            foreach ($aRequestsEmails as $s) {
+                sendMail(trim($s), $aMessage['Subject'], $aMessage['Body'], 0, array(), BX_EMAIL_SYSTEM);
+            }
         }
 
         return array('content' => MsgBox(_t('_bx_invites_msg_request_sent')), 'content_id' => $sFormId, 'eval' => $sEval);
