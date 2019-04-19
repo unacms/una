@@ -94,6 +94,7 @@ class BxBaseModProfileAlertsResponse extends BxBaseModGeneralAlertsResponse
         case 'timeline_comment':
         case 'timeline_report':
         case 'timeline_vote':
+        case 'timeline_score':
             $this->processTimelineEventsBoolResult($oAlert, $oAlert->iObject);
             break;
 
@@ -101,6 +102,8 @@ class BxBaseModProfileAlertsResponse extends BxBaseModGeneralAlertsResponse
             $this->processTimelineEventsCheckResult($oAlert, $oAlert->iObject);
             break;
 
+        case 'timeline_pin':
+        case 'timeline_promote':
         case 'timeline_delete':
             $this->processTimelineEventsCheckResult($oAlert, $oAlert->iObject, 'checkAllowedEdit');
             break;
@@ -155,9 +158,6 @@ class BxBaseModProfileAlertsResponse extends BxBaseModGeneralAlertsResponse
 
     protected function processTimelineEventsCheckResult ($oAlert, $iGroupProfileId, $sFunc = 'checkAllowedPost')
     {
-        if ($oAlert->aExtras['check_result'][CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
-            return;
-
         $oGroupProfile = BxDolProfile::getInstance($iGroupProfileId);
         if (!$oGroupProfile) 
             return;

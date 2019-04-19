@@ -500,8 +500,11 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('bx_persons', 'timeline_delete', @iHandler),
 ('bx_persons', 'timeline_comment', @iHandler),
 ('bx_persons', 'timeline_vote', @iHandler),
+('bx_persons', 'timeline_score', @iHandler),
 ('bx_persons', 'timeline_report', @iHandler),
-('bx_persons', 'timeline_repost', @iHandler);
+('bx_persons', 'timeline_repost', @iHandler),
+('bx_persons', 'timeline_pin', @iHandler),
+('bx_persons', 'timeline_promote', @iHandler);
 
 -- PRIVACY 
 INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `spaces`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES

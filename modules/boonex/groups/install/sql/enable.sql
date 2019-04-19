@@ -490,8 +490,11 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('bx_groups', 'timeline_delete', @iHandler),
 ('bx_groups', 'timeline_comment', @iHandler),
 ('bx_groups', 'timeline_vote', @iHandler),
+('bx_groups', 'timeline_score', @iHandler),
 ('bx_groups', 'timeline_report', @iHandler),
-('bx_groups', 'timeline_repost', @iHandler);
+('bx_groups', 'timeline_repost', @iHandler),
+('bx_groups', 'timeline_pin', @iHandler),
+('bx_groups', 'timeline_promote', @iHandler);
 
 -- PRIVACY 
 
