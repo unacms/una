@@ -264,8 +264,7 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
         	INNER JOIN `sys_sessions` AS `ts` ON `tp`.`account_id`=`ts`.`user_id` 
         	WHERE 
         		`ta`.`profile_id`=`tp`.`id` AND 
-        		`ts`.`date` > (UNIX_TIMESTAMP() - 60 * ?) 
-        	LIMIT 1", (int)getParam('sys_account_online_time'));
+        		`ts`.`date` > (UNIX_TIMESTAMP() - 60 * ?)", (int)getParam('sys_account_online_time'));
         return (int)$this->getOne($sSql);
     }
 
