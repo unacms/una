@@ -40,8 +40,8 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
 
         // select view entry submenu
         $this->_setSubmenu(array(
-        	'title' => $sTitle,
-			'link' => $sUrl,
+            'title' => $sTitle,
+            'link' => $sUrl,
             'icon' => $sIcon
         ));
     }
@@ -59,20 +59,28 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
          * Hide actions menu from View Page cover because 
          * cover area should be decorative in Text Based modules.
          */
-        BxDolMenu::getObjectInstance('sys_site_submenu')->setObjectActionsMenu(false);
+        $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
+        if($oMenuSubmenu)
+            $oMenuSubmenu->setObjectActionsMenu(false);
 
         return $mixedResult;
     }
+
     protected function _setSubmenu($aParams)
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
-		$oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
-		$oMenuSubmenu->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'], array_merge(array(
-			'title' => '',
-			'link' => '',
-			'icon' => '',
-		), $aParams));
+        $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
+        if(!$oMenuSubmenu)
+            return false;
+
+        $oMenuSubmenu->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'], array_merge(array(
+            'title' => '',
+            'link' => '',
+            'icon' => '',
+        ), $aParams));
+
+        return true;
     }
 
     protected function _getBlockService ($aBlock)

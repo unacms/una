@@ -84,16 +84,17 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
         }
 
         $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
+        if($oMenuSubmenu) {
+            // add actions menu to submenu
+            if(isset($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY']))
+                $oMenuSubmenu->setObjectActionsMenu($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY']);
 
-        // add actions menu to submenu
-        if (isset($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY']))
-            $oMenuSubmenu->setObjectActionsMenu($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY']);
-
-        // add social sharing menu to submenu
-        $oMenuSubmenu->setServiceSocialSharing(array(
-            'module' => $this->MODULE,
-            'method' => 'entity_social_sharing',
-        ));
+            // add social sharing menu to submenu
+            $oMenuSubmenu->setServiceSocialSharing(array(
+                'module' => $this->MODULE,
+                'method' => 'entity_social_sharing',
+            ));
+        }
 
         return parent::getCode ();
     }

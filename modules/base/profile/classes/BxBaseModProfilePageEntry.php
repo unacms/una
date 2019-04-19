@@ -60,11 +60,12 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
 
         // select view profile submenu
         $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
-        $oMenuSubmenu->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'], array (
-            'title' => $this->_oProfile->getDisplayName(),
-            'link' => $this->_oProfile->getUrl(),
-            'icon' => $CNF['ICON'],
-        ));
+        if($oMenuSubmenu)
+            $oMenuSubmenu->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'], array (
+                'title' => $this->_oProfile->getDisplayName(),
+                'link' => $this->_oProfile->getUrl(),
+                'icon' => $CNF['ICON'],
+            ));
 
         // add replaceable markers
         $this->addMarkers($this->_aProfileInfo); // every content field can be used as marker
