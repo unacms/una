@@ -250,6 +250,24 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
         	LIMIT 1", $iId, (int)getParam('sys_account_online_time'));
         return (int)$this->getOne($sSql) > 0;
     }
+    
+    /**
+     * Get online profiles count 
+     * @return online profiles count 
+     */
+    public function getOnlineCount()
+    {
+        $sSql = $this->prepare("SELECT 
+        		COUNT(`tp`.`id`) 
+        	FROM `sys_profiles` AS `tp` 
+        	INNER JOIN `sys_accounts` AS `ta` ON `tp`.`account_id`=`ta`.`id` 
+        	INNER JOIN `sys_sessions` AS `ts` ON `tp`.`account_id`=`ts`.`user_id` 
+        	WHERE 
+        		`ta`.`profile_id`=`tp`.`id` AND 
+        		`ts`.`date` > (UNIX_TIMESTAMP() - 60 * ?) 
+        	LIMIT 1", (int)getParam('sys_account_online_time'));
+        return (int)$this->getOne($sSql);
+    }
 
     /**
      * Get profile field by specified field name and value.
