@@ -213,7 +213,7 @@ class BxDolStudioFormCheckerHelper extends BxDolFormCheckerHelper
             $bValue = parent::checkAvail($sValue);
 
             if($bAll && !$bValue)
-                return false;
+                return $sLangName;
             if(!$bAll && $bValue)
                 return true;
         }
@@ -233,7 +233,7 @@ class BxDolStudioFormCheckerHelper extends BxDolFormCheckerHelper
             $bValue = parent::checkLength($sValue, $iLenMin, $iLenMax);
 
             if($bAll && !$bValue)
-                return false;
+                return $sLangName;
             if(!$bAll && $bValue)
                 return true;
         }
