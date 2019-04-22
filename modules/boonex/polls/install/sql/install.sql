@@ -253,7 +253,8 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_polls', 'bx_polls', 'anonymous', 1, '', 1, 'switcher', '_bx_polls_form_profile_input_sys_anonymous', '_bx_polls_form_profile_input_anonymous', '_bx_polls_form_profile_input_anonymous_info', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_polls', 'bx_polls', 'hidden_results', 1, '', 0, 'switcher', '_bx_polls_form_profile_input_sys_hidden_results', '_bx_polls_form_profile_input_hidden_results', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_polls', 'bx_polls', 'added', '', '', 0, 'datetime', '_bx_polls_form_entry_input_sys_date_added', '_bx_polls_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_polls', 'bx_polls', 'changed', '', '', 0, 'datetime', '_bx_polls_form_entry_input_sys_date_changed', '_bx_polls_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
+('bx_polls', 'bx_polls', 'changed', '', '', 0, 'datetime', '_bx_polls_form_entry_input_sys_date_changed', '_bx_polls_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_polls', 'bx_polls', 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
