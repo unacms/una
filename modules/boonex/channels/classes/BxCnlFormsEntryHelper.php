@@ -18,6 +18,12 @@ class BxCnlFormsEntryHelper extends BxBaseModGroupsFormsEntryHelper
     {
         parent::__construct($oModule);
     }
+    
+    public function onDataDeleteAfter ($iContentId, $aContentInfo, $oProfile)
+    {
+        $this->_oModule->_oDb->removeChannelContent($iContentId);
+        return parent::onDataDeleteAfter ($iContentId, $aContentInfo, $oProfile);
+    }
 }
 
 /** @} */

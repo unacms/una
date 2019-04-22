@@ -81,6 +81,15 @@ class BxCnlDb extends BxBaseModGroupsDb
         );
         $this->query("DELETE FROM `" . $CNF['TABLE_CONTENT'] . "` WHERE `content_id` = :content_id AND `module_name` = :module_name", $aBindings);
     }
+	
+	public function removeChannelContent($iChannelId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        $aBindings = array(
+            'channel_id' => $iChannelId
+        );
+        $this->query("DELETE FROM `" . $CNF['TABLE_CONTENT'] . "` WHERE `cnl_id` = :channel_id", $aBindings);
+    }
 }
 
 /** @} */
