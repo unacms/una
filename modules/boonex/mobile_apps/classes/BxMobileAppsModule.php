@@ -18,14 +18,27 @@ class BxMobileAppsModule extends BxDolModule
 
     /**
      * Get injection code required for mobile apps
+     * @return string
+     */
+    public function serviceInjectionHeadBegin()
+    {
+        $s = '';
+        if (false !== strpos($_SERVER['HTTP_USER_AGENT'], 'UNAMobileApp/Desktop')) {
+            $s .= "<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>";
+        }
+        return $s;
+    }
+    
+    /**
+     * Get injection code required for mobile apps
      * @return string with Styles and JS code
      */
-    public function serviceInjection()
+    public function serviceInjectionHead()
     {
         if (false === strpos($_SERVER['HTTP_USER_AGENT'], 'UNAMobileApp')) 
             return '';
 
-        $this->mobileRedirects();
+        $this->redirects();
 
         $oMenu = BxDolMenu::getObjectInstance('sys_account_notifications'); // sys_toolbar_member
         $a = $oMenu->getMenuItems();
@@ -53,10 +66,14 @@ class BxMobileAppsModule extends BxDolModule
 
         $this->_oTemplate->addJs('pulltorefresh.min.js');
 
+        if (false !== strpos($_SERVER['HTTP_USER_AGENT'], 'Desktop')) {
+            $s .= "<script>if (window.module) module = window.module;</script>";
+        }
+
         return $s;
     }
 
-    protected function mobileRedirects()
+    protected function redirects()
     {
         $bLoggedIn = isLogged() ? 1 : 0;
         $i = bx_get('i');
@@ -67,12 +84,24 @@ class BxMobileAppsModule extends BxDolModule
             header("Location: " . BX_DOL_URL_ROOT);
             exit;
         }
-        
-        // for logged in members some pages aren't available as well
-        $aI = array('forgot-password' => 1, 'create-account' => 1, 'login' => 1);
-        if ($bLoggedIn && isset($aI[$i])) {
-            header("Location: " . BX_DOL_URL_ROOT);
-            exit;
+
+        if ($bLoggedIn) {
+            if (false !== strpos($_SERVER['HTTP_USER_AGENT'], 'Desktop')) {
+                // desktop: for logged in members show messenger only
+                $aI = array('messenger' => 1);
+                if (!preg_match('/member.php$/', $_SERVER['PHP_SELF']) && !isset($aI[$i])) {
+                    header("Location: " . BX_DOL_URL_ROOT . 'page.php?i=messenger');
+                    exit;
+                }
+            }
+            else {        
+                // mobile: for logged in members some pages aren't available as well
+                $aI = array('forgot-password' => 1, 'create-account' => 1, 'login' => 1);
+                if (isset($aI[$i])) {
+                    header("Location: " . BX_DOL_URL_ROOT);
+                    exit;
+                }
+            }
         }
     }
 }

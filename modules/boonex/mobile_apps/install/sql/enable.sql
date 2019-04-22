@@ -16,7 +16,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `e
 -- Injections
 
 INSERT INTO `sys_injections`(`name`, `page_index`, `key`, `type`, `data`, `replace`, `active`) VALUES
-('bx_mobileapps', 0, 'injection_head', 'service', 'a:2:{s:6:"module";s:13:"bx_mobileapps";s:6:"method";s:9:"injection";}', 0, 1);
+('bx_mobileapps', 0, 'injection_head_begin', 'service', 'a:2:{s:6:"module";s:13:"bx_mobileapps";s:6:"method";s:20:"injection_head_begin";}', 0, 1),
+('bx_mobileapps', 0, 'injection_head', 'service', 'a:2:{s:6:"module";s:13:"bx_mobileapps";s:6:"method";s:14:"injection_head";}', 0, 1);
 
 -- Alerts
 
