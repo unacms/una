@@ -264,8 +264,13 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         // new fan was added
         if ($oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId, true)) {
             // follow group on join
-            $this->addFollower($oGroupProfile->id(), (int)$iInitiatorId);
-         
+            if (BxDolService::call($oGroupProfile->getModule(), 'act_as_profile')){
+                 $this->addFollower($oGroupProfile->id(), (int)$iInitiatorId);
+            }
+            else{
+                 $this->addFollower((int)$iInitiatorId, $oGroupProfile->id()); 
+            }
+            
             bx_alert($this->getName(), 'fan_added', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array(
             	'object_author_id' => $iGroupProfileId,
             	'performer_id' => $iProfileId,
