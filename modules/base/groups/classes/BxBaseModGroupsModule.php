@@ -263,6 +263,9 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
         // new fan was added
         if ($oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId, true)) {
+            // follow group on join
+            $this->addFollower($oGroupProfile->id(), (int)$iInitiatorId);
+         
             bx_alert($this->getName(), 'fan_added', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array(
             	'object_author_id' => $iGroupProfileId,
             	'performer_id' => $iProfileId,
@@ -299,7 +302,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
         return $oGrid->getCode();
     }
-
+    
     public function serviceFans ($iContentId = 0, $bAsArray = false)
     {
         if (!$iContentId)
@@ -650,6 +653,16 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return parent::_checkAllowedConnect ($aDataEntry, $isPerformAction, $sObjConnection, $isMutual, $isInvertResult, $isSwap);
     }
 
+    public function addFollower ($iProfileId1, $iProfileId2)
+    {
+        $oConnectionFollow = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
+        if($oConnectionFollow && !$oConnectionFollow->isConnected($iProfileId1, $iProfileId2)){
+            $oConnectionFollow->addConnection($iProfileId1, $iProfileId2);
+            return true;
+        }
+        return false;
+    }
+    
     public function isFan ($iContentId, $iProfileId = false) 
     {
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName());
