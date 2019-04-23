@@ -114,6 +114,40 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
         return $this->genCustomViewRowValueProfileEmailOrIp($aInput);
     }
     
+    protected function genCustomViewRowValueFriendsCount($aInput)
+    {
+        if (isset($this->_oModule->_oConfig->CNF['URI_VIEW_FRIENDS'])){
+            $oProfile = $this->_oModule->getProfileByCurrentUrl();
+            if ($oProfile){
+                $oConnection = BxDolConnection::getObjectInstance('sys_profiles_friends');
+                $iCount = $oConnection->getConnectedContentCount($oProfile->id(), true);
+                return $this->_oModule->_oTemplate->parseHtmlByName('name_link.html', array(
+                    'href' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oModule->_oConfig->CNF['URI_VIEW_FRIENDS'] . '&profile_id=' . $oProfile->id()),
+                    'title' => '',
+                    'content' => $iCount
+                ));
+            }
+        }
+        return '';
+    }
+    
+    protected function genCustomViewRowValueFollowersCount($aInput)
+    {
+        if (isset($this->_oModule->_oConfig->CNF['URI_VIEW_SUBSCRIPTIONS'])){
+            $oProfile = $this->_oModule->getProfileByCurrentUrl();
+            if ($oProfile){
+                $oConnectionFollow = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
+                $iCount = $oConnectionFollow->getConnectedInitiatorsCount($oProfile->id());
+                return $this->_oModule->_oTemplate->parseHtmlByName('name_link.html', array(
+                    'href' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oModule->_oConfig->CNF['URI_VIEW_SUBSCRIPTIONS'] . '&profile_id=' . $oProfile->id()),
+                    'title' => '',
+                    'content' => $iCount
+                ));
+            }
+        }
+        return '';
+    }
+    
     private function genCustomViewRowValueProfileEmailOrIp($aInput)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
@@ -138,7 +172,7 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
             'content' => $sValue
         ));
     }
-
+    
     protected function genCustomViewRowValueProfileStatus($aInput)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
