@@ -54,7 +54,6 @@
             $(document).ready(function () {
                 document.querySelector('body').addEventListener('click', event => {
                     let link = event.target.href;
-                    console.log(link);
                     if (event.target.tagName.toLowerCase() !== 'a') 
                         return;
                     event.preventDefault();
