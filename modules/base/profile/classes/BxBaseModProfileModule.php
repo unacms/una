@@ -1269,6 +1269,20 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
 		return $oProfile->id() == $iLogged;
     }
+    
+    public function getProfileByCurrentUrl ()
+    {
+        $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+        
+        if ($iProfileId)
+            return  BxDolProfile::getInstance($iProfileId);
+
+        $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if ($iContentId)
+            return BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName());
+        
+        return false;
+    }
 
     // ====== PROTECTED METHODS
 

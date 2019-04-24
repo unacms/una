@@ -63,6 +63,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'URI_EDIT_ENTRY' => 'edit-persons-profile',
             'URI_EDIT_COVER' => 'edit-persons-cover',
             'URI_MANAGE_COMMON' => 'persons-manage',
+            'URI_VIEW_SUBSCRIPTIONS' => 'persons-profile-subscriptions',
 
             'URL_HOME' => 'page.php?i=persons-home',
             'URL_CREATE' => 'page.php?i=create-persons-profile',
