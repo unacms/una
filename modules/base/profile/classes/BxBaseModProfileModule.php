@@ -1036,6 +1036,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return CHECK_ACTION_RESULT_ALLOWED;
     }
 
+    public function serviceSetViewProfileCover($oPage, $aProfileInfo)
+    {
+        $this->_oTemplate->setCover($oPage,$aProfileInfo);
+    }
+
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
      */
