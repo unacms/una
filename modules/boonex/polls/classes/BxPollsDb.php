@@ -22,7 +22,9 @@ class BxPollsDb extends BxBaseModTextDb
     public function getContentInfoById ($iContentId)
     {
         $aContentInfo = parent::getContentInfoById($iContentId);
-        $aContentInfo['salt'] = $this->_oConfig->getSalt();
+        if(!empty($aContentInfo) && is_array($aContentInfo))
+            $aContentInfo['salt'] = $this->_oConfig->getSalt();
+
         return $aContentInfo;
     }
 
