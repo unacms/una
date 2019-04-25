@@ -189,7 +189,9 @@ class BxPollsModule extends BxBaseModTextModule
             return $mixedResult;
 
         list($iContentId, $aContentInfo) = $mixedResult;
-        $aContentInfo['salt'] = bx_get('salt') !== false ? bx_process_input(bx_get('salt')) : $this->_oConfig->getSalt();
+
+        if(bx_get('salt') !== false)
+            $aContentInfo['salt'] = bx_process_input(bx_get('salt'));
     
         return array($iContentId, $aContentInfo);
     }
