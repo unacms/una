@@ -38,7 +38,7 @@ class BxBaseModProfileAlertsResponse extends BxBaseModGeneralAlertsResponse
 
         // connection events
         if ($oAlert->sUnit == 'sys_profiles_friends' && $oAlert->sAction == 'connection_added') {
-            if((int)$oAlert->aExtras['mutual'] == 0)
+            if((int)$oAlert->aExtras['mutual'] == 0 && !BxDolModuleQuery::getInstance()->isEnabledByName('bx_notifications'))
                 $this->sendMailFriendRequest($oAlert);
         }
 
