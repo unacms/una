@@ -77,6 +77,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'FIELD_STATUS' => 'status',
             'FIELD_STATUS_ADMIN' => 'status_admin',
             'FIELD_LOCATION_PREFIX' => 'location',
+            'FIELD_LABELS' => 'labels',
             'FIELDS_QUICK_SEARCH' => array('title'),
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 
@@ -105,6 +106,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_market_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_market_rss_num',
         	'PARAM_SEARCHABLE_FIELDS' => 'bx_market_searchable_fields',
+            'PARAM_LABELS' => 'bx_market_labels',
 
             // objects            
             'OBJECT_STORAGE' => 'bx_market_photos',

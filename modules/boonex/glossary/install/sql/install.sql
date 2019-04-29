@@ -206,7 +206,8 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_glossary', 'bx_glossary', 'cat', '', '#!bx_glossary_cats', 0, 'select', '_bx_glossary_form_entry_input_sys_cat', '_bx_glossary_form_entry_input_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_glossary_form_entry_input_cat_err', 'Xss', '', 1, 0),
 ('bx_glossary', 'bx_glossary', 'added', '', '', 0, 'datetime', '_bx_glossary_form_entry_input_sys_date_added', '_bx_glossary_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_glossary', 'bx_glossary', 'changed', '', '', 0, 'datetime', '_bx_glossary_form_entry_input_sys_date_changed', '_bx_glossary_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_glossary', 'bx_glossary', 'status_admin', '', '#!bx_glossary_statuses', 0, 'select', '_bx_glossary_form_entry_input_sys_status_admin', '_bx_glossary_form_entry_input_status_admin', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_glossary_form_entry_input_status_admin_error', 'Xss', '', 1, 0);
+('bx_glossary', 'bx_glossary', 'status_admin', '', '#!bx_glossary_statuses', 0, 'select', '_bx_glossary_form_entry_input_sys_status_admin', '_bx_glossary_form_entry_input_status_admin', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_glossary_form_entry_input_status_admin_error', 'Xss', '', 1, 0),
+('bx_glossary', 'bx_glossary', 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_glossary_entry_add', 'delete_confirm', 2147483647, 0, 1),

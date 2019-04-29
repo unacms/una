@@ -11,9 +11,12 @@
 
 require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
-class BxCnvGrid extends BxTemplGrid
+class BxCnvGrid extends BxBaseModGeneralGridAdministration
 {
     protected $MODULE;
+    protected $_sFilter1Name;
+	protected $_sFilter1Value;
+	protected $_aFilter1Values;
 
     public function __construct ($aOptions, $oTemplate = false)
     {
@@ -26,6 +29,66 @@ class BxCnvGrid extends BxTemplGrid
                 'folder_id' => $iFolderId,
                 'profile_id' => bx_get_logged_profile_id(),
             ));
+        
+        $this->_sFilter1Name = 'filter1';
+        $this->_aFilter1Values = array(
+        	'' => _t('_bx_cnv_grid_filter_item_title_adm_all'),
+            'unread' => _t('_bx_cnv_grid_filter_item_title_adm_unread'),
+		);
+        
+    	$sFilter1 = bx_get($this->_sFilter1Name);
+        if(!empty($sFilter1)) {
+            $this->_sFilter1Value = bx_process_input($sFilter1);
+            $this->_aQueryAppend['filter1'] = $this->_sFilter1Value;
+        }
+        $this->_sManageType = BX_DOL_MANAGE_TOOLS_COMMON;
+    }
+    
+    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    {
+        if(strpos($sFilter, $this->_sParamsDivider) !== false)
+            list($this->_sFilter1Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
+
+    	if(!empty($this->_sFilter1Value)){
+            $CNF = &$this->_oModule->_oConfig->CNF;
+        	$this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" WHERE `c`.`comments` > `f`.`read_comments` ");
+        }
+    
+        return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
+    }
+    
+    //--- Layout methods ---//
+	protected function _getFilterControls()
+    {
+        parent::_getFilterControls();
+
+        return  $this->_getFilterSelectOne($this->_sFilter1Name, $this->_sFilter1Value, $this->_aFilter1Values) . $this->_getSearchInput();
+    }
+    
+    protected function _getFilterSelectOne($sFilterName, $sFilterValue, $aFilterValues)
+    {
+        if(empty($sFilterName) || empty($aFilterValues))
+            return '';
+
+		$CNF = &$this->_oModule->_oConfig->CNF;
+		$sJsObject = $this->_oModule->_oConfig->getJsObject('manage_tools');
+
+		foreach($aFilterValues as $sKey => $sValue)
+			$aFilterValues[$sKey] = _t($sValue);
+
+        $aInputModules = array(
+            'type' => 'select',
+            'name' => $sFilterName,
+            'attrs' => array(
+                'id' => 'bx-grid-' . $sFilterName . '-' . $this->_sObject,
+                'onChange' => 'javascript:' . $sJsObject . '.onChangeFilter(this)'
+            ),
+            'value' => $sFilterValue,
+            'values' => $aFilterValues
+        );
+
+        $oForm = new BxTemplFormView(array());
+        return $oForm->genRow($aInputModules);
     }
 
     public function performActionCompose()

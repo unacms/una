@@ -253,7 +253,8 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_group', 'bx_groups', 'join_confirmation', 1, '', 1, 'switcher', '_bx_groups_form_profile_input_sys_join_confirm', '_bx_groups_form_profile_input_join_confirm', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_group', 'bx_groups', 'cover', 'a:1:{i:0;s:20:"bx_groups_cover_crop";}', 'a:1:{s:20:"bx_groups_cover_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_groups_form_profile_input_sys_cover', '_bx_groups_form_profile_input_cover', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_group', 'bx_groups', 'picture', 'a:1:{i:0;s:22:"bx_groups_picture_crop";}', 'a:1:{s:22:"bx_groups_picture_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_groups_form_profile_input_sys_picture', '_bx_groups_form_profile_input_picture', '', 0, 0, 0, '', '', '', '', '', '_bx_groups_form_profile_input_picture_err', '', '', 1, 0),
-('bx_group', 'bx_groups', 'location', '', '', 0, 'location', '_sys_form_input_sys_location', '_sys_form_input_location', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
+('bx_group', 'bx_groups', 'location', '', '', 0, 'location', '_sys_form_input_sys_location', '_sys_form_input_location', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_group', 'bx_groups', 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_group_add', 'delete_confirm', 2147483647, 0, 3),

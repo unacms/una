@@ -363,8 +363,8 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_market', 'bx_market', 'header_end_other', '', '', 0, 'block_end', '_bx_market_form_entry_input_sys_header_end_other', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_market', 'bx_market', 'warning_single', '_bx_market_err_not_accept_payments_single', '', 0, 'value', '_bx_market_form_entry_input_sys_warning_single', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_market', 'bx_market', 'warning_recurring', '_bx_market_err_not_accept_payments_recurring', '', 0, 'value', '_bx_market_form_entry_input_sys_warning_recurring', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_market', 'bx_market', 'subentries', '', '', 0, 'custom', '_bx_market_form_entry_input_sys_subentries', '_bx_market_form_entry_input_subentries', '_bx_market_form_entry_input_subentries_inf', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
-
+('bx_market', 'bx_market', 'subentries', '', '', 0, 'custom', '_bx_market_form_entry_input_sys_subentries', '_bx_market_form_entry_input_subentries', '_bx_market_form_entry_input_subentries_inf', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_market', 'bx_market', 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_market_entry_add', 'title', 2147483647, 1, 1),

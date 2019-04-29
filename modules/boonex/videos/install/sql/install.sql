@@ -277,7 +277,8 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_videos', 'bx_videos', 'cat', '', '#!bx_videos_cats', 0, 'select', '_bx_videos_form_entry_input_sys_cat', '_bx_videos_form_entry_input_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_videos_form_entry_input_cat_err', 'Xss', '', 1, 0),
 ('bx_videos', 'bx_videos', 'duration', '', '', 0, 'text', '_bx_videos_form_entry_input_sys_duration', '_bx_videos_form_entry_input_duration', '', 1, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_videos', 'bx_videos', 'added', '', '', 0, 'datetime', '_bx_videos_form_entry_input_sys_date_added', '_bx_videos_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_videos', 'bx_videos', 'changed', '', '', 0, 'datetime', '_bx_videos_form_entry_input_sys_date_changed', '_bx_videos_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
+('bx_videos', 'bx_videos', 'changed', '', '', 0, 'datetime', '_bx_videos_form_entry_input_sys_date_changed', '_bx_videos_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_videos', 'bx_videos', 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_videos_entry_add', 'title', 2147483647, 1, 1),
