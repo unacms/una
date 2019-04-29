@@ -1459,7 +1459,7 @@
 	<string name="_adm_tmi_cpt_logout"><![CDATA[Sign out]]></string>
 	<string name="_adm_tmi_cpt_site"><![CDATA[Go To Site]]></string>
 	<string name="_adm_tmi_cpt_tour"><![CDATA[Tour]]></string>
-	<string name="_adm_txt_back_to_launcher"><![CDATA[Back to Launcher]]></string>
+	<string name="_adm_tmi_cpt_launcher"><![CDATA[Back to Launcher]]></string>
 	<string name="_adm_txt_confirm_cancel"><![CDATA[Cancel]]></string>
 	<string name="_adm_txt_confirm_ok"><![CDATA[OK]]></string>
 	<string name="_adm_txt_forgot_password"><![CDATA[Forgot password?]]></string>

@@ -113,24 +113,36 @@ div.bx-std-pmen-item {
 	overflow: hidden;
 }
 div.bx-std-pmen-item-cnt {
-	padding-left: 66px;    
+    padding-left: 66px;    
 
-	white-space: nowrap;
+    white-space: nowrap;
     text-overflow: ellipsis;
-	overflow: hidden;
+    overflow: hidden;
+}
+div.bx-std-pmen-item-bg {
+    position: absolute;
+
+    top: 7px;
+    left: 20px;
+    width: 32px;
+    height: 32px;
+
+    background-color: #323c46;
+    border-radius: 8px;
 }
 
 span.bx-std-pmen-item-counter {}
 span.bx-std-pmen-ic-num {}
 div.bx-std-pmen-item img {
-	position: absolute;
-	top: 7px;
-	left: 20px;
-	width: 32px;
-	height: 32px;
+    position: absolute;
+
+    top: 7px;
+    left: 20px;
+    width: 32px;
+    height: 32px;
 }
 div.bx-std-pmen-item i.sys-icon {
-	position: absolute;
+    position: absolute;
     left: 20px;
     width:32px;
 
@@ -140,11 +152,11 @@ div.bx-std-pmen-item i.sys-icon {
     text-shadow:none;
 }
 div.bx-menu-tab-active {
-	background-color: #f2f2f2;
+    background-color: #fbfcfd;
 }
 div.bx-menu-tab-active a,
 div.bx-menu-tab-active:hover a {
-	color: #333333;
+    color: #333333;
     text-decoration:none;
 }
 

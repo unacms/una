@@ -1457,7 +1457,7 @@
 	<string name="_adm_tmi_cpt_logout"><![CDATA[Выйти]]></string>
 	<string name="_adm_tmi_cpt_site"><![CDATA[Перейти на сайт]]></string>
 	<string name="_adm_tmi_cpt_tour"><![CDATA[Инструкции]]></string>
-	<string name="_adm_txt_back_to_launcher"><![CDATA[Назад к загрузчику]]></string>
+	<string name="_adm_tmi_cpt_launcher"><![CDATA[Назад к загрузчику]]></string>
 	<string name="_adm_txt_confirm_cancel"><![CDATA[Отменить]]></string>
 	<string name="_adm_txt_confirm_ok"><![CDATA[OK]]></string>
 	<string name="_adm_txt_forgot_password"><![CDATA[Забыли пароль?]]></string>

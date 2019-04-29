@@ -24,8 +24,8 @@ div.bx-std-page-column-wrp {
 div.bx-std-page-column {}
 div.bx-std-page-column-cnt {}
 div.bx-std-page-menu {
-	position: relative;
-	float: left;
+    position: relative;
+    float: left;
     width: 230px;
 }
 div.bx-std-page-content {
