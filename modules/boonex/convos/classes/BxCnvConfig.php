@@ -92,6 +92,14 @@ class BxCnvConfig extends BxBaseModTextConfig
 	            'txt_folder_' . BX_CNV_FOLDER_TRASH => '_bx_cnv_folder_trash',
             ),
         );
+        
+        $this->_aJsClasses = array_merge($this->_aJsClasses, array(
+           'manage_tools' => 'BxCnvManageTools'
+        ));
+
+        $this->_aJsObjects = array_merge($this->_aJsObjects, array(
+            'manage_tools' => 'oBxCnvManageTools'
+        ));
 
     }
 }
