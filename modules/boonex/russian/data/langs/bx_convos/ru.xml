@@ -101,6 +101,8 @@
 
     <string name="_bx_cnv_grid_action_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_cnv_grid_action_compose"><![CDATA[Новое сообщение]]></string>
+    <string name="_bx_cnv_grid_filter_item_title_adm_all"><![CDATA[Все]]></string>
+    <string name="_bx_cnv_grid_filter_item_title_adm_unread"><![CDATA[Непрочитанные]]></string>
 
     <string name="_bx_cnv_collaborator_author"><![CDATA[автор]]></string>
     <string name="_bx_cnv_collaborator_last_replier"><![CDATA[последний ответивший]]></string>
