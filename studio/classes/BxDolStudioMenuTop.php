@@ -64,7 +64,7 @@ class BxDolStudioMenuTop extends BxDol
                 ),
                 'logout' => array(
                     'name' => 'logout',
-                    'icon' => 'sign-out',
+                    'icon' => 'sign-out-alt',
                     'link' => 'logout.php',
                     'onclick' => $this->getJsObject() . '.clickLogout(this);',
                     'title' => '_adm_tmi_cpt_logout'
