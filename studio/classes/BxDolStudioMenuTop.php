@@ -53,7 +53,7 @@ class BxDolStudioMenuTop extends BxDol
                 'site' => array(
                     'name' => 'site',
                     'icon' => 'home',
-                    'link' => 'index.php',
+                    'link' => BX_DOL_URL_ROOT,
                     'title' => '_adm_tmi_cpt_site'
                 ),
                 'launcher' => array(
