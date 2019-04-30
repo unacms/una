@@ -32,6 +32,12 @@ class BxCnlAlertsResponse extends BxBaseModGroupsAlertsResponse
                  * TODO: $oAlert->aExtras['object'] - contains Metatags object name but further it's used as Module name.
                  * It's working correctly while Metatags object name is equal to Module name.
                  * This should be changed in Ticket #1596
+                 * 
+                 * Also there is a problem that only Content's Author ID is saved, but further it's used to check visibility 
+                 * in case of Context. So, it works correctly when Author posts something with tags in his own profile, 
+                 * but will work incorrecly when Author posts something with tags in some Context (group, event, etc).
+                 * In this case system will use Author's profile as context instead of the real Context 
+                 * in which the content was posted.
                  */
                 $this->_oModule->processHashtag($oAlert->aExtras['meta'], $oAlert->aExtras['object'], $oAlert->iObject, $oAlert->iSender);
             }
