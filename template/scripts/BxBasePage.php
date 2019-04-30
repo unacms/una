@@ -290,7 +290,11 @@ class BxBasePage extends BxDolPage
         if(empty($this->_aObject['submenu']))
             return;
 
-        BxDolMenu::getObjectInstance('sys_site_submenu')->setObjectSubmenu($this->_aObject['submenu'], $aParams);
+        $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
+        if(!$oMenuSubmenu)
+            return;
+
+        $oMenuSubmenu->setObjectSubmenu($this->_aObject['submenu'], $aParams);
     }
 
     /**

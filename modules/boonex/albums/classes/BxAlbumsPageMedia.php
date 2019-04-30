@@ -46,11 +46,13 @@ class BxAlbumsPageMedia extends BxTemplPage
             $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $this->_aAlbumInfo[$CNF['FIELD_ID']]);
 
             // select view entry submenu
-            BxDolMenu::getObjectInstance('sys_site_submenu')->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'], array (
-                'title' => '',
-                'link' => '',
-                'icon' => '',
-            ));
+            $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
+            if($oMenuSubmenu)
+                $oMenuSubmenu->setObjectSubmenu($CNF['OBJECT_MENU_SUBMENU_VIEW_ENTRY'], array (
+                    'title' => '',
+                    'link' => '',
+                    'icon' => '',
+                ));
         }
     }
 
