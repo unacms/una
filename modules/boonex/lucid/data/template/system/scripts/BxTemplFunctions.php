@@ -88,19 +88,17 @@ class BxTemplFunctions extends BxBaseFunctions
 
         $sLogoUrl = $this->getMainLogoUrl();
         $bLogoUrl = !empty($sLogoUrl);
-        
-        $sLogoText = '';
-        if(!$bLogoUrl) {
-        	$sLogoText = BxDolDesigns::getInstance()->getSiteLogoAlt();
-        	if(empty($sLogoText))
-        		$sLogoText = getParam('site_title');
-        }
+
+        $sLogoText = BxDolDesigns::getInstance()->getSiteLogoAlt();
+        if(empty($sLogoText))
+            $sLogoText = getParam('site_title');
 
         $sCode .= $this->_oTemplate->parsePageByName('menu_dropdown.html', array(
 			'bx_if:show_logo_image' => array(
 				'condition' => $bLogoUrl,
 				'content' => array(
 					'logo_url' => $sLogoUrl,
+                                        'logo_text' => $sLogoText
 				)
 			),
 			'bx_if:show_logo_text' => array(
