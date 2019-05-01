@@ -184,14 +184,18 @@ class BxDolMEvents extends BxDolMData
 	 *  @param int $iEventProfileId events id from sys_profile
 	 *  @return int participants number
 	 */
-	private function exportFans($iMID, $iEventProfileId)
+
+    private function exportFans($iMID, $iEventProfileId)
     {
-		$iCount = 0;
-		$aFans =  $this -> _mDb -> getAll("SELECT * FROM `bx_events_participants` WHERE `id_entry`=:id ", array('id' => $iMID));
-		foreach($aFans as $iKey => $aValue)
-		{
-			$iProfileId = $this -> getProfileId($aValue['id_profile']);
-			$sQuery =  $this -> _oDb -> prepare("
+        $aFans =  $this -> _mDb -> getAll("SELECT  `p` . * , IF(  `a`.`id_entry` IS NULL , 0, 1 ) AS  `admin` 
+                                           FROM  `bx_events_participants` AS  `p` 
+                                           LEFT JOIN  `bx_events_admins` AS  `a` ON  `p`.`id_entry` =  `a`.`id_entry` AND  `p`.`id_profile` =  `a`.`id_profile` 
+                                           WHERE `p`.`id_entry`=:id", array('id' => $iMID));
+        foreach($aFans as $iKey => $aValue)
+        {
+            $iProfileId = $this -> getProfileId($aValue['id_profile']);
+
+            $sQuery =  $this -> _oDb -> prepare("
 						INSERT IGNORE INTO
 							`bx_events_fans`
 						SET
@@ -200,15 +204,32 @@ class BxDolMEvents extends BxDolMData
 						   `mutual`     = ?,
 						   `added`     	= ?
 			", $iProfileId,  $iEventProfileId, $aValue['confirmed'], $aValue['when']);
-				
-			if(!$this -> _oDb -> query($sQuery))
-			   return _t('_bx_dolphin_migration_friends_exports_error');
-		   
-		   $iCount++;
-		}
-		
-		return $iCount;
-	}
+
+            if(!$this -> _oDb -> query($sQuery))
+                return _t('_bx_dolphin_migration_friends_exports_error');
+
+            if ($aValue['confirmed']) {
+                $sQuery = $this->_oDb->prepare("
+                            INSERT IGNORE INTO
+                                `bx_events_fans`
+                            SET
+                               `initiator`	= ?,
+                               `content`    = ?,
+                               `mutual`     = ?,
+                               `added`     	= ?
+                ", $iEventProfileId, $iProfileId, 1, $aValue['when']);
+
+                if (!$this->_oDb->query($sQuery))
+                    return _t('_bx_dolphin_migration_friends_exports_error');
+            }
+
+            if ((int)$aValue['admin']) {
+                $this->_oDb->query("REPLACE INTO `bx_events_admins` SET `fan_id` = :fan, `group_profile_id` = :group",
+                    array('fan' => $iProfileId, 'group' => $iEventProfileId));
+            }
+
+        }
+    }
 	
 	public function removeContent()
 	{

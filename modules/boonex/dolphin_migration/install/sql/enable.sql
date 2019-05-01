@@ -14,7 +14,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_dolphin_migration_salt', '', 0, '_bx_dolphin_migration_salt', 'digit', '', '', '', 1),
 ('bx_dolphin_migration_overwrite', '', @iCategId, '_bx_dolphin_migration_cpt_overwrite', 'checkbox', '', '', '', 2),
 ('bx_dolphin_migration_use_nickname', '', @iCategId, '_bx_dolphin_migration_cpt_use_nickname', 'checkbox', '', '', '', 3),
-('bx_dolphin_migration_empty_albums', 'on', @iCategId, '_bx_dolphin_migration_cpt_empty_albums', 'checkbox', '', '', '', 4),
+('bx_dolphin_migration_empty_albums', '', @iCategId, '_bx_dolphin_migration_cpt_empty_albums', 'checkbox', '', '', '', 4),
 ('bx_dolphin_migration_default_privacy', '3', @iCategId, '_bx_dolphin_migration_cpt_default_privacy', 'select', '', '', 'a:2:{s:6:"module";s:20:"bx_dolphin_migration";s:6:"method";s:18:"get_privacy_groups";}', 5);
 
 -- GRIDS:

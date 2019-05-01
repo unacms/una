@@ -74,7 +74,12 @@ class BxDolMData
 	* @var string $_sTransferFieldIdent field name which is created in table into which records are added, it allows to set connect between ids from Dolphin and UNA's tables
 	*/
 	protected $_sTransferFieldIdent = 'mig_id';
-	
+
+    /**
+     * @var array $_aSysProfiles profiles cache, allows to find content_id and sys_profile ID by Dolphin's profile ID and avoiding to make request to database
+     */
+
+	protected $_aSysProfiles = array();
 	/**
 	 *  Base class constructor
 	 *  
@@ -124,17 +129,23 @@ class BxDolMData
 	    $this -> _oDb -> query($sQuery);
 	}
 
+    private function createSysProfilesCache(){
+        if (empty($this -> _aSysProfiles))
+            $this->_aSysProfiles = $this->_oDb->getAllWithKey("SELECT `p`.`content_id`, `p`.`id`, `a`.`mig_id` 
+                                                               FROM `sys_profiles` as `p`
+                                                               LEFT JOIN `sys_accounts` as `a` ON `a`.`id` = `p`.`account_id` 
+                                                               WHERE `type` =  'bx_persons' AND `mig_id` <> 0", 'mig_id');
+
+    }
+
 	/**
 	* Returns content id of transferred member from Dolphin
 	* @param int $iId Dolphin's profile ID
 	* @return int
 	*/	
 	protected function getContentId($iId){
-		$sQuery = $this -> _oDb -> prepare("SELECT `p`.`content_id` FROM  `sys_accounts` AS  `a` 
-											LEFT JOIN  `sys_profiles` AS  `p` ON `a`.`id` =  `p`.`account_id` 
-											WHERE  `{$this -> _sTransferFieldIdent}` = ? AND  `p`.`type` =  'bx_persons' LIMIT 1", $iId);
-											
-		return $this -> _oDb -> getOne($sQuery);
+        $this -> createSysProfilesCache();
+		return isset($this->_aSysProfiles[$iId]) ? $this->_aSysProfiles[$iId]['content_id'] : false;
 	}
 
 	/**
@@ -144,11 +155,8 @@ class BxDolMData
 	*/	
 	protected function getProfileId($iId)
 	{
-		$sQuery = $this -> _oDb -> prepare("SELECT `p`.`id` FROM  `sys_accounts` AS  `a` 
-											LEFT JOIN  `sys_profiles` AS  `p` ON `a`.`id` =  `p`.`account_id` 
-											WHERE  `{$this -> _sTransferFieldIdent}` = ? AND  `p`.`type` =  'bx_persons' LIMIT 1", $iId);
-											
-		return $this -> _oDb -> getOne($sQuery);
+        $this -> createSysProfilesCache();
+		return isset($this->_aSysProfiles[$iId]) ? $this->_aSysProfiles[$iId]['id'] : false;
 	}
 
 	/**
@@ -256,7 +264,7 @@ class BxDolMData
 			if (!$this -> isKeyPreKeyExits($sName))
 			{
 				$sQuery = $this -> _oDb -> prepare("INSERT INTO `sys_form_pre_lists` (`id`, `module`, `key`, `title`, `use_for_sets`, `extendable`) VALUES
-												(NULL, 'bx_persons', ?, ?, 0, 1)", $sName, '_bx_' . $sName . '_pre_lists_cats');			
+												(NULL, 'bx_persons', ?, ?, 1, 1)", $sName, '_bx_' . $sName . '_pre_lists_cats');
 				$this -> _oLanguage -> addLanguageString('_bx_' . $sName . '_pre_lists_cats', $sTitle);
 				$this -> _oDb -> query($sQuery);
 				
@@ -271,7 +279,7 @@ class BxDolMData
 			else
 			{
 				if (!$bAdd)
-					return '';
+                    return "#!{$sName}";
 				
 				$i = $this -> _oDb -> getOne("SELECT MAX(`Order`) FROM `sys_form_pre_values` WHERE `Key` =:key", array('key' => $sName)) + 1;
 			}

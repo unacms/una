@@ -48,7 +48,7 @@ class BxDolMShoutBox extends BxDolMData
 		$aParticipantsList = array();
 		foreach($aMessages as $iMes => $aMessage)
 		{
-			$iMessageId = $this -> isItemExisted($aMessage['ID']);
+			$iMessageId = $this -> isItemExisted($aMessage['ID'], 'id', $this -> _sMigField);
 			$iProfileId = $this -> getProfileId((int)$aMessage['OwnerID']);
 			if (!$iProfileId)
 				continue;

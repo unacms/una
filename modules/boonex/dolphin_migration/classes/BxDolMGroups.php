@@ -171,7 +171,10 @@ class BxDolMGroups extends BxDolMData
 	
 	private function exportFans($iMID, $iGroupProfileId)
     {
-		$aFans =  $this -> _mDb -> getAll("SELECT * FROM `bx_groups_fans` WHERE `id_entry`=:id ", array('id' => $iMID));
+		$aFans =  $this -> _mDb -> getAll("SELECT  `f` . * , IF(  `a`.`id_entry` IS NULL , 0, 1 ) AS  `admin` 
+                                           FROM  `bx_groups_fans` AS  `f` 
+                                           LEFT JOIN  `bx_groups_admins` AS  `a` ON  `f`.`id_entry` =  `a`.`id_entry` AND  `f`.`id_profile` =  `a`.`id_profile` 
+                                           WHERE `f`.`id_entry`=:id ", array('id' => $iMID));
 		foreach($aFans as $iKey => $aValue)
 		{
 			$iProfileId = $this -> getProfileId($aValue['id_profile']);
@@ -184,9 +187,29 @@ class BxDolMGroups extends BxDolMData
 						   `mutual`     = ?,
 						   `added`     	= ?
 			", $iProfileId,  $iGroupProfileId, $aValue['confirmed'], $aValue['when']);
-				
-			if(!$this -> _oDb -> query($sQuery))
-			   return _t('_bx_dolphin_migration_friends_exports_error');
+
+            if(!$this -> _oDb -> query($sQuery))
+                return _t('_bx_dolphin_migration_friends_exports_error');
+
+                if ($aValue['confirmed']) {
+                    $sQuery = $this->_oDb->prepare("
+                            INSERT IGNORE INTO
+                                `bx_groups_fans`
+                            SET
+                               `initiator`	= ?,
+                               `content`    = ?,
+                               `mutual`     = ?,
+                               `added`     	= ?
+                ", $iGroupProfileId, $iProfileId, 1, $aValue['when']);
+
+                if(!$this -> _oDb -> query($sQuery))
+                    return _t('_bx_dolphin_migration_friends_exports_error');
+			}
+
+            if ((int)$aValue['admin']) {
+                   $this->_oDb->query("REPLACE INTO `bx_groups_admins` SET `fan_id` = :fan, `group_profile_id` = :group",
+                       array('fan' => $iProfileId, 'group' => $iGroupProfileId));
+            }
 		}
 	}
 	

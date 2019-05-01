@@ -26,30 +26,20 @@ class BxDolMChat extends BxDolMData
 	{
 		return $this -> _mDb -> getOne("SELECT COUNT(*) FROM `" . $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['table_name'] . "`");
 	}
-	
-	private function getLotId($iSenderId, $iRecipientId)
-	{
-		$iLot = $this -> _oDb -> getOne("SELECT `id` FROM `bx_messenger_lots` WHERE `participants` = :l1 OR `participants` = :l2 AND `type`=2 LIMIT 1", array('l1' => "{$iSenderId},{$iRecipientId}", 'l2' => "{$iRecipientId},{$iSenderId}"));
-		if ($iLot)
-			return $iLot;
-		
-		$this -> _oDb -> query("INSERT INTO `bx_messenger_lots` SET `created` = UNIX_TIMESTAMP(), `author`= :author, `participants` = :parts, `type` = 2", array('parts' => "{$iSenderId},{$iRecipientId}", 'author' => $iSenderId));
-		return $this -> _oDb -> lastId();
-	}
+
 	/**
 	 *  Transfer Flash chat rooms
 	 *  
 	 *  @return array - created Lots ids associated with Dolphin chat rooms
 	 *  
 	 */
-	private function tansferRooms()
+	private function transferRooms()
 	{
 		$aRooms = $this -> _mDb -> getAll("SELECT * FROM `RayChatRooms`");
 		if (empty($aRooms))
 			return false;
 		$aResult = array();
-		$ilotId = 0;
-			
+
 		foreach($aRooms as $iKey => $aRoom)
 		{
 			$aUsers = $this -> _mDb -> getPairs("SELECT `Sender` FROM `RayChatHistory` WHERE `Room`=:Room GROUP BY `Sender`", 'Sender', 'Sender', array('Room' => $aRoom['ID']));
@@ -75,7 +65,7 @@ class BxDolMChat extends BxDolMData
 	
 	public function runMigration()
 	{        
-		$aLots = $this -> tansferRooms();
+		$aLots = $this -> transferRooms();
 		if (!$this -> getTotalRecords() || empty($aLots))
 		{
 			$this -> setResultStatus(_t('_bx_dolphin_migration_no_data_to_transfer'));
@@ -89,7 +79,7 @@ class BxDolMChat extends BxDolMData
 		$aMessages = $this -> _mDb -> getAll("SELECT * FROM `" . $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['table_name'] . "` ORDER BY `ID`");
 		foreach($aMessages as $iMes => $aMessage)
 		{
-			$iMessageId = $this -> isItemExisted($aMessage['ID']);
+			$iMessageId = $this -> isItemExisted($aMessage['ID'], 'id', $this -> _sMigField);
 			$iSenderId = $this -> getProfileId((int)$aMessage['Sender']);
 			if (!$iMessageId && $iSenderId)
 			{

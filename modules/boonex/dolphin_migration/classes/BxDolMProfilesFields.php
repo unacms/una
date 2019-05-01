@@ -20,7 +20,7 @@ class BxDolMProfilesFields extends BxDolMData
 	private $_aProfileFields = array();
 	
 	/**
-	 *  @var  $_aFiltered exclude listed filed from migration list
+	 *  @var array $_aFiltered exclude listed fields from migration list
 	 */
 	private $_aFiltered = array(
 									'ID', 'NickName', 'Email', 'Password', 
@@ -143,21 +143,22 @@ class BxDolMProfilesFields extends BxDolMData
 		$this -> createMIdField();		
 		$this -> setResultStatus(_t('_bx_dolphin_migration_started_migration_profile_fields'));		
 		$i = 0;
-		foreach($this -> _aProfileFields as $sKey => $aItem)
+
+    	foreach($this -> _aProfileFields as $sKey => $aItem)
 		{
 			if (!$this -> _oDb -> isFieldExists('bx_persons_data', $sKey))
 			{
-			if (!$this -> _oDb -> query("ALTER TABLE `bx_persons_data` ADD `{$sKey}` {$aItem['type']['sql']}")){
+			    if (!$this -> _oDb -> query("ALTER TABLE `bx_persons_data` ADD `{$sKey}` {$aItem['type']['sql']}")){
 						 $this -> setResultStatus(_t('_bx_dolphin_migration_started_migration_profile_field_can_not_be_transferred'));
 						 return BX_MIG_FAILED;
 				   }			   
 			}
 			  
 			//continue;
-			if ($this -> isFieldTransfered($sKey)) 
+			if ($this -> isFieldTransferred($sKey))
 				continue;
 			   
-			$iKeyID = time() + $i++; // unique language keys postfix			
+			$iKeyID = time() + $i++; // unique language keys postfix
 			$sQuery = $this -> _oDb -> prepare("
 				INSERT INTO `{$this -> _sTableWithTransKey}` SET
 					`object`	= 'bx_person', 
@@ -168,8 +169,8 @@ class BxDolMProfilesFields extends BxDolMData
 					`type`		= ?,
 					`required`	= ?,
 					`caption_system` = ?,
-					`caption`	= ?", 
-					$this -> transferPreValues($sKey, $aItem['name'], $aItem['values']), 
+					`caption`	= ?",
+					$this -> transferPreValues($sKey, $aItem['name'], $aItem['values']),
 					$sKey,
 					$aItem['type']['db_pass'],
 					$aItem['type']['type'],
@@ -202,7 +203,7 @@ class BxDolMProfilesFields extends BxDolMData
 			
 			// add display for view and add forms
 			$this -> _oDb -> query(trim($sQueryDisplay, ','));
-			// add lanungage keys with translations
+			// add language keys with translations
 			
 			foreach($this -> _aLanguages as $sLangKey => $sValue)
 			{
@@ -220,9 +221,9 @@ class BxDolMProfilesFields extends BxDolMData
 		return BX_MIG_SUCCESSFUL;
 	}
 
-	private function isFieldTransfered($sName)
+	private function isFieldTransferred($sName)
 	{
-		$sQuery = $this -> _oDb -> prepare("SELECT COUNT(*) FROM `sys_form_inputs` WHERE `object` = 'bx_person' AND `module` = 'custom' AND `name` = ? LIMIT 1", $sName);
+	    $sQuery = $this -> _oDb -> prepare("SELECT COUNT(*) FROM `sys_form_inputs` WHERE `object` = 'bx_person' AND `module` = 'custom' AND `name` = ?", $sName);
 		return (int)$this -> _oDb -> getOne($sQuery) > 0;
 	}        
 			
@@ -308,7 +309,7 @@ class BxDolMProfilesFields extends BxDolMData
 	 *  Builds list for fields lists with translations
 	 *  
 	 *  @param int $sField fields list's name
-	 *  @param int $bGetKeyIfExists dont add values if list exists.
+	 *  @param boolean $bGetKeyIfExists dont add values if list exists.
 	 *  @return mixed array with fields list or pre values key list name
 	 */
 	public function getFieldValues($sField, $bGetKeyIfExists = true)
@@ -325,8 +326,10 @@ class BxDolMProfilesFields extends BxDolMData
 				return $sValues;
 			
 			$aValues = $this -> getPreValuesBy($sKey);
-			foreach($aValues as $iKey => $sValue)
+			foreach($aValues as $iKey => $sValue) {
 				$aItems[$iKey] = $this -> getLKeyTranslations($sValue);
+                $aItems[$iKey] = $aItems[$iKey] ? $aItems[$iKey] : $sValue;
+            }
 		}
 		else
 		{
@@ -342,11 +345,8 @@ class BxDolMProfilesFields extends BxDolMData
 	{
 		if (!$this -> _oDb -> isTableExists($this -> _sTableWithTransKey) || !$this -> _oDb -> isFieldExists($this -> _sTableWithTransKey, $this -> _sTransferFieldIdent))
 			return false;
-	
-		$aRecords = $this -> _oDb -> getAll("SELECT `ti` . * , `tdi`.`id` AS  `di_id` , `tdi`.`display_name` AS  `display_name` , `tdi`.`visible_for_levels` AS `visible_for_levels` 
-											FROM  `sys_form_display_inputs` AS  `tdi` 
-											LEFT JOIN  `sys_form_inputs` AS  `ti` ON  `tdi`.`input_name` =  `ti`.`name` 
-											WHERE `ti`.`object` =  'bx_person' AND `ti`.`{$this -> _sTransferFieldIdent}` !=0");
+
+		$aRecords = $this -> _oDb -> getAll("SELECT  * FROM `sys_form_inputs` WHERE `object` =  'bx_person' AND `{$this -> _sTransferFieldIdent}` != 0");
 		if (!empty($aRecords))
 		{
 			$iNumber = 0;		
@@ -367,9 +367,10 @@ class BxDolMProfilesFields extends BxDolMData
 					
 					if(!empty($aValue['checker_error']))
 						$oLanguage->deleteLanguageString($aValue['checker_error']);
-				
-					(int)$this -> _oDb -> query("ALTER TABLE `bx_persons_data` DROP `{$aValue['name']}`");
-					
+
+					if ($this -> _oDb -> isFieldExists('bx_persons_data', $aValue['name']))
+					    $this -> _oDb -> query("ALTER TABLE `bx_persons_data` DROP `{$aValue['name']}`");
+
 					$iNumber++;
 				}
 			}
