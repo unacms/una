@@ -1270,6 +1270,9 @@ class BxDolFormChecker
 
             foreach ($aInputs as $k => $a) {
 
+                if (!isset($a['name']))
+                    continue;
+
                 $a['name'] = str_replace('[]', '', $a['name']);
 
                 if ($a['type'] != 'textarea' && $a['type'] != 'text' && !in_array($a['name'], $this->_aFieldsCheckForSpam))
