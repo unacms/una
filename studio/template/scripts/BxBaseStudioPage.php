@@ -86,6 +86,8 @@ class BxBaseStudioPage extends BxDolStudioPage
         if(empty($this->aPage) || !is_array($this->aPage))
             return '';
 
+        $this->updateHistory();
+
         $oTemplate = BxDolStudioTemplate::getInstance();
         $oFunctions = BxTemplStudioFunctions::getInstance();
 
@@ -99,24 +101,11 @@ class BxBaseStudioPage extends BxDolStudioPage
 
         $oTemplate->addInjection('injection_header', 'text', $sHelp . $sActions);
 
-        //--- Menu Left ---//
-        $aItems = array(
-            'back' => array(
-                'name' => 'back',
-                'icon' => 'th',
-                'link' => BX_DOL_URL_STUDIO . 'launcher.php',
-                'title' => '_adm_txt_back_to_launcher'
-            )
-        );
-
-        $oMenu = new BxTemplStudioMenu(array('template' => 'menu_top_toolbar.html', 'menu_items' => $aItems));
-        $sMenuLeft = $oMenu->getCode();
-
         //--- Menu Right ---//
-        $aItems = array();
+        $aItemsRight = array();
 
         if($bActions)
-            $aItems['actions'] = array(
+            $aItemsRight['actions'] = array(
                 'name' => 'actions',
                 'icon' => 'cog',
                 'onclick' => BX_DOL_STUDIO_PAGE_JS_OBJECT . ".togglePopup('actions', this)",
@@ -124,39 +113,19 @@ class BxBaseStudioPage extends BxDolStudioPage
             );
 
         if($bHelp)
-            $aItems['help'] = array(
+            $aItemsRight['help'] = array(
                 'name' => 'help',
                 'icon' => 'question-circle',
                 'onclick' => BX_DOL_STUDIO_PAGE_JS_OBJECT . ".togglePopup('help', this)",
                 'title' => '_adm_txt_show_help'
             );
 
-        $aItems = array_merge($aItems, array(
-        	'home' => array(
-                'name' => 'home',
-                'icon' => 'home',
-                'link' => BX_DOL_URL_ROOT,
-                'onclick' => '',
-                'title' => '_adm_tmi_cpt_site'
-            ),
-            'logout' => array(
-                'name' => 'logout',
-                'icon' => 'power-off',
-                'link' => BX_DOL_URL_ROOT . 'logout.php',
-                'onclick' => '',
-                'title' => '_adm_tmi_cpt_logout'
-            )
-        ));
+        $oTopMenu = BxTemplStudioMenuTop::getInstance();
+        $oTopMenu->setSelected(BX_DOL_STUDIO_MT_LEFT, $this->aPage['name']);
+        $oTopMenu->setContent(BX_DOL_STUDIO_MT_CENTER, _t($this->aPage['caption']));
+        $oTopMenu->setContent(BX_DOL_STUDIO_MT_RIGHT, array('template' => 'menu_top_toolbar.html', 'menu_items' => $aItemsRight));
 
-        $oMenu = new BxTemplStudioMenu(array('template' => 'menu_top_toolbar.html', 'menu_items' => $aItems));
-        $sMenuRight = $oMenu->getCode();
-
-        $aTmplVars = array(
-            'menu_left' => $sMenuLeft,
-            'caption' => _t($this->aPage['caption']),
-            'menu_right' => $sMenuRight
-        );
-        return $oTemplate->parseHtmlByName('page_caption.html', $aTmplVars);
+        return '';
     }
 
     public function getPageAttributes()

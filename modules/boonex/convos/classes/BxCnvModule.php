@@ -208,7 +208,11 @@ class BxCnvModule extends BxBaseModTextModule
             'profile_id' => bx_get_logged_profile_id(),
         ));
 
-        return $oGrid->getCode();
+        $this->_oTemplate->addCss(array('manage_tools.css'));
+        $this->_oTemplate->addJs(array('manage_tools.js'));
+        $this->_oTemplate->addJsTranslation(array('_sys_grid_search'));
+        
+        return $this->_oTemplate->getJsCode('manage_tools', array('sObjNameGrid' => $this->_oConfig->CNF['OBJECT_GRID'])) . $oGrid->getCode();
     }
 
     public function serviceMessagesPreviews ($iProfileId = 0, $bEmptyMessage = true)

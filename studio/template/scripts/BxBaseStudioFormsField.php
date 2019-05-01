@@ -1221,6 +1221,7 @@ class BxBaseStudioFormsFieldDatepicker extends BxBaseStudioFormsFieldText
                 'info' => _t('_adm_form_dsc_field_db_pass'),
                 'value' => $this->sDbPass,
                 'values' => array(
+                    array('key' => '', 'value' => _t('_adm_form_txt_field_db_pass_select_value')),
                     array('key' => 'Date', 'value' => _t('_adm_form_txt_field_db_pass_date')),
                     array('key' => 'DateTs', 'value' => _t('_adm_form_txt_field_db_pass_date_ts')),
                     array('key' => 'DateUtc', 'value' => _t('_adm_form_txt_field_db_pass_date_utc')),
@@ -1255,6 +1256,7 @@ class BxBaseStudioFormsFieldDatetime extends BxBaseStudioFormsFieldDatepicker
         $this->aForm['inputs']['value']['db']['pass'] = $this->sDbPass;
 
         $this->aForm['inputs']['db_pass']['values'] = array(
+            array('key' => '', 'value' => _t('_adm_form_txt_field_db_pass_select_value')),
             array('key' => 'DateTime', 'value' => _t('_adm_form_txt_field_db_pass_date_time')),
             array('key' => 'DateTimeTs', 'value' => _t('_adm_form_txt_field_db_pass_date_time_ts')),
             array('key' => 'DateTimeUtc', 'value' => _t('_adm_form_txt_field_db_pass_date_time_utc')),

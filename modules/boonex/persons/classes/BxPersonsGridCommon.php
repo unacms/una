@@ -11,6 +11,8 @@
 
 class BxPersonsGridCommon extends BxBaseModProfileGridCommon
 {
+    protected $_sFilter2Value;
+    
     public function __construct ($aOptions, $oTemplate = false)
     {
     	$this->MODULE = 'bx_persons';

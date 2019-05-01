@@ -110,6 +110,12 @@ class BxBaseServiceProfiles extends BxDol
         return $iNum;
     }
 
+    public function serviceGetCountOnlineProfiles ()
+    {
+        $oProfilesQuery = BxDolProfileQuery::getInstance();
+        return $oProfilesQuery->getOnlineCount();
+    }
+    
     public function serviceGetProfilesModules ()
     {
         if (getParam('sys_db_cache_enable')) { // get list of profiles  modules from db cache, cache is invalidated when new module is installed

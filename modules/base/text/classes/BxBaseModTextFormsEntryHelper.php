@@ -130,11 +130,19 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $aParams = array('object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]);
-        if(isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
-        	$aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
+        $iId = (int)$aContentInfo[$CNF['FIELD_ID']];
+        $iAuthorId = (int)$aContentInfo[$CNF['FIELD_AUTHOR']];
 
-        bx_alert($this->_oModule->getName(), 'added', $aContentInfo[$CNF['FIELD_ID']], false, $aParams);
+        $aParams = array('object_author_id' => $iAuthorId);
+        if(isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
+            $aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
+        if(!empty($CNF['OBJECT_METATAGS']))
+            $aParams['timeline_group'] = array(
+                'by' => $this->_oModule->_oConfig->getName() . '_' . $iAuthorId . '_' . $iId,
+                'field' => 'owner_id'
+            );
+
+        bx_alert($this->_oModule->getName(), 'added', $iId, false, $aParams);
     }
 
     protected function _alertAfterEdit($aContentInfo)

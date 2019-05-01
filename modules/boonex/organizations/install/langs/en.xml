@@ -67,6 +67,10 @@
     <string name="_bx_orgs_form_profile_input_date_added"><![CDATA[Added]]></string>
     <string name="_bx_orgs_form_profile_input_sys_date_changed"><![CDATA[Updated]]></string>
     <string name="_bx_orgs_form_profile_input_date_changed"><![CDATA[Updated]]></string>
+    <string name="_bx_orgs_form_profile_input_sys_friends_count"><![CDATA[Friends count]]></string>
+    <string name="_bx_orgs_form_profile_input_friends_count"><![CDATA[Friends count]]></string>
+    <string name="_bx_orgs_form_profile_input_sys_followers_count"><![CDATA[Followers count]]></string>
+    <string name="_bx_orgs_form_profile_input_followers_count"><![CDATA[Followers count]]></string>
 
 	<string name="_bx_orgs_acl_action_create_profile"><![CDATA[Create Organization's Profile]]></string>
 	<string name="_bx_orgs_acl_action_delete_profile"><![CDATA[Delete Organization's Profile]]></string>

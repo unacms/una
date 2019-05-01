@@ -625,7 +625,14 @@ EOF;
 
     protected function proto()
     {
-        return (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']) || getenv('UNA_HTTPS') ? 'https://' : 'http://';
+        $sProto = 'http://';
+        if  (
+                (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']) || 
+                (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && 'https' == strtolower($_SERVER['HTTP_X_FORWARDED_PROTO'])) || 
+                getenv('UNA_HTTPS')
+            )
+            $sProto = 'https://';
+        return $sProto;
     }
 }
 

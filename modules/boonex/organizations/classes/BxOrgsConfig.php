@@ -69,7 +69,8 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'URI_EDIT_COVER' => 'edit-organization-cover',
             'URI_JOINED_ENTRIES' => 'joined-organizations',
             'URI_MANAGE_COMMON' => 'organizations-manage',
-
+            'URI_VIEW_SUBSCRIPTIONS' => 'organization-profile-subscriptions',
+            
             'URL_HOME' => 'page.php?i=organizations-home',
             'URL_CREATE' => 'page.php?i=create-organization-profile',
             'URL_ENTRY_FANS' => 'page.php?i=organization-profile-fans',

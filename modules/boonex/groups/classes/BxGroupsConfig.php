@@ -56,6 +56,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'FIELD_COMMENTS' => 'comments',
             'FIELDS_QUICK_SEARCH' => array('group_name'),
             'FIELD_LOCATION_PREFIX' => 'location',
+			'FIELD_LABELS' => 'labels',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 
             // page URIs
@@ -76,6 +77,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'PARAM_SEARCHABLE_FIELDS' => 'bx_groups_searchable_fields',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_groups_per_page_browse_showcase',
             'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_groups_per_page_browse_recommended',
+			'PARAM_LABELS' => 'bx_groups_labels',
 
             // objects
             'OBJECT_STORAGE' => 'bx_groups_pics',

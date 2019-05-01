@@ -528,8 +528,8 @@ EOS;
 
         $sClassWrapper = 'bx-form-element-wrapper';
         if($isOneLine)
-        	$sClassWrapper .= ' ' . $sClassWrapper . '-oneline';
-		$sClassWrapper .= ' bx-def-margin-top';
+            $sClassWrapper .= ' ' . $sClassWrapper . '-oneline';
+        $sClassWrapper .= ' bx-def-margin-top';
 
         if (isset($aInput['name']))
             $aInput['tr_attrs']['id'] = "bx-form-element-" . $aInput['name'];
@@ -546,6 +546,8 @@ EOS;
         }
 
         $sInput = $this->genInput($aInput);
+        if(isset($aInput['error_updated']) && $aInput['error_updated'] === true)
+            $sErrorIcon = $this->genErrorIcon(empty($aInput['error']) ? '' : $aInput['error']);
 
         $sCaptionCode = '';
         if ($sCaption)

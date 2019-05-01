@@ -57,6 +57,13 @@ div.adm-bpb-icon {
 	width: 32px;
 	height: 32px;
 }
+div.adm-bpb-icon-bg {
+    width: 32px;
+    height: 32px;
+
+    background-color: #323c46;
+    border-radius: 8px;
+}
 div.adm-bpb-icon img {
     width: 32px;
     height: 32px;

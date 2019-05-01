@@ -48,10 +48,10 @@ DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandler;
 DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandler;
 
 -- PRIVACY 
-DELETE FROM `sys_objects_privacy` WHERE `object` IN('bx_groups_allow_view_to', 'bx_groups_allow_view_notification_to');
+DELETE FROM `sys_objects_privacy` WHERE `object` IN ('bx_groups_allow_view_to', 'bx_groups_allow_view_notification_to', 'bx_groups_allow_post_to');
 
 -- EMAIL TEMPLATES
 DELETE FROM `sys_email_templates` WHERE `Module` = 'bx_groups';
 
 -- UPLOADERS
-DELETE FROM `sys_objects_uploader` WHERE `object` IN('bx_groups_cover_crop', 'bx_groups_picture_crop');
+DELETE FROM `sys_objects_uploader` WHERE `object` IN ('bx_groups_cover_crop', 'bx_groups_picture_crop');

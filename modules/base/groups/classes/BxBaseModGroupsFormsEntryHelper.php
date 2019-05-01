@@ -41,7 +41,7 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
         $this->makeAuthorAdmin ($oGroupProfile, bx_get('initial_members'));
 
         $this->inviteMembers ($oGroupProfile, bx_get('initial_members'));
-        
+
         return '';
     }
 

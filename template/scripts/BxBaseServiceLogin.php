@@ -75,8 +75,10 @@ class BxBaseServiceLogin extends BxDol
 
     public function serviceLoginForm ($sParams = '', $sForceRelocate = '')
     {
-        if(isLogged())
-            return false;
+        if(isLogged()){
+            header('Location: ' . BX_DOL_URL_ROOT);
+            exit;
+        }
 
         $oForm = BxDolForm::getObjectInstance('sys_login', 'sys_login');
 
@@ -126,8 +128,10 @@ class BxBaseServiceLogin extends BxDol
     
     public function serviceLoginFormStep2 ()
     {
-        if(isLogged())
-            return false;
+        if(isLogged()){
+            header('Location: ' . BX_DOL_URL_ROOT);
+            exit;
+        }
 
         $oSession = BxDolSession::getInstance();
         $iAccountId = $oSession->getValue(BX_ACCOUNT_SESSION_KEY_FOR_2FA_LOGIN_ACCOUNT_ID);
@@ -166,8 +170,11 @@ class BxBaseServiceLogin extends BxDol
     
     public function serviceLoginFormStep3 ()
     {
-        if(isLogged())
-            return false;
+        if(isLogged()){
+            header('Location: ' . BX_DOL_URL_ROOT);
+            exit;
+        }
+        
         $oForm = BxDolForm::getObjectInstance('sys_login', 'sys_login_step3');
         $oForm->aFormAttrs['action'] = '';
         $oForm->initChecker();

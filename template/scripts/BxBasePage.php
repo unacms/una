@@ -131,9 +131,12 @@ class BxBasePage extends BxDolPage
 
     public function getPageCoverParams()
     {
-    	$aParams = BxDolMenu::getObjectInstance('sys_site_submenu')->getPageCoverParams();
-    	if(!empty($aParams) && is_array($aParams))
-    		return $aParams;
+        $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
+        if($oMenuSubmenu) {
+            $aParams = $oMenuSubmenu->getPageCoverParams();
+            if(!empty($aParams) && is_array($aParams))
+                return $aParams;
+        }
 
     	return array (
             'title' => $this->_getPageTitle(),
@@ -287,7 +290,11 @@ class BxBasePage extends BxDolPage
         if(empty($this->_aObject['submenu']))
             return;
 
-        BxDolMenu::getObjectInstance('sys_site_submenu')->setObjectSubmenu($this->_aObject['submenu'], $aParams);
+        $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
+        if(!$oMenuSubmenu)
+            return;
+
+        $oMenuSubmenu->setObjectSubmenu($this->_aObject['submenu'], $aParams);
     }
 
     /**

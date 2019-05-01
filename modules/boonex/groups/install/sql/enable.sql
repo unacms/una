@@ -16,8 +16,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `e
 ('bx_groups_num_rss', '10', @iCategId, '_bx_groups_option_num_rss', 'digit', '', '', '', 12),
 ('bx_groups_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', 15),
 ('bx_groups_per_page_browse_recommended', '10', @iCategId, '_sys_option_per_page_browse_recommended', 'digit', '', '', '', 16),
-('bx_groups_searchable_fields', 'group_name,group_desc', @iCategId, '_bx_groups_option_searchable_fields', 'list', 'a:2:{s:6:"module";s:9:"bx_groups";s:6:"method";s:21:"get_searchable_fields";}', '', '', 30);
-
+('bx_groups_searchable_fields', 'group_name,group_desc', @iCategId, '_bx_groups_option_searchable_fields', 'list', 'a:2:{s:6:"module";s:9:"bx_groups";s:6:"method";s:21:"get_searchable_fields";}', '', '', 30),
+('bx_groups_labels', '', @iCategId, '_sys_option_labels', 'text', '', '', '', 40);
 
 -- PAGES
 
@@ -490,8 +490,11 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('bx_groups', 'timeline_delete', @iHandler),
 ('bx_groups', 'timeline_comment', @iHandler),
 ('bx_groups', 'timeline_vote', @iHandler),
+('bx_groups', 'timeline_score', @iHandler),
 ('bx_groups', 'timeline_report', @iHandler),
-('bx_groups', 'timeline_repost', @iHandler);
+('bx_groups', 'timeline_repost', @iHandler),
+('bx_groups', 'timeline_pin', @iHandler),
+('bx_groups', 'timeline_promote', @iHandler);
 
 -- PRIVACY 
 

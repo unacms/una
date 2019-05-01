@@ -138,7 +138,15 @@ class BxBaseStudioFormView extends BxDolStudioForm
         $oFunctions = BxTemplStudioFunctions::getInstance();
 
         $oLanguage = BxDolStudioLanguagesUtils::getInstance();
-        $sLanguage = $oLanguage->getCurrentLangName(false);
+
+        if(!empty($aInput['error']) && is_string($aInput['error'])) {
+            $sLanguage = $aInput['error'];
+            $aInput['error'] = isset($aInput['checker']['error']) ? $aInput['checker']['error'] : '';
+            $aInput['error_updated'] = true;
+        }
+        else
+            $sLanguage = $oLanguage->getCurrentLangName(false);
+
         $aLanguages = $oLanguage->getLanguagesInfo();
 
         $aInput['type'] = 'hidden';
@@ -148,16 +156,17 @@ class BxBaseStudioFormView extends BxDolStudioForm
         $sInput .= $this->genInputStandard($aInput);
 
         $aStrings = !empty($aInput['value']) ? $oLanguage->getLanguageString($aInput['value']) : array();
-        
+
         $aTmplVars = array();
         foreach($aLanguages as $aLanguage) {
             $bLanguage = $aLanguage['name'] == $sLanguage;
 
             $sValue = '';
-            if(($bValue = key_exists($aLanguage['id'], $aStrings)) === true)
+            if(key_exists($aLanguage['id'], $aStrings))
                 $sValue = $aStrings[$aLanguage['id']]['string'];
             else if(isset($aInput['values'][$aLanguage['name']]))
                 $sValue = $aInput['values'][$aLanguage['name']];
+            $bValue = !empty($sValue);
 
             $aInput['type'] = $sType;
             $aInput['name'] = $sInputName . '-' . $aLanguage['name'];

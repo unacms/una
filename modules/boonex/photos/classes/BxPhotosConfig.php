@@ -50,6 +50,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
             'FIELD_COMMENTS' => 'comments',
 	        'FIELD_STATUS' => 'status',
         	'FIELD_STATUS_ADMIN' => 'status_admin',
+            'FIELD_LABELS' => 'labels',
             'FIELD_LOCATION_PREFIX' => 'location',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 			
@@ -72,6 +73,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_photos_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_photos_rss_num',
         	'PARAM_SEARCHABLE_FIELDS' => 'bx_photos_searchable_fields',
+            'PARAM_LABELS' => 'bx_photos_labels',
 
             // objects
             'OBJECT_STORAGE' => 'bx_photos_photos',

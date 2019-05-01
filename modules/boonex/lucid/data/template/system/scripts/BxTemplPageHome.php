@@ -17,13 +17,16 @@ class BxTemplPageHome extends BxBasePageHome
         parent::__construct($aObject, $oTemplate);
 
         $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
-		$oMenuSubmenu->setObjectSubmenu('bx_lucid_homepage_submenu', array());
+        if(!$oMenuSubmenu)
+            return;
 
-		$sSelName = 'home';
-		if(bx_get('i') !== false)
-		    $sSelName = bx_process_input(bx_get('i'));
+        $oMenuSubmenu->setObjectSubmenu('bx_lucid_homepage_submenu', array());
 
-		BxDolMenu::setSelectedGlobal('bx_lucid', $sSelName);
+        $sSelName = 'home';
+        if(bx_get('i') !== false)
+            $sSelName = bx_process_input(bx_get('i'));
+
+        BxDolMenu::setSelectedGlobal('bx_lucid', $sSelName);
     }
 }
 

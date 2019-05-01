@@ -17,7 +17,7 @@ bx_require_authentication(true);
 
 bx_import('BxTemplStudioMenuTop');
 $oTopMenu = BxTemplStudioMenuTop::getInstance();
-$oTopMenu->setVisibleAll();
+$oTopMenu->setSelected(BX_DOL_STUDIO_MT_LEFT, 'launcher');
 
 $oPage = new BxTemplStudioLauncher();
 

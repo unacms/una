@@ -1002,8 +1002,12 @@ class BxBaseModGeneralModule extends BxDolModule
         if(empty($sTitle) && !empty($aContentInfo[$CNF['FIELD_TEXT']]))
             $sTitle = $aContentInfo[$CNF['FIELD_TEXT']];
 
+        $iOwnerId = $iAuthorIdAbs;
+        if((int)$aEvent['object_privacy_view'] < 0)
+            $iOwnerId = abs($aEvent['object_privacy_view']);
+
         return array(
-            'owner_id' => $aEvent['owner_id'],
+            'owner_id' => $iOwnerId,
             'object_owner_id' => $iAuthorId,
             'icon' => !empty($CNF['ICON']) ? $CNF['ICON'] : '',
             'sample' => isset($CNF['T']['txt_sample_single_with_article']) ? $CNF['T']['txt_sample_single_with_article'] : $CNF['T']['txt_sample_single'],

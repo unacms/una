@@ -26,6 +26,11 @@ class BxBaseServiceAccount extends BxDol
 
     public function serviceCreateAccountForm ($aParams = array())
     {   
+        if(isLogged()){
+            header('Location: ' . BX_DOL_URL_ROOT);
+            exit;
+        }
+        
         if (isset($_SERVER['HTTP_REFERER']) && 0 === mb_stripos($_SERVER['HTTP_REFERER'], BX_DOL_URL_ROOT)) { // remember referrer
             
             $sJoinReferrer = $_SERVER['HTTP_REFERER'];
@@ -308,6 +313,11 @@ class BxBaseServiceAccount extends BxDol
      */
     public function serviceForgotPassword()
     {
+        if(isLogged()){
+            header('Location: ' . BX_DOL_URL_ROOT);
+            exit;
+        }
+        
         if (bx_get('key'))
             return $this->resetPassword();
 
@@ -326,14 +336,12 @@ class BxBaseServiceAccount extends BxDol
             }
         }
         else{
-            if (BxDolAccount::isNeedConfirmEmail()){
-                unset($oForm->aInputs['phone']);
-                $sCaptionKey = "_sys_txt_forgot_pasword_desc";
-                $oForm->aInputs['email']['checker']['func'] = 'EmailExist';
-                $bNeedCheckEmailAndPhone = false;
-            }
+            unset($oForm->aInputs['phone']);
+            $sCaptionKey = "_sys_txt_forgot_pasword_desc";
+            $oForm->aInputs['email']['checker']['func'] = 'EmailExist';
+            $bNeedCheckEmailAndPhone = false;
         }
-        if ((BxDolAccount::isNeedConfirmPhone() && BxDolAccount::isNeedConfirmEmail()) || (!BxDolAccount::isNeedConfirmPhone() && !BxDolAccount::isNeedConfirmEmail())){
+        if ((BxDolAccount::isNeedConfirmPhone() && BxDolAccount::isNeedConfirmEmail())){
             if (isset($oForm->aInputs['phone']))
                 $oForm->aInputs['phone']['required'] = false;
             if (isset($oForm->aInputs['email']))

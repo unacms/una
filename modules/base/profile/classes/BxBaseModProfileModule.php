@@ -1036,6 +1036,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return CHECK_ACTION_RESULT_ALLOWED;
     }
 
+    public function serviceSetViewProfileCover($oPage, $aProfileInfo)
+    {
+        $this->_oTemplate->setCover($oPage,$aProfileInfo);
+    }
+
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
      */
@@ -1268,6 +1273,20 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     		return false;
 
 		return $oProfile->id() == $iLogged;
+    }
+    
+    public function getProfileByCurrentUrl ()
+    {
+        $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+        
+        if ($iProfileId)
+            return  BxDolProfile::getInstance($iProfileId);
+
+        $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if ($iContentId)
+            return BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName());
+        
+        return false;
     }
 
     // ====== PROTECTED METHODS

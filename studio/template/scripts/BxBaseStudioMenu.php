@@ -14,7 +14,7 @@ class BxBaseStudioMenu extends BxDolStudioMenu
     {
         parent::__construct ($aObject, $oTemplate);
     }
-
+    
     /**
      * Check if menu items is selected.
      * @param $a menu item array

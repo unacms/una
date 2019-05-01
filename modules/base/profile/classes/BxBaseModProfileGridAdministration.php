@@ -117,10 +117,17 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     }
 
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
-    {
-        if(strpos($sFilter, $this->_sParamsDivider) !== false)
-            list($this->_sFilter1Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
-
+    { 
+        $iFilterPartsCount = substr_count($sFilter, $this->_sParamsDivider);
+        switch ($iFilterPartsCount) {
+            case 1:
+                list($this->_sFilter1Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
+                break;
+            case 2:
+                list($this->_sFilter1Value, $this->_sFilter2Value, $sFilter) = explode($this->_sParamsDivider, $sFilter);
+                break;
+        }
+        
     	if(!empty($this->_sFilter1Value))
         	$this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tp`.`status`=?", $this->_sFilter1Value);
 

@@ -237,7 +237,10 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_person', 'bx_persons', 'profile_ip', '', '', 0, 'text', '_bx_persons_form_profile_input_sys_profile_ip', '_bx_persons_form_profile_input_profile_ip', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
 ('bx_person', 'bx_persons', 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_person', 'bx_persons', 'added', '', '', 0, 'datetime', '_bx_persons_form_profile_input_sys_date_added', '_bx_persons_form_profile_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_person', 'bx_persons', 'changed', '', '', 0, 'datetime', '_bx_persons_form_profile_input_sys_date_changed', '_bx_persons_form_profile_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
+('bx_person', 'bx_persons', 'changed', '', '', 0, 'datetime', '_bx_persons_form_profile_input_sys_date_changed', '_bx_persons_form_profile_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_person', 'bx_persons', 'friends_count', '', '', 0, 'text', '_bx_persons_form_profile_input_sys_friends_count', '_bx_persons_form_profile_input_friends_count', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_person', 'bx_persons', 'followers_count', '', '', 0, 'text', '_bx_persons_form_profile_input_sys_followers_count', '_bx_persons_form_profile_input_followers_count', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
+
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_person_add', 'picture', 2147483647, 1, 1),
@@ -280,6 +283,8 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_person_view', 'profile_ip', 192, 1, 6),
 ('bx_person_view', 'added', 192, 1, 7),
 ('bx_person_view', 'changed', 192, 1, 8),
+('bx_person_view', 'friends_count', 2147483647, 1, 9),
+('bx_person_view', 'followers_count', 2147483647, 1, 10),
 
 ('bx_person_view_full', 'gender', 2147483647, 1, 1),
 ('bx_person_view_full', 'birthday', 2147483647, 1, 2),

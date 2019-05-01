@@ -11,6 +11,8 @@
 
 class BxOrgsGridCommon extends BxBaseModGroupsGridCommon
 {
+    protected $_sFilter2Value;
+    
     public function __construct ($aOptions, $oTemplate = false)
     {
     	$this->MODULE = 'bx_organizations';

@@ -22,9 +22,9 @@ class BxDolStudioPage extends BxDol
     protected $sPageSelected;
 
     protected $sPageRssHelpObject;
-	protected $sPageRssHelpUrl;
+    protected $sPageRssHelpUrl;
     protected $iPageRssHelpLength;
-	protected $sPageRssHelpId;
+    protected $sPageRssHelpId;
 
     protected $aActions;
     protected $aMarkers;
@@ -37,9 +37,9 @@ class BxDolStudioPage extends BxDol
 
         $this->aPage = array();
         $this->bPageMultiple = false;
-        $this->sPageSelected = '';
+        $this->sPageSelected = '';       
 
-		$this->sPageRssHelpObject = 'sys_studio_page_help';
+        $this->sPageRssHelpObject = 'sys_studio_page_help';
         $this->sPageRssHelpUrl = 'http://feed.una.io/?section={page_name}';
         $this->iPageRssHelpLength = 5;
 
@@ -151,6 +151,31 @@ class BxDolStudioPage extends BxDol
     protected function getModules($bShowCustom = true, $bShowSystem = true)
     {
         return BxDolStudioUtils::getModules($bShowCustom, $bShowSystem);
+    }
+    
+    protected function updateHistory()
+    {
+        if(empty($this->aPage['wid_id'])) 
+            return;
+
+        $sHistorySessionKey = BxTemplStudioMenuTop::$sHistorySessionKey;
+        $iHistoryLength = BxTemplStudioMenuTop::$iHistoryLength;
+
+        $oSession = BxDolSession::getInstance();
+        $aHistory = $oSession->getValue($sHistorySessionKey);
+        if(!empty($aHistory) && isset($aHistory[$this->aPage['name']]))
+            unset($aHistory[$this->aPage['name']]);
+
+        $aHistory[$this->aPage['name']] = array(
+            'name' => $this->aPage['name'],
+            'icon' => $this->aPage['wid_icon'],
+            'link' => $this->aPage['wid_url'],
+            'onclick' => $this->aPage['wid_click'],
+            'title' => $this->aPage['wid_caption']
+        );
+        if(count($aHistory) > $iHistoryLength)
+            $aHistory = array_slice($aHistory, -$iHistoryLength);
+        $oSession->setValue($sHistorySessionKey, $aHistory);
     }
 }
 

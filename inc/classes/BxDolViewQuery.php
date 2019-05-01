@@ -68,8 +68,8 @@ class BxDolViewQuery extends BxDolObjectQuery
         }
 
         if(($iDateNow - $iDate) > $this->_iPeriod) {
-            $sQuery = $this->prepare("UPDATE `{$this->_sTableTrack}` SET `date` = ? WHERE `object_id` = ? AND `viewer_id` = ? AND `viewer_nip` = ?", $iDateNow, $iObjectId, $iAuthorId, $iAuthorNip);
-            return (int)$this->query($sQuery) > 0;
+            $aBindings['date'] = $iDateNow;
+            return (int)$this->query("UPDATE `{$this->_sTableTrack}` SET `date` = :date WHERE `object_id` = :object_id " . $sWhere, $aBindings) > 0;
         }
     }
 

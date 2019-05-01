@@ -33,9 +33,11 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
             ));
 
         if(isset($CNF['PARAM_POLL_ENABLED']) && $CNF['PARAM_POLL_ENABLED'] === true) {
-            $sResult .= $this->_oModule->_oTemplate->getJsCode('poll');
+            $sInclude = '';
+            $sInclude .= $this->_oModule->_oTemplate->addCss(array('polls.css'), $bDynamicMode);
+            $sInclude .= $this->_oModule->_oTemplate->addJs(array('polls.js'), $bDynamicMode);
 
-            $this->_oModule->_oTemplate->addJs(array('polls.js'));
+            $sResult .= ($bDynamicMode ? $sInclude : '') . $this->_oModule->_oTemplate->getJsCode('poll');
         }           
 
     	return $sResult;
@@ -77,8 +79,6 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
 
     protected function genCustomInputPolls ($aInput)
     {
-        $this->_oModule->_oTemplate->addCss(array('polls.css'));
-
         return $this->_oModule->_oTemplate->getPollField(!empty($aInput['content_id']) ? (int)$aInput['content_id'] : 0);
     }
 

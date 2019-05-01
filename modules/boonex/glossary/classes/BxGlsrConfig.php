@@ -45,6 +45,7 @@ class BxGlsrConfig extends BxBaseModTextConfig
             'FIELD_COMMENTS' => 'comments',
             'FIELD_STATUS' => 'status',
             'FIELD_STATUS_ADMIN' => 'status_admin',
+            'FIELD_LABELS' => 'labels',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 
             // page URIs
@@ -67,6 +68,7 @@ class BxGlsrConfig extends BxBaseModTextConfig
             'PARAM_NUM_RSS' => 'bx_glossary_rss_num',
             'PARAM_SEARCHABLE_FIELDS' => 'bx_glossary_searchable_fields',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_glossary_per_page_browse_showcase',
+            'PARAM_LABELS' => 'bx_glossary_labels',
             
 
             // objects

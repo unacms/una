@@ -851,7 +851,7 @@ CREATE TABLE `sys_acl_levels` (
   `Active` enum('yes','no') NOT NULL default 'no',
   `Purchasable` enum('yes','no') NOT NULL default 'yes',
   `Removable` enum('yes','no') NOT NULL default 'yes',
-  `QuotaSize` int(11) NOT NULL,
+  `QuotaSize` bigint(20) NOT NULL,
   `QuotaNumber` int(11) NOT NULL,
   `QuotaMaxFileSize` int(11) NOT NULL,
   `Order` int(11) NOT NULL default '0',

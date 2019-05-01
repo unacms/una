@@ -31,6 +31,14 @@ class BxBaseModTextPageAuthor extends BxTemplPage
         if (!$this->_aProfileInfo || !$this->_oProfile)
             return;
 
+        //set cover
+        $sProfileModule = $this->_oProfile->getModule();
+        if(BxDolRequest::serviceExists($sProfileModule, 'set_view_profile_cover')) {
+            $aProfileInfoFull = BxDolService::call($sProfileModule, 'get_all', array(array('type' => 'id', 'id' => $this->_oProfile->getContentId())));
+
+            BxDolService::call($sProfileModule, 'set_view_profile_cover', array($this, $aProfileInfoFull));
+        }
+
         // select view profile submenu
         $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
         if ($oMenuSubmenu) {

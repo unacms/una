@@ -2409,10 +2409,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return true;
 
         $iUserId = $this->getUserId();
-        $aCheckResult = checkActionModule($iUserId, 'post', $this->getName(), $bPerform);
 
-        $oProfileOwner = BxDolProfile::getInstance($this->_iOwnerId);
-        if($oProfileOwner !== false) {
+        $aCheckResult = checkActionModule($iUserId, 'post', $this->getName(), $bPerform);
+        if(!empty($this->_iOwnerId) && ($oProfileOwner = BxDolProfile::getInstance($this->_iOwnerId)) !== false) {
             if($oProfileOwner->checkAllowedPostInProfile() !== CHECK_ACTION_RESULT_ALLOWED)
                 return _t('_sys_txt_access_denied');
 
@@ -2452,9 +2451,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
            return true;
 
         $aCheckResult = checkActionModule($iUserId, 'edit', $this->getName(), $bPerform);
-
-        $oProfileOwner = BxDolProfile::getInstance($iOwnerId);
-        if($oProfileOwner !== false)
+        if(!empty($iOwnerId) && ($oProfileOwner = BxDolProfile::getInstance($iOwnerId)) !== false)
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_edit', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
 
         return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
@@ -2475,9 +2472,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
            return true;
 
         $aCheckResult = checkActionModule($iUserId, 'delete', $this->getName(), $bPerform);
-
-        $oProfileOwner = BxDolProfile::getInstance($iOwnerId);
-        if($oProfileOwner !== false)
+        if(!empty($iOwnerId) && ($oProfileOwner = BxDolProfile::getInstance($iOwnerId)) !== false)
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_delete', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
 
         return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
@@ -2498,9 +2493,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $oCmts->addCssJs();
 
         $bResult = true;
-
-        $oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
-        if($oProfileOwner !== false) {
+        if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false) {
             if($oProfileOwner->checkAllowedPostInProfile() !== CHECK_ACTION_RESULT_ALLOWED)
                 return false;
 
@@ -2523,9 +2516,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         	return false;
 
         $bResult = true;
-
-        $oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
-        if($oProfileOwner !== false)
+        if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_view_counter', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
 
         return $bResult;
@@ -2544,9 +2535,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         	return false;
 
         $bResult = true;
-
-        $oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
-        if($oProfileOwner !== false)
+        if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_vote', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
 
         return $bResult;
@@ -2565,9 +2554,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         	return false;
 
         $bResult = true;
-
-        $oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
-        if($oProfileOwner !== false)
+        if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_score', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
 
         return $bResult;
@@ -2586,9 +2573,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         	return false;
 
         $bResult = true;
-
-        $oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
-        if($oProfileOwner !== false)
+        if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_report', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
 
         return $bResult;
@@ -2608,9 +2593,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return true;
 
         $aCheckResult = checkActionModule($iUserId, 'repost', $this->getName(), $bPerform);
-
-        $oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
-        if($oProfileOwner !== false)
+        if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_repost', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
 
         return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
@@ -2629,9 +2612,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return false;
 
         $aCheckResult = checkActionModule($iUserId, 'send', $this->getName(), $bPerform);
-
-        $oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
-        if($oProfileOwner !== false)
+        if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_send', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
 
         return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
@@ -3117,9 +3098,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
            return true;
 
         $aCheckResult = checkActionModule($iUserId, 'pin', $this->getName(), $bPerform);
-
-        $oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
-        if($oProfileOwner !== false)
+        if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_pin', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
 
         return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
@@ -3135,10 +3114,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     		return true;
 
     	$aCheckResult = checkActionModule($iUserId, 'stick', $this->getName(), $bPerform);
-    
-    	$oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
-    	if($oProfileOwner !== false)
-    		bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_stick', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
+    	if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_stick', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
     
     	return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
     }
@@ -3153,9 +3130,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return false;
 
         $aCheckResult = checkActionModule($iUserId, 'promote', $this->getName(), $bPerform);
-
-        $oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
-        if($oProfileOwner !== false)
+        if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_promote', $oProfileOwner->id(), $iUserId, array('check_result' => &$aCheckResult));
 
         return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;

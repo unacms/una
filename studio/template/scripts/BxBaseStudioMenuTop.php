@@ -49,11 +49,16 @@ class BxBaseStudioMenuTop extends BxDolStudioMenuTop implements iBxDolSingleton
                 continue;
 
             $sContent = "";
-            if(is_array($mixedItems)) {
-                $oMenu = new BxTemplStudioMenu(array('template' => 'menu_top_toolbar.html', 'menu_items' => $mixedItems));
-                $sContent = $oMenu->getCode();
-            } else if(is_string($mixedItems) && !empty($mixedItems))
+            if(is_string($mixedItems) && !empty($mixedItems))
                 $sContent = $mixedItems;
+            else if(is_array($mixedItems)) {
+                $oMenu = new BxTemplStudioMenu($mixedItems);
+                $oMenu->addMarkers(array(
+                    'url_studio' => BX_DOL_URL_STUDIO
+                ));
+
+                $sContent = $oMenu->getCode();
+            }
 
             $aTmplVars[] = array(
                 'name' => $sPosition,

@@ -329,7 +329,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($aResult === false)
             return '';
 
-        $aEvent['owner_id'] = $aResult['owner_id'];
+        /**
+         * If 'updated' Owner ID was returned with data from integrated module,
+         * then save it's original value in 'owner_id_orig' for future usage and 
+         * rewrite with received value.
+         */
+        if(isset($aResult['owner_id'])) {
+            $aEvent['owner_id_orig'] = $aEvent['owner_id'];
+            $aEvent['owner_id'] = $aResult['owner_id'];
+        }
         $aEvent['object_owner_id'] = $aResult['object_owner_id'];
         $aEvent['icon'] = !empty($aResult['icon']) ? $aResult['icon'] : '';
         $aEvent['sample'] = !empty($aResult['sample']) ? $aResult['sample'] : '_bx_timeline_txt_sample';
@@ -1478,7 +1486,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $oConnection = BxDolConnection::getObjectInstance($sConnection);
         $sConnectionTitle = _t('_sys_menu_item_title_sm_subscribe');
 
-        $aOwnerIds = is_array($aEvent['owner_id']) ? $aEvent['owner_id'] : array($aEvent['owner_id']);
+        $sKeyOwnerId = isset($aEvent['owner_id_orig']) ? 'owner_id_orig' : 'owner_id';
+        $aOwnerIds = is_array($aEvent[$sKeyOwnerId]) ? $aEvent[$sKeyOwnerId] : array($aEvent[$sKeyOwnerId]);
 
         $aTmplVarsOwners = array();
         foreach($aOwnerIds as $iOwnerId) {
@@ -1775,7 +1784,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $iOwner = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $aEvent['owner_id'] : $aEvent['object_id'];
 
         $aTmplVars = array();
-        if(!empty($aEvent['promoted'])) {
+        if(!empty($iOwner) && !is_array($iOwner) && !empty($aEvent['promoted'])) {
             $sConnection = $this->_oConfig->getObject('conn_subscriptions');
             $oConnection = BxDolConnection::getObjectInstance($sConnection);
             if(!$oConnection->isConnected($iUser, $iOwner))

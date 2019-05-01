@@ -710,7 +710,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     static $TYPES_TEXT = array('text' => 1, 'textarea' => 1);
     static $TYPES_FILE = array('file' => 1);
 
-    static $FUNC_SKIP_DOMAIN_CHECK = array('email' => 1, 'emails' => 1, 'emailexist' => 1, 'emailuniq' => 1, 'emailexistorempty' => 1, 'hostdomain' => 1, 'hostdomainchat' => 1);
+    static $FUNC_SKIP_DOMAIN_CHECK = array('email' => 1, 'emails' => 1, 'emailexist' => 1, 'emailuniq' => 1, 'emailexistorempty' => 1, 'hostdomain' => 1, 'hostdomainchat' => 1, 'emailorempty' => 1);
 
     protected $_aMarkers = array ();
 
@@ -1270,6 +1270,9 @@ class BxDolFormChecker
 
             foreach ($aInputs as $k => $a) {
 
+                if (!isset($a['name']))
+                    continue;
+
                 $a['name'] = str_replace('[]', '', $a['name']);
 
                 if ($a['type'] != 'textarea' && $a['type'] != 'text' && !in_array($a['name'], $this->_aFieldsCheckForSpam))
@@ -1467,6 +1470,12 @@ class BxDolFormCheckerHelper
             return !self::_isEmptyArray($s);
         }
         return $s ? true : false;
+    }
+    static public function checkEmailOrEmpty($s)
+    {
+        if (empty($s))
+            return true;
+        return self::checkEmail($s);
     }
     static public function checkEmail($s)
     {
