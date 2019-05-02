@@ -336,7 +336,7 @@ class BxDolStudioSettings extends BxTemplStudioPage
 
     protected function clearCache()
     {
-        BxDolDb::getInstance()->cacheParams(true);
+        BxDolDb::getInstance()->cacheParams(true, true);
         BxDolCacheUtilities::getInstance()->clear('css');
     }
 }

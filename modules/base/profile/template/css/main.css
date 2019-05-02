@@ -137,8 +137,6 @@ p.bx-base-pofile-unit-ava {
 .bx-base-pofile-cover {
     position: relative;
     min-height: 10rem;
-
-    border-bottom-width: 0;
 }
 .bx-media-phone .bx-base-pofile-cover {
     border-left-width: 0;
