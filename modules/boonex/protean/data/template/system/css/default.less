@@ -28,10 +28,6 @@ html.bx-media-phone {
 	padding: @bx-content-padding-block;
 }
 
-#bx-logo {
-    margin-top:-@bx-content-padding-header;
-}
-
 /* shadow */
 .bx-shadow-header {
     -webkit-box-shadow: @bx-shadow-header;
@@ -335,8 +331,7 @@ a.bx-def-font-h3:hover {
 }
 
 /* cover */
-.bx-menu-toolbar-padding,
-.bx-menu-toolbar-padding .bx-cover-wrapper {
+.bx-menu-toolbar-padding .bx-def-cover-color-bg {
     background-color: @bx-color-cover;
 }
 
@@ -402,6 +397,18 @@ a.bx-def-font-h3:hover {
 }
 .bx-def-border-radius-block {
     border-radius: @bx-border-radius-block;
+    background-clip: padding-box;
+}
+.bx-def-border-radius-block-int {
+    border-radius: @bx-border-radius-block-itl @bx-border-radius-block-itr @bx-border-radius-block-ibr @bx-border-radius-block-ibl;
+    background-clip: padding-box;
+}
+.bx-def-border-radius-block-int-top {
+    border-radius: @bx-border-radius-block-itl @bx-border-radius-block-itr 0 0;
+    background-clip: padding-box;
+}
+.bx-def-border-radius-block-int-bottom {
+    border-radius: 0 0 @bx-border-radius-block-ibr @bx-border-radius-block-ibl;
     background-clip: padding-box;
 }
 .bx-db-header {
@@ -623,20 +630,32 @@ a.bx-def-font-h3:hover {
 
 /* page menu */
 .bx-menu-main-bar-wrapper {
-	-webkit-box-shadow: @bx-shadow-menu-page;
-	-moz-box-shadow: @bx-shadow-menu-page;
-	box-shadow: @bx-shadow-menu-page;
+    -webkit-box-shadow: @bx-shadow-menu-page;
+    -moz-box-shadow: @bx-shadow-menu-page;
+    box-shadow: @bx-shadow-menu-page;
 
-	border-width: @bx-border-width-menu-page;
-	border-style: solid;
-	border-color: @bx-color-border-menu-page;
+    border-width: @bx-border-width-menu-page;
+    border-style: solid;
+    border-color: @bx-color-border-menu-page;
+    border-bottom-right-radius: @bx-border-radius-block-br;
+    border-bottom-left-radius: @bx-border-radius-block-bl;
 
-	background-color: @bx-color-menu-page;
+    background-color: @bx-color-menu-page;
 
-	background-image: @bx-image-bg-menu-page;
-	background-repeat: @bx-image-bg-menu-page-repeat;
-	background-attachment: @bx-image-bg-menu-page-attachment;
+    background-image: @bx-image-bg-menu-page;
+    background-repeat: @bx-image-bg-menu-page-repeat;
+    background-attachment: @bx-image-bg-menu-page-attachment;
     background-size: @bx-image-bg-menu-page-size;
+}
+.bx-menu-main-bar-wrapper:before {
+    left: 0px;
+    border-bottom-left-radius: @bx-border-radius-block-bl;
+    background: @bx-color-menu-page-gradient-left;
+}
+.bx-menu-main-bar-wrapper:after {
+    right: 0px;
+    border-bottom-right-radius: @bx-border-radius-block-br;
+    background: @bx-color-menu-page-gradient-right;
 }
 .bx-menu-main-bar-wrapper .bx-menu-main-submenu {
 	padding: @bx-content-padding-menu-page;

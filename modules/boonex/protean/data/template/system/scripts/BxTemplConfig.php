@@ -20,13 +20,15 @@ class BxTemplConfig extends BxBaseConfig
 
         //--- Defaults
         $this->_aConfig['aLessConfig'] = array_merge($this->_aConfig['aLessConfig'], array(
-            'bx-margin' => '16px',
-            'bx-margin-sec' => '8px',
-            'bx-margin-thd' => '4px',
+            'bx-margin' => '20px',
+            'bx-margin-sec' => '10px',
+            'bx-margin-thd' => '5px',
 
-            'bx-padding' => '16px',
-            'bx-padding-sec' => '8px',
-            'bx-padding-thd' => '4px'
+            'bx-padding' => '20px',
+            'bx-padding-sec' => '10px',
+            'bx-padding-thd' => '5px',
+        
+            'bx-size-avatar' => '200px'
         ));
 
         //--- Images
@@ -127,6 +129,7 @@ class BxTemplConfig extends BxBaseConfig
         if($this->_isModule) {
             $this->_aConfig['aLessConfig']['bx-color-hl'] = $this->_setColorRgba($sName . '_general_item_bg_color_hover', 'rgba(196, 248, 156, 0.2)');
             $this->_aConfig['aLessConfig']['bx-color-active'] = $this->_setColorRgba($sName . '_general_item_bg_color_active', 'rgba(196, 248, 156, 0.4)');
+            $this->_aConfig['aLessConfig']['bx-color-disabled'] = $this->_setColorRgba($sName . '_general_item_bg_color_disabled', 'rgba(221, 221, 221, 1.0)');
         }
 
         $this->_aConfig['aLessConfig']['bx-color-header'] = $this->_setColorRgba($sName . '_header_bg_color', 'rgba(59, 134, 134, 1)');
@@ -143,6 +146,8 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig']['bx-color-menu-main'] = $this->_setColorRgba($sName . '_menu_main_bg_color', 'rgba(255, 255, 255, 0.9)');
         $this->_aConfig['aLessConfig']['bx-color-menu-account'] = $this->_setColorRgba($sName . '_menu_account_bg_color', 'rgba(255, 255, 255, 0.9)');
         $this->_aConfig['aLessConfig']['bx-color-menu-page'] = $this->_setColorRgba($sName . '_menu_page_bg_color', 'rgba(242, 242, 242, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-menu-page-gradient-left'] = $this->_setGradientMenuPageLeft($sName . '_menu_page_bg_color', '242, 242, 242');
+        $this->_aConfig['aLessConfig']['bx-color-menu-page-gradient-right'] = $this->_setGradientMenuPageRight($sName . '_menu_page_bg_color', '242, 242, 242');
         $this->_aConfig['aLessConfig']['bx-color-menu-slide'] = $this->_setColorRgba($sName . '_menu_slide_bg_color', 'rgba(255, 255, 255, 0.9)');
         $this->_aConfig['aLessConfig']['bx-color-form-input'] = $this->_setColorRgba($sName . '_form_input_bg_color', 'rgba(255, 255, 255, 1)');
         $this->_aConfig['aLessConfig']['bx-color-form-input-active'] = $this->_setColorRgba($sName . '_form_input_bg_color_active', 'rgba(255, 255, 255, 1)');
@@ -213,6 +218,12 @@ class BxTemplConfig extends BxBaseConfig
             $this->_aConfig['aLessConfig']['bx-border-radius-block-br'],
             $this->_aConfig['aLessConfig']['bx-border-radius-block-bl']
         ) = $this->_setSizeDivided($this->_aConfig['aLessConfig']['bx-border-radius-block']);
+        list(
+            $this->_aConfig['aLessConfig']['bx-border-radius-block-itl'],
+            $this->_aConfig['aLessConfig']['bx-border-radius-block-itr'],
+            $this->_aConfig['aLessConfig']['bx-border-radius-block-ibr'],
+            $this->_aConfig['aLessConfig']['bx-border-radius-block-ibl']
+        ) = $this->_setInnerSizeDivided($this->_aConfig['aLessConfig']['bx-border-radius-block']);
         $this->_aConfig['aLessConfig']['bx-border-radius-cover'] = $this->_setSize($sName . '_cover_border_radius');
         $this->_aConfig['aLessConfig']['bx-border-radius-cover-icon'] = $this->_setSize($sName . '_cover_icon_border_radius');
         $this->_aConfig['aLessConfig']['bx-border-radius-block-title'] = $this->_setSize($sName . '_block_title_border_radius');
@@ -341,6 +352,37 @@ class BxTemplConfig extends BxBaseConfig
 
         if($this->_isModule)
             $this->setPageWidth('bx_protean_page_width');
+    }
+
+    protected function _getColorFromRgba($sKey, $sDefault = '')
+    {
+        if(empty($sDefault))
+            $sDefault = '51, 51, 51';
+
+        $sPattern = "/rgba?\s*\(\s*(([0-9]{1,3}\s*,?\s*){3})\s*([0-9\.]+)?\s*\)/";
+
+        $aMatch = array();
+        $sValue = trim(getParam($sKey));
+        if(!$this->_isModule || empty($sValue) || !preg_match($sPattern, $sValue, $aMatch) || empty($aMatch[1]))
+            $sValue = $sDefault;
+        else 
+            $sValue = trim($aMatch[1], ', ');
+
+        return $sValue;
+    }
+    
+    protected function _setGradientMenuPageLeft($sKey, $sDefault = '')
+    {
+        $sValue = $this->_getColorFromRgba($sKey, $sDefault);
+
+        return "linear-gradient(to right, rgba(" . $sValue . ", 1) 0%, rgba(" . $sValue . ", 0) 100%)";
+    }
+
+    protected function _setGradientMenuPageRight($sKey, $sDefault = '')
+    {
+        $sValue = $this->_getColorFromRgba($sKey, $sDefault);
+
+        return "linear-gradient(to right, rgba(" . $sValue . ", 0) 0%, rgba(" . $sValue . ", 1) 100%)";
     }
 }
 
