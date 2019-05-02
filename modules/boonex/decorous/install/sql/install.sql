@@ -22,7 +22,8 @@ SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, CONCAT(@sName, '_general_item_bg_color_hover'), '_bx_decorous_stg_cpt_option_general_item_bg_color_hover', 'rgba(210, 230, 250, 0.2)', 'rgba', '', '', '', 1),
-(@iCategoryId, CONCAT(@sName, '_general_item_bg_color_active'), '_bx_decorous_stg_cpt_option_general_item_bg_color_active', 'rgba(210, 230, 250, 0.4)', 'rgba', '', '', '', 2);
+(@iCategoryId, CONCAT(@sName, '_general_item_bg_color_active'), '_bx_decorous_stg_cpt_option_general_item_bg_color_active', 'rgba(210, 230, 250, 0.4)', 'rgba', '', '', '', 2),
+(@iCategoryId, CONCAT(@sName, '_general_item_bg_color_disabled'), '_bx_decorous_stg_cpt_option_general_item_bg_color_disabled', 'rgba(221, 221, 221, 1.0)', 'rgba', '', '', '', 3);
 
 
 -- SETTINGS: Decorous template Styles Header
