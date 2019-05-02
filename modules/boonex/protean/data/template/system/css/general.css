@@ -40,6 +40,16 @@
     border-bottom-right-radius: 0;
 }
 
+/* --------------- Profile Avatar */
+a.bx-base-pofile-cover-thumb p.bx-base-pofile-unit-ava,
+a.bx-base-pofile-cover-thumb img.bx-base-pofile-unit-ava {
+    border: 5px solid #fff;
+}
+a.bx-base-pofile-cover-thumb p.bx-base-pofile-unit-ava {
+    line-height: 190px;
+    font-size: 5.0rem;
+}
+
 /* --------------- Profile Stats block */
 .bx-profile-stats .bx-profile-stats-cnt {
     padding: 0;

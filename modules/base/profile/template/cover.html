@@ -34,8 +34,18 @@
     __picture_popup__
 </div>
 <script>
-    $('.bx-base-pofile-cover .bx-base-pofile-cover-thumb img').load(function() {
-        var oOffset = $(this).offset();
-        window.scrollTo(0, oOffset.top - $('.bx-header').height() - 20);
-    });
+    var oThumb = $('.bx-base-pofile-cover .bx-base-pofile-cover-thumb img');
+    if(oThumb.length > 0)
+        oThumb.ready(function() {
+            var oOffset = oThumb.offset();
+            window.scrollTo(0, oOffset.top - $('.bx-header').height() - 20);
+        });
+    else {
+        var oCover = $('.bx-base-pofile-cover .bx-base-pofile-cover-image img');
+        if(oCover.length > 0)
+            oCover.ready(function() {
+                var oOffset = $('.bx-base-pofile-cover .bx-base-pofile-cover-thumb p').offset();
+                window.scrollTo(0, oOffset.top - $('.bx-header').height() - 20);
+            });
+    }
 </script>
