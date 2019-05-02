@@ -95,8 +95,12 @@
 }
 
 /* --------------- submenu */
+.bx-media-tablet .bx-menu-main-bar-gap.bx-def-page-width,
+.bx-media-phone .bx-menu-main-bar-gap.bx-def-page-width {
+    width: 100%;
+}
 
-.bx-menu-main-bar-wrapper {
+.bx-menu-main-bar {
     text-align:center;
     overflow-x:auto;
     -webkit-overflow-scrolling: touch;

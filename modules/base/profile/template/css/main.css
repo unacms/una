@@ -130,13 +130,27 @@ p.bx-base-pofile-unit-ava {
 
 
 /* --- Profile Cover --- */
-.bx-base-pofile-cover {
-    position:relative;
-    min-height:10rem;
+.bx-media-phone .bx-base-pofile-cover-wrapper {
+    padding-left: 0;
+    padding-right: 0;
 }
+.bx-base-pofile-cover {
+    position: relative;
+    min-height: 10rem;
 
-a.bx-base-pofile-cover-image:hover,
-.bx-base-pofile-cover-image {
+    border-bottom-width: 0;
+}
+.bx-media-phone .bx-base-pofile-cover {
+    border-left-width: 0;
+    border-right-width: 0;
+}
+div.bx-base-pofile-cover-image {
+    position: relative;
+    max-width: 100%;
+    height: 32rem;
+}
+a.bx-base-pofile-cover-image,
+a.bx-base-pofile-cover-image:hover {
     position:absolute;
     width:100%;
     height:100%;
@@ -150,32 +164,30 @@ a.bx-base-pofile-cover-image:hover,
     -o-background-size: cover;
     background-size: cover;
 }
-
-.bx-base-pofile-cover-info-container {
-    position:relative;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-align-items: flex-end;
-    align-items: flex-end;
-    min-height: 40vh;
-
-    cursor:pointer; 
-    cursor:hand;	
+a.bx-base-pofile-cover-image img {
+    object-fit: cover;
+    max-width: 100%;
+    height: 100%;
 }
-
 .bx-base-pofile-cover-info {
     position: relative;
+    width: 100%;
 
+    background-color: rgba(255, 255, 255, 1.0);
+}
+.bx-base-pofile-ci-cnt {
     display: -webkit-flex;
     display: flex;
     -webkit-align-items: flex-start;
     align-items: flex-start;
     -webkit-justify-content: space-between;
     justify-content: space-between;
-
-    width: 100%;
-
-    background-color: rgba(255, 255, 255, 1.0);
+}
+.bx-media-phone .bx-base-pofile-ci-cnt {
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-align-items: center;
+    align-items: center;
 }
 
 div.bx-base-pofile-cover-thumb {
@@ -184,7 +196,11 @@ div.bx-base-pofile-cover-thumb {
     display: flex;
     -webkit-align-items: flex-end;
     align-items: flex-end;
-    height: 4rem;
+    height: 6.75rem;
+}
+.bx-media-phone div.bx-base-pofile-cover-thumb {
+    margin-right: 0;
+    margin-bottom: 0;
 }
 div.bx-base-pofile-cover-thumb .bx-base-pofile-unit-online {
     width: 0.875rem;
@@ -198,8 +214,7 @@ a.bx-base-pofile-cover-thumb img {
     display: block;
 }
 a.bx-base-pofile-cover-thumb img {
-    border:2px solid #fff;
-    border:0.15rem solid #fff;
+    border: 5px solid #fff;
     background-color: #fff;
 }
 
