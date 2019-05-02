@@ -88,8 +88,8 @@
 }
 
 /*--- Page Submenu bar ---*/
-.bx-menu-main-bar-wrapper {
-	overflow: hidden;
+.bx-menu-main-bar {
+    overflow: hidden;
 }
 
 /*--- Main Page Content ---*/

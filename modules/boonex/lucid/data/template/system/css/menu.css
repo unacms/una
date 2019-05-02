@@ -585,3 +585,10 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
 .bx-menu-ver.bx-menu-object-sys_profile_stats li .bx-menu-addon-cnt.bx-def-color-bg-hl {
 	background-color: transparent;
 }
+
+/*--- Custom Menu with More Auto ---*/
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item a,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .bx-btn,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .bx-btn .sys-icon {
+    color: inherit;
+}

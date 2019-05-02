@@ -140,6 +140,7 @@ class BxTemplConfig extends BxBaseConfig
         if($this->_isModule) {
             $this->_aConfig['aLessConfig']['bx-color-hl'] = $this->_setColorRgba($sName . '_general_item_bg_color_hover', 'rgba(196, 248, 156, 0.2)');
             $this->_aConfig['aLessConfig']['bx-color-active'] = $this->_setColorRgba($sName . '_general_item_bg_color_active', 'rgba(196, 248, 156, 0.4)');
+            $this->_aConfig['aLessConfig']['bx-color-disabled'] = $this->_setColorRgba($sName . '_general_item_bg_color_disabled', 'rgba(221, 221, 221, 1.0)');
         }
 
         $this->_aConfig['aLessConfig']['bx-color-header'] = $this->_setColorRgba($sName . '_header_bg_color', 'rgba(59, 134, 134, 1)');
