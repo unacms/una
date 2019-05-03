@@ -629,24 +629,73 @@ class BxAlbumsModule extends BxBaseModTextModule
         return $aParams;
     }
 
-    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
+    protected function _getImagesForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
 
-        if (!($aMediaList = $this->_oDb->getMediaListByContentId($aContentInfo[$CNF['FIELD_ID']])))
+        if(empty($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']))
             return array();
 
+        $aMediaList = $this->_oDb->getMediaListByContentId($aContentInfo[$CNF['FIELD_ID']]);
+        if(empty($aMediaList) || !is_array($aMediaList))
+            return array();
+
+        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+        $oTcPoster = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']);
         $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
-        $aMediaList = array_slice($aMediaList, 0, 3);
+        
         $aOutput = array();
         foreach ($aMediaList as $aMedia) {
-            $aOutput[] = array (
+            $aFileInfo = $oStorage->getFile($aMedia['file_id']);
+
+            $bVideo = $oTcPoster && strncmp('video/', $aFileInfo['mime_type'], 6) === 0 && $oTcPoster->isMimeTypeSupported($aFileInfo['mime_type']);
+            if($bVideo)
+                continue;
+
+            $aOutput[$aMedia['id']] = array (
                 'url' => $this->_oTemplate->getViewMediaUrl($CNF, $aMedia['id']), 
                 'src' => $oTranscoder->getFileUrl($aMedia['file_id']),
             );
         }
 
-        return $aOutput;
+        return count($aOutput) > 3 ? array_slice($aOutput, 0, 3) : $aOutput;
+    }
+
+    protected function _getVideosForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($CNF['OBJECT_VIDEOS_TRANSCODERS']))
+            return array();
+
+        $aMediaList = $this->_oDb->getMediaListByContentId($aContentInfo[$CNF['FIELD_ID']]);
+        if(empty($aMediaList) || !is_array($aMediaList))
+            return array();
+
+        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+        $oTcPoster = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']);
+        $oTcMp4 = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']);
+        $oTcWebm = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['webm']);
+        if(!$oTcPoster || !$oTcMp4 || !$oTcWebm)
+            return $aResults;
+
+        $aOutput = array();
+        foreach($aMediaList as $k => $aMedia) {
+            $aFileInfo = $oStorage->getFile($aMedia['file_id']);
+
+            $bVideo = $oTcPoster && strncmp('video/', $aFileInfo['mime_type'], 6) === 0 && $oTcPoster->isMimeTypeSupported($aFileInfo['mime_type']);
+            if(!$bVideo)
+                continue;
+
+            $aOutput[$aMedia['id']] = array(
+                'id' => $aMedia['id'],
+                'src_poster' => $oTcPoster->getFileUrl($aMedia['file_id']),
+                'src_mp4' => $oTcMp4->getFileUrl($aMedia['file_id']),
+                'src_webm' => $oTcWebm->getFileUrl($aMedia['file_id']),
+            );
+        }
+
+        return count($aOutput) > 3 ? array_slice($aOutput, 0, 3) : $aOutput;
     }
 
     protected function _getContentForTimelineMedia($aEvent, $aContentInfo, $aBrowseParams = array())
@@ -656,8 +705,34 @@ class BxAlbumsModule extends BxBaseModTextModule
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
         $sTitle = isset($CNF['FIELD_TITLE']) && isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : (isset($CNF['FIELD_TEXT']) && isset($aContentInfo[$CNF['FIELD_TEXT']]) ? strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...') : '');
 
-    	//--- Image(s)
-        $aImages = $this->_getImagesForTimelineMedia($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
+        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+        $oTcPoster = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']);
+        $oTcMp4 = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']);
+        $oTcWebm = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['webm']);
+        $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
+
+    	//--- Image(s) and Video(s)
+        $aImages = $aVideos = array();
+        foreach($aEvent['content']['medias_added'] as $iMediaId) {
+            $aMediaInfo = $this->_oDb->getMediaInfoById($iMediaId);
+            if(empty($aMediaInfo) || !is_array($aMediaInfo))
+                continue;
+
+            $aFileInfo = $oStorage->getFile($aMediaInfo['file_id']);
+            $bVideo = $oTcPoster && strncmp('video/', $aFileInfo['mime_type'], 6) === 0 && $oTcPoster->isMimeTypeSupported($aFileInfo['mime_type']);
+            if($bVideo)
+                $aVideos[$iMediaId] = array(
+                    'id' => $aMediaInfo['id'],
+                    'src_poster' => $oTcPoster->getFileUrl($aMediaInfo['file_id']),
+                    'src_mp4' => $oTcMp4->getFileUrl($aMediaInfo['file_id']),
+                    'src_webm' => $oTcWebm->getFileUrl($aMediaInfo['file_id']),
+                );
+            else
+                $aImages[$iMediaId] = array(
+                    'url' => $this->_oTemplate->getViewMediaUrl($CNF, $aMediaInfo['id']), 
+                    'src' => $oTranscoder->getFileUrl($aMediaInfo['file_id']),
+                );
+        }
 
     	return array(
             'sample' => isset($CNF['T']['txt_sample_single_with_article']) ? $CNF['T']['txt_sample_single_with_article'] : $CNF['T']['txt_sample_single'],
@@ -666,8 +741,8 @@ class BxAlbumsModule extends BxBaseModTextModule
             'url' => $sUrl,
             'title' => $sTitle,
             'text' => '',
-            'images' => $aImages,
-            'videos' => array()
+            'images_attach' => $aImages,
+            'videos_attach' => $aVideos
         );
     }
 
@@ -677,20 +752,7 @@ class BxAlbumsModule extends BxBaseModTextModule
 
         $aImages = array();
 
-        foreach($aEvent['content']['medias_added'] as $iMediaId) {
-            $aMediaInfo = $this->_oDb->getMediaInfoById($iMediaId);
-            if(empty($aMediaInfo) || !is_array($aMediaInfo))
-                continue;
-
-            $sImage = $this->_oConfig->getImageUrl($aMediaInfo['file_id'], array('OBJECT_TRANSCODER_BROWSE'));
-            if(empty($sImage))
-                continue;
-
-            $aImages[] = array(
-                'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $aMediaInfo['id']), 
-                'src' => $sImage
-            );
-        }
+        
 
         return $aImages;
     }

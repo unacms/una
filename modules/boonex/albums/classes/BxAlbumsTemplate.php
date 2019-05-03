@@ -44,15 +44,33 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
         if (!$oProfile) 
             $oProfile = BxDolProfileUndefined::getInstance();
 
+        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
         $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_TRANSCODER_BROWSE']);
+        $oTranscoderPoster = $CNF['OBJECT_VIDEOS_TRANSCODERS'] ? BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']) : false;
 
         $aBrowseUnits = array ();
         $aMediaList = $oModule->_oDb->getMediaListByContentId($aData[$CNF['FIELD_ID']], getParam('bx_albums_album_browsing_unit'));
         foreach ($aMediaList as $k => $a) {
+            $aFileInfo = $oStorage->getFile($a['file_id']);
+
+            $bVideo = $oTranscoderPoster && strncmp('video/', $aFileInfo['mime_type'], 6) === 0 && $oTranscoderPoster->isMimeTypeSupported($aFileInfo['mime_type']);            
+            $iVideoDuration = $bVideo ? $oModule->getMediaDuration($aFileInfo) : 0;
+
             $aBrowseUnits[] = array (
                 'img_url' => $oTranscoder->getFileUrl($a['file_id']),
                 'url' => $this->getViewMediaUrl($CNF, $a['id']),
                 'title_attr' => bx_html_attribute($a['title']),
+                'bx_if:show_play' => array(
+                    'condition' => $bVideo,
+                    'content' => array()
+                ),
+                'bx_if:show_duration' => array(
+                    'condition' => $iVideoDuration > 0,
+                    'content' => array(
+                        'duration' => _t_format_duration($iVideoDuration)
+                    )
+                )
+
             );
         }
 
@@ -252,6 +270,9 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
             if(!empty($aParams['autoplay']))
                 $mixedAttrs = array('autoplay' => 'autoplay');
 
+            $iVideoDuration = $oModule->getMediaDuration($aFileInfo);
+            $sVideoDuration = _t_format_duration($iVideoDuration);
+            
             $aTmplVarsVideo = array (
                 'title_attr' => $sMediaTitleAttr,
                 'title' => $sMediaTitle,
@@ -263,7 +284,13 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
                     $aTranscodersVideo['webm']->getFileUrl($aMediaInfo['file_id']),
                     $mixedAttrs, 'max-height:' . $CNF['OBJECT_VIDEO_TRANSCODER_HEIGHT']
                 ) : '',
-                'duration' => _t_format_duration($oModule->getMediaDuration($aMediaInfo))
+                'duration' => $sVideoDuration,
+                'bx_if:show_duration' => array(
+                    'condition' => $iVideoDuration > 0,
+                    'content' => array(
+                        'duration' => $sVideoDuration
+                    )
+                )
             );
         }
 

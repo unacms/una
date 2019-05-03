@@ -172,6 +172,14 @@
 .bx-albums-unit-image img {
     height: 11.25rem;
 }
+.bx-albums-unit-image {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
 .bx-base-text-unit-gallery .bx-albums-unit-images-cont {
     padding: 0.125rem 0.125rem 0 0.125rem;
 }

@@ -8,7 +8,17 @@
 	</div>
     <div class="bx-albums-unit-images-cont bx-def-padding-thd-leftright bx-def-padding-bottom">
         <div class="bx-albums-unit-images bx-clearfix">
-            <bx_repeat:browse><a class="bx-albums-unit-image" title="__title_attr__" href="__url__"><img alt="__title_attr__" src="__img_url__" /></a></bx_repeat:browse>
+            <bx_repeat:browse>
+                <a class="bx-albums-unit-image" title="__title_attr__" href="__url__">
+                    <img alt="__title_attr__" src="__img_url__" />
+                    <bx_if:show_play>
+                        <div class="bx-albums-media-play bx-def-round-corners"><i class="sys-icon play"></i></div>
+                    </bx_if:show_play>
+                    <bx_if:show_duration>
+                        <div class="bx-albums-media-duration bx-def-padding-sec-leftright bx-def-padding-thd-topbottom bx-def-border bx-def-round-corners bx-def-font">__duration__</div>
+                    </bx_if:show_duration>
+                </a>
+            </bx_repeat:browse>
         </div> 
     </div> 
 </div>
