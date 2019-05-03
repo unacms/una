@@ -2585,8 +2585,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if($iUserId == 0)
             return false;
 
-        $iPrivacy = $this->getObjectPrivacyView(is_array($aEvent['content']) ? $aEvent['content'] : unserialize($aEvent['content']));
-        if(!in_array($iPrivacy, array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS)))
+        $iPrivacy = (int)$aEvent['object_privacy_view'];
+        if($iPrivacy >= 0 && !in_array($iPrivacy, array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS)))
             return false;      
 
         if(isAdmin())
