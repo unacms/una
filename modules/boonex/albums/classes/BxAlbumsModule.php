@@ -557,6 +557,34 @@ class BxAlbumsModule extends BxBaseModTextModule
         );
     }
 
+    public function actionEditMedia($iMediaId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iMediaId = (int)$iMediaId;
+    	$aMediaInfo = $this->_oDb->getMediaInfoById($iMediaId);
+
+        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_MEDIA'], $CNF['OBJECT_FORM_MEDIA_DISPLAY_EDIT']);
+        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'edit_media/' . $iMediaId;
+        $oForm->initChecker($aMediaInfo);
+
+        if($oForm->isSubmittedAndValid()) {
+            if($oForm->update($iMediaId) !== false)
+                $aRes = array('reload' => 1);
+            else
+                $aRes = array('msg' => _t('_bx_albums_txt_err_cannot_perform_action'));
+
+            return echoJson($aRes);
+        }
+
+        $sContent = BxTemplStudioFunctions::getInstance()->transBox('bx-albums-edit-media-popup', $this->_oTemplate->parseHtmlByName('media-edit.html', array(
+            'form_id' => $oForm->aFormAttrs['id'],
+            'form' => $oForm->getCode(true)
+        )));
+
+        echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
+    }
+
     public function actionGetSiblingMedia($iMediaId, $mixedContext)
     {
         $aSiblings = false;

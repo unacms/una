@@ -9,7 +9,7 @@
  */
 
 function BxAlbumsMain(oOptions) {
-	this._sActionsUrl = oOptions.sActionUrl;
+    this._sActionsUrl = oOptions.sActionUrl;
     this._sObjName = oOptions.sObjName == undefined ? 'oBxAlbumsMain' : oOptions.sObjName;
 
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'fade' : oOptions.sAnimationEffect;
@@ -32,6 +32,38 @@ BxAlbumsMain.prototype.init = function() {
         wrapAround: true,
         pageDots: false
     });
+};
+
+BxAlbumsMain.prototype.editMedia = function(oButton, iId) {
+    var $this = this;
+    var oDate = new Date();
+
+    this.loadingInButton(oButton, true);
+
+    $.get(
+        this._sActionsUrl + 'edit_media/' + iId, 
+        {
+            _t: oDate.getTime()
+        },
+        function(oData) {
+            $this.loadingInButton(oButton, false);
+
+            processJsonData(oData);
+        },
+        'json'
+    );
+};
+
+BxAlbumsMain.prototype.onEditMedia = function(oData) {
+    if(oData && oData.content != undefined)
+        $('#' + this._oHtmlIds['subentry_votes'] + oData.content.subentry_id).html(oData.content.votes_formated);
+};
+
+BxAlbumsMain.prototype.loadingInButton = function(e, bShow) {
+    if($(e).length)
+        bx_loading_btn($(e), bShow);
+    else
+        bx_loading($('body'), bShow);
 };
 
 /** @} */

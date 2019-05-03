@@ -195,6 +195,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
 
         $aVars = array(
             'album' => _t('_bx_albums_txt_media_album_link', $sUrlAlbum,  bx_process_output($aAlbumInfo[$CNF['FIELD_TITLE']]), $oProfile->getUrl(), $oProfile->getDisplayName()),
+            'js_code' => $this->getJsCode('main')
         );
 
         $mixedContext = isset($aParams['context']) ? $aParams['context'] : false;

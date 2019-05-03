@@ -41,7 +41,16 @@
 	<string name="_bx_albums_form_entry_input_date_added"><![CDATA[Created]]></string>
 	<string name="_bx_albums_form_entry_input_sys_date_changed"><![CDATA[Updated]]></string>
     <string name="_bx_albums_form_entry_input_date_changed"><![CDATA[Updated]]></string>
-    
+
+        <string name="_bx_albums_form_media"><![CDATA[Medias]]></string>
+        <string name="_bx_albums_form_media_display_edit"><![CDATA[Edit Media]]></string>
+        <string name="_bx_albums_form_media_input_sys_title"><![CDATA[Caption]]></string>
+	<string name="_bx_albums_form_media_input_title"><![CDATA[Caption]]></string>
+        <string name="_bx_albums_form_media_input_sys_do_submit"><![CDATA[Submit]]></string>
+	<string name="_bx_albums_form_media_input_do_submit"><![CDATA[Submit]]></string>
+        <string name="_bx_albums_form_media_input_sys_do_cancel"><![CDATA[Cancel]]></string>
+	<string name="_bx_albums_form_media_input_do_cancel"><![CDATA[Cancel]]></string>
+
 	<string name="_bx_albums_acl_action_create_entry"><![CDATA[Create Album]]></string>
 	<string name="_bx_albums_acl_action_delete_entry"><![CDATA[Delete Album]]></string>
 	<string name="_bx_albums_acl_action_view_entry"><![CDATA[View Album]]></string>
@@ -247,6 +256,7 @@
     <string name="_bx_albums_txt_media_album_shutter_speed"><![CDATA[Exposure time]]></string>
     <string name="_bx_albums_txt_media_album_shutter_speed_value"><![CDATA[{0}s]]></string>
     <string name="_bx_albums_txt_media_album_iso"><![CDATA[ISO]]></string>
+    <string name="_bx_albums_txt_err_cannot_perform_action"><![CDATA[Cannot perform the action. Please report.]]></string>
 
     <string name="_bx_albums_alert_action_medias_added"><![CDATA[add images]]></string>
     <string name="_bx_albums_alert_action_medias_added_follow_member"><![CDATA[New media]]></string>

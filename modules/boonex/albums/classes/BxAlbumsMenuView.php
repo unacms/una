@@ -19,6 +19,8 @@ class BxAlbumsMenuView extends BxBaseModTextMenuView
         $this->MODULE = 'bx_albums';
         parent::__construct($aObject, $oTemplate);
 
+        $this->addMarkers(array('js_object' => $this->_oModule->_oConfig->getJsObject('main')));
+
         $sURI = bx_process_input(bx_get('i'));
         if ($sURI == 'view-album-media') {
             $iMediaId = (int)bx_get('id');
