@@ -159,10 +159,6 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if($sResult)
             return array('code' => 4, 'message' => $sResult);
 
-        // process uploaded files
-        if (isset($CNF['FIELD_PHOTO']))
-            $oForm->processFiles ($CNF['FIELD_PHOTO'], $iContentId, true);
-        
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         return array('code' => 0, 'message' => '', 'content' => $aContentInfo);
     }
@@ -214,10 +210,6 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         $sResult = $this->onDataAddAfter (getLoggedId(), $iContentId);
         if ($sResult)
             return $this->prepareResponse($sResult, $bAsJson, 'msg');
-
-        // process uploaded files
-        if (isset($CNF['FIELD_PHOTO']))
-            $oForm->processFiles ($CNF['FIELD_PHOTO'], $iContentId, true);
 
         // perform action
         $this->_oModule->$sCheckFunction(true);
@@ -287,10 +279,6 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         $sResult = $this->onDataEditAfter ($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm);
         if ($sResult)
             return $sResult;
-
-        // process uploaded files
-        if (isset($CNF['FIELD_PHOTO']))
-            $oForm->processFiles ($CNF['FIELD_PHOTO'], $iContentId, false);
 
         // perform action
         $this->_oModule->$sCheckFunction($aContentInfo, true);
@@ -436,6 +424,9 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
+        if (isset($CNF['FIELD_PHOTO']))
+            $oForm->processFiles ($CNF['FIELD_PHOTO'], $iContentId, false);
+
         if (!empty($CNF['OBJECT_METATAGS'])) { // && isset($aTrackTextFieldsChanges['changed_fields'][$CNF['FIELD_TEXT']])) { // TODO: check if aTrackTextFieldsChanges works 
             list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
@@ -454,6 +445,13 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
 
     public function onDataAddAfter ($iAccountId, $iContentId)
     {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(($oForm = $this->getObjectFormAdd()) !== false) {
+            if(isset($CNF['FIELD_PHOTO']))
+                $oForm->processFiles($CNF['FIELD_PHOTO'], $iContentId, true);
+        }
+
         $this->_processMetas($iAccountId, $iContentId);
 
         return '';
