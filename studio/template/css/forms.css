@@ -15,30 +15,28 @@
 .bx-form-value .bx-form-input-textarea,
 .bx-form-value .bx-form-input-password,
 .bx-form-value .bx-form-input-text {
-	height: 40px;
-	height: 2.5rem;
+    height: 36px;
+    height: 2.4rem;
+    box-sizing: border-box;
 
-	border-color: rgba(40, 60, 80, 0.5);
-	border-width: 2px;
-	border-width: 0.125;
+    border-color: rgba(136, 143, 153, 1);
+    border-width: 1px;
 
-	background-color: rgba(245, 250, 255, 0.5);
-
-	-webkit-box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.15);
-	-moz-box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.15);
-	box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.15);
+    background-color: rgba(255, 255, 255, 1);
+    
+    font-size: 1.075rem;
 }
 
 .bx-form-value .bx-form-input-select_multiple,
 .bx-form-value .bx-form-input-radio_set,
 .bx-form-value .bx-form-input-checkbox_set {
-	height:auto;
+    height:auto;
 }
 
 .bx-form-value .bx-form-input-textarea {
-	height: 150px;
+    height: 150px;
     height: 10rem;
-	padding: 0.5rem;
+    padding: 0.5rem;
 
     line-height:normal;
 } 
@@ -51,20 +49,15 @@
 .bx-form-value .bx-form-input-textarea:focus,
 .bx-form-value .bx-form-input-password:focus,
 .bx-form-value .bx-form-input-text:focus {
-	border-color: rgba(30, 140, 240, 1);
-	background-color: rgba(255, 255, 255, 1);
+    border-color: rgba(136, 143, 153, 1);
+    background-color: rgba(255, 255, 255, 1);
 }
 
 .bx-form-value .bx-switcher-cont {
-	border-color: rgba(40, 60, 80, 0.5);
-	border-width: 2px;
-	border-width: 0.125;
+    border-color: rgba(136, 143, 153, 1);
+    border-width: 1px;
 
-	background-color: rgba(245, 250, 255, 0.5);
-
-	-webkit-box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.15);
-	-moz-box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.15);
-	box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.15);
+    background-color: rgba(255, 255, 255, 1);
 }
 
 .bx-form-value .bx-form-input-select_multiple,

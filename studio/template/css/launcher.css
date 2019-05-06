@@ -176,14 +176,10 @@ div.bx-std-widget-action {
     border-radius: 16px;
 
     line-height: 30px;
+    text-align: center;
 }
 div.bx-std-widget-action i.sys-icon {
-    position: absolute;
-    left: 0px;
-    width: 30px;
-
     font-size: 20px;
-    text-align: center;
     text-shadow: none;
     color: #323c46;
 }
