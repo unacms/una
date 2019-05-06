@@ -195,6 +195,8 @@ div.bx-base-pofile-cover-thumb {
     -webkit-align-items: flex-end;
     align-items: flex-end;
     height: 6.75rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
 }
 .bx-media-phone div.bx-base-pofile-cover-thumb {
     margin-right: 0;
