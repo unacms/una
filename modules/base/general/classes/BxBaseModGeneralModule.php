@@ -1003,7 +1003,7 @@ class BxBaseModGeneralModule extends BxDolModule
             $sTitle = $aContentInfo[$CNF['FIELD_TEXT']];
 
         $iOwnerId = $iAuthorIdAbs;
-        if((int)$aEvent['object_privacy_view'] < 0)
+        if(isset($aEvent['object_privacy_view']) && (int)$aEvent['object_privacy_view'] < 0)
             $iOwnerId = abs($aEvent['object_privacy_view']);
 
         return array(
