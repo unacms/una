@@ -17,7 +17,8 @@ CREATE TABLE IF NOT EXISTS `bx_notifications_events` (
   `processed` tinyint(4) NOT NULL default '0',
   `active` tinyint(4) NOT NULL default '1',
   PRIMARY KEY  (`id`),
-  KEY `owner_id` (`owner_id`)
+  KEY `owner_id` (`owner_id`),
+  KEY `object_owner_id` (`object_owner_id`)
 );
 
 CREATE TABLE IF NOT EXISTS `bx_notifications_events2users` (
