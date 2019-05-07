@@ -702,9 +702,12 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
                         $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($this->_sPrefix . 'events', 'object_id', $aParams['owner_id']);
                         $aJoin2 = $aQueryParts['join'];
+                        $aJoin2['table_alias'] = 'cc';
+                        $aJoin2['condition'] = str_replace('`c`', '`' . $aJoin2['table_alias'] . '`', $aJoin2['condition']);
 
                         //--- Join System and Direct posts made by following members. 'LEFT' join is essential to apply different conditions.
-                        $sJoinClause .= " LEFT JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON ((" . $aJoin1['condition'] . ") OR (SUBSTRING(`" . $this->_sTable . "`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "' AND " . $aJoin2['condition'] . "))";
+                        $sJoinClause .= " LEFT JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON " . $aJoin1['condition'];
+                        $sJoinClause .= " LEFT JOIN `" . $aJoin2['table'] . "` AS `" . $aJoin2['table_alias'] . "` ON SUBSTRING(`" . $this->_sTable . "`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "' AND " . $aJoin2['condition'];
 
                         //--- Select Own (System and Direct) posts from Profile's Timeline.
                         $sWhereSubclause = $this->prepareAsString("(`{$this->_sTable}`.`owner_id` = ?)", $aParams['owner_id']);
@@ -717,7 +720,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                         //$sWhereSubclause .= $this->prepareAsString(" OR (NOT ISNULL(`c`.`content`) AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> ?, 1))", $aParams['owner_id']);
 
                         //--- All posts on timelines of following members.
-                        $sWhereSubclause .= " OR NOT ISNULL(`c`.`content`)";				
+                        $sWhereSubclause .= " OR NOT ISNULL(`" . $aJoin1['table_alias'] . "`.`content`) OR NOT ISNULL(`" . $aJoin2['table_alias'] . "`.`content`)";
 
                         //--- Select Promoted posts.
                         $sWhereSubclause .= " OR `{$this->_sTable}`.`promoted` <> '0'";
