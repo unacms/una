@@ -94,6 +94,15 @@ class BxDolInformer extends BxDolFactory implements iBxDolSingleton
     {
         unset($this->_aMessages[$sId]);
     }
+    
+    /**
+     * Get message from informer.
+     * @param $sId - message id
+     */
+    public function get ($sId)
+    {
+        return $this->_aMessages[$sId];
+    }
 
     /**
      * Add permanent messages which are displayed on every page.
