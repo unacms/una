@@ -141,10 +141,10 @@ class BxDolStudioSettings extends BxTemplStudioPage
 		if($sName == BX_DOL_STUDIO_STG_MIX_SYSTEM || $this->oDb->updateMixes(array('active' => 1), array('name' => $sName))) {
 		    $this->clearCache();
 
-			$aResult = array('eval' => $this->getPageJsObject() . '.onMixSelect(oData);');
+                    $aResult = array('eval' => $this->getPageJsObject() . '.onMixSelect(oData);');
 		}
 		else 
-    		$aResult = array('message' => _t('_adm_stg_err_cannot_perform')); 
+                    $aResult = array('message' => _t('_adm_stg_err_cannot_perform')); 
 
     	return $aResult;
     }
@@ -337,7 +337,10 @@ class BxDolStudioSettings extends BxTemplStudioPage
     protected function clearCache()
     {
         BxDolDb::getInstance()->cacheParams(true, true);
-        BxDolCacheUtilities::getInstance()->clear('css');
+
+        $oCacheUtilities = BxDolCacheUtilities::getInstance();
+        $oCacheUtilities->clear('db');
+        $oCacheUtilities->clear('css');
     }
 }
 

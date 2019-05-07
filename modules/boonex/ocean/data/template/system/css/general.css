@@ -20,12 +20,6 @@
     line-height: 4rem;
 }
 
-/*---------------- main menu */
-#bx-menu-main-bar {
-	text-align: center;
-	overflow-x: auto;
-}
-
 /* --------------- content */
 #bx-content-wrapper {
 	background-image: url(../images/bg-page.png);

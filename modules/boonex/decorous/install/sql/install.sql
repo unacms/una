@@ -271,7 +271,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_menu_page_bg_image_size'), '_bx_decorous_stg_cpt_option_menu_page_bg_image_size', 'cover', 'select', 'auto,cover,contain', '', '', 5),
 (@iCategoryId, CONCAT(@sName, '_menu_page_content_padding'), '_bx_decorous_stg_cpt_option_menu_page_content_padding', '0.3rem', 'digit', '', '', '', 6),
 (@iCategoryId, CONCAT(@sName, '_menu_page_border_color'), '_bx_decorous_stg_cpt_option_menu_page_border_color', 'rgba(0, 0, 0, 0.1)', 'rgba', '', '', '', 7),
-(@iCategoryId, CONCAT(@sName, '_menu_page_border_size'), '_bx_decorous_stg_cpt_option_menu_page_border_size', '1px', 'digit', '', '', '', 8),
+(@iCategoryId, CONCAT(@sName, '_menu_page_border_size'), '_bx_decorous_stg_cpt_option_menu_page_border_size', '1px 0px 0px 0px', 'digit', '', '', '', 8),
 (@iCategoryId, CONCAT(@sName, '_menu_page_shadow'), '_bx_decorous_stg_cpt_option_menu_page_shadow', 'none', 'digit', '', '', '', 9),
 (@iCategoryId, CONCAT(@sName, '_menu_page_font_family'), '_bx_decorous_stg_cpt_option_menu_page_font_family', 'Arial, sans-serif', 'digit', '', '', '', 10),
 (@iCategoryId, CONCAT(@sName, '_menu_page_font_size'), '_bx_decorous_stg_cpt_option_menu_page_font_size', '1rem', 'digit', '', '', '', 11),

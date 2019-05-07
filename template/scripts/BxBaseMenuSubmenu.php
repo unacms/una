@@ -18,9 +18,13 @@ class BxBaseMenuSubmenu extends BxTemplMenu
     protected $_sObjectSubmenu = false;
     protected $_mixedMainMenuItemSelected = false;
 
+    protected $_sJsObject;
+
     public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject, $oTemplate);
+
+        $this->_sJsObject = 'o' . bx_gen_method_name($this->_sObject);
     }
 
     /**
@@ -77,16 +81,15 @@ class BxBaseMenuSubmenu extends BxTemplMenu
     public function getCode ()
     {
         $aMenuItemSelected = $this->getSelectedMenuItem ();
-        if (isset($aMenuItemSelected['set_name']) && 'sys_site' == $aMenuItemSelected['set_name'] && 'home' == $aMenuItemSelected['name'])
+        if(isset($aMenuItemSelected['set_name']) && 'sys_site' == $aMenuItemSelected['set_name'] && 'home' == $aMenuItemSelected['name'])
+            return '';
+
+        $oMenuSubmenu = BxDolMenu::getObjectInstance($this->_sObjectSubmenu);
+        if(!$oMenuSubmenu || !$oMenuSubmenu->isVisible())
             return '';
 
         $this->_addJsCss();
-
-        $oMenuSubmenu = BxDolMenu::getObjectInstance($this->_sObjectSubmenu);
-        if ($oMenuSubmenu && $oMenuSubmenu->isVisible())
-            return $oMenuSubmenu->getCode();
-
-        return '';
+        return $oMenuSubmenu->getCode() . $this->_getJsCode();
     }
 
     public function getPageCoverParams ()
@@ -153,6 +156,22 @@ class BxBaseMenuSubmenu extends BxTemplMenu
         }
 
         return false;
+    }
+
+    protected function _getJsCode($aParams = array())
+    {
+        $aParams = array_merge(array(
+            'sObject' => $this->_sObject
+        ), $aParams);
+
+        return $this->_oTemplate->_wrapInTagJsCode("if(!" . $this->_sJsObject . ") var " . $this->_sJsObject . " = new BxDolMenuSubmenu(" . json_encode($aParams) . "); " . $this->_sJsObject . ".init();");
+    }
+
+    protected function _addJsCss()
+    {
+        parent::_addJsCss();
+
+        $this->_oTemplate->addJs(array('BxDolMenuSubmenu.js'));
     }
 }
 

@@ -26,9 +26,7 @@ class BxTemplConfig extends BxBaseConfig
 
             'bx-padding' => '20px',
             'bx-padding-sec' => '10px',
-            'bx-padding-thd' => '5px',
-        
-            'bx-size-avatar' => '200px'
+            'bx-padding-thd' => '5px'
         ));
 
         //--- Images
@@ -352,37 +350,6 @@ class BxTemplConfig extends BxBaseConfig
 
         if($this->_isModule)
             $this->setPageWidth('bx_protean_page_width');
-    }
-
-    protected function _getColorFromRgba($sKey, $sDefault = '')
-    {
-        if(empty($sDefault))
-            $sDefault = '51, 51, 51';
-
-        $sPattern = "/rgba?\s*\(\s*(([0-9]{1,3}\s*,?\s*){3})\s*([0-9\.]+)?\s*\)/";
-
-        $aMatch = array();
-        $sValue = trim(getParam($sKey));
-        if(!$this->_isModule || empty($sValue) || !preg_match($sPattern, $sValue, $aMatch) || empty($aMatch[1]))
-            $sValue = $sDefault;
-        else 
-            $sValue = trim($aMatch[1], ', ');
-
-        return $sValue;
-    }
-    
-    protected function _setGradientMenuPageLeft($sKey, $sDefault = '')
-    {
-        $sValue = $this->_getColorFromRgba($sKey, $sDefault);
-
-        return "linear-gradient(to right, rgba(" . $sValue . ", 1) 0%, rgba(" . $sValue . ", 0) 100%)";
-    }
-
-    protected function _setGradientMenuPageRight($sKey, $sDefault = '')
-    {
-        $sValue = $this->_getColorFromRgba($sKey, $sDefault);
-
-        return "linear-gradient(to right, rgba(" . $sValue . ", 0) 0%, rgba(" . $sValue . ", 1) 100%)";
     }
 }
 

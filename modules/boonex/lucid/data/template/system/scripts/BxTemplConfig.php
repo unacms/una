@@ -28,9 +28,7 @@ class BxTemplConfig extends BxBaseConfig
             'bx-padding-sec' => '8px',
             'bx-padding-thd' => '4px',
 
-            'bx-size-avatar' => '96px',
-            'bx-size-thumb' => '32px',
-            'bx-size-icon' => '32px',
+            'bx-size-thumb' => '32px'
         ));
 
         //--- Images
@@ -158,6 +156,8 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig']['bx-color-menu-account'] = $this->_setColorRgba($sName . '_menu_account_bg_color', 'rgba(255, 255, 255, 0.9)');
         $this->_aConfig['aLessConfig']['bx-color-menu-add'] = $this->_setColorRgba($sName . '_menu_add_bg_color', 'rgba(255, 255, 255, 0.9)');
         $this->_aConfig['aLessConfig']['bx-color-menu-page'] = $this->_setColorRgba($sName . '_menu_page_bg_color', 'rgba(242, 242, 242, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-menu-page-gradient-left'] = $this->_setGradientMenuPageLeft($sName . '_menu_page_bg_color', '242, 242, 242');
+        $this->_aConfig['aLessConfig']['bx-color-menu-page-gradient-right'] = $this->_setGradientMenuPageRight($sName . '_menu_page_bg_color', '242, 242, 242');
         $this->_aConfig['aLessConfig']['bx-color-menu-slide'] = $this->_setColorRgba($sName . '_menu_slide_bg_color', 'rgba(255, 255, 255, 0.9)');
         $this->_aConfig['aLessConfig']['bx-color-form-input'] = $this->_setColorRgba($sName . '_form_input_bg_color', 'rgba(255, 255, 255, 1)');
         $this->_aConfig['aLessConfig']['bx-color-form-input-active'] = $this->_setColorRgba($sName . '_form_input_bg_color_active', 'rgba(255, 255, 255, 1)');

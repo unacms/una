@@ -16,6 +16,14 @@ class BxTemplMenuSubmenu extends BxBaseMenuSubmenu
     {
         parent::__construct ($aObject, $oTemplate);
     }
+
+    protected function _getJsCode($aParams = array())
+    {
+        return parent::_getJsCode(array(
+            'sClassBar' => 'bx-menu-main-submenu-wrp',
+            'sClassMenu' => 'bx-menu-main-submenu-group'
+        ));
+    }
 }
 
 /** @} */

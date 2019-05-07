@@ -635,7 +635,7 @@ INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 ('bx_lucid_menu_page_border_color', @iMixId, 'rgba(0, 0, 0, 0.1)'),
 ('bx_lucid_menu_page_content_padding', @iMixId, '0px'),
 ('bx_lucid_menu_page_bg_image_size', @iMixId, 'cover'),
-('bx_lucid_menu_page_bg_color', @iMixId, 'rgba(0, 0, 0, 0)'),
+('bx_lucid_menu_page_bg_color', @iMixId, 'rgba(220, 230, 240, 1)'),
 ('bx_lucid_menu_page_bg_image_repeat', @iMixId, 'no-repeat'),
 ('bx_lucid_menu_add_font_color_active', @iMixId, 'rgba(20, 80, 100, 1)'),
 ('bx_lucid_menu_add_font_shadow', @iMixId, 'none'),

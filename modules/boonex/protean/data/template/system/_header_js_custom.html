@@ -1,23 +1,5 @@
 <script type="text/javascript" language="javascript">
     $(document).ready(function () {
         bx_activate_anim_icons('#283C50');
-
-        /**
-         * Page submenu.
-         */
-        $('.bx-menu-main-bar').bind('scroll', function () {
-            var oMenuBarWrapper = $(this).parents('.bx-menu-main-bar-wrapper');
-            var oMenu = $(this).find('#bx-menu-main-submenu');
-
-            if(Math.abs(oMenu.position().left) >= (oMenu.width() - $(this).width() - 1))
-                oMenuBarWrapper.addClass('bx-menu-main-bar-hide-shadow-after');
-            else
-                oMenuBarWrapper.removeClass('bx-menu-main-bar-hide-shadow-after');
-
-            if(oMenu.position().left >= 0)
-                oMenuBarWrapper.addClass('bx-menu-main-bar-hide-shadow-before');
-            else
-                oMenuBarWrapper.removeClass('bx-menu-main-bar-hide-shadow-before');
-        });
     });
 </script>
