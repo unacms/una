@@ -50,17 +50,17 @@ class BxDolStudioMenuTop extends BxDol
         $this->aItems[BX_DOL_STUDIO_MT_LEFT] = array(
             'template' => 'menu_floating_blocks.html',
             'menu_items' => array(
-                'site' => array(
-                    'name' => 'site',
-                    'icon' => 'home',
-                    'link' => BX_DOL_URL_ROOT,
-                    'title' => '_adm_tmi_cpt_site'
-                ),
                 'launcher' => array(
                     'name' => 'launcher',
                     'icon' => 'th',
                     'link' => BX_DOL_URL_STUDIO,
                     'title' => '_adm_tmi_cpt_launcher'
+                ),
+                'site' => array(
+                    'name' => 'site',
+                    'icon' => 'home',
+                    'link' => BX_DOL_URL_ROOT,
+                    'title' => '_adm_tmi_cpt_site'
                 ),
                 'logout' => array(
                     'name' => 'logout',
@@ -74,7 +74,7 @@ class BxDolStudioMenuTop extends BxDol
 
         $aHistory = BxDolSession::getInstance()->getValue(self::$sHistorySessionKey);
         if(!empty($aHistory) && is_array($aHistory))
-            $this->aItems[BX_DOL_STUDIO_MT_LEFT]['menu_items'] = bx_array_insert_before(array_reverse($aHistory), $this->aItems[BX_DOL_STUDIO_MT_LEFT]['menu_items'], 'logout');
+            $this->aItems[BX_DOL_STUDIO_MT_LEFT]['menu_items'] = bx_array_insert_before(array_reverse($aHistory), $this->aItems[BX_DOL_STUDIO_MT_LEFT]['menu_items'], 'site');
 
         $aMatch = array();
         $iResult = preg_match("/^(https?:\/\/)?(.*)\/$/", BX_DOL_URL_ROOT, $aMatch);
