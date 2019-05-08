@@ -392,7 +392,7 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_vpt_font_size_scale'), '_bx_protean_stg_cpt_option_vpt_font_size_scale', '100%', 'digit', '', '', '', 1);
+(@iCategoryId, CONCAT(@sName, '_vpt_font_size_scale'), '_bx_protean_stg_cpt_option_vpt_font_size_scale', '93.75%', 'digit', '', '', '', 1);
 
 -- SETTINGS: Protean template Viewport Mobile
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
@@ -400,7 +400,7 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_vpm_font_size_scale'), '_bx_protean_stg_cpt_option_vpm_font_size_scale', '100%', 'digit', '', '', '', 1);
+(@iCategoryId, CONCAT(@sName, '_vpm_font_size_scale'), '_bx_protean_stg_cpt_option_vpm_font_size_scale', '85%', 'digit', '', '', '', 1);
 
 
 -- MIXES
@@ -524,7 +524,7 @@ INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 ('bx_protean_font_size_h3', @iMixId, '20px'),
 ('bx_protean_font_color_grayed', @iMixId, 'rgba(40, 60, 80, 0.5)'),
 ('bx_protean_font_color_contrasted', @iMixId, 'rgba(255, 255, 255, 1)'),
-('bx_protean_vpt_font_size_scale', @iMixId, '100%'),
+('bx_protean_vpt_font_size_scale', @iMixId, '93.75%'),
 ('bx_protean_vpm_font_size_scale', @iMixId, '85%'),
 ('bx_protean_header_bg_image_repeat', @iMixId, 'no-repeat'),
 ('bx_protean_header_bg_image_size', @iMixId, 'cover'),
@@ -874,7 +874,7 @@ INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 ('bx_protean_site_logo_width', @iMixId, '240'),
 ('bx_protean_styles_custom', @iMixId, 'div.bx-base-pofile-cover {\r\nborder: 1px solid #d0d0d0;\r\nborder-bottom-width: 0;\r\n}\r\n\r\ndiv.bx-market-unit-cover div.bx-base-text-unit-no-thumb {\r\nborder-width: 0px;\r\n}'),
 ('bx_protean_vpm_font_size_scale', @iMixId, '85%'),
-('bx_protean_vpt_font_size_scale', @iMixId, '100%');
+('bx_protean_vpt_font_size_scale', @iMixId, '93.75%');
 
 
 -- STUDIO PAGE & WIDGET

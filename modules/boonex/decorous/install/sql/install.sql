@@ -416,7 +416,7 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_vpt_font_size_scale'), '_bx_decorous_stg_cpt_option_vpt_font_size_scale', '100%', 'digit', '', '', '', 1);
+(@iCategoryId, CONCAT(@sName, '_vpt_font_size_scale'), '_bx_decorous_stg_cpt_option_vpt_font_size_scale', '93.75%', 'digit', '', '', '', 1);
 
 -- SETTINGS: Decorous template Viewport Mobile
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
@@ -424,7 +424,7 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_vpm_font_size_scale'), '_bx_decorous_stg_cpt_option_vpm_font_size_scale', '100%', 'digit', '', '', '', 1);
+(@iCategoryId, CONCAT(@sName, '_vpm_font_size_scale'), '_bx_decorous_stg_cpt_option_vpm_font_size_scale', '85%', 'digit', '', '', '', 1);
 
 
 -- STUDIO PAGE & WIDGET
