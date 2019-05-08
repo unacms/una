@@ -38,10 +38,6 @@ class BxTemplMenuToolbar extends BxBaseMenuToolbar
 
         $a['class_add_a'] = '';
         switch ($a['name']) {
-            case 'bx_lucid_search':
-                $a['class_add'] = 'bx-def-media-phone-hide';
-                break;
-
             case 'main-menu':
                 $a['class_add'] = ' bx-def-media-desktop-hide bx-def-media-tablet-hide';
                 $a['class_add_a'] = ' cd-nav-trigger';
