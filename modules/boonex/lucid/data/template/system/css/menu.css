@@ -334,27 +334,6 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
 #bx-menu-toolbar-2-container .bx-menu-toolbar li.bx-menu-item-account .bx-menu-toolbar-item-title {
 	display: none;
 }
-
-#bx-menu-toolbar-2-container .bx-menu-toolbar li.bx-menu-item-bx_lucid_login .bx-btn, 
-#bx-menu-toolbar-2-container .bx-menu-toolbar li.bx-menu-item-bx_lucid_join .bx-btn {
-	border-color: rgba(20, 80, 100, 0.1);
-	background-color: rgba(238, 241, 244, 1);
-
-	font-size: 0.8125rem;
-	font-weight: normal;
-	color: rgba(29, 75, 96, 1);
-}
-
-#bx-menu-toolbar-2-container .bx-menu-toolbar li.bx-menu-item-bx_lucid_login .bx-btn:hover,
-#bx-menu-toolbar-2-container .bx-menu-toolbar li.bx-menu-item-bx_lucid_join .bx-btn:hover {
-	background-color: rgba(255, 255, 255, 1.0);
-}
-
-#bx-menu-toolbar-2-container .bx-menu-toolbar li.bx-menu-item-bx_lucid_login .bx-btn span,
-#bx-menu-toolbar-2-container .bx-menu-toolbar li.bx-menu-item-bx_lucid_join .bx-btn span {
-	margin-left: 0;
-	margin-right: 0;
-}
 	
 #bx-menu-toolbar-2-container .bx-menu-toolbar li .sys-icon-a {
 	margin-top: 0px;

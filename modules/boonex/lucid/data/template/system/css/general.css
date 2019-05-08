@@ -20,6 +20,10 @@
     text-align: left;
 }
 
+#bx-logo-container a span {
+    vertical-align: middle;
+}
+
 
 /*---Toolbar ---*/
 .bx-toolbar-content {

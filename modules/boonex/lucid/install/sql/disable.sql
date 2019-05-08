@@ -20,7 +20,7 @@ DELETE FROM `sys_menu_templates` WHERE `template`='menu_dropdown_site.html' AND 
 DELETE FROM `sys_objects_menu` WHERE `object`='bx_lucid_dropdown_site';
 
 -- MENU: member toolbar
-DELETE FROM `sys_menu_items` WHERE `set_name`='sys_toolbar_member' AND `name` IN ('bx_lucid_search', 'bx_lucid_login', 'bx_lucid_join');
+DELETE FROM `sys_menu_items` WHERE `set_name`='sys_toolbar_member' AND `name` IN ('bx_lucid_search');
 
 -- MENU: home page submenu
 DELETE FROM `sys_objects_menu` WHERE `object`='bx_lucid_homepage_submenu';
