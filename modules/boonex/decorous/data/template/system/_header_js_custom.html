@@ -21,7 +21,8 @@
         //mobile only - open sidebar when user clicks the hamburger menu
         sidebarTrigger.on('click', function(event){
             event.preventDefault();
-            $([sidebar, sidebarTrigger]).toggleClass('nav-is-visible');
+            sidebar.toggleClass('nav-is-visible');
+            sidebarTrigger.toggleClass('bx-menu-tab-active');
         });
 
         function checkScrollbarPosition() {
