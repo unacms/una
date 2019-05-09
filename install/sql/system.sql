@@ -551,6 +551,7 @@ CREATE TABLE `sys_options_mixes` (
   `name` varchar(64) NOT NULL default '',
   `title` varchar(64) NOT NULL default '',
   `active` tinyint(1) NOT NULL default '0',
+  `published` tinyint(1) NOT NULL default '0',
   `editable` tinyint(1) NOT NULL default '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name`(`name`)

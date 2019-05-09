@@ -147,10 +147,6 @@ div.bx-base-pofile-cover-image {
     max-width: 100%;
     height: 32rem;
 }
-div.bx-base-pofile-cover-image,
-div.bx-base-pofile-cover-info {
-    background-color: rgba(255, 255, 255, 1.0);
-}
 a.bx-base-pofile-cover-image,
 a.bx-base-pofile-cover-image:hover {
     position:absolute;
@@ -264,7 +260,6 @@ a.bx-base-pofile-cover-thumb p.bx-base-pofile-unit-ava {
     text-shadow: none;
     font-size: 1.5rem;
     font-weight: 800;
-    color: rgba(29,75,96,1);
 }
 
 .bx-base-pofile-cover-actions {

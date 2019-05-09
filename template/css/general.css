@@ -292,7 +292,6 @@ div.bx-account-unit-online {
     white-space: nowrap;
     font-size: 1rem;
     font-weight: 400;
-    color: #102e70;
 }
 .sys-cpf-submenu {
 	overflow-x: auto;
@@ -338,14 +337,13 @@ div.bx-account-unit-online {
     
 }
 .sys-cpf-submenu-cnt ul li div {
-	padding: 0 0.625rem;
+    padding: 0 0.625rem;
 }
 .sys-cpf-submenu-cnt ul li.bx-menu-inter-act {
     border-bottom-color: #364f6b;
 }
 .sys-cpf-submenu-cnt ul li.bx-menu-inter-act > div {
-	font-weight: bold;
-    color: #000000;
+    font-weight: bold;
 }
 .sys-cpf-submenu-item .bx-cnc-psi-icon,
 .sys-cpf-submenu-item .bx-cnc-psi-icon img {
