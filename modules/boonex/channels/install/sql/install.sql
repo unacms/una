@@ -221,35 +221,19 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_channel', 'bx_channels', 'picture', 'a:1:{i:0;s:24:"bx_channels_picture_crop";}', 'a:1:{s:24:"bx_channels_picture_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_channels_form_profile_input_sys_picture', '_bx_channels_form_profile_input_picture', '', 0, 0, 0, '', '', '', '', '', '_bx_channels_form_profile_input_picture_err', '', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
-('bx_channel_add', 'delete_confirm', 2147483647, 0, 3),
-('bx_channel_add', 'cover', 2147483647, 0, 4),
-('bx_channel_add', 'picture', 2147483647, 1, 6),
-('bx_channel_add', 'channel_name', 2147483647, 1, 7),
-('bx_channel_add', 'do_submit', 2147483647, 1, 9),
+('bx_channel_add', 'channel_name', 2147483647, 1, 1),
+('bx_channel_add', 'do_submit', 2147483647, 1, 2),
 
-('bx_channel_delete', 'delete_confirm', 2147483647, 1, 0),
-('bx_channel_delete', 'cover', 2147483647, 0, 0),
-('bx_channel_delete', 'picture', 2147483647, 0, 0),
 ('bx_channel_delete', 'do_submit', 2147483647, 1, 1),
 ('bx_channel_delete', 'channel_name', 2147483647, 0, 2),
 
-('bx_channel_edit', 'delete_confirm', 2147483647, 0, 2),
-('bx_channel_edit', 'cover', 2147483647, 0, 3),
-('bx_channel_edit', 'picture', 2147483647, 1, 4),
-('bx_channel_edit', 'channel_name', 2147483647, 1, 5),
-('bx_channel_edit', 'do_submit', 2147483647, 1, 7),
+('bx_channel_edit', 'channel_name', 2147483647, 1, 1),
+('bx_channel_edit', 'do_submit', 2147483647, 1, 2),
 
-('bx_channel_edit_cover', 'delete_confirm', 2147483647, 0, 1),
-('bx_channel_edit_cover', 'channel_name', 2147483647, 0, 2),
-('bx_channel_edit_cover', 'picture', 2147483647, 0, 3),
-('bx_channel_edit_cover', 'cover', 2147483647, 1, 4),
-('bx_channel_edit_cover', 'do_submit', 2147483647, 1, 5),
+('bx_channel_edit_cover', 'cover', 2147483647, 1, 1),
+('bx_channel_edit_cover', 'do_submit', 2147483647, 1, 2),
 
-('bx_channel_view', 'delete_confirm', 2147483647, 0, 3),
-('bx_channel_view', 'picture', 2147483647, 0, 4),
-('bx_channel_view', 'cover', 2147483647, 0, 5),
-('bx_channel_view', 'do_submit', 2147483647, 0, 6),
-('bx_channel_view', 'channel_name', 2147483647, 1, 7),
+('bx_channel_view', 'channel_name', 2147483647, 1, 1),
 
 ('bx_channel_view_full', 'channel_name', 2147483647, 1, 1);
 

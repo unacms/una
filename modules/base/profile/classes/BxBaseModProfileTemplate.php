@@ -17,8 +17,10 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     protected $_sUnitClass;
     protected $_sUnitClassWithCover;
     protected $_sUnitClassWoInfo;
-	protected $_sUnitClassWoInfoShowCase;
+    protected $_sUnitClassWoInfoShowCase;
     protected $_sUnitClassShowCase;
+
+    protected $_bLetterAvatar;
     
     function __construct(&$oConfig, &$oDb)
     {
@@ -29,6 +31,8 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $this->_sUnitClassWoInfo = 'bx-base-pofile-unit-wo-info';
         $this->_sUnitClassWoInfoShowCase = 'bx-base-pofile-unit-wo-info bx-base-unit-showcase bx-base-pofile-unit-wo-info-showcase';
         $this->_sUnitClassShowCase = 'bx-base-pofile-unit-with-cover bx-base-unit-showcase bx-base-pofile-unit-showcase';
+
+        $this->_bLetterAvatar = true;
     }
 
     /**
@@ -79,44 +83,55 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $bThumbUrl = !empty($sThumbUrl);
         $bAvatarUrl = !empty($sAvatarUrl);
 
+        $bTmplVarsThumbnail = $bThumbUrl || $bAvatarUrl || $this->_bLetterAvatar;
+        $aTmplVarsThumbnail = array();
+        if($bTmplVarsThumbnail)
+            $aTmplVarsThumbnail = array(
+                'bx_if:show_thumb_image' => array(
+                    'condition' => $bThumbUrl,
+                    'content' => array(
+                        'thumb_url' => $sThumbUrl
+                    )
+                ),
+                'bx_if:show_avatar_image' => array(
+                    'condition' => $bAvatarUrl,
+                    'content' => array(
+                        'avatar_url' => $sAvatarUrl
+                    )
+                ),
+                'bx_if:show_thumb_letter' => array(
+                    'condition' => !$bThumbUrl && !$bAvatarUrl,
+                    'content' => array(
+                        'color' => implode(', ', BxDolTemplate::getColorCode($iProfile, 1.0)),
+                        'letter' => mb_strtoupper(mb_substr($sTitle, 0, 1))
+                    )
+                ),
+                'bx_if:show_online' => array(
+                    'condition' => $oProfile->isOnline(),
+                    'content' => array()
+                ),
+                'thumb_url' => $bThumbUrl ? $sThumbUrl : $this->getImageUrl('no-picture-thumb.png'),
+                'avatar_url' => $bAvatarUrl ? $sAvatarUrl : $this->getImageUrl('no-picture-thumb.png'),
+            );
+
         $sCoverUrl = $bPublicCover ? $this->urlCoverUnit($aData, false) : '';
         if(empty($sCoverUrl) && ($iCoverId = (int)getParam('sys_unit_cover_profile')) != 0)
             $sCoverUrl = BxDolTranscoder::getObjectInstance(BX_DOL_TRANSCODER_OBJ_COVER_UNIT_PROFILE)->getFileUrlById($iCoverId);
         if(empty($sCoverUrl))
             $sCoverUrl = $this->getImageUrl('cover.jpg');
-
+        
         $aTmplVarsMeta = $this->getSnippetMenuVars ($iProfile, $bPublic);
 
+        
         // generate html
-        return array (
-        	'class' => $this->_getUnitClass($aData, $sTemplateName),
+        return array_merge(array (
+            'class' => $this->_getUnitClass($aData, $sTemplateName),
             'id' => $iContentId,
-        	'public' => $bPublic,
-            'bx_if:show_thumb_image' => array(
-                'condition' => $bThumbUrl,
-                'content' => array(
-                    'thumb_url' => $sThumbUrl
-                )
+            'public' => $bPublic,
+            'bx_if:show_thumbnail' => array(
+                'condition' => $bTmplVarsThumbnail,
+                'content' => $aTmplVarsThumbnail
             ),
-            'bx_if:show_avatar_image' => array(
-                'condition' => $bAvatarUrl,
-                'content' => array(
-                    'avatar_url' => $sAvatarUrl
-                )
-            ),
-            'bx_if:show_thumb_letter' => array(
-                'condition' => !$bThumbUrl && !$bAvatarUrl,
-                'content' => array(
-                    'color' => implode(', ', BxDolTemplate::getColorCode($iProfile, 1.0)),
-                    'letter' => mb_strtoupper(mb_substr($sTitle, 0, 1))
-                )
-            ),
-            'bx_if:show_online' => array(
-            	'condition' => $oProfile->isOnline(),
-            	'content' => array()
-            ),
-            'thumb_url' => $bThumbUrl ? $sThumbUrl : $this->getImageUrl('no-picture-thumb.png'),
-            'avatar_url' => $bAvatarUrl ? $sAvatarUrl : $this->getImageUrl('no-picture-thumb.png'),
             'cover_url' => $sCoverUrl,
             'content_url' => $bPublic ? $sUrl : 'javascript:void(0);',
             'content_click' => !$bPublic ? 'javascript:bx_alert(' . bx_js_string('"' . _t('_sys_access_denied_to_private_content') . '"') . ');' : '',
@@ -129,7 +144,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                 'condition' => !empty($aTmplVarsMeta),
                 'content' => $aTmplVarsMeta
             )
-        );
+        ), $aTmplVarsThumbnail);
     }
 
     function isProfilePublic($aData)
@@ -194,17 +209,17 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
         $sTitle = bx_process_output($aData[$CNF['FIELD_NAME']]);
 
-        $sUrlPicture = $this->urlPicture ($aData);
-        $sUrlPictureChange = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
-
         $sUrlAvatar = $this->urlAvatar($aData, false);
         $bUrlAvatar = !empty($sUrlAvatar);
+
+        $sUrlPicture = $this->urlPicture ($aData);
+        $sUrlPictureChange = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
 
         $sUrlCover = $this->urlCover ($aData, false);
         if(!$sUrlCover && $oPage !== false && $oPage->isPageCover()) {
             $aCover = $oPage->getPageCoverImage();
-			if(!empty($aCover))
-				$sUrlCover = BxDolCover::getCoverImageUrl($aCover);
+            if(!empty($aCover))
+                $sUrlCover = BxDolCover::getCoverImageUrl($aCover);
         }
 
         if(!$sUrlCover)
@@ -214,7 +229,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
         $sCoverPopup = '';
         $sCoverPopupId = $this->MODULE . '-popup-cover';
-        if ($bProfileViewAllowed && $aData[$CNF['FIELD_COVER']]) {
+        if($bProfileViewAllowed && $aData[$CNF['FIELD_COVER']]) {
             $sCoverPopup = BxTemplFunctions::getInstance()->transBox($sCoverPopupId, $this->parseHtmlByName('image_popup.html', array (
                 'image_url' => $sUrlCover,
                 'bx_if:owner' => array (
@@ -226,18 +241,47 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             )), true, true);
         }
 
+        $bShowAvatar = $bUrlAvatar || $this->_bLetterAvatar;
+        $aShowAvatar = array();
         $sPicturePopup = '';
-        $sPicturePopupId = $this->MODULE . '-popup-picture';
-        if ($bProfileViewAllowed && $aData[$CNF['FIELD_PICTURE']]) {
-            $sPicturePopup = BxTemplFunctions::getInstance()->transBox($sPicturePopupId, $this->parseHtmlByName('image_popup.html', array (
-                'image_url' => $sUrlPicture,
-                'bx_if:owner' => array (
-                    'condition' => CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedEdit($aData),
-                    'content' => array (
-                        'change_image_url' => $sUrlPictureChange,
-                    ),
+        if($bShowAvatar) {
+            $sPicturePopupId = $this->MODULE . '-popup-picture';
+
+            $aShowAvatar = array(
+                'bx_if:show_ava_image' => array(
+                    'condition' => $bUrlAvatar,
+                    'content' => array(
+                        'ava_url' => $sUrlAvatar
+                    )
                 ),
-            )), true, true);
+                'bx_if:show_ava_letter' => array(
+                    'condition' => !$bUrlAvatar,
+                    'content' => array(
+                        'color' => implode(', ', BxDolTemplate::getColorCode($iProfile, 1.0)),
+                        'letter' => mb_substr($sTitle, 0, 1)
+                    )
+                ),
+                'bx_if:show_online' => array(
+                    'condition' => $oProfile->isOnline(),
+                    'content' => array()
+                ),
+                'picture_avatar_url' => $bUrlAvatar ? $sUrlAvatar : $this->getImageUrl('no-picture-preview.png'),
+                'picture_popup_id' => $sPicturePopupId,
+                'picture_url' => $sUrlPicture,
+                'picture_href' => !$aData[$CNF['FIELD_PICTURE']] && CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedEdit($aData) ? $sUrlPictureChange : 'javascript:void(0);',
+            );
+
+            if($bProfileViewAllowed && $aData[$CNF['FIELD_PICTURE']]) {
+                $sPicturePopup = BxTemplFunctions::getInstance()->transBox($sPicturePopupId, $this->parseHtmlByName('image_popup.html', array (
+                    'image_url' => $sUrlPicture,
+                    'bx_if:owner' => array (
+                        'condition' => CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedEdit($aData),
+                        'content' => array (
+                            'change_image_url' => $sUrlPictureChange,
+                        ),
+                    ),
+                )), true, true);
+            }
         }
 
         $sActionsMenu = '';
@@ -248,7 +292,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         }
         else 
             $sActionsMenu = $this->getModule()->serviceEntityAllActions();
-
+        
         // generate html
         $aVars = array (
             'id' => $aData[$CNF['FIELD_ID']],
@@ -258,28 +302,11 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
             'action_menu' => $sActionsMenu,
 
-            'bx_if:show_ava_image' => array(
-                'condition' => $bUrlAvatar,
-                'content' => array(
-                    'ava_url' => $sUrlAvatar
-                )
+            'bx_if:show_avatar' => array(
+                'condition' => $bShowAvatar,
+                'content' => $aShowAvatar
             ),
-            'bx_if:show_ava_letter' => array(
-                'condition' => !$bUrlAvatar,
-                'content' => array(
-            		'color' => implode(', ', BxDolTemplate::getColorCode($iProfile, 1.0)),
-                    'letter' => mb_substr($sTitle, 0, 1)
-                )
-            ),
-            'bx_if:show_online' => array(
-                'condition' => $oProfile->isOnline(),
-            	'content' => array()
-            ),
-            'picture_avatar_url' => $bUrlAvatar ? $sUrlAvatar : $this->getImageUrl('no-picture-preview.png'),
             'picture_popup' => $sPicturePopup,
-            'picture_popup_id' => $sPicturePopupId,
-            'picture_url' => $sUrlPicture,
-            'picture_href' => !$aData[$CNF['FIELD_PICTURE']] && CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedEdit($aData) ? $sUrlPictureChange : 'javascript:void(0);',
 
             'cover_popup' => $sCoverPopup,
             'cover_popup_id' => $sCoverPopupId,

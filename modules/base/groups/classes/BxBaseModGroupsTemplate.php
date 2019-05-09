@@ -14,12 +14,13 @@
  */
 class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
 {
-	protected $_iUnitCharsSummary;
+    protected $_iUnitCharsSummary;
 
     function __construct(&$oConfig, &$oDb)
     {
         parent::__construct($oConfig, $oDb);
 
+        $this->_bLetterAvatar = false;
         $this->_iUnitCharsSummary = 50;
 
         $this->_sUnitClassWithCover .= ' bx-base-groups-unit-with-cover';

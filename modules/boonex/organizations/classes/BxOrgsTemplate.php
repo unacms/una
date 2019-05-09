@@ -20,6 +20,8 @@ class BxOrgsTemplate extends BxBaseModGroupsTemplate
 
         parent::__construct($oConfig, $oDb);
 
+        $this->_bLetterAvatar = true;
+
         $this->_sUnitClass = 'bx-base-pofile-unit';
         $this->_sUnitClassWithCover = 'bx-base-pofile-unit-with-cover';
         $this->_sUnitClassWoInfo = 'bx-base-pofile-unit-wo-info';
