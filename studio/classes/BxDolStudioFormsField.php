@@ -95,6 +95,11 @@ class BxDolStudioFormsField extends BxDol
         return isset($this->aParams['table']) && !empty($this->aParams['table']);
     }
 
+    /**
+     * Checks whether the field exists in connected table.
+     * @param type $sName - field name
+     * @return boolean - check result
+     */
     public function isField($sName)
     {
         if(!isset($this->aParams['table_alter']) || $this->aParams['table_alter'] !== true)

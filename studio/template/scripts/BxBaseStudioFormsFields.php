@@ -44,7 +44,9 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
         }
 
         $mixedResult = $oClass->getCode($sAction, $this->_sObject);
-        if(is_string($mixedResult))
+        if(is_array($mixedResult))
+            echoJson($mixedResult);
+        else if(is_string($mixedResult))
             echoJson(array('popup' => array('html' => $mixedResult, 'options' => array('closeOnOuterClick' => false))));
         else if(is_int($mixedResult) || is_bool($mixedResult)) {
             $aResult = $mixedResult !== false ? array('grid' => $this->getCode(false), 'blink' => (int)$mixedResult) : array('msg' => _t('_adm_form_err_field_add'));

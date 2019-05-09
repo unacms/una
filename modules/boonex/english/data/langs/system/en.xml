@@ -723,6 +723,7 @@
 	<string name="_adm_form_err_displays_edit"><![CDATA[Cannot update display]]></string>
 	<string name="_adm_form_err_displays_title"><![CDATA[Enter title, more than 3 characters]]></string>
 	<string name="_adm_form_err_field_add"><![CDATA[Cannot add new field]]></string>
+        <string name="_adm_form_err_field_add_already_exists"><![CDATA[Field with similar name already exists]]></string>
 	<string name="_adm_form_err_field_add_not_allowed"><![CDATA[Fields cannot be added in this form]]></string>
 	<string name="_adm_form_err_field_caption_system"><![CDATA[A name with at least 3 characters is required.]]></string>
 	<string name="_adm_form_err_field_checker_error"><![CDATA[You need to enter error message]]></string>

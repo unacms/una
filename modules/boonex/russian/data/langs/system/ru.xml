@@ -721,6 +721,7 @@
 	<string name="_adm_form_err_displays_edit"><![CDATA[Невозможно обновить дисплей]]></string>
 	<string name="_adm_form_err_displays_title"><![CDATA[Введите заголовок, более 3 символов]]></string>
 	<string name="_adm_form_err_field_add"><![CDATA[Невозможно добавить новое поле]]></string>
+        <string name="_adm_form_err_field_add_already_exists"><![CDATA[Поле с таким же именем уже существует]]></string>
 	<string name="_adm_form_err_field_add_not_allowed"><![CDATA[Поля не могут быть добавлены в эту форму]]></string>
 	<string name="_adm_form_err_field_caption_system"><![CDATA[Необходимо имя из как минимум 3 символов.]]></string>
 	<string name="_adm_form_err_field_checker_error"><![CDATA[Нужно ввести сообщение об ошибке]]></string>

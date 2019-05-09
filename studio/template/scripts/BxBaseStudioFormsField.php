@@ -123,11 +123,15 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
             }
 
             $sFieldName = strmaxtextlen($sInputName, $this->iFieldNameMaxLen, '');
-            if(strcmp($sInputName, $sFieldName) !== 0)
-            	BxDolForm::setSubmittedValue('name', $sFieldName, $oForm->aFormAttrs['method']);
+            if(strcmp($sInputName, $sFieldName) !== 0) {
+                if($this->oDb->isInput($sInputObject, $sFieldName))
+                    return array('msg' => _t('_adm_form_err_field_add_already_exists'));
+
+            	BxDolForm::setSubmittedValue('name', $sFieldName, $oForm->aFormAttrs['method']);                
+            }
 
             if($this->isField($sFieldName))
-                return false;
+                return array('msg' => _t('_adm_form_err_field_add_already_exists'));
 
             $this->onSubmitField($oForm);
             if(($iId = $oForm->insert()) === false)
