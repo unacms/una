@@ -146,7 +146,7 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_events_calendar', '_bx_events_page_title_sys_calendar', '_bx_events_page_title_calendar', 'bx_events', 5, 2147483647, 1, 'events-calendar', 'page.php?i=events-calendar', '', '', '', 0, 1, 0, 'BxEventsPageCalendar', 'modules/boonex/events/classes/BxEventsPageCalendar.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_events_calendar', 1, 'bx_events', '_bx_events_page_block_title_calendar', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_events";s:6:"method";s:8:"calendar";}', 0, 1, 0);
+('bx_events_calendar', 1, 'bx_events', '_bx_events_page_block_title_calendar', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:8:"calendar";s:12:"ignore_cache";b:1;}', 0, 1, 0);
 
 -- PAGE: search for entries
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
