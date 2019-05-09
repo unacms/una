@@ -54,27 +54,32 @@ class BxNtfsDb extends BxBaseModNotificationsDb
             return parent::getEvents($aParams, $bReturnCount);
 
         //--- Get query for 'Object Owner' notifications
+        $sLimitClause = isset($aParams['per_page']) ? "LIMIT 0, " . ($aParams['start'] + $aParams['per_page']) : "";
+
         $aParams['type'] = BX_BASE_MOD_NTFS_TYPE_OBJECT_OWNER;
-        list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause) = $this->_getSqlPartsEvents($aParams);
+        list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause) = $this->_getSqlPartsEvents($aParams);
 
         $sSqlOwner = "SELECT {select}
             FROM `{$this->_sTable}`
             LEFT JOIN `{$this->_sTableHandlers}` ON `{$this->_sTable}`.`type`=`{$this->_sTableHandlers}`.`alert_unit` AND `{$this->_sTable}`.`action`=`{$this->_sTableHandlers}`.`alert_action` " . $sJoinClause . "
-            WHERE 1 " . $sWhereClause;       
+            WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;       
 
         //--- Get query for 'Connections based' notifications
         $aParams['type'] = BX_BASE_MOD_NTFS_TYPE_CONNECTIONS;
-        list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause) = $this->_getSqlPartsEvents($aParams);
+        list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause) = $this->_getSqlPartsEvents($aParams);
 
         $sSqlConnections = "SELECT {select}
             FROM `{$this->_sTable}`
             LEFT JOIN `{$this->_sTableHandlers}` ON `{$this->_sTable}`.`type`=`{$this->_sTableHandlers}`.`alert_unit` AND `{$this->_sTable}`.`action`=`{$this->_sTableHandlers}`.`alert_action` " . $sJoinClause . "
-            WHERE 1 " . $sWhereClause;
+            WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
 
         //--- Combine both queries in one
         $sOrderClause = "ORDER BY `date` DESC, `id` DESC";
-        if(!empty($aParams['count_only']))
+        $sLimitClause = isset($aParams['per_page']) ? "LIMIT " . $aParams['start'] . ", " . $aParams['per_page'] : "";
+        if(!empty($aParams['count_only'])) {
             $sOrderClause = "";
+            $sLimitClause = "";
+        }
 
         $sSql = "(" . $sSqlOwner . ") UNION (" . $sSqlConnections . ") {order} {limit}";
         $aEntries = $this->$sMethod(str_replace(array('{select}', '{order}', '{limit}'), array($sSelectClause, $sOrderClause, $sLimitClause), $sSql));
