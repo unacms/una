@@ -398,6 +398,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     function actionRss()
     {
+        $CNF = &$this->_oConfig->CNF;
+
         $aArgs = func_get_args();
 
         $sType = array_shift($aArgs);
@@ -430,16 +432,27 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         ));
         $aEvents = $this->_oDb->getEvents($aParams);
 
+        $oPrivacy = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'));
+
         $aRssData = array();
         foreach($aEvents as $aEvent) {
             if(empty($aEvent['title'])) 
                 continue;
 
-            $iOwner = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $aEvent['owner_id'] : $aEvent['object_id'];
+            $iEventId = (int)$aEvent[$CNF['FIELD_ID']];
+            $sEventFieldAuthor = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? 'owner_id' : 'object_id';
+
+            if($oPrivacy) {
+                $oPrivacy->setTableFieldAuthor($sEventFieldAuthor);
+                if(!$oPrivacy->check($iEventId))
+                    continue;
+            }
+
+            $iOwner = $aEvent[$sEventFieldAuthor];
             $oOwner = BxDolProfile::getInstanceMagic($iOwner);
 
-            $aRssData[$aEvent['id']] = array(
-               'UnitID' => $aEvent['id'],
+            $aRssData[$iEventId] = array(
+               'UnitID' => $iEventId,
                'UnitTitle' => $aEvent['title'],
                'UnitLink' => $this->_oConfig->getItemViewUrl($aEvent),
                'UnitDesc' => bx_replace_markers($aEvent['description'], array(
