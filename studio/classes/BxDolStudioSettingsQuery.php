@@ -248,6 +248,7 @@ class BxDolStudioSettingsQuery extends BxDolStudioPageQuery
                 `tm`.`name` AS `name`,
                 `tm`.`title` AS `title`,
                 `tm`.`active` AS `active`,
+                `tm`.`published` AS `published`,
                 `tm`.`editable` AS `editable` " . $sSelectClause . "
             FROM `sys_options_mixes` AS `tm` " . $sJoinClause . "
             WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
@@ -259,7 +260,7 @@ class BxDolStudioSettingsQuery extends BxDolStudioPageQuery
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
 
-	function updateMixes($aParamsSet, $aParamsWhere)
+    function updateMixes($aParamsSet, $aParamsWhere)
     {
         if(empty($aParamsSet) || empty($aParamsWhere))
             return false;
@@ -268,7 +269,7 @@ class BxDolStudioSettingsQuery extends BxDolStudioPageQuery
         return (int)$this->query($sSql) > 0;
     }
 
-	function deleteMixes($aParamsWhere)
+    function deleteMixes($aParamsWhere)
     {
         if(empty($aParamsWhere))
             return false;

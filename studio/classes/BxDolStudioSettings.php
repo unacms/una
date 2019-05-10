@@ -63,14 +63,14 @@ class BxDolStudioSettings extends BxTemplStudioPage
 
         $this->bReadOnly = false;
 
-		$this->bMixes = false;
-		$this->sMix = '';
-		$this->aMix = array();
+        $this->bMixes = false;
+        $this->sMix = '';
+        $this->aMix = array();
 
-		$this->sStorage = 'sys_images_custom';
-		$this->sTranscoder = 'sys_custom_images';
+        $this->sStorage = 'sys_images_custom';
+        $this->sTranscoder = 'sys_custom_images';
 
-		$this->sErrorMessage = '';
+        $this->sErrorMessage = '';
 
         //--- Check actions ---//
         if(($sAction = bx_get('stg_action')) !== false) {
@@ -83,29 +83,37 @@ class BxDolStudioSettings extends BxTemplStudioPage
             $aResult = array('code' => 0, 'message' => '');
             if(!empty($sAction)) {
                 switch($sAction) {
-                	case 'select-mix':
-                		$aResult = array_merge($aResult, $this->selectMix($sValue));
-                		break;
+                    case 'select-mix':
+                        $aResult = array_merge($aResult, $this->selectMix($sValue));
+                        break;
 
-                	case 'create-mix':
-                		$aResult = array_merge($aResult, $this->getPopupCodeCreateMix());
-						break;
+                    case 'create-mix':
+                        $aResult = array_merge($aResult, $this->getPopupCodeCreateMix());
+                        break;
 
-					case 'import-mix':
-                		$aResult = array_merge($aResult, $this->getPopupCodeImportMix());
-						break;
+                    case 'import-mix':
+                        $aResult = array_merge($aResult, $this->getPopupCodeImportMix());
+                        break;
 
-					case 'export-mix':
-                		$aResult = array_merge($aResult, $this->exportMix((int)$sValue));
-						break;
+                    case 'export-mix':
+                        $aResult = array_merge($aResult, $this->exportMix((int)$sValue));
+                        break;
 
-					case 'download-mix':
-                		$aResult = array_merge($aResult, $this->downloadMix((int)$sValue));
-						break;
+                    case 'download-mix':
+                        $aResult = array_merge($aResult, $this->downloadMix((int)$sValue));
+                        break;
 
-                	case 'delete-mix':
-                		$aResult = array_merge($aResult, $this->deleteMix((int)$sValue));
-						break;
+                    case 'publish-mix':
+                        $aResult = array_merge($aResult, $this->publishMix((int)$sValue));
+                        break;
+
+                    case 'hide-mix':
+                        $aResult = array_merge($aResult, $this->hideMix((int)$sValue));
+                        break;
+
+                    case 'delete-mix':
+                        $aResult = array_merge($aResult, $this->deleteMix((int)$sValue));
+                        break;
 
                     case 'get-page-by-type':
                         $this->sType = $sValue;
@@ -131,22 +139,22 @@ class BxDolStudioSettings extends BxTemplStudioPage
 
     public function selectMix($sName)
     {
-		$this->oDb->updateMixes(array('active' => 0), array(
-			'type' => $this->sType,
-			'category' => is_string($this->sCategory) ? $this->sCategory : '',
-			'active' => 1
-		));
+        $this->oDb->updateMixes(array('active' => 0), array(
+            'type' => $this->sType,
+            'category' => is_string($this->sCategory) ? $this->sCategory : '',
+            'active' => 1
+        ));
 
-		$aResult = array();
-		if($sName == BX_DOL_STUDIO_STG_MIX_SYSTEM || $this->oDb->updateMixes(array('active' => 1), array('name' => $sName))) {
-		    $this->clearCache();
+        $aResult = array();
+        if($sName == BX_DOL_STUDIO_STG_MIX_SYSTEM || $this->oDb->updateMixes(array('active' => 1), array('name' => $sName))) {
+            $this->clearCache();
 
-                    $aResult = array('eval' => $this->getPageJsObject() . '.onMixSelect(oData);');
-		}
-		else 
-                    $aResult = array('message' => _t('_adm_stg_err_cannot_perform')); 
+            $aResult = array('eval' => $this->getPageJsObject() . '.onMixSelect(oData);');
+        }
+        else 
+            $aResult = array('message' => _t('_adm_stg_err_cannot_perform'));
 
-    	return $aResult;
+        return $aResult;
     }
 
     public function exportMix($iId)
@@ -154,15 +162,15 @@ class BxDolStudioSettings extends BxTemplStudioPage
     	$aMix = array();
     	$this->oDb->getMixes(array('type' => 'by_id', 'value' => $iId), $aMix, false);
     	if(empty($aMix) || !is_array($aMix))
-    		return array('message' => _t('_adm_stg_err_cannot_perform'));
+            return array('message' => _t('_adm_stg_err_cannot_perform'));
 
-		return array(
-			'url' => bx_append_url_params(BX_DOL_URL_STUDIO . 'settings.php', array(
-				'stg_action' => 'download-mix',
-    			'stg_value' => $iId,
-			)),
-			'eval' => $this->getPageJsObject() . '.onMixExport(oData);'
-		);
+        return array(
+            'url' => bx_append_url_params(BX_DOL_URL_STUDIO . 'settings.php', array(
+                'stg_action' => 'download-mix',
+                'stg_value' => $iId,
+            )),
+            'eval' => $this->getPageJsObject() . '.onMixExport(oData);'
+        );
     }
 
     public function downloadMix($iId)
@@ -170,19 +178,19 @@ class BxDolStudioSettings extends BxTemplStudioPage
     	$aMix = array();
     	$this->oDb->getMixes(array('type' => 'by_id', 'value' => $iId), $aMix, false);
     	if(empty($aMix) || !is_array($aMix))
-    		BxDolStudioTemplate::getInstance()->displayPageNotFound();
+            BxDolStudioTemplate::getInstance()->displayPageNotFound();
 
-		$aOptions = array();
-		$this->oDb->getMixesOptions(array('type' => 'by_mix_id_pair_option_value', 'value' => $iId, 'for_export' => 1), $aOptions, false);
+        $aOptions = array();
+        $this->oDb->getMixesOptions(array('type' => 'by_mix_id_pair_option_value', 'value' => $iId, 'for_export' => 1), $aOptions, false);
 
     	$aContent = array(
-    		'mix' => array(
-    			'type' => $aMix['type'],
-    			'category' => $aMix['category'],
-    			'name' => $aMix['name'],
-    			'title' => $aMix['title']
-    		),
-    		'options' => $aOptions
+            'mix' => array(
+                'type' => $aMix['type'],
+                'category' => $aMix['category'],
+                'name' => $aMix['name'],
+                'title' => $aMix['title']
+            ),
+            'options' => $aOptions
     	);
     	$sContent = json_encode($aContent);
 
@@ -194,17 +202,45 @@ class BxDolStudioSettings extends BxTemplStudioPage
         echo $sContent;
         exit;
     }
-    
+
+    public function publishMix($iId)
+    {
+    	$aResult = array();
+        if($this->oDb->updateMixes(array('published' => 1), array('id' => $iId))) {
+            $this->clearCache();
+
+            $aResult = array('eval' => $this->getPageJsObject() . '.onMixPublish(oData);');
+        }
+        else 
+            $aResult = array('message' => _t('_adm_stg_err_cannot_perform'));
+
+        return $aResult;
+    }
+
+    public function hideMix($iId)
+    {
+    	$aResult = array();
+        if($this->oDb->updateMixes(array('published' => 0), array('id' => $iId))) {
+            $this->clearCache();
+
+            $aResult = array('eval' => $this->getPageJsObject() . '.onMixHide(oData);');
+        }
+        else 
+            $aResult = array('message' => _t('_adm_stg_err_cannot_perform'));
+
+        return $aResult;
+    }
+
     public function deleteMix($iId)
     {
     	$aResult = array();
     	if($this->oDb->deleteMixesOptions(array('mix_id' => $iId)) && $this->oDb->deleteMixes(array('id' => $iId))) {
     	    $this->clearCache();
 
-    		$aResult = array('eval' => $this->getPageJsObject() . '.onMixDelete(oData);');
+            $aResult = array('eval' => $this->getPageJsObject() . '.onMixDelete(oData);');
     	}
     	else 
-    		$aResult = array('message' => _t('_adm_stg_err_cannot_perform')); 
+            $aResult = array('message' => _t('_adm_stg_err_cannot_perform')); 
 
     	return $aResult;
     }

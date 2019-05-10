@@ -25,6 +25,7 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
     protected static $_aParams;
     protected static $_sParamsCacheName = 'sys_options';
     protected static $_sParamsCacheNameMixed = 'sys_options_mixed_';
+    protected static $_sParamsCacheNameMix = 'sys_options_mix_';
 
     protected static $_sErrorKey = 'bx_db_error';
     protected static $_aErrors = array(
@@ -635,14 +636,31 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
 
         list($sTmplCode, $sTmplName) = BxDolTemplate::retrieveCode();
         if(!empty($sTmplCode) && !empty($sTmplName)) {
+            if(is_array($sTmplCode))
+                list($sTmplCode, $iTmplMix) = $sTmplCode;
+
             $sCacheNameMixed = self::$_sParamsCacheNameMixed . $sTmplCode;
 
-            if ($bForceCacheInvalidateMixed)
+            $bTmplMix = !empty($iTmplMix);
+            if($bTmplMix)
+                $sCacheNameMixed .= '_' . $iTmplMix;
+
+            if($bForceCacheInvalidateMixed)
                 $this->cacheParamsClear($sCacheNameMixed);
 
-            $aMixed = $this->fromCache($sCacheNameMixed, 'getPairs', "SELECT `tmo`.`option` AS `option`, `tmo`.`value` AS `value` FROM `sys_options_mixes2options` AS `tmo` INNER JOIN `sys_options_mixes` AS `tm` ON `tmo`.`mix_id`=`tm`.`id` AND `tm`.`type`=:type AND `tm`.`active`='1'", "option", "value", array(
-                'type' => $sTmplName
-            ));
+            $sQuery = "SELECT `tmo`.`option` AS `option`, `tmo`.`value` AS `value` FROM `sys_options_mixes2options` AS `tmo` INNER JOIN `sys_options_mixes` AS `tm` ON `tmo`.`mix_id`=`tm`.`id`";
+            $aBindings = array();
+
+            if($bTmplMix) {
+                $sQuery .= " AND `tm`.`id`=:mix_id";
+                $aBindings['mix_id'] = $iTmplMix;
+            }
+            else {
+                $sQuery .= " AND `tm`.`type`=:type AND `tm`.`active`='1'";
+                $aBindings['type'] = $sTmplName;
+            }
+
+            $aMixed = $this->fromCache($sCacheNameMixed, 'getPairs', $sQuery, "option", "value", $aBindings);
 
             if(!empty($aMixed))
             	self::$_aParams = array_merge(self::$_aParams, $aMixed);
@@ -692,9 +710,9 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
             return self::$_aParams[$sKey];
         } else {
             $sQuery = $this->prepare("SELECT `tmo`.`value` AS `value` FROM `sys_options_mixes2options` AS `tmo` INNER JOIN `sys_options_mixes` AS `tm` ON `tmo`.`mix_id`=`tm`.`id` AND `tm`.`active`='1' WHERE `tmo`.`option`=? LIMIT 1", $sKey);
-			$mixedValue = $this->getOne($sQuery);
-			if($mixedValue !== false)
-				return $mixedValue;
+            $mixedValue = $this->getOne($sQuery);
+            if($mixedValue !== false)
+                return $mixedValue;
 
             $sQuery = $this->prepare("SELECT `value` FROM `sys_options` WHERE `name` = ? LIMIT 1", $sKey);
             return $this->getOne($sQuery);
@@ -714,6 +732,34 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
         $bResult &= $this->cacheParams(true, !empty($iMixId));
 
         return $bResult;
+    }
+
+    public function getParamsMix($iId)
+    {
+        return $this->fromCache(self::$_sParamsCacheNameMix . $iId, 'getRow', 'SELECT * FROM `sys_options_mixes` WHERE `id`=:id', array(
+            'id' => $iId
+        ));
+    }
+
+    public function getParamsMixActive($sType)
+    {
+        return $this->getRow("SELECT * FROM `sys_options_mixes` WHERE `type`=:type AND `active`='1'", array(
+            'type' => $sType
+        ));
+    }
+
+    public function getParamsMixes($sType, $mixedPublished = false)
+    {
+        $aBindings = array('type' => $sType);
+
+        $sQuery = "SELECT * FROM `sys_options_mixes` WHERE `type`=:type";
+        if($mixedPublished !== false) {
+            $aBindings['published'] = (int)$mixedPublished;
+
+            $sQuery .= " AND `published`=:published";
+        }
+
+        return $this->getAll($sQuery, $aBindings);
     }
 
     public function setTimezone($sTimezone)

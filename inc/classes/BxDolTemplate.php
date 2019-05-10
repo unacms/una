@@ -10,6 +10,7 @@
 ini_set('pcre.backtrack_limit', 1000000);
 
 define('BX_DOL_TEMPLATE_CODE_KEY', 'skin');
+define('BX_DOL_TEMPLATE_MIX_KEY', 'mix');
 define('BX_DOL_TEMPLATE_DEFAULT_CODE', 'protean');
 define('BX_DOL_TEMPLATE_FOLDER_ROOT', 'template');
 
@@ -182,6 +183,8 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     protected $_sInjectionsCache;
     protected $_sCode;
     protected $_sCodeKey;
+    protected $_iMix;
+    protected $_sMixKey;
     protected $_sKeyWrapperHtml;
     protected $_sFolderHtml;
     protected $_sFolderCss;
@@ -231,7 +234,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     protected function __construct($sRootPath = BX_DIRECTORY_PATH_ROOT, $sRootUrl = BX_DOL_URL_ROOT)
     {
-        if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
+        if(isset($GLOBALS['bxDolClasses'][get_class($this)]))
             trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
 
         parent::__construct();
@@ -244,16 +247,21 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $this->_sInjectionsCache = BX_DOL_TEMPLATE_INJECTIONS_CACHE;
 
         $this->_sCodeKey = BX_DOL_TEMPLATE_CODE_KEY;
+        $this->_sMixKey = BX_DOL_TEMPLATE_MIX_KEY;
         list(
             $this->_sCode, 
             $this->_sName, 
             $this->_sSubPath
-        ) = self::retrieveCode($this->_sCodeKey, $this->_sRootPath);
+        ) = self::retrieveCode($this->_sCodeKey, $this->_sMixKey, $this->_sRootPath);
 
-        if (!$this->_sSubPath)
+        $this->_iMix = 0;
+        if(is_array($this->_sCode))
+            list($this->_sCode, $this->_iMix) = $this->_sCode;
+
+        if(!$this->_sSubPath)
             $this->_sSubPath = 'boonex/' . BX_DOL_TEMPLATE_DEFAULT_CODE . '/';
 
-        if (!file_exists(BX_DIRECTORY_PATH_MODULES . $this->_sSubPath)) // just for 8.0.0-A6 upgrade
+        if(!file_exists(BX_DIRECTORY_PATH_MODULES . $this->_sSubPath)) // just for 8.0.0-A6 upgrade
             $this->_sSubPath = 'boonex/uni/';
 
         if(isset($_GET[$this->_sCodeKey])) {
@@ -326,10 +334,11 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     /**
      * Retrieve template code and check whether it's associated with active template or not.
      *
-     * @param string  $sCodeKey template's code key.
+     * @param string $sCodeKey template's code key.
+     * @param string $sMixKey template's mix key.
      * @param string $sRootPath path to root directory.
      */
-    public static function retrieveCode($sCodeKey = BX_DOL_TEMPLATE_CODE_KEY, $sRootPath = BX_DIRECTORY_PATH_ROOT)
+    public static function retrieveCode($sCodeKey = BX_DOL_TEMPLATE_CODE_KEY, $sMixKey = BX_DOL_TEMPLATE_MIX_KEY, $sRootPath = BX_DIRECTORY_PATH_ROOT)
     {
         $fCheckCode = function($sCode, $bSetCookie) use($sCodeKey, $sRootPath) {
             if(empty($sCode) || !preg_match('/^[A-Za-z0-9_-]+$/', $sCode))
@@ -358,6 +367,26 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             return $aResult;
         };
 
+        $fCheckMix = function($aResult, $iMix, $bSetCookie) use($sMixKey, $sRootPath) {
+            list($sCode, $sName) = $aResult;
+            if(empty($sName))
+                return false;
+
+            $aMix = BxDolDb::getInstance()->getParamsMix($iMix);
+            if(empty($aMix) || !is_array($aMix) || $aMix['type'] != $sName)
+                return false;
+
+            if(!$bSetCookie)
+                return $iMix;
+
+            $aUrl = parse_url(BX_DOL_URL_ROOT);
+            $sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
+
+            setcookie($sMixKey, $iMix, time() + 60*60*24*365, $sPath);
+
+            return $iMix;
+        };
+
         $sCode = getParam('template');
         if(empty($sCode))
             $sCode = BX_DOL_TEMPLATE_DEFAULT_CODE;
@@ -374,6 +403,28 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $aResultCheck = $fCheckCode($sCode, true);
         if($aResultCheck !== false)
             $aResult = $aResultCheck;
+
+        if($aResult !== false) {
+            //--- Check selected mix in COOKIE(the lowest priority) ---//
+            $iMix = !empty($_COOKIE[$sMixKey]) ? (int)$_COOKIE[$sMixKey] : 0;
+            $iResultCheck = $fCheckMix($aResult, $iMix, false);
+            if($iResultCheck !== false) {
+                if(!is_array($aResult[0]))
+                    $aResult[0] = array($aResult[0]);
+
+                $aResult[0][1] = $iResultCheck;
+            }
+
+            //--- Check selected mix in GET(the highest priority) ---//
+            $iMix = !empty($_GET[$sMixKey]) ? (int)$_GET[$sMixKey] : 0;
+            $iResultCheck = $fCheckMix($aResult, $iMix, true);
+            if($iResultCheck !== false) {
+                if(!is_array($aResult[0]))
+                    $aResult[0] = array($aResult[0]);
+
+                $aResult[0][1] = $iResultCheck;
+            }
+        }
 
         return $aResult;
     }
@@ -634,6 +685,16 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     function getCode()
     {
         return $this->_sCode;
+    }
+
+    /**
+     * Get currently active template mix.
+     *
+     * @return integer template's mix.
+     */
+    function getMix()
+    {
+        return $this->_iMix;
     }
 
     /**

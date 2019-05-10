@@ -569,7 +569,11 @@
 	<string name="_adm_btn_settings_import"><![CDATA[Импортировать]]></string>
 	<string name="_adm_btn_settings_save"><![CDATA[Сохранить]]></string>
 	<string name="_adm_btn_settings_mix_create"><![CDATA[Создать набор]]></string>
-	<string name="_adm_btn_settings_mix_delete"><![CDATA[Удалить набор]]></string>
+        <string name="_adm_btn_settings_mix_import"><![CDATA[Импортировать]]></string>
+	<string name="_adm_btn_settings_mix_export"><![CDATA[Экспортировать]]></string>
+	<string name="_adm_btn_settings_mix_delete"><![CDATA[Удалить]]></string>
+        <string name="_adm_btn_settings_mix_hide"><![CDATA[Скрыть]]></string>
+        <string name="_adm_btn_settings_mix_publish"><![CDATA[Публиковать]]></string>
 	<string name="_adm_btn_store_search"><![CDATA[Поиск]]></string>
 	<string name="_adm_dbd_btn_update"><![CDATA[Обновить]]></string>
 	<string name="_adm_dbd_txt_version_n_available"><![CDATA[Новая версия UNA {0}!]]></string>
@@ -1379,6 +1383,7 @@
 	<string name="_adm_stg_txt_mix_duplicate"><![CDATA[Продублировать]]></string>
 	<string name="_adm_stg_txt_mix_duplicate_inf"><![CDATA[Используйте 'Никакой', чтобы продублировать Системные значения]]></string>
 	<string name="_adm_stg_txt_mix_title"><![CDATA[Название набора]]></string>
+        <string name="_adm_stg_txt_mix_title_inf"><![CDATA[Создайте <b>_sys_template_mixed_[template_name]_[mix_name]</b> языковой ключ в Polyglot, чтобы изменить публичное отображение. <b>[template_name]</b> и <b>[mix_name]</b>: строчные буквы, пробелы заменены на подчеркивания.]]></string>
 	<string name="_adm_stg_txt_mix_title_err"><![CDATA[Нужно указать название. Пожалуйста, заполните это поле.]]></string>
 	<string name="_adm_stg_txt_mix_system"><![CDATA[Системный]]></string>
 	<string name="_adm_stg_err_remove_old_image"><![CDATA[Невозможно удалить текущее изображение.]]></string>
@@ -2605,7 +2610,7 @@
 	<string name="_sys_switch_profile"><![CDATA[Переключить профиль]]></string>
 	<string name="_sys_submit"><![CDATA[Выполнить]]></string>
 	<string name="_sys_subscribe"><![CDATA[Получать уведомления]]></string>
-
+        <string name="_sys_template_mixed_mask"><![CDATA[{0} ({1})]]></string>
 
 	<string name="_sys_tour_launcher_welcome_title"><![CDATA[Добро пожаловать в UNA Студию!]]></string>
 	<string name="_sys_tour_launcher_welcome_txt"><![CDATA[Студия это место, где можно настроить свой сайт: добавлять приложения и управлять ими; управлять языками и изменять дизайн; контролировать уровни доступа для пользователей; настраивать страницы и навигацию, а также многое другое. Текущая страница - стартовый экран Студии.]]></string>

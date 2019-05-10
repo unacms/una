@@ -174,63 +174,73 @@ class BxBaseStudioSettings extends BxDolStudioSettings
         $bTmplVarsMixes = false;
         $aTmplVarsMixes = array();
         if($this->bMixes) {
-        	if(is_string($this->sCategory))
-        		$aMixesBrowse = array('type' => 'by_type_category', 'mix_type' => $this->sType, 'mix_category' => $this->sCategory);
-        	else
-        		$aMixesBrowse = array('type' => 'by_type', 'value' => $this->sType);
+            if(is_string($this->sCategory))
+                $aMixesBrowse = array('type' => 'by_type_category', 'mix_type' => $this->sType, 'mix_category' => $this->sCategory);
+            else
+                $aMixesBrowse = array('type' => 'by_type', 'value' => $this->sType);
 
-        	$aMixes = array();
-			$this->oDb->getMixes($aMixesBrowse, $aMixes, false);
-			$aMixes = array_merge(array(array('name' => BX_DOL_STUDIO_STG_MIX_DEFAULT, 'title' => _t('_adm_stg_txt_mix_' . BX_DOL_STUDIO_STG_MIX_DEFAULT))), $aMixes);
+            $aMixes = array();
+            $this->oDb->getMixes($aMixesBrowse, $aMixes, false);
+            $aMixes = array_merge(array(array('name' => BX_DOL_STUDIO_STG_MIX_DEFAULT, 'title' => _t('_adm_stg_txt_mix_' . BX_DOL_STUDIO_STG_MIX_DEFAULT))), $aMixes);
 
-			foreach($aMixes as $aMix)
-				$aTmplVarsMixes[] = array(
-					'value' => $aMix['name'],
-					'title' => $aMix['title'],
-					'bx_if:show_checked_mix' => array(
-						'condition' => !empty($this->sMix) && $aMix['name'] == $this->sMix,
-						'content' => array()
-					)
-				);
+            foreach($aMixes as $aMix)
+                $aTmplVarsMixes[] = array(
+                    'value' => $aMix['name'],
+                    'title' => $aMix['title'],
+                    'bx_if:show_checked_mix' => array(
+                        'condition' => !empty($this->sMix) && $aMix['name'] == $this->sMix,
+                        'content' => array()
+                    )
+                );
 
-			$bTmplVarsMixes = !empty($aTmplVarsMixes);
+            $bTmplVarsMixes = !empty($aTmplVarsMixes);
         }
 
         $bMixSelected = !empty($this->sMix) && !empty($this->aMix);
+        $bMixPublished = $bMixSelected && (int)$this->aMix['published'] != 0;
+
         $aTmplVarsButton = array();
         if($bMixSelected)
-        	$aTmplVarsButton = array(
-        		'js_object' => $sJsObject,
-				'id' => $this->aMix['id']
-        	);
+            $aTmplVarsButton = array(
+                'js_object' => $sJsObject,
+                'id' => $this->aMix['id']
+            );
 
         return $oTemplate->parseHtmlByName('settings.html', array(
-        	'js_object' => $sJsObject,
-        	'type' => $this->sType,
-	        'category' => is_array($this->sCategory) ? json_encode($this->sCategory) : $this->sCategory,
-	        'mix' => $this->sMix,
-        	'bx_if:show_mixes' => array(
-        		'condition' => $this->bMixes,
-        		'content' => array(
-        			'js_object' => $sJsObject,
-        			'bx_if:show_select_mix' => array(
-        				'condition' => $bTmplVarsMixes,
-        				'content' => array(
-        					'js_object' => $sJsObject,
-        					'bx_repeat:mixes' => $aTmplVarsMixes,
-        				) 
-        			),
-        			'bx_if:show_export_mix' => array(
-        				'condition' => $bMixSelected,
-        				'content' => $aTmplVarsButton
-        			),
-        			'bx_if:show_delete_mix' => array(
-        				'condition' => $bMixSelected,
-        				'content' => $aTmplVarsButton
-        			),
-        		)
-        	), 
-        	'form' => $oForm->getCode()
+            'js_object' => $sJsObject,
+            'type' => $this->sType,
+            'category' => is_array($this->sCategory) ? json_encode($this->sCategory) : $this->sCategory,
+            'mix' => $this->sMix,
+            'bx_if:show_mixes' => array(
+                'condition' => $this->bMixes,
+                'content' => array(
+                    'js_object' => $sJsObject,
+                    'bx_if:show_select_mix' => array(
+                        'condition' => $bTmplVarsMixes,
+                        'content' => array(
+                            'js_object' => $sJsObject,
+                            'bx_repeat:mixes' => $aTmplVarsMixes,
+                        ) 
+                    ),
+                    'bx_if:show_publish_mix' => array(
+                        'condition' => !$bMixPublished,
+                        'content' => $aTmplVarsButton
+                    ),
+                    'bx_if:show_hide_mix' => array(
+                        'condition' => $bMixPublished,
+                        'content' => $aTmplVarsButton
+                    ),
+                    'bx_if:show_export_mix' => array(
+                        'condition' => $bMixSelected,
+                        'content' => $aTmplVarsButton
+                    ),
+                    'bx_if:show_delete_mix' => array(
+                        'condition' => $bMixSelected,
+                        'content' => $aTmplVarsButton
+                    ),
+                )
+            ), 
+            'form' => $oForm->getCode()
         ));
     }
 
@@ -259,32 +269,33 @@ class BxBaseStudioSettings extends BxDolStudioSettings
             ),
             'inputs' => array(
             	'page' => array(
-            		'type' => 'hidden',
+                    'type' => 'hidden',
                     'name' => 'page',
                     'value' => $this->sType
-				),
-				'category' => array(
-            		'type' => 'hidden',
+                ),
+                'category' => array(
+                    'type' => 'hidden',
                     'name' => 'category',
                     'value' => is_array($this->sCategory) ? json_encode($this->sCategory) : $this->sCategory,
-				),
+                ),
             	'title' => array(
-            		'type' => 'text',
+                    'type' => 'text',
                     'name' => 'title',
                     'caption' => _t('_adm_stg_txt_mix_title'),
+                    'info' => _t('_adm_stg_txt_mix_title_inf'),
                     'value' => '',
-					'required' => true,
-					'checker' => array(
-						'func' => 'avail',
-						'params' => array(),
-						'error' => _t('_adm_stg_txt_mix_title_err')
-					),
+                    'required' => true,
+                    'checker' => array(
+                        'func' => 'avail',
+                        'params' => array(),
+                        'error' => _t('_adm_stg_txt_mix_title_err')
+                    ),
                     'db' => array (
                         'pass' => 'Xss',
-            		)
-				),
-				'duplicate' => array(
-					'type' => 'select',
+                    )
+                ),
+                'duplicate' => array(
+                    'type' => 'select',
                     'name' => 'duplicate',
                     'caption' => _t('_adm_stg_txt_mix_duplicate'),
 					'info' => _t('_adm_stg_txt_mix_duplicate_inf'),
