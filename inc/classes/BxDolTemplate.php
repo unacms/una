@@ -2589,7 +2589,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 $sResult = $this->_sCacheFilePrefix . bx_lang_name() . '_' . $this->_sCode .  '_' . $sResult;
                 break;
             case 'css':
-                $sResult = $this->_sCssCachePrefix . $sResult;
+                $sResult = $this->_sCssCachePrefix . (!empty($this->_iMix) ? $this->_iMix . '_' : '') .  $sResult;
                 break;
             case 'js':
                 $sResult = $this->_sJsCachePrefix . $sResult;
