@@ -220,7 +220,7 @@ class BxDolPermalinks extends BxDolDb implements iBxDolSingleton
 
             $sPage = substr($sLink, $iLength);
 
-            return $sPrefix . $this->aLinksPermalink[$sKey]['standard'] . $sPage;
+            return $sPrefix . $this->aLinksPermalink[$sKey]['standard'] . str_replace('?', '&', $sPage);
 
         }
 

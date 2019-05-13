@@ -2183,6 +2183,7 @@
 	<string name="_sys_location_geolocation_not_supported_by_browser"><![CDATA[Геолокация не поддерживается этим браузером]]></string>
 	<string name="_sys_location_undefined"><![CDATA[Отключить местоположение]]></string>
 	<string name="_sys_menu_item_title_about"><![CDATA[О нас]]></string>
+        <string name="_sys_menu_item_title_copyright"><![CDATA[Копирайт]]></string>
 	<string name="_sys_menu_item_title_privacy"><![CDATA[Конфиденциальность]]></string>
 	<string name="_sys_menu_item_title_search"><![CDATA[Поиск]]></string>
 	<string name="_sys_menu_item_title_switch_language"><![CDATA[Язык]]></string>
@@ -2247,6 +2248,7 @@
     <string name="_sys_menu_item_title_sm_country"><![CDATA[Страна]]></string>
     <string name="_sys_menu_item_title_sm_country_city"><![CDATA[Страна и город]]></string>
 	<string name="_sys_menu_item_title_system_about"><![CDATA[Об...]]></string>
+        <string name="_sys_menu_item_title_system_copyright"><![CDATA[Копирайт]]></string>
 	<string name="_sys_menu_item_title_system_privacy"><![CDATA[Конфиденциальность]]></string>
 	<string name="_sys_menu_item_title_system_switch_language"><![CDATA[Язык]]></string>
 	<string name="_sys_menu_item_title_system_switch_template"><![CDATA[Тема]]></string>

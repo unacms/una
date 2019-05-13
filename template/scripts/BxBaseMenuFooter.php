@@ -17,6 +17,10 @@ class BxBaseMenuFooter extends BxTemplMenu
         parent::__construct ($aObject, $oTemplate);
     }
 
+    public function getCode ()
+    {
+        return parent::getCode() . getVersionComment();
+    }
     public function getMenuItems ()
     {
         $aItems = parent::getMenuItems();
@@ -31,9 +35,9 @@ class BxBaseMenuFooter extends BxTemplMenu
                     break;
 
                 case 'switch_template':
-                	$aTemplates = get_templates_array(true, true);
+                    $aTemplates = get_templates_array(true, true);
 
-                	$sTemplateName = $this->_oTemplate->getCode();                    
+                    $sTemplateName = $this->_oTemplate->getCode();                    
                     $sTemplateTitle = isset($aTemplates[$sTemplateName]) ? $aTemplates[$sTemplateName] : '';
 
                     $sTitle = _t('_sys_menu_item_title_switch_template_mask', $aItems[$iKey]['title'], $sTemplateTitle);
@@ -41,6 +45,10 @@ class BxBaseMenuFooter extends BxTemplMenu
                     $aItems[$iKey]['title'] = $sTitle;
                     $aItems[$iKey]['bx_if:title']['condition'] = (bool)$sTitle;
                     $aItems[$iKey]['bx_if:title']['content']['title'] = $sTitle;
+                    break;
+
+                case 'copyright':
+                    $aItems[$iKey]['title_attr'] = bx_html_attribute(_t('_copyright', date('Y')));
                     break;
 
                 case 'powered_by':

@@ -40,7 +40,7 @@ class BxBaseMenuSwitchLanguage extends BxTemplMenu
         list($sPageLink, $aPageParams) = $this->{'getBaseUrl' . bx_gen_method_name($this->_sType)}();
 
         $oPermalink = BxDolPermalinks::getInstance();
-		$sMethod = 'getItemTitle' . bx_gen_method_name($this->_sType);
+        $sMethod = 'getItemTitle' . bx_gen_method_name($this->_sType);
 
         $aItems = array();
         foreach( $aLanguages as $sName => $sLang ) {
