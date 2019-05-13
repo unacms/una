@@ -92,6 +92,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'OBJECT_IMAGES_TRANSCODER_THUMB' => 'bx_persons_thumb',
             'OBJECT_IMAGES_TRANSCODER_ICON' => 'bx_persons_icon',
             'OBJECT_IMAGES_TRANSCODER_AVATAR' => 'bx_persons_avatar',
+            'OBJECT_IMAGES_TRANSCODER_AVATAR_BIG' => 'bx_persons_avatar_big',
             'OBJECT_IMAGES_TRANSCODER_PICTURE' => 'bx_persons_picture',
             'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_persons_cover',
             'OBJECT_IMAGES_TRANSCODER_COVER_THUMB' => 'bx_persons_cover_thumb',

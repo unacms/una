@@ -9,9 +9,9 @@ DELETE FROM sys_profiles WHERE `type` = 'bx_organizations';
 DELETE FROM `sys_objects_storage` WHERE `object` IN('bx_organizations_pics', 'bx_organizations_pics_resized');
 DELETE FROM `sys_storage_tokens` WHERE `object` IN('bx_organizations_pics', 'bx_organizations_pics_resized');
 
-DELETE FROM `sys_objects_transcoder` WHERE `object` IN('bx_organizations_icon', 'bx_organizations_thumb', 'bx_organizations_avatar', 'bx_organizations_picture', 'bx_organizations_cover', 'bx_organizations_cover_thumb', 'bx_organizations_gallery');
-DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` IN('bx_organizations_icon', 'bx_organizations_thumb', 'bx_organizations_avatar', 'bx_organizations_picture', 'bx_organizations_cover', 'bx_organizations_cover_thumb', 'bx_organizations_gallery');
-DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_organizations_icon', 'bx_organizations_thumb', 'bx_organizations_avatar', 'bx_organizations_picture', 'bx_organizations_cover', 'bx_organizations_cover_thumb', 'bx_organizations_gallery');
+DELETE FROM `sys_objects_transcoder` WHERE `object` IN('bx_organizations_icon', 'bx_organizations_thumb', 'bx_organizations_avatar', 'bx_organizations_avatar_big', 'bx_organizations_picture', 'bx_organizations_cover', 'bx_organizations_cover_thumb', 'bx_organizations_gallery');
+DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` IN('bx_organizations_icon', 'bx_organizations_thumb', 'bx_organizations_avatar', 'bx_organizations_avatar_big', 'bx_organizations_picture', 'bx_organizations_cover', 'bx_organizations_cover_thumb', 'bx_organizations_gallery');
+DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_organizations_icon', 'bx_organizations_thumb', 'bx_organizations_avatar', 'bx_organizations_avatar_big', 'bx_organizations_picture', 'bx_organizations_cover', 'bx_organizations_cover_thumb', 'bx_organizations_gallery');
 
 -- FORMS
 DELETE FROM `sys_objects_form` WHERE `module` = 'bx_organizations';

@@ -209,7 +209,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
         $sTitle = bx_process_output($aData[$CNF['FIELD_NAME']]);
 
-        $sUrlAvatar = $this->urlAvatar($aData, false);
+        $sUrlAvatar = $this->urlAvatarBig($aData, false);
         $bUrlAvatar = !empty($sUrlAvatar);
 
         $sUrlPicture = $this->urlPicture ($aData);
@@ -351,6 +351,15 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     {
         $CNF = &$this->_oConfig->CNF;
         return $this->_image ($CNF['FIELD_PICTURE'], $CNF['OBJECT_IMAGES_TRANSCODER_AVATAR'], 'no-picture-preview.png', $aData, $bSubstituteNoImage);
+    }
+
+    /**
+     * Get profile avatar big url
+     */
+    function urlAvatarBig ($aData, $bSubstituteNoImage = true)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        return $this->_image ($CNF['FIELD_PICTURE'], $CNF['OBJECT_IMAGES_TRANSCODER_AVATAR_BIG'], 'no-picture-preview.png', $aData, $bSubstituteNoImage);
     }
 
     /**

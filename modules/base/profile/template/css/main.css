@@ -65,20 +65,20 @@ img.bx-base-pofile-unit-thumb {
 
 p.bx-base-pofile-unit-thumb,
 p.bx-base-pofile-unit-ava {
-	display: block;
+    display: block;
     margin: 0px;
 
-	line-height: 46px;
+    line-height: 46px;
     line-height: 2.9rem;
 
-	font-size: 32px;
-	font-size: 2.0rem;
-	font-weight: 700;
-	color: #ffffff;
+    font-size: 32px;
+    font-size: 2.0rem;
+    font-weight: 700;
+    color: #ffffff;
 }
 p.bx-base-pofile-unit-ava {
-    line-height: 94px;
-    line-height: 5.9rem;
+    line-height: 100px;
+    line-height: 6.625rem;
 
     text-align: center;
     font-size: 48px;
@@ -86,14 +86,14 @@ p.bx-base-pofile-unit-ava {
     font-weight: 700;
 }
 .bx-base-pofile-unit-online {
-	position: absolute;
-	right: 0;
-	bottom: 0;
-	width: 0.625rem;
-	height: 0.625rem;
-	border: 1px solid #ffffff;
-	border-radius: 0.625rem;
-	background-color: #7ed321;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 0.625rem;
+    height: 0.625rem;
+    border: 1px solid #ffffff;
+    border-radius: 0.625rem;
+    background-color: #7ed321;
 }
 .bx-base-pofile-unit-with-cover {
     display:inline-block;
@@ -228,7 +228,7 @@ a.bx-base-pofile-cover-thumb img.bx-base-pofile-unit-ava {
     border: 5px solid #fff;
 }
 a.bx-base-pofile-cover-thumb p.bx-base-pofile-unit-ava {
-    line-height: 190px;
+    line-height: 200px;
     font-size: 5.0rem;
 }
 

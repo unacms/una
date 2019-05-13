@@ -85,6 +85,7 @@ class BxSpacesConfig extends BxBaseModProfileConfig
             'OBJECT_IMAGES_TRANSCODER_THUMB' => 'bx_spaces_thumb',
             'OBJECT_IMAGES_TRANSCODER_ICON' => 'bx_spaces_icon',
             'OBJECT_IMAGES_TRANSCODER_AVATAR' => 'bx_spaces_avatar',
+            'OBJECT_IMAGES_TRANSCODER_AVATAR_BIG' => 'bx_spaces_avatar_big',
             'OBJECT_IMAGES_TRANSCODER_PICTURE' => 'bx_spaces_picture',
             'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_spaces_cover',
             'OBJECT_IMAGES_TRANSCODER_COVER_THUMB' => 'bx_spaces_cover_thumb',

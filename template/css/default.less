@@ -476,11 +476,28 @@ h3,
 
 /* image/thumbnail/gallery default styles */
 
-.bx-def-ava,
+
+.bx-def-icon,
 .bx-def-thumb,
-.bx-def-icon {
+.bx-def-ava,
+.bx-def-ava-big {
     .radius(100px);
     overflow:hidden;
+}
+
+.bx-def-ava-big-size {
+    .width(@bx-size-avatar-big);
+    .height(@bx-size-avatar-big);
+    .line-height(@bx-size-avatar-big);
+}
+.bx-def-ava-big-size-max-height {
+    .max-height(@bx-size-avatar-big);
+}
+.bx-def-ava-big-size-min-height {
+    .min-height(@bx-size-avatar-big);
+}
+.bx-def-ava-big-size-left-indent {
+    .margin-left(@bx-size-avatar-big + @bx-margin);
 }
 
 

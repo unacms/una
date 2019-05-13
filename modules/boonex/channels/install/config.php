@@ -81,6 +81,7 @@ $aConfig = array(
         'bx_channels_icon',
         'bx_channels_thumb',
         'bx_channels_avatar',
+        'bx_channels_avatar_big',
         'bx_channels_picture',
         'bx_channels_cover',
         'bx_channels_cover_thumb',

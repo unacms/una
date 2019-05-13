@@ -12,9 +12,9 @@ DELETE FROM sys_profiles WHERE `type` = 'bx_channels';
 DELETE FROM `sys_objects_storage` WHERE `object` IN('bx_channels_pics', 'bx_channels_pics_resized');
 DELETE FROM `sys_storage_tokens` WHERE `object` IN('bx_channels_pics', 'bx_channels_pics_resized');
 
-DELETE FROM `sys_objects_transcoder` WHERE `object` IN('bx_channels_icon', 'bx_channels_thumb', 'bx_channels_avatar', 'bx_channels_picture', 'bx_channels_cover', 'bx_channels_cover_thumb', 'bx_channels_gallery');
-DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` IN('bx_channels_icon', 'bx_channels_thumb', 'bx_channels_avatar', 'bx_channels_picture', 'bx_channels_cover', 'bx_channels_cover_thumb', 'bx_channels_gallery');
-DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_channels_icon', 'bx_channels_thumb', 'bx_channels_avatar', 'bx_channels_picture', 'bx_channels_cover', 'bx_channels_cover_thumb', 'bx_channels_gallery');
+DELETE FROM `sys_objects_transcoder` WHERE `object` IN('bx_channels_icon', 'bx_channels_thumb', 'bx_channels_avatar', 'bx_channels_avatar_big', 'bx_channels_picture', 'bx_channels_cover', 'bx_channels_cover_thumb', 'bx_channels_gallery');
+DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` IN('bx_channels_icon', 'bx_channels_thumb', 'bx_channels_avatar', 'bx_channels_avatar_big', 'bx_channels_picture', 'bx_channels_cover', 'bx_channels_cover_thumb', 'bx_channels_gallery');
+DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_channels_icon', 'bx_channels_thumb', 'bx_channels_avatar', 'bx_channels_avatar_big', 'bx_channels_picture', 'bx_channels_cover', 'bx_channels_cover_thumb', 'bx_channels_gallery');
 
 -- FORMS
 

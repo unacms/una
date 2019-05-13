@@ -75,6 +75,7 @@ class BxCnlConfig extends BxBaseModProfileConfig
             'OBJECT_IMAGES_TRANSCODER_THUMB' => 'bx_channels_thumb',
             'OBJECT_IMAGES_TRANSCODER_ICON' => 'bx_channels_icon',
             'OBJECT_IMAGES_TRANSCODER_AVATAR' => 'bx_channels_avatar',
+            'OBJECT_IMAGES_TRANSCODER_AVATAR_BIG' => 'bx_channels_avatar_big',
             'OBJECT_IMAGES_TRANSCODER_PICTURE' => 'bx_channels_picture',
             'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_channels_cover',
             'OBJECT_IMAGES_TRANSCODER_COVER_THUMB' => 'bx_channels_cover_thumb',

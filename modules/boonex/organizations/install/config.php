@@ -79,6 +79,7 @@ $aConfig = array(
     	'bx_organizations_icon', 
     	'bx_organizations_thumb', 
     	'bx_organizations_avatar', 
+        'bx_organizations_avatar_big', 
     	'bx_organizations_picture', 
     	'bx_organizations_cover', 
     	'bx_organizations_cover_thumb',

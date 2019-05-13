@@ -80,6 +80,7 @@ $aConfig = array(
         'bx_spaces_icon',
         'bx_spaces_thumb',
         'bx_spaces_avatar',
+        'bx_spaces_avatar_big',
         'bx_spaces_picture',
         'bx_spaces_cover',
         'bx_spaces_cover_thumb',
