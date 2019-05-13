@@ -480,16 +480,19 @@ div.bx-tl-empty div.bx-msg-box-container {
 
 /*--- Comments Styles ---*/
 div.bx-tl-item-comments-holder .cmt.bx-def-box {
-	border-width: 0px;
+    border-width: 0px;
 }
 div.bx-tl-item-comments-holder .bx-def-thumb-size {
-	width: 32px;
-	width: 2rem;
-	height: 32px;
-	height: 2rem;
+    width: 30px;
+    width: 2rem;
+    height: 30px;
+    height: 2rem;
 
-	line-height: 32px;
-	line-height: 2rem;
+    line-height: 28px;
+    line-height: 1.8125rem;
+
+    font-size: 24px;
+    font-size: 1.6rem;
 }
 div.bx-tl-item-comments-holder .bx-def-thumb-size-left-indent {
 	margin-left: 3.25rem;

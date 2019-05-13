@@ -257,21 +257,11 @@ class BxBaseView extends BxDolView
 
         $aUsers = $this->_oQuery->getPerformedBy($this->getId());
         foreach($aUsers as $aUser) {
-            list($sUserName, $sUserUrl, $sUserIcon, $sUserUnit) = $this->_getAuthorInfo($aUser['id']);
-            $bUserIcon = !empty($sUserIcon);
+            list($sUserName, $sUserUrl, $sUserIcon, $sUserUnit, $sUserUnitWoInfo) = $this->_getAuthorInfo($aUser['id']);
 
             $aTmplUsers[] = array(
                 'style_prefix' => $this->_sStylePrefix,
-                'bx_if:show_user_icon' => array(
-                    'condition' => $bUserIcon,
-                    'content' => array(
-                        'user_icon' => $sUserIcon
-                    )
-                ),
-                'bx_if:show_user_icon_empty' => array(
-                    'condition' => !$bUserIcon,
-                    'content' => array()
-                ),
+                'user_unit' => $sUserUnitWoInfo,
                 'user_url' => $sUserUrl,
             	'user_title' => bx_html_attribute($sUserName),
             	'user_name' => $sUserName,

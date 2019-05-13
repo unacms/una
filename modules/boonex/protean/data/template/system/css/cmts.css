@@ -2,10 +2,6 @@
 
 
 /*--- View comment ---*/
-div.cmt-avatar .bx-def-unit-img .bx-def-border {
-    border-width: 0;
-}
-
 div.cmt-info .cmt-meta ul.bx-menu-custom li .cmt-meta-item .cmt-meta-username,
 div.cmt-info .cmt-meta ul.bx-menu-custom li .cmt-meta-item .cmt-meta-ago, 
 div.cmt-info .cmt-meta ul.bx-menu-custom li .cmt-meta-item .cmt-meta-membership,
@@ -19,9 +15,4 @@ div.cmt-info .cmt-meta ul.bx-menu-custom li .cmt-meta-item .cmt-meta-username {
 
 div.cmt-cont .cmt-body {
     font-size: 0.875rem;
-}
-
-/*--- Post Comment ---*/
-div.cmt-reply .cmt-bm-user .bx-def-unit-img .bx-def-border {
-    border-width: 0;
 }

@@ -4,9 +4,7 @@
 div.bx-tl-item div.bx-tl-owner-name > * {
     display: inline-block;
 }
-div.bx-tl-item  div.bx-tl-owner-avatar .bx-def-unit-img .bx-def-border {
-    border-width: 0;
-}
+
 
 /*--- Meta and Activity Styles ---*/
 div.bx-tl-item-meta-activity {
