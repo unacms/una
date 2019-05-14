@@ -141,8 +141,7 @@ div.bx-tl-view div.bx-tl-item div.bx-tl-owner-actions {
 	height: 1.875rem;
 	line-height: 1.875rem;
 }
-.bx-tl-item-context-owner .bx-tl-ico-icon .bx-base-pofile-unit-wo-info p.bx-base-pofile-unit-thumb, 
-.bx-tl-item-context-owner .bx-tl-ico-icon .bx-base-pofile-unit-wo-info p.bx-base-pofile-unit-ava {
+.bx-tl-item-context-owner .bx-tl-ico-icon .bx-base-pofile-unit-wo-info p.bx-base-pofile-unit-thumb {
     display: block;
     margin: 0px;
     border-width: 0;

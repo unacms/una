@@ -741,7 +741,7 @@ INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 ('bx_lucid_cover_height', @iMixId, '8rem'),
 ('bx_lucid_body_icon_color_hover', @iMixId, 'rgba(20, 80, 160, 1)'),
 ('bx_lucid_body_link_color_hover', @iMixId, 'rgba(20, 80, 160, 1)'),
-('bx_lucid_cover_bg_color', @iMixId, 'rgba(50, 150, 250, 1)'),
+('bx_lucid_cover_bg_color', @iMixId, 'rgba(255, 255, 255, 1)'),
 ('bx_lucid_body_link_color', @iMixId, 'rgba(50, 150, 250, 1)'),
 ('bx_lucid_font_color_link_h1_hover', @iMixId, 'rgba(50, 100, 180, 1)'),
 ('bx_lucid_button_lg_font_shadow', @iMixId, 'none'),

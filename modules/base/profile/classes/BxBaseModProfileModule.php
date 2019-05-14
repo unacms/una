@@ -236,6 +236,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         $bCheckPrivateContent = isset($aParams['check_private_content']) ? (bool)$aParams['check_private_content'] : true;
 
         $sTemplate = 'unit.html';
+        $sTemplateSize = false;
         $aTemplateVars = array();
         if(!empty($aParams['template'])) {
             if(is_string($aParams['template']))
@@ -244,12 +245,15 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
                 if(!empty($aParams['template']['name']))
                     $sTemplate = $aParams['template']['name'] . '.html';
 
+                if(!empty($aParams['template']['size']))
+                    $sTemplateSize = $aParams['template']['size'];
+
                 if(!empty($aParams['template']['vars']))
                     $aTemplateVars = $aParams['template']['vars'];
             }
         }
 
-        return $this->_oTemplate->unit($aContentInfo, $bCheckPrivateContent, array($sTemplate, $aTemplateVars));
+        return $this->_oTemplate->unit($aContentInfo, $bCheckPrivateContent, array($sTemplate, $sTemplateSize, $aTemplateVars));
     }
 
     public function serviceHasImage ($iContentId)

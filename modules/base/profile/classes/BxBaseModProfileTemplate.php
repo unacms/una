@@ -14,6 +14,9 @@
  */
 class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 {
+    protected $_sUnitDefault;    
+    protected $_sUnitSizeDefault;
+
     protected $_sUnitClass;
     protected $_sUnitClassWithCover;
     protected $_sUnitClassWoInfo;
@@ -26,6 +29,9 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     {
         parent::__construct($oConfig, $oDb);
 
+        $this->_sUnitDefault = 'unit.html';
+        $this->_sUnitSizeDefault = 'thumb';
+                
         $this->_sUnitClass = 'bx-base-pofile-unit';
         $this->_sUnitClassWithCover = 'bx-base-pofile-unit-with-cover';
         $this->_sUnitClassWoInfo = 'bx-base-pofile-unit-wo-info';
@@ -38,20 +44,29 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     /**
      * Get profile unit
      */
-    function unit ($aData, $isCheckPrivateContent = true, $mixedTemplate = 'unit.html')
+    function unit ($aData, $isCheckPrivateContent = true, $mixedTemplate = false)
     {
-        list($sTemplate, $aTemplateVars) = is_array($mixedTemplate) ? $mixedTemplate : array($mixedTemplate, array());
+        list($sTemplate) = is_array($mixedTemplate) ? $mixedTemplate : array($mixedTemplate);
+        if(empty($sTemplate))
+            $sTemplate = $this->_sUnitDefault;
 
-        $aVars = $this->unitVars($aData, $isCheckPrivateContent, $sTemplate);
-        if(!empty($aTemplateVars) && is_array($aTemplateVars))
-            $aVars = array_merge($aVars, $aTemplateVars);
-
+        $aVars = $this->unitVars($aData, $isCheckPrivateContent, $mixedTemplate);
+ 
         return $this->parseHtmlByName($sTemplate, $aVars);
     }
 
-    function unitVars ($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html')
+    function unitVars ($aData, $isCheckPrivateContent = true, $mixedTemplate = false)
     {
         $CNF = &$this->_oConfig->CNF;
+
+        list($sTemplate, $sTemplateSize, $aTemplateVars) = is_array($mixedTemplate) ? $mixedTemplate : array($mixedTemplate, false, array());
+
+        if(empty($sTemplate))
+            $sTemplate = $this->_sUnitDefault;
+        if(empty($sTemplateSize))
+            $sTemplateSize = $this->_getUnitSize($aData, $sTemplate);
+        if(empty($aTemplateVars) || !is_array($aTemplateVars))
+            $aTemplateVars = array();
 
         $oModule = $this->getModule();
         $iContentId = (int)$aData[$CNF['FIELD_ID']];
@@ -90,18 +105,21 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                 'bx_if:show_thumb_image' => array(
                     'condition' => $bThumbUrl,
                     'content' => array(
+                        'size' => $sTemplateSize,
                         'thumb_url' => $sThumbUrl
                     )
                 ),
                 'bx_if:show_avatar_image' => array(
                     'condition' => $bAvatarUrl,
                     'content' => array(
+                        'size' => $sTemplateSize,
                         'avatar_url' => $sAvatarUrl
                     )
                 ),
                 'bx_if:show_thumb_letter' => array(
                     'condition' => !$bThumbUrl && !$bAvatarUrl,
                     'content' => array(
+                        'size' => $sTemplateSize,
                         'color' => implode(', ', BxDolTemplate::getColorCode($iProfile, 1.0)),
                         'letter' => mb_strtoupper(mb_substr($sTitle, 0, 1))
                     )
@@ -110,6 +128,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                     'condition' => $oProfile->isOnline(),
                     'content' => array()
                 ),
+                'size' => $sTemplateSize,
                 'thumb_url' => $bThumbUrl ? $sThumbUrl : $this->getImageUrl('no-picture-thumb.png'),
                 'avatar_url' => $bAvatarUrl ? $sAvatarUrl : $this->getImageUrl('no-picture-thumb.png'),
             );
@@ -122,10 +141,8 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         
         $aTmplVarsMeta = $this->getSnippetMenuVars ($iProfile, $bPublic);
 
-        
-        // generate html
         return array_merge(array (
-            'class' => $this->_getUnitClass($aData, $sTemplateName),
+            'class' => $this->_getUnitClass($aData, $sTemplate),
             'id' => $iContentId,
             'public' => $bPublic,
             'bx_if:show_thumbnail' => array(
@@ -144,7 +161,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                 'condition' => !empty($aTmplVarsMeta),
                 'content' => $aTmplVarsMeta
             )
-        ), $aTmplVarsThumbnail);
+        ), $aTmplVarsThumbnail, $aTemplateVars);
     }
 
     function isProfilePublic($aData)
@@ -450,6 +467,23 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
 			case 'unit_wo_info_showcase.html':
                 $sResult = $this->_sUnitClassWoInfoShowCase;
+                break;
+        }
+
+        return $sResult;
+    }
+
+    protected function _getUnitSize($aData, $sTemplateName = 'unit.html')
+    {
+        $sResult = '';
+
+        switch($sTemplateName) {
+            case 'unit_with_cover.html':
+                $sResult = 'ava';
+                break;
+
+            default:
+                $sResult = $this->_sUnitSizeDefault;
                 break;
         }
 

@@ -13,9 +13,13 @@
  */
 class BxBaseMenuToolbar extends BxTemplMenu
 {
+    protected $_sUnitSize;
+
     public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject, $oTemplate);
+        
+        $this->_sUnitSize = 'icon';
     }
 
     public function getMenuItems ()
@@ -34,7 +38,7 @@ class BxBaseMenuToolbar extends BxTemplMenu
 
             $oProfile = BxDolProfile::getInstance(bx_get_logged_profile_id());
 
-            $sUnit = $oProfile->getUnit(0, array('template' => 'unit_wo_info_links'));
+            $sUnit = $oProfile->getUnit(0, array('template' => array('name' => 'unit_wo_info_links', 'size' => $this->_sUnitSize)));
             if(!empty($sUnit)) {
                 $a[$k]['bx_if:icon']['condition'] = false;
                 $a[$k]['bx_if:unit'] = array (

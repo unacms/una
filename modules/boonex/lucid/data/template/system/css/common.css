@@ -20,7 +20,6 @@
 }
 
 /* --- Profile Thumbnails/Avatars --- */
-img.bx-base-pofile-unit-ava,
 img.bx-base-pofile-unit-thumb {
     background-color: #fff;
 }
@@ -36,7 +35,7 @@ div.bx-base-pofile-unit-wo-info div.bx-def-unit-img p.bx-base-pofile-unit-thumb 
 	font-size: 1.5rem;
 }
 
-div.bx-def-unit-img p.bx-base-pofile-unit-ava {
+div.bx-def-unit-img p.bx-base-pofile-unit-thumb.bx-def-ava-size {
 	line-height: 92px;
 	line-height: 5.8rem;
 }
