@@ -464,17 +464,17 @@ div.bx-tl-view-outline div.bx-tl-reposted div.bx-tl-content {
 
 /*--- Item Brief Style ---*/
 div.bx-tl-bview-image {
-	text-align: center;
+    text-align: center;
 }
 div.bx-tl-bview-image img {
-	max-width: 100%;
+    max-width: 100%;
 }
 
 
 /*--- Empty Style ---*/
 div.bx-tl-empty div.bx-msg-box-container {
-	margin-top: 0px;
-	margin-bottom: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 
@@ -488,21 +488,21 @@ div.bx-tl-item-comments-holder .bx-def-thumb-size {
     height: 30px;
     height: 2rem;
 
-    line-height: 28px;
-    line-height: 1.8125rem;
+    line-height: 26px;
+    line-height: 1.75rem;
 
-    font-size: 24px;
-    font-size: 1.6rem;
+    font-size: 19.5px;
+    font-size: 1.3rem;
 }
 div.bx-tl-item-comments-holder .bx-def-thumb-size-left-indent {
-	margin-left: 3.25rem;
+    margin-left: 3.25rem;
 }
 div.bx-tl-item-comments-holder .bx-def-thumb-size-min-height {
     min-height: 2rem;
 }
 div.bx-tl-item-comments-holder .cmts.cmts-margin {
-	font-size: 12px;
-	font-size: 0.75rem;
+    font-size: 12px;
+    font-size: 0.75rem;
 }
 
 /*--- Live Update Alert Styles ---*/

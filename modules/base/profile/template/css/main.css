@@ -85,10 +85,11 @@ p.bx-base-pofile-unit-thumb {
     color: #ffffff;
 }
 p.bx-base-pofile-unit-thumb.bx-def-icon-size {
-    line-height: 28px;
-    line-height: 1.8125rem;
-    font-size: 24px;
-    font-size: 1.6rem;
+    line-height: 26px;
+    line-height: 1.75rem;
+
+    font-size: 19.5px;
+    font-size: 1.3rem;
 }
 p.bx-base-pofile-unit-thumb.bx-def-ava-size {
     line-height: 96px;
