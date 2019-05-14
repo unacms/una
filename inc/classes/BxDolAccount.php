@@ -332,10 +332,32 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
      */
     public function getUnit($iAccountId = false, $aParams = array())
     {
-        $sTemplate = 'account_' . (!empty($aParams['template']) ? $aParams['template'] : 'unit') . '.html';
+        
+        $sTemplate = 'unit';
+        $sTemplateSize = false;
+        $aTemplateVars = array();
+        if(!empty($aParams['template'])) {
+            if(is_string($aParams['template']))
+                $sTemplate = $aParams['template'];
+            else if(is_array($aParams['template'])) {
+                if(!empty($aParams['template']['name']))
+                    $sTemplate = $aParams['template']['name'];
+
+                if(!empty($aParams['template']['size']))
+                    $sTemplateSize = $aParams['template']['size'];
+
+                if(!empty($aParams['template']['vars']))
+                    $aTemplateVars = $aParams['template']['vars'];
+            }
+        }
+        $sTemplate = 'account_' . $sTemplate . '.html';
+        if(empty($sTemplateSize))
+            $sTemplateSize = 'thumb';
 
         $sTitle = $this->getDisplayName($iAccountId);
-        return BxDolTemplate::getInstance()->parseHtmlByName($sTemplate, array(
+
+        $aTmplVars = array(
+            'size' => $sTemplateSize,
             'color' => implode(', ', BxDolTemplate::getColorCode(($iAccountId ? $iAccountId : $this->_iAccountID), 1.0)),
             'letter' => mb_strtoupper(mb_substr($sTitle, 0, 1)),
             'content_url' => $this->getUrl($iAccountId),
@@ -345,7 +367,12 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
                 'condition' => $this->isOnline($iAccountId),
                 'content' => array()
             )
-        ));
+        );
+
+        if(!empty($aTemplateVars) && is_array($aTemplateVars))
+            $aTmplVars = array_merge ($aTmplVars, $aTemplateVars);
+
+        return BxDolTemplate::getInstance()->parseHtmlByName($sTemplate, $aTmplVars);
     }
 
     /**
