@@ -17,16 +17,18 @@
         </filter>
     </defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="posts">
-            <mask id="mask-2" fill="white">
-                <use xlink:href="#path-1"></use>
-            </mask>
-            <use id="Path" fill="#00B356" xlink:href="#path-1"></use>
-            <g id="file-alt" mask="url(#mask-2)" fill-rule="nonzero">
-                <g transform="translate(17.000000, 12.000000)" id="Shape">
-                    <g>
-                        <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"></use>
-                        <use fill="url(#linearGradient-3)" xlink:href="#path-4"></use>
+        <g id="Artboard" transform="translate(-340.000000, -430.000000)">
+            <g id="posts" transform="translate(340.000000, 430.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Path" fill="#00B356" xlink:href="#path-1"></use>
+                <g id="file-alt" mask="url(#mask-2)" fill-rule="nonzero">
+                    <g transform="translate(17.000000, 12.000000)" id="Shape">
+                        <g>
+                            <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"></use>
+                            <use fill="url(#linearGradient-3)" xlink:href="#path-4"></use>
+                        </g>
                     </g>
                 </g>
             </g>
