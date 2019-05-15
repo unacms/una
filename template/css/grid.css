@@ -36,6 +36,10 @@
     margin:0;
 }
 
+.bx-grid-header-controls-filter {
+    float:left;
+    width: 50%;
+}
 
 .bx-grid-header-controls-independent {
     float:right;
