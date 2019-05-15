@@ -1261,7 +1261,7 @@ BLAH;
         $sOptions = '';
         if (isset($aInput['values']) and is_array($aInput['values'])) {
             foreach ($aInput['values'] as $sValue => $sTitle) {
-                $sClassC = $sStyleC = "";
+                $sAttrsOpt = "";
                 if(is_array($sTitle)) {
                     if(isset($sTitle['type'])) {
                         switch($sTitle['type']) {
@@ -1280,8 +1280,18 @@ BLAH;
                         continue;
                     }
 
-                    $sClassC = isset($sTitle['class']) ? " class=\"" . $sTitle['class'] . "\"" : "";
-                    $sStyleC = isset($sTitle['style']) ? " style=\"" . $sTitle['style'] . "\"" : "";
+                    $aAttrsOpt = array();
+                    if(!empty($sTitle['attrs']) && is_array($sTitle['attrs']))
+                        $aAttrsOpt = $sTitle['attrs'];
+
+                    if(isset($sTitle['class']))
+                        $aAttrsOpt['class'] = !empty($aAttrsOpt['class']) ? $aAttrsOpt['class'] . ' ' . $sTitle['class'] : $sTitle['class'];
+
+                    if(isset($sTitle['style']))
+                        $aAttrsOpt['style'] = !empty($aAttrsOpt['style']) ? $aAttrsOpt['style'] . ' ' . $sTitle['style'] : $sTitle['style'];
+
+                    $sAttrsOpt = !empty($aAttrsOpt) ? bx_convert_array2attrs($aAttrsOpt) : '';
+
                     $sValue = $sTitle['key'];
                     $sTitle = $sTitle['value'];
                 }
@@ -1291,7 +1301,7 @@ BLAH;
                 $sSelected = $this->$sIsSelectedFunc($sValue, $mixedCurrentVal) ? 'selected="selected"' : '';
 
                 $sOptions .= <<<BLAH
-                   <option value="$sValueC"$sClassC$sStyleC $sSelected>$sTitleC</option>
+                   <option value="$sValueC" $sAttrsOpt $sSelected>$sTitleC</option>
 BLAH;
 
             }
