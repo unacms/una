@@ -61,7 +61,7 @@ class BxBaseModGroupsPrivacy extends BxBaseModProfilePrivacy
             $iOwnerId = bx_get_logged_profile_id();
 
         $aParams['dynamic_groups'] = array(
-            array ('key' => '', 'value' => '----'),
+            array ('key' => '', 'value' => '----', 'attrs' => array('disabled' => 'disabled')),
             array ('key' => BX_BASE_MOD_GROUPS_PG_CLOSED, 'value' => _t('_sys_ps_group_title_closed')),
             array ('key' => BX_BASE_MOD_GROUPS_PG_SECRET, 'value' => _t('_sys_ps_group_title_secret')),
         );

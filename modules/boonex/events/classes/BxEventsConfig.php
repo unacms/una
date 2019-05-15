@@ -74,8 +74,8 @@ class BxEventsConfig extends BxBaseModProfileConfig
 
             'PARAM_NUM_RSS' => 'bx_events_num_rss',
             'PARAM_NUM_CONNECTIONS_QUICK' => 'bx_events_num_connections_quick',
-            
             'PARAM_SEARCHABLE_FIELDS' => 'bx_events_searchable_fields',
+            'PARAM_PUBLIC_SBSD' => 'bx_events_public_subscribed_me',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_events_per_page_browse_showcase',
             'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_events_per_page_browse_recommended',
 
