@@ -47,10 +47,17 @@ class BxDolTranscoderQuery extends BxDolDb
         return $oDb->getAll($sQuery);
     }
 
-    public function getTranscoderFilters ()
+    public function getTranscoderFilters ($sFilterName = '')
     {
-        $sQuery = $this->prepare("SELECT * FROM {$this->_sTableFilters} WHERE `transcoder_object` = ? ORDER BY `order` ASC", $this->_aObject['object']);
-        return $this->getAll($sQuery);
+        $aBindings = array('object' => $this->_aObject['object']);
+        $sWhere = '';
+        if ($sFilterName) {
+            $sWhere .= ' AND `filter` = :filter '; 
+            $aBindings['filter'] = $sFilterName;
+        }
+        $sQuery = "SELECT * FROM {$this->_sTableFilters} WHERE `transcoder_object` = :object $sWhere ORDER BY `order` ASC";
+        return $this->fromMemory('BxDolTranscoderQuery::getTranscoderFilters' . $this->_aObject['object'] . $sFilterName, 'getAll', $sQuery, $aBindings);
+
     }
 
     public function updateHandler ($iFileId, $mixedHandler)
