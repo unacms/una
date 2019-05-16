@@ -3,17 +3,17 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    MobileApps Mobile Apps
+ * @defgroup    Nexus Nexus - Mobile Apps and Desktop apps connector
  * @ingroup     UnaModules
  *
  * @{
  */
 
-class BxMobileAppsDb extends BxDolModuleDb
+class BxNexusConfig extends BxDolModuleConfig
 {
-    function __construct(&$oConfig)
+    function __construct($aModule)
     {
-        parent::__construct($oConfig);
+        parent::__construct($aModule);
     }
 }
 

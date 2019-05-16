@@ -38,17 +38,18 @@
         ipcRenderer.send('message', __msg__);
 
         // send messenger badge
-        setInterval(function () {
-            if ('undefined' !== typeof oLiveUpdates && oLiveUpdates._aSystemsActive && 'undefined' !== typeof oLiveUpdates._aSystemsActive.bx_messenger_new_messages) {
-                sMsg = {
-                    'bubbles': {
-                        'notifications-messenger': oLiveUpdates._aSystemsActive.bx_messenger_new_messages,
-                    },
-                };
-                ipcRenderer.send('message', sMsg);
-            }
-        }, 3000);
-        
+        if (typeof window.glBxMessengerOnNotificationChange === 'undefined')
+            window.glBxMessengerOnNotificationChange = [];
+
+        window.glBxMessengerOnNotificationChange.push(function (iNewNumberOfUnreadChats) {
+            sMsg = {
+                'bubbles': {
+                    'notifications-messenger': iNewNumberOfUnreadChats,
+                },
+            };
+            ipcRenderer.send('message', sMsg);
+        });
+
         if ($.cookie('memberID')) {
             // force links to open in external browser in electron
             $(document).ready(function () {
