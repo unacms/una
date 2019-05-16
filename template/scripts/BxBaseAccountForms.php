@@ -77,6 +77,9 @@ class BxBaseAccountForms extends BxDolProfileForms
 
         $iProfileId = $this->onAccountCreated($iAccountId, $oForm->isSetPendingApproval());
 
+        $sRelocateCustom = $oForm->getCleanValue('relocate');
+        $bRelocateCustom = !empty($sRelocateCustom);
+
         // perform action
         BxDolAccount::isAllowedCreate ($iProfileId, true);
 
@@ -106,16 +109,21 @@ class BxBaseAccountForms extends BxDolProfileForms
             $a = BxDolService::call($sProfileModule, 'entity_add', array($iProfileId, $aProfileInfo));
 
             // in case of successful profile add redirect to the page after profile creation
-            if (0 == $a['code']) { 
+            if (0 == $a['code']) {
+                if($bRelocateCustom)
+                    $this->_redirectAndExit($sRelocateCustom, false);
+
                 BxDolService::call($sProfileModule, 'redirect_after_add', array($a['content']));
                 return;
             }
             // if creation failed, redirect to create profile form
         }
 
-        $sRedirectUrl = !empty($sProfileModule) ? BxDolService::call($sProfileModule, 'profile_create_url', array(false)) : '';
+        $sRelocate = !empty($sProfileModule) ? BxDolService::call($sProfileModule, 'profile_create_url', array(false)) : '';
+        if(empty($sRelocate))
+            $sRelocate = $bRelocateCustom ? $sRelocateCustom : getParam('sys_redirect_after_account_added');
     
-        $this->_redirectAndExit(!empty($sRedirectUrl) ? $sRedirectUrl : getParam('sys_redirect_after_account_added'), true, array(
+        $this->_redirectAndExit($sRelocate, true, array(
             'account_id' => $iAccountId,
             'profile_id' => $iProfileId,
         ));
