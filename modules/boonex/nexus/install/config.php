@@ -3,7 +3,7 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    MobileApps Mobile Apps
+ * @defgroup    Nexus Nexus - Mobile Apps and Desktop apps connector
  * @ingroup     UnaModules
  *
  * @{
@@ -14,9 +14,9 @@ $aConfig = array(
      * Main Section.
      */
     'type' => BX_DOL_MODULE_TYPE_MODULE,
-    'name' => 'bx_mobileapps',
-    'title' => 'Mobile Apps',
-    'note' => 'Mobile Apps.',
+    'name' => 'bx_nexus',
+    'title' => 'Nexus',
+    'note' => 'Nexus - Mobile Apps and Desktop apps connector.',
     'version' => '9.0.0.DEV',
     'vendor' => 'BoonEx',
 	'help_url' => 'http://feed.una.io/?section={module_name}',
@@ -28,16 +28,16 @@ $aConfig = array(
     /**
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
-    'home_dir' => 'boonex/mobile_apps/',
-    'home_uri' => 'mobileapps',
+    'home_dir' => 'boonex/nexus/',
+    'home_uri' => 'nexus',
 
-    'db_prefix' => 'bx_mobileapps_',
-    'class_prefix' => 'BxMobileApps',
+    'db_prefix' => 'bx_nexus_',
+    'class_prefix' => 'BxNexus',
 
     /**
      * Category for language keys.
      */
-    'language_category' => 'Mobile Apps',
+    'language_category' => 'Nexus',
     
     /**
      * Installation/Uninstallation Section.

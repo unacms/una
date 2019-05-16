@@ -47,10 +47,17 @@ class BxDolTranscoderQuery extends BxDolDb
         return $oDb->getAll($sQuery);
     }
 
-    public function getTranscoderFilters ()
+    public function getTranscoderFilters ($sFilterName = '')
     {
-        $sQuery = $this->prepare("SELECT * FROM {$this->_sTableFilters} WHERE `transcoder_object` = ? ORDER BY `order` ASC", $this->_aObject['object']);
-        return $this->getAll($sQuery);
+        $aBindings = array('object' => $this->_aObject['object']);
+        $sWhere = '';
+        if ($sFilterName) {
+            $sWhere .= ' AND `filter` = :filter '; 
+            $aBindings['filter'] = $sFilterName;
+        }
+        $sQuery = "SELECT * FROM {$this->_sTableFilters} WHERE `transcoder_object` = :object $sWhere ORDER BY `order` ASC";
+        return $this->fromMemory('BxDolTranscoderQuery::getTranscoderFilters' . $this->_aObject['object'] . $sFilterName, 'getAll', $sQuery, $aBindings);
+
     }
 
     public function updateHandler ($iFileId, $mixedHandler)
@@ -73,7 +80,7 @@ class BxDolTranscoderQuery extends BxDolDb
 
     public function getFileIdByHandler ($mixedHandler)
     {
-        $sQuery = $this->prepare("SELECT `file_id` FROM {$this->_sTableFiles} WHERE `transcoder_object` = ? AND `handler` = ?", $this->_aObject['object'], $mixedHandler);
+        $sQuery = $this->prepare("SELECT `file_id` FROM {$this->_sTableFiles} WHERE `transcoder_object` = ? AND `handler` = ? LIMIT 1", $this->_aObject['object'], (string)$mixedHandler);
         return $this->getOne($sQuery);
     }
 
@@ -86,7 +93,7 @@ class BxDolTranscoderQuery extends BxDolDb
     public function updateAccessTime($mixedHandler)
     {
         $iTime = time();
-        $sQuery = $this->prepare("UPDATE {$this->_sTableFiles} SET `atime` = ? WHERE `transcoder_object` = ? AND `handler` = ?", $iTime, $this->_aObject['object'], $mixedHandler);
+        $sQuery = $this->prepare("UPDATE {$this->_sTableFiles} SET `atime` = ? WHERE `transcoder_object` = ? AND `handler` = ? LIMIT 1", $iTime, $this->_aObject['object'], (string)$mixedHandler);
         return $this->res($sQuery);
     }
 
@@ -277,7 +284,7 @@ class BxDolTranscoderQuery extends BxDolDb
 
     public function getTranscodedFileData($mixedHandler)
     {
-        $sQuery = $this->prepare("SELECT `data` FROM {$this->_sTableFiles} WHERE `transcoder_object` = ? AND `handler` = ?", $this->_aObject['object'], $mixedHandler);
+        $sQuery = $this->prepare("SELECT `data` FROM {$this->_sTableFiles} WHERE `transcoder_object` = ? AND `handler` = ? LIMIT 1", $this->_aObject['object'], (string)$mixedHandler);
         $s = $this->getOne($sQuery);
         if (!$s)
             return false;
@@ -287,7 +294,7 @@ class BxDolTranscoderQuery extends BxDolDb
     public function updateTranscodedFileData($mixedHandler, $mixedData)
     {
         $sData = $mixedData ? serialize($mixedData) : '';
-        $sQuery = $this->prepare("UPDATE {$this->_sTableFiles} SET `data` = ? WHERE `transcoder_object` = ? AND `handler` = ?", $sData, $this->_aObject['object'], $mixedHandler);
+        $sQuery = $this->prepare("UPDATE {$this->_sTableFiles} SET `data` = ? WHERE `transcoder_object` = ? AND `handler` = ? LIMIT 1", $sData, $this->_aObject['object'], (string)$mixedHandler);
 
         return $this->res($sQuery);
     }
