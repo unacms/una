@@ -106,6 +106,8 @@ class BxDolSearchExtendedQuery extends BxDolDb
                     	'values_list_name' => $sList,
                     ));
                 }
+                else if(BxDolService::isSerializedService($aField['values']))
+                    $aFields[$iIndex]['values'] = BxDolService::callSerialized($aField['values']);
                 else
                     $aFields[$iIndex]['values'] = unserialize($aField['values']);
             }
