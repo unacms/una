@@ -25,3 +25,6 @@
 .bx-profile-stats .bx-def-unit-cnt .bx-def-ava-size-max-height {
     max-height: 3.75rem;
 }
+.bx-profile-stats .bx-def-unit-cnt .bx-def-unit-line.bx-def-margin-sec-top {
+    margin-top: 0.25rem;
+}
