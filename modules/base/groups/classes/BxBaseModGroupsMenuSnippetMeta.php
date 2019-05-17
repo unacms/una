@@ -38,6 +38,20 @@ class BxBaseModGroupsMenuSnippetMeta extends BxBaseModProfileMenuSnippetMeta
         return $this->_getMenuItemConnection($this->_oModule->_oConfig->CNF['OBJECT_CONNECTIONS'], 'remove', $aItem);
     }
 
+    protected function _getMenuItemPrivacy($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $sField = 'FIELD_ALLOW_VIEW_TO';
+        if(empty($CNF[$sField]) || empty($this->_aContentInfo[$CNF[$sField]]))
+            return false;
+
+        if($this->_aContentInfo[$CNF[$sField]] == BX_DOL_PG_ALL)
+            return false;
+
+        return $this->getUnitMetaItemText(_t($CNF['T']['txt_private_group']));
+    }
+
     protected function _getMenuItemMembers($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
