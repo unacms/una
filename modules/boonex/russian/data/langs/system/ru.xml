@@ -2240,6 +2240,7 @@
     <string name="_sys_menu_item_title_sm_leave"><![CDATA[Покинуть]]></string>
     <string name="_sys_menu_item_title_sm_leave_cancel"><![CDATA[Отменить присоединение]]></string>
     <string name="_sys_menu_item_title_sm_leave_reject"><![CDATA[Отвергнуть присоединение]]></string>
+    <string name="_sys_menu_item_title_sm_nl"><![CDATA[Новая строка]]></string>
     <string name="_sys_menu_item_title_sm_subscribe"><![CDATA[Получать уведомления]]></string>
     <string name="_sys_menu_item_title_sm_unsubscribe"><![CDATA[Отключить уведомления]]></string>
     <string name="_sys_menu_item_title_sm_friends"><![CDATA[Друзья: {0}]]></string>
@@ -2314,6 +2315,7 @@
     <string name="_sys_menu_item_title_system_sm_unfriend"><![CDATA[Перестать дружить]]></string>
     <string name="_sys_menu_item_title_system_sm_join"><![CDATA[Присоединиться]]></string>
     <string name="_sys_menu_item_title_system_sm_leave"><![CDATA[Покинуть]]></string>
+    <string name="_sys_menu_item_title_system_sm_nl"><![CDATA[Новая строка]]></string>
     <string name="_sys_menu_item_title_system_sm_subscribe"><![CDATA[Получать уведомления]]></string>
     <string name="_sys_menu_item_title_system_sm_unsubscribe"><![CDATA[Отключить уведомления]]></string>
     <string name="_sys_menu_item_title_system_sm_country"><![CDATA[Страна]]></string>

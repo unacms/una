@@ -42,6 +42,11 @@ class BxBaseMenuUnitMeta extends BxTemplMenuCustom
         return $this->getUnitMetaItem('sbutton', $sContent, $aAttrs);
     }
 
+    public function getUnitMetaItemNl($sContent = '')
+    {
+        return $this->getUnitMetaItem('nl', $sContent);
+    }
+
     public function getUnitMetaItemCustom($sContent)
     {
         return $this->getUnitMetaItem('custom', $sContent);
@@ -49,13 +54,13 @@ class BxBaseMenuUnitMeta extends BxTemplMenuCustom
 
     public function getUnitMetaItem($sName, $sContent, $aAttrs = array(), $sTemplate = 'unit_meta_item.html')
     {
-        if(empty($sContent))
+        if(empty($sContent) && $sName != 'nl')
             return '';
 
         if(!is_array($aAttrs))
             $aAttrs = array();
 
-        $aTags = array('span', 'a', 'button', 'sbutton', 'custom');
+        $aTags = array('span', 'a', 'button', 'sbutton', 'custom', 'nl');
 
         $sTmplVarsClass = ''; 
         if(!empty($aAttrs['class'])) {
@@ -88,6 +93,11 @@ class BxBaseMenuUnitMeta extends BxTemplMenuCustom
         return $this->_oTemplate->parseHtmlByName($sTemplate, $aTmplVars);
     }
     
+    protected function _getMenuItemNl($aItem)
+    {
+        return $this->getUnitMetaItemNl();
+    }
+
     protected function _getMenuItemDefault($aItem)
     {
         $sResult = '';
