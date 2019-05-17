@@ -141,7 +141,7 @@ class BxBaseModGeneralDb extends BxDolModuleDb
             $sSearchValue = "";
             switch ($aSearchParam['operator']) {
                 case 'like':
-                    $sSearchValue = " LIKE " . $this->escape("%" . $aSearchParam['value'] . "%");
+                    $sSearchValue = " LIKE " . $this->escape("%" . preg_replace('/\s+/', '%', $aSearchParam['value']) . "%");
                     break;
 
                 case 'in':
