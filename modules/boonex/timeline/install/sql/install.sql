@@ -148,7 +148,8 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_links` (
   `title` varchar(255) NOT NULL,
   `text` text NOT NULL,
   `added` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `profile_id` (`profile_id`)
 );
 
 CREATE TABLE IF NOT EXISTS `bx_timeline_links2events` (
@@ -156,7 +157,7 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_links2events` (
   `event_id` int(11) NOT NULL DEFAULT '0',
   `link_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `link` (`event_id`, `link_id`)
+  UNIQUE KEY `link` (`link_id`, `event_id`)
 );
 
 -- TABLES: REPOSTS

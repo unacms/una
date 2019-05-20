@@ -3,13 +3,13 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    MobileApps Mobile Apps
+ * @defgroup    Nexus Nexus - Mobile Apps and Desktop apps connector
  * @ingroup     UnaModules
  *
  * @{
  */
 
-class BxMobileAppsModule extends BxDolModule
+class BxNexusModule extends BxDolModule
 {
     function __construct(&$aModule)
     {
@@ -17,7 +17,7 @@ class BxMobileAppsModule extends BxDolModule
     }
 
     /**
-     * Get injection code required for mobile apps
+     * Get injection code required for Nexus apps
      * @return string
      */
     public function serviceInjectionHeadBegin()
@@ -30,7 +30,7 @@ class BxMobileAppsModule extends BxDolModule
     }
     
     /**
-     * Get injection code required for mobile apps
+     * Get injection code required for Nexus apps
      * @return string with Styles and JS code
      */
     public function serviceInjectionHead()
@@ -51,17 +51,17 @@ class BxMobileAppsModule extends BxDolModule
             $iBubbles += $r['bx_if:addon']['content']['addon'];
         }
 
-        $s  = $this->_oTemplate->parseHtmlByName('mobile_apps_styles.html', array());
-        $s .= $this->_oTemplate->parseHtmlByName('mobile_apps_js.html', array(
+        $s  = $this->_oTemplate->parseHtmlByName('styles.html', array());
+        $s .= $this->_oTemplate->parseHtmlByName('js.html', array(
             'msg' => json_encode(array(
                 'loggedin' => isLogged(),                
                 'bubbles_num' => $iBubbles ? $iBubbles : '',
                 'bubbles' => $aBubbles,
                 'push_tags' => array('user' => bx_get_logged_profile_id())
             )),
-            'txt_pull_to_refresh' => bx_js_string(_t('_bx_mobileapps_pull_to_refresh')),
-            'txt_release_to_refresh' => bx_js_string(_t('_bx_mobileapps_release_to_refresh')),
-            'txt_refreshing' => bx_js_string(_t('_bx_mobileapps_refreshing')),
+            'txt_pull_to_refresh' => bx_js_string(_t('_bx_nexus_pull_to_refresh')),
+            'txt_release_to_refresh' => bx_js_string(_t('_bx_nexus_release_to_refresh')),
+            'txt_refreshing' => bx_js_string(_t('_bx_nexus_refreshing')),
         ));
 
         $this->_oTemplate->addJs('pulltorefresh.min.js');

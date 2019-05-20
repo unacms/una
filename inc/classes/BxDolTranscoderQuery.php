@@ -80,7 +80,7 @@ class BxDolTranscoderQuery extends BxDolDb
 
     public function getFileIdByHandler ($mixedHandler)
     {
-        $sQuery = $this->prepare("SELECT `file_id` FROM {$this->_sTableFiles} WHERE `transcoder_object` = ? AND `handler` = ?", $this->_aObject['object'], $mixedHandler);
+        $sQuery = $this->prepare("SELECT `file_id` FROM {$this->_sTableFiles} WHERE `transcoder_object` = ? AND `handler` = ? LIMIT 1", $this->_aObject['object'], (string)$mixedHandler);
         return $this->getOne($sQuery);
     }
 
@@ -93,7 +93,7 @@ class BxDolTranscoderQuery extends BxDolDb
     public function updateAccessTime($mixedHandler)
     {
         $iTime = time();
-        $sQuery = $this->prepare("UPDATE {$this->_sTableFiles} SET `atime` = ? WHERE `transcoder_object` = ? AND `handler` = ?", $iTime, $this->_aObject['object'], $mixedHandler);
+        $sQuery = $this->prepare("UPDATE {$this->_sTableFiles} SET `atime` = ? WHERE `transcoder_object` = ? AND `handler` = ? LIMIT 1", $iTime, $this->_aObject['object'], (string)$mixedHandler);
         return $this->res($sQuery);
     }
 
@@ -284,7 +284,7 @@ class BxDolTranscoderQuery extends BxDolDb
 
     public function getTranscodedFileData($mixedHandler)
     {
-        $sQuery = $this->prepare("SELECT `data` FROM {$this->_sTableFiles} WHERE `transcoder_object` = ? AND `handler` = ?", $this->_aObject['object'], $mixedHandler);
+        $sQuery = $this->prepare("SELECT `data` FROM {$this->_sTableFiles} WHERE `transcoder_object` = ? AND `handler` = ? LIMIT 1", $this->_aObject['object'], (string)$mixedHandler);
         $s = $this->getOne($sQuery);
         if (!$s)
             return false;
@@ -294,7 +294,7 @@ class BxDolTranscoderQuery extends BxDolDb
     public function updateTranscodedFileData($mixedHandler, $mixedData)
     {
         $sData = $mixedData ? serialize($mixedData) : '';
-        $sQuery = $this->prepare("UPDATE {$this->_sTableFiles} SET `data` = ? WHERE `transcoder_object` = ? AND `handler` = ?", $sData, $this->_aObject['object'], $mixedHandler);
+        $sQuery = $this->prepare("UPDATE {$this->_sTableFiles} SET `data` = ? WHERE `transcoder_object` = ? AND `handler` = ? LIMIT 1", $sData, $this->_aObject['object'], (string)$mixedHandler);
 
         return $this->res($sQuery);
     }

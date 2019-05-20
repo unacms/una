@@ -141,7 +141,7 @@ class BxBaseModGeneralDb extends BxDolModuleDb
             $sSearchValue = "";
             switch ($aSearchParam['operator']) {
                 case 'like':
-                    $sSearchValue = " LIKE " . $this->escape("%" . $aSearchParam['value'] . "%");
+                    $sSearchValue = " LIKE " . $this->escape("%" . preg_replace('/\s+/', '%', $aSearchParam['value']) . "%");
                     break;
 
                 case 'in':
@@ -163,7 +163,7 @@ class BxBaseModGeneralDb extends BxDolModuleDb
                     if(!isset($CNF['OBJECT_METATAGS']))
                         break;
 
-                    list($fLatitude, $fLongitude, $sCountry, $sState, $sCity, $sZip) = $aSearchParam['value'];
+                    list($fLatitude, $fLongitude, $sCountry, $sState, $sCity, $sZip) = $aSearchParam['value']['array'];
 
                     $aSql = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])->locationsGetAsSQLPart($CNF['TABLE_ENTRIES'], $CNF['FIELD_ID'], $sCountry, $sState, $sCity, $sZip);
 

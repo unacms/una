@@ -3,13 +3,13 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    MobileApps Mobile Apps
+ * @defgroup    Nexus Nexus - Mobile Apps and Desktop apps connector
  * @ingroup     UnaModules
  *
  * @{
  */
 
-class BxMobileAppsAlerts extends BxDolAlertsResponse
+class BxNexusAlerts extends BxDolAlertsResponse
 {
     protected $_oModule;
     function __construct()

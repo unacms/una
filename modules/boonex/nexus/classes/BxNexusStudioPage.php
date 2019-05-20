@@ -3,13 +3,13 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    MobileApps Mobile Apps
+ * @defgroup    Nexus Nexus - Mobile Apps and Desktop apps connector
  * @ingroup     UnaModules
  *
  * @{
  */
 
-class BxMobileAppsStudioPage extends BxTemplStudioModule
+class BxNexusStudioPage extends BxTemplStudioModule
 {
     function __construct($sModule = "", $sPage = "")
     {
@@ -17,13 +17,13 @@ class BxMobileAppsStudioPage extends BxTemplStudioModule
 
         $this->aMenuItems = array(
             array('name' => 'settings', 'icon' => 'cogs', 'title' => '_adm_lmi_cpt_settings'),
-            array('name' => 'help', 'icon' => 'question', 'title' => '_bx_mobileapps_information'),
+            array('name' => 'help', 'icon' => 'question', 'title' => '_bx_nexus_information'),
         );
     }
     
     function getHelp ()
     {
-        return _t('_bx_mobileapps_information_block');
+        return _t('_bx_nexus_information_block');
     }
 }
 
