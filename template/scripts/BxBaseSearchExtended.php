@@ -97,18 +97,30 @@ class BxBaseSearchExtended extends BxDolSearchExtended
 
         $aParamsSearch = array();
         foreach($this->_aObject['fields'] as $aField) {
-            $sValue = $oForm->getCleanValue($aField['name']);
-            if(empty($sValue) || (is_array($sValue) && bx_is_empty_array($sValue)))
+            $mixedValue = $oForm->getCleanValue($aField['name']);
+            if(empty($mixedValue) || (is_array($mixedValue) && bx_is_empty_array($mixedValue)))
                 continue;
 
             $aParamsSearch[$aField['name']] = array(
                 'type' => $aField['search_type'],
-                'value' => $sValue,
+                'value' => $mixedValue,
                 'operator' => $aField['search_operator']
             );
 
-            if(!$bCondition)
-                $aParams['cond'][$aField['name']] = $sValue;
+            if(!$bCondition) {
+                if(!isset($aParams['cond']))
+                    $aParams['cond'] = array();
+
+                switch($oForm->aInputs[$aField['name']]['type']) {
+                    case 'location':
+                        $aParams['cond'][$aField['name']] = $mixedValue['string'];
+                        $aParams['cond'] = array_merge($aParams['cond'], BxDolMetatags::locationsParseComponents($mixedValue['array'], $aField['name']));
+                        break;
+
+                    default:
+                        $aParams['cond'][$aField['name']] = $mixedValue;
+                }
+            }
         }
 
         if(empty($aParamsSearch) || !is_array($aParamsSearch))
@@ -224,6 +236,9 @@ class BxBaseSearchExtended extends BxDolSearchExtended
                     'pass' => !empty($aField['pass']) ? $aField['pass'] : 'Xss'
                 )
             );
+
+            if(in_array($aField['search_type'], array('location')))
+                $aForm['inputs'][$aField['name']]['manual_input'] = true;
         }
 
         $aForm['inputs']['search'] = array(
@@ -241,9 +256,10 @@ class BxBaseSearchExtended extends BxDolSearchExtended
 
         $bJsMode = isset($aParams['js_mode']) ? (bool)$aParams['js_mode'] : $this->_bJsMode;
         $bCondition = !empty($aParams['cond']) && is_array($aParams['cond']);
+        $aValues = !$bJsMode && $bCondition ? $aParams['cond'] : array();
 
         $this->_oForm = new $sClass($aForm, $this->_oTemplate);
-        $this->_oForm->initChecker(!$bJsMode && $bCondition ? $aParams['cond'] : array());
+        $this->_oForm->initChecker($aValues, $aValues);
 
         return $this->_oForm;
     }

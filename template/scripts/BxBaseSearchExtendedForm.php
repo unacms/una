@@ -31,7 +31,10 @@ class BxBaseSearchExtendedForm extends BxTemplFormView
 
         //--- Process field with 'Location' type. 
         if($bType && $this->aInputs[$sName]['type'] == 'location')
-            return BxDolMetatags::locationsRetrieveFromForm($sName, $this);
+            return array(
+                'string' => parent::getCleanValue($sName), 
+                'array' => BxDolMetatags::locationsRetrieveFromForm($sName, $this)
+            );
 
         //--- Process field with 'Date Range Age' and 'Date-Time Range Age' type.
         if($bType && in_array($this->aInputs[$sName]['type'], array('datepicker_range_age', 'datetime_range_age'))) {

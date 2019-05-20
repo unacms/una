@@ -163,7 +163,7 @@ class BxBaseModGeneralDb extends BxDolModuleDb
                     if(!isset($CNF['OBJECT_METATAGS']))
                         break;
 
-                    list($fLatitude, $fLongitude, $sCountry, $sState, $sCity, $sZip) = $aSearchParam['value'];
+                    list($fLatitude, $fLongitude, $sCountry, $sState, $sCity, $sZip) = $aSearchParam['value']['array'];
 
                     $aSql = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])->locationsGetAsSQLPart($CNF['TABLE_ENTRIES'], $CNF['FIELD_ID'], $sCountry, $sState, $sCity, $sZip);
 

@@ -591,6 +591,25 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
+     * Parse address components into associative array with the following indexes:
+     * lat, lng, country, state, city, zip, street, street_number
+     */ 
+    public static function locationsParseComponents($aAdress, $sPrefix = '')
+    {
+        $aKeys = array('lat', 'lng', 'country', 'state', 'city', 'zip', 'street', 'street_number');
+
+        if($sPrefix)
+            $sPrefix .= '_';
+
+        $aRet = array();
+        $iAdress = count($aAdress);
+        for($i = 0; $i < $iAdress; $i++)
+            $aRet[$sPrefix . $aKeys[$i]] = $aAdress[$i];
+
+        return $aRet;
+    }
+
+    /**
      * Parse google's formatted address components into array with the following indexes:
      * lat, lng, country, state, city, zip, street, street_number
      */ 
