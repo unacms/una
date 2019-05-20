@@ -102,8 +102,16 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 			'status' => 'hidden'
         ));
         $o->unsetPaginate();
-
-        return $o->getNum();
+        $iNum1 = $o->getNum();
+        
+        $iNum2 = 0;
+        $CNF = &$this->_oConfig->CNF;
+        if (isset($CNF['OBJECT_REPORTS'])){
+            $o->fillFilters(array('status' => ''));
+            $o->fillFiltersByObjects(array('reported' => array('value' => '0', 'field' => 'reports', 'operator' => '>')));
+            $iNum2 = $o->getNum();
+        }
+        return array('counter1_value' => $iNum1, 'counter2_value' => $iNum2);
 	}
 
 	public function serviceGetMenuAddonManageToolsProfileStats()
