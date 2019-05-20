@@ -306,6 +306,16 @@ class BxBaseSearchResult extends BxDolSearchResult
             }
         }
     }
+    
+    function fillFiltersByObjects ($aParams)
+    {
+        // transform all given values to fields values
+        if (is_array($aParams)) {
+            foreach ($aParams as $sKey => $mixedValue) {
+                $this->aCurrent['restriction'][$sKey] = $mixedValue;
+            }
+        }
+    }
 
     /**
      * Set design box template id to use to wrap search results in
