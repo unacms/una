@@ -294,7 +294,7 @@
     <string name="_bx_market_menu_item_title_system_manage_account"><![CDATA[Управление аккаунтом]]></string>
     <string name="_bx_market_menu_item_title_manage_account"><![CDATA[Управление аккаунтом]]></string>
 	<string name="_bx_market_menu_item_title_system_admt_products"><![CDATA[Продукты]]></string>
-	<string name="_bx_market_menu_item_title_admt_products"><![CDATA[Продукты - {addon} спрятано]]></string>
+	<string name="_bx_market_menu_item_title_admt_products"><![CDATA[Продукты]]></string>
 	<string name="_bx_market_menu_item_title_manage_my"><![CDATA[Мои продукты]]></string>
 	<string name="_bx_market_menu_item_title_manage_all"><![CDATA[Все продукты]]></string>
 	<string name="_bx_market_menu_item_title_system_licenses"><![CDATA[Лицензии]]></string>

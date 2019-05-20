@@ -176,7 +176,7 @@
     <string name="_bx_files_menu_item_title_system_manage_account"><![CDATA[Manage account]]></string>
     <string name="_bx_files_menu_item_title_manage_account"><![CDATA[Manage account]]></string>
 	<string name="_bx_files_menu_item_title_system_admt_files"><![CDATA[Files]]></string>
-	<string name="_bx_files_menu_item_title_admt_files"><![CDATA[Files - {addon} hidden]]></string>
+	<string name="_bx_files_menu_item_title_admt_files"><![CDATA[Files]]></string>
 	<string name="_bx_files_menu_item_title_manage_my"><![CDATA[My Files]]></string>
 	<string name="_bx_files_menu_item_title_manage_all"><![CDATA[All Files]]></string>
 	<string name="_bx_files_menu_item_title_system_download_file"><![CDATA[Download]]></string>

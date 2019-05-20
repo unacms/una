@@ -218,7 +218,7 @@
     <string name="_bx_forum_menu_item_title_system_manage_account"><![CDATA[Manage account]]></string>
     <string name="_bx_forum_menu_item_title_manage_account"><![CDATA[Manage account]]></string>
     <string name="_bx_forum_menu_item_title_system_admt_discussions"><![CDATA[Discussions]]></string>
-    <string name="_bx_forum_menu_item_title_admt_discussions"><![CDATA[Discussions - {addon} hidden]]></string>
+    <string name="_bx_forum_menu_item_title_admt_discussions"><![CDATA[Discussions]]></string>
     <string name="_bx_forum_menu_item_title_manage_my"><![CDATA[My Discussions]]></string>
     <string name="_bx_forum_menu_item_title_manage_all"><![CDATA[All Discussions]]></string>
     <string name="_bx_forum_menu_item_title_system_discussions"><![CDATA[Discussions number]]></string>

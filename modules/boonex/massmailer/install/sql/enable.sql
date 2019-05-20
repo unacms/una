@@ -61,12 +61,12 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 -- MENU: dashboard manage tools
 SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_account_dashboard_manage_tools', @sName, 'massmailer-campaigns', '_bx_massmailer_menu_item_title_system_admt_mailer', '_bx_massmailer_menu_item_title_admt_mailer', 'page.php?i=massmailer-campaigns', '', '_self', '', 'a:2:{s:6:"module";s:13:"bx_massmailer";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 128, 1, 0, @iManageMenuOrder + 1);
+('sys_account_dashboard_manage_tools', @sName, 'massmailer-campaigns', '_bx_massmailer_menu_item_title_system_admt_mailer', '_bx_massmailer_menu_item_title_admt_mailer', 'page.php?i=massmailer-campaigns', '', '_self', 'mail-bulk', 'a:2:{s:6:"module";s:13:"bx_massmailer";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 128, 1, 0, @iManageMenuOrder + 1);
 
 -- MENU: account dashboard
 SET @iMoAccountDashboard = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard' LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES
-('sys_account_dashboard', @sName, 'dashboard-massmailer', '_bx_massmailer_menu_item_title_system_admt_mailer', '_bx_massmailer_menu_item_title_admt_mailer', 'page.php?i=massmailer-campaigns', '', '', 'envelope col-red', '', '', 128, 1, 0, 1, @iMoAccountDashboard + 1);
+('sys_account_dashboard', @sName, 'dashboard-massmailer', '_bx_massmailer_menu_item_title_system_admt_mailer', '_bx_massmailer_menu_item_title_admt_mailer', 'page.php?i=massmailer-campaigns', '', '', 'mail-bulk col-red', '', '', 128, 1, 0, 1, @iMoAccountDashboard + 1);
 
 -- GRIDS: campaigns administration
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES

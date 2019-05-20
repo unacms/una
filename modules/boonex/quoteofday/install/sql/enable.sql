@@ -46,7 +46,8 @@ INSERT INTO `sys_pages_blocks` (object, `cell_id`, `module`, `title_system`, `ti
 
 -- MENU: dashboard manage tools
 SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);
-INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES('sys_account_dashboard_manage_tools', @sName, 'quoteofday-manage', '_bx_quoteofday_menu_item_title_system_admt_manage', '_bx_quoteofday_menu_item_title_system_admt_manage', 'page.php?i=quoteofday-manage', '', '_self', '', 'a:2:{s:6:"module";s:13:"bx_quoteofday";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 0, 2147483647, 1, 0, 1, 6);
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) 
+VALUES('sys_account_dashboard_manage_tools', @sName, 'quoteofday-manage', '_bx_quoteofday_menu_item_title_system_admt_manage', '_bx_quoteofday_menu_item_title_system_admt_manage', 'page.php?i=quoteofday-manage', '', '_self', 'quote-right', 'a:2:{s:6:"module";s:13:"bx_quoteofday";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 0, 2147483647, 1, 0, 1, 6);
 
 -- ALERTS
 INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 

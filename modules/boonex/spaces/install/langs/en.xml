@@ -223,7 +223,7 @@
 	<string name="_bx_spaces_menu_item_title_system_entries_home"><![CDATA[Spaces]]></string>
 	<string name="_bx_spaces_menu_item_title_entries_home"><![CDATA[Spaces]]></string>
 	<string name="_bx_spaces_menu_item_title_system_admt_spaces"><![CDATA[Spaces]]></string>
-	<string name="_bx_spaces_menu_item_title_admt_spaces"><![CDATA[Spaces - {addon} unapproved]]></string>
+	<string name="_bx_spaces_menu_item_title_admt_spaces"><![CDATA[Spaces]]></string>
 	<string name="_bx_spaces_menu_item_title_manage_my"><![CDATA[My Spaces]]></string>
 	<string name="_bx_spaces_menu_item_title_manage_all"><![CDATA[All Spaces]]></string>
 	<string name="_bx_spaces_menu_item_title_system_entries_top"><![CDATA[Top]]></string>

@@ -2202,7 +2202,7 @@
 	<string name="_sys_menu_item_title_account_settings_pwd"><![CDATA[Пароль]]></string>
 	<string name="_sys_menu_item_title_add_content"><![CDATA[Добавить...]]></string>
 	<string name="_sys_menu_item_title_cart"><![CDATA[Корзина]]></string>
-	<string name="_sys_menu_item_title_cmts_administration"><![CDATA[Управление комментариями]]></string>
+	<string name="_sys_menu_item_title_cmts_administration"><![CDATA[Комментарии]]></string>
 	<string name="_sys_menu_item_title_cmts_item_delete"><![CDATA[Удалить]]></string>
 	<string name="_sys_menu_item_title_cmts_item_edit"><![CDATA[Редактировать]]></string>
 	<string name="_sys_menu_item_title_cmts_item_reply"><![CDATA[]]></string>
@@ -2264,7 +2264,7 @@
 	<string name="_sys_menu_item_title_system_account_settings_pwd"><![CDATA[Пароль]]></string>
 	<string name="_sys_menu_item_title_system_add_content"><![CDATA[Добавить Содержимое]]></string>
 	<string name="_sys_menu_item_title_system_cart"><![CDATA[Корзина]]></string>
-  <string name="_sys_menu_item_title_system_cmts_administration"><![CDATA[Управление комментариями]]></string>
+  <string name="_sys_menu_item_title_system_cmts_administration"><![CDATA[Комментарии]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_delete"><![CDATA[Удалить]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_edit"><![CDATA[Редактировать]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_reply"><![CDATA[Ответить]]></string>
@@ -2348,6 +2348,7 @@
 	<string name="_sys_menu_template_title_floating_blocks"><![CDATA[Подвесные блоки]]></string>
 	<string name="_sys_menu_template_title_floating_blocks_wide"><![CDATA[Широкие подвесные блоки с оповещениями]]></string>
 	<string name="_sys_menu_template_title_floating_blocks_big"><![CDATA[Подвесные блоки - Большие]]></string>
+	<string name="_sys_menu_template_title_floating_blocks_dash"><![CDATA[Подвесные блоки с иконками и подписями]]></string>
 	<string name="_sys_menu_template_title_footer"><![CDATA[Основание - Ссылки]]></string>
 	<string name="_sys_menu_template_title_hor"><![CDATA[Горизонтальные ссылки]]></string>
 	<string name="_sys_menu_template_title_icon_buttons_hor"><![CDATA[Горизонтальные кнопки с иконками]]></string>
@@ -2394,6 +2395,9 @@
 	<string name="_sys_menu_title_switch_language_inline"><![CDATA[Переключатель языка (встроенный)]]></string>
 	<string name="_sys_menu_title_switch_template"><![CDATA[Переключить тему]]></string>
 	<string name="_sys_menu_title_snippet_meta"><![CDATA[Мета информация в карточке]]></string>
+  <string name="_sys_menu_dashboard_manage_tools_addon_counter1_caption_default"><![CDATA[спрятано]]></string>
+  <string name="_sys_menu_dashboard_manage_tools_addon_counter1_caption_profile_default"><![CDATA[неодобрено]]></string>
+  <string name="_sys_menu_dashboard_manage_tools_addon_counter2_caption_default"><![CDATA[жалоб]]></string>
 	<string name="_sys_metatags_mention_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> упомянул <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
 	<string name="_sys_mobile_friends"><![CDATA[Друзья]]></string>
 	<string name="_sys_mobile_info"><![CDATA[Инфо]]></string>

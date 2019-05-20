@@ -175,7 +175,7 @@
     <string name="_bx_polls_menu_item_title_system_manage_account"><![CDATA[Управление аккаунтом]]></string>
     <string name="_bx_polls_menu_item_title_manage_account"><![CDATA[Управление аккаунтом]]></string>
 	<string name="_bx_polls_menu_item_title_system_admt_polls"><![CDATA[Голосования]]></string>
-	<string name="_bx_polls_menu_item_title_admt_polls"><![CDATA[Голосования - {addon} спрятано]]></string>
+	<string name="_bx_polls_menu_item_title_admt_polls"><![CDATA[Голосования]]></string>
 	<string name="_bx_polls_menu_item_title_manage_my"><![CDATA[Мои голосования]]></string>
 	<string name="_bx_polls_menu_item_title_manage_all"><![CDATA[Все голосования]]></string>
 	<string name="_bx_polls_menu_item_view_subentries"><![CDATA[Показать голосование]]></string>

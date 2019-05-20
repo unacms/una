@@ -218,7 +218,7 @@
     <string name="_bx_groups_menu_item_title_system_entries_home"><![CDATA[Groups]]></string>
     <string name="_bx_groups_menu_item_title_entries_home"><![CDATA[Groups]]></string>
     <string name="_bx_groups_menu_item_title_system_admt_groups"><![CDATA[Groups]]></string>
-	<string name="_bx_groups_menu_item_title_admt_groups"><![CDATA[Groups - {addon} unapproved]]></string>
+	<string name="_bx_groups_menu_item_title_admt_groups"><![CDATA[Groups]]></string>
 	<string name="_bx_groups_menu_item_title_manage_my"><![CDATA[My Groups]]></string>
 	<string name="_bx_groups_menu_item_title_manage_all"><![CDATA[All Groups]]></string>
 	<string name="_bx_groups_menu_item_title_system_entries_top"><![CDATA[Top]]></string>

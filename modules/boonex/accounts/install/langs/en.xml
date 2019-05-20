@@ -32,8 +32,9 @@
     <string name="_bx_accnt_menu_item_title_system_unmake_operator"><![CDATA[Unmake Operator]]></string>
     <string name="_bx_accnt_menu_item_title_unmake_operator"><![CDATA[Unmake Operator]]></string>
     <string name="_bx_accnt_menu_item_title_system_admt_accounts"><![CDATA[Accounts]]></string>
-    <string name="_bx_accnt_menu_item_title_admt_accounts"><![CDATA[Accounts - {addon} unconfirmed]]></string>
+    <string name="_bx_accnt_menu_item_title_admt_accounts"><![CDATA[Accounts]]></string>
     <string name="_bx_accnt_menu_item_title_manage"><![CDATA[Manage]]></string>
+    <string name="_bx_accnt_menu_dashboard_manage_tools_addon_counter1_caption"><![CDATA[unconfirmed]]></string>
 
     <string name="_bx_accnt_acl_action_edit_any_account"><![CDATA[Edit Any Account]]></string>
 

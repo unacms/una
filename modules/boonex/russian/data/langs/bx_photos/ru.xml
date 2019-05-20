@@ -185,7 +185,7 @@
     <string name="_bx_photos_menu_item_title_system_manage_account"><![CDATA[Управление аккаунтом]]></string>
     <string name="_bx_photos_menu_item_title_manage_account"><![CDATA[Управление аккаунтом]]></string>
 	<string name="_bx_photos_menu_item_title_system_admt_photos"><![CDATA[Фото]]></string>
-	<string name="_bx_photos_menu_item_title_admt_photos"><![CDATA[Фото - {addon} спрятано]]></string>
+	<string name="_bx_photos_menu_item_title_admt_photos"><![CDATA[Фото]]></string>
 	<string name="_bx_photos_menu_item_title_manage_my"><![CDATA[Мои фото]]></string>
 	<string name="_bx_photos_menu_item_title_manage_all"><![CDATA[Все фото]]></string>
 

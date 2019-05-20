@@ -219,7 +219,7 @@
     <string name="_bx_forum_menu_item_title_system_manage_account"><![CDATA[Управление аккаунтом]]></string>
     <string name="_bx_forum_menu_item_title_manage_account"><![CDATA[Управление аккаунтом]]></string>
     <string name="_bx_forum_menu_item_title_system_admt_discussions"><![CDATA[Обсуждения]]></string>
-    <string name="_bx_forum_menu_item_title_admt_discussions"><![CDATA[Обсуждения - {addon} спрятано]]></string>
+    <string name="_bx_forum_menu_item_title_admt_discussions"><![CDATA[Обсуждения]]></string>
     <string name="_bx_forum_menu_item_title_manage_my"><![CDATA[Мои обсуждения]]></string>
     <string name="_bx_forum_menu_item_title_manage_all"><![CDATA[Все обсуждения]]></string>
     <string name="_bx_forum_menu_item_title_system_discussions"><![CDATA[Количество дискуссий]]></string>

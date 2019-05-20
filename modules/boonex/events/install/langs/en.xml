@@ -254,7 +254,7 @@
     <string name="_bx_events_menu_item_title_system_entries_home"><![CDATA[Events]]></string>
     <string name="_bx_events_menu_item_title_entries_home"><![CDATA[Events]]></string>
     <string name="_bx_events_menu_item_title_system_admt_groups"><![CDATA[Events]]></string>
-	<string name="_bx_events_menu_item_title_admt_groups"><![CDATA[Events - {addon} unapproved]]></string>
+	<string name="_bx_events_menu_item_title_admt_groups"><![CDATA[Events]]></string>
 	<string name="_bx_events_menu_item_title_manage_my"><![CDATA[My Events]]></string>
 	<string name="_bx_events_menu_item_title_manage_all"><![CDATA[All Events]]></string>
 	<string name="_bx_events_menu_item_title_system_entries_top"><![CDATA[Top]]></string>

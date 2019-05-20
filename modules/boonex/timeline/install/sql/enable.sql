@@ -28,7 +28,7 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 
 
 -- PAGES: add page block on dashboard
-SET @iPBCellDashboard = 2;
+SET @iPBCellDashboard = 4;
 SET @iPBOrderDashboard = 1; --(SELECT IFNULL(MAX(`order`), 0) FROM `sys_pages_blocks` WHERE `object` = 'sys_dashboard' AND `cell_id` = @iPBCellDashboard LIMIT 1);
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
 ('sys_dashboard', @iPBCellDashboard, 'bx_timeline', '_bx_timeline_page_block_title_system_post_account', '_bx_timeline_page_block_title_post_account', 11, 2147483644, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:22:"get_block_post_account";}', 0, 1, 1, @iPBOrderDashboard),
@@ -147,7 +147,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: dashboard manage tools
 SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_account_dashboard_manage_tools', 'bx_timeline', 'timeline-administration', '_bx_timeline_menu_item_title_system_admt_timeline', '_bx_timeline_menu_item_title_admt_timeline', 'page.php?i=timeline-administration', '', '_self', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 192, 1, 0, @iManageMenuOrder + 1);
+('sys_account_dashboard_manage_tools', 'bx_timeline', 'timeline-administration', '_bx_timeline_menu_item_title_system_admt_timeline', '_bx_timeline_menu_item_title_admt_timeline', 'page.php?i=timeline-administration', '', '_self', 'clock', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 192, 1, 0, @iManageMenuOrder + 1);
 
 -- SETTINGS
 SET @iTypeOrder = (SELECT MAX(`order`) FROM `sys_options_types` WHERE `group` = 'modules');

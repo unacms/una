@@ -136,7 +136,7 @@
     <string name="_bx_timeline_menu_item_title_system_item_send"><![CDATA[Послать]]></string>
     <string name="_bx_timeline_menu_item_title_item_send"><![CDATA[Послать другу]]></string>
     <string name="_bx_timeline_menu_item_title_system_admt_timeline"><![CDATA[Лента]]></string>
-    <string name="_bx_timeline_menu_item_title_admt_timeline"><![CDATA[Лента - {addon} скрытых]]></string>
+    <string name="_bx_timeline_menu_item_title_admt_timeline"><![CDATA[Лента]]></string>
 
     <string name="_bx_timeline_menu_title_item_manage"><![CDATA[Элемент - Управление]]></string>
     <string name="_bx_timeline_menu_set_title_item_manage"><![CDATA[Элемент - Управление]]></string>

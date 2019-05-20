@@ -203,7 +203,7 @@
     <string name="_bx_snipcart_menu_item_title_system_manage_account"><![CDATA[Управление аккаунтом]]></string>
     <string name="_bx_snipcart_menu_item_title_manage_account"><![CDATA[Управление аккаунтом]]></string>
 	<string name="_bx_snipcart_menu_item_title_system_admt_entries"><![CDATA[Товары]]></string>
-	<string name="_bx_snipcart_menu_item_title_admt_entries"><![CDATA[Товары - {addon} спрятано]]></string>
+	<string name="_bx_snipcart_menu_item_title_admt_entries"><![CDATA[Товары]]></string>
 	<string name="_bx_snipcart_menu_item_title_manage_my"><![CDATA[Мои товары]]></string>
 	<string name="_bx_snipcart_menu_item_title_manage_all"><![CDATA[Все товары]]></string>
         <string name="_bx_snipcart_menu_item_title_system_buy_for"><![CDATA[Купить]]></string>

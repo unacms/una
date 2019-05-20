@@ -219,7 +219,7 @@
     <string name="_bx_groups_menu_item_title_system_entries_home"><![CDATA[Группы]]></string>
     <string name="_bx_groups_menu_item_title_entries_home"><![CDATA[Группы]]></string>
     <string name="_bx_groups_menu_item_title_system_admt_groups"><![CDATA[Группы]]></string>
-	<string name="_bx_groups_menu_item_title_admt_groups"><![CDATA[Группы - {addon} неодобрено]]></string>
+	<string name="_bx_groups_menu_item_title_admt_groups"><![CDATA[Группы]]></string>
 	<string name="_bx_groups_menu_item_title_manage_my"><![CDATA[Мои группы]]></string>
 	<string name="_bx_groups_menu_item_title_manage_all"><![CDATA[Все группы]]></string>
 	<string name="_bx_groups_menu_item_title_system_entries_top"><![CDATA[Популярные]]></string>

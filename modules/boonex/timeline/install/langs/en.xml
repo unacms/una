@@ -136,7 +136,7 @@
     <string name="_bx_timeline_menu_item_title_system_item_send"><![CDATA[Send]]></string>
     <string name="_bx_timeline_menu_item_title_item_send"><![CDATA[Send to Friend]]></string>
     <string name="_bx_timeline_menu_item_title_system_admt_timeline"><![CDATA[Timeline]]></string>
-    <string name="_bx_timeline_menu_item_title_admt_timeline"><![CDATA[Timeline - {addon} hidden]]></string>
+    <string name="_bx_timeline_menu_item_title_admt_timeline"><![CDATA[Timeline]]></string>
     
     <string name="_bx_timeline_menu_title_item_manage"><![CDATA[Manage Item]]></string>
     <string name="_bx_timeline_menu_set_title_item_manage"><![CDATA[Manage Item]]></string>
