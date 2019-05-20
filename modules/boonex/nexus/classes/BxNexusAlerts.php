@@ -19,7 +19,7 @@ class BxNexusAlerts extends BxDolAlertsResponse
 
     public function response($o)
     {
-        if ('system' == $o->sUnit && 'page_output' == $o->sAction && 'sys_home' == $o->aExtras['page_name'] && !isLogged() && false !== strpos($_SERVER['HTTP_USER_AGENT'], 'UNANexus')) {
+        if ('system' == $o->sUnit && 'page_output' == $o->sAction && 'sys_home' == $o->aExtras['page_name'] && !isLogged() && false !== strpos($_SERVER['HTTP_USER_AGENT'], 'UNAMobileApp')) {
 
             // require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
     
