@@ -351,7 +351,11 @@ ul.bx-menu-toolbar li a .bx-def-unit-alert-middle {
     max-width:800px;
     max-width:50rem;
 }
-
+ul.bx-menu-floating-blocks-dash{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+}
 ul.bx-menu-floating-blocks-wide,
 ul.bx-menu-floating-blocks-big,
 ul.bx-menu-floating-blocks-dash,
@@ -359,14 +363,10 @@ ul.bx-menu-floating-blocks {
     padding:0;
     margin:0;
     list-style:none;
-}
-ul.bx-menu-floating-blocks-dash {
-    margin-left: -6px;
-}
-    
+}  
 
 .bx-menu-floating-blocks-big li,
-.bx-menu-floating-blocks-dash li,
+
 .bx-menu-floating-blocks-wide li,
 .bx-menu-floating-blocks li {
     display: inline-block;
@@ -387,8 +387,15 @@ ul.bx-menu-floating-blocks-dash {
     height:8rem;
 }
 .bx-menu-floating-blocks-dash li {
-    width:15rem;
-    height:3.6rem;
+    display: block;
+    width:25%;
+    height:3.35rem;
+}
+.bx-media-phone .bx-menu-floating-blocks-dash li {
+    width:50%;
+}
+.bx-menu-floating-blocks-dash-item {
+     height:3.35rem;
 }
 .bx-menu-floating-blocks-wide li {
     position:relative;
