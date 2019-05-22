@@ -188,7 +188,7 @@
     <string name="_bx_shopify_menu_item_title_system_manage_account"><![CDATA[Manage account]]></string>
     <string name="_bx_shopify_menu_item_title_manage_account"><![CDATA[Manage account]]></string>
 	<string name="_bx_shopify_menu_item_title_system_admt_entries"><![CDATA[Goods]]></string>
-	<string name="_bx_shopify_menu_item_title_admt_entries"><![CDATA[Goods - {addon} hidden]]></string>
+	<string name="_bx_shopify_menu_item_title_admt_entries"><![CDATA[Goods]]></string>
 	<string name="_bx_shopify_menu_item_title_manage_my"><![CDATA[My Goods]]></string>
 	<string name="_bx_shopify_menu_item_title_manage_all"><![CDATA[All Goods]]></string>
 	<string name="_bx_shopify_menu_item_title_buy_for"><![CDATA[Buy for {price}]]></string>

@@ -295,7 +295,7 @@
     <string name="_bx_market_menu_item_title_system_manage_account"><![CDATA[Manage account]]></string>
     <string name="_bx_market_menu_item_title_manage_account"><![CDATA[Manage account]]></string>
 	<string name="_bx_market_menu_item_title_system_admt_products"><![CDATA[Products]]></string>
-	<string name="_bx_market_menu_item_title_admt_products"><![CDATA[Products - {addon} hidden]]></string>
+	<string name="_bx_market_menu_item_title_admt_products"><![CDATA[Products]]></string>
 	<string name="_bx_market_menu_item_title_manage_my"><![CDATA[My Products]]></string>
 	<string name="_bx_market_menu_item_title_manage_all"><![CDATA[All Products]]></string>
 	<string name="_bx_market_menu_item_title_system_licenses"><![CDATA[Licenses]]></string>

@@ -28,8 +28,9 @@
     <string name="_bx_accnt_menu_item_title_system_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
     <string name="_bx_accnt_menu_item_title_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
     <string name="_bx_accnt_menu_item_title_system_admt_accounts"><![CDATA[Аккаунты]]></string>
-    <string name="_bx_accnt_menu_item_title_admt_accounts"><![CDATA[Аккаунты - {addon} неподтверждено]]></string>
+    <string name="_bx_accnt_menu_item_title_admt_accounts"><![CDATA[Аккаунты]]></string>
     <string name="_bx_accnt_menu_item_title_manage"><![CDATA[Управление]]></string>
+    <string name="_bx_accnt_menu_dashboard_manage_tools_addon_counter1_caption"><![CDATA[неподтверждено]]></string>
 
     <string name="_bx_accnt_acl_action_edit_any_account"><![CDATA[Редактировать мой аккаунт]]></string>
 

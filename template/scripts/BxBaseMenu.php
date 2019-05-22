@@ -149,7 +149,8 @@ class BxBaseMenu extends BxDolMenu
 		$a = $this->_replaceMarkers($a);
 
 		$mixedAddon = $this->_getMenuAddon($a);
-		$this->addMarkers(array('addon' => $mixedAddon));
+        if (!is_array($mixedAddon))
+		    $this->addMarkers(array('addon' => $mixedAddon));
 
 		$a = $this->_replaceMarkers($a);
 

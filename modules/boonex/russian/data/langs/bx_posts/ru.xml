@@ -215,7 +215,7 @@
     <string name="_bx_posts_menu_item_title_system_manage_account"><![CDATA[Управление аккаунтом]]></string>
     <string name="_bx_posts_menu_item_title_manage_account"><![CDATA[Управление аккаунтом]]></string>
 	<string name="_bx_posts_menu_item_title_system_admt_posts"><![CDATA[Публикации]]></string>
-	<string name="_bx_posts_menu_item_title_admt_posts"><![CDATA[Публикации - {addon} спрятано]]></string>
+	<string name="_bx_posts_menu_item_title_admt_posts"><![CDATA[Публикации]]></string>
 	<string name="_bx_posts_menu_item_title_manage_my"><![CDATA[Мои публикации]]></string>
 	<string name="_bx_posts_menu_item_title_manage_all"><![CDATA[Все публикации]]></string>
 

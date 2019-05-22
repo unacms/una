@@ -249,7 +249,7 @@
     <string name="_bx_directory_menu_item_title_system_manage_account"><![CDATA[Manage account]]></string>
     <string name="_bx_directory_menu_item_title_manage_account"><![CDATA[Manage account]]></string>
     <string name="_bx_directory_menu_item_title_system_admt_posts"><![CDATA[Ads]]></string>
-    <string name="_bx_directory_menu_item_title_admt_posts"><![CDATA[Ads - {addon} hidden]]></string>
+    <string name="_bx_directory_menu_item_title_admt_posts"><![CDATA[Ads]]></string>
     <string name="_bx_directory_menu_item_title_manage_my"><![CDATA[My Ads]]></string>
     <string name="_bx_directory_menu_item_title_manage_all"><![CDATA[All Ads]]></string>
     <string name="_bx_directory_menu_item_title_categories"><![CDATA[Categories]]></string>

@@ -175,7 +175,7 @@
     <string name="_bx_files_menu_item_title_system_manage_account"><![CDATA[Управление учетной записью]]></string>
     <string name="_bx_files_menu_item_title_manage_account"><![CDATA[Управление учетной записью]]></string>
 	<string name="_bx_files_menu_item_title_system_admt_files"><![CDATA[Файлы]]></string>
-	<string name="_bx_files_menu_item_title_admt_files"><![CDATA[Файлы - {addon} спрятанных]]></string>
+	<string name="_bx_files_menu_item_title_admt_files"><![CDATA[Файлы]]></string>
 	<string name="_bx_files_menu_item_title_manage_my"><![CDATA[Мой файлы]]></string>
 	<string name="_bx_files_menu_item_title_manage_all"><![CDATA[Все файлы]]></string>
 	<string name="_bx_files_menu_item_title_system_download_file"><![CDATA[Скачать]]></string>

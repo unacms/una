@@ -3475,7 +3475,8 @@ INSERT INTO `sys_menu_templates` (`id`, `template`, `title`, `visible`) VALUES
 (20, 'menu_custom_ver.html', '_sys_menu_template_title_custom_ver', 0),
 (21, 'menu_profile_stats.html', '_sys_menu_template_title_profile_stats', 0),
 (22, 'menu_interactive.html', '_sys_menu_template_title_interactive', 1),
-(23, 'menu_buttons_icon_hor.html', '_sys_menu_template_title_buttons_icon_hor', 1);
+(23, 'menu_buttons_icon_hor.html', '_sys_menu_template_title_buttons_icon_hor', 1),
+(24, 'menu_floating_blocks_dash.html', '_sys_menu_template_title_floating_blocks_dash', 0);
 
 CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -3503,7 +3504,7 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_add_profile', '_sys_menu_title_add_profile', 'sys_add_profile_links', 'system', 14, 0, 1, 'BxTemplMenuProfileAdd', ''),
 ('sys_add_profile_vertical', '_sys_menu_title_add_profile_vertical', 'sys_add_profile_links', 'system', 6, 0, 1, 'BxTemplMenuProfileAdd', ''),
 ('sys_account_dashboard', '_sys_menu_title_account_dashboard', 'sys_account_dashboard', 'system', 8, 0, 1, 'BxTemplMenuAccountDashboard', ''),
-('sys_account_dashboard_manage_tools', '_sys_menu_title_account_dashboard_manage_tools', 'sys_account_dashboard_manage_tools', 'system', 4, 0, 1, '', ''),
+('sys_account_dashboard_manage_tools', '_sys_menu_title_account_dashboard_manage_tools', 'sys_account_dashboard_manage_tools', 'system', 24, 0, 1, 'BxTemplMenuDashboardManageTools', ''),
 ('sys_account_settings_submenu', '_sys_menu_title_account_settings', 'sys_account_settings', 'system', 8, 0, 1, '', ''),
 ('sys_account_settings_more', '_sys_menu_title_account_settings_more', 'sys_account_settings_more', 'system', 4, 0, 1, '', ''),
 ('sys_profiles_create', '_sys_menu_title_profiles_create', 'sys_profiles_create', 'system', 4, 0, 1, '', ''),
@@ -3658,7 +3659,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 -- dashboard manage tools
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_account_dashboard_manage_tools', 'system', 'cmts-administration', '_sys_menu_item_title_system_cmts_administration', '_sys_menu_item_title_cmts_administration', 'page.php?i=cmts-administration', '', '', '', 'a:2:{s:6:"module";s:6:"system";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 192, 1, 0, 1);
+('sys_account_dashboard_manage_tools', 'system', 'cmts-administration', '_sys_menu_item_title_system_cmts_administration', '_sys_menu_item_title_cmts_administration', 'page.php?i=cmts-administration', '', '', 'comments', 'a:2:{s:6:"module";s:6:"system";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 192, 1, 0, 1);
 
 -- profile stats
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
@@ -4221,7 +4222,7 @@ INSERT INTO `sys_objects_page` (`object`, `uri`, `title_system`, `title`, `modul
 ('sys_about', 'about', '_sys_page_title_system_about', '_sys_page_title_about', 'system', 5, 2147483647, 1, 'page.php?i=about', '', '', '', 0, 1, 0, '', ''),
 ('sys_terms', 'terms', '_sys_page_title_system_terms', '_sys_page_title_terms', 'system', 5, 2147483647, 1, 'page.php?i=terms', '', '', '', 0, 1, 0, '', ''),
 ('sys_privacy', 'privacy', '_sys_page_title_system_privacy', '_sys_page_title_privacy', 'system', 5, 2147483647, 1, 'page.php?i=privacy', '', '', '', 0, 1, 0, '', ''),
-('sys_dashboard', 'dashboard', '_sys_page_title_system_dashboard', '_sys_page_title_dashboard', 'system', 12, 2147483646, 1, 'page.php?i=dashboard', '', '', '', 0, 1, 0, 'BxTemplPageDashboard', ''),
+('sys_dashboard', 'dashboard', '_sys_page_title_system_dashboard', '_sys_page_title_dashboard', 'system', 10, 2147483646, 1, 'page.php?i=dashboard', '', '', '', 0, 1, 0, 'BxTemplPageDashboard', ''),
 ('sys_create_account', 'create-account', '_sys_page_title_system_create_account', '_sys_page_title_create_account', 'system', 5, 2147483647, 1, 'page.php?i=create-account', '', '', '', 0, 1, 0, '', ''),
 ('sys_login', 'login', '_sys_page_title_system_login', '_sys_page_title_login', 'system', 5, 2147483647, 1, 'page.php?i=login', '', '', '', 0, 1, 0, '', ''),
 ('sys_login_step2', 'login-step2', '_sys_page_title_system_login_step2', '_sys_page_title_login_step2', 'system', 5, 2147483647, 1, 'page.php?i=login-step2', '', '', '', 0, 1, 0, '', ''),
@@ -4348,13 +4349,13 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 
 ('sys_privacy', 1, 'system', '', '_sys_page_block_title_privacy', 11, 2147483647, 'lang', '_sys_page_lang_block_privacy', 0, 1, 1, 1),
 
-('sys_dashboard', 3, 'system', '', '_sys_page_block_title_profile_stats', 3, 2147483644, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"profile_stats";s:6:"params";a:0:{}s:5:"class";s:20:"TemplServiceProfiles";}', 0, 1, 1, 1),
+('sys_dashboard', 3, 'system', '', '_sys_page_block_title_profile_stats', 3, 2147483644, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"profile_stats";s:6:"params";a:0:{}s:5:"class";s:20:"TemplServiceProfiles";}', 0, 1, 0, 1),
 
 ('sys_dashboard', 3, 'system', '', '_sys_page_block_title_profile_membership', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:18:"profile_membership";s:6:"params";a:0:{}s:5:"class";s:20:"TemplServiceProfiles";}', 0, 1, 0, 0),
 
-('sys_dashboard', 3, 'system', '', '_sys_page_block_title_manage_tools', 11, 192, 'menu', 'sys_account_dashboard_manage_tools', 0, 1, 1, 3),
+('sys_dashboard', 1, 'system', '', '_sys_page_block_title_manage_tools', 11, 192, 'menu', 'sys_account_dashboard_manage_tools', 0, 1, 1, 3),
 
-('sys_dashboard', 2, 'system', '', '_sys_page_block_title_chart_growth', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:16:"get_chart_growth";s:6:"params";a:0:{}s:5:"class";s:18:"TemplChartServices";}', 0, 1, 1, 4),
+('sys_dashboard', 3, 'system', '', '_sys_page_block_title_chart_growth', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:16:"get_chart_growth";s:6:"params";a:0:{}s:5:"class";s:18:"TemplChartServices";}', 0, 1, 1, 0),
 
 ('sys_dashboard', 2, 'system', '', '_sys_page_block_title_chart_stats', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"get_chart_stats";s:6:"params";a:0:{}s:5:"class";s:18:"TemplChartServices";}', 0, 1, 1, 3),
 

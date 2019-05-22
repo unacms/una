@@ -185,7 +185,7 @@
     <string name="_bx_channels_menu_item_title_system_entries_home"><![CDATA[Каналы]]></string>
     <string name="_bx_channels_menu_item_title_entries_home"><![CDATA[Каналы]]></string>
 	<string name="_bx_channels_menu_item_title_system_admt_channels"><![CDATA[Каналы]]></string>
-	<string name="_bx_channels_menu_item_title_admt_channels"><![CDATA[Каналы - {addon} неодобрено]]></string>
+	<string name="_bx_channels_menu_item_title_admt_channels"><![CDATA[Каналы]]></string>
     <string name="_bx_channels_menu_item_title_manage_my"><![CDATA[Мои каналы]]></string>
 	<string name="_bx_channels_menu_item_title_manage_all"><![CDATA[Все каналы]]></string>
 	<string name="_bx_channels_menu_item_title_system_entries_top"><![CDATA[Популярные]]></string>

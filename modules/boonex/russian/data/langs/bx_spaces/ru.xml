@@ -224,7 +224,7 @@
     <string name="_bx_spaces_menu_item_title_system_entries_home"><![CDATA[Пространства]]></string>
     <string name="_bx_spaces_menu_item_title_entries_home"><![CDATA[Пространства]]></string>
     <string name="_bx_spaces_menu_item_title_system_admt_groups"><![CDATA[Пространства]]></string>
-	<string name="_bx_spaces_menu_item_title_admt_groups"><![CDATA[Пространства - {addon} неодобрено]]></string>
+	<string name="_bx_spaces_menu_item_title_admt_groups"><![CDATA[Пространства]]></string>
 	<string name="_bx_spaces_menu_item_title_manage_my"><![CDATA[Мои пространства]]></string>
 	<string name="_bx_spaces_menu_item_title_manage_all"><![CDATA[Все пространства]]></string>
 	<string name="_bx_spaces_menu_item_title_system_entries_top"><![CDATA[Популярные]]></string>

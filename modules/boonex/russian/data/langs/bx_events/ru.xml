@@ -255,7 +255,7 @@
     <string name="_bx_events_menu_item_title_system_entries_home"><![CDATA[События]]></string>
     <string name="_bx_events_menu_item_title_entries_home"><![CDATA[События]]></string>
     <string name="_bx_events_menu_item_title_system_admt_groups"><![CDATA[События]]></string>
-	<string name="_bx_events_menu_item_title_admt_groups"><![CDATA[События - {addon} неодобрено]]></string>
+	<string name="_bx_events_menu_item_title_admt_groups"><![CDATA[События]]></string>
 	<string name="_bx_events_menu_item_title_manage_my"><![CDATA[Мой события]]></string>
 	<string name="_bx_events_menu_item_title_manage_all"><![CDATA[Все события]]></string>
 	<string name="_bx_events_menu_item_title_system_entries_top"><![CDATA[Популярные]]></string>

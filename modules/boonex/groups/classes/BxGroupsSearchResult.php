@@ -32,7 +32,7 @@ class BxGroupsSearchResult extends BxBaseModGroupsSearchResult
         		'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>', 'table' => 'bx_groups_data'),
             ),
             'join' => array (
-                'profile' => array(
+				'profile' => array(
                     'type' => 'INNER',
                     'table' => 'bx_groups_data',
                     'mainField' => 'content_id',

@@ -205,7 +205,7 @@
     <string name="_bx_albums_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_albums_menu_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
 	<string name="_bx_albums_menu_item_title_system_admt_albums"><![CDATA[Альбомы]]></string>
-	<string name="_bx_albums_menu_item_title_admt_albums"><![CDATA[Альбомы - {addon} спрятан]]></string>
+	<string name="_bx_albums_menu_item_title_admt_albums"><![CDATA[Альбомы]]></string>
 	<string name="_bx_albums_menu_item_title_manage_my"><![CDATA[Мои альбомы]]></string>
 	<string name="_bx_albums_menu_item_title_manage_all"><![CDATA[Все альбомы]]></string>
         <string name="_bx_albums_menu_item_title_system_sm_items"><![CDATA[Элементы]]></string>

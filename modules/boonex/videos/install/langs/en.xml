@@ -180,7 +180,7 @@
     <string name="_bx_videos_menu_item_title_system_manage_account"><![CDATA[Manage account]]></string>
     <string name="_bx_videos_menu_item_title_manage_account"><![CDATA[Manage account]]></string>
 	<string name="_bx_videos_menu_item_title_system_admt_videos"><![CDATA[Videos]]></string>
-	<string name="_bx_videos_menu_item_title_admt_videos"><![CDATA[Videos - {addon} hidden]]></string>
+	<string name="_bx_videos_menu_item_title_admt_videos"><![CDATA[Videos]]></string>
 	<string name="_bx_videos_menu_item_title_manage_my"><![CDATA[My Videos]]></string>
 	<string name="_bx_videos_menu_item_title_manage_all"><![CDATA[All Videos]]></string>
 

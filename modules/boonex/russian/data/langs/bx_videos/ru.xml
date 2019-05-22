@@ -180,7 +180,7 @@
     <string name="_bx_videos_menu_item_title_system_manage_account"><![CDATA[Управление аккаунтом]]></string>
     <string name="_bx_videos_menu_item_title_manage_account"><![CDATA[Управление аккаунтом]]></string>
 	<string name="_bx_videos_menu_item_title_system_admt_videos"><![CDATA[Видео]]></string>
-	<string name="_bx_videos_menu_item_title_admt_videos"><![CDATA[Видео - {addon} спрятано]]></string>
+	<string name="_bx_videos_menu_item_title_admt_videos"><![CDATA[Видео]]></string>
 	<string name="_bx_videos_menu_item_title_manage_my"><![CDATA[Мои видео]]></string>
 	<string name="_bx_videos_menu_item_title_manage_all"><![CDATA[Все видео]]></string>
 

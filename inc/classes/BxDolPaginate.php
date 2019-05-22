@@ -196,7 +196,7 @@ abstract class BxDolPaginate extends BxDol
     public function setPerPage($i)
     {
         if ((int)$i > 0) {
-            $this->_iPerPage = $iPerPage;
+            $this->_iPerPage = $i;
             return true;
         }
         return false;

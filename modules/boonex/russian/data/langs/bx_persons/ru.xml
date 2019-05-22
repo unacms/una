@@ -257,7 +257,7 @@
     <string name="_bx_persons_menu_item_title_system_entries_home"><![CDATA[Персоны]]></string>
     <string name="_bx_persons_menu_item_title_entries_home"><![CDATA[Люди]]></string>
 	<string name="_bx_persons_menu_item_title_system_admt_persons"><![CDATA[Профили]]></string>
-	<string name="_bx_persons_menu_item_title_admt_persons"><![CDATA[Профили - {addon} неодобрено]]></string>
+	<string name="_bx_persons_menu_item_title_admt_persons"><![CDATA[Профили]]></string>
 	<string name="_bx_persons_menu_item_title_manage_my"><![CDATA[Мои профили]]></string>
 	<string name="_bx_persons_menu_item_title_manage_all"><![CDATA[Все профили]]></string>   
 	<string name="_bx_persons_menu_item_title_system_entries_active"><![CDATA[Активные]]></string>

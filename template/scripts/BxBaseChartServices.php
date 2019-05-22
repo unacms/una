@@ -113,7 +113,6 @@ class BxBaseChartServices extends BxDol
         $aItems = $oDb->getAll($sQuery);
 
         foreach($aItems as $aItem) {
-            $sTitle = _t($aItem['title']);
             $sTitleAttr = bx_html_attribute(_t($aItem['title']));
 
             $iValue = 0;
@@ -121,36 +120,8 @@ class BxBaseChartServices extends BxDol
                 $iValue = (int)$oDb->getOne($aItem['query']);
             else if(BxDolRequest::serviceExists($aItem['module'], 'get_query_statistics'))
                 $iValue = (int)BxDolService::call($aItem['module'], 'get_query_statistics', array($aItem));
-
-            $sLink = '';
-            if(!empty($aItem['link']))
-                $sLink = BxDolPermalinks::getInstance()->permalink($aItem['link']);
-            $bLink = !empty($sLink);
-
-            $aTmplVarsItems[] = array(
-            	'title' => $sTitle,
-            	'title_attr' => $sTitleAttr,
-                'value' => $iValue,
-                'bx_if:show_link' => array(
-                    'condition' => $bLink,
-                    'content' => array(
-                        'link' => $sLink,
-                        'title' => $sTitle,
-            			'title_attr' => $sTitleAttr,
-                		'value' => $iValue,
-                    )
-                ),
-                'bx_if:show_text' => array(
-                    'condition' => !$bLink,
-                    'content' => array(
-                        'title' => $sTitle,
-                		'title_attr' => $sTitleAttr,
-                		'value' => $iValue,
-                    )
-                )
-            );
-
-            $aTmplVarsDataLabels[] = $sTitle;
+            
+            $aTmplVarsDataLabels[] = $sTitleAttr . ' - ' . $iValue;
 
             $aTmplVarsDataSet['data'][] = $iValue;
             $aTmplVarsDataSet['backgroundColor'][] = '#' . dechex(rand(0x000000, 0xFFFFFF));
@@ -161,7 +132,6 @@ class BxBaseChartServices extends BxDol
         $oTemplate->addCss(array('chart.css'));
 
         return $oTemplate->parseHtmlByName('chart_stats.html', array(
-        	'bx_repeat:items' => $aTmplVarsItems,
             'chart_data' => json_encode(array(
                 'labels' => $aTmplVarsDataLabels,
                 'datasets' => array($aTmplVarsDataSet)

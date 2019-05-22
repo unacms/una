@@ -175,7 +175,7 @@
     <string name="_bx_glossary_menu_item_title_system_manage_account"><![CDATA[Manage account]]></string>
     <string name="_bx_glossary_menu_item_title_manage_account"><![CDATA[Manage account]]></string>
 	<string name="_bx_glossary_menu_item_title_system_admt_glossary"><![CDATA[Glossary]]></string>
-	<string name="_bx_glossary_menu_item_title_admt_glossary"><![CDATA[Glossary - {addon} hidden]]></string>
+	<string name="_bx_glossary_menu_item_title_admt_glossary"><![CDATA[Glossary]]></string>
 	<string name="_bx_glossary_menu_item_title_manage_my"><![CDATA[My Terms]]></string>
 	<string name="_bx_glossary_menu_item_title_manage_all"><![CDATA[All Terms]]></string>
 

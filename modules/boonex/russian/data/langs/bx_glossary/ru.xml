@@ -178,7 +178,7 @@
     <string name="_bx_glossary_menu_item_title_system_manage_account"><![CDATA[Управление аккаунтом]]></string>
     <string name="_bx_glossary_menu_item_title_manage_account"><![CDATA[Управление аккаунтом]]></string>
 	<string name="_bx_glossary_menu_item_title_system_admt_posts"><![CDATA[Глоссарий]]></string>
-	<string name="_bx_glossary_menu_item_title_admt_posts"><![CDATA[Глоссарий - {addon} спрятано]]></string>
+	<string name="_bx_glossary_menu_item_title_admt_posts"><![CDATA[Глоссарий]]></string>
 	<string name="_bx_glossary_menu_item_title_manage_my"><![CDATA[Мои Глоссарий]]></string>
 	<string name="_bx_glossary_menu_item_title_manage_all"><![CDATA[Все Глоссарий]]></string>
 

@@ -48,7 +48,7 @@ class BxAccntModule extends BxBaseModGeneralModule
         ));
         $o->unsetPaginate();
 
-        return $o->getNum();
+        return array('counter1_value' => $o->getNum(), 'counter1_caption' => _t('_bx_accnt_menu_dashboard_manage_tools_addon_counter1_caption'));
 	}
 
     public function checkAllowedDelete(&$aDataEntry, $isPerformAction = false)
