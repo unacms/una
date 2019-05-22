@@ -28,13 +28,14 @@ class BxDirConfig extends BxBaseModTextConfig
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'entries',
             'TABLE_ENTRIES_FULLTEXT' => 'title_text',
+            'TABLE_CATEGORIES' => $aModule['db_prefix'] . 'categories',
+            'TABLE_CATEGORIES_TYPES' => $aModule['db_prefix'] . 'categories_types',
 
             // database fields
             'FIELD_ID' => 'id',
             'FIELD_AUTHOR' => 'author',
             'FIELD_ADDED' => 'added',
             'FIELD_CHANGED' => 'changed',
-            'FIELD_PUBLISHED' => 'published',
             'FIELD_TITLE' => 'title',
             'FIELD_TEXT' => 'text',
             'FIELD_TEXT_ID' => 'ad-text',
@@ -55,7 +56,6 @@ class BxDirConfig extends BxBaseModTextConfig
             'FIELD_LABELS' => 'labels',
             'FIELD_ANONYMOUS' => 'anonymous',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
-            'FIELD_DISABLE_COMMENTS' => 'disable_comments',
             
             // page URIs
             'URI_VIEW_ENTRY' => 'view-ad',
@@ -78,7 +78,7 @@ class BxDirConfig extends BxBaseModTextConfig
             'PARAM_SEARCHABLE_FIELDS' => 'bx_directory_searchable_fields',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_directory_per_page_browse_showcase',
             'PARAM_LABELS' => 'bx_directory_labels',
-            
+            'PARAM_CATEGORY_LEVEL_MAX' => 1,
 
             // objects
             'OBJECT_STORAGE' => 'bx_directory_covers',
@@ -110,10 +110,14 @@ class BxDirConfig extends BxBaseModTextConfig
             'OBJECT_COMMENTS' => 'bx_directory',
             'OBJECT_CATEGORY' => 'bx_directory_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_directory_allow_view_to',
+            'OBJECT_FORM_CATEGORY' => 'bx_directory_category',
+            'OBJECT_FORM_CATEGORY_DISPLAY_ADD' => 'bx_directory_category_add',
+            'OBJECT_FORM_CATEGORY_DISPLAY_EDIT' => 'bx_directory_category_edit',
+            'OBJECT_FORM_CATEGORY_DISPLAY_DELETE' => 'bx_directory_category_delete',
             'OBJECT_FORM_ENTRY' => 'bx_directory',
-            'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_directory_entry_view',
+            'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => '',
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_directory_entry_add',
-            'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_directory_entry_edit',
+            'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => '',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_directory_entry_delete',
             'OBJECT_FORM_POLL' => 'bx_directory_poll',
             'OBJECT_FORM_POLL_DISPLAY_ADD' => 'bx_directory_poll_add',
@@ -126,6 +130,7 @@ class BxDirConfig extends BxBaseModTextConfig
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'directory-home', // first item in view entry submenu from main module submenu
             'OBJECT_MENU_SNIPPET_META' => 'bx_directory_snippet_meta', // menu for snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_directory_menu_manage_tools', //manage menu in content administration tools
+            'OBJECT_GRID_CATEGORIES' => 'bx_directory_categories',
             'OBJECT_GRID_ADMINISTRATION' => 'bx_directory_administration',
             'OBJECT_GRID_COMMON' => 'bx_directory_common',
             'OBJECT_UPLOADERS' => array('bx_directory_simple', 'bx_directory_html5'),
@@ -159,19 +164,25 @@ class BxDirConfig extends BxBaseModTextConfig
                 'txt_err_cannot_perform_action' => '_bx_directory_txt_err_cannot_perform_action',
                 'txt_poll_answer_vote_do_by' => '_bx_directory_txt_poll_answer_vote_do_by',
                 'txt_poll_answer_vote_counter' => '_bx_directory_txt_poll_answer_vote_counter',
-                'txt_poll_answer_vote_percent' => '_bx_directory_txt_poll_answer_vote_percent'
+                'txt_poll_answer_vote_percent' => '_bx_directory_txt_poll_answer_vote_percent',
+                'txt_display_add' => '_bx_directory_txt_display_title_add',
+                'txt_display_edit' => '_bx_directory_txt_display_title_edit',
+                'txt_display_view' => '_bx_directory_txt_display_title_view',
             ),
         ));
         
         $this->_aJsClasses = array_merge($this->_aJsClasses, array(
-            'manage_tools' => 'BxDirManageTools'
+            'manage_tools' => 'BxDirManageTools',
+            'studio' => 'BxDirStudio'
         ));
 
         $this->_aJsObjects = array_merge($this->_aJsObjects, array(
-            'manage_tools' => 'oBxDirManageTools'
+            'manage_tools' => 'oBxDirManageTools',
+            'studio' => 'oBxDirStudio'
         ));
 
         $this->_aGridObjects = array(
+            'categories' => $this->CNF['OBJECT_GRID_CATEGORIES'],
             'common' => $this->CNF['OBJECT_GRID_COMMON'],
             'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
         );
