@@ -139,16 +139,16 @@ class BxDolLanguagesQuery extends BxDolDb implements iBxDolSingleton
 
             case 'all_by_id':
             	$aMethod['params'][1] = array(
-                	'id' => $aParams['value']
+                    'id' => $aParams['value']
                 );
 
                 $sWhereClause .= " AND `tl`.`ID`=:id";
                 $sOrderClause = " `tl`.`Name` ASC ";
                 break;
 
-			case 'all_by_name':
-				$aMethod['params'][1] = array(
-                	'name' => $aParams['value']
+            case 'all_by_name':
+                $aMethod['params'][1] = array(
+                    'name' => $aParams['value']
                 );
 
                 $sWhereClause .= " AND `tl`.`Name`=:name";
@@ -158,13 +158,36 @@ class BxDolLanguagesQuery extends BxDolDb implements iBxDolSingleton
             case 'all_key_id':
                 $aMethod['name'] = 'getAllWithKey';
                 $aMethod['params'][1] = 'id';
+                $aMethod['params'][2] = array();
 
-                if(isset($aParams['language']) && (int)$aParams['language'] != 0) {
-                	$aMethod['params'][2] = array(
-	                	'id' => $aParams['language']
-	                );
+                if(!empty($aParams['language'])) {
+                    $aMethod['params'][2]['id'] = $aParams['language'];
 
                     $sWhereClause .= " AND `tl`.`ID`=:id";
+                }
+
+                if(isset($aParams['enabled'])) {
+                    $aMethod['params'][2]['enabled'] = (int)$aParams['enabled'];
+
+                    $sWhereClause .= " AND `tl`.`Enabled`=:enabled";
+                }
+                break;
+
+            case 'all_key_name':
+                $aMethod['name'] = 'getAllWithKey';
+                $aMethod['params'][1] = 'name';
+                $aMethod['params'][2] = array();
+
+                if(!empty($aParams['language'])) {
+                    $aMethod['params'][2]['name'] = $aParams['language'];
+
+                    $sWhereClause .= " AND `tl`.`Name`=:name";
+                }
+
+                if(isset($aParams['enabled'])) {
+                    $aMethod['params'][2]['enabled'] = (int)$aParams['enabled'];
+
+                    $sWhereClause .= " AND `tl`.`Enabled`=:enabled";
                 }
                 break;
         }

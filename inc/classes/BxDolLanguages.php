@@ -136,6 +136,17 @@ class BxDolLanguages extends BxDolFactory implements iBxDolSingleton
     {
         return $this->oDb->getLanguages($bIdAsKey, $bActiveOnly);
     }
+    
+    function getLanguagesExt($bIdAsKey = false, $bActiveOnly = false)
+    {
+        $aParams = array('type' => 'all_key_' . ($bIdAsKey ? 'id' : 'name'));
+        if($bActiveOnly)
+            $aParams['enabled'] = 1;
+
+        $aResults = array();
+        $this->oDb->getLanguagesBy($aParams, $aResults, false);
+        return $aResults;
+    }
 
     function getLanguageCategory($sName)
     {

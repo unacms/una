@@ -121,7 +121,7 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_directory_home', 1, 'bx_directory', '', '_bx_directory_page_block_title_featured_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:12:"bx_directory";s:6:"method";s:15:"browse_featured";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 1, 1, 0),
 ('bx_directory_home', 1, 'bx_directory', '', '_bx_directory_page_block_title_recent_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:12:"bx_directory";s:6:"method";s:13:"browse_public";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 1, 1, 1),
 ('bx_directory_home', 2, 'bx_directory', '', '_bx_directory_page_block_title_popular_keywords', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:14:"keywords_cloud";s:6:"params";a:2:{i:0;s:12:"bx_directory";i:1;s:12:"bx_directory";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 1, 1, 0),
-('bx_directory_home', 2, 'bx_directory', '', '_bx_directory_page_block_title_cats', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"categories_list";s:6:"params";a:2:{i:0;s:17:"bx_directory_cats";i:1;a:1:{s:10:"show_empty";b:1;}}s:5:"class";s:20:"TemplServiceCategory";}', 0, 1, 1, 1);
+('bx_directory_home', 2, 'bx_directory', '', '_bx_directory_page_block_title_cats', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:12:"bx_directory";s:6:"method";s:15:"categories_list";s:6:"params";a:1:{i:0;a:1:{s:10:"show_empty";b:1;}}}', 0, 1, 1, 1);
 
 
 -- PAGE: search for entries
@@ -411,10 +411,6 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
 ('bx_directory', 'bx_directory_meta_keywords', 'bx_directory_meta_locations', 'bx_directory_meta_mentions', '', '');
 
--- CATEGORY
-INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
-('bx_directory_cats', 'bx_directory', 'bx_directory', 'bx_directory_cats', 'bx_directory_entries', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `bx_directory_entries`.`author` OR `sys_profiles`.`id` = -`bx_directory_entries`.`author`)', 'AND `sys_profiles`.`status` = ''active''', '', '');
-
 -- STATS
 SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);
 INSERT INTO `sys_statistics` (`module`, `name`, `title`, `link`, `icon`, `query`, `order`) VALUES 
@@ -430,7 +426,6 @@ INSERT INTO `sys_objects_chart` (`object`, `title`, `table`, `field_date_ts`, `f
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
 ('bx_directory_administration', 'Sql', 'SELECT * FROM `bx_directory_entries` WHERE 1 ', 'bx_directory_entries', 'id', 'added', 'status_admin', '', 20, NULL, 'start', '', 'title,text', '', 'like', 'reports', '', 192, 'BxDirGridAdministration', 'modules/boonex/directory/classes/BxDirGridAdministration.php'),
 ('bx_directory_common', 'Sql', 'SELECT * FROM `bx_directory_entries` WHERE 1 ', 'bx_directory_entries', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 2147483647, 'BxDirGridCommon', 'modules/boonex/directory/classes/BxDirGridCommon.php');
-
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_directory_administration', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
@@ -456,8 +451,27 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_directory_common', 'single', 'delete', '_bx_directory_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_directory_common', 'single', 'settings', '_bx_directory_grid_action_title_adm_more_actions', 'cog', 1, 0, 3);
 
--- UPLOADERS
+-- GRIDS: categories manager
+INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_mode`, `sorting_fields`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
+('bx_directory_categories', 'Sql', 'SELECT * FROM `bx_directory_categories` WHERE 1 ', 'bx_directory_categories', 'id', 'order', 'active', '', 20, NULL, 'start', '', 'title,text', 'auto', '', 128, 'BxDirGridCategories', 'modules/boonex/directory/classes/BxDirGridCategories.php');
 
+INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
+('bx_directory_categories', 'order', '', '1%', 0, '', '', 1),
+('bx_directory_categories', 'checkbox', '_sys_select', '1%', 0, '', '', 2),
+('bx_directory_categories', 'switcher', '', '8%', 0, '', '', 3),
+('bx_directory_categories', 'icon', '_bx_directory_grid_column_title_icon', '5%', 0, '', '', 4),
+('bx_directory_categories', 'title', '_bx_directory_grid_column_title_title', '50%', 1, '32', '', 5),
+('bx_directory_categories', 'subcategories', '_bx_directory_grid_column_title_subcategories', '15%', 0, '16', '', 6),
+('bx_directory_categories', 'actions', '', '20%', 0, '', '', 7);
+
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
+('bx_directory_categories', 'bulk', 'delete', '_bx_directory_grid_action_title_delete', '', 1, 1),
+('bx_directory_categories', 'single', 'edit', '', 'pencil-alt', 0, 1),
+('bx_directory_categories', 'single', 'delete', '', 'remove', 1, 2),
+('bx_directory_categories', 'independent', 'add', '_bx_directory_grid_action_title_add', '', 0, 1);
+
+
+-- UPLOADERS
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('bx_directory_simple', 1, 'BxDirUploaderSimple', 'modules/boonex/directory/classes/BxDirUploaderSimple.php'),
 ('bx_directory_html5', 1, 'BxDirUploaderHTML5', 'modules/boonex/directory/classes/BxDirUploaderHTML5.php'),

@@ -28,9 +28,6 @@ DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_directory', 'bx_dire
 -- METATAGS
 DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_directory';
 
--- CATEGORY
-DELETE FROM `sys_objects_category` WHERE `object` = 'bx_directory_cats';
-
 -- STATS
 DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_directory%';
 
@@ -38,9 +35,9 @@ DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_directory%';
 DELETE FROM `sys_objects_chart` WHERE `object` LIKE 'bx_directory%';
 
 -- GRIDS
-DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_directory_administration', 'bx_directory_common');
-DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_directory_administration', 'bx_directory_common');
-DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_directory_administration', 'bx_directory_common');
+DELETE FROM `sys_objects_grid` WHERE `object` LIKE 'bx_directory%';
+DELETE FROM `sys_grid_fields` WHERE `object` LIKE 'bx_directory%';
+DELETE FROM `sys_grid_actions` WHERE `object` LIKE 'bx_directory%';
 
 -- UPLOADERS
 DELETE FROM `sys_objects_uploader` WHERE `object` LIKE 'bx_directory_%';
