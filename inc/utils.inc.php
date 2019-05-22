@@ -584,9 +584,9 @@ function clear_xss($val)
 
 //--------------------------------------- friendly permalinks --------------------------------------//
 //------------------------------------------- main functions ---------------------------------------//
-function uriGenerate ($s, $sTable, $sField, $sEmpty = '-')
+function uriGenerate ($s, $sTable, $sField, $sEmpty = '-', $sDivider = '-')
 {
-    $s = uriFilter($s, $sEmpty);
+    $s = uriFilter($s, $sEmpty, $sDivider);
     if(uriCheckUniq($s, $sTable, $sField))
         return $s;
 
@@ -595,27 +595,27 @@ function uriGenerate ($s, $sTable, $sField, $sEmpty = '-')
         $s = get_mb_substr($s, 0, 240);
 
     // try to add date
-    $s .= '-' . date('Y-m-d');
+    $s .= $sDivider . date('Y-m-d');
     if(uriCheckUniq($s, $sTable, $sField))
         return $s;
 
     // try to add number
     for($i = 0 ; $i < 999 ; ++$i)
-        if(uriCheckUniq($s . '-' . $i, $sTable, $sField))
-            return ($s . '-' . $i);
+        if(uriCheckUniq($s . $sDivider . $i, $sTable, $sField))
+            return ($s . $sDivider . $i);
 
     return rand(0, 999999999);
 }
 
-function uriFilter ($s, $sEmpty = '-')
+function uriFilter ($s, $sEmpty = '-', $sDivider = '-')
 {
     if (BxTemplConfig::getInstance()->bAllowUnicodeInPreg)
-        $s = get_mb_replace ('/[^\pL^\pN]+/u', '-', $s); // unicode characters
+        $s = get_mb_replace ('/[^\pL^\pN]+/u', $sDivider, $s); // unicode characters
     else
-        $s = get_mb_replace ('/([^\d^\w]+)/u', '-', $s); // latin characters only
+        $s = get_mb_replace ('/([^\d^\w]+)/u', $sDivider, $s); // latin characters only
 
-    $s = get_mb_replace ('/([-^]+)/', '-', $s);
-    $s = get_mb_replace ('/([-]+)$/', '', $s); // remove trailing dash
+    $s = get_mb_replace ('/([' . $sDivider . '^]+)/', $sDivider, $s);
+    $s = get_mb_replace ('/([' . $sDivider . ']+)$/', '', $s); // remove trailing dash
     if (!$s) $s = $sEmpty;
     return $s;
 }
