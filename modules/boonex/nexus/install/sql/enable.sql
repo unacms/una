@@ -11,7 +11,7 @@ VALUES (@iTypeId, 'bx_nexus_general', '_bx_nexus_adm_stg_cpt_category_general', 
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-('bx_nexus_option_qwerty', '123', @iCategId, '_bx_nexus_option_qwerty', 'digit', '', '', '', 10);
+('bx_nexus_option_styles', '', @iCategId, '_bx_nexus_option_styles', 'text', '', '', '', 10);
 
 -- Injections
 

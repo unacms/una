@@ -51,7 +51,10 @@ class BxNexusModule extends BxDolModule
             $iBubbles += $r['bx_if:addon']['content']['addon'];
         }
 
-        $s  = $this->_oTemplate->parseHtmlByName('styles.html', array());
+        $s = $this->_oTemplate->parseHtmlByName('styles.html', array());
+        if ($sCustomStyles = getParam('bx_nexus_option_styles'))
+            $s .= "<style>\n" . $sCustomStyles . "\n</style>";
+
         $s .= $this->_oTemplate->parseHtmlByName('js.html', array(
             'msg' => json_encode(array(
                 'loggedin' => isLogged(),                

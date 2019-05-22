@@ -14,6 +14,14 @@
         bx_menu_slide_inline('#bx-sliding-menu-sys_add_content', null, 'site');
     }
 
+    function bx_mobile_apps_show_notifications_menu () {
+        bx_menu_slide('bx_notifications_preview', null, 'site', {id:{value:'bx_notifications_preview', force:1}});
+    }
+
+    function bx_mobile_apps_show_messenger_menu () {
+        document.location = sUrlRoot + 'page.php?i=messenger';
+    }
+
     function bx_mobile_apps_home () {
         if (window.history.length > 1)
             window.history.go(-(window.history.length - 1));
@@ -78,5 +86,7 @@
                 },
             });
         }
+        if ('undefined' !== typeof(window.ReactNativeWebView))
+            window.ReactNativeWebView.postMessage(JSON.stringify({stop_loading: 1}));
     });
 </script>
