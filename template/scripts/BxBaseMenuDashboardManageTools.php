@@ -58,7 +58,7 @@ class BxBaseMenuDashboardManageTools extends BxTemplMenu
         );
         return array(
             'addon' => (trim($aValues['counter1_value']) != '' || trim($aValues['counter2_value']) != ''),
-            'addonf' => $this->_oTemplate->parseHtmlByTemplateName('menu_item_dashboard_manage_tools_addon', $aTmp)
+            'addonf' => $this->_oTemplate->parseHtmlByName('menu_item_dashboard_manage_tools_addon.html', $aTmp)
         );
     }
 }
