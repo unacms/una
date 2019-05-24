@@ -38,7 +38,10 @@
 
 .bx-grid-header-controls-filter {
     float:left;
-    width: 50%;
+}
+
+.bx-media-phone div.bx-grid-header div.bx-form-element-wrapper{
+    float:none;
 }
 
 .bx-grid-header-controls-independent {
