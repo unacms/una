@@ -19,35 +19,29 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_directory_searchable_fields', 'title,text', @iCategId, '_bx_directory_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:21:"get_searchable_fields";}', 30),
 ('bx_directory_labels', '', @iCategId, '_sys_option_labels', 'text', '', '', '', 40);
 
--- PAGE: create entry
 
+-- PAGE: create entry
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_directory_create_entry', '_bx_directory_page_title_sys_create_entry', '_bx_directory_page_title_create_entry', 'bx_directory', 5, 2147483647, 1, 'create-ad', 'page.php?i=create-ad', '', '', '', 0, 1, 0, 'BxDirPageBrowse', 'modules/boonex/directory/classes/BxDirPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('bx_directory_create_entry', 1, 'bx_directory', '_bx_directory_page_block_title_create_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:13:"entity_create";}', 0, 1, 1);
 
-
 -- PAGE: edit entry
-
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_directory_edit_entry', '_bx_directory_page_title_sys_edit_entry', '_bx_directory_page_title_edit_entry', 'bx_directory', 5, 2147483647, 1, 'edit-ad', '', '', '', '', 0, 1, 0, 'BxDirPageEntry', 'modules/boonex/directory/classes/BxDirPageEntry.php');
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('bx_directory_edit_entry', 1, 'bx_directory', '_bx_directory_page_block_title_edit_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:11:"entity_edit";}', 0, 0, 0);
 
-
 -- PAGE: delete entry
-
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_directory_delete_entry', '_bx_directory_page_title_sys_delete_entry', '_bx_directory_page_title_delete_entry', 'bx_directory', 5, 2147483647, 1, 'delete-ad', '', '', '', '', 0, 1, 0, 'BxDirPageEntry', 'modules/boonex/directory/classes/BxDirPageEntry.php');
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('bx_directory_delete_entry', 1, 'bx_directory', '_bx_directory_page_block_title_delete_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:13:"entity_delete";}', 0, 0, 0);
 
-
 -- PAGE: view entry
-
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_directory_view_entry', '_bx_directory_page_title_sys_view_entry', '_bx_directory_page_title_view_entry', 'bx_directory', 12, 2147483647, 1, 'view-ad', '', '', '', '', 0, 1, 0, 'BxDirPageEntry', 'modules/boonex/directory/classes/BxDirPageEntry.php');
 
@@ -66,36 +60,36 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_directory_view_entry', 3, 'bx_directory', '', '_bx_directory_page_block_title_entry_location', 3, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"locations_map";s:6:"params";a:2:{i:0;s:12:"bx_directory";i:1;s:4:"{id}";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 0, 1, 3),
 ('bx_directory_view_entry', 3, 'bx_directory', '', '_bx_directory_page_block_title_featured_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:12:"bx_directory";s:6:"method";s:15:"browse_featured";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 0, 1, 4);
 
-
 -- PAGE: view entry comments
-
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_directory_view_entry_comments', '_bx_directory_page_title_sys_view_entry_comments', '_bx_directory_page_title_view_entry_comments', 'bx_directory', 5, 2147483647, 1, 'view-ad-comments', '', '', '', '', 0, 1, 0, 'BxDirPageEntry', 'modules/boonex/directory/classes/BxDirPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_directory_view_entry_comments', 1, 'bx_directory', '_bx_directory_page_block_title_entry_comments', '_bx_directory_page_block_title_entry_comments_link', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:15:"entity_comments";}', 0, 0, 1);
 
-
 -- PAGE: popular entries
-
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_directory_popular', '_bx_directory_page_title_sys_entries_popular', '_bx_directory_page_title_entries_popular', 'bx_directory', 5, 2147483647, 1, 'ads-popular', 'page.php?i=ads-popular', '', '', '', 0, 1, 0, 'BxDirPageBrowse', 'modules/boonex/directory/classes/BxDirPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_directory_popular', 1, 'bx_directory', '_bx_directory_page_block_title_popular_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:12:"bx_directory";s:6:"method";s:14:"browse_popular";s:6:"params";a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 1, 1);
 
-
 -- PAGE: recently updated entries
-
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_directory_updated', '_bx_directory_page_title_sys_entries_updated', '_bx_directory_page_title_entries_updated', 'bx_directory', 5, 2147483647, 1, 'ads-updated', 'page.php?i=ads-updated', '', '', '', 0, 1, 0, 'BxDirPageBrowse', 'modules/boonex/directory/classes/BxDirPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_directory_updated', 1, 'bx_directory', '_bx_directory_page_block_title_updated_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:12:"bx_directory";s:6:"method";s:14:"browse_updated";s:6:"params";a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 1, 1);
 
+-- PAGE:  entries' categories 
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_directory_categories', '_bx_directory_page_title_sys_entries_categories', '_bx_directory_page_title_entries_categories', 'bx_directory', 1, 2147483647, 1, 'ads-categories', 'page.php?i=ads-categories', '', '', '', 0, 1, 0, 'BxDirPageBrowse', 'modules/boonex/directory/classes/BxDirPageBrowse.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_directory_categories', 1, 'bx_directory', '', '_bx_directory_page_block_title_categories', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:12:"bx_directory";s:6:"method";s:15:"categories_list";s:6:"params";a:1:{i:0;a:1:{s:10:"show_empty";b:1;}}}', 0, 0, 1, 1),
+('bx_directory_categories', 2, 'bx_directory', '', '_bx_directory_page_block_title_entries_by_category', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:12:"bx_directory";s:6:"method";s:15:"browse_category";s:6:"params";a:2:{i:0;i:0;i:1;a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}}', 0, 1, 1, 1);
 
 -- PAGE: entries of author
-
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_directory_author', 'ads-author', '_bx_directory_page_title_sys_entries_of_author', '_bx_directory_page_title_entries_of_author', 'bx_directory', 5, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxDirPageAuthor', 'modules/boonex/directory/classes/BxDirPageAuthor.php');
 
@@ -105,7 +99,6 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_directory_author', 1, 'bx_directory', '_bx_directory_page_block_title_sys_entries_of_author', '_bx_directory_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:13:"browse_author";}', 0, 0, 1, 3);
 
 -- PAGE: entries in context
-
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_directory_context', 'ads-context', '_bx_directory_page_title_sys_entries_in_context', '_bx_directory_page_title_entries_in_context', 'bx_directory', 5, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxDirPageAuthor', 'modules/boonex/directory/classes/BxDirPageAuthor.php');
 
@@ -113,7 +106,6 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_directory_context', 1, 'bx_directory', '_bx_directory_page_block_title_sys_entries_in_context', '_bx_directory_page_block_title_entries_in_context', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:14:"browse_context";}', 0, 0, 1, 1);
 
 -- PAGE: module home
-
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_directory_home', 'directory-home', '_bx_directory_page_title_sys_home', '_bx_directory_page_title_home', 'bx_directory', 2, 2147483647, 1, 'page.php?i=directory-home', '', '', '', 0, 1, 0, 'BxDirPageBrowse', 'modules/boonex/directory/classes/BxDirPageBrowse.php');
 
@@ -121,11 +113,10 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_directory_home', 1, 'bx_directory', '', '_bx_directory_page_block_title_featured_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:12:"bx_directory";s:6:"method";s:15:"browse_featured";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 1, 1, 0),
 ('bx_directory_home', 1, 'bx_directory', '', '_bx_directory_page_block_title_recent_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:12:"bx_directory";s:6:"method";s:13:"browse_public";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 1, 1, 1),
 ('bx_directory_home', 2, 'bx_directory', '', '_bx_directory_page_block_title_popular_keywords', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:14:"keywords_cloud";s:6:"params";a:2:{i:0;s:12:"bx_directory";i:1;s:12:"bx_directory";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 1, 1, 0),
-('bx_directory_home', 2, 'bx_directory', '', '_bx_directory_page_block_title_cats', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:12:"bx_directory";s:6:"method";s:15:"categories_list";s:6:"params";a:1:{i:0;a:1:{s:10:"show_empty";b:1;}}}', 0, 1, 1, 1);
+('bx_directory_home', 2, 'bx_directory', '', '_bx_directory_page_block_title_categories', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:12:"bx_directory";s:6:"method";s:15:"categories_list";s:6:"params";a:1:{i:0;a:1:{s:10:"show_empty";b:1;}}}', 0, 1, 1, 1);
 
 
 -- PAGE: search for entries
-
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_directory_search', '_bx_directory_page_title_sys_entries_search', '_bx_directory_page_title_entries_search', 'bx_directory', 5, 2147483647, 1, 'ads-search', 'page.php?i=ads-search', '', '', '', 0, 1, 0, 'BxDirPageBrowse', 'modules/boonex/directory/classes/BxDirPageBrowse.php');
 
@@ -134,7 +125,6 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 ('bx_directory_search', 1, 'bx_directory', '_bx_directory_page_block_title_search_results', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_results";s:6:"params";a:1:{i:0;a:2:{s:6:"object";s:12:"bx_directory";s:10:"show_empty";b:1;}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 1, 2),
 ('bx_directory_search', 1, 'bx_directory', '_bx_directory_page_block_title_search_form_cmts', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:8:"get_form";s:6:"params";a:1:{i:0;a:1:{s:6:"object";s:17:"bx_directory_cmts";}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 0, 3),
 ('bx_directory_search', 1, 'bx_directory', '_bx_directory_page_block_title_search_results_cmts', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_results";s:6:"params";a:1:{i:0;a:2:{s:6:"object";s:17:"bx_directory_cmts";s:10:"show_empty";b:1;}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 0, 4);
-
 
 -- PAGE: module manage own
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -151,7 +141,6 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_directory_administration', 1, 'bx_directory', '_bx_directory_page_block_title_system_manage_administration', '_bx_directory_page_block_title_manage', 11, 192, 'service', 'a:3:{s:6:"module";s:12:"bx_directory";s:6:"method";s:12:"manage_tools";s:6:"params";a:1:{i:0;s:14:"administration";}}', 0, 1, 0);
 
 -- PAGE: add block to homepage
-
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = 'sys_home' AND `cell_id` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('sys_home', 1, 'bx_directory', '_bx_directory_page_block_title_recent_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:12:"bx_directory";s:6:"method";s:13:"browse_public";s:6:"params";a:2:{i:0;b:0;i:1;b:0;}}', 1, 0, 0, IFNULL(@iBlockOrder, 0) + 1);
@@ -162,7 +151,6 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 ('trigger_page_profile_view_entry', @iPBCellProfile, 'bx_directory', '_bx_directory_page_block_title_my_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:12:"bx_directory";s:6:"method";s:13:"browse_author";s:6:"params";a:2:{i:0;s:12:"{profile_id}";i:1;a:2:{s:8:"per_page";s:29:"bx_directory_per_page_profile";s:13:"empty_message";b:0;}}}', 0, 0, 0);
 
 -- PAGE: service blocks
-
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = '' AND `cell_id` = 0 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system` , `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('', 0, 'bx_directory', '', '_bx_directory_page_block_title_recent_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:12:"bx_directory";s:6:"method";s:13:"browse_public";s:6:"params";a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 1),
@@ -176,25 +164,21 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system` , `
 
 
 -- MENU: add to site menu
-
 SET @iSiteMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_site' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('sys_site', 'bx_directory', 'directory-home', '_bx_directory_menu_item_title_system_entries_home', '_bx_directory_menu_item_title_entries_home', 'page.php?i=directory-home', '', '', 'folder-open col-green3', 'bx_directory_submenu', 2147483647, 1, 1, IFNULL(@iSiteMenuOrder, 0) + 1);
 
 -- MENU: add to homepage menu
-
 SET @iHomepageMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_homepage' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('sys_homepage', 'bx_directory', 'directory-home', '_bx_directory_menu_item_title_system_entries_home', '_bx_directory_menu_item_title_entries_home', 'page.php?i=directory-home', '', '', 'folder-open col-green3', 'bx_directory_submenu', 2147483647, 1, 1, IFNULL(@iHomepageMenuOrder, 0) + 1);
 
 -- MENU: add to "add content" menu
-
 SET @iAddMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_add_content_links' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('sys_add_content_links', 'bx_directory', 'create-ad', '_bx_directory_menu_item_title_system_create_entry', '_bx_directory_menu_item_title_create_entry', 'page.php?i=create-ad', '', '', 'folder-open col-green3', '', 2147483647, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
 
 -- MENU: create ad form attachments (link, photo, video, etc)
-
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_directory_entry_attachments', '_bx_directory_menu_title_entry_attachments', 'bx_directory_entry_attachments', 'bx_directory', 23, 0, 1, 'BxDirMenuAttachments', 'modules/boonex/directory/classes/BxDirMenuAttachments.php');
 
@@ -211,7 +195,6 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_directory_entry_attachments', 'bx_directory', 'poll', '_bx_directory_menu_item_title_system_cpa_poll', '_bx_directory_menu_item_title_cpa_poll', 'javascript:void(0)', 'javascript:{js_object}.showPollForm(this);', '_self', 'tasks', '', '', 2147483647, '', 1, 0, 1, 7);
 
 -- MENU: actions menu for view entry 
-
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_directory_view', '_bx_directory_menu_title_view_entry', 'bx_directory_view', 'bx_directory', 9, 0, 1, 'BxDirMenuView', 'modules/boonex/directory/classes/BxDirMenuView.php');
 
@@ -222,9 +205,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_directory_view', 'bx_directory', 'edit-ad', '_bx_directory_menu_item_title_system_edit_entry', '_bx_directory_menu_item_title_edit_entry', 'page.php?i=edit-ad&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 1),
 ('bx_directory_view', 'bx_directory', 'delete-ad', '_bx_directory_menu_item_title_system_delete_entry', '_bx_directory_menu_item_title_delete_entry', 'page.php?i=delete-ad&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 2);
 
-
 -- MENU: all actions menu for view entry 
-
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_directory_view_actions', '_sys_menu_title_view_actions', 'bx_directory_view_actions', 'bx_directory', 15, 0, 1, 'BxDirMenuViewActions', 'modules/boonex/directory/classes/BxDirMenuViewActions.php');
 
@@ -248,9 +229,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_directory_view_actions', 'bx_directory', 'social-sharing-pinterest', '_sys_menu_item_title_system_social_sharing_pinterest', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 330),
 ('bx_directory_view_actions', 'bx_directory', 'more-auto', '_sys_menu_item_title_system_va_more_auto', '_sys_menu_item_title_va_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', '', 0, 2147483647, 1, 0, 9999);
 
-
 -- MENU: actions menu for my entries
-
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_directory_my', '_bx_directory_menu_title_entries_my', 'bx_directory_my', 'bx_directory', 9, 0, 1, 'BxDirMenu', 'modules/boonex/directory/classes/BxDirMenu.php');
 
@@ -262,7 +241,6 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 
 -- MENU: module sub-menu
-
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_directory_submenu', '_bx_directory_menu_title_submenu', 'bx_directory_submenu', 'bx_directory', 8, 0, 1, '', '');
 
@@ -272,8 +250,9 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_directory_submenu', 'bx_directory', 'directory-home', '_bx_directory_menu_item_title_system_entries_public', '_bx_directory_menu_item_title_entries_public', 'page.php?i=directory-home', '', '', '', '', 2147483647, 1, 1, 1),
 ('bx_directory_submenu', 'bx_directory', 'ads-popular', '_bx_directory_menu_item_title_system_entries_popular', '_bx_directory_menu_item_title_entries_popular', 'page.php?i=ads-popular', '', '', '', '', 2147483647, 1, 1, 2),
-('bx_directory_submenu', 'bx_directory', 'ads-search', '_bx_directory_menu_item_title_system_entries_search', '_bx_directory_menu_item_title_entries_search', 'page.php?i=ads-search', '', '', '', '', 2147483647, 1, 1, 3),
-('bx_directory_submenu', 'bx_directory', 'ads-manage', '_bx_directory_menu_item_title_system_entries_manage', '_bx_directory_menu_item_title_entries_manage', 'page.php?i=ads-manage', '', '', '', '', 2147483646, 1, 1, 4);
+('bx_directory_submenu', 'bx_directory', 'ads-categories', '_bx_directory_menu_item_title_system_entries_categories', '_bx_directory_menu_item_title_entries_categories', 'page.php?i=ads-categories', '', '', '', '', 2147483647, 1, 1, 3),
+('bx_directory_submenu', 'bx_directory', 'ads-search', '_bx_directory_menu_item_title_system_entries_search', '_bx_directory_menu_item_title_entries_search', 'page.php?i=ads-search', '', '', '', '', 2147483647, 1, 1, 4),
+('bx_directory_submenu', 'bx_directory', 'ads-manage', '_bx_directory_menu_item_title_system_entries_manage', '_bx_directory_menu_item_title_entries_manage', 'page.php?i=ads-manage', '', '', '', '', 2147483646, 1, 1, 5);
 
 -- MENU: sub-menu for view entry
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -296,7 +275,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
 ('bx_directory_snippet_meta', 'bx_directory', 'date', '_sys_menu_item_title_system_sm_date', '_sys_menu_item_title_sm_date', '', '', '', '', '', 2147483647, 1, 0, 1, 1),
 ('bx_directory_snippet_meta', 'bx_directory', 'author', '_sys_menu_item_title_system_sm_author', '_sys_menu_item_title_sm_author', '', '', '', '', '', 2147483647, 1, 0, 1, 2),
-('bx_directory_snippet_meta', 'bx_directory', 'category', '_sys_menu_item_title_system_sm_category', '_sys_menu_item_title_sm_category', '', '', '', '', '', 2147483647, 0, 0, 1, 3),
+('bx_directory_snippet_meta', 'bx_directory', 'category', '_sys_menu_item_title_system_sm_category', '_sys_menu_item_title_sm_category', '', '', '', '', '', 2147483647, 1, 0, 1, 3),
 ('bx_directory_snippet_meta', 'bx_directory', 'tags', '_sys_menu_item_title_system_sm_tags', '_sys_menu_item_title_sm_tags', '', '', '', '', '', 2147483647, 0, 0, 1, 4),
 ('bx_directory_snippet_meta', 'bx_directory', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 2147483647, 0, 0, 1, 5),
 ('bx_directory_snippet_meta', 'bx_directory', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 2147483647, 0, 0, 1, 6);
@@ -322,20 +301,17 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('sys_account_dashboard_manage_tools', 'bx_directory', 'ads-administration', '_bx_directory_menu_item_title_system_admt_ads', '_bx_directory_menu_item_title_admt_ads', 'page.php?i=ads-administration', '', '_self', 'folder-open', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 192, 1, 0, @iManageMenuOrder + 1);
 
 -- MENU: add menu item to profiles modules (trigger* menu sets are processed separately upon modules enable/disable)
-
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('trigger_profile_view_submenu', 'bx_directory', 'ads-author', '_bx_directory_menu_item_title_system_view_entries_author', '_bx_directory_menu_item_title_view_entries_author', 'page.php?i=ads-author&profile_id={profile_id}', '', '', 'folder-open col-green3', '', 2147483647, 1, 0, 0),
 ('trigger_group_view_submenu', 'bx_directory', 'ads-context', '_bx_directory_menu_item_title_system_view_entries_in_context', '_bx_directory_menu_item_title_view_entries_in_context', 'page.php?i=ads-context&profile_id={profile_id}', '', '', 'folder-open col-green3', '', 2147483647, 1, 0, 0);
 
 
 -- PRIVACY 
-
 INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
 ('bx_directory_allow_view_to', 'bx_directory', 'view', '_bx_directory_form_entry_input_allow_view_to', '3', 'bx_directory_entries', 'id', 'author', '', '');
 
 
 -- ACL
-
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('bx_directory', 'create entry', NULL, '_bx_directory_acl_action_create_entry', '', 1, 3);
 SET @iIdActionEntryCreate = LAST_INSERT_ID();
@@ -407,20 +383,24 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 ('bx_directory', '_bx_directory', @iSearchOrder + 1, 'BxDirSearchResult', 'modules/boonex/directory/classes/BxDirSearchResult.php'),
 ('bx_directory_cmts', '_bx_directory_cmts', @iSearchOrder + 2, 'BxDirCmtsSearchResult', 'modules/boonex/directory/classes/BxDirCmtsSearchResult.php');
 
+
 -- METATAGS
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
 ('bx_directory', 'bx_directory_meta_keywords', 'bx_directory_meta_locations', 'bx_directory_meta_mentions', '', '');
+
 
 -- STATS
 SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);
 INSERT INTO `sys_statistics` (`module`, `name`, `title`, `link`, `icon`, `query`, `order`) VALUES 
 ('bx_directory', 'bx_directory', '_bx_directory', 'page.php?i=ads-home', 'folder-open col-green3', 'SELECT COUNT(*) FROM `bx_directory_entries` WHERE 1 AND `status` = ''active'' AND `status_admin` = ''active''', @iMaxOrderStats + 1);
 
+
 -- CHARTS
 SET @iMaxOrderCharts = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_objects_chart`);
 INSERT INTO `sys_objects_chart` (`object`, `title`, `table`, `field_date_ts`, `field_date_dt`, `field_status`, `query`, `active`, `order`, `class_name`, `class_file`) VALUES
 ('bx_directory_growth', '_bx_directory_chart_growth', 'bx_directory_entries', 'added', '', 'status,status_admin', '', 1, @iMaxOrderCharts + 1, 'BxDolChartGrowth', ''),
 ('bx_directory_growth_speed', '_bx_directory_chart_growth_speed', 'bx_directory_entries', 'added', '', 'status,status_admin', '', 1, @iMaxOrderCharts + 2, 'BxDolChartGrowthSpeed', '');
+
 
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
@@ -482,8 +462,8 @@ INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `
 ('bx_directory_files_simple', 1, 'BxDirUploaderSimpleAttach', 'modules/boonex/directory/classes/BxDirUploaderSimpleAttach.php'),
 ('bx_directory_files_html5', 1, 'BxDirUploaderHTML5Attach', 'modules/boonex/directory/classes/BxDirUploaderHTML5Attach.php');
 
--- ALERTS
 
+-- ALERTS
 INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 
 ('bx_directory', 'BxDirAlertsResponse', 'modules/boonex/directory/classes/BxDirAlertsResponse.php', '');
 SET @iHandler := LAST_INSERT_ID();

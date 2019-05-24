@@ -4,9 +4,11 @@ CREATE TABLE IF NOT EXISTS `bx_directory_entries` (
   `author` int(11) NOT NULL,
   `added` int(11) NOT NULL,
   `changed` int(11) NOT NULL,
+  `category` int(11) NOT NULL,
   `thumb` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
-  `category` int(11) NOT NULL,
+  `price` varchar(255) NOT NULL,
+  `year` varchar(255) NOT NULL,
   `text` mediumtext NOT NULL,
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
@@ -53,6 +55,7 @@ CREATE TABLE IF NOT EXISTS `bx_directory_categories` (
   `title` varchar(255) NOT NULL DEFAULT '',
   `text` text NOT NULL,
   `icon` varchar(255) NOT NULL DEFAULT '',
+  `items` int(11) NOT NULL DEFAULT '0',
   `active` tinyint(4) NOT NULL DEFAULT '1',
   `order` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
@@ -68,8 +71,7 @@ INSERT INTO `bx_directory_categories` (`parent_id`, `level`, `type`, `name`, `ti
 (@iParentId, 1, 1, 'job_finance', '_bx_directory_cat_title_accounting_finance', '', '', 1, 1),
 (@iParentId, 1, 1, 'job_education', '_bx_directory_cat_title_education_nonprofit', '', '', 1, 2),
 (@iParentId, 1, 1, 'job_legal', '_bx_directory_cat_title_government_legal', '', '', 1, 3),
-(@iParentId, 1, 1, 'job_programming', '_bx_directory_cat_title_programming_web_design', '', '', 1, 4),
-(@iParentId, 1, 1, 'job_other', '_bx_directory_cat_title_other_jobs', '', '', 1, 5);
+(@iParentId, 1, 1, 'job_programming', '_bx_directory_cat_title_programming_web_design', '', '', 1, 4);
 
 INSERT INTO `bx_directory_categories` (`parent_id`, `level`, `type`, `name`, `title`, `text`, `icon`, `active`, `order`) VALUES 
 (0, 0, 2, 'music', '_bx_directory_cat_title_music', '', 'music', 1, 2);
@@ -77,8 +79,7 @@ SET @iParentId = LAST_INSERT_ID();
 
 INSERT INTO `bx_directory_categories` (`parent_id`, `level`, `type`, `name`, `title`, `text`, `icon`, `active`, `order`) VALUES 
 (@iParentId, 1, 2, 'music_isale', '_bx_directory_cat_title_instrument_sale', '', '', 1, 1),
-(@iParentId, 1, 2, 'music_iwanted', '_bx_directory_cat_title_instrument_wanted', '', '', 1, 2),
-(@iParentId, 1, 2, 'music_other', '_bx_directory_cat_title_other', '', '', 1, 3);
+(@iParentId, 1, 2, 'music_iwanted', '_bx_directory_cat_title_instrument_wanted', '', '', 1, 2);
 
 INSERT INTO `bx_directory_categories` (`parent_id`, `level`, `type`, `name`, `title`, `text`, `icon`, `active`, `order`) VALUES 
 (0, 0, 1, 'housing', '_bx_directory_cat_title_housing', '', 'home', 1, 3);
@@ -120,8 +121,7 @@ SET @iParentId = LAST_INSERT_ID();
 INSERT INTO `bx_directory_categories` (`parent_id`, `level`, `type`, `name`, `title`, `text`, `icon`, `active`, `order`) VALUES 
 (@iParentId, 1, 2, 'personal_mw', '_bx_directory_cat_title_men_women', '', '', 1, 1),
 (@iParentId, 1, 2, 'personal_wm', '_bx_directory_cat_title_women_men', '', '', 1, 2),
-(@iParentId, 1, 2, 'personal_missed', '_bx_directory_cat_title_missed_connection', '', '', 1, 3),
-(@iParentId, 1, 2, 'personal_other', '_bx_directory_cat_title_personal_other', '', '', 1, 4);
+(@iParentId, 1, 2, 'personal_missed', '_bx_directory_cat_title_missed_connection', '', '', 1, 3);
 
 INSERT INTO `bx_directory_categories` (`parent_id`, `level`, `type`, `name`, `title`, `text`, `icon`, `active`, `order`) VALUES 
 (0, 0, 2, 'sale', '_bx_directory_cat_title_sale', '', 'shopping-cart', 1, 7);
@@ -130,8 +130,7 @@ SET @iParentId = LAST_INSERT_ID();
 INSERT INTO `bx_directory_categories` (`parent_id`, `level`, `type`, `name`, `title`, `text`, `icon`, `active`, `order`) VALUES 
 (@iParentId, 1, 2, 'sale_barter', '_bx_directory_cat_title_barter', '', '', 1, 1),
 (@iParentId, 1, 2, 'sale_clothing', '_bx_directory_cat_title_clothing', '', '', 1, 1),
-(@iParentId, 1, 2, 'sale_collectible', '_bx_directory_cat_title_collectible', '', '', 1, 1),
-(@iParentId, 1, 2, 'sale_misc', '_bx_directory_cat_title_miscellaneous', '', '', 1, 1);
+(@iParentId, 1, 2, 'sale_collectible', '_bx_directory_cat_title_collectible', '', '', 1, 1);
 
 INSERT INTO `bx_directory_categories` (`parent_id`, `level`, `type`, `name`, `title`, `text`, `icon`, `active`, `order`) VALUES 
 (0, 0, 2, 'sale_car', '_bx_directory_cat_title_sale_car', '', 'truck', 1, 8);
@@ -544,79 +543,86 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_directory', 'bx_directory', 'title', '', '', 0, 'text', '_bx_directory_form_entry_input_sys_title', '_bx_directory_form_entry_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_directory_form_entry_input_title_err', 'Xss', '', 1, 0),
 ('bx_directory', 'bx_directory', 'price', '', '', 0, 'text', '_bx_directory_form_entry_input_sys_price', '_bx_directory_form_entry_input_price', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_directory', 'bx_directory', 'year', '', '', 0, 'text', '_bx_directory_form_entry_input_sys_year', '_bx_directory_form_entry_input_year', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
-('bx_directory', 'bx_directory', 'category', '', '', 0, 'select', '_bx_directory_form_entry_input_sys_category', '_bx_directory_form_entry_input_category', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_directory_form_entry_input_category_err', 'Xss', '', 1, 0),
+('bx_directory', 'bx_directory', 'category', '', '', 0, 'hidden', '_bx_directory_form_entry_input_sys_category', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('bx_directory', 'bx_directory', 'category_view', '', '', 0, 'text', '_bx_directory_form_entry_input_sys_category_view', '_bx_directory_form_entry_input_category_view', '', 0, 0, 0, 'a:1:{s:8:"disabled";s:8:"disabled";}', '', '', '', '', '', '', '', 1, 0),
+('bx_directory', 'bx_directory', 'category_select', '', '', 0, 'select', '_bx_directory_form_entry_input_sys_category_select', '_bx_directory_form_entry_input_category_select', '', 1, 0, 0, 'a:1:{s:8:"onchange";s:35:"oBxDirEntry.onChangeCategory(this);";}', '', '', '', '', '', '', '', 0, 0),
 ('bx_directory', 'bx_directory', 'added', '', '', 0, 'datetime', '_bx_directory_form_entry_input_sys_date_added', '_bx_directory_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_directory', 'bx_directory', 'changed', '', '', 0, 'datetime', '_bx_directory_form_entry_input_sys_date_changed', '_bx_directory_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_directory', 'bx_directory', 'attachments', '', '', 0, 'custom', '_bx_directory_form_entry_input_sys_attachments', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_directory', 'bx_directory', 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
-('bx_directory_entry_add', 'category', 2147483647, 1, 1),
-('bx_directory_entry_add', 'do_submit', 2147483647, 1, 2),
+('bx_directory_entry_add', 'category_select', 2147483647, 1, 1),
 
 ('bx_directory_entry_delete', 'delete_confirm', 2147483647, 1, 1),
 ('bx_directory_entry_delete', 'do_submit', 2147483647, 1, 2),
 
-('bx_directory_entry_price_add', 'title', 2147483647, 1, 1),
-('bx_directory_entry_price_add', 'price', 2147483647, 1, 2),
-('bx_directory_entry_price_add', 'text', 2147483647, 1, 3),
-('bx_directory_entry_price_add', 'attachments', 2147483647, 1, 4),
-('bx_directory_entry_price_add', 'pictures', 2147483647, 1, 5),
-('bx_directory_entry_price_add', 'videos', 2147483647, 1, 6),
-('bx_directory_entry_price_add', 'files', 2147483647, 1, 7),
-('bx_directory_entry_price_add', 'polls', 2147483647, 1, 8),
-('bx_directory_entry_price_add', 'covers', 2147483647, 1, 9),
-('bx_directory_entry_price_add', 'allow_view_to', 2147483647, 1, 10),
-('bx_directory_entry_price_add', 'location', 2147483647, 1, 11),
-('bx_directory_entry_price_add', 'do_submit', 2147483647, 1, 12),
+('bx_directory_entry_price_add', 'category', 2147483647, 1, 1),
+('bx_directory_entry_price_add', 'category_view', 2147483647, 1, 2),
+('bx_directory_entry_price_add', 'title', 2147483647, 1, 3),
+('bx_directory_entry_price_add', 'price', 2147483647, 1, 4),
+('bx_directory_entry_price_add', 'text', 2147483647, 1, 5),
+('bx_directory_entry_price_add', 'attachments', 2147483647, 1, 6),
+('bx_directory_entry_price_add', 'pictures', 2147483647, 1, 7),
+('bx_directory_entry_price_add', 'videos', 2147483647, 1, 8),
+('bx_directory_entry_price_add', 'files', 2147483647, 1, 9),
+('bx_directory_entry_price_add', 'polls', 2147483647, 1, 10),
+('bx_directory_entry_price_add', 'covers', 2147483647, 1, 11),
+('bx_directory_entry_price_add', 'allow_view_to', 2147483647, 1, 12),
+('bx_directory_entry_price_add', 'location', 2147483647, 1, 13),
+('bx_directory_entry_price_add', 'do_submit', 2147483647, 1, 14),
 
-('bx_directory_entry_price_edit', 'title', 2147483647, 1, 1),
-('bx_directory_entry_price_edit', 'price', 2147483647, 1, 2),
-('bx_directory_entry_price_edit', 'text', 2147483647, 1, 3),
-('bx_directory_entry_price_edit', 'attachments', 2147483647, 1, 4),
-('bx_directory_entry_price_edit', 'pictures', 2147483647, 1, 5),
-('bx_directory_entry_price_edit', 'videos', 2147483647, 1, 6),
-('bx_directory_entry_price_edit', 'files', 2147483647, 1, 7),
-('bx_directory_entry_price_edit', 'polls', 2147483647, 1, 8),
-('bx_directory_entry_price_edit', 'covers', 2147483647, 1, 9),
-('bx_directory_entry_price_edit', 'allow_view_to', 2147483647, 1, 10),
-('bx_directory_entry_price_edit', 'location', 2147483647, 1, 11),
-('bx_directory_entry_price_edit', 'do_submit', 2147483647, 1, 12),
+('bx_directory_entry_price_edit', 'category_view', 2147483647, 1, 1),
+('bx_directory_entry_price_edit', 'title', 2147483647, 1, 2),
+('bx_directory_entry_price_edit', 'price', 2147483647, 1, 3),
+('bx_directory_entry_price_edit', 'text', 2147483647, 1, 4),
+('bx_directory_entry_price_edit', 'attachments', 2147483647, 1, 5),
+('bx_directory_entry_price_edit', 'pictures', 2147483647, 1, 6),
+('bx_directory_entry_price_edit', 'videos', 2147483647, 1, 7),
+('bx_directory_entry_price_edit', 'files', 2147483647, 1, 8),
+('bx_directory_entry_price_edit', 'polls', 2147483647, 1, 9),
+('bx_directory_entry_price_edit', 'covers', 2147483647, 1, 10),
+('bx_directory_entry_price_edit', 'allow_view_to', 2147483647, 1, 11),
+('bx_directory_entry_price_edit', 'location', 2147483647, 1, 12),
+('bx_directory_entry_price_edit', 'do_submit', 2147483647, 1, 13),
 
-('bx_directory_entry_price_view', 'category', 2147483647, 1, 1),
+('bx_directory_entry_price_view', 'category_view', 2147483647, 1, 1),
 ('bx_directory_entry_price_view', 'price', 2147483647, 1, 2),
-('bx_directory_entry_price_view', 'added', 2147483647, 1, 2),
-('bx_directory_entry_price_view', 'changed', 2147483647, 1, 3),
+('bx_directory_entry_price_view', 'added', 2147483647, 1, 3),
+('bx_directory_entry_price_view', 'changed', 2147483647, 1, 4),
 
-('bx_directory_entry_price_year_add', 'title', 2147483647, 1, 1),
-('bx_directory_entry_price_year_add', 'price', 2147483647, 1, 2),
-('bx_directory_entry_price_year_add', 'year', 2147483647, 1, 3),
-('bx_directory_entry_price_year_add', 'text', 2147483647, 1, 4),
-('bx_directory_entry_price_year_add', 'attachments', 2147483647, 1, 5),
-('bx_directory_entry_price_year_add', 'pictures', 2147483647, 1, 6),
-('bx_directory_entry_price_year_add', 'videos', 2147483647, 1, 7),
-('bx_directory_entry_price_year_add', 'files', 2147483647, 1, 8),
-('bx_directory_entry_price_year_add', 'polls', 2147483647, 1, 9),
-('bx_directory_entry_price_year_add', 'covers', 2147483647, 1, 10),
-('bx_directory_entry_price_year_add', 'allow_view_to', 2147483647, 1, 11),
-('bx_directory_entry_price_year_add', 'location', 2147483647, 1, 12),
-('bx_directory_entry_price_year_add', 'do_submit', 2147483647, 1, 13),
+('bx_directory_entry_price_year_add', 'category', 2147483647, 1, 1),
+('bx_directory_entry_price_year_add', 'category_view', 2147483647, 1, 2),
+('bx_directory_entry_price_year_add', 'title', 2147483647, 1, 3),
+('bx_directory_entry_price_year_add', 'price', 2147483647, 1, 4),
+('bx_directory_entry_price_year_add', 'year', 2147483647, 1, 5),
+('bx_directory_entry_price_year_add', 'text', 2147483647, 1, 6),
+('bx_directory_entry_price_year_add', 'attachments', 2147483647, 1, 7),
+('bx_directory_entry_price_year_add', 'pictures', 2147483647, 1, 8),
+('bx_directory_entry_price_year_add', 'videos', 2147483647, 1, 9),
+('bx_directory_entry_price_year_add', 'files', 2147483647, 1, 10),
+('bx_directory_entry_price_year_add', 'polls', 2147483647, 1, 11),
+('bx_directory_entry_price_year_add', 'covers', 2147483647, 1, 12),
+('bx_directory_entry_price_year_add', 'allow_view_to', 2147483647, 1, 13),
+('bx_directory_entry_price_year_add', 'location', 2147483647, 1, 14),
+('bx_directory_entry_price_year_add', 'do_submit', 2147483647, 1, 15),
 
-('bx_directory_entry_price_year_edit', 'title', 2147483647, 1, 1),
-('bx_directory_entry_price_year_edit', 'price', 2147483647, 1, 2),
-('bx_directory_entry_price_year_edit', 'year', 2147483647, 1, 3),
-('bx_directory_entry_price_year_edit', 'text', 2147483647, 1, 4),
-('bx_directory_entry_price_year_edit', 'attachments', 2147483647, 1, 5),
-('bx_directory_entry_price_year_edit', 'pictures', 2147483647, 1, 6),
-('bx_directory_entry_price_year_edit', 'videos', 2147483647, 1, 7),
-('bx_directory_entry_price_year_edit', 'files', 2147483647, 1, 8),
-('bx_directory_entry_price_year_edit', 'polls', 2147483647, 1, 9),
-('bx_directory_entry_price_year_edit', 'covers', 2147483647, 1, 10),
-('bx_directory_entry_price_year_edit', 'allow_view_to', 2147483647, 1, 11),
-('bx_directory_entry_price_year_edit', 'location', 2147483647, 1, 12),
-('bx_directory_entry_price_year_edit', 'do_submit', 2147483647, 1, 13),
+('bx_directory_entry_price_year_edit', 'category_view', 2147483647, 1, 1),
+('bx_directory_entry_price_year_edit', 'title', 2147483647, 1, 2),
+('bx_directory_entry_price_year_edit', 'price', 2147483647, 1, 3),
+('bx_directory_entry_price_year_edit', 'year', 2147483647, 1, 4),
+('bx_directory_entry_price_year_edit', 'text', 2147483647, 1, 5),
+('bx_directory_entry_price_year_edit', 'attachments', 2147483647, 1, 6),
+('bx_directory_entry_price_year_edit', 'pictures', 2147483647, 1, 7),
+('bx_directory_entry_price_year_edit', 'videos', 2147483647, 1, 8),
+('bx_directory_entry_price_year_edit', 'files', 2147483647, 1, 9),
+('bx_directory_entry_price_year_edit', 'polls', 2147483647, 1, 10),
+('bx_directory_entry_price_year_edit', 'covers', 2147483647, 1, 11),
+('bx_directory_entry_price_year_edit', 'allow_view_to', 2147483647, 1, 12),
+('bx_directory_entry_price_year_edit', 'location', 2147483647, 1, 13),
+('bx_directory_entry_price_year_edit', 'do_submit', 2147483647, 1, 14),
 
-('bx_directory_entry_price_year_view', 'category', 2147483647, 1, 1),
+('bx_directory_entry_price_year_view', 'category_view', 2147483647, 1, 1),
 ('bx_directory_entry_price_year_view', 'price', 2147483647, 1, 2),
 ('bx_directory_entry_price_year_view', 'year', 2147483647, 1, 3),
 ('bx_directory_entry_price_year_view', 'added', 2147483647, 1, 4),

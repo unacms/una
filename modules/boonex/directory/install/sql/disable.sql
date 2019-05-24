@@ -8,7 +8,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_directory';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_directory' OR `object` IN ('bx_directory_create_entry', 'bx_directory_edit_entry', 'bx_directory_delete_entry', 'bx_directory_view_entry', 'bx_directory_view_entry_comments', 'bx_directory_home', 'bx_directory_popular', 'bx_directory_updated', 'bx_directory_author', 'bx_directory_context', 'bx_directory_search', 'bx_directory_manage');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_directory' OR `object` IN ('bx_directory_create_entry', 'bx_directory_edit_entry', 'bx_directory_delete_entry', 'bx_directory_view_entry', 'bx_directory_view_entry_comments', 'bx_directory_home', 'bx_directory_popular', 'bx_directory_updated', 'bx_directory_categories', 'bx_directory_author', 'bx_directory_context', 'bx_directory_search', 'bx_directory_manage');
 
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_directory';

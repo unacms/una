@@ -64,8 +64,10 @@
     <string name="_bx_directory_form_entry_input_sys_year"><![CDATA[Year]]></string>
     <string name="_bx_directory_form_entry_input_year"><![CDATA[Year]]></string>
     <string name="_bx_directory_form_entry_input_sys_category"><![CDATA[Category]]></string>
-    <string name="_bx_directory_form_entry_input_category"><![CDATA[Category]]></string>
-    <string name="_bx_directory_form_entry_input_category_err"><![CDATA[Please select category]]></string>
+    <string name="_bx_directory_form_entry_input_sys_category_view"><![CDATA[Category]]></string>
+    <string name="_bx_directory_form_entry_input_category_view"><![CDATA[Category]]></string>
+    <string name="_bx_directory_form_entry_input_sys_category_select"><![CDATA[Category]]></string>
+    <string name="_bx_directory_form_entry_input_category_select"><![CDATA[Category]]></string>
     <string name="_bx_directory_form_entry_input_sys_text"><![CDATA[Text]]></string>
     <string name="_bx_directory_form_entry_input_text"><![CDATA[Text]]></string>
     <string name="_bx_directory_form_entry_input_text_err"><![CDATA[Text field can't be empty]]></string>
@@ -131,6 +133,7 @@
     <string name="_bx_directory_page_title_browse_recent"><![CDATA[Latest Ads]]></string>
     <string name="_bx_directory_page_title_browse_popular"><![CDATA[Popular Ads]]></string>
     <string name="_bx_directory_page_title_browse_updated"><![CDATA[Updated Ads]]></string>
+    <string name="_bx_directory_page_title_browse_category"><![CDATA[Ads in {display_name}]]]]></string>
     <string name="_bx_directory_page_title_sys_home"><![CDATA[Directory Home]]></string>
     <string name="_bx_directory_page_title_home"><![CDATA[Directory]]></string>
     <string name="_bx_directory_page_block_title_featured_entries_view_extended"><![CDATA[Featured Ads]]></string>
@@ -181,7 +184,7 @@
     <string name="_bx_directory_page_block_title_system_manage_administration"><![CDATA[Manage All]]></string>
     <string name="_bx_directory_page_block_title_manage"><![CDATA[Manage]]></string>    
     <string name="_bx_directory_page_block_title_popular_keywords"><![CDATA[Popular Hashtags]]></string>
-    <string name="_bx_directory_page_block_title_cats"><![CDATA[Ads Categories]]></string>
+    <string name="_bx_directory_page_block_title_categories"><![CDATA[Ads Categories]]></string>
     <string name="_bx_directory_page_block_title_entry_info"><![CDATA[Info]]></string>
     <string name="_bx_directory_page_block_title_my_entries"><![CDATA[My Ads]]></string>
     <string name="_bx_directory_page_block_title_sys_recent_entries_view_showcase"><![CDATA[Latest Ads (Showcase View)]]></string>
@@ -192,6 +195,10 @@
     <string name="_bx_directory_page_block_title_featured_entries_view_showcase"><![CDATA[Featured Ads]]></string>
     <string name="_bx_directory_page_block_title_sys_entry_context"><![CDATA[Posted in]]></string>
     <string name="_bx_directory_page_block_title_entry_context"><![CDATA[Posted in]]></string>
+    <string name="_bx_directory_page_title_sys_entries_categories"><![CDATA[Ads Categories]]></string>
+    <string name="_bx_directory_page_title_entries_categories"><![CDATA[Ads Categories]]></string>
+    <string name="_bx_directory_page_block_title_entries_by_category"><![CDATA[Ads]]></string>
+    <string name="_bx_directory_page_block_title_entries_by_category_mask"><![CDATA[Ads in: {0}]]></string>
 
     <string name="_bx_directory_menu_title_entry_attachments"><![CDATA[Form Attachments]]></string>
     <string name="_bx_directory_menu_set_title_entry_attachments"><![CDATA[Form Attachments]]></string>
@@ -249,10 +256,12 @@
     <string name="_bx_directory_menu_item_title_system_manage_account"><![CDATA[Manage account]]></string>
     <string name="_bx_directory_menu_item_title_manage_account"><![CDATA[Manage account]]></string>
     <string name="_bx_directory_menu_item_title_system_admt_posts"><![CDATA[Ads]]></string>
-    <string name="_bx_directory_menu_item_title_admt_posts"><![CDATA[Ads]]></string>
+    <string name="_bx_directory_menu_item_title_admt_posts"><![CDATA[Ads - {addon} hidden]]></string>
     <string name="_bx_directory_menu_item_title_manage_my"><![CDATA[My Ads]]></string>
     <string name="_bx_directory_menu_item_title_manage_all"><![CDATA[All Ads]]></string>
     <string name="_bx_directory_menu_item_title_categories"><![CDATA[Categories]]></string>
+    <string name="_bx_directory_menu_item_title_system_entries_categories"><![CDATA[Categories]]></string>
+    <string name="_bx_directory_menu_item_title_entries_categories"><![CDATA[Categories]]></string>
 
     <string name="_bx_directory_grid_column_title_icon"><![CDATA[Icon]]></string>
     <string name="_bx_directory_grid_column_title_title"><![CDATA[Title]]></string>
@@ -290,54 +299,50 @@
     <string name="_bx_directory_cat_type_price_year"><![CDATA[With price and year]]></string>
 
     <string name="_bx_directory_cat_title_job"><![CDATA[Jobs]]></string>
-    <string name="_bx_directory_cat_title_accounting_finance"><![CDATA[accounting / finance]]></string>
-    <string name="_bx_directory_cat_title_education_nonprofit"><![CDATA[education / nonprofit]]></string>
-    <string name="_bx_directory_cat_title_government_legal"><![CDATA[government / legal]]></string>
-    <string name="_bx_directory_cat_title_programming_web_design"><![CDATA[programming / web design]]></string>
-    <string name="_bx_directory_cat_title_other_jobs"><![CDATA[other]]></string>
+    <string name="_bx_directory_cat_title_accounting_finance"><![CDATA[Accounting / finance jobs]]></string>
+    <string name="_bx_directory_cat_title_education_nonprofit"><![CDATA[Education / nonprofit jobs]]></string>
+    <string name="_bx_directory_cat_title_government_legal"><![CDATA[Government / legal jobs]]></string>
+    <string name="_bx_directory_cat_title_programming_web_design"><![CDATA[Programming / web design jobs]]></string>
 
     <string name="_bx_directory_cat_title_music"><![CDATA[Music Exchange]]></string>
-    <string name="_bx_directory_cat_title_instrument_sale"><![CDATA[instruments for sale]]></string>
-    <string name="_bx_directory_cat_title_instrument_wanted"><![CDATA[instruments wanted]]></string>
-    <string name="_bx_directory_cat_title_other"><![CDATA[other]]></string>
-
+    <string name="_bx_directory_cat_title_instrument_sale"><![CDATA[Music instruments for sale]]></string>
+    <string name="_bx_directory_cat_title_instrument_wanted"><![CDATA[Music instruments wanted]]></string>
+    
     <string name="_bx_directory_cat_title_housing"><![CDATA[Housing & Rentals]]></string>
-    <string name="_bx_directory_cat_title_apartments_housing"><![CDATA[apartments / housing]]></string>
-    <string name="_bx_directory_cat_title_office_commercial"><![CDATA[office / commercial]]></string>
-    <string name="_bx_directory_cat_title_real_estate_sale"><![CDATA[real estate for sale]]></string>
-    <string name="_bx_directory_cat_title_roommate"><![CDATA[roommates]]></string>
-    <string name="_bx_directory_cat_title_temporary_rental"><![CDATA[temporary rental]]></string>
+    <string name="_bx_directory_cat_title_apartments_housing"><![CDATA[Apartments / housing]]></string>
+    <string name="_bx_directory_cat_title_office_commercial"><![CDATA[Office / commercial]]></string>
+    <string name="_bx_directory_cat_title_real_estate_sale"><![CDATA[Real estate for sale]]></string>
+    <string name="_bx_directory_cat_title_roommate"><![CDATA[Roommates]]></string>
+    <string name="_bx_directory_cat_title_temporary_rental"><![CDATA[Temporary rental]]></string>
     
     <string name="_bx_directory_cat_title_service"><![CDATA[Services]]></string>
-    <string name="_bx_directory_cat_title_automotive"><![CDATA[automotive]]></string>
-    <string name="_bx_directory_cat_title_educational"><![CDATA[educational]]></string>
-    <string name="_bx_directory_cat_title_financial"><![CDATA[financial]]></string>
-    <string name="_bx_directory_cat_title_labor_move"><![CDATA[labor / move]]></string>
-    <string name="_bx_directory_cat_title_legal"><![CDATA[legal]]></string>
+    <string name="_bx_directory_cat_title_automotive"><![CDATA[Automotive services]]></string>
+    <string name="_bx_directory_cat_title_educational"><![CDATA[Educational services]]></string>
+    <string name="_bx_directory_cat_title_financial"><![CDATA[Financial services]]></string>
+    <string name="_bx_directory_cat_title_labor_move"><![CDATA[Labor / move services]]></string>
+    <string name="_bx_directory_cat_title_legal"><![CDATA[Legal services]]></string>
 
     <string name="_bx_directory_cat_title_casting"><![CDATA[Casting Calls]]></string>
-    <string name="_bx_directory_cat_title_acting"><![CDATA[acting]]></string>
-    <string name="_bx_directory_cat_title_dance"><![CDATA[dance]]></string>
-    <string name="_bx_directory_cat_title_modeling"><![CDATA[modeling]]></string>
-    <string name="_bx_directory_cat_title_musician"><![CDATA[musicians]]></string>
-    <string name="_bx_directory_cat_title_reality_show"><![CDATA[reality shows]]></string>
+    <string name="_bx_directory_cat_title_acting"><![CDATA[Acting castings]]></string>
+    <string name="_bx_directory_cat_title_dance"><![CDATA[Dance castings]]></string>
+    <string name="_bx_directory_cat_title_modeling"><![CDATA[Modeling castings]]></string>
+    <string name="_bx_directory_cat_title_musician"><![CDATA[Musicians castings]]></string>
+    <string name="_bx_directory_cat_title_reality_show"><![CDATA[Reality shows castings]]></string>
 
     <string name="_bx_directory_cat_title_personal"><![CDATA[Personals]]></string>
-    <string name="_bx_directory_cat_title_men_women"><![CDATA[men seeking women]]></string>
-    <string name="_bx_directory_cat_title_women_men"><![CDATA[women seeking men]]></string>
-    <string name="_bx_directory_cat_title_missed_connection"><![CDATA[missed connections]]></string>
-    <string name="_bx_directory_cat_title_personal_other"><![CDATA[other]]></string>
+    <string name="_bx_directory_cat_title_men_women"><![CDATA[Men seeking women]]></string>
+    <string name="_bx_directory_cat_title_women_men"><![CDATA[Women seeking men]]></string>
+    <string name="_bx_directory_cat_title_missed_connection"><![CDATA[Missed connections]]></string>
 
     <string name="_bx_directory_cat_title_sale"><![CDATA[For Sale]]></string>
-    <string name="_bx_directory_cat_title_barter"><![CDATA[barter]]></string>
-    <string name="_bx_directory_cat_title_clothing"><![CDATA[clothing]]></string>
-    <string name="_bx_directory_cat_title_collectible"><![CDATA[collectibles]]></string>
-    <string name="_bx_directory_cat_title_miscellaneous"><![CDATA[miscellaneous]]></string>
+    <string name="_bx_directory_cat_title_barter"><![CDATA[Barter]]></string>
+    <string name="_bx_directory_cat_title_clothing"><![CDATA[Sale clothing]]></string>
+    <string name="_bx_directory_cat_title_collectible"><![CDATA[Sale collectibles]]></string>
 
     <string name="_bx_directory_cat_title_sale_car"><![CDATA[Cars For Sale]]></string>
-    <string name="_bx_directory_cat_title_auto_part"><![CDATA[auto parts]]></string>
-    <string name="_bx_directory_cat_title_auto_truck"><![CDATA[autos / trucks]]></string>
-    <string name="_bx_directory_cat_title_motorcycle"><![CDATA[motorcycles]]></string>
+    <string name="_bx_directory_cat_title_auto_part"><![CDATA[Sale auto parts]]></string>
+    <string name="_bx_directory_cat_title_auto_truck"><![CDATA[Sale autos / trucks]]></string>
+    <string name="_bx_directory_cat_title_motorcycle"><![CDATA[Sale motorcycles]]></string>
 
 
     <string name="_bx_directory_txt_all_entries_in"><![CDATA[<a href="{0}">All Ads in {1} ({2})</a>]]></string>

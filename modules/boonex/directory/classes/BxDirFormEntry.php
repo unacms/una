@@ -22,6 +22,12 @@ class BxDirFormEntry extends BxBaseModTextFormEntry
         parent::__construct($aInfo, $oTemplate);
 
         $CNF = &$this->_oModule->_oConfig->CNF;
+        
+        $iCategory = 0;
+        if(bx_get('category') !== false)
+            $iCategory = (int)bx_get('category');
+
+        $this->_initCategoryFields($iCategory);
 
     	if(isset($CNF['FIELD_COVER']) && isset($this->aInputs[$CNF['FIELD_COVER']])) {
             if($this->_oModule->checkAllowedSetThumb() === CHECK_ACTION_RESULT_ALLOWED) {
@@ -79,6 +85,12 @@ class BxDirFormEntry extends BxBaseModTextFormEntry
         }
     }
 
+    function getCode($bDynamicMode = false)
+    {
+        $this->_oModule->_oTemplate->addJs('entry.js');
+        return $this->_oModule->_oTemplate->getJsCode('entry') . parent::getCode($bDynamicMode);
+    }
+
     function initChecker ($aValues = array (), $aSpecificValues = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
@@ -86,7 +98,9 @@ class BxDirFormEntry extends BxBaseModTextFormEntry
         $bValues = $aValues && !empty($aValues['id']);
         $aContentInfo = $bValues ? $this->_oModule->_oDb->getContentInfoById($aValues['id']) : false;
 
-        if (isset($CNF['FIELD_COVER']) && isset($this->aInputs[$CNF['FIELD_COVER']])) {
+        $this->_initCategoryFields($aContentInfo[$CNF['FIELD_CATEGORY']]);
+
+        if(isset($CNF['FIELD_COVER']) && isset($this->aInputs[$CNF['FIELD_COVER']])) {
             if($bValues)
                 $this->aInputs[$CNF['FIELD_COVER']]['content_id'] = $aValues['id'];
 
@@ -140,6 +154,25 @@ class BxDirFormEntry extends BxBaseModTextFormEntry
             'content_id' => (int)$this->aInputs[$CNF['FIELD_PHOTO']]['content_id'],
             'editor_id' => isset($CNF['FIELD_TEXT_ID']) ? $CNF['FIELD_TEXT_ID'] : ''
     	);
+    }
+
+    protected function _initCategoryFields($iCategory)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(isset($CNF['FIELD_CATEGORY']) && isset($this->aInputs[$CNF['FIELD_CATEGORY']]) && $iCategory != 0) {
+            $this->aInputs[$CNF['FIELD_CATEGORY']]['value'] = $iCategory;
+        }
+        
+        if(isset($CNF['FIELD_CATEGORY_VIEW']) && isset($this->aInputs[$CNF['FIELD_CATEGORY_VIEW']]) && $iCategory != 0) {
+            $aCategory = $this->_oModule->_oDb->getCategories(array('type' => 'id', 'id' => $iCategory));
+
+            $this->aInputs[$CNF['FIELD_CATEGORY_VIEW']]['value'] = !empty($aCategory['title']) ? _t($aCategory['title']) : '';
+        }
+
+        if(isset($CNF['FIELD_CATEGORY_SELECT']) && isset($this->aInputs[$CNF['FIELD_CATEGORY_SELECT']])) {
+            $this->aInputs[$CNF['FIELD_CATEGORY_SELECT']]['values'] = $this->_oModule->serviceGetCategoryOptions(0, true);
+        }
     }
 }
 

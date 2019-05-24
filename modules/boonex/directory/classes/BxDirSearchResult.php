@@ -26,6 +26,7 @@ class BxDirSearchResult extends BxBaseModTextSearchResult
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
                 'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>'),
+                'category' => array('value' => '', 'field' => 'category', 'operator' => '='),
                 'status' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
                 'statusAdmin' => array('value' => 'active', 'field' => 'status_admin', 'operator' => '='),
             ),
@@ -100,6 +101,14 @@ class BxDirSearchResult extends BxBaseModTextSearchResult
                 $this->aCurrent['title'] = _t('_bx_directory_page_title_browse_updated');
                 $this->aCurrent['rss']['link'] = 'modules/?r=ads/rss/' . $sMode;
                 $this->aCurrent['sorting'] = 'updated';
+                break;
+
+            case 'category':
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_CATEGORIES']);
+                $this->aCurrent['restriction']['category']['value'] = $aParams['category'];
+                $this->aCurrent['title'] = _t('_bx_directory_page_title_browse_category');
+                $this->aCurrent['rss']['link'] = 'modules/?r=ads/rss/' . $sMode;
+                $this->aCurrent['sorting'] = 'last';
                 break;
 
             case '': // search results

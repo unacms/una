@@ -39,7 +39,7 @@ class BxDirDb extends BxBaseModTextDb
         if(empty($aParamsWhere))
             return false;
 
-        return (int)$this->query("DELETE FROM `" . $CNF['TABLE_CATEGORIES_TYPES'] . "` WHERE " . $this->arrayToSQL($aParamsWhere, ' AND ')) <= 0;
+        return (int)$this->query("DELETE FROM `" . $CNF['TABLE_CATEGORIES_TYPES'] . "` WHERE " . $this->arrayToSQL($aParamsWhere, ' AND ')) > 0;
     }
 
     public function getCategoryTypes($aParams = array())
@@ -74,7 +74,17 @@ class BxDirDb extends BxBaseModTextDb
 
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
-    
+
+    public function updateCategory($aParamsSet, $aParamsWhere)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($aParamsSet) || empty($aParamsWhere))
+            return false;
+
+        return $this->query("UPDATE `" . $CNF['TABLE_CATEGORIES'] . "` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $this->arrayToSQL($aParamsWhere, ' AND ')) !== false;
+    }
+
     public function getCategories($aParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
@@ -82,7 +92,7 @@ class BxDirDb extends BxBaseModTextDb
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
 
         $sSelectClause = "`tc`.*";
-        $sWhereClause = "";
+        $sJoinClause = $sWhereClause = $sGroupClause = "";
         $sOrderClause = "`tc`.`order` ASC";
 
         switch($aParams['type']) {
@@ -95,13 +105,26 @@ class BxDirDb extends BxBaseModTextDb
                 $sWhereClause = " AND `tc`.`id`=:id";
                 break;
 
+            case 'id_full':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                    'id' => $aParams['id']
+                );
+
+                $sSelectClause .= ", `tct`.`name` AS `type_name`, `tct`.`display_add` AS `type_display_add`, `tct`.`display_edit` AS `type_display_edit`, `tct`.`display_view` AS `type_display_view`";
+                $sJoinClause = " LEFT JOIN `" . $CNF['TABLE_CATEGORIES_TYPES'] . "` AS `tct` ON `tc`.`type`=`tct`.`id`";
+                $sWhereClause = " AND `tc`.`id`=:id";
+                break;
+
             case 'parent_id':
                 $aMethod['params'][1] = array(
                     'parent_id' => $aParams['parent_id']
                 );
 
-            $sWhereClause = " AND `tc`.`parent_id`=:parent_id";
-            break;
+                $sWhereClause = " AND `tc`.`parent_id`=:parent_id";
+                if(isset($aParams['with_content']) && $aParams['with_content'] === true)
+                    $sWhereClause .= " AND `tc`.`items`>0";
+                break;
 
             case 'parent_id_count':
                 $aMethod['name'] = 'getOne';
@@ -109,9 +132,9 @@ class BxDirDb extends BxBaseModTextDb
                     'parent_id' => $aParams['parent_id']
                 );
 
-            $sSelectClause = "COUNT(`tc`.`id`)";
-            $sWhereClause = " AND `tc`.`parent_id`=:parent_id";
-            break;
+                $sSelectClause = "COUNT(`tc`.`id`)";
+                $sWhereClause = " AND `tc`.`parent_id`=:parent_id";
+                break;
         
             case 'parent_id_order':
                 $aMethod['name'] = 'getOne';
@@ -119,19 +142,57 @@ class BxDirDb extends BxBaseModTextDb
                     'parent_id' => $aParams['parent_id']
                 );
 
-            $sSelectClause = "MAX(`tc`.`order`)";
-            $sWhereClause = " AND `tc`.`parent_id`=:parent_id";
-            break;
+                $sSelectClause = "MAX(`tc`.`order`)";
+                $sWhereClause = " AND `tc`.`parent_id`=:parent_id";
+                break;
+
+            case 'collect_stats':
+                $sSelectClause = "`tc`.`id`, COUNT(`te`.`id`) AS `count`";
+                $sJoinClause = " LEFT JOIN `" . $CNF['TABLE_ENTRIES'] . "` AS `te` ON `tc`.`id`=`te`.`category`";
+                $sWhereClause = " AND `te`.`status`='active' AND `te`.`status_admin`='active' AND (`te`.`allow_view_to`='" . BX_DOL_PG_ALL . "' OR `te`.`allow_view_to`<0)";
+                $sGroupClause = "`tc`.`id`";
+                break;
         }
+
+        if(!empty($sGroupClause))
+            $sGroupClause = "GROUP BY " . $sGroupClause;
 
         if(!empty($sOrderClause))
             $sOrderClause = "ORDER BY " . $sOrderClause;
 
         $aMethod['params'][0] = "SELECT " . $sSelectClause . " 
-            FROM `" . $CNF['TABLE_CATEGORIES'] . "` AS `tc`
-            WHERE 1" . $sWhereClause . " " . $sOrderClause;
+            FROM `" . $CNF['TABLE_CATEGORIES'] . "` AS `tc`" . $sJoinClause . " 
+            WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause;
 
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+
+    public function getDisplays($sDisplayPrefix = '', $mixedDisplayType = '')
+    {
+        $sWhereClause = "";
+        $aBindings = array(
+            'display_prefix' => '%' . (!empty($sDisplayPrefix) ? $sDisplayPrefix : $this->_oConfig->getName()) . '%'
+        );
+
+        if(!empty($mixedDisplayType)) {
+            if(is_string($mixedDisplayType)) {
+                $sWhereClause = " AND `display_name` LIKE :display_type";
+
+                $aBindings['display_type'] = '%' . $mixedDisplayType . '%';
+            }
+            else if(is_array($mixedDisplayType)) {
+                $aWhereClauseOr = array();
+                foreach($mixedDisplayType as $iIndex => $sValue) {
+                    $aWhereClauseOr[] = "`display_name` LIKE :display_type_" . $iIndex;
+
+                    $aBindings['display_type_' . $iIndex] = '%' . $sValue . '%';
+                }
+
+                $sWhereClause = " AND (" . implode(" OR ", $aWhereClauseOr) . ")";
+            }
+        }
+
+        return $this->getAll("SELECT * FROM `sys_form_displays` WHERE `display_name` LIKE :display_prefix" . $sWhereClause, $aBindings);
     }
 
     public function cloneDisplay($sDisplayName, $sNewDisplayName, $sNewDisplayTitle)

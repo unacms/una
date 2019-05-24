@@ -16,11 +16,6 @@ DELETE FROM `sys_form_displays` WHERE `module` = 'bx_directory';
 DELETE FROM `sys_form_inputs` WHERE `module` = 'bx_directory';
 DELETE FROM `sys_form_display_inputs` WHERE `display_name` LIKE 'bx_directory_%';
 
--- PRE-VALUES
-DELETE FROM `sys_form_pre_lists` WHERE `module` = 'bx_directory';
-
-DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_directory_cats');
-
 -- COMMENTS
 DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_directory';
 

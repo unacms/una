@@ -19,6 +19,55 @@ class BxDirTemplate extends BxBaseModTextTemplate
         $this->MODULE = 'bx_directory';
 
         parent::__construct($oConfig, $oDb);
+
+        $this->aMethodsToCallAddJsCss[] = 'categories';
+    }
+
+    public function categoriesList()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return $this->_categoriesList(0, array(
+            'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_CATEGORIES'], array('category' => ''))
+        ));
+    }
+
+    protected function _categoriesList($iParentId, $aParams = array())
+    {
+        $aCategories = $this->_oDb->getCategories(array('type' => 'parent_id', 'parent_id' => $iParentId));
+
+        $aTmplVars = array();
+        foreach($aCategories as $aCategory) {
+            $iItems = (int)$aCategory['items'];
+
+            $sSibcategories = $this->_categoriesList($aCategory['id'], $aParams);
+            if($iItems == 0 && empty($sSibcategories))
+                continue;
+
+            $aTmplVars[] = array(
+                'url' => $aParams['url'] . $aCategory['id'],
+                'title' => _t($aCategory['title']),
+                'bx_if:show_counter' => array(
+                    'condition' => $iItems != 0,
+                    'content' => array(
+                        'items' => $iItems,
+                    )
+                ),
+                'bx_if:show_subcategories' => array(
+                    'condition' => !empty($sSibcategories),
+                    'content' => array(
+                        'subcategories' => $sSibcategories
+                    )
+                )
+            );
+        }
+
+        if(empty($aTmplVars))
+            return '';
+
+        return $this->parseHtmlByName('categories.html', array(
+            'bx_repeat:categories' => $aTmplVars
+        ));
     }
 
     /**

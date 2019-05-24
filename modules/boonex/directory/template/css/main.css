@@ -1,1 +1,6 @@
 @import url(../../../../base/text/template/css/main.css);
+
+/*--- Categories ---*/
+.bx-dir-subcategories .bx-dir-category:first-child {
+    padding-top: 0;
+}

@@ -18,16 +18,38 @@ class BxDirFormsEntryHelper extends BxBaseModTextFormsEntryHelper
     {
         parent::__construct($oModule);
     }
-
-    protected function _alertAfterAdd($aContentInfo)
+    
+    public function onDataAddAfter($iAccountId, $iContentId)
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
+        $s = parent::onDataAddAfter($iAccountId, $iContentId);
+        if(!empty($s))
+            return $s;
 
-        $aParams = array('object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]);
-        if(isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
-        	$aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
+        $this->_oModule->serviceUpdateCategoriesStats();
 
-        bx_alert($this->_oModule->getName(), ($aContentInfo[$CNF['FIELD_STATUS']] == 'awaiting' ? 'scheduled' : 'added'), $aContentInfo[$CNF['FIELD_ID']], $aContentInfo[$CNF['FIELD_AUTHOR']], $aParams);
+        return '';
+    }
+
+    public function onDataEditAfter($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm)
+    {
+        $s = parent::onDataEditAfter($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm);
+        if(!empty($s))
+            return $s;
+
+        $this->_oModule->serviceUpdateCategoriesStats();
+
+        return '';
+    }
+
+    public function onDataDeleteAfter ($iContentId, $aContentInfo, $oProfile)
+    {
+        $s = parent::onDataDeleteAfter ($iContentId, $aContentInfo, $oProfile);
+        if(!empty($s))
+            return $s;
+
+        $this->_oModule->serviceUpdateCategoriesStats();
+
+        return '';
     }
 }
 

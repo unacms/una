@@ -39,7 +39,9 @@ class BxDirConfig extends BxBaseModTextConfig
             'FIELD_TITLE' => 'title',
             'FIELD_TEXT' => 'text',
             'FIELD_TEXT_ID' => 'ad-text',
-            'FIELD_CATEGORY' => 'cat',
+            'FIELD_CATEGORY' => 'category',
+            'FIELD_CATEGORY_VIEW' => 'category_view',
+            'FIELD_CATEGORY_SELECT' => 'category_select',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_COVER' => 'covers',
             'FIELD_PHOTO' => 'pictures',
@@ -56,7 +58,7 @@ class BxDirConfig extends BxBaseModTextConfig
             'FIELD_LABELS' => 'labels',
             'FIELD_ANONYMOUS' => 'anonymous',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
-            
+
             // page URIs
             'URI_VIEW_ENTRY' => 'view-ad',
             'URI_AUTHOR_ENTRIES' => 'ads-author',
@@ -68,8 +70,11 @@ class BxDirConfig extends BxBaseModTextConfig
             'URL_HOME' => 'page.php?i=directory-home',
             'URL_POPULAR' => 'page.php?i=ads-popular',
             'URL_UPDATED' => 'page.php?i=ads-updated',
+            'URL_CATEGORIES' => 'page.php?i=ads-categories',
             'URL_MANAGE_COMMON' => 'page.php?i=ads-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=ads-administration',
+
+            'GET_PARAM_CATEGORY' => 'category',
 
             // some params
             'PARAM_CHARS_SUMMARY' => 'bx_directory_summary_chars',
@@ -108,7 +113,7 @@ class BxDirConfig extends BxBaseModTextConfig
             'OBJECT_FEATURED' => 'bx_directory',
             'OBJECT_METATAGS' => 'bx_directory',
             'OBJECT_COMMENTS' => 'bx_directory',
-            'OBJECT_CATEGORY' => 'bx_directory_cats',
+            'OBJECT_CATEGORY' => '',
             'OBJECT_PRIVACY_VIEW' => 'bx_directory_allow_view_to',
             'OBJECT_FORM_CATEGORY' => 'bx_directory_category',
             'OBJECT_FORM_CATEGORY_DISPLAY_ADD' => 'bx_directory_category_add',
@@ -173,12 +178,14 @@ class BxDirConfig extends BxBaseModTextConfig
         
         $this->_aJsClasses = array_merge($this->_aJsClasses, array(
             'manage_tools' => 'BxDirManageTools',
-            'studio' => 'BxDirStudio'
+            'studio' => 'BxDirStudio',
+            'entry' => 'BxDirEntry'
         ));
 
         $this->_aJsObjects = array_merge($this->_aJsObjects, array(
             'manage_tools' => 'oBxDirManageTools',
-            'studio' => 'oBxDirStudio'
+            'studio' => 'oBxDirStudio',
+            'entry' => 'oBxDirEntry'
         ));
 
         $this->_aGridObjects = array(

@@ -1,0 +1,13 @@
+<div class="bx-dir-categories">
+    <div class="bx-dir-categories-cnt">
+        <bx_repeat:categories>
+            <div class="bx-dir-category bx-def-padding-thd-topbottom">
+                <a href="__url__">__title__</a>
+                <bx_if:show_counter><span class="bx-def-padding-sec-left">(__items__)</span></bx_if:show_counter>
+            </div>
+            <bx_if:show_subcategories>
+                <div class="bx-dir-subcategories bx-def-padding-left">__subcategories__</div>
+            </bx_if:show_subcategories>
+        </bx_repeat:categories>
+    </div>
+</div>
