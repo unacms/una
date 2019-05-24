@@ -32,6 +32,12 @@ class BxBasePageHome extends BxTemplPage
                 'content' => $aTmplVarsCover,
             ),
         ), 'cover_home.html');
+        
+        $sSelName = 'home';
+        if(bx_get('i') !== false)
+            $sSelName = bx_process_input(bx_get('i'));
+
+        BxDolMenu::setSelectedGlobal('system', $sSelName);
     }
 
     public function getCode ()

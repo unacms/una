@@ -3496,6 +3496,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
 INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('sys_site', '_sys_menu_title_main', 'sys_site', 'system', 14, 0, 1, 'BxTemplMenuSite', ''),
 ('sys_homepage', '_sys_menu_title_homepage', 'sys_homepage', 'system', 14, 0, 1, 'BxTemplMenuHomepage', ''),
+('sys_homepage_submenu', '_sys_menu_title_homepage_submenu', 'sys_homepage_submenu', 'system', 8, 0, 1, '', ''),
 ('sys_site_submenu', '_sys_menu_title_submenu', 'sys_site', 'system', 1, 0, 1, 'BxTemplMenuSubmenu', ''),
 ('sys_footer', '_sys_menu_title_footer', 'sys_footer', 'system', 2, 0, 1, 'BxTemplMenuFooter', ''),
 ('sys_toolbar_site', '_sys_menu_title_toolbar_site', 'sys_toolbar_site', 'system', 5, 0, 1, 'BxTemplMenuToolbar', ''),
@@ -3533,6 +3534,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu_sets` (
 INSERT INTO `sys_menu_sets` (`set_name`, `module`, `title`, `deletable`) VALUES
 ('sys_site', 'system', '_sys_menu_set_title_site', 0),
 ('sys_homepage', 'system', '_sys_menu_set_title_homepage', 0),
+('sys_homepage_submenu', 'system', '_sys_menu_set_title_homepage_submenu', 0),
 ('sys_footer', 'system', '_sys_menu_set_title_footer', 0),
 ('sys_toolbar_site', 'system', '_sys_menu_set_title_toolbar_site', 0),
 ('sys_toolbar_member', 'system', '_sys_menu_set_title_toolbar_member', 0),
@@ -3581,6 +3583,13 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 ('sys_site', 'system', 'home', '_sys_menu_item_title_system_home', '_sys_menu_item_title_home', 'index.php', '', '', 'home col-gray-dark', '', 2147483647, 1, 1, 1),
 ('sys_site', 'system', 'about', '_sys_menu_item_title_system_about', '_sys_menu_item_title_about', 'page.php?i=about', '', '', 'info-circle col-blue3-dark', '', 2147483647, 1, 1, 2),
 ('sys_site', 'system', 'search', '_sys_menu_item_title_system_search', '_sys_menu_item_title_search', 'javascript:void(0);', 'bx_menu_slide_inline(\'#bx-sliding-menu-search\', this, \'site\');', '', 'search', '', 2147483647, 1, 1, 3);
+
+-- homepage submenu
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES
+('sys_homepage_submenu', 'system', 'home', '_sys_menu_item_title_system_home', '_sys_menu_item_title_home', 'index.php', '', '', 'bolt', '', '', 2147483647, '', 1, 1, 1),
+('sys_homepage_submenu', 'system', 'explore', '_sys_menu_item_title_system_explore', '_sys_menu_item_title_explore', 'page.php?i=explore', '', '', 'compass ', '', '', 2147483647, '', 0, 1, 2),
+('sys_homepage_submenu', 'system', 'updates', '_sys_menu_item_title_system_updates', '_sys_menu_item_title_updates', 'page.php?i=updates', '', '', 'fire', '', '', 2147483647, '', 0, 1, 3),
+('sys_homepage_submenu', 'system', 'trends', '_sys_menu_item_title_system_trends', '_sys_menu_item_title_trends', 'page.php?i=trends', '', '', 'hashtag', '', '', 2147483647, '', 0, 1, 4);
 
 -- footer menu
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
@@ -4217,28 +4226,31 @@ CREATE TABLE IF NOT EXISTS `sys_objects_page` (
   UNIQUE KEY `uri` (`uri`(191))
 );
 
-INSERT INTO `sys_objects_page` (`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES
-('sys_home', 'home', '_sys_page_title_system_home', '_sys_page_title_home', 'system', 5, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxTemplPageHome', ''),
-('sys_about', 'about', '_sys_page_title_system_about', '_sys_page_title_about', 'system', 5, 2147483647, 1, 'page.php?i=about', '', '', '', 0, 1, 0, '', ''),
-('sys_terms', 'terms', '_sys_page_title_system_terms', '_sys_page_title_terms', 'system', 5, 2147483647, 1, 'page.php?i=terms', '', '', '', 0, 1, 0, '', ''),
-('sys_privacy', 'privacy', '_sys_page_title_system_privacy', '_sys_page_title_privacy', 'system', 5, 2147483647, 1, 'page.php?i=privacy', '', '', '', 0, 1, 0, '', ''),
-('sys_dashboard', 'dashboard', '_sys_page_title_system_dashboard', '_sys_page_title_dashboard', 'system', 10, 2147483646, 1, 'page.php?i=dashboard', '', '', '', 0, 1, 0, 'BxTemplPageDashboard', ''),
-('sys_create_account', 'create-account', '_sys_page_title_system_create_account', '_sys_page_title_create_account', 'system', 5, 2147483647, 1, 'page.php?i=create-account', '', '', '', 0, 1, 0, '', ''),
-('sys_login', 'login', '_sys_page_title_system_login', '_sys_page_title_login', 'system', 5, 2147483647, 1, 'page.php?i=login', '', '', '', 0, 1, 0, '', ''),
-('sys_login_step2', 'login-step2', '_sys_page_title_system_login_step2', '_sys_page_title_login_step2', 'system', 5, 2147483647, 1, 'page.php?i=login-step2', '', '', '', 0, 1, 0, '', ''),
-('sys_login_step3', 'login-step3', '_sys_page_title_system_login_step3', '_sys_page_title_login_step3', 'system', 5, 2147483647, 1, 'page.php?i=login-step3', '', '', '', 0, 1, 0, '', ''),
-('sys_forgot_password', 'forgot-password', '_sys_page_title_system_forgot_password', '_sys_page_title_forgot_password', 'system', 5, 2147483647, 1, 'page.php?i=forgot-password', '', '', '', 0, 1, 0, '', ''),
-('sys_confirm_email', 'confirm-email', '_sys_page_title_system_confirm_email', '_sys_page_title_confirm_email', 'system', 5, 2147483647, 1, 'page.php?i=confirm-email', '', '', '', 0, 1, 0, '', ''),
-('sys_confirm_phone', 'confirm-phone', '_sys_page_title_system_confirm_phone', '_sys_page_title_confirm_phone', 'system', 5, 2147483647, 1, 'page.php?i=confirm-phone', '', '', '', 0, 1, 0, '', ''),
-('sys_account_settings_email', 'account-settings-email', '_sys_page_title_system_account_settings_email', '_sys_page_title_account_settings_email', 'system', 5, 2147483647, 1, 'member.php', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
-('sys_account_settings_pwd', 'account-settings-password', '_sys_page_title_system_account_settings_pwd', '_sys_page_title_account_settings_pwd', 'system', 5, 2147483647, 1, 'page.php?i=account-settings-pwd', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
-('sys_account_settings_info', 'account-settings-info', '_sys_page_title_system_account_settings_info', '_sys_page_title_account_settings_info', 'system', 5, 2147483647, 1, 'page.php?i=account-settings-info', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
-('sys_account_settings_delete', 'account-settings-delete', '_sys_page_title_system_account_settings_delete', '_sys_page_title_account_settings_delete', 'system', 5, 2147483647, 1, 'page.php?i=account-settings-delete', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
-('sys_account_profile_switcher', 'account-profile-switcher', '_sys_page_title_system_account_profile_switcher', '_sys_page_title_account_profile_switcher', 'system', 5, 2147483647, 1, 'page.php?i=account-profile-switcher', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
-('sys_unsubscribe_notifications', 'unsubscribe-notifications', '_sys_page_title_system_unsubscribe_notifications', '_sys_page_title_unsubscribe_notifications', 'system', 5, 2147483647, 1, 'page.php?i=unsubscribe-notifications', '', '', '', 0, 1, 0, '', ''),
-('sys_unsubscribe_news', 'unsubscribe-news', '_sys_page_title_system_unsubscribe_news', '_sys_page_title_unsubscribe_news', 'system', 5, 2147483647, 1, 'page.php?i=unsubscribe-news', '', '', '', 0, 1, 0, '', ''),
-('sys_std_dashboard', '', '_sys_page_title_system_studio_dashboard', '_sys_page_title_studio_dashboard', 'system', 4, 2147483647, 1, '', '', '', '', 0, 1, 0, '', ''),
-('sys_cmts_administration' ,'cmts-administration', '_sys_page_title_system_cmts_administration', '_sys_page_title_cmts_administration', 'system', 5, 192, 1, 'page.php?i=cmts-administration', '', '', '', 0, 1, 0, '', '');
+INSERT INTO `sys_objects_page` (`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `submenu`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES
+('sys_home', 'home', '_sys_page_title_system_home', '_sys_page_title_home', 'system', 5, 'sys_homepage_submenu', 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxTemplPageHome', ''),
+('sys_about', 'about', '_sys_page_title_system_about', '_sys_page_title_about', 'system', 5, '', 2147483647, 1, 'page.php?i=about', '', '', '', 0, 1, 0, '', ''),
+('sys_terms', 'terms', '_sys_page_title_system_terms', '_sys_page_title_terms', 'system', 5, '', 2147483647, 1, 'page.php?i=terms', '', '', '', 0, 1, 0, '', ''),
+('sys_privacy', 'privacy', '_sys_page_title_system_privacy', '_sys_page_title_privacy', 'system', 5, '', 2147483647, 1, 'page.php?i=privacy', '', '', '', 0, 1, 0, '', ''),
+('sys_explore', 'explore', '_sys_page_title_sys_explore', '_sys_page_title_explore', 'system', 5, 'sys_homepage_submenu', 2147483647, 1, 'page.php?i=explore', '', '', '', 0, 1, 0, 'BxTemplPageHome', ''),
+('sys_updates', 'updates', '_sys_page_title_sys_updates', '_sys_page_title_updates', 'system', 5, 'sys_homepage_submenu', 2147483647, 1, 'page.php?i=updates', '', '', '', 0, 1, 0, 'BxTemplPageHome', ''),
+('sys_trends', 'trends', '_sys_page_title_sys_trends', '_sys_page_title_trends', 'system', 5, 'sys_homepage_submenu', 2147483647, 1, 'page.php?i=trends', '', '', '', 0, 1, 0, 'BxTemplPageHome', ''),
+('sys_dashboard', 'dashboard', '_sys_page_title_system_dashboard', '_sys_page_title_dashboard', 'system', 10, '', 2147483646, 1, 'page.php?i=dashboard', '', '', '', 0, 1, 0, 'BxTemplPageDashboard', ''),
+('sys_create_account', 'create-account', '_sys_page_title_system_create_account', '_sys_page_title_create_account', 'system', 5, '', 2147483647, 1, 'page.php?i=create-account', '', '', '', 0, 1, 0, '', ''),
+('sys_login', 'login', '_sys_page_title_system_login', '_sys_page_title_login', 'system', 5, '', 2147483647, 1, 'page.php?i=login', '', '', '', 0, 1, 0, '', ''),
+('sys_login_step2', 'login-step2', '_sys_page_title_system_login_step2', '_sys_page_title_login_step2', 'system', 5, '', 2147483647, 1, 'page.php?i=login-step2', '', '', '', 0, 1, 0, '', ''),
+('sys_login_step3', 'login-step3', '_sys_page_title_system_login_step3', '_sys_page_title_login_step3', 'system', 5, '', 2147483647, 1, 'page.php?i=login-step3', '', '', '', 0, 1, 0, '', ''),
+('sys_forgot_password', 'forgot-password', '_sys_page_title_system_forgot_password', '_sys_page_title_forgot_password', 'system', 5, '', 2147483647, 1, 'page.php?i=forgot-password', '', '', '', 0, 1, 0, '', ''),
+('sys_confirm_email', 'confirm-email', '_sys_page_title_system_confirm_email', '_sys_page_title_confirm_email', 'system', 5, '', 2147483647, 1, 'page.php?i=confirm-email', '', '', '', 0, 1, 0, '', ''),
+('sys_confirm_phone', 'confirm-phone', '_sys_page_title_system_confirm_phone', '_sys_page_title_confirm_phone', 'system', 5, '', 2147483647, 1, 'page.php?i=confirm-phone', '', '', '', 0, 1, 0, '', ''),
+('sys_account_settings_email', 'account-settings-email', '_sys_page_title_system_account_settings_email', '_sys_page_title_account_settings_email', 'system', 5, '', 2147483647, 1, 'member.php', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
+('sys_account_settings_pwd', 'account-settings-password', '_sys_page_title_system_account_settings_pwd', '_sys_page_title_account_settings_pwd', 'system', 5, '', 2147483647, 1, 'page.php?i=account-settings-pwd', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
+('sys_account_settings_info', 'account-settings-info', '_sys_page_title_system_account_settings_info', '_sys_page_title_account_settings_info', 'system', 5, '', 2147483647, 1, 'page.php?i=account-settings-info', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
+('sys_account_settings_delete', 'account-settings-delete', '_sys_page_title_system_account_settings_delete', '_sys_page_title_account_settings_delete', 'system', 5, '', 2147483647, 1, 'page.php?i=account-settings-delete', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
+('sys_account_profile_switcher', 'account-profile-switcher', '_sys_page_title_system_account_profile_switcher', '_sys_page_title_account_profile_switcher', 'system', 5, '', 2147483647, 1, 'page.php?i=account-profile-switcher', '', '', '', 0, 1, 0, 'BxTemplPageAccount', ''),
+('sys_unsubscribe_notifications', 'unsubscribe-notifications', '_sys_page_title_system_unsubscribe_notifications', '_sys_page_title_unsubscribe_notifications', 'system', 5, '', 2147483647, 1, 'page.php?i=unsubscribe-notifications', '', '', '', 0, 1, 0, '', ''),
+('sys_unsubscribe_news', 'unsubscribe-news', '_sys_page_title_system_unsubscribe_news', '_sys_page_title_unsubscribe_news', 'system', 5, '', 2147483647, 1, 'page.php?i=unsubscribe-news', '', '', '', 0, 1, 0, '', ''),
+('sys_std_dashboard', '', '_sys_page_title_system_studio_dashboard', '_sys_page_title_studio_dashboard', 'system', 4, '', 2147483647, 1, '', '', '', '', 0, 1, 0, '', ''),
+('sys_cmts_administration' ,'cmts-administration', '_sys_page_title_system_cmts_administration', '_sys_page_title_cmts_administration', 'system', 5, '', 192, 1, 'page.php?i=cmts-administration', '', '', '', 0, 1, 0, '', '');
 
 
 CREATE TABLE IF NOT EXISTS `sys_pages_types` (

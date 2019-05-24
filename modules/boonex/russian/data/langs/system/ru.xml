@@ -2383,6 +2383,14 @@
 	<string name="_sys_menu_title_footer"><![CDATA[Основание - Ссылки]]></string>
 	<string name="_sys_menu_title_main"><![CDATA[Сайт - Навигация]]></string>
 	<string name="_sys_menu_title_homepage"><![CDATA[Меню на главной странице]]></string>
+        <string name="_sys_menu_title_homepage_submenu"><![CDATA[Подменю на главной странице]]></string>
+	<string name="_sys_menu_set_title_homepage_submenu"><![CDATA[Подменю на главной странице]]></string>
+	<string name="_sys_menu_item_title_system_explore"><![CDATA[Открытия]]></string>
+	<string name="_sys_menu_item_title_explore"><![CDATA[Открытия]]></string>
+	<string name="_sys_menu_item_title_system_updates"><![CDATA[Обновления]]></string>
+	<string name="_sys_menu_item_title_updates"><![CDATA[Обновления]]></string>
+	<string name="_sys_menu_item_title_system_trends"><![CDATA[Тренды]]></string>
+	<string name="_sys_menu_item_title_trends"><![CDATA[Тренды]]></string>
 	<string name="_sys_menu_title_profiles_create"><![CDATA[Профиль - Создание]]></string>
 	<string name="_sys_menu_title_profile_stats"><![CDATA[Профиль - Статистика]]></string>
 	<string name="_sys_menu_title_rss"><![CDATA[RSS]]></string>
@@ -2467,7 +2475,7 @@
 	<string name="_sys_page_title_account_settings_info"><![CDATA[Редактировать аккаунт]]></string>
 	<string name="_sys_page_title_account_settings_pwd"><![CDATA[Изменить пароль]]></string>
 	<string name="_sys_page_title_add_content"><![CDATA[Добавить содержимое]]></string>
-  <string name="_sys_page_title_cmts_administration"><![CDATA[Управление комментариями]]></string>
+        <string name="_sys_page_title_cmts_administration"><![CDATA[Управление комментариями]]></string>
 	<string name="_sys_page_title_confirm_email"><![CDATA[Email - Подтверждение]]></string>
 	<string name="_sys_page_title_confirm_phone"><![CDATA[Телефон - Подтверждение]]></string>
 	<string name="_sys_page_title_create_account"><![CDATA[Присоединиться]]></string>
@@ -2478,6 +2486,9 @@
 	<string name="_sys_page_title_login_step2"><![CDATA[Вход - шаг 2]]></string>
 	<string name="_sys_page_title_login_step3"><![CDATA[Вход - шаг 3]]></string>
 	<string name="_sys_page_title_privacy"><![CDATA[Политика конфиденциальности]]></string>
+        <string name="_sys_page_title_explore"><![CDATA[Открытия]]></string>
+        <string name="_sys_page_title_updates"><![CDATA[Обновления]]></string>
+        <string name="_sys_page_title_trends"><![CDATA[Тренды]]></string>
 	<string name="_sys_page_title_terms"><![CDATA[Правила пользования]]></string>
 	<string name="_sys_page_title_system_about"><![CDATA[Об...]]></string>
 	<string name="_sys_page_title_system_account_profile_switcher"><![CDATA[Мои профили]]></string>
@@ -2486,7 +2497,7 @@
 	<string name="_sys_page_title_system_account_settings_info"><![CDATA[Редактировать аккаунт]]></string>
 	<string name="_sys_page_title_system_account_settings_pwd"><![CDATA[Изменить пароль]]></string>
 	<string name="_sys_page_title_system_add_content"><![CDATA[Добавить содержимое]]></string>
-  <string name="_sys_page_title_system_cmts_administration"><![CDATA[Управление комментариями]]></string>
+        <string name="_sys_page_title_system_cmts_administration"><![CDATA[Управление комментариями]]></string>
 	<string name="_sys_page_title_system_confirm_email"><![CDATA[Email подтверждение]]></string>
 	<string name="_sys_page_title_system_confirm_phone"><![CDATA[Подтверждение телефона]]></string>
 	<string name="_sys_page_title_system_create_account"><![CDATA[Присоединиться]]></string>
@@ -2497,6 +2508,9 @@
 	<string name="_sys_page_title_system_login_step2"><![CDATA[Вход - шаг2]]></string>
 	<string name="_sys_page_title_system_login_step3"><![CDATA[Вход - шаг3]]></string>
 	<string name="_sys_page_title_system_privacy"><![CDATA[Политика конфиденциальности]]></string>
+        <string name="_sys_page_title_sys_explore"><![CDATA[Открытия]]></string>
+	<string name="_sys_page_title_sys_updates"><![CDATA[Обновления]]></string>
+	<string name="_sys_page_title_sys_trends"><![CDATA[Тренды]]></string>
 	<string name="_sys_page_title_system_terms"><![CDATA[Правила пользования]]></string>
 	<string name="_sys_page_title_system_unsubscribe_news"><![CDATA[Отписаться от новостей]]></string>
 	<string name="_sys_page_title_system_unsubscribe_notifications"><![CDATA[Отписаться от уведомлений]]></string>

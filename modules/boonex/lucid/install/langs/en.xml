@@ -289,13 +289,6 @@
 	<string name="_bx_lucid_lmi_cpt_styles"><![CDATA[Styles]]></string>
 
 
-	<string name="_bx_lucid_page_title_sys_explore"><![CDATA[Explore]]></string>
-	<string name="_bx_lucid_page_title_explore"><![CDATA[Explore]]></string>
-	<string name="_bx_lucid_page_title_sys_updates"><![CDATA[Updates]]></string>
-	<string name="_bx_lucid_page_title_updates"><![CDATA[Updates]]></string>
-	<string name="_bx_lucid_page_title_sys_trends"><![CDATA[Trends]]></string>
-	<string name="_bx_lucid_page_title_trends"><![CDATA[Trends]]></string>
-
 	<string name="_bx_lucid_menu_template_title_dropdown_site"><![CDATA[Site Dropdown Navigation]]></string>
 	<string name="_bx_lucid_menu_title_dropdown_site"><![CDATA[Site Dropdown Navigation]]></string>
 
@@ -304,15 +297,4 @@
 	<string name="_bx_lucid_menu_item_title_login"><![CDATA[Login]]></string>
 	<string name="_bx_lucid_menu_item_title_system_join"><![CDATA[Join]]></string>
 	<string name="_bx_lucid_menu_item_title_join"><![CDATA[Join]]></string>
-
-	<string name="_bx_lucid_menu_title_homepage_submenu"><![CDATA[Homepage Submenu]]></string>
-	<string name="_bx_lucid_menu_set_title_homepage_submenu"><![CDATA[Homepage Submenu]]></string>
-	<string name="_bx_lucid_menu_item_title_system_home"><![CDATA[News]]></string>
-	<string name="_bx_lucid_menu_item_title_home"><![CDATA[News]]></string>
-	<string name="_bx_lucid_menu_item_title_system_explore"><![CDATA[Explore]]></string>
-	<string name="_bx_lucid_menu_item_title_explore"><![CDATA[Explore]]></string>
-	<string name="_bx_lucid_menu_item_title_system_updates"><![CDATA[Updates]]></string>
-	<string name="_bx_lucid_menu_item_title_updates"><![CDATA[Updates]]></string>
-	<string name="_bx_lucid_menu_item_title_system_trends"><![CDATA[Trends]]></string>
-	<string name="_bx_lucid_menu_item_title_trends"><![CDATA[Trends]]></string>
 </resources>
