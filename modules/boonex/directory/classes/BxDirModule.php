@@ -86,7 +86,10 @@ class BxDirModule extends BxBaseModTextModule
 
     public function serviceCategoriesList($aParams = array())
     {
-        return $this->_oTemplate->categoriesList();
+        if(!isset($aParams['show_empty']))
+            $aParams['show_empty'] = true;
+
+        return $this->_oTemplate->categoriesList($aParams);
     }
 
     public function serviceBrowseCategory($iCategoryId = 0, $aParams = array())

@@ -23,13 +23,18 @@ class BxDirTemplate extends BxBaseModTextTemplate
         $this->aMethodsToCallAddJsCss[] = 'categories';
     }
 
-    public function categoriesList()
+    public function categoriesList($aParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
 
-        return $this->_categoriesList(0, array(
+        $sResult = $this->_categoriesList(0, array(
             'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_CATEGORIES'], array('category' => ''))
         ));
+
+        if(empty($sResult) && isset($aParams['show_empty']) && $aParams['show_empty'] === true)
+            $sResult = MsgBox(_t('_Empty'));
+
+        return $sResult;
     }
 
     protected function _categoriesList($iParentId, $aParams = array())
