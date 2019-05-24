@@ -85,11 +85,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return parent::serviceGetSearchResultUnit($iContentId, $sUnitTemplate);
     }
 
-    public function serviceGetSearchableFieldsExtended()
+    public function serviceGetSearchableFieldsExtended($aInputsAdd = array())
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $aResult = parent::serviceGetSearchableFieldsExtended();
+        $aResult = parent::serviceGetSearchableFieldsExtended($aInputsAdd);
         if(!$this->serviceActAsProfile())
             return $aResult;
 

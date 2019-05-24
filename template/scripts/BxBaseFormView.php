@@ -1334,11 +1334,17 @@ BLAH;
 
         $sOptions = '';
 
-        if (isset($aInput['values']) and is_array($aInput['values'])) {
+        if (isset($aInput['values']) && is_array($aInput['values'])) {
             if (count($aInput['values']) > 3 && $sDivider == $this->_sDivider)
                 $sDivider = $this->_sDividerAlt;
+            
             // generate complex input using simple standard inputs
             foreach ($aInput['values'] as $sValue => $sLabel) {
+                if(is_array($sLabel)) {
+                    $sValue = $sLabel['key'];
+                    $sLabel = $sLabel['value'];
+                }
+
                 // create new simple input
                 $aNewInput = array(
                     'type'    => $sType,

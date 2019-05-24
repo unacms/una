@@ -91,11 +91,11 @@ class BxForumModule extends BxBaseModTextModule
     /** 
      * @ref bx_forum-get_searchable_fields "get_searchable_fields"
      */
-    public function serviceGetSearchableFields ()
+    public function serviceGetSearchableFields ($aInputsAdd = array())
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $aResult = parent::serviceGetSearchableFields();
+        $aResult = parent::serviceGetSearchableFields($aInputsAdd);
         $aResult[$CNF['FIELD_TEXT_COMMENTS']] = _t('_bx_forum_form_entry_input_text_comments');
 
         return $aResult;

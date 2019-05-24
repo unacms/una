@@ -120,11 +120,11 @@ class BxMarketModule extends BxBaseModTextModule
     /** 
      * @ref bx_market-get_searchable_fields "get_searchable_fields"
      */
-    public function serviceGetSearchableFields ()
+    public function serviceGetSearchableFields ($aInputsAdd = array())
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $aResult = parent::serviceGetSearchableFields();
+        $aResult = parent::serviceGetSearchableFields($aInputsAdd);
         unset($aResult[$CNF['FIELD_PRICE_SINGLE']], $aResult[$CNF['FIELD_TRIAL_RECURRING']]);
 
         return $aResult;

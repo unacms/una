@@ -57,11 +57,11 @@ class BxSnipcartModule extends BxBaseModTextModule
     /** 
      * @ref bx_snipcart-get_searchable_fields "get_searchable_fields"
      */
-    public function serviceGetSearchableFields ()
+    public function serviceGetSearchableFields ($aInputsAdd = array())
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $aResult = parent::serviceGetSearchableFields();
+        $aResult = parent::serviceGetSearchableFields($aInputsAdd);
         unset($aResult[$CNF['FIELD_PRICE']], $aResult[$CNF['FIELD_WEIGHT']]);
 
         return $aResult;

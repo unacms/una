@@ -184,7 +184,7 @@ class BxBaseModGeneralModule extends BxDolModule
         return $this->_oDb->getEntriesByAuthor((int)$iProfileId);
     }
 
-    public function serviceGetSearchableFieldsExtended()
+    public function serviceGetSearchableFieldsExtended($aInputsAdd = array())
     {
         $CNF = &$this->_oConfig->CNF;
         if(empty($CNF['OBJECT_FORM_ENTRY']))
@@ -213,9 +213,12 @@ class BxBaseModGeneralModule extends BxDolModule
             $aInputs = array_merge($aInputs, $oForm->aInputs);
         }
 
+        if(!empty($aInputsAdd) && is_array($aInputsAdd))
+            $aInputs = array_merge($aInputs, $aInputsAdd);
+
         foreach($aInputs as $aInput)
-            if(in_array($aInput['type'], BxDolSearchExtended::$SEARCHABLE_TYPES) && !in_array($aInput['name'], $this->_aSearchableNamesExcept))
-                $aResult[$aInput['name']] = array(
+            if(in_array($aInput['type'], BxDolSearchExtended::$SEARCHABLE_TYPES) && !in_array($aInput['name'], $this->_aSearchableNamesExcept)) {
+                $aField = array(
                     'type' => $aInput['type'], 
                     'caption_system' => $aInput['caption_system_src'],
                     'caption' => $aInput['caption_src'],
@@ -224,6 +227,12 @@ class BxBaseModGeneralModule extends BxDolModule
                     'values' => !empty($aInput['values_src']) ? $aInput['values_src'] : '',
                     'pass' => !empty($aInput['db']['pass']) ? $aInput['db']['pass'] : '',
                 );
+
+                if(isset($aInput['search_type']))
+                    $aField['search_type'] = $aInput['search_type'];
+
+                $aResult[$aInput['name']] = $aField;
+            }
 
         return $aResult;
     }
@@ -241,24 +250,31 @@ class BxBaseModGeneralModule extends BxDolModule
         return isset($this->_oConfig->CNF['ICON']) ? $this->_oConfig->CNF['ICON'] : '';
     }
 
-    public function serviceGetSearchableFields ()
+    public function serviceGetSearchableFields ($aInputsAdd = array())
     {
         $CNF = $this->_oConfig->CNF;
 
-        if (!isset($CNF['PARAM_SEARCHABLE_FIELDS']) || !isset($CNF['OBJECT_FORM_ENTRY']) || !isset($CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']))
+        if(!isset($CNF['PARAM_SEARCHABLE_FIELDS']) || !isset($CNF['OBJECT_FORM_ENTRY']) || !isset($CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']))
             return array();
+
+        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'], $this->_oTemplate);
+        if(!$oForm)
+            return array();
+
+        $aInputs = $oForm->aInputs;
+        if(!empty($aInputsAdd) && is_array($aInputsAdd))
+            $aInputs = array_merge($aInputs, $aInputsAdd);
 
         $aTextTypes = array('text', 'textarea');
         $aTextFields = array();
-        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'], $this->_oTemplate);
-        foreach ($oForm->aInputs as $r) {
-            if (in_array($r['type'], $aTextTypes))
+        foreach($aInputs as $r)
+            if(in_array($r['type'], $aTextTypes))
                 $aTextFields[$r['name']] = $r['caption'];
-        }
+
         return $aTextFields;
     }
     
-	public function serviceManageTools($sType = 'common')
+    public function serviceManageTools($sType = 'common')
     {
         $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getGridObject($sType));
         if(!$oGrid)
@@ -1435,13 +1451,16 @@ class BxBaseModGeneralModule extends BxDolModule
         exit;
     }
 
-    protected function _getContent($iContentId = 0, $sFuncGetContent = 'getContentInfoById')
+    protected function _getContent($iContentId = 0, $sFuncGetContent = true)
     {
         if(!$iContentId)
             $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
 
         if(!$iContentId)
             return false;
+
+        if($sFuncGetContent === true)
+            $sFuncGetContent = 'getContentInfoById';
 
         if(empty($sFuncGetContent) || !method_exists($this->_oDb, $sFuncGetContent))
             return $iContentId;

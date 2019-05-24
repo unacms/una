@@ -205,13 +205,16 @@ class BxBaseSearchExtended extends BxDolSearchExtended
             if((int)$aField['active'] == 0)
                 continue;
 
-            if (in_array($aField['search_type'], array('checkbox_set', 'select_multiple')) && (isset($aField['values']['']) || isset($aField['values'][0]))) {
-                unset($aField['values']['']);
-                unset($aField['values'][0]);
+            if(in_array($aField['search_type'], array('checkbox_set', 'select_multiple'))) {
+                if(isset($aField['values']['']))
+                    unset($aField['values']['']);
+
+                if(isset($aField['values'][0]) && !is_array($aField['values'][0]))
+                    unset($aField['values'][0]);
             }
-            
+
             $aAttrs = array();
-            
+
             if(in_array($aField['search_type'], array('datepicker_range_age')) && isset($aField['search_value']) && $aField['search_value'] != ''){
                 $aTmp = BxDolService::callSerialized($aField['search_value']);
                 if (isset($aTmp['min']) && isset($aTmp['max'])){

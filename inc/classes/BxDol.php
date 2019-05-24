@@ -265,7 +265,7 @@ interface iBxDolContentInfoService
     public function serviceGetSearchResultUnit ($iContentId, $sUnitTemplate = '');
     public function serviceGetAll ($aParams = array());
 
-    public function serviceGetSearchableFieldsExtended();
+    public function serviceGetSearchableFieldsExtended($aInputsAdd = array());
     public function serviceGetSearchResultExtended($aParams, $iStart = 0, $iPerPage = 0);
 }
 /** @} */

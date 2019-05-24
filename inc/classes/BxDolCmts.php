@@ -1220,7 +1220,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return $this->_oQuery->getCommentsBy($aParams);
     }
 
-    public function serviceGetSearchableFieldsExtended()
+    public function serviceGetSearchableFieldsExtended($aInputsAdd = array())
     {
         $oForm = BxDolForm::getObjectInstance('sys_comment', 'sys_comment_post', $this->_oTemplate);
         if(!$oForm)
@@ -1248,16 +1248,20 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             )
         );
 
-        foreach ($oForm->aInputs as $aInput)
-            if (in_array($aInput['type'], BxDolSearchExtended::$SEARCHABLE_TYPES) && !in_array($aInput['name'], $aSrchNamesExcept))
+        $aInputs = $oForm->aInputs;
+        if(!empty($aInputsAdd) && is_array($aInputsAdd))
+            $aInputs = array_merge($aInputs, $aInputsAdd);
+
+        foreach($aInputs as $aInput)
+            if(in_array($aInput['type'], BxDolSearchExtended::$SEARCHABLE_TYPES) && !in_array($aInput['name'], $aSrchNamesExcept))
                 $aResult[$aInput['name']] = array(
-                	'type' => $aInput['type'], 
-                        'caption_system' => !empty($aInput['caption_system_src']) ? $aInput['caption_system_src'] : '',
-                	'caption' => !empty($aInput['caption_src']) ? $aInput['caption_src'] : (!empty($aSrchCaptions[$aInput['name']]) ? $aSrchCaptions[$aInput['name']] : ''),
-                	'info' => !empty($aInput['info_src']) ? $aInput['info_src'] : '',
-                	'value' => !empty($aInput['value']) ? $aInput['value'] : '',
+                    'type' => $aInput['type'], 
+                    'caption_system' => !empty($aInput['caption_system_src']) ? $aInput['caption_system_src'] : '',
+                    'caption' => !empty($aInput['caption_src']) ? $aInput['caption_src'] : (!empty($aSrchCaptions[$aInput['name']]) ? $aSrchCaptions[$aInput['name']] : ''),
+                    'info' => !empty($aInput['info_src']) ? $aInput['info_src'] : '',
+                    'value' => !empty($aInput['value']) ? $aInput['value'] : '',
                     'values' => !empty($aInput['values_src']) ? $aInput['values_src'] : '',
-                	'pass' => !empty($aInput['db']['pass']) ? $aInput['db']['pass'] : ''
+                    'pass' => !empty($aInput['db']['pass']) ? $aInput['db']['pass'] : ''
                 );
 
         return $aResult;

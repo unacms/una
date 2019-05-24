@@ -171,12 +171,12 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     {
         return $this->_serviceBrowseWithParam ('context', 'profile_id', $iProfileId, $aParams);
     }
-    
+
     public function _serviceBrowseWithParam ($sParamName, $sParamGet, $sParamVal, $aParams = array())
     {
-        if (!$sParamVal)
+        if(!$sParamVal)
             $sParamVal = bx_process_input(bx_get($sParamGet), BX_DATA_INT);
-        if (!$sParamVal)
+        if(!$sParamVal)
             return '';
 
         $bEmptyMessage = true;
@@ -185,7 +185,13 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
             unset($aParams['empty_message']);
         }
 
-        return $this->_serviceBrowse ($sParamName, array_merge(array($sParamName => $sParamVal), $aParams), BX_DB_PADDING_DEF, $bEmptyMessage);
+        $bAjaxPaginate = true;
+        if(isset($aParams['ajax_paginate'])) {
+            $bAjaxPaginate = (bool)$aParams['ajax_paginate'];
+            unset($aParams['ajax_paginate']);
+        }
+
+        return $this->_serviceBrowse ($sParamName, array_merge(array($sParamName => $sParamVal), $aParams), BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
     }
     
     /**
