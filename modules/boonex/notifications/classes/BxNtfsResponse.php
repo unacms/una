@@ -64,7 +64,7 @@ class BxNtfsResponse extends BxBaseModNotificationsResponse
                     $this->_oModule->_oDb->deleteEvent(array('owner_id' => $oAlert->iObject));
 
                     $this->_oModule->_oDb->deleteEvent(array('action' => 'connection_added', 'object_id' => $oAlert->iObject));
-                        break;
+                    break;
             	}
 
             	$sMethod = 'getDeleteData' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);           	

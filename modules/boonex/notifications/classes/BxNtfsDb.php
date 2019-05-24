@@ -48,6 +48,16 @@ class BxNtfsDb extends BxBaseModNotificationsDb
         ));
     }
 
+    public function deleteEvent($aParams, $sWhereAddon = "")
+    {
+        $aEvents = $this->getAll("SELECT * FROM `{$this->_sTable}` WHERE " . $this->arrayToSQL($aParams, " AND ") . $sWhereAddon);
+        if(!empty($aEvents) && is_array($aEvents)) 
+            foreach($aEvents as $aEvent)
+                $this->queueDelete(array('event_id' => $aEvent['id']));
+
+        return parent::deleteEvent($aParams, $sWhereAddon);
+    }
+
     public function getEvents($aParams, $bReturnCount = false)
     {
         if($aParams['browse'] != 'list' || $aParams['type'] != BX_NTFS_TYPE_OBJECT_OWNER_AND_CONNECTIONS)
