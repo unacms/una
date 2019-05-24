@@ -37,6 +37,10 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
         $this->_sDeliveryType = BX_BASE_MOD_NTFS_DTYPE_SITE;
         $this->_sTitleMask = _t('_bx_ntfs_setting_title_mask', '%s', '%s');
 
+        $sDeliveryType = bx_get('delivery_type');
+        if(!empty($sDeliveryType))
+            $this->setDeliveryType($sDeliveryType);
+
         $this->init();
     }
 
@@ -64,7 +68,8 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
 
     public function setDeliveryType($sType)
     {
-        $this->_sDeliveryType = $sType;
+        $this->_sDeliveryType = bx_process_input($sType);
+        $this->_aQueryAppend['delivery_type'] = $this->_sDeliveryType;
     }
 
     public function performActionDeactivate()
