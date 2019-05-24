@@ -110,22 +110,22 @@ BxDolStudioFormsFields.prototype.onChangeType = function(iDiId) {
 };
 
 BxDolStudioFormsFields.prototype.onSelectChecker = function(oSelect) {
-	var sChecker = $(oSelect).val();
+    var sChecker = $(oSelect).val();
 
-	$('#bx-form-element-checker_params_length_min, #bx-form-element-checker_params_length_max, #bx-form-element-checker_params_preg, #bx-form-element-checker_params_required').hide().find('input').val('');
-	switch(sChecker) {
-	    case 'length':
-	        $('#bx-form-element-checker_params_length_min, #bx-form-element-checker_params_length_max').show();
-	        break;
+    $('#bx-form-element-checker_params_length_min, #bx-form-element-checker_params_length_max, #bx-form-element-checker_params_preg, #bx-form-element-checker_params_required').hide().find('input').val('').attr('disabled', 'disabled');
+    switch(sChecker) {
+        case 'length':
+            $('#bx-form-element-checker_params_length_min, #bx-form-element-checker_params_length_max').show().find('input').removeAttr('disabled');
+            break;
 
-	    case 'date_range':
-	        $('#bx-form-element-checker_params_length_min, #bx-form-element-checker_params_length_max, #bx-form-element-checker_params_required').show();
-			break;
-	
-		case 'preg':
-			$('#bx-form-element-checker_params_preg').show();
-			break;
-	}
+        case 'date_range':
+            $('#bx-form-element-checker_params_length_min, #bx-form-element-checker_params_length_max, #bx-form-element-checker_params_required').show().find('input').removeAttr('disabled');
+            break;
+
+        case 'preg':
+            $('#bx-form-element-checker_params_preg').show().find('input').removeAttr('disabled');
+            break;
+    }
 };
 
 BxDolStudioFormsFields.prototype.onCheckRequired = function(oCheckbox) {
