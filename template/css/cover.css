@@ -1,3 +1,10 @@
+.bx-cover-gap {
+    position:relative;
+}
+.bx-media-phone .bx-cover-gap {
+    padding-left: 0;
+    padding-right: 0;
+}
 
 .bx-cover-wrapper {
     position:relative;

@@ -135,6 +135,8 @@
 .bx-media-phone .bx-menu-main-bar-wrapper {
     border-left-width: 0;
     border-right-width: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
 .bx-media-phone .bx-menu-main-bar-wrapper:before {
     border-bottom-left-radius: 0;
