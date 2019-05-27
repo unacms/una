@@ -164,7 +164,7 @@ class BxDolStudioPage extends BxDol
         $oSession = BxDolSession::getInstance();
         $aHistory = $oSession->getValue($sHistorySessionKey);
         if(!empty($aHistory) && isset($aHistory[$this->aPage['name']]))
-            unset($aHistory[$this->aPage['name']]);
+            return;
 
         $aHistory[$this->aPage['name']] = array(
             'name' => $this->aPage['name'],
