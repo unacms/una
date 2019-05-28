@@ -10,25 +10,15 @@
  */
 
 /**
- * View profile entry menu
+ * View profile entry actions menu
  */
-class BxBaseModProfileMenuView extends BxTemplMenuMoreAuto
+class BxBaseModProfileMenuViewActions extends BxBaseModGeneralMenuView
 {
-    protected $_sModule;
-    protected $_oModule;
-
-    protected $_iContentId;
-    protected $_aContentInfo;
-
     protected $_oProfile;
     protected $_aProfileInfo;
 
     public function __construct($aObject, $oTemplate = false)
     {
-        $this->_oModule = BxDolModule::getInstance($this->_sModule);
-        if(!$oTemplate)
-            $oTemplate = $this->_oModule->_oTemplate;
-
         parent::__construct($aObject, $oTemplate);
 
         $CNF = $this->_oModule->_oConfig->CNF;
@@ -44,8 +34,8 @@ class BxBaseModProfileMenuView extends BxTemplMenuMoreAuto
     public function setContentId($iContentId)
     {
         $this->_iContentId = (int)$iContentId;
+        $this->_oProfile = BxDolProfile::getInstanceByContentAndType($this->_iContentId, $this->MODULE);
 
-        $this->_oProfile = BxDolProfile::getInstanceByContentAndType($this->_iContentId, $this->_sModule);
         if(!$this->_oProfile) 
             return;
 
@@ -56,17 +46,14 @@ class BxBaseModProfileMenuView extends BxTemplMenuMoreAuto
         $this->addMarkers(array(
             'profile_id' => $this->_oProfile->id()
         ));
-    }
 
-    /**
-     * Check if menu items is visible with extended checking linked to "allow*" method of particular module
-     * Associated "allow*" method with particular menu item is stored in module config in MENU_ITEM_TO_METHOD array.
-     * @param $a menu item array
-     * @return boolean
-     */
-    protected function _isVisible ($a)
-    {
-        return $this->_oModule->isMenuItemVisible($this->_sObject, $a, $this->_aContentInfo);
+        $aTitles = $this->_oModule->serviceGetConnectionButtonsTitles($this->_oProfile->id());
+        if($aTitles) {
+            $this->addMarkers(array(
+                'title_add_friend' => $aTitles['add'],
+                'title_remove_friend' => $aTitles['remove'],
+            ));
+        }
     }
 }
 

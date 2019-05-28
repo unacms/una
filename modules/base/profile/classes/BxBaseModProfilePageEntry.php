@@ -58,6 +58,8 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
             return;
         }
 
+        BxDolTemplate::getInstance()->addInjection('injection_main_class', 'text', 'bx-base-profile-view');
+
         // select view profile submenu
         $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
         if($oMenuSubmenu)

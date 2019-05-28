@@ -167,7 +167,6 @@ ul.bx-menu-custom-ver {
 }
 
 #bx-menu-main-submenu {
-    display:inline-block;
     line-height:2.5rem;
     vertical-align:top;
 }
@@ -634,6 +633,7 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
 
 
 /*--- Custom Menu with More Auto ---*/
+.bx-menu-main-submenu.bx-menu-more-auto,
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto,
 .bx-menu-custom.bx-menu-hor.bx-menu-submenu-more-auto {
     position: relative;
@@ -644,6 +644,7 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
     -webkit-justify-content: flex-start;
     justify-content: flex-start;
 }
+.bx-menu-main-submenu.bx-menu-more-auto,
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto {
     -webkit-flex-wrap: nowrap;
     flex-wrap: nowrap;
@@ -656,6 +657,7 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
 
     min-width: 18rem;
 }
+.bx-menu-main-submenu.bx-menu-more-auto .bx-menu-item,
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item {
     position: relative;
     display: block;
@@ -663,10 +665,17 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
     padding: 8px;
     padding: 0.5rem;
 }
+.bx-menu-main-submenu.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto > span,
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto > span {
     display: block;
     margin: 0;
 }
+.bx-menu-main-submenu.bx-menu-more-auto .bx-menu-item > a:last-child,
+.bx-menu-main-submenu.bx-menu-more-auto .bx-menu-item > a.bx-btn:last-child,
+.bx-menu-main-submenu.bx-menu-more-auto .bx-menu-item > span:last-child,
+.bx-menu-main-submenu.bx-menu-more-auto .bx-menu-item:last-child > a,
+.bx-menu-main-submenu.bx-menu-more-auto .bx-menu-item:last-child > a.bx-btn,
+.bx-menu-main-submenu.bx-menu-more-auto .bx-menu-item:last-child > span,
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item > a:last-child,
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item > a.bx-btn:last-child,
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item > span:last-child,
@@ -675,9 +684,11 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item:last-child > span {
     margin-right: 0;
 }
+.bx-menu-main-submenu.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto,
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto {
     display: none;
 }
+.bx-menu-main-submenu.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .bx-btn,
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .bx-btn {
     position: relative;
     display: -webkit-flex;
