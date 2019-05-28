@@ -1637,6 +1637,8 @@
 	<string name="_sys_acl_action_post_links_desc"><![CDATA[Post links in text and textarea form fields]]></string>    
 	<string name="_sys_acl_action_set_acl_level"><![CDATA[Set membership level]]></string>
 	<string name="_sys_acl_action_set_acl_level_desc"><![CDATA[Set membership level for profiles]]></string>
+        <string name="_sys_acl_action_set_acl_as_privacy"><![CDATA[Choose membership level as privacy]]></string>
+	<string name="_sys_acl_action_set_acl_as_privacy_desc"><![CDATA[Choose membership level as privacy in add content forms]]></string>
 	<string name="_sys_acl_action_suspended"><![CDATA[You can't '{1}' because your profile was suspended, if you don't know why - try to send message to <a href="mailto:{7}">administrator</a>.]]></string>
 	<string name="_sys_acl_action_unauthenticated"><![CDATA[Not logged in users can't '{1}'.]]></string>
 	<string name="_sys_acl_action_unconfirmed"><![CDATA[You didn't confirm your profile. Please check your email with profile activation link. Unconfirmed members can't <b>{1}</b>.]]></string>
@@ -2556,6 +2558,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_profile_status_pending"><![CDATA[Pending]]></string>
 	<string name="_sys_profile_status_suspended"><![CDATA[Suspended]]></string>
 	<string name="_sys_private"><![CDATA[Private]]></string>
+        <string name="_sys_privacy_groups_acl"><![CDATA[Membership Levels]]></string>
     <string name="_sys_pruning_db"><![CDATA[<h3>Database pruning:</h3>
         <ul>
             <li><b>{0}</b> deleted expired membership levels</li>

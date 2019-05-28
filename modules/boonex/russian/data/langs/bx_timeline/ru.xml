@@ -34,7 +34,7 @@
 	<string name="_bx_timeline_form_post_display_edit"><![CDATA[Изменить сообщение]]></string>
 	<string name="_bx_timeline_form_post_input_sys_owner_id"><![CDATA[ID владельца]]></string>
 	<string name="_bx_timeline_form_post_input_owner_id_own"><![CDATA[Собственный профиль]]></string>
-    <string name="_bx_timeline_form_post_input_owner_id_following_group"><![CDATA[Отслеживаемые {0}]]></string>
+    <string name="_bx_timeline_form_post_input_owner_id_following_group"><![CDATA[{0}]]></string>
 	<string name="_bx_timeline_form_post_input_sys_action"><![CDATA[Действие]]></string>
 	<string name="_bx_timeline_form_post_input_sys_type"><![CDATA[Тип]]></string>
 	<string name="_bx_timeline_form_post_input_sys_text"><![CDATA[Содержимое]]></string>

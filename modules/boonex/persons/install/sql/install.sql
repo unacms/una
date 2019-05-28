@@ -23,8 +23,8 @@ CREATE TABLE IF NOT EXISTS `bx_persons_data` (
   `comments` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
   `featured` int(11) NOT NULL default '0',
-  `allow_view_to` int(11) NOT NULL DEFAULT '3',
-  `allow_post_to` int(11) NOT NULL DEFAULT '3',
+  `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
+  `allow_post_to` varchar(16) NOT NULL DEFAULT '3',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `search_fields` (`fullname`,`description`)
 );

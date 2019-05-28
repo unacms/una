@@ -1637,6 +1637,8 @@
     <string name="_sys_acl_action_post_links_desc"><![CDATA[Публикация ссылок в формах]]></string>
 	<string name="_sys_acl_action_set_acl_level"><![CDATA[Назначить членство]]></string>
 	<string name="_sys_acl_action_set_acl_level_desc"><![CDATA[Назначить членство для профилей]]></string>
+        <string name="_sys_acl_action_set_acl_as_privacy"><![CDATA[Использовать уровень членства в настройках приватности]]></string>
+	<string name="_sys_acl_action_set_acl_as_privacy_desc"><![CDATA[Использовать уровень членства в настройках приватности в формах добавления контента]]></string>
 	<string name="_sys_acl_action_suspended"><![CDATA[Вы не можете '{1}', потому что Ваш профайл заблокирован. Если Вы не знаете, почему, постарайтесь связаться с <a href="mailto:{7}">администратором</a>.]]></string>
 	<string name="_sys_acl_action_unauthenticated"><![CDATA[Не вошедшие пользователи не могут '{1}'.]]></string>
 	<string name="_sys_acl_action_unconfirmed"><![CDATA[Вы не подтвердили свой профиль. Пожалуйста, проверьте эл. сообщение со ссылкой на активацию профиля. Неподтверждённые пользователи не могут <b>{1}</b>.]]></string>
@@ -2555,6 +2557,7 @@
     <string name="_sys_profile_status_pending"><![CDATA[В ожидании]]></string>
     <string name="_sys_profile_status_suspended"><![CDATA[Заблокированный]]></string>
 	<string name="_sys_private"><![CDATA[Приватные]]></string>
+        <string name="_sys_privacy_groups_acl"><![CDATA[Членство]]></string>
     <string name="_sys_pruning_db"><![CDATA[<h3>Очистка базы данных:</h3>
         <ul>
             <li><b>{0}</b> удалено просроченных членств</li>

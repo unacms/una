@@ -47,7 +47,7 @@ class BxTimelinePrivacy extends BxBaseModNotificationsPrivacy
 
         $oProfile = BxDolProfile::getInstance();
         foreach($aCnnGroups as $sCnnGroup => $aCnnGroup) {
-            $aValues[] = array('type' => 'group_header', 'value' => _t('_bx_timeline_form_post_input_owner_id_following_group', _t('_' . $sCnnGroup)));
+            $aValues[] = array('type' => 'group_header', 'value' => mb_strtoupper(_t('_bx_timeline_form_post_input_owner_id_following_group', _t('_' . $sCnnGroup))));
             foreach($aCnnGroup as $iId)
                 $aValues[] = array('key' => -$iId, 'value' => $oProfile->getDisplayName($iId));
             $aValues[] = array('type' => 'group_end');

@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `bx_posts_posts` (
   `comments` int(11) NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
   `featured` int(11) NOT NULL default '0',
-  `allow_view_to` int(11) NOT NULL DEFAULT '3',
+  `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
   `disable_comments` tinyint(4) NOT NULL DEFAULT '0',
   `status` enum('active','awaiting','hidden') NOT NULL DEFAULT 'active',
   `status_admin` enum('active','hidden') NOT NULL DEFAULT 'active',

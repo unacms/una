@@ -134,7 +134,9 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         $aValues = $oPrivacy->getGroups();
 
         $aValues = $oPrivacy->addDynamicGroups($aValues, $iOwnerId, $aParams);
-        
+
+        $aValues = $oPrivacy->addAclGroups($aValues, $iOwnerId, $aParams);
+
         $aValues = $oPrivacy->addSpaces($aValues, $iOwnerId, $aParams);
 
         $sName = $oPrivacy->convertActionToField($sAction);
@@ -165,6 +167,20 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
     {
         if (isset($aParams['dynamic_groups']) && is_array($aParams['dynamic_groups']))
             $aValues = array_merge($aValues, $aParams['dynamic_groups']);
+
+        return $aValues;
+    }
+
+    public function addAclGroups($aValues, $iOwnerId, $aParams)
+    {
+        $aLevels = BxDolAcl::getInstance()->getMemberships(false, true, true, true);
+        if(empty($aLevels) || !is_array($aLevels))
+            return $aValues;
+
+        $aValues[] = array('type' => 'group_header', 'value' => mb_strtoupper(_t('_sys_privacy_groups_acl')));
+        foreach($aLevels as $iId => $sTitle)
+            $aValues[] = array('key' => 'ml' . $iId, 'value' => $sTitle);
+        $aValues[] = array('type' => 'group_end');
 
         return $aValues;
     }
@@ -323,7 +339,12 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         if(isAdmin() || $iViewerId == $aObject['owner_id'])
             return true;
 
-        if ($aObject['group_id'] < 0)
+        if(strncmp($aObject['group_id'], 'ml', 2) === 0) {
+            $iLevel = (int)substr($aObject['group_id'], 2);
+            return (bool)BxDolAcl::getInstance()->isMemberLevelInSet(array($iLevel), $iViewerId);
+        }
+
+        if($aObject['group_id'] < 0)
             return $this->checkSpace($aObject, $iViewerId);
 
         $aGroup = $this->_oDb->getGroupsBy(array('type' => 'id', 'id' => $aObject['group_id']));

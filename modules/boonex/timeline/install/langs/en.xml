@@ -34,7 +34,7 @@
 	<string name="_bx_timeline_form_post_display_edit"><![CDATA[Edit Post]]></string>
 	<string name="_bx_timeline_form_post_input_sys_owner_id"><![CDATA[Owner ID]]></string>
 	<string name="_bx_timeline_form_post_input_owner_id_own"><![CDATA[Your profile]]></string>
-	<string name="_bx_timeline_form_post_input_owner_id_following_group"><![CDATA[Following {0}]]></string>
+	<string name="_bx_timeline_form_post_input_owner_id_following_group"><![CDATA[{0}]]></string>
 	<string name="_bx_timeline_form_post_input_sys_action"><![CDATA[Action]]></string>
 	<string name="_bx_timeline_form_post_input_sys_type"><![CDATA[Type]]></string>
 	<string name="_bx_timeline_form_post_input_sys_text"><![CDATA[Content]]></string>

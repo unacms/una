@@ -697,6 +697,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionSetAclLevel = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'set acl as privacy', NULL, '_sys_acl_action_set_acl_as_privacy', '_sys_acl_action_set_acl_as_privacy_desc', 0, 3);
+SET @iIdActionSetAclAsPrivacy = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('system', 'chart view', NULL, '_sys_acl_action_chart_view', '_sys_acl_action_chart_view_desc', 0, 3);
 SET @iIdActionChartView = LAST_INSERT_ID();
 
@@ -833,6 +837,9 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 -- set acl level
 (@iAdministrator, @iIdActionSetAclLevel),
+
+-- set acl as privacy
+(@iAdministrator, @iIdActionSetAclAsPrivacy),
 
 -- view charts
 (@iAdministrator, @iIdActionChartView),
