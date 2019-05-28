@@ -3,21 +3,20 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defdroup    Spaces Spaces
+ * @defdroup    Channels Channels
  * @indroup     UnaModules
  *
  * @{
  */
 
 /**
- * 'View space' menu.
+ * 'View channel' actions menu.
  */
-class BxSpacesMenuView extends BxBaseModGroupsMenuView
+class BxCnlMenuViewActions extends BxBaseModGroupsMenuViewActions
 {
     public function __construct($aObject, $oTemplate = false)
     {
-        $this->_sModule = 'bx_spaces';
-
+        $this->MODULE = 'bx_channels';
         parent::__construct($aObject, $oTemplate);
     }
 }

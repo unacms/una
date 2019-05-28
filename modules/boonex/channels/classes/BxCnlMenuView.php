@@ -14,10 +14,10 @@
  */
 class BxCnlMenuView extends BxBaseModGroupsMenuView
 {
-
     public function __construct($aObject, $oTemplate = false)
     {
-        $this->MODULE = 'bx_channels';
+        $this->_sModule = 'bx_channels';
+
         parent::__construct($aObject, $oTemplate);
     }
 }

@@ -154,6 +154,8 @@
     <string name="_bx_channels_menu_item_title_view_profile_info"><![CDATA[Инфо]]></string>
     <string name="_bx_channels_menu_item_title_system_view_profile_view"><![CDATA[Канал]]></string>
     <string name="_bx_channels_menu_item_title_view_profile_view"><![CDATA[Канал]]></string>
+    <string name="_bx_channels_menu_item_title_system_view_profile_more_auto"><![CDATA[Еще]]></string>
+    <string name="_bx_channels_menu_item_title_view_profile_more_auto"><![CDATA[Еще]]></string>
     <string name="_bx_channels_menu_item_title_system_invite"><![CDATA[Пригласить]]></string>
     <string name="_bx_channels_menu_item_title_invite"><![CDATA[Пригласить]]></string>
     

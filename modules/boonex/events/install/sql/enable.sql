@@ -221,7 +221,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 -- MENU: view actions
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_events_view_actions', '_bx_events_menu_title_view_profile_actions', 'bx_events_view_actions', 'bx_events', 9, 0, 1, 'BxEventsMenuView', 'modules/boonex/events/classes/BxEventsMenuView.php');
+('bx_events_view_actions', '_bx_events_menu_title_view_profile_actions', 'bx_events_view_actions', 'bx_events', 9, 0, 1, 'BxEventsMenuViewActions', 'modules/boonex/events/classes/BxEventsMenuViewActions.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_events_view_actions', 'bx_events', '_bx_events_menu_set_title_view_profile_actions', 0);
@@ -234,7 +234,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: view actions more
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_events_view_actions_more', '_bx_events_menu_title_view_profile_actions_more', 'bx_events_view_actions_more', 'bx_events', 6, 0, 1, 'BxEventsMenuView', 'modules/boonex/events/classes/BxEventsMenuView.php');
+('bx_events_view_actions_more', '_bx_events_menu_title_view_profile_actions_more', 'bx_events_view_actions_more', 'bx_events', 6, 0, 1, 'BxEventsMenuViewActions', 'modules/boonex/events/classes/BxEventsMenuViewActions.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_events_view_actions_more', 'bx_events', '_bx_events_menu_set_title_view_profile_actions_more', 0);
@@ -313,11 +313,12 @@ INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `templat
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_events_view_submenu', 'bx_events', '_bx_events_menu_set_title_view_profile_submenu', 0);
 
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_events_view_submenu', 'bx_events', 'view-event-profile', '_bx_events_menu_item_title_system_view_profile_view', '_bx_events_menu_item_title_view_profile_view', 'page.php?i=view-event-profile&id={content_id}', '', '', 'calendar col-red2', '', 2147483647, 1, 0, 1),
-('bx_events_view_submenu', 'bx_events', 'event-profile-info', '_bx_events_menu_item_title_system_view_profile_info', '_bx_events_menu_item_title_view_profile_info', 'page.php?i=event-profile-info&id={content_id}', '', '', 'info-circle col-gray', '', 2147483647, 1, 0, 2),
-('bx_events_view_submenu', 'bx_events', 'event-profile-comments', '_bx_events_menu_item_title_system_view_profile_comments', '_bx_events_menu_item_title_view_profile_comments', 'page.php?i=event-profile-comments&id={content_id}', '', '', '', '', 2147483647, 0, 0, 3),
-('bx_events_view_submenu', 'bx_events', 'event-fans', '_bx_events_menu_item_title_system_view_fans', '_bx_events_menu_item_title_view_fans', 'page.php?i=event-fans&profile_id={profile_id}', '', '', 'calendar col-blue3', '', 2147483647, 1, 0, 4);
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('bx_events_view_submenu', 'bx_events', 'view-event-profile', '_bx_events_menu_item_title_system_view_profile_view', '_bx_events_menu_item_title_view_profile_view', 'page.php?i=view-event-profile&id={content_id}', '', '', 'calendar col-red2', '', '', 0, 2147483647, 1, 0, 1),
+('bx_events_view_submenu', 'bx_events', 'event-profile-info', '_bx_events_menu_item_title_system_view_profile_info', '_bx_events_menu_item_title_view_profile_info', 'page.php?i=event-profile-info&id={content_id}', '', '', 'info-circle col-gray', '', '', 0, 2147483647, 1, 0, 2),
+('bx_events_view_submenu', 'bx_events', 'event-profile-comments', '_bx_events_menu_item_title_system_view_profile_comments', '_bx_events_menu_item_title_view_profile_comments', 'page.php?i=event-profile-comments&id={content_id}', '', '', '', '', '', 0, 2147483647, 0, 0, 3),
+('bx_events_view_submenu', 'bx_events', 'event-fans', '_bx_events_menu_item_title_system_view_fans', '_bx_events_menu_item_title_view_fans', 'page.php?i=event-fans&profile_id={profile_id}', '', '', 'calendar col-blue3', '', '', 0, 2147483647, 1, 0, 4),
+('bx_events_view_submenu', 'bx_events', 'more-auto', '_bx_events_menu_item_title_system_view_profile_more_auto', '_bx_events_menu_item_title_view_profile_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', '', 0, 2147483647, 1, 0, 9999);
 
 -- MENU: custom menu for snippet meta info
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 

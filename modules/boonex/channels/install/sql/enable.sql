@@ -166,7 +166,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 -- MENU: view actions
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_channels_view_actions', '_bx_channels_menu_title_view_profile_actions', 'bx_channels_view_actions', 'bx_channels', 9, 0, 1, 'BxCnlMenuView', 'modules/boonex/channels/classes/BxCnlMenuView.php');
+('bx_channels_view_actions', '_bx_channels_menu_title_view_profile_actions', 'bx_channels_view_actions', 'bx_channels', 9, 0, 1, 'BxCnlMenuViewActions', 'modules/boonex/channels/classes/BxCnlMenuViewActions.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_channels_view_actions', 'bx_channels', '_bx_channels_menu_set_title_view_profile_actions', 0);
@@ -178,7 +178,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: view actions more
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_channels_view_actions_more', '_bx_channels_menu_title_view_profile_actions_more', 'bx_channels_view_actions_more', 'bx_channels', 6, 0, 1, 'BxCnlMenuView', 'modules/boonex/channels/classes/BxCnlMenuView.php');
+('bx_channels_view_actions_more', '_bx_channels_menu_title_view_profile_actions_more', 'bx_channels_view_actions_more', 'bx_channels', 6, 0, 1, 'BxCnlMenuViewActions', 'modules/boonex/channels/classes/BxCnlMenuViewActions.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_channels_view_actions_more', 'bx_channels', '_bx_channels_menu_set_title_view_profile_actions_more', 0);

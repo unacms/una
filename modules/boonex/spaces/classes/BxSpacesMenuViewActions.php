@@ -10,14 +10,13 @@
  */
 
 /**
- * 'View space' menu.
+ * 'View space' actions menu.
  */
-class BxSpacesMenuView extends BxBaseModGroupsMenuView
+class BxSpacesMenuViewActions extends BxBaseModGroupsMenuViewActions
 {
     public function __construct($aObject, $oTemplate = false)
     {
-        $this->_sModule = 'bx_spaces';
-
+        $this->MODULE = 'bx_spaces';
         parent::__construct($aObject, $oTemplate);
     }
 }

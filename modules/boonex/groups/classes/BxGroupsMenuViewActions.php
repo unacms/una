@@ -10,14 +10,13 @@
  */
 
 /**
- * 'View group' menu.
+ * 'View group' actions menu.
  */
-class BxGroupsMenuView extends BxBaseModGroupsMenuView
+class BxGroupsMenuViewActions extends BxBaseModGroupsMenuViewActions
 {
     public function __construct($aObject, $oTemplate = false)
     {
-        $this->_sModule = 'bx_groups';
-
+        $this->MODULE = 'bx_groups';
         parent::__construct($aObject, $oTemplate);
     }
 }
