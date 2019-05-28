@@ -211,6 +211,8 @@
     <string name="_bx_persons_menu_item_title_view_profile_info"><![CDATA[Инфо]]></string>
     <string name="_bx_persons_menu_item_title_system_view_profile_view"><![CDATA[Профиль]]></string>
     <string name="_bx_persons_menu_item_title_view_profile_view"><![CDATA[Профиль]]></string>
+    <string name="_bx_persons_menu_item_title_system_view_profile_more_auto"><![CDATA[Еще]]></string>
+    <string name="_bx_persons_menu_item_title_view_profile_more_auto"><![CDATA[Еще]]></string>
     <string name="_bx_persons_menu_item_title_system_befriend"><![CDATA[Добавить друга]]></string>
     <string name="_bx_persons_menu_item_title_befriend"><![CDATA[Добавить друга]]></string>
     <string name="_bx_persons_menu_item_title_befriend_sent"><![CDATA[Добавить друга (запрошено)]]></string>
