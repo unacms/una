@@ -3,21 +3,21 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    Persons Persons
+ * @defgroup    Organizations Organizations
  * @ingroup     UnaModules
  *
  * @{
  */
 
+
 /**
- * 'View person' menu.
+ * 'View organization' actions menu.
  */
-class BxPersonsMenuView extends BxBaseModProfileMenuView
+class BxOrgsMenuViewActions extends BxBaseModGroupsMenuViewActions
 {
     public function __construct($aObject, $oTemplate = false)
     {
-        $this->_sModule = 'bx_persons';
-
+        $this->MODULE = 'bx_organizations';
         parent::__construct($aObject, $oTemplate);
     }
 }

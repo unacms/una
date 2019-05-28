@@ -14,10 +14,10 @@
  */
 class BxOrgsMenuView extends BxBaseModGroupsMenuView
 {
-
     public function __construct($aObject, $oTemplate = false)
     {
-        $this->MODULE = 'bx_organizations';
+        $this->_sModule = 'bx_organizations';
+
         parent::__construct($aObject, $oTemplate);
     }
 }

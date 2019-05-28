@@ -12,12 +12,12 @@
 /**
  * 'View person' menu.
  */
-class BxPersonsMenuView extends BxBaseModProfileMenuView
+class BxPersonsMenuViewActions extends BxBaseModProfileMenuViewActions
 {
+
     public function __construct($aObject, $oTemplate = false)
     {
-        $this->_sModule = 'bx_persons';
-
+        $this->MODULE = 'bx_persons';
         parent::__construct($aObject, $oTemplate);
     }
 }

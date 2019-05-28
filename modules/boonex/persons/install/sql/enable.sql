@@ -223,7 +223,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 -- MENU: view actions
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_persons_view_actions', '_bx_persons_menu_title_view_profile_actions', 'bx_persons_view_actions', 'bx_persons', 9, 0, 1, 'BxPersonsMenuView', 'modules/boonex/persons/classes/BxPersonsMenuView.php');
+('bx_persons_view_actions', '_bx_persons_menu_title_view_profile_actions', 'bx_persons_view_actions', 'bx_persons', 9, 0, 1, 'BxPersonsMenuViewActions', 'modules/boonex/persons/classes/BxPersonsMenuViewActions.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_persons_view_actions', 'bx_persons', '_bx_persons_menu_set_title_view_profile_actions', 0);
@@ -238,7 +238,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: view actions more
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_persons_view_actions_more', '_bx_persons_menu_title_view_profile_actions_more', 'bx_persons_view_actions_more', 'bx_persons', 6, 0, 1, 'BxPersonsMenuView', 'modules/boonex/persons/classes/BxPersonsMenuView.php');
+('bx_persons_view_actions_more', '_bx_persons_menu_title_view_profile_actions_more', 'bx_persons_view_actions_more', 'bx_persons', 6, 0, 1, 'BxPersonsMenuViewActions', 'modules/boonex/persons/classes/BxPersonsMenuViewActions.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_persons_view_actions_more', 'bx_persons', '_bx_persons_menu_set_title_view_profile_actions_more', 0);
@@ -307,13 +307,14 @@ INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `templat
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_persons_view_submenu', 'bx_persons', '_bx_persons_menu_set_title_view_profile_submenu', 0);
 
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_persons_view_submenu', 'bx_persons', 'view-persons-profile', '_bx_persons_menu_item_title_system_view_profile_view', '_bx_persons_menu_item_title_view_profile_view', 'page.php?i=view-persons-profile&id={content_id}', '', '', 'user col-blue3', '', 2147483647, 1, 0, 1),
-('bx_persons_view_submenu', 'bx_persons', 'persons-profile-info', '_bx_persons_menu_item_title_system_view_profile_info', '_bx_persons_menu_item_title_view_profile_info', 'page.php?i=persons-profile-info&id={content_id}', '', '', 'info-circle col-gray', '', 2147483647, 1, 0, 2),
-('bx_persons_view_submenu', 'bx_persons', 'persons-profile-friends', '_bx_persons_menu_item_title_system_view_profile_friends', '_bx_persons_menu_item_title_view_profile_friends', 'page.php?i=persons-profile-friends&profile_id={profile_id}', '', '', 'users col-blue3', '', 2147483647, 1, 0, 3),
-('bx_persons_view_submenu', 'bx_persons', 'persons-profile-relations', '_bx_persons_menu_item_title_system_view_profile_relations', '_bx_persons_menu_item_title_view_profile_relations', 'page.php?i=persons-profile-relations&profile_id={profile_id}', '', '', 'sync col-blue3', '', 2147483647, 1, 0, 4),
-('bx_persons_view_submenu', 'bx_persons', 'persons-profile-subscriptions', '_bx_persons_menu_item_title_system_view_profile_subscriptions', '_bx_persons_menu_item_title_view_profile_subscriptions', 'page.php?i=persons-profile-subscriptions&profile_id={profile_id}', '', '', 'check col-blue3', '', 2147483647, 1, 0, 5),
-('bx_persons_view_submenu', 'bx_persons', 'persons-profile-comments', '_bx_persons_menu_item_title_system_view_profile_comments', '_bx_persons_menu_item_title_view_profile_comments', 'page.php?i=persons-profile-comments&id={content_id}', '', '', '', '', 2147483647, 0, 0, 6);
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
+('bx_persons_view_submenu', 'bx_persons', 'view-persons-profile', '_bx_persons_menu_item_title_system_view_profile_view', '_bx_persons_menu_item_title_view_profile_view', 'page.php?i=view-persons-profile&id={content_id}', '', '', 'user col-blue3', '', '', 0, 2147483647, 1, 0, 1),
+('bx_persons_view_submenu', 'bx_persons', 'persons-profile-info', '_bx_persons_menu_item_title_system_view_profile_info', '_bx_persons_menu_item_title_view_profile_info', 'page.php?i=persons-profile-info&id={content_id}', '', '', 'info-circle col-gray', '', '', 0, 2147483647, 1, 0, 2),
+('bx_persons_view_submenu', 'bx_persons', 'persons-profile-friends', '_bx_persons_menu_item_title_system_view_profile_friends', '_bx_persons_menu_item_title_view_profile_friends', 'page.php?i=persons-profile-friends&profile_id={profile_id}', '', '', 'users col-blue3', '', '', 0, 2147483647, 1, 0, 3),
+('bx_persons_view_submenu', 'bx_persons', 'persons-profile-relations', '_bx_persons_menu_item_title_system_view_profile_relations', '_bx_persons_menu_item_title_view_profile_relations', 'page.php?i=persons-profile-relations&profile_id={profile_id}', '', '', 'sync col-blue3', '', '', 0, 2147483647, 1, 0, 4),
+('bx_persons_view_submenu', 'bx_persons', 'persons-profile-subscriptions', '_bx_persons_menu_item_title_system_view_profile_subscriptions', '_bx_persons_menu_item_title_view_profile_subscriptions', 'page.php?i=persons-profile-subscriptions&profile_id={profile_id}', '', '', 'check col-blue3', '', '', 0, 2147483647, 1, 0, 5),
+('bx_persons_view_submenu', 'bx_persons', 'persons-profile-comments', '_bx_persons_menu_item_title_system_view_profile_comments', '_bx_persons_menu_item_title_view_profile_comments', 'page.php?i=persons-profile-comments&id={content_id}', '', '', '', '', '', 0, 2147483647, 0, 0, 6),
+('bx_persons_view_submenu', 'bx_persons', 'more-auto', '_bx_persons_menu_item_title_system_view_profile_more_auto', '_bx_persons_menu_item_title_view_profile_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', '', 0, 2147483647, 1, 0, 9999);
 
 -- MENU: custom menu for snippet meta info
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
