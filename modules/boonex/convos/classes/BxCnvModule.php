@@ -298,7 +298,7 @@ class BxCnvModule extends BxBaseModTextModule
                     'PageUrl' => $oCmts->getItemUrl($iCommentId),
                     'PageTitle' => $oCmts->getObjectTitle(),
                     'Message' => $sCommentText,
-                ), BX_EMAIL_NOTIFY);
+                ), BX_EMAIL_NOTIFY, true);
             }
         }
 
