@@ -2114,6 +2114,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function _includeFiles($sType, &$aFiles)
     {
+        $iRev = (int)getParam('sys_revision');
         $sUpcaseType = ucfirst($sType);
 
         $sMethodWrap = '_wrapInTag' . $sUpcaseType;
@@ -2124,7 +2125,13 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             if($this->_bLessEnable && method_exists($this, $sMethodLess))
                 $aFile = $this->$sMethodLess($aFile);
 
-            $sResult .= $this->$sMethodWrap($aFile['url']);
+            $sFileUrl = $aFile['url'];
+            if(!$this->{'_b' . $sUpcaseType . 'Cache'})
+                $sFileUrl = bx_append_url_params($sFileUrl, array(
+                    'rev' => $iRev
+                ));
+
+            $sResult .= $this->$sMethodWrap($sFileUrl);
         }
 
         return $sResult;
