@@ -297,7 +297,8 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_form_input_shadow'), '_bx_protean_stg_cpt_option_form_input_shadow', 'inset 0px 0px 2px 1px rgba(0,0,0,0.15)', 'digit', '', '', '', 7),
 (@iCategoryId, CONCAT(@sName, '_form_input_font_family'), '_bx_protean_stg_cpt_option_form_input_font_family', 'Arial, sans-serif', 'digit', '', '', '', 8),
 (@iCategoryId, CONCAT(@sName, '_form_input_font_size'), '_bx_protean_stg_cpt_option_form_input_font_size', '1rem', 'digit', '', '', '', 9),
-(@iCategoryId, CONCAT(@sName, '_form_input_font_color'), '_bx_protean_stg_cpt_option_form_input_font_color', 'rgba(20, 30, 40, 1)', 'rgba', '', '', '', 10);
+(@iCategoryId, CONCAT(@sName, '_form_input_font_color'), '_bx_protean_stg_cpt_option_form_input_font_color', 'rgba(20, 30, 40, 1)', 'rgba', '', '', '', 10),
+(@iCategoryId, CONCAT(@sName, '_form_input_editor_skin'), '_bx_protean_stg_cpt_option_form_input_editor_skin', '', 'select', 'a:2:{s:6:"module";s:10:"bx_protean";s:6:"method";s:34:"get_options_form_input_editor_skin";}', '', '', 11);
 
 
 -- SETTINGS: Protean template Styles Large Buttons
@@ -770,6 +771,7 @@ INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 ('bx_protean_form_input_font_size', @iMixId, '1rem'),
 ('bx_protean_form_input_height', @iMixId, '2.5rem'),
 ('bx_protean_form_input_shadow', @iMixId, 'inset 0px 0px 2px 1px rgba(0,0,0,0.15);'),
+('bx_protean_form_input_editor_skin', @iMixId, 'gray'),
 ('bx_protean_general_item_bg_color_active', @iMixId, 'rgba(243, 244, 245, 1)'),
 ('bx_protean_general_item_bg_color_disabled', @iMixId, 'rgba(233, 234, 235, 1)'),
 ('bx_protean_general_item_bg_color_hover', @iMixId, 'rgba(243, 244, 245, 0.8)'),
@@ -1022,6 +1024,7 @@ INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 ('bx_protean_form_input_font_size', @iMixId, '1rem'),
 ('bx_protean_form_input_height', @iMixId, '2.5rem'),
 ('bx_protean_form_input_shadow', @iMixId, 'none'),
+('bx_protean_form_input_editor_skin', @iMixId, 'dark'),
 ('bx_protean_general_item_bg_color_active', @iMixId, 'rgba(34, 51, 68, 1)'),
 ('bx_protean_general_item_bg_color_disabled', @iMixId, 'rgba(233, 234, 235, 1)'),
 ('bx_protean_general_item_bg_color_hover', @iMixId, 'rgba(51, 68, 85, 1)'),

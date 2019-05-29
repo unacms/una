@@ -214,6 +214,9 @@
 	<string name="_bx_protean_stg_cpt_option_form_input_font_family"><![CDATA[Input font stack]]></string>
 	<string name="_bx_protean_stg_cpt_option_form_input_font_size"><![CDATA[Input font size]]></string>
 	<string name="_bx_protean_stg_cpt_option_form_input_font_color"><![CDATA[Input font color]]></string>
+        <string name="_bx_protean_stg_cpt_option_form_input_editor_skin"><![CDATA[Editor skin]]></string>
+        <string name="_bx_protean_stg_cpt_option_form_input_editor_skin_select"><![CDATA[Select skin...]]></string>
+        <string name="_bx_protean_stg_cpt_option_form_input_editor_skin_unavailable"><![CDATA[Skins are unavailable]]></string>
 
 	<string name="_bx_protean_stg_cpt_category_styles_large_button"><![CDATA[Large Buttons]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_lg_height"><![CDATA[Height]]></string>

@@ -65,6 +65,9 @@ class BxDolEditor extends BxDolFactory implements iBxDolFactoryObject
     protected $_sButtonsCustom = false;
     protected $_sPluginsCustom = false;
 
+    protected $_sSkin;
+    protected $_aSkins;
+
     /**
      * Constructor
      * @param $aObject array of editor options
@@ -75,6 +78,9 @@ class BxDolEditor extends BxDolFactory implements iBxDolFactoryObject
 
         $this->_sObject = $aObject['object'];
         $this->_aObject = $aObject;
+        
+        $this->_sSkin = !empty($aObject['skin']) ? $aObject['skin']: '';
+        $this->_aSkins = array();
     }
 
     /**
@@ -144,6 +150,29 @@ class BxDolEditor extends BxDolFactory implements iBxDolFactoryObject
     public function getWidth ($iViewMode)
     {
         // override this function in particular editor class
+    }
+
+    /**
+     * Get a list of available skins.
+     */
+    public function getSkins($bFullInfo = false)
+    {
+        if($bFullInfo)
+            return $this->_aSkins;
+
+        $aResults = array();
+        foreach($this->_aSkins as $aSkin)
+            $aResults[] = array('key' => $aSkin['name'], 'value' => _t($aSkin['title']));
+
+        return $aResults;
+    }
+
+    public function setSkin($sSkin)
+    {
+        if(!in_array($sSkin, array_keys($this->_aSkins)))
+            return;
+
+        $this->_sSkin = $sSkin;
     }
 
     /**

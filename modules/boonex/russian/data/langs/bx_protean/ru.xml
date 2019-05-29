@@ -214,6 +214,9 @@
 	<string name="_bx_protean_stg_cpt_option_form_input_font_family"><![CDATA[Набор шрифтов поля]]></string>
 	<string name="_bx_protean_stg_cpt_option_form_input_font_size"><![CDATA[Размер шрифта поля]]></string>
 	<string name="_bx_protean_stg_cpt_option_form_input_font_color"><![CDATA[Цвет шрифта поля]]></string>
+        <string name="_bx_protean_stg_cpt_option_form_input_editor_skin"><![CDATA[Тема редактора]]></string>
+        <string name="_bx_protean_stg_cpt_option_form_input_editor_skin_select"><![CDATA[Выбрать тему...]]></string>
+        <string name="_bx_protean_stg_cpt_option_form_input_editor_skin_unavailable"><![CDATA[Темы не доступны]]></string>
 
 	<string name="_bx_protean_stg_cpt_category_styles_large_button"><![CDATA[Большие кнопки]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_lg_height"><![CDATA[Высота]]></string>

@@ -18,7 +18,26 @@ class BxProteanModule extends BxBaseModTemplateModule
         parent::__construct($aModule);
     }
 
-	function serviceIncludeCssJs()
+    public function serviceGetOptionsFormInputEditorSkin()
+    {
+        $aResultError = array(
+            array('key' => '', 'value' => _t('_bx_protean_stg_cpt_option_form_input_editor_skin_unavailable'))
+        );
+
+        $oEditor = BxDolEditor::getObjectInstance();
+        if(!$oEditor)
+            return $aResultError;
+
+        $aSkins = $oEditor->getSkins();
+        if(empty($aSkins) || !is_array($aSkins))
+            return $aResultError;
+
+        return array_merge(array(
+            array('key' => '', 'value' => _t('_bx_protean_stg_cpt_option_form_input_editor_skin_select'))
+        ), $aSkins);
+    }
+
+    function serviceIncludeCssJs()
     {
         if(BxDolTemplate::getInstance()->getCode() != $this->_oConfig->getUri())
             return '';

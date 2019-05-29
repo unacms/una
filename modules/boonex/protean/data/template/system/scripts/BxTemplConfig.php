@@ -348,8 +348,11 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig']['bx-viewport-font-tablet'] = $this->_setValue($sName . '_vpt_font_size_scale', '100%');
         $this->_aConfig['aLessConfig']['bx-viewport-font-mobile'] = $this->_setValue($sName . '_vpm_font_size_scale', '85%');
 
-        if($this->_isModule)
+        if($this->_isModule) {
             $this->setPageWidth('bx_protean_page_width');
+
+            BxDolEditor::getObjectInstance()->setSkin($this->_setValue($sName . '_form_input_editor_skin', ''));
+        }
     }
 }
 

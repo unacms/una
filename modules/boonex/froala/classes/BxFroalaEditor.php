@@ -96,8 +96,14 @@ EOS;
             $this->_oTemplate = $oTemplate;
         else
             $this->_oTemplate = BxDolTemplate::getInstance();
+
+        $this->_aSkins = array(
+            'dark' => array('name' => 'dark', 'title' => '_bx_froala_txt_skin_dark'),
+            'gray' => array('name' => 'gray', 'title' => '_bx_froala_txt_skin_gray'),
+            'royal' => array('name' => 'royal', 'title' => '_bx_froala_txt_skin_royal')
+        );
     }
-    
+
     /**
      * Attach editor to HTML element, in most cases - textarea.
      * @param $sSelector - jQuery selector to attach editor to.
@@ -142,7 +148,7 @@ EOS;
             'bx_var_custom_conf' => $this->_sConfCustom,
             'bx_var_plugins_path' => bx_js_string(BX_DOL_URL_PLUGINS_PUBLIC, BX_ESCAPE_STR_APOS),
             'bx_var_css_path' => bx_js_string($aCss['url'], BX_ESCAPE_STR_APOS),
-            'bx_var_skin' => bx_js_string($this->_aObject['skin'], BX_ESCAPE_STR_APOS),
+            'bx_var_skin' => bx_js_string($this->_sSkin, BX_ESCAPE_STR_APOS),
             'bx_var_lang' => bx_js_string($sLang, BX_ESCAPE_STR_APOS),
             'bx_var_selector' => bx_js_string($sSelector, BX_ESCAPE_STR_APOS),
             'bx_url_root' => bx_js_string(BX_DOL_URL_ROOT, BX_ESCAPE_STR_APOS),
@@ -226,7 +232,7 @@ EOS;
             BX_DIRECTORY_PATH_MODULES . 'boonex/froala/template/css/|editor.css',
             BX_DIRECTORY_PATH_MODULES . 'boonex/froala/plugins/froala/css/|froala_editor.pkgd.min.css', 
             BX_DIRECTORY_PATH_MODULES . 'boonex/froala/plugins/froala/css/|froala_style.min.css',
-            BX_DIRECTORY_PATH_MODULES . 'boonex/froala/plugins/froala/css/themes/|' . $this->_aObject['skin'] . '.min.css',
+            BX_DIRECTORY_PATH_MODULES . 'boonex/froala/plugins/froala/css/themes/|' . $this->_sSkin . '.min.css',
         );
 
         $aPlugins = $this->_getPlugins(true);
