@@ -4440,7 +4440,7 @@ CREATE TABLE `sys_labels` (
   `parent` int(11) NOT NULL DEFAULT 0,
   `level` int(11) NOT NULL DEFAULT 0,
   `order` int(11) NOT NULL DEFAULT 0,
-  `value` varchar(255) NOT NULL,
+  `value` varchar(128) NOT NULL,
   PRIMARY KEY (id),
   UNIQUE KEY `value` (`value`)
 );
