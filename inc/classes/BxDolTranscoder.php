@@ -406,80 +406,92 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
     public function transcode ($mixedHandler, $iProfileId = 0)
     {
         $sExtChange = false;
+        $bRet = true;
 
         $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_PROCESSING, '', gethostname());
 
-        // create tmp file locally
-        $sSuffix = $this->_sQueueStorage ? 'Queue' : $this->_aObject['source_type'];
-        $sMethodStoreFile = 'storeFileLocally_' . $sSuffix;
-        $sTmpFile = $this->$sMethodStoreFile($mixedHandler);
-        if (!$sTmpFile) {
-            $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_FAILED, "store local tmp file failed ($sMethodStoreFile)");
-            return false;
-        }
+        do {
 
-        // appply filters to tmp file
-        $this->initFilters ();
-        foreach ($this->_aObject['filters'] as $aParams) {
-            $this->clearLog();
-            $sMethodFilter = 'applyFilter_' . $aParams['filter'];
-            if (!method_exists($this, $sMethodFilter))
-                continue;
-            if (!$this->$sMethodFilter($sTmpFile, $aParams['filter_params'])) {
-                unlink($sTmpFile);
-                $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_FAILED, "filter failed: $sMethodFilter\n" . $this->getLog());
-                return false;
+            // create tmp file locally
+            $sSuffix = $this->_sQueueStorage ? 'Queue' : $this->_aObject['source_type'];
+            $sMethodStoreFile = 'storeFileLocally_' . $sSuffix;
+            $sTmpFile = $this->$sMethodStoreFile($mixedHandler);
+            if (!$sTmpFile) {
+                $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_FAILED, "store local tmp file failed ($sMethodStoreFile)");
+                $bRet = false;
+                break;
             }
 
-            if (!empty($aParams['filter_params']['force_type'])) {
-                switch ($aParams['filter_params']['force_type']) {
-                    case 'jpeg':
-                    case 'jpg':
-                        $sExtChange = 'jpg';
-                        break;
-                    default:
-                        $sExtChange = $aParams['filter_params']['force_type'];
+            // appply filters to tmp file
+            $this->initFilters ();
+            foreach ($this->_aObject['filters'] as $aParams) {
+                $this->clearLog();
+                $sMethodFilter = 'applyFilter_' . $aParams['filter'];
+                if (!method_exists($this, $sMethodFilter))
+                    continue;
+                if (!$this->$sMethodFilter($sTmpFile, $aParams['filter_params'])) {
+                    unlink($sTmpFile);
+                    $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_FAILED, "filter failed: $sMethodFilter\n" . $this->getLog());
+                    $bRet = false;
+                    break 2;
                 }
-            }
 
-            if ($sExtChange) {
-                $iDotPos = strrpos($sTmpFile, '.');
-                $sExtOld = false === $iDotPos ? '' : substr($sTmpFile, $iDotPos+1);
-                if ($sExtOld != $sExtChange) {
-                    $sTmpFileOld = $sTmpFile;
-                    $sTmpFile = false === $iDotPos ? $sTmpFile . '.' . $sExtChange : substr_replace($sTmpFile, $sExtChange, $iDotPos+1, strlen($sExtOld));
-                    if (!rename($sTmpFileOld, $sTmpFile)) {
-                        @unlink($sTmpFileOld);
-                        $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_FAILED, "change file extension failed: $sTmpFileOld => $sTmpFile");
-                        return false;
+                if (!empty($aParams['filter_params']['force_type'])) {
+                    switch ($aParams['filter_params']['force_type']) {
+                        case 'jpeg':
+                        case 'jpg':
+                            $sExtChange = 'jpg';
+                            break;
+                        default:
+                            $sExtChange = $aParams['filter_params']['force_type'];
+                    }
+                }
+
+                if ($sExtChange) {
+                    $iDotPos = strrpos($sTmpFile, '.');
+                    $sExtOld = false === $iDotPos ? '' : substr($sTmpFile, $iDotPos+1);
+                    if ($sExtOld != $sExtChange) {
+                        $sTmpFileOld = $sTmpFile;
+                        $sTmpFile = false === $iDotPos ? $sTmpFile . '.' . $sExtChange : substr_replace($sTmpFile, $sExtChange, $iDotPos+1, strlen($sExtOld));
+                        if (!rename($sTmpFileOld, $sTmpFile)) {
+                            @unlink($sTmpFileOld);
+                            $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_FAILED, "change file extension failed: $sTmpFileOld => $sTmpFile");
+                            $bRet = false;
+                            break 2;
+                        }
                     }
                 }
             }
-        }
 
-        $mixedHandler = $this->processHandlerForRetinaDevice($mixedHandler);
-        
-        $bRet = true;
-        if ($this->_sQueueStorage) {
+            $mixedHandler = $this->processHandlerForRetinaDevice($mixedHandler);
+                    
+            if ($this->_sQueueStorage) {
 
-            $sFileUrlResult = '';
-            if (!($iFileIdResult = $this->storeTranscodedFileInQueueStorage($mixedHandler, $sTmpFile, $sFileUrlResult)))
-                $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_FAILED, "store queue tmp file failed:\n" . $this->getLog());
-            else
-                $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_COMPLETE, '', '', $iFileIdResult, $sFileUrlResult, $sExtChange);
+                $sFileUrlResult = '';
+                if (!($iFileIdResult = $this->storeTranscodedFileInQueueStorage($mixedHandler, $sTmpFile, $sFileUrlResult)))
+                    $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_FAILED, "store queue tmp file failed:\n" . $this->getLog());
+                else
+                    $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_COMPLETE, '', '', $iFileIdResult, $sFileUrlResult, $sExtChange);
 
-        } else {
+            } else {
 
-            $bRet = $this->storeTranscodedFile($mixedHandler, $sTmpFile, $iProfileId);
-            
-            if ($bRet)
-                $this->deleteFromQueue($mixedHandler);
-            else
-                $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_FAILED, "store file failed:\n" . $this->getLog());
+                $bRet = $this->storeTranscodedFile($mixedHandler, $sTmpFile, $iProfileId);
                 
-        }
+                if ($bRet)
+                    $this->deleteFromQueue($mixedHandler);
+                else
+                    $this->_oDb->updateQueueStatus($mixedHandler, BX_DOL_QUEUE_FAILED, "store file failed:\n" . $this->getLog());
+                    
+            }
 
-        @unlink($sTmpFile);
+            @unlink($sTmpFile);
+
+        } while (false);
+
+        bx_alert($this->_aObject['object'], 'transcoded', $mixedHandler, false, array(
+            'object' => $this,
+            'ret' => $bRet,
+        ));
 
         return $bRet;
     }
