@@ -23,6 +23,9 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     protected $_sUnitClassWoInfoShowCase;
     protected $_sUnitClassShowCase;
 
+    /*
+     * Enable/Disable Letter based thumbnail in "Unit with Cover" only.
+     */
     protected $_bLetterAvatar;
     
     function __construct(&$oConfig, &$oDb)
@@ -98,40 +101,37 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $bThumbUrl = !empty($sThumbUrl);
         $bAvatarUrl = !empty($sAvatarUrl);
 
-        $bTmplVarsThumbnail = $bThumbUrl || $bAvatarUrl || $this->_bLetterAvatar;
-        $aTmplVarsThumbnail = array();
-        if($bTmplVarsThumbnail)
-            $aTmplVarsThumbnail = array(
-                'bx_if:show_thumb_image' => array(
-                    'condition' => $bThumbUrl,
-                    'content' => array(
-                        'size' => $sTemplateSize,
-                        'thumb_url' => $sThumbUrl
-                    )
-                ),
-                'bx_if:show_avatar_image' => array(
-                    'condition' => $bAvatarUrl,
-                    'content' => array(
-                        'size' => $sTemplateSize,
-                        'avatar_url' => $sAvatarUrl
-                    )
-                ),
-                'bx_if:show_thumb_letter' => array(
-                    'condition' => !$bThumbUrl && !$bAvatarUrl,
-                    'content' => array(
-                        'size' => $sTemplateSize,
-                        'color' => implode(', ', BxDolTemplate::getColorCode($iProfile, 1.0)),
-                        'letter' => mb_strtoupper(mb_substr($sTitle, 0, 1))
-                    )
-                ),
-                'bx_if:show_online' => array(
-                    'condition' => $oProfile->isOnline(),
-                    'content' => array()
-                ),
-                'size' => $sTemplateSize,
-                'thumb_url' => $bThumbUrl ? $sThumbUrl : $this->getImageUrl('no-picture-thumb.png'),
-                'avatar_url' => $bAvatarUrl ? $sAvatarUrl : $this->getImageUrl('no-picture-thumb.png'),
-            );
+        $aTmplVarsThumbnail = array(
+            'bx_if:show_thumb_image' => array(
+                'condition' => $bThumbUrl,
+                'content' => array(
+                    'size' => $sTemplateSize,
+                    'thumb_url' => $sThumbUrl
+                )
+            ),
+            'bx_if:show_avatar_image' => array(
+                'condition' => $bAvatarUrl,
+                'content' => array(
+                    'size' => $sTemplateSize,
+                    'avatar_url' => $sAvatarUrl
+                )
+            ),
+            'bx_if:show_thumb_letter' => array(
+                'condition' => !$bThumbUrl && !$bAvatarUrl,
+                'content' => array(
+                    'size' => $sTemplateSize,
+                    'color' => implode(', ', BxDolTemplate::getColorCode($iProfile, 1.0)),
+                    'letter' => mb_strtoupper(mb_substr($sTitle, 0, 1))
+                )
+            ),
+            'bx_if:show_online' => array(
+                'condition' => $oProfile->isOnline(),
+                'content' => array()
+            ),
+            'size' => $sTemplateSize,
+            'thumb_url' => $bThumbUrl ? $sThumbUrl : $this->getImageUrl('no-picture-thumb.png'),
+            'avatar_url' => $bAvatarUrl ? $sAvatarUrl : $this->getImageUrl('no-picture-thumb.png'),
+        );
 
         $sCoverUrl = $bPublicCover ? $this->urlCoverUnit($aData, false) : '';
         if(empty($sCoverUrl) && ($iCoverId = (int)getParam('sys_unit_cover_profile')) != 0)
@@ -146,7 +146,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'id' => $iContentId,
             'public' => $bPublic,
             'bx_if:show_thumbnail' => array(
-                'condition' => $bTmplVarsThumbnail,
+                'condition' => $bThumbUrl || $bAvatarUrl || $this->_bLetterAvatar,
                 'content' => $aTmplVarsThumbnail
             ),
             'cover_url' => $sCoverUrl,
