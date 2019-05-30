@@ -29,7 +29,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'entries',
-        	'TABLE_ENTRIES_FULLTEXT' => 'title_text',
+            'TABLE_ENTRIES_FULLTEXT' => 'title_text',
             'TABLE_FILES' => $aModule['db_prefix'] . 'photos',
 
             // database fields
@@ -45,11 +45,11 @@ class BxPhotosConfig extends BxBaseModTextConfig
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_PHOTO' => 'pictures',
             'FIELD_THUMB' => 'thumb',
-			'FIELD_FOR_STORING_FILE_ID' => 'thumb',
-			'FIELD_VIEWS' => 'views',
+            'FIELD_FOR_STORING_FILE_ID' => 'thumb',
+            'FIELD_VIEWS' => 'views',
             'FIELD_COMMENTS' => 'comments',
-	        'FIELD_STATUS' => 'status',
-        	'FIELD_STATUS_ADMIN' => 'status_admin',
+            'FIELD_STATUS' => 'status',
+            'FIELD_STATUS_ADMIN' => 'status_admin',
             'FIELD_LABELS' => 'labels',
             'FIELD_LOCATION_PREFIX' => 'location',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
@@ -59,33 +59,32 @@ class BxPhotosConfig extends BxBaseModTextConfig
             'URI_AUTHOR_ENTRIES' => 'photos-author',
             'URI_ENTRIES_BY_CONTEXT' => 'photos-context',
             'URI_ADD_ENTRY' => 'create-photo',
-        	'URI_EDIT_ENTRY' => 'edit-photo',
-        	'URI_MANAGE_COMMON' => 'photos-manage',
+            'URI_EDIT_ENTRY' => 'edit-photo',
+            'URI_MANAGE_COMMON' => 'photos-manage',
 
             'URL_HOME' => 'page.php?i=photos-home',
             'URL_POPULAR' => 'page.php?i=photos-popular',
             'URL_UPDATED' => 'page.php?i=photos-updated',
-        	'URL_MANAGE_COMMON' => 'page.php?i=photos-manage',
-        	'URL_MANAGE_ADMINISTRATION' => 'page.php?i=photos-administration',
+            'URL_MANAGE_COMMON' => 'page.php?i=photos-manage',
+            'URL_MANAGE_ADMINISTRATION' => 'page.php?i=photos-administration',
 
             // some params
             'PARAM_CHARS_SUMMARY' => 'bx_photos_summary_chars',
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_photos_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_photos_rss_num',
-        	'PARAM_SEARCHABLE_FIELDS' => 'bx_photos_searchable_fields',
-            'PARAM_LABELS' => 'bx_photos_labels',
+            'PARAM_SEARCHABLE_FIELDS' => 'bx_photos_searchable_fields',
 
             // objects
             'OBJECT_STORAGE' => 'bx_photos_photos',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_photos_preview',
             'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_photos_gallery',
-        	'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_photos_cover',
-        	'OBJECT_REPORTS' => 'bx_photos',
+            'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_photos_cover',
+            'OBJECT_REPORTS' => 'bx_photos',
             'OBJECT_VIEWS' => 'bx_photos',
             'OBJECT_VOTES' => 'bx_photos',
             'OBJECT_VOTES_STARS' => 'bx_photos_stars',
-        	'OBJECT_SCORES' => 'bx_photos',
-        	'OBJECT_FAVORITES' => 'bx_photos',
+            'OBJECT_SCORES' => 'bx_photos',
+            'OBJECT_FAVORITES' => 'bx_photos',
             'OBJECT_FEATURED' => 'bx_photos',
             'OBJECT_METATAGS' => 'bx_photos',
             'OBJECT_COMMENTS' => 'bx_photos',

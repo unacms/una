@@ -677,6 +677,9 @@
 	<string name="_adm_form_btn_forms_cancel"><![CDATA[Отменить]]></string>
 	<string name="_adm_form_btn_forms_edit"><![CDATA[Редактировать Форму]]></string>
 	<string name="_adm_form_btn_forms_save"><![CDATA[Сохранить]]></string>
+        <string name="_adm_form_btn_labels_add"><![CDATA[Добавить]]></string>
+        <string name="_adm_form_btn_labels_cancel"><![CDATA[Отменить]]></string>
+        <string name="_adm_form_btn_labels_submit"><![CDATA[Отправить]]></string>
 	<string name="_adm_form_btn_pre_lists_add"><![CDATA[Добавить]]></string>
 	<string name="_adm_form_btn_pre_lists_cancel"><![CDATA[Отменить]]></string>
 	<string name="_adm_form_btn_pre_lists_create"><![CDATA[Добавить новый список]]></string>
@@ -740,6 +743,9 @@
 	<string name="_adm_form_err_field_values"><![CDATA[Нужно выбрать набор данных из списка.]]></string>
 	<string name="_adm_form_err_forms_edit"><![CDATA[Невозможно обновить форму]]></string>
 	<string name="_adm_form_err_forms_title"><![CDATA[Введите название, более 3 символов]]></string>
+        <string name="_adm_form_err_labels_add"><![CDATA[Невозможно добавить метку]]></string>
+        <string name="_adm_form_err_labels_edit"><![CDATA[Невозможно обновить метку]]></string>
+        <string name="_adm_form_err_labels_value"><![CDATA[Метка должна иметь уникальное, не пустое значение.]]></string>
 	<string name="_adm_form_err_missing_params"><![CDATA[Отсутствуют необходимые параметры.]]></string>
 	<string name="_adm_form_err_pre_lists_create"><![CDATA[Невозможно добавить список]]></string>
 	<string name="_adm_form_err_pre_lists_edit"><![CDATA[Невозможно обновить список]]></string>
@@ -872,6 +878,14 @@
 	<string name="_adm_form_txt_forms_n_displays"><![CDATA[{0} дисплеев]]></string>
 	<string name="_adm_form_txt_forms_n_fields"><![CDATA[{0} полей]]></string>
 	<string name="_adm_form_txt_forms_title"><![CDATA[Системное имя]]></string>
+        <string name="_adm_form_txt_labels_add_popup"><![CDATA[Добавить метку]]></string>
+        <string name="_adm_form_txt_labels_edit_popup"><![CDATA[Изменить "{0}" метку]]></string>
+        <string name="_adm_form_txt_labels_items"><![CDATA[Элементы]]></string>
+        <string name="_adm_form_txt_labels_manage_items"><![CDATA[Управление дочерними метками]]></string>
+        <string name="_adm_form_txt_labels_n_items"><![CDATA[{0} элемент]]></string>
+        <string name="_adm_form_txt_labels_parent"><![CDATA[Родитель]]></string>
+        <string name="_adm_form_txt_labels_parent_empty"><![CDATA[Нет родителя]]></string>
+        <string name="_adm_form_txt_labels_value"><![CDATA[Метка]]></string>        
 	<string name="_adm_form_txt_pre_lists_country"><![CDATA[Страна]]></string>
 	<string name="_adm_form_txt_pre_lists_create_popup"><![CDATA[Добавить новый список]]></string>
 	<string name="_adm_form_txt_pre_lists_edit_popup"><![CDATA[Редактировать "{0}" список]]></string>
@@ -939,6 +953,7 @@
 	<string name="_adm_lmi_cpt_images"><![CDATA[Изображения]]></string>
 	<string name="_adm_lmi_cpt_items"><![CDATA[Элементы]]></string>
 	<string name="_adm_lmi_cpt_keys"><![CDATA[Ключи]]></string>
+        <string name="_adm_lmi_cpt_labels"><![CDATA[Метки]]></string>
 	<string name="_adm_lmi_cpt_latest"><![CDATA[Новые]]></string>
 	<string name="_adm_lmi_cpt_levels"><![CDATA[Уровни]]></string>
 	<string name="_adm_lmi_cpt_logo"><![CDATA[Лого]]></string>

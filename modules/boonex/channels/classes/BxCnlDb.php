@@ -18,16 +18,26 @@ class BxCnlDb extends BxBaseModGroupsDb
     {
         parent::__construct($oConfig);
     }
-    
+
     public function getChannelIdByName($sName)
     {
         $CNF = &$this->_oConfig->CNF;
-        $aBindings = array(
+
+        return $this->getOne("SELECT `" . $CNF['FIELD_ID'] . "` FROM `" . $CNF['TABLE_ENTRIES'] . "` WHERE `" . $CNF['FIELD_NAME'] . "` = :name", array(
             'name' => $sName,
-        );
-        return $this->getOne("SELECT `" . $CNF['FIELD_ID'] . "` FROM `" . $CNF['TABLE_ENTRIES'] . "` WHERE `" . $CNF['FIELD_NAME'] . "` = :name", $aBindings);
+        ));
     }
-    
+
+    public function getChannelInfoByName($sName)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return $this->getRow("SELECT `c`.*, `p`.`account_id`, `p`.`id` AS `profile_id`, `a`.`email` AS `profile_email`, `a`.`ip` AS `profile_ip`, `p`.`status` AS `profile_status` FROM `" . $CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = :type) INNER JOIN `sys_accounts` AS `a` ON (`p`.`account_id` = `a`.`id`) WHERE `c`.`channel_name` = :name", array(
+            'type' => $this->_oConfig->getName(),
+            'name' => $sName,
+        ));
+    }
+
     public function addContentToChannel($iContentId, $iCnlId, $sModuleName, $iAuthorId)
     {
         $CNF = &$this->_oConfig->CNF;

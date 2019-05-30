@@ -56,7 +56,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'FIELD_COMMENTS' => 'comments',
             'FIELDS_QUICK_SEARCH' => array('group_name'),
             'FIELD_LOCATION_PREFIX' => 'location',
-			'FIELD_LABELS' => 'labels',
+            'FIELD_LABELS' => 'labels',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 
             // page URIs
@@ -64,7 +64,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'URI_EDIT_ENTRY' => 'edit-group-profile',
             'URI_EDIT_COVER' => 'edit-group-cover',
             'URI_JOINED_ENTRIES' => 'joined-groups',
-        	'URI_MANAGE_COMMON' => 'groups-manage',
+            'URI_MANAGE_COMMON' => 'groups-manage',
 
             'URL_HOME' => 'page.php?i=groups-home',
             'URL_ENTRY_FANS' => 'page.php?i=group-fans',
@@ -77,7 +77,6 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'PARAM_SEARCHABLE_FIELDS' => 'bx_groups_searchable_fields',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_groups_per_page_browse_showcase',
             'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_groups_per_page_browse_recommended',
-			'PARAM_LABELS' => 'bx_groups_labels',
 
             // objects
             'OBJECT_STORAGE' => 'bx_groups_pics',
@@ -89,18 +88,18 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'OBJECT_IMAGES_TRANSCODER_PICTURE' => 'bx_groups_picture',
             'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_groups_cover',
             'OBJECT_IMAGES_TRANSCODER_COVER_THUMB' => 'bx_groups_cover_thumb',
-        	'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_groups_gallery',
+            'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_groups_gallery',
             'OBJECT_VIEWS' => 'bx_groups',
             'OBJECT_VOTES' => 'bx_groups',
-        	'OBJECT_SCORES' => 'bx_groups',
-        	'OBJECT_FAVORITES' => 'bx_groups',
-        	'OBJECT_FEATURED' => 'bx_groups',
-        	'OBJECT_COMMENTS' => 'bx_groups',
+            'OBJECT_SCORES' => 'bx_groups',
+            'OBJECT_FAVORITES' => 'bx_groups',
+            'OBJECT_FEATURED' => 'bx_groups',
+            'OBJECT_COMMENTS' => 'bx_groups',
             'OBJECT_REPORTS' => 'bx_groups',
             'OBJECT_METATAGS' => 'bx_groups',
             'OBJECT_FORM_ENTRY' => 'bx_group',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_group_view',
-        	'OBJECT_FORM_ENTRY_DISPLAY_VIEW_FULL' => 'bx_group_view_full', // for "info" tab on view group page
+            'OBJECT_FORM_ENTRY_DISPLAY_VIEW_FULL' => 'bx_group_view_full', // for "info" tab on view group page
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_group_add',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_group_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER' => 'bx_group_edit_cover',

@@ -112,7 +112,18 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         return $aVars;
     }
 
-    function entryText ($aData, $sTemplateName = 'entry-text.html')
+    public function entryBreadcrumb($aContentInfo, $aTmplVarsItems = array())
+    {
+    	$CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
+
+    	return $this->parseHtmlByName('breadcrumb.html', array(
+    		'url_home' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']),
+    		'icon_home' => $CNF['ICON'],
+    		'bx_repeat:items' => $aTmplVarsItems
+    	));
+    }
+
+    public function entryText ($aData, $sTemplateName = 'entry-text.html')
     {
         $aVars = $this->getTmplVarsText($aData);
 
@@ -122,7 +133,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         return $this->parseHtmlByName($sTemplateName, $aVars);
     }
 
-    function entryLocation ($iContentId)
+    public function entryLocation ($iContentId)
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 

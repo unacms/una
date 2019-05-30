@@ -70,8 +70,7 @@ class BxFilesConfig extends BxBaseModTextConfig
             'PARAM_CHARS_SUMMARY' => 'bx_files_summary_chars',
             'PARAM_CHARS_SUMMARY_PLAIN' => '',
             'PARAM_NUM_RSS' => 'bx_files_rss_num',
-        	'PARAM_SEARCHABLE_FIELDS' => 'bx_files_searchable_fields',
-            'PARAM_LABELS' => 'bx_files_labels',
+            'PARAM_SEARCHABLE_FIELDS' => 'bx_files_searchable_fields',
 
             // objects
             'OBJECT_STORAGE' => 'bx_files_files',

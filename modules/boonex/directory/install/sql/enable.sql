@@ -16,8 +16,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_directory_per_page_profile', '6', @iCategId, '_bx_directory_option_per_page_profile', 'digit', '', '', '', 12),
 ('bx_directory_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', 15),
 ('bx_directory_rss_num', '10', @iCategId, '_bx_directory_option_rss_num', 'digit', '', '', '', 20),
-('bx_directory_searchable_fields', 'title,text', @iCategId, '_bx_directory_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:21:"get_searchable_fields";}', 30),
-('bx_directory_labels', '', @iCategId, '_sys_option_labels', 'text', '', '', '', 40);
+('bx_directory_searchable_fields', 'title,text', @iCategId, '_bx_directory_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:21:"get_searchable_fields";}', 30);
 
 
 -- PAGE: create entry

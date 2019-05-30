@@ -65,10 +65,6 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             $this->aInputs[$CNF['FIELD_PHOTO']]['ghost_template'] = '';
         }
 
-        if (isset($CNF['FIELD_LABELS']) && isset($this->aInputs[$CNF['FIELD_LABELS']])) {
-            $this->aInputs[$CNF['FIELD_LABELS']]['values'] = array_map('trim', getParam($CNF['PARAM_LABELS']) ? explode(',', getParam($CNF['PARAM_LABELS'])) : array());
-        }
-
         if (isset($CNF['FIELD_ALLOW_VIEW_TO']) && isset($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]) && $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) {
 
             $aSave = array('db' => array('pass' => 'Xss'));
@@ -104,7 +100,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         if (isset($CNF['FIELD_LABELS']) && isset($this->aInputs[$CNF['FIELD_LABELS']]) && !empty($aValues['id']) && ($oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])) && $oMetatags->keywordsIsEnabled() && ($aLabels = $oMetatags->keywordsGet($aValues['id']))) {
             $this->aInputs[$CNF['FIELD_LABELS']]['content_id'] = $aValues['id'];
             $this->aInputs[$CNF['FIELD_LABELS']]['meta_object'] = $CNF['OBJECT_METATAGS'];
-            $this->aInputs[$CNF['FIELD_LABELS']]['value'] = array_intersect($aLabels, $this->aInputs[$CNF['FIELD_LABELS']]['values']);
+            $this->aInputs[$CNF['FIELD_LABELS']]['value'] = $aLabels;
         }
 
         if (isset($CNF['FIELD_ANONYMOUS']) && isset($this->aInputs[$CNF['FIELD_ANONYMOUS']]) && isset($CNF['FIELD_AUTHOR']) && isset($aValues[$CNF['FIELD_AUTHOR']])) {

@@ -20,13 +20,14 @@ class BxBaseStudioForms extends BxDolStudioForms
         $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'builder_forms.php?page=';
 
         $this->aGridObjects = array(
-	        'forms' => 'sys_studio_forms',
-	        'displays' => 'sys_studio_forms_displays',
-	        'fields' => 'sys_studio_forms_fields',
-	        'pre_lists' => 'sys_studio_forms_pre_lists',
-	        'pre_values' => 'sys_studio_forms_pre_values',
-        	'search_forms' => 'sys_studio_search_forms',
-        	'search_fields' => 'sys_studio_search_forms_fields',
+            'forms' => 'sys_studio_forms',
+            'displays' => 'sys_studio_forms_displays',
+            'fields' => 'sys_studio_forms_fields',
+            'pre_lists' => 'sys_studio_forms_pre_lists',
+            'pre_values' => 'sys_studio_forms_pre_values',
+            'search_forms' => 'sys_studio_search_forms',
+            'search_fields' => 'sys_studio_search_forms_fields',
+            'labels' => 'sys_studio_labels',
     	);
     }
 
@@ -58,6 +59,7 @@ class BxBaseStudioForms extends BxDolStudioForms
             BX_DOL_STUDIO_FORM_TYPE_PRE_VALUES => array('icon' => 'indent'),
             BX_DOL_STUDIO_FORM_TYPE_SEARCH_FORMS => array('icon' => 'search'),
             BX_DOL_STUDIO_FORM_TYPE_SEARCH_FIELDS => array('icon' => 'check-square'),
+            BX_DOL_STUDIO_FORM_TYPE_LABELS => array('icon' => 'tags'),
         );
         foreach($aMenuItems as $sMenuItem => $aItem)
             $aMenu[] = array(
@@ -114,6 +116,15 @@ class BxBaseStudioForms extends BxDolStudioForms
 
         $sModule = bx_process_input($sModule);
         return array('code' => 0, 'message' => '', 'content' => $this->getSearchFieldsObject()->getFormsSelector($sModule));
+    }
+
+    function actionGetLabels()
+    {
+        if(($sModule = bx_get('form_module')) === false)
+            return array('code' => 2, 'message' => _t('_adm_form_err_missing_params'));
+
+        $sModule = bx_process_input($sModule);
+        return array('code' => 0, 'message' => '', 'content' => $this->getLabelsObject()->getFormsSelector($sModule));
     }
 
     protected function getForms()
@@ -181,6 +192,16 @@ class BxBaseStudioForms extends BxDolStudioForms
         return $this->getGridObject($this->aGridObjects['search_fields']);
     }
 
+    protected function getLabels()
+    {
+        return $this->getGrid($this->aGridObjects['labels']);
+    }
+
+    protected function getLabelsObject()
+    {
+        return $this->getGridObject($this->aGridObjects['labels']);
+    }
+
     protected function getGridObject($sObjectName)
     {
         $oGrid = BxDolGrid::getObjectInstance($sObjectName);
@@ -199,8 +220,8 @@ class BxBaseStudioForms extends BxDolStudioForms
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('forms.html', array(
             'js_object' => $this->getPageJsObject(),
             'content' => $this->getBlockCode(array(
-				'items' => $oGrid->getCode()
-			))
+                'items' => $oGrid->getCode()
+            ))
         ));
     }
 

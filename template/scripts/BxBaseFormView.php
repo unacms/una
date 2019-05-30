@@ -1124,9 +1124,32 @@ BLAH;
 
         return $this->oTemplate->parseHtmlByName('form_field_labels_view.html', array(
             'values' => $s,
-        ));        
+        ));
     }
-    
+
+    protected function genCustomInputLabels ($aInput)
+    {
+        $aValues = array();
+        $oLabel = BxDolLabel::getInstance();
+        $this->_getLabelOptions(0, $oLabel, $aValues);
+
+        $aInput['type'] = 'select_multiple';
+        $aInput['values'] = $aValues;
+
+        return $this->genInputSelectMultiple($aInput);
+    }
+
+    protected function _getLabelOptions($iParent, &$oLabel, &$aValues)
+    {
+        $aLabels = $oLabel->getLabels(array('type' => 'parent', 'parent' => $iParent));
+        foreach($aLabels as $aLabel) {
+            $aValues[] = array('key' => $aLabel['value'], 'value' => str_repeat('&nbsp;&nbsp;&nbsp;', (int)$aLabel['level']) . ' ' . $aLabel['value']);
+
+            $this->_getLabelOptions($aLabel['id'], $oLabel, $aValues);
+        }
+    }
+
+    /*
     protected function genCustomInputLabels ($aInput)
     {
         // generate currently selected labels
@@ -1140,7 +1163,6 @@ BLAH;
         }
 
         // generate "following" labels
-
         $aFollowingLabels = bx_srv('bx_channels', 'get_following_channels_names', array(bx_get_logged_profile_id()));
         if (!is_array($aFollowingLabels))
             $aFollowingLabels = array();
@@ -1179,6 +1201,7 @@ BLAH;
             'values' => $sValues,
         ));
     }
+     */
     
     /**
      * Generate Select Element	

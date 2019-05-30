@@ -83,42 +83,46 @@
     <string name="_bx_channels_page_block_title_entries_actions"><![CDATA[Каналы - Действия]]></string>
     <string name="_bx_channels_page_block_title_sys_entries_of_author"><![CDATA[Просматриваемые каналы]]></string>
     <string name="_bx_channels_page_block_title_entries_of_author"><![CDATA[Просматриваемые каналы]]></string>
-	<string name="_bx_channels_page_block_title_favorites_of_author"><![CDATA[Избранные каналы]]></string>   
+    <string name="_bx_channels_page_block_title_favorites_of_author"><![CDATA[Избранные каналы]]></string>   
     <string name="_bx_channels_page_block_title_sys_favorites_of_author"><![CDATA[Избранные каналы]]></string>
-	<string name="_bx_channels_page_block_title_create_profile"><![CDATA[Создать канал]]></string>
-	<string name="_bx_channels_page_block_title_edit_profile"><![CDATA[Редактировать канал]]></string>
-	<string name="_bx_channels_page_block_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
-	<string name="_bx_channels_page_block_title_delete_profile"><![CDATA[Удалить канал]]></string>
-	<string name="_bx_channels_page_block_title_profile_info_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Инфо]]></string>
-	<string name="_bx_channels_page_block_title_profile_info"><![CDATA[Инфо]]></string>
-	<string name="_bx_channels_page_block_title_system_profile_info"><![CDATA[Инфо]]></string>
-	<string name="_bx_channels_page_block_title_profile_description"><![CDATA[Описание]]></string>
-	<string name="_bx_channels_page_block_title_profile_friends_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Друзья]]></string>
-	<string name="_bx_channels_page_block_title_profile_friends"><![CDATA[Друзья]]></string>
-	<string name="_bx_channels_page_block_title_system_profile_friends"><![CDATA[Друзья]]></string>
-	<string name="_bx_channels_page_block_title_admins"><![CDATA[Администраторы]]></string>
-	<string name="_bx_channels_page_block_title_profile_comments"><![CDATA[Комментарии]]></string>
+    <string name="_bx_channels_page_block_title_create_profile"><![CDATA[Создать канал]]></string>
+    <string name="_bx_channels_page_block_title_edit_profile"><![CDATA[Редактировать канал]]></string>
+    <string name="_bx_channels_page_block_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
+    <string name="_bx_channels_page_block_title_delete_profile"><![CDATA[Удалить канал]]></string>
+    <string name="_bx_channels_page_block_title_profile_info_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Инфо]]></string>
+    <string name="_bx_channels_page_block_title_profile_info"><![CDATA[Инфо]]></string>
+    <string name="_bx_channels_page_block_title_system_profile_info"><![CDATA[Инфо]]></string>
+    <string name="_bx_channels_page_block_title_profile_description"><![CDATA[Описание]]></string>
+    <string name="_bx_channels_page_block_title_profile_friends_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Друзья]]></string>
+    <string name="_bx_channels_page_block_title_profile_friends"><![CDATA[Друзья]]></string>
+    <string name="_bx_channels_page_block_title_system_profile_friends"><![CDATA[Друзья]]></string>
+    <string name="_bx_channels_page_block_title_admins"><![CDATA[Администраторы]]></string>
+    <string name="_bx_channels_page_block_title_profile_comments"><![CDATA[Комментарии]]></string>
     <string name="_bx_channels_page_block_title_profile_comments_link"><![CDATA[Комментарии к <a href="{entry_link}">{title}</a>]]></string>
-	<string name="_bx_channels_page_block_title_profile_actions"><![CDATA[Действия]]></string>
-	<string name="_bx_channels_page_block_title_featured_profiles"><![CDATA[Продвинутые каналы]]></string>
-	<string name="_bx_channels_page_block_title_latest_profiles"><![CDATA[Новые каналы]]></string>
-	<string name="_bx_channels_page_block_title_system_manage"><![CDATA[Управление собственными каналами]]></string>
-	<string name="_bx_channels_page_block_title_system_manage_administration"><![CDATA[Управление всеми каналами]]></string>
-	<string name="_bx_channels_page_block_title_manage"><![CDATA[Управление]]></string>
+    <string name="_bx_channels_page_block_title_profile_actions"><![CDATA[Действия]]></string>
+    <string name="_bx_channels_page_block_title_featured_profiles"><![CDATA[Продвинутые каналы]]></string>
+    <string name="_bx_channels_page_block_title_latest_profiles"><![CDATA[Новые каналы]]></string>
+    <string name="_bx_channels_page_block_title_system_manage"><![CDATA[Управление собственными каналами]]></string>
+    <string name="_bx_channels_page_block_title_system_manage_administration"><![CDATA[Управление всеми каналами]]></string>
+    <string name="_bx_channels_page_block_title_manage"><![CDATA[Управление]]></string>
     <string name="_bx_channels_page_block_title_top_profiles"><![CDATA[Популярные каналы]]></string>
-	<string name="_bx_channels_page_block_title_entry_all_actions"><![CDATA[Все действия]]></string>
+    <string name="_bx_channels_page_block_title_entry_all_actions"><![CDATA[Все действия]]></string>
     <string name="_bx_channels_page_block_title_entry_social_sharing"><![CDATA[Поделиться]]></string>
+    <string name="_bx_channels_page_block_title_entry_breadcrumb"><![CDATA["Хлебные крошки"]]></string>
+    <string name="_bx_channels_page_block_title_entry_parent"><![CDATA[Родительский канал]]></string>
+    <string name="_bx_channels_page_block_title_entry_childs"><![CDATA[Дочерние каналы]]></string>
     <string name="_bx_channels_page_block_title_search_form"><![CDATA[Форма поиска]]></string>
-	<string name="_bx_channels_page_block_title_entries_my"><![CDATA[Мои просматриваемые каналы]]></string>
-        <string name="_bx_channels_page_trigger_block_title_entries_my"><![CDATA[Мои просматриваемые каналы]]></string>
+    <string name="_bx_channels_page_block_title_entries_my"><![CDATA[Мои просматриваемые каналы]]></string>
+    <string name="_bx_channels_page_trigger_block_title_entries_my"><![CDATA[Мои просматриваемые каналы]]></string>
     <string name="_bx_channels_page_block_title_search_results"><![CDATA[Результаты поиска]]></string>
-	<string name="_bx_channels_page_block_title_search_results_by_hashtag"><![CDATA[Результаты поиска по хештегу]]></string>
+    <string name="_bx_channels_page_block_title_search_results_by_hashtag"><![CDATA[Результаты поиска по хештегу]]></string>
     <string name="_bx_channels_page_block_title_search_form_cmts"><![CDATA[Форма поиска комментариев]]></string>
     <string name="_bx_channels_page_block_title_search_results_cmts"><![CDATA[Результаты поиска комментариев]]></string>
     <string name="_bx_channels_page_block_title_sys_featured_entries_view_showcase"><![CDATA[Продвинутые каналы]]></string>
     <string name="_bx_channels_page_block_title_featured_entries_view_showcase"><![CDATA[Продвинутые каналы (Витринный просмотр)]]></string>
     <string name="_bx_channels_page_block_title_sys_recommended_entries_view_showcase"><![CDATA[Рекомендованные каналы (Витринный просмотр)]]></string>
     <string name="_bx_channels_page_block_title_recommended_entries_view_showcase"><![CDATA[Рекомендованные каналы]]></string>
+    
     <string name="_bx_channels_menu_title_submenu"><![CDATA[Каналы - Подменю]]></string>
     <string name="_bx_channels_menu_set_title_submenu"><![CDATA[Каналы - Подменю]]></string>
     <string name="_bx_channels_menu_set_title_view_profile_actions"><![CDATA[Канал - Действия]]></string>
@@ -128,7 +132,7 @@
     <string name="_bx_channels_menu_set_title_view_profile_submenu"><![CDATA[Подменю просмотра канала]]></string>
     <string name="_bx_channels_menu_title_entries_my"><![CDATA[Каналы профиля - Меню действий]]></string>
     <string name="_bx_channels_menu_set_title_entries_my"><![CDATA[Каналы профиля - Меню]]></string>
-	<string name="_bx_channels_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
+    <string name="_bx_channels_menu_set_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_channels_menu_title_manage_tools"><![CDATA[Инструменты управления - Подменю]]></string>
     <string name="_bx_channels_menu_item_title_system_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_channels_menu_item_title_delete"><![CDATA[Удалить]]></string>

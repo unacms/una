@@ -28,7 +28,7 @@ class BxVideosConfig extends BxBaseModTextConfig
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'entries',
-        	'TABLE_ENTRIES_FULLTEXT' => 'title_text',
+            'TABLE_ENTRIES_FULLTEXT' => 'title_text',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -43,13 +43,13 @@ class BxVideosConfig extends BxBaseModTextConfig
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_PHOTO' => 'pictures',
             'FIELD_THUMB' => 'thumb',
-        	'FIELD_POSTER' => '', //'poster',
-        	'FIELD_VIDEOS' => 'videos',
+            'FIELD_POSTER' => '', //'poster',
+            'FIELD_VIDEOS' => 'videos',
             'FIELD_VIDEO' => 'video',
-			'FIELD_VIEWS' => 'views',
+            'FIELD_VIEWS' => 'views',
             'FIELD_COMMENTS' => 'comments',
-	        'FIELD_STATUS' => 'status',
-        	'FIELD_STATUS_ADMIN' => 'status_admin',
+            'FIELD_STATUS' => 'status',
+            'FIELD_STATUS_ADMIN' => 'status_admin',
             'FIELD_LABELS' => 'labels',
             'FIELD_LOCATION_PREFIX' => 'location',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
@@ -59,29 +59,28 @@ class BxVideosConfig extends BxBaseModTextConfig
             'URI_AUTHOR_ENTRIES' => 'videos-author',
             'URI_ENTRIES_BY_CONTEXT' => 'videos-context',
             'URI_ADD_ENTRY' => 'create-video',
-        	'URI_EDIT_ENTRY' => 'edit-video',
-        	'URI_MANAGE_COMMON' => 'videos-manage',
+            'URI_EDIT_ENTRY' => 'edit-video',
+            'URI_MANAGE_COMMON' => 'videos-manage',
 
             'URL_HOME' => 'page.php?i=videos-home',
             'URL_POPULAR' => 'page.php?i=videos-popular',
             'URL_UPDATED' => 'page.php?i=videos-updated',
-        	'URL_MANAGE_COMMON' => 'page.php?i=videos-manage',
-        	'URL_MANAGE_ADMINISTRATION' => 'page.php?i=videos-administration',
+            'URL_MANAGE_COMMON' => 'page.php?i=videos-manage',
+            'URL_MANAGE_ADMINISTRATION' => 'page.php?i=videos-administration',
 
             // some params
             'PARAM_CHARS_SUMMARY' => 'bx_videos_summary_chars',
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_videos_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_videos_rss_num',
-        	'PARAM_SEARCHABLE_FIELDS' => 'bx_videos_searchable_fields',
-            'PARAM_LABELS' => 'bx_videos_labels',
+            'PARAM_SEARCHABLE_FIELDS' => 'bx_videos_searchable_fields',
 
             // objects
             'OBJECT_STORAGE' => 'bx_videos_photos',
-        	'OBJECT_STORAGE_VIDEOS' => 'bx_videos_videos',
+            'OBJECT_STORAGE_VIDEOS' => 'bx_videos_videos',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_videos_preview',
             'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_videos_gallery',
-        	'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_videos_cover',
-        	'OBJECT_IMAGES_TRANSCODER_POSTER' => 'bx_videos_poster',
+            'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_videos_cover',
+            'OBJECT_IMAGES_TRANSCODER_POSTER' => 'bx_videos_poster',
             'OBJECT_VIDEOS_TRANSCODERS' => array(
             	'poster' => 'bx_videos_video_poster_cover', 
             	'poster_preview' => 'bx_videos_video_poster_preview',
@@ -89,8 +88,8 @@ class BxVideosConfig extends BxBaseModTextConfig
             	'mp4' => 'bx_videos_video_mp4', 
             	'webm' => 'bx_videos_video_webm'
             ),
-        	'OBJECT_VIDEO_TRANSCODER_HEIGHT' => '480px',
-        	'OBJECT_REPORTS' => 'bx_videos',
+            'OBJECT_VIDEO_TRANSCODER_HEIGHT' => '480px',
+            'OBJECT_REPORTS' => 'bx_videos',
             'OBJECT_VIEWS' => 'bx_videos',
             'OBJECT_VOTES' => 'bx_videos',
             'OBJECT_VOTES_STARS' => 'bx_videos_stars',

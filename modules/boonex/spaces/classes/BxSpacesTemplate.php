@@ -46,7 +46,7 @@ class BxSpacesTemplate extends BxBaseModGroupsTemplate
             $oProfile = BxDolProfile::getInstance($iProfileId);
             if(!$oProfile)
                 continue;
-            $sRv .= $oProfile->getUnit(false, array('template' => 'unit_live_search'));
+            $sRv .= $oProfile->getUnit(false, array('template' => 'unit_wo_cover'));
         }
         return $sRv;
     }

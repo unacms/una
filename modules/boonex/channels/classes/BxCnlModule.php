@@ -106,7 +106,31 @@ class BxCnlModule extends BxBaseModGroupsModule
         
         return $this->_oDb->removeContentFromChannel($iContentId, $sModuleName);
     }
-    
+
+    public function serviceEntityBreadcrumb($iContentId = 0)
+    {
+    	if(!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if(!$iContentId)
+            return false;
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(!$aContentInfo)
+            return false;
+
+        return $this->_oTemplate->entryBreadcrumb($aContentInfo);
+    }
+
+    public function serviceEntityParent($iContentId = 0)
+    {
+        return $this->_serviceTemplateFunc('entryParent', $iContentId);
+    }
+
+    public function serviceEntityChilds($iContentId = 0)
+    {
+        return $this->_serviceTemplateFunc('entryChilds', $iContentId);
+    }
+
     function serviceSearchResultByHashtag($iContentId = 0)
     {
         $CNF = &$this->_oConfig->CNF;

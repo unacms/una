@@ -68,8 +68,6 @@ class BxGlsrConfig extends BxBaseModTextConfig
             'PARAM_NUM_RSS' => 'bx_glossary_rss_num',
             'PARAM_SEARCHABLE_FIELDS' => 'bx_glossary_searchable_fields',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_glossary_per_page_browse_showcase',
-            'PARAM_LABELS' => 'bx_glossary_labels',
-            
 
             // objects
             'OBJECT_STORAGE' => 'bx_glossary_files',
@@ -80,7 +78,7 @@ class BxGlsrConfig extends BxBaseModTextConfig
             'OBJECT_REPORTS' => 'bx_glossary',
             'OBJECT_VIEWS' => 'bx_glossary',
             'OBJECT_VOTES' => 'bx_glossary',
-        	'OBJECT_SCORES' => 'bx_glossary',
+            'OBJECT_SCORES' => 'bx_glossary',
             'OBJECT_FAVORITES' => 'bx_glossary',
             'OBJECT_FEATURED' => 'bx_glossary',
             'OBJECT_METATAGS' => 'bx_glossary',

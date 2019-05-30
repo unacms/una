@@ -90,7 +90,6 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'PARAM_PUBLIC_SBSD' => 'bx_organizations_public_subscribed_me',
             'PARAM_REDIRECT_AADD' => 'bx_organizations_redirect_aadd',
             'PARAM_REDIRECT_AADD_CUSTOM_URL' => 'bx_organizations_redirect_aadd_custom_url',
-            'PARAM_LABELS' => 'bx_organizations_labels',
 
             // objects
             'OBJECT_STORAGE' => 'bx_organizations_pics',

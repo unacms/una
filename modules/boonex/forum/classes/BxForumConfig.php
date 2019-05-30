@@ -86,10 +86,9 @@ class BxForumConfig extends BxBaseModTextConfig
             'PARAM_CHARS_SUMMARY' => 'bx_forum_summary_chars',
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_forum_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_forum_rss_num',
-        	'PARAM_SEARCHABLE_FIELDS' => 'bx_forum_searchable_fields',
-        	'PARAM_AUTOSUBSCRIBE_CREATED' => 'bx_forum_autosubscribe_created',
-            'PARAM_AUTOSUBSCRIBE_REPLIED' => 'bx_forum_autosubscribe_replied',
-            'PARAM_LABELS' => 'bx_forum_labels',            
+            'PARAM_SEARCHABLE_FIELDS' => 'bx_forum_searchable_fields',
+            'PARAM_AUTOSUBSCRIBE_CREATED' => 'bx_forum_autosubscribe_created',
+            'PARAM_AUTOSUBSCRIBE_REPLIED' => 'bx_forum_autosubscribe_replied',           
 
             // objects
             'OBJECT_GRID' => 'bx_forum',

@@ -82,7 +82,6 @@ class BxDirConfig extends BxBaseModTextConfig
             'PARAM_NUM_RSS' => 'bx_directory_rss_num',
             'PARAM_SEARCHABLE_FIELDS' => 'bx_directory_searchable_fields',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_directory_per_page_browse_showcase',
-            'PARAM_LABELS' => 'bx_directory_labels',
             'PARAM_CATEGORY_LEVEL_MAX' => 1,
 
             // objects

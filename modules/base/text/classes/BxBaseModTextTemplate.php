@@ -431,17 +431,6 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         return _t($CNF['T']['txt_all_entries_in'], $sUrl, $oProfile->getDisplayName(), $this->getModule()->_oDb->getEntriesNumByContext($oProfile->id()));
     }
 
-    public function entryBreadcrumb($aContentInfo, $aTmplVarsItems = array())
-    {
-    	$CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
-
-    	return $this->parseHtmlByName('breadcrumb.html', array(
-    		'url_home' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']),
-    		'icon_home' => $CNF['ICON'],
-    		'bx_repeat:items' => $aTmplVarsItems
-    	));
-    }
-
     protected function checkPrivacy ($aData, $isCheckPrivateContent, $oModule, $sTemplateName = '')
     {
         if ($isCheckPrivateContent && CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $oModule->checkAllowedView($aData))) {

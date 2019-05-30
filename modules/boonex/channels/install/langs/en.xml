@@ -108,18 +108,21 @@
 	<string name="_bx_channels_page_block_title_top_profiles"><![CDATA[Top Channels]]></string>
         <string name="_bx_channels_page_block_title_entry_all_actions"><![CDATA[All Actions]]></string>
 	<string name="_bx_channels_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
+        <string name="_bx_channels_page_block_title_entry_breadcrumb"><![CDATA[Breadcrumb]]></string>
+        <string name="_bx_channels_page_block_title_entry_parent"><![CDATA[Parent Channel]]></string>
+        <string name="_bx_channels_page_block_title_entry_childs"><![CDATA[Child Channels]]></string>
 	<string name="_bx_channels_page_block_title_search_form"><![CDATA[Search Form]]></string>
-  <string name="_bx_channels_page_block_title_entries_my"><![CDATA[My Followed Channels]]></string>
-  <string name="_bx_channels_page_trigger_block_title_entries_my"><![CDATA[My Followed Channels]]></string>
-  <string name="_bx_channels_page_block_title_search_results"><![CDATA[Search Results]]></string>
-  <string name="_bx_channels_page_block_title_search_results_by_hashtag"><![CDATA[Search Results By Hashtag]]></string>
+        <string name="_bx_channels_page_block_title_entries_my"><![CDATA[My Followed Channels]]></string>
+        <string name="_bx_channels_page_trigger_block_title_entries_my"><![CDATA[My Followed Channels]]></string>
+        <string name="_bx_channels_page_block_title_search_results"><![CDATA[Search Results]]></string>
+        <string name="_bx_channels_page_block_title_search_results_by_hashtag"><![CDATA[Search Results By Hashtag]]></string>
 	<string name="_bx_channels_page_block_title_search_form_cmts"><![CDATA[Comments Search Form]]></string>
 	<string name="_bx_channels_page_block_title_search_results_cmts"><![CDATA[Comments Search Results]]></string>
 	<string name="_bx_channels_page_block_title_sys_featured_entries_view_showcase"><![CDATA[Featured Channels (Showcase View)]]></string>
 	<string name="_bx_channels_page_block_title_featured_entries_view_showcase"><![CDATA[Featured Channels]]></string>
 	<string name="_bx_channels_page_block_title_sys_recommended_entries_view_showcase"><![CDATA[Recommended Channels (Showcase View)]]></string>
 	<string name="_bx_channels_page_block_title_recommended_entries_view_showcase"><![CDATA[Recommended Channels]]></string>
-	
+
 	<string name="_bx_channels_menu_title_submenu"><![CDATA[Channels Submenu]]></string>
 	<string name="_bx_channels_menu_set_title_submenu"><![CDATA[Channels Submenu]]></string>
 	<string name="_bx_channels_menu_set_title_view_profile_actions"><![CDATA[Channel Actions]]></string>

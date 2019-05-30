@@ -38,6 +38,9 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
 ('bx_channels_view_profile', 1, 'bx_channels', '', '_bx_channels_page_block_title_entry_social_sharing', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:21:\"entity_social_sharing\";}', 0, 0, 0, 0),
 ('bx_channels_view_profile', 1, 'bx_channels', '', '_bx_channels_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:18:\"entity_all_actions\";}', 0, 0, 0, 0),
+('bx_channels_view_profile', 1, 'bx_channels', '', '_bx_channels_page_block_title_entry_breadcrumb', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_channels";s:6:"method";s:17:"entity_breadcrumb";}', 0, 0, 1, 1),
+('bx_channels_view_profile', 2, 'bx_channels', '', '_bx_channels_page_block_title_entry_parent', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_channels";s:6:"method";s:13:"entity_parent";}', 0, 0, 1, 1),
+('bx_channels_view_profile', 3, 'bx_channels', '', '_bx_channels_page_block_title_entry_childs', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_channels";s:6:"method";s:13:"entity_childs";}', 0, 0, 1, 1),
 ('bx_channels_view_profile', 4, 'bx_channels', '', '_bx_channels_page_block_title_search_results_by_hashtag', 0, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:24:\"search_result_by_hashtag\";}', 0, 0, 0, 0),
 ('bx_channels_view_profile', 4, 'bx_channels', '', '_bx_channels_page_block_title_profile_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:11:\"bx_channels\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 0, 1);
 

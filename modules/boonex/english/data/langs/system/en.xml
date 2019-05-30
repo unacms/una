@@ -677,6 +677,9 @@
 	<string name="_adm_form_btn_forms_cancel"><![CDATA[Cancel]]></string>
 	<string name="_adm_form_btn_forms_edit"><![CDATA[Edit form]]></string>
 	<string name="_adm_form_btn_forms_save"><![CDATA[Save]]></string>
+        <string name="_adm_form_btn_labels_add"><![CDATA[Add]]></string>
+        <string name="_adm_form_btn_labels_cancel"><![CDATA[Cancel]]></string>
+        <string name="_adm_form_btn_labels_submit"><![CDATA[Submit]]></string>
 	<string name="_adm_form_btn_pre_lists_add"><![CDATA[Add]]></string>
 	<string name="_adm_form_btn_pre_lists_cancel"><![CDATA[Cancel]]></string>
 	<string name="_adm_form_btn_pre_lists_create"><![CDATA[Add New List]]></string>
@@ -740,6 +743,9 @@
 	<string name="_adm_form_err_field_values"><![CDATA[You need to select a data set from the list.]]></string>
 	<string name="_adm_form_err_forms_edit"><![CDATA[Cannot update form]]></string>
 	<string name="_adm_form_err_forms_title"><![CDATA[Enter name, more than 3 characters]]></string>
+        <string name="_adm_form_err_labels_add"><![CDATA[Cannot add label]]></string>
+        <string name="_adm_form_err_labels_edit"><![CDATA[Cannot update label]]></string>
+        <string name="_adm_form_err_labels_value"><![CDATA[Label should have unique non-empty value.]]></string>
 	<string name="_adm_form_err_missing_params"><![CDATA[The required parameters are missing.]]></string>
 	<string name="_adm_form_err_pre_lists_create"><![CDATA[Cannot add list]]></string>
 	<string name="_adm_form_err_pre_lists_edit"><![CDATA[Cannot update list]]></string>
@@ -872,6 +878,14 @@
 	<string name="_adm_form_txt_forms_n_displays"><![CDATA[{0} displays]]></string>
 	<string name="_adm_form_txt_forms_n_fields"><![CDATA[{0} fields]]></string>
 	<string name="_adm_form_txt_forms_title"><![CDATA[System Name]]></string>
+        <string name="_adm_form_txt_labels_add_popup"><![CDATA[Add label]]></string>
+        <string name="_adm_form_txt_labels_edit_popup"><![CDATA[Edit "{0}" label]]></string>
+        <string name="_adm_form_txt_labels_items"><![CDATA[Items]]></string>
+        <string name="_adm_form_txt_labels_manage_items"><![CDATA[Manage child labels]]></string>
+        <string name="_adm_form_txt_labels_n_items"><![CDATA[{0} items]]></string>
+        <string name="_adm_form_txt_labels_parent"><![CDATA[Parent]]></string>
+        <string name="_adm_form_txt_labels_parent_empty"><![CDATA[No Parent]]></string>
+        <string name="_adm_form_txt_labels_value"><![CDATA[Label]]></string>
 	<string name="_adm_form_txt_pre_lists_country"><![CDATA[Country]]></string>
 	<string name="_adm_form_txt_pre_lists_create_popup"><![CDATA[Add New List]]></string>
 	<string name="_adm_form_txt_pre_lists_edit_popup"><![CDATA[Edit "{0}" List]]></string>
@@ -939,6 +953,7 @@
 	<string name="_adm_lmi_cpt_images"><![CDATA[Images]]></string>
 	<string name="_adm_lmi_cpt_items"><![CDATA[Items]]></string>
 	<string name="_adm_lmi_cpt_keys"><![CDATA[Keys]]></string>
+        <string name="_adm_lmi_cpt_labels"><![CDATA[Labels]]></string>
 	<string name="_adm_lmi_cpt_latest"><![CDATA[Latest]]></string>
 	<string name="_adm_lmi_cpt_levels"><![CDATA[Levels]]></string>
 	<string name="_adm_lmi_cpt_logo"><![CDATA[Logo]]></string>
