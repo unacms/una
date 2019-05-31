@@ -100,7 +100,7 @@ class BxDirConfig extends BxBaseModTextConfig
                 'poster' => 'bx_directory_videos_poster', 
             	'poster_preview' => 'bx_directory_videos_poster_preview',
             	'mp4' => 'bx_directory_videos_mp4', 
-            	'webm' => 'bx_directory_videos_webm'
+            	'mp4_hd' => 'bx_directory_videos_mp4_hd'
             ),
             'OBJECT_VIDEO_TRANSCODER_HEIGHT' => '480px',
             'OBJECT_REPORTS' => 'bx_directory',

@@ -703,8 +703,8 @@ class BxAlbumsModule extends BxBaseModTextModule
         $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
         $oTcPoster = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']);
         $oTcMp4 = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']);
-        $oTcWebm = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['webm']);
-        if(!$oTcPoster || !$oTcMp4 || !$oTcWebm)
+        $oTcMp4Hd = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4_hd']);
+        if(!$oTcPoster || !$oTcMp4 || !$oTcMp4Hd)
             return $aResults;
 
         $aOutput = array();
@@ -719,7 +719,7 @@ class BxAlbumsModule extends BxBaseModTextModule
                 'id' => $aMedia['id'],
                 'src_poster' => $oTcPoster->getFileUrl($aMedia['file_id']),
                 'src_mp4' => $oTcMp4->getFileUrl($aMedia['file_id']),
-                'src_webm' => $oTcWebm->getFileUrl($aMedia['file_id']),
+                'src_mp4_hd' => $oTcMp4Hd->getFileUrl($aMedia['file_id']),
             );
         }
 
@@ -736,7 +736,7 @@ class BxAlbumsModule extends BxBaseModTextModule
         $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
         $oTcPoster = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']);
         $oTcMp4 = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']);
-        $oTcWebm = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['webm']);
+        $oTcMp4Hd = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4_hd']);
         $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
 
     	//--- Image(s) and Video(s)
@@ -753,7 +753,7 @@ class BxAlbumsModule extends BxBaseModTextModule
                     'id' => $aMediaInfo['id'],
                     'src_poster' => $oTcPoster->getFileUrl($aMediaInfo['file_id']),
                     'src_mp4' => $oTcMp4->getFileUrl($aMediaInfo['file_id']),
-                    'src_webm' => $oTcWebm->getFileUrl($aMediaInfo['file_id']),
+                    'src_mp4_hd' => $oTcMp4Hd->getFileUrl($aMediaInfo['file_id']),
                 );
             else
                 $aImages[$iMediaId] = array(

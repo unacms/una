@@ -444,7 +444,7 @@ INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`,
 ('bx_directory_videos_poster', 'bx_directory_videos_resized', 'Storage', 'a:1:{s:6:"object";s:19:"bx_directory_videos";}', 'no', '0', '0', '0', 'BxDolTranscoderVideo', ''),
 ('bx_directory_videos_poster_preview', 'bx_directory_videos_resized', 'Storage', 'a:1:{s:6:"object";s:19:"bx_directory_videos";}', 'no', '0', '0', '0', 'BxDolTranscoderVideo', ''),
 ('bx_directory_videos_mp4', 'bx_directory_videos_resized', 'Storage', 'a:1:{s:6:"object";s:19:"bx_directory_videos";}', 'no', '0', '0', '0', 'BxDolTranscoderVideo', ''),
-('bx_directory_videos_webm', 'bx_directory_videos_resized', 'Storage', 'a:1:{s:6:"object";s:19:"bx_directory_videos";}', 'no', '0', '0', '0', 'BxDolTranscoderVideo', ''),
+('bx_directory_videos_mp4_hd', 'bx_directory_videos_resized', 'Storage', 'a:1:{s:6:"object";s:19:"bx_directory_videos";}', 'no', '0', '0', '0', 'BxDolTranscoderVideo', ''),
 
 ('bx_directory_preview_files', 'bx_directory_photos_resized', 'Storage', 'a:1:{s:6:"object";s:18:"bx_directory_files";}', 'no', '1', '2592000', '0', '', ''),
 ('bx_directory_gallery_files', 'bx_directory_photos_resized', 'Storage', 'a:1:{s:6:"object";s:18:"bx_directory_files";}', 'no', '1', '2592000', '0', '', '');
@@ -461,7 +461,7 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 ('bx_directory_videos_poster_preview', 'Poster', 'a:2:{s:1:"h";s:3:"480";s:10:"force_type";s:3:"jpg";}', 0),
 ('bx_directory_videos_poster', 'Poster', 'a:2:{s:1:"h";s:3:"318";s:10:"force_type";s:3:"jpg";}', 0),
 ('bx_directory_videos_mp4', 'Mp4', 'a:2:{s:1:"h";s:3:"318";s:10:"force_type";s:3:"mp4";}', 0),
-('bx_directory_videos_webm', 'Webm', 'a:2:{s:1:"h";s:3:"318";s:10:"force_type";s:4:"webm";}', 0),
+('bx_directory_videos_mp4_hd', 'Mp4', 'a:2:{s:1:"h";s:3:"720";s:10:"force_type";s:4:"mp4";}', 0),
 
 ('bx_directory_preview_files', 'Resize', 'a:3:{s:1:"w";s:3:"300";s:1:"h";s:3:"200";s:11:"crop_resize";s:1:"1";}', '0'),
 ('bx_directory_gallery_files', 'Resize', 'a:1:{s:1:"w";s:3:"500";}', '0');

@@ -233,7 +233,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             return array (
                 'poster' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']),
                 'mp4' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']),
-                'webm' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['webm']),
+                'mp4_hd' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4_hd']),
             );
 
         return false;
@@ -290,7 +290,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
                     'video' => $isVideo && $aTranscodersVideo ? BxTemplFunctions::getInstance()->videoPlayer(
                         $aTranscodersVideo['poster']->getFileUrl($a['id']), 
                         $aTranscodersVideo['mp4']->getFileUrl($a['id']), 
-                        $aTranscodersVideo['webm']->getFileUrl($a['id']),
+                        $aTranscodersVideo['mp4_hd']->getFileUrl($a['id']),
                         false, ''
                     ) : '',
                 ),

@@ -234,7 +234,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
             $aTranscodersVideo = array (
                 'poster' => BxDolTranscoderImage::getObjectInstance($sVideoPosterTranscoder),
                 'mp4' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']),
-                'webm' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['webm']),
+                'mp4_hd' => BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4_hd']),
             );
         
         $aFileInfo = $oStorage->getFile ($aMediaInfo['file_id']);
@@ -282,7 +282,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
                 'video' => $isVideo && $aTranscodersVideo ? BxTemplFunctions::getInstance()->videoPlayer(
                     $aTranscodersVideo['poster']->getFileUrl($aMediaInfo['file_id']), 
                     $aTranscodersVideo['mp4']->getFileUrl($aMediaInfo['file_id']), 
-                    $aTranscodersVideo['webm']->getFileUrl($aMediaInfo['file_id']),
+                    $aTranscodersVideo['mp4_hd']->getFileUrl($aMediaInfo['file_id']),
                     $mixedAttrs, 'max-height:' . $CNF['OBJECT_VIDEO_TRANSCODER_HEIGHT']
                 ) : '',
                 'duration' => $sVideoDuration,

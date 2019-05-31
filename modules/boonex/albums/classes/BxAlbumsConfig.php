@@ -79,7 +79,12 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_albums_proxy_preview',
             'OBJECT_IMAGES_TRANSCODER_GALLERY' => '',
             'OBJECT_IMAGES_TRANSCODER_BIG' => 'bx_albums_big',
-            'OBJECT_VIDEOS_TRANSCODERS' => array('poster' => 'bx_albums_video_poster_big', 'poster_preview' => 'bx_albums_video_poster_preview', 'mp4' => 'bx_albums_video_mp4', 'webm' => 'bx_albums_video_webm'),
+            'OBJECT_VIDEOS_TRANSCODERS' => array(
+                'poster' => 'bx_albums_video_poster_big', 
+                'poster_preview' => 'bx_albums_video_poster_preview', 
+                'mp4' => 'bx_albums_video_mp4', 
+                'mp4_hd' => 'bx_albums_video_mp4_hd'
+            ),
             'OBJECT_VIDEO_TRANSCODER_HEIGHT' => '480px',
             'OBJECT_TRANSCODER_BROWSE' => 'bx_albums_proxy_browse',
             'OBJECT_TRANSCODER_COVER' => 'bx_albums_proxy_cover',

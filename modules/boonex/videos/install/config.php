@@ -67,9 +67,15 @@ $aConfig = array(
      * Transcoders.
      */
     'transcoders' => array(
-		'bx_videos_preview',
+        'bx_videos_preview',
         'bx_videos_gallery',
-        'bx_videos_cover'
+        'bx_videos_cover',
+        'bx_videos_poster',
+        'bx_videos_video_poster_preview',
+        'bx_videos_video_poster_gallery',
+        'bx_videos_video_poster_cover',
+        'bx_videos_video_mp4',
+        'bx_videos_video_mp4_hd'
     ),
 
     /**

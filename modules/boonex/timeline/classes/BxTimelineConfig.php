@@ -141,7 +141,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'transcoder_photos_big' => $this->_sName . '_photos_big',
             'transcoder_videos_poster' => $this->_sName . '_videos_poster',
             'transcoder_videos_mp4' => $this->_sName . '_videos_mp4',
-            'transcoder_videos_webm' => $this->_sName . '_videos_webm',
+            'transcoder_videos_mp4_hd' => $this->_sName . '_videos_mp4_hd',
 
             'page_item_brief' => $this->_sName . '_item_brief',
 

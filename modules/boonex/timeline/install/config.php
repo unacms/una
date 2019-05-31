@@ -73,7 +73,7 @@ $aConfig = array(
         'bx_timeline_photos_big',
     	'bx_timeline_videos_poster',
     	'bx_timeline_videos_mp4',
-    	'bx_timeline_videos_webm'
+    	'bx_timeline_videos_mp4_hd'
     ),
 
     /**

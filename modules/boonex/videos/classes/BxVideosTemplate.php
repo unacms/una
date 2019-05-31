@@ -84,7 +84,7 @@ class BxVideosTemplate extends BxBaseModTextTemplate
             $aTranscodersVideo = array (
                 'poster' => BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']),
                 'mp4' => BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']),
-                'webm' => BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['webm']),
+                'mp4_hd' => BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4_hd']),
             );
 
         $iFile = (int)$aContentInfo[$CNF['FIELD_VIDEO']];
@@ -105,7 +105,7 @@ class BxVideosTemplate extends BxBaseModTextTemplate
             'player' => BxTemplFunctions::getInstance()->videoPlayer(
                 $sPoster, 
                 $aTranscodersVideo['mp4']->getFileUrl($iFile), 
-                $aTranscodersVideo['webm']->getFileUrl($iFile),
+                $aTranscodersVideo['mp4_hd']->getFileUrl($iFile),
                 false, 'max-height:' . $CNF['OBJECT_VIDEO_TRANSCODER_HEIGHT']
             )
         );

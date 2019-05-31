@@ -358,8 +358,8 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 
         $oTcPoster = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']);
         $oTcMp4 = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']);
-        $oTcWebm = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['webm']);
-        if(!$oTcPoster || !$oTcMp4 || !$oTcWebm)
+        $oTcMp4Hd = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4_hd']);
+        if(!$oTcPoster || !$oTcMp4 || !$oTcMp4Hd)
             return array();
 
         $aResults = array();
@@ -368,7 +368,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
                 'id' => $a['id'],
                 'src_poster' => $oTcPoster->getFileUrl($a['id']),
                 'src_mp4' => $oTcMp4->getFileUrl($a['id']),
-                'src_webm' => $oTcWebm->getFileUrl($a['id']),
+                'src_mp4_hd' => $oTcMp4Hd->getFileUrl($a['id']),
             );
 
         return $aResults;

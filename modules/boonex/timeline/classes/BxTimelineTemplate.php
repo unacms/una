@@ -974,7 +974,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     {
         $sVideoId = $this->_oConfig->getHtmlIds('view', 'video') . $aEvent['id'] . '-' . $aVideo['id'];
         return $this->parseHtmlByName('video_player.html', array(
-            'player' => BxTemplFunctions::getInstance()->videoPlayer($aVideo['src_poster'], $aVideo['src_mp4'], $aVideo['src_webm'], array('id' => $sVideoId)),
+            'player' => BxTemplFunctions::getInstance()->videoPlayer($aVideo['src_poster'], $aVideo['src_mp4'], $aVideo['src_mp4_hd'], array('id' => $sVideoId)),
             'html_id' => $sVideoId
         ));
     }
@@ -1916,7 +1916,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             if(!$bMain || $sVap == BX_TIMELINE_VAP_OFF)
                 $aTmplVarsVideos[] = array(
                     'style_prefix' => $sStylePrefix,
-                    'item' => BxTemplFunctions::getInstance()->videoPlayer($aVideo['src_poster'], $aVideo['src_mp4'], $aVideo['src_webm'], array(
+                    'item' => BxTemplFunctions::getInstance()->videoPlayer($aVideo['src_poster'], $aVideo['src_mp4'], $aVideo['src_mp4_hd'], array(
                         'preload' => 'auto'
                     ), '') 
                 );
@@ -2085,14 +2085,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 if(!empty($aVideos) && is_array($aVideos)) {
                     $oTranscoderPoster = BxDolTranscoderVideo::getObjectInstance($this->_oConfig->getObject('transcoder_videos_poster'));
                     $oTranscoderMp4 = BxDolTranscoderVideo::getObjectInstance($this->_oConfig->getObject('transcoder_videos_mp4'));
-                    $oTranscoderWebm = BxDolTranscoderVideo::getObjectInstance($this->_oConfig->getObject('transcoder_videos_webm'));
+                    $oTranscoderMp4Hd = BxDolTranscoderVideo::getObjectInstance($this->_oConfig->getObject('transcoder_videos_mp4_hd'));
 
                     foreach($aVideos as $iVideoId) {
                         $aResult['content']['videos_attach'][$iVideoId] = array(
                             'id' => $iVideoId,
                             'src_poster' => $oTranscoderPoster->getFileUrl($iVideoId),
                             'src_mp4' => $oTranscoderMp4->getFileUrl($iVideoId),
-                            'src_webm' => $oTranscoderWebm->getFileUrl($iVideoId),
+                            'src_mp4_hd' => $oTranscoderMp4Hd->getFileUrl($iVideoId),
                         );
                     }
                 }

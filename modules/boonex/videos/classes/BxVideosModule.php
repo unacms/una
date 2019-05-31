@@ -109,8 +109,8 @@ class BxVideosModule extends BxBaseModTextModule
         $oTcvPoster = BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']);
         $oTciPoster = BxDolTranscoder::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_POSTER']);
         $oTcvMp4 = BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']);
-        $oTcvWebm = BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['webm']);
-        if(!($oTcvPoster || $oTciPoster) || !$oTcvMp4 || !$oTcvWebm)
+        $oTcvMp4Hd = BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4_hd']);
+        if(!($oTcvPoster || $oTciPoster) || !$oTcvMp4 || !$oTcvMp4Hd)
             return array();
 
 		$sPosterSrc = !empty($CNF['FIELD_POSTER']) ? $CNF['FIELD_POSTER'] : $CNF['FIELD_THUMB'];
@@ -124,7 +124,7 @@ class BxVideosModule extends BxBaseModTextModule
             	'id' => $iFile,
             	'src_poster' => $sPoster, 
             	'src_mp4' => $oTcvMp4->getFileUrl($iFile), 
-            	'src_webm' => $oTcvWebm->getFileUrl($iFile)
+            	'src_mp4_hd' => $oTcvMp4Hd->getFileUrl($iFile)
             )
         );
     }

@@ -80,7 +80,7 @@ $aConfig = array(
         'bx_directory_videos_poster',
         'bx_directory_videos_poster_preview',
         'bx_directory_videos_mp4',
-        'bx_directory_videos_webm',
+        'bx_directory_videos_mp4_hd',
 
         'bx_directory_preview_files',
         'bx_directory_gallery_files'

@@ -86,7 +86,7 @@ class BxVideosConfig extends BxBaseModTextConfig
             	'poster_preview' => 'bx_videos_video_poster_preview',
                 'poster_gallery' => 'bx_videos_video_poster_gallery',  
             	'mp4' => 'bx_videos_video_mp4', 
-            	'webm' => 'bx_videos_video_webm'
+            	'mp4_hd' => 'bx_videos_video_mp4_hd'
             ),
             'OBJECT_VIDEO_TRANSCODER_HEIGHT' => '480px',
             'OBJECT_REPORTS' => 'bx_videos',
