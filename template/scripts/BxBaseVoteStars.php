@@ -140,9 +140,9 @@ class BxBaseVoteStars extends BxDolVoteStars
         ));
     }
 
-    protected function _isShowLegend($aParams, $isAllowedVote, $bCount)
+    protected function _isShowLegend($aParams, $isAllowedVote, $isAllowedVoteView, $bCount)
     {
-        return isset($aParams['show_legend']) && $aParams['show_legend'] === true;
+        return isset($aParams['show_legend']) && $aParams['show_legend'] === true && $isAllowedVoteView;
     }
 }
 

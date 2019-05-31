@@ -227,6 +227,32 @@ class BxDolScore extends BxDolObject
         return $this->checkActionErrorMsg('vote');
     }
 
+    public function isAllowedVoteView($isPerformAction = false)
+    {
+        if(isAdmin())
+            return true;
+
+        return $this->checkAction('vote_view', $isPerformAction);
+    }
+
+    public function msgErrAllowedVoteView()
+    {
+        return $this->checkActionErrorMsg('vote_view');
+    }
+
+    public function isAllowedVoteViewVoters($isPerformAction = false)
+    {
+        if(isAdmin())
+            return true;
+
+        return $this->checkAction('vote_view_voters', $isPerformAction);
+    }
+
+    public function msgErrAllowedVoteViewVoters()
+    {
+        return $this->checkActionErrorMsg('vote_view_voters');
+    }
+
 
     /**
      * Internal functions
