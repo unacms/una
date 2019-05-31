@@ -122,7 +122,12 @@ class BxPostsFormEntry extends BxBaseModTextFormEntry
              $aValsToAdd[$CNF['FIELD_PUBLISHED']] = $iPublished;
         }
 
-        $aValsToAdd[$CNF['FIELD_STATUS']] = $aValsToAdd[$CNF['FIELD_PUBLISHED']] > $aValsToAdd[$CNF['FIELD_ADDED']] ? 'awaiting' : 'active';
+        $aValsToAdd[$CNF['FIELD_STATUS']] = 'active';
+        if($aValsToAdd[$CNF['FIELD_PUBLISHED']] > $aValsToAdd[$CNF['FIELD_ADDED']]) {
+            $aValsToAdd[$CNF['FIELD_ADDED']] = $aValsToAdd[$CNF['FIELD_PUBLISHED']];
+            $aValsToAdd[$CNF['FIELD_CHANGED']] = $aValsToAdd[$CNF['FIELD_PUBLISHED']];
+            $aValsToAdd[$CNF['FIELD_STATUS']] = 'awaiting';
+        }
 
         $iContentId = parent::insert ($aValsToAdd, $isIgnore);
         if(!empty($iContentId))
