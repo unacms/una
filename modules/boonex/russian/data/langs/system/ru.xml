@@ -2631,6 +2631,7 @@
 	<string name="_sys_splash_inp_postfix"><![CDATA[.online.me]]></string>
 	<string name="_sys_splash_slogan"><![CDATA[Самый простой способ создать свой собственный социальный сайт.]]></string>
         <string name="_sys_status"><![CDATA[Статус]]></string>
+        <string name="_sys_status_awaiting"><![CDATA[ожидающий]]></string>
 	<string name="_sys_storage_err_db"><![CDATA[ошибка базы данных]]></string>
 	<string name="_sys_storage_err_engine_add"><![CDATA[произошла ошибка]]></string>
 	<string name="_sys_storage_err_engine_get"><![CDATA[произошла ошибка]]></string>

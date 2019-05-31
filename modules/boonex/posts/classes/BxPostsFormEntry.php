@@ -143,9 +143,6 @@ class BxPostsFormEntry extends BxBaseModTextFormEntry
             $aValsToAdd[$CNF['FIELD_PUBLISHED']] = $iPublished;
         }
 
-        if(isset($aValsToAdd[$CNF['FIELD_PUBLISHED']]))
-            $aValsToAdd[$CNF['FIELD_STATUS']] = $aValsToAdd[$CNF['FIELD_PUBLISHED']] > time() ? 'awaiting' : 'active';
-
         $iResult = parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
 
         $this->processFiles($CNF['FIELD_COVER'], $iContentId, false);

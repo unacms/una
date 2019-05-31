@@ -308,11 +308,18 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         if(empty($iId))
             $iId = $this->_iContentId;
 
-        if(!empty($CNF['FIELD_ALLOW_VIEW_TO'])) {
-            $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iId);
-            if(isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) && !in_array((int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']], array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS)))
-                return '';
-        }
+        $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iId);
+        if(!empty($CNF['FIELD_PUBLISHED']) && isset($aContentInfo[$CNF['FIELD_PUBLISHED']]) && (int)$aContentInfo[$CNF['FIELD_PUBLISHED']] > time())
+            return '';
+
+        if(!empty($CNF['FIELD_ALLOW_VIEW_TO']) && isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) && !in_array((int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']], array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS)))
+            return '';
+
+        $sStatus = 'active';
+        if(!empty($CNF['FIELD_STATUS']) && isset($aContentInfo[$CNF['FIELD_STATUS']]) && $aContentInfo[$CNF['FIELD_STATUS']] != $sStatus)
+            return '';
+        if(!empty($CNF['FIELD_STATUS_ADMIN']) && isset($aContentInfo[$CNF['FIELD_STATUS_ADMIN']]) && $aContentInfo[$CNF['FIELD_STATUS_ADMIN']] != $sStatus)
+            return '';
 
         if(!BxDolRequest::serviceExists('bx_timeline', 'get_repost_element_block'))
             return '';
