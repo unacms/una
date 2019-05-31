@@ -1658,6 +1658,8 @@
 	<string name="_sys_acl_action_unauthenticated"><![CDATA[Не вошедшие пользователи не могут '{1}'.]]></string>
 	<string name="_sys_acl_action_unconfirmed"><![CDATA[Вы не подтвердили свой профиль. Пожалуйста, проверьте эл. сообщение со ссылкой на активацию профиля. Неподтверждённые пользователи не могут <b>{1}</b>.]]></string>
 	<string name="_sys_acl_action_vote"><![CDATA[Голосовать]]></string>
+        <string name="_sys_acl_action_vote_view"><![CDATA[Просматривать голоса]]></string>
+        <string name="_sys_acl_action_vote_view_voters"><![CDATA[Просматривать проголосовавших]]></string>
 	<string name="_sys_acl_action_report"><![CDATA[Жаловаться]]></string>
 	<string name="_sys_acl_action_report_view"><![CDATA[Просматривать жалобы]]></string>
 	<string name="_sys_acl_start"><![CDATA[Начало: ]]></string>

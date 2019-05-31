@@ -1658,6 +1658,8 @@
 	<string name="_sys_acl_action_unauthenticated"><![CDATA[Not logged in users can't '{1}'.]]></string>
 	<string name="_sys_acl_action_unconfirmed"><![CDATA[You didn't confirm your profile. Please check your email with profile activation link. Unconfirmed members can't <b>{1}</b>.]]></string>
 	<string name="_sys_acl_action_vote"><![CDATA[Vote]]></string>
+        <string name="_sys_acl_action_vote_view"><![CDATA[View votes]]></string>
+        <string name="_sys_acl_action_vote_view_voters"><![CDATA[View voters]]></string>
 	<string name="_sys_acl_action_report"><![CDATA[Report]]></string>
 	<string name="_sys_acl_action_report_view"><![CDATA[View reports]]></string>
 	<string name="_sys_acl_start"><![CDATA[Start: ]]></string>

@@ -637,6 +637,14 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionVote = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'vote_view', NULL, '_sys_acl_action_vote_view', '', 1, 0);
+SET @iIdActionVoteView = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'vote_view_voters', NULL, '_sys_acl_action_vote_view_voters', '', 1, 0);
+SET @iIdActionVoteViewVoters = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('system', 'report', NULL, '_sys_acl_action_report', '', 1, 0);
 SET @iIdActionReport = LAST_INSERT_ID();
 
@@ -752,6 +760,18 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iModerator, @iIdActionVote),
 (@iAdministrator, @iIdActionVote),
 (@iPremium, @iIdActionVote),
+
+-- vote view
+(@iStandard, @iIdActionVoteView),
+(@iModerator, @iIdActionVoteView),
+(@iAdministrator, @iIdActionVoteView),
+(@iPremium, @iIdActionVoteView),
+
+-- vote view voters
+(@iStandard, @iIdActionVoteViewVoters),
+(@iModerator, @iIdActionVoteViewVoters),
+(@iAdministrator, @iIdActionVoteViewVoters),
+(@iPremium, @iIdActionVoteViewVoters),
 
 -- report 
 (@iStandard, @iIdActionReport),
