@@ -74,6 +74,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'FIELD_ADDED' => 'date',
             'FIELD_TITLE' => 'title',
             'FIELD_TEXT' => 'description',
+            'FIELD_STATUS' => 'status',
+            'FIELD_DATE' => 'date',
             'FIELD_ANONYMOUS' => 'anonymous',
             'FIELD_CONTROLS' => 'controls',
             'FIELD_LOCATION_PREFIX' => 'location',
@@ -98,6 +100,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
             // some language keys
             'T' => array (
+                'txt_status_deleted' => '_bx_timeline_txt_status_deleted',
                 'txt_sample_single' => '_bx_timeline_txt_sample',
                 'txt_sample_single_ext' => '_bx_timeline_txt_sample_ext',
             	'txt_sample_comment_single' => '_bx_timeline_txt_sample_comment_single',

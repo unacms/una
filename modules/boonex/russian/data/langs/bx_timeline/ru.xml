@@ -219,6 +219,7 @@
 	<string name="_bx_timeline_txt_or_jump_to"><![CDATA[... или перейти к:]]></string>
 	<string name="_bx_timeline_txt_jump_to_n_year"><![CDATA[Перейти к {0} году]]></string>
 	<string name="_bx_timeline_txt_jump_to_recent"><![CDATA[Перейти к недавним сообщениям]]></string>
+        <string name="_bx_timeline_txt_status_deleted"><![CDATA[Удалено]]></string>
 	<string name="_bx_timeline_txt_hot"><![CDATA['Горячее' событие]]></string>
 	<string name="_bx_timeline_txt_pinned"><![CDATA[Приколотое событие]]></string>
         <string name="_bx_timeline_txt_sticked"><![CDATA[Событие приколотое для всех]]></string>

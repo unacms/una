@@ -16,22 +16,22 @@ class BxTimelineGridAdministration extends BxBaseModGeneralGridAdministration
     	$this->MODULE = 'bx_timeline';
         parent::__construct ($aOptions, $oTemplate);
     }
-    
+
     protected function _getCellDate($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
     }
-    
+
     protected function _switcherChecked2State($isChecked)
     {
-        return $isChecked ? '1' : '0';
+        return $isChecked ? 'active' : 'hidden';
     }
 
     protected function _switcherState2Checked($mixedState)
     {
-        return '1' == $mixedState ? true : false;
+        return 'active' == $mixedState ? true : false;
     }
-    
+
     public function performActionDelete($aParams = array())
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;

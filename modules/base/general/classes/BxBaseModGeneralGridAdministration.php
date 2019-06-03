@@ -177,7 +177,22 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
     {
     	return true;
     }
-    
+
+    protected function _getCellSwitcher ($mixedValue, $sKey, $aField, $aRow)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!in_array($aRow[$CNF['FIELD_STATUS']], array('active', 'hidden'))) {
+            $sStatusKey = '_sys_status_' . $aRow[$CNF['FIELD_STATUS']];
+            if(!empty($CNF['T']['txt_status_' . $aRow[$CNF['FIELD_STATUS']]]))
+                $sStatusKey = $CNF['T']['txt_status_' . $aRow[$CNF['FIELD_STATUS']]];
+
+            return parent::_getCellDefault(_t($sStatusKey), $sKey, $aField, $aRow);
+        }
+
+        return parent::_getCellSwitcher ($mixedValue, $sKey, $aField, $aRow);
+    }
+
     protected function _getCellHeaderReports ($sKey, $aField)
     {
         $s = parent::_getCellHeaderDefault($sKey, $aField);
