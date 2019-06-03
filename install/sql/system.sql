@@ -111,6 +111,7 @@ CREATE TABLE `sys_objects_auths` (
   `Link` varchar(255) NOT NULL,
   `OnClick` varchar(255) NOT NULL,
   `Icon` varchar(64) NOT NULL,
+  `Style` varchar(255) NOT NULL,
   PRIMARY KEY  (`ID`)
 );
 
