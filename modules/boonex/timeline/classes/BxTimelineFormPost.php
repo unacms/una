@@ -46,6 +46,10 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
+        if($this->aParams['display'] == $this->_oModule->_oConfig->getObject('form_display_post_edit') && isset($CNF['FIELD_DATE']) && isset($this->aInputs[$CNF['FIELD_DATE']]))
+            if(isset($aValues[$CNF['FIELD_STATUS']]) && in_array($aValues[$CNF['FIELD_STATUS']], array(BX_TIMELINE_STATUS_ACTIVE, BX_TIMELINE_STATUS_HIDDEN)))
+                unset($this->aInputs[$CNF['FIELD_DATE']]);
+
         if(isset($CNF['FIELD_ANONYMOUS']) && isset($this->aInputs[$CNF['FIELD_ANONYMOUS']]) && isset($aValues[$CNF['FIELD_OBJECT_ID']]))
             $this->aInputs[$CNF['FIELD_ANONYMOUS']]['checked'] = $aValues[$CNF['FIELD_OBJECT_ID']] < 0;
 
