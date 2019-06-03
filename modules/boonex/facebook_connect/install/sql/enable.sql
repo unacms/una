@@ -6,8 +6,8 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 
 -- OBJECTS: AUTH
 
-INSERT INTO `sys_objects_auths` (`Name`, `Title`, `Link`, `Icon`) VALUES
-('bx_facebook', '_bx_facebook_auth_title', 'modules/?r=facebook_connect/login_form', 'fab facebook-square');
+INSERT INTO `sys_objects_auths` (`Name`, `Title`, `Link`, `Icon`, `Style`) VALUES
+('bx_facebook', '_bx_facebook_auth_title', 'modules/?r=facebook_connect/login_form', 'fab facebook-square', 'a:1:{s:7:".bx-btn";a:1:{s:10:"background";s:18:"#3b5999 !important";}}');
 
 -- ALERTS
 

@@ -33,8 +33,8 @@ class BxBaseServiceLogin extends BxDol
         foreach($aAuthTypes as $iKey => $aItems) {
             $sTitle = _t($aItems['Title']);
 
-            $aTmplButtons[] = array(
-            	'class' => $bCompact ? 'sys-auth-compact bx-def-margin-sec-left-auto' : '',
+            $aTmplButtons[] = array( 
+            	'class' => ($bCompact ? 'sys-auth-compact bx-def-margin-sec-left-auto ' : '') . $aItems['Name'],
                 'href' => !empty($aItems['Link']) ? BX_DOL_URL_ROOT . $aItems['Link'] : 'javascript:void(0)',
                 'title_alt' => bx_html_attribute($sTitle),
                 'bx_if:show_onclick' => array(
@@ -56,12 +56,19 @@ class BxBaseServiceLogin extends BxDol
                     )
                 )
             );
+            if ($aItems['Style'] != ""){
+                $aStyles = unserialize($aItems['Style']);
+                foreach($aStyles as $sKey => $aValues) {
+                    BxDolTemplate::getInstance()->addCssStyle('.'. $aItems['Name'] .' ' . $sKey, $aValues);
+                }
+            }
         }
 
         BxDolTemplate::getInstance()->addCss(array('auth.css'));
 
         return BxDolTemplate::getInstance()->parseHtmlByName('auth.html', array(
-            'bx_repeat:buttons' => $aTmplButtons
+            'bx_repeat:buttons' => $aTmplButtons,
+             'class_container' => ($bCompact ? 'sys-auth-compact-container' : '')
         ));
     }
 
