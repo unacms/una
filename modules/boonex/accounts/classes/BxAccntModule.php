@@ -43,12 +43,14 @@ class BxAccntModule extends BxBaseModGeneralModule
 		bx_import('SearchResult', $this->_aModule);
         $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
         $o = new $sClass();
+        $o->unsetPaginate();
+        $iNumTotal = $o->getNum();
+        
         $o->fillFilters(array(
 			'unconfirmed' => 1
         ));
-        $o->unsetPaginate();
-
-        return array('counter1_value' => $o->getNum(), 'counter1_caption' => _t('_bx_accnt_menu_dashboard_manage_tools_addon_counter1_caption'));
+      
+        return array('counter1_value' => $o->getNum(),'counter3_value' => $iNumTotal, 'counter1_caption' => _t('_bx_accnt_menu_dashboard_manage_tools_addon_counter1_caption'));
 	}
 
     public function checkAllowedDelete(&$aDataEntry, $isPerformAction = false)

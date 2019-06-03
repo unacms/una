@@ -137,10 +137,12 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 		bx_import('SearchResult', $this->_aModule);
         $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
         $o = new $sClass();
+        $o->unsetPaginate();
+        $iNumTotal = $o->getNum();
+        
         $o->fillFilters(array(
 			'perofileStatus' => BX_PROFILE_STATUS_PENDING
         ));
-        $o->unsetPaginate();
         $iNum1 = $o->getNum();
         
         $iNum2 = 0;
@@ -150,7 +152,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             $o->fillFiltersByObjects(array('reported' => array('value' => '0', 'field' => 'reports', 'operator' => '>', 'table' => $CNF['TABLE_ENTRIES'])));
             $iNum2 = $o->getNum();
         }
-        return array('counter1_value' => $iNum1, 'counter2_value' => $iNum2, 'counter1_caption' => _t('_sys_menu_dashboard_manage_tools_addon_counter1_caption_profile_default'));
+        return array('counter1_value' => $iNum1, 'counter2_value' => $iNum2, 'counter3_value' => $iNumTotal, 'counter1_caption' => _t('_sys_menu_dashboard_manage_tools_addon_counter1_caption_profile_default'));
 	}
 
 	public function serviceGetMenuAddonManageToolsProfileStats()

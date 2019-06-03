@@ -246,7 +246,7 @@ class BxInvModule extends BxDolModule
      */
     public function serviceGetMenuAddonRequests()
     {
-        return array('counter1_value' => $this->_oDb->getRequests(array('type' => 'count_all')), 'counter1_caption' => _t('_bx_invites_menu_dashboard_manage_tools_addon_counter1_caption'));
+        return array('counter3_value' => $this->_oDb->getRequests(array('type' => 'count_all')));
     }
 
     /**
