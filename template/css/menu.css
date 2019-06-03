@@ -391,7 +391,7 @@ ul.bx-menu-floating-blocks {
     height:3.35rem;
 }
 .bx-media-phone .bx-menu-floating-blocks-dash li {
-    width:50%;
+    width:49.5%;
 }
 .bx-menu-floating-blocks-dash-item {
      height:3.35rem;
@@ -514,6 +514,8 @@ ul.bx-menu-floating-blocks {
 .bx-menu-floating-blocks-dash li .sys-icon {
     line-height:2rem;
     font-size:2rem;
+	width: 2.2rem;
+    display: inline-block;
 }
 .bx-menu-floating-blocks-dash .bx-menu-floating-blocks-icon {
     float:left;

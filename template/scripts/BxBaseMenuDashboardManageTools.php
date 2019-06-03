@@ -28,7 +28,11 @@ class BxBaseMenuDashboardManageTools extends BxTemplMenu
     
     protected function _getTmplVarsAddon($mixedAddon, $aMenuItem)
     {
-        $aValues = array('counter1_value' => 0, 'counter1_caption' => _t('_sys_menu_dashboard_manage_tools_addon_counter1_caption_default'), 'counter2_value' => 0, 'counter2_caption' => _t('_sys_menu_dashboard_manage_tools_addon_counter2_caption_default'));
+        $aValues = array(
+            'counter1_value' => 0, 'counter1_caption' => _t('_sys_menu_dashboard_manage_tools_addon_counter1_caption_default'), 
+            'counter2_value' => 0, 'counter2_caption' => _t('_sys_menu_dashboard_manage_tools_addon_counter2_caption_default'),
+            'counter3_value' => 0, 'counter3_caption' => ''
+        );
         if (is_array($mixedAddon)){
             $aValues = array_merge($aValues, $mixedAddon);
         }
@@ -49,6 +53,13 @@ class BxBaseMenuDashboardManageTools extends BxTemplMenu
                 'content' => array(
                     'value' => $aValues['counter2_value'],
                     'caption' => $aValues['counter2_caption']
+                )
+            ),
+            'bx_if:counter3' => array(
+                'condition' => $aValues['counter3_value'] > 0,
+                'content' => array(
+                    'value' => $aValues['counter3_value'],
+                    'caption' => $aValues['counter3_caption']
                 )
             ),
             'bx_if:counter1and2' => array(

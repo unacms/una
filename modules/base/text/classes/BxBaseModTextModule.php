@@ -98,10 +98,12 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 		bx_import('SearchResult', $this->_aModule);
         $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
         $o = new $sClass();
+        $o->unsetPaginate();
+        $iNumTotal = $o->getNum();
+        
         $o->fillFilters(array(
 			'status' => 'hidden'
-        ));
-        $o->unsetPaginate();
+        )); 
         $iNum1 = $o->getNum();
         
         $iNum2 = 0;
@@ -111,7 +113,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
             $o->fillFiltersByObjects(array('reported' => array('value' => '0', 'field' => 'reports', 'operator' => '>')));
             $iNum2 = $o->getNum();
         }
-        return array('counter1_value' => $iNum1, 'counter2_value' => $iNum2);
+        return array('counter1_value' => $iNum1, 'counter2_value' => $iNum2, 'counter3_value' => $iNumTotal );
 	}
 
 	public function serviceGetMenuAddonManageToolsProfileStats()
