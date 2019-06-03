@@ -66,16 +66,6 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
         return  $this->_getFilterSelectOne($this->_sFilter1Name, $this->_sFilter1Value, $this->_aFilter1Values) . $this->_getSearchInput();
     }
 
-    protected function _getCellSwitcher ($mixedValue, $sKey, $aField, $aRow)
-    {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        if(!in_array($aRow[$CNF['FIELD_STATUS']], array('active', 'hidden')))
-            return parent::_getCellDefault(_t('_sys_status_' . $aRow[$CNF['FIELD_STATUS']]), $sKey, $aField, $aRow);
-
-        return parent::_getCellSwitcher ($mixedValue, $sKey, $aField, $aRow);
-    }
-
     protected function _getCellTitle($mixedValue, $sKey, $aField, $aRow)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;

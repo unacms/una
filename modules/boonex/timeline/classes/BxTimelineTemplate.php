@@ -1912,7 +1912,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             }
         }
 
-        foreach($aVideos as $iVideo => $aVideo)
+        foreach($aVideos as $iVideo => $aVideo) {
             if(!$bMain || $sVap == BX_TIMELINE_VAP_OFF)
                 $aTmplVarsVideos[] = array(
                     'style_prefix' => $sStylePrefix,
@@ -1929,6 +1929,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                         'src' => $sVapSrc . $iVideo . '/'
                     )) 
                 );
+        }
 
         return array( 
             'display' => $sDisplay,

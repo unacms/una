@@ -219,7 +219,8 @@
 	<string name="_bx_timeline_txt_or_jump_to"><![CDATA[... or jump to:]]></string>
 	<string name="_bx_timeline_txt_jump_to_n_year"><![CDATA[Jump to {0} year]]></string>
 	<string name="_bx_timeline_txt_jump_to_recent"><![CDATA[Jump to recent posts]]></string>
-	<string name="_bx_timeline_txt_hot"><![CDATA[Hot post]]></string>
+        <string name="_bx_timeline_txt_status_deleted"><![CDATA[Deleted]]></string>
+        <string name="_bx_timeline_txt_hot"><![CDATA[Hot post]]></string>
 	<string name="_bx_timeline_txt_pinned"><![CDATA[Pinned post]]></string>
         <string name="_bx_timeline_txt_sticked"><![CDATA[Pinned for all post]]></string>
 	<string name="_bx_timeline_txt_promoted"><![CDATA[Promoted]]></string>

@@ -86,6 +86,10 @@ class BxPostsFormEntry extends BxBaseModTextFormEntry
         $bValues = $aValues && !empty($aValues['id']);
         $aContentInfo = $bValues ? $this->_oModule->_oDb->getContentInfoById($aValues['id']) : false;
 
+        if($this->aParams['display'] == $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT'] && isset($CNF['FIELD_PUBLISHED']) && isset($this->aInputs[$CNF['FIELD_PUBLISHED']]))
+            if($bValues && in_array($aValues[$CNF['FIELD_STATUS']], array('active', 'hidden')))
+                unset($this->aInputs[$CNF['FIELD_PUBLISHED']]);
+
         if (isset($CNF['FIELD_COVER']) && isset($this->aInputs[$CNF['FIELD_COVER']])) {
             if($bValues)
                 $this->aInputs[$CNF['FIELD_COVER']]['content_id'] = $aValues['id'];

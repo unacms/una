@@ -44,36 +44,36 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
     public function deleteModuleEvents($aData)
     {
-    	foreach($aData['handlers'] as $aHandler) {
-    		//Delete system events.
+        foreach($aData['handlers'] as $aHandler) {
+            //Delete system events.
             $this->deleteEvent(array('type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
 
             //Delete reposted events.
-    		$aEvents = $this->getEvents(array('browse' => 'reposted_by_descriptor', 'type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
-			foreach($aEvents as $aEvent) {
-				$aContent = unserialize($aEvent['content']);
-				if(isset($aContent['type']) && $aContent['type'] == $aHandler['alert_unit'] && isset($aContent['action']) && $aContent['action'] == $aHandler['alert_action'])
-					$this->deleteEvent(array('id' => (int)$aEvent['id']));
-			}
-    	}
+            $aEvents = $this->getEvents(array('browse' => 'reposted_by_descriptor', 'type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
+                foreach($aEvents as $aEvent) {
+                    $aContent = unserialize($aEvent['content']);
+                    if(isset($aContent['type']) && $aContent['type'] == $aHandler['alert_unit'] && isset($aContent['action']) && $aContent['action'] == $aHandler['alert_action'])
+                        $this->deleteEvent(array('id' => (int)$aEvent['id']));
+                }
+        }
     }
 
     public function activateModuleEvents($aData, $bActivate = true)
     {
-    	$iActivate = $bActivate ? 1 : 0;
+        $iActivate = $bActivate ? 1 : 0;
 
-    	foreach($aData['handlers'] as $aHandler) {
-    		//Activate (deactivate) system events.
+        foreach($aData['handlers'] as $aHandler) {
+            //Activate (deactivate) system events.
             $this->updateEvent(array('active' => $iActivate), array('type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
 
-			//Activate (deactivate) reposted events.
-			$aEvents = $this->getEvents(array('browse' => 'reposted_by_descriptor', 'type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
-			foreach($aEvents as $aEvent) {
-				$aContent = unserialize($aEvent['content']);
-				if(isset($aContent['type']) && $aContent['type'] == $aHandler['alert_unit'] && isset($aContent['action']) && $aContent['action'] == $aHandler['alert_action'])
-					$this->updateEvent(array('active' => $iActivate), array('id' => (int)$aEvent['id']));
-			}
-    	}
+            //Activate (deactivate) reposted events.
+            $aEvents = $this->getEvents(array('browse' => 'reposted_by_descriptor', 'type' => $aHandler['alert_unit'], 'action' => $aHandler['alert_action']));
+            foreach($aEvents as $aEvent) {
+                $aContent = unserialize($aEvent['content']);
+                if(isset($aContent['type']) && $aContent['type'] == $aHandler['alert_unit'] && isset($aContent['action']) && $aContent['action'] == $aHandler['alert_action'])
+                    $this->updateEvent(array('active' => $iActivate), array('id' => (int)$aEvent['id']));
+            }
+        }
     }
 
     public function getMaxDuration($aParams)
@@ -123,14 +123,14 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 		if($bSystem && (empty($aReposted) || !is_array($aReposted))) {
 			$iOwnerId = 0;
 			$iDate = 0;
-			$iHidden = 1;
+			$sStatus = BX_TIMELINE_STATUS_DELETED;
 
 			$mixedResult = $this->_oConfig->getSystemDataByDescriptor($sType, $sAction, $iObjectId);
 			if(is_array($mixedResult)) {
                             $iOwnerId = !empty($mixedResult['owner_id']) ? (int)$mixedResult['owner_id'] : 0;
                             $iDate = !empty($mixedResult['date']) ? (int)$mixedResult['date'] : 0;
                             if($this->_oConfig->isUnhideRestored() && !empty($iOwnerId) && !empty($iDate))
-                                $iHidden = 0;
+                                $sStatus = BX_TIMELINE_STATUS_ACTIVE;
 			}
 
 			$iId = $this->insertEvent(array(
@@ -143,7 +143,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                             'title' => '',
                             'description' => '',
                             'date' => $iDate,
-                            'hidden' => $iHidden
+                            'status' => $sStatus
 			));
 
 			$aReposted = $this->getEvents(array('browse' => 'id', 'value' => $iId));
@@ -458,6 +458,23 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 
+    public function publish()
+    {
+        $CNF = $this->_oConfig->CNF;
+
+        $aEvents = $this->getAll("SELECT `" . $CNF['FIELD_ID'] . "`, `" . $CNF['FIELD_DATE'] . "`  FROM `" . $this->_sTable . "` WHERE `" . $CNF['FIELD_STATUS'] . "`='" . BX_TIMELINE_STATUS_AWAITING . "'");
+        if(empty($aEvents) || !is_array($aEvents))
+            return false;
+
+        $iNow = time();
+        $aResult = array();
+        foreach($aEvents as $aEvent)
+            if($aEvent[$CNF['FIELD_DATE']] <= $iNow) 
+                $aResult[] = $aEvent[$CNF['FIELD_ID']];
+
+        return count($aResult) == (int)$this->query("UPDATE `" . $this->_sTable . "` SET `" . $CNF['FIELD_STATUS'] . "`='" . BX_TIMELINE_STATUS_ACTIVE . "' WHERE `id` IN (" . $this->implode_escape($aResult) . ")") ? $aResult : false;
+    }
+
     protected function _getFilterAddon($iOwnerId, $sFilter)
     {
         switch($sFilter) {
@@ -597,9 +614,8 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
     	$sJoinClause = $sWhereClause = "";
 
-        $sWhereClauseStatus = "AND `{$this->_sTable}`.`hidden`='0' ";
-        if(isset($aParams['active']))
-            $sWhereClauseStatus .= $this->prepareAsString("AND `{$this->_sTable}`.`active`=? ", (int)$aParams['active']);
+        $sWhereClauseStatus = "AND `{$this->_sTable}`.`active`='1' ";
+        $sWhereClauseStatus .= $this->prepareAsString("AND `{$this->_sTable}`.`status`=? ", isset($aParams['status']) ? $aParams['status'] : BX_TIMELINE_STATUS_ACTIVE);
 
         //--- Apply filter
         $sWhereClauseFilter = "";

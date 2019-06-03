@@ -32,6 +32,11 @@ define('BX_TIMELINE_PARSE_TYPE_POST', 'post');
 define('BX_TIMELINE_PARSE_TYPE_REPOST', 'repost');
 define('BX_TIMELINE_PARSE_TYPE_DEFAULT', BX_TIMELINE_PARSE_TYPE_POST);
 
+define('BX_TIMELINE_STATUS_ACTIVE', 'active');
+define('BX_TIMELINE_STATUS_AWAITING', 'awaiting');
+define('BX_TIMELINE_STATUS_HIDDEN', 'hidden');
+define('BX_TIMELINE_STATUS_DELETED', 'deleted');
+
 define('BX_TIMELINE_MEDIA_PHOTO', 'photo');
 define('BX_TIMELINE_MEDIA_VIDEO', 'video');
 
@@ -2013,18 +2018,18 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     /** 
      * @ref bx_timeline-get_menu_addon_manage_tools "get_menu_addon_manage_tools"
      */
-	public function serviceGetMenuAddonManageTools()
-	{
-		bx_import('SearchResult', $this->_aModule);
+    public function serviceGetMenuAddonManageTools()
+    {
+        bx_import('SearchResult', $this->_aModule);
         $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
-        $o = new $sClass();
-        $o->fillFilters(array(
-			'active' => 0
+        $oSearch = new $sClass();
+        $oSearch->fillFilters(array(
+            'status' => BX_TIMELINE_STATUS_HIDDEN
         ));
-        $o->unsetPaginate();
+        $oSearch->unsetPaginate();
 
-        return $o->getNum();
-	}
+        return $oSearch->getNum();
+    }
 
     /*
      * COMMON METHODS
@@ -2147,11 +2152,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $sDescription = _t('_bx_timeline_txt_user_added_sample', '{profile_name}', _t('_bx_timeline_txt_sample_with_article'));
 
             //--- Process Date ---//
+            $iNow = time();
             $iDate = 0;
             if(isset($oForm->aInputs['date']))
                 $iDate = $oForm->getCleanValue('date');
             if(empty($iDate))
-                $iDate = time();
+                $iDate = $iNow;
+            
+            //--- Process Status ---//
+            $sStatus = BX_TIMELINE_STATUS_ACTIVE;
+            if($iDate > $iNow)
+                $sStatus = BX_TIMELINE_STATUS_AWAITING;
 
             /**
              * Unset 'text' input because its data was already processed 
@@ -2167,7 +2178,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 'content' => serialize($aContent),
                 'title' => $sTitle,
                 'description' => $sDescription,
-                'date' => $iDate
+                'date' => $iDate,
+                'status' => $sStatus
             ));
 
             if(!empty($iId)) {
@@ -2281,6 +2293,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 $oMetatags->metaAdd($iId, $sText);
             $oMetatags->locationsAddFromForm($iId, $this->_oConfig->CNF['FIELD_LOCATION_PREFIX']);
 
+            $this->getCacheItemObject()->removeAllByPrefix($this->_oConfig->getPrefix('cache_item') . $iId);
             $this->_oDb->deleteCache(array('event_id' => $iId));
 
             return array(
@@ -2743,6 +2756,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function onPost($iId)
     {
+        $CNF = &$this->_oConfig->CNF;
+
         $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
 
         if($this->_oConfig->isSystem($aEvent['type'], $aEvent['action'])) {
@@ -2758,7 +2773,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         }
 
         //--- Event -> Post for Alerts Engine ---//
-        bx_alert($this->_oConfig->getObject('alert'), 'post_' . $sPostType, $iId, $iSenderId, array(
+        $sAction = ($aEvent[$CNF['FIELD_STATUS']] == BX_TIMELINE_STATUS_AWAITING ? 'schedule' : 'post') . '_' . $sPostType;
+        bx_alert($this->_oConfig->getObject('alert'), $sAction, $iId, $iSenderId, array(
             'owner_id' => $aEvent['owner_id'],
             'object_author_id' => $iObjectAuthorId,
             'privacy_view' => $aEvent['object_privacy_view'],
@@ -3269,8 +3285,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $aParams = array_merge($aParams, array(
             'browse' => 'list',
-            'active' => 1,
-            'hidden' => 0
+            'status' => BX_TIMELINE_STATUS_ACTIVE
         ));
 
         return $aParams;
@@ -3315,8 +3330,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $aParams = array_merge($aParams, array(
             'browse' => 'list',
-            'active' => 1,
-            'hidden' => 0,
+            'status' => BX_TIMELINE_STATUS_ACTIVE,
             'dynamic_mode' => true,
         ));
 
