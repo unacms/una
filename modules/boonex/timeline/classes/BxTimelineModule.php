@@ -2293,6 +2293,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 $oMetatags->metaAdd($iId, $sText);
             $oMetatags->locationsAddFromForm($iId, $this->_oConfig->CNF['FIELD_LOCATION_PREFIX']);
 
+            $this->getCacheItemObject()->removeAllByPrefix($this->_oConfig->getPrefix('cache_item') . $iId);
             $this->_oDb->deleteCache(array('event_id' => $iId));
 
             return array(
