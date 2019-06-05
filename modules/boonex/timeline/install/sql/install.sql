@@ -367,7 +367,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_timeline_post_add', 'attachments', 2147483647, 1, 3),
 ('bx_timeline_post_add', 'owner_id', 2147483647, 1, 4),
 ('bx_timeline_post_add', 'object_privacy_view', 2147483647, 1, 5),
-('bx_timeline_post_add', 'published', 192, 1, 13),
+('bx_timeline_post_add', 'published', 192, 1, 6),
 ('bx_timeline_post_add', 'location', 2147483647, 1, 7),
 ('bx_timeline_post_add', 'link', 2147483647, 1, 8),
 ('bx_timeline_post_add', 'photo', 2147483647, 1, 9),
