@@ -142,7 +142,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
         $this->addCss(array('polls.css'));
         $this->addJs(array('polls.js'));
-        return $this->parseHtmlByName('poll_items.html', array(
+        return $this->getJsCode('poll') . $this->parseHtmlByName('poll_items.html', array(
             'polls' => $sPolls
         ));
     }
