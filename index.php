@@ -26,13 +26,12 @@ if (!file_exists("./inc/header.inc.php")) {
 require_once('./inc/header.inc.php');
 require_once(BX_DIRECTORY_PATH_INC . "profiles.inc.php");
 
-$_GET['i'] = 'home';
-
 if (!isLogged() && getParam('sys_site_splash_enabled')) {
     require_once("./splash.php");
     exit;
 }
 
+$_GET['i'] = 'home';
 require_once("./page.php");
 
 /** @} */
