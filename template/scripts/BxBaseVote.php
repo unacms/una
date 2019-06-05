@@ -137,7 +137,9 @@ class BxBaseVote extends BxDolVote
                     'bx_repeat:attrs' => $aTmplVarsAttrs,
                     'content' => $sContent
                 )
-            )
+            ),
+            'bx_repeat:attrs' => $aTmplVarsAttrs,
+            'content' => $sContent
         ));
     }
 
