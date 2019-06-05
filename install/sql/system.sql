@@ -4463,7 +4463,7 @@ CREATE TABLE `sys_labels` (
   `order` int(11) NOT NULL DEFAULT 0,
   `value` varchar(128) NOT NULL,
   PRIMARY KEY (id),
-  UNIQUE KEY `value` (`value`(191))
+  UNIQUE KEY `value` (`value`)
 );
 
 -- --------------------------------------------------------
