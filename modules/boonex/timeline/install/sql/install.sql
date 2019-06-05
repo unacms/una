@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_events` (
   `owner_id` int(11) NOT NULL default '0',
   `type` varchar(255) NOT NULL,
   `action` varchar(255) NOT NULL,
-  `object_id` text NOT NULL,
+  `object_id` int(11) NOT NULL default '0',
   `object_privacy_view` varchar(16) NOT NULL default '3',
   `content` text NOT NULL,
   `title` varchar(255) NOT NULL,
@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_events` (
   `promoted` int(11) NOT NULL default '0',
   PRIMARY KEY (`id`),
   KEY `owner_id` (`owner_id`),
+  KEY `object_id` (`object_id`),
   FULLTEXT KEY `search_fields` (`title`, `description`)
 );
 
