@@ -23,6 +23,7 @@
     height: 3rem;
     line-height: 3rem;
     border-radius:4px;
+    border:none;
 }
 
 .sys-auth .bx-btn .sys-icon {
