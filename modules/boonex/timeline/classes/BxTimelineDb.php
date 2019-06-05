@@ -767,63 +767,6 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
         return array($sJoinClause, $sWhereClause);
     }
-
-    function updateSimilarObject($iId, &$oAlert, $sDuration = 'day')
-    {
-        $sType = $oAlert->sUnit;
-        $sAction = $oAlert->sAction;
-
-        //Check handler
-        $aHandler = $this->_oConfig->getHandlers($sType . '_' . $sAction);
-        if(empty($aHandler) || !is_array($aHandler) || (int)$aHandler['groupable'] != 1)
-            return false;
-
-        //Check content's extra values
-        if(isset($aHandler['group_by']) && !empty($aHandler['group_by']) && (!isset($oAlert->aExtras[$aHandler['group_by']]) || empty($oAlert->aExtras[$aHandler['group_by']])))
-            return false;
-
-		$aBindings = array(
-			'object_id' => $oAlert->iObject,
-			'id' => $iId,
-			'owner_id' => $oAlert->iSender,
-			'type' => $sType,
-			'action' => $sAction
-		);
-
-        $sWhereClause = "";
-        switch($sDuration) {
-            case 'day':
-                $aBindings['day_start'] = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
-                $aBindings['day_end'] = mktime(23, 59, 59, date('m'), date('d'), date('Y'));
-
-                $sWhereClause .= "AND `date`>:day_start AND `date`<:day_end ";
-                break;
-        }
-
-        if(isset($aHandler['group_by'])) {
-        	$aBindings['content'] = '%' . $oAlert->aExtras[$aHandler['group_by']] . '%';
-
-            $sWhereClause .= "AND `content` LIKE :content ";
-        }
-
-        $sSql = "UPDATE `{$this->_sTable}`
-            SET
-                `object_id`=CONCAT(`object_id`, ',:object_id'),
-                `title`='',
-                `description`='',
-                `date`=UNIX_TIMESTAMP()
-            WHERE
-                `id`<>:id AND
-                `owner_id`=:owner_id AND
-                `type`=:type AND
-                `action`=:action " . $sWhereClause;
-        $mixedResult = $this->query($sSql, $aBindings);
-
-        if((int)$mixedResult > 0)
-            $this->deleteEvent(array('id' => $iId));
-
-        return $mixedResult;
-    }
 }
 
 /** @} */

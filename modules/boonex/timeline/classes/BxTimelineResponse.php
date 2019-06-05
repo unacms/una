@@ -58,9 +58,6 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
 
                 if(!empty($iId))
                     $this->_oModule->onPost($iId);
-
-                //TODO: Remove the call and the function itself if GROUPING feature won't be used.
-                $this->_oModule->_oDb->updateSimilarObject($iId, $oAlert);
                 break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_UPDATE:
