@@ -6,8 +6,8 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 
 -- Auth objects
 
-INSERT INTO `sys_objects_auths` (`Name`, `Title`, `Link`, `Icon`) VALUES
-('bx_googlecon', '_bx_googlecon_auth_title', 'modules/?r=googlecon/start', 'fab google-plus-square');
+INSERT INTO `sys_objects_auths` (`Name`, `Title`, `Link`, `Icon`, `Style`) VALUES
+('bx_googlecon', '_bx_googlecon_auth_title', 'modules/?r=googlecon/start', 'fab google-plus-square', 'a:1:{s:7:".bx-btn";a:1:{s:10:"background";s:18:"#cb4023 !important";}}');
 
 -- Alerts
 

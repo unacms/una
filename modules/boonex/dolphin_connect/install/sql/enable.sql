@@ -6,8 +6,8 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 
 -- Auth objects
 
-INSERT INTO `sys_objects_auths` (`Name`, `Title`, `Link`, `Icon`) VALUES
-('bx_dolcon', '_bx_dolcon_auth_title', 'modules/?r=dolcon/start', 'sign-in-alt');
+INSERT INTO `sys_objects_auths` (`Name`, `Title`, `Link`, `Icon`, `Style`) VALUES
+('bx_dolcon', '_bx_dolcon_auth_title', 'modules/?r=dolcon/start', 'sign-in-alt', 'a:1:{s:7:".bx-btn";a:1:{s:10:"background";s:18:"#3295f8 !important";}}');
 
 -- Alerts
 
