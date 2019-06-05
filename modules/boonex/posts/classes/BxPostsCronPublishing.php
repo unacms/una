@@ -9,14 +9,12 @@
  * @{
  */
 
-require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
-
 class BxPostsCronPublishing extends BxDolCron
 {
-	protected $_sModule;
-	protected $_oModule;
+    protected $_sModule;
+    protected $_oModule;
 
-	public function __construct()
+    public function __construct()
     {
         parent::__construct();
 
@@ -26,12 +24,12 @@ class BxPostsCronPublishing extends BxDolCron
 
     function processing()
     {
-        $mixedIds = $this->_oModule->_oDb->publish();
+        $mixedIds = $this->_oModule->_oDb->publishEntries();
         if($mixedIds === false)
-        	return;
+            return;
 
-		foreach($mixedIds as $iId)
-        	$this->_oModule->onPublished($iId);
+        foreach($mixedIds as $iId)
+            $this->_oModule->onPublished($iId);
     }
 }
 

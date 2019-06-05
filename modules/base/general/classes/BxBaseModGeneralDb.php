@@ -94,6 +94,37 @@ class BxBaseModGeneralDb extends BxDolModuleDb
         $sQuery = $this->prepare ("SELECT COUNT(*) FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` WHERE `" . $this->_oConfig->CNF['FIELD_AUTHOR'] . "` = ?", $iProfileId);
         return $this->getOne($sQuery);
     }
+    
+    public function updateEntriesBy($aParamsSet, $aParamsWhere)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($CNF['TABLE_ENTRIES']) || empty($aParamsSet) || empty($aParamsWhere))
+            return false;
+
+        return $this->query("UPDATE `" . $CNF['TABLE_ENTRIES'] . "` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $this->arrayToSQL($aParamsWhere, " AND "));
+    }
+
+    public function publishEntries()
+    {
+        $CNF = $this->_oConfig->CNF;
+
+        $aEntries = $this->getAll("SELECT `id`, `" . $CNF['FIELD_PUBLISHED'] . "`, FROM_UNIXTIME(`" . $CNF['FIELD_PUBLISHED'] . "`)  FROM `" . $CNF['TABLE_ENTRIES'] . "` WHERE `" . $CNF['FIELD_PUBLISHED'] . "` > `" . $CNF['FIELD_ADDED'] . "` AND `" . $CNF['FIELD_STATUS'] . "` = 'awaiting'");
+        if(empty($aEntries) || !is_array($aEntries))
+            return false;
+
+        $iNow = time();
+        $aResult = array();
+        foreach($aEntries as $aEntry)
+            if($aEntry[$CNF['FIELD_PUBLISHED']] <= $iNow) 
+                $aResult[] = $aEntry[$CNF['FIELD_ID']];
+
+        $sSet = "`" . $CNF['FIELD_ADDED'] . "`=`" . $CNF['FIELD_PUBLISHED'] . "`, `" . $CNF['FIELD_STATUS'] . "` = 'active'";
+        if(isset($CNF['FIELD_CHANGED']))
+            $sSet .= ", `" . $CNF['FIELD_CHANGED'] . "`=`" . $CNF['FIELD_PUBLISHED'] . "`";
+
+        return count($aResult) == (int)$this->query("UPDATE `" . $CNF['TABLE_ENTRIES'] . "` SET " . $sSet . " WHERE `id` IN (" . $this->implode_escape($aResult) . ")") ? $aResult : false;
+    }
 
     public function alterFulltextIndex ()
     {

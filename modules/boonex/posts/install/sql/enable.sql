@@ -476,7 +476,10 @@ SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('system', 'save_setting', @iHandler),
-('profile', 'delete', @iHandler);
+('profile', 'delete', @iHandler),
+
+('bx_posts_videos_mp4', 'transcoded', @iHandler),
+('bx_posts_videos_mp4_hd', 'transcoded', @iHandler);
 
 
 -- CRON

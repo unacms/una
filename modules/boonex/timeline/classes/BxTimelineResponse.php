@@ -136,6 +136,54 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
         $this->_oModule->_oDb->clearCache();
                 
     }
+
+    protected function _processBxTimelineVideosMp4Transcoded($oAlert)
+    {
+        $this->_onVideoTranscoded($oAlert->iObject);
+    }
+
+    protected function _processBxTimelineVideosMp4HdTranscoded($oAlert)
+    {
+        $this->_onVideoTranscoded($oAlert->iObject);
+    }
+
+    protected function _onVideoTranscoded($iMediaId, $aParams = array())
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!isset($CNF['FIELD_STATUS']))
+            return;
+
+        $aMedia = $this->_oModule->_oDb->getMediaById(BX_TIMELINE_MEDIA_VIDEO, $iMediaId);
+        if(empty($aMedia) || !is_array($aMedia))
+            return;
+
+        $iContentId = (int)$aMedia['event_id'];
+        $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return;
+
+        if(!isset($aContentInfo[$CNF['FIELD_STATUS']]) || $aContentInfo[$CNF['FIELD_STATUS']] != 'awaiting')
+            return;
+        
+        $iNow = time();
+        if(isset($CNF['FIELD_PUBLISHED']) && isset($aContentInfo[$CNF['FIELD_PUBLISHED']]) && $aContentInfo[$CNF['FIELD_PUBLISHED']] > $iNow)
+            return;
+
+        $aTranscoders = array();
+        foreach($CNF['OBJECT_VIDEOS_TRANSCODERS'] as $sKey => $sTranscoder)
+            if(in_array($sKey, array('mp4', 'mp4_hd')))
+                $aTranscoders[$sTranscoder] = BxDolTranscoder::getObjectInstance($sTranscoder);
+
+        $aMediasToCheck = $this->_oModule->_oDb->getMedia(BX_TIMELINE_MEDIA_VIDEO, $iContentId);
+        foreach($aMediasToCheck as $iMediaToCheck)
+            foreach($aTranscoders as $sTranscoder => $oTranscoder)
+                if(!$oTranscoder->isFileReady($iMediaToCheck))
+                    return;
+
+        if((int)$this->_oModule->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => 'active'), array($CNF['FIELD_ID'] => $iContentId)) > 0)
+            $this->_oModule->onPublished($iContentId);
+    }
 }
 
 /** @} */

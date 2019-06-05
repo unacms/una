@@ -290,7 +290,10 @@ SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('system', 'clear_cache', @iHandler),
-('profile', 'delete', @iHandler);
+('profile', 'delete', @iHandler),
+
+('bx_timeline_videos_mp4', 'transcoded', @iHandler),
+('bx_timeline_videos_mp4_hd', 'transcoded', @iHandler);
 
 
 -- SEARCH

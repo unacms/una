@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_events` (
   `reports` int(11) unsigned NOT NULL default '0',
   `reposts` int(11) unsigned NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
+  `published` int(11) NOT NULL default '0',
   `status` enum ('active', 'awaiting', 'hidden', 'deleted') NOT NULL DEFAULT 'active',
   `active` int(11) NOT NULL default '1',
   `pinned` int(11) NOT NULL default '0',
@@ -326,7 +327,7 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 
 ('bx_timeline_videos_poster', 'Poster', 'a:2:{s:1:"h";s:3:"318";s:10:"force_type";s:3:"jpg";}', 0),
 ('bx_timeline_videos_mp4', 'Mp4', 'a:2:{s:1:"h";s:3:"318";s:10:"force_type";s:3:"mp4";}', 0),
-('bx_timeline_videos_mp4_hd', 'Mp4', 'a:2:{s:1:"h";s:3:"720";s:10:"force_type";s:4:"mp4";}', 0);
+('bx_timeline_videos_mp4_hd', 'Mp4', 'a:2:{s:1:"h";s:3:"720";s:10:"force_type";s:3:"mp4";}', 0);
 
 
 -- Forms -> Post
@@ -346,7 +347,8 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('bx_timeline_post', @sName, 'owner_id', '0', '', 0, 'hidden', '_bx_timeline_form_post_input_sys_owner_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_timeline_post', @sName, 'text', '', '', 0, 'textarea', '_bx_timeline_form_post_input_sys_text', '_bx_timeline_form_post_input_text', '', 0, 0, 3, 'a:1:{s:12:"autocomplete";s:3:"off";}', '', '', '', '', '', 'XssHtml', '', 1, 0),
 ('bx_timeline_post', @sName, 'anonymous', '', '', 0, 'switcher', '_sys_form_input_sys_anonymous', '_sys_form_input_anonymous', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_timeline_post', @sName, 'date', '', '', 0, 'datetime', '_bx_timeline_form_post_input_sys_date', '_bx_timeline_form_post_input_date', '_bx_timeline_form_post_input_date_info', 0, 0, 0, '', '', '', '', '', '', 'DateTimeUtc', '', 1, 0),
+('bx_timeline_post', @sName, 'date', '', '', 0, 'datetime', '_bx_timeline_form_post_input_sys_date', '_bx_timeline_form_post_input_date', '', 0, 0, 0, '', '', '', '', '', '', 'DateTimeUtc', '', 1, 0),
+('bx_timeline_post', @sName, 'published', '', '', 0, 'datetime', '_bx_timeline_form_post_input_sys_date_published', '_bx_timeline_form_post_input_date_published', '_bx_timeline_form_post_input_date_published_info', 0, 0, 0, '', '', '', '', '', '', 'DateTimeUtc', '', 1, 0),
 ('bx_timeline_post', @sName, 'object_privacy_view', '', '', 0, 'custom', '_bx_timeline_form_post_input_sys_object_privacy_view', '_bx_timeline_form_post_input_object_privacy_view', '', 1, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_timeline_post', @sName, 'location', '', '', 0, 'location', '_sys_form_input_sys_location', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_timeline_post', @sName, 'link', '', '', 0, 'custom', '_bx_timeline_form_post_input_sys_link', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
@@ -364,7 +366,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_timeline_post_add', 'attachments', 2147483647, 1, 3),
 ('bx_timeline_post_add', 'owner_id', 2147483647, 1, 4),
 ('bx_timeline_post_add', 'object_privacy_view', 2147483647, 1, 5),
-('bx_timeline_post_add', 'date', 192, 1, 6),
+('bx_timeline_post_add', 'published', 192, 1, 13),
 ('bx_timeline_post_add', 'location', 2147483647, 1, 7),
 ('bx_timeline_post_add', 'link', 2147483647, 1, 8),
 ('bx_timeline_post_add', 'photo', 2147483647, 1, 9),
@@ -377,7 +379,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_timeline_post_add_public', 'text', 2147483647, 1, 3),
 ('bx_timeline_post_add_public', 'attachments', 2147483647, 1, 4),
 ('bx_timeline_post_add_public', 'object_privacy_view', 2147483647, 1, 5),
-('bx_timeline_post_add_public', 'date', 192, 1, 6),
+('bx_timeline_post_add_public', 'published', 192, 1, 6),
 ('bx_timeline_post_add_public', 'location', 2147483647, 1, 7),
 ('bx_timeline_post_add_public', 'link', 2147483647, 1, 8),
 ('bx_timeline_post_add_public', 'photo', 2147483647, 1, 9),
@@ -390,7 +392,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_timeline_post_add_profile', 'text', 2147483647, 1, 3),
 ('bx_timeline_post_add_profile', 'attachments', 2147483647, 1, 4),
 ('bx_timeline_post_add_profile', 'object_privacy_view', 2147483647, 1, 5),
-('bx_timeline_post_add_profile', 'date', 192, 1, 6),
+('bx_timeline_post_add_profile', 'published', 192, 1, 6),
 ('bx_timeline_post_add_profile', 'location', 2147483647, 1, 7),
 ('bx_timeline_post_add_profile', 'link', 2147483647, 1, 8),
 ('bx_timeline_post_add_profile', 'photo', 2147483647, 1, 9),
@@ -401,7 +403,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_timeline_post_edit', 'action', 2147483647, 1, 2),
 ('bx_timeline_post_edit', 'owner_id', 2147483647, 1, 3),
 ('bx_timeline_post_edit', 'text', 2147483647, 1, 4),
-('bx_timeline_post_edit', 'date', 192, 1, 5),
+('bx_timeline_post_edit', 'published', 192, 1, 5),
 ('bx_timeline_post_edit', 'location', 2147483647, 1, 6),
 ('bx_timeline_post_edit', 'controls', 2147483647, 1, 7),
 ('bx_timeline_post_edit', 'tlb_do_submit', 2147483647, 1, 8),

@@ -204,6 +204,16 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return $this->getColumn($sQuery);
     }
 
+    public function getMediaById($sType, $iMediaId)
+    {
+        $sTableMedia = $this->_aTablesMedia[$sType];
+    	$sTableMedia2Events = $this->_aTablesMedia2Events[$sType];
+
+        return $this->getRow("SELECT `tm`.*, `tme`.`event_id` AS `event_id` FROM `" . $sTableMedia2Events . "` AS `tme` LEFT JOIN `" . $sTableMedia . "` AS `tm` ON `tme`.`media_id`=`tm`.`id` WHERE `tme`.`media_id`=:media_id LIMIT 1", array(
+            'media_id' => $iMediaId
+        ));
+    }
+
     //--- Link attach related methods ---//
     public function getUnusedLinks($iUserId, $iLinkId = 0)
     {
@@ -456,23 +466,6 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         WHERE 1" . $sWhereClause . " ORDER BY `date` DESC " . $sLimitClause;
 
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
-    }
-
-    public function publish()
-    {
-        $CNF = $this->_oConfig->CNF;
-
-        $aEvents = $this->getAll("SELECT `" . $CNF['FIELD_ID'] . "`, `" . $CNF['FIELD_DATE'] . "`  FROM `" . $this->_sTable . "` WHERE `" . $CNF['FIELD_STATUS'] . "`='" . BX_TIMELINE_STATUS_AWAITING . "'");
-        if(empty($aEvents) || !is_array($aEvents))
-            return false;
-
-        $iNow = time();
-        $aResult = array();
-        foreach($aEvents as $aEvent)
-            if($aEvent[$CNF['FIELD_DATE']] <= $iNow) 
-                $aResult[] = $aEvent[$CNF['FIELD_ID']];
-
-        return count($aResult) == (int)$this->query("UPDATE `" . $this->_sTable . "` SET `" . $CNF['FIELD_STATUS'] . "`='" . BX_TIMELINE_STATUS_ACTIVE . "' WHERE `id` IN (" . $this->implode_escape($aResult) . ")") ? $aResult : false;
     }
 
     protected function _getFilterAddon($iOwnerId, $sFilter)

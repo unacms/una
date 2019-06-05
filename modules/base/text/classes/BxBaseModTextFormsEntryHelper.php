@@ -142,7 +142,11 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
                 'field' => 'owner_id'
             );
 
-        bx_alert($this->_oModule->getName(), 'added', $iId, false, $aParams);
+        $sAction = 'added';
+        if(isset($CNF['FIELD_STATUS']) && isset($aContentInfo[$CNF['FIELD_STATUS']]) && $aContentInfo[$CNF['FIELD_STATUS']] == 'awaiting')
+            $sAction = 'scheduled';
+
+        bx_alert($this->_oModule->getName(), $sAction, $iId, $iAuthorId, $aParams);
     }
 
     protected function _alertAfterEdit($aContentInfo)

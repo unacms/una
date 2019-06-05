@@ -46,9 +46,9 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if($this->aParams['display'] == $this->_oModule->_oConfig->getObject('form_display_post_edit') && isset($CNF['FIELD_DATE']) && isset($this->aInputs[$CNF['FIELD_DATE']]))
+        if($this->aParams['display'] == $this->_oModule->_oConfig->getObject('form_display_post_edit') && isset($CNF['FIELD_PUBLISHED']) && isset($this->aInputs[$CNF['FIELD_PUBLISHED']]))
             if(isset($aValues[$CNF['FIELD_STATUS']]) && in_array($aValues[$CNF['FIELD_STATUS']], array(BX_TIMELINE_STATUS_ACTIVE, BX_TIMELINE_STATUS_HIDDEN)))
-                unset($this->aInputs[$CNF['FIELD_DATE']]);
+                unset($this->aInputs[$CNF['FIELD_PUBLISHED']]);
 
         if(isset($CNF['FIELD_ANONYMOUS']) && isset($this->aInputs[$CNF['FIELD_ANONYMOUS']]) && isset($aValues[$CNF['FIELD_OBJECT_ID']]))
             $this->aInputs[$CNF['FIELD_ANONYMOUS']]['checked'] = $aValues[$CNF['FIELD_OBJECT_ID']] < 0;
@@ -62,6 +62,30 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
 
         $aValsToAdd[$CNF['FIELD_OBJECT_ID']] *= isset($CNF['FIELD_ANONYMOUS']) && isset($this->aInputs[$CNF['FIELD_ANONYMOUS']]) && $this->getCleanValue($CNF['FIELD_ANONYMOUS']) ? -1 : 1;
 
+        if(isset($CNF['FIELD_ADDED']) && empty($aValsToAdd[$CNF['FIELD_ADDED']])) {
+            $iAdded = 0;
+            if(isset($this->aInputs[$CNF['FIELD_ADDED']]))
+                $iAdded = $this->getCleanValue($CNF['FIELD_ADDED']);
+            
+            if(empty($iAdded))
+                 $iAdded = time();
+
+            $aValsToAdd[$CNF['FIELD_ADDED']] = $iAdded;
+        }
+
+        if(empty($aValsToAdd[$CNF['FIELD_PUBLISHED']])) {
+            $iPublished = 0;
+            if(isset($this->aInputs[$CNF['FIELD_PUBLISHED']]))
+                $iPublished = $this->getCleanValue($CNF['FIELD_PUBLISHED']);
+                
+             if(empty($iPublished))
+                 $iPublished = time();
+
+             $aValsToAdd[$CNF['FIELD_PUBLISHED']] = $iPublished;
+        }
+
+        $aValsToAdd[$CNF['FIELD_STATUS']] = $aValsToAdd[$CNF['FIELD_PUBLISHED']] > $aValsToAdd[$CNF['FIELD_ADDED']] ? BX_TIMELINE_STATUS_AWAITING : BX_TIMELINE_STATUS_ACTIVE;
+
         return parent::insert ($aValsToAdd, $isIgnore);
     }
 
@@ -73,6 +97,14 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
             $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
 
             $aValsToAdd[$CNF['FIELD_OBJECT_ID']] = ($this->getCleanValue($CNF['FIELD_ANONYMOUS']) ? -1 : 1) * abs($aContentInfo[$CNF['FIELD_OBJECT_ID']]);
+        }
+
+        if(empty($aValsToAdd[$CNF['FIELD_PUBLISHED']]) && isset($this->aInputs[$CNF['FIELD_PUBLISHED']])) {
+            $iPublished = $this->getCleanValue($CNF['FIELD_PUBLISHED']);
+            if(empty($iPublished))
+                $iPublished = time();
+
+            $aValsToAdd[$CNF['FIELD_PUBLISHED']] = $iPublished;
         }
 
         return parent::update($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
@@ -197,15 +229,15 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
 
         if($this->_bPublicMode || $this->_bProfileMode)
             foreach($aInput['values'] as $iKey => $aValue) {
-                    //--- Show 'Public' privacy group only in Public post form. 
-                    if($this->_bPublicMode && isset($aValue['key']) && $aValue['key'] == BX_DOL_PG_ALL)
-                            continue;
+                //--- Show 'Public' privacy group only in Public post form. 
+                if($this->_bPublicMode && isset($aValue['key']) && $aValue['key'] == BX_DOL_PG_ALL)
+                    continue;
 
-                    //--- Show a default privacy groups in Profile (for Owner) post form.
-                    if($this->_bProfileMode && $iOwnerId == $iUserId && isset($aValue['key']) && (int)$aValue['key'] >= 0)
-                            continue;
+                //--- Show a default privacy groups in Profile (for Owner) post form.
+                if($this->_bProfileMode && $iOwnerId == $iUserId && isset($aValue['key']) && (int)$aValue['key'] >= 0)
+                    continue;
 
-                    unset($aInput['values'][$iKey]);
+                unset($aInput['values'][$iKey]);
             }
 
         return $aInput;

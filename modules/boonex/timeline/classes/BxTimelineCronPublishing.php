@@ -24,12 +24,12 @@ class BxTimelineCronPublishing extends BxDolCron
 
     function processing()
     {
-        $mixedIds = $this->_oModule->_oDb->publish();
+        $mixedIds = $this->_oModule->_oDb->publishEntries();
         if($mixedIds === false)
             return;
 
         foreach($mixedIds as $iId)
-            $this->_oModule->onPost($iId);
+            $this->_oModule->onPublished($iId);
     }
 }
 

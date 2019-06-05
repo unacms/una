@@ -34,16 +34,18 @@
 	<string name="_bx_timeline_form_post_display_edit"><![CDATA[Изменить сообщение]]></string>
 	<string name="_bx_timeline_form_post_input_sys_owner_id"><![CDATA[ID владельца]]></string>
 	<string name="_bx_timeline_form_post_input_owner_id_own"><![CDATA[Собственный профиль]]></string>
-    <string name="_bx_timeline_form_post_input_owner_id_following_group"><![CDATA[{0}]]></string>
+        <string name="_bx_timeline_form_post_input_owner_id_following_group"><![CDATA[{0}]]></string>
 	<string name="_bx_timeline_form_post_input_sys_action"><![CDATA[Действие]]></string>
 	<string name="_bx_timeline_form_post_input_sys_type"><![CDATA[Тип]]></string>
 	<string name="_bx_timeline_form_post_input_sys_text"><![CDATA[Содержимое]]></string>
 	<string name="_bx_timeline_form_post_input_text"><![CDATA[]]></string>
-    <string name="_bx_timeline_form_post_input_sys_object_privacy_view"><![CDATA[Видимость]]></string>
-    <string name="_bx_timeline_form_post_input_object_privacy_view"><![CDATA[Видимость]]></string>
-    <string name="_bx_timeline_form_post_input_sys_date"><![CDATA[Опубликовать]]></string>
-    <string name="_bx_timeline_form_post_input_date"><![CDATA[Опубликовать]]></string>
-    <string name="_bx_timeline_form_post_input_date_info"><![CDATA[Оставьте пустым, чтобы опубликовать немедленно.]]></string>
+        <string name="_bx_timeline_form_post_input_sys_object_privacy_view"><![CDATA[Видимость]]></string>
+        <string name="_bx_timeline_form_post_input_object_privacy_view"><![CDATA[Видимость]]></string>
+        <string name="_bx_timeline_form_post_input_sys_date"><![CDATA[Создано]]></string>
+        <string name="_bx_timeline_form_post_input_date"><![CDATA[Создано]]></string>
+        <string name="_bx_timeline_form_post_input_sys_date_published"><![CDATA[Опубликовать]]></string>
+        <string name="_bx_timeline_form_post_input_date_published"><![CDATA[Опубликовать]]></string>
+        <string name="_bx_timeline_form_post_input_date_published_info"><![CDATA[Оставьте пустым, чтобы опубликовать немедленно.]]></string>
 	<string name="_bx_timeline_form_post_input_sys_link"><![CDATA[Ссылка]]></string>
 	<string name="_bx_timeline_form_post_input_link_alt"><![CDATA[Добавить ссылку]]></string>
 	<string name="_bx_timeline_form_post_input_link_err_delete"><![CDATA[Невозможно удалить ссылку. Пожалуйста, оповестите нас о проблеме.]]></string>
@@ -57,7 +59,7 @@
 	<string name="_bx_timeline_form_post_input_sys_do_submit"><![CDATA[Создать]]></string>
 	<string name="_bx_timeline_form_post_input_do_submit"><![CDATA[Создать]]></string>
 	<string name="_bx_timeline_form_post_input_sys_do_cancel"><![CDATA[Отмена]]></string>
-    <string name="_bx_timeline_form_post_input_do_cancel"><![CDATA[Отмена]]></string>
+        <string name="_bx_timeline_form_post_input_do_cancel"><![CDATA[Отмена]]></string>
 
 	<string name="_bx_timeline_form_attach_link"><![CDATA[Прикрепить ссылку]]></string>
 	<string name="_bx_timeline_form_attach_link_display_add"><![CDATA[Прикрепить ссылку]]></string>

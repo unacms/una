@@ -54,9 +54,10 @@ class BxPostsConfig extends BxBaseModTextConfig
             'FIELD_LOCATION_PREFIX' => 'location',
             'FIELD_LABELS' => 'labels',
             'FIELD_ANONYMOUS' => 'anonymous',
-            'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
             'FIELD_DISABLE_COMMENTS' => 'disable_comments',
-            
+            'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
+            'FIELDS_DELAYED_PROCESSING' => 'videos', // can be array of fields or comma separated string of field names
+
             // page URIs
             'URI_VIEW_ENTRY' => 'view-post',
             'URI_AUTHOR_ENTRIES' => 'posts-author',

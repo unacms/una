@@ -42,29 +42,12 @@ class BxPostsModule extends BxBaseModTextModule
         return $aResult;
     }
 
-    public function onPublished($iContentId)
-    {
-        $CNF = &$this->_oConfig->CNF;
-
-        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if(!$aContentInfo)
-            return MsgBox(_t('_sys_txt_error_occured'));
-
-        $aParams = array('object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]);
-        if(isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
-            $aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
-
-        bx_alert($this->getName(), 'added', $iContentId, $aContentInfo[$CNF['FIELD_AUTHOR']], $aParams);
-
-        return '';
-    }
-    
     public function serviceCheckAllowedCommentsPost($iContentId, $sObjectComments) 
     {
-		$CNF = &$this->_oConfig->CNF;
-		$aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-		if ($aContentInfo[$CNF['FIELD_DISABLE_COMMENTS']] == 1)
-			return false;
+        $CNF = &$this->_oConfig->CNF;
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if ($aContentInfo[$CNF['FIELD_DISABLE_COMMENTS']] == 1)
+            return false;
 
         return parent::serviceCheckAllowedCommentsPost($iContentId, $sObjectComments);
     }
@@ -72,9 +55,9 @@ class BxPostsModule extends BxBaseModTextModule
 	public function serviceCheckAllowedCommentsView($iContentId, $sObjectComments) 
     {
         $CNF = &$this->_oConfig->CNF;
-		$aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-		if ($aContentInfo[$CNF['FIELD_DISABLE_COMMENTS']] == 1)
-			return false;
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if ($aContentInfo[$CNF['FIELD_DISABLE_COMMENTS']] == 1)
+            return false;
 
         return parent::serviceCheckAllowedCommentsView($iContentId, $sObjectComments);
     }

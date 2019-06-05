@@ -504,5 +504,8 @@ SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('system', 'save_setting', @iHandler),
+('profile', 'delete', @iHandler),
+
 ('bx_albums_files', 'file_deleted', @iHandler),
-('profile', 'delete', @iHandler);
+('bx_albums_video_mp4', 'transcoded', @iHandler),
+('bx_albums_video_mp4_hd', 'transcoded', @iHandler);

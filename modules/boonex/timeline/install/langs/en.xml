@@ -40,10 +40,12 @@
 	<string name="_bx_timeline_form_post_input_sys_text"><![CDATA[Content]]></string>
 	<string name="_bx_timeline_form_post_input_text"><![CDATA[]]></string>
 	<string name="_bx_timeline_form_post_input_sys_object_privacy_view"><![CDATA[Visibility]]></string>
-    <string name="_bx_timeline_form_post_input_object_privacy_view"><![CDATA[Visibility]]></string>
-    <string name="_bx_timeline_form_post_input_sys_date"><![CDATA[Publish at]]></string>
-    <string name="_bx_timeline_form_post_input_date"><![CDATA[Publish at]]></string>
-    <string name="_bx_timeline_form_post_input_date_info"><![CDATA[Leave empty to publish immediately.]]></string>
+        <string name="_bx_timeline_form_post_input_object_privacy_view"><![CDATA[Visibility]]></string>
+        <string name="_bx_timeline_form_post_input_sys_date"><![CDATA[Created at]]></string>
+        <string name="_bx_timeline_form_post_input_date"><![CDATA[Created at]]></string>
+        <string name="_bx_timeline_form_post_input_sys_date_published"><![CDATA[Publish at]]></string>
+        <string name="_bx_timeline_form_post_input_date_published"><![CDATA[Publish at]]></string>
+        <string name="_bx_timeline_form_post_input_date_published_info"><![CDATA[Leave empty to publish immediately.]]></string>
 	<string name="_bx_timeline_form_post_input_sys_link"><![CDATA[Link]]></string>
 	<string name="_bx_timeline_form_post_input_link_alt"><![CDATA[Add Link]]></string>
 	<string name="_bx_timeline_form_post_input_link_err_delete"><![CDATA[Cannot remove the link. Please report.]]></string>
@@ -57,7 +59,7 @@
 	<string name="_bx_timeline_form_post_input_sys_do_submit"><![CDATA[Post]]></string>
 	<string name="_bx_timeline_form_post_input_do_submit"><![CDATA[Post]]></string>
 	<string name="_bx_timeline_form_post_input_sys_do_cancel"><![CDATA[Cancel]]></string>
-    <string name="_bx_timeline_form_post_input_do_cancel"><![CDATA[Cancel]]></string>
+        <string name="_bx_timeline_form_post_input_do_cancel"><![CDATA[Cancel]]></string>
 
 	<string name="_bx_timeline_form_attach_link"><![CDATA[Attach Link]]></string>
 	<string name="_bx_timeline_form_attach_link_display_add"><![CDATA[Attach Link]]></string>

@@ -72,6 +72,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'FIELD_OBJECT_ID' => 'object_id', //Note. For 'Direct Timeline Posts' this field contains post's author profile ID.
             'FIELD_OBJECT_PRIVACY_VIEW' => 'object_privacy_view',
             'FIELD_ADDED' => 'date',
+            'FIELD_PUBLISHED' => 'published',
             'FIELD_TITLE' => 'title',
             'FIELD_TEXT' => 'description',
             'FIELD_STATUS' => 'status',
@@ -79,6 +80,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'FIELD_ANONYMOUS' => 'anonymous',
             'FIELD_CONTROLS' => 'controls',
             'FIELD_LOCATION_PREFIX' => 'location',
+            'FIELDS_DELAYED_PROCESSING' => 'video', // can be array of fields or comma separated string of field names
 
             // page URIs
             'URI_VIEW_LIST' => 'timeline-view',
@@ -88,8 +90,14 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
             // objects
             'OBJECT_STORAGE' => $this->_sName . '_photos',
-            'OBJECT_GRID_ADMINISTRATION' => $this->_sName . '_administration',
+            'OBJECT_STORAGE_VIDEOS' => $this->_sName . '_videos',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => $this->_sName . '_photos_preview',
+            'OBJECT_VIDEOS_TRANSCODERS' => array(
+                'poster' => 'bx_timeline_videos_poster', 
+            	'mp4' => 'bx_timeline_videos_mp4', 
+            	'mp4_hd' => 'bx_timeline_videos_mp4_hd'
+            ),
+            'OBJECT_GRID_ADMINISTRATION' => $this->_sName . '_administration',
             'OBJECT_MENU_ENTRY_ATTACHMENTS' => $this->_sName . '_menu_post_attachments',
             'OBJECT_METATAGS' => $this->_sName,
             'OBJECT_COMMENTS' => $this->_sName,
@@ -137,14 +145,14 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'metatags' => $this->_sName,
 
             'storage_photos' => $this->CNF['OBJECT_STORAGE'],
-            'storage_videos' => $this->_sName . '_videos',
+            'storage_videos' => $this->CNF['OBJECT_STORAGE_VIDEOS'],
             'transcoder_photos_preview' => $this->CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW'],
             'transcoder_photos_view' => $this->_sName . '_photos_view',
             'transcoder_photos_medium' => $this->_sName . '_photos_medium',
             'transcoder_photos_big' => $this->_sName . '_photos_big',
-            'transcoder_videos_poster' => $this->_sName . '_videos_poster',
-            'transcoder_videos_mp4' => $this->_sName . '_videos_mp4',
-            'transcoder_videos_mp4_hd' => $this->_sName . '_videos_mp4_hd',
+            'transcoder_videos_poster' => $this->CNF['OBJECT_VIDEOS_TRANSCODERS']['poster'],
+            'transcoder_videos_mp4' => $this->CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4'],
+            'transcoder_videos_mp4_hd' => $this->CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4_hd'],
 
             'page_item_brief' => $this->_sName . '_item_brief',
 

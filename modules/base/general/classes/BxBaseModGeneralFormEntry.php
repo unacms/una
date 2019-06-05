@@ -130,6 +130,18 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
                 $aValsToAdd[$CNF['FIELD_THUMB']] = $iFileThumb;
         }
         
+        if(isset($CNF['FIELD_STATUS']) && !empty($CNF['FIELDS_DELAYED_PROCESSING'])) {
+            $aFields = $CNF['FIELDS_DELAYED_PROCESSING'];
+            if(is_string($aFields))
+                $aFields = explode(',', $aFields);
+
+            foreach($aFields as $sField) {
+                $mixedFieldValues = $this->getCleanValue($sField);
+                if(!empty($mixedFieldValues))
+                    $aValsToAdd[$CNF['FIELD_STATUS']] = 'awaiting';
+            }
+        }
+
         return parent::insert ($aValsToAdd, $isIgnore);
     }
 

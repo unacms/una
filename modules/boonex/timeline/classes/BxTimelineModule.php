@@ -2151,19 +2151,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $sTitle = $bText ? $this->_oConfig->getTitle($sText) : $this->_oConfig->getTitleDefault($bLinkIds, $bPhotoIds, $bVideoIds);
             $sDescription = _t('_bx_timeline_txt_user_added_sample', '{profile_name}', _t('_bx_timeline_txt_sample_with_article'));
 
-            //--- Process Date ---//
-            $iNow = time();
-            $iDate = 0;
-            if(isset($oForm->aInputs['date']))
-                $iDate = $oForm->getCleanValue('date');
-            if(empty($iDate))
-                $iDate = $iNow;
-            
-            //--- Process Status ---//
-            $sStatus = BX_TIMELINE_STATUS_ACTIVE;
-            if($iDate > $iNow)
-                $sStatus = BX_TIMELINE_STATUS_AWAITING;
-
             /**
              * Unset 'text' input because its data was already processed 
              * and will be saved via additional values which were passed 
@@ -2177,9 +2164,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 'object_privacy_view' => $iObjectPrivacyView,
                 'content' => serialize($aContent),
                 'title' => $sTitle,
-                'description' => $sDescription,
-                'date' => $iDate,
-                'status' => $sStatus
+                'description' => $sDescription
             ));
 
             if(!empty($iId)) {
@@ -2193,17 +2178,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                     foreach($aLinkIds as $iLinkId)
                         $this->_oDb->saveLink($iId, $iLinkId);
 
-				//--- Process Media ---//
-				if($bPhotoIds) 
-					$this->_saveMedia(BX_TIMELINE_MEDIA_PHOTO, $iId, $aPhotoIds);
+                //--- Process Media ---//
+                if($bPhotoIds) 
+                    $this->_saveMedia(BX_TIMELINE_MEDIA_PHOTO, $iId, $aPhotoIds);
 
-				if($bVideoIds)
-					$this->_saveMedia(BX_TIMELINE_MEDIA_VIDEO, $iId, $aVideoIds);
+                if($bVideoIds)
+                    $this->_saveMedia(BX_TIMELINE_MEDIA_VIDEO, $iId, $aVideoIds);
 
                 $this->onPost($iId);
 
                 return $this->_prepareResponse(array('id' => $iId), $bAjaxMode, array(
-                	'redirect' => $this->_oConfig->getItemViewUrl(array('id' => $iId))
+                    'redirect' => $this->_oConfig->getItemViewUrl(array('id' => $iId))
                 ));
             }
 
@@ -2275,15 +2260,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                     'owner_id' => abs($iObjectPrivacyView),
                     'object_privacy_view' => $iObjectPrivacyViewDefault
                 ));
-
-            //--- Process Date ---//
-            if(isset($oForm->aInputs['date'])) {
-                $iDate = $oForm->getCleanValue('date');
-                if(empty($iDate))
-                    $iDate = time();
-
-                $aValsToAdd['date'] = $iDate;
-            }
 
             if(!$oForm->update($iId, $aValsToAdd))
                 return array('message' => _t('_bx_timeline_txt_err_cannot_perform_action'));
@@ -2780,6 +2756,21 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'privacy_view' => $aEvent['object_privacy_view'],
         ));
         //--- Event -> Post for Alerts Engine ---//
+    }
+
+    public function onPublished($iContentId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContentId));
+
+        //--- Clear Item cache
+        $this->getCacheItemObject()->removeAllByPrefix($this->_oConfig->getPrefix('cache_item') . $iContentId);
+        
+        //--- Clear Feed cache
+        $this->_oDb->deleteCache(array('context_id' => $aEvent[$CNF['FIELD_OWNER_ID']])); //--- Delete cache for old context
+
+        $this->onPost($iContentId);
     }
 
     public function onRepost($iId, $aReposted = array())
