@@ -468,6 +468,95 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 
+    public function getEvents($aParams, $bReturnCount = false)
+    {
+        list($sMethod, $sSelectClause, $mixedJoinClause, $mixedWhereClause, $sOrderClause, $sLimitClause) = $this->_getSqlPartsEvents($aParams);
+
+        $bCount = isset($aParams['count']) && $aParams['count'] === true;
+        if($bCount) {
+            $sMethod = 'getOne';
+            $sSelectClause = 'COUNT(*)';
+            $sOrderClause = '';
+            $sLimitClause = '';
+        }
+
+        $aAlertParams = $aParams;
+        unset($aAlertParams['browse']);
+
+        bx_alert($this->_oConfig->getName(), 'get_events', 0, 0, array(
+            'browse' => $aParams['browse'],
+            'params' => $aAlertParams,
+            'table' => $this->_sTable,
+            'method' => &$sMethod,
+            'select_clause' => &$sSelectClause,
+            'join_clause' => &$mixedJoinClause,
+            'where_clause' => &$mixedWhereClause,
+            'order_clause' => &$sOrderClause,
+            'limit_clause' => &$sLimitClause
+        ));
+
+        $sSqlMask = "SELECT {select}
+            FROM `{$this->_sTable}`
+            LEFT JOIN `{$this->_sTableHandlers}` ON `{$this->_sTable}`.`type`=`{$this->_sTableHandlers}`.`alert_unit` AND `{$this->_sTable}`.`action`=`{$this->_sTableHandlers}`.`alert_action` {join}
+            WHERE 1 {where} {order} {limit}";
+
+        if(is_string($mixedWhereClause)) {
+            $aSqlMarkers = array(
+                'select' => $sSelectClause, 
+                'join' => $mixedJoinClause, 
+                'where' => $mixedWhereClause, 
+                'order' => $sOrderClause, 
+                'limit' => $sLimitClause
+            );
+
+            $aEntries = $this->$sMethod(bx_replace_markers($sSqlMask, $aSqlMarkers));
+
+            return !$bReturnCount ? $aEntries : array($aEntries, (int)$this->getOne(bx_replace_markers($sSqlMask, array_merge($aSqlMarkers, array(
+                'select' => 'COUNT(*)',
+                'order' => '',
+                'limit' => ''
+            )))));
+        }
+
+        $bJoinAsArray = !empty($mixedJoinClause) && is_array($mixedJoinClause);
+
+        $sOrderSubclause = $sLimitSubclause = '';
+        if(!$bCount) {
+            $sOrderSubclause = $sOrderClause;
+            $sLimitSubclause = isset($aParams['per_page']) ? 'LIMIT 0, ' . ($aParams['start'] + $aParams['per_page']) : '';
+        }
+
+        $iEntries = 0;
+        $aSqlParts = array();
+        foreach($mixedWhereClause as $sKey => $sValue) {
+            $aSqlMarkers = array(
+                'select' => $sSelectClause, 
+                'join' => $bJoinAsArray ? (isset($mixedJoinClause[$sKey]) ? $mixedJoinClause[$sKey] : '') : $mixedJoinClause, 
+                'where' => $sValue, 
+                'order' => $sOrderSubclause, 
+                'limit' => $sLimitSubclause
+            );
+            $sSqlPart = bx_replace_markers($sSqlMask, $aSqlMarkers);
+
+            $aSqlParts[] = !$bCount ? $sSqlPart : (int)$this->$sMethod($sSqlPart);
+            if(!$bReturnCount)
+                continue;
+
+            $iEntries += (int)$this->getOne(bx_replace_markers($sSqlMask, array_merge($aSqlMarkers, array(
+                'select' => 'COUNT(*)',
+                'order' => '',
+                'limit' => ''
+            ))));
+        }
+
+        $aEntries = $bCount ? array_sum($aSqlParts) : $this->$sMethod(bx_replace_markers('(' . implode(') UNION (', $aSqlParts) . ') {order} {limit}', array(
+            'order' => str_replace('`' . $this->_sTable . '`.', '', $sOrderClause),
+            'limit' => str_replace('`' . $this->_sTable . '`.', '', $sLimitClause),
+        )));
+
+        return !$bReturnCount ? $aEntries : array($aEntries, $iEntries);
+    }
+
     protected function _getFilterAddon($iOwnerId, $sFilter)
     {
         switch($sFilter) {
@@ -485,7 +574,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 $sFilterAddon = $this->prepareAsString(" AND `{$this->_sTable}`.`action`='' AND `{$this->_sTable}`.`object_id`<>? ", $iOwnerId);
                 break;
 
-			/**
+            /**
              * All (Direct and System) posts in Timeline (owned by $iOwnerId) made by users except the viewer
              */
             case BX_TIMELINE_FILTER_OTHER_VIEWER:
@@ -577,27 +666,6 @@ class BxTimelineDb extends BxBaseModNotificationsDb
             $sOrderClause = "ORDER BY " . $sOrderClause . "`{$this->_sTable}`.`date` DESC";
         }
 
-        if(isset($aParams['count']) && $aParams['count'] === true) {
-            $sMethod = 'getOne';
-            $sSelectClause = "COUNT(`{$this->_sTable}`.`id`)";
-            $sLimitClause = "";
-        }
-
-        $aAlertParams = $aParams;
-        unset($aAlertParams['browse']);
-
-        bx_alert($this->_oConfig->getName(), 'get_events', 0, 0, array(
-            'browse' => $aParams['browse'],
-            'params' => $aAlertParams,
-            'table' => $this->_sTable,
-            'method' => &$sMethod,
-            'select_clause' => &$sSelectClause,
-            'join_clause' => &$sJoinClause,
-            'where_clause' => &$sWhereClause,
-            'order_clause' => &$sOrderClause,
-            'limit_clause' => &$sLimitClause
-        ));
-
         return array($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);
     }
 
@@ -605,7 +673,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     {
         $sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
 
-    	$sJoinClause = $sWhereClause = "";
+    	$mixedJoinClause = $mixedWhereClause = "";
 
         $sWhereClauseStatus = "AND `{$this->_sTable}`.`active`='1' ";
         $sWhereClauseStatus .= $this->prepareAsString("AND `{$this->_sTable}`.`status`=? ", isset($aParams['status']) ? $aParams['status'] : BX_TIMELINE_STATUS_ACTIVE);
@@ -634,107 +702,110 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         //--- Apply unpublished (date in future) filter
         $sWhereClauseUnpublished = $this->prepareAsString("AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "' AND `{$this->_sTable}`.`object_id` = ?, 1, `{$this->_sTable}`.`date` <= UNIX_TIMESTAMP()) ", bx_get_logged_profile_id());
 
-		//--- Check type
-		$sWhereSubclause = "";
-		switch($aParams['type']) {
-		    case BX_TIMELINE_TYPE_HOT: //--- Hot (Public) Feed.
-		        $sJoinClause .= " INNER JOIN `{$this->_sTableHotTrack}` ON `{$this->_sTable}`.`id`=`{$this->_sTableHotTrack}`.`event_id`";
-		        
-		    case BX_BASE_MOD_NTFS_TYPE_PUBLIC: //--- Site (Public) Feed.
-		        //--- Apply privacy filter
-		        $aPrivacyGroups = array(BX_DOL_PG_ALL);
-		        if(isLogged())
-		            $aPrivacyGroups[] = BX_DOL_PG_MEMBERS;
+        //--- Check type
+        $mixedWhereSubclause = "";
+        switch($aParams['type']) {
+            case BX_TIMELINE_TYPE_HOT: //--- Hot (Public) Feed.
+                $mixedJoinClause .= " INNER JOIN `{$this->_sTableHotTrack}` ON `{$this->_sTable}`.`id`=`{$this->_sTableHotTrack}`.`event_id`";
 
-        		$aQueryParts = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'))->getContentByGroupAsSQLPart($aPrivacyGroups);
-        		$sWhereClause .= $aQueryParts['where'] . " ";
+            case BX_BASE_MOD_NTFS_TYPE_PUBLIC: //--- Site (Public) Feed.
+                //--- Apply privacy filter
+                $aPrivacyGroups = array(BX_DOL_PG_ALL);
+                if(isLogged())
+                    $aPrivacyGroups[] = BX_DOL_PG_MEMBERS;
 
-        		if($this->_oConfig->isShowAll())
-        		    break;
+                $aQueryParts = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'))->getContentByGroupAsSQLPart($aPrivacyGroups);
+                $mixedWhereClause .= $aQueryParts['where'] . " ";
 
-        		//--- Select All System posts
-        		$sWhereSubclause = "SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") <> '" . $sCommonPostPrefix . "'";
+                if($this->_oConfig->isShowAll())
+                    break;
 
-        		//--- Select Public (Direct) posts created on Home Page Timeline (Public Feed) 
-        		$sWhereSubclause .= $this->prepareAsString(" OR `{$this->_sTable}`.`owner_id`=?", 0);
+                //--- Select All System posts
+                $mixedWhereSubclause = "SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") <> '" . $sCommonPostPrefix . "'";
 
-        		//--- Select Promoted posts.
-		        $sWhereSubclause .= " OR `{$this->_sTable}`.`promoted` <> '0'";
-		        break;
+                //--- Select Public (Direct) posts created on Home Page Timeline (Public Feed) 
+                $mixedWhereSubclause .= $this->prepareAsString(" OR `{$this->_sTable}`.`owner_id`=?", 0);
 
-                    //--- Profile Feed
-                    case BX_BASE_MOD_NTFS_TYPE_OWNER:
-                        if(empty($aParams['owner_id']))
-                            break;
+                //--- Select Promoted posts.
+                $mixedWhereSubclause .= " OR `{$this->_sTable}`.`promoted` <> '0'";
+                break;
 
-                        //--- Select Own (System and Direct) posts from Profile's Timeline.
-                        $sWhereSubclause = $this->prepareAsString("(`{$this->_sTable}`.`owner_id` = ?)", $aParams['owner_id']);
+            //--- Profile Feed
+            case BX_BASE_MOD_NTFS_TYPE_OWNER:
+                if(empty($aParams['owner_id']))
+                    break;
 
-                        //--- Select Own Public (Direct) posts from Home Page Timeline (Public Feed).
-                        $sWhereSubclause .= $this->prepareAsString(" OR (`{$this->_sTable}`.`owner_id` = '0' AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` = ?, 1))", $aParams['owner_id']);
-                        break;
+                //--- Select Own (System and Direct) posts from Profile's Timeline.
+                $mixedWhereSubclause = $this->prepareAsString("(`{$this->_sTable}`.`owner_id` = ?)", $aParams['owner_id']);
 
-                    //--- Profile Connections Feed
-                    case BX_BASE_MOD_NTFS_TYPE_CONNECTIONS:
-                        if(empty($aParams['owner_id']))
-                            break;
+                //--- Select Own Public (Direct) posts from Home Page Timeline (Public Feed).
+                $mixedWhereSubclause .= $this->prepareAsString(" OR (`{$this->_sTable}`.`owner_id` = '0' AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` = ?, 1))", $aParams['owner_id']);
+                break;
 
-                        $oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
+            //--- Profile Connections Feed
+            case BX_BASE_MOD_NTFS_TYPE_CONNECTIONS:
+                if(empty($aParams['owner_id']))
+                    break;
 
-                        $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($this->_sPrefix . 'events', 'owner_id', $aParams['owner_id']);
-                        $aJoin1 = $aQueryParts['join'];
+                $oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
 
-                        $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($this->_sPrefix . 'events', 'object_id', $aParams['owner_id']);
-                        $aJoin2 = $aQueryParts['join'];
+                $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($this->_sPrefix . 'events', 'owner_id', $aParams['owner_id']);
+                $aJoin1 = $aQueryParts['join'];
 
-                        //--- Join System and Direct posts made by following members.  
-                        $sJoinClause .= " " . $aJoin1['type'] . " JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON ((" . $aJoin1['condition'] . ") OR (SUBSTRING(`" . $this->_sTable . "`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "' AND " . $aJoin2['condition'] . "))";
+                $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($this->_sPrefix . 'events', 'object_id', $aParams['owner_id']);
+                $aJoin2 = $aQueryParts['join'];
 
-                        //--- Exclude Own (Direct) posts on timelines of following members.
-                        //--- Note. Disabled for now.
-                        //$sWhereSubclause = $this->prepareAsString("IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> ?, 1)", $aParams['owner_id']);
-                        $sWhereSubclause = "0";
+                //--- Join System and Direct posts made by following members.  
+                $mixedJoinClause .= " " . $aJoin1['type'] . " JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON ((" . $aJoin1['condition'] . ") OR (SUBSTRING(`" . $this->_sTable . "`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "' AND " . $aJoin2['condition'] . "))";
 
-                        //--- Select Promoted posts.
-                        $sWhereSubclause .= " OR `{$this->_sTable}`.`promoted` <> '0'";
-                        break;
+                //--- Exclude Own (Direct) posts on timelines of following members.
+                //--- Note. Disabled for now.
+                //$mixedWhereSubclause = $this->prepareAsString("IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> ?, 1)", $aParams['owner_id']);
+                $mixedWhereSubclause = "0";
 
-                    //--- Profile + Profile Connections Feed
-                    case BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS:
-                        if(empty($aParams['owner_id']))
-                            break;
+                //--- Select Promoted posts.
+                $mixedWhereSubclause .= " OR `{$this->_sTable}`.`promoted` <> '0'";
+                break;
 
-                        $oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
+            //--- Profile + Profile Connections Feed
+            case BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS:
+                if(empty($aParams['owner_id']))
+                    break;
 
-                        $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($this->_sPrefix . 'events', 'owner_id', $aParams['owner_id']);
-                        $aJoin1 = $aQueryParts['join'];
+                $mixedJoinClause = array();
+                $mixedWhereSubclause = array();
 
-                        $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($this->_sPrefix . 'events', 'object_id', $aParams['owner_id']);
-                        $aJoin2 = $aQueryParts['join'];
-                        $aJoin2['table_alias'] = 'cc';
-                        $aJoin2['condition'] = str_replace('`c`', '`' . $aJoin2['table_alias'] . '`', $aJoin2['condition']);
+                $oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('conn_subscriptions'));
 
-                        //--- Join System and Direct posts made by following members. 'LEFT' join is essential to apply different conditions.
-                        $sJoinClause .= " LEFT JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON " . $aJoin1['condition'];
-                        $sJoinClause .= " LEFT JOIN `" . $aJoin2['table'] . "` AS `" . $aJoin2['table_alias'] . "` ON SUBSTRING(`" . $this->_sTable . "`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "' AND " . $aJoin2['condition'];
+                //--- Select Own (System and Direct) posts from Profile's Timeline.
+                $mixedWhereSubclause['p1'] = $this->prepareAsString("(`{$this->_sTable}`.`owner_id` = ?)", $aParams['owner_id']);
 
-                        //--- Select Own (System and Direct) posts from Profile's Timeline.
-                        $sWhereSubclause = $this->prepareAsString("(`{$this->_sTable}`.`owner_id` = ?)", $aParams['owner_id']);
+                //--- Select Own Public (Direct) posts from Home Page Timeline (Public Feed).
+                $mixedWhereSubclause['p1'] .= $this->prepareAsString(" OR (`{$this->_sTable}`.`owner_id` = '0' AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` = ?, 1))", $aParams['owner_id']);
 
-                        //--- Select Own Public (Direct) posts from Home Page Timeline (Public Feed).
-                        $sWhereSubclause .= $this->prepareAsString(" OR (`{$this->_sTable}`.`owner_id` = '0' AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` = ?, 1))", $aParams['owner_id']);
+                //--- Exclude Own (Direct) posts on timelines of following members.
+                //--- Note. Disabled for now and next check is used instead. 
+                //$mixedWhereSubclause['pX'] = $this->prepareAsString(" OR (NOT ISNULL(`c`.`content`) AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> ?, 1))", $aParams['owner_id']);
 
-                        //--- Exclude Own (Direct) posts on timelines of following members.
-                        //--- Note. Disabled for now and next check is used instead. 
-                        //$sWhereSubclause .= $this->prepareAsString(" OR (NOT ISNULL(`c`.`content`) AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> ?, 1))", $aParams['owner_id']);
+                //--- Join System and Direct posts received by and made by following members. 'LEFT' join is essential to apply different conditions.
+                $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($this->_sPrefix . 'events', 'owner_id', $aParams['owner_id']);
+                $aJoin1 = $aQueryParts['join'];
 
-                        //--- All posts on timelines of following members.
-                        $sWhereSubclause .= " OR NOT ISNULL(`" . $aJoin1['table_alias'] . "`.`content`) OR NOT ISNULL(`" . $aJoin2['table_alias'] . "`.`content`)";
+                $mixedJoinClause['p2'] = "LEFT JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON " . $aJoin1['condition'];
+                $mixedWhereSubclause['p2'] = "NOT ISNULL(`" . $aJoin1['table_alias'] . "`.`content`)";
 
-                        //--- Select Promoted posts.
-                        $sWhereSubclause .= " OR `{$this->_sTable}`.`promoted` <> '0'";
-                        break;
-		}
+                $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($this->_sPrefix . 'events', 'object_id', $aParams['owner_id']);
+                $aJoin2 = $aQueryParts['join'];
+                $aJoin2['table_alias'] = 'cc';
+                $aJoin2['condition'] = str_replace('`c`', '`' . $aJoin2['table_alias'] . '`', $aJoin2['condition']);
+
+                $mixedJoinClause['p3'] = "LEFT JOIN `" . $aJoin2['table'] . "` AS `" . $aJoin2['table_alias'] . "` ON SUBSTRING(`" . $this->_sTable . "`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "' AND " . $aJoin2['condition'];
+                $mixedWhereSubclause['p3'] = "NOT ISNULL(`" . $aJoin2['table_alias'] . "`.`content`)";
+
+                //--- Select Promoted posts.
+                $mixedWhereSubclause['p4'] = "`{$this->_sTable}`.`promoted` <> '0'";
+                break;
+        }
 
         $aAlertParams = $aParams;
         unset($aAlertParams['type'], $aAlertParams['owner_id']);
@@ -744,28 +815,36 @@ class BxTimelineDb extends BxBaseModNotificationsDb
             'owner_id' => $aParams['owner_id'],
             'params' => $aAlertParams,
             'table' => $this->_sTable,
-            'join_clause' => &$sJoinClause,
-            'where_clause' => &$sWhereClause,
+            'join_clause' => &$mixedJoinClause,
+            'where_clause' => &$mixedWhereClause,
             'where_clause_status' => &$sWhereClauseStatus,
             'where_clause_filter' => &$sWhereClauseFilter,
             'where_clause_timeline' => &$sWhereClauseTimeline,
             'where_clause_modules' => &$sWhereClauseModules,
             'where_clause_hidden' => &$sWhereClauseHidden,
             'where_clause_unpublished' => &$sWhereClauseUnpublished,
-            'where_subclause' => &$sWhereSubclause
+            'where_subclause' => &$mixedWhereSubclause
         ));
 
-        $sWhereClause .= $sWhereClauseStatus;
-        $sWhereClause .= $sWhereClauseFilter;
-        $sWhereClause .= $sWhereClauseTimeline;
-        $sWhereClause .= $sWhereClauseModules;
-        $sWhereClause .= $sWhereClauseHidden;
-        $sWhereClause .= $sWhereClauseUnpublished;
+        $mixedWhereClause .= $sWhereClauseStatus;
+        $mixedWhereClause .= $sWhereClauseFilter;
+        $mixedWhereClause .= $sWhereClauseTimeline;
+        $mixedWhereClause .= $sWhereClauseModules;
+        $mixedWhereClause .= $sWhereClauseHidden;
+        $mixedWhereClause .= $sWhereClauseUnpublished;
 
-        if(!empty($sWhereSubclause))
-            $sWhereClause .= "AND (" . $sWhereSubclause . ") ";
+        if(!empty($mixedWhereSubclause)) {
+            if(is_array($mixedWhereSubclause)) {
+                $aWhereClause = array();
+                foreach($mixedWhereSubclause as $sKey => $sValue)
+                    $aWhereClause[$sKey] = $mixedWhereClause . "AND " . $sValue . " ";
+                $mixedWhereClause = $aWhereClause;
+            }
+            else
+                $mixedWhereClause .= "AND (" . $mixedWhereSubclause . ") ";
+        }
 
-        return array($sJoinClause, $sWhereClause);
+        return array($mixedJoinClause, $mixedWhereClause);
     }
 }
 
