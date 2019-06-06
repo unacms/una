@@ -61,6 +61,9 @@ class BxDolLabelQuery extends BxDolDb
                 );
 
                 $sWhereClause = " AND `tl`.`parent`=:parent";
+
+                if(!empty($aParams['exclude']) && is_array($aParams['exclude']))
+                    $sWhereClause .= " AND `tl`.`id` NOT IN(" . $this->implode_escape($aParams['exclude']) . ")";
                 break;
 
             case 'parent_order':
