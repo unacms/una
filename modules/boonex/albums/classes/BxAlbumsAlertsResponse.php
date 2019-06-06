@@ -25,9 +25,9 @@ class BxAlbumsAlertsResponse extends BxBaseModTextAlertsResponse
         parent::response($oAlert);
     }
 
-    protected function _onVideoTranscoded($iGhostId, $aParams = array())
+    protected function _onVideoTranscoded($iGhostId, $bResult, $aParams = array())
     {
-        return parent::_onVideoTranscoded($iGhostId, array('storage' => $this->_oModule->_oConfig->CNF['OBJECT_STORAGE']));
+        return parent::_onVideoTranscoded($iGhostId, $bResult, array('storage' => $this->_oModule->_oConfig->CNF['OBJECT_STORAGE']));
     }
 }
 

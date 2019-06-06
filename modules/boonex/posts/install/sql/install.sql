@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `bx_posts_posts` (
   `featured` int(11) NOT NULL default '0',
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
   `disable_comments` tinyint(4) NOT NULL DEFAULT '0',
-  `status` enum('active','awaiting','hidden') NOT NULL DEFAULT 'active',
+  `status` enum('active','awaiting','failed','hidden') NOT NULL DEFAULT 'active',
   `status_admin` enum('active','hidden') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `title_text` (`title`,`text`)

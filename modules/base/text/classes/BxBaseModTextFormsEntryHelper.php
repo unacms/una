@@ -144,7 +144,7 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 
         $sAction = 'added';
         if(isset($CNF['FIELD_STATUS']) && isset($aContentInfo[$CNF['FIELD_STATUS']]) && $aContentInfo[$CNF['FIELD_STATUS']] == 'awaiting')
-            $sAction = 'scheduled';
+            $sAction = 'deferred';
 
         bx_alert($this->_oModule->getName(), $sAction, $iId, $iAuthorId, $aParams);
     }

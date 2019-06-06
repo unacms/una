@@ -418,17 +418,22 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
 
     public function onDataEditBefore ($iContentId, $aContentInfo, &$aTrackTextFieldsChanges)
     {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(isset($CNF['FIELD_STATUS']) && isset($aContentInfo[$CNF['FIELD_STATUS']]) && $aContentInfo[$CNF['FIELD_STATUS']] == 'failed')
+            $aTrackTextFieldsChanges = array();
     }
 
     public function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if (isset($CNF['FIELD_PHOTO']))
+        list($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
+
+        if(isset($CNF['FIELD_PHOTO']))
             $oForm->processFiles ($CNF['FIELD_PHOTO'], $iContentId, false);
 
-        if (!empty($CNF['OBJECT_METATAGS'])) { // && isset($aTrackTextFieldsChanges['changed_fields'][$CNF['FIELD_TEXT']])) { // TODO: check if aTrackTextFieldsChanges works 
-            list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
+        if(!empty($CNF['OBJECT_METATAGS'])) { // && isset($aTrackTextFieldsChanges['changed_fields'][$CNF['FIELD_TEXT']])) { // TODO: check if aTrackTextFieldsChanges works 
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
             $oMetatags->metaAddAuto($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT']);
             if (isset($CNF['FIELD_LOCATION_PREFIX']) && isset($oForm->aInputs[$CNF['FIELD_LOCATION_PREFIX']]) && $oMetatags->locationsIsEnabled())
@@ -439,6 +444,10 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
                     $oMetatags->keywordsAddOne($aContentInfo[$CNF['FIELD_ID']], $sLabel, false);
             }
         }
+
+        if(isset($CNF['FIELD_STATUS']) && isset($aTrackTextFieldsChanges['data'][$CNF['FIELD_STATUS']]) && $aTrackTextFieldsChanges['data'][$CNF['FIELD_STATUS']] == 'failed')
+            if(isset($aContentInfo[$CNF['FIELD_STATUS']]) && $aContentInfo[$CNF['FIELD_STATUS']] == 'active')
+                $this->_alertAfterAdd($aContentInfo);
 
         return '';
     }

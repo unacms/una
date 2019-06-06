@@ -136,15 +136,10 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
 
     protected function _processBxTimelineVideosMp4Transcoded($oAlert)
     {
-        $this->_onVideoTranscoded($oAlert->iObject);
+        $this->_onVideoTranscoded($oAlert->iObject, $oAlert->aExtras['ret']);
     }
 
-    protected function _processBxTimelineVideosMp4HdTranscoded($oAlert)
-    {
-        $this->_onVideoTranscoded($oAlert->iObject);
-    }
-
-    protected function _onVideoTranscoded($iMediaId, $aParams = array())
+    protected function _onVideoTranscoded($iMediaId, $bResult, $aParams = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -162,21 +157,23 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
 
         if(!isset($aContentInfo[$CNF['FIELD_STATUS']]) || $aContentInfo[$CNF['FIELD_STATUS']] != 'awaiting')
             return;
-        
+
+        if(!$bResult) {
+            if((int)$this->_oModule->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => 'failed'), array($CNF['FIELD_ID'] => $iContentId)) > 0)
+                $this->_oModule->onFailed($iContentId);
+
+            return;
+        }
+
         $iNow = time();
         if(isset($CNF['FIELD_PUBLISHED']) && isset($aContentInfo[$CNF['FIELD_PUBLISHED']]) && $aContentInfo[$CNF['FIELD_PUBLISHED']] > $iNow)
             return;
 
-        $aTranscoders = array();
-        foreach($CNF['OBJECT_VIDEOS_TRANSCODERS'] as $sKey => $sTranscoder)
-            if(in_array($sKey, array('mp4', 'mp4_hd')))
-                $aTranscoders[$sTranscoder] = BxDolTranscoder::getObjectInstance($sTranscoder);
-
+        $oTranscoder = BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']);
         $aMediasToCheck = $this->_oModule->_oDb->getMedia(BX_TIMELINE_MEDIA_VIDEO, $iContentId);
         foreach($aMediasToCheck as $iMediaToCheck)
-            foreach($aTranscoders as $sTranscoder => $oTranscoder)
-                if(!$oTranscoder->isFileReady($iMediaToCheck))
-                    return;
+            if(!$oTranscoder->isFileReady($iMediaToCheck))
+                return;
 
         if((int)$this->_oModule->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => 'active'), array($CNF['FIELD_ID'] => $iContentId)) > 0)
             $this->_oModule->onPublished($iContentId);

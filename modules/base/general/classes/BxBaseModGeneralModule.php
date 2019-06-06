@@ -1277,7 +1277,10 @@ class BxBaseModGeneralModule extends BxDolModule
             return '';
     }
 
-	// ====== COMMON METHODS
+    // ====== COMMON METHODS
+    public function onPublished($iContentId) {}
+
+    public function onFailed($iContentId) {}
 
     public function getEntryImageData($aContentInfo, $sField = 'FIELD_THUMB', $aTranscoders = array())
     {

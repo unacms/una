@@ -507,5 +507,4 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('profile', 'delete', @iHandler),
 
 ('bx_albums_files', 'file_deleted', @iHandler),
-('bx_albums_video_mp4', 'transcoded', @iHandler),
-('bx_albums_video_mp4_hd', 'transcoded', @iHandler);
+('bx_albums_video_mp4', 'transcoded', @iHandler);

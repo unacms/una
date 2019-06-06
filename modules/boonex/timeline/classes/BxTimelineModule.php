@@ -2730,11 +2730,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return CHECK_ACTION_RESULT_ALLOWED;
     }
 
-    public function onPost($iId)
+    public function onPost($iContentId)
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
+        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContentId));
 
         if($this->_oConfig->isSystem($aEvent['type'], $aEvent['action'])) {
             //--- Request event's data from content module and update it in the Timeline DB.
@@ -2748,9 +2748,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $iSenderId = $iObjectAuthorId = (int)$aEvent['object_id'];
         }
 
-        //--- Event -> Post for Alerts Engine ---//
-        $sAction = ($aEvent[$CNF['FIELD_STATUS']] == BX_TIMELINE_STATUS_AWAITING ? 'schedule' : 'post') . '_' . $sPostType;
-        bx_alert($this->_oConfig->getObject('alert'), $sAction, $iId, $iSenderId, array(
+        //--- Event -> Post/Defer for Alerts Engine ---//
+        $sAction = ($aEvent[$CNF['FIELD_STATUS']] == BX_TIMELINE_STATUS_AWAITING ? 'defer' : 'post') . '_' . $sPostType;
+        bx_alert($this->_oConfig->getObject('alert'), $sAction, $iContentId, $iSenderId, array(
             'owner_id' => $aEvent['owner_id'],
             'object_author_id' => $iObjectAuthorId,
             'privacy_view' => $aEvent['object_privacy_view'],
@@ -2768,14 +2768,42 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $this->getCacheItemObject()->removeAllByPrefix($this->_oConfig->getPrefix('cache_item') . $iContentId);
         
         //--- Clear Feed cache
-        $this->_oDb->deleteCache(array('context_id' => $aEvent[$CNF['FIELD_OWNER_ID']])); //--- Delete cache for old context
+        $this->_oDb->deleteCache(array('context_id' => $aEvent[$CNF['FIELD_OWNER_ID']]));
 
         $this->onPost($iContentId);
     }
-
-    public function onRepost($iId, $aReposted = array())
+    
+    public function onFailed($iContentId)
     {
-        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
+        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContentId));
+
+        //--- Clear Item cache
+        $this->getCacheItemObject()->removeAllByPrefix($this->_oConfig->getPrefix('cache_item') . $iContentId);
+
+        if($this->_oConfig->isSystem($aEvent['type'], $aEvent['action'])) {
+            //--- Request event's data from content module and update it in the Timeline DB.
+            $this->_oTemplate->getDataCached($aEvent);
+
+            $sPostType = 'system';
+            $iSenderId = $iObjectAuthorId = (int)$aEvent['owner_id'];
+        } 
+        else {
+            $sPostType = 'common';
+            $iSenderId = $iObjectAuthorId = (int)$aEvent['object_id'];
+        }
+
+        //--- Event -> Fail for Alerts Engine ---//
+        bx_alert($this->_oConfig->getObject('alert'), 'fail_' . $sPostType, $iContentId, $iSenderId, array(
+            'owner_id' => $aEvent['owner_id'],
+            'object_author_id' => $iObjectAuthorId,
+            'privacy_view' => $aEvent['object_privacy_view'],
+        ));
+        //--- Event -> Post for Alerts Engine ---//
+    }
+
+    public function onRepost($iContentId, $aReposted = array())
+    {
+        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContentId));
 
         if(empty($aReposted)) {
             $aContent = unserialize($aEvent['content']);
@@ -2790,12 +2818,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $this->_oDb->updateRepostCounter($aReposted['id'], $aReposted['reposts']);
 
         //--- Timeline -> Update for Alerts Engine ---//
-        $oAlert = new BxDolAlerts($this->_oConfig->getObject('alert'), 'repost', $aReposted['id'], $iUserId, array(
-        	'privacy_view' => $aEvent['object_privacy_view'],
-        	'object_author_id' => $aReposted['owner_id'],
-        	'repost_id' => $iId,
+        bx_alert($this->_oConfig->getObject('alert'), 'repost', $aReposted['id'], $iUserId, array(
+            'privacy_view' => $aEvent['object_privacy_view'],
+            'object_author_id' => $aReposted['owner_id'],
+            'repost_id' => $iContentId,
         ));
-        $oAlert->alert();
         //--- Timeline -> Update for Alerts Engine ---//
     }
 

@@ -268,19 +268,34 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     // ====== COMMON METHODS
     public function onPublished($iContentId)
     {
+        parent::onPublished($iContentId);
+
         $CNF = &$this->_oConfig->CNF;
 
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if(!$aContentInfo)
-            return MsgBox(_t('_sys_txt_error_occured'));
+            return;
 
         $aParams = array('object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]);
         if(isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
             $aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
 
         bx_alert($this->getName(), 'added', $iContentId, $aContentInfo[$CNF['FIELD_AUTHOR']], $aParams);
+    }
 
-        return '';
+    public function onFailed($iContentId)
+    {
+        parent::onFailed($iContentId);
+
+        $CNF = &$this->_oConfig->CNF;
+        
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(!$aContentInfo)
+            return;
+
+        $aParams = array('object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]);
+
+        bx_alert($this->getName(), 'failed', $iContentId, $aContentInfo[$CNF['FIELD_AUTHOR']], $aParams);
     }
 
     public function isEntryActive($aContentInfo)

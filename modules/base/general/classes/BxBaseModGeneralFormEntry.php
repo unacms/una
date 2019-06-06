@@ -149,22 +149,25 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if (isset($CNF['FIELD_AUTHOR']) && isset($CNF['FIELD_ANONYMOUS']) && isset($this->aInputs[$CNF['FIELD_ANONYMOUS']])) {
-            $aContentInfo = $this->_oModule->_oDb->getContentInfoById ($iContentId);
+        $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
+
+        if(isset($CNF['FIELD_AUTHOR']) && isset($CNF['FIELD_ANONYMOUS']) && isset($this->aInputs[$CNF['FIELD_ANONYMOUS']]))
             $aValsToAdd[$CNF['FIELD_AUTHOR']] = ($this->getCleanValue($CNF['FIELD_ANONYMOUS']) ? -1 : 1) * abs($aContentInfo[$CNF['FIELD_AUTHOR']]);
-        }
-        
-        if (isset($CNF['FIELD_CHANGED']) && empty($aValsToAdd[$CNF['FIELD_CHANGED']]) && empty($this->getCleanValue($CNF['FIELD_CHANGED'])))
+
+        if(isset($CNF['FIELD_CHANGED']) && empty($aValsToAdd[$CNF['FIELD_CHANGED']]) && empty($this->getCleanValue($CNF['FIELD_CHANGED'])))
             $aValsToAdd[$CNF['FIELD_CHANGED']] = time();
 
-        if (CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb($iContentId) && isset($CNF['FIELD_THUMB'])) {
+        if(CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedSetThumb($iContentId) && isset($CNF['FIELD_THUMB'])) {
             $aThumb = bx_process_input (bx_get($CNF['FIELD_THUMB']), BX_DATA_INT);
             $aValsToAdd[$CNF['FIELD_THUMB']] = 0;
             if (!empty($aThumb) && is_array($aThumb) && ($iFileThumb = array_pop($aThumb)))
                 $aValsToAdd[$CNF['FIELD_THUMB']] = $iFileThumb;
         }
-        
-        return parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
+
+        if(isset($CNF['FIELD_STATUS']) && isset($aContentInfo[$CNF['FIELD_STATUS']]) && $aContentInfo[$CNF['FIELD_STATUS']] == 'failed')
+            $aValsToAdd[$CNF['FIELD_STATUS']] = 'active';
+
+        return parent::update($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
     }
 
     protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId, $sPictureField = '')

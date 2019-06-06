@@ -28,11 +28,11 @@ class BxBaseModGeneralAlertsResponse extends BxDolAlertsResponse
             return $this->_oModule->_oDb->alterFulltextIndex();
 
         $sKey = 'OBJECT_VIDEOS_TRANSCODERS';
-        if(!empty($CNF[$sKey]) && is_array($CNF[$sKey]) && in_array($oAlert->sUnit, $CNF[$sKey])  && $oAlert->sAction == 'transcoded')
-            return $this->_onVideoTranscoded($oAlert->iObject);
+        if(isset($CNF[$sKey]) && !empty($CNF[$sKey]['mp4']) && strcmp($oAlert->sUnit , $CNF[$sKey]['mp4']) === 0 && $oAlert->sAction == 'transcoded')
+            return $this->_onVideoTranscoded($oAlert->iObject, $oAlert->aExtras['ret']);
     }
 
-    protected function _onVideoTranscoded($iGhostId, $aParams = array())
+    protected function _onVideoTranscoded($iGhostId, $bResult, $aParams = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -62,21 +62,23 @@ class BxBaseModGeneralAlertsResponse extends BxDolAlertsResponse
 
         if(!isset($aContentInfo[$CNF['FIELD_STATUS']]) || $aContentInfo[$CNF['FIELD_STATUS']] != 'awaiting')
             return;
-        
+
+        if(!$bResult) {
+            if((int)$this->_oModule->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => 'failed'), array($CNF['FIELD_ID'] => $iContentId)) > 0)
+                $this->_oModule->onFailed($iContentId);
+
+            return;
+        }
+
         $iNow = time();
         if(isset($CNF['FIELD_PUBLISHED']) && isset($aContentInfo[$CNF['FIELD_PUBLISHED']]) && $aContentInfo[$CNF['FIELD_PUBLISHED']] > $iNow)
             return;
 
-        $aTranscoders = array();
-        foreach($CNF['OBJECT_VIDEOS_TRANSCODERS'] as $sKey => $sTranscoder)
-            if(in_array($sKey, array('mp4', 'mp4_hd')))
-                $aTranscoders[$sTranscoder] = BxDolTranscoder::getObjectInstance($sTranscoder);
-
+        $oTranscoder = BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']);
         $aGhostsToCheck = $oStorage->getGhosts($aGhost['profile_id'], $iContentId);
         foreach($aGhostsToCheck as $aGhostToCheck)
-            foreach($aTranscoders as $sTranscoder => $oTranscoder)
-                if(!$oTranscoder->isFileReady($aGhostToCheck['id']))
-                    return;
+            if(!$oTranscoder->isFileReady($aGhostToCheck['id']))
+                return;
 
         if((int)$this->_oModule->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => 'active'), array($CNF['FIELD_ID'] => $iContentId)) > 0)
             $this->_oModule->onPublished($iContentId);

@@ -426,5 +426,4 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('system', 'save_setting', @iHandler),
 ('profile', 'delete', @iHandler),
 
-('bx_videos_video_mp4', 'transcoded', @iHandler),
-('bx_videos_video_mp4_hd', 'transcoded', @iHandler);
+('bx_videos_video_mp4', 'transcoded', @iHandler);
