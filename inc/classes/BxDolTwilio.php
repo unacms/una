@@ -50,8 +50,8 @@ class BxDolTwilio extends BxDolFactory implements iBxDolSingleton
         try{
             require_once BX_DIRECTORY_PATH_PLUGINS . 'Twilio/autoload.php'; // Loads the library
             $client = new Twilio\Rest\Client($this->_sSid, $this->_sToken);
-            $aParams = array('body' => $sMessage, 'from' => $sFrom != '' ? $sFrom : $this->_sFromNumber);
-            $client->messages->create($sTo, $aParams);
+            $aParams = array('body' => $sMessage, 'from' => $sFrom != '' ? $this->normalizePhone($sFrom) : $this->normalizePhone($this->_sFromNumber));
+            $client->messages->create($this->normalizePhone($sTo), $aParams);
             return true;
         }
         catch (Exception $oException) {
@@ -59,6 +59,14 @@ class BxDolTwilio extends BxDolFactory implements iBxDolSingleton
             return false;
         }
     }
+    
+    public function normalizePhone($sPhone){
+		$sPhone = trim($sPhone);
+		if (substr($sPhone, 0, 1) != '+'){
+			$sPhone = '+' . $sPhone;	
+		}
+		return $sPhone;
+	}
     
     private function writeLog($sString)
 	{
