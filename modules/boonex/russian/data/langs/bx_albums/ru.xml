@@ -254,6 +254,9 @@
     <string name="_bx_albums_txt_media_album_shutter_speed"><![CDATA[Выдержка]]></string>
     <string name="_bx_albums_txt_media_album_shutter_speed_value"><![CDATA[{0} сек]]></string>
     <string name="_bx_albums_txt_media_album_iso"><![CDATA[Чувствительность (ISO)]]></string>
+    <string name="_bx_albums_txt_processing_awaiting"><![CDATA[Альбом будет опубликован как только сконвертируется видео.]]></string>
+    <string name="_bx_albums_txt_processing_failed"><![CDATA[Альбом не был опубликован, тк произошла ошибка при конвертации видео. Обновите видео, чтобы решить проблему.]]></string>
+
     <string name="_bx_albums_txt_err_cannot_perform_action"><![CDATA[Невозможно выполнить действие. Пожалуйста, оповестите нас об этой проблеме.]]></string>
 
     <string name="_bx_albums_alert_action_medias_added"><![CDATA[добавить изображения]]></string>

@@ -24,6 +24,9 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
         if ($iContentId)
             $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
 
+        $bLoggedOwner = isset($this->_aContentInfo[$CNF['FIELD_AUTHOR']]) && $this->_aContentInfo[$CNF['FIELD_AUTHOR']] == bx_get_logged_profile_id();
+        $bLoggedModerator = $this->_oModule->checkAllowedEditAnyEntry() === CHECK_ACTION_RESULT_ALLOWED;
+
         $sTitle = $sUrl = $sIcon = "";
         if ($this->_aContentInfo && CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedView($this->_aContentInfo)) {
             $sTitle = isset($this->_aContentInfo[$CNF['FIELD_TITLE']]) ? $this->_aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($this->_aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
@@ -32,7 +35,7 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
 
             $this->addMarkers($this->_aContentInfo); // every field can be used as marker
         }
-
+        
         $this->addMarkers(array(
             'title' => $sTitle,
             'entry_link' => $sUrl,
@@ -44,6 +47,38 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
             'link' => $sUrl,
             'icon' => $sIcon
         ));
+        
+        $aInformers = array ();
+        $oInformer = BxDolInformer::getInstance($this->_oTemplate);
+        if($oInformer && ($bLoggedOwner || $bLoggedModerator)) {
+            $iNow = time();
+            $bFieldPublished = isset($CNF['FIELD_PUBLISHED']);
+            $sStatus = isset($CNF['FIELD_STATUS']) ? $this->_aContentInfo[$CNF['FIELD_STATUS']] : '';
+
+            //--- Display 'processing' informer if an item was already published but awaiting/failed to be processed.
+            if(!$bFieldPublished || $this->_aContentInfo[$CNF['FIELD_PUBLISHED']] <= $iNow) {
+                if(!empty($CNF['INFORMERS']['processing']) && isset($CNF['INFORMERS']['processing']['map'][$sStatus])) {
+                    $aInformer = $CNF['INFORMERS']['processing'];
+                    $aInformers[] = array ('name' => $aInformer['name'], 'msg' => _t($aInformer['map'][$sStatus]['msg']), 'type' => $aInformer['map'][$sStatus]['type']);
+                }
+            }
+            //--- Display 'scheduled' informer if an item wasn't published yet.
+            else if($bFieldPublished) {
+                if(!empty($CNF['INFORMERS']['scheduled']) && isset($CNF['INFORMERS']['scheduled']['map'][$sStatus])) {
+                    $this->addMarkers(array(
+                        'date_publish_uf' => bx_time_js((int)$this->_aContentInfo[$CNF['FIELD_PUBLISHED']], BX_FORMAT_DATE, true)
+                    ));
+
+                    $aInformer = $CNF['INFORMERS']['scheduled'];
+                    $aInformers[] = array ('name' => $aInformer['name'], 'msg' => _t($aInformer['map'][$sStatus]['msg']), 'type' => $aInformer['map'][$sStatus]['type']);
+                }
+            }
+
+            // add informers
+            if($aInformers)
+                foreach($aInformers as $aInformer)
+                    $oInformer->add($aInformer['name'], $this->_replaceMarkers($aInformer['msg']), $aInformer['type']);
+        }
     }
 
     public function isActive()

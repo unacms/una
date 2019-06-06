@@ -278,6 +278,9 @@
     <string name="_bx_posts_txt_sample_single_with_article"><![CDATA[публикация]]></string>
     <string name="_bx_posts_txt_sample_comment_single"><![CDATA[комментарий к публикации]]></string>
     <string name="_bx_posts_txt_sample_vote_single"><![CDATA[голос за публикацию]]></string>
+    <string name="_bx_posts_txt_processing_awaiting"><![CDATA[Публикация будет опубликована как только сконвертируется видео.]]></string>
+    <string name="_bx_posts_txt_processing_failed"><![CDATA[Публикация не была опубликовано, тк произошла ошибка при конвертации видео. Обновите видео, чтобы решить проблему.]]></string>
+    <string name="_bx_posts_txt_scheduled_awaiting"><![CDATA[Дата публикации: {date_publish_uf}]]></string>
 
     <string name="_bx_posts_txt_err_cannot_perform_action"><![CDATA[Невозможно выполнить действие. Пожалуйста, оповестите нас об этой проблеме.]]></string>
 

@@ -278,9 +278,12 @@
     <string name="_bx_posts_txt_sample_single_with_article"><![CDATA[a post]]></string>
     <string name="_bx_posts_txt_sample_comment_single"><![CDATA[comment to post]]></string>
     <string name="_bx_posts_txt_sample_vote_single"><![CDATA[vote to post]]></string>
-    
+    <string name="_bx_posts_txt_processing_awaiting"><![CDATA[Post will be published as soon as video is converted]]></string>
+    <string name="_bx_posts_txt_processing_failed"><![CDATA[Post isn't published because video conversion failed, edit video to fix the issue.]]></string>
+    <string name="_bx_posts_txt_scheduled_awaiting"><![CDATA[Post publishing date is {date_publish_uf}]]></string>
+
     <string name="_bx_posts_txt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
-    
+
     <string name="_bx_posts_txt_poll_view_answers"><![CDATA[poll]]></string>
     <string name="_bx_posts_txt_poll_view_results"><![CDATA[results]]></string>
     <string name="_bx_posts_txt_poll_answer_vote_do_by"><![CDATA[Voted for]]></string>

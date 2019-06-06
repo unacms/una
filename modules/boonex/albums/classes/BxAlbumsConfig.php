@@ -9,6 +9,8 @@
  * @{
  */
 
+bx_import('BxDolInformer');
+
 class BxAlbumsConfig extends BxBaseModTextConfig
 {
     function __construct($aModule)
@@ -134,6 +136,17 @@ class BxAlbumsConfig extends BxBaseModTextConfig
                     'create-album' => 'checkAllowedAdd',
                 ),
                 'bx_albums_view' => $aMenuItems2Methods,
+            ),
+
+            // informer messages
+            'INFORMERS' => array (
+                'processing' => array (
+                    'name' => 'bx_albums-processing',
+                    'map' => array (
+                        'awaiting' => array('msg' => '_bx_albums_txt_processing_awaiting', 'type' => BX_INFORMER_ALERT),
+                        'failed' => array('msg' => '_bx_albums_txt_processing_failed', 'type' => BX_INFORMER_ERROR)
+                    ),
+                ),
             ),
 
             // some language keys

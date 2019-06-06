@@ -9,6 +9,8 @@
  * @{
  */
 
+bx_import('BxDolInformer');
+
 class BxPostsConfig extends BxBaseModTextConfig
 {
     function __construct($aModule)
@@ -135,6 +137,23 @@ class BxPostsConfig extends BxBaseModTextConfig
                     'create-post' => 'checkAllowedAdd',
                 ),
                 'bx_posts_view' => $aMenuItems2Methods,
+            ),
+
+            // informer messages
+            'INFORMERS' => array (
+                'processing' => array (
+                    'name' => 'bx-posts-processing',
+                    'map' => array (
+                        'awaiting' => array('msg' => '_bx_posts_txt_processing_awaiting', 'type' => BX_INFORMER_ALERT),
+                        'failed' => array('msg' => '_bx_posts_txt_processing_failed', 'type' => BX_INFORMER_ERROR)
+                    ),
+                ),
+                'scheduled' => array (
+                    'name' => 'bx-posts-scheduled',
+                    'map' => array (
+                        'awaiting' => array('msg' => '_bx_posts_txt_scheduled_awaiting', 'type' => BX_INFORMER_ALERT),
+                    ),
+                ),
             ),
 
             // some language keys

@@ -221,4 +221,6 @@
     <string name="_bx_videos_txt_sample_comment_single"><![CDATA[comment to video]]></string>
     <string name="_bx_videos_txt_sample_vote_single"><![CDATA[vote to video]]></string>
     <string name="_bx_videos_txt_n_views"><![CDATA[{0} views]]></string>
+    <string name="_bx_videos_txt_processing_awaiting"><![CDATA[Video will be published as soon as video is converted]]></string>
+    <string name="_bx_videos_txt_processing_failed"><![CDATA[Video isn't published because video conversion failed, edit video to fix the issue.]]></string>
 </resources>

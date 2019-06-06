@@ -179,8 +179,26 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 
             foreach($aFields as $sField) {
                 $mixedFieldValues = $this->getCleanValue($sField);
-                if(!empty($mixedFieldValues))
-                    $aValsToAdd[$CNF['FIELD_STATUS']] = 'awaiting';
+                if(empty($mixedFieldValues)) 
+                    continue;
+
+                $oStorage = BxDolStorage::getObjectInstance($this->aInputs[$sField]['storage_object']);
+                if(!$oStorage)
+                    continue;
+
+                if(!is_array($mixedFieldValues))
+                    $mixedFieldValues = array($mixedFieldValues);
+
+                foreach($mixedFieldValues as $mixedFieldValue) {
+                    $aInfo = $oStorage->getFile((int)$mixedFieldValue);
+                    if(empty($aInfo) || !is_array($aInfo))
+                        continue;
+
+                    if(strncmp($aInfo['mime_type'], 'video/', 6) === 0) {
+                        $aValsToAdd[$CNF['FIELD_STATUS']] = 'awaiting';
+                        break 2;
+                    }
+                }
             }
         }
 

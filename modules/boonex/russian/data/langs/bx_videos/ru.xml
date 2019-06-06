@@ -221,4 +221,6 @@
     <string name="_bx_videos_txt_sample_comment_single"><![CDATA[комментарий к видео]]></string>
     <string name="_bx_videos_txt_sample_vote_single"><![CDATA[голос за видео]]></string>
     <string name="_bx_videos_txt_n_views"><![CDATA[{0} просмотров]]></string>
+    <string name="_bx_videos_txt_processing_awaiting"><![CDATA[Видео будет опубликовано как только сконвертируется.]]></string>
+    <string name="_bx_videos_txt_processing_failed"><![CDATA[Видео не было опубликовано, тк произошла ошибка при конвертации. Обновите видео, чтобы решить проблему.]]></string>
 </resources>

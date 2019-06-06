@@ -9,6 +9,8 @@
  * @{
  */
 
+bx_import('BxDolInformer');
+
 class BxVideosConfig extends BxBaseModTextConfig
 {
 
@@ -95,7 +97,7 @@ class BxVideosConfig extends BxBaseModTextConfig
             'OBJECT_VOTES' => 'bx_videos',
             'OBJECT_VOTES_STARS' => 'bx_videos_stars',
             'OBJECT_SCORES' => 'bx_videos',
-        	'OBJECT_FAVORITES' => 'bx_videos',
+            'OBJECT_FAVORITES' => 'bx_videos',
             'OBJECT_FEATURED' => 'bx_videos',
             'OBJECT_METATAGS' => 'bx_videos',
             'OBJECT_COMMENTS' => 'bx_videos',
@@ -115,7 +117,7 @@ class BxVideosConfig extends BxBaseModTextConfig
             'OBJECT_MENU_SNIPPET_META' => 'bx_videos_snippet_meta', // menu for snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_videos_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_GRID_ADMINISTRATION' => 'bx_videos_administration',
-        	'OBJECT_GRID_COMMON' => 'bx_videos_common',
+            'OBJECT_GRID_COMMON' => 'bx_videos_common',
             'OBJECT_UPLOADERS' => array('sys_simple', 'sys_html5'),
 
             // menu items which visibility depends on custom visibility checking
@@ -124,6 +126,17 @@ class BxVideosConfig extends BxBaseModTextConfig
                     'create-video' => 'checkAllowedAdd',
                 ),
                 'bx_videos_view' => $aMenuItems2Methods,
+            ),
+
+            // informer messages
+            'INFORMERS' => array (
+                'processing' => array (
+                    'name' => 'bx-videos-processing',
+                    'map' => array (
+                        'awaiting' => array('msg' => '_bx_videos_txt_processing_awaiting', 'type' => BX_INFORMER_ALERT),
+                        'failed' => array('msg' => '_bx_videos_txt_processing_failed', 'type' => BX_INFORMER_ERROR)
+                    ),
+                ),
             ),
 
             // some language keys
