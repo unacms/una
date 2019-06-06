@@ -12,14 +12,17 @@ bx_import('BxTemplStudioFormView');
 
 class BxStudioFormsLabelsCheckerHelper extends BxDolFormCheckerHelper
 {
-    public function checkAvailUnique($s)
+    public function checkAvailUnique($s, $aExclude = array())
     {
         $aLabel = BxDolLabel::getInstance()->getLabels(array(
             'type' => 'value', 
             'value' => $s
         ));
 
-        return empty($aLabel) || !is_array($aLabel);
+        if(!is_array($aExclude))
+            $aExclude = array($aExclude);
+
+        return empty($aLabel) || !is_array($aLabel) || in_array($aLabel['id'], $aExclude);
     }
 }
 
@@ -149,6 +152,20 @@ class BxBaseStudioFormsLabels extends BxDolStudioFormsLabels
         $oForm->addCssJs();
     }
 
+    protected function _getActionBack($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+        if(empty($this->_iParent))
+            return '';
+
+        $sUrl = bx_append_url_params($this->_sBaseUrl, array('parent' => $this->_aParent['parent']));
+
+    	$a['attr'] = array_merge($a['attr'], array(
+            "onclick" => "window.open('" . $sUrl . "','_self');"
+    	));
+
+    	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    }
+
     protected function _getCellModule($mixedValue, $sKey, $aField, $aRow)
     {
         $mixedValue = $this->_limitMaxLength($this->getModuleTitle($aRow['module']), $sKey, $aField, $aRow, $this->_isDisplayPopupOnTextOverflow);
@@ -216,7 +233,7 @@ class BxBaseStudioFormsLabels extends BxDolStudioFormsLabels
                     ),
                     'checker' => array (
                         'func' => 'AvailUnique',
-                        'params' => array(),
+                        'params' => array(isset($aLabel['id']) ? (int)$aLabel['id'] : 0),
                         'error' => _t('_adm_form_err_labels_value'),
                     ),
                 ),
@@ -241,23 +258,32 @@ class BxBaseStudioFormsLabels extends BxDolStudioFormsLabels
             )
         );
 
-        if($sAction == 'add') {
-            if(empty($this->_iParent))
-                $aForm['inputs']['parent']['values'][] = array('key' => 0, 'value' => _t('_adm_form_txt_labels_parent_empty'));
-            else 
-                $aForm['inputs']['parent']['values'][] = array('key' => $this->_iParent, 'value' => $this->_aParent['value']);
-            
-            $aForm['inputs']['parent']['values'][] = array('key' => '', 'value' => '----', 'attrs' => array('disabled' => 'disabled'));
+        if(empty($this->_iParent))
+            $aForm['inputs']['parent']['values'][] = array('key' => 0, 'value' => _t('_adm_form_txt_labels_parent_empty'));
+        else {
+            if(!empty($this->_aParent['parent'])) {
+                $aForm['inputs']['parent']['values'][] = array('key' => '', 'value' => _t('_adm_form_txt_labels_grandparent_label'), 'attrs' => array('disabled' => 'disabled'));
 
-            $aLabels = $this->_oLabel->getLabels(array('type' => 'parent', 'parent' => $this->_iParent));
-            foreach($aLabels as $aLabel)
+                $aGrandParent = $this->_oLabel->getLabels(array('type' => 'id', 'id' => $this->_aParent['parent']));
+                $aForm['inputs']['parent']['values'][] = array('key' => $aGrandParent['id'], 'value' => $aGrandParent['value']);
+            }
+            else
+                $aForm['inputs']['parent']['values'][] = array('key' => 0, 'value' => _t('_adm_form_txt_labels_parent_empty'));
+
+            $aForm['inputs']['parent']['values'][] = array('key' => '', 'value' => _t('_adm_form_txt_labels_parent_label'), 'attrs' => array('disabled' => 'disabled'));
+            $aForm['inputs']['parent']['values'][] = array('key' => $this->_aParent['id'], 'value' => $this->_aParent['value']);
+        }
+
+        $aSiblings = $this->_oLabel->getLabels(array('type' => 'parent', 'parent' => $this->_iParent, 'exclude' => array(!empty($aLabel['id']) ? (int)$aLabel['id'] : 0)));
+        if(!empty($aSiblings) && is_array($aSiblings)) {
+            $aForm['inputs']['parent']['values'][] = array('key' => '', 'value' => _t('_adm_form_txt_labels_sibling_labels'), 'attrs' => array('disabled' => 'disabled'));
+
+            foreach($aSiblings as $aSiblings)
                 $aForm['inputs']['parent']['values'][] = array(
-                    'key' => $aLabel['id'], 
-                    'value' => $aLabel['value']
+                    'key' => $aSiblings['id'], 
+                    'value' => $aSiblings['value']
                 );
         }
-        else
-            $aForm['inputs']['parent']['type'] = 'hidden';
 
         return new BxTemplStudioFormView($aForm);
     }

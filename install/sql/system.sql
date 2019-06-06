@@ -3942,7 +3942,8 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('sys_studio_search_forms_fields', 'single', 'edit', '', 'pencil-alt', 0, 1),
 ('sys_studio_search_forms_fields', 'independent', 'reset', '_adm_form_btn_search_forms_fields_reset', '', 0, 1),
 
-('sys_studio_labels', 'independent', 'add', '_adm_form_btn_labels_add', '', 0, 1),
+('sys_studio_labels', 'independent', 'back', '_adm_form_btn_labels_back', '', 0, 1),
+('sys_studio_labels', 'independent', 'add', '_adm_form_btn_labels_add', '', 0, 2),
 ('sys_studio_labels', 'single', 'edit', '', 'pencil-alt', 0, 1),
 ('sys_studio_labels', 'single', 'delete', '', 'remove', 1, 2);
 
@@ -4463,7 +4464,7 @@ CREATE TABLE `sys_labels` (
   `order` int(11) NOT NULL DEFAULT 0,
   `value` varchar(128) NOT NULL,
   PRIMARY KEY (id),
-  UNIQUE KEY `value` (`value`)
+  UNIQUE KEY `value` (`value`(191))
 );
 
 -- --------------------------------------------------------

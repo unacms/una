@@ -678,6 +678,7 @@
 	<string name="_adm_form_btn_forms_edit"><![CDATA[Edit form]]></string>
 	<string name="_adm_form_btn_forms_save"><![CDATA[Save]]></string>
         <string name="_adm_form_btn_labels_add"><![CDATA[Add]]></string>
+        <string name="_adm_form_btn_labels_back"><![CDATA[Back]]></string>
         <string name="_adm_form_btn_labels_cancel"><![CDATA[Cancel]]></string>
         <string name="_adm_form_btn_labels_submit"><![CDATA[Submit]]></string>
 	<string name="_adm_form_btn_pre_lists_add"><![CDATA[Add]]></string>
@@ -885,6 +886,9 @@
         <string name="_adm_form_txt_labels_n_items"><![CDATA[{0} items]]></string>
         <string name="_adm_form_txt_labels_parent"><![CDATA[Parent]]></string>
         <string name="_adm_form_txt_labels_parent_empty"><![CDATA[No Parent]]></string>
+        <string name="_adm_form_txt_labels_grandparent_label"><![CDATA[Grandparent Label]]></string>
+        <string name="_adm_form_txt_labels_parent_label"><![CDATA[Parent Label]]></string>
+        <string name="_adm_form_txt_labels_sibling_labels"><![CDATA[Sibling Labels]]></string>
         <string name="_adm_form_txt_labels_value"><![CDATA[Label]]></string>
 	<string name="_adm_form_txt_pre_lists_country"><![CDATA[Country]]></string>
 	<string name="_adm_form_txt_pre_lists_create_popup"><![CDATA[Add New List]]></string>

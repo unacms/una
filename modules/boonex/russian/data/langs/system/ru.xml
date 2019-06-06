@@ -678,6 +678,7 @@
 	<string name="_adm_form_btn_forms_edit"><![CDATA[Редактировать Форму]]></string>
 	<string name="_adm_form_btn_forms_save"><![CDATA[Сохранить]]></string>
         <string name="_adm_form_btn_labels_add"><![CDATA[Добавить]]></string>
+        <string name="_adm_form_btn_labels_back"><![CDATA[Назад]]></string>
         <string name="_adm_form_btn_labels_cancel"><![CDATA[Отменить]]></string>
         <string name="_adm_form_btn_labels_submit"><![CDATA[Отправить]]></string>
 	<string name="_adm_form_btn_pre_lists_add"><![CDATA[Добавить]]></string>
@@ -885,6 +886,9 @@
         <string name="_adm_form_txt_labels_n_items"><![CDATA[{0} элемент]]></string>
         <string name="_adm_form_txt_labels_parent"><![CDATA[Родитель]]></string>
         <string name="_adm_form_txt_labels_parent_empty"><![CDATA[Нет родителя]]></string>
+        <string name="_adm_form_txt_labels_grandparent_label"><![CDATA[Прородительская метка]]></string>
+        <string name="_adm_form_txt_labels_parent_label"><![CDATA[Родительская метка]]></string>
+        <string name="_adm_form_txt_labels_sibling_labels"><![CDATA[Метки того же уровня]]></string>
         <string name="_adm_form_txt_labels_value"><![CDATA[Метка]]></string>        
 	<string name="_adm_form_txt_pre_lists_country"><![CDATA[Страна]]></string>
 	<string name="_adm_form_txt_pre_lists_create_popup"><![CDATA[Добавить новый список]]></string>
