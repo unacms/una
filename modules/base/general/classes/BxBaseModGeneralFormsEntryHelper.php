@@ -267,7 +267,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         // update data in the DB
         $aTrackTextFieldsChanges = null;
 
-        $this->onDataEditBefore ($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $aTrackTextFieldsChanges);
+        $this->onDataEditBefore ($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm);
 
         if (!$oForm->update ($aContentInfo[$CNF['FIELD_ID']], array(), $aTrackTextFieldsChanges)) {
             if (!$oForm->isValid())
@@ -416,12 +416,12 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         return '';
     }
 
-    public function onDataEditBefore ($iContentId, $aContentInfo, &$aTrackTextFieldsChanges)
+    public function onDataEditBefore ($iContentId, $aContentInfo, &$aTrackTextFieldsChanges, &$oProfile, &$oForm)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if(isset($CNF['FIELD_STATUS']) && isset($aContentInfo[$CNF['FIELD_STATUS']]) && $aContentInfo[$CNF['FIELD_STATUS']] == 'failed')
-            $aTrackTextFieldsChanges = array();
+            $oForm->addTrackFields($CNF['FIELD_STATUS'], $aContentInfo);
     }
 
     public function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm)
@@ -445,8 +445,8 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             }
         }
 
-        if(isset($CNF['FIELD_STATUS']) && isset($aTrackTextFieldsChanges['data'][$CNF['FIELD_STATUS']]) && $aTrackTextFieldsChanges['data'][$CNF['FIELD_STATUS']] == 'failed')
-            if(isset($aContentInfo[$CNF['FIELD_STATUS']]) && $aContentInfo[$CNF['FIELD_STATUS']] == 'active')
+        if(isset($CNF['FIELD_STATUS']) && ($aTrackResult = $oForm->isTrackFieldChanged($CNF['FIELD_STATUS'], true)) !== false)
+            if($aTrackResult['old'] == 'failed' && $aTrackResult['new'] == 'active')
                 $this->_alertAfterAdd($aContentInfo);
 
         return '';

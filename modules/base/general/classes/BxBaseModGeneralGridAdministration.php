@@ -182,7 +182,7 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if(!in_array($aRow[$CNF['FIELD_STATUS']], array('active', 'hidden'))) {
+        if(isset($CNF['FIELD_STATUS']) && isset($aRow[$CNF['FIELD_STATUS']]) && !in_array($aRow[$CNF['FIELD_STATUS']], array('active', 'hidden'))) {
             $sStatusKey = '_sys_status_' . $aRow[$CNF['FIELD_STATUS']];
             if(!empty($CNF['T']['txt_status_' . $aRow[$CNF['FIELD_STATUS']]]))
                 $sStatusKey = $CNF['T']['txt_status_' . $aRow[$CNF['FIELD_STATUS']]];

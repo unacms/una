@@ -25,12 +25,16 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
     protected $_oMetatagsContentId = 0;
 
     protected $_sGhostTemplate = 'form_ghost_template.html';
+    
+    protected $_aTrackFieldsChanges;
 
     public function __construct($aInfo, $oTemplate = false)
     {
         parent::__construct($aInfo, $oTemplate);
 
         $this->_oModule = BxDolModule::getInstance($this->MODULE);
+
+        $this->_aTrackFieldsChanges = array();
 
         $CNF = &$this->_oModule->_oConfig->CNF;
         
@@ -76,7 +80,45 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             $aGroupChooser = $oPrivacy->getGroupChooser($CNF['OBJECT_PRIVACY_VIEW']);
             
             $this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']] = array_merge($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']], $aGroupChooser, $aSave);
-		}        
+        }        
+    }
+
+    /**
+     * Add field(s) which will be tracked during content update. 
+     */
+    public function addTrackFields($mixedFields, $mixedContent)
+    {
+        if(empty($mixedContent) || empty($mixedFields))
+            return;
+
+        if(!is_array($mixedContent)) {
+            $mixedContent = $this->_oModule->_oDb->getContentInfoById((int)$mixedContent);
+            if(empty($mixedContent) || !is_array($mixedContent))
+                return;
+        }
+
+        if(!is_array($mixedFields))
+            $mixedFields = array($mixedFields);
+
+        foreach($mixedFields as $sField) {
+            if(!isset($mixedContent[$sField]))
+                continue;
+
+            $this->_aTrackFieldsChanges[$sField] = array(
+                'old' => $mixedContent[$sField],
+            );
+        }
+    }
+
+    /**
+     * Checks if the field was changed.
+     */
+    public function isTrackFieldChanged($sField, $bReturnValues = false)
+    {
+        if(!isset($this->_aTrackFieldsChanges[$sField]) || $this->_aTrackFieldsChanges[$sField] === false)
+            return false;
+
+        return $bReturnValues ? $this->_aTrackFieldsChanges[$sField] : true;
     }
 
     function initChecker ($aValues = array (), $aSpecificValues = array())
@@ -167,7 +209,11 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         if(isset($CNF['FIELD_STATUS']) && isset($aContentInfo[$CNF['FIELD_STATUS']]) && $aContentInfo[$CNF['FIELD_STATUS']] == 'failed')
             $aValsToAdd[$CNF['FIELD_STATUS']] = 'active';
 
-        return parent::update($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
+        $mixedResult = parent::update($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
+        if($mixedResult !== false)
+            $this->_processTrackFields($iContentId);
+
+        return $mixedResult;
     }
 
     protected function _associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId, $sPictureField = '')
@@ -329,6 +375,24 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
     function getContentOwnerProfileId ($iContentId)
     {
         return $this->_oModule->serviceGetContentOwnerProfileId($iContentId);
+    }
+
+    protected function _processTrackFields($mixedContent)
+    {
+        if(empty($mixedContent) || empty($this->_aTrackFieldsChanges))
+            return;
+
+        if(!is_array($mixedContent)) {
+            $mixedContent = $this->_oModule->_oDb->getContentInfoById((int)$mixedContent);
+            if(empty($mixedContent) || !is_array($mixedContent))
+                return;
+        }
+
+        foreach($this->_aTrackFieldsChanges as $sField => $aValues)
+            if($mixedContent[$sField] == $aValues['old'])
+                $this->_aTrackFieldsChanges[$sField] = false;
+            else
+                $this->_aTrackFieldsChanges[$sField]['new'] = $mixedContent[$sField];
     }
 }
 

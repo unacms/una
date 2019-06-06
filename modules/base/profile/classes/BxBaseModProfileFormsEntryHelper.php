@@ -71,7 +71,7 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         return parent::deleteData ($iContentId, $aContentInfo, $oProfile, $oForm);
     }
 
-    public function onDataEditBefore ($iContentId, $aContentInfo, &$aTrackTextFieldsChanges)
+    public function onDataEditBefore ($iContentId, $aContentInfo, &$aTrackTextFieldsChanges, &$oProfile, &$oForm)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
