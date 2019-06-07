@@ -110,8 +110,9 @@ div.bx-base-general-breadcrumb i {
 .bx-base-general-attachment {
     margin:1px;
 }
-.bx-base-general-attachments .bx-base-general-attachment video,
-.bx-base-general-attachments .bx-base-general-attachment {
+.bx-base-general-attachments .bx-base-general-attachment
+.bx-base-general-attachments .bx-base-general-attachment img,
+.bx-base-general-attachments .bx-base-general-attachment video {
     width:18.75rem;
     height:12.5rem;
 }
