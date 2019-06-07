@@ -228,7 +228,7 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
      * @param $sFile path to the video file
      * @return array where 'w' key is width and 'h' key is height
      */
-    protected function _getVideoSize ($sFile)
+    public function getVideoSize ($sFile)
     {
         $sFileOut = $this->getTmpFilename('.jpg');
 
@@ -272,7 +272,7 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
             $aParams['h'] = '360';
 
         $fRatio = 16/9;
-        $aSize = $this->_getVideoSize($sFile);
+        $aSize = $this->getVideoSize($sFile);
         if ($aSize)
             $fRatio = $aSize['w'] / $aSize['h'];
 

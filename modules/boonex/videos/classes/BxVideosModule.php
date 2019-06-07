@@ -101,8 +101,10 @@ class BxVideosModule extends BxBaseModTextModule
         if(empty($CNF['OBJECT_STORAGE_VIDEOS']) || empty($CNF['OBJECT_VIDEOS_TRANSCODERS']))
             return array();
 
+        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_VIDEOS']);
+
         $iFile = (int)$aContentInfo[$CNF['FIELD_VIDEO']];
-        $aFile = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_VIDEOS'])->getFile($iFile);
+        $aFile = $oStorage->getFile($iFile);
         if(empty($aFile) || !is_array($aFile) || strncmp('video/', $aFile['mime_type'], 6) !== 0)
             return array();
 
@@ -113,18 +115,25 @@ class BxVideosModule extends BxBaseModTextModule
         if(!($oTcvPoster || $oTciPoster) || !$oTcvMp4 || !$oTcvMp4Hd)
             return array();
 
-		$sPosterSrc = !empty($CNF['FIELD_POSTER']) ? $CNF['FIELD_POSTER'] : $CNF['FIELD_THUMB'];
+        $sPosterSrc = !empty($CNF['FIELD_POSTER']) ? $CNF['FIELD_POSTER'] : $CNF['FIELD_THUMB'];
         if(!empty($sPosterSrc) && !empty($aContentInfo[$sPosterSrc]) && $oTciPoster)
             $sPoster = $oTciPoster->getFileUrl($aContentInfo[$sPosterSrc]);
         else 
             $sPoster = $oTcvPoster->getFileUrl($iFile);
+
+        $sVideoUrl = $oStorage->getFileUrlById($iFile);
+        $aVideoSize = $oTcvMp4Hd->getVideoSize($sVideoUrl);
+
+        $sVideoUrlHd = '';
+        if(!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] > 720)
+            $sVideoUrlHd = $oTcvMp4Hd->getFileUrl($iFile);
 
         return array(
             $iFile => array(
             	'id' => $iFile,
             	'src_poster' => $sPoster, 
             	'src_mp4' => $oTcvMp4->getFileUrl($iFile), 
-            	'src_mp4_hd' => $oTcvMp4Hd->getFileUrl($iFile)
+            	'src_mp4_hd' => $sVideoUrlHd
             )
         );
     }

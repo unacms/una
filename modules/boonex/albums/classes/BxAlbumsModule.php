@@ -715,11 +715,18 @@ class BxAlbumsModule extends BxBaseModTextModule
             if(!$bVideo)
                 continue;
 
+            $sVideoUrl = $oStorage->getFileUrlById($aMedia['file_id']);
+            $aVideoSize = $oTcMp4Hd->getVideoSize($sVideoUrl);
+
+            $sVideoUrlHd = '';
+            if(!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] > 720)
+                $sVideoUrlHd = $oTcMp4Hd->getFileUrl($aMedia['file_id']);
+
             $aOutput[$aMedia['id']] = array(
                 'id' => $aMedia['id'],
                 'src_poster' => $oTcPoster->getFileUrl($aMedia['file_id']),
                 'src_mp4' => $oTcMp4->getFileUrl($aMedia['file_id']),
-                'src_mp4_hd' => $oTcMp4Hd->getFileUrl($aMedia['file_id']),
+                'src_mp4_hd' => $sVideoUrlHd,
             );
         }
 

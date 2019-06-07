@@ -396,13 +396,21 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
             return array();
 
         $aResults = array();
-        foreach ($aGhostFiles as $k => $a) 
+        foreach ($aGhostFiles as $k => $a) {
+            $sVideoUrl = $oStorage->getFileUrlById($a['id']);
+            $aVideoSize = $oTcMp4Hd->getVideoSize($sVideoUrl);
+
+            $sVideoUrlHd = '';
+            if(!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] > 720)
+                $sVideoUrlHd = $oTcMp4Hd->getFileUrl($a['id']);
+
             $aResults[$a['id']] = array(
                 'id' => $a['id'],
                 'src_poster' => $oTcPoster->getFileUrl($a['id']),
                 'src_mp4' => $oTcMp4->getFileUrl($a['id']),
-                'src_mp4_hd' => $oTcMp4Hd->getFileUrl($a['id']),
+                'src_mp4_hd' => $sVideoUrlHd,
             );
+        }
 
         return $aResults;
     }

@@ -2084,16 +2084,25 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
                 $aVideos = $this->_oDb->getMedia(BX_TIMELINE_MEDIA_VIDEO, $aEvent['id']);
                 if(!empty($aVideos) && is_array($aVideos)) {
+                    $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage_videos'));
+
                     $oTranscoderPoster = BxDolTranscoderVideo::getObjectInstance($this->_oConfig->getObject('transcoder_videos_poster'));
                     $oTranscoderMp4 = BxDolTranscoderVideo::getObjectInstance($this->_oConfig->getObject('transcoder_videos_mp4'));
                     $oTranscoderMp4Hd = BxDolTranscoderVideo::getObjectInstance($this->_oConfig->getObject('transcoder_videos_mp4_hd'));
 
                     foreach($aVideos as $iVideoId) {
+                        $sVideoUrl = $oStorage->getFileUrlById($iVideoId);
+                        $aVideoSize = $oTranscoderMp4Hd->getVideoSize($sVideoUrl);
+
+                        $sVideoUrlHd = '';
+                        if(!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] > 720)
+                            $sVideoUrlHd = $oTranscoderMp4Hd->getFileUrl($iVideoId);
+
                         $aResult['content']['videos_attach'][$iVideoId] = array(
                             'id' => $iVideoId,
                             'src_poster' => $oTranscoderPoster->getFileUrl($iVideoId),
                             'src_mp4' => $oTranscoderMp4->getFileUrl($iVideoId),
-                            'src_mp4_hd' => $oTranscoderMp4Hd->getFileUrl($iVideoId),
+                            'src_mp4_hd' => $sVideoUrlHd,
                         );
                     }
                 }

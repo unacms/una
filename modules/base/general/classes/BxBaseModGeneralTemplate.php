@@ -283,6 +283,14 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
                 ),
             );
 
+            $sVideoUrlHd = '';
+            if($isVideo) {
+                $sVideoUrl = $oStorage->getFileUrlById($a['id']);
+                $aVideoSize = $aTranscodersVideo['mp4_hd']->getVideoSize($sVideoUrl);
+                if(!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] > 720)
+                    $sVideoUrlHd = $aTranscodersVideo['mp4_hd']->getFileUrl($a['id']);
+            }
+
             // videos are displayed inline
             $a['bx_if:video'] = array (
                 'condition' => $isVideo,
@@ -290,7 +298,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
                     'video' => $isVideo && $aTranscodersVideo ? BxTemplFunctions::getInstance()->videoPlayer(
                         $aTranscodersVideo['poster']->getFileUrl($a['id']), 
                         $aTranscodersVideo['mp4']->getFileUrl($a['id']), 
-                        $aTranscodersVideo['mp4_hd']->getFileUrl($a['id']),
+                        $sVideoUrlHd,
                         false, ''
                     ) : '',
                 ),

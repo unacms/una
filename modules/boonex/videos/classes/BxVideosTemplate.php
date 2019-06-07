@@ -100,13 +100,19 @@ class BxVideosTemplate extends BxBaseModTextTemplate
         else 
             $sPoster = $aTranscodersVideo['poster']->getFileUrl($iFile);
 
+        $sVideoUrl = $oStorage->getFileUrlById($iFile);
+        $aVideoSize = $aTranscodersVideo['mp4_hd']->getVideoSize($sVideoUrl);
+
+        $sVideoUrlHd = '';
+        if(!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] > 720)
+            $sVideoUrlHd = $aTranscodersVideo['mp4_hd']->getFileUrl($iFile);
+
         return array(
             'poster_url' => $aTranscodersVideo['poster']->getFileUrl($iFile),
             'player' => BxTemplFunctions::getInstance()->videoPlayer(
                 $sPoster, 
                 $aTranscodersVideo['mp4']->getFileUrl($iFile), 
-                $aTranscodersVideo['mp4_hd']->getFileUrl($iFile),
-                false, 'max-height:' . $CNF['OBJECT_VIDEO_TRANSCODER_HEIGHT']
+                $sVideoUrlHd, false, 'max-height:' . $CNF['OBJECT_VIDEO_TRANSCODER_HEIGHT']
             )
         );
     }

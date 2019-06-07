@@ -273,7 +273,14 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
 
             $iVideoDuration = $oModule->getMediaDuration($aFileInfo);
             $sVideoDuration = _t_format_duration($iVideoDuration);
-            
+
+            $sVideoUrl = $oStorage->getFileUrlById($aMediaInfo['file_id']);
+            $aVideoSize = $aTranscodersVideo['mp4_hd']->getVideoSize($sVideoUrl);
+
+            $sVideoUrlHd = '';
+            if(!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] > 720)
+                $sVideoUrlHd = $aTranscodersVideo['mp4_hd']->getFileUrl($aMediaInfo['file_id']);
+
             $aTmplVarsVideo = array (
                 'title_attr' => $sMediaTitleAttr,
                 'title' => $sMediaTitle,
@@ -282,8 +289,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
                 'video' => $isVideo && $aTranscodersVideo ? BxTemplFunctions::getInstance()->videoPlayer(
                     $aTranscodersVideo['poster']->getFileUrl($aMediaInfo['file_id']), 
                     $aTranscodersVideo['mp4']->getFileUrl($aMediaInfo['file_id']), 
-                    $aTranscodersVideo['mp4_hd']->getFileUrl($aMediaInfo['file_id']),
-                    $mixedAttrs, 'max-height:' . $CNF['OBJECT_VIDEO_TRANSCODER_HEIGHT']
+                    $sVideoUrlHd, $mixedAttrs, 'max-height:' . $CNF['OBJECT_VIDEO_TRANSCODER_HEIGHT']
                 ) : '',
                 'duration' => $sVideoDuration,
                 'bx_if:show_duration' => array(
