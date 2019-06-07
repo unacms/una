@@ -199,17 +199,18 @@ class BxEventsConfig extends BxBaseModProfileConfig
         );
 
         $this->_aJsClasses = array(
-        	'manage_tools' => 'BxEventsManageTools'
+            'entry' => 'BxEventsEntry',
+            'manage_tools' => 'BxEventsManageTools'
         );
 
         $this->_aJsObjects = array(
-        	'manage_tools' => 'oBxEventsManageTools'
+            'entry' => 'oBxEventsEntry',
+            'manage_tools' => 'oBxEventsManageTools'
         );
 
         $this->_aGridObjects = array(
-        	'common' => $this->CNF['OBJECT_GRID_COMMON'],
-        	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
-        	
+            'common' => $this->CNF['OBJECT_GRID_COMMON'],
+            'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION']
         );
     }
 

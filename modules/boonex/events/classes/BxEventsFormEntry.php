@@ -112,6 +112,11 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
         }        
     }
 
+    function getCode($bDynamicMode = false)
+    {
+        return $this->_oModule->_oTemplate->getJsCode('entry') . parent::getCode($bDynamicMode);
+    }
+
     function initChecker ($aValues = array (), $aSpecificValues = array())
     {
         if (isset($aValues[$this->_oModule->_oConfig->CNF['FIELD_ID']]))
@@ -253,10 +258,10 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
     function addCssJs ()
     {
         if ((!isset($this->aParams['view_mode']) || !$this->aParams['view_mode']) && !self::$_isCssJsEventsAdded) {
-            $this->oTemplate->addJs('intervals.js');
+            $this->oTemplate->addJs(array('moment-timezone-with-data.js', 'entry.js', 'intervals.js'));
             $this->oTemplate->addCss('informer.css');
             self::$_isCssJsEventsAdded = true;
-        }   
+        }  
 
         parent::addCssJs ();
     }
