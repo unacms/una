@@ -54,9 +54,19 @@ class BxPhotosTemplate extends BxBaseModTextTemplate
             return $bAsArray ? array() : '';
 
         $aTmplVars = array_merge($aTmplVars, array(
+            'content_description_before' => '',
             'entry_photo' => $sImage,
             'entry_title_attr' => bx_html_attribute($aContentInfo['title']),
+            'content_description_after' => ''
         ));
+
+        if(!empty($CNF['OBJECT_REACTIONS'])) {
+            $oReactions = BxDolVote::getObjectInstance($CNF['OBJECT_REACTIONS'], $aContentInfo[$CNF['FIELD_ID']]);
+            if($oReactions)
+                $aTmplVars['content_description_after'] .= $oReactions->getCounter(array(
+                    'show_counter' => true
+                ));
+        }
 
         return $bAsArray ? $aTmplVars : $this->parseHtmlByName('entry-photo.html', $aTmplVars);
     }
