@@ -1,6 +1,6 @@
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_glossary_terms`, `bx_glossary_files`, `bx_glossary_photos_resized`, `bx_glossary_cmts`, `bx_glossary_votes`, `bx_glossary_votes_track`, `bx_glossary_views_track`, `bx_glossary_meta_keywords`, `bx_glossary_meta_mentions`, `bx_glossary_reports`, `bx_glossary_reports_track`, `bx_glossary_favorites_track`, `bx_glossary_scores`, `bx_glossary_scores_track`;
+DROP TABLE IF EXISTS `bx_glossary_terms`, `bx_glossary_files`, `bx_glossary_photos_resized`, `bx_glossary_cmts`, `bx_glossary_votes`, `bx_glossary_votes_track`, `bx_glossary_reactions`, `bx_glossary_reactions_track`, `bx_glossary_views_track`, `bx_glossary_meta_keywords`, `bx_glossary_meta_mentions`, `bx_glossary_reports`, `bx_glossary_reports_track`, `bx_glossary_favorites_track`, `bx_glossary_scores`, `bx_glossary_scores_track`;
 
 -- STORAGES & TRANSCODERS
 DELETE FROM `sys_objects_storage` WHERE `object` = 'bx_glossary_files' OR `object` = 'bx_glossary_photos_resized';
@@ -25,7 +25,7 @@ DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_glossary_cats');
 DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_glossary';
 
 -- VOTES
-DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_glossary';
+DELETE FROM `sys_objects_vote` WHERE `Name` IN ('bx_glossary', 'bx_glossary_reactions');
 
 -- SCORES
 DELETE FROM `sys_objects_score` WHERE `name` = 'bx_glossary';

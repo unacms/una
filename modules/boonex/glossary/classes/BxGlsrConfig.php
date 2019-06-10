@@ -78,6 +78,7 @@ class BxGlsrConfig extends BxBaseModTextConfig
             'OBJECT_REPORTS' => 'bx_glossary',
             'OBJECT_VIEWS' => 'bx_glossary',
             'OBJECT_VOTES' => 'bx_glossary',
+            'OBJECT_REACTIONS' => 'bx_glossary_reactions',
             'OBJECT_SCORES' => 'bx_glossary',
             'OBJECT_FAVORITES' => 'bx_glossary',
             'OBJECT_FEATURED' => 'bx_glossary',

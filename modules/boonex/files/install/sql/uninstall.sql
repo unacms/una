@@ -25,7 +25,7 @@ DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_files_cats');
 DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_files';
 
 -- VOTES
-DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_files';
+DELETE FROM `sys_objects_vote` WHERE `Name` IN ('bx_files', 'bx_files_reactions');
 
 -- SCORES
 DELETE FROM `sys_objects_score` WHERE `name` = 'bx_files';

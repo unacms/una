@@ -107,6 +107,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'OBJECT_REPORTS' => 'bx_forum',
             'OBJECT_VIEWS' => 'bx_forum',
             'OBJECT_VOTES' => 'bx_forum',
+            'OBJECT_REACTIONS' => 'bx_forum_reactions',
             'OBJECT_SCORES' => 'bx_forum',
             'OBJECT_FAVORITES' => 'bx_forum',
             'OBJECT_FEATURED' => 'bx_forum',

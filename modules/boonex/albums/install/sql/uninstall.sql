@@ -25,7 +25,7 @@ DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_albums' OR `Name` = 'bx_albums
 
 
 -- VOTES
-DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_albums' OR `Name` = 'bx_albums_media';
+DELETE FROM `sys_objects_vote` WHERE `Name` IN ('bx_albums', 'bx_albums_media', 'bx_albums_reactions');
 
 
 -- SCORES
