@@ -13,6 +13,8 @@ CREATE TABLE IF NOT EXISTS `bx_polls_entries` (
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',
+  `rrate` float NOT NULL default '0',
+  `rvotes` int(11) NOT NULL default '0',
   `score` int(11) NOT NULL default '0',
   `sc_up` int(11) NOT NULL default '0',
   `sc_down` int(11) NOT NULL default '0',
@@ -123,6 +125,26 @@ CREATE TABLE IF NOT EXISTS `bx_polls_votes_subentries_track` (
   `object_id` int(11) NOT NULL default '0',
   `author_id` int(11) NOT NULL default '0',
   `author_nip` int(11) unsigned NOT NULL default '0',
+  `value` tinyint(4) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  KEY `vote` (`object_id`, `author_nip`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_polls_reactions` (
+  `object_id` int(11) NOT NULL default '0',
+  `reaction` varchar(32) NOT NULL default '',
+  `count` int(11) NOT NULL default '0',
+  `sum` int(11) NOT NULL default '0',
+  UNIQUE KEY `reaction` (`object_id`, `reaction`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_polls_reactions_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `author_nip` int(11) unsigned NOT NULL default '0',
+  `reaction` varchar(32) NOT NULL default '',
   `value` tinyint(4) NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
   PRIMARY KEY (`id`),
@@ -321,7 +343,9 @@ INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `Char
 -- VOTES
 INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
 ('bx_polls', 'bx_polls_votes', 'bx_polls_votes_track', '604800', '1', '1', '0', '1', 'bx_polls_entries', 'id', 'author', 'rate', 'votes', '', ''),
-('bx_polls_subentries', 'bx_polls_votes_subentries', 'bx_polls_votes_subentries_track', '604800', '1', '1', '0', '1', 'bx_polls_subentries', 'id', 'author', 'rate', 'votes', 'BxPollsVoteSubentries', 'modules/boonex/polls/classes/BxPollsVoteSubentries.php');
+('bx_polls_subentries', 'bx_polls_votes_subentries', 'bx_polls_votes_subentries_track', '604800', '1', '1', '0', '1', 'bx_polls_subentries', 'id', 'author', 'rate', 'votes', 'BxPollsVoteSubentries', 'modules/boonex/polls/classes/BxPollsVoteSubentries.php'),
+
+('bx_polls_reactions', 'bx_polls_reactions', 'bx_polls_reactions_track', '604800', '1', '1', '1', '1', 'bx_polls_entries', 'id', 'author', 'rrate', 'rvotes', 'BxTemplVoteReactions', '');
 
 
 -- SCORES

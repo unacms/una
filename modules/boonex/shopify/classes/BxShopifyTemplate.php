@@ -71,12 +71,15 @@ class BxShopifyTemplate extends BxBaseModTextTemplate
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
-        return $this->parseHtmlByName($sTemplateName, array(
+        $aVars = parent::getTmplVarsText($aData);
+        $aVars = array_merge($aVars, array(
             'js_object' => $this->_oConfig->getJsObjectShop($aData[$CNF['FIELD_AUTHOR']]),
             'html_id' => $this->_oConfig->getHtmlIds('entry_content'),
             'entry_title' => $this->getTitle($aData),
             'entry_code' => $aData[$CNF['FIELD_CODE']]
         ));
+
+        return $this->parseHtmlByName($sTemplateName, $aVars);
     }
 
     public function entryAttachments ($aData, $aParams = array())
