@@ -124,6 +124,7 @@
     <string name="_bx_directory_page_block_title_delete_entry"><![CDATA[Delete]]></string>
     <string name="_bx_directory_page_title_sys_view_entry"><![CDATA[View Ad]]></string>
     <string name="_bx_directory_page_title_view_entry"><![CDATA[{title}]]></string>
+    <string name="_bx_directory_page_block_title_entry_breadcrumb"><![CDATA[Breadcrumb]]></string>
     <string name="_bx_directory_page_block_title_entry_text"><![CDATA[Ad Text]]></string>
     <string name="_bx_directory_page_title_browse"><![CDATA[Ads]]></string>
     <string name="_bx_directory_page_title_search_results"><![CDATA[Ads matching "{0}"]]></string>
@@ -269,6 +270,7 @@
     <string name="_bx_directory_grid_column_value_subcategories"><![CDATA[{0} subcategories]]></string>
     <string name="_bx_directory_grid_column_info_subcategories"><![CDATA[View subcategories]]></string>
     <string name="_bx_directory_grid_action_title_add"><![CDATA[Add New]]></string>
+    <string name="_bx_directory_grid_action_title_back"><![CDATA[Back]]></string>
     <string name="_bx_directory_grid_action_title_delete"><![CDATA[Delete]]></string>
     <string name="_bx_directory_grid_popup_title_add"><![CDATA[Add New Category]]></string>
     <string name="_bx_directory_grid_popup_title_edit"><![CDATA[Edit '{0}' Category]]></string>
@@ -354,6 +356,8 @@
     <string name="_bx_directory_txt_display_title_add"><![CDATA[{0}: Add]]></string>
     <string name="_bx_directory_txt_display_title_edit"><![CDATA[{0}: Edit]]></string>
     <string name="_bx_directory_txt_display_title_view"><![CDATA[{0}: View]]></string>
+    <string name="_bx_directory_txt_processing_awaiting"><![CDATA[Ad will be published as soon as video is converted]]></string>
+    <string name="_bx_directory_txt_processing_failed"><![CDATA[Ad isn't published because video conversion failed, edit video to fix the issue.]]></string>
 
     <string name="_bx_directory_txt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
 

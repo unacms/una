@@ -4,3 +4,7 @@
 .bx-dir-subcategories .bx-dir-category:first-child {
     padding-top: 0;
 }
+.bx-dir-category .sys-icon {
+    display: inline-block;
+    width: 1.0rem;
+}

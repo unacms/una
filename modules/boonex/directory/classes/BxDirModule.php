@@ -74,7 +74,7 @@ class BxDirModule extends BxBaseModTextModule
 
     public function serviceEntityCreate ($sParams = false)
     {
-        if(($sDisplay = $this->_getCategoryDisplay('add')) !== false) {
+        if(($sDisplay = $this->getCategoryDisplay('add')) !== false) {
             if(empty($sParams) || !is_array($sParams))
                 $sParams = array();
 
@@ -113,9 +113,26 @@ class BxDirModule extends BxBaseModTextModule
         return $aBlock;
     }
 
+
     /**
      * Common methods.
      */
+    public function getCategoryDisplay($sDisplayType, $iCategory = 0)
+    {
+        if(empty($iCategory) && bx_get('category') !== false)
+            $iCategory = (int)bx_get('category');
+
+        if(empty($iCategory))
+            return false;
+
+        $aCategory = $this->_oDb->getCategories(array('type' => 'id_full', 'id' => $iCategory));
+
+        $sKey = 'type_display_' . $sDisplayType;
+        if(empty($aCategory[$sKey]))
+            return false;
+
+        return $aCategory[$sKey];
+    }
 
 
     /**
@@ -142,27 +159,10 @@ class BxDirModule extends BxBaseModTextModule
                 break;
         }
 
-        if($sDisplayType !== false && ($sDisplayNew = $this->_getCategoryDisplay($sDisplayType, $aContentInfo[$CNF['FIELD_CATEGORY']])) !== false)
+        if($sDisplayType !== false && ($sDisplayNew = $this->getCategoryDisplay($sDisplayType, $aContentInfo[$CNF['FIELD_CATEGORY']])) !== false)
             $sDisplay = $sDisplayNew;
 
         return parent::_serviceEntityForm ($sFormMethod, $iContentId, $sDisplay, $sCheckFunction, $bErrorMsg);
-    }
-
-    protected function _getCategoryDisplay($sDisplayType, $iCategory = 0)
-    {
-        if(empty($iCategory) && bx_get('category') !== false)
-            $iCategory = (int)bx_get('category');
-
-        if(empty($iCategory))
-            return false;
-
-        $aCategory = $this->_oDb->getCategories(array('type' => 'id_full', 'id' => $iCategory));
-
-        $sKey = 'type_display_' . $sDisplayType;
-        if(empty($aCategory[$sKey]))
-            return false;
-
-        return $aCategory[$sKey];
     }
 
     protected function _getCategoryOptions($iParentId, &$aValues)

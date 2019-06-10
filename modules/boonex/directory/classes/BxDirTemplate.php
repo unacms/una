@@ -23,6 +23,24 @@ class BxDirTemplate extends BxBaseModTextTemplate
         $this->aMethodsToCallAddJsCss[] = 'categories';
     }
 
+    public function entryBreadcrumb($aContentInfo, $aTmplVarsItems = array())
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+        $oPermalink = BxDolPermalinks::getInstance();
+
+        $aTmplVarsItems = array();
+        $this->_entryBreadcrumb($aContentInfo[$CNF['FIELD_CATEGORY']], $oPermalink, $aTmplVarsItems);
+        $aTmplVarsItems = array_reverse($aTmplVarsItems);
+        
+        $aTmplVarsItems[] = array(
+            'url' => BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
+            'title' => bx_process_output($aContentInfo[$CNF['FIELD_TITLE']])
+        );
+
+    	return parent::entryBreadcrumb($aContentInfo, $aTmplVarsItems);
+    }
+
     public function categoriesList($aParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
@@ -35,6 +53,16 @@ class BxDirTemplate extends BxBaseModTextTemplate
             $sResult = MsgBox(_t('_Empty'));
 
         return $sResult;
+    }
+
+    /**
+     * Use Gallery image for both because currently there is no Unit types with small thumbnails.
+     */
+    protected function getUnitThumbAndGallery ($aData)
+    {
+        list($sPhotoThumb, $sPhotoGallery) = parent::getUnitThumbAndGallery($aData);
+
+        return array($sPhotoGallery, $sPhotoGallery);
     }
 
     protected function _categoriesList($iParentId, $aParams = array())
@@ -52,6 +80,12 @@ class BxDirTemplate extends BxBaseModTextTemplate
             $aTmplVars[] = array(
                 'url' => $aParams['url'] . $aCategory['id'],
                 'title' => _t($aCategory['title']),
+                'bx_if:show_icon' => array(
+                    'condition' => !empty($aCategory['icon']),
+                    'content' => array(
+                        'icon' => $aCategory['icon'],
+                    )
+                ),
                 'bx_if:show_counter' => array(
                     'condition' => $iItems != 0,
                     'content' => array(
@@ -75,14 +109,23 @@ class BxDirTemplate extends BxBaseModTextTemplate
         ));
     }
 
-    /**
-     * Use Gallery image for both because currently there is no Unit types with small thumbnails.
-     */
-    protected function getUnitThumbAndGallery ($aData)
+    protected function _entryBreadcrumb($iCategory, &$oPermalink, &$aTmplVarsItems)
     {
-        list($sPhotoThumb, $sPhotoGallery) = parent::getUnitThumbAndGallery($aData);
+        $CNF = &$this->_oConfig->CNF;
 
-        return array($sPhotoGallery, $sPhotoGallery);
+        $aCategory = $this->_oDb->getCategories(array('type' => 'id', 'id' => $iCategory));
+        if(empty($aCategory) || !is_array($aCategory))
+            return;
+
+        $aTmplVarsItems[] = array(
+            'url' => BX_DOL_URL_ROOT . $oPermalink->permalink($CNF['URL_CATEGORIES'], array($CNF['GET_PARAM_CATEGORY'] => $aCategory['id'])),
+            'title' => bx_process_output(_t($aCategory['title']))
+        );
+
+        if(empty($aCategory['parent_id']))
+            return;
+
+        $this->_entryBreadcrumb((int)$aCategory['parent_id'], $oPermalink, $aTmplVarsItems);
     }
 }
 

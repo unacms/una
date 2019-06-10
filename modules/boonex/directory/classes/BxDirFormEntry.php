@@ -121,7 +121,7 @@ class BxDirFormEntry extends BxBaseModTextFormEntry
         return $iContentId;
     }
 
-    function update ($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
+    public function update ($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -130,6 +130,34 @@ class BxDirFormEntry extends BxBaseModTextFormEntry
         $this->processFiles($CNF['FIELD_COVER'], $iContentId, false);
 
         return $iResult;
+    }
+
+    protected function genCustomInputCategoryView(&$aInput)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!empty($aInput['value'])) {
+            $aCategory = $this->_oModule->_oDb->getCategories(array('type' => 'id', 'id' => (int)$aInput['value']));
+            if(!empty($aCategory) && is_array($aCategory))
+                $aInput['value'] = bx_process_output(_t($aCategory['title']));
+        }
+
+        return $this->genInputStandard($aInput);
+    }
+ 
+    protected function genCustomViewRowValueCategoryView(&$aInput)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(empty($aInput['value']))
+            return '';
+
+        $aCategory = $this->_oModule->_oDb->getCategories(array('type' => 'id', 'id' => $aInput['value']));
+        if(empty($aCategory) || !is_array($aCategory))
+            return '';
+
+        $sLink = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_CATEGORIES'], array($CNF['GET_PARAM_CATEGORY'] => $aCategory['id']));
+        return $this->_oModule->_oTemplate->parseLink($sLink, bx_process_output(_t($aCategory['title'])));
     }
 
     protected function _getCoverGhostTmplVars($aContentInfo = array())
@@ -165,9 +193,7 @@ class BxDirFormEntry extends BxBaseModTextFormEntry
         }
         
         if(isset($CNF['FIELD_CATEGORY_VIEW']) && isset($this->aInputs[$CNF['FIELD_CATEGORY_VIEW']]) && $iCategory != 0) {
-            $aCategory = $this->_oModule->_oDb->getCategories(array('type' => 'id', 'id' => $iCategory));
-
-            $this->aInputs[$CNF['FIELD_CATEGORY_VIEW']]['value'] = !empty($aCategory['title']) ? _t($aCategory['title']) : '';
+            $this->aInputs[$CNF['FIELD_CATEGORY_VIEW']]['value'] = $iCategory;
         }
 
         if(isset($CNF['FIELD_CATEGORY_SELECT']) && isset($this->aInputs[$CNF['FIELD_CATEGORY_SELECT']])) {

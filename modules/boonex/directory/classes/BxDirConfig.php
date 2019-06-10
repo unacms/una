@@ -9,6 +9,8 @@
  * @{
  */
 
+bx_import('BxDolInformer');
+
 class BxDirConfig extends BxBaseModTextConfig
 {
     function __construct($aModule)
@@ -47,7 +49,7 @@ class BxDirConfig extends BxBaseModTextConfig
             'FIELD_PHOTO' => 'pictures',
             'FIELD_VIDEO' => 'videos',
             'FIELD_FILE' => 'files',
-            'FIELD_POLL' => '',
+            'FIELD_POLL' => 'polls',
             'FIELD_THUMB' => 'thumb',
             'FIELD_ATTACHMENTS' => 'attachments',
             'FIELD_VIEWS' => 'views',
@@ -58,6 +60,7 @@ class BxDirConfig extends BxBaseModTextConfig
             'FIELD_LABELS' => 'labels',
             'FIELD_ANONYMOUS' => 'anonymous',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
+            'FIELDS_DELAYED_PROCESSING' => 'videos', // can be array of fields or comma separated string of field names
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-ad',
@@ -145,6 +148,17 @@ class BxDirConfig extends BxBaseModTextConfig
                     'create-ad' => 'checkAllowedAdd',
                 ),
                 'bx_directory_view' => $aMenuItems2Methods,
+            ),
+
+            // informer messages
+            'INFORMERS' => array (
+                'processing' => array (
+                    'name' => 'bx-directory-processing',
+                    'map' => array (
+                        'awaiting' => array('msg' => '_bx_directory_txt_processing_awaiting', 'type' => BX_INFORMER_ALERT),
+                        'failed' => array('msg' => '_bx_directory_txt_processing_failed', 'type' => BX_INFORMER_ERROR)
+                    ),
+                )
             ),
 
             // some language keys

@@ -18,7 +18,15 @@ class BxDirFormsEntryHelper extends BxBaseModTextFormsEntryHelper
     {
         parent::__construct($oModule);
     }
-    
+
+    public function getObjectFormAdd($sDisplay = false)
+    {
+        if(($sCategoryDisplay = $this->_oModule->getCategoryDisplay('add')) !== false)
+            $sDisplay = $sCategoryDisplay;
+
+        return parent::getObjectFormAdd($sDisplay);
+    }
+
     public function onDataAddAfter($iAccountId, $iContentId)
     {
         $s = parent::onDataAddAfter($iAccountId, $iContentId);

@@ -45,19 +45,20 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_directory_view_entry', '_bx_directory_page_title_sys_view_entry', '_bx_directory_page_title_view_entry', 'bx_directory', 12, 2147483647, 1, 'view-ad', '', '', '', '', 0, 1, 0, 'BxDirPageEntry', 'modules/boonex/directory/classes/BxDirPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_directory_view_entry', 2, 'bx_directory', '', '_bx_directory_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:17:"entity_text_block";}', 0, 0, 1, 2),
+('bx_directory_view_entry', 1, 'bx_directory', '', '_bx_directory_page_block_title_entry_breadcrumb', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:17:"entity_breadcrumb";}', 0, 0, 1, 1),
 ('bx_directory_view_entry', 2, 'bx_directory', '', '_bx_directory_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:13:"entity_author";}', 0, 0, 1, 1),
+('bx_directory_view_entry', 2, 'bx_directory', '', '_bx_directory_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:17:"entity_text_block";}', 0, 0, 1, 2),
+('bx_directory_view_entry', 2, 'bx_directory', '', '_bx_directory_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:18:"entity_all_actions";}', 0, 0, 1, 3),
+('bx_directory_view_entry', 2, 'bx_directory', '', '_bx_directory_page_block_title_entry_attachments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:18:"entity_attachments";}', 0, 0, 1, 4),
+('bx_directory_view_entry', 2, 'bx_directory', '', '_bx_directory_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:15:"entity_comments";}', 0, 0, 1, 5),
+('bx_directory_view_entry', 3, 'bx_directory', '', '_bx_directory_page_block_title_entry_location', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:15:"entity_location";}', 0, 0, 0, 0),
 ('bx_directory_view_entry', 3, 'bx_directory', '_bx_directory_page_block_title_sys_entry_context', '_bx_directory_page_block_title_entry_context', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:14:"entity_context";}', 0, 0, 1, 1),
 ('bx_directory_view_entry', 3, 'bx_directory', '', '_bx_directory_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:11:"entity_info";}', 0, 0, 1, 2),
-('bx_directory_view_entry', 3, 'bx_directory', '', '_bx_directory_page_block_title_entry_location', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:15:"entity_location";}', 0, 0, 0, 0),
-('bx_directory_view_entry', 2, 'bx_directory', '', '_bx_directory_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:18:"entity_all_actions";}', 0, 0, 1, 3),
-('bx_directory_view_entry', 4, 'bx_directory', '', '_bx_directory_page_block_title_entry_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:14:"entity_actions";}', 0, 0, 0, 0),
-('bx_directory_view_entry', 4, 'bx_directory', '', '_bx_directory_page_block_title_entry_social_sharing', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:21:"entity_social_sharing";}', 0, 0, 0, 0),
-('bx_directory_view_entry', 4, 'bx_directory', '', '_bx_directory_page_block_title_entry_attachments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:18:"entity_attachments";}', 0, 0, 0, 0),
-('bx_directory_view_entry', 4, 'bx_directory', '', '_bx_directory_page_block_title_entry_polls', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:12:"entity_polls";}', 0, 0, 0, 0),
-('bx_directory_view_entry', 2, 'bx_directory', '', '_bx_directory_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:15:"entity_comments";}', 0, 0, 1, 4),
 ('bx_directory_view_entry', 3, 'bx_directory', '', '_bx_directory_page_block_title_entry_location', 3, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"locations_map";s:6:"params";a:2:{i:0;s:12:"bx_directory";i:1;s:4:"{id}";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 0, 1, 3),
-('bx_directory_view_entry', 3, 'bx_directory', '', '_bx_directory_page_block_title_featured_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:12:"bx_directory";s:6:"method";s:15:"browse_featured";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 0, 1, 4);
+('bx_directory_view_entry', 3, 'bx_directory', '', '_bx_directory_page_block_title_entry_polls', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:12:"entity_polls";}', 0, 0, 1, 4),
+('bx_directory_view_entry', 3, 'bx_directory', '', '_bx_directory_page_block_title_featured_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:12:"bx_directory";s:6:"method";s:15:"browse_featured";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 0, 1, 5),
+('bx_directory_view_entry', 4, 'bx_directory', '', '_bx_directory_page_block_title_entry_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:14:"entity_actions";}', 0, 0, 0, 0),
+('bx_directory_view_entry', 4, 'bx_directory', '', '_bx_directory_page_block_title_entry_social_sharing', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:21:"entity_social_sharing";}', 0, 0, 0, 0);
 
 -- PAGE: view entry comments
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -216,7 +217,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_directory_view_actions', 'bx_directory', 'delete-ad', '_bx_directory_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 20),
 ('bx_directory_view_actions', 'bx_directory', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 200),
 ('bx_directory_view_actions', 'bx_directory', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 210),
-('bx_directory_view_actions', 'bx_directory', 'vote', '_sys_menu_item_title_system_va_vote', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 220),
+('bx_directory_view_actions', 'bx_directory', 'vote', '_sys_menu_item_title_system_va_vote', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 220),
 ('bx_directory_view_actions', 'bx_directory', 'reaction', '_sys_menu_item_title_system_va_reaction', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 225),
 ('bx_directory_view_actions', 'bx_directory', 'score', '_sys_menu_item_title_system_va_score', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 230),
 ('bx_directory_view_actions', 'bx_directory', 'favorite', '_sys_menu_item_title_system_va_favorite', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 240),
@@ -447,7 +448,8 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('bx_directory_categories', 'bulk', 'delete', '_bx_directory_grid_action_title_delete', '', 1, 1),
 ('bx_directory_categories', 'single', 'edit', '', 'pencil-alt', 0, 1),
 ('bx_directory_categories', 'single', 'delete', '', 'remove', 1, 2),
-('bx_directory_categories', 'independent', 'add', '_bx_directory_grid_action_title_add', '', 0, 1);
+('bx_directory_categories', 'independent', 'back', '_bx_directory_grid_action_title_back', '', 0, 1),
+('bx_directory_categories', 'independent', 'add', '_bx_directory_grid_action_title_add', '', 0, 2);
 
 
 -- UPLOADERS
@@ -469,7 +471,9 @@ SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('system', 'save_setting', @iHandler),
-('profile', 'delete', @iHandler);
+('profile', 'delete', @iHandler),
+
+('bx_directory_videos_mp4', 'transcoded', @iHandler);
 
 
 -- CRON

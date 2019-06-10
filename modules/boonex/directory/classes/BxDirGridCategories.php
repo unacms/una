@@ -230,6 +230,20 @@ class BxDirGridCategories extends BxTemplGrid
         return $oForm;
     }
 
+    protected function _getActionBack($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+        if(empty($this->_iParentId))
+            return '';
+
+        $sUrl = bx_append_url_params($this->_sBaseUrl, array('parent_id' => $this->_aParentInfo['parent_id']));
+
+    	$a['attr'] = array_merge($a['attr'], array(
+            "onclick" => "window.open('" . $sUrl . "','_self');"
+    	));
+
+    	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    }
+
     protected function _getCellIcon ($mixedValue, $sKey, $aField, $aRow)
     {
         $mixedValue = $this->_oTemplate->getIcon($mixedValue, array('class' => 'bx-def-border'));
