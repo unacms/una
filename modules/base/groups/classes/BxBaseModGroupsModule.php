@@ -420,7 +420,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     {
     	$sModule = $this->_aModule['name'];
 
-        $aSettingsTypes = array('follow_context');
+        $aSettingsTypes = array('follow_member', 'follow_context');
         if($this->serviceActAsProfile())
             $aSettingsTypes = array('personal', 'follow_member');
 
