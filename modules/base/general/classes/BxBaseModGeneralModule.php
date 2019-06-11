@@ -767,12 +767,18 @@ class BxBaseModGeneralModule extends BxDolModule
 
                 array('group' => $sModule . '_vote', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVote', 'module_name' => $sModule, 'module_method' => 'get_notifications_vote', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
                 array('group' => $sModule . '_vote', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVote'),
+                
+                array('group' => $sModule . '_score_up', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVoteUp', 'module_name' => $sModule, 'module_method' => 'get_notifications_score_up', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
+
+                array('group' => $sModule . '_score_down', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVoteDown', 'module_name' => $sModule, 'module_method' => 'get_notifications_score_down', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
             ),
             'settings' => array(
                 array('group' => 'content', 'unit' => $sModule, 'action' => 'added', 'types' => array('follow_member', 'follow_context')),
                 array('group' => 'comment', 'unit' => $sModule, 'action' => 'commentPost', 'types' => array('personal', 'follow_member', 'follow_context')),
                 array('group' => 'reply', 'unit' => $sModule, 'action' => 'replyPost', 'types' => array('personal')),
-                array('group' => 'vote', 'unit' => $sModule, 'action' => 'doVote', 'types' => array('personal', 'follow_member', 'follow_context'))
+                array('group' => 'vote', 'unit' => $sModule, 'action' => 'doVote', 'types' => array('personal', 'follow_member', 'follow_context')),
+                array('group' => 'score_up', 'unit' => $sModule, 'action' => 'doVoteUp', 'types' => array('personal', 'follow_member', 'follow_context')),
+                array('group' => 'score_down', 'unit' => $sModule, 'action' => 'doVoteDown', 'types' => array('personal', 'follow_member', 'follow_context'))
             ),
             'alerts' => array(
                 array('unit' => $sModule, 'action' => 'added'),
@@ -787,6 +793,9 @@ class BxBaseModGeneralModule extends BxDolModule
 
                 array('unit' => $sModule, 'action' => 'doVote'),
                 array('unit' => $sModule, 'action' => 'undoVote'),
+
+                array('unit' => $sModule, 'action' => 'doVoteUp'),
+                array('unit' => $sModule, 'action' => 'doVoteDown'),
             )
         );
     }
@@ -920,6 +929,48 @@ class BxBaseModGeneralModule extends BxDolModule
 		);
     }
 
+    /**
+     * Entry post score -> vote up for Notifications module
+     */
+    public function serviceGetNotificationsScoreUp($aEvent)
+    {
+    	return $this->_serviceGetNotificationsScore('up', $aEvent);
+    }
+
+    /**
+     * Entry post score -> vote up for Notifications module
+     */
+    public function serviceGetNotificationsScoreDown($aEvent)
+    {
+    	return $this->_serviceGetNotificationsScore('down', $aEvent);
+    }
+
+    protected function _serviceGetNotificationsScore($sType, $aEvent)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$iContentId = (int)$aEvent['object_id'];
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return array();
+
+        $oScore = BxDolScore::getObjectInstance($CNF['OBJECT_SCORES'], $iContentId);
+        if(!$oScore || !$oScore->isEnabled())
+            return array();
+
+        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+        $sEntryCaption = isset($aContentInfo[$CNF['FIELD_TITLE']]) ? $aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
+
+        return array(
+            'entry_sample' => $CNF['T']['txt_sample_single'],
+            'entry_url' => $sEntryUrl,
+            'entry_caption' => $sEntryCaption,
+            'entry_author' => $aContentInfo[$CNF['FIELD_AUTHOR']],
+            'subentry_sample' => $CNF['T']['txt_sample_score_' . $sType . '_single'],
+            'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+        );
+    }
+    
     /**
      * Data for Timeline module
      */

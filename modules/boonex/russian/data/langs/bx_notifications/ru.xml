@@ -59,6 +59,12 @@
     <string name="_bx_ntfs_alert_action_doVote_personal"><![CDATA[Кто-то отдал голос вашему контенту]]></string>
     <string name="_bx_ntfs_alert_action_doVote_follow_member"><![CDATA[Новые голоса]]></string>
     <string name="_bx_ntfs_alert_action_doVote_follow_context"><![CDATA[Новые голоса]]></string>
+    <string name="_bx_ntfs_alert_action_doVoteUp_personal"><![CDATA[Кто-то отдал голос 'За' ваш контент]]></string>
+    <string name="_bx_ntfs_alert_action_doVoteUp_follow_member"><![CDATA[Новые голоса 'За']]></string>
+    <string name="_bx_ntfs_alert_action_doVoteUp_follow_context"><![CDATA[Новые голоса 'За']]></string>
+    <string name="_bx_ntfs_alert_action_doVoteDown_personal"><![CDATA[Кто-то отдал голос 'Против' вашего контента]]></string>
+    <string name="_bx_ntfs_alert_action_doVoteDown_follow_member"><![CDATA[Новые голоса 'Против']]></string>
+    <string name="_bx_ntfs_alert_action_doVoteDown_follow_context"><![CDATA[Новые голоса 'Против']]></string>
     <string name="_bx_ntfs_alert_action_fan_added_personal"><![CDATA[Новые фанаты]]></string>
     <string name="_bx_ntfs_alert_action_fan_added_follow_member"><![CDATA[Новые фанаты]]></string>
     <string name="_bx_ntfs_alert_action_fan_added_follow_context"><![CDATA[Новые фанаты]]></string>

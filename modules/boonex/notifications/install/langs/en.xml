@@ -65,6 +65,12 @@
     <string name="_bx_ntfs_alert_action_doVote_personal"><![CDATA[Someone adds a like to your content]]></string>
     <string name="_bx_ntfs_alert_action_doVote_follow_member"><![CDATA[New likes]]></string>
     <string name="_bx_ntfs_alert_action_doVote_follow_context"><![CDATA[New likes]]></string>
+    <string name="_bx_ntfs_alert_action_doVoteUp_personal"><![CDATA[Someone adds an 'Up' vote to your content]]></string>
+    <string name="_bx_ntfs_alert_action_doVoteUp_follow_member"><![CDATA[New 'Up' votes]]></string>
+    <string name="_bx_ntfs_alert_action_doVoteUp_follow_context"><![CDATA[New 'Up' votes]]></string>
+    <string name="_bx_ntfs_alert_action_doVoteDown_personal"><![CDATA[Someone adds a 'Down' vote to your content]]></string>
+    <string name="_bx_ntfs_alert_action_doVoteDown_follow_member"><![CDATA[New 'Down' votes]]></string>
+    <string name="_bx_ntfs_alert_action_doVoteDown_follow_context"><![CDATA[New 'Down' votes]]></string>
     <string name="_bx_ntfs_alert_action_fan_added_personal"><![CDATA[New fans]]></string>
     <string name="_bx_ntfs_alert_action_fan_added_follow_member"><![CDATA[New fans]]></string>
     <string name="_bx_ntfs_alert_action_fan_added_follow_context"><![CDATA[New fans]]></string>

@@ -19,10 +19,10 @@ class BxBaseModNotificationsResponse extends BxDolAlertsResponse
     }
 
     /**
-     * Note. Check priprity is IMPORTANT!
+     * Note. Check priority is IMPORTANT!
      * Don't swap the checks without a REAL need.
      */
-	protected function _getObjectOwnerId($aExtras)
+    protected function _getObjectOwnerId($aExtras)
     {
         if(!is_array($aExtras))
             return 0;
@@ -42,7 +42,7 @@ class BxBaseModNotificationsResponse extends BxDolAlertsResponse
     }
 
     /**
-     * Note. Check priprity is NOT IMPORTANT!
+     * Note. Check priority is NOT IMPORTANT!
      */
     protected function _getSubObjectId($aExtras)
     {
@@ -54,6 +54,9 @@ class BxBaseModNotificationsResponse extends BxDolAlertsResponse
 
         if(isset($aExtras['vote_id']))
             return (int)$aExtras['vote_id'];
+
+        if(isset($aExtras['score_id']))
+            return (int)$aExtras['score_id'];
 
         if(isset($aExtras['repost_id']))
             return (int)$aExtras['repost_id'];
