@@ -18,7 +18,7 @@ class BxMarketConfig extends BxBaseModTextConfig
         parent::__construct($aModule);
 
         $aMenuItems2Methods = array (
-        	'hide-product' => 'checkAllowedHide',
+            'hide-product' => 'checkAllowedHide',
             'unhide-product' => 'checkAllowedUnhide',
             'edit-product' => 'checkAllowedEdit',
             'delete-product' => 'checkAllowedDelete',
@@ -179,10 +179,12 @@ class BxMarketConfig extends BxBaseModTextConfig
             	'txt_sample_single_with_article' => '_bx_market_txt_sample_single_with_article',
             	'txt_sample_comment_single' => '_bx_market_txt_sample_comment_single',
             	'txt_sample_vote_single' => '_bx_market_txt_sample_vote_single',
+                'txt_sample_score_up_single' => '_bx_market_txt_sample_score_up_single',
+                'txt_sample_score_down_single' => '_bx_market_txt_sample_score_down_single',
             	'form_field_author' => '_bx_market_form_entry_input_author',
             	'grid_action_err_delete' => '_bx_market_grid_action_err_delete',
             	'grid_txt_account_manager' => '_bx_market_grid_txt_account_manager',
-				'filter_item_active' => '_bx_market_grid_filter_item_title_adm_active',
+                'filter_item_active' => '_bx_market_grid_filter_item_title_adm_active',
             	'filter_item_hidden' => '_bx_market_grid_filter_item_title_adm_hidden',
             	'filter_item_select_one_filter1' => '_bx_market_grid_filter_item_title_adm_select_one_filter1',
             	'menu_item_manage_my' => '_bx_market_menu_item_title_manage_my',

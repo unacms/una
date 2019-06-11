@@ -451,12 +451,18 @@ class BxAlbumsModule extends BxBaseModTextModule
 
             array('group' => $sModule . '_vote_media', 'type' => 'insert', 'alert_unit' => $sModule . '_media', 'alert_action' => 'doVote', 'module_name' => $sModule, 'module_method' => 'get_notifications_vote_media', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
             array('group' => $sModule . '_vote_media', 'type' => 'delete', 'alert_unit' => $sModule . '_media', 'alert_action' => 'undoVote'),
+            
+            array('group' => $sModule . '_score_up_media', 'type' => 'insert', 'alert_unit' => $sModule . '_media', 'alert_action' => 'doVoteUp', 'module_name' => $sModule, 'module_method' => 'get_notifications_score_up_media', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
+
+            array('group' => $sModule . '_score_down_media', 'type' => 'insert', 'alert_unit' => $sModule . '_media', 'alert_action' => 'doVoteDown', 'module_name' => $sModule, 'module_method' => 'get_notifications_score_down_media', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
         ));
 
         $aResult['settings'] = array_merge($aResult['settings'], array(
             array('group' => 'content', 'unit' => $sModule, 'action' => 'medias_added', 'types' => array('follow_member', 'follow_context')),
             array('group' => 'comment', 'unit' => $sModule . '_media', 'action' => 'commentPost', 'types' => array('personal', 'follow_member', 'follow_context')),
-            array('group' => 'vote', 'unit' => $sModule . '_media', 'action' => 'doVote', 'types' => array('personal', 'follow_member', 'follow_context'))
+            array('group' => 'vote', 'unit' => $sModule . '_media', 'action' => 'doVote', 'types' => array('personal', 'follow_member', 'follow_context')),
+            array('group' => 'score_up', 'unit' => $sModule . '_media', 'action' => 'doVoteUp', 'types' => array('personal', 'follow_member', 'follow_context')),
+            array('group' => 'score_down', 'unit' => $sModule . '_media', 'action' => 'doVoteDown', 'types' => array('personal', 'follow_member', 'follow_context'))
         ));
 
         $aResult['alerts'] = array_merge($aResult['alerts'], array(
@@ -468,6 +474,9 @@ class BxAlbumsModule extends BxBaseModTextModule
 
             array('unit' => $sModule . '_media', 'action' => 'doVote'),
             array('unit' => $sModule . '_media', 'action' => 'undoVote'),
+
+            array('unit' => $sModule . '_media', 'action' => 'doVoteUp'),
+            array('unit' => $sModule . '_media', 'action' => 'doVoteDown'),
         ));
 
         return $aResult; 
@@ -552,6 +561,43 @@ class BxAlbumsModule extends BxBaseModTextModule
             'entry_caption' => $sEntryCaption,
             'entry_author' => $aMediaInfo['author'],
             'subentry_sample' => $CNF['T']['txt_media_vote_single'],
+            'subentry_url' => '',
+            'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+        );
+    }
+
+    public function serviceGetNotificationsScoreUpMedia($aEvent)
+    {
+    	return $this->_serviceGetNotificationsScoreMedia('up', $aEvent);
+    }
+
+    public function serviceGetNotificationsScoreDownMedia($aEvent)
+    {
+    	return $this->_serviceGetNotificationsScoreMedia('down', $aEvent);
+    }
+
+    protected function _serviceGetNotificationsScoreMedia($sType, $aEvent)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+    	$iMediaId = (int)$aEvent['object_id'];
+    	$aMediaInfo = $this->_oDb->getMediaInfoById($iMediaId);
+        if(empty($aMediaInfo) || !is_array($aMediaInfo))
+            return array();
+
+        $oVote = BxDolScore::getObjectInstance($CNF['OBJECT_SCORES_MEDIA'], $iMediaId);
+        if(!$oVote || !$oVote->isEnabled())
+            return array();
+
+        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_MEDIA'] . '&id=' . $aMediaInfo['id']);
+        $sEntryCaption = isset($aMediaInfo['title']) ? $aMediaInfo['title'] : _t('_bx_albums_media');
+
+        return array(
+            'entry_sample' => $CNF['T']['txt_media_single'],
+            'entry_url' => $sEntryUrl,
+            'entry_caption' => $sEntryCaption,
+            'entry_author' => $aMediaInfo['author'],
+            'subentry_sample' => $CNF['T']['txt_media_score_' . $sType . '_single'],
             'subentry_url' => '',
             'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
         );

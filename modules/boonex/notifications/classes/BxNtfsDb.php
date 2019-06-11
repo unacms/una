@@ -92,6 +92,7 @@ class BxNtfsDb extends BxBaseModNotificationsDb
         }
 
         $sSql = "(" . $sSqlOwner . ") UNION (" . $sSqlConnections . ") {order} {limit}";
+        //var_dump(str_replace(array('{select}', '{order}', '{limit}'), array($sSelectClause, $sOrderClause, $sLimitClause), $sSql), "<br />"); exit;
         $aEntries = $this->$sMethod(str_replace(array('{select}', '{order}', '{limit}'), array($sSelectClause, $sOrderClause, $sLimitClause), $sSql));
         if(!$bReturnCount)
             return $aEntries;

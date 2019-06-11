@@ -223,6 +223,8 @@
     <string name="_bx_photos_txt_sample_single_with_article"><![CDATA[a photo]]></string>
     <string name="_bx_photos_txt_sample_comment_single"><![CDATA[comment to photo]]></string>
     <string name="_bx_photos_txt_sample_vote_single"><![CDATA[vote to photo]]></string>
+    <string name="_bx_photos_txt_sample_score_up_single"><![CDATA[score up vote to photo]]></string>
+    <string name="_bx_photos_txt_sample_score_down_single"><![CDATA[score down vote to photo]]></string>
     <string name="_bx_photos_txt_n_views"><![CDATA[{0} views]]></string>
     <string name="_bx_photos_txt_previous"><![CDATA[Previous]]></string>
     <string name="_bx_photos_txt_next"><![CDATA[Next]]></string>

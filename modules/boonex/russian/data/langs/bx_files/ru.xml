@@ -220,6 +220,8 @@
     <string name="_bx_files_txt_sample_single_with_article"><![CDATA[файл]]></string>
     <string name="_bx_files_txt_sample_comment_single"><![CDATA[комментарии к файлу]]></string>
     <string name="_bx_files_txt_sample_vote_single"><![CDATA[голос за файл]]></string>
+    <string name="_bx_files_txt_sample_score_up_single"><![CDATA[голос за файл]]></string>
+    <string name="_bx_files_txt_sample_score_down_single"><![CDATA[голос против файла]]></string>
 
     <string name="_bx_files_privacy_public"><![CDATA[Для всех]]></string>
     <string name="_bx_files_privacy_participants"><![CDATA[Для участников]]></string>

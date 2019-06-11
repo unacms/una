@@ -1387,12 +1387,18 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
                 array('group' => $sModule . '_vote', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVote', 'module_name' => $sModule, 'module_method' => 'get_notifications_vote', 'module_class' => 'Module'),
                 array('group' => $sModule . '_vote', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVote'),
+                
+                array('group' => $sModule . '_score_up', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVoteUp', 'module_name' => $sModule, 'module_method' => 'get_notifications_score_up', 'module_class' => 'Module'),
+
+                array('group' => $sModule . '_score_down', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVoteDown', 'module_name' => $sModule, 'module_method' => 'get_notifications_score_down', 'module_class' => 'Module'),
             ),
             'settings' => array(
                 array('group' => 'content', 'unit' => $sModule, 'action' => 'post_common', 'types' => array('personal', 'follow_member', 'follow_context')),
                 array('group' => 'content', 'unit' => $sModule, 'action' => 'repost', 'types' => array('follow_member', 'follow_context')),
                 array('group' => 'comment', 'unit' => $sModule, 'action' => 'commentPost', 'types' => array('personal', 'follow_member', 'follow_context')),
-                array('group' => 'vote', 'unit' => $sModule, 'action' => 'doVote', 'types' => array('personal', 'follow_member', 'follow_context'))
+                array('group' => 'vote', 'unit' => $sModule, 'action' => 'doVote', 'types' => array('personal', 'follow_member', 'follow_context')),
+                array('group' => 'score_up', 'unit' => $sModule, 'action' => 'doVoteUp', 'types' => array('personal', 'follow_member', 'follow_context')),
+                array('group' => 'score_down', 'unit' => $sModule, 'action' => 'doVoteDown', 'types' => array('personal', 'follow_member', 'follow_context'))
             ),
             'alerts' => array(
                 array('unit' => $sModule, 'action' => 'post_common'),
@@ -1406,6 +1412,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 
                 array('unit' => $sModule, 'action' => 'doVote'),
                 array('unit' => $sModule, 'action' => 'undoVote'),
+
+                array('unit' => $sModule, 'action' => 'doVoteUp'),
+                array('unit' => $sModule, 'action' => 'doVoteDown'),
             )
         );
     }
@@ -1562,6 +1571,78 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'entry_caption' => $sEntryCaption,
             'entry_author' => $aContent['owner_id'],
             'subentry_sample' => $CNF['T']['txt_sample_vote_single'],
+            'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+        );
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-integration_notifications Integration with Notifications
+     * @subsubsection bx_timeline-get_notifications_score_up get_notifications_score_up
+     * 
+     * @code bx_srv('bx_timeline', 'get_notifications_score_up', [...]); @endcode
+     * 
+     * Get data for Score Up Vote event to display in Notifications module.
+     * 
+     * @param $aEvent an array with event description.
+     * @return an array with special format.
+     * 
+     * @see BxTimelineModule::serviceGetNotificationsScoreUp
+     */
+    /** 
+     * @ref bx_timeline-get_notifications_score_up "get_notifications_score_up"
+     */
+    public function serviceGetNotificationsScoreUp($aEvent)
+    {
+    	return $this->_serviceGetNotificationsScore('up', $aEvent);
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-integration_notifications Integration with Notifications
+     * @subsubsection bx_timeline-get_notifications_score_down get_notifications_score_down
+     * 
+     * @code bx_srv('bx_timeline', 'get_notifications_score_down', [...]); @endcode
+     * 
+     * Get data for Score Down Vote event to display in Notifications module.
+     * 
+     * @param $aEvent an array with event description.
+     * @return an array with special format.
+     * 
+     * @see BxTimelineModule::serviceGetNotificationsScoreDown
+     */
+    /** 
+     * @ref bx_timeline-get_notifications_score_down "get_notifications_score_down"
+     */
+    public function serviceGetNotificationsScoreDown($aEvent)
+    {
+    	return $this->_serviceGetNotificationsScore('down', $aEvent);
+    }
+
+
+    protected function _serviceGetNotificationsScore($sType, $aEvent)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+        $iContent = (int)$aEvent['object_id'];
+        $aContent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContent));
+        if(empty($aContent) || !is_array($aContent))
+            return array();
+
+        $oScore = BxDolScore::getObjectInstance($CNF['OBJECT_SCORES'], $iContent);
+        if(!$oScore || !$oScore->isEnabled())
+            return array();
+
+        $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : $this->_oConfig->getTitle($aContent['description'], $aContent['object_id']);
+
+        return array(
+            'entry_sample' => $CNF['T']['txt_sample_single'],
+            'entry_url' => $this->_oConfig->getItemViewUrl($aContent),
+            'entry_caption' => $sEntryCaption,
+            'entry_author' => $aContent['owner_id'],
+            'subentry_sample' => $CNF['T']['txt_sample_score_' . $sType . '_single'],
             'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
         );
     }

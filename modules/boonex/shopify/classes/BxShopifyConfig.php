@@ -29,8 +29,8 @@ class BxShopifyConfig extends BxBaseModTextConfig
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'entries',
-        	'TABLE_SETTINGS' => $aModule['db_prefix'] . 'settings',
-        	'TABLE_ENTRIES_FULLTEXT' => 'title_text',
+            'TABLE_SETTINGS' => $aModule['db_prefix'] . 'settings',
+            'TABLE_ENTRIES_FULLTEXT' => 'title_text',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -122,10 +122,12 @@ class BxShopifyConfig extends BxBaseModTextConfig
             	'txt_sample_single_with_article' => '_bx_shopify_txt_sample_single_with_article',
             	'txt_sample_comment_single' => '_bx_shopify_txt_sample_comment_single',
             	'txt_sample_vote_single' => '_bx_shopify_txt_sample_vote_single',
+                'txt_sample_score_up_single' => '_bx_shopify_txt_sample_score_up_single',
+                'txt_sample_score_down_single' => '_bx_shopify_txt_sample_score_down_single',
             	'form_field_author' => '_bx_shopify_form_entry_input_author',
             	'grid_action_err_delete' => '_bx_shopify_grid_action_err_delete',
             	'grid_txt_account_manager' => '_bx_shopify_grid_txt_account_manager',
-				'filter_item_active' => '_bx_shopify_grid_filter_item_title_adm_active',
+                'filter_item_active' => '_bx_shopify_grid_filter_item_title_adm_active',
             	'filter_item_hidden' => '_bx_shopify_grid_filter_item_title_adm_hidden',
             	'filter_item_select_one_filter1' => '_bx_shopify_grid_filter_item_title_adm_select_one_filter1',
             	'menu_item_manage_my' => '_bx_shopify_menu_item_title_manage_my',

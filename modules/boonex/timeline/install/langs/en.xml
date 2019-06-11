@@ -237,6 +237,8 @@
 	<string name="_bx_timeline_txt_sample_ext"><![CDATA[timeline post]]></string>
 	<string name="_bx_timeline_txt_sample_comment_single"><![CDATA[comment to timeline post]]></string>
     <string name="_bx_timeline_txt_sample_vote_single"><![CDATA[vote to timeline post]]></string>
+    <string name="_bx_timeline_txt_sample_score_up_single"><![CDATA[score up vote to timeline post]]></string>
+    <string name="_bx_timeline_txt_sample_score_down_single"><![CDATA[score down vote to timeline post]]></string>
     <string name="_bx_timeline_txt_sample_with_link"><![CDATA[with link]]></string>
     <string name="_bx_timeline_txt_sample_with_image"><![CDATA[with image]]></string>
     <string name="_bx_timeline_txt_sample_with_video"><![CDATA[with video]]></string>

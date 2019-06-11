@@ -353,6 +353,8 @@
     <string name="_bx_directory_txt_sample_single_with_article"><![CDATA[an ad]]></string>
     <string name="_bx_directory_txt_sample_comment_single"><![CDATA[comment to ad]]></string>
     <string name="_bx_directory_txt_sample_vote_single"><![CDATA[vote to ad]]></string>
+    <string name="_bx_directory_txt_sample_score_up_single"><![CDATA[score up vote to ad]]></string>
+    <string name="_bx_directory_txt_sample_score_down_single"><![CDATA[score down vote to ad]]></string>
     <string name="_bx_directory_txt_display_title_add"><![CDATA[{0}: Add]]></string>
     <string name="_bx_directory_txt_display_title_edit"><![CDATA[{0}: Edit]]></string>
     <string name="_bx_directory_txt_display_title_view"><![CDATA[{0}: View]]></string>
