@@ -40,14 +40,14 @@
 .bx-uploader-html5-drop-area { 
     width:auto;
     height:12rem;
-    overflow-y:scroll;
+    overflow-y:auto;
 }
 .bx-uploader-html5-drop-area.dropzone .dz-message {
     margin:3.5em 0;
 }
 .bx-uploader-html5-errors-area {
     max-height:2.75rem;
-    overflow-y:scroll;
+    overflow-y:auto;
 }
 .bx-uploader-html5-paste-catcher {
     width:0; 
