@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS `bx_timeline_comments`;
 
 DROP TABLE IF EXISTS `bx_timeline_views_track`;
 
-DROP TABLE IF EXISTS `bx_timeline_votes`, `bx_timeline_votes_track`;
+DROP TABLE IF EXISTS `bx_timeline_votes`, `bx_timeline_votes_track`, `bx_timeline_reactions`, `bx_timeline_reactions_track`;
 
 DROP TABLE IF EXISTS `bx_timeline_meta_keywords`, `bx_timeline_meta_locations`, `bx_timeline_meta_mentions`;
 
@@ -50,7 +50,7 @@ DELETE FROM `sys_objects_view` WHERE `name` = 'bx_timeline' LIMIT 1;
 
 
 -- VOTES
-DELETE FROM `sys_objects_vote` WHERE `Name` = 'bx_timeline' LIMIT 1;
+DELETE FROM `sys_objects_vote` WHERE `Name` IN ('bx_timeline', 'bx_timeline_reactions');
 
 
 -- SCORES

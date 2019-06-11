@@ -2339,6 +2339,18 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         return $oVote;
     }
+    
+    public function getReactionObject($sSystem, $iId)
+    {
+        if(empty($sSystem) || (int)$iId == 0)
+            return false;
+
+        $oReaction = BxDolVote::getObjectInstance($sSystem, $iId, true, $this->_oTemplate);
+        if(!$oReaction || !$oReaction->isEnabled())
+            return false;
+
+        return $oReaction;
+    }
 
     public function getScoreObject($sSystem, $iId)
     {
@@ -2539,6 +2551,25 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $bResult = true;
         if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
             bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_vote', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
+
+        return $bResult;
+    }
+
+    public function isAllowedReaction($aEvent, $bPerform = false)
+    {
+        $mixedReactions = $this->getReactionsData($aEvent['reactions']);
+        if($mixedReactions === false)
+            return false;
+
+        list($sSystem, $iObjectId) = $mixedReactions;
+        $oReaction = $this->getReactionObject($sSystem, $iObjectId);
+
+        if(!$oReaction->isAllowedVote($bPerform))
+            return false;
+
+        $bResult = true;
+        if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false)
+            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_reaction', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
 
         return $bResult;
     }
@@ -2929,6 +2960,20 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $sSystem = isset($aVotes['system']) ? $aVotes['system'] : '';
         $iObjectId = isset($aVotes['object_id']) ? (int)$aVotes['object_id'] : 0;
         $iCount = isset($aVotes['count']) ? (int)$aVotes['count'] : 0;
+        if($sSystem == '' || $iObjectId == 0)
+            return false;
+
+        return array($sSystem, $iObjectId, $iCount);
+    }
+
+    public function getReactionsData(&$aReactions)
+    {
+        if(empty($aReactions) || !is_array($aReactions))
+            return false;
+
+        $sSystem = isset($aReactions['system']) ? $aReactions['system'] : '';
+        $iObjectId = isset($aReactions['object_id']) ? (int)$aReactions['object_id'] : 0;
+        $iCount = isset($aReactions['count']) ? (int)$aReactions['count'] : 0;
         if($sSystem == '' || $iObjectId == 0)
             return false;
 

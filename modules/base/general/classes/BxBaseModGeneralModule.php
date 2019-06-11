@@ -979,6 +979,17 @@ class BxBaseModGeneralModule extends BxDolModule
                 'object_id' => $aContentInfo[$CNF['FIELD_ID']],
                 'count' => $aContentInfo['votes']
             );
+        
+        //--- Reactions
+        $oReactions = isset($CNF['OBJECT_REACTIONS']) ? BxDolVote::getObjectInstance($CNF['OBJECT_REACTIONS'], $aEvent['object_id']) : null;
+
+        $aReactions = array();
+        if ($oReactions && $oReactions->isEnabled())
+            $aReactions = array(
+                'system' => $CNF['OBJECT_REACTIONS'],
+                'object_id' => $aContentInfo[$CNF['FIELD_ID']],
+                'count' => $aContentInfo['rvotes']
+            );
 
         //--- Scores
         $oScores = isset($CNF['OBJECT_SCORES']) ? BxDolScore::getObjectInstance($CNF['OBJECT_SCORES'], $aEvent['object_id']) : null;
@@ -1035,6 +1046,7 @@ class BxBaseModGeneralModule extends BxDolModule
             'date' => $aContentInfo[$CNF['FIELD_ADDED']],
             'views' => $aViews,
             'votes' => $aVotes,
+            'reactions' => $aReactions,
             'scores' => $aScores,
             'reports' => $aReports,
             'comments' => $aComments,

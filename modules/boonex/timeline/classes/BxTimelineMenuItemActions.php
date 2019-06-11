@@ -73,6 +73,7 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 
     	$aEvent['views'] = $aEventData['views'];
         $aEvent['votes'] = $aEventData['votes'];
+        $aEvent['reactions'] = $aEventData['reactions'];
         $aEvent['scores'] = $aEventData['scores'];
         $aEvent['reports'] = $aEventData['reports'];
         $aEvent['comments'] = $aEventData['comments'];
@@ -99,15 +100,15 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
     protected function _getMenuItemItemView($aItem)
     {
         if(!isset($this->_aEvent['views']) || !is_array($this->_aEvent['views']) || !isset($this->_aEvent['views']['system'])) 
-        	return false;
+            return false;
 
-		$sViewsSystem = $this->_aEvent['views']['system'];
-		$iViewsObject = $this->_aEvent['views']['object_id'];
-		$aViewsParams = array('dynamic_mode' => $this->_bDynamicMode);
-		if($this->_bShowTitles)
+        $sViewsSystem = $this->_aEvent['views']['system'];
+        $iViewsObject = $this->_aEvent['views']['object_id'];
+        $aViewsParams = array('dynamic_mode' => $this->_bDynamicMode);
+        if($this->_bShowTitles)
             $aViewsParams['show_do_view_label'] = true;
 
-    	return $this->_oModule->getViewObject($sViewsSystem, $iViewsObject)->getElementInline($aViewsParams);
+        return $this->_oModule->getViewObject($sViewsSystem, $iViewsObject)->getElementInline($aViewsParams);
     }
 
     protected function _getMenuItemItemComment($aItem)
@@ -116,8 +117,8 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
             return false;
 
         $aItem = BxTemplMenu::_getMenuItem($aItem);
-		if($aItem === false)
-			return false;
+        if($aItem === false)
+            return false;
 
         return $this->_getMenuItemDefault($aItem);
     }
@@ -125,43 +126,57 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
     protected function _getMenuItemItemVote($aItem)
     {
         if(!isset($this->_aEvent['votes']) || !is_array($this->_aEvent['votes']) || !isset($this->_aEvent['votes']['system'])) 
-        	return false;
+            return false;
 
-		$sVotesSystem = $this->_aEvent['votes']['system'];
-		$iVotesObject = $this->_aEvent['votes']['object_id'];
-		$aVotesParams = array('dynamic_mode' => $this->_bDynamicMode);
-		if($this->_bShowTitles)
-		    $aVotesParams['show_do_vote_label'] = true;
+        $sVotesSystem = $this->_aEvent['votes']['system'];
+        $iVotesObject = $this->_aEvent['votes']['object_id'];
+        $aVotesParams = array('dynamic_mode' => $this->_bDynamicMode);
+        if($this->_bShowTitles)
+            $aVotesParams['show_do_vote_label'] = true;
 
-    	return $this->_oModule->getVoteObject($sVotesSystem, $iVotesObject)->getElementInline($aVotesParams);
+        return $this->_oModule->getVoteObject($sVotesSystem, $iVotesObject)->getElementInline($aVotesParams);
+    }
+
+    protected function _getMenuItemItemReaction($aItem)
+    {
+        if(!isset($this->_aEvent['reactions']) || !is_array($this->_aEvent['reactions']) || !isset($this->_aEvent['reactions']['system'])) 
+            return false;
+
+        $sReactionsSystem = $this->_aEvent['reactions']['system'];
+        $iReactionsObject = $this->_aEvent['reactions']['object_id'];
+        $aReactionsParams = array('dynamic_mode' => $this->_bDynamicMode);
+        if($this->_bShowTitles)
+            $aReactionsParams['show_do_vote_label'] = true;
+
+    	return $this->_oModule->getReactionObject($sReactionsSystem, $iReactionsObject)->getElementInline($aReactionsParams);
     }
 
     protected function _getMenuItemItemScore($aItem)
     {
         if(!isset($this->_aEvent['scores']) || !is_array($this->_aEvent['scores']) || !isset($this->_aEvent['scores']['system'])) 
-        	return false;
+            return false;
 
-		$sScoresSystem = $this->_aEvent['scores']['system'];
-		$iScoresObject = $this->_aEvent['scores']['object_id'];
-		$aScoresParams = array('dynamic_mode' => $this->_bDynamicMode);
-		if($this->_bShowTitles)
-		    $aScoresParams['show_do_vote_label'] = true;
+        $sScoresSystem = $this->_aEvent['scores']['system'];
+        $iScoresObject = $this->_aEvent['scores']['object_id'];
+        $aScoresParams = array('dynamic_mode' => $this->_bDynamicMode);
+        if($this->_bShowTitles)
+            $aScoresParams['show_do_vote_label'] = true;
 
-    	return $this->_oModule->getScoreObject($sScoresSystem, $iScoresObject)->getElementInline($aScoresParams);
+        return $this->_oModule->getScoreObject($sScoresSystem, $iScoresObject)->getElementInline($aScoresParams);
     }
 
-	protected function _getMenuItemItemReport($aItem)
+    protected function _getMenuItemItemReport($aItem)
     {
         if(!isset($this->_aEvent['reports']) || !is_array($this->_aEvent['reports']) || !isset($this->_aEvent['reports']['system'])) 
-        	return false;
+            return false;
 
-		$sReportsSystem = $this->_aEvent['reports']['system'];
-		$iReportsObject = $this->_aEvent['reports']['object_id'];
-		$aReportsParams = array('dynamic_mode' => $this->_bDynamicMode);
-		if($this->_bShowTitles)
-		    $aReportsParams['show_do_report_label'] = true;
+        $sReportsSystem = $this->_aEvent['reports']['system'];
+        $iReportsObject = $this->_aEvent['reports']['object_id'];
+        $aReportsParams = array('dynamic_mode' => $this->_bDynamicMode);
+        if($this->_bShowTitles)
+            $aReportsParams['show_do_report_label'] = true;
 
-    	return $this->_oModule->getReportObject($sReportsSystem, $iReportsObject)->getElementInline($aReportsParams);
+        return $this->_oModule->getReportObject($sReportsSystem, $iReportsObject)->getElementInline($aReportsParams);
     }
 
     protected function _getMenuItemDefault ($aItem)
@@ -197,6 +212,10 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 
             case 'item-vote':
                 $sCheckFuncName = 'isAllowedVote';
+                break;
+            
+            case 'item-reaction':
+                $sCheckFuncName = 'isAllowedReaction';
                 break;
 
             case 'item-score':

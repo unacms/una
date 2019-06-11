@@ -346,6 +346,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aEvent['allowed_view'] = isset($aResult['allowed_view']) ? $aResult['allowed_view'] : CHECK_ACTION_RESULT_ALLOWED;
         $aEvent['views'] = $aResult['views'];
         $aEvent['votes'] = $aResult['votes'];
+        $aEvent['reactions'] = $aResult['reactions'];
         $aEvent['scores'] = $aResult['scores'];
         $aEvent['reports'] = $aResult['reports'];
         $aEvent['comments'] = $aResult['comments'];
@@ -1263,6 +1264,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $bTmplVarsOwnerActions = !empty($aTmplVarsOwnerActions); 
 
         $aTmplVarsTimelineOwner = $this->_getTmplVarsTimelineOwner($aEvent);
+        
+        $aTmplVarsReactions = $this->_getTmplVarsReactions($aEvent, $aBrowseParams);
 
         $bPinned = (int)$aEvent['pinned'] > 0;
         $bSticked = (int)$aEvent['sticked'] > 0;
@@ -1359,6 +1362,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     'style_prefix' => $sStylePrefix,
                     'location' => $sLocation
             	)
+            ),
+            'bx_if:show_reactions' => array(
+                'condition' => !empty($aTmplVarsReactions),
+                'content' => $aTmplVarsReactions
             ),
             'bx_if:show_menu_item_actions' => array(
                 'condition' => !empty($aTmplVarsMenuItemActions),
@@ -1544,7 +1551,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     {
     	$aContent = &$aEvent['content'];
         $sStylePrefix = $this->_oConfig->getPrefix('style');
-        $sJsObject = $this->_oConfig->getJsObjectView($aBrowseParams);
 
         $bViewItem = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_ITEM;
 
@@ -1990,6 +1996,28 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         );
     }
 
+    protected function _getTmplVarsReactions(&$aEvent, $aBrowseParams = array())
+    {
+        if(!isset($aEvent['reactions']) || !is_array($aEvent['reactions']) || !isset($aEvent['reactions']['system']))
+            return array();
+
+        $sReactionsSystem = $aEvent['reactions']['system'];
+        $iReactionsObject = $aEvent['reactions']['object_id'];
+        $aReactionsParams = array(
+            'show_counter' => true, 
+            'dynamic_mode' => isset($aBrowseParams['dynamic_mode']) && $aBrowseParams['dynamic_mode'] === true
+        );
+
+        $oReactions = $this->getModule()->getReactionObject($sReactionsSystem, $iReactionsObject);
+        if(!$oReactions)
+            return array();
+
+        return array(
+            'style_prefix' => $this->_oConfig->getPrefix('style'),
+            'reactions' => $oReactions->getCounter($aReactionsParams)
+        );
+    }
+
     protected function _getSystemData(&$aEvent, $aBrowseParams = array())
     {
         $mixedResult = $this->_oConfig->getSystemData($aEvent, $aBrowseParams);
@@ -2033,6 +2061,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             ), //a string to display or array to parse default template before displaying.
             'views' => '',
             'votes' => '',
+            'reactions' => '',
             'scores' => '',
             'reports' => '',
             'comments' => '',
@@ -2167,6 +2196,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'system' => $sSystem,
                 'object_id' => $aEvent['id'],
                 'count' => $aEvent['votes']
+            );
+        
+        $sSystem = $this->_oConfig->getObject('reaction');
+        if(empty($aResult['reactions']) && $oModule->getReactionObject($sSystem, $aEvent['id']) !== false)
+            $aResult['reactions'] = array(
+                'system' => $sSystem,
+                'object_id' => $aEvent['id'],
+                'count' => $aEvent['rvotes']
             );
 
         $sSystem = $this->_oConfig->getObject('score');
