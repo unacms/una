@@ -59,6 +59,7 @@ class BxEventsConfig extends BxBaseModProfileConfig
             'FIELDS_QUICK_SEARCH' => array('event_name'),
             'FIELD_LOCATION_PREFIX' => 'location',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
+            'FIELD_LABELS' => 'labels',
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-event-profile',
