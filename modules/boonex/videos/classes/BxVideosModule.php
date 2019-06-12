@@ -125,7 +125,7 @@ class BxVideosModule extends BxBaseModTextModule
         $aVideoSize = $oTcvMp4Hd->getVideoSize($sVideoUrl);
 
         $sVideoUrlHd = '';
-        if(!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] > 720)
+        if(!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] >= 720)
             $sVideoUrlHd = $oTcvMp4Hd->getFileUrl($iFile);
 
         return array(

@@ -278,7 +278,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
             $aVideoSize = $aTranscodersVideo['mp4_hd']->getVideoSize($sVideoUrl);
 
             $sVideoUrlHd = '';
-            if(!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] > 720)
+            if(!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] >= 720)
                 $sVideoUrlHd = $aTranscodersVideo['mp4_hd']->getFileUrl($aMediaInfo['file_id']);
 
             $aTmplVarsVideo = array (

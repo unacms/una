@@ -765,7 +765,7 @@ class BxAlbumsModule extends BxBaseModTextModule
             $aVideoSize = $oTcMp4Hd->getVideoSize($sVideoUrl);
 
             $sVideoUrlHd = '';
-            if(!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] > 720)
+            if(!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] >= 720)
                 $sVideoUrlHd = $oTcMp4Hd->getFileUrl($aMedia['file_id']);
 
             $aOutput[$aMedia['id']] = array(

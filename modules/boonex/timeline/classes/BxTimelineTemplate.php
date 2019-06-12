@@ -2124,7 +2124,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                         $aVideoSize = $oTranscoderMp4Hd->getVideoSize($sVideoUrl);
 
                         $sVideoUrlHd = '';
-                        if(!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] > 720)
+                        if(!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] >= 720)
                             $sVideoUrlHd = $oTranscoderMp4Hd->getFileUrl($iVideoId);
 
                         $aResult['content']['videos_attach'][$iVideoId] = array(
