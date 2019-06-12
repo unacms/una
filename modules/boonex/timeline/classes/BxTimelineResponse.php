@@ -114,6 +114,9 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                     'action' => $aHandlers[BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT]['alert_action'], 
                     'object_id' => $oAlert->iObject
             	));
+                if(empty($aEvent) || !is_array($aEvent))
+                    break;
+
             	$this->_oModule->deleteEvent($aEvent);
 
                 $this->_oModule->_oDb->deleteCache(array('event_id' => $aEvent[$CNF['FIELD_ID']]));
