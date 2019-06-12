@@ -504,25 +504,22 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
      * Ouputs HTML5 video player.
      * @param $sUrlPoster video poster image
      * @param $sUrlMP4 .mp4 video
-     * @param $sUrlWebM .webm video
+     * @param $sUrlMP4Hd .mp4 video in better quality
      * @param $aAttrs custom attributes, defaults are: controls="" preload="none" autobuffer=""
      * @param $sStyles custom styles, defaults are: width:100%; height:auto;
      */
-    function videoPlayer ($sUrlPoster, $sUrlMP4, $sUrlWebM = '', $aAttrs = false, $sStyles = 'width:100%; height:auto;')
+    function videoPlayer ($sUrlPoster, $sUrlMP4, $sUrlMP4Hd = '', $aAttrs = false, $sStyles = 'width:100%; height:auto;')
     {
-        $aAttrsDefaults = array(
-            'controls' => '',
-            'controlsList' => 'nodownload',
-            'preload' => 'none',
-            'autobuffer' => '', 
-        );
-        $aAttrs = array_merge($aAttrsDefaults, is_array($aAttrs) ? $aAttrs : array());
-        $sAttrs = bx_convert_array2attrs($aAttrs, '', $sStyles);
-
-        return '<video ' . $sAttrs . ' poster="' . $sUrlPoster . '">
-                    ' . ($sUrlWebM ? '<source type="video/webm; codecs="vp8, vorbis" src="' . $sUrlWebM . '" />' : '') . '
-                    ' . ($sUrlMP4  ? '<source type="video/mp4" src="' . $sUrlMP4 . '" />' : '') . '
-                </video>';
+        $oPlayer = BxDolPlayer::getObjectInstance();
+        if (!$oPlayer)
+            return '';
+        return $oPlayer->getCodeVideo (BX_PLAYER_STANDARD, array(
+            'poster' => $sUrlPoster,
+            'mp4' => array('standard' => $sUrlMP4, 'hd' => $sUrlMP4Hd),
+            'webm' => '',
+            'attrs' => $aAttrs,
+            'styles' => $sStyles,
+        ));
     }
 
     protected function getInjection($sPrefix)

@@ -40,6 +40,24 @@ INSERT INTO `sys_objects_editor` (`object`, `title`, `skin`, `override_class_nam
 ('sys_tinymce', 'TinyMCE', 'lightgray', 'BxTemplEditorTinyMCE', '');
 
 
+-- --------------------------------------------------------
+
+
+CREATE TABLE `sys_objects_player` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object` varchar(64) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `skin` varchar(255) NOT NULL,
+  `override_class_name` varchar(255) NOT NULL,
+  `override_class_file` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `object` (`object`)
+);
+
+
+INSERT INTO `sys_objects_player` (`object`, `title`, `skin`, `override_class_name`, `override_class_file`) VALUES
+('sys_html5', 'HTML5', '', 'BxTemplPlayerHTML5', '');
+
 
 -- --------------------------------------------------------
 
@@ -292,6 +310,8 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 (@iCategoryId, 'sys_editor_default', '_adm_stg_cpt_option_sys_editor_default', 'sys_tinymce', 'digit', '', '', '', 50),
 (@iCategoryId, 'sys_captcha_default', '_adm_stg_cpt_option_sys_captcha_default', 'sys_recaptcha_new', 'digit', '', '', '', 51),
+(@iCategoryId, 'sys_player_default', '_adm_stg_cpt_option_sys_player_default', 'sys_html5', 'digit', '', '', '', 55),
+(@iCategoryId, 'sys_player_default_format', '_adm_stg_cpt_option_sys_player_default_format', 'standard', 'select', 'standard,hd', '', '', 56),
 
 (@iCategoryId, 'sys_live_updates_interval', '_adm_stg_cpt_option_sys_live_updates_interval', '10000', 'digit', '', '', '', 60),
 
