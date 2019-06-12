@@ -228,6 +228,8 @@
     <string name="_bx_polls_txt_sample_single_with_article"><![CDATA[голосование]]></string>
     <string name="_bx_polls_txt_sample_comment_single"><![CDATA[комментарий к голосованию]]></string>
     <string name="_bx_polls_txt_sample_vote_single"><![CDATA[голос за голосование]]></string>
+    <string name="_bx_polls_txt_sample_score_up_single"><![CDATA[голос за голосование]]></string>
+    <string name="_bx_polls_txt_sample_score_down_single"><![CDATA[голос против голосования]]></string>
     <string name="_bx_polls_txt_subentry_vote_do_by"><![CDATA[Проголосовали за]]></string>
     <string name="_bx_polls_txt_subentry_vote_counter"><![CDATA[{0} голосов]]></string>
     <string name="_bx_polls_txt_subentry_vote_percent"><![CDATA[({0}%)]]></string>

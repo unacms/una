@@ -383,6 +383,8 @@
     <string name="_bx_orgs_txt_sample_single"><![CDATA[Организация]]></string>
     <string name="_bx_orgs_txt_sample_comment_single"><![CDATA[комментарий к организации]]></string>
     <string name="_bx_orgs_txt_sample_vote_single"><![CDATA[голос за организацию]]></string>
+    <string name="_bx_orgs_txt_sample_score_up_single"><![CDATA[голос за организацию]]></string>
+    <string name="_bx_orgs_txt_sample_score_down_single"><![CDATA[голос против организации]]></string>
     <string name="_bx_orgs_txt_sample_pp_single"><![CDATA[изображение профиля]]></string>
     <string name="_bx_orgs_txt_sample_pp_single_with_article"><![CDATA[изображение профиля]]></string>
     <string name="_bx_orgs_txt_sample_pc_single"><![CDATA[обложка профиля]]></string>

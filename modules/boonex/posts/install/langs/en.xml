@@ -278,6 +278,8 @@
     <string name="_bx_posts_txt_sample_single_with_article"><![CDATA[a post]]></string>
     <string name="_bx_posts_txt_sample_comment_single"><![CDATA[comment to post]]></string>
     <string name="_bx_posts_txt_sample_vote_single"><![CDATA[vote to post]]></string>
+    <string name="_bx_posts_txt_sample_score_up_single"><![CDATA[score up vote to post]]></string>
+    <string name="_bx_posts_txt_sample_score_down_single"><![CDATA[score down vote to post]]></string>
     <string name="_bx_posts_txt_processing_awaiting"><![CDATA[Post will be published as soon as video is converted]]></string>
     <string name="_bx_posts_txt_processing_failed"><![CDATA[Post isn't published because video conversion failed, edit video to fix the issue.]]></string>
     <string name="_bx_posts_txt_scheduled_awaiting"><![CDATA[Post publishing date is {date_publish_uf}]]></string>

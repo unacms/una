@@ -106,7 +106,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
             'OBJECT_MENU_SNIPPET_META' => 'bx_photos_snippet_meta', // menu for snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_photos_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_GRID_ADMINISTRATION' => 'bx_photos_administration',
-        	'OBJECT_GRID_COMMON' => 'bx_photos_common',
+            'OBJECT_GRID_COMMON' => 'bx_photos_common',
             'OBJECT_UPLOADERS' => array('sys_simple', 'sys_html5'),
 
             // menu items which visibility depends on custom visibility checking
@@ -123,11 +123,13 @@ class BxPhotosConfig extends BxBaseModTextConfig
             	'txt_sample_single_with_article' => '_bx_photos_txt_sample_single_with_article',
             	'txt_sample_comment_single' => '_bx_photos_txt_sample_comment_single',
             	'txt_sample_vote_single' => '_bx_photos_txt_sample_vote_single',
+                'txt_sample_score_up_single' => '_bx_photos_txt_sample_score_up_single',
+                'txt_sample_score_down_single' => '_bx_photos_txt_sample_score_down_single',
                 'form_field_author' => '_bx_photos_form_entry_input_author',
-				'form_entry_upload_single_for_update' => '_bx_photos_form_entry_input_pictures_upload',
+                'form_entry_upload_single_for_update' => '_bx_photos_form_entry_input_pictures_upload',
             	'grid_action_err_delete' => '_bx_photos_grid_action_err_delete',
             	'grid_txt_account_manager' => '_bx_photos_grid_txt_account_manager',
-				'filter_item_active' => '_bx_photos_grid_filter_item_title_adm_active',
+                'filter_item_active' => '_bx_photos_grid_filter_item_title_adm_active',
             	'filter_item_hidden' => '_bx_photos_grid_filter_item_title_adm_hidden',
             	'filter_item_select_one_filter1' => '_bx_photos_grid_filter_item_title_adm_select_one_filter1',
             	'menu_item_manage_my' => '_bx_photos_menu_item_title_manage_my',
@@ -141,18 +143,18 @@ class BxPhotosConfig extends BxBaseModTextConfig
         );
 
         $this->_aJsClasses = array(
-        	'main' => 'BxPhotosMain',
-        	'manage_tools' => 'BxPhotosManageTools'
+            'main' => 'BxPhotosMain',
+            'manage_tools' => 'BxPhotosManageTools'
         );
 
         $this->_aJsObjects = array(
-        	'main' => 'oBxPhotosMain',
-        	'manage_tools' => 'oBxPhotosManageTools'
+            'main' => 'oBxPhotosMain',
+            'manage_tools' => 'oBxPhotosManageTools'
         );
 
         $this->_aGridObjects = array(
-        	'common' => $this->CNF['OBJECT_GRID_COMMON'],
-        	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION']
+            'common' => $this->CNF['OBJECT_GRID_COMMON'],
+            'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION']
         );
 
         $sHtmlPrefix = str_replace('_', '-', $this->_sName);

@@ -260,6 +260,8 @@
     <string name="_bx_spaces_txt_sample_single_with_article"><![CDATA[пространство]]></string>
     <string name="_bx_spaces_txt_sample_comment_single"><![CDATA[комментарий к пространству]]></string>
     <string name="_bx_spaces_txt_sample_vote_single"><![CDATA[голос за пространство]]></string>
+    <string name="_bx_spaces_txt_sample_score_up_single"><![CDATA[голос за пространство]]></string>
+    <string name="_bx_spaces_txt_sample_score_down_single"><![CDATA[голос против пространства]]></string>
     <string name="_bx_spaces_txt_to_admins"><![CDATA[В админы]]></string>
     <string name="_bx_spaces_txt_from_admins"><![CDATA[Из админов]]></string>
     <string name="_bx_spaces_txt_private_group"><![CDATA[Приватная пространство]]></string>

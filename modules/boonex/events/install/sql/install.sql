@@ -280,7 +280,8 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_event', 'bx_events', 'reoccurring', '', '', 0, 'custom', '_bx_events_form_profile_input_sys_reoccurring', '_bx_events_form_profile_input_reoccurring', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 1),
 ('bx_event', 'bx_events', 'time', '', '', 0, 'custom', '_bx_events_form_profile_input_sys_time', '_bx_events_form_profile_input_time', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_event', 'bx_events', 'timezone', 'UTC', '', 0, 'select', '_bx_events_form_profile_input_sys_timezone', '_bx_events_form_profile_input_timezone', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
-('bx_event', 'bx_events', 'location', '', '', 0, 'location', '_sys_form_input_sys_location', '_sys_form_input_location', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
+('bx_event', 'bx_events', 'location', '', '', 0, 'location', '_sys_form_input_sys_location', '_sys_form_input_location', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_event', 'bx_events', 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_event_add', 'time', 2147483647, 0, 1),

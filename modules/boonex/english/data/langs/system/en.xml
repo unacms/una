@@ -1313,12 +1313,14 @@
 	<string name="_adm_stg_cpt_option_sys_autoupdate"><![CDATA[Enable auto-update]]></string>
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_host"><![CDATA[Memcached server host]]></string>
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_port"><![CDATA[Memcached server port]]></string>
-	<string name="_adm_stg_cpt_option_sys_captcha_default"><![CDATA[Сaptcha object]]></string>
+	<string name="_adm_stg_cpt_option_sys_captcha_default"><![CDATA[Default Сaptcha]]></string>
 	<string name="_adm_stg_cpt_option_sys_email_attachable_email_templates"><![CDATA[Attachable email templates list]]></string>
 	<string name="_adm_stg_cpt_option_sys_db_cache_enable"><![CDATA[Enable DB cache]]></string>
 	<string name="_adm_stg_cpt_option_sys_db_cache_engine"><![CDATA[DB cache engine (other than File option may require custom server setup)]]></string>
 	<string name="_adm_stg_cpt_option_sys_default_payment"><![CDATA[Payment module]]></string>
-	<string name="_adm_stg_cpt_option_sys_editor_default"><![CDATA[HTML editor object]]></string>
+    <string name="_adm_stg_cpt_option_sys_editor_default"><![CDATA[Default HTML editor]]></string>
+	<string name="_adm_stg_cpt_option_sys_player_default"><![CDATA[Default Player]]></string>
+	<string name="_adm_stg_cpt_option_sys_player_default_format"><![CDATA[Default video format]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_date"><![CDATA[Date Format]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_datetime"><![CDATA[Datetime Format]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_time"><![CDATA[Time Format]]></string>

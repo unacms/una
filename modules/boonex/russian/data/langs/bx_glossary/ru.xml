@@ -223,5 +223,7 @@
     <string name="_bx_glossary_txt_sample_single_with_article"><![CDATA[термин]]></string>
     <string name="_bx_glossary_txt_sample_comment_single"><![CDATA[комментарий к Глоссарий]]></string>
     <string name="_bx_glossary_txt_sample_vote_single"><![CDATA[голос за термин]]></string>
+    <string name="_bx_glossary_txt_sample_score_up_single"><![CDATA[голос за термин]]></string>
+    <string name="_bx_glossary_txt_sample_score_down_single"><![CDATA[голос против термина]]></string>
 	<string name="_bx_glossary_txt_term_in_pending_status"><![CDATA[Этот термин ожидает одобрения.]]></string>
 </resources>

@@ -166,6 +166,8 @@ class BxPersonsConfig extends BxBaseModProfileConfig
                 'txt_sample_single' => '_bx_persons_txt_sample_single',
             	'txt_sample_comment_single' => '_bx_persons_txt_sample_comment_single',
                 'txt_sample_vote_single' => '_bx_persons_txt_sample_vote_single',
+                'txt_sample_score_up_single' => '_bx_persons_txt_sample_score_up_single',
+                'txt_sample_score_down_single' => '_bx_persons_txt_sample_score_down_single',
             	'txt_sample_pp_single' => '_bx_persons_txt_sample_pp_single',
             	'txt_sample_pp_single_with_article' => '_bx_persons_txt_sample_pp_single_with_article',
                 'txt_sample_pc_single' => '_bx_persons_txt_sample_pc_single',

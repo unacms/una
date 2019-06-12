@@ -420,7 +420,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     {
     	$sModule = $this->_aModule['name'];
 
-        $aSettingsTypes = array('follow_context');
+        $aSettingsTypes = array('follow_member', 'follow_context');
         if($this->serviceActAsProfile())
             $aSettingsTypes = array('personal', 'follow_member');
 
@@ -428,6 +428,10 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             'handlers' => array(
                 array('group' => $sModule . '_vote', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVote', 'module_name' => $sModule, 'module_method' => 'get_notifications_vote', 'module_class' => 'Module'),
                 array('group' => $sModule . '_vote', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVote'),
+                
+                array('group' => $sModule . '_score_up', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVoteUp', 'module_name' => $sModule, 'module_method' => 'get_notifications_score_up', 'module_class' => 'Module'),
+
+                array('group' => $sModule . '_score_down', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVoteDown', 'module_name' => $sModule, 'module_method' => 'get_notifications_score_down', 'module_class' => 'Module'),
 
                 array('group' => $sModule . '_fan_added', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'fan_added', 'module_name' => $sModule, 'module_method' => 'get_notifications_fan_added', 'module_class' => 'Module'),
 
@@ -437,6 +441,10 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             ),
             'settings' => array(
                 array('group' => 'vote', 'unit' => $sModule, 'action' => 'doVote', 'types' => $aSettingsTypes),
+
+                array('group' => 'score_up', 'unit' => $sModule, 'action' => 'doVoteUp', 'types' => $aSettingsTypes),
+
+                array('group' => 'score_down', 'unit' => $sModule, 'action' => 'doVoteDown', 'types' => $aSettingsTypes),
                 
                 array('group' => 'fan', 'unit' => $sModule, 'action' => 'fan_added', 'types' => $aSettingsTypes),
 
@@ -447,6 +455,9 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             'alerts' => array(
                 array('unit' => $sModule, 'action' => 'doVote'),
                 array('unit' => $sModule, 'action' => 'undoVote'),
+
+                array('unit' => $sModule, 'action' => 'doVoteUp'),
+                array('unit' => $sModule, 'action' => 'doVoteDown'),
 
                 array('unit' => $sModule, 'action' => 'fan_added'),
 

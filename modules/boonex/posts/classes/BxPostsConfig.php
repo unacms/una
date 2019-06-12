@@ -162,6 +162,8 @@ class BxPostsConfig extends BxBaseModTextConfig
             	'txt_sample_single_with_article' => '_bx_posts_txt_sample_single_with_article',
             	'txt_sample_comment_single' => '_bx_posts_txt_sample_comment_single',
             	'txt_sample_vote_single' => '_bx_posts_txt_sample_vote_single',
+                'txt_sample_score_up_single' => '_bx_posts_txt_sample_score_up_single',
+                'txt_sample_score_down_single' => '_bx_posts_txt_sample_score_down_single',
                 'form_field_author' => '_bx_posts_form_entry_input_author',
             	'grid_action_err_delete' => '_bx_posts_grid_action_err_delete',
             	'grid_txt_account_manager' => '_bx_posts_grid_txt_account_manager',

@@ -287,7 +287,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             if($isVideo) {
                 $sVideoUrl = $oStorage->getFileUrlById($a['id']);
                 $aVideoSize = $aTranscodersVideo['mp4_hd']->getVideoSize($sVideoUrl);
-                if(!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] > 720)
+                if(!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] >= 720)
                     $sVideoUrlHd = $aTranscodersVideo['mp4_hd']->getFileUrl($a['id']);
             }
 

@@ -401,7 +401,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
             $aVideoSize = $oTcMp4Hd->getVideoSize($sVideoUrl);
 
             $sVideoUrlHd = '';
-            if(!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] > 720)
+            if(!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] >= 720)
                 $sVideoUrlHd = $oTcMp4Hd->getFileUrl($a['id']);
 
             $aResults[$a['id']] = array(

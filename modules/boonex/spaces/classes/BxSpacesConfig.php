@@ -59,6 +59,7 @@ class BxSpacesConfig extends BxBaseModProfileConfig
             'FIELDS_QUICK_SEARCH' => array('space_name'),
             'FIELD_LOCATION_PREFIX' => 'location',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
+            'FIELD_LABELS' => 'labels',
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-space-profile',
@@ -165,6 +166,8 @@ class BxSpacesConfig extends BxBaseModProfileConfig
                 'txt_sample_single_with_article' => '_bx_spaces_txt_sample_single_with_article',
                 'txt_sample_comment_single' => '_bx_spaces_txt_sample_comment_single',
                 'txt_sample_vote_single' => '_bx_spaces_txt_sample_vote_single',
+                'txt_sample_score_up_single' => '_bx_spaces_txt_sample_score_up_single',
+                'txt_sample_score_down_single' => '_bx_spaces_txt_sample_score_down_single',
                 'txt_private_group' => '_bx_spaces_txt_private_space',
                 'txt_N_fans' => '_bx_spaces_txt_N_fans',
                 'txt_ntfs_join_request' => '_bx_spaces_txt_ntfs_join_request',

@@ -302,6 +302,8 @@
     <string name="_bx_persons_txt_sample_single"><![CDATA[Персона]]></string>
     <string name="_bx_persons_txt_sample_comment_single"><![CDATA[комментарий к персональному профилю]]></string>
     <string name="_bx_persons_txt_sample_vote_single"><![CDATA[голос за профиль]]></string>
+    <string name="_bx_persons_txt_sample_score_up_single"><![CDATA[голос за профиль]]></string>
+    <string name="_bx_persons_txt_sample_score_down_single"><![CDATA[голос против профиля]]></string>
     <string name="_bx_persons_txt_sample_pp_single"><![CDATA[изображение профиля]]></string>
     <string name="_bx_persons_txt_sample_pp_single_with_article"><![CDATA[изображение профиля]]></string>
     <string name="_bx_persons_txt_sample_pc_single"><![CDATA[обложка профиля]]></string>

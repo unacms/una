@@ -142,6 +142,8 @@ class BxCnlConfig extends BxBaseModProfileConfig
                 'txt_sample_single_with_article' => '_bx_channels_txt_sample_single_with_article',
                 'txt_sample_comment_single' => '_bx_channels_txt_sample_comment_single',
                 'txt_sample_vote_single' => '_bx_channels_txt_sample_vote_single',
+                'txt_sample_score_up_single' => '_bx_channels_txt_sample_score_up_single',
+                'txt_sample_score_down_single' => '_bx_channels_txt_sample_score_down_single',
                 'txt_private_group' => '_bx_channels_txt_private_channel',
                 'txt_ntfs_timeline_post_common' => '_bx_channels_txt_ntfs_timeline_post_common',
                 'form_field_author' => '_bx_channels_form_entry_input_author',

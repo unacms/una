@@ -53,10 +53,10 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
         if($oInformer && ($bLoggedOwner || $bLoggedModerator)) {
             $iNow = time();
             $bFieldPublished = isset($CNF['FIELD_PUBLISHED']);
-            $sStatus = isset($CNF['FIELD_STATUS']) ? $this->_aContentInfo[$CNF['FIELD_STATUS']] : '';
+            $sStatus = isset($CNF['FIELD_STATUS']) && isset($this->_aContentInfo[$CNF['FIELD_STATUS']]) ? $this->_aContentInfo[$CNF['FIELD_STATUS']] : '';
 
             //--- Display 'processing' informer if an item was already published but awaiting/failed to be processed.
-            if(!$bFieldPublished || $this->_aContentInfo[$CNF['FIELD_PUBLISHED']] <= $iNow) {
+            if(!$bFieldPublished || (isset($this->_aContentInfo[$CNF['FIELD_PUBLISHED']]) && $this->_aContentInfo[$CNF['FIELD_PUBLISHED']] <= $iNow)) {
                 if(!empty($CNF['INFORMERS']['processing']) && isset($CNF['INFORMERS']['processing']['map'][$sStatus])) {
                     $aInformer = $CNF['INFORMERS']['processing'];
                     $aInformers[] = array ('name' => $aInformer['name'], 'msg' => _t($aInformer['map'][$sStatus]['msg']), 'type' => $aInformer['map'][$sStatus]['type']);
