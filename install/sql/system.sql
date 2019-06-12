@@ -56,7 +56,7 @@ CREATE TABLE `sys_objects_player` (
 
 
 INSERT INTO `sys_objects_player` (`object`, `title`, `skin`, `override_class_name`, `override_class_file`) VALUES
-('sys_html5', 'HTML5', '', 'BxTemplPlayerHTML5', '');
+('sys_html5', 'HTML5', '', 'BxTemplPlayerHtml5', '');
 
 
 -- --------------------------------------------------------
