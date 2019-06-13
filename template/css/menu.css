@@ -666,6 +666,13 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
 
     padding: 8px;
     padding: 0.5rem;
+
+    text-align: left;
+}
+.bx-menu-main-submenu.bx-menu-more-auto .bx-menu-item .sys-icon,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item .sys-icon {
+    display: inline-block;
+    width: 1.5rem;
 }
 .bx-menu-main-submenu.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto > span,
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto > span {
@@ -689,6 +696,11 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
 .bx-menu-main-submenu.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto,
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto {
     display: none;
+}
+.bx-menu-main-submenu.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .sys-icon,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .sys-icon {
+    display: inline-block;
+    width: 2.0rem;
 }
 .bx-menu-main-submenu.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .bx-btn,
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .bx-btn {
