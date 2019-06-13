@@ -3498,6 +3498,137 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         return $aEvent[$CNF[$sField]];
     }
+
+    /**
+     * Returns records for React Jot using OAuth2
+     * @param int $iProfileId
+     * @param string $sPage
+     * @param string $sTab
+     * @param int $iStart
+     * @param int $iPerPage
+     * @return array
+     */
+    public function serviceGetUserPosts($iProfileId = 0, $sPage = 'home', $sTab = 'hot', $iStart = 0, $iPerPage = 0)
+    {
+        $iProfileId = (int)$iProfileId ? (int)$iProfileId : bx_get_logged_profile_id();
+        if(empty($iProfileId))
+            return array(
+                'code' => 1,
+                'result' => array(),
+                'message' => _t('_bx_timeline_txt_msg_no_profile_id'),
+                'page' => $sPage,
+                'tab' => $sTab
+            );
+
+        $sType = BX_TIMELINE_TYPE_DEFAULT;
+        $sView = BX_TIMELINE_VIEW_DEFAULT;
+        $sFilter = BX_TIMELINE_FILTER_ALL;
+
+        switch($sTab)
+        {
+            case 'feed':
+                $sType = BX_BASE_MOD_NTFS_TYPE_PUBLIC;
+                break;
+            case 'latest':
+                $sType = BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS;
+                $sFilter = BX_TIMELINE_FILTER_OWNER;
+                break;
+            case 'popular':
+                $sType = BX_TIMELINE_TYPE_HOT;
+                break;
+            case 'profile':
+                $sType = BX_BASE_MOD_NTFS_TYPE_OWNER;
+                $sFilter = BX_TIMELINE_FILTER_OWNER;
+                break;
+        }
+
+        $aModules = array();
+        if (!in_array($sPage, array('home', 'profile')))
+           $aModules = array($sPage);
+
+        $aParams = $this->getParams($sView, $sType, $iProfileId, $iStart, $iPerPage, $sFilter, $aModules);
+        $aData = $this->_oDb->getEvents($aParams, true);
+
+        list($aEvents, $iCount) = $aData;
+
+        if(empty($aEvents) || !is_array($aEvents))
+            return array(
+                'code' => 0,
+                'result' => array(),
+                'message' => _t('_bx_timeline_txt_msg_no_results'),
+                'page' => $sPage,
+                'tab' => $sTab
+            );
+
+        $aBrowseParams = array();
+        $aItems = array();
+
+        foreach($aEvents as $aEvent) {
+            $aResult = $this->_oTemplate->getData($aEvent, $aBrowseParams);
+
+            if($aResult === false)
+                continue;
+
+            $oOwnerProfile = BxDolProfile::getInstance($aResult['owner_id']);
+
+            $aFiles = array();
+            $aContent = &$aResult['content'];
+
+            if (!empty($aContent['image']))
+                $aFiles['images'] = $aContent['images'];
+            else
+            if (!empty($aContent['images_attach']))
+                $aFiles['images'] = $aContent['images_attach'];
+
+            if (!empty($aContent['videos']))
+                $aFiles['videos'] = $aContent['videos'];
+            else
+            if (!empty($aContent['videos_attach']))
+                $aFiles['videos'] = $aContent['videos_attach'];
+
+            if (!empty($aContent['files']))
+                $aFiles['files'] = $aContent['files'];
+            else
+                if (!empty($aContent['files_attach']))
+                    $aFiles['files'] = $aContent['files_attach'];
+
+
+            $aItems[$aEvent['id']] = array_merge(array(
+                'owner' => array(
+                    'icon' => $oOwnerProfile -> getThumb(),
+                    'name' => $oOwnerProfile -> getDisplayName(),
+                    'url' => $oOwnerProfile -> getUrl()
+                ),
+                'sample' => !empty($aResult['sample']) ? _t($aResult['sample']) : _t('_bx_timeline_txt_sample'),
+                'sample_action' => !empty($aResult['sample_action']) ? _t($aResult['sample_action']) : _t('_bx_timeline_txt_added_sample'),
+                'url' => isset($aResult['url']) ? $aResult['url'] : '',
+                'text' => isset($aContent['text']) ? strip_tags($aContent['text']) : '',
+                'views' => isset($aResult['views']['count']) ? (int)$aResult['views']['count'] : 0,
+                'votes' => isset($aResult['votes']['count']) ? (int)$aResult['votes']['count'] : 0,
+                'reactions' => isset($aResult['reactions']['count']) ? (int)$aResult['reactions']['count'] : 0,
+                'scores' => isset($aResult['scores']['count']) ? (int)$aResult['scores']['count'] : 0,
+                'reports' => isset($aResult['reports']['count']) ? (int)$aResult['reports']['count'] : 0,
+                'comments' => isset($aResult['comments']['count']) ? (int)$aResult['comments']['count'] : 0,
+                'date' => isset($aResult['date']) ? $aResult['date'] : $aEvent['date'],
+                'type' => stripos($aEvent['type'], 'timeline') !== FALSE ? 'bx_timeline' : $aEvent['type'],
+                'event_type' => $aEvent['type'],
+                'id' => $aEvent['id'],
+                'content' => $aResult['content'],
+                'title' => isset($aResult['title']) ? _t($aResult['title']) : '',
+                'description' => isset($aResult['description']) ? $aResult['description'] : ''
+            ), $aFiles);
+        }
+
+        return array(
+            'result' => $aItems,
+            'code' => 0,
+            'message' => '',
+            'page' => $sPage,
+            'tab' => $sTab,
+            'total' => $iCount,
+            'start' => (int)$iStart
+        );
+    }
 }
 
 /** @} */
