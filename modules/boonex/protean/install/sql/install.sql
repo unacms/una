@@ -406,8 +406,8 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 -- MIXES
 -- Neat Mix
-INSERT INTO `sys_options_mixes` (`type`, `category`, `name`, `title`, `active`, `editable`) VALUES
-(@sName, '', 'Neat-Mix', 'Neat Mix', 1, 0);
+INSERT INTO `sys_options_mixes` (`type`, `category`, `name`, `title`, `active`, `published`, `editable`) VALUES
+(@sName, '', 'Neat-Mix', 'Neat Mix', 0, 0, 0);
 SET @iMixId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
@@ -626,7 +626,7 @@ INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 
 -- Light Mix
 INSERT INTO `sys_options_mixes` (`type`, `category`, `name`, `title`, `active`, `published`, `editable`) VALUES
-(@sName, '', 'Protean-Light-Mix', 'Light Mix', 1, 1, 1);
+(@sName, '', 'Protean-Light-Mix', 'Light Mix', 1, 1, 0);
 SET @iMixId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
@@ -765,12 +765,12 @@ INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 ('bx_protean_form_input_bg_color_active', @iMixId, 'rgba(255, 255, 255, 1)'),
 ('bx_protean_form_input_border_color', @iMixId, 'rgba(136, 153, 170, 0.3)'),
 ('bx_protean_form_input_border_color_active', @iMixId, 'rgba(68, 136, 255, 1)'),
-('bx_protean_form_input_border_size', @iMixId, '2px'),
+('bx_protean_form_input_border_size', @iMixId, '1px'),
 ('bx_protean_form_input_font_color', @iMixId, 'rgba(51, 68, 85, 1)'),
 ('bx_protean_form_input_font_family', @iMixId, '\"Helvetica Neue\", sans-serif'),
 ('bx_protean_form_input_font_size', @iMixId, '1rem'),
 ('bx_protean_form_input_height', @iMixId, '2.5rem'),
-('bx_protean_form_input_shadow', @iMixId, 'inset 0px 0px 2px 1px rgba(0,0,0,0.15);'),
+('bx_protean_form_input_shadow', @iMixId, 'inset 0px 0px 2px 1px rgba(0, 0, 0, 0.01)'),
 ('bx_protean_form_input_editor_skin', @iMixId, 'gray'),
 ('bx_protean_general_item_bg_color_active', @iMixId, 'rgba(243, 244, 245, 1)'),
 ('bx_protean_general_item_bg_color_disabled', @iMixId, 'rgba(233, 234, 235, 1)'),
@@ -881,7 +881,7 @@ INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 
 -- Dark Mix
 INSERT INTO `sys_options_mixes` (`type`, `category`, `name`, `title`, `active`, `published`, `editable`) VALUES
-(@sName, '', 'Protean-Dark-Mix', 'Dark Mix', 1, 1, 1);
+(@sName, '', 'Protean-Dark-Mix', 'Dark Mix', 0, 1, 0);
 SET @iMixId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
