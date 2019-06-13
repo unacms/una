@@ -1794,8 +1794,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $sConnection = $this->_oConfig->getObject('conn_subscriptions');
             $oConnection = BxDolConnection::getObjectInstance($sConnection);
             if(!$oConnection->isConnected($iUser, $iOwner))
-                $aTmplVars = array(
+                $aTmplVars[] = array(
                     'style_prefix' => $sStylePrefix,
+                    'class' => '',
                     'bx_if:show_note_color' => array(
                         'condition' => false,
                         'content' => array(
@@ -1806,7 +1807,43 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 );
         }
 
-        return $aTmplVars;
+        //--- Awaiting status related notes.
+        if($aEvent['status'] == BX_TIMELINE_STATUS_AWAITING) {
+            $sNote = '';
+            if((int)$aEvent['published'] > (int)$aEvent['date'])
+                $sNote = _t('_bx_timeline_txt_note_scheduled_awaiting', bx_time_js($aEvent['published'], BX_FORMAT_DATE, true));
+            else
+                $sNote = _t('_bx_timeline_txt_note_processing_awaiting');
+
+            $aTmplVars[] = array(
+                'style_prefix' => $sStylePrefix,
+                'bx_if:show_note_color' => array(
+                    'condition' => true,
+                    'content' => array(
+                        'item_note_color' => 'red3'
+                    )
+                ),
+                'item_note' => $sNote
+            );
+        }
+
+        //--- Failed status related notes.
+        if($aEvent['status'] == BX_TIMELINE_STATUS_FAILED)
+            $aTmplVars[] = array(
+                'style_prefix' => $sStylePrefix,
+                'bx_if:show_note_color' => array(
+                    'condition' => true,
+                    'content' => array(
+                        'item_note_color' => 'red2'
+                    )
+                ),
+                'item_note' => _t('_bx_timeline_txt_note_processing_failed')
+            );
+
+        return empty($aTmplVars) ? array() : array(
+            'style_prefix' => $sStylePrefix,
+            'bx_repeat:notes' => $aTmplVars
+        );
     }
 
     protected function _getTmplVarsOwnerActions(&$aEvent, $aBrowseParams = array())

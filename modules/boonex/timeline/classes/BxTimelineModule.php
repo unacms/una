@@ -34,6 +34,7 @@ define('BX_TIMELINE_PARSE_TYPE_DEFAULT', BX_TIMELINE_PARSE_TYPE_POST);
 
 define('BX_TIMELINE_STATUS_ACTIVE', 'active');
 define('BX_TIMELINE_STATUS_AWAITING', 'awaiting');
+define('BX_TIMELINE_STATUS_FAILED', 'failed');
 define('BX_TIMELINE_STATUS_HIDDEN', 'hidden');
 define('BX_TIMELINE_STATUS_DELETED', 'deleted');
 

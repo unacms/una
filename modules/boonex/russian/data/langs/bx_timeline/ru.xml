@@ -226,7 +226,10 @@
 	<string name="_bx_timeline_txt_hot"><![CDATA['Горячее' событие]]></string>
 	<string name="_bx_timeline_txt_pinned"><![CDATA[Приколотое событие]]></string>
         <string name="_bx_timeline_txt_sticked"><![CDATA[Событие приколотое для всех]]></string>
-    <string name="_bx_timeline_txt_promoted"><![CDATA[Рекламируемое]]></string>
+        <string name="_bx_timeline_txt_promoted"><![CDATA[Рекламируемое]]></string>
+        <string name="_bx_timeline_txt_note_scheduled_awaiting"><![CDATA[Дата публикации: {0}]]></string>
+        <string name="_bx_timeline_txt_note_processing_awaiting"><![CDATA[Обновление будет опубликована как только сконвертируется видео.]]></string>
+        <string name="_bx_timeline_txt_note_processing_failed"><![CDATA[Обновление не было опубликовано, тк произошла ошибка при конвертации видео. Обновите видео, чтобы решить проблему.]]></string>
 	<string name="_bx_timeline_txt_rss_caption"><![CDATA[Лента {0}]]></string>
 	<string name="_bx_timeline_txt_added_sample"><![CDATA[добавил {0}]]></string>
 	<string name="_bx_timeline_txt_user_added_sample"><![CDATA[{0} добавил {1}]]></string>

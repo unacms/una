@@ -227,6 +227,9 @@
 	<string name="_bx_timeline_txt_pinned"><![CDATA[Pinned post]]></string>
         <string name="_bx_timeline_txt_sticked"><![CDATA[Pinned for all post]]></string>
 	<string name="_bx_timeline_txt_promoted"><![CDATA[Promoted]]></string>
+        <string name="_bx_timeline_txt_note_scheduled_awaiting"><![CDATA[Update publishing date is {0}]]></string>
+        <string name="_bx_timeline_txt_note_processing_awaiting"><![CDATA[Update will be published as soon as video is converted]]></string>
+        <string name="_bx_timeline_txt_note_processing_failed"><![CDATA[Update isn't published because video conversion failed, edit video to fix the issue.]]></string>
 	<string name="_bx_timeline_txt_rss_caption"><![CDATA[{0}'s timeline]]></string>
 	<string name="_bx_timeline_txt_added_sample"><![CDATA[added {0}]]></string>
 	<string name="_bx_timeline_txt_user_added_sample"><![CDATA[{0} added {1}]]></string>
