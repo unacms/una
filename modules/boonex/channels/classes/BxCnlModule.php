@@ -331,6 +331,44 @@ class BxCnlModule extends BxBaseModGroupsModule
             $oConn->addConnection($oProfile->id(), $oProfileChannel->id());
         }
     }
+
+    /** Returns profile's subscribed channels  React Jot
+     *
+     * @param int $iProfileId
+     * @param array $aParams
+     * @return array
+     */
+
+    public function serviceBrowseAuthorChannels($iProfileId = 0, $aParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($iProfileId))
+            $iProfileId = bx_get_logged_profile_id();
+
+        $oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
+        $aProfile = $oConnection->getConnectedContent($iProfileId);
+        $aVars = array();
+        foreach ($aProfile as $iProfileId) {
+            $oProfile = BxDolProfile::getInstance($iProfileId);
+            if (!$oProfile || $oProfile->getModule() != $this->getName())
+                continue;
+
+            $iContentId = $oProfile->getContentId();
+            $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+
+            if (isset($aContentInfo[$CNF['FIELD_NAME']]))
+                array_push($aVars, array(
+                    'title' => $aContentInfo[$CNF['FIELD_NAME']],
+                    'link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId),
+                    'followers' => $oConnection -> getConnectedInitiatorsCount($iProfileId),
+                    'id' => $iProfileId,
+                    'icon' => $oProfile -> getThumb()
+                ));
+        }
+
+        return $aVars;
+    }
 }
 
 /** @} */

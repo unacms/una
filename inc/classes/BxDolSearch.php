@@ -444,8 +444,10 @@ class BxDolSearchResult implements iBxDolReplaceable
     function displayResultBlock ()
     {
         $aData = $this->getSearchData();
+
+        $sCode = '';
         if (count($aData) > 0) {
-            $sCode .= $this->addCustomParts();
+            $sCode = $this->addCustomParts();
             foreach ($aData as $iKey => $aValue) {
                 $sCode .= $this->displaySearchUnit($aValue);
             }

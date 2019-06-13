@@ -1482,6 +1482,22 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
         return parent::_getContent($iContentId, $sFuncGetContent);
     }
+
+    /** Returns list of members by mode with limited number of records for React Jot
+     * @param string $sMode
+     * @param int $iStart
+     * @param int $iPerPage
+     * @return mixed
+     */
+
+    public function serviceGetMembers($sMode = 'active', $iStart = 0, $iPerPage = 10){
+        bx_import('SearchResult', $this->_aModule);
+        $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
+        $o = new $sClass($sMode);
+
+        $o -> aCurrent['paginate'] = array('perPage' => $iPerPage, 'forceStart' => $iStart);
+        return $o -> getSearchData();
+    }
 }
 
 /** @} */

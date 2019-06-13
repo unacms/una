@@ -239,7 +239,14 @@ class BxNtfsModule extends BxBaseModNotificationsModule
 		    $aParams = array_merge($aParams, $aBrowseParams);
 
 		list($aEvent) = $this->_oDb->getEvents($aParams, true);
-		return $aEvent;
+
+        // returns parsed content for React Jot
+		if (!is_array($aBrowseParams) && $aBrowseParams === 'return_parsed_content')
+		    foreach ($aEvent as &$aContent)
+                $this->_oTemplate->getPost($aContent, array('return_parsed_content'));
+
+
+        return $aEvent;
     }
 
     /**

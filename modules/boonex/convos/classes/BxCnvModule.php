@@ -228,6 +228,22 @@ class BxCnvModule extends BxBaseModTextModule
     }
 
     /**
+     * Returns preview of profile's conversations with statistic for React Jot
+     * @param int $iProfileId
+     * @param int $iStart
+     * @param int $iPerPage
+     * @param int $iFolderId
+     * @return mixed
+     */
+    public function serviceGetMessagesPreviews ($iProfileId = 0, $iStart = 0, $iPerPage = 10, $iFolderId = BX_CNV_FOLDER_INBOX)
+    {
+        if (!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+
+        return $this->_oDb->getMessagesPreviews($iProfileId, (int)$iStart, (int)$iPerPage, $iFolderId);
+    }
+
+    /**
      * Get number of unread messages for spme profile
      * @param $iProfileId - profile to get unread messages for, if omitted then currently logged is profile is used
      * @return integer
