@@ -48,47 +48,44 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
         $aValsToAdd['last_reply_profile_id'] = bx_get_logged_profile_id();
 
         $bSaveToDrafts = bx_get('draft_save');
-        $iContentId = bx_get('draft_id');
+        $iContentId = (int)bx_get('draft_id');
         $bDraft = $iContentId ? BX_CNV_FOLDER_DRAFTS == $this->_oModule->_oDb->getConversationFolder($iContentId, bx_get_logged_profile_id()) : false;
 
-        if ($iContentId) {
+        // check for spam
+        $bSpam = false;
+        $sValue = $this->getCleanValue($CNF['FIELD_TEXT']);
+        bx_alert('system', 'check_spam', 0, getLoggedId(), array('is_spam' => &$bSpam, 'content' => &$sValue, 'where' => $this->MODULE));
+        self::setSubmittedValue($CNF['FIELD_TEXT'], $sValue, $this->aFormAttrs['method']);
 
-            if (!$bDraft)
+        if($iContentId) {
+            if(!$bDraft)
                 return 0;
 
-            if (!parent::update ($iContentId, $aValsToAdd, $isIgnore))
+            if(!parent::update($iContentId, $aValsToAdd, $isIgnore))
                 return 0;
 
-        } else {
-            $iContentId = parent::insert ($aValsToAdd, $isIgnore);
-            if (!$iContentId)
+        } 
+        else {
+            
+            $iContentId = parent::insert($aValsToAdd, $isIgnore);
+            if(!$iContentId)
                 return 0;
         }
 
-        if ($bSaveToDrafts) {
-
-            if (!$bDraft)
+        if($bSaveToDrafts) {
+            if(!$bDraft)
                 $this->_oModule->_oDb->conversationToFolder($iContentId, BX_CNV_FOLDER_DRAFTS, bx_get_logged_profile_id(), 0);
 
             // process uploaded files
-            if (isset($CNF['FIELD_PHOTO']))
+            if(isset($CNF['FIELD_PHOTO']))
                 $this->processFiles ($CNF['FIELD_PHOTO'], $iContentId, true);
 
             // draft is saved via ajax call only, upon successfull draft saving content id is returned
             echo $iContentId . ',' . $this->getCsrfToken();
             exit;
-
-        } else {
-
-            // check for spam
-            $bSpam = false;
-			$sVal = $this->getCleanValue('text');
-            bx_alert('system', 'check_spam', 0, getLoggedId(), array('is_spam' => &$bSpam, 'content' => &$sVal, 'where' => $this->MODULE));
-			if (isset($this->aInputs[$sName]))
-				$this->aInputs[$sName] = $sVal;
-				
+        } 
+        else {
             $iFolder = $bSpam ? BX_CNV_FOLDER_SPAM : BX_CNV_FOLDER_INBOX;
-
             $this->_updateParticipants ($iContentId, $iFolder, $bDraft);
         }
 
