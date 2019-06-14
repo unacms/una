@@ -3521,9 +3521,21 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 'tab' => $sTab
             );
 
-        $sType = BX_TIMELINE_TYPE_DEFAULT;
+        $sType = BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS;
         $sView = BX_TIMELINE_VIEW_DEFAULT;
         $sFilter = BX_TIMELINE_FILTER_ALL;
+
+        $aModules = array();
+
+        switch($sPage){
+            case 'profile':
+                $sType = BX_BASE_MOD_NTFS_TYPE_OWNER;
+                $sFilter = BX_TIMELINE_FILTER_OWNER;
+                break;
+            default:
+                if ($this -> _oDb -> isModuleByName($sPage))
+                   $aModules = array($sPage);
+        }
 
         switch($sTab)
         {
@@ -3533,16 +3545,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             case 'popular':
                 $sType = BX_TIMELINE_TYPE_HOT;
                 break;
-            case 'profile':
-                $sType = BX_BASE_MOD_NTFS_TYPE_OWNER;
+            case 'feed':
+                $sType = BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS;
                 break;
             default:
-                $sType = BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS;
+                if ($this -> _oDb -> isModuleByName($sTab))
+                    $aModules = array($sTab);
         }
-
-        $aModules = array();
-        if (!in_array($sPage, array('home', 'profile')))
-           $aModules = array($sPage);
 
         $aParams = $this->getParams($sView, $sType, $iProfileId, $iStart, $iPerPage, $sFilter, $aModules);
         $aData = $this->_oDb->getEvents($aParams, true);
