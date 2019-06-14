@@ -207,18 +207,17 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
     function setCover ($oPage, $aData, $sTemplateName = 'cover.html')
     {
         $CNF = &$this->_oConfig->CNF;
-        
-        $bProfileViewAllowed = CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedView($aData);
+        $oModule = $this->getModule();
 
-        if (CHECK_ACTION_RESULT_ALLOWED !== $this->getModule()->checkAllowedViewProfileImage($aData)) {
-            $CNF = &$this->_oConfig->CNF;
+        BxDolTemplate::getInstance()->addInjection('injection_main_class', 'text', 'bx-base-profile-view');
+
+        $bProfileViewAllowed = CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedView($aData);
+
+        if (CHECK_ACTION_RESULT_ALLOWED !== $oModule->checkAllowedViewProfileImage($aData))
             $aData[$CNF['FIELD_PICTURE']] = 0;
-        }
 
-        if (CHECK_ACTION_RESULT_ALLOWED !== $this->getModule()->checkAllowedViewCoverImage($aData)) {
-            $CNF = &$this->_oConfig->CNF;
+        if (CHECK_ACTION_RESULT_ALLOWED !== $oModule->checkAllowedViewCoverImage($aData))
             $aData[$CNF['FIELD_COVER']] = 0;
-        }
 
         $oProfile = BxDolProfile::getInstanceByContentAndType($aData[$CNF['FIELD_ID']], $this->MODULE);
         $iProfile = $oProfile->id();
@@ -250,7 +249,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             $sCoverPopup = BxTemplFunctions::getInstance()->transBox($sCoverPopupId, $this->parseHtmlByName('image_popup.html', array (
                 'image_url' => $sUrlCover,
                 'bx_if:owner' => array (
-                    'condition' => CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedChangeCover($aData),
+                    'condition' => CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedChangeCover($aData),
                     'content' => array (
                         'change_image_url' => $sUrlCoverChange,
                     ),
@@ -285,14 +284,14 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                 'picture_avatar_url' => $bUrlAvatar ? $sUrlAvatar : $this->getImageUrl('no-picture-preview.png'),
                 'picture_popup_id' => $sPicturePopupId,
                 'picture_url' => $sUrlPicture,
-                'picture_href' => !$aData[$CNF['FIELD_PICTURE']] && CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedEdit($aData) ? $sUrlPictureChange : 'javascript:void(0);',
+                'picture_href' => !$aData[$CNF['FIELD_PICTURE']] && CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedEdit($aData) ? $sUrlPictureChange : 'javascript:void(0);',
             );
 
             if($bProfileViewAllowed && $aData[$CNF['FIELD_PICTURE']]) {
                 $sPicturePopup = BxTemplFunctions::getInstance()->transBox($sPicturePopupId, $this->parseHtmlByName('image_popup.html', array (
                     'image_url' => $sUrlPicture,
                     'bx_if:owner' => array (
-                        'condition' => CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedEdit($aData),
+                        'condition' => CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedEdit($aData),
                         'content' => array (
                             'change_image_url' => $sUrlPictureChange,
                         ),
@@ -308,7 +307,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                 $sActionsMenu = $oMenu->getCode();
         }
         else 
-            $sActionsMenu = $this->getModule()->serviceEntityAllActions();
+            $sActionsMenu = $oModule->serviceEntityAllActions();
         
         // generate html
         $aVars = array (
@@ -328,7 +327,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'cover_popup' => $sCoverPopup,
             'cover_popup_id' => $sCoverPopupId,
             'cover_url' => $sUrlCover,
-            'cover_href' => !$aData[$CNF['FIELD_COVER']] && CHECK_ACTION_RESULT_ALLOWED === $this->getModule()->checkAllowedChangeCover($aData) ? $sUrlCoverChange : 'javascript:void(0);',
+            'cover_href' => !$aData[$CNF['FIELD_COVER']] && CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedChangeCover($aData) ? $sUrlCoverChange : 'javascript:void(0);',
         );
 
         BxDolCover::getInstance($this)->set($aVars, $sTemplateName);
