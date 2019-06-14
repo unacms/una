@@ -317,7 +317,20 @@ class BxOAuthAPI extends BxDol
             unset($aProfileInfo['content_id']);
             unset($aProfileInfo['status']);
 
+            // --- account's profiles info
             $aProfileInfo['email'] = $oAccount->getEmail();
+
+            // ---- returns all accounts profiles React Jot
+            $aProfiles = $oAccount->getProfiles();
+            foreach($aProfiles as &$aProfile) {
+               $oSubProfile = BxDolProfile::getInstance($aProfile['id']);
+               $aProfileInfo['profiles'][$aProfile['id']] = array(
+                    'name' => $oSubProfile->getDisplayName(),
+                    'profile_link' => $oSubProfile->getUrl(),
+                    'picture' => $oSubProfile->getThumb(),
+                    'id' => $aProfile['id']
+               );
+            }
 
             // TODO: fetch extended info from profile module
         }
@@ -328,6 +341,12 @@ class BxOAuthAPI extends BxDol
         $aProfileInfo['profile_display_name'] = $oProfile->getDisplayName();
         $aProfileInfo['profile_link'] = $oProfile->getUrl();
         $aProfileInfo['picture'] = $oProfile->getPicture();
+		
+		// ---- additional profile's fields for React Jot
+        $aProfileInfo['cover'] = $oProfile->getCover();
+        $aProfileInfo['followers'] = (int)BxDolConnection::getObjectInstance('sys_profiles_subscriptions')->getConnectedInitiatorsCount($aProfileInfo['id']);
+        $aProfileInfo['following'] = (int)BxDolConnection::getObjectInstance('sys_profiles_subscriptions')->getConnectedContentCount($aProfileInfo['id']);
+        $aProfileInfo['friends'] = (int)BxDolConnection::getObjectInstance('sys_profiles_friends')->getConnectedContentCount($aProfileInfo['id'], true);
 
         return $aProfileInfo;
     }

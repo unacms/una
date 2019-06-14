@@ -180,6 +180,10 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
     	    $aEvent['content_parsed'] = $this->parseHtmlByContent($aEvent['content_parsed'], $aEvent['content'], array('{', '}'));
         }
 
+        // returns parsed content for React Jot
+        if(isset($aBrowseParams['return_parsed_content']))
+            return $aEvent;
+
         return $this->parseHtmlByName('event.html', array (
             'html_id' => $this->_oConfig->getHtmlIds('view', 'event') . $aEvent['id'],
             'style_prefix' => $this->_oConfig->getPrefix('style'),

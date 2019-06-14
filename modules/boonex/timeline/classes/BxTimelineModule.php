@@ -3527,20 +3527,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         switch($sTab)
         {
-            case 'feed':
-                $sType = BX_BASE_MOD_NTFS_TYPE_PUBLIC;
-                break;
             case 'latest':
-                $sType = BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS;
-                $sFilter = BX_TIMELINE_FILTER_OWNER;
+                $sType = BX_BASE_MOD_NTFS_TYPE_PUBLIC;
                 break;
             case 'popular':
                 $sType = BX_TIMELINE_TYPE_HOT;
                 break;
             case 'profile':
                 $sType = BX_BASE_MOD_NTFS_TYPE_OWNER;
-                $sFilter = BX_TIMELINE_FILTER_OWNER;
                 break;
+            default:
+                $sType = BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS;
         }
 
         $aModules = array();
