@@ -515,8 +515,7 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
             return '';
         return $oPlayer->getCodeVideo (BX_PLAYER_STANDARD, array(
             'poster' => $sUrlPoster,
-            'mp4' => array('standard' => $sUrlMP4, 'hd' => $sUrlMP4Hd),
-            'webm' => '',
+            'mp4' => array('sd' => $sUrlMP4, 'hd' => $sUrlMP4Hd),
             'attrs' => $aAttrs,
             'styles' => $sStyles,
         ));

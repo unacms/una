@@ -372,7 +372,6 @@ div.bx-tl-view-item div.bx-tl-item-video {
 }
 div.bx-tl-view div.bx-tl-item-videos.bx-tl-iv-gallery div.bx-tl-item-video video,
 div.bx-tl-view div.bx-tl-item-videos.bx-tl-iv-single div.bx-tl-item-video video {
-    position: relative;
     display: block;
     max-width: 100%;
     margin-left: auto;

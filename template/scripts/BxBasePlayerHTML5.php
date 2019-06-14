@@ -87,10 +87,12 @@ class BxBasePlayerHTML5 extends BxDolPlayer
             'mp4' => '<source type="video/mp4" src="{url}" />',
         );
         foreach ($aTypes as $s => $ss) {
+            if (!isset($aParams[$s]))
+                continue;
             if (is_array($aParams[$s]) && !empty($aParams[$s][$sFormat]))
                 $aParams[$s] = str_replace('{url}', $aParams[$s][$sFormat], $ss);
-            elseif (is_array($aParams[$s]) && !empty($aParams[$s]['standard']))
-                $aParams[$s] = str_replace('{url}', $aParams[$s]['standard'], $ss);
+            elseif (is_array($aParams[$s]) && !empty($aParams[$s]['sd']))
+                $aParams[$s] = str_replace('{url}', $aParams[$s]['sd'], $ss);
             elseif (is_string($aParams[$s]) && !empty($aParams[$s]))
                 $aParams[$s] = str_replace('{url}', $aParams[$s], $ss);
             else
@@ -100,8 +102,8 @@ class BxBasePlayerHTML5 extends BxDolPlayer
         // player code
         $sCode = $this->_replaceMarkers($sInit, array(
             'attrs' => $sAttrs,
-            'webm' => $aParams['webm'],
-            'mp4' => $aParams['mp4'],
+            'webm' => isset($aParams['webm']) ? $aParams['webm'] : '',
+            'mp4' => isset($aParams['mp4']) ? $aParams['mp4'] : '',
         ));
 
         return $sCode;

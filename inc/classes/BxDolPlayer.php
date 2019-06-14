@@ -55,7 +55,7 @@ define('BX_PLAYER_EMBED', 2);
  *      echo $oPlayer->getCodeVideo (BX_PLAYER_STANDARD, array(
  *          'poster' => $sUrlPoster, // optional, but very 
  *          'mp4' => $sUrlMP4, // or array of files, 
- *                   for example: array('standard' => $sUrl480, 'hd' => $sUrl720)
+ *                   for example: array('sd' => $sUrl480, 'hd' => $sUrl720)
  *          'webm' => $sUrlWebM, // optional, mp4 format is enough for all moders browsers
  *          'attrs' => $aAttrs,  // optional, not supported by all player implementations
  *          'styles' => 'width:100%; height:auto;', // optional, not supported by all 
@@ -68,11 +68,15 @@ class BxDolPlayer extends BxDolFactory implements iBxDolFactoryObject
 {
     protected $_sObject;
     protected $_aObject;
-    protected $_sConfCustom = '';
-    protected $_sPluginsCustom = false;
+    protected $_aConfCustom = array();
 
     protected $_sSkin;
     protected $_aSkins;
+
+    protected $_aSizes = array(
+        'sd' => 480,
+        'hd' => 720,
+    );    
 
     protected function __construct($aObject)
     {
@@ -125,19 +129,20 @@ class BxDolPlayer extends BxDolFactory implements iBxDolFactoryObject
     /**
      * Set custom player configuration options
      */
-    public function setCustomConf ($s)
+    public function setCustomConf ($a)
     {
-        $this->_sConfCustom = $s;
+        $this->_aConfCustom = $a;
     }
 
     /**
-     * Set custom plugins
+     * Set size for default resolutions: 'sd' and 'hd'
      */
-    public function setCustomPlugins ($sPlugins)
+    public function setVideoSize ($sName, $iSize)
     {
-        $this->_sPluginsCustom = $sPlugins;
+        if (isset($this->_aSizes[$sName]))
+            $this->_aSizes[$sName] = $iSize;
     }
-
+    
     /**
      * Get a list of available skins.
      */
