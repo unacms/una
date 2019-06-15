@@ -48,15 +48,20 @@ class BxDolMenuQuery extends BxDolDb
         if (empty($aMenuItem['set_name']))
             return false;
 
+        // check if menu item already exists, 
+        // so the menu item position will not reset when it's unnecessary
+        $sQuery = $oDb->prepare("SELECT `id` FROM `sys_menu_items` WHERE `set_name` = ? AND `name` = ?", $aMenuItem['set_name'], $aMenuItem['name']);
+        if ($oDb->getOne($sQuery))
+            return true;
+      
+        // get order
         if (empty($aMenuItem['order'])) {
             $sQuery = $oDb->prepare("SELECT `order` FROM `sys_menu_items` WHERE `set_name` = ? AND `active` = 1 AND `order` != ? ORDER BY `order` DESC LIMIT 1", $aMenuItem['set_name'], BX_MENU_LAST_ITEM_ORDER);
             $iProfileMenuOrder = (int)$oDb->getOne($sQuery);
             $aMenuItem['order'] = $iProfileMenuOrder + 1;
         }
 
-        $sQuery = $oDb->prepare("DELETE FROM `sys_menu_items` WHERE `set_name` = ? AND `name` = ?", $aMenuItem['set_name'], $aMenuItem['name']);
-        $oDb->query($sQuery);
-
+        // add new item
         unset($aMenuItem['id']);
         return $oDb->query("INSERT INTO `sys_menu_items` SET " . $oDb->arrayToSQL($aMenuItem));
     }

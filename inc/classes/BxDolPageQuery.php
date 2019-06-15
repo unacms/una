@@ -53,15 +53,20 @@ class BxDolPageQuery extends BxDolDb
         if (empty($aPageBlock['object']))
             return false;
 
+        // check if block already exists, 
+        // so the block position will not reset when it's unnecessary
+        $sQuery = $oDb->prepare("SELECT `id` FROM `sys_pages_blocks` WHERE `object` = ? AND `type` = ? AND `title` = ?", $aPageBlock['object'], $aPageBlock['type'], $aPageBlock['title']);
+        if ($oDb->getOne($sQuery))
+            return true;
+        
+        // get order
         if (empty($aPageBlock['order'])) {
         	$iCellId = !empty($aPageBlock['cell_id']) ? (int)$aPageBlock['cell_id'] : 1;
             $sQuery = $oDb->prepare("SELECT `order` FROM `sys_pages_blocks` WHERE `object` = ? AND `cell_id` = ? AND `active` = 1 ORDER BY `order` DESC LIMIT 1", $aPageBlock['object'], $iCellId);
             $aPageBlock['order'] = (int)$oDb->getOne($sQuery) + 1;
         }
 
-        $sQuery = $oDb->prepare("DELETE FROM `sys_pages_blocks` WHERE `object` = ? AND `type` = ? AND `title` = ?", $aPageBlock['object'], $aPageBlock['type'], $aPageBlock['title']);
-        $oDb->query($sQuery);
-
+        // add new block
         unset($aPageBlock['id']);
         return $oDb->query("INSERT INTO `sys_pages_blocks` SET " . $oDb->arrayToSQL($aPageBlock));
     }
