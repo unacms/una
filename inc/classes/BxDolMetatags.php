@@ -311,7 +311,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      */
     public function keywordsAdd($iId, $s) 
     {
-        return $this->_metaAdd($iId, ' ' . strip_tags(str_replace(array('<br>', '<br />', '<hr>', '<hr />', '</p>'), "\n", $s)), '/[\PL\PN]\#(\pL[\pL\pN_]+)/u', 'keywordsDelete', 'keywordsAdd', (int)getParam('sys_metatags_hashtags_max'), 'keyword');
+        return $this->_metaAdd($iId, ' ' . strip_tags(str_replace(array('<br>', '<br />', '<hr>', '<hr />', '</p>'), "\n", $s)), '/[\PL\PN]\#(\pL[\pL\pN_]+)/u', 'keywordsDelete', 'keywordsAdd', 'keywordsGet', (int)getParam('sys_metatags_hashtags_max'), 'keyword');
     }
 
     /**
@@ -810,7 +810,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      */
     public function mentionsAdd($iId, $s) 
     {
-        return $this->_metaAdd($iId, $s, '/data\-profile\-id="(\d+)"/u', 'mentionsDelete', 'mentionsAdd', (int)getParam('sys_metatags_mentions_max'), 'mention');
+        return $this->_metaAdd($iId, $s, '/data\-profile\-id="(\d+)"/u', 'mentionsDelete', 'mentionsAdd', 'mentionsGet', (int)getParam('sys_metatags_mentions_max'), 'mention');
     }
 
     /**
@@ -850,6 +850,15 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         return 0;
     }
 
+    /**
+     * Get list of profile IDs associated with the content
+     * @return array of profile IDs
+     */
+    public function mentionsGet($iId)
+    {
+        return $this->_oQuery->mentionsGet($iId);
+    }
+    
     /**
      * Set condition for search results object for mentions
      * @param $oSearchResult search results object
@@ -936,7 +945,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         return $i;
     }
 
-    protected function _metaAdd($iId, $s, $sPreg, $sFuncDelete, $sFuncAdd, $iMaxItems, $sAlertName) 
+    protected function _metaAdd($iId, $s, $sPreg, $sFuncDelete, $sFuncAdd, $sFuncGet, $iMaxItems, $sAlertName) 
     {
         $a = array();
         if (!preg_match_all($sPreg, $s, $a)) {
@@ -946,6 +955,16 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
 
         $aMetas = array_unique($a[1]);
         $aMetas = array_slice($aMetas, 0, $iMaxItems);
+
+        // check if keywords/mentions were changed
+        $aMetasOld = $this->$sFuncGet($iId);
+        if (is_array($aMetas) && is_array($aMetasOld) 
+            && count($aMetas) == count($aMetasOld) 
+            && empty(array_diff($aMetas, $aMetasOld))
+            && empty(array_diff($aMetasOld, $aMetas))
+        ) {
+            return 0;
+        }
 
         if ($iRet = $this->_oQuery->$sFuncAdd($iId, $aMetas)) {
             foreach ($aMetas as $sMeta) {

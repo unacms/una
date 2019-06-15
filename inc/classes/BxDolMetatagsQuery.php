@@ -41,6 +41,12 @@ class BxDolMetatagsQuery extends BxDolDb
     {
         return $this->metaDelete($this->_aObject['table_mentions'], $mixedContentId);
     }
+
+    public function mentionsGet($mixedContentId)
+    {
+        $sQuery = $this->prepare("SELECT `profile_id` FROM `{$this->_aObject['table_mentions']}` WHERE `object_id` = ? ORDER BY `profile_id` DESC LIMIT ?", $mixedContentId, (int)getParam('sys_metatags_mentions_max'));
+        return $this->getColumn($sQuery);
+    }
     
     public function keywordsAdd($mixedContentId, $aKeywords, $bDeletePreviousKeywords = true)
     {
