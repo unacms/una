@@ -3582,23 +3582,21 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $aContent = &$aResult['content'];
 
             if (!empty($aContent['image']))
-                $aFiles['images'] = $aContent['images'];
-            else
+                $aFiles['images'] = array_values($aContent['images']);
             if (!empty($aContent['images_attach']))
-                $aFiles['images'] = $aContent['images_attach'];
+                $aFiles['images'] = array_values($aContent['images_attach']);
 
             if (!empty($aContent['videos']))
-                $aFiles['videos'] = $aContent['videos'];
+                $aFiles['videos'] = array_values($aContent['videos']);
             else
             if (!empty($aContent['videos_attach']))
-                $aFiles['videos'] = $aContent['videos_attach'];
+                $aFiles['videos'] = array_values($aContent['videos_attach']);
 
             if (!empty($aContent['files']))
-                $aFiles['files'] = $aContent['files'];
+                $aFiles['files'] = array_values($aContent['files']);
             else
                 if (!empty($aContent['files_attach']))
-                    $aFiles['files'] = $aContent['files_attach'];
-
+                    $aFiles['files'] = array_values($aContent['files_attach']);
 
             $aItems[$aEvent['id']] = array_merge(array(
                 'owner' => array(
