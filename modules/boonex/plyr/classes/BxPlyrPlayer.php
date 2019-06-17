@@ -138,6 +138,7 @@ class BxPlyrPlayer extends BxDolPlayer
         $aOptions = array_merge(array(
             // 'debug' => true,
             'quality' => array('default' => $this->_aSizes[$sFormat]),
+            'displayDuration' => false,
         ), $this->_aConfCustom);
         $sInitEditor = "
             gl$sId = new Plyr('#$sId', " . json_encode($aOptions) . ");
