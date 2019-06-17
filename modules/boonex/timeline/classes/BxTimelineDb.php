@@ -781,7 +781,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 $sWhereSubclauseOwnProfile = $this->prepareAsString("(`{$this->_sTable}`.`owner_id` = ?)", $aParams['owner_id']);
 
                 //--- Select Own Public (Direct) posts from Home Page Timeline (Public Feed).
-                $sWhereSubclauseOwnPublic .= $this->prepareAsString("(`{$this->_sTable}`.`owner_id` = '0' AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` = ?, 1))", $aParams['owner_id']);
+                $sWhereSubclauseOwnPublic = $this->prepareAsString("(`{$this->_sTable}`.`owner_id` = '0' AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` = ?, 1))", $aParams['owner_id']);
 
                 $mixedWhereSubclause['p1'] = "(" . $sWhereSubclauseOwnProfile . " OR " . $sWhereSubclauseOwnPublic . ")";
 
