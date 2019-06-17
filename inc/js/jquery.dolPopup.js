@@ -219,7 +219,6 @@
                 }
 
                 // show popup
-                $('body').addClass('bx-popup-visible');
 
                 $el.css({display: 'block', visibility: 'visible'});
                 if (o.fog) {
@@ -326,7 +325,6 @@
             	eval(o.onBeforeHide);
 
             $el.removeClass('bx-popup-active').addClass('bx-popup-inactive');
-            $('body').removeClass('bx-popup-visible');
 
             var onHide = null;
             if(typeof(o.onHide) == 'function')
