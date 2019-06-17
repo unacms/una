@@ -21,11 +21,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_group', 'bx_groups', 'allow_post_to', 3, '', 0, 'custom', '_bx_groups_form_profile_input_sys_allow_post_to', '_bx_groups_form_profile_input_allow_post_to', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_group', 'bx_groups', 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
-DELETE FROM `sys_form_display_inputs` WHERE `display_name`='bx_group_add' AND `input_name` IN ('picture', 'allow_post_to');
+DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN ('bx_group_add', 'bx_group_edit') AND `input_name`='allow_post_to';
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
-('bx_group_add', 'allow_post_to', 2147483647, 1, 8);
-
-
-DELETE FROM `sys_form_display_inputs` WHERE `display_name`='bx_group_edit' AND `input_name` IN ('picture', 'allow_post_to');
-INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
+('bx_group_add', 'allow_post_to', 2147483647, 1, 8),
 ('bx_group_edit', 'allow_post_to', 2147483647, 1, 7);

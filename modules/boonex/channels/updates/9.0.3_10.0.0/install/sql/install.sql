@@ -10,7 +10,3 @@ UPDATE `sys_transcoder_filters` SET `filter_params`='a:3:{s:1:"w";s:3:"100";s:1:
 DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object`='bx_channels_avatar_big';
 INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES 
 ('bx_channels_avatar_big', 'Resize', 'a:3:{s:1:"w";s:3:"200";s:1:"h";s:3:"200";s:13:"square_resize";s:1:"1";}', '0');
-
-
--- FORMS
-DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN ('bx_channel_add', 'bx_channel_edit') AND `input_name`='picture';
