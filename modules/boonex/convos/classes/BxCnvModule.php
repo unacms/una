@@ -115,10 +115,7 @@ class BxCnvModule extends BxBaseModTextModule
      */
     public function deleteConvoForever ($iContentId)
     {
-        if (!$this->_oDb->deleteConvo((int)$iContentId))
-            return _t('_error occured');
-
-        return '';
+        return $this->_oDb->deleteConvo((int)$iContentId);
     }
 
     public function actionMarkUnread($iContentId)
@@ -289,6 +286,17 @@ class BxCnvModule extends BxBaseModTextModule
         if (!$aContentInfo)
             return false;
 
+        // add author to the list of collaborators when somebody replies
+        // if author is removed from collaborators
+        // of if authot placed message to trash
+        $aCollaborators = $this->_oDb->getCollaborators($aContentInfo[$CNF['FIELD_ID']]);
+        if (!isset($aCollaborators[$aContentInfo[$CNF['FIELD_AUTHOR']]]) || BX_CNV_FOLDER_TRASH == $this->_oDb->getConversationFolder($aContentInfo[$CNF['FIELD_ID']], $aContentInfo[$CNF['FIELD_AUTHOR']])) {
+            $oFormsHelper = $this->serviceFormsHelper ();
+            $oForm = $oFormsHelper->getObjectFormEdit();
+            $oForm->updateParticipants($aContentInfo[$CNF['FIELD_ID']], BX_CNV_FOLDER_INBOX, false, array($aContentInfo[$CNF['FIELD_AUTHOR']]));
+        }
+
+
         $oCmts = BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $iContentId);
         if(!$oCmts)
             return false;
@@ -304,7 +312,6 @@ class BxCnvModule extends BxBaseModTextModule
 
         // send notification to all collaborators
         if ($oProfile = BxDolProfile::getInstance($iProfileId)) {
-            $aCollaborators = $this->_oDb->getCollaborators($aContentInfo[$CNF['FIELD_ID']]);
             foreach ($aCollaborators as $iCollaborator => $iReadComments) {
                 if ($iCollaborator == $iProfileId)
                     continue;

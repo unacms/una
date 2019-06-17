@@ -99,6 +99,7 @@
     <string name="_bx_cnv_field_preview"><![CDATA[Preview]]></string>
     <string name="_bx_cnv_field_collaborators"><![CDATA[Participants]]></string>
 
+    <string name="_bx_cnv_grid_action_err_delete"><![CDATA[Cannot delete the selected conversation(s).]]></string>
     <string name="_bx_cnv_grid_action_delete"><![CDATA[Delete]]></string>
     <string name="_bx_cnv_grid_action_compose"><![CDATA[Compose]]></string>
 	<string name="_bx_cnv_grid_filter_item_title_adm_all"><![CDATA[All]]></string>

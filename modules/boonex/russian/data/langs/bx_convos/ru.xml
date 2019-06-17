@@ -99,6 +99,7 @@
     <string name="_bx_cnv_field_preview"><![CDATA[Предпросмотр]]></string>
     <string name="_bx_cnv_field_collaborators"><![CDATA[Адресаты]]></string>
 
+    <string name="_bx_cnv_grid_action_err_delete"><![CDATA[Невозможно удалить выбранное(ные) сообщение(ния).]]></string>
     <string name="_bx_cnv_grid_action_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_cnv_grid_action_compose"><![CDATA[Новое сообщение]]></string>
     <string name="_bx_cnv_grid_filter_item_title_adm_all"><![CDATA[Все]]></string>

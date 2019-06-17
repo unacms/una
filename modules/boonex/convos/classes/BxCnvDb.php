@@ -84,7 +84,7 @@ class BxCnvDb extends BxBaseModTextDb
         $sQuery = $this->prepare("SELECT `folder_id` FROM `" . $this->getPrefix() . "conv2folder` WHERE `conv_id` = ? AND `collaborator` = ?", $iConversationId, $iProfileId);
         $iFolderIdOld = $this->getOne($sQuery);
         if (BX_CNV_FOLDER_TRASH == $iFolderIdOld) // if convo is already in trash folder - delete it
-            return $this->deleteConvo($iConversationId, $iProfileId);
+            return '' === $this->deleteConvo($iConversationId, $iProfileId) ? true : false;
 
         $sQuery = $this->prepare("UPDATE `" . $this->getPrefix() . "conv2folder` SET `folder_id` = ? WHERE `conv_id` = ? AND `collaborator` = ?", $iFolderId, $iConversationId, $iProfileId);
         return $this->query($sQuery);
@@ -94,7 +94,7 @@ class BxCnvDb extends BxBaseModTextDb
     {
         $aContentInfo = $this->getContentInfoById ($iConversationId);
         if (!$aContentInfo)
-            return true;
+            return '';
 
         // delete convo
         $aBindings = array(
@@ -113,16 +113,16 @@ class BxCnvDb extends BxBaseModTextDb
 
         // delete whole conversation if there is no refencences to the conversation in conv2folder table
         if ($this->getCollaborators($iConversationId))
-            return false;
+            return '';
             
         $sQuery = $this->prepare("SELECT `id` FROM `" . $this->getPrefix() . "conv2folder` WHERE `conv_id` = ?", $iConversationId);
         if (!$this->getOne($sQuery)) {
             $CNF = &$this->_oConfig->CNF;
             $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']);
-            return $oForm->delete((int)$iConversationId, $aContentInfo);
+            return $oForm->delete((int)$iConversationId, $aContentInfo) ? '' : _t('_sys_txt_error_occured');
         }
 
-        return true;
+        return '';
     }
 
     public function getUnreadMessagesNum ($iProfileId, $iFolderId = BX_CNV_FOLDER_INBOX)

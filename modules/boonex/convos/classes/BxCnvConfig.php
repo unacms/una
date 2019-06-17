@@ -85,6 +85,7 @@ class BxCnvConfig extends BxBaseModTextConfig
 
             // some language keys
             'T' => array (
+                'grid_action_err_delete' => '_bx_cnv_grid_action_err_delete',
                 'txt_sample_single' => '_bx_cnv_txt_sample_single',
             	'txt_folder_' . BX_CNV_FOLDER_INBOX => '_bx_cnv_folder_inbox',
 	            'txt_folder_' . BX_CNV_FOLDER_DRAFTS => '_bx_cnv_folder_drafts',

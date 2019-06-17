@@ -146,11 +146,11 @@ class BxCnvGrid extends BxBaseModGeneralGridAdministration
         return parent::_getCellDefault ('<div class="bx-cnv-grid-field-messages"><span>' . (1 + $mixedValue) . '</span>' . $s . '</div>', $sKey, $aField, $aRow);
     }
 
-    protected function _delete ($mixedId)
+    protected function _doDelete ($iId, $aParams = array())
     {
         $oModule = BxDolModule::getInstance($this->MODULE);
 
-        if ($sErrorMsg = $oModule->deleteConvo ($mixedId))
+        if ($sErrorMsg = $oModule->deleteConvo ($iId))
             return 0;
 
         return 1;

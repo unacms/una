@@ -34,7 +34,7 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
 
             $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
             if ($aContentInfo && bx_get_logged_profile_id() == $aContentInfo[$CNF['FIELD_AUTHOR']]) // allow to edit participants for author only
-                $this->_updateParticipants ($iContentId, $iFolder, $iFolder == BX_CNV_FOLDER_DRAFTS ? true : false);
+                $this->updateParticipants ($iContentId, $iFolder, $iFolder == BX_CNV_FOLDER_DRAFTS ? true : false);
         }
 
         return $bRet;
@@ -86,19 +86,20 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
         } 
         else {
             $iFolder = $bSpam ? BX_CNV_FOLDER_SPAM : BX_CNV_FOLDER_INBOX;
-            $this->_updateParticipants ($iContentId, $iFolder, $bDraft);
+            $this->updateParticipants ($iContentId, $iFolder, $bDraft);
         }
 
         return $iContentId;
     }
 
-    protected function _updateParticipants ($iContentId, $iFolder, $bDraft) 
+    public function updateParticipants ($iContentId, $iFolder, $bDraft, $aRecipientsAdd = array()) 
     {
         $iSender = bx_get_logged_profile_id();
         $aRecipientsOld = $this->_oModule->_oDb->getCollaborators($iContentId);
 
         // place conversation to "inbox" (or "spam" - in case of spam) folder
-        $aRecipients = array_unique(array_merge($this->getCleanValue('recipients'), array($iSender)), SORT_NUMERIC);
+        $aRecipientsFormForm = $this->getCleanValue('recipients') ? $this->getCleanValue('recipients') : array();
+        $aRecipients = array_unique(array_merge($aRecipientsFormForm, array($iSender), $aRecipientsAdd), SORT_NUMERIC);
         foreach ($aRecipients as $iProfile) {
             $oProfile = BxDolProfile::getInstance($iProfile);
             if(!$oProfile)
@@ -114,6 +115,9 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
                     if(!$bCanContact)
                         $iFolder = BX_CNV_FOLDER_SPAM;
                 }
+
+                if ($aRecipientsAdd && in_array($iRecipient, $aRecipientsAdd))
+                    $this->_oModule->_oDb->removeCollaborator($iContentId, $iRecipient);
 
                 $this->_oModule->_oDb->conversationToFolder($iContentId, $iFolder, $iRecipient, $iRecipient == $iSender ? 0 : -1);
             }
