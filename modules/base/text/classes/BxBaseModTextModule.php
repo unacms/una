@@ -64,6 +64,10 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         echoJson($this->getPollForm());
     }
 
+    public function actionFileEmbedVideo($iFileId)
+    {
+        $this->_oTemplate->embedVideo($iFileId);
+    }
 
     // ====== SERVICE METHODS
     public function serviceGetBlockPollAnswers($iPollId, $bForceDisplay = false)
@@ -222,15 +226,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 
     public function serviceEntityBreadcrumb ($iContentId = 0)
     {
-    	if (!$iContentId)
-            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
-        if (!$iContentId)
-            return false;
-        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        if (!$aContentInfo)
-            return false;
-
-		return $this->_oTemplate->entryBreadcrumb($aContentInfo);
+        return $this->_serviceTemplateFunc ('entryBreadcrumb', $iContentId);
     }
 
     /**

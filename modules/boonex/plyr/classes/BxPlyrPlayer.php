@@ -136,7 +136,7 @@ class BxPlyrPlayer extends BxDolPlayer
         // plyr initialization
         $sFormat = getParam('sys_player_default_format');
         $aOptions = array_merge(array(
-            'debug' => true,
+            // 'debug' => true,
             'quality' => array('default' => $this->_aSizes[$sFormat]),
         ), $this->_aConfCustom);
         $sInitEditor = "

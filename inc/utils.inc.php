@@ -544,7 +544,7 @@ function clear_xss($val)
             $oConfig->set('HTML.Nofollow', 'true');
         }
 
-        $oConfig->set('Filter.Custom', array (new HTMLPurifier_Filter_YouTube(), new HTMLPurifier_Filter_YoutubeIframe(), new HTMLPurifier_Filter_AddBxLinksClass()));
+        $oConfig->set('Filter.Custom', array (new HTMLPurifier_Filter_YouTube(), new HTMLPurifier_Filter_YoutubeIframe(), new HTMLPurifier_Filter_AddBxLinksClass(), new HTMLPurifier_Filter_LocalIframe()));
 
 	    $oConfig->set('HTML.DefinitionID', 'html5-definitions');
 		$oConfig->set('HTML.DefinitionRev', 1);

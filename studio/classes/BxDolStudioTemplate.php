@@ -149,7 +149,7 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
         return $this->parseHtmlByName('breadcrumb.html', array('bx_repeat:items' => $aItems));
     }
 
-    function displayMsg ($s, $bTranslate = false)
+    function displayMsg ($s, $bTranslate = false, $iPage = BX_PAGE_DEFAULT)
     {
         $sTitle = $bTranslate ? _t($s) : $s;
 
@@ -158,7 +158,7 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
             'content' => $sContent
         ));
 
-        $this->setPageNameIndex(BX_PAGE_DEFAULT);
+        $this->setPageNameIndex($iPage);
         $this->setPageHeader($sTitle);
         $this->setPageContent('page_main_code', $sContent);
         $this->getPageCode();

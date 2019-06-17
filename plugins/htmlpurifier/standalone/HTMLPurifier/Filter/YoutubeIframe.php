@@ -6,7 +6,7 @@ class HTMLPurifier_Filter_YoutubeIframe extends HTMLPurifier_Filter
 
     public function preFilter($html, $config, $context)
     {
-        if (strstr($html, '<iframe')) {
+        if (strstr($html, '<iframe') && (strstr($html, 'youtube.com') || strstr($html, 'youtu.be') || strstr($html, 'youtube-nocookie.com'))) {
             $html = str_ireplace("</iframe>", "", $html);
             if (preg_match_all("/<iframe(.*?)>/si", $html, $result)) {
                 foreach ($result[1] as $key => $item) {
@@ -14,10 +14,11 @@ class HTMLPurifier_Filter_YoutubeIframe extends HTMLPurifier_Filter
                     $width = $width[1];
                     preg_match('/height="([0-9]+)"/', $item, $height);
                     $height = $height[1];
-                    preg_match('/((\/\/www\.youtube\.com\/embed\/)|(\/\/www\.youtube-nocookie\.com\/embed\/)|(\/\/www.youtube.com\/v\/))([a-zA-Z0-9_-]+)/', $item, $id);
-                    $id = $id[5];
-                    $sProto = 0 == strncmp('https', BX_DOL_URL_ROOT, 5) ? 'https' : 'http';
-                    $html = str_replace($result[0][$key], '<img class="YouTubeIframe" width="' . $width . '" height="' . $height . '" src="' . $sProto . '://www.youtube-nocookie.com/embed/' . $id . '?rel=0">', $html);
+                    if (preg_match('/((\/\/www\.youtube\.com\/embed\/)|(\/\/www\.youtube-nocookie\.com\/embed\/)|(\/\/www.youtube.com\/v\/))([a-zA-Z0-9_-]+)/', $item, $id)) {
+                        $id = $id[5];
+                        $sProto = 0 == strncmp('https', BX_DOL_URL_ROOT, 5) ? 'https' : 'http';
+                        $html = str_replace($result[0][$key], '<img class="YouTubeIframe" width="' . $width . '" height="' . $height . '" src="' . $sProto . '://www.youtube-nocookie.com/embed/' . $id . '?rel=0">', $html);
+                    }
                 }
             }
         }

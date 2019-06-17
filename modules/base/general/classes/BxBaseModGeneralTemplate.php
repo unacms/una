@@ -320,6 +320,78 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         return $aAttachmnts;
     }
 
+    public function embedVideo($iFileId)
+    {
+        // general checks
+        $oPlayer = BxDolPlayer::getObjectInstance();
+        $CNF = $this->getModule()->_oConfig->CNF;
+        $sStorage = isset($CNF['OBJECT_STORAGE_VIDEOS']) ? $CNF['OBJECT_STORAGE_VIDEOS'] : false;
+        if (!$oPlayer || !$sStorage || !($oStorage = BxDolStorage::getObjectInstance($sStorage))) {
+            $this->displayErrorOccured('', BX_PAGE_EMBED);
+            exit;
+        }
+
+        // privacy check
+        $aGhost = $oStorage->getGhost($iFileId);
+        $aContentInfo = $aGhost && $aGhost['content_id'] ? $this->getModule()->_oDb->getContentInfoById($aGhost['content_id']) : false;
+        if (!$aGhost || ($aGhost['content_id'] && !$aContentInfo)) {
+            $this->displayPageNotFound('', BX_PAGE_EMBED);
+            exit;
+        }
+            
+        if (!$aGhost['content_id']) {
+            // if file is not associated with content yet, then only admin and owner can view it
+            if (!isAdmin() && CHECK_ACTION_RESULT_ALLOWED !== $this->getModule()->checkAllowedEditAnyEntry() && $aGhost['profile_id'] != bx_get_logged_profile_id()) {
+                $this->displayAccessDenied('', BX_PAGE_EMBED);
+                exit;
+            }
+        }
+        else {
+            // if file is associated with content, then check entry privacy
+            if (CHECK_ACTION_RESULT_ALLOWED !== $this->getModule()->checkAllowedView($aContentInfo)) {
+                $this->displayAccessDenied('', BX_PAGE_EMBED);
+                exit;
+            }
+        }
+
+        // get file info
+        if (!($a = $oStorage->getFile($iFileId))) {
+            $this->displayPageNotFound('', BX_PAGE_EMBED);
+            exit;
+        }
+
+        // check if file is really video
+        $aTranscodersVideo = $this->getAttachmentsVideoTranscoders($sStorage);        
+        if (!$aTranscodersVideo || (0 !== strncmp('video/', $a['mime_type'], 6)) || !$aTranscodersVideo['poster']->isMimeTypeSupported($a['mime_type'])) {
+            $this->displayErrorOccured('', BX_PAGE_EMBED);
+            exit;
+        }
+
+        // check HD video version
+        $sVideoUrlHd = '';
+        $sVideoUrl = $oStorage->getFileUrlById($a['id']);
+        $aVideoSize = $aTranscodersVideo['mp4_hd']->getVideoSize($sVideoUrl);
+        if (!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] >= 720)
+            $sVideoUrlHd = $aTranscodersVideo['mp4_hd']->getFileUrl($a['id']);
+
+        // generate player code
+        $sCode = $oPlayer->getCodeVideo (BX_PLAYER_EMBED, array(
+            'poster' => $aTranscodersVideo['poster']->getFileUrl($a['id']),
+            'mp4' => array(
+                'sd' => $aTranscodersVideo['mp4']->getFileUrl($a['id']), 
+                'hd' => $sVideoUrlHd
+            ),
+        ));
+
+        // display page
+        $oTemplate = BxDolTemplate::getInstance();
+        $oTemplate->setPageNameIndex (BX_PAGE_EMBED);
+        $oTemplate->setPageHeader ($a['file_name']);
+        $oTemplate->setPageContent ('page_main_code', $sCode);
+        $oTemplate->getPageCode();
+        exit;
+    }
+
     public function addCssJs()
     {
         $this->addCss('main.css');

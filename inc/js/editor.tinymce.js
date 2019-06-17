@@ -6,8 +6,8 @@
  * @{
  */
 
-function bx_editor_insert_img (sEditorId, sImgId, sImgUrl, sClasses) {
-
+function bx_editor_insert_html (sEditorId, sImgId, sHtml) {
+    
     var eEditor = 'object' == typeof(tinymce) ? tinymce.get(sEditorId) : undefined;
     if ('undefined' == typeof(eEditor))
         return;
@@ -15,10 +15,15 @@ function bx_editor_insert_img (sEditorId, sImgId, sImgUrl, sClasses) {
     if (eEditor.dom && eEditor.dom.doc && eEditor.dom.doc.getElementById(sImgId))
         return;
 
+    eEditor.execCommand('mceInsertContent', false, sHtml);
+}
+
+function bx_editor_insert_img (sEditorId, sImgId, sImgUrl, sClasses) {
+
     if ('undefined' == typeof(sClasses))
         sClasses = '';
-
-    eEditor.execCommand('mceInsertContent', false, '<img id="' + sImgId + '" class="' + sClasses + '" src="' + sImgUrl + '" />');
+    
+    bx_editor_insert_html(sEditorId, sImgId, '<img id="' + sImgId + '" class="' + sClasses + '" src="' + sImgUrl + '" />')
 }
 
 function bx_editor_on_init (sEditorId)

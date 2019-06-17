@@ -8,15 +8,20 @@
  * @{
  */
 
-function bx_editor_insert_img (sEditorId, sImgId, sImgUrl, sClasses) 
+function bx_editor_insert_html (sEditorId, sImgId, sHtml) 
 {
     if (typeof $('#' + sEditorId).froalaEditor !== 'function')
         return;
-    
+
+    $('#' + sEditorId).froalaEditor('html.insert', sHtml, false);
+}
+
+function bx_editor_insert_img (sEditorId, sImgId, sImgUrl, sClasses) 
+{   
     if ('undefined' == typeof(sClasses))
         sClasses = '';
 
-    $('#' + sEditorId).froalaEditor('html.insert', '<img id="' + sImgId + '" class="' + sClasses + '" src="' + sImgUrl + '" />', false);
+    bx_editor_insert_html(sEditorId, sImgId, '<img id="' + sImgId + '" class="' + sClasses + '" src="' + sImgUrl + '" />');
 }
 
 function bx_editor_remove_img (aEditorIds, aMarkers) 
