@@ -175,6 +175,17 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
         return $this->parseHtmlByName($sTemplateName, $aVars);
     }
 
+    public function entryText ($aData, $sTemplateName = 'entry-text.html')
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $aVars = $this->getTmplVarsText($aData);
+        if(empty($aVars[$CNF['FIELD_TITLE']]) && empty($aVars[$CNF['FIELD_TEXT']]))
+            return false;
+
+        return $this->parseHtmlByName($sTemplateName, $aVars);
+    }
+
     function entryMediaView ($iMediaId, $aParams = array())
     {
         $oModule = BxDolModule::getInstance($this->MODULE);
