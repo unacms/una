@@ -38,6 +38,7 @@ check_logged();
 
 $oTemplate = BxDolTemplate::getInstance();
 $oTemplate->setPageNameIndex(BX_PAGE_DEFAULT);
+$oTemplate->setPageType(BX_PAGE_TYPE_DEFAULT_WO_HF);
 $oTemplate->setPageContent ('page_main_code', getPageMainCode());
 $oTemplate->getPageCode();
 
