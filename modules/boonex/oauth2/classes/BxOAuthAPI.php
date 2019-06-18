@@ -341,7 +341,8 @@ class BxOAuthAPI extends BxDol
         $aProfileInfo['profile_display_name'] = $oProfile->getDisplayName();
         $aProfileInfo['profile_link'] = $oProfile->getUrl();
         $aProfileInfo['picture'] = $oProfile->getPicture();
-		
+        $aProfileInfo['avatar'] = $oProfile->getAvatar();
+
 		// ---- additional profile's fields for React Jot
         $aProfileInfo['cover'] = $oProfile->getCover();
         $aProfileInfo['followers'] = (int)BxDolConnection::getObjectInstance('sys_profiles_subscriptions')->getConnectedInitiatorsCount($aProfileInfo['id']);
