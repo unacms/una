@@ -3607,6 +3607,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 'sample' => !empty($aResult['sample']) ? _t($aResult['sample']) : _t('_bx_timeline_txt_sample'),
                 'sample_action' => !empty($aResult['sample_action']) ? _t($aResult['sample_action']) : _t('_bx_timeline_txt_added_sample'),
                 'url' => isset($aResult['url']) ? $aResult['url'] : '',
+                'raw' => isset($aContent['raw']) ? strip_tags($aContent['raw']) : '',
                 'text' => isset($aContent['text']) ? strip_tags($aContent['text']) : '',
                 'views' => isset($aResult['views']['count']) ? (int)$aResult['views']['count'] : 0,
                 'votes' => isset($aResult['votes']['count']) ? (int)$aResult['votes']['count'] : 0,
