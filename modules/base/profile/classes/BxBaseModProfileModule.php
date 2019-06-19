@@ -412,6 +412,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         bx_import('BxDolPrivacy');
         $aFieldsDefault2 = array(
             'allow_view_to' => BX_DOL_PG_ALL,
+            'allow_post_to' => BX_DOL_PG_FRIENDS,
         );
         $aFieldsProfile = array_merge($aFieldsDefault2, $aFieldsDefault, $aFieldsProfile);
 
