@@ -172,7 +172,9 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
                 $aValsToAdd[$CNF['FIELD_THUMB']] = $iFileThumb;
         }
         
-        if(isset($CNF['FIELD_STATUS']) && !empty($CNF['FIELDS_DELAYED_PROCESSING'])) {
+        if(isset($CNF['FIELD_STATUS']) && !empty($CNF['FIELDS_DELAYED_PROCESSING']) && !empty($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4'])) {
+            $oTranscoder = BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']);
+
             $aFields = $CNF['FIELDS_DELAYED_PROCESSING'];
             if(is_string($aFields))
                 $aFields = explode(',', $aFields);
@@ -194,10 +196,14 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
                     if(empty($aInfo) || !is_array($aInfo))
                         continue;
 
-                    if(strncmp($aInfo['mime_type'], 'video/', 6) === 0) {
-                        $aValsToAdd[$CNF['FIELD_STATUS']] = 'awaiting';
-                        break 2;
-                    }
+                    if(strncmp($aInfo['mime_type'], 'video/', 6) != 0) 
+                        continue;
+
+                    if($oTranscoder->isFileReady((int)$mixedFieldValue))
+                        continue;
+
+                    $aValsToAdd[$CNF['FIELD_STATUS']] = 'awaiting';
+                    break 2;
                 }
             }
         }
