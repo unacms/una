@@ -19,6 +19,8 @@
     text-align: left;
     font-weight:normal;
     white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
     color: #fff;
     height: 3rem;
     line-height: 3rem;

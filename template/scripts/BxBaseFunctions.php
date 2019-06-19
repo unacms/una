@@ -325,19 +325,19 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
      * Get logo HTML.
      * @return string
      */
-    function getMainLogo()
+    function getMainLogo($aParams = array())
     {
-		$oDesigns = BxDolDesigns::getInstance();
+        $oDesigns = BxDolDesigns::getInstance();
 
         $sAlt = $oDesigns->getSiteLogoAlt();
         if(empty($sAlt))
-        	$sAlt = getParam('site_title');
+            $sAlt = getParam('site_title');
 
         $sLogo = '<span>' . $sAlt . '</span>';
 
         $sFileUrl = $this->getMainLogoUrl();
         if (!empty($sFileUrl)) {
-        	$iLogoWidth = (int)$oDesigns->getSiteLogoWidth();
+            $iLogoWidth = (int)$oDesigns->getSiteLogoWidth();
             $sMaxWidth = $iLogoWidth > 0 ? 'max-width:' . round($iLogoWidth/16, 3) . 'rem;' : '';
 
             $iLogoHeight = (int)$oDesigns->getSiteLogoHeight();
@@ -346,7 +346,15 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
             $sLogo = '<img style="' . $sMaxWidth . $sMaxHeight . '" src="' . $sFileUrl . '" id="bx-logo" alt="' . bx_html_attribute($sAlt, BX_ESCAPE_STR_QUOTE) . '" />';
         }
 
-        return '<a class="bx-def-font-contrasted" href="' . BX_DOL_URL_ROOT . '" title="' . bx_html_attribute($sAlt, BX_ESCAPE_STR_QUOTE) . '">' . $sLogo . '</a>';
+        $aAttrs = array(
+            'class' => 'bx-def-font-contrasted',
+            'href' => BX_DOL_URL_ROOT,
+            'title' => bx_html_attribute($sAlt, BX_ESCAPE_STR_QUOTE)
+        );
+        if(!empty($aParams['attrs']) && is_array($aParams['attrs']))
+            $aAttrs = array_merge($aAttrs, $aParams['attrs']);
+
+        return '<a' . bx_convert_array2attrs($aAttrs) . '>' . $sLogo . '</a>';
     }
 
     /**

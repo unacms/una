@@ -2777,12 +2777,16 @@
 	<string name="_sys_txt_reset_pasword_email_send_failed"><![CDATA[Ваш новый пароль <b>{0}</b>. Пожалуйста, сохраните его в надёжном месте, так как нам не удалось отослать Вам его по эл. почте. Вы можете его поменять при первом входе в аккаунт.]]></string>
 	<string name="_sys_txt_reset_pasword_email_sent"><![CDATA[Ваш новый пароль - <b>{0}</b> - был отослан Вам по эл. почте. Вы можете его поменять при первом входе в аккаунт.]]></string>
 	<string name="_sys_txt_reset_pasword_error_occured"><![CDATA[Произошла ошибка, пожалуйста <a href="{0}">попытайтесь снова</a>.]]></string>
-	<string name="_sys_txt_splash_btn_join"><![CDATA[Зарегистрироваться]]></string>
-	<string name="_sys_txt_splash_slide01_title"><![CDATA[Узнайте людей, которые разделяют Ваши увлечения]]></string>
-	<string name="_sys_txt_splash_slide01_desc"><![CDATA[Истории, идеи, фотографии, видео, вопросы, шутки, обсуждения, что угодно.<br />Следите за интересными людьми и будьте интересными для других.]]></string>
-	<string name="_sys_txt_splash_slide02_txt"><![CDATA["Присядь на стул. Попробуй.<br />Зарегистрируйся. Жизнь такая<br />сладкая."]]></string>
-	<string name="_sys_txt_splash_slide03_txt"><![CDATA["Лучший способ завести друзей - быть кому-то другом."]]></string>
-        <string name="_sys_txt_splash_slide04_txt"><![CDATA[Уже один из нас?]]></string>
+	<string name="_sys_txt_splash_title"><![CDATA[Присоединяйся. Делись. Создавай.]]></string>
+	<string name="_sys_txt_splash_slogan"><![CDATA[Вступай в наше сообщество сейчас, чтобы найти единомышленников, дулиться захватывающими новостями и создавать вдохновляющий контент.]]></string>
+        <string name="_sys_txt_splash_login"><![CDATA[Войти]]></string>
+        <string name="_sys_txt_splash_join"><![CDATA[Зарегистрироваться]]></string>
+	<string name="_sys_txt_splash_connect"><![CDATA[Присоединяйся]]></string>
+        <string name="_sys_txt_splash_connect_text"><![CDATA[Найди единомышленников, новых друзей, слуди за интересными авторами и будь в курсе событий, где бы ты ни был.]]></string>
+        <string name="_sys_txt_splash_share"><![CDATA[Делись]]></string>
+        <string name="_sys_txt_splash_share_text"><![CDATA[Рассказывай последние новости, делись интересными статьями, восхитительными сайтами, классными фотографиями и потрясающими видео.]]></string>
+        <string name="_sys_txt_splash_create"><![CDATA[Создавай]]></string>
+        <string name="_sys_txt_splash_create_text"><![CDATA[Создай свой профайл, изменяй статус, пиши заметки, создавай голосования и загружай медиа альбомы.]]></string>
         <string name="_sys_txt_switch_profile_context"><![CDATA[Переключиться]]></string>
 	<string name="_sys_txt_unsubscribe_email_settings_update_success"><![CDATA[Ваши email-установки были удачно обновлены.]]></string>
 	<string name="_sys_txt_unsubscribe_error_occured"><![CDATA[Произошла ошибка, пожалуйста, зайдите в свой аккаунт и обновите email-установки или свяжитесь с администратором сайта, чтобы он Вас отписал вручную.]]></string>
