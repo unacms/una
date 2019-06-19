@@ -260,7 +260,7 @@
     <string name="_bx_albums_txt_media_album_shutter_speed"><![CDATA[Exposure time]]></string>
     <string name="_bx_albums_txt_media_album_shutter_speed_value"><![CDATA[{0}s]]></string>
     <string name="_bx_albums_txt_media_album_iso"><![CDATA[ISO]]></string>
-    <string name="_bx_albums_txt_processing_awaiting"><![CDATA[Album will be published as soon as video is converted]]></string>
+    <string name="_bx_albums_txt_processing_awaiting"><![CDATA[Scheduled for publishing as soon as video conversion is complete.]]></string>
     <string name="_bx_albums_txt_processing_failed"><![CDATA[Album isn't published because video conversion failed, edit video to fix the issue.]]></string>
 
     <string name="_bx_albums_txt_err_cannot_perform_action"><![CDATA[Cannot perform the action. Please report.]]></string>

@@ -223,6 +223,6 @@
     <string name="_bx_videos_txt_sample_score_up_single"><![CDATA[score up vote to video]]></string>
     <string name="_bx_videos_txt_sample_score_down_single"><![CDATA[score down vote to video]]></string>
     <string name="_bx_videos_txt_n_views"><![CDATA[{0} views]]></string>
-    <string name="_bx_videos_txt_processing_awaiting"><![CDATA[Video will be published as soon as video is converted]]></string>
+    <string name="_bx_videos_txt_processing_awaiting"><![CDATA[Scheduled for publishing as soon as video conversion is complete.]]></string>
     <string name="_bx_videos_txt_processing_failed"><![CDATA[Video isn't published because video conversion failed, edit video to fix the issue.]]></string>
 </resources>
