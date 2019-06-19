@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_events` (
   `date` int(11) NOT NULL default '0',
   `published` int(11) NOT NULL default '0',
   `status` enum ('active', 'awaiting', 'failed', 'hidden', 'deleted') NOT NULL DEFAULT 'active',
-  `active` int(11) NOT NULL default '1',
+  `active` tinyint(4) NOT NULL default '1',
   `pinned` int(11) NOT NULL default '0',
   `sticked` int(11) NOT NULL default '0',
   `promoted` int(11) NOT NULL default '0',

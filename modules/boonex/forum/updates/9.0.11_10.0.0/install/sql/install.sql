@@ -25,3 +25,9 @@ CREATE TABLE IF NOT EXISTS `bx_forum_reactions_track` (
   PRIMARY KEY (`id`),
   KEY `vote` (`object_id`, `author_nip`)
 );
+
+
+-- VOTES
+DELETE FROM `sys_objects_vote` WHERE `Name`='bx_forum_reactions';
+INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
+('bx_forum_reactions', 'bx_forum_reactions', 'bx_forum_reactions_track', '604800', '1', '1', '1', '1', 'bx_forum_discussions', 'id', 'author', 'rrate', 'rvotes', 'BxTemplVoteReactions', '');
