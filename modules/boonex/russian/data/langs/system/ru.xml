@@ -2472,6 +2472,7 @@
 	<string name="_sys_page_block_title_create_post_public"><![CDATA[Добавить...]]></string>
 	<string name="_sys_page_block_title_dashboard"><![CDATA[Панель]]></string>
     <string name="_sys_page_block_title_homepage_menu"><![CDATA[Меню модулей с содержимым]]></string>
+    <string name="_sys_page_block_title_homepage_splash"><![CDATA[Заставка]]></string>
 	<string name="_sys_page_block_title_forgot_password"><![CDATA[Забыли пароль]]></string>
 	<string name="_sys_page_block_system_title_login"><![CDATA[Вход с линкой регистрации]]></string>
 	<string name="_sys_page_block_system_title_login_step2"><![CDATA[Вход - шаг 2]]></string>

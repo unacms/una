@@ -50,6 +50,29 @@ class BxBasePageHome extends BxTemplPage
         return $s;
     }
 
+    protected function _getBlockRaw($aBlock)
+    {
+        if(strpos($aBlock['title'], 'splash') !== false) {
+            $oPermalink = BxDolPermalinks::getInstance();
+
+            $sJoinForm = BxDolService::call('system', 'create_account_form', array(), 'TemplServiceAccount');
+            $sLoginForm = BxDolService::call('system', 'login_form', array(), 'TemplServiceLogin');
+
+            $oTemplate = BxDolTemplate::getInstance();
+            $oTemplate->addJs(array('lottie.min.js'));
+            $aBlock['content'] = $oTemplate->parseHtmlByContent($aBlock['content'], array(
+                'join_link' => BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=create-account'),
+                'join_form' => $sJoinForm,
+                'join_form_in_box' => DesignBoxContent(_t('_sys_txt_splash_join'), $sJoinForm, BX_DB_PADDING_DEF),
+                'login_link' => BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=login'),
+                'login_form' => $sLoginForm,
+                'login_form_in_box' => DesignBoxContent(_t('_sys_txt_splash_login'), $sLoginForm, BX_DB_PADDING_DEF)
+            ));
+        }
+
+        return parent::_getBlockRaw($aBlock);
+    }
+
     protected function _addJsCss()
     {
         parent::_addJsCss();
