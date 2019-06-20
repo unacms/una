@@ -393,9 +393,19 @@ ul.bx-menu-floating-blocks {
 .bx-media-phone .bx-menu-floating-blocks-dash li {
     width:49.5%;
 }
-.bx-menu-floating-blocks-dash-item {
-     height:3.35rem;
+.bx-menu-floating-blocks-dash-item A{
+    display:flex !important;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center
 }
+.bx-menu-floating-blocks-dash-title{
+    display:flex;
+    height:2.35rem;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .bx-menu-floating-blocks-wide li {
     position:relative;
     width:100px;
@@ -516,9 +526,6 @@ ul.bx-menu-floating-blocks {
     font-size:2rem;
 	width: 2.2rem;
     display: inline-block;
-}
-.bx-menu-floating-blocks-dash .bx-menu-floating-blocks-icon {
-    float:left;
 }
 
 .bx-menu-floating-blocks-big li .bx-menu-floating-blocks-title,
