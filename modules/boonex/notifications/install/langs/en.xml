@@ -110,5 +110,6 @@
     <string name="_bx_ntfs_grid_column_title_unit"><![CDATA[Module]]></string>
     <string name="_bx_ntfs_grid_column_title_type"><![CDATA[Type]]></string>
     <string name="_bx_ntfs_grid_column_title_title"><![CDATA[Notification]]></string>
+    <string name="_bx_ntfs_grid_column_title_title_warning"><![CDATA[The setting's value is corrupted. It is recommended to enable/disable it and reload the page.]]></string>
     <string name="_bx_ntfs_grid_action_title_deactivate"><![CDATA[Deactivate]]></string>
 </resources>

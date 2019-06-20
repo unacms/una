@@ -22,6 +22,8 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
     protected $_sDeliveryType;
     protected $_sTitleMask;
 
+    protected $_sSource;
+
     public function __construct ($aOptions, $oTemplate = false)
     {
         parent::__construct ($aOptions, $oTemplate);
@@ -36,6 +38,8 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
         $this->_bGrouped = $this->_oModule->_oConfig->isSettingsGrouped();
         $this->_sDeliveryType = BX_BASE_MOD_NTFS_DTYPE_SITE;
         $this->_sTitleMask = _t('_bx_ntfs_setting_title_mask', '%s', '%s');
+
+        $this->_sSource = '';
 
         $sDeliveryType = bx_get('delivery_type');
         if(!empty($sDeliveryType))
@@ -126,6 +130,9 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
         if($this->_bGrouped && $aRow['type'] == BX_NTFS_STYPE_OTHER)
             $mixedValue = sprintf($this->_sTitleMask, _t($this->_oModule->_oConfig->getHandlersUnitTitle($aRow['unit'])), $mixedValue);
 
+        if($this->_bGrouped && !$this->_isSettingsGroupValid($aRow))
+            $mixedValue = $this->_oTemplate->parseIcon('exclamation-triangle', array('class' => 'bx-def-margin-sec-right', 'title' => _t('_bx_ntfs_grid_column_title_title_warning'))) . $mixedValue;
+
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
@@ -154,11 +161,11 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $aResult = array();
-        $sSource = $this->_aOptions['source'];
+        $this->_sSource = $this->_aOptions['source'];
 
         $aTypes = $this->_oModule->_oConfig->getSettingsTypes();
         foreach($aTypes as $sType) {
-            $this->_aOptions['source'] = $sSource . $this->_oModule->_oDb->prepareAsString(" AND `ts`.`type`=?", $sType) . " GROUP BY `group`";
+            $this->_aOptions['source'] = $this->_sSource . $this->_oModule->_oDb->prepareAsString(" AND `ts`.`type`=?", $sType) . " GROUP BY `group`";
 
             $aRows = parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
             if(empty($aRows) || !is_array($aRows)) 
@@ -174,6 +181,24 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
     protected function _updateSettingTitle($sTitle, &$aRow)
     {
         return $this->_oModule->_oDb->updateSetting(array('title' => $sTitle), array('id' => $aRow['id']));
+    }
+    
+    protected function _isSettingsGroupValid(&$aRow)
+    {
+        if(!$this->_bGrouped)
+            return true;
+
+        $iEnabled = $iDisabled = 0;
+
+        $sSql = $this->_sSource . $this->_oModule->_oDb->prepareAsString(" AND `ts`.`group`=? AND `ts`.`type`=?", $aRow['group'], $aRow['type']);
+        $aItems = $this->_oModule->_oDb->getAll($sSql);
+        foreach($aItems as $aItem) 
+            if((int)$aItem['active'] != 0)
+                $iEnabled += 1;
+            else 
+                $iDisabled += 1;
+
+        return $iEnabled == 0 || $iDisabled == 0;
     }
 }
 
