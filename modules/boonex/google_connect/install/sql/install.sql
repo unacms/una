@@ -4,7 +4,7 @@ CREATE TABLE `bx_googlecon_accounts` (
   `remote_profile` varchar(16) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`local_profile`),
   KEY `remote_profile` (`remote_profile`)
-) ENGINE=MyISAM;
+);
 
 -- Studio page and widget
 

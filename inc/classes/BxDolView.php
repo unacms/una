@@ -44,7 +44,7 @@ define('BX_DOL_VIEW_USAGE_DEFAULT', BX_DOL_VIEW_USAGE_BLOCK);
  *      `viewer_nip` int(11) unsigned NOT NULL default '0', -- viewer ip address to track guest views
  *      `date` int(11) NOT NULL default '0', -- timestamp of last recorded view
  *      KEY `id` (`object_id`,`viewer_id`,`viewer_nip`)
- *  ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+ *  );
  * @endcode
  *
  */

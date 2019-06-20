@@ -2845,7 +2845,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_uploader` (
   `override_class_file` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `object` (`object`)
-) ENGINE=MyISAM;
+);
 
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('sys_simple', 1, 'BxTemplUploaderSimple', ''),
