@@ -11,7 +11,7 @@
 
 
 /* --------------- design boxes */
-.bx-media-phone .bx-db-container {
+.bx-media-phone .bx-layout-cell > .bx-page-block-container > .bx-db-container {
     border-left-width: 0;
     border-right-width: 0;
     border-radius: 0;
