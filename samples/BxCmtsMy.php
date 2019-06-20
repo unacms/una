@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `sample_cmts_votes` (
   `count` int(11) NOT NULL default '0',
   `sum` int(11) NOT NULL default '0',
   UNIQUE KEY `object_id` (`object_id`)
-) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+);
 
 CREATE TABLE IF NOT EXISTS `sample_cmts_votes_track` (
   `object_id` int(11) NOT NULL default '0',
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `sample_cmts_votes_track` (
   `value` tinyint(4) NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
   KEY `vote` (`object_id`, `author_nip`)
-) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+);
 
  */
 
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `sample_cmts` (
   `cmt_replies` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`cmt_id`),
   KEY `cmt_object_id` (`cmt_object_id`,`cmt_parent_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+);
 
 Note: 'sample_cmts_trigger' table is needed just to check comments counter. In real integration it should be your main content table.
 CREATE TABLE IF NOT EXISTS `sample_cmts_trigger` (
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `sample_cmts_trigger` (
   `title` varchar(64) NOT NULL DEFAULT '0',
   `comments` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO `sample_cmts_trigger` (`id`, `title`, `comments`) VALUES
 (1, 'Sample Comments', 0);

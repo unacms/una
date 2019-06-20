@@ -4,7 +4,7 @@ CREATE TABLE `bx_unacon_accounts` (
   `remote_profile` int(10) unsigned NOT NULL,
   PRIMARY KEY (`local_profile`),
   KEY `remote_profile` (`remote_profile`)
-) ENGINE=MyISAM;
+);
 
 -- Studio page and widget
 

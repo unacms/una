@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `sample_grid_data` (
   KEY `Country` (`Country`),
   KEY `DateOfBirth` (`DateOfBirth`),
   FULLTEXT KEY `NickName_2` (`NickName`,`City`,`Headline`,`DescriptionMe`,`Tags`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=56 ;
+);
 
 INSERT INTO `sample_grid_data` VALUES
 (1, 'admin', 'dev@boonex.com', 'Rejected', 3, '', '', '', '', '', '0000-00-00', '', 0),

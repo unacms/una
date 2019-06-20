@@ -64,6 +64,8 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
         $this->_aError = array();
 
         $this->_sStorageEngine = 'MYISAM';
+        if (defined('BX_DATABASE_ENGINE'))
+            $this->_sStorageEngine = BX_DATABASE_ENGINE;
 
         $this->_sCharset = 'utf8mb4';
         if($aDbConf === false) {
@@ -84,7 +86,9 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
             if(isset($aDbConf['charset']))
             	$this->_sCharset = $aDbConf['charset'];
             if(isset($aDbConf['error_checking']))
-            	$this->_bErrorChecking = $aDbConf['error_checking'];
+                $this->_bErrorChecking = $aDbConf['error_checking'];
+            if(isset($aDbConf['storage_engine']))
+            	$this->_sStorageEngine = $aDbConf['storage_engine'];
         }
 
         @set_exception_handler(array($this, 'pdoExceptionHandler'));
@@ -156,6 +160,8 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
 
             $this->pdoExec("SET NAMES 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'");
             $this->pdoExec("SET sql_mode = ''");
+            if (0 == strcasecmp($this->_sStorageEngine, 'INNODB'))
+                $this->pdoExec("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
 
             $sVer = $this->getVersion();
             $sStorageEngine = !$sVer || version_compare($sVer, '5.7.5', '>=') ? 'default_storage_engine' : 'storage_engine';
@@ -484,14 +490,33 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
         if(isset($GLOBALS['bx_profiler']))
         	$GLOBALS['bx_profiler']->beginQuery($oStatement->queryString);
 
-		$bResult = $this->executeStatement($oStatement, $aBindings, $bVerbose);
+        for ($iAttempts = 3; $iAttempts > 0; --$iAttempts) {
 
-		//if mysql connection is lost - reconnect and try again
-        if(!$bResult && !$this->ping()) {
-            $this->disconnect();
-            $this->connect();
+            $oException = null;
+            $iErrorCode = 0;
+            $bResult = false;
+            try {
+                $bResult = $this->executeStatement($oStatement, $aBindings, $bVerbose, $iErrorCode);
+            } catch (PDOException $oException) {
+                $iErrorCode = $oException->errorInfo[1];
+            }
 
-            $bResult = $this->executeStatement($oStatement, $aBindings, $bVerbose);
+            // if deadlock timeout - try again, make sure that deadlock timeout is short
+            if (!$bResult && (1205 == $iErrorCode || 1213 == $iErrorCode)) {
+                continue;
+            }
+
+	    	// if mysql connection is lost - reconnect and try again
+            if(!$bResult && !$this->ping()) {
+                $this->disconnect();
+                $this->connect();
+                continue;
+            }
+
+            // in all other cases exit from the loop
+            if ($oException)
+                throw $oException;
+            break;
         }
 
         if(isset($GLOBALS['bx_profiler']))
@@ -1091,7 +1116,7 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
         return empty($aResult) ? true : $aResult;
     }
 
-    protected function executeStatement($oStatement, $aBindings = array(), $bVerbose = null)
+    protected function executeStatement($oStatement, $aBindings = array(), $bVerbose = null, &$iErrorCode = null)
     {
         $bResult = false;
 
@@ -1116,6 +1141,11 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
     			$bResult = $this->executeStatementException($oStatement, $aBindings, $bVerbose);
     			break;
     	}
+
+        if (!$bResult && !is_null($iErrorCode)) {
+            $aError = $oStatement->errorInfo();
+            $iErrorCode = $aError[1];
+        }
 
     	return $bResult;
     }

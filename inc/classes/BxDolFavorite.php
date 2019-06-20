@@ -40,7 +40,7 @@ define('BX_DOL_FAVORITE_USAGE_DEFAULT', BX_DOL_FAVORITE_USAGE_BLOCK);
  *      `author_id` int(11) NOT NULL default '0', -- favoring user profile id
  *      `date` int(11) NOT NULL default '0', -- timestamp of last recorded view
  *      KEY `id` (`object_id`,`author_id`)
- *  ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+ *  );
  * @endcode
  *
  */
