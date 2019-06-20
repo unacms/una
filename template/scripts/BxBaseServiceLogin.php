@@ -64,11 +64,14 @@ class BxBaseServiceLogin extends BxDol
             }
         }
 
-        BxDolTemplate::getInstance()->addCss(array('auth.css'));
+        if(empty($aTmplButtons) || !is_array($aTmplButtons))
+            return '';
 
-        return BxDolTemplate::getInstance()->parseHtmlByName('auth.html', array(
+        $oTemplate = BxDolTemplate::getInstance();
+        $oTemplate->addCss(array('auth.css'));
+        return $oTemplate->parseHtmlByName('auth.html', array(
             'bx_repeat:buttons' => $aTmplButtons,
-             'class_container' => ($bCompact ? 'sys-auth-compact-container' : '')
+            'class_container' => ($bCompact ? 'sys-auth-compact-container' : '')
         ));
     }
 
