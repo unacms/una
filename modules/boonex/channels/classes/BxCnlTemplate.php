@@ -28,6 +28,8 @@ class BxCnlTemplate extends BxBaseModGroupsTemplate
         $oPermalink = BxDolPermalinks::getInstance();
 
         $aLabel = $oLabel->getLabels(array('type' => 'value', 'value' => $aContentInfo[$CNF['FIELD_NAME']]));
+        if(empty($aLabel) || !is_array($aLabel))
+            return '';
 
         $aTmplVarsItems = array();
         $this->_entryBreadcrumb($aLabel['id'], $oLabel, $oPermalink, $aTmplVarsItems);

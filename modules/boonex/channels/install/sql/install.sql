@@ -226,8 +226,8 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_channel_add', 'channel_name', 2147483647, 1, 1),
 ('bx_channel_add', 'do_submit', 2147483647, 1, 2),
 
+('bx_channel_delete', 'delete_confirm', 2147483647, 1, 0),
 ('bx_channel_delete', 'do_submit', 2147483647, 1, 1),
-('bx_channel_delete', 'channel_name', 2147483647, 0, 2),
 
 ('bx_channel_edit', 'channel_name', 2147483647, 1, 1),
 ('bx_channel_edit', 'do_submit', 2147483647, 1, 2),
