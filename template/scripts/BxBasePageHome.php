@@ -55,8 +55,11 @@ class BxBasePageHome extends BxTemplPage
         if(strpos($aBlock['title'], 'splash') !== false) {
             $oPermalink = BxDolPermalinks::getInstance();
 
-            $sJoinForm = BxDolService::call('system', 'create_account_form', array(), 'TemplServiceAccount');
-            $sLoginForm = BxDolService::call('system', 'login_form', array(), 'TemplServiceLogin');
+            $sJoinForm = $sLoginForm = '';
+            if(!isLogged()) {
+                $sJoinForm = BxDolService::call('system', 'create_account_form', array(), 'TemplServiceAccount');
+                $sLoginForm = BxDolService::call('system', 'login_form', array(), 'TemplServiceLogin');
+            }
 
             $oTemplate = BxDolTemplate::getInstance();
             $oTemplate->addJs(array('lottie.min.js'));
