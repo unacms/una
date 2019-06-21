@@ -1,318 +1,276 @@
 /*!
- * froala_editor v2.8.5 (https://www.froala.com/wysiwyg-editor)
+ * froala_editor v3.0.0 (https://www.froala.com/wysiwyg-editor)
  * License https://froala.com/wysiwyg-editor/terms/
- * Copyright 2014-2018 Froala Labs
+ * Copyright 2014-2019 Froala Labs
  */
 
-(function (factory) {
-    if (typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define(['jquery'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        // Node/CommonJS
-        module.exports = function( root, jQuery ) {
-            if ( jQuery === undefined ) {
-                // require('jQuery') returns a factory that requires window to
-                // build a jQuery instance, we normalize how we use modules
-                // that require this pattern but the window provided is a noop
-                // if it's defined (how jquery works)
-                if ( typeof window !== 'undefined' ) {
-                    jQuery = require('jquery');
-                }
-                else {
-                    jQuery = require('jquery')(root);
-                }
-            }
-            return factory(jQuery);
-        };
-    } else {
-        // Browser globals
-        factory(window.jQuery);
-    }
-}(function ($) {
-/**
- * Danish
- */
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('froala-editor')) :
+  typeof define === 'function' && define.amd ? define(['froala-editor'], factory) :
+  (factory(global.FroalaEditor));
+}(this, (function (FE) { 'use strict';
 
-$.FE.LANGUAGE['da'] = {
-  translation: {
-    // Place holder
-    "Type something": "Skriv noget",
+  FE = FE && FE.hasOwnProperty('default') ? FE['default'] : FE;
 
-    // Basic formatting
-    "Bold": "Fed",
-    "Italic": "Kursiv",
-    "Underline": "Understreg",
-    "Strikethrough": "Gennemstreg",
+  /**
+   * Danish
+   */
+  FE.LANGUAGE['da'] = {
+    translation: {
+      // Place holder
+      'Type something': 'Skriv her',
+      // Basic formatting
+      'Bold': 'Fed',
+      'Italic': 'Kursiv',
+      'Underline': 'Understreget',
+      'Strikethrough': 'Gennemstreget',
+      // Main buttons
+      'Insert': 'Indsæt',
+      'Delete': 'Slet',
+      'Cancel': 'Fortryd',
+      'OK': 'Ok',
+      'Back': 'Tilbage',
+      'Remove': 'Fjern',
+      'More': 'Mere',
+      'Update': 'Opdater',
+      'Style': 'Udseende',
+      // Font
+      'Font Family': 'Skrifttype',
+      'Font Size': 'Skriftstørrelse',
+      // Colors
+      'Colors': 'Farver',
+      'Background': 'Baggrund',
+      'Text': 'Tekst',
+      'HEX Color': 'Hex farve',
+      // Paragraphs
+      'Paragraph Format': 'Typografi',
+      'Normal': 'Normal',
+      'Code': 'Kode',
+      'Heading 1': 'Overskrift 1',
+      'Heading 2': 'Overskrift 2',
+      'Heading 3': 'Overskrift 3',
+      'Heading 4': 'Overskrift 4',
+      // Style
+      'Paragraph Style': 'Afsnit',
+      'Inline Style': 'På linje',
+      // Alignment
+      'Align': 'Tilpasning',
+      'Align Left': 'Venstrejusteret',
+      'Align Center': 'Centreret',
+      'Align Right': 'Højrejusteret',
+      'Align Justify': 'Justeret',
+      'None': 'Ingen',
+      // Lists
+      'Ordered List': 'Punktopstilling',
+      'Unordered List': 'Punktopstilling med tal',
+      // Indent
+      'Decrease Indent': 'Formindsk indrykning',
+      'Increase Indent': 'Forøg indrykning',
+      // Links
+      'Insert Link': 'Indsæt link',
+      'Open in new tab': 'Åbn i ny fane',
+      'Open Link': 'Åbn link',
+      'Edit Link': 'Rediger link',
+      'Unlink': 'Fjern link',
+      'Choose Link': 'Vælg link',
+      // Images
+      'Insert Image': 'Indsæt billede',
+      'Upload Image': 'Upload billede',
+      'By URL': 'Fra URL',
+      'Browse': 'Gennemse',
+      'Drop image': 'Træk billedet herind',
+      'or click': 'eller klik',
+      'Manage Images': 'Administrer billeder',
+      'Loading': 'Henter',
+      'Deleting': 'Sletter',
+      'Tags': 'Tags',
+      'Are you sure? Image will be deleted.': 'Er du sikker? Billedet vil blive slettet.',
+      'Replace': 'Udskift',
+      'Uploading': 'Uploader',
+      'Loading image': 'Henter billede',
+      'Display': 'Layout',
+      'Inline': 'På linje',
+      'Break Text': 'Ombryd tekst',
+      'Alternative Text': 'Supplerende tekst',
+      'Change Size': 'Tilpas størrelse',
+      'Width': 'Bredde',
+      'Height': 'Højde',
+      'Something went wrong. Please try again.': 'Noget gik galt. Prøv igen.',
+      'Image Caption': 'Billedtekst',
+      'Advanced Edit': 'Avanceret redigering',
+      // Video
+      'Insert Video': 'Indsæt video',
+      'Embedded Code': 'Indlejret kode',
+      'Paste in a video URL': 'Indsæt en video via URL',
+      'Drop video': 'Træk videoen herind',
+      'Your browser does not support HTML5 video.': 'Din browser understøtter ikke HTML5 video.',
+      'Upload Video': 'Upload video',
+      // Tables
+      'Insert Table': 'Indsæt tabel',
+      'Table Header': 'Tabeloverskrift',
+      'Remove Table': 'Fjern tabel',
+      'Table Style': 'Tabeludseende',
+      'Horizontal Align': 'Vandret tilpasning',
+      'Row': 'Række',
+      'Insert row above': 'Indsæt række over',
+      'Insert row below': 'Indsæt række under',
+      'Delete row': 'Slet række',
+      'Column': 'Kolonne',
+      'Insert column before': 'Indsæt kolonne før',
+      'Insert column after': 'Indsæt kolonne efter',
+      'Delete column': 'Slet kolonne',
+      'Cell': 'Celle',
+      'Merge cells': 'Flet celler',
+      'Horizontal split': 'Vandret split',
+      'Vertical split': 'Lodret split',
+      'Cell Background': 'Cellebaggrund',
+      'Vertical Align': 'Lodret tilpasning',
+      'Top': 'Top',
+      'Middle': 'Midte',
+      'Bottom': 'Bund',
+      'Align Top': 'Tilpas i top',
+      'Align Middle': 'Tilpas i midte',
+      'Align Bottom': 'Tilpas i bund',
+      'Cell Style': 'Celleudseende',
+      // Files
+      'Upload File': 'Upload fil',
+      'Drop file': 'Træk filen herind',
+      // Emoticons
+      'Emoticons': 'Humørikoner',
+      'Grinning face': 'Grinende ansigt',
+      'Grinning face with smiling eyes': 'Grinende ansigt med smilende øjne',
+      'Face with tears of joy': 'Ansigt med glædestårer',
+      'Smiling face with open mouth': 'Smilende ansigt med åben mund',
+      'Smiling face with open mouth and smiling eyes': 'Smilende ansigt med åben mund og smilende øjne',
+      'Smiling face with open mouth and cold sweat': 'Smilende ansigt med åben mund og koldsved',
+      'Smiling face with open mouth and tightly-closed eyes': 'Smilende ansigt med åben mund og stramtlukkede øjne',
+      'Smiling face with halo': 'Smilende ansigt med glorie',
+      'Smiling face with horns': 'Smilende ansigt med horn',
+      'Winking face': 'Blinkede ansigt',
+      'Smiling face with smiling eyes': 'Smilende ansigt med smilende øjne',
+      'Face savoring delicious food': 'Ansigt der savler over lækker mad',
+      'Relieved face': 'Lettet ansigt',
+      'Smiling face with heart-shaped eyes': 'Smilende ansigt med hjerteformede øjne',
+      'Smiling face with sunglasses': 'Smilende ansigt med solbriller',
+      'Smirking face': 'Smilende ansigt',
+      'Neutral face': 'Neutralt ansigt',
+      'Expressionless face': 'Udtryksløst ansigt',
+      'Unamused face': 'Utilfredst ansigt',
+      'Face with cold sweat': 'Ansigt med koldsved',
+      'Pensive face': 'Eftertænksomt ansigt',
+      'Confused face': 'Forvirret ansigt',
+      'Confounded face': 'Irriteret ansigt',
+      'Kissing face': 'Kyssende ansigt',
+      'Face throwing a kiss': 'Ansigt der luftkysser',
+      'Kissing face with smiling eyes': 'Kyssende ansigt med smilende øjne',
+      'Kissing face with closed eyes': 'Kyssende ansigt med lukkede øjne',
+      'Face with stuck out tongue': 'Ansigt med tungen ud af munden',
+      'Face with stuck out tongue and winking eye': 'Ansigt med tungen ud af munden og blinkede øje',
+      'Face with stuck out tongue and tightly-closed eyes': 'Ansigt med tungen ud af munden og stramt lukkede øjne',
+      'Disappointed face': 'Skuffet ansigt',
+      'Worried face': 'Bekymret ansigt',
+      'Angry face': 'Vredt ansigt',
+      'Pouting face': 'Surmulende ansigt',
+      'Crying face': 'Grædende ansigt',
+      'Persevering face': 'Vedholdende ansigt',
+      'Face with look of triumph': 'Hoverende ansigt',
+      'Disappointed but relieved face': 'Skuffet, men lettet ansigt',
+      'Frowning face with open mouth': 'Ansigt med åben mund og rynket pande',
+      'Anguished face': 'Forpintt ansigt',
+      'Fearful face': 'Angst ansigt',
+      'Weary face': 'Udmattet ansigt',
+      'Sleepy face': 'Søvnigt ansigt',
+      'Tired face': 'Træt ansigt',
+      'Grimacing face': 'Ansigt der laver en grimasse',
+      'Loudly crying face': 'Vrælende ansigt',
+      'Face with open mouth': 'Ansigt med åben mund',
+      'Hushed face': 'Tyst ansigt',
+      'Face with open mouth and cold sweat': 'Ansigt med åben mund og koldsved',
+      'Face screaming in fear': 'Ansigt der skriger i frygt',
+      'Astonished face': 'Forbløffet ansigt',
+      'Flushed face': 'Blussende ansigt',
+      'Sleeping face': 'Sovende ansigt',
+      'Dizzy face': 'Svimmelt ansigt',
+      'Face without mouth': 'Ansigt uden mund',
+      'Face with medical mask': 'Ansigt med mundbind',
+      // Line breaker
+      'Break': 'Linjeskift',
+      // Math
+      'Subscript': 'Sænket skrift',
+      'Superscript': 'Hævet skrift',
+      // Full screen
+      'Fullscreen': 'Fuldskærm',
+      // Horizontal line
+      'Insert Horizontal Line': 'Indsæt vandret linie',
+      // Clear formatting
+      'Clear Formatting': 'Fjern formatering',
+      // Undo, redo
+      'Undo': 'Fortryd',
+      'Redo': 'Annuller fortryd',
+      // Select all
+      'Select All': 'Vælg alt',
+      // Code view
+      'Code View': 'Kodevisning',
+      // Quote
+      'Quote': 'Citat',
+      'Increase': 'Forøg',
+      'Decrease': 'Formindsk',
+      // Quick Insert
+      'Quick Insert': 'Kvik-indsæt',
+      // Spcial Characters
+      'Special Characters': 'Specialtegn',
+      'Latin': 'Latin',
+      'Greek': 'Græsk',
+      'Cyrillic': 'Kyrillisk',
+      'Punctuation': 'Tegnsætning',
+      'Currency': 'Valuta',
+      'Arrows': 'Pile',
+      'Math': 'Matematik',
+      'Misc': 'Diverse',
+      // Print.
+      'Print': 'Print',
+      // Spell Checker.
+      'Spell Checker': 'Stavekontrol',
+      // Help
+      'Help': 'Hjælp',
+      'Shortcuts': 'Genveje',
+      'Inline Editor': 'Indlejret editor',
+      'Show the editor': 'Vis editor',
+      'Common actions': 'Almindelige handlinger',
+      'Copy': 'Kopier',
+      'Cut': 'Klip',
+      'Paste': 'Sæt ind',
+      'Basic Formatting': 'Grundlæggende formatering',
+      'Increase quote level': 'Hæv citatniveau',
+      'Decrease quote level': 'Sænk citatniveau',
+      'Image / Video': 'Billede / video',
+      'Resize larger': 'Ændre til større',
+      'Resize smaller': 'Ændre til mindre',
+      'Table': 'Tabel',
+      'Select table cell': 'Vælg tabelcelle',
+      'Extend selection one cell': 'Udvid markeringen med én celle',
+      'Extend selection one row': 'Udvid markeringen med én række',
+      'Navigation': 'Navigation',
+      'Focus popup / toolbar': 'Fokuser popup / værktøjslinje',
+      'Return focus to previous position': 'Skift fokus tilbage til tidligere position',
+      // Embed.ly
+      'Embed URL': 'Integrer URL',
+      'Paste in a URL to embed': 'Indsæt en URL for at indlejre',
+      // Word Paste.
+      'The pasted content is coming from a Microsoft Word document. Do you want to keep the format or clean it up?': 'Det indsatte indhold kommer fra et Microsoft Word-dokument. Vil du beholde formateringen eller fjerne den?',
+      'Keep': 'Behold',
+      'Clean': 'Fjern',
+      'Word Paste Detected': 'Indsættelse fra Word opdaget',
+      // Character Counter 
+      'Characters': 'tegn',
+      // More Buttons
+      'More Text': 'Mere tekst',
+      'More Paragraph': 'Mere afsnit',
+      'More Rich': 'Mere rig',
+      'More Misc': 'Mere Diverse'
+    },
+    direction: 'ltr'
+  };
 
-    // Main buttons
-    "Insert": "Inds\u00e6t",
-    "Delete": "Slet",
-    "Cancel": "Fortryd",
-    "OK": "Ok",
-    "Back": "Tilbage",
-    "Remove": "Fjern",
-    "More": "Mere",
-    "Update": "Opdatering",
-    "Style": "Stil",
-
-    // Font
-    "Font Family": "Skrifttype",
-    "Font Size": "Skriftst\u00f8rrelse",
-
-    // Colors
-    "Colors": "Farver",
-    "Background": "Baggrunds",
-    "Text": "Tekst",
-    "HEX Color": "Hex farve",
-
-    // Paragraphs
-    "Paragraph Format": "S\u00e6tning format",
-    "Normal": "Normal",
-    "Code": "Code",
-    "Heading 1": "Overskrift 1",
-    "Heading 2": "Overskrift 2",
-    "Heading 3": "Overskrift 3",
-    "Heading 4": "Overskrift 4",
-
-    // Style
-    "Paragraph Style": "S\u00e6tning stil",
-    "Inline Style": "Inline stil",
-
-    // Alignment
-    "Align": "Tilpasning",
-    "Align Left": "Venstrejusteret",
-    "Align Center": "Centreret",
-    "Align Right": "H\u00f8jrejusteret",
-    "Align Justify": "Justering",
-    "None": "Intet",
-
-    // Lists
-    "Ordered List": "Ordnet liste",
-    "Unordered List": "Uordnet liste",
-
-    // Indent
-    "Decrease Indent": "Mindske indrykning",
-    "Increase Indent": "For\u00f8ge indrykning",
-
-    // Links
-    "Insert Link": "Inds\u00e6t link",
-    "Open in new tab": "\u00c5bn i ny fane",
-    "Open Link": "\u00c5bn link",
-    "Edit Link": "Rediger link",
-    "Unlink": "Fjern link",
-    "Choose Link": "V\u00e6lg link",
-
-    // Images
-    "Insert Image": "Inds\u00e6t billede",
-    "Upload Image": "Upload billede",
-    "By URL": "Af URL",
-    "Browse": "Gennemse",
-    "Drop image": "Tr\u00e6k billedet herind",
-    "or click": "eller klik",
-    "Manage Images": "Administrer billeder",
-    "Loading": "Lastning",
-    "Deleting": "Sletning",
-    "Tags": "Tags",
-    "Are you sure? Image will be deleted.": "Er du sikker? Billede vil blive slettet.",
-    "Replace": "Udskift",
-    "Uploading": "Upload",
-    "Loading image": "Lastning billede",
-    "Display": "Udstilling",
-    "Inline": "Inline",
-    "Break Text": "Afbrydelse tekst",
-    "Alternative Text": "Suppleant tekst",
-    "Change Size": "Skift st\u00f8rrelse",
-    "Width": "Bredde",
-    "Height": "H\u00f8jde",
-    "Something went wrong. Please try again.": "Noget gik galt. Pr\u00f8v igen.",
-    "Image Caption": "Billedtekst",
-    "Advanced Edit": "Avanceret redigering",
-
-    // Video
-    "Insert Video": "Inds\u00e6t video",
-    "Embedded Code": "Embedded kode",
-    "Paste in a video URL": "Indsæt i en video url",
-    "Drop video": "Slip video",
-    "Your browser does not support HTML5 video.": "Din browser understøtter ikke html5 video.",
-    "Upload Video": "Upload video",
-
-    // Tables
-    "Insert Table": "Inds\u00e6t tabel",
-    "Table Header": "Tabel header",
-    "Remove Table": "Fjern tabel",
-    "Table Style": "Tabel stil",
-    "Horizontal Align": "Vandret tilpasning",
-    "Row": "R\u00e6kke",
-    "Insert row above": "Inds\u00e6t r\u00e6kke over",
-    "Insert row below": "Inds\u00e6t r\u00e6kke under",
-    "Delete row": "Slet r\u00e6kke",
-    "Column": "Kolonne",
-    "Insert column before": "Inds\u00e6t kolonne f\u00f8r",
-    "Insert column after": "Inds\u00e6t kolonne efter",
-    "Delete column": "Slet kolonne",
-    "Cell": "Celle",
-    "Merge cells": "Flet celler",
-    "Horizontal split": "Vandret split",
-    "Vertical split": "Lodret split",
-    "Cell Background": "Celle baggrund",
-    "Vertical Align": "Lodret tilpasning",
-    "Top": "Top",
-    "Middle": "Midten",
-    "Bottom": "Bund",
-    "Align Top": "Tilpasse top",
-    "Align Middle": "Tilpasse midten",
-    "Align Bottom": "Tilpasse bund",
-    "Cell Style": "Celle stil",
-
-    // Files
-    "Upload File": "Upload fil",
-    "Drop file": "Drop fil",
-
-    // Emoticons
-    "Emoticons": "Hum\u00f8rikoner",
-    "Grinning face": "Grinende ansigt",
-    "Grinning face with smiling eyes": "Grinende ansigt med smilende \u00f8jne",
-    "Face with tears of joy": "Ansigt med gl\u00e6dest\u00e5rer",
-    "Smiling face with open mouth": "Smilende ansigt med \u00e5ben mund",
-    "Smiling face with open mouth and smiling eyes": "Smilende ansigt med \u00e5ben mund og smilende \u00f8jne",
-    "Smiling face with open mouth and cold sweat": "Smilende ansigt med \u00e5ben mund og koldsved",
-    "Smiling face with open mouth and tightly-closed eyes": "Smilende ansigt med \u00e5ben mund og stramt-lukkede \u00f8jne",
-    "Smiling face with halo": "Smilende ansigt med halo",
-    "Smiling face with horns": "Smilende ansigt med horn",
-    "Winking face": "Blinkede ansigt",
-    "Smiling face with smiling eyes": "Smilende ansigt med smilende \u00f8jne",
-    "Face savoring delicious food": "Ansigt savoring l\u00e6kker mad",
-    "Relieved face": "Lettet ansigt",
-    "Smiling face with heart-shaped eyes": "Smilende ansigt med hjerteformede \u00f8jne",
-    "Smiling face with sunglasses": "Smilende ansigt med solbriller",
-    "Smirking face": "Smilende ansigt",
-    "Neutral face": "Neutral ansigt",
-    "Expressionless face": "Udtryksl\u00f8se ansigt",
-    "Unamused face": "Ikke morede ansigt",
-    "Face with cold sweat": "Ansigt med koldsved",
-    "Pensive face": "Eftert\u00e6nksom ansigt",
-    "Confused face": "Forvirret ansigt",
-    "Confounded face": "Forvirrede ansigt",
-    "Kissing face": "Kysse ansigt",
-    "Face throwing a kiss": "Ansigt smide et kys",
-    "Kissing face with smiling eyes": "Kysse ansigt med smilende \u00f8jne",
-    "Kissing face with closed eyes": "Kysse ansigt med lukkede \u00f8jne",
-    "Face with stuck out tongue": "Ansigt med stak ud tungen",
-    "Face with stuck out tongue and winking eye": "Ansigt med stak ud tungen og blinkede \u00f8je",
-    "Face with stuck out tongue and tightly-closed eyes": "Ansigt med stak ud tungen og stramt lukkede \u00f8jne",
-    "Disappointed face": "Skuffet ansigt",
-    "Worried face": "Bekymret ansigt",
-    "Angry face": "Vred ansigt",
-    "Pouting face": "Sk\u00e6gtorsk ansigt",
-    "Crying face": "Gr\u00e6der ansigt",
-    "Persevering face": "Udholdende ansigt",
-    "Face with look of triumph": "Ansigt med udseendet af triumf",
-    "Disappointed but relieved face": "Skuffet, men lettet ansigt",
-    "Frowning face with open mouth": "Rynkede panden ansigt med \u00e5ben mund",
-    "Anguished face": "Forpinte ansigt",
-    "Fearful face": "Frygt ansigt",
-    "Weary face": "Tr\u00e6tte ansigt",
-    "Sleepy face": "S\u00f8vnig ansigt",
-    "Tired face": "Tr\u00e6t ansigt",
-    "Grimacing face": "Grimasser ansigt",
-    "Loudly crying face": "H\u00f8jlydt grædende ansigt",
-    "Face with open mouth": "Ansigt med \u00e5ben mund",
-    "Hushed face": "Tyst ansigt",
-    "Face with open mouth and cold sweat": "Ansigt med \u00e5ben mund og koldsved",
-    "Face screaming in fear": "Ansigt skrigende i fryg",
-    "Astonished face": "Forundret ansigt",
-    "Flushed face": "Blussende ansigt",
-    "Sleeping face": "Sovende ansigt",
-    "Dizzy face": "Svimmel ansigt",
-    "Face without mouth": "Ansigt uden mund",
-    "Face with medical mask": "Ansigt med medicinsk maske",
-
-    // Line breaker
-    "Break": "Afbrydelse",
-
-    // Math
-    "Subscript": "S\u00e6nket skrift",
-    "Superscript": "H\u00e6vet skrift",
-
-    // Full screen
-    "Fullscreen": "Fuld sk\u00e6rm",
-
-    // Horizontal line
-    "Insert Horizontal Line": "Inds\u00e6t vandret linie",
-
-    // Clear formatting
-    "Clear Formatting": "Fjern formatering",
-
-    // Undo, redo
-    "Undo": "Fortryd",
-    "Redo": "Genopret",
-
-    // Select all
-    "Select All": "V\u00e6lg alle",
-
-    // Code view
-    "Code View": "Kode visning",
-
-    // Quote
-    "Quote": "Citat",
-    "Increase": "For\u00f8ge",
-    "Decrease": "Mindsk",
-
-    // Quick Insert
-    "Quick Insert": "Hurtig indsats",
-
-    // Spcial Characters
-    "Special Characters": "Specialtegn",
-    "Latin": "Latin",
-    "Greek": "Græsk",
-    "Cyrillic": "Kyrillisk",
-    "Punctuation": "Tegnsætning",
-    "Currency": "Betalingsmiddel",
-    "Arrows": "Pile",
-    "Math": "Matematik",
-    "Misc": "Misc",
-
-    // Print.
-    "Print": "Print",
-
-    // Spell Checker.
-    "Spell Checker": "Stavekontrol",
-
-    // Help
-    "Help": "Hjælp",
-    "Shortcuts": "Genveje",
-    "Inline Editor": "Inline editor",
-    "Show the editor": "Vis redaktøren",
-    "Common actions": "Fælles handlinger",
-    "Copy": "Kopi",
-    "Cut": "Skære",
-    "Paste": "Sæt ind",
-    "Basic Formatting": "Grundlæggende formatering",
-    "Increase quote level": "Øge tilbudsniveau",
-    "Decrease quote level": "Sænk citeringsniveauet",
-    "Image / Video": "Billede / video",
-    "Resize larger": "Ændre størrelse større",
-    "Resize smaller": "Ændre størrelsen mindre",
-    "Table": "Tabel",
-    "Select table cell": "Vælg tabel celle",
-    "Extend selection one cell": "Udvide valget en celle",
-    "Extend selection one row": "Udvide markeringen en række",
-    "Navigation": "Navigation",
-    "Focus popup / toolbar": "Fokus popup / værktøjslinje",
-    "Return focus to previous position": "Returnere fokus til tidligere position",
-
-    // Embed.ly
-    "Embed URL": "Integrere url",
-    "Paste in a URL to embed": "Indsæt i en URL for at indlejre",
-
-    // Word Paste.
-    "The pasted content is coming from a Microsoft Word document. Do you want to keep the format or clean it up?": "Det indsatte indhold kommer fra et Microsoft Word-dokument. Vil du beholde formateringen eller fjerne det?",
-    "Keep": "Beholde",
-    "Clean": "Fjerne",
-    "Word Paste Detected": "Indsættelse fra Word er detekteret"
-  },
-  direction: "ltr"
-};
-
-}));
+})));
+//# sourceMappingURL=da.js.map

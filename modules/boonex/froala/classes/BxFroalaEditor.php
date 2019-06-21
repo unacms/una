@@ -19,50 +19,53 @@ class BxFroalaEditor extends BxDolEditor
      * Common initialization params
      */
     protected static $CONF_COMMON = <<<EOS
-        jQuery('{bx_var_selector}')
-            .on('froalaEditor.initialized', function (e, editor) {
-                editor.\$el.atwho({
-                    searchKey: 'label',
-                    at: "@", 
-                    limit: 20,
-                    displayTpl: '<li class="bx-mention-row" data-value="\${value}"><span>\${label}</span> <img class="bx-def-round-corners" src="\${thumb}" /></li>',
-                    insertTpl: '<a class="bx-mention" data-profile-id="\${value}" href="\${url}">\${label}</a>',
-                    callbacks: {
-                        remoteFilter: function(query, callback) {
-                            $.getJSON("{bx_url_root}searchExtended.php?action=get_authors", {term: query}, function(data) {
-                                callback(data);
-                            });
-                        }
-                    },
-                });
- 
-                editor.events.on('keydown', function (e) {
-                    if (e.which == $.FroalaEditor.KEYCODE.ENTER || e.which == $.FroalaEditor.KEYCODE.SPACE)
+        new FroalaEditor('{bx_var_selector}', {
+            {bx_var_custom_init}
+            {bx_var_custom_conf}
+            key:'SDB17hD9B4F4B3eMRPYa1c1REe1BGQOQIc1CDBREJImD6F5F4I4E1B9B6C3F5C4==',
+            attribution: false,
+            embedlyKey: '{bx_var_embedly_key}',
+            emoticonsUseImage: false,
+            charCounterCount: false,
+            toolbarSticky: false,
+            quickInsertTags: [],
+            pastePlain: true,
+            entities: '',
+            imageUpload: true,
+            imageUploadURL: '{bx_var_image_upload_url}',
+            videoUpload: false,
+            language: '{bx_var_lang}',
+            theme: '{bx_var_skin}',
+            iconsTemplate: '{bx_var_icons_template}',
+            events: { 
+                'initialized': function () {
+                    var editor = this;
+                    \$('{bx_var_selector}').data('froala-instance', editor);
+                    \$(editor.el).atwho({
+                        searchKey: 'label',
+                        at: "@", 
+                        limit: 20,
+                        displayTpl: '<li class="bx-mention-row" data-value="\${value}"><span>\${label}</span> <img class="bx-def-round-corners" src="\${thumb}" /></li>',
+                        insertTpl: '<a class="bx-mention" data-profile-id="\${value}" href="\${url}">\${label}</a>',
+                        callbacks: {
+                            remoteFilter: function(query, callback) {
+                                $.getJSON("{bx_url_root}searchExtended.php?action=get_authors", {term: query}, function(data) {
+                                    callback(data);
+                                });
+                            }
+                        },
+                    });
+                    bx_editor_on_init('{bx_var_selector}');
+                },
+                'keydown': function (e) {
+                    var editor = this;
+                    if (e.which == FroalaEditor.KEYCODE.ENTER || e.which == FroalaEditor.KEYCODE.SPACE)
                         bx_editor_on_space_enter('{bx_var_selector}');
-                    if (e.which == $.FroalaEditor.KEYCODE.ENTER && editor.\$el.atwho('isSelecting'))
+                    if (e.which == FroalaEditor.KEYCODE.ENTER && \$(editor.el).atwho('isSelecting'))
                         return false;
-                }, true);
-
-                bx_editor_on_init('{bx_var_selector}');
-            })
-            .froalaEditor({
-                {bx_var_custom_init}
-                {bx_var_custom_conf}
-                key:'TB14A7D6A6kF4A3F3J4C6B7D6A3D3F3C-8LAHYKAJOEh1HQDUH==',
-                embedlyKey: '{bx_var_embedly_key}',
-                emoticonsUseImage: false,
-                charCounterCount: false,
-                toolbarSticky: false,
-                quickInsertTags: [],
-                pastePlain: true,
-                entities: '',
-                imageUpload: true,
-                imageUploadURL: '{bx_var_image_upload_url}',
-                videoUpload: false,
-                language: '{bx_var_lang}',
-                theme: '{bx_var_skin}',
-                iconsTemplate: 'font_awesome_5'
-            });
+                },
+            }
+        });
 EOS;
 
     /**
@@ -154,6 +157,7 @@ EOS;
             'bx_url_root' => bx_js_string(BX_DOL_URL_ROOT, BX_ESCAPE_STR_APOS),
             'bx_var_embedly_key' => bx_js_string(getParam('sys_embedly_api_key'), BX_ESCAPE_STR_APOS),            
             'bx_var_image_upload_url' => $oModule ? BX_DOL_URL_ROOT . $oModule->_oConfig->getBaseUri() . 'upload' : '',
+            'bx_var_icons_template' => getParam('bx_froala_icons_template'),
         ));
 
         if ($bDynamicMode) {

@@ -1,7 +1,7 @@
 {
   "name": "froala-editor",
-  "version": "2.8.5",
-  "description": "A beautiful Javascript WYSIWYG HTML rich text editor made by devs for devs. High performance and modern design make it easy to use for developers and loved by users.",
+  "version": "3.0.0",
+  "description": "The next generation Javascript WYSIWYG HTML rich text editor made by devs for devs. High performance and modern design make it easy to use for developers and loved by users.",
   "keywords": [
     "froala",
     "froala-editor",
@@ -10,12 +10,12 @@
     "text",
     "editor",
     "wysiwyg",
-    "jquery-plugin",
+    "javascript-plugin",
     "rich editor",
     "rich text editor",
     "rte",
     "javascript",
-    "jquery"
+    "vanillajs"
   ],
   "homepage": "https://www.froala.com/wysiwyg-editor",
   "license": "https://www.froala.com/wysiwyg-editor/pricing",
@@ -28,10 +28,6 @@
       "name": "Froala Labs"
     }
   ],
-  "dependencies" : {
-    "jquery": ">=1.11.0",
-    "font-awesome": ">=4.4.0"
-  },
   "filename": "js/froala_editor.min.js",
   "main": "js/froala_editor.min.js",
   "npmName": "froala-editor",
@@ -43,8 +39,10 @@
         "js/third_party/*.min.js",
         "js/froala_editor.min.js",
         "js/froala_editor.pkgd.min.js",
+        "js/plugins.pkgd.min.js",
         "css/froala_editor.min.css",
         "css/froala_editor.pkgd.min.css",
+        "css/plugins.pkgd.min.css",
         "css/froala_style.min.css",
         "css/plugins/*.min.css",
         "css/third_party/*.min.css",

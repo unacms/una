@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="../../css/froala_editor.css">
   <link rel="stylesheet" href="../../css/froala_style.css">
@@ -21,19 +22,19 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.css">
 
   <style>
-      body {
-          text-align: center;
-      }
+    body {
+      text-align: center;
+    }
 
-      div#editor {
-          width: 81%;
-          margin: auto;
-          text-align: left;
-      }
+    div#editor {
+      width: 81%;
+      margin: auto;
+      text-align: left;
+    }
 
-      .ss {
-        background-color: red;
-      }
+    .ss {
+      background-color: red;
+    }
   </style>
 </head>
 
@@ -49,16 +50,18 @@
             <li>The last button clears the selection.</li>
           </ul>
         </li>
-        <li>The selection will be restored correctly only if you don't make any changes by typing into the WYSIWYG HTML editor after you save it.</li>
+        <li>The selection will be restored correctly only if you don't make any changes by typing into the WYSIWYG HTML
+          editor after you save it.</li>
       </ol>
     </div>
   </div>
 
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script>
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script>
 
-  <script type="text/javascript" src="../../js/froala_editor.min.js" ></script>
+  <script type="text/javascript" src="../../js/froala_editor.min.js"></script>
   <script type="text/javascript" src="../../js/plugins/align.min.js"></script>
   <script type="text/javascript" src="../../js/plugins/char_counter.min.js"></script>
   <script type="text/javascript" src="../../js/plugins/code_beautifier.min.js"></script>
@@ -87,44 +90,45 @@
   <script type="text/javascript" src="../../js/plugins/video.min.js"></script>
 
   <script>
-    $(function(){
-      $.FroalaEditor.DefineIcon('saveSelection', {NAME: 'download'});
-      $.FroalaEditor.RegisterCommand('saveSelection', {
+    (function () {
+      FroalaEditor.DefineIcon('saveSelection', { NAME: 'download', SVG_KEY: 'print' })
+      FroalaEditor.RegisterCommand('saveSelection', {
         title: 'Save',
         focus: true,
         undo: false,
         refreshAfterCallback: false,
         callback: function () {
-          this.selection.save();
-          alert('selection saved');
+          this.selection.save()
+          alert('selection saved')
         }
-      });
+      })
 
-      $.FroalaEditor.DefineIcon('restoreSelection', {NAME: 'upload'});
-      $.FroalaEditor.RegisterCommand('restoreSelection', {
+      FroalaEditor.DefineIcon('restoreSelection', { NAME: 'upload', SVG_KEY: 'upload' });
+      FroalaEditor.RegisterCommand('restoreSelection', {
         title: 'Restore',
         focus: true,
         undo: false,
         refreshAfterCallback: false,
         callback: function () {
-          this.selection.restore();
+          this.selection.restore()
         }
-      });
+      })
 
-      $.FroalaEditor.DefineIcon('clearSelection', {NAME: 'trash'});
-      $.FroalaEditor.RegisterCommand('clearSelection', {
+      FroalaEditor.DefineIcon('clearSelection', { NAME: 'trash', SVG_KEY: 'remove' });
+      FroalaEditor.RegisterCommand('clearSelection', {
         title: 'Clear',
         focus: true,
         undo: false,
         refreshAfterCallback: false,
         callback: function () {
-          this.selection.clear();
+          this.selection.clear()
         }
-      });
-      $('#edit').froalaEditor({
-        toolbarButtons: ['saveSelection', 'restoreSelection', 'clearSelection']
       })
-    });
+      new FroalaEditor("#edit", {
+        toolbarButtons: [ ['saveSelection', 'restoreSelection', 'clearSelection'] ]
+      })
+    })()
   </script>
 </body>
+
 </html>

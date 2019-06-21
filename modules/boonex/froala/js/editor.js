@@ -10,10 +10,11 @@
 
 function bx_editor_insert_html (sEditorId, sImgId, sHtml) 
 {
-    if (typeof $('#' + sEditorId).froalaEditor !== 'function')
+    var oEditor = $('#' + sEditorId).data('froala-instance');
+    if (typeof oEditor !== 'object')
         return;
 
-    $('#' + sEditorId).froalaEditor('html.insert', sHtml, false);
+    oEditor.html.insert(sHtml, false);
 }
 
 function bx_editor_insert_img (sEditorId, sImgId, sImgUrl, sClasses) 
@@ -56,9 +57,12 @@ function bx_editor_on_space_enter (sEditorId)
     glBxEditorOnSpaceEnterTimer = setTimeout(function () {
         glBxEditorOnSpaceEnterTimer = undefined;
         if (typeof glOnSpaceEnterInEditor !== 'undefined' && glOnSpaceEnterInEditor instanceof Array) {
-            for (var i = 0; i < glOnSpaceEnterInEditor.length; i++)
-                if (typeof glOnSpaceEnterInEditor[i] === "function")
-                    glOnSpaceEnterInEditor[i]($(sEditorId).froalaEditor('html.get'), sEditorId);
+            for (var i = 0; i < glOnSpaceEnterInEditor.length; i++) {
+                if (typeof glOnSpaceEnterInEditor[i] === "function") {
+                    var oEditor = $(sEditorId).data('froala-instance');
+                    glOnSpaceEnterInEditor[i](oEditor.html.get(), sEditorId);
+                }
+            }
         }
     }, 800);
 }
@@ -67,7 +71,8 @@ function bx_editor_get_htmleditable (sEditorSelector)
 {
     if (!$(sEditorSelector).size())
         return false;
-    return $(sEditorSelector).data('froala.editor').el;
+    var oEditor = $(sEditorSelector).data('froala-instance');
+    return oEditor.el;
 }
 
 function bx_editor_remove_all (oElement) 
