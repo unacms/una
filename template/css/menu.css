@@ -401,11 +401,14 @@ ul.bx-menu-floating-blocks {
 }
 .bx-menu-floating-blocks-dash-title{
     display:flex;
+    width:calc(100% - 3rem);
     height:2.35rem;
     flex-direction: column;
     justify-content: center;
 }
-
+.bx-media-phone .bx-menu-floating-blocks-title {
+    font-size:0.75rem;
+}
 .bx-menu-floating-blocks-wide li {
     position:relative;
     width:100px;
