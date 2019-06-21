@@ -11,7 +11,8 @@ VALUES (@iTypeId, 'bx_plyr_general', '_bx_plyr_adm_stg_cpt_category_general', 1)
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-('bx_plyr_option_todo', '123', @iCategId, '_bx_plyr_option_todo', 'digit', '', '', '', 10);
+('bx_plyr_option_controls', 'play-large,play,progress,current-time,mute,volume,captions,settings,pip,airplay,fullscreen', @iCategId, '_bx_plyr_option_controls', 'text', '', '', '', 10),
+('bx_plyr_option_settings', 'captions,quality,speed,loop', @iCategId, '_bx_plyr_option_settings', 'text', '', '', '', 20);
 
 -- Editor
 

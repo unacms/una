@@ -135,10 +135,14 @@ class BxPlyrPlayer extends BxDolPlayer
 
         // plyr initialization
         $sFormat = getParam('sys_player_default_format');
+        $aControls = explode(',', getParam('bx_plyr_option_controls'));
+        $aSettings = explode(',', getParam('bx_plyr_option_settings'));
         $aOptions = array_merge(array(
             // 'debug' => true,
             'quality' => array('default' => $this->_aSizes[$sFormat]),
             'displayDuration' => false,
+            'controls' => $aControls,
+            'settings' => $aSettings,
         ), $this->_aConfCustom);
         $sInitEditor = "
             gl$sId = new Plyr('#$sId', " . json_encode($aOptions) . ");
