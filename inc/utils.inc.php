@@ -1595,7 +1595,7 @@ function bx_linkify($text, $sAttrs = '', $bHtmlSpecialChars = false)
     if ($bHtmlSpecialChars)
         $text = htmlspecialchars($text, ENT_NOQUOTES, 'UTF-8');
 
-    $re = "@\b((https?://)|(www\.))(([0-9a-zA-Z_!~*'().&=+$%-]+:)?[0-9a-zA-Z_!~*'().&=+$%-]+\@)?(([0-9]{1,3}\.){3}[0-9]{1,3}|([0-9a-zA-Z_!~*'()-]+\.)*([0-9a-zA-Z][0-9a-zA-Z-]{0,61})?[0-9a-zA-Z]\.[a-zA-Z]{2,7})(:[0-9]{1,4})?((/[0-9a-zA-Z_!~*'().;?:\@&=+$,%#-]+)*/?)@";
+    $re = "@\b((https?://)|(www\.))(([0-9a-zA-Z_!~*'().&=+$%-]+:)?[0-9a-zA-Z_!~*'().&=+$%-]+\@)?(([0-9]{1,3}\.){3}[0-9]{1,3}|([0-9a-zA-Z_!~*'()-]+\.)*([0-9a-zA-Z][0-9a-zA-Z-]{0,61})?[0-9a-zA-Z]\.[a-zA-Z]{2,16})(:[0-9]{1,4})?((/[0-9a-zA-Z_!~*'().;?:\@&=+$,%#-]+)*/?)@";
     preg_match_all($re, $text, $matches, PREG_OFFSET_CAPTURE);
 
     $matches = $matches[0];
@@ -1605,17 +1605,18 @@ function bx_linkify($text, $sAttrs = '', $bHtmlSpecialChars = false)
 
     while ($i--)
     {
+        $sAttrsLocal = $sAttrs;
         $url = $matches[$i][0];
         if (!preg_match('@^https?://@', $url))
             $url = 'http://'.$url;
 
         if (strncmp(BX_DOL_URL_ROOT, $url, strlen(BX_DOL_URL_ROOT)) !== 0) {
-            $sAttrs .= ' target="_blank" ';
+            $sAttrsLocal .= ' target="_blank" ';
             if ($bAddNofollow)
-                $sAttrs .= ' rel="nofollow" ';
+                $sAttrsLocal .= ' rel="nofollow" ';
         }
 
-        $text = substr_replace($text, '<a ' . $sAttrs . ' href="'.$url.'">'.$matches[$i][0].'</a>', $matches[$i][1], strlen($matches[$i][0]));
+        $text = substr_replace($text, '<a ' . $sAttrsLocal . ' href="'.$url.'">'.$matches[$i][0].'</a>', $matches[$i][1], strlen($matches[$i][0]));
     }
 	
 	// email pattern
@@ -1642,6 +1643,8 @@ function bx_linkify_html($sHtmlOrig, $sAttrs = '')
     $xpath = new DOMXpath($dom);
 
     foreach ($xpath->query('//text()') as $text) {
+        if (!empty($text->parentNode) && !empty($text->parentNode->tagName) && 'a' == $text->parentNode->tagName)
+            continue;
         $frag = $dom->createDocumentFragment();
         @$frag->appendXML(bx_linkify($text->nodeValue, $sAttrs, true));
         $text->parentNode->replaceChild($frag, $text);
