@@ -161,7 +161,9 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
         $sContent = "";
         if(($bPage = $this->sPage != '') === true) {
-            $aTmplVars = array();
+            $aTmplVars = array(
+                'page_id' => 'bx-page-' . $this->aPageRebuild['uri']
+            );
             for($i = 1; $i <= $this->aPageRebuild['layout_cells_number']; $i++) {
                 $aBlocks = array();
                 $this->oDb->getBlocks(array('type' => 'by_object_cell', 'object' => $this->aPageRebuild['object'], 'cell' => $i), $aBlocks, false);
