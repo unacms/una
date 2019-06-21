@@ -119,10 +119,16 @@
     justify-content: space-between;
 }
 
+.bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-bottom .bx-forum-gpm-reply {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
 .bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-bottom .bx-forum-gpm-reply i,
 .bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-bottom .bx-forum-gpm-reply ul {
-    display: inline-block;
-    vertical-align: middle;
+    display: block;
 }
 
 .bx-base-general-unit-meta ul.bx-menu-object-bx_forum_snippet_meta_counters li span {
