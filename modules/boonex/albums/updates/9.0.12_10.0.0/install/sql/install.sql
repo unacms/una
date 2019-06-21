@@ -29,6 +29,10 @@ DELETE FROM `sys_objects_transcoder` WHERE `object` IN ('bx_albums_video_webm', 
 INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`, `override_class_name`, `override_class_file`) VALUES
 ('bx_albums_video_mp4_hd', 'bx_albums_photos_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_albums_files";}', 'no', 0, 0, 0, 'BxDolTranscoderVideo', '');
 
+UPDATE `sys_objects_transcoder` SET `source_params`='a:4:{s:6:"object";s:15:"bx_albums_files";s:5:"image";s:17:"bx_albums_preview";s:12:"video_poster";s:30:"bx_albums_video_poster_preview";s:5:"video";a:4:{i:0;s:19:"bx_albums_video_mp4";i:1;s:22:"bx_albums_video_mp4_hd";i:2;s:29:"bx_albums_video_poster_browse";i:3;s:26:"bx_albums_video_poster_big";}}' WHERE `object`='bx_albums_proxy_preview';
+UPDATE `sys_objects_transcoder` SET `source_params`='a:4:{s:6:"object";s:15:"bx_albums_files";s:5:"image";s:16:"bx_albums_browse";s:12:"video_poster";s:29:"bx_albums_video_poster_browse";s:5:"video";a:2:{i:0;s:19:"bx_albums_video_mp4";i:1;s:22:"bx_albums_video_mp4_hd";}}' WHERE `object`='bx_albums_proxy_browse';
+UPDATE `sys_objects_transcoder` SET `source_params`='a:4:{s:6:"object";s:15:"bx_albums_files";s:5:"image";s:13:"bx_albums_big";s:12:"video_poster";s:26:"bx_albums_video_poster_big";s:5:"video";a:2:{i:0;s:19:"bx_albums_video_mp4";i:1;s:22:"bx_albums_video_mp4_hd";}}' WHERE `object`='bx_albums_proxy_cover';
+
 DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` IN ('bx_albums_video_webm', 'bx_albums_video_mp4_hd');
 INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES 
 ('bx_albums_video_mp4_hd', 'Mp4', 'a:3:{s:1:"h";s:3:"720";s:13:"video_bitrate";s:4:"1536";s:10:"force_type";s:3:"mp4";}', 0);
