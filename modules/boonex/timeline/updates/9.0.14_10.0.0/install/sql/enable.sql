@@ -6,11 +6,8 @@ UPDATE `sys_pages_blocks` SET `designbox_id`='0' WHERE `object`='bx_timeline_vie
 UPDATE `sys_pages_blocks` SET `designbox_id`='0' WHERE `object`='bx_timeline_view_hot' AND `title`='_bx_timeline_page_block_title_view_hot';
 UPDATE `sys_pages_blocks` SET `designbox_id`='0' WHERE `object`='bx_timeline_view_hot' AND `title`='_bx_timeline_page_block_title_view_hot_outline';
 
-SET @iPBCellDashboard = 4;
-SET @iPBOrderDashboard = 1;
-UPDATE `sys_pages_blocks` SET `cell_id`=@iPBCellDashboard, `order`=@iPBOrderDashboard WHERE `object`='sys_dashboard' AND `title`='_bx_timeline_page_block_title_post_account';
-UPDATE `sys_pages_blocks` SET `cell_id`=@iPBCellDashboard, `designbox_id`='0', `order`=@iPBOrderDashboard+1 WHERE `object`='sys_dashboard' AND `title`='_bx_timeline_page_block_title_view_account';
-UPDATE `sys_pages_blocks` SET `cell_id`=@iPBCellDashboard, `designbox_id`='0', `order`=@iPBOrderDashboard+1 WHERE `object`='sys_dashboard' AND `title`='_bx_timeline_page_block_title_view_account_outline';
+UPDATE `sys_pages_blocks` SET `designbox_id`='0' WHERE `object`='sys_dashboard' AND `title`='_bx_timeline_page_block_title_view_account';
+UPDATE `sys_pages_blocks` SET `designbox_id`='0' WHERE `object`='sys_dashboard' AND `title`='_bx_timeline_page_block_title_view_account_outline';
 
 UPDATE `sys_pages_blocks` SET `designbox_id`='0' WHERE `object`='sys_home' AND `title`='_bx_timeline_page_block_title_view_home';
 UPDATE `sys_pages_blocks` SET `designbox_id`='0' WHERE `object`='sys_home' AND `title`='_bx_timeline_page_block_title_view_home_outline';
