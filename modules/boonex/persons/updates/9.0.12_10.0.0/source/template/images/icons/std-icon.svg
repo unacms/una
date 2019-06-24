@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>people</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M32,64 C46.0222222,64 53.8173667,64 58.9086889,58.9086889 C64,53.8173667 64,46.0222222 64,32 C64,17.9777778 64,10.1826333 58.9086889,5.09131111 C53.8173667,0 46.0222222,0 32,0 C17.9777778,0 10.1826333,0 5.09131111,5.09131111 C0,10.1826333 0,17.9777778 0,32 C0,46.0222222 0,53.8173667 5.09131111,58.9086889 C10.1826333,64 17.9777778,64 32,64 Z" id="path-1"></path>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-3">
+            <stop stop-color="#FDFEFF" offset="0%"></stop>
+            <stop stop-color="#FBFCFD" stop-opacity="0.9" offset="100%"></stop>
+        </linearGradient>
+        <path d="M17.5,20 C23.0234375,20 27.5,15.5234375 27.5,10 C27.5,4.4765625 23.0234375,0 17.5,0 C11.9765625,0 7.5,4.4765625 7.5,10 C7.5,15.5234375 11.9765625,20 17.5,20 Z M24.5,22.5 L23.1953125,22.5 C21.4609375,23.296875 19.53125,23.75 17.5,23.75 C15.46875,23.75 13.546875,23.296875 11.8046875,22.5 L10.5,22.5 C4.703125,22.5 0,27.203125 0,33 L0,36.25 C0,38.3203125 1.6796875,40 3.75,40 L31.25,40 C33.3203125,40 35,38.3203125 35,36.25 L35,33 C35,27.203125 30.296875,22.5 24.5,22.5 Z" id="path-4"></path>
+        <filter x="-5.7%" y="-2.5%" width="111.4%" height="110.0%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-340.000000, -594.000000)">
+            <g id="people" transform="translate(340.000000, 594.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Path" fill="#FF9500" xlink:href="#path-1"></use>
+                <g id="user" mask="url(#mask-2)" fill-rule="nonzero">
+                    <g transform="translate(15.000000, 11.000000)" id="Shape">
+                        <g>
+                            <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"></use>
+                            <use fill="url(#linearGradient-3)" xlink:href="#path-4"></use>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
