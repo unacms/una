@@ -58,6 +58,8 @@ $aConfig = array(
     'delete_files' => array(
         'classes/BxTimelineUploaderSimplePhoto.php',
         'classes/BxTimelineUploaderSimpleVideo.php',
-        'classes/BxTimelineVote.php'
+        'classes/BxTimelineVote.php',
+        'template/menu_buttons_hor.html',
+        'template/uploader_button_simple.html',
     ),
 );

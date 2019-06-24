@@ -27,11 +27,15 @@ class BxPostsUpdater extends BxDolStudioUpdater
 
         $aResult = parent::update($aParams);
         if($aResult['result']) {
-            if($aStorage['engine'] == 'Local')
-                rename(BX_DIRECTORY_PATH_ROOT . 'storage/bx_posts_files/', BX_DIRECTORY_PATH_ROOT . 'storage/bx_posts_covers/');
+            if($aStorage['engine'] == 'Local') {
+                $sSrc = BX_DIRECTORY_PATH_ROOT . 'storage/bx_posts_files/';
+                $sDst = BX_DIRECTORY_PATH_ROOT . 'storage/bx_posts_covers/';
+                if(file_exists($sSrc))
+                    rename($sSrc, $sDst);
+            }
         }
 
-        return $bResult;
+        return $aResult;
     }
 
     public function actionExecuteSql($sOperation)
