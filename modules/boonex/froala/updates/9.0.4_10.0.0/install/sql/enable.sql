@@ -1,3 +1,9 @@
+-- SETTINGS
+SET @iCategId = (SELECT `id` FROM `sys_options_categories` WHERE `name`='bx_froala_general' LIMIT 1);
+DELETE FROM `sys_options` WHERE `name`='bx_froala_icons_template';
+INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_params`, `check_error`, `order`) VALUES
+('bx_froala_icons_template', 'svg', @iCategId, '_bx_froala_option_icons_template', 'select', 'svg,font_awesome_5,text', '', '', '', 5);
+
 -- ALERTS
 SET @iHandlerId := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name`='bx_froala' LIMIT 1);
 DELETE FROM `sys_alerts_handlers` WHERE `name`='bx_froala';

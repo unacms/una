@@ -33,6 +33,9 @@ $aConfig = array(
      * Transcoders.
      */
     'transcoders' => array(
+        'bx_posts_preview',
+        'bx_posts_gallery',
+        'bx_posts_cover',
         'bx_posts_videos_poster',
         'bx_posts_videos_poster_preview',
         'bx_posts_videos_mp4',

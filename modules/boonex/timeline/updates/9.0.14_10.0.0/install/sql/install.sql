@@ -44,6 +44,9 @@ INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `
 ('bx_timeline_html5_photo', 1, 'BxTimelineUploaderHTML5Attach', 'modules/boonex/timeline/classes/BxTimelineUploaderHTML5Attach.php'),
 ('bx_timeline_html5_video', 1, 'BxTimelineUploaderHTML5Attach', 'modules/boonex/timeline/classes/BxTimelineUploaderHTML5Attach.php');
 
+UPDATE `sys_objects_storage` SET `ext_allow`='avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,qt,divx,xvid,3gp,3g2,webm,mkv,ogv,ogg,rm,rmvb,asf,drc' WHERE `object`='bx_timeline_videos';
+UPDATE `sys_objects_storage` SET `ext_allow`='jpg,jpeg,jpe,gif,png,avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,qt,divx,xvid,3gp,3g2,webm,mkv,ogv,ogg,rm,rmvb,asf,drc' WHERE `object`='bx_timeline_videos_processed';
+
 DELETE FROM `sys_objects_transcoder` WHERE `object` IN ('bx_timeline_videos_mp4_hd', 'bx_timeline_videos_webm');
 INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`, `override_class_name`, `override_class_file`) VALUES
 ('bx_timeline_videos_mp4_hd', 'bx_timeline_videos_processed', 'Storage', 'a:1:{s:6:"object";s:18:"bx_timeline_videos";}', 'no', '0', '0', '0', 'BxDolTranscoderVideo', '');
