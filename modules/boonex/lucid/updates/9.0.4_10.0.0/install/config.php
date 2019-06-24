@@ -47,5 +47,7 @@ $aConfig = array(
     /**
      * Files Section
      */
-    'delete_files' => array(),
+    'delete_files' => array(
+        'data/template/bx_timeline/type_post.html',
+    ),
 );

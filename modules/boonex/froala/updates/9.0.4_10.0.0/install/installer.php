@@ -7,7 +7,7 @@
 class BxFroalaUpdater extends BxDolStudioUpdater
 {
     function __construct($aConfig)
-	{
+    {
         parent::__construct($aConfig);
     }
 }

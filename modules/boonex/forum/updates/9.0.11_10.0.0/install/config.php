@@ -10,7 +10,7 @@ $aConfig = array(
      */
     'title' => 'Discussions',
     'version_from' => '9.0.11',
-	'version_to' => '10.0.0',
+    'version_to' => '10.0.0',
     'vendor' => 'BoonEx',
 
     'compatible_with' => array(
@@ -21,10 +21,10 @@ $aConfig = array(
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
     'home_dir' => 'boonex/forum/updates/update_9.0.11_10.0.0/',
-	'home_uri' => 'forum_update_9011_1000',
+    'home_uri' => 'forum_update_9011_1000',
 
-	'module_dir' => 'boonex/forum/',
-	'module_uri' => 'forum',
+    'module_dir' => 'boonex/forum/',
+    'module_uri' => 'forum',
 
     'db_prefix' => 'bx_forum_',
     'class_prefix' => 'BxForum',
@@ -33,19 +33,21 @@ $aConfig = array(
      * Installation/Uninstallation Section.
      */
     'install' => array(
-		'execute_sql' => 1,
+        'execute_sql' => 1,
         'update_files' => 1,
         'update_languages' => 1,
-		'clear_db_cache' => 1,
+        'clear_db_cache' => 1,
     ),
 
-	/**
+    /**
      * Category for language keys.
      */
     'language_category' => 'Discussions',
 
-	/**
+    /**
      * Files Section
      */
-    'delete_files' => array(),
+    'delete_files' => array(
+        'template/entry-label.html',
+    ),
 );
