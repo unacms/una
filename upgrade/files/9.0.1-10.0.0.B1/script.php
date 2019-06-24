@@ -1,5 +1,11 @@
 <?php
 
+    $aStoragesTranscodersWithWebmFiles = array(
+        'bx_videos_media_resized' => 'bx_videos_video_webm',
+        'bx_albums_photos_resized' => 'bx_albums_video_webm',
+        'bx_timeline_videos_processed' => 'bx_timeline_videos_webm',
+    );
+
     if (!$this->oDb->isFieldExists('sys_objects_auths', 'Style'))
         $this->oDb->query("ALTER TABLE `sys_objects_auths` ADD `Style` varchar(255) NOT NULL AFTER `Icon`");
 
@@ -36,5 +42,19 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`, `Dat
 EOF;
         $this->oDb->query($sQuery);
     }
-    
+
+    // delete webm files
+    foreach ($aStoragesTranscodersWithWebmFiles as $sStorage => $sTranscoder) {
+        $o = BxDolStorage::getObjectInstance($sStorage);
+        $sTableFiles = $this->oDb->getOne("SELECT `table_files` FROM `sys_objects_storage` WHERE `object` = :storage", array('storage' => $sStorage));
+        if (!$o || !$sTableFiles)
+            continue;
+
+        $aFilesIds = $this->oDb->getColumn("SELECT `id` FROM `{$sTableFiles}` WHERE `ext` = 'webm'");
+        if ($aFilesIds)
+            $o->queueFilesForDeletion($aFilesIds);
+
+        $this->oDb->query("DELETE FROM `sys_transcoder_videos_files` WHERE `transcoder_object` = :transcoder", array('transcoder' => $sTranscoder));
+    }
+
     return true;

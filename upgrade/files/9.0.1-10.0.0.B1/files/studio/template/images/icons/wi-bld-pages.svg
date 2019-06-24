@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>pages</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M32,64 C46.0222222,64 53.8173667,64 58.9086889,58.9086889 C64,53.8173667 64,46.0222222 64,32 C64,17.9777778 64,10.1826333 58.9086889,5.09131111 C53.8173667,0 46.0222222,0 32,0 C17.9777778,0 10.1826333,0 5.09131111,5.09131111 C0,10.1826333 0,17.9777778 0,32 C0,46.0222222 0,53.8173667 5.09131111,58.9086889 C10.1826333,64 17.9777778,64 32,64 Z" id="path-1"></path>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-3">
+            <stop stop-color="#FDFEFF" offset="0%"></stop>
+            <stop stop-color="#FBFCFD" stop-opacity="0.9" offset="100%"></stop>
+        </linearGradient>
+        <path d="M25,35 L25,38.125 C25,39.1605469 24.1605469,40 23.125,40 L1.875,40 C0.839453125,40 0,39.1605469 0,38.125 L0,9.375 C0,8.33945312 0.839453125,7.5 1.875,7.5 L7.5,7.5 L7.5,30.625 C7.5,33.0374219 9.46257813,35 11.875,35 L25,35 Z M25,8.125 L25,0 L11.875,0 C10.8394531,0 10,0.839453125 10,1.875 L10,30.625 C10,31.6605469 10.8394531,32.5 11.875,32.5 L33.125,32.5 C34.1605469,32.5 35,31.6605469 35,30.625 L35,10 L26.875,10 C25.84375,10 25,9.15625 25,8.125 Z M34.4508594,5.70085937 L29.2991406,0.549140625 C28.9475151,0.197533215 28.4706202,2.59996977e-06 27.9733594,0 L27.5,0 L27.5,7.5 L35,7.5 L35,7.02664062 C34.9999974,6.52937984 34.8024668,6.0524849 34.4508594,5.70085937 L34.4508594,5.70085937 Z" id="path-4"></path>
+        <filter x="-5.7%" y="-2.5%" width="111.4%" height="110.0%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-421.000000, -512.000000)">
+            <g id="pages" transform="translate(421.000000, 512.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Path" fill="#2085FD" xlink:href="#path-1"></use>
+                <g id="copy" mask="url(#mask-2)" fill-rule="nonzero">
+                    <g transform="translate(15.000000, 12.000000)" id="Shape">
+                        <g>
+                            <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"></use>
+                            <use fill="url(#linearGradient-3)" xlink:href="#path-4"></use>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
