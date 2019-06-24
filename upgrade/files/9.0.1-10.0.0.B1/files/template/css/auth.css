@@ -1,0 +1,43 @@
+.sys-auth-block {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: space-between;
+}
+
+.sys-auth-block.sys-auth-compact-container {
+    justify-content:flex-start;
+}
+
+.sys-auth-block .sys-auth:not(.sys-auth-compact) {
+    width: 48%;
+}
+
+.sys-auth .bx-btn {
+    float: none;
+    width: 100%;
+    text-align: left;
+    font-weight:normal;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #fff;
+    height: 3rem;
+    line-height: 3rem;
+    border-radius:4px;
+    border:none;
+}
+
+.sys-auth .bx-btn .sys-icon {
+    color: #fff;
+    font-size: 1.5rem;
+}
+
+.sys-auth-compact {
+	position: relative;
+	display: inline-block;
+}
+
+.sys-auth-compact .bx-btn {
+	width: auto;
+}

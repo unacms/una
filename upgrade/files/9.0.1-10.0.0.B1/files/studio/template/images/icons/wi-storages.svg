@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55 (78076) - https://sketchapp.com -->
+    <title>Storage</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M32,64 C46.0222222,64 53.8173667,64 58.9086889,58.9086889 C64,53.8173667 64,46.0222222 64,32 C64,17.9777778 64,10.1826333 58.9086889,5.09131111 C53.8173667,0 46.0222222,0 32,0 C17.9777778,0 10.1826333,0 5.09131111,5.09131111 C0,10.1826333 0,17.9777778 0,32 C0,46.0222222 0,53.8173667 5.09131111,58.9086889 C10.1826333,64 17.9777778,64 32,64 Z" id="path-1"></path>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-3">
+            <stop stop-color="#FDFEFF" offset="0%"></stop>
+            <stop stop-color="#FBFCFD" stop-opacity="0.9" offset="100%"></stop>
+        </linearGradient>
+        <path d="M35.1020408,5.71429688 L35.1020408,9.28570313 C35.1020408,12.4330469 27.2406724,15 17.5510204,15 C7.86136844,15 0,12.4330469 0,9.28570313 L0,5.71429688 C0,2.56695313 7.86136844,0 17.5510204,0 C27.2406724,0 35.1020408,2.56695313 35.1020408,5.71429688 Z M35.1020408,13.75 L35.1020408,21.7857031 C35.1020408,24.9330469 27.2406724,27.5 17.5510204,27.5 C7.86136844,27.5 0,24.9330469 0,21.7857031 L0,13.75 C3.77072704,16.3392969 10.6722741,17.5446875 17.5510204,17.5446875 C24.4297668,17.5446875 31.3312354,16.3392969 35.1020408,13.75 Z M35.1020408,26.25 L35.1020408,34.2857031 C35.1020408,37.4330469 27.2406724,40 17.5510204,40 C7.86136844,40 0,37.4330469 0,34.2857031 L0,26.25 C3.77072704,28.8392969 10.6722741,30.0446875 17.5510204,30.0446875 C24.4297668,30.0446875 31.3312354,28.8392969 35.1020408,26.25 Z" id="path-4"></path>
+        <filter x="-5.7%" y="-2.5%" width="111.4%" height="110.0%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-907.000000, -430.000000)">
+            <g id="Storage" transform="translate(907.000000, 430.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Path" fill="#00B356" xlink:href="#path-1"></use>
+                <g id="database" mask="url(#mask-2)" fill-rule="nonzero">
+                    <g transform="translate(15.000000, 12.000000)" id="Shape">
+                        <g>
+                            <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"></use>
+                            <use fill="url(#linearGradient-3)" xlink:href="#path-4"></use>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

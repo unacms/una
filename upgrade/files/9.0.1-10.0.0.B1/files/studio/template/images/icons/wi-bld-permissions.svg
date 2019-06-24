@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>permissions</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M32,64 C46.0222222,64 53.8173667,64 58.9086889,58.9086889 C64,53.8173667 64,46.0222222 64,32 C64,17.9777778 64,10.1826333 58.9086889,5.09131111 C53.8173667,0 46.0222222,0 32,0 C17.9777778,0 10.1826333,0 5.09131111,5.09131111 C0,10.1826333 0,17.9777778 0,32 C0,46.0222222 0,53.8173667 5.09131111,58.9086889 C10.1826333,64 17.9777778,64 32,64 Z" id="path-1"></path>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-3">
+            <stop stop-color="#FDFEFF" offset="0%"></stop>
+            <stop stop-color="#FBFCFD" stop-opacity="0.9" offset="100%"></stop>
+        </linearGradient>
+        <path d="M36.6666667,4.3902439 L26.6666667,4.3902439 L26.6666667,10.9756098 L13.3333333,10.9756098 L13.3333333,4.3902439 L3.33333333,4.3902439 C1.49305556,4.3902439 0,5.86509146 0,7.68292683 L0,31.8292683 C0,33.6471037 1.49305556,35.1219512 3.33333333,35.1219512 L36.6666667,35.1219512 C38.5069444,35.1219512 40,33.6471037 40,31.8292683 L40,7.68292683 C40,5.86509146 38.5069444,4.3902439 36.6666667,4.3902439 Z M20,15.3658537 C22.4513889,15.3658537 24.4444444,17.3346037 24.4444444,19.7560976 C24.4444444,22.1775915 22.4513889,24.1463415 20,24.1463415 C17.5486111,24.1463415 15.5555556,22.1775915 15.5555556,19.7560976 C15.5555556,17.3346037 17.5486111,15.3658537 20,15.3658537 Z M26.4791667,30.7317073 L13.5208333,30.7317073 C12.7986111,30.7317073 12.2152778,30.0457317 12.4375,29.3734756 C13.0138889,27.617378 14.6875,26.3414634 16.6666667,26.3414634 L17.2361111,26.3414634 C18.0902778,26.691311 19.0208333,26.8902439 20,26.8902439 C20.9791667,26.8902439 21.9166667,26.691311 22.7638889,26.3414634 L23.3333333,26.3414634 C25.3055556,26.3414634 26.9791667,27.6105183 27.5625,29.3734756 C27.7847222,30.0457317 27.2013889,30.7317073 26.4791667,30.7317073 L26.4791667,30.7317073 Z M24.4444444,2.19512195 C24.4444444,0.980945122 23.4513889,0 22.2222222,0 L17.7777778,0 C16.5486111,0 15.5555556,0.980945122 15.5555556,2.19512195 L15.5555556,8.7804878 L24.4444444,8.7804878 L24.4444444,2.19512195 Z" id="path-4"></path>
+        <filter x="-5.0%" y="-2.8%" width="110.0%" height="111.4%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-583.000000, -512.000000)">
+            <g id="permissions" transform="translate(583.000000, 512.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Path" fill="#2085FD" xlink:href="#path-1"></use>
+                <g id="id-card-alt" mask="url(#mask-2)" fill-rule="nonzero">
+                    <g transform="translate(12.000000, 14.000000)" id="Shape">
+                        <g>
+                            <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"></use>
+                            <use fill="url(#linearGradient-3)" xlink:href="#path-4"></use>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
