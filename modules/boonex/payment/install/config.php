@@ -13,16 +13,16 @@ $aConfig = array(
     /**
      * Main Section.
      */
-	'type' => BX_DOL_MODULE_TYPE_MODULE,
+    'type' => BX_DOL_MODULE_TYPE_MODULE,
     'name' => 'bx_payment',
     'title' => 'Payment',
     'note' => 'Payment module.',
-    'version' => '9.0.14.DEV',
+    'version' => '10.0.1.DEV',
     'vendor' => 'Boonex',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '9.0.x'
+        '10.0.x'
     ),
 
     /**

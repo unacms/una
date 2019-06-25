@@ -17,12 +17,12 @@ $aConfig = array(
     'name' => 'bx_fontawesome',
     'title' => 'Font Awesome Pro',
     'note' => 'Font Awesome Pro integration.',
-    'version' => '9.0.3.DEV',
+    'version' => '10.0.1.DEV',
     'vendor' => 'BoonEx',
-	'help_url' => 'http://feed.una.io/?section={module_name}',
+    'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '9.0.x'
+        '10.0.x'
     ),
 
     /**

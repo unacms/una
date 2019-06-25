@@ -17,12 +17,12 @@ $aConfig = array(
     'name' => 'bx_oauth',
     'title' => 'OAuth2 Server',
     'note' => 'Allow to use site user credentials and basic API',
-    'version' => '9.0.10.DEV',
+    'version' => '10.0.1.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '9.0.x'
+        '10.0.x'
     ),
 
     /**

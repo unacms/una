@@ -18,12 +18,12 @@ $aConfig = array(
     'name' => 'bx_videos',
     'title' => 'Videos',
     'note' => 'Basic video posting module.',
-    'version' => '9.0.5.DEV',
+    'version' => '10.0.1.DEV',
     'vendor' => 'BoonEx',
-	'help_url' => 'http://feed.una.io/?section={module_name}',
+    'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '9.0.x'
+        '10.0.x'
     ),
 
     /**
