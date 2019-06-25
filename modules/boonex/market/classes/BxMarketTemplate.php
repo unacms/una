@@ -130,24 +130,6 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     	));    	
     }
 
-    public function getGhostTemplateFile($oForm, $aContentInfo)
-    {
-    	$CNF = &$this->getModule()->_oConfig->CNF;
-
-    	return $this->parseHtmlByName('form_ghost_template_file.html', array (
-                'name' => $oForm->aInputs[$CNF['FIELD_FILE']]['name'],
-                'content_id' => $oForm->aInputs[$CNF['FIELD_FILE']]['content_id'],
-                'editor_id' => $CNF['FIELD_TEXT_ID'],
-                'thumb_id' => isset($aContentInfo[$CNF['FIELD_PACKAGE']]) ? $aContentInfo[$CNF['FIELD_PACKAGE']] : 0,
-                'bx_if:set_thumb' => array (
-                    'condition' => true,
-                    'content' => array(
-            			'name_thumb' => $CNF['FIELD_PACKAGE'],
-            		),
-                ),
-            ));
-    }
-
     protected function getUnit ($aData, $aParams = array())
     {
         $bTmplVarsSectionAuthor = false;
@@ -398,6 +380,16 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     	}
 
     	return array_intersect_key($aFiles, $aResults);
+    }
+
+    protected function getAttachmentsImagesTranscoders ($sStorage = '')
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
+        $oTranscoderPreview = isset($CNF['OBJECT_IMAGES_TRANSCODER_PICTURE']) && $CNF['OBJECT_IMAGES_TRANSCODER_PICTURE'] ? BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PICTURE']) : null;
+
+        return array($oTranscoder, $oTranscoderPreview);
     }
 
     protected function _getHeaderImage($aData)
