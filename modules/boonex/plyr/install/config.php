@@ -17,12 +17,12 @@ $aConfig = array(
     'name' => 'bx_plyr',
     'title' => 'Plyr',
     'note' => 'Plyr player integration.',
-    'version' => '9.0.0.DEV',
+    'version' => '10.0.1.DEV',
     'vendor' => 'BoonEx',
-	'help_url' => 'http://feed.una.io/?section={module_name}',
+    'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '9.0.x'
+        '10.0.x'
     ),
 
     /**
