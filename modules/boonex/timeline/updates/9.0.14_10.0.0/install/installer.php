@@ -29,6 +29,7 @@ class BxTimelineUpdater extends BxDolStudioUpdater
                 $this->oDb->query("ALTER TABLE `bx_timeline_events` DROP `hidden`");
             }
 
+            $this->oDb->query("ALTER TABLE `bx_timeline_events` CHANGE `object_id` `object_id` int(11) NOT NULL default '0'");
             if(!$this->oDb->isIndexExists('bx_timeline_events', 'object_id'))
             	    $this->oDb->query("ALTER TABLE `bx_timeline_events` ADD INDEX `object_id` (`object_id`)");
 

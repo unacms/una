@@ -27,6 +27,8 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 
 
 -- VOTES
+UPDATE `sys_objects_vote` SET `ClassName`='BxMarketVoteStars', `ClassFile`='modules/boonex/market/classes/BxMarketVoteStars.php' WHERE `Name`='bx_market';
+
 DELETE FROM `sys_objects_vote` WHERE `Name`='bx_market_reactions';
 INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
 ('bx_market_reactions', 'bx_market_reactions', 'bx_market_reactions_track', '604800', '1', '1', '1', '1', 'bx_market_products', 'id', 'author', 'rrate', 'rvotes', 'BxTemplVoteReactions', '');

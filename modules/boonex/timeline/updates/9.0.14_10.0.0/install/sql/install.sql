@@ -2,7 +2,6 @@ SET @sName = 'bx_timeline';
 
 
 -- TABLES
-ALTER TABLE `bx_timeline_events` CHANGE `object_id` `object_id` int(11) NOT NULL default '0';
 ALTER TABLE `bx_timeline_events` CHANGE `object_privacy_view` `object_privacy_view` varchar(16) NOT NULL default '3';
 
 CREATE TABLE IF NOT EXISTS `bx_timeline_cache` (
