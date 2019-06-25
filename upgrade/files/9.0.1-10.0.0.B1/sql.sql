@@ -130,7 +130,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 ('sys_homepage_submenu', 'system', 'updates', '_sys_menu_item_title_system_updates', '_sys_menu_item_title_updates', 'page.php?i=updates', '', '', 'fire', '', '', 2147483647, '', 0, 1, 3),
 ('sys_homepage_submenu', 'system', 'trends', '_sys_menu_item_title_system_trends', '_sys_menu_item_title_trends', 'page.php?i=trends', '', '', 'hashtag', '', '', 2147483647, '', 0, 1, 4);
 
-UPDATE `sys_menu_items` SET `active` = 0 WHERE `set_name` = 'sys_footer' AND `name` = 'switch_language';
+UPDATE `sys_menu_items` SET `active` = 1 WHERE `set_name` = 'sys_footer' AND `name` = 'switch_language';
 
 DELETE FROM `sys_menu_items` WHERE `set_name` = 'sys_footer' AND `name` = 'copyright';
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
