@@ -83,8 +83,8 @@ class BxDolMenuQuery extends BxDolDb
         $aBindings = array();
 
     	$sSelectClause = '*';
-    	$sWhereClause = $sGroupClause = '';
-    	$sLimitClause = isset($aParams['start']) && !empty($aParams['per_page']) ? "LIMIT " . $aParams['start'] . ", " . $aParams['per_page'] : "";
+    	$sWhereClause = $sGroupClause = $sOrderClause = '';
+    	$sLimitClause = isset($aParams['start']) && !empty($aParams['per_page']) ? " LIMIT " . $aParams['start'] . ", " . $aParams['per_page'] : "";
 
     	if(!empty($aParams['type']))
             switch($aParams['type']) {
@@ -92,6 +92,7 @@ class BxDolMenuQuery extends BxDolDb
                     $aBindings['set_name'] = $aParams['set_name'];
 
                     $sWhereClause = 'AND `set_name` = :set_name';
+                    $sOrderClause = '`order` ASC';
                     break;
                     
                 case 'set_name_duplicates':
@@ -107,7 +108,10 @@ class BxDolMenuQuery extends BxDolDb
         if(!empty($sGroupClause))
             $sGroupClause = " GROUP BY " . $sGroupClause;
 
-        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `sys_menu_items` WHERE 1 " . $sWhereClause . " " . $sGroupClause . " " . $sLimitClause;
+        if(!empty($sOrderClause))
+            $sOrderClause = " ORDER BY " . $sOrderClause;
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `sys_menu_items` WHERE 1 " . $sWhereClause . $sGroupClause . $sOrderClause . $sLimitClause;
         $aMethod['params'][] = $aBindings;
 
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
