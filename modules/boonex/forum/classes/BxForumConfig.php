@@ -126,6 +126,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE' => 'bx_forum_view_more', // more actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_forum_view_actions', // all actions menu on view entry page
             'OBJECT_MENU_ACTIONS_MY_ENTRIES' => 'bx_forum_my', // actions menu on my entries page
+            'OBJECT_MENU_SNIPPET_META' => 'bx_forum_snippet_meta_main', // menu for 'main' snippet meta info
             'OBJECT_MENU_SNIPPET_META_MAIN' => 'bx_forum_snippet_meta_main', // menu for 'main' snippet meta info
             'OBJECT_MENU_SNIPPET_META_COUNTERS' => 'bx_forum_snippet_meta_counters', // menu for 'counters' snippet meta info
             'OBJECT_MENU_SNIPPET_META_REPLY' => 'bx_forum_snippet_meta_reply', // menu for 'reply' snippet meta info

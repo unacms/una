@@ -186,23 +186,13 @@ class BxForumTemplate extends BxBaseModTextTemplate
             'bx_if:meta_reply' => array(
                 'condition' => $aMetas['reply'] !== false,
                 'content' => $aMetas['reply']
-            ),
-            
-            
-            //'lr_time_and_replier' => _t('_bx_forum_x_date_by_x_replier', bx_time_js($aRow['lr_timestamp'], BX_FORMAT_DATE), $oProfileLast->getDisplayName()),
+            )
         ));
     }
 
     function getAuthorAddon ($aData, $oProfile)
     {
         return '';
-    }
-
-    protected function getUnit ($aData, $aParams = array())
-    {
-    	$aUnit = parent::getUnit($aData, $aParams);
-		$aUnit['label'] = $this->getEntryLabel($aData, array('show_count' => 0, 'last_replier' => 0));
-    	return $aUnit;
     }
 }
 
