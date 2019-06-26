@@ -24,6 +24,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_sCacheItemEngine;
     protected $_iCacheItemLifetime;
     protected $_bCacheList;
+    protected $_aCacheListExceptions;
 
     protected $_iRssLength;
     protected $_iLiveUpdateLength;
@@ -274,6 +275,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_sCacheItemEngine = getParam($sOptionPrefix . 'cache_item_engine');
         $this->_iCacheItemLifetime = (int)getParam($sOptionPrefix . 'cache_item_lifetime');
         $this->_bCacheList = getParam($sOptionPrefix . 'enable_cache_list') == 'on';
+        $this->_aCacheListExceptions = array(BX_TIMELINE_TYPE_HOT);
 
         $this->_aPerPage = array(
             'default' => (int)getParam($sOptionPrefix . 'events_per_page'),
@@ -381,6 +383,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function isCacheList()
     {
         return $this->_bCacheList;
+    }
+
+    public function isCacheListException($sType)
+    {
+        return in_array($sType, $this->_aCacheListExceptions);
     }
 
     public function getCacheItemEngine()
