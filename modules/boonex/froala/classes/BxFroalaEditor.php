@@ -167,7 +167,7 @@ EOS;
             $sCss = $this->_oTemplate->addCss($aCss, true);
             
             $sScript = $sCss . "<script>
-                if ('undefined' == typeof(jQuery(document).froalaEditor)) {
+                if ('undefined' == typeof(window.FroalaEditor)) {
                     bx_get_scripts(" . json_encode($aJs) . ", function () {
                         $sInitEditor
                     });
