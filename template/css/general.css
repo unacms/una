@@ -164,9 +164,10 @@
 #bx-footer-wrapper {
     position: relative;
 
+    -webkit-flex-grow: 0;
+    flex-grow: 0;
+
     width: 100%;
-    height: 100px;
-    height: 4.0rem;
     bottom: 0;
 }
 #bx-footer-wrapper .bx-def-hr {
@@ -174,6 +175,9 @@
 }
 #bx-menu-bottom ul {
     text-align: center;
+}
+#bx-menu-bottom ul li {
+    line-height: 2rem;
 }
 .bx-menu-switch-language-inline {
 	float: none;
