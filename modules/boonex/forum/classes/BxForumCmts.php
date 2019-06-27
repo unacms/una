@@ -77,22 +77,39 @@ class BxForumCmts extends BxTemplCmts
 
     public function getComment($mixedCmt, $aBp = array(), $aDp = array())
     {
-    	return parent::getComment($mixedCmt, $aBp, array_merge($aDp, array(
-    		'class_comment' => ' bx-def-box bx-def-padding bx-def-round-corners bx-def-color-bg-box'
-    	)));
+        return parent::getComment($mixedCmt, $aBp, array_merge($aDp, array(
+            'class_comment' => 'bx-def-box bx-def-padding bx-def-round-corners bx-def-color-bg-box'
+        )));
     }
 
-	protected function _getFormObject($sAction = BX_CMT_ACTION_POST)
+    protected function _getEmpty($aDp = array())
     {
-    	$CNF = &$this->_oModule->_oConfig->CNF;
+        return parent::_getEmpty(array_merge($aDp, array(
+            'class' => 'bx-def-box bx-def-padding bx-def-round-corners bx-def-color-bg-box'
+        )));
+    }
 
-    	$oResult = parent::_getFormObject($sAction);
-    	if(!isset($oResult->aInputs['cmt_image']))
-    		return $oResult;
+    protected function _getFormBox($sType, $aBp, $aDp)
+    {
+        if(!isset($aBp['parent_id']) || (int)$aBp['parent_id'] == 0)
+            $aDp = array_merge($aDp, array(
+                'class' => 'bx-def-box bx-def-padding bx-def-round-corners bx-def-color-bg-box'
+            ));
 
-		$oResult->aInputs['cmt_image']['storage_object'] = $CNF['OBJECT_STORAGE_CMTS']; 
-		$oResult->aInputs['cmt_image']['images_transcoder'] = $CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_CMTS'];
-		$oResult->aInputs['cmt_image']['upload_buttons_titles'] = array('Simple' => 'paperclip');
+        return parent::_getFormBox($sType, $aBp, $aDp);
+    }
+
+    protected function _getFormObject($sAction = BX_CMT_ACTION_POST)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $oResult = parent::_getFormObject($sAction);
+        if(!isset($oResult->aInputs['cmt_image']))
+            return $oResult;
+
+        $oResult->aInputs['cmt_image']['storage_object'] = $CNF['OBJECT_STORAGE_CMTS']; 
+        $oResult->aInputs['cmt_image']['images_transcoder'] = $CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_CMTS'];
+        $oResult->aInputs['cmt_image']['upload_buttons_titles'] = array('Simple' => 'paperclip');
 
         return $oResult;
     }

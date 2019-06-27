@@ -160,7 +160,7 @@ class BxBaseCmts extends BxDolCmts
         		return MsgBox(_t('_cmt_msg_login_required', $oPermalink->permalink('page.php?i=login'), $oPermalink->permalink('page.php?i=create-account')));
         	}
 
-            return isset($aDp['show_empty']) && $aDp['show_empty'] === true ? $this->_getEmpty() : '';
+            return isset($aDp['show_empty']) && $aDp['show_empty'] === true ? $this->_getEmpty($aDp) : '';
         }
 
         $sCmts = '';
@@ -230,15 +230,15 @@ class BxBaseCmts extends BxDolCmts
         if($aCmt['cmt_author_id'] == $iUserId)
             $sClass .= ' ' . $this->_sStylePrefix . '-mine';
 
-		if(!empty($aDp['blink']) && in_array($aCmt['cmt_id'], $aDp['blink']))
-			$sClass .= ' ' . $this->_sStylePrefix . '-blink';
+        if(!empty($aDp['blink']) && in_array($aCmt['cmt_id'], $aDp['blink']))
+            $sClass .= ' ' . $this->_sStylePrefix . '-blink';
 
-		if(!empty($aDp['class_comment']))
-			$sClass .= ' ' . $aDp['class_comment'];
+        if(!empty($aDp['class_comment']))
+            $sClass .= ' ' . $aDp['class_comment'];
 
-		if(!empty($aDp['class_comment_content']))
-			$sClassCnt .= ' ' . $aDp['class_comment_content'];
-			
+        if(!empty($aDp['class_comment_content']))
+            $sClassCnt .= ' ' . $aDp['class_comment_content'];
+
         $sActions = $this->_getActionsBox($aCmt, $aDp);
 
         $aTmplReplyTo = array();
@@ -735,6 +735,12 @@ class BxBaseCmts extends BxDolCmts
             $sClass .= ' ' . $this->_sStylePrefix . '-reply-' . $sPosition;
         if($bFormMin)
             $sClass .= ' ' . $this->_sStylePrefix . '-reply-min';
+        if(!empty($aDp['class']))
+            $sClass .= ' ' . $aDp['class'];
+
+        $sClassBody = '';
+        if(!empty($aDp['class_body']))
+            $sClassBody .= ' ' . $aDp['class_body'];
 
         $aTmplVarsFormMin = array();
         if($bFormMin) {
@@ -752,8 +758,13 @@ class BxBaseCmts extends BxDolCmts
                 'value' => '',
             );
 
+            $sClassBodyMin = '';
+            if(!empty($aDp['class_body_min']))
+                $sClassBodyMin .= ' ' . $aDp['class_body_min'];
+
             $aTmplVarsFormMin = array(
                 'js_object' => $this->_sJsObjName,
+                'class_body_min' => $sClassBodyMin,
                 'style_prefix' => $this->_sStylePrefix,
                 'author_unit' => $sAuthorUnit,
                 'placeholder' => $oForm->genRow($aInputPlaceholder)
@@ -767,6 +778,7 @@ class BxBaseCmts extends BxDolCmts
             'js_object' => $this->_sJsObjName,
             'style_prefix' => $this->_sStylePrefix,
             'class' => $sClass,
+            'class_body' => $sClassBody,
             'bx_if:show_form_min' => array(
                 'condition' => $bFormMin,
                 'content' => $aTmplVarsFormMin
@@ -962,10 +974,15 @@ class BxBaseCmts extends BxDolCmts
         return $sCmts;
     }
 
-    protected function _getEmpty()
+    protected function _getEmpty($aDp = array())
     {
+        $sClass = '';
+        if(!empty($aDp['class']))
+            $sClass .= ' ' . $aDp['class'];
+
         return $this->_oTemplate->parseHtmlByName('comment_empty.html', array(
             'style_prefix' => $this->_sStylePrefix,
+            'class' => $sClass,
             'content' => MsgBox(_t('_Empty'))
         ));
     }
