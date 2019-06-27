@@ -88,8 +88,14 @@ class BxBaseMenuSubmenu extends BxTemplMenu
         if(!$oMenuSubmenu || !$oMenuSubmenu->isVisible())
             return '';
 
+        $sCode = $oMenuSubmenu->getCode();
+        if(empty($sCode))
+            return '';
+
         $this->_addJsCss();
-        return $oMenuSubmenu->getCode() . $this->_getJsCode();
+        return $this->_oTemplate->parseHtmlByName('menu_main_submenu_bar.html', array(
+            'code' => $sCode . $this->_getJsCode()
+        ));
     }
 
     public function getPageCoverParams ()
