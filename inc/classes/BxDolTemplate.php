@@ -433,6 +433,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             }
         }
 
+        if(is_array($aResult[0]) && count($aResult[0]) == 1)
+           $aResult[0] = $aResult[0][0];
+
         return $aResult;
     }
 
