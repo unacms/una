@@ -405,25 +405,31 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         if($aResultCheck !== false)
             $aResult = $aResultCheck;
 
-        if($aResult !== false) {
-            //--- Check selected mix in COOKIE(the lowest priority) ---//
-            $iMix = !empty($_COOKIE[$sMixKey]) ? (int)$_COOKIE[$sMixKey] : 0;
-            $iResultCheck = $fCheckMix($aResult, $iMix, false);
-            if($iResultCheck !== false) {
-                if(!is_array($aResult[0]))
-                    $aResult[0] = array($aResult[0]);
+        if($aResult === false) 
+            return $aResult;
 
-                $aResult[0][1] = $iResultCheck;
-            }
+        if(!is_array($aResult[0]))
+            $aResult[0] = array($aResult[0]);
 
-            //--- Check selected mix in GET(the highest priority) ---//
-            $iMix = !empty($_GET[$sMixKey]) ? (int)$_GET[$sMixKey] : 0;
-            $iResultCheck = $fCheckMix($aResult, $iMix, true);
-            if($iResultCheck !== false) {
-                if(!is_array($aResult[0]))
-                    $aResult[0] = array($aResult[0]);
+        //--- Check selected mix in COOKIE(the lowest priority) ---//
+        $iMix = !empty($_COOKIE[$sMixKey]) ? (int)$_COOKIE[$sMixKey] : 0;
+        $iResultCheck = $fCheckMix($aResult, $iMix, false);
+        if($iResultCheck !== false)
+            $aResult[0][1] = $iResultCheck;
 
-                $aResult[0][1] = $iResultCheck;
+        //--- Check selected mix in GET(the highest priority) ---//
+        $iMix = !empty($_GET[$sMixKey]) ? (int)$_GET[$sMixKey] : 0;
+        $iResultCheck = $fCheckMix($aResult, $iMix, true);
+        if($iResultCheck !== false)
+            $aResult[0][1] = $iResultCheck;
+
+        //--- Get default mix for currently selected template ---//
+        if(empty($aResult[0][1]) && !empty($aResult[1])) {
+            $aMix = BxDolDb::getInstance()->getParamsMixActive($aResult[1]);
+            if(!empty($aMix) && is_array($aMix)) {
+                $iResultCheck = $fCheckMix($aResult, $aMix['id'], true);
+                if($iResultCheck !== false)
+                    $aResult[0][1] = $iResultCheck;
             }
         }
 
