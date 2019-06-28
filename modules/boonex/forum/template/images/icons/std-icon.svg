@@ -9,15 +9,6 @@
             <stop stop-color="#FDFEFF" offset="0%"></stop>
             <stop stop-color="#FBFCFD" stop-opacity="0.9" offset="100%"></stop>
         </linearGradient>
-        <filter x="-12.2%" y="-11.1%" width="124.4%" height="127.8%" filterUnits="objectBoundingBox" id="filter-4">
-            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
-            <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
-            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.1 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
-            <feMerge>
-                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
-                <feMergeNode in="SourceGraphic"></feMergeNode>
-            </feMerge>
-        </filter>
         <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-5">
             <stop stop-color="#FDFEFF" offset="0%"></stop>
             <stop stop-color="#FBFCFD" stop-opacity="0.9" offset="100%"></stop>
