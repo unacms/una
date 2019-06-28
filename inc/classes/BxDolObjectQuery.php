@@ -81,8 +81,14 @@ class BxDolObjectQuery extends BxDolDb
 
     public function getPerformedBy($iObjectId)
     {
-        $sQuery = $this->prepare("SELECT `author_id` FROM `{$this->_sTableTrack}` WHERE `object_id`=?", $iObjectId);
+        $sQuery = $this->prepare("SELECT `author_id` FROM `{$this->_sTableTrack}` WHERE `object_id` = ?", $iObjectId);
         return $this->getColumn($sQuery);
+    }
+    
+    public function getData($iObjectId)
+    {
+        $sQuery = $this->prepare("SELECT * FROM `{$this->_sTableTrack}` WHERE `object_id` = ?", $iObjectId);
+        return $this->getAll($sQuery);
     }
 
     public function getTrack($iObjectId, $iAuthorId)
