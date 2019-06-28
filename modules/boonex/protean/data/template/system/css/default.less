@@ -1,5 +1,12 @@
 @import '../../../../../../../template/css/default.less';
 
+/**
+ * Is used for inputs and buttons. They should have the same value 
+ * because Input and Button can be positioned in one line.
+ */
+@base-input-box-sizing: border-box;
+
+
 /* viewport */
 html.bx-media-tablet {
     font-size: @bx-viewport-font-tablet !important;
@@ -687,14 +694,16 @@ a.bx-def-font-h3:hover {
 .bx-form-value .bx-form-input-textarea,
 .bx-form-value .bx-form-input-password,
 .bx-form-value .bx-form-input-text {
-	border-color: @bx-color-border-form-input;
-	border-width: @bx-border-width-form-input;
+    .box-sizing(@base-input-box-sizing);
 
-	background-color: @bx-color-form-input;
+    border-color: @bx-color-border-form-input;
+    border-width: @bx-border-width-form-input;
 
-	-webkit-box-shadow: @bx-shadow-form-input;
-	-moz-box-shadow: @bx-shadow-form-input;
-	box-shadow: @bx-shadow-form-input;
+    background-color: @bx-color-form-input;
+
+    -webkit-box-shadow: @bx-shadow-form-input;
+    -moz-box-shadow: @bx-shadow-form-input;
+    box-shadow: @bx-shadow-form-input;
 }
 .bx-form-value .bx-form-input-slider,
 .bx-form-value .bx-form-input-doublerange,
@@ -704,7 +713,7 @@ a.bx-def-font-h3:hover {
 .bx-form-value .bx-form-input-datetime,
 .bx-form-value .bx-form-input-password,
 .bx-form-value .bx-form-input-text {
-	height: @bx-height-form-input;
+    height: @bx-height-form-input;
 }
 .bx-form-value .bx-form-input-text.bx-form-input-autotoken b {
     line-height: @bx-height-form-input;
@@ -740,7 +749,7 @@ a.bx-def-font-h3:hover {
 /* button large */
 .bx-btn,
 .bx-btn.bx-btn-primary {
-	.box-sizing(content-box);
+	.box-sizing(@base-input-box-sizing);
 
 	height: @bx-height-button;
 	line-height: @bx-height-button;
@@ -794,7 +803,7 @@ a.bx-def-font-h3:hover {
 
 /* button small */
 .bx-btn.bx-btn-small {
-	.box-sizing(content-box);
+	.box-sizing(@base-input-box-sizing);
 
 	height: @bx-height-button-small;
 	line-height: @bx-height-button-small;

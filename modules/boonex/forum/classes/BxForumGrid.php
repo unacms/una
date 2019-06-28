@@ -72,7 +72,10 @@ class BxForumGrid extends BxTemplGrid
         if(empty($sCode))
             return '';
 
-    	return $this->_oModule->_oTemplate->getJsCode('main') . $sCode;
+    	return $this->_oModule->_oTemplate->parseHtmlByName('units.html', array(
+            'code' => $sCode,
+            'js_code' => $this->_oModule->_oTemplate->getJsCode('main')
+        ));
     }
 
     protected function _getActionAdd ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())

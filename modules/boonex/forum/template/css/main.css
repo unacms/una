@@ -62,6 +62,20 @@
 }
 
 /*-- Grid --*/
+.bx-forum-grid .bx-grid-table tr.bx-def-color-bg-hl {
+    background-color: transparent;
+}
+
+.bx-forum-grid .bx-grid-table tr th:first-child,
+.bx-forum-grid .bx-grid-table tr td:first-child {
+    padding-left: 0;
+}
+
+.bx-forum-grid .bx-grid-table tr th:last-child,
+.bx-forum-grid .bx-grid-table tr td:last-child {
+    padding-right: 0;
+}
+
 .bx-forum-grid-field-replies .bx-def-unit-alert-middle {
     position:static;
     display:inline-block;
@@ -117,6 +131,25 @@
 .bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-top {
     -webkit-justify-content: space-between;
     justify-content: space-between;
+
+    padding-bottom: 0.2rem;
+}
+
+.bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-bottom {
+    padding-top: 0.2rem;
+}
+
+.bx-forum-grid-preview .bx-forum-gp-meta .bx-menu-custom.bx-menu-hor {
+    margin: 0;
+}
+
+.bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-bottom .bx-menu-custom.bx-menu-hor {
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.bx-layout-col.bx-layout-column-thin .bx-forum-grid-preview .bx-forum-gp-meta .bx-def-media-phone-hide {
+    display: none;
 }
 
 .bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-bottom .bx-forum-gpm-reply {
@@ -126,9 +159,38 @@
     align-items: center;
 }
 
-.bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-bottom .bx-forum-gpm-reply i,
-.bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-bottom .bx-forum-gpm-reply ul {
+.bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-bottom .bx-forum-gpm-reply .bx-menu-item-reply-author .bx-base-pofile-unit {
+    width: auto;
+    margin: 0;
+}
+
+.bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-bottom .bx-forum-gpm-reply .bx-menu-item-reply-author .bx-def-icon-size {
+    width: 1.0rem;
+    height: 1.0rem;
+
+    line-height: 0.875rem;
+    font-size: 0.6rem;
+}
+
+.bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-bottom .bx-forum-gpm-reply .bx-menu-item-reply-author .bx-def-icon-size-min-height {
+    min-height: 1.0rem;
+}
+
+.bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-bottom .bx-forum-gpm-reply .bx-menu-item-reply-author .bx-def-icon-size-max-height {
+    max-height: 1.0rem;
+}
+
+.bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-bottom .bx-forum-gpm-reply .bx-menu-item-reply-author .bx-def-icon-size-left-indent {
+    margin-left: 1.25rem;
+}
+
+.bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-bottom .bx-forum-gpm-reply .bx-menu-item-reply-author .bx-def-unit-img .bx-base-pofile-unit-thumb {
     display: block;
+    border-width: 1px;
+}
+
+.bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-bottom .bx-forum-gpm-reply .bx-menu-item-reply-author .bx-base-pofile-unit-online {
+    display: none;
 }
 
 .bx-base-general-unit-meta ul.bx-menu-object-bx_forum_snippet_meta_counters li span {

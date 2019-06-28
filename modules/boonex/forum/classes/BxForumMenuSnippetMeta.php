@@ -67,10 +67,10 @@ class BxForumMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
             return '';
 
         $oProfile = BxDolProfile::getInstanceMagic($this->_aContentInfo[$CNF['FIELD_LR_AUTHOR']]);
-        return $this->getUnitMetaItemLink($oProfile->getDisplayName(), array(
-            'href' => $oProfile->getUrl(),
-            'class' => 'bx-base-text-unit-author'
-        ));
+        return $this->getUnitMetaItemCustom($oProfile->getUnit(0, array('template' => array(
+            'name' => 'unit',
+            'size' => 'icon'
+        ))));
     }
 
     protected function _getMenuItemReplyDate($aItem)

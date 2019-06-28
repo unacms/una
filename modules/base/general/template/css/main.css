@@ -181,7 +181,7 @@ div.bx-base-general-comments div.bx-base-general-comments-counter-holder {
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
 
-    margin: 0.1rem -0.25rem 0.2rem -0.25rem;
+    margin: 0.1rem 0 0.2rem 0;
 }
 .sys-author ul.bx-menu-custom.bx-menu-hor > li,
 .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-hor > li {
@@ -205,8 +205,8 @@ div.bx-base-general-comments div.bx-base-general-comments-counter-holder {
 .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-hor > li > span {
     margin-left: 0;
     margin-right: 0;
-    padding-left: 0.25rem;
-    padding-right: 0.25rem;
+    padding-left: 0;
+    padding-right: 0;
 }
 .sys-author ul.bx-menu-custom li:first-child .bx-base-general-unit-meta-div,
 .bx-base-general-unit-meta ul.bx-menu-custom li:first-child .bx-base-general-unit-meta-div {
