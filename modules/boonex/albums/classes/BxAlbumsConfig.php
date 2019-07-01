@@ -20,6 +20,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
         $aMenuItems2Methods = array (
             'add-images-to-album' => 'checkAllowedEdit',
             'edit-album' => 'checkAllowedEdit',
+            'edit-image' => 'checkAllowedEdit',
             'delete-album' => 'checkAllowedDelete',
         );
 
@@ -137,6 +138,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
                     'create-album' => 'checkAllowedAdd',
                 ),
                 'bx_albums_view' => $aMenuItems2Methods,
+                'bx_albums_view_media' => $aMenuItems2Methods,
             ),
 
             // informer messages
