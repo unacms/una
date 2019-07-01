@@ -215,6 +215,9 @@ class BxBaseServiceConnections extends BxDol
         if(empty($aProfile) || !is_array($aProfile))
             return false;
 
+        if(!BxDolConnection::getObjectInstance('sys_profiles_relations')->isRelationAvailableFromProfile($aProfile['type']))
+            return false;
+
         $oGrid = BxDolGrid::getObjectInstance('sys_grid_relations');
         if (!$oGrid)
             return false;
@@ -240,6 +243,9 @@ class BxBaseServiceConnections extends BxDol
 
         $aProfile = BxDolProfile::getInstance($iProfileId)->getInfo();
         if(empty($aProfile) || !is_array($aProfile))
+            return false;
+
+        if(!BxDolConnection::getObjectInstance('sys_profiles_relations')->isRelationAvailableWithProfile($aProfile['type']))
             return false;
 
         $oGrid = BxDolGrid::getObjectInstance('sys_grid_related_me');

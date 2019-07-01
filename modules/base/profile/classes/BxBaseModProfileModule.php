@@ -762,7 +762,14 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         $CNF = &$this->_oConfig->CNF;
         return isset($CNF['PARAM_ENABLE_ACTIVATION_LETTER']) ? (bool)getParam($CNF['PARAM_ENABLE_ACTIVATION_LETTER']) : true;
     }
-    
+
+    public function serviceIsEnableRelations()
+    {
+        $sModule = $this->_oConfig->getName();
+        $oRelations = BxDolConnection::getObjectInstance('sys_profiles_relations');
+        return $oRelations->isRelationAvailableWithProfile($sModule) || $oRelations->isRelationAvailableFromProfile($sModule);
+    }
+
     /**
      * For internal usage only.
      */
@@ -1235,9 +1242,13 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
     public function checkAllowedRelationsView (&$aDataEntry, $isPerformAction = false)
     {
-        $CNF = &$this->_oConfig->CNF;
-
         $sResult = _t('_sys_txt_access_denied');
+
+        $sModule = $this->_oConfig->getName();
+        $oRelations = BxDolConnection::getObjectInstance('sys_profiles_relations');
+        if(!$oRelations->isRelationAvailableWithProfile($sModule) && !$oRelations->isRelationAvailableFromProfile($sModule))
+            return $sResult;
+
         if(empty($aDataEntry) || !is_array($aDataEntry))
             return $sResult;
 

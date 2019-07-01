@@ -9,7 +9,9 @@
 
 class BxDolRelation extends BxDolConnection
 {
+    protected $_sParamDivider;
     protected $_sParamEnabled;
+
     protected $_sPreList;
 
     protected function __construct($aObject)
@@ -18,6 +20,7 @@ class BxDolRelation extends BxDolConnection
 
         $this->_oQuery = new BxDolRelationQuery($aObject);
 
+        $this->_sParamDivider = '_';
         $this->_sParamEnabled = 'sys_relations';
         $this->_sPreList = 'sys_relations';
     }
@@ -184,19 +187,47 @@ class BxDolRelation extends BxDolConnection
         return CHECK_ACTION_RESULT_ALLOWED;
     }
 
+    public function isRelationAvailableFromProfile($sModule)
+    {
+        $sModule .= $this->_sParamDivider;
+
+        $aTypes = $this->getRelationTypes();
+        foreach($aTypes as $sType)
+            if(substr($sType, 0, strlen($sModule)) == $sModule)
+                return true;
+
+        return false;
+    }
+
+    public function isRelationAvailableWithProfile($sModule)
+    {
+        $sModule = $this->_sParamDivider . $sModule;
+
+        $aTypes = $this->getRelationTypes();
+        foreach($aTypes as $sType)
+            if(substr($sType, -strlen($sModule)) == $sModule)
+                return true;
+
+        return false;
+    }
+    
+    public function isRelationAvailableBetweenProfiles($sModuleInitiator, $sModuleContent)
+    {
+        $aTypes = $this->getRelationTypes();
+        if(in_array($sModuleInitiator . $this->_sParamDivider . $sModuleContent, $aTypes))
+            return true;
+
+        return false;
+    }
+
     public function isRelationAvailable($iInitiator, $iContent)
     {
-        $sParam = getParam($this->_sParamEnabled);
         $oInitiator = BxDolProfile::getInstance($iInitiator);
         $oContent = BxDolProfile::getInstance($iContent);
-        if(empty($sParam) || !$oInitiator || !$oContent)
+        if(!$oInitiator || !$oContent)
             return false;
 
-        $aParam = explode(',', $sParam);
-        if(!in_array($oInitiator->getModule() . '_' . $oContent->getModule(), $aParam))
-            return false;
-
-        return true;
+        return $this->isRelationAvailableBetweenProfiles($oInitiator->getModule(), $oContent->getModule());
     }
 
     public function getRelations($iInitiator, $iContent, &$aSuggestions = array())
@@ -233,5 +264,14 @@ class BxDolRelation extends BxDolConnection
         $aRelations = BxDolFormQuery::getDataItems($this->_sPreList, false, $sUseValues);
 
         return !empty($aRelations[$iValue]) ? $aRelations[$iValue] : _t('_uknown');
+    }
+
+    public function getRelationTypes()
+    {
+        $sParam = getParam($this->_sParamEnabled);
+        if(empty($sParam))
+            return array();
+
+        return explode(',', $sParam);
     }
 }
