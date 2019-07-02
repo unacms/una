@@ -32,12 +32,10 @@
 .bx-media-desktop .bx-layout-column-fullwidth div.bx-tl-view-timeline div.bx-tl-items::before {
     left: 50%;
     margin-left: -2px;
-    margin-left: -0.125rem;
 } 
 .bx-media-desktop .bx-layout-column-fullwidth div.bx-tl-view-timeline div.bx-tl-item div.bx-tl-item-type {
     left: 50%;
     margin-left: -20px;
-    margin-left: -1.25rem;
 } 
 .bx-media-desktop .bx-layout-column-fullwidth div.bx-tl-view-timeline div.bx-tl-item div.bx-tl-item-cnt {
     width: 45%;
