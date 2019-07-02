@@ -238,7 +238,16 @@ class BxBaseModGeneralDb extends BxDolModuleDb
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $sOrderClause .=  "`" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ADDED'] . "` DESC";
+        if(empty($aParams['search_params']['order']) || !is_array($aParams['search_params']['order'])) 
+            $aParams['search_params']['order'] = array(
+                array('table' => $CNF['TABLE_ENTRIES'], 'field' => $CNF['FIELD_ADDED'], 'direction' => 'DESC')
+            );
+
+        $aOrders = array();
+        foreach($aParams['search_params']['order'] as $aOrder) 
+            $aOrders[] = "`" . (isset($aOrder['table']) ? $aOrder['table'] : $CNF['TABLE_ENTRIES']) . "`.`" . (!empty($aOrder['field']) ? $aOrder['field'] : $CNF['FIELD_ADDED']) . "` " . (!empty($aOrder['direction']) ? strtoupper($aOrder['direction']) : 'DESC');
+
+        $sOrderClause .= implode(', ', $aOrders);
     }
 }
 

@@ -249,7 +249,36 @@ div.bx-account-unit-online {
     overflow: hidden;
 }
 
-.bx-profile-stats .bx-def-unit-info-cnt {
+.bx-profile-stats .bx-ps-user-cnt {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+}
+
+.bx-profile-stats .bx-ps-user-cnt .bx-def-ava-size {
+    width: 3.75rem;
+    height: 3.75rem;
+}
+
+.bx-profile-stats .bx-ps-user-cnt .bx-def-ava-size,
+.bx-profile-stats .bx-ps-user-cnt div.bx-def-unit-img p.bx-base-pofile-unit-thumb.bx-def-ava-size {
+    line-height: 3.75rem;
+}
+
+.bx-profile-stats .bx-ps-user-img {
+    -webkit-flex: 0 2 auto; 
+    flex: 0 2 auto;
+}
+
+.bx-profile-stats .bx-ps-user-info {
+    -webkit-flex: 1 1 auto; 
+    flex: 1 1 auto;
+}
+
+.bx-profile-stats .bx-ps-user-info-cnt {
     display: -webkit-flex;
     display: flex;
     -webkit-align-items: flex-start;
