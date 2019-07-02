@@ -157,10 +157,22 @@ div.bx-base-general-comments div.bx-base-general-comments-counter-holder {
     width:11.75;
 }
 
-.bx-def-unit-live-search .bx-def-unit-img {
+.bx-def-unit-live-search .bx-def-unit-img:not(.empty) {
     background-size:cover;
     background-repeat:no-repeat;
     background-position:center center;
+}
+.bx-def-unit-live-search .bx-def-unit-img-empty {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+.bx-def-unit-live-search .bx-def-unit-img-empty i {
+    font-size: 1.2rem;
 }
 
 /* unit meta */

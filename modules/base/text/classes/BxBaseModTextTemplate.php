@@ -535,6 +535,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             'bx_if:no_thumb' => array (
                 'condition' => !$sPhotoThumb,
                 'content' => array (
+                    'module_icon' => $CNF['ICON'],
                     'content_url' => $sUrl,
                     'summary_plain' => $sSummaryPlain,
                     'strecher' => mb_strlen($sSummaryPlain) > 240 ? '' : str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', round((240 - mb_strlen($sSummaryPlain)) / 6)),
