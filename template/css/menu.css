@@ -260,12 +260,16 @@ ul.bx-menu-toolbar li .sys-icon {
 }
 
 ul.bx-menu-toolbar li .bx-menu-toolbar-item-unit {
-	display: inline-block;
-	vertical-align: middle;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+ul.bx-menu-toolbar li .bx-menu-toolbar-item-unit .bx-base-pofile-unit-online {
+    display: none;
 }
 
 ul.bx-menu-toolbar li a .bx-def-unit-alert-middle {
-	right: 5px;
+    right: 5px;
     right: -0.3125rem;
 }
 
