@@ -152,14 +152,14 @@ class BxForumModule extends BxBaseModTextModule
     /** 
      * @ref bx_forum-browse_new "browse_new"
      */
-	public function serviceBrowseNew ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
+	public function serviceBrowseNew ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = false)
     {
     	$sType = 'new';
 
     	if($sUnitView != 'table')   
         	return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
-        return $this->_serviceBrowseTable(array('type' => $sType));
+        return $this->_serviceBrowseTable(array('type' => $sType), $bShowHeader);
     }
 
     /**
@@ -183,14 +183,14 @@ class BxForumModule extends BxBaseModTextModule
     /** 
      * @ref bx_forum-browse_latest "browse_latest"
      */
-	public function serviceBrowseLatest($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = true)
+    public function serviceBrowseLatest($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = false)
     {
-    	$sType = 'latest';
+        $sType = 'latest';
 
-    	if($sUnitView != 'table')
-        	return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+        if($sUnitView != 'table')
+            return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
-		return $this->_serviceBrowseTable(array('type' => $sType), $bShowHeader);
+        return $this->_serviceBrowseTable(array('type' => $sType), $bShowHeader);
     }
 
     /**
@@ -214,21 +214,21 @@ class BxForumModule extends BxBaseModTextModule
     /** 
      * @ref bx_forum-browse_featured "browse_featured"
      */
-    public function serviceBrowseFeatured($sUnitView = false, $bEmptyMessage = false, $bAjaxPaginate = true, $bShowHeader = true)
+    public function serviceBrowseFeatured($sUnitView = false, $bEmptyMessage = false, $bAjaxPaginate = true, $bShowHeader = false)
     {
         $CNF = &$this->_oConfig->CNF;
 
     	$sType = 'featured';
 
     	if($sUnitView != 'table')
-        	return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+            return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
-		return $this->_serviceBrowseTable(array(
-			'grid' => $CNF['OBJECT_GRID_FEATURE'],
-			'type' => $sType, 
-			'where' => array('fld' => 'featured', 'val' => 0, 'opr' => '<>'),
-		    'empty_message' => $bEmptyMessage
-		), $bShowHeader);
+        return $this->_serviceBrowseTable(array(
+            'grid' => $CNF['OBJECT_GRID_FEATURE'],
+            'type' => $sType, 
+            'where' => array('fld' => 'featured', 'val' => 0, 'opr' => '<>'),
+            'empty_message' => $bEmptyMessage
+        ), $bShowHeader);
     }
 
     /**
@@ -251,14 +251,14 @@ class BxForumModule extends BxBaseModTextModule
     /** 
      * @ref bx_forum-browse_top "browse_top"
      */
-	public function serviceBrowseTop($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
+    public function serviceBrowseTop($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = false)
     {
-    	$sType = 'top';
+        $sType = 'top';
 
-    	if($sUnitView != 'table')
-        	return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+        if($sUnitView != 'table')
+            return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
-		return $this->_serviceBrowseTable(array('type' => $sType));
+        return $this->_serviceBrowseTable(array('type' => $sType), $bShowHeader);
     }
 
     /**
@@ -281,14 +281,14 @@ class BxForumModule extends BxBaseModTextModule
     /** 
      * @ref bx_forum-browse_popular "browse_popular"
      */
-    public function serviceBrowsePopular ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
+    public function serviceBrowsePopular ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = false)
     {
         $sType = 'popular';
 
         if($sUnitView != 'table')
             $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
-        return $this->_serviceBrowseTable(array('type' => $sType));
+        return $this->_serviceBrowseTable(array('type' => $sType), $bShowHeader);
     }
 
     /**
@@ -311,14 +311,14 @@ class BxForumModule extends BxBaseModTextModule
     /** 
      * @ref bx_forum-browse_updated "browse_updated"
      */
-    public function serviceBrowseUpdated ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
+    public function serviceBrowseUpdated ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = false)
     {
         $sType = 'updated';
 
         if($sUnitView != 'table')
             $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
-        return $this->_serviceBrowseTable(array('type' => $sType));
+        return $this->_serviceBrowseTable(array('type' => $sType), $bShowHeader);
     }
 
     /**
@@ -342,18 +342,18 @@ class BxForumModule extends BxBaseModTextModule
     /** 
      * @ref bx_forum-browse_index "browse_index"
      */
-	public function serviceBrowseIndex($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = true)
+    public function serviceBrowseIndex($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = false)
     {
     	$sType = 'index';
 
     	if($sUnitView != 'table')
-        	return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+            return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
-		return $this->_serviceBrowseTable(array(
-			'type' => $sType,
-			'per_page' => (int)$this->_oDb->getParam('bx_forum_per_page_index'),
-			'empty_message' => $bEmptyMessage
-		), $bShowHeader);
+        return $this->_serviceBrowseTable(array(
+            'type' => $sType,
+            'per_page' => (int)$this->_oDb->getParam('bx_forum_per_page_index'),
+            'empty_message' => $bEmptyMessage
+        ), $bShowHeader);
     }
 
     /**
@@ -498,19 +498,19 @@ class BxForumModule extends BxBaseModTextModule
     /** 
      * @ref bx_forum-browse_category "browse_category"
      */
-    public function serviceBrowseCategory($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
+    public function serviceBrowseCategory($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = false)
     {
-    	$sType = 'category';
-    	$iCategory = bx_process_input(bx_get('category'), BX_DATA_INT);
+        $sType = 'category';
+        $iCategory = bx_process_input(bx_get('category'), BX_DATA_INT);
 
-    	$aCategory = $this->_oDb->getCategories(array('type' => 'by_category', 'category' => $iCategory));
-    	if(!empty($aCategory['visible_for_levels']) && !BxDolAcl::getInstance()->isMemberLevelInSet($aCategory['visible_for_levels']))
-    		return $bEmptyMessage ? MsgBox(_t('_sys_txt_access_denied')) : '';
+        $aCategory = $this->_oDb->getCategories(array('type' => 'by_category', 'category' => $iCategory));
+        if(!empty($aCategory['visible_for_levels']) && !BxDolAcl::getInstance()->isMemberLevelInSet($aCategory['visible_for_levels']))
+            return $bEmptyMessage ? MsgBox(_t('_sys_txt_access_denied')) : '';
 
-    	if($sUnitView != 'table')   
-        	return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+        if($sUnitView != 'table')   
+            return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
-		return $this->_serviceBrowseTable(array('type' => $sType, 'where' => array('fld' => 'cat', 'val' => $iCategory, 'opr' => '=')));
+        return $this->_serviceBrowseTable(array('type' => $sType, 'where' => array('fld' => 'cat', 'val' => $iCategory, 'opr' => '=')), $bShowHeader);
     }
 
     /**
@@ -533,15 +533,15 @@ class BxForumModule extends BxBaseModTextModule
     /** 
      * @ref bx_forum-browse_keyword "browse_keyword"
      */
-	public function serviceBrowseKeyword($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
+    public function serviceBrowseKeyword($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = false)
     {
-    	$sType = 'keyword';
-    	$sKeyword = bx_process_input(bx_get('keyword'));
+        $sType = 'keyword';
+        $sKeyword = bx_process_input(bx_get('keyword'));
 
-    	if($sUnitView != 'table')   
-        	return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+        if($sUnitView != 'table')   
+            return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
-		return $this->_serviceBrowseTable(array('type' => $sType, 'where' => $this->_getSearchKeywordDescriptor('#' . $sKeyword)));
+        return $this->_serviceBrowseTable(array('type' => $sType, 'where' => $this->_getSearchKeywordDescriptor('#' . $sKeyword)), $bShowHeader);
     }
 
     /**
@@ -566,30 +566,30 @@ class BxForumModule extends BxBaseModTextModule
      */
     public function serviceBrowseSearchResults($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
     {
-    	$sType = 'search';
+        $sType = 'search';
 
-    	$aAuthors = bx_process_input(bx_get('author'));
-    	$iCategory = bx_process_input(bx_get('category'), BX_DATA_INT);
-    	$sKeyword = bx_process_input(bx_get('keyword'));
+        $aAuthors = bx_process_input(bx_get('author'));
+        $iCategory = bx_process_input(bx_get('category'), BX_DATA_INT);
+        $sKeyword = bx_process_input(bx_get('keyword'));
 
-    	$aCategory = $this->_oDb->getCategories(array('type' => 'by_category', 'category' => $iCategory));
-    	if(!empty($aCategory['visible_for_levels']) && !BxDolAcl::getInstance()->isMemberLevelInSet($aCategory['visible_for_levels']))
-    		return $bEmptyMessage ? MsgBox(_t('_sys_txt_access_denied')) : '';
+        $aCategory = $this->_oDb->getCategories(array('type' => 'by_category', 'category' => $iCategory));
+        if(!empty($aCategory['visible_for_levels']) && !BxDolAcl::getInstance()->isMemberLevelInSet($aCategory['visible_for_levels']))
+            return $bEmptyMessage ? MsgBox(_t('_sys_txt_access_denied')) : '';
 
-    	if($sUnitView != 'table')   
-        	return $this->_serviceBrowse('', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+        if($sUnitView != 'table')   
+            return $this->_serviceBrowse('', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
         $aWhereGroupAnd = array('grp' => true, 'opr' => 'AND', 'cnds' => array());
         if(!empty($aAuthors) && is_array($aAuthors))
-        	$aWhereGroupAnd['cnds'][] = $this->_getSearchAuthorDescriptor($aAuthors);
+            $aWhereGroupAnd['cnds'][] = $this->_getSearchAuthorDescriptor($aAuthors);
 
         if(!empty($iCategory))
-        	$aWhereGroupAnd['cnds'][] = array('fld' => 'cat', 'val' => $iCategory, 'opr' => '=');
+            $aWhereGroupAnd['cnds'][] = array('fld' => 'cat', 'val' => $iCategory, 'opr' => '=');
 
         if(!empty($sKeyword))
-        	$aWhereGroupAnd['cnds'][] = $this->_getSearchKeywordDescriptor($sKeyword);
+            $aWhereGroupAnd['cnds'][] = $this->_getSearchKeywordDescriptor($sKeyword);
 
-		return $this->_serviceBrowseTable(array('type' => $sType, 'where' => $aWhereGroupAnd), false);
+        return $this->_serviceBrowseTable(array('type' => $sType, 'where' => $aWhereGroupAnd), false);
     }
 
     /**
@@ -871,7 +871,7 @@ class BxForumModule extends BxBaseModTextModule
         return _t('_sys_txt_access_denied');
     }
 
-	protected function _serviceBrowseTable($aParams, $isDisplayHeader = true)
+    protected function _serviceBrowseTable($aParams, $isDisplayHeader = true)
     {
         $sGrid = $this->_oConfig->CNF['OBJECT_GRID'];
         if(!empty($aParams['grid'])) {
@@ -881,9 +881,9 @@ class BxForumModule extends BxBaseModTextModule
 
         $oGrid = BxDolGrid::getObjectInstance($sGrid);
         if(!$oGrid)
-			return false;
+            return false;
 
-		$oGrid->setBrowseParams($aParams);
+        $oGrid->setBrowseParams($aParams);
 
         return $oGrid->getCode($isDisplayHeader);
     }
