@@ -112,10 +112,6 @@
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
-.bx-menu-main-bar-wrapper.bx-menu-main-bar-hide-shadow-before:before,
-.bx-menu-main-bar-wrapper.bx-menu-main-bar-hide-shadow-after:after {
-    display:none !important;
-}
 .bx-menu-main-bar-wrapper:before,
 .bx-menu-main-bar-wrapper:after {
     display: block;

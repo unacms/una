@@ -94,7 +94,7 @@ class BxBaseMenuSubmenu extends BxTemplMenu
 
         $this->_addJsCss();
         return $this->_oTemplate->parseHtmlByName('menu_main_submenu_bar.html', array(
-            'code' => $sCode . $this->_getJsCode()
+            'code' => $sCode
         ));
     }
 
@@ -162,22 +162,6 @@ class BxBaseMenuSubmenu extends BxTemplMenu
         }
 
         return false;
-    }
-
-    protected function _getJsCode($aParams = array())
-    {
-        $aParams = array_merge(array(
-            'sObject' => $this->_sObject
-        ), $aParams);
-
-        return $this->_oTemplate->_wrapInTagJsCode("if(!" . $this->_sJsObject . ") var " . $this->_sJsObject . " = new BxDolMenuSubmenu(" . json_encode($aParams) . "); " . $this->_sJsObject . ".init();");
-    }
-
-    protected function _addJsCss()
-    {
-        parent::_addJsCss();
-
-        $this->_oTemplate->addJs(array('BxDolMenuSubmenu.js'));
     }
 }
 

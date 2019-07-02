@@ -266,6 +266,16 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
 	display: block;
 }
 
+
+/*--- Profile View Submenu ---*/
+.bx-menu-main-bar-wrapper .bx-menu-main-submenu-wrp.bx-menu-profile-view-submenu-wrp {
+    overflow-x: visible;
+}
+.bx-menu-main-bar-wrapper .bx-menu-main-submenu-wrp.bx-menu-profile-view-submenu-wrp .bx-menu-main-submenu-group {
+    display: block;
+}
+
+
 /*--- Toolbars ---*/
 .bx-toolbar-item .bx-menu-toolbar .bx-menu-toolbar-item a.bx-btn {
 	width: auto;

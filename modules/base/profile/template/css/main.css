@@ -296,10 +296,6 @@ a.bx-base-pofile-cover-thumb p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
 .bx-base-profile-view .bx-menu-main-bar {
     overflow: visible;
 }
-.bx-base-profile-view .bx-menu-main-bar-wrapper::before, 
-.bx-base-profile-view .bx-menu-main-bar-wrapper::after {
-    display: none;
-}
 
 .bx-menu-main-bar ul.bx-menu-main-submenu.bx-menu-more-auto,
 .bx-base-pofile-cover-actions ul.bx-menu-hor.bx-menu-more-auto {

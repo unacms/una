@@ -25,9 +25,6 @@ class BxTemplConfig extends BxBaseConfig
             'bx-color-active' => 'rgba(202, 242, 252, 0.4)',
 
             'bx-border-color' => '#00a0ce',
-
-            'bx-color-menu-page-gradient-left' => 'linear-gradient(to right, #ffffff 0%, rgba(255, 255, 255, 0) 100%)',
-            'bx-color-menu-page-gradient-right' => 'linear-gradient(to right, rgba(255, 255, 255, 0) 0%, #ffffff 100%)'
         ));
 
         $this->setPageWidth('bx_ocean_page_width');
