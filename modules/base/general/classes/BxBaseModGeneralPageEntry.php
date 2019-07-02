@@ -54,8 +54,10 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
 
         // count views
         $CNF = &$this->_oModule->_oConfig->CNF;
-        if (!empty($CNF['OBJECT_VIEWS'])) {
-            BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $this->_aContentInfo[$CNF['FIELD_ID']])->doView();
+        if(!empty($CNF['OBJECT_VIEWS'])) {
+            $oView = BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $this->_aContentInfo[$CNF['FIELD_ID']]);
+            if($oView && $oView->isEnabled())
+                $oView->doView();
         }
 
         // set cover image
