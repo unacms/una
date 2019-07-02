@@ -1406,7 +1406,7 @@ class BxBaseModGeneralModule extends BxDolModule
             return false;
 
         $oFavorite = BxDolFavorite::getObjectInstance($sSystem, $iId, true, $this->_oTemplate);
-        if(!$oFavorite->isEnabled())
+        if(!$oFavorite || !$oFavorite->isEnabled())
             return false;
 
         return $oFavorite;

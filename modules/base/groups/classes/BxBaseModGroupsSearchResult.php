@@ -61,7 +61,7 @@ class BxBaseModGroupsSearchResult extends BxBaseModProfileSearchResult
 
         $iProfileAuthor = $oProfileAuthor->id();
         $oFavorite = $this->oModule->getObjectFavorite();
-        if(!$oFavorite->isPublic() && $iProfileAuthor != bx_get_logged_profile_id()) 
+        if(!$oFavorite || (!$oFavorite->isPublic() && $iProfileAuthor != bx_get_logged_profile_id())) 
             return false;
 
         $aConditions = $oFavorite->getConditionsTrack($CNF['TABLE_ENTRIES'], 'id', $iProfileAuthor);
