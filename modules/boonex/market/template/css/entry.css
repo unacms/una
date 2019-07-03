@@ -7,30 +7,25 @@
 /*--- Entry Content ---*/
 div.bx-market-entity-content {}
 
-div.bx-market-ec-head {
-	position: relative;
-}
-div.bx-market-ech-info {
-	position: relative;
-	display: -webkit-flex;
-	display: flex;
+div.bx-market-ec-title {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
 
-	-webkit-align-items: center;
-	align-items: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
 }
-div.bx-market-ech-info-cnt {
-	position: relative;
-	width: 100%;
+div.bx-market-ect-icon {
+    -webkit-flex: 0 2 auto;
+    flex: 0 2 auto;
 }
-div.bx-market-ech-info .bx-market-ech-title {
-	margin: 0px;
+div.bx-market-ect-title {
+    -webkit-flex: 1 1 auto;
+    flex: 1 1 auto;
 }
-div.bx-market-ech-info .bx-market-ech-paid {
-	display: inline-block;
-	float: none;
-	vertical-align: top;
-}
-div.bx-market-ech-info .bx-market-ech-free {}
+
 
 /*--- Entry Screenshots ---*/
 div.bx-market-screenshots {

@@ -63,20 +63,47 @@ class BxMarketTemplate extends BxBaseModTextTemplate
     	return $sVotes; 
     }
 
-    public function entryText ($aData, $sTemplateName = 'entry-text.html')
+    public function getTmplVarsText($aData)
     {
-    	$sScreenshots = $this->getScreenshots($aData);
+        $oModule = $this->getModule();
+        $CNF = &$oModule->_oConfig->CNF;
 
-    	$this->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css');
-    	$this->addJs('flickity/flickity.pkgd.min.js');
-    	return $this->parseHtmlByContent(parent::entryText($aData), array(
-    		'bx_if:show_screenshots' => array(
-    			'condition' => !empty($sScreenshots),
-    			'content' => array(
-    				'screenshots' => $sScreenshots
-    			)
-    		)
-    	));
+        $aVars = parent::getTmplVarsText($aData);
+
+        $sIcon = '';
+        $mixedIcon = $oModule->getEntryImageData($aData, 'FIELD_THUMB', array('OBJECT_IMAGES_TRANSCODER_ICON', 'OBJECT_IMAGES_TRANSCODER_THUMB'));
+        if($mixedIcon !== false) {
+            if(!empty($mixedIcon['object']))
+                $o = BxDolStorage::getObjectInstance($mixedIcon['object']);
+            else if(!empty($mixedIcon['transcoder']))
+                $o = BxDolTranscoder::getObjectInstance($mixedIcon['transcoder']);
+
+            if($o)
+                $sIcon = $o->getFileUrlById($mixedIcon['id']);
+        }
+
+        $aVars['bx_if:show_icon'] = array(
+            'condition' => !empty($sIcon),
+            'content' => array(
+                'entry_icon' => $sIcon
+            )
+        );
+
+        $sScreenshots = $this->getScreenshots($aData);
+        $bScreenshots = !empty($sScreenshots);
+        if($bScreenshots) {
+            $this->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css');
+            $this->addJs('flickity/flickity.pkgd.min.js');
+        }
+
+        $aVars['bx_if:show_screenshots'] = array(
+            'condition' => $bScreenshots,
+            'content' => array(
+                'screenshots' => $sScreenshots
+            )
+        );
+        
+        return $aVars;
     }
 
     public function getScreenshots($aData)
