@@ -64,12 +64,14 @@
 .bx-base-text-unit-gallery .bx-base-text-unit-no-thumb,
 .bx-base-text-unit-gallery .bx-base-text-unit-thumb {
     float:none;
-    line-height:1.25em;
+    display:block;
+    width:100%;
+
     background-size:cover;
     background-repeat:no-repeat;
     background-position:center center;
-    display:table;
-    width:100%;
+
+    line-height:1.25em;
 }
 
 .bx-base-text-unit-gallery h2 {
