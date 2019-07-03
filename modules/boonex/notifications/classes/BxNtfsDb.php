@@ -63,41 +63,48 @@ class BxNtfsDb extends BxBaseModNotificationsDb
         if($aParams['browse'] != 'list' || $aParams['type'] != BX_NTFS_TYPE_OBJECT_OWNER_AND_CONNECTIONS)
             return parent::getEvents($aParams, $bReturnCount);
 
+        $bCountOnly = !empty($aParams['count_only']);
+
         //--- Get query for 'Object Owner' notifications
         $sLimitClause = isset($aParams['per_page']) ? "LIMIT 0, " . ($aParams['start'] + $aParams['per_page']) : "";
 
         $aParams['type'] = BX_BASE_MOD_NTFS_TYPE_OBJECT_OWNER;
         list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause) = $this->_getSqlPartsEvents($aParams);
 
-        $sSqlOwner = "SELECT {select}
+        $sQueryOwner = "SELECT {select}
             FROM `{$this->_sTable}`
             LEFT JOIN `{$this->_sTableHandlers}` ON `{$this->_sTable}`.`type`=`{$this->_sTableHandlers}`.`alert_unit` AND `{$this->_sTable}`.`action`=`{$this->_sTableHandlers}`.`alert_action` " . $sJoinClause . "
-            WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;       
+            WHERE 1 " . $sWhereClause . (!$bCountOnly ? " " . $sOrderClause . " " . $sLimitClause : "");
 
         //--- Get query for 'Connections based' notifications
         $aParams['type'] = BX_BASE_MOD_NTFS_TYPE_CONNECTIONS;
         list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause) = $this->_getSqlPartsEvents($aParams);
 
-        $sSqlConnections = "SELECT {select}
+        $sQueryConnections = "SELECT {select}
             FROM `{$this->_sTable}`
             LEFT JOIN `{$this->_sTableHandlers}` ON `{$this->_sTable}`.`type`=`{$this->_sTableHandlers}`.`alert_unit` AND `{$this->_sTable}`.`action`=`{$this->_sTableHandlers}`.`alert_action` " . $sJoinClause . "
-            WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+            WHERE 1 " . $sWhereClause . (!$bCountOnly ? " " . $sOrderClause . " " . $sLimitClause : "");
 
         //--- Combine both queries in one
-        $sOrderClause = "ORDER BY `date` DESC, `id` DESC";
-        $sLimitClause = isset($aParams['per_page']) ? "LIMIT " . $aParams['start'] . ", " . $aParams['per_page'] : "";
-        if(!empty($aParams['count_only'])) {
-            $sOrderClause = "";
-            $sLimitClause = "";
+        $sUnionMethod = 'getColumn';
+        $sUnionOrderClause = $sUnionLimitClause = '';
+        if(!$bCountOnly) {
+            $sUnionMethod = $sMethod;
+            $sUnionOrderClause = "ORDER BY `date` DESC, `id` DESC";
+            $sUnionLimitClause = isset($aParams['per_page']) ? "LIMIT " . $aParams['start'] . ", " . $aParams['per_page'] : "";
         }
+        
+        $sQuery = "(" . $sQueryOwner . ") UNION (" . $sQueryConnections . ") {order} {limit}";
+        $sQuery = str_replace(array('{select}', '{order}', '{limit}'), array($sSelectClause, $sUnionOrderClause, $sUnionLimitClause), $sQuery);
+        $aEntries = $this->$sUnionMethod($sQuery);
 
-        $sSql = "(" . $sSqlOwner . ") UNION (" . $sSqlConnections . ") {order} {limit}";
-        //var_dump(str_replace(array('{select}', '{order}', '{limit}'), array($sSelectClause, $sOrderClause, $sLimitClause), $sSql), "<br />"); exit;
-        $aEntries = $this->$sMethod(str_replace(array('{select}', '{order}', '{limit}'), array($sSelectClause, $sOrderClause, $sLimitClause), $sSql));
+        if($bCountOnly)
+            $aEntries = (int)array_sum($aEntries);
+
         if(!$bReturnCount)
             return $aEntries;
 
-        return array($aEntries, (int)$this->getOne(str_replace(array('{select}', '{order}', '{limit}'), array("COUNT(*)", "", ""), $sSql)));
+        return array($aEntries, (int)$this->getOne(str_replace(array('{select}', '{order}', '{limit}'), array("COUNT(*)", "", ""), $sQuery)));
     }
 
     protected function _getSqlPartsEvents($aParams)
