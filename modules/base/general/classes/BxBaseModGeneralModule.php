@@ -506,11 +506,12 @@ class BxBaseModGeneralModule extends BxDolModule
             $oFormsHelper->setDynamicMode($sParams['dynamic_mode']);
 
         $mixedResult = $oFormsHelper->addDataForm($sDisplay);
-        if(!$oFormsHelper->isAjaxMode())
-            return $mixedResult;
+        if(isset($mixedResult['_dt']) && $mixedResult['_dt'] == 'json') {
+            echoJson($mixedResult);
+            exit;
+        }
 
-        echoJson($mixedResult);
-        exit;
+        return $mixedResult;
     }
 
     public function serviceEntityEdit ($iContentId = 0, $sDisplay = false)

@@ -46,11 +46,6 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         	$this->setDynamicMode(true);
     }
 
-    public function isAjaxMode()
-    {
-        return $this->_bAjaxMode;
-    }
-
     public function setDynamicMode($bDynamicMode)
     {
         $this->_bDynamicMode = (bool)$bDynamicMode;
@@ -521,7 +516,8 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             return $mixedResponse;
 
         $aResponse = array(
-            $sKey => $mixedResponse
+            $sKey => $mixedResponse,
+            '_dt' => 'json'
         );
 
         if(!empty($aAdditional) && is_array($aAdditional))
