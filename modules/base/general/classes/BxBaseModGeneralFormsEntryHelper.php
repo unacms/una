@@ -39,11 +39,16 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         	$this->setAjaxMode($mixedAjaxMode);
     }
 
-	public function setAjaxMode($bAjaxMode)
+    public function setAjaxMode($bAjaxMode)
     {
         $this->_bAjaxMode = (bool)$bAjaxMode;
         if($this->_bAjaxMode)
         	$this->setDynamicMode(true);
+    }
+
+    public function isAjaxMode()
+    {
+        return $this->_bAjaxMode;
     }
 
     public function setDynamicMode($bDynamicMode)
