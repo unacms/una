@@ -433,6 +433,9 @@ class BxNtfsModule extends BxBaseModNotificationsModule
 
     public function sendNotificationPush($oProfile, $aNotification)
     {
+        if(!$oProfile)
+            return false;
+
         $oAccount = $oProfile->getAccountObject();
         if(!$oAccount)
             return false;
