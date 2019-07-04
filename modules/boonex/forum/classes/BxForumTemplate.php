@@ -190,6 +190,11 @@ class BxForumTemplate extends BxBaseModTextTemplate
         ));
     }
 
+    function getAuthorDesc ($aData, $oProfile)
+    {
+        return '';
+    }
+
     function getAuthorAddon ($aData, $oProfile)
     {
         return '';
