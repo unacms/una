@@ -27,7 +27,14 @@ class BxBaseModFilesFormsEntryHelper extends BxBaseModTextFormsEntryHelper
         if (false === $sDisplay)
             $sDisplay = $this->_sDisplayForFormAdd;
 
-        return BxDolForm::getObjectInstance($this->_sObjectNameForFormAdd, $sDisplay, $this->_oModule->_oTemplate);
+        $oForm = BxDolForm::getObjectInstance($this->_sObjectNameForFormAdd, $sDisplay, $this->_oModule->_oTemplate);
+        if($this->_bAjaxMode)
+            $oForm->setAjaxMode($this->_bAjaxMode);
+
+        if($this->_bAbsoluteActionUrl)
+            $this->_setAbsoluteActionUrl('add', $oForm);
+
+        return $oForm;
     }
     
     protected function addDataFormAction ($sDisplay = false, $sCheckFunction = false)

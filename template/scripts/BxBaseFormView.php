@@ -58,6 +58,11 @@ class BxBaseFormView extends BxDolForm
      * Form is submitted dynamically (using Ajax Submit).
      */
     protected $_bAjaxMode = false;
+    
+    /**
+     * Use absolute Action URL which is needed in Ajax Mode.
+     */
+    protected $_bAbsoluteActionUrl = false;
 
     /**
      * Form is displayed in view mode.
@@ -99,29 +104,33 @@ class BxBaseFormView extends BxDolForm
     {
         parent::__construct($aInfo, $oTemplate);
 
-        if(isset($this->aParams['ajax_mode']))
-        	$this->setAjaxMode($this->aParams['ajax_mode']);
-
-        $mixedAjaxMode = bx_get('ajax_mode');
-        if($mixedAjaxMode !== false)
-        	$this->setAjaxMode($mixedAjaxMode);
-
+        $this->_bAjaxMode = isset($this->aParams['ajax_mode']) && $this->aParams['ajax_mode'];
         $this->_bViewMode = isset($this->aParams['view_mode']) && $this->aParams['view_mode'];
 
-        if ($this->_bViewMode) {
+        if($this->_bViewMode) {
             $this->_sSectionClose = 'getCloseSectionViewMode';
             $this->_sSectionOpen = 'getOpenSectionViewMode';
         }
     }
 
-	function setAjaxMode($bAjaxMode)
+    function setAjaxMode($bAjaxMode)
     {
-		$this->_bAjaxMode = (bool)$bAjaxMode;
+        $this->_bAjaxMode = (bool)$bAjaxMode;
     }
 
     function isAjaxMode()
     {
-    	return $this->_bAjaxMode;
+        return $this->_bAjaxMode;
+    }
+
+    function setAbsoluteActionUrl($sUrl)
+    {
+        if(empty($sUrl))
+            return;
+
+        $this->aFormAttrs['action'] = $sUrl;
+
+        $this->_bAbsoluteActionUrl = true;
     }
 
     /**
@@ -226,9 +235,19 @@ BLAH;
 
         // add 'Ajax Mode' flag
         if($this->_bAjaxMode)
-        	$this->aInputs['ajax_mode'] = array(
+            $this->aInputs['ajax_mode'] = array(
                 'type' => 'hidden',
                 'name' => 'ajax_mode',
+                'value' => 1,
+                'db' => array ('pass' => 'Int'),
+                'visible_for_levels' => PHP_INT_MAX,
+            );
+
+        // add 'Absolute Action Url' flag
+        if($this->_bAbsoluteActionUrl)
+            $this->aInputs['absolute_action_url'] = array(
+                'type' => 'hidden',
+                'name' => 'absolute_action_url',
                 'value' => 1,
                 'db' => array ('pass' => 'Int'),
                 'visible_for_levels' => PHP_INT_MAX,

@@ -24,6 +24,12 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
      */
     protected $_bAjaxMode;
 
+    /**
+     * Use absolute Action URL in generated form object. 
+     * It's needed in Ajax Mode.
+     */
+    protected $_bAbsoluteActionUrl;
+
     protected $_bDynamicMode;
 
     public function __construct($oModule)
@@ -36,14 +42,24 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         $this->_bAjaxMode = false;
         $mixedAjaxMode = bx_get('ajax_mode');
         if($mixedAjaxMode !== false)
-        	$this->setAjaxMode($mixedAjaxMode);
+            $this->setAjaxMode($mixedAjaxMode);
+
+        $this->_bAbsoluteActionUrl = false;
+        $mixedAbsoluteActionUrl = bx_get('absolute_action_url');
+        if($mixedAbsoluteActionUrl !== false)
+            $this->setAbsoluteActionUrl($mixedAbsoluteActionUrl);
     }
 
     public function setAjaxMode($bAjaxMode)
     {
         $this->_bAjaxMode = (bool)$bAjaxMode;
         if($this->_bAjaxMode)
-        	$this->setDynamicMode(true);
+            $this->setDynamicMode(true);
+    }
+
+    public function setAbsoluteActionUrl($bAbsoluteActionUrl)
+    {
+        $this->_bAbsoluteActionUrl = (bool)$bAbsoluteActionUrl;
     }
 
     public function setDynamicMode($bDynamicMode)
@@ -60,23 +76,37 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
-        if (false === $sDisplay)
+        if(false === $sDisplay)
             $sDisplay = $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD'];
-        
-        return BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sDisplay, $this->_oModule->_oTemplate);
+
+        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sDisplay, $this->_oModule->_oTemplate);
+        if($this->_bAjaxMode)
+            $oForm->setAjaxMode($this->_bAjaxMode);
+
+        if($this->_bAbsoluteActionUrl)
+            $this->_setAbsoluteActionUrl('add', $oForm);
+
+        return $oForm; 
     }
 
     public function getObjectFormEdit ($sDisplay = false)
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
-        if (false === $sDisplay)
+        if(false === $sDisplay)
             $sDisplay = $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT'];
 
-        return BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sDisplay, $this->_oModule->_oTemplate);
+        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sDisplay, $this->_oModule->_oTemplate);
+        if($this->_bAjaxMode)
+            $oForm->setAjaxMode($this->_bAjaxMode);
+
+        if($this->_bAbsoluteActionUrl)
+            $this->_setAbsoluteActionUrl('edit', $oForm);
+
+        return $oForm;
     }
 
-	public function getObjectFormView ($sDisplay = false)
+    public function getObjectFormView ($sDisplay = false)
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -93,7 +123,14 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if (false === $sDisplay)
             $sDisplay = $CNF['OBJECT_FORM_ENTRY_DISPLAY_DELETE'];
 
-        return BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sDisplay, $this->_oModule->_oTemplate);
+        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $sDisplay, $this->_oModule->_oTemplate);
+        if($this->_bAjaxMode)
+            $oForm->setAjaxMode($this->_bAjaxMode);
+
+        if($this->_bAbsoluteActionUrl)
+            $this->_setAbsoluteActionUrl('delete', $oForm);
+
+        return $oForm;
     }
 
     public function viewDataEntry ($iContentId)
@@ -524,6 +561,17 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             $aResponse = array_merge($aResponse, $aAdditional);
 
         return $aResponse;
+    }
+    
+    protected function _setAbsoluteActionUrl($sType, &$oForm)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $sKeyUri = 'URI_' . strtoupper($sType) . '_ENTRY';
+        if(empty($CNF[$sKeyUri]))
+            return;
+
+        $oForm->setAbsoluteActionUrl(BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF[$sKeyUri]));
     }
 }
 

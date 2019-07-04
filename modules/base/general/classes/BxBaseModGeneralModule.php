@@ -451,21 +451,18 @@ class BxBaseModGeneralModule extends BxDolModule
         $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
         $oFormsHelper = new $sClass($this);
 
+        $sParamsKey = 'ajax_mode';
+        if(isset($aParams[$sParamsKey]) && (bool)$aParams[$sParamsKey] === true)
+            $oFormsHelper->setAjaxMode((bool)$aParams[$sParamsKey]);
+
+        $sParamsKey = 'absolute_action_url';
+        if(isset($aParams[$sParamsKey]) && (bool)$aParams[$sParamsKey] === true)
+            $oFormsHelper->setAbsoluteActionUrl((bool)$aParams[$sParamsKey]);
+
         $sDisplay = !empty($aParams['display']) ? $aParams['display'] : false;
 
         $sFunc = 'getObjectForm' . ucfirst($sType);
         $oForm = $oFormsHelper->$sFunc($sDisplay);
-
-        $sParamsKey = 'absolute_action_url';
-        if(isset($aParams[$sParamsKey]) && (bool)$aParams[$sParamsKey] === true) {
-            $sKeyUri = 'URI_' . strtoupper($sType) . '_ENTRY';
-            if(!empty($this->_oConfig->CNF[$sKeyUri]))
-                $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oConfig->CNF[$sKeyUri]);
-        }
-
-        $sParamsKey = 'ajax_mode';
-        if(isset($aParams[$sParamsKey]) && is_bool($aParams[$sParamsKey]))
-        	$oForm->setAjaxMode((bool)$aParams[$sParamsKey]);
 
         $sKey = 'FIELD_ALLOW_VIEW_TO';
         if(!empty($aParams['context_id']) && !empty($CNF[$sKey]) && !empty($oForm->aInputs[$CNF[$sKey]])) {
