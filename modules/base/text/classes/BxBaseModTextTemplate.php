@@ -72,7 +72,8 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             'author_unit' => $oProfile->getUnit(0, array('template' => 'unit_wo_info')),
             'author_title' => $sName,
             'author_title_attr' => bx_html_attribute($sName),
-            'author_desc' => $sFuncAuthorDesc ? $this->$sFuncAuthorDesc($aData) : '',
+            'author_desc' => $sFuncAuthorDesc ? $this->$sFuncAuthorDesc($aData, $oProfile) : '',
+            'author_profile_desc' => $this->getAuthorProfileDesc($aData, $oProfile),
             'bx_if:addon' => array (
                 'condition' => (bool)$sAddon,
                 'content' => array (
@@ -395,34 +396,77 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         return $aVars;
     }
 
-    function getAuthorDesc ($aData)
+    function getAuthorDesc($aData, $oProfile)
     {
-        if (!($a = $this->getAuthorSnippetMenu($aData)) || !isset($a['meta']))
-            return '';
-        return $a['meta'];
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $aItem = array(
+            'bx_if:text' => array(
+                'condition' => false,
+                'content' => array(
+                    'content' => ''
+                )
+            ),
+            'bx_if:link' => array(
+                'condition' => false,
+                'content' => array(
+                    'link' => '',
+                    'content' => ''
+                )
+            )
+        );
+
+        $aTmplVarsItems = array();
+        if(!empty($CNF['FIELD_ADDED']) && !empty($aData[$CNF['FIELD_ADDED']]))
+            $aTmplVarsItems[] = array_merge($aItem, array('bx_if:text' => array(
+                'condition' => true,
+                'content' => array(
+                    'content' => bx_time_js($aData[$CNF['FIELD_ADDED']], BX_FORMAT_DATE)
+                )
+            )));
+
+        if(!empty($CNF['URI_AUTHOR_ENTRIES']))
+            $aTmplVarsItems[] = array_merge($aItem, array('bx_if:link' => array(
+                'condition' => true,
+                'content' => array(
+                    'link' => BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id=' . $oProfile->id()),
+                    'content' => _t($CNF['T']['txt_all_entries_by'], $this->getModule()->_oDb->getEntriesNumByAuthor($oProfile->id()))
+                )
+            )));
+
+        return $this->parseHtmlByName('author_desc.html', array(
+            'bx_repeat:items' => $aTmplVarsItems
+        ));
     }
-    
+
+    function getAuthorProfileDesc ($aData, $oProfile)
+    {
+        $aSnippetMeta = $this->getProfileSnippetMenu($aData);
+        if(empty($aSnippetMeta) || !is_array($aSnippetMeta) || !isset($aSnippetMeta['meta']))
+            return '';
+
+        return $aSnippetMeta['meta'];
+    }
+
     function getContextDesc ($aData)
     {
         return '';
     }
 
-    function getAuthorSnippetMenu ($aData)
+    function getProfileSnippetMenu ($aData)
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
         if (!($oProfile = BxDolProfile::getInstance($aData[$CNF['FIELD_AUTHOR']])))
             return array();
+
         return bx_srv($oProfile->getModule(), 'get_snippet_menu_vars', array($oProfile->id()));
     }
-    
+
     function getAuthorAddon ($aData, $oProfile)
     {
-        $CNF = &$this->getModule()->_oConfig->CNF;
-        $sUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id=' . $oProfile->id();
-        $sUrl = BxDolPermalinks::getInstance()->permalink($sUrl);
-        return _t($CNF['T']['txt_all_entries_by'], $sUrl, $oProfile->getDisplayName(), $this->getModule()->_oDb->getEntriesNumByAuthor($oProfile->id()));
+        return '';
     }
-    
+
     function getContextAddon ($aData, $oProfile)
     {
         $CNF = &$this->getModule()->_oConfig->CNF;

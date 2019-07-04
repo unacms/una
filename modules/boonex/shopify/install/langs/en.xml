@@ -231,7 +231,7 @@
     <string name="_bx_shopify_err_load_collection"><![CDATA[Cannot load collection. Please check your shop settings.]]></string>
     <string name="_bx_shopify_err_purchase_product"><![CDATA[Cannot purchase the product.]]></string>
 
-    <string name="_bx_shopify_txt_all_entries_by"><![CDATA[<a href="{0}">All Goods by {1} ({2})</a>]]></string>
+    <string name="_bx_shopify_txt_all_entries_by"><![CDATA[{0} goods]]></string>
     <string name="_bx_shopify_txt_all_entries_in"><![CDATA[<a href="{0}">All Goods in {1} ({2})</a>]]></string>
     <string name="_bx_shopify_txt_sample_single"><![CDATA[shop item]]></string>
     <string name="_bx_shopify_txt_sample_single_with_article"><![CDATA[a shop item]]></string>

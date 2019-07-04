@@ -250,7 +250,7 @@
     <string name="_bx_snipcart_err_save_settings"><![CDATA[Невозможно сохранить настройки.]]></string>
     <string name="_bx_snipcart_err_not_configured"><![CDATA[Сначала вам необходимо настроить магазин. <a href="{0}">Нажмите здесь</a>.]]></string>
 
-    <string name="_bx_snipcart_txt_all_entries_by"><![CDATA[<a href="{0}">Все товары от {1} ({2})</a>]]></string>
+    <string name="_bx_snipcart_txt_all_entries_by"><![CDATA[{0} товаров]]></string>
     <string name="_bx_snipcart_txt_all_entries_in"><![CDATA[<a href="{0}">Все товары в {1} ({2})</a>]]></string>
     <string name="_bx_snipcart_txt_sample_single"><![CDATA[товар]]></string>
     <string name="_bx_snipcart_txt_sample_single_with_article"><![CDATA[товар]]></string>

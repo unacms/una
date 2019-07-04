@@ -97,7 +97,7 @@ class BxCnvTemplate extends BxBaseModTextTemplate
         return $this->parseHtmlByName('collaborators.html', $aVars);
     }
 
-    function getAuthorDesc ($aData)
+    function getAuthorDesc ($aData, $oProfile)
     {
         $oModule = BxDolModule::getInstance($this->MODULE);
         if ($aData['last_reply_timestamp'] == $aData[$oModule->_oConfig->CNF['FIELD_ADDED']])

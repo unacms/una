@@ -272,7 +272,7 @@
     <string name="_bx_posts_cat_Weddings"><![CDATA[Свадьба]]></string>
     <string name="_bx_posts_cat_Womens_Fashion"><![CDATA[Женская мода]]></string>
 
-    <string name="_bx_posts_txt_all_entries_by"><![CDATA[<a href="{0}">Все публикации от {1} ({2})</a>]]></string>
+    <string name="_bx_posts_txt_all_entries_by"><![CDATA[{0} публикаций]]></string>
     <string name="_bx_posts_txt_all_entries_in"><![CDATA[<a href="{0}">Все публикации в {1} ({2})</a>]]></string>
     <string name="_bx_posts_txt_sample_single"><![CDATA[публикация]]></string>
     <string name="_bx_posts_txt_sample_single_with_article"><![CDATA[публикация]]></string>

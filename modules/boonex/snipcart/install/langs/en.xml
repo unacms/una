@@ -250,7 +250,7 @@
     <string name="_bx_snipcart_err_save_settings"><![CDATA[Cannot save settings.]]></string>
     <string name="_bx_snipcart_err_not_configured"><![CDATA[You need to configure shop settings first. <a href="{0}">Click here</a>.]]></string>
 
-    <string name="_bx_snipcart_txt_all_entries_by"><![CDATA[<a href="{0}">All Goods by {1} ({2})</a>]]></string>
+    <string name="_bx_snipcart_txt_all_entries_by"><![CDATA[{0} goods]]></string>
     <string name="_bx_snipcart_txt_all_entries_in"><![CDATA[<a href="{0}">All Goods in {1} ({2})</a>]]></string>
     <string name="_bx_snipcart_txt_sample_single"><![CDATA[shop item]]></string>
     <string name="_bx_snipcart_txt_sample_single_with_article"><![CDATA[a shop item]]></string>

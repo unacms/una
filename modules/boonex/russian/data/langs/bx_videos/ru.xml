@@ -214,7 +214,7 @@
     <string name="_bx_videos_cat_sports"><![CDATA[Спорт]]></string>
     <string name="_bx_videos_cat_travel"><![CDATA[Путешествия]]></string>
 
-    <string name="_bx_videos_txt_all_entries_by"><![CDATA[<a href="{0}">Все видео от {1} ({2})</a>]]></string>
+    <string name="_bx_videos_txt_all_entries_by"><![CDATA[{0} видео]]></string>
     <string name="_bx_videos_txt_all_entries_in"><![CDATA[<a href="{0}">Все видео в {1} ({2})</a>]]></string>
     <string name="_bx_videos_txt_sample_single"><![CDATA[видео]]></string>
     <string name="_bx_videos_txt_sample_single_with_article"><![CDATA[видео]]></string>

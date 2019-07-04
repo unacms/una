@@ -223,7 +223,7 @@
     <string name="_bx_polls_cat_would_you_rather"><![CDATA[Would You Rather]]></string>
     <string name="_bx_polls_cat_yes_or_no"><![CDATA[Yes or No]]></string>
 
-    <string name="_bx_polls_txt_all_entries_by"><![CDATA[<a href="{0}">All Polls by {1} ({2})</a>]]></string>
+    <string name="_bx_polls_txt_all_entries_by"><![CDATA[{0} polls]]></string>
     <string name="_bx_polls_txt_all_entries_in"><![CDATA[<a href="{0}">All Polls in {1} ({2})</a>]]></string>
     <string name="_bx_polls_txt_sample_single"><![CDATA[poll]]></string>
     <string name="_bx_polls_txt_sample_single_with_article"><![CDATA[a poll]]></string>

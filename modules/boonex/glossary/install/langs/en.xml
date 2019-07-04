@@ -214,7 +214,7 @@
     <string name="_bx_glossary_item_admin_status_hidden"><![CDATA[Hidden]]></string>
     <string name="_bx_glossary_item_admin_status_pending"><![CDATA[Pending]]></string>
 
-    <string name="_bx_glossary_txt_all_entries_by"><![CDATA[<a href="{0}">All Terms by {1} ({2})</a>]]></string>
+    <string name="_bx_glossary_txt_all_entries_by"><![CDATA[{0} terms]]></string>
     <string name="_bx_glossary_txt_all_entries_in"><![CDATA[<a href="{0}">All Terms in {1} ({2})</a>]]></string>
     <string name="_bx_glossary_txt_sample_single"><![CDATA[term]]></string>
     <string name="_bx_glossary_txt_sample_single_with_article"><![CDATA[a term]]></string>

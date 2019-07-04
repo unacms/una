@@ -219,7 +219,7 @@
     <string name="_bx_photos_cat_sports"><![CDATA[Спорт]]></string>
     <string name="_bx_photos_cat_travel"><![CDATA[Путешествия]]></string>
 
-    <string name="_bx_photos_txt_all_entries_by"><![CDATA[<a href="{0}">Все фото от {1} ({2})</a>]]></string>
+    <string name="_bx_photos_txt_all_entries_by"><![CDATA[{0} фото]]></string>
     <string name="_bx_photos_txt_all_entries_in"><![CDATA[<a href="{0}">Все фото в {1} ({2})</a>]]></string>
     <string name="_bx_photos_txt_sample_single"><![CDATA[фото]]></string>
     <string name="_bx_photos_txt_sample_single_with_article"><![CDATA[фото]]></string>

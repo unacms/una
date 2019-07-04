@@ -232,7 +232,7 @@
     <string name="_bx_shopify_err_load_collection"><![CDATA[Невозможно загрузить коллекцию. Пожалуйста, проверьте настройки вашего магазина.]]></string>
     <string name="_bx_shopify_err_purchase_product"><![CDATA[Невозможно купить продукт.]]></string>
 
-    <string name="_bx_shopify_txt_all_entries_by"><![CDATA[<a href="{0}">Все товары от {1} ({2})</a>]]></string>
+    <string name="_bx_shopify_txt_all_entries_by"><![CDATA[{0} товаров]]></string>
     <string name="_bx_shopify_txt_all_entries_in"><![CDATA[<a href="{0}">Все альбомы в {1} ({2})</a>]]></string>
     <string name="_bx_shopify_txt_sample_single"><![CDATA[товар]]></string>
     <string name="_bx_shopify_txt_sample_single_with_article"><![CDATA[товар]]></string>
