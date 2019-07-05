@@ -19,7 +19,7 @@ class BxPlyrPlayer extends BxDolPlayer
      * Standard view initialization params
      */
     protected static $CONF_STANDARD = '
-    <div class="bx_player_plyr" {attrs_wrapper}>
+    <div {attrs_wrapper}>
         <video {attrs}>
             {webm}
             {mp4}
@@ -62,14 +62,21 @@ class BxPlyrPlayer extends BxDolPlayer
     
     public function getCodeVideo ($iViewMode, $aParams, $bDynamicMode = false)
     {
+        $sInit = self::$CONF_STANDARD;
+        $sClass = 'bx-player-plyr';
+        
         // set visual mode
-
         switch ($iViewMode) {
-        case BX_PLAYER_STANDARD:
         case BX_PLAYER_MINI:
+            $sClass .= ' bx-player-plyr-mini';
+            break;
         case BX_PLAYER_EMBED:
+            $sClass .= ' bx-player-plyr-embed';
+            break;
+        case BX_PLAYER_STANDARD:
         default:
-                $sInit = self::$CONF_STANDARD;
+            $sClass .= ' bx-player-plyr-standard';
+            break;
         }
 
         // attrs
@@ -82,6 +89,7 @@ class BxPlyrPlayer extends BxDolPlayer
             'controlsList' => 'nodownload',
             'preload' => 'none',
             'autobuffer' => '', 
+            'class' => $sClass,
         );
         $aAttrs = isset($aParams['attrs']) && is_array($aParams['attrs']) ? $aParams['attrs'] : array();
         $aAttrs = array_merge($aAttrsDefault, $aAttrs);

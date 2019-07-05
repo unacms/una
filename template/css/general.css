@@ -476,3 +476,10 @@ div.bx-account-unit-online {
 .sys-author-profile .bx-menu-custom.bx-menu-hor > li:first-child .bx-base-general-unit-meta-div {
     display: none;
 }
+
+/* --------------- Author Info */
+
+video.bx-player-embed {
+    width:100vw;
+    height:100vh;
+}

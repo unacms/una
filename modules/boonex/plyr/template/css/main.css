@@ -1,7 +1,10 @@
-.bx_player_plyr video {
-    width:100% !important;
-    height:100% !important;
-}
-.bx_player_plyr {
+.bx-player-plyr {
     width:100%;
+}
+
+.bx-page-iframe .plyr,
+.bx-page-iframe .plyr__video-wrapper,
+.bx-page-iframe .plyr video {
+    width:100vw;
+    height:100vh;
 }

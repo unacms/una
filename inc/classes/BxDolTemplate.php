@@ -36,7 +36,7 @@ define('BX_DOL_PAGE_WIDTH', '1024px');
  */
 define('BX_PAGE_DEFAULT', 0); ///< default, regular page
 define('BX_PAGE_CLEAR', 2); ///< clear page, without any headers and footers
-define('BX_PAGE_EMBED', 2); ///< page used for embeds
+define('BX_PAGE_EMBED', 22); ///< page used for embeds
 define('BX_PAGE_POPUP', 44); ///< popup page, without any headers and footers
 define('BX_PAGE_TRANSITION', 150); ///< transition page with redirect to display some msg, like 'please wait', without headers footers
 

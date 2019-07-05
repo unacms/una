@@ -58,13 +58,20 @@ class BxBasePlayerHTML5 extends BxDolPlayer
 
     public function getCodeVideo ($iViewMode, $aParams, $bDynamicMode = false)
     {
+        $sInit = self::$CONF_STANDARD;
+        $sClass = 'bx-player';
+
         // set visual mode
         switch ($iViewMode) {
-        case BX_PLAYER_STANDARD:
         case BX_PLAYER_MINI:
+            $sClass .= ' bx-player-mini';
+            break;
         case BX_PLAYER_EMBED:
+            $sClass .= ' bx-player-embed';
+            break;
+        case BX_PLAYER_STANDARD:
         default:
-                $sInit = self::$CONF_STANDARD;
+            $sClass .= ' bx-player-standard';
         }
 
         // attrs
@@ -73,6 +80,7 @@ class BxBasePlayerHTML5 extends BxDolPlayer
             'controlsList' => 'nodownload',
             'preload' => 'none',
             'autobuffer' => '', 
+            'class' => $sClass,
         );
         $aAttrs = isset($aParams['attrs']) && is_array($aParams['attrs']) ? $aParams['attrs'] : array();
         $aAttrs = array_merge($aAttrsDefault, $aAttrs);
