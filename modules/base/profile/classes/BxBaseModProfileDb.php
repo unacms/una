@@ -62,14 +62,17 @@ class BxBaseModProfileDb extends BxBaseModGeneralDb
 
         $sWhere = '';
         foreach ($this->_oConfig->CNF['FIELDS_QUICK_SEARCH'] as $sField) {
-        	$aBindings[$sField] = '%' . $sTerm . '%';
+        	$aBindings[$sField] = $sTerm . '%';
 
             $sWhere .= " OR `c`.`$sField` LIKE :" . $sField;
         }
 
-        $sOrderBy = $this->prepareAsString(" ORDER BY `added` DESC LIMIT ?", (int)$iLimit);
+        $sOrderBy = $this->prepareAsString(" ORDER BY `a`.`logged` DESC LIMIT ?", (int)$iLimit);
 
-        $sQuery = "SELECT `c`.`id` AS `content_id`, `p`.`account_id`, `p`.`id` AS `profile_id`, `p`.`status` AS `profile_status` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = :type) WHERE `p`.`status` = :status AND (0 $sWhere)" . $sOrderBy;
+        $sQuery = "SELECT `c`.`id` AS `content_id`, `p`.`account_id`, `p`.`id` AS `profile_id`, `p`.`status` AS `profile_status` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` 
+            INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = :type) 
+            INNER JOIN `sys_accounts` AS `a` ON (`a`.`profile_id` = `p`.`id`) 
+            WHERE `p`.`status` = :status AND (0 $sWhere)" . $sOrderBy;
         return $this->getAll($sQuery, $aBindings);
     }
 
