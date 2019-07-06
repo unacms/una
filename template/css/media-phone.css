@@ -143,8 +143,8 @@ html.bx-media-phone .bx-grid-table-wrapper-responsive .bx-grid-table-wrapper {
 html.bx-media-phone .bx-grid-table-wrapper-responsive .bx-grid-table {
     min-width:720px;
 }
-html.bx-media-phone .bx-grid-table-wrapper-responsive .bx-grid-table-wrapper2:before,
-html.bx-media-phone .bx-grid-table-wrapper-responsive .bx-grid-table-wrapper2:after {
+html.bx-media-phone .bx-grid-table-wrapper-responsive.bx-grid-table-wrapper2:before,
+html.bx-media-phone .bx-grid-table-wrapper-responsive.bx-grid-table-wrapper2:after {
     display:block;
 }
 
