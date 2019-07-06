@@ -3748,6 +3748,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_grid` (
   `sorting_fields` text NOT NULL,
   `sorting_fields_translatable` text NOT NULL,
   `visible_for_levels` int(11) NOT NULL DEFAULT '2147483647',
+  `responsive` tinyint(4) NOT NULL DEFAULT '1',
   `override_class_name` varchar(255) NOT NULL,
   `override_class_file` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
@@ -3787,6 +3788,7 @@ CREATE TABLE IF NOT EXISTS `sys_grid_fields` (
   `translatable` tinyint(4) NOT NULL DEFAULT '0',
   `chars_limit` int(11) NOT NULL DEFAULT '0',
   `params` text NOT NULL,
+  `hidden_on` varchar(255) NOT NULL DEFAULT '',
   `order` int(11) NOT NULL,
   UNIQUE KEY `object_name` (`object`(64),`name`(127))
 );
@@ -4022,41 +4024,41 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 
 
 -- GRID: connections
-INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('sys_grid_connections', 'Sql', 'SELECT `p`.`id`, `c`.`added`, `c`.`mutual` FROM `sys_profiles` AS `p` INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` = `p`.`account_id`) {join_connections}', 'sys_profiles', 'id', 'c`.`added', '', '', 10, NULL, 'start', '', 'name,email', '', 'auto', '', '', 2147483647, 'BxDolGridConnections', ''),
-('sys_grid_connections_requests', 'Sql', 'SELECT `p`.`id`, `c`.`added`, `c`.`mutual` FROM `sys_profiles` AS `p` INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` = `p`.`account_id`) {join_connections}', 'sys_profiles', 'id', 'c`.`added', '', '', 10, NULL, 'start', '', 'name,email', '', 'auto', '', '', 2147483647, 'BxDolGridConnectionsRequests', ''),
+INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `responsive`, `override_class_name`, `override_class_file`) VALUES
+('sys_grid_connections', 'Sql', 'SELECT `p`.`id`, `c`.`added`, `c`.`mutual` FROM `sys_profiles` AS `p` INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` = `p`.`account_id`) {join_connections}', 'sys_profiles', 'id', 'c`.`added', '', '', 10, NULL, 'start', '', 'name,email', '', 'auto', '', '', 2147483647, 0, 'BxDolGridConnections', ''),
+('sys_grid_connections_requests', 'Sql', 'SELECT `p`.`id`, `c`.`added`, `c`.`mutual` FROM `sys_profiles` AS `p` INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` = `p`.`account_id`) {join_connections}', 'sys_profiles', 'id', 'c`.`added', '', '', 10, NULL, 'start', '', 'name,email', '', 'auto', '', '', 2147483647, 0, 'BxDolGridConnectionsRequests', ''),
 
-('sys_grid_subscriptions', 'Sql', 'SELECT `p`.`id`, `c`.`added` FROM `sys_profiles` AS `p` INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` = `p`.`account_id`) {join_connections}', 'sys_profiles', 'id', 'c`.`added', '', '', 10, NULL, 'start', '', 'name,email', '', 'auto', '', '', 2147483647, 'BxDolGridSubscriptions', ''),
-('sys_grid_subscribed_me', 'Sql', 'SELECT `p`.`id`, `c`.`added` FROM `sys_profiles` AS `p` INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` = `p`.`account_id`) {join_connections}', 'sys_profiles', 'id', 'c`.`added', '', '', 10, NULL, 'start', '', 'name,email', '', 'auto', '', '', 2147483647, 'BxDolGridSubscribedMe', ''),
+('sys_grid_subscriptions', 'Sql', 'SELECT `p`.`id`, `c`.`added` FROM `sys_profiles` AS `p` INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` = `p`.`account_id`) {join_connections}', 'sys_profiles', 'id', 'c`.`added', '', '', 10, NULL, 'start', '', 'name,email', '', 'auto', '', '', 2147483647, 0, 'BxDolGridSubscriptions', ''),
+('sys_grid_subscribed_me', 'Sql', 'SELECT `p`.`id`, `c`.`added` FROM `sys_profiles` AS `p` INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` = `p`.`account_id`) {join_connections}', 'sys_profiles', 'id', 'c`.`added', '', '', 10, NULL, 'start', '', 'name,email', '', 'auto', '', '', 2147483647, 0, 'BxDolGridSubscribedMe', ''),
 
-('sys_grid_relations', 'Sql', 'SELECT `p`.`id`, `c`.`relation`, `c`.`mutual`, `c`.`added` FROM `sys_profiles` AS `p` INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` = `p`.`account_id`) {join_connections}', 'sys_profiles', 'id', 'c`.`added', '', '', 10, NULL, 'start', '', 'name,email', '', 'auto', '', '', 2147483647, 'BxDolGridRelations', ''),
-('sys_grid_related_me', 'Sql', 'SELECT `p`.`id`, `c`.`relation`, `c`.`mutual`, `c`.`added` FROM `sys_profiles` AS `p` INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` = `p`.`account_id`) {join_connections}', 'sys_profiles', 'id', 'c`.`added', '', '', 10, NULL, 'start', '', 'name,email', '', 'auto', '', '', 2147483647, 'BxDolGridRelatedMe', '');
+('sys_grid_relations', 'Sql', 'SELECT `p`.`id`, `c`.`relation`, `c`.`mutual`, `c`.`added` FROM `sys_profiles` AS `p` INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` = `p`.`account_id`) {join_connections}', 'sys_profiles', 'id', 'c`.`added', '', '', 10, NULL, 'start', '', 'name,email', '', 'auto', '', '', 2147483647, 0, 'BxDolGridRelations', ''),
+('sys_grid_related_me', 'Sql', 'SELECT `p`.`id`, `c`.`relation`, `c`.`mutual`, `c`.`added` FROM `sys_profiles` AS `p` INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` = `p`.`account_id`) {join_connections}', 'sys_profiles', 'id', 'c`.`added', '', '', 10, NULL, 'start', '', 'name,email', '', 'auto', '', '', 2147483647, 0, 'BxDolGridRelatedMe', '');
 
 
-INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
-('sys_grid_connections', 'name', '_sys_name', '40%', '', 1),
-('sys_grid_connections', 'info', '', '30%', '', 2),
-('sys_grid_connections', 'actions', '', '30%', '', 3),
+INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `hidden_on`, `order`) VALUES
+('sys_grid_connections', 'name', '_sys_name', '40%', '', '', 1),
+('sys_grid_connections', 'info', '', '30%', '', '1', 2),
+('sys_grid_connections', 'actions', '', '30%', '', '', 3),
 
-('sys_grid_connections_requests', 'name', '_sys_name', '40%', '', 1),
-('sys_grid_connections_requests', 'info', '', '30%', '', 2),
-('sys_grid_connections_requests', 'actions', '', '30%', '', 3),
+('sys_grid_connections_requests', 'name', '_sys_name', '40%', '', '', 1),
+('sys_grid_connections_requests', 'info', '', '30%', '', '1', 2),
+('sys_grid_connections_requests', 'actions', '', '30%', '', '', 3);
 
-('sys_grid_subscriptions', 'name', '_sys_name', '70%', '', 1),
-('sys_grid_subscriptions', 'actions', '', '30%', '', 2),
+('sys_grid_subscriptions', 'name', '_sys_name', '70%', '', '', 1),
+('sys_grid_subscriptions', 'actions', '', '30%', '', '', 2),
 
-('sys_grid_subscribed_me', 'name', '_sys_name', '70%', '', 1),
-('sys_grid_subscribed_me', 'actions', '', '30%', '', 2),
+('sys_grid_subscribed_me', 'name', '_sys_name', '70%', '', '', 1),
+('sys_grid_subscribed_me', 'actions', '', '30%', '', '', 2),
 
-('sys_grid_relations', 'name', '_sys_name', '40%', '', 1),
-('sys_grid_relations', 'relation', '_sys_relation', '15%', '', 2),
-('sys_grid_relations', 'mutual', '_sys_status', '15%', '', 3),
-('sys_grid_relations', 'actions', '', '30%', '', 4),
+('sys_grid_relations', 'name', '_sys_name', '40%', '', '', 1),
+('sys_grid_relations', 'relation', '_sys_relation', '15%', '', '', 2),
+('sys_grid_relations', 'mutual', '_sys_status', '15%', '', '', 3),
+('sys_grid_relations', 'actions', '', '30%', '', '', 4),
 
-('sys_grid_related_me', 'name', '_sys_name', '40%', '', 1),
-('sys_grid_related_me', 'relation', '_sys_relation', '15%', '', 2),
-('sys_grid_related_me', 'mutual', '_sys_status', '15%', '', 3),
-('sys_grid_related_me', 'actions', '', '30%', '', 4);
+('sys_grid_related_me', 'name', '_sys_name', '40%', '', '', 1),
+('sys_grid_related_me', 'relation', '_sys_relation', '15%', '', '', 2),
+('sys_grid_related_me', 'mutual', '_sys_status', '15%', '', '', 3),
+('sys_grid_related_me', 'actions', '', '30%', '', '', 4);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('sys_grid_connections', 'single', 'accept', '_sys_accept', '', 0, 0, 1),

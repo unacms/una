@@ -56,10 +56,12 @@ class BxDolGridQuery extends BxDolDb
             return false;
         foreach ($aFields as $sKey => $aRow) {
             $aObject['fields'][$sKey] = array(
+                'name' => $sKey,
                 'title' => _t($aRow['title']),
                 'width' => $aRow['width'],
                 'translatable' => $aRow['translatable'],
                 'chars_limit' => $aRow['chars_limit'],
+                'hidden_on' => $aRow['hidden_on'],
             );
             if (empty($aRow['params']))
                 continue;

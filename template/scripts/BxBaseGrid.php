@@ -197,6 +197,7 @@ class BxBaseGrid extends BxDolGrid
             'id_table' => $sIdTable,
             'id_cont' => $sIdContainer,
             'id_wrap' => $sIdWrapper,
+            'class_table_wrapper' => $this->_aOptions['responsive'] ? 'bx-grid-table-wrapper-responsive' : '',
             'sortable' => empty($this->_aOptions['field_order']) ? 0 : 1,
             'sorting' => empty($this->_aOptions['sorting_fields']) ? 0 : 1,
             'sorting_field' => $sOrderField,
@@ -616,6 +617,18 @@ class BxBaseGrid extends BxDolGrid
 
     protected function _convertAttrs ($aField, $sAttrName, $sClasses = false, $sStyles = false)
     {
+        if (!empty($aField['hidden_on'])) {
+            $aHiddenOn = array(
+                pow(2, BX_DB_HIDDEN_PHONE - 1) => 'bx-def-media-phone-hide',
+                pow(2, BX_DB_HIDDEN_TABLET - 1) => 'bx-def-media-tablet-hide',
+                pow(2, BX_DB_HIDDEN_DESKTOP - 1) => 'bx-def-media-desktop-hide',
+                pow(2, BX_DB_HIDDEN_MOBILE - 1) => 'bx-def-mobile-app-hide'
+            );
+            foreach ($aHiddenOn as $iHiddenOn => $sClass)
+                if ((int)$aField['hidden_on'] & $iHiddenOn)
+                    $sClasses .= ' ' . $sClass;
+        }
+            
         return bx_convert_array2attrs(
             isset($aField[$sAttrName]) && is_array($aField[$sAttrName]) ? $aField[$sAttrName] : array(),
             $sClasses,
