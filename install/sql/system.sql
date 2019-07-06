@@ -4042,7 +4042,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `hi
 
 ('sys_grid_connections_requests', 'name', '_sys_name', '40%', '', '', 1),
 ('sys_grid_connections_requests', 'info', '', '30%', '', '1', 2),
-('sys_grid_connections_requests', 'actions', '', '30%', '', '', 3);
+('sys_grid_connections_requests', 'actions', '', '30%', '', '', 3),
 
 ('sys_grid_subscriptions', 'name', '_sys_name', '70%', '', '', 1),
 ('sys_grid_subscriptions', 'actions', '', '30%', '', '', 2),
