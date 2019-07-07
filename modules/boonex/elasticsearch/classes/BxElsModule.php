@@ -21,13 +21,30 @@ class BxElsModule extends BxBaseModGeneralModule
         $this->_oApi = new BxElsApi($this);
     }
 
-    public function actionDebug($sType = '', $sIndex = '')
+    public function actionDeleteOldIndex()
+    {
+        if (!isAdmin()) {
+            BxDolTemplate::getInstance()->displayAccessDenied();
+            exit;
+        }
+
+        $mixed = $this->_oApi->api('/' . $this->_oConfig->getIndex(), array(), 'delete');
+
+        echo '<pre>';
+        if (null === $mixed)
+            echo $this->_oApi->getErrorMsg();
+        else
+            var_dump($mixed);
+        echo '</pre>';
+    }
+
+    public function actionDebug($sIndex = '')
     {
         if(empty($sIndex))
             $sIndex = $this->_oConfig->getIndex();
 
         // search all
-        $mixed = $this->_oApi->api('/' . $sIndex . (!empty($sType) ? '/' . $sType : '') . '/_search?q=*');
+        $mixed = $this->_oApi->api('/' . $sIndex . '@bx_posts/doc/_search?q=*');
         // $mixed = $this->_oApi->api('/testdata/_search', ['query' => ['match_all' => (object)[]]]);
 
         // search for the term

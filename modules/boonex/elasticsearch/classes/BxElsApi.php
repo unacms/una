@@ -16,6 +16,8 @@ define('BX_ELASTICSEARCH_LOG', 1);
  */
 class BxElsApi extends BxDol
 {
+    static $TYPE = 'doc';
+    
 	protected $_oModule;
 
     protected $_sError = false;
@@ -35,19 +37,29 @@ class BxElsApi extends BxDol
 
     public function searchSimple($sIndex, $sType, $sTerm) 
     {
-        $sQuery = "/$sIndex" . (!empty($sType) ? "/$sType" : "") . "/_search";
-        return $this->api($sQuery, array('query' => array('simple_query_string' => array('query' => $sTerm))));
+        if ($sType) {
+            $sQuery = "/{$sIndex}@{$sType}/" . self::$TYPE . "/_search";
+            return $this->api($sQuery, array('query' => array('simple_query_string' => array('query' => $sTerm))));
+        } 
+        else {
+            $this->log('ERROR: searchSimple - search without specifying particular module(type) isn\'t supported');
+        }
     }
 
     public function searchExtended($sIndex, $sType, $aCondition, $aSelection = array()) 
     {
-        $sQuery = "/$sIndex" . (!empty($sType) ? "/$sType" : "") . "/_search";
+        if ($sType) {
+            $sQuery = "/{$sIndex}@{$sType}/" . self::$TYPE . "/_search";
 
-        $aQuery = array('query' => $this->_prepareConditionsGroup($aCondition));
-        if(!empty($aSelection))
-            $aQuery = array_merge($aQuery, $aSelection);
+            $aQuery = array('query' => $this->_prepareConditionsGroup($aCondition));
+            if(!empty($aSelection))
+                $aQuery = array_merge($aQuery, $aSelection);
 
-        return $this->api($sQuery, $aQuery);
+            return $this->api($sQuery, $aQuery);
+        }
+        else {
+            $this->log('ERROR: searchExtended - search without specifying particular module(type) isn\'t supported');
+        }
     }
 
     protected function _prepareConditionsGroup($aGrp)
@@ -119,22 +131,22 @@ class BxElsApi extends BxDol
 
     public function getData($sIndex, $sType, $iContentId) 
     {
-        return $this->api("/$sIndex/$sType/$iContentId");
+        return $this->api("/{$sIndex}@{$sType}/" . self::$TYPE . "/$iContentId");
     }
 
     public function indexData($sIndex, $sType, $iContentId, $aData) 
     {
-        return $this->api("/$sIndex/$sType/$iContentId", $aData, 'put');
+        return $this->api("/{$sIndex}@{$sType}/" . self::$TYPE . "/$iContentId", $aData, 'put');
     }
 
     public function updateData($sIndex, $sType, $iContentId, $aData)
     {
-        return $this->api("/$sIndex/$sType/$iContentId", $aData, 'post');
+        return $this->api("/{$sIndex}@{$sType}/" . self::$TYPE . "/$iContentId", $aData, 'post');
     }
 
     public function deleteData($sIndex, $sType, $iContentId)
     {
-        return $this->api("/$sIndex/$sType/$iContentId", array(), 'delete');
+        return $this->api("/{$sIndex}@{$sType}/" . self::$TYPE . "/$iContentId", array(), 'delete');
     }
 
     public function getErrorMsg() 

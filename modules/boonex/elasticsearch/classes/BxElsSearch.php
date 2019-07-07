@@ -59,8 +59,16 @@ class BxElsSearch extends BxTemplSearch
                 continue;
 
             $sContent = '';
-            foreach ($aResults['hits'] as $aResult)
-                $sContent .= BxDolContentInfo::getObjectInstance($aResult['_type'])->getContentSearchResultUnit($aResult['_id'], $sUnitTemplate);
+            foreach ($aResults['hits'] as $aResult) {
+                if (!isset($aResult['_index']))
+                    continue;
+                list ($sHost, $sObject) = explode('@', $aResult['_index']);
+                if (empty($sObject))
+                    continue;
+                if (!($oContentInfo = BxDolContentInfo::getObjectInstance($sObject)))
+                    continue;
+                $sContent .= $oContentInfo->getContentSearchResultUnit($aResult['_id'], $sUnitTemplate);
+            }
 
             $sResult .= $this->_oModule->_oTemplate->parseHtmlByName('search_results_block.html', array(
                 'id' => $aValue['id'],
