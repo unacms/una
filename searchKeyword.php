@@ -14,7 +14,7 @@ $sClass = 'BxTemplSearch';
 
 $sElsName = 'bx_elasticsearch';
 $sElsMethod = 'is_configured';
-if(BxDolRequest::serviceExists($sElsName, $sElsMethod) && BxDolService::call($sElsName, $sElsMethod)) {
+if(BxDolRequest::serviceExists($sElsName, $sElsMethod) && BxDolService::call($sElsName, $sElsMethod) && !bx_get('cat') && !bx_get('type')) {
      $oModule = BxDolModule::getInstance($sElsName);
 
      bx_import('Search', $oModule->_aModule);
