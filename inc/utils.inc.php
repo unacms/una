@@ -1119,6 +1119,18 @@ function bx_get_base_url($sPageLink)
     return array($sPageLink, $aPageParams);
 }
 
+function bx_get_location_bounds_latlng($fLatitude, $fLongitude, $iRadiusInKm)
+{
+    $fEquatorLatInKm = 111.321;
+    $aRv = array();
+    $aRv['max_lat'] = $fLatitude + $iRadiusInKm / $fEquatorLatInKm;
+    $aRv['min_lat'] = $fLatitude - ($aRv['max_lat'] - $fLatitude);
+    $aRv['max_lng'] = $fLongitude + $iRadiusInKm / (cos($aRv['min_lat'] * M_PI / 180) * $fEquatorLatInKm);
+    $aRv['min_lng'] = $fLongitude - ($aRv['max_lng'] - $fLongitude);
+    return $aRv;
+    
+}
+
 function bx_encode_url_params ($a, $aExcludeKeys = array (), $aOnlyKeys = false)
 {
     $s = '';

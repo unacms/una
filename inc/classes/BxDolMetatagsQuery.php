@@ -118,7 +118,7 @@ class BxDolMetatagsQuery extends BxDolDb
                 continue;
 
             if ('bounds' == $sIndex) {
-                $sWhereBounds = $this->prepareAsString("AND `tl`.`lat` != 0 AND `tl`.`lng` != 0 AND `tl`.`lat` > ? AND `tl`.`lat` < ? AND `tl`.`lng` > ? AND `tl`.`lng` < ?", ${$sVar}['min_lat'], ${$sVar}['max_lat'], ${$sVar}['min_lng'], ${$sVar}['max_lng']);
+                $sWhereBounds = $this->prepareAsString(" AND `tl`.`lat` != 0 AND `tl`.`lng` != 0 AND `tl`.`lat` > ? AND `tl`.`lat` < ? AND `tl`.`lng` > ? AND `tl`.`lng` < ?", ${$sVar}['min_lat'], ${$sVar}['max_lat'], ${$sVar}['min_lng'], ${$sVar}['max_lng']);
             } 
             else {
                 $aWhere['tl`.`' . $sIndex] = $$sVar;
