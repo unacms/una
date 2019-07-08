@@ -12,6 +12,7 @@
 class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 {
     protected static $_aMemoryCacheItems;
+    protected static $_sMemoryCacheItemsKeyMask;
 
     protected static $_sTmplContentItemItem;
     protected static $_sTmplContentItemOutline;
@@ -34,6 +35,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         parent::init();
 
         self::$_aMemoryCacheItems = array();
+        self::$_sMemoryCacheItemsKeyMask = "%s_%d";
     }
 
     public function getCss($bDynamic = false)
@@ -302,13 +304,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $CNF = &$this->_oConfig->CNF;
 
         $iEventId = (int)$aEvent[$CNF['FIELD_ID']];
-        if(array_key_exists($iEventId, self::$_aMemoryCacheItems))
-            return self::$_aMemoryCacheItems[$iEventId];
+
+        $sMemoryCacheItemsKey = sprintf(self::$_sMemoryCacheItemsKeyMask, $aBrowseParams['view'], $iEventId);
+        if(array_key_exists($sMemoryCacheItemsKey, self::$_aMemoryCacheItems))
+            return self::$_aMemoryCacheItems[$sMemoryCacheItemsKey];
 
         /**
          * Add all items in memory cache even if they are empty.
          */
-        self::$_aMemoryCacheItems[$iEventId] = '';
+        self::$_aMemoryCacheItems[$sMemoryCacheItemsKey] = '';
 
         $oPrivacy = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'));
         if($oPrivacy) {
@@ -359,9 +363,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $this->_cacheEvent(bx_get_logged_profile_id(), $aEvent, $aBrowseParams);
 
         $sType = !empty($aResult['content_type']) ? $aResult['content_type'] : BX_TIMELINE_PARSE_TYPE_DEFAULT;
-        self::$_aMemoryCacheItems[$iEventId] = $this->_getPost($sType, $aEvent, $aBrowseParams);
+        self::$_aMemoryCacheItems[$sMemoryCacheItemsKey] = $this->_getPost($sType, $aEvent, $aBrowseParams);
 
-        return self::$_aMemoryCacheItems[$iEventId];
+        return self::$_aMemoryCacheItems[$sMemoryCacheItemsKey];
     }
 
     public function getPosts($aParams)
