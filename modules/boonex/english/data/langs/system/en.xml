@@ -2038,8 +2038,11 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_input_age"><![CDATA[Age]]></string>
 	<string name="_sys_form_input_sys_location"><![CDATA[Location]]></string>
 	<string name="_sys_form_input_location"><![CDATA[Location]]></string>
+  <string name="_sys_form_input_sys_location_radius"><![CDATA[Location Radius]]></string>
+	<string name="_sys_form_input_location_radius"><![CDATA[Location Radius]]></string>
+  <string name="_sys_form_input_location_radius_label"><![CDATA[Radius (in km)]]></string>
 	<string name="_sys_form_input_sys_labels"><![CDATA[Labels]]></string>
-    <string name="_sys_form_input_labels"><![CDATA[Labels]]></string>
+  <string name="_sys_form_input_labels"><![CDATA[Labels]]></string>
 	<string name="_sys_form_input_sys_anonymous"><![CDATA[Post as anonymous]]></string>
 	<string name="_sys_form_input_anonymous"><![CDATA[Post as anonymous]]></string>
 	<string name="_sys_form_login"><![CDATA[Log in]]></string>

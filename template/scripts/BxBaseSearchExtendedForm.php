@@ -35,7 +35,17 @@ class BxBaseSearchExtendedForm extends BxTemplFormView
                 'string' => parent::getCleanValue($sName), 
                 'array' => BxDolMetatags::locationsRetrieveFromForm($sName, $this)
             );
-
+        
+        if($bType && $this->aInputs[$sName]['type'] == 'location_radius'){
+            $aTmp = BxDolMetatags::locationsRetrieveFromForm($sName, $this);   
+            $sValue = bx_get($sName . '_rad');
+            $iValue = is_numeric($sValue) ? (int)$sValue : 0;
+            array_push($aTmp, $iValue);
+            return array(
+                'string' => parent::getCleanValue($sName), 
+                'array' => $aTmp
+            );
+        }
         //--- Process field with 'Date Range Age' and 'Date-Time Range Age' type.
         if($bType && in_array($this->aInputs[$sName]['type'], array('datepicker_range_age', 'datetime_range_age'))) {
             $bTypeDateTime = $this->aInputs[$sName]['type'] == 'datetime_range_age';
@@ -130,6 +140,25 @@ class BxBaseSearchExtendedForm extends BxTemplFormView
         $aInput['ajax_get_suggestions'] = BX_DOL_URL_ROOT . 'searchExtended.php?action=get_authors';
 
         return $this->genCustomInputUsernamesSuggestions($aInput);
+    }
+    
+    public function genCustomInputLocationRadius(&$aInput)
+    {
+        $aInput['manual_input'] = true;
+        
+        $aInputRadius = $aInput;
+        $aInputRadius['type'] = 'text';
+        $aInputRadius['name'] = $aInputRadius['name'] . '_rad';
+        $sValue = bx_get($aInputRadius['name']);
+        $aInputRadius['value'] = is_numeric($sValue) ? $sValue : 0;
+        $aInputRadius['attrs']['placeholder'] = _t('_sys_form_input_location_radius_label');
+        
+        $aVars = array (
+            'location_input' => parent::genInputLocation($aInput),
+            'radius_input' => parent::genInputStandard($aInputRadius),
+        );
+        $this->_addCss('search_extended.css');
+        return $this->oTemplate->parseHtmlByName('form_field_location_radius.html', $aVars);
     }
 }
 

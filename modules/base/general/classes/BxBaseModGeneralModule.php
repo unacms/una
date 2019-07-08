@@ -233,6 +233,16 @@ class BxBaseModGeneralModule extends BxDolModule
 
                 $aResult[$aInput['name']] = $aField;
             }
+            if(!empty($CNF['FIELD_LOCATION_PREFIX']) && !in_array($CNF['FIELD_LOCATION_PREFIX'], $this->_aSearchableNamesExcept))
+                $aResult['location_radius'] = array(
+                    'type' => 'location_radius', 
+                    'caption' => '_sys_form_input_location_radius',
+                    'caption_system' => '_sys_form_input_sys_location_radius',
+                    'info' => '',
+            	    'value' => '',
+                    'values' => '',
+                    'pass' => ''
+                );
 
         return $aResult;
     }
