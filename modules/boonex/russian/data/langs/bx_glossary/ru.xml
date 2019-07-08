@@ -221,8 +221,9 @@
     <string name="_bx_glossary_txt_all_entries_in"><![CDATA[<a href="{0}">Все термины в {1} ({2})</a>]]></string>
     <string name="_bx_glossary_txt_sample_single"><![CDATA[термин]]></string>
     <string name="_bx_glossary_txt_sample_single_with_article"><![CDATA[термин]]></string>
-    <string name="_bx_glossary_txt_sample_comment_single"><![CDATA[комментарий к Глоссарий]]></string>
+    <string name="_bx_glossary_txt_sample_comment_single"><![CDATA[комментарий к термину]]></string>
     <string name="_bx_glossary_txt_sample_vote_single"><![CDATA[голос за термин]]></string>
+    <string name="_bx_glossary_txt_sample_reaction_single"><![CDATA[реакция '{0}' к термину]]></string>
     <string name="_bx_glossary_txt_sample_score_up_single"><![CDATA[голос за термин]]></string>
     <string name="_bx_glossary_txt_sample_score_down_single"><![CDATA[голос против термина]]></string>
 	<string name="_bx_glossary_txt_term_in_pending_status"><![CDATA[Этот термин ожидает одобрения.]]></string>

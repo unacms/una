@@ -278,6 +278,7 @@
     <string name="_bx_forum_txt_entry_sticked"><![CDATA[Закрепленное обсуждение]]></string>
     <string name="_bx_forum_txt_sample_comment_single"><![CDATA[комментарий к обсуждению]]></string>
     <string name="_bx_forum_txt_sample_vote_single"><![CDATA[голос за обсуждение]]></string>
+    <string name="_bx_forum_txt_sample_reaction_single"><![CDATA[реакция '{0}' к обсуждению]]></string>
     <string name="_bx_forum_txt_sample_score_up_single"><![CDATA[голос за обсуждение]]></string>
     <string name="_bx_forum_txt_sample_score_down_single"><![CDATA[голос против обсуждения]]></string>
     <string name="_bx_forum_txt_all_entries_in"><![CDATA[<a href="{0}">Все обсуждения в {1} ({2})</a>]]></string>

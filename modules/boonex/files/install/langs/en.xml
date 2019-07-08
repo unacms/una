@@ -221,6 +221,7 @@
     <string name="_bx_files_txt_sample_single_with_article"><![CDATA[a file]]></string>
     <string name="_bx_files_txt_sample_comment_single"><![CDATA[comment to file]]></string>
     <string name="_bx_files_txt_sample_vote_single"><![CDATA[vote to file]]></string>
+    <string name="_bx_files_txt_sample_reaction_single"><![CDATA['{0}' reaction to file]]></string>
     <string name="_bx_files_txt_sample_score_up_single"><![CDATA[score up vote to file]]></string>
     <string name="_bx_files_txt_sample_score_down_single"><![CDATA[score down vote to file]]></string>
 

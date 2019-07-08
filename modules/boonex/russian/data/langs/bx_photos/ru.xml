@@ -225,6 +225,7 @@
     <string name="_bx_photos_txt_sample_single_with_article"><![CDATA[фото]]></string>
     <string name="_bx_photos_txt_sample_comment_single"><![CDATA[комментарий к фото]]></string>
     <string name="_bx_photos_txt_sample_vote_single"><![CDATA[голос за фото]]></string>
+    <string name="_bx_photos_txt_sample_reaction_single"><![CDATA[реакция '{0}' к фото]]></string>
     <string name="_bx_photos_txt_sample_score_up_single"><![CDATA[голос за фото]]></string>
     <string name="_bx_photos_txt_sample_score_down_single"><![CDATA[голос против фото]]></string>
     <string name="_bx_photos_txt_n_views"><![CDATA[{0} просмотров]]></string>

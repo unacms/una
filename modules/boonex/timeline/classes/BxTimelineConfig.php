@@ -115,6 +115,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
                 'txt_sample_single_ext' => '_bx_timeline_txt_sample_ext',
             	'txt_sample_comment_single' => '_bx_timeline_txt_sample_comment_single',
                 'txt_sample_vote_single' => '_bx_timeline_txt_sample_vote_single',
+                'txt_sample_reaction_single' => '_bx_timeline_txt_sample_reaction_single',
                 'txt_sample_score_up_single' => '_bx_timeline_txt_sample_score_up_single',
                 'txt_sample_score_down_single' => '_bx_timeline_txt_sample_score_down_single',
                 'txt_sample_with_link' => '_bx_timeline_txt_sample_with_link',

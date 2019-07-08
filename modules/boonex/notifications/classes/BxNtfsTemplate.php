@@ -169,9 +169,24 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
             $aEvent['content']['object_owner_icon'] = $oObjectOwner->getThumb();
         }
 
-        foreach($aEvent['content'] as $sKey => $sValue)
-            if(substr($sValue, 0, 1) == '_')
-                    $aEvent['content'][$sKey] = _t($sValue);        
+        foreach($aEvent['content'] as $sKey => $sValue) {
+            if(!is_string($sValue) || substr($sValue, 0, 1) != '_') 
+                continue;
+
+            $aCallParams = array($sValue);
+
+            $sKeyParams = $sKey . '_params';
+            if(isset($aEvent['content'][$sKeyParams]) && is_array($aEvent['content'][$sKeyParams])) {
+                foreach($aEvent['content'][$sKeyParams] as $iParamIndex => $sParamValue)
+                    if(is_string($sParamValue) && substr($sParamValue, 0, 1) == '_')
+                        $aEvent['content'][$sKeyParams][$iParamIndex] = _t($sParamValue);
+
+                $aCallParams = array_merge($aCallParams, $aEvent['content'][$sKeyParams]);
+                unset($aEvent['content'][$sKeyParams]);
+            }
+
+            $aEvent['content'][$sKey] = call_user_func_array('_t', $aCallParams);
+        }
 
     	$bEventParsed = false;
         bx_alert($this->_oConfig->getName(), 'get_notification', 0, 0, array('event' => &$aEvent, 'event_parsed' => &$bEventParsed, 'owner' => &$oOwner));

@@ -420,6 +420,7 @@
     <string name="_bx_market_txt_sample_single_with_article"><![CDATA[a product]]></string>
     <string name="_bx_market_txt_sample_comment_single"><![CDATA[comment to product]]></string>
     <string name="_bx_market_txt_sample_vote_single"><![CDATA[vote to product]]></string>
+    <string name="_bx_market_txt_sample_reaction_single"><![CDATA['{0}' reaction to product]]></string>
     <string name="_bx_market_txt_sample_score_up_single"><![CDATA[score up vote to product]]></string>
     <string name="_bx_market_txt_sample_score_down_single"><![CDATA[score down vote to product]]></string>
     <string name="_bx_market_txt_author_added_product"><![CDATA[{0} {1}]]></string>

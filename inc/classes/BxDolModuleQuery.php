@@ -104,9 +104,9 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
         $aBindings = array();
 
         switch($aParams['type']) {
-        	case 'type':
-        		if(!is_array($aParams['value']))
-        			$aParams['value'] = array($aParams['value']);
+            case 'type':
+                if(!is_array($aParams['value']))
+                    $aParams['value'] = array($aParams['value']);
 
                 $sPostfix .= '_type_' . implode('_', $aParams['value']);
                 $sWhereClause .= " AND `type` IN (" . $this->implode_escape($aParams['value']) . ")";
@@ -130,20 +130,20 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
                 $sPostfix .= '_templates';
                 $aBindings['type'] = BX_DOL_MODULE_TYPE_TEMPLATE;
 
-                $sWhereClause .= " AND `type`=?";
+                $sWhereClause .= " AND `type`=:type";
                 break;
 
             case 'path_and_uri':
             	$aMethod['name'] = 'getRow';
             	$aBindings = array_merge($aBindings, array(
-                	'path' => $aParams['path'],
-            		'uri' => $aParams['uri']
+                    'path' => $aParams['path'],
+                    'uri' => $aParams['uri']
                 ));
 
             	$sWhereClause .= " AND `path`=:path AND `uri`=:uri";
             	break;
 
-			case 'all_pairs_name_uri':
+            case 'all_pairs_name_uri':
             	$aMethod['name'] = 'getPairs';
             	$aMethod['params'][1] = 'name';
             	$aMethod['params'][2] = 'uri';
