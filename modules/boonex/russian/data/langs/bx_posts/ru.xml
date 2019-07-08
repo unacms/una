@@ -278,6 +278,7 @@
     <string name="_bx_posts_txt_sample_single_with_article"><![CDATA[публикация]]></string>
     <string name="_bx_posts_txt_sample_comment_single"><![CDATA[комментарий к публикации]]></string>
     <string name="_bx_posts_txt_sample_vote_single"><![CDATA[голос за публикацию]]></string>
+    <string name="_bx_posts_txt_sample_reaction_single"><![CDATA[реакция '{0}' к публикации]]></string>
     <string name="_bx_posts_txt_sample_score_up_single"><![CDATA[голос за публикацию]]></string>
     <string name="_bx_posts_txt_sample_score_down_single"><![CDATA[голос против публикации]]></string>
     <string name="_bx_posts_txt_processing_awaiting"><![CDATA[Публикация будет опубликована как только сконвертируется видео.]]></string>

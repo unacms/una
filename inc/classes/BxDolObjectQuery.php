@@ -81,14 +81,8 @@ class BxDolObjectQuery extends BxDolDb
 
     public function getPerformedBy($iObjectId)
     {
-        $sQuery = $this->prepare("SELECT `author_id` FROM `{$this->_sTableTrack}` WHERE `object_id` = ?", $iObjectId);
+        $sQuery = $this->prepare("SELECT `author_id` FROM `{$this->_sTableTrack}` WHERE `object_id`=?", $iObjectId);
         return $this->getColumn($sQuery);
-    }
-    
-    public function getData($iObjectId)
-    {
-        $sQuery = $this->prepare("SELECT * FROM `{$this->_sTableTrack}` WHERE `object_id` = ?", $iObjectId);
-        return $this->getAll($sQuery);
     }
 
     public function getTrack($iObjectId, $iAuthorId)
@@ -97,6 +91,36 @@ class BxDolObjectQuery extends BxDolDb
             'object_id' => $iObjectId,
             'author_id' => $iAuthorId
         ));
+    }
+    
+    public function getTrackBy($aParams = array())
+    {
+        $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+        $sWhereClause = $sOrderByClause = $sLimitClause = "";
+        $aBindings = array();
+
+        switch($aParams['type']) {
+            case 'id':
+                $aMethod['name'] = 'getRow';
+                $aBindings['id'] = $aParams['id'];
+
+                $sWhereClause .= " AND `id`=:id";
+                break;
+
+            case 'all':
+            	break;
+        }
+
+        if(!empty($aParams['order_by']))
+            $sOrderByClause = " ORDER BY " . $aParams['order_by'] . (!empty($aParams['order_way']) ? " " . $aParams['order_way'] : "");
+
+        if(isset($aParams['start']) && !empty($aParams['per_page']))
+            $sLimitClause = " LIMIT " . $aParams['start'] . ", " . $aParams['per_page'];
+
+        $aMethod['params'][0] = "SELECT * FROM `{$this->_sTableTrack}` WHERE 1 " . $sWhereClause . $sOrderByClause . $sLimitClause;
+        $aMethod['params'][] = $aBindings;
+
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 
     public function deleteObjectEntries($iObjectId)

@@ -238,6 +238,7 @@
     <string name="_bx_shopify_txt_sample_single_with_article"><![CDATA[товар]]></string>
     <string name="_bx_shopify_txt_sample_comment_single"><![CDATA[комментарии к товару]]></string>
     <string name="_bx_shopify_txt_sample_vote_single"><![CDATA[голос за товар]]></string>
+    <string name="_bx_shopify_txt_sample_reaction_single"><![CDATA[реакция '{0}' к товару]]></string>
     <string name="_bx_shopify_txt_sample_score_up_single"><![CDATA[голос за товар]]></string>
     <string name="_bx_shopify_txt_sample_score_down_single"><![CDATA[голос против товара]]></string>
 </resources>

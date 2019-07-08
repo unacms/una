@@ -75,6 +75,11 @@ class BxDolVoteReactions extends BxTemplVote
         return $bFullInfo ? $this->_aDataList : array_keys($this->_aDataList);
     }
 
+    public function getTrackBy($aParams)
+    {
+        return $this->_oQuery->getTrackBy($aParams);
+    }
+
     /**
      * Actions functions
      */
