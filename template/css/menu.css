@@ -335,10 +335,6 @@ ul.bx-menu-toolbar li a .bx-def-unit-alert-middle {
     margin-bottom:0;
 }
 
-.bx-sliding-menu-main .bx-menu-account-popup-profile-switcher {
-    overflow:hidden;
-}
-
 .bx-popup-content .bx-menu-floating-blocks-wide,
 .bx-popup-content .bx-menu-floating-blocks {
     width:256px;

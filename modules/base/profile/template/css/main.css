@@ -66,26 +66,26 @@ p.bx-base-pofile-unit-thumb {
     margin: 0px;
 
     line-height: 48px;
-    line-height: 3.2rem;
+    line-height: 3.0rem;
     text-align: center;
 
     font-size: 30px;
-    font-size: 2.0rem;
+    font-size: 1.875rem;
     font-weight: 700;
     color: #ffffff;
 }
 p.bx-base-pofile-unit-thumb.bx-def-icon-size {
     line-height: 26px;
-    line-height: 1.765rem;
+    line-height: 1.625rem;
 
-    font-size: 19.5px;
-    font-size: 1.3rem;
+    font-size: 20px;
+    font-size: 1.25rem;
 }
 p.bx-base-pofile-unit-thumb.bx-def-ava-size {
     line-height: 96px;
-    line-height: 6.4rem;
+    line-height: 6rem;
 
-    font-size: 45px;
+    font-size: 48px;
     font-size: 3.0rem;
     font-weight: 700;
 }
@@ -243,7 +243,7 @@ a.bx-base-pofile-cover-thumb img.bx-base-pofile-unit-thumb {
 }
 a.bx-base-pofile-cover-thumb p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
     line-height: 200px;
-    line-height: 13.375rem;
+    line-height: 12.5rem;
 
     font-size: 5.0rem;
 }

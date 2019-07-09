@@ -393,7 +393,7 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_vpt_font_size_scale'), '_bx_protean_stg_cpt_option_vpt_font_size_scale', '93.75%', 'digit', '', '', '', 1);
+(@iCategoryId, CONCAT(@sName, '_vpt_font_size_scale'), '_bx_protean_stg_cpt_option_vpt_font_size_scale', '100%', 'digit', '', '', '', 1);
 
 -- SETTINGS: Protean template Viewport Mobile
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
@@ -401,7 +401,7 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_vpm_font_size_scale'), '_bx_protean_stg_cpt_option_vpm_font_size_scale', '85%', 'digit', '', '', '', 1);
+(@iCategoryId, CONCAT(@sName, '_vpm_font_size_scale'), '_bx_protean_stg_cpt_option_vpm_font_size_scale', '87.5%', 'digit', '', '', '', 1);
 
 
 -- MIXES
@@ -525,8 +525,8 @@ INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 ('bx_protean_font_size_h3', @iMixId, '20px'),
 ('bx_protean_font_color_grayed', @iMixId, 'rgba(40, 60, 80, 0.5)'),
 ('bx_protean_font_color_contrasted', @iMixId, 'rgba(255, 255, 255, 1)'),
-('bx_protean_vpt_font_size_scale', @iMixId, '93.75%'),
-('bx_protean_vpm_font_size_scale', @iMixId, '85%'),
+('bx_protean_vpt_font_size_scale', @iMixId, '100%'),
+('bx_protean_vpm_font_size_scale', @iMixId, '87.5%'),
 ('bx_protean_header_bg_image_repeat', @iMixId, 'no-repeat'),
 ('bx_protean_header_bg_image_size', @iMixId, 'cover'),
 ('bx_protean_footer_bg_image_repeat', @iMixId, 'no-repeat'),
@@ -875,8 +875,8 @@ INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 ('bx_protean_site_logo_height', @iMixId, '48'),
 ('bx_protean_site_logo_width', @iMixId, '240'),
 ('bx_protean_styles_custom', @iMixId, 'div.bx-base-pofile-cover {\r\nborder: 1px solid rgba(136, 153, 170, 0.3);\r\nborder-bottom-width: 0;\r\n}\r\n\r\n\r\ndiv.bx-market-unit-cover div.bx-base-text-unit-no-thumb {\r\nborder-width: 0px;\r\n}\r\n\r\n\r\n.bx-def-font {\r\nline-height:18px;\r\nline-height:1.2rem;\r\n}\r\nh1,\r\n.bx-def-font-h1 {\r\nline-height:36px;\r\nline-height:2.4rem;\r\n}\r\nh2,\r\n.bx-def-font-h2 {\r\nline-height:29px;\r\nline-height:1.92rem;\r\n}\r\nh3,\r\n.bx-def-font-h3 {\r\nline-height:22px;\r\nline-height:1.44rem;\r\n}\r\n'),
-('bx_protean_vpm_font_size_scale', @iMixId, '85%'),
-('bx_protean_vpt_font_size_scale', @iMixId, '93.75%');
+('bx_protean_vpm_font_size_scale', @iMixId, '87.5%'),
+('bx_protean_vpt_font_size_scale', @iMixId, '100%');
 
 
 -- Dark Mix
@@ -1127,8 +1127,8 @@ INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 ('bx_protean_site_logo_height', @iMixId, '48'),
 ('bx_protean_site_logo_width', @iMixId, '240'),
 ('bx_protean_styles_custom', @iMixId, 'div.bx-base-pofile-cover {\r\nborder: 1px solid rgba(136, 153, 170, 0.3);\r\nborder-bottom-width: 0;\r\n}\r\n\r\n\r\ndiv.bx-market-unit-cover div.bx-base-text-unit-no-thumb {\r\nborder-width: 0px;\r\n}\r\n\r\n.sys-cpf-header,\r\n.sys-cpf-title,\r\n.sys-cpf-submenu-cnt ul li {\r\nborder-bottom-color: rgba(136, 153, 170, 0.3);\r\n}\r\n\r\n.sys-cpf-submenu-cnt ul li.bx-menu-inter-act {\r\nborder-bottom-color: rgb(17, 34, 51);\r\n}\r\n\r\n\r\n.bx-def-font {\r\nline-height:18px;\r\nline-height:1.2rem;\r\n}\r\nh1,\r\n.bx-def-font-h1 {\r\nline-height:36px;\r\nline-height:2.4rem;\r\n}\r\nh2,\r\n.bx-def-font-h2 {\r\nline-height:29px;\r\nline-height:1.92rem;\r\n}\r\nh3,\r\n.bx-def-font-h3 {\r\nline-height:22px;\r\nline-height:1.44rem;\r\n}\r\n\r\n.bx-def-label {\r\nbackground-color: rgba(245, 250, 255, 0.5);\r\n}\r\n.bx-def-label,\r\n.bx-def-label a,\r\n.bx-def-label .sys-icon {\r\ncolor: rgba(51, 68, 85, 1);\r\n}\r\n\r\n/*--- Informers ---*/\r\n.bx-informer-msg-info {\r\nbackground-color: rgba(60, 164, 85, 1.0);\r\n}\r\n.bx-informer-msg-alert {\r\nbackground-color: rgba(230, 115, 55, 1.0);\r\n}\r\n.bx-informer-msg-error {\r\nbackground-color: rgba(200, 64, 64, 1.0);\r\n}\r\n\r\n\r\n/*--- Menus ---*/\r\n.bx-menu-notif li.bx-menu-tab-active a, \r\n.bx-menu-verlit li.bx-menu-tab-active a, \r\n.bx-menu-ver li.bx-menu-tab-active a,\r\n.bx-menu-hor li.bx-menu-tab-active a {\r\ncolor: rgba(252, 253, 254, 1);\r\n}\r\n\r\n/*--- Forms ---*/\r\n.bx-form-value .bx-form-input-autotoken b {\r\ncolor: rgba(243, 244, 245, 1);\r\n}\r\n.bx-popup .dropzone {\r\nbackground-color: rgba(17, 34, 51, 1);\r\n}\r\n\r\n/*--- Timeline ---*/\r\ndiv.bx-tl-view-timeline div.bx-tl-items:before,\r\ndiv.bx-tl-view-timeline div.bx-tl-item-circle {\r\nbackground-color: rgba(51, 68, 85, 1);\r\n}\r\ndiv.bx-tl-il-embed {\r\npadding: 0.5rem;\r\nbackground-color: rgba(255, 255, 255, 0.8);\r\nborder-radius:  5px;\r\n}\r\n'),
-('bx_protean_vpm_font_size_scale', @iMixId, '85%'),
-('bx_protean_vpt_font_size_scale', @iMixId, '93.75%');
+('bx_protean_vpm_font_size_scale', @iMixId, '87.5%'),
+('bx_protean_vpt_font_size_scale', @iMixId, '100%');
 
 
 -- STUDIO PAGE & WIDGET

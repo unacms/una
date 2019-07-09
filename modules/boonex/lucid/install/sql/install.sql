@@ -495,7 +495,7 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_vpt_font_size_scale'), '_bx_lucid_stg_cpt_option_vpt_font_size_scale', '93.75%', 'digit', '', '', '', 1);
+(@iCategoryId, CONCAT(@sName, '_vpt_font_size_scale'), '_bx_lucid_stg_cpt_option_vpt_font_size_scale', '100%', 'digit', '', '', '', 1);
 
 -- SETTINGS: Lucid template Viewport Mobile
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
@@ -503,7 +503,7 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_vpm_font_size_scale'), '_bx_lucid_stg_cpt_option_vpm_font_size_scale', '85%', 'digit', '', '', '', 1);
+(@iCategoryId, CONCAT(@sName, '_vpm_font_size_scale'), '_bx_lucid_stg_cpt_option_vpm_font_size_scale', '87.5%', 'digit', '', '', '', 1);
 
 
 -- MIXES
@@ -694,9 +694,9 @@ INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 ('bx_lucid_card_content_padding', @iMixId, '1rem'),
 ('bx_lucid_popup_bg_color', @iMixId, 'rgba(255, 255, 255, 1)'),
 ('bx_lucid_card_shadow', @iMixId, '0px 2px 6px 0px rgba(0, 0, 0, 0.05)'),
-('bx_lucid_vpt_font_size_scale', @iMixId, '93.75%'),
+('bx_lucid_vpt_font_size_scale', @iMixId, '100%'),
 ('bx_lucid_card_border_radius', @iMixId, '8px'),
-('bx_lucid_vpm_font_size_scale', @iMixId, '85%'),
+('bx_lucid_vpm_font_size_scale', @iMixId, '87.5%'),
 ('bx_lucid_card_border_size', @iMixId, '1px'),
 ('bx_lucid_card_border_color', @iMixId, 'rgba(20, 80, 100, 0.1)'),
 ('bx_lucid_styles_custom', @iMixId, 'div.bx-market-unit-cover div.bx-base-text-unit-no-thumb {\r\n border-width: 0px;\r\n}'),
