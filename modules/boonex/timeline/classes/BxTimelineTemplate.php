@@ -347,7 +347,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aEvent['sample'] = !empty($aResult['sample']) ? $aResult['sample'] : '_bx_timeline_txt_sample';
         $aEvent['sample_action'] = !empty($aResult['sample_action']) ? $aResult['sample_action'] : '_bx_timeline_txt_added_sample';
         $aEvent['content'] = $aResult['content'];
-        $aEvent['allowed_view'] = isset($aResult['allowed_view']) ? $aResult['allowed_view'] : CHECK_ACTION_RESULT_ALLOWED;
+        $aEvent['allowed_view'] = CHECK_ACTION_RESULT_ALLOWED;
+        if(($aHandler = $this->_oConfig->getHandler($aEvent)) !== false && BxDolRequest::serviceExists($aHandler['module_name'], 'check_allowed_view_for_profile'))
+            $aEvent['allowed_view'] = BxDolService::call($aHandler['module_name'], 'check_allowed_view_for_profile', array($aEvent['object_id']));
         $aEvent['views'] = $aResult['views'];
         $aEvent['votes'] = $aResult['votes'];
         $aEvent['reactions'] = $aResult['reactions'];

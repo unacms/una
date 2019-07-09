@@ -543,13 +543,9 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
     public function getSystemData(&$aEvent, $aBrowseParams = array())
     {
-        $sHandler = $aEvent['type'] . '_' . $aEvent['action'];
-        if(!$this->isHandler($sHandler))
+        $aHandler = $this->getHandler($aEvent);
+        if($aHandler === false)
             return false;
-
-        $aHandler = $this->getHandlers($sHandler);
-        if(empty($aHandler['module_name']) || empty($aHandler['module_class']) || empty($aHandler['module_method']))
-            return false; 
 
         return BxDolService::call($aHandler['module_name'], $aHandler['module_method'], array($aEvent, $aBrowseParams), $aHandler['module_class']);
     }

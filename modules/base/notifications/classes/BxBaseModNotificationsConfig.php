@@ -112,6 +112,19 @@ class BxBaseModNotificationsConfig extends BxBaseModGeneralConfig
         return $sKey;
     }
 
+    public function getHandler(&$aEvent)
+    {
+        $sHandler = $aEvent['type'] . '_' . $aEvent['action'];
+        if(!$this->isHandler($sHandler))
+            return false;
+
+        $aHandler = $this->getHandlers($sHandler);
+        if(empty($aHandler['module_name']) || empty($aHandler['module_class']) || empty($aHandler['module_method']))
+            return false;
+
+        return $aHandler;
+    }
+
     public function isHandler($sKey = '')
     {
         return isset($this->_aHandlers[$sKey]);
