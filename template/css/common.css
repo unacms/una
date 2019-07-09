@@ -685,7 +685,7 @@ input.bx-btn {
 .bx-btn.bx-btn-small {
     height:24px; 
     height:1.6rem; 
-    padding-left:0px 8px 0px 8px;
+    padding:0px 8px 0px 8px;
 
     line-height:24px;
     line-height:1.5rem;
