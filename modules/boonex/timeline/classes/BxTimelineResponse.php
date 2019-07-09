@@ -82,11 +82,15 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
 
                 $this->_oModule->_oDb->updateEvent($aParamsSet, array('type' => $oAlert->sUnit, 'object_id' => $oAlert->iObject));
 
-                //--- Delete cached
+                //--- Delete feed cached
                 $this->_oModule->_oDb->deleteCache(array('context_id' => 0)); //--- Delete cache for Public feed
                 $this->_oModule->_oDb->deleteCache(array('context_id' => $aEvent[$CNF['FIELD_OWNER_ID']])); //--- Delete cache for old context
                 if(isset($aParamsSet['owner_id']))
                     $this->_oModule->_oDb->deleteCache(array('context_id' => $aParamsSet['owner_id'])); //--- Delete cache for new context
+
+                //--- Delete item cache.
+                $sCacheItemKey = $this->_oModule->_oConfig->getCacheItemKey($aEvent['id']);
+                $this->_oModule->getCacheItemObject()->delData($sCacheItemKey);
                 break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_DELETE:
@@ -119,8 +123,6 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                     break;
 
             	$this->_oModule->deleteEvent($aEvent);
-
-                $this->_oModule->_oDb->deleteCache(array('event_id' => $aEvent[$CNF['FIELD_ID']]));
                 break;
         }
     }

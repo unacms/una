@@ -2941,34 +2941,36 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function onDelete($aEvent)
     {
+        $CNF = &$this->_oConfig->CNF;
+
         $iUserId = $this->getUserId();
     	$sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
     	$sCommonPostComment = $this->_oConfig->getObject('comment');
     	
     	//--- Delete comments for Common posts.
     	if($this->_oConfig->isCommon($aEvent['type'], $aEvent['action'])) {
-            $oComments = $this->getCmtsObject($sCommonPostComment, $aEvent['id']);
+            $oComments = $this->getCmtsObject($sCommonPostComment, $aEvent[$CNF['FIELD_ID']]);
             if($oComments !== false)
-                $oComments->onObjectDelete($aEvent['id']);
+                $oComments->onObjectDelete($aEvent[$CNF['FIELD_ID']]);
     	}
 
     	//--- Delete attached photos, videos and links when common event was deleted.
     	if($aEvent['type'] == $sCommonPostPrefix . BX_TIMELINE_PARSE_TYPE_POST) {
-    		$this->_deleteMedia(BX_TIMELINE_MEDIA_PHOTO, $aEvent['id']);
-    		$this->_deleteMedia(BX_TIMELINE_MEDIA_VIDEO, $aEvent['id']);
+    		$this->_deleteMedia(BX_TIMELINE_MEDIA_PHOTO, $aEvent[$CNF['FIELD_ID']]);
+    		$this->_deleteMedia(BX_TIMELINE_MEDIA_VIDEO, $aEvent[$CNF['FIELD_ID']]);
 
-	        $this->_deleteLinks($aEvent['id']);
+	        $this->_deleteLinks($aEvent[$CNF['FIELD_ID']]);
     	}
 
     	//--- Update parent event when repost event was deleted.
     	$bRepost = $aEvent['type'] == $sCommonPostPrefix . BX_TIMELINE_PARSE_TYPE_REPOST;
         if($bRepost) {
-            $this->_oDb->deleteRepostTrack($aEvent['id']);
+            $this->_oDb->deleteRepostTrack($aEvent[$CNF['FIELD_ID']]);
 
             $aContent = unserialize($aEvent['content']);
             $aReposted = $this->_oDb->getReposted($aContent['type'], $aContent['action'], $aContent['object_id']);
             if(!empty($aReposted) && is_array($aReposted))
-                $this->_oDb->updateRepostCounter($aReposted['id'], $aReposted['reposts'], -1);
+                $this->_oDb->updateRepostCounter($aReposted[$CNF['FIELD_ID']], $aReposted['reposts'], -1);
         }
 
         //--- Find and delete repost events when parent event was deleted.
@@ -2976,28 +2978,35 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 	    $aRepostEvents = $this->_oDb->getEvents(array('browse' => 'reposted_by_descriptor', 'type' => $aEvent['type']));
 		foreach($aRepostEvents as $aRepostEvent) {
 			$aContent = unserialize($aRepostEvent['content']);
-			if(isset($aContent['type']) && $aContent['type'] == $aEvent['type'] && isset($aContent['object_id']) && (($bSystem && (int)$aContent['object_id'] == (int)$aEvent['object_id']) || (!$bSystem  && (int)$aContent['object_id'] == (int)$aEvent['id'])) && (int)$this->_oDb->deleteEvent(array('id' => (int)$aRepostEvent['id'])) > 0) {
-			    $oComments = $this->getCmtsObject($sCommonPostComment, $aRepostEvent['id']);
+			if(isset($aContent['type']) && $aContent['type'] == $aEvent['type'] && isset($aContent['object_id']) && (($bSystem && (int)$aContent['object_id'] == (int)$aEvent['object_id']) || (!$bSystem  && (int)$aContent['object_id'] == (int)$aEvent[$CNF['FIELD_ID']])) && (int)$this->_oDb->deleteEvent(array('id' => (int)$aRepostEvent[$CNF['FIELD_ID']])) > 0) {
+			    $oComments = $this->getCmtsObject($sCommonPostComment, $aRepostEvent[$CNF['FIELD_ID']]);
                 if($oComments !== false)
-                    $oComments->onObjectDelete($aRepostEvent['id']);
+                    $oComments->onObjectDelete($aRepostEvent[$CNF['FIELD_ID']]);
 
-                bx_alert($this->_oConfig->getObject('alert'), 'delete_repost', $aEvent['id'], $iUserId, array(
-                    'repost_id' => $aRepostEvent['id'],
+                bx_alert($this->_oConfig->getObject('alert'), 'delete_repost', $aEvent[$CNF['FIELD_ID']], $iUserId, array(
+                    'repost_id' => $aRepostEvent[$CNF['FIELD_ID']],
                 ));
             }
 		}
 
-		//--- Delete associated meta.
+        //--- Delete associated meta.
         $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
-        $oMetatags->onDeleteContent($aEvent['id']);
+        $oMetatags->onDeleteContent($aEvent[$CNF['FIELD_ID']]);
+
+        //--- Delete feed cache.
+        $this->_oDb->deleteCache(array('event_id' => $aEvent[$CNF['FIELD_ID']]));
+        
+        //--- Delete item cache.
+        $sCacheItemKey = $this->_oConfig->getCacheItemKey($aEvent[$CNF['FIELD_ID']]);
+        $this->getCacheItemObject()->delData($sCacheItemKey);
 
         //--- Event -> Delete for Alerts Engine ---//
         if($bRepost)
-            bx_alert($this->_oConfig->getObject('alert'), 'delete_repost', $aReposted['id'], $iUserId, array(
-                'repost_id' => $aEvent['id'],
+            bx_alert($this->_oConfig->getObject('alert'), 'delete_repost', $aReposted[$CNF['FIELD_ID']], $iUserId, array(
+                'repost_id' => $aEvent[$CNF['FIELD_ID']],
             ));
         else
-            bx_alert($this->_oConfig->getObject('alert'), 'delete', $aEvent['id'], $iUserId);
+            bx_alert($this->_oConfig->getObject('alert'), 'delete', $aEvent[$CNF['FIELD_ID']], $iUserId);
         //--- Event -> Delete for Alerts Engine ---//
     }
 
