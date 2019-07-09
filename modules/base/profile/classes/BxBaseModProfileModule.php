@@ -1012,7 +1012,8 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         if (!$iProfileId)
             $iProfileId = $this->_iProfileId;
 
-        $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->getName());
+        $iContentId = is_numeric($aDataEntry) ? (int)$aDataEntry : $aDataEntry[$this->_oConfig->CNF['FIELD_ID']];
+        $oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName());
         if ($oProfile && $oProfile->id() == $iProfileId)
             return CHECK_ACTION_RESULT_ALLOWED;
 
