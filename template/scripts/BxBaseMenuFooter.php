@@ -89,8 +89,16 @@ class BxBaseMenuFooter extends BxTemplMenu
                 break;
 
             case 'switch_template':
-                $aTemplates = get_templates_array(true, true);
-                if(count($aTemplates) <= 1)
+                $iTemplates = 0;
+                $aTemplates = get_templates_array(true, false);
+                foreach($aTemplates as $aTemplate) {
+                    $aMixes = $this->_oQuery->getParamsMixes($aTemplate['name'], 1);
+                    if(!empty($aMixes) && is_array($aMixes))
+                        $iTemplates += count($aMixes);
+                    else 
+                        $iTemplates += 1;
+                }
+                if($iTemplates <= 1)
                     $bResult = false;
                 break;
         }
