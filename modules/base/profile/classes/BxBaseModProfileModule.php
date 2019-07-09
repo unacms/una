@@ -23,6 +23,12 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     function __construct(&$aModule)
     {
         parent::__construct($aModule);
+
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!empty($CNF['FIELD_ALLOW_POST_TO']))
+            $this->_aSearchableNamesExcept[] = $CNF['FIELD_ALLOW_POST_TO'];
+
         $this->_iAccountId = getLoggedId();
     }
 

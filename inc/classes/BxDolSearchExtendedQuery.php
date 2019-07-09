@@ -55,17 +55,20 @@ class BxDolSearchExtendedQuery extends BxDolDb
                 if ($sSearchType == 'datepicker_range_age' || $sSearchType == 'datepicker_range'){
                     $sSearchValue =  BxDolService::getSerializedService($aObject['module'], 'get_search_options', array($sField, $aField['type'], $sSearchType));
                 }
-                $bResult = (int)$oDb->query("INSERT INTO `sys_search_extended_fields`(`object`, `name`, `type`, `caption`, `info`, `values`, `pass`, `search_type`, `search_value`, `search_operator`, `active`, `order`) VALUES(:object, :name, :type, :caption, :info, :values, :pass, :search_type, :search_value, :search_operator, '1', :order)", array(
+                $iActive = isset($aField['active']) ? (int)$aField['active'] : 1;
+
+                $bResult = (int)$oDb->query("INSERT INTO `sys_search_extended_fields`(`object`, `name`, `type`, `caption`, `info`, `values`, `pass`, `search_type`, `search_value`, `search_operator`, `active`, `order`) VALUES(:object, :name, :type, :caption, :info, :values, :pass, :search_type, :search_value, :search_operator, :active, :order)", array(
                     'object' => $aObject['object'], 
                     'name' => $sField,
                     'type' => $aField['type'],
                     'caption' => $sCaptionKey,
-                	'info' => $sInfoKey,
+                    'info' => $sInfoKey,
                     'values' => $aField['values'],
                     'pass' => $aField['pass'],
                     'search_type' => $sSearchType,
                     'search_value' => $sSearchValue, 
                     'search_operator' => isset($aField['search_operator']) ? $aField['search_operator'] : reset(BxDolSearchExtended::$TYPE_TO_OPERATOR[$aField['type']]),
+                    'active' => $iActive,
                     'order' => $iOrder++
                 )) > 0;
 
