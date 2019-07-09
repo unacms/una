@@ -20,14 +20,6 @@ class BxTemplConfig extends BxBaseConfig
 
         //--- Defaults
         $this->_aConfig['aLessConfig'] = array_merge($this->_aConfig['aLessConfig'], array(
-            'bx-margin' => '16px',
-            'bx-margin-sec' => '8px',
-            'bx-margin-thd' => '4px',
-
-            'bx-padding' => '16px',
-            'bx-padding-sec' => '8px',
-            'bx-padding-thd' => '4px',
-
             'bx-size-thumb' => '32px'
         ));
 

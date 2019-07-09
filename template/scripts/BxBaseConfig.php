@@ -14,13 +14,13 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton
         'aLessConfig' => array (
             'bx-page-width' => '1000px',
 
-            'bx-margin' => '20px',
-            'bx-margin-sec' => '10px',
-            'bx-margin-thd' => '5px',
+            'bx-margin' => '16px',
+            'bx-margin-sec' => '8px',
+            'bx-margin-thd' => '4px',
 
-            'bx-padding' => '20px',
-            'bx-padding-sec' => '10px',
-            'bx-padding-thd' => '5px',
+            'bx-padding' => '16px',
+            'bx-padding-sec' => '8px',
+            'bx-padding-thd' => '4px',
 
             'bx-font-family' => 'Helvetica, Arial, sans-serif',
 
