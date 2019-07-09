@@ -193,11 +193,15 @@ class BxBaseModGeneralDb extends BxDolModuleDb
                 case 'locate':
                     if(!isset($CNF['OBJECT_METATAGS']))
                         break;
-
-                    list($fLatitude, $fLongitude, $sCountry, $sState, $sCity, $sZip) = $aSearchParam['value']['array'];
-
-                    $aSql = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])->locationsGetAsSQLPart($CNF['TABLE_ENTRIES'], $CNF['FIELD_ID'], $sCountry, $sState, $sCity, $sZip);
-
+                    if ($aSearchParam['type'] == 'location_radius'){
+                        list($fLatitude, $fLongitude, $sCountry, $sState, $sCity, $sZip, $sStreet, $sStreetNumber, $iRadius) = $aSearchParam['value']['array'];
+                        $aBounds = bx_get_location_bounds_latlng($fLatitude, $fLongitude, $iRadius);   
+                        $aSql = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])->locationsGetAsSQLPart($CNF['TABLE_ENTRIES'], $CNF['FIELD_ID'], '', '', '', '', $aBounds);
+                    }
+                    else{
+                        list($fLatitude, $fLongitude, $sCountry, $sState, $sCity, $sZip) = $aSearchParam['value']['array'];
+                        $aSql = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])->locationsGetAsSQLPart($CNF['TABLE_ENTRIES'], $CNF['FIELD_ID'], $sCountry, $sState, $sCity, $sZip);
+                    }
                     if(!empty($aSql['where'])) {
                         $sWhereConditions .= $aSql['where'];
 
@@ -206,23 +210,6 @@ class BxBaseModGeneralDb extends BxDolModuleDb
                     }
                     break;
                     
-                case 'locate_in_radius':
-                    if(!isset($CNF['OBJECT_METATAGS']))
-                        break;
-                    
-                    list($fLatitude, $fLongitude, $sCountry, $sState, $sCity, $sZip, $sStreet, $sStreetNumber, $iRadius) = $aSearchParam['value']['array'];
-                    $aBounds = bx_get_location_bounds_latlng($fLatitude, $fLongitude, $iRadius);
-                    
-                    $aSql = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])->locationsGetAsSQLPart($CNF['TABLE_ENTRIES'], $CNF['FIELD_ID'], '', '', '', '', $aBounds);
-                    
-                    if(!empty($aSql['where'])) {
-                        $sWhereConditions .= $aSql['where'];
-
-                        if(!empty($aSql['join']))
-                            $sJoinClause .= $aSql['join'];
-                    }
-                    break;
-
                 case 'between':
                     if(!is_array($aSearchParam['value']) || count($aSearchParam['value']) != 2) 
                         break;

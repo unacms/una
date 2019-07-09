@@ -216,7 +216,7 @@ class BxBaseModGeneralModule extends BxDolModule
         if(!empty($aInputsAdd) && is_array($aInputsAdd))
             $aInputs = array_merge($aInputs, $aInputsAdd);
 
-        foreach($aInputs as $aInput)
+        foreach($aInputs as $aInput){
             if(in_array($aInput['type'], BxDolSearchExtended::$SEARCHABLE_TYPES) && !in_array($aInput['name'], $this->_aSearchableNamesExcept)) {
                 $aField = array(
                     'type' => $aInput['type'], 
@@ -233,17 +233,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
                 $aResult[$aInput['name']] = $aField;
             }
-            if(!empty($CNF['FIELD_LOCATION_PREFIX']) && !in_array($CNF['FIELD_LOCATION_PREFIX'], $this->_aSearchableNamesExcept))
-                $aResult['location_radius'] = array(
-                    'type' => 'location_radius', 
-                    'caption' => '_sys_form_input_location_radius',
-                    'caption_system' => '_sys_form_input_sys_location_radius',
-                    'info' => '',
-            	    'value' => '',
-                    'values' => '',
-                    'pass' => ''
-                );
-
+        }
         return $aResult;
     }
 

@@ -124,6 +124,9 @@ class BxBaseSearchExtendedForm extends BxTemplFormView
 				}
 
                 return $this->genInputStandard($aInput);
+                
+            case 'location_radius':
+                return $this->genInputLocationRadius($aInput);
         }
 
         return parent::genInput($aInput);
@@ -142,7 +145,7 @@ class BxBaseSearchExtendedForm extends BxTemplFormView
         return $this->genCustomInputUsernamesSuggestions($aInput);
     }
     
-    public function genCustomInputLocationRadius(&$aInput)
+    public function genInputLocationRadius(&$aInput)
     {
         $aInput['manual_input'] = true;
         
@@ -150,7 +153,7 @@ class BxBaseSearchExtendedForm extends BxTemplFormView
         $aInputRadius['type'] = 'text';
         $aInputRadius['name'] = $aInputRadius['name'] . '_rad';
         $sValue = bx_get($aInputRadius['name']);
-        $aInputRadius['value'] = is_numeric($sValue) ? $sValue : 0;
+        $aInputRadius['value'] = is_numeric($sValue) ? $sValue : '';
         $aInputRadius['attrs']['placeholder'] = _t('_sys_form_input_location_radius_label');
         
         $aVars = array (

@@ -33,8 +33,7 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
         'switcher' => array('checkbox', 'switcher'),
         'datepicker' => array('datepicker_range', 'datepicker_range_age'),
         'datetime' => array('datetime_range', 'datetime_range_age'),
-        'location' => array('location'),
-        'location_radius' => array('location_radius')
+        'location' => array('location', 'location_radius')
     );
 
     public static $TYPE_TO_OPERATOR = array(
@@ -50,8 +49,7 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
         'switcher' => array('='),
     	'datepicker' => array('between'), 
     	'datetime' => array('between'),
-        'location' => array('locate'),
-        'location_radius' => array('locate_in_radius')
+        'location' => array('locate')
     );
 
     protected $_oDb;

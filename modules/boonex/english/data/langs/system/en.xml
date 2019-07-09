@@ -831,7 +831,8 @@
 	<string name="_adm_form_txt_field_type_image"><![CDATA[image]]></string>
 	<string name="_adm_form_txt_field_type_input_set"><![CDATA[input set]]></string>
 	<string name="_adm_form_txt_field_type_location"><![CDATA[location]]></string>
-	<string name="_adm_form_txt_field_type_number"><![CDATA[number]]></string>
+  <string name="_adm_form_txt_field_type_location_radius"><![CDATA[location radius]]></string>
+  <string name="_adm_form_txt_field_type_number"><![CDATA[number]]></string>
 	<string name="_adm_form_txt_field_type_password"><![CDATA[password]]></string>
 	<string name="_adm_form_txt_field_type_radio_set"><![CDATA[radio set]]></string>
 	<string name="_adm_form_txt_field_type_reset"><![CDATA[reset]]></string>
@@ -2038,8 +2039,6 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_input_age"><![CDATA[Age]]></string>
 	<string name="_sys_form_input_sys_location"><![CDATA[Location]]></string>
 	<string name="_sys_form_input_location"><![CDATA[Location]]></string>
-  <string name="_sys_form_input_sys_location_radius"><![CDATA[Location Radius]]></string>
-	<string name="_sys_form_input_location_radius"><![CDATA[Location Radius]]></string>
   <string name="_sys_form_input_location_radius_label"><![CDATA[Radius (in km)]]></string>
 	<string name="_sys_form_input_sys_labels"><![CDATA[Labels]]></string>
   <string name="_sys_form_input_labels"><![CDATA[Labels]]></string>

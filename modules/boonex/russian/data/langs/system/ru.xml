@@ -831,6 +831,7 @@
 	<string name="_adm_form_txt_field_type_image"><![CDATA[картинка]]></string>
 	<string name="_adm_form_txt_field_type_input_set"><![CDATA[набор полей ввода]]></string>
 	<string name="_adm_form_txt_field_type_location"><![CDATA[местонахождение]]></string>
+  <string name="_adm_form_txt_field_type_location_radius"><![CDATA[радиус местонахождения]]></string>
 	<string name="_adm_form_txt_field_type_number"><![CDATA[число]]></string>
 	<string name="_adm_form_txt_field_type_password"><![CDATA[пароль]]></string>
 	<string name="_adm_form_txt_field_type_radio_set"><![CDATA[набор переключателей]]></string>
@@ -2038,11 +2039,9 @@
 	<string name="_sys_form_forgot_password_input_submit"><![CDATA[Выполнить]]></string>
 	<string name="_sys_form_input_age"><![CDATA[Возраст]]></string>
 	<string name="_sys_form_input_sys_location"><![CDATA[Расположение]]></string>
-    <string name="_sys_form_input_location"><![CDATA[Расположение по радиусу]]></string>
-  <string name="_sys_form_input_sys_location_radius"><![CDATA[Расположение по радиусу]]></string>
+  <string name="_sys_form_input_location"><![CDATA[Расположение по радиусу]]></string>
   <string name="_sys_form_input_location_radius_label"><![CDATA[Радиус (в км)]]></string>
-  <string name="_sys_form_input_location_radius"><![CDATA[Расположение]]></string>
-	<string name="_sys_form_input_sys_labels"><![CDATA[Метки]]></string>
+  <string name="_sys_form_input_sys_labels"><![CDATA[Метки]]></string>
     <string name="_sys_form_input_labels"><![CDATA[Метки]]></string>
 	<string name="_sys_form_input_sys_anonymous"><![CDATA[Анонимная публикация]]></string>
 	<string name="_sys_form_input_anonymous"><![CDATA[Анонимная публикация]]></string>
