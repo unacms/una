@@ -23,7 +23,7 @@
                     <use xlink:href="#path-1"></use>
                 </mask>
                 <use id="Path" fill="#00B356" xlink:href="#path-1"></use>
-                <g id="comment-alt-lines" filter="url(#filter-4)" mask="url(#mask-2)" fill-rule="nonzero">
+                <g id="comment-alt-lines" mask="url(#mask-2)" fill-rule="nonzero">
                     <g transform="translate(13.000000, 15.000000)" id="Shape">
                         <g>
                             <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
