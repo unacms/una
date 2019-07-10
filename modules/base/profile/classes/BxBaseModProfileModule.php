@@ -906,33 +906,49 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return $aResult;
     }
 
-	/**
+    /**
      * Entry post for Timeline module
      */
     public function serviceGetTimelineProfilePicture($aEvent, $aBrowseParams = array())
     {
-        return $this->_serviceGetTimelineProfileImage($aEvent, $aBrowseParams, array(
+        $aResult = $this->_serviceGetTimelineProfileImage($aEvent, $aBrowseParams, array(
             'stg' => 'OBJECT_STORAGE',
-    		'trans' => array('OBJECT_IMAGES_TRANSCODER_GALLERY', 'OBJECT_IMAGES_TRANSCODER_AVATAR'),
-    		'trans_orig' => array('OBJECT_IMAGES_TRANSCODER_PICTURE', 'OBJECT_IMAGES_TRANSCODER_GALLERY'),
+            'trans' => array('OBJECT_IMAGES_TRANSCODER_GALLERY', 'OBJECT_IMAGES_TRANSCODER_AVATAR'),
+            'trans_orig' => array('OBJECT_IMAGES_TRANSCODER_PICTURE', 'OBJECT_IMAGES_TRANSCODER_GALLERY'),
             'txt_ss' => 'txt_sample_pp_single',
             'txt_sswa' => 'txt_sample_pp_single_with_article',
             'txt_sa' => 'txt_sample_pi_action',
             'txt_sau' => 'txt_sample_pi_action_user'
         ));
+        $aResult['allowed_view'] = array('module' => $this->_oConfig->getName(), 'method' => 'get_timeline_profile_picture_allowed_view');
+
+        return $aResult;
+    }
+
+    public function serviceGetTimelineProfilePictureAllowedView($aEvent)
+    {
+        return $this->_serviceGetTimelineProfileImageAllowedView($aEvent);
     }
 
     public function serviceGetTimelineProfileCover($aEvent, $aBrowseParams = array())
     {
-        return $this->_serviceGetTimelineProfileImage($aEvent, $aBrowseParams, array(
-        	'stg' => 'OBJECT_STORAGE_COVER',
-    		'trans' => array('OBJECT_IMAGES_TRANSCODER_GALLERY', 'OBJECT_IMAGES_TRANSCODER_COVER_THUMB'),
-    		'trans_orig' => array('OBJECT_IMAGES_TRANSCODER_COVER', 'OBJECT_IMAGES_TRANSCODER_GALLERY'),
+        $aResult = $this->_serviceGetTimelineProfileImage($aEvent, $aBrowseParams, array(
+            'stg' => 'OBJECT_STORAGE_COVER',
+            'trans' => array('OBJECT_IMAGES_TRANSCODER_GALLERY', 'OBJECT_IMAGES_TRANSCODER_COVER_THUMB'),
+            'trans_orig' => array('OBJECT_IMAGES_TRANSCODER_COVER', 'OBJECT_IMAGES_TRANSCODER_GALLERY'),
             'txt_ss' => 'txt_sample_pc_single',
             'txt_sswa' => 'txt_sample_pc_single_with_article',
             'txt_sa' => 'txt_sample_pi_action',
             'txt_sau' => 'txt_sample_pi_action_user'
         ));
+        $aResult['allowed_view'] = array('module' => $this->_oConfig->getName(), 'method' => 'get_timeline_profile_cover_allowed_view');
+
+        return $aResult;
+    }
+    
+    public function serviceGetTimelineProfileCoverAllowedView($aEvent)
+    {
+        return $this->_serviceGetTimelineProfileImageAllowedView($aEvent);
     }
 
     public function serviceGetConnectionButtonsTitles($iProfileId, $sConnectionsObject = 'sys_profiles_friends')
@@ -1442,6 +1458,20 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         );
     }
 
+    protected function _serviceGetTimelineProfileImageAllowedView($aEvent)
+    {
+        $sError = _t('_sys_access_denied_to_private_content');
+
+        if(empty($aEvent['content']) || !is_array($aEvent['content']) || empty($aEvent['content']['id']))
+            return $sError;
+
+        $aContentInfo = $this->_oDb->getContentInfoById($aEvent['content']['id']);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return $sError;
+
+        return $this->serviceCheckAllowedViewForProfile($aContentInfo);
+    }
+
     protected function _getContentForTimelineProfileImage($aEvent, $aBrowseParams, $aBuildParams, $aContentInfo, $aFileInfo)
     {
     	$CNF = &$this->_oConfig->CNF;
@@ -1462,15 +1492,16 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         }
 
     	return array(
-    		'sample' => isset($CNF['T'][$aBuildParams['txt_sswa']]) ? $CNF['T'][$aBuildParams['txt_sswa']] : $CNF['T'][$aBuildParams['txt_ss']],
-    		'sample_wo_article' => $CNF['T'][$aBuildParams['txt_ss']],
-    	    'sample_action' => isset($CNF['T'][$aBuildParams['txt_sa']]) ? $CNF['T'][$aBuildParams['txt_sa']] : '',
-			'url' => $sUrl,
-			'title' =>  '',
-			'text' => '',
-			'images' => $aImages,
+            'sample' => isset($CNF['T'][$aBuildParams['txt_sswa']]) ? $CNF['T'][$aBuildParams['txt_sswa']] : $CNF['T'][$aBuildParams['txt_ss']],
+            'sample_wo_article' => $CNF['T'][$aBuildParams['txt_ss']],
+            'sample_action' => isset($CNF['T'][$aBuildParams['txt_sa']]) ? $CNF['T'][$aBuildParams['txt_sa']] : '',
+            'id' => $aContentInfo[$CNF['FIELD_ID']],
+            'url' => $sUrl,
+            'title' =>  '',
+            'text' => '',
+            'images' => $aImages,
             'videos' => array()
-		);
+        );
     }
 
     protected function _entityComments($sObject, $iId = 0)
