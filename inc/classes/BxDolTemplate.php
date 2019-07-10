@@ -1654,6 +1654,14 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     }
 
     /**
+     * get added js files
+     */ 
+    function getJs()
+    {
+        return $this->aPage['js_compiled'];
+    }
+    
+    /**
      * Add System JS file(s) to global output.
      * System JS files are the files which are attached to all pages. They will be cached separately from the others.
      *
@@ -1782,6 +1790,14 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     function addCss($mixedFiles, $bDynamic = false)
     {
         return $this->_processFiles('css', 'add', $mixedFiles, $bDynamic);
+    }
+
+    /**
+     * get added css files
+     */ 
+    function getCss()
+    {
+        return $this->aPage['css_compiled'];
     }
 
     /**

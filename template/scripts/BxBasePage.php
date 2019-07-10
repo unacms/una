@@ -33,6 +33,42 @@ class BxBasePage extends BxDolPage
     }
 
     /**
+     * Very similar to BxBasePage::getCode
+     * but adds css and js files which are needed for the corect page display
+     */ 
+    public function getCodeDynamic ()
+    {
+        $oTemplate = BxDolTemplate::getInstance();
+
+        // get js&css before the page code is generated
+        $aCssBefore = $oTemplate->getCss();
+        $aJsBefore = $oTemplate->getJs();
+
+        // generate page code
+        $sContent = $this->getCode();
+
+        // get js&css after the page code is generated
+        $aCssAfter = $oTemplate->getCss();
+        $aJsAfter = $oTemplate->getJs();
+
+        // compare files which were added before and after page code is generated
+        $f = function ($a1, $a2) {
+            return strcasecmp($a1['url'], $a2['url']);
+        };
+        $aCssNew = array_udiff($aCssAfter, $aCssBefore, $f);
+        $aJsNew = array_udiff($aJsAfter, $aJsBefore, $f);
+
+        // add newly added js&css files in static mode
+        $sCss = $sJs = '';
+        foreach ($aCssNew as $a)
+            $sCss .= $oTemplate->addCss($a['url'], true);
+        foreach ($aJsNew as $a)
+            $sJs .= $oTemplate->addJs($a['url'], true);
+
+        return $sJs . $sCss . $sContent;
+    }
+    
+    /**
      * Get page code with automatic caching, adding necessary css/js files and system template vars.
      * @return string.
      */

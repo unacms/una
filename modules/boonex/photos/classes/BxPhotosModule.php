@@ -21,7 +21,7 @@ class BxPhotosModule extends BxBaseModTextModule
 
     public function actionViewEntryBrief()
     {
-        echo BxDolPage::getObjectInstance($this->_oConfig->CNF['OBJECT_PAGE_VIEW_ENTRY_BRIEF'], $this->_oTemplate)->getCode();
+        echo BxDolPage::getObjectInstance($this->_oConfig->CNF['OBJECT_PAGE_VIEW_ENTRY_BRIEF'], $this->_oTemplate)->getCodeDynamic();
     }
 
     /**
