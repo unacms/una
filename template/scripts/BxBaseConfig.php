@@ -275,22 +275,38 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton
         return $sValue;
     }
 
-    /**
-     * Note. Isn't used for now.
-     */
-    protected function _setGradientMenuPageLeft($sKey, $sDefault = '')
+    protected function _setGradientLeft($sKey, $sDefault = '')
     {
         $sValue = $this->_getColorFromRgba($sKey, $sDefault);
         return "linear-gradient(to right, rgba(" . $sValue . ", 1) 0%, rgba(" . $sValue . ", 0) 100%)";
     }
-
-    /**
-     * Note. Isn't used for now.
-     */
-    protected function _setGradientMenuPageRight($sKey, $sDefault = '')
+    
+    protected function _setGradientRight($sKey, $sDefault = '')
     {
         $sValue = $this->_getColorFromRgba($sKey, $sDefault);
         return "linear-gradient(to right, rgba(" . $sValue . ", 0) 0%, rgba(" . $sValue . ", 1) 100%)";
+    }
+    
+    /**
+     * Can be removed in on of the next versions.
+     * 
+     * @deprecated since 10.0.0-B2
+     * @see BxBaseConfig::_setGradientLeft
+     */
+    protected function _setGradientMenuPageLeft($sKey, $sDefault = '')
+    {
+        return $this->_setGradientLeft($sKey, $sDefault);
+    }
+
+    /**
+     * Can be removed in on of the next versions.
+     * 
+     * @deprecated since 10.0.0-B2
+     * @see BxBaseConfig::_setGradientRight
+     */
+    protected function _setGradientMenuPageRight($sKey, $sDefault = '')
+    {
+        return $this->_setGradientRight($sKey, $sDefault);
     }
 
     protected function _setBgUrl($sKey, $oStorage = null)
