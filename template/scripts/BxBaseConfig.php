@@ -275,6 +275,24 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton
         return $sValue;
     }
 
+    /**
+     * Note. Isn't used for now.
+     */
+    protected function _setGradientMenuPageLeft($sKey, $sDefault = '')
+    {
+        $sValue = $this->_getColorFromRgba($sKey, $sDefault);
+        return "linear-gradient(to right, rgba(" . $sValue . ", 1) 0%, rgba(" . $sValue . ", 0) 100%)";
+    }
+
+    /**
+     * Note. Isn't used for now.
+     */
+    protected function _setGradientMenuPageRight($sKey, $sDefault = '')
+    {
+        $sValue = $this->_getColorFromRgba($sKey, $sDefault);
+        return "linear-gradient(to right, rgba(" . $sValue . ", 0) 0%, rgba(" . $sValue . ", 1) 100%)";
+    }
+
     protected function _setBgUrl($sKey, $oStorage = null)
     {
         if(empty($oStorage))
