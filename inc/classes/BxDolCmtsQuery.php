@@ -154,6 +154,7 @@ class BxDolCmtsQuery extends BxDolDb
 
         $sQuery = "SELECT
                 `{$this->_sTable}`.`cmt_id`,
+                `{$this->_sTableIds}`.`id` AS `cmt_unique_id`,
                 `{$this->_sTable}`.`cmt_parent_id`,
                 `{$this->_sTable}`.`cmt_vparent_id`,
                 `{$this->_sTable}`.`cmt_object_id`,

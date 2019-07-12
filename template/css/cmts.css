@@ -141,26 +141,30 @@
         position: relative;
     	text-align: left;
     }
-	div.cmt-cont .bullet {
-		padding: 0px 5px;
-		padding: 0px 0.3rem;
+    div.cmt-cont .bullet {
+        padding: 0px 5px;
+        padding: 0px 0.3rem;
     }
     div.cmt-cont .cmt-body img {
         max-width: 100%;
     	height: auto;
     }
     div.cmt-cont .cmt-post-reply .bx-form-element-wrapper {
-		margin-top: 10px;
+        margin-top: 10px;
     	margin-top: 0.5rem;
     }
-	div.cmt-cont .cmt-post-reply .bx-form-element-wrapper:first-child {
-		margin-top: 0px;
+    div.cmt-cont .cmt-post-reply .bx-form-element-wrapper:first-child {
+        margin-top: 0px;
     }
     span.cmt-body-see-more a {
-		font-weight: bold;
+        font-weight: bold;
+    }
+    div.cmt-reactions .bx-vote-counter-wrapper {
+        line-height: 2.0rem;
+        font-size: 1.2rem;
     }
     div.cmt-attached-preview {
-		overflow:hidden;
+        overflow:hidden;
     }
     div.cmt-attached-preview,
     div.cmt-attached-preview img {
@@ -173,27 +177,27 @@
     	position: relative;
     	float: left;
 	}
-	div.cmt-attached-preview img {
-		background-position: center center;
-		background-repeat: no-repeat;
-		background-size: contain;
-	}
-	
+    div.cmt-attached-preview img {
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
     /*--- Comment Actions ---*/
-	div.cmt-actions {
-		position: relative;
-		text-align: left;
-	}
-	div.cmt-meta-ago,
-	div.cmt-comment-manage-link, 
-	div.cmt-actions ul.bx-menu-hor,
-	div.cmt-points-wrp {
-		position: relative;
-		float: left;
-	}
-	div.cmt-actions li .bx-vote {
-	   margin-right: 1.25rem;
-	}
+    div.cmt-actions {
+        position: relative;
+        text-align: left;
+    }
+    div.cmt-meta-ago,
+    div.cmt-comment-manage-link, 
+    div.cmt-actions ul.bx-menu-hor,
+    div.cmt-points-wrp {
+        position: relative;
+        float: left;
+    }
+    div.cmt-actions li .bx-vote {
+       margin-right: 1.25rem;
+    }
     div.cmt-comment-manage .bx-menu-ver li {
 		white-space: nowrap;
     }

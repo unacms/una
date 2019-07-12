@@ -305,6 +305,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
                     `RootStylePrefix` AS `root_style_prefix`,
                     `BaseUrl` AS `base_url`,
                     `ObjectVote` AS `object_vote`,
+                    `ObjectReaction` AS `object_reaction`,
                     `ObjectScore` AS `object_score`,
                     `ObjectReport` AS `object_report`,
                     `TriggerTable` AS `trigger_table`,
@@ -444,13 +445,25 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     public function getVoteObject($iId)
     {
         if(empty($this->_aSystem['object_vote']))
-        	$this->_aSystem['object_vote'] = 'sys_cmts';
+            $this->_aSystem['object_vote'] = 'sys_cmts';
 
         $oVote = BxDolVote::getObjectInstance($this->_aSystem['object_vote'], $iId, true, $this->_oTemplate);
         if(!$oVote || !$oVote->isEnabled())
             return false;
 
         return $oVote;
+    }
+
+    public function getReactionObject($iId)
+    {
+        if(empty($this->_aSystem['object_reaction']))
+            $this->_aSystem['object_reaction'] = 'sys_cmts_reactions';
+
+        $oReaction = BxDolVote::getObjectInstance($this->_aSystem['object_reaction'], $iId, true, $this->_oTemplate);
+        if(!$oReaction || !$oReaction->isEnabled())
+            return false;
+
+        return $oReaction;
     }
 
     public function getScoreObject($iId)

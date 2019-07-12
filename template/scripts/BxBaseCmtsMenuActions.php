@@ -48,13 +48,26 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
     {
         $oVote = $this->_oCmts->getVoteObject($this->_aCmt['cmt_unique_id']);
         if(!$oVote)
-        	return false;
+            return false;
 
         $aVotesParams = array('dynamic_mode' => $this->_bDynamicMode);
         if($this->_bShowTitles)
-		    $aVotesParams['show_do_vote_label'] = true;
+            $aVotesParams['show_do_vote_label'] = true;
 
-    	return $oVote->getElementInline($aVotesParams);
+        return $oVote->getElementInline($aVotesParams);
+    }
+
+    protected function _getMenuItemItemReaction($aItem)
+    {
+        $oReaction = $this->_oCmts->getReactionObject($this->_aCmt['cmt_unique_id']);
+        if(!$oReaction)
+            return false;
+
+        $aReactionParams = array('dynamic_mode' => $this->_bDynamicMode);
+        if($this->_bShowTitles)
+            $aReactionParams['show_do_vote_label'] = true;
+
+        return $oReaction->getElementInline($aReactionParams);
     }
 
     protected function _getMenuItemItemScore($aItem)

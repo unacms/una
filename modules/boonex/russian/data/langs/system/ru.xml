@@ -2234,6 +2234,7 @@
 	<string name="_sys_menu_item_title_cmts_administration"><![CDATA[Комментарии]]></string>
 	<string name="_sys_menu_item_title_cmts_item_delete"><![CDATA[Удалить]]></string>
 	<string name="_sys_menu_item_title_cmts_item_edit"><![CDATA[Редактировать]]></string>
+        <string name="_sys_menu_item_title_cmts_item_reaction"><![CDATA[]]></string>
 	<string name="_sys_menu_item_title_cmts_item_reply"><![CDATA[]]></string>
 	<string name="_sys_menu_item_title_cmts_item_score"><![CDATA[]]></string>
 	<string name="_sys_menu_item_title_cmts_item_vote"><![CDATA[]]></string>
@@ -2297,6 +2298,7 @@
   <string name="_sys_menu_item_title_system_cmts_administration"><![CDATA[Комментарии]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_delete"><![CDATA[Удалить]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_edit"><![CDATA[Редактировать]]></string>
+        <string name="_sys_menu_item_title_system_cmts_item_reaction"><![CDATA[Реагировать]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_reply"><![CDATA[Ответить]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_report"><![CDATA[Пожаловаться]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_score"><![CDATA[Голосовать (За/Против)]]></string>

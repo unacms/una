@@ -275,14 +275,20 @@ class BxBaseCmts extends BxDolCmts
             }
         }
 
+        $sReactions = '';
+        if(($oReaction = $this->getReactionObject($aCmt['cmt_unique_id'])) !== false)
+            $sReactions = $oReaction->getCounter(array(
+                'show_counter' => true
+            ));
+
         return $this->_oTemplate->parseHtmlByName('comment.html', array_merge(array(
             'system' => $this->_sSystem,
             'style_prefix' => $this->_sStylePrefix,
             'js_object' => $this->_sJsObjName,
             'id' => $aCmt['cmt_id'],
-        	'anchor' => $this->getItemAnchor($aCmt['cmt_id']),
+            'anchor' => $this->getItemAnchor($aCmt['cmt_id']),
             'class' => $sClass,
-        	'class_cnt' => $sClassCnt,
+            'class_cnt' => $sClassCnt,
             'bx_if:show_reply_to' => array(
                 'condition' => !empty($aTmplReplyTo),
                 'content' => $aTmplReplyTo
@@ -298,8 +304,9 @@ class BxBaseCmts extends BxDolCmts
                     'attached' => $sAttachments
                 )
             ),
+            'reactions' => $sReactions,
             'actions' => $sActions,
-            'replies' =>  $sReplies
+            'replies' =>  $sReplies,
         ), $this->_getTmplVarsAuthor($aCmt), $this->_getTmplVarsText($aCmt)));
     }
 
