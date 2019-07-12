@@ -19,9 +19,9 @@ class BxForumCmts extends BxTemplCmts
     	$this->MODULE = 'bx_forum';
     	$this->_oModule = BxDolModule::getInstance($this->MODULE);
 
-        parent::__construct($sSystem, $iId, $iInit, $this->_oModule->_oTemplate);
+        $this->_sTableImages = 'bx_forum_files';
 
-        $this->setTableNameFiles('bx_forum_files');
+        parent::__construct($sSystem, $iId, $iInit, $this->_oModule->_oTemplate);
     }
 
     public function registerTranscoders()
