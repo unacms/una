@@ -1591,7 +1591,11 @@
         <string name="_cmt_txt_added_sample"><![CDATA[добавил новый комментарий]]></string>
 	<string name="_cmt_txt_or"><![CDATA[или]]></string>
 	<string name="_cmt_txt_sample_comment_single"><![CDATA[комментарий]]></string>
+        <string name="_cmt_txt_sample_reaction_single"><![CDATA[реакция '{0}' к комментарию]]></string>
 	<string name="_cmt_txt_sample_reply_to"><![CDATA[ответ на комментарий]]></string>
+        <string name="_cmt_txt_sample_score_up_single"><![CDATA[голос за комментарий]]></string>
+        <string name="_cmt_txt_sample_score_down_single"><![CDATA[голос против комментария]]></string>
+        <string name="_cmt_txt_sample_vote_single"><![CDATA[голос за комментарий]]></string>
 	<string name="_cmt_txt_n_comments"><![CDATA[{0} комментариев]]></string>	
         <string name="_cmt_txt_do"><![CDATA[Комментировать]]></string>
         <string name="_cmt_txt_counter"><![CDATA[{0}]]></string>

@@ -113,7 +113,16 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('sys_profiles_friends', 'connection_removed', @iHandler),
 
 ('sys_profiles_subscriptions', 'connection_added', @iHandler),
-('sys_profiles_subscriptions', 'connection_removed', @iHandler);
+('sys_profiles_subscriptions', 'connection_removed', @iHandler),
+
+('sys_cmts', 'doVote', @iHandler),
+('sys_cmts', 'undoVote', @iHandler),
+
+('sys_cmts_reactions', 'doVote', @iHandler),
+('sys_cmts_reactions', 'undoVote', @iHandler),
+
+('sys_cmts', 'doVoteUp', @iHandler),
+('sys_cmts', 'doVoteDown', @iHandler);
 
 
 -- EMAIL TEMPLATES

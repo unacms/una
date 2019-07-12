@@ -1130,8 +1130,8 @@ CREATE TABLE `sys_objects_vote` (
 );
 
 INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
-('sys_cmts', 'sys_cmts_votes', 'sys_cmts_votes_track', '604800', '1', '1', '0', '1', 'sys_cmts_ids', 'id', '', 'rate', 'votes', '', ''),
-('sys_cmts_reactions', 'sys_cmts_reactions', 'sys_cmts_reactions_track', '604800', '1', '1', '1', '1', 'sys_cmts_ids', 'id', '', 'rrate', 'rvotes', 'BxTemplVoteReactions', '');
+('sys_cmts', 'sys_cmts_votes', 'sys_cmts_votes_track', '604800', '1', '1', '0', '1', 'sys_cmts_ids', 'id', 'author_id', 'rate', 'votes', '', ''),
+('sys_cmts_reactions', 'sys_cmts_reactions', 'sys_cmts_reactions_track', '604800', '1', '1', '1', '1', 'sys_cmts_ids', 'id', 'author_id', 'rrate', 'rvotes', 'BxTemplVoteReactions', '');
 
 -- --------------------------------------------------------
 
@@ -1159,7 +1159,7 @@ CREATE TABLE `sys_objects_score` (
 );
 
 INSERT INTO `sys_objects_score` (`name`, `module`, `table_main`, `table_track`, `post_timeout`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_score`, `trigger_field_cup`, `trigger_field_cdown`, `class_name`, `class_file`) VALUES 
-('sys_cmts', 'system', 'sys_cmts_scores', 'sys_cmts_scores_track', '604800', '0', 'sys_cmts_ids', 'id', '', 'score', 'sc_up', 'sc_down', '', '');
+('sys_cmts', 'system', 'sys_cmts_scores', 'sys_cmts_scores_track', '604800', '0', 'sys_cmts_ids', 'id', 'author_id', 'score', 'sc_up', 'sc_down', '', '');
 
 -- -------------------------------------------------------
 
@@ -1327,6 +1327,7 @@ CREATE TABLE IF NOT EXISTS `sys_cmts_ids` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `system_id` int(11) NOT NULL DEFAULT '0',
   `cmt_id` int(11) NOT NULL DEFAULT '0',
+  `author_id` int(11) NOT NULL DEFAULT '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',
   `rrate` float NOT NULL default '0',
@@ -1559,7 +1560,7 @@ CREATE TABLE `sys_objects_report` (
 );
 
 INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('sys_cmts', 'sys_cmts_reports', 'sys_cmts_reports_track', '1', '', 'sys_cmts_ids', 'id', '', 'reports',  '', '');
+('sys_cmts', 'sys_cmts_reports', 'sys_cmts_reports_track', '1', '', 'sys_cmts_ids', 'id', 'author_id', 'reports',  '', '');
 
 
 -- --------------------------------------------------------

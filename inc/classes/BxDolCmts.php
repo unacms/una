@@ -128,6 +128,21 @@ define('BX_CMT_USAGE_DEFAULT', BX_CMT_USAGE_BLOCK);
  */
 class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContentInfoService
 {
+    /**
+     * System tables which are UNITED for all 
+     * comment systems and cannot be overwritten.
+     */
+    public static $sTableSystems = 'sys_objects_cmts';
+    public static $sTableIds = 'sys_cmts_ids';
+
+    /**
+     * System tables which are used by default and
+     * can be overwritten in comment systems.
+     * @see BxDolCmts::getTableNameImages and BxDolCmts::getTableNameImages2Entries
+     */
+    protected $_sTableImages = 'sys_cmts_images';
+    protected $_sTableImages2Entries = 'sys_cmts_images2entries';
+
     protected $_oQuery = null;
     protected $_oTemplate = null;
 
@@ -186,11 +201,6 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $this->_sSystem = $sSystem;
         $this->_aSystem = $this->_aSystems[$sSystem];
 
-        $this->_aSystem['table_images'] = 'sys_cmts_images';
-        $this->_aSystem['table_images2entries'] = 'sys_cmts_images2entries';
-
-        $this->_aSystem['table_ids'] = 'sys_cmts_ids';
-
         $this->_aSystem['is_browse_filter'] = (int)$this->_bBrowseFilter;
 
         $this->_iDpMaxLevel = (int)$this->_aSystem['number_of_levels'];
@@ -238,13 +248,18 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $this->_sMetatagsObj = 'sys_cmts';
 
         $this->_aT = array(
-        	'block_comments_title' => '_cmt_block_comments_title'
+            'block_comments_title' => '_cmt_block_comments_title',
+            'txt_sample_single' => '_cmt_txt_sample_comment_single',
+            'txt_sample_vote_single' => '_cmt_txt_sample_vote_single',
+            'txt_sample_reaction_single' => '_cmt_txt_sample_reaction_single',
+            'txt_sample_score_up_single' => '_cmt_txt_sample_score_up_single',
+            'txt_sample_score_down_single' => '_cmt_txt_sample_score_down_single'
         );
 
         if ($iInit)
             $this->init($iId);
 
-		if ($oTemplate)
+        if ($oTemplate)
             $this->_oTemplate = $oTemplate;
         else
             $this->_oTemplate = BxDolTemplate::getInstance();
@@ -315,9 +330,16 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
                     `TriggerFieldComments` AS `trigger_field_comments`,
                     `ClassName` AS `class_name`,
                     `ClassFile` AS `class_file`
-                FROM `sys_objects_cmts`', 'name');
+                FROM `' . self::$sTableSystems . '`', 'name');
         }
         return $GLOBALS[$sKey];
+    }
+
+    public static function getGlobalInfo ($iUniqueId)
+    {
+        return BxDolDb::getInstance()->getRow("SELECT `ti`.*, `ts`.`Name` AS `system_name` FROM `" . self::$sTableIds . "` AS `ti` LEFT JOIN `" . self::$sTableSystems . "` AS `ts` ON `ti`.`system_id`=`ts`.`ID` WHERE `ti`.`id`=:id LIMIT 1", array(
+            'id' => (int)$iUniqueId
+        ));
     }
 
     public function init ($iId)
@@ -351,19 +373,34 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return $this->_sSystem;
     }
 
+    public function getSystemInfo()
+    {
+        return $this->_aSystem;
+    }
+
     public function getStorageObjectName()
     {
     	return $this->_getFormObject()->getStorageObjectName();
     }
 
-	public function getTranscoderPreviewName()
+    public function getTranscoderPreviewName()
     {
     	return $this->_getFormObject()->getTranscoderPreviewName();
     }
 
-    public function getSystemInfo()
+    public function getTableNameImages()
     {
-        return $this->_aSystem;
+        return $this->_sTableImages;
+    }
+
+    public function getTableNameImages2Entries()
+    {
+        return $this->_sTableImages2Entries;
+    }
+
+    public function getLanguageKey($sIndex)
+    {
+        return isset($this->_aT[$sIndex]) ? $this->_aT[$sIndex] : '';
     }
 
     public function getMaxLevel()
@@ -381,16 +418,16 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return $iCmtParentId == 0 ? $this->_aSystem['per_view'] : $this->_aSystem['per_view_replies'];
     }
 
-	public function getViewUrl($iCmtId)
+    public function getViewUrl($iCmtId)
     {
     	if(empty($this->_aSystem['trigger_field_title']))
-    		return '';
+            return '';
 
     	return bx_append_url_params($this->_sViewUrl, array(
-			'sys' => $this->_sSystem,
-			'id' => $this->_iId,
-			'cmt_id' => $iCmtId
-		));
+            'sys' => $this->_sSystem,
+            'id' => $this->_iId,
+            'cmt_id' => $iCmtId
+        ));
     }
 
     public function getBaseUrl()
@@ -490,20 +527,26 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return $oReport;
     }
 
-	public function getNotificationId()
-	{
-		return 'cmts-notification-' . $this->_sSystem . '-' . $this->_iId;
-	}
-
-	public function setTableNameFiles($sTable)
+    public function getNotificationId()
     {
-    	$this->_aSystem['table_images'] = $sTable;
+        return 'cmts-notification-' . $this->_sSystem . '-' . $this->_iId;
+    }
+
+    /**
+     * @deprecated since version 10.0.0-B3 and can be removed in later versions.
+     */
+    public function setTableNameFiles($sTable)
+    {
+        $this->_sTableImages = $sTable;
     	$this->_oQuery->setTableNameFiles($sTable);
     }
 
-	public function setTableNameFiles2Entries($sTable)
+    /**
+     * @deprecated since version 10.0.0-B3 and can be removed in later versions.
+     */
+    public function setTableNameFiles2Entries($sTable)
     {
-    	$this->_aSystem['table_images2entries'] = $sTable;
+    	$this->_sTableImages2Entries = $sTable;
     	$this->_oQuery->setTableNameFiles2Entries($sTable);
     }
 

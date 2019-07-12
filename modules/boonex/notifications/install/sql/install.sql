@@ -65,6 +65,7 @@ CREATE TABLE IF NOT EXISTS `bx_notifications_settings2users` (
 INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES 
 ('profile', 'delete', 'profile', 'delete', '');
 
+-- Mentions
 INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES 
 ('mention', 'insert', 'meta_mention', 'added', 'a:3:{s:11:"module_name";s:6:"system";s:13:"module_method";s:30:"get_notifications_post_mention";s:12:"module_class";s:20:"TemplServiceMetatags";}');
 SET @iHandlerId = LAST_INSERT_ID();
@@ -74,6 +75,7 @@ INSERT INTO `bx_notifications_settings`(`group`, `handler_id`, `delivery`, `type
 ('mention', @iHandlerId, 'email', 'personal', '_bx_ntfs_alert_action_mention_added_personal', 1),
 ('mention', @iHandlerId, 'push', 'personal', '_bx_ntfs_alert_action_mention_added_personal', 1);
 
+-- Friendship
 INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES 
 ('friendship', 'insert', 'sys_profiles_friends', 'connection_added', 'a:3:{s:11:"module_name";s:6:"system";s:13:"module_method";s:33:"get_notifications_post_friendship";s:12:"module_class";s:23:"TemplServiceConnections";}');
 SET @iHandlerId = LAST_INSERT_ID();
@@ -86,6 +88,7 @@ INSERT INTO `bx_notifications_settings`(`group`, `handler_id`, `delivery`, `type
 INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES 
 ('friendship', 'delete', 'sys_profiles_friends', 'connection_removed', '');
 
+-- Subscription
 INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES 
 ('subscription', 'insert', 'sys_profiles_subscriptions', 'connection_added', 'a:3:{s:11:"module_name";s:6:"system";s:13:"module_method";s:22:"get_notifications_post";s:12:"module_class";s:23:"TemplServiceConnections";}');
 SET @iHandlerId = LAST_INSERT_ID();
@@ -97,6 +100,81 @@ INSERT INTO `bx_notifications_settings`(`group`, `handler_id`, `delivery`, `type
 
 INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES 
 ('subscription', 'delete', 'sys_profiles_subscriptions', 'connection_removed', '');
+
+-- Comments Actions (Like, Reaction, Score Up\Down)
+INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`, `privacy`) VALUES 
+('sys_cmts_vote', 'insert', 'sys_cmts', 'doVote', 'a:3:{s:11:"module_name";s:6:"system";s:13:"module_method";s:22:"get_notifications_vote";s:12:"module_class";s:17:"TemplCmtsServices";}', '');
+SET @iHandlerId = LAST_INSERT_ID();
+
+INSERT INTO `bx_notifications_settings`(`group`, `handler_id`, `delivery`, `type`, `title`, `order`) VALUES
+('vote', @iHandlerId, 'site', 'personal', '_bx_ntfs_alert_action_doVote_personal', 4),
+('vote', @iHandlerId, 'email', 'personal', '_bx_ntfs_alert_action_doVote_personal', 4),
+('vote', @iHandlerId, 'push', 'personal', '_bx_ntfs_alert_action_doVote_personal', 4),
+
+('vote', @iHandlerId, 'site', 'follow_member', '_bx_ntfs_alert_action_doVote_follow_member', 1),
+('vote', @iHandlerId, 'email', 'follow_member', '_bx_ntfs_alert_action_doVote_follow_member', 1),
+('vote', @iHandlerId, 'push', 'follow_member', '_bx_ntfs_alert_action_doVote_follow_member', 1),
+
+('vote', @iHandlerId, 'site', 'follow_context', '_bx_ntfs_alert_action_doVote_follow_context', 1),
+('vote', @iHandlerId, 'email', 'follow_context', '_bx_ntfs_alert_action_doVote_follow_context', 1),
+('vote', @iHandlerId, 'push', 'follow_context', '_bx_ntfs_alert_action_doVote_follow_context', 1);
+
+INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES 
+('sys_cmts_vote', 'delete', 'sys_cmts', 'undoVote', '');
+
+INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`, `privacy`) VALUES 
+('sys_cmts_reaction', 'insert', 'sys_cmts_reactions', 'doVote', 'a:3:{s:11:"module_name";s:6:"system";s:13:"module_method";s:26:"get_notifications_reaction";s:12:"module_class";s:17:"TemplCmtsServices";}', '');
+SET @iHandlerId = LAST_INSERT_ID();
+
+INSERT INTO `bx_notifications_settings`(`group`, `handler_id`, `delivery`, `type`, `title`, `order`) VALUES
+('vote', @iHandlerId, 'site', 'personal', '_bx_ntfs_alert_action_doVote_personal', 5),
+('vote', @iHandlerId, 'email', 'personal', '_bx_ntfs_alert_action_doVote_personal', 5),
+('vote', @iHandlerId, 'push', 'personal', '_bx_ntfs_alert_action_doVote_personal', 5),
+
+('vote', @iHandlerId, 'site', 'follow_member', '_bx_ntfs_alert_action_doVote_follow_member', 2),
+('vote', @iHandlerId, 'email', 'follow_member', '_bx_ntfs_alert_action_doVote_follow_member', 2),
+('vote', @iHandlerId, 'push', 'follow_member', '_bx_ntfs_alert_action_doVote_follow_member', 2),
+
+('vote', @iHandlerId, 'site', 'follow_context', '_bx_ntfs_alert_action_doVote_follow_context', 2),
+('vote', @iHandlerId, 'email', 'follow_context', '_bx_ntfs_alert_action_doVote_follow_context', 2),
+('vote', @iHandlerId, 'push', 'follow_context', '_bx_ntfs_alert_action_doVote_follow_context', 2);
+
+INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES 
+('sys_cmts_reaction', 'delete', 'sys_cmts_reactions', 'undoVote', '');
+
+INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`, `privacy`) VALUES 
+('sys_cmts_score_up', 'insert', 'sys_cmts', 'doVoteUp', 'a:3:{s:11:"module_name";s:6:"system";s:13:"module_method";s:26:"get_notifications_score_up";s:12:"module_class";s:17:"TemplCmtsServices";}', '');
+SET @iHandlerId = LAST_INSERT_ID();
+
+INSERT INTO `bx_notifications_settings`(`group`, `handler_id`, `delivery`, `type`, `title`, `order`) VALUES
+('score_up', @iHandlerId, 'site', 'personal', '_bx_ntfs_alert_action_doVoteUp_personal', 6),
+('score_up', @iHandlerId, 'email', 'personal', '_bx_ntfs_alert_action_doVoteUp_personal', 6),
+('score_up', @iHandlerId, 'push', 'personal', '_bx_ntfs_alert_action_doVoteUp_personal', 6),
+
+('score_up', @iHandlerId, 'site', 'follow_member', '_bx_ntfs_alert_action_doVoteUp_follow_member', 3),
+('score_up', @iHandlerId, 'email', 'follow_member', '_bx_ntfs_alert_action_doVoteUp_follow_member', 3),
+('score_up', @iHandlerId, 'push', 'follow_member', '_bx_ntfs_alert_action_doVoteUp_follow_member', 3),
+
+('score_up', @iHandlerId, 'site', 'follow_context', '_bx_ntfs_alert_action_doVoteUp_follow_context', 3),
+('score_up', @iHandlerId, 'email', 'follow_context', '_bx_ntfs_alert_action_doVoteUp_follow_context', 3),
+('score_up', @iHandlerId, 'push', 'follow_context', '_bx_ntfs_alert_action_doVoteUp_follow_context', 3);
+
+INSERT INTO `bx_notifications_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`, `privacy`) VALUES 
+('sys_cmts_score_down', 'insert', 'sys_cmts', 'doVoteDown', 'a:3:{s:11:"module_name";s:6:"system";s:13:"module_method";s:28:"get_notifications_score_down";s:12:"module_class";s:17:"TemplCmtsServices";}', '');
+SET @iHandlerId = LAST_INSERT_ID();
+
+INSERT INTO `bx_notifications_settings`(`group`, `handler_id`, `delivery`, `type`, `title`, `order`) VALUES
+('score_down', @iHandlerId, 'site', 'personal', '_bx_ntfs_alert_action_doVoteDown_personal', 7),
+('score_down', @iHandlerId, 'email', 'personal', '_bx_ntfs_alert_action_doVoteDown_personal', 7),
+('score_down', @iHandlerId, 'push', 'personal', '_bx_ntfs_alert_action_doVoteDown_personal', 7),
+
+('score_down', @iHandlerId, 'site', 'follow_member', '_bx_ntfs_alert_action_doVoteDown_follow_member', 4),
+('score_down', @iHandlerId, 'email', 'follow_member', '_bx_ntfs_alert_action_doVoteDown_follow_member', 4),
+('score_down', @iHandlerId, 'push', 'follow_member', '_bx_ntfs_alert_action_doVoteDown_follow_member', 4),
+
+('score_down', @iHandlerId, 'site', 'follow_context', '_bx_ntfs_alert_action_doVoteDown_follow_context', 4),
+('score_down', @iHandlerId, 'email', 'follow_context', '_bx_ntfs_alert_action_doVoteDown_follow_context', 4),
+('score_down', @iHandlerId, 'push', 'follow_context', '_bx_ntfs_alert_action_doVoteDown_follow_context', 4);
 
 CREATE TABLE IF NOT EXISTS `bx_notifications_queue` (
   `id` int(11) NOT NULL auto_increment,

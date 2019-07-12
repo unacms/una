@@ -28,7 +28,12 @@ class BxDolCmtsQuery extends BxDolDb
 
     public function __construct(&$oMain)
     {
+        $this->_sTableIds = BxDolCmts::$sTableIds;
+
         $this->_oMain = $oMain;
+
+        $this->_sTableFiles = $this->_oMain->getTableNameImages();
+        $this->_sTableFiles2Entries = $this->_oMain->getTableNameImages2Entries();
 
         $aSystem = $this->_oMain->getSystemInfo();
         $this->_sTable = $aSystem['table'];
@@ -38,11 +43,6 @@ class BxDolCmtsQuery extends BxDolDb
         $this->_sTriggerFieldTitle = $aSystem['trigger_field_title'];
         $this->_sTriggerFieldComments = $aSystem['trigger_field_comments'];
 
-        $this->_sTableFiles = $aSystem['table_images'];
-        $this->_sTableFiles2Entries = $aSystem['table_images2entries'];
-
-        $this->_sTableIds = $aSystem['table_ids'];
-
         parent::__construct();
     }
 
@@ -51,12 +51,18 @@ class BxDolCmtsQuery extends BxDolDb
         return $this->_sTable;
     }
 
+    /**
+     * @deprecated since version 10.0.0-B3 and can be removed in later versions.
+     */
     function setTableNameFiles($sTable)
     {
     	$this->_sTableFiles = $sTable;
     }
 
-	function setTableNameFiles2Entries($sTable)
+    /**
+     * @deprecated since version 10.0.0-B3 and can be removed in later versions.
+     */
+    function setTableNameFiles2Entries($sTable)
     {
     	$this->_sTableFiles2Entries = $sTable;
     }
@@ -497,14 +503,17 @@ class BxDolCmtsQuery extends BxDolDb
         return $this->query($sQuery);
     }
 
-    function getUniqId($iSystemId, $iCmtId)
+    function getUniqId($iSystemId, $iCmtId, $iAuthorId = 0)
     {
         $sQuery = $this->prepare("SELECT `id` FROM `{$this->_sTableIds}` WHERE `system_id` = ? AND `cmt_id` = ?", $iSystemId, $iCmtId);
-        if ($iUniqId = $this->getOne($sQuery))
+        if($iUniqId = $this->getOne($sQuery))
             return $iUniqId;
-            
-        $sQuery = $this->prepare("INSERT INTO `{$this->_sTableIds}` SET `system_id` = ?, `cmt_id` = ?", $iSystemId, $iCmtId);
-        if (!$this->query($sQuery))
+
+        if(empty($iAuthorId))
+            $iAuthorId = bx_get_logged_profile_id();
+
+        $sQuery = $this->prepare("INSERT INTO `{$this->_sTableIds}` SET `system_id` = ?, `cmt_id` = ?, `author_id` = ?", $iSystemId, $iCmtId, $iAuthorId);
+        if(!$this->query($sQuery))
             return false;
 
         return $this->lastId();

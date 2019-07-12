@@ -843,7 +843,7 @@ class BxBaseCmts extends BxDolCmts
 
                 if ($this->_sMetatagsObj) {
                     $oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj);
-                    $oMetatags->metaAdd($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId), $sCmtText);
+                    $oMetatags->metaAdd($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId, $iCmtAuthorId), $sCmtText);
                 }
 
                 $this->onPostAfter($iCmtId);
