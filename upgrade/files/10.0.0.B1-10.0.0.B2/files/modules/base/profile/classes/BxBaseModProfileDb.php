@@ -71,7 +71,7 @@ class BxBaseModProfileDb extends BxBaseModGeneralDb
 
         $sQuery = "SELECT `c`.`id` AS `content_id`, `p`.`account_id`, `p`.`id` AS `profile_id`, `p`.`status` AS `profile_status` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` 
             INNER JOIN `sys_profiles` AS `p` ON (`p`.`content_id` = `c`.`id` AND `p`.`type` = :type) 
-            INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` =  `p`.`account_id`)
+            INNER JOIN `sys_accounts` AS `a` ON (`a`.`profile_id` = `p`.`id`) 
             WHERE `p`.`status` = :status AND (0 $sWhere)" . $sOrderBy;
         return $this->getAll($sQuery, $aBindings);
     }
