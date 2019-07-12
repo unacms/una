@@ -178,7 +178,7 @@ class BxCnlModule extends BxBaseModGroupsModule
         if(!BxDolRequest::serviceExists($aEventContent['module_name'], 'get_timeline_post'))
             return false;      
 
-        return BxDolService::call($aEventContent['module_name'], 'get_timeline_post', array(array('owner_id' => $aEventContent['author_id'], 'object_id' => $aEventContent['content_id'])));
+        return BxDolService::call($aEventContent['module_name'], 'get_timeline_post', array(array('id' => $aEvent['id'], 'owner_id' => $aEventContent['author_id'], 'object_id' => $aEventContent['content_id'])));
     }
     
     /**
