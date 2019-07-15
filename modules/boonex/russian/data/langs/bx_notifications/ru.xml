@@ -80,9 +80,8 @@
     <string name="_bx_ntfs_setting_type_follow_member"><![CDATA[Активность, относящаяся к пользователям, за которыми Вы следите]]></string>
     <string name="_bx_ntfs_setting_type_follow_context"><![CDATA[Активность, относящаяся к контекстам (группам, собитиям и тп), за которыми Вы следите]]></string>
     <string name="_bx_ntfs_setting_type_other"><![CDATA[Другая активность]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    
+
+    <string name="_bx_ntfs_alert_module_sys_cmts"><![CDATA[Комментарии]]></string>
     <string name="_bx_ntfs_alert_module_meta_mention"><![CDATA[Упоминания о профайлах]]></string>
     <string name="_bx_ntfs_alert_module_sys_profiles_subscriptions"><![CDATA[Подписки профайлов]]></string>
     <string name="_bx_ntfs_alert_module_sys_profiles_friends"><![CDATA[Друзья профайлов]]></string>
