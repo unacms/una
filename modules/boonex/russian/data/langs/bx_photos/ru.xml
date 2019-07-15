@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
 
-	<string name="_bx_photos"><![CDATA[Фото]]></string>
-	<string name="_bx_photos_cmts"><![CDATA[Фото - Комментарии]]></string>
+    <string name="_bx_photos"><![CDATA[Фото]]></string>
+    <string name="_bx_photos_cmts"><![CDATA[Фото - Комментарии]]></string>
+    <string name="_bx_photos_reactions"><![CDATA[Фото - Реакции]]></string>
 
-	<string name="_bx_photos_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к фото]]></string>
-	<string name="_bx_photos_option_plain_summary_chars"><![CDATA[Количество символов в описании фото при отсутствующей картинке]]></string>
+    <string name="_bx_photos_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к фото]]></string>
+    <string name="_bx_photos_option_plain_summary_chars"><![CDATA[Количество символов в описании фото при отсутствующей картинке]]></string>
     <string name="_bx_photos_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
     <string name="_bx_photos_option_per_page_profile"><![CDATA[Количество элементов на странице профайла]]></string>
-	<string name="_bx_photos_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
-	<string name="_bx_photos_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
+    <string name="_bx_photos_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
+    <string name="_bx_photos_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
 
     <string name="_bx_photos_form_entry"><![CDATA[Фото]]></string>
     <string name="_bx_photos_form_entry_display_add"><![CDATA[Добавить фото]]></string>

@@ -3,6 +3,7 @@
 
 	<string name="_bx_videos"><![CDATA[Видео]]></string>
 	<string name="_bx_videos_cmts"><![CDATA[Видео - Комментарии]]></string>
+        <string name="_bx_videos_reactions"><![CDATA[Видео - Реакции]]></string>
 
 	<string name="_bx_videos_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к видео]]></string>
 	<string name="_bx_videos_option_plain_summary_chars"><![CDATA[Количество символов в описании видео при отсутствующей картинке видео]]></string>

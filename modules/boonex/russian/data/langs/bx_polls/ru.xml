@@ -3,6 +3,7 @@
 
 	<string name="_bx_polls"><![CDATA[Голосования]]></string>
 	<string name="_bx_polls_cmts"><![CDATA[Голосования - Комментарии]]></string>
+        <string name="_bx_polls_reactions"><![CDATA[Голосования - Реакции]]></string>
 
 	<string name="_bx_polls_option_title_chars"><![CDATA[Количество символов в автогенерируемом заголовке голосования]]></string>
 	<string name="_bx_polls_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>

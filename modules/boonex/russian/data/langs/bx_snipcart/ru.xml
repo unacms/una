@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
 
-	<string name="_bx_snipcart"><![CDATA[Snipcart]]></string>
-	<string name="_bx_snipcart_cmts"><![CDATA[Snipcart - Обзоры]]></string>
+    <string name="_bx_snipcart"><![CDATA[Snipcart]]></string>
+    <string name="_bx_snipcart_cmts"><![CDATA[Snipcart - Обзоры]]></string>
+    <string name="_bx_snipcart_reactions"><![CDATA[Snipcart - Реакции]]></string>
 
-	<string name="_bx_snipcart_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к товарам]]></string>
-	<string name="_bx_snipcart_option_plain_summary_chars"><![CDATA[Количество символов в описании товара при отсутствующей картинке товара]]></string>
+    <string name="_bx_snipcart_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к товарам]]></string>
+    <string name="_bx_snipcart_option_plain_summary_chars"><![CDATA[Количество символов в описании товара при отсутствующей картинке товара]]></string>
     <string name="_bx_snipcart_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
     <string name="_bx_snipcart_option_per_page_profile"><![CDATA[Количество элементов на странице профайла]]></string>
 	<string name="_bx_snipcart_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="en" flag="gb" title="English">
 
-	<string name="_bx_timeline"><![CDATA[Timeline]]></string>
-	<string name="_bx_timeline_cmts"><![CDATA[Timelines' Comments]]></string>
+    <string name="_bx_timeline"><![CDATA[Timeline]]></string>
+    <string name="_bx_timeline_cmts"><![CDATA[Timeline's Comments]]></string>
+    <string name="_bx_timeline_reactions"><![CDATA[Timeline's Reactions]]></string>
 
     <string name="_bx_timeline_option_enable_edit"><![CDATA[Allow user to edit his items]]></string>
 	<string name="_bx_timeline_option_enable_delete"><![CDATA[Allow Timeline owner to remove items]]></string>

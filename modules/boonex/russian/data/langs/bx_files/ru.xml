@@ -3,6 +3,7 @@
 
 	<string name="_bx_files"><![CDATA[Файлы]]></string>
 	<string name="_bx_files_cmts"><![CDATA[Комментарии к файлам]]></string>
+        <string name="_bx_files_reactions"><![CDATA[Реакции к файлам]]></string>
 
 	<string name="_bx_files_option_summary_chars"><![CDATA[Количество символов в автоматическом описании к файлу]]></string>
 	<string name="_bx_files_option_per_page_browse"><![CDATA[Количество файлов на странице]]></string>

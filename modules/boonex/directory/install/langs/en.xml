@@ -2,6 +2,7 @@
 <resources name="en" flag="gb" title="English">
     <string name="_bx_directory"><![CDATA[Directory]]></string>
     <string name="_bx_directory_cmts"><![CDATA[Directory's Comments]]></string>
+    <string name="_bx_directory_reactions"><![CDATA[Directory's Reactions]]></string>
 
     <string name="_bx_directory_option_summary_chars"><![CDATA[Number of characters in auto-cropped ad summary]]></string>
     <string name="_bx_directory_option_plain_summary_chars"><![CDATA[Number of characters in plain ad description when ad hasn't thumb]]></string>

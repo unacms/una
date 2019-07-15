@@ -3,6 +3,7 @@
 
 	<string name="_bx_files"><![CDATA[Files]]></string>
 	<string name="_bx_files_cmts"><![CDATA[Files' Comments]]></string>
+        <string name="_bx_files_reactions"><![CDATA[Files' Reactions]]></string>
 
 	<string name="_bx_files_option_summary_chars"><![CDATA[Number of characters in auto-cropped file summary]]></string>
 	<string name="_bx_files_option_per_page_browse"><![CDATA[Number of items per page]]></string>

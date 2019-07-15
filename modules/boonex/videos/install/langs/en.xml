@@ -3,6 +3,7 @@
 
 	<string name="_bx_videos"><![CDATA[Videos]]></string>
 	<string name="_bx_videos_cmts"><![CDATA[Videos' Comments]]></string>
+        <string name="_bx_videos_reactions"><![CDATA[Videos' Reactions]]></string>
 
 	<string name="_bx_videos_option_summary_chars"><![CDATA[Number of characters in auto-cropped video summary]]></string>
 	<string name="_bx_videos_option_plain_summary_chars"><![CDATA[Number of characters in plain video description when video hasn't thumb]]></string>

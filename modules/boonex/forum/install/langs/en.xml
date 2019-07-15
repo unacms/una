@@ -3,6 +3,7 @@
 
 	<string name="_bx_forum"><![CDATA[Discussions]]></string>
 	<string name="_bx_forum_cmts"><![CDATA[Discussions's Comments]]></string>
+        <string name="_bx_forum_reactions"><![CDATA[Discussions's Reactions]]></string>
 
 	<string name="_bx_forum_option_summary_chars"><![CDATA[Number of characters in auto-cropped discussion summary]]></string>
 	<string name="_bx_forum_option_plain_summary_chars"><![CDATA[Number of characters in plain discussion description when discussion hasn't thumb]]></string>

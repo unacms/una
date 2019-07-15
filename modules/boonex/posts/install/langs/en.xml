@@ -3,6 +3,7 @@
 
     <string name="_bx_posts"><![CDATA[Posts]]></string>
     <string name="_bx_posts_cmts"><![CDATA[Posts' Comments]]></string>
+    <string name="_bx_posts_reactions"><![CDATA[Posts' Reactions]]></string>
 
     <string name="_bx_posts_option_summary_chars"><![CDATA[Number of characters in auto-cropped post summary]]></string>
     <string name="_bx_posts_option_plain_summary_chars"><![CDATA[Number of characters in plain post description when post hasn't thumb]]></string>

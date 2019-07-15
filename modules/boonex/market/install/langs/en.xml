@@ -3,6 +3,7 @@
 
 	<string name="_bx_market"><![CDATA[Market]]></string>
 	<string name="_bx_market_cmts"><![CDATA[Market's Reviews]]></string>
+        <string name="_bx_market_reactions"><![CDATA[Market's Reactions]]></string>
 
 	<string name="_bx_market_option_enable_recurring"><![CDATA[Allow to sell subscriptions]]></string>
 	<string name="_bx_market_option_recurring_reserve"><![CDATA[Reserve (in days) to accept and process recurring payment notification]]></string>

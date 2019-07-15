@@ -2,7 +2,8 @@
 <resources name="en" flag="gb" title="English">
 
 	<string name="_bx_glossary"><![CDATA[Glossary]]></string>
-	<string name="_bx_glossary_cmts"><![CDATA[Glossary' Comments]]></string>
+	<string name="_bx_glossary_cmts"><![CDATA[Glossary's Comments]]></string>
+        <string name="_bx_glossary_reactions"><![CDATA[Glossary's Reactions]]></string>
 
 	<string name="_bx_glossary_option_summary_chars"><![CDATA[Number of characters in auto-cropped term summary]]></string>
 	<string name="_bx_glossary_option_plain_summary_chars"><![CDATA[Number of characters in plain term description when term hasn't thumb]]></string>

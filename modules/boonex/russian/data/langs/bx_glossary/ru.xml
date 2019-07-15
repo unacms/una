@@ -3,6 +3,7 @@
 
 	<string name="_bx_glossary"><![CDATA[Глоссарий]]></string>
 	<string name="_bx_glossary_cmts"><![CDATA[Глоссарий - Комментарии]]></string>
+        <string name="_bx_glossary_reactions"><![CDATA[Глоссарий - Реакции]]></string>
 
 	<string name="_bx_glossary_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к термину]]></string>
 	<string name="_bx_glossary_option_plain_summary_chars"><![CDATA[Количество символов в описании Глоссарий при отсутствующей картинке Глоссарий]]></string>

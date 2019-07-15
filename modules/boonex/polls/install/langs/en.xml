@@ -3,6 +3,7 @@
 
 	<string name="_bx_polls"><![CDATA[Polls]]></string>
 	<string name="_bx_polls_cmts"><![CDATA[Polls' Comments]]></string>
+        <string name="_bx_polls_reactions"><![CDATA[Polls' Reactions]]></string>
 
 	<string name="_bx_polls_option_title_chars"><![CDATA[Number of characters in auto-cropped poll title]]></string>
 	<string name="_bx_polls_option_per_page_browse"><![CDATA[Number of items per page]]></string>

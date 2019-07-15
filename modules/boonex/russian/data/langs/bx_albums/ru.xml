@@ -3,6 +3,7 @@
 
 	<string name="_bx_albums"><![CDATA[Альбомы]]></string>
 	<string name="_bx_albums_cmts"><![CDATA[Комментарии к альбомам]]></string>
+        <string name="_bx_albums_reactions"><![CDATA[Реакции к альбомам]]></string>
 	<string name="_bx_albums_media"><![CDATA[Изображения]]></string>
 	<string name="_bx_albums_media_cmts"><![CDATA[Комментарии к изображениям]]></string>
 

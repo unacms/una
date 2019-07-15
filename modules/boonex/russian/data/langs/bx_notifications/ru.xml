@@ -82,6 +82,7 @@
     <string name="_bx_ntfs_setting_type_other"><![CDATA[Другая активность]]></string>
 
     <string name="_bx_ntfs_alert_module_sys_cmts"><![CDATA[Комментарии]]></string>
+    <string name="_bx_ntfs_alert_module_sys_cmts_reactions"><![CDATA[Реакции к комментариям]]></string>
     <string name="_bx_ntfs_alert_module_meta_mention"><![CDATA[Упоминания о профайлах]]></string>
     <string name="_bx_ntfs_alert_module_sys_profiles_subscriptions"><![CDATA[Подписки профайлов]]></string>
     <string name="_bx_ntfs_alert_module_sys_profiles_friends"><![CDATA[Друзья профайлов]]></string>
