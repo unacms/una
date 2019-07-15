@@ -133,7 +133,37 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         $iId = (int)$aContentInfo[$CNF['FIELD_ID']];
         $iAuthorId = (int)$aContentInfo[$CNF['FIELD_AUTHOR']];
 
-        $aParams = array('object_author_id' => $iAuthorId);
+        $sAction = 'added';
+        if(isset($CNF['FIELD_STATUS']) && isset($aContentInfo[$CNF['FIELD_STATUS']]) && $aContentInfo[$CNF['FIELD_STATUS']] == 'awaiting')
+            $sAction = 'deferred';
+
+        $aParams = $this->_alertParams($aContentInfo);
+        bx_alert($this->_oModule->getName(), $sAction, $iId, $iAuthorId, $aParams);
+    }
+
+    protected function _alertAfterEdit($aContentInfo)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $iId = (int)$aContentInfo[$CNF['FIELD_ID']];
+
+        $aParams = $this->_alertParams($aContentInfo);
+        bx_alert($this->_oModule->getName(), 'edited', $iId, false, $aParams);
+    }
+
+    /**
+     * Get array of params to be passed in Add/Edit Alert.
+     */
+    protected function _alertParams($aContentInfo)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $iId = (int)$aContentInfo[$CNF['FIELD_ID']];
+        $iAuthorId = (int)$aContentInfo[$CNF['FIELD_AUTHOR']];
+
+        $aParams = array(
+            'object_author_id' => $iAuthorId
+        );
         if(isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
             $aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
         if(!empty($CNF['OBJECT_METATAGS']))
@@ -142,22 +172,7 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
                 'field' => 'owner_id'
             );
 
-        $sAction = 'added';
-        if(isset($CNF['FIELD_STATUS']) && isset($aContentInfo[$CNF['FIELD_STATUS']]) && $aContentInfo[$CNF['FIELD_STATUS']] == 'awaiting')
-            $sAction = 'deferred';
-
-        bx_alert($this->_oModule->getName(), $sAction, $iId, $iAuthorId, $aParams);
-    }
-
-    protected function _alertAfterEdit($aContentInfo)
-    {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        $aParams = array('object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]);
-        if(isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
-        	$aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
-
-        bx_alert($this->_oModule->getName(), 'edited', $aContentInfo[$CNF['FIELD_ID']], false, $aParams);
+        return $aParams;
     }
 }
 
