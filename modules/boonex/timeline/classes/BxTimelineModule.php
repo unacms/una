@@ -1388,7 +1388,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
                 array('group' => $sModule . '_vote', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVote', 'module_name' => $sModule, 'module_method' => 'get_notifications_vote', 'module_class' => 'Module'),
                 array('group' => $sModule . '_vote', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'undoVote'),
-                
+
+                array('group' => $sModule . '_reaction', 'type' => 'insert', 'alert_unit' => $sModule . '_reactions', 'alert_action' => 'doVote', 'module_name' => $sModule, 'module_method' => 'get_notifications_reaction', 'module_class' => 'Module'),
+                array('group' => $sModule . '_reaction', 'type' => 'delete', 'alert_unit' => $sModule . '_reactions', 'alert_action' => 'undoVote'),
+
                 array('group' => $sModule . '_score_up', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVoteUp', 'module_name' => $sModule, 'module_method' => 'get_notifications_score_up', 'module_class' => 'Module'),
 
                 array('group' => $sModule . '_score_down', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doVoteDown', 'module_name' => $sModule, 'module_method' => 'get_notifications_score_down', 'module_class' => 'Module'),
@@ -1398,6 +1401,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 array('group' => 'content', 'unit' => $sModule, 'action' => 'repost', 'types' => array('follow_member', 'follow_context')),
                 array('group' => 'comment', 'unit' => $sModule, 'action' => 'commentPost', 'types' => array('personal', 'follow_member', 'follow_context')),
                 array('group' => 'vote', 'unit' => $sModule, 'action' => 'doVote', 'types' => array('personal', 'follow_member', 'follow_context')),
+                array('group' => 'vote', 'unit' => $sModule . '_reactions', 'action' => 'doVote', 'types' => array('personal', 'follow_member', 'follow_context')),
                 array('group' => 'score_up', 'unit' => $sModule, 'action' => 'doVoteUp', 'types' => array('personal', 'follow_member', 'follow_context')),
                 array('group' => 'score_down', 'unit' => $sModule, 'action' => 'doVoteDown', 'types' => array('personal', 'follow_member', 'follow_context'))
             ),
@@ -1413,6 +1417,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 
                 array('unit' => $sModule, 'action' => 'doVote'),
                 array('unit' => $sModule, 'action' => 'undoVote'),
+
+                array('unit' => $sModule . '_reactions', 'action' => 'doVote'),
+                array('unit' => $sModule . '_reactions', 'action' => 'undoVote'),
 
                 array('unit' => $sModule, 'action' => 'doVoteUp'),
                 array('unit' => $sModule, 'action' => 'doVoteDown'),
@@ -1572,6 +1579,46 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'entry_caption' => $sEntryCaption,
             'entry_author' => $aContent['owner_id'],
             'subentry_sample' => $CNF['T']['txt_sample_vote_single'],
+            'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+        );
+    }
+
+    /**
+     * Entry post vote for Notifications module
+     */
+    public function serviceGetNotificationsReaction($aEvent)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$iContent = (int)$aEvent['object_id'];
+        $aContent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iContent));
+        if(empty($aContent) || !is_array($aContent))
+            return array();
+
+        $oReaction = BxDolVote::getObjectInstance($CNF['OBJECT_REACTIONS'], $iContent);
+        if(!$oReaction || !$oReaction->isEnabled())
+            return array();
+
+        $aSubentry = $oReaction->getTrackBy(array('type' => 'id', 'id' => (int)$aEvent['subobject_id']));
+        if(empty($aSubentry) || !is_array($aSubentry))
+            return array();
+
+        $aSubentrySampleParams = array();
+        $aReaction = $oReaction->getReaction($aSubentry['reaction']);
+        if(!empty($aReaction['title']))
+            $aSubentrySampleParams[] = $aReaction['title'];
+        else
+            $aSubentrySampleParams[] = '_undefined';
+
+        $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : $this->_oConfig->getTitle($aContent['description'], $aContent['object_id']);
+
+        return array(
+            'entry_sample' => $CNF['T']['txt_sample_single'],
+            'entry_url' => $this->_oConfig->getItemViewUrl($aContent),
+            'entry_caption' => $sEntryCaption,
+            'entry_author' => $aContent['owner_id'],
+            'subentry_sample' => $CNF['T']['txt_sample_reaction_single'],
+            'subentry_sample_params' => $aSubentrySampleParams,
             'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
         );
     }

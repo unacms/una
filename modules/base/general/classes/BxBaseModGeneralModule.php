@@ -753,8 +753,8 @@ class BxBaseModGeneralModule extends BxDolModule
     	$sModule = $this->_aModule['name'];
 
     	$sEventPrivacy = $sModule . '_allow_view_event_to';
-		if(BxDolPrivacy::getObjectInstance($sEventPrivacy) === false)
-			$sEventPrivacy = '';
+        if(BxDolPrivacy::getObjectInstance($sEventPrivacy) === false)
+            $sEventPrivacy = '';
 
         return array(
             'handlers' => array(
