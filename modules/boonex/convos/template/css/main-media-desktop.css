@@ -8,3 +8,6 @@
     display:inline;
 }
 
+.bx-media-desktop .bx-grid-table .bx-cnv-collaborators {  
+    min-width:11.25rem;
+}

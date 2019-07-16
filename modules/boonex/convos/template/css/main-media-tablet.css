@@ -7,3 +7,7 @@
 .bx-media-tablet .bx-grid-table .bx-grid-header-collaborators span {
     display:inline;
 }
+
+.bx-media-tablet .bx-grid-table .bx-cnv-collaborators {  
+    min-width:11.25rem;
+}
