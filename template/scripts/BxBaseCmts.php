@@ -819,6 +819,8 @@ class BxBaseCmts extends BxDolCmts
 
             $iCmtId = (int)$oForm->insert(array('cmt_vparent_id' => $iCmtVisualParentId, 'cmt_object_id' => $this->_iId, 'cmt_author_id' => $iCmtAuthorId, 'cmt_level' => $iLevel, 'cmt_time' => time()));
             if($iCmtId != 0) {
+                $iCmtUniqId = $this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId, $iCmtAuthorId);
+
                 if($this->isAttachImageEnabled()) {
                     $aImages = $oForm->getCleanValue('cmt_image');
                     if(!empty($aImages) && is_array($aImages)) {
@@ -841,10 +843,8 @@ class BxBaseCmts extends BxDolCmts
 
                 $this->isPostReplyAllowed(true);
 
-                if ($this->_sMetatagsObj) {
-                    $oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj);
-                    $oMetatags->metaAdd($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId, $iCmtAuthorId), $sCmtText);
-                }
+                if($this->_sMetatagsObj && ($oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj)) !== false)
+                    $oMetatags->metaAdd($iCmtUniqId, $sCmtText);
 
                 $this->onPostAfter($iCmtId);
 
@@ -876,13 +876,12 @@ class BxBaseCmts extends BxDolCmts
             $sCmtText = $oForm->getCleanValue('cmt_text');
 
             if($oForm->update($iCmtId) !== false) {
+                $iCmtUniqId = $this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId, (int)$aCmt['cmt_author_id']);
 
                 $this->isEditAllowed($aCmt, true);
 
-                if ($this->_sMetatagsObj) {
-                    $oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj);
-                    $oMetatags->metaAdd($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId), $sCmtText);
-                }
+                if($this->_sMetatagsObj && ($oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj)) !== false)
+                    $oMetatags->metaAdd($iCmtUniqId, $sCmtText);
 
                 $this->onEditAfter($iCmtId);
 

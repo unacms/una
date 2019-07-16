@@ -506,7 +506,7 @@ class BxDolCmtsQuery extends BxDolDb
     function getUniqId($iSystemId, $iCmtId, $iAuthorId = 0)
     {
         $sQuery = $this->prepare("SELECT `id` FROM `{$this->_sTableIds}` WHERE `system_id` = ? AND `cmt_id` = ?", $iSystemId, $iCmtId);
-        if($iUniqId = $this->getOne($sQuery))
+        if(($iUniqId = (int)$this->getOne($sQuery)) != 0)
             return $iUniqId;
 
         if(empty($iAuthorId))

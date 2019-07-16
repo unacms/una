@@ -158,6 +158,8 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     protected $_sMenuObjActions;
     protected $_sMenuObjMeta;
 
+    protected $_sMetatagsObj;
+
     protected $_sViewUrl = '';
     protected $_sBaseUrl = '';
     protected $_sListAnchor = '';
@@ -1443,10 +1445,8 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     	$s = bx_process_output($s, $iDataAction);
     	$s = bx_linkify_html($s, 'class="' . BX_DOL_LINK_CLASS . '"');
 
-        if ($this->_sMetatagsObj && $iCmtId) {
-            $oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj);
+        if($iCmtId && $this->_sMetatagsObj && ($oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj)) !== false)
             $s = $oMetatags->metaParse($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId), $s);
-        }
 
         return $s;
     }
