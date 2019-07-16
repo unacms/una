@@ -152,30 +152,13 @@ class BxDolStudioPage extends BxDol
     {
         return BxDolStudioUtils::getModules($bShowCustom, $bShowSystem);
     }
-    
+
     protected function updateHistory()
     {
         if(empty($this->aPage['wid_id'])) 
             return;
 
-        $sHistorySessionKey = BxTemplStudioMenuTop::$sHistorySessionKey;
-        $iHistoryLength = BxTemplStudioMenuTop::$iHistoryLength;
-
-        $oSession = BxDolSession::getInstance();
-        $aHistory = $oSession->getValue($sHistorySessionKey);
-        if(!empty($aHistory) && isset($aHistory[$this->aPage['name']]))
-            return;
-
-        $aHistory[$this->aPage['name']] = array(
-            'name' => $this->aPage['name'],
-            'icon' => $this->aPage['wid_icon'],
-            'link' => $this->aPage['wid_url'],
-            'onclick' => $this->aPage['wid_click'],
-            'title' => $this->aPage['wid_caption']
-        );
-        if(count($aHistory) > $iHistoryLength)
-            $aHistory = array_slice($aHistory, -$iHistoryLength);
-        $oSession->setValue($sHistorySessionKey, $aHistory);
+        BxTemplStudioMenuTop::historyAdd($this->aPage);
     }
 }
 

@@ -60,6 +60,9 @@ class BxDolStudioModules extends BxDol
                     $aResult = BxDolStudioInstallerUtils::getInstance()->perform($aModule['path'], 'uninstall', array('html_response' => true));
                     if(!empty($aResult['message']))
                         $aResult['message'] = $this->getPopupResult($aResult['message']);
+
+                    if($aResult['code'] == BX_DOL_STUDIO_IU_RC_SUCCESS)
+                        BxTemplStudioMenuTop::historyDelete($sPageName);
                     break;
             }
 

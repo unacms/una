@@ -72,7 +72,7 @@ class BxDolStudioMenuTop extends BxDol
             )
         );
 
-        $aHistory = BxDolSession::getInstance()->getValue(self::$sHistorySessionKey);
+        $aHistory = self::historyGetList();
         if(!empty($aHistory) && is_array($aHistory))
             $this->aItems[BX_DOL_STUDIO_MT_LEFT]['menu_items'] = bx_array_insert_before(array_reverse($aHistory), $this->aItems[BX_DOL_STUDIO_MT_LEFT]['menu_items'], 'site');
 
@@ -110,6 +110,48 @@ class BxDolStudioMenuTop extends BxDol
                 )
             )
         );
+    }
+
+    public static function historyGetList()
+    {
+        return BxDolSession::getInstance()->getValue(self::$sHistorySessionKey);
+    }
+    
+    public static function historyAdd($aPage)
+    {
+        $oSession = BxDolSession::getInstance();
+        $aHistory = $oSession->getValue(self::$sHistorySessionKey);
+        if(!empty($aHistory) && isset($aHistory[$aPage['name']]))
+            return;
+
+        $aHistory[$aPage['name']] = array(
+            'name' => $aPage['name'],
+            'icon' => $aPage['wid_icon'],
+            'link' => $aPage['wid_url'],
+            'onclick' => $aPage['wid_click'],
+            'title' => $aPage['wid_caption']
+        );
+        if(count($aHistory) > BxTemplStudioMenuTop::$iHistoryLength)
+            $aHistory = array_slice($aHistory, -BxTemplStudioMenuTop::$iHistoryLength);
+        $oSession->setValue(self::$sHistorySessionKey, $aHistory);
+    }
+
+    public static function historyDelete($mixedPage)
+    {
+        if(is_array($mixedPage)) {
+            if(!isset($mixedPage['name']))
+                return;
+
+            $mixedPage = $mixedPage['name'];
+        }
+
+        $oSession = BxDolSession::getInstance();
+        $aHistory = $oSession->getValue(self::$sHistorySessionKey);
+        if(empty($aHistory) || !isset($aHistory[$mixedPage]))
+            return;
+
+        unset($aHistory[$mixedPage]);
+        $oSession->setValue(self::$sHistorySessionKey, $aHistory);
     }
 
     public function setContent($sPosition, $mixedContent)
