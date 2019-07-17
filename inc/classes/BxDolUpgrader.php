@@ -9,7 +9,7 @@
 
 class BxDolUpgrader extends BxDol
 {
-    protected $_sUrlVersionCheck = 'https://v.una.io/beta/';
+    protected $_sUrlVersionCheck = 'https://v.una.io/';
     protected $_sError = false;
 
     /**
@@ -101,7 +101,8 @@ class BxDolUpgrader extends BxDol
 
     public function getVersionUpdateInfo ()
     {
-        $s = bx_file_get_contents($this->_sUrlVersionCheck, array ('v' => bx_get_ver()));
+        $sUrlVersionCheck = $this->_sUrlVersionCheck . ('beta' == getParam('sys_upgrade_channel') ? 'beta/' : '');
+        $s = bx_file_get_contents($sUrlVersionCheck, array ('v' => bx_get_ver()));
         if (!$s)
             return null;
 
