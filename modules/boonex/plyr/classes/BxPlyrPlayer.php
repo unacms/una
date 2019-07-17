@@ -142,7 +142,9 @@ class BxPlyrPlayer extends BxDolPlayer
         ));
 
         // plyr initialization
-        $sFormat = getParam('sys_player_default_format');
+
+        if (!($sFormat = getParam('sys_player_default_format')))
+            $sFormat = 'sd';
         $aControls = explode(',', getParam('bx_plyr_option_controls'));
         $aSettings = explode(',', getParam('bx_plyr_option_settings'));
         $aOptions = array_merge(array(
