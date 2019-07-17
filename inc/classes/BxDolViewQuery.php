@@ -46,20 +46,20 @@ class BxDolViewQuery extends BxDolObjectQuery
         $iAuthorNip = ip2long($sAuthorIp);
 
         $aBindings = array(
-        	'object_id' => $iObjectId
+            'object_id' => $iObjectId
         );
         if($iAuthorId) {
-        	$aBindings['viewer_id'] = $iAuthorId;
+            $aBindings['viewer_id'] = $iAuthorId;
 
             $sWhere = " AND `viewer_id` = :viewer_id ";
         }
         else {
-        	$aBindings['viewer_nip'] = $iAuthorNip;
+            $aBindings['viewer_nip'] = $iAuthorNip;
 
             $sWhere = " AND `viewer_id` = '0' AND `viewer_nip` = :viewer_nip ";
         }
 
-        $iDate = (int)$this->getOne("SELECT `date` FROM `{$this->_sTableTrack}` WHERE `object_id` = :object_id " . $sWhere, $aBindings);
+        $iDate = (int)$this->getOne("SELECT `date` FROM `{$this->_sTableTrack}` WHERE `object_id` = :object_id " . $sWhere . " ORDER BY `date` DESC LIMIT 1", $aBindings);
         $iDateNow = time();
 
         if(!$iDate || ($iDateNow - $iDate) > $this->_iPeriod) {
