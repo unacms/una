@@ -84,6 +84,34 @@ class BxDirModule extends BxBaseModTextModule
         return parent::serviceEntityCreate($sParams);
     }
 
+    public function serviceEntityReviews($iContentId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        if(empty($CNF['OBJECT_REVIEWS']))
+            return false;
+
+        return $this->_entityComments($CNF['OBJECT_REVIEWS'], $iContentId);
+    }
+    
+    public function serviceEntityReviewsRating($iContentId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        if(empty($CNF['OBJECT_REVIEWS']))
+            return false;
+
+        if(!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+
+        if(!$iContentId)
+            return false;
+
+        $oCmts = BxDolCmts::getObjectInstance($CNF['OBJECT_REVIEWS'], $iContentId);
+        if (!$oCmts || !$oCmts->isEnabled())
+            return false;
+
+        return $oCmts->getRatingBlock(array('in_designbox' => false));
+    }
+
     public function serviceCategoriesList($aParams = array())
     {
         if(!isset($aParams['show_empty']))

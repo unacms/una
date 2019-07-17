@@ -115,6 +115,7 @@ class BxDirConfig extends BxBaseModTextConfig
             'OBJECT_FEATURED' => 'bx_directory',
             'OBJECT_METATAGS' => 'bx_directory',
             'OBJECT_COMMENTS' => 'bx_directory',
+            'OBJECT_REVIEWS' => 'bx_directory_reviews',
             'OBJECT_CATEGORY' => '',
             'OBJECT_PRIVACY_VIEW' => 'bx_directory_allow_view_to',
             'OBJECT_FORM_CATEGORY' => 'bx_directory_category',

@@ -20,6 +20,8 @@ CREATE TABLE IF NOT EXISTS `bx_directory_entries` (
   `sc_down` int(11) NOT NULL default '0',
   `favorites` int(11) NOT NULL default '0',
   `comments` int(11) NOT NULL default '0',
+  `reviews` int(11) NOT NULL default '0',
+  `reviews_avg` float NOT NULL default '0',
   `reports` int(11) NOT NULL default '0',
   `featured` int(11) NOT NULL default '0',
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
@@ -240,6 +242,25 @@ CREATE TABLE IF NOT EXISTS `bx_directory_videos_resized` (
 
 -- TABLE: comments
 CREATE TABLE IF NOT EXISTS `bx_directory_cmts` (
+  `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cmt_parent_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_vparent_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_object_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_author_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_level` int(11) NOT NULL DEFAULT '0',
+  `cmt_text` text NOT NULL,
+  `cmt_mood` tinyint(4) NOT NULL DEFAULT '0',
+  `cmt_rate` int(11) NOT NULL DEFAULT '0',
+  `cmt_rate_count` int(11) NOT NULL DEFAULT '0',
+  `cmt_time` int(11) unsigned NOT NULL DEFAULT '0',
+  `cmt_replies` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`cmt_id`),
+  KEY `cmt_object_id` (`cmt_object_id`,`cmt_parent_id`),
+  FULLTEXT KEY `search_fields` (`cmt_text`)
+);
+
+-- TABLE: reviews
+CREATE TABLE IF NOT EXISTS `bx_directory_reviews` (
   `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
   `cmt_parent_id` int(11) NOT NULL DEFAULT '0',
   `cmt_vparent_id` int(11) NOT NULL DEFAULT '0',
@@ -652,7 +673,8 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 
 -- COMMENTS
 INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Html`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
-('bx_directory', 'bx_directory', 'bx_directory_cmts', 1, 5000, 1000, 3, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-post&id={object_id}', '', 'bx_directory_entries', 'id', 'author', 'title', 'comments', '', '');
+('bx_directory', 'bx_directory', 'bx_directory_cmts', 1, 5000, 1000, 3, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-post&id={object_id}', '', 'bx_directory_entries', 'id', 'author', 'title', 'comments', '', ''),
+('bx_directory_reviews', 'bx_directory', 'bx_directory_reviews', 1, 5000, 1000, 3, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-post&id={object_id}', '', 'bx_directory_entries', 'id', 'author', 'title', 'reviews', 'BxTemplCmtsReviews', '');
 
 -- VOTES
 INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
@@ -683,7 +705,8 @@ INSERT INTO `sys_objects_feature` (`name`, `is_on`, `is_undo`, `base_url`, `trig
 -- CONTENT INFO
 INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_action_add`, `alert_action_update`, `alert_action_delete`, `class_name`, `class_file`) VALUES
 ('bx_directory', '_bx_directory', 'bx_directory', 'added', 'edited', 'deleted', '', ''),
-('bx_directory_cmts', '_bx_directory_cmts', 'bx_directory', 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', '');
+('bx_directory_cmts', '_bx_directory_cmts', 'bx_directory', 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', ''),
+('bx_directory_reviews', '_bx_directory_reviews', 'bx_directory_reviews', 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', '');
 
 INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, `condition`, `selection`) VALUES
 ('bx_directory', 'bx_directory_administration', 'id', '', ''),
@@ -692,7 +715,8 @@ INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, 
 -- SEARCH EXTENDED
 INSERT INTO `sys_objects_search_extended` (`object`, `object_content_info`, `module`, `title`, `active`, `class_name`, `class_file`) VALUES
 ('bx_directory', 'bx_directory', 'bx_directory', '_bx_directory_search_extended', 1, '', ''),
-('bx_directory_cmts', 'bx_directory_cmts', 'bx_directory', '_bx_directory_search_extended_cmts', 1, 'BxTemplSearchExtendedCmts', '');
+('bx_directory_cmts', 'bx_directory_cmts', 'bx_directory', '_bx_directory_search_extended_cmts', 1, 'BxTemplSearchExtendedCmts', ''),
+('bx_directory_reviews', 'bx_directory_reviews', 'bx_directory', '_bx_directory_search_extended_reviews', 1, 'BxTemplSearchExtendedCmts', '');
 
 -- STUDIO: page & widget
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES

@@ -46,11 +46,13 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_directory_view_entry', 1, 'bx_directory', '', '_bx_directory_page_block_title_entry_breadcrumb', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:17:"entity_breadcrumb";}', 0, 0, 1, 1),
+('bx_directory_view_entry', 2, 'bx_directory', '', '_bx_directory_page_block_title_entry_reviews', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:14:"entity_reviews";}', 0, 0, 0, 0),
 ('bx_directory_view_entry', 2, 'bx_directory', '', '_bx_directory_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:13:"entity_author";}', 0, 0, 1, 1),
 ('bx_directory_view_entry', 2, 'bx_directory', '', '_bx_directory_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:17:"entity_text_block";}', 0, 0, 1, 2),
 ('bx_directory_view_entry', 2, 'bx_directory', '', '_bx_directory_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:18:"entity_all_actions";}', 0, 0, 1, 3),
 ('bx_directory_view_entry', 2, 'bx_directory', '', '_bx_directory_page_block_title_entry_attachments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:18:"entity_attachments";}', 0, 0, 1, 4),
 ('bx_directory_view_entry', 2, 'bx_directory', '', '_bx_directory_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:15:"entity_comments";}', 0, 0, 1, 5),
+('bx_directory_view_entry', 3, 'bx_directory', '', '_bx_directory_page_block_title_entry_reviews_rating', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:21:"entity_reviews_rating";}', 0, 0, 0, 0),
 ('bx_directory_view_entry', 3, 'bx_directory', '', '_bx_directory_page_block_title_entry_location', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:15:"entity_location";}', 0, 0, 0, 0),
 ('bx_directory_view_entry', 3, 'bx_directory', '_bx_directory_page_block_title_sys_entry_context', '_bx_directory_page_block_title_entry_context', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:14:"entity_context";}', 0, 0, 1, 1),
 ('bx_directory_view_entry', 3, 'bx_directory', '', '_bx_directory_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:12:"bx_directory";s:6:"method";s:11:"entity_info";}', 0, 0, 1, 2),

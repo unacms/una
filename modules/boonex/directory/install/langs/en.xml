@@ -147,6 +147,9 @@
     <string name="_bx_directory_page_block_title_entry_actions"><![CDATA[Actions]]></string>
     <string name="_bx_directory_page_block_title_entry_comments"><![CDATA[Comments]]></string>
     <string name="_bx_directory_page_block_title_entry_comments_link"><![CDATA[Comments to <a href="{entry_link}">{title}</a>]]></string>
+    <string name="_bx_directory_page_block_title_entry_reviews"><![CDATA[Reviews]]></string>
+    <string name="_bx_directory_page_block_title_entry_reviews_link"><![CDATA[Reviews to <a href="{entry_link}">{title}</a>]]></string>
+    <string name="_bx_directory_page_block_title_entry_reviews_rating"><![CDATA[Rating]]></string>
     <string name="_bx_directory_page_block_title_entry_location"><![CDATA[Location]]></string>
     <string name="_bx_directory_page_block_title_entry_attachments"><![CDATA[Attachments]]></string>
     <string name="_bx_directory_page_block_title_entry_polls"><![CDATA[Polls]]></string>
