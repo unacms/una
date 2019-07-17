@@ -364,3 +364,61 @@ div.cmt div.cmt-counter-holder {
 .cmt-link .cmt-counter-holder.bx-btn-border {
 	border-width: 0px;
 }
+
+
+/*----------------------*/
+/*--- Reviews Styles ---*/
+/*----------------------*/
+
+/*--- Mood Element Styles ---*/
+div.cmt-mood {
+    position: relative;
+    display: inline-block;
+}
+div.cmt-mood-underlay {}
+div.cmt-mood-slider {
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    left: 0px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+div.cmt-mood a.cmt-mood-button,
+div.cmt-mood i.cmt-mood-star {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    height: 16px;
+    width: 16px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+div.cmt-mood-underlay i.cmt-mood-star {
+    color: rgba(255, 204, 102, 1);
+}
+div.cmt-mood-slider i.cmt-mood-star,
+div.cmt-mood-buttons a:hover i.cmt-mood-star {
+    color: rgba(255, 100, 0, 1);
+}
+
+div.cmt-mood-buttons {
+    position: absolute;
+    z-index: 2;
+    top: 0px;
+    left: 0px;
+}
+div.cmt-mood-buttons a:hover {
+	text-decoration: none;
+}
+div.cmt-mood-buttons i.cmt-mood-star {
+    color: transparent;
+}
+
+/*--- Rating Block Styles ---*/
+.cmts-box-rating div.cmt-mood i.cmt-mood-star {
+    height: 24px;
+    width: 24px;
+    font-size: 20px;
+}

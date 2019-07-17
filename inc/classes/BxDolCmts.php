@@ -9,6 +9,9 @@
 
 bx_import('BxDolAcl');
 
+define('BX_DOL_CMT_TYPE_COMMENT', 'comment');
+define('BX_DOL_CMT_TYPE_REVIEW', 'review');
+
 define('BX_CMT_OLD_VOTES', 365*86400); ///< comment votes older than this number of seconds will be deleted automatically
 
 define('BX_CMT_ACTION_POST', 'post');
@@ -143,6 +146,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     protected $_sTableImages = 'sys_cmts_images';
     protected $_sTableImages2Entries = 'sys_cmts_images2entries';
 
+    protected $_sType;
     protected $_oQuery = null;
     protected $_oTemplate = null;
 
@@ -195,6 +199,8 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     protected function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
         parent::__construct();
+
+        $this->_sType = BX_DOL_CMT_TYPE_COMMENT;
 
         $this->_aSystems = $this->getSystems();
         if(!isset($this->_aSystems[$sSystem]))

@@ -1,0 +1,111 @@
+<?php defined('BX_DOL') or die('hack attempt');
+/**
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
+ *
+ * @defgroup    UnaBaseView UNA Base Representation Classes
+ * @{
+ */
+
+/**
+ * @see BxDolCmtsReviews
+ */
+class BxBaseCmtsReviews extends BxDolCmtsReviews
+{
+    function __construct( $sSystem, $iId, $iInit = true, $oTemplate = false)
+    {
+        parent::__construct($sSystem, $iId, $iInit, $oTemplate);
+
+        $this->_sTmplNameItem = 'review.html';
+        $this->_sJsObjClass = 'BxDolCmtsReviews';
+    }
+
+    public function getStylePrefix()
+    {
+        return $this->_sStylePrefix;
+    }
+    
+    public function getComment($mixedCmt, $aBp = array(), $aDp = array())
+    {
+        $sResult = parent::getComment($mixedCmt, $aBp, $aDp);
+        if(empty($sResult))
+            return $sResult;
+
+        return $this->_oTemplate->parseHtmlByContent($sResult, array(
+            'mood' => $this->_getMood($mixedCmt, $aDp)
+        ));
+    }
+    
+    function getRatingBlock($aDp = array())
+    {
+        $mixedResult = $this->isViewAllowed();
+        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+            return $mixedResult;
+
+        $aBp = array();
+        $this->_getParams($aBp, $aDp);
+
+        $iId = $this->getId();
+
+        $sCaption = _t($this->_aT['block_rating_title']);
+        $sContent = $this->_oTemplate->parseHtmlByName('reviews_rating_block.html', array(
+            'style_prefix' => $this->_sStylePrefix,
+            'system' => $this->_sSystem,
+            'id' => $iId,
+            'content' => $this->_oTemplate->parseHtmlByName('review_mood_legend.html', array_merge(array(
+                'style_prefix' => $this->_sStylePrefix,
+                'html_id' => $this->getRatingLegendId(),
+                'value' => $this->_oQuery->getReviewsAvg($iId),
+                'bx_if:show_init' => array(
+                    'condition' => false,
+                    'content' => array()
+                )
+            ), $this->_getTmplVarsStars())),
+            'script' => $this->getJsScript($aBp, $aDp)
+        ));
+
+        return $aDp['in_designbox'] ? DesignBoxContent($sCaption, $sContent) : array(
+            'title' => $sCaption,
+            'content' => $sContent
+        );
+    }
+
+    protected function _getMood(&$aCmt, $aDp = array())
+    {
+        $sHtmlId = $this->getMoodLegendId($aCmt['cmt_id']);
+        return $this->_oTemplate->parseHtmlByName('review_mood_legend.html', array_merge(array(
+            'style_prefix' => $this->_sStylePrefix,
+            'html_id' => $sHtmlId,
+            'value' => (int)$aCmt['cmt_mood'],
+            'bx_if:show_init' => array(
+                'condition' => isset($aDp['dynamic_mode']) && (bool)$aDp['dynamic_mode'],
+                'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
+                    'js_object' => $this->_sJsObjName,
+                    'html_id' => $sHtmlId,
+                )
+            )
+        ), $this->_getTmplVarsStars()));
+    }
+
+    protected function _getTmplVarsStars() {
+        $aTmplVarsStars = $aTmplVarsSlider = array();
+        for($i = $this->_iMoodMinValue; $i <= $this->_iMoodMaxValue; $i++) {
+            $aTmplVarsStars[] = array(
+                'style_prefix' => $this->_sStylePrefix,
+                'value' => $i
+            );
+
+            $aTmplVarsSlider[] = array(
+                'style_prefix' => $this->_sStylePrefix
+            );
+        }
+
+        return array(
+            'bx_repeat:stars' => $aTmplVarsStars,
+            'bx_repeat:slider' => $aTmplVarsSlider
+        );
+    }
+}
+
+/** @} */

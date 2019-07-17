@@ -159,16 +159,8 @@ class BxDolCmtsQuery extends BxDolDb
        	$sLimit = $iCount != -1 ? $this->prepareAsString(" LIMIT ?, ?", (int)$iStart, (int)$iCount) : '';
 
         $sQuery = "SELECT
-                `{$this->_sTable}`.`cmt_id`,
-                `{$this->_sTableIds}`.`id` AS `cmt_unique_id`,
-                `{$this->_sTable}`.`cmt_parent_id`,
-                `{$this->_sTable}`.`cmt_vparent_id`,
-                `{$this->_sTable}`.`cmt_object_id`,
-                `{$this->_sTable}`.`cmt_author_id`,
-                `{$this->_sTable}`.`cmt_level`,
-                `{$this->_sTable}`.`cmt_text`,
-                `{$this->_sTable}`.`cmt_replies`,
-                `{$this->_sTable}`.`cmt_time`
+                `{$this->_sTable}`.*,
+                `{$this->_sTableIds}`.`id` AS `cmt_unique_id`
                 $sFields
             FROM `{$this->_sTable}`
             LEFT JOIN `{$this->_sTableIds}` ON (`{$this->_sTable}`.`cmt_id` = `{$this->_sTableIds}`.`cmt_id` AND `{$this->_sTableIds}`.`system_id` = :system_id)
@@ -177,26 +169,17 @@ class BxDolCmtsQuery extends BxDolDb
         return $this->getAll($sQuery, $aBindings);
     }
 
-	function getCommentsBy($aParams = array())
+    function getCommentsBy($aParams = array())
     {
     	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query', 1 => array()));
         $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
 
-        $sSelectClause = "
-        	`{$this->_sTable}`.`cmt_id`,
-            `{$this->_sTable}`.`cmt_parent_id`,
-            `{$this->_sTable}`.`cmt_vparent_id`,
-            `{$this->_sTable}`.`cmt_object_id`,
-            `{$this->_sTable}`.`cmt_author_id`,
-            `{$this->_sTable}`.`cmt_level`,
-            `{$this->_sTable}`.`cmt_text`,
-            `{$this->_sTable}`.`cmt_replies`,
-            `{$this->_sTable}`.`cmt_time`";
+        $sSelectClause = "`{$this->_sTable}`.*";
 
         if(isset($aParams['object_id'])) {
-        	$aMethod['params'][1]['cmt_object_id'] = (int)$aParams['object_id'];
+            $aMethod['params'][1]['cmt_object_id'] = (int)$aParams['object_id'];
 
-        	$sWhereClause .= " AND `{$this->_sTable}`.`cmt_object_id` = :cmt_object_id";
+            $sWhereClause .= " AND `{$this->_sTable}`.`cmt_object_id` = :cmt_object_id";
         }
 
         switch($aParams['type']) {
@@ -310,16 +293,8 @@ class BxDolCmtsQuery extends BxDolDb
         }
 
         $sQuery = $this->prepare("SELECT
-                `{$this->_sTable}`.`cmt_id`,
-                `{$this->_sTableIds}`.`id` AS `cmt_unique_id`,
-                `{$this->_sTable}`.`cmt_parent_id`,
-                `{$this->_sTable}`.`cmt_vparent_id`,
-                `{$this->_sTable}`.`cmt_object_id`,
-                `{$this->_sTable}`.`cmt_author_id`,
-                `{$this->_sTable}`.`cmt_level`,
-                `{$this->_sTable}`.`cmt_text`,
-                `{$this->_sTable}`.`cmt_replies`,
-                `{$this->_sTable}`.`cmt_time`
+                `{$this->_sTable}`.*,
+                `{$this->_sTableIds}`.`id` AS `cmt_unique_id`
                 $sFields
             FROM `{$this->_sTable}`
             LEFT JOIN `{$this->_sTableIds}` ON (`{$this->_sTable}`.`cmt_id` = `{$this->_sTableIds}`.`cmt_id` AND `{$this->_sTableIds}`.`system_id` = ?)

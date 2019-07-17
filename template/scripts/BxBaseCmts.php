@@ -17,6 +17,9 @@ class BxBaseCmts extends BxDolCmts
     protected static $_sTmplContentDoCommentLabel;
     protected static $_sTmplContentCounter;
 
+    protected $_sTmplNameItem;
+
+    protected $_sJsObjClass;
     protected $_sJsObjName;
     protected $_sStylePrefix;
 
@@ -30,6 +33,9 @@ class BxBaseCmts extends BxDolCmts
         if (empty($sSystem))
             return;
 
+        $this->_sTmplNameItem = 'comment.html';
+                
+        $this->_sJsObjClass = 'BxDolCmts';
         $this->_sJsObjName = 'oCmts' . bx_gen_method_name($sSystem, array('_' , '-')) . $iId;
         $this->_sStylePrefix = isset($this->_aSystem['root_style_prefix']) ? $this->_aSystem['root_style_prefix'] : 'cmt';
 
@@ -99,10 +105,11 @@ class BxBaseCmts extends BxDolCmts
             'sBrowseType' => $this->_sBrowseType,
             'sDisplayType' => $this->_sDisplayType,
             'iMinPostForm' => $bMinPostForm ? 1 : 0,
+            'sStylePrefix' => $this->_sStylePrefix,
         );
 
         $this->addCssJs();
-        return $this->_oTemplate->_wrapInTagJsCode("if(window['" . $this->_sJsObjName . "'] == undefined) var " . $this->_sJsObjName . " = new BxDolCmts(" . json_encode($aParams) . "); " . $this->_sJsObjName . ".cmtInit();");
+        return $this->_oTemplate->_wrapInTagJsCode("if(window['" . $this->_sJsObjName . "'] == undefined) var " . $this->_sJsObjName . " = new " . $this->_sJsObjClass . "(" . json_encode($aParams) . "); " . $this->_sJsObjName . ".cmtInit();");
     }
 
     /**
@@ -281,7 +288,7 @@ class BxBaseCmts extends BxDolCmts
                 'show_counter' => true
             ));
 
-        return $this->_oTemplate->parseHtmlByName('comment.html', array_merge(array(
+        return $this->_oTemplate->parseHtmlByName($this->_sTmplNameItem, array_merge(array(
             'system' => $this->_sSystem,
             'style_prefix' => $this->_sStylePrefix,
             'js_object' => $this->_sJsObjName,

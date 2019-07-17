@@ -2915,6 +2915,7 @@ INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_att
 ('sys_confirm_phone', 'system', '_sys_form_confirm_phone', '', '', 'a:2:{i:0;s:9:"do_submit";i:1;s:10:"do_sendsms";}', '', '', '', '', 'a:1:{s:14:"checker_helper";s:31:"BxFormConfirmPhoneCheckerHelper";}', 0, 1, 'BxTemplFormConfirmPhone', ''),
 ('sys_unsubscribe', 'system', '_sys_form_unsubscribe', '', '', 'do_submit', 'sys_accounts', 'id', '', '', '', 0, 1, 'BxTemplFormAccount', ''),
 ('sys_comment', 'system', '_sys_form_comment', 'cmts.php', 'a:3:{s:2:"id";s:17:"cmt-%s-form-%s-%d";s:4:"name";s:17:"cmt-%s-form-%s-%d";s:5:"class";s:14:"cmt-post-reply";}', 'cmt_submit', '', 'cmt_id', '', '', '', 0, 1, 'BxTemplCmtsForm', ''),
+('sys_review', 'system', '_sys_form_review', 'cmts.php', 'a:3:{s:2:"id";s:17:"cmt-%s-form-%s-%d";s:4:"name";s:17:"cmt-%s-form-%s-%d";s:5:"class";s:14:"cmt-post-reply";}', 'cmt_submit', '', 'cmt_id', '', '', '', 0, 1, 'BxTemplCmtsReviewsForm', ''),
 ('sys_report', 'system', '_sys_form_report', 'report.php', 'a:3:{s:2:"id";s:0:"";s:4:"name";s:0:"";s:5:"class";s:17:"bx-report-do-form";}', 'submit', '', 'id', '', '', '', 0, 1, '', '');
 
 CREATE TABLE IF NOT EXISTS `sys_form_displays` (
@@ -2945,6 +2946,8 @@ INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `v
 ('sys_unsubscribe_news', 'system', 'sys_unsubscribe', '_sys_form_display_unsubscribe_news', 0),
 ('sys_comment_post', 'system', 'sys_comment', '_sys_form_display_comment_post', 0),
 ('sys_comment_edit', 'system', 'sys_comment', '_sys_form_display_comment_edit', 0),
+('sys_review_post', 'system', 'sys_review', '_sys_form_review_display_post', 0),
+('sys_review_edit', 'system', 'sys_review', '_sys_form_review_display_edit', 0),
 ('sys_report_post', 'system', 'sys_report', '_sys_form_display_report_post', 0);
 
 
@@ -3033,6 +3036,17 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('sys_comment', 'system', 'cmt_anonymous', '', '', 0, 'switcher', '_sys_form_input_sys_anonymous', '_sys_form_input_anonymous', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('sys_comment', 'system', 'cmt_image', 'a:1:{i:0;s:15:"sys_cmts_simple";}', 'a:1:{s:15:"sys_cmts_simple";s:26:"_sys_uploader_simple_title";}', 0, 'files', '_sys_form_comment_input_caption_system_cmt_image', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('sys_comment', 'system', 'cmt_submit', '_sys_form_comment_input_submit', '', 0, 'submit', '_sys_form_comment_input_caption_system_cmt_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+
+('sys_review', 'system', 'sys', '', '', 0, 'hidden', '_sys_form_review_input_caption_system_sys', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_review', 'system', 'id', '', '', 0, 'hidden', '_sys_form_review_input_caption_system_id', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_review', 'system', 'action', '', '', 0, 'hidden', '_sys_form_review_input_caption_system_action', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_review', 'system', 'cmt_id', '', '', 0, 'hidden', '_sys_form_review_input_caption_system_cmt_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('sys_review', 'system', 'cmt_parent_id', '', '', 0, 'hidden', '_sys_form_review_input_caption_system_cmt_parent_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('sys_review', 'system', 'cmt_text', '', '', 0, 'textarea', '_sys_form_review_input_caption_system_cmt_text', '', '', 0, 0, 3, 'a:1:{s:12:"autocomplete";s:3:"off";}', '', '', 'Length', 'a:2:{s:3:"min";i:1;s:3:"max";i:5000;}', '_Please enter n1-n2 characters', 'XssHtml', '', 1, 0),
+('sys_review', 'system', 'cmt_mood', '', '', 0, 'custom', '_sys_form_review_input_caption_system_cmt_mood', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
+('sys_review', 'system', 'cmt_anonymous', '', '', 0, 'switcher', '_sys_form_input_sys_anonymous', '_sys_form_input_anonymous', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('sys_review', 'system', 'cmt_image', 'a:1:{i:0;s:15:"sys_cmts_simple";}', 'a:1:{s:15:"sys_cmts_simple";s:26:"_sys_uploader_simple_title";}', 0, 'files', '_sys_form_review_input_caption_system_cmt_image', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('sys_review', 'system', 'cmt_submit', '_sys_form_review_input_submit', '', 0, 'submit', '_sys_form_review_input_caption_system_cmt_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 
 ('sys_report', 'system', 'sys', '', '', 0, 'hidden', '_sys_form_report_input_caption_system_sys', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_report', 'system', 'object_id', '', '', 0, 'hidden', '_sys_form_report_input_caption_system_object_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
@@ -3139,6 +3153,26 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_comment_edit', 'cmt_text', 2147483647, 1, 6),
 ('sys_comment_edit', 'cmt_image', 2147483647, 0, 7),
 ('sys_comment_edit', 'cmt_submit', 2147483647, 1, 8),
+
+('sys_review_post', 'sys', 2147483647, 1, 1),
+('sys_review_post', 'id', 2147483647, 1, 2),
+('sys_review_post', 'action', 2147483647, 1, 3),
+('sys_review_post', 'cmt_id', 2147483647, 0, 4),
+('sys_review_post', 'cmt_parent_id', 2147483647, 1, 5),
+('sys_review_post', 'cmt_text', 2147483647, 1, 6),
+('sys_review_post', 'cmt_mood', 2147483647, 1, 7),
+('sys_review_post', 'cmt_image', 2147483647, 1, 8),
+('sys_review_post', 'cmt_submit', 2147483647, 1, 9),
+
+('sys_review_edit', 'sys', 2147483647, 1, 1),
+('sys_review_edit', 'id', 2147483647, 1, 2),
+('sys_review_edit', 'action', 2147483647, 1, 3),
+('sys_review_edit', 'cmt_id', 2147483647, 1, 4),
+('sys_review_edit', 'cmt_parent_id', 2147483647, 1, 5),
+('sys_review_edit', 'cmt_text', 2147483647, 1, 6),
+('sys_review_edit', 'cmt_mood', 2147483647, 1, 7),
+('sys_review_edit', 'cmt_image', 2147483647, 0, 8),
+('sys_review_edit', 'cmt_submit', 2147483647, 1, 9),
 
 ('sys_report_post', 'sys', 2147483647, 1, 1),
 ('sys_report_post', 'object_id', 2147483647, 1, 2),
@@ -4654,6 +4688,7 @@ INSERT INTO `sys_preloader`(`module`, `type`, `content`, `active`, `order`) VALU
 ('system', 'js_system', 'BxDolVoteLikes.js', 1, 37),
 ('system', 'js_system', 'BxDolVoteReactions.js', 1, 38),
 ('system', 'js_system', 'BxDolVoteStars.js', 1, 39),
+('system', 'js_system', 'BxDolCmtsReviews.js', 1, 40),
 
 ('system', 'js_translation', '_Are_you_sure', 1, 1),
 ('system', 'js_translation', '_error occured', 1, 2),

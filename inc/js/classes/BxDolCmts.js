@@ -21,6 +21,7 @@ function BxDolCmts (options) {
     this._sBrowseType = undefined == options.sBrowseType ? 'tail' : options.sBrowseType;
     this._sBrowseFilter = undefined == options.sBrowseFilter ? 'all' : options.sBrowseFilter;
 
+    this._sSP = options.sStylePrefix === undefined ? 'cmt' : options.sStylePrefix;
     this._sAnimationEffect = 'fade';
     this._iAnimationSpeed = 'slow';
 
