@@ -17,7 +17,25 @@ class BxDolCmtsReviewsQuery extends BxDolCmtsQuery
         parent::__construct($oMain);
     }
 
-    function getReviewsAvg ($iId, $iCmtVParentId = -1, $iAuthorId = 0, $sFilter = '')
+    public function isReviewed($iId, $iAuthorId)
+    {
+        $aReviews = $this->getCommentsBy(array('type' => 'author_id', 'author_id' => $iAuthorId, 'object_id' => $iId));
+
+        return !empty($aReviews) && is_array($aReviews);
+    }
+
+    public function getReviewAuthorId($iId, $mixedCmt)
+    {
+        if(!is_array($mixedCmt))
+            $mixedCmt = $this->getCommentSimple($iId, (int)$mixedCmt);
+
+        if((int)$mixedCmt['cmt_parent_id'] == 0)
+            return (int)$mixedCmt['cmt_author_id'];
+
+        return (int)$this->getReviewAuthorId($iId, $mixedCmt['cmt_parent_id']);
+    }
+
+    public function getReviewsStats ($iId, $iCmtVParentId = -1, $iAuthorId = 0, $sFilter = '')
     {
     	$aBindings = array(
             'cmt_object_id' => $iId
@@ -47,10 +65,10 @@ class BxDolCmtsReviewsQuery extends BxDolCmtsQuery
                 break;
         }
 
-        return (float)$this->getOne("SELECT SUM(`cmt_mood`)/COUNT(*) FROM `{$this->_sTable}` $sJoinClause WHERE 1 " . $sWhereClause, $aBindings);
+        return $this->getRow("SELECT COUNT(*) as `count`, SUM(`cmt_mood`)/COUNT(*) AS `avg` FROM `{$this->_sTable}` $sJoinClause WHERE 1 " . $sWhereClause, $aBindings);
     }
 
-    function updateTriggerTableAvg($iId, $fAvg)
+    public function updateTriggerTableAvg($iId, $fAvg)
     {
         $sField = $this->_sTriggerFieldComments . '_avg';
         return $this->query("UPDATE `{$this->_sTriggerTable}` SET `{$sField}` = :avg WHERE `{$this->_sTriggerFieldId}` = :id LIMIT 1", array(

@@ -29,6 +29,19 @@ BxDolCmtsReviews.prototype.cmtInit = function ()
     BxDolCmts.prototype.cmtInit.call(this);
 };
 
+BxDolCmtsReviews.prototype.cmtAfterEditSubmit = function (oCmtForm, oData, onComplete)
+{
+    var $this = this;
+
+    BxDolCmts.prototype.cmtAfterEditSubmit.call(this, oCmtForm, oData, function() {
+        if(oData && oData.mood != undefined && oData.mood_legend_id != undefined)
+            $this.cmtInitRating($('#' + oData.mood_legend_id).attr('cmt-rating-data', oData.mood));
+
+        if(typeof onComplete == 'function')
+            onComplete(oCmtForm, oData);
+    });
+};
+
 BxDolCmtsReviews.prototype.cmtInitRating = function(oElement)
 {
     var fValue = oElement.attr(this._sAttributeRating);

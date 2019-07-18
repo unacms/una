@@ -31,8 +31,15 @@ class BxBaseCmtsReviews extends BxDolCmtsReviews
         if(empty($sResult))
             return $sResult;
 
+        $sMood = $this->_getMood($mixedCmt, $aDp);
         return $this->_oTemplate->parseHtmlByContent($sResult, array(
-            'mood' => $this->_getMood($mixedCmt, $aDp)
+            'bx_if:show_mood' => array(
+                'condition' => !empty($sMood),
+                'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
+                    'mood' => $sMood
+                )
+            )
         ));
     }
     
@@ -46,32 +53,62 @@ class BxBaseCmtsReviews extends BxDolCmtsReviews
         $this->_getParams($aBp, $aDp);
 
         $iId = $this->getId();
+        $aStats = $this->_oQuery->getReviewsStats($iId);
+
+        if(!empty($aStats) && is_array($aStats) && (int)$aStats['count'] > 0)
+            $sContent = $this->_oTemplate->parseHtmlByName('reviews_rating_block.html', array(
+                'style_prefix' => $this->_sStylePrefix,
+                'system' => $this->_sSystem,
+                'id' => $iId,
+                'content' => $this->_oTemplate->parseHtmlByName('review_mood_legend.html', array_merge(array(
+                    'style_prefix' => $this->_sStylePrefix,
+                    'html_id' => $this->getRatingLegendId(),
+                    'value' => (float)$aStats['avg'],
+                    'bx_if:show_init' => array(
+                        'condition' => false,
+                        'content' => array()
+                    )
+                ), $this->_getTmplVarsStars())),
+                'script' => $this->getJsScript($aBp, $aDp)
+            ));
+        else
+            $sContent = MsgBox(_t('_cmt_rvw_txt_empty'));
 
         $sCaption = _t($this->_aT['block_rating_title']);
-        $sContent = $this->_oTemplate->parseHtmlByName('reviews_rating_block.html', array(
-            'style_prefix' => $this->_sStylePrefix,
-            'system' => $this->_sSystem,
-            'id' => $iId,
-            'content' => $this->_oTemplate->parseHtmlByName('review_mood_legend.html', array_merge(array(
-                'style_prefix' => $this->_sStylePrefix,
-                'html_id' => $this->getRatingLegendId(),
-                'value' => $this->_oQuery->getReviewsAvg($iId),
-                'bx_if:show_init' => array(
-                    'condition' => false,
-                    'content' => array()
-                )
-            ), $this->_getTmplVarsStars())),
-            'script' => $this->getJsScript($aBp, $aDp)
-        ));
-
         return $aDp['in_designbox'] ? DesignBoxContent($sCaption, $sContent) : array(
             'title' => $sCaption,
             'content' => $sContent
         );
     }
 
+    protected function _getForm($sAction, $iId)
+    {
+        $oForm = parent::_getForm($sAction, $iId);
+        
+        switch($sAction) {
+            case BX_CMT_ACTION_POST:
+                if(!empty($iId))
+                    unset($oForm->aInputs['cmt_mood']);
+                break;
+
+            case BX_CMT_ACTION_EDIT:
+                $aCmt = $this->getCommentSimple($iId);
+                if(!empty($aCmt['cmt_parent_id']))
+                    unset($oForm->aInputs['cmt_mood']);
+                break;
+        }
+
+        return $oForm;
+    }
+
     protected function _getMood(&$aCmt, $aDp = array())
     {
+        if(!is_array($aCmt))
+            $aCmt = $this->getCommentSimple((int)$aCmt);
+
+        if((int)$aCmt['cmt_parent_id'] > 0)
+            return '';
+
         $sHtmlId = $this->getMoodLegendId($aCmt['cmt_id']);
         return $this->_oTemplate->parseHtmlByName('review_mood_legend.html', array_merge(array(
             'style_prefix' => $this->_sStylePrefix,

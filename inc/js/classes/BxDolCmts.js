@@ -146,35 +146,34 @@ BxDolCmts.prototype.cmtBeforeEditSubmit = function(oCmtForm)
 	this._loadingInButton($(oCmtForm).children().find(':submit'), true);
 };
 
-BxDolCmts.prototype.cmtAfterEditSubmit = function (oCmtForm, oData)
+BxDolCmts.prototype.cmtAfterEditSubmit = function (oCmtForm, oData, onComplete)
 {
-	var $this = this;
-	var fContinue = function() {
-		if(oData && oData.id != undefined && oData.text != undefined) {
-			var iCmtId = parseInt(oData.id);
-			if(iCmtId > 0) {
-				$('#cmt' + iCmtId + ' .cmt-body').bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-					$(this).html(oData.text).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
-				});
-	        }
+    var $this = this;
+    var fContinue = function() {
+        if(oData && oData.id != undefined && oData.text != undefined) {
+            var iCmtId = parseInt(oData.id);
+            if(iCmtId > 0) {
+                $('#cmt' + iCmtId + ' .cmt-body').bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+                    $(this).html(oData.text).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
+                });
+            }
+        }
 
-	        return;
-		}
+        if(oData && oData.form != undefined && oData.form_id != undefined) {
+            $('#' + oData.form_id).replaceWith(oData.form);
+            $this.cmtInitFormEdit(oData.form_id);
+        }
 
-		if(oData && oData.form != undefined && oData.form_id != undefined) {
-			$('#' + oData.form_id).replaceWith(oData.form);
-			$this.cmtInitFormEdit(oData.form_id);
+        if(typeof onComplete == 'function')
+            onComplete(oCmtForm, oData);
+    };
 
-			return;
-		}
-	};
+    this._loadingInButton($(oCmtForm).children().find(':submit'), false);
 
-	this._loadingInButton($(oCmtForm).children().find(':submit'), false);
-
-	if(oData && oData.msg != undefined)
+    if(oData && oData.msg != undefined)
         bx_alert(oData.msg, fContinue);
-	else 
-		fContinue();
+    else 
+            fContinue();
 };
 
 BxDolCmts.prototype.cmtEdit = function(oLink, iCmtId) {

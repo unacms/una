@@ -1602,13 +1602,14 @@
         <string name="_cmt_txt_counter"><![CDATA[{0}]]></string>
 	<string name="_cmt_txt_counter_empty"><![CDATA[Comment]]></string>
         <string name="_cmt_txt_min_form_placeholder"><![CDATA[{0}, leave your comment here.]]></string>
-        <string name="_cmt_rvw_block_rating_title"><![CDATA[Rating]]></string>
+        <string name="_cmt_rvw_block_rating_title"><![CDATA[Reviews Rating]]></string>
         <string name="_cmt_rvw_block_reviews_title"><![CDATA[Reviews ({0})]]></string>
         <string name="_cmt_rvw_txt_sample_comment_single"><![CDATA[review]]></string>
         <string name="_cmt_rvw_txt_sample_reaction_single"><![CDATA['{0}' reaction to review]]></string>
         <string name="_cmt_rvw_txt_sample_score_up_single"><![CDATA[score up vote to review]]></string>
         <string name="_cmt_rvw_txt_sample_score_down_single"><![CDATA[score down vote to review]]></string>
         <string name="_cmt_rvw_txt_sample_vote_single"><![CDATA[vote to review]]></string>
+        <string name="_cmt_rvw_txt_empty"><![CDATA[No reviews yet]]></string>
         <string name="_copyright"><![CDATA[&copy; {0} Company]]></string>
 	<string name="_delete"><![CDATA[delete]]></string>
 	<string name="_error occured"><![CDATA[Error occurred]]></string>

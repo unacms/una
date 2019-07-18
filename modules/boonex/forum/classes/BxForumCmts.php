@@ -47,13 +47,13 @@ class BxForumCmts extends BxTemplCmts
         BxDolTranscoderImage::cleanupObjectsArray($aTranscoders);
     }
 
-	public function isPostReplyAllowed($isPerformAction = false)
+	public function isPostAllowed($isPerformAction = false)
     {
     	$aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_iId);
         if(!$aContentInfo || (int)$aContentInfo[$this->_oModule->_oConfig->CNF['FIELD_LOCK']] == 1)
             return false;
 
-    	return parent::isPostReplyAllowed($isPerformAction);
+    	return parent::isPostAllowed($isPerformAction);
     }
 
     public function onPostAfter($iId)

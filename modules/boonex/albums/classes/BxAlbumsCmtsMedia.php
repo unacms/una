@@ -35,7 +35,7 @@ class BxAlbumsCmtsMedia extends BxTemplCmts
         return CHECK_ACTION_RESULT_ALLOWED;
     }
 
-    public function isPostReplyAllowed ($isPerformAction = false)
+    public function isPostAllowed ($isPerformAction = false)
     {
         $CNF = $this->_oModule->_oConfig->CNF;
 

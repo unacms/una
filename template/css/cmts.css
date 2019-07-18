@@ -145,6 +145,10 @@
         padding: 0px 5px;
         padding: 0px 0.3rem;
     }
+    div.cmt-cont .cmt-body p:first-child {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
     div.cmt-cont .cmt-body img {
         max-width: 100%;
     	height: auto;
@@ -417,7 +421,9 @@ div.cmt-mood-buttons i.cmt-mood-star {
 }
 
 /*--- Rating Block Styles ---*/
-.cmts-box-rating div.cmt-mood i.cmt-mood-star {
+.cmts-box-rating div.cmt-mood i.cmt-mood-star,
+.cmt-rating-element div.cmt-mood i.cmt-mood-star,
+.cmt-rating-element div.cmt-mood a.cmt-mood-button {
     height: 24px;
     width: 24px;
     font-size: 20px;

@@ -643,6 +643,17 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return $this->_oQuery->getComments ($this->getId(), $iVParentId, $this->_getAuthorId(), $sFilter, $aOrder, $iStart, $iCount);
     }
 
+    /**
+     * Get comment's short info.
+     */
+    public function getCommentSimple ($iCmtId)
+    {
+        return $this->_oQuery->getCommentSimple ($this->getId(), $iCmtId);
+    }
+
+    /**
+     * Get comment's full info.
+     */
     public function getCommentRow ($iCmtId)
     {
         return $this->_oQuery->getComment ($this->getId(), $iCmtId);
@@ -840,7 +851,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return $oReport->isAllowedReport($isPerformAction);
     }
 
-    public function isPostReplyAllowed ($isPerformAction = false)
+    public function isPostAllowed ($isPerformAction = false)
     {
         $mixedResult = BxDolService::call($this->_aSystem['module'], 'check_allowed_comments_post', array($this->getId(), $this->getSystemName()));
         if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
@@ -849,9 +860,25 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return $this->checkAction ('comments post', $isPerformAction);
     }
 
-    public function msgErrPostReplyAllowed ()
+    public function msgErrPostAllowed ()
     {
         return $this->checkActionErrorMsg('comments post');
+    }
+
+    /**
+     * Determines whether a 'reply' action allowed or not.
+     * @param integer or array $mixedCmt - ID or an array which describes the comment to be replied
+     * @param boolean $isPerformAction
+     * @return boolean
+     */
+    public function isReplyAllowed ($mixedCmt, $isPerformAction = false)
+    {
+        return $this->isPostAllowed($isPerformAction);
+    }
+
+    public function msgErrReplyAllowed ()
+    {
+        return $this->msgErrPostAllowed ();
     }
 
     public function isEditAllowed ($aCmt, $isPerformAction = false)
@@ -937,10 +964,8 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     public function actionGetFormEdit ()
     {
-        if (!$this->isEnabled()){
-            echoJson(array());
-            return;
-        }
+        if (!$this->isEnabled())
+            return echoJson(array());
 
         $iCmtId = bx_process_input(bx_get('Cmt'), BX_DATA_INT);
         echoJson($this->getFormEdit($iCmtId, array('dynamic_mode' => true)));
@@ -975,18 +1000,16 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             return '';
 
         $aBp = $aDp = array();
-		$this->_getParams($aBp, $aDp);
+        $this->_getParams($aBp, $aDp);
 
-		$aDp['dynamic_mode'] = true;
+        $aDp['dynamic_mode'] = true;
         return $this->getComments($aBp, $aDp);
     }
 
     public function actionSubmitPostForm()
     {
-        if(!$this->isEnabled() || !$this->isPostReplyAllowed()) {
-            echoJson(array());
-            return;
-        }
+        if(!$this->isEnabled())
+            return echoJson(array());
 
         $iCmtParentId = 0;
         if(bx_get('cmt_parent_id') !== false)
@@ -1131,54 +1154,54 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         if(empty($aCmt) || !is_array($aCmt))
             return false;
 
+        $iCmtPrntId = (int)$aCmt['cmt_parent_id'];
         $iPerformerId = (int)$aCmt['cmt_author_id'];
         bx_alert($this->_sSystem, 'commentPost', $iObjId, $iPerformerId, array(
-			'object_author_id' => $iObjAthrId,
+            'object_author_id' => $iObjAthrId,
 
-        	'comment_id' => $iCmtId, 
-        	'comment_author_id' => $aCmt['cmt_author_id'], 
-        	'comment_text' => $aCmt['cmt_text']
+            'comment_id' => $iCmtId, 
+            'comment_author_id' => $aCmt['cmt_author_id'], 
+            'comment_text' => $aCmt['cmt_text']
         ));
 
         bx_alert('comment', 'added', $iCmtId, $iPerformerId, array(
-        	'object_system' => $this->_sSystem, 
-        	'object_id' => $iObjId, 
-        	'object_author_id' => $iObjAthrId,
+            'object_system' => $this->_sSystem, 
+            'object_id' => $iObjId, 
+            'object_author_id' => $iObjAthrId,
 
-        	'comment_author_id' => $aCmt['cmt_author_id'], 
-        	'comment_text' => $aCmt['cmt_text']
+            'comment_author_id' => $aCmt['cmt_author_id'], 
+            'comment_text' => $aCmt['cmt_text']
         ));
 
-        if(!empty($aCmt['cmt_parent_id'])) {
-            $iCmtPrntId = (int)$aCmt['cmt_parent_id'];
+        if(!empty($iCmtPrntId)) {
             $aCmtPrnt = $this->_oQuery->getCommentSimple($iObjId, $iCmtPrntId);
             if(!empty($aCmtPrnt) && is_array($aCmtPrnt)) {
                 bx_alert($this->_sSystem, 'replyPost', $iCmtPrntId, $iPerformerId, array(
                     'object_id' => $iObjId, 
                     'object_author_id' => $iObjAthrId,
 
-                	'parent_author_id' => $aCmtPrnt['cmt_author_id'],
+                    'parent_author_id' => $aCmtPrnt['cmt_author_id'],
 
-                	'comment_id' => $iCmtId,
-                	'comment_author_id' => $aCmt['cmt_author_id'], 
-                	'comment_text' => $aCmt['cmt_text']
+                    'comment_id' => $iCmtId,
+                    'comment_author_id' => $aCmt['cmt_author_id'], 
+                    'comment_text' => $aCmt['cmt_text']
                 ));
 
                 bx_alert('comment', 'replied', $iCmtId, $iPerformerId, array(
-                	'object_system' => $this->_sSystem, 
-                	'object_id' => $iObjId, 
-                	'object_author_id' => $iObjAthrId,
- 
-                	'parent_id' => $iCmtPrntId,
-                	'parent_author_id' => $aCmtPrnt['cmt_author_id'],
+                    'object_system' => $this->_sSystem, 
+                    'object_id' => $iObjId, 
+                    'object_author_id' => $iObjAthrId,
 
-                	'comment_author_id' => $aCmt['cmt_author_id'],  
-                	'comment_text' => $aCmt['cmt_text']
+                    'parent_id' => $iCmtPrntId,
+                    'parent_author_id' => $aCmtPrnt['cmt_author_id'],
+
+                    'comment_author_id' => $aCmt['cmt_author_id'],  
+                    'comment_text' => $aCmt['cmt_text']
                 ));
             }
         }
 
-        return true;
+        return array('id' => $iCmtId, 'parent_id' => $iCmtPrntId);
     }
 
     public function onEditAfter($iCmtId)
@@ -1208,7 +1231,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             'comment_text' => $aCmt['cmt_text']
         ));
 
-        return true;
+        return array('id' => $iCmtId, 'text' => $this->_prepareTextForOutput($aCmt['cmt_text'], $iCmtId));
     }
 
     public function serviceGetAuthor ($iContentId)

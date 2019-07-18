@@ -110,7 +110,9 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
         $aCheckFuncParams = array();
         switch ($a['name']) {
             case 'item-reply':
-                $sCheckFuncName = 'isPostReplyAllowed';
+                $sCheckFuncName = 'isReplyAllowed';
+                if(!empty($this->_aCmt))
+                    $aCheckFuncParams = array($this->_aCmt);
                 break;
 
             case 'item-vote':

@@ -24,15 +24,15 @@ class BxMarketCmts extends BxTemplCmts
         $this->_aT['block_comments_title'] = '_bx_market_page_block_title_entry_comments_n';
     }
 
-    public function isPostReplyAllowed ($isPerformAction = false)
+    public function isPostAllowed ($isPerformAction = false)
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
     	$oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_COMMENT']);
-		if($oPrivacy && !$oPrivacy->check($this->_iId))
-			return false;
+        if($oPrivacy && !$oPrivacy->check($this->_iId))
+            return false;
 
-		return parent::isPostReplyAllowed($isPerformAction);
+        return parent::isPostAllowed($isPerformAction);
     }
 }
 

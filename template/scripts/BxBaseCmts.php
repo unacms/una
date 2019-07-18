@@ -371,9 +371,6 @@ class BxBaseCmts extends BxDolCmts
 
     function getFormBoxPost($aBp = array(), $aDp = array())
     {
-        if(!$this->isPostReplyAllowed())
-            return '';
-
         return $this->_getFormBox(BX_CMT_ACTION_POST, $aBp, $aDp);
     }
 
@@ -518,7 +515,7 @@ class BxBaseCmts extends BxDolCmts
         $iCount = $this->getCommentsCountAll();
         $bCount = (int)$iCount != 0;
 
-        $isAllowedComment = $this->isPostReplyAllowed();
+        $isAllowedComment = $this->isPostAllowed();
 
         //--- Do Comment
         $bTmplVarsDoComment = $this->_isShowDoComment($aParams, $isAllowedComment, $bCount);
@@ -787,6 +784,8 @@ class BxBaseCmts extends BxDolCmts
 
         $sMethod = '_getForm' . ucfirst($sType);
         $aForm = $this->$sMethod($iCmtParentId, $aDp);
+        if(empty($aForm['form']))
+            return '';
 
         return $this->_oTemplate->parseHtmlByName('comment_reply_box.html', array(
             'js_object' => $this->_sJsObjName,
@@ -804,12 +803,16 @@ class BxBaseCmts extends BxDolCmts
 
     protected function _getFormPost($iCmtParentId = 0, $aDp = array())
     {
+        $bCmtParentId = !empty($iCmtParentId);
+        if((!$bCmtParentId && !$this->isPostAllowed()) || ($bCmtParentId && !$this->isReplyAllowed($iCmtParentId)))
+            return array('msg' => _t('_Access denied'));
+
         $bDynamic = isset($aDp['dynamic_mode']) && (bool)$aDp['dynamic_mode'];
 
         $oForm = $this->_getForm(BX_CMT_ACTION_POST, $iCmtParentId);
         $oForm->aInputs['cmt_parent_id']['value'] = $iCmtParentId;
-        $oForm->initChecker();
 
+        $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
             $iCmtAuthorId = $this->_getAuthorId();
             $iCmtParentId = $oForm->getCleanValue('cmt_parent_id');
@@ -848,14 +851,16 @@ class BxBaseCmts extends BxDolCmts
 
                 $this->_triggerComment();
 
-                $this->isPostReplyAllowed(true);
+                if($bCmtParentId)
+                    $this->isReplyAllowed($iCmtParentId, true);
+                else
+                    $this->isPostAllowed(true);
 
                 if($this->_sMetatagsObj && ($oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj)) !== false)
                     $oMetatags->metaAdd($iCmtUniqId, $sCmtText);
 
-                $this->onPostAfter($iCmtId);
-
-                return array('id' => $iCmtId, 'parent_id' => $iCmtParentId);
+                if(($mixedResult = $this->onPostAfter($iCmtId)) !== false)
+                    return $mixedResult;
             }
 
             return array('msg' => _t('_cmt_err_cannot_perform_action'));
@@ -868,7 +873,7 @@ class BxBaseCmts extends BxDolCmts
     {
         $bDynamic = isset($aDp['dynamic_mode']) && (bool)$aDp['dynamic_mode'];
 
-        $aCmt = $this->_oQuery->getCommentSimple ((int)$this->getId(), $iCmtId);
+        $aCmt = $this->getCommentSimple($iCmtId);
         if(!$aCmt)
             return array('msg' => _t('_No such comment'));
 
@@ -890,9 +895,8 @@ class BxBaseCmts extends BxDolCmts
                 if($this->_sMetatagsObj && ($oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj)) !== false)
                     $oMetatags->metaAdd($iCmtUniqId, $sCmtText);
 
-                $this->onEditAfter($iCmtId);
-
-                return array('id' => $iCmtId, 'text' => $this->_prepareTextForOutput($sCmtText, $iCmtId));
+                if(($mixedResult = $this->onEditAfter($iCmtId)) !== false)
+                    return $mixedResult;
             }
 
             return array('msg' => _t('_cmt_err_cannot_perform_action'));

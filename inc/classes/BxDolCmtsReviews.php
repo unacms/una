@@ -20,6 +20,25 @@ class BxDolCmtsReviews extends BxTemplCmts
 
     protected $_sRatingLegendId;
 
+    /*
+     * Determines whether an object author is allowed 
+     * to post review to his own content.
+     */
+    protected $_bOaPostAllowed;
+
+    /*
+     * Determines whether an object author is allowed 
+     * to reply to somebody's review.
+     */
+    protected $_bOaReplyAllowed;
+
+    /*
+     * Determines whether a review author is allowed 
+     * to reply to his own review or to somebody's reply 
+     * to his own review.
+     */
+    protected $_bRaReplyAllowed;
+
     public function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
         parent::__construct($sSystem, $iId, $iInit, $oTemplate);
@@ -46,6 +65,60 @@ class BxDolCmtsReviews extends BxTemplCmts
         $this->_sMoodLegendId = "cmt-legend-%s-%d-%d";
 
         $this->_sRatingLegendId = "cmt-legend-%s-%d";
+
+        $this->_bOaPostAllowed = true;
+        $this->_bOaReplyAllowed = true;
+        $this->_bRaReplyAllowed = true;
+    }
+
+    public function isPostAllowed($isPerformAction = false)
+    {
+        $iUsrId = $this->_getAuthorId();
+        $iObjAthrId = $this->getObjectAuthorId();
+
+        if($iUsrId == $iObjAthrId && !$this->_bOaPostAllowed)
+            return false;
+
+        if($this->isReviewed($iUsrId))
+            return false;
+
+        if($this->isPostAllowedCustom($isPerformAction) === false)
+            return false;
+
+        return parent::isPostAllowed($isPerformAction);
+    }
+
+    public function isReplyAllowed ($mixedCmt, $isPerformAction = false)
+    {
+        $iUsrId = $this->_getAuthorId();
+        $iObjAthrId = $this->getObjectAuthorId();
+        $iRvwAthrId = $this->getReviewAuthorId($mixedCmt);
+
+        if(!in_array($iUsrId, array($iObjAthrId, $iRvwAthrId)))
+            return false;
+
+        if($iUsrId == $iObjAthrId && $iUsrId != $iRvwAthrId && !$this->_bOaReplyAllowed)
+            return false;
+
+        if($iUsrId == $iRvwAthrId && !$this->_bRaReplyAllowed)
+            return false;
+
+        return parent::isPostAllowed($isPerformAction);
+    }
+
+    /**
+     * Can be overwritten if some custom check is needed.
+     * @param boolean $isPerformAction
+     * @return boolean
+     */
+    public function isPostAllowedCustom($isPerformAction = false)
+    {
+        return true;
+    }
+
+    public function isReviewed($mixedCmt)
+    {
+        return $this->_oQuery->isReviewed($this->getId(), $mixedCmt);
     }
 
     public function getMoodMinValue()
@@ -68,6 +141,25 @@ class BxDolCmtsReviews extends BxTemplCmts
         return sprintf($this->_sRatingLegendId, str_replace('_', '-', $this->getSystemName()), $this->getId());
     }
 
+    public function getReviewAuthorId($mixedCmt)
+    {
+        return $this->_oQuery->getReviewAuthorId($this->getId(), $mixedCmt);
+    }
+
+    public function onEditAfter($iCmtId)
+    {
+        $mixedResult = parent::onEditAfter($iCmtId);
+        if($mixedResult === false)
+            return $mixedResult;
+
+        $aCmt = $this->getCommentSimple($iCmtId);
+
+        return array_merge($mixedResult, array(
+            'mood' => (int)$aCmt['cmt_mood'],
+            'mood_legend_id' => $this->getMoodLegendId($iCmtId)
+        ));
+    }
+
     protected function _triggerComment()
     {
         $mixedResult = parent::_triggerComment();
@@ -75,8 +167,8 @@ class BxDolCmtsReviews extends BxTemplCmts
             return $mixedResult;
 
         $iId = $this->getId();
-        $fAvg = $this->_oQuery->getReviewsAvg($iId);
-        return $this->_oQuery->updateTriggerTableAvg($iId, $fAvg);
+        $aStats = $this->_oQuery->getReviewsStats($iId);
+        return $this->_oQuery->updateTriggerTableAvg($iId, (float)$aStats['avg']);
     }
 }
 

@@ -27,8 +27,7 @@ div.cmts li.cmt div.cmt-cnt div.cmt-head .cmt-meta-ago a {
 	color: #cccccc;
 }
 
-div.cmts li.cmt div.cmt-cnt div.cmt-cont,
-div.cmts li.cmt div.cmt-cnt div.cmt-cont p {
+div.cmts li.cmt div.cmt-cnt div.cmt-cont {
 	margin-top: 0.5rem;
 	margin-bottom: 0.5rem;
 }
