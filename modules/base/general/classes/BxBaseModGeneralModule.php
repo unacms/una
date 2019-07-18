@@ -1156,6 +1156,16 @@ class BxBaseModGeneralModule extends BxDolModule
         );
     }
 
+    public function serviceGetTimelinePostAllowedView($aEvent)
+    {
+        $iContentId = (int)$aEvent['object_id'];
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return _t('_sys_txt_access_denied');
+
+        return $this->serviceCheckAllowedViewForProfile($aContentInfo);
+    }
+
     /**
      * Check particular action permission without content
      * @param $sAction action to check, for example: Browse, Add
@@ -1225,9 +1235,6 @@ class BxBaseModGeneralModule extends BxDolModule
     // ====== PERMISSION METHODS
     public function serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction = false, $iProfileId = false)
     {
-        if(is_numeric($aDataEntry))
-            $aDataEntry = $this->_oDb->getContentInfoById((int)$aDataEntry);
-
         if (!$iProfileId)
             $iProfileId = $this->_iProfileId;
 

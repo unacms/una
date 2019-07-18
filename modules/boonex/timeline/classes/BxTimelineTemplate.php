@@ -358,8 +358,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aEvent[$sKey] = CHECK_ACTION_RESULT_ALLOWED;
         if(isset($aResult[$sKey], $aResult[$sKey]['module'], $aResult[$sKey]['method']))
             $aEvent[$sKey] = BxDolService::call($aResult[$sKey]['module'], $aResult[$sKey]['method'], array($aEvent));
-        else if(($aHandler = $this->_oConfig->getHandler($aEvent)) !== false && BxDolRequest::serviceExists($aHandler['module_name'], 'check_allowed_view_for_profile'))
-            $aEvent[$sKey] = BxDolService::call($aHandler['module_name'], 'check_allowed_view_for_profile', array($aEvent['object_id']));
+        else if(($aHandler = $this->_oConfig->getHandler($aEvent)) !== false && BxDolRequest::serviceExists($aHandler['module_name'], 'get_timeline_post_allowed_view'))
+            $aEvent[$sKey] = BxDolService::call($aHandler['module_name'], 'get_timeline_post_allowed_view', array($aEvent));
 
         if(isset($aEvent[$sKey]) && $aEvent[$sKey] !== CHECK_ACTION_RESULT_ALLOWED) 
             return '';

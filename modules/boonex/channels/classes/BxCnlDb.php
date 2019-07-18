@@ -66,10 +66,10 @@ class BxCnlDb extends BxBaseModGroupsDb
     public function getContentById($iId)
     {
         $CNF = &$this->_oConfig->CNF;
-        $aBindings = array(
+
+        return $this->getRow("SELECT * FROM `" . $CNF['TABLE_CONTENT'] . "` WHERE `id` = :id LIMIT 1", array(
             'id' => $iId
-        );
-        return $this->getFirstRow("SELECT * FROM `" . $CNF['TABLE_CONTENT'] . "` WHERE `id` = :id", $aBindings);
+        ));
     }
     
     public function getDataByContent($iContentId, $sModuleName)

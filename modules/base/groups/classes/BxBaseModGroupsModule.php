@@ -561,8 +561,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
     public function serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction = false, $iProfileId = false)
     {
-        $iContentId = is_numeric($aDataEntry) ? (int)$aDataEntry : $aDataEntry[$this->_oConfig->CNF['FIELD_ID']];
-        if($this->isFan($iContentId, $iProfileId))
+        if ($this->isFan($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $iProfileId))
             return CHECK_ACTION_RESULT_ALLOWED;
 
         return parent::serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction, $iProfileId);

@@ -165,7 +165,24 @@ class BxCnlModule extends BxBaseModGroupsModule
             )
         );
     }
-    
+
+    public function serviceGetTimelinePostAllowedView ($aEvent)
+    {
+        $sError = _t('_sys_txt_access_denied');
+
+        if(empty($aEvent) || !is_array($aEvent))
+            return $sError;
+
+        $aEventContent = $this->_oDb->getContentById($aEvent['object_id']);
+        if(empty($aEventContent) || !is_array($aEventContent))
+            return $sError;
+
+        if(!BxDolRequest::serviceExists($aEventContent['module_name'], 'get_timeline_post_allowed_view'))
+            return $sError;
+
+        return BxDolService::call($aEventContent['module_name'], 'get_timeline_post_allowed_view', array(array('id' => $aEvent['id'], 'owner_id' => $aEventContent['author_id'], 'object_id' => $aEventContent['content_id'])));
+    }
+
     public function serviceGetTimelinePostHashtag($aEvent, $aBrowseParams = array())
     {
         if(empty($aEvent) || !is_array($aEvent))
