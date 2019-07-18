@@ -2564,6 +2564,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $iUserId = $this->getUserId();
 
         $aCheckResult = checkActionModule($iUserId, 'post', $this->getName(), $bPerform);
+        if($aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
+            return $aCheckResult[CHECK_ACTION_MESSAGE];
+        
         if(!empty($this->_iOwnerId) && ($oProfileOwner = BxDolProfile::getInstance($this->_iOwnerId)) !== false) {
             if($oProfileOwner->checkAllowedPostInProfile() !== CHECK_ACTION_RESULT_ALLOWED)
                 return _t('_sys_txt_access_denied');
