@@ -511,20 +511,23 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
     	$aParams = array_merge($this->_aFormParams, $aParams);
 
-        $this->_iOwnerId = $aParams['context_id'];
+        $bContextId = !empty($aParams['context_id']);
+        $bFormDisplay = !empty($aParams['display']);
+
+        $this->_iOwnerId = $bContextId ? (int)$aParams['context_id'] : 0;
 
     	$oForm = $this->serviceGetObjectForm('add', $aParams);
     	if(!$oForm)
             return '';
 
-        if(!empty($aParams['display']))
+        $aParams['type'] = $bContextId ? BX_BASE_MOD_NTFS_TYPE_OWNER : BX_BASE_MOD_NTFS_TYPE_PUBLIC;
+
+        if($bFormDisplay)
             $aParams['form_display'] = $aParams['display'];
-        else if(isset($aParams['context_id'])) {
-            if((int)$aParams['context_id'] == 0)
-                $aParams['form_display'] = 'form_display_post_add_public';
-            else
-                $aParams['form_display'] = 'form_display_post_add_profile';
-        }
+        else if($bContextId) 
+            $aParams['form_display'] = 'form_display_post_add_profile';
+        else
+            $aParams['form_display'] = 'form_display_post_add_public';
 
     	$aResult = $this->getFormPost($aParams);
     	if(!empty($aResult['form'])) {
@@ -532,13 +535,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
             $sCode = '';
             $sCode .= $this->_oTemplate->getCssJs($bDynamicMode);
-            $sCode .= $this->_oTemplate->getJsCodePost($this->_iOwnerId);
+            $sCode .= $this->_oTemplate->getJsCodePost($this->_iOwnerId, $aParams);
             $sCode .= $aResult['form'];
             return $sCode;
         }
 
         if(!empty($aResult['message']))
-                return $aResult['message'];
+            return $aResult['message'];
 
         return '';
     }
@@ -564,19 +567,20 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      */
     public function serviceGetObjectForm ($sType, $aParams = array())
     {
-    	if (!in_array($sType, array('add')))
+    	if(!in_array($sType, array('add')))
             return false;
 
-        $CNF = &$this->_oConfig->CNF;
+        $bContextId = !empty($aParams['context_id']);
+        $bFormDisplay = !empty($aParams['display']);
 
-        if(!empty($aParams['display']))
+        $aParams['type'] = $bContextId ? BX_BASE_MOD_NTFS_TYPE_OWNER : BX_BASE_MOD_NTFS_TYPE_PUBLIC;
+
+        if($bFormDisplay)
             $aParams['form_display'] = $aParams['display'];
-        else if(isset($aParams['context_id'])) {
-            if((int)$aParams['context_id'] == 0)
-                $aParams['form_display'] = 'form_display_post_add_public';
-            else
-                $aParams['form_display'] = 'form_display_post_add_profile';
-        }
+        else if($bContextId)
+            $aParams['form_display'] = 'form_display_post_add_profile';
+        else
+            $aParams['form_display'] = 'form_display_post_add_public';
 
         $oForm = $this->getFormPostObject($aParams);
 
@@ -2431,12 +2435,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject($sFormObject), $this->_oConfig->getObject($sFormDisplay), $this->_oTemplate);        
 
-        $sParamsKey = 'ajax_mode';
-        if(isset($aParams[$sParamsKey]) && is_bool($aParams[$sParamsKey]))
-            $oForm->setAjaxMode((bool)$aParams[$sParamsKey]);
-
+        /**
+         * Note. 'ajax_mode' parameter isn't checked because
+         * timeline post form works as Ajax form by default.
+         */
         $sParamsKey = 'visibility_autoselect';
-        if(isset($aParams[$sParamsKey]) && is_bool($aParams[$sParamsKey]))
+        if(isset($aParams[$sParamsKey]) && (bool)$aParams[$sParamsKey] === true)
             $oForm->setVisibilityAutoselect((bool)$aParams[$sParamsKey]);
 
         $oForm->init();
