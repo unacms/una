@@ -455,10 +455,13 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
         return (int)$this->query($sSql) > 0;
     }
 
-    function getMenus()
+    function getMenus($bFull = false)
     {
-        $sSql = "SELECT `object`, `title` FROM `sys_objects_menu` WHERE 1";
-        return $this->getPairs($sSql, 'object', 'title');
+        $sSql = "SELECT * FROM `sys_objects_menu` WHERE 1 ORDER BY `module`, `object`";
+        if($bFull)
+            return $this->getAllWithKey($sSql, 'object');
+        else
+            return $this->getPairs($sSql, 'object', 'title');
     }
 }
 

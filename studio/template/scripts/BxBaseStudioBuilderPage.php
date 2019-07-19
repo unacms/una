@@ -1531,11 +1531,20 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     )
                 );
 
-                $aMenus = $this->oDb->getMenus();
-                foreach($aMenus as $sKey => $sValue)
-                    $aFields['content']['values'][$sKey] = _t($sValue);
+                $sGroup = '';
+                $aMenus = $this->oDb->getMenus(true);
+                foreach($aMenus as $sKey => $aMenu) {
+                    if($sGroup != $aMenu['module']) {
+                        if(!empty($sGroup))
+                            $aFields['content']['values'][$sGroup . '_end'] = array('type' => 'group_end');
 
-                asort($aFields['content']['values']);
+                        $sGroup = $aMenu['module'];
+                        $aFields['content']['values'][$sGroup . '_beg'] = array('type' => 'group_header', 'value' => BxDolStudioUtils::getModuleTitle($sGroup));
+                    }
+
+                    $aFields['content']['values'][$sKey] = _t($aMenu['title']);
+                }
+
                 $aFields['content']['values'] = array_merge(array('' => _t('_adm_bp_txt_block_content_menu_empty')), $aFields['content']['values']);
                 break;
 
