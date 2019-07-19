@@ -98,8 +98,10 @@ BxDolCmts.prototype.cmtAfterPostSubmit = function (oCmtForm, oData)
                 if(iCmtId > 0) {
                     $this._getCmt(oCmtForm, iCmtId);
                     $this._getForm(undefined, parseInt(oData.parent_id), function(sFormWrp) {
-                        var oFormWrp = $(sFormWrp);
-                        oParent.hide().html(oFormWrp.html()).show();
+                        if(sFormWrp && sFormWrp.length > 0)
+                            sFormWrp = $(sFormWrp).html();
+
+                        oParent.hide().html(sFormWrp).show();
 
                         $this.cmtInitFormPost(oParent.find('form'));
                     });
