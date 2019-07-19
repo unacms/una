@@ -142,7 +142,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         if (isset($CNF['FIELD_LABELS']) && isset($this->aInputs[$CNF['FIELD_LABELS']]) && !empty($aValues['id']) && ($oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])) && $oMetatags->keywordsIsEnabled() && ($aLabels = $oMetatags->keywordsGet($aValues['id']))) {
             $this->aInputs[$CNF['FIELD_LABELS']]['content_id'] = $aValues['id'];
             $this->aInputs[$CNF['FIELD_LABELS']]['meta_object'] = $CNF['OBJECT_METATAGS'];
-            $this->aInputs[$CNF['FIELD_LABELS']]['value'] = $aLabels;
+            $this->aInputs[$CNF['FIELD_LABELS']]['value'] = array_intersect($aLabels, BxDolLabel::getInstance()->getLabels(array('type' => 'values')));
         }
 
         if (isset($CNF['FIELD_ANONYMOUS']) && isset($this->aInputs[$CNF['FIELD_ANONYMOUS']]) && isset($CNF['FIELD_AUTHOR']) && isset($aValues[$CNF['FIELD_AUTHOR']])) {

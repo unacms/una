@@ -55,6 +55,12 @@ class BxDolLabelQuery extends BxDolDb
                 $sWhereClause = " AND UPPER(`tl`.`value`)=:value";
                 break;
 
+            case 'values':
+                $aMethod['name'] = 'getColumn';
+
+                $sSelectClause = "`tl`.`value`";
+                break;
+
             case 'parent':
                 $aMethod['params'][1] = array(
                     'parent' => $aParams['parent']
