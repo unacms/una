@@ -1,3 +1,4 @@
+
 .bx-player-plyr {
     width:100%;
 }
@@ -7,4 +8,8 @@
 .bx-page-iframe .plyr video {
     width:100vw;
     height:100vh;
+}
+
+.bx-tl-item-attachment .bx-player-plyr-wrapper {
+    width:100%;
 }

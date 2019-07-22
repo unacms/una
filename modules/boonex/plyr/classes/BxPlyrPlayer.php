@@ -82,7 +82,6 @@ class BxPlyrPlayer extends BxDolPlayer
         // attrs
 
         $sId = isset($aParams['attrs']) && isset($aParams['attrs']['id']) ? $aParams['attrs']['id'] : 'BxPlyr' . mt_rand();
-        $sAttrsWrapper = '';
         $aAttrsDefault = array(
             'id' => $sId,
             'controls' => '',
@@ -95,14 +94,12 @@ class BxPlyrPlayer extends BxDolPlayer
         $aAttrs = array_merge($aAttrsDefault, $aAttrs);
         if (isset($aParams['poster']) && is_string($aParams['poster']))
             $aAttrs['poster'] = $aParams['poster'];
-
-        if (isset($aParams['styles']) && is_string($aParams['styles']) ? $aParams['styles'] : false) {
-            $sAttrsWrapper = bx_convert_array2attrs(array('styles' => $aParams['styles']));
-            unset($aParams['styles']);
-        }
-            
         $sAttrs = bx_convert_array2attrs($aAttrs);
 
+        $aAttrsWrapper = isset($aParams['attrs_wrapper']) && is_array($aParams['attrs_wrapper']) ? $aParams['attrs_wrapper'] : array();
+        $sAttrsWrapper = bx_convert_array2attrs($aAttrsWrapper, 'bx-player-plyr-wrapper', isset($aParams['styles']) && is_string($aParams['styles']) ? $aParams['styles'] : false);
+
+        
         // generate files list for HTML5 player
         
         $aTypes = array(
