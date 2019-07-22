@@ -81,7 +81,7 @@ class BxPlyrPlayer extends BxDolPlayer
 
         // attrs
 
-        $sId = 'BxPlyr' . mt_rand();
+        $sId = isset($aParams['attrs']) && isset($aParams['attrs']['id']) ? $aParams['attrs']['id'] : 'BxPlyr' . mt_rand();
         $sAttrsWrapper = '';
         $aAttrsDefault = array(
             'id' => $sId,
@@ -155,7 +155,7 @@ class BxPlyrPlayer extends BxDolPlayer
             'settings' => $aSettings,
         ), $this->_aConfCustom);
         $sInitEditor = "
-            gl$sId = new Plyr('#$sId', " . json_encode($aOptions) . ");
+            glBxPlyr" . mt_rand() . " = new Plyr('#$sId', " . json_encode($aOptions) . ");
         ";
 
         // load necessary JS and CSS

@@ -983,8 +983,16 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     public function getVideo($aEvent, $aVideo)
     {
         $sVideoId = $this->_oConfig->getHtmlIds('view', 'video') . $aEvent['id'] . '-' . $aVideo['id'];
+        $oPlayer = BxDolPlayer::getObjectInstance();
+        if (!$oPlayer)
+            return '';
+        $sPlayer = $oPlayer->getCodeVideo (BX_PLAYER_EMBED, array(
+            'poster' => $aVideo['src_poster'],
+            'mp4' => array('sd' => $aVideo['src_mp4'], 'hd' => $aVideo['src_mp4_hd']),
+            'attrs' => array('id' => $sVideoId),
+        ));
         return $this->parseHtmlByName('video_player.html', array(
-            'player' => BxTemplFunctions::getInstance()->videoPlayer($aVideo['src_poster'], $aVideo['src_mp4'], $aVideo['src_mp4_hd'], array('id' => $sVideoId)),
+            'player' => $sPlayer,
             'html_id' => $sVideoId
         ));
     }

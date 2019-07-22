@@ -80,18 +80,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if($aData === false || !isset($aData['content']['videos'][$iVideoId]))
             return;
 
-        $iNameIndex = BX_PAGE_CLEAR;
-        $oTemplate = $this->_oTemplate;
-        if(getParam('sys_player_default') == 'bx_plyr') {
-            $iNameIndex = BX_PAGE_EMBED;
-            $oTemplate = BxDolTemplate::getInstance();
-            $oTemplate->addJs(array(
-                'jquery.min.js', 
-                'embedly-player.min.js'
-            ));
-        }
 
-        $oTemplate->setPageNameIndex ($iNameIndex);
+        $oTemplate = BxDolTemplate::getInstance();
+        $oTemplate->addJs(array(
+            'embedly-player.min.js'
+        ));
+        $oTemplate->setPageNameIndex (BX_PAGE_EMBED);
         $oTemplate->setPageContent ('page_main_code', $this->_oTemplate->getVideo($aEvent, $aData['content']['videos'][$iVideoId]));
         $oTemplate->getPageCode();
     }
