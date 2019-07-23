@@ -508,7 +508,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         $CNF = &$this->_oConfig->CNF;
 
         $iProfile = bx_get_logged_profile_id();
-        $bDynamic = isset($aBrowseParams['dynamic_mode']) && $aBrowseParams['dynamic_mode'] === true;
+        $bDynamic = isset($aBrowseParams['dynamic_mode']) && (bool)$aBrowseParams['dynamic_mode'] === true;
 
         $sPolls = '';
         $aPolls = $this->_oDb->getPolls(array('type' => 'content_id', 'content_id' => (int)$aContentInfo[$CNF['FIELD_ID']]));
