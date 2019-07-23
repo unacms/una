@@ -1057,7 +1057,7 @@ class BxBaseModGeneralModule extends BxDolModule
         $iUserId = $this->getUserId();
         $iAuthorId = (int)$aContentInfo[$CNF['FIELD_AUTHOR']];
         $iAuthorIdAbs = abs($iAuthorId);
-        if($iAuthorId < 0 && $iAuthorIdAbs == (int)$aEvent['owner_id'] && $iAuthorIdAbs != $iUserId)
+        if($iAuthorId < 0 && ((is_numeric($aEvent['owner_id']) && $iAuthorIdAbs == (int)$aEvent['owner_id']) || (is_array($aEvent['owner_id']) && in_array($iAuthorIdAbs, $aEvent['owner_id']))) && $iAuthorIdAbs != $iUserId)
             return false;
 
         //--- Views
