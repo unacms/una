@@ -534,6 +534,9 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
                     'html_id' => $this->_oConfig->getHtmlIds('polls_showcase') . $aEvent['id'],
                     'polls' => $sPolls
                 ));
+
+                if((!empty($aResult['videos']) && is_array($aResult['videos'])) || (!empty($aResult['videos_attach']) && is_array($aResult['videos_attach'])))
+                    $aResult['_cache'] = false;
             }
         }
 

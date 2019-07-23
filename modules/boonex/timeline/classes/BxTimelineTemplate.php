@@ -975,8 +975,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $aBrowseParams['dynamic_mode'] = true;
         $aResult = $this->getData($aEvent, $aBrowseParams);
-        $oCache->setData($sCacheKey, serialize($aResult), $iCacheLifetime);           
+        if(!empty($aResult) && isset($aResult['_cache']) && (bool)$aResult['_cache'] === false)
+            return $aResult;
 
+        $oCache->setData($sCacheKey, serialize($aResult), $iCacheLifetime);           
         return $aResult;
     }
 

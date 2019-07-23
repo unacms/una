@@ -1135,7 +1135,16 @@ class BxBaseModGeneralModule extends BxDolModule
         if(isset($aEvent['object_privacy_view']) && (int)$aEvent['object_privacy_view'] < 0)
             $iOwnerId = abs($aEvent['object_privacy_view']);
 
+        $bCache = true;
+        $aContent = $this->_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams);
+        if(isset($aContent['_cache'])) {
+            $bCache = (bool)$aContent['_cache'];
+
+            unset($aContent['_cache']);
+        }
+
         return array(
+            '_cache' => $bCache,
             'owner_id' => $iOwnerId,
             'object_owner_id' => $iAuthorId,
             'icon' => !empty($CNF['ICON']) ? $CNF['ICON'] : '',
@@ -1143,7 +1152,7 @@ class BxBaseModGeneralModule extends BxDolModule
             'sample_wo_article' => $CNF['T']['txt_sample_single'],
             'sample_action' => isset($CNF['T']['txt_sample_action']) ? $CNF['T']['txt_sample_action'] : '',
             'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
-            'content' => $this->_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams), //a string to display or array to parse default template before displaying.
+            'content' => $aContent, //a string to display or array to parse default template before displaying.
             'date' => $aContentInfo[$CNF['FIELD_ADDED']],
             'views' => $aViews,
             'votes' => $aVotes,
