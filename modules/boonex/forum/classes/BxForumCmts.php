@@ -60,11 +60,14 @@ class BxForumCmts extends BxTemplCmts
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if(!parent::onPostAfter($iId))
-            return false;
+        $mixedResult = parent::onPostAfter($iId);
+        if($mixedResult === false)
+            return $mixedResult;
 
         if(getParam($CNF['PARAM_AUTOSUBSCRIBE_REPLIED']) == 'on')
             BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION_SUBSCRIBERS'])->actionAdd((int)$this->getId(), (int)$this->_getAuthorId());
+
+        return $mixedResult;
     }
 
     public function getCommentsBlock($aBp = array(), $aDp = array())
