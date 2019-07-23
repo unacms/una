@@ -170,25 +170,26 @@ div.bx-tl-item div.bx-tl-owner-actions .bx-btn {
 
 /*--- Item Content Style ---*/
 div.bx-tl-item-content {
-	position: relative;
+    position: relative;
     text-align: left;
 }
 div.bx-tl-item-content form {
-	padding-left: 1rem;
-	padding-right: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 div.bx-tl-item-content div.bx-tl-title {
-	text-overflow: ellipsis;
+    text-overflow: ellipsis;
     overflow: hidden;
 }
 div.bx-tl-item-content div.bx-tl-content iframe {
-	width: 100%;
+    width: 100%;
+    min-height: 240px !important;
 }
 div.bx-tl-item-text div.bx-tl-content {
-	position: relative;
+    position: relative;
     max-height: 250px;
 
-	text-overflow: ellipsis;
+    text-overflow: ellipsis;
     overflow: hidden;
 }
 div.bx-tl-item-text div.bx-tl-content.bx-tl-overflow {
