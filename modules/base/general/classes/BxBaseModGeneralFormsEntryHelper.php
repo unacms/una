@@ -196,6 +196,14 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if($sResult)
             return array('code' => 4, 'message' => $sResult);
 
+        /*
+         * Process metas.
+         * Note. It's essential to process metas a the very end, 
+         * because all data related to an entry should be already
+         * processed and are ready to be passed to alert. 
+         */
+        $this->_oModule->processMetasAdd($iContentId);
+
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         return array('code' => 0, 'message' => '', 'content' => $aContentInfo);
     }
@@ -247,6 +255,14 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         $sResult = $this->onDataAddAfter (getLoggedId(), $iContentId);
         if ($sResult)
             return $this->prepareResponse($sResult, $bAsJson, 'msg');
+
+        /*
+         * Process metas.
+         * Note. It's essential to process metas a the very end, 
+         * because all data related to an entry should be already
+         * processed and are ready to be passed to alert. 
+         */
+        $this->_oModule->processMetasAdd($iContentId);
 
         // perform action
         $this->_oModule->$sCheckFunction(true);
@@ -317,6 +333,14 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if ($sResult)
             return $sResult;
 
+        /*
+         * Process metas.
+         * Note. It's essential to process metas a the very end, 
+         * because all data related to an entry should be already
+         * processed and are ready to be passed to alert. 
+         */
+        $this->_oModule->processMetasEdit($iContentId);
+        
         // perform action
         $this->_oModule->$sCheckFunction($aContentInfo, true);
         
@@ -470,21 +494,9 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if(isset($CNF['FIELD_PHOTO']))
             $oForm->processFiles ($CNF['FIELD_PHOTO'], $iContentId, false);
 
-        if(!empty($CNF['OBJECT_METATAGS'])) { // && isset($aTrackTextFieldsChanges['changed_fields'][$CNF['FIELD_TEXT']])) { // TODO: check if aTrackTextFieldsChanges works 
-            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
-            $oMetatags->metaAddAuto($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT']);
-            if (isset($CNF['FIELD_LOCATION_PREFIX']) && isset($oForm->aInputs[$CNF['FIELD_LOCATION_PREFIX']]) && $oMetatags->locationsIsEnabled())
-                $oMetatags->locationsAddFromForm($aContentInfo[$CNF['FIELD_ID']], empty($CNF['FIELD_LOCATION_PREFIX']) ? '' : $CNF['FIELD_LOCATION_PREFIX']);
-
-            if (!empty($CNF['FIELD_LABELS']) && ($aLabels = bx_get($CNF['FIELD_LABELS'])) && $oMetatags->keywordsIsEnabled()) {
-                foreach ($aLabels as $sLabel)
-                    $oMetatags->keywordsAddOne($aContentInfo[$CNF['FIELD_ID']], $sLabel, false);
-            }
-        }
-
         if(isset($CNF['FIELD_STATUS']) && ($aTrackResult = $oForm->isTrackFieldChanged($CNF['FIELD_STATUS'], true)) !== false)
             if($aTrackResult['old'] == 'failed' && $aTrackResult['new'] == 'active')
-                $this->_alertAfterAdd($aContentInfo);
+                $this->_oModule->alertAfterAdd($aContentInfo);
 
         return '';
     }
@@ -498,28 +510,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
                 $oForm->processFiles($CNF['FIELD_PHOTO'], $iContentId, true);
         }
 
-        $this->_processMetas($iAccountId, $iContentId);
-
         return '';
-    }
-
-    protected function _processMetas($iAccountId, $iContentId)
-    {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        if (!empty($CNF['OBJECT_METATAGS'])) {
-            list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
-            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
-            if ($aContentInfo)
-                $oMetatags->metaAddAuto($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']);
-            if ($oMetatags->locationsIsEnabled() && $aContentInfo)
-                $oMetatags->locationsAddFromForm($aContentInfo[$CNF['FIELD_ID']], $CNF['FIELD_LOCATION_PREFIX']);
-
-            if ($aContentInfo && !empty($CNF['FIELD_LABELS']) && ($aLabels = bx_get($CNF['FIELD_LABELS'])) && $oMetatags->keywordsIsEnabled()) {
-                foreach ($aLabels as $sLabel)
-                    $oMetatags->keywordsAddOne($aContentInfo[$CNF['FIELD_ID']], $sLabel, false);
-            }
-        }
     }
 
     protected function prepareCustomRedirectUrl($s, $aContentInfo)

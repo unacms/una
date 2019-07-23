@@ -83,7 +83,7 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
             $oProfile->disapprove(BX_PROFILE_ACTION_AUTO);
 
         // alert
-        $this->_alertAfterEdit($aContentInfo);
+        $this->_oModule->alertAfterEdit($aContentInfo);
 
         return '';
     }
@@ -110,7 +110,7 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         }
 
         // alert
-        $this->_alertAfterAdd($aContentInfo);
+        $this->_oModule->alertAfterAdd($aContentInfo);
 
         return '';
     }
@@ -124,55 +124,6 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         $this->_oModule->_oDb->deletePolls(array('content_id' => $iContentId));
 
         return '';
-    }
-
-    protected function _alertAfterAdd($aContentInfo)
-    {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        $iId = (int)$aContentInfo[$CNF['FIELD_ID']];
-        $iAuthorId = (int)$aContentInfo[$CNF['FIELD_AUTHOR']];
-
-        $sAction = 'added';
-        if(isset($CNF['FIELD_STATUS']) && isset($aContentInfo[$CNF['FIELD_STATUS']]) && $aContentInfo[$CNF['FIELD_STATUS']] == 'awaiting')
-            $sAction = 'deferred';
-
-        $aParams = $this->_alertParams($aContentInfo);
-        bx_alert($this->_oModule->getName(), $sAction, $iId, $iAuthorId, $aParams);
-    }
-
-    protected function _alertAfterEdit($aContentInfo)
-    {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        $iId = (int)$aContentInfo[$CNF['FIELD_ID']];
-
-        $aParams = $this->_alertParams($aContentInfo);
-        bx_alert($this->_oModule->getName(), 'edited', $iId, false, $aParams);
-    }
-
-    /**
-     * Get array of params to be passed in Add/Edit Alert.
-     */
-    protected function _alertParams($aContentInfo)
-    {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        $iId = (int)$aContentInfo[$CNF['FIELD_ID']];
-        $iAuthorId = (int)$aContentInfo[$CNF['FIELD_AUTHOR']];
-
-        $aParams = array(
-            'object_author_id' => $iAuthorId
-        );
-        if(isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
-            $aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
-        if(!empty($CNF['OBJECT_METATAGS']))
-            $aParams['timeline_group'] = array(
-                'by' => $this->_oModule->_oConfig->getName() . '_' . $iAuthorId . '_' . $iId,
-                'field' => 'owner_id'
-            );
-
-        return $aParams;
     }
 }
 

@@ -43,6 +43,13 @@ class BxCnlModule extends BxBaseModGroupsModule
         if(empty($oModule))
             return;
 
+        /*
+         * Use content's author profile when Author ID wasn't provided. 
+         * Usually it happens when tags were processed with cron.
+         */
+        if(empty($iAuthorId))
+            $iAuthorId = BxDolService::call($sModuleName, 'get_author', array($iContentId));
+
         $aCheck = checkActionModule($this->_iProfileId, 'create channel auto', $this->getName(), false);
         $mixedCnlId = $this->_oDb->getChannelIdByName($sHashtag);
         if (empty($mixedCnlId) && ($aCheck[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED)){

@@ -85,8 +85,18 @@ class BxBaseModGeneralAlertsResponse extends BxDolAlertsResponse
                 return;
         }
 
-        if((int)$this->_oModule->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => 'active'), array($CNF['FIELD_ID'] => $iContentId)) > 0)
-            $this->_oModule->onPublished($iContentId);
+        if(!$this->_oModule->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => 'active'), array($CNF['FIELD_ID'] => $iContentId))) 
+            return;
+        
+        $this->_oModule->onPublished($iContentId);
+
+        /*
+         * Process metas.
+         * Note. It's essential to process metas a the very end, 
+         * because all data related to an entry should be already
+         * processed and are ready to be passed to alert. 
+         */
+        $this->_oModule->processMetasAdd($iContentId);
     }
 }
 

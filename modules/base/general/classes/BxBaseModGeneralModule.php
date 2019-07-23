@@ -1405,6 +1405,57 @@ class BxBaseModGeneralModule extends BxDolModule
 
     public function onFailed($iContentId) {}
 
+    public function processMetasAdd($iContentId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($CNF['OBJECT_METATAGS'])) 
+            return;
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+
+        $bFldStatus = isset($CNF['FIELD_STATUS']);
+        $bFldStatusAdmin = isset($CNF['FIELD_STATUS_ADMIN']);
+        $bContentInfo = $aContentInfo && (!$bFldStatus || ($bFldStatus && $aContentInfo[$CNF['FIELD_STATUS']] == 'active')) && (!$bFldStatusAdmin || ($bFldStatusAdmin && $aContentInfo[$CNF['FIELD_STATUS_ADMIN']] == 'active'));
+        if(!$bContentInfo)
+            return;
+
+        $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+        $oMetatags->metaAddAuto($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']);
+
+        if($oMetatags->locationsIsEnabled())
+            $oMetatags->locationsAddFromForm($aContentInfo[$CNF['FIELD_ID']], $CNF['FIELD_LOCATION_PREFIX']);
+
+        if(!empty($CNF['FIELD_LABELS']) && ($aLabels = bx_get($CNF['FIELD_LABELS'])) && $oMetatags->keywordsIsEnabled())
+            foreach ($aLabels as $sLabel)
+                $oMetatags->keywordsAddOne($aContentInfo[$CNF['FIELD_ID']], $sLabel, false);
+    }
+    
+    public function processMetasEdit($iContentId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($CNF['OBJECT_METATAGS']))
+            return;
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+
+        $bFldStatus = isset($CNF['FIELD_STATUS']);
+        $bFldStatusAdmin = isset($CNF['FIELD_STATUS_ADMIN']);
+        $bContentInfo = $aContentInfo && (!$bFldStatus || ($bFldStatus && $aContentInfo[$CNF['FIELD_STATUS']] == 'active')) && (!$bFldStatusAdmin || ($bFldStatusAdmin && $aContentInfo[$CNF['FIELD_STATUS_ADMIN']] == 'active'));
+        if(!$bContentInfo)
+            return;
+
+        $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+        $oMetatags->metaAddAuto($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT']);
+        if(isset($CNF['FIELD_LOCATION_PREFIX']) && isset($oForm->aInputs[$CNF['FIELD_LOCATION_PREFIX']]) && $oMetatags->locationsIsEnabled())
+            $oMetatags->locationsAddFromForm($aContentInfo[$CNF['FIELD_ID']], empty($CNF['FIELD_LOCATION_PREFIX']) ? '' : $CNF['FIELD_LOCATION_PREFIX']);
+
+        if(!empty($CNF['FIELD_LABELS']) && ($aLabels = bx_get($CNF['FIELD_LABELS'])) && $oMetatags->keywordsIsEnabled())
+            foreach ($aLabels as $sLabel)
+                $oMetatags->keywordsAddOne($aContentInfo[$CNF['FIELD_ID']], $sLabel, false);
+    }
+
     public function getEntryImageData($aContentInfo, $sField = 'FIELD_THUMB', $aTranscoders = array())
     {
         if(empty($aTranscoders))

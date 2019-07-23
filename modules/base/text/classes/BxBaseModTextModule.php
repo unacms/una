@@ -272,10 +272,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         if(!$aContentInfo)
             return;
 
-        $aParams = array('object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]);
-        if(isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
-            $aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
-
+        $aParams = $this->_alertParams($aContentInfo);
         bx_alert($this->getName(), 'added', $iContentId, $aContentInfo[$CNF['FIELD_AUTHOR']], $aParams);
     }
 
@@ -292,6 +289,55 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         $aParams = array('object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']]);
 
         bx_alert($this->getName(), 'failed', $iContentId, $aContentInfo[$CNF['FIELD_AUTHOR']], $aParams);
+    }
+
+    public function alertAfterAdd($aContentInfo)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iId = (int)$aContentInfo[$CNF['FIELD_ID']];
+        $iAuthorId = (int)$aContentInfo[$CNF['FIELD_AUTHOR']];
+
+        $sAction = 'added';
+        if(isset($CNF['FIELD_STATUS']) && isset($aContentInfo[$CNF['FIELD_STATUS']]) && $aContentInfo[$CNF['FIELD_STATUS']] == 'awaiting')
+            $sAction = 'deferred';
+
+        $aParams = $this->_alertParams($aContentInfo);
+        bx_alert($this->getName(), $sAction, $iId, $iAuthorId, $aParams);
+    }
+
+    public function alertAfterEdit($aContentInfo)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iId = (int)$aContentInfo[$CNF['FIELD_ID']];
+
+        $aParams = $this->_alertParams($aContentInfo);
+        bx_alert($this->getName(), 'edited', $iId, false, $aParams);
+    }
+
+    /**
+     * Get array of params to be passed in Add/Edit Alert.
+     */
+    protected function _alertParams($aContentInfo)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iId = (int)$aContentInfo[$CNF['FIELD_ID']];
+        $iAuthorId = (int)$aContentInfo[$CNF['FIELD_AUTHOR']];
+
+        $aParams = array(
+            'object_author_id' => $iAuthorId
+        );
+        if(isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
+            $aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
+        if(!empty($CNF['OBJECT_METATAGS']))
+            $aParams['timeline_group'] = array(
+                'by' => $this->getName() . '_' . $iAuthorId . '_' . $iId,
+                'field' => 'owner_id'
+            );
+
+        return $aParams;
     }
 
     public function isEntryActive($aContentInfo)

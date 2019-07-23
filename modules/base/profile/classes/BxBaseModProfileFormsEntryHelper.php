@@ -110,7 +110,6 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 
     public function onDataAddAfter ($iAccountId, $iContentId)
     {
-        // parent method isn't processing metas, so we are processing it below
         if ($s = parent::onDataAddAfter($iAccountId, $iContentId))
             return $s;
 
@@ -132,9 +131,6 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
             $iAclLevel = !isset($CNF['PARAM_DEFAULT_ACL_LEVEL']) ? MEMBERSHIP_ID_STANDARD : 
                (isAdmin() ? MEMBERSHIP_ID_ADMINISTRATOR : getParam($CNF['PARAM_DEFAULT_ACL_LEVEL']));
         BxDolAcl::getInstance()->setMembership($iProfileId, $iAclLevel, 0, true);
-
-        // process metas
-        $this->_processMetas($iAccountId, $iContentId);
         
         // process uploaded files
         $oForm = $this->getObjectFormAdd();
