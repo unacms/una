@@ -79,7 +79,15 @@ class BxDolProfileUndefined extends BxDolFactory implements iBxDolSingleton, iBx
      */
     public function getUnit($iProfileId = 0, $aParams = array())
     {
+        $aSize2Method = array(
+            'icon' => 'Icon',
+            'thumb' => 'Thumb',
+            'ava' => 'Avatar',
+            'ava-big' => 'Picture'
+        );
+
         $sTemplate = 'profile_unit.html';
+        $sTemplateSize = 'thumb';
         $aTemplateVars = array();
         if(!empty($aParams['template'])) {
             if(is_string($aParams['template']))
@@ -88,15 +96,25 @@ class BxDolProfileUndefined extends BxDolFactory implements iBxDolSingleton, iBx
                 if(!empty($aParams['template']['name']))
                     $sTemplate = 'profile_' . $aParams['template']['name'] . '.html';
 
+                if(!empty($aParams['template']['size']))
+                    $sTemplateSize = $aParams['template']['size'];
+
                 if(!empty($aParams['template']['vars']))
                     $aTemplateVars = $aParams['template']['vars'];
             }
         }
 
-        return BxDolTemplate::getInstance()->parseHtmlByName($sTemplate, array(
-            'thumb_url' => $this->getThumb(),
+        if(empty($sTemplateSize) || !isset($aSize2Method[$sTemplateSize]))
+            $sTemplateSize = 'thumb';
+
+        if(empty($aTemplateVars) || !is_array($aTemplateVars))
+            $aTemplateVars = array();
+
+        return BxDolTemplate::getInstance()->parseHtmlByName($sTemplate, array_merge(array(
+            'size' => $sTemplateSize,
+            'thumb_url' => $this->{'get' . $aSize2Method[$sTemplateSize]}(),
             'title' => $this->getDisplayName()
-        ));
+        ), $aTemplateVars));
     }
 
     /**
