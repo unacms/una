@@ -240,7 +240,7 @@
 	<string name="_bx_protean_stg_cpt_option_button_sm_bg_color"><![CDATA[Цвет фона]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_bg_color_hover"><![CDATA[Цвет фона при наведении курсора]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_border_color"><![CDATA[Цвет границы]]></string>
-	<string name="_bx_protean_stg_cpt_option_button_sm_border_color_hover"><![CDATA[Цвет грфницы при наведении курсора]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_sm_border_color_hover"><![CDATA[Цвет границы при наведении курсора]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_border_size"><![CDATA[Размер границы]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_border_radius"><![CDATA[Радиус углов]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_shadow"><![CDATA[Тень]]></string>
@@ -253,7 +253,7 @@
 
 	<string name="_bx_protean_stg_cpt_category_styles_font"><![CDATA[Шрифты]]></string>
 	<string name="_bx_protean_stg_cpt_option_font_family"><![CDATA[Набор шрифтов]]></string>
-	<string name="_bx_protean_stg_cpt_option_font_size_default"><![CDATA[Размер стандартный шрифта]]></string>
+	<string name="_bx_protean_stg_cpt_option_font_size_default"><![CDATA[Стандартный размер шрифта]]></string>
 	<string name="_bx_protean_stg_cpt_option_font_color_default"><![CDATA[Стандартный цвет шрифта]]></string>
 	<string name="_bx_protean_stg_cpt_option_font_color_grayed"><![CDATA[Серый цвет шрифта]]></string>
 	<string name="_bx_protean_stg_cpt_option_font_color_contrasted"><![CDATA[Контрастный цвет шрифта]]></string>
