@@ -50,6 +50,7 @@ class BxBaseSearchResult extends BxDolSearchResult
     {
         $sCode = '';
         $aData = $this->getSearchData();
+        bx_alert('simple_search', 'get_data', 0, false, array('object' => &$this->aCurrent, 'search_results' => &$aData));
         if ($this->aCurrent['paginate']['num'] > 0) {
 
             $sCode .= $this->addCustomParts();
