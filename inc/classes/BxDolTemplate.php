@@ -341,6 +341,8 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     public static function retrieveCode($sCodeKey = BX_DOL_TEMPLATE_CODE_KEY, $sMixKey = BX_DOL_TEMPLATE_MIX_KEY, $sRootPath = BX_DIRECTORY_PATH_ROOT)
     {
+        $oDb = BxDolDb::getInstance();
+
         $fCheckCode = function($sCode, $bSetCookie) use($sCodeKey, $sRootPath) {
             if(empty($sCode) || !preg_match('/^[A-Za-z0-9_-]+$/', $sCode))
                 return false;
@@ -368,12 +370,12 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             return $aResult;
         };
 
-        $fCheckMix = function($aResult, $iMix, $bSetCookie) use($sMixKey, $sRootPath) {
+        $fCheckMix = function($aResult, $iMix, $bSetCookie) use($sMixKey, $sRootPath, $oDb) {
             list($sCode, $sName) = $aResult;
             if(empty($sName) || empty($iMix))
                 return false;
 
-            $aMix = BxDolDb::getInstance()->getParamsMix($iMix);
+            $aMix = $oDb->getParamsMix($iMix);
             if(empty($aMix) || !is_array($aMix) || $aMix['type'] != $sName)
                 return false;
 
@@ -411,11 +413,23 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         if(!is_array($aResult[0]))
             $aResult[0] = array($aResult[0]);
 
+        $iMixDefault = !empty($aResult[1]) ? (int)getParam($aResult[1] . '_default_mix') : 0;
+
         //--- Check selected mix in COOKIE(the lowest priority) ---//
         $iMix = !empty($_COOKIE[$sMixKey]) ? (int)$_COOKIE[$sMixKey] : 0;
         $iResultCheck = $fCheckMix($aResult, $iMix, false);
-        if($iResultCheck !== false)
-            $aResult[0][1] = $iResultCheck;
+        if($iResultCheck !== false) {
+            $aMix = $oDb->getParamsMix($iMix);
+            if((int)$aMix['published'] == 0 && $iMix != $iMixDefault) {
+                $aUrl = parse_url(BX_DOL_URL_ROOT);
+                $sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
+
+                setcookie($sMixKey, '', time() - 96 * 3600, $sPath);
+                unset($_COOKIE[$sMixKey]);
+            }
+            else
+                $aResult[0][1] = $iResultCheck;
+        }
 
         //--- Check selected mix in GET(the highest priority) ---//
         $iMix = !empty($_GET[$sMixKey]) ? (int)$_GET[$sMixKey] : 0;
@@ -424,13 +438,10 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             $aResult[0][1] = $iResultCheck;
 
         //--- Get default mix for currently selected template ---//
-        if(empty($aResult[0][1]) && !empty($aResult[1])) {
-            $iMixId = (int)getParam($aResult[1] . '_default_mix');
-            if(!empty($iMixId)) {
-                $iResultCheck = $fCheckMix($aResult, $iMixId, false);
-                if($iResultCheck !== false)
-                    $aResult[0][1] = $iResultCheck;
-            }
+        if(empty($aResult[0][1]) && !empty($iMixDefault)) {
+            $iResultCheck = $fCheckMix($aResult, $iMixDefault, false);
+            if($iResultCheck !== false)
+                $aResult[0][1] = $iResultCheck;
         }
 
         if(is_array($aResult[0]) && count($aResult[0]) == 1)
