@@ -12,7 +12,8 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_switcher_title'), '_bx_decorous_stg_cpt_option_switcher_name', 'Decorous', 'digit', '', '', '', 1);
+(@iCategoryId, CONCAT(@sName, '_switcher_title'), '_bx_decorous_stg_cpt_option_switcher_name', 'Decorous', 'digit', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_default_mix'), '_bx_decorous_stg_cpt_option_default_mix', '', 'select', 'a:2:{s:6:"module";s:11:"bx_decorous";s:6:"method";s:23:"get_options_default_mix";}', '', '', 10);
 
 
 -- SETTINGS: Decorous template Styles General

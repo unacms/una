@@ -12,7 +12,8 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_switcher_title'), '_bx_protean_stg_cpt_option_switcher_name', 'Protean', 'digit', '', '', '', 1);
+(@iCategoryId, CONCAT(@sName, '_switcher_title'), '_bx_protean_stg_cpt_option_switcher_name', 'Protean', 'digit', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_default_mix'), '_bx_protean_stg_cpt_option_default_mix', '', 'select', 'a:2:{s:6:"module";s:10:"bx_protean";s:6:"method";s:23:"get_options_default_mix";}', '', '', 10);
 
 
 -- SETTINGS: Protean template Styles General
@@ -628,6 +629,8 @@ INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 INSERT INTO `sys_options_mixes` (`type`, `category`, `name`, `title`, `active`, `published`, `editable`) VALUES
 (@sName, '', 'Protean-Light-Mix', 'Light Mix', 1, 1, 0);
 SET @iMixId = LAST_INSERT_ID();
+
+UPDATE `sys_options` SET `value`=@iMixId WHERE `name`=CONCAT(@sName, '_default_mix');
 
 INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 ('bx_protean_block_bg_color', @iMixId, 'rgba(255, 255, 255, 0.9)'),

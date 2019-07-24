@@ -14,7 +14,7 @@ bx_import('BxBaseModGeneralDb');
 /*
  * Module database queries
  */
-class BxProteanDb extends BxBaseModGeneralDb
+class BxProteanDb extends BxBaseModTemplateDb
 {
     function __construct(&$oConfig)
     {

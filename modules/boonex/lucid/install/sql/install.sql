@@ -12,7 +12,8 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_switcher_title'), '_bx_lucid_stg_cpt_option_switcher_name', 'Lucid', 'digit', '', '', '', 1);
+(@iCategoryId, CONCAT(@sName, '_switcher_title'), '_bx_lucid_stg_cpt_option_switcher_name', 'Lucid', 'digit', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_default_mix'), '_bx_lucid_stg_cpt_option_default_mix', '', 'select', 'a:2:{s:6:"module";s:8:"bx_lucid";s:6:"method";s:23:"get_options_default_mix";}', '', '', 10);
 
 
 -- SETTINGS: Lucid template Styles General
@@ -510,6 +511,8 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 INSERT INTO `sys_options_mixes` (`type`, `category`, `name`, `title`, `active`, `editable`) VALUES
 (@sName, '', 'Light-Mix', 'Light Mix', 1, 0);
 SET @iMixId = LAST_INSERT_ID();
+
+UPDATE `sys_options` SET `value`=@iMixId WHERE `name`=CONCAT(@sName, '_default_mix');
 
 INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 ('bx_lucid_button_nlp_bg_color_hover', @iMixId, 'rgba(50, 100, 180, 1)'),

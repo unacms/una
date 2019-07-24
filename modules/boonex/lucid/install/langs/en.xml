@@ -6,6 +6,7 @@
 	<string name="_bx_lucid_stg_cpt_type"><![CDATA[Lucid]]></string>
 	<string name="_bx_lucid_stg_cpt_category_system"><![CDATA[General]]></string>
 	<string name="_bx_lucid_stg_cpt_option_switcher_name"><![CDATA[Name In Template Switcher]]></string>
+        <string name="_bx_lucid_stg_cpt_option_default_mix"><![CDATA[Default mix]]></string>
 
 	<string name="_bx_lucid_stg_cpt_category_styles_general"><![CDATA[General]]></string>
 	<string name="_bx_lucid_stg_cpt_option_general_item_bg_color_hover"><![CDATA[On-hover item background color]]></string>

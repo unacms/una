@@ -9,12 +9,12 @@
  * @{
  */
 
-bx_import('BxBaseModGeneralDb');
+bx_import('BxBaseModTemplateDb');
 
 /*
  * Module database queries
  */
-class BxOceanDb extends BxBaseModGeneralDb
+class BxOceanDb extends BxBaseModTemplateDb
 {
     function __construct(&$oConfig)
     {

@@ -19,6 +19,23 @@ class BxBaseModTemplateModule extends BxBaseModGeneralModule
 
         $this->_oConfig->init($this->_oDb);
     }
+
+    public function serviceGetOptionsDefaultMix()
+    {
+        $aResult = array(
+            array('key' => '', 'value' => _t('_Select_one'))
+        );
+
+        $aMixes = $this->_oDb->getMixes($this->_oConfig->getName());
+        foreach($aMixes as $aMix) {
+            $aResult[] = array(
+                'key' => $aMix['id'],
+                'value' => $aMix['title']
+            );
+        }
+
+        return $aResult;
+    }
 }
 
 /** @} */

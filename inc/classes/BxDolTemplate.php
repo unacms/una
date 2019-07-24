@@ -370,7 +370,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
         $fCheckMix = function($aResult, $iMix, $bSetCookie) use($sMixKey, $sRootPath) {
             list($sCode, $sName) = $aResult;
-            if(empty($sName))
+            if(empty($sName) || empty($iMix))
                 return false;
 
             $aMix = BxDolDb::getInstance()->getParamsMix($iMix);
@@ -425,9 +425,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
         //--- Get default mix for currently selected template ---//
         if(empty($aResult[0][1]) && !empty($aResult[1])) {
-            $aMix = BxDolDb::getInstance()->getParamsMixActive($aResult[1]);
-            if(!empty($aMix) && is_array($aMix)) {
-                $iResultCheck = $fCheckMix($aResult, $aMix['id'], true);
+            $iMixId = (int)getParam($aResult[1] . '_default_mix');
+            if(!empty($iMixId)) {
+                $iResultCheck = $fCheckMix($aResult, $iMixId, false);
                 if($iResultCheck !== false)
                     $aResult[0][1] = $iResultCheck;
             }

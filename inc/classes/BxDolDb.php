@@ -661,34 +661,25 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
 
         list($sTmplCode, $sTmplName) = BxDolTemplate::retrieveCode();
         if(!empty($sTmplCode) && !empty($sTmplName)) {
+            $iTmplMix = 0;
             if(is_array($sTmplCode))
                 list($sTmplCode, $iTmplMix) = $sTmplCode;
 
-            $sCacheNameMixed = self::$_sParamsCacheNameMixed . $sTmplCode;
+            if(empty($iTmplMix))
+                $iTmplMix = (int)$this->getParam($sTmplName . '_default_mix');
 
-            $bTmplMix = !empty($iTmplMix);
-            if($bTmplMix)
-                $sCacheNameMixed .= '_' . $iTmplMix;
+            if(!empty($iTmplMix)) {
+                $sCacheNameMixed = self::$_sParamsCacheNameMixed . $sTmplCode .  '_' . $iTmplMix;
+                if($bForceCacheInvalidateMixed)
+                    $this->cacheParamsClear($sCacheNameMixed);
 
-            if($bForceCacheInvalidateMixed)
-                $this->cacheParamsClear($sCacheNameMixed);
+                $aMixed = $this->fromCache($sCacheNameMixed, 'getPairs', "SELECT `option`, `value` FROM `sys_options_mixes2options` WHERE `mix_id`=:mix_id", "option", "value", array(
+                    'mix_id' => $iTmplMix
+                ));
 
-            $sQuery = "SELECT `tmo`.`option` AS `option`, `tmo`.`value` AS `value` FROM `sys_options_mixes2options` AS `tmo` INNER JOIN `sys_options_mixes` AS `tm` ON `tmo`.`mix_id`=`tm`.`id`";
-            $aBindings = array();
-
-            if($bTmplMix) {
-                $sQuery .= " AND `tm`.`id`=:mix_id";
-                $aBindings['mix_id'] = $iTmplMix;
+                if(!empty($aMixed) && is_array($aMixed))
+                    self::$_aParams = array_merge(self::$_aParams, $aMixed);
             }
-            else {
-                $sQuery .= " AND `tm`.`type`=:type AND `tm`.`active`='1'";
-                $aBindings['type'] = $sTmplName;
-            }
-
-            $aMixed = $this->fromCache($sCacheNameMixed, 'getPairs', $sQuery, "option", "value", $aBindings);
-
-            if(!empty($aMixed))
-            	self::$_aParams = array_merge(self::$_aParams, $aMixed);
         }
 
         if (empty(self::$_aParams)) {
