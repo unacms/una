@@ -16,7 +16,6 @@ class BxBaseMetatags extends BxDolMetatags
 {
     protected $_oTemplate;
 
-    protected $_sBrowseUrl;
     protected $_iKeywordsCloudFontSizeMin = 14;
     protected $_iKeywordsCloudFontSizeMax = 32;
 
@@ -28,11 +27,6 @@ class BxBaseMetatags extends BxDolMetatags
             $this->_oTemplate = $oTemplate;
         else
             $this->_oTemplate = BxDolTemplate::getInstance();
-
-		$this->_sBrowseUrl = bx_append_url_params('searchKeyword.php', array(
-    		'type' => 'keyword', 
-    		'keyword' => '{keyword}'
-    	)) . '{sections}';
     }
 
     /**
@@ -53,10 +47,7 @@ class BxBaseMetatags extends BxDolMetatags
         $aUnits = array();
         foreach($aKeywords as $sKeyword) {
             $aUnits[] = array(
-                'href' => BX_DOL_URL_ROOT . bx_replace_markers($this->_sBrowseUrl, array(
-            		'keyword' => rawurlencode($sKeyword),
-            		'sections' => ''
-            	)),
+                'href' => $this->keywordsGetHashTagUrl($sKeyword, $iId),
                 'keyword' => htmlspecialchars_adv($sKeyword),
             );
         }
@@ -87,20 +78,11 @@ class BxBaseMetatags extends BxDolMetatags
         $iRatingDiff = $iMaxRating - $iMinRating;
         $iRatingDiff = $iRatingDiff == 0 ? 1 : $iRatingDiff;
 
-        $sSectionPart = '';
-        if (is_array($mixedSection))
-            $sSectionPart = '&section[]=' . implode('&section[]=', $mixedSection);
-        elseif (is_string($mixedSection))
-            $sSectionPart = '&section[]=' . $mixedSection;
-
         $aUnits = array();
         foreach($aKeywords as $sKeyword => $iCount) {
             $aUnits[] = array(
                 'size' => $this->_iKeywordsCloudFontSizeMin + floor($iFontDiff * (($iCount - $iMinRating) / $iRatingDiff)),
-                'href' => BX_DOL_URL_ROOT . bx_replace_markers($this->_sBrowseUrl, array(
-            		'keyword' => rawurlencode($sKeyword),
-            		'sections' => $sSectionPart
-            	)),
+                'href' => $this->keywordsGetHashTagUrl($sKeyword, 0, $mixedSection),
                 'count' => $iCount,
                 'keyword' => htmlspecialchars_adv($sKeyword),
             );
