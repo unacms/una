@@ -1478,6 +1478,22 @@ class BxBaseStudioFormsFieldNumber extends BxBaseStudioFormsFieldText
     }
 }
 
+class BxBaseStudioFormsFieldTime extends BxBaseStudioFormsFieldText
+{
+    protected $sType = 'time';
+    protected $aCheckFunctions = array('avail');
+    protected $sDbPass = 'Xss';
+    
+    public function init()
+	{
+		parent::init();
+
+        $this->aParams['table_field_type'] = 'time';
+
+        $this->aForm['inputs']['value']['db']['pass'] = 'Xss';
+    }
+}
+
 class BxBaseStudioFormsFieldSlider extends BxBaseStudioFormsFieldNumber
 {
     protected $sType = 'slider';
