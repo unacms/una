@@ -417,14 +417,23 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         return $s;
     }
 	
-	public function keywordsGetHashTagUrl($sKeyword, $iId) 
+	public function keywordsGetHashTagUrl($sKeyword, $iId, $mixedSection = false) 
     {   
-        $sUrl = BX_DOL_URL_ROOT . 'searchKeyword.php?type=keyword&keyword=' . rawurlencode($sKeyword);
+        $sSectionPart = '';
+        if (!empty($mixedSection)) {
+            if (is_array($mixedSection))
+                $sSectionPart = '&section[]=' . implode('&section[]=', $mixedSection);
+            elseif (is_string($mixedSection))
+                $sSectionPart = '&section[]=' . $mixedSection;
+        }
+        
+        $sUrl = BX_DOL_URL_ROOT . 'searchKeyword.php?type=keyword&keyword=' . rawurlencode($sKeyword) . $sSectionPart;
         bx_alert('meta_keyword', 'url', 0, false, array(
            'url' => &$sUrl,
            'keyword' => $sKeyword,
 		   'id' => $iId,
-		   'sObject' => $this->_sObject
+           'sObject' => $this->_sObject,
+           'section' => $mixedSection,
         ));
 	    return $sUrl;
 	}
