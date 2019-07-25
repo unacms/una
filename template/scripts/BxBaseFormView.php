@@ -715,6 +715,7 @@ BLAH;
             case 'date_time':
             case 'datetime':
             case 'number':
+            case 'time':
             case 'checkbox':
             case 'radio':
             case 'image':
