@@ -52,7 +52,10 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             if(!empty($CNF[$sKey]))
                 $aStorages[] = $CNF[$sKey];
 
-        return $this->entryAttachmentsByStorage($aStorages, $aData, $aParams);
+        if(!empty($aStorages))
+            return $this->entryAttachmentsByStorage($aStorages, $aData, array_merge($aParams, array('filter_field' => '')));
+
+        return parent::entryAttachments($aData, $aParams);
     }
 
     function entryAuthor ($aData, $iProfileId = false, $sFuncAuthorDesc = 'getAuthorDesc', $sTemplateName = 'author.html', $sFuncAuthorAddon = 'getAuthorAddon')
@@ -619,21 +622,21 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
         $oTranscoder = null;
         $oTranscoderView = null;
-        switch($sStorage) {
-            case $CNF['OBJECT_STORAGE_PHOTOS']:
-                if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS']))
-                    $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS']);
-                if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY_PHOTOS']))
-                    $oTranscoderView = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY_PHOTOS']);
-                break;
 
-            case $CNF['OBJECT_STORAGE_FILES']:
-                if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_FILES']))
-                    $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_FILES']);
-                if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY_FILES']))
-                    $oTranscoderView = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY_FILES']);
-                break;
+        if(isset($CNF['OBJECT_STORAGE_PHOTOS']) && $CNF['OBJECT_STORAGE_PHOTOS'] == $sStorage) {
+            if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS']))
+                $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS']);
+            if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY_PHOTOS']))
+                $oTranscoderView = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY_PHOTOS']);
         }
+        else if(isset($CNF['OBJECT_STORAGE_FILES']) && $CNF['OBJECT_STORAGE_FILES'] == $sStorage) {
+            if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_FILES']))
+                $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_FILES']);
+            if(!empty($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY_FILES']))
+                $oTranscoderView = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_GALLERY_FILES']);
+        }
+        else
+            list($oTranscoder, $oTranscoderView) = parent::getAttachmentsImagesTranscoders($sStorage);
 
         return array($oTranscoder, $oTranscoderView);
     }
