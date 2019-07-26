@@ -59,6 +59,11 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
      */
     protected function addConditionsForPrivateContent($CNF, $oProfile, $aCustomGroup = array()) 
     {
+        // default is bProcessPrivateContent = 1, 
+        // so private items are shown as empty boxes with "Private" title
+
+        // we can show public content when privacy object is available
+        
         if(empty($CNF['OBJECT_PRIVACY_VIEW']))
             return;
 
@@ -66,19 +71,25 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
         if(!$oPrivacy)
             return;
 
+        // for posts in some context we need to show all items, not only public content
         if (!empty($this->aCurrent['restriction']['context']['value']) || !empty($this->aCurrent['restriction']['author']['value'])) {
             $this->setProcessPrivateContent(true);
             return;
         }
-        
+
+        // build condition to show only public content
         $aCondition = $oPrivacy->getContentPublicAsCondition($oProfile ? $oProfile->id() : 0, $aCustomGroup);
         if(empty($aCondition) || !is_array($aCondition))
             return;
 
-        if(isset($aCondition['restriction']))
+        if(isset($aCondition['restriction'])) {
             $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], $aCondition['restriction']);
-        if(isset($aCondition['join']))
+            $this->aPrivateConditionsIndexes['restriction'] = array_keys($aCondition['restriction']);
+        }
+        if(isset($aCondition['join'])) {
             $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $aCondition['join']);
+            $this->aPrivateConditionsIndexes['join'] = array_keys($aCondition['join']);
+        }
 
         $this->setProcessPrivateContent(false);
     }

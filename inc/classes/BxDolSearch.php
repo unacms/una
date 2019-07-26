@@ -302,6 +302,7 @@ class BxDolSearchResult implements iBxDolReplaceable
     protected $bDisplayEmptyMsg = false; ///< display empty message instead of nothing, when no results
     protected $sDisplayEmptyMsgKey = ''; ///< custom empty message language key, instead of default "empty" message
     protected $bProcessPrivateContent = true; ///< check each item for privacy, if view isn't allowed then display private view instead
+    protected $aPrivateConditionsIndexes = array('restriction' => array(), 'join' => array()); ///< conditions indexes for bProcessPrivateContent
     protected $bForceAjaxPaginate = false; ///< force ajax paginate
     protected $iPaginatePerPage = BX_DOL_SEARCH_RESULTS_PER_PAGE_DEFAULT; ///< default 'per page' value for paginate.
 
@@ -409,6 +410,13 @@ class BxDolSearchResult implements iBxDolReplaceable
     public function setProcessPrivateContent ($b)
     {
         $this->bProcessPrivateContent = $b;
+        if ($b) {
+            // unset condition which was set when 'bProcessPrivateContent' was set to 'false'
+            foreach ($this->aPrivateConditionsIndexes['restriction'] as $sKey) 
+                unset($this->aCurrent['restriction'][$sKey]);
+            foreach ($this->aPrivateConditionsIndexes['join'] as $sKey)
+                unset($this->aCurrent['join'][$sKey]);
+        }
     }
 
     /**
@@ -700,6 +708,8 @@ class BxDolSearchResult implements iBxDolReplaceable
                 'field' => '',
                 'operator' => 'against'
             );
+            // for search results we need to show all items, not only public content
+            $this->setProcessPrivateContent(true);
         }
 
         // owner
