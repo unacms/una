@@ -187,7 +187,20 @@ div.bx-base-text-pr-graph .bx-base-text-prg-text {
 /*--- Poll item embed ---*/
 .bx-base-text-poll-embed {
     width: 100%;
-    height: 315px;
+    height: 240px;
+}
+
+.bx-page-iframe .bx-base-text-poll {
+    height: 240px;
+}
+.bx-page-iframe .bx-base-text-poll-cnt {
+    height: 100%;
+    box-sizing: border-box;
+}
+.bx-page-iframe .bx-base-text-poll-plate {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 
