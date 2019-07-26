@@ -534,37 +534,23 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 
         $CNF = &$this->_oConfig->CNF;
 
-        $iProfile = bx_get_logged_profile_id();
         $bDynamic = isset($aBrowseParams['dynamic_mode']) && (bool)$aBrowseParams['dynamic_mode'] === true;
 
-        $sPolls = '';
         $aPolls = $this->_oDb->getPolls(array('type' => 'content_id', 'content_id' => (int)$aContentInfo[$CNF['FIELD_ID']]));
         if(!empty($aPolls) && is_array($aPolls)) {
-            foreach($aPolls as $aPoll) {
-                $sPoll = $this->_oTemplate->getPollItem($aPoll, $iProfile, array(
-                    'dynamic' => $bDynamic,
-                    'switch_menu' => false
-                ));
-                if(empty($sPoll))
-                    continue;
+            $sInclude = $this->_oTemplate->addCss(array('polls.css'), $bDynamic);
 
-                $sPolls .= $sPoll;
-            }
-
-            if(!empty($sPolls)) {
-                $sInclude = '';
-                $sInclude .= $this->_oTemplate->addJs(array('polls.js'), $bDynamic);
-                $sInclude .= $this->_oTemplate->addCss(array('polls.css'), $bDynamic);
-
-                $aResult['raw'] = ($bDynamic ? $sInclude : '') . $this->_oTemplate->getJsCode('poll') . $this->_oTemplate->parseHtmlByName('poll_items_showcase.html', array(
-                    'js_object' => $this->_oConfig->getJsObject('poll'),
-                    'html_id' => $this->_oConfig->getHtmlIds('polls_showcase') . $aEvent['id'],
-                    'polls' => $sPolls
-                ));
-
-                if((!empty($aResult['videos']) && is_array($aResult['videos'])) || (!empty($aResult['videos_attach']) && is_array($aResult['videos_attach'])))
-                    $aResult['_cache'] = false;
-            }
+            $aResult['raw'] = ($bDynamic ? $sInclude : '') . $this->_oTemplate->parseHtmlByName('poll_items_embed.html', array(
+                'embed_url' => BX_DOL_URL_ROOT . bx_append_url_params($this->_oConfig->getBaseUri() . 'embed_polls/', array(
+                    'id' => (int)$aContentInfo[$CNF['FIELD_ID']],
+                    'param_switch_menu' => 0,
+                    'param_showcase' => 1
+                ))
+            ));
+/*
+            if((!empty($aResult['videos']) && is_array($aResult['videos'])) || (!empty($aResult['videos_attach']) && is_array($aResult['videos_attach'])))
+                $aResult['_cache'] = false;
+ */
         }
 
         return $aResult;

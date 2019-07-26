@@ -307,13 +307,26 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         if(empty($aContentInfo) || !is_array($aContentInfo))
             return;
 
-        $aPolls = $this->_oDb->getPolls(array('type' => 'content_id', 'content_id' => (int)$aContentInfo[$CNF['FIELD_ID']]));
+        $iContentId = (int)$aContentInfo[$CNF['FIELD_ID']];
+
+        $aPolls = $this->_oDb->getPolls(array('type' => 'content_id', 'content_id' => $iContentId));
         if(empty($aPolls) || !is_array($aPolls))
             return;
 
         $sContent = '';
         foreach($aPolls as $aPoll)
             $sContent .= $this->getPollItem($aPoll, 0, $aParams);
+
+        if(!empty($sContent) && isset($aParams['showcase']) && (bool)$aParams['showcase'] === true) {
+            $this->addJs(array('flickity/flickity.pkgd.min.js'));
+            $this->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css');
+
+            $sContent = $this->parseHtmlByName('poll_items_showcase.html', array(
+                'js_object' => $this->_oConfig->getJsObject('poll'),
+                'html_id' => $this->_oConfig->getHtmlIds('polls_showcase') . $iContentId,
+                'polls' => $sContent
+            ));
+        }
 
         $sHeader = '';
         if(!empty($sContent)) {
