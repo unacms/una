@@ -25,8 +25,11 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
     public function getJsCode($sType, $aParams = array(), $bWrap = true)
     {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
         $aParams = array_merge(array(
-            'aHtmlIds' => $this->_oConfig->getHtmlIds()
+            'aHtmlIds' => $this->_oConfig->getHtmlIds(),
+            'sEditorId' => isset($CNF['FIELD_TEXT_ID']) ? $CNF['FIELD_TEXT_ID'] : ''
         ), $aParams);
 
         return parent::getJsCode($sType, $aParams, $bWrap);
@@ -252,6 +255,13 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                 )
             ),
             'action_menu' => !empty($mixedMenu) ? $mixedMenu->getCode() : '',
+            'bx_if:show_action_embed' => array(
+                'condition' => $bManage,
+                'content' => array(
+                    'js_object' => $sJsObject,
+                    'id' => $iPollId
+                )
+            ),
             'bx_if:show_action_delete' => array(
                 'condition' => $bManage,
                 'content' => array(
@@ -263,7 +273,66 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             'content' => $this->$sMethod($aPoll, $bDynamic)
         ));
     }
-    
+
+    public function embedPollItem($mixedPoll, $aParams = array())
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $sHeader = '';
+        $sContent = $this->getPollItem($mixedPoll, 0, $aParams);
+        if(!empty($sContent)) {
+            $aPoll = is_array($mixedPoll) ? $mixedPoll : $this->_oDb->getPolls(array('type' => 'id', 'id' => (int)$mixedPoll));
+
+            $sHeader = strmaxtextlen($aPoll[$CNF['FIELD_POLL_TEXT']], 32, '...');
+            $sContent = $this->getJsCode('poll') . $sContent;
+        }
+
+        $this->addJs(array('polls.js'));
+        $this->addCss(array('polls.css'));
+
+        $oTemplate = BxDolTemplate::getInstance();
+        $oTemplate->addCssStyle($CNF['STYLES_POLLS_EMBED_CLASS'], $CNF['STYLES_POLLS_EMBED_CONTENT']);
+        $oTemplate->setPageNameIndex(BX_PAGE_EMBED);
+        $oTemplate->setPageHeader($sHeader);
+        $oTemplate->setPageContent('page_main_code', $sContent);
+        $oTemplate->getPageCode();
+        exit;
+    }
+
+    public function embedPollItems($mixedContentInfo, $aParams = array())
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $aContentInfo = is_array($mixedContentInfo) ? $mixedContentInfo : $this->_oDb->getContentInfoById((int)$mixedContentInfo);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return;
+
+        $aPolls = $this->_oDb->getPolls(array('type' => 'content_id', 'content_id' => (int)$aContentInfo[$CNF['FIELD_ID']]));
+        if(empty($aPolls) || !is_array($aPolls))
+            return;
+
+        $sContent = '';
+        foreach($aPolls as $aPoll)
+            $sContent .= $this->getPollItem($aPoll, 0, $aParams);
+
+        $sHeader = '';
+        if(!empty($sContent)) {
+            $sHeader = strmaxtextlen($aContentInfo[$CNF['FIELD_TITLE']], 32, '...');
+            $sContent = $this->getJsCode('poll') . $sContent;
+        }
+
+        $this->addJs(array('polls.js'));
+        $this->addCss(array('polls.css'));
+
+        $oTemplate = BxDolTemplate::getInstance();
+        $oTemplate->addCssStyle($CNF['STYLES_POLLS_EMBED_CLASS'], $CNF['STYLES_POLLS_EMBED_CONTENT']);
+        $oTemplate->setPageNameIndex(BX_PAGE_EMBED);
+        $oTemplate->setPageHeader($sHeader);
+        $oTemplate->setPageContent('page_main_code', $sContent);
+        $oTemplate->getPageCode();
+        exit;
+    }
+
     protected function _getPollAnswers($aPoll, $bDynamic = false)
     {
         $CNF = &$this->getModule()->_oConfig->CNF;

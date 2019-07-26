@@ -47,6 +47,12 @@ class BxBaseModTextConfig extends BxBaseModGeneralConfig
 
             // objects
             'OBJECT_VOTES_POLL_ANSWERS' => $this->_sName . '_poll_answers',
+
+            // styles
+            'STYLES_POLLS_EMBED_CLASS' => 'body.bx-page-iframe.bx-def-color-bg-page',
+            'STYLES_POLLS_EMBED_CONTENT' => array(
+                'background-color' => '#ffffff'
+            ),
         );
 
         $this->_aJsClasses = array(

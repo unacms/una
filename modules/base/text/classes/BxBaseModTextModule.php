@@ -20,6 +20,33 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     }
 
     // ====== ACTIONS METHODS
+    public function actionEmbedPoll($iPollId = 0)
+    {
+        if(empty($iPollId) && bx_get('poll_id') !== false)
+            $iPollId = (int)bx_get('poll_id');
+
+        $aParams = bx_get_with_prefix('param');
+        array_walk($aParams, function(&$sValue) {
+            $sValue = bx_process_input($sValue);
+        });
+
+        $this->_oTemplate->embedPollItem($iPollId, $aParams);
+    }
+
+    public function actionEmbedPolls($iId = 0)
+    {
+        list($iContentId, $aContentInfo) = $this->_getContent($iId);
+        if($iContentId === false)
+            return;
+
+        $aParams = bx_get_with_prefix('param');
+        array_walk($aParams, function(&$sValue) {
+            $sValue = bx_process_input($sValue);
+        });
+
+        $this->_oTemplate->embedPollItems($aContentInfo, $aParams);
+    }
+
     public function actionGetPoll()
     {
         $iPollId = (int)bx_get('poll_id');

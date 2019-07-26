@@ -13,10 +13,12 @@ function BxPostsPolls(oOptions) {
     this._sActionsUrl = oOptions.sActionUrl;
     this._sObjName = oOptions.sObjName == undefined ? 'oBxPostsPolls' : oOptions.sObjName;
     this._iOwnerId = oOptions.iOwnerId == undefined ? 0 : oOptions.iOwnerId;
+    this._sEditorId = oOptions.sEditorId == undefined ? '' : oOptions.sEditorId;
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'slide' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
+    
 }
 
 BxPostsPolls.prototype.initFlickity = function(oParent) {
@@ -96,6 +98,14 @@ BxPostsPolls.prototype.afterPollFormSubmit = function (oForm, oData)
         bx_alert(oData.message, fContinue);
     else
         fContinue();
+};
+
+BxPostsPolls.prototype.embedPoll = function(oLink, iId) 
+{
+    var sEmbedUrl = this._sActionsUrl + 'embed_poll/' + iId;
+    var sHtmlId = 'bx-base-general-poll-' + iId;
+
+    bx_editor_insert_html (this._sEditorId, sHtmlId, '<iframe class="bx-base-text-poll-embed" src="' + sEmbedUrl + '" frameborder="0" allow="autoplay; picture-in-picture" allowfullscreen></iframe>');
 };
 
 BxPostsPolls.prototype.deletePoll = function(oLink, iId)

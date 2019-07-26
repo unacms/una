@@ -184,6 +184,13 @@ div.bx-base-text-pr-graph .bx-base-text-prg-text {
 	white-space: nowrap;
 }
 
+/*--- Poll item embed ---*/
+.bx-base-text-poll-embed {
+    width: 560px;
+    height: 315px;
+}
+
+
 /*--- Animation ---*/
 @-webkit-keyframes bx-base-text-prg-bar-anim {
     from {

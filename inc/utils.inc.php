@@ -1074,6 +1074,25 @@ function bx_get ($sName, $sMethod = false)
         return false;
 }
 
+function bx_get_with_prefix ($sPrefix, $sMethod = false)
+{
+    $aSources = array('get' => &$_GET, 'post' => &$_POST);
+
+    $aFiltered = array();
+    foreach($aSources as $sName => $aSource)
+        if($sMethod == $sName || !$sMethod)
+            $aFiltered = array_merge($aFiltered, array_filter($aSource, function($sKey) use ($sPrefix) {
+                return strpos($sKey, $sPrefix) === 0;
+            }, ARRAY_FILTER_USE_KEY));
+
+    $aUpdated = array();
+    array_walk($aFiltered, function($sValue, $sKey) use ($sPrefix, &$aUpdated) {
+        $aUpdated[trim(str_replace($sPrefix, '', $sKey), '_-')] = $sValue;
+    });
+
+    return $aUpdated;
+}
+
 function bx_get_base_url_inline($aParams = array())
 {
     $aBaseLink = parse_url(BX_DOL_URL_ROOT);
