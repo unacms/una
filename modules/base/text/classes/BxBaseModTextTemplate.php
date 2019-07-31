@@ -90,6 +90,30 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         return $this->parseHtmlByName($sTemplateName, $aVars);
     }
 
+    public function entryBreadcrumb($aContentInfo, $aTmplVarsItems = array())
+    {
+    	$CNF = &$this->getModule()->_oConfig->CNF;
+
+        $oPermalink = BxDolPermalinks::getInstance();
+
+        $aTmplVarsItems = array();
+        if(!empty($CNF['OBJECT_CATEGORY']) && !empty($CNF['FIELD_CATEGORY'])) {
+            $oCategory = BxDolCategory::getObjectInstance($CNF['OBJECT_CATEGORY']);
+
+            $aTmplVarsItems[] = array(
+                'url' => $oCategory->getCategoryUrl($aContentInfo[$CNF['FIELD_CATEGORY']]),
+                'title' => $oCategory->getCategoryTitle($aContentInfo[$CNF['FIELD_CATEGORY']])
+            );
+        }
+
+    	$aTmplVarsItems[] = array(
+            'url' => $oPermalink->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
+            'title' => bx_process_output($aContentInfo[$CNF['FIELD_TITLE']])
+        );
+
+    	return parent::entryBreadcrumb($aContentInfo, $aTmplVarsItems);
+    }
+
     function entryContext ($aData, $iProfileId = false, $sFuncContextDesc = 'getContextDesc', $sTemplateName = 'context.html', $sFuncContextAddon = 'getContextAddon')
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
