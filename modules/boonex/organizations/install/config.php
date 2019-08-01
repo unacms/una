@@ -45,7 +45,8 @@ $aConfig = array(
      */
     'connections' => array(
     	'sys_profiles_friends' => array ('type' => 'profiles'),
-		'sys_profiles_subscriptions' => array ('type' => 'profiles'),
+        'sys_profiles_subscriptions' => array ('type' => 'profiles'),
+        'sys_profiles_relations' => array ('type' => 'profiles'),
     ),
 
     /**
