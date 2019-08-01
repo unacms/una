@@ -1112,24 +1112,54 @@ BLAH;
         $this->addCssJsUi();
 
         $sVals = '';
-        if (!empty($aInput['value']) && is_array($aInput['value'])) {
-            foreach ($aInput['value'] as $sVal) {
-                if (!$sVal || !($oProfile = BxDolProfile::getInstance($sVal)))
+        if(!empty($aInput['value']) && is_array($aInput['value'])) {
+            foreach($aInput['value'] as $sVal) {
+                if(!$sVal || !($oProfile = BxDolProfile::getInstance($sVal)))
                     continue;
+
                $sVals .= '<b class="val bx-def-color-bg-hl bx-def-round-corners">' . $oProfile->getUnit(0, array('template' => 'unit_wo_info')) . $oProfile->getDisplayName() . '<input type="hidden" name="' . $aInput['name'] . '[]" value="' . $sVal . '" /></b>';
             }
             $sVals = trim($sVals, ',');
         }
 
+        $bDisabled = isset($aInput['attrs']['disabled']) && $aInput['attrs']['disabled'] == 'disabled';
+
+        $sId = $aInput['name'] . time() . mt_rand(0, 100);
+        $sClass = 'bx-form-input-autotoken bx-def-font-inputs bx-form-input-text';
+        if($bDisabled)
+            $sClass .= ' bx-form-input-disabled';
+        if(!empty($aInput['attrs']['class'])) {
+            $sClass .= ' ' . $aInput['attrs']['class'];
+            unset($aInput['attrs']['class']);
+        }
+
+        $aAttrs = array('value' => '', 'autocomplete' => 'off', 'autocapitalize' => 'off', 'autocorrect' => 'off');
+        if(isset($aInput['attrs']) && is_array($aInput['attrs']))
+            $aAttrs = array_merge($aAttrs, $aInput['attrs']);
+
         return $this->oTemplate->parseHtmlByName('form_field_custom_suggestions.html', array(
-            'id' => $aInput['name'] . time() . mt_rand(0, 100),
-            'url_get_recipients' => $aInput['ajax_get_suggestions'],
+            'id' => $sId,
             'name' => $aInput['name'],
-			'b_img' => isset($aInput['custom']['b_img']) ? (int)$aInput['custom']['b_img'] : 1,
-			'only_once' => isset($aInput['custom']['only_once']) ? 1 : 0,
-			'on_select' => isset($aInput['custom']['on_select']) ? $aInput['custom']['on_select']: 'null',
-            'placeholder' => bx_html_attribute(isset($aInput['placeholder']) ? $aInput['placeholder'] : _t('_sys_form_paceholder_profiles_suggestions'), BX_ESCAPE_STR_QUOTE),
+            'class' => $sClass,
             'vals' => $sVals,
+            'bx_if:input' => array(
+                'condition' => !$bDisabled,
+                'content' => array(
+                    'attrs' => bx_convert_array2attrs($aAttrs),
+                )
+            ),
+            'bx_if:init' => array(
+                'condition' => !$bDisabled,
+                'content' => array(
+                    'id' => $sId,
+                    'name' => $aInput['name'],
+                    'url_get_recipients' => $aInput['ajax_get_suggestions'],
+                    'b_img' => isset($aInput['custom']['b_img']) ? (int)$aInput['custom']['b_img'] : 1,
+                    'only_once' => isset($aInput['custom']['only_once']) ? 1 : 0,
+                    'on_select' => isset($aInput['custom']['on_select']) ? $aInput['custom']['on_select']: 'null',
+                    'placeholder' => bx_html_attribute(isset($aInput['placeholder']) ? $aInput['placeholder'] : _t('_sys_form_paceholder_profiles_suggestions'), BX_ESCAPE_STR_QUOTE),
+                )
+            )
         ));
     }
 

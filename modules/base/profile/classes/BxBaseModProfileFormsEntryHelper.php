@@ -39,18 +39,12 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 
     protected function _getProfileAndContentData ($iContentId)
     {
-        $aContentInfo = array();
-        $oProfile = false;
-
         $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
-        if (!$aContentInfo)
+        if(!$aContentInfo)
             return array (false, false);
 
-        $oProfile = BxDolProfile::getInstance($aContentInfo['profile_id']);
-        if (!$oProfile) 
-            $oProfile = BxDolProfileUndefined::getInstance();
-
-        return array ($oProfile, $aContentInfo);
+        $oProfile = BxDolProfile::getInstanceMagic($aContentInfo['profile_id']);
+        return array($oProfile, $aContentInfo);
     }
 
     public function deleteData ($iContentId, $aContentInfo = false, $oProfile = null, $oForm = null)
@@ -71,6 +65,27 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         return parent::deleteData ($iContentId, $aContentInfo, $oProfile, $oForm);
     }
 
+    public function onDataDeleteAfter ($iContentId, $aContentInfo, $oProfile)
+    {
+        if($s = parent::onDataDeleteAfter($iContentId, $aContentInfo, $oProfile))
+            return $s;
+
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $bActAsProfile = BxDolService::call($oProfile->getModule(), 'act_as_profile');
+        if(($oPrivacyView = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) !== false && $bActAsProfile)
+            $oPrivacyView->deleteGroupCustomByProfileId($oProfile->id());
+
+        if(($oPrivacyPost = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_POST'])) !== false) {
+            $oPrivacyPost->deleteGroupCustomByContentId($iContentId);
+
+            if($bActAsProfile)
+                $oPrivacyPost->deleteGroupCustomByProfileId($oProfile->id());
+        }
+
+        return '';
+    }
+
     public function onDataEditBefore ($iContentId, $aContentInfo, &$aTrackTextFieldsChanges, &$oProfile, &$oForm)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
@@ -89,6 +104,11 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
+        /*
+         * Load update data.
+         */
+        list($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
+
         $aProfileInfo = $oProfile->getInfo();
 
         // change profile to 'pending' only if profile is 'active'
@@ -101,6 +121,9 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         if (isset($CNF['FIELD_COVER']))
             $oForm->processFiles($CNF['FIELD_COVER'], $iContentId, false);
 
+        if(isset($CNF['FIELD_ALLOW_POST_TO']) && !empty($aContentInfo[$CNF['FIELD_ALLOW_POST_TO']]) && ($oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_POST'])) !== false)
+            $oPrivacy->reassociateGroupCustomWithContent($oProfile->id(), $iContentId, (int)$aContentInfo[$CNF['FIELD_ALLOW_POST_TO']]);
+
         // create an alert
         bx_alert($this->_oModule->getName(), 'edited', $aContentInfo[$CNF['FIELD_ID']]);
         bx_alert('profile', 'edit', $oProfile->id(), 0, array('content' => $iContentId, 'module' => $this->_oModule->getName()));
@@ -110,14 +133,21 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 
     public function onDataAddAfter ($iAccountId, $iContentId)
     {
-        if ($s = parent::onDataAddAfter($iAccountId, $iContentId))
+        /*
+         * Add account and content association.
+         * Note. It should be done first to correctly get and user author's profile later.
+         */
+        $iProfileId = BxDolProfile::add(BX_PROFILE_ACTION_MANUAL, $iAccountId, $iContentId, BX_PROFILE_STATUS_PENDING, $this->_oModule->getName());
+
+        if($s = parent::onDataAddAfter($iAccountId, $iContentId))
             return $s;
 
         $CNF = &$this->_oModule->_oConfig->CNF;
-
-        // add account and content association
-        $iProfileId = BxDolProfile::add(BX_PROFILE_ACTION_MANUAL, $iAccountId, $iContentId, BX_PROFILE_STATUS_PENDING, $this->_oModule->getName());
-        $oProfile = BxDolProfile::getInstance($iProfileId);
+        
+        /*
+         * Load update data.
+         */
+        list($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
 
         // approve profile if auto-approval is enabled and profile status is 'pending'
         $sStatus = $oProfile->getStatus();
@@ -139,12 +169,14 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         if (isset($CNF['FIELD_COVER']))
             $oForm->processFiles($CNF['FIELD_COVER'], $iContentId, true);
 
+        if(isset($CNF['FIELD_ALLOW_POST_TO']) && !empty($aContentInfo[$CNF['FIELD_ALLOW_POST_TO']]) && ($oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_POST'])) !== false)
+            $oPrivacy->associateGroupCustomWithContent($oProfile->id(), $iContentId, (int)$aContentInfo[$CNF['FIELD_ALLOW_POST_TO']]);
+
         // alert
-        $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
         $aParams = array();        
         if(isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
             $aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
-        
+
         bx_alert($this->_oModule->getName(), 'added', $iContentId, false, $aParams);
 
         // switch context to the created profile

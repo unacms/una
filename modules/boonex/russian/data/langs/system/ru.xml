@@ -844,7 +844,6 @@
 	<string name="_adm_form_txt_field_type_text"><![CDATA[текст]]></string>
 	<string name="_adm_form_txt_field_type_text_auto"><![CDATA[авто текст]]></string>
 	<string name="_adm_form_txt_field_type_textarea"><![CDATA[текстовое поле]]></string>
-  <string name="_adm_form_txt_field_type_time"><![CDATA[время]]></string>
 	<string name="_adm_form_txt_field_type_value"><![CDATA[инфо]]></string>
 	<string name="_adm_form_txt_field_unique"><![CDATA[Уникальное]]></string>
 	<string name="_adm_form_txt_field_value_button"><![CDATA[Заголовок]]></string>
@@ -2097,8 +2096,22 @@
 	<string name="_sys_form_login_input_phone_error_format"><![CDATA[Телефон должен содержать только цифры и начинаться с '+']]></string>
 	<string name="_sys_form_login_input_phone_error_not_unique"><![CDATA[Этот телефон уже кем-то используется]]></string>
 	<string name="_sys_form_login_input_code_error_invalid"><![CDATA[Неправильный код проверки. Пожалуйста, повторите код или  <a href="{0}">измените телефонный номер и начните сначала</a>.]]></string>
-	
 	<string name="_sys_form_paceholder_profiles_suggestions"><![CDATA[Введите имя...]]></string>
+        <string name="_sys_form_ps_group_custom"><![CDATA[Конфиденциальность: Пользовательские группы]]></string>
+        <string name="_sys_form_display_ps_gc_select"><![CDATA[Конфиденциальность: Выбрать пользовательскую группу]]></string>
+        <string name="_sys_form_ps_gc_input_caption_system_profile_id"><![CDATA[ID профиля]]></string>
+        <string name="_sys_form_ps_gc_input_caption_system_content_id"><![CDATA[ID контента]]></string>
+        <string name="_sys_form_ps_gc_input_caption_system_object"><![CDATA[Объект]]></string>
+        <string name="_sys_form_ps_gc_input_caption_system_action"><![CDATA[Действие]]></string>
+        <string name="_sys_form_ps_gc_input_caption_system_group_id"><![CDATA[ID группы]]></string>
+        <string name="_sys_form_ps_gc_input_caption_system_search"><![CDATA[Поиск]]></string>
+        <string name="_sys_form_ps_gc_input_caption_search"><![CDATA[Найти]]></string>
+        <string name="_sys_form_ps_gc_input_caption_system_list"><![CDATA[Список]]></string>
+        <string name="_sys_form_ps_gc_input_caption_list"><![CDATA[или выбрать]]></string>
+        <string name="_sys_form_ps_gc_input_caption_system_do_submit"><![CDATA[Отправить]]></string>
+        <string name="_sys_form_ps_gc_input_caption_do_submit"><![CDATA[Отправить]]></string>
+        <string name="_sys_form_ps_gc_input_caption_system_do_cancel"><![CDATA[Отменить]]></string>
+        <string name="_sys_form_ps_gc_input_caption_do_cancel"><![CDATA[Отменить]]></string>
 	<string name="_sys_form_report"><![CDATA[Пожаловаться]]></string>
 	<string name="_sys_form_report_input_caption_submit"><![CDATA[Пожаловаться]]></string>
 	<string name="_sys_form_report_input_caption_text"><![CDATA[Текст жалобы]]></string>
@@ -2629,14 +2642,20 @@
             <li><b>{0}</b> всего</li>
             <li><b>{1}</b> удалено</li>
         </ul>]]></string>
+        <string name="_sys_ps_group_title_custom"><![CDATA[Индивидуально]]></string>
         <string name="_sys_ps_group_title_followers"><![CDATA[Подписчики]]></string>
 	<string name="_sys_ps_group_title_friends"><![CDATA[Друзья]]></string>
+        <string name="_sys_ps_group_title_friends_selected"><![CDATA[Друзья (выборочно)]]></string>
+        <string name="_sys_ps_group_title_relations"><![CDATA[Отношения]]></string>
+        <string name="_sys_ps_group_title_relations_selected"><![CDATA[Отношения (выборочно)]]></string>
 	<string name="_sys_ps_group_title_me_only"><![CDATA[Только я]]></string>
-	<string name="_sys_ps_group_title_members"><![CDATA[Пользователей]]></string>
-	<string name="_sys_ps_group_title_public"><![CDATA[Публичные]]></string>
+	<string name="_sys_ps_group_title_members"><![CDATA[Пользователи]]></string>
+	<string name="_sys_ps_group_title_public"><![CDATA[Все]]></string>
         <string name="_sys_ps_group_title_participants"><![CDATA[Участники]]></string>
 	<string name="_sys_ps_group_title_closed"><![CDATA[Закрытая]]></string>
     <string name="_sys_ps_group_title_secret"><![CDATA[Секретная]]></string>
+    <string name="_sys_ps_ferr_incorrect_gc_not_allowed"><![CDATA[Пользовательские группы конфиденциальности не доступны.]]></string>
+    <string name="_sys_ps_ferr_incorrect_gc_owner"><![CDATA[Вы не являетесь владельцем данного контента.]]></string>
     <string name="_sys_ps_ferr_incorrect_select"><![CDATA[Вам нужно выбрать значение]]></string>
     <string name="_sys_ps_space_title_friend"><![CDATA[друг]]></string>
     <string name="_sys_push_notification_request"><![CDATA[Хотите получать уведомления с сайта {0}?]]></string>   

@@ -474,6 +474,11 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
 
     public function onDataDeleteAfter ($iContentId, $aContentInfo, $oProfile)
     {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(($oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) !== false)
+            $oPrivacy->deleteGroupCustomByContentId($iContentId);
+
         return '';
     }
 
@@ -489,6 +494,9 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
+        /*
+         * Load update data.
+         */
         list($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
 
         if(isset($CNF['FIELD_PHOTO']))
@@ -498,6 +506,9 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             if($aTrackResult['old'] == 'failed' && $aTrackResult['new'] == 'active')
                 $this->_oModule->alertAfterAdd($aContentInfo);
 
+        if(isset($CNF['FIELD_ALLOW_VIEW_TO']) && !empty($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) && ($oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) !== false)
+            $oPrivacy->reassociateGroupCustomWithContent($oProfile->id(), $iContentId, (int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]);
+
         return '';
     }
 
@@ -505,10 +516,15 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
+        list($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
+
         if(($oForm = $this->getObjectFormAdd()) !== false) {
             if(isset($CNF['FIELD_PHOTO']))
                 $oForm->processFiles($CNF['FIELD_PHOTO'], $iContentId, true);
         }
+
+        if(isset($CNF['FIELD_ALLOW_VIEW_TO']) && !empty($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) && ($oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) !== false)
+            $oPrivacy->associateGroupCustomWithContent($oProfile->id(), $iContentId, (int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]);
 
         return '';
     }

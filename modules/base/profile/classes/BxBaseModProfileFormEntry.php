@@ -81,6 +81,14 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
             $this->aInputs[$sField]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName('form_ghost_template.html', $this->_getProfilePhotoGhostTmplVars($sField, $aContentInfo));
         }
 
+        if (isset($CNF['FIELD_ALLOW_POST_TO']) && isset($this->aInputs[$CNF['FIELD_ALLOW_POST_TO']]) && $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_POST'])) {
+            $iContentId = !empty($aValues[$CNF['FIELD_ID']]) ? (int)$aValues[$CNF['FIELD_ID']] : 0;
+            $iProfileId = !empty($iContentId) ? (int)$this->getContentOwnerProfileId($iContentId) : bx_get_logged_profile_id();
+            $iGroupId = !empty($aValues[$CNF['FIELD_ALLOW_POST_TO']]) ? $aValues[$CNF['FIELD_ALLOW_POST_TO']] : 0;
+
+            $oPrivacy->loadGroupCustom($iProfileId, $iContentId, $iGroupId);
+        }
+
         parent::initChecker($aValues, $aSpecificValues);
     }
 

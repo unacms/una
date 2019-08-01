@@ -12,6 +12,10 @@ define('BX_DOL_PG_MEONLY', '2');
 define('BX_DOL_PG_ALL', '3');
 define('BX_DOL_PG_MEMBERS', '4');
 define('BX_DOL_PG_FRIENDS', '5');
+define('BX_DOL_PG_FRIENDS_SELECTED', '6');
+define('BX_DOL_PG_RELATIONS', '7');
+define('BX_DOL_PG_RELATIONS_SELECTED', '8');
+define('BX_DOL_PG_CUSTOM', '9');
 
 define('BX_DOL_PG_DEFAULT', BX_DOL_PG_ALL);
 
@@ -63,7 +67,11 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
     protected $_sObject;
     protected $_aObject;
 
+    protected $_aGroupsSettings;
     protected $_aGroupsExclude;
+    
+    protected $_sFormUsers;
+    protected $_sFormDisplayUsersSelect;
 
     /**
      * Constructor
@@ -79,7 +87,15 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         $this->_oDb = new BxDolPrivacyQuery();
         $this->_oDb->init($this->_aObject);
 
+        $this->_aGroupsSettings = array(
+            BX_DOL_PG_FRIENDS_SELECTED => array('connection' => 'sys_profiles_friends'),
+            BX_DOL_PG_RELATIONS_SELECTED => array('connection' => 'sys_profiles_relations')
+        );
+
         $this->_aGroupsExclude = array();
+
+        $this->_sFormUsers = 'sys_privacy_group_custom';
+        $this->_sFormDisplayUsersSelect = 'sys_privacy_group_custom_manage';
     }
 
     /**
@@ -147,12 +163,18 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
             $sTitle = _t(!empty($sTitle) ? $sTitle : '_' . $sName);
         }
 
+        BxDolTemplate::getInstance()->addInjection('system_injection_header', 'text', $oPrivacy->getJsScript());
+
         return array(
             'type' => 'select',
             'name' => $sName,
             'caption' => $sTitle,
             'value' => $sValue,
             'values' => $aValues,
+            'attrs' => array(
+                'class' => 'sys-privacy-group',
+                'onchange' => 'javascript: ' . $oPrivacy->getJsObjectName() . '.selectGroup(this);'
+            ),
             'checker' => array(
                 'func' => 'avail',
                 'error' => _t('_sys_ps_ferr_incorrect_select')
@@ -161,6 +183,150 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
                 'pass' => 'Int'
             )
         );
+    }
+
+    public function actionLoadGroupCustom()
+    {
+        $iProfileId = (int)bx_get('profile_id');
+        $iContentId = (int)bx_get('content_id');
+        $iGroupId = (int)bx_get('group_id');
+
+        $oForm = BxDolForm::getObjectInstance($this->_sFormUsers, $this->_sFormDisplayUsersSelect);
+        return echoJson(array('eval' => $this->getJsObjectName() . '.onSelectGroup(oData);', 'content' => $oForm->getElementGroupCustom(array(
+            'profile_id' => $iProfileId, 
+            'content_id' => $iContentId, 
+            'object' => $this->_sObject, 
+            'group_id' => $iGroupId
+        ))));
+    }
+
+    public function actionSelectGroup()
+    {
+        $aValues = array(
+            'profile_id' => (int)bx_get('profile_id'),
+            'content_id' => (int)bx_get('content_id'),
+            'object' => $this->_sObject,
+            'group_id' => (int)bx_get('group_id')
+        );
+
+        $aParams = array(
+            'popup_only' => (bool)bx_get('popup_only')
+        );
+
+        if(!isset($this->_aGroupsSettings[$aValues['group_id']]))
+            return echoJson(array());
+
+        if($aValues['profile_id'] != bx_get_logged_profile_id())
+            return echoJson(array('msg' => _t('_sys_ps_ferr_incorrect_gc_owner')));
+
+        if(($mixedResult = $this->isSelectGroupCustom($aValues)) !== true)
+            return echoJson(array('msg' => $mixedResult));
+
+        return echoJson($this->getSelectGroup($aValues, $aParams));
+    }
+
+    public function actionUsersList()
+    {
+        $iGroup = (int)bx_get('group');
+        if(!isset($this->_aGroupsSettings[$iGroup]))
+            return echoJson(array());
+
+        $oConnection = BxDolConnection::getObjectInstance($this->_aGroupsSettings[$iGroup]['connection']);
+        if(!$oConnection)
+            return echoJson(array());
+
+        $iProfileId = bx_get_logged_profile_id();
+        $aConnectedIds = $oConnection->getConnectedContent($iProfileId, true);
+        if(empty($aConnectedIds) || !is_array($aConnectedIds))
+            return echoJson(array());
+
+        $sTerm = bx_get('term');
+        $aProfiles = BxDolService::call('system', 'profiles_search', array($sTerm), 'TemplServiceProfiles');
+        if(empty($aProfiles))
+            return echoJson(array());
+        
+        $aResult = array();
+        foreach($aProfiles as $aProfile)
+            if(in_array($aProfile['value'], $aConnectedIds))
+                $aResult[] = $aProfile;
+
+        echoJson($aResult);
+    }  
+
+    public function loadGroupCustom($iProfileId, $iContentId, $iGroupId)
+    {
+        $sJsCode = $this->_oTemplate->_wrapInTagJsCode($this->getJsObjectName() . ".loadGroupCustom(" . json_encode(array(
+            'profile_id' => $iProfileId,
+            'content_id' => $iContentId,
+            'group_id' => $iGroupId
+        )) . ");");
+
+        BxDolTemplate::getInstance()->addInjection('system_injection_header', 'text', $sJsCode);
+    }
+
+    public function getGroupSettings($iGroup)
+    {
+        if(empty($this->_aGroupsSettings[$iGroup]) || !is_array($this->_aGroupsSettings[$iGroup]))
+            return false;
+
+        return $this->_aGroupsSettings[$iGroup];
+    }
+
+    public function getGroupCustom($aParams)
+    {
+        return $this->_oDb->getGroupCustom($aParams);
+    }
+
+    public function updateGroupCustom($aParamsSet, $aParamsWhere)
+    {
+        return $this->_oDb->updateGroupCustom($aParamsSet, $aParamsWhere);
+    }
+
+    public function deleteGroupCustom($aParamsWhere)
+    {
+        return $this->_oDb->deleteGroupCustom($aParamsWhere);
+    }
+
+    public function associateGroupCustomWithContent($iProfileId, $iContentId, $iGroupId)
+    {
+        return $this->updateGroupCustom(array('content_id' => $iContentId), array(
+            'profile_id' => $iProfileId,
+            'content_id' => 0,
+            'object' => $this->_sObject,
+            'group_id' => $iGroupId
+        ));
+    }
+
+    public function reassociateGroupCustomWithContent($iProfileId, $iContentId, $iGroupId)
+    {
+        $aGroupCustom = $this->getGroupCustom(array(
+            'type' => 'pco', 
+            'profile_id' => $iProfileId,
+            'content_id' => $iContentId,
+            'object' => $this->_sObject
+        ));
+
+        if(!empty($aGroupCustom) && is_array($aGroupCustom) && $aGroupCustom['group_id'] != $iGroupId)
+            $this->deleteGroupCustom(array('id' => $aGroupCustom['id']));
+
+        return $this->associateGroupCustomWithContent($iProfileId, $iContentId, $iGroupId);
+    }
+
+    public function deleteGroupCustomByContentId($iContentId)
+    {
+        return $this->_oDb->deleteGroupCustom(array('content_id' => $iContentId, 'object' => $this->_sObject));
+    }
+
+    public function deleteGroupCustomByProfileId($iProfileId)
+    {
+        $aGroups = $this->_oDb->getGroupCustom(array('type' => 'profile_id', 'profile_id' => $iProfileId));
+        if(empty($aGroups) || !is_array($aGroups))
+            return true;
+
+        foreach($aGroups as $aGroup)
+            $this->_oDb->deleteGroupCustom(array('id' => $aGroup['id']));
+
+        return true;
     }
 
     public function addDynamicGroups($aValues, $iOwnerId, $aParams)
@@ -324,7 +490,7 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
      * @param  integer $iViewerId viewer ID.
      * @return boolean result of operation.
      */
-    function check($iObjectId, $iViewerId = 0)
+    public function check($iObjectId, $iViewerId = 0)
     {
         if(empty($iViewerId))
             $iViewerId = (int)bx_get_logged_profile_id();
@@ -350,7 +516,7 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         $aGroup = $this->_oDb->getGroupsBy(array('type' => 'id', 'id' => $aObject['group_id']));
         if(!empty($aGroup) && is_array($aGroup) && (int)$aGroup['active'] == 1 && !empty($aGroup['check'])) {
             $sCheckMethod = $this->getCheckMethod($aGroup['check']);
-            if(method_exists($this, $sCheckMethod) && $this->$sCheckMethod($aObject['owner_id'], $iViewerId))
+            if(method_exists($this, $sCheckMethod) && $this->$sCheckMethod((substr($sCheckMethod, -8) == 'ByObject' ? $aObject : $aObject['owner_id']), $iViewerId))
                 return true;
         }
 
@@ -386,6 +552,48 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         return BxDolConnection::getObjectInstance('sys_profiles_friends')->isConnected($iOwnerId, $iViewerId, true);
     }
 
+    public function checkFriendsSelectedByObject($aObject, $iViewerId)
+    {
+        if(!$this->checkFriends($aObject['owner_id'], $iViewerId))
+            return false;
+
+        $aGroupCustom = $this->getGroupCustom(array(
+            'type' => 'pcog_ext', 
+            'profile_id' => $aObject['owner_id'], 
+            'content_id' => $aObject['id'], 
+            'object' => $this->_sObject, 
+            'group_id' => $aObject['group_id']
+        ));
+
+        return !empty($aGroupCustom['members']) && is_array($aGroupCustom['members']) && in_array($iViewerId, $aGroupCustom['members']);
+    }
+
+    public function checkRelations($iOwnerId, $iViewerId)
+    {
+        return BxDolConnection::getObjectInstance('sys_profiles_relations')->isConnected($aObject['owner_id'], $iViewerId, true);
+    }
+
+    public function checkRelationsSelectedByObject($aObject, $iViewerId)
+    {
+        if(!$this->checkRelations($aObject['owner_id'], $iViewerId))
+            return false;
+
+        $aGroupCustom = $this->getGroupCustom(array(
+            'type' => 'pcog_ext', 
+            'profile_id' => $aObject['owner_id'], 
+            'content_id' => $aObject['id'], 
+            'object' => $this->_sObject, 
+            'group_id' => $aObject['group_id']
+        ));
+
+        return !empty($aGroupCustom['members']) && is_array($aGroupCustom['members']) && in_array($iViewerId, $aGroupCustom['members']);
+    }
+
+    public function checkCustomByObject($aObject, $iViewerId)
+    {
+        return '';
+    }
+
     public function setTableFieldAuthor($sValue)
     {
         $this->_aObject['table_field_author'] = $sValue;
@@ -406,7 +614,7 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
             if($iProfileIdLogged == $iProfileIdOwner)
                 return true;
 
-			$aGroups[] = BX_DOL_PG_MEMBERS;
+            $aGroups[] = BX_DOL_PG_MEMBERS;
             if($iProfileIdOwner && $this->checkFriends($iProfileIdOwner, $iProfileIdLogged))
                 $aGroups[] = BX_DOL_PG_FRIENDS;
         }
@@ -454,6 +662,18 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
             $aValues[] = array('key' => $aGroup['id'], 'value' => _t($aGroup['title']));
         }
         return $aValues;
+    }
+
+    /**
+     * Check whethere custom group is allowed in current circumstances.
+     * NOTE. Can be overwritten if it's needed.
+     * 
+     * @param type $aParams an array of parameters.
+     * @return boolean result of operation.
+     */
+    protected function isSelectGroupCustom($aParams)
+    {
+        return true;
     }
 }
 

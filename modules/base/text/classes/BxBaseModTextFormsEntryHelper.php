@@ -45,18 +45,12 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $aContentInfo = array();
-        $oProfile = false;
-
         $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
-        if (!$aContentInfo)
-            return array (false, false);
+        if(!$aContentInfo)
+            return array(false, false);
 
-        $oProfile = BxDolProfile::getInstance($aContentInfo[$CNF['FIELD_AUTHOR']]);
-        if (!$oProfile) 
-            $oProfile = BxDolProfileUndefined::getInstance();
-
-        return array ($oProfile, $aContentInfo);
+        $oProfile = BxDolProfile::getInstanceMagic($aContentInfo[$CNF['FIELD_AUTHOR']]);
+        return array($oProfile, $aContentInfo);
     }
 
     public function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm)

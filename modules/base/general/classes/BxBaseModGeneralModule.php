@@ -1224,8 +1224,9 @@ class BxBaseModGeneralModule extends BxDolModule
 
         // file owner must be author of the content or profile itself in case of profile based module
         if ($iContentId) {
-            if ($this instanceof iBxDolProfileService) {
-                $oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName());
+            $sModule = $this->getName();
+            if ($this instanceof iBxDolProfileService && BxDolService::call($sModule, 'act_as_profile')) {
+                $oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $sModule);
             }
             else {
                 $aContentInfo = $this->_oDb->getContentInfoById($iContentId);

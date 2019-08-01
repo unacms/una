@@ -19,6 +19,18 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
         parent::__construct($oModule);
     }
 
+    protected function _getProfileAndContentData ($iContentId)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
+        if(!$aContentInfo)
+            return array(false, false);
+
+        $oProfile = BxDolProfile::getInstanceMagic($aContentInfo[$CNF['FIELD_AUTHOR']]);
+        return array($oProfile, $aContentInfo);
+    }
+
     protected function _processPermissionsCheckForViewDataForm ($aContentInfo, $oProfile)
     {
         $sMsg = parent::_processPermissionsCheckForViewDataForm ($aContentInfo, $oProfile);
@@ -68,6 +80,12 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
 
         if (isset($CNF['OBJECT_CONNECTIONS']) && $oGroupProfile && ($oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])))
             $oConnection->onDeleteInitiatorAndContent($oGroupProfile->id());
+
+        if(($oPrivacyView = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) !== false)
+            $oPrivacyView->deleteGroupCustomByContentId($iContentId);
+
+        if(($oPrivacyPost = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_POST'])) !== false)
+            $oPrivacyPost->deleteGroupCustomByContentId($iContentId);
 
         return '';
     }

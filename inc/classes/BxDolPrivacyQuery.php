@@ -160,6 +160,141 @@ class BxDolPrivacyQuery extends BxDolDb
         return $this->query($sSql);
     }
 
+    public function getGroupCustom($aParams)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sDiv = ',';
+    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+
+    	$sSelectClause = "`tg`.*";
+    	$sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
+        switch($aParams['type']) {
+            case 'id':
+            	$aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = array(
+                    'id' => $aParams['id']
+                );
+
+                $sWhereClause = " AND `tg`.`id`=:id";
+                break;
+
+            case 'id_ext':
+            	$aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = array(
+                    'id' => $aParams['id']
+                );
+
+                $sSelectClause .= ", GROUP_CONCAT(`tgm`.`member_id` SEPARATOR  '" . $sDiv . "') AS `members`";
+                $sJoinClause = "LEFT JOIN `sys_privacy_groups_custom_members` AS `tgm` ON `tg`.`id`=`tgm`.`group_id`";
+                $sWhereClause = " AND `tg`.`id`=:id";
+                $sGroupClause = "`tg`.`id`";
+                break;
+
+            case 'pco':
+                $aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = array(
+                    'profile_id' => $aParams['profile_id'],
+                    'content_id' => $aParams['content_id'],
+                    'object' => $aParams['object'],
+                );
+
+                $sWhereClause = " AND `tg`.`profile_id`=:profile_id AND `tg`.`content_id`=:content_id AND `tg`.`object`=:object";
+                break;
+
+            case 'pcog_ext':
+                $aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = array(
+                    'profile_id' => $aParams['profile_id'],
+                    'content_id' => $aParams['content_id'],
+                    'object' => $aParams['object'],
+                    'group_id' => $aParams['group_id'],
+                );
+
+                $sSelectClause .= ", GROUP_CONCAT(`tgm`.`member_id` SEPARATOR  '" . $sDiv . "') AS `members`";
+                $sJoinClause = "LEFT JOIN `sys_privacy_groups_custom_members` AS `tgm` ON `tg`.`id`=`tgm`.`group_id`";
+                $sWhereClause = " AND `tg`.`profile_id`=:profile_id AND (`tg`.`content_id`=:content_id" . (!empty($aParams['content_id']) ? " OR `tg`.`content_id`='0'" : "") . ") AND `tg`.`object`=:object AND `tg`.`group_id`=:group_id";
+                $sGroupClause = "`tg`.`id`";
+                break;
+
+            case 'profile_id':
+            	$aMethod['params'][1] = array(
+                    'profile_id' => $aParams['profile_id']
+                );
+
+                $sWhereClause = " AND `tg`.`profile_id`=:profile_id";
+                break;
+        }
+
+        $sGroupClause = !empty($sGroupClause) ? "GROUP BY " . $sGroupClause : $sGroupClause;
+        $sOrderClause = !empty($sOrderClause) ? "ORDER BY " . $sOrderClause : $sOrderClause;
+        $sLimitClause = !empty($sLimitClause) ? "LIMIT " . $sLimitClause : $sLimitClause;
+
+        $aMethod['params'][0] = "SELECT
+                " . $sSelectClause . "
+            FROM `sys_privacy_groups_custom` AS `tg` " . $sJoinClause . " 
+            WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
+
+        $aResult = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+        if(in_array($aParams['type'], array('id_ext', 'pcog_ext')) && !empty($aResult) && is_array($aResult))
+            $aResult['members'] = explode($sDiv, $aResult['members']);
+
+        return $aResult;
+    }
+
+    public function insertGroupCustom($aParamsSet)
+    {
+        if(empty($aParamsSet))
+            return false;
+
+        if(!$this->query("INSERT INTO `sys_privacy_groups_custom` SET " . $this->arrayToSQL($aParamsSet)))
+            return false;
+
+        return (int)$this->lastId();
+    }
+
+    public function updateGroupCustom($aParamsSet, $aParamsWhere)
+    {
+        if(empty($aParamsSet) || empty($aParamsWhere))
+            return false;
+
+        return $this->query("UPDATE `sys_privacy_groups_custom` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $this->arrayToSQL($aParamsWhere, " AND "));
+    }
+
+    public function deleteGroupCustom($aParamsWhere)
+    {
+        if(empty($aParamsWhere))
+            return false;
+
+        $sWhereClause = $this->arrayToSQL($aParamsWhere, " AND ");
+
+        $aGroup = $this->getRow("SELECT * FROM `sys_privacy_groups_custom` WHERE " . $sWhereClause . " LIMIT 1");
+        if(empty($aGroup) || !is_array($aGroup))
+            return true;
+
+        $bResult = $this->query("DELETE FROM `sys_privacy_groups_custom` WHERE " . $sWhereClause . " LIMIT 1") !== false;
+        if($bResult)
+            $this->deleteGroupCustomMember(array('group_id' => $aGroup['id']));
+
+        return $bResult;
+    }
+
+    public function insertGroupCustomMember($aParamsSet)
+    {
+        if(empty($aParamsSet))
+            return false;
+
+        return $this->query("INSERT INTO `sys_privacy_groups_custom_members` SET " . $this->arrayToSQL($aParamsSet));
+    }
+
+    public function deleteGroupCustomMember($aParamsWhere)
+    {
+        if(empty($aParamsWhere))
+            return false;
+
+        return $this->query("DELETE FROM `sys_privacy_groups_custom_members` WHERE " . $this->arrayToSQL($aParamsWhere, " AND "));
+    }
+
     function getContentByGroupAsSQLPart($sField, $mixedGroupId)
     {
         if(is_array($mixedGroupId))
