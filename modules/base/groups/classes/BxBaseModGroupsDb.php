@@ -92,9 +92,11 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
         return $this->getOne($sQuery) ? true : false;
     }
 
-    public function getAdmins ($iGroupProfileId)
+    public function getAdmins ($iGroupProfileId, $iStart = 0, $iLimit = 0)
     {
-        $sQuery = $this->prepare("SELECT `fan_id` FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `group_profile_id` = ?", $iGroupProfileId);
+		$sQuery = $this->prepare("SELECT `fan_id` FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `group_profile_id` = ?", $iGroupProfileId);
+		if ($iLimit > 0)
+            $sQuery = $this->prepare("SELECT `fan_id` FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `group_profile_id` = ? LIMIT ?, ?", $iGroupProfileId, $iStart, $iLimit);
         return $this->getColumn($sQuery);
     }
 }
