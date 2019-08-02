@@ -347,14 +347,14 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if(!$oGroupProfile)
             return false;
 
-        $aProfiles = $this->_oDb->getAdmins($oGroupProfile->id());
-        if(empty($aProfiles) || !is_array($aProfiles))
-            return false;
-
         $iStart = (int)bx_get('start');
         $iLimit = !empty($CNF['PARAM_NUM_CONNECTIONS_QUICK']) ? getParam($CNF['PARAM_NUM_CONNECTIONS_QUICK']) : 4;
         if(!$iLimit)
             $iLimit = 4;
+        
+        $aProfiles = $this->_oDb->getAdmins($oGroupProfile->id(), $iStart,  $iLimit+1);
+        if(empty($aProfiles) || !is_array($aProfiles))
+            return false;
 
         return $this->_serviceBrowseQuick($aProfiles, $iStart, $iLimit);
     }
