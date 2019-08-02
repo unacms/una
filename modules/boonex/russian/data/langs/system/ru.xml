@@ -1685,7 +1685,7 @@
 	<string name="_sys_acl_start"><![CDATA[Начало: ]]></string>
 	<string name="_sys_acl_expire"><![CDATA[Окончание: ]]></string>
 	<string name="_sys_acl_expire_never"><![CDATA[никогда]]></string>
-	<string name="_sys_add_friend"><![CDATA[Добавить друга]]></string>
+	<string name="_sys_add_friend"><![CDATA[Добавить в друзья]]></string>
         <string name="_sys_add_relation"><![CDATA[Добавить связь]]></string>
 	<string name="_sys_adm_installed"><![CDATA[Установленные]]></string>
 	<string name="_sys_admin_apply"><![CDATA[Применить]]></string>
@@ -2303,9 +2303,9 @@
     <string name="_sys_menu_item_title_sm_rating"><![CDATA[Рейтинг]]></string>
     <string name="_sys_menu_item_title_sm_comments"><![CDATA[Комментарии]]></string>
     <string name="_sys_menu_item_title_sm_actions"><![CDATA[Действия]]></string>
-    <string name="_sys_menu_item_title_sm_befriend"><![CDATA[Добавить друга]]></string>
+    <string name="_sys_menu_item_title_sm_befriend"><![CDATA[Добавить в друзья]]></string>
     <string name="_sys_menu_item_title_sm_befriend_confirm"><![CDATA[Принять запрос о дружбе]]></string>
-    <string name="_sys_menu_item_title_sm_unfriend"><![CDATA[Перестать дружить]]></string>
+    <string name="_sys_menu_item_title_sm_unfriend"><![CDATA[Удалить из друзей]]></string>
     <string name="_sys_menu_item_title_sm_unfriend_cancel"><![CDATA[Отменить запрос о дружбе]]></string>
     <string name="_sys_menu_item_title_sm_unfriend_reject"><![CDATA[Отвергнуть запрос о дружбе]]></string>
     <string name="_sys_menu_item_title_sm_join"><![CDATA[Присоединиться]]></string>
@@ -2385,8 +2385,8 @@
     <string name="_sys_menu_item_title_system_sm_rating"><![CDATA[Рейтинг]]></string>
     <string name="_sys_menu_item_title_system_sm_comments"><![CDATA[Комментарии]]></string>
     <string name="_sys_menu_item_title_system_sm_actions"><![CDATA[Действия]]></string>
-    <string name="_sys_menu_item_title_system_sm_befriend"><![CDATA[Добавить друга]]></string>
-    <string name="_sys_menu_item_title_system_sm_unfriend"><![CDATA[Перестать дружить]]></string>
+    <string name="_sys_menu_item_title_system_sm_befriend"><![CDATA[Добавить в друзья]]></string>
+    <string name="_sys_menu_item_title_system_sm_unfriend"><![CDATA[Удалить из друзей]]></string>
     <string name="_sys_menu_item_title_system_sm_join"><![CDATA[Присоединиться]]></string>
     <string name="_sys_menu_item_title_system_sm_leave"><![CDATA[Покинуть]]></string>
     <string name="_sys_menu_item_title_system_sm_nl"><![CDATA[Новая строка]]></string>
@@ -2810,7 +2810,7 @@
 	<string name="_sys_txt_form_submission_error"><![CDATA[Неправильная информация. Пожалуйста, проверьте ввод и отошлите снова.]]></string>
 	<string name="_sys_txt_form_submission_error_csrf_expired"><![CDATA[Маркер устарел. Пожалуйста попробуйте снова.]]></string>
 
-    <string name="_sys_txt_homepage_cover"><![CDATA[Сплоченность людей — нерушимая крепость.<br /><button class="bx-btn bx-hide-when-logged-in bx-def-margin-top" onclick="document.location='{0}'">Присоедениться!</button>]]></string>
+    <string name="_sys_txt_homepage_cover"><![CDATA[Сплоченность людей — нерушимая крепость.<br /><button class="bx-btn bx-hide-when-logged-in bx-def-margin-top" onclick="document.location='{0}'">Присоединиться!</button>]]></string>
     <string name="_sys_txt_login_2fa_description"><![CDATA[Двухэтапная авторизация включена. В дополнении к email-у и паролю, Вам нужно будет ввести код проверки, который мы вышлем вам в SMS.]]></string>
 	<string name="_sys_txt_login_2fa_sms_text"><![CDATA[Ваш код проверки {0}.]]></string>
 	<string name="_sys_txt_login_2fa_sms_error_occured"><![CDATA[Произошла ошибка, пожалуйста, уведомите о ней администратора сайта.]]></string>
