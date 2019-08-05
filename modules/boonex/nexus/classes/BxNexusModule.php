@@ -67,7 +67,8 @@ class BxNexusModule extends BxDolModule
             'txt_refreshing' => bx_js_string(_t('_bx_nexus_refreshing')),
         ));
 
-        $this->_oTemplate->addJs('pulltorefresh.min.js');
+        //  TODO: enable it back when it will work correctly on Android
+        // $this->_oTemplate->addJs('pulltorefresh.min.js');
 
         if (false !== strpos($_SERVER['HTTP_USER_AGENT'], 'Desktop')) {
             $s .= "<script>if (window.module) module = window.module;</script>";
