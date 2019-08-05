@@ -45,3 +45,11 @@ ul.bx-menu-toolbar li a .sys-icon-a {
 .bx-menu-account-popup-profile {
 	font-weight: bold;
 }
+
+/* --------------- custom menu */
+.bx-menu-main-submenu.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .sys-icon,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .sys-icon,
+.bx-menu-main-submenu.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .bx-btn,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .bx-btn {
+    color: #29789c;
+}

@@ -1,5 +1,14 @@
 @import url(../../../../../../../template/css/menu.css);
 
+
+/* --------------- custom menu */
+.bx-menu-main-submenu.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .sys-icon,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .sys-icon,
+.bx-menu-main-submenu.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .bx-btn,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .bx-btn {
+    color: rgba(30, 150, 250, 0.9);
+}
+
 /* --------------- profile stats menu */
 ul.bx-menu-ver.bx-menu-profile-stats li {
     margin-top: 0;

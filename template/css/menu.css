@@ -733,6 +733,12 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
     box-shadow: none;
     text-shadow: none;
 }
+.bx-menu-main-submenu.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .sys-icon,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .sys-icon,
+.bx-menu-main-submenu.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .bx-btn,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .bx-btn {
+    color: #3e8685;
+}
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-view-element-holder a span,
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-vote-element-holder a span,
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-score-element-holder a span,
