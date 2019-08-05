@@ -197,7 +197,6 @@ class BxBaseStudioSettings extends BxDolStudioSettings
         }
 
         $bMixSelected = !empty($this->sMix) && !empty($this->aMix);
-        $bMixPublished = $bMixSelected && (int)$this->aMix['published'] != 0;
 
         $aTmplVarsButton = array();
         if($bMixSelected)
@@ -223,11 +222,11 @@ class BxBaseStudioSettings extends BxDolStudioSettings
                         ) 
                     ),
                     'bx_if:show_publish_mix' => array(
-                        'condition' => !$bMixPublished,
+                        'condition' => $bMixSelected && (int)$this->aMix['published'] == 0,
                         'content' => $aTmplVarsButton
                     ),
                     'bx_if:show_hide_mix' => array(
-                        'condition' => $bMixPublished,
+                        'condition' => $bMixSelected && (int)$this->aMix['published'] != 0,
                         'content' => $aTmplVarsButton
                     ),
                     'bx_if:show_export_mix' => array(
