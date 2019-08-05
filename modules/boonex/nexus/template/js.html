@@ -74,6 +74,7 @@
 
     // pull to refresh
     $(document).ready(function () {
+/*
         if ($('.bx-messenger-block-lots').length)
             glBxMobileDisablePullToRefresh = true;
         if ('undefined' === typeof glBxMobileDisablePullToRefresh || false === glBxMobileDisablePullToRefresh) {
@@ -86,6 +87,7 @@
                 },
             });
         }
+*/
         if ('undefined' !== typeof(window.ReactNativeWebView))
             window.ReactNativeWebView.postMessage(JSON.stringify({stop_loading: 1}));
     });
