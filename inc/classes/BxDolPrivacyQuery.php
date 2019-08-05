@@ -284,7 +284,7 @@ class BxDolPrivacyQuery extends BxDolDb
         if(empty($aParamsSet))
             return false;
 
-        return $this->query("INSERT INTO `sys_privacy_groups_custom_members` SET " . $this->arrayToSQL($aParamsSet));
+        return $this->query("INSERT IGNORE INTO `sys_privacy_groups_custom_members` SET " . $this->arrayToSQL($aParamsSet));
     }
 
     public function deleteGroupCustomMember($aParamsWhere)

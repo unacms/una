@@ -94,7 +94,8 @@ class BxBasePrivacy extends BxDolPrivacy
 
             if(($aMembersList = $oForm->getCleanValue('list')) !== false)
                 $aMembers = array_merge($aMembers, $aMembersList);
-            
+
+            $aMembers = array_unique($aMembers);
             if(empty($aMembers) || !is_array($aMembers))
                 return array();
 

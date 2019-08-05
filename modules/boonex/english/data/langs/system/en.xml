@@ -2646,9 +2646,9 @@ If it is not enabled then please consider implement this optimization, since it 
         <string name="_sys_ps_group_title_custom"><![CDATA[Custom]]></string>
         <string name="_sys_ps_group_title_followers"><![CDATA[Followers]]></string>
 	<string name="_sys_ps_group_title_friends"><![CDATA[Friends]]></string>
-        <string name="_sys_ps_group_title_friends_selected"><![CDATA[Selected Friends]]></string>
+        <string name="_sys_ps_group_title_friends_selected"><![CDATA[Selected Friends...]]></string>
         <string name="_sys_ps_group_title_relations"><![CDATA[Relationships]]></string>
-        <string name="_sys_ps_group_title_relations_selected"><![CDATA[Selected Relationships]]></string>
+        <string name="_sys_ps_group_title_relations_selected"><![CDATA[Selected Relationships...]]></string>
 	<string name="_sys_ps_group_title_me_only"><![CDATA[Me only]]></string>
 	<string name="_sys_ps_group_title_members"><![CDATA[Members]]></string>
 	<string name="_sys_ps_group_title_public"><![CDATA[Public]]></string>

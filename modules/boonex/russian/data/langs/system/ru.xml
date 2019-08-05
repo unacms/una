@@ -2645,9 +2645,9 @@
         <string name="_sys_ps_group_title_custom"><![CDATA[Индивидуально]]></string>
         <string name="_sys_ps_group_title_followers"><![CDATA[Подписчики]]></string>
 	<string name="_sys_ps_group_title_friends"><![CDATA[Друзья]]></string>
-        <string name="_sys_ps_group_title_friends_selected"><![CDATA[Друзья (выборочно)]]></string>
+        <string name="_sys_ps_group_title_friends_selected"><![CDATA[Избранные друзья...]]></string>
         <string name="_sys_ps_group_title_relations"><![CDATA[Отношения]]></string>
-        <string name="_sys_ps_group_title_relations_selected"><![CDATA[Отношения (выборочно)]]></string>
+        <string name="_sys_ps_group_title_relations_selected"><![CDATA[Избранные отношения...]]></string>
 	<string name="_sys_ps_group_title_me_only"><![CDATA[Только я]]></string>
 	<string name="_sys_ps_group_title_members"><![CDATA[Пользователи]]></string>
 	<string name="_sys_ps_group_title_public"><![CDATA[Все]]></string>
