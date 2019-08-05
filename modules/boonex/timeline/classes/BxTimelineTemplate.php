@@ -560,24 +560,27 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     public function getLoadMore($aParams, $bEnabled, $bVisible = true)
     {
-        $iStart = $aParams['start'];
-        $iPerPage = $aParams['per_page'];
-        $iYearSel = (int)$aParams['timeline'];
-        $iYearMin = $this->_oDb->getMaxDuration($aParams);
-
         $sStylePrefix = $this->_oConfig->getPrefix('style');
         $sJsObject = $this->_oConfig->getJsObjectView($aParams);
 
-        $sYears = '';
-        if(!empty($iYearMin)) {
-            $iYearMax = date('Y', time()) - 1;
-            for($i = $iYearMax; $i >= $iYearMin; $i--)
-                $sYears .= ($i != $iYearSel ? $this->parseLink('javascript:void(0)', $i, array(
-                    'title' => _t('_bx_timeline_txt_jump_to_n_year', $i),
-                    'onclick' => 'javascript:' . $sJsObject . '.changeTimeline(this, ' . $i . ')'
-                )) : $i) . ', ';
+        $iStart = $aParams['start'];
+        $iPerPage = $aParams['per_page'];
 
-            $sYears = substr($sYears, 0, -2);
+        $sYears = '';
+        if($this->_oConfig->isJumpTo()) {
+            $iYearSel = (int)$aParams['timeline'];
+            $iYearMin = $this->_oDb->getMaxDuration($aParams);      
+
+            if(!empty($iYearMin)) {
+                $iYearMax = date('Y', time()) - 1;
+                for($i = $iYearMax; $i >= $iYearMin; $i--)
+                    $sYears .= ($i != $iYearSel ? $this->parseLink('javascript:void(0)', $i, array(
+                        'title' => _t('_bx_timeline_txt_jump_to_n_year', $i),
+                        'onclick' => 'javascript:' . $sJsObject . '.changeTimeline(this, ' . $i . ')'
+                    )) : $i) . ', ';
+
+                $sYears = substr($sYears, 0, -2);
+            }
         }
 
         $aTmplVars = array(

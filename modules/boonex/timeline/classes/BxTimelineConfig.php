@@ -33,6 +33,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_sVideosAutoplay;
     protected $_iPreloadComments;
     protected $_iPreloadCommentsMax;
+    protected $_bJumpTo;
 
     protected $_bHot;
     protected $_iHotInterval;
@@ -296,6 +297,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         if($this->_iPreloadComments > $this->_iPreloadCommentsMax)
             $this->_iPreloadComments = $this->_iPreloadCommentsMax;
 
+        $this->_bJumpTo = getParam($sOptionPrefix . 'enable_jump_to_switcher') == 'on';
+
         $this->_bHot = getParam($sOptionPrefix . 'enable_hot') == 'on';
         $this->_iHotInterval = (int)getParam($sOptionPrefix . 'hot_interval');
 
@@ -359,6 +362,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function isCountAllViews()
     {
         return $this->_bCountAllViews;
+    }
+
+    public function isJumpTo()
+    {
+        return $this->_bJumpTo;
     }
 
     public function isHot()
