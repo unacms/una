@@ -105,7 +105,7 @@ BxPostsPolls.prototype.embedPoll = function(oLink, iId)
     var sEmbedUrl = this._sActionsUrl + 'embed_poll/' + iId;
     var sHtmlId = 'bx-base-general-poll-' + iId;
 
-    bx_editor_insert_html (this._sEditorId, sHtmlId, '<iframe class="bx-base-text-poll-embed" src="' + sEmbedUrl + '" frameborder="0"></iframe>');
+    bx_editor_insert_html (this._sEditorId, sHtmlId, '<iframe src="' + sEmbedUrl + '" frameborder="0" width="100%" height="240px"></iframe>');
 };
 
 BxPostsPolls.prototype.deletePoll = function(oLink, iId)
