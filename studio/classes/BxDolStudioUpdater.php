@@ -99,7 +99,7 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
         if($aResult['result']) {
             $this->oDb->updateModule(array('version' => $this->_aConfig['version_to']), array('id' => $aModuleInfo['id']));
 
-            //--- Remove update pàckage ---//
+            //--- Remove update package ---//
             $this->delete($aParams);
         }
 
@@ -164,24 +164,24 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
             return BX_DOL_STUDIO_INSTALLER_FAILED;
 
         $oLanguages = BxDolStudioLanguagesUtils::getInstance();
-        $aLanguages = $oLanguages->getLanguages();
+        $aLanguages = $oLanguages->getLanguagesExt();
 
         $aCategories = array();
         if(!empty($aConfig['language_category']) && is_array($aConfig['language_category'])) {
-        	$aCategories = $aConfig['language_category'];
-        	foreach($aCategories as $iIndex => $aCategory)
-				$aCategories[$iIndex]['id'] = !empty($aCategory['name']) ? $oLanguages->getLanguageCategory($aCategory['name']) : 0;
+            $aCategories = $aConfig['language_category'];
+            foreach($aCategories as $iIndex => $aCategory)
+                $aCategories[$iIndex]['id'] = !empty($aCategory['name']) ? $oLanguages->getLanguageCategory($aCategory['name']) : 0;
         }
-		else
-			$aCategories[] = array(
-				'id' => !empty($aConfig['language_category']) ? $oLanguages->getLanguageCategory($aConfig['language_category']) : 0,
-				'name' => $aConfig['language_category'],
-				'path' => ''
-			);
+        else
+            $aCategories[] = array(
+                'id' => !empty($aConfig['language_category']) ? $oLanguages->getLanguageCategory($aConfig['language_category']) : 0,
+                'name' => $aConfig['language_category'],
+                'path' => ''
+            );
 
-        foreach($aLanguages as $sName => $sTitle)
-        	foreach($aCategories as $iIndex => $aCategory)
-            	$this->_updateLanguage($bInstall, $sName, $aCategory['id'], $aCategory['path']);
+        foreach($aLanguages as $sName => $aLanguage)
+            foreach($aCategories as $iIndex => $aCategory)
+            	$this->_updateLanguage($bInstall, $aLanguage, $aCategory['id'], $aCategory['path']);
 
         return $oLanguages->compileLanguage(0, true) ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
     }
@@ -262,34 +262,32 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
 		return BX_DOL_STUDIO_INSTALLER_SUCCESS;
     }
 
-    protected function _updateLanguage($bInstall, $sLanguage, $iCategory = 0, $sPath = '')
+    protected function _updateLanguage($bInstall, $aLanguage, $iCategory = 0, $sPath = '')
     {
         $oLanguages = BxDolStudioLanguagesUtils::getInstance();
 
-        $sPathAbsolute = $this->_sHomePath . 'install/langs/' . $sPath . $sLanguage . '.xml';
+        $sPathAbsolute = $this->_sHomePath . 'install/langs/' . $sPath . $aLanguage['name'] . '.xml';
         $aLanguageInfo = $oLanguages->readLanguage($sPathAbsolute, 'update');
         if(empty($aLanguageInfo))
             return false;
 
-        $iLanguage = $oLanguages->getLangId($sLanguage);
-
         if(!empty($aLanguageInfo['category']))
-        	$iCategory = $oLanguages->getLanguageCategory($aLanguageInfo['category']);
+            $iCategory = $oLanguages->getLanguageCategory($aLanguageInfo['category']);
 
         //--- Process delete. Note. Deletion is performed for all languages. ---//
         if(isset($aLanguageInfo['strings_del']))
-        	foreach($aLanguageInfo['strings_del'] as $sKey => $sValue)
-        		$oLanguages->deleteLanguageString($sKey, 0, false);
+            foreach($aLanguageInfo['strings_del'] as $sKey => $sValue)
+                $oLanguages->deleteLanguageString($sKey, 0, false);
 
         //--- Process add. Note. Key's category will be updated if it doesn't match. ---//
         if(isset($aLanguageInfo['strings_add']))
-        	foreach($aLanguageInfo['strings_add'] as $sKey => $sValue)
-        		$oLanguages->addLanguageString($sKey, $sValue, $iLanguage, $iCategory, false);
+            foreach($aLanguageInfo['strings_add'] as $sKey => $sValue)
+                $oLanguages->addLanguageString($sKey, $sValue, $aLanguage['id'], $iCategory, false);
 
         //--- Process update. Note. Key's category will be updated if it doesn't match. ---//
         if(isset($aLanguageInfo['strings_upd']))
-        	foreach($aLanguageInfo['strings_upd'] as $sKey => $sValue)
-        		$oLanguages->updateLanguageString($sKey, $sValue, $iLanguage, $iCategory, false);
+            foreach($aLanguageInfo['strings_upd'] as $sKey => $sValue)
+                $oLanguages->updateLanguageString($sKey, $sValue, $aLanguage['id'], $iCategory, false);
 
         return true;
     }

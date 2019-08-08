@@ -335,13 +335,13 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
     public function delete($aParams)
     {
     	$aError = array(
-			'message' => _t('_adm_err_modules_cannot_remove_package'),
-			'result' => false
-		);
+            'message' => _t('_adm_err_modules_cannot_remove_package'),
+            'result' => false
+        );
 
     	$oFile = $this->_getFileManager();
     	if(empty($oFile))
-    		return $aError;
+            return $aError;
 
         if(!$oFile->delete('modules/' . $this->_aConfig['home_dir']))
             return $aError;
@@ -350,28 +350,6 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             'message' => '', //_t('_adm_msg_modules_success_delete'),
             'result' => true
         );
-    }
-
-    public function recompile($aParams)
-    {
-        $oLanguages = BxDolStudioLanguagesUtils::getInstance();
-
-        $aResult = array('message' => '', 'result' => false);
-
-        $aLanguages = $this->oDb->getLanguages();
-        if (isAdmin() && !empty($aLanguages)) {
-            $this->_updateLanguage(false, current($aLanguages));
-
-            $bResult = false;
-            foreach($aLanguages as $aLanguage) {
-                $bResult = $this->_updateLanguage(true, $aLanguage) && $oLanguages->compileLanguage($aLanguage['id']);
-                $aResult['message'] .= $aLanguage['title'] . ': <span style="color:' . ($bResult ? 'green' : 'red') . '">' . _t($bResult ? '_adm_txt_modules_process_action_success' : '_adm_txt_modules_process_action_failed') . '</span><br />';
-
-                $aResult['result'] |= $bResult;
-            }
-        }
-
-        return $aResult;
     }
 
     public function enable($aParams)
