@@ -2579,11 +2579,14 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
         $CNF = $this->_oConfig->CNF;
 
-        $mixedResult = BxDolProfile::getInstance($aEvent[$CNF['FIELD_OWNER_ID']])->checkAllowedProfileView();
-        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+        if((int)$aEvent[$CNF['FIELD_OWNER_ID']] == 0)
+            return true;
+
+        $oProfileOwner = BxDolProfile::getInstance($aEvent[$CNF['FIELD_OWNER_ID']]);
+        if($oProfileOwner && $oProfileOwner->checkAllowedProfileView() !== CHECK_ACTION_RESULT_ALLOWED)
             return false;
 
-		return true;
+        return true;
     }
 
     public function isAllowedEdit($aEvent, $bPerform = false)
