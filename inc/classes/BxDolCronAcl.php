@@ -10,14 +10,14 @@
 class BxDolCronAcl extends BxDolCron
 {
     public function processing()
-    {
+    {        
     	$iExpireLetters = 0;
         $iExpireNotificationDays = (int)getParam("sys_acl_expire_notification_days");
         $bExpireNotifyOnce = getParam("sys_acl_expire_notify_once") == 'on';
 
         $oAcl = BxDolAcl::getInstance();
-
-        $aIds = BxDolDb::getInstance()->getColumn("SELECT `id` FROM `sys_profiles` WHERE `type`<>'system'");
+        $oDb = BxDolDb::getInstance();
+        $aIds = $oDb->getColumn("SELECT DISTINCT `IDMember` FROM `sys_acl_levels_members`");
         foreach($aIds as $iId) {
             $aMemCur = $oAcl->getMemberMembershipInfo($iId);
 
@@ -30,12 +30,9 @@ class BxDolCronAcl extends BxDolCron
                     if($bMailResult)
                         $iExpireLetters++;
                 }
-
-                continue;
             }
-
             // If memberhip is not standard then check if it will change
-            if($aMemCur['id'] != MEMBERSHIP_ID_STANDARD) {
+            elseif($aMemCur['id'] != MEMBERSHIP_ID_STANDARD) {
                 $iDateNext = time() + $iExpireNotificationDays * 24 * 3600;
                 $aMemNext = $oAcl->getMemberMembershipInfo($iId, $iDateNext);
                 if($aMemCur['id'] != $aMemNext['id'] && $aMemNext['id'] == MEMBERSHIP_ID_STANDARD) {
@@ -47,7 +44,14 @@ class BxDolCronAcl extends BxDolCron
                 }
             }
 
-            continue;
+            // clean memory
+            $oProfile = BxDolProfile::getInstance($iId);
+            $iAccountId = $oProfile->getAccountId();
+            $sClass = 'BxDolProfile_' . $iId;
+            unset($GLOBALS['bxDolClasses'][$sClass]);
+            $sClass = 'BxDolAccount_' . $iAccountId;
+            unset($GLOBALS['bxDolClasses'][$sClass]);
+            BxDolDb::getInstance()->cleanMemory('BxDolAclQuery::getLevelCurrent' . $iId . 0);
         }
     }
 }
