@@ -91,9 +91,9 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
-        $aProfileInfo = $oProfile->getInfo();
 
-        if (!$this->isAutoApproval() && BX_PROFILE_STATUS_ACTIVE == $aProfileInfo['status'])
+        $sStatus = $oProfile->getStatus();
+        if (!$this->isAutoApproval() && BX_PROFILE_STATUS_ACTIVE == $sStatus)
             $aTrackTextFieldsChanges = array ();
     }
 
@@ -105,14 +105,13 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         /*
-         * Load update data.
+         * Load updated data.
          */
-        list($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
-
-        $aProfileInfo = $oProfile->getInfo();
+        $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
 
         // change profile to 'pending' only if profile is 'active'
-        if (!$this->isAutoApproval() && BX_PROFILE_STATUS_ACTIVE == $aProfileInfo['status'] && !empty($aTrackTextFieldsChanges['changed_fields']))
+        $sStatus = $oProfile->getStatus();
+        if (!$this->isAutoApproval() && BX_PROFILE_STATUS_ACTIVE == $sStatus && !empty($aTrackTextFieldsChanges['changed_fields']))
             $oProfile->disapprove(BX_PROFILE_ACTION_AUTO, 0, $this->_oModule->serviceActAsProfile());
 
         // process uploaded files
@@ -135,19 +134,20 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
     {
         /*
          * Add account and content association.
-         * Note. It should be done first to correctly get and user author's profile later.
+         * Note. It should be done first to correctly get and use author's profile later.
          */
         $iProfileId = BxDolProfile::add(BX_PROFILE_ACTION_MANUAL, $iAccountId, $iContentId, BX_PROFILE_STATUS_PENDING, $this->_oModule->getName());
+        $oProfile = BxDolProfile::getInstance($iProfileId);
 
         if($s = parent::onDataAddAfter($iAccountId, $iContentId))
             return $s;
 
         $CNF = &$this->_oModule->_oConfig->CNF;
-        
+
         /*
-         * Load update data.
+         * Load updated data.
          */
-        list($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
+        $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
 
         // approve profile if auto-approval is enabled and profile status is 'pending'
         $sStatus = $oProfile->getStatus();
