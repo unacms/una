@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `bx_forum_discussions` (
   `stick` tinyint(4) NOT NULL DEFAULT '0',
   `lock` tinyint(4) NOT NULL DEFAULT '0',
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
-  `status` enum('active','draft','hidden') NOT NULL DEFAULT 'active',
+  `status` enum('active','hidden') NOT NULL DEFAULT 'active',
   `status_admin` enum('active','hidden') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `title_text` (`title`,`text`,`text_comments`),
