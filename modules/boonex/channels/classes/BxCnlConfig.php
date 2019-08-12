@@ -62,6 +62,7 @@ class BxCnlConfig extends BxBaseModProfileConfig
             'URL_MANAGE_COMMON' => 'page.php?i=channels-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=channels-administration',
 
+            'PARAM_DEFAULT_AUTHOR' => 'bx_channels_default_author',
             'PARAM_NUM_RSS' => 'bx_channels_num_rss',
             'PARAM_NUM_CONNECTIONS_QUICK' => 'bx_channels_num_connections_quick',
 

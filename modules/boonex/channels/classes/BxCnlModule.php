@@ -35,6 +35,8 @@ class BxCnlModule extends BxBaseModGroupsModule
      */
     function processHashtag($sHashtag, $sModuleName, $iContentId, $iAuthorId)
     {
+        $CNF = &$this->_oConfig->CNF;
+
         /*
          * Note! For now metatag object name is used here as module name, because usually it's equal to module's name. This should be changed in Ticket #1596
          * For now if module cannot be created then a channel for such tag shouldn't be created too.
@@ -52,17 +54,18 @@ class BxCnlModule extends BxBaseModGroupsModule
 
         $aCheck = checkActionModule($this->_iProfileId, 'create channel auto', $this->getName(), false);
         $mixedCnlId = $this->_oDb->getChannelIdByName($sHashtag);
-        if (empty($mixedCnlId) && ($aCheck[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED)){
-            $CNF = &$this->_oConfig->CNF;
-            $oAccountQuery = BxDolAccountQuery::getInstance();
-            $aOperators = $oAccountQuery->getOperators();
-            if(count($aOperators) > 0){
-                $oProfile = BxDolProfile::getInstanceByAccount($aOperators[0]);
-                $aContent = $this->serviceEntityAdd($oProfile->id(), array($CNF['FIELD_NAME'] => $sHashtag));
-                checkActionModule($this->_iProfileId, 'create channel auto', $this->getName(), true);
-                if (isset($aContent['content']) && isset($aContent['content']['id']))
-                    $mixedCnlId = $aContent['content']['id'];
+        if(empty($mixedCnlId) && ($aCheck[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED)) {
+            $iProfileId = (int)$this->_oDb->getParam($CNF['PARAM_DEFAULT_AUTHOR']);
+            if(empty($iProfileId)) {
+                $aOperators = BxDolAccountQuery::getInstance()->getOperators();
+                if(count($aOperators) > 0)
+                    $iProfileId = BxDolProfile::getInstanceByAccount(array_shift($aOperators))->id();
             }
+
+            $aContent = $this->serviceEntityAdd($iProfileId, array($CNF['FIELD_NAME'] => $sHashtag));
+            checkActionModule($this->_iProfileId, 'create channel auto', $this->getName(), true);
+            if(isset($aContent['content']) && isset($aContent['content']['id']))
+                $mixedCnlId = $aContent['content']['id'];
         }
 
         if(empty($mixedCnlId) || (int)$this->_oDb->checkContentInChannel($iContentId, $mixedCnlId, $sModuleName, $iAuthorId) != 0)
@@ -112,6 +115,36 @@ class BxCnlModule extends BxBaseModGroupsModule
         }
         
         return $this->_oDb->removeContentFromChannel($iContentId, $sModuleName);
+    }
+
+    public function serviceGetWidgetNotices()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iResult = 0;
+        if(empty($this->_oDb->getParam($CNF['PARAM_DEFAULT_AUTHOR'])))
+            $iResult += 1;
+
+        return $iResult;
+    }
+
+    public function serviceGetOptionsDefaultAuthor()
+    {
+        $aResult = array(
+            array('key' => '', 'value' => _t('_Select_one'))
+        );
+
+        $aAccountsIds = BxDolAccountQuery::getInstance()->getOperators();
+        foreach($aAccountsIds as $iAccountId) {
+            $aProfilesIds = BxDolAccount::getInstance($iAccountId)->getProfilesIds();
+            foreach($aProfilesIds as $iProfileId)
+                $aResult[] = array(
+                    'key' => $iProfileId,
+                    'value' => BxDolProfile::getInstance($iProfileId)->getDisplayName()
+                );
+        }
+
+        return $aResult;
     }
 
     public function serviceEntityBreadcrumb($iContentId = 0)

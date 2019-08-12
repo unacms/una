@@ -21,6 +21,12 @@ class BxCnlAlertsResponse extends BxBaseModGroupsAlertsResponse
     {
         parent::response($oAlert);
 
+        $CNF = $this->_oModule->_oConfig->CNF;
+
+        $sMethod = '_process' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);           	
+        if(method_exists($this, $sMethod))
+            return $this->$sMethod($oAlert);
+        
         $aProfileModulesAutofollowLabels = array('bx_persons', 'bx_organizations');
         if (in_array($oAlert->sUnit, $aProfileModulesAutofollowLabels) && in_array($oAlert->sAction, array('added', 'edited'))) {
             $this->_oModule->followLabels($oAlert->sUnit, $oAlert->iObject);
@@ -57,6 +63,33 @@ class BxCnlAlertsResponse extends BxBaseModGroupsAlertsResponse
             if (isset($oAlert->aExtras['object']) && isset($oAlert->iObject) && isset($oAlert->iSender)){
                 $this->_oModule->removeContentFromChannel($oAlert->iObject, $oAlert->aExtras['object']);
             }
+        }
+    }
+
+    protected function _processSystemSaveSetting($oAlert)
+    {
+        $CNF = $this->_oModule->_oConfig->CNF;
+
+        switch($oAlert->aExtras['option']) {
+            case $CNF['PARAM_DEFAULT_AUTHOR']:
+                $bChanged = $oAlert->aExtras['value'] != $oAlert->aExtras['value_prior'];
+                if($bChanged) {
+                    $oStudioWidget = new BxTemplStudioWidgets($this->MODULE);
+                    if($oStudioWidget)
+                        $oStudioWidget->updateCache();
+                }
+
+                if(empty($oAlert->aExtras['value']) || !$bChanged)
+                    break;
+
+                $aSet = array($CNF['FIELD_AUTHOR'] => (int)$oAlert->aExtras['value']);
+                $this->_oModule->_oDb->updateEntriesBy($aSet, array($CNF['FIELD_AUTHOR'] => (int)$oAlert->aExtras['value_prior']));
+
+                $aOperators = BxDolAccountQuery::getInstance()->getOperators();
+                if(count($aOperators) > 0)
+                     $this->_oModule->_oDb->updateEntriesBy($aSet, array($CNF['FIELD_AUTHOR'] => BxDolProfile::getInstanceByAccount(array_shift($aOperators))->id()));
+                break;
+                
         }
     }
 }

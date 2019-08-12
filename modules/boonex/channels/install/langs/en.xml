@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="en" flag="gb" title="English">
-	<string name="_bx_channels"><![CDATA[Channels]]></string>
-	<string name="_bx_channels_cmts"><![CDATA[Channels' Comments]]></string>
-	
-	<string name="_bx_channels_option_num_connections_quick"><![CDATA[Number of items in friends block]]></string>
-	<string name="_bx_channels_option_per_page_browse"><![CDATA[Number of items per page]]></string>
-	<string name="_bx_channels_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
+    <string name="_bx_channels"><![CDATA[Channels]]></string>
+    <string name="_bx_channels_cmts"><![CDATA[Channels' Comments]]></string>
+
+    <string name="_bx_channels_option_default_author"><![CDATA[Default author for automatically created channels]]></string>
+    <string name="_bx_channels_option_num_connections_quick"><![CDATA[Number of items in friends block]]></string>
+    <string name="_bx_channels_option_per_page_browse"><![CDATA[Number of items per page]]></string>
+    <string name="_bx_channels_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
     <string name="_bx_channels_option_searchable_fields"><![CDATA[Searchable fields]]></string>
     <string name="_bx_channels_option_labels_autofollow"><![CDATA[Auto-follow channels when used as labels in profiles]]></string>
-	
+
 	<string name="_bx_channels_form_profile"><![CDATA[Channels]]></string>
 	<string name="_bx_channels_form_profile_display_add"><![CDATA[Add Channel]]></string>
 	<string name="_bx_channels_form_profile_display_edit"><![CDATA[Edit Channel]]></string>
@@ -227,6 +228,7 @@
 	<string name="_bx_channels_txt_sample_vote_single"><![CDATA[vote to channel]]></string>
         <string name="_bx_channels_txt_sample_score_up_single"><![CDATA[score up vote to channel]]></string>
         <string name="_bx_channels_txt_sample_score_down_single"><![CDATA[score down vote to channel]]></string>
+        <string name="_bx_channels_msg_empty_author"><![CDATA['Default author for automatically created channels' is empty. You need to select some profile in this setting.]]></string>
 
     <string name="_bx_channels_txt_ntfs_timeline_post_common"><![CDATA[New post <b class="bx-ntfs-content-entry">{subentry_sample}</b> in <b class="bx-ntfs-content-profile">{owner_name}</b> channel timeline]]></string>
     <string name="_bx_channels_ntfs_txt_subobject_added"><![CDATA[New content <b class="bx-ntfs-content-entry">{entry_caption}</b> in <b class="bx-ntfs-content-profile">{owner_name}</b> channel]]></string>

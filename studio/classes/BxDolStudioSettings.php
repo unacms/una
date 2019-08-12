@@ -259,8 +259,8 @@ class BxDolStudioSettings extends BxTemplStudioPage
             foreach($aOptions as $aOption) {
                 $aData[$aOption['name']] = $this->getSubmittedValue($aOption, $oForm);
                 if($aData[$aOption['name']] === false && !empty($this->sErrorMessage)) {
-                	$this->sCategory = $sCategory;
-					return $this->getJsResult(_t('_adm_stg_err_save_error_message', _t($aOption['caption']), _t($this->sErrorMessage)), false, false, '', $sEvalRenewToken);
+                    $this->sCategory = $sCategory;
+                    return $this->getJsResult(_t('_adm_stg_err_save_error_message', _t($aOption['caption']), _t($this->sErrorMessage)), false, false, '', $sEvalRenewToken);
                 }
 
                 if(!empty($aOption['check'])) {
@@ -290,11 +290,17 @@ class BxDolStudioSettings extends BxTemplStudioPage
                 else
                     $aData[$aOption['name']] = $this->getEmptyValue($aOption);
 
+                $mixedValue = $this->oDb->getParam($aOption['name']);
                 if($this->oDb->setParam($aOption['name'], $aData[$aOption['name']], $iMixId)) {
-                	$aCategoryInfo = array();
-		            $this->oDb->getCategories(array('type' => 'by_name', 'value' => $sCategory), $aCategoryInfo, false);
+                    $aCategoryInfo = array();
+                    $this->oDb->getCategories(array('type' => 'by_name', 'value' => $sCategory), $aCategoryInfo, false);
 
-	        		bx_alert('system', 'save_setting', 0, 0, array('category' => $aCategoryInfo, 'option' => $aOption['name'], 'value' => $aData[$aOption['name']]));
+                    bx_alert('system', 'save_setting', 0, 0, array(
+                        'category' => $aCategoryInfo, 
+                        'option' => $aOption['name'], 
+                        'value' => $aData[$aOption['name']],
+                        'value_prior' => $mixedValue
+                    ));
                 }
             }
         }

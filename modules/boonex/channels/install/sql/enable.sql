@@ -10,14 +10,15 @@ INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
 VALUES (@iTypeId, 'bx_channels', '_bx_channels', 1);
 SET @iCategId = LAST_INSERT_ID();
 
-INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-('bx_channels_num_connections_quick', '6', @iCategId, '_bx_channels_option_num_connections_quick', 'digit', '', '', '', 10),
-('bx_channels_per_page_browse', '24', @iCategId, '_bx_channels_option_per_page_browse', 'digit', '', '', '', 11),
-('bx_channels_num_rss', '10', @iCategId, '_bx_channels_option_num_rss', 'digit', '', '', '', 12),
-('bx_channels_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', 15),
-('bx_channels_per_page_browse_recommended', '10', @iCategId, '_sys_option_per_page_browse_recommended', 'digit', '', '', '', 16),
-('bx_channels_searchable_fields', 'channel_name', @iCategId, '_bx_channels_option_searchable_fields', 'list', 'a:2:{s:6:"module";s:11:"bx_channels";s:6:"method";s:21:"get_searchable_fields";}', '', '', 30),
-('bx_channels_labels_autofollow', 'on', @iCategId, '_bx_channels_option_labels_autofollow', 'checkbox', '', '', '', 40);
+INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_params`, `check_error`, `order`) VALUES
+('bx_channels_default_author', '', @iCategId, '_bx_channels_option_default_author', 'select', 'a:2:{s:6:"module";s:11:"bx_channels";s:6:"method";s:26:"get_options_default_author";}', '', '', '', 1),
+('bx_channels_num_connections_quick', '6', @iCategId, '_bx_channels_option_num_connections_quick', 'digit', '', '', '', '', 10),
+('bx_channels_per_page_browse', '24', @iCategId, '_bx_channels_option_per_page_browse', 'digit', '', '', '', '', 11),
+('bx_channels_num_rss', '10', @iCategId, '_bx_channels_option_num_rss', 'digit', '', '', '', '', 12),
+('bx_channels_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', '', 15),
+('bx_channels_per_page_browse_recommended', '10', @iCategId, '_sys_option_per_page_browse_recommended', 'digit', '', '', '', '', 16),
+('bx_channels_searchable_fields', 'channel_name', @iCategId, '_bx_channels_option_searchable_fields', 'list', 'a:2:{s:6:"module";s:11:"bx_channels";s:6:"method";s:21:"get_searchable_fields";}', '', '', '', 30),
+('bx_channels_labels_autofollow', 'on', @iCategId, '_bx_channels_option_labels_autofollow', 'checkbox', '', '', '', '', 40);
 
 
 -- PAGES
