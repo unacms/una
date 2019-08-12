@@ -339,7 +339,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
          * because all data related to an entry should be already
          * processed and are ready to be passed to alert. 
          */
-        $this->_oModule->processMetasEdit($iContentId);
+        $this->_oModule->processMetasEdit($iContentId, $oForm);
         
         // perform action
         $this->_oModule->$sCheckFunction($aContentInfo, true);
