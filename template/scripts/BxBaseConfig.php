@@ -24,10 +24,10 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton
 
             'bx-font-family' => 'Helvetica, Arial, sans-serif',
 
-            'bx-size-avatar-big' => '200px',
-            'bx-size-avatar' => '100px',
-            'bx-size-thumb' => '50px',
-            'bx-size-icon' => '30px',
+            'bx-size-avatar-big' => '192px',
+            'bx-size-avatar' => '96px',
+            'bx-size-thumb' => '48px',
+            'bx-size-icon' => '32px',
 
             'bx-size-gallery-img-width' => '300px',
             'bx-size-gallery-img-height' => '200px',

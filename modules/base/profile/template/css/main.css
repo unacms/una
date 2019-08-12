@@ -65,8 +65,8 @@ p.bx-base-pofile-unit-thumb {
     display: block;
     margin: 0px;
 
-    line-height: 48px;
-    line-height: 3.0rem;
+    line-height: 44px;
+    line-height: 2.75rem;
     text-align: center;
 
     font-size: 30px;
@@ -75,8 +75,8 @@ p.bx-base-pofile-unit-thumb {
     color: #ffffff;
 }
 p.bx-base-pofile-unit-thumb.bx-def-icon-size {
-    line-height: 26px;
-    line-height: 1.625rem;
+    line-height: 28px;
+    line-height: 1.75rem;
 
     font-size: 20px;
     font-size: 1.25rem;

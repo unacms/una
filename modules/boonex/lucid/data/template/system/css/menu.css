@@ -298,6 +298,11 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
     vertical-align: middle;
 }
 
+.bx-toolbar-item .bx-menu-toolbar .bx-menu-toolbar-item a .sys-icon,
+.bx-toolbar-item .bx-menu-toolbar .bx-menu-toolbar-item a .sys-icon-a {
+    font-size: 1.2rem;
+}
+
 
 /*--- Toolbar Site ---*/
 #bx-menu-toolbar-1-container .bx-menu-toolbar li {
