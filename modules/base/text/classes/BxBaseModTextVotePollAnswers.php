@@ -112,6 +112,11 @@ class BxBaseModTextVotePollAnswers extends BxTemplVoteLikes
         return $this->_oModule->checkAllowedView($aContentInfo) === CHECK_ACTION_RESULT_ALLOWED;
     }
 
+    public function isAllowedVoteViewVoters($isPerformAction = false)
+    {
+        return false;
+    }
+
     /**
      * Internal functions
      */
