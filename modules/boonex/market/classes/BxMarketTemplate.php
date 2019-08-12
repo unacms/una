@@ -71,7 +71,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
         $aVars = parent::getTmplVarsText($aData);
 
         $sIcon = '';
-        $mixedIcon = $oModule->getEntryImageData($aData, 'FIELD_THUMB', array('OBJECT_IMAGES_TRANSCODER_ICON', 'OBJECT_IMAGES_TRANSCODER_THUMB'));
+        $mixedIcon = $oModule->getEntryImageData($aData, 'FIELD_THUMB', array('OBJECT_IMAGES_TRANSCODER_THUMB', 'OBJECT_IMAGES_TRANSCODER_GALLERY'));
         if($mixedIcon !== false) {
             if(!empty($mixedIcon['object']))
                 $o = BxDolStorage::getObjectInstance($mixedIcon['object']);
