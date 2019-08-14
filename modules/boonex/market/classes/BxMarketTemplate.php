@@ -28,39 +28,21 @@ class BxMarketTemplate extends BxBaseModTextTemplate
         $this->_aCurrency = $this->_oConfig->getCurrency();
     }
 
-    public function entryBreadcrumb($aContentInfo, $aTmplVarsItems = array())
-    {
-    	$CNF = &$this->getModule()->_oConfig->CNF;
-
-        $oPermalink = BxDolPermalinks::getInstance();
-        $oCategory = BxDolCategory::getObjectInstance($CNF['OBJECT_CATEGORY']);
-
-    	$aTmplVarsItems = array(array(
-            'url' => $oCategory->getCategoryUrl($aContentInfo[$CNF['FIELD_CATEGORY']]),
-            'title' => $oCategory->getCategoryTitle($aContentInfo[$CNF['FIELD_CATEGORY']])
-        ), array(
-            'url' => $oPermalink->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
-            'title' => bx_process_output($aContentInfo[$CNF['FIELD_TITLE']])
-        ));
-
-    	return parent::entryBreadcrumb($aContentInfo, $aTmplVarsItems);
-    }
-
     public function entryRating($aData)
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
-    	$sVotes = '';
+        $sVotes = '';
         $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $aData['id']);
         if($oVotes) {
-			$sVotes = $oVotes->getElementBlock(array('show_counter' => true, 'show_legend' => true));
-			if(!empty($sVotes))
-				$sVotes = $this->parseHtmlByName('entry-rating.html', array(
-		    		'content' => $sVotes,
-		    	));
+            $sVotes = $oVotes->getElementBlock(array('show_counter' => true, 'show_legend' => true));
+            if(!empty($sVotes))
+                $sVotes = $this->parseHtmlByName('entry-rating.html', array(
+                'content' => $sVotes,
+            ));
         }
 
-    	return $sVotes; 
+        return $sVotes; 
     }
 
     public function getTmplVarsText($aData)

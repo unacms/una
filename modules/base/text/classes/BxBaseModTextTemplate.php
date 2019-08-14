@@ -92,9 +92,10 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
     public function entryBreadcrumb($aContentInfo, $aTmplVarsItems = array())
     {
-    	$CNF = &$this->getModule()->_oConfig->CNF;
+        if(!empty($aTmplVarsItems) && is_array($aTmplVarsItems))
+            return parent::entryBreadcrumb($aContentInfo, $aTmplVarsItems);
 
-        $oPermalink = BxDolPermalinks::getInstance();
+    	$CNF = &$this->getModule()->_oConfig->CNF;
 
         $aTmplVarsItems = array();
         if(!empty($CNF['OBJECT_CATEGORY']) && !empty($CNF['FIELD_CATEGORY'])) {
@@ -107,7 +108,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         }
 
     	$aTmplVarsItems[] = array(
-            'url' => $oPermalink->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
+            'url' => BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]),
             'title' => bx_process_output($aContentInfo[$CNF['FIELD_TITLE']])
         );
 
