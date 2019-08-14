@@ -2513,6 +2513,8 @@
 	<string name="_sys_page_block_title_confirm_email"><![CDATA[Email - Подтверждение]]></string>
 	<string name="_sys_page_block_title_confirm_phone"><![CDATA[Телефон - Подтверждение]]></string>
 	<string name="_sys_page_block_title_create_account"><![CDATA[Присоединиться]]></string>
+        <string name="_sys_page_block_title_sys_create_post"><![CDATA[Создать публикацию]]></string>
+	<string name="_sys_page_block_title_create_post"><![CDATA[Добавить...]]></string>
 	<string name="_sys_page_block_title_sys_create_post_context"><![CDATA[Создать публикацию (в контекст)]]></string>
 	<string name="_sys_page_block_title_create_post_context"><![CDATA[Добавить...]]></string>
 	<string name="_sys_page_block_title_sys_create_post_public"><![CDATA[Создать публикацию (публично)]]></string>

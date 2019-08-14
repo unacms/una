@@ -54,6 +54,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
     	$aParams = bx_process_input(array_intersect_key($_GET, $this->_aFormParams));
     	$aParams = array_merge($this->_aFormParams, $aParams);
+        $aParams['context_id'] = (bool)$aParams['context_id'] ? (int)$aParams['context_id'] : false;
 
     	$mixedResponse = $this->serviceGetCreatePostForm($aParams);
     	if(empty($mixedResponse))
@@ -442,8 +443,15 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function serviceGetObjectForm ($sType, $aParams = array())
     {
-        if (!in_array($sType, array('add', 'edit', 'view', 'delete')))
+        if(!in_array($sType, array('add', 'edit', 'view', 'delete')))
             return false;
+
+        $mixedContextId = isset($aParams['context_id']) ? $aParams['context_id'] : false;
+
+        $bContext = $mixedContextId !== false;
+        if($bContext && ($oContextProfile = BxDolProfile::getInstance(abs($mixedContextId))) !== false)
+            if($oContextProfile->checkAllowedPostInProfile() !== CHECK_ACTION_RESULT_ALLOWED)
+                return false;
 
         $CNF = &$this->_oConfig->CNF;
 
@@ -465,13 +473,49 @@ class BxBaseModGeneralModule extends BxDolModule
         $oForm = $oFormsHelper->$sFunc($sDisplay);
 
         $sKey = 'FIELD_ALLOW_VIEW_TO';
-        if(!empty($aParams['context_id']) && !empty($CNF[$sKey]) && !empty($oForm->aInputs[$CNF[$sKey]])) {
-            foreach($oForm->aInputs[$CNF[$sKey]]['values'] as $aValue)
-                if(isset($aValue['key']) && (int)$aValue['key'] == -(int)$aParams['context_id']) {
-                    $oForm->aInputs[$CNF[$sKey]]['value'] = -(int)$aParams['context_id'];
-                    $oForm->aInputs[$CNF[$sKey]]['type'] = 'hidden';
-                    break;
+        if(!empty($CNF[$sKey]) && !empty($oForm->aInputs[$CNF[$sKey]]) && (!$bContext || $mixedContextId < 0)) {
+            $bContextOwner = $bContext && abs($mixedContextId) == (int)bx_get_logged_profile_id();
+
+            if(!$bContext || $bContextOwner) {
+                $iGc = 0;
+                $iKeyGh = false;
+                foreach($oForm->aInputs[$CNF[$sKey]]['values'] as $iKey => $aValue) {
+                    if(isset($aValue['type']) && in_array($aValue['type'], array('group_header', 'group_end'))) {
+                        if($iKeyGh !== false && $iGc == 0) {
+                            unset($oForm->aInputs[$CNF[$sKey]]['values'][$iKeyGh]);
+                            $iKeyGh = false;
+
+                            if($aValue['type'] == 'group_end')
+                                unset($oForm->aInputs[$CNF[$sKey]]['values'][$iKey]);
+                        }
+
+                        if($aValue['type'] == 'group_header') {
+                            $iGc = 0;
+                            $iKeyGh = $iKey;
+                        }
+
+                        continue;
+                    }
+
+                    //--- Show 'Public' privacy group only in Public post form. 
+                    if(!$bContext && $aValue['key'] == BX_DOL_PG_ALL) {
+                        $iGc += 1;
+                        continue;
+                    }
+
+                    //--- Show a default privacy groups in Profile (for Owner) post form.
+                    if($bContextOwner && (int)$aValue['key'] >= 0) {
+                        $iGc += 1;
+                        continue;
+                    }
+
+                    unset($oForm->aInputs[$CNF[$sKey]]['values'][$iKey]);
                 }
+            }
+            else {
+                $oForm->aInputs[$CNF[$sKey]]['value'] = $mixedContextId;
+                $oForm->aInputs[$CNF[$sKey]]['type'] = 'hidden';
+            }
         }
 
         bx_alert('system', 'get_object_form', 0, 0, array(

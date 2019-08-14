@@ -173,13 +173,22 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         return BX_PROFILE_STATUS_ACTIVE == $this->getStatus($iProfileId);
     }
 
-	/**
+    /**
      * Is profile online
      */
-	public function isOnline($iProfileId = false)
+    public function isOnline($iProfileId = false)
     {
         $iProfileId = (int)$iProfileId ? $iProfileId : $this->_iProfileID;
         return $this->_oQuery->isOnline($iProfileId);
+    }
+
+    /**
+     * Is profile can 'Act as Profile'
+     */
+    public function isActAsProfile($iProfileId = false)
+    {
+        $aInfo = $this->_oQuery->getInfoById((int)$iProfileId ? $iProfileId : $this->_iProfileID);
+        return BxDolService::call($aInfo['type'], 'act_as_profile');
     }
 
     /**

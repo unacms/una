@@ -227,18 +227,43 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
             return $aInput;
         }
 
-        if($this->_bPublicMode || $this->_bProfileMode)
+        $bProfileModeOwner = $this->_bProfileMode && $iOwnerId == $iUserId;
+        if($this->_bPublicMode || $bProfileModeOwner) {
+            $iGc = 0;
+            $iKeyGh = false;
             foreach($aInput['values'] as $iKey => $aValue) {
-                //--- Show 'Public' privacy group only in Public post form. 
-                if($this->_bPublicMode && isset($aValue['key']) && $aValue['key'] == BX_DOL_PG_ALL)
+                if(isset($aValue['type']) && in_array($aValue['type'], array('group_header', 'group_end'))) {
+                    if($iKeyGh !== false && $iGc == 0) {
+                        unset($aInput['values'][$iKeyGh]);
+                        $iKeyGh = false;
+
+                        if($aValue['type'] == 'group_end')
+                            unset($aInput['values'][$iKey]);
+                    }
+
+                    if($aValue['type'] == 'group_header') {
+                        $iGc = 0;
+                        $iKeyGh = $iKey;
+                    }
+
                     continue;
+                }
+
+                //--- Show 'Public' privacy group only in Public post form. 
+                if($this->_bPublicMode && $aValue['key'] == BX_DOL_PG_ALL) {
+                    $iGc += 1;
+                    continue;
+                }
 
                 //--- Show a default privacy groups in Profile (for Owner) post form.
-                if($this->_bProfileMode && $iOwnerId == $iUserId && isset($aValue['key']) && (int)$aValue['key'] >= 0)
+                if($bProfileModeOwner && (int)$aValue['key'] >= 0) {
+                    $iGc += 1;
                     continue;
+                }
 
                 unset($aInput['values'][$iKey]);
             }
+        }
 
         return $aInput;
     }

@@ -505,23 +505,28 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
     	$aParams = array_merge($this->_aFormParams, $aParams);
 
-        $bContextId = !empty($aParams['context_id']);
-        $bFormDisplay = !empty($aParams['display']);
-
-        $this->_iOwnerId = $bContextId ? (int)$aParams['context_id'] : 0;
+        $bContext = $aParams['context_id'] !== false;
+        $this->_iOwnerId = $bContext ? abs($aParams['context_id']) : 0;
 
     	$oForm = $this->serviceGetObjectForm('add', $aParams);
     	if(!$oForm)
             return '';
 
-        $aParams['type'] = $bContextId ? BX_BASE_MOD_NTFS_TYPE_OWNER : BX_BASE_MOD_NTFS_TYPE_PUBLIC;
+        $aParams['type'] = BX_BASE_MOD_NTFS_TYPE_PUBLIC;
+        $aParams['form_display'] = 'form_display_post_add_public';
+        if($bContext) {
+            if($aParams['context_id'] < 0) {
+                $aParams['type'] = BX_BASE_MOD_NTFS_TYPE_OWNER;
+                $aParams['form_display'] = 'form_display_post_add_profile';
+            }
+            else {
+                $aParams['type'] = BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS;
+                $aParams['form_display'] = 'form_display_post_add';
+            }
+        }
 
-        if($bFormDisplay)
+        if(!empty($aParams['display']))
             $aParams['form_display'] = $aParams['display'];
-        else if($bContextId) 
-            $aParams['form_display'] = 'form_display_post_add_profile';
-        else
-            $aParams['form_display'] = 'form_display_post_add_public';
 
     	$aResult = $this->getFormPost($aParams);
     	if(!empty($aResult['form'])) {
@@ -564,17 +569,26 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     	if(!in_array($sType, array('add')))
             return false;
 
-        $bContextId = !empty($aParams['context_id']);
-        $bFormDisplay = !empty($aParams['display']);
+        $bContext = $aParams['context_id'] !== false;
+        if($bContext && ($oContextProfile = BxDolProfile::getInstance(abs($aParams['context_id']))) !== false)
+            if($oContextProfile->checkAllowedPostInProfile() !== CHECK_ACTION_RESULT_ALLOWED)
+                return false;
 
-        $aParams['type'] = $bContextId ? BX_BASE_MOD_NTFS_TYPE_OWNER : BX_BASE_MOD_NTFS_TYPE_PUBLIC;
+        $aParams['type'] = BX_BASE_MOD_NTFS_TYPE_PUBLIC;
+        $aParams['form_display'] = 'form_display_post_add_public';
+        if($bContext) {
+            if($aParams['context_id'] < 0) {
+                $aParams['type'] = BX_BASE_MOD_NTFS_TYPE_OWNER;
+                $aParams['form_display'] = 'form_display_post_add_profile';
+            }
+            else {
+                $aParams['type'] = BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS;
+                $aParams['form_display'] = 'form_display_post_add';
+            }
+        }
 
-        if($bFormDisplay)
+        if(!empty($aParams['display']))
             $aParams['form_display'] = $aParams['display'];
-        else if($bContextId)
-            $aParams['form_display'] = 'form_display_post_add_profile';
-        else
-            $aParams['form_display'] = 'form_display_post_add_public';
 
         $oForm = $this->getFormPostObject($aParams);
 

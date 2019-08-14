@@ -99,15 +99,32 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return array();
     }
     
-    public function serviceGetCreatePostForm($iContextId = 0, $sDefault = '', $aCustom = array())
+    /**
+     * Get United Create Post form.
+     * 
+     * @param type $mixedContextId - context which the post will be created in:
+     *      false = 'Public' post form;
+     *      0 = 'Account' post form, which allows to post in your own profile and connections;
+     *      n = 'Context' post form, which allows to post in context (3d party profile, group, event, etc).
+     * @param type $sDefault - tab selected by default.
+     * @param type $aCustom - an array with custom paramaters.
+     * @return string
+     */
+    public function serviceGetCreatePostForm($mixedContextId = false, $sDefault = '', $aCustom = array())
     {
     	if(!isLogged())
             return '';
 
-    	$oProfile = BxDolProfile::getInstance();
+        if($mixedContextId !== false)
+            $mixedContextId = (int)(!empty($mixedContextId) ? -$mixedContextId : bx_get_logged_profile_id());
 
-        $sTitle = _t('_sys_page_block_title_create_post_' . (empty($iContextId) ? 'public' : 'context'));
-        $sPlaceholder = _t('_sys_txt_create_post_placeholder', $oProfile->getDisplayName());
+        $bContext = $mixedContextId !== false;
+        if($bContext && ($oContextProfile = BxDolProfile::getInstance(abs($mixedContextId))) !== false)
+            if($oContextProfile->checkAllowedPostInProfile() !== CHECK_ACTION_RESULT_ALLOWED)
+                return '';
+
+        $sTitle = _t('_sys_page_block_title_create_post' . (!$bContext ? '_public' : ($mixedContextId < 0 ? '_context' : '')));
+        $sPlaceholder = _t('_sys_txt_create_post_placeholder', BxDolProfile::getInstance()->getDisplayName());
 
     	$oMenu = BxDolMenu::getObjectInstance('sys_create_post');
 
@@ -129,7 +146,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'sObjName' => $sJsObject,
             'sRootUrl' => BX_DOL_URL_ROOT,
             'sDefault' => $sDefault,
-            'iContextId' => $iContextId,
+            'iContextId' => $bContext ? $mixedContextId : 0,
             'oCustom' => $aCustom
         )) . ");");
 
@@ -139,7 +156,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'placeholder' => $sPlaceholder,
             'user_thumb' => BxDolProfile::getInstance()->getUnit(0, array('template' => 'unit_wo_info')),
             'menu' => $oMenu->getCode(),
-            'form' => BxDolService::call($sDefault, 'get_create_post_form', array(array('context_id' => $iContextId, 'ajax_mode' => true, 'absolute_action_url' => true, 'custom' => $aCustom))),
+            'form' => BxDolService::call($sDefault, 'get_create_post_form', array(array('context_id' => $mixedContextId, 'ajax_mode' => true, 'absolute_action_url' => true, 'custom' => $aCustom))),
             'js_object' => $sJsObject,
             'js_content' => $sJsContent
     	)));
