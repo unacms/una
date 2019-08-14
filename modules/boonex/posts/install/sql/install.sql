@@ -275,6 +275,7 @@ CREATE TABLE IF NOT EXISTS `bx_posts_polls` (
   `content_id` int(11) NOT NULL default '0',
   `text` text NOT NULL,
   PRIMARY KEY (`id`),
+  KEY `content_id` (`content_id`),
   FULLTEXT KEY `search_fields` (`text`)
 );
 
@@ -286,6 +287,7 @@ CREATE TABLE IF NOT EXISTS `bx_posts_polls_answers` (
   `votes` int(11) NOT NULL default '0',
   `order` int(11) NOT NULL default '0',
   PRIMARY KEY (`id`),
+  KEY `poll_id` (`poll_id`),
   FULLTEXT KEY `title` (`title`)
 );
 
