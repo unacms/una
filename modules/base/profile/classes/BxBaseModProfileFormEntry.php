@@ -86,7 +86,13 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
             $iProfileId = !empty($iContentId) ? (int)$this->getContentOwnerProfileId($iContentId) : bx_get_logged_profile_id();
             $iGroupId = !empty($aValues[$CNF['FIELD_ALLOW_POST_TO']]) ? $aValues[$CNF['FIELD_ALLOW_POST_TO']] : 0;
 
-            $oPrivacy->loadGroupCustom($iProfileId, $iContentId, $iGroupId);
+            $sKey = $CNF['FIELD_ALLOW_POST_TO'];
+            if(!isset($this->aInputs[$sKey]['content']))
+                $this->aInputs[$sKey]['content'] = '';
+
+            $this->aInputs[$sKey]['content'] .= $oPrivacy->loadGroupCustom($iProfileId, $iContentId, $iGroupId, array(
+                'form' => $this->getId()
+            ));
         }
 
         parent::initChecker($aValues, $aSpecificValues);

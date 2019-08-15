@@ -1387,6 +1387,9 @@ BLAH;
             </select>
 BLAH;
 
+        if(!empty($aInput['content']))
+            $sCode .= $aInput['content'];
+
         return $sCode;
     }
 

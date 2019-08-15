@@ -163,8 +163,6 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
             $sTitle = _t(!empty($sTitle) ? $sTitle : '_' . $sName);
         }
 
-        BxDolTemplate::getInstance()->addInjection('system_injection_header', 'text', $oPrivacy->getJsScript());
-
         return array(
             'type' => 'select',
             'name' => $sName,
@@ -181,7 +179,8 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
             ),
             'db' => array(
                 'pass' => 'Int'
-            )
+            ),
+            'content' => $oPrivacy->getJsScript()
         );
     }
 
@@ -251,17 +250,16 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
                 $aResult[] = $aProfile;
 
         echoJson($aResult);
-    }  
+    }
 
-    public function loadGroupCustom($iProfileId, $iContentId, $iGroupId)
+    public function loadGroupCustom($iProfileId, $iContentId, $iGroupId, $aHtmlIds)
     {
-        $sJsCode = $this->_oTemplate->_wrapInTagJsCode($this->getJsObjectName() . ".loadGroupCustom(" . json_encode(array(
-            'profile_id' => $iProfileId,
-            'content_id' => $iContentId,
-            'group_id' => $iGroupId
+        return $this->_oTemplate->_wrapInTagJsCode($this->getJsObjectName() . ".loadGroupCustom(" . json_encode(array(
+            'iProfileId' => $iProfileId,
+            'iContentId' => $iContentId,
+            'iGroupId' => $iGroupId,
+            'aHtmlIds' => $aHtmlIds
         )) . ");");
-
-        BxDolTemplate::getInstance()->addInjection('system_injection_header', 'text', $sJsCode);
     }
 
     public function getGroupSettings($iGroup)

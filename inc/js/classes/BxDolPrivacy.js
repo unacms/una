@@ -32,22 +32,34 @@ BxDolPrivacy.prototype.loadGroupCustom = function(aParams)
     var $this = this;
 
     aParams = aParams || {};
-    if(aParams && aParams.profile_id != undefined)
-        this._iProfileId = parseInt(aParams.profile_id);
+    if(aParams && aParams.iProfileId != undefined)
+        this._iProfileId = parseInt(aParams.iProfileId);
 
-    if(aParams && aParams.content_id != undefined)
-        this._iContentId = parseInt(aParams.content_id);
+    if(aParams && aParams.iContentId != undefined)
+        this._iContentId = parseInt(aParams.iContentId);
+
+    if(aParams && aParams.aHtmlIds != undefined)
+        this._aHtmlIds = $.extend({}, this._aHtmlIds, aParams.aHtmlIds);
 
     $(document).ready(function() {
         var oElement = $this._getSelectGroupElement();
 
-        if(!aParams.group_id && oElement && oElement.length > 0)
-            aParams.group_id = parseInt($(oElement).val());
+        var iGroupId = 0;
+        if(aParams && aParams.iGroupId != undefined)
+            iGroupId = parseInt(aParams.iGroupId);
 
-        if(!aParams.group_id || !$this._aGroupSettings[aParams.group_id])
+        if(!iGroupId && oElement && oElement.length > 0)
+            iGroupId = parseInt($(oElement).val());
+
+        if(!iGroupId || !$this._aGroupSettings[iGroupId])
             return;
 
-        var oData = $.extend({}, $this._getDefaultParams(), {action: 'load_group_custom'}, aParams);
+        var oData = $.extend({}, $this._getDefaultParams(), {
+            action: 'load_group_custom',
+            profile_id: this._iProfileId,
+            content_id: this._iContentId,
+            group_id: iGroupId
+        });
 
         $this._loadingInFormElement(oElement, true);
 
@@ -138,7 +150,7 @@ BxDolPrivacy.prototype._loadingInFormElement = function(e, bShow)
 
 BxDolPrivacy.prototype._getSelectGroupElement = function()
 {
-    return $('#' + this._aHtmlIds['group_element'] + ' .sys-privacy-group');
+    return $('#' + this._aHtmlIds['form'] + ' #' + this._aHtmlIds['group_element'] + ' .sys-privacy-group');
 };
 
 BxDolPrivacy.prototype._getDefaultParams = function() 
