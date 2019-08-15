@@ -644,7 +644,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         }
 
         $sSelectClause .= ", DAYOFYEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `days`, DAYOFYEAR(NOW()) AS `today`, ROUND((UNIX_TIMESTAMP() - `{$this->_sTable}`.`date`)/86400) AS `ago_days`, YEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `year`";
-        if(in_array($aParams['browse'], array('list', 'ids'))) {
+        if(in_array($aParams['browse'], array('list', 'ids')) && (!isset($aParams['newest']) || $aParams['newest'] === false)) {
             $sOrderClause = "";
 
             switch($aParams['type']) {

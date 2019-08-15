@@ -1016,6 +1016,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aParams = $oModule->getParamsExt($aBrowseParams);
         $aParams['start'] = 0;
         $aParams['per_page'] = 1;
+        $aParams['newest'] = true;
         $aParams['filter'] = BX_TIMELINE_FILTER_OTHER_VIEWER;
         $aEvents = $this->_oDb->getEvents($aParams);
         if(empty($aEvents) || !is_array($aEvents))
