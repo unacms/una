@@ -106,7 +106,7 @@ class BxDolStudioDashboard extends BxTemplStudioPage
                                 break;
 
                             case 'custom':
-                                $aResult = array('code' => 0);
+                                $aResult = array('code' => 0, 'message' => _t('_adm_dbd_msg_c_clean_success'));
                                 break;
 
                             default:

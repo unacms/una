@@ -129,7 +129,7 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
 
     protected function _processSystemClearCache($oAlert)
     {
-        if($oAlert->aExtras['type'] != 'custom')
+        if(!in_array($oAlert->aExtras['type'], array('all', 'custom')))
             return;
 
         //--- Clear item cache.
