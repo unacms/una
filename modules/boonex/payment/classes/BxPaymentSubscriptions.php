@@ -285,7 +285,7 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
 
             $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate($sPrefix . 'expiration_notification_seller', $aEtParams, 0, (int)$aSubscription['client_id']);
 
-            sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_SYSTEM, 'html', false, array(), true);
+            sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_SYSTEM);
         }
 
         /**
@@ -295,7 +295,7 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
             $sEmail = $oClient->getAccountObject()->getEmail();
             $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate($sPrefix . 'expiration_notification_client', $aEtParams, 0, (int)$aSubscription['seller_id']);
 
-            sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_SYSTEM, 'html', false, array(), true);
+            sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_SYSTEM);
         }
     }
 
