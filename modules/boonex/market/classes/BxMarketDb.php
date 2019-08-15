@@ -550,22 +550,30 @@ class BxMarketDb extends BxBaseModTextDb
         return $this->query($sQuery, $aWhereBindings) !== false;
     }
 
-	function processExpiredLicenses()
-	{
-		$sWhereClause = "`type` = :type AND `added` < UNIX_TIMESTAMP() AND `expired` <> 0 AND `expired` < UNIX_TIMESTAMP()";
-    	$aWhereBindings = array(
-    		'type' => BX_MARKET_LICENSE_TYPE_RECURRING
-    	);
+    function processExpiredLicense($aLicense)
+    {
+        //--- Move to deleted licenses table with 'expire' as reason.  
+        $this->query("INSERT IGNORE INTO `" . $this->_oConfig->CNF['TABLE_LICENSES_DELETED'] . "` SET " . $this->arrayToSQL($aLicense));
 
-    	//--- Move to deleted licenses table with 'expire' as reason.  
-		$sQuery = "INSERT IGNORE INTO `" . $this->_oConfig->CNF['TABLE_LICENSES_DELETED'] . "` SELECT *, 'expire' AS `reason`, UNIX_TIMESTAMP() AS `deleted` FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE " . $sWhereClause;
-		$this->query($sQuery, $aWhereBindings);
+        return $this->query("DELETE FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE `id`=:id LIMIT 1", array('id' => $aLicense['id'])) !== false;
+    }
 
-		$sQuery = "DELETE FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE " . $sWhereClause;
-		return $this->query($sQuery, $aWhereBindings) !== false;	    
-	}
+    function processExpiredLicenses()
+    {
+        $sWhereClause = "`type` = :type AND `added` < UNIX_TIMESTAMP() AND `expired` <> 0 AND `expired` < UNIX_TIMESTAMP()";
+        $aWhereBindings = array(
+            'type' => BX_MARKET_LICENSE_TYPE_RECURRING
+        );
 
-	protected function _deassociateAttachmentWithContent($sTable, $iContentId, $iFileId)
+        //--- Move to deleted licenses table with 'expire' as reason.  
+        $sQuery = "INSERT IGNORE INTO `" . $this->_oConfig->CNF['TABLE_LICENSES_DELETED'] . "` SELECT *, 'expire' AS `reason`, UNIX_TIMESTAMP() AS `deleted` FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE " . $sWhereClause;
+        $this->query($sQuery, $aWhereBindings);
+
+        $sQuery = "DELETE FROM `" . $this->_oConfig->CNF['TABLE_LICENSES'] . "` WHERE " . $sWhereClause;
+        return $this->query($sQuery, $aWhereBindings) !== false;
+    }
+
+    protected function _deassociateAttachmentWithContent($sTable, $iContentId, $iFileId)
     {
         $sWhere = '';
         $aBindings = array();
