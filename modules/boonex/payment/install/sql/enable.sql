@@ -154,7 +154,9 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 -- EMAIL TEMPLATES
 INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES 
 (@sName, '_bx_payment_et_txt_name_paid_need_join', 'bx_payment_paid_need_join', '_bx_payment_et_txt_subject_paid_need_join', '_bx_payment_et_txt_body_paid_need_join'),
-(@sName, '_bx_payment_et_txt_name_cancelation_request', 'bx_payment_cancelation_request', '_bx_payment_et_txt_subject_cancelation_request', '_bx_payment_et_txt_body_cancelation_request');
+(@sName, '_bx_payment_et_txt_name_cancelation_request', 'bx_payment_cancelation_request', '_bx_payment_et_txt_subject_cancelation_request', '_bx_payment_et_txt_body_cancelation_request'),
+(@sName, '_bx_payment_et_txt_name_expiration_notification_seller', 'bx_payment_expiration_notification_seller', '_bx_payment_et_txt_subject_expiration_notification_seller', '_bx_payment_et_txt_body_expiration_notification_seller'),
+(@sName, '_bx_payment_et_txt_name_expiration_notification_client', 'bx_payment_expiration_notification_client', '_bx_payment_et_txt_subject_expiration_notification_client', '_bx_payment_et_txt_body_expiration_notification_client');
 
 
 -- PAYMENTS

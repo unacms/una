@@ -88,7 +88,88 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
         return $this->_getBlock('history');
     }
 
-	/**
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-other Other
+     * @subsubsection bx_payment-get_subscription_orders_info get_subscription_orders_info
+     * 
+     * @code bx_srv('bx_payment', 'get_subscription_orders_info', [...], 'Subscriptions'); @endcode
+     * 
+     * Get subscription transaction(s) which meets all requirements.
+     *
+     * @param $aConditions an array of pears('key' => 'value'). The most useful keys are the following:
+     * a. client_id - client's ID (integer)
+     * b. seller_id - seller's ID (integer)
+     * c. type - transaction type: single or recurring (string)
+     * d. amount - transaction amount (float)
+     * e. order - order ID received from payment provider (string)
+     * f. provider - payment provider name (string)
+     * g. date - the date when the payment was established(UNIXTIME STAMP)
+     * h. processed - whether the payment was processed or not (integer, 0 or 1)
+     * @return an array of transactions. Each transaction has full info(client ID, seller ID, external transaction ID, date and so on)
+     * 
+     * @see BxPaymentSubscriptions::serviceGetSubscriptionOrdersInfo
+     */
+    /** 
+     * @ref bx_payment-get_subscription_orders_info "get_subscription_orders_info"
+     */
+    public function serviceGetSubscriptionOrdersInfo($aConditions)
+    {
+        if(empty($aConditions) || !is_array($aConditions))
+            return array();
+
+        return $this->_oModule->_oDb->getOrderSubscription(array('type' => 'mixed', 'conditions' => $aConditions));
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-other Other
+     * @subsubsection bx_payment-get_subscriptions_info get_subscriptions_info
+     * 
+     * @code bx_srv('bx_payment', 'get_subscriptions_info', [...], 'Subscriptions'); @endcode
+     * 
+     * Get subscription(s) which meets all requirements.
+     *
+     * @param $aConditions an array of pears('key' => 'value'). The most useful keys are the following:
+     * a. pending_id - pending transaction ID (integer)
+     * b. customer_id - customer ID from payment provider (string)
+     * c. subscription_id - subscription ID from payment provider (string)
+     * d. paid - flag determining whether the subscription paid or not (integer)
+     * e. date - the date when the subscription was established(UNIXTIME STAMP)
+     * @param $bCheckInProvider boolean value determining whether the subscription should be checked in associated payment provider.
+     * @return an array of subscriptions. Each subscription has full info(pending ID, customer ID, subscription ID and so on)
+     * 
+     * @see BxPaymentSubscriptions::serviceGetSubscriptionsInfo
+     */
+    /** 
+     * @ref bx_payment-get_subscriptions_info "get_subscriptions_info"
+     */
+    public function serviceGetSubscriptionsInfo($aConditions, $bCheckInProvider = false)
+    {
+        if(empty($aConditions) || !is_array($aConditions))
+            return array();
+
+        $aSubscriptions = $this->_oModule->_oDb->getSubscription(array('type' => 'mixed_ext', 'conditions' => $aConditions));
+        if(empty($aSubscriptions) || !is_array($aSubscriptions) || !$bCheckInProvider)
+            return $aSubscriptions;
+
+        foreach($aSubscriptions as $iKey => $aSubscription) {
+            if(empty($aSubscription['provider']) || $aSubscription['provider'] == 'manual')
+                continue;
+
+            $oProvider = $this->_oModule->getObjectProvider($aSubscription['provider'], $aSubscription['seller_id']);
+            if(!$oProvider)
+                continue;
+
+            $aSubscriptions[$iKey]['data'] = $oProvider->getSubscription($aSubscription['pending_id'], $aSubscription['customer_id'], $aSubscription['subscription_id']);
+        }
+
+        return $aSubscriptions;
+    }
+
+    /**
      * @page service Service Calls
      * @section bx_payment Payment
      * @subsection bx_payment-purchase_processing Purchase Processing
@@ -111,7 +192,7 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
     /** 
      * @ref bx_payment-subscribe "subscribe"
      */
-	public function serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect = '', $aCustom = array())
+    public function serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect = '', $aCustom = array())
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -145,6 +226,77 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
         	return array('code' => 6, 'message' => _t($mixedResult));
 
 		return $mixedResult;
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-purchase_processing Purchase Processing
+     * @subsubsection bx_payment-subscribe subscribe
+     * 
+     * @code bx_srv('bx_payment', 'subscribe', [...], 'Subscriptions'); @endcode
+     * 
+     * Initialize subscription for specified item.
+     *
+     * @param $iSellerId integer value with seller ID.
+     * @param $sSellerProvider string value with a name of payment provider to be used for processing. Empty value means that payment provider selector should be shown.
+     * @param $iModuleId integer value with module ID.
+     * @param $iItemId integer value with item ID.
+     * @param $iItemCount integer value with a number of items for purchasing. It's equal to 1 in case of subscription.
+     * @param $sRedirect (optional) string value with redirect URL, if it's needed. 
+     * @return an array with special format which describes the result of operation.
+     * 
+     * @see BxPaymentSubscriptions::serviceSubscribe
+     */
+    /** 
+     * @ref bx_payment-subscribe "subscribe"
+     */
+    public function serviceSendSubscriptionExpirationLetters($iPendingId, $sOrderId)
+    {
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+        $sPrefix = $this->_oModule->_oConfig->getPrefix('general');
+
+        $aSubscription = $this->serviceGetSubscriptionsInfo(array('subscription_id' => $sOrderId));
+        if(empty($aSubscription) || !is_array($aSubscription))
+            return;
+
+        $aSubscription = array_shift($aSubscription);
+
+        $oSeller = BxDolProfile::getInstanceMagic((int)$aSubscription['seller_id']);
+        $oClient = BxDolProfile::getInstanceMagic((int)$aSubscription['client_id']);
+
+        $aEtParams = array(
+            'sibscription_id' => $aSubscription['subscription_id'],
+            'sibscription_customer' => $aSubscription['customer_id'],
+            'sibscription_date' => bx_time_js($aSubscription['date'], BX_FORMAT_DATE, true)
+        );
+
+        /**
+         * Notify seller.
+         */
+        if($oSeller !== false) {
+            $sEmail = '';
+            $oProvider = $this->_oModule->getObjectProvider($aSubscription['provider'], $aSubscription['seller_id']);
+            if($oProvider !== false && $oProvider->isActive())
+                $sEmail = $oProvider->getOption('expiration_email');
+
+            if(empty($sEmail))
+                $sEmail = $oSeller->getAccountObject()->getEmail();
+
+            $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate($sPrefix . 'expiration_notification_seller', $aEtParams, 0, (int)$aSubscription['client_id']);
+
+            sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_SYSTEM, 'html', false, array(), true);
+        }
+
+        /**
+         * Notify client.
+         */
+        if($oClient !== false) {
+            $sEmail = $oClient->getAccountObject()->getEmail();
+            $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate($sPrefix . 'expiration_notification_client', $aEtParams, 0, (int)$aSubscription['seller_id']);
+
+            sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_SYSTEM, 'html', false, array(), true);
+        }
     }
 
     public function cancel($iPendingId)

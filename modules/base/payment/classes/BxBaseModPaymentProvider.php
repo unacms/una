@@ -11,17 +11,17 @@
 
 interface iBxBaseModPaymentProvider
 {
-	public function initializeCheckout($iPendingId, $aCartInfo);
+    public function initializeCheckout($iPendingId, $aCartInfo);
     public function finalizeCheckout(&$aData);
     public function finalizedCheckout();
 }
 
 class BxBaseModPaymentProvider extends BxDol
 {
-	protected $MODULE;
-	protected $_oModule;
+    protected $MODULE;
+    protected $_oModule;
 
-	protected $_sLangsPrefix;
+    protected $_sLangsPrefix;
 
     protected $_iId;
     protected $_sName;
@@ -31,6 +31,12 @@ class BxBaseModPaymentProvider extends BxDol
     protected $_bUseSsl;
     protected $_bRedirectOnResult;
     protected $_sLogFile;
+
+    /**
+     * Is needed to translate status received from Payment Provider 
+     * to internal one. 
+     */
+    protected $_aSbsStatuses;
 
     function __construct($aConfig)
     {
@@ -50,9 +56,11 @@ class BxBaseModPaymentProvider extends BxDol
 
         $this->_sLogFile = BX_DIRECTORY_PATH_LOGS . 'bx_pp_' . $this->_sName . '.log';
 
+        $this->_aSbsStatuses = array();
+
         $this->_aOptions = array();
         if(!empty($aConfig['options']) && is_array($aConfig['options']))
-        	$this->setOptions($aConfig['options']);
+            $this->setOptions($aConfig['options']);
     }
 
     public function setOptions($aOptions)
@@ -101,24 +109,29 @@ class BxBaseModPaymentProvider extends BxDol
 		return bx_append_url_params($sUrl, $aParams);
     }
 
-	public function getNotifyUrl($iVendorId, $aParams = array())
+    public function getNotifyUrl($iVendorId, $aParams = array())
     {
     	$sUrl = $this->_oModule->_oConfig->getUrl('URL_NOTIFY', array(), $this->_bUseSsl) . $this->_sName . '/' . $iVendorId;
-		return bx_append_url_params($sUrl, $aParams);
+        return bx_append_url_params($sUrl, $aParams);
     }
 
     /**
      * TODO: Check whether the method is needed or not. 
      * Is used on success only.
      */
-	public function needRedirect()
+    public function needRedirect()
     {
         return $this->_bRedirectOnResult;
     }
 
-	public function addJsCss() {}
+    public function addJsCss() {}
 
-	public function finalizedCheckout() {}
+    public function finalizedCheckout() {}
+
+    public function getSubscription($iPendingId, $sCustomerId, $sSubscriptionId)
+    {
+        return array();
+    }
 
     protected function getOptionsByPending($iPendingId)
     {

@@ -207,6 +207,24 @@
 <p>Subscription info:<br />ID: {sibscription_id}<br />Customer: {sibscription_customer}<br />Date: {sibscription_date}</p>
 {email_footer}]]></string>
 
+    <string name="_bx_payment_et_txt_name_expiration_notification_seller"><![CDATA[Subscription expiration notification (for seller).]]></string>
+    <string name="_bx_payment_et_txt_subject_expiration_notification_seller"><![CDATA[Subscription expiration notification.]]></string>
+    <string name="_bx_payment_et_txt_body_expiration_notification_seller"><![CDATA[{email_header}
+<p>Hello,</p>
+<p>A subscription purchased by '{profile_name}' expired.</p>
+<p>Subscription info:<br />ID: {sibscription_id}<br />Customer: {sibscription_customer}<br />Date: {sibscription_date}</p>
+<p><b>Note</b>. An associated data will be removed shortly.</p>
+{email_footer}]]></string>
+
+    <string name="_bx_payment_et_txt_name_expiration_notification_client"><![CDATA[Subscription expiration notification (for client).]]></string>
+    <string name="_bx_payment_et_txt_subject_expiration_notification_client"><![CDATA[Subscription expiration notification.]]></string>
+    <string name="_bx_payment_et_txt_body_expiration_notification_client"><![CDATA[{email_header}
+<p>Hello,</p>
+<p>Your subscription purchased from '{profile_name}' expired.</p>
+<p>Subscription info:<br />ID: {sibscription_id}<br />Customer: {sibscription_customer}<br />Date: {sibscription_date}</p>
+<p><b>Note</b>. An associated data will be removed shortly.</p>
+{email_footer}]]></string>
+
 	<!-- MESSAGES, WARNINGS and ERRORS -->
 	<string name="_bx_payment_msg_no_results"><![CDATA[Empty]]></string>
 	<string name="_bx_payment_msg_redirecting"><![CDATA[Redirecting... Please wait.]]></string>
@@ -370,6 +388,8 @@
 	<string name="_bx_payment_cbee_check_amount_dsc"><![CDATA[Enable amount checking for Chargebee Webhooks (recomended). However checking should be disabled when discounts and coupons are used.]]></string>
 	<string name="_bx_payment_cbee_ssl_cpt"><![CDATA[Enable SSL]]></string>
 	<string name="_bx_payment_cbee_ssl_dsc"><![CDATA[Enable SSL connection to communicate with Chargebee. Note. URLs below will be updated after saving.]]></string>
+        <string name="_bx_payment_cbee_cancellation_email_cpt"><![CDATA[Cancellation Email]]></string>
+        <string name="_bx_payment_cbee_expiration_email_cpt"><![CDATA[Expiration Email]]></string>
 	<string name="_bx_payment_cbee_return_data_url_cpt"><![CDATA[Data return URL]]></string>
 	<string name="_bx_payment_cbee_notify_url_cpt"><![CDATA[Webhooks URL]]></string>
 	<string name="_bx_payment_cbee_msg_subscribed"><![CDATA[Thank you! Subscription created. Please, check your email for further instructions.]]></string>
@@ -462,6 +482,7 @@
 	<string name="_bx_payment_strp_ssl_dsc"><![CDATA[Enable SSL connection to communicate with Stripe. Note. URLs below will be updated after saving.]]></string>
 	<string name="_bx_payment_strp_notify_url_cpt"><![CDATA[Webhooks URL]]></string>
 	<string name="_bx_payment_strp_cancellation_email_cpt"><![CDATA[Cancellation Email]]></string>
+        <string name="_bx_payment_strp_expiration_email_cpt"><![CDATA[Expiration Email]]></string>
 	<string name="_bx_payment_strp_msg_charged"><![CDATA[Payment was successfully processed.]]></string>
 	<string name="_bx_payment_strp_msg_subscribed"><![CDATA[Thank you! Subscription created. Please, check your email for further instructions.]]></string>
 	<string name="_bx_payment_strp_msg_details_changed"><![CDATA[Subscription details were changed.]]></string>

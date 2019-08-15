@@ -16,20 +16,20 @@ define('STRP_MODE_TEST', 2);
 
 class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBaseModPaymentProvider
 {
-	protected $_aIncludeJs;
-	protected $_aIncludeCss;
+    protected $_aIncludeJs;
+    protected $_aIncludeCss;
 
-	protected $_sFormDetails;
-	protected $_sFormDisplayDetailsEdit;
+    protected $_sFormDetails;
+    protected $_sFormDisplayDetailsEdit;
 
     protected $_sFormCard;
-	protected $_sFormDisplayCardAdd;
+    protected $_sFormDisplayCardAdd;
 
-	protected $_iMode;
-	protected $_bCheckAmount;
-	protected $_bProrate;
+    protected $_iMode;
+    protected $_bCheckAmount;
+    protected $_bProrate;
 
-	protected $_oCustomer;
+    protected $_oCustomer;
 
 
     function __construct($aConfig)
@@ -37,6 +37,16 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
     	$this->MODULE = 'bx_payment';
 
         parent::__construct($aConfig);
+
+        $this->_aSbsStatuses = array(
+            'incomplete' => BX_PAYMENT_SBS_STATUS_UNPAID, 
+            'incomplete_expired' => BX_PAYMENT_SBS_STATUS_UNPAID, 
+            'trialing' => BX_PAYMENT_SBS_STATUS_TRIAL, 
+            'active' => BX_PAYMENT_SBS_STATUS_ACTIVE, 
+            'past_due' => BX_PAYMENT_SBS_STATUS_UNPAID,
+            'unpaid' => BX_PAYMENT_SBS_STATUS_UNPAID,
+            'canceled' => BX_PAYMENT_SBS_STATUS_CANCELED,
+        );
 
         $this->_sFormDetails = 'bx_payment_form_strp_details';
         $this->_sFormDisplayDetailsEdit = 'bx_payment_form_strp_details_edit';
@@ -47,12 +57,12 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
         $this->_bProrate = false;
 
         $this->_aIncludeJs = array(
-        	'https://checkout.stripe.com/checkout.js',
-        	'main.js',
-        	'stripe.js'
+            'https://checkout.stripe.com/checkout.js',
+            'main.js',
+            'stripe.js'
         );
         $this->_aIncludeCss = array(
-        	'stripe.css'
+            'stripe.css'
         );
 
         $this->_oCustomer = null;
@@ -385,7 +395,7 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
         }
 
         return $this->_oModule->_oTemplate->parseHtmlByName('strp_billing_change_recuring.html', array(
-        	'object' => $this->_oModule->_oConfig->getJsObject('subscription'),
+            'object' => $this->_oModule->_oConfig->getJsObject('subscription'),
             'form' => $oForm->getCode(),
             'form_id' => $oForm->aFormAttrs['id'],
         ));
@@ -403,32 +413,55 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
     public function getCheckoutParamsSingle($aParams, &$oGrid)
     {
     	if(bx_get('token') !== false)
-    		$aParams['token'] = bx_process_input(bx_get('token'));
+            $aParams['token'] = bx_process_input(bx_get('token'));
 
     	return $aParams;
     }
 
-	protected function _getPublicKey()
-	{
-		return $this->_iMode == STRP_MODE_LIVE ? $this->getOption('live_pub_key') : $this->getOption('test_pub_key');
-	}
+    public function getSubscription($iPendingId, $sCustomerId, $sSubscriptionId)
+    {
+        $oSubscription = $this->_retrieveSubscription($sCustomerId, $sSubscriptionId);
+        if($oSubscription === false)
+            return array();
 
-	protected function _getSecretKey()
-	{
-		return $this->_iMode == STRP_MODE_LIVE ? $this->getOption('live_sec_key') : $this->getOption('test_sec_key');
-	}
+        $aSubscription = $oSubscription->jsonSerialize();
+        if(empty($aSubscription) || !is_array($aSubscription))
+            return array();
+
+        $sStatus = isset($this->_aSbsStatuses[$aSubscription['status']]) ? $this->_aSbsStatuses[$aSubscription['status']] : BX_PAYMENT_SBS_STATUS_UNKNOWN;
+
+        return array(
+            'status' => $sStatus,
+            'created' => $aSubscription['created'],
+            'started' => !empty($aSubscription['start']) ? $aSubscription['start'] : 0,
+            'trial_start' => !empty($aSubscription['trial_start']) ? $aSubscription['trial_start'] : 0,
+            'trial_end' => !empty($aSubscription['trial_end']) ? $aSubscription['trial_end'] : 0,
+            'cperiod_start' => !empty($aSubscription['current_period_start']) ? $aSubscription['current_period_start'] : 0,
+            'cperiod_end' => !empty($aSubscription['current_period_end']) ? $aSubscription['current_period_end'] : 0,
+        );
+    }
+
+    protected function _getPublicKey()
+    {
+        return $this->_iMode == STRP_MODE_LIVE ? $this->getOption('live_pub_key') : $this->getOption('test_pub_key');
+    }
+
+    protected function _getSecretKey()
+    {
+        return $this->_iMode == STRP_MODE_LIVE ? $this->getOption('live_sec_key') : $this->getOption('test_sec_key');
+    }
 
     protected function _createToken($aCard)
     {
-		try {
-			$oToken = Stripe\Token::create(array('card' => $aCard));
-		}
-		catch (Stripe\Error\Base $oException) {
-			return $this->_processException('Create Token Error: ', $oException);
-		}
+        try {
+            $oToken = Stripe\Token::create(array('card' => $aCard));
+        }
+        catch (Stripe\Error\Base $oException) {
+            return $this->_processException('Create Token Error: ', $oException);
+        }
 
-		return $oToken->jsonSerialize();
-	}
+        return $oToken->jsonSerialize();
+    }
 
 	protected function _createCustomer($sType, $sToken, $aClient)
 	{

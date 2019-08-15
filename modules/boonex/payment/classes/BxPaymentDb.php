@@ -415,20 +415,31 @@ class BxPaymentDb extends BxBaseModPaymentDb
     {
     	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
 
-    	$sWhereClause = $sLimitClause = '';
+        $sSelectClause = "`ts`.*";
+    	$sJoinClause = $sWhereClause = $sLimitClause = '';
         switch($aParams['type']) {
             case 'pending_id':
                 $aMethod['name'] = 'getRow';
             	$aMethod['params'][1] = array(
-                	'pending_id' => $aParams['pending_id']
+                    'pending_id' => $aParams['pending_id']
                 );
 
-                $sWhereClause = " AND `pending_id`=:pending_id";
+                $sWhereClause = " AND `ts`.`pending_id`=:pending_id";
                 $sLimitClause = " LIMIT 1";
+                break;
+
+            case 'mixed':
+                $sWhereClause = " AND " . $this->arrayToSQL($aParams['conditions'], ' AND ');
+                break;
+
+            case 'mixed_ext':
+                $sSelectClause .= ", `ttp`.`client_id`, `ttp`.`seller_id`, `ttp`.`type`, `ttp`.`provider`, `ttp`.`order`";
+                $sJoinClause = "LEFT JOIN `" . $this->_sPrefix . "transactions_pending` AS `ttp` ON `ts`.`pending_id`=`ttp`.`id`";
+                $sWhereClause = " AND " . $this->arrayToSQL($aParams['conditions'], ' AND ');
                 break;
         }
 
-        $aMethod['params'][0] = "SELECT * FROM `" . $this->_sPrefix . "subscriptions` WHERE 1 " . $sWhereClause . $sLimitClause;
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . $this->_sPrefix . "subscriptions` AS `ts` " . $sJoinClause . " WHERE 1 " . $sWhereClause . $sLimitClause;
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 

@@ -131,36 +131,54 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
     public function getOrdersUrl()
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_orders_url', 'Orders'))
-    		return '';
+            return '';
 
     	return BxDolService::call($this->_sActive, 'get_orders_url', array(), 'Orders');
     }
 
     public function getOrdersCount($sType)
     {
-    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_orders_count', 'Orders'))
-    		return array();
+        if(!BxDolRequest::serviceExists($this->_sActive, 'get_orders_count', 'Orders'))
+            return array();
 
-		$aSrvParams = array($sType);
-		return BxDolService::call($this->_sActive, 'get_orders_count', $aSrvParams, 'Orders');
+        $aSrvParams = array($sType);
+        return BxDolService::call($this->_sActive, 'get_orders_count', $aSrvParams, 'Orders');
     }
 
     public function getOrdersInfo($aConditions)
     {
-    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_orders_info', 'Orders'))
-    		return array();
+        if(!BxDolRequest::serviceExists($this->_sActive, 'get_orders_info', 'Orders'))
+            return array();
 
-		$aSrvParams = array($aConditions);
-		return BxDolService::call($this->_sActive, 'get_orders_info', $aSrvParams, 'Orders');
+        $aSrvParams = array($aConditions);
+        return BxDolService::call($this->_sActive, 'get_orders_info', $aSrvParams, 'Orders');
     }
 
     public function getPendingOrdersInfo($aConditions)
     {
-    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_pending_orders_info', 'Orders'))
-    		return array();
+        if(!BxDolRequest::serviceExists($this->_sActive, 'get_pending_orders_info', 'Orders'))
+            return array();
 
-		$aSrvParams = array($aConditions);
-		return BxDolService::call($this->_sActive, 'get_pending_orders_info', $aSrvParams, 'Orders');
+        $aSrvParams = array($aConditions);
+        return BxDolService::call($this->_sActive, 'get_pending_orders_info', $aSrvParams, 'Orders');
+    }
+
+    public function getSubscriptionOrdersInfo($aConditions)
+    {
+        if(!BxDolRequest::serviceExists($this->_sActive, 'get_subscription_orders_info', 'Subscriptions'))
+            return array();
+
+        $aSrvParams = array($aConditions);
+        return BxDolService::call($this->_sActive, 'get_subscription_orders_info', $aSrvParams, 'Subscriptions');
+    }
+
+    public function getSubscriptionsInfo($aConditions, $bCheckInProvider = false)
+    {
+        if(!BxDolRequest::serviceExists($this->_sActive, 'get_subscriptions_info', 'Subscriptions'))
+            return array();
+
+        $aSrvParams = array($aConditions, $bCheckInProvider);
+        return BxDolService::call($this->_sActive, 'get_subscriptions_info', $aSrvParams, 'Subscriptions');
     }
 
     public function getCartUrl($iVendor = 0)
@@ -270,32 +288,41 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
      */
     public function getSubscribeLink($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1, $sRedirect = '', $aCustom = array())
     {
-		if(!BxDolRequest::serviceExists($this->_sActive, 'get_subscribe_link', 'Subscriptions'))
-			return '';
+        if(!BxDolRequest::serviceExists($this->_sActive, 'get_subscribe_link', 'Subscriptions'))
+            return '';
 
-		$aSrvParams = array($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount, $sRedirect, $aCustom);
-		return BxDolService::call($this->_sActive, 'get_subscribe_link', $aSrvParams, 'Subscriptions');
+        $aSrvParams = array($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount, $sRedirect, $aCustom);
+        return BxDolService::call($this->_sActive, 'get_subscribe_link', $aSrvParams, 'Subscriptions');
+    }
+
+    public function sendSubscriptionExpirationLetters($iPendingId, $sOrderId)
+    {
+        if(!BxDolRequest::serviceExists($this->_sActive, 'send_subscription_expiration_letters', 'Subscriptions'))
+            return '';
+
+        $aSrvParams = array($iPendingId, $sOrderId);
+        return BxDolService::call($this->_sActive, 'send_subscription_expiration_letters', $aSrvParams, 'Subscriptions');
     }
 
     public function initializeCheckout($iVendorId, $sProvider, $aItems = array())
     {
-    	if(!BxDolRequest::serviceExists($this->_sActive, 'initialize_checkout'))
-			return '';
+        if(!BxDolRequest::serviceExists($this->_sActive, 'initialize_checkout'))
+            return '';
 
-		$aSrvParams = array($iVendorId, $sProvider, $aItems);
-		return BxDolService::call($this->_sActive, 'initialize_checkout', $aSrvParams);
+        $aSrvParams = array($iVendorId, $sProvider, $aItems);
+        return BxDolService::call($this->_sActive, 'initialize_checkout', $aSrvParams);
     }
 
     /**
      * Isn't used anywhere for now. Is needed when license 'prolong' is requested from license keeping module like Market and ACL.  
      */
-	public function prolongSubscription($sOrderId)
+    public function prolongSubscription($sOrderId)
     {
-    	if(!BxDolRequest::serviceExists($this->_sActive, 'prolong_subscription'))
-			return '';
+        if(!BxDolRequest::serviceExists($this->_sActive, 'prolong_subscription'))
+            return '';
 
-		$aSrvParams = array($sOrderId);
-		return BxDolService::call($this->_sActive, 'prolong_subscription', $aSrvParams);
+        $aSrvParams = array($sOrderId);
+        return BxDolService::call($this->_sActive, 'prolong_subscription', $aSrvParams);
     }
 
     public function generateLicense()

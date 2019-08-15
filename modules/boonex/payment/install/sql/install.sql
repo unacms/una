@@ -169,8 +169,10 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 (@iProviderId, 'cbee_test_api_key', 'text', '_bx_payment_cbee_test_api_key_cpt', '_bx_payment_cbee_test_api_key_dsc', '', '', '', '', 7),
 (@iProviderId, 'cbee_check_amount', 'checkbox', '_bx_payment_cbee_check_amount_cpt', '_bx_payment_cbee_check_amount_dsc', '', '', '', '', 8),
 (@iProviderId, 'cbee_ssl', 'checkbox', '_bx_payment_cbee_ssl_cpt', '_bx_payment_cbee_ssl_dsc', '', '', '', '', 9),
-(@iProviderId, 'cbee_return_data_url', 'value', '_bx_payment_cbee_return_data_url_cpt', '', '', '', '', '', 10),
-(@iProviderId, 'cbee_notify_url', 'value', '_bx_payment_cbee_notify_url_cpt', '', '', '', '', '', 11);
+(@iProviderId, 'cbee_cancellation_email', 'text', '_bx_payment_cbee_cancellation_email_cpt', '', '', 'EmailOrEmpty', '', '_sys_form_account_input_email_error', 10),
+(@iProviderId, 'cbee_expiration_email', 'text', '_bx_payment_cbee_expiration_email_cpt', '', '', 'EmailOrEmpty', '', '_sys_form_account_input_email_error', 11),
+(@iProviderId, 'cbee_return_data_url', 'value', '_bx_payment_cbee_return_data_url_cpt', '', '', '', '', '', 12),
+(@iProviderId, 'cbee_notify_url', 'value', '_bx_payment_cbee_notify_url_cpt', '', '', '', '', '', 13);
 
 -- Chargebee V3 payment provider
 INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `active`, `order`, `class_name`) VALUES
@@ -187,8 +189,10 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 (@iProviderId, 'cbee_v3_test_api_key', 'text', '_bx_payment_cbee_test_api_key_cpt', '_bx_payment_cbee_test_api_key_dsc', '', '', '', '', 7),
 (@iProviderId, 'cbee_v3_check_amount', 'checkbox', '_bx_payment_cbee_check_amount_cpt', '_bx_payment_cbee_check_amount_dsc', '', '', '', '', 8),
 (@iProviderId, 'cbee_v3_ssl', 'checkbox', '_bx_payment_cbee_ssl_cpt', '_bx_payment_cbee_ssl_dsc', '', '', '', '', 9),
-(@iProviderId, 'cbee_v3_return_data_url', 'value', '_bx_payment_cbee_return_data_url_cpt', '', '', '', '', '', 10),
-(@iProviderId, 'cbee_v3_notify_url', 'value', '_bx_payment_cbee_notify_url_cpt', '', '', '', '', '', 11);
+(@iProviderId, 'cbee_v3_cancellation_email', 'text', '_bx_payment_cbee_cancellation_email_cpt', '', '', 'EmailOrEmpty', '', '_sys_form_account_input_email_error', 10),
+(@iProviderId, 'cbee_v3_expiration_email', 'text', '_bx_payment_cbee_expiration_email_cpt', '', '', 'EmailOrEmpty', '', '_sys_form_account_input_email_error', 11),
+(@iProviderId, 'cbee_v3_return_data_url', 'value', '_bx_payment_cbee_return_data_url_cpt', '', '', '', '', '', 12),
+(@iProviderId, 'cbee_v3_notify_url', 'value', '_bx_payment_cbee_notify_url_cpt', '', '', '', '', '', 13);
 
 -- Recurly payment provider
 INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `active`, `order`, `class_name`) VALUES
@@ -221,7 +225,8 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 (@iProviderId, 'strp_check_amount', 'checkbox', '_bx_payment_strp_check_amount_cpt', '_bx_payment_strp_check_amount_dsc', '', '', '', '', 8),
 (@iProviderId, 'strp_ssl', 'checkbox', '_bx_payment_strp_ssl_cpt', '_bx_payment_strp_ssl_dsc', '', '', '', '', 9),
 (@iProviderId, 'strp_cancellation_email', 'text', '_bx_payment_strp_cancellation_email_cpt', '', '', 'EmailOrEmpty', '', '_sys_form_account_input_email_error', 10),
-(@iProviderId, 'strp_notify_url', 'value', '_bx_payment_strp_notify_url_cpt', '', '', '', '', '', 11);
+(@iProviderId, 'strp_expiration_email', 'text', '_bx_payment_strp_expiration_email_cpt', '', '', 'EmailOrEmpty', '', '_sys_form_account_input_email_error', 11),
+(@iProviderId, 'strp_notify_url', 'value', '_bx_payment_strp_notify_url_cpt', '', '', '', '', '', 12);
 
 
 -- GRIDS

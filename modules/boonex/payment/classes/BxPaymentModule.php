@@ -18,6 +18,14 @@ define('BX_PAYMENT_EMPTY_ID', 0);
 
 define('BX_PAYMENT_RESULT_SUCCESS', 0);
 
+define('BX_PAYMENT_SBS_STATUS_SCHEDULED', 'scheduled');
+define('BX_PAYMENT_SBS_STATUS_TRIAL', 'trial');
+define('BX_PAYMENT_SBS_STATUS_ACTIVE', 'active');
+define('BX_PAYMENT_SBS_STATUS_UNPAID', 'unpaid');
+define('BX_PAYMENT_SBS_STATUS_PAUSED', 'paused');
+define('BX_PAYMENT_SBS_STATUS_CANCELED', 'canceled');
+define('BX_PAYMENT_SBS_STATUS_UNKNOWN', 'unknown');
+
 /**
  * Payment module by BoonEx
  *
@@ -445,22 +453,22 @@ class BxPaymentModule extends BxBaseModPaymentModule
         if($mixedResult !== true)
             return echoJson(array('code' => 2, 'message' => $mixedResult));
 
-		$aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate($this->_oConfig->getPrefix('general') . 'cancelation_request', array(
-			'sibscription_id' => $aSubscription['subscription_id'],
-			'sibscription_customer' => $aSubscription['customer_id'],
-		    'sibscription_date' => bx_time_js($aSubscription['date'], BX_FORMAT_DATE, true)
-		), 0, (int)$aPending['client_id']);
+        $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate($this->_oConfig->getPrefix('general') . 'cancelation_request', array(
+            'sibscription_id' => $aSubscription['subscription_id'],
+            'sibscription_customer' => $aSubscription['customer_id'],
+            'sibscription_date' => bx_time_js($aSubscription['date'], BX_FORMAT_DATE, true)
+        ), 0, (int)$aPending['client_id']);
 
-		$sEmail = '';
-		$oProvider = $this->getObjectProvider($aPending['provider'], $aPending['seller_id']);
-		if($oProvider !== false && $oProvider->isActive())
-		    $sEmail = $oProvider->getOption('cancellation_email');
+        $sEmail = '';
+        $oProvider = $this->getObjectProvider($aPending['provider'], $aPending['seller_id']);
+        if($oProvider !== false && $oProvider->isActive())
+            $sEmail = $oProvider->getOption('cancellation_email');
 
-		if(empty($sEmail))
-		    $sEmail = $oRecipient->getAccountObject()->getEmail();
+        if(empty($sEmail))
+            $sEmail = $oRecipient->getAccountObject()->getEmail();
 
-		if(!sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_SYSTEM))
-		    return echoJson($aResult);
+        if(!sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_SYSTEM))
+            return echoJson($aResult);
 
         echoJson(array('code' => 0, 'message' => _t('_bx_payment_msg_cancelation_request_sent')));
     }

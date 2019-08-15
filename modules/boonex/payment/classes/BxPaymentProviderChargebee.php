@@ -16,14 +16,23 @@ define('CBEE_MODE_TEST', 2);
 
 class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBxBaseModPaymentProvider
 {
-	protected $_iMode;
-	protected $_bCheckAmount;
+    protected $_iMode;
+    protected $_bCheckAmount;
 
     function __construct($aConfig)
     {
     	$this->MODULE = 'bx_payment';
 
-        parent::__construct($aConfig);        
+        parent::__construct($aConfig);   
+
+        $this->_aSbsStatuses = array(
+            'future' => BX_PAYMENT_SBS_STATUS_SCHEDULED, 
+            'in_trial' => BX_PAYMENT_SBS_STATUS_TRIAL, 
+            'active' => BX_PAYMENT_SBS_STATUS_ACTIVE, 
+            'non_renewing' => BX_PAYMENT_SBS_STATUS_ACTIVE, 
+            'paused' => BX_PAYMENT_SBS_STATUS_PAUSED,
+            'canceled' => BX_PAYMENT_SBS_STATUS_CANCELED,
+        );
     }
 
     public function setOptions($aOptions)
@@ -216,38 +225,58 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
 	}
 
     public function retrieveCustomer($sCustomerId)
-	{
-		$oCustomer = null;
+    {
+        $oCustomer = null;
 
-		try {
-			ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
-			$oResult = ChargeBee_Customer::retrieve($sCustomerId);
+        try {
+            ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
+            $oResult = ChargeBee_Customer::retrieve($sCustomerId);
 
-			$oCustomer = $oResult->customer();
-			if($oCustomer->id != $sCustomerId)
-				return false;
-		}
-		catch (Exception $oException) {
-			$iError = $oException->getCode();
-			$sError = $oException->getMessage();
+            $oCustomer = $oResult->customer();
+            if($oCustomer->id != $sCustomerId)
+                    return false;
+        }
+        catch (Exception $oException) {
+            $iError = $oException->getCode();
+            $sError = $oException->getMessage();
 
-			$this->log('Retrieve Customer Error: ' . $sError . '(' . $iError . ')');
+            $this->log('Retrieve Customer Error: ' . $sError . '(' . $iError . ')');
 
-			return false;
-		}
+            return false;
+        }
 
-		return $oCustomer;
-	}
+        return $oCustomer;
+    }
 
-	protected function _getSite()
-	{
-		return $this->_iMode == CBEE_MODE_LIVE ? $this->getOption('live_site') : $this->getOption('test_site');
-	}
+    public function getSubscription($iPendingId, $sCustomerId, $sSubscriptionId)
+    {
+        $oSubscription = $this->retrieveSubscription($sSubscriptionId);
+        if($oSubscription === false)
+            return array();
 
-	protected function _getApiKey()
-	{
-		return $this->_iMode == CBEE_MODE_LIVE ? $this->getOption('live_api_key') : $this->getOption('test_api_key');
-	}
+        $sStatus = $oSubscription->status;
+        $sStatus = isset($this->_aSbsStatuses[$sStatus]) ? $this->_aSbsStatuses[$sStatus] : BX_PAYMENT_SBS_STATUS_UNKNOWN;
+
+        return array(
+            'status' => $sStatus,
+            'created' => $oSubscription->createdAt,
+            'started' => $oSubscription->startedAt,
+            'trial_start' => $oSubscription->trialStart,
+            'trial_end' => $oSubscription->trialEnd,
+            'cperiod_start' => $oSubscription->currentTermStart,
+            'cperiod_end' => $oSubscription->currentTermEnd,
+        );
+    }
+
+    protected function _getSite()
+    {
+        return $this->_iMode == CBEE_MODE_LIVE ? $this->getOption('live_site') : $this->getOption('test_site');
+    }
+
+    protected function _getApiKey()
+    {
+        return $this->_iMode == CBEE_MODE_LIVE ? $this->getOption('live_api_key') : $this->getOption('test_api_key');
+    }
 
 	protected function _processEvent()
 	{
