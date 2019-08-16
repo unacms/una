@@ -844,6 +844,7 @@
 	<string name="_adm_form_txt_field_type_text"><![CDATA[text]]></string>
 	<string name="_adm_form_txt_field_type_text_auto"><![CDATA[auto text]]></string>
 	<string name="_adm_form_txt_field_type_textarea"><![CDATA[textarea]]></string>
+        <string name="_adm_form_txt_field_type_time"><![CDATA[time]]></string>
 	<string name="_adm_form_txt_field_type_value"><![CDATA[info]]></string>
 	<string name="_adm_form_txt_field_unique"><![CDATA[Unique]]></string>
 	<string name="_adm_form_txt_field_value_button"><![CDATA[Title]]></string>
