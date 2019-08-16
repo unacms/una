@@ -627,6 +627,39 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     /**
      * @page service Service Calls
      * @section bx_timeline Timeline
+     * @subsection get_timeline_post
+     * @see BxTimelineModule::serviceGetTimelinePostAllowedView
+     *
+     * Check Timeline post's visibility. It's needed for Timeline module, when its events 
+     * are accessed and checked from outside. For example, when they are referenced 
+     * from Channels module.
+     * 
+     * @param $aEvent timeline event array from Timeline module
+     * @return mixed value: CHECK_ACTION_RESULT_ALLOWED or text of some error message.
+     */
+    public function serviceGetTimelinePostAllowedView($aEvent)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iOwnerId = (int)$aEvent[$CNF['FIELD_OWNER_ID']];
+        if($iOwnerId == 0)
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        $oOwner = BxDolProfile::getInstance($iOwnerId);
+        if(!$oOwner)
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        $sModule = $oOwner->getModule();
+        $aOwnerInfo = BxDolService::call($sModule, 'get_info', array($oOwner->getContentId(), false));
+        if(empty($aOwnerInfo) || !is_array($aOwnerInfo))
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        return BxDolService::call($sModule, 'check_allowed_view_for_profile', array($aOwnerInfo));
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
      * @subsection bx_timeline-other Other
      * @subsubsection bx_timeline-get_author get_author
      * 
