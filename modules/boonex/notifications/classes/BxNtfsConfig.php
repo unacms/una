@@ -61,7 +61,7 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
         );
 
         $this->_iOwnerNameMaxLen = 21;
-        $this->_iContentMaxLen = 21;
+        $this->_iContentMaxLen = 32;
         $this->_iPushMaxLen = 190;
 
         $this->_aHandlerDescriptor = array('module_name' => '', 'module_method' => '', 'module_class' => '');

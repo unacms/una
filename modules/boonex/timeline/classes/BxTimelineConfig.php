@@ -28,6 +28,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
     protected $_iRssLength;
     protected $_iLiveUpdateLength;
+    protected $_iCharsDisplayMinTitle;
     protected $_iCharsDisplayMaxTitle;
 
     protected $_sVideosAutoplay;
@@ -288,7 +289,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
         $this->_iRssLength = (int)getParam($sOptionPrefix . 'rss_length');
         $this->_iLiveUpdateLength = 10;
-        $this->_iCharsDisplayMaxTitle = 20;
+        $this->_iCharsDisplayMinTitle = 32;
+        $this->_iCharsDisplayMaxTitle = 64;
 
         $this->_sVideosAutoplay = getParam($sOptionPrefix . 'videos_autoplay');
 
@@ -448,6 +450,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         return $this->_iLiveUpdateLength;
     }
 
+    public function getCharsDisplayMinTitle()
+    {
+        return $this->_iCharsDisplayMinTitle;
+    }
+
     public function getCharsDisplayMaxTitle()
     {
         return $this->_iCharsDisplayMaxTitle;
@@ -481,7 +488,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     /**
      * Ancillary functions
      */
-    public function getTitle($s, $mixedProfile = false)
+    public function getTitle($s, $mixedProfile = false, $sMethodLength = 'getCharsDisplayMaxTitle')
     {
         if($mixedProfile !== false) {
             if(is_numeric($mixedProfile))
@@ -493,7 +500,15 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
                 ));
         }
 
-        return strmaxtextlen($s, $this->getCharsDisplayMaxTitle(), '...');
+        if(!method_exists($this, $sMethodLength))
+            $sMethodLength = 'getCharsDisplayMaxTitle';
+
+        return strmaxtextlen($s, $this->$sMethodLength(), '...');
+    }
+
+    public function getTitleShort($s, $mixedProfile = false)
+    {
+        return $this->getTitle($s, $mixedProfile, 'getCharsDisplayMinTitle');
     }
 
     public function getTitleDefault($bL, $bP, $bV)

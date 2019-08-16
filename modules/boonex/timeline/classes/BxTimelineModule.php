@@ -1540,7 +1540,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         else
             $iEntryAuthor = (int)$aContent['object_id'];
 
-        $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : $this->_oConfig->getTitle($aContent['description'], $aContent['object_id']);
+        $sEntryCaption = call_user_func_array(array($this->_oConfig, 'getTitleShort'), !empty($aContent['title']) ? array($aContent['title']) : array($aContent['description'], $aContent['object_id']));
 
         return array(
             'entry_sample' => $CNF['T']['txt_sample_single_ext'],
@@ -1582,7 +1582,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(!$oComment || !$oComment->isEnabled())
             return array();
 
-        $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : $this->_oConfig->getTitle($aContent['description'], $aContent['object_id']);
+        $sEntryCaption = call_user_func_array(array($this->_oConfig, 'getTitleShort'), !empty($aContent['title']) ? array($aContent['title']) : array($aContent['description'], $aContent['object_id']));
 
         return array(
             'entry_sample' => $CNF['T']['txt_sample_single'],
@@ -1626,7 +1626,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(!$oVote || !$oVote->isEnabled())
             return array();
 
-        $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : $this->_oConfig->getTitle($aContent['description'], $aContent['object_id']);
+        $sEntryCaption = call_user_func_array(array($this->_oConfig, 'getTitleShort'), !empty($aContent['title']) ? array($aContent['title']) : array($aContent['description'], $aContent['object_id']));
 
         return array(
             'entry_sample' => $CNF['T']['txt_sample_single'],
@@ -1665,7 +1665,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         else
             $aSubentrySampleParams[] = '_undefined';
 
-        $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : $this->_oConfig->getTitle($aContent['description'], $aContent['object_id']);
+        $sEntryCaption = call_user_func_array(array($this->_oConfig, 'getTitleShort'), !empty($aContent['title']) ? array($aContent['title']) : array($aContent['description'], $aContent['object_id']));
 
         return array(
             'entry_sample' => $CNF['T']['txt_sample_single'],
@@ -1738,7 +1738,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(!$oScore || !$oScore->isEnabled())
             return array();
 
-        $sEntryCaption = !empty($aContent['title']) ? $aContent['title'] : $this->_oConfig->getTitle($aContent['description'], $aContent['object_id']);
+        $sEntryCaption = call_user_func_array(array($this->_oConfig, 'getTitleShort'), !empty($aContent['title']) ? array($aContent['title']) : array($aContent['description'], $aContent['object_id']));
 
         return array(
             'entry_sample' => $CNF['T']['txt_sample_single'],
