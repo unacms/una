@@ -7,7 +7,7 @@
  * primary concern and you are using an opcode cache. PLEASE DO NOT EDIT THIS
  * FILE, changes will be overwritten the next time the script is run.
  *
- * @version 4.10.0
+ * @version 4.11.0
  *
  * @warning
  *      You must *not* include any other HTML Purifier files before this file,
@@ -39,7 +39,7 @@
  */
 
 /*
-    HTML Purifier 4.10.0 - Standards Compliant HTML Filtering
+    HTML Purifier 4.11.0 - Standards Compliant HTML Filtering
     Copyright (C) 2006-2008 Edward Z. Yang
 
     This library is free software; you can redistribute it and/or
@@ -78,12 +78,12 @@ class HTMLPurifier
      * Version of HTML Purifier.
      * @type string
      */
-    public $version = '4.10.0';
+    public $version = '4.11.0';
 
     /**
      * Constant with version of HTML Purifier.
      */
-    const VERSION = '4.10.0';
+    const VERSION = '4.11.0';
 
     /**
      * Global configuration object.
@@ -260,12 +260,16 @@ class HTMLPurifier
     public function purifyArray($array_of_html, $config = null)
     {
         $context_array = array();
-        foreach ($array_of_html as $key => $html) {
-            $array_of_html[$key] = $this->purify($html, $config);
+        foreach($array_of_html as $key=>$value){
+            if (is_array($value)) {
+                $array[$key] = $this->purifyArray($value, $config);
+            } else {
+                $array[$key] = $this->purify($value, $config);
+            }
             $context_array[$key] = $this->context;
         }
         $this->context = $context_array;
-        return $array_of_html;
+        return $array;
     }
 
     /**
@@ -1418,15 +1422,25 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
             array(
                 new HTMLPurifier_AttrDef_CSS_Length('0'),
                 new HTMLPurifier_AttrDef_CSS_Percentage(true),
-                new HTMLPurifier_AttrDef_Enum(array('auto'))
+                new HTMLPurifier_AttrDef_Enum(array('auto', 'initial', 'inherit'))
+            )
+        );
+        $trusted_min_wh = new HTMLPurifier_AttrDef_CSS_Composite(
+            array(
+                new HTMLPurifier_AttrDef_CSS_Length('0'),
+                new HTMLPurifier_AttrDef_CSS_Percentage(true),
+                new HTMLPurifier_AttrDef_Enum(array('initial', 'inherit'))
+            )
+        );
+        $trusted_max_wh = new HTMLPurifier_AttrDef_CSS_Composite(
+            array(
+                new HTMLPurifier_AttrDef_CSS_Length('0'),
+                new HTMLPurifier_AttrDef_CSS_Percentage(true),
+                new HTMLPurifier_AttrDef_Enum(array('none', 'initial', 'inherit'))
             )
         );
         $max = $config->get('CSS.MaxImgLength');
 
-        $this->info['min-width'] =
-        $this->info['max-width'] =
-        $this->info['min-height'] =
-        $this->info['max-height'] =
         $this->info['width'] =
         $this->info['height'] =
             $max === null ?
@@ -1442,6 +1456,38 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
                     ),
                     // For everyone else:
                     $trusted_wh
+                );
+        $this->info['min-width'] =
+        $this->info['min-height'] =
+            $max === null ?
+                $trusted_min_wh :
+                new HTMLPurifier_AttrDef_Switch(
+                    'img',
+                    // For img tags:
+                    new HTMLPurifier_AttrDef_CSS_Composite(
+                        array(
+                            new HTMLPurifier_AttrDef_CSS_Length('0', $max),
+                            new HTMLPurifier_AttrDef_Enum(array('initial', 'inherit'))
+                        )
+                    ),
+                    // For everyone else:
+                    $trusted_min_wh
+                );
+        $this->info['max-width'] =
+        $this->info['max-height'] =
+            $max === null ?
+                $trusted_max_wh :
+                new HTMLPurifier_AttrDef_Switch(
+                    'img',
+                    // For img tags:
+                    new HTMLPurifier_AttrDef_CSS_Composite(
+                        array(
+                            new HTMLPurifier_AttrDef_CSS_Length('0', $max),
+                            new HTMLPurifier_AttrDef_Enum(array('none', 'initial', 'inherit'))
+                        )
+                    ),
+                    // For everyone else:
+                    $trusted_max_wh
                 );
 
         $this->info['text-decoration'] = new HTMLPurifier_AttrDef_CSS_TextDecoration();
@@ -1764,7 +1810,7 @@ class HTMLPurifier_Config
      * HTML Purifier's version
      * @type string
      */
-    public $version = '4.10.0';
+    public $version = '4.11.0';
 
     /**
      * Whether or not to automatically finalize
@@ -2633,7 +2679,7 @@ class HTMLPurifier_Config
             // zip(tail(trace), trace) -- but PHP is not Haskell har har
             for ($i = 0, $c = count($trace); $i < $c - 1; $i++) {
                 // XXX this is not correct on some versions of HTML Purifier
-                if ($trace[$i + 1]['class'] === 'HTMLPurifier_Config') {
+                if (isset($trace[$i + 1]['class']) && $trace[$i + 1]['class'] === 'HTMLPurifier_Config') {
                     continue;
                 }
                 $frame = $trace[$i];
@@ -2764,7 +2810,7 @@ class HTMLPurifier_ConfigSchema
      * @param string $key Name of directive
      * @param mixed $default Default value of directive
      * @param string $type Allowed type of the directive. See
-     *      HTMLPurifier_DirectiveDef::$type for allowed values
+     *      HTMLPurifier_VarParser::$types for allowed values
      * @param bool $allow_null Whether or not to allow null values
      */
     public function add($key, $default, $type, $allow_null)
@@ -4564,7 +4610,7 @@ class HTMLPurifier_EntityParser
         $entity = $matches[0];
         $hex_part = @$matches[1];
         $dec_part = @$matches[2];
-        $named_part = empty($matches[3]) ? @$matches[4] : $matches[3];
+        $named_part = empty($matches[3]) ? (empty($matches[4]) ? "" : $matches[4]) : $matches[3];
         if ($hex_part !== NULL && $hex_part !== "") {
             return HTMLPurifier_Encoder::unichr(hexdec($hex_part));
         } elseif ($dec_part !== NULL && $dec_part !== "") {
@@ -9891,34 +9937,34 @@ class HTMLPurifier_UnitConverter
 class HTMLPurifier_VarParser
 {
 
-    const STRING = 1;
+    const C_STRING = 1;
     const ISTRING = 2;
     const TEXT = 3;
     const ITEXT = 4;
-    const INT = 5;
-    const FLOAT = 6;
-    const BOOL = 7;
+    const C_INT = 5;
+    const C_FLOAT = 6;
+    const C_BOOL = 7;
     const LOOKUP = 8;
     const ALIST = 9;
     const HASH = 10;
-    const MIXED = 11;
+    const C_MIXED = 11;
 
     /**
      * Lookup table of allowed types. Mainly for backwards compatibility, but
      * also convenient for transforming string type names to the integer constants.
      */
     public static $types = array(
-        'string' => self::STRING,
+        'string' => self::C_STRING,
         'istring' => self::ISTRING,
         'text' => self::TEXT,
         'itext' => self::ITEXT,
-        'int' => self::INT,
-        'float' => self::FLOAT,
-        'bool' => self::BOOL,
+        'int' => self::C_INT,
+        'float' => self::C_FLOAT,
+        'bool' => self::C_BOOL,
         'lookup' => self::LOOKUP,
         'list' => self::ALIST,
         'hash' => self::HASH,
-        'mixed' => self::MIXED
+        'mixed' => self::C_MIXED
     );
 
     /**
@@ -9926,7 +9972,7 @@ class HTMLPurifier_VarParser
      * allowed value lists.
      */
     public static $stringTypes = array(
-        self::STRING => true,
+        self::C_STRING => true,
         self::ISTRING => true,
         self::TEXT => true,
         self::ITEXT => true,
@@ -9958,7 +10004,7 @@ class HTMLPurifier_VarParser
         // These are basic checks, to make sure nothing horribly wrong
         // happened in our implementations.
         switch ($type) {
-            case (self::STRING):
+            case (self::C_STRING):
             case (self::ISTRING):
             case (self::TEXT):
             case (self::ITEXT):
@@ -9969,17 +10015,17 @@ class HTMLPurifier_VarParser
                     $var = strtolower($var);
                 }
                 return $var;
-            case (self::INT):
+            case (self::C_INT):
                 if (!is_int($var)) {
                     break;
                 }
                 return $var;
-            case (self::FLOAT):
+            case (self::C_FLOAT):
                 if (!is_float($var)) {
                     break;
                 }
                 return $var;
-            case (self::BOOL):
+            case (self::C_BOOL):
                 if (!is_bool($var)) {
                     break;
                 }
@@ -10003,7 +10049,7 @@ class HTMLPurifier_VarParser
                     }
                 }
                 return $var;
-            case (self::MIXED):
+            case (self::C_MIXED):
                 return $var;
             default:
                 $this->errorInconsistent(get_class($this), $type);
@@ -13347,7 +13393,11 @@ class HTMLPurifier_AttrDef_URI_Host extends HTMLPurifier_AttrDef
 
         // PHP 5.3 and later support this functionality natively
         if (function_exists('idn_to_ascii')) {
-            $string = idn_to_ascii($string, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
+            if (defined('IDNA_NONTRANSITIONAL_TO_ASCII') && defined('INTL_IDNA_VARIANT_UTS46')) {
+                $string = idn_to_ascii($string, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
+            } else {
+                $string = idn_to_ascii($string);
+            }
 
         // If we have Net_IDNA2 support, we can support IRIs by
         // punycoding them. (This is the most portable thing to do,
@@ -17030,13 +17080,13 @@ class HTMLPurifier_HTMLModule_SafeScripting extends HTMLPurifier_HTMLModule
         $script = $this->addElement(
             'script',
             'Inline',
-            'Empty',
+            'Optional:', // Not `Empty` to not allow to autoclose the <script /> tag @see https://www.w3.org/TR/html4/interact/scripts.html
             null,
             array(
                 // While technically not required by the spec, we're forcing
                 // it to this value.
                 'type' => 'Enum#text/javascript',
-                'src*' => new HTMLPurifier_AttrDef_Enum(array_keys($allowed))
+                'src*' => new HTMLPurifier_AttrDef_Enum(array_keys($allowed), /*case sensitive*/ true)
             )
         );
         $script->attr_transform_pre[] =
@@ -18933,8 +18983,13 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
         $doc = new DOMDocument();
         $doc->encoding = 'UTF-8'; // theoretically, the above has this covered
 
+        $options = 0;
+        if ($config->get('Core.AllowParseManyTags') && defined('LIBXML_PARSEHUGE')) {
+            $options |= LIBXML_PARSEHUGE;
+        }
+
         set_error_handler(array($this, 'muteErrorHandler'));
-        $doc->loadHTML($html);
+        $doc->loadHTML($html, $options);
         restore_error_handler();
 
         $body = $doc->getElementsByTagName('html')->item(0)-> // <html>
@@ -18998,11 +19053,11 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
      */
     protected function getTagName($node)
     {
-        if (property_exists($node, 'tagName')) {
+        if (isset($node->tagName)) {
             return $node->tagName;
-        } else if (property_exists($node, 'nodeName')) {
+        } else if (isset($node->nodeName)) {
             return $node->nodeName;
-        } else if (property_exists($node, 'localName')) {
+        } else if (isset($node->localName)) {
             return $node->localName;
         }
         return null;
@@ -19015,11 +19070,11 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
      */
     protected function getData($node)
     {
-        if (property_exists($node, 'data')) {
+        if (isset($node->data)) {
             return $node->data;
-        } else if (property_exists($node, 'nodeValue')) {
+        } else if (isset($node->nodeValue)) {
             return $node->nodeValue;
-        } else if (property_exists($node, 'textContent')) {
+        } else if (isset($node->textContent)) {
             return $node->textContent;
         }
         return null;
@@ -22377,23 +22432,23 @@ class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
             // Note: if code "breaks" from the switch, it triggers a generic
             // exception to be thrown. Specific errors can be specifically
             // done here.
-            case self::MIXED:
+            case self::C_MIXED:
             case self::ISTRING:
-            case self::STRING:
+            case self::C_STRING:
             case self::TEXT:
             case self::ITEXT:
                 return $var;
-            case self::INT:
+            case self::C_INT:
                 if (is_string($var) && ctype_digit($var)) {
                     $var = (int)$var;
                 }
                 return $var;
-            case self::FLOAT:
+            case self::C_FLOAT:
                 if ((is_string($var) && is_numeric($var)) || is_int($var)) {
                     $var = (float)$var;
                 }
                 return $var;
-            case self::BOOL:
+            case self::C_BOOL:
                 if (is_int($var) && ($var === 0 || $var === 1)) {
                     $var = (bool)$var;
                 } elseif (is_string($var)) {
