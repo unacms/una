@@ -999,6 +999,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
 
         // facebook / twitter
+        $bPageImage = !empty($this->aPage['image']);
         $sRet .= '<meta name="twitter:card" content="' . ($bPageImage ? 'summary_large_image' : 'summary') . '" />';
         if ($bPageImage)
             $sRet .= '<meta property="og:image" content="' . $this->aPage['image'] . '" />';
