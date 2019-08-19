@@ -15,7 +15,7 @@
     font-weight:900;
     font-style:normal;
 }
-.fa:before, .sys-icon:before,
+.fa:not(.fab):not(.fal):before, .sys-icon:not(.fab):not(.fal):before,
 .fas:before, .sys-icon.fas:before,
 .far:before, .sys-icon.far:before,
 .fad:before, .sys-icon.fad:before {
@@ -25,7 +25,7 @@
   opacity: var(--fa-primary-opacity, 1); 
 }
 
-.fa:after, .sys-icon:after,
+.fa:not(.fab):not(.fal):after, .sys-icon:not(.fab):not(.fal):after,
 .fas:after, .sys-icon.fas:after,
 .far:after, .sys-icon.far:after,
 .fad:after, .sys-icon.fad:after {
@@ -59,6 +59,9 @@
     font-family:'sys-user-fal';
     font-weight:300;
     font-style:normal;
+}
+.fal:after, .sys-icon.fal:after {
+    display:none;
 }
 
 
