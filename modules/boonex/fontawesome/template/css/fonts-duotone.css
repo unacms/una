@@ -296,7 +296,7 @@
 .sys-icon.arrows:after, .fa-arrows:after {
   content: "\10f047"; }
 
-.sys-icon.arrows-alt:after, .fa-arrows-alt:after {
+.sys-icon.move:after, .sys-icon.arrows-alt:after, .fa-arrows-alt:after {
   content: "\10f0b2"; }
 
 .sys-icon.arrows-alt-h:after, .fa-arrows-alt-h:after {
@@ -4430,7 +4430,7 @@
 .sys-icon.tilde:after, .fa-tilde:after {
   content: "\10f69f"; }
 
-.sys-icon.times:after, .fa-times:after {
+.sys-icon.remove:after, .sys-icon.times:after, .fa-times:after {
   content: "\10f00d"; }
 
 .sys-icon.times-circle:after, .fa-times-circle:after {
@@ -4769,7 +4769,7 @@
 .sys-icon.user-times:after, .fa-user-times:after {
   content: "\10f235"; }
 
-.sys-icon.users:after, .fa-users:after {
+.sys-icon.group:after, .sys-icon.users:after, .fa-users:after {
   content: "\10f0c0"; }
 
 .sys-icon.users-class:after, .fa-users-class:after {

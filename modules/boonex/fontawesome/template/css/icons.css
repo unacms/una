@@ -306,7 +306,7 @@
 .sys-icon.arrows:before, .fa-arrows:before {
   content: "\f047"; }
 
-.sys-icon.arrows-alt:before, .fa-arrows-alt:before {
+.sys-icon.move:before, .sys-icon.arrows-alt:before, .fa-arrows-alt:before {
   content: "\f0b2"; }
 
 .sys-icon.arrows-alt-h:before, .fa-arrows-alt-h:before {
@@ -5469,7 +5469,7 @@
 .sys-icon.tilde:before, .fa-tilde:before {
   content: "\f69f"; }
 
-.sys-icon.times:before, .fa-times:before {
+.sys-icon.remove:before, .sys-icon.times:before, .fa-times:before {
   content: "\f00d"; }
 
 .sys-icon.times-circle:before, .fa-times-circle:before {
@@ -5856,7 +5856,7 @@
 .sys-icon.user-times:before, .fa-user-times:before {
   content: "\f235"; }
 
-.sys-icon.users:before, .fa-users:before {
+.sys-icon.group:before, .sys-icon.users:before, .fa-users:before {
   content: "\f0c0"; }
 
 .sys-icon.users-class:before, .fa-users-class:before {
@@ -6470,7 +6470,7 @@
 .fad.sys-icon.arrows:after, .fad.fa-arrows:after {
   content: "\10f047"; }
 
-.fad.sys-icon.arrows-alt:after, .fad.fa-arrows-alt:after {
+.fad.sys-icon.move:after, .fad.sys-icon.arrows-alt:after, .fad.fa-arrows-alt:after {
   content: "\10f0b2"; }
 
 .fad.sys-icon.arrows-alt-h:after, .fad.fa-arrows-alt-h:after {
@@ -10604,7 +10604,7 @@
 .fad.sys-icon.tilde:after, .fad.fa-tilde:after {
   content: "\10f69f"; }
 
-.fad.sys-icon.times:after, .fad.fa-times:after {
+.fad.sys-icon.remove:after, .fad.sys-icon.times:after, .fad.fa-times:after {
   content: "\10f00d"; }
 
 .fad.sys-icon.times-circle:after, .fad.fa-times-circle:after {
@@ -10943,7 +10943,7 @@
 .fad.sys-icon.user-times:after, .fad.fa-user-times:after {
   content: "\10f235"; }
 
-.fad.sys-icon.users:after, .fad.fa-users:after {
+.fad.sys-icon.group:after, .fad.sys-icon.users:after, .fad.fa-users:after {
   content: "\10f0c0"; }
 
 .fad.sys-icon.users-class:after, .fad.fa-users-class:after {
