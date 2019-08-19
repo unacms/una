@@ -67,6 +67,7 @@
     font-family:'sys-user-fad';
     font-weight:900;
     font-style:normal;
+    vertical-align:baseline !important;
 }
 
 .fad:before, .sys-icon.fad:before {

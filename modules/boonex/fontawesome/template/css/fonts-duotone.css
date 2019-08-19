@@ -14,6 +14,7 @@
     font-family:'sys-user-fad';
     font-weight:900;
     font-style:normal;
+    vertical-align:baseline !important;
 }
 .fa:not(.fab):not(.fal):before, .sys-icon:not(.fab):not(.fal):before,
 .fas:before, .sys-icon.fas:before,
