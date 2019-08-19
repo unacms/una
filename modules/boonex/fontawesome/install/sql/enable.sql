@@ -11,7 +11,7 @@ VALUES (@iTypeId, 'bx_fontawesome_general', '_bx_fontawesome_adm_stg_cpt_categor
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-('bx_fontawesome_option_light_icons', '', @iCategId, '_bx_fontawesome_option_light_icons', 'checkbox', '', '', '', 10);
+('bx_fontawesome_option_icons_style', '', @iCategId, '_bx_fontawesome_option_icons_style', 'select', 'default,light,duotone', '', '', 10);
 
 
 -- Alerts
@@ -30,5 +30,6 @@ UPDATE `sys_preloader` SET `active` = 0 WHERE `module` = 'system' AND `type` = '
 INSERT INTO `sys_preloader` (`module`, `type`, `content`, `active`) VALUES
 ('bx_fontawesome', 'css_system', 'icons.css', 1),
 ('bx_fontawesome', 'css_system', 'fonts-all.css', 1),
+('bx_fontawesome', 'css_system', 'fonts-duotone.css', 0),
 ('bx_fontawesome', 'css_system', 'fonts-light.css', 0);
 

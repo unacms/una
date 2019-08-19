@@ -26,3 +26,32 @@
     font-family:'sys-user-fab';
     font-style:normal;
 }
+
+@font-face {
+    font-family: 'sys-user-fad';
+    font-style: normal;
+    font-weight: 900;
+    font-display: auto;
+    src: url("../fonts/fa-duotone-900.eot");
+    src: url("../fonts/fa-duotone-900.eot?#iefix") format("embedded-opentype"), url("../fonts/fa-duotone-900.woff2") format("woff2"), url("../fonts/fa-duotone-900.woff") format("woff"), url("../fonts/fa-duotone-900.ttf") format("truetype"), url("../fonts/fa-duotone-900.svg#fontawesome") format("svg");
+}
+
+.fad, .sys-icon.fad {
+    position: relative;
+    font-family:'sys-user-fad';
+    font-weight:900;
+    font-style:normal;
+}
+
+.fad:before, .sys-icon.fad:before {
+  position: absolute;
+  color: var(--fa-primary-color, inherit);
+  opacity: 1;
+  opacity: var(--fa-primary-opacity, 1); 
+}
+
+.fad:after, .sys-icon.fad:after {
+  color: var(--fa-secondary-color, inherit);
+  opacity: 0.4;
+  opacity: var(--fa-secondary-opacity, 0.4); 
+}

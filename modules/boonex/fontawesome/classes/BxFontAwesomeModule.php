@@ -16,9 +16,9 @@ class BxFontAwesomeModule extends BxDolModule
         parent::__construct($aModule);
     }
 
-    public function serviceSwitchLightFont($bEnable)
+    public function serviceSwitchFont($sFont)
     {
-        $this->_oDb->switchLightFont($bEnable);
+        $this->_oDb->switchFont($sFont);
         BxDolCacheUtilities::getInstance()->clear('css');
         BxDolCacheUtilities::getInstance()->clear('db');
     }

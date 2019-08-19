@@ -13,8 +13,8 @@ class BxFontAwesomeAlerts extends BxDolAlertsResponse
 {
     public function response($o)
     {        
-        if ('system' == $o->sUnit && 'save_setting' == $o->sAction && 'bx_fontawesome_option_light_icons' == $o->aExtras['option']) {            
-            bx_srv('bx_fontawesome', 'switch_light_font', array($o->aExtras['value']));
+        if ('system' == $o->sUnit && 'save_setting' == $o->sAction && 'bx_fontawesome_option_icons_style' == $o->aExtras['option']) {            
+            bx_srv('bx_fontawesome', 'switch_font', array($o->aExtras['value']));
         }
     }    
 }
