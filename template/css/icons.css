@@ -1,5 +1,5 @@
 /*!
- * Font Awesome Free 5.9.0 by @fontawesome - https://fontawesome.com
+ * Font Awesome Free 5.10.1 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 
@@ -228,7 +228,7 @@
 .sys-icon.arrow-up:before, .fa-arrow-up:before {
   content: "\f062"; }
 
-.sys-icon.move:before, .sys-icon.arrows-alt:before, .fa-arrows-alt:before {
+.sys-icon.arrows-alt:before, .sys-icon.move:before, .fa-arrows-alt:before {
   content: "\f0b2"; }
 
 .sys-icon.arrows-alt-h:before, .fa-arrows-alt-h:before {
@@ -944,6 +944,9 @@
 
 .sys-icon.copyright:before, .fa-copyright:before {
   content: "\f1f9"; }
+
+.sys-icon.cotton-bureau:before, .fa-cotton-bureau:before {
+  content: "\f89e"; }
 
 .sys-icon.couch:before, .fa-couch:before {
   content: "\f4b8"; }
@@ -3672,7 +3675,7 @@
 .sys-icon.ticket-alt:before, .fa-ticket-alt:before {
   content: "\f3ff"; }
 
-.sys-icon.remove:before, .sys-icon.times:before, .fa-times:before {
+.sys-icon.times:before, .sys-icon.remove:before, .fa-times:before {
   content: "\f00d"; }
 
 .sys-icon.times-circle:before, .fa-times-circle:before {
@@ -3930,7 +3933,7 @@
 .sys-icon.user-times:before, .fa-user-times:before {
   content: "\f235"; }
 
-.sys-icon.group:before, .sys-icon.users:before, .fa-users:before {
+.sys-icon.users:before, .sys-icon.group:before, .fa-users:before {
   content: "\f0c0"; }
 
 .sys-icon.users-cog:before, .fa-users-cog:before {
@@ -4196,3 +4199,4 @@
 
 .sys-icon.zhihu:before, .fa-zhihu:before {
   content: "\f63f"; }
+
