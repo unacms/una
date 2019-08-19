@@ -41,7 +41,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `or
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
 ('bx_anon_follow_grid_subscribed_me', 'single', 'subscribe', '_sys_subscribe', 'check', 0, 1),
 ('bx_anon_follow_grid_subscriptions', 'single', 'subscribe', '_sys_subscribe', 'check', 0, 1),
-('bx_anon_follow_grid_subscriptions', 'single', 'delete', '', 'remove', 1, 2);
+('bx_anon_follow_grid_subscriptions', 'single', 'delete', '', 'times', 1, 2);
 
 -- ALERTS
 INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 

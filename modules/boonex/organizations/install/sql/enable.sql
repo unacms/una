@@ -278,7 +278,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_organizations_view_actions_more', 'bx_organizations', 'edit-organization-cover', '_bx_orgs_menu_item_title_system_edit_cover', '_bx_orgs_menu_item_title_edit_cover', 'page.php?i=edit-organization-cover&id={content_id}', '', '', 'edit', '', 2147483647, 1, 0, 25),
 ('bx_organizations_view_actions_more', 'bx_organizations', 'edit-organization-profile', '_bx_orgs_menu_item_title_system_edit_profile', '_bx_orgs_menu_item_title_edit_profile', 'page.php?i=edit-organization-profile&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 30),
 ('bx_organizations_view_actions_more', 'bx_organizations', 'invite-to-organization', '_bx_orgs_menu_item_title_system_invite', '_bx_orgs_menu_item_title_invite', 'page.php?i=invite-to-organization&id={content_id}', '', '', 'user-friends', '', 2147483647, 1, 0, 32),
-('bx_organizations_view_actions_more', 'bx_organizations', 'delete-organization-profile', '_bx_orgs_menu_item_title_system_delete_profile', '_bx_orgs_menu_item_title_delete_profile', 'page.php?i=delete-organization-profile&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 40),
+('bx_organizations_view_actions_more', 'bx_organizations', 'delete-organization-profile', '_bx_orgs_menu_item_title_system_delete_profile', '_bx_orgs_menu_item_title_delete_profile', 'page.php?i=delete-organization-profile&id={content_id}', '', '', 'times', '', 2147483647, 1, 0, 40),
 ('bx_organizations_view_actions_more', 'bx_organizations', 'delete-organization-account', '_bx_orgs_menu_item_title_system_delete_account', '_bx_orgs_menu_item_title_delete_account', 'page.php?i=account-settings-delete&id={account_id}', '', '', 'user-times', '', 128, 1, 0, 50),
 ('bx_organizations_view_actions_more', 'bx_organizations', 'delete-organization-account-content', '_bx_orgs_menu_item_title_system_delete_account_content', '_bx_orgs_menu_item_title_delete_account_content', 'page.php?i=account-settings-delete&id={account_id}&content=1', '', '', 'trash', '', 128, 1, 0, 60);
 
@@ -533,7 +533,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('bx_organizations_fans', 'single', 'accept', '_sys_accept', '', 0, 10),
 ('bx_organizations_fans', 'single', 'to_admins', '_bx_orgs_txt_to_admins', '', 0, 20),
 ('bx_organizations_fans', 'single', 'from_admins', '_bx_orgs_txt_from_admins', '', 0, 30),
-('bx_organizations_fans', 'single', 'delete', '', 'remove', 1, 40);
+('bx_organizations_fans', 'single', 'delete', '', 'times', 1, 40);
 
 -- GRIDS: administration
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES

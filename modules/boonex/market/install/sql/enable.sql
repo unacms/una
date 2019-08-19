@@ -265,7 +265,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_market_view_more', 'bx_market', 'hide-product', '_bx_market_menu_item_title_system_hide_entry', '_bx_market_menu_item_title_hide_entry', 'javascript:void(0);', 'javascript:{js_object}.perform(this, ''hide-product'', {content_id});', '', 'stop-circle', '', 2147483647, 1, 0, 10),
 ('bx_market_view_more', 'bx_market', 'edit-product', '_bx_market_menu_item_title_system_edit_entry', '_bx_market_menu_item_title_edit_entry', 'page.php?i=edit-product&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 20),
-('bx_market_view_more', 'bx_market', 'delete-product', '_bx_market_menu_item_title_system_delete_entry', '_bx_market_menu_item_title_delete_entry', 'page.php?i=delete-product&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 30);
+('bx_market_view_more', 'bx_market', 'delete-product', '_bx_market_menu_item_title_system_delete_entry', '_bx_market_menu_item_title_delete_entry', 'page.php?i=delete-product&id={content_id}', '', '', 'times', '', 2147483647, 1, 0, 30);
 
 -- MENU: all actions menu for view entry 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -599,11 +599,11 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_market_administration', 'bulk', 'delete', '_bx_market_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_market_administration', 'single', 'edit', '_bx_market_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
-('bx_market_administration', 'single', 'delete', '_bx_market_grid_action_title_adm_delete', 'remove', 1, 1, 2),
+('bx_market_administration', 'single', 'delete', '_bx_market_grid_action_title_adm_delete', 'times', 1, 1, 2),
 ('bx_market_administration', 'single', 'settings', '_bx_market_grid_action_title_adm_more_actions', 'cog', 1, 0, 3),
 ('bx_market_common', 'bulk', 'delete', '_bx_market_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_market_common', 'single', 'edit', '_bx_market_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
-('bx_market_common', 'single', 'delete', '_bx_market_grid_action_title_adm_delete', 'remove', 1, 1, 2),
+('bx_market_common', 'single', 'delete', '_bx_market_grid_action_title_adm_delete', 'times', 1, 1, 2),
 ('bx_market_common', 'single', 'settings', '_bx_market_grid_action_title_adm_more_actions', 'cog', 1, 0, 3),
 
 ('bx_market_licenses_administration', 'single', 'reset', '_bx_market_grid_action_title_lcs_reset', 'eraser', 1, 1, 1),

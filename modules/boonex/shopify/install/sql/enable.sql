@@ -179,7 +179,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_shopify_view', 'bx_shopify', 'edit-shopify-entry', '_bx_shopify_menu_item_title_system_edit_entry', '_bx_shopify_menu_item_title_edit_entry', 'page.php?i=edit-shopify-entry&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 1),
-('bx_shopify_view', 'bx_shopify', 'delete-shopify-entry', '_bx_shopify_menu_item_title_system_delete_entry', '_bx_shopify_menu_item_title_delete_entry', 'page.php?i=delete-shopify-entry&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 2);
+('bx_shopify_view', 'bx_shopify', 'delete-shopify-entry', '_bx_shopify_menu_item_title_system_delete_entry', '_bx_shopify_menu_item_title_delete_entry', 'page.php?i=delete-shopify-entry&id={content_id}', '', '', 'times', '', 2147483647, 1, 0, 2);
 
 -- MENU: all actions menu for view entry 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -405,12 +405,12 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_shopify_administration', 'bulk', 'delete', '_bx_shopify_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_shopify_administration', 'single', 'edit', '_bx_shopify_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
-('bx_shopify_administration', 'single', 'delete', '_bx_shopify_grid_action_title_adm_delete', 'remove', 1, 1, 2),
+('bx_shopify_administration', 'single', 'delete', '_bx_shopify_grid_action_title_adm_delete', 'times', 1, 1, 2),
 ('bx_shopify_administration', 'single', 'settings', '_bx_shopify_grid_action_title_adm_more_actions', 'cog', 1, 0, 3),
 
 ('bx_shopify_common', 'bulk', 'delete', '_bx_shopify_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_shopify_common', 'single', 'edit', '_bx_shopify_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
-('bx_shopify_common', 'single', 'delete', '_bx_shopify_grid_action_title_adm_delete', 'remove', 1, 1, 2),
+('bx_shopify_common', 'single', 'delete', '_bx_shopify_grid_action_title_adm_delete', 'times', 1, 1, 2),
 ('bx_shopify_common', 'single', 'settings', '_bx_shopify_grid_action_title_adm_more_actions', 'cog', 1, 0, 3);
 
 

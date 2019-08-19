@@ -33,7 +33,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_ribbons_data', 'single', 'edit', '_bx_ribbons_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
-('bx_ribbons_data', 'single', 'delete', '_bx_ribbons_grid_action_title_adm_delete', 'remove', 1, 1, 2),
+('bx_ribbons_data', 'single', 'delete', '_bx_ribbons_grid_action_title_adm_delete', 'times', 1, 1, 2),
 ('bx_ribbons_data', 'bulk', 'delete', '_bx_ribbons_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_ribbons_data', 'independent', 'add', '_bx_ribbons_grid_action_title_adm_add', '', 0, 0, 1);
 

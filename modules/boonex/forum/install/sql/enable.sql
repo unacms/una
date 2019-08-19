@@ -226,7 +226,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_forum_view_more', @sName, 'unlock-discussion', '_bx_forum_menu_item_title_system_unlock_entry', '_bx_forum_menu_item_title_unlock_entry', 'javascript:void(0);', '{js_object}.updateStatus(this, \'unlock\', {content_id});', '', 'unlock', '', 2147483647, 1, 0, 3),
 ('bx_forum_view_more', @sName, 'unhide-discussion', '_bx_forum_menu_item_title_system_unhide_entry', '_bx_forum_menu_item_title_unhide_entry', 'javascript:void(0);', '{js_object}.updateStatus(this, \'unhide\', {content_id});', '', 'play-circle', '', 2147483647, 1, 0, 4),
 ('bx_forum_view_more', @sName, 'edit-discussion', '_bx_forum_menu_item_title_system_edit_entry', '_bx_forum_menu_item_title_edit_entry', 'page.php?i=edit-discussion&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 5),
-('bx_forum_view_more', @sName, 'delete-discussion', '_bx_forum_menu_item_title_system_delete_entry', '_bx_forum_menu_item_title_delete_entry', 'page.php?i=delete-discussion&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 6);
+('bx_forum_view_more', @sName, 'delete-discussion', '_bx_forum_menu_item_title_system_delete_entry', '_bx_forum_menu_item_title_delete_entry', 'page.php?i=delete-discussion&id={content_id}', '', '', 'times', '', 2147483647, 1, 0, 6);
 
 -- MENU: all actions menu for view entry 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -388,12 +388,12 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_forum_administration', 'bulk', 'delete', '_bx_forum_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_forum_administration', 'single', 'edit', '_bx_forum_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
-('bx_forum_administration', 'single', 'delete', '_bx_forum_grid_action_title_adm_delete', 'remove', 1, 1, 2),
+('bx_forum_administration', 'single', 'delete', '_bx_forum_grid_action_title_adm_delete', 'times', 1, 1, 2),
 ('bx_forum_administration', 'single', 'settings', '_bx_forum_grid_action_title_adm_more_actions', 'cog', 1, 0, 3),
 
 ('bx_forum_common', 'bulk', 'delete', '_bx_forum_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_forum_common', 'single', 'edit', '_bx_forum_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
-('bx_forum_common', 'single', 'delete', '_bx_forum_grid_action_title_adm_delete', 'remove', 1, 1, 2),
+('bx_forum_common', 'single', 'delete', '_bx_forum_grid_action_title_adm_delete', 'times', 1, 1, 2),
 ('bx_forum_common', 'single', 'settings', '_bx_forum_grid_action_title_adm_more_actions', 'cog', 1, 0, 3);
 
 -- GRIDS: categories manager

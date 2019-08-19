@@ -85,7 +85,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_massmailer_campaigns', 'bulk', 'delete', '_bx_massmailer_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_massmailer_campaigns', 'single', 'edit', '_bx_massmailer_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
-('bx_massmailer_campaigns', 'single', 'delete', '_bx_massmailer_grid_action_title_adm_delete', 'remove', 1, 1, 2),
+('bx_massmailer_campaigns', 'single', 'delete', '_bx_massmailer_grid_action_title_adm_delete', 'times', 1, 1, 2),
 ('bx_massmailer_campaigns', 'single', 'copy', '_bx_massmailer_grid_action_title_adm_copy', 'copy', 1, 0, 4),
 ('bx_massmailer_campaigns', 'single', 'send_test', '_bx_massmailer_grid_action_title_adm_send_test', 'envelope-open', 1, 0, 5),
 ('bx_massmailer_campaigns', 'single', 'view', '_bx_massmailer_grid_action_title_adm_view', 'eye', 1, 0, 6),
