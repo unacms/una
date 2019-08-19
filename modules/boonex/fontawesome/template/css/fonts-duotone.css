@@ -14,8 +14,9 @@
     font-family:'sys-user-fad';
     font-weight:900;
     font-style:normal;
+    vertical-align:baseline !important;
 }
-.fa:before, .sys-icon:before,
+.fa:not(.fab):not(.fal):before, .sys-icon:not(.fab):not(.fal):before,
 .fas:before, .sys-icon.fas:before,
 .far:before, .sys-icon.far:before,
 .fad:before, .sys-icon.fad:before {
@@ -25,7 +26,7 @@
   opacity: var(--fa-primary-opacity, 1); 
 }
 
-.fa:after, .sys-icon:after,
+.fa:not(.fab):not(.fal):after, .sys-icon:not(.fab):not(.fal):after,
 .fas:after, .sys-icon.fas:after,
 .far:after, .sys-icon.far:after,
 .fad:after, .sys-icon.fad:after {
@@ -59,6 +60,9 @@
     font-family:'sys-user-fal';
     font-weight:300;
     font-style:normal;
+}
+.fal:after, .sys-icon.fal:after {
+    display:none;
 }
 
 
@@ -296,7 +300,7 @@
 .sys-icon.arrows:after, .fa-arrows:after {
   content: "\10f047"; }
 
-.sys-icon.arrows-alt:after, .fa-arrows-alt:after {
+.sys-icon.move:after, .sys-icon.arrows-alt:after, .fa-arrows-alt:after {
   content: "\10f0b2"; }
 
 .sys-icon.arrows-alt-h:after, .fa-arrows-alt-h:after {
@@ -4430,7 +4434,7 @@
 .sys-icon.tilde:after, .fa-tilde:after {
   content: "\10f69f"; }
 
-.sys-icon.times:after, .fa-times:after {
+.sys-icon.remove:after, .sys-icon.times:after, .fa-times:after {
   content: "\10f00d"; }
 
 .sys-icon.times-circle:after, .fa-times-circle:after {
@@ -4769,7 +4773,7 @@
 .sys-icon.user-times:after, .fa-user-times:after {
   content: "\10f235"; }
 
-.sys-icon.users:after, .fa-users:after {
+.sys-icon.group:after, .sys-icon.users:after, .fa-users:after {
   content: "\10f0c0"; }
 
 .sys-icon.users-class:after, .fa-users-class:after {
