@@ -45,6 +45,7 @@ $aConfig = array(
      */
     'language_category' => array(
         array('name' => 'Channels', 'path' => 'bx_channels/'),
+        array('name' => 'Notifications', 'path' => 'bx_notifications/'),
         array('name' => 'Payment', 'path' => 'bx_payment/'),
         array('name' => 'Timeline', 'path' => 'bx_timeline/'),
         array('name' => 'System', 'path' => 'system/'),
