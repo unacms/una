@@ -78,7 +78,7 @@
     <string name="_bx_ntfs_setting_title_mask"><![CDATA[{0}: {1}]]></string>
     <string name="_bx_ntfs_setting_type_personal"><![CDATA[Активность, относящаяся к вам]]></string>
     <string name="_bx_ntfs_setting_type_follow_member"><![CDATA[Активность, относящаяся к пользователям, за которыми Вы следите]]></string>
-    <string name="_bx_ntfs_setting_type_follow_context"><![CDATA[Активность, относящаяся к контекстам (группам, собитиям и тп), за которыми Вы следите]]></string>
+    <string name="_bx_ntfs_setting_type_follow_context"><![CDATA[Активность, относящаяся к контекстам (группам, событиям и тп), за которыми Вы следите]]></string>
     <string name="_bx_ntfs_setting_type_other"><![CDATA[Другая активность]]></string>
 
     <string name="_bx_ntfs_alert_module_sys_cmts"><![CDATA[Комментарии]]></string>
