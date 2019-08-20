@@ -3786,7 +3786,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 -- account settings menu more
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('sys_account_settings_more', 'system', 'account-settings-delete', '_sys_menu_item_title_system_account_settings_delete', '_sys_menu_item_title_account_settings_delete', 'page.php?i=account-settings-delete', '', '', 'times', '', 2147483646, 1, 1, 1);
+('sys_account_settings_more', 'system', 'account-settings-delete', '_sys_menu_item_title_system_account_settings_delete', '_sys_menu_item_title_account_settings_delete', 'page.php?i=account-settings-delete', '', '', 'remove', '', 2147483646, 1, 1, 1);
 
 -- account dashboard
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
@@ -3798,7 +3798,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
 ('sys_cmts_item_manage', 'system', 'item-report', '_sys_menu_item_title_system_cmts_item_report', '', 'javascript:void(0)', '', '', '', '', 2147483647, 1, 0, 0),
 ('sys_cmts_item_manage', 'system', 'item-edit', '_sys_menu_item_title_system_cmts_item_edit', '_sys_menu_item_title_cmts_item_edit', 'javascript:void(0)', 'javascript:{js_object}.cmtEdit(this, {content_id})', '_self', 'pencil-alt', '', 2147483647, 1, 0, 0),
-('sys_cmts_item_manage', 'system', 'item-delete', '_sys_menu_item_title_system_cmts_item_delete', '_sys_menu_item_title_cmts_item_delete', 'javascript:void(0)', 'javascript:{js_object}.cmtRemove(this, {content_id})', '_self', 'times', '', 2147483647, 1, 0, 0);
+('sys_cmts_item_manage', 'system', 'item-delete', '_sys_menu_item_title_system_cmts_item_delete', '_sys_menu_item_title_cmts_item_delete', 'javascript:void(0)', 'javascript:{js_object}.cmtRemove(this, {content_id})', '_self', 'remove', '', 2147483647, 1, 0, 0);
 
 -- comment actions menu
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
@@ -4019,29 +4019,29 @@ CREATE TABLE IF NOT EXISTS `sys_grid_actions` (
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
 ('sys_studio_lang_keys', 'bulk', 'delete', '_adm_pgt_btn_delete', '', 1, 1),
 ('sys_studio_lang_keys', 'single', 'edit', '', 'pencil-alt', 0, 1),
-('sys_studio_lang_keys', 'single', 'delete', '', 'times', 1, 2),
+('sys_studio_lang_keys', 'single', 'delete', '', 'remove', 1, 2),
 ('sys_studio_lang_keys', 'independent', 'add', '_adm_pgt_btn_add_new_key', '', 0, 1),
 
 ('sys_studio_lang_etemplates', 'single', 'edit', '', 'pencil-alt', 0, 1),
 
 ('sys_studio_acl', 'independent', 'add', '_adm_prm_btn_add_level', '', 0, 1),
 ('sys_studio_acl', 'single', 'edit', '', 'pencil-alt', 0, 1),
-('sys_studio_acl', 'single', 'delete', '', 'times', 1, 2),
+('sys_studio_acl', 'single', 'delete', '', 'remove', 1, 2),
 
 ('sys_studio_acl_actions', 'single', 'options', '', 'cog', 0, 1),
 
 ('sys_studio_nav_menus', 'independent', 'add', '_adm_nav_btn_menus_create', '', 0, 1),
 ('sys_studio_nav_menus', 'single', 'edit', '', 'pencil-alt', 0, 1),
-('sys_studio_nav_menus', 'single', 'delete', '', 'times', 1, 2),
+('sys_studio_nav_menus', 'single', 'delete', '', 'remove', 1, 2),
 
 ('sys_studio_nav_sets', 'independent', 'add', '_adm_nav_btn_sets_create', '', 0, 1),
 ('sys_studio_nav_sets', 'single', 'edit', '', 'pencil-alt', 0, 1),
-('sys_studio_nav_sets', 'single', 'delete', '', 'times', 1, 2),
+('sys_studio_nav_sets', 'single', 'delete', '', 'remove', 1, 2),
 
 ('sys_studio_nav_items', 'independent', 'import', '_adm_nav_btn_items_gl_import', '', 0, 1),
 ('sys_studio_nav_items', 'independent', 'add', '_adm_nav_btn_items_gl_create', '', 0, 2),
 ('sys_studio_nav_items', 'single', 'edit', '', 'pencil-alt', 0, 1),
-('sys_studio_nav_items', 'single', 'delete', '', 'times', 1, 2),
+('sys_studio_nav_items', 'single', 'delete', '', 'remove', 1, 2),
 ('sys_studio_nav_items', 'single', 'show_to', '_adm_nav_btn_items_gl_visible', '', 0, 3),
 
 ('sys_studio_nav_import', 'single', 'import', '', 'plus', 0, 1),
@@ -4052,17 +4052,17 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('sys_studio_forms_displays', 'single', 'edit', '', 'pencil-alt', 0, 1),
 
 ('sys_studio_forms_fields', 'single', 'edit', '', 'pencil-alt', 0, 1),
-('sys_studio_forms_fields', 'single', 'delete', '', 'times', 1, 2),
+('sys_studio_forms_fields', 'single', 'delete', '', 'remove', 1, 2),
 ('sys_studio_forms_fields', 'single', 'show_to', '_adm_form_btn_fields_visible', '', 0, 3),
 ('sys_studio_forms_fields', 'independent', 'add', '_adm_form_btn_fields_create', '', 0, 1),
 
 ('sys_studio_forms_pre_lists', 'independent', 'add', '_adm_form_btn_pre_lists_create', '', 0, 1),
 ('sys_studio_forms_pre_lists', 'single', 'edit', '', 'pencil-alt', 0, 1),
-('sys_studio_forms_pre_lists', 'single', 'delete', '', 'times', 1, 2),
+('sys_studio_forms_pre_lists', 'single', 'delete', '', 'remove', 1, 2),
 
 ('sys_studio_forms_pre_values', 'independent', 'add', '_adm_form_btn_pre_values_create', '', 0, 1),
 ('sys_studio_forms_pre_values', 'single', 'edit', '', 'pencil-alt', 0, 1),
-('sys_studio_forms_pre_values', 'single', 'delete', '', 'times', 1, 2),
+('sys_studio_forms_pre_values', 'single', 'delete', '', 'remove', 1, 2),
 ('sys_studio_forms_pre_values', 'bulk', 'delete', '_adm_form_btn_pre_values_delete', '', 1, 1),
 
 ('sys_studio_search_forms', 'single', 'edit', '', 'pencil-alt', 0, 1),
@@ -4073,7 +4073,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('sys_studio_labels', 'independent', 'back', '_adm_form_btn_labels_back', '', 0, 1),
 ('sys_studio_labels', 'independent', 'add', '_adm_form_btn_labels_add', '', 0, 2),
 ('sys_studio_labels', 'single', 'edit', '', 'pencil-alt', 0, 1),
-('sys_studio_labels', 'single', 'delete', '', 'times', 1, 2);
+('sys_studio_labels', 'single', 'delete', '', 'remove', 1, 2);
 
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
@@ -4089,7 +4089,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('sys_cmts_administration', 'bulk', 'delete', '_sys_cmts_administration_grid_action_title_adm_delete', '', 0, 1, 1),
-('sys_cmts_administration', 'single', 'delete', '_sys_cmts_administration_grid_action_title_adm_delete', 'times', 1, 1, 1);
+('sys_cmts_administration', 'single', 'delete', '_sys_cmts_administration_grid_action_title_adm_delete', 'remove', 1, 1, 1);
 
 
 -- GRID: Storage managers
@@ -4118,14 +4118,14 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 -- Storages: Files
 ('sys_studio_strg_files', 'bulk', 'delete', '_adm_strg_btn_delete', '', 0, 1, 1),
 ('sys_studio_strg_files', 'single', 'download', '_adm_strg_btn_download', 'download', 1, 0, 1),
-('sys_studio_strg_files', 'single', 'delete', '_adm_strg_btn_delete', 'times', 1, 1, 2),
+('sys_studio_strg_files', 'single', 'delete', '_adm_strg_btn_delete', 'remove', 1, 1, 2),
 ('sys_studio_strg_files', 'independent', 'add', '_adm_strg_btn_add', '', 0, 0, 1),
 
 -- Storages: Images
 ('sys_studio_strg_images', 'bulk', 'delete', '_adm_strg_btn_delete', '', 0, 1, 1),
 ('sys_studio_strg_images', 'single', 'download', '_adm_strg_btn_download', 'download', 1, 0, 1),
 ('sys_studio_strg_images', 'single', 'resize', '_adm_strg_btn_resize', 'compress', 1, 0, 2),
-('sys_studio_strg_images', 'single', 'delete', '_adm_strg_btn_delete', 'times', 1, 1, 3),
+('sys_studio_strg_images', 'single', 'delete', '_adm_strg_btn_delete', 'remove', 1, 1, 3),
 ('sys_studio_strg_images', 'independent', 'add', '_adm_strg_btn_add', '', 0, 0, 1);
 
 
@@ -4168,18 +4168,18 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `hi
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('sys_grid_connections', 'single', 'accept', '_sys_accept', '', 0, 0, 1),
-('sys_grid_connections', 'single', 'delete', '', 'times', 0, 1, 2),
+('sys_grid_connections', 'single', 'delete', '', 'remove', 0, 1, 2),
 ('sys_grid_connections', 'single', 'add_friend', '_sys_add_friend', 'plus', 0, 0, 3),
 
 ('sys_grid_connections_requests', 'single', 'accept', '_sys_accept', '', 0, 0, 1),
-('sys_grid_connections_requests', 'single', 'delete', '', 'times', 0, 1, 2),
+('sys_grid_connections_requests', 'single', 'delete', '', 'remove', 0, 1, 2),
 
 ('sys_grid_subscriptions', 'single', 'subscribe', '_sys_subscribe', 'check', 0, 0, 1),
-('sys_grid_subscriptions', 'single', 'delete', '', 'times', 0, 1, 2),
+('sys_grid_subscriptions', 'single', 'delete', '', 'remove', 0, 1, 2),
 
 ('sys_grid_subscribed_me', 'single', 'subscribe', '_sys_subscribe', 'check', 0, 0, 1),
 
-('sys_grid_relations', 'single', 'delete', '_Delete', 'times', 1, 1, 1),
+('sys_grid_relations', 'single', 'delete', '_Delete', 'remove', 1, 1, 1),
 
 ('sys_grid_related_me', 'single', 'confirm', '_sys_confirm', 'check-circle', 1, 0, 1),
 ('sys_grid_related_me', 'single', 'decline', '_sys_decline', 'times-circle', 1, 1, 2),

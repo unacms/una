@@ -191,7 +191,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_channels_view_actions_more', 'bx_channels', 'profile-subscribe-remove', '_bx_channels_menu_item_title_system_unsubscribe', '_bx_channels_menu_item_title_unsubscribe', 'javascript:void(0)', 'bx_conn_action(this, \'sys_profiles_subscriptions\', \'remove\', \'{profile_id}\')', '', 'check', '', 2147483647, 1, 0, 20),
 ('bx_channels_view_actions_more', 'bx_channels', 'edit-channel-cover', '_bx_channels_menu_item_title_system_edit_cover', '_bx_channels_menu_item_title_edit_cover', 'page.php?i=edit-channel-cover&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 30),
 ('bx_channels_view_actions_more', 'bx_channels', 'edit-channel-profile', '_bx_channels_menu_item_title_system_edit_profile', '_bx_channels_menu_item_title_edit_profile', 'page.php?i=edit-channel-profile&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 0, 0, 40),
-('bx_channels_view_actions_more', 'bx_channels', 'delete-channel-profile', '_bx_channels_menu_item_title_system_delete_profile', '_bx_channels_menu_item_title_delete_profile', 'page.php?i=delete-channel-profile&id={content_id}', '', '', 'times', '', 2147483647, 1, 0, 50);
+('bx_channels_view_actions_more', 'bx_channels', 'delete-channel-profile', '_bx_channels_menu_item_title_system_delete_profile', '_bx_channels_menu_item_title_delete_profile', 'page.php?i=delete-channel-profile&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 50);
 
 -- MENU: all actions menu for view entry 
 

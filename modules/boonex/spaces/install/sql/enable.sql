@@ -224,7 +224,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_spaces_view_actions_more', 'bx_spaces', 'edit-space-cover', '_bx_spaces_menu_item_title_system_edit_cover', '_bx_spaces_menu_item_title_edit_cover', 'page.php?i=edit-space-cover&id={content_id}', '', '', 'edit', '', 2147483647, 1, 0, 30),
 ('bx_spaces_view_actions_more', 'bx_spaces', 'edit-space-profile', '_bx_spaces_menu_item_title_system_edit_profile', '_bx_spaces_menu_item_title_edit_profile', 'page.php?i=edit-space-profile&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 40),
 ('bx_spaces_view_actions_more', 'bx_spaces', 'invite-to-space', '_bx_spaces_menu_item_title_system_invite', '_bx_spaces_menu_item_title_invite', 'page.php?i=invite-to-space&id={content_id}', '', '', 'user-friends', '', 2147483647, 1, 0, 42),
-('bx_spaces_view_actions_more', 'bx_spaces', 'delete-space-profile', '_bx_spaces_menu_item_title_system_delete_profile', '_bx_spaces_menu_item_title_delete_profile', 'page.php?i=delete-space-profile&id={content_id}', '', '', 'times', '', 2147483647, 1, 0, 50);
+('bx_spaces_view_actions_more', 'bx_spaces', 'delete-space-profile', '_bx_spaces_menu_item_title_system_delete_profile', '_bx_spaces_menu_item_title_delete_profile', 'page.php?i=delete-space-profile&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 50);
 
 -- MENU: all actions menu for view entry 
 
@@ -444,7 +444,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('bx_spaces_fans', 'single', 'accept', '_sys_accept', '', 0, 10),
 ('bx_spaces_fans', 'single', 'to_admins', '_bx_spaces_txt_to_admins', '', 0, 20),
 ('bx_spaces_fans', 'single', 'from_admins', '_bx_spaces_txt_from_admins', '', 0, 30),
-('bx_spaces_fans', 'single', 'delete', '', 'times', 1, 40);
+('bx_spaces_fans', 'single', 'delete', '', 'remove', 1, 40);
 
 -- GRIDS: administration
 

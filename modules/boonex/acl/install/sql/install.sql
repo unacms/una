@@ -94,7 +94,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_acl_administration', 'independent', 'add', '_bx_acl_grid_action_add', '', 0, 0, 1),
 ('bx_acl_administration', 'single', 'edit', '_bx_acl_grid_action_edit', 'pencil-alt', 1, 0, 1),
-('bx_acl_administration', 'single', 'delete', '_bx_acl_grid_action_delete', 'times', 1, 1, 2),
+('bx_acl_administration', 'single', 'delete', '_bx_acl_grid_action_delete', 'remove', 1, 1, 2),
 ('bx_acl_administration', 'bulk', 'delete', '_bx_acl_grid_action_delete', '', 0, 1, 1),
 
 ('bx_acl_view', 'single', 'buy', '_bx_acl_grid_action_buy', 'cart-plus', 0, 0, 1),

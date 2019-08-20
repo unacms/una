@@ -203,7 +203,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_albums_view', 'bx_albums', 'add-images-to-album', '_bx_albums_menu_item_title_system_add_images', '_bx_albums_menu_item_title_add_images', 'page.php?i=add-images&id={content_id}', '', '', 'plus', '', 2147483647, 1, 0, 10),
 ('bx_albums_view', 'bx_albums', 'edit-album', '_bx_albums_menu_item_title_system_edit_entry', '_bx_albums_menu_item_title_edit_entry', 'page.php?i=edit-album&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 20),
-('bx_albums_view', 'bx_albums', 'delete-album', '_bx_albums_menu_item_title_system_delete_entry', '_bx_albums_menu_item_title_delete_entry', 'page.php?i=delete-album&id={content_id}', '', '', 'times', '', 2147483647, 1, 0, 30);
+('bx_albums_view', 'bx_albums', 'delete-album', '_bx_albums_menu_item_title_system_delete_entry', '_bx_albums_menu_item_title_delete_entry', 'page.php?i=delete-album&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 30);
 
 -- MENU: all actions menu for view entry 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -483,11 +483,11 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_albums_administration', 'bulk', 'delete', '_bx_albums_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_albums_administration', 'single', 'edit', '_bx_albums_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
-('bx_albums_administration', 'single', 'delete', '_bx_albums_grid_action_title_adm_delete', 'times', 1, 1, 2),
+('bx_albums_administration', 'single', 'delete', '_bx_albums_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_albums_administration', 'single', 'settings', '_bx_albums_grid_action_title_adm_more_actions', 'cog', 1, 0, 3),
 ('bx_albums_common', 'bulk', 'delete', '_bx_albums_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_albums_common', 'single', 'edit', '_bx_albums_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
-('bx_albums_common', 'single', 'delete', '_bx_albums_grid_action_title_adm_delete', 'times', 1, 1, 2),
+('bx_albums_common', 'single', 'delete', '_bx_albums_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_albums_common', 'single', 'settings', '_bx_albums_grid_action_title_adm_more_actions', 'cog', 1, 0, 3);
 
 

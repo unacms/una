@@ -84,7 +84,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_invites_requests', 'bulk', 'delete', '_bx_invites_grid_action_title_adm_delete', '', 0, 1, 2),
 ('bx_invites_requests', 'single', 'info', '_bx_invites_grid_action_title_adm_info', 'info-circle', 1, 0, 1),
 ('bx_invites_requests', 'single', 'invite', '_bx_invites_grid_action_title_adm_invite', 'envelope', 1, 0, 2),
-('bx_invites_requests', 'single', 'delete', '_bx_invites_grid_action_title_adm_delete', 'times', 1, 1, 3),
+('bx_invites_requests', 'single', 'delete', '_bx_invites_grid_action_title_adm_delete', 'remove', 1, 1, 3),
 ('bx_invites_requests', 'single', 'invite_info', '_bx_invites_grid_action_title_adm_invite_info', 'info-circle', 1, 0, 4),
 ('bx_invites_requests', 'independent', 'add', '_bx_invites_grid_action_title_adm_add', '', 0, 0, 5);
 

@@ -208,7 +208,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_files_view', 'bx_files', 'download-file', '_bx_files_menu_item_title_system_download_file', '_bx_files_menu_item_title_download_file', 'modules/?r=files/download/{file_download_token}/{content_id}.{file_ext}', '', '_blank', 'download', '', 2147483647, 1, 0, 1),
 ('bx_files_view', 'bx_files', 'edit-file', '_bx_files_menu_item_title_system_edit_entry', '_bx_files_menu_item_title_edit_entry', 'page.php?i=edit-file&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 2),
-('bx_files_view', 'bx_files', 'delete-file', '_bx_files_menu_item_title_system_delete_entry', '_bx_files_menu_item_title_delete_entry', 'page.php?i=delete-file&id={content_id}', '', '', 'times', '', 2147483647, 1, 0, 3);
+('bx_files_view', 'bx_files', 'delete-file', '_bx_files_menu_item_title_system_delete_entry', '_bx_files_menu_item_title_delete_entry', 'page.php?i=delete-file&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 3);
 
 
 -- MENU: all actions menu for view entry 
@@ -428,11 +428,11 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_files_administration', 'bulk', 'delete', '_bx_files_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_files_administration', 'single', 'edit', '_bx_files_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
-('bx_files_administration', 'single', 'delete', '_bx_files_grid_action_title_adm_delete', 'times', 1, 1, 2),
+('bx_files_administration', 'single', 'delete', '_bx_files_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_files_administration', 'single', 'settings', '_bx_files_grid_action_title_adm_more_actions', 'cog', 1, 0, 3),
 ('bx_files_common', 'bulk', 'delete', '_bx_files_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_files_common', 'single', 'edit', '_bx_files_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
-('bx_files_common', 'single', 'delete', '_bx_files_grid_action_title_adm_delete', 'times', 1, 1, 2),
+('bx_files_common', 'single', 'delete', '_bx_files_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_files_common', 'single', 'settings', '_bx_files_grid_action_title_adm_more_actions', 'cog', 1, 0, 3);
 
 -- UPLOADERS

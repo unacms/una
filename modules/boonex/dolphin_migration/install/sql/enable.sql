@@ -31,5 +31,5 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_dolphin_migration_transfers', 'bulk', 'run', '_bx_dolphin_migration_start_transfer', '', 0, 1, 1),
-('bx_dolphin_migration_transfers', 'single', 'times', '_bx_dolphin_migration_remove_content', 'trash', 1, 1, 2),
+('bx_dolphin_migration_transfers', 'single', 'remove', '_bx_dolphin_migration_remove_content', 'trash', 1, 1, 2),
 ('bx_dolphin_migration_transfers', 'single', 'clean', '_bx_dolphin_migration_clean', 'eraser ', 1, 1, 1);

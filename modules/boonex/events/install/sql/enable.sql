@@ -245,7 +245,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_events_view_actions_more', 'bx_events', 'edit-event-cover', '_bx_events_menu_item_title_system_edit_cover', '_bx_events_menu_item_title_edit_cover', 'page.php?i=edit-event-cover&id={content_id}', '', '', 'edit', '', 2147483647, 1, 0, 30),
 ('bx_events_view_actions_more', 'bx_events', 'edit-event-profile', '_bx_events_menu_item_title_system_edit_profile', '_bx_events_menu_item_title_edit_profile', 'page.php?i=edit-event-profile&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 40),
 ('bx_events_view_actions_more', 'bx_events', 'invite-to-event', '_bx_events_menu_item_title_system_invite', '_bx_events_menu_item_title_invite', 'page.php?i=invite-to-event&id={content_id}', '', '', 'user-friends', '', 2147483647, 1, 0, 42),
-('bx_events_view_actions_more', 'bx_events', 'delete-event-profile', '_bx_events_menu_item_title_system_delete_profile', '_bx_events_menu_item_title_delete_profile', 'page.php?i=delete-event-profile&id={content_id}', '', '', 'times', '', 2147483647, 1, 0, 50);
+('bx_events_view_actions_more', 'bx_events', 'delete-event-profile', '_bx_events_menu_item_title_system_delete_profile', '_bx_events_menu_item_title_delete_profile', 'page.php?i=delete-event-profile&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 50);
 
 -- MENU: all actions menu for view entry 
 
@@ -469,7 +469,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('bx_events_fans', 'single', 'accept', '_sys_accept', '', 0, 10),
 ('bx_events_fans', 'single', 'to_admins', '_bx_events_txt_to_admins', '', 0, 20),
 ('bx_events_fans', 'single', 'from_admins', '_bx_events_txt_from_admins', '', 0, 30),
-('bx_events_fans', 'single', 'delete', '', 'times', 1, 40);
+('bx_events_fans', 'single', 'delete', '', 'remove', 1, 40);
 
 -- GRIDS: administration
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
