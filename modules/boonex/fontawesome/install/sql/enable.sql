@@ -11,7 +11,7 @@ VALUES (@iTypeId, 'bx_fontawesome_general', '_bx_fontawesome_adm_stg_cpt_categor
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-('bx_fontawesome_option_icons_style', '', @iCategId, '_bx_fontawesome_option_icons_style', 'select', 'default,light,duotone', '', '', 10);
+('bx_fontawesome_option_icons_style', 'default', @iCategId, '_bx_fontawesome_option_icons_style', 'select', 'default,light,duotone', '', '', 10);
 
 
 -- Alerts
