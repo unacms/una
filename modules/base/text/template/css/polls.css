@@ -66,8 +66,6 @@
 .bx-base-text-polls-showcase .bx-base-text-poll {
     position: relative;
     width: 100%;
-    padding-top: 0;
-    padding-bottom: 0;
 }
 
 /* Media: phone2 */
@@ -188,10 +186,12 @@ div.bx-base-text-pr-graph .bx-base-text-prg-text {
 .bx-base-text-poll-embed {
     width: 100%;
     height: 240px;
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
 }
 
 .bx-page-iframe .bx-base-text-poll {
-    width: 100vw;
+    width: 80vw;
     height: 100vh;
 }
 .bx-page-iframe .bx-base-text-poll-cnt {
