@@ -103,7 +103,6 @@ class BxBaseModProfileAlertsResponse extends BxBaseModGeneralAlertsResponse
             break;
 
         case 'timeline_pin':
-        case 'timeline_promote':
         case 'timeline_delete':
             $this->processTimelineEventsCheckResult($oAlert, $oAlert->iObject, 'checkAllowedEdit');
             break;
