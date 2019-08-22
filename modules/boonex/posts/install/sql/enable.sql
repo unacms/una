@@ -220,7 +220,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_posts_view', 'bx_posts', 'edit-post', '_bx_posts_menu_item_title_system_edit_entry', '_bx_posts_menu_item_title_edit_entry', 'page.php?i=edit-post&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 1),
-('bx_posts_view', 'bx_posts', 'delete-post', '_bx_posts_menu_item_title_system_delete_entry', '_bx_posts_menu_item_title_delete_entry', 'page.php?i=delete-post&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 2);
+('bx_posts_view', 'bx_posts', 'delete-post', '_bx_posts_menu_item_title_system_delete_entry', '_bx_posts_menu_item_title_delete_entry', 'page.php?i=delete-post&id={content_id}', '', '', 'times', '', 2147483647, 1, 0, 2);
 
 
 -- MENU: all actions menu for view entry 
@@ -413,7 +413,7 @@ INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations
 
 -- CATEGORY
 INSERT INTO `sys_objects_category` (`object`, `search_object`, `form_object`, `list_name`, `table`, `field`, `join`, `where`, `override_class_name`, `override_class_file`) VALUES
-('bx_posts_cats', 'bx_posts', 'bx_posts', 'bx_posts_cats', 'bx_posts_posts', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = `bx_posts_posts`.`author` OR `sys_profiles`.`id` = -`bx_posts_posts`.`author`)', 'AND `sys_profiles`.`status` = ''active''', '', '');
+('bx_posts_cats', 'bx_posts', 'bx_posts', 'bx_posts_cats', 'bx_posts_posts', 'cat', 'INNER JOIN `sys_profiles` ON (`sys_profiles`.`id` = ABS(`bx_posts_posts`.`author`))', 'AND `sys_profiles`.`status` = ''active''', '', '');
 
 -- STATS
 SET @iMaxOrderStats = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_statistics`);
@@ -449,11 +449,11 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_posts_administration', 'bulk', 'delete', '_bx_posts_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_posts_administration', 'single', 'edit', '_bx_posts_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
-('bx_posts_administration', 'single', 'delete', '_bx_posts_grid_action_title_adm_delete', 'remove', 1, 1, 2),
+('bx_posts_administration', 'single', 'delete', '_bx_posts_grid_action_title_adm_delete', 'times', 1, 1, 2),
 ('bx_posts_administration', 'single', 'settings', '_bx_posts_grid_action_title_adm_more_actions', 'cog', 1, 0, 3),
 ('bx_posts_common', 'bulk', 'delete', '_bx_posts_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_posts_common', 'single', 'edit', '_bx_posts_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
-('bx_posts_common', 'single', 'delete', '_bx_posts_grid_action_title_adm_delete', 'remove', 1, 1, 2),
+('bx_posts_common', 'single', 'delete', '_bx_posts_grid_action_title_adm_delete', 'times', 1, 1, 2),
 ('bx_posts_common', 'single', 'settings', '_bx_posts_grid_action_title_adm_more_actions', 'cog', 1, 0, 3);
 
 -- UPLOADERS
