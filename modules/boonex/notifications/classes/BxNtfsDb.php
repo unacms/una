@@ -165,7 +165,7 @@ class BxNtfsDb extends BxBaseModNotificationsDb
                     break;
 
                 case BX_BASE_MOD_NTFS_TYPE_OBJECT_OWNER:
-                    $sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`owner_id`<>`{$this->_sTable}`.`object_owner_id` AND `{$this->_sTable}`.`object_owner_id`=? ", $aParams['owner_id']);
+                    $sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`owner_id`<>`{$this->_sTable}`.`object_owner_id` AND ((`{$this->_sTable}`.`owner_id`=? AND `{$this->_sTable}`.`object_privacy_view`<0 AND `{$this->_sTable}`.`owner_id`=ABS(`{$this->_sTable}`.`object_privacy_view`)) OR `{$this->_sTable}`.`object_owner_id`=?) ", $aParams['owner_id'], $aParams['owner_id']);
                     $sWhereClause .= $this->prepareAsString("AND `{$this->_sTableSettings}`.`type`=? AND `{$this->_sTableSettings}`.`active`='1' AND (ISNULL(`{$this->_sTableSettings2Users}`.`active`) OR `{$this->_sTableSettings2Users}`.`active`='1') ", BX_NTFS_STYPE_PERSONAL);
                     break;
 
