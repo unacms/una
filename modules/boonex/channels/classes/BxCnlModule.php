@@ -90,15 +90,16 @@ class BxCnlModule extends BxBaseModGroupsModule
                 'field' => 'owner_id'
             )
         ));
-
-        bx_alert($this->_aModule['name'], 'hashtag_added_notif', $mixedCnlId, $iCnlProfileId, array(
+        $aParams = array(
             'object_author_id' => $iAuthorId, 
             'privacy_view' => -$iCnlProfileId, 
             'subobject_id' => $iId,
 
             'content_id' => $iContentId,
             'content_author_id' => $iAuthorId
-        ));
+        );
+        bx_alert('system', 'prepare_alert_params', 0, 0, array('unit'=> $this->_aModule['name'], 'action' => 'hashtag_added_notif', 'object_id' => $mixedCnlId, 'sender_id' => $iCnlProfileId, 'extras' => &$aParams));
+        bx_alert($this->_aModule['name'], 'hashtag_added_notif', $mixedCnlId, $iCnlProfileId, $aParams);
     }
     
     function removeContentFromChannel($iContentId, $sModuleName)
