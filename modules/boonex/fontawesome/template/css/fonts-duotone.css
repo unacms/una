@@ -15,6 +15,7 @@
     font-weight:900;
     font-style:normal;
     vertical-align:baseline !important;
+    display: inline-block;
 }
 .fa:not(.fab):not(.fal):before, .sys-icon:not(.fab):not(.fal):before,
 .fas:before, .sys-icon.fas:before,
