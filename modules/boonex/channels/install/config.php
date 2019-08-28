@@ -18,7 +18,7 @@ $aConfig = array(
     'name' => 'bx_channels',
     'title' => 'Channels',
     'note' => 'Channels functionality.',
-    'version' => '10.0.2.DEV',
+    'version' => '10.0.4.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
