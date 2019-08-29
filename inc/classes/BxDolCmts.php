@@ -757,16 +757,17 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     public function deleteMetaInfo ($mixedCmtId)
     {
-        if (!$this->_sMetatagsObj)
-            return;
-
-        if (!is_array($mixedCmtId))
+        if(!is_array($mixedCmtId))
             $mixedCmtId = array($mixedCmtId);
 
-        $oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj);
+        $oMetatags = false;
+        if(!empty($this->_sMetatagsObj))
+            $oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj);
 
-        foreach ($mixedCmtId as $iCmtId) {
-            $oMetatags->onDeleteContent($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId));
+        foreach($mixedCmtId as $iCmtId) {
+            if($oMetatags)
+                $oMetatags->onDeleteContent($this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId));
+
             $this->_oQuery->deleteCmtIds($this->_aSystem['system_id'], $iCmtId);
         }
     }
