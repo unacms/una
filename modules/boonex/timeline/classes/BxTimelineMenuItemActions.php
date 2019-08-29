@@ -52,12 +52,16 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
             $sCommentsOnclick = bx_replace_markers("{js_object_view}.commentItem(this, '" . $sCommentsSystem . "', " . $iCommentsObject . ")", $this->_aMarkers);
         }
 
+        $bSystem = $this->_oModule->_oConfig->isSystem($this->_aEvent['type'], $this->_aEvent['action']);
+
         $this->addMarkers(array(
             'content_id' => $this->_iEvent,
 
             'comment_system' => $sCommentsSystem,
             'comment_object' => $iCommentsObject,
             'comment_onclick' => $sCommentsOnclick,
+
+            'delete_title' => _t('_bx_timeline_menu_item_title_item_delete_' . ($bSystem ? 'system' : 'common'))
         ));
     }
 

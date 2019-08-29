@@ -158,10 +158,12 @@
     <string name="_bx_timeline_menu_item_title_item_unpromote"><![CDATA[Не рекламировать]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_edit"><![CDATA[Изменить]]></string>
     <string name="_bx_timeline_menu_item_title_item_edit"><![CDATA[Изменить]]></string>
-    <string name="_bx_timeline_menu_item_title_system_item_delete"><![CDATA[Скрыть]]></string>
-    <string name="_bx_timeline_menu_item_title_item_delete"><![CDATA[Скрыть из хроник]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_delete"><![CDATA[Удалить]]></string>
+    <string name="_bx_timeline_menu_item_title_item_delete"><![CDATA[{delete_title}]]></string>
+    <string name="_bx_timeline_menu_item_title_item_delete_common"><![CDATA[Удалить]]></string>  
+    <string name="_bx_timeline_menu_item_title_item_delete_system"><![CDATA[Скрыть из хроник]]></string>
 
-	<string name="_bx_timeline_menu_title_item_actions"><![CDATA[Элемент - Действия]]></string>
+    <string name="_bx_timeline_menu_title_item_actions"><![CDATA[Элемент - Действия]]></string>
     <string name="_bx_timeline_menu_set_title_item_actions"><![CDATA[Элемент - Действия]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_comment"><![CDATA[Комментарий]]></string>
     <string name="_bx_timeline_menu_item_title_item_comment"><![CDATA[]]></string>

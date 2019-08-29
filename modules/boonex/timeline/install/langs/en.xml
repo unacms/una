@@ -144,7 +144,7 @@
     
     <string name="_bx_timeline_menu_title_item_manage"><![CDATA[Manage Item]]></string>
     <string name="_bx_timeline_menu_set_title_item_manage"><![CDATA[Manage Item]]></string>
-	<string name="_bx_timeline_menu_item_title_system_item_pin"><![CDATA[Pin here]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_pin"><![CDATA[Pin here]]></string>
     <string name="_bx_timeline_menu_item_title_item_pin"><![CDATA[Pin here]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_unpin"><![CDATA[Unpin here]]></string>
     <string name="_bx_timeline_menu_item_title_item_unpin"><![CDATA[Unpin here]]></string>
@@ -158,10 +158,12 @@
     <string name="_bx_timeline_menu_item_title_item_unpromote"><![CDATA[Unpromote]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_edit"><![CDATA[Edit]]></string>
     <string name="_bx_timeline_menu_item_title_item_edit"><![CDATA[Edit]]></string>
-    <string name="_bx_timeline_menu_item_title_system_item_delete"><![CDATA[Hide]]></string>
-    <string name="_bx_timeline_menu_item_title_item_delete"><![CDATA[Hide from feeds]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_timeline_menu_item_title_item_delete"><![CDATA[{delete_title}]]></string>
+    <string name="_bx_timeline_menu_item_title_item_delete_common"><![CDATA[Delete]]></string>
+    <string name="_bx_timeline_menu_item_title_item_delete_system"><![CDATA[Hide from feeds]]></string>
 
-	<string name="_bx_timeline_menu_title_item_actions"><![CDATA[Item Actions]]></string>
+    <string name="_bx_timeline_menu_title_item_actions"><![CDATA[Item Actions]]></string>
     <string name="_bx_timeline_menu_set_title_item_actions"><![CDATA[Item Actions]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_comment"><![CDATA[Comment]]></string>
     <string name="_bx_timeline_menu_item_title_item_comment"><![CDATA[]]></string>
