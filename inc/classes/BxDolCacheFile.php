@@ -36,6 +36,9 @@ class BxDolCacheFile extends BxDolCache
             return null;
 
         include($this->sPath . $sKey);
+        if (!isset($mixedData))
+            return null;
+
         return $mixedData;
     }
 
