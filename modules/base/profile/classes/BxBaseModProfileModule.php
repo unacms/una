@@ -1322,7 +1322,35 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
 		return $oProfile->id() == $iLogged;
     }
-    
+
+    // ====== COMMON METHODS
+    public function alertAfterAdd($aContentInfo)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sModule = $this->getName();
+        $iContentId = (int)$aContentInfo[$CNF['FIELD_ID']];
+
+        $aParams = array();        
+        if(isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
+            $aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
+
+        bx_alert($sModule, 'added', $iContentId, false, $aParams);
+    }
+
+    public function alertAfterEdit($aContentInfo)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sModule = $this->getName();
+        $iContentId = (int)$aContentInfo[$CNF['FIELD_ID']];
+
+        $oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $sModule);
+
+        bx_alert($sModule, 'edited', $iContentId);
+        bx_alert('profile', 'edit', $oProfile->id(), 0, array('content' => $iContentId, 'module' => $sModule));
+    }
+
     public function getProfileByCurrentUrl ()
     {
         $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);

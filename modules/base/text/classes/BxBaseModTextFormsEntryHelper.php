@@ -76,9 +76,6 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         if ($oProfile->isActive() && !empty($aTrackTextFieldsChanges['changed_fields']))
             $oProfile->disapprove(BX_PROFILE_ACTION_AUTO);
 
-        // alert
-        $this->_oModule->alertAfterEdit($aContentInfo);
-
         return '';
     }
 
@@ -102,9 +99,6 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
             if (isset($CNF['FIELD_POLL']))
                 $oForm->processPolls($CNF['FIELD_POLL'], $iContentId);
         }
-
-        // alert
-        $this->_oModule->alertAfterAdd($aContentInfo);
 
         return '';
     }

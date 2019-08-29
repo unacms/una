@@ -1455,6 +1455,10 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
     // ====== COMMON METHODS
+    public function alertAfterAdd($aContentInfo) {}
+    
+    public function alertAfterEdit($aContentInfo) {}
+
     public function onPublished($iContentId) {}
 
     public function onFailed($iContentId) {}

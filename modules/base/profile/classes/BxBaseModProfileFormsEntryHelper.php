@@ -123,10 +123,6 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         if(isset($CNF['FIELD_ALLOW_POST_TO']) && !empty($aContentInfo[$CNF['FIELD_ALLOW_POST_TO']]) && ($oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_POST'])) !== false)
             $oPrivacy->reassociateGroupCustomWithContent($oProfile->id(), $iContentId, (int)$aContentInfo[$CNF['FIELD_ALLOW_POST_TO']]);
 
-        // create an alert
-        bx_alert($this->_oModule->getName(), 'edited', $aContentInfo[$CNF['FIELD_ID']]);
-        bx_alert('profile', 'edit', $oProfile->id(), 0, array('content' => $iContentId, 'module' => $this->_oModule->getName()));
-
         return '';
     }
 
@@ -171,13 +167,6 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 
         if(isset($CNF['FIELD_ALLOW_POST_TO']) && !empty($aContentInfo[$CNF['FIELD_ALLOW_POST_TO']]) && ($oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_POST'])) !== false)
             $oPrivacy->associateGroupCustomWithContent($oProfile->id(), $iContentId, (int)$aContentInfo[$CNF['FIELD_ALLOW_POST_TO']]);
-
-        // alert
-        $aParams = array();        
-        if(isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]))
-            $aParams['privacy_view'] = $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']];
-
-        bx_alert($this->_oModule->getName(), 'added', $iContentId, false, $aParams);
 
         // switch context to the created profile
         if ($this->_oModule->serviceActAsProfile()) {

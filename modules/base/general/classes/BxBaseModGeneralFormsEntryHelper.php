@@ -196,6 +196,8 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if($sResult)
             return array('code' => 4, 'message' => $sResult);
 
+        list($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
+
         /*
          * Process metas.
          * Note. It's essential to process metas a the very end, 
@@ -204,7 +206,9 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
          */
         $this->_oModule->processMetasAdd($iContentId);
 
-        list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
+        // Create alert about the completed action.
+        $this->_oModule->alertAfterAdd($aContentInfo);
+
         return array('code' => 0, 'message' => '', 'content' => $aContentInfo);
     }
 
@@ -256,6 +260,8 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if ($sResult)
             return $this->prepareResponse($sResult, $bAsJson, 'msg');
 
+        list($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
+
         /*
          * Process metas.
          * Note. It's essential to process metas a the very end, 
@@ -264,14 +270,16 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
          */
         $this->_oModule->processMetasAdd($iContentId);
 
-        // perform action
+        // Perform ACL action
         $this->_oModule->$sCheckFunction(true);
 
-        // redirect
-        list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
+        // Create alert about the completed action.
+        $this->_oModule->alertAfterAdd($aContentInfo);
+
+        // Redirect
         $this->redirectAfterAdd($aContentInfo);
     }
-    
+
     public function redirectAfterAdd($aContentInfo)
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
@@ -340,11 +348,14 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
          * processed and are ready to be passed to alert. 
          */
         $this->_oModule->processMetasEdit($iContentId, $oForm);
-        
-        // perform action
+
+        // Perform ACL action
         $this->_oModule->$sCheckFunction($aContentInfo, true);
+
+        // Create alert about the completed action.
+        $this->_oModule->alertAfterEdit($aContentInfo);
         
-        // redirect
+        // Redirect
         $this->redirectAfterEdit($aContentInfo);
     }
 
