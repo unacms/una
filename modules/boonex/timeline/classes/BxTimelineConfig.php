@@ -490,6 +490,9 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
      */
     public function getTitle($s, $mixedProfile = false, $sMethodLength = 'getCharsDisplayMaxTitle')
     {
+        if(get_mb_substr($s, 0, 1) == '_' && strcmp($s, _t($s)) != 0)
+            return $s;
+
         if($mixedProfile !== false) {
             if(is_numeric($mixedProfile))
                 $mixedProfile = BxDolProfile::getInstanceMagic((int)$mixedProfile);
