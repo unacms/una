@@ -1049,25 +1049,28 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     public function remove($iCmtId)
     {
         $aCmt = $this->_oQuery->getCommentsBy(array('type' => 'id', 'id' => $iCmtId));
-        if(!$aCmt) {
+        if(!$aCmt)
             return array('msg' => _t('_No such comment'));
-        }
         
         $iObjId = $this->getId();
-        if (!$iObjId){
+        if(!$iObjId){
             $this->setId($aCmt['cmt_object_id']);
             $iObjId = $aCmt['cmt_object_id'];
         }
         $iObjAthrId = $this->getObjectAuthorId($iObjId);
         
-        if ($aCmt['cmt_replies'] > 0) {
-            return array('msg' => _t('_Can not delete comments with replies'));
+        if($aCmt['cmt_replies'] > 0) {
+            if(!$this->isModerator())
+                return array('msg' => _t('_Can not delete comments with replies'));
+
+            $aReplies = $this->_oQuery->getCommentsBy(array('type' => 'parent_id', 'parent_id' => $iCmtId));
+            foreach($aReplies as $aReply)
+                $this->remove($aReply['cmt_id']);
         }
 
         $iPerformerId = $this->_getAuthorId();
-        if(!$this->isRemoveAllowed($aCmt)) {
+        if(!$this->isRemoveAllowed($aCmt))
             return array('msg' => $aCmt['cmt_author_id'] == $iPerformerId ? strip_tags($this->msgErrRemoveAllowed()) : _t('_Access denied'));
-        }
 
         if($this->_oQuery->removeComment($iObjId, $iCmtId, $aCmt['cmt_parent_id'])) {
             $this->_triggerComment();

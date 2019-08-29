@@ -204,6 +204,18 @@ class BxDolCmtsQuery extends BxDolDb
 
                 break;
 
+            case 'parent_id':
+                $aMethod['params'][1]['cmt_parent_id'] = (int)$aParams['parent_id'];
+
+                $sWhereClause .= " AND `{$this->_sTable}`.`cmt_parent_id` = :cmt_parent_id";
+
+                $sOrderClause = "`{$this->_sTable}`.`cmt_time` ASC";
+                $sLimitClause = "";
+                if(isset($aParams['per_page']))
+                    $sLimitClause = $this->prepareAsString("?, ?", $aParams['start'], $aParams['per_page']);
+
+                break;
+
             case 'object_id':
                 $aMethod['params'][1]['cmt_object_id'] = (int)$aParams['object_id'];
 
