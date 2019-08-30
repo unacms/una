@@ -91,15 +91,17 @@ class BxBaseStudioPage extends BxDolStudioPage
         $oTemplate = BxDolStudioTemplate::getInstance();
         $oFunctions = BxTemplStudioFunctions::getInstance();
 
-        $sHelp = $this->getPageCaptionHelp();
-        if(($bHelp = strlen($sHelp)) > 0)
-            $sHelp = $oFunctions->transBox('bx-std-pcap-menu-popup-help', $sHelp, true);
-
+        $bActions = false;
         $sActions = $this->getPageCaptionActions();
         if(($bActions = strlen($sActions)) > 0)
             $sActions = $oFunctions->transBox('bx-std-pcap-menu-popup-actions', $sActions, true);
 
-        $oTemplate->addInjection('injection_header', 'text', $sHelp . $sActions);
+        $bHelp = false;
+        $sHelp = $this->getPageCaptionHelp();
+        if(($bHelp = strlen($sHelp)) > 0)
+            $sHelp = $oFunctions->transBox('bx-std-pcap-menu-popup-help', $sHelp, true);
+
+        $oTemplate->addInjection('injection_header', 'text', $sActions . $sHelp);
 
         //--- Menu Right ---//
         $aItemsRight = array();
@@ -118,6 +120,15 @@ class BxBaseStudioPage extends BxDolStudioPage
                 'icon' => 'question-circle',
                 'onclick' => BX_DOL_STUDIO_PAGE_JS_OBJECT . ".togglePopup('help', this)",
                 'title' => '_adm_txt_show_help'
+            );
+
+        $aLanguages = BxDolLanguagesQuery::getInstance()->getLanguages(false, true);
+        if(count($aLanguages) > 1)
+            $aItemsRight['language'] = array(
+                'name' => 'language',
+                'icon' => 'globe',
+                'onclick' => "bx_menu_popup('sys_switch_language_popup', this);",
+                'title' => '_adm_tmi_cpt_language'
             );
 
         $oTopMenu = BxTemplStudioMenuTop::getInstance();
@@ -151,7 +162,7 @@ class BxBaseStudioPage extends BxDolStudioPage
         $oTemplate = BxDolStudioTemplate::getInstance();
     	$oTemplate->addJsTranslation('_adm_txt_show_help_content_empty');
         return $oTemplate->parseHtmlByName('page_caption_help.html', array(
-        	'content' => $sContent
+            'content' => $sContent
         ));
     }
 

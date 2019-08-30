@@ -1486,6 +1486,7 @@
 	<string name="_adm_tmi_cpt_edit"><![CDATA[Manage Launcher]]></string>
 	<string name="_adm_tmi_cpt_extensions"><![CDATA[Add Apps]]></string>
 	<string name="_adm_tmi_cpt_favorite"><![CDATA[Show Favorite Only]]></string>
+        <string name="_adm_tmi_cpt_language"><![CDATA[Language]]></string>
 	<string name="_adm_tmi_cpt_logout"><![CDATA[Sign out]]></string>
 	<string name="_adm_tmi_cpt_site"><![CDATA[Go To Site]]></string>
 	<string name="_adm_tmi_cpt_tour"><![CDATA[Tour]]></string>
