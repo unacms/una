@@ -2681,7 +2681,7 @@
     <string name="_sys_score_err_duplicate_vote"><![CDATA[Повторный голос]]></string>
 	<string name="_sys_search_main_title"><![CDATA[Поиск - Домой]]></string>
 	<string name="_sys_select"><![CDATA[Выбрать]]></string>
-	<string name="_sys_send"><![CDATA[Послать]]></string>
+	<string name="_sys_send"><![CDATA[Отправить]]></string>
     <string name="_sys_search_placeholder"><![CDATA[Поиск...]]></string>
     <string name="_sys_show_more"><![CDATA[Показать ещё]]></string>
 	<string name="_sys_spam_detected"><![CDATA[Ваше действие привело к блокировке]]></string>
