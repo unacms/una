@@ -150,6 +150,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     protected $_oQuery = null;
     protected $_oTemplate = null;
 
+    protected $_bPostQuote;
     protected $_bMinPostForm;
     protected $_sFormObject;
     protected $_sFormDisplayPost;
@@ -241,6 +242,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
         $this->_oQuery = new BxDolCmtsQuery($this);
 
+        $this->_bPostQuote = false;
         $this->_bMinPostForm = true;
         $this->_sFormObject = 'sys_comment';
         $this->_sFormDisplayPost = 'sys_comment_post';
@@ -883,6 +885,16 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return $this->msgErrPostAllowed ();
     }
 
+    public function isQuoteAllowed ($mixedCmt, $isPerformAction = false)
+    {
+        return $this->_bPostQuote && $this->isReplyAllowed ($mixedCmt, $isPerformAction);
+    }
+
+    public function msgErrQuoteAllowed ()
+    {
+        return $this->msgErrReplyAllowed ();
+    }
+
     public function isEditAllowed ($aCmt, $isPerformAction = false)
     {
         if(isAdmin())
@@ -958,10 +970,13 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $sCmtDisplay = bx_get('CmtDisplay');
         $sCmtDisplay = $sCmtDisplay !== false ? bx_process_input($sCmtDisplay, BX_DATA_TEXT) : '';
 
+        $bQuote = bx_get('CmtQuote');
+        $bQuote = $bQuote !== false ? bx_process_input($bQuote, BX_DATA_INT) == 1 : false;
+
         $bMinPostForm = bx_get('CmtMinPostForm');
         $bMinPostForm = $bMinPostForm !== false ? bx_process_input($bMinPostForm, BX_DATA_INT) == 1 : $this->_bMinPostForm;
 
-        return $this->getFormBoxPost(array('parent_id' => $iCmtParentId, 'type' => $sCmtBrowse), array('type' => $sCmtDisplay, 'dynamic_mode' => true, 'min_post_form' => $bMinPostForm));
+        return $this->getFormBoxPost(array('parent_id' => $iCmtParentId, 'type' => $sCmtBrowse), array('type' => $sCmtDisplay, 'dynamic_mode' => true, 'quote' => $bQuote, 'min_post_form' => $bMinPostForm));
     }
 
     public function actionGetFormEdit ()
@@ -1464,6 +1479,10 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         if(bx_get('CmtBlink') !== false) 
             $aDp['blink'] = bx_process_input($_REQUEST['CmtBlink'], BX_DATA_TEXT);
 
+        $aDp['quote'] = isset($aDp['quote']) ? (int)$aDp['quote'] : 0;
+        if(bx_get('CmtQuote') !== false) 
+            $aDp['quote'] = bx_process_input($_REQUEST['CmtQuote'], BX_DATA_INT);
+
         $aDp['min_post_form'] = isset($aDp['min_post_form']) ? (bool)$aDp['min_post_form'] : $this->_bMinPostForm;
         if(bx_get('CmtMinPostForm') !== false)
             $aDp['min_post_form'] = bx_process_input(bx_get('CmtMinPostForm'), BX_DATA_INT) == 1;
@@ -1499,6 +1518,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $aDp['blink'] = !empty($aDp['blink']) ? $aDp['blink'] : array();
         if(!is_array($aDp['blink']))
             $aDp['blink'] = explode(',', $aDp['blink']);
+        $aDp['quote'] = !empty($aDp['quote']) ? (int)$aDp['quote'] : 0;
         if(!isset($aDp['min_post_form']))
             $aDp['min_post_form'] = $this->_bMinPostForm;
 
