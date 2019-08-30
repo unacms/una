@@ -764,7 +764,7 @@ class BxBaseCmts extends BxDolCmts
                 'caption' => '',
                 'attrs' => array(
                     'onclick' => 'javascript:' . $this->_sJsObjName . '.cmtShowForm(this)',
-                    'placeholder' => _t('_cmt_txt_min_form_placeholder', $sAuthorName)
+                    'placeholder' => _t($this->_aT['txt_min_form_placeholder'], $sAuthorName)
                 ),
                 'value' => '',
             );

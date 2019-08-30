@@ -261,7 +261,8 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             'txt_sample_vote_single' => '_cmt_txt_sample_vote_single',
             'txt_sample_reaction_single' => '_cmt_txt_sample_reaction_single',
             'txt_sample_score_up_single' => '_cmt_txt_sample_score_up_single',
-            'txt_sample_score_down_single' => '_cmt_txt_sample_score_down_single'
+            'txt_sample_score_down_single' => '_cmt_txt_sample_score_down_single',
+            'txt_min_form_placeholder' => '_cmt_txt_min_form_placeholder'
         );
 
         if ($iInit)

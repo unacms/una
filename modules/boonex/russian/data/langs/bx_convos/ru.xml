@@ -119,6 +119,8 @@
     <string name="_bx_cnv_draft_saving_error"><![CDATA[Ошибка сохранения черновика!]]></string>
     <string name="_bx_cnv_draft_saved_success"><![CDATA[Черновик сохранён.]]></string>
 
+    <string name="_bx_cnv_txt_min_form_placeholder"><![CDATA[Напишите сообщение...]]></string>
+
     <string name="_bx_cnv_email_new_message"><![CDATA[Новое сообщение]]></string>
     <string name="_bx_cnv_email_new_message_subject"><![CDATA[Новое сообщение от {SenderDisplayName}]]></string>
     <string name="_bx_cnv_email_new_message_body"><![CDATA[{email_header}

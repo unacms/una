@@ -119,6 +119,8 @@
     <string name="_bx_cnv_draft_saving_error"><![CDATA[Draft saving error!]]></string>
     <string name="_bx_cnv_draft_saved_success"><![CDATA[Draft saved.]]></string>
 
+    <string name="_bx_cnv_txt_min_form_placeholder"><![CDATA[{0}, leave your message here.]]></string>
+
     <string name="_bx_cnv_email_new_message"><![CDATA[New message]]></string>
     <string name="_bx_cnv_email_new_message_subject"><![CDATA[New message from {SenderDisplayName}]]></string>
     <string name="_bx_cnv_email_new_message_body"><![CDATA[{email_header}

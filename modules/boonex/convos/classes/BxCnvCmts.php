@@ -20,6 +20,10 @@ class BxCnvCmts extends BxTemplCmts
         $this->_oModule = BxDolModule::getInstance($this->_sModule);
 
         parent::__construct($sSystem, $iId, $iInit, $oTemplate);
+
+        $this->_aT = array_merge($this->_aT, array(
+            'txt_min_form_placeholder' => '_bx_cnv_txt_min_form_placeholder'
+        ));
     }
 
     public function getObjectTitle ($iObjectId = 0)
