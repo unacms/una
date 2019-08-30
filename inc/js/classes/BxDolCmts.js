@@ -97,14 +97,20 @@ BxDolCmts.prototype.cmtAfterPostSubmit = function (oCmtForm, oData)
                 var iCmtId = parseInt(oData.id);
                 if(iCmtId > 0) {
                     $this._getCmt(oCmtForm, iCmtId);
-                    $this._getForm(undefined, parseInt(oData.parent_id), function(sFormWrp) {
-                        if(sFormWrp && sFormWrp.length > 0)
-                            sFormWrp = $(sFormWrp).html();
 
-                        oParent.hide().html(sFormWrp).show();
+                    var iCmtParentId = parseInt(oData.parent_id);
+                    if(iCmtParentId == 0)
+                        $this._getForm(undefined, {CmtParent: iCmtParentId}, function(sFormWrp) {
+                            if(sFormWrp && sFormWrp.length > 0)
+                                sFormWrp = $(sFormWrp).html();
 
-                        $this.cmtInitFormPost(oParent.find('form'));
-                    });
+                            oParent.hide().html(sFormWrp).show();
+
+                            $this.cmtInitFormPost(oParent.find('form'));
+                        });
+                    else
+                        oParent.remove();
+                        
                 }
 
                 return;
@@ -350,21 +356,29 @@ BxDolCmts.prototype.showImage = function(oLink, sUrl) {
 	$(this._sRootId + '-view-image-popup').dolPopupImage(sUrl, $(oLink).parents('.cmt-attached:first'));
 };
 
-BxDolCmts.prototype.toggleReply = function(e, iCmtParentId)
+BxDolCmts.prototype.toggleReply = function(e, iCmtParentId, iQuote)
 {
     var $this = this;
-    var sParentId = this._sRootId + ' #cmt' + iCmtParentId;
+    var aParams = {
+        CmtParent: iCmtParentId,
+        CmtQuote: iQuote != undefined ? parseInt(iQuote) : 0
+    };
     var fOnShow = function() {
         $(this).find('textarea:first').focus();
     };
 
-    var sReplyId = sParentId + ' > .cmt-reply';
-    if ($(sReplyId).length) {
-        $(sReplyId).bx_anim('toggle', this._sAnimationEffect, this._iAnimationSpeed, fOnShow);
+    var sParentId = this._sRootId + ' #cmt' + iCmtParentId;
+    var sReplyQuoteId = '.cmt-reply-quote';
+    if(!aParams['CmtQuote'])
+        sReplyQuoteId = ':not(' + sReplyQuoteId + ')';
+    var sReplyId = '.cmt-reply' + sReplyQuoteId;
+
+    if ($(sParentId + ' > ' + sReplyId).length) {
+        $(sParentId + ' > ' + sReplyId).bx_anim('toggle', this._sAnimationEffect, this._iAnimationSpeed, fOnShow);
         return;
     }
 
-    this._getForm(e, iCmtParentId, function(sForm) {
+    this._getForm(e, aParams, function(sForm) {
         var oForm = $(sForm).hide().addClass('cmt-reply-' + $this._sPostFormPosition).addClass('cmt-reply-margin');
         var oFormSibling = $(sParentId + ' > ul.cmts:first');
         switch($this._sPostFormPosition) {
@@ -379,8 +393,13 @@ BxDolCmts.prototype.toggleReply = function(e, iCmtParentId)
 
         $this.cmtInitFormPost(oForm.find('form'));
 
-        $(sParentId).children('.cmt-reply').bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed, fOnShow);
+        $(sParentId).children(sReplyId).bx_anim('toggle', $this._sAnimationEffect, $this._iAnimationSpeed, fOnShow);
     });
+};
+
+BxDolCmts.prototype.toggleQuote = function(e, iCmtParentId)
+{
+    this.toggleReply(e, iCmtParentId, 1);
 };
 
 BxDolCmts.prototype.goTo = function(oLink, sGoToId, sBlinkIds, onLoad)
@@ -623,16 +642,16 @@ BxDolCmts.prototype._getCmts = function (oElement, oRequestParams, onLoad)
     );
 };
 
-BxDolCmts.prototype._getForm = function (e, iCmtParentId, onLoad)
+BxDolCmts.prototype._getForm = function (e, oParams, onLoad)
 {
     var $this = this;
-    var oData = this._getDefaultActions();
-    oData['action'] = 'GetFormPost';
-    oData['CmtType'] = 'reply';
-    oData['CmtParent'] = iCmtParentId;
-    oData['CmtBrowse'] = this._sBrowseType;
-    oData['CmtDisplay'] = this._sDisplayType;
-    oData['CmtMinPostForm'] = this._iMinPostForm;
+    var oData = $.extend({}, this._getDefaultActions(), {
+        action: 'GetFormPost',
+        CmtType: 'reply',
+        CmtBrowse: this._sBrowseType, 
+        CmtDisplay: this._sDisplayType, 
+        CmtMinPostForm: this._iMinPostForm
+    }, oParams);
 
     if(e)
     	this._loadingInContent(e, true);

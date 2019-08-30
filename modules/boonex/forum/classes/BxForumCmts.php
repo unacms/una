@@ -11,10 +11,10 @@
 
 class BxForumCmts extends BxTemplCmts
 {
-	protected $MODULE;
-	protected $_oModule;
+    protected $MODULE;
+    protected $_oModule;
 
-	public function __construct($sSystem, $iId, $iInit = 1)
+    public function __construct($sSystem, $iId, $iInit = 1)
     {
     	$this->MODULE = 'bx_forum';
     	$this->_oModule = BxDolModule::getInstance($this->MODULE);
@@ -22,6 +22,8 @@ class BxForumCmts extends BxTemplCmts
         $this->_sTableImages = 'bx_forum_files';
 
         parent::__construct($sSystem, $iId, $iInit, $this->_oModule->_oTemplate);
+
+        $this->_bPostQuote = true;
     }
 
     public function registerTranscoders()

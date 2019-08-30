@@ -1486,6 +1486,7 @@
 	<string name="_adm_tmi_cpt_edit"><![CDATA[Управление загрузчиком]]></string>
 	<string name="_adm_tmi_cpt_extensions"><![CDATA[Добавить приложения]]></string>
 	<string name="_adm_tmi_cpt_favorite"><![CDATA[Показывать только Избранное]]></string>
+        <string name="_adm_tmi_cpt_language"><![CDATA[Язык]]></string>
 	<string name="_adm_tmi_cpt_logout"><![CDATA[Выйти]]></string>
 	<string name="_adm_tmi_cpt_site"><![CDATA[Перейти на сайт]]></string>
 	<string name="_adm_tmi_cpt_tour"><![CDATA[Инструкции]]></string>
@@ -2278,6 +2279,7 @@
 	<string name="_sys_menu_item_title_cmts_administration"><![CDATA[Комментарии]]></string>
 	<string name="_sys_menu_item_title_cmts_item_delete"><![CDATA[Удалить]]></string>
 	<string name="_sys_menu_item_title_cmts_item_edit"><![CDATA[Редактировать]]></string>
+        <string name="_sys_menu_item_title_cmts_item_quote"><![CDATA[]]></string>
         <string name="_sys_menu_item_title_cmts_item_reaction"><![CDATA[]]></string>
 	<string name="_sys_menu_item_title_cmts_item_reply"><![CDATA[]]></string>
 	<string name="_sys_menu_item_title_cmts_item_score"><![CDATA[]]></string>
@@ -2342,6 +2344,7 @@
   <string name="_sys_menu_item_title_system_cmts_administration"><![CDATA[Комментарии]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_delete"><![CDATA[Удалить]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_edit"><![CDATA[Редактировать]]></string>
+        <string name="_sys_menu_item_title_system_cmts_item_quote"><![CDATA[Цитировать]]></string>
         <string name="_sys_menu_item_title_system_cmts_item_reaction"><![CDATA[Реагировать]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_reply"><![CDATA[Ответить]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_report"><![CDATA[Пожаловаться]]></string>

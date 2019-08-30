@@ -1486,6 +1486,7 @@
 	<string name="_adm_tmi_cpt_edit"><![CDATA[Manage Launcher]]></string>
 	<string name="_adm_tmi_cpt_extensions"><![CDATA[Add Apps]]></string>
 	<string name="_adm_tmi_cpt_favorite"><![CDATA[Show Favorite Only]]></string>
+        <string name="_adm_tmi_cpt_language"><![CDATA[Language]]></string>
 	<string name="_adm_tmi_cpt_logout"><![CDATA[Sign out]]></string>
 	<string name="_adm_tmi_cpt_site"><![CDATA[Go To Site]]></string>
 	<string name="_adm_tmi_cpt_tour"><![CDATA[Tour]]></string>
@@ -2277,6 +2278,7 @@ If it is not enabled then please consider implement this optimization, since it 
   <string name="_sys_menu_item_title_cmts_administration"><![CDATA[Comments]]></string>
 	<string name="_sys_menu_item_title_cmts_item_delete"><![CDATA[Delete]]></string>
 	<string name="_sys_menu_item_title_cmts_item_edit"><![CDATA[Edit]]></string>
+        <string name="_sys_menu_item_title_cmts_item_quote"><![CDATA[]]></string>
         <string name="_sys_menu_item_title_cmts_item_reaction"><![CDATA[]]></string>
 	<string name="_sys_menu_item_title_cmts_item_reply"><![CDATA[]]></string>
 	<string name="_sys_menu_item_title_cmts_item_score"><![CDATA[]]></string>
@@ -2339,9 +2341,10 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_system_account_settings_pwd"><![CDATA[Password]]></string>
 	<string name="_sys_menu_item_title_system_add_content"><![CDATA[Add Content]]></string>
 	<string name="_sys_menu_item_title_system_cart"><![CDATA[Shopping Cart]]></string>
-  <string name="_sys_menu_item_title_system_cmts_administration"><![CDATA[Comments]]></string>
+        <string name="_sys_menu_item_title_system_cmts_administration"><![CDATA[Comments]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_delete"><![CDATA[Delete]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_edit"><![CDATA[Edit]]></string>
+        <string name="_sys_menu_item_title_system_cmts_item_quote"><![CDATA[Quote]]></string>
         <string name="_sys_menu_item_title_system_cmts_item_reaction"><![CDATA[Reaction]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_reply"><![CDATA[Reply]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_report"><![CDATA[Report]]></string>

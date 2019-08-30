@@ -56,6 +56,7 @@ class BxBaseStudioLauncher extends BxDolStudioLauncher
     {
         $aCss = array(
             'launcher.css',
+            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flag-icon-css/css/|flag-icon.min.css',
             BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'shepherd/css/|shepherd-theme-' . $this->_sTourTheme . '.css',
         );
         foreach($this->aIncludes as $sName => $oInclude)
@@ -69,35 +70,37 @@ class BxBaseStudioLauncher extends BxDolStudioLauncher
         if(empty($this->aPage) || !is_array($this->aPage))
             return '';
 
+        $oTemplate = BxDolStudioTemplate::getInstance();
+
         $sIncludes = '';
         foreach($this->aIncludes as $sName => $oInclude)
             $sIncludes .= $oInclude->getJsCode();
 
-        $s = BxDolStudioTemplate::getInstance()->parseHtmlByName('launcher.html', array(
+        $s = $oTemplate->parseHtmlByName('launcher.html', array(
             'js_object' => $this->getPageJsObject(),
             'includes' => $sIncludes,
             'items' => parent::getPageCode($bHidden),
         ));
 
         if (getParam('site_tour_studio') == 'on')
-            $s .= BxDolStudioTemplate::getInstance()->parseHtmlByName('launcher_tour.html', array('tour_theme' => $this->_sTourTheme));
+            $s .= $oTemplate->parseHtmlByName('launcher_tour.html', array('tour_theme' => $this->_sTourTheme));
 
         return $s;
     }
 
-	public function serviceGetCacheUpdater()
-	{
-		check_logged();
-		if(!isAdmin())
-    		return '';
+    public function serviceGetCacheUpdater()
+    {
+        check_logged();
+        if(!isAdmin())
+            return '';
 
-		$oTemplate = BxDolStudioTemplate::getInstance();
-		$sContent = $oTemplate->addJs('launcher.js', true);
-		$sContent .= $oTemplate->parseHtmlByName('launcher_cache_updater.html', array(
-    		'js_object' => $this->getPageJsObject()
-    	));
+        $oTemplate = BxDolStudioTemplate::getInstance();
+        $sContent = $oTemplate->addJs('launcher.js', true);
+        $sContent .= $oTemplate->parseHtmlByName('launcher_cache_updater.html', array(
+            'js_object' => $this->getPageJsObject()
+        ));
 
-    	return $sContent;
+        return $sContent;
     }
 }
 

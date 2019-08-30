@@ -38,9 +38,10 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
             'js_object' => $sJsObject,
             'cmt_system' => $this->_oCmts->getSystemName(),
             'cmt_object_id' => $this->_oCmts->getId(),
-        	'cmt_id' => $iCmtId,
+            'cmt_id' => $iCmtId,
             'content_id' => $iCmtId,
-            'reply_onclick' => $sJsObject . '.toggleReply(this, ' . $iCmtId . ')'
+            'reply_onclick' => $sJsObject . '.toggleReply(this, ' . $iCmtId . ')',
+            'quote_onclick' => $sJsObject . '.toggleQuote(this, ' . $iCmtId . ')'
         ));
     }
 
@@ -111,6 +112,12 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
         switch ($a['name']) {
             case 'item-reply':
                 $sCheckFuncName = 'isReplyAllowed';
+                if(!empty($this->_aCmt))
+                    $aCheckFuncParams = array($this->_aCmt);
+                break;
+
+            case 'item-quote':
+                $sCheckFuncName = 'isQuoteAllowed';
                 if(!empty($this->_aCmt))
                     $aCheckFuncParams = array($this->_aCmt);
                 break;

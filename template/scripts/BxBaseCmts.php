@@ -735,7 +735,8 @@ class BxBaseCmts extends BxDolCmts
     {
         $iCmtParentId = isset($aBp['parent_id']) ? (int)$aBp['parent_id'] : 0;
         $sPosition = isset($aDp['position']) ? $aDp['position'] : '';
-        $bFormMin = $iCmtParentId == 0 && isset($aDp['min_post_form']) ? $aDp['min_post_form'] : false;
+        $bQuote = isset($aDp['quote']) && (bool)$aDp['quote'];
+        $bFormMin = $iCmtParentId == 0 && isset($aDp['min_post_form']) && (bool)$aDp['min_post_form'];
 
         $sPositionSystem = $this->_aSystem['post_form_position'];
         if(!empty($sPosition) && $sPositionSystem != $sPosition)
@@ -744,6 +745,8 @@ class BxBaseCmts extends BxDolCmts
         $sClass = '';
         if(!empty($sPosition))
             $sClass .= ' ' . $this->_sStylePrefix . '-reply-' . $sPosition;
+        if($bQuote)
+            $sClass .= ' ' . $this->_sStylePrefix . '-reply-quote';
         if($bFormMin)
             $sClass .= ' ' . $this->_sStylePrefix . '-reply-min';
         if(!empty($aDp['class']))
@@ -808,9 +811,18 @@ class BxBaseCmts extends BxDolCmts
             return array('msg' => _t('_Access denied'));
 
         $bDynamic = isset($aDp['dynamic_mode']) && (bool)$aDp['dynamic_mode'];
+        $bQuote = isset($aDp['quote']) && (bool)$aDp['quote'];
 
         $oForm = $this->_getForm(BX_CMT_ACTION_POST, $iCmtParentId);
         $oForm->aInputs['cmt_parent_id']['value'] = $iCmtParentId;
+
+        if($bQuote) {
+            $aCmtParent = $this->getCommentRow((int)$iCmtParentId);
+            if(!empty($aCmtParent['cmt_text']))
+                $oForm->aInputs['cmt_text']['value'] = $this->_oTemplate->parseHtmlByName('comment_quote.html', array(
+                    'content' => $aCmtParent['cmt_text']
+                ));
+        }
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
