@@ -1062,15 +1062,16 @@ function bx_get_scripts (aFiles, fCallback)
                   // during multiple loadings of the same file
                   glBxLoadedScripts[sFile].queue.map(sFunc => sFunc());
                   // This part is executed only when the last file from the list is loaded
-                  if (((iLength-1) === iCounter) && typeof fCallback === 'function')
-                    fCallback();
+                   if (((iLength-1) === iCounter) && typeof fCallback === 'function')
+                       fCallback();
+                   else
+                        fDone(iCounter + 1);
               });
           };
 
     if ('undefined' === typeof(glBxLoadedScripts))
         glBxLoadedScripts = {};
 
-    while(iCounter < iLength){
         let sFile = aFiles[iCounter];
         if ('undefined' === typeof(glBxLoadedScripts[sFile])) {
             // call the function if the file doesn't exist in global scope yet
@@ -1084,9 +1085,6 @@ function bx_get_scripts (aFiles, fCallback)
             else
                 fCallback(); // executes callback only in case when the file is completely loaded and exists in global scope
         }
-
-        iCounter++;
-    }
 }
 
 jQuery.bxGetCachedScript = function(sUrl, oOptions) 
