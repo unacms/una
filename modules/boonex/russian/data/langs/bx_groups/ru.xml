@@ -184,12 +184,12 @@
     <string name="_bx_groups_menu_item_title_system_invite"><![CDATA[Пригласить]]></string>
     <string name="_bx_groups_menu_item_title_invite"><![CDATA[Пригласить]]></string>
     
-    <string name="_bx_groups_menu_item_title_system_befriend"><![CDATA[Добавить друга]]></string>
-    <string name="_bx_groups_menu_item_title_befriend"><![CDATA[Добавить друга]]></string>
-    <string name="_bx_groups_menu_item_title_befriend_sent"><![CDATA[Добавить друга (запрошено)]]></string>
+    <string name="_bx_groups_menu_item_title_system_befriend"><![CDATA[Добавить в друзья]]></string>
+    <string name="_bx_groups_menu_item_title_befriend"><![CDATA[Добавить в друзья]]></string>
+    <string name="_bx_groups_menu_item_title_befriend_sent"><![CDATA[Добавить в друзья (запрошено)]]></string>
     <string name="_bx_groups_menu_item_title_befriend_confirm"><![CDATA[Принять запрос о дружбе]]></string>
-    <string name="_bx_groups_menu_item_title_system_unfriend"><![CDATA[Перестать дружить]]></string>
-    <string name="_bx_groups_menu_item_title_unfriend"><![CDATA[Перестать дружить]]></string>
+    <string name="_bx_groups_menu_item_title_system_unfriend"><![CDATA[Удалить из друзей]]></string>
+    <string name="_bx_groups_menu_item_title_unfriend"><![CDATA[Удалить из друзей]]></string>
     <string name="_bx_groups_menu_item_title_unfriend_cancel_request"><![CDATA[Отменить запрос о дружбе]]></string>
     <string name="_bx_groups_menu_item_title_unfriend_reject_request"><![CDATA[Отвергнуть запрос о дружбе]]></string>
 
