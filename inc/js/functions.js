@@ -1041,31 +1041,56 @@ function bx_prompt(sMessage, sValue, fOnClickOk, fOnClickCancel, oParams)
     });
 }
 
+/**
+ * This function loads the passed list of js files and executes callback function when the all files are loaded.
+ * In case when this function is called for dynamic loading of the same file but many times (like Plyr video init)
+ * it allows to avoid multiply loadings of the same file.
+ */
 function bx_get_scripts (aFiles, fCallback)
 {
-    var 
-        iLength = aFiles.length,
-        aDeferreds = [],
-        iCounter = 0,
-        i = 0,
-        fHandler = function() {
-            if (iCounter++ >= (iLength-1)) {
-                fCallback && fCallback();
-            } 
-            else if ('undefined' === typeof(glBxLoadedScripts[aFiles[iCounter]])) {
-                glBxLoadedScripts[aFiles[iCounter]] = aFiles[iCounter];
-                $.bxGetCachedScript(aFiles[iCounter]).done(fHandler);
-            }
-        };
+    let iCounter = 0;
+    const iLength = aFiles.length,
+          // this function is called every time when each file with unique name is started to load
+          fDone = (iCounter) => {
+              let sFile = aFiles[iCounter];
+              // init file's record in global scope with loaded = false, means that file is not loaded yet
+              glBxLoadedScripts[sFile] = { loaded: false, queue: []};
+              $.bxGetCachedScript(sFile).done(() => {
+                  // set "loaded" flag to true when the file is loaded
+                  glBxLoadedScripts[sFile].loaded = true;
+                  // executes the all callback functions which was attached to queue
+                  // during multiple loadings of the same file
+                  glBxLoadedScripts[sFile].queue.map(sFunc => sFunc());
+                  // This part is executed only when the last file from the list is loaded
+                  if (((iLength-1) === iCounter) && typeof fCallback === 'function')
+                    fCallback();
+              });
+          };
 
     if ('undefined' === typeof(glBxLoadedScripts))
-        glBxLoadedScripts = {}; 
-    
-    $.bxGetCachedScript(aFiles[iCounter]).done(fHandler);
+        glBxLoadedScripts = {};
+
+    while(iCounter < iLength){
+        let sFile = aFiles[iCounter];
+        if ('undefined' === typeof(glBxLoadedScripts[sFile])) {
+            // call the function if the file doesn't exist in global scope yet
+            fDone(iCounter);
+        }
+        else if (typeof fCallback === 'function') {
+            // this condition is executed only in case when there are many files with the same name are loading
+            // and current file already exists in global scope, but is not completely loaded (loaded = false)
+            if (glBxLoadedScripts[sFile].loaded === false)
+                glBxLoadedScripts[sFile].queue.push(fCallback); // attache callback to queue
+            else
+                fCallback(); // executes callback only in case when the file is completely loaded and exists in global scope
+        }
+
+        iCounter++;
+    }
 }
 
 jQuery.bxGetCachedScript = function(sUrl, oOptions) 
-{ 
+{
     oOptions = $.extend(oOptions || {}, {
         dataType: "script",
         cache: true,
