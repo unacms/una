@@ -7,7 +7,7 @@
         <p>This module can be used to login to this site using LinkedIn credentials.</p>
         <p>To make it work, <a target="_blank" href="https://www.linkedin.com/developer/apps">create LinkedIn app</a> and specify all the details, particularly:
             <ul>
-                <li>For "Application Permissions": <strong>r_basicprofile</strong> and <strong>r_emailaddress</strong></li>
+                <li>For "Application Permissions": <strong>r_liteprofile</strong> and <strong>r_emailaddress</strong></li>
                 <li>For the redirect URL: <strong>{0}</strong></li>
             </ul>
             Then enter generated Client ID & Secret pair in this module settings.

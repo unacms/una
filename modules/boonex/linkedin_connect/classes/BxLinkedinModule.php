@@ -86,18 +86,30 @@ class BxLinkedinModule extends BxBaseModConnectModule
         $sExpiresAt = new \DateTime('+' . $sExpiresIn . ' seconds');
 
         // request info about profile
-        $s = bx_file_get_contents($this->_oConfig->sApiUrl . '/people/~:(' . $this->_oConfig->sFields . ')?format=json', array(), 'get', array(
+        $s = bx_file_get_contents($this->_oConfig->sApiUrl . '/me?projection=(' . $this->_oConfig->sFields . ')', array(), 'get', array(
             'Authorization: Bearer ' . $sAccessToken,
         ));
 
         // handle error
-        if (!$s || NULL === ($aResponse = json_decode($s, true)) || !$aResponse || isset($aResponse['error'])) {
-            $sErrorDescription = isset($aResponse['error_description']) ? $aResponse['error_description'] : _t('_error occured'); 
+        if (!$s || NULL === ($aResponse = json_decode($s, true)) || !$aResponse || (isset($aResponse['status']) && ($aResponse['status'] < 200 || $aResponse['status'] > 299))) {
+            $sErrorDescription = isset($aResponse['message']) ? $aResponse['message'] : _t('_error occured'); 
             $this->_oTemplate->getPage(_t('_Error'), MsgBox($sErrorDescription));
             return;
         }
 
-        $aRemoteProfileInfo = $aResponse;
+        // request email
+        $s = bx_file_get_contents($this->_oConfig->sApiUrl . '/emailAddress?q=members&projection=(elements*(handle~))', array(), 'get', array(
+            'Authorization: Bearer ' . $sAccessToken,
+        ));
+
+        // handle error
+        if (!$s || NULL === ($aResponseEmail = json_decode($s, true)) || !$aResponseEmail || (isset($aResponseEmail['status']) && ($aResponseEmail['status'] < 200 || $aResponseEmail['status'] > 299))) {
+            $sErrorDescription = isset($aResponseEmail['message']) ? $aResponseEmail['message'] : _t('_error occured'); 
+            $this->_oTemplate->getPage(_t('_Error'), MsgBox($sErrorDescription));
+            return;
+        }
+
+        $aRemoteProfileInfo = array_merge($aResponse, $aResponseEmail);
 
         if ($aRemoteProfileInfo) {
 
@@ -127,13 +139,54 @@ class BxLinkedinModule extends BxBaseModConnectModule
     {
         $aProfileFields = $aProfileInfo;
 
-        $aProfileFields['name'] = $aProfileInfo['firstName'];
-        $aProfileFields['fullname'] = $aProfileInfo['firstName'] . ' ' . (isset($aProfileInfo['lastName']) ? $aProfileInfo['lastName'] : '');
-        $aProfileFields['email'] = isset($aProfileInfo['emailAddress']) ? $aProfileInfo['emailAddress'] : '';
-        $aProfileFields['picture'] = isset($aProfileInfo['pictureUrl']) ? $aProfileInfo['pictureUrl'] : '';
+        $aProfileFields['name'] = $this->_getLocalizedValue($aProfileInfo['firstName']);
+        $aProfileFields['fullname'] = $this->_getLocalizedValue($aProfileInfo['firstName']) . ' ' . (isset($aProfileInfo['lastName']) ? $this->_getLocalizedValue($aProfileInfo['lastName']) : '');
+        $aProfileFields['email'] = isset($aProfileInfo['elements']) ? $this->_getEmail($aProfileInfo['elements']) : '';
+        $aProfileFields['picture'] = isset($aProfileInfo['profilePicture']) ? $this->_getImageUrl($aProfileInfo['profilePicture']) : '';
         $aProfileFields['allow_view_to'] = getParam('bx_linkedin_privacy');
-        
+
         return $aProfileFields;
+    }
+
+    protected function _getLocalizedValue($a) 
+    {
+        $sLocale = isset($a['preferredLocale']) ? $a['preferredLocale']['language'] . '_' . $a['preferredLocale']['country'] : false;
+        if (isset($a['localized']) && isset($a['localized'][$sLocale]))
+            return $a['localized'][$sLocale];
+        return false;
+    }
+
+    protected function _getEmail($a) 
+    {
+        $r = array_pop($a);
+        if (!isset($r['handle~']) || !isset($r['handle~']['emailAddress']))
+            return false;
+        return $r['handle~']['emailAddress'];
+    }
+
+    protected function _getImageUrl($a) 
+    {
+        if (!isset($a['displayImage~']))
+            return false;
+        $aBiggestImage = false;
+        foreach ($a['displayImage~']['elements'] as $r) {
+            if (empty($r['identifiers']) || !isset($r['data']) || !isset($r['data']['com.linkedin.digitalmedia.mediaartifact.StillImage']) || !isset($r['data']['com.linkedin.digitalmedia.mediaartifact.StillImage']['storageSize']))
+                continue;
+            if (!$aBiggestImage || $r['data']['com.linkedin.digitalmedia.mediaartifact.StillImage']['storageSize']['width'] > $aBiggestImage['width']) {
+                foreach ($r['identifiers'] as $rr) {
+                    if ('EXTERNAL_URL' == $rr['identifierType']) {
+                        $aBiggestImage = array(
+                            'width' => $r['data']['com.linkedin.digitalmedia.mediaartifact.StillImage']['storageSize']['width'],
+                            'url' => $rr['identifier'],
+                        );
+                        break;
+                    }
+                }
+            }
+        }
+        if (!$aBiggestImage)
+            return false;
+        return $aBiggestImage['url'];
     }
 }
 

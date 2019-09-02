@@ -13,15 +13,15 @@ class BxLinkedinConfig extends BxBaseModConnectConfig
 {
     public $sApiID;
     public $sApiSecret;
-    public $sApiUrl = 'https://api.linkedin.com/v1';
+    public $sApiUrl = 'https://api.linkedin.com/v2';
     public $sOauthUrl = 'https://www.linkedin.com/oauth/v2';
 
-    public $sFields = 'id,firstName,lastName,picture-url,email-address';
+    public $sFields = 'id,firstName,lastName,profilePicture(displayImage~:playableStreams)';
 
     public $sPageStart;
     public $sPageHandle;
 
-    public $sScope = 'r_basicprofile r_emailaddress';
+    public $sScope = 'r_liteprofile r_emailaddress';
 
     function __construct($aModule)
     {

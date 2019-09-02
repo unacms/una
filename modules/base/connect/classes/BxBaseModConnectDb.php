@@ -53,7 +53,7 @@ class BxBaseModConnectDb extends BxBaseModGeneralDb
      */
     function saveRemoteId($iProfileId, $iRemoteId)
     {
-        $iRemoteId = (int) $iRemoteId;
+        $iRemoteId = $iRemoteId;
         $iProfileId = (int) $iProfileId;
 
         $sQuery = $this->prepare ("REPLACE INTO `{$this -> sTablePrefix}accounts` SET `local_profile` = ?, `remote_profile` = ?", $iProfileId, $iRemoteId);
