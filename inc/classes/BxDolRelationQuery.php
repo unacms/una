@@ -34,7 +34,7 @@ class BxDolRelationQuery extends BxDolConnectionQuery
         if($iMutualParam !== null)
             $iMutualParam = $iMutual;
 
-        $this->cleanMemory('BxDolConnectionQuery::getConnection' . $this->_sTable . $iInitiator . $iContent);
+        $this->cleanMemory('BxDolConnectionQuery::getConnection' . $this->_sTable . $iInitiator . '_' . $iContent);
         return true;
     }
 
@@ -44,7 +44,7 @@ class BxDolRelationQuery extends BxDolConnectionQuery
         if(!$this->res($sQuery))
             return false;
 
-        $this->cleanMemory('BxDolConnectionQuery::getConnection' . $this->_sTable . $iInitiator . $iContent);
+        $this->cleanMemory('BxDolConnectionQuery::getConnection' . $this->_sTable . $iInitiator . '_' . $iContent);
         return true;
     }
     
