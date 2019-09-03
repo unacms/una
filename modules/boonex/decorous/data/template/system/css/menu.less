@@ -1,4 +1,6 @@
-@import url(../../../../../../../template/css/menu.css);
+@import (reference) 'default.less';
+@import '../../../../../../../template/css/menu.css';
+
 
 .bx-menu-toolbar-padding {
     padding-top: 0;
@@ -174,4 +176,40 @@
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .bx-btn,
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .bx-btn .sys-icon {
     color: inherit;
+}
+
+
+/*--- Popup menus (vertical) ---*/
+ul.bx-menu-custom.bx-menu-custom-ver {
+    margin: -0.5rem;
+}
+ul.bx-menu-custom.bx-menu-custom-ver li {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+ul.bx-menu-custom.bx-menu-custom-ver li > span,
+ul.bx-menu-custom.bx-menu-custom-ver li > .bx-def-margin-thd-topbottom {
+    margin: 0;
+    padding: 0.25rem 0.5rem;
+}
+ul.bx-menu-custom.bx-menu-custom-ver li > span > a,
+ul.bx-menu-custom.bx-menu-custom-ver li > span > span,
+ul.bx-menu-custom.bx-menu-custom-ver li > span > span > a,
+ul.bx-menu-custom.bx-menu-custom-ver li .bx-menu-item-link,
+ul.bx-menu-custom.bx-menu-custom-ver li .bx-report-element-holder,
+ul.bx-menu-custom.bx-menu-custom-ver li .bx-report-do-report {
+    margin: 0;
+    padding: 0;
+}
+ul.bx-menu-custom.bx-menu-custom-ver li a > span {
+    margin-left: 1.0rem;
+    line-height: 1.5rem;
+    .font-size(@bx-font-size-middle);
+}
+ul.bx-menu-custom.bx-menu-custom-ver li a > img,
+ul.bx-menu-custom.bx-menu-custom-ver li a > .sys-icon {
+    width: 1.0rem;
+    height: 1.0rem;
+    line-height: 1.0rem;
+    font-size: 1.0rem;
 }

@@ -423,8 +423,6 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
 	display: inline-block;
 	vertical-align: top;
 }
-.bx-popup .bx-menu-ver li a,
-.bx-popup .bx-menu-custom-ver li a, 
 .bx-menu-object-sys_account_notifications li a,
 .bx-menu-object-sys_account_notifications li .bx-menu-floating-blocks-title,
 .bx-menu-object-sys_add_content li .bx-menu-floating-blocks-title {
@@ -484,9 +482,10 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
 .bx-popup .bx-menu-ver li,
 .bx-popup .bx-menu-custom-ver li,
 .bx-menu-floating-blocks-wide.bx-menu-object-sys_account_notifications li {
-	margin: 0.625rem 0;
-
-	border-radius: 0; 
+    border-radius: 0; 
+}
+.bx-menu-floating-blocks-wide.bx-menu-object-sys_account_notifications li {
+    margin: 0.625rem 0;
 }
 .bx-popup .bx-menu-ver li,
 .bx-popup .bx-menu-custom-ver li,
@@ -494,7 +493,7 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
 .bx-popup .bx-menu-custom-ver li.bx-def-color-bg-hl-hover,
 .bx-menu-ver.bx-menu-object-sys_profile_stats li.bx-def-color-bg-hl-hover,
 .bx-menu-floating-blocks-wide.bx-menu-object-sys_account_notifications li.bx-def-color-bg-hl-hover {
-	border: 1px solid transparent;
+    border: 1px solid transparent;
 }
 .bx-popup .bx-menu-ver li:hover,
 .bx-popup .bx-menu-custom-ver li:hover,
@@ -502,26 +501,32 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
 .bx-popup .bx-menu-custom-ver li.bx-def-color-bg-hl-hover:hover,
 .bx-menu-ver.bx-menu-object-sys_profile_stats li.bx-def-color-bg-hl-hover:hover,
 .bx-menu-floating-blocks-wide.bx-menu-object-sys_account_notifications li.bx-def-color-bg-hl-hover:hover {
-	border-radius: 0.5rem;
-	border-color: rgba(20, 80, 100, 0.05);
-	background-color: #ffffff;
+    border-radius: 0.5rem;
+    border-color: rgba(20, 80, 100, 0.05);
+    background-color: #ffffff;
 }
 .bx-popup .bx-menu-ver li.bx-def-color-bg-active,
 .bx-popup .bx-menu-custom-ver li.bx-def-color-bg-active,
 .bx-menu-ver.bx-menu-object-sys_profile_stats li.bx-def-color-bg-active,
 .bx-menu-floating-blocks-wide.bx-menu-object-sys_account_notifications li.bx-def-color-bg-active {
-	border-color: rgba(20, 80, 100, 0.05);
-	border-radius: 0.5rem;
-	background-color: #ffffff;
+    border-color: rgba(20, 80, 100, 0.05);
+    border-radius: 0.5rem;
+    background-color: #ffffff;
 }
-.bx-popup .bx-menu-custom-ver li > span {
-	width: 100%;
-	margin: 0 !important;
+.bx-popup .bx-menu-custom-ver li > span,
+.bx-popup .bx-menu-custom-ver li > .bx-def-margin-thd-topbottom {
+    width: 100%;
+    margin: 0 !important;
+    padding: 0.25rem 0.5rem;
+}
+.bx-popup .bx-menu-ver li a,
+.bx-popup .bx-menu-custom-ver li a {
+    line-height: 1.5rem;
 }
 .bx-popup .bx-menu-custom-ver li a,
 .bx-menu-floating-blocks-wide.bx-menu-object-sys_account_notifications li > a {
-	position: relative;
-	display: -webkit-flex;
+    position: relative;
+    display: -webkit-flex;
     display: flex;
     -webkit-flex-flow: row nowrap;
     flex-flow: row nowrap;
@@ -529,9 +534,10 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
     align-items: center;
     -webkit-justify-content: flex-start;
     justify-content: flex-start;
-	box-sizing: border-box;
-	width: 100%;
-	padding: 0 0.625rem;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 .bx-popup .bx-menu-ver li.bx-def-color-bg-active a,
 .bx-popup .bx-menu-custom-ver li.bx-def-color-bg-active a,
@@ -548,18 +554,18 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
 .bx-popup .bx-menu-ver li .sys-icon,
 .bx-popup .bx-menu-custom-ver li img,
 .bx-popup .bx-menu-custom-ver li .sys-icon {
-	display: inline-block;
+    display: inline-block;
     vertical-align: middle;
-	width: 1.5rem;
-	height: 1.5rem;
-	line-height: 1.5rem;
-	font-size: 1.5rem;
+    width: 1.0rem;
+    height: 1.0rem;
+    line-height: 1.0rem;
+    font-size: 1.0rem;
 }
 .bx-menu-floating-blocks-wide.bx-menu-object-sys_account_notifications li img,
 .bx-menu-floating-blocks-wide.bx-menu-object-sys_account_notifications li .sys-icon {
-	width: 1.5rem;
-	height: 1.5rem;
-	line-height: 1.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
 }
 .bx-popup .bx-menu-ver li a div {
     padding-left: 1.0rem;
@@ -569,9 +575,9 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
 .bx-popup .bx-menu-ver li a > span,
 .bx-popup .bx-menu-ver li a div > span,
 .bx-popup .bx-menu-custom-ver li a > span {
-	margin-left: 0.625rem;
-	white-space: nowrap;
-	vertical-align: middle;
+    margin-left: 1.0rem;
+    white-space: nowrap;
+    vertical-align: middle;
 }
 .bx-popup .bx-menu-ver.bx-menu-object-sys_switch_language_popup li a div > span {
     margin-left: 0;
