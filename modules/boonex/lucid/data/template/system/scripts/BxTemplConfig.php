@@ -18,11 +18,6 @@ class BxTemplConfig extends BxBaseConfig
         $sName = 'bx_lucid';
         $this->_isModule = BxDolModuleQuery::getInstance()->isModuleByName($sName);
 
-        //--- Defaults
-        $this->_aConfig['aLessConfig'] = array_merge($this->_aConfig['aLessConfig'], array(
-            'bx-size-thumb' => '32px'
-        ));
-
         //--- Images
         $oStorage = BxDolStorage::getObjectInstance('sys_images_custom');
 

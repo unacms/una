@@ -14,14 +14,14 @@
 	display: block;	
 	width: 5rem;
 	height: 5rem;
-	border: 0.125rem solid rgba(255,255,255,1);
+	border: 2px solid rgba(255,255,255,1);
 	border-radius: 3rem;
 	background-clip: border-box;
 	overflow: hidden;
 }
 
 .bx-base-pofile-unit-with-cover .bx-def-unit-img p.bx-base-pofile-unit-thumb {
-	line-height: 5rem;
+	line-height: 4.75rem;
 	text-align: center;
 }
 

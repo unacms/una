@@ -265,7 +265,8 @@ div.bx-account-unit-online {
 
 .bx-profile-stats .bx-ps-user-cnt .bx-def-ava-size,
 .bx-profile-stats .bx-ps-user-cnt div.bx-def-unit-img p.bx-base-pofile-unit-thumb.bx-def-ava-size {
-    line-height: 3.75rem;
+    line-height: 3.5rem;
+    font-size: 2.325rem;
 }
 
 .bx-profile-stats .bx-ps-user-img {
