@@ -451,6 +451,13 @@ div.bx-tl-view-outline div.bx-tl-reposted div.bx-tl-content {
 	color: #999999;
 }
 
+/*--- Item Style: View page ---*/
+div.bx-tl-view-item-comments .bx-tl-item-comments {
+    margin-top: 0;
+}
+div.bx-tl-view-item-comments .cmts .cmt:first-child  {
+    padding-top: 0;
+}
 
 /*--- Item Brief Style ---*/
 div.bx-tl-bview-image {

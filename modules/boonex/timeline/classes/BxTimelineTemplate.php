@@ -285,8 +285,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aResult = $this->getDataCached($aEvent);
         if($aResult === false)
             return '';
-            
-        return $this->_getComments($aResult['comments']);
+
+        return $this->parseHtmlByName('block_item_comments.html', array(
+            'style_prefix' => $this->_oConfig->getPrefix('style'),
+            'content' => $this->_getComments($aResult['comments'])
+        ));
+                
     }
 
     public function getUnit(&$aEvent, $aBrowseParams = array())
