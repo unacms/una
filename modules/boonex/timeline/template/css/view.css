@@ -192,6 +192,14 @@ div.bx-tl-item-text div.bx-tl-content {
     text-overflow: ellipsis;
     overflow: hidden;
 }
+div.bx-tl-item-text div.bx-tl-content > p:first-child {
+    margin-top: 0;
+    padding-top: 0;
+}
+div.bx-tl-item-text div.bx-tl-content > p:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
 div.bx-tl-item-text div.bx-tl-content.bx-tl-overflow {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
@@ -210,6 +218,11 @@ div.bx-tl-item-text div.bx-tl-content p {
 div.bx-tl-item-text div.bx-tl-content img {
 	max-width: 100%;
 	height: auto;
+}
+
+/*--- Item Reactions Style ---*/
+div.bx-tl-item-reactions .bx-vote-counter {
+    margin-top: 0.5rem;
 }
 
 /*--- Item Images Style ---*/
