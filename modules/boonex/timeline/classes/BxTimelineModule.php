@@ -388,6 +388,16 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         echo BxDolPage::getObjectInstance($this->_oConfig->getObject('page_item_brief'), $this->_oTemplate)->getCodeDynamic();
     }
 
+    public function actionGetJumpTo()
+    {
+        $aParams = $this->_prepareParamsGet();
+        $this->_iOwnerId = $aParams['owner_id'];
+
+        echoJson(array(
+            'jump_to' => $this->_oTemplate->getJumpTo($aParams)
+        ));
+    }
+
     public function actionResumeLiveUpdate()
     {
         $aParams = $this->_prepareParamsGet();

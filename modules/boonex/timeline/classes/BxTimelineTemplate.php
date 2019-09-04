@@ -575,22 +575,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $iStart = $aParams['start'];
         $iPerPage = $aParams['per_page'];
 
-        $sYears = '';
-        if($this->_oConfig->isJumpTo()) {
-            $iYearSel = (int)$aParams['timeline'];
-            $iYearMin = $this->_oDb->getMaxDuration($aParams);      
-
-            if(!empty($iYearMin)) {
-                $iYearMax = date('Y', time()) - 1;
-                for($i = $iYearMax; $i >= $iYearMin; $i--)
-                    $sYears .= ($i != $iYearSel ? $this->parseLink('javascript:void(0)', $i, array(
-                        'title' => _t('_bx_timeline_txt_jump_to_n_year', $i),
-                        'onclick' => 'javascript:' . $sJsObject . '.changeTimeline(this, ' . $i . ')'
-                    )) : $i) . ', ';
-
-                $sYears = substr($sYears, 0, -2);
-            }
-        }
+        $sYears = $this->getJumpTo($aParams);
 
         $aTmplVars = array(
             'style_prefix' => $sStylePrefix,
@@ -614,6 +599,29 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             )
         );
         return $this->parseHtmlByName('load_more.html', $aTmplVars);
+    }
+
+    public function getJumpTo($aParams)
+    {
+        if(!$this->_oConfig->isJumpTo())
+            return '';
+
+        $iYearSel = (int)$aParams['timeline'];
+        $iYearMin = $this->_oDb->getMaxDuration($aParams);      
+        if(empty($iYearMin))
+            return '';
+
+        $sJsObject = $this->_oConfig->getJsObjectView($aParams);
+
+        $sYears = '';
+        $iYearMax = date('Y', time()) - 1;
+        for($i = $iYearMax; $i >= $iYearMin; $i--)
+            $sYears .= ($i != $iYearSel ? $this->parseLink('javascript:void(0)', $i, array(
+                'title' => _t('_bx_timeline_txt_jump_to_n_year', $i),
+                'onclick' => 'javascript:' . $sJsObject . '.changeTimeline(this, ' . $i . ')'
+            )) : $i) . ', ';
+
+        return substr($sYears, 0, -2);
     }
 
     public function getComments($sSystem, $iId, $aBrowseParams = array())
