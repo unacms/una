@@ -421,7 +421,7 @@ function BxDolUploaderCrop (sUploaderObject, sStorageObject, sUniqId, options) {
                     });
                     $("#" + $this._sFormContainerId + " .bx-croppie-element").addClass('ready');
                     $("#" + $this._sFormContainerId + " .bx-crop-action").removeClass('bx-btn-disabled');
-                    $("#" + $this._sFormContainerId + " .bx-croppie-element").data('bx-filename', input.files[0].name.replace(/(\.[A-Za-z0-9]+)$/, '.png'));
+                    $("#" + $this._sFormContainerId + " .bx-croppie-element").data('bx-filename', input.files[0].name.replace(/(\.[A-Za-z0-9]+)$/, '.jpg'));
                 }
                 reader.readAsDataURL(input.files[0]);
             }
@@ -430,7 +430,9 @@ function BxDolUploaderCrop (sUploaderObject, sStorageObject, sUniqId, options) {
         $("#" + this._sFormContainerId + " .bx-crop-upload").on('click', function(ev) {
             eCroppie.croppie('result', {
                 type: 'canvas',
-                size: 'original'
+                size: 'original',
+                format: 'jpeg',
+                quality: '0.85',
             }).then(function(resp) {
                 var fd = new FormData();
 
