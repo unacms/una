@@ -80,30 +80,6 @@ class BxForumCmts extends BxTemplCmts
         return $mixedBlock;
     }
 
-    public function getComment($mixedCmt, $aBp = array(), $aDp = array())
-    {
-        return parent::getComment($mixedCmt, $aBp, array_merge($aDp, array(
-            'class_comment' => 'bx-def-box bx-def-padding bx-def-round-corners bx-def-color-bg-box'
-        )));
-    }
-
-    protected function _getEmpty($aDp = array())
-    {
-        return parent::_getEmpty(array_merge($aDp, array(
-            'class' => 'bx-def-box bx-def-padding bx-def-round-corners bx-def-color-bg-box'
-        )));
-    }
-
-    protected function _getFormBox($sType, $aBp, $aDp)
-    {
-        if(!isset($aBp['parent_id']) || (int)$aBp['parent_id'] == 0)
-            $aDp = array_merge($aDp, array(
-                'class' => 'bx-def-box bx-def-padding bx-def-round-corners bx-def-color-bg-box'
-            ));
-
-        return parent::_getFormBox($sType, $aBp, $aDp);
-    }
-
     protected function _getFormObject($sAction = BX_CMT_ACTION_POST)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
