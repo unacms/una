@@ -2112,10 +2112,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sPrefix = $this->_oConfig->getPrefix('common_post');
         $sType = str_replace($sPrefix, '', $aEvent['type']);
 
-        $oOwner = BxDolProfile::getInstanceMagic($aEvent['object_id']);
+        $oObjectOwner = BxDolProfile::getInstanceMagic($aEvent['object_id']);
+
+        $iOwnerId = $aEvent['owner_id'];
+        if(is_array($aEvent['owner_id']))
+            $iOwnerId = is_numeric($aEvent['object_privacy_view']) && (int)$aEvent['object_privacy_view'] < 0 ? abs((int)$aEvent['object_privacy_view']) : (int)array_shift($aEvent['owner_id']);
 
         $aResult = array(
-            'owner_id' => $aEvent['owner_id'],
+            'owner_id' => $iOwnerId,
             'object_owner_id' => $aEvent['object_id'],
             'icon' => $CNF['ICON'],
             'sample' => '_bx_timeline_txt_sample_with_article',
@@ -2136,7 +2140,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'comments' => '',
             'title' => $aEvent['title'], //may be empty.
             'description' => bx_replace_markers($aEvent['description'], array(
-                'profile_name' => $oOwner->getDisplayName()
+                'profile_name' => $oObjectOwner->getDisplayName()
             )) //may be empty.
         );
 
