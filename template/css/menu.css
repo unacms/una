@@ -623,13 +623,21 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
 }
 
 .bx-menu-account-popup-profile-switcher-link {
-    text-align:left;
+    text-align: center;
 }
 
 .bx-menu-account-popup-profile-switcher-link a:hover,
 .bx-menu-account-popup-profile-switcher-link a {
     text-decoration:none;
 }
+
+.bx-menu-account-popup-profile-switcher-link .bx-btn {
+    float: none;
+    display: inline-block;
+    width: 100%;
+    max-width: 20rem;
+}
+
 
 /* --------------- custom menu */
 
