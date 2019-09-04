@@ -15,7 +15,7 @@
             </bx_repeat:notes>
             <div class="__style_prefix__-in-divider bx-def-hr"></div>
         </bx_if:show_note>
-        <div class="__style_prefix__-item-owner bx-def-padding-top bx-def-padding-sec-bottom __class_owner__"> 
+        <div class="__style_prefix__-item-owner bx-def-padding-top __class_owner__"> 
             <div class="__style_prefix__-item-owner-cnt">
                 <div class="__style_prefix__-owner-avatar bx-def-thumb-size">__item_owner_unit__</div>
                 <div class="__style_prefix__-owner-info bx-def-thumb-size-min-height bx-def-thumb-size-left-indent">
@@ -58,15 +58,15 @@
             </div>
         </div>
         <div class="__style_prefix__-item-content bx-clearfix">__content__</div>
+        <bx_if:show_reactions>
+            <div class="__style_prefix__-item-reactions bx-def-margin-leftright">__reactions__</div>
+        </bx_if:show_reactions>
         <bx_if:show_location>
             <div class="__style_prefix__-item-location bx-def-margin-leftright bx-def-margin-sec-top bx-def-font-grayed bx-clearfix">__location__</div>
         </bx_if:show_location>
-        <bx_if:show_reactions>
-            <div class="__style_prefix__-item-reactions bx-def-margin-leftright bx-def-margin-sec-top">__reactions__</div>
-        </bx_if:show_reactions>
         <div class="__style_prefix__-item-footer">
             <bx_if:show_menu_item_actions>
-                <div class="__style_prefix__-item-activity bx-def-border-top bx-def-margin-sec-top bx-clearfix">__menu_item_actions__</div>
+                <div class="__style_prefix__-item-activity bx-def-border-top bx-def-margin-top bx-clearfix">__menu_item_actions__</div>
             </bx_if:show_menu_item_actions>
             <div class="__style_prefix__-item-comments-holder">__comments__</div>
         </div>
