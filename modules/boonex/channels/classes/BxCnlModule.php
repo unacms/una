@@ -298,6 +298,12 @@ class BxCnlModule extends BxBaseModGroupsModule
         return '';
     }
     
+    public function serviceBrowseByLevel ($iLevelId = 0, $bDisplayEmptyMsg = false)
+    {
+        echo $iLevelId;
+        return $this->_serviceBrowse ('level', array('level' => $iLevelId), BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
+    }
+    
     public function serviceBrowseAuthor($iProfileId = 0, $aParams = array())
     {
         $CNF = &$this->_oConfig->CNF;

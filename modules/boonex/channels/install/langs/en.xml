@@ -77,6 +77,8 @@
 	<string name="_bx_channels_page_title_top"><![CDATA[Top Channels]]></string>
 	<string name="_bx_channels_page_title_sys_entries_search"><![CDATA[Search]]></string>
 	<string name="_bx_channels_page_title_entries_search"><![CDATA[Search]]></string>
+  <string name="_bx_channels_page_title_sys_entries_toplevel"><![CDATA[Top level]]></string>
+  <string name="_bx_channels_page_title_entries_toplevel"><![CDATA[Top level]]></string>
         <string name="_bx_channels_page_title_sys_entries_of_author"><![CDATA[Сhannels of author]]></string>
         <string name="_bx_channels_page_title_entries_of_author"><![CDATA[Сhannels by {display_name}]]></string>
 
@@ -113,6 +115,7 @@
         <string name="_bx_channels_page_block_title_entry_parent"><![CDATA[Parent Channel]]></string>
         <string name="_bx_channels_page_block_title_entry_childs"><![CDATA[Child Channels]]></string>
 	<string name="_bx_channels_page_block_title_search_form"><![CDATA[Search Form]]></string>
+  <string name="_bx_channels_page_block_title_toplevel"><![CDATA[Top level]]></string>
         <string name="_bx_channels_page_block_title_entries_my"><![CDATA[My Followed Channels]]></string>
         <string name="_bx_channels_page_trigger_block_title_entries_my"><![CDATA[My Followed Channels]]></string>
         <string name="_bx_channels_page_block_title_search_results"><![CDATA[Search Results]]></string>
@@ -187,6 +190,8 @@
 	<string name="_bx_channels_menu_item_title_entries_recent"><![CDATA[New]]></string>
 	<string name="_bx_channels_menu_item_title_system_entries_search"><![CDATA[Search]]></string>
 	<string name="_bx_channels_menu_item_title_entries_search"><![CDATA[Search]]></string>
+  <string name="_bx_channels_menu_item_title_system_entries_toplevel"><![CDATA[Top level]]></string>
+  <string name="_bx_channels_menu_item_title_entries_toplevel"><![CDATA[Top level]]></string>
         <string name="_bx_channels_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
 	<string name="_bx_channels_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
 	<string name="_bx_channels_menu_item_title_system_entries_home"><![CDATA[Channels]]></string>
