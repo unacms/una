@@ -145,7 +145,7 @@
         padding: 0px 5px;
         padding: 0px 0.3rem;
     }
-    div.cmt-cont .cmt-body p:first-child {
+    div.cmt-cont .cmt-body > p:first-child {
         margin-top: 0;
         margin-bottom: 0;
     }
