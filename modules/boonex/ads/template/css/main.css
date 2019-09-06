@@ -1,0 +1,10 @@
+@import url(../../../../base/text/template/css/main.css);
+
+/*--- Categories ---*/
+.bx-ads-subcategories .bx-ads-category:first-child {
+    padding-top: 0;
+}
+.bx-ads-category .sys-icon {
+    display: inline-block;
+    width: 1.0rem;
+}

@@ -1,0 +1,14 @@
+<div class="bx-ads-categories">
+    <div class="bx-ads-categories-cnt">
+        <bx_repeat:categories>
+            <div class="bx-ads-category bx-def-padding-thd-topbottom">
+                <bx_if:show_icon><span class="bx-def-padding-sec-right"><i class="sys-icon __icon__"></i></span></bx_if:show_icon>
+                <a href="__url__">__title__</a>
+                <bx_if:show_counter><span class="bx-def-padding-sec-left">(__items__)</span></bx_if:show_counter>
+            </div>
+            <bx_if:show_subcategories>
+                <div class="bx-ads-subcategories bx-def-margin-left bx-def-padding-sec-left">__subcategories__</div>
+            </bx_if:show_subcategories>
+        </bx_repeat:categories>
+    </div>
+</div>
