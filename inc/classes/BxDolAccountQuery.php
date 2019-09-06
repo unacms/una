@@ -91,6 +91,9 @@ class BxDolAccountQuery extends BxDolDb implements iBxDolSingleton
      */
     public function getIdById($iId, $bClearCache = false)
     {
+        if (!$iId)
+            return false;
+
         $sKey = 'BxDolAccountQuery::getIdById' . $iId;
         if ($bClearCache)
             $this->cleanMemory($sKey);

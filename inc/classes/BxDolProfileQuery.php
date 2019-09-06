@@ -75,6 +75,9 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
      */
     public function getProfileByContentAndType ($iContentId, $sType, $bClearCache = false)
     {
+        if (!$iContentId)
+            return false;
+
         $sKey = 'BxDolProfileQuery::getProfileByContentAndType' . $iContentId . $sType;
         if ($bClearCache)
             $this->cleanMemory($sKey);
@@ -152,6 +155,9 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
      */
     public function getCurrentProfileByAccount ($iAccountId, $bClearCache = false)
     {
+        if (!$iAccountId)
+            return false;
+
         $sKey = 'BxDolProfileQuery::getCurrentProfileByAccount' . $iAccountId;
         if ($bClearCache)
             $this->cleanMemory($sKey);
@@ -190,6 +196,9 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
      */
     public function getIdById($iId, $bClearCache = false)
     {
+        if (!$iId)
+            return false;
+
         $sKey = 'BxDolProfileQuery::getIdById' . $iId;
         if ($bClearCache)
             $this->cleanMemory($sKey);
