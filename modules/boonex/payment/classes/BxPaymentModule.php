@@ -651,33 +651,33 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
         $oProvider = $this->getObjectProvider($sProvider, $mixedVendorId);
         if($oProvider === false || !$oProvider->isActive())
-        	return $this->_oTemplate->displayPageCodeError($this->_sLangsPrefix . 'err_incorrect_provider');
+            return $this->_oTemplate->displayPageCodeError($this->_sLangsPrefix . 'err_incorrect_provider');
 
         $aResult = $oProvider->finalizeCheckout($aData);
         if((int)$aResult['code'] != BX_PAYMENT_RESULT_SUCCESS) 
-        	return $this->_oTemplate->displayPageCodeError($aResult['message']);
+            return $this->_oTemplate->displayPageCodeError($aResult['message']);
 
-		$aPending = $this->_oDb->getOrderPending(array('type' => 'id', 'id' => (int)$aResult['pending_id']));
-		$bTypeRecurring = $aPending['type'] == BX_PAYMENT_TYPE_RECURRING;
-		if($bTypeRecurring) {
-			$aSubscription = array(
-		        'customer_id' => $aResult['customer_id'], 
-		    	'subscription_id' => $aResult['subscription_id']
-		    );
+        $aPending = $this->_oDb->getOrderPending(array('type' => 'id', 'id' => (int)$aResult['pending_id']));
+        $bTypeRecurring = $aPending['type'] == BX_PAYMENT_TYPE_RECURRING;
+        if($bTypeRecurring) {
+            $aSubscription = array(
+                'customer_id' => $aResult['customer_id'], 
+                'subscription_id' => $aResult['subscription_id']
+            );
 
-		    if(!$this->registerSubscription($aPending, $aSubscription))
-		    	return $this->_oTemplate->displayPageCodeError($this->_sLangsPrefix . 'err_already_registered');
-		}
+            if(!$this->registerSubscription($aPending, $aSubscription))
+                return $this->_oTemplate->displayPageCodeError($this->_sLangsPrefix . 'err_already_registered');
+        }
 
-		$this->onPaymentRegisterBefore($aPending);
+        $this->onPaymentRegisterBefore($aPending);
 
-		//--- Check "Pay Before Join" situation
-		if((int)$aPending['client_id'] == 0)
-			$this->getObjectJoin()->performJoin((int)$aPending['id'], isset($aResult['client_name']) ? $aResult['client_name'] : '', isset($aResult['client_email']) ? $aResult['client_email'] : '');
+        //--- Check "Pay Before Join" situation
+        if((int)$aPending['client_id'] == 0)
+            $this->getObjectJoin()->performJoin((int)$aPending['id'], isset($aResult['client_name']) ? $aResult['client_name'] : '', isset($aResult['client_email']) ? $aResult['client_email'] : '');
 
-		//--- Register payment for purchased items in associated modules 
-		if(!empty($aResult['paid']) || ($bTypeRecurring && !empty($aResult['trial'])))
-			$this->registerPayment($aPending);
+        //--- Register payment for purchased items in associated modules 
+        if(!empty($aResult['paid']) || ($bTypeRecurring && !empty($aResult['trial'])))
+            $this->registerPayment($aPending);
 
         bx_alert($this->getName(), 'finalize_checkout', 0, bx_get_logged_profile_id(), array(
             'pending' => $aPending,
@@ -687,9 +687,9 @@ class BxPaymentModule extends BxBaseModPaymentModule
         ));
 
         if($oProvider->needRedirect()) {
-			header('Location: ' . $oProvider->getReturnUrl());
-			exit;
-		}
+            header('Location: ' . $oProvider->getReturnUrl());
+            exit;
+        }
 
 		if(!empty($aResult['redirect'])) {
 			header('Location: ' . base64_decode(urldecode($aResult['redirect'])));
@@ -745,36 +745,36 @@ class BxPaymentModule extends BxBaseModPaymentModule
     {
         $iUserId = (int)$this->getProfileId();
 
-        $aItemInfo = $this->callGetCartItem($aItem['module_id'], array($aItem['item_id']));
-		if(empty($aItemInfo))
-			return false;
+        $aItemInfo = $this->callGetCartItem((int)$aItem['module_id'], array($aItem['item_id']));
+        if(empty($aItemInfo))
+            return false;
 
         if(isAdmin())
             return true;
 
         $aCheckResult = checkActionModule($iUserId, 'purchase', $this->getName(), $bPerform);
         if($aCheckResult[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED)
-			return true;
+            return true;
 
         return $aCheckResult[CHECK_ACTION_MESSAGE];
     }
 
     public function isAllowedSell($aItem, $bPerform = false)
     {
-		$iUserId = (int)$this->getProfileId();
+        $iUserId = (int)$this->getProfileId();
         if(!$iUserId)
-        	return false;
+            return false;
 
-		$aItemInfo = $this->callGetCartItem($aItem['module_id'], array($aItem['item_id']));
-		if(empty($aItemInfo))
-			return false;
+        $aItemInfo = $this->callGetCartItem((int)$aItem['module_id'], array($aItem['item_id']));
+        if(empty($aItemInfo))
+            return false;
 
         if(isAdmin())
             return true;
 
         $aCheckResult = checkActionModule($iUserId, 'sell', $this->getName(), $bPerform);
         if((int)$aItemInfo['author_id'] == $iUserId && $aCheckResult[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED)
-			return true;
+            return true;
 
         return $aCheckResult[CHECK_ACTION_MESSAGE];
     }
@@ -824,36 +824,36 @@ class BxPaymentModule extends BxBaseModPaymentModule
 		return true;
     }
 
-	public function registerPayment($mixedPending)
+    public function registerPayment($mixedPending)
     {
     	$aPending = is_array($mixedPending) ? $mixedPending : $this->_oDb->getOrderPending(array('type' => 'id', 'id' => (int)$mixedPending));
     	if(empty($aPending) || !is_array($aPending))
-    		return false;
+            return false;
 
-		$sType = $aPending['type'];
-		$bTypeSingle = $sType == BX_PAYMENT_TYPE_SINGLE;
+        $sType = $aPending['type'];
+        $bTypeSingle = $sType == BX_PAYMENT_TYPE_SINGLE;
 
-		if($bTypeSingle && (int)$aPending['processed'] == 1)
-			return true;
+        if($bTypeSingle && (int)$aPending['processed'] == 1)
+            return true;
 
-		$iClientId = (int)$aPending['client_id'];
-		$sLicense = $this->_oConfig->getLicense();
-		$aCustoms = !empty($aPending['customs']) ? unserialize($aPending['customs']) : array();
+        $iClientId = (int)$aPending['client_id'];
+        $sLicense = $this->_oConfig->getLicense();
+        $aCustoms = !empty($aPending['customs']) ? unserialize($aPending['customs']) : array();
 
-		$aCart = array();
-		if($bTypeSingle) {
-			$aCart = $this->_oDb->getCartContent($iClientId);
-			$aCart['customs'] = !empty($aCart['customs']) ? unserialize($aCart['customs']) : array();
-		}
+        $aCart = array();
+        if($bTypeSingle) {
+            $aCart = $this->_oDb->getCartContent($iClientId);
+            $aCart['customs'] = !empty($aCart['customs']) ? unserialize($aCart['customs']) : array();
+        }
 
-		$bResult = false;
+        $bResult = false;
         $aItems = $this->_oConfig->descriptorsM2A($aPending['items']);
         foreach($aItems as $aItem) {
             $sItem = $this->_oConfig->descriptorA2S(array($aItem['vendor_id'], $aItem['module_id'], $aItem['item_id']));
-		    $aItemCustom = $this->_oConfig->getCustom($sItem, $aCustoms);
+            $aItemCustom = $this->_oConfig->getCustom($sItem, $aCustoms);
 
-        	$sMethod = $bTypeSingle ? 'callRegisterCartItem' : 'callRegisterSubscriptionItem';
-        	$aItemInfo = $this->$sMethod((int)$aItem['module_id'], array($aPending['client_id'], $aPending['seller_id'], $aItem['item_id'], $aItem['item_count'], $aPending['order'], $sLicense, $aItemCustom));
+            $sMethod = $bTypeSingle ? 'callRegisterCartItem' : 'callRegisterSubscriptionItem';
+            $aItemInfo = $this->$sMethod((int)$aItem['module_id'], array($aPending['client_id'], $aPending['seller_id'], $aItem['item_id'], $aItem['item_count'], $aPending['order'], $sLicense, $aItemCustom));
             if(empty($aItemInfo) || !is_array($aItemInfo))
                 continue;
 
@@ -874,50 +874,50 @@ class BxPaymentModule extends BxBaseModPaymentModule
             	$aCart['items'] = trim(preg_replace("'" . $this->_oConfig->descriptorA2S($aItem) . ":?'", "", $aCart['items']), ":");
             }
 
-			$bResult = true;
+            $bResult = true;
         }
 
         if($bTypeSingle)
-			$this->_oDb->setCartItems($iClientId, $aCart['items'], $aCart['customs']);
+            $this->_oDb->setCartItems($iClientId, $aCart['items'], $aCart['customs']);
 
         if($bResult) {
-        	$this->_oDb->updateOrderPending($aPending['id'], array('processed' => 1));
+            $this->_oDb->updateOrderPending($aPending['id'], array('processed' => 1));
 
-        	$this->onPaymentRegister($aPending);
+            $this->onPaymentRegister($aPending);
         }
 
         return $bResult;
     }
 
-	public function refundPayment($mixedPending)
-	{
-		$aPending = is_array($mixedPending) ? $mixedPending : $this->_oDb->getOrderPending(array('type' => 'id', 'id' => (int)$mixedPending));
-    	if(empty($aPending) || !is_array($aPending))
-    		return false;
+    public function refundPayment($mixedPending)
+    {
+        $aPending = is_array($mixedPending) ? $mixedPending : $this->_oDb->getOrderPending(array('type' => 'id', 'id' => (int)$mixedPending));
+        if(empty($aPending) || !is_array($aPending))
+            return false;
 
-		$bTypeSingle = $aPending['type'] == BX_PAYMENT_TYPE_SINGLE;
+        $bTypeSingle = $aPending['type'] == BX_PAYMENT_TYPE_SINGLE;
 
-		$iCanceled = 0;
-		$aOrders = $this->_oDb->getOrderProcessed(array('type' => 'pending_id', 'pending_id' => (int)$aPending['id']));
-		foreach($aOrders as $aOrder) {
-			$sMethod = $bTypeSingle ? 'callUnregisterCartItem' : 'callUnregisterSubscriptionItem';
-			$bResult = $this->$sMethod((int)$aOrder['module_id'], array($aOrder['client_id'], $aOrder['seller_id'], $aOrder['item_id'], $aOrder['item_count'], $aPending['order'], $aOrder['license']));
-			if(!$bResult)
+        $iCanceled = 0;
+        $aOrders = $this->_oDb->getOrderProcessed(array('type' => 'pending_id', 'pending_id' => (int)$aPending['id']));
+        foreach($aOrders as $aOrder) {
+            $sMethod = $bTypeSingle ? 'callUnregisterCartItem' : 'callUnregisterSubscriptionItem';
+            $bResult = $this->$sMethod((int)$aOrder['module_id'], array($aOrder['client_id'], $aOrder['seller_id'], $aOrder['item_id'], $aOrder['item_count'], $aPending['order'], $aOrder['license']));
+            if(!$bResult)
                 continue;
 
             if($this->_oDb->deleteOrderProcessed($aOrder['id']))
-            	$iCanceled++;
-		}
+                $iCanceled++;
+        }
 
-		if($iCanceled != count($aOrders))
-			return false;
+        if($iCanceled != count($aOrders))
+                return false;
 
-		$bResult = $this->_oDb->deleteOrderPending($aPending['id']);
-		if($bResult)
-			$this->onPaymentRefund($aPending);
+        $bResult = $this->_oDb->deleteOrderPending($aPending['id']);
+        if($bResult)
+                $this->onPaymentRefund($aPending);
 
-		return $bResult;
-	}
+        return $bResult;
+    }
 
 	public function registerSubscription($aPending, $aParams = array())
 	{
@@ -948,15 +948,15 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
 	public function cancelSubscription($mixedPending)
 	{
-		$aPending = is_array($mixedPending) ? $mixedPending : $this->_oDb->getOrderPending(array('type' => 'id', 'id' => (int)$mixedPending));
-    	if(empty($aPending) || !is_array($aPending) || $aPending['type'] != BX_PAYMENT_TYPE_RECURRING)
+            $aPending = is_array($mixedPending) ? $mixedPending : $this->_oDb->getOrderPending(array('type' => 'id', 'id' => (int)$mixedPending));
+            if(empty($aPending) || !is_array($aPending) || $aPending['type'] != BX_PAYMENT_TYPE_RECURRING)
     		return false;
 
-		$aItems = $this->_oConfig->descriptorsM2A($aPending['items']);
-        foreach($aItems as $aItem)
-			$this->callCancelSubscriptionItem((int)$aItem['module_id'], array($aPending['client_id'], $aPending['seller_id'], $aItem['item_id'], $aItem['item_count'], $aPending['order']));
+            $aItems = $this->_oConfig->descriptorsM2A($aPending['items']);
+            foreach($aItems as $aItem)
+                $this->callCancelSubscriptionItem((int)$aItem['module_id'], array($aPending['client_id'], $aPending['seller_id'], $aItem['item_id'], $aItem['item_count'], $aPending['order']));
 
-		$this->onSubscriptionCancel($aPending);
+            $this->onSubscriptionCancel($aPending);
 	}
 
 	public function onPaymentRegisterBefore($aPending, $aResult = array())
@@ -976,16 +976,16 @@ class BxPaymentModule extends BxBaseModPaymentModule
                 $this->isAllowedPurchase(array('module_id' => $aItem['module_id'], 'item_id' => $aItem['item_id']), true);
 	    }
 
-		//--- 'System' -> 'Register Payment' for Alerts Engine ---//
-		bx_alert('system', 'register_payment', 0, $aPending['client_id'], array('pending' => $aPending));
-		//--- 'System' -> 'Register Payment' for Alerts Engine ---//
+            //--- 'System' -> 'Register Payment' for Alerts Engine ---//
+            bx_alert('system', 'register_payment', 0, $aPending['client_id'], array('pending' => $aPending));
+            //--- 'System' -> 'Register Payment' for Alerts Engine ---//
 	}
 
 	public function onPaymentRefund($aPending, $aResult = array())
 	{
-		//--- 'System' -> 'Refund Payment' for Alerts Engine ---//
-		bx_alert('system', 'refund_payment', 0, $aPending['client_id'], array('pending' => $aPending));
-		//--- 'System' -> 'Refund Payment' for Alerts Engine ---//
+            //--- 'System' -> 'Refund Payment' for Alerts Engine ---//
+            bx_alert('system', 'refund_payment', 0, $aPending['client_id'], array('pending' => $aPending));
+            //--- 'System' -> 'Refund Payment' for Alerts Engine ---//
 	}
 
 	public function onSubscriptionCreate($aPending, $aResult = array())
@@ -993,9 +993,9 @@ class BxPaymentModule extends BxBaseModPaymentModule
 	    $aItems = $this->_oConfig->descriptorsM2A($aPending['items']);
 	    $this->isAllowedPurchase(array('module_id' => $aItems[0]['module_id'], 'item_id' => $aItems[0]['item_id']), true);
 
-		//--- 'System' -> 'Create Subscription' for Alerts Engine ---//
-		bx_alert('system', 'create_subscription', 0, $aPending['client_id'], array('pending' => $aPending));
-		//--- 'System' -> 'Create Subscription' for Alerts Engine ---//
+            //--- 'System' -> 'Create Subscription' for Alerts Engine ---//
+            bx_alert('system', 'create_subscription', 0, $aPending['client_id'], array('pending' => $aPending));
+            //--- 'System' -> 'Create Subscription' for Alerts Engine ---//
 	}
 
 	public function onSubscriptionUpdate($aPending, $aResult = array())

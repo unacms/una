@@ -118,36 +118,36 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
     {
         $sOrderId = bx_process_input($aData['order_id']);
     	$sCustomerId = bx_process_input($aData['customer_id']);
-		$iPendingId = bx_process_input($aData['pending_id'], BX_DATA_INT);
+        $iPendingId = bx_process_input($aData['pending_id'], BX_DATA_INT);
         if(empty($iPendingId))
-        	return array('code' => 1, 'message' => $this->_sLangsPrefix . 'err_wrong_data');
+            return array('code' => 1, 'message' => $this->_sLangsPrefix . 'err_wrong_data');
 
         $sRedirect = bx_process_input($aData['redirect']);
 
-		$aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
+        $aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
         if(!empty($aPending['order']) || !empty($aPending['error_code']) || !empty($aPending['error_msg']) || (int)$aPending['processed'] != 0)
             return array('code' => 3, 'message' => $this->_sLangsPrefix . 'err_already_processed');
 
         if($aPending['type'] != BX_PAYMENT_TYPE_RECURRING) 
             return array('code' => 1, 'message' => $this->_sLangsPrefix . 'err_wrong_data');
 
-		$oCustomer = $this->retrieveCustomer($sCustomerId);
-		$oSubscription = $this->retrieveSubscription($sOrderId);
-		if($oCustomer === false || $oSubscription === false)
+        $oCustomer = $this->retrieveCustomer($sCustomerId);
+        $oSubscription = $this->retrieveSubscription($sOrderId);
+        if($oCustomer === false || $oSubscription === false)
             return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
 
-		$aResult = array(
-			'code' => BX_PAYMENT_RESULT_SUCCESS,
-        	'message' => $this->_sLangsPrefix . 'cbee_msg_subscribed',
-			'pending_id' => $iPendingId,
-			'customer_id' => $oCustomer->id,
-		    'subscription_id' => $oSubscription->id,
-			'client_name' => _t($this->_sLangsPrefix . 'txt_buyer_name_mask', $oCustomer->firstName, $oCustomer->lastName),
-			'client_email' => $oCustomer->email,
-			'paid' => false,
-			'trial' => false,
-			'redirect' => $sRedirect
-		);
+        $aResult = array(
+            'code' => BX_PAYMENT_RESULT_SUCCESS,
+            'message' => $this->_sLangsPrefix . 'cbee_msg_subscribed',
+            'pending_id' => $iPendingId,
+            'customer_id' => $oCustomer->id,
+            'subscription_id' => $oSubscription->id,
+            'client_name' => _t($this->_sLangsPrefix . 'txt_buyer_name_mask', $oCustomer->firstName, $oCustomer->lastName),
+            'client_email' => $oCustomer->email,
+            'paid' => false,
+            'trial' => $oSubscription->status == 'in_trial',
+            'redirect' => $sRedirect
+        );
 
         //--- Update pending transaction ---//
         $this->_oModule->_oDb->updateOrderPending($iPendingId, array(

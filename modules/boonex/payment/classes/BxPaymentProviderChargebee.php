@@ -66,34 +66,34 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
 
     public function finalizeCheckout(&$aData)
     {
-    	$sPageId = bx_process_input($aData['id']);
-		$iPendingId = bx_process_input($aData['pending_id'], BX_DATA_INT);
+        $sPageId = bx_process_input($aData['id']);
+        $iPendingId = bx_process_input($aData['pending_id'], BX_DATA_INT);
 
         if(empty($sPageId) || empty($iPendingId))
-        	return array('code' => 1, 'message' => $this->_sLangsPrefix . 'err_wrong_data');
+            return array('code' => 1, 'message' => $this->_sLangsPrefix . 'err_wrong_data');
 
-		$oPage = $this->retreiveHostedPage($sPageId);
-		if($oPage === false)
-			return $this->_sLangsPrefix . 'err_cannot_perform';
-		
-		$aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
+        $oPage = $this->retreiveHostedPage($sPageId);
+        if($oPage === false)
+                return $this->_sLangsPrefix . 'err_cannot_perform';
+
+        $aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
         if(!empty($aPending['order']) || !empty($aPending['error_code']) || !empty($aPending['error_msg']) || (int)$aPending['processed'] != 0)
             return array('code' => 3, 'message' => $this->_sLangsPrefix . 'err_already_processed');
 
-		$oCustomer = $oPage->content()->customer();
-		$oSubscription = $oPage->content()->subscription();
+        $oCustomer = $oPage->content()->customer();
+        $oSubscription = $oPage->content()->subscription();
 
-		$aResult = array(
-			'code' => BX_PAYMENT_RESULT_SUCCESS,
-        	'message' => $this->_sLangsPrefix . 'cbee_msg_subscribed',
-			'pending_id' => $iPendingId,
-			'customer_id' => $oCustomer->id,
-		    'subscription_id' => $oSubscription->id,
-			'client_name' => _t($this->_sLangsPrefix . 'txt_buyer_name_mask', $oCustomer->firstName, $oCustomer->lastName),
-			'client_email' => $oCustomer->email,
-			'paid' => false,
-			'trial' => false,
-		);
+        $aResult = array(
+            'code' => BX_PAYMENT_RESULT_SUCCESS,
+            'message' => $this->_sLangsPrefix . 'cbee_msg_subscribed',
+            'pending_id' => $iPendingId,
+            'customer_id' => $oCustomer->id,
+            'subscription_id' => $oSubscription->id,
+            'client_name' => _t($this->_sLangsPrefix . 'txt_buyer_name_mask', $oCustomer->firstName, $oCustomer->lastName),
+            'client_email' => $oCustomer->email,
+            'paid' => false,
+            'trial' => $oSubscription->status == 'in_trial',
+        );
 
         //--- Update pending transaction ---//
         $this->_oModule->_oDb->updateOrderPending($iPendingId, array(
