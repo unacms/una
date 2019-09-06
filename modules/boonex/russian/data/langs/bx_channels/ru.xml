@@ -78,6 +78,8 @@
     <string name="_bx_channels_page_title_sys_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_channels_page_title_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_channels_page_title_sys_entries_of_author"><![CDATA[Каналы автора]]></string>
+    <string name="_bx_channels_page_title_sys_entries_toplevel"><![CDATA[Верхний уровень]]></string>
+    <string name="_bx_channels_page_title_entries_toplevel"><![CDATA[Верхний уровень]]></string>
     <string name="_bx_channels_page_title_entries_of_author"><![CDATA[{display_name} - Каналы]]></string>
 
     <string name="_bx_channels_page_block_title_sys_entries_actions"><![CDATA[Каналы - Действия]]></string>
@@ -113,6 +115,7 @@
     <string name="_bx_channels_page_block_title_entry_parent"><![CDATA[Родительский канал]]></string>
     <string name="_bx_channels_page_block_title_entry_childs"><![CDATA[Дочерние каналы]]></string>
     <string name="_bx_channels_page_block_title_search_form"><![CDATA[Форма поиска]]></string>
+    <string name="_bx_channels_page_block_title_toplevel"><![CDATA[Верхний уровень]]></string>
     <string name="_bx_channels_page_block_title_entries_my"><![CDATA[Мои просматриваемые каналы]]></string>
     <string name="_bx_channels_page_trigger_block_title_entries_my"><![CDATA[Мои просматриваемые каналы]]></string>
     <string name="_bx_channels_page_block_title_search_results"><![CDATA[Результаты поиска]]></string>
@@ -187,6 +190,8 @@
     <string name="_bx_channels_menu_item_title_entries_recent"><![CDATA[Новые]]></string>
     <string name="_bx_channels_menu_item_title_system_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_channels_menu_item_title_entries_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_channels_menu_item_title_system_entries_toplevel"><![CDATA[Верхний уровень]]></string>
+    <string name="_bx_channels_menu_item_title_entries_toplevel"><![CDATA[Верхний уровень]]></string>
     <string name="_bx_channels_menu_item_title_system_entries_manage"><![CDATA[Управление]]></string>
     <string name="_bx_channels_menu_item_title_entries_manage"><![CDATA[Управление]]></string>
     <string name="_bx_channels_menu_item_title_system_entries_home"><![CDATA[Каналы]]></string>

@@ -136,6 +136,20 @@ class BxCnlSearchResult extends BxBaseModGroupsSearchResult
                 $this->aCurrent['sorting'] = 'top';
                 $this->sBrowseUrl = 'page.php?i=channels-top';
                 break;
+           
+            case 'level':
+                $this->aCurrent['join']['level'] = array(
+                    'type' => 'INNER',
+                    'table' => 'sys_labels',
+                    'mainTable' => 'bx_cnl_data',
+                    'mainField' => 'channel_name',
+                    'onField' => 'value',
+                    'joinFields' => array('value'),
+                );
+                $this->aCurrent['restriction']['level'] = array('value' => $aParams['level'], 'field' => 'level', 'operator' => '=', 'table' => 'sys_labels');
+                $this->aCurrent['sorting'] = 'level';
+                $this->sBrowseUrl = 'page.php?i=channels-toplevel';
+                break;
 
             case '': // search results
                 $this->sBrowseUrl = BX_DOL_SEARCH_KEYWORD_PAGE;
@@ -164,6 +178,8 @@ class BxCnlSearchResult extends BxBaseModGroupsSearchResult
             return array();
         case 'top':
             return array('order' => ' ORDER BY `bx_cnl_data`.`views` DESC ');
+        case 'level':
+            return array('order' => ' ORDER BY `bx_cnl_data`.`channel_name` DESC ');
         case 'last':
         default:
             return array('order' => ' ORDER BY `bx_cnl_data`.`added` DESC ');
