@@ -457,20 +457,26 @@ class BxAclModule extends BxDolModule
     
     protected function _serviceRegisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense, $sType)
     {
+        $CNF = &$this->_oConfig->CNF;
+
     	$aItem = $this->serviceGetCartItem($iItemId);
         if(empty($aItem) || !is_array($aItem))
-			return array();
+            return array();
+
+        $oAcl = BxDolAcl::getInstance();
 
         $aItemInfo = $this->_oDb->getPrices(array('type' => 'by_id', 'value' => $iItemId));
+        $aMembershipInfo = $oAcl->getMemberMembershipInfo($iClientId);
 
-        $iPeriod = (int)$aItemInfo['period'];
-        $sPeriodUnit = $aItemInfo['period_unit'];
-		if($sType == BX_ACL_LICENSE_TYPE_RECURRING && (int)$aItemInfo['trial'] > 0) {
-		    $iPeriod = (int)$aItemInfo['trial'];
-		    $sPeriodUnit = 'day';
-		}
+        $aPeriod = array('period' => (int)$aItemInfo['period'], 'period_unit' => $aItemInfo['period_unit']);
+        if($sType == BX_ACL_LICENSE_TYPE_RECURRING && (int)$aItemInfo['trial'] > 0 && (int)$aItemInfo['level_id'] != (int)$aMembershipInfo['id'])
+            $aPeriod = array('period' => (int)$aItemInfo['trial'], 'period_unit' => 'day');
 
-        if(!BxDolAcl::getInstance()->setMembership($iClientId, $aItemInfo['level_id'], array('period' => $iPeriod, 'period_unit' => $sPeriodUnit), false, $sLicense))
+        $iReserve = (int)getParam($CNF['PARAM_RECURRING_RESERVE']);
+        if(!empty($iReserve))
+            $aPeriod['period_reserve'] = $iReserve;
+
+        if(!$oAcl->setMembership($iClientId, $aItemInfo['level_id'], $aPeriod, true, $sLicense))
             return array();
 
         return $aItem;

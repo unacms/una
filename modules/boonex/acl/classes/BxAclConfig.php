@@ -28,36 +28,41 @@ class BxAclConfig extends BxBaseModGeneralConfig
         parent::__construct($aModule);
 
         $this->CNF = array (
-        	'TABLE_PRICES' => $aModule['db_prefix'] . 'level_prices',
+            'TABLE_PRICES' => $aModule['db_prefix'] . 'level_prices',
 
-        	'URL_ADMINISTRATION' => 'page.php?i=acl-administration',
-        	'URL_VIEW' => 'page.php?i=acl-view',
+            // page URIs
+            'URL_ADMINISTRATION' => 'page.php?i=acl-administration',
+            'URL_VIEW' => 'page.php?i=acl-view',
 
-        	'OBJECT_GRID_ADMINISTRATION' => 'bx_acl_administration',
-        	'OBJECT_GRID_VIEW' => 'bx_acl_view',
-        	'OBJECT_FORM_PRICE' => 'bx_acl_price',
+            // some params
+            'PARAM_RECURRING_RESERVE' => 'bx_acl_recurring_reserve',
+
+            // objects 
+            'OBJECT_GRID_ADMINISTRATION' => 'bx_acl_administration',
+            'OBJECT_GRID_VIEW' => 'bx_acl_view',
+            'OBJECT_FORM_PRICE' => 'bx_acl_price',
             'OBJECT_FORM_PRICE_DISPLAY_ADD' => 'bx_acl_price_add',
-        	'OBJECT_FORM_PRICE_DISPLAY_EDIT' => 'bx_acl_price_edit',
-        	'OBJECT_FORM_PRELISTS_PERIOD_UNITS' => 'bx_acl_period_units',
+            'OBJECT_FORM_PRICE_DISPLAY_EDIT' => 'bx_acl_price_edit',
+            'OBJECT_FORM_PRELISTS_PERIOD_UNITS' => 'bx_acl_period_units',
         );
 
-		$this->_aGridObjects = array(
-			'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
-			'view' => $this->CNF['OBJECT_GRID_VIEW'],
-		);
+        $this->_aGridObjects = array(
+            'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
+            'view' => $this->CNF['OBJECT_GRID_VIEW'],
+        );
 
-		$this->_aPrefixes = array(
-        	'style' => 'bx-acl',
-        	'option' => 'bx_acl_',
+        $this->_aPrefixes = array(
+            'style' => 'bx-acl',
+            'option' => 'bx_acl_',
         );
 
         $this->_aJsClasses = array(
-        	'main' => 'BxAclMain',
-        	'administration' => 'BxAclAdministration',
+            'main' => 'BxAclMain',
+            'administration' => 'BxAclAdministration',
         );
         $this->_aJsObjects = array(
             'main' => 'oAclMain',
-	        'administration' => 'oAclAdministration',
+            'administration' => 'oAclAdministration',
         );
 
         $sHtmlPrefix = str_replace('_', '-', $this->_sName);

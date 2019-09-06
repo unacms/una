@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="en" flag="gb" title="English">
-
 	<string name="_bx_acl"><![CDATA[Paid Levels]]></string>
+
+
+        <!-- Option -->
+        <string name="_bx_acl_option_recurring_reserve"><![CDATA[Reserve (in days) to accept and process recurring payment notification]]></string>
+
 
 	<!-- Pages -->
 	<string name="_bx_acl_page_title_sys_view"><![CDATA[Membership]]></string>
 	<string name="_bx_acl_page_title_view"><![CDATA[Membership]]></string>
 	<string name="_bx_acl_page_block_title_system_view"><![CDATA[Membership]]></string>
 	<string name="_bx_acl_page_block_title_view"><![CDATA[Membership]]></string>
+
+
+        <!-- Menus -->
+        <string name="_bx_acl_lmi_cpt_manage"><![CDATA[Manage]]></string>
 
 
 	<!-- Forms -->

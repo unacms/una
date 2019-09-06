@@ -318,33 +318,42 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
     function insertLevelByProfileId($iProfileId, $iMembershipId, $iDateStarts, $aPeriod, $sTransactionId)
     {
     	$aBindings = array(
-			'member_id' => $iProfileId,
-			'level_id' => $iMembershipId,
-			'transaction_id' => $sTransactionId,
-			'date_starts' => $iDateStarts
-		);
+            'member_id' => $iProfileId,
+            'level_id' => $iMembershipId,
+            'transaction_id' => $sTransactionId,
+            'date_starts' => $iDateStarts
+        );
 
     	$sSetClause = '';
     	if((int)$aPeriod['period'] != 0) {
-    		$aBindings['period'] = (int)$aPeriod['period'];
+            $aBindings['period'] = (int)$aPeriod['period'];
 
-	    	switch($aPeriod['period_unit']) {
-	    		case MEMBERSHIP_PERIOD_UNIT_DAY:
-	    		case MEMBERSHIP_PERIOD_UNIT_WEEK:
-	    			if($aPeriod['period_unit'] == MEMBERSHIP_PERIOD_UNIT_WEEK)
-	    				$aBindings['period'] *= 7;
+            switch($aPeriod['period_unit']) {
+                case MEMBERSHIP_PERIOD_UNIT_DAY:
+                case MEMBERSHIP_PERIOD_UNIT_WEEK:
+                    if($aPeriod['period_unit'] == MEMBERSHIP_PERIOD_UNIT_WEEK)
+                        $aBindings['period'] *= 7;
 
-	    			$sSetClause = ", `DateExpires`=DATE_ADD(FROM_UNIXTIME(:date_starts), INTERVAL :period DAY)";
-	    			break;
+                    $sSetClause = "DATE_ADD(FROM_UNIXTIME(:date_starts), INTERVAL :period DAY)";
+                    break;
 
-	    		case MEMBERSHIP_PERIOD_UNIT_MONTH:
-	    			$sSetClause = ", `DateExpires`=DATE_ADD(FROM_UNIXTIME(:date_starts), INTERVAL :period MONTH)";
-	    			break;
+                case MEMBERSHIP_PERIOD_UNIT_MONTH:
+                    $sSetClause = "DATE_ADD(FROM_UNIXTIME(:date_starts), INTERVAL :period MONTH)";
+                    break;
 
-	    		case MEMBERSHIP_PERIOD_UNIT_YEAR:
-	    			$sSetClause = ", `DateExpires`=DATE_ADD(FROM_UNIXTIME(:date_starts), INTERVAL :period YEAR)";
-	    			break;
-	    	}
+                case MEMBERSHIP_PERIOD_UNIT_YEAR:
+                    $sSetClause = "DATE_ADD(FROM_UNIXTIME(:date_starts), INTERVAL :period YEAR)";
+                    break;
+            }
+
+            if(!empty($sSetClause) && !empty($aPeriod['period_reserve'])) {
+                $aBindings['reserve'] = (int)$aPeriod['period_reserve'];
+
+                $sSetClause = "DATE_ADD(" . $sSetClause . ", INTERVAL :reserve DAY)";
+            }
+
+            if(!empty($sSetClause))
+                $sSetClause = ", `DateExpires`=" . $sSetClause;
     	}
 
         $sQuery = $this->prepare("INSERT `sys_acl_levels_members` SET `IDMember`=:member_id, `IDLevel`=:level_id, `DateStarts`=FROM_UNIXTIME(:date_starts), `TransactionID`=:transaction_id" . $sSetClause);
