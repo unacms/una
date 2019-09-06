@@ -568,14 +568,8 @@ EOS;
         if(isset($aInput['error_updated']) && $aInput['error_updated'] === true)
             $sErrorIcon = $this->genErrorIcon(empty($aInput['error']) ? '' : $aInput['error']);
 
-        $sCaptionCode = '';
-        if ($sCaption)
-            $sCaptionCode = '<div class="bx-form-caption' . $sClassOneLineCaption . '">' . $sCaption . $sRequired . '</div>';
-        else
-            $sInput .= $sRequired;
-
+        $sCaptionCode = $sCaption ? '<div class="bx-form-caption' . $sClassOneLineCaption . '">' . $sCaption . $sRequired . '</div>' : '';
         $sInputCode = $this->genWrapperInput($aInput, $sInput);
-
 
         if (empty($sInfoIcon)) $sInfoIcon = '';
         if (empty($sInputCode)) $sInputCode = '';
