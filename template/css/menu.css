@@ -855,3 +855,11 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
 .bx-menu-add-relation-hidden {
     display: none;
 }
+
+/* --------------- switch language menu (popup) */
+.bx-popup .bx-menu-ver.bx-menu-object-sys_switch_language_popup li a div > span {
+    margin-left: 0;
+}
+.bx-popup ul.bx-menu-ver.bx-menu-object-sys_switch_language_popup li span.flag-icon {
+    margin-right: 0.5rem;
+}
