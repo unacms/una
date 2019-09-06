@@ -300,7 +300,6 @@ class BxCnlModule extends BxBaseModGroupsModule
     
     public function serviceBrowseByLevel ($iLevelId = 0, $bDisplayEmptyMsg = false)
     {
-        echo $iLevelId;
         return $this->_serviceBrowse ('level', array('level' => $iLevelId), BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
     }
     
