@@ -1606,6 +1606,7 @@
         <string name="_cmt_txt_min_form_placeholder"><![CDATA[{0}, здесь Вы можете оставить комментарий.]]></string>
         <string name="_cmt_rvw_block_rating_title"><![CDATA[Оценка по обзорам]]></string>
         <string name="_cmt_rvw_block_reviews_title"><![CDATA[Обзоры ({0})]]></string>
+        <string name="_cmt_rvw_txt_min_form_placeholder"><![CDATA[{0}, здесь Вы можете написать обзор.]]></string>
         <string name="_cmt_rvw_txt_sample_comment_single"><![CDATA[обзор]]></string>
         <string name="_cmt_rvw_txt_sample_reaction_single"><![CDATA[реакция '{0}' к обзору]]></string>
         <string name="_cmt_rvw_txt_sample_score_up_single"><![CDATA[голос за обзор]]></string>

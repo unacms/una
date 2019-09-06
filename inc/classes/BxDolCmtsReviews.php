@@ -57,7 +57,8 @@ class BxDolCmtsReviews extends BxTemplCmts
             'txt_sample_vote_single' => '_cmt_rvw_txt_sample_vote_single',
             'txt_sample_reaction_single' => '_cmt_rvw_txt_sample_reaction_single',
             'txt_sample_score_up_single' => '_cmt_rvw_txt_sample_score_up_single',
-            'txt_sample_score_down_single' => '_cmt_rvw_txt_sample_score_down_single'
+            'txt_sample_score_down_single' => '_cmt_rvw_txt_sample_score_down_single',
+            'txt_min_form_placeholder' => '_cmt_rvw_txt_min_form_placeholder'
         );
 
         $this->_iMoodMinValue = 1;
