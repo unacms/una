@@ -1212,7 +1212,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     {
         $CNF = &$this->_oConfig->CNF;
 
-        if(!$this->_oConfig->isCacheList() || $this->_oConfig->isCacheListException(BX_TIMELINE_TYPE_HOT))
+        if(!$this->_oConfig->isCacheList() || $this->_oConfig->isCacheListException($aParams['type']))
             return $this->_oDb->getEvents($aParams);
 
         $iPerPage = (int)$aParams['per_page'];
