@@ -20,7 +20,7 @@ function BxDolPush(oOptions) {
 
 BxDolPush.prototype.init = function() {
 	var $this = this;
-	var OneSignal = window.OneSignal || [];
+	window.OneSignal = window.OneSignal || [];
 
 	OneSignal.push(function() {
 		OneSignal.SERVICE_WORKER_UPDATER_PATH = "OneSignalSDKUpdaterWorker.js.php";
