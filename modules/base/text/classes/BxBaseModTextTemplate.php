@@ -338,9 +338,16 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         if(empty($aPolls) || !is_array($aPolls))
             return;
 
+        $iPolls = 0;
         $sContent = '';
-        foreach($aPolls as $aPoll)
-            $sContent .= $this->getPollItem($aPoll, 0, $aParams);
+        foreach($aPolls as $aPoll) {
+            $sPoll = $this->getPollItem($aPoll, 0, $aParams);
+            if(empty($sPoll))
+                continue;
+
+            $sContent .= $sPoll;
+            $iPolls += 1;
+        }
 
         if(!empty($sContent) && isset($aParams['showcase']) && (bool)$aParams['showcase'] === true) {
             $this->addJs(array('flickity/flickity.pkgd.min.js'));
@@ -349,6 +356,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             $sContent = $this->parseHtmlByName('poll_items_showcase.html', array(
                 'js_object' => $this->_oConfig->getJsObject('poll'),
                 'html_id' => $this->_oConfig->getHtmlIds('polls_showcase') . $iContentId,
+                'type' => $iPolls == 1 ? 'single' : 'multiple',
                 'polls' => $sContent
             ));
         }

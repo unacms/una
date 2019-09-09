@@ -194,6 +194,9 @@ div.bx-base-text-pr-graph .bx-base-text-prg-text {
     width: 80vw;
     height: 100vh;
 }
+.bx-page-iframe .bx-base-text-showcase-type-single .bx-base-text-poll {
+    width: 100vw;
+}
 .bx-page-iframe .bx-base-text-poll-cnt {
     height: 100%;
     box-sizing: border-box;
