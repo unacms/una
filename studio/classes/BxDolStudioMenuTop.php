@@ -115,7 +115,7 @@ class BxDolStudioMenuTop extends BxDol
         if(count($aLanguages) > 1)
             $this->aItems[BX_DOL_STUDIO_MT_RIGHT]['menu_items']['language'] = array(
                 'name' => 'language',
-                'icon' => 'globe',
+                'icon' => 'language',
                 'link' => 'javascript:void(0);',
                 'onclick' => "bx_menu_popup('sys_switch_language_popup', this);",
                 'title' => '_adm_tmi_cpt_language'

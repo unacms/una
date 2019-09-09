@@ -126,7 +126,7 @@ class BxBaseStudioPage extends BxDolStudioPage
         if(count($aLanguages) > 1)
             $aItemsRight['language'] = array(
                 'name' => 'language',
-                'icon' => 'globe',
+                'icon' => 'language',
                 'onclick' => "bx_menu_popup('sys_switch_language_popup', this);",
                 'title' => '_adm_tmi_cpt_language'
             );
