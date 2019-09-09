@@ -85,7 +85,7 @@ class BxBaseServiceLogin extends BxDol
 
     public function serviceLoginForm ($sParams = '', $sForceRelocate = '')
     {
-        if(isLogged()){
+        if (isLogged() && 'login' == bx_get('i')) {
             header('Location: ' . BX_DOL_URL_ROOT);
             exit;
         }
