@@ -3616,7 +3616,7 @@ INSERT INTO `sys_menu_templates` (`id`, `template`, `title`, `visible`) VALUES
 (8, 'menu_main_submenu.html', '_sys_menu_template_title_main_submenu', 8),
 (9, 'menu_buttons_hor.html', '_sys_menu_template_title_buttons_hor', 1),
 (10, 'menu_inline.html', '_sys_menu_template_title_inline', 1),
-(11, 'menu_interactive_vertical.html', '_sys_menu_template_title_interactive_vertical', 1),
+(11, 'menu_interactive_vertical.html', '_sys_menu_template_title_interactive_vertical', 0),
 (12, 'menu_account_popup.html', '_sys_menu_template_title_account_popup', 0),
 (13, 'menu_account_notifications.html', '_sys_menu_template_title_account_notifications', 0),
 (14, 'menu_floating_blocks_big.html', '_sys_menu_template_title_floating_blocks_big', 1),
@@ -3627,7 +3627,7 @@ INSERT INTO `sys_menu_templates` (`id`, `template`, `title`, `visible`) VALUES
 (19, 'menu_floating_blocks_wide.html', '_sys_menu_template_title_floating_blocks_wide', 0),
 (20, 'menu_custom_ver.html', '_sys_menu_template_title_custom_ver', 0),
 (21, 'menu_profile_stats.html', '_sys_menu_template_title_profile_stats', 0),
-(22, 'menu_interactive.html', '_sys_menu_template_title_interactive', 1),
+(22, 'menu_interactive.html', '_sys_menu_template_title_interactive', 0),
 (23, 'menu_buttons_icon_hor.html', '_sys_menu_template_title_buttons_icon_hor', 1),
 (24, 'menu_floating_blocks_dash.html', '_sys_menu_template_title_floating_blocks_dash', 0);
 
