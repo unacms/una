@@ -574,8 +574,16 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $iStart = $aParams['start'];
         $iPerPage = $aParams['per_page'];
+        $bDynamicMode = isset($aParams['dynamic_mode']) && (bool)$aParams['dynamic_mode'] === true;
 
-        $sYears = $this->getJumpTo($aParams);
+        $bTmplVarsJumpTo = $this->_oConfig->isJumpTo();
+        $aTmplVarsJumpTo = array(
+            'style_prefix' => $sStylePrefix,
+            'content' => ''
+        );
+
+        if($bTmplVarsJumpTo && $bDynamicMode)
+            $aTmplVarsJumpTo['content'] = $this->getJumpTo($aParams);
 
         $aTmplVars = array(
             'style_prefix' => $sStylePrefix,
@@ -591,11 +599,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 )
             ),
             'bx_if:show_jump_to' => array(
-                'condition' => !empty($sYears),
-                'content' => array(
-                    'style_prefix' => $sStylePrefix,
-                    'years' => $sYears
-                )
+                'condition' => $bTmplVarsJumpTo,
+                'content' => $aTmplVarsJumpTo
             )
         );
         return $this->parseHtmlByName('load_more.html', $aTmplVars);
@@ -611,17 +616,36 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(empty($iYearMin))
             return '';
 
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
         $sJsObject = $this->_oConfig->getJsObjectView($aParams);
 
-        $sYears = '';
+        $aYears = array();
         $iYearMax = date('Y', time()) - 1;
-        for($i = $iYearMax; $i >= $iYearMin; $i--)
-            $sYears .= ($i != $iYearSel ? $this->parseLink('javascript:void(0)', $i, array(
-                'title' => _t('_bx_timeline_txt_jump_to_n_year', $i),
-                'onclick' => 'javascript:' . $sJsObject . '.changeTimeline(this, ' . $i . ')'
-            )) : $i) . ', ';
+        for($i = $iYearMax; $i >= $iYearMin; $i--) {
+            $bCurrent = $i == $iYearSel;
+            $aYears[] = array(
+                'style_prefix' => $sStylePrefix,
+                'bx_if:show_link' => array(
+                    'condition' => !$bCurrent,
+                    'content' => array(
+                        'title' => _t('_bx_timeline_txt_jump_to_n_year', $i),
+                        'onclick' => 'javascript:' . $sJsObject . '.changeTimeline(this, ' . $i . ')',
+                        'content' => $i
+                    )
+                ),
+                'bx_if:show_text' => array(
+                    'condition' => $bCurrent,
+                    'content' => array(
+                        'content' => $i
+                    )
+                ),
+            );
+        }
 
-        return substr($sYears, 0, -2);
+        return $this->parseHtmlByName('jump_to.html', array(
+            'style_prefix' => $sStylePrefix,
+            'bx_repeat:links' => $aYears,
+        ));
     }
 
     public function getComments($sSystem, $iId, $aBrowseParams = array())

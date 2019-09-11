@@ -29,6 +29,7 @@ function BxTimelineMain() {
     this.sClassItemAttachments = this.sSP + '-item-attachments';
     this.sClassItemAttachment = this.sSP + '-item-attachment';
     this.sClassBlink = this.sSP + '-blink';
+    this.sClassJumpTo = this.sSP + '-jump-to';
 
     this.oView = null;
     this.bViewTimeline = false;

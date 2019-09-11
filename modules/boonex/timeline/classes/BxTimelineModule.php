@@ -393,8 +393,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $aParams = $this->_prepareParamsGet();
         $this->_iOwnerId = $aParams['owner_id'];
 
+        $sJsObjectView = $this->_oConfig->getJsObjectView($aParams);
+
         echoJson(array(
-            'jump_to' => $this->_oTemplate->getJumpTo($aParams)
+            'content' => $this->_oTemplate->getJumpTo($aParams),
+            'eval' => $sJsObjectView . '.onGetJumpTo(oData)'
         ));
     }
 

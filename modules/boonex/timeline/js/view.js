@@ -92,6 +92,9 @@ BxTimelineView.prototype.init = function()
 
         //--- Blink (highlight) necessary items
         this.blink(this.oView);
+
+        //--- Load 'Jump To'
+        this.initJumpTo(this.oView);
     }
 
     if(this.bViewOutline) {
@@ -110,6 +113,9 @@ BxTimelineView.prototype.init = function()
 
         //--- Blink (highlight) necessary items
         this.blink(this.oView);
+
+        //--- Load 'Jump To'
+        this.initJumpTo(this.oView);
     }
 
     if(this.bViewItem) {
@@ -123,6 +129,34 @@ BxTimelineView.prototype.init = function()
     }
 
     this.initFlickity();
+};
+
+BxTimelineView.prototype.initJumpTo = function(oParent)
+{
+    var oJumpTo = $(oParent).find('.' + this.sClassJumpTo);
+    if(!oJumpTo || oJumpTo.length == 0 || oJumpTo.html() != '')
+        return;
+
+    bx_loading_btn(oJumpTo, true);
+
+    jQuery.post (
+        this._sActionsUrl + 'get_jump_to/',
+        this._getDefaultData(oParent),
+        function(oData) {
+            oData.holder = oJumpTo;
+
+            processJsonData(oData);
+        },
+        'json'
+    );
+};
+
+BxTimelineView.prototype.onGetJumpTo = function(oData)
+{
+    if(!oData.holder || !oData.content)
+        return;
+
+    $(oData.holder).html(oData.content);
 };
 
 BxTimelineView.prototype.initVideosAutoplay = function(oParent)
