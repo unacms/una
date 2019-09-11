@@ -153,7 +153,7 @@ BxTimelineView.prototype.initJumpTo = function(oParent)
 
 BxTimelineView.prototype.onGetJumpTo = function(oData)
 {
-    if(!oData.holder || !oData.content)
+    if(!oData.holder || oData.content == undefined)
         return;
 
     $(oData.holder).html(oData.content);
