@@ -233,16 +233,41 @@ class BxCnlModule extends BxBaseModGroupsModule
         if(empty($aEventContent) || !is_array($aEventContent))
             return false;
 
-        if(!BxDolRequest::serviceExists($aEventContent['module_name'], 'get_timeline_post'))
-            return false;      
+        $sModule = $aEventContent['module_name'];
+        if(!BxDolRequest::serviceExists($sModule, 'get_timeline_post'))
+            return false;
 
-        return BxDolService::call($aEventContent['module_name'], 'get_timeline_post', array(
-            array(
-                'id' => $aEvent['id'], 
-                'owner_id' => $aEventContent['author_id'], 
-                'object_id' => $aEventContent['content_id']
-            ), 
-            $aBrowseParams
+        /**
+         * Prepare fake event array (only mandatory parameters) to get
+         * necessary data (related to an 'original' event with hashtag/label) 
+         * from associated content module.
+         */
+        $iOwnerId = (int)$aEventContent['author_id'];
+        $iContentId = (int)$aEventContent['content_id'];
+        $mixedObjectPrivacyView = BX_DOL_PG_ALL;
+        if(BxDolRequest::serviceExists($sModule, 'get_privacy_view')) {
+            $mixedAllowViewTo = BxDolService::call($sModule, 'get_privacy_view', array($iContentId));
+            if($mixedAllowViewTo !== false)
+                $mixedObjectPrivacyView = $mixedAllowViewTo;
+            if(is_numeric($mixedAllowViewTo) && (int)$mixedAllowViewTo < 0)
+                $iOwnerId = abs($mixedAllowViewTo);
+        }
+
+        $aResult = BxDolService::call($sModule, 'get_timeline_post', array(array(
+            'owner_id' => $iOwnerId,
+            'object_id' => $iContentId,
+            'object_privacy_view' => $mixedObjectPrivacyView
+        ), $aBrowseParams));
+
+        if(empty($aResult) || !is_array($aResult))
+            return $aResult;
+
+        /**
+         * Note. The context shouldn't be changed therefore 
+         * use input event's context (owner_id) in returned results.
+         */
+        return array_merge($aResult, array(
+            'owner_id' => $aEvent['owner_id']
         ));
     }
     

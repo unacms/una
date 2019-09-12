@@ -625,12 +625,19 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      */
     public function serviceGetTimelinePost($aEvent, $aBrowseParams = array())
     {
-        $CNF = &$this->_oConfig->CNF;
+        $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return false;
+
+        $aEvent = array_merge($aEvent, array(
+            'owner_id' => $aContentInfo['owner_id'],
+            'object_privacy_view' => $aContentInfo['object_privacy_view']
+        ));
 
         /*
          * Note. For 'Direct Timeline Posts' FIELD_OBJECT_ID contains post's author profile ID.
          */
-        $CNF['FIELD_AUTHOR'] = $CNF['FIELD_OBJECT_ID'];
+        $this->_oConfig->CNF['FIELD_AUTHOR'] = $this->_oConfig->CNF['FIELD_OBJECT_ID'];
         return parent::serviceGetTimelinePost($aEvent, $aBrowseParams);
     }
 
