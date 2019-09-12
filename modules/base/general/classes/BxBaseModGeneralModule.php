@@ -88,6 +88,11 @@ class BxBaseModGeneralModule extends BxDolModule
         return $mixedResult !== false ? (int)$mixedResult : 0; 
     }
 
+    public function serviceGetPrivacyView ($iContentId)
+    {
+        return $this->_getFieldValue('FIELD_ALLOW_VIEW_TO', $iContentId);
+    }
+
     public function serviceGetDateAdded ($iContentId)
     {
         $mixedResult = $this->_getFieldValue('FIELD_ADDED', $iContentId);
@@ -1105,7 +1110,7 @@ class BxBaseModGeneralModule extends BxDolModule
             return false;
 
         //--- Views
-        $oViews = isset($CNF['OBJECT_VIEWS']) ? BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $aEvent['object_id']) : null;
+        $oViews = isset($CNF['OBJECT_VIEWS']) ? BxDolView::getObjectInstance($CNF['OBJECT_VIEWS'], $aContentInfo[$CNF['FIELD_ID']]) : null;
 
         $aViews = array();
         if ($oViews && $oViews->isEnabled())
@@ -1116,7 +1121,7 @@ class BxBaseModGeneralModule extends BxDolModule
             );
 
         //--- Votes
-        $oVotes = isset($CNF['OBJECT_VOTES']) ? BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $aEvent['object_id']) : null;
+        $oVotes = isset($CNF['OBJECT_VOTES']) ? BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $aContentInfo[$CNF['FIELD_ID']]) : null;
 
         $aVotes = array();
         if ($oVotes && $oVotes->isEnabled())
@@ -1127,7 +1132,7 @@ class BxBaseModGeneralModule extends BxDolModule
             );
         
         //--- Reactions
-        $oReactions = isset($CNF['OBJECT_REACTIONS']) ? BxDolVote::getObjectInstance($CNF['OBJECT_REACTIONS'], $aEvent['object_id']) : null;
+        $oReactions = isset($CNF['OBJECT_REACTIONS']) ? BxDolVote::getObjectInstance($CNF['OBJECT_REACTIONS'], $aContentInfo[$CNF['FIELD_ID']]) : null;
 
         $aReactions = array();
         if ($oReactions && $oReactions->isEnabled())
@@ -1138,7 +1143,7 @@ class BxBaseModGeneralModule extends BxDolModule
             );
 
         //--- Scores
-        $oScores = isset($CNF['OBJECT_SCORES']) ? BxDolScore::getObjectInstance($CNF['OBJECT_SCORES'], $aEvent['object_id']) : null;
+        $oScores = isset($CNF['OBJECT_SCORES']) ? BxDolScore::getObjectInstance($CNF['OBJECT_SCORES'], $aContentInfo[$CNF['FIELD_ID']]) : null;
 
         $aScores = array();
         if ($oScores && $oScores->isEnabled())
@@ -1148,8 +1153,8 @@ class BxBaseModGeneralModule extends BxDolModule
                 'score' => $aContentInfo['score']
             );
 
-		//--- Reports
-        $oReports = isset($CNF['OBJECT_REPORTS']) ? BxDolReport::getObjectInstance($CNF['OBJECT_REPORTS'], $aEvent['object_id']) : null;
+        //--- Reports
+        $oReports = isset($CNF['OBJECT_REPORTS']) ? BxDolReport::getObjectInstance($CNF['OBJECT_REPORTS'], $aContentInfo[$CNF['FIELD_ID']]) : null;
 
         $aReports = array();
         if ($oReports && $oReports->isEnabled())
@@ -1160,7 +1165,7 @@ class BxBaseModGeneralModule extends BxDolModule
             );
 
         //--- Comments
-        $oCmts = isset($CNF['OBJECT_COMMENTS']) ? BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $aEvent['object_id']) : null;
+        $oCmts = isset($CNF['OBJECT_COMMENTS']) ? BxDolCmts::getObjectInstance($CNF['OBJECT_COMMENTS'], $aContentInfo[$CNF['FIELD_ID']]) : null;
 
         $aComments = array();
         if($oCmts && $oCmts->isEnabled())
