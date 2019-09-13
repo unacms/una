@@ -17,9 +17,15 @@ class BxBaseLiveUpdates extends BxDolLiveUpdates
         parent::__construct();
     }
 
-	public function init($aParams = array())
+    public function init($aParams = array())
     {
         if(!$this->_iProfileId)
+            return '';
+
+        $oTemplate = BxDolTemplate::getInstance();
+
+        $iNameIndex = $oTemplate->getPageNameIndex();
+        if(in_array($iNameIndex, array(BX_PAGE_EMBED)))
             return '';
 
         /*
@@ -29,32 +35,50 @@ class BxBaseLiveUpdates extends BxDolLiveUpdates
         $aCached = $this->_getCachedData();
 
         $aParams = array_merge(array(
-        	'sActionsUrl' => BX_DOL_URL_ROOT . 'live_updates.php',
-        	'sObjName' => $this->_sJsObject,
-        	'iInterval' => $this->_iInterval,
-        	'aSystemsActive' => array_intersect_key($aCached, array_flip($this->_aSystemsActive)),
+            'sActionsUrl' => BX_DOL_URL_ROOT . 'live_updates.php',
+            'sObjName' => $this->_sJsObject,
+            'iInterval' => $this->_iInterval,
+            'aSystemsActive' => array_intersect_key($aCached, array_flip($this->_aSystemsActive)),
             'aSystemsTransient' => array_flip($this->_aSystemsTransient),
-        	'bServerRequesting' => !empty($this->_aSystems),
-        	'sHash' => base64_encode($this->_sCacheKey),
+            'bServerRequesting' => !empty($this->_aSystems),
+            'sHash' => base64_encode($this->_sCacheKey),
         ), $aParams);
 
-		$sContent = "var " . $this->_sJsObject . " = new " . $this->_sJsClass . "(" . json_encode($aParams) . ");";
+        $sContent = "var " . $this->_sJsObject . " = new " . $this->_sJsClass . "(" . json_encode($aParams) . ");";
 
-		$oTemplate = BxDolTemplate::getInstance();
-
-		$oTemplate->addJs(array('BxDolLiveUpdates.js'));
+        $oTemplate->addJs(array('BxDolLiveUpdates.js'));
         return $oTemplate->_wrapInTagJsCode($sContent);
     }
 
-    public function add($sName, $iFrequency, $sServiceCall, $bActive = true)
+    /**
+     * 
+     * Add transient live update for current user on this current page. 
+     * @param string $sName - unique name.
+     * @param integer $iFrequency - call frequency.
+     * @param string $sServiceCall - serialized service call.
+     * @param boolean $bActive - add active/not active live update.
+     * @param mixed $mixedValue - a value (mainly integer) which will be used as initial value. 
+     * When it's false then initial data will be gotten automatically using provided serialized service call.
+     */
+    public function add($sName, $iFrequency, $sServiceCall, $bActive = true, $mixedValue = false)
     {
         $sCacheKey = $this->_sCacheKey;
 
-        $mixedResult = parent::add($sName, $iFrequency, $sServiceCall, $bActive);
-        if($mixedResult === false)
+        if(!$this->_addSystem($sName, $iFrequency, $sServiceCall, $bActive))
             return '';
 
-        $aParams = array('name' => $sName, 'value' => $mixedResult);
+        $iValue = 0;
+        if($mixedValue === false) {
+            $mixedResponce = $this->_getRequestedDataBySystem($this->_aSystems[$sName]);
+            if($mixedResponce !== false && isset($mixedResponce['count']))
+                $iValue = (int)$mixedResponce['count'];
+        }
+        else
+            $iValue = (int)$mixedValue;
+
+    	$this->_addData($sName, $iValue);
+
+        $aParams = array('name' => $sName, 'value' => $iValue);
         if($sCacheKey != $this->_sCacheKey)
             $aParams['hash'] = base64_encode($this->_sCacheKey);
 

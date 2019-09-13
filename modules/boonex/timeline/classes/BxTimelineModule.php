@@ -2129,7 +2129,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     /** 
      * @ref bx_timeline-get_live_update "get_live_update"
      */
-    public function serviceGetLiveUpdate($aBrowseParams, $iProfileId, $iCount = 0, $iInit = 0)
+    public function serviceGetLiveUpdate($aBrowseParams, $iProfileId, $iValue = 0, $iInit = 0)
     {
         $sKey = $this->_oConfig->getLiveUpdateKey($aBrowseParams);
 
@@ -2138,21 +2138,26 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return false;
 
         $aParams = $this->_prepareParams($aBrowseParams);
-        $aParams['filter'] = BX_TIMELINE_FILTER_OTHER_VIEWER;
-        $aParams['count'] = true;
-
-        $iCountNew = $this->_oDb->getEvents($aParams);
-        if($iCountNew == $iCount)
+        $aParams = array_merge($aParams, array(
+            'per_page' => 1,
+            'filter' => BX_TIMELINE_FILTER_OTHER_VIEWER
+        ));
+        $aEvents = $this->_oDb->getEvents($aParams);
+        if(empty($aEvents) || !is_array($aEvents) || count($aEvents) != 1)
+            return false;
+        
+        $iValueNew = $aEvents[0]['id'];
+        if($iValueNew == $iValue)
             return false;
 
         if((int)$iInit != 0)
-            return array('count' => $iCountNew);
+            return array('count' => $iValueNew);
 
         return array(
-            'count' => $iCountNew, // required (for initialization and visualization)
+            'count' => $iValueNew, // required (for initialization and visualization)
             'method' => $this->_oConfig->getJsObjectView($aBrowseParams) . '.showLiveUpdate(oData)', // required (for visualization)
             'data' => array(
-                'code' => $this->_oTemplate->getLiveUpdate($aBrowseParams, $iProfileId, $iCount, $iCountNew)
+                'code' => $this->_oTemplate->getLiveUpdate($aBrowseParams, $iProfileId, $iValue, $iValueNew)
             ),  // optional, may have some additional data to be passed in JS method provided using 'method' param above.
         );
     }

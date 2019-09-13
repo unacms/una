@@ -101,15 +101,21 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     {
         $oModule = $this->getModule();
 
+        list($sContent, $sLoadMore, $sBack, $sEmpty, $iEvent) = $this->getPosts($aParams);
+
         //--- Add live update
         $oModule->actionResumeLiveUpdate($aParams['type'], $aParams['owner_id']);
 
-        $sMethod = !empty($aParams['get_live_updates']) ? $aParams['get_live_updates'] : 'get_live_update';
-        $sServiceCall = BxDolService::getSerializedService($this->_oConfig->getName(), $sMethod, array($aParams, $oModule->getUserId(), '{count}', '{init}'));
-        $sLiveUpdatesCode = BxDolLiveUpdates::getInstance()->add($this->_oConfig->getLiveUpdateKey($aParams), 1, $sServiceCall);
-        //--- Add live update
+        $sModuleName = $oModule->getName();
+        $sModuleMethod = !empty($aParams['get_live_updates']) ? $aParams['get_live_updates'] : 'get_live_update';
+        $sService = BxDolService::getSerializedService($sModuleName, $sModuleMethod, array($aParams, $oModule->getUserId(), '{count}', '{init}'));
 
-        list($sContent, $sLoadMore, $sBack, $sEmpty) = $this->getPosts($aParams);
+        $aLiveUpdatesParams = array($this->_oConfig->getLiveUpdateKey($aParams), 1, $sService, true);
+        if($sModuleMethod == 'get_live_update')
+            $aLiveUpdatesParams[] = $iEvent;
+
+        $sLiveUpdatesCode = call_user_func_array(array(BxDolLiveUpdates::getInstance(), 'add'), $aLiveUpdatesParams);
+        //--- Add live update
 
         $sJsObject = $this->_oConfig->getJsObjectView($aParams);
         return $sLiveUpdatesCode . $this->parseHtmlByName('block_view.html', array(
@@ -463,6 +469,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             }
         }
 
+        $iFirst = 0;
         $bFirst = true;
         $sEvents = '';
         foreach($aEvents as $aEvent) {
@@ -472,8 +479,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             if(empty($sEvent))
                 continue;
 
-            if($bViewTimeline && $bFirst) {
-                $sEvents .= $this->getDividerToday($aEvent);
+            if($bFirst) {
+                $iFirst = $iEvent;
+
+                if($bViewTimeline)
+                    $sEvents .= $this->getDividerToday($aEvent);
+
                 $bFirst = false;
             }
 
@@ -487,7 +498,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sBack = $this->getBack($aParams);
         $sLoadMore = $this->getLoadMore($aParams, $bNext, $iEvents > 0 && $bEvents);
         $sEmpty = $this->getEmpty($iEvents <= 0 || !$bEvents);
-        return array($sContent, $sLoadMore, $sBack, $sEmpty);
+        return array($sContent, $sLoadMore, $sBack, $sEmpty, $iFirst);
     }
 
     public function getEmpty($bVisible)

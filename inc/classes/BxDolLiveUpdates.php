@@ -9,11 +9,11 @@
 
 class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
 {
-	protected $_oQuery;
+    protected $_oQuery;
 
-	/*
-	 * List of all systems (active and inactive) with full description.
-	 */
+    /*
+     * List of all systems (active and inactive) with full description.
+     */
     protected $_aSystems;
 
     /*
@@ -31,9 +31,9 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
 
     protected $_iInterval;
 
-	protected $_oCacheObject;
-	protected $_sCacheKey;
-	protected $_iCacheTTL;
+    protected $_oCacheObject;
+    protected $_sCacheKey;
+    protected $_iCacheTTL;
 
     protected $_sJsClass;
     protected $_sJsObject;
@@ -73,10 +73,10 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
      */
     public static function getInstance()
     {
-		if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
-			$GLOBALS['bxDolClasses'][__CLASS__] = new BxTemplLiveUpdates();
+        if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
+            $GLOBALS['bxDolClasses'][__CLASS__] = new BxTemplLiveUpdates();
 
-		return $GLOBALS['bxDolClasses'][__CLASS__];
+        return $GLOBALS['bxDolClasses'][__CLASS__];
     }
 
     /**
@@ -85,67 +85,59 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
      */
     public function perform()
     {
-		$iIndex = (int)bx_get('index');
+        $iIndex = (int)bx_get('index');
 
-		$mixedCacheKey = bx_get('hash');
-		if($mixedCacheKey !== false)
-		    $this->_sCacheKey = base64_decode(bx_process_input($mixedCacheKey));
+        $mixedCacheKey = bx_get('hash');
+        if($mixedCacheKey !== false)
+            $this->_sCacheKey = base64_decode(bx_process_input($mixedCacheKey));
 
-		$mixedSystemsActive = bx_get('systems_active');
-		if($mixedSystemsActive !== false)
-			$this->_aSystemsActive = array_keys($mixedSystemsActive);
+        $mixedSystemsActive = bx_get('systems_active');
+        if($mixedSystemsActive !== false)
+            $this->_aSystemsActive = array_keys($mixedSystemsActive);
 
         $mixedSystemsTransient = bx_get('systems_transient');
-		if($mixedSystemsTransient !== false)
-			$this->_aSystemsTransient = array_keys($mixedSystemsTransient);
+        if($mixedSystemsTransient !== false)
+            $this->_aSystemsTransient = array_keys($mixedSystemsTransient);
 
-		$this->_aSystems = $this->_getCachedSystems();
+        $this->_aSystems = $this->_getCachedSystems();
     	if(empty($this->_aSystems) || !is_array($this->_aSystems))
-    		return array();
+            return array();
 
         $aCurrent = $mixedSystemsActive;
         if(empty($aCurrent) || !is_array($aCurrent))
-		    $aCurrent = $this->_getCachedData();
+            $aCurrent = $this->_getCachedData();
 
-		$aRequested = $this->_getRequestedData($iIndex, true, $aCurrent);
+        $aRequested = $this->_getRequestedData($iIndex, true, $aCurrent);
 
-		$aResult = array();
-		$bUpdateCache = false;
-		foreach($aRequested as $sName => $aData) {
-			if(isset($aCurrent[$sName])) {
+        $aResult = array();
+        $bUpdateCache = false;
+        foreach($aRequested as $sName => $aData) {
+            if(isset($aCurrent[$sName])) {
                 if((int)$aCurrent[$sName] == (int)$aData['count'])			    
-    				continue;
+                    continue;
 
-				$aResultData = array('count_new' => $aData['count'], 'count_old' => $aCurrent[$sName]);
-				if(isset($aData['data']))
-					$aResultData = array_merge($aResultData, $aData['data']);
-	
-				$aResult[] = array(
-					'system' => $sName, 
-					'data' => $aResultData,
-					'method' => $aData['method']
-				);
-			}
+                $aResultData = array('count_new' => $aData['count'], 'count_old' => $aCurrent[$sName]);
+                if(isset($aData['data']))
+                    $aResultData = array_merge($aResultData, $aData['data']);
 
-			$aCurrent[$sName] = $aData['count'];
-			$bUpdateCache = true;
-		}
+                $aResult[] = array(
+                    'system' => $sName, 
+                    'data' => $aResultData,
+                    'method' => $aData['method']
+                );
+            }
 
-		if($bUpdateCache)
-			$this->_updateCached('data', $aCurrent);
+            $aCurrent[$sName] = $aData['count'];
+            $bUpdateCache = true;
+        }
+
+        if($bUpdateCache)
+            $this->_updateCached('data', $aCurrent);
 
     	return $aResult;
     }
 
-    /**
-     * 
-     * Add transient live update for current user on this current page. 
-     * @param string $sName - unique name.
-     * @param integer $iFrequency - call frequency.
-     * @param string $sServiceCall - serialized service call.
-     * @param boolean $bActive - add active/not active live update.
-     */
-    public function add($sName, $iFrequency, $sServiceCall, $bActive = true)
+    protected function _addSystem($sName, $iFrequency, $sServiceCall, $bActive = true)
     {
         if(!$this->_iProfileId)
             return false;
@@ -154,79 +146,78 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
             $this->_sCacheKey .= $this->_getPageId();
 
         if(!in_array($sName, $this->_aSystemsTransient))
-    		$this->_aSystemsTransient[] = $sName;
+            $this->_aSystemsTransient[] = $sName;
 
-    	if(!in_array($sName, $this->_aSystemsActive))
-    		$this->_aSystemsActive[] = $sName;
+        if(!in_array($sName, $this->_aSystemsActive))
+            $this->_aSystemsActive[] = $sName;
 
-    	if(empty($this->_aSystems[$sName])) {
-	    	$this->_aSystems[$sName] = array(
-	    		'name' => $sName,
-	    		'frequency' => $iFrequency,
-	    		'service_call' => $sServiceCall,
-	    		'active' => $bActive ? 1 : 0
-	    	);
+        if(empty($this->_aSystems[$sName])) {
+            $this->_aSystems[$sName] = array(
+                'name' => $sName,
+                'frequency' => $iFrequency,
+                'service_call' => $sServiceCall,
+                'active' => $bActive ? 1 : 0
+            );
 
-	    	$this->_updateCached('systems', $this->_aSystems);
-    	}
+            $this->_updateCached('systems', $this->_aSystems);
+        }
 
-    	$mixedResponce = $this->_getRequestedDataBySystem($this->_aSystems[$sName]);
+        return true;
+    }
+    
+    protected function _addData($sName, $iValue)
+    {
+        $aCachedData = $this->_getCachedData();
+        $aCachedData[$sName] = $iValue;
+        $this->_updateCached('data', $aCachedData);
 
-    	$iCount = 0;
-    	if($mixedResponce !== false && isset($mixedResponce['count']))
-    	    $iCount = (int)$mixedResponce['count'];
-
-    	$aCachedData = $this->_getCachedData();
-		$aCachedData[$sName] = $iCount;
-		$this->_updateCached('data', $aCachedData);
-
-    	return $iCount;
+        return true;
     }
 
     protected function _getCacheInfo()
     {
     	return array(
-    		$this->_oCacheObject,
-    		$this->_oQuery->genDbCacheKey($this->_sCacheKey),
-    		$this->_iCacheTTL
+            $this->_oCacheObject,
+            $this->_oQuery->genDbCacheKey($this->_sCacheKey),
+            $this->_iCacheTTL
     	);
     }
 
     protected function _getCached($sType)
     {
-    	list($oCache, $sCacheKey, $iCacheTtl) = $this->_getCacheInfo();
+        list($oCache, $sCacheKey, $iCacheTtl) = $this->_getCacheInfo();
 
-    	$aCached = $oCache->getData($sCacheKey, $iCacheTtl);
-    	if(empty($aCached[$sType])) {
-    		switch($sType) {
-    			case 'systems':
-    				$aCached[$sType] = $this->_oQuery->getSystems();
-    				break;
+        $aCached = $oCache->getData($sCacheKey, $iCacheTtl);
+        if(empty($aCached[$sType])) {
+            switch($sType) {
+                case 'systems':
+                    $aCached[$sType] = $this->_oQuery->getSystems();
+                    break;
 
-    			case 'data':
-    				if(!isset($aCached[$sType]))
-    					$aCached[$sType] = array();
+                case 'data':
+                    if(!isset($aCached[$sType]))
+                        $aCached[$sType] = array();
 
-    				$aRequested = $this->_getRequestedData();
-    				foreach($this->_aSystems as $sName => $aSystem)
-    					$aCached[$sType][$sName] = !empty($aRequested[$sName]['count']) ? (int)$aRequested[$sName]['count'] : 0;
-    				break;
-    		}
+                    $aRequested = $this->_getRequestedData();
+                    foreach($this->_aSystems as $sName => $aSystem)
+                        $aCached[$sType][$sName] = !empty($aRequested[$sName]['count']) ? (int)$aRequested[$sName]['count'] : 0;
+                    break;
+            }
 
-    		if(!empty($aCached[$sType]))
-    			$oCache->setData($sCacheKey, $aCached, $iCacheTtl);
-    	}
+            if(!empty($aCached[$sType]))
+                    $oCache->setData($sCacheKey, $aCached, $iCacheTtl);
+        }
 
-    	return $aCached[$sType];
+        return $aCached[$sType];
     }
 
-	protected function _getCachedSystems()
+    protected function _getCachedSystems()
     {
-    	$aSystems = $this->_getCached('systems');
-    	if(!empty($aSystems) && !empty($this->_aSystemsActive))
-    		$aSystems = array_intersect_key($aSystems, array_flip($this->_aSystemsActive));
+        $aSystems = $this->_getCached('systems');
+        if(!empty($aSystems) && !empty($this->_aSystemsActive))
+            $aSystems = array_intersect_key($aSystems, array_flip($this->_aSystemsActive));
 
-    	return $aSystems;
+        return $aSystems;
     }
 
     protected function _getCachedData()
@@ -241,7 +232,7 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
         $oCache->delData($sCacheKey);
     }
 
-	protected function _updateCached($sKey, $aData)
+    protected function _updateCached($sKey, $aData)
     {
     	list($oCache, $sCacheKey, $iCacheTtl) = $this->_getCacheInfo();
 
@@ -253,36 +244,36 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
 
     protected function _getRequestedData($iIndex = 0, $bIndexCheck = false, $aCachedData = array())
     {
-    	$aResult = array();
+        $aResult = array();
 
-    	foreach($this->_aSystems as $sName => $aSystem) {
-    		if(empty($aSystem) || !is_array($aSystem) || (int)$aSystem['active'] != 1)
-    			continue;
+        foreach($this->_aSystems as $sName => $aSystem) {
+            if(empty($aSystem) || !is_array($aSystem) || (int)$aSystem['active'] != 1)
+                continue;
 
-			if($bIndexCheck && $iIndex % (int)$aSystem['frequency'] != 0)
-				continue;
+            if($bIndexCheck && $iIndex % (int)$aSystem['frequency'] != 0)
+                continue;
 
-			$bCachedDataBySystem = !empty($aCachedData) && isset($aCachedData[$sName]);
-			$mixedResponce = $this->_getRequestedDataBySystem($aSystem, ($bCachedDataBySystem ? (int)$aCachedData[$sName] : 0), !$bCachedDataBySystem);
-			if($mixedResponce === false)
-				continue;
+            $bCachedDataBySystem = !empty($aCachedData) && isset($aCachedData[$sName]);
+            $mixedResponce = $this->_getRequestedDataBySystem($aSystem, ($bCachedDataBySystem ? (int)$aCachedData[$sName] : 0), !$bCachedDataBySystem);
+            if($mixedResponce === false)
+                continue;
 
-			$aResult[$sName] = $mixedResponce;
-    	}
+            $aResult[$sName] = $mixedResponce;
+        }
 
-    	return $aResult;
+        return $aResult;
     }
 
     protected function _getRequestedDataBySystem($aSystem, $iCachedData = 0, $bInit = true)
     {
-		if(!BxDolService::isSerializedService($aSystem['service_call']))
-			return false;
+        if(!BxDolService::isSerializedService($aSystem['service_call']))
+            return false;
 
-		$aResponce = BxDolService::callSerialized($aSystem['service_call'], array('count' => (int)$iCachedData, 'init' => ($bInit ? 1 : 0)));
-		if(empty($aResponce) || !is_array($aResponce) || !isset($aResponce['count']) || (!$bInit && !isset($aResponce['method'])))
-			return false;
+        $aResponce = BxDolService::callSerialized($aSystem['service_call'], array('count' => (int)$iCachedData, 'init' => ($bInit ? 1 : 0)));
+        if(empty($aResponce) || !is_array($aResponce) || !isset($aResponce['count']) || (!$bInit && !isset($aResponce['method'])))
+            return false;
 
-		return $aResponce;
+        return $aResponce;
     }
 
     protected function _getPageId()
