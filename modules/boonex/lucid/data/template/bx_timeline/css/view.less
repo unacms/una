@@ -1,4 +1,5 @@
-@import url(../../../../../timeline/template/css/view.css);
+@import (reference) '../../system/css/default.less';
+@import '../../../../../timeline/template/css/view.css';
 
 .bx-tl-grid-sizer {
 	width: 100%;
@@ -239,6 +240,9 @@ div.bx-tl-view.bx-tl-view-item div.bx-tl-item-image {
 /*--- Item Content Style ---*/
 div.bx-tl-item-text div.bx-tl-content {
     max-height: 250px;
+}
+div.bx-tl-item-text div.bx-tl-content.bx-tl-overflow:before {
+    background: linear-gradient(to bottom, transparent, @bx-color-box);
 }
 div.bx-tl-item-date {
 	color: #E0E8EB;
