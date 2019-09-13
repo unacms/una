@@ -77,6 +77,12 @@ class BxBaseModFilesFormsEntryHelper extends BxBaseModTextFormsEntryHelper
             $sResult = $this->onDataAddAfter (getLoggedId(), $iContentId);
             if ($sResult)
                 return $sResult;
+
+            if (!($aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId)))
+                return MsgBox(_t('_sys_txt_error_occured'));
+
+            // Create alert about the completed action.
+            $this->_oModule->alertAfterAdd($aContentInfo);
         }
         
         return array('need_redirect_after_action' => true, 'content_ids_array' => $aContentIds);
