@@ -278,18 +278,23 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
     public function addConnection ($iInitiator, $iContent, $aParams = array())
     {
         $iMutual = 0;
-        if (!$this->_oQuery->addConnection((int)$iInitiator, (int)$iContent, $iMutual))
-            return false;
-
-        $aAlertExtras = array(
-            'initiator' => (int)$iInitiator,
-            'content' => (int)$iContent,
-            'mutual' => (int)$iMutual,
+		$iInitiator = (int)$iInitiator;
+		$iContent = (int)$iContent;
+		
+		$aAlertExtras = array(
+            'initiator' => &$iInitiator,
+            'content' => &$iContent,
+            'mutual' => &$iMutual,
             'object' => $this,
         );
         if(!empty($aParams['alert_extras']) && is_array($aParams['alert_extras']))
             $aAlertExtras = array_merge($aAlertExtras, $aParams['alert_extras']);
-
+        
+        bx_alert($this->_sObject, 'connection_before_add', 0, bx_get_logged_profile_id(), $aAlertExtras);
+        
+        if (!$this->_oQuery->addConnection((int)$iInitiator, (int)$iContent, $iMutual))
+            return false;
+        
         bx_alert($this->_sObject, 'connection_added', 0, bx_get_logged_profile_id(), $aAlertExtras);
 
         $this->checkAllowedConnect ($iInitiator, $iContent, true, $iMutual, false);
