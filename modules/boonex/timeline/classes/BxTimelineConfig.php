@@ -72,6 +72,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             // database fields
             'FIELD_ID' => 'id',
             'FIELD_OWNER_ID' => 'owner_id',
+            'FIELD_SYSTEM' => 'system',
             'FIELD_OBJECT_ID' => 'object_id', //Note. For 'Direct Timeline Posts' this field contains post's author profile ID.
             'FIELD_OBJECT_PRIVACY_VIEW' => 'object_privacy_view',
             'FIELD_ADDED' => 'date',

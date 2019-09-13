@@ -60,6 +60,7 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
+        $aValsToAdd[$CNF['FIELD_SYSTEM']] = 0;
         $aValsToAdd[$CNF['FIELD_OBJECT_ID']] *= isset($CNF['FIELD_ANONYMOUS']) && isset($this->aInputs[$CNF['FIELD_ANONYMOUS']]) && $this->getCleanValue($CNF['FIELD_ANONYMOUS']) ? -1 : 1;
 
         if(isset($CNF['FIELD_ADDED']) && empty($aValsToAdd[$CNF['FIELD_ADDED']])) {

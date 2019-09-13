@@ -1924,6 +1924,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $iId = $this->_oDb->insertEvent(array(
             'owner_id' => $iOwnerId,
+            'system' => 0,
             'type' => $this->_oConfig->getPrefix('common_post') . 'repost',
             'action' => '',
             'object_id' => $iAuthorId,

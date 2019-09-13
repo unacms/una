@@ -602,7 +602,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
             case 'common_by_object':
                 $sCommonPostPrefix = $this->_oConfig->getPrefix('common_post');
-                $sWhereClause = $this->prepareAsString("AND SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ")='" . $sCommonPostPrefix . "' AND `{$this->_sTable}`.`object_id`=? ", $aParams['value']);
+                $sWhereClause = $this->prepareAsString("AND `{$this->_sTable}`.`system`='0' AND `{$this->_sTable}`.`object_id`=? ", $aParams['value']);
                 break;
 
             case 'descriptor':
@@ -700,7 +700,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         }
 
         //--- Apply unpublished (date in future) filter
-        $sWhereClauseUnpublished = $this->prepareAsString("AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "' AND `{$this->_sTable}`.`object_id` = ?, 1, `{$this->_sTable}`.`date` <= UNIX_TIMESTAMP()) ", bx_get_logged_profile_id());
+        $sWhereClauseUnpublished = $this->prepareAsString("AND IF(`{$this->_sTable}`.`system`='0' AND `{$this->_sTable}`.`object_id` = ?, 1, `{$this->_sTable}`.`date` <= UNIX_TIMESTAMP()) ", bx_get_logged_profile_id());
 
         //--- Check type
         $mixedWhereSubclause = "";
@@ -721,7 +721,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                     break;
 
                 //--- Select All System posts
-                $mixedWhereSubclause = "SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") <> '" . $sCommonPostPrefix . "'";
+                $mixedWhereSubclause = "`{$this->_sTable}`.`system`='1'";
 
                 //--- Select Public (Direct) posts created on Home Page Timeline (Public Feed) 
                 $mixedWhereSubclause .= $this->prepareAsString(" OR `{$this->_sTable}`.`owner_id`=?", 0);
@@ -739,7 +739,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 $mixedWhereSubclause = $this->prepareAsString("(`{$this->_sTable}`.`owner_id` = ?)", $aParams['owner_id']);
 
                 //--- Select Own Public (Direct) posts from Home Page Timeline (Public Feed).
-                $mixedWhereSubclause .= $this->prepareAsString(" OR (`{$this->_sTable}`.`owner_id` = '0' AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` = ?, 1))", $aParams['owner_id']);
+                $mixedWhereSubclause .= $this->prepareAsString(" OR (`{$this->_sTable}`.`owner_id` = '0' AND IF(`{$this->_sTable}`.`system`='0', `{$this->_sTable}`.`object_id` = ?, 1))", $aParams['owner_id']);
                 break;
 
             //--- Profile Connections Feed
@@ -756,11 +756,11 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 $aJoin2 = $aQueryParts['join'];
 
                 //--- Join System and Direct posts made by following members.  
-                $mixedJoinClause .= " " . $aJoin1['type'] . " JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON ((" . $aJoin1['condition'] . ") OR (SUBSTRING(`" . $this->_sTable . "`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "' AND " . $aJoin2['condition'] . "))";
+                $mixedJoinClause .= " " . $aJoin1['type'] . " JOIN `" . $aJoin1['table'] . "` AS `" . $aJoin1['table_alias'] . "` ON ((" . $aJoin1['condition'] . ") OR (`" . $this->_sTable . "`.`system`='0' AND " . $aJoin2['condition'] . "))";
 
                 //--- Exclude Own (Direct) posts on timelines of following members.
                 //--- Note. Disabled for now.
-                //$mixedWhereSubclause = $this->prepareAsString("IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> ?, 1)", $aParams['owner_id']);
+                //$mixedWhereSubclause = $this->prepareAsString("IF(`{$this->_sTable}`.`system`='0', `{$this->_sTable}`.`object_id` <> ?, 1)", $aParams['owner_id']);
                 $mixedWhereSubclause = "0";
 
                 //--- Select Promoted posts.
@@ -781,13 +781,13 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 $sWhereSubclauseOwnProfile = $this->prepareAsString("(`{$this->_sTable}`.`owner_id` = ?)", $aParams['owner_id']);
 
                 //--- Select Own Public (Direct) posts from Home Page Timeline (Public Feed).
-                $sWhereSubclauseOwnPublic = $this->prepareAsString("(`{$this->_sTable}`.`owner_id` = '0' AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` = ?, 1))", $aParams['owner_id']);
+                $sWhereSubclauseOwnPublic = $this->prepareAsString("(`{$this->_sTable}`.`owner_id` = '0' AND IF(`{$this->_sTable}`.`system`='0', `{$this->_sTable}`.`object_id` = ?, 1))", $aParams['owner_id']);
 
                 $mixedWhereSubclause['p1'] = "(" . $sWhereSubclauseOwnProfile . " OR " . $sWhereSubclauseOwnPublic . ")";
 
                 //--- Exclude Own (Direct) posts on timelines of following members.
                 //--- Note. Disabled for now and next check is used instead. 
-                //$mixedWhereSubclause['pX'] = $this->prepareAsString(" OR (NOT ISNULL(`c`.`content`) AND IF(SUBSTRING(`{$this->_sTable}`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "', `{$this->_sTable}`.`object_id` <> ?, 1))", $aParams['owner_id']);
+                //$mixedWhereSubclause['pX'] = $this->prepareAsString(" OR (NOT ISNULL(`c`.`content`) AND IF(`{$this->_sTable}`.`system`='0', `{$this->_sTable}`.`object_id` <> ?, 1))", $aParams['owner_id']);
 
                 //--- Join System and Direct posts received by and made by following members. 'LEFT' join is essential to apply different conditions.
                 $aQueryParts = $oConnection->getConnectedContentAsSQLPartsExt($this->_sPrefix . 'events', 'owner_id', $aParams['owner_id']);
@@ -801,7 +801,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 $aJoin2['table_alias'] = 'cc';
                 $aJoin2['condition'] = str_replace('`c`', '`' . $aJoin2['table_alias'] . '`', $aJoin2['condition']);
 
-                $mixedJoinClause['p3'] = "LEFT JOIN `" . $aJoin2['table'] . "` AS `" . $aJoin2['table_alias'] . "` ON SUBSTRING(`" . $this->_sTable . "`.`type`, 1, " . strlen($sCommonPostPrefix) . ") = '" . $sCommonPostPrefix . "' AND " . $aJoin2['condition'];
+                $mixedJoinClause['p3'] = "LEFT JOIN `" . $aJoin2['table'] . "` AS `" . $aJoin2['table_alias'] . "` ON `" . $this->_sTable . "`.`system`='0' AND " . $aJoin2['condition'];
                 $mixedWhereSubclause['p3'] = "NOT ISNULL(`" . $aJoin2['table_alias'] . "`.`content`)";
 
                 //--- Select Promoted posts.
