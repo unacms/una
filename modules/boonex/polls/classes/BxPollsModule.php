@@ -46,6 +46,20 @@ class BxPollsModule extends BxBaseModTextModule
         ));
     }
 
+    public function actionEmbedEntry($iId = 0)
+    {
+        list($iContentId, $aContentInfo) = $this->_getContent($iId);
+        if($iContentId === false)
+            return;
+
+        $aParams = bx_get_with_prefix('param');
+        array_walk($aParams, function(&$sValue) {
+            $sValue = bx_process_input($sValue);
+        });
+
+        $this->_oTemplate->embedEntry($aContentInfo, $aParams);
+    }
+
 
     /**
      * SERVICE METHODS
@@ -207,15 +221,18 @@ class BxPollsModule extends BxBaseModTextModule
         $bDynamic = isset($aBrowseParams['dynamic_mode']) && $aBrowseParams['dynamic_mode'] === true;
 
         $sInclude = '';
-        $sInclude .= $this->_oTemplate->addJs(array('entry.js'), $bDynamic);
-        $sInclude .= $this->_oTemplate->addCss(array('entry.css'), $bDynamic);
+        $sInclude .= $this->_oTemplate->addCss(array('main.css'), $bDynamic);
 
         $aBlock = $this->_oTemplate->{$this->_oDb->isPerformed($aContentInfo[$CNF['FIELD_ID']], bx_get_logged_profile_id()) ? 'entryResults' : 'entrySubentries'}($aContentInfo, $bDynamic);
 
         $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams);
         $aResult['title'] = $this->_oConfig->getTitle($aContentInfo);
         $aResult['text'] = '';
-        $aResult['raw'] = ($bDynamic ? $sInclude : '') . $this->_oTemplate->getJsCode('entry') . $aBlock['content'];
+        $aResult['raw'] = ($bDynamic ? $sInclude : '') . $this->_oTemplate->parseHtmlByName('unit_embed.html', array(
+            'embed_url' => BX_DOL_URL_ROOT . bx_append_url_params($this->_oConfig->getBaseUri() . 'embed_entry/', array(
+                'id' => (int)$aContentInfo[$CNF['FIELD_ID']]
+            ))
+        ));
 
         return $aResult;
     }
