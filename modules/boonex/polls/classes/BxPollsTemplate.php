@@ -23,6 +23,28 @@ class BxPollsTemplate extends BxBaseModTextTemplate
         parent::__construct($oConfig, $oDb);
     }
 
+    public function embedEntry($mixedContentInfo, $aParams = array())
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        $aContentInfo = is_array($mixedContentInfo) ? $mixedContentInfo : $this->_oDb->getContentInfoById((int)$mixedContentInfo);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return;
+
+        $aBlock = $this->{$this->_oDb->isPerformed((int)$aContentInfo[$CNF['FIELD_ID']], bx_get_logged_profile_id()) ? 'entryResults' : 'entrySubentries'}($aContentInfo);
+
+        $this->addJs(array('entry.js'));
+        $this->addCss(array('entry.css'));
+
+        $oTemplate = BxDolTemplate::getInstance();
+        $oTemplate->addCssStyle($CNF['STYLES_POLLS_EMBED_CLASS'], $CNF['STYLES_POLLS_EMBED_CONTENT']);
+        $oTemplate->setPageNameIndex(BX_PAGE_EMBED);
+        $oTemplate->setPageHeader(strmaxtextlen($this->_oConfig->getTitle($aContentInfo), 32, '...'));
+        $oTemplate->setPageContent('page_main_code', $this->getJsCode('entry') . $aBlock['content']);
+        $oTemplate->getPageCode();
+        exit;
+    }
+
     public function getJsCode($sType, $aParams = array(), $bWrap = true)
     {
         $aParams = array_merge(array(

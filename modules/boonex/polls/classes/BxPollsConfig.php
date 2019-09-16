@@ -107,8 +107,14 @@ class BxPollsConfig extends BxBaseModTextConfig
             'OBJECT_MENU_SNIPPET_META' => 'bx_polls_snippet_meta', // menu for snippet meta info
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_polls_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_GRID_ADMINISTRATION' => 'bx_polls_administration',
-        	'OBJECT_GRID_COMMON' => 'bx_polls_common',
+            'OBJECT_GRID_COMMON' => 'bx_polls_common',
             'OBJECT_UPLOADERS' => array('sys_simple', 'sys_html5'),
+
+            // styles
+            'STYLES_POLLS_EMBED_CLASS' => 'body.bx-page-iframe.bx-def-color-bg-page',
+            'STYLES_POLLS_EMBED_CONTENT' => array(
+                'background-color' => 'transparent'
+            ),
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
