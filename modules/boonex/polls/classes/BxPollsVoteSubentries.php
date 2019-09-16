@@ -18,7 +18,6 @@ class BxPollsVoteSubentries extends BxTemplVoteLikes
     protected $_aContentInfo;
 
     protected $_sTmplNameElementBlock;
-    protected $_sTmplNameCounterText;
 
     function __construct($sSystem, $iId, $iInit = 1)
     {
@@ -38,7 +37,6 @@ class BxPollsVoteSubentries extends BxTemplVoteLikes
         $this->_aContentInfo = array();
 
         $this->_sTmplNameElementBlock = 'subentries_ve_block.html';
-        $this->_sTmplNameCounterText = 'subentries_vc_text.html';
     }
 
     public function setEntry($aEntry)
@@ -107,6 +105,16 @@ class BxPollsVoteSubentries extends BxTemplVoteLikes
         return $this->_oModule->isAllowedVote($isPerformAction)  === CHECK_ACTION_RESULT_ALLOWED;
     }
 
+    public function isAllowedVoteViewVoters($isPerformAction = false)
+    {
+        $CNF = $this->_oModule->_oConfig->CNF;
+
+        if((int)$this->getEntryField($CNF['FIELD_ANONYMOUS_VOTING']) == 1)
+            return false;
+
+        return parent::isAllowedVoteViewVoters($isPerformAction);
+    }
+
     /**
      * Internal functions
      */
@@ -138,16 +146,6 @@ class BxPollsVoteSubentries extends BxTemplVoteLikes
     protected function _getTmplContentElementBlock()
     {
         return $this->_oTemplate->getHtml($this->_sTmplNameElementBlock);
-    }
-
-    protected function _getTmplContentCounter()
-    {
-        $CNF = $this->_oModule->_oConfig->CNF;
-
-        if((int)$this->getEntryField($CNF['FIELD_ANONYMOUS_VOTING']) == 1)
-            return $this->_oTemplate->getHtml($this->_sTmplNameCounterText);
-
-        return self::$_sTmplContentCounter;
     }
 }
 
