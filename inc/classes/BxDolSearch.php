@@ -391,6 +391,11 @@ class BxDolSearchResult implements iBxDolReplaceable
         $this->_aCustomSearchCondition = $a;
     }
     
+    public function setMultiCategoryCondition($sKeyword)
+    {
+        $this->aCurrent['restriction']['multicat'] = array('value' => $sKeyword, 'field' => 'multicat', 'operator' => 'like');
+    }
+    
     /**
      * Display empty message if there is no content, custom empty message can be used.
      * @param $b - boolan value to enable or disable 'empty' message
@@ -751,9 +756,15 @@ class BxDolSearchResult implements iBxDolReplaceable
         }
 
         // category
-        if ($this->_sCategoryObject && ($o = BxDolCategory::getObjectInstance($this->_sCategoryObject)) && $this->_bSingleSearch) {
-            unset($this->aCurrent['restriction']['keyword']);
-            $o->setSearchCondition($this, $sKeyword);
+        if ($this->_sCategoryObject){
+            if(($o = BxDolCategory::getObjectInstance($this->_sCategoryObject)) && $this->_bSingleSearch) {
+                unset($this->aCurrent['restriction']['keyword']);
+                $o->setSearchCondition($this, $sKeyword);
+            }
+            if ($this->_sCategoryObject == 'multi'){
+                unset($this->aCurrent['restriction']['keyword']);
+                $this->setMultiCategoryCondition($sKeyword);
+            }
         }
 
         $this->setPaginate();
