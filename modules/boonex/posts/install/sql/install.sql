@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS `bx_posts_posts` (
   `thumb` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `cat` int(11) NOT NULL,
+  `multicat` text NOT NULL,
   `text` mediumtext NOT NULL,
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
@@ -309,6 +310,16 @@ CREATE TABLE IF NOT EXISTS `bx_posts_polls_answers_votes_track` (
   KEY `vote` (`object_id`, `author_nip`)
 );
 
+CREATE TABLE IF NOT EXISTS `sys_categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `value` varchar(100) NOT NULL,
+  `module` varchar(32) NOT NULL,
+  `status` enum ('active', 'hidden') NOT NULL DEFAULT 'active',
+  `added` int(11) NOT NULL,
+  `author` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
 -- STORAGES & TRANSCODERS
 SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');
 
@@ -381,6 +392,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_posts', 'bx_posts', 'text', '', '', 0, 'textarea', '_bx_posts_form_entry_input_sys_text', '_bx_posts_form_entry_input_text', '', 1, 0, 2, '', '', '', 'Avail', '', '_bx_posts_form_entry_input_text_err', 'XssHtml', '', 1, 0),
 ('bx_posts', 'bx_posts', 'title', '', '', 0, 'text', '_bx_posts_form_entry_input_sys_title', '_bx_posts_form_entry_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_posts_form_entry_input_title_err', 'Xss', '', 1, 0),
 ('bx_posts', 'bx_posts', 'cat', '', '#!bx_posts_cats', 0, 'select', '_bx_posts_form_entry_input_sys_cat', '_bx_posts_form_entry_input_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_posts_form_entry_input_cat_err', 'Xss', '', 1, 0),
+('bx_posts', 'bx_posts', 'multicat', '', '', 0, 'custom', '_bx_posts_form_entry_input_sys_multicat', '_bx_posts_form_entry_input_multicat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_posts_form_entry_input_multicat_err', 'Xss', '', 1, 0),
 ('bx_posts', 'bx_posts', 'added', '', '', 0, 'datetime', '_bx_posts_form_entry_input_sys_date_added', '_bx_posts_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_posts', 'bx_posts', 'changed', '', '', 0, 'datetime', '_bx_posts_form_entry_input_sys_date_changed', '_bx_posts_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_posts', 'bx_posts', 'published', '', '', 0, 'datetime', '_bx_posts_form_entry_input_sys_date_published', '_bx_posts_form_entry_input_date_published', '_bx_posts_form_entry_input_date_published_info', 0, 0, 0, '', '', '', '', '', '', 'DateTimeUtc', '', 1, 0),
@@ -453,6 +465,25 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_posts_poll_add', 'controls', 2147483647, 1, 3),
 ('bx_posts_poll_add', 'do_submit', 2147483647, 1, 4),
 ('bx_posts_poll_add', 'do_cancel', 2147483647, 1, 5);
+
+
+-- FORMS: category
+INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_posts_category', 'bx_posts', '_bx_posts_category_form_entry', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', 'sys_categories', 'id', '', '', 'a:2:{i:0;s:9:"do_submit";i:1;s:10:"do_publish";}', '', 0, 1, '', '');
+
+INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
+('bx_posts_category', 'bx_posts_category_add', 'bx_posts', 0, '_bx_posts_category_display_add'),
+('bx_posts_category', 'bx_posts_category_edit', 'bx_posts', 0, '_bx_posts_category_display_edit');
+
+INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
+('bx_posts_category', 'bx_posts', 'value', '', '', 0, 'text', '_bx_posts_category_form_entry_input_sys_value', '_bx_posts_category_form_entry_input_value', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_posts_category_form_entry_input_value_err', 'Xss', '', 1, 0),
+('bx_posts_category', 'bx_posts', 'do_submit', '_bx_posts_form_entry_input_do_submit', '', 0, 'submit', '_bx_posts_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
+
+INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
+('bx_posts_category_add', 'value', 2147483647, 1, 1),
+('bx_posts_category_add', 'do_submit', 2147483647, 1, 2),
+('bx_posts_category_edit', 'value', 2147483647, 1, 1),
+('bx_posts_category_edit', 'do_submit', 2147483647, 1, 2);
 
 
 -- PRE-VALUES

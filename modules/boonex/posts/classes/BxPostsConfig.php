@@ -41,6 +41,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'FIELD_TEXT' => 'text',
             'FIELD_TEXT_ID' => 'post-text',
             'FIELD_CATEGORY' => 'cat',
+            'FIELD_MULTICAT' => 'multicat',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_COVER' => 'covers',
             'FIELD_PHOTO' => 'pictures',
@@ -129,6 +130,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'OBJECT_MENU_MANAGE_TOOLS' => 'bx_posts_menu_manage_tools', //manage menu in content administration tools
             'OBJECT_GRID_ADMINISTRATION' => 'bx_posts_administration',
             'OBJECT_GRID_COMMON' => 'bx_posts_common',
+            'OBJECT_GRID_CATEGORIES' => 'bx_posts_categories',
             'OBJECT_UPLOADERS' => array('bx_posts_simple', 'bx_posts_html5'),
 
             // menu items which visibility depends on custom visibility checking
@@ -185,11 +187,13 @@ class BxPostsConfig extends BxBaseModTextConfig
         ));
         
         $this->_aJsClasses = array_merge($this->_aJsClasses, array(
-            'manage_tools' => 'BxPostsManageTools'
+            'manage_tools' => 'BxPostsManageTools',
+            'categories' => 'BxPostsCategories'
         ));
 
         $this->_aJsObjects = array_merge($this->_aJsObjects, array(
-            'manage_tools' => 'oBxPostsManageTools'
+            'manage_tools' => 'oBxPostsManageTools',
+            'categories' => 'oBxPostsCategories'
         ));
 
         $this->_aGridObjects = array(

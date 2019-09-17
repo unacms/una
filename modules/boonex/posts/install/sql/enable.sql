@@ -17,7 +17,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_posts_per_page_profile', '6', @iCategId, '_bx_posts_option_per_page_profile', 'digit', '', '', '', 12),
 ('bx_posts_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', 15),
 ('bx_posts_rss_num', '10', @iCategId, '_bx_posts_option_rss_num', 'digit', '', '', '', 20),
-('bx_posts_searchable_fields', 'title,text', @iCategId, '_bx_posts_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:8:"bx_posts";s:6:"method";s:21:"get_searchable_fields";}', 30);
+('bx_posts_searchable_fields', 'title,text', @iCategId, '_bx_posts_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:8:"bx_posts";s:6:"method";s:21:"get_searchable_fields";}', 30),
+('bx_posts_auto_activation_for_categories', 'on', @iCategId, '_bx_posts_option_auto_activation_for_categories', 'checkbox', '', '', '', 35);
 
 -- PAGE: create entry
 
@@ -121,8 +122,8 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_posts_home', 1, 'bx_posts', '', '_bx_posts_page_block_title_featured_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_posts";s:6:"method";s:15:"browse_featured";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 1, 1, 0),
 ('bx_posts_home', 1, 'bx_posts', '', '_bx_posts_page_block_title_recent_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_posts";s:6:"method";s:13:"browse_public";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 1, 1, 1),
 ('bx_posts_home', 2, 'bx_posts', '', '_bx_posts_page_block_title_popular_keywords', 11, 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:14:\"keywords_cloud\";s:6:\"params\";a:2:{i:0;s:8:\"bx_posts\";i:1;s:8:\"bx_posts\";}s:5:\"class\";s:20:\"TemplServiceMetatags\";}', 0, 1, 1, 0),
-('bx_posts_home', 2, 'bx_posts', '', '_bx_posts_page_block_title_cats', 11, 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:15:\"categories_list\";s:6:\"params\";a:2:{i:0;s:13:\"bx_posts_cats\";i:1;a:1:{s:10:\"show_empty\";b:1;}}s:5:\"class\";s:20:\"TemplServiceCategory\";}', 0, 1, 1, 1);
-
+('bx_posts_home', 2, 'bx_posts', '', '_bx_posts_page_block_title_cats', 11, 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:15:\"categories_list\";s:6:\"params\";a:2:{i:0;s:13:\"bx_posts_cats\";i:1;a:1:{s:10:\"show_empty\";b:1;}}s:5:\"class\";s:20:\"TemplServiceCategory\";}', 0, 1, 1, 1),
+('bx_posts_home', 2, 'bx_posts', '_bx_posts_page_block_title_sys_multicats', '_bx_posts_page_block_title_multicats', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_posts";s:6:"method";s:21:"categories_multi_list";}', 0, 1, 0, 2);
 
 -- PAGE: search for entries
 
@@ -429,7 +430,8 @@ INSERT INTO `sys_objects_chart` (`object`, `title`, `table`, `field_date_ts`, `f
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
 ('bx_posts_administration', 'Sql', 'SELECT * FROM `bx_posts_posts` WHERE 1 ', 'bx_posts_posts', 'id', 'added', 'status_admin', '', 20, NULL, 'start', '', 'title,text', '', 'like', 'reports', '', 192, 'BxPostsGridAdministration', 'modules/boonex/posts/classes/BxPostsGridAdministration.php'),
-('bx_posts_common', 'Sql', 'SELECT * FROM `bx_posts_posts` WHERE 1 ', 'bx_posts_posts', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 2147483647, 'BxPostsGridCommon', 'modules/boonex/posts/classes/BxPostsGridCommon.php');
+('bx_posts_common', 'Sql', 'SELECT * FROM `bx_posts_posts` WHERE 1 ', 'bx_posts_posts', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 2147483647, 'BxPostsGridCommon', 'modules/boonex/posts/classes/BxPostsGridCommon.php'),
+('bx_posts_categories', 'Sql', 'SELECT * FROM `sys_categories` WHERE 1 ', 'sys_categories', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'value', '', 'like', '', '', 2147483647, 'BxPostsGridCategories', 'modules/boonex/posts/classes/BxPostsGridCategories.php');
 
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
@@ -444,7 +446,14 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_posts_common', 'switcher', '_bx_posts_grid_column_title_adm_active', '8%', 0, '', '', 2),
 ('bx_posts_common', 'title', '_bx_posts_grid_column_title_adm_title', '40%', 0, '35', '', 3),
 ('bx_posts_common', 'added', '_bx_posts_grid_column_title_adm_added', '30%', 1, '25', '', 4),
-('bx_posts_common', 'actions', '', '20%', 0, '', '', 5);
+('bx_posts_common', 'actions', '', '20%', 0, '', '', 5),
+('bx_posts_categories', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
+('bx_posts_categories', 'switcher', '_bx_posts_grid_column_title_adm_active', '8%', 0, '', '', 2),
+('bx_posts_categories', 'value', '_bx_posts_grid_column_title_adm_value', '35%', 0, '35', '', 3),
+('bx_posts_categories', 'author', '_bx_posts_grid_column_title_adm_author', '20%', 0, '35', '', 3),
+('bx_posts_categories', 'added', '_bx_posts_grid_column_title_adm_added', '15%', 1, '25', '', 4),
+('bx_posts_categories', 'actions', '', '20%', 0, '', '', 5);
+
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_posts_administration', 'bulk', 'delete', '_bx_posts_grid_action_title_adm_delete', '', 0, 1, 1),
@@ -454,7 +463,11 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_posts_common', 'bulk', 'delete', '_bx_posts_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_posts_common', 'single', 'edit', '_bx_posts_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
 ('bx_posts_common', 'single', 'delete', '_bx_posts_grid_action_title_adm_delete', 'remove', 1, 1, 2),
-('bx_posts_common', 'single', 'settings', '_bx_posts_grid_action_title_adm_more_actions', 'cog', 1, 0, 3);
+('bx_posts_common', 'single', 'settings', '_bx_posts_grid_action_title_adm_more_actions', 'cog', 1, 0, 3),
+('bx_posts_categories', 'bulk', 'delete', '_bx_posts_grid_action_title_adm_delete', '', 0, 1, 1),
+('bx_posts_categories', 'single', 'edit', '_bx_posts_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
+('bx_posts_categories', 'single', 'delete', '_bx_posts_grid_action_title_adm_delete', 'remove', 1, 1, 2),
+('bx_posts_categories', 'independent', 'add', '_bx_posts_grid_action_title_adm_add', '', 0, 0, 1);
 
 -- UPLOADERS
 
