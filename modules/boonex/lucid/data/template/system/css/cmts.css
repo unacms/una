@@ -14,10 +14,6 @@ div.cmts li.cmt div.cmt-cnt .bx-def-hr {
 	border-color: rgba(20, 80, 100, 0.1);
 }
 
-div.cmts li.cmt div.cmt-cnt .cmt-info.bx-def-thumb-size-left-indent {
-	margin-left: 2.5rem;
-}
-
 div.cmts li.cmt div.cmt-cnt div.cmt-head .cmt-meta-username {
 	font-weight: 600;
 	font-size: 0.875rem;
