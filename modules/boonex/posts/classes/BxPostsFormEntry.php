@@ -198,15 +198,19 @@ class BxPostsFormEntry extends BxBaseModTextFormEntry
     }
     
     protected function processMulticatBefore($sFieldName, &$aValsToAdd){
-        $this->aInputs[$sFieldName]['value'] = array_unique(array_filter($this->aInputs[$sFieldName]['value'], function($sTmp){
-           return trim($sTmp);
-        }));  
-        $aValsToAdd[$sFieldName] = implode(',', $this->aInputs[$sFieldName]['value']);
+        if (isset($this->aInputs[$sFieldName])){
+            $this->aInputs[$sFieldName]['value'] = array_unique(array_filter($this->aInputs[$sFieldName]['value'], function($sTmp){
+               return trim($sTmp);
+            }));  
+            $aValsToAdd[$sFieldName] = implode(',', $this->aInputs[$sFieldName]['value']);
+        }
     }
     
     protected function processMulticatAfter($sFieldName, $iContentId){
-        foreach($this->aInputs[$sFieldName]['value'] as  $sValue) {
-            $this->_oModule->_oDb->addCategory($this->_oModule->getName(), bx_get_logged_profile_id(), $sValue);
+        if (isset($this->aInputs[$sFieldName])){
+            foreach($this->aInputs[$sFieldName]['value'] as  $sValue) {
+                $this->_oModule->_oDb->addCategory($this->_oModule->getName(), bx_get_logged_profile_id(), $sValue);
+            }
         }
     }
     
