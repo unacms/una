@@ -9,8 +9,8 @@ $aConfig = array(
      * Main Section.
      */
     'title' => 'English',
-    'version_from' => '10.0.3',
-    'version_to' => '10.0.4',
+    'version_from' => '10.0.4',
+    'version_to' => '10.0.5',
     'vendor' => 'BoonEx',
 
     'compatible_with' => array(
@@ -20,8 +20,8 @@ $aConfig = array(
     /**
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
-    'home_dir' => 'boonex/english/updates/update_10.0.3_10.0.4/',
-    'home_uri' => 'en_update_1003_1004',
+    'home_dir' => 'boonex/english/updates/update_10.0.4_10.0.5/',
+    'home_uri' => 'en_update_1004_1005',
 
     'module_dir' => 'boonex/english/',
     'module_uri' => 'en',

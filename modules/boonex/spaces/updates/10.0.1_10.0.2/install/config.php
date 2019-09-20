@@ -8,42 +8,41 @@ $aConfig = array(
     /**
      * Main Section.
      */
-    'title' => 'English',
-    'version_from' => '10.0.3',
-    'version_to' => '10.0.4',
+    'title' => 'Spaces',
+    'version_from' => '10.0.1',
+    'version_to' => '10.0.2',
     'vendor' => 'BoonEx',
 
     'compatible_with' => array(
-        '10.x.x'
+        '10.1.0'
     ),
 
     /**
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
-    'home_dir' => 'boonex/english/updates/update_10.0.3_10.0.4/',
-    'home_uri' => 'en_update_1003_1004',
+    'home_dir' => 'boonex/spaces/updates/update_10.0.1_10.0.2/',
+    'home_uri' => 'spaces_update_1001_1002',
 
-    'module_dir' => 'boonex/english/',
-    'module_uri' => 'en',
+    'module_dir' => 'boonex/spaces/',
+    'module_uri' => 'spaces',
 
-    'db_prefix' => 'bx_eng_',
-    'class_prefix' => 'BxEng',
+    'db_prefix' => 'bx_spaces_',
+    'class_prefix' => 'BxSpaces',
 
     /**
      * Installation/Uninstallation Section.
      */
     'install' => array(
-        'execute_sql' => 0,
+        'execute_sql' => 1,
         'update_files' => 1,
-        'update_languages' => 1,
-        'restore_languages' => 0,
-        'clear_db_cache' => 0,
+        'update_languages' => 0,
+        'clear_db_cache' => 1,
     ),
 
     /**
      * Category for language keys.
      */
-    'language_category' => 'System',
+    'language_category' => 'Spaces',
 
     /**
      * Files Section
