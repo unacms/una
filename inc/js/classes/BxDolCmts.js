@@ -369,9 +369,22 @@ BxDolCmts.prototype.toggleReply = function(e, iCmtParentId, iQuote)
 
     var sParentId = this._sRootId + ' #cmt' + iCmtParentId;
     var sReplyQuoteId = '.cmt-reply-quote';
-    if(!aParams['CmtQuote'])
-        sReplyQuoteId = ':not(' + sReplyQuoteId + ')';
-    var sReplyId = '.cmt-reply' + sReplyQuoteId;
+    var sReplyQuoteIdOpst = ':not(' + sReplyQuoteId + ')';
+
+    var sReplyId = '';
+    var sReplyIdOpst = '';
+    if(aParams['CmtQuote']) {
+        sReplyId = '.cmt-reply' + sReplyQuoteId;
+        sReplyIdOpst = '.cmt-reply' + sReplyQuoteIdOpst;
+    }
+    else {
+        sReplyId = '.cmt-reply' + sReplyQuoteIdOpst;
+        sReplyIdOpst = '.cmt-reply' + sReplyQuoteId;
+    }
+
+    //--- Hide opposite form.
+    if ($(sParentId + ' > ' + sReplyIdOpst + ':visible').length)
+        $(sParentId + ' > ' + sReplyIdOpst).hide();
 
     if ($(sParentId + ' > ' + sReplyId).length) {
         $(sParentId + ' > ' + sReplyId).bx_anim('toggle', this._sAnimationEffect, this._iAnimationSpeed, fOnShow);
