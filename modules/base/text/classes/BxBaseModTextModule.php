@@ -102,7 +102,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         if(!$iPollId)
             return false;
 
-        if(!$bForceDisplay && $this->_oDb->isPollPerformed($iPollId, bx_get_logged_profile_id()))
+        if(!$bForceDisplay && $this->isPollPerformed($iPollId))
             return $this->serviceGetBlockPollResults($iPollId);
 
         return $this->_serviceTemplateFunc('entryPollAnswers', $iPollId, 'getPollInfoById');
@@ -124,9 +124,9 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         return $mixedResult !== false ? $mixedResult : '';
     }
 
-	public function serviceGetMenuAddonManageTools()
-	{
-		bx_import('SearchResult', $this->_aModule);
+    public function serviceGetMenuAddonManageTools()
+    {
+        bx_import('SearchResult', $this->_aModule);
         $sClass = $this->_aModule['class_prefix'] . 'SearchResult';
         $o = new $sClass();
         $o->unsetPaginate();
@@ -286,6 +286,16 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
             return $aCheck[CHECK_ACTION_MESSAGE];
         return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    public function isPollPerformed($iObjectId, $iAuthorId = 0, $iAuthorIp = 0)
+    {
+        if(empty($iAuthorId)) {
+            $iAuthorId = bx_get_logged_profile_id();
+            $iAuthorIp = ip2long(getVisitorIP());
+        }
+
+        return $this->_oDb->isPollPerformed($iObjectId, $iAuthorId, $iAuthorIp);
     }
 
     // ====== COMMON METHODS

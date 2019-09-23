@@ -89,7 +89,7 @@ class BxBaseModTextVotePollAnswers extends BxTemplVoteLikes
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        return $this->_oModule->_oDb->isPollPerformed($this->_aPollInfo[$CNF['FIELD_POLL_ID']], $iAuthorId);
+        return $this->_oModule->isPollPerformed((int)$this->_aPollInfo[$CNF['FIELD_POLL_ID']], $iAuthorId, $iAuthorIp);
     }
 
     /**

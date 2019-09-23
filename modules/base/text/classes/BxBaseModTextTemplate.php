@@ -246,7 +246,8 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
     public function getPollItem($mixedPoll, $iProfileId = 0, $aParams = array())
     {
-        $CNF = &$this->getModule()->_oConfig->CNF;
+        $oModule = $this->getModule();
+        $CNF = &$oModule->_oConfig->CNF;
 
         $aPoll = is_array($mixedPoll) ? $mixedPoll : $this->_oDb->getPolls(array('type' => 'id', 'id' => (int)$mixedPoll));
         if(empty($aPoll) || !is_array($aPoll))
@@ -260,7 +261,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         $bForceDisplayAnswers = isset($aParams['force_display_answers']) && (bool)$aParams['force_display_answers'] === true;
 
         $iPollId = (int)$aPoll[$CNF['FIELD_POLL_ID']];
-        $sPollView = !$bForceDisplayAnswers && $this->_oDb->isPollPerformed($iPollId, $iProfileId) ? 'results' : 'answers';
+        $sPollView = !$bForceDisplayAnswers && $oModule->isPollPerformed($iPollId, $iProfileId) ? 'results' : 'answers';
         
         $sMethod = '_getPoll' . ucfirst($sPollView);
         if(!method_exists($this, $sMethod))
@@ -438,7 +439,8 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
     protected function _getPollBlockMenu($aPoll, $sSelected = '', $aParams = array())
     {
-        $CNF = &$this->getModule()->_oConfig->CNF;
+        $oModule = $this->getModule();
+        $CNF = &$oModule->_oConfig->CNF;
 
         $sPostfix = '-' . time() . rand(0, PHP_INT_MAX);
         $sJsObject = $this->_oConfig->getJsObject('poll');
@@ -446,7 +448,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
         $aViews = array(
             'answers' => true, 
-            'results' => $CNF['PARAM_POLL_HIDDEN_RESULTS'] === false || $this->_oDb->isPollPerformed($iPollId, bx_get_logged_profile_id())
+            'results' => $CNF['PARAM_POLL_HIDDEN_RESULTS'] === false || $oModule->isPollPerformed($iPollId)
         );
 
         $aMenu = array();

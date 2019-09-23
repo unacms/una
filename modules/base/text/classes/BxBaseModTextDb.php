@@ -55,21 +55,25 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
      * Internal Polls related methods. 
      * 
      */
-    public function isPollPerformed($iPollId, $iAuthorId)
+    public function isPollPerformed($iPollId, $iAuthorId, $iAuthorIp = 0)
     {
         $CNF = &$this->_oConfig->CNF;
 
         if(empty($CNF['TABLE_POLLS_ANSWERS_VOTES_TRACK']))
             return false;
 
-        if(empty($iAuthorId))
-            $iAuthorId = bx_get_logged_profile_id();
+        $iAuthorId = (int)$iAuthorId;
+
+        $aBindings = array('author_id' => $iAuthorId);
+        $sWhereClause = "AND `author_id`=:author_id";
+
+        if(empty($iAuthorId)) {
+            $aBindings['author_nip'] = $iAuthorIp;
+            $sWhereClause .= " AND `author_nip`=:author_nip";
+        }
 
         $aAnswers = $this->getPollAnswers(array('type' => 'poll_id_pairs', 'poll_id' => $iPollId));
-
-        return (int)$this->getOne("SELECT `object_id` FROM `" . $CNF['TABLE_POLLS_ANSWERS_VOTES_TRACK'] . "` WHERE `object_id` IN (" . $this->implode_escape(array_keys($aAnswers)) . ") AND `author_id`=:author_id LIMIT 1", array(
-            'author_id' => $iAuthorId
-        )) != 0;
+        return (int)$this->getOne("SELECT `object_id` FROM `" . $CNF['TABLE_POLLS_ANSWERS_VOTES_TRACK'] . "` WHERE `object_id` IN (" . $this->implode_escape(array_keys($aAnswers)) . ") " . $sWhereClause . " LIMIT 1", $aBindings) != 0;
     }
 
     public function getPolls($aParams)
