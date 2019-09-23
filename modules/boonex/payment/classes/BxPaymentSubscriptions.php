@@ -262,8 +262,8 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
 
         $aSubscription = array_shift($aSubscription);
 
-        $oSeller = BxDolProfile::getInstanceMagic((int)$aSubscription['seller_id']);
-        $oClient = BxDolProfile::getInstanceMagic((int)$aSubscription['client_id']);
+        $oSeller = BxDolProfile::getInstance((int)$aSubscription['seller_id']);
+        $oClient = BxDolProfile::getInstance((int)$aSubscription['client_id']);
 
         $aEtParams = array(
             'sibscription_id' => $aSubscription['subscription_id'],
