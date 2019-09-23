@@ -94,10 +94,10 @@ class BxPollsVoteSubentries extends BxTemplVoteLikes
     {
         $CNF = $this->_oModule->_oConfig->CNF;
 
-        return $this->_oModule->_oDb->isPerformed($this->getEntryField($CNF['FIELD_ID']), $iAuthorId);
+        return $this->_oModule->isPerformed((int)$this->getEntryField($CNF['FIELD_ID']), $iAuthorId, $iAuthorIp);
     }
 
-	/**
+    /**
      * Permissions functions
      */
     public function isAllowedVote($isPerformAction = false)

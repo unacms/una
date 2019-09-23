@@ -25,13 +25,14 @@ class BxPollsTemplate extends BxBaseModTextTemplate
 
     public function embedEntry($mixedContentInfo, $aParams = array())
     {
-        $CNF = &$this->getModule()->_oConfig->CNF;
+        $oModule = $this->getModule();
+        $CNF = &$oModule->_oConfig->CNF;
 
         $aContentInfo = is_array($mixedContentInfo) ? $mixedContentInfo : $this->_oDb->getContentInfoById((int)$mixedContentInfo);
         if(empty($aContentInfo) || !is_array($aContentInfo))
             return;
 
-        $aBlock = $this->{$this->_oDb->isPerformed((int)$aContentInfo[$CNF['FIELD_ID']], bx_get_logged_profile_id()) ? 'entryResults' : 'entrySubentries'}($aContentInfo);
+        $aBlock = $this->{$oModule->isPerformed((int)$aContentInfo[$CNF['FIELD_ID']]) ? 'entryResults' : 'entrySubentries'}($aContentInfo);
 
         $this->addJs(array('entry.js'));
         $this->addCss(array('entry.css'));
@@ -80,11 +81,12 @@ class BxPollsTemplate extends BxBaseModTextTemplate
 
     public function entryTextAndSubentries($aData, $bForceDisplaySubentries = false)
     {
-        $CNF = &$this->getModule()->_oConfig->CNF;
+        $oModule = $this->getModule();
+        $CNF = &$oModule->_oConfig->CNF;
 
         $sMethod = '_getGetBlockContent';
         $sMenuItem = '';
-        if(!$bForceDisplaySubentries && $this->_oDb->isPerformed($aData[$CNF['FIELD_ID']], bx_get_logged_profile_id())) {
+        if(!$bForceDisplaySubentries && $oModule->isPerformed($aData[$CNF['FIELD_ID']])) {
             $sMethod .= 'Results';
             $sMenuItem = 'results';
         }
@@ -129,9 +131,10 @@ class BxPollsTemplate extends BxBaseModTextTemplate
 
     protected function getSummary($aData, $sTitle = '', $sText = '', $sUrl = '')
     {
-        $CNF = &$this->getModule()->_oConfig->CNF;
+        $oModule = $this->getModule();
+        $CNF = &$oModule->_oConfig->CNF;
 
-        $aBlock = $this->{$this->_oDb->isPerformed($aData[$CNF['FIELD_ID']], bx_get_logged_profile_id()) ? 'entryResults' : 'entrySubentries'}($aData);
+        $aBlock = $this->{$oModule->isPerformed($aData[$CNF['FIELD_ID']]) ? 'entryResults' : 'entrySubentries'}($aData);
 
         return $aBlock['content'];
     }
@@ -166,14 +169,15 @@ class BxPollsTemplate extends BxBaseModTextTemplate
 
     protected function _getGetBlockMenu($aData, $sSelected = '')
     {
-        $CNF = &$this->getModule()->_oConfig->CNF;
+        $oModule = $this->getModule();
+        $CNF = &$oModule->_oConfig->CNF;
 
         $sJsObject = $this->_oConfig->getJsObject('entry');
         $iContentId = $aData[$CNF['FIELD_ID']];
 
         $aBlocks = array(
             'subentries' => true, 
-            'results' => (int)$aData[$CNF['FIELD_HIDDEN_RESULTS']] == 0 || $this->_oDb->isPerformed($iContentId, bx_get_logged_profile_id())
+            'results' => (int)$aData[$CNF['FIELD_HIDDEN_RESULTS']] == 0 || $oModule->isPerformed($iContentId)
         );
 
         $aMenu = array();

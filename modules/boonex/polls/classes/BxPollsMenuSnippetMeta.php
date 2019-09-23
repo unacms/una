@@ -36,7 +36,7 @@ class BxPollsMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $iContentId = (int)$this->_aContentInfo[$CNF['FIELD_ID']];
-        $bPerformed = $this->_oModule->_oDb->isPerformed($iContentId, bx_get_logged_profile_id());
+        $bPerformed = $this->_oModule->isPerformed($iContentId);
         if((int)$this->_aContentInfo[$CNF['FIELD_HIDDEN_RESULTS']] != 0 && !$bPerformed)
             return false;
 

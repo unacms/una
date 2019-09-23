@@ -28,14 +28,22 @@ class BxPollsDb extends BxBaseModTextDb
         return $aContentInfo;
     }
 
-    public function isPerformed($iEntryId, $iAuthorId)
+    public function isPerformed($iEntryId, $iAuthorId, $iAuthorIp)
     {
         $CNF = &$this->_oConfig->CNF;
 
+        $iAuthorId = (int)$iAuthorId;
+
+        $aBindings = array('author_id' => $iAuthorId);
+        $sWhereClause = "AND `author_id`=:author_id";
+
+        if(empty($iAuthorId)) {
+            $aBindings['author_nip'] = $iAuthorIp;
+            $sWhereClause .= " AND `author_nip`=:author_nip";
+        }
+
         $aSubentries = $this->getSubentries(array('type' => 'entry_id_pairs', 'entry_id' => $iEntryId));
-        return (int)$this->getOne("SELECT `object_id` FROM `" . $CNF['TABLE_VOTES_SUBENTRIES_TRACK'] . "` WHERE `object_id` IN (" . $this->implode_escape(array_keys($aSubentries)) . ") AND `author_id`=:author_id LIMIT 1", array(
-            'author_id' => $iAuthorId
-        )) != 0;
+        return (int)$this->getOne("SELECT `object_id` FROM `" . $CNF['TABLE_VOTES_SUBENTRIES_TRACK'] . "` WHERE `object_id` IN (" . $this->implode_escape(array_keys($aSubentries)) . ") " . $sWhereClause . " LIMIT 1", $aBindings) != 0;
     }
 
     public function getContentInfoBySubentryId ($iSubentryId)

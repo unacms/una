@@ -116,7 +116,7 @@ class BxPollsModule extends BxBaseModTextModule
         if (!$iContentId)
             return false;
 
-        if(!$bForceDisplay && $this->_oDb->isPerformed($iContentId, bx_get_logged_profile_id()))
+        if(!$bForceDisplay && $this->isPerformed($iContentId))
             return $this->serviceGetBlockResults($iContentId);
 
         return $this->_serviceTemplateFunc('entrySubentries', $iContentId);
@@ -192,6 +192,16 @@ class BxPollsModule extends BxBaseModTextModule
         return CHECK_ACTION_RESULT_ALLOWED;
     }
 
+    public function isPerformed($iObjectId, $iAuthorId = 0, $iAuthorIp = 0)
+    {
+        if(empty($iAuthorId)) {
+            $iAuthorId = bx_get_logged_profile_id();
+            $iAuthorIp = ip2long(getVisitorIP());
+        }
+
+        return $this->_oDb->isPerformed($iObjectId, $iAuthorId, $iAuthorIp);
+    }
+
 
     /**
      * INTERNAL METHODS
@@ -223,7 +233,7 @@ class BxPollsModule extends BxBaseModTextModule
         $sInclude = '';
         $sInclude .= $this->_oTemplate->addCss(array('main.css'), $bDynamic);
 
-        $aBlock = $this->_oTemplate->{$this->_oDb->isPerformed($aContentInfo[$CNF['FIELD_ID']], bx_get_logged_profile_id()) ? 'entryResults' : 'entrySubentries'}($aContentInfo, $bDynamic);
+        $aBlock = $this->_oTemplate->{$this->isPerformed($aContentInfo[$CNF['FIELD_ID']]) ? 'entryResults' : 'entrySubentries'}($aContentInfo, $bDynamic);
 
         $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams);
         $aResult['title'] = $this->_oConfig->getTitle($aContentInfo);
