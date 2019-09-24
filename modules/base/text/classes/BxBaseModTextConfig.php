@@ -27,6 +27,10 @@ class BxBaseModTextConfig extends BxBaseModGeneralConfig
         parent::__construct($aModule);
 
         $this->CNF = array(
+            // modules icon
+            'ICON_POLLS_ANSWERS' => 'vote-yea',
+            'ICON_POLLS_RESULTS' => 'poll-h',
+
             // database tables
             'TABLE_POLLS' => $aModule['db_prefix'] . 'polls',
             'TABLE_POLLS_ANSWERS' => $aModule['db_prefix'] . 'polls_answers',

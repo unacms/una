@@ -460,7 +460,16 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             if(!empty($sSelected) && $sSelected == $sView)
                 $sSelected = $sId;
 
-            $aMenu[] = array('id' => $sId, 'name' => $sId, 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changePollView(this, \'' . $sView . '\', ' . $iPollId . ')', 'target' => '_self', 'title' => _t('_bx_posts_txt_poll_view_' . $sView));
+            $aMenu[] = array(
+                'id' => $sId, 
+                'name' => $sId, 
+                'class' => '', 
+                'link' => 'javascript:void(0)', 
+                'onclick' => 'javascript:' . $sJsObject . '.changePollView(this, \'' . $sView . '\', ' . $iPollId . ')', 
+                'target' => '_self', 
+                'title_attr' => _t($CNF['T']['txt_poll_menu_view_' . $sView]), 
+                'title' => $this->parseIcon($CNF['ICON_POLLS_' . strtoupper($sView)])
+            );
         }
 
         if(count($aMenu) <= 1)

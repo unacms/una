@@ -560,25 +560,31 @@ ul.bx-menu-floating-blocks {
 /* --------------- interactive block menu */
 ul.bx-menu-inter,
 ul.bx-menu-inter-vert {
-	padding:0;
+    padding:0;
     margin:0;
-	list-style:none;
+    list-style:none;
 }
 ul.bx-menu-inter li {
     float:left;
 }
+ul.bx-menu-inter li:hover {
+    background-color: transparent;
+}
 li.bx-menu-inter-div {
-	padding: 0px 3px;
+    padding: 0px 3px;
 }
 li.bx-menu-inter-div:first-child {
-	display: none;
+    display: none;
 }
-li.bx-menu-inter-act {}
+li.bx-menu-inter-act .sys-icon {
+    color: rgba(0, 0, 0, 0.2);
+}
 li.bx-menu-inter-pas a:hover {
-	text-decoration: none;
+    background-color: transparent;
+    text-decoration: none;
 }
 li.bx-menu-inter-hidden {
-	display: none;
+    display: none;
 }
 
 /* --------------- horizontal buttons menu */

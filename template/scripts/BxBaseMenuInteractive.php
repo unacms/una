@@ -74,6 +74,7 @@ class BxBaseMenuInteractive extends BxTemplMenu
 
             $a['link'] = isset($a['link']) ? $this->_oPermalinks->permalink($a['link']) : 'javascript:void(0);';
             $a['title'] = _t($a['title']);
+            $a['title_attr'] = isset($a['title_attr']) ? bx_html_attribute($a['title_attr']) : '';
             $a['bx_if:show_divider'] = array (
             	'condition' => $this->_bShowDivider,
                 'content' => array(),
