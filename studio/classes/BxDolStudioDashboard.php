@@ -28,6 +28,7 @@ class BxDolStudioDashboard extends BxTemplStudioPage
             array('name' => 'all'),
             array('name' => 'db'),
             array('name' => 'template'),
+            array('name' => 'less'),
             array('name' => 'css'),
             array('name' => 'js'),
             array('name' => 'custom')
@@ -46,81 +47,82 @@ class BxDolStudioDashboard extends BxTemplStudioPage
             $aResult = array('code' => 1, 'message' => _t('_adm_err_cannot_process_action'));
             switch($sAction) {
             	case 'get_block':
-            		$sValue = bx_get('dbd_value');
-					if($sValue === false)
-						break;
+                    $sValue = bx_get('dbd_value');
+                    if($sValue === false)
+                        break;
 
-					$sValue = bx_process_input($sValue);
-					if(!isset($this->aBlocks[$sValue]))
-						break;
-						
-					$aBlock = $this->{$this->aBlocks[$sValue]}(false);
-					if(!empty($aBlock['content']))
-            			$aResult = array('code' => 0, 'data' => $aBlock['content']);
+                    $sValue = bx_process_input($sValue);
+                    if(!isset($this->aBlocks[$sValue]))
+                        break;
 
-            		break;
+                    $aBlock = $this->{$this->aBlocks[$sValue]}(false);
+                    if(!empty($aBlock['content']))
+                        $aResult = array('code' => 0, 'data' => $aBlock['content']);
 
-				case 'check_for_upgrade':
-					$aResult = array('code' => 0, 'data' => $this->getPageCodeVersionAvailable());
+                    break;
+
+                case 'check_for_upgrade':
+                    $aResult = array('code' => 0, 'data' => $this->getPageCodeVersionAvailable());
                     break;
 
             	case 'perform_upgrade':
-            		$oUpgrader = bx_instance('BxDolUpgrader');
-			        if(!$oUpgrader->prepare())
-			        	$aResult = array('code' => 1, 'message' => $oUpgrader->getError());
-			        else
-			        	$aResult = array('code' => 0, 'message' => _t('_adm_dbd_msg_upgrade_started', BX_DOL_URL_STUDIO));
-					break;
+                    $oUpgrader = bx_instance('BxDolUpgrader');
+                    if(!$oUpgrader->prepare())
+                        $aResult = array('code' => 1, 'message' => $oUpgrader->getError());
+                    else
+                        $aResult = array('code' => 0, 'message' => _t('_adm_dbd_msg_upgrade_started', BX_DOL_URL_STUDIO));
+                    break;
 
                 case 'clear_cache':
-                        $sValue = bx_get('dbd_value');
-                        if($sValue === false)
-                                break;
-
-                        $sValue = bx_process_input($sValue);
-
-                        $oCacheUtilities = BxDolCacheUtilities::getInstance();
-
-                        switch ($sValue) {
-                            case 'all':
-                                $aResult = false;
-                                foreach($this->aItemsCache as $aItem) {
-                                    if($aItem['name'] == 'all')
-                                        continue;
-
-                                    $aResultClear = $oCacheUtilities->clear($aItem['name']);
-                                    if($aResultClear === false)
-                                        continue;
-
-                                    $aResult = $aResultClear;
-                                    if(isset($aResult['code']) && $aResult['code'] != 0)
-                                        break;
-                                }
-                                break;
-
-                            case 'db':
-                            case 'template':
-                            case 'css':
-                            case 'js':
-                                $aResult = $oCacheUtilities->clear($sValue);
-                                break;
-
-                            case 'custom':
-                                $aResult = array('code' => 0, 'message' => _t('_adm_dbd_msg_c_clean_success'));
-                                break;
-
-                            default:
-                                $aResult = array('code' => 1, 'message' => _t('_Error Occured'));
-                        }
-
-                        if($aResult === false)
-                            $aResult['data'] = MsgBox(_t('_adm_dbd_msg_c_all_disabled'));
-                        else if(isset($aResult['code']) && $aResult['code'] == 0) {
-                            bx_alert('system', 'clear_cache', 0, 0, array('type' => $sValue));
-
-                            $aResult['data'] = $this->getCacheChartData(false);
-                        }
+                    $sValue = bx_get('dbd_value');
+                    if($sValue === false)
                         break;
+
+                    $sValue = bx_process_input($sValue);
+
+                    $oCacheUtilities = BxDolCacheUtilities::getInstance();
+
+                    switch ($sValue) {
+                        case 'all':
+                            $aResult = false;
+                            foreach($this->aItemsCache as $aItem) {
+                                if($aItem['name'] == 'all')
+                                    continue;
+
+                                $aResultClear = $oCacheUtilities->clear($aItem['name']);
+                                if($aResultClear === false)
+                                    continue;
+
+                                $aResult = $aResultClear;
+                                if(isset($aResult['code']) && $aResult['code'] != 0)
+                                    break;
+                            }
+                            break;
+
+                        case 'db':
+                        case 'template':
+                        case 'less':
+                        case 'css':
+                        case 'js':
+                            $aResult = $oCacheUtilities->clear($sValue);
+                            break;
+
+                        case 'custom':
+                            $aResult = array('code' => 0, 'message' => _t('_adm_dbd_msg_c_clean_success'));
+                            break;
+
+                        default:
+                            $aResult = array('code' => 1, 'message' => _t('_Error Occured'));
+                    }
+
+                    if($aResult === false)
+                        $aResult['data'] = MsgBox(_t('_adm_dbd_msg_c_all_disabled'));
+                    else if(isset($aResult['code']) && $aResult['code'] == 0) {
+                        bx_alert('system', 'clear_cache', 0, 0, array('type' => $sValue));
+
+                        $aResult['data'] = $this->getCacheChartData(false);
+                    }
+                    break;
 
                 case 'permissions':                    
                     $oAdmTools = new BxDolStudioTools();
@@ -130,12 +132,12 @@ class BxDolStudioDashboard extends BxTemplStudioPage
                     $oAdmTools->checkPermissions();
                     exit;
 
-				case 'server_audit':
-					$oAudit = new BxDolStudioToolsAudit();
-            
+                case 'server_audit':
+                    $oAudit = new BxDolStudioToolsAudit();
+
                     header( 'Content-type: text/html; charset=utf-8' );
-					echo $oAudit->generate();
-					exit;
+                    echo $oAudit->generate();
+                    exit;
             }
 
             if(!empty($aResult['message'])) {

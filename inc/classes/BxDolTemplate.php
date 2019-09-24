@@ -208,21 +208,18 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     protected $_bImagesInline;
     protected $_iImagesMaxSize;
 
+    protected $_bCssLess;
     protected $_bCssCache;
     protected $_bCssMinify;
     protected $_bCssArchive;
+    protected $_sCssLessPrefix;
     protected $_sCssCachePrefix;
 
+    protected $_bJsLess;
     protected $_bJsCache;
     protected $_bJsMinify;
     protected $_bJsArchive;
     protected $_sJsCachePrefix;
-
-    /**
-     * Less related fields
-     */
-    protected $_bLessEnable;
-    protected $_sLessCachePrefix;
 
     protected $aPage;
     protected $aPageContent;
@@ -293,18 +290,19 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $this->_iImagesMaxSize = (int)getParam('sys_template_cache_image_max_size') * 1024;
 
         $bArchive = getParam('sys_template_cache_compress_enable') == 'on';
+
+        $this->_bCssLess = true; //--- Less cannot be disabled for CSS.
         $this->_bCssCache = !defined('BX_DOL_CRON_EXECUTE') && getParam('sys_template_cache_css_enable') == 'on';
         $this->_bCssMinify = $this->_bCssCache && getParam('sys_template_cache_minify_css_enable') == 'on';
         $this->_bCssArchive = $this->_bCssCache && $bArchive;
+        $this->_sCssLessPrefix = $this->_sCacheFilePrefix . 'less_';
         $this->_sCssCachePrefix = $this->_sCacheFilePrefix . 'css_';
 
+        $this->_bJsLess = false; //--- Less language isn't available for JS at all.
         $this->_bJsCache = !defined('BX_DOL_CRON_EXECUTE') && getParam('sys_template_cache_js_enable') == 'on';
         $this->_bJsMinify = $this->_bJsCache && getParam('sys_template_cache_minify_js_enable') == 'on';
         $this->_bJsArchive = $this->_bJsCache && $bArchive;
         $this->_sJsCachePrefix = $this->_sCacheFilePrefix . 'js_';
-
-        $this->_bLessEnable = true;
-        $this->_sLessCachePrefix = $this->_sCacheFilePrefix . 'less_';
 
         $this->aPage = array();
         $this->aPageContent = array();
@@ -1557,17 +1555,21 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     {
     	$sResult = '';
     	switch($sType) {
-    		case 'template':
-				$sResult = $this->_sCacheFilePrefix;
-				break;
+            case 'template':
+                $sResult = $this->_sCacheFilePrefix;
+                break;
 
-    		case 'css':
-    			$sResult = $this->_sCssCachePrefix;
-    			break;
+            case 'less':
+                $sResult = $this->_sCssLessPrefix;
+                break;
 
-    		case 'js':
-    			$sResult = $this->_sJsCachePrefix;
-    			break;
+            case 'css':
+                $sResult = $this->_sCssCachePrefix;
+                break;
+
+            case 'js':
+                $sResult = $this->_sJsCachePrefix;
+                break;
     	}
 
     	return $sResult;
@@ -2005,7 +2007,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
             require_once(BX_DIRECTORY_PATH_PLUGINS . 'lessphp/Cache.php');
         	$aFiles = array($mixed['path'] => $mixed['url']);
-        	$aOptions = array('cache_dir' => $this->_sCachePublicFolderPath);
+        	$aOptions = array('cache_dir' => $this->_sCachePublicFolderPath, 'prefix' => $this->_sCssLessPrefix);
         	$sFile = Less_Cache::Get($aFiles, $aOptions, $this->_oTemplateConfig->aLessConfig);
 
             return array('url' => $this->_sCachePublicFolderUrl . $sFile, 'path' => $this->_sCachePublicFolderPath . $sFile);
@@ -2112,18 +2114,17 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         }
 
         //--- Collect all attached CSS/JS in one file ---//
-        $bLess = $this->_bLessEnable && method_exists($this, $sMethodLess);
 
         $sResult = "";
         $aIncluded = array();
         foreach($aFiles as $aFile) {
-        	if($bLess)
-				$aFile = $this->$sMethodLess($aFile);
+            if($this->{'_b' . $sUpcaseType . 'Less'})
+                $aFile = $this->$sMethodLess($aFile);
 
             if(($sContent = $this->$sMethodCompile($aFile['path'], $aIncluded)) === false)
                 continue;                
 
-            if (!preg_match('/[\.-]min.(js|css)$/i', $aFile['path']) && $this->{'_b' . $sUpcaseType . 'Minify'}) // don't minify minified files
+            if(!preg_match('/[\.-]min.(js|css)$/i', $aFile['path']) && $this->{'_b' . $sUpcaseType . 'Minify'}) // don't minify minified files
                 $sContent = $this->$sMethodMinify($sContent);
             
             $sResult .= $sContent;
@@ -2161,7 +2162,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
         $sResult = "";
         foreach($aFiles as $aFile) {
-            if($this->_bLessEnable && method_exists($this, $sMethodLess))
+            if($this->{'_b' . $sUpcaseType . 'Less'})
                 $aFile = $this->$sMethodLess($aFile);
 
             $sFileUrl = $aFile['url'];

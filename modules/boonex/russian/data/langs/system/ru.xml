@@ -592,6 +592,8 @@
 	<string name="_adm_dbd_txt_c_clear_template"><![CDATA[Очистить кэш темы]]></string>
 	<string name="_adm_dbd_txt_c_css"><![CDATA[CSS]]></string>
 	<string name="_adm_dbd_txt_c_clear_css"><![CDATA[Очистить кэш CSS]]></string>
+        <string name="_adm_dbd_txt_c_less"><![CDATA[LESS]]></string>
+        <string name="_adm_dbd_txt_c_clear_less"><![CDATA[Очистить кэш LESS]]></string>
 	<string name="_adm_dbd_txt_c_js"><![CDATA[JavaScript]]></string>
 	<string name="_adm_dbd_txt_c_clear_js"><![CDATA[Очистить кэш JavaScript]]></string>
         <string name="_adm_dbd_txt_c_clear_custom"><![CDATA[Очистить специальный кэш]]></string>
