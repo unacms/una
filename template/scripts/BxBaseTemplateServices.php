@@ -30,6 +30,19 @@ class BxBaseTemplateServices extends BxDol
 
         return $aResult;
     }
+
+    public function serviceGetInjection($sName)
+    {
+        $sResult = '';
+
+        switch($sName) {
+            case 'body_class':
+                $sResult = 'bx-user-' . (isLogged() ? '' : 'un') . 'authorized';
+                break;
+        }
+
+        return $sResult;
+    }
 }
 
 /** @} */
