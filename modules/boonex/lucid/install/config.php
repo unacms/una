@@ -17,11 +17,7 @@ $aConfig = array(
     'name' => 'bx_lucid',
     'title' => 'Lucid',
     'note' => 'Design template',
-<<<<<<< HEAD
-    'version' => '10.0.5.DEV',
-=======
     'version' => '10.0.7.DEV',
->>>>>>> c35cd0dfc... Modules updates.
     'vendor' => 'Boonex',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
