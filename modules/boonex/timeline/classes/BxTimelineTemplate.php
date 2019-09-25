@@ -348,15 +348,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($aResult === false)
             return '';
 
-        /**
-         * If 'updated' Owner ID was returned with data from integrated module,
-         * then save it's original value in 'owner_id_orig' for future usage and 
-         * rewrite with received value.
-         */
-        if(isset($aResult['owner_id'])) {
-            $aEvent['owner_id_orig'] = $aEvent['owner_id'];
+        if(isset($aResult['owner_id']))
             $aEvent['owner_id'] = $aResult['owner_id'];
-        }
+
         $aEvent['object_owner_id'] = $aResult['object_owner_id'];
         $aEvent['icon'] = !empty($aResult['icon']) ? $aResult['icon'] : '';
         $aEvent['sample'] = !empty($aResult['sample']) ? $aResult['sample'] : '_bx_timeline_txt_sample';
@@ -464,7 +458,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     foreach($aGroup['indexes'] as $iIndex)
                         unset($aEvents[$iIndex]);
 
-                    $aEvents[$iGroupIndex]['owner_id'] = $aOwnerIds;
+                    $aEvents[$iGroupIndex]['owner_id_grouped'] = $aOwnerIds;
                     break;
             }
         }
@@ -1568,7 +1562,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $oConnection = BxDolConnection::getObjectInstance($sConnection);
         $sConnectionTitle = _t('_sys_menu_item_title_sm_subscribe');
 
-        $sKeyOwnerId = isset($aEvent['owner_id_orig']) ? 'owner_id_orig' : 'owner_id';
+        $sKeyOwnerId = isset($aEvent['owner_id_grouped']) ? 'owner_id_grouped' : 'owner_id';
         $aOwnerIds = is_array($aEvent[$sKeyOwnerId]) ? $aEvent[$sKeyOwnerId] : array($aEvent[$sKeyOwnerId]);
 
         $aTmplVarsOwners = array();

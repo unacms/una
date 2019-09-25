@@ -115,18 +115,6 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         return $this->_oModule->getViewObject($sViewsSystem, $iViewsObject)->getElementInline($aViewsParams);
     }
 
-    protected function _getMenuItemItemComment($aItem)
-    {
-        if($this->_sView == BX_TIMELINE_VIEW_ITEM)
-            return false;
-
-        $aItem = BxTemplMenu::_getMenuItem($aItem);
-        if($aItem === false)
-            return false;
-
-        return $this->_getMenuItemDefault($aItem);
-    }
-
     protected function _getMenuItemItemVote($aItem)
     {
         if(!isset($this->_aEvent['votes']) || !is_array($this->_aEvent['votes']) || !isset($this->_aEvent['votes']['system'])) 
@@ -211,6 +199,9 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
                 break;
 
             case 'item-comment':
+                if($this->_sView == BX_TIMELINE_VIEW_ITEM)
+                    return false;
+
                 $sCheckFuncName = 'isAllowedComment';
                 break;
 
@@ -260,7 +251,7 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
                 $sCheckFuncName = 'isAllowedPromote';
                 break;
 
-			case 'item-unpromote':
+            case 'item-unpromote':
                 $sCheckFuncName = 'isAllowedUnpromote';
                 break;
 
