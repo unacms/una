@@ -140,16 +140,27 @@ class BxBaseFormView extends BxDolForm
      */
     function getCode($bDynamicMode = false)
     {
-        if (!$bDynamicMode && bx_is_dynamic_request())
+        if(!$bDynamicMode && bx_is_dynamic_request())
             $bDynamicMode = true;
 
         $this->_bDynamicMode = $bDynamicMode;
         $this->aFormAttrs = $this->_replaceMarkers($this->aFormAttrs);
-        $this->sCode = $this->genForm();
 
-        $this->addCssJs ();
+        $sInclude = '';
+        $this->sCode = false;
+        bx_alert('system', 'form_output', 0, 0, array(
+            'dynamic' => $this->_bDynamicMode,
+            'object' => &$this,
+            'code' => &$this->sCode,
+            'include' => &$sInclude
+        ));
+
+        if($this->sCode === false)
+            $this->sCode = $this->genForm();
+
+        $this->addCssJs();
         $sDynamicCssJs = $this->_processCssJs();
-        return $sDynamicCssJs . $this->sCode;
+        return $sInclude . $sDynamicCssJs . $this->sCode;
     }
 
     /**

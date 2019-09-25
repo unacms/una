@@ -52,6 +52,10 @@ class BxBaseAccountForms extends BxDolProfileForms
         $oForm->aFormAttrs['action'] = !empty($aParams['action']) ? $aParams['action'] : BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-account');
         $oForm->initChecker(self::$PROFILE_FIELDS);
 
+        bx_alert('account', 'add_form_check', 0, 0, array(
+            'form_object' => &$oForm
+        ));
+
         if (!$oForm->isSubmittedAndValid()) {
         	$sCode = $oForm->getCode();
 
