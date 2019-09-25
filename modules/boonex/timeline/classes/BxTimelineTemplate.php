@@ -422,8 +422,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sContent .= $this->getSizer($aParams);
 
         $iEvents = count($aEvents);
-        if($bViewTimeline && $iEvents <= 0)
-        	$sContent .= $this->getDividerToday();
+        if($iEvents > 0)
+            $iFirst = (int)$aEvents[0]['id'];
+        else 
+            $sContent .= $bViewTimeline ? $this->getDividerToday() : '';
 
         //--- Check for Visual Grouping
         $aGroups = array();
@@ -449,7 +451,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 case 'owner_id':
                     $aOwnerIds = array();
                     foreach($aGroup['indexes'] as $iIndex)
-                        $aOwnerIds[] = $aEvents[$iIndex]['owner_id'];
+                        if(!in_array($aEvents[$iIndex]['owner_id'], $aOwnerIds))
+                            $aOwnerIds[] = $aEvents[$iIndex]['owner_id'];
 
                     $iGroupIndex = (int)array_shift($aGroup['indexes']);
                     if(is_null($iGroupIndex))
@@ -463,7 +466,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             }
         }
 
-        $iFirst = 0;
         $bFirst = true;
         $sEvents = '';
         foreach($aEvents as $aEvent) {
@@ -473,11 +475,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             if(empty($sEvent))
                 continue;
 
-            if($bFirst) {
-                $iFirst = $iEvent;
-
-                if($bViewTimeline)
-                    $sEvents .= $this->getDividerToday($aEvent);
+            if($bFirst && $bViewTimeline) {
+                $sEvents .= $this->getDividerToday($aEvent);
 
                 $bFirst = false;
             }
