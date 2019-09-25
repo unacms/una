@@ -421,6 +421,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sContent = '';
         $sContent .= $this->getSizer($aParams);
 
+        $iFirst = 0;
         $iEvents = count($aEvents);
         if($iEvents > 0)
             $iFirst = (int)$aEvents[0]['id'];
