@@ -25,10 +25,11 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
             'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
-        		'category' => array('value' => '', 'field' => 'cat', 'operator' => '='),
-        		'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>'),
-        		'status' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
-        		'statusAdmin' => array('value' => 'active', 'field' => 'status_admin', 'operator' => '='),
+                'cmt_author' => array('value' => '', 'field' => 'cmt_author_id', 'operator' => '=', 'table' => 'bx_forum_cmts'),
+                'category' => array('value' => '', 'field' => 'cat', 'operator' => '='),
+                'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>'),
+                'status' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
+                'statusAdmin' => array('value' => 'active', 'field' => 'status_admin', 'operator' => '='),
             ),
             'paginate' => array('perPage' => getParam('bx_forum_per_page_browse'), 'start' => 0),
             'sorting' => 'last',
@@ -85,12 +86,12 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
                     $this->isError = true;
                 break;
 
-			case 'category':
-				$iCategory = (int)$aParams['category'];
-				$this->addMarkers(array(
-					'category_id' => $iCategory,
-					'category_name' => BxDolCategory::getObjectInstance($CNF['OBJECT_CATEGORY'])->getCategoryTitle($iCategory),
-				));
+            case 'category':
+                    $iCategory = (int)$aParams['category'];
+                    $this->addMarkers(array(
+                        'category_id' => $iCategory,
+                        'category_name' => BxDolCategory::getObjectInstance($CNF['OBJECT_CATEGORY'])->getCategoryTitle($iCategory),
+                    ));
 
                 $this->aCurrent['restriction']['category']['value'] = $iCategory;
 
@@ -99,17 +100,17 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
                 $this->aCurrent['rss']['link'] = 'modules/?r=forum/rss/' . $sMode . '/' . $iCategory;
                 break;
 
-			case 'new':
+            case 'new':
             case 'public':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_NEW']);
                 $this->aCurrent['title'] = _t('_bx_forum_page_title_browse_new');
                 $this->aCurrent['rss']['link'] = 'modules/?r=forum/rss/' . $sMode;
                 break;
 
-			case 'index':
+            case 'index':
                 $this->aCurrent['paginate']['perPage'] = getParam('bx_forum_per_page_index');
 
-			case 'latest':
+            case 'latest':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_TOP']);
                 $this->aCurrent['title'] = _t('_bx_forum_page_title_browse_latest');
                 $this->aCurrent['rss']['link'] = 'modules/?r=forum/rss/' . $sMode;
@@ -131,7 +132,7 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
                 $this->aCurrent['sorting'] = 'top';
                 break;
 
-			case 'popular':
+            case 'popular':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_POPULAR']);
                 $this->aCurrent['title'] = _t('_bx_forum_page_title_browse_popular');
                 $this->aCurrent['rss']['link'] = 'modules/?r=forum/rss/' . $sMode;
@@ -139,10 +140,32 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
                 break;
 
             case 'updated':
-                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_HOME']);
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_UPDATED']);
                 $this->aCurrent['title'] = _t('_bx_forum_page_title_browse_updated');
                 $this->aCurrent['rss']['link'] = 'modules/?r=forum/rss/' . $sMode;
                 $this->aCurrent['sorting'] = 'updated';
+                break;
+
+            case 'partaken':
+                $this->aCurrent['restriction']['cmt_author']['value'] = bx_get_logged_profile_id();
+
+                if(!isset($this->aCurrent['join']))
+                    $this->aCurrent['join'] = array();
+
+                $this->aCurrent['join']['cmts'] = array(
+                    'type' => 'INNER',
+                    'table' => 'bx_forum_cmts',
+                    'mainField' => 'id',
+                    'onField' => 'cmt_object_id',
+                    'joinFields' => array('cmt_author_id'),
+                    'groupTable' => 'bx_forum_discussions',
+                    'groupField' => 'id'
+                );
+
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_PARTAKEN']);
+                $this->aCurrent['title'] = _t('_bx_forum_page_title_browse_partaken');
+                $this->aCurrent['rss']['link'] = 'modules/?r=forum/rss/' . $sMode;
+                $this->aCurrent['sorting'] = 'partaken';
                 break;
 
             case '': // search results
@@ -171,17 +194,20 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
             case 'featured':
                 $aSql['order'] = ' ORDER BY `bx_forum_discussions`.`featured` DESC';
                 break;
-			case 'updated':
+            case 'updated':
                 $aSql['order'] = ' ORDER BY `bx_forum_discussions`.`changed` DESC';
                 break;
-			case 'latest':
+            case 'latest':
                 $aSql['order'] = ' ORDER BY `bx_forum_discussions`.`lr_timestamp` DESC';
                 break;
-			case 'top':
+            case 'top':
                 $aSql['order'] = ' ORDER BY `bx_forum_discussions`.`comments` DESC';
                 break;
             case 'popular':
                 $aSql['order'] = ' ORDER BY `bx_forum_discussions`.`views` DESC';
+                break;
+            case 'partaken':
+                $aSql['order'] = ' ORDER BY MAX(`bx_forum_cmts`.`cmt_time`) DESC';
                 break;
         }
         return $aSql;

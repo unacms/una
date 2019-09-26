@@ -97,6 +97,7 @@
     <string name="_bx_forum_page_title_browse_top"><![CDATA[Top Discussions]]></string>
     <string name="_bx_forum_page_title_browse_popular"><![CDATA[Popular Discussions]]></string>
     <string name="_bx_forum_page_title_browse_updated"><![CDATA[Updated Discussions]]></string>
+    <string name="_bx_forum_page_title_browse_partaken"><![CDATA[Partaken Discussions]]></string>
     <string name="_bx_forum_page_title_sys_home"><![CDATA[Discussions Home]]></string>
     <string name="_bx_forum_page_title_home"><![CDATA[Discussions]]></string>
     <string name="_bx_forum_page_block_title_featured_entries"><![CDATA[Featured Discussions]]></string>
@@ -145,7 +146,6 @@
     <string name="_bx_forum_page_block_title_entries_actions"><![CDATA[Discussions actions]]></string>
 	<string name="_bx_forum_page_block_title_sys_entry_context"><![CDATA[Posted in]]></string>
   	<string name="_bx_forum_page_block_title_entry_context"><![CDATA[Posted in]]></string>
-    
 	<string name="_bx_forum_page_block_title_browse_cmts"><![CDATA[Forum's Comments]]></string>
     <string name="_bx_forum_page_title_sys_manage"><![CDATA[Manage Own]]></string>
 	<string name="_bx_forum_page_title_sys_manage_administration"><![CDATA[Manage All]]></string>
@@ -164,6 +164,10 @@
     <string name="_bx_forum_page_block_title_search_results"><![CDATA[Search Results]]></string>
     <string name="_bx_forum_page_block_title_search_form_cmts"><![CDATA[Comments Search Form]]></string>
     <string name="_bx_forum_page_block_title_search_results_cmts"><![CDATA[Comments Search Results]]></string>
+    <string name="_bx_forum_page_title_sys_entries_partaken"><![CDATA[Partaken]]></string>
+    <string name="_bx_forum_page_title_entries_partaken"><![CDATA[Partaken]]></string>
+    <string name="_bx_forum_page_block_title_partaken_entries"><![CDATA[Partaken]]></string>
+    
     <string name="_bx_forum_menu_title_submenu"><![CDATA[Forum Submenu]]></string>
     <string name="_bx_forum_menu_set_title_submenu"><![CDATA[Forum Submenu]]></string>
     <string name="_bx_forum_menu_item_title_system_create_entry"><![CDATA[Discussion]]></string>
@@ -192,6 +196,8 @@
     <string name="_bx_forum_menu_item_title_more"><![CDATA[]]></string>
     <string name="_bx_forum_menu_item_title_system_entries_home"><![CDATA[Discussions]]></string>
     <string name="_bx_forum_menu_item_title_entries_home"><![CDATA[Discussions]]></string>
+    <string name="_bx_forum_menu_item_title_system_entries_partaken"><![CDATA[Partaken]]></string>
+    <string name="_bx_forum_menu_item_title_entries_partaken"><![CDATA[Partaken]]></string>
     <string name="_bx_forum_menu_item_title_system_entries_public"><![CDATA[Latest]]></string>
     <string name="_bx_forum_menu_item_title_entries_public"><![CDATA[Latest]]></string>
     <string name="_bx_forum_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>

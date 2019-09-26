@@ -11,7 +11,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = @sName;
-DELETE FROM `sys_pages_blocks` WHERE `module` = @sName OR `object` LIKE 'bx_forum%';
+DELETE FROM `sys_pages_blocks` WHERE `module` = @sName OR `object` LIKE 'bx_forum_%';
 
 
 -- MENU

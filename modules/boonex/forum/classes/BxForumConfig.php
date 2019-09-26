@@ -79,6 +79,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'URL_NEW' => 'page.php?i=discussions-new',
             'URL_TOP' => 'page.php?i=discussions-top',
             'URL_POPULAR' => 'page.php?i=discussions-popular',
+            'URL_PARTAKEN' => 'page.php?i=discussions-partaken',
             'URL_MANAGE_COMMON' => 'page.php?i=discussions-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=discussions-administration',
 

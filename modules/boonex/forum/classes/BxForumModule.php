@@ -286,7 +286,7 @@ class BxForumModule extends BxBaseModTextModule
         $sType = 'popular';
 
         if($sUnitView != 'table')
-            $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+            return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
         return $this->_serviceBrowseTable(array('type' => $sType), $bShowHeader);
     }
@@ -316,9 +316,72 @@ class BxForumModule extends BxBaseModTextModule
         $sType = 'updated';
 
         if($sUnitView != 'table')
-            $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+            return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
         return $this->_serviceBrowseTable(array('type' => $sType), $bShowHeader);
+    }
+
+        /**
+     * @page service Service Calls
+     * @section bx_forum Discussions
+     * @subsection bx_forum-page_blocks Page Blocks
+     * @subsubsection bx_forum-browse_partaken browse_partaken
+     * 
+     * @code bx_srv('bx_forum', 'browse_partaken', [...]); @endcode
+     * 
+     * Get page block with a list of partaken items represented as table.
+     * 
+     * @param $sUnitView (optional) string with unit view type.
+     * @param $bEmptyMessage (optional) boolean value determining whether an "Empty" message should be returned or not.
+     * @param $bAjaxPaginate (optional) boolean value determining whether an Ajax based pagination should be used or not.
+     * @return HTML string with block content to display on the site or false if something is wrong. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxForumModule::serviceBrowsePartaken
+     */
+    /** 
+     * @ref bx_forum-browse_partaken "browse_partaken"
+     */
+    public function serviceBrowsePartaken ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true, $bShowHeader = false)
+    {
+        $sType = 'partaken';
+
+        if($sUnitView != 'table')
+            return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+
+        $aSelect = array(
+            'tbla' => 'tco', 
+            'fld' => 'cmt_author_id',
+        );
+
+        $aJoin = array(
+            'tp' => 'INNER',
+            'tbl1' => 'bx_forum_cmts',
+            'tbl1a' => 'tco',
+            'fld1' => 'cmt_object_id',
+            'tbl2' => 'bx_forum_discussions',
+            'fld2' => 'id'
+        );
+
+        $aWhere = array(
+            'tbl' => 'tco', 
+            'fld' => 'cmt_author_id', 
+            'val' => bx_get_logged_profile_id(), 
+            'opr' => '='
+        );
+
+        $aGroupBy = array(
+            'tbl' => 'bx_forum_discussions', 
+            'fld' => 'id',
+        );
+
+        return $this->_serviceBrowseTable(array(
+            'type' => $sType,
+            'select' => $aSelect,
+            'join' => $aJoin,
+            'where' => $aWhere,
+            'group_by' => $aGroupBy,
+            'empty_message' => $bEmptyMessage
+        ), $bShowHeader);
     }
 
     /**
