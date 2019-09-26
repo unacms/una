@@ -22,8 +22,8 @@
 	<string name="_bx_albums_form_entry_display_delete"><![CDATA[Удалить альбом]]></string>
 	<string name="_bx_albums_form_entry_display_view"><![CDATA[Просмотреть альбом]]></string>
 	<string name="_bx_albums_form_entry_input_author"><![CDATA[Автор]]></string>
-	<string name="_bx_albums_form_entry_input_sys_do_submit"><![CDATA[Выполнить]]></string>
-	<string name="_bx_albums_form_entry_input_do_submit"><![CDATA[Выполнить]]></string>
+	<string name="_bx_albums_form_entry_input_sys_do_submit"><![CDATA[Опубликовать]]></string>
+	<string name="_bx_albums_form_entry_input_do_submit"><![CDATA[Опубликовать]]></string>
 	<string name="_bx_albums_form_entry_input_sys_title"><![CDATA[Заголовок]]></string>
 	<string name="_bx_albums_form_entry_input_title"><![CDATA[Заголовок]]></string>
 	<string name="_bx_albums_form_entry_input_title_err"><![CDATA[Необходим заголовок. Пожалуйста, заполните это поле.]]></string>
@@ -47,8 +47,8 @@
         <string name="_bx_albums_form_media_display_edit"><![CDATA[Редактировать изображение]]></string>
 	<string name="_bx_albums_form_media_input_sys_title"><![CDATA[Заголовок]]></string>
 	<string name="_bx_albums_form_media_input_title"><![CDATA[Заголовок]]></string>
-        <string name="_bx_albums_form_media_input_sys_do_submit"><![CDATA[Выполнить]]></string>
-	<string name="_bx_albums_form_media_input_do_submit"><![CDATA[Выполнить]]></string>
+        <string name="_bx_albums_form_media_input_sys_do_submit"><![CDATA[Опубликовать]]></string>
+	<string name="_bx_albums_form_media_input_do_submit"><![CDATA[Опубликовать]]></string>
         <string name="_bx_albums_form_media_input_sys_do_cancel"><![CDATA[Отмена]]></string>
 	<string name="_bx_albums_form_media_input_do_cancel"><![CDATA[Отмена]]></string>
 

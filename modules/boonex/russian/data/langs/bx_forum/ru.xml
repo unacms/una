@@ -21,8 +21,8 @@
 	<string name="_bx_forum_form_entry_display_edit"><![CDATA[Редактирование обсуждения]]></string>
 	<string name="_bx_forum_form_entry_display_view"><![CDATA[Просмотр обсуждения]]></string>
 	<string name="_bx_forum_form_entry_input_author"><![CDATA[Автор]]></string>
-	<string name="_bx_forum_form_entry_input_sys_do_submit"><![CDATA[Выполнить]]></string>
-	<string name="_bx_forum_form_entry_input_do_submit"><![CDATA[Выполнить]]></string>
+	<string name="_bx_forum_form_entry_input_sys_do_submit"><![CDATA[Опубликовать]]></string>
+	<string name="_bx_forum_form_entry_input_do_submit"><![CDATA[Опубликовать]]></string>
 	<string name="_bx_forum_form_entry_input_sys_text"><![CDATA[Текст]]></string>
 	<string name="_bx_forum_form_entry_input_text"><![CDATA[Текст]]></string>
 	<string name="_bx_forum_form_entry_input_text_err"><![CDATA[Поле для текста не может быть пустым]]></string>
@@ -97,6 +97,7 @@
     <string name="_bx_forum_page_title_browse_top"><![CDATA[ТОП обсуждений]]></string>
     <string name="_bx_forum_page_title_browse_popular"><![CDATA[Популарные обсуждения]]></string>
     <string name="_bx_forum_page_title_browse_updated"><![CDATA[Обновлённые обсуждения]]></string>
+    <string name="_bx_forum_page_title_browse_partaken"><![CDATA[Отвеченные обсуждения]]></string>
     <string name="_bx_forum_page_title_sys_home"><![CDATA[Обсуждения - Домой]]></string>
     <string name="_bx_forum_page_title_home"><![CDATA[Обсуждения]]></string>
     <string name="_bx_forum_page_block_title_featured_entries"><![CDATA[Продвинутые обсуждения]]></string>
@@ -146,8 +147,7 @@
     <string name="_bx_forum_page_block_title_browse_cmts"><![CDATA[Форум - Комментарии]]></string>
     <string name="_bx_forum_page_block_title_sys_entry_context"><![CDATA[Опубликовано в]]></string>
     <string name="_bx_forum_page_block_title_entry_context"><![CDATA[Опубликовано в]]></string>
-
-  <string name="_bx_forum_page_title_sys_manage"><![CDATA[Управление собственными обсуждениями]]></string>
+    <string name="_bx_forum_page_title_sys_manage"><![CDATA[Управление собственными обсуждениями]]></string>
 	<string name="_bx_forum_page_title_sys_manage_administration"><![CDATA[Управление всеми обсуждениями]]></string>
 	<string name="_bx_forum_page_title_manage"><![CDATA[Управление]]></string>
 	<string name="_bx_forum_page_block_title_system_manage"><![CDATA[Управление собственными обсуждениями]]></string>
@@ -164,8 +164,11 @@
     <string name="_bx_forum_page_block_title_search_results"><![CDATA[Результаты поиска]]></string>
     <string name="_bx_forum_page_block_title_search_form_cmts"><![CDATA[Форма поиска комментариев]]></string>
     <string name="_bx_forum_page_block_title_search_results_cmts"><![CDATA[Результаты поиска комментариев]]></string>
+    <string name="_bx_forum_page_title_sys_entries_partaken"><![CDATA[Отвеченные мной]]></string>
+    <string name="_bx_forum_page_title_entries_partaken"><![CDATA[Отвеченные мной]]></string>
+    <string name="_bx_forum_page_block_title_partaken_entries"><![CDATA[Отвеченные мной]]></string>
 
-	<string name="_bx_forum_menu_title_submenu"><![CDATA[Форум - Подменю]]></string>
+    <string name="_bx_forum_menu_title_submenu"><![CDATA[Форум - Подменю]]></string>
     <string name="_bx_forum_menu_set_title_submenu"><![CDATA[Форум - Подменю]]></string>
     <string name="_bx_forum_menu_item_title_system_create_entry"><![CDATA[Обсуждение]]></string>
     <string name="_bx_forum_menu_item_title_create_entry"><![CDATA[Обсуждение]]></string>
@@ -193,6 +196,8 @@
     <string name="_bx_forum_menu_item_title_unhide_entry"><![CDATA[Показать]]></string>
     <string name="_bx_forum_menu_item_title_system_entries_home"><![CDATA[Обсуждения]]></string>
     <string name="_bx_forum_menu_item_title_entries_home"><![CDATA[Обсуждения]]></string>
+    <string name="_bx_forum_menu_item_title_system_entries_partaken"><![CDATA[Отвеченные]]></string>
+    <string name="_bx_forum_menu_item_title_entries_partaken"><![CDATA[Отвеченные]]></string>
     <string name="_bx_forum_menu_item_title_system_entries_public"><![CDATA[Недавние]]></string>
     <string name="_bx_forum_menu_item_title_entries_public"><![CDATA[Недавние]]></string>
     <string name="_bx_forum_menu_item_title_system_entries_manage"><![CDATA[Управление]]></string>

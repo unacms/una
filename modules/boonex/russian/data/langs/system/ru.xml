@@ -53,7 +53,7 @@
 	<string name="_From"><![CDATA[От]]></string>
 	<string name="_Header"><![CDATA[Заголовок]]></string>
 	<string name="_Incorrect Captcha"><![CDATA[Неправильная капча]]></string>
-	<string name="_Incorrect Email"><![CDATA[Неправильный email]]></string>
+	<string name="_Incorrect Email"><![CDATA[Введите правильный адрес электронной почты]]></string>
 	<string name="_Info"><![CDATA[Инфо]]></string>
 	<string name="_Keyword"><![CDATA[Ключевое слово]]></string>
 	<string name="_LookinFemale"><![CDATA[Женщина]]></string>
@@ -1590,7 +1590,7 @@
 	<string name="_cmt_load_more_replies_head"><![CDATA[Увидеть новые ответы...]]></string>
 	<string name="_cmt_load_more_replies_tail"><![CDATA[Увидеть старые ответы...]]></string>
 	<string name="_cmt_load_more_replies_popular"><![CDATA[Увидеть ещё ответы...]]></string>
-        <string name="_cmt_txt_new_content"><![CDATA[Новый контент]]></string>
+        <string name="_cmt_txt_new_content"><![CDATA[Новое сообщение]]></string>
 	<string name="_cmt_txt_link_show"><![CDATA[Прочитать]]></string>
 	<string name="_cmt_txt_link_reply"><![CDATA[Ответить]]></string>
         <string name="_cmt_txt_added_sample"><![CDATA[добавил новый комментарий]]></string>
@@ -1977,7 +1977,7 @@
 	<string name="_sys_form_account_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если Вы действительно хотите удалить свой аккаунт вместе с содержимым.]]></string>
 	<string name="_sys_form_account_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено.]]></string>
 	<string name="_sys_form_account_input_email"><![CDATA[Email]]></string>
-	<string name="_sys_form_account_input_email_error"><![CDATA[Неправильный email]]></string>
+	<string name="_sys_form_account_input_email_error"><![CDATA[Введите правильный адрес электронной почты]]></string>
 	<string name="_sys_form_account_input_email_uniq_error"><![CDATA[Этот эл. адрес уже зарегистрирован. Пожалуйста, воспользуйтесь ссылкой <a href="{0}">Забыли пароль?</a>, чтобы восстановить доступ к своему аккаунту.]]></string>
 	<string name="_sys_form_account_input_email_uniq_error_loggedin"><![CDATA[Этот эл. адрес уже кем-то используется.]]></string>
 	<string name="_sys_form_account_input_name"><![CDATA[Имя аккаунта]]></string>
@@ -1987,7 +1987,7 @@
 	<string name="_sys_form_account_input_password_confirm_error"><![CDATA[Не удалось подтвердить пароль]]></string>
 	<string name="_sys_form_account_input_password_current"><![CDATA[Текущий пароль]]></string>
 	<string name="_sys_form_account_input_password_current_error"><![CDATA[Неправильный текущий пароль. Введите пароль, который Вы используете для доступа к этому сайту.]]></string>
-	<string name="_sys_form_account_input_password_error"><![CDATA[Пароль должен иметь как минимум 8 символов, и содержать по крайней мере 1 прописную латинскую букву, 1 строчную латинскую букву и 1 число.]]></string>
+	<string name="_sys_form_account_input_password_error"><![CDATA[Пароль должен иметь как минимум 8 символов, содержать 1 заглавную латинскую букву, 1 строчную букву и 1 число.]]></string>
 	<string name="_sys_form_account_input_phone_error"><![CDATA[Это обязательное поле.]]></string>
 	<string name="_sys_form_account_input_receive_news"><![CDATA[Получать новости]]></string>
 	<string name="_sys_form_account_input_receive_updates"><![CDATA[Получать обновления сайта]]></string>
@@ -2002,11 +2002,11 @@
 	<string name="_sys_form_comment_input_caption_system_cmt_id"><![CDATA[Комментировать ID]]></string>
 	<string name="_sys_form_comment_input_caption_system_cmt_image"><![CDATA[Изображение]]></string>
 	<string name="_sys_form_comment_input_caption_system_cmt_parent_id"><![CDATA[Родительский ID]]></string>
-	<string name="_sys_form_comment_input_caption_system_cmt_submit"><![CDATA[Сообщение]]></string>
+	<string name="_sys_form_comment_input_caption_system_cmt_submit"><![CDATA[Отправить]]></string>
 	<string name="_sys_form_comment_input_caption_system_cmt_text"><![CDATA[Текст]]></string>
 	<string name="_sys_form_comment_input_caption_system_id"><![CDATA[ID объекта]]></string>
 	<string name="_sys_form_comment_input_caption_system_sys"><![CDATA[Тип объекта]]></string>
-	<string name="_sys_form_comment_input_submit"><![CDATA[Сообщение]]></string>
+	<string name="_sys_form_comment_input_submit"><![CDATA[Отправить]]></string>
 	<string name="_sys_form_confirm_email"><![CDATA[Подтверждение email-а]]></string>
 	<string name="_sys_form_confirm_email_input_caption_system_code"><![CDATA[Код верификации]]></string>
 	<string name="_sys_form_confirm_email_input_caption_system_do_submit"><![CDATA[Выполнить]]></string>
@@ -2138,12 +2138,12 @@
 	<string name="_sys_form_review_input_caption_system_cmt_id"><![CDATA[ID]]></string>
 	<string name="_sys_form_review_input_caption_system_cmt_image"><![CDATA[Изображение]]></string>
 	<string name="_sys_form_review_input_caption_system_cmt_parent_id"><![CDATA[Родительский ID]]></string>
-	<string name="_sys_form_review_input_caption_system_cmt_submit"><![CDATA[Сообщение]]></string>
+	<string name="_sys_form_review_input_caption_system_cmt_submit"><![CDATA[Отправить]]></string>
 	<string name="_sys_form_review_input_caption_system_cmt_text"><![CDATA[Текст]]></string>
         <string name="_sys_form_review_input_caption_system_cmt_mood"><![CDATA[Оценка]]></string>
 	<string name="_sys_form_review_input_caption_system_id"><![CDATA[ID объекта]]></string>
 	<string name="_sys_form_review_input_caption_system_sys"><![CDATA[Тип объекта]]></string>
-	<string name="_sys_form_review_input_submit"><![CDATA[Сообщение]]></string>
+	<string name="_sys_form_review_input_submit"><![CDATA[Отправить]]></string>
 	<string name="_sys_form_unsubscribe"><![CDATA[Отписаться]]></string>
 	<string name="_sys_form_unsubscribe_input_caption_system_code"><![CDATA[Код безопасности]]></string>
 	<string name="_sys_form_unsubscribe_input_caption_system_do_submit"><![CDATA[Выполнить]]></string>
@@ -2785,7 +2785,7 @@
 	<string name="_sys_txt_confirm_phone_set_phone_desc_set_phone"><![CDATA[Пожалуйста, введите телефонный номер на который будет отправлено SMS с кодом подтверждения.]]></string>
 	<string name="_sys_txt_confirm_phone_set_phone_desc_phone_confirmation"><![CDATA[Пожалуйста, введите код проверки из SMS]]></string>
 
-	<string name="_sys_txt_create_post_placeholder"><![CDATA[Что происходит, {0}]]></string>
+	<string name="_sys_txt_create_post_placeholder"><![CDATA[Что нового, {0}]]></string>
 
     <string name="_sys_txt_current_picture"><![CDATA[Текущая картинка]]></string>
 	<string name="_sys_txt_data_successfully_submitted"><![CDATA[Выполнено]]></string>
@@ -2816,7 +2816,7 @@
     <string name="_sys_txt_form_entry_input_picture_insert"><![CDATA[Вставить в сообщение]]></string>
 	<string name="_sys_txt_form_entry_input_picture_pic_url"><![CDATA[URL прикрепления:]]></string>
     <string name="_sys_txt_form_entry_input_picture_use_as_thumb"><![CDATA[Использовать в качестве миниатюры]]></string>
-	<string name="_sys_txt_form_submission_error"><![CDATA[Неправильная информация. Пожалуйста, проверьте ввод и отошлите снова.]]></string>
+	<string name="_sys_txt_form_submission_error"><![CDATA[Неправильная информация. Пожалуйста, проверьте ввод и отправьте снова.]]></string>
 	<string name="_sys_txt_form_submission_error_csrf_expired"><![CDATA[Маркер устарел. Пожалуйста попробуйте снова.]]></string>
 
     <string name="_sys_txt_homepage_cover"><![CDATA[Сплоченность людей — нерушимая крепость.<br /><button class="bx-btn bx-hide-when-logged-in bx-def-margin-top" onclick="document.location='{0}'">Присоединиться!</button>]]></string>
