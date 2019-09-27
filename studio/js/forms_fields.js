@@ -109,10 +109,12 @@ BxDolStudioFormsFields.prototype.onChangeType = function(iDiId) {
 	glGrids[this.sObjNameGrid].action('edit', {}, 'type=' + sType + '&di_id=' + iDiId, false, false);
 };
 
-BxDolStudioFormsFields.prototype.onSelectChecker = function(oSelect) {
+BxDolStudioFormsFields.prototype.onSelectChecker = function(oSelect, bClear) {
     var sChecker = $(oSelect).val();
+    var oInputs = $('#bx-form-element-checker_params_length_min, #bx-form-element-checker_params_length_max, #bx-form-element-checker_params_preg, #bx-form-element-checker_params_required').hide().find('input').attr('disabled', 'disabled');
+    if(bClear || bClear == 'undefined')
+        oInputs.val('');
 
-    $('#bx-form-element-checker_params_length_min, #bx-form-element-checker_params_length_max, #bx-form-element-checker_params_preg, #bx-form-element-checker_params_required').hide().find('input').val('').attr('disabled', 'disabled');
     switch(sChecker) {
         case 'length':
             $('#bx-form-element-checker_params_length_min, #bx-form-element-checker_params_length_max').show().find('input').removeAttr('disabled');
@@ -129,13 +131,18 @@ BxDolStudioFormsFields.prototype.onSelectChecker = function(oSelect) {
 };
 
 BxDolStudioFormsFields.prototype.onCheckRequired = function(oCheckbox) {
-	var sId = 'bx-form-element-checker_func';
-	if($(oCheckbox).attr('checked') != undefined)
-		$('#' + sId + ',#bx-form-element-checker_error').show();
-	else {
-		$('#' + sId).hide().find('select').val('');
-		$('#bx-form-element-checker_params_length_min, #bx-form-element-checker_params_length_max, #bx-form-element-checker_params_preg, #bx-form-element-checker_error, #bx-form-element-checker_params_required').hide().find('input').val('');
-	}
+    var sId = 'bx-form-element-checker_func';
+    if($(oCheckbox).attr('checked') != undefined) {
+        $('#' + sId + ',#bx-form-element-checker_error').show();
+
+        var oSelect = $('#' + sId + ' select');
+        if(oSelect.val() != '')
+            this.onSelectChecker(oSelect, false);
+    }
+    else {
+        $('#' + sId).hide().find('select').val('');
+        $('#bx-form-element-checker_params_length_min, #bx-form-element-checker_params_length_max, #bx-form-element-checker_params_preg, #bx-form-element-checker_error, #bx-form-element-checker_params_required').hide().find('input').val('');
+    }
 };
 
 BxDolStudioFormsFields.prototype.onChangeVisibleFor = function(oSelect) {

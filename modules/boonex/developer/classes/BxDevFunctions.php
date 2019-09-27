@@ -50,7 +50,11 @@ class BxDevFunctions
                     $aInputs[$sName]['checker']['func'] = str_ireplace($sTrlCheckFuncPostfix, '', $aInput['checker']['func']);
             }
 
-		$aFields = array(
+        unset($aInputs['required']['attrs']['onchange']);
+        unset($aInputs['checker_func']['attrs']['disabled'], $aInputs['checker_func']['tr_attrs']['style']);
+        unset($aInputs['checker_error']['attrs']['disabled'], $aInputs['checker_error']['tr_attrs']['style']);
+
+        $aFields = array(
             'editable' => array(
                 'type' => 'switcher',
                 'name' => 'editable',
