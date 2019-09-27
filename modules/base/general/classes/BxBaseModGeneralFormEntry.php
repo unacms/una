@@ -185,7 +185,10 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             if (!empty($aThumb) && is_array($aThumb) && ($iFileThumb = array_pop($aThumb)))
                 $aValsToAdd[$CNF['FIELD_THUMB']] = $iFileThumb;
         }
-        
+
+        if(!empty($CNF['OBJECT_METATAGS']))
+            $this->_processMetas($aValsToAdd);
+
         if(isset($CNF['FIELD_STATUS']) && !empty($CNF['FIELDS_DELAYED_PROCESSING']) && !empty($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4'])) {
             $oTranscoder = BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']);
 
@@ -243,6 +246,9 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             if (!empty($aThumb) && is_array($aThumb) && ($iFileThumb = array_pop($aThumb)))
                 $aValsToAdd[$CNF['FIELD_THUMB']] = $iFileThumb;
         }
+
+        if(!empty($CNF['OBJECT_METATAGS']))
+            $this->_processMetas($aValsToAdd);
 
         if(isset($CNF['FIELD_STATUS']) && isset($aContentInfo[$CNF['FIELD_STATUS']]) && $aContentInfo[$CNF['FIELD_STATUS']] == 'failed')
             $aValsToAdd[$CNF['FIELD_STATUS']] = 'active';
@@ -431,6 +437,26 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
                 $this->_aTrackFieldsChanges[$sField] = false;
             else
                 $this->_aTrackFieldsChanges[$sField]['new'] = $mixedContent[$sField];
+    }
+
+    protected function _processMetas(&$aValsToAdd)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $sKey = 'FIELD_LABELS';
+        if(isset($CNF[$sKey]) && isset($this->aInputs[$CNF[$sKey]]) && empty($aValsToAdd[$CNF[$sKey]])) {
+            $aLabels = $this->getCleanValue($CNF[$sKey]);
+            if(!empty($aLabels) && is_array($aLabels))
+                $aValsToAdd[$CNF[$sKey]] = serialize($aLabels);
+        }
+
+        $sKey1 = 'FIELD_LOCATION';
+        $sKey2 = 'FIELD_LOCATION_PREFIX';
+        if(isset($CNF[$sKey1]) && isset($CNF[$sKey2]) && isset($this->aInputs[$CNF[$sKey1]]) && empty($aValsToAdd[$CNF[$sKey1]])) {               
+            $aLocation = BxDolMetatags::locationsRetrieveFromForm($CNF[$sKey2], $this);
+            if(!empty($aLocation) && is_array($aLocation))
+                $aValsToAdd[$CNF[$sKey1]] = serialize(BxDolMetatags::locationsParseComponents($aLocation));
+        }
     }
 }
 

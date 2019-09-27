@@ -1484,16 +1484,24 @@ class BxBaseModGeneralModule extends BxDolModule
             return;
 
         $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
-        $oMetatags->metaAddAuto($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']);
+        $oMetatags->metaAddAuto($iContentId, $aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']);
 
-        if($oMetatags->locationsIsEnabled())
-            $oMetatags->locationsAddFromForm($aContentInfo[$CNF['FIELD_ID']], $CNF['FIELD_LOCATION_PREFIX']);
+        $sKey = 'FIELD_LOCATION';
+        if($oMetatags->locationsIsEnabled() && !empty($CNF[$sKey]) && !empty($aContentInfo[$CNF[$sKey]])) {
+            $aLocation = unserialize($aContentInfo[$CNF[$sKey]]);
+            if(!empty($aLocation) && is_array($aLocation))
+                call_user_func_array(array($oMetatags, 'locationsAdd'), array_merge(array($iContentId), array_values($aLocation)));
+        }
 
-        if(!empty($CNF['FIELD_LABELS']) && ($aLabels = bx_get($CNF['FIELD_LABELS'])) && $oMetatags->keywordsIsEnabled())
-            foreach ($aLabels as $sLabel)
-                $oMetatags->keywordsAddOne($aContentInfo[$CNF['FIELD_ID']], $sLabel, false);
+        $sKey = 'FIELD_LABELS';
+        if($oMetatags->keywordsIsEnabled() && !empty($CNF[$sKey]) && !empty($aContentInfo[$CNF[$sKey]])) {
+            $aLabels = unserialize($aContentInfo[$CNF[$sKey]]);
+            if(!empty($aLabels) && is_array($aLabels))
+                foreach ($aLabels as $sLabel)
+                    $oMetatags->keywordsAddOne($iContentId, $sLabel, false);
+        }
     }
-    
+
     public function processMetasEdit($iContentId, $oForm)
     {
         $CNF = &$this->_oConfig->CNF;
@@ -1510,13 +1518,22 @@ class BxBaseModGeneralModule extends BxDolModule
             return;
 
         $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
-        $oMetatags->metaAddAuto($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT']);
-        if(isset($CNF['FIELD_LOCATION_PREFIX']) && isset($oForm->aInputs[$CNF['FIELD_LOCATION_PREFIX']])  && $oMetatags->locationsIsEnabled())
-            $oMetatags->locationsAddFromForm($aContentInfo[$CNF['FIELD_ID']], empty($CNF['FIELD_LOCATION_PREFIX']) ? '' : $CNF['FIELD_LOCATION_PREFIX']);
+        $oMetatags->metaAddAuto($iContentId, $aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT']);
 
-        if(!empty($CNF['FIELD_LABELS']) && ($aLabels = bx_get($CNF['FIELD_LABELS'])) && $oMetatags->keywordsIsEnabled())
-            foreach ($aLabels as $sLabel)
-                $oMetatags->keywordsAddOne($aContentInfo[$CNF['FIELD_ID']], $sLabel, false);
+        $sKey = 'FIELD_LOCATION';
+        if($oMetatags->locationsIsEnabled() && !empty($CNF[$sKey]) && !empty($aContentInfo[$CNF[$sKey]])) {
+            $aLocation = unserialize($aContentInfo[$CNF[$sKey]]);
+            if(!empty($aLocation) && is_array($aLocation))
+                call_user_func_array(array($oMetatags, 'locationsAdd'), array_merge(array($iContentId), array_values($aLocation)));
+        }
+
+        $sKey = 'FIELD_LABELS';
+        if($oMetatags->keywordsIsEnabled() && !empty($CNF[$sKey]) && !empty($aContentInfo[$CNF[$sKey]])) {
+            $aLabels = unserialize($aContentInfo[$CNF[$sKey]]);
+            if(!empty($aLabels) && is_array($aLabels))
+                foreach ($aLabels as $sLabel)
+                    $oMetatags->keywordsAddOne($iContentId, $sLabel, false);
+        }
     }
 
     public function getEntryImageData($aContentInfo, $sField = 'FIELD_THUMB', $aTranscoders = array())

@@ -10,6 +10,8 @@ CREATE TABLE IF NOT EXISTS `bx_posts_posts` (
   `cat` int(11) NOT NULL,
   `multicat` text NOT NULL,
   `text` mediumtext NOT NULL,
+  `labels` text NOT NULL,
+  `location` text NOT NULL,
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',

@@ -206,7 +206,9 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
          */
         $this->_oModule->processMetasAdd($iContentId);
 
-        // Create alert about the completed action.
+        /*
+         * Create alert about the completed action.
+         */
         $this->_oModule->alertAfterAdd($aContentInfo);
 
         return array('code' => 0, 'message' => '', 'content' => $aContentInfo);
