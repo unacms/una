@@ -393,6 +393,11 @@ ul.bx-menu-floating-blocks {
 .bx-media-phone .bx-menu-floating-blocks-dash li {
     width:49.5%;
 }
+
+.bx-media-desktop .bx-menu-floating-blocks-dash{
+	min-width: 222px;
+}
+
 .bx-menu-floating-blocks-dash-item A{
     display:flex !important;
     flex-direction: row;
