@@ -21,6 +21,11 @@ class BxAdsMenuViewActions extends BxBaseModTextMenuViewActions
         parent::__construct($aObject, $oTemplate);
     }
 
+    protected function _getMenuItemInterested($aItem)
+    {
+        return $this->_getMenuItemByNameActions($aItem);
+    }
+    
     protected function _getMenuItemEditAd($aItem)
     {
         return $this->_getMenuItemByNameActions($aItem);

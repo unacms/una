@@ -109,7 +109,8 @@ class BxAdsSearchResult extends BxBaseModTextSearchResult
 
             case 'category':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_CATEGORIES']);
-                $this->aCurrent['restriction']['category']['value'] = $aParams['category'];
+                if(!empty($aParams['category']))
+                    $this->aCurrent['restriction']['category']['value'] = $aParams['category'];
                 $this->aCurrent['title'] = _t('_bx_ads_page_title_browse_category');
                 $this->aCurrent['rss']['link'] = 'modules/?r=ads/rss/' . $sMode;
                 $this->aCurrent['sorting'] = 'last';

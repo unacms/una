@@ -20,6 +20,13 @@ class BxAdsMenuView extends BxBaseModTextMenuView
 
         parent::__construct($aObject, $oTemplate);
     }
+
+    public function setContentId($iContentId)
+    {
+        parent::setContentId($iContentId);
+
+        $this->addMarkers(array('js_object' => $this->_oModule->_oConfig->getJsObject('entry')));
+    }
 }
 
 /** @} */

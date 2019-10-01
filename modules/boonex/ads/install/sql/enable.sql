@@ -16,7 +16,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_ads_per_page_profile', '6', @iCategId, '_bx_ads_option_per_page_profile', 'digit', '', '', '', 12),
 ('bx_ads_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', 15),
 ('bx_ads_rss_num', '10', @iCategId, '_bx_ads_option_rss_num', 'digit', '', '', '', 20),
-('bx_ads_searchable_fields', 'title,text', @iCategId, '_bx_ads_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:21:"get_searchable_fields";}', 30);
+('bx_ads_searchable_fields', 'title,text', @iCategId, '_bx_ads_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:21:"get_searchable_fields";}', 30),
+('bx_ads_lifetime', '30', @iCategId, '_bx_ads_option_lifetime', 'digit', '', '', '', 40);
 
 
 -- PAGE: create entry
@@ -204,8 +205,9 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_ads_view', 'bx_ads', '_bx_ads_menu_set_title_view_entry', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_ads_view', 'bx_ads', 'edit-ad', '_bx_ads_menu_item_title_system_edit_entry', '_bx_ads_menu_item_title_edit_entry', 'page.php?i=edit-ad&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 1),
-('bx_ads_view', 'bx_ads', 'delete-ad', '_bx_ads_menu_item_title_system_delete_entry', '_bx_ads_menu_item_title_delete_entry', 'page.php?i=delete-ad&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 2);
+('bx_ads_view', 'bx_ads', 'interested', '_bx_ads_menu_item_title_system_interested_entry', '_bx_ads_menu_item_title_interested_entry', 'javascript:void(0)', 'javascript:{js_object}.interested(this, {content_id})', '', 'map-marker', '', 2147483646, 1, 0, 10),
+('bx_ads_view', 'bx_ads', 'edit-ad', '_bx_ads_menu_item_title_system_edit_entry', '_bx_ads_menu_item_title_edit_entry', 'page.php?i=edit-ad&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 20),
+('bx_ads_view', 'bx_ads', 'delete-ad', '_bx_ads_menu_item_title_system_delete_entry', '_bx_ads_menu_item_title_delete_entry', 'page.php?i=delete-ad&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 30);
 
 -- MENU: all actions menu for view entry 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -215,8 +217,9 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_ads_view_actions', 'bx_ads', '_sys_menu_set_title_view_actions', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_ads_view_actions', 'bx_ads', 'edit-ad', '_bx_ads_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 10),
-('bx_ads_view_actions', 'bx_ads', 'delete-ad', '_bx_ads_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 20),
+('bx_ads_view_actions', 'bx_ads', 'interested', '_bx_ads_menu_item_title_system_interested_entry', '', '', '', '', '', '', '', 0, 2147483646, 1, 0, 10),
+('bx_ads_view_actions', 'bx_ads', 'edit-ad', '_bx_ads_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 20),
+('bx_ads_view_actions', 'bx_ads', 'delete-ad', '_bx_ads_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 30),
 ('bx_ads_view_actions', 'bx_ads', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 200),
 ('bx_ads_view_actions', 'bx_ads', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 210),
 ('bx_ads_view_actions', 'bx_ads', 'vote', '_sys_menu_item_title_system_va_vote', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 220),
@@ -278,9 +281,10 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_ads_snippet_meta', 'bx_ads', 'date', '_sys_menu_item_title_system_sm_date', '_sys_menu_item_title_sm_date', '', '', '', '', '', 2147483647, 1, 0, 1, 1),
 ('bx_ads_snippet_meta', 'bx_ads', 'author', '_sys_menu_item_title_system_sm_author', '_sys_menu_item_title_sm_author', '', '', '', '', '', 2147483647, 1, 0, 1, 2),
 ('bx_ads_snippet_meta', 'bx_ads', 'category', '_sys_menu_item_title_system_sm_category', '_sys_menu_item_title_sm_category', '', '', '', '', '', 2147483647, 1, 0, 1, 3),
-('bx_ads_snippet_meta', 'bx_ads', 'tags', '_sys_menu_item_title_system_sm_tags', '_sys_menu_item_title_sm_tags', '', '', '', '', '', 2147483647, 0, 0, 1, 4),
-('bx_ads_snippet_meta', 'bx_ads', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 2147483647, 0, 0, 1, 5),
-('bx_ads_snippet_meta', 'bx_ads', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 2147483647, 0, 0, 1, 6);
+('bx_ads_snippet_meta', 'bx_ads', 'price', '_bx_ads_menu_item_title_system_sm_price', '_bx_ads_menu_item_title_sm_price', '', '', '', '', '', 2147483647, 1, 0, 1, 4),
+('bx_ads_snippet_meta', 'bx_ads', 'tags', '_sys_menu_item_title_system_sm_tags', '_sys_menu_item_title_sm_tags', '', '', '', '', '', 2147483647, 0, 0, 1, 5),
+('bx_ads_snippet_meta', 'bx_ads', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 2147483647, 0, 0, 1, 6),
+('bx_ads_snippet_meta', 'bx_ads', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 2147483647, 0, 0, 1, 7);
 
 -- MENU: profile stats
 SET @iNotifMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_profile_stats' AND `active` = 1 LIMIT 1);
@@ -480,4 +484,10 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 
 -- CRON
 INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
+('bx_ads_pruning', '0 0 * * *', 'BxAdsCronPruning', 'modules/boonex/ads/classes/BxAdsCronPruning.php', ''),
 ('bx_ads_publishing', '* * * * *', 'BxAdsCronPublishing', 'modules/boonex/ads/classes/BxAdsCronPublishing.php', '');
+
+
+-- EMAIL TEMPLATES
+INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES 
+('bx_ads', '_bx_ads_et_txt_name_interested', 'bx_ads_interested', '_bx_ads_et_txt_subject_interested', '_bx_ads_et_txt_body_interested');

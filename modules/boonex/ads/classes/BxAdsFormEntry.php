@@ -14,6 +14,7 @@
  */
 class BxAdsFormEntry extends BxBaseModTextFormEntry
 {
+    protected $_iCategory;
     protected $_sGhostTemplateCover = 'form_ghost_template_cover.html';
 	
     public function __construct($aInfo, $oTemplate = false)
@@ -22,12 +23,8 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
         parent::__construct($aInfo, $oTemplate);
 
         $CNF = &$this->_oModule->_oConfig->CNF;
-        
-        $iCategory = 0;
-        if(bx_get('category') !== false)
-            $iCategory = (int)bx_get('category');
 
-        $this->_initCategoryFields($iCategory);
+        $this->_initCategoryFields();
 
     	if(isset($CNF['FIELD_COVER']) && isset($this->aInputs[$CNF['FIELD_COVER']])) {
             if($this->_oModule->checkAllowedSetThumb() === CHECK_ACTION_RESULT_ALLOWED) {
@@ -136,8 +133,8 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if(!empty($aInput['value'])) {
-            $aCategory = $this->_oModule->_oDb->getCategories(array('type' => 'id', 'id' => (int)$aInput['value']));
+        if(!empty($this->_iCategory)) {
+            $aCategory = $this->_oModule->_oDb->getCategories(array('type' => 'id', 'id' => $this->_iCategory));
             if(!empty($aCategory) && is_array($aCategory))
                 $aInput['value'] = bx_process_output(_t($aCategory['title']));
         }
@@ -184,21 +181,22 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
     	);
     }
 
-    protected function _initCategoryFields($iCategory)
+    protected function _initCategoryFields($iCategory = 0)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if(isset($CNF['FIELD_CATEGORY']) && isset($this->aInputs[$CNF['FIELD_CATEGORY']]) && $iCategory != 0) {
-            $this->aInputs[$CNF['FIELD_CATEGORY']]['value'] = $iCategory;
-        }
-        
-        if(isset($CNF['FIELD_CATEGORY_VIEW']) && isset($this->aInputs[$CNF['FIELD_CATEGORY_VIEW']]) && $iCategory != 0) {
-            $this->aInputs[$CNF['FIELD_CATEGORY_VIEW']]['value'] = $iCategory;
-        }
+        $this->_iCategory = (int)$iCategory;
+        if(empty($this->_iCategory) && bx_get('category') !== false)
+            $this->_iCategory = (int)bx_get('category');
 
-        if(isset($CNF['FIELD_CATEGORY_SELECT']) && isset($this->aInputs[$CNF['FIELD_CATEGORY_SELECT']])) {
+        if(isset($CNF['FIELD_CATEGORY']) && isset($this->aInputs[$CNF['FIELD_CATEGORY']]) && $this->_iCategory != 0)
+            $this->aInputs[$CNF['FIELD_CATEGORY']]['value'] = $this->_iCategory;
+
+        if(isset($CNF['FIELD_CATEGORY_VIEW']) && isset($this->aInputs[$CNF['FIELD_CATEGORY_VIEW']]) && $this->_iCategory != 0)
+            $this->aInputs[$CNF['FIELD_CATEGORY_VIEW']]['value'] = $this->_iCategory;
+
+        if(isset($CNF['FIELD_CATEGORY_SELECT']) && isset($this->aInputs[$CNF['FIELD_CATEGORY_SELECT']]))
             $this->aInputs[$CNF['FIELD_CATEGORY_SELECT']]['values'] = $this->_oModule->serviceGetCategoryOptions(0, true);
-        }
     }
 }
 
