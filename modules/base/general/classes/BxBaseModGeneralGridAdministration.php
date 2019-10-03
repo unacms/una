@@ -168,7 +168,24 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
 		return $sLink;
     }
 
-	protected function _doDelete($iId, $aParams = array())
+    protected function _enable ($mixedId, $isChecked)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $mixedResult = parent::_enable($mixedId, $isChecked);
+        if((int)$mixedResult > 0) {
+            if(!empty($CNF['FIELD_CHANGED']))
+                $this->_oModule->_oDb->updateEntriesBy(array($CNF['FIELD_CHANGED'] => time()), array($this->_aOptions['field_id'] => $mixedId));
+
+            $aContentInfo = $this->_oModule->_oDb->getContentInfoById($mixedId);
+
+            $this->_oModule->alertAfterEdit($aContentInfo);
+        }
+
+        return $mixedResult;
+    }
+
+    protected function _doDelete($iId, $aParams = array())
     {
     	return $this->_oModule->serviceDeleteEntity($iId) == '';
     }

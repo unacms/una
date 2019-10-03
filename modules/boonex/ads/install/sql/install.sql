@@ -143,6 +143,15 @@ INSERT INTO `bx_ads_categories` (`parent_id`, `level`, `type`, `name`, `title`, 
 (@iParentId, 1, 2, 'sale_car_auto', '_bx_ads_cat_title_auto_truck', '', '', 1, 2),
 (@iParentId, 1, 2, 'sale_car_motorcycle', '_bx_ads_cat_title_motorcycle', '', '', 1, 3);
 
+CREATE TABLE IF NOT EXISTS `bx_ads_interested_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `entry_id` int(11) NOT NULL default '0',
+  `profile_id` int(11) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  KEY `interested` (`entry_id`, `profile_id`)
+);
+
 -- TABLE: storages & transcoders
 CREATE TABLE IF NOT EXISTS `bx_ads_covers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

@@ -17,6 +17,27 @@ function BxAdsEntry(oOptions) {
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
 }
 
+BxAdsEntry.prototype.interested = function(oElement, iContentId) {
+    var $this = this;
+
+    if(oElement)
+        this.loadingInButton(oElement, true);
+
+    jQuery.get (
+        this._sActionsUrl + 'interested',
+        {
+            id: iContentId
+        },
+        function(oData) {
+            if(oElement)
+                $this.loadingInButton(oElement, false);
+
+            processJsonData(oData);
+        },
+        'json'
+    );
+};
+
 BxAdsEntry.prototype.onChangeCategory = function(oElement) {
     this.loadingInBlock(oElement, true);
 

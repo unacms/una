@@ -29,15 +29,15 @@ DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_ads', 'bx_ads_cmts')
 DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_ads';
 
 -- STATS
-DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_ads%';
+DELETE FROM `sys_statistics` WHERE `module` = 'bx_ads';
 
 -- CHARTS
-DELETE FROM `sys_objects_chart` WHERE `object` LIKE 'bx_ads%';
+DELETE FROM `sys_objects_chart` WHERE `object` LIKE 'bx_ads_%';
 
 -- GRIDS
-DELETE FROM `sys_objects_grid` WHERE `object` LIKE 'bx_ads%';
-DELETE FROM `sys_grid_fields` WHERE `object` LIKE 'bx_ads%';
-DELETE FROM `sys_grid_actions` WHERE `object` LIKE 'bx_ads%';
+DELETE FROM `sys_objects_grid` WHERE `object` LIKE 'bx_ads_%';
+DELETE FROM `sys_grid_fields` WHERE `object` LIKE 'bx_ads_%';
+DELETE FROM `sys_grid_actions` WHERE `object` LIKE 'bx_ads_%';
 
 -- UPLOADERS
 DELETE FROM `sys_objects_uploader` WHERE `object` LIKE 'bx_ads_%';
@@ -48,4 +48,7 @@ DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandler;
 DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandler;
 
 -- CRON
-DELETE FROM `sys_cron_jobs` WHERE `name` LIKE 'bx_ads%';
+DELETE FROM `sys_cron_jobs` WHERE `name` LIKE 'bx_ads_%';
+
+-- EMAIL TEMPLATES
+DELETE FROM `sys_email_templates` WHERE `Module` = 'bx_ads';

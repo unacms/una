@@ -40,6 +40,23 @@ class BxAdsMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
             'href' => $this->_sCategoryUrl . $iCategory
         ));
     }
+
+    protected function _getMenuItemPrice($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(empty($CNF['FIELD_PRICE']))
+            return false;
+
+        if(!empty($this->_aContentInfo[$CNF['FIELD_PRICE']]))
+            $sPrice = _t_format_currency((float)$this->_aContentInfo[$CNF['FIELD_PRICE']]);
+        else
+            $sPrice = _t('_bx_ads_txt_free');
+
+        return $this->getUnitMetaItemText($sPrice, array(
+            'class' => 'price'
+        ));
+    }
 }
 
 /** @} */

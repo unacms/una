@@ -1103,6 +1103,9 @@ class BxBaseModGeneralModule extends BxDolModule
 
         $CNF = &$this->_oConfig->CNF;
 
+        if((!empty($CNF['FIELD_STATUS']) && $aContentInfo[$CNF['FIELD_STATUS']] != 'active') || (!empty($CNF['FIELD_STATUS_ADMIN']) && $aContentInfo[$CNF['FIELD_STATUS_ADMIN']] != 'active'))
+            return false;
+
         $iUserId = $this->getUserId();
         $iAuthorId = (int)$aContentInfo[$CNF['FIELD_AUTHOR']];
         $iAuthorIdAbs = abs($iAuthorId);

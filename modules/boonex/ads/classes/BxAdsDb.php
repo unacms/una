@@ -19,6 +19,36 @@ class BxAdsDb extends BxBaseModTextDb
         parent::__construct($oConfig);
     }
 
+    function getEntriesBy($aParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query', 1 => array()));
+        $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
+
+        $sSelectClause = "`" . $CNF['TABLE_ENTRIES'] . "`.*";
+
+        switch($aParams['type']) {
+            case 'expired':
+                $aMethod['params'][1]['days'] = 86400 * (int)$aParams['days'];
+
+                $sWhereClause .= " AND UNIX_TIMESTAMP() - `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_CHANGED'] . "` > :days";
+                break;
+
+            default:
+                return parent::getEntriesBy($aParams);
+        }
+
+        if(!empty($sOrderClause))
+            $sOrderClause = 'ORDER BY ' . $sOrderClause;
+
+        if(!empty($sLimitClause))
+            $sLimitClause = 'LIMIT ' . $sLimitClause;
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . $CNF['TABLE_ENTRIES'] . "` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+            return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+
     public function insertCategoryType($aParamsSet)
     {
         $CNF = &$this->_oConfig->CNF;
@@ -214,6 +244,33 @@ class BxAdsDb extends BxBaseModTextDb
             return false;
 
         return true;
+    }
+
+    public function isInterested($iEntryId, $iProfileId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return (int)$this->getOne("SELECT `id` FROM `" . $CNF['TABLE_INTERESTED_TRACK'] . "` WHERE `entry_id`=:entry_id AND `profile_id`=:profile_id LIMIT 1", array(
+            'entry_id' => $iEntryId,
+            'profile_id' => $iProfileId
+        )) > 0;
+    }
+
+    public function insertInterested($aParamsSet)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($aParamsSet))
+            return 0;
+
+        $sSetClause = $this->arrayToSQL($aParamsSet);
+        if(!isset($aParamsSet['date']))
+            $sSetClause .= ", `date`=UNIX_TIMESTAMP()";
+
+        if((int)$this->query("INSERT INTO `" . $CNF['TABLE_INTERESTED_TRACK'] . "` SET " . $sSetClause) <= 0)
+            return 0;
+
+        return (int)$this->lastId();
     }
 }
 

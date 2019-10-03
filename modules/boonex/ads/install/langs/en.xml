@@ -10,6 +10,7 @@
     <string name="_bx_ads_option_per_page_profile"><![CDATA[Number of items on profile/group page]]></string>
     <string name="_bx_ads_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
     <string name="_bx_ads_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
+    <string name="_bx_ads_option_lifetime"><![CDATA[Deactivate automatically after (in days)]]></string>
 
     <string name="_bx_ads_form_category"><![CDATA[Category]]></string>
     <string name="_bx_ads_form_category_display_add"><![CDATA[Add Category]]></string>
@@ -228,6 +229,8 @@
     <string name="_bx_ads_menu_set_title_submenu"><![CDATA[Ads Submenu]]></string>
     <string name="_bx_ads_menu_item_title_system_create_entry"><![CDATA[Ad]]></string>
     <string name="_bx_ads_menu_item_title_create_entry"><![CDATA[Ad]]></string>
+    <string name="_bx_ads_menu_item_title_system_interested_entry"><![CDATA[Interested]]></string>
+    <string name="_bx_ads_menu_item_title_interested_entry"><![CDATA[I'm interested]]></string>
     <string name="_bx_ads_menu_item_title_system_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_ads_menu_item_title_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_ads_menu_item_title_system_delete_entry"><![CDATA[Delete]]></string>
@@ -267,6 +270,8 @@
     <string name="_bx_ads_menu_item_title_categories"><![CDATA[Categories]]></string>
     <string name="_bx_ads_menu_item_title_system_entries_categories"><![CDATA[Categories]]></string>
     <string name="_bx_ads_menu_item_title_entries_categories"><![CDATA[Categories]]></string>
+    <string name="_bx_ads_menu_item_title_system_sm_price"><![CDATA[Price]]></string>
+    <string name="_bx_ads_menu_item_title_sm_price"><![CDATA[Price]]></string>
 
     <string name="_bx_ads_grid_column_title_icon"><![CDATA[Icon]]></string>
     <string name="_bx_ads_grid_column_title_title"><![CDATA[Title]]></string>
@@ -350,6 +355,12 @@
     <string name="_bx_ads_cat_title_auto_truck"><![CDATA[Sale autos / trucks]]></string>
     <string name="_bx_ads_cat_title_motorcycle"><![CDATA[Sale motorcycles]]></string>
 
+    <string name="_bx_ads_et_txt_name_interested"><![CDATA[I'm interested.]]></string>
+    <string name="_bx_ads_et_txt_subject_interested"><![CDATA[{viewer_name} is interested in your ad.]]></string>
+    <string name="_bx_ads_et_txt_body_interested"><![CDATA[{email_header}
+<p>Hello, {profile_name}.</p>
+<p><b><a href="{viewer_url}">{viewer_name}</a></b> is interested in your ad <b><a href="{ad_url}">{ad_name}</a></b>.</p>
+{email_footer}]]></string>
 
     <string name="_bx_ads_txt_all_entries_in"><![CDATA[<a href="{0}">All Ads in {1} ({2})</a>]]></string>
     <string name="_bx_ads_txt_all_entries_by"><![CDATA[{0} ads]]></string>
@@ -365,7 +376,11 @@
     <string name="_bx_ads_txt_display_title_view"><![CDATA[{0}: View]]></string>
     <string name="_bx_ads_txt_processing_awaiting"><![CDATA[Ad will be published as soon as video is converted]]></string>
     <string name="_bx_ads_txt_processing_failed"><![CDATA[Ad isn't published because video conversion failed, edit video to fix the issue.]]></string>
+    <string name="_bx_ads_txt_free"><![CDATA[Free]]></string>
 
+    <string name="_bx_ads_txt_msg_author_notified"><![CDATA[Advertiser was notified, that you're interested in his ad. Please wait.]]></string>
+    <string name="_bx_ads_txt_err_your_own"><![CDATA[You cannot do the action because it's your own ad.]]></string>
+    <string name="_bx_ads_txt_err_duplicate"><![CDATA[You already performed the action.]]></string>
     <string name="_bx_ads_txt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
 
     <string name="_bx_ads_txt_poll_view_answers"><![CDATA[poll]]></string>

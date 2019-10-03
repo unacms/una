@@ -8,3 +8,8 @@
     display: inline-block;
     width: 1.0rem;
 }
+
+/*--- Snippet ---*/
+div.bx-base-general-unit-meta .bx-menu-item-price span.price {
+    color: #307424;
+}

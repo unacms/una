@@ -32,6 +32,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'TABLE_ENTRIES_FULLTEXT' => 'title_text',
             'TABLE_CATEGORIES' => $aModule['db_prefix'] . 'categories',
             'TABLE_CATEGORIES_TYPES' => $aModule['db_prefix'] . 'categories_types',
+            'TABLE_INTERESTED_TRACK' => $aModule['db_prefix'] . 'interested_track',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -44,6 +45,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'FIELD_CATEGORY' => 'category',
             'FIELD_CATEGORY_VIEW' => 'category_view',
             'FIELD_CATEGORY_SELECT' => 'category_select',
+            'FIELD_PRICE' => 'price',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_COVER' => 'covers',
             'FIELD_PHOTO' => 'pictures',
@@ -85,6 +87,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'PARAM_NUM_RSS' => 'bx_ads_rss_num',
             'PARAM_SEARCHABLE_FIELDS' => 'bx_ads_searchable_fields',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_ads_per_page_browse_showcase',
+            'PARAM_LIFETIME' => 'bx_ads_lifetime',
             'PARAM_CATEGORY_LEVEL_MAX' => 1,
 
             // objects
@@ -161,6 +164,9 @@ class BxAdsConfig extends BxBaseModTextConfig
                     ),
                 )
             ),
+
+            // email templates
+            'ETEMPLATE_INTERESTED' => 'bx_ads_interested',
 
             // some language keys
             'T' => array (

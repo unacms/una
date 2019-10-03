@@ -26,6 +26,44 @@ class BxAdsModule extends BxBaseModTextModule
         ));
     }
 
+    public function actionInterested()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return echoJson(array());
+
+        $iViewer = bx_get_logged_profile_id();        
+        $oViewer = BxDolProfile::getInstance($iViewer);
+        if(!$oViewer)
+            return echoJson(array());
+
+        $iContentAuthor = (int)$aContentInfo[$CNF['FIELD_AUTHOR']];
+        if($iContentAuthor == $iViewer)
+            return echoJson(array('msg' => _t('_bx_ads_txt_err_your_own')));
+
+        if($this->_oDb->isInterested($iContentId, $iViewer))
+            return echoJson(array('msg' => _t('_bx_ads_txt_err_duplicate')));
+
+        if(!$this->_oDb->insertInterested(array('entry_id' => $iContentId, 'profile_id' => $iViewer)))
+            return echoJson(array('msg' => _t('_bx_ads_txt_err_cannot_perform_action')));
+
+        sendMailTemplate($CNF['ETEMPLATE_INTERESTED'], 0, $iContentAuthor, array(
+            'viewer_name' => $oViewer->getDisplayName(),
+            'viewer_url' => $oViewer->getUrl(),
+            'ad_name' => $aContentInfo[$CNF['FIELD_TITLE']],
+            'ad_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+                'i' => $CNF['URI_VIEW_ENTRY'], 
+                $CNF['FIELD_ID'] => $iContentId
+            ))
+        ));
+
+        return echoJson(array('msg' => _t('_bx_ads_txt_msg_author_notified')));
+    }
+
     public function serviceUpdateCategoriesStats()
     {
         $aStats = $this->_oDb->getCategories(array('type' => 'collect_stats'));
@@ -122,16 +160,24 @@ class BxAdsModule extends BxBaseModTextModule
 
     public function serviceBrowseCategory($iCategoryId = 0, $aParams = array())
     {
-        $sParamGet = 'category';
+        $sParamName = $sParamGet = 'category';
 
-        $bEmptyMessage = isset($aParams['empty_message']) ? (bool)$aParams['empty_message'] : true;
-
-        if(!$iCategoryId)
+        if(!$iCategoryId && bx_get($sParamGet) !== false)
             $iCategoryId = bx_process_input(bx_get($sParamGet), BX_DATA_INT);
-        if(!$iCategoryId)
-            return $bEmptyMessage ? MsgBox(_t('_Empty')) : '';
 
-        $aBlock = $this->_serviceBrowseWithParam('category', $sParamGet, $iCategoryId, $aParams);
+        $bEmptyMessage = true;
+        if(isset($aParams['empty_message'])) {
+            $bEmptyMessage = (bool)$aParams['empty_message'];
+            unset($aParams['empty_message']);
+        }
+
+        $bAjaxPaginate = true;
+        if(isset($aParams['ajax_paginate'])) {
+            $bAjaxPaginate = (bool)$aParams['ajax_paginate'];
+            unset($aParams['ajax_paginate']);
+        }
+
+        $aBlock = $this->_serviceBrowse ($sParamName, array_merge(array($sParamName => $iCategoryId), $aParams), BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
         if(!empty($aBlock['content'])) {
             $aCategory = $this->_oDb->getCategories(array('type' => 'id', 'id' => $iCategoryId));
             if(!empty($aCategory['title']))
@@ -223,6 +269,39 @@ class BxAdsModule extends BxBaseModTextModule
             $aResult = array_merge($aResult, $oForm->aInputs);
         }
 
+        return $aResult;
+    }
+    
+    protected function _getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $bDynamic = isset($aBrowseParams['dynamic_mode']) && (bool)$aBrowseParams['dynamic_mode'] === true;
+
+        $sCategory = '';
+        if(!empty($CNF['FIELD_CATEGORY']) && !empty($aContentInfo[$CNF['FIELD_CATEGORY']])) {
+            $iCategory = (int)$aContentInfo[$CNF['FIELD_CATEGORY']];
+            $aCategory = $this->_oDb->getCategories(array('type' => 'id', 'id' => $iCategory));
+            $sCategory = _t($aCategory['title']);
+            $sCategoryLink = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_CATEGORIES'], array($CNF['GET_PARAM_CATEGORY'] => $iCategory));
+        }
+
+        $sPrice = _t('_bx_ads_txt_free');
+        if(!empty($CNF['FIELD_PRICE']) && !empty($aContentInfo[$CNF['FIELD_PRICE']]))
+            $sPrice = _t_format_currency((float)$aContentInfo[$CNF['FIELD_PRICE']]);
+
+        $sInclude = $this->_oTemplate->addCss(array('timeline.css'), $bDynamic);
+
+        $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams);
+        $aResult['text'] = $this->_oTemplate->parseHtmlByName('timeline_post_text.html', array(
+            'category_link' => $sCategoryLink,
+            'category_title' => $sCategory,
+            'category_title_attr' => bx_html_attribute($sCategory),
+            'price' => $sPrice,
+            'text' => $aResult['text']
+        )) . ($bDynamic ? $sInclude : '');
+
+        
         return $aResult;
     }
 }
