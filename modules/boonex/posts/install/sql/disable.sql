@@ -38,9 +38,9 @@ DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_posts%';
 DELETE FROM `sys_objects_chart` WHERE `object` LIKE 'bx_posts%';
 
 -- GRIDS
-DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_posts_administration', 'bx_posts_common', 'bx_posts_categories');
-DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_posts_administration', 'bx_posts_common', 'bx_posts_categories');
-DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_posts_administration', 'bx_posts_common', 'bx_posts_categories');
+DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_posts_administration', 'bx_posts_common');
+DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_posts_administration', 'bx_posts_common');
+DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_posts_administration', 'bx_posts_common');
 
 -- UPLOADERS
 DELETE FROM `sys_objects_uploader` WHERE `object` LIKE 'bx_posts_%';
