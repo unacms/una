@@ -43,7 +43,7 @@ class BxDolSearch extends BxDol
 
     protected $_bLiveSearch = false;
     protected $_sMetaType = '';
-    protected $_sCategoryObject = '';
+    protected $_sCategoryObject = ''; ///< by default = object from sys_objects_category table, for multicategories set to 'multi' string 
     protected $_aCustomSearchCondition = array();
     protected $_aCustomCurrentCondition = array();
     protected $_sUnitTemplate = '';
@@ -391,9 +391,24 @@ class BxDolSearchResult implements iBxDolReplaceable
         $this->_aCustomSearchCondition = $a;
     }
     
-    public function setMultiCategoryCondition($sKeyword)
+    public function setCategoriesCondition($sKeyword)
     {
-        $this->aCurrent['restriction']['multicat'] = array('value' => $sKeyword, 'field' => 'multicat', 'operator' => 'like');
+        $this->aCurrent['join']['multicat'] = array(
+            'type' => 'INNER',
+            'table' => 'sys_categories2objects',
+            'mainField' => 'id',
+            'onField' => 'object_id',
+            'joinFields' => array(),
+        );
+        $this->aCurrent['join']['multicat2'] = array(
+           'type' => 'INNER',
+           'table' => 'sys_categories',
+           'mainField' => 'category_id',
+           'mainTable' => 'sys_categories2objects',
+           'onField' => 'id',
+           'joinFields' => array(),
+       );
+       $this->aCurrent['restriction']['multicat'] = array('value' => $sKeyword, 'field' => 'value', 'operator' => '=', 'table' => 'sys_categories');
     }
     
     /**
@@ -763,7 +778,7 @@ class BxDolSearchResult implements iBxDolReplaceable
             }
             if ($this->_sCategoryObject == 'multi'){
                 unset($this->aCurrent['restriction']['keyword']);
-                $this->setMultiCategoryCondition($sKeyword);
+                $this->setCategoriesCondition($sKeyword);
             }
         }
 
