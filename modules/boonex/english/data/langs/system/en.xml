@@ -679,10 +679,14 @@
 	<string name="_adm_form_btn_forms_cancel"><![CDATA[Cancel]]></string>
 	<string name="_adm_form_btn_forms_edit"><![CDATA[Edit form]]></string>
 	<string name="_adm_form_btn_forms_save"><![CDATA[Save]]></string>
+  <string name="_adm_form_btn_categories_cancel"><![CDATA[Cancel]]></string>
+  <string name="_adm_form_btn_categories_submit"><![CDATA[Submit]]></string>
         <string name="_adm_form_btn_labels_add"><![CDATA[Add]]></string>
         <string name="_adm_form_btn_labels_back"><![CDATA[Back]]></string>
         <string name="_adm_form_btn_labels_cancel"><![CDATA[Cancel]]></string>
         <string name="_adm_form_btn_labels_submit"><![CDATA[Submit]]></string>
+  <string name="_adm_form_btn_categories_add"><![CDATA[Add]]></string>
+  <string name="_adm_form_btn_categories_delete"><![CDATA[Delete]]></string>
 	<string name="_adm_form_btn_pre_lists_add"><![CDATA[Add]]></string>
 	<string name="_adm_form_btn_pre_lists_cancel"><![CDATA[Cancel]]></string>
 	<string name="_adm_form_btn_pre_lists_create"><![CDATA[Add New List]]></string>
@@ -894,7 +898,16 @@
         <string name="_adm_form_txt_labels_parent_label"><![CDATA[Parent Label]]></string>
         <string name="_adm_form_txt_labels_sibling_labels"><![CDATA[Sibling Labels]]></string>
         <string name="_adm_form_txt_labels_value"><![CDATA[Label]]></string>
-	<string name="_adm_form_txt_pre_lists_country"><![CDATA[Country]]></string>
+        <string name="_adm_form_txt_categories_author"><![CDATA[Author]]></string>
+        <string name="_adm_form_txt_categories_added"><![CDATA[Added]]></string>
+		<string name="_adm_form_txt_categories_module"><![CDATA[Module]]></string>
+        <string name="_adm_form_txt_categories_value"><![CDATA[Value]]></string>
+        <string name="_adm_form_txt_categories_add_popup"><![CDATA[Add category]]></string>
+        <string name="_adm_form_txt_categories_edit_popup"><![CDATA[Edit "{0}" category]]></string>
+        <string name="_adm_form_err_categories_value"><![CDATA[Category should have unique non-empty value.]]></string>
+      
+  
+  <string name="_adm_form_txt_pre_lists_country"><![CDATA[Country]]></string>
 	<string name="_adm_form_txt_pre_lists_create_popup"><![CDATA[Add New List]]></string>
 	<string name="_adm_form_txt_pre_lists_edit_popup"><![CDATA[Edit "{0}" List]]></string>
 	<string name="_adm_form_txt_pre_lists_gl_module"><![CDATA[Module]]></string>
