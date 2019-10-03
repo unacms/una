@@ -139,7 +139,8 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
     }
     
     protected function processMulticatAfter($sFieldName, $iContentId){
-		$bAutoActivation = (isset($CNF['PARAM_MULTICAT_AUTO_ACTIVATION_FOR_CATEGORIES']) && getParam($CNF['PARAM_MULTICAT_AUTO_ACTIVATION_FOR_CATEGORIES']) == 'on') ? true : false;
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        $bAutoActivation = (isset($CNF['PARAM_MULTICAT_AUTO_ACTIVATION_FOR_CATEGORIES']) && getParam($CNF['PARAM_MULTICAT_AUTO_ACTIVATION_FOR_CATEGORIES']) == 'on') ? true : false;
 		$oCategories = BxDolCategories::getInstance();
         if (isset($this->aInputs[$sFieldName])){
             $oCategories->delete($this->_oModule->getName(), $iContentId);
