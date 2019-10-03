@@ -8,7 +8,6 @@
  *
  * @{
  */
-define('BX_POSTS_STUDIO_TEMPL_TYPE_CATEGORIES', 'categories');
 
 class BxPostsStudioPage extends BxTemplStudioModule
 {
@@ -21,17 +20,6 @@ class BxPostsStudioPage extends BxTemplStudioModule
     	$this->_oModule = BxDolModule::getInstance($this->_sModule);
 
         parent::__construct($sModule, $sPage);
-        
-        $this->aMenuItems[BX_POSTS_STUDIO_TEMPL_TYPE_CATEGORIES] = array('name' => BX_POSTS_STUDIO_TEMPL_TYPE_CATEGORIES, 'title' => '_bx_posts_lmi_cpt_categories', 'icon' => 'bars');
-    }
-    
-    protected function getCategories($sMix = '')
-    {
-        $oGrid = BxDolGrid::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_GRID_CATEGORIES'], BxDolStudioTemplate::getInstance());
-        if(!$oGrid)
-            return '';
-
-        return $oGrid->getCode();
     }
 }
 

@@ -14,15 +14,16 @@ class BxStudioFormsCategoriesCheckerHelper extends BxDolFormCheckerHelper
 {
     public function checkAvailUnique($s, $aExclude = array())
     {
-        $aLabel = BxDolCategories::getInstance()->getCategories(array(
-            'type' => 'value', 
+        $aCategory = BxDolCategories::getInstance()->getData(array(
+            'type' => 'value_and_module',
+            'module' => bx_get('module'),
             'value' => $s
         ));
 
         if(!is_array($aExclude))
             $aExclude = array($aExclude);
 
-        return empty($aLabel) || !is_array($aLabel) || in_array($aLabel['id'], $aExclude);
+        return empty($aCategory) || !is_array($aCategory) || in_array($aCategory['id'], $aExclude);
     }
 }
 
@@ -85,7 +86,7 @@ class BxBaseStudioFormsCategories extends BxDolStudioFormsCategories
 
         $iId = (int)array_shift($aIds);
 
-        $aCategory = $this->_oCategory->getCategories(array('type' => 'id', 'id' => $iId));
+        $aCategory = $this->_oCategory->getData(array('type' => 'id', 'id' => $iId));
         if(empty($aCategory) || !is_array($aCategory))
             return echoJson(array());
         

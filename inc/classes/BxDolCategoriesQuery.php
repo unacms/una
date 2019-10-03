@@ -88,6 +88,25 @@ class BxDolCategoriesQuery extends BxDolDb
                 $sWhereClause = " AND `sc`.`status` = 'active' AND `soc`.`module` = :module AND `soc`.`object_id` = :object_id";
                 $sOrderClause = "`added` DESC";
                 break;
+                
+            case 'value_and_module':
+            	$aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = array(
+                    'value' => $aParams['value'],
+                    'module' => $aParams['module'],
+                );
+
+                $sWhereClause = " AND `sc`.`value` = :value AND `sc`.`module` = :module";
+                break;  
+                
+            case 'id':
+            	$aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = array(
+                    'id' => $aParams['id']
+                );
+
+                $sWhereClause = " AND `sc`.`id` = :id";
+                break;
         }
 
         if(!empty($sGroupClause))
