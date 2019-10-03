@@ -279,7 +279,7 @@ class BxBaseStudioFormsCategories extends BxDolStudioFormsCategories
 		foreach($aInputModules['values'] as $sKey => $sValue){
 			$bEnable = false;
 			$oModule = BxDolModule::getInstance($sKey);
-			if (isset($oModule->_oConfig)){
+			if (isset($oModule->_oConfig) && isset($oModule->_oConfig->CNF)){
 				$CNF = $oModule->_oConfig->CNF;
 				if (isset($CNF['PARAM_MULTICAT_ENABLED']) && $CNF['PARAM_MULTICAT_ENABLED'] == true){
 					$bEnable = true;
