@@ -28,6 +28,7 @@ class BxBaseStudioForms extends BxDolStudioForms
             'search_forms' => 'sys_studio_search_forms',
             'search_fields' => 'sys_studio_search_forms_fields',
             'labels' => 'sys_studio_labels',
+            'categories' => 'sys_studio_categories',
     	);
     }
 
@@ -60,6 +61,7 @@ class BxBaseStudioForms extends BxDolStudioForms
             BX_DOL_STUDIO_FORM_TYPE_SEARCH_FORMS => array('icon' => 'search'),
             BX_DOL_STUDIO_FORM_TYPE_SEARCH_FIELDS => array('icon' => 'check-square'),
             BX_DOL_STUDIO_FORM_TYPE_LABELS => array('icon' => 'tags'),
+            BX_DOL_STUDIO_FORM_TYPE_CATEGORIES => array('icon' => 'folder'),
         );
         foreach($aMenuItems as $sMenuItem => $aItem)
             $aMenu[] = array(
@@ -108,7 +110,7 @@ class BxBaseStudioForms extends BxDolStudioForms
         $sModule = bx_process_input($sModule);
         return array('code' => 0, 'message' => '', 'content' => $this->getPreValuesObject()->getListsSelector($sModule));
     }
-
+	
     function actionGetSearchForms()
     {
         if(($sModule = bx_get('form_module')) === false)
@@ -200,6 +202,16 @@ class BxBaseStudioForms extends BxDolStudioForms
     protected function getLabelsObject()
     {
         return $this->getGridObject($this->aGridObjects['labels']);
+    }
+    
+    protected function getCategories()
+    {
+        return $this->getGrid($this->aGridObjects['categories']);
+    }
+
+    protected function getCategoriesObject()
+    {
+        return $this->getGridObject($this->aGridObjects['categories']);
     }
 
     protected function getGridObject($sObjectName)
