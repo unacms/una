@@ -260,6 +260,7 @@ class BxBaseAccountForms extends BxDolProfileForms
         // check if password was changed
         if ($oForm->getCleanValue('password')) {
             // relogin with new password
+			bx_alert('account', 'edited', $aAccountInfo['id'], $aAccountInfo['id'], array('action' => 'change_password'));
             bx_logout();
             bx_login($aAccountInfo['id']);
         }

@@ -273,6 +273,32 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 
         return $iCount;
     }
+    
+    /**
+     * Entry multicategiries block
+     */
+    public function serviceCategoriesMultiList($bDisplayEmptyCats = true)
+    {
+		$oCategories = BxDolCategories::getInstance();
+        $aCats = $oCategories->getData(array('type' => 'by_module_with_num', 'module' => $this->getName()));
+        $aVars = array('bx_repeat:cats' => array());
+        foreach ($aCats as $oCat) {
+            $sValue = $oCat['value'];
+            $iNum = $oCat['num'];
+            
+            $aVars['bx_repeat:cats'][] = array(
+                'url' => $oCategories->getUrl($this->getName(), $sValue),
+                'name' => _t($sValue),
+                'value' => $sValue,
+                'num' => $iNum,
+            );
+        }
+        
+        if (!$aVars['bx_repeat:cats'])
+            return '';
+
+        return $this->_oTemplate->parseHtmlByName('category_list.html', $aVars);
+    }
 
     // ====== PERMISSION METHODS
 

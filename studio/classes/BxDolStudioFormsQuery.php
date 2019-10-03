@@ -470,6 +470,59 @@ class BxDolStudioFormsQuery extends BxDolDb
             WHERE 1 AND `tl`.`key`=?", $sKey);
         return (int)$this->getOne($sSql) > 0;
     }
+    
+    function getCategories($aParams, &$aItems, $bReturnCount = true)
+    {
+        $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+        $sSelectClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
+
+        if(!isset($aParams['order']) || empty($aParams['order']))
+            $sOrderClause = "ORDER BY `tv`.`module` ASC";
+
+        switch($aParams['type']) {
+            case 'by_id':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                	'id' => $aParams['value']
+                );
+
+                $sWhereClause = " AND `tv`.`id`=:id ";
+                break;
+
+            case 'counter_by_modules':
+                $aMethod['name'] = 'getPairs';
+                $aMethod['params'][1] = 'module';
+                $aMethod['params'][2] = 'counter';
+                $sSelectClause = ", `tv`.`module` AS `module`, COUNT(`tv`.`id`) AS `counter`";
+                $sGroupClause = "GROUP BY `tv`.`module`";
+                break;
+
+            case 'all':
+                break;
+        }
+
+        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
+                `tv`.`id` AS `id`,
+                `tv`.`Value` AS `value`,
+                `tv`.`Value` AS `Value` " . $sSelectClause . "
+            FROM `sys_categories` AS `tv` " . $sJoinClause . "
+            WHERE 1 " . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
+        $aItems = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+
+        if(!$bReturnCount)
+            return !empty($aItems);
+
+        return (int)$this->getOne("SELECT FOUND_ROWS()");
+    }
+    
+    function deleteCategories($CategoryId)
+    {
+        $sSql = "DELETE FROM `sys_categories2objects` WHERE `category_id` = :category_id";
+        $aBindings = array(
+            'category_id' => $CategoryId
+    	);
+        return $this->query($sSql, $aBindings);
+    }
 
     function getValues($aParams, &$aItems, $bReturnCount = true)
     {
@@ -551,7 +604,7 @@ class BxDolStudioFormsQuery extends BxDolDb
 
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
-
+    
     function deleteValues($aParams)
     {
     	$aBindings = array();

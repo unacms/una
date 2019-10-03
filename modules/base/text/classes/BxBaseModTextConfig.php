@@ -48,6 +48,7 @@ class BxBaseModTextConfig extends BxBaseModGeneralConfig
             'PARAM_POLL_ENABLED' => true,
             'PARAM_POLL_HIDDEN_RESULTS' => false,
             'PARAM_POLL_ANONYMOUS_VOTING' => true,
+            'PARAM_MULTICAT_ENABLED' => false,
 
             // objects
             'OBJECT_VOTES_POLL_ANSWERS' => $this->_sName . '_poll_answers',
@@ -60,11 +61,13 @@ class BxBaseModTextConfig extends BxBaseModGeneralConfig
         );
 
         $this->_aJsClasses = array(
-            'poll' => $this->_sClassPrefix . 'Polls'
+            'poll' => $this->_sClassPrefix . 'Polls',
+            'categories' => $this->_sClassPrefix . 'Categories'
         );
 
         $this->_aJsObjects = array(
-            'poll' => 'o' . $this->_sClassPrefix . 'Polls'
+            'poll' => 'o' . $this->_sClassPrefix . 'Polls',
+            'categories' => 'o' . $this->_sClassPrefix . 'Categories'
         );
 
         $sPrefix = str_replace('_', '-', $this->_sName);

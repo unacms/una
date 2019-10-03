@@ -110,6 +110,7 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
             return $sResult;
 
         $this->_oModule->_oDb->deletePolls(array('content_id' => $iContentId));
+        BxDolCategories::getInstance()->delete($this->_oModule->getName(), $iContentId);
 
         return '';
     }

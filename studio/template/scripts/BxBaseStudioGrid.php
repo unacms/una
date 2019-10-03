@@ -19,13 +19,11 @@ class BxBaseStudioGrid extends BxDolStudioGrid
     {
         return '';
     }
-
-    public function getModulesSelectOne($sGetItemsMethod, $bShowCustom = true, $bShowSystem = true)
+    
+    public function getModulesSelectOneArray($sGetItemsMethod, $bShowCustom = true, $bShowSystem = true)
     {
         if(empty($sGetItemsMethod))
             return '';
-
-        $oForm = new BxTemplStudioFormView(array());
 
         $aInputModules = array(
             'type' => 'select',
@@ -41,10 +39,16 @@ class BxBaseStudioGrid extends BxDolStudioGrid
         $aCounter = array();
         $this->oDb->$sGetItemsMethod(array('type' => 'counter_by_modules'), $aCounter, false);
         foreach($aInputModules['values'] as $sKey => $sValue)
-                $aInputModules['values'][$sKey] = $aInputModules['values'][$sKey] . " (" . (isset($aCounter[$sKey]) ? $aCounter[$sKey] : "0") . ")";
+            $aInputModules['values'][$sKey] = $aInputModules['values'][$sKey] . " (" . (isset($aCounter[$sKey]) ? $aCounter[$sKey] : "0") . ")";
+        
+        return $aInputModules;
+    }
 
+    public function getModulesSelectOne($sGetItemsMethod, $bShowCustom = true, $bShowSystem = true)
+    {
+        $aInputModules = $this->getModulesSelectOneArray($sGetItemsMethod, $bShowCustom, $bShowSystem);
         $aInputModules['values'] = array_merge(array('' => _t('_adm_txt_select_module')), $aInputModules['values']);
-
+        $oForm = new BxTemplStudioFormView(array());
         return $oForm->genRow($aInputModules);
     }
 

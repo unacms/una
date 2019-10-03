@@ -29,11 +29,11 @@
     <string name="_bx_posts_form_entry_input_sys_cat"><![CDATA[Category]]></string>
     <string name="_bx_posts_form_entry_input_cat"><![CDATA[Category]]></string>
     <string name="_bx_posts_form_entry_input_cat_err"><![CDATA[Please select category]]></string>
-    <string name="_bx_posts_form_entry_input_sys_multicat"><![CDATA[Category]]></string>
-    <string name="_bx_posts_form_entry_input_multicat"><![CDATA[Category]]></string>
+    <string name="_bx_posts_form_entry_input_sys_multicat"><![CDATA[Categories]]></string>
+    <string name="_bx_posts_form_entry_input_multicat"><![CDATA[Categories]]></string>
     <string name="_bx_posts_form_entry_input_multicat_err"><![CDATA[Please select category]]></string>
     <string name="_bx_posts_form_entry_input_category_add"><![CDATA[Add]]></string>
-    <string name="_bx_posts_form_entry_input_category_add_new"><![CDATA[Add new]]></string>
+    <string name="_bx_posts_form_entry_input_category_add_new"><![CDATA[Create own category]]></string>
     <string name="_bx_posts_form_entry_input_sys_text"><![CDATA[Text]]></string>
     <string name="_bx_posts_form_entry_input_text"><![CDATA[Text]]></string>
     <string name="_bx_posts_form_entry_input_text_err"><![CDATA[Text field can't be empty]]></string>
@@ -84,8 +84,6 @@
     <string name="_bx_posts_category_form_entry_input_sys_value"><![CDATA[Value]]></string>
     <string name="_bx_posts_category_form_entry_input_value"><![CDATA[Value]]></string>>
     <string name="_bx_posts_category_form_entry_input_value_err"><![CDATA[Value is essential. Please, fill in this field]]></string>
-    <string name="_bx_posts_form_category_add_title"><![CDATA[Add category]]></string>
-    <string name="_bx_posts_form_category_edit_title"><![CDATA[Edit category]]></string>
     <string name="_bx_posts_lmi_cpt_categories"><![CDATA[Categories]]></string>
 
   <string name="_bx_posts_acl_action_create_entry"><![CDATA[Create Post]]></string>
@@ -243,9 +241,7 @@
 	<string name="_bx_posts_grid_filter_item_title_adm_hidden"><![CDATA[Hidden]]></string>
 	<string name="_bx_posts_grid_column_title_adm_active"><![CDATA[Active]]></string>
     <string name="_bx_posts_grid_column_title_adm_title"><![CDATA[Title]]></string>
-    <string name="_bx_posts_grid_column_title_adm_added"><![CDATA[Added]]></string>
-    <string name="_bx_posts_grid_column_title_adm_author"><![CDATA[Author]]></string>
-  <string name="_bx_posts_grid_column_title_adm_value"><![CDATA[Value]]></string>
+    <string name="_bx_posts_grid_column_title_adm_author"><![CDATA[Author]]></string>>
     <string name="_bx_posts_grid_action_title_adm_add"><![CDATA[Add]]></string>
     <string name="_bx_posts_grid_action_title_adm_edit"><![CDATA[Edit]]></string>
     <string name="_bx_posts_grid_action_title_adm_delete"><![CDATA[Delete]]></string>

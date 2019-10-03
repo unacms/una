@@ -3887,7 +3887,8 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 ('sys_studio_search_forms', 'Sql', 'SELECT * FROM `sys_objects_search_extended` WHERE 1 ', 'sys_objects_search_extended', 'id', 'module,title', 'active', '', 100, NULL, 'start', '', 'module', 'title', 'like', 'module', 'title', 'BxTemplStudioFormsSearchForms', ''),
 ('sys_studio_search_forms_fields', 'Sql', 'SELECT * FROM `sys_search_extended_fields` WHERE 1 AND `object`=?', 'sys_search_extended_fields', 'id', 'order', 'active', '', 100, NULL, 'start', '', 'type', 'caption', 'like', '', '', 'BxTemplStudioFormsSearchFields', ''),
 
-('sys_studio_labels', 'Sql', 'SELECT * FROM `sys_labels` WHERE 1 ', 'sys_labels', 'id', 'order', '', '', 100, NULL, 'start', '', 'value', '', 'like', 'value', '', 'BxTemplStudioFormsLabels', '');
+('sys_studio_labels', 'Sql', 'SELECT * FROM `sys_labels` WHERE 1 ', 'sys_labels', 'id', 'order', '', '', 100, NULL, 'start', '', 'value', '', 'like', 'value', '', 'BxTemplStudioFormsLabels', ''),
+('sys_studio_categories', 'Sql', 'SELECT * FROM `sys_categories` WHERE 1 ', 'sys_categories', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'value', '', 'like', '', '', 'BxTemplStudioFormsCategories', '');
 
 CREATE TABLE IF NOT EXISTS `sys_grid_fields` (
   `object` varchar(64) NOT NULL,
@@ -4004,7 +4005,15 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('sys_studio_labels', 'order', '', '1%', 0, 0, '', 1),
 ('sys_studio_labels', 'value', '_adm_form_txt_labels_value', '70%', 0, 38, '', 2),
 ('sys_studio_labels', 'items', '_adm_form_txt_labels_items', '10%', 0, 0, '', 3),
-('sys_studio_labels', 'actions', '', '19%', 0, 0, '', 4);
+('sys_studio_labels', 'actions', '', '19%', 0, 0, '', 4),
+
+('sys_studio_categories', 'checkbox', '_sys_select', '2%', 0, 0, '', 1),
+('sys_studio_categories', 'switcher', '_adm_prm_txt_enable', '8%', 0, 0, '', 2),
+('sys_studio_categories', 'value', '_adm_form_txt_categories_value', '25%', 0, 35, '', 3),
+('sys_studio_categories', 'module', '_adm_form_txt_categories_module', '15%', 0, 35, '', 4),
+('sys_studio_categories', 'author', '_adm_form_txt_categories_author', '15%', 0, 35, '', 5),
+('sys_studio_categories', 'added', '_adm_form_txt_categories_added', '15%', 1, 25, '', 6),
+('sys_studio_categories', 'actions', '', '20%', 0, 0, '', 7);
 
 
 CREATE TABLE IF NOT EXISTS `sys_grid_actions` (
@@ -4076,7 +4085,12 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('sys_studio_labels', 'independent', 'back', '_adm_form_btn_labels_back', '', 0, 1),
 ('sys_studio_labels', 'independent', 'add', '_adm_form_btn_labels_add', '', 0, 2),
 ('sys_studio_labels', 'single', 'edit', '', 'pencil-alt', 0, 1),
-('sys_studio_labels', 'single', 'delete', '', 'remove', 1, 2);
+('sys_studio_labels', 'single', 'delete', '', 'remove', 1, 2),
+
+('sys_studio_categories', 'bulk', 'delete', '_adm_form_btn_categories_delete', '', 1, 1),
+('sys_studio_categories', 'single', 'edit', '', 'pencil-alt', 0, 1),
+('sys_studio_categories', 'single', 'delete', '', 'remove', 1, 2),
+('sys_studio_categories', 'independent', 'add', '_adm_form_btn_categories_add', '', 0, 1);
 
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
@@ -4635,6 +4649,26 @@ CREATE TABLE `sys_objects_category` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `object` (`object`),
   UNIQUE KEY `form_object` (`form_object`(64),`list_name`(127))
+);
+
+-- --------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `sys_categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `author` int(11) NOT NULL,
+  `added` int(11) NOT NULL,
+  `module` varchar(32) NOT NULL,
+  `value` varchar(100) NOT NULL,
+  `status` enum ('active', 'hidden') NOT NULL DEFAULT 'active',
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE IF NOT EXISTS `sys_categories2objects` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `module` varchar(32) NOT NULL,
+  `object_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 );
 
 -- --------------------------------------------------------

@@ -62,36 +62,6 @@ class BxPostsModule extends BxBaseModTextModule
 
         return parent::serviceCheckAllowedCommentsView($iContentId, $sObjectComments);
     }
-    
-    public function serviceCategoriesMultiList($bDisplayEmptyCats = true)
-    {
-        $aCats = $this->_oDb->getCategories($this->getName());
-        $aVars = array('bx_repeat:cats' => array());
-        foreach ($aCats as $oCat) {
-            $sValue = $oCat['value'];
-            $iNum = $this->_oDb->getItemsNumByCategories($sValue);
-
-            if (!$bDisplayEmptyCats && !$iNum)
-                continue;
-            
-            $aVars['bx_repeat:cats'][] = array(
-                'url' => $this->getCategoriesMultiUrl($sValue),
-                'name' => $sValue,
-                'value' => $sValue,
-                'num' => $iNum,
-            );
-        }
-        
-        if (!$aVars['bx_repeat:cats'])
-            return '';
-
-        return $this->_oTemplate->parseHtmlByName('category_list.html', $aVars);
-    }
-    
-    public function getCategoriesMultiUrl ($sValue)
-    {
-        return  BX_DOL_URL_ROOT . 'searchKeyword.php?keyword=' . rawurlencode($sValue) . '&cat=multi&section=' . $this->getName();
-    }
 }
 
 /** @} */

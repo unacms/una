@@ -430,9 +430,7 @@ INSERT INTO `sys_objects_chart` (`object`, `title`, `table`, `field_date_ts`, `f
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
 ('bx_posts_administration', 'Sql', 'SELECT * FROM `bx_posts_posts` WHERE 1 ', 'bx_posts_posts', 'id', 'added', 'status_admin', '', 20, NULL, 'start', '', 'title,text', '', 'like', 'reports', '', 192, 'BxPostsGridAdministration', 'modules/boonex/posts/classes/BxPostsGridAdministration.php'),
-('bx_posts_common', 'Sql', 'SELECT * FROM `bx_posts_posts` WHERE 1 ', 'bx_posts_posts', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 2147483647, 'BxPostsGridCommon', 'modules/boonex/posts/classes/BxPostsGridCommon.php'),
-('bx_posts_categories', 'Sql', 'SELECT * FROM `sys_categories` WHERE 1 ', 'sys_categories', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'value', '', 'like', '', '', 2147483647, 'BxPostsGridCategories', 'modules/boonex/posts/classes/BxPostsGridCategories.php');
-
+('bx_posts_common', 'Sql', 'SELECT * FROM `bx_posts_posts` WHERE 1 ', 'bx_posts_posts', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 2147483647, 'BxPostsGridCommon', 'modules/boonex/posts/classes/BxPostsGridCommon.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_posts_administration', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
@@ -446,13 +444,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_posts_common', 'switcher', '_bx_posts_grid_column_title_adm_active', '8%', 0, '', '', 2),
 ('bx_posts_common', 'title', '_bx_posts_grid_column_title_adm_title', '40%', 0, '35', '', 3),
 ('bx_posts_common', 'added', '_bx_posts_grid_column_title_adm_added', '30%', 1, '25', '', 4),
-('bx_posts_common', 'actions', '', '20%', 0, '', '', 5),
-('bx_posts_categories', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
-('bx_posts_categories', 'switcher', '_bx_posts_grid_column_title_adm_active', '8%', 0, '', '', 2),
-('bx_posts_categories', 'value', '_bx_posts_grid_column_title_adm_value', '35%', 0, '35', '', 3),
-('bx_posts_categories', 'author', '_bx_posts_grid_column_title_adm_author', '20%', 0, '35', '', 3),
-('bx_posts_categories', 'added', '_bx_posts_grid_column_title_adm_added', '15%', 1, '25', '', 4),
-('bx_posts_categories', 'actions', '', '20%', 0, '', '', 5);
+('bx_posts_common', 'actions', '', '20%', 0, '', '', 5);
 
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
@@ -463,11 +455,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_posts_common', 'bulk', 'delete', '_bx_posts_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_posts_common', 'single', 'edit', '_bx_posts_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
 ('bx_posts_common', 'single', 'delete', '_bx_posts_grid_action_title_adm_delete', 'remove', 1, 1, 2),
-('bx_posts_common', 'single', 'settings', '_bx_posts_grid_action_title_adm_more_actions', 'cog', 1, 0, 3),
-('bx_posts_categories', 'bulk', 'delete', '_bx_posts_grid_action_title_adm_delete', '', 0, 1, 1),
-('bx_posts_categories', 'single', 'edit', '_bx_posts_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
-('bx_posts_categories', 'single', 'delete', '_bx_posts_grid_action_title_adm_delete', 'remove', 1, 1, 2),
-('bx_posts_categories', 'independent', 'add', '_bx_posts_grid_action_title_adm_add', '', 0, 0, 1);
+('bx_posts_common', 'single', 'settings', '_bx_posts_grid_action_title_adm_more_actions', 'cog', 1, 0, 3);
 
 -- UPLOADERS
 
