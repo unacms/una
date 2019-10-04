@@ -107,6 +107,7 @@ class BxBaseAccountForms extends BxDolProfileForms
         if (getParam('sys_account_auto_profile_creation') && !empty($sProfileModule)) {
             $oAccount = BxDolAccount::getInstance($iAccountId);
             $aProfileInfo = BxDolService::call($sProfileModule, 'prepare_fields', array(array(
+                'author' => $iProfileId,
                 'name' => $oAccount->getDisplayName(),
             )));
             
