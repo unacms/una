@@ -180,7 +180,8 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
         $sJsObject = $this->_oModule->_oConfig->getJsObject('categories');
 		$aValuesForSelect = BxDolCategories::getInstance()->getData(array('type' => 'by_module_and_author', 'module' => $this->_oModule->getName(), 'author' => bx_get_logged_profile_id()));
    
-        $aSelectedItems = array();        
+        $aSelectedItems = array();
+		$aInput['value'] = array_filter($aInput['value']);
         if(!empty($aInput['value'])) {
             if (!is_array($aInput['value']))
                 $aValues = BxDolCategories::getInstance()->getData(array('type' => 'by_module_and_object', 'module' => $this->_oModule->getName(), 'object_id' => (!empty($aInput['content_id']) ? (int)$aInput['content_id'] : 0 )));
@@ -199,8 +200,10 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
             }
         }
         else{
-            $aSelectedItems = array();
-        } 
+            $aSelectedItems = array(
+                array('js_object' => $sJsObject, 'select_cat' => $this->genCustomInputMulticatSelect($aInput, $aValuesForSelect))
+            );
+        }
         return $this->_oModule->_oTemplate->parseHtmlByName('form_categories.html', array(
             'bx_repeat:items' => $aSelectedItems,
             'js_object' => $sJsObject, 
@@ -236,11 +239,10 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
     
     protected function genCustomInputMulticatButton($aInput)
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
         $sName = $aInput['name'];
         $aInput['type'] = 'button';
         $aInput['name'] .= '_add';
-        $aInput['value'] = _t($CNF['T']['txt_multicat_button_caption_add']);
+        $aInput['value'] = _t('_sys_txt_categories_button_caption_add');
         $aInput['attrs']['class'] = 'bx-def-margin-right bx-def-margin-sec-top';
         $aInput['attrs']['onclick'] = $this->_oModule->_oConfig->getJsObject('categories') . ".categoryAdd(this, '" . $sName . "');";
         return $this->genInputButton($aInput);
@@ -248,11 +250,10 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
     
     protected function genCustomInputMulticatButtonNew($aInput)
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
         $sName = $aInput['name'];
         $aInput['type'] = 'button';
         $aInput['name'] .= '_add';
-        $aInput['value'] = _t($CNF['T']['txt_multicat_button_caption_addnew']);
+        $aInput['value'] = _t('_sys_txt_categories_button_caption_addnew');
         $aInput['attrs']['class'] = 'bx-def-margin-sec-top';
         $aInput['attrs']['onclick'] = $this->_oModule->_oConfig->getJsObject('categories') . ".categoryAddNew(this, '" . $sName . "');";
         return $this->genInputButton($aInput);

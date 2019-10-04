@@ -190,9 +190,7 @@ class BxPostsConfig extends BxBaseModTextConfig
                 'txt_poll_menu_view_' => '_bx_posts_txt_poll_view_',
                 'txt_poll_answer_vote_do_by' => '_bx_posts_txt_poll_answer_vote_do_by',
                 'txt_poll_answer_vote_counter' => '_bx_posts_txt_poll_answer_vote_counter',
-                'txt_poll_answer_vote_percent' => '_bx_posts_txt_poll_answer_vote_percent',
-                'txt_multicat_button_caption_add' => '_bx_posts_form_entry_input_category_add',
-                'txt_multicat_button_caption_addnew' => '_bx_posts_form_entry_input_category_add_new',
+                'txt_poll_answer_vote_percent' => '_bx_posts_txt_poll_answer_vote_percent'
             ),
         ));
         

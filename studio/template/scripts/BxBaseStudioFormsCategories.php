@@ -14,16 +14,24 @@ class BxStudioFormsCategoriesCheckerHelper extends BxDolFormCheckerHelper
 {
     public function checkAvailUnique($s, $aExclude = array())
     {
-        $aCategory = BxDolCategories::getInstance()->getData(array(
-            'type' => 'value_and_module',
-            'module' => bx_get('module'),
-            'value' => $s
-        ));
-
         if(!is_array($aExclude))
             $aExclude = array($aExclude);
-
-        return empty($aCategory) || !is_array($aCategory) || in_array($aCategory['id'], $aExclude);
+        
+        $aLanguages = BxDolStudioLanguagesUtils::getInstance()->getLanguages();
+        
+        foreach($aLanguages as $sLangName => $sLangTitle) {
+            $sValue = BxDolForm::getSubmittedValue('value' . '-' . $sLangName, BX_DOL_STUDIO_METHOD_DEFAULT);
+            $aCategory = BxDolCategories::getInstance()->getData(array(
+                'type' => 'value_and_module',
+                'module' => bx_get('module'),
+                'value' => $sValue
+            ));
+            $bNoInUsers = empty($aCategory) || !is_array($aCategory) || in_array($aCategory['id'], $aExclude);
+            // also need check uniq in system categories to
+            if(!$bNoInUsers)
+                return false;
+        }
+        return true;
     }
 }
 
@@ -102,7 +110,7 @@ class BxBaseStudioFormsCategories extends BxDolStudioFormsCategories
             echoJson($aRes);
         }
         else {
-            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-categories-edit-popup', _t('_adm_form_txt_labels_edit_popup', $aCategory['value']), $this->_oTemplate->parseHtmlByName('form_add_category.html', array(
+            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-categories-edit-popup', _t('_adm_form_txt_labels_edit_popup', _t($aCategory['value'])), $this->_oTemplate->parseHtmlByName('form_add_category.html', array(
                'form_id' => $oForm->aFormAttrs['id'],
                'form' => $oForm->getCode(true),
                'object' => $this->_sObject,
@@ -212,7 +220,7 @@ class BxBaseStudioFormsCategories extends BxDolStudioFormsCategories
                     ),
                 ),
                 'value' => array(
-                    'type' => 'text',
+                    'type' => 'text_translatable',
                     'name' => 'value',
                     'caption' => _t('_adm_form_txt_categories_value'),
                     'info' => '',
