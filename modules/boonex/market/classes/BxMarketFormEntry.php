@@ -282,22 +282,16 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
     	return $aResult;
     }
 
-    protected function genCustomInputSubentries($aInput)
+    protected function genCustomInputSubentries ($aInput)
     {
-        $this->addCssJsUi();
-
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $sGetSubentriesUrl = BX_DOL_URL_ROOT . $this->_oModule->_oConfig->getBaseUri() . 'get_subentries';
-        $sPlaceholder = bx_html_attribute(_t('_bx_market_form_entry_input_subentries_placeholder'), BX_ESCAPE_STR_QUOTE);
-
-        $this->oTemplate->addJs(array(
-            'jquery.form.min.js',
-        ));
+        $aInput['ajax_get_suggestions'] = BX_DOL_URL_ROOT . $this->_oModule->_oConfig->getBaseUri() . 'get_subentries';
+        $aInput['placeholder'] = _t('_bx_market_form_entry_input_subentries_placeholder');
 
         $sVals = '';
-        if (!empty($aInput['value']) && is_array($aInput['value'])) {
-            foreach ($aInput['value'] as $iValue) {
+        if(!empty($aInput['value']) && is_array($aInput['value'])) {
+            foreach($aInput['value'] as $iValue) {
                 $iValue = (int)$iValue;
                 if(!$iValue)
                     continue;
@@ -310,17 +304,9 @@ class BxMarketFormEntry extends BxBaseModTextFormEntry
             }
             $sVals = trim($sVals, ',');
         }
+        $aInput['value'] = $sVals;
 
-        return $this->oTemplate->parseHtmlByName('form_field_custom_suggestions.html', array(
-            'id' => $aInput['name'] . time(),
-            'url_get_recipients' => $sGetSubentriesUrl,
-            'name' => $aInput['name'],
-			'b_img' => 1,
-			'only_once' => 0,
-			'on_select' => 'null',
-		    'placeholder' => $sPlaceholder,
-            'vals' => $sVals,
-        ));
+        return $this->genCustomInputUsernamesSuggestions($aInput);
     }
 }
 
