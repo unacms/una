@@ -69,7 +69,7 @@ BxDolVoteReactions.prototype.onVote = function (oLink, oData, onComplete)
     //--- Update Counter.
     var oCounter = this._getCounter(oLink);
     if(oCounter && oCounter.length > 0)
-        oCounter.filter('.' + oData.reaction).html(oData.countf).bx_anim(oData.count > 0 ? 'show' : 'hide');
+        oCounter.filter('.' + oData.reaction).html(oData.countf).toggleClass('bx-vc-hidden', !oData.count);
 
     if(typeof onComplete == 'function')
         onComplete(oLink, oData);
