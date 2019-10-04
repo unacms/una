@@ -693,8 +693,8 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
     position: relative;
     display: block;
 
-    padding: 8px;
-    padding: 0.5rem;
+    padding: 0 8px;
+    padding: 0 0.5rem;
 
     text-align: left;
 }
@@ -702,11 +702,6 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
     display: inline-block;
     vertical-align: top;
     width: 1.6rem;
-}
-.bx-menu-main-submenu.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto > span,
-.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto > span {
-    display: block;
-    margin: 0;
 }
 .bx-menu-main-submenu.bx-menu-more-auto .bx-menu-item > a:last-child,
 .bx-menu-main-submenu.bx-menu-more-auto .bx-menu-item > a.bx-btn:last-child,
@@ -725,6 +720,16 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
 .bx-menu-main-submenu.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto,
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto {
     display: none;
+}
+.bx-menu-main-submenu.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto > span,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto > span {
+    display: block;
+    margin: 0;
+}
+.bx-menu-main-submenu.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto .bx-popup .bx-menu-item,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto .bx-popup .bx-menu-item {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
 }
 .bx-menu-main-submenu.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .sys-icon {
     display: inline-block;
@@ -873,4 +878,9 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
 }
 .bx-popup ul.bx-menu-ver.bx-menu-object-sys_switch_language_popup li span.flag-icon {
     margin-right: 0.5rem;
+}
+
+/* --------------- switch template menu (popup) */
+.bx-popup .bx-menu-ver.bx-menu-object-sys_switch_template li a div > span {
+    margin-left: 0;
 }
