@@ -16,7 +16,7 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
     public function __construct($sMode = '', $aParams = array())
     {
         parent::__construct($sMode, $aParams);
-        $this->aUnitViews = array('gallery' => 'unit_with_cover.html', 'showcase' => 'unit_with_cover_showcase.html', 'showcase_wo_info' => 'unit_wo_info_showcase.html', 'simple' => 'unit_wo_links.html');
+        $this->aUnitViews = array('gallery' => 'unit_with_cover.html', 'gallery_wo_info' => 'unit_wo_info.html', 'showcase' => 'unit_with_cover_showcase.html', 'showcase_wo_info' => 'unit_wo_info_showcase.html', 'simple' => 'unit_wo_links.html');
         if (!empty($aParams['unit_views']) && is_array($aParams['unit_views']))
             $this->aUnitViews = array_merge ($this->aUnitViews, $aParams['unit_views']);
         if (!empty($aParams['unit_view']))
@@ -24,13 +24,20 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
         
         $this->sUnitTemplate = $this->aUnitViews[$this->sUnitViewDefault];
         $this->sCenterContentUnitSelector = '.bx-base-pofile-unit';
-        $this->addContainerClass (array('bx-def-margin-sec-lefttopright-neg', 'bx-base-pofile-units-wrapper', 'bx-def-margin-sec-bottom-neg'));
-		if (in_array($this->sUnitTemplate, array('unit_with_cover_showcase.html', 'unit_wo_info_showcase.html'))){
-			$this->bShowcaseView = true;
+        $this->addContainerClass (array(
+            'bx-base-pofile-units-wrapper', 
+            'bx-base-puw-' . str_replace('_' ,  '-', $this->sUnitViewDefault),
+            'bx-def-margin-sec-neg'
+        ));
 
-			$this->removeContainerClass ('bx-def-margin-bottom-neg');
-			if($this->sUnitTemplate == 'unit_wo_info_showcase.html')
-				$this->addContainerAttribute(array('bx-sc-group-cells' => 3));
+        if(in_array($this->sUnitTemplate, array('unit_wo_info.html', 'unit_wo_info_showcase.html'))) {
+            $this->removeContainerClass('bx-def-margin-sec-neg');
+        }
+        if(in_array($this->sUnitTemplate, array('unit_with_cover_showcase.html', 'unit_wo_info_showcase.html'))) {
+            $this->bShowcaseView = true;
+
+            if($this->sUnitTemplate == 'unit_wo_info_showcase.html')
+                $this->addContainerAttribute(array('bx-sc-group-cells' => 3));
         }
         if ($sMode == 'recommended')
             $this->bRecommendedView=true;

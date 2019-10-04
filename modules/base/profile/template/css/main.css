@@ -392,6 +392,15 @@ a.bx-base-pofile-cover-thumb p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
     justify-content: flex-start;
 }
 
+.bx-base-pofile-units-wrapper.bx-base-puw-gallery-wo-info {
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+}
+.bx-base-pofile-units-wrapper.bx-base-puw-gallery-wo-info:before,
+.bx-base-pofile-units-wrapper.bx-base-puw-gallery-wo-info:after {
+    display: none;
+}
+
 .bx-base-pofile-units-wrapper .bx-base-pofile-unit-with-cover {
     -webkit-box-flex: 0;
 
