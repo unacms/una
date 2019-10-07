@@ -21,6 +21,10 @@ DELETE FROM `sys_form_pre_lists` WHERE `module` = 'bx_posts';
 
 DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_posts_cats');
 
+-- CATEGORIES
+DELETE FROM `sys_categories` WHERE `module` = 'bx_posts';
+DELETE FROM `sys_categories2objects` WHERE `module` = 'bx_posts';
+
 -- COMMENTS
 DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_posts';
 
