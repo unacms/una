@@ -13,6 +13,8 @@ CREATE TABLE IF NOT EXISTS `bx_persons_data` (
   `description` text NOT NULL,
   `gender` varchar(255) DEFAULT NULL,
   `birthday` date DEFAULT NULL,
+  `labels` text NOT NULL,
+  `location` text NOT NULL,
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',

@@ -76,6 +76,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'FIELD_FEATURED' => 'featured',
             'FIELD_STATUS' => 'status',
             'FIELD_STATUS_ADMIN' => 'status_admin',
+            'FIELD_LOCATION' => 'location',
             'FIELD_LOCATION_PREFIX' => 'location',
             'FIELD_LABELS' => 'labels',
             'FIELDS_QUICK_SEARCH' => array('title'),

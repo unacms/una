@@ -13,6 +13,8 @@ CREATE TABLE IF NOT EXISTS `bx_files_main` (
   `desc` text NOT NULL,
   `data` text NOT NULL,
   `data_processed` tinyint(4) NOT NULL DEFAULT '0',
+  `labels` text NOT NULL,
+  `location` text NOT NULL,
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',

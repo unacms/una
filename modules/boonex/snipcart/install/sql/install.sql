@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS `bx_snipcart_entries` (
   `text` text NOT NULL,
   `price` float NOT NULL default '0',
   `weight` float NOT NULL default '0',
+  `location` text NOT NULL,
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',

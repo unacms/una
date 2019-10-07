@@ -58,6 +58,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'FIELD_COMMENTS' => 'comments',
             'FIELD_STATUS' => 'status',
             'FIELD_STATUS_ADMIN' => 'status_admin',
+            'FIELD_LOCATION' => 'location',
             'FIELD_LOCATION_PREFIX' => 'location',
             'FIELD_LABELS' => 'labels',
             'FIELD_ANONYMOUS' => 'anonymous',

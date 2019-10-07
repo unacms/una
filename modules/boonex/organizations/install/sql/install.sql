@@ -12,6 +12,8 @@ CREATE TABLE IF NOT EXISTS `bx_organizations_data` (
   `org_name` varchar(255) NOT NULL,
   `org_cat` int(11) NOT NULL,
   `org_desc` text NOT NULL,
+  `labels` text NOT NULL,
+  `location` text NOT NULL,
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',
