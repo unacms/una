@@ -500,6 +500,58 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      * @page service Service Calls
      * @section bx_timeline Timeline
      * @subsection bx_timeline-other Other
+     * @subsubsection bx_timeline-get_content_owner_profile_id get_content_owner_profile_id
+     * 
+     * @code bx_srv('bx_timeline', 'get_content_owner_profile_id', [...]); @endcode
+     * 
+     * Get event's owner profile id.
+     * 
+     * @param $mixedEvent integer value with event ID or an array with event info.
+     * @return event's owner profile id.
+     * 
+     * @see BxTimelineModule::serviceGetContentOwnerProfileId
+     */
+    /** 
+     * @ref bx_timeline-get_content_owner_profile_id "get_content_owner_profile_id"
+     */
+    public function serviceGetContentOwnerProfileId($mixedEvent)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iProfile = (int)bx_get_logged_profile_id();
+        if(empty($mixedEvent))
+            return $iProfile;
+
+        if(!is_array($mixedEvent))
+            $mixedEvent = $this->_oDb->getContentInfoById((int)$mixedEvent);
+
+        if(empty($mixedEvent) || !is_array($mixedEvent) || !isset($mixedEvent[$CNF['FIELD_SYSTEM']]))
+            return $iProfile;
+
+        if((int)$mixedEvent[$CNF['FIELD_SYSTEM']] == 0)
+            return (int)$mixedEvent[$CNF['FIELD_OBJECT_ID']];
+
+        if(!empty($mixedEvent['object_owner_id']))
+            return (int)$mixedEvent['object_owner_id'];
+
+        if(!empty($mixedEvent['content'])) {
+            $aContent = unserialize($mixedEvent['content']);
+
+            if(!empty($aContent) && is_array($aContent) && !empty($aContent['object_author_id']))
+                return (int)$aContent['object_author_id'];
+        }
+
+        $aEventData = $this->_oTemplate->getData($mixedEvent);
+        if(!empty($aEventData) && is_array($aEventData) && !empty($aEventData['object_owner_id']))
+            return (int)$aEventData['object_owner_id'];
+
+        return $iProfile;
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-other Other
      * @subsubsection bx_timeline-get_create_post_form get_create_post_form
      * 
      * @code bx_srv('bx_timeline', 'get_create_post_form', [...]); @endcode

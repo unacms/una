@@ -73,7 +73,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'FIELD_ID' => 'id',
             'FIELD_OWNER_ID' => 'owner_id',
             'FIELD_SYSTEM' => 'system',
-            'FIELD_OBJECT_ID' => 'object_id', //Note. For 'Direct Timeline Posts' this field contains post's author profile ID.
+            'FIELD_OBJECT_ID' => 'object_id', //Note. For 'Direct Timeline Posts' ('system' db field == 0) this field contains post's author profile ID.
             'FIELD_OBJECT_PRIVACY_VIEW' => 'object_privacy_view',
             'FIELD_ADDED' => 'date',
             'FIELD_PUBLISHED' => 'published',
@@ -558,6 +558,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         return $this->getName() . '_live_update_' . $this->getNameView($aParams, true);
     }
 
+    //TODO: isCommon and isSystem can be updated to use new 'system' db field.
     public function isCommon($sType, $sAction)
     {
         return !$this->isSystem($sType, $sAction);
