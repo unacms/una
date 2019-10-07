@@ -83,6 +83,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'FIELD_DATE' => 'date',
             'FIELD_ANONYMOUS' => 'anonymous',
             'FIELD_CONTROLS' => 'controls',
+            'FIELD_LOCATION' => 'location',
             'FIELD_LOCATION_PREFIX' => 'location',
             'FIELDS_DELAYED_PROCESSING' => 'video', // can be array of fields or comma separated string of field names
 
