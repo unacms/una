@@ -20,6 +20,8 @@ CREATE TABLE IF NOT EXISTS `bx_market_products` (
   `price_recurring` float NOT NULL default '0',
   `duration_recurring` varchar(16) NOT NULL default 'month',
   `trial_recurring` int(11) NOT NULL default '0',
+  `labels` text NOT NULL,
+  `location` text NOT NULL,
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',

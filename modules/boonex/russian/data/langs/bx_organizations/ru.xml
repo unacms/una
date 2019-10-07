@@ -166,17 +166,18 @@
     <string name="_bx_orgs_page_block_title_profile_related_me"><![CDATA[Связи со мной]]></string>
     <string name="_bx_orgs_page_block_title_profile_comments"><![CDATA[Комментарии]]></string>
     <string name="_bx_orgs_page_block_title_profile_comments_link"><![CDATA[Комментарии к <a href="{entry_link}">{title}</a>]]></string>
-	<string name="_bx_orgs_page_block_title_profile_actions"><![CDATA[Действия]]></string>
-	<string name="_bx_orgs_page_block_title_featured_profiles"><![CDATA[Продвинутые организации]]></string>
-	<string name="_bx_orgs_page_block_title_latest_profiles"><![CDATA[Новые организации]]></string>
-	<string name="_bx_orgs_page_block_title_system_manage"><![CDATA[Управление собственными организациями]]></string>
-	<string name="_bx_orgs_page_block_title_system_manage_administration"><![CDATA[Управление всеми организациями]]></string>
-	<string name="_bx_orgs_page_block_title_manage"><![CDATA[Управление]]></string>
+    <string name="_bx_orgs_page_block_title_profile_actions"><![CDATA[Действия]]></string>
+    <string name="_bx_orgs_page_block_title_featured_profiles"><![CDATA[Продвинутые организации]]></string>
+    <string name="_bx_orgs_page_block_title_latest_profiles"><![CDATA[Новые организации]]></string>
+    <string name="_bx_orgs_page_block_title_system_manage"><![CDATA[Управление собственными организациями]]></string>
+    <string name="_bx_orgs_page_block_title_system_manage_administration"><![CDATA[Управление всеми организациями]]></string>
+    <string name="_bx_orgs_page_block_title_manage"><![CDATA[Управление]]></string>
+    <string name="_bx_orgs_page_block_title_sys_active_profiles"><![CDATA[Активные организации]]></string>
     <string name="_bx_orgs_page_block_title_active_profiles"><![CDATA[Активные организации]]></string>
     <string name="_bx_orgs_page_block_title_online_profiles"><![CDATA[Онлайн организации]]></string>
-	<string name="_bx_orgs_page_block_title_categories"><![CDATA[Категории организаций]]></string>
-	<string name="_bx_orgs_page_block_title_invite_to_organization"><![CDATA[Пригласить участников в организацию]]></string>
-	<string name="_bx_orgs_page_block_title_search_form"><![CDATA[Форма поиска]]></string>
+    <string name="_bx_orgs_page_block_title_categories"><![CDATA[Категории организаций]]></string>
+    <string name="_bx_orgs_page_block_title_invite_to_organization"><![CDATA[Пригласить участников в организацию]]></string>
+    <string name="_bx_orgs_page_block_title_search_form"><![CDATA[Форма поиска]]></string>
     <string name="_bx_orgs_page_block_title_search_results"><![CDATA[Результаты поиска]]></string>
     <string name="_bx_orgs_page_block_title_search_form_cmts"><![CDATA[Форма поиска комментариев]]></string>
     <string name="_bx_orgs_page_block_title_search_results_cmts"><![CDATA[Результаты поиска комментариев]]></string>

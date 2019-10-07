@@ -157,6 +157,7 @@
     <string name="_bx_persons_page_block_title_system_manage"><![CDATA[Управление собственными профилями]]></string>
     <string name="_bx_persons_page_block_title_system_manage_administration"><![CDATA[Управление всеми профилями]]></string>
     <string name="_bx_persons_page_block_title_manage"><![CDATA[Управление]]></string>
+    <string name="_bx_persons_page_block_title_sys_active_profiles"><![CDATA[Активные пользователи]]></string>
     <string name="_bx_persons_page_block_title_active_profiles"><![CDATA[Активные пользователи]]></string>
     <string name="_bx_persons_page_block_title_online_profiles"><![CDATA[Онлайн пользователи]]></string>
     <string name="_bx_persons_page_block_title_search_form"><![CDATA[Форма поиска]]></string>

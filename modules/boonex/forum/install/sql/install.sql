@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS `bx_forum_discussions` (
   `lr_timestamp` int(11) NOT NULL,
   `lr_profile_id` int(11) NOT NULL,
   `lr_comment_id` int(11) NOT NULL,
+  `labels` text NOT NULL,
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',

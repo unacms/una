@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS `bx_shopify_entries` (
   `title` varchar(255) NOT NULL,
   `code` varchar(16) NOT NULL default '',
   `cat` int(11) NOT NULL,
+  `location` text NOT NULL,
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',

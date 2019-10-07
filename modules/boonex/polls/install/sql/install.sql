@@ -10,6 +10,8 @@ CREATE TABLE IF NOT EXISTS `bx_polls_entries` (
   `thumb` int(11) NOT NULL,
   `text` text NOT NULL,
   `cat` int(11) NOT NULL,
+  `labels` text NOT NULL,
+  `location` text NOT NULL,
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',

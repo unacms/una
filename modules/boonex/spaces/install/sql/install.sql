@@ -13,6 +13,8 @@ CREATE TABLE IF NOT EXISTS `bx_spaces_data` (
   `space_name` varchar(255) NOT NULL,
   `space_cat` int(11) NOT NULL,
   `space_desc` text NOT NULL,
+  `labels` text NOT NULL,
+  `location` text NOT NULL,
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',

@@ -15,6 +15,8 @@ CREATE TABLE IF NOT EXISTS `bx_events_data` (
   `date_start` int(11) DEFAULT NULL,
   `date_end` int(11) DEFAULT NULL,
   `timezone` varchar(255) DEFAULT NULL,
+  `labels` text NOT NULL,
+  `location` text NOT NULL,
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',

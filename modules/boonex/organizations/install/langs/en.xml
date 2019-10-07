@@ -166,12 +166,13 @@
     <string name="_bx_orgs_page_block_title_profile_related_me"><![CDATA[Relationships with Me]]></string>
     <string name="_bx_orgs_page_block_title_profile_comments"><![CDATA[Comments]]></string>
     <string name="_bx_orgs_page_block_title_profile_comments_link"><![CDATA[Comments to <a href="{entry_link}">{title}</a>]]></string>
-	<string name="_bx_orgs_page_block_title_profile_actions"><![CDATA[Actions]]></string>
-	<string name="_bx_orgs_page_block_title_featured_profiles"><![CDATA[Featured Organizations]]></string>
-	<string name="_bx_orgs_page_block_title_latest_profiles"><![CDATA[New Organizations]]></string>
-	<string name="_bx_orgs_page_block_title_system_manage"><![CDATA[Manage Own Organizations]]></string>
-	<string name="_bx_orgs_page_block_title_system_manage_administration"><![CDATA[Manage All Organizations]]></string>
-	<string name="_bx_orgs_page_block_title_manage"><![CDATA[Manage Organizations]]></string>
+    <string name="_bx_orgs_page_block_title_profile_actions"><![CDATA[Actions]]></string>
+    <string name="_bx_orgs_page_block_title_featured_profiles"><![CDATA[Featured Organizations]]></string>
+    <string name="_bx_orgs_page_block_title_latest_profiles"><![CDATA[New Organizations]]></string>
+    <string name="_bx_orgs_page_block_title_system_manage"><![CDATA[Manage Own Organizations]]></string>
+    <string name="_bx_orgs_page_block_title_system_manage_administration"><![CDATA[Manage All Organizations]]></string>
+    <string name="_bx_orgs_page_block_title_manage"><![CDATA[Manage Organizations]]></string>
+    <string name="_bx_orgs_page_block_title_sys_active_profiles"><![CDATA[Active Organizations]]></string>
     <string name="_bx_orgs_page_block_title_active_profiles"><![CDATA[Active Organizations]]></string>
     <string name="_bx_orgs_page_block_title_online_profiles"><![CDATA[Online Organizations]]></string>
     <string name="_bx_orgs_page_block_title_categories"><![CDATA[Organization categories]]></string>

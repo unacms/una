@@ -117,15 +117,16 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
         return $iPerPageInShowCase;
     }
     
-    function displayResultBlock ()
+    function displayResultBlock()
     {
-		if ($this->bShowcaseView){
-            $this->addContainerClass(array('bx-def-margin-sec-lefttopright-neg', 'bx-base-unit-showcase-wrapper'));
-			$this->aCurrent['paginate']['perPage'] = $this->getItemPerPageInShowCase();
-			$this->oModule->_oTemplate->addCss(array(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css'));
+        if ($this->bShowcaseView) {
+            $this->addContainerClass(array('bx-base-unit-showcase-wrapper'));
+            $this->aCurrent['paginate']['perPage'] = $this->getItemPerPageInShowCase();
+            $this->oModule->_oTemplate->addCss(array(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css'));
             $this->oModule->_oTemplate->addJs(array('flickity/flickity.pkgd.min.js','modules/base/general/js/|showcase.js'));
-		}
-		return parent::displayResultBlock ();
+        }
+
+        return parent::displayResultBlock();
     }
 }
 

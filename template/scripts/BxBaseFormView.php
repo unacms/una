@@ -1117,14 +1117,18 @@ BLAH;
         $this->addCssJsUi();
 
         $sVals = '';
-        if(!empty($aInput['value']) && is_array($aInput['value'])) {
-            foreach($aInput['value'] as $sVal) {
-                if(!$sVal || !($oProfile = BxDolProfile::getInstance($sVal)))
-                    continue;
+        if(!empty($aInput['value'])) {
+            if(is_array($aInput['value'])) {
+                foreach($aInput['value'] as $sVal) {
+                    if(!$sVal || !($oProfile = BxDolProfile::getInstance($sVal)))
+                        continue;
 
-               $sVals .= '<b class="val bx-def-color-bg-hl bx-def-round-corners">' . $oProfile->getUnit(0, array('template' => 'unit_wo_info')) . $oProfile->getDisplayName() . '<input type="hidden" name="' . $aInput['name'] . '[]" value="' . $sVal . '" /></b>';
+                   $sVals .= '<b class="val bx-def-color-bg-hl bx-def-round-corners">' . $oProfile->getUnit(0, array('template' => 'unit_wo_info')) . $oProfile->getDisplayName() . '<input type="hidden" name="' . $aInput['name'] . '[]" value="' . $sVal . '" /></b>';
+                }
+                $sVals = trim($sVals, ',');
             }
-            $sVals = trim($sVals, ',');
+            else if(is_string($aInput['value']))
+                $sVals = $aInput['value'];
         }
 
         $bDisabled = isset($aInput['attrs']['disabled']) && $aInput['attrs']['disabled'] == 'disabled';
