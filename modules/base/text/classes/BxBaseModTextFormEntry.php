@@ -159,7 +159,7 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
             foreach ($aValues as  $sValue) {
                 $aVars['bx_repeat:cats'][] = array(
                     'url' => $oCategories->getUrl($this->_oModule->getName(), $sValue),
-                    'name' => $sValue,
+                    'name' => _t($sValue),
                     'bx_if:more' => array(
                         'condition' => $sValue === end($aValues) ? false : true,
                         'content' => array('1')
@@ -181,8 +181,9 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
 		$aValuesForSelect = BxDolCategories::getInstance()->getData(array('type' => 'by_module_and_author', 'module' => $this->_oModule->getName(), 'author' => bx_get_logged_profile_id()));
    
         $aSelectedItems = array();
-        if (isset($aInput['value']))
+        if (isset($aInput['value']) && is_array($aInput['value']))
 		    $aInput['value'] = array_filter($aInput['value']);
+        
         if(!empty($aInput['value'])) {
             if (!is_array($aInput['value']))
                 $aValues = BxDolCategories::getInstance()->getData(array('type' => 'by_module_and_object', 'module' => $this->_oModule->getName(), 'object_id' => (!empty($aInput['content_id']) ? (int)$aInput['content_id'] : 0 )));
