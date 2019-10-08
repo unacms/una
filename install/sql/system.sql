@@ -3625,7 +3625,6 @@ INSERT INTO `sys_menu_templates` (`id`, `template`, `title`, `visible`) VALUES
 (15, 'menu_custom_hor.html', '_sys_menu_template_title_custom_hor', 0),
 (16, 'menu_buttons_ver.html', '_sys_menu_template_title_buttons_ver', 1),
 (17, 'menu_inline_sbtn.html', '_sys_menu_template_title_inline_sbtn', 1),
-(18, 'menu_icon_buttons_hor.html', '_sys_menu_template_title_icon_buttons_hor', 1),
 (19, 'menu_floating_blocks_wide.html', '_sys_menu_template_title_floating_blocks_wide', 0),
 (20, 'menu_custom_ver.html', '_sys_menu_template_title_custom_ver', 0),
 (21, 'menu_profile_stats.html', '_sys_menu_template_title_profile_stats', 0),
@@ -3674,7 +3673,7 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_switch_language_inline', '_sys_menu_title_switch_language_inline', 'sys_switch_language', 'system', 3, 0, 1, 'BxTemplMenuSwitchLanguage', ''),
 ('sys_switch_template', '_sys_menu_title_switch_template', 'sys_switch_template', 'system', 6, 0, 1, 'BxTemplMenuSwitchTemplate', ''),
 ('sys_set_acl_level', '_sys_menu_title_set_acl_level', '', 'system', 6, 0, 1, 'BxTemplMenuSetAclLevel', ''),
-('sys_social_sharing', '_sys_menu_title_social_sharing', 'sys_social_sharing', 'system', 18, 0, 1, 'BxTemplMenuSocialSharing', ''),
+('sys_social_sharing', '_sys_menu_title_social_sharing', 'sys_social_sharing', 'system', 23, 0, 1, 'BxTemplMenuSocialSharing', ''),
 ('sys_create_post', '_sys_menu_title_create_post', 'sys_add_content_links', 'system', 22, 0, 1, 'BxTemplMenuCreatePost', ''),
 ('sys_add_relation', '_sys_menu_title_add_relation', '', 'system', 6, 0, 1, 'BxTemplMenuAddRelation', '');
 

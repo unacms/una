@@ -2435,7 +2435,6 @@
 	<string name="_sys_menu_template_title_floating_blocks_dash"><![CDATA[Подвесные блоки с иконками и подписями]]></string>
 	<string name="_sys_menu_template_title_footer"><![CDATA[Основание - Ссылки]]></string>
 	<string name="_sys_menu_template_title_hor"><![CDATA[Горизонтальные ссылки]]></string>
-	<string name="_sys_menu_template_title_icon_buttons_hor"><![CDATA[Горизонтальные кнопки с иконками]]></string>
 	<string name="_sys_menu_template_title_inline"><![CDATA[В тексте]]></string>
 	<string name="_sys_menu_template_title_inline_sbtn"><![CDATA[В тексте ('спец' кнопки)]]></string>
 	<string name="_sys_menu_template_title_interactive"><![CDATA[Интерактивные горизонтальные ссылки]]></string>
