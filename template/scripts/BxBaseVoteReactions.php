@@ -185,25 +185,14 @@ class BxBaseVoteReactions extends BxDolVoteReactions
         if(empty($iValue))
             $iValue = $this->getValue();
 
-        $sJsObject = $this->getJsObjectName();
-        $aReactions = $this->getReactions(true);
+        $oMenu = BxTemplMenu::getObjectInstance($this->_sMenuDoVote);
+        if(!$oMenu)
+            return '';
 
-        $aMenu = array();        
-        foreach($aReactions as $sName => $aReaction) {
-            $aMenu[] = array(
-                'id' => $sName, 
-                'name' => $sName, 
-                'class' => '', 
-                'link' => 'javascript:void(0)', 
-                'onclick' => 'javascript:' . $this->getJsClickDo($sName, $iValue), 
-                'target' => '_self', 
-                'title' => _t($aReaction['title']), 
-                'icon' => $aReaction['icon'], 
-                'active' => 1
-            );
-        }
-
-        $oMenu = new BxTemplMenu(array('template' => 'menu_buttons_icon_hor.html', 'menu_id'=> $this->_aHtmlIds['do_menu'], 'menu_items' => $aMenu));
+        $oMenu->setParams(array(
+            'object' => &$this,
+            'value' => $iValue,
+        ));
         return $oMenu->getCode();
     }
 

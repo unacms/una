@@ -1,0 +1,70 @@
+<?php defined('BX_DOL') or die('hack attempt');
+/**
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT
+ *
+ * @defgroup    UnaBaseView UNA Base Representation Classes
+ * @{
+ */
+
+/**
+ * Menu representation.
+ * @see BxDolMenu
+ */
+class BxBaseVoteReactionsMenuDo extends BxTemplMenu
+{
+    protected $_iValue;
+    protected $_oObject;
+
+    public function __construct($aObject, $oTemplate)
+    {
+        parent::__construct ($aObject, $oTemplate);
+    }
+
+    public function setParams($aParams)
+    {
+        if(empty($aParams['object']) || !is_a($aParams['object'], 'BxTemplVoteReactions'))
+            return;
+
+        $this->_oObject = $aParams['object'];
+
+        $this->_iValue = isset($aParams['value']) ? (int)$aParams['value'] : $this->_oObject->getValue();
+    }
+
+    protected function getMenuItemsRaw()
+    {
+        $sJsObject = $this->_oObject->getJsObjectName();
+        $aReactions = $this->_oObject->getReactions(true);
+
+        $aMenuItems = array();        
+        foreach($aReactions as $sName => $aReaction) {
+            $aMenuItems[] = array(
+                'id' => $sName, 
+                'name' => $sName, 
+                'class' => '', 
+                'link' => 'javascript:void(0)', 
+                'onclick' => 'javascript:' . $this->_oObject->getJsClickDo($sName, $this->_iValue), 
+                'target' => '_self', 
+                'title' => _t($aReaction['title']), 
+                'icon' => $aReaction['icon'], 
+                'active' => 1
+            );
+        }
+
+        return $aMenuItems;
+    }
+
+    protected function _getMenuItem ($a)
+    {
+        $aResult = parent::_getMenuItem($a);
+        if(empty($aResult) || !is_array($aResult))
+            return $aResult;
+
+        $aResult['title'] = '';
+        $aResult['bx_if:title']['condition'] = false;
+
+        return $aResult;
+    }
+}
+
+/** @} */

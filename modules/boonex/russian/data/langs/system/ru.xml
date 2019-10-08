@@ -2486,6 +2486,7 @@
 	<string name="_sys_menu_title_switch_language_inline"><![CDATA[Переключатель языка (встроенный)]]></string>
 	<string name="_sys_menu_title_switch_template"><![CDATA[Переключить тему]]></string>
 	<string name="_sys_menu_title_snippet_meta"><![CDATA[Мета информация в карточке]]></string>
+        <string name="_sys_menu_title_vote_reactions_do"><![CDATA[Отреагировать - Меню]]></string>
   <string name="_sys_menu_dashboard_manage_tools_addon_counter1_caption_default"><![CDATA[спрятано]]></string>
   <string name="_sys_menu_dashboard_manage_tools_addon_counter1_caption_profile_default"><![CDATA[неодобрено]]></string>
   <string name="_sys_menu_dashboard_manage_tools_addon_counter2_caption_default"><![CDATA[жалоб]]></string>

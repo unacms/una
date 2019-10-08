@@ -12,6 +12,8 @@
  */
 class BxDolVoteReactions extends BxTemplVote
 {
+    protected $_sMenuDoVote; //--- Do vote (reaction)  menu name.
+
     protected $_sDataList; //--- Reactions list name.
     protected $_aDataList; //--- Reactions list with all reactions.
 
@@ -23,6 +25,8 @@ class BxDolVoteReactions extends BxTemplVote
 
         $this->_oQuery = new BxDolVoteReactionsQuery($this);
         $this->_sType = BX_DOL_VOTE_TYPE_REACTIONS;
+
+        $this->_sMenuDoVote = 'sys_vote_reactions_do';
 
         $this->_sDataList = 'sys_vote_reactions';
         $this->_aDataList = array();
