@@ -660,8 +660,6 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             $sText = $oMetatags->metaParse($aData[$CNF['FIELD_ID']], $sText);
         }
 
-        $sTitle = bx_process_output($sTitle);
-
         $aTmplVarsMeta = array();
         if(!empty($CNF['OBJECT_MENU_SNIPPET_META'])) {
             $oMenuMeta = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_SNIPPET_META'], $this);
@@ -715,20 +713,6 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                 ),
             ),
         );
-    }
-
-    protected function getTitle($aData)
-    {
-        $CNF = &$this->getModule()->_oConfig->CNF;
-
-        return isset($aData[$CNF['FIELD_TITLE']]) ? $aData[$CNF['FIELD_TITLE']] : '';
-    }
-
-    protected function getText($aData)
-    {
-        $CNF = &$this->getModule()->_oConfig->CNF;
-
-        return isset($aData[$CNF['FIELD_TEXT']]) ? $aData[$CNF['FIELD_TEXT']] : '';
     }
 
     protected function getSummary($aData, $sTitle = '', $sText = '', $sUrl = '')

@@ -40,7 +40,7 @@ class BxPollsTemplate extends BxBaseModTextTemplate
         $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->addCssStyle($CNF['STYLES_POLLS_EMBED_CLASS'], $CNF['STYLES_POLLS_EMBED_CONTENT']);
         $oTemplate->setPageNameIndex(BX_PAGE_EMBED);
-        $oTemplate->setPageHeader(strmaxtextlen($this->_oConfig->getTitle($aContentInfo), 32, '...'));
+        $oTemplate->setPageHeader($this->getTitleAuto($aContentInfo));
         $oTemplate->setPageContent('page_main_code', $this->getJsCode('entry') . $aBlock['content']);
         $oTemplate->getPageCode();
         exit;
@@ -124,9 +124,22 @@ class BxPollsTemplate extends BxBaseModTextTemplate
         );
     }
 
-    protected function getTitle($aData)
+    public function getTitleAuto($aData, $iMaxLen = 32, $sEllipsisSign = '...')
     {
-        return $this->_oConfig->getTitle($aData);
+        $sResult = $this->getTitle($aData);
+        if(strlen($sResult) > 0 && $iMaxLen > 0)
+            $sResult = strmaxtextlen($sResult, $iMaxLen, $sEllipsisSign);
+
+        return $sResult;
+    }
+
+    public function getTitle($aData, $mixedProcessOutput = BX_DATA_TEXT)
+    {
+        $sResult = $this->_oConfig->getTitle($aData);
+        if($mixedProcessOutput !== false && !empty($sResult))
+            $sResult = bx_process_output($sResult, (int)$mixedProcessOutput);
+
+        return $sResult;
     }
 
     protected function getSummary($aData, $sTitle = '', $sText = '', $sUrl = '')

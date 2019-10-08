@@ -57,6 +57,48 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         return ($mixedWrap === true || (is_array($mixedWrap) && isset($mixedWrap['wrap']) && $mixedWrap['wrap'] === true)) ? $this->_wrapInTagJsCode($sContent) : $sContent;
     }
 
+    public function getTitleAuto($aData, $iMaxLen = 20, $sEllipsisSign = '...')
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+        if(isset($aData[$CNF['FIELD_TITLE']]))
+            return $this->getTitle($aData);
+
+        $sResult = $this->getText($aData);
+        if(strlen($sResult) > 0 && $iMaxLen > 0)
+            $sResult = strmaxtextlen($sResult, $iMaxLen, $sEllipsisSign);
+
+        return $sResult;
+    }
+
+    public function getTitle($aData, $mixedProcessOutput = BX_DATA_TEXT)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+        
+        if(!isset($aData[$CNF['FIELD_TITLE']]))
+            return '';
+
+        $sResult = $aData[$CNF['FIELD_TITLE']];
+        if($mixedProcessOutput !== false && !empty($sResult))
+            $sResult = bx_process_output($sResult, (int)$mixedProcessOutput);
+
+        return $sResult;
+    }
+
+    public function getText($aData, $mixedProcessOutput = BX_DATA_HTML)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+        
+        if(!isset($aData[$CNF['FIELD_TEXT']]))
+            return '';
+
+        $sResult = $aData[$CNF['FIELD_TEXT']];
+        if($mixedProcessOutput !== false && !empty($sResult))
+            $sResult = bx_process_output($sResult, (int)$mixedProcessOutput);
+
+        return $sResult;
+    }
+
     public function getProfileLink($mixedProfile)
     {
     	if(!is_array($mixedProfile))
@@ -83,8 +125,8 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         $CNF = &$this->getModule()->_oConfig->CNF;
 
         $aVars = $aData;
-        $aVars['entry_title'] = !empty($CNF['FIELD_TITLE']) && isset($aData[$CNF['FIELD_TITLE']]) ? bx_process_output($aData[$CNF['FIELD_TITLE']]) : '';
-        $aVars['entry_text'] = !empty($CNF['FIELD_TEXT']) && isset($aData[$CNF['FIELD_TEXT']]) ? bx_process_output($aData[$CNF['FIELD_TEXT']], BX_DATA_HTML) : '';
+        $aVars['entry_title'] = $this->getTitle($aData);
+        $aVars['entry_text'] = $this->getText($aData);
 
         if (!empty($CNF['OBJECT_METATAGS'])) {
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
