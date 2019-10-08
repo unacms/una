@@ -737,15 +737,19 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
     width: 2.0rem;
 }
 .bx-menu-main-submenu.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .bx-btn,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .bx-btn,
+.bx-menu-main-submenu.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .bx-btn-height,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .bx-btn-height {
+    height: auto;
+    line-height: auto;
+}
+.bx-menu-main-submenu.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .bx-btn,
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .bx-btn {
     position: relative;
     display: -webkit-flex;
     display: flex;
     -webkit-align-items: center;
-    align-items: center;
-
-    height: auto;
-    line-height: auto;
+    align-items: center;   
 
     margin: 0;
     padding: 0;
