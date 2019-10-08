@@ -279,7 +279,6 @@
     <string name="_bx_dev_nav_txt_sys_menus_set_name"><![CDATA[Набор]]></string>
     <string name="_bx_dev_nav_txt_menus_set_name"><![CDATA[Набор]]></string>
     <string name="_bx_dev_nav_txt_menus_set_name_select"><![CDATA[Выбрать набор...]]></string>
-    <string name="_bx_dev_nav_err_menus_set_name"><![CDATA[Нужно выбрать набор]]></string>
     <string name="_bx_dev_nav_txt_sys_menus_template_id"><![CDATA[Стиль]]></string>
     <string name="_bx_dev_nav_txt_menus_template_id"><![CDATA[Стиль]]></string>
     <string name="_bx_dev_nav_txt_menus_template_id_select"><![CDATA[Выбрать стиль...]]></string>

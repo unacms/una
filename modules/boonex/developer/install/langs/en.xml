@@ -279,7 +279,6 @@
     <string name="_bx_dev_nav_txt_sys_menus_set_name"><![CDATA[Set]]></string>
     <string name="_bx_dev_nav_txt_menus_set_name"><![CDATA[Set]]></string>
     <string name="_bx_dev_nav_txt_menus_set_name_select"><![CDATA[Select Set...]]></string>
-    <string name="_bx_dev_nav_err_menus_set_name"><![CDATA[You need to select a set]]></string>
     <string name="_bx_dev_nav_txt_sys_menus_template_id"><![CDATA[Style]]></string>
     <string name="_bx_dev_nav_txt_menus_template_id"><![CDATA[Style]]></string>
     <string name="_bx_dev_nav_txt_menus_template_id_select"><![CDATA[Select Style...]]></string>
