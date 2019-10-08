@@ -29,7 +29,7 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
 
         $sTitle = $sUrl = $sIcon = "";
         if ($this->_aContentInfo && CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedView($this->_aContentInfo)) {
-            $sTitle = isset($this->_aContentInfo[$CNF['FIELD_TITLE']]) ? $this->_aContentInfo[$CNF['FIELD_TITLE']] : strmaxtextlen($this->_aContentInfo[$CNF['FIELD_TEXT']], 20, '...');
+            $sTitle = $this->_oModule->_oTemplate->getTitleAuto($this->_aContentInfo);
             $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $this->_aContentInfo[$CNF['FIELD_ID']]);
             $sIcon = $CNF['ICON'];
 

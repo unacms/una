@@ -53,6 +53,22 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
         if(isset($CNF['FIELD_ANONYMOUS']) && isset($this->aInputs[$CNF['FIELD_ANONYMOUS']]) && isset($aValues[$CNF['FIELD_OBJECT_ID']]))
             $this->aInputs[$CNF['FIELD_ANONYMOUS']]['checked'] = $aValues[$CNF['FIELD_OBJECT_ID']] < 0;
 
+        $sKey = 'FIELD_OBJECT_PRIVACY_VIEW';
+        if(isset($CNF[$sKey]) && isset($this->aInputs[$CNF[$sKey]]) && $oPrivacy = BxDolPrivacy::getObjectInstance($this->_oModule->_oConfig->getObject('privacy_view'))) {
+            $sField = $CNF[$sKey];
+
+            $iContentId = !empty($aValues[$CNF['FIELD_ID']]) ? (int)$aValues[$CNF['FIELD_ID']] : 0;
+            $iProfileId = !empty($iContentId) ? (int)$this->getContentOwnerProfileId($iContentId) : bx_get_logged_profile_id();
+            $iGroupId = !empty($aValues[$sField]) ? $aValues[$sField] : 0;
+
+            if(!isset($this->aInputs[$sField]['content']))
+                $this->aInputs[$sField]['content'] = '';
+
+            $this->aInputs[$sField]['content'] .= $oPrivacy->loadGroupCustom($iProfileId, $iContentId, $iGroupId, array(
+                'form' => $this->getId()
+            ));
+        }
+
         parent::initChecker ($aValues, $aSpecificValues);
     }
 

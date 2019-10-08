@@ -251,13 +251,17 @@ class BxBaseCmts extends BxDolCmts
         $aTmplReplyTo = array();
         if((int)$aCmt['cmt_parent_id'] != 0) {
             $aParent = $this->getCommentRow($aCmt['cmt_parent_id']);
-            list($sParAuthorName, $sParAuthorLink, $sParAuthorIcon) = $this->_getAuthorInfo($aParent['cmt_author_id']);
+
+            $oProfile = $this->_getAuthorObject($aParent['cmt_author_id']);
+            $sParAuthorName = $oProfile->getDisplayName();
+            $sParAuthorUnit = $oProfile->getUnit(0, array('template' => array('name' => 'unit_wo_info_links', 'size' => 'icon')));
 
             $aTmplReplyTo = array(
                 'style_prefix' => $this->_sStylePrefix,
                 'par_cmt_link' => $this->getItemUrl($aCmt['cmt_parent_id']),
-            	'par_cmt_title' => bx_html_attribute(_t('_in_reply_to', $sParAuthorName)),
-                'par_cmt_author' => $sParAuthorName
+            	'par_cmt_title' => bx_html_attribute(_t('_in_reply_to_x', $sParAuthorName)),
+                'par_cmt_author' => $sParAuthorName,
+                'par_cmt_author_unit' => $sParAuthorUnit
             );
         }
 

@@ -56,7 +56,7 @@ class BxPhotosTemplate extends BxBaseModTextTemplate
         $aTmplVars = array_merge($aTmplVars, array(
             'content_description_before' => '',
             'entry_photo' => $sImage,
-            'entry_title_attr' => bx_html_attribute($aContentInfo['title']),
+            'entry_title_attr' => bx_html_attribute($this->getTitle($aContentInfo)),
             'content_description_after' => ''
         ));
 
@@ -182,6 +182,15 @@ class BxPhotosTemplate extends BxBaseModTextTemplate
         $aResult['bx_if:thumb']['content']['content_onclick'] = !empty($sMode) ? $this->_oConfig->getJsObject('main') . ".viewEntry(" . $aData[$CNF['FIELD_ID']] . ", '" . $sMode . "', " . bx_html_attribute(json_encode($aParams)) . "); return false;" : "";
 
         return $aResult;
+    }
+    
+    public function getTitle($aData, $mixedProcessOutput = BX_DATA_TEXT)
+    {
+        $sTitle = parent::getTitle($aData, $mixedProcessOutput);
+        if(!empty($sTitle))
+            return $sTitle;
+
+        return _t('_sys_txt_no_title');
     }
 }
 
