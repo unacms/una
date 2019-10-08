@@ -465,6 +465,7 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
     public function isProfilesLimitReached ()
     {
         $iProfilesLimit = (int)getParam('sys_account_limit_profiles_number');
+        bx_alert('account', 'get_limit_profiles_number', 0, 0, array('account_id' => $this->_iAccountID, 'number' => &$iProfilesLimit));
         if ($iProfilesLimit && ($iProfilesNum = $this->getProfilesNumber()) && $iProfilesNum >= $iProfilesLimit)
             return true;
 
