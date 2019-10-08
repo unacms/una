@@ -1633,7 +1633,8 @@
 	<string name="_error occured"><![CDATA[Error occurred]]></string>
 	<string name="_from"><![CDATA[from]]></string>
 	<string name="_hidden_comment"><![CDATA[Comment by <b>{0}</b> is hidden.]]></string>
-	<string name="_in_reply_to"><![CDATA[In reply to {0}]]></string>
+	<string name="_in_reply_to"><![CDATA[In reply to]]></string>
+        <string name="_in_reply_to_x"><![CDATA[In reply to {0}]]></string>
 	<string name="_item"><![CDATA[item]]></string>
 	<string name="_items"><![CDATA[items]]></string>
 	<string name="_member_banned"><![CDATA[Sorry, you've been banned]]></string>

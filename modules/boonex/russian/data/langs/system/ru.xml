@@ -1620,7 +1620,8 @@
 	<string name="_error occured"><![CDATA[Произошла ошибка]]></string>
 	<string name="_from"><![CDATA[от]]></string>
 	<string name="_hidden_comment"><![CDATA[Комментарий от <b>{0}</b> спрятан.]]></string>
-	<string name="_in_reply_to"><![CDATA[В ответе на {0}]]></string>
+	<string name="_in_reply_to"><![CDATA[В ответ на]]></string>
+        <string name="_in_reply_to_x"><![CDATA[В ответ на {0}]]></string>
 	<string name="_item"><![CDATA[элемент]]></string>
 	<string name="_items"><![CDATA[элементы]]></string>
 	<string name="_member_banned"><![CDATA[Извините, Вас забанили]]></string>
