@@ -24,9 +24,9 @@ class BxBaseVoteReactions extends BxDolVoteReactions
 
         $sHtmlId = str_replace(array('_' , ' '), array('-', '-'), $sSystem) . '-' . $iId;
         $this->_aHtmlIds = array_merge($this->_aHtmlIds, array(
-            'main' => 'bx-vote-reactions-' . $sHtmlId,
-            'do_menu' => 'bx-vote-do-menu-' . $sHtmlId,
-            'do_popup' => 'bx-vote-do-popup-' . $sHtmlId
+            'main' => 'bx-vr-' . $sHtmlId,
+            'do_menu' => 'bx-vr-do-menu-' . $sHtmlId,
+            'do_popup' => 'bx-vr-do-popup-' . $sHtmlId
         ));
 
         $this->_aElementDefaults = array(
@@ -143,20 +143,26 @@ class BxBaseVoteReactions extends BxDolVoteReactions
 
         $sClass = '';
         if($bShowDoVoteAsButton)
-            $sClass = 'bx-btn';
+            $sClass = ' bx-btn';
         else if ($bShowDoVoteAsButtonSmall)
-            $sClass = 'bx-btn bx-btn-small';
+            $sClass = ' bx-btn bx-btn-small';
 
         $sJsClick = '';
-        if($bDisabled)
-            $sClass .= $bShowDoVoteAsButton || $bShowDoVoteAsButtonSmall ? ' bx-btn-disabled' : 'bx-vote-disabled';
+        if(!$bDisabled) {
+            if($bVoted && $bUndo) {
+                $sClass = ' ' . $this->_sStylePrefix . '-voted' . $sClass;
+                $sJsClick = $this->getJsClickDo($aParams['track']['reaction']);
+            }
+            else 
+                $sJsClick = $this->getJsClick();
+        }
         else
-            $sJsClick = $bVoted && $bUndo ? $this->getJsClickDo($aParams['track']['reaction']) : $this->getJsClick();
+            $sClass .= $bShowDoVoteAsButton || $bShowDoVoteAsButtonSmall ? ' bx-btn-disabled' : ' ' . $this->_sStylePrefix . '-disabled';
 
         return $this->_oTemplate->parseLink('javascript:void(0)', $this->_getDoVoteLabel($aParams), array(
-            'class' => $this->_sStylePrefix . '-do-vote ' . $sClass,
+            'class' => $this->_sStylePrefix . '-do-vote' . $sClass,
             'title' => _t($this->_getTitleDoWithTrack($bVoted, $aParams['track'])),
-            'onclick' => $sJsClick
+            'onclick' => $sJsClick,
         ));
     }
 
