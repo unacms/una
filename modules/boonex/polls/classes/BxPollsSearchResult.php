@@ -97,6 +97,13 @@ class BxPollsSearchResult extends BxBaseModTextSearchResult
                 $this->aCurrent['sorting'] = 'popular';
                 break;
 
+            case 'top':
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_TOP']);
+                $this->aCurrent['title'] = _t('_bx_polls_page_title_browse_top');
+                $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode;
+                $this->aCurrent['sorting'] = 'top';
+                break;
+
             case 'updated':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_UPDATED']);
                 $this->aCurrent['title'] = _t('_bx_polls_page_title_browse_updated');
@@ -134,28 +141,6 @@ class BxPollsSearchResult extends BxBaseModTextSearchResult
         $this->oModule->_oTemplate->addCss(array('entry.css'));
 
         return $this->oModule->_oTemplate->getJsCode('entry');
-    }
-    
-    
-        
-    function getAlterOrder()
-    {
-        $aSql = array();
-        switch ($this->aCurrent['sorting']) {
-            case 'last':
-                $aSql['order'] = ' ORDER BY `bx_polls_entries`.`added` DESC';
-                break;
-            case 'featured':
-                $aSql['order'] = ' ORDER BY `bx_polls_entries`.`featured` DESC';
-                break;
-            case 'updated':
-                $aSql['order'] = ' ORDER BY `bx_polls_entries`.`changed` DESC';
-                break;
-            case 'popular':
-                $aSql['order'] = ' ORDER BY `bx_polls_entries`.`views` DESC';
-                break;
-        }
-        return $aSql;
     }
 }
 

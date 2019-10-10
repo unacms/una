@@ -65,6 +65,7 @@ class BxPollsConfig extends BxBaseModTextConfig
 
             'URL_HOME' => 'page.php?i=polls-home',
             'URL_POPULAR' => 'page.php?i=polls-popular',
+            'URL_TOP' => 'page.php?i=polls-top',
             'URL_UPDATED' => 'page.php?i=polls-updated',
             'URL_MANAGE_COMMON' => 'page.php?i=polls-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=polls-administration',
