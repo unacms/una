@@ -35,6 +35,64 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
 		}
     }
 
+    function getAlterOrder()
+    {
+        $CNF = &$this->oModule->_oConfig->CNF;
+
+        $sTable = $this->aCurrent['table'];
+
+        $aSql = array();
+        switch ($this->aCurrent['sorting']) {
+            case 'last':
+                $aSql['order'] = ' ORDER BY `' . $sTable . '`.`' . $CNF['FIELD_ADDED'] . '` DESC';
+                break;
+
+            case 'updated':
+                $aSql['order'] = ' ORDER BY `' . $sTable . '`.`' . $CNF['FIELD_CHANGED'] . '` DESC';
+                break;
+
+            case 'featured':
+                $aSql['order'] = ' ORDER BY `' . $sTable . '`.`featured` DESC';
+                break;
+
+            case 'popular':
+                $aSql['order'] = ' ORDER BY `' . $sTable . '`.`' . $CNF['FIELD_VIEWS'] . '` DESC';
+                break;
+
+            case 'top':
+                $aSql['order'] = '';
+
+                $aPartsUp = $aPartsDown = array();
+                if(!empty($CNF['OBJECT_VOTES']) && ($oVote = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], 0, false)) !== false) {
+                    $aVote = $oVote->getSystemInfo();
+                    if(!empty($aVote['trigger_table']) && !empty($aVote['trigger_field_count']))
+                        $aPartsUp[] = '`' . $aVote['trigger_table'] . '`.`' . $aVote['trigger_field_count'] . '`';
+                }
+
+                if(!empty($CNF['OBJECT_REACTIONS']) && ($oReaction = BxDolVote::getObjectInstance($CNF['OBJECT_REACTIONS'], 0, false)) !== false) {
+                    $aReaction = $oReaction->getSystemInfo();
+                    if(!empty($aReaction['trigger_table']) && !empty($aReaction['trigger_field_count']))
+                        $aPartsUp[] = '`' . $aReaction['trigger_table'] . '`.`' . $aReaction['trigger_field_count'] . '`';
+                }
+
+                if(!empty($CNF['OBJECT_SCORES']) && ($oScore = BxDolScore::getObjectInstance($CNF['OBJECT_SCORES'], 0, false)) !== false) {
+                    $aScore = $oScore->getSystemInfo();
+                    if(!empty($aScore['trigger_table']) && !empty($aScore['trigger_field_cup']) && !empty($aScore['trigger_field_cdown'])) {
+                        $aPartsUp[] = '`' . $aScore['trigger_table'] . '`.`' . $aScore['trigger_field_cup'] . '`';
+                        $aPartsDown[] = '`' . $aScore['trigger_table'] . '`.`' . $aScore['trigger_field_cdown'] . '`';
+                    }
+                }
+
+                if(empty($aPartsUp) && empty($aPartsDown))
+                    break;
+
+                $aSql['order'] = ' ORDER BY ' . pow(10, 8) . ' * ((' . implode(' + ', $aPartsUp) . ') - (' . implode(' + ', $aPartsDown) . ')) / (UNIX_TIMESTAMP() - `' . $sTable . '`.`' . $CNF['FIELD_ADDED'] . '`) DESC';
+                break;
+        }
+
+        return $aSql;
+    }
+
     function getRssUnitImage (&$a, $sField)
     {
         $CNF = &$this->oModule->_oConfig->CNF;

@@ -179,6 +179,15 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     }
 
     /**
+     * Display popular entries
+     * @return HTML string
+     */
+    public function serviceBrowseTop ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
+    {
+        return $this->_serviceBrowse ('top', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+    }
+
+    /**
      * Display recently updated entries
      * @return HTML string
      */
