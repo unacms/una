@@ -89,10 +89,17 @@ class BxPostsSearchResult extends BxBaseModTextSearchResult
                 break;
 
             case 'popular':
-                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_POPULAR']);
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_TOP']);
                 $this->aCurrent['title'] = _t('_bx_posts_page_title_browse_popular');
                 $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode;
                 $this->aCurrent['sorting'] = 'popular';
+                break;
+
+            case 'top':
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_POPULAR']);
+                $this->aCurrent['title'] = _t('_bx_posts_page_title_browse_top');
+                $this->aCurrent['rss']['link'] = 'modules/?r=posts/rss/' . $sMode;
+                $this->aCurrent['sorting'] = 'top';
                 break;
 
             case 'updated':
@@ -116,26 +123,6 @@ class BxPostsSearchResult extends BxBaseModTextSearchResult
         $this->processReplaceableMarkers($oProfileAuthor);
 
         $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
-    }
-
-    function getAlterOrder()
-    {
-        $aSql = array();
-        switch ($this->aCurrent['sorting']) {
-            case 'last':
-                $aSql['order'] = ' ORDER BY `bx_posts_posts`.`added` DESC';
-                break;
-            case 'featured':
-                $aSql['order'] = ' ORDER BY `bx_posts_posts`.`featured` DESC';
-                break;
-            case 'updated':
-                $aSql['order'] = ' ORDER BY `bx_posts_posts`.`changed` DESC';
-                break;
-            case 'popular':
-                $aSql['order'] = ' ORDER BY `bx_posts_posts`.`views` DESC';
-                break;
-        }
-        return $aSql;
     }
 }
 
