@@ -105,6 +105,9 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
             if(!$oProfile)
                 continue;
 
+            if($this->_oModule->checkAllowedContact($iProfile) !== CHECK_ACTION_RESULT_ALLOWED)
+                continue;
+
             $iRecipient = $oProfile->id();
             if($bDraft && $iRecipient == $iSender)
                 $this->_oModule->_oDb->moveConvo($iContentId, $iRecipient, $iFolder);
@@ -202,6 +205,28 @@ class BxCnvFormEntry extends BxBaseModTextFormEntry
             $isAssociateWithContent = true; // TODO: if edit mode will be added, then this functionality maybe reconsidered
          
         return parent::processFiles ($sFieldFile, $iContentId, $isAssociateWithContent);
+    }
+}
+
+class BxCnvFormEntryCheckerHelper extends BxDolFormCheckerHelper
+{
+    static public function checkRecipients($aIds)
+    {
+        $bResult = self::checkAvail($aIds);
+        if(!$bResult)
+            return $bResult;
+
+        $oModule = BxDolModule::getInstance('bx_convos');
+
+        $aIdsAllowed = array();
+        foreach($aIds as $iId)
+            if($oModule->checkAllowedContact($iId) === CHECK_ACTION_RESULT_ALLOWED)
+                $aIdsAllowed[] = $iId;
+
+        if(empty($aIdsAllowed)) 
+            return false;
+
+        return true;
     }
 }
 

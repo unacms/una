@@ -187,6 +187,11 @@ class BxCnvModule extends BxBaseModTextModule
         echo(json_encode($a));
     }
 
+    public function serviceIsAllowedContact($iProfileId)
+    {
+        return $this->checkAllowedContact($iProfileId) === CHECK_ACTION_RESULT_ALLOWED;
+    }
+
     public function serviceConversationsInFolder ($iFolderId = BX_CNV_FOLDER_INBOX)
     {
         $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->CNF['OBJECT_GRID']);
@@ -329,6 +334,31 @@ class BxCnvModule extends BxBaseModTextModule
     }
 
     /**
+     * Create entry form
+     * @return HTML string
+     */
+    public function serviceEntityCreate ($sParams = false)
+    {
+        $sProfilesIds = bx_get('profiles');
+        if($sProfilesIds !== false) {
+            $sDiv = ',';
+            $aIds = explode($sDiv, $sProfilesIds);
+
+            $aIdsAllowed = array();
+            foreach($aIds as $iId)
+                if($this->checkAllowedContact($iId) === CHECK_ACTION_RESULT_ALLOWED)
+                    $aIdsAllowed[] = $iId;
+
+            if(empty($aIdsAllowed))
+                return MsgBox(_t('_sys_txt_access_denied'));
+            
+            bx_set('profiles', implode($sDiv, $aIdsAllowed));
+        }
+
+        return parent::serviceEntityCreate();
+    }
+
+    /**
      * Entry collaborators block
      */
     public function serviceEntityCollaborators ($iContentId = 0)
@@ -443,6 +473,21 @@ class BxCnvModule extends BxBaseModTextModule
     public function checkAllowedView ($aDataEntry, $isPerformAction = false)
     {
         return $this->serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction);
+    }
+
+    /**
+     * Checks whether contact is allowed.
+     * @param integer $iProfileId - recipient profile ID
+     * @param boolean $isPerformAction - perform or just check the action
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
+     */
+    public function checkAllowedContact($iProfileId, $isPerformAction = false)
+    {
+        $mixedResult = BxDolProfile::getInstance($iProfileId)->checkAllowedProfileContact();
+        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+            return _t('_sys_txt_access_denied');
+
+        return $this->checkAllowedAdd($isPerformAction);
     }
 
     public function serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction = false, $iProfileId = false)

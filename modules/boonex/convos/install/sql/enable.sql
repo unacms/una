@@ -113,9 +113,9 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 -- MENU: add menu item to profiles modules actions menu (trigger* menu sets are processed separately upon modules enable/disable)
 
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('trigger_profile_view_actions', 'bx_convos', 'convos-compose', '_bx_cnv_menu_item_title_system_message', '_bx_cnv_menu_item_title_message', 'page.php?i=start-convo&profiles={profile_id}', '', '', 'envelope', '', 2147483646, 1, 0, 0),
-('trigger_group_view_actions', 'bx_convos', 'convos-compose', '_bx_cnv_menu_item_title_system_message_group', '_bx_cnv_menu_item_title_message_group', 'page.php?i=start-convo&profiles={recipients}', '', '', 'envelope', '', 2147483646, 1, 0, 0);
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
+('trigger_profile_view_actions', 'bx_convos', 'convos-compose', '_bx_cnv_menu_item_title_system_message', '_bx_cnv_menu_item_title_message', 'page.php?i=start-convo&profiles={profile_id}', '', '', 'envelope', '', 2147483646, 'a:3:{s:6:"module";s:9:"bx_convos";s:6:"method";s:18:"is_allowed_contact";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 1, 0, 0),
+('trigger_group_view_actions', 'bx_convos', 'convos-compose', '_bx_cnv_menu_item_title_system_message_group', '_bx_cnv_menu_item_title_message_group', 'page.php?i=start-convo&profiles={recipients}', '', '', 'envelope', '', 2147483646, '', 1, 0, 0);
 
 -- GRID
 
