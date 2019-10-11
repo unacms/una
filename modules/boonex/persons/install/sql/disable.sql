@@ -48,7 +48,7 @@ DELETE FROM `sys_alerts` WHERE `handler_id` = @iHandler;
 DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandler;
 
 -- PRIVACY 
-DELETE FROM `sys_objects_privacy` WHERE `object` IN ('bx_persons_allow_view_to', 'bx_persons_allow_post_to');
+DELETE FROM `sys_objects_privacy` WHERE `object` IN ('bx_persons_allow_view_to', 'bx_persons_allow_post_to', 'bx_persons_allow_contact_to');
 
 -- EMAIL TEMPLATES
 DELETE FROM `sys_email_templates` WHERE `Module` = 'bx_persons';
