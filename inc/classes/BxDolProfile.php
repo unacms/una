@@ -353,6 +353,16 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
     }
 
     /**
+     * @see iBxDolProfile::checkAllowedProfileContact
+     */
+    public function checkAllowedProfileContact($iProfileId = 0)
+    {
+        $aInfo = $this->getInfo($iProfileId);
+        return BxDolService::call($aInfo['type'], 'check_allowed_profile_contact', array($aInfo['content_id']));
+    }
+    
+    
+    /**
      * @see iBxDolProfile::checkAllowedPostInProfile
      */
     public function checkAllowedPostInProfile($iProfileId = 0)

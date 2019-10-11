@@ -1074,6 +1074,28 @@ function bx_get ($sName, $sMethod = false)
         return false;
 }
 
+function bx_set ($sName, $sValue, $sMethod = false)
+{
+    if(!$sMethod)
+        $sMethod = 'get';
+
+    $bResult = true;
+    switch($sMethod) {
+        case 'get':
+            $_GET[$sName] = $sValue;
+            break;
+        
+        case 'post':
+            $_POST[$sName] = $sValue;
+            break;
+
+        default:
+            $bResult = false;
+    }
+
+    return $bResult;
+}
+
 function bx_get_with_prefix ($sPrefix, $sMethod = false)
 {
     $aSources = array('get' => &$_GET, 'post' => &$_POST);

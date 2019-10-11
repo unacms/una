@@ -69,18 +69,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             $this->aInputs[$CNF['FIELD_PHOTO']]['ghost_template'] = '';
         }
 
-        if (isset($CNF['FIELD_ALLOW_VIEW_TO']) && isset($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]) && $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) {
-
-            $aSave = array('db' => array('pass' => 'Xss'));
-            array_walk($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']], function ($a, $k, $aSave) {
-                if (in_array($k, array('info', 'caption', 'value')))
-                    $aSave[0][$k] = $a;
-            }, array(&$aSave));
-            
-            $aGroupChooser = $oPrivacy->getGroupChooser($CNF['OBJECT_PRIVACY_VIEW']);
-            
-            $this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']] = array_merge($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']], $aGroupChooser, $aSave);
-        }        
+        $this->_preparePrivacyField('VIEW');       
     }
 
     /**
@@ -149,19 +138,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             $this->aInputs[$CNF['FIELD_ANONYMOUS']]['checked'] = $aValues[$CNF['FIELD_AUTHOR']] < 0;
         }
 
-        if (isset($CNF['FIELD_ALLOW_VIEW_TO']) && isset($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]) && $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) {
-            $iContentId = !empty($aValues[$CNF['FIELD_ID']]) ? (int)$aValues[$CNF['FIELD_ID']] : 0;
-            $iProfileId = !empty($iContentId) ? (int)$this->getContentOwnerProfileId($iContentId) : bx_get_logged_profile_id();
-            $iGroupId = !empty($aValues[$CNF['FIELD_ALLOW_VIEW_TO']]) ? $aValues[$CNF['FIELD_ALLOW_VIEW_TO']] : 0;
-
-            $sKey = $CNF['FIELD_ALLOW_VIEW_TO'];
-            if(!isset($this->aInputs[$sKey]['content']))
-                $this->aInputs[$sKey]['content'] = '';
-
-            $this->aInputs[$sKey]['content'] .= $oPrivacy->loadGroupCustom($iProfileId, $iContentId, $iGroupId, array(
-                'form' => $this->getId()
-            ));
-        }
+        $this->_preloadPrivacyField('VIEW', $aValues);
 
         parent::initChecker ($aValues, $aSpecificValues);
     }
@@ -457,6 +434,53 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             if(!empty($aLocation) && is_array($aLocation))
                 $aValsToAdd[$CNF[$sKey1]] = serialize(BxDolMetatags::locationsParseComponents($aLocation));
         }
+    }
+
+    protected function _preparePrivacyField($Type)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!isset($CNF['FIELD_ALLOW_' . $Type . '_TO']) || !isset($this->aInputs[$CNF['FIELD_ALLOW_' . $Type . '_TO']]) || !isset($CNF['OBJECT_PRIVACY_' . $Type]))
+            return;
+
+        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_' . $Type]);
+        if(!$oPrivacy) 
+            return;
+
+
+        $aSave = array('db' => array('pass' => 'Xss'));
+        array_walk($this->aInputs[$CNF['FIELD_ALLOW_' . $Type . '_TO']], function ($a, $k, $aSave) {
+            if (in_array($k, array('info', 'caption', 'value')))
+                $aSave[0][$k] = $a;
+        }, array(&$aSave));
+
+        $aGroupChooser = $oPrivacy->getGroupChooser($CNF['OBJECT_PRIVACY_' . $Type]);
+
+        $this->aInputs[$CNF['FIELD_ALLOW_' . $Type . '_TO']] = array_merge($this->aInputs[$CNF['FIELD_ALLOW_' . $Type . '_TO']], $aGroupChooser, $aSave);
+    }
+
+    protected function _preloadPrivacyField($Type, $aValues)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!isset($CNF['FIELD_ALLOW_' . $Type . '_TO']) || !isset($this->aInputs[$CNF['FIELD_ALLOW_' . $Type . '_TO']]) || !isset($CNF['OBJECT_PRIVACY_' . $Type]))
+            return;
+
+        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_' . $Type]);
+        if(!$oPrivacy) 
+            return;
+
+        $iContentId = !empty($aValues[$CNF['FIELD_ID']]) ? (int)$aValues[$CNF['FIELD_ID']] : 0;
+        $iProfileId = !empty($iContentId) ? (int)$this->getContentOwnerProfileId($iContentId) : bx_get_logged_profile_id();
+        $iGroupId = !empty($aValues[$CNF['FIELD_ALLOW_' . $Type . '_TO']]) ? $aValues[$CNF['FIELD_ALLOW_' . $Type . '_TO']] : 0;
+
+        $sKey = $CNF['FIELD_ALLOW_' . $Type . '_TO'];
+        if(!isset($this->aInputs[$sKey]['content']))
+            $this->aInputs[$sKey]['content'] = '';
+
+        $this->aInputs[$sKey]['content'] .= $oPrivacy->loadGroupCustom($iProfileId, $iContentId, $iGroupId, array(
+            'form' => $this->getId()
+        ));
     }
 }
 

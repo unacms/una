@@ -171,7 +171,7 @@ interface iBxDolProfile
     public function hasImage();
     public function getPicture();
     public function getAvatar();
-	public function getCover();
+    public function getCover();
     public function getThumb();
     public function getIcon();
     public function getIconModule();
@@ -185,7 +185,13 @@ interface iBxDolProfile
      * @return message on error, or CHECK_ACTION_RESULT_ALLOWED when allowed
      */    
     public function checkAllowedProfileView();
-    
+
+    /**
+     * Check if profile can be contacted.
+     * @return message on error, or CHECK_ACTION_RESULT_ALLOWED when allowed
+     */    
+    public function checkAllowedProfileContact();
+
     /**
      * Check if posting in profile is allowed
      * @return message on error, or CHECK_ACTION_RESULT_ALLOWED when allowed
@@ -201,7 +207,7 @@ interface iBxDolProfileService
     public function serviceProfileUnit ($iContentId);
     public function serviceProfilePicture ($iContentId);
     public function serviceProfileAvatar ($iContentId);
-	public function serviceProfileCover ($iContentId); 
+    public function serviceProfileCover ($iContentId); 
     public function serviceProfileThumb ($iContentId);
     public function serviceProfileIcon ($iContentId);
     public function serviceProfileName ($iContentId);
@@ -215,6 +221,13 @@ interface iBxDolProfileService
      */     
     public function serviceCheckAllowedProfileView($iContentId);
 
+    /**
+     * Check if profile can be contacted
+     * @param $iContentId content ID
+     * @return message on error, or CHECK_ACTION_RESULT_ALLOWED when allowed
+     */     
+    public function serviceCheckAllowedProfileContact($iContentId);
+    
     /**
      * Check if posting in profile is allowed, for example posting in profile's timeline
      * @param $iContentId content ID

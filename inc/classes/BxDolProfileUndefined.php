@@ -190,6 +190,14 @@ class BxDolProfileUndefined extends BxDolFactory implements iBxDolSingleton, iBx
     }
 
     /**
+     * @see iBxDolProfile::checkAllowedProfileContact
+     */
+    public function checkAllowedProfileContact($iProfileId = 0)
+    {
+        return _t('_sys_txt_access_denied');
+    }
+
+    /**
      * @see iBxDolProfile::checkAllowedPostInProfile
      */
     public function checkAllowedPostInProfile($iProfileId = 0)

@@ -96,11 +96,12 @@ class BxBasePrivacy extends BxDolPrivacy
                 $aMembers = array_merge($aMembers, $aMembersList);
 
             $aMembers = array_unique($aMembers);
-            if(empty($aMembers) || !is_array($aMembers))
-                return array();
 
             $iGroupCustomId = $oForm->getGroupCustomId();
             if(!$iGroupCustomId) {
+                if(empty($aMembers) || !is_array($aMembers))
+                    return array();
+
                 $this->deleteGroupCustom(array(
                     'profile_id' => $oForm->getCleanValue('profile_id'),
                     'content_id' => $oForm->getCleanValue('content_id'),
