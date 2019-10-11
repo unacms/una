@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS `bx_organizations_data` (
   `join_confirmation` tinyint(4) NOT NULL DEFAULT '1',
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
   `allow_post_to` varchar(16) NOT NULL DEFAULT '3',
+  `allow_contact_to` varchar(16) NOT NULL DEFAULT '3',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `search_fields` (`org_name`,`org_desc`)
 );
@@ -250,6 +251,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
 ('bx_organization', 'bx_organizations', 'allow_view_to', 3, '', 0, 'custom', '_bx_orgs_form_profile_input_sys_allow_view_to', '_bx_orgs_form_profile_input_allow_view_to', '_bx_orgs_form_profile_input_allow_view_to_info', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_organization', 'bx_organizations', 'allow_post_to', 3, '', 0, 'custom', '_bx_orgs_form_profile_input_sys_allow_post_to', '_bx_orgs_form_profile_input_allow_post_to', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_organization', 'bx_organizations', 'allow_contact_to', 3, '', 0, 'custom', '_bx_orgs_form_profile_input_sys_allow_contact_to', '_bx_orgs_form_profile_input_allow_contact_to', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_organization', 'bx_organizations', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_orgs_form_profile_input_sys_delete_confirm', '_bx_orgs_form_profile_input_delete_confirm', '_bx_orgs_form_profile_input_delete_confirm_info', 1, 0, 0, '', '', '', 'avail', '', '_bx_orgs_form_profile_input_delete_confirm_error', '', '', 1, 0),
 ('bx_organization', 'bx_organizations', 'do_submit', '_sys_form_account_input_submit', '', 0, 'submit', '_bx_orgs_form_profile_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_organization', 'bx_organizations', 'org_desc', '', '', 0, 'textarea', '_bx_orgs_form_profile_input_sys_org_desc', '_bx_orgs_form_profile_input_org_desc', '', 0, 0, 1, '', '', '', '', '', '', 'XssHtml', '', 1, 1),
@@ -279,7 +281,8 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_organization_add', 'join_confirmation', 2147483647, 1, 7),
 ('bx_organization_add', 'allow_view_to', 2147483647, 1, 8),
 ('bx_organization_add', 'allow_post_to', 2147483647, 1, 9),
-('bx_organization_add', 'do_submit', 2147483647, 1, 10),
+('bx_organization_add', 'allow_contact_to', 2147483647, 1, 10),
+('bx_organization_add', 'do_submit', 2147483647, 1, 11),
 
 ('bx_organization_invite', 'initial_members', 2147483647, 1, 1),
 ('bx_organization_invite', 'do_submit', 2147483647, 1, 2),
@@ -295,7 +298,8 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_organization_edit', 'join_confirmation', 2147483647, 1, 6),
 ('bx_organization_edit', 'allow_view_to', 2147483647, 1, 7),
 ('bx_organization_edit', 'allow_post_to', 2147483647, 1, 8),
-('bx_organization_edit', 'do_submit', 2147483647, 1, 9),
+('bx_organization_edit', 'allow_contact_to', 2147483647, 1, 9),
+('bx_organization_edit', 'do_submit', 2147483647, 1, 10),
 
 ('bx_organization_edit_cover', 'cover', 2147483647, 1, 1),
 ('bx_organization_edit_cover', 'do_submit', 2147483647, 1, 2),

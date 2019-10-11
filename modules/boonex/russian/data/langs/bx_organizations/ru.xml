@@ -36,6 +36,8 @@
     <string name="_bx_orgs_form_profile_input_allow_view_notification_to"><![CDATA[Оповещения доступены для]]></string>
     <string name="_bx_orgs_form_profile_input_sys_allow_post_to"><![CDATA[Оставлять сообщения в профиле могут]]></string>
     <string name="_bx_orgs_form_profile_input_allow_post_to"><![CDATA[Оставлять сообщения в профиле могут]]></string>
+    <string name="_bx_orgs_form_profile_input_sys_allow_contact_to"><![CDATA[Писать мне могут]]></string>
+    <string name="_bx_orgs_form_profile_input_allow_contact_to"><![CDATA[Писать мне могут]]></string>
     <string name="_bx_orgs_form_profile_input_sys_initial_members"><![CDATA[Пригласить участников]]></string>
     <string name="_bx_orgs_form_profile_input_initial_members"><![CDATA[Пригласить участников]]></string>
     <string name="_bx_orgs_form_profile_input_sys_org_name"><![CDATA[Название организации]]></string>
