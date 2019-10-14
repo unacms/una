@@ -62,16 +62,18 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'URI_AUTHOR_ENTRIES' => 'albums-author',
             'URI_ENTRIES_BY_CONTEXT' => 'albums-context',
             'URI_ADD_ENTRY' => 'create-album',
-        	'URI_EDIT_ENTRY' => 'edit-album',
-        	'URI_MANAGE_COMMON' => 'albums-manage',
+            'URI_EDIT_ENTRY' => 'edit-album',
+            'URI_MANAGE_COMMON' => 'albums-manage',
 
             'URL_HOME' => 'page.php?i=albums-home',
             'URL_POPULAR' => 'page.php?i=albums-popular',
+            'URL_TOP' => 'page.php?i=albums-top',
             'URL_UPDATED' => 'page.php?i=albums-home',
             'URL_POPULAR_MEDIA' => 'page.php?i=albums-popular-media',
+            'URL_TOP_MEDIA' => 'page.php?i=albums-top-media',
             'URL_RECENT_MEDIA' => 'page.php?i=albums-recent-media', // TODO: add page
-        	'URL_MANAGE_COMMON' => 'page.php?i=albums-manage',
-        	'URL_MANAGE_ADMINISTRATION' => 'page.php?i=albums-administration',
+            'URL_MANAGE_COMMON' => 'page.php?i=albums-manage',
+            'URL_MANAGE_ADMINISTRATION' => 'page.php?i=albums-administration',
 
             // some params
             'PARAM_CHARS_SUMMARY' => 'bx_albums_summary_chars',

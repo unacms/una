@@ -121,6 +121,14 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
                 $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
                 break;
 
+            case 'top':
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_TOP_MEDIA']);
+                $this->aCurrent['title'] = _t('_bx_albums_page_title_browse_top_media');
+                $this->aCurrent['rss']['link'] = BxDolPermalinks::getInstance()->permalink('modules/?r=albums/rss_media/' . $sMode);
+                $this->aCurrent['sorting'] = 'top';
+                $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
+                break;
+
             case '': // search results
                 $this->sBrowseUrl = BX_DOL_SEARCH_KEYWORD_PAGE;
                 unset($this->aCurrent['paginate']['perPage'], $this->aCurrent['rss']);
@@ -140,21 +148,54 @@ class BxAlbumsSearchResultMedia extends BxBaseModTextSearchResult
 
     function getAlterOrder()
     {
+        $CNF = &$this->oModule->_oConfig->CNF;
+
+        $sTable = $this->aCurrent['table'];
+        $sWay = $this->sOrderDirection;
+
         $aSql = array();
         switch ($this->aCurrent['sorting']) {
             case 'order':
-                $aSql['order'] = " ORDER BY `{$this->aCurrent['table']}`.`order` {$this->sOrderDirection}, `{$this->aCurrent['table']}`.`id` {$this->sOrderDirection} ";
+                $aSql['order'] = " ORDER BY `" . $sTable . "`.`order` " . $sWay . ", `" . $sTable . "`.`id` " . $sWay . " ";
                 break;
+
             case 'last':
-                $aSql['order'] = " ORDER BY `f`.`added` {$this->sOrderDirection}, `{$this->aCurrent['table']}`.`id` {$this->sOrderDirection} ";
+                $aSql['order'] = " ORDER BY `f`.`added` " . $sWay . ", `" . $sTable . "`.`id` " . $sWay . " ";
                 break;
+
             case 'featured':
-                $aSql['order'] = " ORDER BY `{$this->aCurrent['table']}`.`featured` {$this->sOrderDirection}, `{$this->aCurrent['table']}`.`id` {$this->sOrderDirection}";
+                $aSql['order'] = " ORDER BY `" . $sTable . "`.`featured` " . $sWay . ", `" . $sTable . "`.`id` " . $sWay . "";
                 break;
+
             case 'popular':
-                $aSql['order'] = " ORDER BY `{$this->aCurrent['table']}`.`views` {$this->sOrderDirection}, `{$this->aCurrent['table']}`.`id` {$this->sOrderDirection}";
+                $aSql['order'] = " ORDER BY `" . $sTable . "`.`views` " . $sWay . ", `" . $sTable . "`.`id` " . $sWay . "";
+                break;
+
+            case 'top':
+                $aSql['order'] = '';
+
+                $aPartsUp = $aPartsDown = array();
+                if(!empty($CNF['OBJECT_VOTES_MEDIA']) && ($oVote = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_MEDIA'], 0, false)) !== false) {
+                    $aVote = $oVote->getSystemInfo();
+                    if(!empty($aVote['trigger_table']) && !empty($aVote['trigger_field_count']))
+                        $aPartsUp[] = '`' . $aVote['trigger_table'] . '`.`' . $aVote['trigger_field_count'] . '`';
+                }
+
+                if(!empty($CNF['OBJECT_SCORES_MEDIA']) && ($oScore = BxDolScore::getObjectInstance($CNF['OBJECT_SCORES_MEDIA'], 0, false)) !== false) {
+                    $aScore = $oScore->getSystemInfo();
+                    if(!empty($aScore['trigger_table']) && !empty($aScore['trigger_field_cup']) && !empty($aScore['trigger_field_cdown'])) {
+                        $aPartsUp[] = '`' . $aScore['trigger_table'] . '`.`' . $aScore['trigger_field_cup'] . '`';
+                        $aPartsDown[] = '`' . $aScore['trigger_table'] . '`.`' . $aScore['trigger_field_cdown'] . '`';
+                    }
+                }
+
+                if(empty($aPartsUp) && empty($aPartsDown))
+                    break;
+
+                $aSql['order'] = ' ORDER BY ' . pow(10, 8) . ' * ((' . implode(' + ', $aPartsUp) . ') - (' . implode(' + ', $aPartsDown) . ')) / (UNIX_TIMESTAMP() - `f`.`added`) ' . $sWay;
                 break;
         }
+
         return $aSql;
     }
 

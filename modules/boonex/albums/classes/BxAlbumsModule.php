@@ -299,6 +299,15 @@ class BxAlbumsModule extends BxBaseModTextModule
     }
 
     /**
+     * Display top media. 
+     * For the list of params @see BxAlbumsModule::serviceBrowseRecentMedia
+     */     
+    public function serviceBrowseTopMedia ($sUnitView = false, $bDisplayEmptyMsg = true, $bAjaxPaginate = true)
+    {
+        return $this->_serviceBrowse ('top', array('unit_view' => $sUnitView), BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate, 'SearchResultMedia');
+    }
+
+    /**
      * Display favorite media for particular profile. 
      * @param $iProfileId profile ID, if omitted then 'profile_id' GET variable is used 
      * @param $aParams additional params for browsing such as 'unit_view'
