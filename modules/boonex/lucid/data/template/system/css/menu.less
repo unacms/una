@@ -433,12 +433,12 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
 .bx-menu-object-sys_account_notifications li a,
 .bx-menu-object-sys_account_notifications li .bx-menu-floating-blocks-title,
 .bx-menu-object-sys_add_content li .bx-menu-floating-blocks-title {
-	line-height: 2.25rem;
+	line-height: 1.5rem;
 }
 .bx-menu-object-sys_account_notifications li .bx-menu-floating-blocks-title,
 .bx-menu-object-sys_add_content li .bx-menu-floating-blocks-title {
-	padding-left: 0.5rem;
-	padding-right: 0.5rem;
+	padding-left: 1.0rem;
+	padding-right: 1.0rem;
 }
 .bx-menu-object-sys_account_notifications li img,
 .bx-menu-object-sys_account_notifications li .sys-icon,
@@ -446,16 +446,16 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
 .bx-menu-object-sys_account_notifications li .bx-menu-floating-blocks-icon .sys-icon,
 .bx-menu-object-sys_add_content li .bx-menu-floating-blocks-icon img,
 .bx-menu-object-sys_add_content li .bx-menu-floating-blocks-icon .sys-icon {
-	height: 2rem;
-    width: 2rem;
+    height: 1.0rem;
+    width: 1.0rem;
 
-	margin: 0px;	
+    margin: 0px;	
 }
 .bx-menu-object-sys_account_notifications li .sys-icon,
 .bx-menu-object-sys_account_notifications li .bx-menu-floating-blocks-icon .sys-icon,
 .bx-menu-object-sys_add_content li .bx-menu-floating-blocks-icon .sys-icon {
-    line-height: 2rem;
-    font-size: 1.2rem;
+    line-height: 1.0rem;
+    font-size: 1.0rem;
 }
 .bx-menu-object-sys_account_notifications li img,
 .bx-menu-object-sys_account_notifications li .bx-menu-floating-blocks-icon img,
@@ -491,14 +491,12 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
 .bx-menu-floating-blocks-wide.bx-menu-object-sys_account_notifications li {
     border-radius: 0; 
 }
-.bx-menu-floating-blocks-wide.bx-menu-object-sys_account_notifications li {
-    margin: 0.625rem 0;
-}
 .bx-popup .bx-menu-ver li,
 .bx-popup .bx-menu-custom-ver li,
 .bx-popup .bx-menu-ver li.bx-def-color-bg-hl-hover,
 .bx-popup .bx-menu-custom-ver li.bx-def-color-bg-hl-hover,
 .bx-menu-ver.bx-menu-object-sys_profile_stats li.bx-def-color-bg-hl-hover,
+.bx-menu-floating-blocks.bx-menu-object-sys_add_content li.bx-def-color-bg-hl-hover,
 .bx-menu-floating-blocks-wide.bx-menu-object-sys_account_notifications li.bx-def-color-bg-hl-hover {
     border: 1px solid transparent;
 }
@@ -507,18 +505,22 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
 .bx-popup .bx-menu-ver li.bx-def-color-bg-hl-hover:hover,
 .bx-popup .bx-menu-custom-ver li.bx-def-color-bg-hl-hover:hover,
 .bx-menu-ver.bx-menu-object-sys_profile_stats li.bx-def-color-bg-hl-hover:hover,
+.bx-menu-floating-blocks.bx-menu-object-sys_add_content li.bx-def-color-bg-hl-hover:hover,
 .bx-menu-floating-blocks-wide.bx-menu-object-sys_account_notifications li.bx-def-color-bg-hl-hover:hover {
     border-radius: 0.5rem;
     border-color: rgba(20, 80, 100, 0.05);
     background-color: #ffffff;
 }
 .bx-popup .bx-menu-ver li.bx-def-color-bg-active,
-.bx-popup .bx-menu-custom-ver li.bx-def-color-bg-active,
+.bx-popup .bx-menu-custom-ver li.bx-def-color-bg-active {
+    border-radius: 0.5rem;
+    border-color: rgba(20, 80, 100, 0.05);
+    background-color: #ffffff;
+}
 .bx-menu-ver.bx-menu-object-sys_profile_stats li.bx-def-color-bg-active,
 .bx-menu-floating-blocks-wide.bx-menu-object-sys_account_notifications li.bx-def-color-bg-active {
-    border-color: rgba(20, 80, 100, 0.05);
-    border-radius: 0.5rem;
-    background-color: #ffffff;
+    border-color: transparent;
+    background-color: transparent;
 }
 .bx-popup .bx-menu-custom-ver li > span,
 .bx-popup .bx-menu-custom-ver li > .bx-def-margin-thd-topbottom {
@@ -531,6 +533,7 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
     line-height: 1.5rem;
 }
 .bx-popup .bx-menu-custom-ver li a,
+.bx-menu-floating-blocks.bx-menu-object-sys_add_content li > a, 
 .bx-menu-floating-blocks-wide.bx-menu-object-sys_account_notifications li > a {
     position: relative;
     display: -webkit-flex;
@@ -546,6 +549,10 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
     margin: 0;
     padding: 0;
 }
+.bx-menu-floating-blocks.bx-menu-object-sys_add_content li > a,
+.bx-menu-floating-blocks-wide.bx-menu-object-sys_account_notifications li > a {
+    padding: 0.25rem 0.5rem;
+}
 .bx-popup .bx-menu-ver li.bx-def-color-bg-active a,
 .bx-popup .bx-menu-custom-ver li.bx-def-color-bg-active a,
 .bx-menu-ver.bx-menu-object-sys_profile_stats li.bx-def-color-bg-active a,
@@ -554,8 +561,8 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
 .bx-popup .bx-menu-custom-ver li.bx-def-color-bg-active .sys-icon,
 .bx-menu-ver.bx-menu-object-sys_profile_stats li.bx-def-color-bg-active .sys-icon,
 .bx-menu-floating-blocks-wide.bx-menu-object-sys_account_notifications li.bx-def-color-bg-active .sys-icon {
-	font-weight: 800;
-	color: rgba(20,80,100,1) !important;
+    font-weight: 800;
+    color: rgba(20,80,100,1) !important;
 }
 .bx-popup .bx-menu-ver li img,
 .bx-popup .bx-menu-ver li .sys-icon,
@@ -570,13 +577,12 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
 }
 .bx-menu-floating-blocks-wide.bx-menu-object-sys_account_notifications li img,
 .bx-menu-floating-blocks-wide.bx-menu-object-sys_account_notifications li .sys-icon {
-    width: 1.5rem;
-    height: 1.5rem;
-    line-height: 1.5rem;
+    width: 1.0rem;
+    height: 1.0rem;
+    line-height: 1.0rem;
 }
 .bx-popup .bx-menu-ver li a div {
-    padding-left: 1.0rem;
-    padding-right: 1.0rem;
+    padding: 0.25rem 0.5rem;
     white-space: nowrap;
 }
 .bx-popup .bx-menu-ver li a > span,
