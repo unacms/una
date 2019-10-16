@@ -94,6 +94,13 @@ class BxGlsrSearchResult extends BxBaseModTextSearchResult
                 $this->aCurrent['sorting'] = 'popular';
                 break;
 
+            case 'top':
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_TOP']);
+                $this->aCurrent['title'] = _t('_bx_glossary_page_title_browse_top');
+                $this->aCurrent['rss']['link'] = 'modules/?r=glossary/rss/' . $sMode;
+                $this->aCurrent['sorting'] = 'top';
+                break;
+
             case 'updated':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_UPDATED']);
                 $this->aCurrent['title'] = _t('_bx_glossary_page_title_browse_updated');
@@ -127,26 +134,19 @@ class BxGlsrSearchResult extends BxBaseModTextSearchResult
     function getAlterOrder()
     {
         $aSql = array();
+
         switch ($this->aCurrent['sorting']) {
-            case 'last':
-                $aSql['order'] = ' ORDER BY `bx_glossary_terms`.`added` DESC';
-                break;
-            case 'featured':
-                $aSql['order'] = ' ORDER BY `bx_glossary_terms`.`featured` DESC';
-                break;
-            case 'updated':
-                $aSql['order'] = ' ORDER BY `bx_glossary_terms`.`changed` DESC';
-                break;
-            case 'popular':
-                $aSql['order'] = ' ORDER BY `bx_glossary_terms`.`views` DESC';
-                break;
             case 'alphabetical':
                 $aSql['order'] = ' ORDER BY `bx_glossary_terms`.`title` ASC';
                 break;
+
+            default:
+                $aSql = parent::getAlterOrder();
         }
+
         return $aSql;
     }
-    
+
     function displayResultBlock ()
     {
         if ($this->bShowcaseView){
