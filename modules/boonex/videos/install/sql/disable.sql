@@ -9,7 +9,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_videos';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_videos' OR `object` IN('bx_videos_create_entry', 'bx_videos_edit_entry', 'bx_videos_delete_entry', 'bx_videos_view_entry', 'bx_videos_view_entry_comments', 'bx_videos_home', 'bx_videos_popular', 'bx_videos_updated', 'bx_videos_author', 'bx_videos_context', 'bx_videos_search', 'bx_videos_manage');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_videos' OR `object` IN('bx_videos_create_entry', 'bx_videos_edit_entry', 'bx_videos_delete_entry', 'bx_videos_view_entry', 'bx_videos_view_entry_comments', 'bx_videos_home', 'bx_videos_popular', 'bx_videos_top', 'bx_videos_updated', 'bx_videos_author', 'bx_videos_context', 'bx_videos_search', 'bx_videos_manage');
 
 
 -- MENU

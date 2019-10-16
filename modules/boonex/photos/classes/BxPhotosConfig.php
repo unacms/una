@@ -65,6 +65,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
 
             'URL_HOME' => 'page.php?i=photos-home',
             'URL_POPULAR' => 'page.php?i=photos-popular',
+            'URL_TOP' => 'page.php?i=photos-top',
             'URL_UPDATED' => 'page.php?i=photos-updated',
             'URL_MANAGE_COMMON' => 'page.php?i=photos-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=photos-administration',
