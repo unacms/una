@@ -68,6 +68,7 @@ class BxVideosConfig extends BxBaseModTextConfig
 
             'URL_HOME' => 'page.php?i=videos-home',
             'URL_POPULAR' => 'page.php?i=videos-popular',
+            'URL_TOP' => 'page.php?i=videos-top',
             'URL_UPDATED' => 'page.php?i=videos-updated',
             'URL_MANAGE_COMMON' => 'page.php?i=videos-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=videos-administration',

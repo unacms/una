@@ -80,6 +80,7 @@
 	<string name="_bx_photos_page_title_browse_featured"><![CDATA[Featured Photos]]></string>
     <string name="_bx_photos_page_title_browse_recent"><![CDATA[Latest Photos]]></string>
     <string name="_bx_photos_page_title_browse_popular"><![CDATA[Popular Photos]]></string>
+    <string name="_bx_photos_page_title_browse_top"><![CDATA[Top Photos]]></string>
     <string name="_bx_photos_page_title_browse_updated"><![CDATA[Updated Photos]]></string>
     <string name="_bx_photos_page_title_sys_home"><![CDATA[Photos Home]]></string>
     <string name="_bx_photos_page_title_home"><![CDATA[Photos]]></string>
@@ -100,6 +101,8 @@
     <string name="_bx_photos_page_block_title_entry_rating"><![CDATA[Rating]]></string>
     <string name="_bx_photos_page_title_sys_entries_popular"><![CDATA[Popular Photos]]></string>
     <string name="_bx_photos_page_title_entries_popular"><![CDATA[Popular Photos]]></string>
+    <string name="_bx_photos_page_title_sys_entries_top"><![CDATA[Top Photos]]></string>
+    <string name="_bx_photos_page_title_entries_top"><![CDATA[Top Photos]]></string>
     <string name="_bx_photos_page_title_sys_entries_updated"><![CDATA[Updated Photos]]></string>
     <string name="_bx_photos_page_title_entries_updated"><![CDATA[Updated Photos]]></string>
     <string name="_bx_photos_page_title_sys_entries_search"><![CDATA[Search]]></string>
@@ -111,6 +114,7 @@
     <string name="_bx_photos_page_block_title_popular_entries"><![CDATA[Popular Photos]]></string>
     <string name="_bx_photos_page_block_title_popular_entries_view_extended"><![CDATA[Popular Photos (Extended View)]]></string>
     <string name="_bx_photos_page_block_title_popular_entries_view_full"><![CDATA[Popular Photos (Full View)]]></string>
+    <string name="_bx_photos_page_block_title_top_entries"><![CDATA[Top Photos]]></string>
     <string name="_bx_photos_page_block_title_updated_entries"><![CDATA[Updated Photos]]></string>
     <string name="_bx_photos_page_title_sys_view_entry_comments"><![CDATA[Photo Comments]]></string>
     <string name="_bx_photos_page_title_view_entry_comments"><![CDATA[Comments to {title}]]></string>
@@ -164,6 +168,8 @@
     <string name="_bx_photos_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
     <string name="_bx_photos_menu_item_title_system_entries_popular"><![CDATA[Popular]]></string>
     <string name="_bx_photos_menu_item_title_entries_popular"><![CDATA[Popular]]></string>
+    <string name="_bx_photos_menu_item_title_system_entries_top"><![CDATA[Top]]></string>
+    <string name="_bx_photos_menu_item_title_entries_top"><![CDATA[Top]]></string>
     <string name="_bx_photos_menu_item_title_system_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_photos_menu_item_title_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_photos_menu_title_view_entry_submenu"><![CDATA[View Photo Submenu]]></string>

@@ -83,6 +83,13 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_photos_popular', 1, 'bx_photos', '_bx_photos_page_block_title_popular_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_photos";s:6:"method";s:14:"browse_popular";s:6:"params";a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 1, 1);
 
+-- PAGE: top entries
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_photos_top', '_bx_photos_page_title_sys_entries_top', '_bx_photos_page_title_entries_top', 'bx_photos', 5, 2147483647, 1, 'photos-top', 'page.php?i=photos-top', '', '', '', 0, 1, 0, 'BxPhotosPageBrowse', 'modules/boonex/photos/classes/BxPhotosPageBrowse.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
+('bx_photos_top', 1, 'bx_photos', '_bx_photos_page_block_title_top_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_photos";s:6:"method";s:10:"browse_top";s:6:"params";a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:1;s:13:"ajax_paginate";b:0;}}', 0, 1, 1);
+
 -- PAGE: recently updated entries
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_photos_updated', '_bx_photos_page_title_sys_entries_updated', '_bx_photos_page_title_entries_updated', 'bx_photos', 5, 2147483647, 1, 'photos-updated', 'page.php?i=photos-updated', '', '', '', 0, 1, 0, 'BxPhotosPageBrowse', 'modules/boonex/photos/classes/BxPhotosPageBrowse.php');
@@ -235,8 +242,9 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_photos_submenu', 'bx_photos', 'photos-home', '_bx_photos_menu_item_title_system_entries_public', '_bx_photos_menu_item_title_entries_public', 'page.php?i=photos-home', '', '', '', '', 2147483647, 1, 1, 1),
 ('bx_photos_submenu', 'bx_photos', 'photos-popular', '_bx_photos_menu_item_title_system_entries_popular', '_bx_photos_menu_item_title_entries_popular', 'page.php?i=photos-popular', '', '', '', '', 2147483647, 1, 1, 2),
-('bx_photos_submenu', 'bx_photos', 'photos-search', '_bx_photos_menu_item_title_system_entries_search', '_bx_photos_menu_item_title_entries_search', 'page.php?i=photos-search', '', '', '', '', 2147483647, 1, 1, 3),
-('bx_photos_submenu', 'bx_photos', 'photos-manage', '_bx_photos_menu_item_title_system_entries_manage', '_bx_photos_menu_item_title_entries_manage', 'page.php?i=photos-manage', '', '', '', '', 2147483646, 1, 1, 4);
+('bx_photos_submenu', 'bx_photos', 'photos-top', '_bx_photos_menu_item_title_system_entries_top', '_bx_photos_menu_item_title_entries_top', 'page.php?i=photos-top', '', '', '', '', 2147483647, 1, 1, 3),
+('bx_photos_submenu', 'bx_photos', 'photos-search', '_bx_photos_menu_item_title_system_entries_search', '_bx_photos_menu_item_title_entries_search', 'page.php?i=photos-search', '', '', '', '', 2147483647, 1, 1, 4),
+('bx_photos_submenu', 'bx_photos', 'photos-manage', '_bx_photos_menu_item_title_system_entries_manage', '_bx_photos_menu_item_title_entries_manage', 'page.php?i=photos-manage', '', '', '', '', 2147483646, 1, 1, 5);
 
 -- MENU: sub-menu for view entry
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
