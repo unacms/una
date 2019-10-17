@@ -500,7 +500,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             isset($CNF['FIELD_TITLE']) ? $aContentInfo[$CNF['FIELD_TITLE']] : '', 
             isset($CNF['OBJECT_CONTENT_INFO']) ? $CNF['OBJECT_CONTENT_INFO'] : '',
             $mContextId, 
-            $mContextId ? BxDolProfile::getInstance($mContextId)->getDisplayName() : '', 
+            ($mContextId && $mContextId != -3) ? BxDolProfile::getInstance($mContextId)->getDisplayName() : '', 
             $aContentInfo
         );
         
@@ -542,7 +542,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             isset($CNF['FIELD_TITLE']) ? $aContentInfo[$CNF['FIELD_TITLE']] : '', 
             isset($CNF['OBJECT_CONTENT_INFO']) ? $CNF['OBJECT_CONTENT_INFO'] : '',
             $mContextId, 
-            $mContextId ? BxDolProfile::getInstance($mContextId)->getDisplayName() : '', 
+            ($mContextId && $mContextId != -3) ? BxDolProfile::getInstance($mContextId)->getDisplayName() : '', 
             $aContentInfo
         );
         
@@ -571,7 +571,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             isset($CNF['FIELD_TITLE']) ? $aContentInfo[$CNF['FIELD_TITLE']] : '', 
             isset($CNF['OBJECT_CONTENT_INFO']) ? $CNF['OBJECT_CONTENT_INFO'] : '',
             $mContextId, 
-            $mContextId ? BxDolProfile::getInstance($mContextId)->getDisplayName() : '', 
+            ($mContextId && $mContextId != -3) ? BxDolProfile::getInstance($mContextId)->getDisplayName() : '', 
             $aContentInfo
         );
         
