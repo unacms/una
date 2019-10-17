@@ -323,7 +323,21 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         if($this->_isInContext($aEvent))
             return '_bx_ntfs_txt_object_added_in_context';
 
-    	return '_bx_ntfs_txt_object_added';
+        $sKey = '';
+        switch($aEvent['action']) {
+            case 'publish_failed':
+                $sKey = '_bx_ntfs_txt_object_publish_failed';
+                break;
+
+            case 'publish_succeeded':
+                $sKey = '_bx_ntfs_txt_object_publish_succeeded';
+                break;
+
+            default:
+                $sKey = '_bx_ntfs_txt_object_added';
+        }
+
+    	return $sKey;
     }
 
     protected function _getContentLink(&$aEvent)

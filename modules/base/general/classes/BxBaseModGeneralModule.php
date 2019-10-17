@@ -805,7 +805,7 @@ class BxBaseModGeneralModule extends BxDolModule
         if(BxDolPrivacy::getObjectInstance($sEventPrivacy) === false)
             $sEventPrivacy = '';
 
-        return array(
+        $aResult = array(
             'handlers' => array(
                 array('group' => $sModule . '_object', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'added', 'module_name' => $sModule, 'module_method' => 'get_notifications_post', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
                 array('group' => $sModule . '_object', 'type' => 'update', 'alert_unit' => $sModule, 'alert_action' => 'edited'),
@@ -857,6 +857,25 @@ class BxBaseModGeneralModule extends BxDolModule
                 array('unit' => $sModule, 'action' => 'doVoteDown'),
             )
         );
+
+        if(!empty($this->_oConfig->CNF['FIELDS_DELAYED_PROCESSING'])) {
+            $aResult = array_merge($aResult, array(
+                'handlers' => array(
+                    array('group' => $sModule . '_object_publish_failed', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'publish_failed', 'module_name' => $sModule, 'module_method' => 'get_notifications_post_publish_failed', 'module_class' => 'Module', 'module_event_privacy' => ''),
+                    array('group' => $sModule . '_object_publish_succeeded', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'publish_succeeded', 'module_name' => $sModule, 'module_method' => 'get_notifications_post_publish_succeeded', 'module_class' => 'Module', 'module_event_privacy' => ''),
+                ),
+                'settings' => array(
+                    array('group' => 'content', 'unit' => $sModule, 'action' => 'publish_failed', 'types' => array('personal')),
+                    array('group' => 'content', 'unit' => $sModule, 'action' => 'publish_succeeded', 'types' => array('personal')),
+                ),
+                'alerts' => array(
+                    array('unit' => $sModule, 'action' => 'publish_failed'),
+                    array('unit' => $sModule, 'action' => 'publish_succeeded'),
+                )
+            ));
+        }
+
+        return $aResult;
     }
 
     /**
@@ -898,7 +917,17 @@ class BxBaseModGeneralModule extends BxDolModule
         );
     }
 
-	/**
+    public function serviceGetNotificationsPostPublishFailed($aEvent)
+    {
+        return $this->serviceGetNotificationsPost($aEvent);
+    }
+
+    public function serviceGetNotificationsPostPublishSucceeded($aEvent)
+    {
+        return $this->serviceGetNotificationsPost($aEvent);
+    }
+
+    /**
      * Entry post comment for Notifications module
      */
     public function serviceGetNotificationsComment($aEvent)

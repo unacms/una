@@ -63,14 +63,24 @@ class BxBaseModGeneralAlertsResponse extends BxDolAlertsResponse
         if(!isset($aContentInfo[$CNF['FIELD_STATUS']]) || $aContentInfo[$CNF['FIELD_STATUS']] != 'awaiting')
             return;
 
+        $iNow = time();
+        $bNotify = $iNow - $aContentInfo[$CNF['FIELD_ADDED']] > $this->_oModule->_oConfig->getDpnTime();
+        $iSystemBotProfileId = (int)getParam('sys_profile_bot');
+
         if(!$bResult) {
-            if((int)$this->_oModule->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => 'failed'), array($CNF['FIELD_ID'] => $iContentId)) > 0)
+            if((int)$this->_oModule->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => 'failed'), array($CNF['FIELD_ID'] => $iContentId)) > 0) {
                 $this->_oModule->onFailed($iContentId);
+
+                if($bNotify)
+                    bx_alert($this->_oModule->getName(), 'publish_failed', $aContentInfo[$CNF['FIELD_ID']], $iSystemBotProfileId, array(
+                        'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']],
+                        'privacy_view' => BX_DOL_PG_ALL
+                    ));
+            }
 
             return;
         }
 
-        $iNow = time();
         if(isset($CNF['FIELD_PUBLISHED']) && isset($aContentInfo[$CNF['FIELD_PUBLISHED']]) && $aContentInfo[$CNF['FIELD_PUBLISHED']] > $iNow)
             return;
 
@@ -87,8 +97,14 @@ class BxBaseModGeneralAlertsResponse extends BxDolAlertsResponse
 
         if(!$this->_oModule->_oDb->updateEntriesBy(array($CNF['FIELD_STATUS'] => 'active'), array($CNF['FIELD_ID'] => $iContentId))) 
             return;
-        
+
         $this->_oModule->onPublished($iContentId);
+
+        if($bNotify)
+            bx_alert($this->_oModule->getName(), 'publish_succeeded', $aContentInfo[$CNF['FIELD_ID']], $iSystemBotProfileId, array(
+                'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']],
+                'privacy_view' => BX_DOL_PG_ALL
+            ));
 
         /*
          * Process metas.

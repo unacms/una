@@ -19,6 +19,13 @@ class BxBaseModGeneralConfig extends BxDolModuleConfig
     protected $_aJsObjects;
     protected $_aGridObjects;
 
+    /**
+     * Delayed Publishing Notification Time (in seconds)
+     * If video transcoding takes more than specified amount of time
+     * then author will be notified about publishing (failure).
+     */
+    protected $_iDpnTime;
+
     function __construct($aModule)
     {
         parent::__construct($aModule);
@@ -30,6 +37,8 @@ class BxBaseModGeneralConfig extends BxDolModuleConfig
         $this->_aJsClasses = array();
         $this->_aJsObjects = array();
         $this->_aGridObjects = array();
+
+        $this->_iDpnTime = 3600;
     }
 
     public function getObject($sType = '')
@@ -40,7 +49,7 @@ class BxBaseModGeneralConfig extends BxDolModuleConfig
         return isset($this->_aObjects[$sType]) ? $this->_aObjects[$sType] : '';
     }
 
-	public function getPrefix($sType = '')
+    public function getPrefix($sType = '')
     {
     	if(empty($sType))
             return $this->_aPrefixes;
@@ -48,19 +57,19 @@ class BxBaseModGeneralConfig extends BxDolModuleConfig
         return isset($this->_aPrefixes[$sType]) ? $this->_aPrefixes[$sType] : '';
     }
 
-	public function getJsClass($sType)
+    public function getJsClass($sType)
     {
         return isset($this->_aJsClasses[$sType]) ? $this->_aJsClasses[$sType] : '';
     }
 
     public function getJsObject($sType)
     {
-		return isset($this->_aJsObjects[$sType]) ? $this->_aJsObjects[$sType] : '';
+        return isset($this->_aJsObjects[$sType]) ? $this->_aJsObjects[$sType] : '';
     }
 
     public function getGridObject($sType)
     {
-		return isset($this->_aGridObjects[$sType]) ? $this->_aGridObjects[$sType] : '';
+        return isset($this->_aGridObjects[$sType]) ? $this->_aGridObjects[$sType] : '';
     }
 
     /*
@@ -86,6 +95,11 @@ class BxBaseModGeneralConfig extends BxDolModuleConfig
         }
 
         return $sResult;
+    }
+
+    public function getDpnTime()
+    {
+        return $this->_iDpnTime;
     }
 }
 
