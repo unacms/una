@@ -28,9 +28,9 @@ class BxPhotosSearchResult extends BxBaseModTextSearchResult
             'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
-        		'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>'),
-        		'status' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
-        		'statusAdmin' => array('value' => 'active', 'field' => 'status_admin', 'operator' => '='),
+                'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>'),
+                'status' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
+                'statusAdmin' => array('value' => 'active', 'field' => 'status_admin', 'operator' => '='),
             ),
             'paginate' => array('perPage' => getParam('bx_photos_per_page_browse'), 'start' => 0),
             'sorting' => 'last',
@@ -104,6 +104,13 @@ class BxPhotosSearchResult extends BxBaseModTextSearchResult
                 $this->aCurrent['sorting'] = 'popular';
                 break;
 
+            case 'top':
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_TOP']);
+                $this->aCurrent['title'] = _t('_bx_photos_page_title_browse_top');
+                $this->aCurrent['rss']['link'] = 'modules/?r=photos/rss/' . $sMode;
+                $this->aCurrent['sorting'] = 'top';
+                break;
+
             case 'updated':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_UPDATED']);
                 $this->aCurrent['title'] = _t('_bx_photos_page_title_browse_updated');
@@ -140,26 +147,6 @@ class BxPhotosSearchResult extends BxBaseModTextSearchResult
         $this->aUnitParams['per_page'] = $this->aCurrent['paginate']['perPage'];
 
         return $aResult;
-    }
-
-    function getAlterOrder()
-    {
-        $aSql = array();
-        switch ($this->aCurrent['sorting']) {
-            case 'last':
-                $aSql['order'] = ' ORDER BY `bx_photos_entries`.`added` DESC';
-                break;
-            case 'featured':
-                $aSql['order'] = ' ORDER BY `bx_photos_entries`.`featured` DESC';
-                break;
-            case 'updated':
-                $aSql['order'] = ' ORDER BY `bx_photos_entries`.`changed` DESC';
-                break;
-            case 'popular':
-                $aSql['order'] = ' ORDER BY `bx_photos_entries`.`views` DESC';
-                break;
-        }
-        return $aSql;
     }
 }
 

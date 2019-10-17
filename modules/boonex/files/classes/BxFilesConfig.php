@@ -63,6 +63,7 @@ class BxFilesConfig extends BxBaseModTextConfig
 
             'URL_HOME' => 'page.php?i=files-home',
             'URL_POPULAR' => 'page.php?i=files-popular',
+            'URL_TOP' => 'page.php?i=files-top',
             'URL_UPDATED' => 'page.php?i=files-updated',
             'URL_MANAGE_COMMON' => 'page.php?i=files-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=files-administration',

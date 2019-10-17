@@ -141,6 +141,7 @@
 	<string name="_bx_market_page_title_browse_featured"><![CDATA[Featured Products]]></string>
     <string name="_bx_market_page_title_browse_latest"><![CDATA[Latest Products]]></string>
     <string name="_bx_market_page_title_browse_popular"><![CDATA[Popular Products]]></string>
+    <string name="_bx_market_page_title_browse_top"><![CDATA[Top Products]]></string>
     <string name="_bx_market_page_title_browse_updated"><![CDATA[Updated Products]]></string>
     <string name="_bx_market_page_title_browse_category"><![CDATA[Products by category: {0}]]></string>
     <string name="_bx_market_page_title_browse_keyword"><![CDATA[Products by hashtag: {0}]]></string>
@@ -172,11 +173,14 @@
     <string name="_bx_market_page_title_entries_featured"><![CDATA[Featured Products]]></string>
     <string name="_bx_market_page_title_sys_entries_popular"><![CDATA[Popular Products]]></string>
     <string name="_bx_market_page_title_entries_popular"><![CDATA[Popular Products]]></string>
+    <string name="_bx_market_page_title_sys_entries_top"><![CDATA[Top Products]]></string>
+    <string name="_bx_market_page_title_entries_top"><![CDATA[Top Products]]></string>
     <string name="_bx_market_page_title_sys_entries_updated"><![CDATA[Updated Products]]></string>
     <string name="_bx_market_page_title_entries_updated"><![CDATA[Updated Products]]></string>
     <string name="_bx_market_page_block_title_popular_entries"><![CDATA[Popular Products]]></string>
     <string name="_bx_market_page_block_title_popular_entries_view_extended"><![CDATA[Popular Products (Extended View)]]></string>
     <string name="_bx_market_page_block_title_popular_entries_view_full"><![CDATA[Popular Products (Full View)]]></string>
+    <string name="_bx_market_page_block_title_top_entries"><![CDATA[Top Products]]></string>
     <string name="_bx_market_page_block_title_updated_entries"><![CDATA[Updated Products]]></string>
     <string name="_bx_market_page_block_title_updated_entries_view_extended"><![CDATA[Updated Products (Extended View)]]></string>
     <string name="_bx_market_page_block_title_updated_entries_view_full"><![CDATA[Updated Products (Full View)]]></string>
@@ -273,6 +277,8 @@
     <string name="_bx_market_menu_item_title_entries_featured"><![CDATA[Featured]]></string>
     <string name="_bx_market_menu_item_title_system_entries_popular"><![CDATA[Popular Products]]></string>
     <string name="_bx_market_menu_item_title_entries_popular"><![CDATA[Popular]]></string>
+    <string name="_bx_market_menu_item_title_system_entries_top"><![CDATA[Top Products]]></string>
+    <string name="_bx_market_menu_item_title_entries_top"><![CDATA[Top]]></string>
     <string name="_bx_market_menu_item_title_system_entries_updated"><![CDATA[Updated Products]]></string>
     <string name="_bx_market_menu_item_title_entries_updated"><![CDATA[Updated]]></string>
     <string name="_bx_market_menu_title_view_entry_submenu"><![CDATA[View Product Submenu]]></string>

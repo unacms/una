@@ -1507,6 +1507,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 array('group' => $sModule . '_object', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'post_common', 'module_name' => $sModule, 'module_method' => 'get_notifications_post', 'module_class' => 'Module'),
                 array('group' => $sModule . '_object', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'delete'),
 
+                array('group' => $sModule . '_object_publish_failed', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'publish_failed', 'module_name' => $sModule, 'module_method' => 'get_notifications_post_publish_failed', 'module_class' => 'Module'),
+                array('group' => $sModule . '_object_publish_succeeded', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'publish_succeeded', 'module_name' => $sModule, 'module_method' => 'get_notifications_post_publish_succeeded', 'module_class' => 'Module'),
+
                 array('group' => $sModule . '_repost', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'repost', 'module_name' => $sModule, 'module_method' => 'get_notifications_repost', 'module_class' => 'Module'),
                 array('group' => $sModule . '_repost', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'delete_repost'),
 
@@ -1525,6 +1528,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             ),
             'settings' => array(
                 array('group' => 'content', 'unit' => $sModule, 'action' => 'post_common', 'types' => array('personal', 'follow_member', 'follow_context')),
+                array('group' => 'content', 'unit' => $sModule, 'action' => 'publish_failed', 'types' => array('personal')),
+                array('group' => 'content', 'unit' => $sModule, 'action' => 'publish_succeeded', 'types' => array('personal')),
                 array('group' => 'content', 'unit' => $sModule, 'action' => 'repost', 'types' => array('follow_member', 'follow_context')),
                 array('group' => 'comment', 'unit' => $sModule, 'action' => 'commentPost', 'types' => array('personal', 'follow_member', 'follow_context')),
                 array('group' => 'vote', 'unit' => $sModule, 'action' => 'doVote', 'types' => array('personal', 'follow_member', 'follow_context')),
@@ -1534,8 +1539,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             ),
             'alerts' => array(
                 array('unit' => $sModule, 'action' => 'post_common'),
+                array('unit' => $sModule, 'action' => 'publish_failed'),
+                array('unit' => $sModule, 'action' => 'publish_succeeded'),
                 array('unit' => $sModule, 'action' => 'delete'),
-                
+
                 array('unit' => $sModule, 'action' => 'repost'),
                 array('unit' => $sModule, 'action' => 'delete_repost'),
                 
@@ -3663,7 +3670,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $aParams['per_page'] = $aParams['per_page'] !== false ? bx_process_input($aParams['per_page'], BX_DATA_INT) : $this->_oConfig->getPerPage();
 
         $aParams['timeline'] = bx_get('timeline');
-        $aParams['timeline'] = $aParams['timeline'] !== false ? bx_process_input($aParams['timeline'], BX_DATA_INT) : 0;
+        $aParams['timeline'] = $aParams['timeline'] !== false ? bx_process_input($aParams['timeline']) : '';
 
         $aParams['filter'] = bx_get('filter');
         $aParams['filter'] = $aParams['filter'] !== false ? bx_process_input($aParams['filter'], BX_DATA_TEXT) : BX_TIMELINE_FILTER_ALL;

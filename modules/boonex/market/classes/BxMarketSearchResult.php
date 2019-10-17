@@ -25,10 +25,10 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
             'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
-        		'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>'),
-        		'except' => array('value' => '', 'field' => 'id', 'operator' => 'not in'),
-        		'status' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
-        		'statusAdmin' => array('value' => 'active', 'field' => 'status_admin', 'operator' => '='),
+                'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>'),
+                'except' => array('value' => '', 'field' => 'id', 'operator' => 'not in'),
+                'status' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
+                'statusAdmin' => array('value' => 'active', 'field' => 'status_admin', 'operator' => '='),
             ),
             'paginate' => array('perPage' => getParam('bx_market_per_page_browse'), 'start' => 0),
             'sorting' => 'last',
@@ -97,6 +97,13 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
                 $this->aCurrent['sorting'] = 'popular';
                 break;
 
+            case 'top':
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_TOP']);
+                $this->aCurrent['title'] = _t('_bx_market_page_title_browse_top');
+                $this->aCurrent['rss']['link'] = 'modules/?r=market/rss/' . $sMode;
+                $this->aCurrent['sorting'] = 'top';
+                break;
+
             case 'updated':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_UPDATED']);
                 $this->aCurrent['title'] = _t('_bx_market_page_title_browse_updated');
@@ -136,26 +143,6 @@ class BxMarketSearchResult extends BxBaseModTextSearchResult
     function displayResultBlock ()
     {
     	return BxDolPayments::getInstance()->getCartJs() . parent::displayResultBlock();
-    }
-
-    function getAlterOrder()
-    {
-        $aSql = array();
-        switch ($this->aCurrent['sorting']) {
-            case 'last':
-                $aSql['order'] = ' ORDER BY `bx_market_products`.`added` DESC';
-                break;
-            case 'featured':
-                $aSql['order'] = ' ORDER BY `bx_market_products`.`featured` DESC';
-                break;
-            case 'updated':
-                $aSql['order'] = ' ORDER BY `bx_market_products`.`changed` DESC';
-                break;
-            case 'popular':
-                $aSql['order'] = ' ORDER BY `bx_market_products`.`views` DESC';
-                break;
-        }
-        return $aSql;
     }
 }
 

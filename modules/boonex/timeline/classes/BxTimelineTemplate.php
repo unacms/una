@@ -59,6 +59,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $mixedResult = parent::getJs($bDynamic);
         $mixedResult .= $this->addJs(array(
             'jquery-ui/jquery-ui.custom.min.js',
+            'jquery-ui/jquery.ui.datepicker.min.js',
             'jquery.form.min.js',
             'jquery.ba-resize.min.js',
             'autosize.min.js',
@@ -579,16 +580,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $iStart = $aParams['start'];
         $iPerPage = $aParams['per_page'];
-        $bDynamicMode = isset($aParams['dynamic_mode']) && (bool)$aParams['dynamic_mode'] === true;
-
-        $bTmplVarsJumpTo = $this->_oConfig->isJumpTo();
-        $aTmplVarsJumpTo = array(
-            'style_prefix' => $sStylePrefix,
-            'content' => ''
-        );
-
-        if($bTmplVarsJumpTo && $bDynamicMode)
-            $aTmplVarsJumpTo['content'] = $this->getJumpTo($aParams);
 
         $aTmplVars = array(
             'style_prefix' => $sStylePrefix,
@@ -604,53 +595,33 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 )
             ),
             'bx_if:show_jump_to' => array(
-                'condition' => $bTmplVarsJumpTo,
-                'content' => $aTmplVarsJumpTo
+                'condition' => $this->_oConfig->isJumpTo(),
+                'content' => array(
+                    'style_prefix' => $sStylePrefix,
+                    'content' => $this->getJumpTo($aParams)
+                )
             )
         );
         return $this->parseHtmlByName('load_more.html', $aTmplVars);
     }
 
+    /**
+     * Note. For now both List and Caledar based Jump To elements are available.
+     * Calendar based element is used by default. List based one can be removed 
+     * later if it won't be used completely.
+     */
     public function getJumpTo($aParams)
     {
         if(!$this->_oConfig->isJumpTo())
             return '';
 
-        $iYearSel = (int)$aParams['timeline'];
-        $iYearMin = $this->_oDb->getMaxDuration($aParams);      
-        if(empty($iYearMin))
+        $bList = false;
+        $bDynamicMode = isset($aParams['dynamic_mode']) && (bool)$aParams['dynamic_mode'] === true;
+
+        if($bList && !$bDynamicMode)
             return '';
 
-        $sStylePrefix = $this->_oConfig->getPrefix('style');
-        $sJsObject = $this->_oConfig->getJsObjectView($aParams);
-
-        $aYears = array();
-        $iYearMax = date('Y', time()) - 1;
-        for($i = $iYearMax; $i >= $iYearMin; $i--) {
-            $bCurrent = $i == $iYearSel;
-            $aYears[] = array(
-                'style_prefix' => $sStylePrefix,
-                'bx_if:show_link' => array(
-                    'condition' => !$bCurrent,
-                    'content' => array(
-                        'title' => _t('_bx_timeline_txt_jump_to_n_year', $i),
-                        'onclick' => 'javascript:' . $sJsObject . '.changeTimeline(this, ' . $i . ')',
-                        'content' => $i
-                    )
-                ),
-                'bx_if:show_text' => array(
-                    'condition' => $bCurrent,
-                    'content' => array(
-                        'content' => $i
-                    )
-                ),
-            );
-        }
-
-        return $this->parseHtmlByName('jump_to.html', array(
-            'style_prefix' => $sStylePrefix,
-            'bx_repeat:links' => $aYears,
-        ));
+        return $this->{'_getJumpTo' . ($bList ? 'List' : 'Caledar')}($aParams);
     }
 
     public function getComments($sSystem, $iId, $aBrowseParams = array())
@@ -1518,6 +1489,74 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $iOwnerId = !empty($iOwnerId) ? (int)$iOwnerId : $this->getModule()->getUserId(); //--- in whose timeline the content will be reposted
         return sprintf($sFormat, $sJsObject, $iOwnerId, $sType, $sAction, (int)$iObjectId);
+    }
+
+    protected function _getJumpToList($aParams)
+    {
+        $iYearSel = (int)$aParams['timeline'];
+        $iYearMin = $this->_oDb->getMaxDuration($aParams);      
+        if(empty($iYearMin))
+            return '';
+
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
+        $sJsObject = $this->_oConfig->getJsObjectView($aParams);
+
+        $aYears = array();
+        $iYearMax = date('Y', time()) - 1;
+        for($i = $iYearMax; $i >= $iYearMin; $i--) {
+            $bCurrent = $i == $iYearSel;
+            $aYears[] = array(
+                'style_prefix' => $sStylePrefix,
+                'bx_if:show_link' => array(
+                    'condition' => !$bCurrent,
+                    'content' => array(
+                        'title' => _t('_bx_timeline_txt_jump_to_n_year', $i),
+                        'onclick' => 'javascript:' . $sJsObject . '.changeTimeline(this, \'' . $i . '-12-31\')',
+                        'content' => $i
+                    )
+                ),
+                'bx_if:show_text' => array(
+                    'condition' => $bCurrent,
+                    'content' => array(
+                        'content' => $i
+                    )
+                ),
+            );
+        }
+
+        return $this->parseHtmlByName('jump_to.html', array(
+            'bx_if:show_list' => array(
+                'condition' => true,
+                'content' => array(
+                    'style_prefix' => $sStylePrefix,
+                    'bx_repeat:links' => $aYears,
+                )
+            ),
+            'bx_if:show_calendar' => array(
+                'condition' => false,
+                'content' => array()
+            )
+        ));
+    }
+
+    protected function _getJumpToCaledar($aParams)
+    {
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
+        $sJsObject = $this->_oConfig->getJsObjectView($aParams);
+                
+        return $this->parseHtmlByName('jump_to.html', array(
+            'bx_if:show_list' => array(
+                'condition' => false,
+                'content' => array()
+            ),
+            'bx_if:show_calendar' => array(
+                'condition' => true,
+                'content' => array(
+                    'style_prefix' => $sStylePrefix,
+                    'onclick' => 'javascript:' . $sJsObject . '.showCalendar(this)',
+                )
+            )
+        ));
     }
 
     protected function _getTmplVarsMenuItemActions(&$aEvent, $aBrowseParams = array())

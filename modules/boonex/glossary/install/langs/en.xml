@@ -74,6 +74,7 @@
 	<string name="_bx_glossary_page_title_browse_featured"><![CDATA[Featured Terms]]></string>
     <string name="_bx_glossary_page_title_browse_recent"><![CDATA[Latest Terms]]></string>
     <string name="_bx_glossary_page_title_browse_popular"><![CDATA[Popular Terms]]></string>
+    <string name="_bx_glossary_page_title_browse_top"><![CDATA[Top Terms]]></string>
     <string name="_bx_glossary_page_title_browse_alphabetical"><![CDATA[Alphabetical Index]]></string>
     <string name="_bx_glossary_page_title_browse_updated"><![CDATA[Updated Terms]]></string>
     <string name="_bx_glossary_page_title_sys_home"><![CDATA[Glossary Home]]></string>
@@ -92,6 +93,8 @@
     <string name="_bx_glossary_page_block_title_entry_all_actions"><![CDATA[All Actions]]></string>
     <string name="_bx_glossary_page_title_sys_entries_popular"><![CDATA[Popular Terms]]></string>
     <string name="_bx_glossary_page_title_entries_popular"><![CDATA[Popular Terms]]></string>
+    <string name="_bx_glossary_page_title_sys_entries_top"><![CDATA[Top Terms]]></string>
+    <string name="_bx_glossary_page_title_entries_top"><![CDATA[Top Terms]]></string>
     <string name="_bx_glossary_page_title_sys_entries_updated"><![CDATA[Updated Terms]]></string>
     <string name="_bx_glossary_page_title_entries_updated"><![CDATA[Updated Terms]]></string>
     <string name="_bx_glossary_page_title_sys_entries_search"><![CDATA[Search]]></string>
@@ -103,6 +106,7 @@
     <string name="_bx_glossary_page_block_title_popular_entries"><![CDATA[Popular Terms]]></string>
     <string name="_bx_glossary_page_block_title_popular_entries_view_extended"><![CDATA[Popular Terms (Extended View)]]></string>
     <string name="_bx_glossary_page_block_title_popular_entries_view_full"><![CDATA[Popular Terms (Full View)]]></string>
+    <string name="_bx_glossary_page_block_title_top_entries"><![CDATA[Top Terms]]></string>
     <string name="_bx_glossary_page_block_title_updated_entries"><![CDATA[Updated Terms]]></string>
     <string name="_bx_glossary_page_title_sys_view_entry_comments"><![CDATA[Term Comments]]></string>
     <string name="_bx_glossary_page_title_view_entry_comments"><![CDATA[Comments to {title}]]></string>
@@ -156,6 +160,8 @@
     <string name="_bx_glossary_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
     <string name="_bx_glossary_menu_item_title_system_entries_popular"><![CDATA[Popular]]></string>
     <string name="_bx_glossary_menu_item_title_entries_popular"><![CDATA[Popular]]></string>
+    <string name="_bx_glossary_menu_item_title_system_entries_top"><![CDATA[Top]]></string>
+    <string name="_bx_glossary_menu_item_title_entries_top"><![CDATA[Top]]></string>
     <string name="_bx_glossary_menu_item_title_system_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_glossary_menu_item_title_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_glossary_menu_title_view_entry_submenu"><![CDATA[View Glossary Submenu]]></string>

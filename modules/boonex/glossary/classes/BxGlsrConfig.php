@@ -58,6 +58,7 @@ class BxGlsrConfig extends BxBaseModTextConfig
 
             'URL_HOME' => 'page.php?i=glossary-home',
             'URL_POPULAR' => 'page.php?i=glossary-popular',
+            'URL_TOP' => 'page.php?i=glossary-top',
             'URL_UPDATED' => 'page.php?i=glossary-updated',
             'URL_MANAGE_COMMON' => 'page.php?i=glossary-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=glossary-administration',

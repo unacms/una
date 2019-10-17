@@ -90,6 +90,19 @@ class BxBasePageHome extends BxTemplPage
             ));
         }
     }
+
+    protected function _getPageMetaImage()
+    {
+        $iImage = (int)getParam('sys_site_icon');
+        if(empty($iImage))
+            return '';
+
+        $oTranscoder = BxDolTranscoderImage::getObjectInstance(BX_DOL_TRANSCODER_OBJ_ICON_FACEBOOK);
+        if(!$oTranscoder)
+            return '';
+
+        return $oTranscoder->getFileUrl($iImage);
+    }
 }
 
 /** @} */

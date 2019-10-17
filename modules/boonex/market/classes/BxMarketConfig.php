@@ -95,6 +95,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'URL_LATEST' => 'page.php?i=products-latest',
             'URL_FEATURED' => 'page.php?i=products-featured',
             'URL_POPULAR' => 'page.php?i=products-popular',
+            'URL_TOP' => 'page.php?i=products-top',
             'URL_UPDATED' => 'page.php?i=products-updated',
             'URL_MANAGE_COMMON' => 'page.php?i=products-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=products-administration',

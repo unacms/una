@@ -53,10 +53,6 @@ class BxForumGrid extends BxTemplGrid
                     $sField = 'lr_timestamp';
                     break;
 
-                case 'top':
-                    $sField = 'comments';
-                    break;
-
                 case 'popular':
                     $sField = 'views';
                     break;
@@ -182,11 +178,42 @@ class BxForumGrid extends BxTemplGrid
 
     protected function _getDataSqlOrderClause($sOrderByFilter, $sOrderField, $sOrderDir, $bFieldsOnly = false)
     {
-    	$sOrder = parent::_getDataSqlOrderClause($sOrderByFilter, $sOrderField, $sOrderDir, true);
-        if(!empty($this->_aBrowseParams['type']) && $this->_aBrowseParams['type'] == 'partaken')
-            $sOrder = 'MAX(`tco`.`cmt_time`) ' . $this->_sDefaultSortingOrder;
+        $CNF = &$this->_oModule->_oConfig->CNF;
 
-    	return " ORDER BY `" . $this->_oModule->_oConfig->CNF['FIELD_STICK'] . "` DESC, " . $sOrder;
+    	$sOrder = parent::_getDataSqlOrderClause($sOrderByFilter, $sOrderField, $sOrderDir, true);
+        if(!empty($this->_aBrowseParams['type']))
+            switch($this->_aBrowseParams['type']) {
+                case 'top':
+                    $aPartsUp = $aPartsDown = array(0);
+                    if(($oVote = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], 0, false)) !== false && $oVote->isEnabled()) {
+                        $aVote = $oVote->getSystemInfo();
+                        if(!empty($aVote['trigger_table']) && !empty($aVote['trigger_field_count']))
+                            $aPartsUp[] = '`' . $aVote['trigger_table'] . '`.`' . $aVote['trigger_field_count'] . '`';
+                    }
+
+                    if(($oReaction = BxDolVote::getObjectInstance($CNF['OBJECT_REACTIONS'], 0, false)) !== false && $oReaction->isEnabled()) {
+                        $aReaction = $oReaction->getSystemInfo();
+                        if(!empty($aReaction['trigger_table']) && !empty($aReaction['trigger_field_count']))
+                            $aPartsUp[] = '`' . $aReaction['trigger_table'] . '`.`' . $aReaction['trigger_field_count'] . '`';
+                    }
+
+                    if(($oScore = BxDolScore::getObjectInstance($CNF['OBJECT_SCORES'], 0, false)) !== false && $oScore->isEnabled()) {
+                        $aScore = $oScore->getSystemInfo();
+                        if(!empty($aScore['trigger_table']) && !empty($aScore['trigger_field_cup']) && !empty($aScore['trigger_field_cdown'])) {
+                            $aPartsUp[] = '`' . $aScore['trigger_table'] . '`.`' . $aScore['trigger_field_cup'] . '`';
+                            $aPartsDown[] = '`' . $aScore['trigger_table'] . '`.`' . $aScore['trigger_field_cdown'] . '`';
+                        }
+                    }
+
+                    $sOrder = pow(10, 8) . ' * ((' . implode(' + ', $aPartsUp) . ') - (' . implode(' + ', $aPartsDown) . ')) / (UNIX_TIMESTAMP() - `' . $this->_aOptions['table'] . '`.`' . $CNF['FIELD_ADDED'] . '`) ' . $this->_sDefaultSortingOrder;
+                    break;
+
+                case 'partaken':
+                    $sOrder = 'MAX(`tco`.`cmt_time`) ' . $this->_sDefaultSortingOrder;
+                    break;
+            }           
+
+    	return " ORDER BY `" . $CNF['FIELD_STICK'] . "` DESC, " . $sOrder;
     }
 
     protected function _getSqlSelectFromGroup($aGrp)

@@ -656,7 +656,7 @@ INSERT INTO `sys_options_mixes2options` (`option`, `mix_id`, `value`) VALUES
 ('bx_lucid_menu_account_font_color_active', @iMixId, 'rgba(20, 80, 100, 1)'),
 ('bx_lucid_menu_add_bg_color', @iMixId, 'rgba(255, 255, 255, 1)'),
 ('bx_lucid_menu_account_font_family', @iMixId, 'Nunito, Lato, Arial, sans-serif'),
-('bx_lucid_menu_account_font_weight', @iMixId, '600'),
+('bx_lucid_menu_account_font_weight', @iMixId, '400'),
 ('bx_lucid_menu_account_font_color_hover', @iMixId, 'rgba(50, 100, 180, 1)'),
 ('bx_lucid_menu_account_border_color', @iMixId, 'rgba(20, 80, 100, 0.2)'),
 ('bx_lucid_menu_account_font_shadow', @iMixId, 'none'),

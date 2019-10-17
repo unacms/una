@@ -62,20 +62,20 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
             case 'top':
                 $aSql['order'] = '';
 
-                $aPartsUp = $aPartsDown = array();
-                if(!empty($CNF['OBJECT_VOTES']) && ($oVote = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], 0, false)) !== false) {
+                $aPartsUp = $aPartsDown = array(0);
+                if(!empty($CNF['OBJECT_VOTES']) && ($oVote = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], 0, false)) !== false && $oVote->isEnabled()) {
                     $aVote = $oVote->getSystemInfo();
                     if(!empty($aVote['trigger_table']) && !empty($aVote['trigger_field_count']))
                         $aPartsUp[] = '`' . $aVote['trigger_table'] . '`.`' . $aVote['trigger_field_count'] . '`';
                 }
 
-                if(!empty($CNF['OBJECT_REACTIONS']) && ($oReaction = BxDolVote::getObjectInstance($CNF['OBJECT_REACTIONS'], 0, false)) !== false) {
+                if(!empty($CNF['OBJECT_REACTIONS']) && ($oReaction = BxDolVote::getObjectInstance($CNF['OBJECT_REACTIONS'], 0, false)) !== false && $oReaction->isEnabled()) {
                     $aReaction = $oReaction->getSystemInfo();
                     if(!empty($aReaction['trigger_table']) && !empty($aReaction['trigger_field_count']))
                         $aPartsUp[] = '`' . $aReaction['trigger_table'] . '`.`' . $aReaction['trigger_field_count'] . '`';
                 }
 
-                if(!empty($CNF['OBJECT_SCORES']) && ($oScore = BxDolScore::getObjectInstance($CNF['OBJECT_SCORES'], 0, false)) !== false) {
+                if(!empty($CNF['OBJECT_SCORES']) && ($oScore = BxDolScore::getObjectInstance($CNF['OBJECT_SCORES'], 0, false)) !== false && $oScore->isEnabled()) {
                     $aScore = $oScore->getSystemInfo();
                     if(!empty($aScore['trigger_table']) && !empty($aScore['trigger_field_cup']) && !empty($aScore['trigger_field_cdown'])) {
                         $aPartsUp[] = '`' . $aScore['trigger_table'] . '`.`' . $aScore['trigger_field_cup'] . '`';

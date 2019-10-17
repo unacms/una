@@ -25,9 +25,9 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
             'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
-        		'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>'),
-        		'status' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
-        		'statusAdmin' => array('value' => 'active', 'field' => 'status_admin', 'operator' => '='),
+                'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>'),
+                'status' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
+                'statusAdmin' => array('value' => 'active', 'field' => 'status_admin', 'operator' => '='),
             ),
             'paginate' => array('perPage' => getParam('bx_files_per_page_browse'), 'start' => 0),
             'sorting' => 'last',
@@ -96,6 +96,13 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
                 $this->aCurrent['sorting'] = 'popular';
                 break;
 
+            case 'top':
+                $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_TOP']);
+                $this->aCurrent['title'] = _t('_bx_files_page_title_browse_top');
+                $this->aCurrent['rss']['link'] = 'modules/?r=files/rss/' . $sMode;
+                $this->aCurrent['sorting'] = 'top';
+                break;
+
             case 'updated':
                 $this->sBrowseUrl = BxDolPermalinks::getInstance()->permalink($CNF['URL_UPDATED']);
                 $this->aCurrent['title'] = _t('_bx_files_page_title_browse_updated');
@@ -118,26 +125,6 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
 
         if ('group_author' != $sMode)
             $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
-    }
-
-    function getAlterOrder()
-    {
-        $aSql = array();
-        switch ($this->aCurrent['sorting']) {
-            case 'last':
-                $aSql['order'] = ' ORDER BY `bx_files_main`.`added` DESC';
-                break;
-            case 'featured':
-                $aSql['order'] = ' ORDER BY `bx_files_main`.`featured` DESC';
-                break;
-            case 'updated':
-                $aSql['order'] = ' ORDER BY `bx_files_main`.`changed` DESC';
-                break;
-            case 'popular':
-                $aSql['order'] = ' ORDER BY `bx_files_main`.`views` DESC';
-                break;
-        }
-        return $aSql;
     }
 }
 

@@ -275,6 +275,25 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return "<script>addToHomescreen();</script>";
     }
 
+    public function serviceGetOptionsProfileBot()
+    {
+        $aResult = array(
+            array('key' => '', 'value' => _t('_Select_one'))
+        );
+
+        $aAccountsIds = BxDolAccountQuery::getInstance()->getOperators();
+        foreach($aAccountsIds as $iAccountId) {
+            $aProfilesIds = BxDolAccount::getInstance($iAccountId)->getProfilesIds();
+            foreach($aProfilesIds as $iProfileId)
+                $aResult[] = array(
+                    'key' => $iProfileId,
+                    'value' => BxDolProfile::getInstance($iProfileId)->getDisplayName()
+                );
+        }
+
+        return $aResult;
+    }
+
     public function serviceGetOptionsEmbedDefault()
     {
         $aResults = array(

@@ -187,29 +187,20 @@ class BxForumSearchResult extends BxBaseModTextSearchResult
     function getAlterOrder()
     {
         $aSql = array();
+
         switch ($this->aCurrent['sorting']) {
-            case 'last':
-                $aSql['order'] = ' ORDER BY `bx_forum_discussions`.`added` DESC';
-                break;
-            case 'featured':
-                $aSql['order'] = ' ORDER BY `bx_forum_discussions`.`featured` DESC';
-                break;
-            case 'updated':
-                $aSql['order'] = ' ORDER BY `bx_forum_discussions`.`changed` DESC';
-                break;
             case 'latest':
                 $aSql['order'] = ' ORDER BY `bx_forum_discussions`.`lr_timestamp` DESC';
                 break;
-            case 'top':
-                $aSql['order'] = ' ORDER BY `bx_forum_discussions`.`comments` DESC';
-                break;
-            case 'popular':
-                $aSql['order'] = ' ORDER BY `bx_forum_discussions`.`views` DESC';
-                break;
+
             case 'partaken':
                 $aSql['order'] = ' ORDER BY MAX(`bx_forum_cmts`.`cmt_time`) DESC';
                 break;
+
+            default:
+                $aSql = parent::getAlterOrder();
         }
+
         return $aSql;
     }
 }

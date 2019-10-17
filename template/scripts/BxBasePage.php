@@ -293,21 +293,27 @@ class BxBasePage extends BxDolPage
      */
     protected function _addSysTemplateVars ()
     {
+        $oTemplate = BxDolTemplate::getInstance();
+
         $sPageTitle = $this->_getPageTitle();
         if ($sPageTitle)
-            BxDolTemplate::getInstance()->setPageHeader ($sPageTitle);
+            $oTemplate->setPageHeader ($sPageTitle);
 
         $sMetaDesc = $this->_getPageMetaDesc();
         if ($sMetaDesc)
-            BxDolTemplate::getInstance()->setPageDescription ($sMetaDesc);
-
-        $sMetaKeywords = $this->_getPageMetaKeywords();
-        if ($sMetaKeywords)
-            BxDolTemplate::getInstance()->addPageKeywords ($sMetaKeywords);
+            $oTemplate->setPageDescription ($sMetaDesc);
 
         $sMetaRobots = $this->_getPageMetaRobots();
         if ($sMetaRobots)
-            BxDolTemplate::getInstance()->setPageMetaRobots ($sMetaRobots);
+            $oTemplate->setPageMetaRobots ($sMetaRobots);
+
+        $sMetaImage = $this->_getPageMetaImage();
+        if ($sMetaImage)
+            $oTemplate->addPageMetaImage($sMetaImage);
+
+        $sMetaKeywords = $this->_getPageMetaKeywords();
+        if ($sMetaKeywords)
+            $oTemplate->addPageKeywords ($sMetaKeywords);
     }
 
     /**
@@ -441,6 +447,15 @@ class BxBasePage extends BxDolPage
         return $this->_replaceMarkers(_t($this->_aObject['meta_description']));
     }
 
+    /**
+     * Get page meta image.
+     * @return string
+     */
+    protected function _getPageMetaImage()
+    {
+        return '';
+    }
+    
     /**
      * Get page meta keywords.
      * @return string
