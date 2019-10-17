@@ -492,6 +492,18 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if(($oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) !== false)
             $oPrivacy->deleteGroupCustomByContentId($iContentId);
 
+        $mContextId = isset($CNF['FIELD_ALLOW_VIEW_TO']) && !empty($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) ? -$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] : false;
+        bx_audit(
+            $iContentId, 
+            $this->_oModule->getName(), 
+            '_sys_audit_action_detete',  
+            isset($CNF['FIELD_TITLE']) ? $aContentInfo[$CNF['FIELD_TITLE']] : '', 
+            isset($CNF['OBJECT_CONTENT_INFO']) ? $CNF['OBJECT_CONTENT_INFO'] : '',
+            $mContextId, 
+            $mContextId ? BxDolProfile::getInstance($mContextId)->getDisplayName() : '', 
+            $aContentInfo
+        );
+        
         return '';
     }
 
@@ -521,7 +533,19 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
 
         if(isset($CNF['FIELD_ALLOW_VIEW_TO']) && !empty($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) && ($oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) !== false)
             $oPrivacy->reassociateGroupCustomWithContent($oProfile->id(), $iContentId, (int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]);
-
+        
+        $mContextId = isset($CNF['FIELD_ALLOW_VIEW_TO']) && !empty($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) ? -$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] : false;
+        bx_audit(
+            $iContentId, 
+            $this->_oModule->getName(), 
+            '_sys_audit_action_edit',  
+            isset($CNF['FIELD_TITLE']) ? $aContentInfo[$CNF['FIELD_TITLE']] : '', 
+            isset($CNF['OBJECT_CONTENT_INFO']) ? $CNF['OBJECT_CONTENT_INFO'] : '',
+            $mContextId, 
+            $mContextId ? BxDolProfile::getInstance($mContextId)->getDisplayName() : '', 
+            $aContentInfo
+        );
+        
         return '';
     }
 
@@ -539,6 +563,18 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if(isset($CNF['FIELD_ALLOW_VIEW_TO']) && !empty($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) && ($oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) !== false)
             $oPrivacy->associateGroupCustomWithContent($oProfile->id(), $iContentId, (int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]);
 
+        $mContextId = isset($CNF['FIELD_ALLOW_VIEW_TO']) && !empty($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) ? -$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] : false;
+        bx_audit(
+            $iContentId, 
+            $this->_oModule->getName(), 
+            '_sys_audit_action_add',  
+            isset($CNF['FIELD_TITLE']) ? $aContentInfo[$CNF['FIELD_TITLE']] : '', 
+            isset($CNF['OBJECT_CONTENT_INFO']) ? $CNF['OBJECT_CONTENT_INFO'] : '',
+            $mContextId, 
+            $mContextId ? BxDolProfile::getInstance($mContextId)->getDisplayName() : '', 
+            $aContentInfo
+        );
+        
         return '';
     }
 

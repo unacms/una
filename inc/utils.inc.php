@@ -1379,6 +1379,30 @@ function bx_unicode_urldecode($s)
 }
 
 /**
+ * Raise an audit event
+ * @param int $iProfileId - sender (action's author) profile id, if it is false - then currectly logged in profile id is used
+ * @param int $iContentId - content id
+ * @param string $sContentModule - module name
+ * @param string $sAction - system action key
+ * @param string $sContentTitle - needed in case when original content was deleted
+ * @param string $sContentInfoObject - content info object
+ * @param int $iContextProfileId - context profile id
+ * @param string $sContextProfileTitle - needed in case when original context was deleted
+ * @param array $aActionParams - serialized array of parameters to pass to 'action lang key', for example friend name in case if 'befriend' action
+ */
+function bx_audit($iContentId, $sContentModule, $sAction, $sContentTitle = '', $sContentInfoObject = '', $iContextProfileId = 0, $sContextProfileTitle = '', $aExtras = array(), $aActionParams = array(), $iProfileId = false)
+{
+    if (!$iProfileId)
+        $iProfileId  = bx_get_logged_profile_id();
+    $oDb = BxDolDb::getInstance();
+    
+    
+    $sSql = $oDb->prepare("INSERT INTO `sys_audit`(profile_id, content_id, content_title, content_module, context_profile_id, context_profile_title, action_lang_key, action_lang_key_params, content_info_object, extras) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    , $iProfileId, $iContentId, $sContentTitle, $sContentModule, $iContextProfileId, $sContextProfileTitle, $sAction, (count($aActionParams) > 0 ? serialize($aActionParams) : '') ,$sContentInfoObject, (count($aExtras) > 0 ? serialize($aExtras) : ''));
+    return !$oDb->query($sSql);
+}
+
+/**
  * Raise an alert
  * @param string $sUnit - system type
  * @param string $sAction - system action
