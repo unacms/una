@@ -78,12 +78,8 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
         }
 
         // add content metatags
-        $mixedThumb = $this->_getThumbForMetaObject();
-        if (!empty($CNF['OBJECT_METATAGS']) && $mixedThumb) {
-            $o = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
-            if ($o)
-                $o->addPageMetaInfo($this->_aContentInfo[$CNF['FIELD_ID']], $mixedThumb);
-        }
+        if(!empty($CNF['OBJECT_METATAGS']) && ($o = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])) !== false)
+            $o->addPageMetaInfo($this->_aContentInfo[$CNF['FIELD_ID']], $this->_getThumbForMetaObject());
 
         $oMenuSubmenu = BxDolMenu::getObjectInstance('sys_site_submenu');
         if($oMenuSubmenu) {

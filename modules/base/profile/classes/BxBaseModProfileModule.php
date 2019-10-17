@@ -1425,9 +1425,14 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         
         return false;
     }
+    
+    public function getEntryImageData($aContentInfo, $sField = 'FIELD_PICTURE', $aTranscoders = array())
+    {
+        return parent::getEntryImageData($aContentInfo, $sField, $aTranscoders);
+    }
+
 
     // ====== PROTECTED METHODS
-
     protected function _checkAllowedConnect (&$aDataEntry, $isPerformAction, $sObjConnection, $isMutual, $isInvertResult, $isSwap = false)
     {
         if (!$this->_iProfileId)
