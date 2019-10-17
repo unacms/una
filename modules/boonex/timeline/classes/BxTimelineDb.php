@@ -685,8 +685,11 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
         //--- Apply timeline
         $sWhereClauseTimeline = "";
-        if(isset($aParams['timeline']) && !empty($aParams['timeline']))
-            $sWhereClauseTimeline = $this->prepareAsString("AND `date`<=? ", mktime(23, 59, 59, 12, 31, (int)$aParams['timeline']));
+        if(isset($aParams['timeline']) && !empty($aParams['timeline']) && strpos($aParams['timeline'], '-') !== false) {
+            list($iY, $iM, $iD) = explode('-', $aParams['timeline']);
+
+            $sWhereClauseTimeline = $this->prepareAsString("AND `date`<=? ", mktime(23, 59, 59, (int)$iM, (int)$iD, (int)$iY));
+        }
 
         //--- Apply modules or handlers filter
         $sWhereClauseModules = "";

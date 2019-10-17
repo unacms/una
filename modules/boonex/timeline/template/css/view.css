@@ -28,14 +28,28 @@ div.bx-tl-items-wrapper {
 
 /*--- Load More Style ---*/
 div.bx-tl-view-timeline div.bx-tl-load-more {
-	padding-top: 0px;
+    padding-top: 0px;
 }
 
 div.bx-tl-jump-to {
-	position: relative;
-	float: right;
-	line-height: 36px;
-	line-height: 2.25rem;
+    position: relative;
+    float: right;
+    line-height: 36px;
+    line-height: 2.25rem;
+}
+div.bx-tl-jump-to .bx-tl-jt-divider:last-child {
+    display: none;
+}
+div.bx-tl-jump-to .bx-btn {
+    display: inline-block;
+    float: none;
+}
+div.bx-tl-jump-to .bx-tl-jump-to-calendar {
+    position: relative;
+    display: inline-block;
+    visibility: hidden;
+    width: 0;
+    height: 100%;
 }
 
 

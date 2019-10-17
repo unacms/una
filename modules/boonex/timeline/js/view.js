@@ -285,13 +285,37 @@ BxTimelineView.prototype.changeFilter = function(oLink)
     this._getPosts(oLink);
 };
 
-BxTimelineView.prototype.changeTimeline = function(oLink, iYear)
+BxTimelineView.prototype.changeTimeline = function(oLink, sDate)
 {
     this.loadingInBlock(oLink, true);
 
     this._oRequestParams.start = 0;
-    this._oRequestParams.timeline = iYear;
+    this._oRequestParams.timeline = sDate;
     this._getPosts(oLink);
+};
+
+BxTimelineView.prototype.showCalendar = function(oLink)
+{
+    var $this = this;
+    var oInput = $(oLink).siblings('.' + this.sSP + '-jump-to-calendar');
+    if(!oInput.length)
+        return;
+
+    var sClassProcessed = this.sSP + '-datepicker-processed';
+    if(!oInput.hasClass(sClassProcessed)) {
+        oInput.datetimepicker({
+            changeYear: true,
+            changeMonth: true,
+            dateFormat: 'yy-mm-dd',
+            yearRange: '1900:2100',
+            onSelect: function(sDate, oPicker){
+		$this.changeTimeline(oLink, sDate);
+            }
+        });
+        oInput.addClass(sClassProcessed);
+    }
+
+    oInput.datetimepicker('show');
 };
 
 BxTimelineView.prototype.showMore = function(oLink)
