@@ -15,6 +15,15 @@ class BxBaseStudioAuditGrid extends BxDolStudioAuditGrid
         parent::__construct($aOptions, $oTemplate);
     }
     
+    protected function _addJsCss()
+    {
+        parent::_addJsCss();
+        $this->_oTemplate->addJs(array('jquery.form.min.js', 'forms_audit.js'));
+
+        $oForm = new BxTemplStudioFormView(array());
+        $oForm->addCssJs();
+    }
+    
 	protected function _getCellAdded($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
@@ -102,6 +111,46 @@ class BxBaseStudioAuditGrid extends BxDolStudioAuditGrid
             $mixedValue = '';
         }
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
+    
+    protected function _getFilterControls ()
+    {
+        parent::_getFilterControls();
+
+        $aInputModules = $this->getModulesSelectOneArray('getAudit', false, false);
+		$aInputModules['values'] = array_merge(array('' => _t('_adm_txt_select_module')), $aInputModules['values']);
+		$oForm = new BxTemplStudioFormView(array());
+        $sContent = $oForm->genRow($aInputModules);
+        $oForm = new BxTemplStudioFormView(array());
+
+        $aInputSearch = array(
+            'type' => 'text',
+            'name' => 'keyword',
+            'attrs' => array(
+                'id' => 'bx-grid-search-' . $this->_sObject,
+            ),
+            'tr_attrs' => array(
+                'style' => 'display:none;'
+            )
+        );
+        $sContent .= $oForm->genRow($aInputSearch);
+
+        return  $sContent;
+    }
+    
+    function getJsObject()
+    {
+        return 'oBxDolStudioFormsAudit';
+    }
+    
+    function getCode($isDisplayHeader = true)
+    {
+        return $this->_oTemplate->parseHtmlByName('forms_audit.html', array(
+            'content' => parent::getCode($isDisplayHeader),
+            'js_object' => $this->getJsObject(),
+            'grid_object' => $this->_sObject,
+            'params_divider' => $this->sParamsDivider
+        ));
     }
 }
 

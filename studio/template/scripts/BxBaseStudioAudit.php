@@ -28,22 +28,17 @@ class BxBaseStudioAudit extends BxDolStudioAudit
         	'audit' => 'sys_studio_audit'
     );
     }
+	
     function getPageCss()
     {
         return array_merge(parent::getPageCss(), array('forms.css', 'paginate.css'));
     }
+	
     function getPageJs()
     {
         return array_merge(parent::getPageJs(), array('settings.js'));
     }
-    function getPageJsClass()
-    {
-        return 'BxDolStudioAudit';
-    }
-    function getPageJsObject()
-    {
-        return 'oBxDolStudioAudit';
-    }
+
     function getPageJsCode($aOptions = array(), $bWrap = true)
     {
         $aOptions = array_merge($aOptions, array(
@@ -52,6 +47,7 @@ class BxBaseStudioAudit extends BxDolStudioAudit
 
         return parent::getPageJsCode($aOptions, $bWrap);
     }
+    
     function getPageMenu($aMenu = array(), $aMarkers = array())
     {
         $sJsObject = $this->getPageJsObject();
