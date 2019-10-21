@@ -295,7 +295,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                     'id' => $iPollId
                 )
             ),
-            'text' => bx_process_output($aPoll[$CNF['FIELD_POLL_TEXT']], BX_DATA_HTML),
+            'text' => bx_process_output($aPoll[$CNF['FIELD_POLL_TEXT']], BX_DATA_TEXT),
             'content' => $this->$sMethod($aPoll, $bDynamic)
         ));
     }

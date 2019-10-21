@@ -445,7 +445,7 @@ INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `v
 ('bx_posts_poll_add', 'bx_posts', 'bx_posts_poll', '_bx_posts_form_poll_display_add', 0);
 
 INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
-('bx_posts_poll', 'bx_posts', 'text', '', '', 0, 'textarea', '_bx_posts_form_poll_input_sys_text', '_bx_posts_form_poll_input_text', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_posts_form_poll_input_text_err', 'Xss', '', 1, 0),
+('bx_posts_poll', 'bx_posts', 'text', '', '', 0, 'text', '_bx_posts_form_poll_input_sys_text', '_bx_posts_form_poll_input_text', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_posts_form_poll_input_text_err', 'Xss', '', 1, 0),
 ('bx_posts_poll', 'bx_posts', 'answers', '', '', 0, 'custom', '_bx_posts_form_poll_input_sys_answers', '_bx_posts_form_poll_input_answers', '', 1, 0, 0, '', '', '', 'AvailAnswers', '', '_bx_posts_form_poll_input_answers_err', '', '', 1, 0),
 ('bx_posts_poll', 'bx_posts', 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_posts_poll', 'bx_posts', 'do_submit', '_bx_posts_form_poll_input_do_submit', '', 0, 'submit', '_bx_posts_form_poll_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
