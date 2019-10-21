@@ -492,6 +492,13 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if(($oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) !== false)
             $oPrivacy->deleteGroupCustomByContentId($iContentId);
 
+        bx_audit(
+            $iContentId, 
+            $this->_oModule->getName(), 
+            '_sys_audit_action_detete',  
+            $this->_prepareAuditParams($aContentInfo)
+        );
+        
         return '';
     }
 
@@ -521,7 +528,14 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
 
         if(isset($CNF['FIELD_ALLOW_VIEW_TO']) && !empty($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) && ($oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) !== false)
             $oPrivacy->reassociateGroupCustomWithContent($oProfile->id(), $iContentId, (int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]);
-
+        
+        bx_audit(
+            $iContentId, 
+            $this->_oModule->getName(), 
+            '_sys_audit_action_edit',  
+            $this->_prepareAuditParams($aContentInfo)
+        );
+        
         return '';
     }
 
@@ -539,6 +553,13 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if(isset($CNF['FIELD_ALLOW_VIEW_TO']) && !empty($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) && ($oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW'])) !== false)
             $oPrivacy->associateGroupCustomWithContent($oProfile->id(), $iContentId, (int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]);
 
+        bx_audit(
+            $iContentId, 
+            $this->_oModule->getName(), 
+            '_sys_audit_action_add',  
+            $this->_prepareAuditParams($aContentInfo)
+        );
+        
         return '';
     }
 
@@ -567,6 +588,23 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         return $s;
     }
 
+    private function _prepareAuditParams($aContentInfo)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        
+        $iContextId = isset($CNF['FIELD_ALLOW_VIEW_TO']) && (!empty($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) && (int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0) ? - $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] : 0;
+        
+        $AuditParams = array(
+            'content_title' => isset($CNF['FIELD_TITLE']) ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
+            'context_profile_id' => $iContextId,
+            'content_info_object' =>  isset($CNF['OBJECT_CONTENT_INFO']) ? $CNF['OBJECT_CONTENT_INFO'] : '',
+            'data' => $aContentInfo
+        );
+        if ($iContextId > 0)
+            $AuditParams['context_profile_title'] = BxDolProfile::getInstance($iContextId)->getDisplayName();
+        return $AuditParams;
+    }
+    
     protected function prepareResponse($mixedResponse, $bAsJson = false, $sKey = 'msg', $aAdditional = array())
     {
     	if(!$bAsJson)

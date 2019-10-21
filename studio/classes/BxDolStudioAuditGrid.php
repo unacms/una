@@ -7,17 +7,15 @@
  * @{
  */
 
-class BxDolStudioFormsCategories extends BxTemplStudioGrid
+class BxDolStudioAuditGrid extends BxTemplStudioGrid
 {
     protected $sModule;
-    protected $_oCategory;
-
+    
     public function __construct ($aOptions, $oTemplate = false)
     {
         parent::__construct ($aOptions, $oTemplate);
-
+        
         $this->_sDefaultSortingOrder = 'DESC';
-        $this->_oCategory = BxDolCategories::getInstance();
         
         $this->oDb = new BxDolStudioFormsQuery();
 
@@ -27,7 +25,7 @@ class BxDolStudioFormsCategories extends BxTemplStudioGrid
             $this->_aQueryAppend['module'] = $this->sModule;
         }
     }
-
+    
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
         $sModule = $this->sModule;
@@ -35,7 +33,7 @@ class BxDolStudioFormsCategories extends BxTemplStudioGrid
             list($sModule, $sFilter) = explode($this->sParamsDivider, $sFilter);
 
         if($sModule != '')
-            $this->_aOptions['source'] .= $this->oDb->prepareAsString(" AND `module` = ?", $sModule);
+            $this->_aOptions['source'] .= $this->oDb->prepareAsString(" AND `content_module`=?", $sModule);
         
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }

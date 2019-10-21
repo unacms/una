@@ -87,7 +87,7 @@ class BxDrupalModule extends BxBaseModConnectModule
             if ($iLocalProfileId && $oProfile = BxDolProfile::getInstance($iLocalProfileId)) {
                 // user already exists
                 bx_alert($this->getName(), 'login', 0, $oProfile->id(), array('remote_profile_info' => $aRemoteProfileInfo));
-                $this->setLogged($oProfile->id());
+                $this->setLogged($oProfile->id(), '', false);
             }             
             else {  
                 // register new user

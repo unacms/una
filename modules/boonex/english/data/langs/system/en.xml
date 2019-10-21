@@ -769,7 +769,13 @@
     <string name="_adm_form_err_search_forms_title"><![CDATA[Enter name, more than 3 characters]]></string>
 	<string name="_adm_form_txt_all_modules"><![CDATA[All Modules]]></string>
 	<string name="_adm_form_txt_confirm_delete"><![CDATA[Are you sure you want to delete this field? It will be deleted from all Displays! You may just turn it off instead.]]></string>
-	<string name="_adm_form_txt_displays_edit_popup"><![CDATA[Edit "{0}" Display]]></string>
+  <string name="_adm_form_txt_audit_added"><![CDATA[Added]]></string>
+  <string name="_adm_form_txt_audit_profile"><![CDATA[Profile]]></string>
+  <string name="_adm_form_txt_audit_content"><![CDATA[Content]]></string>
+  <string name="_adm_form_txt_audit_module"><![CDATA[Module]]></string>
+  <string name="_adm_pgt_txt_audit_context"><![CDATA[Context]]></string>
+  <string name="_adm_pgt_txt_audit_action"><![CDATA[Action]]></string>
+  <string name="_adm_form_txt_displays_edit_popup"><![CDATA[Edit "{0}" Display]]></string>
 	<string name="_adm_form_txt_displays_gl_fields"><![CDATA[Fields]]></string>
 	<string name="_adm_form_txt_displays_gl_form"><![CDATA[Form]]></string>
 	<string name="_adm_form_txt_displays_gl_module"><![CDATA[Module]]></string>
@@ -1123,6 +1129,7 @@
         <string name="_adm_nav_txt_block_hidden_on_tablet"><![CDATA[tablet]]></string>
         <string name="_adm_nav_txt_block_hidden_on_desktop"><![CDATA[desktop]]></string>
         <string name="_adm_nav_txt_block_hidden_on_mobile"><![CDATA[mobile app]]></string>
+  <string name="_adm_page_cpt_audit"><![CDATA[Audit]]></string>
 	<string name="_adm_page_cpt_builder_forms"><![CDATA[Forms]]></string>
 	<string name="_adm_page_cpt_builder_menus"><![CDATA[Navigation]]></string>
 	<string name="_adm_page_cpt_builder_mobile"><![CDATA[Mobile Builder]]></string>
@@ -1573,6 +1580,7 @@
 	<string name="_adm_txt_show_help"><![CDATA[Help]]></string>
 	<string name="_adm_txt_show_help_content_empty"><![CDATA[Help is not available]]></string>
 	<string name="_adm_txt_uninstall"><![CDATA[Uninstall]]></string>
+  <string name="_adm_wgt_cpt_audit"><![CDATA[Audit]]></string>
 	<string name="_adm_wgt_cpt_builder_forms"><![CDATA[Forms]]></string>
 	<string name="_adm_wgt_cpt_builder_menus"><![CDATA[Navigation]]></string>
 	<string name="_adm_wgt_cpt_builder_pages"><![CDATA[Pages]]></string>
@@ -1705,6 +1713,11 @@
 	<string name="_sys_acl_start"><![CDATA[Start: ]]></string>
 	<string name="_sys_acl_expire"><![CDATA[Expire: ]]></string>
 	<string name="_sys_acl_expire_never"><![CDATA[never]]></string>
+
+  <string name="_sys_audit_action_edit"><![CDATA[Edit]]></string>
+  <string name="_sys_audit_action_add"><![CDATA[Add]]></string>
+  <string name="_sys_audit_action_delete"><![CDATA[Delete]]></string>
+  
 	<string name="_sys_add_friend"><![CDATA[Add friend]]></string>
         <string name="_sys_add_relation"><![CDATA[Add relationship]]></string>
 	<string name="_sys_adm_installed"><![CDATA[Installed]]></string>

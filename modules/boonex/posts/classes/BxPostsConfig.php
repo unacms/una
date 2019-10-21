@@ -138,6 +138,8 @@ class BxPostsConfig extends BxBaseModTextConfig
             'OBJECT_GRID_COMMON' => 'bx_posts_common',
             'OBJECT_GRID_CATEGORIES' => 'bx_posts_categories',
             'OBJECT_UPLOADERS' => array('bx_posts_simple', 'bx_posts_html5'),
+            'OBJECT_CONTENT_INFO' => 'bx_posts',
+            'OBJECT_CMTS_CONTENT_INFO' => 'bx_posts_cmts',
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
