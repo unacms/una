@@ -111,8 +111,8 @@
     <string name="_bx_orgs_page_title_profile_subscriptions"><![CDATA[Подписки и подписчики]]></string>
     <string name="_bx_orgs_page_title_sys_profile_relations"><![CDATA[Связи]]></string>
     <string name="_bx_orgs_page_title_profile_relations"><![CDATA[Связи]]></string>
-    <string name="_bx_orgs_page_title_sys_group_fans"><![CDATA[Участники]]></string>
-    <string name="_bx_orgs_page_title_group_fans"><![CDATA[Участники]]></string>
+    <string name="_bx_orgs_page_title_sys_fans"><![CDATA[Участники]]></string>
+    <string name="_bx_orgs_page_title_fans"><![CDATA[Участники]]></string>
     <string name="_bx_orgs_page_title_sys_profile_comments"><![CDATA[Комментарии]]></string>
     <string name="_bx_orgs_page_title_profile_comments"><![CDATA[Комментарии]]></string>
 	<string name="_bx_orgs_page_title_sys_profile_info"><![CDATA[Инфо профиля]]></string>
@@ -126,8 +126,8 @@
 	<string name="_bx_orgs_page_title_active"><![CDATA[Активные организации]]></string>
 	<string name="_bx_orgs_page_title_sys_online"><![CDATA[Онлайн организации]]></string>
 	<string name="_bx_orgs_page_title_online"><![CDATA[Онлайн организации]]></string>
-	<string name="_bx_orgs_page_title_sys_invite_to_group"><![CDATA[Пригласить участников в организацию]]></string>
-    <string name="_bx_orgs_page_title_invite_to_group"><![CDATA[Пригласить участников в организацию]]></string>
+	<string name="_bx_orgs_page_title_sys_invite_to_organization"><![CDATA[Пригласить участников в организацию]]></string>
+    <string name="_bx_orgs_page_title_invite_to_organization"><![CDATA[Пригласить участников в организацию]]></string>
 	<string name="_bx_orgs_page_title_sys_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_orgs_page_title_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_orgs_page_title_sys_joined_entries"><![CDATA[Участие в организациях]]></string>

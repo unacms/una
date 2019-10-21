@@ -233,8 +233,8 @@
     <string name="_bx_forum_lmi_cpt_categories"><![CDATA[Категории]]></string>
     <string name="_bx_forum_menu_title_snippet_meta_main"><![CDATA[Мета информация в карточке: Главное]]></string>
     <string name="_bx_forum_menu_set_title_snippet_meta_main"><![CDATA[Мета информация в карточке: Главное]]></string>
-    <string name="_bx_forum_menu_title_snippet_meta_conters"><![CDATA[Мета информация в карточке: Счетчики]]></string>
-    <string name="_bx_forum_menu_set_title_snippet_meta_conters"><![CDATA[Мета информация в карточке: Счетчики]]></string>
+    <string name="_bx_forum_menu_title_snippet_meta_counters"><![CDATA[Мета информация в карточке: Счетчики]]></string>
+    <string name="_bx_forum_menu_set_title_snippet_meta_counters"><![CDATA[Мета информация в карточке: Счетчики]]></string>
     <string name="_bx_forum_menu_title_snippet_meta_reply"><![CDATA[Мета информация в карточке: Ответ]]></string>
     <string name="_bx_forum_menu_set_title_snippet_meta_reply"><![CDATA[Мета информация в карточке: Ответ]]></string>
     <string name="_bx_forum_menu_item_title_system_sm_reply_text"><![CDATA[Текст ответа]]></string>
