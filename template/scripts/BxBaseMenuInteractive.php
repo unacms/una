@@ -20,12 +20,15 @@ class BxBaseMenuInteractive extends BxTemplMenu
     {
         parent::__construct ($aObject);
 
+        if(empty($this->_aObject['menu_id']))
+            $this->_aObject['menu_id'] = $this->_sObject;
+
         if ($oTemplate)
             $this->_oTemplate = $oTemplate;
         else
             $this->_oTemplate = BxDolTemplate::getInstance();
 
-		$this->_bShowDivider = true;
+        $this->_bShowDivider = true;
     }
 
     /**

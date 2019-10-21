@@ -134,6 +134,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_aTypeToFormDisplay = array(
             BX_BASE_MOD_NTFS_TYPE_OWNER => 'form_display_post_add_profile',
             BX_BASE_MOD_NTFS_TYPE_PUBLIC => 'form_display_post_add_public',
+            BX_TIMELINE_TYPE_NEWS => 'form_display_post_add',
+            BX_TIMELINE_TYPE_FEED => 'form_display_post_add',
             BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS => 'form_display_post_add'
         );
 
@@ -166,6 +168,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
             'page_item_brief' => $this->_sName . '_item_brief',
 
+            'menu_view' => $this->_sName . '_menu_view',
             'menu_item_manage' => $this->_sName . '_menu_item_manage',
             'menu_item_actions' => $this->_sName . '_menu_item_actions',
             'menu_item_meta' => $this->_sName . '_menu_item_meta',
@@ -311,23 +314,35 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_bUnhideRestored = false;
     }
 
-    protected function getNameView($aParams, $bWithOwner = false, $sGlue = '_')
+    /**
+     * Generate name from parameters.
+     * 
+     * @param type $aParams - parameters whose values will be used during generation.
+     * @param type $aRules - generation rules.
+     * @return string
+     */
+    protected function getNameView($aParams, $aRules = array())
     {
+        $bWithView = !isset($aRules['with_view']) || $aRules['with_view'] === true;
+        $bWithType = !isset($aRules['with_type']) || $aRules['with_type'] === true;
+        $bWithOwner = isset($aRules['with_owner']) && $aRules['with_owner'] === true;
+        $sGlue = !empty($aRules['glue']) ? $aRules['glue'] : '_';
+
         $aAddons = array();
         if(!empty($aParams['name']))
             $aAddons[] = $aParams['name'];
         else {
-            if(!empty($aParams['view']))
+            if($bWithView && !empty($aParams['view']))
                 $aAddons[] = $aParams['view'];
 
-            if(!empty($aParams['type']))
+            if($bWithType && !empty($aParams['type']))
                 $aAddons[] = $aParams['type'];
         }
 
         if($bWithOwner)
             $aAddons[] = $aParams['owner_id'];
 
-        return !empty($aAddons) ? implode('_', $aAddons) : '';
+        return !empty($aAddons) ? implode($sGlue, $aAddons) : '';
     }
 
     /**
@@ -341,11 +356,12 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         return parent::getJsObject('view') . bx_gen_method_name($this->getNameView($aParams));
     }
 
-    public function getHtmlIdView($sKey, $aParams, $bWhole = true)
+    public function getHtmlIdView($sKey, $aParams, $aRules = array())
     {
-        $sDiv = '_';
+        $bWhole = !isset($aRules['whole']) || $aRules['whole'] === true;
+        $sGlue = !empty($aRules['glue']) ? $aRules['glue'] : '_';
 
-        return str_replace($sDiv, '-', $this->_sName  . $sDiv . $sKey . $sDiv . $this->getNameView($aParams) . (!$bWhole ? $sDiv : ''));
+        return str_replace($sGlue, '-', $this->_sName  . $sGlue . $sKey . $sGlue . $this->getNameView($aParams, $aRules) . (!$bWhole ? $sGlue : ''));
     }
 
     public function isAllowEdit()
@@ -555,7 +571,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
     public function getLiveUpdateKey($aParams)
     {
-        return $this->getName() . '_live_update_' . $this->getNameView($aParams, true);
+        return $this->getName() . '_live_update_' . $this->getNameView($aParams, array('with_owner' => true));
     }
 
     //TODO: isCommon and isSystem can be updated to use new 'system' db field.

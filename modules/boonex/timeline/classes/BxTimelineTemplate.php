@@ -98,6 +98,41 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
+    public function getViewsBlock($aParams)
+    {
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
+        $sJsObject = $this->_oConfig->getJsObjectView($aParams);
+        
+        $sType = isset($aParams['type']) ? $aParams['type'] : '';
+
+        $sMenu = $this->_oConfig->getObject('menu_view');
+        $oMenu = BxDolMenu::getObjectInstance($sMenu);
+
+    	$aMenuItems = $oMenu->getMenuItems();
+    	if(empty($aMenuItems) || !is_array($aMenuItems))
+            return '';
+
+    	if(empty($sType)) {
+            $aMenuItem = array_shift($aMenuItems);
+            $sType = $aMenuItem['name'];
+    	}
+    	$oMenu->setSelected($this->_oConfig->getName(), $sType);
+        $oMenu->addMarkers(array(
+            'js_object_view' => $sJsObject
+        ));
+
+        $sTitle = _t('_bx_timeline_page_block_title_views_' . $aParams['view']);
+
+        return $this->parseHtmlByName('block_views.html', array(
+            'style_prefix' => $sStylePrefix,
+            'html_id' => $this->_oConfig->getHtmlIdView('views', $aParams, array('with_type' => false)),
+            'html_id_content' => $this->_oConfig->getHtmlIdView('views_content', $aParams, array('with_type' => false)),
+            'title' => $sTitle,
+            'menu' => $oMenu->getCode(),
+            'content' => $this->getViewBlock($aParams)
+        ));
+    }
+
     public function getViewBlock($aParams)
     {
         $oModule = $this->getModule();
@@ -1160,6 +1195,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $aParamsSet['context_id'] = 0;
                 break;
 
+            case BX_TIMELINE_TYPE_NEWS:
+            case BX_TIMELINE_TYPE_FEED:
             case BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS:
                 $aParamsSet['context_id'] = $iProfileId;
                 break;
@@ -1342,7 +1379,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aTmplVars = array (
             'style_prefix' => $sStylePrefix,
             'js_object' => $sJsObject,
-            'html_id' => $this->_oConfig->getHtmlIdView('item', $aBrowseParams, false) . $aEvent['id'],
+            'html_id' => $this->_oConfig->getHtmlIdView('item', $aBrowseParams, array('whole' => false)) . $aEvent['id'],
             'class' => $sClass,
             'class_owner' => $sClassOwner,
             'class_content' => $bViewItem ? 'bx-def-color-bg-block' : 'bx-def-color-bg-box',

@@ -224,6 +224,42 @@ BxTimelineView.prototype.playVideos = function(oEvents, fOffsetStart, fOffsetSto
     });
 };
 
+BxTimelineView.prototype.changeView = function(oLink, sType)
+{
+    var oViews = $(this._getHtmlId('views_content', this._oRequestParams, {with_type: false})); 
+
+    this._oRequestParams.type = sType;
+
+    var sView = this._getHtmlId('main', this._oRequestParams);
+    if(oViews.find(sView).length !== 0) {
+        oViews.children(':visible').hide().siblings(sView).show();
+        return;
+    }
+
+    var $this = this;
+    var oData = this._getDefaultData(oLink);
+
+    this.loadingIn(oLink, true);
+
+    jQuery.get (
+        this._sActionsUrl + 'get_view',
+        oData,
+        function(oResponse) {
+            if(oLink)
+                $this.loadingIn(oLink, false);
+
+            if(!oResponse.content)
+                return;
+
+            var oContent = $(oResponse.content);
+            oContent.filter(sView).bxProcessHtml().hide();
+
+            oViews.append(oContent).children(':visible').hide().siblings(sView).show();
+        },
+        'json'
+    );
+};
+
 BxTimelineView.prototype.changePage = function(oLink, iStart, iPerPage)
 {
     var $this = this;
@@ -303,7 +339,7 @@ BxTimelineView.prototype.showCalendar = function(oLink)
 
     var sClassProcessed = this.sSP + '-datepicker-processed';
     if(!oInput.hasClass(sClassProcessed)) {
-        oInput.datetimepicker({
+        oInput.datepicker({
             changeYear: true,
             changeMonth: true,
             dateFormat: 'yy-mm-dd',
@@ -315,7 +351,7 @@ BxTimelineView.prototype.showCalendar = function(oLink)
         oInput.addClass(sClassProcessed);
     }
 
-    oInput.datetimepicker('show');
+    oInput.datepicker('show');
 };
 
 BxTimelineView.prototype.showMore = function(oLink)
@@ -337,7 +373,7 @@ BxTimelineView.prototype.showItem = function(oLink, iId, sMode, oParams)
 
     $(window).dolPopupAjax({
         id: {
-            value: this._getHtmlId('item_popup', this._oRequestParams, false, false) + iId, 
+            value: this._getHtmlId('item_popup', this._oRequestParams, {whole: false, hash: false}) + iId, 
             force: true
         },
         url: bx_append_url_params(this._sActionsUrl + 'get_item_brief', oData),
@@ -413,7 +449,7 @@ BxTimelineView.prototype.promotePost = function(oLink, iId, iWay)
         }
     });
 
-    var oLoadingContainer = $(this._getHtmlId('item', this._oRequestParams, false) + iId);
+    var oLoadingContainer = $(this._getHtmlId('item', this._oRequestParams, {whole: false}) + iId);
 
     this.loadingInItem(oLoadingContainer, true);
 
@@ -488,7 +524,7 @@ BxTimelineView.prototype.editPost = function(oLink, iId)
 
     $(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide();
 
-    var oItem = this.oView.find(this._getHtmlId('item', this._oRequestParams, false) + iId);
+    var oItem = this.oView.find(this._getHtmlId('item', this._oRequestParams, {whole: false}) + iId);
 
     var oContent = oItem.find('.' + this.sClassItemContent);
     if(oContent.find('form').length) {
@@ -519,7 +555,7 @@ BxTimelineView.prototype.onEditPost = function(oData)
     if(!oData || !oData.id)
         return;
 
-    var oItem = $(this._getHtmlId('item', this._oRequestParams, false) + oData.id);
+    var oItem = $(this._getHtmlId('item', this._oRequestParams, {whole: false}) + oData.id);
 
     this.loadingInItem(oItem, false);
 
@@ -547,7 +583,7 @@ BxTimelineView.prototype.deletePost = function(oLink, iId)
         var oData = $this._getDefaultData();
         oData['id'] = iId;
 
-        $this.loadingInItem($($this._getHtmlId('item', $this._oRequestParams, false) + iId), true);
+        $this.loadingInItem($($this._getHtmlId('item', $this._oRequestParams, {whole: false}) + iId), true);
 
         $.post(
             $this._sActionsUrl + 'delete/',
@@ -563,7 +599,7 @@ BxTimelineView.prototype.deletePost = function(oLink, iId)
 BxTimelineView.prototype.onDeletePost = function(oData)
 {
     var $this = this;
-    var oItem = $(this._getHtmlId('item', this._oRequestParams, false) + oData.id);
+    var oItem = $(this._getHtmlId('item', this._oRequestParams, {whole: false}) + oData.id);
 
     //--- Delete from 'Timeline' (if available)
     if(this.bViewTimeline) {
@@ -861,7 +897,7 @@ BxTimelineView.prototype._onGetPost = function(oData)
         return;
 
     var $this = this;
-    var sItem = this._getHtmlId('item', this._oRequestParams, false) + oData.id;
+    var sItem = this._getHtmlId('item', this._oRequestParams, {whole:false}) + oData.id;
     this.oView.find(sItem).replaceWith($(oData.item).bxProcessHtml());
     this.oView.find(sItem).find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight(this.sSP + '-overflow', function(oElement) {
         $this.onFindOverflow(oElement);
@@ -879,7 +915,7 @@ BxTimelineView.prototype._markPost = function(oLink, iId, iWay, sAction)
         }
     });
 
-    this.loadingInItem($(this._getHtmlId('item', this._oRequestParams, false) + iId), true);
+    this.loadingInItem($(this._getHtmlId('item', this._oRequestParams, {whole:false}) + iId), true);
 
     $.post(
         this._sActionsUrl + sAction + '/',
@@ -894,7 +930,7 @@ BxTimelineView.prototype._markPost = function(oLink, iId, iWay, sAction)
 BxTimelineView.prototype._onMarkPost = function(oData, sAction)
 {
     var $this = this;
-    var sItem = this._getHtmlId('item', this._oRequestParams, false) + oData.id;
+    var sItem = this._getHtmlId('item', this._oRequestParams, {whole:false}) + oData.id;
 
     this._oRequestParams.start = 0;
 

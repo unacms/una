@@ -1,6 +1,152 @@
 /*--- General section ---*/
 
 
+/*--- Views Block Style ---*/
+.bx-tl-views {
+    position: relative;
+}
+
+.bx-tl-views .bx-loading-ajax {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.bx-tl-v-header {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+
+    border-bottom-color: #e6f0fa;
+    border-bottom-width: 2px;
+}
+.bx-tl-v-title,
+.bx-tl-v-submenu {
+    -webkit-flex: 0 1 auto; 
+    -ms-flex:  0 1 auto; 
+    flex:  0 1 auto;
+    line-height: 3.125rem;
+}
+.bx-tl-v-title,
+.bx-tl-v-submenu-cnt {
+    height: 3.125rem;
+}
+
+.bx-tl-v-title {
+    -webkit-flex-grow: 3;
+    flex-grow: 3;
+
+    border-bottom: 2px solid rgba(0,0,0,0.1);
+
+    white-space: nowrap;
+    font-size: 1rem;
+    font-weight: 400;
+}
+.bx-tl-v-submenu {
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    -webkit-overflow-scrolling: touch;
+}
+.bx-tl-v-submenu::-webkit-scrollbar {
+    width: 0.5rem;
+}
+.bx-tl-v-submenu::-webkit-scrollbar-track {
+    -webkit-border-radius: 0.5rem;
+    border-radius: 0.5rem;
+
+    background-color: rgba(0, 0, 0, 0.1); 
+}
+.bx-tl-v-submenu::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 0.5rem;
+    border-radius: 0.5rem;
+
+    background: rgba(255, 255, 255, 0.9); 
+    -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.5);
+}
+.bx-tl-v-submenu::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(255, 255, 255, 0.4); 
+}
+.bx-tl-v-submenu-cnt ul {
+    display: -webkit-flex;
+    display: flex;
+}
+.bx-tl-v-submenu-cnt ul li {
+    -webkit-flex: 0 1 auto; 
+    -ms-flex:  0 1 auto; 
+    flex:  0 1 auto;
+    box-sizing: border-box;
+    height: 3.125rem;
+
+    border-bottom: 2px solid rgba(0,0,0,0.1);
+    border-radius: 0;
+
+    line-height: 3.125rem;
+    white-space: nowrap;
+    
+}
+.bx-tl-v-submenu-cnt ul li div {
+    padding: 0 0.625rem;
+}
+.bx-tl-v-submenu-cnt ul li.bx-menu-inter-act {
+    border-bottom-color: #364f6b;
+}
+.bx-tl-v-submenu-cnt ul li.bx-menu-inter-act > div {
+    font-weight: bold;
+}
+.bx-tl-v-submenu-item .bx-cnc-psi-icon,
+.bx-tl-v-submenu-item .bx-cnc-psi-icon img {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+.bx-tl-v-submenu-item .bx-cnc-psi-icon img {
+    color: #002e74;
+}
+
+.bx-tl-v-submenu-item .bx-cnc-psi-icon .sys-icon {
+    vertical-align: middle;
+    font-size: 1.5rem;
+}
+.bx-tl-v-submenu-item .bx-cnc-psi-title {
+    text-align: center;
+}
+.bx-tl-v-submenu-item.bx-cnc-psi-main .bx-cnc-psi-title {
+    text-align: left;
+}
+.bx-tl-v-view {
+    position: relative;
+}
+.bx-tl-v-form .bx-tl-v-user {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.bx-tl-v-form .bx-tl-v-content {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+}
+.bx-tl-v-form.bx-tl-v-default .bx-tl-v-content {
+    -webkit-align-items: stretch;
+    align-items: stretch;   
+}
+.bx-tl-v-form.bx-tl-v-default .bx-tl-v-content > div {
+    width: 100%;
+    cursor: text;
+}
+.bx-tl-v-form .bx-uploader-ghost .bx-base-general-icon-wrapper img {
+	max-width: 9.375rem;
+}
+
+
 /*--- View Block Style ---*/
 div.bx-tl-view {
 	position: relative;

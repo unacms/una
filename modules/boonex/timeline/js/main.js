@@ -221,6 +221,11 @@ BxTimelineMain.prototype.loadingInBlock = function(e, bShow) {
     bx_loading(oParent, bShow);
 };
 
+BxTimelineMain.prototype.loadingInBlockHeaderCustom = function(e, bShow) {
+    var oParent = $(e).length ? $(e).parents('.bx-tl-v-header:first') : $('body'); 
+    bx_loading(oParent, bShow);
+};
+
 BxTimelineMain.prototype.loadingInPopup = function(e, bShow) {
     var oParent = $(e).length ? $(e).parents('.bx-popup-content:first') : $('body'); 
     bx_loading(oParent, bShow);
@@ -236,8 +241,8 @@ BxTimelineMain.prototype.loadingIn = function(e, bShow) {
         this.loadingInItem(e, bShow);
     else if(bElement && oElement.parents('.bx-popup-content:first').length > 0)
         this.loadingInPopup(e, bShow);
-    else if(bElement && oElement.parents('.bx-db-container:first').length > 0)
-        this.loadingInBlock(e, bShow);
+    else if(bElement && oElement.parents('.bx-tl-v-header:first').length > 0)
+        this.loadingInBlockHeaderCustom(e, bShow);
     else 
         bx_loading($('body'), bShow);
 };
@@ -285,30 +290,45 @@ BxTimelineMain.prototype._getView = function(oElement) {
     return '';
 };
 
-BxTimelineMain.prototype._getName = function(oData)
+BxTimelineMain.prototype._getName = function(oData, oRules)
 {
+    oRules = jQuery.extend({}, oRules);
+
+    var bWithView = oRules.with_view === undefined || oRules.with_view === true;
+    var bWithType = oRules.with_type === undefined || oRules.with_type === true;
+    var bWithOwner = oRules.with_owner !== undefined && oRules.with_owner === true;
+    var sGlue = oRules.glue !== undefined && oRules.glue ? oRules.glue : '_';
+
     var aAddons = [];
     if(oData['name'])
         aAddons.push(oData['name']);
     else {
-        if(oData['view'])
+        if(bWithView && oData['view'])
             aAddons.push(oData['view']);
 
-        if(oData['type'])
+        if(bWithType && oData['type'])
             aAddons.push(oData['type']);
     }
 
-    return aAddons.length > 0 ? aAddons.join('_') : '';
+    if(bWithOwner)
+        aAddons.push(this._iOwnerId);
+
+    return aAddons.length > 0 ? aAddons.join(sGlue) : '';
 };
 
-BxTimelineMain.prototype._getHtmlId = function(sKey, oData, bWhole, bHash)
+BxTimelineMain.prototype._getHtmlId = function(sKey, oData, oRules)
 {
-    var sDiv = '_';
-    var sHtmlId = this.sId  + sDiv + sKey + sDiv + this._getName(oData) + (bWhole != undefined && !bWhole ? sDiv : '');
-    if(bHash != undefined && !bHash)
+    oRules = jQuery.extend({}, oRules);
+
+    var bWhole = oRules.whole === undefined || oRules.whole === true;
+    var bHash = oRules.hash === undefined || oRules.hash === true;
+    var sGlue = oRules.glue !== undefined && oRules.glue ? oRules.glue : '_';
+
+    var sHtmlId = this.sId  + sGlue + sKey + sGlue + this._getName(oData, oRules) + (!bWhole ? sGlue : '');
+    if(!bHash)
         sHtmlId = sHtmlId.substr(1);
 
-    return sHtmlId.replace(new RegExp(sDiv,'g'), '-');
+    return sHtmlId.replace(new RegExp(sGlue, 'g'), '-');
 };
 
 BxTimelineMain.prototype._getDefaultData = function() {

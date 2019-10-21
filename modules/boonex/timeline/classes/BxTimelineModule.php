@@ -14,7 +14,9 @@ bx_import('BxBaseModNotificationsModule');
 
 define('BX_TIMELINE_TYPE_ITEM', 'view_item');
 define('BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS', 'owner_and_connections');
-define('BX_TIMELINE_TYPE_HOT', 'hot');
+define('BX_TIMELINE_TYPE_NEWS', 'news'); //--- Followed channels only.
+define('BX_TIMELINE_TYPE_FEED', 'feed'); //--- Owner and folloved contexts excluding channels.
+define('BX_TIMELINE_TYPE_HOT', 'hot'); //--- Aggrigated hot content.
 define('BX_TIMELINE_TYPE_DEFAULT', BX_BASE_MOD_NTFS_TYPE_OWNER);
 
 define('BX_TIMELINE_VIEW_ITEM', 'item');
@@ -243,6 +245,20 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'countf' => (int)$aReposted['reposts'] > 0 ? $this->_oTemplate->getRepostCounterLabel($aReposted['reposts']) : '',
             'counter' => $sCounter,
             'disabled' => true
+        ));
+    }
+
+    function actionGetView()
+    {
+        $aParams = $this->_prepareParamsGet();
+
+        $sConten = $this->_oTemplate->getViewBlock($aParams);
+        if(empty($sConten))
+            return echoJson(array());
+
+        echoJson(array(
+            'code' => 0, 
+            'content' => $sConten,
         ));
     }
 
@@ -1158,6 +1174,36 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'start' => $iStart, 
             'per_page' => $iPerPage, 
             'per_page_default' => $this->_oConfig->getPerPage('profile'), 
+            'timeline' => $iTimeline, 
+            'filter' => $sFilter, 
+            'modules' => $aModules
+        ));
+    }
+
+    public function serviceGetBlockViewsTimeline($sType = BX_BASE_MOD_NTFS_TYPE_PUBLIC, $iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
+    {
+        return $this->_serviceGetBlockViews(array(
+            'view' => BX_TIMELINE_VIEW_TIMELINE, 
+            'type' => $sType,
+            'owner_id' => $iProfileId,
+            'start' => $iStart, 
+            'per_page' => $iPerPage, 
+            'per_page_default' => $this->_oConfig->getPerPage('home'), 
+            'timeline' => $iTimeline, 
+            'filter' => $sFilter, 
+            'modules' => $aModules
+        ));
+    }
+    
+    public function serviceGetBlockViewsOutline($sType = BX_BASE_MOD_NTFS_TYPE_PUBLIC, $iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
+    {
+        return $this->_serviceGetBlockViews(array(
+            'view' => BX_TIMELINE_VIEW_OUTLINE, 
+            'type' => $sType,
+            'owner_id' => $iProfileId,
+            'start' => $iStart, 
+            'per_page' => $iPerPage, 
+            'per_page_default' => $this->_oConfig->getPerPage('home'), 
             'timeline' => $iTimeline, 
             'filter' => $sFilter, 
             'modules' => $aModules
@@ -3357,6 +3403,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $aBrowseParams['owner_id'] = $oProfile->id();
 
         return $this->_getBlockView($aBrowseParams);
+    }
+
+    protected function _serviceGetBlockViews($aBrowseParams = array())
+    {
+        $aParams = $this->_prepareParams($aBrowseParams);
+
+        $this->_iOwnerId = $aParams['owner_id'];
+
+        return array(
+            'content' => $this->_oTemplate->getViewsBlock($aParams)
+        );
     }
 
     protected function _serviceGetBlockViewHome($aBrowseParams = array())
