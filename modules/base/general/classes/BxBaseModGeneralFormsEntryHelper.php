@@ -595,7 +595,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         $iContextId = isset($CNF['FIELD_ALLOW_VIEW_TO']) && (!empty($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) && (int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0) ? - $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] : 0;
         
         $AuditParams = array(
-            'content_title' => isset($CNF['FIELD_TITLE']) ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
+            'content_title' => (isset($CNF['FIELD_TITLE']) && isset($aContentInfo[$CNF['FIELD_TITLE']])) ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
             'context_profile_id' => $iContextId,
             'content_info_object' =>  isset($CNF['OBJECT_CONTENT_INFO']) ? $CNF['OBJECT_CONTENT_INFO'] : '',
             'data' => $aContentInfo
