@@ -717,7 +717,7 @@ a.bx-def-font-h3:hover {
     line-height: @bx-height-form-input;
 }
 .bx-form-value .bx-form-input-text.bx-form-input-autotoken b .bx-def-thumb-size {
-	width: @bx-height-form-input;
+    width: @bx-height-form-input;
     height: @bx-height-form-input;
     line-height: @bx-height-form-input;
 }
@@ -730,65 +730,65 @@ a.bx-def-font-h3:hover {
 .bx-form-value .bx-form-input-textarea:focus,
 .bx-form-value .bx-form-input-password:focus,
 .bx-form-value .bx-form-input-text:focus {
-	border-color: @bx-color-border-form-input-active;
-	background-color: @bx-color-form-input-active;
+    border-color: @bx-color-border-form-input-active;
+    background-color: @bx-color-form-input-active;
 }
 .bx-form-value .bx-switcher-cont,
 .bx-grid-table .bx-switcher-cont {
-	border-color: @bx-color-border-form-input;
-	border-width: @bx-border-width-form-input;
+    border-color: @bx-color-border-form-input;
+    border-width: @bx-border-width-form-input;
 
-	background-color: @bx-color-form-input;
+    background-color: @bx-color-form-input;
 
-	-webkit-box-shadow: @bx-shadow-form-input;
-	-moz-box-shadow: @bx-shadow-form-input;
-	box-shadow: @bx-shadow-form-input;
+    -webkit-box-shadow: @bx-shadow-form-input;
+    -moz-box-shadow: @bx-shadow-form-input;
+    box-shadow: @bx-shadow-form-input;
 }
 
 /* button large */
 .bx-btn,
 .bx-btn.bx-btn-primary {
-	.box-sizing(@base-input-box-sizing);
+    .box-sizing(@base-input-box-sizing);
 
-	height: @bx-height-button;
-	line-height: (@bx-height-button - 0.2);
+    height: @bx-height-button;
+    line-height: (@bx-height-button - 0.2);
 
-	.background-color (@bx-color-button);
+    .background-color (@bx-color-button);
 
-	border-width: @bx-border-width-button;
-	border-style: solid;
-	border-color: @bx-color-border-button;
+    border-width: @bx-border-width-button;
+    border-style: solid;
+    border-color: @bx-color-border-button;
 
-	border-radius: @bx-border-radius-button;
-	background-clip: padding-box;
-    
-	text-shadow: @bx-shadow-font-button;
+    border-radius: @bx-border-radius-button;
+    background-clip: padding-box;
 
-	font-family: @bx-font-family-button;
-	font-size: @bx-font-size-button;
-	font-weight: @bx-font-weight-button;
-	color: @bx-font-color-button;
+    text-shadow: @bx-shadow-font-button;
+
+    font-family: @bx-font-family-button;
+    font-size: @bx-font-size-button;
+    font-weight: @bx-font-weight-button;
+    color: @bx-font-color-button;
 }
 .bx-btn-height {
-	height: @bx-height-button;
-	line-height: @bx-height-button;
+    height: @bx-height-button;
+    line-height: (@bx-height-button - 0.2);
 }
 .bx-btn-border {
-	border-width: @bx-border-width-button;
-	border-style: solid;
-	border-color: transparent;
+    border-width: @bx-border-width-button;
+    border-style: solid;
+    border-color: transparent;
 }
 .bx-btn:hover,
 .bx-btn:active,
 .bx-btn.bx-btn-primary:hover,
 .bx-btn.bx-btn-primary:active {
-	border-width: @bx-border-width-button;
-	border-style: solid;
-	border-color: @bx-color-border-button-hover;
+    border-width: @bx-border-width-button;
+    border-style: solid;
+    border-color: @bx-color-border-button-hover;
 
-	.background-color (@bx-color-button-hover);
+    .background-color (@bx-color-button-hover);
 
-	color: @bx-font-color-button-hover;
+    color: @bx-font-color-button-hover;
 }
 .bx-btn .sys-icon:not(.sys-colored) {
     color: @bx-font-color-button;
@@ -799,55 +799,62 @@ a.bx-def-font-h3:hover {
 .bx-btn.bx-btn-primary:active .sys-icon:not(.sys-colored) {
     color: @bx-font-color-button-hover;
 }
+.bx-btn .bx-loading-ajax-btn,
+.bx-btn.bx-btn-primary .bx-loading-ajax-btn {
+    margin-top: -@bx-border-width-button;
+}
 
 /* button small */
 .bx-btn.bx-btn-small {
-	.box-sizing(@base-input-box-sizing);
+    .box-sizing(@base-input-box-sizing);
 
-	height: @bx-height-button-small;
-	line-height: (@bx-height-button-small - 0.1);
+    height: @bx-height-button-small;
+    line-height: (@bx-height-button-small - 0.1);
 
-	.background-color (@bx-color-button-small);
+    .background-color (@bx-color-button-small);
 
-	border-width: @bx-border-width-button-small;
-	border-style: solid;
-	border-color: @bx-color-border-button-small;
+    border-width: @bx-border-width-button-small;
+    border-style: solid;
+    border-color: @bx-color-border-button-small;
 
-	border-radius: @bx-border-radius-button-small;
-	background-clip: padding-box;
+    border-radius: @bx-border-radius-button-small;
+    background-clip: padding-box;
 
-	text-shadow: @bx-shadow-font-button-small;
+    text-shadow: @bx-shadow-font-button-small;
 
-	font-family: @bx-font-family-button-small;
-	font-size: @bx-font-size-button-small;
-	font-weight: @bx-font-weight-button-small;
-	color: @bx-font-color-button-small;
+    font-family: @bx-font-family-button-small;
+    font-size: @bx-font-size-button-small;
+    font-weight: @bx-font-weight-button-small;
+    color: @bx-font-color-button-small;
 }
 .bx-btn-small-height {
-	height: @bx-height-button-small;
-	line-height: @bx-height-button-small;
+    height: @bx-height-button-small;
+    line-height: (@bx-height-button-small - 0.1);
 }
 .bx-btn-small-border {
-	border-width: @bx-border-width-button-small;
-	border-style: solid;
-	border-color: transparent;
+    border-width: @bx-border-width-button-small;
+    border-style: solid;
+    border-color: transparent;
 }
 .bx-btn.bx-btn-small:hover,
 .bx-btn.bx-btn-small:active {
-	border-width: @bx-border-width-button-small;
-	border-style: solid;
-	border-color: @bx-color-border-button-small-hover;
+    border-width: @bx-border-width-button-small;
+    border-style: solid;
+    border-color: @bx-color-border-button-small-hover;
 
-	.background-color (@bx-color-button-small-hover);
+    .background-color (@bx-color-button-small-hover);
 
-	color: @bx-font-color-button-small-hover;
+    color: @bx-font-color-button-small-hover;
 }
 .bx-btn.bx-btn-small .sys-icon {
-	color: @bx-font-color-button-small;
+    color: @bx-font-color-button-small;
 }
 .bx-btn.bx-btn-small:hover .sys-icon,
 .bx-btn.bx-btn-small:active .sys-icon {
-	color: @bx-font-color-button-small-hover;
+    color: @bx-font-color-button-small-hover;
+}
+.bx-btn.bx-btn-small .bx-loading-ajax-btn {
+    margin-top: -@bx-border-width-button-small;
 }
 
 /* colors */

@@ -10,3 +10,9 @@ a {
 .bx-btn u {
     vertical-align: top !important;
 }
+
+/* --- Loading indicator --- */
+.bx-loading-ajax-btn {
+    margin-left: 10px;
+}
+    
