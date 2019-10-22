@@ -61,7 +61,14 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_UPDATE:
-                $aEvent = $this->_oModule->_oDb->getEvents(array('browse' => 'descriptor', 'type' => $oAlert->sUnit, 'object_id' => $oAlert->iObject));
+                $aHandlers = $this->_oModule->_oDb->getHandlers(array('type' => 'by_group_key_type', 'group' => $aHandler['group']));
+                
+                $aEvent = $this->_oModule->_oDb->getEvents(array(
+                    'browse' => 'descriptor', 
+                    'type' => $oAlert->sUnit, 
+                    'action' => $aHandlers[BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT]['alert_action'],
+                    'object_id' => $oAlert->iObject
+                ));
                 if(empty($aEvent) || !is_array($aEvent))
                     break;
 
@@ -80,7 +87,7 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                         'object_privacy_view' => $iObjectPrivacyView 
                     ));
 
-                $this->_oModule->_oDb->updateEvent($aParamsSet, array('type' => $oAlert->sUnit, 'object_id' => $oAlert->iObject));
+                $this->_oModule->_oDb->updateEvent($aParamsSet, array('id' => $aEvent[$CNF['FIELD_ID']]));
 
                 //--- Delete feed cached
                 $this->_oModule->_oDb->deleteCache(array('context_id' => 0)); //--- Delete cache for Public feed
