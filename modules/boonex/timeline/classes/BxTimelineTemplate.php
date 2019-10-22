@@ -1043,6 +1043,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $oPlayer = BxDolPlayer::getObjectInstance();
         if (!$oPlayer)
             return '';
+
         $sPlayer = $oPlayer->getCodeVideo (BX_PLAYER_EMBED, array(
             'poster' => $aVideo['src_poster'],
             'mp4' => array('sd' => $aVideo['src_mp4'], 'hd' => $aVideo['src_mp4_hd']),
@@ -2106,7 +2107,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     'style_prefix' => $sStylePrefix,
                     'item' => BxTemplFunctions::getInstance()->videoPlayer($aVideo['src_poster'], $aVideo['src_mp4'], $aVideo['src_mp4_hd'], array(
                         'preload' => 'auto'
-                    ), '') 
+                    ), '', $aBrowseParams['dynamic_mode'])
                 );
             else 
                 $aTmplVarsVideos[] = array(

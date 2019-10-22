@@ -516,17 +516,21 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
      * @param $aAttrs custom attributes, defaults are: controls="" preload="none" autobuffer=""
      * @param $sStyles custom styles, defaults are: width:100%; height:auto;
      */
-    function videoPlayer ($sUrlPoster, $sUrlMP4, $sUrlMP4Hd = '', $aAttrs = false, $sStyles = 'width:100%; height:auto;')
+    function videoPlayer ($sUrlPoster, $sUrlMP4, $sUrlMP4Hd = '', $aAttrs = false, $sStyles = false, $bDynamicMode = false)
     {
         $oPlayer = BxDolPlayer::getObjectInstance();
-        if (!$oPlayer)
+        if(!$oPlayer)
             return '';
+
+        if($sStyles === false)
+            $sStyles = 'width:100%; height:auto;';
+
         return $oPlayer->getCodeVideo (BX_PLAYER_STANDARD, array(
             'poster' => $sUrlPoster,
             'mp4' => array('sd' => $sUrlMP4, 'hd' => $sUrlMP4Hd),
             'attrs' => $aAttrs,
             'styles' => $sStyles,
-        ));
+        ), $bDynamicMode);
     }
 
     protected function getInjection($sPrefix)
