@@ -241,6 +241,8 @@ BxTimelineMain.prototype.loadingIn = function(e, bShow) {
         this.loadingInItem(e, bShow);
     else if(bElement && oElement.parents('.bx-popup-content:first').length > 0)
         this.loadingInPopup(e, bShow);
+    else if(bElement && oElement.parents('.bx-db-container:first').length > 0)
+        this.loadingInBlock(e, bShow);
     else if(bElement && oElement.parents('.bx-tl-v-header:first').length > 0)
         this.loadingInBlockHeaderCustom(e, bShow);
     else 

@@ -26,6 +26,9 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_bCacheList;
     protected $_aCacheListExceptions;
 
+    protected $_bInfScroll;
+    protected $_iInfScrollAutoPreloads;
+
     protected $_iRssLength;
     protected $_iLiveUpdateLength;
     protected $_iCharsDisplayMinTitle;
@@ -289,8 +292,12 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'default' => (int)getParam($sOptionPrefix . 'events_per_page'),
             'profile' => (int)getParam($sOptionPrefix . 'events_per_page_profile'),
             'account' => (int)getParam($sOptionPrefix . 'events_per_page_account'),
-            'home' => (int)getParam($sOptionPrefix . 'events_per_page_home')
+            'home' => (int)getParam($sOptionPrefix . 'events_per_page_home'),
+            'preload' => (int)getParam($sOptionPrefix . 'events_per_preload')
     	);
+
+        $this->_bInfScroll = getParam($sOptionPrefix . 'enable_infinite_scroll') == 'on';
+        $this->_iInfScrollAutoPreloads = (int)getParam($sOptionPrefix . 'auto_preloads');
 
         $this->_iRssLength = (int)getParam($sOptionPrefix . 'rss_length');
         $this->_iLiveUpdateLength = 10;
@@ -374,6 +381,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         return $this->_bAllowDelete;
     }
 
+    public function isInfiniteScroll()
+    {
+        return $this->_bInfScroll;
+    }
+
     public function isShowAll()
     {
         return $this->_bShowAll;
@@ -450,12 +462,25 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             case 'photo':
                 $aResult = $this->_aPhotoUploaders;
                 break;
-			case 'video':
+            case 'video':
                 $aResult = $this->_aVideoUploaders;
                 break;
         }
 
         return $aResult;
+    }
+
+    public function getPerPage($sType = 'default')
+    {
+        if($this->isInfiniteScroll())
+            $sType = 'preload';
+
+        return parent::getPerPage($sType);
+    }
+
+    public function getAutoPreloads()
+    {
+        return $this->_iInfScrollAutoPreloads;
     }
 
     public function getRssLength()

@@ -75,6 +75,18 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             return $mixedResult; 
     }
 
+    public function getJsCode($sType, $aParams = array(), $bWrap = true)
+    {
+        $oModule = $this->getModule();
+
+        $aParams = array_merge(array(
+            'bInfScroll' => $this->_oConfig->isInfiniteScroll(),
+            'iInfScrollAutoPreloads' => $this->_oConfig->getAutoPreloads()
+        ), $aParams);
+
+        return parent::getJsCode($sType, $aParams, $bWrap);
+    }
+
     public function getJsCodePost($iOwnerId, $aParams = array())
     {
         return $this->getJsCode('post', array(
@@ -1233,7 +1245,39 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         return $aIds;
     }
-            
+
+    protected function _cacheEventsFrom($iId, $aParams)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iPerPage = (int)$aParams['per_page'];
+
+        $aParamsCopy = $aParams;
+        $aParamsCopy['browse'] = 'list_from';
+        $aParamsCopy['from'] = $iId;
+        $aParamsCopy['start'] = 0;
+
+        $aIds = array();
+        while(count($aIds) < $iPerPage) {
+            $aEvents = $this->_oDb->getEvents($aParamsCopy);
+            if(empty($aEvents))
+                break;
+
+            foreach($aEvents as $aEvent) {
+                if($this->getPost($aEvent, $aParamsCopy) == '')
+                    continue;
+
+                $aIds[] = $aEvent[$CNF['FIELD_ID']];
+                if(count($aIds) == $iPerPage)
+                    break 2;
+            }
+
+            $aParamsCopy['start'] += $iPerPage;
+        }
+
+        return $aIds;
+    }
+
     protected function _getCachedEvents($iProfileId, &$aParams)
     {
         return $this->_oDb->getCache(array(
@@ -1257,12 +1301,16 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $iProfileId = (int)bx_get_logged_profile_id(); 
 
         /*
-         * Get cached data and check it for relevance.
+         * Get cached data.
          */
         $aCache = $this->_getCachedEvents($iProfileId, $aParams);
         if(is_array($aCache) && !empty($aCache)) {
+
+            /*
+             * Check received data for relevance.
+             */
             if(($iCache = count($aCache)) != $iPerPage) {
-                $aRecachedIds = $this->_cacheEvents($aParams);
+                $aRecachedIds = $this->_cacheEventsFrom(reset($aCache)['event_id'], $aParams);
                 if(is_array($aRecachedIds) && count($aRecachedIds) > $iCache)
                     $aCache = $this->_getCachedEvents($iProfileId, $aParams);
             }
@@ -1270,7 +1318,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $bFound = false;
             $bUpdated = false;
 
-            $aCachedItem = current($aCache);
+            $aCachedItem = reset($aCache);
             $aCachedIds = array_keys($aCache);
 
             $aParamsCopy = $aParams;

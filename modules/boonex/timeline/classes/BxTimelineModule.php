@@ -82,7 +82,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if($aData === false || !isset($aData['content']['videos'][$iVideoId]))
             return;
 
-
         $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->addJs(array(
             'embedly-player.min.js'
@@ -1188,7 +1187,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'owner_id' => $iProfileId,
             'start' => $iStart, 
             'per_page' => $iPerPage, 
-            'per_page_default' => $this->_oConfig->getPerPage('home'), 
+            'per_page_default' => $this->_oConfig->getPerPage(), 
             'timeline' => $iTimeline, 
             'filter' => $sFilter, 
             'modules' => $aModules
@@ -1203,7 +1202,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'owner_id' => $iProfileId,
             'start' => $iStart, 
             'per_page' => $iPerPage, 
-            'per_page_default' => $this->_oConfig->getPerPage('home'), 
+            'per_page_default' => $this->_oConfig->getPerPage(), 
             'timeline' => $iTimeline, 
             'filter' => $sFilter, 
             'modules' => $aModules
@@ -3698,7 +3697,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $aParams = array_merge($aParams, array(
             'browse' => 'list',
-            'status' => BX_TIMELINE_STATUS_ACTIVE
+            'status' => BX_TIMELINE_STATUS_ACTIVE,
+            'dynamic_mode' => false,
         ));
 
         return $aParams;
@@ -3884,7 +3884,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 'reports' => isset($aResult['reports']['count']) ? (int)$aResult['reports']['count'] : 0,
                 'comments' => isset($aResult['comments']['count']) ? (int)$aResult['comments']['count'] : 0,
                 'date' => isset($aResult['date']) ? $aResult['date'] : $aEvent['date'],
-                'type' => stripos($aEvent['type'], 'timeline') !== FALSE ? 'bx_timeline' : $aEvent['type'],
+                'type' => stripos($aEvent['type'], 'timeline') !== false ? 'bx_timeline' : $aEvent['type'],
                 'event_type' => $aEvent['type'],
                 'id' => $aEvent['id'],
                 'content' => $aResult['content'],
