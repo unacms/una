@@ -1956,7 +1956,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sSampleLink = empty($aContent['url']) ? $sSample : $this->parseLink($aContent['url'], $sSample);
 
         $sTitle = _t('_bx_timeline_txt_reposted', $sOwnerLink, $sSampleLink);
-        $sText = $this->_getContent($aContent['parse_type'], $aEvent);
+        $sText = $this->_getContent($aContent['parse_type'], $aEvent, $aBrowseParams);
 
         return array(
             'bx_if:show_title' => array(
