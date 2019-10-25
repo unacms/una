@@ -179,11 +179,13 @@ class BxBaseModTextFormPoll extends BxTemplFormView
 
     protected function genCustomInputAnswersButton($aInput)
     {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
         $sName = $aInput['name'];
 
         $aInput['type'] = 'button';
         $aInput['name'] .= '_add';
-        $aInput['value'] = _t('_bx_posts_form_poll_input_answers_add');
+        $aInput['value'] = _t($CNF['T']['txt_poll_form_answers_add']);
         $aInput['attrs']['class'] = 'bx-def-margin-sec-top';
         $aInput['attrs']['onclick'] = $this->_oModule->_oConfig->getJsObject('poll') . ".addPollAnswer(this, '" . $sName . "');";
 
