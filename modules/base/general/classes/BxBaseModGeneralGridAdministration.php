@@ -180,6 +180,23 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
             $aContentInfo = $this->_oModule->_oDb->getContentInfoById($mixedId);
 
             $this->_oModule->alertAfterEdit($aContentInfo);
+            
+            $iContextId = isset($CNF['FIELD_ALLOW_VIEW_TO']) && (!empty($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) && (int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0) ? - $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] : 0;
+            $AuditParams = array(
+                'content_title' => (isset($CNF['FIELD_TITLE']) && isset($aContentInfo[$CNF['FIELD_TITLE']])) ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
+                'context_profile_id' => $iContextId,
+                'content_info_object' =>  isset($CNF['OBJECT_CONTENT_INFO']) ? $CNF['OBJECT_CONTENT_INFO'] : '',
+                'data' => $aContentInfo
+            );
+            if ($iContextId > 0)
+                $AuditParams['context_profile_title'] = BxDolProfile::getInstance($iContextId)->getDisplayName();
+            
+            bx_audit(
+                $mixedId, 
+                $this->_oModule->getName(), 
+                ($isChecked ? '_sys_audit_action_content_enabled': '_sys_audit_action_content_disabled'), 
+                $AuditParams
+            );
         }
 
         return $mixedResult;

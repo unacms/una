@@ -292,7 +292,12 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
         );
 
         $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_Confirmation', $aPlus);
-        return $aTemplate && sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_SYSTEM);
+        $bRv = $aTemplate && sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_SYSTEM);
+        
+        if($bRv){
+            $this->doAudit($iAccountId, '_sys_audit_action_account_resend_confirmation_email');
+        }
+        return $bRv;
     }
 
     /**
@@ -545,6 +550,8 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
        // create system event
         bx_alert('account', 'delete', $this->_iAccountID, 0, array ('delete_with_content' => $bDeleteWithContent));
         
+        $this->doAudit($this->_iAccountID, $bDeleteWithContent ? '_sys_audit_action_account_deleted_with_content' : '_sys_audit_action_account_deleted');
+        
         return true;
     }
 
@@ -590,6 +597,17 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
         $iAccountId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
         $a = $this->getInfo();
         return md5($a['email'] . $a['salt'] . BX_DOL_SECRET);
+    }
+    
+    public function doAudit($iAccountId, $sAction, $aData = array())
+    {
+        $iAccountId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
+        bx_audit(
+            $iAccountId, 
+            'bx_accounts', 
+            $sAction,  
+            array('content_title' => $this->getDisplayName(), 'data' => $aData)
+        );
     }
 
     /**

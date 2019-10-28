@@ -165,6 +165,13 @@ class BxDolFeature extends BxDolObject
             
         if(!$bPerformUndo)
             $this->isAllowedFeature(true);
+        
+        bx_audit(
+            $this->getId(), 
+            $this->_aSystem['name'], 
+            '_sys_audit_action_' . ($bPerformUndo ? 'un' : '') . 'feature',  
+            $this->_prepareAuditParams()
+        );
 
         bx_alert($this->_sSystem, ($bPerformUndo ? 'un' : '') . 'feature', $iObjectId, $iAuthorId, array('object_author_id' => $iObjectAuthorId));
         bx_alert('feature', ($bPerformUndo ? 'un' : '') . 'do', 0, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId));
@@ -186,6 +193,22 @@ class BxDolFeature extends BxDolObject
     protected function _getTitleDoFeature($bPerformed)
     {
     	return $bPerformed && $this->isUndo() ? '_feature_do_unfeature' : '_feature_do_feature';
+    }
+    
+    private function _prepareAuditParams()
+    {
+        $sModule = $this->_aSystem['name'];
+        $oModule = BxDolModule::getInstance($sModule);
+        $CNF = $oModule->_oConfig->CNF;
+
+        $aContentInfo = BxDolRequest::serviceExists($sModule, 'get_all') ? BxDolService::call($sModule, 'get_all', array(array('type' => 'id', 'id' => $this->getId()))) : array();
+        
+        $AuditParams = array(
+            'content_title' => isset($CNF['FIELD_TITLE'])  ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
+            'content_info_object' =>  isset($CNF['OBJECT_CONTENT_INFO']) ? $CNF['OBJECT_CONTENT_INFO'] : '',
+        );
+        
+        return $AuditParams;
     }
 }
 

@@ -352,8 +352,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_site_splash_enabled', '', '', 'checkbox', '', '', '', 26),
 
 (@iCategoryId, 'sys_site_cover_common', '', '0', 'digit', '', '', '', 27),
-(@iCategoryId, 'sys_unit_cover_profile', '', '0', 'digit', '', '', '', 28),
-(@iCategoryId, 'sys_audit_max_records', '', '1000', 'digit', '', '', '', 29);
+(@iCategoryId, 'sys_unit_cover_profile', '', '0', 'digit', '', '', '', 28);
 
 
 --
@@ -568,6 +567,18 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_twilio_gate_token', '_adm_stg_cpt_option_sys_twilio_gate_token', '', 'digit', '', '', '', 2),
 (@iCategoryId, 'sys_twilio_gate_from_number', '_adm_stg_cpt_option_sys_twilio_gate_from_number', '', 'digit', '', '', '', 3);
 
+
+--
+-- CATEGORY (HIDDEN): Audit
+--
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'audit', '_adm_stg_cpt_category_audit', 1, 2);
+SET @iCategoryId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+(@iCategoryId, 'sys_audit_enable', '_adm_stg_cpt_option_sys_audit_enable', '', 'checkbox', '', '', '', 1),
+(@iCategoryId, 'sys_audit_max_records', '_adm_stg_cpt_option_sys_audit_max_records', '10000', 'digit', '', '', '', 2),
+(@iCategoryId, 'sys_audit_days_before_expire', '_adm_stg_cpt_option_sys_audit_days_before_expire', '365', 'digit', '', '', '', 3),
+(@iCategoryId, 'sys_audit_acl_levels', '_adm_stg_cpt_option_sys_audit_acl_levels', '7,8', 'digit', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"get_memberships";s:6:"params";a:0:{}s:5:"class";s:16:"TemplAclServices";}', '', '', 4);
 --
 -- Table structure for table `sys_options_mixes`
 --
@@ -1494,6 +1505,7 @@ CREATE TABLE `sys_audit` (
   `id` int(11) unsigned NOT NULL auto_increment, 
   `added` int(11) NOT NULL, 
   `profile_id` int(10) NOT NULL, 
+  `profile_title` varchar(255) NOT NULL, 
   `content_id` int(10) NOT NULL, 
   `content_title` varchar(255) NOT NULL, 
   `content_module` varchar(32) NOT NULL default '',
@@ -1788,7 +1800,8 @@ INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VA
 ('sys_storage', '* * * * *', 'BxDolCronStorage', 'inc/classes/BxDolCronStorage.php', ''),
 ('sys_transcoder', '* * * * *', 'BxDolCronTranscoder', 'inc/classes/BxDolCronTranscoder.php', ''),
 ('sys_queue_email', '* * * * *', 'BxDolCronQueueEmail', 'inc/classes/BxDolCronQueueEmail.php', ''),
-('sys_queue_push', '* * * * *', 'BxDolCronQueuePush', 'inc/classes/BxDolCronQueuePush.php', '');
+('sys_queue_push', '* * * * *', 'BxDolCronQueuePush', 'inc/classes/BxDolCronQueuePush.php', ''),
+('sys_audit_clean', '* * * * *', 'BxDolCronAudit', 'inc/classes/BxDolCronAudit.php', '');
 
 -- --------------------------------------------------------
 

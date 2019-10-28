@@ -40,7 +40,7 @@ class BxBaseStudioAuditGrid extends BxDolStudioAuditGrid
         if ($aRow['content_id'] > 0 && $aRow['content_info_object'] != ''){
             $oContentInfo = BxDolContentInfo::getObjectInstance($aRow['content_info_object']);
             if ($oContentInfo){
-    	        $sTitle = $oContentInfo->getContentTitle($aRow['content_id']);
+    	        $sTitle = bx_process_output($oContentInfo->getContentTitle($aRow['content_id']));
                 if ($sTitle != ''){
                     $mixedValue =  $this->_oTemplate->parseHtmlByName('account_link.html', array(
                         'href' => $oContentInfo->getContentLink($aRow['content_id']),
@@ -52,7 +52,7 @@ class BxBaseStudioAuditGrid extends BxDolStudioAuditGrid
             }
         }
         if ($mixedValue == ''){
-            $mixedValue = $aRow['content_title'];
+            $mixedValue = bx_process_output($aRow['content_title']);
         }
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
@@ -83,8 +83,11 @@ class BxBaseStudioAuditGrid extends BxDolStudioAuditGrid
     protected function _getCellModule ($mixedValue, $sKey, $aField, $aRow)
     {
         $oModule = bxDolModule::getInstance($aRow['content_module']);
-        if($oModule instanceof iBxDolContentInfoService){
+        if($oModule && $oModule instanceof iBxDolContentInfoService){
             $mixedValue = $oModule->_aModule['title'];
+        }
+        else{
+            $mixedValue = $aRow['content_module'];
         }
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
@@ -104,7 +107,7 @@ class BxBaseStudioAuditGrid extends BxDolStudioAuditGrid
                 ));
             }
             else{
-                $mixedValue = 'deleted';
+                $mixedValue = $aRow['profile_title'];
             }
         }
         else{
@@ -136,6 +139,30 @@ class BxBaseStudioAuditGrid extends BxDolStudioAuditGrid
         $sContent .= $oForm->genRow($aInputSearch);
 
         return  $sContent;
+    }
+    
+    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    {
+        $sFilterContent = bx_get('content_id');
+        if(!empty($sFilter2)) {
+            $sFilterContent = bx_process_input($sFilterContent);
+            $this->_aOptions['source'] .= " AND `content_id` = " .  $sFilterContent . 'AND `content_module` = ' . $this->sModule;
+        }
+        
+        $sFilterContext = bx_get('context_id');
+        if(!empty($sFilterContext)) {
+            $sFilterContext = bx_process_input($sFilterContext);
+            $this->_aOptions['source'] .= " AND `context_profile_id` = " .  $sFilterContext;
+        }
+        
+        $sPrifile = bx_get('profile_id');
+        if(!empty($sPrifile)) {
+            $sPrifile = bx_process_input($sPrifile);
+            $this->_aOptions['source'] .= " AND `profile_id` = " .  $sPrifile;
+        }
+
+
+        return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
     
     function getJsObject()

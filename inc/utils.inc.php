@@ -1380,22 +1380,22 @@ function bx_unicode_urldecode($s)
 
 /**
  * Raise an audit event
- * @param int $iProfileId - sender (action's author) profile id, if it is false - then currectly logged in profile id is used
  * @param int $iContentId - content id
  * @param string $sContentModule - module name
  * @param string $sAction - system action key
- * @param string $sContentTitle - needed in case when original content was deleted
- * @param string $sContentInfoObject - content info object
- * @param int $iContextProfileId - context profile id
- * @param string $sContextProfileTitle - needed in case when original context was deleted
- * @param array $aActionParams - serialized array of parameters to pass to 'action lang key', for example friend name in case if 'befriend' action
+ * @param array $aParams - array of parameters 
  */
 function bx_audit($iContentId, $sContentModule, $sAction, $aParams)
 {
-    $sContentTitle = $sContentInfoObject = $sContextProfileTitle = $sData = $sActionParams = '';
-    $iContextProfileId = 0;
+    if (!getParam('sys_audit_enable') || getParam('sys_audit_acl_levels') == '')
+        return;
     
     $iProfileId = bx_get_logged_profile_id();
+    if (!BxDolAcl::getInstance()->isMemberLevelInSet(explode(',', getParam('sys_audit_acl_levels')), $iProfileId))
+        return;
+    
+    $sContentTitle = $sContentInfoObject = $sContextProfileTitle = $sData = $sActionParams = '';
+    $iContextProfileId = 0;
     
     if (isset($aParams['profile_id']))
         $iProfileId = (int)$aParams['profile_id'];
@@ -1418,9 +1418,11 @@ function bx_audit($iContentId, $sContentModule, $sAction, $aParams)
     if (isset($aParams['data']) && is_array($aParams['data']) && count($aParams['data']))
         $sData = serialize($aParams['data']);
     
+    $sProfileTitle = BxDolProfile::getInstance($iProfileId)->getDisplayName();
+    
     $oDb = BxDolDb::getInstance();
-    $sSql = $oDb->prepare("INSERT INTO `sys_audit`(`added`, `profile_id`, `content_id`, `content_title`, `content_module`, `context_profile_id`, `context_profile_title`, `action_lang_key`, `action_lang_key_params`, `content_info_object`, `extras`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-     ,time(), $iProfileId, $iContentId, $sContentTitle, $sContentModule, $iContextProfileId, $sContextProfileTitle, $sAction, $sActionParams ,$sContentInfoObject, $sData);
+    $sSql = $oDb->prepare("INSERT INTO `sys_audit`(`added`, `profile_id`, `profile_title`, `content_id`, `content_title`, `content_module`, `context_profile_id`, `context_profile_title`, `action_lang_key`, `action_lang_key_params`, `content_info_object`, `extras`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+     ,time(), $iProfileId, $sProfileTitle, $iContentId, $sContentTitle, $sContentModule, $iContextProfileId, $sContextProfileTitle, $sAction, $sActionParams ,$sContentInfoObject, $sData);
     return !$oDb->query($sSql);
 }
 

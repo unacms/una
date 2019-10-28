@@ -495,8 +495,8 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         bx_audit(
             $iContentId, 
             $this->_oModule->getName(), 
-            '_sys_audit_action_detete',  
-            $this->_prepareAuditParams($aContentInfo)
+            '_sys_audit_action_detete_content',  
+            $this->_oModule->_prepareAuditParams($aContentInfo)
         );
         
         return '';
@@ -532,8 +532,8 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         bx_audit(
             $iContentId, 
             $this->_oModule->getName(), 
-            '_sys_audit_action_edit',  
-            $this->_prepareAuditParams($aContentInfo)
+            '_sys_audit_action_edit_content',  
+            $this->_oModule->_prepareAuditParams($aContentInfo)
         );
         
         return '';
@@ -556,8 +556,8 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         bx_audit(
             $iContentId, 
             $this->_oModule->getName(), 
-            '_sys_audit_action_add',  
-            $this->_prepareAuditParams($aContentInfo)
+            '_sys_audit_action_add_content',  
+            $this->_oModule->_prepareAuditParams($aContentInfo)
         );
         
         return '';
@@ -586,23 +586,6 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             $s = BX_DOL_URL_ROOT . $s;
         
         return $s;
-    }
-
-    private function _prepareAuditParams($aContentInfo)
-    {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-        
-        $iContextId = isset($CNF['FIELD_ALLOW_VIEW_TO']) && (!empty($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) && (int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0) ? - $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] : 0;
-        
-        $AuditParams = array(
-            'content_title' => (isset($CNF['FIELD_TITLE']) && isset($aContentInfo[$CNF['FIELD_TITLE']])) ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
-            'context_profile_id' => $iContextId,
-            'content_info_object' =>  isset($CNF['OBJECT_CONTENT_INFO']) ? $CNF['OBJECT_CONTENT_INFO'] : '',
-            'data' => $aContentInfo
-        );
-        if ($iContextId > 0)
-            $AuditParams['context_profile_title'] = BxDolProfile::getInstance($iContextId)->getDisplayName();
-        return $AuditParams;
     }
     
     protected function prepareResponse($mixedResponse, $bAsJson = false, $sKey = 'msg', $aAdditional = array())

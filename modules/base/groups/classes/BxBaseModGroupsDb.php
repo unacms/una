@@ -47,6 +47,8 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
         if ($oModule && method_exists($oModule, 'onFanAddedToAdmins'))
             $oModule->onFanAddedToAdmins($iGroupProfileId, $iFanId);
 
+        $oModule->doAudit($iGroupProfileId, $iFanId, '_sys_audit_action_group_to_admins');
+        
         return true;
     }
 
@@ -66,6 +68,8 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
         $oModule = BxDolModule::getInstance($this->_oConfig->getName());
         if ($oModule && method_exists($oModule, 'onFanRemovedFromAdmins'))
             $oModule->onFanRemovedFromAdmins($iGroupProfileId, $iFanId);
+        
+        $oModule->doAudit($iGroupProfileId, $iFanId, '_sys_audit_action_group_from_admins');
         
         return true;
     }

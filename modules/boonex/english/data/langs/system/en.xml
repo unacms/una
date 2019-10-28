@@ -1282,6 +1282,7 @@
 	<string name="_adm_scs_operation_done"><![CDATA[]]></string>
 	<string name="_adm_stg_cpt_category_account"><![CDATA[Account]]></string>
 	<string name="_adm_stg_cpt_category_acl"><![CDATA[ACL]]></string>
+  <string name="_adm_stg_cpt_category_audit"><![CDATA[Audit]]></string>
 	<string name="_adm_stg_cpt_category_notifications"><![CDATA[Notifications]]></string>
 	<string name="_adm_stg_cpt_category_notifications_push"><![CDATA[Push Notifications]]></string>
 	<string name="_adm_stg_cpt_category_cache"><![CDATA[Cache]]></string>
@@ -1333,6 +1334,10 @@
 	<string name="_adm_stg_cpt_option_sys_acl_expire_notification_days"><![CDATA[Number of days before membership expiration to notify members (-1 = after expiration)]]></string>
 	<string name="_adm_stg_cpt_option_sys_acl_expire_notify_once"><![CDATA[Notify members about membership expiration only once (every day otherwise)]]></string>
 	<string name="_adm_stg_cpt_option_sys_add_nofollow"><![CDATA[Add "nofollow" attribute for external links]]></string>
+  <string name="_adm_stg_cpt_option_sys_audit_enable"><![CDATA[Enable]]></string>
+  <string name="_adm_stg_cpt_option_sys_audit_max_records"><![CDATA[Number of log records]]></string>
+  <string name="_adm_stg_cpt_option_sys_audit_days_before_expire"><![CDATA[Delete logs older than (days)]]></string>
+  <string name="_adm_stg_cpt_option_sys_audit_acl_levels"><![CDATA[Enable for levels]]></string>
 	<string name="_adm_stg_cpt_option_sys_autoupdate_force_modified_files"><![CDATA[Force auto-update, even if some files were modified]]></string>
 	<string name="_adm_stg_cpt_option_sys_autoupdate"><![CDATA[Enable auto-update]]></string>
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_host"><![CDATA[Memcached server host]]></string>
@@ -1714,11 +1719,45 @@
 	<string name="_sys_acl_expire"><![CDATA[Expire: ]]></string>
 	<string name="_sys_acl_expire_never"><![CDATA[never]]></string>
 
-  <string name="_sys_audit_action_edit"><![CDATA[Edit]]></string>
-  <string name="_sys_audit_action_add"><![CDATA[Add]]></string>
-  <string name="_sys_audit_action_delete"><![CDATA[Delete]]></string>
+  <string name="_sys_audit_action_edit_content"><![CDATA[Content edited]]></string>
+  <string name="_sys_audit_action_add_content"><![CDATA[Content added]]></string>
+  <string name="_sys_audit_action_detete_content"><![CDATA[Content removed]]></string>
+  <string name="_sys_audit_action_edit_comment"><![CDATA[Comment edited]]></string>
+  <string name="_sys_audit_action_add_comment"><![CDATA[Comment added]]></string>
+  <string name="_sys_audit_action_delete_comment"><![CDATA[Comment removed]]></string>
+  <string name="_sys_audit_action_feature"><![CDATA[Featured]]></string>
+  <string name="_sys_audit_action_unfeature"><![CDATA[Unfeatured]]></string>
+  <string name="_sys_audit_action_group_to_admins"><![CDATA[Added to group admins]]></string>
+  <string name="_sys_audit_action_group_from_admins"><![CDATA[Removed from group admins]]></string>
+  <string name="_sys_audit_action_group_join_request_accepted"><![CDATA[Join requestaccepted]]></string>
+  <string name="_sys_audit_action_account_change_role_to_3"><![CDATA[Made operator]]></string>
+  <string name="_sys_audit_action_account_change_role_to_1"><![CDATA[Unmade operator]]></string>
+  <string name="_sys_audit_action_account_unlock"><![CDATA[Unlocked]]></string>
+  <string name="_sys_audit_action_account_reset_password"><![CDATA[Password reseted]]></string>
+  <string name="_sys_audit_action_account_resend_confirmation_email"><![CDATA[Confirmation email re-sended]]></string>
+  <string name="_sys_audit_action_account_deleted_with_content"><![CDATA[Removed with content]]></string>
+  <string name="_sys_audit_action_account_deleted"><![CDATA[Removed]]></string>
+  <string name="_sys_audit_action_account_email_changed"><![CDATA[Email changed]]></string>
+  <string name="_sys_audit_action_account_activated"><![CDATA[Activated]]></string>
+  <string name="_sys_audit_action_account_suspended"><![CDATA[Suspended]]></string>
+  <string name="_sys_audit_action_content_enabled"><![CDATA[Enabled]]></string>
+  <string name="_sys_audit_action_content_disabled"><![CDATA[Disabled]]></string>
+  <string name="_sys_audit_action_set_membership"><![CDATA[Membership set]]></string>
+  <string name="_sys_audit_action_set_status_approve"><![CDATA[Approved]]></string>
+  <string name="_sys_audit_action_set_status_active"><![CDATA[Activated]]></string>
+  <string name="_sys_audit_action_set_status_disapprove"><![CDATA[Disapproved]]></string>
+  <string name="_sys_audit_action_set_status_suspended"><![CDATA[Suspended]]></string>
+  <string name="_sys_audit_action_report"><![CDATA[Reported]]></string>
+  <string name="_sys_audit_action_lock"><![CDATA[Locked]]></string>
+  <string name="_sys_audit_action_unlock"><![CDATA[Unlocked]]></string>
+  <string name="_sys_audit_action_stick"><![CDATA[Sticked]]></string>
+  <string name="_sys_audit_action_unstick"><![CDATA[Unsticked]]></string>
+  <string name="_sys_audit_action_promote"><![CDATA[Promoted]]></string>
+  <string name="_sys_audit_action_unpromote"><![CDATA[Unpromoted]]></string>
+  <string name="_sys_audit_action_unpromote"><![CDATA[Unpromoted]]></string>
   
-	<string name="_sys_add_friend"><![CDATA[Add friend]]></string>
+
+  <string name="_sys_add_friend"><![CDATA[Add friend]]></string>
         <string name="_sys_add_relation"><![CDATA[Add relationship]]></string>
 	<string name="_sys_adm_installed"><![CDATA[Installed]]></string>
 	<string name="_sys_admin_apply"><![CDATA[Apply]]></string>
