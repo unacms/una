@@ -14,13 +14,20 @@
 class BxDolObject extends BxDolFactory implements iBxDolReplaceable
 {
     protected $_oTemplate = null;
-	protected $_oQuery = null;
+    protected $_oQuery = null;
 
     protected $_iId = 0; ///< item id the action to be performed with
     protected $_sSystem = ''; ///< current system name
     protected $_aSystem = array(); ///< current system array
 
     protected $_aMarkers = array ();
+
+    protected $_sTmplContentElementBlock = '';
+    protected $_sTmplContentElementInline = '';
+    protected $_sTmplContentDoAction;
+    protected $_sTmplContentDoActionLabel = '';
+    protected $_sTmplContentCounter = '';
+    protected $_sTmplContentCounterLabel = '';
 
     protected function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
@@ -207,15 +214,15 @@ class BxDolObject extends BxDolFactory implements iBxDolReplaceable
         return $a[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $a[CHECK_ACTION_MESSAGE] : '';
     }
 
-	/**
+    /**
      * Actions' response functions
      */
-	public function onObjectDelete($iObjectId = 0)
+    public function onObjectDelete($iObjectId = 0)
     {
         $this->_oQuery->deleteObjectEntries($iObjectId ? $iObjectId : $this->getId());
     }
 
-	/**
+    /**
      * Internal functions
      */
 	protected function _getAuthorId ()
@@ -296,6 +303,36 @@ class BxDolObject extends BxDolFactory implements iBxDolReplaceable
     protected function _replaceMarkers ($mixed)
     {
         return bx_replace_markers($mixed, $this->_aMarkers);
+    }
+
+    protected function _getTmplContentElementBlock()
+    {
+        return $this->_sTmplContentElementBlock;
+    }
+
+    protected function _getTmplContentElementInline()
+    {
+        return $this->_sTmplContentElementInline;
+    }
+
+    protected function _getTmplContentDoAction()
+    {
+        return $this->_sTmplContentDoAction;
+    }
+
+    protected function _getTmplContentDoActionLabel()
+    {
+        return $this->_sTmplContentDoActionLabel;
+    }
+
+    protected function _getTmplContentCounter()
+    {
+        return $this->_sTmplContentCounter;
+    }
+
+    protected function _getTmplContentCounterLabel()
+    {
+        return $this->_sTmplContentCounterLabel;
     }
 }
 

@@ -12,13 +12,9 @@
  */
 class BxBaseFeature extends BxDolFeature
 {
-    protected static $_sTmplContentElementBlock;
-    protected static $_sTmplContentElementInline;
-    protected static $_sTmplContentDoFeatureLabel;
-
     protected $_bCssJsAdded;
 
-	protected $_sJsObjClass;
+    protected $_sJsObjClass;
     protected $_sJsObjName;
     protected $_sStylePrefix;
 
@@ -39,24 +35,19 @@ class BxBaseFeature extends BxDolFeature
         $sHtmlId = str_replace(array('_' , ' '), array('-', '-'), $sSystem) . '-' . $iId;
         $this->_aHtmlIds = array(
             'main' => 'bx-feature-' . $sHtmlId,
-        	'do_link' => 'bx-feature-do-link-' . $sHtmlId
+            'do_link' => 'bx-feature-do-link-' . $sHtmlId
         );
 
         $this->_aElementDefaults = array(
-			'show_do_feature_as_button' => false,
-			'show_do_feature_as_button_small' => false,
-			'show_do_feature_icon' => true,
-			'show_do_feature_label' => false
+            'show_do_feature_as_button' => false,
+            'show_do_feature_as_button_small' => false,
+            'show_do_feature_icon' => true,
+            'show_do_feature_label' => false
         );
 
-        if(empty(self::$_sTmplContentElementBlock))
-            self::$_sTmplContentElementBlock = $this->_oTemplate->getHtml('feature_element_block.html');
-
-        if(empty(self::$_sTmplContentElementInline))
-            self::$_sTmplContentElementInline = $this->_oTemplate->getHtml('feature_element_inline.html');
-
-        if(empty(self::$_sTmplContentDoFeatureLabel))
-            self::$_sTmplContentDoFeatureLabel = $this->_oTemplate->getHtml('feature_do_feature_label.html');
+        $this->_sTmplContentElementBlock = $this->_oTemplate->getHtml('feature_element_block.html');
+        $this->_sTmplContentElementInline = $this->_oTemplate->getHtml('feature_element_inline.html');
+        $this->_sTmplContentDoActionLabel = $this->_oTemplate->getHtml('feature_do_feature_label.html');
     }
 
     public function getJsObjectName()
@@ -118,7 +109,7 @@ class BxBaseFeature extends BxDolFeature
 
         $aParams['is_featured'] = $this->isPerformed($iObjectId, $iAuthorId) ? true : false;
 
-        $sTmplName = self::${'_sTmplContentElement' . bx_gen_method_name(!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_FEATURED_USAGE_DEFAULT)};
+        $sTmplName = $this->{'_getTmplContentElement' . bx_gen_method_name(!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_FEATURED_USAGE_DEFAULT)}();
         return $this->_oTemplate->parseHtmlByContent($sTmplName, array(
             'style_prefix' => $this->_sStylePrefix,
             'html_id' => $this->_aHtmlIds['main'],
@@ -156,7 +147,7 @@ class BxBaseFeature extends BxDolFeature
     protected function _getLabelDoFeature($aParams = array())
     {
     	$bFeatured = isset($aParams['is_featured']) && $aParams['is_featured'] === true;
-        return $this->_oTemplate->parseHtmlByContent(self::$_sTmplContentDoFeatureLabel, array(
+        return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentDoActionLabel(), array(
         	'bx_if:show_icon' => array(
         		'condition' => isset($aParams['show_do_feature_icon']) && $aParams['show_do_feature_icon'] == true,
         		'content' => array(

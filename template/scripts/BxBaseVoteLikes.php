@@ -12,8 +12,6 @@
  */
 class BxBaseVoteLikes extends BxDolVoteLikes
 {
-    protected static $_sTmplContentDoVoteLabelLikes;
-
     public function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
         parent::__construct($sSystem, $iId, $iInit, $oTemplate);
@@ -32,11 +30,14 @@ class BxBaseVoteLikes extends BxDolVoteLikes
             'show_do_vote_label' => false,
             'show_counter' => true,
             'show_counter_empty' => false,
-            'show_legend' => false
+            'show_counter_label_icon' => false,
+            'show_counter_label_text' => true,
+            'show_legend' => false,
+            'show_script' => true
         );
 
-        if(empty(self::$_sTmplContentDoVoteLabelLikes))
-            self::$_sTmplContentDoVoteLabelLikes = $this->_oTemplate->getHtml('vote_do_vote_likes_label.html');
+        $this->_sTmplContentDoActionLabel = $this->_oTemplate->getHtml('vote_do_vote_label_likes.html');
+        $this->_sTmplContentCounterLabel = $this->_oTemplate->getHtml('vote_counter_label_likes.html');
     }
 
     public function getJsClick($iValue = 0)
@@ -104,17 +105,40 @@ class BxBaseVoteLikes extends BxDolVoteLikes
     protected function _getDoVoteLabel($aParams = array())
     {
     	$bVoted = isset($aParams['is_voted']) && $aParams['is_voted'] === true;
-        return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentDoVoteLabel(), array(
+        return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentDoActionLabel(), array(
             'bx_if:show_icon' => array(
                 'condition' => isset($aParams['show_do_vote_icon']) && $aParams['show_do_vote_icon'] == true,
                 'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
                     'name' => $this->_getIconDo($bVoted)
                 )
             ),
             'bx_if:show_text' => array(
                 'condition' => isset($aParams['show_do_vote_label']) && $aParams['show_do_vote_label'] == true,
                 'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
                     'text' => _t($this->_getTitleDo($bVoted))
+                )
+            )
+        ));
+    }
+
+    protected function _getCounterLabel($iCount, $aParams = array())
+    {
+        $bVoted = isset($aParams['is_voted']) && $aParams['is_voted'] === true;
+        return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentCounterLabel(), array(
+            'bx_if:show_icon' => array(
+                'condition' => !isset($aParams['show_counter_label_icon']) || $aParams['show_counter_label_icon'] === true,
+                'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
+                    'name' => $this->_getIconDo($bVoted)
+                )
+            ),
+            'bx_if:show_text' => array(
+                'condition' => !isset($aParams['show_counter_label_text']) || $aParams['show_counter_label_text'] === true,
+                'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
+                    'text' => parent::_getCounterLabel($iCount)
                 )
             )
         ));
@@ -127,11 +151,6 @@ class BxBaseVoteLikes extends BxDolVoteLikes
             return $bResult;
 
         return $isAllowedVote || $bCount;
-    }
-
-    protected function _getTmplContentDoVoteLabel()
-    {
-        return self::$_sTmplContentDoVoteLabelLikes;
     }
 }
 

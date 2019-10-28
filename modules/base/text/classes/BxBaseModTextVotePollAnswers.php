@@ -138,7 +138,7 @@ class BxBaseModTextVotePollAnswers extends BxTemplVoteLikes
     	return _t($CNF['T']['txt_poll_answer_vote_do_by']);
     }
 
-    protected function _getLabelCounter($iCount, $aParams = array())
+    protected function _getCounterLabel($iCount, $aParams = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 

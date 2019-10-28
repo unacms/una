@@ -100,8 +100,9 @@ class BxDolVote extends BxDolObject
      */
     public static function getObjectInstance($sSys, $iId, $iInit = true, $oTemplate = false)
     {
-        if(isset($GLOBALS['bxDolClasses']['BxDolVote!' . $sSys . $iId]))
-            return $GLOBALS['bxDolClasses']['BxDolVote!' . $sSys . $iId];
+        $sKey = 'BxDolVote!' . $sSys . $iId . ($oTemplate ? $oTemplate->getClassName() : '');
+        if(isset($GLOBALS['bxDolClasses'][$sKey]))
+            return $GLOBALS['bxDolClasses'][$sKey];
 
         $aSystems = self::getSystems();
         if(!isset($aSystems[$sSys]))
@@ -118,7 +119,7 @@ class BxDolVote extends BxDolObject
         if($iInit && method_exists($o, 'init'))
             $o->init($iId);
 
-        return ($GLOBALS['bxDolClasses']['BxDolVote!' . $sSys . $iId] = $o);
+        return ($GLOBALS['bxDolClasses'][$sKey] = $o);
     }
 
     public static function &getSystems()
@@ -337,7 +338,7 @@ class BxDolVote extends BxDolObject
             'code' => 0,
             'rate' => $aVote['rate'],
             'count' => $aVote['count'],
-            'countf' => (int)$aVote['count'] > 0 ? $this->_getLabelCounter($aVote['count']) : '',
+            'countf' => (int)$aVote['count'] > 0 ? $this->_getCounterLabel($aVote['count']) : '',
             'label_icon' => $this->_getIconDo($bVoted),
             'label_title' => _t($this->_getTitleDo($bVoted)),
             'disabled' => $bVoted && !$bUndo,

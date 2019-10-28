@@ -68,14 +68,14 @@ define('BX_DOL_REPORT_USAGE_DEFAULT', BX_DOL_REPORT_USAGE_BLOCK);
 
 class BxDolReport extends BxDolObject
 {
-	protected $_oTemplate;
+    protected $_oTemplate;
 
-	protected $_sBaseUrl;
+    protected $_sBaseUrl;
 
-	protected $_sFormObject;
+    protected $_sFormObject;
     protected $_sFormDisplayPost;
 
-	protected $_aTypes;
+    protected $_aTypes;
 
     protected function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
@@ -90,14 +90,14 @@ class BxDolReport extends BxDolObject
         else
             $this->_oTemplate = BxDolTemplate::getInstance();
 
-		$this->_sBaseUrl = BxDolPermalinks::getInstance()->permalink($this->_aSystem['base_url']);
+        $this->_sBaseUrl = BxDolPermalinks::getInstance()->permalink($this->_aSystem['base_url']);
         if(get_mb_substr($this->_sBaseUrl, 0, 4) != 'http')
             $this->_sBaseUrl = BX_DOL_URL_ROOT . $this->_sBaseUrl;
 
-		$this->_sFormObject = 'sys_report';
-		$this->_sFormDisplayPost = 'sys_report_post';
+        $this->_sFormObject = 'sys_report';
+        $this->_sFormDisplayPost = 'sys_report_post';
 
-		$this->_aTypes = array('spam', 'scam', 'fraud', 'nude', 'other');
+        $this->_aTypes = array('spam', 'scam', 'fraud', 'nude', 'other');
     }
 
     /**
@@ -109,8 +109,9 @@ class BxDolReport extends BxDolObject
      */
     public static function getObjectInstance($sSys, $iId, $iInit = true, $oTemplate = false)
     {
-        if(isset($GLOBALS['bxDolClasses']['BxDolReport!' . $sSys . $iId]))
-            return $GLOBALS['bxDolClasses']['BxDolReport!' . $sSys . $iId];
+        $sKey = 'BxDolReport!' . $sSys . $iId . ($oTemplate ? $oTemplate->getClassName() : '');
+        if(isset($GLOBALS['bxDolClasses'][$sKey]))
+            return $GLOBALS['bxDolClasses'][$sKey];
 
         $aSystems = self::getSystems();
         if(!isset($aSystems[$sSys]))
@@ -124,7 +125,7 @@ class BxDolReport extends BxDolObject
         }
 
         $o = new $sClassName($sSys, $iId, $iInit, $oTemplate);
-        return ($GLOBALS['bxDolClasses']['BxDolReport!' . $sSys . $iId] = $o);
+        return ($GLOBALS['bxDolClasses'][$sKey] = $o);
     }
 
     public static function &getSystems()

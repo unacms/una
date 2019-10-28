@@ -63,3 +63,26 @@ div.bx-view-counter-holder {
 .bx-view-button-small .bx-view-counter-holder {
 	font-size: 1.5rem;
 }
+
+/*--- Counter Styles ---*/
+.bx-view-counter span.bx-view-counter-icon {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+
+    width: 1.0rem;
+    height: 1.0rem;
+    margin-top: 4px;
+    margin-bottom: 4px;
+
+    background-color: rgba(215, 215, 215, 1.0);
+    border: 1px solid #ffffff;
+    border-radius: 1rem;
+
+    line-height: 0.875rem;
+    text-align: center;
+    font-size: 0.5rem;
+}
+.bx-view-counter span.bx-view-counter-icon .sys-icon {
+    vertical-align: top;
+}

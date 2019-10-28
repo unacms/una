@@ -103,12 +103,22 @@ class BxDolVoteReactionsQuery extends BxDolVoteQuery
     	if(!empty($aParams['type']))
             switch($aParams['type']) {
                 case 'by':
-                    $aMethod['name'] = 'getColumn';
                     $aBindings['object_id'] = $aParams['object_id'];
-                    $aBindings['reaction'] = $aParams['reaction'];
 
-                    $sSelectClause = '`author_id`';
-                    $sWhereClause = 'AND `object_id` = :object_id AND `reaction`=:reaction';
+                    $sWhereClause = 'AND `object_id` = :object_id';
+
+                    if(!empty($aParams['reaction'])) {
+                        $aMethod['name'] = 'getColumn';
+                        $aBindings['reaction'] = $aParams['reaction'];
+
+                        $sSelectClause = '`author_id`';
+                        $sWhereClause .= ' AND `reaction`=:reaction';
+                    }
+                    else {
+                        $aMethod['name'] = 'getAll';
+
+                        $sSelectClause = '`author_id`, `reaction`';
+                    }
                     break;
             }
 

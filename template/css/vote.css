@@ -1,16 +1,16 @@
-/*--- Comment Plused By ---*/
+/*--- Voted By ---*/
 div.bx-vote-by-list {}
 div.bx-vote-by-list-cnt {
-	max-height: 200px;
-	max-height: 12.5rem;
-	min-width: 220px;
-	min-width: 13.75rem;
-	overflow: auto;
+    max-height: 200px;
+    max-height: 12.5rem;
+    min-width: 220px;
+    min-width: 13.75rem;
+    overflow: auto;
 }
 div.bx-vote-by-list div.bx-base-pofile-unit {
-	float: none;
-	margin-right: 0px;
-	margin-bottom: 0px;
+    float: none;
+    margin-right: 0px;
+    margin-bottom: 0px;
 }
 
 /*--- Vote Element Styles ---*/
@@ -20,7 +20,10 @@ div.bx-vote div.bx-vote-counter-holder {
 	float: left;
 }
 
+
+/*----------------------------------*/
 /*--- Likes based Element Styles ---*/
+/*----------------------------------*/
 .bx-vote-likes .bx-vote-element-holder,
 .bx-vote-likes .bx-vote-counter-holder {
 	line-height: 20px;
@@ -53,7 +56,10 @@ div.bx-vote div.bx-vote-counter-holder {
     border-width: 0px;
 }
 
+
+/*--------------------------------------*/
 /*--- Reactions based Element Styles ---*/
+/*--------------------------------------*/
 .bx-vote-reactions .bx-vote-element-holder,
 .bx-vote-reactions .bx-vote-counter-holder {
 	line-height: 20px;
@@ -89,15 +95,183 @@ div.bx-vote div.bx-vote-counter-holder {
 .bx-vote-counter-wrapper-reactions .bx-vote-counter {
     display: inline-block;
 }
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+
+    padding-left: 4px;
+}
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound .bx-vote-counter {
+    display: block;
+}
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-divided a.bx-vote-counter {
+    margin-right: 0.5rem;
+}
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound a.bx-vote-counter {
+    margin-left: 0.5rem;
+}
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter {
+    width: 1.0rem;
+    height: 1.0rem;
+    box-sizing: border-box;
+
+    margin: 4px 0 4px -4px;
+}
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter:first-child {
+    margin-left: 0;
+}
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter > span {
+    vertical-align: top;
+}
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter > span:not(.bx-vote-counter-icon) {
+    display: none;
+}
 .bx-vote-counter-wrapper-reactions .bx-vote-counter.bx-vc-hidden {
     display: none;
 }
-.bx-vote-counter-wrapper-reactions .bx-vote-counter i,
-.bx-vote-counter-wrapper-reactions .bx-vote-counter span {
-    vertical-align: middle;
+
+
+/*--- Counter Styles ---*/
+.bx-vote-counter.bx-vote-counter-likes span.bx-vote-counter-icon,
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound .bx-vote-counter.bx-vote-counter-reactions span.bx-vote-counter-icon {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+
+    width: 1.0rem;
+    height: 1.0rem;
+
+    background-color: rgba(215, 215, 215, 1.0);
+    border: 1px solid #ffffff;
+    border-radius: 1rem;
+
+    line-height: 0.875rem;
+    text-align: center;
+    font-size: 0.5rem;
+}
+.bx-vote-counter.bx-vote-counter-likes span.bx-vote-counter-icon {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+.bx-vote-counter.bx-vote-counter-likes span.bx-vote-counter-icon .sys-icon {
+    vertical-align: top;
 }
 
+
+/*--- Voted By ---*/
+div.bx-vote-by-list {}
+div.bx-vote-by-list-cnt {
+    max-height: 200px;
+    max-height: 12.5rem;
+    min-width: 220px;
+    min-width: 13.75rem;
+    overflow: auto;
+}
+div.bx-vote-by-list div.bx-base-pofile-unit {
+    float: none;
+    margin-right: 0px;
+    margin-bottom: 0px;
+}
+.bx-vote-bls-header {
+    display: -webkit-flex;
+    display: flex;
+
+    margin: -1.25rem -1.25rem 0 -1.25rem;
+    
+    border-bottom-color: #e6f0fa;
+    border-bottom-width: 2px;
+}
+.bx-vote-bls-title,
+.bx-vote-bls-submenu {
+    -webkit-flex: 0 1 auto; 
+    -ms-flex:  0 1 auto; 
+    flex:  0 1 auto;
+    line-height: 3.125rem;
+}
+.bx-vote-bls-title,
+.bx-vote-bls-submenu-cnt {
+	height: 3.125rem;
+}
+
+.bx-vote-bls-title {
+    -webkit-flex-grow: 3;
+    flex-grow: 3;
+
+    border-bottom: 2px solid rgba(0,0,0,0.1);
+
+    white-space: nowrap;
+    font-size: 1rem;
+    font-weight: 400;
+}
+.bx-vote-bls-submenu {
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    -webkit-overflow-scrolling: touch;
+}
+.bx-vote-bls-submenu::-webkit-scrollbar {
+    width: 0.5rem;
+}
+.bx-vote-bls-submenu::-webkit-scrollbar-track {
+    -webkit-border-radius: 0.5rem;
+    border-radius: 0.5rem;
+
+    background-color: rgba(0, 0, 0, 0.1); 
+}
+.bx-vote-bls-submenu::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 0.5rem;
+    border-radius: 0.5rem;
+
+    background: rgba(255, 255, 255, 0.9); 
+    -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.5);
+}
+.bx-vote-bls-submenu::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(255, 255, 255, 0.4); 
+}
+.bx-vote-bls-submenu-cnt ul {
+    display: -webkit-flex;
+    display: flex;
+}
+.bx-vote-bls-submenu-cnt ul li {
+    -webkit-flex: 0 1 auto; 
+    -ms-flex:  0 1 auto; 
+    flex:  0 1 auto;
+    box-sizing: border-box;
+    height: 3.125rem;
+
+    border-bottom: 2px solid rgba(0,0,0,0.1);
+    border-radius: 0;
+
+    line-height: 3.125rem;
+    white-space: nowrap;
+}
+.bx-vote-bls-submenu-cnt ul li div {
+    padding: 0 0.625rem;
+}
+.bx-vote-bls-submenu-cnt ul li.bx-menu-inter-act {
+    border-bottom-color: #364f6b;
+}
+.bx-vote-bls-submenu-cnt ul li.bx-menu-inter-act > div {
+    font-weight: bold;
+}
+.bx-vote-bls-content .bx-vote-by-list:not(.bx-vote-bl-summary) {
+    display: none;
+}
+.bx-vote-bls-content .bx-vote-by-item {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+
+/*----------------------------------*/
 /*--- Stars based Element Styles ---*/
+/*----------------------------------*/
 .bx-vote-stars,
 .bx-vote-stars .bx-vote-do,
 .bx-vote-stars .bx-vote-element-holder,

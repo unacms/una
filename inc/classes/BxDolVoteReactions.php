@@ -12,6 +12,9 @@
  */
 class BxDolVoteReactions extends BxTemplVote
 {
+    protected static $_sCounterStyleDivided = 'divided';
+    protected static $_sCounterStyleCompound = 'compound';
+
     protected $_sMenuDoVote; //--- Do vote (reaction)  menu name.
 
     protected $_sDataList; //--- Reactions list name.
@@ -97,13 +100,23 @@ class BxDolVoteReactions extends BxTemplVote
 
     public function actionGetVotedBy()
     {
-        if (!$this->isEnabled())
+        if(!$this->isEnabled())
            return '';
 
-        $sReaction = bx_get('reaction');
-        $sReaction = $sReaction !== false ? bx_process_input($sReaction) : $this->_sDefault;
+        $aParams = array();
 
-        return $this->_getVotedBy(array('reaction' => $sReaction));
+        $sReaction = bx_get('reaction');
+        if($sReaction !== false) {
+            $sReaction = bx_process_input($sReaction);
+            
+            $aReactions = $this->getReactions();
+            if(!in_array($sReaction, $aReactions))
+                $sReaction = $this->_sDefault;
+
+            $aParams['reaction'] = $sReaction;
+        }
+
+        return $this->_getVotedBy($aParams);
     }
 
     /**
@@ -142,6 +155,7 @@ class BxDolVoteReactions extends BxTemplVote
 
     protected function _returnVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aData, $bVoted)
     {
+        $aReactions = $this->getReactions();
         $sReaction = $aData['reaction'];
 
         $bUndo = $this->isUndo();
@@ -154,18 +168,32 @@ class BxDolVoteReactions extends BxTemplVote
         if(!$bDisabled)
             $sJsClick = $bVoted && $bUndo ? $this->getJsClickDo($sReaction) : $this->getJsClick();
 
+        $iTotalC = $iTotalS = 0;
+        foreach($aReactions as $sName) {
+            $iTotalC += (int)$aVote['count_' . $sName];
+            $iTotalS += (int)$aVote['sum_' . $sName];
+        }
+        $fTotalR = $iTotalC != 0 ? round($iTotalS / $iTotalC, 2) : 0;
+
         $iCount = (int)$aVote['count_' . $sReaction];
-        return array(
+        $aResult = array(
             'code' => 0,
             'reaction' => $sReaction,
             'rate' => $aVote['rate_' . $sReaction],
             'count' => $iCount,
-            'countf' => $iCount > 0 ? $this->_getLabelCounter($iCount, array('reaction' => $sReaction)) : '',
+            'countf' => $iCount > 0 ? $this->_getCounterLabel($iCount, array('reaction' => $sReaction)) : '',
             'label_icon' => $this->_getIconDoWithTrack($bVoted, $aTrack),
             'label_title' => _t($this->_getTitleDoWithTrack($bVoted, $aTrack)),
             'label_click' => $sJsClick,
             'disabled' => $bVoted && !$this->isUndo(),
+            'total' => array(
+                'rate' => $fTotalR,
+                'count' => $iTotalC,
+                'countf' => $iTotalC > 0 ? $this->_getCounterLabel($iTotalC, array('show_counter_label_icon' => false, 'reaction' => '')) : '',
+            )
         );
+
+        return $aResult;
     }
 
     protected function _getIconDoWithTrack($bVoted, $aTrack = array())
@@ -184,9 +212,11 @@ class BxDolVoteReactions extends BxTemplVote
     
     protected function _getTitleDoBy($aParams = array())
     {
-        $sReaction = !empty($aParams['reaction']) ? $aParams['reaction'] : $this->_sDefault;
+        if(isset($aParams['show_counter_style']) && $aParams['show_counter_style'] == self::$_sCounterStyleCompound)
+            return _t('_vote_do_by_reactions');
 
-    	return _t('_vote_do_by_reactions', _t($this->_aDataList[$sReaction]['title']));
+        $sReaction = !empty($aParams['reaction']) ? $aParams['reaction'] : $this->_sDefault;
+    	return _t('_vote_do_by_x_reaction', _t($this->_aDataList[$sReaction]['title']));
     }
 }
 

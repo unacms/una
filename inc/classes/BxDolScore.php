@@ -98,8 +98,9 @@ class BxDolScore extends BxDolObject
      */
     public static function getObjectInstance($sSys, $iId, $iInit = true, $oTemplate = false)
     {
-        if(isset($GLOBALS['bxDolClasses']['BxDolScore!' . $sSys . $iId]))
-            return $GLOBALS['bxDolClasses']['BxDolScore!' . $sSys . $iId];
+        $sKey = 'BxDolScore!' . $sSys . $iId . ($oTemplate ? $oTemplate->getClassName() : '');
+        if(isset($GLOBALS['bxDolClasses'][$sKey]))
+            return $GLOBALS['bxDolClasses'][$sKey];
 
         $aSystems = self::getSystems();
         if(!isset($aSystems[$sSys]))
@@ -113,7 +114,7 @@ class BxDolScore extends BxDolObject
         }
 
         $o = new $sClassName($sSys, $iId, $iInit, $oTemplate);
-        return ($GLOBALS['bxDolClasses']['BxDolScore!' . $sSys . $iId] = $o);
+        return ($GLOBALS['bxDolClasses'][$sKey] = $o);
     }
 
     public static function &getSystems()
@@ -293,7 +294,7 @@ class BxDolScore extends BxDolObject
             'code' => 0,
             'type' => $sType,
             'score' => $aScore['score'],
-        	'scoref' => $iCup > 0 || $iCdown > 0 ? $this->_getLabelCounter($aScore['score']) : '',
+        	'scoref' => $iCup > 0 || $iCdown > 0 ? $this->_getCounterLabel($aScore['score']) : '',
             'cup' => $iCup,
         	'cdown' => $iCdown,
             'counter' => $this->getCounter($aParams),
@@ -323,7 +324,7 @@ class BxDolScore extends BxDolObject
     	return $sResult;
     }
 
-    protected function _getIconDo($sType)
+    protected function _getIconDo($sType = '')
     {
         $sResult = '';
 
@@ -331,9 +332,13 @@ class BxDolScore extends BxDolObject
             case BX_DOL_SCORE_DO_UP:
                 $sResult = 'arrow-up';
                 break;
+
             case BX_DOL_SCORE_DO_DOWN:
                 $sResult = 'arrow-down';
                 break;
+
+            default:
+                $sResult = 'arrows-alt-v';
         }
 
     	return $sResult;

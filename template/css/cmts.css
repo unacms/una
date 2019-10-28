@@ -350,44 +350,109 @@
         text-overflow: ellipsis;
         overflow: hidden;
     }
-        
+
 /*--- Comment Element Styles ---*/
 div.cmt div.cmt-element-holder,
 div.cmt div.cmt-counter-holder {
-	position: relative;
-	float: left;
+    position: relative;
+    float: left;
+}
+span.cmt span.cmt-element-holder,
+span.cmt span.cmt-counter-holder {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .cmt .cmt-element-holder,
 .cmt .cmt-counter-holder {
-	line-height: 20px;
-	line-height: 1.25rem;
+    line-height: 20px;
+    line-height: 1.25rem;
 }
 
 .cmt-button .cmt-element-holder,
 .cmt-button .cmt-counter-holder {
-	line-height: 36px;
-	line-height: 2.2rem;
+    line-height: 36px;
+    line-height: 2.2rem;
 }
 
 .cmt-button-small .cmt-element-holder,
 .cmt-button-small .cmt-counter-holder {
-	line-height: 24px;
-	line-height: 1.6rem;
+    line-height: 24px;
+    line-height: 1.6rem;
 }
 
 .cmt .cmt-element-holder .cmt-do-comment.cmt-disabled,
 .cmt .cmt-element-holder .cmt-do-comment.cmt-disabled .sys-icon {
-	color: #ddd;
+    color: #ddd;
 }
 
 .cmt-button .cmt-counter-holder,
 .cmt-button-small .cmt-counter-holder {
-	font-size: 1.5rem;
+    font-size: 1.5rem;
 }
 
 .cmt-link .cmt-counter-holder.bx-btn-border {
-	border-width: 0px;
+    border-width: 0px;
+}
+
+/* +++ Comment Element: Counter +++ */
+.cmt-counter {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-flex-wrap:nowrap;
+    flex-wrap:nowrap;
+
+    padding-left: 4px;
+}
+.cmt-counter > * {
+    position: relative;
+}
+.cmt-counter div.cmt-counter-icon,
+.cmt-counter div.bx-base-pofile-unit-wo-info {
+    margin: 4px 0 4px -4px;
+}
+.cmt-counter div.cmt-counter-icon {
+    margin-right: 0.5rem;
+    box-sizing: border-box;
+
+    background-color: rgba(215, 215, 215, 1.0);
+    border: 1px solid #ffffff;
+    border-radius: 1rem;
+
+    text-align: center;
+}
+.cmt-counter .bx-def-icon-size {
+    width: 1.0rem;
+    height: 1.0rem;
+}
+.cmt-counter .bx-def-icon-size,
+.cmt-counter p.bx-base-pofile-unit-thumb.bx-def-icon-size {
+    line-height: 0.875rem;
+    font-size: 0.5rem;
+}
+.cmt-counter .bx-def-icon-size-min-height {
+    min-height: 1.0rem;
+}
+
+.cmt-counter .bx-def-icon-size-max-height {
+    max-height: 1.0rem;
+}
+
+.cmt-counter .bx-def-icon-size-left-indent {
+    margin-left: 1.25rem;
+}
+
+.cmt-counter .bx-def-unit-img .bx-base-pofile-unit-thumb {
+    display: block;
+    border-width: 1px;
+}
+
+.cmt-counter .bx-base-pofile-unit-online {
+    display: none;
 }
 
 

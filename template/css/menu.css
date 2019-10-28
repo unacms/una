@@ -17,7 +17,7 @@ ul.bx-menu-hor {
 }
 
 .bx-menu-hor-inline li a {
-	display:inline;
+    display:inline;
 }
 
 .bx-menu-hor li.bx-menu-tab-active a {
@@ -26,7 +26,7 @@ ul.bx-menu-hor {
 
 .bx-menu-hor li img,
 .bx-menu-hor li .sys-icon {
-	display:inline-block;
+    display:inline-block;
     vertical-align:middle;
 }
 .bx-menu-hor li img {
@@ -35,6 +35,9 @@ ul.bx-menu-hor {
 
     background-position: center center;
     background-repeat: no-repeat;
+}
+.bx-menu-hor li a > span {
+    vertical-align:middle;
 }
 
 /* --------------- horizontal inline menu with 'special' buttons */
@@ -767,22 +770,10 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .bx-btn {
     color: #3e8685;
 }
-.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-view-element-holder a span,
-.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-vote-element-holder a span,
-.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-score-element-holder a span,
-.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-favorite-element-holder a span,
-.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-feature-element-holder a span,
-.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-report-element-holder a span,
-.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-tl-repost-element-holder a span {
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-base-general-ea-sa .sys-action-element-holder a span:not(.sys-action-do-icon) {
     display: none;
 }
-.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-view-element-holder a span,
-.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-vote-element-holder a span,
-.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-score-element-holder a span,
-.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-favorite-element-holder a span,
-.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-feature-element-holder a span,
-.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-report-element-holder a span,
-.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item.bx-base-general-ea-sa .bx-tl-repost-element-holder a span {
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item.bx-base-general-ea-sa .sys-action-element-holder a span:not(.sys-action-do-icon) {
     display: inline;
 }
 

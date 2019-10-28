@@ -12,13 +12,9 @@
  */
 class BxBaseFavorite extends BxDolFavorite
 {
-    protected static $_sTmplContentElementBlock;
-    protected static $_sTmplContentElementInline;
-    protected static $_sTmplContentDoFavoriteLabel;
-
     protected $_bCssJsAdded;
 
-	protected $_sJsObjClass;
+    protected $_sJsObjClass;
     protected $_sJsObjName;
     protected $_sStylePrefix;
 
@@ -40,26 +36,21 @@ class BxBaseFavorite extends BxDolFavorite
         $this->_aHtmlIds = array(
             'main' => 'bx-favorite-' . $sHtmlId,
             'counter' => 'bx-favorite-counter-' . $sHtmlId,
-        	'do_link' => 'bx-favorite-do-link-' . $sHtmlId,
+            'do_link' => 'bx-favorite-do-link-' . $sHtmlId,
             'by_popup' => 'bx-favorite-by-popup-' . $sHtmlId
         );
 
         $this->_aElementDefaults = array(
-			'show_do_favorite_as_button' => false,
-			'show_do_favorite_as_button_small' => false,
-			'show_do_favorite_icon' => true,
-			'show_do_favorite_label' => false,
-			'show_counter' => true
+            'show_do_favorite_as_button' => false,
+            'show_do_favorite_as_button_small' => false,
+            'show_do_favorite_icon' => true,
+            'show_do_favorite_label' => false,
+            'show_counter' => true
         );
 
-        if(empty(self::$_sTmplContentElementBlock))
-            self::$_sTmplContentElementBlock = $this->_oTemplate->getHtml('favorite_element_block.html');
-
-        if(empty(self::$_sTmplContentElementInline))
-            self::$_sTmplContentElementInline = $this->_oTemplate->getHtml('favorite_element_inline.html');
-
-        if(empty(self::$_sTmplContentDoFavoriteLabel))
-            self::$_sTmplContentDoFavoriteLabel = $this->_oTemplate->getHtml('favorite_do_favorite_label.html');
+        $this->_sTmplContentElementBlock = $this->_oTemplate->getHtml('favorite_element_block.html');
+        $this->_sTmplContentElementInline = $this->_oTemplate->getHtml('favorite_element_inline.html');
+        $this->_sTmplContentDoActionLabel = $this->_oTemplate->getHtml('favorite_do_favorite_label.html');
     }
 
     public function getJsObjectName()
@@ -100,7 +91,7 @@ class BxBaseFavorite extends BxDolFavorite
         if($bShowDoFavoriteAsButton)
             $sClass .= ' bx-btn-height';
 
-        return $this->_oTemplate->parseLink('javascript:void(0)', (int)$aFavorite['count'] > 0 ? $this->_getLabelCounter($aFavorite['count']) : '', array(
+        return $this->_oTemplate->parseLink('javascript:void(0)', (int)$aFavorite['count'] > 0 ? $this->_getCounterLabel($aFavorite['count']) : '', array(
             'title' => _t('_favorite_do_favorite_by'),
         	'id' => $this->_aHtmlIds['counter'],
         	'class' => $sClass,
@@ -142,7 +133,7 @@ class BxBaseFavorite extends BxDolFavorite
 
         $aParams['is_favorited'] = $this->isPerformed($iObjectId, $iAuthorId) ? true : false;
 
-        $sTmplName = self::${'_sTmplContentElement' . bx_gen_method_name(!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_FAVORITE_USAGE_DEFAULT)};
+        $sTmplName = $this->{'_getTmplContentElement' . bx_gen_method_name(!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_FAVORITE_USAGE_DEFAULT)}();
         return $this->_oTemplate->parseHtmlByContent($sTmplName, array(
             'style_prefix' => $this->_sStylePrefix,
             'html_id' => $this->_aHtmlIds['main'],
@@ -188,7 +179,7 @@ class BxBaseFavorite extends BxDolFavorite
         ));
     }
 
-    protected function _getLabelCounter($iCount)
+    protected function _getCounterLabel($iCount)
     {
         return _t('_favorite_counter', $iCount);
     }
@@ -196,7 +187,7 @@ class BxBaseFavorite extends BxDolFavorite
     protected function _getLabelDoFavorite($aParams = array())
     {
     	$bFavorited = isset($aParams['is_favorited']) && $aParams['is_favorited'] === true;
-        return $this->_oTemplate->parseHtmlByContent(self::$_sTmplContentDoFavoriteLabel, array(
+        return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentDoActionLabel(), array(
         	'bx_if:show_icon' => array(
         		'condition' => isset($aParams['show_do_favorite_icon']) && $aParams['show_do_favorite_icon'] == true,
         		'content' => array(

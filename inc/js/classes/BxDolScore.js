@@ -8,10 +8,10 @@
 
 function BxDolScore(options)
 {
-	this._sObjName = undefined == options.sObjName ? 'oScore' : options.sObjName; // javascript object name, to run current object instance from onTimer
-	this._sSystem = options.sSystem; // current score system
-	this._iAuthorId = options.iAuthorId; // score's author ID.
-	this._iObjId = options.iObjId; // object id the scores are collected for
+    this._sObjName = undefined == options.sObjName ? 'oScore' : options.sObjName; // javascript object name, to run current object instance from onTimer
+    this._sSystem = options.sSystem; // current score system
+    this._iAuthorId = options.iAuthorId; // score's author ID.
+    this._iObjId = options.iObjId; // object id the scores are collected for
     this._sElementParams = options.sElementParams;
 
     this._sActionsUri = 'score.php';
@@ -26,7 +26,7 @@ function BxDolScore(options)
 }
 
 BxDolScore.prototype.toggleByPopup = function(oLink) {
-	var $this = this;
+    var $this = this;
     var oData = this._getDefaultParams();
     oData['action'] = 'GetVotedBy';
 
@@ -56,37 +56,37 @@ BxDolScore.prototype._vote = function (oLink, sType, onComplete)
     	this._sActionsUrl,
     	oParams,
     	function(oData) {
-    		var fContinue = function() {
-    			if(oData && oData.code != 0)
-                    return;
+            var fContinue = function() {
+            if(oData && oData.code != 0)
+                return;
 
-	    		if(oData && oData.label_icon)
-	    			$(oLink).find('.sys-icon').attr('class', 'sys-icon ' + oData.label_icon);
+            if(oData && oData.label_icon)
+                $(oLink).find('.sys-icon').attr('class', 'sys-icon ' + oData.label_icon);
 
-	    		if(oData && oData.label_title) {
-	    			$(oLink).attr('title', oData.label_title);
-	    			$(oLink).find('span').html(oData.label_title);
-	    		}
+            if(oData && oData.label_title) {
+                $(oLink).attr('title', oData.label_title);
+                $(oLink).find('span:not(.sys-action-do-icon)').html(oData.label_title);
+            }
 
-	    		if(oData && oData.disabled)
-	    			$this._getActions(oLink).removeAttr('onclick').addClass($(oLink).hasClass('bx-btn') ? 'bx-btn-disabled' : 'bx-score-disabled');
+            if(oData && oData.disabled)
+                $this._getActions(oLink).removeAttr('onclick').addClass($(oLink).hasClass('bx-btn') ? 'bx-btn-disabled' : 'bx-score-disabled');
 
-                var oCounter = $this._getCounter(oLink);
-                if(oCounter && oCounter.length > 0) {
-                	if(oData && oData.counter)
-                		oCounter.replaceWith(oData.counter);
-                	else
-	                	oCounter.html(oData.scoref).parents('.' + $this._sSP + '-counter-holder:first:hidden').bx_anim('show');
-                }
+            var oCounter = $this._getCounter(oLink);
+            if(oCounter && oCounter.length > 0) {
+                if(oData && oData.counter)
+                    oCounter.replaceWith(oData.counter);
+                else
+                    oCounter.html(oData.scoref).parents('.' + $this._sSP + '-counter-holder:first:hidden').bx_anim('show');
+            }
 
-                if(typeof onComplete == 'function')
-                	onComplete(oLink, oData);
-    		};
+            if(typeof onComplete == 'function')
+                onComplete(oLink, oData);
+            };
 
-    		if(oData && oData.message != undefined)
+            if(oData && oData.message != undefined)
                 bx_alert(oData.message, fContinue);
-    		else
-    			fContinue();
+            else
+                fContinue();
         },
         'json'
     );

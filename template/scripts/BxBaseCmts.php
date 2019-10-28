@@ -592,10 +592,35 @@ class BxBaseCmts extends BxDolCmts
         if($bShowDoCommentAsButton)
             $sClass .= ' bx-btn-height';
 
+        $aCmts = $this->_oQuery->getCommentsBy(array('type' => 'object_id', 'object_id' => $this->getId(), 'order_way' => 'desc', 'start' => 0, 'per_page' => 5));
+        $aCmts = array_reverse($aCmts);
+
+        $aTmplVarsProfiles = array();
+        foreach($aCmts as $aCmt) {
+            $oAuthor = BxDolProfile::getInstanceMagic((int)$aCmt['cmt_author_id']);
+            if(!$oAuthor)
+                continue;
+            
+            $aTmplVarsProfiles[] = array(
+                'icon' => $oAuthor->getUnit(0, array('template' => array('name' => 'unit_wo_info_links', 'size' => 'icon'))) 
+            );
+        }
+
+        $sContent = $iCount != 0 || $bShowEmpty ? $this->_getCounterLabel($iCount) : '';
+        if(!empty($sContent))
+            $sContent = $this->_oTemplate->parseLink($this->getListUrl(), $sContent);
+
         return $this->_oTemplate->parseHtmlByContent($this->_getTmplCounter(), array(
             'id' => $this->_aHtmlIds['counter'],
             'class' => $sClass,
-            'content' => $iCount != 0 || $bShowEmpty ? $this->_getLabelCounter($iCount) : ''
+            'content' => $sContent,
+            'bx_repeat:profiles' => $aTmplVarsProfiles,
+            'bx_if:show_icon' => array(
+                'condition' => $bShowEmpty || !empty($aTmplVarsProfiles),
+                'content' => array(
+                    'sp' => $this->_sStylePrefix
+                )
+            )
         ));
     }
 
@@ -623,7 +648,7 @@ class BxBaseCmts extends BxDolCmts
         ));
     }
 
-    protected function _getLabelCounter($iCount)
+    protected function _getCounterLabel($iCount)
     {
         return (int)$iCount != 0 ? _t('_cmt_txt_counter', $iCount) : _t('_cmt_txt_counter_empty');
     }

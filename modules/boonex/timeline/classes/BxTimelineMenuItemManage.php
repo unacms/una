@@ -34,6 +34,8 @@ class BxTimelineMenuItemManage extends BxTimelineMenuItemActions
         $this->setEventById($iContentId, $aBrowseParams);
 
         $this->_bShowTitles = true;
+        $this->_bShowCounters = true;
+        $this->_sTmplNameItem = '';
     }
 }
 

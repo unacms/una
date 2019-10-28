@@ -60,8 +60,9 @@ class BxDolFeature extends BxDolObject
      */
     public static function getObjectInstance($sSys, $iId, $iInit = true)
     {
-        if(isset($GLOBALS['bxDolClasses']['BxDolFeature!' . $sSys . $iId]))
-            return $GLOBALS['bxDolClasses']['BxDolFeature!' . $sSys . $iId];
+        $sKey = 'BxDolFeature!' . $sSys . $iId;
+        if(isset($GLOBALS['bxDolClasses'][$sKey]))
+            return $GLOBALS['bxDolClasses'][$sKey];
 
         $aSystems = self::getSystems();
         if(!isset($aSystems[$sSys]))
@@ -75,7 +76,7 @@ class BxDolFeature extends BxDolObject
         }
 
         $o = new $sClassName($sSys, $iId, $iInit);
-        return ($GLOBALS['bxDolClasses']['BxDolFeature!' . $sSys . $iId] = $o);
+        return ($GLOBALS['bxDolClasses'][$sKey] = $o);
     }
 
     public static function &getSystems()

@@ -12,10 +12,6 @@
  */
 class BxBaseVote extends BxDolVote
 {
-    protected static $_sTmplContentElementBlock;
-    protected static $_sTmplContentElementInline;
-    protected static $_sTmplContentCounter;
-
     protected $_aElementDefaults;
 
     protected $_bCssJsAdded;
@@ -50,14 +46,9 @@ class BxBaseVote extends BxDolVote
         $this->_sTmplNameLegend = 'vote_legend.html';
         $this->_sTmplNameByList = 'vote_by_list.html';
 
-        if(empty(self::$_sTmplContentElementBlock))
-            self::$_sTmplContentElementBlock = $this->_oTemplate->getHtml('vote_element_block.html');
-
-        if(empty(self::$_sTmplContentElementInline))
-            self::$_sTmplContentElementInline = $this->_oTemplate->getHtml('vote_element_inline.html');
-
-        if(empty(self::$_sTmplContentCounter))
-            self::$_sTmplContentCounter = $this->_oTemplate->getHtml('vote_counter.html');
+        $this->_sTmplContentElementBlock = $this->_oTemplate->getHtml('vote_element_block.html');
+        $this->_sTmplContentElementInline = $this->_oTemplate->getHtml('vote_element_inline.html');
+        $this->_sTmplContentCounter = $this->_oTemplate->getHtml('vote_counter.html');
     }
 
     public function getJsClassName()
@@ -72,8 +63,11 @@ class BxBaseVote extends BxDolVote
 
     public function getJsScript($bDynamicMode = false)
     {
+        $sJsObjName = $this->getJsObjectName();
+        $sJsObjClass = $this->getJsClassName();
+
         $aParams = array(
-            'sObjName' => $this->_sJsObjName,
+            'sObjName' => $sJsObjName,
             'sSystem' => $this->getSystemName(),
             'iAuthorId' => $this->_getAuthorId(),
             'iObjId' => $this->getId(),
@@ -81,7 +75,7 @@ class BxBaseVote extends BxDolVote
             'sStylePrefix' => $this->_sStylePrefix,
             'aHtmlIds' => $this->_aHtmlIds
         );
-        $sCode = "var " . $this->getJsObjectName() . " = new " . $this->getJsClassName() . "(" . json_encode($aParams) . ");";
+        $sCode = "if(window['" . $sJsObjName . "'] == undefined) var " . $sJsObjName . " = new " . $sJsObjClass . "(" . json_encode($aParams) . ");";
 
         return $this->_oTemplate->_wrapInTagJsCode($sCode);
     }
@@ -98,10 +92,12 @@ class BxBaseVote extends BxDolVote
 
     public function getCounter($aParams = array())
     {
+        $bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'] === true;
         $bShowEmpty = isset($aParams['show_counter_empty']) && $aParams['show_counter_empty'] == true;
-        $bAllowedViewViewVoters = $this->isAllowedVoteViewVoters();
+        $bShowActive = $this->isAllowedVoteViewVoters() && (!isset($aParams['show_counter_active']) || $aParams['show_counter_active'] === true);
+        $bShowScript = !isset($aParams['show_script']) || $aParams['show_script'] == true;
 
-        $sClass = $this->_sStylePrefix . '-counter';
+        $sClass = $this->_sStylePrefix . '-counter ' . $this->_sStylePrefix . '-counter-' . $this->_sType;
         if(!empty($aParams['class_counter']))
             $sClass .= $aParams['class_counter'];
 
@@ -109,7 +105,7 @@ class BxBaseVote extends BxDolVote
             array('key' => 'class', 'value' => $sClass),
         );
 
-        if($bAllowedViewViewVoters)
+        if($bShowActive)
             $aTmplVarsAttrs = array_merge($aTmplVarsAttrs, array(
                 array('key' => 'href', 'value' => 'javascript:void(0)'),
                 array('key' => 'title', 'value' => bx_html_attribute($this->_getTitleDoBy($aParams))),
@@ -121,25 +117,26 @@ class BxBaseVote extends BxDolVote
             $aTmplVarsAttrs[] = array('key' => 'id', 'value' => $sHtmlId);
 
         $aVote = !empty($aParams['vote']) && is_array($aParams['vote']) ? $aParams['vote'] : $this->_getVote();
-        $sContent = $bShowEmpty || (int)$aVote['count'] > 0 ? $this->_getLabelCounter($aVote['count'], $aParams) : '';
+        $sContent = $bShowEmpty || (int)$aVote['count'] > 0 ? $this->_getCounterLabel($aVote['count'], $aParams) : '';
 
         return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentCounter(), array(
             'bx_if:show_text' => array(
-                'condition' => !$bAllowedViewViewVoters,
+                'condition' => !$bShowActive,
                 'content' => array(
                     'bx_repeat:attrs' => $aTmplVarsAttrs,
                     'content' => $sContent
                 )
             ),
             'bx_if:show_link' => array(
-                'condition' => $bAllowedViewViewVoters,
+                'condition' => $bShowActive,
                 'content' => array(
                     'bx_repeat:attrs' => $aTmplVarsAttrs,
                     'content' => $sContent
                 )
             ),
             'bx_repeat:attrs' => $aTmplVarsAttrs,
-            'content' => $sContent
+            'content' => $sContent,
+            'script' => $bShowScript ? $this->getJsScript($bDynamicMode) : ''
         ));
     }
 
@@ -215,7 +212,7 @@ class BxBaseVote extends BxDolVote
                     'condition' => !$bCount && !$bShowCounterEmpty,
                     'content' => array()
                 ),
-                'counter' => $this->getCounter($aParams)
+                'counter' => $this->getCounter(array_merge($aParams, array('show_script' => false)))
             );
 
         //--- Legend
@@ -262,7 +259,7 @@ class BxBaseVote extends BxDolVote
         return '';
     }
 
-    protected function _getLabelCounter($iCount, $aParams = array())
+    protected function _getCounterLabel($iCount, $aParams = array())
     {
         return _t('_vote_counter', $iCount);
     }
@@ -285,6 +282,7 @@ class BxBaseVote extends BxDolVote
 
         return $this->_oTemplate->parseHtmlByName($this->_sTmplNameByList, array(
             'style_prefix' => $this->_sStylePrefix,
+            'class' => '',
             'bx_repeat:list' => $aTmplUsers
         ));
     }
@@ -302,21 +300,6 @@ class BxBaseVote extends BxDolVote
     protected function _isShowLegend($aParams, $isAllowedVote, $isAllowedVoteView, $bCount)
     {
         return false;
-    }
-
-    protected function _getTmplContentElementBlock()
-    {
-        return self::$_sTmplContentElementBlock;
-    }
-
-    protected function _getTmplContentElementInline()
-    {
-        return self::$_sTmplContentElementInline;
-    }
-
-    protected function _getTmplContentCounter()
-    {
-        return self::$_sTmplContentCounter;
     }
 }
 

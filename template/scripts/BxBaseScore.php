@@ -12,11 +12,7 @@
  */
 class BxBaseScore extends BxDolScore
 {
-    protected static $_sTmplContentElementBlock;
-    protected static $_sTmplContentElementInline;
-    protected static $_sTmplContentDoVoteLabel;
-
-	protected $_bCssJsAdded;
+    protected $_bCssJsAdded;
 
     protected $_sJsObjName;
     protected $_sStylePrefix;
@@ -57,14 +53,10 @@ class BxBaseScore extends BxDolScore
         $this->_sTmplNameLegend = 'score_legend.html';
         $this->_sTmplNameByList = 'score_by_list.html';
 
-        if(empty(self::$_sTmplContentElementBlock))
-            self::$_sTmplContentElementBlock = $this->_oTemplate->getHtml('score_element_block.html');
-
-        if(empty(self::$_sTmplContentElementInline))
-            self::$_sTmplContentElementInline = $this->_oTemplate->getHtml('score_element_inline.html');
-
-        if(empty(self::$_sTmplContentDoVoteLabel))
-            self::$_sTmplContentDoVoteLabel = $this->_oTemplate->getHtml('score_do_vote_label.html');
+        $this->_sTmplContentElementBlock = $this->_oTemplate->getHtml('score_element_block.html');
+        $this->_sTmplContentElementInline = $this->_oTemplate->getHtml('score_element_inline.html');
+        $this->_sTmplContentDoActionLabel = $this->_oTemplate->getHtml('score_do_vote_label.html');
+        $this->_sTmplContentCounterLabel = $this->_oTemplate->getHtml('score_counter_label.html');
     }
 
     public function getJsObjectName()
@@ -74,10 +66,12 @@ class BxBaseScore extends BxDolScore
 
     public function getJsScript($aParams = array())
     {
+        $sJsObjName = $this->getJsObjectName();
+
         $bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'] === true;
 
         $aParamsJs = array(
-            'sObjName' => $this->_sJsObjName,
+            'sObjName' => $sJsObjName,
             'sSystem' => $this->getSystemName(),
             'iAuthorId' => $this->_getAuthorId(),
             'iObjId' => $this->getId(),
@@ -86,7 +80,7 @@ class BxBaseScore extends BxDolScore
             'sStylePrefix' => $this->_sStylePrefix,
             'aHtmlIds' => $this->_aHtmlIds
         );
-        $sCode = "var " . $this->_sJsObjName . " = new BxDolScore(" . json_encode($aParamsJs) . ");";
+        $sCode = "if(window['" . $sJsObjName . "'] == undefined) var " . $sJsObjName . " = new BxDolScore(" . json_encode($aParamsJs) . ");";
 
         return $this->_oTemplate->_wrapInTagJsCode($sCode);
     }
@@ -105,9 +99,12 @@ class BxBaseScore extends BxDolScore
     {
         $sJsObject = $this->getJsObjectName();
 
+        $bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'] === true;
         $bShowEmpty = isset($aParams['show_counter_empty']) && $aParams['show_counter_empty'] == true;
         $bShowDoVoteAsButtonSmall = isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true;
         $bShowDoVoteAsButton = !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true;
+        $bShowScript = !isset($aParams['show_script']) || $aParams['show_script'] == true;
+
         $bAllowedViewViewVoters = $this->isAllowedVoteViewVoters();
 
         $aScore = $this->_oQuery->getScore($this->getId());
@@ -123,7 +120,7 @@ class BxBaseScore extends BxDolScore
             $sClass .= ' bx-btn-height';
 
         $bLink = $bAllowedViewViewVoters && !$bEmpty;
-        $sCounter = !$bEmpty || $bShowEmpty ? $this->_getLabelCounter($iCup - $iCdown) : '';
+        $sCounter = !$bEmpty || $bShowEmpty ? $this->_getCounterLabel($iCup - $iCdown) : '';
 
         $aTmplVars = array(
             'id' => $this->_aHtmlIds['counter'],
@@ -145,6 +142,7 @@ class BxBaseScore extends BxDolScore
                 'condition' => !$bLink,
                 'content' => $aTmplVars
             ),
+            'script' => $bShowScript ? $this->getJsScript($bDynamicMode) : ''
         ));
     }
 
@@ -228,7 +226,7 @@ class BxBaseScore extends BxDolScore
                     'condition' => !$bShowCounterEmpty && !$bCount,
                     'content' => array()
                 ),
-                'counter' => $this->getCounter($aParams)
+                'counter' => $this->getCounter(array_merge($aParams, array('show_script' => false)))
             );
 
         //--- Legend
@@ -240,9 +238,9 @@ class BxBaseScore extends BxDolScore
             );
 
         if(!$bTmplVarsDoVote && !$bTmplVarsCounter && !$bTmplVarsLegend)
-                return '';
+            return '';
 
-        $sTmplName = self::${'_sTmplContentElement' . bx_gen_method_name(!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_SCORE_USAGE_DEFAULT)};
+        $sTmplName = $this->{'_getTmplContentElement' . bx_gen_method_name(!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_SCORE_USAGE_DEFAULT)}();
         return $this->_oTemplate->parseHtmlByContent($sTmplName, array(
             'style_prefix' => $this->_sStylePrefix,
             'html_id' => $this->_aHtmlIds['main'],
@@ -278,13 +276,13 @@ class BxBaseScore extends BxDolScore
 		$bDisabled = !$isAllowedVote || $bVoted;
 
         $sClass = '';
-		if($bShowDoVoteAsButton)
-			$sClass = 'bx-btn';
-		else if ($bShowDoVoteAsButtonSmall)
-			$sClass = 'bx-btn bx-btn-small';
+        if($bShowDoVoteAsButton)
+            $sClass = 'bx-btn';
+        else if ($bShowDoVoteAsButtonSmall)
+            $sClass = 'bx-btn bx-btn-small';
 
-		if($bDisabled)
-			$sClass .= $bShowDoVoteAsButton || $bShowDoVoteAsButtonSmall ? ' bx-btn-disabled' : 'bx-score-disabled';
+        if($bDisabled)
+            $sClass .= $bShowDoVoteAsButton || $bShowDoVoteAsButtonSmall ? ' bx-btn-disabled' : 'bx-score-disabled';
 
         return $this->_oTemplate->parseLink('javascript:void(0)', $this->_getLabelDo($sType, $aParams), array(
             'class' => $this->_sStylePrefix . '-do-vote ' . $this->_sStylePrefix . '-dv-' . $sType . ' ' . $sClass,
@@ -293,14 +291,29 @@ class BxBaseScore extends BxDolScore
         ));
     }
 
-    protected function _getLabelCounter($iCount)
+    protected function _getCounterLabel($iCount)
     {
-        return (int)$iCount != 0 ? _t('_sys_score_counter', $iCount) : _t('_sys_score_counter_empty');
+        return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentCounterLabel(), array(
+            'bx_if:show_icon' => array(
+                'condition' => !isset($aParams['show_counter_label_icon']) || $aParams['show_counter_label_icon'] === true,
+                'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
+                    'name' => $this->_getIconDo()
+                )
+            ),
+            'bx_if:show_text' => array(
+                'condition' => !isset($aParams['show_counter_label_text']) || $aParams['show_counter_label_text'] === true,
+                'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
+                    'text' => _t('_sys_score_counter', $iCount)
+                )
+            )
+        ));
     }
 
     protected function _getLabelDo($sType, $aParams = array())
     {
-        return $this->_oTemplate->parseHtmlByContent(self::$_sTmplContentDoVoteLabel, array(
+        return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentDoActionLabel(), array(
             'bx_if:show_image' => array(
                 'condition' => isset($aParams['show_do_vote_image']) && $aParams['show_do_vote_image'] == true,
                 'content' => array(

@@ -2133,6 +2133,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      * @code bx_srv('bx_timeline', 'get_menu_item_addon_comment', [...]); @endcode
      * 
      * Get addon for Comment menu item.
+     * NOTE. The service isn't used for now because comment functionality in card was updated.
      * 
      * @param $sSystem string value with comments engine system.
      * @param $iObjectId integer value with object ID. 

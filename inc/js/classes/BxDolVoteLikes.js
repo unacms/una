@@ -24,7 +24,7 @@ BxDolVoteLikes.prototype.onVote = function (oLink, oData, onComplete)
 
     if(oData && oData.label_title) {
         $(oLink).attr('title', oData.label_title);
-        $(oLink).find('span').html(oData.label_title);
+        $(oLink).find('span:not(.sys-action-do-icon)').html(oData.label_title);
     }
 
     if(oData && oData.disabled)
