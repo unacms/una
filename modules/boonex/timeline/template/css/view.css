@@ -419,20 +419,23 @@ div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li > span img {
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li .sys-action-do-icon,
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li .bx-menu-item-icon {
     display: inline-block;
+    box-sizing: border-box;
 
     width: 1.25rem;
     height: 1.25rem;
 
     background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid #ffffff;
     border-radius: 1rem;
 
     text-align: center;
-    line-height: 1.25rem;
+    line-height: 1.125rem;
     font-size: 0.625rem;
 }
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li .sys-action-do-icon .sys-icon,
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li .bx-menu-item-icon .sys-icon {
     vertical-align: top;
+    color: #334455;
 }
 
 /*--- Item Style: Timeline ---*/

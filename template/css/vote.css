@@ -141,16 +141,16 @@ div.bx-vote div.bx-vote-counter-holder {
     display: inline-block;
     box-sizing: border-box;
 
-    width: 1.0rem;
-    height: 1.0rem;
+    width: 1.25rem;
+    height: 1.25rem;
 
     background-color: rgba(215, 215, 215, 1.0);
     border: 1px solid #ffffff;
     border-radius: 1rem;
 
-    line-height: 0.875rem;
+    line-height: 1.125rem;
     text-align: center;
-    font-size: 0.5rem;
+    font-size: 0.625rem;
 }
 .bx-vote-counter.bx-vote-counter-likes span.bx-vote-counter-icon {
     margin-top: 4px;
@@ -158,6 +158,7 @@ div.bx-vote div.bx-vote-counter-holder {
 }
 .bx-vote-counter span.bx-vote-counter-icon .sys-icon {
     vertical-align: top;
+    color: #334455;
 }
 
 
@@ -266,6 +267,12 @@ div.bx-vote-by-list div.bx-base-pofile-unit {
     display: flex;
     -webkit-align-items: center;
     align-items: center;
+}
+.bx-vote-bls-content .bx-vote-by-item:first-child {
+    padding-top: 1rem;
+}
+.bx-vote-bls-content .bx-vote-by-item:last-child {
+    padding-bottom: 0;
 }
 
 
