@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `bx_shopify_entries` (
   `added` int(11) NOT NULL,
   `changed` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
-  `code` varchar(16) NOT NULL default '',
+  `code` varchar(255) NOT NULL default '',
   `cat` int(11) NOT NULL,
   `location` text NOT NULL,
   `views` int(11) NOT NULL default '0',

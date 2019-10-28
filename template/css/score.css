@@ -71,3 +71,30 @@ div.bx-score-counter-holder {
 .bx-score-button-small .bx-score-counter-holder {
 	font-size: 1.5rem;
 }
+
+/*--- Counter Styles ---*/
+.bx-score-counter > span {
+    vertical-align: middle;
+}
+.bx-score-counter span.bx-score-counter-icon {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-top: 4px;
+    margin-bottom: 4px;
+
+    background-color: rgba(215, 215, 215, 1.0);
+    border: 1px solid #ffffff;
+    border-radius: 1rem;
+
+    line-height: 1.125rem;
+    text-align: center;
+    font-size: 0.625rem;
+}
+.bx-score-counter span.bx-score-counter-icon .sys-icon {
+    vertical-align: top;
+    color: #334455;
+}

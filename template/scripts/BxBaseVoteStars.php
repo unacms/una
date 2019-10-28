@@ -30,7 +30,8 @@ class BxBaseVoteStars extends BxDolVoteStars
             'show_do_vote_legend' => false,
             'show_counter' => true,
             'show_counter_empty' => false,
-            'show_legend' => false
+            'show_legend' => false,
+            'show_script' => true
         );
 
         $this->_sTmplNameDoVoteStars = 'vote_do_vote_stars.html';

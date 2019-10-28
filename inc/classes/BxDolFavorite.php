@@ -70,8 +70,9 @@ class BxDolFavorite extends BxDolObject
      */
     public static function getObjectInstance($sSys, $iId, $iInit = true)
     {
-        if(isset($GLOBALS['bxDolClasses']['BxDolFavorite!' . $sSys . $iId]))
-            return $GLOBALS['bxDolClasses']['BxDolFavorite!' . $sSys . $iId];
+        $sKey = 'BxDolFavorite!' . $sSys . $iId;
+        if(isset($GLOBALS['bxDolClasses'][$sKey]))
+            return $GLOBALS['bxDolClasses'][$sKey];
 
         $aSystems = self::getSystems();
         if(!isset($aSystems[$sSys]))
@@ -85,7 +86,7 @@ class BxDolFavorite extends BxDolObject
         }
 
         $o = new $sClassName($sSys, $iId, $iInit);
-        return ($GLOBALS['bxDolClasses']['BxDolFavorite!' . $sSys . $iId] = $o);
+        return ($GLOBALS['bxDolClasses'][$sKey] = $o);
     }
 
     public static function &getSystems()
@@ -224,7 +225,7 @@ class BxDolFavorite extends BxDolObject
         	'eval' => $this->getJsObjectName() . '.onFavorite(oData, oElement)',
         	'code' => 0, 
         	'count' => $aFavorite['count'],
-        	'countf' => (int)$aFavorite['count'] > 0 ? $this->_getLabelCounter($aFavorite['count']) : '',
+        	'countf' => (int)$aFavorite['count'] > 0 ? $this->_getCounterLabel($aFavorite['count']) : '',
             'label_icon' => $this->_getIconDoFavorite(!$bPerformed),
             'label_title' => _t($this->_getTitleDoFavorite(!$bPerformed)),
             'disabled' => !$bPerformed && !$bUndo

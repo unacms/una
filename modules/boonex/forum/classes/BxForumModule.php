@@ -42,20 +42,20 @@ class BxForumModule extends BxBaseModTextModule
      */
     public function actionUpdateStatus($sAction = '', $iContentId = 0)
     {
-    	if(empty($sAction) && bx_get('action') !== false)
-   			$sAction = bx_process_input(bx_get('action'));
+        if(empty($sAction) && bx_get('action') !== false)
+            $sAction = bx_process_input(bx_get('action'));
 
-		if(empty($iContentId) && bx_get('id') !== false)
-    		$iContentId = (int)bx_get('id');
+        if(empty($iContentId) && bx_get('id') !== false)
+            $iContentId = (int)bx_get('id');
 
-    	$aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         if(empty($aContentInfo) || !is_array($aContentInfo))
-			return echoJson(array('code' => 1, 'message' => _t('_bx_forum_err_not_found')));
+            return echoJson(array('code' => 1, 'message' => _t('_bx_forum_err_not_found')));
 
-		$sMethodCheck = 'checkAllowed' . bx_gen_method_name($sAction) . 'AnyEntry';
-		$sResult = $this->$sMethodCheck($aContentInfo);
+        $sMethodCheck = 'checkAllowed' . bx_gen_method_name($sAction) . 'AnyEntry';
+        $sResult = $this->$sMethodCheck($aContentInfo);
         if($sResult !== CHECK_ACTION_RESULT_ALLOWED)
-        	return echoJson(array('code' => 2, 'message' => $sResult));
+            return echoJson(array('code' => 2, 'message' => $sResult));
 
         bx_audit(
             $iContentId, 
@@ -65,9 +65,12 @@ class BxForumModule extends BxBaseModTextModule
         );
         
         if(!$this->_oDb->updateStatus($sAction, $aContentInfo))
-        	return echoJson(array('code' => 3, 'message' => _t('_error occured')));
+            return echoJson(array('code' => 3, 'message' => _t('_error occured')));
 
-    	echoJson(array('code' => 0, 'id' => $iContentId, 'reload' => 1));
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        $this->alertAfterEdit($aContentInfo);
+
+        echoJson(array('code' => 0, 'id' => $iContentId, 'reload' => 1));
     }
 
     public function actionAjaxGetAuthors()

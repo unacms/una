@@ -12,6 +12,9 @@
     <string name="_bx_timeline_option_events_per_page_account"><![CDATA[Number of items on dashboard page]]></string>
     <string name="_bx_timeline_option_events_per_page_home"><![CDATA[Number of items on site home page]]></string>
     <string name="_bx_timeline_option_events_per_page"><![CDATA[Number of items per page]]></string>
+    <string name="_bx_timeline_option_enable_infinite_scroll"><![CDATA[Enable 'Infinite Scroll']]></string>
+    <string name="_bx_timeline_option_events_per_preload"><![CDATA[Infinite Scroll: Number of items per preload]]></string>
+    <string name="_bx_timeline_option_auto_preloads"><![CDATA[Infinite Scroll: Number of auto preloads]]></string>
     <string name="_bx_timeline_option_rss_length"><![CDATA[The length of RSS feed]]></string>
     <string name="_bx_timeline_option_events_hide"><![CDATA[Show events]]></string>
     <string name="_bx_timeline_option_videos_autoplay"><![CDATA[Videos autoplay (for Timeline view only)]]></string>
@@ -181,14 +184,16 @@
 
     <string name="_bx_timeline_menu_title_item_actions"><![CDATA[Item Actions]]></string>
     <string name="_bx_timeline_menu_set_title_item_actions"><![CDATA[Item Actions]]></string>
+    <string name="_bx_timeline_menu_title_item_counters"><![CDATA[Item Counters]]></string>
+    <string name="_bx_timeline_menu_set_title_item_counters"><![CDATA[Item Counters]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_comment"><![CDATA[Comment]]></string>
-    <string name="_bx_timeline_menu_item_title_item_comment"><![CDATA[]]></string>
+    <string name="_bx_timeline_menu_item_title_item_comment"><![CDATA[Comment]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_view"><![CDATA[View]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_vote"><![CDATA[Vote (Like)]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_score"><![CDATA[Vote (Up/Down)]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_reaction"><![CDATA[Reaction]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_share"><![CDATA[Share]]></string>
-    <string name="_bx_timeline_menu_item_title_item_share"><![CDATA[]]></string>
+    <string name="_bx_timeline_menu_item_title_item_share"><![CDATA[Share]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_report"><![CDATA[Report]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_more"><![CDATA[More Actions]]></string>
     <string name="_bx_timeline_menu_item_title_item_more"><![CDATA[]]></string>

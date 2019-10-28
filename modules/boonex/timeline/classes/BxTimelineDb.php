@@ -637,6 +637,14 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                     $sSelectClause  = "DISTINCT " . $sSelectClause;
                 break;
 
+            case 'list_from':
+                list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause) = parent::_getSqlPartsEvents(array_merge($aParams, array('browse' => 'list')));
+                if(in_array($aParams['type'], array(BX_TIMELINE_TYPE_NEWS, BX_TIMELINE_TYPE_FEED, BX_BASE_MOD_NTFS_TYPE_CONNECTIONS, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS)))
+                    $sSelectClause  = "DISTINCT " . $sSelectClause;
+
+                $sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`id`<=? ", $aParams['from']);
+                break;
+
             case 'ids':
                 $sWhereClause = "AND `{$this->_sTable}`.`id` IN (" . $this->implode_escape($aParams['ids']) . ") ";
                 break;
@@ -646,7 +654,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         }
 
         $sSelectClause .= ", DAYOFYEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `days`, DAYOFYEAR(NOW()) AS `today`, ROUND((UNIX_TIMESTAMP() - `{$this->_sTable}`.`date`)/86400) AS `ago_days`, YEAR(FROM_UNIXTIME(`{$this->_sTable}`.`date`)) AS `year`";
-        if(in_array($aParams['browse'], array('list', 'ids')) && (!isset($aParams['newest']) || $aParams['newest'] === false)) {
+        if(in_array($aParams['browse'], array('list', 'list_from', 'ids')) && (!isset($aParams['newest']) || $aParams['newest'] === false)) {
             $sOrderClause = "";
 
             switch($aParams['type']) {

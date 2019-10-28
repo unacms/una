@@ -212,8 +212,8 @@
     padding: 0;
 }
 .bx-popup ul.bx-menu-ver li a > div > span,
-.bx-popup ul.bx-menu-custom.bx-menu-ver li a > span,
-.bx-popup ul.bx-menu-custom.bx-menu-custom-ver li a > span {
+.bx-popup ul.bx-menu-custom.bx-menu-ver li a > span:not(.sys-action-do-icon),
+.bx-popup ul.bx-menu-custom.bx-menu-custom-ver li a > span:not(.sys-action-do-icon) {
     margin-left: 1.0rem;
     line-height: 1.5rem;
     .font-size(@bx-font-size-middle);
@@ -226,8 +226,11 @@
 .bx-popup ul.bx-menu-ver li a > div .sys-icon,
 .bx-popup ul.bx-menu-custom.bx-menu-ver li a > img,
 .bx-popup ul.bx-menu-custom.bx-menu-ver li a > .sys-icon,
+.bx-popup ul.bx-menu-custom.bx-menu-ver li a > span.sys-action-do-icon,
+.bx-popup ul.bx-menu-custom.bx-menu-ver li a > span.sys-action-do-icon .sys-icon,
 .bx-popup ul.bx-menu-custom.bx-menu-custom-ver li a > img,
-.bx-popup ul.bx-menu-custom.bx-menu-custom-ver li a > .sys-icon {
+.bx-popup ul.bx-menu-custom.bx-menu-custom-ver li a > .sys-icon,
+.bx-popup ul.bx-menu-custom.bx-menu-custom-ver li a > span.sys-action-do-icon .sys-icon {
     width: 1.0rem;
     height: 1.0rem;
     line-height: 1.0rem;

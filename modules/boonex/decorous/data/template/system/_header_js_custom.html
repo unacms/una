@@ -4,6 +4,7 @@
 
         //responsive template
         var mainContent = $('.cd-main-content'),
+            content = $('.content-wrapper'),
             header = $('.cd-main-header'),
             sidebar = $('.cd-side-nav'),
             sidebarTrigger = $('.cd-nav-trigger');
@@ -32,9 +33,14 @@
                 var sidebarHeight = sidebar.outerHeight(),
                     windowHeight = $(window).height(),
                     mainContentHeight = mainContent.outerHeight(),
+                    contentHeight = content.outerHeight(),
                     scrollTop = $(window).scrollTop();
 
-                ( ( scrollTop + windowHeight > sidebarHeight ) && ( mainContentHeight - sidebarHeight != 0 ) ) ? sidebar.addClass('is-fixed').css('bottom', 0) : sidebar.removeClass('is-fixed').attr('style', '');
+                //--- Stick sidebar to bottom when scroll down if its height less than a height of main content area.
+                (scrollTop + windowHeight > sidebarHeight) && (mainContentHeight - sidebarHeight != 0) ? sidebar.addClass('is-fixed').css('bottom', 0) : sidebar.removeClass('is-fixed').attr('style', '');
+
+                //--- Stick main content area to bottom when scroll down if its height less than a height of sidebar.
+                (scrollTop + windowHeight > contentHeight) && (mainContentHeight - contentHeight != 0) ? content.addClass('is-fixed').css('bottom', 0) : content.removeClass('is-fixed').attr('style', '');
             }
             scrolling = false;
         }

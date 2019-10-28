@@ -14,6 +14,9 @@
  */
 class BxTimelineMenuItemActions extends BxTemplMenuCustom
 {
+    protected static $_sModeActions = 'actions';
+    protected static $_sModeCounters = 'counters';
+
     protected $_oModule;
 
     protected $_iEvent;
@@ -21,7 +24,12 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 
     protected $_sType;
     protected $_sView;
+
+    protected $_sMode;
     protected $_bShowTitles;
+    protected $_bShowCounters;
+
+    protected $_sTmplNameItem;
 
     public function __construct($aObject, $oTemplate = false)
     {
@@ -31,7 +39,10 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 
         $this->_setBrowseParams();
 
-        $this->_bShowTitles = false;
+        $this->_sMode = self::$_sModeActions;
+        $this->_bShowTitles = true;
+        $this->_bShowCounters = false;
+        $this->_sTmplNameItem = 'menu_custom_item_hor.html';
     }
 
     public function setEvent($aEvent, $aBrowseParams = array())
@@ -109,10 +120,22 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         $sViewsSystem = $this->_aEvent['views']['system'];
         $iViewsObject = $this->_aEvent['views']['object_id'];
         $aViewsParams = array('dynamic_mode' => $this->_bDynamicMode);
-        if($this->_bShowTitles)
-            $aViewsParams['show_do_view_label'] = true;
 
-        return $this->_oModule->getViewObject($sViewsSystem, $iViewsObject)->getElementInline($aViewsParams);
+        switch($this->_sMode) {
+            case self::$_sModeActions:
+                $sViewsMethod = 'getElementInline';
+                $aViewsParams['show_do_view_label'] = $this->_bShowTitles;
+                $aViewsParams['show_counter'] = $this->_bShowCounters;
+                break;
+
+            case self::$_sModeCounters:
+                $sViewsMethod = 'getCounter';
+                $aViewsParams['show_counter'] = true;
+                $aViewsParams['show_counter_label_icon'] = true;
+                break;
+        }
+
+        return $this->_oModule->getViewObject($sViewsSystem, $iViewsObject)->$sViewsMethod($aViewsParams);
     }
 
     protected function _getMenuItemItemVote($aItem)
@@ -123,10 +146,22 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         $sVotesSystem = $this->_aEvent['votes']['system'];
         $iVotesObject = $this->_aEvent['votes']['object_id'];
         $aVotesParams = array('dynamic_mode' => $this->_bDynamicMode);
-        if($this->_bShowTitles)
-            $aVotesParams['show_do_vote_label'] = true;
 
-        return $this->_oModule->getVoteObject($sVotesSystem, $iVotesObject)->getElementInline($aVotesParams);
+        switch($this->_sMode) {
+            case self::$_sModeActions:
+                $sVotesMethod = 'getElementInline';
+                $aVotesParams['show_do_vote_label'] = $this->_bShowTitles;
+                $aVotesParams['show_counter'] = $this->_bShowCounters;
+                break;
+
+            case self::$_sModeCounters:
+                $sVotesMethod = 'getCounter';
+                $aVotesParams['show_counter'] = true;
+                $aVotesParams['show_counter_empty'] = true;
+                break;
+        }
+
+        return $this->_oModule->getVoteObject($sVotesSystem, $iVotesObject)->$sVotesMethod($aVotesParams);
     }
 
     protected function _getMenuItemItemReaction($aItem)
@@ -137,10 +172,22 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         $sReactionsSystem = $this->_aEvent['reactions']['system'];
         $iReactionsObject = $this->_aEvent['reactions']['object_id'];
         $aReactionsParams = array('dynamic_mode' => $this->_bDynamicMode);
-        if($this->_bShowTitles)
-            $aReactionsParams['show_do_vote_label'] = true;
+        
+        switch($this->_sMode) {
+            case self::$_sModeActions:
+                $sReactionsMethod = 'getElementInline';
+                $aReactionsParams['show_do_vote_label'] = $this->_bShowTitles;
+                $aReactionsParams['show_counter'] = $this->_bShowCounters;
+                break;
 
-    	return $this->_oModule->getReactionObject($sReactionsSystem, $iReactionsObject)->getElementInline($aReactionsParams);
+            case self::$_sModeCounters:
+                $sReactionsMethod = 'getCounter';
+                $aReactionsParams['show_counter'] = true;
+                $aReactionsParams['show_counter_style'] = 'compound';
+                break;
+        }
+
+    	return $this->_oModule->getReactionObject($sReactionsSystem, $iReactionsObject)->$sReactionsMethod($aReactionsParams);
     }
 
     protected function _getMenuItemItemScore($aItem)
@@ -151,10 +198,22 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         $sScoresSystem = $this->_aEvent['scores']['system'];
         $iScoresObject = $this->_aEvent['scores']['object_id'];
         $aScoresParams = array('dynamic_mode' => $this->_bDynamicMode);
-        if($this->_bShowTitles)
-            $aScoresParams['show_do_vote_label'] = true;
+        
+        switch($this->_sMode) {
+            case self::$_sModeActions:
+                $sScoresMethod = 'getElementInline';
+                $aScoresParams['show_do_vote_label'] = $this->_bShowTitles;
+                $aScoresParams['show_counter'] = $this->_bShowCounters;
+                break;
 
-        return $this->_oModule->getScoreObject($sScoresSystem, $iScoresObject)->getElementInline($aScoresParams);
+            case self::$_sModeCounters:
+                $sScoresMethod = 'getCounter';
+                $aScoresParams['show_counter'] = true;
+                $aScoresParams['show_counter_empty'] = true;
+                break;
+        }
+
+        return $this->_oModule->getScoreObject($sScoresSystem, $iScoresObject)->$sScoresMethod($aScoresParams);
     }
 
     protected function _getMenuItemItemReport($aItem)
@@ -165,10 +224,21 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         $sReportsSystem = $this->_aEvent['reports']['system'];
         $iReportsObject = $this->_aEvent['reports']['object_id'];
         $aReportsParams = array('dynamic_mode' => $this->_bDynamicMode);
-        if($this->_bShowTitles)
-            $aReportsParams['show_do_report_label'] = true;
+        
+        switch($this->_sMode) {
+            case self::$_sModeActions:
+                $sReportsMethod = 'getElementInline';
+                $aReportsParams['show_do_report_label'] = $this->_bShowTitles;
+                $aReportsParams['show_counter'] = $this->_bShowCounters;
+                break;
 
-        return $this->_oModule->getReportObject($sReportsSystem, $iReportsObject)->getElementInline($aReportsParams);
+            case self::$_sModeCounters:
+                $sReportsMethod = 'getCounter';
+                $aReportsParams['show_counter'] = true;
+                break;
+        }
+
+        return $this->_oModule->getReportObject($sReportsSystem, $iReportsObject)->$sReportsMethod($aReportsParams);
     }
 
     protected function _getMenuItemDefault ($aItem)
@@ -268,6 +338,14 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
             return true;
 
         return call_user_func_array(array($this->_oModule, $sCheckFuncName), $aCheckFuncParams) === true;
+    }
+    
+    protected function _getTmplContentItem()
+    {
+        if(empty($this->_sTmplNameItem))
+           return parent::_getTmplContentItem();
+
+        return $this->_oModule->_oTemplate->getHtml($this->_sTmplNameItem);
     }
 }
 

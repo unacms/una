@@ -221,7 +221,7 @@ class BxDolCmtsQuery extends BxDolDb
 
                 $sWhereClause .= " AND `{$this->_sTable}`.`cmt_object_id` = :cmt_object_id";
 
-                $sOrderClause = "`{$this->_sTable}`.`cmt_time` ASC";
+                $sOrderClause = "`{$this->_sTable}`.`cmt_time` " . (!empty($aParams['order_way']) ? strtoupper($aParams['order_way']) : "ASC");
                 $sLimitClause = "";
                 if(isset($aParams['per_page']))
                     $sLimitClause = $this->prepareAsString("?, ?", $aParams['start'], $aParams['per_page']);

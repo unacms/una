@@ -64,7 +64,7 @@ BxDolFavorite.prototype.onFavorite = function(oData, oElement)
 
 		if(oData && oData.label_title) {
 			$(oElement).attr('title', oData.label_title);
-			$(oElement).find('span').html(oData.label_title);
+			$(oElement).find('span:not(.sys-action-do-icon)').html(oData.label_title);
 		}
 
 		if(oData && oData.disabled)

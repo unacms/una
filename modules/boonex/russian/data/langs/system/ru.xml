@@ -2918,7 +2918,9 @@
 	<string name="_vote_do_like"><![CDATA[Спасибо!]]></string>
 	<string name="_vote_do_unlike"><![CDATA[Нет, спасибо]]></string>
 	<string name="_vote_do_by"><![CDATA[Поблагодарили]]></string>
-        <string name="_vote_do_by_reactions"><![CDATA["{0}" от]]></string>
+        <string name="_vote_do_by_reactions"><![CDATA[Отреагировали]]></string>
+        <string name="_vote_do_by_x_reaction"><![CDATA["{0}" от]]></string>
+        <string name="_vote_do_by_summary"><![CDATA[Все]]></string>
 	<string name="_vote_err_not_enabled"><![CDATA[Ваш голос не может быть принят в данный момент. Пожалуйста, попробуйте позднее.]]></string>
 	<string name="_vote_err_duplicate_vote"><![CDATA[Повторный голос]]></string>
         <string name="_vote_n_votes"><![CDATA[{0} голосов]]></string>

@@ -1323,7 +1323,7 @@
     <string name="_adm_stg_cpt_option_add_to_mobile_homepage"><![CDATA[Add to mobile homepage widget]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_activation_letter"><![CDATA[Enable account activation letter]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_confirmation_type"><![CDATA[Account is confirmed when]]></string>
-	<string name="_adm_stg_cpt_option_sys_account_2fa_enable"><![CDATA[Enable 2FA]]></string>
+	<string name="_adm_stg_cpt_option_sys_account_2fa_enable"><![CDATA[Enable 2 Factor Authentication]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_autoapproval"><![CDATA[Automatic account activation after creation]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_auto_profile_creation"><![CDATA[Automatic profile creation from account name]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_online_time"><![CDATA[Online status timeframe (minutes)]]></string>
@@ -2989,7 +2989,9 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_vote_do_like"><![CDATA[Thank you!]]></string>
 	<string name="_vote_do_unlike"><![CDATA[No thank you]]></string>
 	<string name="_vote_do_by"><![CDATA[Thanked by]]></string>
-        <string name="_vote_do_by_reactions"><![CDATA["{0}" by]]></string>
+        <string name="_vote_do_by_reactions"><![CDATA[Reacted by]]></string>
+        <string name="_vote_do_by_x_reaction"><![CDATA["{0}" by]]></string>
+        <string name="_vote_do_by_summary"><![CDATA[All]]></string>
 	<string name="_vote_err_not_enabled"><![CDATA[The feature is not available right now. Please, try again later.]]></string>
 	<string name="_vote_err_duplicate_vote"><![CDATA[Duplicate vote]]></string>
         <string name="_vote_n_votes"><![CDATA[{0} votes]]></string>

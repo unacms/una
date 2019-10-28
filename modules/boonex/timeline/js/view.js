@@ -20,6 +20,12 @@ function BxTimelineView(oOptions) {
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
 
+    this._bInfScroll = oOptions.bInfScroll == undefined ? false : oOptions.bInfScroll;
+    this._iInfScrollAutoPreloads = oOptions.iInfScrollAutoPreloads == undefined ? 10 : oOptions.iInfScrollAutoPreloads;
+    this._fInfScrollAfter = 0.25; //--- Preload more info when specified portion of Timeline block's content was already scrolled.
+    this._bInfScrollBusy = false;
+    this._iInfScrollPreloads = 1; //--- First portion is loaded with page loading or 'Load More' button click.
+
     this._fOutsideOffset = 0.8;
     this._oSaved = {};
 
@@ -95,6 +101,9 @@ BxTimelineView.prototype.init = function()
 
         //--- Load 'Jump To'
         this.initJumpTo(this.oView);
+
+        //--- Init 'Infinite Scroll'
+        this.initInfiniteScroll(this.oView);
     }
 
     if(this.bViewOutline) {
@@ -157,6 +166,29 @@ BxTimelineView.prototype.onGetJumpTo = function(oData)
         return;
 
     $(oData.holder).html(oData.content);
+};
+
+BxTimelineView.prototype.initInfiniteScroll = function(oParent)
+{
+    var $this = this;
+
+    if(!this._bInfScroll)
+        return;
+
+    $(window).bind('scroll', function(oEvent) {
+        var iParentTop = parseInt(oParent.offset().top);
+        var iParentHeight = parseInt(oParent.height());
+        var iScrollTop = parseInt($(window).scrollTop());
+        var iWindowHeight = $(window).height();
+        if($this._bInfScrollBusy || $this._iInfScrollPreloads >= $this._iInfScrollAutoPreloads || (iScrollTop + iWindowHeight) <= (iParentTop + iParentHeight * $this._fInfScrollAfter))
+            return;
+
+        $this._bInfScrollBusy = true;
+        $this._getPage(undefined, $this._oRequestParams.start + $this._oRequestParams.per_page, $this._oRequestParams.per_page, function(oData) {
+            $this._iInfScrollPreloads += 1;
+            $this._bInfScrollBusy = false;
+        });
+    });
 };
 
 BxTimelineView.prototype.initVideosAutoplay = function(oParent)
@@ -260,53 +292,12 @@ BxTimelineView.prototype.changeView = function(oLink, sType)
     );
 };
 
-BxTimelineView.prototype.changePage = function(oLink, iStart, iPerPage)
+BxTimelineView.prototype.changePage = function(oLink, iStart, iPerPage, onLoad)
 {
-    var $this = this;
+    if(this._bInfScroll)
+        this._iInfScrollPreloads = 1;
 
-    this.loadingInButton(oLink, true);
-
-    this._oRequestParams.start = iStart;
-    this._oRequestParams.per_page = iPerPage;
-    this._getPosts(oLink, function(oData) {
-    	$this.loadingInButton(oLink, false);
-
-    	var sItems = $.trim(oData.items);
-
-        if($this.bViewTimeline)
-            $this.oView.find('.' + $this.sClassItems).append($(sItems).hide()).find('.' + $this.sClassItem + ':hidden').bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-                $(this).bxProcessHtml().find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
-                    $this.onFindOverflow(oElement);
-                });
-
-                $this.initFlickity();
-
-                //--- Init Video Autoplay
-                $this.initVideosAutoplay($this.oView);
-            });
-
-        if($this.bViewOutline)
-            $this.appendMasonry($(sItems).bxProcessHtml(), function(oItems) {
-                oItems.find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
-                    $this.onFindOverflow(oElement);
-                });
-
-                $this.initFlickity();
-
-                //--- Init Video Layout
-                if($this._sVideosAutoplay != 'off') 
-                    $this.initVideos($this.oView);
-            });
-
-    	if(oData && oData.load_more != undefined)
-            $this.oView.find('.' + $this.sSP + '-load-more-holder').html($.trim(oData.load_more));
-
-    	if(oData && oData.back != undefined)
-            $this.oView.find('.' + $this.sSP + '-back-holder').html($.trim(oData.back));
-
-    	if(oData && oData.empty != undefined)
-            $this.oView.find('.' + $this.sSP + '-empty-holder').html($.trim(oData.empty));
-    });
+    this._getPage(oLink, iStart, iPerPage, onLoad);
 };
 
 BxTimelineView.prototype.changeFilter = function(oLink)
@@ -323,11 +314,33 @@ BxTimelineView.prototype.changeFilter = function(oLink)
 
 BxTimelineView.prototype.changeTimeline = function(oLink, sDate)
 {
-    this.loadingInBlock(oLink, true);
+    var $this = this;
+
+    oLink = $(oLink);
+    var bLink = oLink.length > 0;
+    var bLoadingInButton = bLink && oLink.hasClass('bx-btn');
+
+    if(bLink) {
+        if(bLoadingInButton)
+            this.loadingInButton(oLink, true);
+        else
+            this.loadingInBlock(oLink, true);
+    }
 
     this._oRequestParams.start = 0;
     this._oRequestParams.timeline = sDate;
-    this._getPosts(oLink);
+    this._getPosts(oLink, function(oData) {
+        if(bLink) {
+            if(bLoadingInButton)
+                $this.loadingInButton(oLink, false);
+            else
+                $this.loadingInBlock(oLink, false);
+        }
+
+        window.scrollTo(0, $this.oView.offset().top - 150);
+
+        processJsonData(oData);
+    });
 };
 
 BxTimelineView.prototype.showCalendar = function(oLink)
@@ -820,6 +833,60 @@ BxTimelineView.prototype.blink = function(oParent)
 /*------------------------------------*/
 /*--- Internal (protected) methods ---*/
 /*------------------------------------*/
+BxTimelineView.prototype._getPage = function(oElement, iStart, iPerPage, onLoad)
+{
+    var $this = this;
+
+    if(oElement)
+        this.loadingIn(oElement, true);
+
+    this._oRequestParams.start = iStart;
+    this._oRequestParams.per_page = iPerPage;
+    this._getPosts(oElement, function(oData) {
+        if(oElement)
+            $this.loadingIn(oElement, false);
+
+    	var sItems = $.trim(oData.items);
+
+        if($this.bViewTimeline)
+            $this.oView.find('.' + $this.sClassItems).append($(sItems).hide()).find('.' + $this.sClassItem + ':hidden').bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+                $(this).bxProcessHtml().find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
+                    $this.onFindOverflow(oElement);
+                });
+
+                $this.initFlickity();
+
+                //--- Init Video Autoplay
+                $this.initVideosAutoplay($this.oView);
+            });
+
+        if($this.bViewOutline)
+            $this.appendMasonry($(sItems).bxProcessHtml(), function(oItems) {
+                oItems.find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
+                    $this.onFindOverflow(oElement);
+                });
+
+                $this.initFlickity();
+
+                //--- Init Video Layout
+                if($this._sVideosAutoplay != 'off') 
+                    $this.initVideos($this.oView);
+            });
+
+    	if(oData && oData.load_more != undefined)
+            $this.oView.find('.' + $this.sSP + '-load-more-holder').html($.trim(oData.load_more));
+
+    	if(oData && oData.back != undefined)
+            $this.oView.find('.' + $this.sSP + '-back-holder').html($.trim(oData.back));
+
+    	if(oData && oData.empty != undefined)
+            $this.oView.find('.' + $this.sSP + '-empty-holder').html($.trim(oData.empty));
+
+        if(typeof onLoad == 'function')
+            onLoad(oData);
+    });
+};
+
 BxTimelineView.prototype._getPosts = function(oElement, onComplete)
 {
     var $this = this;
@@ -832,7 +899,8 @@ BxTimelineView.prototype._getPosts = function(oElement, onComplete)
             if(typeof onComplete === 'function')
                 return onComplete(oData);
 
-            $this.loadingInBlock(oElement, false);
+            if(oElement)
+                $this.loadingInBlock(oElement, false);
 
             processJsonData(oData);
         },

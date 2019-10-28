@@ -68,8 +68,9 @@ class BxDolView extends BxDolObject
      */
     public static function getObjectInstance($sSys, $iId, $iInit = true)
     {
-        if(isset($GLOBALS['bxDolClasses']['BxDolView!' . $sSys . $iId]))
-            return $GLOBALS['bxDolClasses']['BxDolView!' . $sSys . $iId];
+        $sKey = 'BxDolView!' . $sSys . $iId;
+        if(isset($GLOBALS['bxDolClasses'][$sKey]))
+            return $GLOBALS['bxDolClasses'][$sKey];
 
         $aSystems = self::getSystems();
         if(!isset($aSystems[$sSys]))
@@ -83,7 +84,7 @@ class BxDolView extends BxDolObject
         }
 
         $o = new $sClassName($sSys, $iId, $iInit);
-        return ($GLOBALS['bxDolClasses']['BxDolView!' . $sSys . $iId] = $o);
+        return ($GLOBALS['bxDolClasses'][$sKey] = $o);
     }
 
     public static function &getSystems()

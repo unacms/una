@@ -75,6 +75,18 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             return $mixedResult; 
     }
 
+    public function getJsCode($sType, $aParams = array(), $bWrap = true)
+    {
+        $oModule = $this->getModule();
+
+        $aParams = array_merge(array(
+            'bInfScroll' => $this->_oConfig->isInfiniteScroll(),
+            'iInfScrollAutoPreloads' => $this->_oConfig->getAutoPreloads()
+        ), $aParams);
+
+        return parent::getJsCode($sType, $aParams, $bWrap);
+    }
+
     public function getJsCodePost($iOwnerId, $aParams = array())
     {
         return $this->getJsCode('post', array(
@@ -1233,7 +1245,39 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         return $aIds;
     }
-            
+
+    protected function _cacheEventsFrom($iId, $aParams)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iPerPage = (int)$aParams['per_page'];
+
+        $aParamsCopy = $aParams;
+        $aParamsCopy['browse'] = 'list_from';
+        $aParamsCopy['from'] = $iId;
+        $aParamsCopy['start'] = 0;
+
+        $aIds = array();
+        while(count($aIds) < $iPerPage) {
+            $aEvents = $this->_oDb->getEvents($aParamsCopy);
+            if(empty($aEvents))
+                break;
+
+            foreach($aEvents as $aEvent) {
+                if($this->getPost($aEvent, $aParamsCopy) == '')
+                    continue;
+
+                $aIds[] = $aEvent[$CNF['FIELD_ID']];
+                if(count($aIds) == $iPerPage)
+                    break 2;
+            }
+
+            $aParamsCopy['start'] += $iPerPage;
+        }
+
+        return $aIds;
+    }
+
     protected function _getCachedEvents($iProfileId, &$aParams)
     {
         return $this->_oDb->getCache(array(
@@ -1257,12 +1301,16 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $iProfileId = (int)bx_get_logged_profile_id(); 
 
         /*
-         * Get cached data and check it for relevance.
+         * Get cached data.
          */
         $aCache = $this->_getCachedEvents($iProfileId, $aParams);
         if(is_array($aCache) && !empty($aCache)) {
+
+            /*
+             * Check received data for relevance.
+             */
             if(($iCache = count($aCache)) != $iPerPage) {
-                $aRecachedIds = $this->_cacheEvents($aParams);
+                $aRecachedIds = $this->_cacheEventsFrom(reset($aCache)['event_id'], $aParams);
                 if(is_array($aRecachedIds) && count($aRecachedIds) > $iCache)
                     $aCache = $this->_getCachedEvents($iProfileId, $aParams);
             }
@@ -1270,7 +1318,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $bFound = false;
             $bUpdated = false;
 
-            $aCachedItem = current($aCache);
+            $aCachedItem = reset($aCache);
             $aCachedIds = array_keys($aCache);
 
             $aParamsCopy = $aParams;
@@ -1335,6 +1383,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $oModule->getViewObject($aEvent['views']['system'], $aEvent['views']['object_id'])->doView();
 
         $aTmplVarsNote = $this->_getTmplVarsNote($aEvent);
+        $aTmplVarsMenuItemCounters = $this->_getTmplVarsMenuItemCounters($aEvent, $aBrowseParams);
         $aTmplVarsMenuItemActions = $this->_getTmplVarsMenuItemActions($aEvent, $aBrowseParams);
         $aTmplVarsMenuItemMeta = $this->_getTmplVarsMenuItemMeta($aEvent, $aBrowseParams);
 
@@ -1342,8 +1391,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $bTmplVarsOwnerActions = !empty($aTmplVarsOwnerActions); 
 
         $aTmplVarsTimelineOwner = $this->_getTmplVarsTimelineOwner($aEvent);
-        
-        $aTmplVarsReactions = $this->_getTmplVarsReactions($aEvent, $aBrowseParams);
 
         $bPinned = (int)$aEvent['pinned'] > 0;
         $bSticked = (int)$aEvent['sticked'] > 0;
@@ -1441,9 +1488,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     'location' => $sLocation
             	)
             ),
-            'bx_if:show_reactions' => array(
-                'condition' => !empty($aTmplVarsReactions),
-                'content' => $aTmplVarsReactions
+            'bx_if:show_menu_item_counters' => array(
+                'condition' => !empty($aTmplVarsMenuItemCounters),
+                'content' => $aTmplVarsMenuItemCounters
             ),
             'bx_if:show_menu_item_actions' => array(
                 'condition' => !empty($aTmplVarsMenuItemActions),
@@ -1613,6 +1660,70 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'menu_item_actions' => $sMenu
         );
     }
+
+    protected function _getTmplVarsMenuItemCounters(&$aEvent, $aBrowseParams = array())
+    {
+        $oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_counters'));
+        $oMenu->setEvent($aEvent, $aBrowseParams);
+        $oMenu->setDynamicMode(isset($aBrowseParams['dynamic_mode']) && $aBrowseParams['dynamic_mode'] === true);
+
+        $sMenu = $oMenu->getCode();
+        if(empty($sMenu))
+            return array();
+
+        return array(
+            'style_prefix' => $this->_oConfig->getPrefix('style'),
+            'js_object' => $this->_oConfig->getJsObjectView($aBrowseParams),
+            'menu_item_counters' => $sMenu
+        );
+    }
+    
+    /*
+    protected function _getTmplVarsReactions(&$aEvent, $aBrowseParams = array())
+    {
+        if(!isset($aEvent['reactions']) || !is_array($aEvent['reactions']) || !isset($aEvent['reactions']['system']))
+            return array();
+
+        $sReactionsSystem = $aEvent['reactions']['system'];
+        $iReactionsObject = $aEvent['reactions']['object_id'];
+        $aReactionsParams = array(
+            'show_counter' => true,
+            'show_counter_style' => 'compound', 
+            'dynamic_mode' => isset($aBrowseParams['dynamic_mode']) && $aBrowseParams['dynamic_mode'] === true
+        );
+
+        $oReactions = $this->getModule()->getReactionObject($sReactionsSystem, $iReactionsObject);
+        if(!$oReactions)
+            return array();
+
+        return array(
+            'style_prefix' => $this->_oConfig->getPrefix('style'),
+            'reactions' => $oReactions->getCounter($aReactionsParams)
+        );
+    }
+
+    protected function _getTmplVarsComments(&$aEvent, $aBrowseParams = array())
+    {
+        if(!isset($aEvent['comments']) || !is_array($aEvent['comments']) || !isset($aEvent['comments']['system']))
+            return array();
+
+        $sCmtsSystem = $aEvent['comments']['system'];
+        $iCmtsObject = $aEvent['comments']['object_id'];
+        $aCmtsParams = array(
+            'show_counter' => true, 
+            'dynamic_mode' => isset($aBrowseParams['dynamic_mode']) && $aBrowseParams['dynamic_mode'] === true
+        );
+
+        $oCmts = $this->getModule()->getCmtsObject($sCmtsSystem, $iCmtsObject);
+        if(!$oCmts)
+            return array();
+
+        return array(
+            'style_prefix' => $this->_oConfig->getPrefix('style'),
+            'comments' => $oCmts->getCounter($aCmtsParams)
+        );
+    }
+     */
 
     protected function _getTmplVarsMenuItemMeta(&$aEvent, $aBrowseParams = array())
     {
@@ -1908,7 +2019,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sSampleLink = empty($aContent['url']) ? $sSample : $this->parseLink($aContent['url'], $sSample);
 
         $sTitle = _t('_bx_timeline_txt_reposted', $sOwnerLink, $sSampleLink);
-        $sText = $this->_getContent($aContent['parse_type'], $aEvent);
+        $sText = $this->_getContent($aContent['parse_type'], $aEvent, $aBrowseParams);
 
         return array(
             'bx_if:show_title' => array(
@@ -2176,28 +2287,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return array(
             'display' => $sDisplay,
             'items' => $aTmplVarsFiles
-        );
-    }
-
-    protected function _getTmplVarsReactions(&$aEvent, $aBrowseParams = array())
-    {
-        if(!isset($aEvent['reactions']) || !is_array($aEvent['reactions']) || !isset($aEvent['reactions']['system']))
-            return array();
-
-        $sReactionsSystem = $aEvent['reactions']['system'];
-        $iReactionsObject = $aEvent['reactions']['object_id'];
-        $aReactionsParams = array(
-            'show_counter' => true, 
-            'dynamic_mode' => isset($aBrowseParams['dynamic_mode']) && $aBrowseParams['dynamic_mode'] === true
-        );
-
-        $oReactions = $this->getModule()->getReactionObject($sReactionsSystem, $iReactionsObject);
-        if(!$oReactions)
-            return array();
-
-        return array(
-            'style_prefix' => $this->_oConfig->getPrefix('style'),
-            'reactions' => $oReactions->getCounter($aReactionsParams)
         );
     }
 

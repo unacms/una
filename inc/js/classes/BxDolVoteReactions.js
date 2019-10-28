@@ -86,7 +86,7 @@ BxDolVoteReactions.prototype.onVote = function (oLink, oData, onComplete)
 
     if(oData && oData.label_title) {
         oLink.attr('title', oData.label_title);
-        oLink.find('span').html(oData.label_title);
+        oLink.find('span:not(.sys-action-do-icon)').html(oData.label_title);
     }
 
     if(oData && oData.label_click)
@@ -99,8 +99,13 @@ BxDolVoteReactions.prototype.onVote = function (oLink, oData, onComplete)
 
     //--- Update Counter.
     var oCounter = this._getCounter(oLink);
-    if(oCounter && oCounter.length > 0)
+    if(oCounter && oCounter.length > 0) {
         oCounter.filter('.' + oData.reaction).html(oData.countf).toggleClass('bx-vc-hidden', !oData.count);
+
+        //--- Update Total.
+        if(oData.total)
+            oCounter.filter('.total-count').html(oData.total.countf).toggleClass('bx-vc-hidden', !oData.total.count);
+    }
 
     if(typeof onComplete == 'function')
         onComplete(oLink, oData);
@@ -208,13 +213,21 @@ BxDolVoteReactions.prototype.toggleByPopup = function(oLink, sReaction)
 {
     var oParams = this._getDefaultParams();
     oParams['action'] = 'GetVotedBy';
-    oParams['reaction'] = sReaction;
+    if(sReaction)
+        oParams['reaction'] = sReaction;
 
     $(oLink).dolPopupAjax({
-        id: this._aHtmlIds['by_popup'], 
+        id: {value: this._aHtmlIds['by_popup'], force: true}, 
         url: bx_append_url_params(this._sActionsUri, oParams),
         removeOnClose: true
     });
+};
+
+BxDolVoteReactions.prototype.changeVotedBy = function(oLink, sReaction)
+{
+    var oContent = $('#' + this._aHtmlIds['by_popup'] + ' .' + this._sSP + '-bls-content');
+    if(oContent.length > 0)
+        oContent.children(':visible').hide().siblings('.' + this._sSP + '-bl-' + sReaction).show();
 };
 
 BxDolVoteReactions.prototype._getCounter = function(oElement)

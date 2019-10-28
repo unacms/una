@@ -188,6 +188,7 @@ class BxPostsConfig extends BxBaseModTextConfig
                 'txt_all_entries_by_author' => '_bx_posts_page_title_browse_by_author',
                 'txt_all_entries_by_context' => '_bx_posts_page_title_browse_by_context',
                 'txt_err_cannot_perform_action' => '_bx_posts_txt_err_cannot_perform_action',
+                'txt_poll_form_answers_add' => '_bx_posts_form_poll_input_answers_add',
                 'txt_poll_menu_view_answers' => '_bx_posts_txt_poll_view_answers',
                 'txt_poll_menu_view_results' => '_bx_posts_txt_poll_view_results',
                 'txt_poll_menu_view_' => '_bx_posts_txt_poll_view_',

@@ -12,6 +12,9 @@
     <string name="_bx_timeline_option_events_per_page_account"><![CDATA[Количество элементов на странице "панель аккаунта"]]></string>
     <string name="_bx_timeline_option_events_per_page_home"><![CDATA[Количество элементов на главной странице сайта]]></string>
     <string name="_bx_timeline_option_events_per_page"><![CDATA[Количество элементов на странице]]></string>
+    <string name="_bx_timeline_option_enable_infinite_scroll"><![CDATA[Включить 'Бесконечную прокрутку']]></string>
+    <string name="_bx_timeline_option_events_per_preload"><![CDATA[Бесконечная прокрутка: Количество элементов, получаемых при авто-подгрузке]]></string>
+    <string name="_bx_timeline_option_auto_preloads"><![CDATA[Бесконечная прокрутка: Количество авто-подгрузок]]></string>
     <string name="_bx_timeline_option_rss_length"><![CDATA[Количество элементов в RSS-ленте]]></string>
     <string name="_bx_timeline_option_events_hide"><![CDATA[Показывать события]]></string>
     <string name="_bx_timeline_option_videos_autoplay"><![CDATA[Автоматически проигрывать видео ролики (доступно только для Ленты)]]></string>
@@ -181,14 +184,16 @@
 
     <string name="_bx_timeline_menu_title_item_actions"><![CDATA[Элемент - Действия]]></string>
     <string name="_bx_timeline_menu_set_title_item_actions"><![CDATA[Элемент - Действия]]></string>
+    <string name="_bx_timeline_menu_title_item_counters"><![CDATA[Элемент - Счетчики]]></string>
+    <string name="_bx_timeline_menu_set_title_item_counters"><![CDATA[Элемент - Счетчики]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_comment"><![CDATA[Комментарий]]></string>
-    <string name="_bx_timeline_menu_item_title_item_comment"><![CDATA[]]></string>
+    <string name="_bx_timeline_menu_item_title_item_comment"><![CDATA[Прокомментировать]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_view"><![CDATA[Посмотреть]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_vote"><![CDATA[Голосовать (Нравится)]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_score"><![CDATA[Голосовать (За/Против)]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_reaction"><![CDATA[Отреагировать]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_share"><![CDATA[Поделиться]]></string>
-    <string name="_bx_timeline_menu_item_title_item_share"><![CDATA[]]></string>
+    <string name="_bx_timeline_menu_item_title_item_share"><![CDATA[Поделиться]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_report"><![CDATA[Пожаловаться]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_more"><![CDATA[Дополнительные действия]]></string>
     <string name="_bx_timeline_menu_item_title_item_more"><![CDATA[]]></string>

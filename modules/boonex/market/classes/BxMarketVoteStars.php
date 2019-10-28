@@ -36,7 +36,7 @@ class BxMarketVoteStars extends BxTemplVoteStars
     	return parent::isAllowedVote($isPerformAction);
     }
 
-    protected function _getLabelCounter($iCount, $aParams = array())
+    protected function _getCounterLabel($iCount, $aParams = array())
     {
         return _t('_bx_market_vote_counter', $iCount);
     }

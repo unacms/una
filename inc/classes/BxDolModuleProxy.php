@@ -54,6 +54,11 @@ class BxDolModuleProxy
         }
     }
 
+    public function getClassName()
+    {
+        return get_class($this->_oProxifiedObject);
+    }
+
     public function isMethodExists($s)
     {
         return method_exists($this->_oProxifiedObject, $s);

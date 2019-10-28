@@ -193,7 +193,7 @@
     display: none;
 }
 
-.bx-base-general-unit-meta ul.bx-menu-object-bx_forum_snippet_meta_counters li span {
+.bx-base-general-unit-meta ul.bx-menu-object-bx_forum_snippet_meta_counters li > span {
     position: relative;
     display: inline-block;
     vertical-align: top;
@@ -203,7 +203,7 @@
     border-width: 0px;
     line-height: 1.5rem;
 }
-.bx-base-general-unit-meta ul.bx-menu-object-bx_forum_snippet_meta_counters li .sys-icon {
+.bx-base-general-unit-meta ul.bx-menu-object-bx_forum_snippet_meta_counters li .sys-icon:not(.cmt-counter-icon) {
     width: 1.0rem;
     height: 1.0rem;
     text-align: center;

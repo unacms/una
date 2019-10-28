@@ -12,12 +12,8 @@
  */
 class BxBaseView extends BxDolView
 {
-    protected static $_sTmplContentElementBlock;
-    protected static $_sTmplContentElementInline;
-    protected static $_sTmplContentCounter;
-    protected static $_sTmplContentDoViewLabel;
-
     protected $_sTmplNameByList;
+    protected $_sTmplContentDoViewLabel;
 
     protected $_bCssJsAdded;
     protected $_sStylePrefix;
@@ -47,22 +43,18 @@ class BxBaseView extends BxDolView
             'show_do_view_as_button_small' => false,
             'show_do_view_icon' => true,
             'show_do_view_label' => false,
-            'show_counter' => true
+            'show_counter' => true,
+            'show_counter_label_icon' => false,
+            'show_counter_label_text' => true,
+            'show_script' => true
         );
 
-        if(empty(self::$_sTmplContentElementBlock))
-            self::$_sTmplContentElementBlock = $this->_oTemplate->getHtml('view_element_block.html');
-
-        if(empty(self::$_sTmplContentElementInline))
-            self::$_sTmplContentElementInline = $this->_oTemplate->getHtml('view_element_inline.html');
-
-        if(empty(self::$_sTmplContentCounter))
-            self::$_sTmplContentCounter = $this->_oTemplate->getHtml('view_counter.html');
-
-        if(empty(self::$_sTmplContentDoViewLabel))
-            self::$_sTmplContentDoViewLabel = $this->_oTemplate->getHtml('view_do_view_label.html');
-
         $this->_sTmplNameByList = 'view_by_list.html';
+        $this->_sTmplContentElementBlock = $this->_oTemplate->getHtml('view_element_block.html');
+        $this->_sTmplContentElementInline = $this->_oTemplate->getHtml('view_element_inline.html');
+        $this->_sTmplContentCounter = $this->_oTemplate->getHtml('view_counter.html');
+        $this->_sTmplContentCounterLabel = $this->_oTemplate->getHtml('view_counter_label.html');
+        $this->_sTmplContentDoViewLabel = $this->_oTemplate->getHtml('view_do_view_label.html');
     }
 
     public function getJsObjectName()
@@ -72,8 +64,10 @@ class BxBaseView extends BxDolView
 
     public function getJsScript($bDynamicMode = false)
     {
+        $sJsObjName = $this->getJsObjectName();
+
         $aParams = array(
-            'sObjName' => $this->_sJsObjName,
+            'sObjName' => $sJsObjName,
             'sSystem' => $this->getSystemName(),
             'iAuthorId' => $this->_getAuthorId(),
             'iObjId' => $this->getId(),
@@ -81,7 +75,7 @@ class BxBaseView extends BxDolView
             'sStylePrefix' => $this->_sStylePrefix,
             'aHtmlIds' => $this->_aHtmlIds
         );
-        $sCode = "var " . $this->_sJsObjName . " = new BxDolView(" . json_encode($aParams) . ");";
+        $sCode = "if(window['" . $sJsObjName . "'] == undefined) var " . $sJsObjName . " = new BxDolView(" . json_encode($aParams) . ");";
 
         return $this->_oTemplate->_wrapInTagJsCode($sCode);
     }
@@ -90,8 +84,11 @@ class BxBaseView extends BxDolView
     {
         $sJsObject = $this->getJsObjectName();
 
+        $bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'] === true;
         $bShowDoViewAsButtonSmall = isset($aParams['show_do_view_as_button_small']) && $aParams['show_do_view_as_button_small'] == true;
         $bShowDoViewAsButton = !$bShowDoViewAsButtonSmall && isset($aParams['show_do_view_as_button']) && $aParams['show_do_view_as_button'] == true;
+        $bShowScript = !isset($aParams['show_script']) || $aParams['show_script'] == true;
+
         $bAllowedViewViewViewers = $this->isAllowedViewViewViewers();
 
         $aView = $this->_oQuery->getView($this->getId());
@@ -101,9 +98,11 @@ class BxBaseView extends BxDolView
         if($bShowDoViewAsButton)
             $sClass .= ' bx-btn-height';
 
-        $sContent = (int)$aView['count'] > 0 ? $this->_getLabelCounter($aView['count']) : '';
-        return $this->_oTemplate->parseHtmlByContent(self::$_sTmplContentCounter, array(
-        	'bx_if:show_text' => array(
+        $sContent = (int)$aView['count'] > 0 ? $this->_getCounterLabel($aView['count'], $aParams) : '';
+        return $this->_oTemplate->parseHtmlByContent($this->_sTmplContentCounter, array(
+            'html_id' => $this->_aHtmlIds['counter'],
+            'style_prefix' => $this->_sStylePrefix,
+            'bx_if:show_text' => array(
                 'condition' => !$bAllowedViewViewViewers,
                 'content' => array(
                     'bx_repeat:attrs' => array(
@@ -125,7 +124,8 @@ class BxBaseView extends BxDolView
                     ),
                     'content' => $sContent
                 )
-            )
+            ),
+            'script' => $bShowScript ? $this->getJsScript($bDynamicMode) : ''
         ));
     }
 
@@ -156,9 +156,9 @@ class BxBaseView extends BxDolView
         $bShowDoViewAsButton = !$bShowDoViewAsButtonSmall && isset($aParams['show_do_view_as_button']) && $aParams['show_do_view_as_button'] == true;
         $bShowCounter = isset($aParams['show_counter']) && $aParams['show_counter'] === true && $bAllowedViewView;
 
-		$iObjectId = $this->getId();
-		$iAuthorId = $this->_getAuthorId();
-		$aView = $this->_oQuery->getView($iObjectId);
+        $iObjectId = $this->getId();
+        $iAuthorId = $this->_getAuthorId();
+        $aView = $this->_oQuery->getView($iObjectId);
         $bCount = (int)$aView['count'] != 0;
 
         if(!$bAllowedView && (!$bAllowedViewView || !$bCount))
@@ -168,41 +168,41 @@ class BxBaseView extends BxDolView
         $bTmplVarsDoView = $bShowDoView && ($bCount || $bAllowedView);
         $aTmplVarsDoView = array();
         if($bTmplVarsDoView)
-        	$aTmplVarsDoView = array(
-				'style_prefix' => $this->_sStylePrefix,
-				'do_view' => $this->_getDoView($aParams, $bAllowedView),
-			);
+            $aTmplVarsDoView = array(
+                'style_prefix' => $this->_sStylePrefix,
+                'do_view' => $this->_getDoView($aParams, $bAllowedView),
+            );
 
         //--- Counter
         $bTmplVarsCounter = $bShowCounter && ($bCount || $bAllowedView);
         $aTmplVarsCounter = array();
         if($bTmplVarsCounter)
-        	$aTmplVarsCounter = array(
-				'style_prefix' => $this->_sStylePrefix,
-				'bx_if:show_hidden' => array(
-					'condition' => !$bCount,
-					'content' => array()
-				),
-				'counter' => $this->getCounter($aParams)
-        	);
+            $aTmplVarsCounter = array(
+                'style_prefix' => $this->_sStylePrefix,
+                'bx_if:show_hidden' => array(
+                    'condition' => !$bCount,
+                    'content' => array()
+                ),
+                'counter' => $this->getCounter(array_merge($aParams, array('show_script' => false)))
+            );
 
-		if(!$bTmplVarsDoView && !$bTmplVarsCounter)
-			return '';
+        if(!$bTmplVarsDoView && !$bTmplVarsCounter)
+            return '';
 
-        $sTmplName = self::${'_sTmplContentElement' . bx_gen_method_name(!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_VIEW_USAGE_DEFAULT)};
+        $sTmplName = $this->{'_getTmplContentElement' . bx_gen_method_name(!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_VIEW_USAGE_DEFAULT)}();
         return $this->_oTemplate->parseHtmlByContent($sTmplName, array(
             'style_prefix' => $this->_sStylePrefix,
             'html_id' => $this->_aHtmlIds['main'],
             'class' => $this->_sStylePrefix . ($bShowDoViewAsButton ? '-button' : '') . ($bShowDoViewAsButtonSmall ? '-button-small' : ''),
             'count' => $aView['count'],
         	'bx_if:show_do_view' => array(
-        		'condition' => $bTmplVarsDoView,
-        		'content' => $aTmplVarsDoView
+                    'condition' => $bTmplVarsDoView,
+                    'content' => $aTmplVarsDoView
         	),
         	'bx_if:show_counter' => array(
-				'condition' => $bTmplVarsCounter,
-				'content' => $aTmplVarsCounter
-			),
+                    'condition' => $bTmplVarsCounter,
+                    'content' => $aTmplVarsCounter
+                ),
             'script' => $this->getJsScript($bDynamicMode)
         ));
     }
@@ -211,16 +211,16 @@ class BxBaseView extends BxDolView
     {
         $bShowDoViewAsButtonSmall = isset($aParams['show_do_view_as_button_small']) && $aParams['show_do_view_as_button_small'] == true;
         $bShowDoViewAsButton = !$bShowDoViewAsButtonSmall && isset($aParams['show_do_view_as_button']) && $aParams['show_do_view_as_button'] == true;
-		$bDisabled = !$bAllowedView;
+        $bDisabled = !$bAllowedView;
 
         $sClass = '';
-		if($bShowDoViewAsButton)
-			$sClass = 'bx-btn';
-		else if ($bShowDoViewAsButtonSmall)
-			$sClass = 'bx-btn bx-btn-small';
+        if($bShowDoViewAsButton)
+            $sClass = 'bx-btn';
+        else if ($bShowDoViewAsButtonSmall)
+            $sClass = 'bx-btn bx-btn-small';
 
-		if($bDisabled)
-			$sClass .= $bShowDoViewAsButton || $bShowDoViewAsButtonSmall ? ' bx-btn-disabled' : 'bx-view-disabled';
+        if($bDisabled)
+            $sClass .= $bShowDoViewAsButton || $bShowDoViewAsButtonSmall ? ' bx-btn-disabled' : 'bx-view-disabled';
 
         return $this->_oTemplate->parseLink('javascript:void(0)', $this->_getLabelDo($aParams), array(
             'class' => $this->_sStylePrefix . '-do-view ' . $sClass,
@@ -228,26 +228,43 @@ class BxBaseView extends BxDolView
         ));
     }
 
-    protected function _getLabelCounter($iCount)
+    protected function _getCounterLabel($iCount, $aParams = array())
     {
-        return _t('_view_counter', $iCount);
+        return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentCounterLabel(), array(
+            'bx_if:show_icon' => array(
+                'condition' => !isset($aParams['show_counter_label_icon']) || $aParams['show_counter_label_icon'] === true,
+                'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
+                    'name' => $this->_getIconDo()
+                )
+            ),
+            'bx_if:show_text' => array(
+                'condition' => !isset($aParams['show_counter_label_text']) || $aParams['show_counter_label_text'] === true,
+                'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
+                    'text' => _t('_view_counter', $iCount)
+                )
+            )
+        ));
     }
 
     protected function _getLabelDo($aParams = array())
     {
-        return $this->_oTemplate->parseHtmlByContent(self::$_sTmplContentDoViewLabel, array(
-        	'bx_if:show_icon' => array(
-        		'condition' => isset($aParams['show_do_view_icon']) && $aParams['show_do_view_icon'] == true,
-        		'content' => array(
-        			'name' => $this->_getIconDo()
-        		)
-        	),
-        	'bx_if:show_text' => array(
-        		'condition' => isset($aParams['show_do_view_label']) && $aParams['show_do_view_label'] == true,
-        		'content' => array(
-        			'text' => _t($this->_getTitleDo())
-        		)
-        	)
+        return $this->_oTemplate->parseHtmlByContent($this->_sTmplContentDoViewLabel, array(
+            'bx_if:show_icon' => array(
+                'condition' => isset($aParams['show_do_view_icon']) && $aParams['show_do_view_icon'] == true,
+                'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
+                    'name' => $this->_getIconDo()
+                )
+            ),
+            'bx_if:show_text' => array(
+                'condition' => isset($aParams['show_do_view_label']) && $aParams['show_do_view_label'] == true,
+                'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
+                    'text' => _t($this->_getTitleDo())
+                )
+            )
         ));
     }
 
