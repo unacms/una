@@ -156,7 +156,7 @@ div.bx-vote div.bx-vote-counter-holder {
     margin-top: 4px;
     margin-bottom: 4px;
 }
-.bx-vote-counter.bx-vote-counter-likes span.bx-vote-counter-icon .sys-icon {
+.bx-vote-counter span.bx-vote-counter-icon .sys-icon {
     vertical-align: top;
 }
 
