@@ -991,7 +991,7 @@ CREATE TABLE `sys_accounts` (
   `changed` int(11) NOT NULL DEFAULT '0',
   `logged` int(11) NOT NULL DEFAULT '0',
   `ip` varchar(40) NOT NULL DEFAULT '',
-  `reffered` varchar(255) NOT NULL DEFAULT '',
+  `referred` varchar(255) NOT NULL DEFAULT '',
   `login_attempts` tinyint(4) NOT NULL DEFAULT '0',
   `locked` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
