@@ -1729,7 +1729,7 @@
   <string name="_sys_audit_action_unfeature"><![CDATA[Unfeatured]]></string>
   <string name="_sys_audit_action_group_to_admins"><![CDATA[Added to group admins]]></string>
   <string name="_sys_audit_action_group_from_admins"><![CDATA[Removed from group admins]]></string>
-  <string name="_sys_audit_action_group_join_request_accepted"><![CDATA[Join requestaccepted]]></string>
+  <string name="_sys_audit_action_group_join_request_accepted"><![CDATA[Join request accepted]]></string>
   <string name="_sys_audit_action_account_change_role_to_3"><![CDATA[Made operator]]></string>
   <string name="_sys_audit_action_account_change_role_to_1"><![CDATA[Unmade operator]]></string>
   <string name="_sys_audit_action_account_unlock"><![CDATA[Unlocked]]></string>
