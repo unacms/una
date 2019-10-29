@@ -579,6 +579,12 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
         $oZ = new BxDolAlerts('profile', 'set_membership', '', $iProfileId, array('mlevel'=> $iLevelId, 'period' => $mixedPeriod['period'], 'period_unit' => $mixedPeriod['period_unit'], 'starts_now' => $bStartsNow, 'txn_id' => $sTransactionId));
         $oZ->alert();
 
+        // audit
+        $aDataForAudit = array();
+        if (!is_empty($aMembershipCurrent))
+            $aDataForAudit = array('new_membership_level' => _t($aLevel['name']), 'old_membership_level' => _t($aMembershipCurrent['name']));
+        BxDolProfile::getInstance($iProfileId)->doAudit('_sys_audit_action_set_membership', $aDataForAudit);
+        
         // Send notification
         $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_MemChanged', array('membership_level' => _t($aLevel['name'])), 0, $iProfileId);
         if ($aTemplate)

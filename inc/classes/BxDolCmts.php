@@ -1102,6 +1102,13 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             $this->isRemoveAllowed($aCmt, true);
 
             $this->deleteMetaInfo ($iCmtId);
+            
+            bx_audit(
+               $this->getId(), 
+               $this->_aSystem['module'], 
+               '_sys_audit_action_delete_comment',  
+               $this->_prepareAuditParams($iCmtId, array('comment_author_id' => $aCmt['cmt_author_id'], 'comment_text' => $aCmt['cmt_text']))
+           );
 
             bx_alert($this->_sSystem, 'commentRemoved', $iObjId, $iPerformerId, array(
                 'object_author_id' => $iObjAthrId,
@@ -1183,6 +1190,13 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             'comment_author_id' => $aCmt['cmt_author_id'], 
             'comment_text' => $aCmt['cmt_text']
         ));
+        
+        bx_audit(
+           $this->getId(), 
+           $this->_aSystem['module'], 
+           '_sys_audit_action_add_comment',  
+           $this->_prepareAuditParams($iCmtId, array('comment_author_id' => $aCmt['cmt_author_id'], 'comment_text' => $aCmt['cmt_text']))
+       );
 
         bx_alert('comment', 'added', $iCmtId, $iPerformerId, array(
             'object_system' => $this->_sSystem, 
@@ -1241,6 +1255,13 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             'comment_author_id' => $aCmt['cmt_author_id'], 
             'comment_text' => $aCmt['cmt_text']        	
         ));
+        
+        bx_audit(
+           $this->getId(), 
+           $this->_aSystem['module'], 
+           '_sys_audit_action_edit_comment',  
+           $this->_prepareAuditParams($iCmtId, array('comment_author_id' => $aCmt['cmt_author_id'], 'comment_text' => $aCmt['cmt_text']))
+       );
 
         bx_alert('comment', 'edited', $iCmtId, $iPerformerId, array(
             'object_system' => $this->_sSystem, 
@@ -1490,6 +1511,30 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $aDp['in_designbox'] = isset($aDp['in_designbox']) ? (bool)$aDp['in_designbox'] : true;
         $aDp['dynamic_mode'] = isset($aDp['dynamic_mode']) ? (bool)$aDp['dynamic_mode'] : false;
         $aDp['show_empty'] = isset($aDp['show_empty']) ? (bool)$aDp['show_empty'] : false;
+    }
+    
+    protected function _prepareAuditParams($iId, $aData)
+    {
+        $sModule = $this->_aSystem['module'];
+        $oModule = BxDolModule::getInstance($sModule);
+        $CNF = $oModule->_oConfig->CNF;
+
+        $aContentInfo = BxDolRequest::serviceExists($sModule, 'get_all') ? BxDolService::call($sModule, 'get_all', array(array('type' => 'id', 'id' => $this->getId()))) : array();
+        $iContextId = 0;
+        if (!empty($aContentInfo)){
+            $iContextId = isset($CNF['FIELD_ALLOW_VIEW_TO']) && (!empty($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) && (int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0) ? - $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] : 0; 
+        }
+        
+        $AuditParams = array(
+            'content_title' => $this->getObjectTitle() ,
+            'context_profile_id' => $iContextId,
+            'content_info_object' =>  isset($CNF['OBJECT_CMTS_CONTENT_INFO']) ? $CNF['OBJECT_CMTS_CONTENT_INFO'] : '',
+            'data' => array_merge(array('comment_id' => $iId), $aData)
+        );
+        if ($iContextId > 0)
+            $AuditParams['context_profile_title'] = BxDolProfile::getInstance($iContextId)->getDisplayName();
+        
+        return $AuditParams;
     }
 
     protected function _prepareTextForOutput ($s, $iCmtId = 0)

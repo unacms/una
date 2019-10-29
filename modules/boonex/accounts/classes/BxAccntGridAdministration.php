@@ -132,6 +132,8 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
                 bx_alert('account', 'edited', $aAccount['id'], BxDolAccount::getInstance()->id(), array('display' => $CNF['OBJECT_FORM_ACCOUNT_DISPLAY_SETTINGS_EMAIL']));
 
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
+                
+                $oAccount->doAudit($iId, '_sys_audit_action_account_email_changed', array('old_email' => $oAccount->getEmail(), 'new_email' => $sEmail));
             }
             else
                 $aRes = array('msg' => _t('_sys_txt_error_account_update'));
@@ -167,7 +169,7 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
         foreach($aIds as $iId)
 			if($oAccount->sendConfirmationEmail($iId)) {
 				$aIdsAffected[] = $iId;
-        		$iAffected++;
+        		$iAffected++;  
 			}
 
 		echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['grid_action_err_perform'])));
@@ -204,6 +206,8 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
             ));
 
             $aRes = array('popup' => BxTemplStudioFunctions::getInstance()->popupBox($sPopupId, $sPopupTitle, $sPopupContent));
+            
+            $oAccount->doAudit($iId, '_sys_audit_action_account_reset_password');
         }
         else 
             $aRes = array('msg' => _t('_bx_accnt_grid_action_err_perform'));
@@ -226,6 +230,8 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
 			if ($oAccount->isLocked()){
 				$oAccountQuery->unlockAccount($iId);
 			}
+            
+            $oAccount->doAudit($iId, '_sys_audit_action_account_unlock');
 		}
 		$aRes = array('grid' => $this->getCode(false), 'blink' => $aIds);
         return echoJson($aRes);
@@ -257,6 +263,9 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
 			if($this->_oModule->_oDb->updateAccount(array('role' => $iRole), array('id' => $iId))) {
 				$aIdsAffected[] = $iId;
         		$iAffected++;
+                
+                $oAccount = BxDolAccount::getInstance($iId);
+                $oAccount->doAudit($iId, '_sys_audit_action_account_change_role_to_' . $iRole);
 			}
 
 		echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['grid_action_err_perform'])));
@@ -271,13 +280,15 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
             echoJson(array());
             return;
         }
-
         $iAffected = 0;
         $aIdsAffected = array();
         foreach($aIds as $iId)
         	if($this->_enable($iId, $isChecked)) {
         		$aIdsAffected[] = $iId;
         		$iAffected++;
+                
+                $oAccount = BxDolAccount::getInstance($iId);
+                $oAccount->doAudit($iId, '_sys_audit_action_account_' . $isChecked ? 'activated' : 'suspended');
         	}
 
         echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['grid_action_err_perform'])));
@@ -368,6 +379,8 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
     {
     	return BxDolAccount::getInstance($iId)->delete(isset($aParams['with_content']) && $aParams['with_content'] === true);
     }
+    
+    
 
     protected function _addJsCss()
     {

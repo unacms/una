@@ -21,7 +21,8 @@ class BxBaseStudioAudit extends BxDolStudioAudit
         $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'audit.php?page=';
 
 		$this->aMenuItems = array(
-            BX_DOL_STUDIO_AUD_TYPE_GENERAL => array('icon' => 'search')
+            BX_DOL_STUDIO_AUD_TYPE_GENERAL => array('icon' => 'search'),
+            BX_DOL_STUDIO_AUD_TYPE_SETTINGS => array('icon' => 'cogs'),
 	    );
 
 		$this->aGridObjects = array(
@@ -77,6 +78,16 @@ class BxBaseStudioAudit extends BxDolStudioAudit
     protected function getGeneral()
     {
         return $this->getGrid($this->aGridObjects['audit']);
+    }
+    
+    protected function getSettings()
+    {
+       
+        $oPage = new BxTemplStudioSettings(BX_DOL_STUDIO_STG_TYPE_SYSTEM, BX_DOL_STUDIO_STG_CATEGORY_AUDIT);
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('audit.html', array(
+            'content' => $oPage->getPageCode(),
+        	'js_content' => ''
+        ));
     }
 
     protected function getGrid($sObjectName)

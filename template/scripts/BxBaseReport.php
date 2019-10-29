@@ -270,6 +270,13 @@ class BxBaseReport extends BxDolReport
 		
 		        $oZ = new BxDolAlerts('report', 'do', $iId, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId, 'type' => $sType, 'text' => $sText));
 		        $oZ->alert();
+                
+                bx_audit(
+                    $iObjectId, 
+                    $this->_sSystem, 
+                    '_sys_audit_action_report',  
+                    $this->_prepareAuditParams($iObjectId, array('type' => $sType, 'text' => $sText))
+                );
 
 		        $aReport = $this->_oQuery->getReport($iObjectId);
 		        return array(
@@ -329,6 +336,23 @@ class BxBaseReport extends BxDolReport
             'style_prefix' => $this->_sStylePrefix,
             'bx_repeat:list' => $aTmplReports
         ));
+    }
+    
+    private function _prepareAuditParams($iObjectId, $aData)
+    {
+        $sModule = $this->_sSystem;
+        $oModule = BxDolModule::getInstance($sModule);
+        $CNF = $oModule->_oConfig->CNF;
+
+        $aContentInfo = BxDolRequest::serviceExists($sModule, 'get_all') ? BxDolService::call($sModule, 'get_all', array(array('type' => 'id', 'id' => $iObjectId))) : array();
+        
+        $AuditParams = array(
+            'content_title' => isset($CNF['FIELD_TITLE'])  ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
+            'content_info_object' =>  isset($CNF['OBJECT_CONTENT_INFO']) ? $CNF['OBJECT_CONTENT_INFO'] : '',
+            'data' => $aData 
+        );
+        
+        return $AuditParams;
     }
 }
 

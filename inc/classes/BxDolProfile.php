@@ -488,6 +488,16 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         return $this->changeStatus(BX_PROFILE_STATUS_PENDING, 'disapprove', $iAction, $iProfileId, $bSendEmailNotification);
     }
 
+    public function doAudit($sAction, $aData = array())
+    {
+        bx_audit(
+            $this->getContentId(), 
+            $this->getModule(), 
+            $sAction,  
+            array('content_title' => $this->getDisplayName(), 'data' => $aData)
+        );  
+    }
+    
     /**
      * Change profile status to 'Suspended'
      */
@@ -515,6 +525,8 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
 
         // alert about status changing
         bx_alert('profile', $sAlertActionName, $iProfileId, false, array('action' => $iAction));
+        
+        $this->doAudit('_sys_audit_action_set_status_' . $sStatus);
         
         // send email to member about status change
         if ($bSendEmailNotification)

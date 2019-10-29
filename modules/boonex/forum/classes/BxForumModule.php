@@ -57,6 +57,13 @@ class BxForumModule extends BxBaseModTextModule
         if($sResult !== CHECK_ACTION_RESULT_ALLOWED)
             return echoJson(array('code' => 2, 'message' => $sResult));
 
+        bx_audit(
+            $iContentId, 
+            $this->getName(), 
+            '_sys_audit_action_' . $sAction,  
+            $this->_prepareAuditParams($aContentInfo, false)
+        );
+        
         if(!$this->_oDb->updateStatus($sAction, $aContentInfo))
             return echoJson(array('code' => 3, 'message' => _t('_error occured')));
 

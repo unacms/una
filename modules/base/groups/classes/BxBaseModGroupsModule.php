@@ -282,6 +282,9 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             	'group_profile' => $iGroupProfileId, 
             	'profile' => $iProfileId,
             ));
+            
+            $this->doAudit($iGroupProfileId, $iInitiatorId, '_sys_audit_action_group_join_request_accepted');
+            
             return false;
         }
 
@@ -653,7 +656,32 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     {
         return parent::checkAllowedSubscribeAdd ($aDataEntry, $isPerformAction);
     }
-
+    
+    public function doAudit($iGroupProfileId, $iFanId, $sAction)
+    {
+        $oProfile = BxDolProfile::getInstance($iFanId);
+        
+        $iContentId = $oProfile->getContentId();
+        $sModule = $oProfile->getModule();
+        $oModule = BxDolModule::getInstance($sModule);
+        $CNF = $oModule->_oConfig->CNF;
+        
+        $aContentInfo = BxDolRequest::serviceExists($sModule, 'get_all') ? BxDolService::call($sModule, 'get_all', array(array('type' => 'id', 'id' => $iContentId))) : array();
+        
+        $AuditParams = array(
+            'content_title' => (isset($CNF['FIELD_TITLE']) && isset($aContentInfo[$CNF['FIELD_TITLE']])) ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
+            'context_profile_id' => $iGroupProfileId,
+            'context_profile_title' => BxDolProfile::getInstance($iGroupProfileId)->getDisplayName()
+        );
+        
+        bx_audit(
+            $iContentId, 
+            $sModule, 
+            $sAction,  
+            $AuditParams
+        );
+    }
+    
     protected function _checkAllowedConnect (&$aDataEntry, $isPerformAction, $sObjConnection, $isMutual, $isInvertResult, $isSwap = false)
     {
         $sResult = $this->checkAllowedView($aDataEntry);

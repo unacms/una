@@ -160,6 +160,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     	if(!$this->_oDb->updateEvent(array('sticked' => $aEvent['sticked']), array('id' => $iId)))
             return echoJson(array('code' => 3));
 
+        bx_audit(
+            $iId, 
+            $this->getName(), 
+            '_sys_audit_action_' . ((int)$aEvent['sticked'] == 0 ? 'stick' : 'unstick'),  
+            $this->_prepareAuditParams($aEvent, false)
+        );
+        
     	echoJson(array(
             'code' => 0,
             'id' => $iId,
@@ -189,6 +196,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'object_id' => $aEvent['object_id'],
             'object_author_id' => $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $aEvent['owner_id'] : $aEvent['object_id']
         ));
+        
+        bx_audit(
+            $iId, 
+            $this->getName(), 
+            '_sys_audit_action_' . ((int)$aEvent['promoted'] == 0 ? 'promote' : 'unpromote'),  
+            $this->_prepareAuditParams($aEvent, false)
+        );
 
         echoJson(array(
             'code' => 0, 
