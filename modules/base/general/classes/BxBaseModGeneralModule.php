@@ -1691,6 +1691,26 @@ class BxBaseModGeneralModule extends BxDolModule
     {
         return CHECK_ACTION_RESULT_ALLOWED === $this->checkAllowedEditAnyEntry ($isPerformAction);
     }
+    
+    public function _prepareAuditParams($aContentInfo, $bIsSaveData = true, $aOverrideAuditParams  = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+        
+        $iContextId = isset($CNF['FIELD_ALLOW_VIEW_TO']) && (!empty($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) && (int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0) ? - $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] : 0;
+        
+        $AuditParams = array(
+            'content_title' => (isset($CNF['FIELD_TITLE']) && isset($aContentInfo[$CNF['FIELD_TITLE']])) ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
+            'context_profile_id' => $iContextId,
+            'content_info_object' =>  isset($CNF['OBJECT_CONTENT_INFO']) ? $CNF['OBJECT_CONTENT_INFO'] : '',
+            'data' => ($bIsSaveData ? $aContentInfo : array())
+        );
+        if ($iContextId > 0)
+            $AuditParams['context_profile_title'] = BxDolProfile::getInstance($iContextId)->getDisplayName();
+        
+        $AuditParams = array_merge($AuditParams, $aOverrideAuditParams);
+        
+        return $AuditParams;
+    }
 
     // ====== PROTECTED METHODS
 
@@ -1927,27 +1947,7 @@ class BxBaseModGeneralModule extends BxDolModule
 
 		echoJson($aResponse);
 		exit;
-    }
-    
-    protected function _prepareAuditParams($aContentInfo, $bIsSaveData = true, $aOverrideAuditParams  = array())
-    {
-        $CNF = &$this->_oConfig->CNF;
-        
-        $iContextId = isset($CNF['FIELD_ALLOW_VIEW_TO']) && (!empty($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) && (int)$aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0) ? - $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] : 0;
-        
-        $AuditParams = array(
-            'content_title' => (isset($CNF['FIELD_TITLE']) && isset($aContentInfo[$CNF['FIELD_TITLE']])) ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
-            'context_profile_id' => $iContextId,
-            'content_info_object' =>  isset($CNF['OBJECT_CONTENT_INFO']) ? $CNF['OBJECT_CONTENT_INFO'] : '',
-            'data' => ($bIsSaveData ? $aContentInfo : array())
-        );
-        if ($iContextId > 0)
-            $AuditParams['context_profile_title'] = BxDolProfile::getInstance($iContextId)->getDisplayName();
-        
-        $AuditParams = array_merge($AuditParams, $aOverrideAuditParams);
-        
-        return $AuditParams;
-    }
+    }    
 }
 
 /** @} */

@@ -581,7 +581,7 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
 
         // audit
         $aDataForAudit = array();
-        if (!is_empty($aMembershipCurrent))
+        if (!empty($aMembershipCurrent))
             $aDataForAudit = array('new_membership_level' => _t($aLevel['name']), 'old_membership_level' => _t($aMembershipCurrent['name']));
         BxDolProfile::getInstance($iProfileId)->doAudit('_sys_audit_action_set_membership', $aDataForAudit);
         
