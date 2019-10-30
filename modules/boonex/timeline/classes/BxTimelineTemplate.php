@@ -2235,18 +2235,17 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sStylePrefix = $this->_oConfig->getPrefix('style');
         $aTmplVarsVideos = array();
 
-        $bMain = $mixedLayout === true;
-
         /*
          * For now Main Section may have only one video which can use 'autoplay' feature.
          */
-        $sDisplay = BX_TIMELINE_ML_SINGLE;
-        if(count($aVideos) > 1) {
-            if($bMain)
+        $bMain = $mixedLayout === true;
+        if($bMain) {
+            $sDisplay = BX_TIMELINE_ML_SINGLE;
+            if(count($aVideos) > 1)
                 $aVideos = array_slice($aVideos, 0, 1);
-            else
-                $sDisplay = is_array($mixedLayout) && !empty($mixedLayout['layout']) ? $mixedLayout['layout'] : BX_TIMELINE_AML_DEFAULT;
         }
+        else
+            $sDisplay = is_array($mixedLayout) && !empty($mixedLayout['layout']) ? $mixedLayout['layout'] : BX_TIMELINE_AML_DEFAULT;
 
         /*
          * Main Section: Autoplay feature is only available here.
