@@ -1853,7 +1853,7 @@ class BxBaseModGeneralModule extends BxDolModule
             $sImageOrig = $sImage;
 
         return array(
-            array('url' => $sUrl, 'src' => $sImage, 'src_orig' => $sImageOrig),
+            array('id' => $aContentInfo[$CNF['FIELD_THUMB']], 'url' => $sUrl, 'src' => $sImage, 'src_orig' => $sImageOrig),
         );
     }
 

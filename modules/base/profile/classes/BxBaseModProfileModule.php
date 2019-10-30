@@ -1578,7 +1578,7 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             if(empty($sImageOrig))
                 $sImageOrig = $sImage;
 
-            $a = array('url' => $sUrl, 'src' => $sImage);
+            $a = array('id' => $aFileInfo['id'], 'url' => $sUrl, 'src' => $sImage);
             if (CHECK_ACTION_RESULT_ALLOWED === $this->checkAllowedView($aContentInfo))
                 $a['src_orig'] = $sImageOrig;
             $aImages = array($a);
