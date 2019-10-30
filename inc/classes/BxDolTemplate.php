@@ -448,6 +448,11 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         return $aResult;
     }
 
+    public function getClassName()
+    {
+        return get_class($this);
+    }
+
     public static function getColorCode($mixedName = false, $fOpacity = false)
     {
         $aClasses = array_keys(self::$_aColors);
