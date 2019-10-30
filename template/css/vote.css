@@ -195,15 +195,19 @@ div.bx-vote-by-list div.bx-base-pofile-unit {
     line-height: 3.125rem;
 }
 .bx-vote-bls-title,
-.bx-vote-bls-submenu-cnt {
-	height: 3.125rem;
+.bx-vote-bls-submenu-cnt,
+.bx-vote-bls-filler {
+    height: 3.125rem;
 }
-
-.bx-vote-bls-title {
+.bx-vote-bls-title,
+.bx-vote-bls-filler {
     -webkit-flex-grow: 3;
     flex-grow: 3;
 
     border-bottom: 2px solid rgba(0,0,0,0.1);
+}
+.bx-vote-bls-title {
+    display: none;
 
     white-space: nowrap;
     font-size: 1rem;
