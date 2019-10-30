@@ -540,6 +540,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sBack = $this->getBack($aParams);
         $sLoadMore = $this->getLoadMore($aParams, $bNext, $iEvents > 0 && $bEvents);
         $sEmpty = $this->getEmpty($iEvents <= 0 || !$bEvents);
+
         return array($sContent, $sLoadMore, $sBack, $sEmpty, $iFirst);
     }
 
@@ -2296,6 +2297,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 else {
                     $bUrl = !empty($aVideo['url']);
                     $sUrl = $bUrl ? $aVideo['url'] : '';
+                    
+                    $bDuration = !empty($aVideo['duration']);
+                    $sDuration = _t_format_duration($bDuration ? $aVideo['duration'] : 0);
 
                     $aTmplVarsVideos[] = array(
                         'style_prefix' => $sStylePrefix,
@@ -2317,7 +2321,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                                     'src' => $aVideo['src_poster'],
                                 )
                             ),
-                            'duration' => !empty($aVideo['duration']) ? _t_format_duration($aVideo['duration']) : 0
+                            'bx_if:show_duration' => array(
+                                'condition' => $bDuration,
+                                'content' => array(
+                                    'style_prefix' => $sStylePrefix,
+                                    'duration' => $sDuration,
+                                )
+                            )
                         ))
                     );
                 }

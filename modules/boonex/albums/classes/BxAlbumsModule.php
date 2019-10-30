@@ -807,6 +807,7 @@ class BxAlbumsModule extends BxBaseModTextModule
         $oTcMp4 = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']);
         $oTcMp4Hd = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4_hd']);
         $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
+        $oTranscoderCover = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_TRANSCODER_COVER']);
 
     	//--- Image(s) and Video(s)
         $aImages = $aVideos = array();
@@ -830,6 +831,7 @@ class BxAlbumsModule extends BxBaseModTextModule
                     'id' => $aMediaInfo['id'],
                     'url' => $this->_oTemplate->getViewMediaUrl($CNF, $aMediaInfo['id']), 
                     'src' => $oTranscoder->getFileUrl($aMediaInfo['file_id']),
+                    'src_orig' => $oTranscoderCover->getFileUrl($aMediaInfo['file_id'])
                 );
         }
 
