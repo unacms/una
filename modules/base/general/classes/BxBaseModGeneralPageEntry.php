@@ -37,6 +37,11 @@ class BxBaseModGeneralPageEntry extends BxTemplPage
         return true;
     }
 
+    public function getContentInfo()
+    {
+        return $this->_aContentInfo;
+    }
+    
     public function getCode ()
     {
         // check if content exists
