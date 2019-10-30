@@ -594,6 +594,7 @@ div.bx-tl-view-search div.bx-tl-item-attachment img {
     height: 12.5rem;
 }
 
+/*+++ Video +++*/
 div.bx-tl-view-timeline div.bx-tl-item-attachment video,
 div.bx-tl-view-outline div.bx-tl-item-attachment video,
 div.bx-tl-view-item div.bx-tl-item-attachment video {
@@ -602,6 +603,61 @@ div.bx-tl-view-item div.bx-tl-item-attachment video {
     margin-left: auto;
     margin-right: auto;
 }
+div.bx-tl-item-attachment .bx-tl-item-video {
+    position: relative;
+}
+div.bx-tl-item-attachment .bx-tl-iv-duration {
+    position: absolute;
+    right: 0.25rem;
+    bottom: 0.25rem;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+/*+++ Showcase Layout +++*/
+div.bx-tl-item-attachments.bx-tl-ia-showcase {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+}
+div.bx-tl-item-attachments.bx-tl-ia-showcase div.bx-tl-item-attachment {
+    box-sizing: border-box;
+    width: 33.2%;
+    height: 8.5rem;
+    border: 1px solid transparent;
+}
+div.bx-tl-item-attachments.bx-tl-ia-showcase div.bx-tl-item-attachment.bx-tl-ia-first {
+    width: 100%;
+    height: auto;
+}
+div.bx-tl-item-attachments.bx-tl-ia-showcase img {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+div.bx-tl-item-attachments.bx-tl-ia-showcase .bx-tl-item-more {
+    position: absolute;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+
+    font-size: 2.5rem;
+    color: #ffffff;
+}
+
 
 /*+++ Slider Styles  +++*/
 div.bx-tl-item-images .flickity-slider,

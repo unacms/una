@@ -480,6 +480,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
                 continue;
 
             $aResults[] = array(
+                'id' => $a['id'],
                 'src' => $sPhotoSrc,
                 'src_medium' => $sPhotoSrc,
                 'src_orig' => $oStorage->getFileUrlById($a['id']),
@@ -562,6 +563,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
             $sUrl = $oStorage->getFileUrlById($a['id']);
 
             $aResults[] = array(
+                'id' => $a['id'],
                 'src' => $sPhotoSrc,
                 'src_medium' => $sPhotoSrc,
                 'src_orig' => $bImage ? $sUrl : '',
