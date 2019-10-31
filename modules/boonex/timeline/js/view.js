@@ -879,7 +879,7 @@ BxTimelineView.prototype._getPage = function(oElement, iStart, iPerPage, onLoad)
     	if(oData && oData.back != undefined)
             $this.oView.find('.' + $this.sSP + '-back-holder').html($.trim(oData.back));
 
-    	if(oData && oData.empty != undefined)
+    	if(oData && oData.empty != undefined && !$this.oView.find('.' + $this.sClassItem).length)
             $this.oView.find('.' + $this.sSP + '-empty-holder').html($.trim(oData.empty));
 
         if(typeof onLoad == 'function')

@@ -220,8 +220,8 @@ class BxFilesModule extends BxBaseModTextModule
             $sPhotoThumb = $oImagesTranscoder->getFileUrl($aFile['id']);
 
         return array(
-		    array('url' => $sUrl, 'src' => $sPhotoThumb),
-		);
+            array('id' => $aFile['id'], 'url' => $sUrl, 'src' => $sPhotoThumb),
+        );
     }
 }
 

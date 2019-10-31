@@ -23,6 +23,9 @@
     <string name="_bx_timeline_option_videos_autoplay_on"><![CDATA[Включено (cо звуком)]]></string>
     <string name="_bx_timeline_option_preload_comments"><![CDATA[Количество предварительно загруженных комментариев (до 7 штук)]]></string>
     <string name="_bx_timeline_option_enable_jump_to_switcher"><![CDATA[Показывать переключатель 'Перейти к']]></string>
+    <string name="_bx_timeline_option_attachments_layout"><![CDATA[Показывать вложения как]]></string>
+    <string name="_bx_timeline_option_attachments_layout_gallery"><![CDATA[Галерея]]></string>
+    <string name="_bx_timeline_option_attachments_layout_showcase"><![CDATA[Витрина]]></string>
     <string name="_bx_timeline_option_enable_hot"><![CDATA[Включить сбор данных для листа 'горячих' сообщений]]></string>
     <string name="_bx_timeline_option_hot_interval"><![CDATA[Интервал времени (в часах) для получения 'горячих' сообщений]]></string>
     <string name="_bx_timeline_option_enable_cache_item"><![CDATA[Включить кэш элемента]]></string>

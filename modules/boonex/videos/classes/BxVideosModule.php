@@ -82,7 +82,7 @@ class BxVideosModule extends BxBaseModTextModule
     }
     protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {
-        list($sImageThumb, $sImageGallery, $sImageCover) = $this->_oTemplate->getUnitImages($aContentInfo);
+        list($iImageId, $sImageThumb, $sImageGallery, $sImageCover) = $this->_oTemplate->getUnitImages($aContentInfo);
         if(empty($sImageGallery) && !empty($sImageThumb))
             $sImageGallery = $sImageThumb;
 
@@ -90,7 +90,7 @@ class BxVideosModule extends BxBaseModTextModule
             return array();
 
         return array(
-            array('url' => $sUrl, 'src' => $sImageGallery, 'src_orig' => $sImageCover),
+            array('id' => $iImageId, 'url' => $sUrl, 'src' => $sImageGallery, 'src_orig' => $sImageCover),
         );
     }
 

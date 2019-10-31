@@ -717,7 +717,7 @@ class BxAlbumsModule extends BxBaseModTextModule
     {
         $CNF = &$this->_oConfig->CNF;
 
-        if(empty($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']))
+        if(empty($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']) || empty($CNF['OBJECT_TRANSCODER_COVER']))
             return array();
 
         $aMediaList = $this->_oDb->getMediaListByContentId($aContentInfo[$CNF['FIELD_ID']]);
@@ -727,6 +727,7 @@ class BxAlbumsModule extends BxBaseModTextModule
         $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
         $oTcPoster = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']);
         $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
+        $oTranscoderCover = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_TRANSCODER_COVER']);
         
         $aOutput = array();
         foreach ($aMediaList as $aMedia) {
@@ -737,12 +738,15 @@ class BxAlbumsModule extends BxBaseModTextModule
                 continue;
 
             $aOutput[$aMedia['id']] = array (
+                'id' => $aMedia['id'],
                 'url' => $this->_oTemplate->getViewMediaUrl($CNF, $aMedia['id']), 
                 'src' => $oTranscoder->getFileUrl($aMedia['file_id']),
+                'src_orig' => $oTranscoderCover->getFileUrl($aMedia['file_id'])
             );
         }
 
-        return count($aOutput) > 3 ? array_slice($aOutput, 0, 3) : $aOutput;
+        $iSliceLenth = 4;
+        return count($aOutput) > $iSliceLenth ? array_slice($aOutput, 0, $iSliceLenth) : $aOutput;
     }
 
     protected function _getVideosForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
@@ -783,10 +787,12 @@ class BxAlbumsModule extends BxBaseModTextModule
                 'src_poster' => $oTcPoster->getFileUrl($aMedia['file_id']),
                 'src_mp4' => $oTcMp4->getFileUrl($aMedia['file_id']),
                 'src_mp4_hd' => $sVideoUrlHd,
+                'duration' => $aFileInfo['duration'],
             );
         }
 
-        return count($aOutput) > 3 ? array_slice($aOutput, 0, 3) : $aOutput;
+        $iSliceLenth = 4;
+        return count($aOutput) > $iSliceLenth ? array_slice($aOutput, 0, $iSliceLenth) : $aOutput;
     }
 
     protected function _getContentForTimelineMedia($aEvent, $aContentInfo, $aBrowseParams = array())
@@ -801,6 +807,7 @@ class BxAlbumsModule extends BxBaseModTextModule
         $oTcMp4 = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']);
         $oTcMp4Hd = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4_hd']);
         $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
+        $oTranscoderCover = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_TRANSCODER_COVER']);
 
     	//--- Image(s) and Video(s)
         $aImages = $aVideos = array();
@@ -817,11 +824,14 @@ class BxAlbumsModule extends BxBaseModTextModule
                     'src_poster' => $oTcPoster->getFileUrl($aMediaInfo['file_id']),
                     'src_mp4' => $oTcMp4->getFileUrl($aMediaInfo['file_id']),
                     'src_mp4_hd' => $oTcMp4Hd->getFileUrl($aMediaInfo['file_id']),
+                    'duration' => $aFileInfo['duration'],
                 );
             else
                 $aImages[$iMediaId] = array(
+                    'id' => $aMediaInfo['id'],
                     'url' => $this->_oTemplate->getViewMediaUrl($CNF, $aMediaInfo['id']), 
                     'src' => $oTranscoder->getFileUrl($aMediaInfo['file_id']),
+                    'src_orig' => $oTranscoderCover->getFileUrl($aMediaInfo['file_id'])
                 );
         }
 

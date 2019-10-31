@@ -121,17 +121,28 @@ class BxVideosTemplate extends BxBaseModTextTemplate
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
-        list($sImageThumb, $sImageGallery) = $this->getUnitThumbAndGallery ($aData);
+        $iImageId = 0;
+        $sImageThumb = $sImageGallery = '';
+
+        $iImageId = (int)$aData[$CNF['FIELD_THUMB']];
+        $sImageThumb = $this->_getUnitImage($CNF['FIELD_THUMB'], $CNF['OBJECT_IMAGES_TRANSCODER_GALLERY'], $aData);
+        if(empty($sImageThumb)) {
+            $iImageId = (int)$aData[$CNF['FIELD_VIDEO']];
+            $sImageThumb = $this->_getUnitImage($CNF['FIELD_VIDEO'], $CNF['OBJECT_VIDEOS_TRANSCODERS']['poster_gallery'], $aData);
+        }
+
+        if(!empty($sImageThumb))
+            $sImageGallery = $sImageThumb;
 
         $sImageCover = $this->_getUnitImage($CNF['FIELD_THUMB'], $CNF['OBJECT_IMAGES_TRANSCODER_COVER'], $aData);
         if(!empty($sImageCover))
-            return array($sImageThumb, $sImageGallery, $sImageCover);
+            return array($aData[$CNF['FIELD_THUMB']], $sImageThumb, $sImageGallery, $sImageCover);
 
         $sImageCover = $this->_getUnitImage($CNF['FIELD_VIDEO'], $CNF['OBJECT_VIDEOS_TRANSCODERS']['poster'], $aData);
         if(!empty($sImageCover))
-            return array($sImageThumb, $sImageGallery, $sImageCover);
+            return array($aData[$CNF['FIELD_VIDEO']], $sImageThumb, $sImageGallery, $sImageCover);
 
-        return array($sImageThumb, $sImageGallery, '');
+        return array($iImageId, $sImageThumb, $sImageGallery, '');
     }
 
     protected function getUnit($aData, $aParams = array())

@@ -726,11 +726,11 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             $sSrc = $oGroupProfile->getCover();
 
         if(empty($sSrc) && isset($CNF['FIELD_PICTURE']) && !empty($aContentInfo[$CNF['FIELD_PICTURE']]))
-             $sSrc = $oGroupProfile->getPicture();
+            $sSrc = $oGroupProfile->getPicture();
 
         return empty($sSrc) ? array() : array(
-		    array('url' => $sUrl, 'src' => $sSrc, 'src_orig' => $sSrc),
-		);
+            array('id' => $aContentInfo[$CNF['FIELD_PICTURE']], 'url' => $sUrl, 'src' => $sSrc, 'src_orig' => $sSrc),
+        );
     }
 
     protected function _prepareProfileAndGroupProfile($iGroupProfileId, $iInitiatorId)

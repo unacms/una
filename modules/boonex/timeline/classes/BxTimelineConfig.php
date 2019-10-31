@@ -38,6 +38,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_iPreloadComments;
     protected $_iPreloadCommentsMax;
     protected $_bJumpTo;
+    protected $_sAttachmentsLayout;
 
     protected $_bHot;
     protected $_iHotInterval;
@@ -131,6 +132,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
                 'txt_sample_with_media' => '_bx_timeline_txt_sample_with_media',
                 'grid_action_err_delete' => '_bx_timeline_grid_action_err_delete', 
                 'grid_txt_account_manager' => '_bx_timeline_grid_txt_account_manager',
+                'option_vap_off' => '_bx_timeline_option_videos_autoplay_off',
+                'option_vap_on_mute' => '_bx_timeline_option_videos_autoplay_on_mute',
+                'option_vap_on' => '_bx_timeline_option_videos_autoplay_on',
+                'option_al_gallery' => '_bx_timeline_option_attachments_layout_gallery',
+                'option_al_showcase' => '_bx_timeline_option_attachments_layout_showcase'
             ),
         );
 
@@ -313,6 +319,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             $this->_iPreloadComments = $this->_iPreloadCommentsMax;
 
         $this->_bJumpTo = getParam($sOptionPrefix . 'enable_jump_to_switcher') == 'on';
+        $this->_sAttachmentsLayout = getParam($sOptionPrefix . 'attachments_layout');
 
         $this->_bHot = getParam($sOptionPrefix . 'enable_hot') == 'on';
         $this->_iHotInterval = (int)getParam($sOptionPrefix . 'hot_interval');
@@ -512,6 +519,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function getPreloadComments()
     {
         return $this->_iPreloadComments;
+    }
+
+    public function getAttachmentsLayout()
+    {
+        return $this->_sAttachmentsLayout;
     }
 
     public function getHotInterval()

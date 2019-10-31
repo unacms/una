@@ -48,6 +48,14 @@ define('BX_TIMELINE_VAP_OFF', 'off');
 define('BX_TIMELINE_VAP_ON_MUTE', 'on_mute');
 define('BX_TIMELINE_VAP_ON', 'on');
 
+//--- Media Layouts
+define('BX_TIMELINE_ML_SINGLE', 'single');
+define('BX_TIMELINE_ML_GALLERY', 'gallery');
+define('BX_TIMELINE_ML_SHOWCASE', 'showcase');
+
+//--- Default Attachments Media Layout
+define('BX_TIMELINE_AML_DEFAULT', BX_TIMELINE_ML_GALLERY);
+
 class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolContentInfoService
 {
     protected $_sJsPostObject;
@@ -2201,7 +2209,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return 'BxTimelineFormCheckerHelper';
     }
 
-	/**
+    /**
      * @page service Service Calls
      * @section bx_timeline Timeline
      * @subsection bx_timeline-other Other
@@ -2220,13 +2228,48 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      */
     public function serviceGetOptionsVideosAutoplay()
     {
+        $CNF = &$this->_oConfig->CNF;
+
         $aOptions = array(BX_TIMELINE_VAP_OFF, BX_TIMELINE_VAP_ON_MUTE, BX_TIMELINE_VAP_ON);
 
         $aResult = array();
         foreach($aOptions as $sOption)
             $aResult[] = array(
                 'key' => $sOption,
-                'value' => _t('_bx_timeline_option_videos_autoplay_' . $sOption)
+                'value' => _t($CNF['T']['option_vap_' . $sOption])
+            );
+
+        return $aResult;
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Timeline
+     * @subsection bx_timeline-other Other
+     * @subsubsection bx_timeline-get_options_attachments_layout get_options_attachments_layout
+     * 
+     * @code bx_srv('bx_timeline', 'get_options_attachments_layout', [...]); @endcode
+     * 
+     * Get an array with available options for 'Show attachments as' setting.
+     *
+     * @return an array with available options represented as key => value pairs.
+     * 
+     * @see BxTimelineModule::serviceGetOptionsAttachmentsLayout
+     */
+    /** 
+     * @ref bx_timeline-get_options_attachments_layout "get_options_attachments_layout"
+     */
+    public function serviceGetOptionsAttachmentsLayout()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aOptions = array(BX_TIMELINE_ML_GALLERY, BX_TIMELINE_ML_SHOWCASE);
+
+        $aResult = array();
+        foreach($aOptions as $sOption)
+            $aResult[] = array(
+                'key' => $sOption,
+                'value' => _t($CNF['T']['option_al_' . $sOption])
             );
 
         return $aResult;

@@ -540,6 +540,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sBack = $this->getBack($aParams);
         $sLoadMore = $this->getLoadMore($aParams, $bNext, $iEvents > 0 && $bEvents);
         $sEmpty = $this->getEmpty($iEvents <= 0 || !$bEvents);
+
         return array($sContent, $sLoadMore, $sBack, $sEmpty, $iFirst);
     }
 
@@ -1888,12 +1889,19 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 );
             }
 
+        /*
+         * View Item page should use Gallery layout.
+         */
+        $sAttachmentsLayout = $this->_oConfig->getAttachmentsLayout();
+        if($bViewItem)
+            $sAttachmentsLayout = BX_TIMELINE_ML_GALLERY;
+
         $aTmplVarsImages = $aTmplVarsVideos = $aTmplVarsAttachments = array();
 
         //--- Process Photos ---//
         $bImages = !empty($aContent['images']) && is_array($aContent['images']);
         if($bImages) {
-            $aImages = $this->_getTmplVarsImages($aContent['images'], $aEvent, $aBrowseParams);
+            $aImages = $this->_getTmplVarsImages($aContent['images'], true, $aEvent, $aBrowseParams);
             if(!empty($aImages))
                 $aTmplVarsImages = array(
                     'style_prefix' => $sStylePrefix,
@@ -1904,7 +1912,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $bImagesAttach = !empty($aContent['images_attach']) && is_array($aContent['images_attach']);
         if($bImagesAttach) {
-            $aImagesAttach = $this->_getTmplVarsImages($aContent['images_attach'], $aEvent, $aBrowseParams);
+            $aImagesAttach = $this->_getTmplVarsImages($aContent['images_attach'], array('layout' => $sAttachmentsLayout, 'first' => empty($aTmplVarsAttachments)), $aEvent, $aBrowseParams);
             if(!empty($aImagesAttach))
                 $aTmplVarsAttachments = array_merge ($aTmplVarsAttachments, $aImagesAttach['items']);
         }
@@ -1936,7 +1944,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $bVideosAttach = !empty($aContent['videos_attach']) && is_array($aContent['videos_attach']);
         if($bVideosAttach) {
-            $aVideosAttach = $this->_getTmplVarsVideos($aContent['videos_attach'], false, $aEvent, $aBrowseParams);
+            $aVideosAttach = $this->_getTmplVarsVideos($aContent['videos_attach'], array('layout' => $sAttachmentsLayout, 'first' => empty($aTmplVarsAttachments)), $aEvent, $aBrowseParams);
             if(!empty($aVideosAttach))
                 $aTmplVarsAttachments = array_merge($aTmplVarsAttachments, $aVideosAttach['items']);
         }
@@ -1958,6 +1966,23 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $aFilesAttach = $this->_getTmplVarsFiles($aContent['files_attach'], $aEvent, $aBrowseParams);
             if(!empty($aFilesAttach))
                 $aTmplVarsAttachments = array_merge ($aTmplVarsAttachments, $aFilesAttach['items']);
+        }
+
+        /*
+         *  Process collected attachments in case of Showcase layout.
+         */
+        $iAttachmentsShow = 4;
+        $iAttachmentsCount = count($aTmplVarsAttachments);
+        if($sAttachmentsLayout == BX_TIMELINE_ML_SHOWCASE && $iAttachmentsCount > 0) {
+            $aTmplVarsAttachments[0]['class'] .= ' ' . $sStylePrefix . '-ia-first';
+
+            if($iAttachmentsCount > $iAttachmentsShow) {
+                $aTmplVarsAttachments = array_slice($aTmplVarsAttachments, 0, $iAttachmentsShow);
+                $aTmplVarsAttachments[$iAttachmentsShow - 1]['item'] .= $this->parseHtmlByName('attach_more.html', array(
+                    'style_prefix' => $sStylePrefix,
+                    'more' => $iAttachmentsCount - $iAttachmentsShow
+                ));
+            }
         }
 
         return array(
@@ -2002,6 +2027,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'condition' => !empty($aTmplVarsAttachments),
                 'content' => array(
                     'style_prefix' => $sStylePrefix,
+                    'display' => $sAttachmentsLayout,
                     'bx_repeat:items' => $aTmplVarsAttachments
                 )
             )
@@ -2133,7 +2159,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         );
     }
 
-    protected function _getTmplVarsImages($aImages, &$aEvent, &$aBrowseParams)
+    protected function _getTmplVarsImages($aImages, $mixedLayout, &$aEvent, &$aBrowseParams)
     {
         if(empty($aImages) || !is_array($aImages))
             return array();
@@ -2146,19 +2172,34 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sDisplay = '';
         $aTmplVarsImages = array();
 
-        $sImageSrcKey = '';
+        $sImageSrcKey = $sImageSrcKeyBig = '';
         $sImageSrcKeyDefault = 'src';
         if(count($aImages) == 1) {
-            $sDisplay = 'single';
+            $sDisplay = BX_TIMELINE_ML_SINGLE;
             $sImageSrcKey = $bViewItem ? 'src_orig' : 'src_medium';
         }
-        else {
-            $sDisplay = 'gallery';
+        else if(is_array($mixedLayout) && !empty($mixedLayout['layout'])) {
+            $sDisplay = $mixedLayout['layout'];
             $sImageSrcKey = 'src';
+            $sImageSrcKeyBig = 'src_orig';
+        }
+        else {
+            $sDisplay = BX_TIMELINE_ML_GALLERY;
+            $sImageSrcKey = 'src';
+            $sImageSrcKeyBig = 'src_orig';
         }
 
+        $bAttachFirst = false;
+        if($sDisplay == BX_TIMELINE_ML_SHOWCASE)
+            $bAttachFirst = isset($mixedLayout['first']) && $mixedLayout['first'] === true;
+
+        $iImageFirst = reset($aImages)['id'];
         foreach($aImages as $aImage) {
-            $sImageSrc = !empty($aImage[$sImageSrcKey]) ? $aImage[$sImageSrcKey] : $aImage[$sImageSrcKeyDefault];
+            $sImageSrcKeyCur = $sImageSrcKey;
+            if($bAttachFirst && $aImage['id'] == $iImageFirst)
+                $sImageSrcKeyCur = $sImageSrcKeyBig;
+
+            $sImageSrc = !empty($aImage[$sImageSrcKeyCur]) ? $aImage[$sImageSrcKeyCur] : $aImage[$sImageSrcKeyDefault];
             if(empty($sImageSrc))
                 continue;
 
@@ -2176,6 +2217,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
             $aTmplVarsImages[] = array(
                 'style_prefix' => $sStylePrefix,
+                'class' => '',
                 'item' => $sImage
             );
         }
@@ -2186,18 +2228,28 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         );
     }
 
-    protected function _getTmplVarsVideos($aVideos, $bMain, &$aEvent, &$aBrowseParams)
+    protected function _getTmplVarsVideos($aVideos, $mixedLayout, &$aEvent, &$aBrowseParams)
     {
         if(empty($aVideos) || !is_array($aVideos))
             return array();
 
         $sStylePrefix = $this->_oConfig->getPrefix('style');
-
-        $sDisplay = count($aVideos) == 1 ? 'single' : 'gallery';
         $aTmplVarsVideos = array();
 
         /*
-         * Autoplay feature is available for Main video only.
+         * For now Main Section may have only one video which can use 'autoplay' feature.
+         */
+        $bMain = $mixedLayout === true;
+        if($bMain) {
+            $sDisplay = BX_TIMELINE_ML_SINGLE;
+            if(count($aVideos) > 1)
+                $aVideos = array_slice($aVideos, 0, 1);
+        }
+        else
+            $sDisplay = is_array($mixedLayout) && !empty($mixedLayout['layout']) ? $mixedLayout['layout'] : BX_TIMELINE_AML_DEFAULT;
+
+        /*
+         * Main Section: Autoplay feature is only available here.
          */
         $sVap = $sVapId = $sVapSrc = $sVapTmpl = '';
         if($bMain) {
@@ -2205,30 +2257,82 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             if($sVap != BX_TIMELINE_VAP_OFF) {
                 $sVapId = $this->_oConfig->getHtmlIds('view', 'video_iframe') . $aEvent['id'] . '-';
                 $sVapSrc = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'video/' . $aEvent['id'] . '/';
-                $sVapTmpl = $this->getHtml('video_iframe.html');
-
-                if(count($aVideos) > 1)
-                    $aVideos = array_slice($aVideos, 0, 1);
+                $sVapTmpl = $this->getHtml('video_iframe.html'); 
             }
         }
 
-        foreach($aVideos as $iVideo => $aVideo) {
-            if(!$bMain || $sVap == BX_TIMELINE_VAP_OFF)
+        /*
+         * Attachments Section.
+         */
+        $sAttachTmpl = '';
+        $bAttachFirst = false;
+        if($sDisplay == BX_TIMELINE_ML_SHOWCASE) {
+            $sAttachTmpl = $this->getHtml('attach_video_preview.html');
+            $bAttachFirst = isset($mixedLayout['first']) && $mixedLayout['first'] === true;
+        }
+
+        $iVideoFirst = reset($aVideos)['id'];
+        foreach($aVideos as $aVideo) {
+            $iVideo = (int)$aVideo['id'];
+
+            if($bMain && $sVap != BX_TIMELINE_VAP_OFF)
                 $aTmplVarsVideos[] = array(
                     'style_prefix' => $sStylePrefix,
-                    'item' => BxTemplFunctions::getInstance()->videoPlayer($aVideo['src_poster'], $aVideo['src_mp4'], $aVideo['src_mp4_hd'], array(
-                        'preload' => 'auto'
-                    ), '', $aBrowseParams['dynamic_mode'])
-                );
-            else 
-                $aTmplVarsVideos[] = array(
-                    'style_prefix' => $sStylePrefix,
+                    'class' => '',
                     'item' => $this->parseHtmlByContent($sVapTmpl, array(
                         'style_prefix' => $sStylePrefix,
                         'html_id' => $sVapId . $iVideo,
                         'src' => $sVapSrc . $iVideo . '/'
                     )) 
                 );
+            else {
+                if($bMain || $sDisplay == BX_TIMELINE_ML_GALLERY || ($bAttachFirst && $iVideo == $iVideoFirst))
+                    $aTmplVarsVideos[] = array(
+                        'style_prefix' => $sStylePrefix,
+                        'class' => '',
+                        'item' => BxTemplFunctions::getInstance()->videoPlayer($aVideo['src_poster'], $aVideo['src_mp4'], $aVideo['src_mp4_hd'], array(
+                            'preload' => 'auto'
+                        ), '', $aBrowseParams['dynamic_mode'])
+                    );
+                else {
+                    $bUrl = !empty($aVideo['url']);
+                    $sUrl = $bUrl ? $aVideo['url'] : '';
+                    
+                    $bDuration = !empty($aVideo['duration']);
+                    $sDuration = _t_format_duration($bDuration ? $aVideo['duration'] : 0);
+
+                    $aTmplVarsVideos[] = array(
+                        'style_prefix' => $sStylePrefix,
+                        'class' => '',
+                        'item' => $this->parseHtmlByContent($sAttachTmpl, array(
+                            'style_prefix' => $sStylePrefix,
+                            'bx_if:show_link' => array(
+                                'condition' => $bUrl,
+                                'content' => array(
+                                    'style_prefix' => $sStylePrefix,
+                                    'url' => $sUrl,
+                                    'src' => $aVideo['src_poster'],
+                                )
+                            ),
+                            'bx_if:show_non_link' => array(
+                                'condition' => !$bUrl,
+                                'content' => array(
+                                    'style_prefix' => $sStylePrefix,
+                                    'src' => $aVideo['src_poster'],
+                                )
+                            ),
+                            'bx_if:show_duration' => array(
+                                'condition' => $bDuration,
+                                'content' => array(
+                                    'style_prefix' => $sStylePrefix,
+                                    'duration' => $sDuration,
+                                )
+                            )
+                        ))
+                    );
+                }
+            }
+                
         }
 
         return array( 
@@ -2280,6 +2384,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
             $aTmplVarsFiles[] = array(
                 'style_prefix' => $sStylePrefix,
+                'class' => '',
                 'item' => $sImage
             );
         }
@@ -2380,8 +2485,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                             $sPhotoSrcBig = $sPhotoSrcMedium;
 
                         $aResult['content']['images_attach'][] = array(
+                            'id' => $iPhotoId,
                             'src' => $sPhotoSrc,
-                        	'src_medium' => $sPhotoSrcMedium,
+                            'src_medium' => $sPhotoSrcMedium,
                             'src_orig' => $sPhotoSrcBig,
                         );
                     }
