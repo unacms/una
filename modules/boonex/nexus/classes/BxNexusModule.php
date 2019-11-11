@@ -84,7 +84,7 @@ class BxNexusModule extends BxDolModule
 
         // only several pages are available for guest, for other pages user is redirected to login page        
         $aI = array('forgot-password' => 1, 'create-account' => 1, 'terms' => 1, 'privacy' => 1, 'contact' => 1, 'about' => 1, 'home' => 1);
-        if (!$bLoggedIn && !preg_match('/searchKeyword.php$/', $_SERVER['PHP_SELF']) && !preg_match('/member.php$/', $_SERVER['PHP_SELF']) && !isset($aI[$i])) {
+        if (!$bLoggedIn && !preg_match('/\/oauth2\//', $_SERVER['REQUEST_URI']) && !preg_match('/searchKeyword.php$/', $_SERVER['PHP_SELF']) && !preg_match('/member.php$/', $_SERVER['PHP_SELF']) && !isset($aI[$i])) {
             header("Location: " . BX_DOL_URL_ROOT);
             exit;
         }
