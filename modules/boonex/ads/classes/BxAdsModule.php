@@ -91,9 +91,12 @@ class BxAdsModule extends BxBaseModTextModule
 
     public function serviceGetSearchableFields($aInputsAdd = array())
     {
-        $aInputsAdd = array_merge($aInputsAdd, $this->_getSearchableFields());
+        $CNF = &$this->_oConfig->CNF;
 
-        return parent::serviceGetSearchableFields($aInputsAdd);
+        $aResult = parent::serviceGetSearchableFields(array_merge($aInputsAdd, $this->_getSearchableFields()));
+        unset($aResult[$CNF['FIELD_CATEGORY_VIEW']], $aResult[$CNF['FIELD_CATEGORY_SELECT']]);
+
+        return $aResult;
     }
 
     public function serviceGetSearchableFieldsExtended($aInputsAdd = array())
