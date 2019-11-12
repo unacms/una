@@ -32,7 +32,8 @@ class BxAdsModule extends BxBaseModTextModule
             return echoJson(array());
 
         return echoJson(array(
-            'content' => $this->serviceEntityCreate(array(
+            'content' => $this->serviceGetCreatePostForm(array(
+                'absolute_action_url' => true,
                 'dynamic_mode' => true
             ))
         ));
