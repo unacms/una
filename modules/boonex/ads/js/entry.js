@@ -39,9 +39,31 @@ BxAdsEntry.prototype.interested = function(oElement, iContentId) {
 };
 
 BxAdsEntry.prototype.onChangeCategory = function(oElement) {
+    var $this = this;
+
     this.loadingInBlock(oElement, true);
 
-    document.location = bx_append_url_params(document.location.href, {category: $(oElement).val()});
+    jQuery.get (
+        this._sActionsUrl + 'get_category_form',
+        {
+            category: $(oElement).val()
+        },
+        function(oData) {
+            if(oElement)
+                $this.loadingInBlock(oElement, false);
+
+            if(!oData || !oData.content && oData.content.length == 0) 
+                return;
+
+            var oContent = $(oData.content);
+            var sFormId = oContent.filter('form').attr('id');
+            if(!sFormId)
+                return;
+
+            $('#' + sFormId).replaceWith(oContent);
+        },
+        'json'
+    );
 };
 
 BxAdsEntry.prototype.loadingInButton = function(e, bShow) {

@@ -84,8 +84,8 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
 
     function getCode($bDynamicMode = false)
     {
-        $this->_oModule->_oTemplate->addJs('entry.js');
-        return $this->_oModule->_oTemplate->getJsCode('entry') . parent::getCode($bDynamicMode);
+        $sInclude = $this->_oModule->_oTemplate->addJs(array('entry.js'), $bDynamicMode);
+        return ($bDynamicMode ? $sInclude : '') . $this->_oModule->_oTemplate->getJsCode('entry') . parent::getCode($bDynamicMode);
     }
 
     function initChecker ($aValues = array (), $aSpecificValues = array())

@@ -26,6 +26,18 @@ class BxAdsModule extends BxBaseModTextModule
         ));
     }
 
+    public function actionGetCategoryForm()
+    {
+        if(bx_get('category') === false)
+            return echoJson(array());
+
+        return echoJson(array(
+            'content' => $this->serviceEntityCreate(array(
+                'dynamic_mode' => true
+            ))
+        ));
+    }
+
     public function actionInterested()
     {
         $CNF = &$this->_oConfig->CNF;
