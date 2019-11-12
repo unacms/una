@@ -163,6 +163,7 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
             $sTitle = _t(!empty($sTitle) ? $sTitle : '_' . $sName);
         }
 
+        $bDynamicMode = isset($aParams['dynamic_mode']) ? (bool)$aParams['dynamic_mode'] : false;
         return array(
             'type' => 'select',
             'name' => $sName,
@@ -180,7 +181,7 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
             'db' => array(
                 'pass' => 'Int'
             ),
-            'content' => $oPrivacy->getJsScript()
+            'content' => $oPrivacy->getJsScript($bDynamicMode)
         );
     }
 

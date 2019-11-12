@@ -61,7 +61,7 @@ class BxBasePrivacy extends BxDolPrivacy
         return $this->addCssJs($bDynamicMode) . $this->_oTemplate->_wrapInTagJsCode("if(window['" . $this->_sJsObjName . "'] == undefined) var " . $this->_sJsObjName . " = new " . $this->_sJsObjClass . "(" . json_encode($aParams) . ");");
     }
 
-    protected function addCssJs($bDynamicMode = false)
+    public function addCssJs($bDynamicMode = false)
     {
         $sInclude = '';
 

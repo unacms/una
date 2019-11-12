@@ -60,7 +60,7 @@ BxAdsEntry.prototype.onChangeCategory = function(oElement) {
             if(!sFormId)
                 return;
 
-            $('#' + sFormId).replaceWith(oContent);
+            $('form#' + sFormId).replaceWith(oContent);
         },
         'json'
     );
