@@ -51,16 +51,22 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
     {    
         $iMemberIdCookie = null;
         $bLoggedMemberGlobals = null;
-        if ($iProfileId) {
+        if ($iProfileId && $iProfileId != bx_get_logged_profile_id()) {            
             if (!empty($_COOKIE['memberID']))
                 $iMemberIdCookie = $_COOKIE['memberID'];
             if (!empty($GLOBALS['logged']['member']))
                 $bLoggedMemberGlobals = $GLOBALS['logged']['member'];
-            $_COOKIE['memberID'] = $iProfileId;
-            $GLOBALS['logged']['member'] = true;
+            $oProfile = BxDolProfile::getInstance($iProfileId);
+            $_COOKIE['memberID'] = $oProfile ? $oProfile->getAccountId() : 0;
+            $GLOBALS['logged']['member'] = $oProfile ? true : false;
         }
-
+    
+        if ($iProfileId && $iProfileId != bx_get_logged_profile_id())
+            unset($GLOBALS['bxDolClasses']['BxDolMenu!sys_account_notifications']);
         $oMenu = BxDolMenu::getObjectInstance('sys_account_notifications'); // sys_toolbar_member
+        if ($iProfileId && $iProfileId != bx_get_logged_profile_id())
+            unset($GLOBALS['bxDolClasses']['BxDolMenu!sys_account_notifications']);
+
         $a = $oMenu->getMenuItems();
         $iBubbles = 0;
         foreach ($a as $r) {
@@ -71,7 +77,7 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
             $iBubbles += $r['bx_if:addon']['content']['addon'];
         }
 
-        if ($iProfileId) {
+        if ($iProfileId && $iProfileId != bx_get_logged_profile_id()) {
             if (null === $iMemberIdCookie)
                 unset($_COOKIE['memberID']);
             else
