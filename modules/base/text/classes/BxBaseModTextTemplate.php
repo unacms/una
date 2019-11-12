@@ -172,8 +172,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         if(empty($sPolls))
             return '';
 
-        $this->addCss(array('polls.css'));
-        $this->addJs(array('polls.js'));
+        $this->_addCssJs();
         return $this->getJsCode('poll') . $this->parseHtmlByName('poll_items.html', array(
             'polls' => $sPolls
         ));
@@ -313,8 +312,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             $sContent = $this->getJsCode('poll') . $sContent;
         }
 
-        $this->addJs(array('polls.js'));
-        $this->addCss(array('polls.css'));
+        $this->_addCssJs();
 
         $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->addCssStyle($CNF['STYLES_POLLS_EMBED_CLASS'], $CNF['STYLES_POLLS_EMBED_CONTENT']);
@@ -368,8 +366,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             $sContent = $this->getJsCode('poll') . $sContent;
         }
 
-        $this->addJs(array('polls.js'));
-        $this->addCss(array('polls.css'));
+        $this->_addCssJs();
 
         $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->addCssStyle($CNF['STYLES_POLLS_EMBED_CLASS'], $CNF['STYLES_POLLS_EMBED_CONTENT']);
@@ -378,6 +375,15 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         $oTemplate->setPageContent('page_main_code', $sContent);
         $oTemplate->getPageCode();
         exit;
+    }
+
+    protected function _addCssJs()
+    {
+        $this->addJs(array(
+            'modules/base/text/js/|polls.js',
+            'polls.js'
+        ));
+        $this->addCss(array('polls.css'));
     }
 
     protected function _getPollAnswers($aPoll, $bDynamic = false)
