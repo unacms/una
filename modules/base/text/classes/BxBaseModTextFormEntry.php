@@ -35,16 +35,16 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
         if(isset($CNF['PARAM_POLL_ENABLED']) && $CNF['PARAM_POLL_ENABLED'] === true) {
             $sInclude = '';
             $sInclude .= $this->_oModule->_oTemplate->addCss(array('polls.css'), $bDynamicMode);
-            $sInclude .= $this->_oModule->_oTemplate->addJs(array('polls.js'), $bDynamicMode);
+            $sInclude .= $this->_oModule->_oTemplate->addJs(array('modules/base/text/js/|polls.js', 'polls.js'), $bDynamicMode);
 
             $sResult .= ($bDynamicMode ? $sInclude : '') . $this->_oModule->_oTemplate->getJsCode('poll');
         }   
-        
+
         if(isset($CNF['PARAM_MULTICAT_ENABLED']) && $CNF['PARAM_MULTICAT_ENABLED'] === true) {
             $sInclude2 = '';
             $sInclude2 .= $this->_oModule->_oTemplate->addJs(array('categories.js'), $bDynamicMode);
             $sInclude2 .= $this->_oModule->_oTemplate->addCss(array('categories.css'), $bDynamicMode);
-            
+
             $sResult .= ($bDynamicMode ? $sInclude2 : '') . $this->_oModule->_oTemplate->getJsCode('categories');
         }
 
