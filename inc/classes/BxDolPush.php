@@ -43,6 +43,49 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
         return $GLOBALS['bxDolClasses'][__CLASS__];
     }
     
+    /**
+     * @param $a - array to fill with notification counter per module
+     * @return total number of notifications
+     */
+    public static function getNotificationsCount($iProfileId = 0, &$aBubbles = null)
+    {    
+        $iMemberIdCookie = null;
+        $bLoggedMemberGlobals = null;
+        if ($iProfileId) {
+            if (!empty($_COOKIE['memberID']))
+                $iMemberIdCookie = $_COOKIE['memberID'];
+            if (!empty($GLOBALS['logged']['member']))
+                $bLoggedMemberGlobals = $GLOBALS['logged']['member'];
+            $_COOKIE['memberID'] = $iProfileId;
+            $GLOBALS['logged']['member'] = true;
+        }
+
+        $oMenu = BxDolMenu::getObjectInstance('sys_account_notifications'); // sys_toolbar_member
+        $a = $oMenu->getMenuItems();
+        $iBubbles = 0;
+        foreach ($a as $r) {
+            if (!$r['bx_if:addon']['condition'])
+                continue;
+            if (null !== $aBubbles)
+                $aBubbles[$r['name']] = $r['bx_if:addon']['content']['addon'];
+            $iBubbles += $r['bx_if:addon']['content']['addon'];
+        }
+
+        if ($iProfileId) {
+            if (null === $iMemberIdCookie)
+                unset($_COOKIE['memberID']);
+            else
+                $_COOKIE['memberID'] = $iMemberIdCookie;
+
+            if (null === $bLoggedMemberGlobals)
+                unset($GLOBALS['logged']['member']);
+            else
+                $GLOBALS['logged']['member'] = $bLoggedMemberGlobals;
+        }
+
+        return $iBubbles;
+    }
+
     public function send($iProfileId, $aMessage, $bAddToQueue = false)
     {
         if(empty($this->_sAppId) || empty($this->_sRestApi))
@@ -51,6 +94,8 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
         if($bAddToQueue && BxDolQueuePush::getInstance()->add($iProfileId, $aMessage))
             return true;
 
+        $iBadgeCount = $this->getNotificationsCount($iProfileId);
+    
 		$aFields = array(
 			'app_id' => $this->_sAppId,
 			'filters' => array(
@@ -61,8 +106,8 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
             'web_url' => !empty($aMessage['url']) ? $aMessage['url'] : '',
             'data' => array('url' => !empty($aMessage['url']) ? $aMessage['url'] : ''),
             'chrome_web_icon' => !empty($aMessage['icon']) ? $aMessage['icon'] : '',
-            'ios_badgeType' => 'Increase',
-            'ios_badgeCount' => 1,
+            'ios_badgeType' => 'SetTo',
+            'ios_badgeCount' => $iBadgeCount,
 		);
 
 		$oChannel = curl_init();

@@ -40,16 +40,8 @@ class BxNexusModule extends BxDolModule
 
         $this->redirects();
 
-        $oMenu = BxDolMenu::getObjectInstance('sys_account_notifications'); // sys_toolbar_member
-        $a = $oMenu->getMenuItems();
-        $iBubbles = 0;
         $aBubbles = array();
-        foreach ($a as $r) {
-            if (!$r['bx_if:addon']['condition'])
-                continue;
-            $aBubbles[$r['name']] = $r['bx_if:addon']['content']['addon'];
-            $iBubbles += $r['bx_if:addon']['content']['addon'];
-        }
+        $iBubbles = BxDolPush::getNotificationsCount(0, $aBubbles);
 
         $s = $this->_oTemplate->parseHtmlByName('styles.html', array());
         if ($sCustomStyles = getParam('bx_nexus_option_styles'))
