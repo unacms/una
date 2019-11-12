@@ -19,15 +19,15 @@ function BxAdsEntry(oOptions) {
 
 BxAdsEntry.prototype.interested = function(oElement, iContentId) {
     var $this = this;
+    var oParams = this._getDefaultData();
+    oParams['id'] = iContentId;
 
     if(oElement)
         this.loadingInButton(oElement, true);
 
     jQuery.get (
         this._sActionsUrl + 'interested',
-        {
-            id: iContentId
-        },
+        oParams,
         function(oData) {
             if(oElement)
                 $this.loadingInButton(oElement, false);
@@ -40,14 +40,14 @@ BxAdsEntry.prototype.interested = function(oElement, iContentId) {
 
 BxAdsEntry.prototype.onChangeCategory = function(oElement) {
     var $this = this;
+    var oParams = this._getDefaultData();
+    oParams['category'] = $(oElement).val();
 
     this.loadingInBlock(oElement, true);
 
     jQuery.get (
         this._sActionsUrl + 'get_category_form',
-        {
-            category: $(oElement).val()
-        },
+        oParams,
         function(oData) {
             if(oElement)
                 $this.loadingInBlock(oElement, false);
