@@ -70,18 +70,18 @@ div.bx-view-counter-holder {
     display: inline-block;
     box-sizing: border-box;
 
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 2.0rem;
+    height: 2.0rem;
     margin-top: 4px;
     margin-bottom: 4px;
 
-    background-color: rgba(215, 215, 215, 1.0);
+    background-color: rgba(232, 232, 232, 1.0);
     border: 1px solid #ffffff;
     border-radius: 1rem;
 
-    line-height: 1.125rem;
+    line-height: 1.9rem;
     text-align: center;
-    font-size: 0.625rem;
+    font-size: 1.0rem;
 }
 .bx-view-counter span.bx-view-counter-icon .sys-icon {
     vertical-align: top;

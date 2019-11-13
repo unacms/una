@@ -27,19 +27,14 @@
 .bx-def-unit-img .bx-base-pofile-unit-thumb {
     background: rgba(255, 255, 255, 1.0);
     background-clip: padding-box;
-    border-width: 2px;
+    border-width: 0px;
     border-color: rgba(255, 255, 255, 1.0);
     box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* browse unit with cover */
 .bx-base-pofile-unit-cover {
-    display:block;
-
     height: 10.0rem;
-
-    line-height:10.0rem;
-    text-align:center;
 
     background-repeat:no-repeat;
     background-position:center center;
@@ -47,6 +42,12 @@
     -moz-background-size:cover;
     -o-background-size:cover;
     background-size:cover;
+}
+.bx-base-pofile-unit-cover:not(.bx-def-align-center) {
+    display:block;
+
+    line-height:10.0rem;
+    text-align:center;
 }
 
 .bx-base-pofile-unit-with-cover .sys-author ul.bx-menu-custom.bx-menu-hor,
@@ -62,12 +63,16 @@ img.bx-base-pofile-unit-thumb {
 }
 
 p.bx-base-pofile-unit-thumb {
-    display: block;
-    margin: 0px;
+    display: -webkit-flex;
+    display: flex;
 
-    line-height: 44px;
-    line-height: 2.75rem;
-    text-align: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+
+    -webkit-align-items: center;
+    align-items: center;
+
+    margin: 0px;
 
     font-size: 30px;
     font-size: 1.875rem;
@@ -75,16 +80,10 @@ p.bx-base-pofile-unit-thumb {
     color: #ffffff;
 }
 p.bx-base-pofile-unit-thumb.bx-def-icon-size {
-    line-height: 28px;
-    line-height: 1.75rem;
-
     font-size: 20px;
     font-size: 1.25rem;
 }
 p.bx-base-pofile-unit-thumb.bx-def-ava-size {
-    line-height: 96px;
-    line-height: 6rem;
-
     font-size: 48px;
     font-size: 3.0rem;
     font-weight: 700;
@@ -95,7 +94,7 @@ p.bx-base-pofile-unit-thumb.bx-def-ava-size {
     bottom: 2px;
     width: 10px;
     height: 10px;
-    border: 1px solid #ffffff;
+    box-shadow: inset 0px 0px 0px 1px #ffffff;
     border-radius: 10px;
     background-color: #7ed321;
 }
@@ -242,9 +241,6 @@ a.bx-base-pofile-cover-thumb img.bx-base-pofile-unit-thumb {
     box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.2);
 }
 a.bx-base-pofile-cover-thumb p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
-    line-height: 200px;
-    line-height: 12.5rem;
-
     font-size: 5.0rem;
 }
 

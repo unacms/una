@@ -26,8 +26,8 @@
 .bx-media-desktop div.bx-tl-view-timeline div.bx-tl-item-cnt {
     position: relative;
 
-    margin: 0px 0px 0px 56px;
-    margin: 0px 0px 0px 3.5rem;
+    margin: 0px 0px 0px 48px;
+    margin: 0px 0px 0px 3.0rem;
 }
 .bx-media-desktop .bx-layout-column-fullwidth div.bx-tl-view-timeline div.bx-tl-items::before {
     left: 50%;
@@ -35,20 +35,20 @@
 } 
 .bx-media-desktop .bx-layout-column-fullwidth div.bx-tl-view-timeline div.bx-tl-item div.bx-tl-item-type {
     left: 50%;
-    margin-left: -20px;
+    margin-left: -16px;
 } 
 .bx-media-desktop .bx-layout-column-fullwidth div.bx-tl-view-timeline div.bx-tl-item div.bx-tl-item-cnt {
     width: 45%;
 }
 .bx-media-desktop .bx-layout-column-fullwidth div.bx-tl-view-timeline div.bx-tl-item:nth-child(2n + 1) div.bx-tl-item-cnt {
-    margin: 0px 56px 0px 0p;
-    margin: 0px 3.5rem 0px 0px;
+    margin: 0px 48px 0px 0p;
+    margin: 0px 3.0rem 0px 0px;
 }
 .bx-media-desktop .bx-layout-column-fullwidth div.bx-tl-view-timeline div.bx-tl-item:nth-child(2n) div.bx-tl-item-cnt {
     float: right;
 
-    margin: 0px 0px 0px 56px;
-    margin: 0px 0px 0px 3.5rem;
+    margin: 0px 0px 0px 48px;
+    margin: 0px 0px 0px 3.0rem;
 }
 
 /*--- Animation ---*/
