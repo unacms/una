@@ -656,8 +656,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                         'pass' => 'Xss',
                     ),
                     'checker' => array (
-                        'func' => 'length',
-                        'params' => array(3,100),
+                        'func' => 'LengthTranslatable',
+                        'params' => array(3, 100, 'title'),
                         'error' => _t('_adm_bp_err_block_title'),
                     ),
                 ),
