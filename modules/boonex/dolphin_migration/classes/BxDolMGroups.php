@@ -116,7 +116,7 @@ class BxDolMGroups extends BxDolMData
         return BX_MIG_SUCCESSFUL;
     }
 	
-	protected function transferCategory($sCategory, $sPrefix = 'bx_groups', $sPreValueCateg = 'bx_groups_cats')
+	protected function transferCategory($sCategory, $sPrefix = 'bx_groups', $sPreValueCateg = 'bx_groups_cats', $iValue = 0, $sData = '')
 	{
 		return parent::transferCategory($sCategory, $sPrefix, $sPreValueCateg);
 	}

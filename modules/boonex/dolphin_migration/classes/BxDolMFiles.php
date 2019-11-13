@@ -139,7 +139,7 @@ class BxDolMFiles extends BxDolMData
 		return false;		
     }
    
-	protected function transferCategory($sCategory, $sPrefix = 'bx_files', $sPreValueCateg = 'bx_files_cats')
+	protected function transferCategory($sCategory, $sPrefix = 'bx_files', $sPreValueCateg = 'bx_files_cats', $iValue = 0, $sData = '')
 	{
 		return parent::transferCategory($sCategory, $sPrefix, $sPreValueCateg);
 	}

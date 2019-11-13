@@ -230,13 +230,15 @@ class BxDolMProfiles extends BxDolMData
                             $sQuery = $this->_oDb->prepare("UPDATE `bx_persons_data` SET `author` = ? WHERE `id` = ?", $iProfile, $iContentId);
                             $this->_oDb->query($sQuery);
 
-                         if (isset($aValue['Country']) || isset($aValue['City']) || isset($aValue['zip'])) {
-                                $this->_oDb->query("INSERT INTO `bx_persons_meta_locations` SET `object_id`=:object, `country`=:country, `city`=:city, zip = :zip",
+                         if (isset($aValue['Country']) || isset($aValue['City']) || isset($aValue['zip']) || isset($aValue['State'])) {
+                                $this->_oDb->query("INSERT INTO `bx_persons_meta_locations` 
+                                                    SET `object_id`=:object, `country`=:country, `city`=:city, zip = :zip, `state`=:state",
                                     array(
                                         'object' => $iContentId,
                                         'country' => isset($aValue['Country']) ? $aValue['Country'] : '',
                                         'city' => isset($aValue['City']) ? $aValue['City'] : '',
-                                        'zip' => isset($aValue['zip']) ? $aValue['zip'] : ''
+                                        'zip' => isset($aValue['zip']) ? $aValue['zip'] : '',
+                                        'state' => isset($aValue['State']) ? $aValue['State'] : '',
                                 ));
                             }
                         }
@@ -371,6 +373,19 @@ class BxDolMProfiles extends BxDolMData
 				   ", $iUserId, $iFriendId, $aValue['Check']);
                 $iResult = $this -> _oDb -> query($sQuery);
 
+                // make initiator to follow content
+                $this->_oDb->query("
+						INSERT IGNORE INTO
+							`sys_profiles_conn_subscriptions`
+						SET
+						   `initiator`	=:initiator,
+						   `content`    =:content ,
+						   `added`     	= UNIX_TIMESTAMP()
+				   ", array('initiator' => $iUserId, 'content' => $iFriendId));
+
+                $iResult = $this -> _oDb -> query($sQuery);
+
+
 				if ($iResult && (int)$aValue['Check']){
                     $sQuery = $this->_oDb->prepare("
                             INSERT IGNORE INTO
@@ -382,7 +397,17 @@ class BxDolMProfiles extends BxDolMData
                                `added`     	= UNIX_TIMESTAMP()
                        ", $iFriendId, $iUserId, 1);
                         $this->_oDb->query($sQuery);
-                    }
+
+                         // make content to follow initiator
+                        $this->_oDb->query("
+                            INSERT IGNORE INTO
+                                `sys_profiles_conn_subscriptions`
+                            SET
+                               `initiator`	=:initiator,
+                               `content`    =:content ,
+                               `added`     	= UNIX_TIMESTAMP()
+                       ", array('initiator' => $iFriendId, 'content' => $iUserId));
+                 }
 			}
 		}
 	}

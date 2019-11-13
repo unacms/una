@@ -365,7 +365,7 @@ class BxDolMTimeline extends BxDolMData
 								`description`			= ?,		
 								`date`					= ?,
 								`active`				= ?,
-								`hidden`				= ?
+								`status`				= ?
 						 ", 
 							$aInfo['owner_id'], 
 							$aInfo['type'],
@@ -377,7 +377,7 @@ class BxDolMTimeline extends BxDolMData
 							$aInfo['description'],
 							$aInfo['date'],
 							$aInfo['active'],
-							$aInfo['hidden']
+							$aInfo['hidden'] ? 'hidden' : 'active'
 							);			
 			
 				$this -> _oDb -> query($sQuery);
