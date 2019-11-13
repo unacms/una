@@ -114,11 +114,11 @@ div.bx-vote div.bx-vote-counter-holder {
     margin-left: 0.5rem;
 }
 .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter {
-    width: 1.0rem;
-    height: 1.0rem;
+    width: 2.0rem;
+    height: 2.0rem;
     box-sizing: border-box;
 
-    margin: 4px 0 4px -4px;
+    margin: 4px 0 4px -8px;
 }
 .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter:first-child {
     margin-left: 0;
@@ -141,16 +141,16 @@ div.bx-vote div.bx-vote-counter-holder {
     display: inline-block;
     box-sizing: border-box;
 
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 2.0rem;
+    height: 2.0rem;
 
-    background-color: rgba(215, 215, 215, 1.0);
+    background-color: rgba(232, 232, 232, 1.0);
     border: 1px solid #ffffff;
     border-radius: 1rem;
 
-    line-height: 1.125rem;
+    line-height: 1.9rem;
     text-align: center;
-    font-size: 0.625rem;
+    font-size: 1.0rem;
 }
 .bx-vote-counter.bx-vote-counter-likes span.bx-vote-counter-icon {
     margin-top: 4px;
@@ -158,9 +158,6 @@ div.bx-vote div.bx-vote-counter-holder {
 }
 .bx-vote-counter span.bx-vote-counter-icon .sys-icon {
     vertical-align: top;
-}
-.bx-vote-counter.bx-vote-counter-likes span.bx-vote-counter-icon .sys-icon {
-    color: #334455;
 }
 
 
@@ -204,7 +201,7 @@ div.bx-vote-by-list div.bx-base-pofile-unit {
     -webkit-flex-grow: 3;
     flex-grow: 3;
 
-    border-bottom: 2px solid rgba(0,0,0,0.1);
+    border-bottom: 2px solid rgba(232, 232, 232, 1.0);
 }
 .bx-vote-bls-title {
     display: none;
@@ -218,6 +215,11 @@ div.bx-vote-by-list div.bx-base-pofile-unit {
     overflow-y: hidden;
 
     -webkit-overflow-scrolling: touch;
+}
+.bx-vote-bls-submenu-cnt {
+    box-sizing: border-box;
+    padding: 0 0.5rem;
+    border-bottom: 2px solid rgba(232, 232, 232, 1.0);
 }
 .bx-vote-bls-submenu::-webkit-scrollbar {
     width: 0.5rem;
@@ -249,7 +251,7 @@ div.bx-vote-by-list div.bx-base-pofile-unit {
     box-sizing: border-box;
     height: 3.125rem;
 
-    border-bottom: 2px solid rgba(0,0,0,0.1);
+    border-bottom: 2px solid rgba(232, 232, 232, 1.0);
     border-radius: 0;
 
     line-height: 3.125rem;

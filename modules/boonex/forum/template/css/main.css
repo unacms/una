@@ -152,6 +152,24 @@
     display: none;
 }
 
+.bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-top .bx-forum-gpm-counters .cmt-counter div.cmt-counter-icon,
+.bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-top .bx-forum-gpm-counters .cmt-counter div.bx-base-pofile-unit-wo-info {
+    margin-left: -4px;
+}
+
+.bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-top .bx-forum-gpm-counters .cmt-counter .bx-def-icon-size {
+    width: 1.0rem;
+    height: 1.0rem;
+}
+.bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-top .bx-forum-gpm-counters .cmt-counter .bx-def-icon-size,
+.bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-top .bx-forum-gpm-counters .cmt-counter p.bx-base-pofile-unit-thumb.bx-def-icon-size {
+    line-height: normal;
+    font-size: 0.6rem;
+}
+.bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-top .bx-forum-gpm-counters .cmt-counter div.cmt-counter-icon .sys-icon {
+    font-size: 0.6rem;
+}
+
 .bx-forum-grid-preview .bx-forum-gp-meta.bx-forum-gpm-bottom .bx-forum-gpm-reply {
     display: -webkit-flex;
     display: flex;

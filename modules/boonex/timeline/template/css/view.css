@@ -370,9 +370,6 @@ div.bx-tl-item-text div.bx-tl-content.bx-tl-overflow:before {
 }
 div.bx-tl-item-text div.bx-tl-content-show-more {
     position: relative;
-
-    text-transform: lowercase;
-    text-align: center;
 }
 div.bx-tl-item-text div.bx-tl-content p {
 	margin-top: 10px;
@@ -400,8 +397,8 @@ div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom {
     position: relative;
     display: -webkit-flex;
     display: flex;
-    -webkit-justify-content: space-between;
-    justify-content: space-between;
+    -webkit-justify-content: space-around;
+    justify-content: space-around;
 }
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom::before,
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom::after {
@@ -421,21 +418,20 @@ div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li .bx-menu-item-icon {
     display: inline-block;
     box-sizing: border-box;
 
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 2.0rem;
+    height: 2.0rem;
 
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.1);
     border: 1px solid #ffffff;
     border-radius: 1rem;
 
     text-align: center;
-    line-height: 1.125rem;
-    font-size: 0.625rem;
+    line-height: 1.9rem;
+    font-size: 1.0rem;
 }
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li .sys-action-do-icon .sys-icon,
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li .bx-menu-item-icon .sys-icon {
     vertical-align: top;
-    color: #334455;
 }
 
 /*--- Item Style: Timeline ---*/
@@ -443,7 +439,7 @@ div.bx-tl-view-timeline div.bx-tl-items:before {
     content: '';
     position: absolute;
     top: 0px;
-    left: 1.1375rem;
+    left: 0.875rem;
     width: 4px;
     height: 100%;
 
@@ -474,13 +470,12 @@ div.bx-tl-view-timeline div.bx-tl-item-circle {
     -webkit-justify-content: center;
     justify-content: center;
 
-    width: 40px;
-    height: 40px;
+    width: 2rem;
+    height: 2rem;
 
-    background-color: #ffffff;
+    background-color: #dddddd;
     background-clip: padding-box;
-    border-radius: 40px;
-    box-shadow: inset 0 0 0 3px #dddddd;
+    border-radius: 2rem;
 
     text-align: center;
     color: #999999;
@@ -488,7 +483,7 @@ div.bx-tl-view-timeline div.bx-tl-item-circle {
     overflow: hidden;
 }
 div.bx-tl-view-timeline div.bx-tl-item-circle .sys-icon {
-    font-size: 1.375rem;
+    font-size: 1.0rem;
 }
 
 
@@ -731,28 +726,7 @@ div.bx-tl-empty div.bx-msg-box-container {
 div.bx-tl-item-comments-holder .cmt.bx-def-box {
     border-width: 0px;
 }
-div.bx-tl-item-comments-holder .bx-def-thumb-size {
-    width: 30px;
-    width: 2rem;
-    height: 30px;
-    height: 2rem;
 
-    line-height: 26px;
-    line-height: 1.75rem;
-
-    font-size: 19.5px;
-    font-size: 1.3rem;
-}
-div.bx-tl-item-comments-holder .bx-def-thumb-size-left-indent {
-    margin-left: 3.25rem;
-}
-div.bx-tl-item-comments-holder .bx-def-thumb-size-min-height {
-    min-height: 2rem;
-}
-div.bx-tl-item-comments-holder .cmts.cmts-margin {
-    font-size: 12px;
-    font-size: 0.75rem;
-}
 
 /*--- Live Update Alert Styles ---*/
 div.bx-tl-live-update-button {
