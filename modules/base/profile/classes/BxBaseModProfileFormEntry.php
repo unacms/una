@@ -23,9 +23,6 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $this->_preparePrivacyField('POST');
-        $this->_preparePrivacyField('CONTACT');
-
         if (!empty($CNF['FIELD_PICTURE']) && isset($this->aInputs[$CNF['FIELD_PICTURE']])) {
             $this->_aImageFields[$CNF['FIELD_PICTURE']] = array (
                 'storage_object' => $CNF['OBJECT_STORAGE'],
@@ -70,9 +67,6 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
 
             $this->aInputs[$sField]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName('form_ghost_template.html', $this->_getProfilePhotoGhostTmplVars($sField, $aContentInfo));
         }
-
-        $this->_preloadPrivacyField('POST', $aValues);
-        $this->_preloadPrivacyField('CONTACT', $aValues);
 
         parent::initChecker($aValues, $aSpecificValues);
     }
@@ -227,6 +221,22 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
         if (!$iContentId || !($aDataEntry = $this->_oModule->_oDb->getContentInfoById((int)$iContentId)))
             return false;
         return CHECK_ACTION_RESULT_ALLOWED == $this->_oModule->checkAllowedEdit ($aDataEntry);        
+    }
+
+    protected function _getPrivacyFields()
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $aFields = array(
+            'FIELD_ALLOW_VIEW_TO' => 'OBJECT_PRIVACY_VIEW',
+            'FIELD_ALLOW_POST_TO' => 'OBJECT_PRIVACY_POST',
+            'FIELD_ALLOW_CONTACT_TO' => 'OBJECT_PRIVACY_CONTACT'
+        );
+
+        if(isset($CNF['PRIVACY_FIELD_TO_OBJECT']) && is_array($CNF['PRIVACY_FIELD_TO_OBJECT']))
+            $aFields = $CNF['PRIVACY_FIELD_TO_OBJECT'];
+
+        return $aFields;
     }
 }
 
