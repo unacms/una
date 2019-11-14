@@ -170,7 +170,7 @@ class BxDolMProfiles extends BxDolMData
 					else
 					{
                        $sFullName = isset($aValue['FullName']) ? $aValue['FullName'] : "{$aValue['FirstName']} {$aValue['LastName']}";
-                       $sFullName = $sFullName ? $sFullName : $aValue['NickName'];
+                       $sFullName = trim($sFullName) ? $sFullName : $aValue['NickName'];
                     }
 
                     $sAction = "INSERT INTO";
