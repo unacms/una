@@ -64,6 +64,25 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
 
         echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['grid_action_err_delete'])));
     }
+    
+    protected function _getActionAuditContent($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+        if (!getParam('sys_audit_enable') || getParam('sys_audit_acl_levels') == '')
+            return;
+        
+        $iProfileId = bx_get_logged_profile_id();
+        if (!BxDolAcl::getInstance()->isMemberLevelInSet(explode(',', getParam('sys_audit_acl_levels')), $iProfileId))
+            return;
+    	
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+        $sUrl = BX_DOL_URL_ROOT . 'studio/audit.php?module=' . $this->_oModule->getName() . '&content_id=' . $aRow[$CNF['FIELD_ID']];
+
+    	$a['attr'] = array_merge($a['attr'], array(
+    		"onclick" => "window.open('" . $sUrl . "','_audit');"
+    	));
+
+    	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    }
 
     protected function _getActionDelete($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {

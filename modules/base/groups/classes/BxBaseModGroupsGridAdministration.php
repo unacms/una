@@ -16,6 +16,26 @@ class BxBaseModGroupsGridAdministration extends BxBaseModProfileGridAdministrati
         parent::__construct ($aOptions, $oTemplate);
     }
 
+    protected function _getActionAuditContext($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+        if (!getParam('sys_audit_enable') || getParam('sys_audit_acl_levels') == '')
+            return;
+        
+        $iProfileId = bx_get_logged_profile_id();
+        if (!BxDolAcl::getInstance()->isMemberLevelInSet(explode(',', getParam('sys_audit_acl_levels')), $iProfileId))
+            return;
+    	
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+        $oProfile = $this->_getProfileObject($aRow[$CNF['FIELD_ID']]);
+        $sUrl = BX_DOL_URL_ROOT . 'studio/audit.php?context_id=' . $oProfile->id();
+
+    	$a['attr'] = array_merge($a['attr'], array(
+    		"onclick" => "window.open('" . $sUrl . "','_audit');"
+    	));
+
+    	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    }
+    
     protected function _getCellName($mixedValue, $sKey, $aField, $aRow)
     {
         $oProfile = $this->_getProfileObject($aRow['id']);
