@@ -179,6 +179,10 @@ class BxBaseModGeneralDb extends BxDolModuleDb
                     $sSearchValue = " IN (" . $this->implode_escape($aSearchParam['value']) . ")";
                     break;
 
+                case 'not in':
+                    $sSearchValue = " NOT IN (" . $this->implode_escape($aSearchParam['value']) . ")";
+                    break;	
+                    
                 case 'and':
                     $iResult = 0;
                     if (is_array($aSearchParam['value']))
