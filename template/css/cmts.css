@@ -418,8 +418,10 @@ span.cmt span.cmt-counter-holder {
     margin-left: 0;
 }
 .cmt-counter div.cmt-counter-icon {
-    margin-right: 0.5rem;
     box-sizing: border-box;
+    z-index: 2;
+
+    margin-right: 0.5rem;
 
     background-color: rgba(232, 232, 232, 1.0);
     border: 1px solid #ffffff;
