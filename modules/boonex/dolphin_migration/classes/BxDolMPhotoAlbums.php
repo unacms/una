@@ -146,13 +146,27 @@ class BxDolMPhotoAlbums extends BxDolMData
 						$iTransferred++;
 						
 						$this -> transferTags((int)$aValue['ID'], $iId, $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['type'], $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['keywords']);
+						$this -> transferFavorites((int)$aValue['ID'], $iId);
 					}
 				}
 			}	
 				  
 	  return $iTransferred;
    }
-       	
+
+    private function transferFavorites($iPhotoId, $iNewID){
+        $aData = $this->_mDb->getRow("SELECT * FROM `bx_photos_favorites` WHERE `ID`=:id LIMIT 1", array('id' => $iPhotoId));
+        if (empty($aData))
+            return false;
+
+        $iProfileId = $this -> getProfileId((int)$aData['Profile']);
+        if (!$iProfileId)
+            return false;
+
+        $sQuery = $this -> _oDb -> prepare("INSERT INTO `bx_albums_favorites_media_track` SET `object_id` = ?, `author_id` = ?, `date` = ?", $iNewID, $iProfileId, ($aData['Date'] ? $aData['Date'] : time()));
+        return $this -> _oDb -> query($sQuery);
+    }
+
 	private function isFileExisted($iAuthor, $sTitle, $iDate){    	
     	$sQuery  = $this -> _oDb ->  prepare("SELECT COUNT(*) FROM `bx_albums_files` WHERE `profile_id` = ? AND `file_name` = ? AND `added` = ? LIMIT 1", $iAuthor, $sTitle, $iDate);
         return (bool)$this -> _oDb -> getOne($sQuery);

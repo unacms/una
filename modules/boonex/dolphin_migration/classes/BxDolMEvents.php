@@ -119,7 +119,7 @@ class BxDolMEvents extends BxDolMData
         return BX_MIG_SUCCESSFUL;
     }
 	
-	protected function transferCategory($sCategory, $sPrefix = 'bx_events', $sPreValueCateg = 'bx_events_cats')
+	protected function transferCategory($sCategory, $sPrefix = 'bx_events', $sPreValueCateg = 'bx_events_cats', $iValue = 0, $sData = '')
 	{
 		return parent::transferCategory($sCategory, $sPrefix, $sPreValueCateg);
 	}

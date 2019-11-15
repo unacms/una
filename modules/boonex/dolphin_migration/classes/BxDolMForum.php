@@ -190,11 +190,9 @@ class BxDolMForum extends BxDolMData
 		return $iProfileId ? $this -> getProfileId($iProfileId) : 0;
 	}
 	
-	protected function transferCategory($sTitle, $sPrefix = 'bx_forum', $sCategory = 'bx_forum_cats')
+	protected function transferCategory($sTitle, $sPrefix = 'bx_forum', $sCategory = 'bx_forum_cats', $iValue = 0, $sData = '')
 	{
-		$iId = parent::transferCategory($sTitle, $sPrefix, $sCategory);
-		$sQuery = $this -> _oDb -> prepare("INSERT IGNORE INTO `bx_forum_categories` SET `category`=? ", $iId);
-		return $this -> _oDb-> query($sQuery) ? $iId : false;
+		return parent::transferCategory($sTitle, $sPrefix, $sCategory);
 	}	
 
 	/**

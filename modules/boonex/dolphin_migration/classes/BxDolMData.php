@@ -219,7 +219,7 @@ class BxDolMData
 	 *  @param int $sCategory module's category's pre values Name
 	 *  @return string value of the added category
 	 */
-	protected function transferCategory($sName, $sPrefix, $sCategory)
+    protected function transferCategory($sName, $sPrefix, $sCategory, $iValue = 0, $sData = '')
 	{
 		if (strpos($sName, ';') !== false)
 			$sName = substr($sName, 0, strpos($sName, ';'));
@@ -231,13 +231,16 @@ class BxDolMData
 			return $aValues['Value'];
 		
 		$aValues = $this -> _oDb -> getRow("SELECT MAX(`Value`) + 1 as `Value`, MAX(`Order`) + 1 as `Order` FROM `sys_form_pre_values` WHERE `Key` = :cat", array('cat' => $sCategory));
+        if ($iValue)
+            $aValues['Value'] = $iValue;
 		
 		$sQuery = $this -> _oDb -> prepare("
 			INSERT INTO `sys_form_pre_values` SET
 				`Key`	= ?, 
 				`Value`	= ?,
 				`Order`	= ?,
-				`LKey`	= ?", $sCategory, $aValues['Value'], $aValues['Order'], "_{$sPrefix}_cat_{$sTitle}");
+				`LKey` = ?,
+				`Data` = ?", $sCategory, $aValues['Value'], $aValues['Order'], "_{$sPrefix}_cat_{$sTitle}", $sData);
 				
 		$this -> _oDb -> query($sQuery);
 		BxDolStudioLanguagesUtils::getInstance() -> addLanguageString("_{$sPrefix}_cat_{$sTitle}", $sName);
@@ -304,7 +307,7 @@ class BxDolMData
 				INSERT INTO `sys_form_pre_values` SET
 					`Key`	= ?, 
 					`Value`	= ?,
-					`Order`		= ?,
+					`Order`	= ?,
 					`LKey`	= ?", $sName, $mixedKey, $i++, $sLangKey);
 				
 				$this -> _oDb -> query($sQuery);
@@ -504,6 +507,7 @@ class BxDolMData
 
         return $this -> _oDb -> query("ALTER TABLE `{$sTableName}` ADD `{$sIdentFieldName}` int(11) unsigned NOT NULL default '0'");
     }
+
 
 	/**
 	 *  Returns last migration field value

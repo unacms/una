@@ -247,7 +247,9 @@ class BxDolMProfilesFields extends BxDolMData
 	private function convertValues($aFiled, $sFiledValue)
 	{
 		$aOriginalFields = $this -> getAssocFields();
-		if (!$aOriginalFields[$aFiled['name']]['values'] || $aOriginalFields[$aFiled['name']]['values'] && substr($aOriginalFields[$aFiled['name']]['values'], 0, 2) != '#!')
+		if (!$aOriginalFields[$aFiled['name']]['values'] ||
+            ($aOriginalFields[$aFiled['name']]['values'] && substr($aOriginalFields[$aFiled['name']]['values'], 0, 2) != '#!')
+               || $aOriginalFields[$aFiled['name']]['type'] !== 'select_set')
 			return $sFiledValue;
 		
 		$aItems = explode(',', $sFiledValue);
@@ -325,10 +327,10 @@ class BxDolMProfilesFields extends BxDolMData
 			if ($this -> isKeyPreKeyExits($sKey) && $bGetKeyIfExists)
 				return $sValues;
 			
-			$aValues = $this -> getPreValuesBy($sKey);
-			foreach($aValues as $iKey => $sValue) {
-				$aItems[$iKey] = $this -> getLKeyTranslations($sValue);
-                $aItems[$iKey] = $aItems[$iKey] ? $aItems[$iKey] : $sValue;
+			$aValues = $this -> getPreValuesBy($sKey, 'Value');
+			foreach($aValues as $mixedKey => $sValue) {
+				$aItems[$mixedKey] = $this -> getLKeyTranslations($sValue);
+                $aItems[$mixedKey] = $aItems[$mixedKey] ? $aItems[$mixedKey] : $sValue;
             }
 		}
 		else
@@ -347,9 +349,9 @@ class BxDolMProfilesFields extends BxDolMData
 			return false;
 
 		$aRecords = $this -> _oDb -> getAll("SELECT  * FROM `sys_form_inputs` WHERE `object` =  'bx_person' AND `{$this -> _sTransferFieldIdent}` != 0");
+        $iNumber = 0;
 		if (!empty($aRecords))
 		{
-			$iNumber = 0;		
 			foreach($aRecords as $iKey => $aValue)
 			{
 				$sSql = $this -> _oDb -> prepare("DELETE `td`, `tdi` FROM `sys_form_display_inputs` AS `tdi` LEFT JOIN `sys_form_inputs` AS `td` ON `tdi`.`input_name`=`td`.`name` WHERE `td`.`object`='bx_person' AND `td`.`name` = ?", $aValue['name']);

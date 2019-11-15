@@ -162,7 +162,7 @@ class BxDolMMarket extends BxDolMData
 		return $aResult;
     }
 	
-	protected function transferCategory($sCategory, $sPrefix = 'bx_market', $sPreValueCateg = 'bx_market_cats')
+	protected function transferCategory($sCategory, $sPrefix = 'bx_market', $sPreValueCateg = 'bx_market_cats', $iValue = 0, $sData = '')
 	{
 		return parent::transferCategory($sCategory, $sPrefix, $sPreValueCateg);
 	}
