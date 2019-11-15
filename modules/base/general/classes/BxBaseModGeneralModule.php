@@ -795,6 +795,69 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
     /**
+     * Blocks for lables tree browsing
+     */
+    public function serviceGetLablesTree()
+    {
+		$aBreadcrumbs = array();
+		$this->_getLablesBreadcrumbsArray(bx_get('label'), $aBreadcrumbs);
+		return $this->_getLablesTreeLevel($aBreadcrumbs);
+	}	
+    
+    public function serviceGetLablesBreadcrumbs()
+    {
+		if (bx_get('label')){
+            $aBreadcrumbs = array();
+            $this->_getLablesBreadcrumbsArray(bx_process_input(bx_get('label'), BX_DATA_INT), $aBreadcrumbs);
+            $aLabels = array();
+            foreach (array_reverse($aBreadcrumbs) as $aLabel){
+                $aLabels[] = array(
+                   'value' => $aLabel['value'], 
+                   'url' => $this->_getLablesBrowseUrl($aLabel['id'])
+               );
+            }
+            
+            return $this->_oTemplate->parseHtmlByName('labels_breadcrumbs.html', array('bx_repeat:items' => $aLabels));
+		}
+        return '';
+	}
+    
+    public function serviceBrowseByLabel()
+    {   
+        $CNF = &$this->_oConfig->CNF;
+        if (empty($CNF['OBJECT_METATAGS']))
+            return '';
+        
+		$sMode = 'recent';
+		$sClassSearchResult ='SearchResult';
+		
+		bx_import($sClassSearchResult, $this->_aModule['name']);
+        $sClass = $this->_aModule['class_prefix'] . $sClassSearchResult;
+		
+        $o = new $sClass($sMode, false);
+		$o->setDesignBoxTemplateId(BX_DB_PADDING_DEF);
+        $o->setDisplayEmptyMsg(true);
+        $o->setAjaxPaginate(false);
+        $o->setUnitParams(array('context' => $sMode));
+		
+		if (bx_get('label')){
+			$iLabelId = (int)bx_get('label');
+			$oLabel = BxDolLabel::getInstance();
+			$aLabel = $oLabel->getLabels(array('type' => 'id', 'id' => $iLabelId));
+			$oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+			$sTmp =$oMetatags->keywordsSetSearchCondition($o, $aLabel['value']);
+		}
+		
+        if ($o->isError)
+            return '';
+
+        if ($s = $o->processing())
+            return $s;
+        else
+            return '';
+	}
+    
+    /**
      * Data for Notifications module
      */
     public function serviceGetNotificationsData()
@@ -1947,7 +2010,66 @@ class BxBaseModGeneralModule extends BxDolModule
 
 		echoJson($aResponse);
 		exit;
-    }    
+    }  
+    
+    /**
+     * Blocks for lables tree browsing private functions
+     */
+    
+    private function _getLablesBreadcrumbsArray($iLabelId, &$aBreadcrumbs)
+	{
+		$oLabel = BxDolLabel::getInstance();
+		$aLabel = $oLabel->getLabels(array('type' => 'id', 'id' => $iLabelId));
+		if ($aLabel){
+            $aBreadcrumbs[$aLabel['id']] = array('id' => $aLabel['id'], 'value' => $aLabel['value']);
+			$this->_getLablesBreadcrumbsArray($aLabel['parent'], $aBreadcrumbs);
+		}
+	}
+    
+    private function _getLablesBrowseUrl($iLabelId)
+	{
+        list($sPageLink, $aPageParams) = bx_get_base_url_inline();
+		return BxDolPermalinks::getInstance()->permalink(bx_append_url_params($sPageLink, array_merge($aPageParams, array('label' => $iLabelId))));
+	}
+    
+    private function _getLablesTreeLevel($aBreadcrumbs, $iParent = 0)
+	{
+		$oLabel = BxDolLabel::getInstance();
+		$aLabelsOutput = array();
+        $aLabels = $oLabel->getLabels(array('type' => 'parent', 'parent' => $iParent));
+        if (count($aLabels) > 0){
+			foreach($aLabels as $aLabel) {
+				$sChild = $this->_getLablesTreeLevel($aBreadcrumbs, $aLabel['id']);
+				$bChildPresent = $sChild != '' ? true : false;
+				$bIsOpen = array_key_exists($aLabel['id'], $aBreadcrumbs) ? true : false;
+				if (!$bIsOpen){
+					$sChild = '';
+				}
+				$aLabelsOutput[] = array(
+					'value' => $aLabel['value'], 
+					'url' => $this->_getLablesBrowseUrl($aLabel['id']),
+					'child' => $sChild,
+					
+					'selected' => bx_process_input(bx_get('label'), BX_DATA_INT) == $aLabel['id'] ? 'selected' : ''.$aLabel['id'], 
+					'bx_if:open' => array(
+						'condition' => $bChildPresent && $bIsOpen,
+						'content' => array()
+					),
+					'bx_if:can_open' => array(
+						'condition' => $bChildPresent && !$bIsOpen,
+						'content' => array()
+					)
+				);
+			}
+			return $this->_oTemplate->parseHtmlByName('labels_tree.html', 
+				array(
+					'bx_repeat:items' => $aLabelsOutput,
+					'parent' => $iParent,
+				)
+			);
+		}
+		return '';
+	}
 }
 
 /** @} */

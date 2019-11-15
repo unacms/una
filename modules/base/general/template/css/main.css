@@ -248,3 +248,16 @@ div.bx-base-general-comments div.bx-base-general-comments-counter-holder {
     margin: 0px;
     line-height: normal;
 }
+
+/* browsing by labels */
+.bx-base-general-lables-tree-parent-0 , .bx-base-general-lables-tree-parent-0 UL{
+	list-style-type: none;
+	padding-left: 2rem;
+}
+.bx-base-general-lables-tree-parent-0 LI{
+	padding: 0 0
+}
+UL.bx-base-general-lables-tree-parent-0{
+	padding: 0px;
+	margin: 0px;
+}
