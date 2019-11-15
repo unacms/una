@@ -227,13 +227,49 @@ function bx_process_output ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams 
         return empty($mixedData) ? '' : gmdate("Y-m-d H:i", (int)$mixedData);
 
     case BX_DATA_HTML:
-        return bx_linkify_html($mixedData, 'class="' . BX_DOL_LINK_CLASS . '"');
+        $s = bx_linkify_html($mixedData, 'class="' . BX_DOL_LINK_CLASS . '"');
+        return $mixedParams && is_array($mixedParams) && in_array('no_process_macro', $mixedParams) ? $s : bx_process_macros($s);
     case BX_DATA_TEXT_MULTILINE:
-        return $mixedData;
+        $s = $mixedData;
+        return $mixedParams && is_array($mixedParams) && in_array('no_process_macros', $mixedParams) ? $s : bx_process_macros($s);
     case BX_DATA_TEXT:
     default:
-        return htmlspecialchars_adv($mixedData);
+        $s = htmlspecialchars_adv($mixedData);
+        return $mixedParams && is_array($mixedParams) && in_array('no_process_macros', $mixedParams) ? $s : bx_process_macros($s);
     }
+}
+
+function bx_is_macros_in_content (&$s) 
+{
+    return false === strpos($s, '{{!') ? false : true; 
+}
+
+/**
+ * This function converts macros upon text output. 
+ * Macros represents constructions like this:
+ * @code
+ * {{!module_name:function[param1, "param2"]}}
+ * @endcode
+ * For example, to display some content from module Posts:
+ * @code
+ * {{!bx_posts:get_search_result_unit[3]}}
+ * @endcode
+ * Only users which have "use macros" ACL action enabled can use this functionlity.
+ *
+ * @param $s text to process
+ * @return modified or not modified text
+ */
+function bx_process_macros ($s)
+{
+    if (!bx_is_macros_in_content($s))
+        return $s;
+
+    return preg_replace_callback(
+        "/{{!(.*?)}}/", 
+        function ($aMatches) {
+            return BxDolService::callMacro($aMatches[1]); 
+        }, 
+        $s);
 }
 
 /*

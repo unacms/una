@@ -711,6 +711,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     static $TYPES_FILE = array('file' => 1);
 
     static $FUNC_SKIP_DOMAIN_CHECK = array('email' => 1, 'emails' => 1, 'emailexist' => 1, 'emailuniq' => 1, 'emailexistorempty' => 1, 'hostdomain' => 1, 'hostdomainchat' => 1, 'emailorempty' => 1);
+    static $FUNC_SKIP_MACROS_CHECK = array();
 
     protected $_aMarkers = array ();
 
@@ -1215,6 +1216,25 @@ class BxDolFormChecker
                 }
                 else {
                     checkActionModule(bx_get_logged_profile_id(), 'post links', 'system', true);
+                }
+            }
+
+            // check for macros in text fields
+            $sCheckerFunc = isset($a['checker']['func']) ? strtolower($a['checker']['func']) : '';
+            if (
+                !isset(BxDolForm::$FUNC_SKIP_MACROS_CHECK[$sCheckerFunc]) && 
+                (!isset($a['skip_macros_check']) || false == $a['skip_macros_check']) && 
+                isset(BxDolForm::$TYPES_TEXT[$a['type']]) && 
+                bx_is_macros_in_content($val) && 
+                !isAdmin())
+            {
+                $aCheck = checkActionModule(bx_get_logged_profile_id(), 'use macros', 'system');
+                if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED) {
+                    ++$iErrors;
+                    $aInputs[$k]['error'] = $aCheck[CHECK_ACTION_MESSAGE];
+                }
+                else {
+                    checkActionModule(bx_get_logged_profile_id(), 'use macros', 'system', true);
                 }
             }
 

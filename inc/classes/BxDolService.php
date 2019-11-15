@@ -89,6 +89,27 @@ class BxDolService extends BxDol
         return self::call($a['module'], $a['method'], isset($a['params']) ? $a['params'] : array(), isset($a['class']) ? $a['class'] : 'Module', isset($a['ignore_cache']) ? $a['ignore_cache'] : false);
     }
 
+    public static function callMacro($s, $aMarkers = array(), $sReplaceIn = 'params')
+    {
+        if ($aMarkers)
+            $s = bx_replace_markers($s, $aMarkers);
+
+        if (!preg_match("/^([a-zA-Z0-9_\:]+)(.*)$/", $s, $aMatches))
+            return '<b></b>';
+
+        $a = explode(":", $aMatches[1]);
+        if (!isset($a[0]) || !isset($a[1]))
+            return '';
+
+        $aParams = array();
+        if (!empty($aMatches[2]))
+            $aParams = json_decode($aMatches[2]);
+        if (!$aParams)
+            $aParams = array();
+
+        return self::call($a[0], $a[1], $aParams, isset($a[3]) ? $a[3] : 'Module', isset($a[4]) && 'ignore_cache' == $a[4] ? true : false);
+    }
+
     /**
      * Check if string is serialized array
      */

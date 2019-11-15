@@ -973,7 +973,7 @@ BLAH;
 
         $sAttrs = bx_convert_array2attrs($aAttrs, "bx-def-font-inputs bx-form-input-{$aInput['type']}" . ((isset($aInput['html']) and $aInput['html'] and $this->addHtmlEditor($aInput['html'], $aInput)) ? ' bx-form-input-html' : ''));
 
-        $sValue = isset($aInput['value']) ? bx_process_output((isset($aInput['html']) && $aInput['html']) || (isset($aInput['code']) && $aInput['code']) ? $aInput['value'] : strip_tags($aInput['value'])) : '';
+        $sValue = isset($aInput['value']) ? bx_process_output((isset($aInput['html']) && $aInput['html']) || (isset($aInput['code']) && $aInput['code']) ? $aInput['value'] : strip_tags($aInput['value']), BX_DATA_TEXT, array('no_process_macros')) : '';
 
         return "<textarea $sAttrs>$sValue</textarea>";
     }
