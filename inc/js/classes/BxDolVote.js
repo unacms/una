@@ -23,6 +23,7 @@ function BxDolVote(oOptions)
     this._iAnimationSpeed = 'slow';
     this._sSP = oOptions.sStylePrefix === undefined ? 'bx-vote' : oOptions.sStylePrefix;
     this._aHtmlIds = oOptions.aHtmlIds;
+    this._aRequestParams = oOptions.aRequestParams;
 }
 
 BxDolVote.prototype.init = function()
@@ -69,6 +70,7 @@ BxDolVote.prototype.onVote = function(oLink, oData, onComplete)
         return;
 
     var oCounter = this._getCounter(oLink);
+    console.log(oCounter);
     if(oCounter && oCounter.length > 0) {
         oCounter.html(oData.countf);
 
@@ -101,6 +103,7 @@ BxDolVote.prototype._getDefaultParams = function()
     return {
         sys: this._sSystem,
         id: this._iObjId,
+        params: $.param(this._aRequestParams),
         _t: oDate.getTime()
     };
 };

@@ -405,19 +405,23 @@ span.cmt span.cmt-counter-holder {
     align-items: center;
     -webkit-flex-wrap:nowrap;
     flex-wrap:nowrap;
-
-    padding-left: 4px;
 }
 .cmt-counter > * {
     position: relative;
 }
 .cmt-counter div.cmt-counter-icon,
 .cmt-counter div.bx-base-pofile-unit-wo-info {
-    margin: 4px 0 4px -8px;
+    margin-left: -0.5rem;
+}
+.cmt-counter div.cmt-counter-icon:first-child,
+.cmt-counter div.bx-base-pofile-unit-wo-info:first-child {
+    margin-left: 0;
 }
 .cmt-counter div.cmt-counter-icon {
-    margin-right: 0.5rem;
     box-sizing: border-box;
+    z-index: 2;
+
+    margin-right: 0.5rem;
 
     background-color: rgba(232, 232, 232, 1.0);
     border: 1px solid #ffffff;
@@ -431,8 +435,9 @@ span.cmt span.cmt-counter-holder {
 .cmt-counter .bx-def-icon-size {
     width: 2.0rem;
     height: 2.0rem;
+
+    font-size: 1.0rem;
 }
-.cmt-counter .bx-def-icon-size,
 .cmt-counter p.bx-base-pofile-unit-thumb.bx-def-icon-size {
     display: -webkit-flex;
     display: flex;

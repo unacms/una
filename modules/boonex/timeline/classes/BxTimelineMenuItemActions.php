@@ -28,6 +28,7 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
     protected $_sMode;
     protected $_bShowTitles;
     protected $_bShowCounters;
+    protected $_bShowCountersIcons;
 
     protected $_sTmplNameItem;
 
@@ -42,6 +43,8 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         $this->_sMode = self::$_sModeActions;
         $this->_bShowTitles = true;
         $this->_bShowCounters = false;
+        $this->_bShowCountersEmpty = false;
+        $this->_bShowCountersIcons = true;
         $this->_sTmplNameItem = 'menu_custom_item_hor.html';
     }
 
@@ -119,19 +122,20 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 
         $sViewsSystem = $this->_aEvent['views']['system'];
         $iViewsObject = $this->_aEvent['views']['object_id'];
-        $aViewsParams = array('dynamic_mode' => $this->_bDynamicMode);
+        $aViewsParams = array(
+            'show_do_view_label' => $this->_bShowTitles,
+            'show_counter' => $this->_bShowCounters, 
+            'show_counter_label_icon' => $this->_bShowCountersIcons,
+            'dynamic_mode' => $this->_bDynamicMode
+        );
 
         switch($this->_sMode) {
             case self::$_sModeActions:
                 $sViewsMethod = 'getElementInline';
-                $aViewsParams['show_do_view_label'] = $this->_bShowTitles;
-                $aViewsParams['show_counter'] = $this->_bShowCounters;
                 break;
 
             case self::$_sModeCounters:
                 $sViewsMethod = 'getCounter';
-                $aViewsParams['show_counter'] = true;
-                $aViewsParams['show_counter_label_icon'] = true;
                 break;
         }
 
@@ -145,19 +149,21 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 
         $sVotesSystem = $this->_aEvent['votes']['system'];
         $iVotesObject = $this->_aEvent['votes']['object_id'];
-        $aVotesParams = array('dynamic_mode' => $this->_bDynamicMode);
+        $aVotesParams = array(
+            'show_do_vote_label' => $this->_bShowTitles,
+            'show_counter' => $this->_bShowCounters,
+            'show_counter_empty' => $this->_bShowCountersEmpty,
+            'show_counter_label_icon' => $this->_bShowCountersIcons,
+            'dynamic_mode' => $this->_bDynamicMode
+        );
 
         switch($this->_sMode) {
             case self::$_sModeActions:
                 $sVotesMethod = 'getElementInline';
-                $aVotesParams['show_do_vote_label'] = $this->_bShowTitles;
-                $aVotesParams['show_counter'] = $this->_bShowCounters;
                 break;
 
             case self::$_sModeCounters:
                 $sVotesMethod = 'getCounter';
-                $aVotesParams['show_counter'] = true;
-                $aVotesParams['show_counter_empty'] = true;
                 break;
         }
 
@@ -171,19 +177,22 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 
         $sReactionsSystem = $this->_aEvent['reactions']['system'];
         $iReactionsObject = $this->_aEvent['reactions']['object_id'];
-        $aReactionsParams = array('dynamic_mode' => $this->_bDynamicMode);
+        $aReactionsParams = array(
+            'show_do_vote_label' => $this->_bShowTitles,
+            'show_counter' => $this->_bShowCounters,
+            'show_counter_empty' => $this->_bShowCountersEmpty,
+            'show_counter_style' => 'compound',
+            'show_counter_label_icon' => $this->_bShowCountersIcons,
+            'dynamic_mode' => $this->_bDynamicMode
+        );
         
         switch($this->_sMode) {
             case self::$_sModeActions:
                 $sReactionsMethod = 'getElementInline';
-                $aReactionsParams['show_do_vote_label'] = $this->_bShowTitles;
-                $aReactionsParams['show_counter'] = $this->_bShowCounters;
                 break;
 
             case self::$_sModeCounters:
                 $sReactionsMethod = 'getCounter';
-                $aReactionsParams['show_counter'] = true;
-                $aReactionsParams['show_counter_style'] = 'compound';
                 break;
         }
 
@@ -197,19 +206,21 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 
         $sScoresSystem = $this->_aEvent['scores']['system'];
         $iScoresObject = $this->_aEvent['scores']['object_id'];
-        $aScoresParams = array('dynamic_mode' => $this->_bDynamicMode);
-        
+        $aScoresParams = array(
+            'show_do_vote_label' => $this->_bShowTitles,
+            'show_counter' => $this->_bShowCounters,
+            'show_counter_empty' => $this->_bShowCountersEmpty,
+            'show_counter_label_icon' => $this->_bShowCountersIcons,
+            'dynamic_mode' => $this->_bDynamicMode
+        );
+
         switch($this->_sMode) {
             case self::$_sModeActions:
                 $sScoresMethod = 'getElementInline';
-                $aScoresParams['show_do_vote_label'] = $this->_bShowTitles;
-                $aScoresParams['show_counter'] = $this->_bShowCounters;
                 break;
 
             case self::$_sModeCounters:
                 $sScoresMethod = 'getCounter';
-                $aScoresParams['show_counter'] = true;
-                $aScoresParams['show_counter_empty'] = true;
                 break;
         }
 
@@ -223,18 +234,19 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 
         $sReportsSystem = $this->_aEvent['reports']['system'];
         $iReportsObject = $this->_aEvent['reports']['object_id'];
-        $aReportsParams = array('dynamic_mode' => $this->_bDynamicMode);
+        $aReportsParams = array(
+            'show_do_report_label' => $this->_bShowTitles,
+            'show_counter' => $this->_bShowCounters,
+            'dynamic_mode' => $this->_bDynamicMode
+        );
         
         switch($this->_sMode) {
             case self::$_sModeActions:
                 $sReportsMethod = 'getElementInline';
-                $aReportsParams['show_do_report_label'] = $this->_bShowTitles;
-                $aReportsParams['show_counter'] = $this->_bShowCounters;
                 break;
 
             case self::$_sModeCounters:
                 $sReportsMethod = 'getCounter';
-                $aReportsParams['show_counter'] = true;
                 break;
         }
 

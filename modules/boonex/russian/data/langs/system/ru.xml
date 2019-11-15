@@ -1677,6 +1677,8 @@
     <string name="_sys_acl_action_pending"><![CDATA[В данный момент вы неактивный пользователь. Пожалуйста, попросите <a href="mailto:{7}">администратора сайта</a> активировать Вас, чтобы Вы могли <b>{1}</b>.]]></string>
 	<string name="_sys_acl_action_post_links"><![CDATA[Публикация ссылок]]></string>
     <string name="_sys_acl_action_post_links_desc"><![CDATA[Публикация ссылок в формах]]></string>
+	<string name="_sys_acl_action_use_macros"><![CDATA[Использовать макросы]]></string>
+    <string name="_sys_acl_action_use_macros_desc"><![CDATA[Использовать специально сконструированный вызов, для вставки динамического контента практически в любой текст]]></string>
 	<string name="_sys_acl_action_set_acl_level"><![CDATA[Назначить членство]]></string>
 	<string name="_sys_acl_action_set_acl_level_desc"><![CDATA[Назначить членство для профилей]]></string>
         <string name="_sys_acl_action_set_acl_as_privacy"><![CDATA[Использовать уровень членства в настройках приватности]]></string>

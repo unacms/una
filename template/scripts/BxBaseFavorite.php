@@ -188,18 +188,21 @@ class BxBaseFavorite extends BxDolFavorite
     {
     	$bFavorited = isset($aParams['is_favorited']) && $aParams['is_favorited'] === true;
         return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentDoActionLabel(), array(
-        	'bx_if:show_icon' => array(
-        		'condition' => isset($aParams['show_do_favorite_icon']) && $aParams['show_do_favorite_icon'] == true,
-        		'content' => array(
-        			'name' => $this->_getIconDoFavorite($bFavorited)
-        		)
-        	),
-        	'bx_if:show_text' => array(
-        		'condition' => isset($aParams['show_do_favorite_label']) && $aParams['show_do_favorite_label'] == true,
-        		'content' => array(
-        			'text' => _t($this->_getTitleDoFavorite($bFavorited))
-        		)
-        	)
+            'style_prefix' => $this->_sStylePrefix,
+            'bx_if:show_icon' => array(
+                'condition' => isset($aParams['show_do_favorite_icon']) && $aParams['show_do_favorite_icon'] == true,
+                'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
+                    'name' => $this->_getIconDoFavorite($bFavorited)
+                )
+            ),
+            'bx_if:show_text' => array(
+                'condition' => isset($aParams['show_do_favorite_label']) && $aParams['show_do_favorite_label'] == true,
+                'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
+                    'text' => _t($this->_getTitleDoFavorite($bFavorited))
+                )
+            )
         ));
     }
 

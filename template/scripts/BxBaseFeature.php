@@ -125,22 +125,22 @@ class BxBaseFeature extends BxDolFeature
     	$bFeatured = isset($aParams['is_featured']) && $aParams['is_featured'] === true;
         $bShowDoFeatureAsButtonSmall = isset($aParams['show_do_feature_as_button_small']) && $aParams['show_do_feature_as_button_small'] == true;
         $bShowDoFeatureAsButton = !$bShowDoFeatureAsButtonSmall && isset($aParams['show_do_feature_as_button']) && $aParams['show_do_feature_as_button'] == true;
-		$bDisabled = !$bAllowedFeature || ($bFeatured  && !$this->isUndo());
+        $bDisabled = !$bAllowedFeature || ($bFeatured  && !$this->isUndo());
 
         $sClass = '';
-		if($bShowDoFeatureAsButton)
-			$sClass = 'bx-btn';
-		else if ($bShowDoFeatureAsButtonSmall)
-			$sClass = 'bx-btn bx-btn-small';
+        if($bShowDoFeatureAsButton)
+            $sClass = 'bx-btn';
+        else if ($bShowDoFeatureAsButtonSmall)
+            $sClass = 'bx-btn bx-btn-small';
 
-		if($bDisabled)
-			$sClass .= $bShowDoFeatureAsButton || $bShowDoFeatureAsButtonSmall ? ' bx-btn-disabled' : 'bx-feature-disabled';
+        if($bDisabled)
+            $sClass .= $bShowDoFeatureAsButton || $bShowDoFeatureAsButtonSmall ? ' bx-btn-disabled' : 'bx-feature-disabled';
 
         return $this->_oTemplate->parseLink('javascript:void(0)', $this->_getLabelDoFeature($aParams), array(
-        	'id' => $this->_aHtmlIds['do_link'],
+            'id' => $this->_aHtmlIds['do_link'],
             'class' => $this->_sStylePrefix . '-do-feature ' . $sClass,
             'title' => _t($this->_getTitleDoFeature($bFeatured)),
-        	'onclick' => !$bDisabled ? $this->getJsClick() : ''
+            'onclick' => !$bDisabled ? $this->getJsClick() : ''
         ));
     }
 
@@ -148,18 +148,21 @@ class BxBaseFeature extends BxDolFeature
     {
     	$bFeatured = isset($aParams['is_featured']) && $aParams['is_featured'] === true;
         return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentDoActionLabel(), array(
-        	'bx_if:show_icon' => array(
-        		'condition' => isset($aParams['show_do_feature_icon']) && $aParams['show_do_feature_icon'] == true,
-        		'content' => array(
-        			'name' => $this->_getIconDoFeature($bFeatured)
-        		)
-        	),
-        	'bx_if:show_text' => array(
-        		'condition' => isset($aParams['show_do_feature_label']) && $aParams['show_do_feature_label'] == true,
-        		'content' => array(
-        			'text' => _t($this->_getTitleDoFeature($bFeatured))
-        		)
-        	)
+            'style_prefix' => $this->_sStylePrefix,
+            'bx_if:show_icon' => array(
+                'condition' => isset($aParams['show_do_feature_icon']) && $aParams['show_do_feature_icon'] == true,
+                'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
+                    'name' => $this->_getIconDoFeature($bFeatured)
+                )
+            ),
+            'bx_if:show_text' => array(
+                'condition' => isset($aParams['show_do_feature_label']) && $aParams['show_do_feature_label'] == true,
+                'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
+                    'text' => _t($this->_getTitleDoFeature($bFeatured))
+                )
+            )
         ));
     }
 }

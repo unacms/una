@@ -65,25 +65,28 @@ div.bx-view-counter-holder {
 }
 
 /*--- Counter Styles ---*/
+.bx-view-counter .bx-view-counter-label.bx-def-valign-center .bx-view-counter-text {
+    line-height: normal;
+}
 .bx-view-counter span.bx-view-counter-icon {
     position: relative;
-    display: inline-block;
     box-sizing: border-box;
 
     width: 2.0rem;
     height: 2.0rem;
-    margin-top: 4px;
-    margin-bottom: 4px;
 
     background-color: rgba(232, 232, 232, 1.0);
     border: 1px solid #ffffff;
     border-radius: 1rem;
 
+    font-size: 1.0rem;
+}
+.bx-view-counter span.bx-view-counter-icon:not(.bx-def-align-center) {
+    display: inline-block;
+
     line-height: 1.9rem;
     text-align: center;
-    font-size: 1.0rem;
 }
 .bx-view-counter span.bx-view-counter-icon .sys-icon {
     vertical-align: top;
-    color: #334455;
 }

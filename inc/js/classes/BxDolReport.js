@@ -56,19 +56,19 @@ BxDolReport.prototype.onReport = function(oData, oElement)
 {
 	var $this = this;
 	var fContinue = function() {
-		if(oData && oData.code != 0)
+            if(oData && oData.code != 0)
 	        return;
 
-		if(oData && oData.label_icon)
-			$(oElement).find('.sys-icon').attr('class', 'sys-icon ' + oData.label_icon);
+            if(oData && oData.label_icon)
+                $(oElement).find('.sys-action-do-icon .sys-icon').attr('class', 'sys-icon ' + oData.label_icon);
 
-		if(oData && oData.label_title) {
-			$(oElement).attr('title', oData.label_title);
-			$(oElement).find('span:not(.sys-action-do-icon)').html(oData.label_title);
-		}
+            if(oData && oData.label_title) {
+                $(oElement).attr('title', oData.label_title);
+                $(oElement).find('.sys-action-do-text').html(oData.label_title);
+            }
 
-		if(oData && oData.disabled)
-			$(oElement).removeAttr('onclick').addClass($(oElement).hasClass('bx-btn') ? 'bx-btn-disabled' : 'bx-report-disabled');
+            if(oData && oData.disabled)
+                $(oElement).removeAttr('onclick').addClass($(oElement).hasClass('bx-btn') ? 'bx-btn-disabled' : 'bx-report-disabled');
 
 	    var oCounter = $this._getCounter(oElement);
 	    if(oCounter && oCounter.length > 0) {
@@ -79,9 +79,9 @@ BxDolReport.prototype.onReport = function(oData, oElement)
 	};
 
 	if(oData && oData.msg != undefined)
-        bx_alert(oData.msg, fContinue);
+            bx_alert(oData.msg, fContinue);
 	else
-		fContinue();
+            fContinue();
 };
 
 BxDolReport.prototype.processJson = function(oData, oElement) {

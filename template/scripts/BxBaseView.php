@@ -231,6 +231,7 @@ class BxBaseView extends BxDolView
     protected function _getCounterLabel($iCount, $aParams = array())
     {
         return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentCounterLabel(), array(
+            'style_prefix' => $this->_sStylePrefix,
             'bx_if:show_icon' => array(
                 'condition' => !isset($aParams['show_counter_label_icon']) || $aParams['show_counter_label_icon'] === true,
                 'content' => array(
@@ -251,6 +252,7 @@ class BxBaseView extends BxDolView
     protected function _getLabelDo($aParams = array())
     {
         return $this->_oTemplate->parseHtmlByContent($this->_sTmplContentDoViewLabel, array(
+            'style_prefix' => $this->_sStylePrefix,
             'bx_if:show_icon' => array(
                 'condition' => isset($aParams['show_do_view_icon']) && $aParams['show_do_view_icon'] == true,
                 'content' => array(
