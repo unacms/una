@@ -305,6 +305,31 @@ class BxDolObject extends BxDolFactory implements iBxDolReplaceable
         return bx_replace_markers($mixed, $this->_aMarkers);
     }
 
+    
+    protected function _getRequestParamsData($aKeys = array())
+    {
+        $sParams = bx_get('params');
+        if($sParams === false)
+            return array();
+
+        $aParams = array();
+        parse_str(bx_process_input($sParams), $aParams);
+
+        return $aParams;
+    }
+
+    protected function _prepareRequestParamsData($aParams, $aParamsAdd = array())
+    {
+        $aRequestParams = array_intersect_key($aParams, $this->_aElementDefaults);
+        $aRequestParams = array_merge($aRequestParams, $aParamsAdd);
+
+        foreach($aRequestParams as $sKey => $mixedValue)
+            if(is_bool($mixedValue))
+                $aRequestParams[$sKey] = (int)$mixedValue;
+
+        return $aRequestParams;
+    }
+
     protected function _getTmplContentElementBlock()
     {
         return $this->_sTmplContentElementBlock;

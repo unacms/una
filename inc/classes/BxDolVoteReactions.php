@@ -153,7 +153,7 @@ class BxDolVoteReactions extends BxTemplVote
         return $aData;
     }
 
-    protected function _returnVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aData, $bVoted)
+    protected function _returnVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aData, $bVoted, $aParams = array())
     {
         $aReactions = $this->getReactions();
         $sReaction = $aData['reaction'];

@@ -46,3 +46,8 @@ div.bx-tl-repost div.bx-tl-repost-counter-holder {
 	position: relative;
 	float: left;
 }
+
+/*--- Counter Styles ---*/
+.bx-tl-repost-counter-holder .bx-tl-repost-counter {
+    line-height: normal;
+}

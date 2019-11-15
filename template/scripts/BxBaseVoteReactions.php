@@ -91,16 +91,18 @@ class BxBaseVoteReactions extends BxDolVoteReactions
 
     public function _getCounterDivided($aParams = array())
     {
-        $bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'] === true;
-        $bShowScript = !isset($aParams['show_script']) || $aParams['show_script'] == true;
+        $bDynamicMode = isset($aParams['dynamic_mode']) && (bool)$aParams['dynamic_mode'] === true;
+        $bShowCounterEmpty = isset($aParams['show_counter_empty']) && (bool)$aParams['show_counter_empty'] === true;
+        $bShowScript = !isset($aParams['show_script']) || (bool)$aParams['show_script'] === true;
 
+        $bVote = $this->_isVote();
         $aVote = $this->_getVote();
         $aReactions = $this->getReactions();
 
         $sClass = isset($aParams['class_counter']) ? $aParams['class_counter'] : '';
-        if(isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true)
+        if(isset($aParams['show_do_vote_as_button_small']) && (bool)$aParams['show_do_vote_as_button_small'] === true)
             $sClass .= ' bx-btn-small-height';
-        else if(isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true)
+        else if(isset($aParams['show_do_vote_as_button']) && (bool)$aParams['show_do_vote_as_button'] === true)
             $sClass .= ' bx-btn-height';
         $sClass .= ' bx-def-margin-sec-right';
 
@@ -108,10 +110,12 @@ class BxBaseVoteReactions extends BxDolVoteReactions
 
         $sResult = '';
         foreach($aReactions as $sName) {
-            $aParams['class_counter'] = ((int)$aVote['count_' . $sName] == 0 ? ' bx-vc-hidden' : '') . ' ' . $sName . ' ' . $sClass;
+            $iCount = (int)$aVote['count_' . $sName];
+
+            $aParams['class_counter'] = ($iCount == 0 && (!$bShowCounterEmpty || $sName != $this->_sDefault || $bVote) ? ' bx-vc-hidden' : '') . ' ' . $sName . ' ' . $sClass;
             $aParams['reaction'] = $sName;
             $aParams['vote'] = array(
-                'count' => $aVote['count_' . $sName],
+                'count' => $iCount,
                 'sum' => $aVote['sum_' . $sName],
                 'rate' => $aVote['rate_' . $sName],
             );
@@ -124,23 +128,34 @@ class BxBaseVoteReactions extends BxDolVoteReactions
             'style_prefix' => $this->_sStylePrefix,
             'type' => $this->_sType,
             'style' => self::$_sCounterStyleDivided,
-            'counter' => $sResult,
-            'script' => $bShowScript ? $this->getJsScript($bDynamicMode) : ''
+            'bx_if:show_link' => array(
+                'condition' => false,
+                'content' => array()
+            ),
+            'bx_if:show_text' => array(
+                'condition' => true,
+                'content' => array(
+                    'counter' => $sResult,
+                )
+            ),
+            'script' => $bShowScript ? $this->getJsScript($aParams) : ''
         ));
     }
 
     public function _getCounterCompound($aParams = array())
     {
-        $bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'] === true;
-        $bShowScript = !isset($aParams['show_script']) || $aParams['show_script'] == true;
+        $bDynamicMode = isset($aParams['dynamic_mode']) && (bool)$aParams['dynamic_mode'] === true;
+        $bShowCounterEmpty = isset($aParams['show_counter_empty']) && (bool)$aParams['show_counter_empty'] === true;
+        $bShowScript = !isset($aParams['show_script']) || (bool)$aParams['show_script'] === true;
 
+        $bVote = $this->_isVote();
         $aVote = $this->_getVote();
         $aReactions = $this->getReactions();
 
         $sClass = isset($aParams['class_counter']) ? $aParams['class_counter'] : '';
-        if(isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true)
+        if(isset($aParams['show_do_vote_as_button_small']) && (bool)$aParams['show_do_vote_as_button_small'] === true)
             $sClass .= ' bx-btn-small-height';
-        else if(isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true)
+        else if(isset($aParams['show_do_vote_as_button']) && (bool)$aParams['show_do_vote_as_button'] === true)
             $sClass .= ' bx-btn-height';
 
         $aParams['id_counter'] = '';
@@ -154,7 +169,7 @@ class BxBaseVoteReactions extends BxDolVoteReactions
                 'show_counter_active' => false,
                 'show_counter_label_icon' => true,
                 'show_counter_label_text' => false,
-                'class_counter' => ($iCount == 0 ? ' bx-vc-hidden' : '') . ' ' . $sName . ' ' . $sClass,
+                'class_counter' => ($iCount == 0 && (!$bShowCounterEmpty || $sName != $this->_sDefault || $bVote) ? ' bx-vc-hidden' : '') . ' ' . $sName . ' ' . $sClass,
                 'reaction' => $sName,
                 'vote' => array(
                     'count' => $iCount,
@@ -169,7 +184,7 @@ class BxBaseVoteReactions extends BxDolVoteReactions
         }
 
         $aParams = array_merge($aParams, array(
-            'show_counter_active' => true,
+            'show_counter_active' => false,
             'show_counter_label_icon' => false,
             'show_counter_label_text' => true,
             'class_counter' => ' total-count ' . $sClass,
@@ -185,19 +200,32 @@ class BxBaseVoteReactions extends BxDolVoteReactions
         return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentCounterWrapper(), array(
             'html_id' => $this->_aHtmlIds['counter'],
             'style_prefix' => $this->_sStylePrefix,
+            'class' => !$bVote && !$bShowCounterEmpty ? 'bx-vc-hidden' : '',
             'type' => $this->_sType,
             'style' => self::$_sCounterStyleCompound,
-            'counter' => $sResult,
-            'script' => $bShowScript ? $this->getJsScript($bDynamicMode) : ''
+            'bx_if:show_link' => array(
+                'condition' => true,
+                'content' => array(
+                    'href' => 'javascript:void(0)',
+                    'onclick' => 'javascript:' . $this->getJsClickCounter($aParams),
+                    'title' => bx_html_attribute($this->_getTitleDoBy($aParams)),
+                    'counter' => $sResult,
+                )
+            ),
+            'bx_if:show_text' => array(
+                'condition' => false,
+                'content' => array()
+            ),
+            'script' => $bShowScript ? $this->getJsScript($aParams) : ''
         ));
     }
 
     public function getElement($aParams = array())
     {
         $sClass = $this->_sStylePrefix . '-' . $this->_sType;
-        if(isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true)
+        if(isset($aParams['show_do_vote_as_button_small']) && (bool)$aParams['show_do_vote_as_button_small'] === true)
             $sClass .=  '-button-small';
-        else if(isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true)
+        else if(isset($aParams['show_do_vote_as_button']) && (bool)$aParams['show_do_vote_as_button'] === true)
             $sClass .= '-button';
 
         $aParams['class_element'] = isset($aParams['class_element']) ? $aParams['class_element'] : '';
@@ -221,9 +249,9 @@ class BxBaseVoteReactions extends BxDolVoteReactions
     protected function _getDoVote($aParams = array(), $isAllowedVote = true)
     {
         $bUndo = $this->isUndo();
-    	$bVoted = isset($aParams['is_voted']) && $aParams['is_voted'] === true;
-        $bShowDoVoteAsButtonSmall = isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true;
-        $bShowDoVoteAsButton = !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true;
+    	$bVoted = isset($aParams['is_voted']) && (bool)$aParams['is_voted'] === true;
+        $bShowDoVoteAsButtonSmall = isset($aParams['show_do_vote_as_button_small']) && (bool)$aParams['show_do_vote_as_button_small'] === true;
+        $bShowDoVoteAsButton = !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && (bool)$aParams['show_do_vote_as_button'] === true;
         $bDisabled = !$isAllowedVote || ($bVoted && !$bUndo);
 
         $sClass = '';
@@ -253,18 +281,19 @@ class BxBaseVoteReactions extends BxDolVoteReactions
 
     protected function _getDoVoteLabel($aParams = array())
     {
-    	$bVoted = isset($aParams['is_voted']) && $aParams['is_voted'] === true;
+    	$bVoted = isset($aParams['is_voted']) && (bool)$aParams['is_voted'] === true;
 
         return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentDoActionLabel(), array(
+            'style_prefix' => $this->_sStylePrefix,
             'bx_if:show_icon' => array(
-                'condition' => isset($aParams['show_do_vote_icon']) && $aParams['show_do_vote_icon'] == true,
+                'condition' => isset($aParams['show_do_vote_icon']) && (bool)$aParams['show_do_vote_icon'] === true,
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
                     'name' => $this->_getIconDoWithTrack($bVoted, $aParams['track'])
                 )
             ),
             'bx_if:show_text' => array(
-                'condition' => isset($aParams['show_do_vote_label']) && $aParams['show_do_vote_label'] == true,
+                'condition' => isset($aParams['show_do_vote_label']) && (bool)$aParams['show_do_vote_label'] === true,
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
                     'text' => _t($this->_getTitleDoWithTrack($bVoted, $aParams['track']))
@@ -294,15 +323,16 @@ class BxBaseVoteReactions extends BxDolVoteReactions
         $sReaction = !empty($aParams['reaction']) ? $aParams['reaction'] : $this->_sDefault;
 
         return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentCounterLabel(), array(
+            'style_prefix' => $this->_sStylePrefix,
             'bx_if:show_icon' => array(
-                'condition' => !isset($aParams['show_counter_label_icon']) || $aParams['show_counter_label_icon'] === true,
+                'condition' => !isset($aParams['show_counter_label_icon']) || (bool)$aParams['show_counter_label_icon'] === true,
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
                     'name' => $this->_aDataList[$sReaction]['icon']
                 )
             ),
             'bx_if:show_text' => array(
-                'condition' => !isset($aParams['show_counter_label_text']) || $aParams['show_counter_label_text'] === true,
+                'condition' => !isset($aParams['show_counter_label_text']) || (bool)$aParams['show_counter_label_text'] === true,
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
                     'text' => parent::_getCounterLabel($iCount)

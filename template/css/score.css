@@ -73,28 +73,29 @@ div.bx-score-counter-holder {
 }
 
 /*--- Counter Styles ---*/
-.bx-score-counter > span {
-    vertical-align: middle;
+.bx-score-counter .bx-score-counter-label.bx-def-valign-center .bx-score-counter-text {
+    line-height: normal;
 }
 .bx-score-counter span.bx-score-counter-icon {
     position: relative;
-    display: inline-block;
     box-sizing: border-box;
 
-    width: 1.25rem;
-    height: 1.25rem;
-    margin-top: 4px;
-    margin-bottom: 4px;
+    width: 2.0rem;
+    height: 2.0rem;
 
-    background-color: rgba(215, 215, 215, 1.0);
+    background-color: rgba(232, 232, 232, 1.0);
     border: 1px solid #ffffff;
     border-radius: 1rem;
 
-    line-height: 1.125rem;
+    line-height: normal;
+    font-size: 1.0rem;
+}
+.bx-score-counter span.bx-score-counter-icon:not(.bx-def-align-center) {
+    display: inline-block;
+
+    line-height: 1.9rem;
     text-align: center;
-    font-size: 0.625rem;
 }
 .bx-score-counter span.bx-score-counter-icon .sys-icon {
     vertical-align: top;
-    color: #334455;
 }

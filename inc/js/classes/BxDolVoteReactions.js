@@ -82,11 +82,11 @@ BxDolVoteReactions.prototype.onVote = function (oLink, oData, onComplete)
 
     //--- Update Do button.
     if(oData && oData.label_icon)
-        oLink.find('.sys-icon').attr('class', 'sys-icon ' + oData.label_icon);
+        oLink.find('.sys-action-do-icon .sys-icon').attr('class', 'sys-icon ' + oData.label_icon);
 
     if(oData && oData.label_title) {
         oLink.attr('title', oData.label_title);
-        oLink.find('span:not(.sys-action-do-icon)').html(oData.label_title);
+        oLink.find('.sys-action-do-text').html(oData.label_title);
     }
 
     if(oData && oData.label_click)
@@ -103,8 +103,10 @@ BxDolVoteReactions.prototype.onVote = function (oLink, oData, onComplete)
         oCounter.filter('.' + oData.reaction).html(oData.countf).toggleClass('bx-vc-hidden', !oData.count);
 
         //--- Update Total.
-        if(oData.total)
+        if(oData.total) {
+            oCounter.parents('.' + this._sSP + '-counter-wrapper:first').toggleClass('bx-vc-hidden', !oData.total.count);
             oCounter.filter('.total-count').html(oData.total.countf).toggleClass('bx-vc-hidden', !oData.total.count);
+        }
     }
 
     if(typeof onComplete == 'function')

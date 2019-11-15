@@ -12,8 +12,6 @@
  */
 class BxBaseVote extends BxDolVote
 {
-    protected $_aElementDefaults;
-
     protected $_bCssJsAdded;
 
     protected $_sJsClsName;
@@ -61,10 +59,12 @@ class BxBaseVote extends BxDolVote
         return $this->_sJsObjName;
     }
 
-    public function getJsScript($bDynamicMode = false)
+    public function getJsScript($aParams = array())
     {
         $sJsObjName = $this->getJsObjectName();
         $sJsObjClass = $this->getJsClassName();
+
+        $bDynamicMode = isset($aParams['dynamic_mode']) && (bool)$aParams['dynamic_mode'] === true;
 
         $aParams = array(
             'sObjName' => $sJsObjName,
@@ -73,7 +73,8 @@ class BxBaseVote extends BxDolVote
             'iObjId' => $this->getId(),
             'sRootUrl' => BX_DOL_URL_ROOT,
             'sStylePrefix' => $this->_sStylePrefix,
-            'aHtmlIds' => $this->_aHtmlIds
+            'aHtmlIds' => $this->_aHtmlIds,
+            'aRequestParams' => $this->_prepareRequestParamsData($aParams)
         );
         $sCode = "if(window['" . $sJsObjName . "'] == undefined) var " . $sJsObjName . " = new " . $sJsObjClass . "(" . json_encode($aParams) . ");";
 
@@ -92,10 +93,12 @@ class BxBaseVote extends BxDolVote
 
     public function getCounter($aParams = array())
     {
-        $bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'] === true;
-        $bShowEmpty = isset($aParams['show_counter_empty']) && $aParams['show_counter_empty'] == true;
-        $bShowActive = $this->isAllowedVoteViewVoters() && (!isset($aParams['show_counter_active']) || $aParams['show_counter_active'] === true);
-        $bShowScript = !isset($aParams['show_script']) || $aParams['show_script'] == true;
+        $aParams = array_merge($this->_aElementDefaults, $aParams);
+
+        $bDynamicMode = isset($aParams['dynamic_mode']) && (bool)$aParams['dynamic_mode'] === true;
+        $bShowEmpty = isset($aParams['show_counter_empty']) && (bool)$aParams['show_counter_empty'] === true;
+        $bShowActive = $this->isAllowedVoteViewVoters() && (!isset($aParams['show_counter_active']) || (bool)$aParams['show_counter_active'] === true);
+        $bShowScript = !isset($aParams['show_script']) || (bool)$aParams['show_script'] === true;
 
         $sClass = $this->_sStylePrefix . '-counter ' . $this->_sStylePrefix . '-counter-' . $this->_sType;
         if(!empty($aParams['class_counter']))
@@ -136,7 +139,7 @@ class BxBaseVote extends BxDolVote
             ),
             'bx_repeat:attrs' => $aTmplVarsAttrs,
             'content' => $sContent,
-            'script' => $bShowScript ? $this->getJsScript($bDynamicMode) : ''
+            'script' => $bShowScript ? $this->getJsScript($aParams) : ''
         ));
     }
 
@@ -181,8 +184,8 @@ class BxBaseVote extends BxDolVote
     {
     	$aParams = array_merge($this->_aElementDefaults, $aParams);
 
-    	$bDynamicMode = isset($aParams['dynamic_mode']) && $aParams['dynamic_mode'] === true;
-        $bShowCounterEmpty = isset($aParams['show_counter_empty']) && $aParams['show_counter_empty'] == true;
+    	$bDynamicMode = isset($aParams['dynamic_mode']) && (bool)$aParams['dynamic_mode'] === true;
+        $bShowCounterEmpty = isset($aParams['show_counter_empty']) && (bool)$aParams['show_counter_empty'] === true;
 
         $iObjectId = $this->getId();
         $iAuthorId = $this->_getAuthorId();
@@ -250,7 +253,7 @@ class BxBaseVote extends BxDolVote
             	'condition' => $bTmplVarsLegend,
             	'content' => $aTmplVarsLegend
             ),
-            'script' => $this->getJsScript($bDynamicMode)
+            'script' => $this->getJsScript($aParams)
         );
     }
 
@@ -289,12 +292,12 @@ class BxBaseVote extends BxDolVote
 
     protected function _isShowDoVote($aParams, $isAllowedVote, $bCount)
     {
-        return !isset($aParams['show_do_vote']) || $aParams['show_do_vote'] == true;
+        return !isset($aParams['show_do_vote']) || (bool)$aParams['show_do_vote'] === true;
     }
 
     protected function _isShowCounter($aParams, $isAllowedVote, $isAllowedVoteView, $bCount)
     {
-        return isset($aParams['show_counter']) && $aParams['show_counter'] === true && $isAllowedVoteView && ($isAllowedVote || $bCount);
+        return isset($aParams['show_counter']) && (bool)$aParams['show_counter'] === true && $isAllowedVoteView && ($isAllowedVote || $bCount);
     }
 
     protected function _isShowLegend($aParams, $isAllowedVote, $isAllowedVoteView, $bCount)

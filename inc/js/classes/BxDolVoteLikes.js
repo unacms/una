@@ -20,17 +20,26 @@ BxDolVoteLikes.prototype.onVote = function (oLink, oData, onComplete)
         return;
 
     if(oData && oData.label_icon)
-        $(oLink).find('.sys-icon').attr('class', 'sys-icon ' + oData.label_icon);
+        $(oLink).find('.sys-action-do-icon .sys-icon').attr('class', 'sys-icon ' + oData.label_icon);
 
     if(oData && oData.label_title) {
         $(oLink).attr('title', oData.label_title);
-        $(oLink).find('span:not(.sys-action-do-icon)').html(oData.label_title);
+        $(oLink).find('.sys-action-do-text').html(oData.label_title);
     }
 
     if(oData && oData.disabled)
         $(oLink).removeAttr('onclick').addClass($(oLink).hasClass('bx-btn') ? 'bx-btn-disabled' : 'bx-vote-disabled');
 
     BxDolVote.prototype.onVote.call(this, oLink, oData, onComplete);
+};
+
+BxDolVoteLikes.prototype._getCounter = function(oElement)
+{
+    var oCounter = BxDolVote.prototype._getCounter.call(this, oElement);
+    if(oCounter && oCounter.length > 0)
+        return oCounter;
+
+    return $('#' + this._aHtmlIds['counter'] + '.' + this._sSP + '-counter');
 };
 
 /** @} */

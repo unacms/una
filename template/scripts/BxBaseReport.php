@@ -198,6 +198,7 @@ class BxBaseReport extends BxDolReport
     {
     	$bReported = isset($aParams['is_reported']) && $aParams['is_reported'] === true;
         return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentDoActionLabel(), array(
+            'style_prefix' => $this->_sStylePrefix,
             'bx_if:show_icon' => array(
                 'condition' => isset($aParams['show_do_report_icon']) && $aParams['show_do_report_icon'] == true,
                 'content' => array(

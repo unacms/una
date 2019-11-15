@@ -606,14 +606,22 @@ class BxBaseCmts extends BxDolCmts
             );
         }
 
-        $sContent = $iCount != 0 || $bShowEmpty ? $this->_getCounterLabel($iCount) : '';
-        if(!empty($sContent))
-            $sContent = $this->_oTemplate->parseLink($this->getListUrl(), $sContent);
+        $sHref = !empty($aParams['overwrite_counter_link_href']) ? $aParams['overwrite_counter_link_href'] : $this->getListUrl();
+        $sOnclick = '';
+        if(!empty($aParams['overwrite_counter_link_onclick']))
+            $sOnclick = $aParams['overwrite_counter_link_onclick'];
 
         return $this->_oTemplate->parseHtmlByContent($this->_getTmplCounter(), array(
             'id' => $this->_aHtmlIds['counter'],
             'class' => $sClass,
-            'content' => $sContent,
+            'href' => $sHref,
+            'bx_if:show_onclick' => array(
+                'condition' => !empty($sOnclick),
+                'content' => array(
+                    'onclick' => $sOnclick
+                )
+            ),
+            'content' => $iCount != 0 || $bShowEmpty ? $this->_getCounterLabel($iCount) : '',
             'bx_repeat:profiles' => $aTmplVarsProfiles,
             'bx_if:show_icon' => array(
                 'condition' => $bShowEmpty || !empty($aTmplVarsProfiles),

@@ -61,3 +61,8 @@ div.bx-favorite div.bx-favorite-counter-holder {
 .bx-favorite-link .bx-favorite-counter-holder.bx-btn-border {
 	border-width: 0px;
 }
+
+/*--- Counter Styles ---*/
+.bx-favorite-counter-holder .bx-favorite-counter {
+    line-height: normal;
+}

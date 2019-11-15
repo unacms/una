@@ -97,12 +97,7 @@ div.bx-vote div.bx-vote-counter-holder {
 }
 .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound {
     position: relative;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-align-items: center;
-    align-items: center;
-
-    padding-left: 4px;
+    padding-left: 8px;
 }
 .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound .bx-vote-counter {
     display: block;
@@ -110,35 +105,34 @@ div.bx-vote div.bx-vote-counter-holder {
 .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-divided a.bx-vote-counter {
     margin-right: 0.5rem;
 }
-.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound a.bx-vote-counter {
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound a.bx-vote-counter.total-count,
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter.total-count {
     margin-left: 0.5rem;
 }
-.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter {
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter:not(.total-count) {
     width: 2.0rem;
     height: 2.0rem;
     box-sizing: border-box;
 
-    margin: 4px 0 4px -8px;
+    margin-left: -0.5rem;
 }
-.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter:first-child {
-    margin-left: 0;
-}
-.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter > span {
-    vertical-align: top;
-}
-.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter > span:not(.bx-vote-counter-icon) {
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter:not(.total-count) span.bx-vote-counter-text {
     display: none;
 }
+.bx-vote-counter-wrapper-reactions.bx-vc-hidden,
 .bx-vote-counter-wrapper-reactions .bx-vote-counter.bx-vc-hidden {
     display: none;
 }
 
 
 /*--- Counter Styles ---*/
+.bx-vote-counter .bx-vote-counter-label.bx-def-valign-center .bx-vote-counter-text {
+    line-height: normal;
+}
+
 .bx-vote-counter.bx-vote-counter-likes span.bx-vote-counter-icon,
 .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound .bx-vote-counter.bx-vote-counter-reactions span.bx-vote-counter-icon {
     position: relative;
-    display: inline-block;
     box-sizing: border-box;
 
     width: 2.0rem;
@@ -148,13 +142,15 @@ div.bx-vote div.bx-vote-counter-holder {
     border: 1px solid #ffffff;
     border-radius: 1rem;
 
-    line-height: 1.9rem;
-    text-align: center;
+    line-height: normal;
     font-size: 1.0rem;
 }
-.bx-vote-counter.bx-vote-counter-likes span.bx-vote-counter-icon {
-    margin-top: 4px;
-    margin-bottom: 4px;
+.bx-vote-counter.bx-vote-counter-likes span.bx-vote-counter-icon:not(.bx-def-align-center),
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound .bx-vote-counter.bx-vote-counter-reactions span.bx-vote-counter-icon:not(.bx-def-align-center) {
+    display: inline-block;
+
+    line-height: 1.9rem;
+    text-align: center;
 }
 .bx-vote-counter span.bx-vote-counter-icon .sys-icon {
     vertical-align: top;

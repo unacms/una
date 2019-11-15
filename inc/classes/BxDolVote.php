@@ -82,6 +82,8 @@ class BxDolVote extends BxDolObject
     protected $_sType;
     protected $_aVote;
 
+    protected $_aElementDefaults;
+
     protected function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
     {
         parent::__construct($sSystem, $iId, $iInit, $oTemplate);
@@ -221,6 +223,7 @@ class BxDolVote extends BxDolObject
             return echoJson(array('code' => 3, 'message' => _t('_vote_err_duplicate_vote')));
 
         $aData = $this->_getVoteData();
+        $aParams = $this->_getRequestParamsData();
         if($aData === false)
             return echoJson(array('code' => 4));
 
@@ -236,7 +239,7 @@ class BxDolVote extends BxDolObject
         bx_alert($this->_sSystem, ($bPerformUndo ? 'un' : '') . 'doVote', $iObjectId, $iAuthorId, array_merge(array('vote_id' => $iId, 'vote_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId), $aData));
         bx_alert('vote', ($bPerformUndo ? 'un' : '') . 'do', $iId, $iAuthorId, array_merge(array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId), $aData));
 
-        echoJson($this->_returnVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aData, !$bVoted));
+        echoJson($this->_returnVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aData, !$bVoted, $aParams));
     }
 
     public function actionGetVotedBy()
@@ -329,7 +332,7 @@ class BxDolVote extends BxDolObject
         return $this->_oQuery->putVote($iObjectId, $iAuthorId, $iAuthorIp, $aData, $bPerformUndo);
     }
 
-    protected function _returnVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aData, $bVoted)
+    protected function _returnVoteData($iObjectId, $iAuthorId, $iAuthorIp, $aData, $bVoted, $aParams = array())
     {
         $bUndo = $this->isUndo();
         $aVote = $this->_getVote($iObjectId, true);
@@ -338,11 +341,19 @@ class BxDolVote extends BxDolObject
             'code' => 0,
             'rate' => $aVote['rate'],
             'count' => $aVote['count'],
-            'countf' => (int)$aVote['count'] > 0 ? $this->_getCounterLabel($aVote['count']) : '',
+            'countf' => (int)$aVote['count'] > 0 ? $this->_getCounterLabel($aVote['count'], $aParams) : '',
             'label_icon' => $this->_getIconDo($bVoted),
             'label_title' => _t($this->_getTitleDo($bVoted)),
             'disabled' => $bVoted && !$bUndo,
         );
+    }
+
+    protected function _prepareRequestParamsData($aParams, $aParamsAdd = array())
+    {
+        if(isset($aParams['is_voted']))
+            $aParamsAdd['is_voted'] = $aParams['is_voted'];
+
+        return parent::_prepareRequestParamsData($aParams, $aParamsAdd);
     }
 
     protected function _getVote($iObjectId = 0, $bForceGet = false)
@@ -355,6 +366,16 @@ class BxDolVote extends BxDolObject
 
         $this->_aVote = $this->_oQuery->getVote($iObjectId);
         return $this->_aVote;
+    }
+
+    protected function _isVote($iObjectId = 0, $bForceGet = false)
+    {
+        $aVote = $this->_getVote($iObjectId, $bForceGet);
+        foreach($aVote as $sKey => $iValue)
+            if(strpos($sKey, 'count_') !== false && !empty($iValue))
+                return true;
+
+        return false;
     }
 
     protected function _getTrack($iObjectId, $iAuthorId)

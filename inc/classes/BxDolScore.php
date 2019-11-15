@@ -206,8 +206,7 @@ class BxDolScore extends BxDolObject
         if (!$this->isEnabled())
            return '';
 
-        $aParams = $this->_decodeElementParams(bx_process_input(bx_get('element_params')));
-
+        $aParams = $this->_getRequestParamsData();
         return $this->_getVotedBy($aParams);
     }
 
@@ -266,8 +265,6 @@ class BxDolScore extends BxDolObject
         if(!$this->isAllowedVote(true))
             return echoJson(array('code' => 2, 'message' => $this->msgErrAllowedVote()));
 
-        $aParams = $this->_decodeElementParams(bx_process_input(bx_get('element_params')));
-
         $iObjectId = $this->getId();
         $iObjectAuthorId = $this->getObjectAuthorId($iObjectId);
         $iAuthorId = $this->_getAuthorId();
@@ -277,7 +274,7 @@ class BxDolScore extends BxDolObject
         if($bVoted)
             return echoJson(array('code' => 3, 'message' => _t('_sys_score_err_duplicate_vote')));
 
-		$iId = $this->_oQuery->putVote($iObjectId, $iAuthorId, $iAuthorIp, $sType);
+        $iId = $this->_oQuery->putVote($iObjectId, $iAuthorId, $iAuthorIp, $sType);
         if($iId === false)
             return echoJson(array('code' => 5));
 
@@ -287,6 +284,9 @@ class BxDolScore extends BxDolObject
         bx_alert($this->_sSystem, 'doVote' . $sTypeUc, $iObjectId, $iAuthorId, array('score_id' => $iId, 'score_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId));
         bx_alert('score', 'do' . $sTypeUc, $iId, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId));
 
+        $aParams = $this->_getRequestParamsData();
+        $aParams['show_script'] = false;
+
         $aScore = $this->_oQuery->getScore($iObjectId);
         $iCup = (int)$aScore['count_up'];
         $iCdown = (int)$aScore['count_down'];
@@ -294,13 +294,13 @@ class BxDolScore extends BxDolObject
             'code' => 0,
             'type' => $sType,
             'score' => $aScore['score'],
-        	'scoref' => $iCup > 0 || $iCdown > 0 ? $this->_getCounterLabel($aScore['score']) : '',
+            'scoref' => $iCup > 0 || $iCdown > 0 ? $this->_getCounterLabel($aScore['score'], $aParams) : '',
             'cup' => $iCup,
-        	'cdown' => $iCdown,
+            'cdown' => $iCdown,
             'counter' => $this->getCounter($aParams),
-        	'label_icon' => $this->_getIconDo($sType),
-        	'label_title' => _t($this->_getTitleDo($sType)),
-        	'disabled' => !$bVoted,
+            'label_icon' => $this->_getIconDo($sType),
+            'label_title' => _t($this->_getTitleDo($sType)),
+            'disabled' => !$bVoted,
         ));
     }
 

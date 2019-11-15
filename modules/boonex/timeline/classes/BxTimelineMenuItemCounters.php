@@ -21,6 +21,7 @@ class BxTimelineMenuItemCounters extends BxTimelineMenuItemActions
         parent::__construct($aObject, $oTemplate);
 
         $this->_sMode = self::$_sModeCounters;
+        $this->_bShowCounters = true;
     }
 
     protected function _getMenuItemItemComment($aItem)
@@ -30,18 +31,22 @@ class BxTimelineMenuItemCounters extends BxTimelineMenuItemActions
 
         $sCommentsSystem = $this->_aEvent['comments']['system'];
         $iCommentsObject = $this->_aEvent['comments']['object_id'];
-        $aCommentsParams = array('dynamic_mode' => $this->_bDynamicMode);
+        $aCommentsParams = array(
+            'overwrite_counter_link_href' => 'javascript:void(0)',
+            'overwrite_counter_link_onclick' => bx_replace_markers('{comment_onclick}', $this->_aMarkers),
+            'show_do_comment_label' => $this->_bShowTitles,
+            'show_counter' => $this->_bShowCounters,
+            'show_counter_label_icon' => true,
+            'dynamic_mode' => $this->_bDynamicMode,
+        );
 
         switch($this->_sMode) {
             case self::$_sModeActions:
                 $sCommentsMethod = 'getElementInline';
-                $aCommentsParams['show_do_comment_label'] = $this->_bShowTitles;
-                $aCommentsParams['show_counter'] = $this->_bShowCounters;
                 break;
 
             case self::$_sModeCounters:
                 $sCommentsMethod = 'getCounter';
-                $aCommentsParams['show_counter'] = true;
                 break;
         }
 

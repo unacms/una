@@ -51,9 +51,9 @@ class BxBaseVoteLikes extends BxDolVoteLikes
     public function getCounter($aParams = array())
     {
         $sClass = '';
-        if(isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true)
+        if(isset($aParams['show_do_vote_as_button_small']) && (bool)$aParams['show_do_vote_as_button_small'] === true)
             $sClass = 'bx-btn-small-height';
-        else if(isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true)
+        else if(isset($aParams['show_do_vote_as_button']) && (bool)$aParams['show_do_vote_as_button'] === true)
             $sClass = 'bx-btn-height';
 
         $aParams['class_counter'] = isset($aParams['class_counter']) ? $aParams['class_counter'] : '';
@@ -65,9 +65,9 @@ class BxBaseVoteLikes extends BxDolVoteLikes
     public function getElement($aParams = array())
     {
         $sClass = $this->_sStylePrefix . '-' . $this->_sType;
-        if(isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true)
+        if(isset($aParams['show_do_vote_as_button_small']) && (bool)$aParams['show_do_vote_as_button_small'] === true)
             $sClass .=  '-button-small';
-        else if(isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true)
+        else if(isset($aParams['show_do_vote_as_button']) && (bool)$aParams['show_do_vote_as_button'] === true)
             $sClass .= '-button';
 
         $aParams['class_element'] = isset($aParams['class_element']) ? $aParams['class_element'] : '';
@@ -81,9 +81,9 @@ class BxBaseVoteLikes extends BxDolVoteLikes
      */
     protected function _getDoVote($aParams = array(), $isAllowedVote = true)
     {
-    	$bVoted = isset($aParams['is_voted']) && $aParams['is_voted'] === true;
-        $bShowDoVoteAsButtonSmall = isset($aParams['show_do_vote_as_button_small']) && $aParams['show_do_vote_as_button_small'] == true;
-        $bShowDoVoteAsButton = !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && $aParams['show_do_vote_as_button'] == true;
+    	$bVoted = isset($aParams['is_voted']) && (bool)$aParams['is_voted'] === true;
+        $bShowDoVoteAsButtonSmall = isset($aParams['show_do_vote_as_button_small']) && (bool)$aParams['show_do_vote_as_button_small'] === true;
+        $bShowDoVoteAsButton = !$bShowDoVoteAsButtonSmall && isset($aParams['show_do_vote_as_button']) && (bool)$aParams['show_do_vote_as_button'] === true;
         $bDisabled = !$isAllowedVote || ($bVoted && !$this->isUndo());
 
         $sClass = '';
@@ -104,17 +104,18 @@ class BxBaseVoteLikes extends BxDolVoteLikes
 
     protected function _getDoVoteLabel($aParams = array())
     {
-    	$bVoted = isset($aParams['is_voted']) && $aParams['is_voted'] === true;
+    	$bVoted = isset($aParams['is_voted']) && (bool)$aParams['is_voted'] === true;
         return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentDoActionLabel(), array(
+            'style_prefix' => $this->_sStylePrefix,
             'bx_if:show_icon' => array(
-                'condition' => isset($aParams['show_do_vote_icon']) && $aParams['show_do_vote_icon'] == true,
+                'condition' => isset($aParams['show_do_vote_icon']) && (bool)$aParams['show_do_vote_icon'] === true,
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
                     'name' => $this->_getIconDo($bVoted)
                 )
             ),
             'bx_if:show_text' => array(
-                'condition' => isset($aParams['show_do_vote_label']) && $aParams['show_do_vote_label'] == true,
+                'condition' => isset($aParams['show_do_vote_label']) && (bool)$aParams['show_do_vote_label'] === true,
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
                     'text' => _t($this->_getTitleDo($bVoted))
@@ -125,20 +126,21 @@ class BxBaseVoteLikes extends BxDolVoteLikes
 
     protected function _getCounterLabel($iCount, $aParams = array())
     {
-        $bVoted = isset($aParams['is_voted']) && $aParams['is_voted'] === true;
+        $bVoted = isset($aParams['is_voted']) && (bool)$aParams['is_voted'] === true;
         return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentCounterLabel(), array(
+            'style_prefix' => $this->_sStylePrefix,
             'bx_if:show_icon' => array(
-                'condition' => !isset($aParams['show_counter_label_icon']) || $aParams['show_counter_label_icon'] === true,
+                'condition' => !isset($aParams['show_counter_label_icon']) || (bool)$aParams['show_counter_label_icon'] === true,
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
                     'name' => $this->_getIconDo($bVoted)
                 )
             ),
             'bx_if:show_text' => array(
-                'condition' => !isset($aParams['show_counter_label_text']) || $aParams['show_counter_label_text'] === true,
+                'condition' => !isset($aParams['show_counter_label_text']) || (bool)$aParams['show_counter_label_text'] === true,
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
-                    'text' => parent::_getCounterLabel($iCount)
+                    'text' => parent::_getCounterLabel($iCount, $aParams)
                 )
             )
         ));
