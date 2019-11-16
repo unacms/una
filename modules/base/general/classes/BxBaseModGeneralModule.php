@@ -71,6 +71,40 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
     // ====== SERVICE METHODS
+
+    public function serviceIsSafeService($s)
+    {
+        $sService = bx_gen_method_name($s);
+        $aSafeServices = $this->serviceGetSafeServices();
+        return in_array($sService, $aSafeServices);
+    }
+
+    public function serviceGetSafeServices()
+    {
+        return array(
+            'ModuleIcon',
+            'GetCreatePostForm',
+            'GetLink',
+            'GetSearchResultUnit',
+            'MyEntriesActions',
+            'Browse',
+            'BrowseFeatured',
+            'BrowseFavorite',
+            'EntityEdit',
+            'EntityDelete',
+            'EntityTextBlock',
+            'EntityInfo',
+            'EntityInfoFull',
+            'EntityInfoExtended',
+            'EntityLocation',
+            'EntityComments',
+            'EntityAttachments',
+            'EntityAllActions',
+            'EntityActions',
+            'EntitySocialSharing',
+        );
+    }
+
     public function serviceGetCreatePostForm($aParams = array())
     {
     	$aParams = array_merge($this->_aFormParams, $aParams);

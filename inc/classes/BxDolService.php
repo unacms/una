@@ -95,17 +95,20 @@ class BxDolService extends BxDol
             $s = bx_replace_markers($s, $aMarkers);
 
         if (!preg_match("/^([a-zA-Z0-9_\:]+)(.*)$/", $s, $aMatches))
-            return '<b></b>';
+            return _t('_sys_macros_malformed');
 
         $a = explode(":", $aMatches[1]);
         if (!isset($a[0]) || !isset($a[1]))
-            return '';
+            return _t('_sys_macros_malformed');
 
         $aParams = array();
         if (!empty($aMatches[2]))
             $aParams = json_decode($aMatches[2]);
         if (!$aParams)
             $aParams = array();
+
+        if (!self::call($a[0], 'is_safe_service', array($a[1])))
+            return _t('_sys_macros_unsafe');
 
         return self::call($a[0], $a[1], $aParams, isset($a[3]) ? $a[3] : 'Module', isset($a[4]) && 'ignore_cache' == $a[4] ? true : false);
     }
