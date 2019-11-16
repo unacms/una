@@ -285,6 +285,21 @@ class BxBaseModGeneralModule extends BxDolModule
         return $this->_oDb->getEntriesBy(array('type' => 'search_ids', 'search_params' => $aParams, 'start' => $iStart, 'per_page' => $iPerPage));
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-other Other
+     * @subsubsection bx_base_general-module_icon module_icon
+     * 
+     * @code bx_srv('bx_posts', 'module_icon', [...]); @endcode
+     * 
+     * Get module icon as CSS class name with FontAwesome icon name class and color class
+     * 
+     * @see BxBaseModGeneralModule::serviceModuleIcon
+     */
+    /** 
+     * @ref bx_base_general-module_icon "module_icon"
+     */
     public function serviceModuleIcon ()
     {
         return isset($this->_oConfig->CNF['ICON']) ? $this->_oConfig->CNF['ICON'] : '';
