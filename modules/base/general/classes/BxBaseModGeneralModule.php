@@ -475,9 +475,9 @@ class BxBaseModGeneralModule extends BxDolModule
      * 
      * Display entries whoch were added to favorite list by some member
      * @param $iProfileId profile ID
-     * @param $aParams additionmal browse params, @see BxBaseModGeneralModuleserviceBrowse
+     * @param $aParams additional browse params, see BxBaseModGeneralModule::serviceBrowse
      * 
-     * @see BxBaseModGeneralModule::serviceBrowseFavorite
+     * @see BxBaseModGeneralModule::serviceBrowseFavorite BxBaseModGeneralModule::serviceBrowse
      */
     /** 
      * @ref bx_base_general-browse_favorite "browse_favorite"
