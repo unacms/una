@@ -589,3 +589,6 @@
 .bx-form-input-autotoken-labels-more {
     display:none;
 }
+.select2-container {
+    width:100% !important;
+}
