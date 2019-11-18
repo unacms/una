@@ -71,15 +71,63 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
     // ====== SERVICE METHODS
-    public function serviceGetCreatePostForm($aParams = array())
+
+    public function serviceIsSafeService($s)
     {
-    	$aParams = array_merge($this->_aFormParams, $aParams);
+        $sService = bx_gen_method_name($s);
+        $aSafeServices = $this->serviceGetSafeServices();
+        return in_array($sService, $aSafeServices);
+    }
 
-    	$oForm = $this->serviceGetObjectForm('add', $aParams);
-    	if(!$oForm)
-            return ''; 	
+    public function serviceGetSafeServices()
+    {
+        return array(
+            // other
+            'ModuleIcon',
+            'GetLink',
+            // browse
+            'GetSearchResultUnit',
+            'Browse',
+            'BrowseFeatured',
+            'BrowseFavorite',
+            // forms
+            'GetCreatePostForm',
+            'EntityEdit',
+            'EntityDelete',
+            // page blocks
+            'EntityTextBlock',
+            'EntityInfo',
+            'EntityInfoFull',
+            'EntityInfoExtended',
+            'EntityLocation',
+            'EntityComments',
+            'EntityAttachments',
+            // menu
+            'EntityAllActions',
+            'EntityActions',
+            'EntitySocialSharing',
+            'MyEntriesActions',
+        );
+    }
 
-    	return $this->serviceEntityCreate($aParams);
+    /**
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-other Other
+     * @subsubsection bx_base_general-module_icon module_icon
+     * 
+     * @code bx_srv('bx_posts', 'module_icon', [...]); @endcode
+     * 
+     * Get module icon as CSS class name with FontAwesome icon name class and color class
+     * 
+     * @see BxBaseModGeneralModule::serviceModuleIcon
+     */
+    /** 
+     * @ref bx_base_general-module_icon "module_icon"
+     */
+    public function serviceModuleIcon ()
+    {
+        return isset($this->_oConfig->CNF['ICON']) ? $this->_oConfig->CNF['ICON'] : '';
     }
 
     public function serviceGetAuthor ($iContentId)
@@ -105,6 +153,22 @@ class BxBaseModGeneralModule extends BxDolModule
         return $mixedResult !== false ? (int)$mixedResult : 0;
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-other Other
+     * @subsubsection bx_base_general-get_link get_link
+     * 
+     * @code bx_srv('bx_posts', 'get_link', [...]); @endcode
+     * 
+     * Get URL for the specified content.
+     * @param $iContentId content id
+     * 
+     * @see BxBaseModGeneralModule::serviceGetLink
+     */
+    /** 
+     * @ref bx_base_general-get_link "get_link"
+     */
     public function serviceGetLink ($iContentId)
     {
         $CNF = &$this->_oConfig->CNF;
@@ -165,6 +229,23 @@ class BxBaseModGeneralModule extends BxDolModule
         return $aResult;
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-browse Browse
+     * @subsubsection bx_base_general-get_search_result_unit get_search_result_unit
+     * 
+     * @code bx_srv('bx_posts', 'get_search_result_unit', [...]); @endcode
+     * 
+     * Get browsing unit for the specified content
+     * @param $iContentId content id
+     * @param $sUnitTemplate unit template, such as: full, extended, gallery, showcase
+     * 
+     * @see BxBaseModGeneralModule::serviceGetSearchResultUnit
+     */
+    /** 
+     * @ref bx_base_general-get_search_result_unit "get_search_result_unit"
+     */
     public function serviceGetSearchResultUnit ($iContentId, $sUnitTemplate = '')
     {
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
@@ -251,11 +332,6 @@ class BxBaseModGeneralModule extends BxDolModule
         return $this->_oDb->getEntriesBy(array('type' => 'search_ids', 'search_params' => $aParams, 'start' => $iStart, 'per_page' => $iPerPage));
     }
 
-    public function serviceModuleIcon ()
-    {
-        return isset($this->_oConfig->CNF['ICON']) ? $this->_oConfig->CNF['ICON'] : '';
-    }
-
     public function serviceGetSearchableFields ($aInputsAdd = array())
     {
         $CNF = $this->_oConfig->CNF;
@@ -332,35 +408,25 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
     /**
-     * My entries actions block
-     */
-    public function serviceMyEntriesActions ($iProfileId = 0)
-    {
-        $CNF = &$this->_oConfig->CNF;
-        if(empty($CNF['OBJECT_MENU_ACTIONS_MY_ENTRIES']))
-            return false;
-
-        if (!$iProfileId)
-            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
-        if (!$iProfileId || !($oProfile = BxDolProfile::getInstance($iProfileId)))
-            return false;
-
-        if ($iProfileId != $this->_iProfileId)
-            return false;
-
-        $oMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_MY_ENTRIES']);
-        return $oMenu ? $oMenu->getCode() : false;
-    }
-
-    /**
-     * Universal browse method
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-browse Browse
+     * @subsubsection bx_base_general-browse browse
+     * 
+     * @code bx_srv('bx_posts', 'browse', [...]); @endcode
+     * 
+     * Universal browse method.
      * @param $aParams custom browse params, possible params are the following:
      *  - mode - browse mode, such as 'recent', 'featured', etc
      *  - params - custom params to browse method, for example 'unit_view' can be passed here
      *  - design_box - design box style, @see BxBaseFunctions::DesignBoxContent 
      *  - empty_message - display or not "empty" message when there is no content
      *  - ajax_paginate - use AJAX paginate or not
-     *  @return HTML string
+     * 
+     * @see BxBaseModGeneralModule::serviceBrowse
+     */
+    /** 
+     * @ref bx_base_general-browse "browse"
      */
     public function serviceBrowse ($aParams = array())
     {
@@ -375,18 +441,46 @@ class BxBaseModGeneralModule extends BxDolModule
         return $this->_serviceBrowse ($aParams['mode'], $aParams['params'], $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
     }
     
-	/**
+    /**
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-browse Browse
+     * @subsubsection bx_base_general-browse_featured browse_featured
+     * 
+     * @code bx_srv('bx_posts', 'browse_featured', [...]); @endcode
+     * 
      * Display featured entries
-     * @return HTML string
+     * @param $sUnitView browseing unity view, 
+     *                   such as: full, extended, gallery, showcase
+     * @param $bEmptyMessage display or not "empty" message when there is no content
+     * @param $bAjaxPaginate use AJAX paginate or not
+     * 
+     * @see BxBaseModGeneralModule::serviceBrowseFeatured
+     */
+    /** 
+     * @ref bx_base_general-browse_featured "browse_featured"
      */
     public function serviceBrowseFeatured ($sUnitView = false, $bEmptyMessage = false, $bAjaxPaginate = true)
     {
         return $this->_serviceBrowse ('featured', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
     }
 	
-	/**
-     * Display entries favored by a member
-     * @return HTML string
+    /**
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-browse Browse
+     * @subsubsection bx_base_general-browse_favorite browse_favorite
+     * 
+     * @code bx_srv('bx_posts', 'browse_favorite', [...]); @endcode
+     * 
+     * Display entries whoch were added to favorite list by some member
+     * @param $iProfileId profile ID
+     * @param $aParams additionmal browse params, @see BxBaseModGeneralModuleserviceBrowse
+     * 
+     * @see BxBaseModGeneralModule::serviceBrowseFavorite
+     */
+    /** 
+     * @ref bx_base_general-browse_favorite "browse_favorite"
      */
     public function serviceBrowseFavorite ($iProfileId = 0, $aParams = array())
     {
@@ -560,26 +654,135 @@ class BxBaseModGeneralModule extends BxDolModule
         return $mixedResult;
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-forms Forms
+     * @subsubsection bx_base_general-get_create_post_form get_create_post_form
+     * 
+     * @code bx_srv('bx_posts', 'get_create_post_form', [...]); @endcode
+     * 
+     * Get content creation form
+     * @param $aParams additional parameters array: 
+     *                 context_id, ajax_mode, absolute_action_url, displays
+     * 
+     * @see BxBaseModGeneralModule::serviceGetCreatePostForm
+     */
+    /** 
+     * @ref bx_base_general-get_create_post_form "get_create_post_form"
+     */
+    public function serviceGetCreatePostForm($aParams = array())
+    {
+    	$aParams = array_merge($this->_aFormParams, $aParams);
+
+    	$oForm = $this->serviceGetObjectForm('add', $aParams);
+    	if(!$oForm)
+            return ''; 	
+
+    	return $this->serviceEntityCreate($aParams);
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-forms Forms
+     * @subsubsection bx_base_general-entity_edit entity_edit
+     * 
+     * @code bx_srv('bx_posts', 'entity_edit', [...]); @endcode
+     * 
+     * Get content edit form
+     * @param $iContentId content ID
+     * @param $sDisplay optional form display name
+     * 
+     * @see BxBaseModGeneralModule::serviceEntityEdit
+     */
+    /** 
+     * @ref bx_base_general-entity_edit "entity_edit"
+     */
     public function serviceEntityEdit ($iContentId = 0, $sDisplay = false)
     {
         return $this->_serviceEntityForm ('editDataForm', $iContentId, $sDisplay);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-forms Forms
+     * @subsubsection bx_base_general-entity_delete entity_delete
+     * 
+     * @code bx_srv('bx_posts', 'entity_delete', [...]); @endcode
+     * 
+     * Get content delete form
+     * @param $iContentId content ID
+     * 
+     * @see BxBaseModGeneralModule::serviceEntityDelete
+     */
+    /** 
+     * @ref bx_base_general-entity_delete "entity_delete"
+     */
     public function serviceEntityDelete ($iContentId = 0)
     {
         return $this->_serviceEntityForm ('deleteDataForm', $iContentId);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-page_blocks Page Blocks
+     * @subsubsection bx_base_general-entity_text_block entity_text_block
+     * 
+     * @code bx_srv('bx_posts', 'entity_text_block', [...]); @endcode
+     * 
+     * Get content text/description
+     * @param $iContentId content ID
+     * 
+     * @see BxBaseModGeneralModule::serviceEntityTextBlock
+     */
+    /** 
+     * @ref bx_base_general-entity_text_block "entity_text_block"
+     */
     public function serviceEntityTextBlock ($iContentId = 0)
     {
         return $this->_serviceEntityForm ('viewDataEntry', $iContentId);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-page_blocks Page Blocks
+     * @subsubsection bx_base_general-entity_info entity_info
+     * 
+     * @code bx_srv('bx_posts', 'entity_info', [...]); @endcode
+     * 
+     * Get content info
+     * @param $iContentId content ID
+     * 
+     * @see BxBaseModGeneralModule::serviceEntityInfo
+     */
+    /** 
+     * @ref bx_base_general-entity_info "entity_info"
+     */
     public function serviceEntityInfo ($iContentId = 0, $sDisplay = false)
     {
         return $this->_serviceEntityForm ('viewDataForm', $iContentId, $sDisplay);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-page_blocks Page Blocks
+     * @subsubsection bx_base_general-entity_info_full entity_info_full
+     * 
+     * @code bx_srv('bx_posts', 'entity_info_full', [...]); @endcode
+     * 
+     * Get full content info
+     * @param $iContentId content ID
+     * 
+     * @see BxBaseModGeneralModule::serviceEntityInfoFull
+     */
+    /** 
+     * @ref bx_base_general-entity_info_full "entity_info_full"
+     */
 	public function serviceEntityInfoFull ($iContentId = 0)
     {
     	$CNF = &$this->_oConfig->CNF;
@@ -588,13 +791,42 @@ class BxBaseModGeneralModule extends BxDolModule
         return $this->_serviceEntityForm ('viewDataForm', $iContentId, !empty($CNF[$sDisplayName]) ? $CNF[$sDisplayName] : false);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-page_blocks Page Blocks
+     * @subsubsection bx_base_general-entity_info_extended entity_info_extended
+     * 
+     * @code bx_srv('bx_posts', 'entity_info_extended', [...]); @endcode
+     * 
+     * Get extended content info
+     * @param $iContentId content ID
+     * 
+     * @see BxBaseModGeneralModule::serviceEntityInfoExtended
+     */
+    /** 
+     * @ref bx_base_general-entity_info_extended "entity_info_extended"
+     */
 	public function serviceEntityInfoExtended ($iContentId = 0)
     {
         return $this->_serviceTemplateFunc ('entryInfo', $iContentId);
     }
 
     /**
-     * Entry location info
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-page_blocks Page Blocks
+     * @subsubsection bx_base_general-entity_location entity_location
+     * 
+     * @code bx_srv('bx_posts', 'entity_location', [...]); @endcode
+     * 
+     * Get content location
+     * @param $iContentId content ID
+     * 
+     * @see BxBaseModGeneralModule::serviceEntityLocation
+     */
+    /** 
+     * @ref bx_base_general-entity_location "entity_location"
      */
     public function serviceEntityLocation ($iContentId = 0)
     {
@@ -606,7 +838,20 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
     /**
-     * Entry comments
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-page_blocks Page Blocks
+     * @subsubsection bx_base_general-entity_comments entity_comments
+     * 
+     * @code bx_srv('bx_posts', 'entity_comments', [...]); @endcode
+     * 
+     * Get content comments
+     * @param $iContentId content ID
+     * 
+     * @see BxBaseModGeneralModule::serviceEntityComments
+     */
+    /** 
+     * @ref bx_base_general-entity_comments "entity_comments"
      */
     public function serviceEntityComments ($iContentId = 0)
     {
@@ -618,7 +863,20 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
     /**
-     * Entry attachments block
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-page_blocks Page Blocks
+     * @subsubsection bx_base_general-entity_attachments entity_attachments
+     * 
+     * @code bx_srv('bx_posts', 'entity_attachments', [...]); @endcode
+     * 
+     * Get content attachments
+     * @param $iContentId content ID
+     * 
+     * @see BxBaseModGeneralModule::serviceEntityAttachments
+     */
+    /** 
+     * @ref bx_base_general-entity_attachments "entity_attachments"
      */
     public function serviceEntityAttachments ($iContentId = 0)
     {
@@ -639,7 +897,56 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
     /**
-     * Entry actions and social sharing block
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-menu Menu
+     * @subsubsection bx_base_general-my_entries_actions my_entries_actions
+     * 
+     * @code bx_srv('bx_posts', 'my_entries_actions', [...]); @endcode
+     * 
+     * My entries actions menu
+     * @param $iProfileId profiles ID, 
+     *        if omitted it try to get it from 'profile_id' GET param
+     * 
+     * @see BxBaseModGeneralModule::serviceMyEntriesActions
+     */
+    /** 
+     * @ref bx_base_general-my_entries_actions "my_entries_actions"
+     */
+    public function serviceMyEntriesActions ($iProfileId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        if(empty($CNF['OBJECT_MENU_ACTIONS_MY_ENTRIES']))
+            return false;
+
+        if (!$iProfileId)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+        if (!$iProfileId || !($oProfile = BxDolProfile::getInstance($iProfileId)))
+            return false;
+
+        if ($iProfileId != $this->_iProfileId)
+            return false;
+
+        $oMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_MY_ENTRIES']);
+        return $oMenu ? $oMenu->getCode() : false;
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-menu Menu
+     * @subsubsection bx_base_general-entity_all_actions entity_all_actions
+     * 
+     * @code bx_srv('bx_posts', 'entity_all_actions', [...]); @endcode
+     * 
+     * Entry actions and social sharing actions
+     * @param $mixedContent content ID
+     * @param $aParams additional params
+     * 
+     * @see BxBaseModGeneralModule::serviceEntityAllActions
+     */
+    /** 
+     * @ref bx_base_general-entity_all_actions "entity_all_actions"
      */
     public function serviceEntityAllActions ($mixedContent = false, $aParams = array())
     {
@@ -711,7 +1018,20 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
     /**
-     * Entry actions block
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-menu Menu
+     * @subsubsection bx_base_general-entity_actions entity_actions
+     * 
+     * @code bx_srv('bx_posts', 'entity_actions', [...]); @endcode
+     * 
+     * Entry actions, without social sharing actions
+     * @param $iContentId content ID
+     * 
+     * @see BxBaseModGeneralModule::serviceEntityActions
+     */
+    /** 
+     * @ref bx_base_general-entity_actions "entity_actions"
      */
     public function serviceEntityActions ($iContentId = 0)
     {
@@ -724,10 +1044,23 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
     /**
-     * Entry social sharing block.
-     * @param type $mixedContent integer content ID or array with integer content ID and array with content info, or false.
-     * @param type $aParams array with additional custom params which may overwrite some default values.
-     * @return boolean|string string with block content or false if something went wrong.
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-menu Menu
+     * @subsubsection bx_base_general-entity_social_sharing entity_social_sharing
+     * 
+     * @code bx_srv('bx_posts', 'entity_social_sharing', [...]); @endcode
+     * 
+     * Entry social sharing actions
+     * @param $mixedContent content ID or array with integer content ID and 
+     *                      array with content info, or false
+     * @param $aParams array with additional custom params 
+     *                 which may overwrite some default values
+     * 
+     * @see BxBaseModGeneralModule::serviceEntitySocialSharing
+     */
+    /** 
+     * @ref bx_base_general-entity_social_sharing "entity_social_sharing"
      */
     public function serviceEntitySocialSharing($mixedContent = false, $aParams = array())
     {
@@ -794,6 +1127,69 @@ class BxBaseModGeneralModule extends BxDolModule
         ));
     }
 
+    /**
+     * Blocks for lables tree browsing
+     */
+    public function serviceGetLablesTree()
+    {
+		$aBreadcrumbs = array();
+		$this->_getLablesBreadcrumbsArray(bx_get('label'), $aBreadcrumbs);
+		return $this->_getLablesTreeLevel($aBreadcrumbs);
+	}	
+    
+    public function serviceGetLablesBreadcrumbs()
+    {
+		if (bx_get('label')){
+            $aBreadcrumbs = array();
+            $this->_getLablesBreadcrumbsArray(bx_process_input(bx_get('label'), BX_DATA_INT), $aBreadcrumbs);
+            $aLabels = array();
+            foreach (array_reverse($aBreadcrumbs) as $aLabel){
+                $aLabels[] = array(
+                   'value' => $aLabel['value'], 
+                   'url' => $this->_getLablesBrowseUrl($aLabel['id'])
+               );
+            }
+            
+            return $this->_oTemplate->parseHtmlByName('labels_breadcrumbs.html', array('bx_repeat:items' => $aLabels));
+		}
+        return '';
+	}
+    
+    public function serviceBrowseByLabel()
+    {   
+        $CNF = &$this->_oConfig->CNF;
+        if (empty($CNF['OBJECT_METATAGS']))
+            return '';
+        
+		$sMode = 'recent';
+		$sClassSearchResult ='SearchResult';
+		
+		bx_import($sClassSearchResult, $this->_aModule['name']);
+        $sClass = $this->_aModule['class_prefix'] . $sClassSearchResult;
+		
+        $o = new $sClass($sMode, false);
+		$o->setDesignBoxTemplateId(BX_DB_PADDING_DEF);
+        $o->setDisplayEmptyMsg(true);
+        $o->setAjaxPaginate(false);
+        $o->setUnitParams(array('context' => $sMode));
+		
+		if (bx_get('label')){
+			$iLabelId = (int)bx_get('label');
+			$oLabel = BxDolLabel::getInstance();
+			$aLabel = $oLabel->getLabels(array('type' => 'id', 'id' => $iLabelId));
+			$oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+			$sTmp =$oMetatags->keywordsSetSearchCondition($o, $aLabel['value']);
+		}
+		
+        if ($o->isError)
+            return '';
+
+        if ($s = $o->processing())
+            return $s;
+        else
+            return '';
+	}
+    
     /**
      * Data for Notifications module
      */
@@ -1947,7 +2343,66 @@ class BxBaseModGeneralModule extends BxDolModule
 
 		echoJson($aResponse);
 		exit;
-    }    
+    }  
+    
+    /**
+     * Blocks for lables tree browsing private functions
+     */
+    
+    private function _getLablesBreadcrumbsArray($iLabelId, &$aBreadcrumbs)
+	{
+		$oLabel = BxDolLabel::getInstance();
+		$aLabel = $oLabel->getLabels(array('type' => 'id', 'id' => $iLabelId));
+		if ($aLabel){
+            $aBreadcrumbs[$aLabel['id']] = array('id' => $aLabel['id'], 'value' => $aLabel['value']);
+			$this->_getLablesBreadcrumbsArray($aLabel['parent'], $aBreadcrumbs);
+		}
+	}
+    
+    private function _getLablesBrowseUrl($iLabelId)
+	{
+        list($sPageLink, $aPageParams) = bx_get_base_url_inline();
+		return BxDolPermalinks::getInstance()->permalink(bx_append_url_params($sPageLink, array_merge($aPageParams, array('label' => $iLabelId))));
+	}
+    
+    private function _getLablesTreeLevel($aBreadcrumbs, $iParent = 0)
+	{
+		$oLabel = BxDolLabel::getInstance();
+		$aLabelsOutput = array();
+        $aLabels = $oLabel->getLabels(array('type' => 'parent', 'parent' => $iParent));
+        if (count($aLabels) > 0){
+			foreach($aLabels as $aLabel) {
+				$sChild = $this->_getLablesTreeLevel($aBreadcrumbs, $aLabel['id']);
+				$bChildPresent = $sChild != '' ? true : false;
+				$bIsOpen = array_key_exists($aLabel['id'], $aBreadcrumbs) ? true : false;
+				if (!$bIsOpen){
+					$sChild = '';
+				}
+				$aLabelsOutput[] = array(
+					'value' => $aLabel['value'], 
+					'url' => $this->_getLablesBrowseUrl($aLabel['id']),
+					'child' => $sChild,
+					
+					'selected' => bx_process_input(bx_get('label'), BX_DATA_INT) == $aLabel['id'] ? 'selected' : ''.$aLabel['id'], 
+					'bx_if:open' => array(
+						'condition' => $bChildPresent && $bIsOpen,
+						'content' => array()
+					),
+					'bx_if:can_open' => array(
+						'condition' => $bChildPresent && !$bIsOpen,
+						'content' => array()
+					)
+				);
+			}
+			return $this->_oTemplate->parseHtmlByName('labels_tree.html', 
+				array(
+					'bx_repeat:items' => $aLabelsOutput,
+					'parent' => $iParent,
+				)
+			);
+		}
+		return '';
+	}
 }
 
 /** @} */
