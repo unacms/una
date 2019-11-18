@@ -232,7 +232,7 @@ class BxBaseModGeneralModule extends BxDolModule
     /**
      * @page service Service Calls
      * @section bx_base_general Base General
-     * @subsection bx_base_general-browse Browse
+     * @subsection bx_base_general-browsing Browsing
      * @subsubsection bx_base_general-get_search_result_unit get_search_result_unit
      * 
      * @code bx_srv('bx_posts', 'get_search_result_unit', [...]); @endcode
@@ -410,7 +410,7 @@ class BxBaseModGeneralModule extends BxDolModule
     /**
      * @page service Service Calls
      * @section bx_base_general Base General
-     * @subsection bx_base_general-browse Browse
+     * @subsection bx_base_general-browsing Browsing
      * @subsubsection bx_base_general-browse browse
      * 
      * @code bx_srv('bx_posts', 'browse', [...]); @endcode
@@ -444,7 +444,7 @@ class BxBaseModGeneralModule extends BxDolModule
     /**
      * @page service Service Calls
      * @section bx_base_general Base General
-     * @subsection bx_base_general-browse Browse
+     * @subsection bx_base_general-browsing Browsing
      * @subsubsection bx_base_general-browse_featured browse_featured
      * 
      * @code bx_srv('bx_posts', 'browse_featured', [...]); @endcode
@@ -468,7 +468,7 @@ class BxBaseModGeneralModule extends BxDolModule
     /**
      * @page service Service Calls
      * @section bx_base_general Base General
-     * @subsection bx_base_general-browse Browse
+     * @subsection bx_base_general-browsing Browsing
      * @subsubsection bx_base_general-browse_favorite browse_favorite
      * 
      * @code bx_srv('bx_posts', 'browse_favorite', [...]); @endcode
