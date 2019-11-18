@@ -113,29 +113,21 @@ class BxBaseModGeneralModule extends BxDolModule
     /**
      * @page service Service Calls
      * @section bx_base_general Base General
-     * @subsection bx_base_general-forms Forms
-     * @subsubsection bx_base_general-get_create_post_form get_create_post_form
+     * @subsection bx_base_general-other Other
+     * @subsubsection bx_base_general-module_icon module_icon
      * 
-     * @code bx_srv('bx_posts', 'get_create_post_form', [...]); @endcode
+     * @code bx_srv('bx_posts', 'module_icon', [...]); @endcode
      * 
-     * Get content creation form
-     * @param $aParams additional parameters array: 
-     *                 context_id, ajax_mode, absolute_action_url, displays
+     * Get module icon as CSS class name with FontAwesome icon name class and color class
      * 
-     * @see BxBaseModGeneralModule::serviceGetCreatePostForm
+     * @see BxBaseModGeneralModule::serviceModuleIcon
      */
     /** 
-     * @ref bx_base_general-get_create_post_form "get_create_post_form"
+     * @ref bx_base_general-module_icon "module_icon"
      */
-    public function serviceGetCreatePostForm($aParams = array())
+    public function serviceModuleIcon ()
     {
-    	$aParams = array_merge($this->_aFormParams, $aParams);
-
-    	$oForm = $this->serviceGetObjectForm('add', $aParams);
-    	if(!$oForm)
-            return ''; 	
-
-    	return $this->serviceEntityCreate($aParams);
+        return isset($this->_oConfig->CNF['ICON']) ? $this->_oConfig->CNF['ICON'] : '';
     }
 
     public function serviceGetAuthor ($iContentId)
@@ -340,26 +332,6 @@ class BxBaseModGeneralModule extends BxDolModule
         return $this->_oDb->getEntriesBy(array('type' => 'search_ids', 'search_params' => $aParams, 'start' => $iStart, 'per_page' => $iPerPage));
     }
 
-    /**
-     * @page service Service Calls
-     * @section bx_base_general Base General
-     * @subsection bx_base_general-other Other
-     * @subsubsection bx_base_general-module_icon module_icon
-     * 
-     * @code bx_srv('bx_posts', 'module_icon', [...]); @endcode
-     * 
-     * Get module icon as CSS class name with FontAwesome icon name class and color class
-     * 
-     * @see BxBaseModGeneralModule::serviceModuleIcon
-     */
-    /** 
-     * @ref bx_base_general-module_icon "module_icon"
-     */
-    public function serviceModuleIcon ()
-    {
-        return isset($this->_oConfig->CNF['ICON']) ? $this->_oConfig->CNF['ICON'] : '';
-    }
-
     public function serviceGetSearchableFields ($aInputsAdd = array())
     {
         $CNF = $this->_oConfig->CNF;
@@ -433,40 +405,6 @@ class BxBaseModGeneralModule extends BxDolModule
     public function serviceGetMenuAddonManageToolsProfileStats()
     {
     	return 0;
-    }
-    /**
-     * @page service Service Calls
-     * @section bx_base_general Base General
-     * @subsection bx_base_general-menu Menu
-     * @subsubsection bx_base_general-my_entries_actions my_entries_actions
-     * 
-     * @code bx_srv('bx_posts', 'my_entries_actions', [...]); @endcode
-     * 
-     * My entries actions menu
-     * @param $iProfileId profiles ID, 
-     *        if omitted it try to get it from 'profile_id' GET param
-     * 
-     * @see BxBaseModGeneralModule::serviceMyEntriesActions
-     */
-    /** 
-     * @ref bx_base_general-my_entries_actions "my_entries_actions"
-     */
-    public function serviceMyEntriesActions ($iProfileId = 0)
-    {
-        $CNF = &$this->_oConfig->CNF;
-        if(empty($CNF['OBJECT_MENU_ACTIONS_MY_ENTRIES']))
-            return false;
-
-        if (!$iProfileId)
-            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
-        if (!$iProfileId || !($oProfile = BxDolProfile::getInstance($iProfileId)))
-            return false;
-
-        if ($iProfileId != $this->_iProfileId)
-            return false;
-
-        $oMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_MY_ENTRIES']);
-        return $oMenu ? $oMenu->getCode() : false;
     }
 
     /**
@@ -720,6 +658,34 @@ class BxBaseModGeneralModule extends BxDolModule
      * @page service Service Calls
      * @section bx_base_general Base General
      * @subsection bx_base_general-forms Forms
+     * @subsubsection bx_base_general-get_create_post_form get_create_post_form
+     * 
+     * @code bx_srv('bx_posts', 'get_create_post_form', [...]); @endcode
+     * 
+     * Get content creation form
+     * @param $aParams additional parameters array: 
+     *                 context_id, ajax_mode, absolute_action_url, displays
+     * 
+     * @see BxBaseModGeneralModule::serviceGetCreatePostForm
+     */
+    /** 
+     * @ref bx_base_general-get_create_post_form "get_create_post_form"
+     */
+    public function serviceGetCreatePostForm($aParams = array())
+    {
+    	$aParams = array_merge($this->_aFormParams, $aParams);
+
+    	$oForm = $this->serviceGetObjectForm('add', $aParams);
+    	if(!$oForm)
+            return ''; 	
+
+    	return $this->serviceEntityCreate($aParams);
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-forms Forms
      * @subsubsection bx_base_general-entity_edit entity_edit
      * 
      * @code bx_srv('bx_posts', 'entity_edit', [...]); @endcode
@@ -928,6 +894,41 @@ class BxBaseModGeneralModule extends BxDolModule
         $sClass = $this->_oConfig->getClassPrefix() . 'FormsEntryHelper';
         $oFormsHelper = new $sClass($this);
         return $oFormsHelper->$sFuncDelete($iContentId);
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-menu Menu
+     * @subsubsection bx_base_general-my_entries_actions my_entries_actions
+     * 
+     * @code bx_srv('bx_posts', 'my_entries_actions', [...]); @endcode
+     * 
+     * My entries actions menu
+     * @param $iProfileId profiles ID, 
+     *        if omitted it try to get it from 'profile_id' GET param
+     * 
+     * @see BxBaseModGeneralModule::serviceMyEntriesActions
+     */
+    /** 
+     * @ref bx_base_general-my_entries_actions "my_entries_actions"
+     */
+    public function serviceMyEntriesActions ($iProfileId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        if(empty($CNF['OBJECT_MENU_ACTIONS_MY_ENTRIES']))
+            return false;
+
+        if (!$iProfileId)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+        if (!$iProfileId || !($oProfile = BxDolProfile::getInstance($iProfileId)))
+            return false;
+
+        if ($iProfileId != $this->_iProfileId)
+            return false;
+
+        $oMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_MY_ENTRIES']);
+        return $oMenu ? $oMenu->getCode() : false;
     }
 
     /**
