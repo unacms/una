@@ -1209,6 +1209,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $aParamsSet['context_id'] = 0;
                 break;
 
+            case BX_BASE_MOD_NTFS_TYPE_OWNER:
             case BX_TIMELINE_TYPE_NEWS:
             case BX_TIMELINE_TYPE_FEED:
             case BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS:
