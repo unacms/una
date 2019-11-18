@@ -2029,6 +2029,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'content' => array(
                     'style_prefix' => $sStylePrefix,
                     'display' => $sAttachmentsLayout,
+                    'count' => count($aTmplVarsAttachments),
                     'bx_repeat:items' => $aTmplVarsAttachments
                 )
             )
