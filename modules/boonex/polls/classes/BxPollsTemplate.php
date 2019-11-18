@@ -271,7 +271,7 @@ class BxPollsTemplate extends BxBaseModTextTemplate
                 'width' => (int)round($fPercent) . '%',
                 'votes' => $oVotes->getCounter(array('show_counter_empty' => true, 'show_counter_in_brackets' => false)),
                 'percent' => _t('_bx_polls_txt_subentry_vote_percent', $iTotal > 0 ? round($fPercent, 2) : 0),
-                'js_code' => $oVotes->getJsScript($bDynamic)
+                'js_code' => $oVotes->getJsScript(array('dynamic_mode' => $bDynamic))
             );
         }
 
