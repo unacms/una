@@ -192,6 +192,7 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
     			'href' => $sManageAccountUrl,
     			'title' => _t($this->_oModule->_oConfig->CNF['T']['grid_txt_account_manager']),
     			'content' => $mixedValue, 
+                'class' => ''
     		));
     	}
 
