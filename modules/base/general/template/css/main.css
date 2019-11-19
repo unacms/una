@@ -255,9 +255,13 @@ div.bx-base-general-comments div.bx-base-general-comments-counter-holder {
 	padding-left: 2rem;
 }
 .bx-base-general-lables-tree-parent-0 LI{
-	padding: 0 0
+	padding: 0px;
 }
 UL.bx-base-general-lables-tree-parent-0{
-	padding: 0px;
 	margin: 0px;
+}
+.bx-base-general-lables-tree-parent-0 LI I.sys-icon {
+    width: 10px;
+    margin-left: -15px;
+    display: inline-block;
 }
