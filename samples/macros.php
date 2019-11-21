@@ -60,7 +60,7 @@ function PageCompMainCode()
             $sModule = isset($aBaseClasses[$sDeclaringClass]) ? $aBaseClasses[$sDeclaringClass] : $aModule['name'];
 
             echo '<a href="https://ci.una.io/docs/service.html#' . $sModule . '-' . $sService . '">';
-            echo '{{!' . $aModule['name']  . ':' . $sService . '[...]}}';
+            echo '{{~' . $aModule['name']  . ':' . $sService . '[...]~}}';
             echo '</a><br />';
         }
         echo '</p>';

@@ -235,11 +235,11 @@ class BxBaseModGeneralModule extends BxDolModule
      * @subsection bx_base_general-browsing Browsing
      * @subsubsection bx_base_general-get_search_result_unit get_search_result_unit
      * 
-     * @code bx_srv('bx_posts', 'get_search_result_unit', [...]); @endcode
+     * @code bx_srv('bx_posts', 'get_search_result_unit', [3,"unit_gallery.html"]); @endcode
      * 
      * Get browsing unit for the specified content
      * @param $iContentId content id
-     * @param $sUnitTemplate unit template, such as: full, extended, gallery, showcase
+     * @param $sUnitTemplate unit template, such as: unit_full.html, unit_gallery.html, unit_live_search.html
      * 
      * @see BxBaseModGeneralModule::serviceGetSearchResultUnit
      */
@@ -660,7 +660,7 @@ class BxBaseModGeneralModule extends BxDolModule
      * @subsection bx_base_general-forms Forms
      * @subsubsection bx_base_general-get_create_post_form get_create_post_form
      * 
-     * @code bx_srv('bx_posts', 'get_create_post_form', [...]); @endcode
+     * @code bx_srv('bx_posts', 'get_create_post_form'); @endcode
      * 
      * Get content creation form
      * @param $aParams additional parameters array: 

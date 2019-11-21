@@ -241,7 +241,7 @@ function bx_process_output ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams 
 
 function bx_is_macros_in_content (&$s) 
 {
-    return false === strpos($s, '{{!') ? false : true; 
+    return false === strpos($s, '{{~') ? false : true; 
 }
 
 /**
@@ -265,7 +265,7 @@ function bx_process_macros ($s)
         return $s;
 
     return preg_replace_callback(
-        "/{{!(.*?)}}/", 
+        "/{{\~(.*?)\~}}/", 
         function ($aMatches) {
             return BxDolService::callMacro($aMatches[1]); 
         }, 
