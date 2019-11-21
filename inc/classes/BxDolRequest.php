@@ -87,7 +87,7 @@ class BxDolRequest extends BxDol
      * @return  0 - if number of args is correct
      *          1 - if method or class wasn't found
      *          2 - if number of args less than number of required arguments
-     *          3 - if number of args more than number of options + required arguments
+     *          3 - if number of args more than number of optional + required arguments
      */
     public static function checkCall($aModule, $sMethod, $aParams, $sClass)
     {

@@ -34,6 +34,8 @@ function PageCompMainCode()
 
     $aBaseClasses = array(
         'BxBaseModGeneralModule' => 'bx_base_general',
+        'BxBaseServices' => 'bx_system_general_common',
+        'BxBaseServiceAccount' => 'bx_system_general_common',
     );
 
     $o = BxDolModuleQuery::getInstance();
@@ -49,7 +51,10 @@ function PageCompMainCode()
             continue;
         echo '<h1>' . $aModule['title'] . '</h1>';
         echo '<p>';
-        foreach ($a as $sService) {
+        foreach ($a as $sService => $sClass) {
+            if ($sClass)
+                $oModuleReflection = new ReflectionClass($sClass);
+
             $oMethodReflection = $oModuleReflection->getMethod('service' . $sService);
             $sDeclaringClass = $oMethodReflection->getDeclaringClass()->getName();
             

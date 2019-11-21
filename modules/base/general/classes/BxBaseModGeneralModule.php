@@ -76,37 +76,37 @@ class BxBaseModGeneralModule extends BxDolModule
     {
         $sService = bx_gen_method_name($s);
         $aSafeServices = $this->serviceGetSafeServices();
-        return in_array($sService, $aSafeServices);
+        return isset($aSafeServices[$sService]);
     }
 
     public function serviceGetSafeServices()
     {
         return array(
             // other
-            'ModuleIcon',
-            'GetLink',
+            'ModuleIcon' => '',
+            'GetLink' => '',
             // browse
-            'GetSearchResultUnit',
-            'Browse',
-            'BrowseFeatured',
-            'BrowseFavorite',
+            'GetSearchResultUnit' => '',
+            'Browse' => '',
+            'BrowseFeatured' => '',
+            'BrowseFavorite' => '',
             // forms
-            'GetCreatePostForm',
-            'EntityEdit',
-            'EntityDelete',
+            'GetCreatePostForm' => '',
+            'EntityEdit' => '',
+            'EntityDelete' => '',
             // page blocks
-            'EntityTextBlock',
-            'EntityInfo',
-            'EntityInfoFull',
-            'EntityInfoExtended',
-            'EntityLocation',
-            'EntityComments',
-            'EntityAttachments',
+            'EntityTextBlock' => '',
+            'EntityInfo' => '',
+            'EntityInfoFull' => '',
+            'EntityInfoExtended' => '',
+            'EntityLocation' => '',
+            'EntityComments' => '',
+            'EntityAttachments' => '',
             // menu
-            'EntityAllActions',
-            'EntityActions',
-            'EntitySocialSharing',
-            'MyEntriesActions',
+            'EntityAllActions' => '',
+            'EntityActions' => '',
+            'EntitySocialSharing' => '',
+            'MyEntriesActions' => '',
         );
     }
 

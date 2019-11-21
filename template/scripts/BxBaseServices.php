@@ -17,6 +17,22 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         parent::__construct();
     }
 
+    public function serviceIsSafeService($s)
+    {
+        $sService = bx_gen_method_name($s);
+        $aSafeServices = $this->serviceGetSafeServices();
+        return in_array($sService, $aSafeServices);
+    }
+
+    public function serviceGetSafeServices()
+    {
+        return array(
+            'GetCreatePostForm' => 'BxBaseServices',
+            'KeywordSearch' => 'BxBaseServices',
+
+            'CreateAccountForm' => 'BxBaseServiceAccount',
+        );
+    }
     public function serviceProfileUnit ($iContentId, $aParams = array())
     {
         return $this->_serviceProfileFunc('getUnit', $iContentId, $aParams);
@@ -108,15 +124,27 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     }
     
     /**
-     * Get United Create Post form.
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-general General
+     * @subsubsection bx_system_general-get_create_post_form get_create_post_form
      * 
-     * @param type $mixedContextId - context which the post will be created in:
-     *      false = 'Public' post form;
-     *      0 = 'Account' post form, which allows to post in your own profile and connections;
-     *      n = 'Context' post form, which allows to post in context (3d party profile, group, event, etc).
-     * @param type $sDefault - tab selected by default.
-     * @param type $aCustom - an array with custom paramaters.
-     * @return string
+     * @code bx_srv('system', 'get_create_post_form', [false], 'TemplServices'); @endcode
+     * @code {{~system:get_create_post_form:TemplServices[false]~}} @endcode
+     * 
+     * Get United Create Post form.
+     * @param $mixedContextId - context which the post will be created in:
+     *      - false = 'Public' post form;
+     *      - 0 = 'Profile' post form, which allows to post in your own profile and connections;
+     *      - n = 'Context' post form, which allows to post in context (3d party profile, group, event, etc).
+     * @param $sDefault - tab selected by default.
+     * @param $aCustom - an array with custom paramaters.
+     * @return string with form content
+     * 
+     * @see BxBaseServices::serviceGetCreatePostForm
+     */
+    /** 
+     * @ref bx_system_general-get_create_post_form "get_create_post_form"
      */
     public function serviceGetCreatePostForm($mixedContextId = false, $sDefault = '', $aCustom = array())
     {

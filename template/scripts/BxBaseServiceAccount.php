@@ -24,6 +24,25 @@ class BxBaseServiceAccount extends BxDol
         $this->_oAccountQuery = BxDolAccountQuery::getInstance();
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-account Account
+     * @subsubsection bx_system_general-create_account_form create_account_form
+     * 
+     * @code bx_srv('system', 'create_account_form', [], 'TemplServiceAccount'); @endcode
+     * @code {{~system:create_account_form:TemplServiceAccount~}} @endcode
+     * 
+     * Join form.
+     * @param $aParams array of additional params, such as: 
+     *          - no_login_text
+     *          - no_auth_buttons
+     * 
+     * @see BxBaseServices::serviceGetCreatePostForm
+     */
+    /** 
+     * @ref bx_system_general-create_account_form "create_account_form"
+     */
     public function serviceCreateAccountForm ($aParams = array())
     {   
         if(isLogged()){
