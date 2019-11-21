@@ -103,14 +103,22 @@ class BxDolService extends BxDol
 
         $aParams = array();
         if (!empty($aMatches[2]))
-            $aParams = json_decode($aMatches[2]);
-        if (!$aParams)
-            $aParams = array();
+            $aParams = json_decode($aMatches[2], true);
+        if (null === $aParams)
+            return _t('_sys_macros_malformed');
 
         if (!self::call($a[0], 'is_safe_service', array($a[1])))
             return _t('_sys_macros_unsafe');
 
-        return self::call($a[0], $a[1], $aParams, isset($a[3]) ? $a[3] : 'Module', isset($a[4]) && 'ignore_cache' == $a[4] ? true : false);
+        $mixed = self::call($a[0], $a[1], $aParams, isset($a[3]) ? $a[3] : 'Module', isset($a[4]) && 'ignore_cache' == $a[4] ? true : false);
+
+        if (is_object($mixed))
+            return _t('_sys_macros_output_not_displayable');
+        if (is_array($mixed) && !isset($mixed['content']))
+            return _t('_sys_macros_output_not_displayable');
+        if (is_array($mixed) && isset($mixed['content']))
+            return $mixed['content'];
+        return $mixed;
     }
 
     /**
