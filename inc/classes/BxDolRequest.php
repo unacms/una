@@ -82,6 +82,38 @@ class BxDolRequest extends BxDol
         BxDolRequest::_error('method', $sMethod, $sModule);
     }
 
+    /**
+     * Check if number of arguments is not less than number of requires arguments
+     * @return  0 - if number of args is correct
+     *          1 - if method or class wasn't found
+     *          2 - if number of args less than number of required arguments
+     *          3 - if number of args more than number of options + required arguments
+     */
+    public static function checkCall($aModule, $sMethod, $aParams, $sClass)
+    {
+        if (isset($aModule['name']) && 'system' == $aModule['name'] && 'Module' == $sClass)
+            $sClass = 'BaseServices';
+        $sMethod = 'service' . bx_gen_method_name($sMethod);
+        $sClass = $aModule['class_prefix'] . $sClass;
+
+        $oModule = BxDolRequest::_require($aModule, $sClass);
+        if($oModule === false)
+            return 1;
+
+        $iArgs = count($aParams);
+        $r = new ReflectionMethod($sClass, $sMethod);
+
+        $iArgsRequired = $r->getNumberOfRequiredParameters();
+        if ($iArgs < $iArgsRequired)
+            return 2;
+
+        $iArgsAll = $r->getNumberOfParameters();
+        if ($iArgs > $iArgsAll)
+            return 3;
+
+        return 0;
+    }
+
     protected static function _perform($aModule, $sClass, $sMethod, $aParams, $bTerminateOnError = true)
     {
         $sClass = $aModule['class_prefix'] . $sClass;
