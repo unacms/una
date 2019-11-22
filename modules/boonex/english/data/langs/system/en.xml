@@ -2326,7 +2326,11 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_location_geolocation_not_supported_by_browser"><![CDATA[Geolocation is not supported by this browser]]></string>
 	<string name="_sys_location_undefined"><![CDATA[Location off]]></string>
     <string name="_sys_macros_malformed"><![CDATA[Error: malformed macros]]></string>
-    <string name="_sys_macros_unsafe"><![CDATA[Error: unsafe macros]]></string> 
+    <string name="_sys_macros_unsafe"><![CDATA[Error: unsafe macros]]></string>
+    <string name="_sys_macros_output_not_displayable"><![CDATA[Error: output isn't displayable]]></string>
+    <string name="_sys_macros_method_or_class_not_found"><![CDATA[Error: no such macros]]></string>
+    <string name="_sys_macros_required_args_missing"><![CDATA[Error: required arguments are missing]]></string>
+    <string name="_sys_macros_too_many_args"><![CDATA[Error: too many arguments]]></string>
 	<string name="_sys_menu_item_title_about"><![CDATA[About]]></string>
         <string name="_sys_menu_item_title_copyright"><![CDATA[Copyright]]></string>
 	<string name="_sys_menu_item_title_privacy"><![CDATA[Privacy]]></string>
@@ -2348,6 +2352,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_add_content"><![CDATA[Add...]]></string>
 	<string name="_sys_menu_item_title_cart"><![CDATA[Shopping Cart]]></string>
   <string name="_sys_menu_item_title_cmts_administration"><![CDATA[Comments]]></string>
+  <string name="_sys_menu_item_title_audit_administration"><![CDATA[Audit]]></string>
 	<string name="_sys_menu_item_title_cmts_item_delete"><![CDATA[Delete]]></string>
 	<string name="_sys_menu_item_title_cmts_item_edit"><![CDATA[Edit]]></string>
         <string name="_sys_menu_item_title_cmts_item_quote"><![CDATA[]]></string>
@@ -2414,6 +2419,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_item_title_system_add_content"><![CDATA[Add Content]]></string>
 	<string name="_sys_menu_item_title_system_cart"><![CDATA[Shopping Cart]]></string>
         <string name="_sys_menu_item_title_system_cmts_administration"><![CDATA[Comments]]></string>
+  <string name="_sys_menu_item_title_system_audit_administration"><![CDATA[Audit]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_delete"><![CDATA[Delete]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_edit"><![CDATA[Edit]]></string>
         <string name="_sys_menu_item_title_system_cmts_item_quote"><![CDATA[Quote]]></string>
@@ -2587,6 +2593,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_block_title_chart_growth"><![CDATA[Growth Charts]]></string>
 	<string name="_sys_page_block_title_chart_stats"><![CDATA[Content]]></string>
 	<string name="_sys_page_block_title_cmts_administration"><![CDATA[Manage Comments]]></string>
+  <string name="_sys_page_block_title_audit_administration"><![CDATA[Audit]]></string>
 	<string name="_sys_page_block_title_confirm_email"><![CDATA[Email Confirmation]]></string>
 	<string name="_sys_page_block_title_confirm_phone"><![CDATA[Phone Confirmation]]></string>
 	<string name="_sys_page_block_title_create_account"><![CDATA[Sign up]]></string>
@@ -2605,6 +2612,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_block_system_title_login_step3"><![CDATA[Log in - step3]]></string>
 	<string name="_sys_page_block_system_title_login_only"><![CDATA[Log in]]></string>
 	<string name="_sys_page_block_title_system_cmts_administration"><![CDATA[Manage Comments]]></string>
+  <string name="_sys_page_block_title_system_audit_administration"><![CDATA[Audit]]></string>
 	<string name="_sys_page_block_title_login"><![CDATA[Log in]]></string>
 	<string name="_sys_page_block_title_login_step2"><![CDATA[Log in - step 2]]></string>
 	<string name="_sys_page_block_title_login_step3"><![CDATA[Log in - step 3]]></string>
@@ -2630,6 +2638,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_title_account_settings_pwd"><![CDATA[Change Password]]></string>
 	<string name="_sys_page_title_add_content"><![CDATA[Add Content]]></string>
   <string name="_sys_page_title_cmts_administration"><![CDATA[Manage Comments]]></string>
+  <string name="_sys_page_title_audit_administration"><![CDATA[Audit]]></string>
 	<string name="_sys_page_title_confirm_email"><![CDATA[Email Confirmation]]></string>
 	<string name="_sys_page_title_confirm_phone"><![CDATA[Phone Confirmation]]></string>
 	<string name="_sys_page_title_create_account"><![CDATA[Sign up]]></string>
@@ -2652,6 +2661,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_title_system_account_settings_pwd"><![CDATA[Change Password]]></string>
 	<string name="_sys_page_title_system_add_content"><![CDATA[Add Content]]></string>
   <string name="_sys_page_title_system_cmts_administration"><![CDATA[Manage Comments]]></string>
+  <string name="_sys_page_title_system_audit_administration"><![CDATA[Audit]]></string>
   <string name="_sys_page_title_system_confirm_email"><![CDATA[Email Confirmation]]></string>
 	<string name="_sys_page_title_system_confirm_phone"><![CDATA[Phone Confirmation]]></string>
 	<string name="_sys_page_title_system_create_account"><![CDATA[Sign up]]></string>

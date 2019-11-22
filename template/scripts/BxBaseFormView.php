@@ -1188,23 +1188,42 @@ BLAH;
 
     protected function genCustomInputLabels ($aInput)
     {
+        $this->oTemplate->addJs(array(
+            'select2/js/select2.min.js',
+			'select2/select2-to-tree/select2totree.js',
+        ));
+
+        $this->oTemplate->addCss(array(
+        	BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'select2/css/|select2.min.css',
+			BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'select2/select2-to-tree/|select2totree.css'
+        ));
+        
         $aValues = array();
         $oLabel = BxDolLabel::getInstance();
-        $this->_getLabelOptions(0, $oLabel, $aValues);
+        $this->_getLabelOptions(0, $oLabel, $aValues, 1, '');
 
-        $aInput['type'] = 'select_multiple';
+        $aInput['type'] = 'select_multiple bx-form-select-labels';
         $aInput['values'] = $aValues;
 
         return $this->genInputSelectMultiple($aInput);
     }
 
-    protected function _getLabelOptions($iParent, &$oLabel, &$aValues)
+    protected function _getLabelOptions($iParent, &$oLabel, &$aValues, $iLevel = 1, $sParentValue = '')
     {
         $aLabels = $oLabel->getLabels(array('type' => 'parent', 'parent' => $iParent));
         foreach($aLabels as $aLabel) {
-            $aValues[] = array('key' => $aLabel['value'], 'value' => str_repeat('&nbsp;&nbsp;&nbsp;', (int)$aLabel['level']) . ' ' . $aLabel['value']);
-
-            $this->_getLabelOptions($aLabel['id'], $oLabel, $aValues);
+			$aAttrs = array();
+			if ($aLabel['parent'] != 0)
+				$aAttrs = array('data-pup' => $sParentValue);
+			
+			$sClass = 'l' . $iLevel;
+			$aLabels2 = $oLabel->getLabels(array('type' => 'parent', 'parent' =>  $aLabel['id']));
+			if (count($aLabels2) > 0)
+				$sClass .= ' non-leaf';	
+			
+            $aValues[] = array('attrs' => $aAttrs, 'class' => $sClass, 'key' => $aLabel['value'], 'value' => $aLabel['value']);
+			$iLevel2 = $iLevel + 1;
+            $this->_getLabelOptions($aLabel['id'], $oLabel, $aValues, $iLevel2, $aLabel['value']);
         }
     }
 

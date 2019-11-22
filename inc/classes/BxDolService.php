@@ -41,14 +41,7 @@ class BxDolService extends BxDol
      */
     public static function call($mixed, $sMethod, $aParams = array(), $sClass = 'Module', $bIgnoreCache = false)
     {
-        $oDb = BxDolModuleQuery::getInstance();
-
-        $aModule = array();
-        if(is_string($mixed))
-            $aModule = $oDb->getModuleByName($mixed);
-        else
-            $aModule = $oDb->getModuleById($mixed);
-
+        $aModule = self::getModule($mixed);
         if (empty($aModule))
             return '';
 
@@ -89,11 +82,13 @@ class BxDolService extends BxDol
         return self::call($a['module'], $a['method'], isset($a['params']) ? $a['params'] : array(), isset($a['class']) ? $a['class'] : 'Module', isset($a['ignore_cache']) ? $a['ignore_cache'] : false);
     }
 
-    public static function callMacro($s, $aMarkers = array(), $sReplaceIn = 'params')
+    public static function callMacro($s, $aMarkers = array())
     {
+        // replace markers
         if ($aMarkers)
             $s = bx_replace_markers($s, $aMarkers);
 
+        // check for correct macros
         if (!preg_match("/^([a-zA-Z0-9_\:]+)(.*)$/", $s, $aMatches))
             return _t('_sys_macros_malformed');
 
@@ -103,14 +98,39 @@ class BxDolService extends BxDol
 
         $aParams = array();
         if (!empty($aMatches[2]))
-            $aParams = json_decode($aMatches[2]);
-        if (!$aParams)
-            $aParams = array();
+            $aParams = json_decode($aMatches[2], true);
+        if (null === $aParams)
+            return _t('_sys_macros_malformed');
 
+        // check if macros is safe
         if (!self::call($a[0], 'is_safe_service', array($a[1])))
             return _t('_sys_macros_unsafe');
 
-        return self::call($a[0], $a[1], $aParams, isset($a[3]) ? $a[3] : 'Module', isset($a[4]) && 'ignore_cache' == $a[4] ? true : false);
+        // check module, method and number of arguments
+        $aModule = self::getModule($a[0]);
+        if (empty($aModule))
+            return _t('_sys_macros_method_or_class_not_found');
+        $iCheck = BxDolRequest::checkCall($aModule, $a[1], $aParams, isset($a[2]) ? $a[2] : 'Module');
+        switch ($iCheck) {
+            case 1: 
+                return _t('_sys_macros_method_or_class_not_found');
+            case 2:
+                return _t('_sys_macros_required_args_missing');
+            case 3:
+                return _t('_sys_macros_too_many_args');
+        }
+
+        // perform call
+        $mixed = self::call($a[0], $a[1], $aParams, isset($a[2]) ? $a[2] : 'Module', isset($a[3]) && 'ignore_cache' == $a[3] ? true : false);
+
+        // check result
+        if (is_object($mixed))
+            return _t('_sys_macros_output_not_displayable');
+        if (is_array($mixed) && !isset($mixed['content']))
+            return _t('_sys_macros_output_not_displayable');
+        if (is_array($mixed) && isset($mixed['content']))
+            return $mixed['content'];
+        return $mixed;
     }
 
     /**
@@ -138,6 +158,16 @@ class BxDolService extends BxDol
 			$aService['class'] = $sClass;
 
 		return serialize($aService);
+    }
+
+    protected static function getModule($mixed)
+    {
+        $oDb = BxDolModuleQuery::getInstance();
+        if (is_string($mixed))
+            $aModule = $oDb->getModuleByName($mixed);
+        else
+            $aModule = $oDb->getModuleById($mixed);
+        return $aModule;
     }
 }
 

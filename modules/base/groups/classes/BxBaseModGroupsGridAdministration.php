@@ -27,7 +27,7 @@ class BxBaseModGroupsGridAdministration extends BxBaseModProfileGridAdministrati
     	
     	$CNF = &$this->_oModule->_oConfig->CNF;
         $oProfile = $this->_getProfileObject($aRow[$CNF['FIELD_ID']]);
-        $sUrl = BX_DOL_URL_ROOT . 'studio/audit.php?context_id=' . $oProfile->id();
+        $sUrl = BX_DOL_URL_ROOT . 'page/audit-administration?context_id=' . $oProfile->id();
 
     	$a['attr'] = array_merge($a['attr'], array(
     		"onclick" => "window.open('" . $sUrl . "','_audit');"

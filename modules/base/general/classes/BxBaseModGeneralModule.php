@@ -76,37 +76,37 @@ class BxBaseModGeneralModule extends BxDolModule
     {
         $sService = bx_gen_method_name($s);
         $aSafeServices = $this->serviceGetSafeServices();
-        return in_array($sService, $aSafeServices);
+        return isset($aSafeServices[$sService]);
     }
 
     public function serviceGetSafeServices()
     {
         return array(
             // other
-            'ModuleIcon',
-            'GetLink',
+            'ModuleIcon' => '',
+            'GetLink' => '',
             // browse
-            'GetSearchResultUnit',
-            'Browse',
-            'BrowseFeatured',
-            'BrowseFavorite',
+            'GetSearchResultUnit' => '',
+            'Browse' => '',
+            'BrowseFeatured' => '',
+            'BrowseFavorite' => '',
             // forms
-            'GetCreatePostForm',
-            'EntityEdit',
-            'EntityDelete',
+            'GetCreatePostForm' => '',
+            'EntityEdit' => '',
+            'EntityDelete' => '',
             // page blocks
-            'EntityTextBlock',
-            'EntityInfo',
-            'EntityInfoFull',
-            'EntityInfoExtended',
-            'EntityLocation',
-            'EntityComments',
-            'EntityAttachments',
+            'EntityTextBlock' => '',
+            'EntityInfo' => '',
+            'EntityInfoFull' => '',
+            'EntityInfoExtended' => '',
+            'EntityLocation' => '',
+            'EntityComments' => '',
+            'EntityAttachments' => '',
             // menu
-            'EntityAllActions',
-            'EntityActions',
-            'EntitySocialSharing',
-            'MyEntriesActions',
+            'EntityAllActions' => '',
+            'EntityActions' => '',
+            'EntitySocialSharing' => '',
+            'MyEntriesActions' => '',
         );
     }
 
@@ -232,14 +232,14 @@ class BxBaseModGeneralModule extends BxDolModule
     /**
      * @page service Service Calls
      * @section bx_base_general Base General
-     * @subsection bx_base_general-browse Browse
+     * @subsection bx_base_general-browsing Browsing
      * @subsubsection bx_base_general-get_search_result_unit get_search_result_unit
      * 
-     * @code bx_srv('bx_posts', 'get_search_result_unit', [...]); @endcode
+     * @code bx_srv('bx_posts', 'get_search_result_unit', [3,"unit_gallery.html"]); @endcode
      * 
      * Get browsing unit for the specified content
      * @param $iContentId content id
-     * @param $sUnitTemplate unit template, such as: full, extended, gallery, showcase
+     * @param $sUnitTemplate unit template, such as: unit_full.html, unit_gallery.html, unit_live_search.html
      * 
      * @see BxBaseModGeneralModule::serviceGetSearchResultUnit
      */
@@ -410,7 +410,7 @@ class BxBaseModGeneralModule extends BxDolModule
     /**
      * @page service Service Calls
      * @section bx_base_general Base General
-     * @subsection bx_base_general-browse Browse
+     * @subsection bx_base_general-browsing Browsing
      * @subsubsection bx_base_general-browse browse
      * 
      * @code bx_srv('bx_posts', 'browse', [...]); @endcode
@@ -444,7 +444,7 @@ class BxBaseModGeneralModule extends BxDolModule
     /**
      * @page service Service Calls
      * @section bx_base_general Base General
-     * @subsection bx_base_general-browse Browse
+     * @subsection bx_base_general-browsing Browsing
      * @subsubsection bx_base_general-browse_featured browse_featured
      * 
      * @code bx_srv('bx_posts', 'browse_featured', [...]); @endcode
@@ -468,7 +468,7 @@ class BxBaseModGeneralModule extends BxDolModule
     /**
      * @page service Service Calls
      * @section bx_base_general Base General
-     * @subsection bx_base_general-browse Browse
+     * @subsection bx_base_general-browsing Browsing
      * @subsubsection bx_base_general-browse_favorite browse_favorite
      * 
      * @code bx_srv('bx_posts', 'browse_favorite', [...]); @endcode
@@ -660,7 +660,7 @@ class BxBaseModGeneralModule extends BxDolModule
      * @subsection bx_base_general-forms Forms
      * @subsubsection bx_base_general-get_create_post_form get_create_post_form
      * 
-     * @code bx_srv('bx_posts', 'get_create_post_form', [...]); @endcode
+     * @code bx_srv('bx_posts', 'get_create_post_form'); @endcode
      * 
      * Get content creation form
      * @param $aParams additional parameters array: 

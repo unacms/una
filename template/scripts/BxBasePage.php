@@ -345,7 +345,10 @@ class BxBasePage extends BxDolPage
      */
     protected function _getBlockRaw ($aBlock)
     {
-        return '<div class="bx-page-raw-container">' . $this->_replaceMarkers(BxDolTemplate::getInstance()->parseHtmlByContent($aBlock['content'], array())) . '</div>';
+        $s = '<div class="bx-page-raw-container">' . BxDolTemplate::getInstance()->parseHtmlByContent($aBlock['content'], array()) . '</div>';
+        $s = $this->_replaceMarkers($s);
+        $s = bx_process_macros($s);
+        return $s;
     }
 
     /**
@@ -354,7 +357,10 @@ class BxBasePage extends BxDolPage
      */
     protected function _getBlockHtml ($aBlock)
     {
-        return '<div class="bx-page-html-container">' . $this->_replaceMarkers($aBlock['content']) . '</div>';
+        $s = '<div class="bx-page-html-container">' . $aBlock['content'] . '</div>';
+        $s = $this->_replaceMarkers($s);
+        $s = bx_process_macros($s);
+        return $s;
     }
 
     /**
@@ -363,7 +369,10 @@ class BxBasePage extends BxDolPage
      */
     protected function _getBlockLang ($aBlock)
     {
-        return '<div class="bx-page-lang-container">' . $this->_replaceMarkers(_t(trim($aBlock['content']))) . '</div>';
+        $s = '<div class="bx-page-lang-container">' . _t(trim($aBlock['content'])) . '</div>';
+        $s = $this->_replaceMarkers($s);
+        $s = bx_process_macros($s);
+        return $s;
     }
 
     /**
