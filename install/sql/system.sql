@@ -3929,7 +3929,7 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 ('sys_studio_labels', 'Sql', 'SELECT * FROM `sys_labels` WHERE 1 ', 'sys_labels', 'id', 'order', '', '', 100, NULL, 'start', '', 'value', '', 'like', 'value', '', 'BxTemplStudioFormsLabels', ''),
 ('sys_studio_categories', 'Sql', 'SELECT * FROM `sys_categories` WHERE 1 ', 'sys_categories', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'value', '', 'like', '', '', 'BxTemplStudioFormsCategories', ''),
 
-('sys_audit_administration', 'Sql', 'SELECT * FROM `sys_audit` WHERE 1 ', 'sys_audit', 'id', 'added', '', '', 20, NULL, 'start', '', 'value', '', 'like', '', '', 'BxTemplStudioAuditGrid', '');
+('sys_audit_administration', 'Sql', 'SELECT * FROM `sys_audit` WHERE 1 ', 'sys_audit', 'id', 'added', '', '', 20, NULL, 'start', '', 'value', '', 'like', '', '', 'BxTemplAuditGrid', '');
 
 CREATE TABLE IF NOT EXISTS `sys_grid_fields` (
   `object` varchar(64) NOT NULL,
