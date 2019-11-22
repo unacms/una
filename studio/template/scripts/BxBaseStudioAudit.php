@@ -78,7 +78,6 @@ class BxBaseStudioAudit extends BxDolStudioAudit
     
     protected function getSettings()
     {
-       
         $oPage = new BxTemplStudioSettings(BX_DOL_STUDIO_STG_TYPE_SYSTEM, BX_DOL_STUDIO_STG_CATEGORY_AUDIT);
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('audit.html', array(
             'content' => $oPage->getPageCode(),
@@ -88,13 +87,12 @@ class BxBaseStudioAudit extends BxDolStudioAudit
 
     protected function getGrid($sObjectName)
     {
-        
         $oGrid = BxDolGrid::getObjectInstance('sys_audit_administration');
         if(!$oGrid)
             return '';
 
         $oTemplate = BxDolStudioTemplate::getInstance();
-        $oTemplate->addJs(array('BxDolAuditManageTools.js', 'BxDolGrid.js', 'jquery-ui.min.js', 'jquery.form.min.js', 'jquery-ui\jquery-ui.custom.min.js' , 'jquery-ui\jquery.ui.sortable.min.js'));
+        $oTemplate->addJs(array('BxDolAuditManageTools.js', 'BxDolGrid.js', 'jquery.form.min.js', 'jquery-ui/jquery-ui.custom.min.js' , 'jquery-ui/jquery.ui.sortable.min.js'));
         //$oForm = new BxTemplStudioFormView(array());
         $oTemplate->addCss('grid.css');
         $oTemplate->addJsTranslation(array('_sys_grid_search'));
