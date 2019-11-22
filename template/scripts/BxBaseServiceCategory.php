@@ -12,15 +12,36 @@
  */
 class BxBaseServiceCategory extends BxDol
 {
+
     /**
-     * Get categories list
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-categories Categories
+     * @subsubsection bx_system_general-categories_list categories_list
+     * 
+     * @code bx_srv('system', 'categories_list', ["bx_posts_cats", ["show_empty_categories" => true]], 'TemplServiceCategory'); @endcode
+     * @code {{~system:categories_list:TemplServiceCategory["bx_posts_cats", {"show_empty_categories":true}]~}} @endcode
+     * 
+     * Get categories list.
+     * @param $sObject categories object name
+     * @param $aParams additional params:
+     *              - show_empty
+     *              - show_empty_categories
+     * 
+     * @see BxBaseServiceCategory::serviceCategoriesList
+     */
+    /** 
+     * @ref bx_system_general-categories_list "categories_list"
      */
     public function serviceCategoriesList ($sObject, $aParams = array())
     {
     	$bShowEmpty = isset($aParams['show_empty']) ? (bool)$aParams['show_empty'] : false;
     	$bShowEmptyCategories = isset($aParams['show_empty_categories']) ? (bool)$aParams['show_empty_categories'] : false;
 
-		$sResult = BxDolCategory::getObjectInstance($sObject)->getCategoriesList($bShowEmptyCategories);
+        if (!($o = BxDolCategory::getObjectInstance($sObject)))
+            return $bShowEmpty ? MsgBox(_t('_Empty')) : '';
+
+		$sResult = $o->getCategoriesList($bShowEmptyCategories);
 		if(empty($sResult))
 			return $bShowEmpty ? MsgBox(_t('_Empty')) : '';
 
