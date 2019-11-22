@@ -21,7 +21,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     {
         $sService = bx_gen_method_name($s);
         $aSafeServices = $this->serviceGetSafeServices();
-        return in_array($sService, $aSafeServices);
+        return isset($aSafeServices[$sService]);
     }
 
     public function serviceGetSafeServices()
@@ -129,8 +129,8 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
      * @subsection bx_system_general-general General
      * @subsubsection bx_system_general-get_create_post_form get_create_post_form
      * 
-     * @code bx_srv('system', 'get_create_post_form', [false], 'TemplServices'); @endcode
-     * @code {{~system:get_create_post_form:TemplServices[false]~}} @endcode
+     * @code bx_srv('system', 'get_create_post_form', [false, "bx_posts"], 'TemplServices'); @endcode
+     * @code {{~system:get_create_post_form:TemplServices[false,"bx_posts"]~}} @endcode
      * 
      * Get United Create Post form.
      * @param $mixedContextId - context which the post will be created in:
@@ -231,6 +231,40 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return $aRet;
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-general General
+     * @subsubsection bx_system_general-keyword_search keyword_search
+     * 
+     * @code bx_srv('system', 'keyword_search', ["bx_posts", ["keyword" => "test"}], 'TemplServices'); @endcode
+     * 
+     * @code {{~system:keyword_search:TemplServices["bx_posts", {"keyword":"test"}]~}} @endcode
+     * @code {{~system:keyword_search:TemplServices["bx_albums", {"meta_type": "location_country", "keyword": "AU"}, "unit.html"]~}} @endcode
+     * @code {{~system:keyword_search:TemplServices["bx_albums", {"meta_type": "location_country_state", "state":"NSW", "keyword": "AU"}, "unit.html"]~}} @endcode
+     * @code {{~system:keyword_search:TemplServices["bx_albums", {"meta_type": "location_country_city", "state":"NSW", "city":"Manly", "keyword": "AU"}, "unit.html"]~}} @endcode
+     * @code {{~system:keyword_search:TemplServices["bx_posts", {"meta_type": "mention", "keyword": 2}, "unit_gallery.html"]~}} @endcode
+     * @code {{~system:keyword_search:TemplServices["bx_posts", {"cat": "bx_posts_cats", "keyword": 3}, "unit_gallery.html"]~}} @endcode
+     * 
+     * Search by keyword
+     * @param $sSection - search object to search in, usually module name, for example: bx_posts
+     * @param $aCondition - condition for search, supported conditions: 
+     *          - search by keyword: ["keyword" => "test"]
+     *          - search by country: ["meta_type" => "location_country", "keyword" => "AU"]
+     *          - search by country and state: ["meta_type": "location_country_state", "state":"NSW", "keyword": "AU"]
+     *          - search by country, state and city: ["meta_type": "location_country_city", "state":"NSW", "city":"Manly", "keyword": "AU"]
+     *          - search for mentions: ["meta_type" => "mention", "keyword" => 2]
+     *          - search in category: ["cat": "bx_posts_cats", "keyword": 3]
+     * @param $sTemplate - template for displaying search results, for example: unit.html
+     * @param $iStart - paginate, display records starting from this number
+     * @param $iPerPage - paginate, display this number of records per page
+     * @param $bLiveSearch - search results like in live search
+     * 
+     * @see BxBaseServices::serviceKeywordSearch
+     */
+    /** 
+     * @ref bx_system_general-keyword_search "keyword_search"
+     */
     public function serviceKeywordSearch ($sSection, $aCondition, $sTemplate = '', $iStart = 0, $iPerPage = 0, $bLiveSearch = 0)
     {
         if (!$sSection || !isset($aCondition['keyword']))

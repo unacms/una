@@ -34,8 +34,8 @@ function PageCompMainCode()
 
     $aBaseClasses = array(
         'BxBaseModGeneralModule' => 'bx_base_general',
-        'BxBaseServices' => 'bx_system_general_common',
-        'BxBaseServiceAccount' => 'bx_system_general_common',
+        'BxBaseServices' => 'bx_system_general',
+        'BxBaseServiceAccount' => 'bx_system_general',
     );
 
     $o = BxDolModuleQuery::getInstance();
