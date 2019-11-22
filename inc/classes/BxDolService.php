@@ -110,7 +110,7 @@ class BxDolService extends BxDol
         $aModule = self::getModule($a[0]);
         if (empty($aModule))
             return _t('_sys_macros_method_or_class_not_found');
-        $iCheck = BxDolRequest::checkCall($aModule, $a[1], $aParams, isset($a[3]) ? $a[3] : 'Module');
+        $iCheck = BxDolRequest::checkCall($aModule, $a[1], $aParams, isset($a[2]) ? $a[2] : 'Module');
         switch ($iCheck) {
             case 1: 
                 return _t('_sys_macros_method_or_class_not_found');
@@ -121,7 +121,7 @@ class BxDolService extends BxDol
         }
 
         // perform call
-        $mixed = self::call($a[0], $a[1], $aParams, isset($a[3]) ? $a[3] : 'Module', isset($a[4]) && 'ignore_cache' == $a[4] ? true : false);
+        $mixed = self::call($a[0], $a[1], $aParams, isset($a[2]) ? $a[2] : 'Module', isset($a[3]) && 'ignore_cache' == $a[3] ? true : false);
 
         // check result
         if (is_object($mixed))

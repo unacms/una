@@ -31,6 +31,9 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'KeywordSearch' => 'BxBaseServices',
 
             'CreateAccountForm' => 'BxBaseServiceAccount',
+            'ForgotPassword' => 'BxBaseServiceAccount',
+
+            'CategoriesList' => 'BxBaseServiceCategory',
         );
     }
     public function serviceProfileUnit ($iContentId, $aParams = array())

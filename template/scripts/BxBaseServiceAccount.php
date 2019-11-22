@@ -31,20 +31,20 @@ class BxBaseServiceAccount extends BxDol
      * @subsubsection bx_system_general-create_account_form create_account_form
      * 
      * @code bx_srv('system', 'create_account_form', [], 'TemplServiceAccount'); @endcode
-     * @code {{~system:create_account_form:TemplServiceAccount~}} @endcode
+     * @code {{~system:create_account_form:TemplServiceAccount[{"no_login_text":true, "no_auth_buttons":true}]~}} @endcode
      * 
      * Join form.
      * @param $aParams array of additional params, such as: 
      *          - no_login_text
      *          - no_auth_buttons
      * 
-     * @see BxBaseServices::serviceGetCreatePostForm
+     * @see BxBaseServiceAccount::serviceGetCreatePostForm
      */
     /** 
      * @ref bx_system_general-create_account_form "create_account_form"
      */
     public function serviceCreateAccountForm ($aParams = array())
-    {   
+    {
         if(isLogged()){
             header('Location: ' . BX_DOL_URL_ROOT);
             exit;
@@ -328,7 +328,21 @@ class BxBaseServiceAccount extends BxDol
     }
 
     /**
-     * Display forgot password form, if reset password key is provided then reset password
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-account Account
+     * @subsubsection bx_system_general-forgot_password forgot_password
+     * 
+     * @code bx_srv('system', 'forgot_password', [], 'TemplServiceAccount'); @endcode
+     * @code {{~system:forgot_password:TemplServiceAccount~}} @endcode
+     * 
+     * Display forgot password form, 
+     * if reset password key is provided then reset password
+     * 
+     * @see BxBaseServiceAccount::serviceForgotPassword
+     */
+    /** 
+     * @ref bx_system_general-forgot_password "forgot_password"
      */
     public function serviceForgotPassword()
     {
