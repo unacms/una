@@ -24,6 +24,22 @@ class BxBaseChartServices extends BxDol
         return CHECK_ACTION_RESULT_ALLOWED;
     }
     
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-chart Chart
+     * @subsubsection bx_system_general-get_chart_growth get_chart_growth
+     * 
+     * @code bx_srv('system', 'get_chart_growth', [], 'TemplChartServices'); @endcode
+     * @code {{~system:get_chart_growth:TemplChartServices~}} @endcode
+     * 
+     * Get growth charts.
+     * 
+     * @see BxBaseChartServices::serviceProfileMembership
+     */
+    /** 
+     * @ref bx_system_general-get_chart_growth "get_chart_growth"
+     */
     public function serviceGetChartGrowth()
     {
         $mixedResult = BxDolService::call('system', 'check_allowed_view', array(), 'TemplChartServices');
@@ -98,6 +114,22 @@ class BxBaseChartServices extends BxDol
         ));
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-chart Chart
+     * @subsubsection bx_system_general-get_chart_stats get_chart_stats
+     * 
+     * @code bx_srv('system', 'get_chart_stats', [], 'TemplChartServices'); @endcode
+     * @code {{~system:get_chart_stats:TemplChartServices~}} @endcode
+     * 
+     * Get statistics chart.
+     * 
+     * @see BxBaseChartServices::serviceGetChartStats
+     */
+    /** 
+     * @ref bx_system_general-get_chart_stats "get_chart_stats"
+     */
     public function serviceGetChartStats()
     {
         $mixedResult = BxDolService::call('system', 'check_allowed_view', array(), 'TemplChartServices');

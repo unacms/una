@@ -34,6 +34,22 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'ForgotPassword' => 'BxBaseServiceAccount',
 
             'CategoriesList' => 'BxBaseServiceCategory',
+
+            'Test' => 'BxBaseServiceLogin',
+            'MemberAuthCode' => 'BxBaseServiceLogin',
+            'LoginForm' => 'BxBaseServiceLogin',
+        
+            'KeywordsCloud' => 'BxBaseServiceMetatags',
+
+            'ProfileMembership' => 'BxBaseServiceProfiles',
+            'ProfileNotifications' => 'BxBaseServiceProfiles',
+            'GetCountOnlineProfiles' => 'BxBaseServiceProfiles',
+
+            'GetChartGrowth' => 'BxBaseChartServices',
+            'GetChartStats' => 'BxBaseChartServices',
+
+            'GetCartItemsCount' => 'BxBasePaymentsServices',
+            'GetOrdersCount' => 'BxBasePaymentsServices',
         );
     }
     public function serviceProfileUnit ($iContentId, $aParams = array())

@@ -36,6 +36,12 @@ function PageCompMainCode()
         'BxBaseModGeneralModule' => 'bx_base_general',
         'BxBaseServices' => 'bx_system_general',
         'BxBaseServiceAccount' => 'bx_system_general',
+        'BxBaseServiceCategory' => 'bx_system_general',
+        'BxBaseServiceLogin' => 'bx_system_general',
+        'BxBaseServiceMetatags' => 'bx_system_general',
+        'BxBaseServiceProfiles' => 'bx_system_general',
+        'BxBaseChartServices' => 'bx_system_general',
+        'BxBasePaymentsServices' => 'bx_system_general',
     );
 
     $o = BxDolModuleQuery::getInstance();
