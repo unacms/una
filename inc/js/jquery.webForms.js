@@ -110,7 +110,6 @@
         $("select", this).each(function () {
             // Labels selector
             var oInput = $(this);
-            console.log(oInput);
             if (oInput.hasClass('bx-form-select-labels')) {
                 $(".bx-form-select-labels").select2ToTree();
             }
