@@ -75,7 +75,7 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
             return;
     	
     	$CNF = &$this->_oModule->_oConfig->CNF;
-        $sUrl = BX_DOL_URL_ROOT . 'studio/audit.php?module=' . $this->_oModule->getName() . '&content_id=' . $aRow[$CNF['FIELD_ID']];
+        $sUrl = BX_DOL_URL_ROOT . 'page/audit-administration?module=' . $this->_oModule->getName() . '&content_id=' . $aRow[$CNF['FIELD_ID']];
 
     	$a['attr'] = array_merge($a['attr'], array(
     		"onclick" => "window.open('" . $sUrl . "','_audit');"

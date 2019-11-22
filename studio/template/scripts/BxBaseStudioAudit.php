@@ -24,10 +24,6 @@ class BxBaseStudioAudit extends BxDolStudioAudit
             BX_DOL_STUDIO_AUD_TYPE_GENERAL => array('icon' => 'search'),
             BX_DOL_STUDIO_AUD_TYPE_SETTINGS => array('icon' => 'cogs'),
 	    );
-
-		$this->aGridObjects = array(
-        	'audit' => 'sys_studio_audit'
-    );
     }
 	
     function getPageCss()
@@ -92,13 +88,20 @@ class BxBaseStudioAudit extends BxDolStudioAudit
 
     protected function getGrid($sObjectName)
     {
-        $oGrid = BxDolGrid::getObjectInstance($sObjectName);
+        
+        $oGrid = BxDolGrid::getObjectInstance('sys_audit_administration');
         if(!$oGrid)
             return '';
 
+        $oTemplate = BxDolStudioTemplate::getInstance();
+        $oTemplate->addJs(array('BxDolAuditManageTools.js', 'BxDolGrid.js', 'jquery-ui.min.js', 'jquery.form.min.js', 'jquery-ui\jquery-ui.custom.min.js' , 'jquery-ui\jquery.ui.sortable.min.js'));
+        //$oForm = new BxTemplStudioFormView(array());
+        $oTemplate->addCss('grid.css');
+        $oTemplate->addJsTranslation(array('_sys_grid_search'));
+      
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('audit.html', array(
             'content' => $this->getBlockCode(array(
-				'items' => $oGrid->getCode()
+				'items' =>$oGrid->getCode()
 			)),
             'js_content' => ''
         ));
