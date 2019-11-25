@@ -765,6 +765,12 @@
     <string name="_adm_form_err_search_forms_title"><![CDATA[Введите имя, более 3 символов]]></string>
 	<string name="_adm_form_txt_all_modules"><![CDATA[Все модули]]></string>
 	<string name="_adm_form_txt_confirm_delete"><![CDATA[Вы уверены, что хотите удалить это поле? Оно будет удалено со всех дисплеев! Вместо этого можно просто отключить его.]]></string>
+  <string name="_adm_form_txt_audit_added"><![CDATA[Добавлено]]></string>
+  <string name="_adm_form_txt_audit_profile"><![CDATA[Профиль]]></string>
+  <string name="_adm_form_txt_audit_content"><![CDATA[Контент]]></string>
+  <string name="_adm_form_txt_audit_module"><![CDATA[Модуль]]></string>
+  <string name="_adm_pgt_txt_audit_context"><![CDATA[Контекст]]></string>
+  <string name="_adm_pgt_txt_audit_action"><![CDATA[Действие]]></string>
 	<string name="_adm_form_txt_displays_edit_popup"><![CDATA[Редактировать "{0}" дисплей]]></string>
 	<string name="_adm_form_txt_displays_gl_fields"><![CDATA[Поля]]></string>
 	<string name="_adm_form_txt_displays_gl_form"><![CDATA[Форма]]></string>
@@ -1110,6 +1116,7 @@
         <string name="_adm_nav_txt_block_hidden_on_tablet"><![CDATA[планшете]]></string>
         <string name="_adm_nav_txt_block_hidden_on_desktop"><![CDATA[настольном компьютере]]></string>
         <string name="_adm_nav_txt_block_hidden_on_mobile"><![CDATA[мобильное приложение]]></string>
+  <string name="_adm_page_cpt_audit"><![CDATA[Аудит]]></string>
 	<string name="_adm_page_cpt_builder_forms"><![CDATA[Формы]]></string>
 	<string name="_adm_page_cpt_builder_menus"><![CDATA[Навигация]]></string>
 	<string name="_adm_page_cpt_builder_mobile"><![CDATA[Мобильный построитель]]></string>
@@ -1262,6 +1269,7 @@
 	<string name="_adm_scs_operation_done"><![CDATA[]]></string>
 	<string name="_adm_stg_cpt_category_account"><![CDATA[Аккаунт]]></string>
 	<string name="_adm_stg_cpt_category_acl"><![CDATA[Уровни доступа]]></string>
+  <string name="_adm_stg_cpt_category_audit"><![CDATA[Аудит]]></string>
 	<string name="_adm_stg_cpt_category_notifications"><![CDATA[Оповещения]]></string>
 	<string name="_adm_stg_cpt_category_notifications_push"><![CDATA[Push - оповещения]]></string>
 	<string name="_adm_stg_cpt_category_cache"><![CDATA[Кэш]]></string>
@@ -1313,6 +1321,10 @@
 	<string name="_adm_stg_cpt_option_sys_acl_expire_notification_days"><![CDATA[За сколько дней до окончания членства оповестить пользователя об окончании (-1 = после окончания)]]></string>
 	<string name="_adm_stg_cpt_option_sys_acl_expire_notify_once"><![CDATA[Оповещать пользователей об окончании членства только одинажды (каждый день в противном случае)]]></string>
 	<string name="_adm_stg_cpt_option_sys_add_nofollow"><![CDATA[Добавить атрибут "nofollow" для внешних ссылок]]></string>
+  <string name="_adm_stg_cpt_option_sys_audit_enable"><![CDATA[Активно]]></string>
+  <string name="_adm_stg_cpt_option_sys_audit_max_records"><![CDATA[Количество записей в логе]]></string>
+  <string name="_adm_stg_cpt_option_sys_audit_days_before_expire"><![CDATA[Удалять записи в логе старше, чем (дней)]]></string>
+  <string name="_adm_stg_cpt_option_sys_audit_acl_levels"><![CDATA[Активно для уровней]]></string>
 	<string name="_adm_stg_cpt_option_sys_autoupdate_force_modified_files"><![CDATA[Инициировать автообновление, даже если какие-то файлы были модифицированы]]></string>
 	<string name="_adm_stg_cpt_option_sys_autoupdate"><![CDATA[Включить автообновление]]></string>
 	<string name="_adm_stg_cpt_option_sys_cache_memcache_host"><![CDATA[Memcached - адрес сервера]]></string>
@@ -1561,6 +1573,7 @@
 	<string name="_adm_txt_show_help"><![CDATA[Помощь]]></string>
 	<string name="_adm_txt_show_help_content_empty"><![CDATA[Помошь недоступна]]></string>
 	<string name="_adm_txt_uninstall"><![CDATA[Демонтировать]]></string>
+  <string name="_adm_wgt_cpt_audit"><![CDATA[Аудит]]></string>
 	<string name="_adm_wgt_cpt_builder_forms"><![CDATA[Формы]]></string>
 	<string name="_adm_wgt_cpt_builder_menus"><![CDATA[Навигация]]></string>
 	<string name="_adm_wgt_cpt_builder_pages"><![CDATA[Страницы]]></string>
@@ -1695,7 +1708,44 @@
 	<string name="_sys_acl_start"><![CDATA[Начало: ]]></string>
 	<string name="_sys_acl_expire"><![CDATA[Окончание: ]]></string>
 	<string name="_sys_acl_expire_never"><![CDATA[никогда]]></string>
-	<string name="_sys_add_friend"><![CDATA[Добавить в друзья]]></string>
+
+  <string name="_sys_audit_action_edit_content"><![CDATA[Контент изменен]]></string>
+  <string name="_sys_audit_action_add_content"><![CDATA[Контент добавлен]]></string>
+  <string name="_sys_audit_action_detete_content"><![CDATA[Контент удален]]></string>
+  <string name="_sys_audit_action_edit_comment"><![CDATA[Комментарий изменен]]></string>
+  <string name="_sys_audit_action_add_comment"><![CDATA[Комментарий добавлен]]></string>
+  <string name="_sys_audit_action_delete_comment"><![CDATA[Комментарий удален]]></string>
+  <string name="_sys_audit_action_feature"><![CDATA[Добавлен в избранные]]></string>
+  <string name="_sys_audit_action_unfeature"><![CDATA[Удален из избранных]]></string>
+  <string name="_sys_audit_action_group_to_admins"><![CDATA[Добавлен в администраторы группы]]></string>
+  <string name="_sys_audit_action_group_from_admins"><![CDATA[Удален из администраторов группы]]></string>
+  <string name="_sys_audit_action_group_join_request_accepted"><![CDATA[Запрос принят]]></string>
+  <string name="_sys_audit_action_account_change_role_to_3"><![CDATA[Добавлен в операторы]]></string>
+  <string name="_sys_audit_action_account_change_role_to_1"><![CDATA[Удален из операторов]]></string>
+  <string name="_sys_audit_action_account_unlock"><![CDATA[Разблокирован]]></string>
+  <string name="_sys_audit_action_account_reset_password"><![CDATA[Пароль сброшен]]></string>
+  <string name="_sys_audit_action_account_resend_confirmation_email"><![CDATA[Письмо с подтверждением отправлено повторно]]></string>
+  <string name="_sys_audit_action_account_deleted_with_content"><![CDATA[Удален вместе с контентом]]></string>
+  <string name="_sys_audit_action_account_deleted"><![CDATA[Удален]]></string>
+  <string name="_sys_audit_action_account_email_changed"><![CDATA[Адрес электронной почты изменен]]></string>
+  <string name="_sys_audit_action_account_activated"><![CDATA[Активирован]]></string>
+  <string name="_sys_audit_action_account_suspended"><![CDATA[Приостановлен]]></string>
+  <string name="_sys_audit_action_content_enabled"><![CDATA[Включено]]></string>
+  <string name="_sys_audit_action_content_disabled"><![CDATA[Выключено]]></string>
+  <string name="_sys_audit_action_set_membership"><![CDATA[Набор участников]]></string>
+  <string name="_sys_audit_action_set_status_approve"><![CDATA[Статус: принято]]></string>
+  <string name="_sys_audit_action_set_status_active"><![CDATA[Статус: активно]]></string>
+  <string name="_sys_audit_action_set_status_disapprove"><![CDATA[Статус: не одобрено]]></string>
+  <string name="_sys_audit_action_set_status_suspended"><![CDATA[Статус: приостановлено]]></string>
+  <string name="_sys_audit_action_report"><![CDATA[Новая жалоба]]></string>
+  <string name="_sys_audit_action_lock"><![CDATA[Заблокировно]]></string>
+  <string name="_sys_audit_action_unlock"><![CDATA[Разблокировано]]></string>
+  <string name="_sys_audit_action_stick"><![CDATA[Приклеено]]></string>
+  <string name="_sys_audit_action_unstick"><![CDATA[Отклеено]]></string>
+  <string name="_sys_audit_action_promote"><![CDATA[Продвинуно]]></string>
+  <string name="_sys_audit_action_unpromote"><![CDATA[Продвижение снято]]></string>
+
+  <string name="_sys_add_friend"><![CDATA[Добавить в друзья]]></string>
         <string name="_sys_add_relation"><![CDATA[Добавить связь]]></string>
 	<string name="_sys_adm_installed"><![CDATA[Установленные]]></string>
 	<string name="_sys_admin_apply"><![CDATA[Применить]]></string>
@@ -2291,6 +2341,7 @@
 	<string name="_sys_menu_item_title_add_content"><![CDATA[Добавить...]]></string>
 	<string name="_sys_menu_item_title_cart"><![CDATA[Корзина]]></string>
 	<string name="_sys_menu_item_title_cmts_administration"><![CDATA[Комментарии]]></string>
+  <string name="_sys_menu_item_title_audit_administration"><![CDATA[Аудит]]></string>
 	<string name="_sys_menu_item_title_cmts_item_delete"><![CDATA[Удалить]]></string>
 	<string name="_sys_menu_item_title_cmts_item_edit"><![CDATA[Редактировать]]></string>
         <string name="_sys_menu_item_title_cmts_item_quote"><![CDATA[]]></string>
@@ -2356,6 +2407,7 @@
 	<string name="_sys_menu_item_title_system_add_content"><![CDATA[Добавить Содержимое]]></string>
 	<string name="_sys_menu_item_title_system_cart"><![CDATA[Корзина]]></string>
   <string name="_sys_menu_item_title_system_cmts_administration"><![CDATA[Комментарии]]></string>
+  <string name="_sys_menu_item_title_system_audit_administration"><![CDATA[Аудит]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_delete"><![CDATA[Удалить]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_edit"><![CDATA[Редактировать]]></string>
         <string name="_sys_menu_item_title_system_cmts_item_quote"><![CDATA[Цитировать]]></string>
@@ -2528,6 +2580,7 @@
     <string name="_sys_page_block_title_chart_growth"><![CDATA[Диаграммы развития]]></string>
     <string name="_sys_page_block_title_chart_stats"><![CDATA[Содержимое]]></string>    
 	<string name="_sys_page_block_title_cmts_administration"><![CDATA[Управление комментариями]]></string>
+  <string name="_sys_page_block_title_audit_administration"><![CDATA[Аудит]]></string>
 	<string name="_sys_page_block_title_confirm_email"><![CDATA[Email - Подтверждение]]></string>
 	<string name="_sys_page_block_title_confirm_phone"><![CDATA[Телефон - Подтверждение]]></string>
 	<string name="_sys_page_block_title_create_account"><![CDATA[Присоединиться]]></string>
@@ -2546,6 +2599,7 @@
 	<string name="_sys_page_block_system_title_login_step3"><![CDATA[Вход - шаг 3]]></string>
 	<string name="_sys_page_block_system_title_login_only"><![CDATA[Вход]]></string>
 	<string name="_sys_page_block_title_system_cmts_administration"><![CDATA[Управление комментариями]]></string>
+  <string name="_sys_page_block_title_system_audit_administration"><![CDATA[Аудит]]></string>
 	<string name="_sys_page_block_title_login"><![CDATA[Вход]]></string>
 	<string name="_sys_page_block_title_login_step2"><![CDATA[Вход - шаг 2]]></string>
 	<string name="_sys_page_block_title_login_step3"><![CDATA[Вход - шаг 3]]></string>
@@ -2570,7 +2624,8 @@
 	<string name="_sys_page_title_account_settings_info"><![CDATA[Редактировать аккаунт]]></string>
 	<string name="_sys_page_title_account_settings_pwd"><![CDATA[Изменить пароль]]></string>
 	<string name="_sys_page_title_add_content"><![CDATA[Добавить содержимое]]></string>
-        <string name="_sys_page_title_cmts_administration"><![CDATA[Управление комментариями]]></string>
+  <string name="_sys_page_title_cmts_administration"><![CDATA[Управление комментариями]]></string>
+  <string name="_sys_page_title_audit_administration"><![CDATA[Аудит]]></string>
 	<string name="_sys_page_title_confirm_email"><![CDATA[Email - Подтверждение]]></string>
 	<string name="_sys_page_title_confirm_phone"><![CDATA[Телефон - Подтверждение]]></string>
 	<string name="_sys_page_title_create_account"><![CDATA[Присоединиться]]></string>
@@ -2593,6 +2648,7 @@
 	<string name="_sys_page_title_system_account_settings_pwd"><![CDATA[Изменить пароль]]></string>
 	<string name="_sys_page_title_system_add_content"><![CDATA[Добавить содержимое]]></string>
         <string name="_sys_page_title_system_cmts_administration"><![CDATA[Управление комментариями]]></string>
+  <string name="_sys_page_title_system_audit_administration"><![CDATA[Аудит]]></string>
 	<string name="_sys_page_title_system_confirm_email"><![CDATA[Email подтверждение]]></string>
 	<string name="_sys_page_title_system_confirm_phone"><![CDATA[Подтверждение телефона]]></string>
 	<string name="_sys_page_title_system_create_account"><![CDATA[Присоединиться]]></string>

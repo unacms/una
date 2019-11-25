@@ -252,6 +252,7 @@
     <string name="_bx_forum_grid_action_title_adm_edit"><![CDATA[Редактировать]]></string>
     <string name="_bx_forum_grid_action_title_adm_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_forum_grid_action_title_adm_more_actions"><![CDATA[Дополнительные действия]]></string>
+    <string name="_bx_forum_grid_action_title_adm_audit_content"><![CDATA[Аудит действий]]></string>
     <string name="_bx_forum_grid_action_title_add"><![CDATA[Новое сообщение]]></string>
     <string name="_bx_forum_grid_action_title_show_to"><![CDATA[Показать]]></string>
     <string name="_bx_forum_grid_action_err_delete"><![CDATA[Невозможно удалить выбранное(ные) обсуждение(ния).]]></string>

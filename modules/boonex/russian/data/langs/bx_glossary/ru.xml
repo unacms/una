@@ -199,6 +199,7 @@
     <string name="_bx_glossary_grid_action_title_adm_edit"><![CDATA[Редактировать]]></string>
     <string name="_bx_glossary_grid_action_title_adm_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_glossary_grid_action_title_adm_more_actions"><![CDATA[Дополнительные действия]]></string>
+    <string name="_bx_glossary_grid_action_title_adm_audit_content"><![CDATA[Аудит действий]]></string>
     <string name="_bx_glossary_grid_action_err_delete"><![CDATA[Невозможно удалить выбранную(ные) термин(ции).]]></string>
     <string name="_bx_glossary_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 

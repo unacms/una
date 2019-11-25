@@ -225,6 +225,7 @@
     <string name="_bx_timeline_grid_column_title_adm_added"><![CDATA[Добавлено]]></string>
     <string name="_bx_timeline_grid_column_title_adm_author"><![CDATA[Автор]]></string>
     <string name="_bx_timeline_grid_action_title_adm_delete"><![CDATA[Удалить]]></string>
+    <string name="_bx_timeline_grid_action_title_adm_audit_content"><![CDATA[Аудит действий]]></string>
     <string name="_bx_timeline_grid_action_err_delete"><![CDATA[Невозможно удалить выбранную(ные) событие(я) ленты.]]></string>
     <string name="_bx_timeline_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 
