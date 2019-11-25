@@ -408,6 +408,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_snipcart_administration', 'single', 'edit', '_bx_snipcart_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
 ('bx_snipcart_administration', 'single', 'delete', '_bx_snipcart_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_snipcart_administration', 'single', 'settings', '_bx_snipcart_grid_action_title_adm_more_actions', 'cog', 1, 0, 3),
+('bx_snipcart_administration', 'single', 'audit_content', '_bx_snipcart_grid_action_title_adm_audit_content', 'search', 1, 0, 4),
 
 ('bx_snipcart_common', 'bulk', 'delete', '_bx_snipcart_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_snipcart_common', 'single', 'edit', '_bx_snipcart_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),

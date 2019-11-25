@@ -388,7 +388,10 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_channels_administration', 'bulk', 'delete', '_bx_channels_grid_action_title_adm_delete', '', 0, 1, 2),
 ('bx_channels_administration', 'bulk', 'delete_with_content', '_bx_channels_grid_action_title_adm_delete_with_content', '', 0, 1, 3),
-('bx_channels_administration', 'single', 'settings', '_bx_channels_grid_action_title_adm_more_actions', 'cog', 1, 0, 2);
+('bx_channels_administration', 'single', 'settings', '_bx_channels_grid_action_title_adm_more_actions', 'cog', 1, 0, 2),
+('bx_channels_administration', 'single', 'audit_content', '_bx_channels_grid_action_title_adm_audit_content', 'search', 1, 0, 3),
+('bx_channels_administration', 'single', 'audit_profile', '_bx_channels_grid_action_title_adm_audit_context', 'search-location', 1, 0, 4);
+
 
 -- ALERTS
 

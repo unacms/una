@@ -1755,8 +1755,6 @@
   <string name="_sys_audit_action_unstick"><![CDATA[Unsticked]]></string>
   <string name="_sys_audit_action_promote"><![CDATA[Promoted]]></string>
   <string name="_sys_audit_action_unpromote"><![CDATA[Unpromoted]]></string>
-  <string name="_sys_audit_action_unpromote"><![CDATA[Unpromoted]]></string>
-  
 
   <string name="_sys_add_friend"><![CDATA[Add friend]]></string>
         <string name="_sys_add_relation"><![CDATA[Add relationship]]></string>

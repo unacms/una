@@ -225,6 +225,7 @@
     <string name="_bx_timeline_grid_column_title_adm_added"><![CDATA[Added]]></string>
     <string name="_bx_timeline_grid_column_title_adm_author"><![CDATA[Author]]></string>
     <string name="_bx_timeline_grid_action_title_adm_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_timeline_grid_action_title_adm_audit_content"><![CDATA[Audit actions]]></string>
     <string name="_bx_timeline_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
     <string name="_bx_timeline_alert_module_timeline_common_post"><![CDATA[Timeline (post)]]></string>
