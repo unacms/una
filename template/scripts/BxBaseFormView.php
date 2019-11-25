@@ -1717,8 +1717,9 @@ BLAH;
     {
         if (self::$_isCssJsLabelsAdded)
             return;       
-
+        
         $this->_addJs('select2/js/select2.min.js', "'undefined' === typeof($.fn.select2)");
+        $this->_addJs('select2/js/i18n/' . BxDolLanguages::getInstance()->getCurrentLanguage() . '.js', "true");
         $this->_addJs('select2/select2-to-tree/select2totree.js', "'undefined' === typeof($.fn.select2ToTree)");
 
         $this->_addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'select2/css/|select2.min.css');
