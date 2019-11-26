@@ -38,14 +38,11 @@
 	<string name="_bx_channels_form_profile_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено.]]></string>
 	<string name="_bx_channels_form_profile_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если действительно хотите удалить канал.]]></string>
 
-	<string name="_bx_channels_acl_action_create_profile"><![CDATA[Создать канал]]></string>
 	<string name="_bx_channels_acl_action_delete_profile"><![CDATA[Удалить канал]]></string>
 	<string name="_bx_channels_acl_action_view_profile"><![CDATA[Просмотреть канал]]></string>
 	<string name="_bx_channels_acl_action_edit_any_profile"><![CDATA[Редактировать любой канал]]></string>
 	<string name="_bx_channels_acl_action_create_channel_auto"><![CDATA[Создавать канал автоматически]]></string>
 
-	<string name="_bx_channels_page_title_sys_create_profile"><![CDATA[Создать канал]]></string>
-	<string name="_bx_channels_page_title_create_profile"><![CDATA[Создать канал]]></string>
 	<string name="_bx_channels_page_title_sys_edit_profile"><![CDATA[Редактировать канал]]></string>
 	<string name="_bx_channels_page_title_edit_profile"><![CDATA[Редактировать канал]]></string>
 	<string name="_bx_channels_page_title_sys_edit_profile_cover"><![CDATA[Редактировать обложку канала]]></string>
@@ -88,7 +85,6 @@
     <string name="_bx_channels_page_block_title_entries_of_author"><![CDATA[Просматриваемые каналы]]></string>
     <string name="_bx_channels_page_block_title_favorites_of_author"><![CDATA[Избранные каналы]]></string>   
     <string name="_bx_channels_page_block_title_sys_favorites_of_author"><![CDATA[Избранные каналы]]></string>
-    <string name="_bx_channels_page_block_title_create_profile"><![CDATA[Создать канал]]></string>
     <string name="_bx_channels_page_block_title_edit_profile"><![CDATA[Редактировать канал]]></string>
     <string name="_bx_channels_page_block_title_edit_profile_cover"><![CDATA[Редактировать обложку]]></string>
     <string name="_bx_channels_page_block_title_delete_profile"><![CDATA[Удалить канал]]></string>
@@ -152,8 +148,6 @@
     <string name="_bx_channels_menu_item_title_delete_account"><![CDATA[Удалить аккаунт]]></string>
     <string name="_bx_channels_menu_item_title_system_profile_type"><![CDATA[Канал]]></string>
     <string name="_bx_channels_menu_item_title_profile_type"><![CDATA[Канал]]></string>
-    <string name="_bx_channels_menu_item_title_system_create_profile"><![CDATA[Канал]]></string>
-    <string name="_bx_channels_menu_item_title_create_profile"><![CDATA[Канал]]></string>
     <string name="_bx_channels_menu_item_title_system_view_profile_friends"><![CDATA[Друзья]]></string>
     <string name="_bx_channels_menu_item_title_view_profile_friends"><![CDATA[Друзья]]></string>
     <string name="_bx_channels_menu_item_title_system_view_profile_comments"><![CDATA[Комментарии]]></string>
