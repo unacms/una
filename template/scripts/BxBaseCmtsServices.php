@@ -17,6 +17,21 @@ class BxBaseCmtsServices extends BxDol
         parent::__construct();
     }
 
+    public function serviceAlertResponseSysCmtsImagesFileDeleted($oAlert)
+    {
+        $iUniqId = (int)$oAlert->aExtras['ghost']['content_id'];
+
+        $aCmt = BxDolCmts::getGlobalInfo($iUniqId);
+        if(empty($aCmt) || !is_array($aCmt))
+            return;
+
+        $oCmts = BxDolCmts::getObjectInstance($aCmt['system_name'], 0, false);
+        if(!$oCmts)
+            return;
+
+        $oCmts->getQueryObject()->deleteImages($aCmt['system_id'], false, $oAlert->iObject);
+    }
+
     public function serviceGetMenuItemAddonVote($sSystem, $iId, $iCmtId)
     {
         $oCmts = BxDolCmts::getObjectInstance($sSystem, $iId);

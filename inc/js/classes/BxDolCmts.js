@@ -141,28 +141,28 @@ BxDolCmts.prototype.cmtInitFormEdit = function(sCmtFormId)
 	oCmtForm.ajaxForm({
         dataType: "json",
         beforeSubmit: function (formData, jqForm, options) {
-        	window[$this._sObjName].cmtBeforeEditSubmit(oCmtForm);
+            window[$this._sObjName].cmtBeforeEditSubmit(oCmtForm);
         },
         success: function (oData) {
-        	window[$this._sObjName].cmtAfterEditSubmit(oCmtForm, oData);
+            window[$this._sObjName].cmtAfterEditSubmit(oCmtForm, oData);
         }
     });
 };
 
 BxDolCmts.prototype.cmtBeforeEditSubmit = function(oCmtForm)
 {
-	this._loadingInButton($(oCmtForm).children().find(':submit'), true);
+    this._loadingInButton($(oCmtForm).children().find(':submit'), true);
 };
 
 BxDolCmts.prototype.cmtAfterEditSubmit = function (oCmtForm, oData, onComplete)
 {
     var $this = this;
     var fContinue = function() {
-        if(oData && oData.id != undefined && oData.text != undefined) {
+        if(oData && oData.id != undefined && oData.content != undefined) {
             var iCmtId = parseInt(oData.id);
             if(iCmtId > 0) {
-                $('#cmt' + iCmtId + ' .cmt-body').bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-                    $(this).html(oData.text).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
+                $('#cmt' + iCmtId + ' .cmt-cont-cnt:first').bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+                    $(this).html(oData.content).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
                 });
             }
         }
@@ -181,49 +181,51 @@ BxDolCmts.prototype.cmtAfterEditSubmit = function (oCmtForm, oData, onComplete)
     if(oData && oData.msg != undefined)
         bx_alert(oData.msg, fContinue);
     else 
-            fContinue();
+        fContinue();
 };
 
 BxDolCmts.prototype.cmtEdit = function(oLink, iCmtId) {
     var $this = this;
+
+    $(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide();
+
+    var sContentId = this._sRootId + ' #cmt' + iCmtId + ' .cmt-cont-cnt:first';
+    if ($(sContentId + ' > form').length) {
+        $(sContentId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+            $(this).html($this._oSavedTexts[iCmtId]).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
+        });
+
+        return;
+    }
+
     var oParams = this._getDefaultActions();
     oParams['action'] = 'GetFormEdit';
     oParams['Cmt'] = iCmtId;
 
-    $(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide();
+    this._oSavedTexts[iCmtId] = $(sContentId).html();
 
-    var sBodyId = this._sRootId + ' #cmt' + iCmtId + ' .cmt-body:first';
-    if ($(sBodyId + ' > form').length) {
-        $(sBodyId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-            $(this).html($this._oSavedTexts[iCmtId]).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
-        });
-        return;
-    }
-    else
-        this._oSavedTexts[iCmtId] = $(sBodyId).html();
-
-    this._loadingInContent (oLink, true);
+    this._loadingInContent(oLink, true);
 
     jQuery.post (
         this._sActionsUrl,
         oParams,
         function (oData) {
-        	var fContinue = function() {
-        		if(oData && oData.form != undefined && oData.form_id != undefined) {
-            		$(sBodyId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+            var fContinue = function() {
+                if(oData && oData.form != undefined && oData.form_id != undefined) {
+                    $(sContentId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
                         $(this).html(oData.form).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-                        	$this.cmtInitFormEdit(oData.form_id);
+                            $this.cmtInitFormEdit(oData.form_id);
                         });
                     });
             	}
-        	};
+            };
 
-        	$this._loadingInContent (oLink, false);
+            $this._loadingInContent(oLink, false);
 
-        	if(oData && oData.msg != undefined)
+            if(oData && oData.msg != undefined)
                 bx_alert(oData.msg, fContinue);
-        	else
-        		fContinue();
+            else
+                fContinue();
         },
         'json'
     );

@@ -11,7 +11,11 @@ class BxBaseCmtsForm extends BxTemplFormView
 {
     protected static $_sAttributeMaskId;
     protected static $_sAttributeMaskName;
-    
+
+    protected $_oObject;
+
+    protected $_sGhostTemplateImage;
+
     public function __construct($aInfo, $oTemplate)
     {
         parent::__construct($aInfo, $oTemplate);
@@ -22,22 +26,19 @@ class BxBaseCmtsForm extends BxTemplFormView
         if(empty(self::$_sAttributeMaskName))
             self::$_sAttributeMaskName = $this->aFormAttrs['name'];
 
+        $this->_oObject = null;
+
+        $this->_sGhostTemplateImage = 'comments_uploader_nfw.html';
+
     	if(isset($this->aInputs['cmt_image'])) {
-            $aFormNested = array(
-                'params' =>array(
-                    'nested_form_template' => 'comments_uploader_nfw.html'
-                ),
-                'inputs' => array(),
-            );
-
-            $oFormNested = new BxDolFormNested('cmt_image', $aFormNested, 'cmt_submit');
-
             $this->aInputs['cmt_image']['storage_object'] = 'sys_cmts_images';
             $this->aInputs['cmt_image']['images_transcoder'] = 'sys_cmts_images_preview';
             $this->aInputs['cmt_image']['uploaders'] = !empty($this->aInputs['cmt_image']['value']) ? unserialize($this->aInputs['cmt_image']['value']) : array('sys_cmts_simple');
             $this->aInputs['cmt_image']['upload_buttons_titles'] = array('Simple' => 'camera');
+            $this->aInputs['cmt_image']['storage_private'] = 0;
             $this->aInputs['cmt_image']['multiple'] = true;
-            $this->aInputs['cmt_image']['ghost_template'] = $oFormNested;
+            $this->aInputs['cmt_image']['content_id'] = 0;
+            $this->aInputs['cmt_image']['ghost_template'] = '';
         }
     }
 
@@ -47,7 +48,7 @@ class BxBaseCmtsForm extends BxTemplFormView
         return isset(self::$$sName) ? self::$$sName : '';
     }
 
-	public function getStorageObjectName()
+    public function getStorageObjectName()
     {
         return isset($this->aInputs['cmt_image']['storage_object']) ? $this->aInputs['cmt_image']['storage_object'] : '';
     }
@@ -59,6 +60,16 @@ class BxBaseCmtsForm extends BxTemplFormView
     
     function initChecker ($aValues = array (), $aSpecificValues = array())
     {
+        if(isset($this->aInputs['cmt_image'])) {
+            if(!empty($this->aInputs['sys']['value']) && !empty($this->aInputs['id']['value']) && !empty($aValues['cmt_id'])) {
+                $oObject = $this->_getObject(bx_process_input($this->aInputs['sys']['value']), (int)$this->aInputs['id']['value']);
+                if($oObject)
+                    $this->aInputs['cmt_image']['content_id'] = $oObject->getCommentUniqId($aValues['cmt_id']);
+            }
+
+            $this->aInputs['cmt_image']['ghost_template'] = $this->oTemplate->parseHtmlByName($this->_sGhostTemplateImage, $this->_getGhostTmplVarsImage());
+        }
+
         if (isset($this->aInputs['cmt_anonymous']) && isset($aValues['cmt_author_id']))
             $this->aInputs['cmt_anonymous']['checked'] = $aValues['cmt_author_id'] < 0;
         
@@ -72,15 +83,77 @@ class BxBaseCmtsForm extends BxTemplFormView
         return parent::insert ($aValsToAdd, $isIgnore);
     }
 
-    function update ($iCmtId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
+    public function update ($iCmtId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
     {
         if (isset($this->aInputs['cmt_anonymous'])) {
-            $aCmt = BxDolCmts::getObjectInstance($this->getCleanValue('sys'), $this->getCleanValue('id'))->getCommentRow($iCmtId);
+            $aCmt = $this->_getObject($this->getCleanValue('sys'), $this->getCleanValue('id'))->getCommentRow($iCmtId);
 
             $aValsToAdd['cmt_author_id'] = ($this->getCleanValue('cmt_anonymous') ? -1 : 1) * abs($aCmt['cmt_author_id']);
         }
 
         return parent::update ($iCmtId, $aValsToAdd, $aTrackTextFieldsChanges);
+    }
+    
+    public function processImages ($oCmts, $sFieldName, $iCmtUniqId, $iCmtId, $iCmtAuthorId, $isAssociateWithContent = false)
+    {
+        if(!isset($this->aInputs[$sFieldName]))
+            return true;
+
+        $mixedFileIds = $this->getCleanValue($sFieldName);
+        if(!$mixedFileIds)
+            return true;
+
+        $oStorage = BxDolStorage::getObjectInstance($this->aInputs[$sFieldName]['storage_object']);
+        if(!$oStorage)
+            return false;
+
+        $aGhostImages = $oStorage->getGhosts($iCmtAuthorId, $isAssociateWithContent ? 0 : $iCmtUniqId, true, $oCmts->isAdmin($iCmtAuthorId));
+        if(!$aGhostImages)
+            return true;
+
+        foreach($aGhostImages as $aImage) {
+            if(is_array($mixedFileIds) && !in_array($aImage['id'], $mixedFileIds))
+                continue;
+
+            if($aImage['private'])
+                $oStorage->setFilePrivate($aImage['id'], 1);
+
+            if($iCmtId)
+                $this->_associalImageWithContent($oCmts, $sFieldName, $iCmtUniqId, $iCmtId, $iCmtAuthorId, $aImage['id']);
+        }
+
+        return true;
+    }
+
+    protected function _getObject($sSystem, $iId)
+    {
+        if(empty($this->_oObject))
+            $this->_oObject = BxDolCmts::getObjectInstance($sSystem, $iId);
+
+        return $this->_oObject;
+    }
+
+    protected function _getGhostTmplVarsImage($aCmt = array())
+    {
+    	return array (
+            'name' => $this->aInputs['cmt_image']['name'],
+            'content_id' => (int)$this->aInputs['cmt_image']['content_id'],
+            'editor_id' => '',
+        );
+    }
+
+    protected function _associalImageWithContent($oCmts, $sFieldName, $iCmtUniqId, $iCmtId, $iCmtAuthorId, $iImageId)
+    {
+        $oStorage = BxDolStorage::getObjectInstance($this->aInputs[$sFieldName]['storage_object']);
+        if(!$oStorage)
+            return false;
+
+        $oStorage->updateGhostsContentId($iImageId, $iCmtAuthorId, $iCmtUniqId, $oCmts->isAdmin($iCmtAuthorId));
+
+        $aSystem = $oCmts->getSystemInfo();
+        $oCmts->getQueryObject()->saveImages($aSystem['system_id'], $iCmtId, $iImageId);
+
+        return true;
     }
 }
 

@@ -386,20 +386,30 @@ class BxDolCmtsQuery extends BxDolDb
         return $this->getAll($sQuery, $aBindings);
     }
 
-    function deleteImages($iSystemId, $iCmtId)
+    function deleteImages($iSystemId, $iCmtId, $iImageId = false)
     {
-    	$aBindings = array(
-    		'system_id' => $iSystemId
-    	);
-
         $sWhereAddon = "";
-        if ($iCmtId !== false) {
-        	$aBindings['cmt_id'] = $iCmtId;
+        $aBindings = array();
 
-            $sWhereAddon = " AND `cmt_id` = :cmt_id ";
+        if ($iSystemId !== false) {
+            $aBindings['system_id'] = $iSystemId;
+
+            $sWhereAddon .= " AND `system_id` = :system_id ";
         }
 
-        return $this->query("DELETE FROM `{$this->_sTableFiles2Entries}` WHERE `system_id` = :system_id" . $sWhereAddon, $aBindings);
+        if ($iCmtId !== false) {
+            $aBindings['cmt_id'] = $iCmtId;
+
+            $sWhereAddon .= " AND `cmt_id` = :cmt_id ";
+        }
+
+        if ($iImageId !== false) {
+            $aBindings['image_id'] = $iImageId;
+
+            $sWhereAddon .= " AND `image_id` = :image_id ";
+        }
+
+        return $this->query("DELETE FROM `{$this->_sTableFiles2Entries}` WHERE 1" . $sWhereAddon, $aBindings);
     }
 
     function updateRepliesCount($iCmtId, $iCount)

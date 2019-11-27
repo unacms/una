@@ -18,6 +18,7 @@ class BxBaseCmts extends BxDolCmts
     protected static $_sTmplContentCounter;
 
     protected $_sTmplNameItem;
+    protected $_sTmplNameItemContent;
 
     protected $_sJsObjClass;
     protected $_sJsObjName;
@@ -34,7 +35,8 @@ class BxBaseCmts extends BxDolCmts
             return;
 
         $this->_sTmplNameItem = 'comment.html';
-                
+        $this->_sTmplNameItemContent = 'comment_content.html';
+
         $this->_sJsObjClass = 'BxDolCmts';
         $this->_sJsObjName = 'oCmts' . bx_gen_method_name($sSystem, array('_' , '-')) . $iId;
         $this->_sStylePrefix = isset($this->_aSystem['root_style_prefix']) ? $this->_aSystem['root_style_prefix'] : 'cmt';
@@ -265,8 +267,6 @@ class BxBaseCmts extends BxDolCmts
             );
         }
 
-        $sAttachments = $this->_getAttachments($aCmt);
-
         $sReplies = '';
         if((int)$aCmt['cmt_replies'] > 0 && !empty($aDp) && $aDp['type'] == BX_CMT_DISPLAY_THREADED) {
         	$aDp['show_empty'] = false;
@@ -286,11 +286,7 @@ class BxBaseCmts extends BxDolCmts
             }
         }
 
-        $sReactions = '';
-        if(($oReaction = $this->getReactionObject($aCmt['cmt_unique_id'])) !== false)
-            $sReactions = $oReaction->getCounter(array(
-                'show_counter' => true
-            ));
+        $sContent = $this->_getContent($aCmt);
 
         return $this->_oTemplate->parseHtmlByName($this->_sTmplNameItem, array_merge(array(
             'system' => $this->_sSystem,
@@ -308,17 +304,10 @@ class BxBaseCmts extends BxDolCmts
                 'condition' => !empty($aTmplVarsMeta),
                 'content' => $aTmplVarsMeta
             ),
-            'bx_if:show_attached' => array(
-                'condition' => !empty($sAttachments),
-                'content' => array(
-                    'style_prefix' => $this->_sStylePrefix,
-                    'attached' => $sAttachments
-                )
-            ),
-            'reactions' => $sReactions,
+            'content' => $sContent,
             'actions' => $sActions,
             'replies' =>  $sReplies,
-        ), $this->_getTmplVarsAuthor($aCmt), $this->_getTmplVarsText($aCmt)));
+        ), $this->_getTmplVarsAuthor($aCmt)));
     }
 
     function getCommentSearch($iCmtId, &$sAddon)
@@ -880,16 +869,8 @@ class BxBaseCmts extends BxDolCmts
             if($iCmtId != 0) {
                 $iCmtUniqId = $this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId, $iCmtAuthorId);
 
-                if($this->isAttachImageEnabled()) {
-                    $aImages = $oForm->getCleanValue('cmt_image');
-                    if(!empty($aImages) && is_array($aImages)) {
-                        $oStorage = BxDolStorage::getObjectInstance($this->getStorageObjectName());
-
-                        foreach($aImages as $iImageId)
-                            if($this->_oQuery->saveImages($this->_aSystem['system_id'], $iCmtId, $iImageId))
-                                $oStorage->afterUploadCleanup($iImageId, $iCmtAuthorId);
-                    }
-                }
+                if($this->isAttachImageEnabled())
+                    $oForm->processImages($this, 'cmt_image', $iCmtUniqId, $iCmtId, $iCmtAuthorId, true);
 
                 if($iCmtParentId) {
                     $this->_oQuery->updateRepliesCount($iCmtParentId, 1);
@@ -939,6 +920,9 @@ class BxBaseCmts extends BxDolCmts
             if($oForm->update($iCmtId) !== false) {
                 $iCmtUniqId = $this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId, (int)$aCmt['cmt_author_id']);
 
+                if($this->isAttachImageEnabled())
+                    $oForm->processImages($this, 'cmt_image', $iCmtUniqId, $iCmtId, $iCmtAuthorId, false);
+
                 $this->isEditAllowed($aCmt, true);
 
                 if($this->_sMetatagsObj && ($oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj)) !== false)
@@ -978,6 +962,30 @@ class BxBaseCmts extends BxDolCmts
         }
 
         return $oForm;
+    }
+
+    protected function _getContent($aCmt)
+    {
+        $sAttachments = $this->_getAttachments($aCmt);
+
+        $sReactions = '';
+        if(($oReaction = $this->getReactionObject($aCmt['cmt_unique_id'])) !== false)
+            $sReactions = $oReaction->getCounter(array(
+                'show_counter' => true
+            ));
+
+        return $this->_oTemplate->parseHtmlByName($this->_sTmplNameItemContent, array_merge(array(
+            'style_prefix' => $this->_sStylePrefix,
+            'js_object' => $this->_sJsObjName,
+            'bx_if:show_attached' => array(
+                'condition' => !empty($sAttachments),
+                'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
+                    'attached' => $sAttachments
+                )
+            ),
+            'reactions' => $sReactions,
+        ), $this->_getTmplVarsText($aCmt)));
     }
 
     protected function _getMoreLink($sCmts, $aBp = array(), $aDp = array())
@@ -1057,7 +1065,7 @@ class BxBaseCmts extends BxDolCmts
     {
     	$sViewImagePopupId = 'cmts-box-' . $this->_sSystem . '-' . $this->getId() . '-view-image-popup' ;
         $sViewImagePopupContent = $this->_oTemplate->parseHtmlByName('popup_image.html', array(
-    		'image_url' => ''
+            'image_url' => ''
     	));
 
     	return BxTemplFunctions::getInstance()->transBox($sViewImagePopupId, $sViewImagePopupContent, true);
@@ -1071,38 +1079,38 @@ class BxBaseCmts extends BxDolCmts
 
         $aFiles = $this->_oQuery->getFiles($this->_aSystem['system_id'], $aCmt['cmt_id']);
         if(!empty($aFiles) && is_array($aFiles)) {
-    		$oStorage = BxDolStorage::getObjectInstance($this->getStorageObjectName());
+            $oStorage = BxDolStorage::getObjectInstance($this->getStorageObjectName());
             $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->getTranscoderPreviewName());
 
             foreach($aFiles as $aFile) {
-            	$bImage = $oTranscoder && $oTranscoder->isMimeTypeSupported($aFile['mime_type']);
+                $bImage = $oTranscoder && $oTranscoder->isMimeTypeSupported($aFile['mime_type']);
 
-            	$sPreview = '';
-            	if($oTranscoder && $bImage)
-            		$sPreview = $oTranscoder->getFileUrl($aFile['image_id']);
+                $sPreview = '';
+                if($oTranscoder && $bImage)
+                    $sPreview = $oTranscoder->getFileUrl($aFile['image_id']);
 
-        		if(!$sPreview)
-            		$sPreview = $this->_oTemplate->getIconUrl($oStorage->getIconNameByFileName($aFile['file_name']));
+                if(!$sPreview)
+                    $sPreview = $this->_oTemplate->getIconUrl($oStorage->getIconNameByFileName($aFile['file_name']));
 
-				$aTmplVarsFile = array(
-				    'js_object' => $this->_sJsObjName,
-					'preview' => $sPreview,
-					'file' => $oStorage->getFileUrlById($aFile['image_id']),
-        			'file_name' => $aFile['file_name'],
+                $aTmplVarsFile = array(
+                    'js_object' => $this->_sJsObjName,
+                    'preview' => $sPreview,
+                    'file' => $oStorage->getFileUrlById($aFile['image_id']),
+                    'file_name' => $aFile['file_name'],
                     'file_icon' => $oStorage->getFontIconNameByFileName($aFile['file_name']),
-				    'file_size' => _t_format_size($aFile['size']),
-				);
+                    'file_size' => _t_format_size($aFile['size']),
+                );
 
                 $aTmplImages[] = array(
                     'style_prefix' => $this->_sStylePrefix,
-                	'bx_if:show_image' => array(
-                		'condition' => $bImage,
-                		'content' => $aTmplVarsFile
-                	),
+                    'bx_if:show_image' => array(
+                        'condition' => $bImage,
+                        'content' => $aTmplVarsFile
+                    ),
                     'bx_if:show_file' => array(
-                		'condition' => !$bImage,
-                		'content' => $aTmplVarsFile
-                	),
+                        'condition' => !$bImage,
+                        'content' => $aTmplVarsFile
+                    ),
                 );
             }
         }

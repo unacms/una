@@ -611,7 +611,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return $this->_oQuery->getTableName ();
     }
 
-	public function getObjectAuthorId ($iObjectId = 0)
+    public function getObjectAuthorId ($iObjectId = 0)
     {
     	if(empty($this->_aSystem['trigger_field_author']))
     		return 0;
@@ -644,6 +644,14 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     public function getCommentsArray ($iVParentId, $sFilter, $aOrder, $iStart = 0, $iCount = -1)
     {
         return $this->_oQuery->getComments ($this->getId(), $iVParentId, $this->_getAuthorId(), $sFilter, $aOrder, $iStart, $iCount);
+    }
+
+    /**
+     * Get comment's unique id.
+     */
+    public function getCommentUniqId($iCmtId, $iAuthorId = 0)
+    {
+        return $this->_oQuery->getUniqId($this->getSystemId(), $iCmtId, $iAuthorId);
     }
 
     /**
@@ -778,6 +786,11 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     /**
      * Permissions functions
      */
+    public function isAdmin($iCmtAuthorId)
+    {
+        return BxDolAcl::getInstance()->isMemberLevelInSet(array(MEMBERSHIP_ID_MODERATOR, MEMBERSHIP_ID_ADMINISTRATOR), $iCmtAuthorId);
+    }
+
     public function checkAction ($sAction, $isPerformAction = false)
     {
         $iId = $this->_getAuthorId();
@@ -1243,7 +1256,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $iObjId = (int)$this->getId();
     	$iObjAthrId = $this->getObjectAuthorId($iObjId);
 
-    	$aCmt = $this->_oQuery->getCommentSimple($iObjId, $iCmtId);
+    	$aCmt = $this->getCommentRow($iCmtId);
         if(empty($aCmt) || !is_array($aCmt))
             return false;
 
@@ -1272,7 +1285,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             'comment_text' => $aCmt['cmt_text']
         ));
 
-        return array('id' => $iCmtId, 'text' => $this->_prepareTextForOutput($aCmt['cmt_text'], $iCmtId));
+        return array('id' => $iCmtId, 'content' => $this->_getContent($aCmt));
     }
 
     public function serviceGetAuthor ($iContentId)
