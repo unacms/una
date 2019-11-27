@@ -126,6 +126,7 @@ class BxBaseVoteReactions extends BxDolVoteReactions
         return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentCounterWrapper(), array(
             'html_id' => $this->_aHtmlIds['counter'],
             'style_prefix' => $this->_sStylePrefix,
+            'class' => !$bVote && !$bShowCounterEmpty ? 'bx-vc-hidden' : '',
             'type' => $this->_sType,
             'style' => self::$_sCounterStyleDivided,
             'bx_if:show_link' => array(
