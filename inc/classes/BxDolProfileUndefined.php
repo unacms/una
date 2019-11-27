@@ -134,6 +134,14 @@ class BxDolProfileUndefined extends BxDolFactory implements iBxDolSingleton, iBx
     }
 
     /**
+     * Get big (2x) avatar url
+     */
+    public function getAvatarBig()
+    {
+        return BxDolTemplate::getInstance()->getImageUrl('account-avatar-big.png');
+    }
+
+    /**
      * Get profile avatar
      */
     public function getAvatar()
@@ -141,7 +149,7 @@ class BxDolProfileUndefined extends BxDolFactory implements iBxDolSingleton, iBx
         return BxDolTemplate::getInstance()->getImageUrl('account-avatar.png');
     }
 	
-	/**
+    /**
      * Get profile cover
      */
     public function getCover()

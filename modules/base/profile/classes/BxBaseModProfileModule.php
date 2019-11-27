@@ -294,7 +294,12 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     {
         return $this->_serviceTemplateFunc('urlAvatar', $iContentId);
     }
-    
+
+    public function serviceProfileAvatarBig ($iContentId)
+    {
+        return $this->_serviceTemplateFunc('urlAvatarBig', $iContentId);
+    }
+
     public function serviceProfileCover ($iContentId)
     {
         return $this->_serviceTemplateFunc('urlCover', $iContentId);

@@ -389,6 +389,14 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
     }
 
     /**
+     * Get big (2x) avatar url
+     */
+    public function getAvatarBig($iAccountId = false)
+    {
+        return BxDolTemplate::getInstance()->getImageUrl('account-avatar-big.png');
+    }
+
+    /**
      * Get avatar url
      */
     public function getAvatar($iAccountId = false)
