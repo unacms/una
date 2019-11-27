@@ -103,7 +103,7 @@ function bx_login($iId, $bRememberMe = false)
     $aUrl = parse_url(BX_DOL_URL_ROOT);
     $sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
     $sHost = '';
-    $iCookieTime = $bRememberMe ? time() + 24*60*60*90 : 0;
+    $iCookieTime = $bRememberMe ? time() + 60 * getParam('sys_session_lifetime_in_min') : 0;
     setcookie("memberID", $iId, $iCookieTime, $sPath, $sHost);
     $_COOKIE['memberID'] = $iId;
     setcookie("memberPassword", $sPassword, $iCookieTime, $sPath, $sHost, false, true /* http only */);

@@ -20,11 +20,31 @@ class BxBaseServiceMetatags extends BxDol
     }
 
     /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-metatags Metatags
+     * @subsubsection bx_system_general-keywords_cloud keywords_cloud
+     * 
+     * @code bx_srv('system', 'keywords_cloud', ["bx_posts", "bx_posts"], 'TemplServiceMetatags'); @endcode
+     * @code {{~system:keywords_cloud:TemplServiceMetatags["bx_posts", "bx_posts"]~}} @endcode
+     * 
      * Get keywords cloud.
-     * @param $sObject metatgs object to get keywords cloud for
-     * @param $mixedSection search section to refer when keyword is clicked, set the same as $sObject to show content withing the module only, it can be one value or array of values, leave empty to show all possible content upon keyword click
-     * @param $iMaxCount number of tags in keywords cloud, by default @see BX_METATAGS_KEYWORDS_IN_CLOUD
+     * @param $sObject metatags object to get keywords cloud for
+     * @param $mixedSection search section to refer when keyword is clicked, 
+     *          set the same as $sObject to show content withing the module only, 
+     *          it can be one value or array of values, leave empty to show 
+     *          all possible content upon keyword click
+     * @param $aParams additional params:
+     *          - max_count: number of tags in keywords cloud, 
+     *                  by default BX_METATAGS_KEYWORDS_IN_CLOUD
+     *          - show_empty: show empty message or not when no data available
+     *          
      * @return tags cloud HTML string
+     * 
+     * @see BxBaseServiceMetatags::serviceKeywordsCloud
+     */
+    /** 
+     * @ref bx_system_general-keywords_cloud "keywords_cloud"
      */
     public function serviceKeywordsCloud($sObject, $mixedSection, $aParams = array())
     {

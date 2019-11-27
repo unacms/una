@@ -641,8 +641,16 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause) = parent::_getSqlPartsEvents(array_merge($aParams, array('browse' => 'list')));
                 if(in_array($aParams['type'], array(BX_TIMELINE_TYPE_NEWS, BX_TIMELINE_TYPE_FEED, BX_BASE_MOD_NTFS_TYPE_CONNECTIONS, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS)))
                     $sSelectClause  = "DISTINCT " . $sSelectClause;
-
-                $sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`id`<=? ", $aParams['from']);
+                
+                $sSqlFrom = $this->prepareAsString("AND `{$this->_sTable}`.`id`<=? ", $aParams['from']);
+                if (is_array($sWhereClause)){
+                    foreach($sWhereClause as $sKey => $sValue){
+                        $sWhereClause[$sKey] = $sValue . $sSqlFrom;
+                    }
+                }
+                else{
+                    $sWhereClause .= $sSqlFrom;
+                }
                 break;
 
             case 'ids':

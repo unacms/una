@@ -17,11 +17,45 @@ class BxBaseServiceLogin extends BxDol
         parent::__construct();
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-login Login
+     * @subsubsection bx_system_general-test test
+     * 
+     * @code bx_srv('system', 'test', [3], 'TemplServiceLogin'); @endcode
+     * @code {{~system:test:TemplServiceLogin[3]~}} @endcode
+     * 
+     * Test method which returns provided number multiplied by 2
+     * @param $n number 
+     * 
+     * @see BxBaseServiceLogin::serviceTest
+     */
+    /** 
+     * @ref bx_system_general-create_account_form "create_account_form"
+     */
     public function serviceTest ($n = 1)
     {
         return $n*2;
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-login Login
+     * @subsubsection bx_system_general-member_auth_code member_auth_code
+     * 
+     * @code bx_srv('system', 'member_auth_code', [], 'TemplServiceLogin'); @endcode
+     * @code {{~system:member_auth_code:TemplServiceLogin~}} @endcode
+     * 
+     * Display external login buttons such as Facebook, Twitter, etc
+     * @param $aAuthTypes optional list of external login buttons
+     * 
+     * @see BxBaseServiceLogin::serviceMemberAuthCode
+     */
+    /** 
+     * @ref bx_system_general-member_auth_code "member_auth_code"
+     */
     public function serviceMemberAuthCode($aAuthTypes = array())
     {
         if(empty($aAuthTypes) || !is_array($aAuthTypes))
@@ -75,6 +109,10 @@ class BxBaseServiceLogin extends BxDol
         ));
     }
 
+    /**
+     * Display login form without join text
+     * @see ::serviceLoginForm
+     */
     public function serviceLoginFormOnly ($sParams = '', $sForceRelocate = '')
     {
     	if(strpos($sParams, 'no_join_text') === false)
@@ -83,6 +121,27 @@ class BxBaseServiceLogin extends BxDol
     	return $this->serviceLoginForm($sParams, $sForceRelocate);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-login Login
+     * @subsubsection bx_system_general-login_form login_form
+     * 
+     * @code bx_srv('system', 'login_form', ["no_auth_buttons"], 'TemplServiceLogin'); @endcode
+     * @code {{~system:login_form:TemplServiceLogin["no_auth_buttons"]~}} @endcode
+     * 
+     * Display login form
+     * @param $sParams optional string with additional params:
+     *          - no_join_text
+     *          - no_auth_buttons
+     *          - ajax_form
+     * @param $sForceRelocate optional URL to redirect to after login
+     * 
+     * @see BxBaseServiceLogin::serviceLoginForm
+     */
+    /** 
+     * @ref bx_system_general-login_form "login_form"
+     */
     public function serviceLoginForm ($sParams = '', $sForceRelocate = '')
     {
         if (isLogged() && 'login' == bx_get('i')) {

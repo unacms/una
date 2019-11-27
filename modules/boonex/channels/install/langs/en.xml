@@ -38,14 +38,11 @@
 	<string name="_bx_channels_form_profile_input_delete_confirm_info"><![CDATA[This action can not be undone.]]></string>
 	<string name="_bx_channels_form_profile_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete channel.]]></string>
 	
-	<string name="_bx_channels_acl_action_create_profile"><![CDATA[Create Channel]]></string>
 	<string name="_bx_channels_acl_action_delete_profile"><![CDATA[Delete Channel]]></string>
 	<string name="_bx_channels_acl_action_view_profile"><![CDATA[View Channel]]></string>
 	<string name="_bx_channels_acl_action_edit_any_profile"><![CDATA[Edit Any Channel]]></string>
   <string name="_bx_channels_acl_action_create_channel_auto"><![CDATA[Create Channel Auto]]></string>
 
-  <string name="_bx_channels_page_title_sys_create_profile"><![CDATA[Create Channel]]></string>
-	<string name="_bx_channels_page_title_create_profile"><![CDATA[Create Channel]]></string>
 	<string name="_bx_channels_page_title_sys_edit_profile"><![CDATA[Edit Channel]]></string>
 	<string name="_bx_channels_page_title_edit_profile"><![CDATA[Edit Channel]]></string>
 	<string name="_bx_channels_page_title_sys_edit_profile_cover"><![CDATA[Edit Channel Cover]]></string>
@@ -88,7 +85,6 @@
 	<string name="_bx_channels_page_block_title_entries_of_author"><![CDATA[Followed Сhannels]]></string>
 	<string name="_bx_channels_page_block_title_favorites_of_author"><![CDATA[Favorite Channels]]></string>
 	<string name="_bx_channels_page_block_title_sys_favorites_of_author"><![CDATA[Favorite Channels]]></string>
-  <string name="_bx_channels_page_block_title_create_profile"><![CDATA[Create Channel]]></string>
 	<string name="_bx_channels_page_block_title_edit_profile"><![CDATA[Edit Channel]]></string>
 	<string name="_bx_channels_page_block_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
 	<string name="_bx_channels_page_block_title_delete_profile"><![CDATA[Delete Channel]]></string>
@@ -152,8 +148,6 @@
 	<string name="_bx_channels_menu_item_title_delete_account"><![CDATA[Delete Account]]></string>
 	<string name="_bx_channels_menu_item_title_system_profile_type"><![CDATA[Channel]]></string>
 	<string name="_bx_channels_menu_item_title_profile_type"><![CDATA[Channel]]></string>
-	<string name="_bx_channels_menu_item_title_system_create_profile"><![CDATA[Channel]]></string>
-	<string name="_bx_channels_menu_item_title_create_profile"><![CDATA[Channel]]></string>
 	<string name="_bx_channels_menu_item_title_system_view_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_channels_menu_item_title_view_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_channels_menu_item_title_system_view_profile_comments"><![CDATA[Comments]]></string>
@@ -216,6 +210,8 @@
 	<string name="_bx_channels_grid_action_title_adm_delete"><![CDATA[Delete]]></string>
 	<string name="_bx_channels_grid_action_title_adm_delete_with_content"><![CDATA[Delete With Content]]></string>
 	<string name="_bx_channels_grid_action_title_adm_more_actions"><![CDATA[More Actions]]></string>
+  <string name="_bx_channels_grid_action_title_adm_audit_context"><![CDATA[Audit actions in context]]></string>
+  <string name="_bx_channels_grid_action_title_adm_audit_content"><![CDATA[Audit actions with content]]></string>
 	<string name="_bx_channels_grid_action_err_delete"><![CDATA[Cannot delete the selected channel(s).]]></string>
 	<string name="_bx_channels_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 	

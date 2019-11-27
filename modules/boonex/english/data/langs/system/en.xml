@@ -1414,6 +1414,7 @@
 	<string name="_adm_stg_cpt_option_sys_template_cache_minify_css_enable"><![CDATA[Enable lessening for CSS files (cache should be enabled)]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_minify_js_enable"><![CDATA[Enable lessening for JS files (cache should be enabled)]]></string>
 	<string name="_adm_stg_cpt_option_sys_transcoder_queue_storage"><![CDATA[Remote video transcoding (requires special setup)]]></string>
+  <string name="_adm_stg_cpt_option_sys_session_lifetime_in_min"><![CDATA[Session lifetime (min)]]></string>
 	<string name="_adm_stg_cpt_option_template"><![CDATA[Default Template]]></string>
 	<string name="_adm_stg_err_option_template"><![CDATA[Template cannot be empty and must have a valid name.]]></string>
     <string name="_adm_stg_cpt_option_use_like_operator"><![CDATA[Use operator LIKE for search (recommended for small content)]]></string>
@@ -1754,8 +1755,6 @@
   <string name="_sys_audit_action_unstick"><![CDATA[Unsticked]]></string>
   <string name="_sys_audit_action_promote"><![CDATA[Promoted]]></string>
   <string name="_sys_audit_action_unpromote"><![CDATA[Unpromoted]]></string>
-  <string name="_sys_audit_action_unpromote"><![CDATA[Unpromoted]]></string>
-  
 
   <string name="_sys_add_friend"><![CDATA[Add friend]]></string>
         <string name="_sys_add_relation"><![CDATA[Add relationship]]></string>

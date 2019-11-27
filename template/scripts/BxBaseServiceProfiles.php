@@ -86,6 +86,23 @@ class BxBaseServiceProfiles extends BxDol
 		return BxDolTemplate::getInstance()->parseLink(BxDolService::call($sModule, $sMethod, array($oProfile->getContentId())), $sCaption);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-profiles Profiles
+     * @subsubsection bx_system_general-profile_membership profile_membership
+     * 
+     * @code bx_srv('system', 'profile_membership', [2], 'TemplServiceProfiles'); @endcode
+     * @code {{~system:profile_membership:TemplServiceProfiles[2]~}} @endcode
+     * 
+     * Get membership level for specified profile.
+     * @param $iProfileId profile ID
+     * 
+     * @see BxBaseServiceProfiles::serviceProfileMembership
+     */
+    /** 
+     * @ref bx_system_general-profile_membership "profile_membership"
+     */
     public function serviceProfileMembership ($iProfileId = 0)
     {
         if (!$iProfileId)
@@ -94,6 +111,22 @@ class BxBaseServiceProfiles extends BxDol
 		return BxDolAcl::getInstance()->getProfileMembership($iProfileId);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-profiles Profiles
+     * @subsubsection bx_system_general-profile_notifications profile_notifications
+     * 
+     * @code bx_srv('system', 'profile_notifications', [], 'TemplServiceProfiles'); @endcode
+     * @code {{~system:profile_notifications:TemplServiceProfiles~}} @endcode
+     * 
+     * Get number of unread notifications for logged in profile
+     * 
+     * @see BxBaseServiceProfiles::serviceProfileNotifications
+     */
+    /** 
+     * @ref bx_system_general-profile_notifications "profile_notifications"
+     */
     public function serviceProfileNotifications ($iProfileId = 0)
     {
         if (!$iProfileId)
@@ -113,6 +146,22 @@ class BxBaseServiceProfiles extends BxDol
         return $iNum;
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-profiles Profiles
+     * @subsubsection bx_system_general-get_count_online_profiles get_count_online_profiles
+     * 
+     * @code bx_srv('system', 'get_count_online_profiles', [], 'TemplServiceProfiles'); @endcode
+     * @code {{~system:get_count_online_profiles:TemplServiceProfiles~}} @endcode
+     * 
+     * Get number of online profiles
+     * 
+     * @see BxBaseServiceProfiles::serviceGetCountOnlineProfiles
+     */
+    /** 
+     * @ref bx_system_general-get_count_online_profiles "get_count_online_profiles"
+     */
     public function serviceGetCountOnlineProfiles ()
     {
         $oProfilesQuery = BxDolProfileQuery::getInstance();

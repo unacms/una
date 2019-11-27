@@ -12,7 +12,7 @@ class BxDolCronAudit extends BxDolCron
     public function processing()
     {
         BxDolDb::getInstance()->query(BxDolDb::getInstance()->prepare("DELETE FROM `sys_audit` WHERE FROM_UNIXTIME(`added`) < NOW() - INTERVAL ? DAY", (int)getParam("sys_audit_days_before_expire")));
-        BxDolDb::getInstance()->query("DELETE FROM `sys_audit` WHERE `id` < (SELECT MAX(`m`.`id`) FROM (SELECT `id` FROM `sys_audit` ORDER BY `id` DESC LIMIT " . (int)getParam("sys_audit_max_records") . ") `m`)");
+        BxDolDb::getInstance()->query("DELETE FROM `sys_audit` WHERE `id` < (SELECT MIN(`m`.`id`) FROM (SELECT `id` FROM `sys_audit` ORDER BY `id` DESC LIMIT " . (int)getParam("sys_audit_max_records") . ") `m`)");
     }
 }
 

@@ -15,6 +15,7 @@
   <string name="_bx_quoteofday_grid_action_title_adm_edit"><![CDATA[Редактировать]]></string>
   <string name="_bx_quoteofday_grid_action_title_adm_delete"><![CDATA[Удалить]]></string>
   <string name="_bx_quoteofday_grid_action_title_adm_publish"><![CDATA[Сделать Цитатой дня]]></string>
+  <string name="_bx_quoteofday_grid_action_title_adm_audit_content"><![CDATA[Аудит действий]]></string>
   <string name="_bx_quoteofday_grid_action_title_adm_publish_text"><![CDATA[Цитата дня установлена]]></string>
   
   <string name="_bx_quoteofday_form_entry"><![CDATA[Цитата дня]]></string>

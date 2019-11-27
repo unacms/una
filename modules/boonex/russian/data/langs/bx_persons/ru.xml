@@ -284,6 +284,8 @@
     <string name="_bx_persons_grid_action_title_adm_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
     <string name="_bx_persons_grid_action_title_adm_set_acl_level"><![CDATA[Назначить членство]]></string>
     <string name="_bx_persons_grid_action_title_adm_more_actions"><![CDATA[Дополнительные действия]]></string>
+    <string name="_bx_persons_grid_action_title_adm_audit_content"><![CDATA[Аудит действий над профилем]]></string>
+    <string name="_bx_persons_grid_action_title_adm_audit_profile"><![CDATA[Аудит действий профиля]]></string>
     <string name="_bx_persons_grid_action_err_delete"><![CDATA[Невозможно удалить выбранную(ные) персону(ны).]]></string>
     <string name="_bx_persons_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 

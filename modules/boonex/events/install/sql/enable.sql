@@ -493,6 +493,8 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_events_administration', 'bulk', 'delete', '_bx_events_grid_action_title_adm_delete', '', 0, 1, 2),
 ('bx_events_administration', 'bulk', 'delete_with_content', '_bx_events_grid_action_title_adm_delete_with_content', '', 0, 1, 3),
 ('bx_events_administration', 'single', 'settings', '_bx_events_grid_action_title_adm_more_actions', 'cog', 1, 0, 2),
+('bx_events_administration', 'single', 'audit_content', '_bx_events_grid_action_title_adm_audit_content', 'search', 1, 0, 3),
+('bx_events_administration', 'single', 'audit_context', '_bx_events_grid_action_title_adm_audit_context', 'search-location', 1, 0, 4),
 ('bx_events_common', 'bulk', 'delete', '_bx_events_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_events_common', 'bulk', 'delete_with_content', '_bx_events_grid_action_title_adm_delete_with_content', '', 0, 1, 2),
 ('bx_events_common', 'single', 'settings', '_bx_events_grid_action_title_adm_more_actions', 'cog', 1, 0, 1);

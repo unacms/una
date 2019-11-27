@@ -22,11 +22,44 @@ class BxBasePaymentsServices extends BxDol
         return BxDolPayments::getInstance()->getPayments();
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services
+     * @subsection bx_system_general-payments Payments
+     * @subsubsection bx_system_general-get_cart_items_count get_cart_items_count
+     * 
+     * @code bx_srv('system', 'get_cart_items_count', [], 'TemplPaymentsServices'); @endcode
+     * @code {{~system:get_cart_items_count:TemplPaymentsServices~}} @endcode
+     * 
+     * Get number of items in shopping cart for currently logged in profile.
+     * 
+     * @see BxBasePaymentsServices::serviceGetChartStats
+     */
+    /** 
+     * @ref bx_system_general-get_cart_items_count "get_cart_items_count"
+     */
     public function serviceGetCartItemsCount()
     {
     	return BxDolPayments::getInstance()->getCartItemsCount();
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services
+     * @subsection bx_system_general-payments Payments
+     * @subsubsection bx_system_general-get_orders_count get_orders_count
+     * 
+     * @code bx_srv('system', 'get_orders_count', ["new"], 'TemplPaymentsServices'); @endcode
+     * @code {{~system:get_orders_count:TemplPaymentsServices["new"]~}} @endcode
+     * 
+     * Get number of order by type for currently logged in profile.
+     * @param $sType type, for example: new
+     * 
+     * @see BxBasePaymentsServices::serviceGetOrdersCount
+     */
+    /** 
+     * @ref bx_system_general-get_orders_count "get_orders_count"
+     */
     public function serviceGetOrdersCount($sType)
     {
     	return BxDolPayments::getInstance()->getOrdersCount($sType);

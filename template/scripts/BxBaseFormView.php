@@ -14,6 +14,7 @@ class BxBaseFormView extends BxDolForm
     protected static $_isCssJsAdded = false;
     protected static $_isCssJsUiAdded = false;
     protected static $_isCssJsMinicolorsAdded = false;
+    protected static $_isCssJsLabelsAdded = false;
     protected static $_isCssJsTimepickerAdded = false;
     protected static $_isCssJsAddedViewMode = false;
 
@@ -1188,15 +1189,7 @@ BLAH;
 
     protected function genCustomInputLabels ($aInput)
     {
-        $this->oTemplate->addJs(array(
-            'select2/js/select2.min.js',
-			'select2/select2-to-tree/select2totree.js',
-        ));
-
-        $this->oTemplate->addCss(array(
-        	BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'select2/css/|select2.min.css',
-			BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'select2/select2-to-tree/|select2totree.css'
-        ));
+        $this->addCssJsLabels ();
         
         $aValues = array();
         $oLabel = BxDolLabel::getInstance();
@@ -1718,6 +1711,21 @@ BLAH;
         $this->_addJs('jquery-minicolors/jquery.minicolors.min.js', "'undefined' === typeof($.minicolors)");
 
         self::$_isCssJsMinicolorsAdded = true;
+    }
+    
+    function addCssJsLabels ()
+    {
+        if (self::$_isCssJsLabelsAdded)
+            return;       
+        
+        $this->_addJs('select2/js/select2.min.js', "'undefined' === typeof($.fn.select2)");
+        $this->_addJs('select2/js/i18n/' . BxDolLanguages::getInstance()->getCurrentLanguage() . '.js', "true");
+        $this->_addJs('select2/select2-to-tree/select2totree.js', "'undefined' === typeof($.fn.select2ToTree)");
+
+        $this->_addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'select2/css/|select2.min.css');
+        $this->_addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'select2/select2-to-tree/|select2totree.css');
+        
+        self::$_isCssJsLabelsAdded = true;
     }
 
     function addCssJsViewMode ()
