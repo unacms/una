@@ -45,7 +45,7 @@ class BxDolService extends BxDol
         if (empty($aModule))
             return '';
 
-        $sKey = md5($mixed . $sMethod . print_r($aParams, true) . $sClass);
+        $sKey = md5($mixed . $sMethod . print_r($aParams, true) . $sClass . bx_get_logged_profile_id());
         if (!$bIgnoreCache && isset(self::$_aMemoryCache[$sKey]))
             return self::$_aMemoryCache[$sKey];
 
