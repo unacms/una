@@ -1505,7 +1505,8 @@ CREATE TABLE `sys_permalinks` (
 INSERT INTO `sys_permalinks` (`standard`, `permalink`, `check`, `compare_by_prefix`) VALUES
 ('page.php?i=', 'page/', 'permalinks_pages', 1),
 ('modules/?r=', 'm/', 'permalinks_modules', 1),
-('storage.php?o=', 's/', 'permalinks_storage', 1);
+('storage.php?o=', 's/', 'permalinks_storage', 1),
+('r.php?_q=wiki/', 'wiki/', 'permalinks_pages', 1);
 
 
 -- --------------------------------------------------------
@@ -4776,6 +4777,9 @@ CREATE TABLE IF NOT EXISTS `sys_rewrite_rules` (
   `service` varchar(255) NOT NULL,
   `active` tinyint(4) NOT NULL DEFAULT '1'
 );
+
+INSERT INTO `sys_rewrite_rules` (`preg`, `service`, `active`) VALUES
+('^wiki/(.*)$', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:9:\"wiki_page\";s:6:\"params\";a:1:{i:0;s:3:\"{1}\";}s:5:\"class\";s:16:\"TemplServiceWiki\";}', 1);
 
 -- --------------------------------------------------------
 
