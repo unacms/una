@@ -11,6 +11,11 @@ Options -MultiViews -Indexes
     RewriteRule ^m/(.*)$  modules/index.php?r=$1 [QSA,L]
     RewriteRule ^page/(.*)$  page.php?i=$1 [QSA,L]
     RewriteRule ^s/([a-zA-Z0-9_]+)/([a-zA-Z0-9\.]+)  storage.php?o=$1&f=$2   [QSA,L]
+
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule .+ - [L]
+    RewriteRule ^(.+)$ r.php?_q=$1 [QSA,L]
 </IfModule>
 
 AddType image/svg+xml svg
