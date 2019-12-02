@@ -45,9 +45,6 @@ class BxInvResponse extends BxDolAlertsResponse
 
     protected function _processAccountAdded($oAlert)
     {
-        if(!$this->_oModule->_oConfig->isRegistrationByInvitation())
-            return;
-
         $sKeyCode = $this->_oModule->_oConfig->getKeyCode();
         $sKey = BxDolSession::getInstance()->getUnsetValue($sKeyCode);
         if($sKey === false)
@@ -67,6 +64,22 @@ class BxInvResponse extends BxDolAlertsResponse
         return;
     }
 
+    protected function _processProfileAdd($oAlert)
+    {
+        if (getParam('bx_invites_automatically_befriend') != 'on')
+            return;
+        
+        $oProfile = BxDolProfile::getInstanceMagic($oAlert->iObject);
+        if ($oProfile && $oProfile->isActAsProfile()){
+            $iProfileInvitor = $this->_oModule->_oDb->getInvites(array('type' => 'profile_id_by_joined_account_id', 'value' => $oProfile->getAccountId()));
+            if ($iProfileInvitor){
+                $oConnFrinds = BxDolConnection::getObjectInstance('sys_profiles_friends');
+                $oConnFrinds->addConnection($oAlert->iObject, $iProfileInvitor);
+                $oConnFrinds->addConnection($iProfileInvitor, $oAlert->iObject);
+            }
+        }  
+    }
+    
     protected function _processProfileDelete($oAlert)
     {
         $this->_oModule->_oDb->deleteInvites(array('profile_id' => $oAlert->iObject));
@@ -75,6 +88,37 @@ class BxInvResponse extends BxDolAlertsResponse
     protected function _processAccountDelete($oAlert)
     {
         $this->_oModule->_oDb->deleteInvitesByAccount(array('joined_account_id' => $oAlert->iObject));
+    }
+    
+    protected function _processBxAnalyticsGetModules($oAlert)
+    {
+        $oAlert->aExtras['list'][$this->_oModule->_aModule['name']] = $this->_oModule->_aModule['title'];
+    }
+    
+    protected function _processBxAnalyticsGetReports($oAlert)
+    {
+        if ($this->_oModule->_aModule['name'] == $oAlert->aExtras['module']){
+            $oAlert->aExtras['list'] = array();
+            $oAlert->aExtras['list']['content_total_invited'] = _t('_bx_invites_reports_for_analytics_invited_total');
+            $oAlert->aExtras['list']['content_speed_invited'] = _t('_bx_invites_reports_for_analytics_invited_speed_grows');
+            $oAlert->aExtras['list']['content_total_invitation'] = _t('_bx_invites_reports_for_analytics_invitation_total');
+            $oAlert->aExtras['list']['content_speed_invitation'] = _t('_bx_invites_reports_for_analytics_invitation_speed_grows');
+        }
+    }
+    
+    protected function _processBxAnalyticsGetChartDataLine($oAlert)
+    {
+        if ($this->_oModule->_aModule['name'] == $oAlert->aExtras['module']){
+            $bIsInvited = false; 
+            if (substr_count($oAlert->aExtras['report_name'], '_invited') > 0)
+                $bIsInvited = true; 
+            
+            if (substr_count($oAlert->aExtras['report_name'], '_total_') > 0)
+                $oAlert->aExtras['report_type'] = BX_ANALYTICS_CONTENT_TOTAL;
+            
+            $oAlert->aExtras['data'] = $this->_oModule->_oDb->getDataForCharts($oAlert->aExtras['date_from'], $oAlert->aExtras['date_to'], $bIsInvited);
+            $oAlert->aExtras['prev_value'] = $this->_oModule->_oDb->getInitValueForCharts($oAlert->aExtras['date_from'], $bIsInvited);
+        }
     }
 }
 

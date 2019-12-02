@@ -64,31 +64,6 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_invites_request_send', 'text', 2147483647, 1, 3),
 ('bx_invites_request_send', 'ifr_do_submit', 2147483647, 1, 4);
 
-
--- GRIDS
-INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('bx_invites_requests', 'Sql', 'SELECT `bx_inv_requests`.* FROM `bx_inv_requests` WHERE 1', 'bx_inv_requests', 'id', 'status, date', '', '', 20, NULL, 'start', '', 'bx_inv_requests`.`name, bx_inv_requests`.`email', '', 'like', '', '', 192, 'BxInvGridRequests', 'modules/boonex/invites/classes/BxInvGridRequests.php');
-
-INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
-('bx_invites_requests', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
-('bx_invites_requests', 'name', '_bx_invites_grid_column_title_name', '14%', 0, '', '', 2),
-('bx_invites_requests', 'email', '_bx_invites_grid_column_title_email', '14%', 1, '25', '', 3),
-('bx_invites_requests', 'nip', '_bx_invites_grid_column_title_nip', '10%', 0, '15', '', 4),
-('bx_invites_requests', 'date', '_bx_invites_grid_column_title_date', '10%', 0, '20', '', 5),
-('bx_invites_requests', 'joined_account', '_bx_invites_grid_column_title_joined_account', '20%', 0, '20', '', 6),
-('bx_invites_requests', 'status', '_bx_invites_grid_column_title_status', '10%', 0, '15', '', 7),
-('bx_invites_requests', 'actions', '', '20%', 0, '', '', 8);
-
-INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
-('bx_invites_requests', 'bulk', 'invite', '_bx_invites_grid_action_title_adm_invite', '', 0, 0, 1),
-('bx_invites_requests', 'bulk', 'delete', '_bx_invites_grid_action_title_adm_delete', '', 0, 1, 2),
-('bx_invites_requests', 'single', 'info', '_bx_invites_grid_action_title_adm_info', 'info-circle', 1, 0, 1),
-('bx_invites_requests', 'single', 'invite', '_bx_invites_grid_action_title_adm_invite', 'envelope', 1, 0, 2),
-('bx_invites_requests', 'single', 'delete', '_bx_invites_grid_action_title_adm_delete', 'remove', 1, 1, 3),
-('bx_invites_requests', 'single', 'invite_info', '_bx_invites_grid_action_title_adm_invite_info', 'info-circle', 1, 0, 4),
-('bx_invites_requests', 'independent', 'add', '_bx_invites_grid_action_title_adm_add', '', 0, 0, 5);
-
-
 -- STUDIO PAGE & WIDGET
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 (3, @sName, '_bx_invites', '_bx_invites', 'bx_invites@modules/boonex/invites/|std-icon.svg');

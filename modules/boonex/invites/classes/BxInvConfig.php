@@ -31,14 +31,19 @@ class BxInvConfig extends BxBaseModGeneralConfig
             'URL_INVITE' => 'page.php?i=invites-invite',
             'URL_REQUEST' => 'page.php?i=invites-request',
             'URL_REQUESTS' => 'page.php?i=invites-requests',
+            'URL_INVITES' => 'page.php?i=invites-invites',
             
             'TABLE_REQUESTS' => $aModule['db_prefix'] . 'requests',
             'TABLE_INVITES' => $aModule['db_prefix'] . 'invites',
+            'TABLE_ENTRIES' => $aModule['db_prefix'] . 'invites',
+            
+            'FIELD_ADDED' => 'date'
         );
 
         $this->_aObjects = array(
             'alert' => $this->_sName,
             'grid_requests' => $this->_sName . '_requests',
+            'grid_invites' => $this->_sName . '_invites',
             'form_invite' => $this->_sName . '_invite',
             'form_request' => $this->_sName . '_request',
             'form_display_invite_send' => $this->_sName . '_invite_send',

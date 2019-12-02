@@ -28,6 +28,8 @@ class BxInvGridRequests extends BxTemplGrid
     {
         parent::__construct ($aOptions, $oTemplate);
 
+        $this->_aQueryReset = array('order_field', 'order_dir', $this->_aOptions['paginate_get_start'], $this->_aOptions['paginate_get_per_page']);
+        
         $this->_sModule = 'bx_invites';
         $this->_oModule = BxDolModule::getInstance($this->_sModule);
         
