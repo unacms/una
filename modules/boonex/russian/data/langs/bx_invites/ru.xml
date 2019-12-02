@@ -37,9 +37,27 @@
 	<string name="_bx_invites_grid_column_title_nip"><![CDATA[IP]]></string>
 	<string name="_bx_invites_grid_column_title_date"><![CDATA[Дата]]></string>
 
-	<string name="_bx_invites_grid_action_title_adm_info"><![CDATA[Инфо]]></string>
-	<string name="_bx_invites_grid_action_title_adm_invite"><![CDATA[Пригласить]]></string>
-	<string name="_bx_invites_grid_action_title_adm_delete"><![CDATA[Удалить]]></string>
+  <string name="_bx_invites_grid_column_title_date_invite"><![CDATA[Дата приглашения]]></string>
+  <string name="_bx_invites_grid_column_title_date_seen"><![CDATA[Дата просмотра]]></string>
+  <string name="_bx_invites_grid_column_title_date_joined"><![CDATA[Дата присоединения]]></string>
+  <string name="_bx_invites_grid_column_title_joined_account"><![CDATA[Присоединился]]></string>
+  <string name="_bx_invites_grid_column_title_status"><![CDATA[Статус]]></string>
+
+  <string name="_bx_invites_grid_action_title_adm_info"><![CDATA[Инфо]]></string>
+  <string name="_bx_invites_grid_action_title_adm_invite_info"><![CDATA[Информация о приглашении]]></string>
+  <string name="_bx_invites_grid_action_title_adm_invite"><![CDATA[Пригласить]]></string>
+  <string name="_bx_invites_grid_action_title_adm_delete"><![CDATA[Удалить]]></string>
+  <string name="_bx_invites_grid_action_title_adm_add"><![CDATA[Отправить приглашения]]></string>
+
+  <string name="_bx_invites_grid_invites_column_title_email"><![CDATA[Эл. адрес]]></string>
+  <string name="_bx_invites_grid_invites_column_title_date"><![CDATA[Дата]]></string>
+  <string name="_bx_invites_grid_invites_column_title_who_sent"><![CDATA[Кто отправил]]></string>
+  <string name="_bx_invites_grid_invites_column_title_date_seen"><![CDATA[Дата отправки]]></string>
+  <string name="_bx_invites_grid_invites_column_title_joined_account"><![CDATA[Присоединившийся]]></string>
+  <string name="_bx_invites_grid_invites_column_title_date_joined"><![CDATA[Дата присоединения]]></string>
+  <string name="_bx_invites_grid_invites_column_title_request"><![CDATA[Запрос]]></string>
+  <string name="_bx_invites_grid_txt_account_manager"><![CDATA[К управлению аккаунтом]]></string>
+  <string name="_bx_invites_grid_txt_view_request"><![CDATA[Просмотреть запрос]]></string>
 
 
 	<!-- Pages and Blocks -->
@@ -52,22 +70,28 @@
 	<string name="_bx_invites_page_title_request"><![CDATA[Запросить приглашение]]></string>
 	<string name="_bx_invites_page_block_title_request_form"><![CDATA[Запросить приглашение]]></string>
 
-	<string name="_bx_invites_page_title_sys_requests"><![CDATA[Управление приглашениями]]></string>
-	<string name="_bx_invites_page_title_requests"><![CDATA[Управление приглашениями]]></string>
-	<string name="_bx_invites_page_block_title_requests"><![CDATA[Управление приглашениями]]></string>
+  <string name="_bx_invites_page_title_sys_requests"><![CDATA[Управление запросами]]></string>
+  <string name="_bx_invites_page_title_requests"><![CDATA[Управление запросами]]></string>
+  <string name="_bx_invites_page_block_title_requests"><![CDATA[Управление запросами]]></string>
 
-	<string name="_bx_invites_page_block_title_invite"><![CDATA[Пригласить]]></string>
+  <string name="_bx_invites_page_title_invites"><![CDATA[Управление приглашениями]]></string>
+  <string name="_bx_invites_page_block_title_invites"><![CDATA[Управление приглашениями]]></string>
+  <string name="_bx_invites_page_block_title_invite"><![CDATA[Пригласить]]></string>
+  <string name="_bx_invites_page_title_sys_invites"><![CDATA[Управление приглашениями]]></string>
 
-
+  
 	<!-- Menus -->
 	<string name="_bx_invites_menu_item_title_system_admt_requests"><![CDATA[Запросы на приглашение]]></string>
 	<string name="_bx_invites_menu_item_title_admt_requests"><![CDATA[Приглашения]]></string>
 	<string name="_bx_invites_menu_item_title_requests"><![CDATA[Запросы]]></string>
   <string name="_bx_invites_menu_dashboard_manage_tools_addon_counter1_caption"><![CDATA[в ожидании]]></string>
+  <string name="_bx_invites_menu_item_title_manage_requests"><![CDATA[Управление приглашениями]]></string>
+  <string name="_bx_invites_menu_item_title_manage_invites"><![CDATA[Управление запросами]]></string>
 
 
 	<!-- Options -->
-	<string name="_bx_invites_option_count_per_user"><![CDATA[Сколько приглашений может послать один пользователь]]></string>
+  <string name="_bx_invites_option_automatically_befriend"><![CDATA[Автоматическая дружба между приглашающим и приглашенным]]></string>
+  <string name="_bx_invites_option_count_per_user"><![CDATA[Сколько приглашений может послать один пользователь]]></string>
 	<string name="_bx_invites_option_key_lifetime"><![CDATA[Срок действия ключа приглашения (в днях)]]></string>
 	<string name="_bx_invites_option_enable_request_invite"><![CDATA[Разрешить запросы на приглашение]]></string>
 	<string name="_bx_invites_option_requests_email"><![CDATA[Эл. адреса для посылки запросов на приглашение (разделенение запятой)]]></string>
@@ -78,6 +102,7 @@
 	<string name="_bx_invites_acl_action_invite"><![CDATA[Пригласить]]></string>
 	<string name="_bx_invites_acl_action_request"><![CDATA[Запросить приглашение]]></string>
 	<string name="_bx_invites_acl_action_delete_request"><![CDATA[Удалить запросы на приглашение]]></string>
+  <string name="_bx_invites_acl_action_delete_invite"><![CDATA[Удалить приглашение]]></string>
 
 
 	<!-- Email Templates -->
@@ -126,6 +151,7 @@
 	<string name="_bx_invites_err_limit_reached"><![CDATA[Число посланных Вами приглашений достигло лимита.]]></string>
 	<string name="_bx_invites_err_not_available"><![CDATA[Эта функция сейчас недоступна. Пожалуйста, попытайтесь ещё раз позднее.]]></string>
 	<string name="_bx_invites_err_invite"><![CDATA[Невозможно послать приглашение по запросу.]]></string>
+  <string name="_bx_invites_err_delete_invite"><![CDATA[Невозможно удалить приглашение.]]></string>
 	<string name="_bx_invites_err_delete_request"><![CDATA[Невозможно удалить запрос.]]></string>
 	<string name="_bx_invites_err_used"><![CDATA[Приглашение не доступно или уже использовано.]]></string>
 	<string name="_bx_invites_err_already_send"><![CDATA[Приглашение уже было отправлено на этот эл. адрес]]></string>
@@ -139,9 +165,20 @@
 	<string name="_bx_invites_request_status_for_filter_invited"><![CDATA[Запросы с приглашениями]]></string>
 	<string name="_bx_invites_request_status_for_filter_seen"><![CDATA[Приглашение просмотрено]]></string>
 	<string name="_bx_invites_request_status_for_filter_joined"><![CDATA[Присоединился]]></string>
-	<string name="_bx_invites_title_date_invite_sent"><![CDATA[Дата отправки]]></string>
+
+  <string name="_bx_invites_invites_status_for_filter_all"><![CDATA[Все приглашения]]></string>
+  <string name="_bx_invites_invites_status_for_filter_accepted"><![CDATA[Принятые приглашения]]></string>
+  <string name="_bx_invites_invites_status_for_filter_not_accepted"><![CDATA[Не принятые приглашения]]></string>
+
+  <string name="_bx_invites_title_date_invite_sent"><![CDATA[Дата отправки]]></string>
 	<string name="_bx_invites_title_date_invite_seen"><![CDATA[Дата просмотра]]></string>
 
-	<string name="_bx_invites_alert_action_request"><![CDATA[<b class="bx-ntfs-content-profile">{entry_sample}</b> запросил приглашение - <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
-        <string name="_bx_invites_alert_action_request_notify_personal"><![CDATA[Новые запросы]]></string>
+  <string name="_bx_invites_reports_for_analytics_invited_total"><![CDATA[Приглашенные - Общее количество]]></string>
+  <string name="_bx_invites_reports_for_analytics_invited_speed_grows"><![CDATA[Приглашенные - Динамика роста]]></string>
+  <string name="_bx_invites_reports_for_analytics_invitation_total"><![CDATA[Приглашения - Общее количество]]></string>
+  <string name="_bx_invites_reports_for_analytics_invitation_speed_grows"><![CDATA[Приглашения - Динамика роста]]></string>
+
+
+  <string name="_bx_invites_alert_action_request"><![CDATA[<b class="bx-ntfs-content-profile">{entry_sample}</b> запросил приглашение - <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
+  <string name="_bx_invites_alert_action_request_notify_personal"><![CDATA[Новые запросы]]></string>
 </resources>
