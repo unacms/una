@@ -3000,4 +3000,8 @@
 	<string name="_sys_option_per_page_browse_showcase"><![CDATA[Количество позиций при отображении витриной]]></string>
   <string name="_sys_option_per_page_browse_recommended"><![CDATA[Количество позиций при отображении рекомендованных]]></string>
   <string name="_sys_javascript_requred"><![CDATA[Для корректной работы нужен включенный JavaScript! Пожалуйста, включите его в барузере!]]></string>
+	<string name="_sys_wiki_system_title"><![CDATA[Системная Вики]]></string>
+	<string name="_sys_wiki_error_page_exists"><![CDATA[Страница с таким именем ({0}) уже существует]]></string>
+    <string name="_sys_wiki_error_missing_wiki_object"><![CDATA[Вики объект ({0}) не найден]]></string>
+
 </resources>

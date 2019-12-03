@@ -32,11 +32,16 @@ class BxDolPageQuery extends BxDolDb
         return $aObject;
     }
 
-    static public function getPageObjectNameByURI($sURI)
+    static public function getPageObjectNameByURI($sURI, $sModule = false)
     {
         $oDb = BxDolDb::getInstance();
-        $sQuery = $oDb->prepare("SELECT `object` FROM `sys_objects_page` WHERE `uri` = ?", $sURI);
-        return $oDb->getOne($sQuery);
+        $a = array('uri' => $sURI);
+        $sQuery = "SELECT `object` FROM `sys_objects_page` WHERE `uri` = :uri";
+        if ($sModule) {
+            $a['module'] = $sModule;
+            $sQuery .= " AND `module` = :module";
+        }
+        return $oDb->getOne($sQuery, $a);
     }
 
 	static public function getPageTriggers($sTriggerName)

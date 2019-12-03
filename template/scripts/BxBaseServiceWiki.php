@@ -30,9 +30,37 @@ class BxBaseServiceWiki extends BxDol
     /** 
      * @ref bx_system_general-wiki_page "wiki_page"
      */
-    public function serviceWikiPage ($sUri)
+    public function serviceWikiPage ($sWikiObject, $sUri)
     {
-        echo "Show wiki page with '$sUri' uri";
+        $oWiki = BxDolWiki::getObjectInstance($sWikiObject);
+        if (!$oWiki) {
+            $oTemplate = BxDolTemplate::getInstance();
+            $oTemplate->displayPageNotFound();
+            return;
+        }
+
+        $oPage = BxDolPage::getObjectInstanceByModuleAndURI($sWikiObject, $sUri);
+        if ($oPage) {
+
+            $oPage->displayPage();
+
+        } else {
+
+            if ($oWiki->isAllowed('add')) {
+                $oPage = BxDolPage::getObjectInstanceByURI($sUri);
+                if ($oPage) {
+                    $oTemplate = BxDolTemplate::getInstance();
+                    $oTemplate->displayErrorOccured(_t("_sys_wiki_error_page_exists", bx_process_output($sUri)));
+                } else {
+                    echo "TODO: wiki - suggest to create page with specified URI";
+                }
+            } 
+            else {
+                $oTemplate = BxDolTemplate::getInstance();
+                $oTemplate->displayPageNotFound();
+            }
+        }
+
     }
 }
 

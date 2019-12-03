@@ -364,6 +364,27 @@ class BxBasePage extends BxDolPage
     }
 
     /**
+     * Get content for 'wiki' block type.
+     * @return string
+     */
+    protected function _getBlockWiki ($aBlock)
+    {
+        $oWiki = BxDolWiki::getObjectInstance($this->_aObject['module']);
+        if (!$oWiki) {
+            $sContent = _t('_sys_wiki_error_missing_wiki_object', $this->_aObject['module']);
+        } 
+        else {
+            $sContent = $oWiki->getBlockContent($aBlock['id']);
+            $sContent = bx_process_macros($sContent);
+        }
+
+        $s = '<div class="bx-page-wiki-container">' . $sContent . '</div>';
+        $s = $this->_replaceMarkers($s);
+        $s = bx_process_macros($s);
+        return $s;
+    }
+
+    /**
      * Get content for 'lang' block type.
      * @return string
      */

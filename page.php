@@ -14,18 +14,14 @@ bx_import('BxDolLanguages');
 
 check_logged();
 
-$oTemplate = BxDolTemplate::getInstance();
-
 $oPage = BxDolPage::getObjectInstanceByURI();
 if ($oPage) {
 
-    $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
-    $oTemplate->setPageType ($oPage->getType());
-    $oTemplate->setPageContent ('page_main_code', $oPage->getCode());
-    $oTemplate->getPageCode();
+    $oPage->displayPage();
 
 } else {
 
+    $oTemplate = BxDolTemplate::getInstance();
     $oTemplate->displayPageNotFound();
 }
 
