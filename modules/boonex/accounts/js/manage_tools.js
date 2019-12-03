@@ -66,6 +66,14 @@ BxAccntManageTools.prototype.onClickResendCemail = function(iContentId, oLink) {
 	oGrid.actionWithId(iContentId, 'resend_cemail', oData, '', false, 0);
 };
 
+BxAccntManageTools.prototype.onClickConfirm = function (iContentId, oLink) {
+    $('.bx-popup-applied:visible').dolPopupHide();
+
+    var oGrid = glGrids[this._sObjNameGrid];
+    var oData = oGrid._checkAppend(oLink, oGrid._getActionDataForReload());
+    oGrid.actionWithId(iContentId, 'confirm', oData, '', false, 0);
+};
+
 BxAccntManageTools.prototype.onClickResetPassword = function(iContentId, oLink) {
 	$('.bx-popup-applied:visible').dolPopupHide();
 

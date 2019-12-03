@@ -151,7 +151,38 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
             echoJson(array('popup' => array('html' => $sContent, 'options' => array())));
         }
     }
+    
+    public function performActionConfirm()
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
 
+    	$aIds = bx_get('ids');
+        if(!$aIds || !is_array($aIds)) {
+            echoJson(array());
+            return;
+        }
+
+        $oAccount = BxDolAccount::getInstance();
+
+        $iAffected = 0;
+        $aIdsAffected = array();
+        foreach($aIds as $iId){
+            if (BxDolAccount::isNeedConfirmEmail()){
+			    if($oAccount->updateEmailConfirmed(true, true, $iId)) {
+				    $aIdsAffected[] = $iId;
+        		    $iAffected++;  
+			    }
+            }
+            if (BxDolAccount::isNeedConfirmPhone()){
+			    if($oAccount->updatePhoneConfirmed(true, $iId)) {
+				    $aIdsAffected[] = $iId;
+        		    $iAffected++;  
+			    }
+            }
+        }
+		echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['grid_action_err_perform'])));
+    }
+    
     public function performActionResendCemail()
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
