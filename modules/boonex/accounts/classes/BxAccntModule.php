@@ -52,6 +52,15 @@ class BxAccntModule extends BxBaseModGeneralModule
       
         return array('counter1_value' => $o->getNum(),'counter3_value' => $iNumTotal, 'counter1_caption' => _t('_bx_accnt_menu_dashboard_manage_tools_addon_counter1_caption'));
 	}
+    
+    public function checkAllowedConfirm(&$aDataEntry, $isPerformAction = false)
+    {
+    	$bAdmin = isAdmin();
+    	if(!$bAdmin || BxDolAccount::getInstance($aDataEntry['id'])->isConfirmed())
+    		return _t('_sys_txt_access_denied');
+
+    	return CHECK_ACTION_RESULT_ALLOWED;
+    }
 
     public function checkAllowedDelete(&$aDataEntry, $isPerformAction = false)
     {

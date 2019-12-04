@@ -74,7 +74,6 @@ class BxAnalyticsModule extends BxDolModule
     public function serviceGetModules()
     {
         $aResult = array();
-        $aResult2 = array();
         $aResult[BX_ANALYTICS_SYSTEM] = _t('_bx_analytics_system_text');
         $BxDolModuleQuery = BxDolModuleQuery::getInstance();
         $aModules = $BxDolModuleQuery->getModulesBy(array('type' => 'modules', 'active' => 1));
@@ -84,7 +83,12 @@ class BxAnalyticsModule extends BxDolModule
                 $aResult[$aModule['name']] = $aModule['title'];
             }
         }
-        return array_merge($aResult, $aResult2);
+        
+        bx_alert($this->_aModule['name'], 'get_modules', 0, 0, array(
+            'list' => &$aResult,
+        ));
+        
+        return $aResult;
     }
           
     /**
@@ -125,6 +129,12 @@ class BxAnalyticsModule extends BxDolModule
             $aRv[BX_ANALYTICS_CONTENT_TOTAL] = _t('_bx_analytics_type_content_growth');
             $aRv[BX_ANALYTICS_CONTENT_SPEED] = _t('_bx_analytics_type_content_speed');
         }
+        
+        bx_alert($this->_aModule['name'], 'get_reports', 0, 0, array(
+            'module' => $sModuleName,
+            'list' => &$aRv,
+        ));
+        
         echo json_encode($aRv);
     }
           
@@ -143,8 +153,7 @@ class BxAnalyticsModule extends BxDolModule
         if ($sType == ''){
             header('Content-Type: application/json');
             echo $this->actionGetReportsDataJson($sModuleName, $sReportName, $sDateFrom, $sDateTo);
-        }
-            
+        } 
     }
     
     private function actionGetReportsDataCsv($sModuleName, $sReportName, $sDateFrom, $sDateTo)
@@ -200,70 +209,21 @@ class BxAnalyticsModule extends BxDolModule
         $iMinValueY = 0;
         $iMaxValueY = 0;
         $bDefaultFillData = true;
+        $sReportType = $sReportName;
+        
         $aValues = array('labels' => array(), 'values' => array(array('legend' => '', 'data' => array())), 'links' => array(), 'strings' => array(0 => _t('_bx_analytics_txt_item'), 1 => _t('_bx_analytics_txt_value')));
    
         if ($sModuleName != BX_ANALYTICS_SYSTEM){
             $oModule = BxDolModule::getInstance($sModuleName);
             $aValues['strings'][0] = $oModule->_aModule['title'];
-            $aValues['strings'][1] = _t('_bx_analytics_type_' . $sReportName . '_label');
+            $aValues['strings'][1] = _t('_bx_analytics_type_' . $sReportType . '_label');
         }
         else{
             $aValues['strings'][0] = _t('_bx_analytics_txt_total_content');
-            $aValues['strings'][1] = _t('_bx_analytics_type_' . $sReportName . '_label');
+            $aValues['strings'][1] = _t('_bx_analytics_type_' . $sReportType . '_label');
         }
               
-        switch ($sReportName) {
-            case BX_ANALYTICS_CONTENT_TOTAL:
-            case BX_ANALYTICS_CONTENT_SPEED:
-                $sType = "line";
-                $bIsTimeX = true;
-                $sTableName = '';
-                $aValues['strings'][0] = _t('_bx_analytics_txt_date');
-                $bDefaultFillData = false;
-                if ($sModuleName != BX_ANALYTICS_SYSTEM){
-                    $oModule = BxDolModule::getInstance($sModuleName);
-                    if (isset($oModule->_oConfig->CNF['TABLE_ENTRIES']))
-                        $sTableName = $oModule->_oConfig->CNF['TABLE_ENTRIES'];
-                    $aValues['strings'][1] = ($sReportName == BX_ANALYTICS_CONTENT_TOTAL ? _t('_bx_analytics_txt_total_count', $oModule->_aModule['title']) : _t('_bx_analytics_txt_count', $oModule->_aModule['title']));
-                }
-                else{
-                    $sTableName = 'sys_accounts';
-                    $aValues['strings'][1] = ($sReportName == BX_ANALYTICS_CONTENT_TOTAL ? _t('_bx_analytics_txt_total_count', _t('_bx_analytics_txt_accounts')) : _t('_bx_analytics_txt_count', _t('_bx_analytics_txt_accounts')));
-                }
-                if (isset($oModule) && isset($oModule->_oConfig->CNF['FIELD_ADDED']))
-                    $sColumnAdded = $oModule->_oConfig->CNF['FIELD_ADDED'];
-                else
-                    $sColumnAdded = 'added';
-                if ($sColumnAdded != ''){
-                    $aData = $this->_oDb->getGrowth($sTableName, $sColumnAdded, $iDateFrom, $iDateTo);
-                    $iValuePrev = $this->_oDb->getGrowthInitValue($sTableName, $sColumnAdded, $iDateFrom);
-                    $aTmpDates = array();
-                    foreach ($aData as $aValue) {
-                        $sX = $aValue['period'];
-                        $aTmpDates[$sX] = $aValue['count'];
-                    }
-                    for ($i = $iDateFrom; $i < $iDateTo ; $i = $i + 86400 ){
-                        $sX = date('Y-m-d', $i);
-                        if (!array_key_exists($sX, $aTmpDates)){
-                            array_push($aValues['values'][0]['data'], array('x' => $sX, 'y' => $sReportName == BX_ANALYTICS_CONTENT_TOTAL ? $iValuePrev : 0));
-                        }
-                        else{
-                            array_push($aValues['values'][0]['data'], array('x' => $sX, 'y' => $sReportName == BX_ANALYTICS_CONTENT_TOTAL ? ($iValuePrev + $aTmpDates[$sX]) : $aTmpDates[$sX]));
-                            $iValuePrev += $aTmpDates[$sX];
-                        }
-                        //array_push($aValues['labels'], $sX);
-                        if ($sReportName == BX_ANALYTICS_CONTENT_TOTAL){
-                            if ($iValuePrev > $iMaxValueY)
-                                $iMaxValueY = $iValuePrev;
-                        }
-                        else{
-                            if (array_key_exists($sX, $aTmpDates) && $aTmpDates[$sX] > $iMaxValueY)
-                                $iMaxValueY = $aTmpDates[$sX];
-                        } 
-                    }
-                }
-                break;
-                  
+        switch ($sReportType) {
             case BX_ANALYTICS_TOP_BY_LIKES:
                 $bDefaultFillData = false;
                 $this->getViewsOrVotes(BxDolVote::getSystems(), 'OBJECT_VOTES', $sModuleName, $iDateFrom, $iDateTo, $aValues, $iMaxValueY, $iMinValueY);
@@ -302,8 +262,77 @@ class BxAnalyticsModule extends BxDolModule
                 }
                 $aData = $this->sortArrayOfArraysAndSlice($aData, 'value', intval(getParam('bx_analytics_items_count')));
                 break;
+                
+            default:
+                $sType = "line";
+                $bIsTimeX = true;
+                $sTableName = '';
+                $aValues['strings'][0] = _t('_bx_analytics_txt_date');
+                $bDefaultFillData = false;
+                if ($sModuleName != BX_ANALYTICS_SYSTEM){
+                    $oModule = BxDolModule::getInstance($sModuleName);
+                    if (isset($oModule->_oConfig->CNF['TABLE_ENTRIES']))
+                        $sTableName = $oModule->_oConfig->CNF['TABLE_ENTRIES'];
+                    $aValues['strings'][1] = ($sReportType == BX_ANALYTICS_CONTENT_TOTAL ? _t('_bx_analytics_txt_total_count', $oModule->_aModule['title']) : _t('_bx_analytics_txt_count', $oModule->_aModule['title']));
+                }
+                else{
+                    $sTableName = 'sys_accounts';
+                    $aValues['strings'][1] = ($sReportType == BX_ANALYTICS_CONTENT_TOTAL ? _t('_bx_analytics_txt_total_count', _t('_bx_analytics_txt_accounts')) : _t('_bx_analytics_txt_count', _t('_bx_analytics_txt_accounts')));
+                }
+                if (isset($oModule) && isset($oModule->_oConfig->CNF['FIELD_ADDED']))
+                    $sColumnAdded = $oModule->_oConfig->CNF['FIELD_ADDED'];
+                else
+                    $sColumnAdded = 'added';
+                
+                $aData = array();
+                $iValuePrev = 0;
+                
+                bx_alert($this->_aModule['name'], 'get_chart_data_line', 0, 0, array(
+                    'module' => $sModuleName,
+                    'report_name' => $sReportName,
+                    'report_type' => &$sReportType,
+                    'date_from' => $iDateFrom,
+                    'date_to' => $iDateTo,
+                    'data' => &$aData,
+                    'prev_value' => &$iValuePrev,
+                ));
+                
+                
+                
+                if ($sColumnAdded != '' && count($aData) == 0){
+                    $aData = $this->_oDb->getGrowth($sTableName, $sColumnAdded, $iDateFrom, $iDateTo);
+                    $iValuePrev = $this->_oDb->getGrowthInitValue($sTableName, $sColumnAdded, $iDateFrom);
+                }
+                
+                if (count($aData) > 0){
+                    $aTmpDates = array();
+                    foreach ($aData as $aValue) {
+                        $sX = $aValue['period'];
+                        $aTmpDates[$sX] = $aValue['count'];
+                    }
+                    for ($i = $iDateFrom; $i < $iDateTo ; $i = $i + 86400 ){
+                        $sX = date('Y-m-d', $i);
+                        if (!array_key_exists($sX, $aTmpDates)){
+                            array_push($aValues['values'][0]['data'], array('x' => $sX, 'y' => $sReportType == BX_ANALYTICS_CONTENT_TOTAL ? $iValuePrev : 0));
+                        }
+                        else{
+                            array_push($aValues['values'][0]['data'], array('x' => $sX, 'y' => $sReportType == BX_ANALYTICS_CONTENT_TOTAL ? ($iValuePrev + $aTmpDates[$sX]) : $aTmpDates[$sX]));
+                            $iValuePrev += $aTmpDates[$sX];
+                        }
+                        //array_push($aValues['labels'], $sX);
+                        if ($sReportType == BX_ANALYTICS_CONTENT_TOTAL){
+                            if ($iValuePrev > $iMaxValueY)
+                                $iMaxValueY = $iValuePrev;
+                        }
+                        else{
+                            if (array_key_exists($sX, $aTmpDates) && $aTmpDates[$sX] > $iMaxValueY)
+                                $iMaxValueY = $aTmpDates[$sX];
+                        } 
+                    }
+                }
+                break;
         }
-              
+          
         if ($bDefaultFillData){
             foreach ($aData as $aValue) {
                 array_push($aValues['labels'], $this->getItemName($oModule->serviceGetTitle($aValue['object_id'])));

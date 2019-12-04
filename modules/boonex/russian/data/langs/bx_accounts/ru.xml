@@ -19,6 +19,8 @@
     <string name="_bx_accnt_menu_item_title_edit_email"><![CDATA[Изменить email]]></string>
     <string name="_bx_accnt_menu_item_title_system_resend_cemail"><![CDATA[Переслать подтверждение]]></string>
     <string name="_bx_accnt_menu_item_title_resend_cemail"><![CDATA[Переслать подтверждение]]></string>
+    <string name="_bx_accnt_menu_item_title_system_confirm"><![CDATA[Подтвердить]]></string>
+    <string name="_bx_accnt_menu_item_title_confirm"><![CDATA[Подтвердить]]></string>
     <string name="_bx_accnt_menu_item_title_system_reset_password"><![CDATA[Сбросить пароль]]></string>
     <string name="_bx_accnt_menu_item_title_reset_password"><![CDATA[Сбросить пароль]]></string>
     <string name="_bx_accnt_menu_item_title_system_unlock_account"><![CDATA[Разблокировать]]></string>
@@ -56,6 +58,7 @@
     <string name="_bx_accnt_grid_column_title_adm_logged"><![CDATA[Последнее посещение]]></string>
     <string name="_bx_accnt_grid_action_title_adm_activate"><![CDATA[Активировать]]></string>
     <string name="_bx_accnt_grid_action_title_adm_suspend"><![CDATA[Заблокировать]]></string>
+    <string name="_bx_accnt_grid_action_title_adm_confirm"><![CDATA[Подтвердить]]></string>
     <string name="_bx_accnt_grid_action_title_adm_edit_email"><![CDATA[Изменить email]]></string>
     <string name="_bx_accnt_grid_action_title_adm_resend_cemail"><![CDATA[Переслать подтверждение]]></string>
     <string name="_bx_accnt_grid_action_title_adm_reset_password"><![CDATA[Сбросить пароль]]></string>

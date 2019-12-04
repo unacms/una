@@ -184,15 +184,38 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
 
         return BxTemplFunctions::getInstance()->popupBox($sId, $sTitle, $sContent, true);
     }
-
-    public function getJsCode($sType, $aParams = array(), $bWrap = true)
+    
+    public function getJsCode2($sType, $sGridType)
     {
+        $aParams = array();
         $aParams = array_merge(array(
             'aHtmlIds' => $this->_oConfig->getHtmlIds(),
-            'sObjNameGrid' => $this->_oConfig->getObject('grid_requests'),
+            'sObjNameGrid' => $this->_oConfig->getObject('grid_' . $sGridType),
         ), $aParams);
 
-        return parent::getJsCode($sType, $aParams, $bWrap);
+        return parent::getJsCode($sType, $aParams);
+    }
+
+    public function getMenuForManageBlocks($sType)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        
+        $sMenu = '';
+		$oPermalink = BxDolPermalinks::getInstance();
+
+		$aMenuItems = array();
+		$aMenuItems[] = array('id' => 'invites-requests', 'name' => 'invites-requests', 'class' => '', 'link' => $oPermalink->permalink($CNF['URL_REQUESTS']), 'target' => '_self', 'title' => _t('_bx_invites_menu_item_title_manage_requests'), 'active' => 1);
+		$aMenuItems[] = array('id' => 'invites-invites', 'name' => 'invites-invites', 'class' => '', 'link' => $oPermalink->permalink($CNF['URL_INVITES']), 'target' => '_self', 'title' => _t('_bx_invites_menu_item_title_manage_invites'), 'active' => 1);
+
+		if(count($aMenuItems) > 1) {
+	        $oMenu = new BxTemplMenu(array(
+	            'template' => 'menu_vertical.html', 
+	            'menu_items' => $aMenuItems
+	        ), $this);
+	        $oMenu->setSelected($this->getModule()->_aModule['name'], 'invites-' . $sType);
+	        $sMenu = $oMenu->getCode();
+		}
+        return $sMenu;
     }
     
     public function getProfilesByAccount($iAccountId, $iMaxVisible = 2)

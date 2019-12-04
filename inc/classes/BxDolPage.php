@@ -130,6 +130,24 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     }
 
     /**
+     * Get page object instance by Module name and page URI
+     * @param $sModule module name
+     * @param $sURI unique page URI
+     * @return object instance or false on error
+     */
+    static public function getObjectInstanceByModuleAndURI($sModule, $sURI = '', $oTemplate = false)
+    {
+    	if(empty($sURI) && bx_get('i') !== false)
+    		$sURI = bx_process_input(bx_get('i'));
+
+    	if(empty($sURI))
+			return false;
+
+        $sObject = BxDolPageQuery::getPageObjectNameByURI($sURI, $sModule);
+        return $sObject ? self::getObjectInstance($sObject, $oTemplate) : false;
+    }
+
+    /**
      * Get page object instance by page URI
      * @param $sURI unique page URI
      * @return object instance or false on error
@@ -213,6 +231,20 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         }
 
         return true;
+    }
+
+    /**
+     * Display complete page
+     */
+    public function displayPage ($oTemplate = null)
+    {
+        if (!$oTemplate)
+            $oTemplate = BxDolTemplate::getInstance();
+
+        $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
+        $oTemplate->setPageType ($this->getType());
+        $oTemplate->setPageContent ('page_main_code', $this->getCode());
+        $oTemplate->getPageCode();
     }
 
     public function getType ()

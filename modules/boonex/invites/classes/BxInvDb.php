@@ -67,6 +67,16 @@ class BxInvDb extends BxDolModuleDb
                 $sWhereClause = "AND joined_account_id IS NOT NULL AND `{$this->_sTableInvites}`.`request_id`=:request_id ";
                 $sLimitClause = "LIMIT 1";
                 break;
+            case 'profile_id_by_joined_account_id':
+                $aMethod['name'] = 'getOne';
+                $aMethod['params'][1] = array(
+                    'joined_account_id' => $aParams['value']
+                );
+
+                $sSelectClause = "MAX(`{$this->_sTableInvites}`.`profile_id`)";
+                $sWhereClause = "AND `{$this->_sTableInvites}`.`joined_account_id`=:joined_account_id ";
+                $sLimitClause = "LIMIT 1";
+                break;  
             case 'date_joined_by_request':
                 $aMethod['name'] = 'getOne';
                 $aMethod['params'][1] = array(
@@ -209,6 +219,34 @@ class BxInvDb extends BxDolModuleDb
         $aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array("COUNT(*)", "", ""), $sSql);
 
         return array($aEntries, (int)call_user_func_array(array($this, $aMethod['name']), $aMethod['params']));
+    }
+    
+    public function getDataForCharts($iDateFrom, $iDateTo, $isInvited = false)
+    {
+        $aBindings = array(
+            'datefrom' => $iDateFrom,
+            'dateto' => $iDateTo
+        );
+        $sQuery = "SELECT DATE(FROM_UNIXTIME(`date`)) AS `period`, YEAR(FROM_UNIXTIME(`date`)) AS `year`, COUNT(*) AS `count` FROM `" . $this->_sTableInvites . "` WHERE `date` >= :datefrom AND `date` <= :dateto " . $this->getAddSqlForCharts($isInvited) . " GROUP BY `period`, `year` ORDER BY `year`, `period` ASC";
+        return $this->getAll($sQuery, $aBindings);
+    }
+    
+    public function getInitValueForCharts($iDateFrom, $isInvited = false)
+    {
+        $aBindings = array(
+            'datefrom' => $iDateFrom
+        );
+        $sQuery = "SELECT COUNT(*) AS `count` FROM " . $this->_sTableInvites . " WHERE `date` < :datefrom " . $this->getAddSqlForCharts($isInvited);
+        return $this->getOne($sQuery, $aBindings);
+    }
+    
+    private function getAddSqlForCharts($isInvited)
+    {
+        $sSqlAdd = "";
+        if ($isInvited){
+            $sSqlAdd = " AND `joined_account_id` IS NOT NULL ";
+        }
+        return $sSqlAdd;
     }
     
     private function updateRequestStatusByRequestId($iStatus, $iReqestId)

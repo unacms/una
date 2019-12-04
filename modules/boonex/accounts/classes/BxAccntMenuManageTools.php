@@ -50,6 +50,9 @@ class BxAccntMenuManageTools extends BxBaseModGeneralMenuManageTools
             case 'unlock-account':
             	$sCheckFuncName = 'checkAllowedUnlockAccount';
             	break;
+            case 'confirm':
+            	$sCheckFuncName = 'checkAllowedConfirm';
+            	break;
         }
 
         if(!$sCheckFuncName || !method_exists($this->_oModule, $sCheckFuncName))

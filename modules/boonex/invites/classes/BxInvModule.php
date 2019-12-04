@@ -216,15 +216,29 @@ class BxInvModule extends BxDolModule
      */
     public function serviceGetBlockManageRequests()
     {
-        $this->_oTemplate->addJs('jquery.form.min.js');
-        $this->_oTemplate->addJs('main.js');
-        $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getObject('grid_requests'));
-        if(!$oGrid)
-            return '';
-
-        $this->_oTemplate->addCss(array('main.css'));
-        $this->_oTemplate->addJsTranslation(array('_sys_grid_search'));
-        return  $this->_oTemplate->getJsCode('main') . $oGrid->getCode();
+        return $this->getBlockManage('requests');
+    }
+    
+    /**
+     * @page service Service Calls
+     * @section bx_invites Invitations
+     * @subsection bx_invites-page_blocks Page Blocks
+     * @subsubsection bx_invites-get_block_manage_invites get_block_manage_requests
+     * 
+     * @code bx_srv('bx_invites', 'get_block_manage_invites', [...]); @endcode
+     * 
+     * Get page block with manage invitations table.
+     *
+     * @return HTML string with block content to display on the site or empty string if something is wrong. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
+     * 
+     * @see BxInvModule::serviceGetBlockManageInvites
+     */
+    /** 
+     * @ref bx_invites-get_block_manage_invites "get_block_manage_invites"
+     */
+    public function serviceGetBlockManageInvites()
+    {
+        return $this->getBlockManage('invites');
     }
 
     /**
@@ -269,8 +283,6 @@ class BxInvModule extends BxDolModule
     public function serviceAccountAddFormCheck()
     {
         $sReturn = '';
-        if (!$this->_oConfig->isRegistrationByInvitation())
-            return $sReturn;
 
         $oSession = BxDolSession::getInstance();
         $sKeyCode = $this->_oConfig->getKeyCode();
@@ -345,8 +357,11 @@ class BxInvModule extends BxDolModule
     }
     
     
+    public function attachAccountIdToInvite($iAccountId, $sKey)
+    {
+        $this->_oDb->attachAccountIdToInvite($iAccountId, $sKey);
+    }
     
-
     public function invite($sType, $sEmails, $sText, $mixedLimit = false, $oForm = null)
     {
         $iProfileId = $this->getProfileId();
@@ -448,6 +463,12 @@ class BxInvModule extends BxDolModule
         $aCheckResult = checkActionModule($iProfileId, 'delete request', $this->getName(), $bPerform);
         return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
     }
+    
+    public function isAllowedDeleteInvite($iProfileId, $bPerform = false)
+    {
+        $aCheckResult = checkActionModule($iProfileId, 'delete invite', $this->getName(), $bPerform);
+        return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
+    }
 
     public function getProfileId()
     {
@@ -472,15 +493,6 @@ class BxInvModule extends BxDolModule
         return $oProfile->getAccountId();
     }
 
-    protected function onInvite($iAccountId, $iProfileId)
-    {
-        $this->isAllowedInvite($iProfileId, true);
-
-        //--- Event -> Invite for Alerts Engine ---//
-        bx_alert($this->_oConfig->getObject('alert'), 'invite', 0, $iProfileId);
-        //--- Event -> Invite for Alerts Engine ---//
-    }
-
     public function onRequest($iRequestId)
     {
         //--- Event -> Request for Alerts Engine ---//
@@ -500,7 +512,33 @@ class BxInvModule extends BxDolModule
         bx_import('FormCheckerHelper', $this->_aModule);
         return BxDolForm::getObjectInstance($this->_oConfig->getObject('form_invite'), $sDisplay);
     }
+    
+    protected function getBlockManage($sType)
+    {
+        $this->_oTemplate->addJs('jquery.form.min.js');
+        $this->_oTemplate->addJs('main.js');
+        $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getObject('grid_' . $sType));
+        if(!$oGrid)
+            return '';
 
+        $this->_oTemplate->addCss(array('main.css'));
+        $this->_oTemplate->addJsTranslation(array('_sys_grid_search'));
+       
+        return array(
+           'menu' => $this->_oTemplate->getMenuForManageBlocks($sType),
+           'content' => $this->_oTemplate->getJsCode2('main', $sType) . $oGrid->getCode()
+       );
+    }
+
+    protected function onInvite($iAccountId, $iProfileId)
+    {
+        $this->isAllowedInvite($iProfileId, true);
+
+        //--- Event -> Invite for Alerts Engine ---//
+        bx_alert($this->_oConfig->getObject('alert'), 'invite', 0, $iProfileId);
+        //--- Event -> Invite for Alerts Engine ---//
+    }
+    
     protected function getJoinLink($sKey)
     {
         $sKeyCode = $this->_oConfig->getKeyCode();
@@ -513,11 +551,7 @@ class BxInvModule extends BxDolModule
     {
         return  BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'SetSeenMark/' . $sKey . "/";
     }
-    
-    public function attachAccountIdToInvite($iAccountId, $sKey)
-    {
-        $this->_oDb->attachAccountIdToInvite($iAccountId, $sKey);
-    }
+
 }
 
 /** @} */
