@@ -624,21 +624,25 @@ class BxBaseCmts extends BxDolCmts
     protected function _getLabelDo($aParams = array())
     {
         return $this->_oTemplate->parseHtmlByContent($this->_getTmplLabelDo(), array(
+            'style_prefix' => $this->_sStylePrefix,
             'bx_if:show_image' => array(
                 'condition' => isset($aParams['show_do_comment_image']) && $aParams['show_do_comment_image'] == true,
                 'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
                     'src' => $this->_getImageDo()
                 )
             ),
             'bx_if:show_icon' => array(
                 'condition' => isset($aParams['show_do_comment_icon']) && $aParams['show_do_comment_icon'] == true,
                 'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
                     'name' => $this->_getIconDo()
                 )
             ),
             'bx_if:show_text' => array(
                 'condition' => isset($aParams['show_do_comment_label']) && $aParams['show_do_comment_label'] == true,
                 'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
                     'text' => _t($this->_getTitleDo())
                 )
             )
