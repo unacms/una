@@ -31,6 +31,11 @@ class BxOrgsTemplate extends BxBaseModGroupsTemplate
     {
         return BxBaseModProfileTemplate::_getUnitClass($aData, $sTemplateName);
     }
+
+    protected function _getUnitSize($aData, $sTemplateName = 'unit.html')
+    {
+        return BxBaseModProfileTemplate::_getUnitSize($aData, $sTemplateName);
+    }
 }
 
 /** @} */

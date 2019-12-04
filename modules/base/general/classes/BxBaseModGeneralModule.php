@@ -436,11 +436,12 @@ class BxBaseModGeneralModule extends BxDolModule
             'design_box' => BX_DB_PADDING_DEF,
             'empty_message' => false,
             'ajax_paginate' => true,
+            'class_search_result' => 'SearchResult'
         );
         $aParams = array_merge($aDefaults, $aParams);
-        return $this->_serviceBrowse ($aParams['mode'], $aParams['params'], $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate']);
+        return $this->_serviceBrowse ($aParams['mode'], $aParams['params'], $aParams['design_box'], $aParams['empty_message'], $aParams['ajax_paginate'], $aParams['class_search_result']);
     }
-    
+
     /**
      * @page service Service Calls
      * @section bx_base_general Base General

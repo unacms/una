@@ -93,13 +93,8 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         // get profile's url
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);
 
-        $sThumbUrl = $sAvatarUrl = '';
-        if($bPublicThumb) {
-            $sThumbUrl = $this->thumb($aData, false);
-            $sAvatarUrl = $this->avatar($aData, false);
-        };
+        $sThumbUrl = $bPublicThumb ? $this->_getUnitThumbUrl($sTemplateSize, $aData, false) : '';
         $bThumbUrl = !empty($sThumbUrl);
-        $bAvatarUrl = !empty($sAvatarUrl);
 
         $aTmplVarsThumbnail = array(
             'bx_if:show_thumb_image' => array(
@@ -109,15 +104,8 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                     'thumb_url' => $sThumbUrl
                 )
             ),
-            'bx_if:show_avatar_image' => array(
-                'condition' => $bAvatarUrl,
-                'content' => array(
-                    'size' => $sTemplateSize,
-                    'avatar_url' => $sAvatarUrl
-                )
-            ),
             'bx_if:show_thumb_letter' => array(
-                'condition' => !$bThumbUrl && !$bAvatarUrl,
+                'condition' => !$bThumbUrl,
                 'content' => array(
                     'size' => $sTemplateSize,
                     'color' => implode(', ', BxDolTemplate::getColorCode($iProfile, 1.0)),
@@ -130,7 +118,6 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             ),
             'size' => $sTemplateSize,
             'thumb_url' => $bThumbUrl ? $sThumbUrl : $this->getImageUrl('no-picture-thumb.png'),
-            'avatar_url' => $bAvatarUrl ? $sAvatarUrl : $this->getImageUrl('no-picture-thumb.png'),
         );
 
         $sCoverUrl = $bPublicCover ? $this->urlCoverUnit($aData, false) : '';
@@ -146,7 +133,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'id' => $iContentId,
             'public' => $bPublic,
             'bx_if:show_thumbnail' => array(
-                'condition' => $bThumbUrl || $bAvatarUrl || $this->_bLetterAvatar,
+                'condition' => $bThumbUrl || $this->_bLetterAvatar,
                 'content' => $aTmplVarsThumbnail
             ),
             'cover_url' => $sCoverUrl,
@@ -333,31 +320,49 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         BxDolCover::getInstance($this)->set($aVars, $sTemplateName);
     }
 
-	/**
+    /**
      * Get profile picture thumb url
+     * @deprecated since 11.0.0 use BxBaseModProfileTemplate::urlAvatar instead.
      */
     function avatar ($aData, $bSubstituteNoImage = true)
     {
-        $CNF = &$this->_oConfig->CNF;
-        return $this->_image ($CNF['FIELD_PICTURE'], $CNF['OBJECT_IMAGES_TRANSCODER_AVATAR'], 'no-picture-thumb.png', $aData, $bSubstituteNoImage);
+        return $this->urlAvatar($aData, $bSubstituteNoImage);
     }
 
     /**
      * Get profile picture thumb url
+     * @deprecated since 11.0.0 use BxBaseModProfileTemplate::urlThumb instead.
      */
     function thumb ($aData, $bSubstituteNoImage = true)
     {
-        $CNF = &$this->_oConfig->CNF;
-        return $this->_image ($CNF['FIELD_PICTURE'], $CNF['OBJECT_IMAGES_TRANSCODER_THUMB'], 'no-picture-thumb.png', $aData, $bSubstituteNoImage);
+        return $this->urlThumb($aData, $bSubstituteNoImage);
+    }
+
+    /**
+     * Get profile picture thumb url
+     * @deprecated since 11.0.0 use BxBaseModProfileTemplate::urlIcon instead.
+     */
+    function icon ($aData, $bSubstituteNoImage = true)
+    {
+        return $this->urlIcon($aData, $bSubstituteNoImage);
     }
 
     /**
      * Get profile picture icon url
      */
-    function icon ($aData, $bSubstituteNoImage = true)
+    function urlIcon ($aData, $bSubstituteNoImage = true)
     {
         $CNF = &$this->_oConfig->CNF;
         return $this->_image ($CNF['FIELD_PICTURE'], $CNF['OBJECT_IMAGES_TRANSCODER_ICON'], 'no-picture-icon.png', $aData, $bSubstituteNoImage);
+    }
+
+    /**
+     * Get profile thumb url
+     */
+    function urlThumb ($aData, $bSubstituteNoImage = true)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        return $this->_image ($CNF['FIELD_PICTURE'], $CNF['OBJECT_IMAGES_TRANSCODER_THUMB'], 'no-picture-thumb.png', $aData, $bSubstituteNoImage);
     }
 
     /**
@@ -396,19 +401,19 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
         $sImageUrl = $this->_image($CNF['FIELD_COVER'], $CNF['OBJECT_IMAGES_TRANSCODER_COVER'], '', $aData, false);
         if($sImageUrl === false) {
-        	$iImageId = (int)getParam('sys_site_cover_common');
-        	$oImageTranscoder = BxDolTranscoderImage::getObjectInstance(BX_DOL_TRANSCODER_OBJ_COVER);
-        	if($oImageTranscoder && $iImageId != 0)
-        		$sImageUrl = $oImageTranscoder->getFileUrl($iImageId);
+            $iImageId = (int)getParam('sys_site_cover_common');
+            $oImageTranscoder = BxDolTranscoderImage::getObjectInstance(BX_DOL_TRANSCODER_OBJ_COVER);
+            if($oImageTranscoder && $iImageId != 0)
+                $sImageUrl = $oImageTranscoder->getFileUrl($iImageId);
         }
 
         if($bSubstituteNoImage && !$sImageUrl)
-        	$sImageUrl = $this->getImageUrl('cover.jpg');
+            $sImageUrl = $this->getImageUrl('cover.jpg');
 
-		return $sImageUrl;
+        return $sImageUrl;
     }
 
-	/**
+    /**
      * Get profile cover image url for browse unit
      */
     function urlCoverUnit ($aData, $bSubstituteNoImage = true)
@@ -464,7 +469,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                 $sResult = $this->_sUnitClassShowCase;
                 break;
 
-			case 'unit_wo_info_showcase.html':
+            case 'unit_wo_info_showcase.html':
                 $sResult = $this->_sUnitClassWoInfoShowCase;
                 break;
         }
@@ -487,6 +492,16 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         }
 
         return $sResult;
+    }
+
+    protected function _getUnitThumbUrl($sSize, $aData, $bSubstituteNoImage = true)
+    {
+        $sMethod = 'url' . bx_gen_method_name(str_replace('ava', 'avatar', $sSize), array('_', '-'));
+
+        if(method_exists($this, $sMethod))
+            return $this->$sMethod($aData, $bSubstituteNoImage);
+        else
+            return $this->_getUnitThumbUrl($this->_sUnitSizeDefault, $aData, $bSubstituteNoImage);
     }
 }
 

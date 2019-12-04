@@ -317,12 +317,12 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
     public function serviceProfileThumb ($iContentId)
     {
-        return $this->_serviceTemplateFunc('thumb', $iContentId);
+        return $this->_serviceTemplateFunc('urlThumb', $iContentId);
     }
 
     public function serviceProfileIcon ($iContentId)
     {
-        return $this->_serviceTemplateFunc('icon', $iContentId);
+        return $this->_serviceTemplateFunc('urlIcon', $iContentId);
     }
 
     public function serviceProfileName ($iContentId)

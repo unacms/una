@@ -20,7 +20,7 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
     {
         parent::__construct($oConfig, $oDb);
 
-        $this->_bLetterAvatar = false;
+        $this->_bLetterAvatar = true;
         $this->_iUnitCharsSummary = 50;
 
         $this->_sUnitClassWithCover .= ' bx-base-groups-unit-with-cover';
@@ -52,6 +52,24 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
         $aVars['author_avatar'] = $oProfile->getAvatar();
 
         return $aVars;
+    }
+
+    protected function _getUnitSize($aData, $sTemplateName = 'unit.html')
+    {
+        $sResult = '';
+
+        switch($sTemplateName) {
+            case 'unit.html':
+            case 'unit_with_cover.html':
+                $sResult = 'ava';
+                break;
+
+            default:
+                $sResult = $this->_sUnitSizeDefault;
+                break;
+        }
+
+        return $sResult;
     }
 }
 
