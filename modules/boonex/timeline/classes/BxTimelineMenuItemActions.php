@@ -17,6 +17,7 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
     protected static $_sModeActions = 'actions';
     protected static $_sModeCounters = 'counters';
 
+    protected $_sModule;
     protected $_oModule;
 
     protected $_iEvent;
@@ -34,7 +35,8 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 
     public function __construct($aObject, $oTemplate = false)
     {
-        $this->_oModule = BxDolModule::getInstance('bx_timeline');
+        $this->_sModule = 'bx_timeline';
+        $this->_oModule = BxDolModule::getInstance($this->_sModule);
 
         parent::__construct($aObject, $this->_oModule->_oTemplate);
 
@@ -97,6 +99,11 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
         $aEvent['comments'] = $aEventData['comments'];
 
     	$this->setEvent($aEvent, $aBrowseParams);
+    }
+
+    public function setTemplateNameItem($sName)
+    {
+        $this->_sTmplNameItem = $sName;
     }
 
     protected function _setBrowseParams($aBrowseParams = array())

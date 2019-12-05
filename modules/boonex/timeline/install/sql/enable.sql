@@ -132,6 +132,31 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_timeline_menu_item_actions', 'bx_timeline', 'item-share', '_bx_timeline_menu_item_title_system_item_share', '_bx_timeline_menu_item_title_item_share', 'javascript:void(0)', 'bx_menu_popup(''bx_timeline_menu_item_share'', this, {''id'':''bx_timeline_menu_item_share_{content_id}''}, {content_id:{content_id}, name:''{name}'', view:''{view}'', type:''{type}''});', '', 'share-alt', '', 'bx_timeline_menu_item_share', 1, 2147483647, 1, 0, 1, 50),
 ('bx_timeline_menu_item_actions', 'bx_timeline', 'item-more', '_bx_timeline_menu_item_title_system_item_more', '_bx_timeline_menu_item_title_item_more', 'javascript:void(0)', 'bx_menu_popup(''bx_timeline_menu_item_manage'', this, {''id'':''bx_timeline_menu_item_manage_{content_id}''}, {content_id:{content_id}, name:''{name}'', view:''{view}'', type:''{type}''});', '', 'ellipsis-h', '', 'bx_timeline_menu_item_manage', 1, 2147483647, 1, 0, 1, 60);
 
+-- MENU: all actions menu for view entry 
+INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
+('bx_timeline_menu_item_actions_all', '_bx_timeline_menu_title_item_actions_all', 'bx_timeline_menu_item_actions_all', 'bx_timeline', 15, 0, 1, 'BxTimelineMenuItemActionsAll', 'modules/boonex/timeline/classes/BxTimelineMenuItemActionsAll.php');
+
+INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
+('bx_timeline_menu_item_actions_all', 'bx_timeline', '_bx_timeline_menu_set_title_item_actions_all', 0);
+
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
+('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-view', '_bx_timeline_menu_item_title_system_item_view', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 1, 0),
+('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-comment', '_bx_timeline_menu_item_title_system_item_comment', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 10),
+('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-vote', '_bx_timeline_menu_item_title_system_item_vote', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 1, 20),
+('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-reaction', '_bx_timeline_menu_item_title_system_item_reaction', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 30),
+('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-score', '_bx_timeline_menu_item_title_system_item_score', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 1, 40),
+('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-share', '_bx_timeline_menu_item_title_system_item_share', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 50),
+('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-pin', '_bx_timeline_menu_item_title_system_item_pin', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 100),
+('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-unpin', '_bx_timeline_menu_item_title_system_item_unpin', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 110),
+('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-stick', '_bx_timeline_menu_item_title_system_item_stick', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 120),
+('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-unstick', '_bx_timeline_menu_item_title_system_item_unstick', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 130),
+('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-promote', '_bx_timeline_menu_item_title_system_item_promote', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 140),
+('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-unpromote', '_bx_timeline_menu_item_title_system_item_unpromote', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 150),
+('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-report', '_bx_timeline_menu_item_title_system_item_report', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 160),
+('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-edit', '_bx_timeline_menu_item_title_system_item_edit', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 170),
+('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-delete', '_bx_timeline_menu_item_title_system_item_delete', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 180),
+('bx_timeline_menu_item_actions_all', 'bx_timeline', 'more-auto', '_sys_menu_item_title_system_va_more_auto', '_sys_menu_item_title_va_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', '', 0, 2147483647, 1, 0, 1, 9999);
+
 -- MENU: Item Counters (Comments, Votes, Reactions, etc)
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_timeline_menu_item_counters', '_bx_timeline_menu_title_item_counters', 'bx_timeline_menu_item_counters', 'bx_timeline', 15, 0, 1, 'BxTimelineMenuItemCounters', 'modules/boonex/timeline/classes/BxTimelineMenuItemCounters.php');

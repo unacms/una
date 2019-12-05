@@ -187,6 +187,8 @@
 
     <string name="_bx_timeline_menu_title_item_actions"><![CDATA[Item Actions]]></string>
     <string name="_bx_timeline_menu_set_title_item_actions"><![CDATA[Item Actions]]></string>
+    <string name="_bx_timeline_menu_title_item_actions_all"><![CDATA[Item Actions All]]></string>
+    <string name="_bx_timeline_menu_set_title_item_actions_all"><![CDATA[Item Actions All]]></string>
     <string name="_bx_timeline_menu_title_item_counters"><![CDATA[Item Counters]]></string>
     <string name="_bx_timeline_menu_set_title_item_counters"><![CDATA[Item Counters]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_comment"><![CDATA[Comment]]></string>

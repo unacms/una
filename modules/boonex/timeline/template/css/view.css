@@ -392,16 +392,16 @@ div.bx-tl-item div.bx-tl-item-image {
     display: inline-block;
 }
 
-/*--- Item Activity ---*/
-div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom {
+/*--- Item Activity (Actions and Manage are different menus) ---*/
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom:not(.bx-menu-submenu-more-auto) {
     position: relative;
     display: -webkit-flex;
     display: flex;
     -webkit-justify-content: space-around;
     justify-content: space-around;
 }
-div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom::before,
-div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom::after {
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom:not(.bx-menu-submenu-more-auto)::before,
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom:not(.bx-menu-submenu-more-auto)::after {
     display: none;
 }
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li > a,
@@ -434,19 +434,33 @@ div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li .bx-menu-item-icon {
 
     font-size: 1.0rem;
 }
-/*
-div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li .sys-action-do-icon:not(.bx-def-align-center),
-div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li .bx-menu-item-icon:not(.bx-def-align-center) {
-    display: inline-block;
-
-    text-align: center;
-    line-height: 1.9rem;
-}
-*/
 
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li .sys-action-do-icon .sys-icon,
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li .bx-menu-item-icon .sys-icon {
     vertical-align: top;
+}
+
+/*--- Item Activity (all actions in one menu) ---*/
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto > li.bx-menu-item {
+    padding: 0;
+    white-space: nowrap;
+}
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto .bx-popup .bx-menu-custom.bx-menu-submenu-more-auto > li.bx-menu-item  a > span {
+    margin-left: 0;
+}
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto .bx-popup .bx-menu-custom.bx-menu-submenu-more-auto > li.bx-menu-item  a .bx-menu-item-icon,
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto .bx-popup .bx-menu-custom.bx-menu-submenu-more-auto > li.bx-menu-item  a .bx-menu-item-icon > .sys-icon {
+    width: 1.0rem;
+    height: 1.0rem;
+
+    background-color: transparent;
+
+    line-height: 1.0rem;
+    font-size: 1.0rem;
+}
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto .bx-popup .bx-menu-custom.bx-menu-submenu-more-auto > li.bx-menu-item  a .bx-menu-item-title {
+    margin-left: 1.0rem;
+    line-height: 1.5rem;
 }
 
 /*--- Item Style: Timeline ---*/

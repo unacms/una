@@ -180,6 +180,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'menu_view' => $this->_sName . '_menu_view',
             'menu_item_manage' => $this->_sName . '_menu_item_manage',
             'menu_item_actions' => $this->_sName . '_menu_item_actions',
+            'menu_item_actions_all' => $this->_sName . '_menu_item_actions_all',
             'menu_item_counters' => $this->_sName . '_menu_item_counters',
             'menu_item_meta' => $this->_sName . '_menu_item_meta',
             'menu_post_attachments' => $this->CNF['OBJECT_MENU_ENTRY_ATTACHMENTS'],
