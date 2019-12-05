@@ -204,37 +204,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     {
         return $this->_serviceBrowseWithParam ('author', 'profile_id', $iProfileId, $aParams);
     }
-
-    /**
-     * Display entries posted into particular context
-     * @return HTML string
-     */
-    public function serviceBrowseContext ($iProfileId = 0, $aParams = array())
-    {
-        return $this->_serviceBrowseWithParam ('context', 'profile_id', $iProfileId, $aParams);
-    }
-
-    public function _serviceBrowseWithParam ($sParamName, $sParamGet, $sParamVal, $aParams = array())
-    {
-        if(!$sParamVal)
-            $sParamVal = bx_process_input(bx_get($sParamGet), BX_DATA_INT);
-        if(!$sParamVal)
-            return '';
-
-        $bEmptyMessage = true;
-        if(isset($aParams['empty_message'])) {
-            $bEmptyMessage = (bool)$aParams['empty_message'];
-            unset($aParams['empty_message']);
-        }
-
-        $bAjaxPaginate = true;
-        if(isset($aParams['ajax_paginate'])) {
-            $bAjaxPaginate = (bool)$aParams['ajax_paginate'];
-            unset($aParams['ajax_paginate']);
-        }
-
-        return $this->_serviceBrowse ($sParamName, array_merge(array($sParamName => $sParamVal), $aParams), BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
-    }
     
     /**
      * Entry author block

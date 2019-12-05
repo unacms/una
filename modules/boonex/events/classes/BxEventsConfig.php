@@ -65,6 +65,7 @@ class BxEventsConfig extends BxBaseModProfileConfig
             // page URIs
             'URI_VIEW_ENTRY' => 'view-event-profile',
             'URI_EDIT_ENTRY' => 'edit-event-profile',
+            'URI_ENTRIES_BY_CONTEXT' => 'event-context',
             'URI_EDIT_COVER' => 'edit-event-cover',
             'URI_JOINED_ENTRIES' => 'joined-events',
             'URI_MANAGE_COMMON' => 'events-manage',
@@ -129,6 +130,8 @@ class BxEventsConfig extends BxBaseModProfileConfig
             'OBJECT_CONNECTIONS' => 'bx_events_fans',
             'OBJECT_UPLOADERS_COVER' => array('bx_events_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_events_picture_crop'),
+            
+            'ENABLE_FOR_CONTEXT_IN_MODULES' => array('bx_groups'),
 
             'EMAIL_INVITATION' => 'bx_events_invitation',
             'EMAIL_JOIN_REQUEST' => 'bx_events_join_request',
@@ -197,7 +200,8 @@ class BxEventsConfig extends BxBaseModProfileConfig
                 
                 'menu_item_title_become_fan_sent' => '_bx_events_menu_item_title_become_fan_sent',
                 'menu_item_title_become_fan' => '_bx_events_menu_item_title_become_fan',
-            	'txt_all_entries_by_author' => '_bx_events_page_title_browse_by_author'
+            	'txt_all_entries_by_author' => '_bx_events_page_title_browse_by_author',
+                'txt_all_entries_by_context' => '_bx_events_page_title_browse_by_context',
             ),
 
         );

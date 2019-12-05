@@ -29,7 +29,10 @@ class BxEventsModule extends BxBaseModGroupsModule
     public function actionCalendarData()
     {
         // check permissions
+        $aSQLPart = array();
         $iContentId = (int)bx_get('event');
+        $iContextId = (int)bx_get('context_id');
+        
         if ($iContentId) {
             $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
             if (CHECK_ACTION_RESULT_ALLOWED !== $this->checkAllowedView($aContentInfo)) {
@@ -40,7 +43,17 @@ class BxEventsModule extends BxBaseModGroupsModule
         }
         else {
             $oPrivacy = BxDolPrivacy::getObjectInstance($this->_oConfig->CNF['OBJECT_PRIVACY_VIEW']);
-            $aSQLPart = $oPrivacy ? $oPrivacy->getContentPublicAsSQLPart(0, $oPrivacy->getPartiallyVisiblePrivacyGroups()) : array();
+            if($iContextId){
+                if (!$this->serviceIsEnableForContext($iContextId)){
+                    exit;
+                }
+                else{
+                    $aSQLPart = $oPrivacy ? $oPrivacy->getContentByGroupAsSQLPart(- $iContextId) : array();
+                }
+            }
+            else{
+                $aSQLPart = $oPrivacy ? $oPrivacy->getContentPublicAsSQLPart(0, $oPrivacy->getPartiallyVisiblePrivacyGroups()) : array();
+            }
         }
 
         // get entries
@@ -54,6 +67,16 @@ class BxEventsModule extends BxBaseModGroupsModule
     {
         return $this->_serviceBrowse ('past', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
     }
+    
+    public function serviceIsEnableForContext($iProfileId = 0)
+    {
+        if ($iProfileId == 0)
+            return false;
+        $CNF = &$this->_oConfig->CNF;
+        if (in_array(BxDolProfile::getInstance()->getModule($iProfileId), $CNF['ENABLE_FOR_CONTEXT_IN_MODULES']))
+            return true;
+        return false;
+    }
 
     /**
      * @page service Service Calls
@@ -65,7 +88,7 @@ class BxEventsModule extends BxBaseModGroupsModule
      * 
      * Shows event or events calendar
      * 
-     * @param $aData additional data to point which events to show, leave empty to show all events, specify event's ID in 'event' array key to show calendar for one event only. If only one event is specified then it will show calendar only if it's repeating event.
+     * @param $aData additional data to point which events to show, leave empty to show all events, specify event's ID in 'event' array key to show calendar for one event only, specify context's ID in 'context_id' array key to show calendar for one context events only. If only one event is specified then it will show calendar only if it's repeating event.
      * @param $sTemplate template to use to show calendar, or leave empty for default template, possible options: calendar.html, calendar_compact.html
      * @return HTML string with calendar to display on the site, all necessary CSS and JS files are automatically added to the HEAD section of the site HTML. On error empty string is returned.
      *
@@ -81,11 +104,16 @@ class BxEventsModule extends BxBaseModGroupsModule
             if ('' == $aContentInfo['repeat_stop']) // don't display calendar for non repeating events
                 return '';
         } 
-
+        
+        
+        if (isset($aData['context_id'])) {
+            if (!$this->serviceIsEnableForContext($aData['context_id'])){
+                return '';
+            }                
+        } 
         $o = new BxTemplCalendar(array(
             'eventSources' => array (
-                BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'calendar_data',
-                $aData,
+                bx_append_url_params(BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'calendar_data', $aData),
             ),
         ), $this->_oTemplate);
         return $o->display($sTemplate);

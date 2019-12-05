@@ -78,6 +78,8 @@
 
 	<string name="_bx_events_page_title_sys_joined_entries"><![CDATA[Profile Events]]></string>
 	<string name="_bx_events_page_title_joined_entries"><![CDATA[Profile Events]]></string>
+  <string name="_bx_events_page_title_sys_entries_in_context"><![CDATA[Events in context]]></string>
+  <string name="_bx_events_page_title_entries_in_context"><![CDATA[Events in {display_name}]]></string>
 	<string name="_bx_events_page_title_sys_create_profile"><![CDATA[Create Event]]></string>
 	<string name="_bx_events_page_title_create_profile"><![CDATA[Create Event]]></string>
 	<string name="_bx_events_page_title_sys_edit_profile"><![CDATA[Edit Event]]></string>
@@ -123,6 +125,11 @@
 
     <string name="_bx_events_page_block_title_sys_entries_actions"><![CDATA[Events actions]]></string>
     <string name="_bx_events_page_block_title_entries_actions"><![CDATA[Events actions]]></string>
+    <string name="_bx_events_page_block_title_entries_in_context"><![CDATA[Events in <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_events_page_block_title_sys_entries_in_context"><![CDATA[Events in context]]></string>
+    <string name="_bx_events_page_block_title_calendar_in_context"><![CDATA[Calendar events in <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_events_page_block_title_sys_calendar_in_context"><![CDATA[Calendar events in context]]></string>
+    <string name="_bx_events_page_block_title_calendar_for_context"><![CDATA[Events calendar]]></string>
     <string name="_bx_events_page_block_title_sys_entries_of_author"><![CDATA[Events of author]]></string>
     <string name="_bx_events_page_block_title_entries_of_author"><![CDATA[Events by {display_name}]]></string>
     <string name="_bx_events_page_block_title_favorites_of_author"><![CDATA[Favorite Events]]></string>
@@ -239,6 +246,8 @@
 
     <string name="_bx_events_menu_item_title_system_subscribe"><![CDATA[Follow]]></string>
     <string name="_bx_events_menu_item_title_subscribe"><![CDATA[Interested]]></string>
+    <string name="_bx_events_menu_item_title_system_view_entries_in_context"><![CDATA[Events]]></string>
+    <string name="_bx_events_menu_item_title_view_entries_in_context"><![CDATA[Events]]></string>
     <string name="_bx_events_menu_item_title_system_unsubscribe"><![CDATA[Unfollow]]></string>
     <string name="_bx_events_menu_item_title_unsubscribe"><![CDATA[Not interested]]></string>
     <string name="_bx_events_menu_item_title_system_more_actions"><![CDATA[More Actions]]></string>
