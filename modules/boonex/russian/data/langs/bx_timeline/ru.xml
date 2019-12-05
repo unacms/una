@@ -187,6 +187,8 @@
 
     <string name="_bx_timeline_menu_title_item_actions"><![CDATA[Элемент - Действия]]></string>
     <string name="_bx_timeline_menu_set_title_item_actions"><![CDATA[Элемент - Действия]]></string>
+    <string name="_bx_timeline_menu_title_item_actions_all"><![CDATA[Элемент - Все действия]]></string>
+    <string name="_bx_timeline_menu_set_title_item_actions_all"><![CDATA[Элемент - Все действия]]></string>
     <string name="_bx_timeline_menu_title_item_counters"><![CDATA[Элемент - Счетчики]]></string>
     <string name="_bx_timeline_menu_set_title_item_counters"><![CDATA[Элемент - Счетчики]]></string>
     <string name="_bx_timeline_menu_item_title_system_item_comment"><![CDATA[Комментарий]]></string>
