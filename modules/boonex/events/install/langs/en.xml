@@ -129,7 +129,8 @@
     <string name="_bx_events_page_block_title_sys_entries_in_context"><![CDATA[Events in context]]></string>
     <string name="_bx_events_page_block_title_calendar_in_context"><![CDATA[Calendar events in <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_sys_calendar_in_context"><![CDATA[Calendar events in context]]></string>
-    <string name="_bx_events_page_block_title_calendar_for_context"><![CDATA[Events calendar]]></string>
+    <string name="_bx_events_page_block_title_calendar_for_context"><![CDATA[Calendar events in context]]></string>
+    <string name="_bx_events_page_block_title_browse_for_context"><![CDATA[Events in context]]></string>
     <string name="_bx_events_page_block_title_sys_entries_of_author"><![CDATA[Events of author]]></string>
     <string name="_bx_events_page_block_title_entries_of_author"><![CDATA[Events by {display_name}]]></string>
     <string name="_bx_events_page_block_title_favorites_of_author"><![CDATA[Favorite Events]]></string>
@@ -169,6 +170,8 @@
     <string name="_bx_events_page_block_title_categories"><![CDATA[Event categories]]></string>
     <string name="_bx_events_page_block_title_calendar"><![CDATA[Events calendar]]></string>
     <string name="_bx_events_page_block_title_profile_calendar"><![CDATA[Calendar]]></string>
+    <string name="_bx_events_page_block_title_sys_entry_context"><![CDATA[Posted in]]></string>
+    <string name="_bx_events_page_block_title_entry_context"><![CDATA[Posted in]]></string>
     <string name="_bx_events_page_block_title_entry_location"><![CDATA[Location]]></string>
     <string name="_bx_events_page_block_title_invite_to_group"><![CDATA[Invite Members to the Event]]></string>
     <string name="_bx_events_page_block_title_search_form"><![CDATA[Search Form]]></string>
@@ -297,6 +300,7 @@
     <string name="_bx_events_search_extended"><![CDATA[Events Search]]></string>
     <string name="_bx_events_search_extended_cmts"><![CDATA[Events Comments Search]]></string>
 
+    <string name="_bx_events_txt_all_entries_in"><![CDATA[<a href="{0}">All Events in {1} ({2})</a>]]></string>
     <string name="_bx_events_txt_account_pending"><![CDATA[This event is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_events_txt_account_suspended"><![CDATA[This event is suspended.]]></string>
     <string name="_bx_events_txt_N_fans"><![CDATA[{0} members]]></string>

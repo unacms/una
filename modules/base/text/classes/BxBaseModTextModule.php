@@ -214,14 +214,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     }
     
     /**
-     * Entry context block
-     */
-    public function serviceEntityContext ($iContentId = 0)
-    {
-        return $this->_serviceTemplateFunc ('entryContext', $iContentId);
-    }
-    
-    /**
      * Entry polls block
      */
     public function serviceEntityPolls ($iContentId = 0)

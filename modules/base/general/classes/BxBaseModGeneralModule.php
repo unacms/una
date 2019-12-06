@@ -1158,6 +1158,14 @@ class BxBaseModGeneralModule extends BxDolModule
             'menu' => $sMenu
         ));
     }
+    
+    /**
+     * Entry context block
+     */
+    public function serviceEntityContext ($iContentId = 0)
+    {
+        return $this->_serviceTemplateFunc ('entryContext', $iContentId);
+    }
 
     /**
      * Blocks for lables tree browsing

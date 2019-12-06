@@ -43,10 +43,10 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_events_view_profile', 1, 'bx_events', '', '_bx_events_page_block_title_entry_social_sharing', 13, '', 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:21:\"entity_social_sharing\";}', 0, 0, 0, 0),
 ('bx_events_view_profile', 1, 'bx_events', '', '_bx_events_page_block_title_entry_all_actions', 13, '', 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_events";s:6:"method";s:18:"entity_all_actions";}', 0, 0, 0, 0),
 ('bx_events_view_profile', 3, 'bx_events', '', '_bx_events_page_block_title_profile_calendar', 11, '', 2147483647, 'service', 'a:3:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:8:\"calendar\";s:6:\"params\";a:2:{i:0;a:1:{s:5:\"event\";s:12:\"{content_id}\";}i:1;s:21:\"calendar_compact.html\";}}', 0, 0, 1, 0),
+('bx_events_view_profile', 3, 'bx_events', '_bx_events_page_block_title_sys_entry_context', '_bx_events_page_block_title_entry_context', 13, '', 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:14:\"entity_context\";}', 0, 0, 1, 1),
 ('bx_events_view_profile', 4, 'bx_events', '', '_bx_events_page_block_title_fans', 11, '', 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:4:\"fans\";}', 0, 0, 1, 1),
 ('bx_events_view_profile', 4, 'bx_events', '', '_bx_events_page_block_title_admins', 11, '', 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:6:\"admins\";}', 0, 0, 1, 2),
 ('bx_events_view_profile', 2, 'bx_events', '', '_bx_events_page_block_title_entry_location', 11, '', 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:13:\"locations_map\";s:6:\"params\";a:2:{i:0;s:9:\"bx_events\";i:1;s:12:\"{content_id}\";}s:5:\"class\";s:20:\"TemplServiceMetatags\";}', 0, 0, 1, 1);
-
 -- PAGE: view closed profile 
 
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -208,7 +208,8 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
  
  -- PAGES: add page block to profiles modules (trigger* page objects are processed separately upon modules enable/disable)
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`, `active`) VALUES
-('trigger_page_group_view_entry', 2, 'bx_events', '_bx_events_page_block_title_calendar_for_context', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:9:"bx_events";s:6:"method";s:8:"calendar";s:12:"ignore_cache";b:1;s:6:"params";a:1:{i:0;a:1:{s:10:"context_id";s:12:"{profile_id}";}}}', 0, 0, 0, 0);
+('trigger_page_group_view_entry', 2, 'bx_events', '_bx_events_page_block_title_calendar_for_context', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:9:"bx_events";s:6:"method";s:8:"calendar";s:12:"ignore_cache";b:1;s:6:"params";a:1:{i:0;a:1:{s:10:"context_id";s:12:"{profile_id}";}}}', 0, 0, 0, 0),
+('trigger_page_group_view_entry', 4, 'bx_events', '_bx_events_page_block_title_browse_for_context', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:14:"browse_context";s:6:"params";a:1:{s:10:"context_id";s:12:"{profile_id}";}}', 0, 0, 1, 0);
 
 
 -- MENU
