@@ -50,7 +50,7 @@ class BxDolTranscoderAudio extends BxDolTranscoderVideo implements iBxDolFactory
     }
 
     /**
-     * check if transcoder suppors given file mime type
+     * check if transcoder supports given file mime type
      */ 
     public function isMimeTypeSupported($sMimeType)
     {
