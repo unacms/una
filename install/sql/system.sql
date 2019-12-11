@@ -1510,6 +1510,8 @@ INSERT INTO `sys_permalinks` (`standard`, `permalink`, `check`, `compare_by_pref
 
 
 -- --------------------------------------------------------
+
+
 CREATE TABLE `sys_audit` (
   `id` int(11) unsigned NOT NULL auto_increment, 
   `added` int(11) NOT NULL, 
@@ -1588,6 +1590,30 @@ SET @iIdHandler = LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('sys_cmts_images', 'file_deleted', @iIdHandler);
+
+
+-- --------------------------------------------------------
+
+
+CREATE TABLE `sys_badges` (
+  `id` int(11) unsigned NOT NULL auto_increment, 
+  `added` int(11) NOT NULL, 
+  `module` varchar(32) NOT NULL default '',
+  `text` varchar(255) NOT NULL default '',
+  `icon` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `sys_badges2objects` (
+  `id` int(11) unsigned NOT NULL auto_increment, 
+  `badge_id` int(11) NOT NULL, 
+  `module` varchar(32) NOT NULL default '',
+  `object_id` int(11) NOT NULL, 
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `badge_object` (`object_id`, `badge_id`)
+);
+
+
 -- --------------------------------------------------------
 
 
@@ -3937,7 +3963,9 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 ('sys_studio_labels', 'Sql', 'SELECT * FROM `sys_labels` WHERE 1 ', 'sys_labels', 'id', 'order', '', '', 100, NULL, 'start', '', 'value', '', 'like', 'value', '', 'BxTemplStudioFormsLabels', ''),
 ('sys_studio_categories', 'Sql', 'SELECT * FROM `sys_categories` WHERE 1 ', 'sys_categories', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'value', '', 'like', '', '', 'BxTemplStudioFormsCategories', ''),
 
-('sys_audit_administration', 'Sql', 'SELECT * FROM `sys_audit` WHERE 1 ', 'sys_audit', 'id', 'added', '', '', 20, NULL, 'start', '', 'value', '', 'like', '', '', 'BxTemplAuditGrid', '');
+('sys_audit_administration', 'Sql', 'SELECT * FROM `sys_audit` WHERE 1 ', 'sys_audit', 'id', 'added', '', '', 20, NULL, 'start', '', 'value', '', 'like', '', '', 'BxTemplAuditGrid', ''),
+
+('sys_badges_administration', 'Sql', 'SELECT * FROM `sys_badges` WHERE 1 ', 'sys_badges', 'id', 'added', '', '', 20, NULL, 'start', '', 'text', '', 'like', '', '', 'BxTemplStudioBadgesGrid', '');
 
 CREATE TABLE IF NOT EXISTS `sys_grid_fields` (
   `object` varchar(64) NOT NULL,
@@ -4069,7 +4097,14 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('sys_audit_administration', 'content', '_adm_form_txt_audit_content', '25%', 1, 25, '', 3),
 ('sys_audit_administration', 'module', '_adm_form_txt_audit_module', '15%', 1, 25, '', 4),
 ('sys_audit_administration', 'context', '_adm_pgt_txt_audit_context', '15%', 1, 25, '', 5),
-('sys_audit_administration', 'action', '_adm_pgt_txt_audit_action', '15%', 1, 25, '', 6);
+('sys_audit_administration', 'action', '_adm_pgt_txt_audit_action', '15%', 1, 25, '', 6),
+
+('sys_badges_administration', 'checkbox', '_sys_select', '2%', 0, 0, '', 1),
+('sys_badges_administration', 'added', '_adm_form_txt_badges_added', '15%', 1, 25, '', 2),
+('sys_badges_administration', 'module', '_adm_form_txt_badges_module', '15%', 1, 25, '', 3),
+('sys_badges_administration', 'text', '_adm_pgt_txt_badges_text', '40%', 1, 25, '', 4),
+('sys_badges_administration', 'icon', '_adm_pgt_txt_badges_icon', '15%', 1, 25, '', 5),
+('sys_badges_administration', 'actions', '', '20%', 0, 0, '', 6);
 
 
 CREATE TABLE IF NOT EXISTS `sys_grid_actions` (
@@ -4146,7 +4181,13 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('sys_studio_categories', 'bulk', 'delete', '_adm_form_btn_categories_delete', '', 1, 1),
 ('sys_studio_categories', 'single', 'edit', '', 'pencil-alt', 0, 1),
 ('sys_studio_categories', 'single', 'delete', '', 'remove', 1, 2),
-('sys_studio_categories', 'independent', 'add', '_adm_form_btn_categories_add', '', 0, 1);
+('sys_studio_categories', 'independent', 'add', '_adm_form_btn_categories_add', '', 0, 1),
+
+('sys_badges_administration', 'bulk', 'delete', '_adm_form_btn_badges_delete', '', 1, 1),
+('sys_badges_administration', 'single', 'edit', '', 'pencil-alt', 0, 1),
+('sys_badges_administration', 'single', 'delete', '', 'remove', 1, 2),
+('sys_badges_administration', 'single', 'delete_icon', '', '', 1, 3),
+('sys_badges_administration', 'independent', 'add', '_adm_form_btn_badges_add', '', 0, 1);
 
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
@@ -4992,6 +5033,10 @@ INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 (3, 'audit', '_adm_page_cpt_audit', '_adm_page_cpt_audit', 'wi-audit.svg');
 SET @iIdAudit = LAST_INSERT_ID();
 
+INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
+(3, 'badges', '_adm_page_cpt_badges', '_adm_page_cpt_badges', 'wi-badges.svg');
+SET @iIdBadges = LAST_INSERT_ID();
+
 --
 -- Dumping data for table `sys_std_widgets` and `sys_std_pages_widgets`
 -- Home Page
@@ -5060,3 +5105,10 @@ INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `capt
 (@iIdAudit, 'system', '{url_studio}audit.php', '', 'wi-audit.svg', '_adm_wgt_cpt_audit', '', '');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 11);
 
+
+--
+-- Badges Page
+--
+INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
+(@iIdBadges, 'system', '{url_studio}badges.php', '', 'wi-badges.svg', '_adm_wgt_cpt_badges', '', '');
+INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 11);
