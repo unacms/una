@@ -73,7 +73,7 @@ class BxBaseStudioAudit extends BxDolStudioAudit
     
     protected function getGeneral()
     {
-        return $this->getGrid($this->aGridObjects['audit']);
+        return $this->getGrid();
     }
     
     protected function getSettings()
@@ -85,7 +85,7 @@ class BxBaseStudioAudit extends BxDolStudioAudit
         ));
     }
 
-    protected function getGrid($sObjectName)
+    protected function getGrid()
     {
         $oGrid = BxDolGrid::getObjectInstance('sys_audit_administration');
         if(!$oGrid)

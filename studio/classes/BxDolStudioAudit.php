@@ -20,8 +20,6 @@ class BxDolStudioAudit extends BxTemplStudioPage
     {
         parent::__construct('audit');
 
-        $this->oDb = new BxDolStudioAuditQuery();
-
         $this->sPage = BX_DOL_STUDIO_AUD_TYPE_DEFAULT;
         if(is_string($sPage) && !empty($sPage))
             $this->sPage = $sPage;
