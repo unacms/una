@@ -8,7 +8,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- PAGES
 DELETE FROM `sys_objects_page` WHERE `module` = 'bx_channels';
-DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_channels' OR `object` IN('bx_channels_create_profile', 'bx_channels_delete_profile', 'bx_channels_edit_profile', 'bx_channels_edit_profile_cover', 'bx_channels_view_profile', 'bx_channels_view_profile_closed', 'bx_channels_profile_info', 'bx_channels_profile_comments', 'bx_channels_author', 'bx_channels_home', 'bx_channels_top', 'bx_channels_search', 'bx_channels_toplevel', 'bx_channels_manage', 'bx_channels_administration');
+DELETE FROM `sys_pages_blocks` WHERE `module` = 'bx_channels' OR `object` IN('bx_channels_delete_profile', 'bx_channels_edit_profile', 'bx_channels_edit_profile_cover', 'bx_channels_view_profile', 'bx_channels_view_profile_closed', 'bx_channels_profile_info', 'bx_channels_profile_comments', 'bx_channels_author', 'bx_channels_home', 'bx_channels_top', 'bx_channels_search', 'bx_channels_toplevel', 'bx_channels_manage', 'bx_channels_administration');
 
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_channels';
