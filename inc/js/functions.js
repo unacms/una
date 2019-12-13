@@ -671,6 +671,38 @@ function bx_set_acl_level (iProfileId, iAclLevel, mixedLoadingElement) {
     }, 'json');
 }
 
+/**
+ * Set ACL badge for specified content
+ * @param sModule - current module for content
+ * @param iContentId - content id to set badge for
+ * @param iBadgeId - badge id to assign to a given content
+ */
+function bx_set_badge (sModule, iContentId, iBadgeId, mixedLoadingElement) {
+    
+    var bLoading = typeof(mixedLoadingElement) != 'undefined';
+    if(bLoading)
+        bx_loading($(mixedLoadingElement), true);
+    $.post(sUrlRoot + 'menu.php', {o:'sys_set_badges', module: sModule, content_id: iContentId, badge_id: iBadgeId}, function(oData) {
+        if(bLoading)
+            bx_loading($(mixedLoadingElement), false);
+
+        if(oData.msg != undefined && oData.msg.length) {
+            bx_alert(oData.msg);
+            return;
+        }
+
+        if($(mixedLoadingElement).hasClass('bx-popup-applied'))
+            $(mixedLoadingElement).dolPopupHide().remove();
+
+        if(typeof(oData.card) == 'object')
+            for(var iField in oData.card) {
+                var oCard = $(oData.card[iField]);
+                $('#' + oCard.attr('id')).replaceWith(oCard);
+            }
+    }, 'json');
+}
+
+
 function validateLoginForm(eForm) {
     return true;
 }

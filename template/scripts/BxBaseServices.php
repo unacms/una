@@ -408,6 +408,29 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
         return $aResults;
     }
+    
+    public function serviceGetBadge($aBadge, $isCompact = false)
+    {
+        $sClass = '';
+        if ($isCompact){
+            $aBadge['is_icon_only'] = 1;
+        }
+        if ($aBadge['is_icon_only'] == 1){
+            $sClass = 'bx-badge-compact';
+        }
+        
+        return BxDolTemplate::getInstance()->parseHtmlByName('badge.html', array(
+            'bx_if:content' => array(
+                'condition' => $aBadge['is_icon_only'] != '1',
+                'content' => array('content' => _t($aBadge['text'])),
+            ),
+            'title' => $aBadge['text'],
+            'icon' => BxDolTemplate::getInstance()->getIcon($aBadge['icon'], array('class' => 'bx-badge-icon')),
+            'style' => $aBadge['color'] != '' ? 'style = "background-color: ' . $aBadge['color'] . '"' : '',
+            'class' => $sClass,
+            )
+    	);
+    }
 }
 
 /** @} */
