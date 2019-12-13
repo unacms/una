@@ -45,6 +45,11 @@ class BxPersonsMenuViewActionsAll extends BxBaseModProfileMenuViewActionsAll
     {
         return $this->_getMenuItemByNameActionsMore($aItem);
     }
+    
+    protected function _getMenuItemProfileSetBadges($aItem)
+    {
+        return $this->_getMenuItemByNameActions($aItem);
+    }
 }
 
 /** @} */

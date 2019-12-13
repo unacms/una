@@ -89,7 +89,6 @@ class BxBaseStudioBadgesGrid extends BxDolStudioBadgesGrid
         $oForm = $this->_getForm($sAction, $aBadge);
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
-            
             $bIconImageCur = is_numeric($aBadge['icon']) && (int)$aBadge['icon'] != 0;
             $bIconImageNew = !empty($_FILES['icon_image']['tmp_name']);
 
@@ -115,10 +114,9 @@ class BxBaseStudioBadgesGrid extends BxDolStudioBadgesGrid
 
                 $oStorage->afterUploadCleanup($sIcon, 0);
             } else if($bIconImageCur && !$bIconFont)
-                $sIcon = $aItem['icon'];
-
+                $sIcon = $aBadge['icon'];
+           
             BxDolForm::setSubmittedValue('icon', $sIcon, $oForm->aFormAttrs['method']);
-            
             
             $mixedResult = $oForm->update($iId);
             if(is_numeric($mixedResult))
@@ -194,6 +192,18 @@ class BxBaseStudioBadgesGrid extends BxDolStudioBadgesGrid
         ));
     }
     
+    protected function _getCellModule ($mixedValue, $sKey, $aField, $aRow)
+    {
+        $oModule = bxDolModule::getInstance($aRow['module']);
+        if($oModule && $oModule instanceof iBxDolContentInfoService){
+            $mixedValue = $oModule->_aModule['title'];
+        }
+        else{
+            $mixedValue = $aRow['module'];
+        }
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
+    
     protected function _getCellAdded($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
@@ -206,7 +216,13 @@ class BxBaseStudioBadgesGrid extends BxDolStudioBadgesGrid
     
     protected function _getCellIcon ($mixedValue, $sKey, $aField, $aRow)
     {
-        $mixedValue = $this->_oTemplate->getIcon($mixedValue, array('class' => 'bx-nav-badge-icon bx-def-border'));
+        $mixedValue = $this->_oTemplate->getIcon($mixedValue, array('class' => 'bx-badge-icon bx-def-border'));
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
+    
+    protected function _getCellView ($mixedValue, $sKey, $aField, $aRow)
+    {
+        $mixedValue = BxDolService::call('system', 'get_badge', array($aRow), 'TemplServices');
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
          
@@ -311,9 +327,32 @@ class BxBaseStudioBadgesGrid extends BxDolStudioBadgesGrid
                     'type' => 'text',
                     'name' => 'text',
                     'caption' => _t('_adm_form_txt_badges_text'),
-                    'info' => _t('_adm_form_dsc_badges_icon'),
+                    'info' => '',
                     'value' => isset($aBadge['text']) ? $aBadge['text'] : '',
                     'required' => '1',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    )
+                ),
+                'color' => array(
+                    'type' => 'rgb',
+                    'name' => 'color',
+                    'caption' => _t('_adm_form_txt_badges_color'),
+                    'info' => '',
+                    'value' => isset($aBadge['color']) ? $aBadge['color'] : '',
+                    'required' => '1',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    )
+                ),
+                'is_icon_only' => array(
+                    'type' => 'switcher',
+                    'name' => 'is_icon_only',
+                    'caption' => _t('_adm_form_txt_badges_is_icon_only'),
+                    'info' => '',
+                    'value' => '1',
+                    'checked' => isset($aBadge['is_icon_only']) && $aBadge['is_icon_only'] == '1',
+                    'required' => '0',
                     'db' => array (
                         'pass' => 'Xss',
                     )

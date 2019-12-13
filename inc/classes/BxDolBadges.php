@@ -41,6 +41,11 @@ class BxDolBadges extends BxDolFactory implements iBxDolSingleton
     {
         return $this->_oDb->delete($iID);
     }
+    
+    public function add($iBadgeId, $iObjectId, $sModule)
+    {
+        return $this->_oDb->add($iBadgeId, $iObjectId, $sModule);
+    }
 }
 
 /** @} */

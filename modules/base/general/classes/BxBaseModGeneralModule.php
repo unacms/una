@@ -2147,6 +2147,33 @@ class BxBaseModGeneralModule extends BxDolModule
         
         return $AuditParams;
     }
+    
+    public function _getBadges($iContentId,  $bIsSingle = false, $bIsSmall  = false)
+    {
+        $oBadges = BxDolBadges::getInstance();
+        $aBadges = $oBadges->getData(
+            array(
+            'type' => ($bIsSingle ? 'by_module&object2_single' : 'by_module&object2'),
+            'module' => $this->_aModule['name'],
+            'object_id' => $iContentId
+            )
+        );
+        
+        if ($bIsSingle && count($aBadges) > 0)
+            return BxDolService::call('system', 'get_badge', array($aBadges[0], $bIsSmall), 'TemplServices');
+        
+        $aBadgesOutput = array();
+        foreach($aBadges as $aBadge) {
+            $aBadgesOutput[] =  array('badge' => BxDolService::call('system', 'get_badge', array($aBadge, $bIsSmall), 'TemplServices'));
+        }
+
+        return $this->_oTemplate->parseHtmlByName('badges.html', 
+			array(
+				'bx_repeat:items' => $aBadgesOutput,
+			)
+		);
+        
+    }
 
     // ====== PROTECTED METHODS
 

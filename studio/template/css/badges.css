@@ -48,13 +48,53 @@ div#bx-form-element-type .bx-menu-ver .bx-def-hr {
 div#bx-form-element-info textarea.bx-form-input-textarea {
 	height: 53px;
 }
-img.bx-nav-badge-icon {
-    width: 32px;
-    height: 32px;
-}
 div.bx-badge-item-icon-preview img {
     max-width: 128px;
     max-height: 128px;
+}
+div.bx-badge {
+	display: flex;
+    align-items:center;
+	text-align: center;
+    background:#ff0000;
+    color:#fff;	
+	width: 150px;
+	vertical-align: middle;
+	height: 1.25rem;
+	line-height: 1.25rem;
+	padding: 0.25rem 0.5rem ;
+	border-radius: 1em;
+	white-space: nowrap; 
+	text-overflow: ellipsis; 
+    overflow: hidden;
+}
+img.bx-badge-icon {
+    width: 20px;
+    height: 20px;
+}
+div.bx-badge img{
+
+	margin-right: 0.25rem;
+}
+div.bx-badge span{
+	text-overflow: ellipsis; 
+    overflow: hidden;
+}
+div.bx-badge .sys-icon{
+	color:#fff;
+	font-size: 1.25rem;
+	margin-right: 0.25rem;
+}
+div.bx-badge.bx-badge-compact{
+	width: 1.25rem;
+	text-align: center;
+}
+div.bx-badge.bx-badge-compact .sys-icon{
+	width: 1.25rem;
+}
+div.bx-badge.bx-badge-compact .sys-icon,
+div.bx-badge.bx-badge-compact img{
+	margin-right: 0;
 }
 
 /*--- Pre Lists page -> Add/Edit Form block ---*/

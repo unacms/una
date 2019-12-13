@@ -492,3 +492,9 @@ a.bx-base-pofile-cover-thumb p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.bx-base-pofile-unit-bages {
+    position: absolute;
+    right: -30%;
+    top: 0px;
+}
