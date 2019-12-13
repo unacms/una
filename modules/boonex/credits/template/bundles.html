@@ -1,0 +1,27 @@
+<div class="__sp__-bundles">
+    <div class="__sp__-bundles-cnt bx-def-margin-sec-neg">
+        <bx_repeat:bundles>
+            <div class="__sp__-bundle-wrp bx-def-padding-sec bx-def-box-sizing">
+                <div class="__sp__-bundle bx-def-box bx-def-color-bg-box bx-def-border bx-def-round-corners">
+                    <div class="__sp__-bundle-cnt bx-def-padding bx-def-box-sizing bx-def-font-align-center">
+                        <div class="__sp__-b-title bx-def-font-h3">__title__</div>
+                        <div class="__sp__-b-amount bx-def-margin-top">
+                            <div class="__sp__-ba-value bx-def-font-h1"><b>__amount__</b></div>
+                            <bx_if:show_bonus>
+                                <div class="__sp__-ba-bonus"><i class="sys-icon plus"></i> <b>__bonus__</b> <bx_text:_bx_credits_txt_for_free /></div>
+                            </bx_if:show_bonus>
+                        </div>
+                        <div class="__sp__-b-price bx-def-margin-top">
+                            <div class="bx-credits-bp-currency">__currency_sign__</div>
+                            <div class="bx-credits-bp-value">__price__</div>
+                        </div>
+                        <div class="__sp__-b-buy bx-def-margin-top ">
+                            <a class="bx-btn" href="javascript:void(0)" onclick="__onclick__"><bx_text:_bx_credits_txt_purchase /></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </bx_repeat:bundles>
+    </div>
+</div>
+__js_code__
