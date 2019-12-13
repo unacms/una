@@ -83,12 +83,17 @@ class BxBaseMenuToolbar extends BxTemplMenu
 
     protected function _getTmplVarsAddon($mixedAddon, $aMenuItem)
     {
+        $aAddon = parent::_getTmplVarsAddon($mixedAddon, $aMenuItem);
+
+        $sAddonF = '';
+        if(!empty($aAddon['addon']))
+            $sAddonF = $this->_oTemplate->parseHtmlByTemplateName('menu_item_addon', array(
+                'content' => $aAddon['addon']
+            ));
+
         return array(
-            'addon' => $mixedAddon,
-            'addonf' => $this->_oTemplate->parseHtmlByTemplateName('menu_item_addon', array(
-		        'content' => $mixedAddon
-		    ))
-			
+            'addon' => $aAddon['addon'],
+            'addonf' => $sAddonF
         );
     }
 }

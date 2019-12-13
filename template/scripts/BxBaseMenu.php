@@ -121,81 +121,86 @@ class BxBaseMenu extends BxDolMenu
         return $this->_oQuery->getMenuItems();
     }
 
-	protected function _getMenuItem ($a)
-	{
-            $aHiddenOn = array(
-                pow(2, BX_DB_HIDDEN_PHONE - 1) => 'bx-def-media-phone-hide',
-                pow(2, BX_DB_HIDDEN_TABLET - 1) => 'bx-def-media-tablet-hide',
-                pow(2, BX_DB_HIDDEN_DESKTOP - 1) => 'bx-def-media-desktop-hide',
-                pow(2, BX_DB_HIDDEN_MOBILE - 1) => 'bx-def-mobile-app-hide'
-            );
-        
-		if (isset($a['active']) && !$a['active'])
-			return false;
+    protected function _getMenuItem ($a)
+    {
+        $aHiddenOn = array(
+            pow(2, BX_DB_HIDDEN_PHONE - 1) => 'bx-def-media-phone-hide',
+            pow(2, BX_DB_HIDDEN_TABLET - 1) => 'bx-def-media-tablet-hide',
+            pow(2, BX_DB_HIDDEN_DESKTOP - 1) => 'bx-def-media-desktop-hide',
+            pow(2, BX_DB_HIDDEN_MOBILE - 1) => 'bx-def-mobile-app-hide'
+        );
 
-		if (isset($a['visible_for_levels']) && !$this->_isVisible($a))
-        	return false;
+        if (isset($a['active']) && !$a['active'])
+            return false;
 
-		$a['title'] = _t($a['title']);
-		$a['bx_if:title'] = array(
-			'condition' => !empty($a['title']),
-			'content' => array(
-				'title' => $a['title']
-			)
-		);
+        if (isset($a['visible_for_levels']) && !$this->_isVisible($a))
+            return false;
+
+        $a['title'] = _t($a['title']);
+        $a['bx_if:title'] = array(
+            'condition' => !empty($a['title']),
+            'content' => array(
+                'title' => $a['title']
+            )
+        );
 
         $this->removeMarker('addon');
 
-		$a = $this->_replaceMarkers($a);
+        $a = $this->_replaceMarkers($a);
 
-		$mixedAddon = $this->_getMenuAddon($a);
-        if (!is_array($mixedAddon))
-		    $this->addMarkers(array('addon' => $mixedAddon));
+        $mixedAddon = $this->_getMenuAddon($a);
+        if(!is_array($mixedAddon))
+            $this->addMarkers(array('addon' => $mixedAddon));
+        else
+            $this->addMarkers($mixedAddon);
 
-		$a = $this->_replaceMarkers($a);
+        $a = $this->_replaceMarkers($a);
 
-		list ($sIcon, $sIconUrl, $sIconA) = $this->_getMenuIcon($a);
+        list ($sIcon, $sIconUrl, $sIconA) = $this->_getMenuIcon($a);
 
-		$a['class_add'] = $this->_isSelected($a) ? 'bx-menu-tab-active' : '';
-        
+        $a['class_add'] = $this->_isSelected($a) ? 'bx-menu-tab-active' : '';
+
         $sHiddenOnCssClasses = '';
         if(!empty($a['hidden_on']))
             foreach($aHiddenOn as $iHiddenOn => $sClass)
                 if((int)$a['hidden_on'] & $iHiddenOn)
                     $sHiddenOnCssClasses .= ' ' . $sClass;
         $a['class_add'] .=  $sHiddenOnCssClasses;
-		$a['link'] = isset($a['link']) ? $this->_oPermalinks->permalink($a['link']) : 'javascript:void(0);';
-		$a['title_attr'] = bx_html_attribute(strip_tags($a['title']));
-		$a['bx_if:image'] = array (
-			'condition' => (bool)$sIconUrl,
-			'content' => array('icon_url' => $sIconUrl),
-		);
-		$a['bx_if:icon'] = array (
-        	'condition' => (bool)$sIcon,
+
+        $a['link'] = isset($a['link']) ? $this->_oPermalinks->permalink($a['link']) : 'javascript:void(0);';
+        $a['title_attr'] = bx_html_attribute(strip_tags($a['title']));
+        $a['bx_if:image'] = array (
+            'condition' => (bool)$sIconUrl,
+            'content' => array('icon_url' => $sIconUrl),
+        );
+        $a['bx_if:icon'] = array (
+            'condition' => (bool)$sIcon,
             'content' => array('icon' => $sIcon),
-		);
-		$a['bx_if:icon-a'] = array (
-        	'condition' => (bool)$sIconA,
+        );
+        $a['bx_if:icon-a'] = array (
+            'condition' => (bool)$sIconA,
             'content' => array('icon-a' => $sIconA),
-		);
-		$a['bx_if:title'] = array (
-			'condition' => (bool)$a['title'],
-			'content' => array(
-				'title' => $a['title'],
-		        'title_attr' => $a['title_attr']
-		    ),
-		);
-		$a['bx_if:addon'] = array (
-			'condition' => (bool)$mixedAddon,
-			'content' => $this->_getTmplVarsAddon($mixedAddon, $a)
-		);
+        );
+        $a['bx_if:title'] = array (
+            'condition' => (bool)$a['title'],
+            'content' => array(
+                'title' => $a['title'],
+                'title_attr' => $a['title_attr']
+            ),
+        );
 
-		foreach ($this->_aOptionalParams as $sName => $sDefaultValue)
-        	if (!isset($a[$sName]))
-            	$a[$sName] = $sDefaultValue;
+        $aTmplVarsAddon = $this->_getTmplVarsAddon($mixedAddon, $a);
+        $a['bx_if:addon'] = array (
+            'condition' => !empty($aTmplVarsAddon['addon']),
+            'content' => $aTmplVarsAddon
+        );
 
-		return $a;
-	}
+        foreach ($this->_aOptionalParams as $sName => $sDefaultValue)
+            if (!isset($a[$sName]))
+                $a[$sName] = $sDefaultValue;
+
+        return $a;
+    }
 
     protected function _getMenuIcon ($a)
     {
@@ -236,13 +241,19 @@ class BxBaseMenu extends BxDolMenu
         $this->_oTemplate->addCss('menu.css');
     }
 
-	protected function _getTmplVarsAddon($mixedAddon, $aMenuItem) 
-	{
-	    return array(
-	    	'addon' => $mixedAddon,
-	        'addonf' => ''
-	    );
-	}
+    protected function _getTmplVarsAddon($mixedAddon, $aMenuItem) 
+    {
+        $sAddon = '';
+        if(!is_array($mixedAddon))
+            $sAddon = $mixedAddon;
+        else if(!empty($mixedAddon['addon']))
+            $sAddon = $mixedAddon['addon'];
+
+        return array(
+            'addon' => $sAddon,
+            'addonf' => ''
+        );
+    }
 }
 
 /** @} */
