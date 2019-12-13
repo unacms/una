@@ -28,7 +28,7 @@ class BxDolBadgesQuery extends BxDolDb
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
 
         $sSelectClause = "`sc`.*";
-        $sJoinClause = $sWhereClause = $sGroupClause = "";
+        $sJoinClause = $sWhereClause = $sGroupClause = $sLimitClause = "";
         $sOrderClause = "`sc`.`added` ASC";
 
         if(isset($aParams['count_only']) && $aParams['count_only'] === true) {
@@ -44,6 +44,52 @@ class BxDolBadgesQuery extends BxDolDb
                 $sSelectClause = "`sc`.`module` AS `module`, COUNT(`sc`.`id`) AS `counter`";
                 $sJoinClause = "LEFT JOIN `sys_badges2objects` `soc` ON `sc`.`id` =  `soc`.`badge_id`";
                 $sGroupClause = "`sc`.`module`";
+                break;
+              
+            case 'by_module&object':
+                $aMethod['name'] = 'getAll';
+                $sSelectClause = "`sc`.`id`, `sc`.`id`, `sc`.`text`, `sc`.`color`, `sc`.`is_icon_only`, `sc`.`icon`, `soc`.`id` AS `badge_id`";
+                $sJoinClause = "LEFT JOIN `sys_badges2objects` `soc` ON `sc`.`id` =  `soc`.`badge_id` AND `soc`.`object_id` = :object_id";
+                $sWhereClause = " AND `sc`.`module` = :module";
+                $aMethod['params'][1] = array(
+                    'object_id' => $aParams['object_id'],
+                    'module' => $aParams['module']
+                );
+                break;
+                
+            case 'by_module&object2':
+                $aMethod['name'] = 'getAll';
+                $sSelectClause = "`sc`.`id`, `sc`.`id`, `sc`.`text`, `sc`.`color`, `sc`.`is_icon_only`, `sc`.`icon`, `soc`.`id` AS `badge_id`";
+                $sJoinClause = "INNER JOIN `sys_badges2objects` `soc` ON `sc`.`id` =  `soc`.`badge_id` AND `soc`.`object_id` = :object_id";
+                $sWhereClause = " AND `sc`.`module` = :module";
+                $aMethod['params'][1] = array(
+                    'object_id' => $aParams['object_id'],
+                    'module' => $aParams['module']
+                );
+                break;
+                
+            case 'by_module&object2_single':
+                $aMethod['name'] = 'getAll';
+                $sSelectClause = "`sc`.`id`, `sc`.`id`, `sc`.`text`, `sc`.`color`, `sc`.`is_icon_only`, `sc`.`icon`, `soc`.`id` AS `badge_id`";
+                $sJoinClause = "INNER JOIN `sys_badges2objects` `soc` ON `sc`.`id` =  `soc`.`badge_id` AND `soc`.`object_id` = :object_id";
+                $sWhereClause = " AND `sc`.`module` = :module";
+                $sLimitClause = "LIMIT 0, 1";
+                $aMethod['params'][1] = array(
+                    'object_id' => $aParams['object_id'],
+                    'module' => $aParams['module']
+                );
+                break;
+                
+            case 'by_module&object&badge':
+                $aMethod['name'] = 'getAll';
+                $sSelectClause = "`sc`.`id`, `sc`.`id`, `sc`.`text`, `sc`.`icon`, `soc`.`id` AS `badge_id`";
+                $sJoinClause = "INNER JOIN `sys_badges2objects` `soc` ON `sc`.`id` =  `soc`.`badge_id` AND `soc`.`object_id` = :object_id";
+                $sWhereClause = " AND `sc`.`module` = :module  AND `sc`.`id` = :badge_id";
+                $aMethod['params'][1] = array(
+                    'object_id' => $aParams['object_id'],
+                    'badge_id' => $aParams['badge_id'],
+                    'module' => $aParams['module']
+                );
                 break;
                 
             case 'id':
@@ -64,7 +110,7 @@ class BxDolBadgesQuery extends BxDolDb
 
         $aMethod['params'][0] = "SELECT " . $sSelectClause . " 
             FROM `" . $this->_sTableBadges . "` AS `sc`" . $sJoinClause . " 
-            WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause;
+            WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause. " " . $sLimitClause;
         $oRv = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
         if ($aItems === false)
             return $oRv;
@@ -78,6 +124,18 @@ class BxDolBadgesQuery extends BxDolDb
         return $this->query($sSql);
     }
     
+    function add($iBadgeId, $iObjectId, $sModule)
+    {
+        $sSql = "INSERT `sys_badges2objects` (`badge_id`, `object_id`, `added`, `module`) VALUES (:badge_id, :object_id, :added, :module)";
+        $aBindings = array(
+            'badge_id' => $iBadgeId,
+            'object_id' => $iObjectId,
+            'added' => time(),
+            'module' => $sModule,
+        );
+        return $this->query($sSql, $aBindings);
+    }
+    
     public function delete($aParams = array())
     {
         switch($aParams['type']) {
@@ -88,11 +146,19 @@ class BxDolBadgesQuery extends BxDolDb
                 );
                 break;
                 
-            case 'by_module_and_object':
+            case 'by_module&object':
                 $sQuery = " WHERE `module` = :module AND object_id = :object_id";
                 $aBindings = array(
                     'module' => $aParams['module'],
                     'object_id' => $aParams['object_id'],
+                );
+                break;
+            case 'by_module&object&badge':   
+                $sQuery = " WHERE `module` = :module AND object_id = :object_id AND badge_id = :badge_id";
+                $aBindings = array(
+                    'module' => $aParams['module'],
+                    'object_id' => $aParams['object_id'],
+                    'badge_id' => $aParams['badge_id'],
                 );
                 break;
         }

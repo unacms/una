@@ -1607,7 +1607,9 @@ CREATE TABLE `sys_badges` (
   `added` int(11) NOT NULL, 
   `module` varchar(32) NOT NULL default '',
   `text` varchar(255) NOT NULL default '',
-  `icon` varchar(255) NOT NULL,
+  `icon` varchar(255) NOT NULL default '',
+  `color` varchar(32) NOT NULL default '',
+  `is_icon_only` tinyint(4) NOT NULL default '1',
   PRIMARY KEY (`id`)
 );
 
@@ -4109,10 +4111,11 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('sys_audit_administration', 'action', '_adm_pgt_txt_audit_action', '15%', 1, 25, '', 6),
 
 ('sys_badges_administration', 'checkbox', '_sys_select', '2%', 0, 0, '', 1),
-('sys_badges_administration', 'module', '_adm_form_txt_badges_module', '20%', 1, 25, '', 2),
-('sys_badges_administration', 'text', '_adm_pgt_txt_badges_text', '38%', 1, 25, '', 3),
-('sys_badges_administration', 'icon', '_adm_pgt_txt_badges_icon', '20%', 1, 25, '', 4),
-('sys_badges_administration', 'actions', '', '20%', 0, 0, '', 5);
+('sys_badges_administration', 'view', '_adm_form_txt_badges_view', '15%', 1, 0, '', 2),
+('sys_badges_administration', 'module', '_adm_form_txt_badges_module', '15%', 1, 25, '', 3),
+('sys_badges_administration', 'text', '_adm_pgt_txt_badges_text', '28%', 1, 35, '', 4),
+('sys_badges_administration', 'icon', '_adm_pgt_txt_badges_icon', '20%', 1, 0, '', 5),
+('sys_badges_administration', 'actions', '', '20%', 0, 0, '', 6);
 
 
 CREATE TABLE IF NOT EXISTS `sys_grid_actions` (
