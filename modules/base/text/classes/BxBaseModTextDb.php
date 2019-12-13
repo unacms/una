@@ -43,13 +43,6 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
         return $this->getAll($sQuery, $aBindings);
     }
     
-    public function getEntriesNumByContext ($iProfileId)
-    {
-        $sQuery = $this->prepare ("SELECT COUNT(*) FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` WHERE `" . $this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO'] . "` = ?", - $iProfileId);
-        return $this->getOne($sQuery);
-    }
-
-
     /**
      * 
      * Internal Polls related methods. 

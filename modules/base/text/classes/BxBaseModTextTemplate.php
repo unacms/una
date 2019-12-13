@@ -115,43 +115,6 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
     	return parent::entryBreadcrumb($aContentInfo, $aTmplVarsItems);
     }
 
-    function entryContext ($aData, $iProfileId = false, $sFuncContextDesc = 'getContextDesc', $sTemplateName = 'context.html', $sFuncContextAddon = 'getContextAddon')
-    {
-        $CNF = &$this->getModule()->_oConfig->CNF;
-
-        $iContextId = $aData[$CNF['FIELD_ALLOW_VIEW_TO']];
-        if ($iContextId >= 0)
-            return '';
-        
-        $iProfileId = - $iContextId;
-
-        $oProfile = BxDolProfile::getInstance($iProfileId);
-        if (!$oProfile) 
-            $oProfile = BxDolProfileUndefined::getInstance();
-
-        if (!$oProfile)
-            return '';
-
-        $sName = $oProfile->getDisplayName();
-        $sAddon = $sFuncContextAddon ? $this->$sFuncContextAddon($aData, $oProfile) : '';
-
-        $aVars = array (
-            'author_url' => $oProfile->getUrl(),
-            'author_thumb_url' => $oProfile->getThumb(),
-            'author_unit' => $oProfile->getUnit(0, array('template' => 'unit_wo_info')),
-            'author_title' => $sName,
-            'author_title_attr' => bx_html_attribute($sName),
-            'author_desc' => $sFuncContextDesc ? $this->$sFuncContextDesc($aData) : '',
-            'bx_if:addon' => array (
-                'condition' => (bool)$sAddon,
-                'content' => array (
-                    'content' => $sAddon,
-                ),
-            ),
-        );
-        return $this->parseHtmlByName($sTemplateName, $aVars);
-    }
-
     public function entryPolls($aData)
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
@@ -583,11 +546,6 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         return $aSnippetMeta['meta'];
     }
 
-    function getContextDesc ($aData)
-    {
-        return '';
-    }
-
     function getProfileSnippetMenu ($aData)
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
@@ -600,14 +558,6 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
     function getAuthorAddon ($aData, $oProfile)
     {
         return '';
-    }
-
-    function getContextAddon ($aData, $oProfile)
-    {
-        $CNF = &$this->getModule()->_oConfig->CNF;
-        $sUrl = 'page.php?i=' . $CNF['URI_ENTRIES_BY_CONTEXT'] . '&profile_id=' . $oProfile->id();
-        $sUrl = BxDolPermalinks::getInstance()->permalink($sUrl);
-        return _t($CNF['T']['txt_all_entries_in'], $sUrl, $oProfile->getDisplayName(), $this->getModule()->_oDb->getEntriesNumByContext($oProfile->id()));
     }
 
     protected function checkPrivacy ($aData, $isCheckPrivateContent, $oModule, $sTemplateName = '')

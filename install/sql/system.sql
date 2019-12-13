@@ -4,7 +4,7 @@
 
 -- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `sys_keys`, `sys_objects_editor`, `sys_objects_player`, `sys_objects_embeds`, `sys_objects_file_handlers`, `sys_objects_captcha`, `sys_objects_cmts`, `sys_cmts_images`, `sys_cmts_images_preview`, `sys_cmts_images2entries`, `sys_cmts_ids`, `sys_cmts_meta_keywords`, `sys_cmts_meta_mentions`, `sys_cmts_votes`, `sys_cmts_votes_track`, `sys_cmts_reactions`, `sys_cmts_reactions_track`, `sys_cmts_reports`, `sys_cmts_reports_track`, `sys_cmts_scores`, `sys_cmts_scores_track`, `sys_email_templates`, `sys_queue_push`, `sys_queue_email`, `sys_options`, sys_options_types, `sys_options_categories`, `sys_options_mixes`, `sys_options_mixes2options`,  `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_rss`, `sys_objects_search`, `sys_objects_search_extended`, `sys_search_extended_fields`, `sys_statistics`, `sys_audit`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_modules_relations`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_privacy_groups_custom`, `sys_privacy_groups_custom_members`, `sys_objects_auths`, `sys_objects_score`, `sys_objects_vote`, `sys_objects_report`, `sys_objects_view`, `sys_objects_favorite`, `sys_objects_feature`, `sys_objects_chart`, `sys_objects_content_info`, `sys_content_info_grids`, `sys_cron_jobs`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_deletions`, `sys_storage_mime_types`, `sys_objects_transcoder`, `sys_transcoder_images_files`, `sys_transcoder_videos_files`, `sys_transcoder_audio_files`, `sys_transcoder_filters`, `sys_transcoder_queue`, `sys_transcoder_queue_files`, `sys_accounts`, `sys_profiles`, `sys_objects_form`, `sys_form_displays`, `sys_form_inputs`, `sys_form_display_inputs`, `sys_form_pre_lists`, `sys_form_pre_values`, `sys_menu_templates`, `sys_objects_menu`, `sys_menu_sets`, `sys_menu_items`, `sys_objects_grid`, `sys_grid_fields`, `sys_grid_actions`, `sys_objects_connection`, `sys_profiles_conn_relations`, `sys_profiles_conn_subscriptions`, `sys_profiles_conn_friends`, `sys_objects_page`, `sys_pages_types`, `sys_pages_layouts`, `sys_pages_design_boxes`, `sys_pages_blocks`, `sys_labels`, `sys_objects_metatags`, `sys_objects_category`, `sys_objects_live_updates`, `sys_objects_payments`, `sys_files`, `sys_images`, `sys_images_custom`, `sys_images_resized`, `sys_rewrite_rules`, `sys_preloader`, `sys_std_pages`, `sys_std_widgets`, `sys_std_pages_widgets`, `sys_categories`, `sys_categories2objects`, `sys_objects_wiki`, `sys_pages_wiki_blocks`;
+DROP TABLE IF EXISTS `sys_keys`, `sys_objects_editor`, `sys_objects_player`, `sys_objects_embeds`, `sys_objects_file_handlers`, `sys_objects_captcha`, `sys_objects_cmts`, `sys_cmts_images`, `sys_cmts_images_preview`, `sys_cmts_images2entries`, `sys_cmts_ids`, `sys_cmts_meta_keywords`, `sys_cmts_meta_mentions`, `sys_cmts_votes`, `sys_cmts_votes_track`, `sys_cmts_reactions`, `sys_cmts_reactions_track`, `sys_cmts_reports`, `sys_cmts_reports_track`, `sys_cmts_scores`, `sys_cmts_scores_track`, `sys_email_templates`, `sys_queue_push`, `sys_queue_email`, `sys_options`, sys_options_types, `sys_options_categories`, `sys_options_mixes`, `sys_options_mixes2options`,  `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_rss`, `sys_objects_search`, `sys_objects_search_extended`, `sys_search_extended_fields`, `sys_statistics`, `sys_audit`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_modules_relations`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_privacy_groups_custom`, `sys_privacy_groups_custom_members`, `sys_objects_auths`, `sys_objects_score`, `sys_objects_vote`, `sys_objects_report`, `sys_objects_view`, `sys_objects_favorite`, `sys_objects_feature`, `sys_objects_chart`, `sys_objects_content_info`, `sys_content_info_grids`, `sys_cron_jobs`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_deletions`, `sys_storage_mime_types`, `sys_objects_transcoder`, `sys_transcoder_images_files`, `sys_transcoder_videos_files`, `sys_transcoder_audio_files`, `sys_transcoder_filters`, `sys_transcoder_queue`, `sys_transcoder_queue_files`, `sys_accounts`, `sys_profiles`, `sys_objects_form`, `sys_form_displays`, `sys_form_inputs`, `sys_form_display_inputs`, `sys_form_pre_lists`, `sys_form_pre_values`, `sys_menu_templates`, `sys_objects_menu`, `sys_menu_sets`, `sys_menu_items`, `sys_objects_grid`, `sys_grid_fields`, `sys_grid_actions`, `sys_objects_connection`, `sys_profiles_conn_relations`, `sys_profiles_conn_subscriptions`, `sys_profiles_conn_friends`, `sys_objects_page`, `sys_pages_types`, `sys_pages_layouts`, `sys_pages_design_boxes`, `sys_pages_blocks`, `sys_labels`, `sys_objects_metatags`, `sys_objects_category`, `sys_objects_live_updates`, `sys_objects_payments`, `sys_files`, `sys_images`, `sys_images_custom`, `sys_images_resized`, `sys_rewrite_rules`, `sys_preloader`, `sys_std_pages`, `sys_std_widgets`, `sys_std_pages_widgets`, `sys_categories`, `sys_categories2objects`, `sys_objects_wiki`, `sys_pages_wiki_blocks`, `sys_badges`, `sys_badges2objects`;
 
 ALTER DATABASE DEFAULT CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci';
 SET NAMES 'utf8mb4' COLLATE 'utf8mb4_unicode_ci';
@@ -743,6 +743,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionSetAclLevel = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'set badge', NULL, '_sys_acl_action_set_badge', '_sys_acl_action_set_badge_desc', 0, 3);
+SET @iIdActionSetBadge = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('system', 'set acl as privacy', NULL, '_sys_acl_action_set_acl_as_privacy', '_sys_acl_action_set_acl_as_privacy_desc', 0, 3);
 SET @iIdActionSetAclAsPrivacy = LAST_INSERT_ID();
 
@@ -899,6 +903,9 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 -- set acl level
 (@iAdministrator, @iIdActionSetAclLevel),
+
+-- set badge
+(@iAdministrator, @iIdActionSetBadge),
 
 -- set acl as privacy
 (@iAdministrator, @iIdActionSetAclAsPrivacy),
@@ -1510,6 +1517,8 @@ INSERT INTO `sys_permalinks` (`standard`, `permalink`, `check`, `compare_by_pref
 
 
 -- --------------------------------------------------------
+
+
 CREATE TABLE `sys_audit` (
   `id` int(11) unsigned NOT NULL auto_increment, 
   `added` int(11) NOT NULL, 
@@ -1588,6 +1597,31 @@ SET @iIdHandler = LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('sys_cmts_images', 'file_deleted', @iIdHandler);
+
+
+-- --------------------------------------------------------
+
+
+CREATE TABLE `sys_badges` (
+  `id` int(11) unsigned NOT NULL auto_increment, 
+  `added` int(11) NOT NULL, 
+  `module` varchar(32) NOT NULL default '',
+  `text` varchar(255) NOT NULL default '',
+  `icon` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `sys_badges2objects` (
+  `id` int(11) unsigned NOT NULL auto_increment, 
+  `badge_id` int(11) NOT NULL, 
+  `object_id` int(11) NOT NULL, 
+  `module` varchar(32) NOT NULL, 
+  `added` int(11) NOT NULL, 
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `badge_object` (`object_id`, `badge_id`)
+);
+
+
 -- --------------------------------------------------------
 
 
@@ -3719,6 +3753,7 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_switch_language_inline', '_sys_menu_title_switch_language_inline', 'sys_switch_language', 'system', 3, 0, 1, 'BxTemplMenuSwitchLanguage', ''),
 ('sys_switch_template', '_sys_menu_title_switch_template', 'sys_switch_template', 'system', 6, 0, 1, 'BxTemplMenuSwitchTemplate', ''),
 ('sys_set_acl_level', '_sys_menu_title_set_acl_level', '', 'system', 6, 0, 1, 'BxTemplMenuSetAclLevel', ''),
+('sys_set_badges', '_sys_menu_title_set_badges', '', 'system', 6, 0, 1, 'BxTemplMenuSetBadges', ''),
 ('sys_social_sharing', '_sys_menu_title_social_sharing', 'sys_social_sharing', 'system', 23, 0, 1, 'BxTemplMenuSocialSharing', ''),
 ('sys_create_post', '_sys_menu_title_create_post', 'sys_add_content_links', 'system', 22, 0, 1, 'BxTemplMenuCreatePost', ''),
 ('sys_add_relation', '_sys_menu_title_add_relation', '', 'system', 6, 0, 1, 'BxTemplMenuAddRelation', ''),
@@ -3937,7 +3972,9 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 ('sys_studio_labels', 'Sql', 'SELECT * FROM `sys_labels` WHERE 1 ', 'sys_labels', 'id', 'order', '', '', 100, NULL, 'start', '', 'value', '', 'like', 'value', '', 'BxTemplStudioFormsLabels', ''),
 ('sys_studio_categories', 'Sql', 'SELECT * FROM `sys_categories` WHERE 1 ', 'sys_categories', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'value', '', 'like', '', '', 'BxTemplStudioFormsCategories', ''),
 
-('sys_audit_administration', 'Sql', 'SELECT * FROM `sys_audit` WHERE 1 ', 'sys_audit', 'id', 'added', '', '', 20, NULL, 'start', '', 'value', '', 'like', '', '', 'BxTemplAuditGrid', '');
+('sys_audit_administration', 'Sql', 'SELECT * FROM `sys_audit` WHERE 1 ', 'sys_audit', 'id', 'added', '', '', 20, NULL, 'start', '', 'value', '', 'like', '', '', 'BxTemplAuditGrid', ''),
+
+('sys_badges_administration', 'Sql', 'SELECT * FROM `sys_badges` WHERE 1 ', 'sys_badges', 'id', 'added', '', '', 20, NULL, 'start', '', 'text', '', 'like', '', '', 'BxTemplStudioBadgesGrid', '');
 
 CREATE TABLE IF NOT EXISTS `sys_grid_fields` (
   `object` varchar(64) NOT NULL,
@@ -4069,7 +4106,13 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('sys_audit_administration', 'content', '_adm_form_txt_audit_content', '25%', 1, 25, '', 3),
 ('sys_audit_administration', 'module', '_adm_form_txt_audit_module', '15%', 1, 25, '', 4),
 ('sys_audit_administration', 'context', '_adm_pgt_txt_audit_context', '15%', 1, 25, '', 5),
-('sys_audit_administration', 'action', '_adm_pgt_txt_audit_action', '15%', 1, 25, '', 6);
+('sys_audit_administration', 'action', '_adm_pgt_txt_audit_action', '15%', 1, 25, '', 6),
+
+('sys_badges_administration', 'checkbox', '_sys_select', '2%', 0, 0, '', 1),
+('sys_badges_administration', 'module', '_adm_form_txt_badges_module', '20%', 1, 25, '', 2),
+('sys_badges_administration', 'text', '_adm_pgt_txt_badges_text', '38%', 1, 25, '', 3),
+('sys_badges_administration', 'icon', '_adm_pgt_txt_badges_icon', '20%', 1, 25, '', 4),
+('sys_badges_administration', 'actions', '', '20%', 0, 0, '', 5);
 
 
 CREATE TABLE IF NOT EXISTS `sys_grid_actions` (
@@ -4146,7 +4189,13 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('sys_studio_categories', 'bulk', 'delete', '_adm_form_btn_categories_delete', '', 1, 1),
 ('sys_studio_categories', 'single', 'edit', '', 'pencil-alt', 0, 1),
 ('sys_studio_categories', 'single', 'delete', '', 'remove', 1, 2),
-('sys_studio_categories', 'independent', 'add', '_adm_form_btn_categories_add', '', 0, 1);
+('sys_studio_categories', 'independent', 'add', '_adm_form_btn_categories_add', '', 0, 1),
+
+('sys_badges_administration', 'bulk', 'delete', '_adm_form_btn_badges_delete', '', 1, 1),
+('sys_badges_administration', 'single', 'edit', '', 'pencil-alt', 0, 1),
+('sys_badges_administration', 'single', 'delete', '', 'remove', 1, 2),
+('sys_badges_administration', 'single', 'delete_icon', '', '', 1, 3),
+('sys_badges_administration', 'independent', 'add', '_adm_form_btn_badges_add', '', 0, 1);
 
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
@@ -4992,6 +5041,10 @@ INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 (3, 'audit', '_adm_page_cpt_audit', '_adm_page_cpt_audit', 'wi-audit.svg');
 SET @iIdAudit = LAST_INSERT_ID();
 
+INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
+(3, 'badges', '_adm_page_cpt_badges', '_adm_page_cpt_badges', 'wi-badges.svg');
+SET @iIdBadges = LAST_INSERT_ID();
+
 --
 -- Dumping data for table `sys_std_widgets` and `sys_std_pages_widgets`
 -- Home Page
@@ -5060,3 +5113,10 @@ INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `capt
 (@iIdAudit, 'system', '{url_studio}audit.php', '', 'wi-audit.svg', '_adm_wgt_cpt_audit', '', '');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 11);
 
+
+--
+-- Badges Page
+--
+INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
+(@iIdBadges, 'system', '{url_studio}badges.php', '', 'wi-badges.svg', '_adm_wgt_cpt_badges', '', '');
+INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 11);

@@ -7,20 +7,19 @@
  * @{
  */
 
-define('BX_DOL_STUDIO_AUD_TYPE_GENERAL', 'general');
-define('BX_DOL_STUDIO_AUD_TYPE_SETTINGS', 'settings');
+define('BX_DOL_STUDIO_BADGES_TYPE_GENERAL', 'badges');
 
-define('BX_DOL_STUDIO_AUD_TYPE_DEFAULT', BX_DOL_STUDIO_AUD_TYPE_GENERAL);
+define('BX_DOL_STUDIO_BADGES_TYPE_DEFAULT', BX_DOL_STUDIO_BADGES_TYPE_GENERAL);
 
-class BxDolStudioAudit extends BxTemplStudioPage
+class BxDolStudioBadges extends BxTemplStudioPage
 {
     protected $sPage;
 
     function __construct($sPage = "")
     {
-        parent::__construct('audit');
+        parent::__construct('badges');
 
-        $this->sPage = BX_DOL_STUDIO_AUD_TYPE_DEFAULT;
+        $this->sPage = BX_DOL_STUDIO_BADGES_TYPE_DEFAULT;
         if(is_string($sPage) && !empty($sPage))
             $this->sPage = $sPage;
     }

@@ -515,48 +515,6 @@ class BxDolStudioFormsQuery extends BxDolDb
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
     
-    function getAudit($aParams, &$aItems, $bReturnCount = true)
-    {
-        $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
-        $sSelectClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
-
-        if(!isset($aParams['order']) || empty($aParams['order']))
-            $sOrderClause = "ORDER BY `tv`.`content_module` ASC";
-
-        switch($aParams['type']) {
-            case 'by_id':
-                $aMethod['name'] = 'getRow';
-                $aMethod['params'][1] = array(
-                	'id' => $aParams['value']
-                );
-
-                $sWhereClause = " AND `tv`.`id`=:id ";
-                break;
-
-            case 'counter_by_modules':
-                $aMethod['name'] = 'getPairs';
-                $aMethod['params'][1] = 'module';
-                $aMethod['params'][2] = 'counter';
-                $sSelectClause = ", `tv`.`content_module` AS `module`, COUNT(`tv`.`id`) AS `counter`";
-                $sGroupClause = "GROUP BY `tv`.`content_module`";
-                break;
-
-            case 'all':
-                break;
-        }
-
-        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
-             `tv`.`id` AS `id`
-             " . $sSelectClause . "
-            FROM `sys_audit` AS `tv` " . $sJoinClause . "
-            WHERE 1 " . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
-        $aItems = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
-
-        if(!$bReturnCount)
-            return !empty($aItems);
-
-        return (int)$this->getOne("SELECT FOUND_ROWS()");
-    }
     
     function deleteCategories($CategoryId)
     {

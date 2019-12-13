@@ -685,6 +685,8 @@
         <string name="_adm_form_btn_labels_back"><![CDATA[Back]]></string>
         <string name="_adm_form_btn_labels_cancel"><![CDATA[Cancel]]></string>
         <string name="_adm_form_btn_labels_submit"><![CDATA[Submit]]></string>
+  <string name="_adm_form_btn_badges_add"><![CDATA[Add new badge]]></string>
+  <string name="_adm_form_btn_badges_delete"><![CDATA[Delete]]></string>
   <string name="_adm_form_btn_categories_add"><![CDATA[Add]]></string>
   <string name="_adm_form_btn_categories_delete"><![CDATA[Delete]]></string>
 	<string name="_adm_form_btn_pre_lists_add"><![CDATA[Add]]></string>
@@ -775,6 +777,31 @@
   <string name="_adm_form_txt_audit_module"><![CDATA[Module]]></string>
   <string name="_adm_pgt_txt_audit_context"><![CDATA[Context]]></string>
   <string name="_adm_pgt_txt_audit_action"><![CDATA[Action]]></string>
+
+  <string name="_adm_form_txt_badges_text"><![CDATA[Text]]></string>
+  <string name="_adm_form_txt_badges_btn_current_icon_image_delete"><![CDATA[Delete]]></string>
+  <string name="_adm_form_txt_badges_icon"><![CDATA[Icon]]></string>
+  <string name="_adm_form_txt_badges_icon_image"><![CDATA[]]></string>
+  <string name="_adm_form_txt_badges_icon_image_new"><![CDATA[]]></string>
+  <string name="_adm_form_txt_badges_icon_image_old"><![CDATA[Current Icon]]></string>
+  <string name="_adm_form_dsc_badges_icon"><![CDATA[You may use font icon here]]></string>
+  <string name="_adm_form_dsc_items_icon_image_current"><![CDATA[]]></string>
+  <string name="_adm_form_dsc_badges_icon_image"><![CDATA[or upload a small image to be displayed near the link.]]></string>
+  <string name="_adm_form_dsc_badges_icon_image_current"><![CDATA[No icon uploaded. Text is used in menu item.]]></string>
+  <string name="_adm_form_err_badges_icon"><![CDATA[You need to enter font icon name here.]]></string>
+  <string name="_adm_form_err_badges_icon_image"><![CDATA[Cannot process image: ]]></string>
+  <string name="_adm_form_err_badges_icon_image_remove"><![CDATA[Cannot remove icon image: ]]></string>
+  <string name="_adm_form_btn_badges_submit"><![CDATA[Submit]]></string>
+  <string name="_adm_form_btn_badges_cancel"><![CDATA[Cancel]]></string>
+  <string name="_adm_form_txt_badges_added"><![CDATA[Added]]></string>
+  <string name="_adm_form_txt_badges_module"><![CDATA[Module]]></string>
+  <string name="_adm_form_txt_badges_add_popup"><![CDATA[Add New Badge]]></string>
+  <string name="_adm_form_txt_badges_edit_popup"><![CDATA[Edit "{0}" badge]]></string>
+  <string name="_adm_pgt_txt_badges_text"><![CDATA[Text]]></string>
+  <string name="_adm_pgt_txt_badges_icon"><![CDATA[Icon]]></string>
+  <string name="_adm_pgt_txt_badges_action"><![CDATA[Action]]></string>
+
+
   <string name="_adm_form_txt_displays_edit_popup"><![CDATA[Edit "{0}" Display]]></string>
 	<string name="_adm_form_txt_displays_gl_fields"><![CDATA[Fields]]></string>
 	<string name="_adm_form_txt_displays_gl_form"><![CDATA[Form]]></string>
@@ -958,6 +985,7 @@
 	<string name="_adm_ipbl_sample"><![CDATA[sample]]></string>
     <string name="_adm_lang_cnf_uninstall"><![CDATA[<h3>Uninstall "{0}" language?</h3><p>Uninstalling "{0}" language will also delete all of its data. Do you want to continue?</p>]]></string>
 	<string name="_adm_lmi_cpt_actions"><![CDATA[Actions]]></string>
+  <string name="_adm_lmi_cpt_badges"><![CDATA[Badges]]></string>
 	<string name="_adm_lmi_cpt_categories"><![CDATA[Categories]]></string>
 	<string name="_adm_lmi_cpt_checkout"><![CDATA[Checkout {checkout_counter}]]></string>
 	<string name="_adm_lmi_cpt_cover"><![CDATA[Cover]]></string>
@@ -1130,6 +1158,7 @@
         <string name="_adm_nav_txt_block_hidden_on_desktop"><![CDATA[desktop]]></string>
         <string name="_adm_nav_txt_block_hidden_on_mobile"><![CDATA[mobile app]]></string>
   <string name="_adm_page_cpt_audit"><![CDATA[Audit]]></string>
+  <string name="_adm_page_cpt_badges"><![CDATA[Badges]]></string>
 	<string name="_adm_page_cpt_builder_forms"><![CDATA[Forms]]></string>
 	<string name="_adm_page_cpt_builder_menus"><![CDATA[Navigation]]></string>
 	<string name="_adm_page_cpt_builder_mobile"><![CDATA[Mobile Builder]]></string>
@@ -1587,6 +1616,7 @@
 	<string name="_adm_txt_show_help_content_empty"><![CDATA[Help is not available]]></string>
 	<string name="_adm_txt_uninstall"><![CDATA[Uninstall]]></string>
   <string name="_adm_wgt_cpt_audit"><![CDATA[Audit]]></string>
+  <string name="_adm_wgt_cpt_badges"><![CDATA[Badges]]></string>
 	<string name="_adm_wgt_cpt_builder_forms"><![CDATA[Forms]]></string>
 	<string name="_adm_wgt_cpt_builder_menus"><![CDATA[Navigation]]></string>
 	<string name="_adm_wgt_cpt_builder_pages"><![CDATA[Pages]]></string>

@@ -32,7 +32,6 @@ BxDolAuditManageTools.prototype.onChangeFilter = function (oFilter) {
 
     clearTimeout($this._iSearchTimeoutId);
     $this._iSearchTimeoutId = setTimeout(function () {
-        console.log(glGrids[$this._sObjNameGrid])
         glGrids[$this._sObjNameGrid].setFilter(sValueFilter1 + $this._sParamsDivider + sValueSearch, true);
     }, 500);
 };

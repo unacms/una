@@ -503,6 +503,37 @@ class BxBaseModGeneralModule extends BxDolModule
 
         return $this->_serviceBrowse ('favorite', array_merge(array('user' => $oProfile->id()), $aParams), BX_DB_PADDING_DEF, $bEmptyMessage);
     }
+    
+    /**
+     * Display entries posted into particular context
+     * @return HTML string
+     */
+    public function serviceBrowseContext ($iProfileId = 0, $aParams = array())
+    {
+        return $this->_serviceBrowseWithParam ('context', 'profile_id', $iProfileId, $aParams);
+    }
+    
+    public function _serviceBrowseWithParam ($sParamName, $sParamGet, $sParamVal, $aParams = array())
+    {
+        if(!$sParamVal)
+            $sParamVal = bx_process_input(bx_get($sParamGet), BX_DATA_INT);
+        if(!$sParamVal)
+            return '';
+
+        $bEmptyMessage = true;
+        if(isset($aParams['empty_message'])) {
+            $bEmptyMessage = (bool)$aParams['empty_message'];
+            unset($aParams['empty_message']);
+        }
+
+        $bAjaxPaginate = true;
+        if(isset($aParams['ajax_paginate'])) {
+            $bAjaxPaginate = (bool)$aParams['ajax_paginate'];
+            unset($aParams['ajax_paginate']);
+        }
+
+        return $this->_serviceBrowse ($sParamName, array_merge(array($sParamName => $sParamVal), $aParams), BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
+    }
 
     public function serviceFormsHelper ()
     {
@@ -1126,6 +1157,14 @@ class BxBaseModGeneralModule extends BxDolModule
         return $this->_oTemplate->parseHtmlByName('entry-share.html', array(
             'menu' => $sMenu
         ));
+    }
+    
+    /**
+     * Entry context block
+     */
+    public function serviceEntityContext ($iContentId = 0)
+    {
+        return $this->_serviceTemplateFunc ('entryContext', $iContentId);
     }
 
     /**

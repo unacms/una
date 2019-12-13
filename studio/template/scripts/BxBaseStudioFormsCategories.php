@@ -110,7 +110,7 @@ class BxBaseStudioFormsCategories extends BxDolStudioFormsCategories
             echoJson($aRes);
         }
         else {
-            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-categories-edit-popup', _t('_adm_form_txt_labels_edit_popup', _t($aCategory['value'])), $this->_oTemplate->parseHtmlByName('form_add_category.html', array(
+            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-categories-edit-popup', _t('_adm_form_txt_categories_edit_popup', _t($aCategory['value'])), $this->_oTemplate->parseHtmlByName('form_add_category.html', array(
                'form_id' => $oForm->aFormAttrs['id'],
                'form' => $oForm->getCode(true),
                'object' => $this->_sObject,

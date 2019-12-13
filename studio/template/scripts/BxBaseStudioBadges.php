@@ -8,7 +8,7 @@
  * @{
  */
 
-class BxBaseStudioAudit extends BxDolStudioAudit
+class BxBaseStudioBadges extends BxDolStudioBadges
 {
     protected $sSubpageUrl;
     protected $aMenuItems;
@@ -18,17 +18,16 @@ class BxBaseStudioAudit extends BxDolStudioAudit
     {
         parent::__construct($sPage);
 
-        $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'audit.php?page=';
+        $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'badges.php?page=';
 
 		$this->aMenuItems = array(
-            BX_DOL_STUDIO_AUD_TYPE_GENERAL => array('icon' => 'search'),
-            BX_DOL_STUDIO_AUD_TYPE_SETTINGS => array('icon' => 'cogs'),
+            BX_DOL_STUDIO_BADGES_TYPE_GENERAL => array('icon' => 'user-tag'),
 	    );
     }
 	
     function getPageCss()
     {
-        return array_merge(parent::getPageCss(), array('forms.css', 'paginate.css'));
+        return array_merge(parent::getPageCss(), array('forms.css', 'paginate.css', 'badges.css'));
     }
 	
     function getPageJs()
@@ -39,7 +38,7 @@ class BxBaseStudioAudit extends BxDolStudioAudit
     function getPageJsCode($aOptions = array(), $bWrap = true)
     {
         $aOptions = array_merge($aOptions, array(
-            'sActionUrl' => BX_DOL_URL_STUDIO . 'audit.php'
+            'sActionUrl' => BX_DOL_URL_STUDIO . 'badges.php'
         ));
 
         return parent::getPageJsCode($aOptions, $bWrap);
@@ -71,33 +70,24 @@ class BxBaseStudioAudit extends BxDolStudioAudit
         return $this->$sMethod();
     }
     
-    protected function getGeneral()
+    protected function getBadges()
     {
         return $this->getGrid();
     }
     
-    protected function getSettings()
-    {
-        $oPage = new BxTemplStudioSettings(BX_DOL_STUDIO_STG_TYPE_SYSTEM, BX_DOL_STUDIO_STG_CATEGORY_AUDIT);
-        return BxDolStudioTemplate::getInstance()->parseHtmlByName('audit.html', array(
-            'content' => $oPage->getPageCode(),
-        	'js_content' => ''
-        ));
-    }
-
     protected function getGrid()
     {
-        $oGrid = BxDolGrid::getObjectInstance('sys_audit_administration');
+        $oGrid = BxDolGrid::getObjectInstance('sys_badges_administration');
         if(!$oGrid)
             return '';
 
         $oTemplate = BxDolStudioTemplate::getInstance();
-        $oTemplate->addJs(array('BxDolAuditManageTools.js', 'BxDolGrid.js', 'jquery.form.min.js', 'jquery-ui/jquery-ui.custom.min.js' , 'jquery-ui/jquery.ui.sortable.min.js'));
-        //$oForm = new BxTemplStudioFormView(array());
+        $oTemplate->addJs(array('BxDolGrid.js', 'jquery.form.min.js', 'jquery-ui/jquery-ui.custom.min.js' , 'jquery-ui/jquery.ui.sortable.min.js'));
+        $oForm = new BxTemplStudioFormView(array());
         $oTemplate->addCss('grid.css');
         $oTemplate->addJsTranslation(array('_sys_grid_search'));
-      
-        return BxDolStudioTemplate::getInstance()->parseHtmlByName('audit.html', array(
+        
+        return BxDolStudioTemplate::getInstance()->parseHtmlByName('badges.html', array(
             'content' => $this->getBlockCode(array(
 				'items' =>$oGrid->getCode()
 			)),

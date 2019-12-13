@@ -78,6 +78,8 @@
 
 	<string name="_bx_events_page_title_sys_joined_entries"><![CDATA[События профиля]]></string>
 	<string name="_bx_events_page_title_joined_entries"><![CDATA[События профиля]]></string>
+  <string name="_bx_events_page_title_sys_entries_in_context"><![CDATA[События в контексте]]></string>
+  <string name="_bx_events_page_title_entries_in_context"><![CDATA[События в {display_name}]]></string>
 	<string name="_bx_events_page_title_sys_create_profile"><![CDATA[Создать событие]]></string>
 	<string name="_bx_events_page_title_create_profile"><![CDATA[Создать событие]]></string>
 	<string name="_bx_events_page_title_sys_edit_profile"><![CDATA[Редактировать событие]]></string>
@@ -123,6 +125,12 @@
 
     <string name="_bx_events_page_block_title_sys_entries_actions"><![CDATA[События - Действия]]></string>
     <string name="_bx_events_page_block_title_entries_actions"><![CDATA[События - Действия]]></string>
+    <string name="_bx_events_page_block_title_entries_in_context"><![CDATA[События в <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_events_page_block_title_sys_entries_in_context"><![CDATA[События в контексте]]></string>
+    <string name="_bx_events_page_block_title_calendar_in_context"><![CDATA[Календарь событий в <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_events_page_block_title_sys_calendar_in_context"><![CDATA[Календарь событий в контексте]]></string>
+    <string name="_bx_events_page_block_title_calendar_for_context"><![CDATA[Календарь событий в контексте]]></string>
+    <string name="_bx_events_page_block_title_browse_for_context"><![CDATA[События в контексте]]></string>
     <string name="_bx_events_page_block_title_sys_entries_of_author"><![CDATA[События автора]]></string>
     <string name="_bx_events_page_block_title_entries_of_author"><![CDATA[{display_name} - События]]></string>
     <string name="_bx_events_page_block_title_favorites_of_author"><![CDATA[Избранные события]]></string>   
@@ -162,6 +170,8 @@
     <string name="_bx_events_page_block_title_categories"><![CDATA[Категории событий]]></string>
     <string name="_bx_events_page_block_title_calendar"><![CDATA[Календарь событий]]></string>
     <string name="_bx_events_page_block_title_profile_calendar"><![CDATA[Календарь событий]]></string>
+    <string name="_bx_events_page_block_title_sys_entry_context"><![CDATA[Опубликовано в]]></string>
+    <string name="_bx_events_page_block_title_entry_context"><![CDATA[Опубликовано в]]></string>
     <string name="_bx_events_page_block_title_entry_location"><![CDATA[Местоположение]]></string>
     <string name="_bx_events_page_block_title_categories"><![CDATA[Категории событий]]></string>
     <string name="_bx_events_page_block_title_invite_to_group"><![CDATA[Приглашение на событие]]></string>
@@ -240,6 +250,8 @@
 
     <string name="_bx_events_menu_item_title_system_subscribe"><![CDATA[Получать уведомления]]></string>
     <string name="_bx_events_menu_item_title_subscribe"><![CDATA[Заинтересован]]></string>
+    <string name="_bx_events_menu_item_title_system_view_entries_in_context"><![CDATA[События]]></string>
+    <string name="_bx_events_menu_item_title_view_entries_in_context"><![CDATA[События]]></string>
     <string name="_bx_events_menu_item_title_system_unsubscribe"><![CDATA[Отключить уведомления]]></string>
     <string name="_bx_events_menu_item_title_unsubscribe"><![CDATA[Не заинтересован]]></string>
     <string name="_bx_events_menu_item_title_system_more_actions"><![CDATA[Дополнительные действия]]></string>
@@ -290,6 +302,7 @@
     <string name="_bx_events_search_extended_cmts"><![CDATA[Поиск комментариев к событиям]]></string>
 
     <string name="_bx_events_txt_account_pending"><![CDATA[Это событие ожидает одобрения. Пожалуйста, дождитесь ее активации.]]></string>
+    <string name="_bx_events_txt_all_entries_in"><![CDATA[<a href="{0}">Все события в {1} ({2})</a>]]></string>
     <string name="_bx_events_txt_account_suspended"><![CDATA[Это событие заблокировано.]]></string>
     <string name="_bx_events_txt_N_fans"><![CDATA[{0} участников]]></string>
     <string name="_bx_events_txt_sample_single"><![CDATA[событие]]></string>
