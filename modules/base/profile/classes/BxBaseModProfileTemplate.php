@@ -96,6 +96,10 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $sThumbUrl = $bPublicThumb ? $this->_getUnitThumbUrl($sTemplateSize, $aData, false) : '';
         $bThumbUrl = !empty($sThumbUrl);
 
+		$bShowOneBadge = false;
+		if ('unit_wo_info.html' ==  $sTemplate)
+			$bShowOneBadge = true;
+		
         $aTmplVarsThumbnail = array(
             'bx_if:show_thumb_image' => array(
                 'condition' => $bThumbUrl,
@@ -117,6 +121,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                 'content' => array()
             ),
             'size' => $sTemplateSize,
+            'badges' => $oModule->_getBadges($iContentId, $bShowOneBadge, $bShowOneBadge),
             'thumb_url' => $bThumbUrl ? $sThumbUrl : $this->getImageUrl('no-picture-thumb.png'),
         );
 
@@ -315,6 +320,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'cover_popup_id' => $sCoverPopupId,
             'cover_url' => $sUrlCover,
             'cover_href' => !$aData[$CNF['FIELD_COVER']] && CHECK_ACTION_RESULT_ALLOWED === $oModule->checkAllowedChangeCover($aData) ? $sUrlCoverChange : 'javascript:void(0);',
+            'badges' => $oModule->_getBadges($aData[$CNF['FIELD_ID']]),
         );
 
         BxDolCover::getInstance($this)->set($aVars, $sTemplateName);
