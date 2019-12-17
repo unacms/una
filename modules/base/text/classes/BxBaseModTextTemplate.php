@@ -596,7 +596,8 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
     protected function getUnit ($aData, $aParams = array())
     {
-        $CNF = &BxDolModule::getInstance($this->MODULE)->_oConfig->CNF;
+        $oModule = BxDolModule::getInstance($this->MODULE);
+        $CNF = &$oModule->_oConfig->CNF;
 
         // get thumb url
         list($sPhotoThumb, $sPhotoGallery) = $this->getUnitThumbAndGallery($aData);
@@ -633,6 +634,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             'id' => $aData[$CNF['FIELD_ID']],
             'content_url' => $sUrl,
             'title' => $sTitle,
+            'badges' => $oModule->serviceGetBadges($aData[$CNF['FIELD_ID']], false, true),
             'title_attr' => bx_html_attribute($sTitle),
             'summary' => $sSummary,
             'text' => $sText,

@@ -268,6 +268,11 @@ div.bx-tl-item div.bx-tl-owner-name {
     text-overflow: ellipsis;
     overflow: hidden;
 }
+
+div.bx-tl-item div.bx-tl-owner-name .bx-badge-compact {
+    display:inline-block;
+}
+
 div.bx-tl-item div.bx-tl-owner-name > * {
     vertical-align: middle;
 }

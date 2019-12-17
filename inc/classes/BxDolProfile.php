@@ -261,6 +261,15 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         $aInfo = $this->getInfo($iProfileId);
         return BxDolService::call($aInfo['type'], 'profile_unit', array($aInfo['content_id'], $aParams));
     }
+    
+    /**
+     * Get badges
+     */
+    public function getBadges($iProfileId = 0)
+    {
+        $aInfo = $this->getInfo($iProfileId);
+        return BxDolService::call($aInfo['type'], 'get_badges', array($aInfo['content_id'], true, true));
+    }
 
 	/**
      * Check whether a profile has real image uploaded by user.

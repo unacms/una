@@ -678,7 +678,7 @@ function bx_set_acl_level (iProfileId, iAclLevel, mixedLoadingElement) {
  * @param iBadgeId - badge id to assign to a given content
  */
 function bx_set_badge (sModule, iContentId, iBadgeId, mixedLoadingElement) {
-    
+   
     var bLoading = typeof(mixedLoadingElement) != 'undefined';
     if(bLoading)
         bx_loading($(mixedLoadingElement), true);
@@ -699,6 +699,9 @@ function bx_set_badge (sModule, iContentId, iBadgeId, mixedLoadingElement) {
                 var oCard = $(oData.card[iField]);
                 $('#' + oCard.attr('id')).replaceWith(oCard);
             }
+		
+		$('.bx-base-bages-container').html(oData.html);
+		
     }, 'json');
 }
 

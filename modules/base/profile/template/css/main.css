@@ -124,6 +124,8 @@ p.bx-base-pofile-unit-thumb.bx-def-ava-size {
     white-space:nowrap;
     text-overflow:ellipsis;
     overflow:hidden;
+    display: flex; 
+    justify-content:center;
 }
 
 .bx-base-pofile-unit-info-members {
@@ -497,4 +499,11 @@ a.bx-base-pofile-cover-thumb p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
     position: absolute;
     right: -30%;
     top: 0px;
+}
+.bx-base-profile-cover-title-bages{
+    display: flex; 
+    align-items: center;
+    justify-content: center; 
+    overflow: hidden;
+    align-items: center;
 }

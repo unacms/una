@@ -140,7 +140,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         $aVars = $aData;
         $aVars['entry_title'] = $this->getTitle($aData);
         $aVars['entry_text'] = $this->getText($aData);
-
+		$aVars['badges'] = $this->getModule()->serviceGetBadges($aData[$CNF['FIELD_ID']]);
         if (!empty($CNF['OBJECT_METATAGS'])) {
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
 
