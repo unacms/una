@@ -52,7 +52,7 @@ class BxBaseServiceWiki extends BxDol
                     $oTemplate = BxDolTemplate::getInstance();
                     $oTemplate->displayErrorOccured(_t("_sys_wiki_error_page_exists", bx_process_output($sUri)));
                 } else {
-                    echo "TODO: wiki - suggest to create page with specified URI";
+                    echo "TODO: wiki - suggest to create page with specified URI. Display form where user can enter title(text input), text(plain textrea), languale (select with currect site languages with current one pre-selected), title - will be page and first block title, text - will be content for first block. Default layout is page with one column and block without borders and title.";
                 }
             } 
             else {

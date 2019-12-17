@@ -103,8 +103,13 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         if (!$sLang)
             $sLang = bx_lang_name();
         $s = $this->_oQuery->getBlockContent ($iBlockId, $sLang);
-        // $s = TODO: wiki - process markdown
+
+        require_once(BX_DIRECTORY_PATH_PLUGINS . "parsedown/Parsedown.php");
+        $oParsedown = new Parsedown();
+        $s = $oParsedown->text($s);
+
         $s = $this->addControls($iBlockId, $s);
+
         return $s;
     }
 
@@ -116,7 +121,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
      */
     public function addControls ($iBlockId, $s)
     {
-        $sControl = "<div>TODO: wiki - controls here, such as edit, delete, translate, history</div>";
+        $sControl = "<div>TODO: wiki - controls here. On left - Edit, Delete version, Delete block, Translate, History. On right - Last modified time and List of missing and outdated translations. History and Last modified time should be controlled by regular menu privacy, while other actions should have custom privacy for particular wiki object.</div>";
         return $s . $sControl;
     }
 
