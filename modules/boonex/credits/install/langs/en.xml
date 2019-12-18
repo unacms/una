@@ -89,6 +89,8 @@
     <string name="_bx_credits_menu_item_title_credits"><![CDATA[Credits]]></string>
     <string name="_bx_credits_menu_item_title_system_history"><![CDATA[Balance]]></string>
     <string name="_bx_credits_menu_item_title_history"><![CDATA[{unit}{value}]]></string>
+    <string name="_bx_credits_menu_item_title_system_notifications"><![CDATA[Balance]]></string>
+    <string name="_bx_credits_menu_item_title_notifications"><![CDATA[{value}]]></string>
     <string name="_bx_credits_menu_title_submenu"><![CDATA[Credits Submenu]]></string>
     <string name="_bx_credits_menu_set_title_submenu"><![CDATA[Credits Submenu]]></string>
     <string name="_bx_credits_menu_item_title_system_home"><![CDATA[Home]]></string>
@@ -144,7 +146,7 @@
     <string name="_bx_credits_grid_column_value_ord_type_single"><![CDATA[Single]]></string>
     <string name="_bx_credits_grid_column_value_ord_type_recurring"><![CDATA[Recurring]]></string>
     <string name="_bx_credits_grid_column_title_ord_added"><![CDATA[Added]]></string>
-    <string name="_bx_credits_grid_column_title_ord_expired"><![CDATA[Expired]]></string>
+    <string name="_bx_credits_grid_column_title_ord_expired"><![CDATA[Expires]]></string>
 
 
     <!-- Email templates -->

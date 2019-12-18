@@ -88,7 +88,7 @@ class BxCreditsGridHistoryAdministration extends BxTemplGrid
 
     protected function _getCellAmount($mixedValue, $sKey, $aField, $aRow)
     {
-        return parent::_getCellDefault($this->_oModule->_oConfig->convertC2S($mixedValue), $sKey, $aField, $aRow);
+        return parent::_getCellDefault($this->_oModule->convertC2S($mixedValue), $sKey, $aField, $aRow);
     }
 
     protected function _getCellOrder($mixedValue, $sKey, $aField, $aRow)
