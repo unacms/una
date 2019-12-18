@@ -17,8 +17,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_credits_conversion_rate_use', '1.0', @iCategId, '_bx_credits_option_conversion_rate_use', 'digit', '', '', '', 11),
 ('bx_credits_conversion_rate_withdraw', '1.0', @iCategId, '_bx_credits_option_conversion_rate_withdraw', 'digit', '', '', '', 12),
 
-('bx_credits_code', '&#36;', @iCategId, '_bx_credits_option_code', 'digit', '', '', '', 20),
-('bx_credits_icon', '', @iCategId, '_bx_credits_option_icon', 'digit', '', '', '', 21);
+('bx_credits_code', '', @iCategId, '_bx_credits_option_code', 'digit', '', '', '', 20),
+('bx_credits_icon', 'copyright', @iCategId, '_bx_credits_option_icon', 'digit', '', '', '', 21);
 
 
 -- PAGE: module home
@@ -68,22 +68,27 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 -- MENU: add to site menu
 SET @iSiteMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_site' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_site', 'bx_credits', 'credits-home', '_bx_credits_menu_item_title_system_credits', '_bx_credits_menu_item_title_credits', 'page.php?i=credits-home', '', '', 'money-bill-alt col-green3', 'bx_credits_submenu', 2147483647, 1, 1, IFNULL(@iSiteMenuOrder, 0) + 1);
+('sys_site', 'bx_credits', 'credits-home', '_bx_credits_menu_item_title_system_credits', '_bx_credits_menu_item_title_credits', 'page.php?i=credits-home', '', '', 'copyright col-green3', 'bx_credits_submenu', 2147483647, 1, 1, IFNULL(@iSiteMenuOrder, 0) + 1);
 
 -- MENU: add to homepage menu
 SET @iHomepageMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_homepage' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_homepage', 'bx_credits', 'credits-home', '_bx_credits_menu_item_title_system_credits', '_bx_credits_menu_item_title_credits', 'page.php?i=credits-home', '', '', 'money-bill-alt col-green3', 'bx_credits_submenu', 2147483647, 1, 1, IFNULL(@iHomepageMenuOrder, 0) + 1);
+('sys_homepage', 'bx_credits', 'credits-home', '_bx_credits_menu_item_title_system_credits', '_bx_credits_menu_item_title_credits', 'page.php?i=credits-home', '', '', 'copyright col-green3', 'bx_credits_submenu', 2147483647, 1, 1, IFNULL(@iHomepageMenuOrder, 0) + 1);
 
 -- MENU: member toolbar
 SET @iMenuToolbarMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_toolbar_member' LIMIT 1);
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('sys_toolbar_member', 'bx_credits', 'credits-history', '_bx_credits_menu_item_title_system_history', '_bx_credits_menu_item_title_history', 'page.php?i=credits-history-common', '', '', '', 'a:2:{s:6:"module";s:10:"bx_credits";s:6:"method";s:26:"get_menu_item_addon_amount";}', '', 0, 2147483646, 1, 1, 0);
 
+-- MENU: Notifications
+SET @iAccountNotificationsMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_account_notifications' AND `order` < 9999);
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
+('sys_account_notifications', 'bx_credits', 'notifications-credits', '_bx_credits_menu_item_title_system_notifications', '_bx_credits_menu_item_title_notifications', 'page.php?i=credits-history-common', '', '', 'copyright col-green3', 'a:2:{s:6:"module";s:10:"bx_credits";s:6:"method";s:26:"get_menu_item_addon_amount";}', '', '0', 2147483646, 1, 1, @iAccountNotificationsMenuOrder + 1);
+
 -- MENU: account dashboard
 SET @iAccountDashboardMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard' LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES
-('sys_account_dashboard', 'bx_credits', 'credits-manage', '_bx_credits_menu_item_title_system_manage', '_bx_credits_menu_item_title_manage', 'page.php?i=credits-orders-common', '', '', 'money-bill-alt col-green3', '', '', 2147483646, 1, 0, 1, @iAccountDashboardMenuOrder + 1);
+('sys_account_dashboard', 'bx_credits', 'credits-manage', '_bx_credits_menu_item_title_system_manage', '_bx_credits_menu_item_title_manage', 'page.php?i=credits-orders-common', '', '', 'copyright col-green3', '', '', 2147483646, 1, 0, 1, @iAccountDashboardMenuOrder + 1);
 
 -- MENU: module sub-menu
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -111,7 +116,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: dashboard manage tools
 SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_account_dashboard_manage_tools', 'bx_credits', 'credits-history-administration', '_bx_credits_menu_item_title_system_admt_credits', '_bx_credits_menu_item_title_admt_credits', 'page.php?i=credits-history-administration', '', '_self', 'money-bill-alt col-green3', 'a:2:{s:6:"module";s:10:"bx_credits";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 192, 1, 0, @iManageMenuOrder + 1);
+('sys_account_dashboard_manage_tools', 'bx_credits', 'credits-history-administration', '_bx_credits_menu_item_title_system_admt_credits', '_bx_credits_menu_item_title_admt_credits', 'page.php?i=credits-history-administration', '', '_self', 'copyright col-green3', 'a:2:{s:6:"module";s:10:"bx_credits";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 192, 1, 0, @iManageMenuOrder + 1);
 
 
 -- ACL

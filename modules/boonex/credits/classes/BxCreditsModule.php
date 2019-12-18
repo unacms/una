@@ -148,8 +148,8 @@ class BxCreditsModule extends BxBaseModGeneralModule
             return '';
 
         return array(
-            'unit' => $this->_oConfig->getUnit(), 
-            'value' => $this->_oConfig->convertC2S($this->_oDb->getProfile(array('type' => 'balance', 'id' => $iProfileId)), false)
+            'unit' => $this->_oTemplate->getUnit(), 
+            'value' => $this->convertC2S($this->_oDb->getProfile(array('type' => 'balance', 'id' => $iProfileId)), false)
         );
     }
 
@@ -563,6 +563,18 @@ class BxCreditsModule extends BxBaseModGeneralModule
     /*
      * Common methods
      */
+    public function convertC2S($fCredits, $bWithUnit = true)
+    {
+        $sResult = '';
+        if($bWithUnit)
+            $sResult .= $this->_oTemplate->getUnit();
+
+        $iPrecision = $this->_oConfig->getPrecision();
+        $sResult .= sprintf("%01." . $iPrecision . "f", round((float)$fCredits, $iPrecision));
+
+        return $sResult;
+    }
+
     public function getProfileBalance($iProfileId = 0)
     {
         if(empty($iProfileId))

@@ -34,6 +34,19 @@ class BxCreditsTemplate extends BxBaseModGeneralTemplate
     	return MsgBox(_t('_bx_credits_msg_empty_author'));
     }
 
+    public function getUnit()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sUnit = '';
+        if(($sCode = getParam($CNF['PARAM_CODE'])) != '')
+            $sUnit = $sCode;
+        else if(($sIcon = getParam($CNF['PARAM_ICON'])) != '')
+            $sUnit = $this->parseIcon($sIcon, array('class' => $this->_oConfig->getPrefix('style') . '-mti-balance bx-def-margin-thd-right'));
+
+        return $sUnit;
+    }
+
     public function getBlockCheckout($oBuyer, $oSeller, $aData)
     {
         $CNF = &$this->_oConfig->CNF;
@@ -73,7 +86,7 @@ class BxCreditsTemplate extends BxBaseModGeneralTemplate
                     'rate' => $fRate,
                 )
             ),
-            'credits' => $this->_oConfig->convertC2S($aData['amountc']),
+            'credits' => $this->getModule()->convertC2S($aData['amountc']),
             'js_code' => $this->getJsCode('checkout')
         ));
     }

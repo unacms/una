@@ -23,7 +23,7 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
         $this->CNF = array (
 
             // module icon
-            'ICON' => 'money-bill-alt col-green3',
+            'ICON' => 'copyright col-green3',
 
             // database tables
             'TABLE_BUNDLES' => $aModule['db_prefix'] . 'bundles',
@@ -152,17 +152,6 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
     	return $this->_aCurrency;
     }
 
-    public function getUnit()
-    {
-        $sUnit = '';
-        if(($sCode = getParam($this->CNF['PARAM_CODE'])) != '')
-            $sUnit = $sCode;
-        else if(($sIcon = getParam($this->CNF['PARAM_ICON'])) != '')
-            $sUnit = $this->_oTemplate->parseIcon($sIcon, array('class' => $this->getPrefix('style') . '-mti-balance bx-def-margin-thd-right'));
-
-        return $sUnit;
-    }
-
     public function isWithdraw()
     {
         return getParam($this->CNF['PARAM_WITHDRAW']) == 'on';
@@ -249,21 +238,6 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
             $iPrecision = $this->getPrecision();
 
         return round((float)$fMoney / $fRate, $iPrecision);
-    }
-
-    /**
-     * Convert Credits to String
-     */
-    public function convertC2S($fCredits, $bWithUnit = true)
-    {
-        $sResult = '';
-        if($bWithUnit)
-            $sResult .= $this->getUnit();
-
-        $iPrecision = $this->getPrecision();
-        $sResult .= sprintf("%01." . $iPrecision . "f", round((float)$fCredits, $iPrecision));
-
-        return $sResult;
     }
 
     /*
