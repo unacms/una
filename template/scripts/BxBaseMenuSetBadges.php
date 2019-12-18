@@ -59,11 +59,11 @@ class BxBaseMenuSetBadges extends BxTemplMenu
                 'id' => $aBadge['id'],
                 'name' => $aBadge['id'],
                 'class' => '',
-                'title' => BxDolService::call('system', 'get_badge', array($aBadge), 'TemplServices'),
-                'icon' => '',//$aBadge['icon'],
+                'title' => '<input onclick=bx_set_badge("' . $sModule . '",' . $iContentId . ',' . $aBadge['id'] . ') type="checkbox" ' . ($aBadge['badge_id'] != '' ? 'checked' : '') . '>' . BxDolService::call('system', 'get_badge', array($aBadge), 'TemplServices'),
+                'addon' => '',
                 'selected' => true,
                 'link' => 'javascript:void(0);',
-                'onclick' => "bx_set_badge('" . $sModule . "', " . $iContentId . ", {$aBadge['id']}, " . bx_js_string("$(this).parents('.bx-popup-applied:first')") . ");"
+                'onclick' => 'javascript:void(0);'
             );
             if ($aBadge['badge_id'] != ''){
                 array_push($this->_aSelectedIds, $aBadge['id']);
@@ -89,15 +89,13 @@ class BxBaseMenuSetBadges extends BxTemplMenu
         
         checkActionModule($iPerformerId, 'set badge', 'system', true); // perform action
         
-        $aResult = array('code' => 0);
+        $aResult = array('code' => 0, 'html' => BxDolService::call($sModule, 'get_badges', array($iContentId)));
         
         return $aResult;
     }
     
     protected function _isSelected ($a)
     {
-        if (isset($a['name']) &&  in_array($a['name'], $this->_aSelectedIds))
-            return true;
         return false;
     }
 }

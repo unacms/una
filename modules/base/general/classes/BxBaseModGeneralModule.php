@@ -1757,7 +1757,33 @@ class BxBaseModGeneralModule extends BxDolModule
 
         return $iProfileId;
     }
+	
+	public function serviceGetBadges($iContentId,  $bIsSingle = false, $bIsCompact  = false)
+    {
+        $oBadges = BxDolBadges::getInstance();
+        $aBadges = $oBadges->getData(
+            array(
+            'type' => ($bIsSingle ? 'by_module&object2_single' : 'by_module&object2'),
+            'module' => $this->_aModule['name'],
+            'object_id' => $iContentId
+            )
+        );
+        
+        if ($bIsSingle && count($aBadges) > 0)
+            return BxDolService::call('system', 'get_badge', array($aBadges[0], $bIsCompact), 'TemplServices');
+        
+        $aBadgesOutput = array();
+        foreach($aBadges as $aBadge) {
+            $aBadgesOutput[] =  array('badge' => BxDolService::call('system', 'get_badge', array($aBadge, $bIsCompact), 'TemplServices'));
+        }
 
+        return $this->_oTemplate->parseHtmlByName('badges.html', 
+			array(
+				'bx_repeat:items' => $aBadgesOutput,
+			)
+		);
+        
+    }
 
     // ====== PERMISSION METHODS
     public function serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction = false, $iProfileId = false)
@@ -2093,6 +2119,20 @@ class BxBaseModGeneralModule extends BxDolModule
             $oProfile->getUnit(0, array('template' => 'unit_wo_info'))
         );
     }
+    
+    public function getUserInfoWithBadges($iUserId = 0)
+    {
+        $oProfile = BxDolProfile::getInstanceMagic($iUserId);
+
+        return array(
+            $oProfile->getDisplayName(),
+            $oProfile->getUrl(),
+            $oProfile->getThumb(),
+            $oProfile->getUnit(),
+            $oProfile->getUnit(0, array('template' => 'unit_wo_info')),
+            $oProfile->getBadges()
+        );
+    }
 
     public function isMenuItemVisible($sObject, &$aItem, &$aContentInfo)
     {
@@ -2148,33 +2188,6 @@ class BxBaseModGeneralModule extends BxDolModule
         return $AuditParams;
     }
     
-    public function _getBadges($iContentId,  $bIsSingle = false, $bIsSmall  = false)
-    {
-        $oBadges = BxDolBadges::getInstance();
-        $aBadges = $oBadges->getData(
-            array(
-            'type' => ($bIsSingle ? 'by_module&object2_single' : 'by_module&object2'),
-            'module' => $this->_aModule['name'],
-            'object_id' => $iContentId
-            )
-        );
-        
-        if ($bIsSingle && count($aBadges) > 0)
-            return BxDolService::call('system', 'get_badge', array($aBadges[0], $bIsSmall), 'TemplServices');
-        
-        $aBadgesOutput = array();
-        foreach($aBadges as $aBadge) {
-            $aBadgesOutput[] =  array('badge' => BxDolService::call('system', 'get_badge', array($aBadge, $bIsSmall), 'TemplServices'));
-        }
-
-        return $this->_oTemplate->parseHtmlByName('badges.html', 
-			array(
-				'bx_repeat:items' => $aBadgesOutput,
-			)
-		);
-        
-    }
-
     // ====== PROTECTED METHODS
 
     protected function _serviceEntityForm ($sFormMethod, $iContentId = 0, $sDisplay = false, $sCheckFunction = false, $bErrorMsg = true)

@@ -1378,7 +1378,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $bViewItem = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_ITEM;
         $bViewOutline = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_OUTLINE;
 
-        list($sAuthorName, $sAuthorUrl, $sAuthorIcon, $sAuthorUnit, $sAuthorUnitShort) = $oModule->getUserInfo($aEvent['object_owner_id']);
+        list($sAuthorName, $sAuthorUrl, $sAuthorIcon, $sAuthorUnit, $sAuthorUnitShort, $sAuthorBadges) = $oModule->getUserInfoWithBadges($aEvent['object_owner_id']);
         $bAuthorIcon = !empty($sAuthorIcon);
 
         if(($bViewItem || $this->_oConfig->isCountAllViews()) && !empty($aEvent['views']) && is_array($aEvent['views']) && isset($aEvent['views']['system']))
@@ -1455,7 +1455,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'item_icon' => !empty($aEvent['icon']) ? $aEvent['icon'] : $CNF['ICON'],
             'item_owner_url' => $sAuthorUrl,
             'item_owner_title' => bx_html_attribute($sAuthorName),
-            'item_owner_name' => $sAuthorName,
+            'item_owner_name' => $sAuthorName .' '. $sAuthorBadges,
             'item_owner_unit' => $sAuthorUnitShort,
             'item_owner_action' => _t($aEvent['sample_action'], _t($aEvent['sample'])),
             'bx_if:show_timeline_owner' => array(

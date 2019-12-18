@@ -283,8 +283,8 @@ div.bx-badge {
 	vertical-align: middle;
 	height: 1.25rem;
 	line-height: 1.25rem;
-	padding: 0.25rem 0.5rem ;
-	border-radius: 1em;
+	padding: 0 0.5rem ;
+	border-radius: 2em;
 	white-space: nowrap; 
 	text-overflow: ellipsis; 
     overflow: hidden;
@@ -294,12 +294,12 @@ div.bx-badges-list div.bx-badge{
 }
 
 img.bx-badge-icon {
-    width: 20px;
-    height: 20px;
+    width: 14px;
+    height: 14px;
 }
 div.bx-badge img{
 
-	margin-right: 0.25rem;
+	margin-right: 0.5rem;
 }
 div.bx-badge span{
 	text-overflow: ellipsis; 
@@ -307,8 +307,7 @@ div.bx-badge span{
 }
 div.bx-badge .sys-icon{
 	color:#fff;
-	font-size: 1.25rem;
-	margin-right: 0.25rem;
+	margin-right: 0.5rem;
 }
 div.bx-badge.bx-badge-compact{
 	width: 1.25rem;
@@ -319,5 +318,13 @@ div.bx-badge.bx-badge-compact .sys-icon{
 }
 div.bx-badge.bx-badge-compact .sys-icon,
 div.bx-badge.bx-badge-compact img{
-	margin-right: 0;
+    margin:0px auto;
+}
+#bx-popup-ajax-wrapper-sys_set_badges li span{
+    display: flex;
+    margin-left: 0px;
+    align-items: baseline;
+}
+#bx-popup-ajax-wrapper-sys_set_badges li INPUT[type="checkbox"] {
+    margin-right: 0.5rem;
 }

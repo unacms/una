@@ -440,24 +440,16 @@ class BxNtfsModule extends BxBaseModNotificationsModule
         if(!$oAccount)
             return false;
 
-        $oLanguage = BxDolLanguages::getInstance();
-
-        $iLanguage = $oAccount->getLanguageId();
-        if(empty($iLanguage))
-            $iLanguage = $oLanguage->getCurrentLangId();
-
-        $sLanguage = $oLanguage->getLangName($iLanguage);
-
         $aContent = &$aNotification['content'];
         $aSettings = &$aNotification['settings'];
 
         $sSubject = !empty($aSettings['subject']) ? $aSettings['subject'] : _t('_bx_ntfs_push_new_event_subject', getParam('site_title'));
         return BxDolPush::getInstance()->send($oProfile->id(), array(
             'contents' => array(
-                $sLanguage => $aContent['message']
+                'en' => $aContent['message']
             ),
             'headings' => array(
-                $sLanguage => $sSubject
+                'en' => $sSubject
             ),
             'url' => $aContent['url'],
             'icon' => $aContent['icon']

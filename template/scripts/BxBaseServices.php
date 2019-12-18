@@ -409,10 +409,10 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return $aResults;
     }
     
-    public function serviceGetBadge($aBadge, $isCompact = false)
+    public function serviceGetBadge($aBadge, $bIsCompact = false)
     {
         $sClass = '';
-        if ($isCompact){
+        if ($bIsCompact){
             $aBadge['is_icon_only'] = 1;
         }
         if ($aBadge['is_icon_only'] == 1){

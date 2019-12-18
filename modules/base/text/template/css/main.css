@@ -42,6 +42,13 @@
 	text-align: left;
 }
 
+.bx-base-text-unit-title{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: flex;
+}
+
 .bx-base-text-unit-cover img {
 	position: relative;
 	display: block;
@@ -220,6 +227,7 @@
 .bx-base-text-entity-content h2:first-child,
 .bx-base-text-entity-content h1:first-child {
     margin-top:0;
+	margin-bottom: 0;
 }
 
 .bx-base-text-entity-content p:last-child,
@@ -232,4 +240,10 @@
 .bx-base-text-entity-actions-all .bx-menu-btns-hor {
     display:inline-block;
     vertical-align:top;
+}
+
+.bx-base-text-title-bages{
+    display: flex;
+    overflow: hidden;
+    align-items: center;
 }

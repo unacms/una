@@ -3424,6 +3424,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $iUserId = (int)$iUserId;
         return parent::getUserInfo($iUserId);
     }
+    
+    public function getUserInfoWithBadges($iUserId = 0)
+    {
+        $iLoggedId = $this->getUserId();
+        $iUserId = (int)$iUserId;
+        return parent::getUserInfoWithBadges($iUserId);
+    }
 
     /**
      * Protected Methods 

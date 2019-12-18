@@ -266,7 +266,13 @@ class BxBaseStudioBadgesGrid extends BxDolStudioBadgesGrid
 			$oModule = BxDolModule::getInstance($sKey);
             if(!($oModule instanceof iBxDolContentInfoService)){
                 unset($aInputModules['values'][$sKey]);
-			}				
+			}	
+            else{
+                $CNF = $oModule->_oConfig->CNF;
+                if(!isset($CNF['BADGES_AVALIABLE']) || !(bool)$CNF['BADGES_AVALIABLE']){
+                    unset($aInputModules['values'][$sKey]);
+                }
+            }
 		}
 		$aInputModules['values'] = array_merge(array('' => _t('_adm_txt_select_module')), $aInputModules['values']);
 		$oForm = new BxTemplStudioFormView(array());
