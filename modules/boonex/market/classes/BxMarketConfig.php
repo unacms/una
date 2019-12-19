@@ -157,6 +157,8 @@ class BxMarketConfig extends BxBaseModTextConfig
             'OBJECT_GRID_LICENSES' => 'bx_market_licenses',
             'OBJECT_UPLOADERS' => array('bx_market_simple', 'bx_market_html5'),
             'OBJECT_CONNECTION_SUBENTRIES' => 'bx_market_subentries',
+            
+            'BADGES_AVALIABLE' => true,
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (

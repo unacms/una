@@ -789,7 +789,7 @@
   <string name="_adm_form_txt_badges_icon_image_new"><![CDATA[]]></string>
   <string name="_adm_form_txt_badges_icon_image_old"><![CDATA[Current Icon]]></string>
   <string name="_adm_form_dsc_badges_icon"><![CDATA[You may use font icon here]]></string>
-  <string name="_adm_form_dsc_items_icon_image_current"><![CDATA[]]></string>
+  <string name="_adm_form_dsc_badges_items_icon_image_current"><![CDATA[]]></string>
   <string name="_adm_form_dsc_badges_icon_image"><![CDATA[or upload a small image to be displayed near the link.]]></string>
   <string name="_adm_form_dsc_badges_icon_image_current"><![CDATA[No icon uploaded. Text is used in menu item.]]></string>
   <string name="_adm_form_err_badges_icon"><![CDATA[You need to enter font icon name here.]]></string>
@@ -803,8 +803,6 @@
   <string name="_adm_form_txt_badges_edit_popup"><![CDATA[Edit "{0}" badge]]></string>
   <string name="_adm_pgt_txt_badges_text"><![CDATA[Text]]></string>
   <string name="_adm_pgt_txt_badges_icon"><![CDATA[Icon]]></string>
-  <string name="_adm_pgt_txt_badges_action"><![CDATA[Action]]></string>
-
 
   <string name="_adm_form_txt_displays_edit_popup"><![CDATA[Edit "{0}" Display]]></string>
 	<string name="_adm_form_txt_displays_gl_fields"><![CDATA[Fields]]></string>

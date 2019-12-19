@@ -76,6 +76,9 @@ div.bx-market-unit-title {
     text-overflow: ellipsis;
     overflow: hidden;
 }
+div.bx-market-unit-title-badges {
+    display: flex;
+}
 .bx-market-ui-price {
 	float: none;
 	max-width: 80%;

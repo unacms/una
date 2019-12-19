@@ -172,8 +172,9 @@ class BxForumTemplate extends BxBaseModTextTemplate
                 'condition' => (int)$aRow[$CNF['FIELD_LOCK']] == 1,
                 'content' => array()
             ),
-            'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $oModule->_oConfig->CNF['URI_VIEW_ENTRY'] . '&id=' . $aRow['id']),
+            'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $oModule->_oConfig->CNF['URI_VIEW_ENTRY'] . '&id=' . $aRow[$CNF['FIELD_ID']]),
             'title' => $sTitle ? $sTitle : _t('_Empty'),
+            'badges' => $oModule->serviceGetBadges($aRow[$CNF['FIELD_ID']], false, true),
             'text' => $sText,
             'bx_if:meta_main' => array(
                 'condition' => $aMetas['main'] !== false,

@@ -117,6 +117,13 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.bx-forum-grid-preview .bx-forum-gp-title .sys-icon,
+.bx-forum-grid-preview .bx-forum-gp-text .sys-icon {
+    margin-right:0.25rem;
 }
 
 .bx-forum-grid-preview .bx-forum-gp-meta {

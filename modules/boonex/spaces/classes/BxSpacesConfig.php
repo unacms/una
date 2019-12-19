@@ -129,6 +129,8 @@ class BxSpacesConfig extends BxBaseModProfileConfig
             'OBJECT_CONNECTIONS' => 'bx_spaces_fans',
             'OBJECT_UPLOADERS_COVER' => array('bx_spaces_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_spaces_picture_crop'),
+            
+            'BADGES_AVALIABLE' => true,
 
             'EMAIL_INVITATION' => 'bx_spaces_invitation',
             'EMAIL_JOIN_REQUEST' => 'bx_spaces_join_request',

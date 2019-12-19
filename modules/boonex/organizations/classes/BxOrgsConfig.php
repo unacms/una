@@ -142,6 +142,8 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'OBJECT_CONNECTIONS' => 'bx_organizations_fans',
             'OBJECT_UPLOADERS_COVER' => array('bx_organizations_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_organizations_picture_crop'),
+            
+            'BADGES_AVALIABLE' => true,
 
             'EMAIL_FRIEND_REQUEST' => 'bx_organizations_friend_request',
             'EMAIL_INVITATION' => 'bx_organizations_invitation',
