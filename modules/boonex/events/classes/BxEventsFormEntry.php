@@ -114,7 +114,11 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
 
     function getCode($bDynamicMode = false)
     {
-        return $this->_oModule->_oTemplate->getJsCode('entry') . parent::getCode($bDynamicMode);
+        $sJsCode = '';
+        if(empty($this->aParams['view_mode']))
+            $sJsCode = $this->_oModule->_oTemplate->getJsCode('entry');
+
+        return $sJsCode . parent::getCode($bDynamicMode);
     }
 
     function initChecker ($aValues = array (), $aSpecificValues = array())
