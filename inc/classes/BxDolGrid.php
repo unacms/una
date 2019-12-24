@@ -408,79 +408,84 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
 
         // add filter condition
         $sOrderByFilter = '';
-        if ($sFilter && (!empty($this->_aOptions['filter_fields']) || !empty($this->_aOptions['filter_fields_translatable']))) {
-
-            $sMode = $this->_aOptions['filter_mode'];
-            if ($sMode != 'like' && $sMode != 'fulltext')
-                $sMode = getParam('useLikeOperator') ? 'like' : 'fulltext';
-
-            $sCond = '';
-            if ('like' == $sMode) { // LIKE search
-
-                // condition for regular fields
-                if (!empty($this->_aOptions['filter_fields']))
-                    foreach ($this->_aOptions['filter_fields'] as $sField)
-                        $sCond .= $oDb->prepareAsString("`{$sField}` LIKE ? OR ", '%' . $sFilter . '%');
-
-                // condition for translatable fields
-                if (!empty($this->_aOptions['filter_fields_translatable'])) {
-                    $sCondFields = '';
-                    foreach ($this->_aOptions['filter_fields_translatable'] as $sField)
-                        $sCondFields .= "`k`.`Key` = `{$sField}` OR ";
-
-                    $sCondFields = rtrim($sCondFields, ' OR ');
-
-                    if ($sCondFields)
-                        $sCond .= $oDb->prepareAsString("(SELECT 1 FROM `sys_localization_strings` AS `s` INNER JOIN `sys_localization_keys` AS `k` ON (`k`.`ID` = `s`.`IDKey`) WHERE `s`.`string` LIKE ? AND ($sCondFields) LIMIT 1) OR ", '%' . $sFilter . '%');
-                }
-
-                $sCond = rtrim($sCond, ' OR ');
-
-            } else { // FULLTEXT search
-
-                // condition for regular fields
-                if (!empty($this->_aOptions['filter_fields'])) {
-
-                    $sCondFields = '';
-                    foreach ($this->_aOptions['filter_fields'] as $sField)
-                        $sCondFields .= "`{$sField}`,";
-
-                    $sCondFields = rtrim($sCondFields, ',');
-
-                    if ($sCondFields) {
-                        $sCond = $oDb->prepareAsString(" MATCH ($sCondFields) AGAINST (?) ", $sFilter);
-                        $sOrderByFilter = $sCond;
-                        $sCond .= ' > 1 OR ';
-                    }
-                }
-
-                // condition for translatable fields
-                if (!empty($this->_aOptions['filter_fields_translatable'])) {
-
-                    $sCondFields = '';
-                    foreach ($this->_aOptions['filter_fields_translatable'] as $sField)
-                        $sCondFields .= "`k`.`Key` = `{$sField}` OR ";
-
-                    $sCondFields = rtrim($sCondFields, ' OR ');
-
-                    if ($sCondFields)
-                        $sCond .= $oDb->prepareAsString("(SELECT 1 FROM `sys_localization_strings` AS `s` INNER JOIN `sys_localization_keys` AS `k` ON (`k`.`ID` = `s`.`IDKey`) WHERE MATCH (`s`.`string`) AGAINST (?) AND ($sCondFields) LIMIT 1) OR ", $sFilter);
-                }
-
-                $sCond = rtrim($sCond, ' OR ');
-            }
-
-            bx_alert('grid', 'get_data_by_filter', 0, false, array('object' => $this->_sObject, 'options' => $this->_aOptions, 'markers' => $this->_aMarkers, 'filter' => $sFilter, 'browse_params' => $this->_aBrowseParams, 'conditions' => &$sCond));
-
-            if ($sCond)
-                $sQuery .= ' AND (' . $sCond . ')';
-        }
+        $sQuery .= $this->_getDataSqlWhereClause($sFilter, $sOrderByFilter);
 
         // add order
         $sQuery .= $this->_getDataSqlOrderClause ($sOrderByFilter, $sOrderField, $sOrderDir);
 
         $sQuery = $sQuery . $oDb->prepareAsString(' LIMIT ?, ?', $iStart, $iPerPage);
         return $oDb->getAll($sQuery);
+    }
+
+    protected function _getDataSqlWhereClause($sFilter, &$sOrderByFilter)
+    {
+        if(!$sFilter || (empty($this->_aOptions['filter_fields']) && empty($this->_aOptions['filter_fields_translatable']))) 
+            return '';
+
+        $sMode = $this->_aOptions['filter_mode'];
+        if($sMode != 'like' && $sMode != 'fulltext')
+            $sMode = getParam('useLikeOperator') ? 'like' : 'fulltext';
+
+        $sCond = '';
+        if('like' == $sMode) { // LIKE search
+
+            // condition for regular fields
+            if (!empty($this->_aOptions['filter_fields']))
+                foreach ($this->_aOptions['filter_fields'] as $sField)
+                    $sCond .= $oDb->prepareAsString("`{$sField}` LIKE ? OR ", '%' . $sFilter . '%');
+
+            // condition for translatable fields
+            if (!empty($this->_aOptions['filter_fields_translatable'])) {
+                $sCondFields = '';
+                foreach ($this->_aOptions['filter_fields_translatable'] as $sField)
+                    $sCondFields .= "`k`.`Key` = `{$sField}` OR ";
+
+                $sCondFields = rtrim($sCondFields, ' OR ');
+
+                if ($sCondFields)
+                    $sCond .= $oDb->prepareAsString("(SELECT 1 FROM `sys_localization_strings` AS `s` INNER JOIN `sys_localization_keys` AS `k` ON (`k`.`ID` = `s`.`IDKey`) WHERE `s`.`string` LIKE ? AND ($sCondFields) LIMIT 1) OR ", '%' . $sFilter . '%');
+            }
+
+            $sCond = rtrim($sCond, ' OR ');
+
+        } 
+        else { // FULLTEXT search
+
+            // condition for regular fields
+            if (!empty($this->_aOptions['filter_fields'])) {
+
+                $sCondFields = '';
+                foreach ($this->_aOptions['filter_fields'] as $sField)
+                    $sCondFields .= "`{$sField}`,";
+
+                $sCondFields = rtrim($sCondFields, ',');
+
+                if ($sCondFields) {
+                    $sCond = $oDb->prepareAsString(" MATCH ($sCondFields) AGAINST (?) ", $sFilter);
+                    $sOrderByFilter = $sCond;
+                    $sCond .= ' > 1 OR ';
+                }
+            }
+
+            // condition for translatable fields
+            if (!empty($this->_aOptions['filter_fields_translatable'])) {
+
+                $sCondFields = '';
+                foreach ($this->_aOptions['filter_fields_translatable'] as $sField)
+                    $sCondFields .= "`k`.`Key` = `{$sField}` OR ";
+
+                $sCondFields = rtrim($sCondFields, ' OR ');
+
+                if ($sCondFields)
+                    $sCond .= $oDb->prepareAsString("(SELECT 1 FROM `sys_localization_strings` AS `s` INNER JOIN `sys_localization_keys` AS `k` ON (`k`.`ID` = `s`.`IDKey`) WHERE MATCH (`s`.`string`) AGAINST (?) AND ($sCondFields) LIMIT 1) OR ", $sFilter);
+            }
+
+            $sCond = rtrim($sCond, ' OR ');
+        }
+
+        bx_alert('grid', 'get_data_by_filter', 0, false, array('object' => $this->_sObject, 'options' => $this->_aOptions, 'markers' => $this->_aMarkers, 'filter' => $sFilter, 'browse_params' => $this->_aBrowseParams, 'conditions' => &$sCond));
+
+        return $sCond ? ' AND (' . $sCond . ')' : $sCond;
     }
 
     protected function _getDataSqlOrderClause ($sOrderByFilter, $sOrderField, $sOrderDir, $bFieldsOnly = false)
