@@ -144,7 +144,11 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
                 return '';
         }
 
+        $bShowRealProfile = !isset($aBrowseParams['show_real_profile']) || $aBrowseParams['show_real_profile'] === true;
+
         $oOwner = $oModule->getObjectUser($aEvent['owner_id']);
+        if(!$bShowRealProfile && $oOwner instanceof BxDolProfileAnonymous)
+            $oOwner->setShowRealProfile($bShowRealProfile);
 
         $aEvent['content']['owner_name'] = strmaxtextlen($oOwner->getDisplayName(), $this->_oConfig->getOwnerNameMaxLen());
         $aEvent['content']['owner_link'] = $oOwner->getUrl();
@@ -164,6 +168,9 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 
         $oObjectOwner = $oModule->getObjectUser($iObjectOwner);
         if($oObjectOwner) {
+            if(!$bShowRealProfile && $oObjectOwner instanceof BxDolProfileAnonymous)
+                $oObjectOwner->setShowRealProfile($bShowRealProfile);
+
             $aEvent['content']['object_owner_name'] = strmaxtextlen($oObjectOwner->getDisplayName(), $this->_oConfig->getOwnerNameMaxLen());
             $aEvent['content']['object_owner_link'] = $oObjectOwner->getUrl();
             $aEvent['content']['object_owner_icon'] = $oObjectOwner->getThumb();
@@ -214,7 +221,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 
     public function getNotificationEmail(&$aEvent)
     {
-        $sEvent = $this->getPost($aEvent, array('perform_privacy_check' => false));
+        $sEvent = $this->getPost($aEvent, array('perform_privacy_check' => false, 'show_real_profile' => false));
         if(empty($sEvent) || empty($aEvent['content_parsed']))
             return false;
 
@@ -232,7 +239,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 
     public function getNotificationPush(&$aEvent)
     {
-        $sEvent = $this->getPost($aEvent, array('perform_privacy_check' => false));
+        $sEvent = $this->getPost($aEvent, array('perform_privacy_check' => false, 'show_real_profile' => false));
         if(empty($sEvent) || empty($aEvent['content_parsed']))
             return false;
 

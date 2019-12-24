@@ -75,7 +75,12 @@ class BxDolProfileAnonymous extends BxDolProfileUndefined
         else
             return 'javascript:void(0);';
     }
-    
+
+    public function setShowRealProfile($bValue) 
+    {
+        $this->_isShowRealProfile = $bValue;
+    }
+
     protected function isShowRealProfile() 
     {
         if (null !== $this->_isShowRealProfile)
