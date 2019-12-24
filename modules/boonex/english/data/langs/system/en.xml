@@ -538,6 +538,10 @@
 	<string name="_adm_bp_txt_page_cache_lifetime"><![CDATA[Cache]]></string>
 	<string name="_adm_bp_txt_page_cover"><![CDATA[Cover]]></string>
 	<string name="_adm_bp_txt_page_cover_image"><![CDATA[Custom Cover]]></string>
+        <string name="_adm_bp_txt_page_cover_0"><![CDATA[Disabled]]></string>
+        <string name="_adm_bp_txt_page_cover_1"><![CDATA[Enabled for all]]></string>
+        <string name="_adm_bp_txt_page_cover_2"><![CDATA[Enabled for visitors only]]></string>
+        <string name="_adm_bp_txt_page_cover_3"><![CDATA[Enabled for members only]]></string>
 	<string name="_adm_bp_txt_page_layout"><![CDATA[Layout]]></string>
 	<string name="_adm_bp_txt_page_layout_empty"><![CDATA[Select Layout...]]></string>
 	<string name="_adm_bp_txt_page_meta_description"><![CDATA[Page (Meta) Description]]></string>

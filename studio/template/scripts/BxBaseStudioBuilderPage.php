@@ -1013,7 +1013,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
     	return $this->getSettingsOptions($aPage, $bCreate, true);
     }
 
-	protected function getSettingsCover($aPage = array(), $bCreate = true, $bInputsOnly = false)
+    protected function getSettingsCover($aPage = array(), $bCreate = true, $bInputsOnly = false)
     {
         $aForm = array(
             'form_attrs' => array(
@@ -1026,33 +1026,38 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                 )
             ),
             'inputs' => array (
-				'cover' => array(
-                    'type' => 'switcher',
+                'cover' => array(
+                    'type' => 'select',
                     'name' => 'cover',
                     'caption' => _t('_adm_bp_txt_page_cover'),
                     'info' => '',
-                    'value' => '1',
-                    'checked' => isset($aPage['cover']) && $aPage['cover'] == '1',
+                    'value' => isset($aPage['cover']) ? (int)$aPage['cover'] : '1',
+                    'values' => array(
+                        array('key' => 0, 'value' => _t('_adm_bp_txt_page_cover_0')),
+                        array('key' => 1, 'value' => _t('_adm_bp_txt_page_cover_1')),
+                        array('key' => 2, 'value' => _t('_adm_bp_txt_page_cover_2')),
+                        array('key' => 3, 'value' => _t('_adm_bp_txt_page_cover_3'))
+                    ),
                     'db' => array (
                         'pass' => 'Int',
                     )
                 ),
-				'cover_image' => array(
-					'type' => 'files',
-					'name' => 'cover_image',
-					'storage_object' => $this->sStorage,
-					'images_transcoder' => $this->sTranscoderCover,
-					'uploaders' => $this->aUploadersCover,
-					'multiple' => false,
-					'content_id' => isset($aPage['id']) ? $aPage['id'] : 0,
-					'ghost_template' => BxDolStudioTemplate::getInstance()->parseHtmlByName('uploader_fgt_cover.html', array(
-						'name' => 'cover_image',
-					)),
-					'caption' => _t('_adm_bp_txt_page_cover_image'),
-					'db' => array (
+                'cover_image' => array(
+                    'type' => 'files',
+                    'name' => 'cover_image',
+                    'storage_object' => $this->sStorage,
+                    'images_transcoder' => $this->sTranscoderCover,
+                    'uploaders' => $this->aUploadersCover,
+                    'multiple' => false,
+                    'content_id' => isset($aPage['id']) ? $aPage['id'] : 0,
+                    'ghost_template' => BxDolStudioTemplate::getInstance()->parseHtmlByName('uploader_fgt_cover.html', array(
+                        'name' => 'cover_image',
+                    )),
+                    'caption' => _t('_adm_bp_txt_page_cover_image'),
+                    'db' => array (
                         'pass' => 'Int',
                     )
-				)
+                )
             )
         );
 

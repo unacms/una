@@ -137,7 +137,22 @@ class BxBasePage extends BxDolPage
      */
     public function isPageCover()
     {
-    	return (int)$this->_aObject['cover'] == 1;
+        $bResult = false;
+        switch((int)$this->_aObject['cover']) {
+            case 1: //--- Enabled for all
+                $bResult = true;
+                break;
+
+            case 2: //--- Enabled for visitors only
+                $bResult = !isLogged();
+                break;
+
+            case 3: //--- Enabled for members only
+                $bResult = isLogged();
+                break;
+        }
+
+    	return $bResult;
     }
 
     public function setPageCover($bCover = true)
