@@ -424,8 +424,11 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
                 'condition' => $aBadge['is_icon_only'] != '1',
                 'content' => array('content' => _t($aBadge['text'])),
             ),
+            'bx_if:icon' => array(
+                'condition' => $aBadge['icon'] != '',
+                'content' => array('content' => BxDolTemplate::getInstance()->getIcon($aBadge['icon'], array('class' => 'bx-badge-icon'))),
+            ),
             'title' => $aBadge['text'],
-            'icon' => BxDolTemplate::getInstance()->getIcon($aBadge['icon'], array('class' => 'bx-badge-icon')),
             'style' => $aBadge['color'] != '' ? 'style = "background-color: ' . $aBadge['color'] . '"' : '',
             'class' => $sClass,
             )

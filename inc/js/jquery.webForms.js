@@ -278,6 +278,7 @@
 
 			// RGB/RGBA pickers
 			if(this.getAttribute('type') == 'text' && (oInput.hasClass('bx-form-input-rgb') || oInput.hasClass('bx-form-input-rgba')) && !oInput.hasClass('minicolors-input')) {
+				oInput.attr('autocomplete', 'off');
 				oInput.minicolors({
                     control: oInput.attr('data-control') || 'hue',
                     format: oInput.attr('data-format') || 'rgb',

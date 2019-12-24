@@ -127,6 +127,8 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'OBJECT_CONNECTIONS' => 'bx_groups_fans',
             'OBJECT_UPLOADERS_COVER' => array('bx_groups_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_groups_picture_crop'),
+            
+            'BADGES_AVALIABLE' => true,
 
             'EMAIL_INVITATION' => 'bx_groups_invitation',
             'EMAIL_JOIN_REQUEST' => 'bx_groups_join_request',

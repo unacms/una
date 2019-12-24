@@ -683,6 +683,8 @@
         <string name="_adm_form_btn_labels_back"><![CDATA[Назад]]></string>
         <string name="_adm_form_btn_labels_cancel"><![CDATA[Отменить]]></string>
         <string name="_adm_form_btn_labels_submit"><![CDATA[Отправить]]></string>
+  <string name="_adm_form_btn_badges_add"><![CDATA[Добавить бейдж]]></string>
+  <string name="_adm_form_btn_badges_delete"><![CDATA[Удалить]]></string>
 	<string name="_adm_form_btn_pre_lists_add"><![CDATA[Добавить]]></string>
 	<string name="_adm_form_btn_pre_lists_cancel"><![CDATA[Отменить]]></string>
 	<string name="_adm_form_btn_pre_lists_create"><![CDATA[Добавить новый список]]></string>
@@ -771,6 +773,33 @@
   <string name="_adm_form_txt_audit_module"><![CDATA[Модуль]]></string>
   <string name="_adm_pgt_txt_audit_context"><![CDATA[Контекст]]></string>
   <string name="_adm_pgt_txt_audit_action"><![CDATA[Действие]]></string>
+
+  <string name="_adm_form_txt_badges_text"><![CDATA[Текст]]></string>
+  <string name="_adm_form_txt_badges_view"><![CDATA[Вид]]></string>
+  <string name="_adm_form_txt_badges_color"><![CDATA[Цвет фона]]></string>
+  <string name="_adm_form_dsc_badges_color"><![CDATA[Цвет фона]]></string>
+  <string name="_adm_form_txt_badges_is_icon_only"><![CDATA[Показывать только иконку]]></string>
+  <string name="_adm_form_txt_badges_btn_current_icon_image_delete"><![CDATA[Удалить]]></string>
+  <string name="_adm_form_txt_badges_icon"><![CDATA[Иконка]]></string>
+  <string name="_adm_form_txt_badges_icon_image"><![CDATA[]]></string>
+  <string name="_adm_form_txt_badges_icon_image_new"><![CDATA[]]></string>
+  <string name="_adm_form_txt_badges_icon_image_old"><![CDATA[Текущая иконка]]></string>
+  <string name="_adm_form_dsc_badges_icon"><![CDATA[Вы можете использовать здесь иконку для шрифта]]></string>
+  <string name="_adm_form_dsc_badges_items_icon_image_current"><![CDATA[]]></string>
+  <string name="_adm_form_dsc_badges_icon_image"><![CDATA[или загрузить маленькую картинку для отображения рядом со ссылкой.]]></string>
+  <string name="_adm_form_dsc_badges_icon_image_current"><![CDATA[Картинка не загружена. В бейдже будет использован текст.]]></string>
+  <string name="_adm_form_err_badges_icon"><![CDATA[Вы должны ввести иконку для шрифта]]></string>
+  <string name="_adm_form_err_badges_icon_image"><![CDATA[невозможно обработать изображение: ]]></string>
+  <string name="_adm_form_err_badges_icon_image_remove"><![CDATA[Нельзя удалить изображение иконки: ]]></string>
+  <string name="_adm_form_btn_badges_submit"><![CDATA[Отправить]]></string>
+  <string name="_adm_form_btn_badges_cancel"><![CDATA[Отменить]]></string>
+  <string name="_adm_form_txt_badges_added"><![CDATA[Добавлено]]></string>
+  <string name="_adm_form_txt_badges_module"><![CDATA[Модуль]]></string>
+  <string name="_adm_form_txt_badges_add_popup"><![CDATA[Добавить новый бейдж]]></string>
+  <string name="_adm_form_txt_badges_edit_popup"><![CDATA[Изменить "{0}" бейдж]]></string>
+  <string name="_adm_pgt_txt_badges_text"><![CDATA[Текст]]></string>
+  <string name="_adm_pgt_txt_badges_icon"><![CDATA[Иконка]]></string>
+  
 	<string name="_adm_form_txt_displays_edit_popup"><![CDATA[Редактировать "{0}" дисплей]]></string>
 	<string name="_adm_form_txt_displays_gl_fields"><![CDATA[Поля]]></string>
 	<string name="_adm_form_txt_displays_gl_form"><![CDATA[Форма]]></string>
@@ -945,6 +974,7 @@
 	<string name="_adm_ipbl_sample"><![CDATA[образец]]></string>
     <string name="_adm_lang_cnf_uninstall"><![CDATA[<h3>Удалить "{0}" язык?</h3><p>Удаление "{0}" языка также удалит все его данные. Вы хотите продолжить?</p>]]></string>
 	<string name="_adm_lmi_cpt_actions"><![CDATA[Действия]]></string>
+    <string name="_adm_lmi_cpt_badges"><![CDATA[Бейджи]]></string>
 	<string name="_adm_lmi_cpt_categories"><![CDATA[Категории]]></string>
 	<string name="_adm_lmi_cpt_checkout"><![CDATA[Оплата {checkout_counter}]]></string>
 	<string name="_adm_lmi_cpt_cover"><![CDATA[Обложка]]></string>
@@ -1117,6 +1147,7 @@
         <string name="_adm_nav_txt_block_hidden_on_desktop"><![CDATA[настольном компьютере]]></string>
         <string name="_adm_nav_txt_block_hidden_on_mobile"><![CDATA[мобильное приложение]]></string>
   <string name="_adm_page_cpt_audit"><![CDATA[Аудит]]></string>
+  <string name="_adm_page_cpt_badges"><![CDATA[Бейджи]]></string>
 	<string name="_adm_page_cpt_builder_forms"><![CDATA[Формы]]></string>
 	<string name="_adm_page_cpt_builder_menus"><![CDATA[Навигация]]></string>
 	<string name="_adm_page_cpt_builder_mobile"><![CDATA[Мобильный построитель]]></string>
@@ -1574,6 +1605,7 @@
 	<string name="_adm_txt_show_help_content_empty"><![CDATA[Помошь недоступна]]></string>
 	<string name="_adm_txt_uninstall"><![CDATA[Демонтировать]]></string>
   <string name="_adm_wgt_cpt_audit"><![CDATA[Аудит]]></string>
+  <string name="_adm_wgt_cpt_badges"><![CDATA[Бейджи]]></string>
 	<string name="_adm_wgt_cpt_builder_forms"><![CDATA[Формы]]></string>
 	<string name="_adm_wgt_cpt_builder_menus"><![CDATA[Навигация]]></string>
 	<string name="_adm_wgt_cpt_builder_pages"><![CDATA[Страницы]]></string>
@@ -1661,6 +1693,9 @@
 	<string name="_sys_access_denied_to_private_content"><![CDATA[Доступ запрещён. Это приватное содержимое.]]></string>
 	<string name="_sys_actions"><![CDATA[Действия]]></string>
 	<string name="_sys_active"><![CDATA[Активный]]></string>
+  <string name="_sys_account_settings_email_successfully_submitted"><![CDATA[Настройки email-а успешно сохранены]]></string>
+  <string name="_sys_account_settings_pwd_successfully_submitted"><![CDATA[Пароль был успешно изменен]]></string>
+  <string name="_sys_account_settings_info_successfully_submitted"><![CDATA[Настройки аккаунта успешно сохранены]]></string>
 	<string name="_sys_acc_confirmation_type_none"><![CDATA[Нет подтверждения]]></string>
 	<string name="_sys_acc_confirmation_type_email"><![CDATA[email подтвержден]]></string>
 	<string name="_sys_acc_confirmation_type_phone"><![CDATA[телефон подтвержден]]></string>
@@ -2357,6 +2392,7 @@
 	<string name="_sys_menu_item_title_orders"><![CDATA[Заказы]]></string>
 	<string name="_sys_menu_item_title_profile"><![CDATA[Профиль]]></string>
 	<string name="_sys_menu_item_title_set_acl_level"><![CDATA[Назначить членство]]></string>
+  <string name="_sys_menu_item_title_set_badges"><![CDATA[Назначить бейджи]]></string>
 	<string name="_sys_menu_item_title_studio"><![CDATA[Студия]]></string>
 	<string name="_sys_menu_item_title_subscriptions"><![CDATA[Подписки]]></string>
 	<string name="_sys_menu_item_title_social_sharing_facebook"><![CDATA[Поделиться в Facebook]]></string>
@@ -2428,6 +2464,7 @@
 	<string name="_sys_menu_item_title_system_profile"><![CDATA[Профиль]]></string>
 	<string name="_sys_menu_item_title_system_search"><![CDATA[Поиск]]></string>
 	<string name="_sys_menu_item_title_system_set_acl_level"><![CDATA[Назначить членство]]></string>
+  <string name="_sys_menu_item_title_system_set_badges"><![CDATA[Назначить бейджи]]></string>
 	<string name="_sys_menu_item_title_system_studio"><![CDATA[Студия]]></string>
 	<string name="_sys_menu_item_title_system_subscriptions"><![CDATA[Подписки]]></string>
         <string name="_sys_menu_title_view_actions"><![CDATA[Просмотр - Действия]]></string>
@@ -2538,6 +2575,7 @@
 	<string name="_sys_menu_title_profile_stats"><![CDATA[Профиль - Статистика]]></string>
 	<string name="_sys_menu_title_rss"><![CDATA[RSS]]></string>
 	<string name="_sys_menu_title_set_acl_level"><![CDATA[Уровни доступа]]></string>
+  <string name="_sys_menu_title_set_badges"><![CDATA[Бейджи]]></string>
 	<string name="_sys_menu_title_social_sharing"><![CDATA[Социальные сети]]></string>
         <string name="_sys_menu_title_create_post"><![CDATA[Создать пост - Меню]]></string>
         <string name="_sys_menu_title_add_relation"><![CDATA[Добавить связь - Меню]]></string>

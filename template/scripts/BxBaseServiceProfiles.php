@@ -246,7 +246,7 @@ class BxBaseServiceProfiles extends BxDol
         foreach ($aModules as $aModule) {
             if (!BxDolService::call($aModule['name'], 'act_as_profile'))
                 continue;
-            $a = array_merge($a, BxDolService::call($aModule['name'], 'profiles_search', array($sTerm, 10)));
+            $a = array_merge($a, BxDolService::call($aModule['name'], 'profiles_search', array($sTerm, getParam('sys_per_page_search_keyword_single'))));
         }
 
         // sort result

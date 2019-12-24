@@ -131,6 +131,7 @@ class BxEventsConfig extends BxBaseModProfileConfig
             'OBJECT_UPLOADERS_COVER' => array('bx_events_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_events_picture_crop'),
             
+            'BADGES_AVALIABLE' => true,
             'ENABLE_FOR_CONTEXT_IN_MODULES' => array('bx_groups'),
 
             'EMAIL_INVITATION' => 'bx_events_invitation',

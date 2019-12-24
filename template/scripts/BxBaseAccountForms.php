@@ -279,7 +279,7 @@ class BxBaseAccountForms extends BxDolProfileForms
         bx_alert('account', 'edited', $aAccountInfo['id'], $aAccountInfo['id'], array('display' => $sDisplayName));
 
         // display result message
-        $sMsg = MsgBox(_t('_sys_txt_data_successfully_submitted'));
+        $sMsg = MsgBox(_t('_' . $sDisplayName . '_successfully_submitted'));
         return $sMsg . $oForm->getCode();
     }    
 

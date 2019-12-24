@@ -242,30 +242,31 @@ INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `templat
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_forum_view_actions', @sName, '_sys_menu_set_title_view_actions', 0);
 
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
--- ('bx_forum_view_actions', @sName, 'subscribe-discussion', '_bx_forum_menu_item_title_system_subscribe', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 10),
--- ('bx_forum_view_actions', @sName, 'unsubscribe-discussion', '_bx_forum_menu_item_title_system_unsubscribe', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 20),
-('bx_forum_view_actions', @sName, 'stick-discussion', '_bx_forum_menu_item_title_system_stick_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 30),
-('bx_forum_view_actions', @sName, 'unstick-discussion', '_bx_forum_menu_item_title_system_unstick_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 40),
-('bx_forum_view_actions', @sName, 'lock-discussion', '_bx_forum_menu_item_title_system_lock_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 50),
-('bx_forum_view_actions', @sName, 'unlock-discussion', '_bx_forum_menu_item_title_system_unlock_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 60),
-('bx_forum_view_actions', @sName, 'hide-discussion', '_bx_forum_menu_item_title_system_hide_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 70),
-('bx_forum_view_actions', @sName, 'unhide-discussion', '_bx_forum_menu_item_title_system_unhide_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 80),
-('bx_forum_view_actions', @sName, 'edit-discussion', '_bx_forum_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 90),
-('bx_forum_view_actions', @sName, 'delete-discussion', '_bx_forum_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 100),
-('bx_forum_view_actions', @sName, 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 200),
-('bx_forum_view_actions', @sName, 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 210),
-('bx_forum_view_actions', @sName, 'vote', '_sys_menu_item_title_system_va_vote', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 220),
-('bx_forum_view_actions', @sName, 'reaction', '_sys_menu_item_title_system_va_reaction', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 225),
-('bx_forum_view_actions', @sName, 'score', '_sys_menu_item_title_system_va_score', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 230),
-('bx_forum_view_actions', @sName, 'favorite', '_sys_menu_item_title_system_va_favorite', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 240),
-('bx_forum_view_actions', @sName, 'feature', '_sys_menu_item_title_system_va_feature', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 250),
-('bx_forum_view_actions', @sName, 'repost', '_sys_menu_item_title_system_va_repost', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 260),
-('bx_forum_view_actions', @sName, 'report', '_sys_menu_item_title_system_va_report', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 270),
-('bx_forum_view_actions', @sName, 'social-sharing-facebook', '_sys_menu_item_title_system_social_sharing_facebook', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 300),
-('bx_forum_view_actions', @sName, 'social-sharing-twitter', '_sys_menu_item_title_system_social_sharing_twitter', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 320),
-('bx_forum_view_actions', @sName, 'social-sharing-pinterest', '_sys_menu_item_title_system_social_sharing_pinterest', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 330),
-('bx_forum_view_actions', @sName, 'more-auto', '_sys_menu_item_title_system_va_more_auto', '_sys_menu_item_title_va_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', '', 0, 2147483647, 1, 0, 9999);
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
+-- ('bx_forum_view_actions', @sName, 'subscribe-discussion', '_bx_forum_menu_item_title_system_subscribe', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 10),
+-- ('bx_forum_view_actions', @sName, 'unsubscribe-discussion', '_bx_forum_menu_item_title_system_unsubscribe', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 20),
+('bx_forum_view_actions', @sName, 'stick-discussion', '_bx_forum_menu_item_title_system_stick_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 30),
+('bx_forum_view_actions', @sName, 'unstick-discussion', '_bx_forum_menu_item_title_system_unstick_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 40),
+('bx_forum_view_actions', @sName, 'lock-discussion', '_bx_forum_menu_item_title_system_lock_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 50),
+('bx_forum_view_actions', @sName, 'unlock-discussion', '_bx_forum_menu_item_title_system_unlock_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 60),
+('bx_forum_view_actions', @sName, 'hide-discussion', '_bx_forum_menu_item_title_system_hide_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 70),
+('bx_forum_view_actions', @sName, 'unhide-discussion', '_bx_forum_menu_item_title_system_unhide_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 80),
+('bx_forum_view_actions', @sName, 'edit-discussion', '_bx_forum_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 90),
+('bx_forum_view_actions', @sName, 'delete-discussion', '_bx_forum_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 100),
+('bx_forum_view_actions', @sName, 'set-badges', '_sys_menu_item_title_system_set_badges', '_sys_menu_item_title_set_badges', 'javascript:void(0)', 'bx_menu_popup(''sys_set_badges'', window, {}, {module: ''bx_forum'', content_id: {content_id}});', '', 'check-circle', '', '', 0, 2147483647, 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:19:"is_badges_avaliable";}', 1, 0, 110),
+('bx_forum_view_actions', @sName, 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 200),
+('bx_forum_view_actions', @sName, 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 210),
+('bx_forum_view_actions', @sName, 'vote', '_sys_menu_item_title_system_va_vote', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 220),
+('bx_forum_view_actions', @sName, 'reaction', '_sys_menu_item_title_system_va_reaction', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 225),
+('bx_forum_view_actions', @sName, 'score', '_sys_menu_item_title_system_va_score', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 230),
+('bx_forum_view_actions', @sName, 'favorite', '_sys_menu_item_title_system_va_favorite', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 240),
+('bx_forum_view_actions', @sName, 'feature', '_sys_menu_item_title_system_va_feature', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 250),
+('bx_forum_view_actions', @sName, 'repost', '_sys_menu_item_title_system_va_repost', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 260),
+('bx_forum_view_actions', @sName, 'report', '_sys_menu_item_title_system_va_report', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 270),
+('bx_forum_view_actions', @sName, 'social-sharing-facebook', '_sys_menu_item_title_system_social_sharing_facebook', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 300),
+('bx_forum_view_actions', @sName, 'social-sharing-twitter', '_sys_menu_item_title_system_social_sharing_twitter', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 320),
+('bx_forum_view_actions', @sName, 'social-sharing-pinterest', '_sys_menu_item_title_system_social_sharing_pinterest', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 330),
+('bx_forum_view_actions', @sName, 'more-auto', '_sys_menu_item_title_system_va_more_auto', '_sys_menu_item_title_va_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', '', 0, 2147483647, '', 1, 0, 9999);
 
 -- MENU: actions menu for my entries
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 

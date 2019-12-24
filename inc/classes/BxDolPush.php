@@ -130,6 +130,13 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
 
 		$sResult = curl_exec($oChannel);
 		curl_close($oChannel);
+        
+        $oResult = @json_decode($sResult, true);
+        if(isset($oResult['errors'])){
+            foreach($oResult['errors'] as $sError) {  
+                file_put_contents(BX_DIRECTORY_PATH_LOGS . '/bx_push.log', date('m-d-Y H:i:s') . ": " . "Error:" . $sError . " Message:" . json_encode($aMessage) . "\n", FILE_APPEND);            
+            }
+        }
 
 		return $sResult;
     }

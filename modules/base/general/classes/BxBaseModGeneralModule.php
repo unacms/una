@@ -78,6 +78,13 @@ class BxBaseModGeneralModule extends BxDolModule
         $aSafeServices = $this->serviceGetSafeServices();
         return isset($aSafeServices[$sService]);
     }
+    
+    public function serviceIsBadgesAvaliable()
+    {
+        $oBadges = BxDolBadges::getInstance();
+		$aBadges = $oBadges->getData(array('type' => 'by_module&object', 'object_id' => 0, 'module' => $this->_oConfig->getName()));
+        return count($aBadges) > 0 ? true : false;
+    }
 
     public function serviceGetSafeServices()
     {

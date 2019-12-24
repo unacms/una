@@ -789,7 +789,7 @@
   <string name="_adm_form_txt_badges_icon_image_new"><![CDATA[]]></string>
   <string name="_adm_form_txt_badges_icon_image_old"><![CDATA[Current Icon]]></string>
   <string name="_adm_form_dsc_badges_icon"><![CDATA[You may use font icon here]]></string>
-  <string name="_adm_form_dsc_items_icon_image_current"><![CDATA[]]></string>
+  <string name="_adm_form_dsc_badges_items_icon_image_current"><![CDATA[]]></string>
   <string name="_adm_form_dsc_badges_icon_image"><![CDATA[or upload a small image to be displayed near the link.]]></string>
   <string name="_adm_form_dsc_badges_icon_image_current"><![CDATA[No icon uploaded. Text is used in menu item.]]></string>
   <string name="_adm_form_err_badges_icon"><![CDATA[You need to enter font icon name here.]]></string>
@@ -803,8 +803,6 @@
   <string name="_adm_form_txt_badges_edit_popup"><![CDATA[Edit "{0}" badge]]></string>
   <string name="_adm_pgt_txt_badges_text"><![CDATA[Text]]></string>
   <string name="_adm_pgt_txt_badges_icon"><![CDATA[Icon]]></string>
-  <string name="_adm_pgt_txt_badges_action"><![CDATA[Action]]></string>
-
 
   <string name="_adm_form_txt_displays_edit_popup"><![CDATA[Edit "{0}" Display]]></string>
 	<string name="_adm_form_txt_displays_gl_fields"><![CDATA[Fields]]></string>
@@ -1708,6 +1706,9 @@
 	<string name="_sys_access_denied_to_private_content"><![CDATA[Access denied. This is private content.]]></string>
 	<string name="_sys_actions"><![CDATA[Actions]]></string>
 	<string name="_sys_active"><![CDATA[Active]]></string>
+  <string name="_sys_account_settings_email_successfully_submitted"><![CDATA[Email settings were successfully saved]]></string>
+  <string name="_sys_account_settings_pwd_successfully_submitted"><![CDATA[Password  were successfully changed]]></string>
+  <string name="_sys_account_settings_info_successfully_submitted"><![CDATA[Account settings were successfully saved]]></string>
 	<string name="_sys_acc_confirmation_type_none"><![CDATA[No confirmation]]></string>
 	<string name="_sys_acc_confirmation_type_email"><![CDATA[email is confirmed]]></string>
 	<string name="_sys_acc_confirmation_type_phone"><![CDATA[phone is confirmed]]></string>
