@@ -413,6 +413,10 @@ div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li > a,
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li > span {
     display: block;
 }
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-hor.bx-menu-more-auto:not(.bx-menu-submenu-more-auto) li > a,
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-hor.bx-menu-more-auto:not(.bx-menu-submenu-more-auto) li > span {
+    margin-right: 1rem;
+}
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li > span {
     margin-right: 0;
 }
