@@ -1,5 +1,13 @@
 
+-- Delete WIKI content
 
+DELETE FROM `wb`, `wc`, `wp`
+USING `sys_pages_blocks` AS `wb`, `sys_pages_wiki_blocks` AS `wc`, `sys_objects_page` AS `wp`
+WHERE `wb`.`id` = `wc`.`block_id` AND `wp`.`object` = `wb`.`object` AND `wp`.`module` = 'bx_wiki';
+
+DELETE FROM `wb`, `wc`
+USING `sys_pages_blocks` AS `wb`, `sys_pages_wiki_blocks` AS `wc`
+WHERE `wb`.`id` = `wc`.`block_id` AND `wb`.`module` = 'bx_wiki';
 
 -- Studio page and widget
 

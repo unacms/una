@@ -1,4 +1,16 @@
 
+-- Wiki home page
+
+INSERT INTO `sys_objects_page` (`object`, `uri`, `title_system`, `title`, `module`, `cover`, `cover_image`, `type_id`, `layout_id`, `submenu`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES
+('bx_wiki_home', 'wiki-home', '', '_bx_wiki_page_home', 'bx_wiki', 0, 0, 1, 5, '', 2147483647, 1, 'r.php?_q=wiki/home', '', '', '', 0, 1, 0, '', '');
+
+INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `hidden_on`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
+('bx_wiki_home', 1, 'bx_wiki', '', '_bx_wiki_block_home', 0, 2147483647, '0', 'wiki', '', 0, 1, 1, 1);
+SET @iBlockId = LAST_INSERT_ID();
+INSERT INTO `sys_pages_wiki_blocks` (`block_id`, `revision`, `language`, `main_language`, `profile_id`, `content`, `comment`, `added`, `changed`) VALUES
+(@iBlockId, 1, 'en', 1, 0, '# Wiki Home\r\n\r\nInsert **your content** here', 'Initial version', UNIX_TIMESTAMP(), UNIX_TIMESTAMP());
+
+
 -- Studio page and widget
 
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
