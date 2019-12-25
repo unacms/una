@@ -34,7 +34,7 @@ class BxDolVoteReactions extends BxTemplVote
         $this->_sDataList = 'sys_vote_reactions';
         $this->_aDataList = array();
 
-        $this->_sDefault = '';
+        $this->_sDefault = 'default';
     }
 
     public function init($iId)
@@ -52,13 +52,14 @@ class BxDolVoteReactions extends BxTemplVote
                 'title' => $aReaction['LKey'],
                 'title_aux' => $aReaction['LKey2'],
                 'icon' => isset($aData['icon']) ? $aData['icon'] : '',
+                'color' => isset($aData['color']) ? $aData['color'] : '',
                 'weight' => isset($aData['weight']) ? $aData['weight'] : 1,
             );
         }
 
         if(!empty($this->_aDataList)) {
-            $aNames = array_keys($this->_aDataList);
-            $this->_sDefault = array_shift($aNames);
+            $this->_aDataList[$this->_sDefault] = reset($this->_aDataList);
+            $this->_aDataList[$this->_sDefault]['color'] = '';
         }
     }
     /**
@@ -67,6 +68,11 @@ class BxDolVoteReactions extends BxTemplVote
     public function getValue()
     {
         return (int)$this->_aSystem['min_value'];
+    }
+
+    public function getDefault()
+    {
+        return $this->_sDefault;
     }
 
     public function getReaction($sName)
@@ -85,6 +91,13 @@ class BxDolVoteReactions extends BxTemplVote
     public function getTrackBy($aParams)
     {
         return $this->_oQuery->getTrackBy($aParams);
+    }
+    
+    public function getIcon($sReaction, $bWithColor = true)
+    {
+        $aReaction = isset($this->_aDataList[$sReaction]) ? $this->_aDataList[$sReaction] : $this->_aDataList[$this->_sDefault];
+
+    	return $aReaction['icon'] . ($bWithColor && !empty($aReaction['color']) ? ' ' . $aReaction['color'] : '');
     }
 
     /**
@@ -200,7 +213,7 @@ class BxDolVoteReactions extends BxTemplVote
     {
         $sReaction = $bVoted ? $aTrack['reaction'] : $this->_sDefault;
 
-    	return $this->_aDataList[$sReaction]['icon'];
+    	return $this->getIcon($sReaction);
     }
 
     protected function _getTitleDoWithTrack($bVoted, $aTrack = array())

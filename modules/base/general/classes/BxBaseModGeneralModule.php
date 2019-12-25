@@ -1341,7 +1341,7 @@ class BxBaseModGeneralModule extends BxDolModule
             'entry_caption' => $sEntryCaption,
             'entry_author' => $aContentInfo[$CNF['FIELD_AUTHOR']],
             'entry_privacy' => '', //may be empty or not specified. In this case Public privacy will be used.
-            'lang_key' => '', //may be empty or not specified. In this case the default one from Notification module will be used.
+            'lang_key' => '', //may be empty or not specified, or a string, or an array('site' => '...', 'email' => '...', 'push' => '...'). In this case of empty/not specified the default one from Notification module will be used.
             /*
              * Custom settings for email and/or push notifications can be provided here. 
              * Only necessary parts of 'settings' array can be used.

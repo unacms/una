@@ -119,34 +119,6 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('sys_account_dashboard_manage_tools', 'bx_credits', 'credits-history-administration', '_bx_credits_menu_item_title_system_admt_credits', '_bx_credits_menu_item_title_admt_credits', 'page.php?i=credits-history-administration', '', '_self', 'copyright col-green3', 'a:2:{s:6:"module";s:10:"bx_credits";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 192, 1, 0, @iManageMenuOrder + 1);
 
 
--- ACL
-INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_credits', 'view', NULL, '_bx_credits_acl_action_view_entry', '', 1, 0);
-SET @iIdActionView = LAST_INSERT_ID();
-
-SET @iUnauthenticated = 1;
-SET @iAccount = 2;
-SET @iStandard = 3;
-SET @iUnconfirmed = 4;
-SET @iPending = 5;
-SET @iSuspended = 6;
-SET @iModerator = 7;
-SET @iAdministrator = 8;
-SET @iPremium = 9;
-
-INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
-
--- entry view
-(@iUnauthenticated, @iIdActionView),
-(@iAccount, @iIdActionView),
-(@iStandard, @iIdActionView),
-(@iUnconfirmed, @iIdActionView),
-(@iPending, @iIdActionView),
-(@iModerator, @iIdActionView),
-(@iAdministrator, @iIdActionView),
-(@iPremium, @iIdActionView);
-
-
 -- GRIDS: bundles
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
 ('bx_credits_bundles', 'Sql', 'SELECT * FROM `bx_credits_bundles` WHERE 1 ', 'bx_credits_bundles', 'id', 'order', 'active', '', 100, NULL, 'start', '', 'period,period_unit,price', '', 'like', '', '', 192, 'BxCreditsGridBundles', 'modules/boonex/credits/classes/BxCreditsGridBundles.php');
