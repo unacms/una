@@ -1512,8 +1512,7 @@ CREATE TABLE `sys_permalinks` (
 INSERT INTO `sys_permalinks` (`standard`, `permalink`, `check`, `compare_by_prefix`) VALUES
 ('page.php?i=', 'page/', 'permalinks_pages', 1),
 ('modules/?r=', 'm/', 'permalinks_modules', 1),
-('storage.php?o=', 's/', 'permalinks_storage', 1),
-('r.php?_q=wiki/', 'wiki/', 'permalinks_pages', 1);
+('storage.php?o=', 's/', 'permalinks_storage', 1);
 
 
 -- --------------------------------------------------------
@@ -4837,14 +4836,10 @@ CREATE TABLE IF NOT EXISTS `sys_objects_wiki` (
   `allow_edit_for_levels` int(11) NOT NULL DEFAULT '2147483647',
   `allow_delete_for_levels` int(11) NOT NULL DEFAULT '2147483647',
   `allow_translate_for_levels` int(11) NOT NULL DEFAULT '2147483647',
+  `allow_unsafe_for_levels` int(11) NOT NULL DEFAULT '2147483647',
   `override_class_name` varchar(255) NOT NULL,
   `override_class_file` varchar(255) NOT NULL
 );
-
-INSERT INTO `sys_objects_wiki` (`object`, `title`, `module`, `allow_add_for_levels`, `allow_edit_for_levels`, `allow_delete_for_levels`, `allow_translate_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('wiki', '_sys_wiki_system_title', 'system', 192, 192, 192, 192, '', '');
-
-
 
 CREATE TABLE IF NOT EXISTS `sys_pages_wiki_blocks` (
   `id` int(10) UNSIGNED NOT NULL,
@@ -4870,9 +4865,6 @@ CREATE TABLE IF NOT EXISTS `sys_rewrite_rules` (
   `service` varchar(255) NOT NULL,
   `active` tinyint(4) NOT NULL DEFAULT '1'
 );
-
-INSERT INTO `sys_rewrite_rules` (`preg`, `service`, `active`) VALUES
-('^wiki/(.*)$', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:9:"wiki_page";s:6:"params";a:2:{i:0;s:4:"wiki";i:1;s:3:"{1}";}s:5:"class";s:16:"TemplServiceWiki";}', 1);
 
 -- --------------------------------------------------------
 
