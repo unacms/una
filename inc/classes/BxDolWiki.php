@@ -116,11 +116,12 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
     {
         if (!$sLang)
             $sLang = bx_lang_name();
-        $s = $this->_oQuery->getBlockContent ($iBlockId, $sLang);
+        $a = $this->_oQuery->getBlockContent ($iBlockId, $sLang);
 
         require_once(BX_DIRECTORY_PATH_PLUGINS . "parsedown/Parsedown.php");
         $oParsedown = new Parsedown();
-        $s = $oParsedown->text($s);
+        $oParsedown->setSafeMode($a['unsafe'] ? false : true);
+        $s = $oParsedown->text($a['content']);
 
         $s = $this->addControls($iBlockId, $s);
 
@@ -152,6 +153,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
             'edit' => 'allow_edit_for_levels',
             'delete' => 'allow_delete_for_levels',
             'translate' => 'allow_translate_for_levels',
+            'unsafe' => 'allow_unsafe_for_levels',
         );
         if (!isset($aTypes[$sType]) || !isset($this->_aObject[$aTypes[$sType]]))
             return false;

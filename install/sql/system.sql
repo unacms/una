@@ -4853,6 +4853,7 @@ CREATE TABLE IF NOT EXISTS `sys_pages_wiki_blocks` (
   `main_language` tinyint(4) NOT NULL DEFAULT '0',
   `profile_id` int(10) UNSIGNED NOT NULL,
   `content` mediumtext NOT NULL,
+  `unsafe` tinyint(4) NOT NULL DEFAULT '0',
   `comment` varchar(255) NOT NULL,
   `added` int(11) NOT NULL,
   `changed` int(11) NOT NULL,

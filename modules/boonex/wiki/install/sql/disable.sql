@@ -11,3 +11,9 @@ DELETE FROM `sys_permalinks` WHERE `standard` = 'r.php?_q=wiki/' AND `permalink`
 
 DELETE FROM `sys_rewrite_rules` WHERE `preg` = '^wiki/(.*)$';
 
+-- Menu
+
+DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_wiki';
+DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_wiki';
+DELETE FROM `sys_menu_items` WHERE `module` = 'bx_wiki' OR `set_name` LIKE 'bx_wiki%';
+
