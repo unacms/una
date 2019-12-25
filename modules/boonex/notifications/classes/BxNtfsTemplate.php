@@ -197,9 +197,22 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 
     	$bEventParsed = false;
         bx_alert($this->_oConfig->getName(), 'get_notification', 0, 0, array('event' => &$aEvent, 'event_parsed' => &$bEventParsed, 'owner' => &$oOwner));
-        if (!$bEventParsed){
-    	    $aEvent['content_parsed'] = _t(!empty($aEvent['content']['lang_key']) ? $aEvent['content']['lang_key'] : $this->_getContentLangKey($aEvent));
-    	    $aEvent['content_parsed'] = $this->parseHtmlByContent($aEvent['content_parsed'], $aEvent['content'], array('{', '}'));
+        if(!$bEventParsed) {
+            $mLk = '';
+            if(!empty($aEvent['content']['lang_key'])) {
+                $mLk = $aEvent['content']['lang_key'];
+                if(!is_string($mLk) && !(is_array($mLk) && isset($mLk['site'], $mLk['email'], $mLk['push'])))
+                    $mLk = '';
+            }
+
+            if(empty($mLk))
+                $mLk = $this->_getContentLangKey($aEvent);
+
+            if(is_array($mLk))
+                foreach($mLk as $sDeliveryType => $sLangKey)
+                    $aEvent['content_parsed'][$sDeliveryType] = $this->_parseContentLangKey($sLangKey, $aEvent);
+            else
+                $aEvent['content_parsed'] = $this->_parseContentLangKey($mLk, $aEvent);
         }
 
         // returns parsed content for React Jot
@@ -214,7 +227,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
             'id' => $aEvent['id'],
             'author_unit' => $this->_isInContext($aEvent) && $oObjectOwner ? $oObjectOwner->getUnit(0, array('template' => 'unit_wo_info_links')) : $oOwner->getUnit(0, array('template' => 'unit_wo_info_links')),
             'link' => $this->_getContentLink($aEvent),
-            'content' => $aEvent['content_parsed'],
+            'content' => is_array($aEvent['content_parsed']) && isset($aEvent['content_parsed']['site']) ? $aEvent['content_parsed']['site'] : $aEvent['content_parsed'],
             'date' => bx_time_js($aEvent['date']),
         ));
     }
@@ -230,7 +243,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
             'content' => $this->parseHtmlByName('et_new_event.html', array(
                 'icon_url' => !empty($aContent['owner_icon']) ? $aContent['owner_icon'] : $this->getIconUrl('std-icon.svg'),
                 'content_url' => $this->_getContentLink($aEvent),
-                'content' => $aEvent['content_parsed'],
+                'content' => is_array($aEvent['content_parsed']) && isset($aEvent['content_parsed']['email']) ? $aEvent['content_parsed']['email'] : $aEvent['content_parsed'],
                 'date' => bx_process_output($aEvent['date'], BX_DATA_DATETIME_TS),
             )),
             'settings' => !empty($aContent['settings']['email']) ? $aContent['settings']['email'] : array()
@@ -243,7 +256,8 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         if(empty($sEvent) || empty($aEvent['content_parsed']))
             return false;
 
-        $sMessage = preg_replace('/<\/?[a-zA-Z0-9=\'":;\(\)\s_-]+>/i', '"', $aEvent['content_parsed']);
+        $sMessage = is_array($aEvent['content_parsed']) && isset($aEvent['content_parsed']['push']) ? $aEvent['content_parsed']['push'] : $aEvent['content_parsed'];
+        $sMessage = preg_replace('/<\/?[a-zA-Z0-9=\'":;\(\)\s_-]+>/i', '"', $sMessage);
         if($sMessage)
             $sMessage = BxTemplFunctions::getInstance()->getStringWithLimitedLength(html_entity_decode($sMessage), $this->_oConfig->getPushMaxLen());
 
@@ -345,6 +359,11 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         }
 
     	return $sKey;
+    }
+
+    protected function _parseContentLangKey($sLangKey, &$aEvent)
+    {
+        return $this->parseHtmlByContent(_t($sLangKey), $aEvent['content'], array('{', '}'));
     }
 
     protected function _getContentLink(&$aEvent)
