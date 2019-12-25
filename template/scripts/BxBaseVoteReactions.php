@@ -329,7 +329,7 @@ class BxBaseVoteReactions extends BxDolVoteReactions
                 'condition' => !isset($aParams['show_counter_label_icon']) || (bool)$aParams['show_counter_label_icon'] === true,
                 'content' => array(
                     'style_prefix' => $this->_sStylePrefix,
-                    'name' => $this->_aDataList[$sReaction]['icon']
+                    'name' => $this->getIcon($sReaction)
                 )
             ),
             'bx_if:show_text' => array(
@@ -367,7 +367,7 @@ class BxBaseVoteReactions extends BxDolVoteReactions
                     'condition' => $bSummary,
                     'content' => array(
                         'style_prefix' => $this->_sStylePrefix,
-                        'icon' => $bSummary ? $this->_aDataList[$mValue['reaction']]['icon'] : ''
+                        'icon' => $bSummary ? $this->getIcon($mValue['reaction']) : ''
                     )
                 )
             );
@@ -396,7 +396,7 @@ class BxBaseVoteReactions extends BxDolVoteReactions
             $bSummary = $sReaction == 'summary';
 
             $sName = $this->_sStylePrefix . '-' . $sReaction;
-            $sTitle = !$bSummary ? $this->_oTemplate->parseIcon($this->_aDataList[$sReaction]['icon']) : $sTxtSummary;
+            $sTitle = !$bSummary ? $this->_oTemplate->parseIcon($this->getIcon($sReaction)) : $sTxtSummary;
             $sTitleAttr = !$bSummary ? _t('_vote_do_by_x_reaction', _t($this->_aDataList[$sReaction]['title'])) : $sTxtSummary;
 
             $aMenuItems[] = array('id' => $sName, 'name' => $sName, 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => 'javascript:' . $sJsObject . '.changeVotedBy(this, \'' . $sReaction . '\')', 'target' => '_self', 'title' => $sTitle, 'title_attr' => $sTitleAttr, 'active' => 1);
