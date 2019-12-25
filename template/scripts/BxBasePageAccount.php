@@ -59,12 +59,18 @@ class BxBasePageAccount extends BxTemplPage
             if ($oProfile && BxDolService::call($oProfile->getModule(), 'act_as_profile')) {
                 $iViewerAccountId = getLoggedId();
                 $iSwitchToAccountId = $oProfile->getAccountId();
-                $bCanSwitch = $iSwitchToAccountId == $iViewerAccountId;
-                bx_alert('account', 'check_switch_context', $iSwitchToAccountId, bx_get_logged_profile_id(), array('switch_to_profile' => $iSwitchToProfileId, 'viewer_account' => $iViewerAccountId, 'override_result' => &$bCanSwitch));
+                
+                $iViewerProfileId = bx_get_logged_profile_id();
+                $aCheck = checkActionModule($iViewerProfileId, 'switch to any profile', 'system', false);
+                $bAllowSwitchToAnyProfile = $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED;
+                
+                $bCanSwitch = ($iSwitchToAccountId == $iViewerAccountId || $bAllowSwitchToAnyProfile);
+                bx_alert('account', 'check_switch_context', $iSwitchToAccountId, $iViewerProfileId, array('switch_to_profile' => $iSwitchToProfileId, 'viewer_account' => $iViewerAccountId, 'override_result' => &$bCanSwitch));
 
                 if ($bCanSwitch) {
                     $oAccount = BxDolAccount::getInstance();
                     if ($oAccount->updateProfileContext($iSwitchToProfileId)) {
+                        checkActionModule($iViewerProfileId, 'switch to any profile', 'system', true);
                         $sInformerMsg = _t('_sys_txt_account_profile_context_changed_success', $oProfile->getDisplayName());
                         if ((int)bx_get('redirect_back') && isset($_SERVER['HTTP_REFERER']) && 0 === mb_stripos($_SERVER['HTTP_REFERER'], BX_DOL_URL_ROOT)) {
                             header("Location:" . $_SERVER['HTTP_REFERER']);

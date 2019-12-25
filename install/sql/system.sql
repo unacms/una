@@ -762,6 +762,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 ('system', 'use macros', NULL, '_sys_acl_action_use_macros', '_sys_acl_action_use_macros_desc', 0, 0);
 SET @iIdActionUseMacros = LAST_INSERT_ID();
 
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'switch to any profile', NULL, '_sys_acl_action_switch_to_any_profile', '_sys_acl_action_switch_to_any_profile', 0, 0);
+SET @iIdActionSwitchToAnyProfile = LAST_INSERT_ID();
+
 CREATE TABLE `sys_acl_actions_track` (
   `IDAction` int(10) unsigned NOT NULL DEFAULT '0',
   `IDMember` int(10) unsigned NOT NULL default '0',
@@ -921,7 +925,10 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 -- use macros
 (@iModerator, @iIdActionUseMacros),
-(@iAdministrator, @iIdActionUseMacros);
+(@iAdministrator, @iIdActionUseMacros),
+
+-- switch to any profile
+(@iAdministrator, @iIdActionSwitchToAnyProfile);
 
 
 CREATE TABLE `sys_acl_levels` (
