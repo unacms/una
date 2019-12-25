@@ -4940,6 +4940,7 @@ INSERT INTO `sys_preloader`(`module`, `type`, `content`, `active`, `order`) VALU
 ('system', 'js_system', 'BxDolVoteReactions.js', 1, 38),
 ('system', 'js_system', 'BxDolVoteStars.js', 1, 39),
 ('system', 'js_system', 'BxDolCmtsReviews.js', 1, 40),
+('system', 'js_system', 'BxDolMenuMoreAuto.js', 1, 41),
 
 ('system', 'js_translation', '_Are_you_sure', 1, 1),
 ('system', 'js_translation', '_error occured', 1, 2),
