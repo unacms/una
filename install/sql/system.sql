@@ -4830,6 +4830,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_payments` (
 CREATE TABLE IF NOT EXISTS `sys_objects_wiki` (
   `id` int(11) NOT NULL,
   `object` varchar(64) NOT NULL,
+  `uri` varchar(32) NOT NULL,
   `title` varchar(255) NOT NULL,
   `module` varchar(32) NOT NULL,
   `allow_add_for_levels` int(11) NOT NULL DEFAULT '2147483647',
@@ -4838,7 +4839,10 @@ CREATE TABLE IF NOT EXISTS `sys_objects_wiki` (
   `allow_translate_for_levels` int(11) NOT NULL DEFAULT '2147483647',
   `allow_unsafe_for_levels` int(11) NOT NULL DEFAULT '2147483647',
   `override_class_name` varchar(255) NOT NULL,
-  `override_class_file` varchar(255) NOT NULL
+  `override_class_file` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `object` (`object`),
+  UNIQUE KEY `uri` (`uri`)
 );
 
 CREATE TABLE IF NOT EXISTS `sys_pages_wiki_blocks` (
@@ -4851,7 +4855,9 @@ CREATE TABLE IF NOT EXISTS `sys_pages_wiki_blocks` (
   `content` mediumtext NOT NULL,
   `comment` varchar(255) NOT NULL,
   `added` int(11) NOT NULL,
-  `changed` int(11) NOT NULL
+  `changed` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `block_lang_rev` (`block_id`,`language`,`revision`)
 );
 
 -- --------------------------------------------------------
@@ -4863,7 +4869,8 @@ CREATE TABLE IF NOT EXISTS `sys_rewrite_rules` (
   `id` int(10) UNSIGNED NOT NULL,
   `preg` varchar(255) NOT NULL,
   `service` varchar(255) NOT NULL,
-  `active` tinyint(4) NOT NULL DEFAULT '1'
+  `active` tinyint(4) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
 );
 
 -- --------------------------------------------------------

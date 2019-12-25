@@ -21,10 +21,20 @@ class BxDolWikiQuery extends BxDolDb
         $this->_aObject = $aObject;
     }
 
+    static public function getWikiObjectByUri ($sUri)
+    {
+        return self::getWikiObjectByField ('uri', $sUri);
+    }
+
     static public function getWikiObject ($sObject)
     {
+        return self::getWikiObjectByField ('object', $sObject);
+    }
+
+    static public function getWikiObjectByField ($sField, $sValue)
+    {
         $oDb = BxDolDb::getInstance();
-        $sQuery = $oDb->prepare("SELECT * FROM `sys_objects_wiki` WHERE `object` = ?", $sObject);
+        $sQuery = $oDb->prepare("SELECT * FROM `sys_objects_wiki` WHERE `$sField` = ?", $sValue);
         $aObject = $oDb->getRow($sQuery);
         if (!$aObject || !is_array($aObject))
             return false;
