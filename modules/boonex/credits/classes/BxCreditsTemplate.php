@@ -17,7 +17,7 @@ class BxCreditsTemplate extends BxBaseModGeneralTemplate
 
         parent::__construct($oConfig, $oDb);
 
-        $this->aMethodsToCallAddJsCss = array('getBlockBundles');
+        $this->aMethodsToCallAddJsCss = array('getBlockBundles', 'getBlockCheckout');
     }
 
     public function getJsCode($sType, $aParams = array(), $bWrap = true)
@@ -42,7 +42,7 @@ class BxCreditsTemplate extends BxBaseModGeneralTemplate
         if(($sCode = getParam($CNF['PARAM_CODE'])) != '')
             $sUnit = $sCode;
         else if(($sIcon = getParam($CNF['PARAM_ICON'])) != '')
-            $sUnit = $this->parseIcon($sIcon, array('class' => $this->_oConfig->getPrefix('style') . '-mti-balance bx-def-margin-thd-right'));
+            $sUnit = $this->parseIcon($sIcon, array('class' => $this->_oConfig->getPrefix('style') . '-prefix-icon bx-def-margin-thd-right'));
 
         return $sUnit;
     }

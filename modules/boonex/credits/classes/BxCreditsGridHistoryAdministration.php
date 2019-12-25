@@ -161,6 +161,7 @@ class BxCreditsGridHistoryAdministration extends BxTemplGrid
         ));
 
         $this->_oModule->_oTemplate->addCss(array(
+            'main.css',
             'withdraw.css'
         ));
 

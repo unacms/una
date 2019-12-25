@@ -15,10 +15,6 @@ DELETE FROM `sys_objects_menu` WHERE `module` = 'bx_credits';
 DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_credits';
 DELETE FROM `sys_menu_items` WHERE `module` = 'bx_credits' OR `set_name` IN ('bx_credits_submenu', 'bx_credits_orders_submenu');
 
--- ACL
-DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matrix` WHERE `sys_acl_matrix`.`IDAction` = `sys_acl_actions`.`ID` AND `sys_acl_actions`.`Module` = 'bx_credits';
-DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_credits';
-
 -- GRIDS
 DELETE FROM `sys_objects_grid` WHERE `object` LIKE 'bx_credits_%';
 DELETE FROM `sys_grid_fields` WHERE `object` LIKE 'bx_credits_%';
