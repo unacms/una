@@ -728,7 +728,9 @@ class BxAlbumsModule extends BxBaseModTextModule
         $oTcPoster = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['poster']);
         $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
         $oTranscoderCover = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_TRANSCODER_COVER']);
-        
+        if(!$oTranscoder || !$oTranscoderCover)
+            return array();
+
         $aOutput = array();
         foreach ($aMediaList as $aMedia) {
             $aFileInfo = $oStorage->getFile($aMedia['file_id']);
@@ -745,8 +747,15 @@ class BxAlbumsModule extends BxBaseModTextModule
             );
         }
 
-        $iSliceLenth = 4;
-        return count($aOutput) > $iSliceLenth ? array_slice($aOutput, 0, $iSliceLenth) : $aOutput;
+        if(empty($aOutput))
+            return array();
+
+        $iSlice = 4;
+        $iTotal = count($aOutput);
+        return array(
+            'total' => $iTotal,
+            'items' => $iTotal > $iSlice ? array_slice($aOutput, 0, $iSlice) : $aOutput
+        );
     }
 
     protected function _getVideosForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
@@ -765,7 +774,7 @@ class BxAlbumsModule extends BxBaseModTextModule
         $oTcMp4 = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']);
         $oTcMp4Hd = BxDolTranscoderVideo::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4_hd']);
         if(!$oTcPoster || !$oTcMp4 || !$oTcMp4Hd)
-            return $aResults;
+            return array();
 
         $aOutput = array();
         foreach($aMediaList as $k => $aMedia) {
@@ -791,8 +800,15 @@ class BxAlbumsModule extends BxBaseModTextModule
             );
         }
 
-        $iSliceLenth = 4;
-        return count($aOutput) > $iSliceLenth ? array_slice($aOutput, 0, $iSliceLenth) : $aOutput;
+        if(empty($aOutput))
+            return array();
+
+        $iSlice = 4;
+        $iTotal = count($aOutput);
+        return array(
+            'total' => $iTotal,
+            'items' => $iTotal > $iSlice ? array_slice($aOutput, 0, $iSlice) : $aOutput
+        );
     }
 
     protected function _getContentForTimelineMedia($aEvent, $aContentInfo, $aBrowseParams = array())

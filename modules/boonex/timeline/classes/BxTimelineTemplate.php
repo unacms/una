@@ -1899,6 +1899,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($bViewItem)
             $sAttachmentsLayout = BX_TIMELINE_ML_GALLERY;
 
+        $iAttachmentsTotal = 0;
         $aTmplVarsImages = $aTmplVarsVideos = $aTmplVarsAttachments = array();
 
         //--- Process Photos ---//
@@ -1916,11 +1917,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $bImagesAttach = !empty($aContent['images_attach']) && is_array($aContent['images_attach']);
         if($bImagesAttach) {
             $aImagesAttach = $this->_getTmplVarsImages($aContent['images_attach'], array('layout' => $sAttachmentsLayout, 'first' => empty($aTmplVarsAttachments)), $aEvent, $aBrowseParams);
-            if(!empty($aImagesAttach))
-                $aTmplVarsAttachments = array_merge ($aTmplVarsAttachments, $aImagesAttach['items']);
+            if(!empty($aImagesAttach)) {
+                $iAttachmentsTotal += $aImagesAttach['total'];
+                $aTmplVarsAttachments = array_merge($aTmplVarsAttachments, $aImagesAttach['items']);
+            }
         }
-            
-        
+
         //--- Add Meta Image when Item is viewed on a separate page ---//
         if($bViewItem) {
             $sMetaImageSrc = '';
@@ -1948,8 +1950,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $bVideosAttach = !empty($aContent['videos_attach']) && is_array($aContent['videos_attach']);
         if($bVideosAttach) {
             $aVideosAttach = $this->_getTmplVarsVideos($aContent['videos_attach'], array('layout' => $sAttachmentsLayout, 'first' => empty($aTmplVarsAttachments)), $aEvent, $aBrowseParams);
-            if(!empty($aVideosAttach))
+            if(!empty($aVideosAttach)) {
+                $iAttachmentsTotal += $aVideosAttach['total'];
                 $aTmplVarsAttachments = array_merge($aTmplVarsAttachments, $aVideosAttach['items']);
+            }
         }
 
         //--- Process Files ---//
@@ -1967,8 +1971,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $bFilesAttach = !empty($aContent['files_attach']) && is_array($aContent['files_attach']);
         if($bFilesAttach) {
             $aFilesAttach = $this->_getTmplVarsFiles($aContent['files_attach'], $aEvent, $aBrowseParams);
-            if(!empty($aFilesAttach))
-                $aTmplVarsAttachments = array_merge ($aTmplVarsAttachments, $aFilesAttach['items']);
+            if(!empty($aFilesAttach)) {
+                $iAttachmentsTotal += $aFilesAttach['total'];
+                $aTmplVarsAttachments = array_merge($aTmplVarsAttachments, $aFilesAttach['items']);
+            }
         }
 
         /*
@@ -1979,13 +1985,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($sAttachmentsLayout == BX_TIMELINE_ML_SHOWCASE && $iAttachmentsCount > 0) {
             $aTmplVarsAttachments[0]['class'] .= ' ' . $sStylePrefix . '-ia-first';
 
-            if($iAttachmentsCount > $iAttachmentsShow) {
+            if($iAttachmentsCount > $iAttachmentsShow)
                 $aTmplVarsAttachments = array_slice($aTmplVarsAttachments, 0, $iAttachmentsShow);
+
+            if($iAttachmentsTotal > $iAttachmentsShow)
                 $aTmplVarsAttachments[$iAttachmentsShow - 1]['item'] .= $this->parseHtmlByName('attach_more.html', array(
                     'style_prefix' => $sStylePrefix,
-                    'more' => $iAttachmentsCount - $iAttachmentsShow
+                    'more' => $iAttachmentsTotal - $iAttachmentsShow
                 ));
-            }
         }
 
         return array(
@@ -2168,6 +2175,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(empty($aImages) || !is_array($aImages))
             return array();
 
+        $iTotal = 0; //--- Total count of images related to the event.
+        if(isset($aImages['total']) && isset($aImages['items'])) {
+            $iTotal = (int)$aImages['total'];
+            $aImages = $aImages['items'];
+        }
+        else
+            $iTotal = count($aImages);
+
         $sStylePrefix = $this->_oConfig->getPrefix('style');
         $sJsObject = $this->_oConfig->getJsObjectView($aBrowseParams);
 
@@ -2228,6 +2243,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         
         return array(
             'display' => $sDisplay,
+            'total' => $iTotal,
             'items' => $aTmplVarsImages
         );
     }
@@ -2236,6 +2252,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     {
         if(empty($aVideos) || !is_array($aVideos))
             return array();
+
+        $iTotal = 0; //--- Total count of videos related to the event.
+        if(isset($aVideos['total']) && isset($aVideos['items'])) {
+            $iTotal = (int)$aVideos['total'];
+            $aVideos = $aVideos['items'];
+        }
+        else
+            $iTotal = count($aVideos);
 
         $sStylePrefix = $this->_oConfig->getPrefix('style');
         $aTmplVarsVideos = array();
@@ -2341,6 +2365,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         return array( 
             'display' => $sDisplay,
+            'total' => $iTotal,
             'items' => $aTmplVarsVideos
         );
     }
@@ -2349,6 +2374,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     {
         if(empty($aFiles) || !is_array($aFiles))
             return array();
+
+        $iTotal = 0; //--- Total count of files related to the event.
+        if(isset($aFiles['total']) && isset($aFiles['items'])) {
+            $iTotal = (int)$aFiles['total'];
+            $aFiles = $aFiles['items'];
+        }
+        else
+            $iTotal = count($aFiles);
 
         $sStylePrefix = $this->_oConfig->getPrefix('style');
         $sJsObject = $this->_oConfig->getJsObjectView($aBrowseParams);
@@ -2392,9 +2425,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'item' => $sImage
             );
         }
-        
+
         return array(
             'display' => $sDisplay,
+            'total' => $iTotal,
             'items' => $aTmplVarsFiles
         );
     }
