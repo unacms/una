@@ -30,16 +30,16 @@ class BxBaseServiceWiki extends BxDol
     /** 
      * @ref bx_system_general-wiki_page "wiki_page"
      */
-    public function serviceWikiPage ($sWikiObject, $sUri)
+    public function serviceWikiPage ($sWikiObjectUri, $sUri)
     {
-        $oWiki = BxDolWiki::getObjectInstance($sWikiObject);
+        $oWiki = BxDolWiki::getObjectInstanceByUri($sWikiObjectUri);
         if (!$oWiki) {
             $oTemplate = BxDolTemplate::getInstance();
             $oTemplate->displayPageNotFound();
             return;
         }
 
-        $oPage = BxDolPage::getObjectInstanceByModuleAndURI($sWikiObject, $sUri);
+        $oPage = BxDolPage::getObjectInstanceByModuleAndURI($oWiki->getObjectName(), $sUri);
         if ($oPage) {
 
             $oPage->displayPage();

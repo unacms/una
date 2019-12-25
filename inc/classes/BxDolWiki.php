@@ -62,11 +62,25 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
+     * Get WIKI object instance by object URI
+     * @param $sObject object name
+     * @return object instance or false on error
+     */
+    static public function getObjectInstanceByUri($sUri, $oTemplate = false)
+    {
+        $aObject = BxDolWikiQuery::getWikiObjectByUri($sUri);
+        if (!$aObject || !is_array($aObject))
+            return false;
+
+        return self::getObjectInstance($aObject['object'], $oTemplate);
+    }
+
+    /**
      * Get WIKI object instance by object name
      * @param $sObject object name
      * @return object instance or false on error
      */
-    static public function getObjectInstance($sObject = false, $oTemplate = false)
+    static public function getObjectInstance($sObject, $oTemplate = false)
     {
         if (isset($GLOBALS['bxDolClasses']['BxDolWiki!'.$sObject]))
             return $GLOBALS['bxDolClasses']['BxDolWiki!'.$sObject];
