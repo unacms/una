@@ -125,7 +125,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         if(empty($sCoverUrl) && ($iCoverId = (int)getParam('sys_unit_cover_profile')) != 0)
             $sCoverUrl = BxDolTranscoder::getObjectInstance(BX_DOL_TRANSCODER_OBJ_COVER_UNIT_PROFILE)->getFileUrlById($iCoverId);
         if(empty($sCoverUrl))
-            $sCoverUrl = $this->getImageUrl('cover.jpg');
+            $sCoverUrl = $this->getImageUrl('cover.svg');
         
         $aTmplVarsMeta = $this->getSnippetMenuVars ($iProfile, $bPublic);
 
@@ -227,7 +227,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         }
 
         if(!$sUrlCover)
-            $sUrlCover = $this->getImageUrl('cover.jpg');
+            $sUrlCover = $this->getImageUrl('cover.svg');
         
         $sUrlCoverChange = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_COVER'] . '&id=' . $aData[$CNF['FIELD_ID']]);
 
@@ -410,7 +410,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         }
 
         if($bSubstituteNoImage && !$sImageUrl)
-            $sImageUrl = $this->getImageUrl('cover.jpg');
+            $sImageUrl = $this->getImageUrl('cover.svg');
 
         return $sImageUrl;
     }
@@ -430,7 +430,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         }
 
         if($bSubstituteNoImage && !$sImageUrl)
-        	$sImageUrl = $this->getImageUrl('cover.jpg');
+        	$sImageUrl = $this->getImageUrl('cover.svg');
 
 		return $sImageUrl;
     }

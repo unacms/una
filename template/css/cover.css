@@ -8,7 +8,7 @@
 
 .bx-cover-wrapper {
     position:relative;
-    background-image: url(../images/cover.jpg);
+    background-image: url(../images/cover.svg);
     background-color: #eee;
     background-repeat: no-repeat;
     background-position: center center;
@@ -70,5 +70,5 @@
 }
 
 .bx-cover-homepage {
-    background-image: url(../images/cover-homepage.png);
+    background-image: url(../images/cover-homepage.svg);
 }
