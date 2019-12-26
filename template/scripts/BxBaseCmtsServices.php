@@ -17,6 +17,24 @@ class BxBaseCmtsServices extends BxDol
         parent::__construct();
     }
 
+    public function serviceGetBlockView($sSystem = '', $iObjectId = 0, $iCommentId = 0)
+    {
+        if(empty($sSystem) && ($sSystem = bx_get('sys')) !== false)
+            $sSystem = bx_process_input($sSystem);
+
+        if(empty($iObjectId) && ($iObjectId = bx_get('id')) !== false)
+            $iObjectId = bx_process_input($iObjectId, BX_DATA_INT);
+
+        if(empty($iCommentId) && ($iCommentId = bx_get('cmt_id')) !== false)
+            $iCommentId = bx_process_input($iCommentId, BX_DATA_INT);
+
+        $oCmts = BxDolCmts::getObjectInstance($sSystem, $iObjectId, true);
+        if(!$oCmts)
+            return '';
+
+        return $oCmts->getCommentBlock($iCommentId);
+    }
+
     public function serviceAlertResponseSysCmtsImagesFileDeleted($oAlert)
     {
         $iUniqId = (int)$oAlert->aExtras['ghost']['content_id'];
