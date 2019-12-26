@@ -87,7 +87,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
 
         $aObject = BxDolWikiQuery::getWikiObject($sObject);
         if (!$aObject || !is_array($aObject))
-            return false;
+            $aObject = BxDolWikiQuery::getWikiObject('system');
 
         $sClass = empty($aObject['override_class_name']) ? 'BxDolWiki' : $aObject['override_class_name'];
         if (!empty($aObject['override_class_file']))
@@ -148,6 +148,9 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
      */
     public function isAllowed ($sType, $iProfileId = false)
     {
+        if (isAdmin())
+            return true;
+
         $aTypes = array(
             'add' => 'allow_add_for_levels',
             'edit' => 'allow_edit_for_levels',

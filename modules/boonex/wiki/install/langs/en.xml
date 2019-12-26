@@ -2,6 +2,7 @@
 <resources name="en" flag="gb" title="English">
     <string name="_sys_module_wiki"><![CDATA[Wiki]]></string>
     <string name="_bx_wiki"><![CDATA[Wiki]]></string>
+    <string name="_bx_wiki_object_title"><![CDATA[Wiki]]></string>
     <string name="_bx_wiki_page_home"><![CDATA[Wiki Home]]></string>
     <string name="_bx_wiki_block_home"><![CDATA[Wiki Home]]></string>
     <string name="_bx_wiki_menu_item_title_system_home"><![CDATA[Wiki]]></string>
