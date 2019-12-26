@@ -2,7 +2,7 @@
 -- Wiki object
 
 INSERT INTO `sys_objects_wiki` (`object`, `uri`, `title`, `module`, `allow_add_for_levels`, `allow_edit_for_levels`, `allow_delete_for_levels`, `allow_translate_for_levels`, `allow_unsafe_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('bx_wiki', 'wiki', '_sys_wiki_system_title', 'system', 192, 192, 192, 192, 192, '', '');
+('bx_wiki', 'wiki', '_bx_wiki_object_title', 'system', 192, 192, 192, 192, 192, '', '');
 
 -- Permalinks
 
@@ -24,4 +24,4 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 SET @iHomepageMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_homepage' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_homepage', 'bx_wiki', 'wiki-home', '', '_bx_wiki_menu_item_title_system_home', 'r.php?_q=wiki/wiki-home', '', '', 'far wikipedia-w', '', 2147483647, 1, 1, IFNULL(@iHomepageMenuOrder, 0) + 1);
+('sys_homepage', 'bx_wiki', 'wiki-home', '', '_bx_wiki_menu_item_title_system_home', 'r.php?_q=wiki/wiki-home', '', '', 'fab wikipedia-w', '', 2147483647, 1, 1, IFNULL(@iHomepageMenuOrder, 0) + 1);

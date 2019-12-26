@@ -4855,6 +4855,10 @@ CREATE TABLE IF NOT EXISTS `sys_objects_wiki` (
   UNIQUE KEY `uri` (`uri`)
 );
 
+INSERT INTO `sys_objects_wiki` (`object`, `uri`, `title`, `module`, `allow_add_for_levels`, `allow_edit_for_levels`, `allow_delete_for_levels`, `allow_translate_for_levels`, `allow_unsafe_for_levels`, `override_class_name`, `override_class_file`) VALUES
+('system', '', '_sys_wiki_system_title', 'system', 0, 0, 0, 0, 0, '', '');
+
+
 CREATE TABLE IF NOT EXISTS `sys_pages_wiki_blocks` (
   `id` int(10) UNSIGNED NOT NULL,
   `block_id` int(11) NOT NULL,
