@@ -78,6 +78,8 @@
     <string name="_bx_ntfs_alert_action_timeline_post_common_personal"><![CDATA[New posts on Timeline]]></string>
     <string name="_bx_ntfs_alert_action_timeline_post_common_follow_member"><![CDATA[New posts on Timeline]]></string>
     <string name="_bx_ntfs_alert_action_timeline_post_common_follow_context"><![CDATA[New posts on Timeline]]></string>
+    <string name="_bx_ntfs_alert_action_publish_failed_personal"><![CDATA[Delayed publishing failed]]></string>
+    <string name="_bx_ntfs_alert_action_publish_succeeded_personal"><![CDATA[Delayed publishing succeeded]]></string>
 
     <string name="_bx_ntfs_setting_title_mask"><![CDATA[{0}: {1}]]></string>
     <string name="_bx_ntfs_setting_type_personal"><![CDATA[Activity related to you]]></string>

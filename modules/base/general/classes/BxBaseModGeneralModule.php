@@ -1308,8 +1308,8 @@ class BxBaseModGeneralModule extends BxDolModule
                     array('group' => $sModule . '_object_publish_succeeded', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'publish_succeeded', 'module_name' => $sModule, 'module_method' => 'get_notifications_post_publish_succeeded', 'module_class' => 'Module', 'module_event_privacy' => ''),
                 ),
                 'settings' => array(
-                    array('group' => 'content', 'unit' => $sModule, 'action' => 'publish_failed', 'types' => array('personal')),
-                    array('group' => 'content', 'unit' => $sModule, 'action' => 'publish_succeeded', 'types' => array('personal')),
+                    array('group' => 'content_publish_failed', 'unit' => $sModule, 'action' => 'publish_failed', 'types' => array('personal')),
+                    array('group' => 'content_publish_succeeded', 'unit' => $sModule, 'action' => 'publish_succeeded', 'types' => array('personal')),
                 ),
                 'alerts' => array(
                     array('unit' => $sModule, 'action' => 'publish_failed'),

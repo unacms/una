@@ -78,6 +78,8 @@
     <string name="_bx_ntfs_alert_action_timeline_post_common_personal"><![CDATA[Новые сообщения на Ленте]]></string>
     <string name="_bx_ntfs_alert_action_timeline_post_common_follow_member"><![CDATA[Новые сообщения на Ленте]]></string>
     <string name="_bx_ntfs_alert_action_timeline_post_common_follow_context"><![CDATA[Новые сообщения на Ленте]]></string>
+    <string name="_bx_ntfs_alert_action_publish_failed_personal"><![CDATA[Отложенная публикация не удалась]]></string>
+    <string name="_bx_ntfs_alert_action_publish_succeeded_personal"><![CDATA[Отложенная публикация успешно выполнена]]></string>
 
     <string name="_bx_ntfs_setting_title_mask"><![CDATA[{0}: {1}]]></string>
     <string name="_bx_ntfs_setting_type_personal"><![CDATA[Активность, относящаяся к вам]]></string>
