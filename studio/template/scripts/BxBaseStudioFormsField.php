@@ -176,13 +176,18 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
 
             return true;
         } 
-        else
-            return BxTemplStudioFunctions::getInstance()->popupBox('adm-form-field-edit-' . $this->aField['type'] . '-popup', _t('_adm_form_txt_field_edit_popup', _t($this->aField['caption_system'])), BxDolStudioTemplate::getInstance()->parseHtmlByName('form_add_field.html', array(
+        else {
+            $sCaption = _t($this->aField['caption_system']);
+            if(empty($sCaption))
+                $sCaption = _t($this->aField['caption']);
+
+            return BxTemplStudioFunctions::getInstance()->popupBox('adm-form-field-edit-' . $this->aField['type'] . '-popup', _t('_adm_form_txt_field_edit_popup', $sCaption), BxDolStudioTemplate::getInstance()->parseHtmlByName('form_add_field.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
                 'form' => $oForm->getCode(true),
                 'object' => $sObject,
                 'action' => $sAction
             )));
+        }
     }
 
     protected function getFormAdd($sAction, $sObject)
@@ -938,14 +943,9 @@ class BxBaseStudioFormsFieldBlockHeader extends BxBaseStudioFormsField
                     'caption' => _t('_adm_form_txt_field_caption_system'),
                     'info' => _t('_adm_form_dsc_field_caption_system'),
                     'value' => '_sys_form_txt_field',
-                    'required' => '1',
+                    'required' => '0',
                     'db' => array (
                         'pass' => 'Xss',
-                    ),
-                    'checker' => array (
-                        'func' => 'LengthTranslatable',
-                        'params' => array(3,100, 'caption_system'),
-                        'error' => _t('_adm_form_err_field_caption_system'),
                     ),
                 ),
                 'caption' => array(
@@ -954,10 +954,15 @@ class BxBaseStudioFormsFieldBlockHeader extends BxBaseStudioFormsField
                     'caption' => _t('_adm_form_txt_field_caption'),
                     'info' => _t('_adm_form_dsc_field_caption_block_header'),
                     'value' => '_sys_form_txt_field',
-                    'required' => '',
+                    'required' => '1',
                     'db' => array (
                         'pass' => 'Xss',
-                    )
+                    ),
+                    'checker' => array (
+                        'func' => 'LengthTranslatable',
+                        'params' => array(3, 100, 'caption'),
+                        'error' => _t('_adm_form_err_field_caption'),
+                    ),
                 ),
                 'collapsed' => array(
                     'type' => 'checkbox',

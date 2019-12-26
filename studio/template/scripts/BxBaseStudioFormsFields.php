@@ -255,7 +255,11 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
             echoJson($aRes);
         } 
         else {
-            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-field-show-to-popup', _t('_adm_form_txt_field_show_to_popup', _t($aField['caption_system'])), $this->_oTemplate->parseHtmlByName('form_add_field.html', array(
+            $sCaption = _t($aField['caption_system']);
+            if(empty($sCaption))
+                $sCaption = _t($aField['caption']);
+
+            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('adm-form-field-show-to-popup', _t('_adm_form_txt_field_show_to_popup', $sCaption), $this->_oTemplate->parseHtmlByName('form_add_field.html', array(
                 'form_id' => $aForm['form_attrs']['id'],
                 'form' => $oForm->getCode(true),
                 'object' => $this->_sObject,
@@ -365,6 +369,14 @@ class BxBaseStudioFormsFields extends BxDolStudioFormsFields
     protected function _getCellType ($mixedValue, $sKey, $aField, $aRow)
     {
         $mixedValue = $this->_oTemplate->getIcon('ui-' . $aRow['type'] . '.png', array('alt' => _t('_adm_form_txt_field_type_' . $aRow['type'])));
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
+
+    protected function _getCellCaptionSystem ($mixedValue, $sKey, $aField, $aRow)
+    {
+        if(empty($mixedValue))
+            $mixedValue = _t($aRow['caption']);
+
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 

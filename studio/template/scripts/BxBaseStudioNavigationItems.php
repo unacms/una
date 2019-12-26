@@ -68,7 +68,10 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
             if($sName == '') {
                 $sLanguage = BxDolStudioLanguagesUtils::getInstance()->getCurrentLangName(false);
 
-                $sName = BxDolForm::getSubmittedValue('title_system-' . $sLanguage, $oForm->aFormAttrs['method']);
+                $sName = BxDolForm::getSubmittedValue('title-' . $sLanguage, $oForm->aFormAttrs['method']);
+                if(empty($sName))
+                    $sName = BxDolForm::getSubmittedValue('title_system-' . $sLanguage, $oForm->aFormAttrs['method']);
+
                 $sName = uriGenerate($sName, 'sys_menu_items', 'name', 'item');
             }
 
@@ -535,7 +538,7 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
 
     protected function _getFormObject($sAction, $aItem = array())
     {
-		bx_import('BxTemplStudioFormView');
+        bx_import('BxTemplStudioFormView');
 
         $aForm = array(
             'form_attrs' => array(
@@ -576,14 +579,9 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
                     'caption' => _t('_adm_nav_txt_items_title_system'),
                     'info' => _t('_adm_nav_dsc_items_title_system'),
                     'value' => isset($aItem['title_system']) ? $aItem['title_system'] : '_adm_nav_txt_item',
-                    'required' => '1',
+                    'required' => '0',
                     'db' => array (
                         'pass' => 'Xss',
-                    ),
-                    'checker' => array (
-                        'func' => 'LengthTranslatable',
-                        'params' => array(3, 100, 'title_system'),
-                        'error' => _t('_adm_nav_err_items_title_system'),
                     ),
                 ),
                 'title' => array(

@@ -338,9 +338,9 @@
     <string name="_bx_dev_nav_err_items_name"><![CDATA[Здесь нужно ввести уникальное значение]]></string>
     <string name="_bx_dev_nav_txt_sys_items_title_system"><![CDATA[Системный заголовок]]></string>
     <string name="_bx_dev_nav_txt_items_title_system"><![CDATA[Системный заголовок]]></string>
-    <string name="_bx_dev_nav_err_items_title_system"><![CDATA[Здесь нужно ввести значение]]></string>
     <string name="_bx_dev_nav_txt_sys_items_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_dev_nav_txt_items_title"><![CDATA[Заголовок]]></string>
+    <string name="_bx_dev_nav_err_items_title"><![CDATA[Здесь нужно ввести значение]]></string>
     <string name="_bx_dev_nav_txt_sys_items_link"><![CDATA[Ссылка]]></string>
     <string name="_bx_dev_nav_txt_items_link"><![CDATA[Ссылка]]></string>
     <string name="_bx_dev_nav_txt_sys_items_onclick"><![CDATA[OnClick]]></string>
@@ -385,7 +385,6 @@
     <string name="_bx_dev_bp_err_page_object"><![CDATA[Здесь нужно ввести уникальное значение]]></string>
     <string name="_bx_dev_bp_txt_sys_page_title_system"><![CDATA[Системный заголовок]]></string>
     <string name="_bx_dev_bp_txt_page_title_system"><![CDATA[Системный заголовок]]></string>
-    <string name="_bx_dev_bp_err_page_title_system"><![CDATA[Здесь нужно ввести значение]]></string>
     <string name="_bx_dev_bp_txt_sys_page_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_dev_bp_txt_page_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_dev_bp_err_page_title"><![CDATA[Здесь нужно ввести значение]]></string>
@@ -426,9 +425,8 @@
     <string name="_bx_dev_bp_txt_sys_block_module"><![CDATA[Модуль]]></string>
     <string name="_bx_dev_bp_txt_block_module"><![CDATA[Модуль]]></string>
     <string name="_bx_dev_bp_err_block_module"><![CDATA[Нужно выбрать модуль]]></string>
-	<string name="_bx_dev_bp_txt_sys_block_title_system"><![CDATA[Системный заголовок]]></string>
+    <string name="_bx_dev_bp_txt_sys_block_title_system"><![CDATA[Системный заголовок]]></string>
     <string name="_bx_dev_bp_txt_block_title_system"><![CDATA[Системный заголовок]]></string>
-    <string name="_bx_dev_bp_err_block_title_system"><![CDATA[Здесь нужно ввести значение]]></string>
     <string name="_bx_dev_bp_txt_sys_block_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_dev_bp_txt_block_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_dev_bp_err_block_title"><![CDATA[Здесь нужно ввести значение]]></string>

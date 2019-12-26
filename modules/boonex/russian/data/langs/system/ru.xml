@@ -739,6 +739,7 @@
 	<string name="_adm_form_err_field_add"><![CDATA[Невозможно добавить новое поле]]></string>
         <string name="_adm_form_err_field_add_already_exists"><![CDATA[Поле с таким же именем уже существует]]></string>
 	<string name="_adm_form_err_field_add_not_allowed"><![CDATA[Поля не могут быть добавлены в эту форму]]></string>
+        <string name="_adm_form_err_field_caption"><![CDATA[Необходимо имя из как минимум 3 символов.]]></string>
 	<string name="_adm_form_err_field_caption_system"><![CDATA[Необходимо имя из как минимум 3 символов.]]></string>
 	<string name="_adm_form_err_field_checker_error"><![CDATA[Нужно ввести сообщение об ошибке]]></string>
 	<string name="_adm_form_err_field_checker_func"><![CDATA[Нужно выбрать проверочную функцию]]></string>
@@ -1077,7 +1078,6 @@
 	<string name="_adm_nav_err_items_link"><![CDATA[Нужно ввести URL элемента]]></string>
 	<string name="_adm_nav_err_items_onclick"><![CDATA[Нужно ввести OnClick элемента]]></string>
 	<string name="_adm_nav_err_items_show_to"><![CDATA[Невозможно обновить элемент]]></string>
-	<string name="_adm_nav_err_items_title_system"><![CDATA[Необходимо указать название из как минимум 3 символов.]]></string>
 	<string name="_adm_nav_err_menus_create"><![CDATA[Невозможно создать меню]]></string>
 	<string name="_adm_nav_err_menus_delete"><![CDATA[Невозможно удалить меню]]></string>
 	<string name="_adm_nav_err_menus_edit"><![CDATA[Невозможно обновить меню]]></string>

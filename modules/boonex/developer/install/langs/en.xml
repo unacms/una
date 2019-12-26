@@ -338,9 +338,9 @@
     <string name="_bx_dev_nav_err_items_name"><![CDATA[You need to enter a unique value here]]></string>
     <string name="_bx_dev_nav_txt_sys_items_title_system"><![CDATA[System Title]]></string>
     <string name="_bx_dev_nav_txt_items_title_system"><![CDATA[System Title]]></string>
-    <string name="_bx_dev_nav_err_items_title_system"><![CDATA[You need to enter a value here]]></string>
     <string name="_bx_dev_nav_txt_sys_items_title"><![CDATA[Title]]></string>
     <string name="_bx_dev_nav_txt_items_title"><![CDATA[Title]]></string>
+    <string name="_bx_dev_nav_err_items_title"><![CDATA[You need to enter a value here]]></string>
     <string name="_bx_dev_nav_txt_sys_items_link"><![CDATA[Link]]></string>
     <string name="_bx_dev_nav_txt_items_link"><![CDATA[Link]]></string>
     <string name="_bx_dev_nav_txt_sys_items_onclick"><![CDATA[OnClick]]></string>
@@ -385,7 +385,6 @@
     <string name="_bx_dev_bp_err_page_object"><![CDATA[You need to enter a unique value here]]></string>
     <string name="_bx_dev_bp_txt_sys_page_title_system"><![CDATA[System Title]]></string>
     <string name="_bx_dev_bp_txt_page_title_system"><![CDATA[System Title]]></string>
-    <string name="_bx_dev_bp_err_page_title_system"><![CDATA[You need to enter a value here]]></string>
     <string name="_bx_dev_bp_txt_sys_page_title"><![CDATA[Title]]></string>
     <string name="_bx_dev_bp_txt_page_title"><![CDATA[Title]]></string>
     <string name="_bx_dev_bp_err_page_title"><![CDATA[You need to enter a value here]]></string>
@@ -426,9 +425,8 @@
     <string name="_bx_dev_bp_txt_sys_block_module"><![CDATA[Module]]></string>
     <string name="_bx_dev_bp_txt_block_module"><![CDATA[Module]]></string>
     <string name="_bx_dev_bp_err_block_module"><![CDATA[You need to select a module]]></string>
-	<string name="_bx_dev_bp_txt_sys_block_title_system"><![CDATA[Title System]]></string>
+    <string name="_bx_dev_bp_txt_sys_block_title_system"><![CDATA[Title System]]></string>
     <string name="_bx_dev_bp_txt_block_title_system"><![CDATA[Title System]]></string>
-    <string name="_bx_dev_bp_err_block_title_system"><![CDATA[You need to enter a value here]]></string>
     <string name="_bx_dev_bp_txt_sys_block_title"><![CDATA[Title]]></string>
     <string name="_bx_dev_bp_txt_block_title"><![CDATA[Title]]></string>
     <string name="_bx_dev_bp_err_block_title"><![CDATA[You need to enter a value here]]></string>

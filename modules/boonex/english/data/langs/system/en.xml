@@ -743,7 +743,8 @@
 	<string name="_adm_form_err_field_add"><![CDATA[Cannot add new field]]></string>
         <string name="_adm_form_err_field_add_already_exists"><![CDATA[Field with similar name already exists]]></string>
 	<string name="_adm_form_err_field_add_not_allowed"><![CDATA[Fields cannot be added in this form]]></string>
-	<string name="_adm_form_err_field_caption_system"><![CDATA[A name with at least 3 characters is required.]]></string>
+	<string name="_adm_form_err_field_caption"><![CDATA[A name with at least 3 characters is required.]]></string>
+        <string name="_adm_form_err_field_caption_system"><![CDATA[A name with at least 3 characters is required.]]></string>
 	<string name="_adm_form_err_field_checker_error"><![CDATA[You need to enter error message]]></string>
 	<string name="_adm_form_err_field_checker_func"><![CDATA[Check Function should be selected]]></string>
 	<string name="_adm_form_err_field_checker_params_length_max"><![CDATA[Enter Max Value, non-zero integer number]]></string>
@@ -1090,7 +1091,6 @@
 	<string name="_adm_nav_err_items_link"><![CDATA[You need to enter item URL]]></string>
 	<string name="_adm_nav_err_items_onclick"><![CDATA[You need to enter item OnClick]]></string>
 	<string name="_adm_nav_err_items_show_to"><![CDATA[Cannot update item]]></string>
-	<string name="_adm_nav_err_items_title_system"><![CDATA[A name with at least 3 characters is required.]]></string>
 	<string name="_adm_nav_err_menus_create"><![CDATA[Cannot create menu]]></string>
 	<string name="_adm_nav_err_menus_delete"><![CDATA[Cannot delete menu]]></string>
 	<string name="_adm_nav_err_menus_edit"><![CDATA[Cannot update menu]]></string>
