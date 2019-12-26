@@ -422,6 +422,8 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         if(!$sFilter || (empty($this->_aOptions['filter_fields']) && empty($this->_aOptions['filter_fields_translatable']))) 
             return '';
 
+        $oDb = BxDolDb::getInstance();
+
         $sMode = $this->_aOptions['filter_mode'];
         if($sMode != 'like' && $sMode != 'fulltext')
             $sMode = getParam('useLikeOperator') ? 'like' : 'fulltext';
