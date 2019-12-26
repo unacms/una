@@ -408,6 +408,14 @@ class BxBaseStudioNavigationItems extends BxDolStudioNavigationItems
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
 
+    protected function _getCellTitleSystem ($mixedValue, $sKey, $aField, $aRow)
+    {
+        if(empty($mixedValue))
+            $mixedValue = _t($aRow['title']);
+
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
+
     protected function _getCellLink ($mixedValue, $sKey, $aField, $aRow)
     {
         if($aRow['submenu_object'] != "") {

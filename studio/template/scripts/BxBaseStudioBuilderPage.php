@@ -1701,8 +1701,16 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         $aPages = $aCounter = array();
         $this->oDb->getPages(array('type' => 'by_module', 'value' => $this->sType), $aPages, false);
         $this->oDb->getBlocks(array('type' => 'counter_by_pages'), $aCounter, false);
-        foreach($aPages as $aPage)
-            $aInputPages['values'][] = array('key' => $aPage['object'], 'value' => _t($aPage['title_system']) . " (" . (isset($aCounter[$aPage['object']]) ? $aCounter[$aPage['object']] : "0") . ")");
+        foreach($aPages as $aPage) {
+            $sTitle = _t($aPage['title_system']);
+            if(empty($sTitle))
+                $sTitle = _t($aPage['title']);
+
+            $aInputPages['values'][] = array(
+                'key' => $aPage['object'], 
+                'value' => $sTitle . " (" . (isset($aCounter[$aPage['object']]) ? $aCounter[$aPage['object']] : "0") . ")"
+            );
+        }
 
         $aTmplVarsActions = array();
         if(($this->sPage != '' && !empty($this->aPageRebuild)) !== false)
