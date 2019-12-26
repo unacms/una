@@ -305,6 +305,7 @@
 
     <string name="_bx_ads_search_extended"><![CDATA[Ads Search]]></string>
     <string name="_bx_ads_search_extended_cmts"><![CDATA[Ads Comments Search]]></string>
+    <string name="_bx_ads_search_extended_reviews"><![CDATA[Ads Reviews Search]]></string>
 
     <!-- Ctegories -->
     <string name="_bx_ads_cat_type_price"><![CDATA[With price]]></string>
