@@ -213,10 +213,10 @@ class BxBasePage extends BxDolPage
     }
 
     /**
-     * Get page code only.
+     * Get page code vars
      * @return string
      */
-    protected function _getPageCode ()
+    protected function _getPageCodeVars ()
     {
     	$aHiddenOn = array(
             pow(2, BX_DB_HIDDEN_PHONE - 1) => 'bx-def-media-phone-hide',
@@ -246,6 +246,16 @@ class BxBasePage extends BxDolPage
             $aVars[$sKey] = $sCell;
         }
 
+        return $aVars;
+    }
+
+    /**
+     * Get page code only.
+     * @return string
+     */
+    protected function _getPageCode ()
+    {
+        $aVars = $this->_getPageCodeVars ();
         return $this->_oTemplate->parseHtmlByName($this->_aObject['template'], $aVars);
     }
 
