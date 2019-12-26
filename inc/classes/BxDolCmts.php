@@ -233,7 +233,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         if(!empty($mixedUserBpFilter))
             $this->_sBrowseFilter = $mixedUserBpFilter;
 
-        $this->_sViewUrl = BX_DOL_URL_ROOT . 'cmts.php';
+        $this->_sViewUrl = BX_DOL_URL_ROOT . 'page.php?i=cmts-view';
         $this->_sBaseUrl = BxDolPermalinks::getInstance()->permalink($this->_aSystem['base_url']);
         if(get_mb_substr($this->_sBaseUrl, 0, 4) != 'http')
             $this->_sBaseUrl = BX_DOL_URL_ROOT . $this->_sBaseUrl;
@@ -434,7 +434,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     	if(empty($this->_aSystem['trigger_field_title']))
             return '';
 
-    	return bx_append_url_params($this->_sViewUrl, array(
+    	return BxDolPermalinks::getInstance()->permalink($this->_sViewUrl, array(
             'sys' => $this->_sSystem,
             'id' => $this->_iId,
             'cmt_id' => $iCmtId

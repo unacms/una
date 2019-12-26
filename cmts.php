@@ -28,28 +28,12 @@ if ($oCmts && $sSys && $iObjectId) {
         exit;
     }
 
-    $iCmtId = bx_get('cmt_id');
-    if($iCmtId !== false) {
-        $oTemplate = BxDolTemplate::getInstance();
-        $sComment = $oCmts->getCommentBlock($iCmtId);
-        if ($sComment) {
-
-            $sObjectTitle = bx_process_output(strip_tags($oCmts->getObjectTitle($iObjectId)));
-
-            $sHeader = _t('_cmt_page_view_header', $sObjectTitle);
-            $sTitle = _t('_cmt_page_view_title', $oCmts->getBaseUrl(), $sObjectTitle);
-            $sContent = DesignBoxContent($sTitle, $sComment, BX_DB_PADDING_DEF);
-            
-            $oTemplate->setPageNameIndex(BX_PAGE_DEFAULT);
-            $oTemplate->setPageHeader($sHeader);
-            $oTemplate->setPageContent('page_main_code', $sContent);
-            $oTemplate->getPageCode();
-
-        } else {
-
-            $oTemplate->displayPageNotFound();
-
-        }
+    if(bx_get('cmt_id') !== false) {
+        $oPage = BxDolPage::getObjectInstance('sys_cmts_view');
+        if($oPage)
+            $oPage->displayPage();
+        else
+            BxDolTemplate::getInstance()->displayPageNotFound();
     }
 }
 
