@@ -94,7 +94,7 @@ class BxCnlModule extends BxBaseModGroupsModule
             'object_author_id' => $iAuthorId, 
             'privacy_view' => -$iCnlProfileId, 
             'subobject_id' => $iId,
-
+			'content_module' => $sModuleName,
             'content_id' => $iContentId,
             'content_author_id' => $iAuthorId
         );
