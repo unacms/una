@@ -114,7 +114,24 @@
                 $(".bx-form-select-labels").select2ToTree();
             }
         });
-        
+
+        if (!$(".bx-form-input-wrapper-password").hasClass("bx-inited")) {
+            $(".bx-form-input-wrapper-password A").on("click", function () {
+                var oIcon = $(this).find("I");
+                var oFld = $(this).parents(".bx-form-input-wrapper-password").find("INPUT");
+                console.log(oFld.prop("type"))
+                if (oIcon.hasClass("eye")) {
+                    oIcon.removeClass("eye").addClass("eye-slash");
+                    oFld.attr("type", "text");
+                }
+                else {
+                    oIcon.addClass("eye").removeClass("eye-slash");
+                    oFld.attr("type", "password");
+                }
+            });
+            $(".bx-form-input-wrapper-password").addClass("bx-inited");
+        }
+           
         $("input", this).each(function() {
         	var oInput = $(this);
 

@@ -725,12 +725,15 @@ BLAH;
             case 'checkbox':
             case 'radio':
             case 'image':
-            case 'password':
             case 'slider':
             case 'doublerange':
             case 'hidden':
                 $sInput = $this->genInputStandard($aInput);
             break;
+            
+            case 'password':
+            	$sInput = $this->genInputPassword($aInput);
+            	break;
 
             case 'file':
             	$sInput = $this->genInputFile($aInput);
@@ -1518,6 +1521,11 @@ BLAH;
         }
 
         return $this->oTemplate->parseHtmlByName('form_field_location.html', $aVars);
+    }
+    
+    function genInputPassword(&$aInput)
+    {
+        return $this->oTemplate->parseHtmlByName('form_field_password.html', array('input' => $this->genInputStandard($aInput)));
     }
 
     public function setLocationVal ($aInput, $sIndex, $sVal)
