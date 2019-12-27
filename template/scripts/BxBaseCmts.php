@@ -815,10 +815,9 @@ class BxBaseCmts extends BxDolCmts
             );
         }
 
-        $sMethod = '_getForm' . ucfirst($sType);
-        $aForm = $this->$sMethod($iCmtParentId, $aDp);
+        $aForm = $this->{'_getForm' . ucfirst($sType)}($iCmtParentId, $aDp);
         if(empty($aForm['form']))
-            return '';
+            return !empty($aForm['msg']) ? MsgBox($aForm['msg']) : '';
 
         return $this->_oTemplate->parseHtmlByName('comment_reply_box.html', array(
             'js_object' => $this->_sJsObjName,
@@ -837,8 +836,11 @@ class BxBaseCmts extends BxDolCmts
     protected function _getFormPost($iCmtParentId = 0, $aDp = array())
     {
         $bCmtParentId = !empty($iCmtParentId);
-        if((!$bCmtParentId && !$this->isPostAllowed()) || ($bCmtParentId && !$this->isReplyAllowed($iCmtParentId)))
-            return array('msg' => _t('_Access denied'));
+        if(!$bCmtParentId && !$this->isPostAllowed())
+            return array('msg' => $this->msgErrPostAllowed());
+
+        if($bCmtParentId && !$this->isReplyAllowed($iCmtParentId))
+            return array('msg' => $this->msgErrReplyAllowed());
 
         $bDynamic = isset($aDp['dynamic_mode']) && (bool)$aDp['dynamic_mode'];
         $bQuote = isset($aDp['quote']) && (bool)$aDp['quote'];
