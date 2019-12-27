@@ -187,6 +187,17 @@
     -o-transition: all 0.2s linear;
     transition: all 0.2s linear;
 }
+.bx-form-input-wrapper-password{
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between
+}
+.bx-form-input-wrapper-password > div:first-child{
+    width: calc(100% - 2rem);
+}
+.bx-form-input-wrapper-password > div:last-child{
+	width:1.5rem;
+}
 
 .bx-form-input-select_multiple,
 .bx-form-input-radio_set,
