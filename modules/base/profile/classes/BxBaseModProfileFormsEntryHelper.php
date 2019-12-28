@@ -52,9 +52,9 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         if (!$aContentInfo)
             list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
 
-        // delete profile
+        // delete profile with content
         $oProfile = BxDolProfile::getInstance($aContentInfo['profile_id']);
-        if (!$oProfile->delete())
+        if (!$oProfile->delete(false, true))
             return _t('_sys_txt_error_entry_delete');
 
         return '';
