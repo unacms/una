@@ -208,7 +208,7 @@ class BxBaseAccountForms extends BxDolProfileForms
 
         // delete account
         $oAccount = BxDolAccount::getInstance($aAccountInfo['id']);
-        if (!$oAccount->delete((int)$oForm->getCleanValue('delete_content') != 0))
+        if (!$oAccount->delete(false === bx_get('delete_content') ? true : (int)$oForm->getCleanValue('delete_content') != 0))
             return MsgBox(_t('_sys_txt_error_account_delete'));
 
         // logout from deleted account
