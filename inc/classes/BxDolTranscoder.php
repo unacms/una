@@ -276,16 +276,13 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
 
         // delete main file
         $iFileId = $this->_oDb->getFileIdByHandler($mixedHandler);
-        if (!$iFileId)
-            return false;
-
-        if (!$this->_oStorage->deleteFile($iFileId))
+        if ($iFileId && !$this->_oStorage->deleteFile($iFileId))
             return false;
 
         // delete retina file
         $iFileId = $this->_oDb->getFileIdByHandler($mixedHandler . $this->_sRetinaSuffix);
-        if ($iFileId)
-            $this->_oStorage->deleteFile($iFileId);
+        if ($iFileId && !$this->_oStorage->deleteFile($iFileId))
+            return false;
 
         return true;
     }

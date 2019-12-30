@@ -1016,7 +1016,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $aCmt = $this->getCommentRow($iCmtId);
         echoJson(array(
             'parent_id' => $aCmt['cmt_parent_id'],
-            'vparent_id' => $aCmt['cmt_vparent_id'],
+            'vparent_id' => $aCmt['cmt_parent_id'],
             'content' => $this->getComment($aCmt, array('type' => $sCmtBrowse), array('type' => $sCmtDisplay, 'dynamic_mode' => true))
         ));
     }

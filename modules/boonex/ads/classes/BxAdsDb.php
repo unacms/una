@@ -178,8 +178,7 @@ class BxAdsDb extends BxBaseModTextDb
 
             case 'collect_stats':
                 $sSelectClause = "`tc`.`id`, COUNT(`te`.`id`) AS `count`";
-                $sJoinClause = " LEFT JOIN `" . $CNF['TABLE_ENTRIES'] . "` AS `te` ON `tc`.`id`=`te`.`category`";
-                $sWhereClause = " AND `te`.`status`='active' AND `te`.`status_admin`='active' AND (`te`.`allow_view_to`='" . BX_DOL_PG_ALL . "' OR `te`.`allow_view_to`<0)";
+                $sJoinClause = $this->prepareAsString(" LEFT JOIN `" . $CNF['TABLE_ENTRIES'] . "` AS `te` ON `tc`.`id`=`te`.`category` AND `te`.`status`='active' AND `te`.`status_admin`='active' AND (`te`.`allow_view_to`=? OR `te`.`allow_view_to`<0)", BX_DOL_PG_ALL);
                 $sGroupClause = "`tc`.`id`";
                 break;
         }
