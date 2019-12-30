@@ -119,7 +119,6 @@
             $(".bx-form-input-wrapper-password A").on("click", function () {
                 var oIcon = $(this).find("I");
                 var oFld = $(this).parents(".bx-form-input-wrapper-password").find("INPUT");
-                console.log(oFld.prop("type"))
                 if (oIcon.hasClass("eye")) {
                     oIcon.removeClass("eye").addClass("eye-slash");
                     oFld.attr("type", "text");
