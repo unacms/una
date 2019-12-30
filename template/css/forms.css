@@ -187,16 +187,18 @@
     -o-transition: all 0.2s linear;
     transition: all 0.2s linear;
 }
-.bx-form-input-wrapper-password{
-	display: flex;
-	align-items: baseline;
-	justify-content: space-between
+.bx-form-input-wrapper-password > A{
+	position: absolute;
+	left:0px;
+	z-index: 1000;
+	height: 2.5rem;
+	line-height: 2.5rem;
+	vertical-align: baseline;
+	margin: 0px 1rem;
 }
-.bx-form-input-wrapper-password > div:first-child{
-    width: calc(100% - 2rem);
-}
-.bx-form-input-wrapper-password > div:last-child{
-	width:1.5rem;
+.bx-form-input-wrapper-password INPUT
+{
+	padding-left: 3rem;
 }
 
 .bx-form-input-select_multiple,
