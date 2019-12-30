@@ -106,6 +106,7 @@ class BxBaseCmts extends BxDolCmts
             'sPostFormPosition' => $this->_aSystem['post_form_position'],
             'sBrowseType' => $this->_sBrowseType,
             'sDisplayType' => $this->_sDisplayType,
+            'iDisplayStructure' => isset($aDp['structure']) && !empty($aDp['structure']) ? 1 : 0,
             'iMinPostForm' => $bMinPostForm ? 1 : 0,
             'sStylePrefix' => $this->_sStylePrefix,
         );
@@ -164,10 +165,10 @@ class BxBaseCmts extends BxDolCmts
 
         $aCmts = $this->getCommentsArray($aBp['vparent_id'], $aBp['filter'], $aBp['order'], $aBp['start'], $aBp['per_view']);
         if(empty($aCmts) || !is_array($aCmts)) {
-        	if((int)$aBp['parent_id'] == 0 && !isLogged())	{
-        		$oPermalink = BxDolPermalinks::getInstance();
-        		return MsgBox(_t('_cmt_msg_login_required', $oPermalink->permalink('page.php?i=login'), $oPermalink->permalink('page.php?i=create-account')));
-        	}
+            if((int)$aBp['parent_id'] == 0 && !isLogged()) {
+                $oPermalink = BxDolPermalinks::getInstance();
+                return MsgBox(_t('_cmt_msg_login_required', $oPermalink->permalink('page.php?i=login'), $oPermalink->permalink('page.php?i=create-account')));
+            }
 
             return isset($aDp['show_empty']) && $aDp['show_empty'] === true ? $this->_getEmpty($aDp) : '';
         }
@@ -180,6 +181,23 @@ class BxBaseCmts extends BxDolCmts
         return $sCmts;
     }
 
+    public function getCommentsByStructure($aBp = array(), $aDp = array())
+    {
+        if(empty($aDp['structure']))
+            return isset($aDp['show_empty']) && $aDp['show_empty'] === true ? $this->_getEmpty($aDp) : '';
+
+        $aBp['count'] = count($aDp['structure']);
+        $this->_prepareParams($aBp, $aDp);
+        $aDp['structure'] = array_slice($aDp['structure'], $aBp['start'], $aBp['per_view'], true);
+
+        $sCmts = '';
+        foreach($aDp['structure'] as $iCmtId => $aCmt)
+            $sCmts .= $this->getComment($iCmtId, $aBp, $aDp);
+
+        $sCmts = $this->_getMoreLink($sCmts, $aBp, $aDp);
+        return $sCmts;
+    }    
+
     /**
      * get comment view block with initializations
      */
@@ -191,6 +209,13 @@ class BxBaseCmts extends BxDolCmts
 
         $aBp = array_merge(array('type' => $this->_sBrowseType), $aBp);
         $aDp = array_merge(array('type' => BX_CMT_DISPLAY_THREADED), $aDp);
+
+        //--- Beg: Using pregenerated structure
+        $mixedStructure = $this->getCommentStructure((int)$iCmtId, $aBp, $aDp);
+        if($mixedStructure !== false)
+            $aDp['structure'] = $mixedStructure;
+        //--- End: Using pregenerated structure
+
         $sComment = $this->getComment($iCmtId, $aBp, $aDp);
         if (!$sComment)
             return '';
@@ -203,7 +228,7 @@ class BxBaseCmts extends BxDolCmts
             'script' => $this->getJsScript($aBp, $aDp)
         ));
     }
-
+    
     /**
      * get one just posted comment
      *
@@ -268,9 +293,17 @@ class BxBaseCmts extends BxDolCmts
         }
 
         $sReplies = '';
-        if((int)$aCmt['cmt_replies'] > 0 && !empty($aDp) && $aDp['type'] == BX_CMT_DISPLAY_THREADED) {
-        	$aDp['show_empty'] = false;
-            $sReplies = $this->getComments(array('parent_id' => $aCmt['cmt_id'], 'vparent_id' => $aCmt['cmt_id'], 'type' => $aBp['type']), $aDp);
+        if(!empty($aDp)) {
+            $aDp['show_empty'] = false;
+
+            if(!empty($aDp['structure'][$aCmt['cmt_id']]) && is_array($aDp['structure'][$aCmt['cmt_id']])) {
+                if(!empty($aDp['structure'][$aCmt['cmt_id']]['items'])) {
+                    $aDp['structure'] = $aDp['structure'][$aCmt['cmt_id']]['items'];
+                    $sReplies = $this->getCommentsByStructure(array('parent_id' => $aCmt['cmt_id'], 'type' => $aBp['type']), $aDp);
+                }
+            } 
+            else if((int)$aCmt['cmt_replies'] > 0 && $aDp['type'] == BX_CMT_DISPLAY_THREADED)
+                $sReplies = $this->getComments(array('parent_id' => $aCmt['cmt_id'], 'vparent_id' => $aCmt['cmt_id'], 'type' => $aBp['type']), $aDp);
         }
 
         $aTmplVarsMeta = array();
@@ -308,6 +341,22 @@ class BxBaseCmts extends BxDolCmts
             'actions' => $sActions,
             'replies' =>  $sReplies,
         ), $this->_getTmplVarsAuthor($aCmt)));
+    }
+
+    public function getCommentStructure($iCmtId, $aBp = array(), $aDp = array())
+    {
+        $aRoot = $this->getCommentRow((int)$iCmtId);
+
+        $aBps = $aBp;
+        if(!empty($aRoot))
+            $aBps['parent_id'] = $aRoot['cmt_id'];
+        $this->_prepareStructureBp($aDp['type'], $aBps);
+
+        $iLevel = 0;
+        $aStructure = array();
+        $this->_getStructure($aRoot, $aBps, $iLevel, $aStructure);
+
+        return !empty($aStructure) && is_array($aStructure) ? $aStructure : false;
     }
 
     function getCommentSearch($iCmtId, &$sAddon)
@@ -1024,7 +1073,8 @@ class BxBaseCmts extends BxDolCmts
                 break;
         }
 
-        $bRoot = (int)$aBp['vparent_id'] <= 0;
+        $sParentKey = isset($aBp['vparent_id']) ? 'vparent_id' : 'parent_id';
+        $bRoot = (int)$aBp[$sParentKey] <= 0;
 
         $sMore = $this->_oTemplate->parseHtmlByName('comment_more.html', array(
             'js_object' => $this->_sJsObjName,
@@ -1033,10 +1083,10 @@ class BxBaseCmts extends BxDolCmts
                 'condition' => $bRoot,
                 'content' => array()
             ),
-            'parent_id' => $aBp['vparent_id'],
+            'parent_id' => $aBp[$sParentKey],
             'start' => $iStart,
             'per_view' => $iPerView,
-            'title' => _t('_cmt_load_more_' . ($aBp['vparent_id'] == 0 ? 'comments' : 'replies') . '_' . $aBp['type'])
+            'title' => _t('_cmt_load_more_' . ($aBp[$sParentKey] == 0 ? 'comments' : 'replies') . '_' . $aBp['type'])
         ));
 
         switch($aBp['type']) {

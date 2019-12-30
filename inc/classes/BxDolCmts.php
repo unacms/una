@@ -173,6 +173,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     protected $_sSystem = 'profile'; ///< current comment system name
     protected $_aSystem = array (); ///< current comments system array
     protected $_iId = 0; ///< obect id to be commented
+    protected $_iAuthorId = 0; ///< currently logged in user who browse, post, etc.
 
     protected $_aT = array (); ///< an array of lang keys
     protected $_aMarkers = array ();
@@ -209,8 +210,9 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
         $this->_sSystem = $sSystem;
         $this->_aSystem = $this->_aSystems[$sSystem];
-
         $this->_aSystem['is_browse_filter'] = (int)$this->_bBrowseFilter;
+
+        $this->_iAuthorId = $this->_getAuthorId();
 
         $this->_iDpMaxLevel = (int)$this->_aSystem['number_of_levels'];
         $this->_sDisplayType = $this->_iDpMaxLevel == 0 ? BX_CMT_DISPLAY_FLAT : BX_CMT_DISPLAY_THREADED;
@@ -1033,7 +1035,21 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $this->_getParams($aBp, $aDp);
 
         $aDp['dynamic_mode'] = true;
-        return $this->getComments($aBp, $aDp);
+
+        //--- Beg: Using pregenerated structure
+        if(isset($aDp['structure']) && $aDp['structure'] === true) {
+            $iCmtId = isset($aBp['parent_id']) ? (int)$aBp['parent_id'] : 0;
+
+            $mixedStructure = $this->getCommentStructure($iCmtId, $aBp, $aDp);
+            if($mixedStructure === false || empty($mixedStructure[$iCmtId]['items'])) 
+                return '';
+
+            $aDp['structure'] = $mixedStructure[$iCmtId]['items'];
+            return $this->getCommentsByStructure($aBp, $aDp);
+        }
+        //--- End: Using pregenerated structure
+        else
+            return $this->getComments($aBp, $aDp);
     }
 
     public function actionSubmitPostForm()
@@ -1509,6 +1525,13 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         if(bx_get('CmtDisplay') !== false) 
             $aDp['type'] = bx_process_input($_REQUEST['CmtDisplay'], BX_DATA_TEXT);
 
+        if(bx_get('CmtDisplayStructure') !== false) {
+            $aDp['structure'] = bx_process_input($_REQUEST['CmtDisplayStructure'], BX_DATA_INT) == 1;
+
+            if($aDp['structure'] && bx_get('CmtParent') !== false)
+                $aBp['parent_id'] = bx_process_input(bx_get('CmtParent'), BX_DATA_INT);
+        }
+
         $aDp['blink'] = isset($aDp['blink']) ? $aDp['blink'] : '';
         if(bx_get('CmtBlink') !== false) 
             $aDp['blink'] = bx_process_input($_REQUEST['CmtBlink'], BX_DATA_TEXT);
@@ -1562,6 +1585,28 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return $s;
     }
 
+    protected function _prepareStructureBp($sDType, &$aBp)
+    {
+        $aBp['type'] = !empty($aBp['type']) ? $aBp['type'] : $this->_sBrowseType;
+        $aBp['filter'] = !empty($aBp['filter']) ? $aBp['filter'] : $this->_sBrowseFilter;
+        $aBp['parent_id'] = isset($aBp['parent_id']) ? $aBp['parent_id'] : 0;
+        $aBp['start'] = isset($aBp['start']) ? $aBp['start'] : -1;
+        $aBp['per_view'] = isset($aBp['per_view']) ? $aBp['per_view'] : -1;
+        $aBp['order']['by'] = isset($aBp['order_by']) ? $aBp['order_by'] : $this->_aOrder['by'];
+        $aBp['order']['way'] = isset($aBp['order_way']) ? $aBp['order_way'] : $this->_aOrder['way'];
+
+        if($aBp['per_view'] == -1)
+            switch($sDType) {
+                case BX_CMT_DISPLAY_FLAT:
+                    $aBp['per_view'] = $this->getPerView(0);
+                    break;
+
+                case BX_CMT_DISPLAY_THREADED:
+                    $aBp['per_view'] = $this->getPerView($aBp['parent_id']);
+                    break;
+            }
+    }
+
     protected function _prepareParams(&$aBp, &$aDp)
     {
         $aBp['type'] = !empty($aBp['type']) ? $aBp['type'] : $this->_sBrowseType;
@@ -1587,7 +1632,13 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
                 break;
 
             case BX_CMT_DISPLAY_THREADED:
-                $aBp['per_view'] = $aBp['per_view'] != -1 ? $aBp['per_view'] : $this->getPerView($aBp['vparent_id']);
+                $iParent = 0;
+                if(isset($aBp['vparent_id']))
+                    $iParent = $aBp['vparent_id'];
+                else if(isset($aBp['parent_id']))
+                    $iParent = $aBp['parent_id'];
+
+                $aBp['per_view'] = $aBp['per_view'] != -1 ? $aBp['per_view'] : $this->getPerView($iParent);
                 break;
         }
 
@@ -1600,7 +1651,9 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
                 break;
         }
 
-        $aBp['count'] = $this->getCommentsCount($this->_iId, $aBp['vparent_id'], $aBp['filter']);
+        if(!isset($aBp['count']))
+            $aBp['count'] = $this->getCommentsCount($this->_iId, $aBp['vparent_id'], $aBp['filter']);
+
         if($aBp['start'] != -1)
             return;
 
@@ -1741,6 +1794,46 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     protected function _getTitleDo()
     {
     	return '_cmt_txt_do';
+    }
+    
+    public function _getStructure($mixedItem, $aBp, &$iLevel, &$aStructure)
+    {
+        $bItem = !empty($mixedItem) && is_array($mixedItem);
+
+        if($bItem) {
+            $iI = $mixedItem['cmt_id'];
+            $aStructure[$iI] = array(
+                'id' => $mixedItem['cmt_id'], 
+                'order' => isset($mixedItem['cmt_order']) ? $mixedItem['cmt_order'] : 0, 
+                'items' => array(),
+            );
+        }
+
+        if(!$bItem || (int)$mixedItem['cmt_replies'] > 0) {
+            $aItems = $this->_oQuery->getStructure($this->_iId, $this->_iAuthorId, $bItem ? $mixedItem['cmt_id'] : 0, $aBp['filter'], $aBp['order']);
+            if(!empty($aItems)) {
+                if($bItem && $iLevel < (int)$this->_aSystem['number_of_levels']) {
+                    $iPassLevel = $iLevel + 1;
+                    $aPassStructure = &$aStructure[$iI]['items'];
+                }
+                else {
+                    $iPassLevel = $iLevel;
+                    $aPassStructure = &$aStructure;
+                }
+
+                foreach($aItems as $aItem)
+                    $this->_getStructure($aItem, $aBp, $iPassLevel, $aPassStructure);
+
+                //--- Sort subitems
+                $iWay = isset($aBp['order']['way']) && $aBp['order']['way'] == 'desc' ? -1 : 1;
+                uasort($aPassStructure, function($aItem1, $aItem2) use ($iWay) {
+                    if($aItem1['order'] == $aItem2['order'])
+                        return 0;
+
+                    return $iWay * ($aItem1['order'] < $aItem2['order'] ? -1 : 1);
+                });
+            }
+        }
     }
 }
 

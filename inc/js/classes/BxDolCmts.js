@@ -18,6 +18,8 @@ function BxDolCmts (options) {
     this._iMinPostForm = undefined == options.iMinPostForm ? 0 : options.iMinPostForm;
     this._sPostFormPosition = undefined == options.sPostFormPosition ? 'top' : options.sPostFormPosition;
     this._sDisplayType = undefined == options.sDisplayType ? 'threaded' : options.sDisplayType;
+    this._iDisplayStructure = undefined == options.iDisplayStructure ? 0 : options.iDisplayStructure;
+
     this._sBrowseType = undefined == options.sBrowseType ? 'tail' : options.sBrowseType;
     this._sBrowseFilter = undefined == options.sBrowseFilter ? 'all' : options.sBrowseFilter;
 
@@ -289,7 +291,8 @@ BxDolCmts.prototype.cmtLoad = function(oLink, iCmtParentId, iStart, iPerView)
 		CmtPerView: iPerView,
 		CmtBrowse: this._sBrowseType,
 		CmtFilter: this._sBrowseFilter,
-		CmtDisplay: this._sDisplayType
+		CmtDisplay: this._sDisplayType,
+                CmtDisplayStructure: this._iDisplayStructure
 	}, function(sListId, sContent) {
 		if(bButton)
 			$this._loadingInButton(oLink, false);

@@ -107,6 +107,57 @@ class BxDolCmtsQuery extends BxDolDb
         return (int)$this->getOne($sQuery, $aBindings);
     }
 
+    function getStructure($iObjectId, $iAuthorId = 0, $iParentId = 0, $sFilter = '', $aOrder = array())
+    {
+        $sSelectClause = $sJoinClause = $sWhereClause = "";
+
+    	$aBindings = array(
+            'cmt_object_id' => $iObjectId,
+            'system_id' => $this->_oMain->getSystemId()
+    	);
+
+        if((int)$iParentId >= 0) {
+            $aBindings['cmt_parent_id'] = $iParentId;
+
+            $sWhereClause .= " AND `tc`.`cmt_parent_id` = :cmt_parent_id";
+        }
+
+        if(in_array($sFilter, array(BX_CMT_FILTER_FRIENDS, BX_CMT_FILTER_SUBSCRIPTIONS))) {
+            $sConnection = $this->_oMain->getConnectionObject($sFilter);
+            $aQueryParts = BxDolConnection::getObjectInstance($sConnection)->getConnectedContentAsSQLParts($this->_sTable, 'cmt_author_id', $iAuthorId);
+            $sJoinClause .= ' ' . $aQueryParts['join'];
+        }
+
+        if(isset($aOrder['by']) && isset($aOrder['way']))
+            switch($aOrder['by']) {
+                case BX_CMT_ORDER_BY_DATE:
+                    $sSelectClause .= ", `tc`.`cmt_time` AS `cmt_order`";
+                    break;
+
+                case BX_CMT_ORDER_BY_POPULAR:
+                    $aOrderFields = array();
+                    if($this->_oMain->getVoteObject(0) !== false)
+                        $aOrderFields[] = "`ti`.`votes`";
+                    if($this->_oMain->getScoreObject(0) !== false)
+                        $aOrderFields[] = "`ti`.`score`";
+                    
+                    if(!empty($aOrderFields))
+                        $sSelectClause .= ", (" . implode(' + ', $aOrderFields) . ") AS `cmt_order`";
+                    else
+                        $sSelectClause .= ", `tc`.`id` AS `cmt_order`";
+                    break;
+            }
+
+        $sQuery = "SELECT
+                `tc`.`cmt_id`, 
+                `tc`.`cmt_replies`, 
+                `tc`.`cmt_time` $sSelectClause
+            FROM `{$this->_sTable}` AS `tc`
+            LEFT JOIN `{$this->_sTableIds}` AS `ti` ON `tc`.`cmt_id` = `ti`.`cmt_id` AND `ti`.`system_id` = :system_id $sJoinClause
+            WHERE `tc`.`cmt_object_id` = :cmt_object_id" . $sWhereClause;
+        return $this->getAll($sQuery, $aBindings);
+    }
+
     function getComments ($iId, $iCmtVParentId = 0, $iAuthorId = 0, $sFilter = '', $aOrder = array(), $iStart = 0, $iCount = -1)
     {
     	$aBindings = array(
