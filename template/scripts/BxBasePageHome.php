@@ -45,8 +45,7 @@ class BxBasePageHome extends BxTemplPage
         $s = parent::getCode ();
         if (isAdmin() && getParam('site_tour_home') == 'on')
             $s .= $this->_oTemplate->parseHtmlByName('homepage_tour.html', array('tour_theme' => $this->_sTourTheme));
-        if (getParam('add_to_mobile_homepage') == 'on')
-            $s .= BxDolService::call('system', 'add_to_mobile_homepage', array(), 'TemplServices');
+
         return $s;
     }
 

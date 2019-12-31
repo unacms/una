@@ -1010,6 +1010,12 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 			<meta property="og:title" content="' . (isset($this->aPage['header']) ? bx_html_attribute(strip_tags($this->aPage['header'])) : '') . '" />
 			<meta property="og:description" content="' . ($bDescription ? bx_html_attribute($this->aPage['description']) : '') . '" />';
 
+        // Smart App Banner
+        if (getParam('smart_app_banner') && false === strpos($_SERVER['HTTP_USER_AGENT'], 'UNAMobileApp')) {
+            if ($sAppIdIOS = getParam('smart_app_banner_ios_app_id'))
+                $sRet .= '<meta name="apple-itunes-app" content="app-id=' . $sAppIdIOS . '" />';
+        }
+
         // RSS
         $oFunctions = BxTemplFunctions::getInstance();
         $sRet .= $oFunctions->getManifests();

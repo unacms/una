@@ -36,9 +36,6 @@ function getPageMainCode()
     	'login_form' => $sLoginForm,
         'login_form_in_box' => DesignBoxContent(_t('_sys_txt_splash_login'), $sLoginForm, BX_DB_PADDING_DEF)
     ));
-
-    if (getParam('add_to_mobile_homepage') == 'on')
-        $s .= BxDolService::call('system', 'add_to_mobile_homepage', array(), 'TemplServices');
         
     return $s;
 }

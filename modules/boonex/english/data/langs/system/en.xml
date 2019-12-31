@@ -1355,7 +1355,8 @@
 	<string name="_adm_stg_cpt_option_site_title"><![CDATA[Site title]]></string>
 	<string name="_adm_stg_cpt_option_site_tour_home"><![CDATA[Site home page tour]]></string>
     <string name="_adm_stg_cpt_option_site_tour_studio"><![CDATA[Studio home page tour]]></string>
-    <string name="_adm_stg_cpt_option_add_to_mobile_homepage"><![CDATA[Add to mobile homepage widget]]></string>
+    <string name="_adm_stg_cpt_option_smart_app_banner"><![CDATA[Smart App Banner]]></string>
+    <string name="_adm_stg_cpt_option_smart_app_banner_ios_app_id"><![CDATA[iOS app ID for Smart App Banner]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_activation_letter"><![CDATA[Enable account activation letter]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_confirmation_type"><![CDATA[Account is confirmed when]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_2fa_enable"><![CDATA[Enable 2 Factor Authentication]]></string>
