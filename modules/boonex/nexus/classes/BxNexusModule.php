@@ -52,7 +52,7 @@ class BxNexusModule extends BxDolModule
                 'loggedin' => isLogged(),                
                 'bubbles_num' => $iBubbles ? $iBubbles : '',
                 'bubbles' => $aBubbles,
-                'push_tags' => array('user' => bx_get_logged_profile_id())
+                'push_tags' => BxDolPush::getTags(),
             )),
             'txt_pull_to_refresh' => bx_js_string(_t('_bx_nexus_pull_to_refresh')),
             'txt_release_to_refresh' => bx_js_string(_t('_bx_nexus_release_to_refresh')),

@@ -44,6 +44,35 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
     }
     
     /**
+     * Get tags to send to PUSH server
+     * @param $iProfileId - profile ID
+     * @return array of tags
+     */
+    public static function getTags($iProfileId = false)
+    {
+        if (false === $iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+
+        $oProfile = BxDolProfile::getInstance($iProfileId);
+        $oAccount = $oProfile->getAccountObject();
+        if (!$oProfile || !$oAccount)
+            return false;
+
+        $sEmail = $oAccount->getEmail();
+        $a = array (
+            'user' => $iProfileId,
+            'user_hash' => encryptUserId($iProfileId),
+            'real_name' => $oProfile->getDisplayName(),
+            'email' => $sEmail,
+            'email_hash' => $sEmail ? hash_hmac('sha256', $sEmail, getParam('sys_push_app_id')) : '',
+        );
+
+        bx_alert('system', 'push_tags', $iProfileId, $iProfileId, array('tags' => &$a));
+
+        return $a;
+    }
+
+    /**
      * @param $a - array to fill with notification counter per module
      * @return total number of notifications
      */
@@ -105,7 +134,7 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
 		$aFields = array(
 			'app_id' => $this->_sAppId,
 			'filters' => array(
-		        array('field' => 'tag', 'key' => 'user', 'relation' => '=', 'value' => $iProfileId)
+		        array('field' => 'tag', 'key' => 'user_hash', 'relation' => '=', 'value' => encryptUserId($iProfileId))
             ),
 			'contents' => !empty($aMessage['contents']) && is_array($aMessage['contents']) ? $aMessage['contents'] : array(),
 			'headings' => !empty($aMessage['headings']) && is_array($aMessage['headings']) ? $aMessage['headings'] : array(),

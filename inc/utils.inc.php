@@ -1100,6 +1100,21 @@ function encryptUserPwd($sPwd, $sSalt)
     }
 }
 
+/**
+ * Hash profile ID
+ */
+function encryptUserId($sId)
+{
+    if (!($oProfile = BxDolProfile::getInstance($sId)))
+        return false;
+
+    if (!($oAccount = $oProfile->getAccountObject()))
+        return false;
+
+    $aAccountInfo = $oAccount->getInfo();
+    return sha1(md5($sId) . md5($aAccountInfo['salt']) . BX_DOL_SECRET);
+}
+
 function bx_get ($sName, $sMethod = false)
 {
     if (isset($_GET[$sName]) && ('get' == $sMethod || !$sMethod))

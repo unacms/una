@@ -1,7 +1,7 @@
 function BxDolPush(oOptions) {
     this._sObjName = oOptions.sObjName == undefined ? 'oBxDolPush' : oOptions.sObjName;
     this._sSiteName = oOptions.sSiteName == undefined ? '' : oOptions.sSiteName;
-    this._iProfileId = oOptions.iProfileId == undefined ? 0 : oOptions.iProfileId;
+    this._aTags = oOptions.aTags == undefined ? {} : oOptions.aTags;
     this._sAppId = oOptions.sAppId == undefined ? '' : oOptions.sAppId;
     this._sShortName = oOptions.sShortName == undefined ? '' : oOptions.sShortName;
     this._sSafariWebId = oOptions.sSafariWebId == undefined ? '' : oOptions.sSafariWebId;
@@ -55,16 +55,20 @@ BxDolPush.prototype.init = function() {
 	OneSignal.push(function() {
 		var isPushSupported = OneSignal.isPushNotificationsSupported();
 		OneSignal.setDefaultNotificationUrl($this._sNotificationUrl);
-		OneSignal.isPushNotificationsEnabled().then(function(isEnabled) {								
-			OneSignal.sendTag('user', $this._iProfileId); // set tag for onesiganl, this tag will be used to send notification
+		OneSignal.isPushNotificationsEnabled().then(function(isEnabled) {
+            if ('undefined' !== typeof($this._aTags['email'])) {
+                OneSignal.setEmail($this._aTags['email'], $this._aTags['email_hash']);
+                delete $this._aTags['email'];
+                delete $this._aTags['email_hash'];
+            }
+			OneSignal.sendTags($this._aTags); // set tags for onesiganl, some of these tags will be used to send notification
 			if(!isEnabled && isPushSupported)
 				OneSignal.showHttpPermissionRequest();													
 		});
 	});
 
     if (navigator.userAgent.indexOf('gonative') > -1) {
-        var data = {user: $this._iProfileId};
-        var json = JSON.stringify(data);
+        var json = JSON.stringify($this._aTags);
         $(document).ready(function () {
             window.location.href='gonative://registration/send?customData=' + encodeURIComponent(json);        
         });

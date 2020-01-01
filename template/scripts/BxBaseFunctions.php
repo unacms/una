@@ -560,6 +560,10 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
         if(empty($sAppId))
             return '';
 
+        $aTags = BxDolPush::getTags($iProfileId);
+        if (!$aTags)
+            return '';
+
         $sShortName = getParam('sys_push_short_name');
         $sSafariWebId = getParam('sys_push_safari_id');
 
@@ -582,15 +586,15 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
         $sContent = "var " . $sJsObject . " = new " . $sJsClass . "(" . json_encode(array(
             'sObjName' => $sJsObject,
             'sSiteName' => getParam('site_title'),
-            'iProfileId' => $iProfileId,
+            'aTags' => $aTags,
             'sAppId' => $sAppId,
             'sShortName' => $sShortName,
             'sSafariWebId' => $sSafariWebId,
             'sSubfolder' => $sSubfolder,
             'sNotificationUrl' => BX_DOL_URL_ROOT,
-            'sTxtNotificationRequest' => bx_js_string(_t('_sys_push_notification_request', getParam('site_title'))),
-            'sTxtNotificationRequestYes' => bx_js_string(_t('_sys_push_notification_request_yes')),
-            'sTxtNotificationRequestNo' => bx_js_string(_t('_sys_push_notification_request_no')),
+            'sTxtNotificationRequest' => _t('_sys_push_notification_request', getParam('site_title')),
+            'sTxtNotificationRequestYes' => _t('_sys_push_notification_request_yes'),
+            'sTxtNotificationRequestNo' => _t('_sys_push_notification_request_no'),
         )) . ");";
 
         return $this->_oTemplate->_wrapInTagJsCode($sContent);
