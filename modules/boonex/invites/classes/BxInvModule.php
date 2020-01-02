@@ -302,7 +302,9 @@ class BxInvModule extends BxDolModule
 
         if($bKey)
             $sReturn .= MsgBox(_t('_bx_invites_err_used'));
-        $sReturn .= $this->_oTemplate->getBlockRequest();
+        
+        if ($this->_oConfig->isRegistrationByInvitation())
+            $sReturn .= $this->_oTemplate->getBlockRequest();
 
         return $sReturn;
     }
