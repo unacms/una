@@ -54,7 +54,7 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
             $iProfileId = bx_get_logged_profile_id();
 
         $oProfile = BxDolProfile::getInstance($iProfileId);
-        $oAccount = $oProfile->getAccountObject();
+        $oAccount = $oProfile ? $oProfile->getAccountObject() : null;
         if (!$oProfile || !$oAccount)
             return false;
 

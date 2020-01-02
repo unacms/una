@@ -42,6 +42,7 @@
     <string name="_bx_ntfs_option_events_hide_push"><![CDATA[Push notifications]]></string>
     <string name="_bx_ntfs_option_enable_group_settings"><![CDATA[Group Settings]]></string>
     <string name="_bx_ntfs_option_delivery_timeout"><![CDATA[Delay before sending Email and/or Push notifications (in seconds)]]></string>
+    <string name="_bx_ntfs_option_processed_event"><![CDATA[The last processed event upon notifications sending]]></string>
 
     <string name="_bx_ntfs_privacy_view"><![CDATA[View event]]></string>
 

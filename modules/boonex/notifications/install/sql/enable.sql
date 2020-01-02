@@ -77,7 +77,8 @@ SET @iCategId = LAST_INSERT_ID();
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
 ('bx_notifications_events_hide_site', '', @iCategId, '_bx_ntfs_option_events_hide_site', 'rlist', '', '', '', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:21:"get_actions_checklist";}', 1),
 ('bx_notifications_events_hide_email', '', @iCategId, '_bx_ntfs_option_events_hide_email', 'rlist', '', '', '', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:21:"get_actions_checklist";}', 2),
-('bx_notifications_events_hide_push', '', @iCategId, '_bx_ntfs_option_events_hide_push', 'rlist', '', '', '', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:21:"get_actions_checklist";}', 3);
+('bx_notifications_events_hide_push', '', @iCategId, '_bx_ntfs_option_events_hide_push', 'rlist', '', '', '', 'a:2:{s:6:"module";s:16:"bx_notifications";s:6:"method";s:21:"get_actions_checklist";}', 3),
+('bx_notifications_processed_event', '', @iCategId, '_bx_ntfs_option_processed_event', 'digit', '', '', '', '', 10);
 
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, @sName, '_bx_ntfs', 0, 1);
 SET @iCategId = LAST_INSERT_ID();
@@ -152,4 +153,5 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 
 -- CRON
 INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
-('bx_notifications_queue', '* * * * *', 'BxNtfsCronQueue', 'modules/boonex/notifications/classes/BxNtfsCronQueue.php', '');
+('bx_notifications_queue', '* * * * *', 'BxNtfsCronQueue', 'modules/boonex/notifications/classes/BxNtfsCronQueue.php', ''),
+('bx_notifications_notify', '* * * * *', 'BxNtfsCronNotify', 'modules/boonex/notifications/classes/BxNtfsCronNotify.php', '');
