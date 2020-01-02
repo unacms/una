@@ -1302,19 +1302,19 @@ class BxBaseModGeneralModule extends BxDolModule
         );
 
         if(!empty($this->_oConfig->CNF['FIELDS_DELAYED_PROCESSING'])) {
-            $aResult = array_merge($aResult, array(
-                'handlers' => array(
-                    array('group' => $sModule . '_object_publish_failed', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'publish_failed', 'module_name' => $sModule, 'module_method' => 'get_notifications_post_publish_failed', 'module_class' => 'Module', 'module_event_privacy' => ''),
-                    array('group' => $sModule . '_object_publish_succeeded', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'publish_succeeded', 'module_name' => $sModule, 'module_method' => 'get_notifications_post_publish_succeeded', 'module_class' => 'Module', 'module_event_privacy' => ''),
-                ),
-                'settings' => array(
-                    array('group' => 'content_publish_failed', 'unit' => $sModule, 'action' => 'publish_failed', 'types' => array('personal')),
-                    array('group' => 'content_publish_succeeded', 'unit' => $sModule, 'action' => 'publish_succeeded', 'types' => array('personal')),
-                ),
-                'alerts' => array(
-                    array('unit' => $sModule, 'action' => 'publish_failed'),
-                    array('unit' => $sModule, 'action' => 'publish_succeeded'),
-                )
+            $aResult['handlers'] = array_merge($aResult['handlers'], array(
+                array('group' => $sModule . '_object_publish_failed', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'publish_failed', 'module_name' => $sModule, 'module_method' => 'get_notifications_post_publish_failed', 'module_class' => 'Module', 'module_event_privacy' => ''),
+                array('group' => $sModule . '_object_publish_succeeded', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'publish_succeeded', 'module_name' => $sModule, 'module_method' => 'get_notifications_post_publish_succeeded', 'module_class' => 'Module', 'module_event_privacy' => ''),
+            ));
+
+            $aResult['settings'] = array_merge($aResult['settings'], array(
+                array('group' => 'content_publish_failed', 'unit' => $sModule, 'action' => 'publish_failed', 'types' => array('personal')),
+                array('group' => 'content_publish_succeeded', 'unit' => $sModule, 'action' => 'publish_succeeded', 'types' => array('personal')),
+            ));
+
+            $aResult['alerts'] = array_merge($aResult['alerts'], array(
+                array('unit' => $sModule, 'action' => 'publish_failed'),
+                array('unit' => $sModule, 'action' => 'publish_succeeded'),
             ));
         }
 
@@ -1731,6 +1731,25 @@ class BxBaseModGeneralModule extends BxDolModule
 
         return $this->$sMethod($aContentInfo, $isPerformAction);
     }
+
+    /**
+     * Check particular action permission with content for specified profile
+     * @param $sAction action to check, for example: View, Edit
+     * @param $iContentId content ID
+     * @param $iProfileId profile ID which the permissions to be cheked for
+     * @return message on error, or CHECK_ACTION_RESULT_ALLOWED when allowed
+     */ 
+    public function serviceCheckAllowedWithContentForProfile($sAction, $iContentId, $iProfileId, $isPerformAction = false)
+    {
+        if (!$iContentId || !($aContentInfo = $this->_oDb->getContentInfoById($iContentId)))
+            return _t('_sys_request_page_not_found_cpt');
+
+        $sMethod = 'checkAllowed' . bx_gen_method_name($sAction) . 'ForProfile';
+        if (!method_exists($this, $sMethod))
+            return _t('_sys_request_method_not_found_cpt');
+
+        return $this->$sMethod($aContentInfo, $iProfileId, $isPerformAction);
+    }
     
     public function serviceCheckAllowedCommentsView($iContentId, $sObjectComments) 
     {
@@ -1850,6 +1869,14 @@ class BxBaseModGeneralModule extends BxDolModule
     public function checkAllowedView ($aDataEntry, $isPerformAction = false)
     {
         return $this->serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction);
+    }
+
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
+     */
+    public function checkAllowedViewForProfile ($aDataEntry, $iProfileId, $isPerformAction = false)
+    {
+        return $this->serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction, $iProfileId);
     }
 
     /**

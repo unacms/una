@@ -82,16 +82,16 @@ class BxDolModuleProxy
     /**
      * Dirty fix for pass by reference to BxNtfsTemplate::getNotificationEmail
      */
-    public function getNotificationEmail(&$aEvent)
+    public function getNotificationEmail($iRecipient, &$aEvent)
     {
-        return $this->_oProxifiedObject->getNotificationEmail($aEvent);
+        return $this->_oProxifiedObject->getNotificationEmail($iRecipient, $aEvent);
     }
     /**
      * Dirty fix for pass by reference to BxNtfsTemplate::getNotificationPush
      */
-    public function getNotificationPush(&$aEvent)
+    public function getNotificationPush($iRecipient, &$aEvent)
     {
-        return $this->_oProxifiedObject->getNotificationPush($aEvent);
+        return $this->_oProxifiedObject->getNotificationPush($iRecipient, $aEvent);
     }
 }
 
