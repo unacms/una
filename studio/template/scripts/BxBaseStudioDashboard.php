@@ -159,8 +159,10 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
 	    	$iSizeTotal = 0;
 	        $aChartData = array();
 	        foreach($aItems as $sColor => $aItem) {
-	        	$iSizeTotal += $aItem['value'];
-	            $aChartData[] = array(bx_js_string(strip_tags(_t($aItem['label'])), BX_ESCAPE_STR_APOS), array('v' => $aItem['value'], 'f' => bx_js_string(_t_format_size($aItem['value']))));
+                if ($aItem['value'] > 0){
+	        	    $iSizeTotal += $aItem['value'];
+	                $aChartData[] = array(bx_js_string(strip_tags(_t($aItem['label'])), BX_ESCAPE_STR_APOS), array('v' => $aItem['value'], 'f' => bx_js_string(_t_format_size($aItem['value']))));
+                }
 	        }
     	}
 
