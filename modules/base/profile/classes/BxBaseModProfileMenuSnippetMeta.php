@@ -50,7 +50,7 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
             $this->_oContentProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->_sModule);
     }
     
-    protected function _getMenuItemConnectionJsCode($sConnection, $sAction, $iContentProfile, $aItem)
+    protected function getMenuItemConnectionJsCode($sConnection, $sAction, $iContentProfile, $aItem)
     {
         return 'bx_conn_action(this, \'' . $sConnection . '\', \'' . $sAction . '\', \'' . $iContentProfile . '\', false, function(oData, eLink) {$(eLink).parents(\'.bx-menu-item:first\').remove();})';
     }
