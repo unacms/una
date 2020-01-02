@@ -129,18 +129,21 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         if((int)$aEvent['processed'] == 0 || empty($aEvent['content']))
             return '';
 
-        $sParam = 'perform_privacy_check';
-        if(!isset($aBrowseParams[$sParam]) || $aBrowseParams[$sParam] === true) {
+        $sParamCheck = 'perform_privacy_check';
+        if(!isset($aBrowseParams[$sParamCheck]) || $aBrowseParams[$sParamCheck] === true) {
+            $sParamCheckFor = 'perform_privacy_check_for';
+            $iViewerId = !empty($aBrowseParams[$sParamCheckFor]) ? (int)$aBrowseParams[$sParamCheckFor] : 0;
+
             $oPrivacyInt = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'));
-            if(!$oPrivacyInt->check($aEvent['id']))
+            if(!$oPrivacyInt->check($aEvent['id'], $iViewerId))
                 return '';
 
             $oPrivacyExt = $oModule->_oConfig->getPrivacyObject($aEvent['type'] . '_' . $aEvent['action']);
-            if($oPrivacyExt !== false && !$oPrivacyExt->check($aEvent['id']))
+            if($oPrivacyExt !== false && !$oPrivacyExt->check($aEvent['id'], $iViewerId))
                 return '';
 
-            $sService = 'check_allowed_with_content';
-            if(BxDolRequest::serviceExists($aEvent['type'], $sService) && BxDolService::call($aEvent['type'], $sService, array('view', $this->_getContentObjectId($aEvent))) !== CHECK_ACTION_RESULT_ALLOWED)
+            $sService = 'check_allowed_with_content_for_profile';
+            if(BxDolRequest::serviceExists($aEvent['type'], $sService) && BxDolService::call($aEvent['type'], $sService, array('view', $this->_getContentObjectId($aEvent), $iViewerId)) !== CHECK_ACTION_RESULT_ALLOWED)
                 return '';
         }
 
@@ -232,9 +235,9 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
-    public function getNotificationEmail(&$aEvent)
+    public function getNotificationEmail($iRecipient, &$aEvent)
     {
-        $sEvent = $this->getPost($aEvent, array('perform_privacy_check' => false, 'show_real_profile' => false));
+        $sEvent = $this->getPost($aEvent, array('perform_privacy_check_for' => $iRecipient, 'show_real_profile' => false));
         if(empty($sEvent) || empty($aEvent['content_parsed']))
             return false;
 
@@ -250,9 +253,9 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
         );
     }
 
-    public function getNotificationPush(&$aEvent)
+    public function getNotificationPush($iRecipient, &$aEvent)
     {
-        $sEvent = $this->getPost($aEvent, array('perform_privacy_check' => false, 'show_real_profile' => false));
+        $sEvent = $this->getPost($aEvent, array('perform_privacy_check_for' => $iRecipient, 'show_real_profile' => false));
         if(empty($sEvent) || empty($aEvent['content_parsed']))
             return false;
 
@@ -302,7 +305,16 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
             unset($aContent['entry_privacy']);
         }
 
-        $aEvent['content'] = $aContent;
+        if(!empty($aEvent['content'])) {
+            if(is_string($aEvent['content']))
+                $aEvent['content'] = unserialize($aEvent['content']);
+
+            if(is_array($aEvent['content']))
+                $aEvent['content'] = array_merge($aEvent['content'], $aContent);
+        }
+        else
+            $aEvent['content'] = $aContent;
+
         $aEvent['processed'] = 1;
 
         $aSet = array_merge($aSet, array(

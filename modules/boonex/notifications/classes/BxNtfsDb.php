@@ -221,6 +221,21 @@ class BxNtfsDb extends BxBaseModNotificationsDb
         return array($sJoinClause, $sWhereClause);
     }
 
+    public function getEventsToProcess()
+    {
+        $aEvents = $this->getAll("SELECT * FROM `" . $this->_sTable . "` WHERE `id`>:id", array('id' => $this->_oConfig->getProcessedEvent()));
+
+        if(!empty($aEvents) && is_array($aEvents)) {
+            $aEventEnd = end($aEvents);
+
+            $this->_oConfig->setProcessedEvent($aEventEnd['id']);
+
+            reset($aEvents);
+        }
+
+        return $aEvents;
+    }
+
     public function queueGet($aParams)
     {
     	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
