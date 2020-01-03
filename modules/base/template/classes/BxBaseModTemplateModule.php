@@ -20,6 +20,11 @@ class BxBaseModTemplateModule extends BxBaseModGeneralModule
         $this->_oConfig->init($this->_oDb);
     }
 
+    public function serviceGetSafeServices()
+    {
+        return array();
+    }
+
     public function serviceGetOptionsDefaultMix()
     {
         $aResult = array(
