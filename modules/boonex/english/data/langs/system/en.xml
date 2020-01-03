@@ -1712,7 +1712,7 @@
 	<string name="_sys_actions"><![CDATA[Actions]]></string>
 	<string name="_sys_active"><![CDATA[Active]]></string>
   <string name="_sys_account_settings_email_successfully_submitted"><![CDATA[Email settings were successfully saved]]></string>
-  <string name="_sys_account_settings_pwd_successfully_submitted"><![CDATA[Password  were successfully changed]]></string>
+  <string name="_sys_account_settings_pwd_successfully_submitted"><![CDATA[Password was successfully changed]]></string>
   <string name="_sys_account_settings_info_successfully_submitted"><![CDATA[Account settings were successfully saved]]></string>
 	<string name="_sys_acc_confirmation_type_none"><![CDATA[No confirmation]]></string>
 	<string name="_sys_acc_confirmation_type_email"><![CDATA[email is confirmed]]></string>
