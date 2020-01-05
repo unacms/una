@@ -97,6 +97,39 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     }
 
     // ====== SERVICE METHODS
+
+    public function serviceGetSafeServices()
+    {
+        $a = parent::serviceGetSafeServices();
+        return array_merge($a, array (
+            'GetBlockPollAnswers' => '',
+            'GetBlockPollResults' => '',
+            'GetMenuAddonManageToolsProfileStats' => '',
+            'BrowsePublic' => '',
+            'BrowsePopular' => '',
+            'BrowseTop' => '',
+            'BrowseUpdated' => '',
+            'BrowseAuthor' => '',
+            'CategoriesMultiList' => ''
+        ));
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_base_text Base Text
+     * @subsection bx_base_text-polls Polls Blocks
+     * @subsubsection bx_base_text-get_block_poll_answers get_block_poll_answers
+     * 
+     * @code bx_srv('bx_posts', 'get_block_poll_answers', [...]); @endcode
+     * 
+     * Get block with poll answers
+     * @param $iPollId poll ID
+     * 
+     * @see BxBaseModTextModule::serviceGetBlockPollAnswers
+     */
+    /** 
+     * @ref bx_base_text-get_block_poll_answers "get_block_poll_answers"
+     */
     public function serviceGetBlockPollAnswers($iPollId, $bForceDisplay = false)
     {
         if(!$iPollId)
@@ -108,6 +141,22 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         return $this->_serviceTemplateFunc('entryPollAnswers', $iPollId, 'getPollInfoById');
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_text Base Text
+     * @subsection bx_base_text-polls Polls Blocks
+     * @subsubsection bx_base_text-get_block_poll_results get_block_poll_results
+     * 
+     * @code bx_srv('bx_posts', 'get_block_poll_results', [...]); @endcode
+     * 
+     * Get block with poll results
+     * @param $iPollId poll ID
+     * 
+     * @see BxBaseModTextModule::serviceGetBlockPollResults
+     */
+    /** 
+     * @ref bx_base_text-get_block_poll_results "get_block_poll_results"
+     */
     public function serviceGetBlockPollResults($iPollId)
     {
         return $this->_serviceTemplateFunc('entryPollResults', $iPollId, 'getPollInfoById');
@@ -147,6 +196,21 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         return array('counter1_value' => $iNum1, 'counter2_value' => $iNum2, 'counter3_value' => $iNumTotal );
 	}
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_text Base Text
+     * @subsection bx_base_text-other Other
+     * @subsubsection bx_base_text-get_menu_addon_manage_tools_profile_stats get_menu_addon_manage_tools_profile_stats
+     * 
+     * @code bx_srv('bx_posts', 'get_menu_addon_manage_tools_profile_stats', []); @endcode
+     * 
+     * Get number of posts for currently logged in user
+     * 
+     * @see BxBaseModTextModule::serviceGetMenuAddonManageToolsProfileStats
+     */
+    /** 
+     * @ref bx_base_text-get_menu_addon_manage_tools_profile_stats "get_menu_addon_manage_tools_profile_stats"
+     */
 	public function serviceGetMenuAddonManageToolsProfileStats()
 	{
 		bx_import('SearchResult', $this->_aModule);
@@ -161,8 +225,22 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 	}
 
     /**
-     * Display public entries
-     * @return HTML string
+     * @page service Service Calls
+     * @section bx_base_text Base Text
+     * @subsection bx_base_text-browse Browse
+     * @subsubsection bx_base_text-browse_public browse_public
+     * 
+     * @code bx_srv('bx_posts', 'browse_public', [...]); @endcode
+     * 
+     * Display public posts
+     * @param $sUnitView unit view, such as: full, extended, gallery, showcase
+     * @param $bEmptyMessage display or not "empty" message when there is no content
+     * @param $bAjaxPaginate use AJAX paginate or not
+     * 
+     * @see BxBaseModTextModule::serviceBrowsePublic
+     */
+    /** 
+     * @ref bx_base_text-browse_public "browse_public"
      */
     public function serviceBrowsePublic ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
     {   
@@ -170,8 +248,22 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     }
 
     /**
-     * Display popular entries
-     * @return HTML string
+     * @page service Service Calls
+     * @section bx_base_text Base Text
+     * @subsection bx_base_text-browse Browse
+     * @subsubsection bx_base_text-browse_popular browse_popular
+     * 
+     * @code bx_srv('bx_posts', 'browse_popular', [...]); @endcode
+     * 
+     * Display popular posts
+     * @param $sUnitView unit view, such as: full, extended, gallery, showcase
+     * @param $bEmptyMessage display or not "empty" message when there is no content
+     * @param $bAjaxPaginate use AJAX paginate or not
+     * 
+     * @see BxBaseModTextModule::serviceBrowsePopular
+     */
+    /** 
+     * @ref bx_base_text-browse_popular "browse_popular"
      */
     public function serviceBrowsePopular ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
     {
@@ -179,8 +271,22 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     }
 
     /**
-     * Display popular entries
-     * @return HTML string
+     * @page service Service Calls
+     * @section bx_base_text Base Text
+     * @subsection bx_base_text-browse Browse
+     * @subsubsection bx_base_text-browse_top browse_top
+     * 
+     * @code bx_srv('bx_posts', 'browse_top', [...]); @endcode
+     * 
+     * Display top posts
+     * @param $sUnitView unit view, such as: full, extended, gallery, showcase
+     * @param $bEmptyMessage display or not "empty" message when there is no content
+     * @param $bAjaxPaginate use AJAX paginate or not
+     * 
+     * @see BxBaseModTextModule::serviceBrowseTop
+     */
+    /** 
+     * @ref bx_base_text-browse_top "browse_top"
      */
     public function serviceBrowseTop ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
     {
@@ -188,8 +294,22 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     }
 
     /**
-     * Display recently updated entries
-     * @return HTML string
+     * @page service Service Calls
+     * @section bx_base_text Base Text
+     * @subsection bx_base_text-browse Browse
+     * @subsubsection bx_base_text-browse_updated browse_updated
+     * 
+     * @code bx_srv('bx_posts', 'browse_updated', [...]); @endcode
+     * 
+     * Display recently updated posts
+     * @param $sUnitView unit view, such as: full, extended, gallery, showcase
+     * @param $bEmptyMessage display or not "empty" message when there is no content
+     * @param $bAjaxPaginate use AJAX paginate or not
+     * 
+     * @see BxBaseModTextModule::serviceBrowseUpdated
+     */
+    /** 
+     * @ref bx_base_text-browse_updated "browse_updated"
      */
     public function serviceBrowseUpdated ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
     {
@@ -197,8 +317,21 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     }
 
     /**
-     * Display entries of the author
-     * @return HTML string
+     * @page service Service Calls
+     * @section bx_base_text Base Text
+     * @subsection bx_base_text-browse Browse
+     * @subsubsection bx_base_text-browse_author browse_author
+     * 
+     * @code bx_srv('bx_posts', 'browse_author', [...]); @endcode
+     * 
+     * Display posts of specified author
+     * @param $iProfileId profile ID
+     * @param $aParams additional params, see BxBaseModGeneralModule::serviceBrowse
+     * 
+     * @see BxBaseModTextModule::serviceBrowseAuthor
+     */
+    /** 
+     * @ref bx_base_text-browse_author "browse_author"
      */
     public function serviceBrowseAuthor ($iProfileId = 0, $aParams = array())
     {
@@ -206,7 +339,20 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     }
     
     /**
-     * Entry author block
+     * @page service Service Calls
+     * @section bx_base_text Base Text
+     * @subsection bx_base_text-page_blocks Page Blocks
+     * @subsubsection bx_base_text-entity_author entity_author
+     * 
+     * @code bx_srv('bx_posts', 'entity_author', [...]); @endcode
+     * 
+     * Display author block for the specified post
+     * @param $iContentId content ID
+     * 
+     * @see BxBaseModTextModule::serviceEntityAuthor
+     */
+    /** 
+     * @ref bx_base_text-entity_author "entity_author"
      */
     public function serviceEntityAuthor ($iContentId = 0)
     {
@@ -214,13 +360,42 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     }
     
     /**
-     * Entry polls block
+     * @page service Service Calls
+     * @section bx_base_text Base Text
+     * @subsection bx_base_text-page_blocks Page Blocks
+     * @subsubsection bx_base_text-entity_polls entity_polls
+     * 
+     * @code bx_srv('bx_posts', 'entity_polls', [...]); @endcode
+     * 
+     * Display polls for the specified post
+     * @param $iContentId content ID
+     * 
+     * @see BxBaseModTextModule::serviceEntityPolls
+     */
+    /** 
+     * @ref bx_base_text-entity_polls "entity_polls"
      */
     public function serviceEntityPolls ($iContentId = 0)
     {
         return $this->_serviceTemplateFunc ('entryPolls', $iContentId);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_text Base Text
+     * @subsection bx_base_text-page_blocks Page Blocks
+     * @subsubsection bx_base_text-entity_breadcrumb entity_breadcrumb
+     * 
+     * @code bx_srv('bx_forum', 'entity_breadcrumb', [...]); @endcode
+     * 
+     * Display breadcrumb for the specified post
+     * @param $iContentId content ID
+     * 
+     * @see BxBaseModTextModule::serviceEntityBreadcrumb
+     */
+    /** 
+     * @ref bx_base_text-entity_breadcrumb "entity_breadcrumb"
+     */
     public function serviceEntityBreadcrumb ($iContentId = 0)
     {
         return $this->_serviceTemplateFunc ('entryBreadcrumb', $iContentId);
@@ -245,7 +420,20 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     }
     
     /**
-     * Entry multicategiries block
+     * @page service Service Calls
+     * @section bx_base_text Base Text
+     * @subsection bx_base_text-page_blocks Page Blocks
+     * @subsubsection bx_base_text-categories_multi_list categories_multi_list
+     * 
+     * @code bx_srv('bx_posts', 'categories_multi_list', [...]); @endcode
+     * 
+     * Display multi-categorories block with number of posts in each category
+     * @param $bDisplayEmptyCats display empty categories
+     * 
+     * @see BxBaseModTextModule::serviceCategoriesMultiList
+     */
+    /** 
+     * @ref bx_base_text-categories_multi_list "categories_multi_list"
      */
     public function serviceCategoriesMultiList($bDisplayEmptyCats = true)
     {
