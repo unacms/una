@@ -338,7 +338,11 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
 
     public function addAclGroups($aValues, $iOwnerId, $aParams)
     {
-        $aLevels = BxDolAcl::getInstance()->getMemberships(false, true, true, true);
+		$aCheck = checkActionModule($iOwnerId, 'show membership levels in privacy groups', 'system', false);
+		if($aCheck[CHECK_ACTION_RESULT] != CHECK_ACTION_RESULT_ALLOWED)
+			return $aValues;
+        
+		$aLevels = BxDolAcl::getInstance()->getMemberships(false, true, true, true);
         if(empty($aLevels) || !is_array($aLevels))
             return $aValues;
 
@@ -362,6 +366,9 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
             return $aValues;
 
         $bProfileProcessed = true; // don't allow to post to profiles for now
+        
+        $aExcludeModules = explode(',', getParam('sys_hide_post_to_context_for_privacy'));
+        
         foreach ($aModules as $aModule) {
             if (!$aModule['enabled'])
                 continue;
@@ -370,6 +377,9 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
                 continue;
 
             if (!BxDolRequest::serviceExists($aModule['name'], 'act_as_profile'))
+                continue;
+            
+            if (in_array($aModule['name'], $aExcludeModules))
                 continue;
 
             $bActAsProfile = BxDolService::call($aModule['name'], 'act_as_profile');
