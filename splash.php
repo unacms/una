@@ -45,7 +45,8 @@ check_logged();
 $oTemplate = BxDolTemplate::getInstance();
 $oTemplate->setPageNameIndex(BX_PAGE_DEFAULT);
 $oTemplate->setPageType(BX_PAGE_TYPE_DEFAULT_WO_HF);
-$oTemplate->setPageContent ('page_main_code', getPageMainCode());
+$oTemplate->setPageHeader(bx_replace_markers(_t('_sys_page_title_home'), array('site_title' => getParam('site_title'))));
+$oTemplate->setPageContent('page_main_code', getPageMainCode());
 $oTemplate->getPageCode();
 
 /** @} */

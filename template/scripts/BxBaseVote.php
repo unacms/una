@@ -66,7 +66,7 @@ class BxBaseVote extends BxDolVote
 
         $bDynamicMode = isset($aParams['dynamic_mode']) && (bool)$aParams['dynamic_mode'] === true;
 
-        $aParams = array(
+        $sCode = "if(window['" . $sJsObjName . "'] == undefined) var " . $sJsObjName . " = new " . $sJsObjClass . "(" . json_encode(array(
             'sObjName' => $sJsObjName,
             'sSystem' => $this->getSystemName(),
             'iAuthorId' => $this->_getAuthorId(),
@@ -75,8 +75,7 @@ class BxBaseVote extends BxDolVote
             'sStylePrefix' => $this->_sStylePrefix,
             'aHtmlIds' => $this->_aHtmlIds,
             'aRequestParams' => $this->_prepareRequestParamsData($aParams)
-        );
-        $sCode = "if(window['" . $sJsObjName . "'] == undefined) var " . $sJsObjName . " = new " . $sJsObjClass . "(" . json_encode($aParams) . ");";
+        )) . ");";
 
         return $this->_oTemplate->_wrapInTagJsCode($sCode);
     }
