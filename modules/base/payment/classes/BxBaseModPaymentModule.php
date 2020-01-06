@@ -22,6 +22,11 @@ class BxBaseModPaymentModule extends BxBaseModGeneralModule
         $this->_sLangsPrefix = $this->_oConfig->getPrefix('langs');
     }
 
+    public function serviceGetSafeServices()
+    {
+        return array();
+    }
+
     /**
      * @page service Service Calls
      * @section bx_base_payment Base Payment
