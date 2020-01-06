@@ -1975,6 +1975,18 @@
 <p>Ваш профиль заблокирован.</p>
 <p> </p>
 {email_footer}]]></string>
+  <string name="_sys_et_txt_body_account_change_status_activate">
+    <![CDATA[{email_header}
+<p>Ваш аккаунт и все связанные с ним профили активированы.</p>
+<p></p>
+{email_footer}]]>
+  </string>
+  <string name="_sys_et_txt_body_account_change_status_suspended">
+    <![CDATA[{email_header}
+<p>Ваш аккаунт и все связанные с ним профили заблокированы.</p>
+<p> </p>
+{email_footer}]]>
+  </string>
 	<string name="_sys_et_txt_body_account"><![CDATA[{email_header}
 <p>{account_output}</p>
 {email_footer}]]></string>
@@ -2026,6 +2038,8 @@
 	<string name="_sys_et_txt_name_profile_change_status_active"><![CDATA[Статус профиля изменён на Активный]]></string>
 	<string name="_sys_et_txt_name_profile_change_status_pending"><![CDATA[Статус профиля изменён на Ожидающий]]></string>
 	<string name="_sys_et_txt_name_profile_change_status_suspended"><![CDATA[Статус профиля изменён на Заблокированный]]></string>
+  <string name="_sys_et_txt_name_account_change_status_active"><![CDATA[Статус аккаунта изменён на Активный]]></string>
+  <string name="_sys_et_txt_name_account_change_status_suspended"><![CDATA[Статус аккаунта изменён на Заблокированный]]></string>
 	<string name="_sys_et_txt_name_system_account"><![CDATA[Новые аккаунты]]></string>
 	<string name="_sys_et_txt_name_system_pruning"><![CDATA[Результат очистки]]></string>
 	<string name="_sys_et_txt_name_upgrade_failed"><![CDATA[Обновление не удалось]]></string>
@@ -2045,6 +2059,8 @@
 	<string name="_sys_et_txt_subject_profile_change_status_active"><![CDATA[Профиль активирован]]></string>
 	<string name="_sys_et_txt_subject_profile_change_status_pending"><![CDATA[Профиль в ожидании одобрения]]></string>
 	<string name="_sys_et_txt_subject_profile_change_status_suspended"><![CDATA[Профиль заблокирован]]></string>
+  <string name="_sys_et_txt_subject_account_change_status_activate"><![CDATA[Аккаунт активирован]]></string>
+  <string name="_sys_et_txt_subject_account_change_status_suspended"><![CDATA[Аккаунт заблокирован]]></string>
 	<string name="_sys_et_txt_subject_account"><![CDATA[{site_name} - {account_count} аккаунтов, созданных вчера]]></string>
 	<string name="_sys_et_txt_subject_pruning"><![CDATA[{site_name} - результат очистки]]></string>
 	<string name="_sys_et_txt_subject_upgrade_failed"><![CDATA[{site_name} - обновление не удалось]]></string>

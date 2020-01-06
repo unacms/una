@@ -458,7 +458,7 @@ class BxBaseModGeneralModule extends BxDolModule
      * @code bx_srv('bx_posts', 'browse_featured', [...]); @endcode
      * 
      * Display featured entries
-     * @param $sUnitView browseing unity view, 
+     * @param $sUnitView browsing unity view, 
      *                   such as: full, extended, gallery, showcase
      * @param $bEmptyMessage display or not "empty" message when there is no content
      * @param $bAjaxPaginate use AJAX paginate or not

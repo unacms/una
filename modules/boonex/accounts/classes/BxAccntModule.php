@@ -21,6 +21,11 @@ class BxAccntModule extends BxBaseModGeneralModule
         $this->_oConfig->init($this->_oDb);
     }
 
+    public function serviceGetSafeServices()
+    {
+        return array ();
+    }
+
     /**
      * @page service Service Calls
      * @section bx_accounts Accounts

@@ -60,6 +60,23 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     }
 
     // ====== SERVICE METHODS
+
+    public function serviceGetSafeServices()
+    {
+        $a = parent::serviceGetSafeServices();
+        return array_merge($a, array (
+            'ProfileUnitSafe' => '',
+            'ProfileUrl' => '',
+            'EntityCreate' => '',
+            'BrowseRecommended' => '',
+            'BrowseRecentProfiles' => '',
+            'BrowseActiveProfiles' => '',
+            'BrowseTopProfiles' => '',
+            'BrowseOnlineProfiles' => '',
+            'BrowseByAcl' => '',
+        ));
+    }
+
     public function serviceGetOptionsRedirectAfterAdd()
     {
         $CNF = &$this->_oConfig->CNF;
@@ -241,6 +258,28 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return $aRet;
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_profile Base Profile
+     * @subsection bx_base_profile-general General
+     * @subsubsection bx_base_profile-profile_unit_safe profile_unit_safe
+     * 
+     * @code bx_srv('bx_persons', 'profile_unit_safe', [...]); @endcode
+     * 
+     * Get profile unit
+     * @param $iContentId content ID
+     * 
+     * @see BxBaseModProfileModule::serviceProfileUnitSafe
+     */
+    /** 
+     * @ref bx_base_profile-profile_unit_safe "profile_unit_safe"
+     */
+    public function serviceProfileUnitSafe ($iContentId, $aParams = array())
+    {
+        unset($aParams['check_private_content']);
+        return $this->serviceProfileUnit ($iContentId, $aParams);
+    }
+
     public function serviceProfileUnit ($iContentId, $aParams = array())
     {
         $mixedContent = $this->_getContent($iContentId);
@@ -344,6 +383,22 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     	return $bAbsolute ? BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_CREATE']) : $CNF['URL_CREATE'];
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_profile Base Profile
+     * @subsection bx_base_profile-general General
+     * @subsubsection bx_base_profile-profile_url profile_url
+     * 
+     * @code bx_srv('bx_persons', 'profile_url', [...]); @endcode
+     * 
+     * Get profile URL
+     * @param $iContentId content ID
+     * 
+     * @see BxBaseModProfileModule::serviceProfileUrl
+     */
+    /** 
+     * @ref bx_base_profile-profile_url "profile_url"
+     */
     public function serviceProfileUrl ($iContentId)
     {
         if (!$iContentId)
@@ -444,6 +499,22 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return parent::serviceFormsHelper ();
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_profile Base Profile
+     * @subsection bx_base_profile-forms Forms
+     * @subsubsection bx_base_profile-entity_create entity_create
+     * 
+     * @code bx_srv('bx_persons', 'entity_create', [...]); @endcode
+     * 
+     * Get profile creation form
+     * @param $sDisplay optional form display name
+     * 
+     * @see BxBaseModProfileModule::serviceEntityCreate
+     */
+    /** 
+     * @ref bx_base_profile-entity_create "entity_create"
+     */
     public function serviceEntityCreate ($sDisplay = false)
     {
 	    BxDolInformer::getInstance($this->_oTemplate)->setEnabled(false);
@@ -456,6 +527,24 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return true;
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_profile Base Profile
+     * @subsection bx_base_profile-browse Browse
+     * @subsubsection bx_base_profile-browse_recommended browse_recommended
+     * 
+     * @code bx_srv('bx_persons', 'browse_recommended', [...]); @endcode
+     * 
+     * Browse recommended profiles
+     * @param $sUnitView optional, unit view, for example - showcase
+     * @param $bEmptyMessage optional, display or not "empty" message when there is no content
+     * @param $bAjaxPaginate optional, use AJAX paginate or not
+     * 
+     * @see BxBaseModProfileModule::serviceBrowseRecommended
+     */
+    /** 
+     * @ref bx_base_profile-browse_recommended "browse_recommended"
+     */
     public function serviceBrowseRecommended ($sUnitView = false, $bEmptyMessage = false, $bAjaxPaginate = true)
     {
         if (!isLogged())
@@ -463,21 +552,89 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return $this->_serviceBrowse ('recommended', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_profile Base Profile
+     * @subsection bx_base_profile-browse Browse
+     * @subsubsection bx_base_profile-browse_recent_profiles browse_recent_profiles
+     * 
+     * @code bx_srv('bx_persons', 'browse_recent_profiles', [...]); @endcode
+     * 
+     * Browse recently joined profiles
+     * @param $bEmptyMessage optional, display or not "empty" message when there is no content
+     * @param $bAjaxPaginate optional, use AJAX paginate or not
+     * 
+     * @see BxBaseModProfileModule::serviceBrowseRecentProfiles
+     */
+    /** 
+     * @ref bx_base_profile-browse_recent_profiles "browse_recent_profiles"
+     */
     public function serviceBrowseRecentProfiles ($bDisplayEmptyMsg = false, $bAjaxPaginate = true)
     {
         return $this->_serviceBrowse ('recent', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_profile Base Profile
+     * @subsection bx_base_profile-browse Browse
+     * @subsubsection bx_base_profile-browse_active_profiles browse_active_profiles
+     * 
+     * @code bx_srv('bx_persons', 'browse_active_profiles', [...]); @endcode
+     * 
+     * Browse recently active profiles
+     * @param $bEmptyMessage optional, display or not "empty" message when there is no content
+     * @param $bAjaxPaginate optional, use AJAX paginate or not
+     * 
+     * @see BxBaseModProfileModule::serviceBrowseActiveProfiles
+     */
+    /** 
+     * @ref bx_base_profile-browse_active_profiles "browse_active_profiles"
+     */
     public function serviceBrowseActiveProfiles ($sUnitView = false, $bEmptyMessage = false, $bAjaxPaginate = false)
     {
         return $this->_serviceBrowse ('active', $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_profile Base Profile
+     * @subsection bx_base_profile-browse Browse
+     * @subsubsection bx_base_profile-browse_top_profiles browse_top_profiles
+     * 
+     * @code bx_srv('bx_persons', 'browse_top_profiles', [...]); @endcode
+     * 
+     * Browse top profiles
+     * @param $bEmptyMessage optional, display or not "empty" message when there is no content
+     * @param $bAjaxPaginate optional, use AJAX paginate or not
+     * 
+     * @see BxBaseModProfileModule::serviceBrowseTopProfiles
+     */
+    /** 
+     * @ref bx_base_profile-browse_top_profiles "browse_top_profiles"
+     */
     public function serviceBrowseTopProfiles ($bDisplayEmptyMsg = false, $bAjaxPaginate = false)
     {
         return $this->_serviceBrowse ('top', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_profile Base Profile
+     * @subsection bx_base_profile-browse Browse
+     * @subsubsection bx_base_profile-browse_online_profiles browse_online_profiles
+     * 
+     * @code bx_srv('bx_persons', 'browse_online_profiles', [...]); @endcode
+     * 
+     * Browse online profiles
+     * @param $bEmptyMessage optional, display or not "empty" message when there is no content
+     * @param $bAjaxPaginate optional, use AJAX paginate or not
+     * 
+     * @see BxBaseModProfileModule::serviceBrowseOnlineProfiles
+     */
+    /** 
+     * @ref bx_base_profile-browse_online_profiles "browse_online_profiles"
+     */
     public function serviceBrowseOnlineProfiles ($bDisplayEmptyMsg = false, $bAjaxPaginate = false)
     {
         return $this->_serviceBrowse ('online', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
@@ -613,6 +770,23 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         );
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_base_profile Base Profile
+     * @subsection bx_base_profile-browse Browse
+     * @subsubsection bx_base_profile-browse_by_acl browse_by_acl
+     * 
+     * @code bx_srv('bx_persons', 'browse_by_acl', [...]); @endcode
+     * 
+     * Browse profiles by membership(ACL) level
+     * @param $mixedLevelId membership level, or array of membership levels
+     * @param $iDesignBox optional, design box identifier
+     * 
+     * @see BxBaseModProfileModule::serviceBrowseByAcl
+     */
+    /** 
+     * @ref bx_base_profile-browse_by_acl "browse_by_acl"
+     */
 	public function serviceBrowseByAcl ($mixedLevelId, $iDesignBox = BX_DB_PADDING_DEF)
     {
         return $this->_serviceBrowse (
@@ -1631,13 +1805,13 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return parent::_getContent($iContentId, $sFuncGetContent);
     }
 
-    /** Returns list of members by mode with limited number of records for React Jot
+    /** 
+     * Returns list of members by mode with limited number of records for React Jot
      * @param string $sMode
      * @param int $iStart
      * @param int $iPerPage
      * @return mixed
      */
-
     public function serviceGetMembers($sMode = 'active', $iStart = 0, $iPerPage = 10){
         bx_import('SearchResult', $this->_aModule);
         $sClass = $this->_aModule['class_prefix'] . 'SearchResult';

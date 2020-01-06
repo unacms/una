@@ -49,6 +49,11 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         if(!empty($this->_iContentId))
             $this->_oContentProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->_sModule);
     }
+    
+    protected function getMenuItemConnectionJsCode($sConnection, $sAction, $iContentProfile, $aItem)
+    {
+        return 'bx_conn_action(this, \'' . $sConnection . '\', \'' . $sAction . '\', \'' . $iContentProfile . '\', false, function(oData, eLink) {$(eLink).parents(\'.bx-menu-item:first\').remove();})';
+    }
 
     public function setContentPublic($bContentPublic)
     {
@@ -118,7 +123,6 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         if(!isLogged() || $this->_oModule->{$this->_aConnectionToFunctionCheck[$sConnection][$sAction]}($this->_aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
             return false;
 
-        $iProfile = bx_get_logged_profile_id();
         $iContentProfile = $this->_oContentProfile->id();
 
         $oConnection = BxDolConnection::getObjectInstance($sConnection);
@@ -130,7 +134,7 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
             return false;
 
         return $this->getUnitMetaItemButtonSmall($sTitle, array(
-            'onclick' => 'bx_conn_action(this, \'' . $sConnection . '\', \'' . $sAction . '\', \'' . $iContentProfile . '\', false, function(oData, eLink) {$(eLink).parents(\'.bx-menu-item:first\').remove();})'
+            'onclick' => $this->getMenuItemConnectionJsCode($sConnection, $sAction, $iContentProfile, $aItem)
         ));
     }
 

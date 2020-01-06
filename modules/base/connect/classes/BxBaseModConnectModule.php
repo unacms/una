@@ -16,6 +16,11 @@ class BxBaseModConnectModule extends BxBaseModGeneralModule
         parent::__construct($aModule);
     }
 
+    public function serviceGetSafeServices()
+    {
+        return array();
+    }
+
     public function serviceGetProfilesModules ()
     {
         $aModules = array();

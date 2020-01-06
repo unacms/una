@@ -254,8 +254,10 @@ class BxBaseAccountForms extends BxDolProfileForms
         }
 
         // check if email was changed
-        if (!empty($aTrackTextFieldsChanges['changed_fields']) && in_array('email', $aTrackTextFieldsChanges['changed_fields']))
+        if (!empty($aTrackTextFieldsChanges['changed_fields']) && in_array('email', $aTrackTextFieldsChanges['changed_fields'])){
+            $oAccount = BxDolAccount::getInstance($iAccountId, true); // refresh account to clear cache 
             $oAccount->updateEmailConfirmed(false);  // mark email as unconfirmed
+        }
 
         // check if password was changed
         if ($oForm->getCleanValue('password')) {

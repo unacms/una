@@ -44,7 +44,7 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
     /**
      * Get singleton instance of the class
      */
-    public static function getInstance($mixedAccountId = false)
+    public static function getInstance($mixedAccountId = false,  $bClearCache = false)
     {
         if (!$mixedAccountId)
             $mixedAccountId = getLoggedId();
@@ -54,6 +54,10 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
             return false;
 
         $sClass = __CLASS__ . '_' . $iAccountId;
+        
+        if ($bClearCache && isset($GLOBALS['bxDolClasses'][$sClass]))
+            unset($GLOBALS['bxDolClasses'][$sClass]);
+        
         if(!isset($GLOBALS['bxDolClasses'][$sClass]))
             $GLOBALS['bxDolClasses'][$sClass] = new BxDolAccount($iAccountId);
 

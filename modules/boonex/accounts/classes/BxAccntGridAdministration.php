@@ -333,13 +333,16 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
 
         $iAction = BX_PROFILE_ACTION_MANUAL;
         $sMethod = $isChecked ? 'activate' : 'suspend';
-        if(!$oProfile->$sMethod($iAction))
+        if(!$oProfile->$sMethod($iAction, 0 ,false))
             return false;
 
+        sendMailTemplate('t_ChangeStatusAccount' . ucfirst($sMethod), $oProfile->getAccountObject()->id(), $oProfile->id(), array(), BX_EMAIL_SYSTEM);
+        
         $aProfiles = $oProfile->getAccountObject()->getProfiles();
-        foreach($aProfiles as $aProfile)
-            BxDolProfile::getInstance($aProfile['id'])->$sMethod($iAction);
-
+        foreach($aProfiles as $aProfile){
+            BxDolProfile::getInstance($aProfile['id'])->$sMethod($iAction, 0 ,false);
+        }
+        
     	return true;
     }
 
