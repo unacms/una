@@ -389,14 +389,14 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         $aTmplVarsAnswers = array();
         foreach($aAnswers as $aAnswer) {
             $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_POLL_ANSWERS'], $aAnswer['id']);
+            $aVotesParams = array('show_counter_empty' => true, 'show_counter_in_brackets' => false, 'dynamic_mode' => $bDynamic);
 
             $fPercent = $iTotal > 0 ? 100 * (float)$aAnswer['votes']/$iTotal : 0;
             $aTmplVarsAnswers[] = array(
                 'title' => bx_process_output($aAnswer['title']),
                 'width' => (int)round($fPercent) . '%',
-                'votes' => $oVotes->getCounter(array('show_counter_empty' => true, 'show_counter_in_brackets' => false)),
-                'percent' => _t($CNF['T']['txt_poll_answer_vote_percent'], $iTotal > 0 ? round($fPercent, 2) : 0),
-                'js_code' => $oVotes->getJsScript($bDynamic)
+                'votes' => $oVotes->getCounter($aVotesParams),
+                'percent' => _t($CNF['T']['txt_poll_answer_vote_percent'], $iTotal > 0 ? round($fPercent, 2) : 0)
             );
         }
 
