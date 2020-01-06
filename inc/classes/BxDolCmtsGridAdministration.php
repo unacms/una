@@ -55,7 +55,7 @@ class BxDolCmtsGridAdministration extends BxTemplGrid
     	if(!empty($this->_sFilter1Value)){
             $oSelectedModule = BxDolModule::getInstance($this->_sFilter1Value);
             $oCmts = BxDolCmts::getObjectInstance($oSelectedModule->_oConfig->CNF['OBJECT_COMMENTS'], 0, false);
-            $this->_aOptions['source'] = "SELECT  sys_cmts_ids.id, sys_cmts_ids.cmt_id, sys_cmts_ids.reports, cmts.* FROM sys_cmts_ids INNER JOIN " . $oCmts->getCommentsTableName() . " cmts ON cmts.cmt_id = sys_cmts_ids.cmt_id WHERE sys_cmts_ids.system_id = " . $oCmts->getSystemId();
+            $this->_aOptions['source'] = "SELECT  sys_cmts_ids.id, sys_cmts_ids.cmt_id, sys_cmts_ids.reports, cmts.*, sys_accounts.email FROM sys_cmts_ids INNER JOIN " . $oCmts->getCommentsTableName() . " cmts ON cmts.cmt_id = sys_cmts_ids.cmt_id INNER JOIN sys_profiles ON cmts.cmt_author_id=sys_profiles.id INNER JOIN sys_accounts ON sys_profiles.account_id=sys_accounts.id WHERE sys_cmts_ids.system_id = " . $oCmts->getSystemId();
         }
         else{
             return '';
