@@ -222,7 +222,12 @@ class BxMassMailerModule extends BxBaseModGeneralModule
     /**
     * SERVICE METHODS
     */
-          
+
+    public function serviceGetSafeServices()
+    {
+        return array ();
+    }
+
     /**
     * @page service Service Calls
     * @section bx_massmailer Mass mailer
@@ -233,7 +238,7 @@ class BxMassMailerModule extends BxBaseModGeneralModule
     * 
     * Get page block with the campagn's subscribers list
     *
-    * @param $aParams an array with search params.
+    * @param $iContentId content ID.
     * @return HTML string with block content to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
     * 
     * @see BxMassMailerModule::serviceCampagnSubscribers
@@ -265,7 +270,7 @@ class BxMassMailerModule extends BxBaseModGeneralModule
      * 
      * Get page block with the campagn info
      *
-     * @param $aParams an array with search params.
+     * @param $iContentId content ID.
      * @return HTML string with block content to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
      * 
      * @see BxMassMailerModule::serviceCampagnInfo
@@ -294,7 +299,7 @@ class BxMassMailerModule extends BxBaseModGeneralModule
      * 
      * Get page block with the campagn links list
      *
-     * @param $aParams an array with search params.
+     * @param $iContentId content ID
      * @return HTML string with block content to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
      * 
      * @see BxMassMailerModule::serviceCampagnLinks
@@ -349,7 +354,7 @@ class BxMassMailerModule extends BxBaseModGeneralModule
      * 
      * Get page block with page's breadcrumbs
      *
-     * @param $aParams an array with search params.
+     * @param $iContentId content ID
      * @return HTML string with block content to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
      * 
      * @see BxMassMailerModule::serviceEntityBreadcrumb
@@ -386,7 +391,6 @@ class BxMassMailerModule extends BxBaseModGeneralModule
      * 
      * Get page block with attributes list
      *
-     * @param $aParams an array with search params.
      * @return HTML string with block content to display on the site. All necessary CSS and JS files are automatically added to the HEAD section of the site HTML.
      * 
      * @see BxMassMailerModule::serviceAttributes

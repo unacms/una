@@ -137,6 +137,11 @@ class BxDolMModule extends BxBaseModGeneralModule
         return $this->_oMDb->connect();
     }
 
+    public function serviceGetSafeServices()
+    {
+        return array ();
+    }
+
     public function serviceGetPrivacyGroups(){
         $aPrivacyList = $this -> _oDb -> getPrivacyList();
         $aValues = array();

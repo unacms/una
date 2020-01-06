@@ -130,6 +130,14 @@ class BxElsModule extends BxBaseModGeneralModule
         echo '</pre>';
     }
 
+    public function serviceGetSafeServices()
+    {
+        return array (
+            'SearchSimple' => '',
+            'SearchExtended' => '',
+        );
+    }
+
     /**
      * @page service Service Calls
      * @section bx_elasticsearch ElasticSearch

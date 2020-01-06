@@ -123,11 +123,16 @@ class BxSEMigModule extends BxBaseModGeneralModule
 		$this -> _oSEDb = new BxSEDb($aConfig);		
 		return $this -> _oSEDb	-> connect(); 
 	}
-	
+
+    public function serviceGetSafeServices()
+    {
+        return array ();
+    }
+
 	/** 
-	* Returns Password Ecnrypted by Seocial Engine Rules
-	* @param object	
-	*/	
+	 * Returns Password Ecnrypted by Seocial Engine Rules
+	 * @param object	
+	 */	
 	public function serviceSocialEngineResponse($oAlert){
 		// if imported member tries to login set new hash for password
 		if ($oAlert -> sAction == 'encrypt_password_after' && isset($oAlert -> aExtras['info']['se_id']) && (int)$oAlert -> aExtras['info']['se_id']){
