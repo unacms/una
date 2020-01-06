@@ -77,6 +77,17 @@ class BxAdsModule extends BxBaseModTextModule
         return echoJson(array('msg' => _t('_bx_ads_txt_msg_author_notified')));
     }
 
+    public function serviceGetSafeServices()
+    {
+        $a = parent::serviceGetSafeServices();
+        return array_merge($a, array (
+            'EntityReviews' => '',
+            'EntityReviewsRating' => '',
+            'CategoriesList' => '',
+            'BrowseCategory' => '',
+        ));
+    }
+
     public function serviceUpdateCategoriesStats()
     {
         $aStats = $this->_oDb->getCategories(array('type' => 'collect_stats'));
@@ -138,6 +149,22 @@ class BxAdsModule extends BxBaseModTextModule
         return parent::serviceEntityCreate($sParams);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_ads Ads 
+     * @subsection bx_ads-page_blocks Page Blocks
+     * @subsubsection bx_ads-entity_reviews entity_reviews
+     * 
+     * @code bx_srv('bx_ads', 'entity_reviews', [...]); @endcode
+     * 
+     * Get reviews for particular content
+     * @param $iContentId content ID
+     * 
+     * @see BxAdsModule::serviceEntityReviews
+     */
+    /** 
+     * @ref bx_ads-entity_reviews "entity_reviews"
+     */
     public function serviceEntityReviews($iContentId = 0)
     {
         $CNF = &$this->_oConfig->CNF;
@@ -147,6 +174,22 @@ class BxAdsModule extends BxBaseModTextModule
         return $this->_entityComments($CNF['OBJECT_REVIEWS'], $iContentId);
     }
     
+    /**
+     * @page service Service Calls
+     * @section bx_ads Ads 
+     * @subsection bx_ads-page_blocks Page Blocks
+     * @subsubsection bx_ads-entity_reviews_rating entity_reviews_rating
+     * 
+     * @code bx_srv('bx_ads', 'entity_reviews_rating', [...]); @endcode
+     * 
+     * Get reviews rating for particular content
+     * @param $iContentId content ID
+     * 
+     * @see BxAdsModule::serviceEntityReviewsRating
+     */
+    /** 
+     * @ref bx_ads-entity_reviews_rating "entity_reviews_rating"
+     */
     public function serviceEntityReviewsRating($iContentId = 0)
     {
         $CNF = &$this->_oConfig->CNF;
@@ -166,6 +209,22 @@ class BxAdsModule extends BxBaseModTextModule
         return $oCmts->getRatingBlock(array('in_designbox' => false));
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_ads Ads 
+     * @subsection bx_ads-page_blocks Page Blocks
+     * @subsubsection bx_ads-categories_list categories_list
+     * 
+     * @code bx_srv('bx_ads', 'categories_list', [...]); @endcode
+     * 
+     * Get reviews rating for particular content
+     * @param $aParams additional params array, such as 'show_empty'
+     * 
+     * @see BxAdsModule::serviceCategoriesList
+     */
+    /** 
+     * @ref bx_ads-categories_list "categories_list"
+     */
     public function serviceCategoriesList($aParams = array())
     {
         if(!isset($aParams['show_empty']))
@@ -174,6 +233,23 @@ class BxAdsModule extends BxBaseModTextModule
         return $this->_oTemplate->categoriesList($aParams);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_ads Ads 
+     * @subsection bx_ads-browse Browse
+     * @subsubsection bx_ads-browse_category browse_category
+     * 
+     * @code bx_srv('bx_ads', 'browse_category', [...]); @endcode
+     * 
+     * Get reviews rating for particular content
+     * @param $iCategoryId category ID
+     * @param $aParams additional params array, such as empty_message, ajax_paginate, etc
+     * 
+     * @see BxAdsModule::serviceBrowseCategory
+     */
+    /**
+     * @ref bx_ads-browse_category "browse_category"
+     */
     public function serviceBrowseCategory($iCategoryId = 0, $aParams = array())
     {
         $sParamName = $sParamGet = 'category';
