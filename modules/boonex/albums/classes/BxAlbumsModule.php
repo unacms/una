@@ -23,6 +23,20 @@ class BxAlbumsModule extends BxBaseModTextModule
         parent::__construct($aModule);
     }
 
+    public function serviceGetSafeServices()
+    {
+        $a = parent::serviceGetSafeServices();
+        return array_merge($a, array (
+            'EntityAddFiles' => '',
+            'MediaComments' => '',
+            'BrowseRecentMedia' => '',
+            'BrowseFeaturedMedia' => '',
+            'BrowsePopularMedia' => '',
+            'BrowseTopMedia' => '',
+            'BrowseFavoriteMedia' => '',
+        ));
+    }
+
     /**
      * Entry actions and social sharing block
      */
@@ -53,10 +67,22 @@ class BxAlbumsModule extends BxBaseModTextModule
     }
     
     /**
+     * @page service Service Calls
+     * @section bx_albums Albums
+     * @subsection bx_albums-forms Forms
+     * @subsubsection bx_albums-entity_add_files entity_add_files
+     * 
+     * @code bx_srv('bx_albums', 'entity_add_files', [...]); @endcode
+     * 
      * Display form for adding media to the album.
      * @param $iContentId album content id where media will be added, if it's not provided then it's determined from 'id' GET variable
      * @return HTML string with form, all necessary CSS and JS files are automatically added to the HEAD section of the site HTML. On error false or empty string is returned.
-     */ 
+     * 
+     * @see BxAlbumsModule::serviceEntityAddFiles
+     */
+    /** 
+     * @ref bx_albums-entity_add_files "entity_add_files"
+     */
     public function serviceEntityAddFiles ($iContentId = 0)
     {
         return $this->_serviceEntityForm ('editDataForm', $iContentId, 'bx_albums_entry_add_images');
@@ -140,9 +166,21 @@ class BxAlbumsModule extends BxBaseModTextModule
     }
 
     /**
+     * @page service Service Calls
+     * @section bx_albums Albums
+     * @subsection bx_albums-page_blocks Page Blocks
+     * @subsubsection bx_albums-media_comments media_comments
+     * 
+     * @code bx_srv('bx_albums', 'media_comments', [...]); @endcode
+     * 
      * Display media comments block.
      * @param $iMediaId media ID, if it's omitted then it's taken from 'id' GET variable.
      * @return HTML string with comments. On error false or empty string is returned.
+     * 
+     * @see BxAlbumsModule::serviceMediaComments
+     */
+    /** 
+     * @ref bx_albums-media_comments "media_comments"
      */
     public function serviceMediaComments ($iMediaId = 0)
     {
@@ -269,49 +307,118 @@ class BxAlbumsModule extends BxBaseModTextModule
     }
 
     /**
+     * @page service Service Calls
+     * @section bx_albums Albums
+     * @subsection bx_albums-browse Browse
+     * @subsubsection bx_albums-browse_recent_media browse_recent_media
+     * 
+     * @code bx_srv('bx_albums', 'browse_recent_media', [...]); @endcode
+     * 
      * Display block for browsing recently uploaded media files.
      * @param $sUnitView unit view mode: gallery
      * @param $bDisplayEmptyMsg display 'empty' message when nothing to browse, or return empty string.
      * @param $bAjaxPaginate use AJAX or regular paginate.
      * @return HTML string with block content. On error false or empty string is returned.
-     */    
+     * 
+     * @see BxAlbumsModule::serviceBrowseRecentMedia
+     */
+    /** 
+     * @ref bx_albums-browse_recent_media "browse_recent_media"
+     */
     public function serviceBrowseRecentMedia ($sUnitView = false, $bDisplayEmptyMsg = true, $bAjaxPaginate = true)
     {
         return $this->_serviceBrowse ('recent', array('unit_view' => $sUnitView), BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate, 'SearchResultMedia');
     }
 
     /**
+     * @page service Service Calls
+     * @section bx_albums Albums
+     * @subsection bx_albums-browse Browse
+     * @subsubsection bx_albums-browse_featured_media browse_featured_media
+     * 
+     * @code bx_srv('bx_albums', 'browse_featured_media', [...]); @endcode
+     * 
      * Display featured media. 
-     * For the list of params @see BxAlbumsModule::serviceBrowseRecentMedia
-     */ 
+     * @param $sUnitView unit view mode: gallery
+     * @param $bDisplayEmptyMsg display 'empty' message when nothing to browse, or return empty string.
+     * @param $bAjaxPaginate use AJAX or regular paginate.
+     * @return HTML string with block content. On error false or empty string is returned.
+     * 
+     * @see BxAlbumsModule::serviceBrowseFeaturedMedia
+     */
+    /** 
+     * @ref bx_albums-browse_featured_media "browse_featured_media"
+     */
     public function serviceBrowseFeaturedMedia ($sUnitView = false, $bDisplayEmptyMsg = false, $bAjaxPaginate = true)
     {
         return $this->_serviceBrowse ('featured', array('unit_view' => $sUnitView), BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate, 'SearchResultMedia');
     }
 
     /**
-     * Display popular media. 
-     * For the list of params @see BxAlbumsModule::serviceBrowseRecentMedia
-     */     
+     * @page service Service Calls
+     * @section bx_albums Albums
+     * @subsection bx_albums-browse Browse
+     * @subsubsection bx_albums-browse_popular_media browse_popular_media
+     * 
+     * @code bx_srv('bx_albums', 'browse_popular_media', [...]); @endcode
+     * 
+     * Display popular media.
+     * @param $sUnitView unit view mode: gallery
+     * @param $bDisplayEmptyMsg display 'empty' message when nothing to browse, or return empty string.
+     * @param $bAjaxPaginate use AJAX or regular paginate.
+     * @return HTML string with block content. On error false or empty string is returned.
+     * 
+     * @see BxAlbumsModule::serviceBrowsePopularMedia
+     */
+    /** 
+     * @ref bx_albums-browse_popular_media "browse_popular_media"
+     */
     public function serviceBrowsePopularMedia ($sUnitView = false, $bDisplayEmptyMsg = true, $bAjaxPaginate = true)
     {
         return $this->_serviceBrowse ('popular', array('unit_view' => $sUnitView), BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate, 'SearchResultMedia');
     }
 
     /**
-     * Display top media. 
-     * For the list of params @see BxAlbumsModule::serviceBrowseRecentMedia
-     */     
+     * @page service Service Calls
+     * @section bx_albums Albums
+     * @subsection bx_albums-browse Browse
+     * @subsubsection bx_albums-browse_top_media browse_top_media
+     * 
+     * @code bx_srv('bx_albums', 'browse_top_media', [...]); @endcode
+     * 
+     * Display top media.
+     * @param $sUnitView unit view mode: gallery
+     * @param $bDisplayEmptyMsg display 'empty' message when nothing to browse, or return empty string.
+     * @param $bAjaxPaginate use AJAX or regular paginate.
+     * @return HTML string with block content. On error false or empty string is returned.
+     * 
+     * @see BxAlbumsModule::serviceBrowseTopMedia
+     */
+    /** 
+     * @ref bx_albums-browse_top_media "browse_top_media"
+     */
     public function serviceBrowseTopMedia ($sUnitView = false, $bDisplayEmptyMsg = true, $bAjaxPaginate = true)
     {
         return $this->_serviceBrowse ('top', array('unit_view' => $sUnitView), BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate, 'SearchResultMedia');
     }
 
     /**
+     * @page service Service Calls
+     * @section bx_albums Albums
+     * @subsection bx_albums-browse Browse
+     * @subsubsection bx_albums-browse_favorite_media browse_favorite_media
+     * 
+     * @code bx_srv('bx_albums', 'browse_favorite_media', [...]); @endcode
+     * 
      * Display favorite media for particular profile. 
      * @param $iProfileId profile ID, if omitted then 'profile_id' GET variable is used 
      * @param $aParams additional params for browsing such as 'unit_view'
-     */         
+     * 
+     * @see BxAlbumsModule::serviceBrowseFavoriteMedia
+     */
+    /** 
+     * @ref bx_albums-browse_favorite_media "browse_favorite_media"
+     */
     public function serviceBrowseFavoriteMedia ($iProfileId = 0, $aParams = array())
     {
         $oProfile = null;

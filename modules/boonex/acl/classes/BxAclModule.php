@@ -34,6 +34,15 @@ class BxAclModule extends BxDolModule
      * SERVICE METHODS
      */
 
+    public function serviceGetSafeServices()
+    {
+        return array (
+            'GetViewUrl' => '',
+            'GetBlockView' => '',
+            'GetMembershipActions' => '',
+        );
+    }
+
 	/**
      * @page service Service Calls
      * @section bx_acl Paid Levels
