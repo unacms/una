@@ -2782,6 +2782,41 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     }
 
     //--- Check permissions methods ---//
+    public function serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction = false, $iProfileId = false)
+    {
+        if(!$iProfileId)
+            $iProfileId = $this->_iProfileId;
+
+        $CNF = &$this->_oConfig->CNF;
+
+        // moderator and owner always have access
+        $iOwnerId = (int)$aDataEntry['owner_id'];
+        if(!empty($iProfileId) && (abs($iOwnerId) == (int)$iProfileId || $this->isModerator()))
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        // check ACL
+        if(($oOwner = BxDolProfile::getInstanceMagic($iOwnerId)) !== false) {
+            $mixedCheckResult = BxDolService::call($oOwner->getModule(), 'check_allowed_with_content_for_profile', array('view', $oOwner->getContentId(), $iProfileId));
+            if($mixedCheckResult !== CHECK_ACTION_RESULT_ALLOWED)
+                return $mixedCheckResult;
+        }
+
+        // check privacy
+        if(!empty($CNF['OBJECT_PRIVACY_VIEW'])) {
+            $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
+            if($oPrivacy && !$oPrivacy->check($aDataEntry[$CNF['FIELD_ID']], $iProfileId))
+                return _t('_sys_access_denied_to_private_content');
+        }
+
+        // check alert to allow custom checks
+        $mixedResult = null;
+        bx_alert('system', 'check_allowed_view', 0, 0, array('module' => $this->getName(), 'content_info' => $aDataEntry, 'profile_id' => $iProfileId, 'override_result' => &$mixedResult));
+        if($mixedResult !== null)
+            return $mixedResult;
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
     public function isModerator()
     {
         $sModule = $this->getName();
