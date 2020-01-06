@@ -1385,7 +1385,7 @@
 	<string name="_adm_stg_cpt_option_sys_default_payment"><![CDATA[Payment module]]></string>
     <string name="_adm_stg_cpt_option_sys_editor_default"><![CDATA[Default HTML editor]]></string>
 	<string name="_adm_stg_cpt_option_sys_player_default"><![CDATA[Default Player]]></string>
-	<string name="_adm_stg_cpt_option_sys_player_default_format"><![CDATA[Default video format]]></string>
+	<string name="_adm_stg_cpt_option_sys_player_default_quality"><![CDATA[Default video quality]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_date"><![CDATA[Date Format]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_datetime"><![CDATA[Datetime Format]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_time"><![CDATA[Time Format]]></string>
