@@ -645,7 +645,7 @@ class BxMarketDb extends BxBaseModTextDb
                 );
 
                 $sWhereClause = " AND `tfe`.`content_id`=:content_id";
-                $sOrderClause = "`tfe`.`type` ASC, `tfe`.`version` DESC";
+                $sOrderClause = "`tfe`.`type` ASC, `tfe`.`order` DESC";
                 break;
 
 			case 'content_id_and_type':
@@ -677,7 +677,7 @@ class BxMarketDb extends BxBaseModTextDb
         		" . $sFieldsClause . "
             FROM `" . $sTable . "` AS `tfe`" . $sJoinClause . "
             WHERE 1" . $sWhereClause . $sOrderClause . $sLimitClause;
-
+        //echo   $aMethod['params'][0];
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 

@@ -129,17 +129,38 @@ div.bx-market-unit-title-badges {
 div.bx-market-attachment {
 	position: relative;
 	display: none;
+    width: calc(25% - 1.2rem);
 }
 div.bx-market-attachment.bx-market-attachment-main {
     display: block;
 }
 div.bx-market-a-main {
 	position: absolute;
-
 	top: 0.25rem;
 	right: 0.5rem;
 }
 div.bx-market-a-text {
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+div.bx-market-a-text i.sys-icon{
+    font-size: 2.5rem;
+    float: left;
+    margin-right: 1rem;
+}
+div.bx-market-attachment-separator{
+    clear:both;
+    width:100%;
+}
+div.bx-market-attachment-text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 2.7rem;
+	width:calc(100% - 3rem);
+}
+div.bx-market-attachment-info{
+	white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
 }
