@@ -1372,7 +1372,7 @@
 	<string name="_adm_stg_cpt_option_sys_default_payment"><![CDATA[Модуль оплаты]]></string>
 	<string name="_adm_stg_cpt_option_sys_editor_default"><![CDATA[HTML редактор по умолчанию]]></string>
 	<string name="_adm_stg_cpt_option_sys_player_default"><![CDATA[Плеер по умолчанию]]></string>
-	<string name="_adm_stg_cpt_option_sys_player_default_format"><![CDATA[Видео формат по умолчанию]]></string>
+	<string name="_adm_stg_cpt_option_sys_player_default_quality"><![CDATA[Качество видео по умолчанию]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_date"><![CDATA[Формат даты]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_datetime"><![CDATA[Формат даты и времени]]></string>
 	<string name="_adm_stg_cpt_option_sys_format_time"><![CDATA[Формат времени]]></string>

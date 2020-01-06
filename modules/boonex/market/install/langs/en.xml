@@ -88,7 +88,7 @@
 	<string name="_bx_market_form_entry_input_files_type_update"><![CDATA[update]]></string>
 	<string name="_bx_market_form_entry_input_files_version_from"><![CDATA[Version from:]]></string>
 	<string name="_bx_market_form_entry_input_files_version_to"><![CDATA[Version to:]]></string>
-	<string name="_bx_market_form_entry_input_files_version_from_x_to_y"><![CDATA[Version from {0} to {1}]]></string>
+	<string name="_bx_market_form_entry_input_files_version_from_x_to_y"><![CDATA[{0} to {1}]]></string>
     <string name="_bx_market_form_entry_input_sys_allow_view_to"><![CDATA[Who can view]]></string>
     <string name="_bx_market_form_entry_input_allow_view_to"><![CDATA[Who can view]]></string>
     <string name="_bx_market_form_entry_input_sys_allow_purchase_to"><![CDATA[Who can purchase]]></string>
@@ -107,8 +107,11 @@
     <string name="_bx_market_form_entry_input_subentries"><![CDATA[Subproducts]]></string>
     <string name="_bx_market_form_entry_input_subentries_inf"><![CDATA[Leave empty if you don't want to create association.]]></string>
     <string name="_bx_market_form_entry_input_subentries_placeholder"><![CDATA[Type product name here...]]></string>
+    <string name="_bx_market_form_entry_input_files_version_caption_latest"><![CDATA[Latest version]]></string>
+    <string name="_bx_market_form_entry_input_files_version_caption_version"><![CDATA[Older versions]]></string>
+    <string name="_bx_market_form_entry_input_files_version_caption_update"><![CDATA[Updates]]></string>
 
-	<string name="_bx_market_acl_action_create_entry"><![CDATA[Create Product]]></string>
+  <string name="_bx_market_acl_action_create_entry"><![CDATA[Create Product]]></string>
 	<string name="_bx_market_acl_action_delete_entry"><![CDATA[Delete Product]]></string>
 	<string name="_bx_market_acl_action_download_entry"><![CDATA[Download Product]]></string>
 	<string name="_bx_market_acl_action_view_entry"><![CDATA[View Product]]></string>
