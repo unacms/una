@@ -228,23 +228,22 @@ class BxNtfsModule extends BxBaseModNotificationsModule
      */
     public function serviceGetNotifications($iOwnerId = 0, $aBrowseParams = array())
     {
-    	if(!$iOwnerId)
-			$iOwnerId = $this->getUserId();
+        if(!$iOwnerId)
+            $iOwnerId = $this->getUserId();
 
-		if(!$iOwnerId)
-			return 0;
+        if(!$iOwnerId)
+            return 0;
 
-		$aParams = $this->_prepareParams(BX_NTFS_TYPE_DEFAULT, $iOwnerId);
-		if(!empty($aBrowseParams) && is_array($aBrowseParams))
-		    $aParams = array_merge($aParams, $aBrowseParams);
+        $aParams = $this->_prepareParams(BX_NTFS_TYPE_DEFAULT, $iOwnerId);
+        if(!empty($aBrowseParams) && is_array($aBrowseParams))
+            $aParams = array_merge($aParams, $aBrowseParams);
 
-		list($aEvent) = $this->_oDb->getEvents($aParams, true);
+        list($aEvent) = $this->_oDb->getEvents($aParams, true);
 
         // returns parsed content for React Jot
-		if (!is_array($aBrowseParams) && $aBrowseParams === 'return_parsed_content')
-		    foreach ($aEvent as &$aContent)
+        if (!is_array($aBrowseParams) && $aBrowseParams === 'return_parsed_content')
+            foreach ($aEvent as &$aContent)
                 $this->_oTemplate->getPost($aContent, array('return_parsed_content'));
-
 
         return $aEvent;
     }
@@ -268,7 +267,7 @@ class BxNtfsModule extends BxBaseModNotificationsModule
      */
     public function serviceGetUnreadNotifications($iOwnerId = 0)
     {
-		return $this->serviceGetNotifications($iOwnerId, array('new' => 1));
+        return $this->serviceGetNotifications($iOwnerId, array('new' => 1));
     }
 
     /**
