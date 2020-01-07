@@ -315,7 +315,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_editor_default', '_adm_stg_cpt_option_sys_editor_default', 'sys_tinymce', 'digit', '', '', '', 50),
 (@iCategoryId, 'sys_captcha_default', '_adm_stg_cpt_option_sys_captcha_default', 'sys_recaptcha_new', 'digit', '', '', '', 51),
 (@iCategoryId, 'sys_player_default', '_adm_stg_cpt_option_sys_player_default', 'sys_html5', 'digit', '', '', '', 55),
-(@iCategoryId, 'sys_player_default_format', '_adm_stg_cpt_option_sys_player_default_quality', 'sd', 'select', 'sd,hd', '', '', 56),
+(@iCategoryId, 'sys_player_default_format', '_adm_stg_cpt_option_sys_player_default_format', 'sd', 'select', 'sd,hd', '', '', 56),
 
 (@iCategoryId, 'sys_live_updates_interval', '_adm_stg_cpt_option_sys_live_updates_interval', '10000', 'digit', '', '', '', 60),
 
@@ -489,8 +489,9 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_metatags_hashtags_max', '_adm_stg_cpt_option_sys_metatags_hashtags_max', '9', 'digit', '', '', '', 30),
 (@iCategoryId, 'sys_metatags_mentions_max', '_adm_stg_cpt_option_sys_metatags_mentions_max', '9', 'digit', '', '', '', 31),
 
-(@iCategoryId, 'sys_profile_bot', '_adm_stg_cpt_option_sys_profile_bot', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:23:"get_options_profile_bot";s:5:"class";s:13:"TemplServices";}', '', '', 40);
+(@iCategoryId, 'sys_profile_bot', '_adm_stg_cpt_option_sys_profile_bot', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:23:"get_options_profile_bot";s:5:"class";s:13:"TemplServices";}', '', '', 40),
 
+(@iCategoryId, 'sys_hide_post_to_context_for_privacy', '_adm_stg_cpt_option_sys_hide_post_to_context_for_privacy', '', 'list', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:44:"get_options_module_list_for_privacy_selector";s:5:"class";s:13:"TemplServices";}', '', '', 50);
 --
 -- CATEGORY: Storage
 --
@@ -770,6 +771,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 ('system', 'switch to any profile', NULL, '_sys_acl_action_switch_to_any_profile', '_sys_acl_action_switch_to_any_profile', 0, 0);
 SET @iIdActionSwitchToAnyProfile = LAST_INSERT_ID();
 
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'show membership levels in privacy groups', NULL, '_sys_acl_action_show_membership_levels_in_privacy_groups', '_sys_acl_action_show_membership_levels_in_privacy_groups_desc', 0, 0);
+SET @iIdActionShowMembershipLevelsInPrivacyGroups = LAST_INSERT_ID();
+
 CREATE TABLE `sys_acl_actions_track` (
   `IDAction` int(10) unsigned NOT NULL DEFAULT '0',
   `IDMember` int(10) unsigned NOT NULL default '0',
@@ -932,7 +937,10 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iAdministrator, @iIdActionUseMacros),
 
 -- switch to any profile
-(@iAdministrator, @iIdActionSwitchToAnyProfile);
+(@iAdministrator, @iIdActionSwitchToAnyProfile),
+
+-- show membership levels in privacy groups
+(@iAdministrator, @iIdActionShowMembershipLevelsInPrivacyGroups);
 
 
 CREATE TABLE `sys_acl_levels` (
@@ -4212,7 +4220,7 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('sys_cmts_administration', 'Sql', '', '', 'cmt_id', 'cmt_time', '', '', 20, NULL, 'start', '', 'cmt_text', '', 'like', 'reports', '', 192, 'BxTemplCmtsGridAdministration', '');
+('sys_cmts_administration', 'Sql', '', '', 'cmt_id', 'cmt_time', '', '', 20, NULL, 'start', '', 'cmt_text,email', '', 'like', 'reports', '', 192, 'BxTemplCmtsGridAdministration', '');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('sys_cmts_administration', 'checkbox', '_sys_select', '2%', 0, '0', '', 1),

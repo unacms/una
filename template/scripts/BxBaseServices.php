@@ -363,6 +363,23 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
         return $aResult;
     }
+    
+    public function serviceGetOptionsModuleListForPrivacySelector()
+    {
+        $aResult = array();
+        $BxDolModuleQuery = BxDolModuleQuery::getInstance();
+        $aModules = $BxDolModuleQuery->getModulesBy(array('type' => 'modules', 'active' => 1));
+        foreach($aModules as $aModule){
+            $oModule = BxDolModule::getInstance($aModule['name']);
+            if($oModule instanceof iBxDolContentInfoService){
+                if (!BxDolRequest::serviceExists($aModule['name'], 'act_as_profile'))
+                    continue;
+                $aResult[$aModule['name']] = $aModule['title'];
+            }
+        }
+        return $aResult;
+    }
+    
 
     public function serviceGetOptionsEmbedDefault()
     {

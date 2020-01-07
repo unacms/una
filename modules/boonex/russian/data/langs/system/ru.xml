@@ -1735,6 +1735,8 @@
     <string name="_sys_acl_action_use_macros_desc"><![CDATA[Использовать специально сконструированный вызов, для вставки динамического контента практически в любой текст]]></string>
 	<string name="_sys_acl_action_set_acl_level"><![CDATA[Назначить членство]]></string>
 	<string name="_sys_acl_action_set_acl_level_desc"><![CDATA[Назначить членство для профилей]]></string>
+  <string name="_sys_acl_action_show_membership_levels_in_privacy_groups"><![CDATA[Показывать членство в группах конфиденциальности]]></string>
+  <string name="_sys_acl_action_show_membership_levels_in_privacy_groups_desc"><![CDATA[Показывать членство в группах конфиденциальности]]></string>
   <string name="_sys_acl_action_set_badge"><![CDATA[Назначение бейджей]]></string>
   <string name="_sys_acl_action_set_badge_desc"><![CDATA[Назначение бейджей для контента]]></string>
   <string name="_sys_acl_action_switch_to_any_profile"><![CDATA[Switch to any profile]]></string>
