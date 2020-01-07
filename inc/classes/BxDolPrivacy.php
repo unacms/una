@@ -339,7 +339,7 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
     public function addAclGroups($aValues, $iOwnerId, $aParams)
     {
 		$aCheck = checkActionModule($iOwnerId, 'show membership levels in privacy groups', 'system', false);
-		if($aCheck[CHECK_ACTION_RESULT] != CHECK_ACTION_RESULT_ALLOWED)
+		if($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
 			return $aValues;
         
 		$aLevels = BxDolAcl::getInstance()->getMemberships(false, true, true, true);
