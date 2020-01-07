@@ -758,17 +758,17 @@ class BxBaseStudioStore extends BxDolStudioStore
 			return array_merge(array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_str_err_download_failed')), $mixedResult);
     }
 
-	protected function getUpdate($sModuleName, $bAutoUpdate = false)
+    protected function getUpdate($sModuleName, $bApplyUpdate = false)
     {
-        $mixedResult = $this->loadUpdate($sModuleName, $bAutoUpdate);
+        $mixedResult = $this->loadUpdate($sModuleName, $bApplyUpdate);
         if($mixedResult === true)
-        	return array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'message' => _t('_adm_str_msg_download' . ($bAutoUpdate ? '_and_install' : '') . '_successfully'));
+            return array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'message' => _t('_adm_str_msg_download' . ($bApplyUpdate ? '_and_install' : '') . '_successfully'));
 
-		if(is_string($mixedResult))
-			return array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => (!empty($mixedResult) ? $mixedResult : _t('_adm_str_err_download_failed')));
+        if(is_string($mixedResult))
+                return array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => (!empty($mixedResult) ? $mixedResult : _t('_adm_str_err_download_failed')));
 
-		if(is_array($mixedResult))
-        	return array_merge(array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_str_err_download_failed')), $mixedResult);
+        if(is_array($mixedResult))
+            return array_merge(array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_str_err_download_failed')), $mixedResult);
     }
 
     protected function displayProducts($mixedItems, $aParams = array())

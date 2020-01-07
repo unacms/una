@@ -65,7 +65,7 @@ class BxDolStudioStore extends BxTemplStudioPage
                     $aResult = $this->getUpdate($sModuleName);
                     break;
 
-				case 'get-update-and-install':
+                case 'get-update-and-install':
                     $sModuleName = bx_process_input(bx_get('str_id'));
                     $aResult = $this->getUpdate($sModuleName, true);
                     break;
@@ -356,9 +356,9 @@ class BxDolStudioStore extends BxTemplStudioPage
     /*
      * Load update's package publicly.
      */
-	protected function loadUpdate($sModuleName, $bAutoUpdate = false)
+    protected function loadUpdate($sModuleName, $bApplyUpdate = false)
     {
-        return BxDolStudioInstallerUtils::getInstance()->downloadUpdatePublic($sModuleName, $bAutoUpdate);
+        return BxDolStudioInstallerUtils::getInstance()->downloadUpdatePublic($sModuleName, $bApplyUpdate);
     }
 
     protected function getBaseUrl($mixedParams = array())
