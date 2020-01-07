@@ -161,20 +161,20 @@ BxDolStudioStore.prototype.getUpdate = function(sModuleName, oButton) {
 };
 
 BxDolStudioStore.prototype.getUpdateAndInstall = function(sModuleName, oButton) {
-	var $this = this;
+    var $this = this;
 
-	var onResult = function(oData, oButton) {
-		if(oData.code != 0) {
-			$this._onGetFile(oData, oButton);
-			return;
-		}
+    var onResult = function(oData, oButton) {
+        if(oData.code != 0) {
+            $this._onGetFile(oData, oButton);
+            return;
+        }
 
-		bx_loading($this.sIdPageContent, false);
+        bx_loading($this.sIdPageContent, false);
 
-		$(oButton).parents('.bx-std-product:first').hide();
-	};
+        $(oButton).parents('.bx-std-product:first').hide();
+    };
 
-	this._getFile('get-update-and-install', sModuleName, onResult, oButton);
+    this._getFile('get-update-and-install', sModuleName, onResult, oButton);
 };
 
 BxDolStudioStore.prototype._getFile = function(sAction, mixedId, onResult, oButton) {
@@ -202,19 +202,33 @@ BxDolStudioStore.prototype._getFile = function(sAction, mixedId, onResult, oButt
 };
 
 BxDolStudioStore.prototype._onGetFile = function(oData, oButton) {
-	bx_loading_btn(oButton, false);
+    bx_loading_btn(oButton, false);
 
-	switch(parseInt(oData.code)) {
-		case 1:
-			$(oButton).removeClass('bx-btn-disabled');
-			break;
-		case 2:
-			$(oButton).val(_t('_adm_btn_queued_submit'));
-			break;
-	}
+    oButton = $(oButton);
+    switch(parseInt(oData.code)) {
+        case 1:
+            oButton.removeClass('bx-btn-disabled');
+            break;
+        case 2:
+            if(oButton.is("input[type = 'button']"))
+                oButton.val(_t('_adm_btn_queued_submit'));
+            else
+                oButton.html(_t('_adm_btn_queued_submit'));
+            break;
+    }
 
-	if(oData.message)
-		this.showNotification(oData.message);
+    if(oData.message)
+        this.showNotification(oData.message);
+
+    if(oData.reload != undefined) {
+        var iReload = parseInt(Number(oData.reload));
+        if(iReload != oData.reload)
+            document.location = document.location;
+        else
+            setTimeout(function() {
+                document.location = document.location;
+            }, iReload);
+    }   
 };
 
 BxDolStudioStore.prototype.info = function(sModuleName, oLink) {

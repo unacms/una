@@ -470,7 +470,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
         if(!defined('BX_DOL_CRON_EXECUTE') && !self::isRealOwner()) {
             if(!$this->addTransientJob(self::getNameDownloadFile($aParams['module_name']), 'download_file_complete', array($sFilePath, array_merge($aParams, array('auto_action' => $sAutoAction)))))
-                return _t('_adm_str_err_download_failed');
+                return array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_str_err_download_failed'));
 
             return array('code' => BX_DOL_STUDIO_IU_RC_SCHEDULED, 'message' => _t('_adm_str_msg_download' . ($bAutoAction ? '_and_install' : '') . '_scheduled'));
         }
@@ -485,7 +485,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
             if($bTransient)
                 $this->emailNotify($mixedResult);
 
-            return $mixedResult;
+            return array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => $mixedResult);
         }
 
         //--- Copy unarchived package.
@@ -498,7 +498,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
             if($bTransient)
                 $this->emailNotify($mixedResult);
 
-            return $mixedResult;
+            return array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => $mixedResult);
         }
 
         if(!$bAutoAction)
@@ -506,14 +506,13 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
         //--- Autoinstall the downloaded package if it's needed.
         $aResult = $this->perform($sHomePath, $sAutoAction, $aParams);
-        if((int)$aResult['code'] != 0) {
-            if($bTransient)
-                $this->emailNotify($aResult['message']);
+        if((int)$aResult['code'] == 0) 
+            return true;
 
-            return $aResult['message'];
-        }
+        if($bTransient)
+            $this->emailNotify($aResult['message']);
 
-        return true;
+        return array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => $aResult['message']);
     }
 
     protected function performWrite($aItem, &$sFilePath)

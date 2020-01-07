@@ -194,7 +194,7 @@ class BxDolStudioStore extends BxTemplStudioPage
                 ));
             }
 
-            echo json_encode($aResult);
+            echoJson($aResult);
             exit;
         }
     }
