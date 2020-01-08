@@ -758,17 +758,20 @@ class BxBaseStudioStore extends BxDolStudioStore
 			return array_merge(array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_str_err_download_failed')), $mixedResult);
     }
 
-	protected function getUpdate($sModuleName, $bAutoUpdate = false)
+    protected function getUpdate($sModuleName, $bApplyUpdate = false)
     {
-        $mixedResult = $this->loadUpdate($sModuleName, $bAutoUpdate);
+        $aResult = array();
+
+        $mixedResult = $this->loadUpdate($sModuleName, $bApplyUpdate);
         if($mixedResult === true)
-        	return array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'message' => _t('_adm_str_msg_download' . ($bAutoUpdate ? '_and_install' : '') . '_successfully'));
+            $aResult = array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'message' => _t('_adm_str_msg_download' . ($bApplyUpdate ? '_and_install' : '') . '_successfully'));
+        else if(is_string($mixedResult))
+            $aResult = array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => (!empty($mixedResult) ? $mixedResult : _t('_adm_str_err_download_failed')));
+        else if(is_array($mixedResult))
+            $aResult = array_merge(array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_str_err_download_failed')), $mixedResult);
 
-		if(is_string($mixedResult))
-			return array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => (!empty($mixedResult) ? $mixedResult : _t('_adm_str_err_download_failed')));
-
-		if(is_array($mixedResult))
-        	return array_merge(array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_str_err_download_failed')), $mixedResult);
+        $aResult['reload'] = 3000;
+        return $aResult;
     }
 
     protected function displayProducts($mixedItems, $aParams = array())
@@ -963,12 +966,13 @@ class BxBaseStudioStore extends BxDolStudioStore
         $sResult = '';
         foreach($mixedItems as $aItem) {
             $bDownloadable = (int)$aItem['is_file'] == 1;
+            $bQueued = $this->oDb->isQueued('download', $aItem['name']);
 
             $sIcon = !empty($aItem['thumbnail']['big']) ? $aItem['thumbnail']['big'] : BxDolStudioUtils::getIconDefault(BX_DOL_MODULE_TYPE_MODULE);
-			$bIcon = strpos($sIcon, '.') !== false;
+            $bIcon = strpos($sIcon, '.') !== false;
 
             $sImage = !empty($aItem['cover']['big']) ? $aItem['cover']['big'] : '';
-			$bImage = strpos($sImage, '.') !== false;
+            $bImage = strpos($sImage, '.') !== false;
 
             $sResult .= $oTemplate->parseHtmlByName('str_update_v2.html', array(
                 'js_object' => $sJsObject,
@@ -1005,11 +1009,15 @@ class BxBaseStudioStore extends BxDolStudioStore
                 'vendor' => $aItem['author_name'],
                 'versions' => _t('_adm_str_txt_update_from_to', $aItem['file_version'], $aItem['file_version_to']),
                 'bx_if:show_download' => array(
-                    'condition' => $bDownloadable,
+                    'condition' => $bDownloadable && !$bQueued,
                     'content' => array(
-	            		'caption' => _t($this->bAuthAccessUpdates ? '_adm_btn_download_submit' : '_adm_btn_install_submit'),
-	            		'on_click' => $sJsObject . "." . ($this->bAuthAccessUpdates ? "getFile(" . $aItem['file_id'] . ", this)" : "getUpdateAndInstall('" . $aItem['name'] . "', this)")
+                        'caption' => _t($this->bAuthAccessUpdates ? '_adm_btn_download_submit' : '_adm_btn_install_submit'),
+                        'on_click' => $sJsObject . "." . ($this->bAuthAccessUpdates ? "getFile(" . $aItem['file_id'] . ", this)" : "getUpdateAndInstall('" . $aItem['name'] . "', this)")
                     )
+                ),
+                'bx_if:show_queued_disabled' => array(
+                    'condition' => $bDownloadable && $bQueued,
+                    'content' => array()
                 )
             ));
         }

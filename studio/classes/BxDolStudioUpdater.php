@@ -9,7 +9,7 @@
 
 class BxDolStudioUpdater extends BxDolStudioInstaller
 {
-	protected $_aModule;
+    protected $_aModule;
 
     public function __construct($aConfig)
     {
@@ -42,6 +42,7 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
 
     public function update($aParams)
     {
+        $bAutoUpdate = isset($aParams['autoupdate']) && (bool)$aParams['autoupdate'];
     	$bHtmlResponce = isset($aParams['html_response']) && (bool)$aParams['html_response'];
 
         $aResult = array(
@@ -52,19 +53,22 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
         $aModuleInfo = $this->oDb->getModulesBy(array('type' => 'path_and_uri', 'path' => $this->_aConfig['module_dir'], 'uri' => $this->_aConfig['module_uri']));
         if(!$aModuleInfo)
             return array_merge($aResult, array(
+                'code' => BX_DOL_STUDIO_IU_RCE_NOT_FOUND,
                 'message' => $this->_displayResult('check_module_exists', false, '_adm_err_modules_module_not_found', $bHtmlResponce),
                 'result' => false
             ));
 
-		if(isset($aParams['module_name']) && strcmp($aParams['module_name'], $aModuleInfo['name']) !== 0)
-			return array_merge($aResult, array(
+        if(isset($aParams['module_name']) && strcmp($aParams['module_name'], $aModuleInfo['name']) !== 0)
+            return array_merge($aResult, array(
+                'code' => BX_DOL_STUDIO_IU_RCE_NOT_AVAILABLE,
                 'message' => $this->_displayResult('check_module_matches', false, '_adm_err_modules_module_not_match', $bHtmlResponce),
                 'result' => false
             ));
 
-		//--- Check version compatibility ---//
+        //--- Check version compatibility ---//
         if(!$this->_isCompatibleWith())
             return array(
+                'code' => BX_DOL_STUDIO_IU_RCE_WSV_MU,
                 'message' => $this->_displayResult('check_script_version', false, _t('_adm_err_modules_wrong_version_script_update', $aModuleInfo['title']), $bHtmlResponce),
                 'result' => false
             );
@@ -72,6 +76,7 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
         //--- Check version ---//
         if(version_compare($aModuleInfo['version'], $this->_aConfig['version_from']) != 0)
             return array_merge($aResult, array(
+                'code' => BX_DOL_STUDIO_IU_RCE_WMV,
                 'message' => $this->_displayResult('check_module_version', false, '_adm_err_modules_wrong_version', $bHtmlResponce),
                 'result' => false
             ));
@@ -84,12 +89,14 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
         $bAutoupdateForceModifiedFiles = getParam('sys_autoupdate_force_modified_files') == 'on';
 
     	if(!empty($aFilesChanged) && !$bAutoupdateForceModifiedFiles) 
-    		return array_merge($aResult, array(
+            return array_merge($aResult, array(
+                'code' => BX_DOL_STUDIO_IU_RCE_MODIFIED,
                 'message' => $this->_displayResult('check_module_hash', false, '_adm_err_modules_module_was_modified', $bHtmlResponce),
                 'result' => false
             ));
-		else if($fChangedPercent > BX_FORCE_AUTOUPDATE_MAX_CHANGED_FILES_PERCENT && $bAutoupdateForceModifiedFiles) 
-			return array_merge($aResult, array(
+        else if($fChangedPercent > BX_FORCE_AUTOUPDATE_MAX_CHANGED_FILES_PERCENT && $bAutoupdateForceModifiedFiles) 
+            return array_merge($aResult, array(
+                'code' => BX_DOL_STUDIO_IU_RCE_CHECKSUM_FAILED,
                 'message' => $this->_displayResult('check_module_hash', false, _t('_sys_upgrade_files_checksum_failed_too_many_module', round($fChangedPercent * 100), $aModuleInfo['title']), $bHtmlResponce),
                 'result' => false
             ));

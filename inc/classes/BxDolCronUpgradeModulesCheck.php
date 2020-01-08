@@ -14,7 +14,11 @@ class BxDolCronUpgradeModulesCheck extends BxDolCron
         if('on' != getParam('sys_autoupdate'))
             return;
 
-		BxDolStudioInstallerUtils::getInstance()->performModulesUpgrade();
+        BxDolStudioInstallerUtils::getInstance()->performModulesUpgrade(array(
+            'directly' => true,
+            'transient' => true,
+            'autoupdate' => true
+        ));
     }
 }
 

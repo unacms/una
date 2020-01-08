@@ -106,7 +106,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             'update_relations_for_all' => array(
                 'title' => _t('_adm_txt_modules_update_relations_for_all'),
             ),
-			'process_connections' => array(
+            'process_connections' => array(
                 'title' => _t('_adm_txt_modules_process_connections'),
             ),
             'process_deleted_profiles' => array(
@@ -159,6 +159,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         //--- Check whether the module was already installed ---//
         if($this->oDb->isModule($this->_aConfig['home_uri']))
             return array(
+                'code' => BX_DOL_STUDIO_IU_RCE_ALREADY_PERFORMED,
                 'message' => _t('_adm_err_modules_already_installed'),
                 'result' => false
             );
@@ -171,6 +172,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         //--- Check mandatory settings ---//
         if($this->oDb->isModuleParamsUsed($this->_aConfig['home_uri'], $this->_aConfig['home_dir'], $this->_aConfig['db_prefix'], $this->_aConfig['class_prefix']))
             return array(
+                'code' => BX_DOL_STUDIO_IU_RCE_UNIQUE_PARAMS_USED,
                 'message' => _t('_adm_txt_modules_params_used'),
                 'result' => false
             );
@@ -178,6 +180,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         //--- Check version compatibility ---//
         if(!$this->_isCompatibleWith())
             return array(
+                'code' => BX_DOL_STUDIO_IU_RCE_WSV_MI,
                 'message' => $this->_displayResult('check_script_version', false, '_adm_err_modules_wrong_version_script', $bHtmlResponce),
                 'result' => false
             );
@@ -191,9 +194,9 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             if($aLanguage['uri'] == 'en')
                 continue;
 
-			$aLanguageConfig = self::getModuleConfig(BX_DIRECTORY_PATH_MODULES . $aLanguage['path'] . '/install/config.php');
-			if(empty($aLanguageConfig))
-				continue;
+            $aLanguageConfig = self::getModuleConfig(BX_DIRECTORY_PATH_MODULES . $aLanguage['path'] . '/install/config.php');
+            if(empty($aLanguageConfig))
+                    continue;
 
             if(!isset($aLanguageConfig['includes'][$sModuleUri]) || empty($aLanguageConfig['includes'][$sModuleUri]))
                 continue;
@@ -261,11 +264,12 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         //--- Check whether the module was already uninstalled ---//
         if(!$this->oDb->isModule($this->_aConfig['home_uri']))
             return array(
+                'code' => BX_DOL_STUDIO_IU_RCE_ALREADY_PERFORMED,
                 'message' => _t('_adm_err_modules_already_uninstalled'),
                 'result' => false
             );
 
-		if($bAutoDisable) {
+        if($bAutoDisable) {
             $aResultDisable = $this->disable($aParams);
             if(!$aResultDisable['result'])
             	return $aResultDisable;
@@ -362,6 +366,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         //--- Check whether the module is installed ---//
         if(empty($aModule) || !is_array($aModule))
             return array(
+                'code' => BX_DOL_STUDIO_IU_RCE_NOT_FOUND,
                 'message' => _t('_adm_err_modules_module_not_installed'),
                 'result' => false
             );
@@ -369,18 +374,19 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         //--- Check whether the module is already enabled ---//
         if((int)$aModule['enabled'] != 0)
             return array(
+                'code' => BX_DOL_STUDIO_IU_RCE_ALREADY_PERFORMED,
                 'message' => _t('_adm_err_modules_already_enabled'),
                 'result' => false
             );
 
-		$aResult = array();
-		if(!empty($this->_aConfig['before_enable'])) {
-        	$aResult = $this->_perform('before_enable', $aParams);
-        	if($aResult && !$aResult['result'])
-        		return $aResult;
-		}
+        $aResult = array();
+        if(!empty($this->_aConfig['before_enable'])) {
+            $aResult = $this->_perform('before_enable', $aParams);
+            if($aResult && !$aResult['result'])
+                return $aResult;
+        }
 
-		$aResult = array();
+        $aResult = array();
         bx_alert('system', 'before_enable', 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));
         if ($aResult && !$aResult['result'])
             return $aResult;
@@ -398,13 +404,13 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
             $this->cleanupMemoryAfterAction($aModule['uri'], $aModule['id']);
 
-		    $this->_onEnableAfter();
+            $this->_onEnableAfter();
 
             if(!empty($this->_aConfig['enable_success']))
             	$this->_perform('enable_success', $aParams);
         }
         else {
-        	if(!empty($this->_aConfig['enable_failed']))
+            if(!empty($this->_aConfig['enable_failed']))
             	$this->_perform('enable_failed', $aParams);
         }
 
@@ -423,6 +429,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         //--- Check whether the module is installed ---//
         if(empty($aModule) || !is_array($aModule))
             return array(
+                'code' => BX_DOL_STUDIO_IU_RCE_NOT_FOUND,
                 'message' => _t('_adm_err_modules_module_not_installed'),
                 'result' => false
             );
@@ -430,18 +437,19 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         //--- Check whether the module is already disabled ---//
         if((int)$aModule['enabled'] == 0)
             return array(
+                'code' => BX_DOL_STUDIO_IU_RCE_ALREADY_PERFORMED,
                 'message' => _t('_adm_err_modules_already_disabled'),
                 'result' => false
             );
 
-		$aResult = array();
-		if(!empty($this->_aConfig['before_disable'])) {
-        	$aResult = $this->_perform('before_disable', $aParams);
-        	if($aResult && !$aResult['result'])
-        		return $aResult;
-		}
+        $aResult = array();
+        if(!empty($this->_aConfig['before_disable'])) {
+            $aResult = $this->_perform('before_disable', $aParams);
+            if($aResult && !$aResult['result'])
+                return $aResult;
+        }
 
-		$aResult = array();
+        $aResult = array();
         bx_alert('system', 'before_disable', 0, false, array ('config' => $this->_aConfig, 'result' => &$aResult));
         if ($aResult && !$aResult['result'])
             return $aResult;
@@ -948,12 +956,16 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         return BX_DOL_STUDIO_INSTALLER_SUCCESS;
     }
 
-	protected function _perform($sOperationName, $aParams = array())
+    protected function _perform($sOperationName, $aParams = array())
     {
     	$bHtmlResponce = isset($aParams['html_response']) && (bool)$aParams['html_response'];
 
         if(!defined('BX_SKIP_INSTALL_CHECK') && !defined('BX_DOL_CRON_EXECUTE') && !$GLOBALS['logged']['admin'])
-            return array('message' => '_adm_mod_err_only_admin_can_perform_operations_with_modules', 'result' => false);
+            return array(
+                'code' => BX_DOL_STUDIO_IU_RCE_NOT_AUTHORIZED,
+                'message' => '_adm_mod_err_only_admin_can_perform_operations_with_modules', 
+                'result' => false
+            );
 
         $sMessage = '';
         foreach($this->_aConfig[$sOperationName] as $sAction => $iEnabled) {
@@ -971,7 +983,11 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
 
             //--- On Failed ---//
             $sMethodFailed = $sMethod . 'Failed';
-            return array('message' => $this->_displayResult($sAction, false, method_exists($this, $sMethodFailed) ? $this->$sMethodFailed($mixedResult) : $this->actionOperationFailed($mixedResult), $bHtmlResponce), 'result' => false);
+            return array(
+                'code' => BX_DOL_STUDIO_IU_RCE_SUBACTION_FAILED,
+                'message' => $this->_displayResult($sAction, false, method_exists($this, $sMethodFailed) ? $this->$sMethodFailed($mixedResult) : $this->actionOperationFailed($mixedResult), $bHtmlResponce), 
+                'result' => false
+            );
         }
 
         if($this->_bShowOnSuccess)

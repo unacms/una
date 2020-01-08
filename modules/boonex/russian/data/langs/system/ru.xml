@@ -3005,6 +3005,7 @@
 	<string name="_sys_upgrade_files_checksum_failed_too_many"><![CDATA[Невозможно применить обновление, потому что слишком много файлов ({0}%) было изменено]]></string>
 	<string name="_sys_upgrade_files_checksum_failed_too_many_module"><![CDATA[Невозможно применить обновление, потому что слишком много файлов ({0}%) было изменено в {1} модуле]]></string>
 	<string name="_sys_upgrade_get_version_info_failed"><![CDATA[Невозможно получить информацию о версии. Пожалуйста, проверьте соединение с Интернетом на веб-сервере или в брандмауэре.]]></string>
+        <string name="_sys_upgrade_modules_upgrade_first"><![CDATA[Некоторые из ваших модулей устарели. Для начала Вам нужно обновить их в Студии &gt; Магазин приложений &gt; Обновления.]]></string>
 	<string name="_sys_upgrade_patch_checksum_failed"><![CDATA[Проверочная сумма загруженного патч-файла неверна]]></string>
 	<string name="_sys_upgrade_patch_download_failed"><![CDATA[Не удалось скачать патч или скачанный файл не может быть сохранён]]></string>
 	<string name="_sys_upgrade_patch_invalid"><![CDATA[Неправильный патч, он не может быть применён для Вашей версии или имеет неправильную структуру файлов.]]></string>
