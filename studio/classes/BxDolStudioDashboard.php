@@ -67,7 +67,7 @@ class BxDolStudioDashboard extends BxTemplStudioPage
 
             	case 'perform_upgrade':
                     $oUpgrader = bx_instance('BxDolUpgrader');
-                    if(!$oUpgrader->prepare())
+                    if(!$oUpgrader->prepare(false))
                         $aResult = array('code' => 1, 'message' => $oUpgrader->getError());
                     else
                         $aResult = array('code' => 0, 'message' => _t('_adm_dbd_msg_upgrade_started', BX_DOL_URL_STUDIO));

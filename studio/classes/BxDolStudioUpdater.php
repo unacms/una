@@ -9,7 +9,7 @@
 
 class BxDolStudioUpdater extends BxDolStudioInstaller
 {
-	protected $_aModule;
+    protected $_aModule;
 
     public function __construct($aConfig)
     {

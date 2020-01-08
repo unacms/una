@@ -18,12 +18,20 @@ class BxDolUpgrader extends BxDol
      * After all check are successfully completed, transient cron job is set to run upgrade upon next cron run.
      * @return true if upgrade was successfully scheduled to run, or false on error (you can call @see getError to determine particular error message)
      */
-    public function prepare()
+    public function prepare($bAuto = true)
     {
         $this->setError(false);
         $iUmaskSave = umask(0);
 
         while(true) {
+
+            if(!$bAuto) {
+                $aUpdates = BxDolStudioInstallerUtils::getInstance()->checkUpdates();
+                if(!empty($aUpdates) && is_array($aUpdates)) {
+                    $this->setError(_t('_sys_upgrade_modules_upgrade_first'));
+                    break;
+                }
+            }
 
             $aVersionUpdateInfo = $this->getVersionUpdateInfo();
             if (null === $aVersionUpdateInfo) {
