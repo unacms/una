@@ -24,11 +24,14 @@ class BxBaseAcl extends BxDolAcl
     	if(empty($aLevel) || !is_array($aLevel))
             return '';
 
-        $iUserId = bx_get_logged_profile_id();
+        $iLoggedProfileId = bx_get_logged_profile_id();
         $aLevelInfo = $this->getMembershipInfo($aLevel['id']);
 
+		
+		$aCheck = checkActionModule($iLoggedProfileId, 'show membership private info', 'system', false);
+		
         $aTmplVarsPrivateInfo = array();
-        $bTmplVarsPrivateInfo = $iProfileId == $iUserId && !empty($aLevel['date_starts']);
+        $bTmplVarsPrivateInfo = ((BxDolProfile::getInstance($iProfileId)->getAccountId() == BxDolProfile::getInstance($iLoggedProfileId)->getAccountId() || $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED) && !empty($aLevel['date_starts']));
         if($bTmplVarsPrivateInfo)
             $aTmplVarsPrivateInfo = array(
                 'date_start' => bx_time_js($aLevel['date_starts']),

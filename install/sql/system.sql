@@ -775,6 +775,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 ('system', 'show membership levels in privacy groups', NULL, '_sys_acl_action_show_membership_levels_in_privacy_groups', '_sys_acl_action_show_membership_levels_in_privacy_groups_desc', 0, 0);
 SET @iIdActionShowMembershipLevelsInPrivacyGroups = LAST_INSERT_ID();
 
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'show membership private info', NULL, '_sys_acl_action_show_membership_private_info', '_sys_acl_action_show_membership_private_info_desc', 0, 0);
+SET @iIdActionShowMembershipPrivateInfo = LAST_INSERT_ID();
+
 CREATE TABLE `sys_acl_actions_track` (
   `IDAction` int(10) unsigned NOT NULL DEFAULT '0',
   `IDMember` int(10) unsigned NOT NULL default '0',
@@ -940,7 +944,11 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iAdministrator, @iIdActionSwitchToAnyProfile),
 
 -- show membership levels in privacy groups
-(@iAdministrator, @iIdActionShowMembershipLevelsInPrivacyGroups);
+(@iAdministrator, @iIdActionShowMembershipLevelsInPrivacyGroups),
+
+-- show membership private info
+(@iModerator, @iIdActionShowMembershipPrivateInfo),
+(@iAdministrator, @iIdActionShowMembershipPrivateInfo);
 
 
 CREATE TABLE `sys_acl_levels` (
