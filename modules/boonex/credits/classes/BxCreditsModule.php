@@ -72,6 +72,15 @@ class BxCreditsModule extends BxBaseModGeneralModule
         ));
     }
 
+    public function serviceGetSafeServices()
+    {
+        return array (
+            'GetBlockBundles' => '',
+            'GetBlockOrders' => '',
+            'GetBlockHistory' => '',
+        );
+    }
+
     public function serviceGetCheckoutUrl()
     {
         return $this->_oConfig->getCheckoutUrl();
@@ -153,6 +162,21 @@ class BxCreditsModule extends BxBaseModGeneralModule
         );
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_credits Credits
+     * @subsection bx_credits-page_blocks Page Blocks
+     * @subsubsection bx_credits-get_block_bundles get_block_bundles
+     * 
+     * @code bx_srv('bx_credits', 'get_block_bundles'); @endcode
+     * 
+     * Get page block with bundles
+     * 
+     * @see BxCreditsModule::serviceGetBlockBundles
+     */
+    /** 
+     * @ref bx_credits-get_block_bundles "get_block_bundles"
+     */
     public function serviceGetBlockBundles()
     {
         return $this->_oTemplate->getBlockBundles();

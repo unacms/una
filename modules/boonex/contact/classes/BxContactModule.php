@@ -26,13 +26,21 @@ class BxContactModule extends BxDolModule
     /**
      * SERVICE METHODS
      */
+
+    public function serviceGetSafeServices()
+    {
+        return array (
+            'GetBlockForm' => '',
+        );
+    }    
+
     /**
      * @page service Service Calls
      * @section bx_contact Contact
      * @subsection bx_contact-page_blocks Page Blocks
      * @subsubsection bx_contact-get_block_form get_block_form
      * 
-     * @code bx_srv('bx_contact', 'get_block_form', [...]); @endcode
+     * @code bx_srv('bx_contact', 'get_block_form'); @endcode
      * 
      * Get page block with contact form.
      *

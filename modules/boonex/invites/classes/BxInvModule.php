@@ -75,6 +75,15 @@ class BxInvModule extends BxDolModule
      * SERVICE METHODS
      */
     
+    public function serviceGetSafeServices()
+    {
+        return array (
+            'GetBlockInvite' => '',
+            'GetBlockFormInvite' => '',
+            'GetBlockFormRequest' => '',
+        );
+    }
+
     /**
      * @page service Service Calls
      * @section bx_invites Invitations

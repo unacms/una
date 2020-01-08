@@ -187,11 +187,51 @@ class BxCnvModule extends BxBaseModTextModule
         echo(json_encode($a));
     }
 
+    public function serviceGetSafeServices()
+    {
+        return array (
+            // other
+            'ModuleIcon' => '',
+            'GetLink' => '',
+            // forms
+            'GetCreatePostForm' => '',
+            'EntityEdit' => '',
+            'EntityDelete' => '',
+            // page blocks
+            'EntityTextBlock' => '',
+            'EntityInfo' => '',
+            'EntityComments' => '',
+            'EntityAttachments' => '',
+            // menu
+            'EntityAllActions' => '',
+            'EntityActions' => '',
+            'MyEntriesActions' => '',
+            // own methods
+            'ConversationsInFolder' => '',
+        );
+    }
+
     public function serviceIsAllowedContact($iProfileId)
     {
         return $this->checkAllowedContact($iProfileId) === CHECK_ACTION_RESULT_ALLOWED;
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_convos Conversations
+     * @subsection bx_convos-page_blocks Page Blocks
+     * @subsubsection bx_convos-conversations_in_folder conversations_in_folder
+     * 
+     * @code bx_srv('bx_convos', 'conversations_in_folder', [...]); @endcode
+     * 
+     * Display conversations in particulr folder for currently logged-in user
+     * @param $iFolderId folder ID
+     * 
+     * @see BxCnvModule::serviceConversationsInFolder
+     */
+    /** 
+     * @ref bx_convos-conversations_in_folder "conversations_in_folder"
+     */
     public function serviceConversationsInFolder ($iFolderId = BX_CNV_FOLDER_INBOX)
     {
         $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->CNF['OBJECT_GRID']);

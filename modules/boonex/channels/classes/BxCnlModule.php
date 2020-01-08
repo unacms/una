@@ -118,6 +118,19 @@ class BxCnlModule extends BxBaseModGroupsModule
         return $this->_oDb->removeContentFromChannel($iContentId, $sModuleName);
     }
 
+    public function serviceGetSafeServices()
+    {
+        $a = parent::serviceGetSafeServices();
+        unset($a['GetCreatePostForm']);
+        unset($a['EntityCreate']);
+        return array_merge($a, array (
+            'EntityBreadcrumb' => '',
+            'EntityParent' => '',
+            'EntityChilds' => '',
+            'SearchResultByHashtag' => '',
+        ));
+    }
+
     public function serviceGetWidgetNotices()
     {
         $CNF = &$this->_oConfig->CNF;
@@ -148,6 +161,22 @@ class BxCnlModule extends BxBaseModGroupsModule
         return $aResult;
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_channels Channels
+     * @subsection bx_channels-page_blocks Page Blocks
+     * @subsubsection bx_channels-entity_breadcrumb entity_breadcrumb
+     * 
+     * @code bx_srv('bx_channels', 'entity_breadcrumb', [...]); @endcode
+     * 
+     * Display channel breadcrumb
+     * @param $iContentId channel content ID
+     * 
+     * @see BxCnlModule::serviceEntityBreadcrumb
+     */
+    /** 
+     * @ref bx_channels-entity_breadcrumb "entity_breadcrumb"
+     */
     public function serviceEntityBreadcrumb($iContentId = 0)
     {
     	if(!$iContentId)
@@ -162,17 +191,65 @@ class BxCnlModule extends BxBaseModGroupsModule
         return $this->_oTemplate->entryBreadcrumb($aContentInfo);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_channels Channels
+     * @subsection bx_channels-page_blocks Page Blocks
+     * @subsubsection bx_channels-entity_parent entity_parent
+     * 
+     * @code bx_srv('bx_channels', 'entity_parent', [...]); @endcode
+     * 
+     * Display block with parent channel
+     * @param $iContentId channel content ID
+     * 
+     * @see BxCnlModule::serviceEntityParent
+     */
+    /** 
+     * @ref bx_channels-entity_parent "entity_parent"
+     */
     public function serviceEntityParent($iContentId = 0)
     {
         return $this->_serviceTemplateFunc('entryParent', $iContentId);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_channels Channels
+     * @subsection bx_channels-page_blocks Page Blocks
+     * @subsubsection bx_channels-entity_childs entity_childs
+     * 
+     * @code bx_srv('bx_channels', 'entity_childs', [...]); @endcode
+     * 
+     * Display block with child channels
+     * @param $iContentId channel content ID
+     * 
+     * @see BxCnlModule::serviceEntityChilds
+     */
+    /** 
+     * @ref bx_channels-entity_childs "entity_childs"
+     */
     public function serviceEntityChilds($iContentId = 0)
     {
         return $this->_serviceTemplateFunc('entryChilds', $iContentId);
     }
 
-    function serviceSearchResultByHashtag($iContentId = 0)
+    /**
+     * @page service Service Calls
+     * @section bx_channels Channels
+     * @subsection bx_channels-page_blocks Page Blocks
+     * @subsubsection bx_channels-search_result_by_hashtag search_result_by_hashtag
+     * 
+     * @code bx_srv('bx_channels', 'search_result_by_hashtag', [...]); @endcode
+     * 
+     * Display search results by hashtag for particular channel
+     * @param $iContentId channel content ID
+     * 
+     * @see BxCnlModule::serviceSearchResultByHashtag
+     */
+    /** 
+     * @ref bx_channels-search_result_by_hashtag "search_result_by_hashtag"
+     */
+    public function serviceSearchResultByHashtag($iContentId = 0)
     {
         $CNF = &$this->_oConfig->CNF;
         

@@ -25,6 +25,14 @@ class BxQuoteOfDayModule extends BxDolModule
     /**
      * Service methods
      */
+
+    public function serviceGetSafeServices()
+    {
+        return array (
+            'GetQuote' => '',
+        );
+    }
+
     /**
      * @page service Service Calls
      * @section bx_quoteofday Quote of the Day

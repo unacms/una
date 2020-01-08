@@ -103,6 +103,16 @@ class BxMarketModule extends BxBaseModTextModule
         echoJson(array_slice($aResult, 0, $iLimit));
     }
 
+    public function serviceGetSafeServices()
+    {
+        $a = parent::serviceGetSafeServices();
+        return array_merge($a, array (
+            'EntityDownload' => '',
+            'EntityAuthorEntities' => '',
+            'BlockLicenses' => '',
+        ));
+    }
+
     /**
      * @page service Service Calls
      * @section bx_market Market

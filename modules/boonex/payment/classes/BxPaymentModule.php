@@ -128,6 +128,19 @@ class BxPaymentModule extends BxBaseModPaymentModule
 		));
     }
 
+    public function serviceGetSafeServices()
+    {
+        $a = parent::serviceGetSafeServices();
+        return array_merge($a, array (
+            'GetBlockJoin' => 'BxPaymentJoin',
+            'GetBlockCarts' => 'BxPaymentCart',
+            'GetBlockCart' => 'BxPaymentCart',
+            'GetBlockCartHistory' => 'BxPaymentCart',
+            'GetBlockListMy' => 'BxPaymentSubscriptions',
+            'GetBlockHistory' => 'BxPaymentSubscriptions',
+        ));
+    }
+
     /**
      * @page service Service Calls
      * @section bx_payment Payment

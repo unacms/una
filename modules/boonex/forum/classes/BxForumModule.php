@@ -84,6 +84,22 @@ class BxForumModule extends BxBaseModTextModule
     /**
      * Service methods
      */
+
+    public function serviceGetSafeServices()
+    {
+        $a = parent::serviceGetSafeServices();
+        return array_merge($a, array (
+            'BrowseNew' => '',
+            'BrowseLatest' => '',
+            'BrowseTop' => '',
+            'BrowsePopular' => '',
+            'BrowseUpdated' => '',
+            'BrowsePartaken' => '',
+            'BrowseIndex' => '',
+            'Search' => '',
+        ));
+    }
+
     /**
      * @page service Service Calls
      * @section bx_forum Discussions

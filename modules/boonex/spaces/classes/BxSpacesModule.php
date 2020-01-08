@@ -23,6 +23,14 @@ class BxSpacesModule extends BxBaseModGroupsModule
         $this->_aSearchableNamesExcept[] = $this->_oConfig->CNF['FIELD_JOIN_CONFIRMATION'];
     }
     
+    public function serviceGetSafeServices()
+    {
+        $a = parent::serviceGetSafeServices();
+        return array_merge($a, array (
+            'BrowseTopLevel' => '',
+        ));
+    }
+
     public function serviceEntityDelete ($iContentId = 0)
     {
         $iContentId = $this->_getContent($iContentId, false);

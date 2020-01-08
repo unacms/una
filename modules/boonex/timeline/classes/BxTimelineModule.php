@@ -533,6 +533,31 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      * SERVICE METHODS
      */
 
+    public function serviceGetSafeServices()
+    {
+        $a = parent::serviceGetSafeServices();
+        return array_merge($a, array (
+            'GetCreatePostForm' => '',
+            'GetSearchResultUnit' => '',
+            'GetBlockPost' => '',
+            'GetBlockPostProfile' => '',
+            'GetBlockPostHome' => '',
+            'GetBlockPostAccount' => '',
+            'GetBlockView' => '',
+            'GetBlockViewOutline' => '',
+            'GetBlockViewProfile' => '',
+            'GetBlockViewProfileOutline' => '',
+            'GetBlockViewsTimeline' => '',
+            'GetBlockViewsOutline' => '',
+            'GetBlockViewHome' => '',
+            'GetBlockViewHomeOutline' => '',
+            'GetBlockViewHot' => '',
+            'GetBlockViewHotOutline' => '',
+            'GetBlockViewAccount' => '',
+            'GetBlockViewAccountOutline' => '',
+        ));
+    }
+
     /**
      * @page service Service Calls
      * @section bx_timeline Timeline

@@ -72,6 +72,13 @@ class BxNtfsModule extends BxBaseModNotificationsModule
      * SERVICE METHODS
      */
 
+    public function serviceGetSafeServices()
+    {
+        return array (
+            'GetBlockView' => '',
+        );
+    }
+
     /**
      * @page service Service Calls
      * @section bx_notifications Invitations

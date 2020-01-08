@@ -58,8 +58,11 @@ function PageCompMainCode()
         echo '<h1>' . $aModule['title'] . '</h1>';
         echo '<p>';
         foreach ($a as $sService => $sClass) {
-            if ($sClass)
+            if ($sClass) {
+                if (0 === strncmp('BxPayment', $sClass, 9))
+                    bx_import(substr($sClass, 9), 'bx_payment');
                 $oModuleReflection = new ReflectionClass($sClass);
+            }
 
             $oMethodReflection = $oModuleReflection->getMethod('service' . $sService);
             $sDeclaringClass = $oMethodReflection->getDeclaringClass()->getName();

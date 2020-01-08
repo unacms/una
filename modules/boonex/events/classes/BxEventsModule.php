@@ -63,6 +63,33 @@ class BxEventsModule extends BxBaseModGroupsModule
         echo json_encode($aEntries);
     }
 
+    public function serviceGetSafeServices()
+    {
+        $a = parent::serviceGetSafeServices();
+        return array_merge($a, array (
+            'BrowsePastProfiles' => '',
+            'Calendar' => '',
+        ));
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_events Events
+     * @subsection bx_events-browse Browse
+     * @subsubsection bx_events-browse_past_profiles browse_past_profiles
+     * 
+     * @code bx_srv('bx_events', 'browse_past_profiles', [...]); @endcode
+     * 
+     * Browse past events
+     * 
+     * @param $bDisplayEmptyMsg show "empty" message or not if nothing found
+     * @param $bAjaxPaginate use AJAX paginate or not
+     *
+     * @see BxEventsModule::serviceBrowsePastProfiles
+     */
+    /** 
+     * @ref bx_events-browse_past_profiles "browse_past_profiles"
+     */
     public function serviceBrowsePastProfiles ($bDisplayEmptyMsg = false, $bAjaxPaginate = true)
     {
         return $this->_serviceBrowse ('past', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);

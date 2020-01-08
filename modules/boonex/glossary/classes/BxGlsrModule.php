@@ -24,9 +24,32 @@ class BxGlsrModule extends BxBaseModTextModule
         ));
     }
 
+    public function serviceGetSafeServices()
+    {
+        $a = parent::serviceGetSafeServices();
+        return array_merge($a, array (
+            'BrowseAlphabetical' => '',
+        ));
+    }
+
     /**
-     * Display terms by Alphabetical index
-     * @return HTML string
+     * @page service Service Calls
+     * @section bx_glossary Glossary
+     * @subsection bx_glossary-browse Browse
+     * @subsubsection bx_glossary-browse_alphabetical browse_alphabetical
+     * 
+     * @code bx_srv('bx_glossary', 'browse_alphabetical', [...]); @endcode
+     * 
+     * Display terms by alphabetical index
+     * 
+     * @param $sUnitView unit view
+     * @param $bDisplayEmptyMsg show "empty" message or not if nothing found
+     * @param $bAjaxPaginate use AJAX paginate or not
+     *
+     * @see BxEventsModule::serviceBrowseAlphabetical
+     */
+    /** 
+     * @ref bx_glossary-browse_alphabetical "browse_alphabetical"
      */
     public function serviceBrowseAlphabetical ($sUnitView = false, $bEmptyMessage = true, $bAjaxPaginate = true)
     {
