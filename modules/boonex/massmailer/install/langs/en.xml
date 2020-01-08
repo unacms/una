@@ -141,6 +141,7 @@
   <string name="_bx_massmailer_txt_unsubscribe_error_occured"><![CDATA[Unsubscribe error]]></string>
   <string name="_bx_massmailer_txt_subscribed"><![CDATA[Subscribed]]></string>
   <string name="_bx_massmailer_txt_unsubscribed"><![CDATA[Unsubscribed]]></string>
+  <string name="_bx_massmailer_txt_send_test_error"><![CDATA[Error occurred]]></string>
   <string name="_bx_massmailer_segments_all"><![CDATA[All subscribers]]></string>
   <string name="_bx_massmailer_email_name"><![CDATA[Mass Mailer message]]></string>
   <string name="_bx_massmailer_email_subject"><![CDATA[Mass Mailer message]]></string>

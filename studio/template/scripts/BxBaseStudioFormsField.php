@@ -1882,7 +1882,7 @@ class BxBaseStudioFormsFieldCaptcha extends BxBaseStudioFormsFieldText
 class BxBaseStudioFormsFieldLocation extends BxBaseStudioFormsFieldText
 {
     protected $sType = 'location';
-    protected $aCheckFunctions = array();
+    protected $aCheckFunctions = array('avail');
     protected $sDbPass = '';
 
     public function init()
@@ -1892,15 +1892,7 @@ class BxBaseStudioFormsFieldLocation extends BxBaseStudioFormsFieldText
         $this->aParams['table_alter'] = false;
 
         unset(
-            $this->aForm['inputs']['required'],
-            $this->aForm['inputs']['unique'],
-            $this->aForm['inputs']['checker_func'],
-            $this->aForm['inputs']['checker_params'],
-            $this->aForm['inputs']['checker_params_length_min'],
-            $this->aForm['inputs']['checker_params_length_max'],
-            $this->aForm['inputs']['checker_params_required'],
-            $this->aForm['inputs']['checker_params_preg'],
-            $this->aForm['inputs']['checker_error']
+            $this->aForm['inputs']['unique']
         );
     }
 }

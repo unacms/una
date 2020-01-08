@@ -1749,6 +1749,8 @@
 	<string name="_sys_acl_action_set_acl_level_desc"><![CDATA[Set membership level for profiles]]></string>
   <string name="_sys_acl_action_show_membership_levels_in_privacy_groups"><![CDATA[Show membership levels in privacy groups]]></string>
   <string name="_sys_acl_action_show_membership_levels_in_privacy_groups_desc"><![CDATA[Show membership levels in privacy groups]]></string>
+  <string name="_sys_acl_action_show_membership_private_info"><![CDATA[Show membership private info]]></string>
+  <string name="_sys_acl_action_show_membership_private_info_desc"><![CDATA[Show membership private info]]></string>
   <string name="_sys_acl_action_set_badge"><![CDATA[Set badge]]></string>
   <string name="_sys_acl_action_set_badge_desc"><![CDATA[Set badge for content]]></string>
   <string name="_sys_acl_action_switch_to_any_profile"><![CDATA[Switch to any profile]]></string>

@@ -43,7 +43,7 @@ class BxMassMailerGridCampaigns extends BxTemplGrid
             if($mixedResult !== false)
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $mixedResult);
             else
-                $aRes = array('msg' => $mixedResult);
+                $aRes = array('msg' => _t('_bx_massmailer_txt_send_test_error'));
             echoJson($aRes);
         }
         else {

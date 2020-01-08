@@ -57,6 +57,7 @@
     <string name="_bx_events_form_profile_input_sys_date_end"><![CDATA[Конец]]></string>
     <string name="_bx_events_form_profile_input_date_end"><![CDATA[Конец]]></string>
     <string name="_bx_events_form_profile_input_date_end_err"><![CDATA[Дата конца обязательна.]]></string>
+    <string name="_bx_events_form_profile_input_date_end_invalid_err"><![CDATA[Дата конца должна быть больше даты начала.]]></string>
     <string name="_bx_events_form_profile_input_sys_timezone"><![CDATA[Часовой пояс]]></string>
     <string name="_bx_events_form_profile_input_timezone"><![CDATA[Часовой пояс]]></string>
     <string name="_bx_events_form_profile_input_sys_time"><![CDATA[Время]]></string>
