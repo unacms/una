@@ -125,8 +125,23 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
     {
         if (isset($aValues[$this->_oModule->_oConfig->CNF['FIELD_ID']]))
             $this->_iContentId = $aValues[$this->_oModule->_oConfig->CNF['FIELD_ID']];
-
+        
         parent::initChecker($aValues, $aSpecificValues);
+        
+        if ($this->isSubmitted ()) {
+            if (isset($this->aInputs['date_start']) && $this->aInputs['date_start']['value'] != '' && isset($this->aInputs['date_end'])){
+                if ($this->aInputs['date_end']['value'] != ''){
+                    if (strtotime($this->aInputs['date_end']['value']) < strtotime($this->aInputs['date_start']['value'])){
+                        $this->aInputs['date_end']['error'] = _t('_bx_events_form_profile_input_date_end_invalid_err');
+                        $this->_isValid = false;                    
+                    }
+                }
+                else{
+                    $this->setSubmittedValue('date_end', $this->aInputs['date_start']['value'], BX_DOL_FORM_METHOD_POST);
+                }
+            }
+        }
+        
     }
 
     protected function genCustomRowDateEnd (&$aInput)
