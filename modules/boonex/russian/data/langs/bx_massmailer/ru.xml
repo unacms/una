@@ -139,6 +139,7 @@
   <string name="_bx_massmailer_txt_unsubscribe_error_occured"><![CDATA[Ошибка отписки]]></string>
   <string name="_bx_massmailer_txt_subscribed"><![CDATA[Подписано]]></string>
   <string name="_bx_massmailer_txt_unsubscribed"><![CDATA[Отписано]]></string>
+  <string name="_bx_massmailer_txt_send_test_error"><![CDATA[Произошла ошибка]]></string>
   <string name="_bx_massmailer_segments_all"><![CDATA[Все подписчики]]></string>
   <string name="_bx_massmailer_email_name"><![CDATA[Сообщение Mass Mailer]]></string>
   <string name="_bx_massmailer_email_subject"><![CDATA[Сообщение Mass Mailer]]></string>
