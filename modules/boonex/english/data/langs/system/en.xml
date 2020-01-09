@@ -1867,6 +1867,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_block_type_menu"><![CDATA[menu]]></string>
 	<string name="_sys_block_type_raw"><![CDATA[raw]]></string>
 	<string name="_sys_block_type_rss"><![CDATA[rss]]></string>
+        <string name="_sys_block_type_wiki"><![CDATA[wiki]]></string>
 	<string name="_sys_block_type_service"><![CDATA[service]]></string>
 	<string name="_sys_block_types_custom"><![CDATA[Custom]]></string>
 	<string name="_sys_block_types_skeletons"><![CDATA[Skeletons]]></string>

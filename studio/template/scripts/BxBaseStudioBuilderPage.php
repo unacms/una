@@ -1345,15 +1345,19 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             	$sResult = 'list-alt';
             	break;
 
+            case BX_DOL_STUDIO_BP_BLOCK_WIKI:
+            	$sResult = 'file-word';
+            	break;
+
             case BX_DOL_STUDIO_BP_BLOCK_SERVICE:
                 $sResult = $this->getModuleIcon($aBlock['module'], 'page');
                 break;
         }
 
         if(strpos($sResult, '.') === false)
-			$sIcon = $sResult;
-		else
-        	$sIconUrl = $sResult;
+            $sIcon = $sResult;
+        else
+            $sIconUrl = $sResult;
 
         return array($sIcon, $sIconUrl);
     }
