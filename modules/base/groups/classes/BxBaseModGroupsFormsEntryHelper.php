@@ -67,6 +67,22 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
 
         $this->inviteMembers ($oGroupProfile, bx_get('initial_members'));
 
+        if (bx_get('key')){
+            $sKey = bx_get('key');
+            $aData = $this->_oModule->_oDb->getInviteByKey($sKey, $oGroupProfile->id());
+            if (isset($aData['invited_profile_id'])){
+                $CNF = &$this->_oModule->_oConfig->CNF;
+                if (!isset($CNF['OBJECT_CONNECTIONS']) || !($oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])))
+                    return '';
+                $iInvitedProfileId = $aData['invited_profile_id'];
+                if($oConnection && !$oConnection->isConnected($iInvitedProfileId, $oGroupProfile->id())){
+                    $oConnection->addConnection($iInvitedProfileId, $oGroupProfile->id());
+                    $oConnection->addConnection($oGroupProfile->id(), $iInvitedProfileId);
+                    $this->_oModule->_oDb->deleteInviteByKey($sKey,  $oGroupProfile->id(), 'date_join', time());
+                }
+            }
+        }
+        
         return '';
     }
     

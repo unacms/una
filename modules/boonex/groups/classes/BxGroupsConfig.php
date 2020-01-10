@@ -38,6 +38,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'data',
             'TABLE_ENTRIES_FULLTEXT' => 'search_fields',
             'TABLE_ADMINS' => $aModule['db_prefix'] . 'admins',
+            'TABLE_INVITES' => $aModule['db_prefix'] . 'invites',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -63,6 +64,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             // page URIs
             'URI_VIEW_ENTRY' => 'view-group-profile',
             'URI_EDIT_ENTRY' => 'edit-group-profile',
+            'URI_INVITE_TO_ENTRY' => 'invite-to-group',
             'URI_EDIT_COVER' => 'edit-group-cover',
             'URI_JOINED_ENTRIES' => 'joined-groups',
             'URI_MANAGE_COMMON' => 'groups-manage',
@@ -106,6 +108,7 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER' => 'bx_group_edit_cover',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_group_delete',
             'OBJECT_FORM_ENTRY_DISPLAY_INVITE' => 'bx_group_invite',
+            'OBJECT_FORM_ENTRY_DISPLAY_JOIN' => 'bx_group_join',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_groups_view_actions', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE' => 'bx_groups_view_actions_more', // actions menu on view entry page for "more" popup
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_groups_view_actions_all', // all actions menu on view entry page
@@ -124,11 +127,14 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'OBJECT_GRID_ADMINISTRATION' => 'bx_groups_administration',
             'OBJECT_GRID_COMMON' => 'bx_groups_common',
             'OBJECT_GRID_CONNECTIONS' => 'bx_groups_fans',
+            'OBJECT_GRID_INVITES' => 'bx_groups_invites',
             'OBJECT_CONNECTIONS' => 'bx_groups_fans',
             'OBJECT_UPLOADERS_COVER' => array('bx_groups_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_groups_picture_crop'),
             
             'BADGES_AVALIABLE' => true,
+            
+            'INVITES_KEYS_LIFETIME' => 86400,
 
             'EMAIL_INVITATION' => 'bx_groups_invitation',
             'EMAIL_JOIN_REQUEST' => 'bx_groups_join_request',

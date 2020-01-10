@@ -103,6 +103,60 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
             $sQuery = $this->prepare("SELECT `fan_id` FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `group_profile_id` = ? LIMIT ?, ?", $iGroupProfileId, $iStart, $iLimit);
         return $this->getColumn($sQuery);
     }
+    
+    public function insertInvite($sKey, $sGroupProfileId, $iAuthorProfileId, $iInvitedProfileId)
+    {
+        $aBindings = array(
+            'key' => $sKey,
+            'group_profile_id' => $sGroupProfileId,
+            'author_profile_id' => $iAuthorProfileId,
+            'invited_profile_id' => $iInvitedProfileId,
+            'added' => time()
+        );
+        $CNF = $this->_oConfig->CNF; 
+        $this->query("INSERT `" . $CNF["TABLE_INVITES"] . "` (`key`, `group_profile_id`, `author_profile_id`, `invited_profile_id`, `added`) VALUES (:key, :group_profile_id, :author_profile_id, :invited_profile_id, :added)", $aBindings);
+        return (int)$this->lastId();
+    }
+    
+    public function getInviteByKey($sKey, $iGroupProfileId)
+    {
+        $aBindings = array(
+            'key' => $sKey,
+            'group_profile_id' => $iGroupProfileId
+        );
+        $CNF = $this->_oConfig->CNF; 
+        return $this->getRow("SELECT * FROM `" . $CNF["TABLE_INVITES"] . "` WHERE `key` = :key AND group_profile_id = :group_profile_id", $aBindings);
+    }
+    
+    public function updateInviteByKey($sKey, $iGroupProfileId, $sColumn, $sValue)
+    {
+        $aBindings = array(
+           'key' => $sKey,
+           'value' => $sValue,
+           'group_profile_id' => $iGroupProfileId
+       );
+        $CNF = $this->_oConfig->CNF; 
+        return $this->query("UPDATE `" . $CNF["TABLE_INVITES"] . "` SET `" . $sColumn . "` = :value WHERE `key` = :key AND group_profile_id = :group_profile_id", $aBindings);
+    }
+    
+    public function deleteInviteByKey($sKey, $iGroupProfileId)
+    {
+        $aBindings = array(
+           'key' => $sKey,
+           'group_profile_id' => $iGroupProfileId
+       );
+        $CNF = $this->_oConfig->CNF; 
+        return $this->query("DELETE FROM `" . $CNF["TABLE_INVITES"] . "` WHERE `key` = :key AND group_profile_id = :group_profile_id", $aBindings);
+    }
+    
+    public function deleteInvite($iId)
+    {
+        $aBindings = array(
+           'id' => $iId
+       );
+        $CNF = $this->_oConfig->CNF; 
+        return $this->query("DELETE FROM `" . $CNF["TABLE_INVITES"] . "` WHERE `id` = :id", $aBindings);
+    }
 }
 
 /** @} */

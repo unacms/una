@@ -38,9 +38,9 @@ DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_groups%';
 DELETE FROM `sys_objects_chart` WHERE `object` LIKE 'bx_groups%';
 
 -- GRIDS
-DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_groups_administration', 'bx_groups_moderation', 'bx_groups_common', 'bx_groups_fans');
-DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_groups_administration', 'bx_groups_moderation', 'bx_groups_common', 'bx_groups_fans');
-DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_groups_administration', 'bx_groups_moderation', 'bx_groups_common', 'bx_groups_fans');
+DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_groups_administration', 'bx_groups_moderation', 'bx_groups_common', 'bx_groups_fans', 'bx_groups_invites');
+DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_groups_administration', 'bx_groups_moderation', 'bx_groups_common', 'bx_groups_fans', 'bx_groups_invites');
+DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_groups_administration', 'bx_groups_moderation', 'bx_groups_common', 'bx_groups_fans', 'bx_groups_invites');
 
 -- ALERTS
 SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = 'bx_groups' LIMIT 1);

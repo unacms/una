@@ -311,6 +311,18 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return $oGrid->getCode();
     }
     
+	public function serviceInvitesTable ()
+    {
+		if (!isset($this->_oConfig->CNF['OBJECT_GRID_INVITES']))
+			return false;
+		
+        $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->CNF['OBJECT_GRID_INVITES']);
+        if (!$oGrid)
+            return false;
+
+        return $oGrid->getCode();
+    }
+	
     public function serviceFans ($iContentId = 0, $bAsArray = false)
     {
         if (!$iContentId)
@@ -385,9 +397,16 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     
     public function serviceEntityInvite ($iContentId = 0, $bErrorMsg = true)
     {
-		if (isset($this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_INVITE']))
-        	return $this->_serviceEntityForm ('editDataForm', $iContentId, $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_INVITE'], false, $bErrorMsg);
-        return false;
+        if (bx_get('key')){
+            if (isset($this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_JOIN']))
+                return $this->_serviceEntityForm ('editDataForm', $iContentId, $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_JOIN'], 'checkAllowedJoin', $bErrorMsg);
+            return false;
+        }
+        else{
+            if (isset($this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_INVITE']))
+                return $this->_serviceEntityForm ('editDataForm', $iContentId, $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_INVITE'], false, $bErrorMsg);
+            return false;
+        }
     }
     
     /**
@@ -643,6 +662,19 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             return CHECK_ACTION_RESULT_ALLOWED;
         return parent::checkAllowedDelete ($aDataEntry, $isPerformAction);
     }
+    
+    public function checkAllowedJoin(&$aDataEntry, $isPerformAction = false)
+    {
+        if (bx_get('key')){
+            $sKey = bx_get('key');
+            $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->getName());
+            $aData = $this->_oDb->getInviteByKey($sKey, $oGroupProfile->id());
+            if (isset($aData['invited_profile_id']) && $aData['invited_profile_id'] == bx_get_logged_profile_id()){
+                return CHECK_ACTION_RESULT_ALLOWED;
+            }
+        }   
+        return _t('_sys_txt_access_denied');
+    }   
 
     public function checkAllowedSubscribeAdd (&$aDataEntry, $isPerformAction = false)
     {
