@@ -1,5 +1,5 @@
 /*!
- * froala_editor v3.0.0 (https://www.froala.com/wysiwyg-editor)
+ * froala_editor v3.0.6 (https://www.froala.com/wysiwyg-editor)
  * License https://froala.com/wysiwyg-editor/terms/
  * Copyright 2014-2019 Froala Labs
  */
@@ -264,7 +264,7 @@
       'Clean': '清除',
       'Word Paste Detected': '检测到粘贴自 Word 的内容',
       // Character Counter
-      'Characters': '人物',
+      'Characters': '字数统计',
       // More Buttons
       'More Text': ' 更多文字',
       'More Paragraph': '更多段落',

@@ -1,5 +1,5 @@
 /*!
- * froala_editor v3.0.0 (https://www.froala.com/wysiwyg-editor)
+ * froala_editor v3.0.6 (https://www.froala.com/wysiwyg-editor)
  * License https://froala.com/wysiwyg-editor/terms/
  * Copyright 2014-2019 Froala Labs
  */
@@ -264,7 +264,7 @@
       'Clean': 'Nettoyer',
       'Word Paste Detected': "Copiage de mots d\xE9tect\xE9",
       // Character Counter 
-      'Characters': 'Personnages',
+      'Characters': 'Caractères',
       // More Buttons
       'More Text': 'Plus de texte',
       'More Paragraph': 'Plus paragraphe',
