@@ -127,13 +127,37 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
             $this->_iContentId = $aValues[$this->_oModule->_oConfig->CNF['FIELD_ID']];
         
         parent::initChecker($aValues, $aSpecificValues);
-        
+    }
+    
+    function isValid ()
+    {
         if ($this->isSubmitted ()) {
             if (isset($this->aInputs['date_start']) && $this->aInputs['date_start']['value'] != '' && isset($this->aInputs['date_end'])){
                 if ($this->aInputs['date_end']['value'] != ''){
                     if (strtotime($this->aInputs['date_end']['value']) < strtotime($this->aInputs['date_start']['value'])){
                         $this->aInputs['date_end']['error'] = _t('_bx_events_form_profile_input_date_end_invalid_err');
-                        $this->_isValid = false;                    
+                        $this->_isValid = false;       
+                        
+                        $sSubmitName = false;
+                        foreach ($this->aInputs as $k => $a) {
+                            if (isset($a['visible_for_levels']) && !BxDolForm::isVisible($a))
+                                continue;
+
+                            if (empty($a['name']) || 'submit' == $a['type'] || 'reset' == $a['type'] || 'button' == $a['type'] || 'value' == $a['type']) {
+                                if (isset($a['type']) && 'submit' == $a['type'])
+                                    $sSubmitName = $k;
+                                continue;
+                            }
+
+                            if ('input_set' == $a['type'])
+                                foreach ($a as $r)
+                                    if (isset($r['type']) && 'submit' == $r['type'])
+                                        $sSubmitName = $k;
+
+                        }
+                        if ($sSubmitName)
+                            $this->aInputs[$sSubmitName]['error'] = _t('_sys_txt_form_submission_error');
+                        
                     }
                 }
                 else{
@@ -142,6 +166,7 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
             }
         }
         
+        return parent::isValid ();
     }
 
     protected function genCustomRowDateEnd (&$aInput)
