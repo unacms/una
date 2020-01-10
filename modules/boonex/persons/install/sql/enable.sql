@@ -515,7 +515,7 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 -- PRIVACY 
 INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `spaces`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
 ('bx_persons_allow_view_to', 'bx_persons', 'view', '_bx_persons_form_profile_input_allow_view_to', '3', '', 'bx_persons_data', 'id', 'author', 'BxPersonsPrivacy', 'modules/boonex/persons/classes/BxPersonsPrivacy.php'),
-('bx_persons_allow_post_to', 'bx_persons', 'post', '_bx_persons_form_profile_input_allow_post_to', '3', '', 'bx_persons_data', 'id', 'author', 'BxPersonsPrivacyPost', 'modules/boonex/persons/classes/BxPersonsPrivacyPost.php'),
+('bx_persons_allow_post_to', 'bx_persons', 'post', '_bx_persons_form_profile_input_allow_post_to', '5', '', 'bx_persons_data', 'id', 'author', 'BxPersonsPrivacyPost', 'modules/boonex/persons/classes/BxPersonsPrivacyPost.php'),
 ('bx_persons_allow_contact_to', 'bx_persons', 'contact', '_bx_persons_form_profile_input_allow_contact_to', '3', '', 'bx_persons_data', 'id', 'author', 'BxPersonsPrivacyContact', 'modules/boonex/persons/classes/BxPersonsPrivacyContact.php');
 
 -- EMAIL TEMPLATES
