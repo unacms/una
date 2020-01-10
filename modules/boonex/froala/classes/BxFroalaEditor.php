@@ -118,21 +118,23 @@ EOS;
         // set visual mode
         switch ($iViewMode) {
             case BX_EDITOR_MINI:
-                $aToolbarItems = explode(',', $this->_sButtonsCustom !== false ? $this->_sButtonsCustom : getParam('bx_froala_option_toolbar_mini'));
+                $sToolbarItems = $this->_getToolbarItems(getParam('bx_froala_option_toolbar_mini'));
+                $sToolbarItemsXC = $this->_getToolbarItems(getParam('bx_froala_option_toolbar_mini_mobile'));
                 $sCustomInit = self::$CONF_MINI;
                 break;
             case BX_EDITOR_FULL:
-                $aToolbarItems = explode(',', $this->_sButtonsCustom !== false ? $this->_sButtonsCustom : getParam('bx_froala_option_toolbar_full'));
+                $sToolbarItems = $this->_getToolbarItems(getParam('bx_froala_option_toolbar_full'));
+                $sToolbarItemsXC = $this->_getToolbarItems(getParam('bx_froala_option_toolbar_full_mobile'));
                 $sCustomInit = self::$CONF_FULL;
             break;
             case BX_EDITOR_STANDARD:
             default:
-                $aToolbarItems = explode(',', $this->_sButtonsCustom !== false ? $this->_sButtonsCustom : getParam('bx_froala_option_toolbar_standard'));
+                $sToolbarItems = $this->_getToolbarItems(getParam('bx_froala_option_toolbar_standard'));
+                $sToolbarItemsXC = $this->_getToolbarItems(getParam('bx_froala_option_toolbar_standard_mobile'));
                 $sCustomInit = self::$CONF_STANDARD;
         }
-        $sCustomInit .= "\ntoolbarButtons: " . json_encode($aToolbarItems) . ",";
-        $sCustomInit .= "\ntoolbarButtonsSM: " . json_encode($aToolbarItems) . ",";
-        $sCustomInit .= "\ntoolbarButtonsXS: " . json_encode($aToolbarItems) . ",";
+        $sCustomInit .= "\ntoolbarButtons: " . $sToolbarItems . ",";
+        $sCustomInit .= "\ntoolbarButtonsXS: " . $sToolbarItemsXC . ",";
 
         // detect language
         $sLang = BxDolLanguages::getInstance()->detectLanguageFromArray (self::$CONF_LANGS, 'en', true);
@@ -190,6 +192,14 @@ EOS;
         }
 
         return $this->_addJsCss($bDynamicMode) . $sScript;
+    }
+
+    protected function _getToolbarItems($s)
+    {
+        if ($this->_sButtonsCustom !== false)
+            return $this->_sButtonsCustom;
+
+        return '{' == $s[0] ? $s : json_encode(explode(',', $s));
     }
 
     /**
