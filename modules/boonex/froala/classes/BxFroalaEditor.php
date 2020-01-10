@@ -197,9 +197,9 @@ EOS;
     protected function _getToolbarItems($s)
     {
         if ($this->_sButtonsCustom !== false)
-            return $this->_sButtonsCustom;
+            return $this->_sButtonsCustom && '{' == $this->_sButtonsCustom[0] ? $this->_sButtonsCustom : json_encode(explode(',', $this->_sButtonsCustom));
 
-        return '{' == $s[0] ? $s : json_encode(explode(',', $s));
+        return $s && '{' == $s[0] ? $s : json_encode(explode(',', $s));
     }
 
     /**
