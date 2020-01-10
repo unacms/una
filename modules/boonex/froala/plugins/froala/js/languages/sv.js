@@ -1,5 +1,5 @@
 /*!
- * froala_editor v3.0.0 (https://www.froala.com/wysiwyg-editor)
+ * froala_editor v3.0.6 (https://www.froala.com/wysiwyg-editor)
  * License https://froala.com/wysiwyg-editor/terms/
  * Copyright 2014-2019 Froala Labs
  */
@@ -86,7 +86,7 @@
       'Tags': 'Etiketter',
       'Are you sure? Image will be deleted.': "\xC4r du s\xE4ker? Bild kommer att raderas.",
       'Replace': "Ers\xE4tt",
-      'Uploading': 'Laddar up',
+      'Uploading': 'Laddar upp',
       'Loading image': 'Laddar bild',
       'Display': 'Visa',
       'Inline': 'I linje',

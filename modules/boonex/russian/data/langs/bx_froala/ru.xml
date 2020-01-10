@@ -9,8 +9,11 @@
     <string name="_bx_froala_option_icons_template"><![CDATA[Шаблон иконок]]></string>
     <string name="_bx_froala_option_plugins"><![CDATA[Плагины]]></string>
     <string name="_bx_froala_option_toolbar_mini"><![CDATA[Кнопки панели инструментов для мини-редактора]]></string>
+    <string name="_bx_froala_option_toolbar_mini_mobile"><![CDATA[Кнопки панели инструментов для мини-редактора для мобильного]]></string>
     <string name="_bx_froala_option_toolbar_standard"><![CDATA[Кнопки панели инструментов для стандартного редактора]]></string>
+    <string name="_bx_froala_option_toolbar_standard_mobile"><![CDATA[Кнопки панели инструментов для стандартного редактора для мобильного]]></string>
     <string name="_bx_froala_option_toolbar_full"><![CDATA[Кнопки панели инструментов для полного редактора]]></string>
+    <string name="_bx_froala_option_toolbar_full_mobile"><![CDATA[Кнопки панели инструментов для полного редактора для мобильного]]></string>
 
     <string name="_bx_froala_txt_skin_dark"><![CDATA[Темная]]></string>
     <string name="_bx_froala_txt_skin_gray"><![CDATA[Серая]]></string>

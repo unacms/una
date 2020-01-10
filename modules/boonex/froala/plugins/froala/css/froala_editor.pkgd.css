@@ -1,5 +1,5 @@
 /*!
- * froala_editor v3.0.0 (https://www.froala.com/wysiwyg-editor)
+ * froala_editor v3.0.6 (https://www.froala.com/wysiwyg-editor)
  * License https://froala.com/wysiwyg-editor/terms/
  * Copyright 2014-2019 Froala Labs
  */
@@ -126,7 +126,6 @@ iframe.fr-iframe {
   width: 100%;
   border: none;
   position: relative;
-  padding: 20px;
   display: block;
   z-index: 2;
   -webkit-box-sizing: border-box;
@@ -153,7 +152,9 @@ iframe.fr-iframe {
     right: 0;
     overflow: hidden; }
   .fr-wrapper.show-placeholder .fr-placeholder {
-    display: block; }
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis; }
   .fr-wrapper ::-moz-selection {
     background: #b5d6fd;
     color: #000; }
@@ -557,6 +558,12 @@ iframe.fr-iframe {
             .fr-command.fr-btn + .fr-dropdown-menu .fr-dropdown-wrapper .fr-dropdown-content ul.fr-dropdown-list li a.fr-disabled {
               color: #bdbdbd;
               cursor: default; }
+            .fr-command.fr-btn + .fr-dropdown-menu .fr-dropdown-wrapper .fr-dropdown-content ul.fr-dropdown-list li a .fr-shortcut {
+              margin-left: 20px;
+              font-weight: bold;
+              -webkit-opacity: 0.75;
+              -moz-opacity: 0.75;
+              opacity: 0.75; }
 .fr-command.fr-btn.fr-active + .fr-dropdown-menu {
   display: inline-block;
   -webkit-box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
@@ -667,7 +674,7 @@ body.prevent-scroll {
     .fr-modal .fr-modal-wrapper div.fr-modal-body {
       height: 100%;
       min-height: 150px;
-      overflow-y: scroll;
+      overflow-y: auto;
       padding-bottom: 20px; }
       .fr-modal .fr-modal-wrapper div.fr-modal-body:focus {
         outline: 0; }
@@ -1222,11 +1229,12 @@ body.prevent-scroll {
   .fr-separator.fr-vs {
     height: 32px;
     width: 1px;
-    margin: 4px; }
+    margin: 8px 4px; }
   .fr-separator.fr-hs {
     clear: both;
     width: calc(100% - (2 * 4px));
-    margin: 0 4px; }
+    margin: 0 4px;
+    height: 1px; }
   .fr-separator.fr-hidden {
     display: none !important; }
 
@@ -1892,7 +1900,8 @@ body.fr-fullscreen {
   border: 0; }
 
 .fr-element img {
-  cursor: pointer; }
+  cursor: pointer;
+  padding: 0 1px; }
 
 .fr-image-resizer {
   position: absolute;
