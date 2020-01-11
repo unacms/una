@@ -1718,7 +1718,7 @@
 	<string name="_sys_acl_action_create_account_desc"><![CDATA[Это имеет смысл только для гостей. Например, Вы можете временно отключить или задать лимит по времени для этого пункта.]]></string>
 	<string name="_sys_acl_action_delete_account"><![CDATA[Удалить Аккаунт]]></string>
 	<string name="_sys_acl_action_delete_account_desc"><![CDATA[Удалить аккаунт, также удалить содержимое аккаунта.]]></string>
-	<string name="_sys_acl_action_every_period"><![CDATA[ каждые {4} часа]]></string>
+	<string name="_sys_acl_action_every_period"><![CDATA[ каждые {4} часа, новый период начнется {8}]]></string>
 	<string name="_sys_acl_action_favorite"><![CDATA[Избранное - Добавлять]]></string>
 	<string name="_sys_acl_action_favorite_view"><![CDATA[Избранное - Просматривать]]></string>
 	<string name="_sys_acl_action_feature"><![CDATA[Продвинутое - Добавлять]]></string>

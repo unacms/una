@@ -33,6 +33,7 @@ define('CHECK_ACTION_LANG_FILE_PERIOD', 4);
 define('CHECK_ACTION_LANG_FILE_AFTER', 5);
 define('CHECK_ACTION_LANG_FILE_BEFORE', 6);
 define('CHECK_ACTION_LANG_FILE_SITE_EMAIL',	7);
+define('CHECK_ACTION_LANG_FILE_PERIOD_RESTART_AT', 8);
 
 /**
  * Standard membership ID's
@@ -243,6 +244,7 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
      *
      * 		$arg0[CHECK_ACTION_LANG_FILE_LIMIT]		= limit on number of actions allowed for the profile
      * 		$arg0[CHECK_ACTION_LANG_FILE_PERIOD]	= period that the limit is set for (in hours, 0 if unlimited)
+     * 		$arg0[CHECK_ACTION_LANG_FILE_PERIOD_RESTART_AT]	= time when new period begins, so counter will be reset
      *
      * 	CHECK_ACTION_RESULT_NOT_ALLOWED_BEFORE:
      *
@@ -363,6 +365,7 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
             if($iActionsLeft <= 0){
                 $aLangFileParams[CHECK_ACTION_LANG_FILE_LIMIT] = $iAllowedCnt;
                 $aLangFileParams[CHECK_ACTION_LANG_FILE_PERIOD] = $iPeriodLen;
+                $aLangFileParams[CHECK_ACTION_LANG_FILE_PERIOD_RESTART_AT] = bx_time_js($iPeriodEnd);
 
                 $aResult[CHECK_ACTION_RESULT] = CHECK_ACTION_RESULT_LIMIT_REACHED;
                 $aResult[CHECK_ACTION_MESSAGE] = '<div class="bx-acl-err-msg">' . _t_ext(CHECK_ACTION_MESSAGE_LIMIT_REACHED, $aLangFileParams) . ($iPeriodLen > 0 ? _t_ext(CHECK_ACTION_MESSAGE_MESSAGE_EVERY_PERIOD, $aLangFileParams) : '') . '.</div>';

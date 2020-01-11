@@ -1732,7 +1732,7 @@
 	<string name="_sys_acl_action_create_account_desc"><![CDATA[It make sense for guests only, you can temporary disable it or set limit by time for example.]]></string>
 	<string name="_sys_acl_action_delete_account"><![CDATA[Delete Account]]></string>
 	<string name="_sys_acl_action_delete_account_desc"><![CDATA[Delete account also deletes account's content.]]></string>
-	<string name="_sys_acl_action_every_period"><![CDATA[ every {4} hours]]></string>
+	<string name="_sys_acl_action_every_period"><![CDATA[ every {4} hours, new period begins {8}]]></string>
 	<string name="_sys_acl_action_favorite"><![CDATA[Favorite]]></string>
 	<string name="_sys_acl_action_favorite_view"><![CDATA[View favorites]]></string>
 	<string name="_sys_acl_action_feature"><![CDATA[Feature]]></string>
