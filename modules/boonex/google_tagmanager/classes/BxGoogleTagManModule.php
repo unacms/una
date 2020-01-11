@@ -41,7 +41,7 @@ class BxGoogleTagManModule extends BxDolModule
                 'profile-status' => $aProfileInfo['status'],                
                 'account-email-confirmed' => (int)($oAccount ? $oAccount->isConfirmed() : 0),
                 'account-profiles-count' => $oAccount ? $oAccount->getProfilesNumber() : 0,
-                'keys-secrets-count' => count($aKeySecrets),
+                'keys-secrets-count' => is_array($aKeySecrets) ? count($aKeySecrets) : 0,
             );
             $sDataLayer = json_encode($aDataLayer);
 
