@@ -151,7 +151,7 @@ class BxDolTranscoderQuery extends BxDolDb
         return $oDb->getAll($sQuery);
     }
 
-    static public function deleteFromQueue ($iId)
+    static public function deleteFromQueueById ($iId)
     {
         $oDb = BxDolDb::getInstance();
         $sQuery = $oDb->prepare("SELECT * FROM `" . self::TABLE_QUEUE . "` WHERE `id` = ?", $iId);
