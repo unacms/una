@@ -2765,6 +2765,7 @@
         <string name="_sys_pre_lists_vote_reactions_sadness"><![CDATA[Грустно]]></string>
         <string name="_sys_pre_lists_vote_reactions_anger"><![CDATA[Злюсь]]></string>
 	<string name="_sys_profile_sample_single"><![CDATA[профиль]]></string>
+    <string name="_sys_profile_with_type"><![CDATA[{0} ({1})]]></string>
         <string name="_sys_profile_friend_request_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> предложил дружбу <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
 	<string name="_sys_profile_friendship_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> и <b class="bx-ntfs-content-entry">{entry_caption}</b> теперь друзья]]></string>
 	<string name="_sys_profile_subscription_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> следит за <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>

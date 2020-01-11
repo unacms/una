@@ -2778,6 +2778,7 @@ If it is not enabled then please consider implement this optimization, since it 
         <string name="_sys_pre_lists_vote_reactions_sadness"><![CDATA[Sad]]></string>
         <string name="_sys_pre_lists_vote_reactions_anger"><![CDATA[Angry]]></string>
 	<string name="_sys_profile_sample_single"><![CDATA[profile]]></string>
+	<string name="_sys_profile_with_type"><![CDATA[{0} ({1})]]></string>
         <string name="_sys_profile_friend_request_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> befriended <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
 	<string name="_sys_profile_friendship_added"><![CDATA[Now <b class="bx-ntfs-content-profile">{owner_name}</b> and <b class="bx-ntfs-content-entry">{entry_caption}</b> are friends]]></string>
 	<string name="_sys_profile_subscription_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> followed <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
