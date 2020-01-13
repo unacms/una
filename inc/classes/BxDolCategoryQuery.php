@@ -48,10 +48,20 @@ class BxDolCategoryQuery extends BxDolDb
         $oDb = BxDolDb::getInstance();
         $sWhere = '';
         // TODO: in the future add 'module' field to categories object
-        if ($bPublicOnly && ($oModule = BxDolModule::getInstance($aObject['search_object'])) && isset($oModule->_oConfig->CNF['FIELD_ALLOW_VIEW_TO'])) {
-            bx_import('BxDolPrivacy');
-            $a = isLogged() ? array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS) : array(BX_DOL_PG_ALL);
-            $sWhere = ' AND `' . $aObject['table'] . '`.`' . $oModule->_oConfig->CNF['FIELD_ALLOW_VIEW_TO'] . '` IN(' . $oDb->implode_escape($a) . ') ';
+        if ($bPublicOnly && ($oModule = BxDolModule::getInstance($aObject['search_object'])) && isset($oModule->_oConfig->CNF)) {
+            $CNF = &$oModule->_oConfig->CNF;
+
+            if(isset($CNF['FIELD_ALLOW_VIEW_TO'])) {
+                bx_import('BxDolPrivacy');
+                $a = isLogged() ? array(BX_DOL_PG_ALL, BX_DOL_PG_MEMBERS) : array(BX_DOL_PG_ALL);
+                $sWhere .= ' AND `' . $aObject['table'] . '`.`' . $CNF['FIELD_ALLOW_VIEW_TO'] . '` IN(' . $oDb->implode_escape($a) . ') ';
+            }
+
+            if(isset($CNF['FIELD_STATUS']))
+                $sWhere .= ' AND `' . $aObject['table'] . '`.`' . $CNF['FIELD_STATUS'] . '` = \'active\' ';
+
+            if(isset($CNF['FIELD_STATUS_ADMIN']))
+                $sWhere .= ' AND `' . $aObject['table'] . '`.`' . $CNF['FIELD_STATUS_ADMIN'] . '` = \'active\' ';
         }
         return $oDb->getOne("SELECT COUNT(*) FROM `" . $aObject['table'] . "` " . $aObject['join'] . " WHERE `" . $aObject['field'] . "` = :cat " . $aObject['where'] . $sWhere, array('cat' => $sCategoryValue));
     }
