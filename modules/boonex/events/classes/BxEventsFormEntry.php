@@ -127,10 +127,7 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
             $this->_iContentId = $aValues[$this->_oModule->_oConfig->CNF['FIELD_ID']];
         
         parent::initChecker($aValues, $aSpecificValues);
-    }
-    
-    function isValid ()
-    {
+        
         if ($this->isSubmitted ()) {
             if (isset($this->aInputs['date_start']) && $this->aInputs['date_start']['value'] != '' && isset($this->aInputs['date_end'])){
                 if ($this->aInputs['date_end']['value'] != ''){
@@ -166,7 +163,6 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
             }
         }
         
-        return parent::isValid ();
     }
 
     protected function genCustomRowDateEnd (&$aInput)
