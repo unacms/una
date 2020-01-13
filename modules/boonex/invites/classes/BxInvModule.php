@@ -537,7 +537,7 @@ class BxInvModule extends BxDolModule
        
         return array(
            'menu' => $this->_oTemplate->getMenuForManageBlocks($sType),
-           'content' => $this->_oTemplate->getJsCode2('main', $sType) . $oGrid->getCode()
+           'content' => $this->_oTemplate->getJsCode('main', array('grid' => $sType)) . $oGrid->getCode()
        );
     }
 
