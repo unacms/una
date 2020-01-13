@@ -20,10 +20,9 @@
 }
 
 .bx-files-text-unit .bx-base-text-unit-text .sys-icon {
-    position:absolute;
-    top:0;
-    left:0;
-    font-size:3.2rem;
+    position: absolute;
+    line-height: normal;
+    font-size: 3.2rem;
 }
 
 .bx-files-text-unit .bx-base-text-unit-text h2,
