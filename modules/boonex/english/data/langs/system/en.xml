@@ -1732,7 +1732,7 @@
 	<string name="_sys_acl_action_create_account_desc"><![CDATA[It make sense for guests only, you can temporary disable it or set limit by time for example.]]></string>
 	<string name="_sys_acl_action_delete_account"><![CDATA[Delete Account]]></string>
 	<string name="_sys_acl_action_delete_account_desc"><![CDATA[Delete account also deletes account's content.]]></string>
-	<string name="_sys_acl_action_every_period"><![CDATA[ every {4} hours]]></string>
+	<string name="_sys_acl_action_every_period"><![CDATA[ every {4} hours, new period begins {8}]]></string>
 	<string name="_sys_acl_action_favorite"><![CDATA[Favorite]]></string>
 	<string name="_sys_acl_action_favorite_view"><![CDATA[View favorites]]></string>
 	<string name="_sys_acl_action_feature"><![CDATA[Feature]]></string>
@@ -2778,6 +2778,7 @@ If it is not enabled then please consider implement this optimization, since it 
         <string name="_sys_pre_lists_vote_reactions_sadness"><![CDATA[Sad]]></string>
         <string name="_sys_pre_lists_vote_reactions_anger"><![CDATA[Angry]]></string>
 	<string name="_sys_profile_sample_single"><![CDATA[profile]]></string>
+	<string name="_sys_profile_with_type"><![CDATA[{0} ({1})]]></string>
         <string name="_sys_profile_friend_request_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> befriended <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
 	<string name="_sys_profile_friendship_added"><![CDATA[Now <b class="bx-ntfs-content-profile">{owner_name}</b> and <b class="bx-ntfs-content-entry">{entry_caption}</b> are friends]]></string>
 	<string name="_sys_profile_subscription_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> followed <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>

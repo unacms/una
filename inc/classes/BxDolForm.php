@@ -1112,6 +1112,16 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     {
         return bx_replace_markers($a, $this->_aMarkers);
     }
+
+    public function getFormErrors ()
+    {
+        $s = '';
+        foreach ($this->aInputs as $k => $a) {
+            if (isset($this->aInputs[$k]['error']) && $this->aInputs[$k]['error'])
+                $s .= $k . ': ' . $this->aInputs[$k]['error'] . " \n";
+        }
+        return $s;
+    }
 }
 
 class BxDolFormChecker

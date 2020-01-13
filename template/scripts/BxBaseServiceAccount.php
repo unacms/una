@@ -45,7 +45,7 @@ class BxBaseServiceAccount extends BxDol
      */
     public function serviceCreateAccountForm ($aParams = array())
     {
-        if(isLogged()){
+        if (isLogged() && 'create-account' == bx_get('i')){
             header('Location: ' . BX_DOL_URL_ROOT);
             exit;
         }

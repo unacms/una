@@ -116,6 +116,11 @@ class BxDolTranscoder extends BxDolFactory implements iBxDolFactoryObject
         $a = BxDolTranscoderQuery::getNextInQueue (gethostname());
         foreach ($a as $r) {
             $o = self::getObjectInstance($r['transcoder_object']);
+            if (!$o) {
+                BxDolTranscoderQuery::deleteFromQueueById($r['id']);
+                continue;
+            }
+
             $aQueue = $o->getDb()->getFromQueue($r['file_id_source']); 
             if (!$aQueue || $aQueue['status'] != BX_DOL_QUEUE_PENDING)
                 continue;

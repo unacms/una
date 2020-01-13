@@ -185,12 +185,17 @@ class BxInvTemplate extends BxBaseModGeneralTemplate
         return BxTemplFunctions::getInstance()->popupBox($sId, $sTitle, $sContent, true);
     }
     
-    public function getJsCode2($sType, $sGridType)
+    public function getJsCode($sType, $aParams = array(), $mixedWrap = true)
     {
-        $aParams = array();
+        $sGrid = 'requests';
+        if(!empty($aParams['grid'])) {
+            $sGrid = $aParams['grid'];
+            unset($aParams['grid']);
+        }
+
         $aParams = array_merge(array(
             'aHtmlIds' => $this->_oConfig->getHtmlIds(),
-            'sObjNameGrid' => $this->_oConfig->getObject('grid_' . $sGridType),
+            'sObjNameGrid' => $this->_oConfig->getObject('grid_' . $sGrid),
         ), $aParams);
 
         return parent::getJsCode($sType, $aParams);

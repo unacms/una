@@ -106,7 +106,7 @@ BxDolCmts.prototype.cmtAfterPostSubmit = function (oCmtForm, oData)
                             if(sFormWrp && sFormWrp.length > 0)
                                 sFormWrp = $(sFormWrp).html();
 
-                            oParent.hide().html(sFormWrp).show();
+                            oParent.hide().html(sFormWrp).bxProcessHtml().show();
 
                             $this.cmtInitFormPost(oParent.find('form'));
                         });
@@ -164,7 +164,7 @@ BxDolCmts.prototype.cmtAfterEditSubmit = function (oCmtForm, oData, onComplete)
             var iCmtId = parseInt(oData.id);
             if(iCmtId > 0) {
                 $('#cmt' + iCmtId + ' .cmt-cont-cnt:first').bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-                    $(this).html(oData.content).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
+                    $(this).html(oData.content).bxProcessHtml().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
                 });
             }
         }
@@ -194,7 +194,7 @@ BxDolCmts.prototype.cmtEdit = function(oLink, iCmtId) {
     var sContentId = this._sRootId + ' #cmt' + iCmtId + ' .cmt-cont-cnt:first';
     if ($(sContentId + ' > form').length) {
         $(sContentId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-            $(this).html($this._oSavedTexts[iCmtId]).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
+            $(this).html($this._oSavedTexts[iCmtId]).bxProcessHtml().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
         });
 
         return;
@@ -215,7 +215,7 @@ BxDolCmts.prototype.cmtEdit = function(oLink, iCmtId) {
             var fContinue = function() {
                 if(oData && oData.form != undefined && oData.form_id != undefined) {
                     $(sContentId).bx_anim('hide', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-                        $(this).html(oData.form).bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+                        $(this).html(oData.form).bxProcessHtml().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
                             $this.cmtInitFormEdit(oData.form_id);
                         });
                     });

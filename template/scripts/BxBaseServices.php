@@ -353,12 +353,14 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
         $aAccountsIds = BxDolAccountQuery::getInstance()->getOperators();
         foreach($aAccountsIds as $iAccountId) {
-            $aProfilesIds = BxDolAccount::getInstance($iAccountId)->getProfilesIds();
-            foreach($aProfilesIds as $iProfileId)
+            $aProfilesIds = BxDolAccount::getInstance($iAccountId)->getProfilesIds(true, false);
+            foreach($aProfilesIds as $iProfileId) {
+                $oProfile = BxDolProfile::getInstance($iProfileId);
                 $aResult[] = array(
                     'key' => $iProfileId,
-                    'value' => BxDolProfile::getInstance($iProfileId)->getDisplayName()
+                    'value' => _t('_sys_profile_with_type', $oProfile->getDisplayName(), $oProfile->getModule()),
                 );
+            }
         }
 
         return $aResult;

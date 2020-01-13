@@ -501,24 +501,34 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
     /**
      * Get all profile ids associated with the account
      */
-    public function getProfilesIds ($isFilterNonSwitchableProfiles = true)
+    public function getProfilesIds ($isFilterNonSwitchableProfiles = true, $isFilterSystemProfiles = true)
     {
-        $a = $this->getProfiles ($isFilterNonSwitchableProfiles);
+        $a = $this->getProfiles ($isFilterNonSwitchableProfiles, $isFilterSystemProfiles);
         return $a ? array_keys($a) : array();
     }
 
     /**
      * Get all profiles associated with the account
      */
-    public function getProfiles ($isFilterNonSwitchableProfiles = true)
+    public function getProfiles ($isFilterNonSwitchableProfiles = true, $isFilterSystemProfiles = true)
     {
         $oProfileQuery = BxDolProfileQuery::getInstance();
         $aProfiles = $oProfileQuery->getProfilesByAccount($this->_iAccountID);
 
         if ($isFilterNonSwitchableProfiles) {
-            foreach ($aProfiles as $iProfileId => $aProfile)
+            foreach ($aProfiles as $iProfileId => $aProfile) {
+                if ('system' == $aProfile['type'])
+                    continue;
                 if (!BxDolService::call($aProfile['type'], 'act_as_profile'))
                     unset($aProfiles[$iProfileId]);
+            }
+        }
+
+        if ($isFilterSystemProfiles) {
+            foreach ($aProfiles as $iProfileId => $aProfile) {
+                if ('system' == $aProfile['type'])
+                    unset($aProfiles[$iProfileId]);
+            }
         }
 
         return $aProfiles;
