@@ -64,7 +64,6 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             // page URIs
             'URI_VIEW_ENTRY' => 'view-group-profile',
             'URI_EDIT_ENTRY' => 'edit-group-profile',
-            'URI_INVITE_TO_ENTRY' => 'invite-to-group',
             'URI_EDIT_COVER' => 'edit-group-cover',
             'URI_JOINED_ENTRIES' => 'joined-groups',
             'URI_MANAGE_COMMON' => 'groups-manage',
@@ -108,7 +107,6 @@ class BxGroupsConfig extends BxBaseModProfileConfig
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER' => 'bx_group_edit_cover',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_group_delete',
             'OBJECT_FORM_ENTRY_DISPLAY_INVITE' => 'bx_group_invite',
-            'OBJECT_FORM_ENTRY_DISPLAY_JOIN' => 'bx_group_join',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_groups_view_actions', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE' => 'bx_groups_view_actions_more', // actions menu on view entry page for "more" popup
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_groups_view_actions_all', // all actions menu on view entry page
@@ -199,17 +197,20 @@ class BxGroupsConfig extends BxBaseModProfileConfig
                 'menu_item_title_leave_group_cancel_request' => '_bx_groups_menu_item_title_leave_group_cancel_request',
                 'menu_item_title_become_fan' => '_bx_groups_menu_item_title_become_fan',
                 'menu_item_title_leave_group' => '_bx_groups_menu_item_title_leave_group',
-                'txt_all_entries_by_author' => '_bx_groups_page_title_browse_by_author'
+                'txt_all_entries_by_author' => '_bx_groups_page_title_browse_by_author',
+                'txt_invitation_popup_title' => '_bx_groups_txt_invite_popup_title'
             ),
 
         );
 
         $this->_aJsClasses = array(
-        	'manage_tools' => 'BxGroupsManageTools'
+        	'manage_tools' => 'BxGroupsManageTools',
+            'invite_popup' => 'BxGroupsInvitePopup'
         );
 
         $this->_aJsObjects = array(
-        	'manage_tools' => 'oBxGroupsManageTools'
+        	'manage_tools' => 'oBxGroupsManageTools',
+            'invite_popup' => 'oBxGroupsInvitePopup'
         );
 
         $this->_aGridObjects = array(

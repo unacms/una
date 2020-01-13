@@ -66,7 +66,7 @@ class BxBaseModGroupsAlertsResponse extends BxBaseModProfileAlertsResponse
                 $sKey = $oKeys->getNewKey(false, $iKeyLifetime);
                 $this->_oModule->_oDb->insertInvite($sKey, $oAlert->iSender, $iSender, $iProfileId);
               
-                $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_INVITE_TO_ENTRY'] . '&id=' . $oAlert->iObject . "&key=" . $sKey);
+                $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $oAlert->iObject . "&key=" . $sKey);
                 sendMailTemplate($this->_oModule->_oConfig->CNF['EMAIL_INVITATION'], 0, $iProfileId, array(
                     'InviterUrl' => BxDolProfile::getInstance($iSender)->getUrl(),
                     'InviterDisplayName' => BxDolProfile::getInstance($iSender)->getDisplayName(),
@@ -74,7 +74,6 @@ class BxBaseModGroupsAlertsResponse extends BxBaseModProfileAlertsResponse
                     'EntryTitle' => $oAlert->aExtras['entry_title'],
                 ), BX_EMAIL_NOTIFY);
             }
-            
         }
         else{
             sendMailTemplate($this->_oModule->_oConfig->CNF['EMAIL_INVITATION'], 0, $iProfileId, array(

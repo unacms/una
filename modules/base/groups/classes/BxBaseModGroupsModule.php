@@ -31,7 +31,30 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         header('Content-Type:text/javascript; charset=utf-8');
         echo(json_encode($a));
     }
-
+    
+    /**
+     * Process Process Invitation
+     */
+    public function actionProcessInvite ($sKey, $iGroupProfileId, $bAccept)
+    {
+        $aData = $this->_oDb->getInviteByKey($sKey, $iGroupProfileId);
+        if (isset($aData['invited_profile_id'])){
+            $CNF = &$this->_oConfig->CNF;
+            if (!isset($CNF['OBJECT_CONNECTIONS']) || !($oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])))
+                return '';
+            $iInvitedProfileId = $aData['invited_profile_id'];
+            if ($iInvitedProfileId != bx_get_logged_profile_id())
+                return '';
+            if ($bAccept){
+                if($oConnection && !$oConnection->isConnected($iInvitedProfileId, $iGroupProfileId)){
+                    $oConnection->addConnection($iInvitedProfileId, $iGroupProfileId);
+                    $oConnection->addConnection($iGroupProfileId, $iInvitedProfileId);
+                }
+            }
+            $this->_oDb->deleteInviteByKey($sKey, $iGroupProfileId);
+        }   
+    }
+ 
     public function serviceGetSearchResultUnit ($iContentId, $sUnitTemplate = '')
     {
         if(empty($sUnitTemplate))
@@ -393,20 +416,12 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
         return $this->_serviceBrowse ('created_entries', array('author' => $iProfileId), BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
     }
-
     
     public function serviceEntityInvite ($iContentId = 0, $bErrorMsg = true)
     {
-        if (bx_get('key')){
-            if (isset($this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_JOIN']))
-                return $this->_serviceEntityForm ('editDataForm', $iContentId, $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_JOIN'], 'checkAllowedJoin', $bErrorMsg);
-            return false;
-        }
-        else{
-            if (isset($this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_INVITE']))
-                return $this->_serviceEntityForm ('editDataForm', $iContentId, $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_INVITE'], false, $bErrorMsg);
-            return false;
-        }
+        if (isset($this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_INVITE']))
+            return $this->_serviceEntityForm ('editDataForm', $iContentId, $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_INVITE'], false, $bErrorMsg);
+        return false;
     }
     
     /**
