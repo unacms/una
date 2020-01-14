@@ -3756,14 +3756,14 @@ CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
 );
 
 INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('sys_site', '_sys_menu_title_main', 'sys_site', 'system', 14, 0, 1, 'BxTemplMenuSite', ''),
+('sys_site', '_sys_menu_title_main', 'sys_site', 'system', 7, 0, 1, 'BxTemplMenuSite', ''),
 ('sys_homepage', '_sys_menu_title_homepage', 'sys_homepage', 'system', 7, 0, 1, 'BxTemplMenuHomepage', ''),
 ('sys_homepage_submenu', '_sys_menu_title_homepage_submenu', 'sys_homepage_submenu', 'system', 8, 0, 1, '', ''),
 ('sys_site_submenu', '_sys_menu_title_submenu', 'sys_site', 'system', 1, 0, 1, 'BxTemplMenuSubmenu', ''),
 ('sys_footer', '_sys_menu_title_footer', 'sys_footer', 'system', 2, 0, 1, 'BxTemplMenuFooter', ''),
 ('sys_toolbar_site', '_sys_menu_title_toolbar_site', 'sys_toolbar_site', 'system', 5, 0, 1, 'BxTemplMenuToolbar', ''),
 ('sys_toolbar_member', '_sys_menu_title_toolbar_member', 'sys_toolbar_member', 'system', 5, 0, 1, 'BxTemplMenuToolbar', ''),
-('sys_add_content', '_sys_menu_title_add_content', 'sys_add_content_links', 'system', 14, 0, 1, 'BxTemplMenuSite', ''),
+('sys_add_content', '_sys_menu_title_add_content', 'sys_add_content_links', 'system', 7, 0, 1, 'BxTemplMenuSite', ''),
 ('sys_add_profile', '_sys_menu_title_add_profile', 'sys_add_profile_links', 'system', 14, 0, 1, 'BxTemplMenuProfileAdd', ''),
 ('sys_add_profile_vertical', '_sys_menu_title_add_profile_vertical', 'sys_add_profile_links', 'system', 6, 0, 1, 'BxTemplMenuProfileAdd', ''),
 ('sys_account_dashboard', '_sys_menu_title_account_dashboard', 'sys_account_dashboard', 'system', 8, 0, 1, 'BxTemplMenuAccountDashboard', ''),
