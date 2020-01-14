@@ -67,23 +67,18 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
 
         $this->inviteMembers ($oGroupProfile, bx_get('initial_members'));
 
-        if (bx_get('key')){
-            $sKey = bx_get('key');
-            $aData = $this->_oModule->_oDb->getInviteByKey($sKey, $oGroupProfile->id());
-            if (isset($aData['invited_profile_id'])){
-                $CNF = &$this->_oModule->_oConfig->CNF;
-                if (!isset($CNF['OBJECT_CONNECTIONS']) || !($oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])))
-                    return '';
-                $iInvitedProfileId = $aData['invited_profile_id'];
-                if($oConnection && !$oConnection->isConnected($iInvitedProfileId, $oGroupProfile->id())){
-                    $oConnection->addConnection($iInvitedProfileId, $oGroupProfile->id());
-                    $oConnection->addConnection($oGroupProfile->id(), $iInvitedProfileId);
-                    $this->_oModule->_oDb->deleteInviteByKey($sKey,  $oGroupProfile->id(), 'date_join', time());
-                }
-            }
-        }
-        
         return '';
+    }
+    
+    protected function redirectAfterEdit($aContentInfo)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        if (bx_get('initial_members') && isset($CNF['URL_ENTRY_FANS'])){
+            $this->_redirectAndExit($CNF['URL_ENTRY_FANS'] . '&profile_id=' . $aContentInfo['profile_id']);
+        }
+        else{
+            $this->_redirectAndExit('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+        }
     }
     
     public function onDataDeleteAfter ($iContentId, $aContentInfo, $oProfile)

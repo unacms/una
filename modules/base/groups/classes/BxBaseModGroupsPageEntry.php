@@ -42,6 +42,31 @@ class BxBaseModGroupsPageEntry extends BxBaseModProfilePageEntry
 
         $this->_oModule->checkAllowedView($this->_aContentInfo, true);
     }
+    
+    public function getCode ()
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        $sRv = '';
+        if (bx_get('key')){
+            $sKey = bx_get('key');
+            $this->_oTemplate->addJs(array('invite_popup.js'));
+            $sId = $this->_oModule->getName() . '_popup_invite';
+            
+            $sContent = $this->_oModule->_oTemplate->parseHtmlByName('popup_invite.html', array(
+                'PopupId' => $sId
+            ));
+            
+            $sRv = $this->_oModule->_oTemplate->getJsCode('invite_popup', array(
+                'sPopupId' => $sId,
+                'sKey' => $sKey,
+                'sAcceptUrl' =>  BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $this->_aProfileInfo['content_id']),
+                'sDeclineUrl' => BX_DOL_URL_ROOT,
+                'iGroupProfileId' => $this->_oProfile->id(),
+            )) . BxTemplFunctions::getInstance()->popupBox($sId, _t($CNF['T']['txt_invitation_popup_title']), $sContent, true);
+        }
+        
+        return $sRv . parent::getCode();
+    }
 }
 
 /** @} */

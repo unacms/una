@@ -253,8 +253,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_group', 'bx_group_edit_cover', 'bx_groups', 0, '_bx_groups_form_profile_display_edit_cover'),
 ('bx_group', 'bx_group_view', 'bx_groups', 1, '_bx_groups_form_profile_display_view'),
 ('bx_group', 'bx_group_view_full', 'bx_groups', 1, '_bx_groups_form_profile_display_view_full'),
-('bx_group', 'bx_group_invite', 'bx_groups', 0, '_bx_groups_form_profile_display_invite'),
-('bx_group', 'bx_group_join', 'bx_groups', 0, '_bx_groups_form_profile_display_join');
+('bx_group', 'bx_group_invite', 'bx_groups', 0, '_bx_groups_form_profile_display_invite');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
 ('bx_group', 'bx_groups', 'allow_view_to', 3, '', 0, 'custom', '_bx_groups_form_profile_input_sys_allow_view_to', '_bx_groups_form_profile_input_allow_view_to', '_bx_groups_form_profile_input_allow_view_to_desc', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
@@ -269,8 +268,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_group', 'bx_groups', 'cover', 'a:1:{i:0;s:20:"bx_groups_cover_crop";}', 'a:1:{s:20:"bx_groups_cover_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_groups_form_profile_input_sys_cover', '_bx_groups_form_profile_input_cover', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_group', 'bx_groups', 'picture', 'a:1:{i:0;s:22:"bx_groups_picture_crop";}', 'a:1:{s:22:"bx_groups_picture_crop";s:24:"_sys_uploader_crop_title";}', 0, 'files', '_bx_groups_form_profile_input_sys_picture', '_bx_groups_form_profile_input_picture', '', 0, 0, 0, '', '', '', '', '', '_bx_groups_form_profile_input_picture_err', '', '', 1, 0),
 ('bx_group', 'bx_groups', 'location', '', '', 0, 'location', '_sys_form_input_sys_location', '_sys_form_input_location', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_group', 'bx_groups', 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_group', 'bx_groups', 'join_info', '_bx_groups_form_profile_input_join_info_value', '', 0, 'value', '_bx_groups_form_profile_input_sys_join_info', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
+('bx_group', 'bx_groups', 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_group_add', 'initial_members', 2147483647, 1, 1),
@@ -285,9 +283,6 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 
 ('bx_group_invite', 'initial_members', 2147483647, 1, 1),
 ('bx_group_invite', 'do_submit', 2147483647, 1, 2),
-
-('bx_group_join', 'join_info', 2147483647, 1, 1),
-('bx_group_join', 'do_submit', 2147483647, 1, 2),
 
 ('bx_group_edit', 'group_name', 2147483647, 1, 1),
 ('bx_group_edit', 'group_cat', 2147483647, 1, 2),

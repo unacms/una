@@ -17,15 +17,12 @@
 	<string name="_bx_groups_form_profile_display_view"><![CDATA[View Group]]></string>
 	<string name="_bx_groups_form_profile_display_view_full"><![CDATA[Full View Group]]></string>
 	<string name="_bx_groups_form_profile_display_invite"><![CDATA[Invite to Group]]></string>
-  <string name="_bx_groups_form_profile_display_join"><![CDATA[Join to Group]]></string>
 	<string name="_bx_groups_form_entry_input_author"><![CDATA[Author]]></string>
 	<string name="_bx_groups_form_profile_input_sys_do_submit"><![CDATA[Submit]]></string>
     <string name="_bx_groups_form_profile_input_sys_join_confirm"><![CDATA[Join confirmation]]></string>
     <string name="_bx_groups_form_profile_input_join_confirm"><![CDATA[Join confirmation]]></string>
     <string name="_bx_groups_form_profile_input_sys_allow_view_to"><![CDATA[Visible to]]></string>
     <string name="_bx_groups_form_profile_input_allow_view_to"><![CDATA[Visible to]]></string>
-    <string name="_bx_groups_form_profile_input_sys_join_info"><![CDATA[Join info]]></string>
-    <string name="_bx_groups_form_profile_input_join_info_value"><![CDATA[You have been invited to a group. Click the button below to accept the invitation.]]></string>
     <string name="_bx_groups_form_profile_input_allow_view_to_desc"><![CDATA[Closed - anyone can find the group and see who's in it, only members can see posts. Secret - only members can find the group and see posts.]]></string>
     <string name="_bx_groups_form_profile_input_sys_allow_post_to"><![CDATA[Who can post]]></string>
     <string name="_bx_groups_form_profile_input_allow_post_to"><![CDATA[Who can post]]></string>
@@ -280,6 +277,10 @@
     <string name="_bx_groups_txt_to_admins"><![CDATA[To Admins]]></string>
     <string name="_bx_groups_txt_from_admins"><![CDATA[From Admins]]></string>
     <string name="_bx_groups_txt_private_group"><![CDATA[Private group]]></string>
+    <string name="_bx_groups_txt_invite_popup_text"><![CDATA[You have been invited to a group. Click the button below to accept the invitation.]]></string>
+    <string name="_bx_groups_txt_invite_popup_title"><![CDATA[Invitation to a group]]></string>
+    <string name="_bx_groups_txt_invite_popup_button_accept"><![CDATA[Accept]]></string>
+    <string name="_bx_groups_txt_invite_popup_button_decline"><![CDATA[Decline]]></string>
 
 	<string name="_bx_groups_alert_action_fan_added"><![CDATA[member joined]]></string>
     <string name="_bx_groups_txt_ntfs_fan_added"><![CDATA[Group <b class="bx-ntfs-content-profile">{owner_name}</b> has got a member <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
