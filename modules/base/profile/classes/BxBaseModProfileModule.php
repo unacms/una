@@ -1669,9 +1669,12 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             if(!$oProfile)
                 continue;
 
-            $aUnitParams = array();
+            $aUnitParams = array('template' => array('name' => 'unit', 'size' => 'thumb'));
+            if(BxDolModule::getInstance($oProfile->getModule()) instanceof BxBaseModGroupsModule)
+                $aUnitParams['template']['name'] = 'unit_wo_cover';
+
             if($bProfile && is_array($mixedProfile['info']))
-                $aUnitParams = array('template' => array('vars' => $mixedProfile['info']));
+                $aUnitParams['template']['vars'] = $mixedProfile['info'];
 
             $s .= $oProfile->getUnit(0, $aUnitParams);
         }

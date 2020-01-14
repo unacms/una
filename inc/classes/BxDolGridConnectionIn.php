@@ -91,7 +91,11 @@ class BxDolGridConnectionIn extends BxTemplGrid
         if (!$oProfile)
             return _t('_sys_txt_error_occured');
 
-        return parent::_getCellDefault ($oProfile->getUnit(), $sKey, $aField, $aRow);
+        $aParams = array('template' => array('name' => 'unit', 'size' => 'thumb'));
+        if(BxDolModule::getInstance($oProfile->getModule()) instanceof BxBaseModGroupsModule)
+            $aParams['template']['name'] = 'unit_wo_cover';
+
+        return parent::_getCellDefault ($oProfile->getUnit(0, $aParams), $sKey, $aField, $aRow);
     }
 
     public function performActionAdd()

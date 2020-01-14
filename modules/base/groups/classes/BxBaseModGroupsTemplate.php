@@ -16,6 +16,8 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
 {
     protected $_iUnitCharsSummary;
 
+    protected $_sUnitClassWoCover;
+
     function __construct(&$oConfig, &$oDb)
     {
         parent::__construct($oConfig, $oDb);
@@ -23,6 +25,7 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
         $this->_bLetterAvatar = true;
         $this->_iUnitCharsSummary = 50;
 
+        $this->_sUnitClassWoCover = $this->_sUnitClass; //--- Save default 'Unit' class (from BxBaseModProfileTemplate) as 'Unit W\O Cover' class here.
         $this->_sUnitClassWithCover .= ' bx-base-groups-unit-with-cover';
         $this->_sUnitClass = $this->_sUnitClassWithCover;
         $this->_sUnitClassWoInfo .= ' bx-base-groups-unit-wo-info'; 
@@ -52,6 +55,22 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
         $aVars['author_avatar'] = $oProfile->getAvatar();
 
         return $aVars;
+    }
+
+    protected function _getUnitClass($aData, $sTemplateName = 'unit.html')
+    {
+        $sResult = '';
+        
+        switch($sTemplateName) {
+            case 'unit_wo_cover.html':
+                $sResult = $this->_sUnitClassWoCover;
+                break;
+
+            default:
+                $sResult = parent::_getUnitClass($aData, $sTemplateName);
+        }
+
+        return $sResult;
     }
 
     protected function _getUnitSize($aData, $sTemplateName = 'unit.html')
