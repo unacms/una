@@ -103,6 +103,9 @@ class BxCreditsGridHistoryAdministration extends BxTemplGrid
 
     protected function _getProfile($mixedValue) 
     {
+        if(is_numeric($mixedValue) && (int)$mixedValue == 0)
+            $mixedValue = $this->_oModule->_oConfig->getAuthor();
+
         $oProfile = BxDolProfile::getInstanceMagic($mixedValue);
         if(!$oProfile)
             return $mixedValue;
