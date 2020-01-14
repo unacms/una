@@ -117,7 +117,7 @@ class BxBaseModPaymentGridOrders extends BxTemplGrid
 
     protected function _getCellDate($mixedValue, $sKey, $aField, $aRow)
     {
-        return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
+        return parent::_getCellDefault(bx_time_js($mixedValue, BX_FORMAT_DATE, true), $sKey, $aField, $aRow);
     }
 }
 

@@ -80,12 +80,12 @@ class BxMarketGridLicensesAdministration extends BxTemplGrid
 
     protected function _getCellAdded($mixedValue, $sKey, $aField, $aRow)
     {
-        return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
+        return parent::_getCellDefault(bx_time_js($mixedValue, BX_FORMAT_DATE, true), $sKey, $aField, $aRow);
     }
 
 	protected function _getCellExpired($mixedValue, $sKey, $aField, $aRow)
     {
-    	$mixedValue = (int)$mixedValue != 0 ? bx_time_js($mixedValue): _t('_bx_market_grid_txt_lcs_never');
+    	$mixedValue = (int)$mixedValue != 0 ? bx_time_js($mixedValue, BX_FORMAT_DATE, true): _t('_bx_market_grid_txt_lcs_never');
     		
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
