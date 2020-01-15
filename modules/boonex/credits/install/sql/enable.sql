@@ -78,7 +78,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 -- MENU: member toolbar
 SET @iMenuToolbarMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_toolbar_member' LIMIT 1);
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_toolbar_member', 'bx_credits', 'credits-history', '_bx_credits_menu_item_title_system_history', '_bx_credits_menu_item_title_history', 'page.php?i=credits-history-common', '', '', '', 'a:2:{s:6:"module";s:10:"bx_credits";s:6:"method";s:26:"get_menu_item_addon_amount";}', '', 0, 2147483646, 0, 0, 0);
+('sys_toolbar_member', 'bx_credits', 'credits-history', '_bx_credits_menu_item_title_system_history', '_bx_credits_menu_item_title_history', 'page.php?i=credits-history-common', '', '', '', 'a:2:{s:6:"module";s:10:"bx_credits";s:6:"method";s:26:"get_menu_item_addon_amount";}', '', 0, 2147483646, 0, 1, 0);
 
 -- MENU: Notifications
 SET @iAccountNotificationsMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_account_notifications' AND `order` < 9999);
