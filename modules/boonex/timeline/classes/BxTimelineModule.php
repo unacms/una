@@ -1079,7 +1079,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return '';
 
         $iProfileId = $this->getProfileId();
-        $sType = BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS;
+        $sType = BX_TIMELINE_TYPE_FEED;
         return $this->_getBlockPost($iProfileId, array(
             'type' => $sType,
             'form_display' => $this->_oConfig->getPostFormDisplay($sType)

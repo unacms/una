@@ -315,6 +315,16 @@ BxTimelinePost.prototype._onGetPost = function(oData)
 
         $this.oView = $($this._getHtmlId('main', oData));
 
+        /*
+         * For backward compatibility.
+         * Current UPF: 'Post to Feed' and Timeline: 'Post to Feed' forms 
+         * should work with an old Account Feed ('Owner and Connections') block.
+         */
+        if(!$this.oView.length && oData['type'] == 'feed') {
+            oData['type'] = 'owner_and_connections';
+            $this.oView = $($this._getHtmlId('main', oData));
+        }
+
         var oLoadMore = $this.oView.find('.' + $this.sSP + '-load-more');
         if(!oLoadMore.is(':visible'))
             oLoadMore.show();
