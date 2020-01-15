@@ -281,8 +281,10 @@
     <string name="_bx_groups_txt_invite_popup_title"><![CDATA[Invitation to a group]]></string>
     <string name="_bx_groups_txt_invite_popup_button_accept"><![CDATA[Accept]]></string>
     <string name="_bx_groups_txt_invite_popup_button_decline"><![CDATA[Decline]]></string>
+    <string name="_bx_groups_txt_invite_popup_error_invitation_absent"><![CDATA[Sorry, an error has occurred. You can not join this group. The invitation is expired or deleted.]]></string>
+    <string name="_bx_groups_txt_invite_popup_error_invitation_wrong_user"><![CDATA[Sorry, an error has occurred. You can not join this group. This invitation cannot be used by you.]]></string>
 
-	<string name="_bx_groups_alert_action_fan_added"><![CDATA[member joined]]></string>
+	  <string name="_bx_groups_alert_action_fan_added"><![CDATA[member joined]]></string>
     <string name="_bx_groups_txt_ntfs_fan_added"><![CDATA[Group <b class="bx-ntfs-content-profile">{owner_name}</b> has got a member <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
     <string name="_bx_groups_alert_action_join_request"><![CDATA[join request]]></string>
     <string name="_bx_groups_txt_ntfs_join_request"><![CDATA[Group <b class="bx-ntfs-content-profile">{owner_name}</b> has a join request from <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
