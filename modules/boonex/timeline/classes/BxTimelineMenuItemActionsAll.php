@@ -21,11 +21,21 @@ class BxTimelineMenuItemActionsAll extends BxTimelineMenuItemActions
         parent::__construct($aObject, $oTemplate);
 
         $this->_aBrowseParams = array();
+        $this->_aSubmenus = array();
+    }
+
+    public function setEvent($aEvent, $aBrowseParams = array())
+    {
+        $bResult = parent::setEvent($aEvent, $aBrowseParams);
+        if(!$bResult)
+            return $bResult;
 
         $this->_aSubmenus = array(
-            'menu_item_actions' => false,
-            'menu_item_manage' => false
+            $this->_getSubmenuKey('menu_item_actions') => false,
+            $this->_getSubmenuKey('menu_item_manage') => false
         );
+
+        return $bResult;
     }
 
     public function addMarkersExt($a)
@@ -50,20 +60,28 @@ class BxTimelineMenuItemActionsAll extends BxTimelineMenuItemActions
 
     protected function _getSubmenu($sName)
     {
-        if(!$this->_aSubmenus[$sName]) {
+        $sKey = $this->_getSubmenuKey($sName);
+        if(!$this->_aSubmenus[$sKey]) {
             $sObject = $this->_oModule->_oConfig->getObject($sName);
 
-            $this->_aSubmenus[$sName] = BxDolMenu::getObjectInstance($sObject);
-            if(!$this->_aSubmenus[$sName])
+            $this->_aSubmenus[$sKey] = BxDolMenu::getObjectInstance($sObject);
+            if(!$this->_aSubmenus[$sKey])
                 return false;
 
-            $this->_aSubmenus[$sName]->setTemplateNameItem($this->_sTmplNameItem);
-            $this->_aSubmenus[$sName]->setEvent($this->_aEvent, $this->_aBrowseParams);
+            $this->_aSubmenus[$sKey]->setTemplateNameItem($this->_sTmplNameItem);
+            $this->_aSubmenus[$sKey]->setEvent($this->_aEvent, $this->_aBrowseParams);
 
-            $this->addMarkers($this->_aSubmenus[$sName]->getMarkers());
+            $this->addMarkers($this->_aSubmenus[$sKey]->getMarkers());
         }
 
-        return $this->_aSubmenus[$sName];
+        return $this->_aSubmenus[$sKey];
+    }
+    
+    protected function _getSubmenuKey($sName)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        return $sName . '_' . $this->_aEvent[$CNF['FIELD_ID']];
     }
     
     /**

@@ -647,7 +647,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 $aParams['form_display'] = 'form_display_post_add_profile';
             }
             else {
-                $aParams['type'] = BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS;
+                $aParams['type'] = BX_TIMELINE_TYPE_FEED;
                 $aParams['form_display'] = 'form_display_post_add';
             }
         }

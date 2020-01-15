@@ -53,7 +53,7 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
     public function setEvent($aEvent, $aBrowseParams = array())
     {
         if(empty($aEvent) || !is_array($aEvent))
-            return;
+            return false;
 
         $this->_aEvent = $aEvent;
         $this->_iEvent = (int)$this->_aEvent['id'];
@@ -79,6 +79,8 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
 
             'delete_title' => _t('_bx_timeline_menu_item_title_item_delete_' . ($bSystem ? 'system' : 'common'))
         ));
+
+        return true;
     }
 
     public function setEventById($iEventId, $aBrowseParams = array())
