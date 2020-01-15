@@ -24,7 +24,7 @@ DELETE FROM `sys_objects_privacy` WHERE `module` = @sName;
 
 
 -- LIVE UPDATES
-DELETE FROM `sys_objects_live_updates` WHERE `name` = @sName;
+DELETE FROM `sys_objects_live_updates` WHERE `name` LIKE 'bx_notifications%';
 
 
 -- ALERTS

@@ -25,6 +25,8 @@
     <string name="_bx_ntfs_menu_item_title_notifications_push"><![CDATA[Push]]></string>
     <string name="_bx_ntfs_menu_item_title_system_notifications"><![CDATA[Уведомления]]></string>
     <string name="_bx_ntfs_menu_item_title_notifications"><![CDATA[Уведомления]]></string>
+    <string name="_bx_ntfs_menu_item_title_system_preview"><![CDATA[Уведомления]]></string>
+    <string name="_bx_ntfs_menu_item_title_preview"><![CDATA[]]></string>
 
     <string name="_bx_ntfs_menu_title_preview"><![CDATA[Уведомления - Пред просмотр]]></string>
     <string name="_bx_ntfs_menu_set_title_preview"><![CDATA[Уведомления - Пред просмотр]]></string>
