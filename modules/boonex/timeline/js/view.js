@@ -260,6 +260,7 @@ BxTimelineView.prototype.changeView = function(oLink, sType)
 {
     var oViews = $(this._getHtmlId('views_content', this._oRequestParams, {with_type: false})); 
 
+    this._oRequestParams.start = 0;
     this._oRequestParams.type = sType;
 
     var sView = this._getHtmlId('main', this._oRequestParams);
