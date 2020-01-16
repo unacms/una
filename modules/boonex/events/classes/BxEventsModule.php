@@ -100,7 +100,7 @@ class BxEventsModule extends BxBaseModGroupsModule
         if ($iProfileId == 0)
             return false;
         $CNF = &$this->_oConfig->CNF;
-        if (in_array(BxDolProfile::getInstance()->getModule($iProfileId), $CNF['ENABLE_FOR_CONTEXT_IN_MODULES']))
+        if (in_array(BxDolProfile::getInstance($iProfileId)->getModule(), $CNF['ENABLE_FOR_CONTEXT_IN_MODULES']))
             return true;
         return false;
     }
