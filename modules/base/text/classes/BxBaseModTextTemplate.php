@@ -726,6 +726,64 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
     {
         return $this->getModule()->getEntryImageData($aData);
     }
+    
+    function mediaExif ($aMediaInfo, $iProfileId = false, $sFuncAuthorDesc = '', $sTemplateName = 'media-exif.html') 
+    {
+
+        if (!$aMediaInfo['exif'])
+            return '';
+
+        $a = unserialize($aMediaInfo['exif']);
+
+        $s = '';
+        if (!empty($a['Make'])) {
+            $oModule = BxDolModule::getInstance($this->MODULE);
+            $CNF = &$oModule->_oConfig->CNF;
+          
+            $sCamera = BxDolMetatags::keywordsCameraModel($a);
+            if (!empty($CNF['OBJECT_METATAGS_MEDIA_CAMERA'])) {
+                $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS_MEDIA_CAMERA']);
+                if ($oMetatags->keywordsIsEnabled()) {
+                    $sCamera = $oMetatags->keywordsParseOne($aMediaInfo['id'], $sCamera);
+                }
+            }
+
+            if (!empty($sCamera))
+                $s .= $this->parseHtmlByName('media-exif-value.html', array(
+                    'key' => _t($CNF['T']['txt_media_exif_camera']), 
+                    'val' => $sCamera,
+                ));
+        }
+        
+        if (!empty($a['FocalLength']))
+            $s .= $this->parseHtmlByName('media-exif-value.html', array(
+                'key' => _t($CNF['T']['txt_media_exif_focal_length']),
+                'val' => _t($CNF['T']['txt_media_exif_focal_length_value'], $a['FocalLength']),
+            ));
+
+        if (!empty($a['COMPUTED']['ApertureFNumber']))
+            $s .= $this->parseHtmlByName('media-exif-value.html', array(
+                'key' => _t($CNF['T']['txt_media_exif_aperture']),
+                'val' => $a['COMPUTED']['ApertureFNumber'],
+            ));
+
+        if (!empty($a['ExposureTime']))
+            $s .= $this->parseHtmlByName('media-exif-value.html', array(
+                'key' => _t($CNF['T']['txt_media_exif_shutter_speed']),
+                'val' => _t($CNF['T']['txt_media_exif_shutter_speed_value'], $a['ExposureTime']),
+            ));
+
+        if (!empty($a['ISOSpeedRatings']))
+            $s .= $this->parseHtmlByName('media-exif-value.html', array(
+                'key' => _t($CNF['T']['txt_media_exif_iso']),
+                'val' => $a['ISOSpeedRatings'],
+            ));
+
+        if (empty($s))
+            return '';
+        
+        return $this->parseHtmlByName($sTemplateName, array('content' => $s));
+    }
 }
 
 /** @} */

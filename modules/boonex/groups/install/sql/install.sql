@@ -284,6 +284,9 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_group_invite', 'initial_members', 2147483647, 1, 1),
 ('bx_group_invite', 'do_submit', 2147483647, 1, 2),
 
+('bx_group_delete', 'delete_confirm', 2147483647, 1, 1),
+('bx_group_delete', 'do_submit', 2147483647, 1, 2),
+
 ('bx_group_edit', 'group_name', 2147483647, 1, 1),
 ('bx_group_edit', 'group_cat', 2147483647, 1, 2),
 ('bx_group_edit', 'group_desc', 2147483647, 1, 3),

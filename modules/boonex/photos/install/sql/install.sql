@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `bx_photos_entries` (
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
   `status` enum('active','hidden') NOT NULL DEFAULT 'active',
   `status_admin` enum('active','hidden') NOT NULL DEFAULT 'active',
+  `exif` text NOT NULL,
   PRIMARY KEY (`id`),
   FULLTEXT KEY `title_text` (`title`,`text`)
 );
@@ -154,6 +155,13 @@ CREATE TABLE `bx_photos_views_track` (
 
 -- TABLE: metas
 CREATE TABLE `bx_photos_meta_keywords` (
+  `object_id` int(10) unsigned NOT NULL,
+  `keyword` varchar(255) NOT NULL,
+  KEY `object_id` (`object_id`),
+  KEY `keyword` (`keyword`)
+);
+
+CREATE TABLE `bx_photos_meta_keywords_camera` (
   `object_id` int(10) unsigned NOT NULL,
   `keyword` varchar(255) NOT NULL,
   KEY `object_id` (`object_id`),

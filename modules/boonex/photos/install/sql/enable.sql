@@ -51,6 +51,7 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_photos_view_entry', 2, 'bx_photos', '', '_bx_photos_page_block_title_entry_rating', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_photos";s:6:"method";s:13:"entity_rating";}', 0, 0, 0, 0),
 ('bx_photos_view_entry', 3, 'bx_photos', '_bx_photos_page_block_title_sys_entry_context', '_bx_photos_page_block_title_entry_context', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_photos\";s:6:\"method\";s:14:\"entity_context\";}', 0, 0, 1, 1),
 ('bx_photos_view_entry', 3, 'bx_photos', '', '_bx_photos_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_photos";s:6:"method";s:11:"entity_info";}', 0, 0, 1, 2),
+('bx_photos_view_entry', 3, 'bx_photos', '', '_bx_photos_page_block_title_entry_media_exif', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_photos\";s:6:\"method\";s:10:\"media_exif\";}', 0, 0, 1, 5),
 ('bx_photos_view_entry', 3, 'bx_photos', '', '_bx_photos_page_block_title_entry_location', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_photos";s:6:"method";s:15:"entity_location";}', 0, 0, 0, 0),
 ('bx_photos_view_entry', 2, 'bx_photos', '', '_bx_photos_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_photos";s:6:"method";s:18:"entity_all_actions";}', 0, 0, 1, 2),
 ('bx_photos_view_entry', 4, 'bx_photos', '', '_bx_photos_page_block_title_entry_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_photos";s:6:"method";s:14:"entity_actions";}', 0, 0, 0, 0),
@@ -377,7 +378,8 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 
 -- METATAGS
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
-('bx_photos', 'bx_photos_meta_keywords', 'bx_photos_meta_locations', 'bx_photos_meta_mentions', '', '');
+('bx_photos', 'bx_photos_meta_keywords', 'bx_photos_meta_locations', 'bx_photos_meta_mentions', '', ''),
+('bx_photos_camera', 'bx_photos_meta_keywords_camera', '', '', '', '');
 
 
 -- CATEGORY

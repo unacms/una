@@ -134,6 +134,8 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'OBJECT_GRID_ADMINISTRATION' => 'bx_albums_administration',
         	'OBJECT_GRID_COMMON' => 'bx_albums_common',
         	'OBJECT_UPLOADERS' => array('bx_albums_simple', 'bx_albums_html5', 'bx_albums_crop'),
+            
+            'FUNCTION_FOR_EXIF_INFO' => 'getMediaInfoById',
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
@@ -182,6 +184,13 @@ class BxAlbumsConfig extends BxBaseModTextConfig
                 'txt_all_entries_in' => '_bx_albums_txt_all_entries_in',
             	'txt_all_entries_by_author' => '_bx_albums_page_title_browse_by_author',
                 'txt_all_entries_by_context' => '_bx_albums_page_title_browse_by_context',
+                'txt_media_exif_camera' => '_bx_albums_txt_media_album_camera',
+                'txt_media_exif_focal_length' => '_bx_albums_txt_media_album_focal_length',
+                'txt_media_exif_focal_length_value' => '_bx_albums_txt_media_album_focal_length_value',
+                'txt_media_exif_aperture' => '_bx_albums_txt_media_album_aperture',
+                'txt_media_exif_shutter_speed' => '_bx_albums_txt_media_album_shutter_speed',
+                'txt_media_exif_shutter_speed_value' => '_bx_albums_txt_media_album_shutter_speed_value',
+                'txt_media_exif_iso' => '_bx_albums_txt_media_album_iso',
             ),
         );
 

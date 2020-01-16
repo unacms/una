@@ -52,6 +52,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
             'FIELD_STATUS_ADMIN' => 'status_admin',
             'FIELD_LABELS' => 'labels',
             'FIELD_LOCATION' => 'location',
+            'FIELD_EXIF' => 'exif',
             'FIELD_LOCATION_PREFIX' => 'location',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 			
@@ -90,6 +91,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
             'OBJECT_FAVORITES' => 'bx_photos',
             'OBJECT_FEATURED' => 'bx_photos',
             'OBJECT_METATAGS' => 'bx_photos',
+            'OBJECT_METATAGS_MEDIA_CAMERA' => 'bx_photos_camera',
             'OBJECT_COMMENTS' => 'bx_photos',
             'OBJECT_CATEGORY' => 'bx_photos_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_photos_allow_view_to',
@@ -110,6 +112,8 @@ class BxPhotosConfig extends BxBaseModTextConfig
             'OBJECT_GRID_ADMINISTRATION' => 'bx_photos_administration',
             'OBJECT_GRID_COMMON' => 'bx_photos_common',
             'OBJECT_UPLOADERS' => array('sys_simple', 'sys_html5'),
+            
+            'FUNCTION_FOR_EXIF_INFO' => 'getContentInfoById',
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
@@ -141,7 +145,14 @@ class BxPhotosConfig extends BxBaseModTextConfig
                 'txt_all_entries_in' => '_bx_photos_txt_all_entries_in',
                 'txt_all_entries_by_author' => '_bx_photos_page_title_browse_by_author',
                 'txt_all_entries_by_context' => '_bx_photos_page_title_browse_by_context',
-            	'txt_pict_use_as_thumb' => '_bx_photos_form_entry_input_picture_use_as_thumb'
+            	'txt_pict_use_as_thumb' => '_bx_photos_form_entry_input_picture_use_as_thumb',
+                'txt_media_exif_camera' => '_bx_photos_txt_camera',
+                'txt_media_exif_focal_length' => '_bx_photos_txt_focal_length',
+                'txt_media_exif_focal_length_value' => '_bx_photos_txt_focal_length_value',
+                'txt_media_exif_aperture' => '_bx_photos_txt_aperture',
+                'txt_media_exif_shutter_speed' => '_bx_photos_txt_shutter_speed',
+                'txt_media_exif_shutter_speed_value' => '_bx_photos_txt_shutter_speed_value',
+                'txt_media_exif_iso' => '_bx_photos_txt_album_iso',
             ),
         );
 
