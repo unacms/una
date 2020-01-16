@@ -488,7 +488,7 @@ function get_templates_array($bEnabledOnly = true, $bShortInfo = true)
         return $oDb->getAllWithKey("SELECT * FROM `sys_modules` WHERE 1 AND `type`='" . BX_DOL_MODULE_TYPE_TEMPLATE . "'" . $sWhereAddon, "uri");
 }
 
-function getExifAndSizeInfo($oStorage, $oTranscoder, $iContentId){
+function bx_get_image_exif_and_size($oStorage, $oTranscoder, $iContentId){
     $sExif = '';
     $aExif = false;
     $aPhoto = $oStorage->getFile($iContentId);

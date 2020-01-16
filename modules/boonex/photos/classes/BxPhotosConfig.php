@@ -113,7 +113,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
             'OBJECT_GRID_COMMON' => 'bx_photos_common',
             'OBJECT_UPLOADERS' => array('sys_simple', 'sys_html5'),
             
-            'FUNCTION_FOR_EXIF_INFO' => 'getContentInfoById',
+            'FUNCTION_GET_ITEM_INFO' => 'getContentInfoById',
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (

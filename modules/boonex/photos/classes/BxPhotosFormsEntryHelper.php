@@ -55,6 +55,16 @@ class BxPhotosFormsEntryHelper extends BxBaseModFilesFormsEntryHelper
        
         return parent::onDataAddAfter($iAccountId, $iContentId);
     }
+    
+    public function onDataDeleteAfter($iContentId, $aContentInfo, $oProfile)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        if (!empty($CNF['OBJECT_METATAGS_MEDIA_CAMERA'])) {
+            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS_MEDIA_CAMERA']);
+            $oMetatags->onDeleteContent($aContentInfo['id']);
+        }
+        return parent::onDataDeleteAfter ($iContentId, $aContentInfo, $oProfile);
+    }
             
     function updateExif($iContentId, $aContentInfo)
     {
@@ -64,8 +74,16 @@ class BxPhotosFormsEntryHelper extends BxBaseModFilesFormsEntryHelper
         
         if (!$oStorage || !$oTranscoder)
             return false;
-        $aInfo = getExifAndSizeInfo($oStorage, $oTranscoder, $aContentInfo[$CNF['FIELD_THUMB']]);
+        $aInfo = bx_get_image_exif_and_size($oStorage, $oTranscoder, $aContentInfo[$CNF['FIELD_THUMB']]);
         $this->_oModule->_oDb->updateEntries(array($CNF['FIELD_EXIF'] => $aInfo['exif']), array($CNF['FIELD_ID'] => $iContentId));
+        
+        $aExif = unserialize($aInfo['exif']);
+        if ($aContentInfo && isset($aExif['Make']) && !empty($CNF['OBJECT_METATAGS_MEDIA_CAMERA'])) {
+		    $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS_MEDIA_CAMERA']);
+            if ($oMetatags->keywordsIsEnabled()){
+		        $oMetatags->keywordsAddOne($aContentInfo['id'], $oMetatags->keywordsCameraModel($aExif));
+			}
+        }
     }
 }
 

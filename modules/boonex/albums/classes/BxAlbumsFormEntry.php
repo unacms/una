@@ -55,8 +55,8 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
 
         $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_BIG']);
         
-		$aInfo = getExifAndSizeInfo($oStorage, $oTranscoder, $iFileId);
-        
+		$aInfo = bx_get_image_exif_and_size($oStorage, $oTranscoder, $iFileId);
+        $aExif = unserialize($aInfo['exif']);
         if (false === $this->_oModule->_oDb->associateFileWithContent ($iContentId, $iFileId, $iProfileId, $this->getCleanValue('title-' . $iFileId), $aInfo['size'], $aInfo['exif']))
             return;
 
@@ -68,13 +68,12 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
             if ($oMetatags->keywordsIsEnabled())
                 $oMetatags->keywordsAdd($aMediaInfo['id'], $aMediaInfo['title']);
         }
-
-        if ($aMediaInfo && isset($aExif['Make']) && !empty($CNF['OBJECT_METATAGS_MEDIA_CAMERA'])) {
-            $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS_MEDIA_CAMERA']);
-            if ($oMetatags->keywordsIsEnabled())
-                $oMetatags->keywordsAddOne($aMediaInfo['id'], $oMetatags->keywordsCameraModel($aExif));
+		if ($aMediaInfo && isset($aExif['Make']) && !empty($CNF['OBJECT_METATAGS_MEDIA_CAMERA'])) {
+		    $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS_MEDIA_CAMERA']);
+            if ($oMetatags->keywordsIsEnabled()){
+		        $oMetatags->keywordsAddOne($aMediaInfo['id'], $oMetatags->keywordsCameraModel($aExif));
+			}
         }
-
         bx_alert($this->_oModule->getName(), 'media_added', $iContentId, $iProfileId, array(
             'object_author_id' => $aContentInfo[$CNF['FIELD_AUTHOR']],
 

@@ -170,7 +170,7 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     public function serviceMediaExif ($iMediaId = 0)
     {
         $CNF = &$this->_oConfig->CNF;
-        return $this->_serviceTemplateFunc ('mediaExif', $iMediaId, $CNF['FUNCTION_FOR_MEGIA_INFO']);
+        return $this->_serviceTemplateFunc ('mediaExif', $iMediaId, $CNF['FUNCTION_FOR_GET_ITEM_INFO']);
     }
 
     public function serviceGetThumb ($iContentId, $sTranscoder = '') 
