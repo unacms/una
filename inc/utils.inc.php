@@ -488,6 +488,28 @@ function get_templates_array($bEnabledOnly = true, $bShortInfo = true)
         return $oDb->getAllWithKey("SELECT * FROM `sys_modules` WHERE 1 AND `type`='" . BX_DOL_MODULE_TYPE_TEMPLATE . "'" . $sWhereAddon, "uri");
 }
 
+function getExifAndSizeInfo($oStorage, $oTranscoder, $iContentId){
+    $sExif = '';
+    $aExif = false;
+    $aPhoto = $oStorage->getFile($iContentId);
+    if ($oTranscoder->isMimeTypeSupported($aPhoto['mime_type'])) {
+        $oImageReize = BxDolImageResize::getInstance();
+        
+        $a = $oImageReize->getImageSize($oTranscoder->getFileUrl($iContentId));
+        $sData = isset($a['w']) && isset($a['h']) ? $a['w'] . 'x' . $a['h'] : '';
+        
+        if ($aExif = $oImageReize->getExifInfo($oStorage->getFileUrlById($iContentId))) {
+            $a = array('Make', 'Model', 'FocalLength', 'ShutterSpeedValue', 'ExposureTime', 'ISOSpeedRatings', 'Orientation', 'Artist', 'Copyright', 'Flash', 'WhiteBalance', 'DateTimeOriginal', 'DateTimeDigitized', 'ExifVersion', 'COMPUTED', 'GPSLatitudeRef', 'GPSLatitude', 'GPSLongitudeRef', 'GPSLongitude', 'GPSAltitudeRef', 'GPSAltitude', 'GPSTimeStamp', 'GPSImgDirectionRef', 'GPSImgDirection', 'GPSDateStamp');
+            $aExifFiltered = array();
+            foreach ($a as $sIndex)
+                if (isset($aExif[$sIndex]))
+                    $aExifFiltered[$sIndex] = $aExif[$sIndex];
+            $sExif = serialize($aExifFiltered);
+        }
+    }
+    return array('exif' => $sExif, 'size' => $sData);
+}
+
 function extFileExists( $sFileSrc )
 {
     return (file_exists( $sFileSrc ) && is_file( $sFileSrc )) ? true : false;

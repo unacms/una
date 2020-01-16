@@ -156,16 +156,6 @@ class BxAlbumsModule extends BxBaseModTextModule
     }
 
     /**
-     * Display media EXIF information.
-     * @param $iMediaId media ID, if it's omitted then it's taken from 'id' GET variable.
-     * @return HTML string with EXIF info. On error empty string is returned.
-     */ 
-    public function serviceMediaExif ($iMediaId = 0)
-    {
-        return $this->_serviceTemplateFunc ('mediaExif', $iMediaId, 'getMediaInfoById');
-    }
-
-    /**
      * @page service Service Calls
      * @section bx_albums Albums
      * @subsection bx_albums-page_blocks Page Blocks

@@ -39,6 +39,34 @@ class BxPhotosFormsEntryHelper extends BxBaseModFilesFormsEntryHelper
                 return $mixedContent;
         }
     }
+    
+    public function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm)
+    {
+        $this->updateExif($iContentId, $aContentInfo);
+        return parent::onDataEditAfter($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm);
+    }
+    
+    public function onDataAddAfter ($iAccountId, $iContentId)
+    {
+        $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
+        if ($aContentInfo){
+             $this->updateExif($iContentId, $aContentInfo);
+        }
+       
+        return parent::onDataAddAfter($iAccountId, $iContentId);
+    }
+            
+    function updateExif($iContentId, $aContentInfo)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
+        $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW']);
+        
+        if (!$oStorage || !$oTranscoder)
+            return false;
+        $aInfo = getExifAndSizeInfo($oStorage, $oTranscoder, $aContentInfo[$CNF['FIELD_THUMB']]);
+        $this->_oModule->_oDb->updateEntries(array($CNF['FIELD_EXIF'] => $aInfo['exif']), array($CNF['FIELD_ID'] => $iContentId));
+    }
 }
 
 /** @} */

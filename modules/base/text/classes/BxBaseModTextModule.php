@@ -161,6 +161,17 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
     {
         return $this->_serviceTemplateFunc('entryPollResults', $iPollId, 'getPollInfoById');
     }
+    
+    /**
+     * Display media EXIF information.
+     * @param $iMediaId media ID, if it's omitted then it's taken from 'id' GET variable.
+     * @return HTML string with EXIF info. On error empty string is returned.
+     */ 
+    public function serviceMediaExif ($iMediaId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        return $this->_serviceTemplateFunc ('mediaExif', $iMediaId, $CNF['FUNCTION_FOR_MEGIA_INFO']);
+    }
 
     public function serviceGetThumb ($iContentId, $sTranscoder = '') 
     {

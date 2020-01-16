@@ -55,27 +55,9 @@ class BxAlbumsFormEntry extends BxBaseModTextFormEntry
 
         $oTranscoder = BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_IMAGES_TRANSCODER_BIG']);
         
-        $sData = '';
-        $sExif = '';
-        $aExif = false;
-        $aFile = $oStorage->getFile($iFileId);
-        if ($oTranscoder->isMimeTypeSupported($aFile['mime_type'])) {
-            $oImageReize = BxDolImageResize::getInstance();
-
-            $a = $oImageReize->getImageSize($oTranscoder->getFileUrl($iFileId));
-            $sData = isset($a['w']) && isset($a['h']) ? $a['w'] . 'x' . $a['h'] : '';
-
-            if ($aExif = $oImageReize->getExifInfo($oStorage->getFileUrlById($iFileId))) {
-                $a = array('Make', 'Model', 'FocalLength', 'ShutterSpeedValue', 'ExposureTime', 'ISOSpeedRatings', 'Orientation', 'Artist', 'Copyright', 'Flash', 'WhiteBalance', 'DateTimeOriginal', 'DateTimeDigitized', 'ExifVersion', 'COMPUTED', 'GPSLatitudeRef', 'GPSLatitude', 'GPSLongitudeRef', 'GPSLongitude', 'GPSAltitudeRef', 'GPSAltitude', 'GPSTimeStamp', 'GPSImgDirectionRef', 'GPSImgDirection', 'GPSDateStamp');
-                $aExifFiltered = array();
-                foreach ($a as $sIndex)
-                    if (isset($aExif[$sIndex]))
-                        $aExifFiltered[$sIndex] = $aExif[$sIndex];
-                $sExif = serialize($aExifFiltered);
-            }
-        }
+		$aInfo = getExifAndSizeInfo($oStorage, $oTranscoder, $iFileId);
         
-        if (false === $this->_oModule->_oDb->associateFileWithContent ($iContentId, $iFileId, $iProfileId, $this->getCleanValue('title-' . $iFileId), $sData, $sExif))
+        if (false === $this->_oModule->_oDb->associateFileWithContent ($iContentId, $iFileId, $iProfileId, $this->getCleanValue('title-' . $iFileId), $aInfo['size'], $aInfo['exif']))
             return;
 
         $aMediaInfo = $this->_oModule->_oDb->getMediaInfoSimpleByFileId($iFileId);
