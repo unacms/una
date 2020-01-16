@@ -23,67 +23,59 @@ function BxDolMenuMoreAuto(options)
 BxDolMenuMoreAuto.prototype.init = function() {
     var $this = this;
 
-    $(document).ready(function() {
-        //--- Initialize ---//
-        $('.bx-menu-object-' + $this._sObject).each(function() {
-            var oMenu = $(this);
-            var oItemMore = oMenu.find($this._sClassItemMore);
-            var oItemMoreSubmenu = oItemMore.find($this._sClassItemMoreSubmenu);
+    var oMenu = $('#' + this._aHtmlIds['main']);
+    if(!oMenu.length) 
+        return;
 
-            for(var i = 0; i < $this._iItemsStatic; i++)
-                oItemMore.prevAll($this._sClassItem + ':not(.' + $this._sClassItemStatic + '):last').addClass($this._sClassItemStatic);
+    //--- Initialize ---//
+    var oItemMore = oMenu.find(this._sClassItemMore);
+    var oItemMoreSubmenu = oItemMore.find(this._sClassItemMoreSubmenu);
 
-            var iMenu = 0;
-            oMenu.children($this._sClassItem + ':visible').each(function() {
-                iMenu += $this._getWidth($(this));
-            });
+    for(var i = 0; i < this._iItemsStatic; i++)
+        oItemMore.prevAll(this._sClassItem + ':not(.' + this._sClassItemStatic + '):last').addClass(this._sClassItemStatic);
 
-            var iParent = oMenu.parent().width();
+    var iMenu = 0;
+    oMenu.children(this._sClassItem + ':visible').each(function() {
+        iMenu += $this._getWidth($(this));
+    });
 
-            var iItemMore = oItemMore.outerWidth(true);
+    var iParent = oMenu.parent().width();
+    var iItemMore = oItemMore.outerWidth(true);
 
-            oMenu.css('overflow', 'visible');
+    oMenu.css('overflow', 'visible');
 
-            if(iMenu < iParent)
-                return;
+    if(iMenu >= iParent)
+        this._moveToSubmenu(oMenu, oItemMore, oItemMoreSubmenu, iParent, iItemMore);
 
-            $this._moveToSubmenu(oMenu, oItemMore, oItemMoreSubmenu, iParent, iItemMore);
-        });
+    //--- Add event handlers ---//
+    $(window).on('resize', function() {
+       $this.update();
+    });
 
-        //--- Add event handlers ---//
-        $(window).on('resize', function() {
-           $this.update();
-        });
-
-        $($this._sClassItem).on('resize', function() {
-            $this.update(true);
-        });
+    oMenu.find(this._sClassItem).on('resize', function() {
+        $this.update(true);
     });
 };
 
 BxDolMenuMoreAuto.prototype.update = function(bForceCalculate)
 {
     var $this = this;
+    var oMenu = $('#' + this._aHtmlIds['main']);
+    var oItemMore = oMenu.find(this._sClassItemMore);
+    var oItemMoreSubmenu = oItemMore.find(this._sClassItemMoreSubmenu);
 
-    $('.bx-menu-object-' + this._sObject).each(function() {
-        var oMenu = $(this);
-        var oItemMore = oMenu.find($this._sClassItemMore);
-        var oItemMoreSubmenu = oItemMore.find($this._sClassItemMoreSubmenu);
-
-        var iMenu = 0;
-        oMenu.children($this._sClassItem + ':visible').each(function() {
-            iMenu += $this._getWidth($(this), bForceCalculate);
-        });
-
-        var iParent = oMenu.parent().width();
-
-        var iItemMore = oItemMore.outerWidth(true);
-
-        if(iMenu > iParent)
-            $this._moveToSubmenu(oMenu, oItemMore, oItemMoreSubmenu, iParent, iItemMore);
-        if(iMenu < iParent)
-            $this._moveFromSubmenu(oMenu, oItemMore, oItemMoreSubmenu, iParent, iMenu);
+    var iMenu = 0;
+    oMenu.children(this._sClassItem + ':visible').each(function() {
+        iMenu += $this._getWidth($(this), bForceCalculate);
     });
+
+    var iParent = oMenu.parent().width();
+    var iItemMore = oItemMore.outerWidth(true);
+
+    if(iMenu > iParent)
+        this._moveToSubmenu(oMenu, oItemMore, oItemMoreSubmenu, iParent, iItemMore);
+    if(iMenu < iParent)
+        this._moveFromSubmenu(oMenu, oItemMore, oItemMoreSubmenu, iParent, iMenu);
 };
 
 BxDolMenuMoreAuto.prototype.more = function(oElement)

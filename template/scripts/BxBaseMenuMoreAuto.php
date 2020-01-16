@@ -34,6 +34,7 @@ class BxBaseMenuMoreAuto extends BxTemplMenu
 
         $sPrefix = str_replace('_', '-', $this->_sObject);
         $this->_aHtmlIds = array(
+            'main' => $sPrefix,
             'more_auto_popup' => $sPrefix . '-ma-popup',
         );
     }
@@ -69,6 +70,7 @@ class BxBaseMenuMoreAuto extends BxTemplMenu
         $bMoreAuto = $this->_isMoreAuto();
 
         $aResult = array_merge(parent::_getTemplateVars(), array(
+            'html_id' => $this->_getHtmlIdMain(),
             'bx_if:show_more_auto_class' => array(
                 'condition' => $bMoreAuto,
                 'content' => array()
@@ -81,12 +83,14 @@ class BxBaseMenuMoreAuto extends BxTemplMenu
 
     protected function _getJsCodeMoreAuto()
     {
-        $aParams = array(
+        $sJsObject = $this->_getJsObjectMoreAuto();
+        $aJsParams = array(
             'sObject' => $this->_sObject,
             'iItemsStatic' => $this->_iMoreAutoItemsStatic,
-            'aHtmlIds' => $this->_aHtmlIds
+            'aHtmlIds' => $this->_getHtmlIds()
         );
-        return $this->_oTemplate->_wrapInTagJsCode("if(!" . $this->_sJsObjectMoreAuto . ") var " . $this->_sJsObjectMoreAuto . " = new BxDolMenuMoreAuto(" . json_encode($aParams) . "); " . $this->_sJsObjectMoreAuto . ".init();");
+
+        return $this->_oTemplate->_wrapInTagJsCode("if(!" . $sJsObject . ") {var " . $sJsObject . " = new BxDolMenuMoreAuto(" . json_encode($aJsParams) . "); " . $sJsObject . ".init();}");
     }
     
     protected function _getMenuItem ($aItem)
@@ -96,12 +100,27 @@ class BxBaseMenuMoreAuto extends BxTemplMenu
         if($aItem['name'] != BX_DEF_MENU_ITEM_MORE_AUTO)
             return parent::_getMenuItem($aItem);
 
-        $aItem['onclick'] = $this->_sJsObjectMoreAuto . '.more(this);';
+        $aItem['onclick'] = $this->_getJsObjectMoreAuto() . '.more(this);';
         $aItem['popup'] = BxTemplFunctions::getInstance()->transBox($this->_aHtmlIds['more_auto_popup'], $this->_oTemplate->parseHtmlByName($this->_getTmplNameItemMorePopup(), array(
             'content' => ''
         )), true);
 
         return parent::_getMenuItem($aItem);
+    }
+
+    protected function _getHtmlIds()
+    {
+        return $this->_aHtmlIds;
+    }
+
+    protected function _getHtmlIdMain()
+    {
+        return $this->_aHtmlIds['main'];
+    }
+
+    protected function _getJsObjectMoreAuto()
+    {
+        return $this->_sJsObjectMoreAuto;
     }
 
     protected function _getTmplNameItemMore()

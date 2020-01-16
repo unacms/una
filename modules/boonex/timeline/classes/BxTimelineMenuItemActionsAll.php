@@ -58,6 +58,23 @@ class BxTimelineMenuItemActionsAll extends BxTimelineMenuItemActions
         parent::_setBrowseParams($aBrowseParams);
     }
 
+    protected function _getHtmlIds()
+    {
+        return array_merge(parent::_getHtmlIds(), array(
+            'main' => $this->_getHtmlIdMain()
+        ));
+    }
+
+    protected function _getHtmlIdMain()
+    {
+        return parent::_getHtmlIdMain() . strtolower($this->_getUniquePart('-'));
+    }
+
+    protected function _getJsObjectMoreAuto()
+    {
+        return parent::_getJsObjectMoreAuto() . $this->_getUniquePart();
+    }
+
     protected function _getSubmenu($sName)
     {
         $sKey = $this->_getSubmenuKey($sName);
@@ -165,6 +182,19 @@ class BxTimelineMenuItemActionsAll extends BxTimelineMenuItemActions
             return false;
 
         return $aItem['item'];
+    }
+
+    private function _getUniquePart($sDelimiter = '')
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $sResult = '';
+        if(!empty($this->_aBrowseParams['view']))
+            $sResult .= $sDelimiter . bx_gen_method_name($this->_aBrowseParams['view']);
+        if(!empty($this->_aBrowseParams['type']))
+            $sResult .= $sDelimiter . bx_gen_method_name($this->_aBrowseParams['type']);
+
+        return $sResult . $sDelimiter . $this->_aEvent[$CNF['FIELD_ID']];
     }
 }
 

@@ -137,7 +137,7 @@ BxTimelinePost.prototype.afterFormPostSubmit = function (oForm, oData)
             if(iId <= 0) 
                 return;
 
-            $('.' + $this.sClassView).each(function() {
+            $('.' + $this.sClassView + ':visible').each(function() {
                 var oView = $(this);
                 $this._getPost(oView, iId, jQuery.extend({}, $this._oRequestParams, {view: $this._getView(oView), afps_loading: 1}));
             });
