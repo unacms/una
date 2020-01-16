@@ -189,7 +189,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
     	if(empty($sDefault)) {
             $aDefault = array_shift($aMenuItems);
-            $sDefault = $aDefault['module'];
+            $sDefault = !empty($aDefault['module']) ? $aDefault['module'] : $aDefault['name'];
     	}
     	$oMenu->setSelected($sDefault, $sDefault);
 

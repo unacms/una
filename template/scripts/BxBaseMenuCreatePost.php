@@ -11,9 +11,9 @@
  * Menu representation.
  * @see BxDolMenu
  */
-class BxBaseMenuCreatePost extends BxTemplMenuInteractive
+class BxBaseMenuCreatePost extends BxTemplMenuCustom
 {
-	protected $_sJsObject;
+    protected $_sJsObject;
 
     public function __construct ($aObject, $oTemplate)
     {
@@ -25,7 +25,7 @@ class BxBaseMenuCreatePost extends BxTemplMenuInteractive
         $this->_sJsObject = 'oBxDolCreatePost';
     }
 
-	protected function getMenuItemsRaw ()
+    protected function getMenuItemsRaw ()
     {
     	$aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'all_pairs_name_uri', 'active' => 1));
 
@@ -39,6 +39,15 @@ class BxBaseMenuCreatePost extends BxTemplMenuInteractive
             $aMenuItems[$iKey]['name'] = $sModule;
             $aMenuItems[$iKey]['onclick'] = "return " . $this->_sJsObject . ".getForm('" . $sModule . "', '" . $aModules[$sModule] . "', this)";
     	}
+        $aMenuItems['more-auto'] = array(
+            'module' => 'system', 
+            'id' => 'more-auto', 
+            'name' => 'more-auto',
+            'title' => '_sys_menu_item_title_va_more_auto', 
+            'href' => 'javascript:void(0)', 
+            'icon' => 'ellipsis-v',
+            'active' => 1
+        );
 
         return $aMenuItems;
     }
@@ -46,9 +55,9 @@ class BxBaseMenuCreatePost extends BxTemplMenuInteractive
     protected function _isVisible ($a)
     {
     	if(BxDolRequest::serviceExists($a['module'], 'act_as_profile'))
-			return false;
+            return false;
 
-		return parent::_isVisible($a);
+        return parent::_isVisible($a);
     }
 }
 
