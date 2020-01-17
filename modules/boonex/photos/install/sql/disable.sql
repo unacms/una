@@ -32,7 +32,7 @@ DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_photos', 'bx_photos_
 
 
 -- METATAGS
-DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_photos';
+DELETE FROM `sys_objects_metatags` WHERE `object` IN ('bx_photos', 'bx_photos_camera');
 
 
 -- CATEGORY
