@@ -53,15 +53,19 @@ class BxBaseModGroupsPageEntry extends BxBaseModProfilePageEntry
             
             $aData = $this->_oModule->_oDb->getInviteByKey($sKey,  $this->_oProfile->id());
             if (!isset($aData['invited_profile_id'])){
-                $sRv = _t('_bx_groups_txt_invite_popup_error_invitation_absent');
+                $sRv = _t($CNF['T']['txt_invitation_popup_error_invitation_absent']);
             }
             else{
                 if ($aData['invited_profile_id'] != bx_get_logged_profile_id()){
-                    $sRv = _t('_bx_groups_txt_invite_popup_error_invitation_wrong_user');
+                    $sRv = _t($CNF['T']['txt_invitation_popup_error_wrong_user']);
                 }
                 else{
                     $sRv = $this->_oModule->_oTemplate->parseHtmlByName('popup_invite.html', array(
-                        'PopupId' => $sId
+                        'popup_id' => $sId,
+						'text' => _t($CNF['T']['txt_invitation_popup_text']),
+						'button_accept' => _t($CNF['T']['txt_invitation_popup_accept_button']),
+						'button_decline' => _t($CNF['T']['txt_invitation_popup_decline_button']),
+						
                     ));
                 }
             }

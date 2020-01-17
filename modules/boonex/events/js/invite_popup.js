@@ -2,13 +2,13 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    Groups Groups
+ * @defgroup    Events Events
  * @ingroup     UnaModules
  *
  * @{
  */
 
-function BxGroupsInvitePopup(oOptions) {
+function BxEventsInvitePopup(oOptions) {
 	this._sActionsUrl = oOptions.sActionUrl;
 	this._sPopupId = oOptions.sPopupId == undefined ? {} : oOptions.sPopupId;
 	this._sKey = oOptions.sKey == undefined ? {} : oOptions.sKey;
@@ -22,7 +22,7 @@ function BxGroupsInvitePopup(oOptions) {
 	});
 }
 
-BxGroupsInvitePopup.prototype.init = function () {
+BxEventsInvitePopup.prototype.init = function () {
     var $this = this;
     $('#' + $this._sPopupId + ' .bx-invite-accept').click(function () {
         $this.onClickAccept();
@@ -34,7 +34,7 @@ BxGroupsInvitePopup.prototype.init = function () {
     $('#' + $this._sPopupId).dolPopup();
 };
 
-BxGroupsInvitePopup.prototype.onClickAccept = function () {
+BxEventsInvitePopup.prototype.onClickAccept = function () {
 	var $this = this;
 	$.getJSON($this._sActionsUrl + 'ProcessInvite/' + $this._sKey + '/' + $this._iGroupProfileId + '/1/', function () {
 	    location.href = $this._sAcceptUrl
@@ -42,7 +42,7 @@ BxGroupsInvitePopup.prototype.onClickAccept = function () {
 
 };
 
-BxGroupsInvitePopup.prototype.onClickDecline = function () {
+BxEventsInvitePopup.prototype.onClickDecline = function () {
     var $this = this;
     $.getJSON($this._sActionsUrl + 'ProcessInvite/' + $this._sKey + '/' + $this._iGroupProfileId + '/0/', function () {
         location.href = $this._sDeclineUrl

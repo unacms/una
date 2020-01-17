@@ -198,7 +198,12 @@ class BxGroupsConfig extends BxBaseModProfileConfig
                 'menu_item_title_become_fan' => '_bx_groups_menu_item_title_become_fan',
                 'menu_item_title_leave_group' => '_bx_groups_menu_item_title_leave_group',
                 'txt_all_entries_by_author' => '_bx_groups_page_title_browse_by_author',
-                'txt_invitation_popup_title' => '_bx_groups_txt_invite_popup_title'
+                'txt_invitation_popup_title' => '_bx_groups_txt_invite_popup_title',
+				'txt_invitation_popup_text' => '_bx_groups_txt_invite_popup_text',
+				'txt_invitation_popup_accept_button' => '_bx_groups_txt_invite_popup_button_accept',
+				'txt_invitation_popup_decline_button' => '_bx_groups_txt_invite_popup_button_decline',
+				'txt_invitation_popup_error_invitation_absent' => '_bx_groups_txt_invite_popup_error_invitation_absent',
+				'txt_invitation_popup_error_wrong_user' => '_bx_groups_txt_invite_popup_error_invitation_wrong_user',
             ),
 
         );

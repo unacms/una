@@ -2630,6 +2630,7 @@
 	<string name="_sys_mobile_search"><![CDATA[Поиск]]></string>
 	<string name="_sys_mobile_status"><![CDATA[Статус]]></string>
     <string name="_sys_name"><![CDATA[Имя]]></string>
+    <string name="_sys_added"><![CDATA[Добавлено]]></string>
     <string name="_sys_next"><![CDATA[Ещё]]></string>
     <string name="_sys_notification_account"><![CDATA[Аккаунты, созданные за последние 24 часа:]]></string>
     <string name="_sys_not_available"><![CDATA[н/д]]></string>

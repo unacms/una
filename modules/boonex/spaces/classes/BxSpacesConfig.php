@@ -38,6 +38,7 @@ class BxSpacesConfig extends BxBaseModProfileConfig
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'data',
             'TABLE_ENTRIES_FULLTEXT' => 'search_fields',
             'TABLE_ADMINS' => $aModule['db_prefix'] . 'admins',
+            'TABLE_INVITES' => $aModule['db_prefix'] . 'invites',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -126,11 +127,13 @@ class BxSpacesConfig extends BxBaseModProfileConfig
             'OBJECT_GRID_ADMINISTRATION' => 'bx_spaces_administration',
             'OBJECT_GRID_COMMON' => 'bx_spaces_common',
             'OBJECT_GRID_CONNECTIONS' => 'bx_spaces_fans',
+             'OBJECT_GRID_INVITES' => 'bx_spaces_invites',
             'OBJECT_CONNECTIONS' => 'bx_spaces_fans',
             'OBJECT_UPLOADERS_COVER' => array('bx_spaces_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_spaces_picture_crop'),
             
             'BADGES_AVALIABLE' => true,
+            'INVITES_KEYS_LIFETIME' => 86400,
 
             'EMAIL_INVITATION' => 'bx_spaces_invitation',
             'EMAIL_JOIN_REQUEST' => 'bx_spaces_join_request',
@@ -195,17 +198,25 @@ class BxSpacesConfig extends BxBaseModProfileConfig
                 'menu_item_title_leave_group_cancel_request' => '_bx_spaces_menu_item_title_leave_space_cancel_request',
                 'menu_item_title_become_fan' => '_bx_spaces_menu_item_title_become_fan',
                 'menu_item_title_leave_group' => '_bx_spaces_menu_item_title_leave_space',
-                'txt_all_entries_by_author' => '_bx_spaces_page_title_browse_by_author'
+                'txt_all_entries_by_author' => '_bx_spaces_page_title_browse_by_author',
+                'txt_invitation_popup_title' => '_bx_spaces_txt_invite_popup_title',
+                'txt_invitation_popup_text' => '_bx_spaces_txt_invite_popup_text',
+				'txt_invitation_popup_accept_button' => '_bx_spaces_txt_invite_popup_button_accept',
+				'txt_invitation_popup_decline_button' => '_bx_spaces_txt_invite_popup_button_decline',
+                'txt_invitation_popup_error_invitation_absent' => '_bx_spaces_txt_invite_popup_error_invitation_absent',
+				'txt_invitation_popup_error_wrong_user' => '_bx_spaces_txt_invite_popup_error_invitation_wrong_user',
             ),
 
         );
 
         $this->_aJsClasses = array(
-            'manage_tools' => 'BxSpacesManageTools'
+            'manage_tools' => 'BxSpacesManageTools',
+            'invite_popup' => 'BxSpacesInvitePopup'
         );
 
         $this->_aJsObjects = array(
-            'manage_tools' => 'oBxSpacesManageTools'
+            'manage_tools' => 'oBxSpacesManageTools',
+            'invite_popup' => 'oBxSpacesInvitePopup'
         );
 
         $this->_aGridObjects = array(

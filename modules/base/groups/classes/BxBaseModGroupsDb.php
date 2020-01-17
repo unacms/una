@@ -128,6 +128,16 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
         return $this->getRow("SELECT * FROM `" . $CNF["TABLE_INVITES"] . "` WHERE `key` = :key AND group_profile_id = :group_profile_id", $aBindings);
     }
     
+    public function getInviteByInvited($iInvitedProfileId, $iGroupProfileId)
+    {
+        $aBindings = array(
+            'invited_profile_id' => $iInvitedProfileId,
+            'group_profile_id' => $iGroupProfileId
+        );
+        $CNF = $this->_oConfig->CNF; 
+        return $this->getOne("SELECT COUNT(*) FROM `" . $CNF["TABLE_INVITES"] . "` WHERE `invited_profile_id` = :invited_profile_id AND group_profile_id = :group_profile_id", $aBindings);
+    }
+    
     public function updateInviteByKey($sKey, $iGroupProfileId, $sColumn, $sValue)
     {
         $aBindings = array(

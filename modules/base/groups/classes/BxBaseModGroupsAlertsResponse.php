@@ -59,20 +59,21 @@ class BxBaseModGroupsAlertsResponse extends BxBaseModProfileAlertsResponse
         if (isset($CNF["TABLE_INVITES"])){
             if (!isset($CNF['OBJECT_CONNECTIONS']) || !($oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])))
                 return '';
-
+            
             if($oConnection && $oConnection->isConnected($iSender, $oAlert->iSender)){
-                $oKeys = BxDolKey::getInstance();
-                $iKeyLifetime = $CNF["INVITES_KEYS_LIFETIME"];
-                $sKey = $oKeys->getNewKey(false, $iKeyLifetime);
-                $this->_oModule->_oDb->insertInvite($sKey, $oAlert->iSender, $iSender, $iProfileId);
-              
-                $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $oAlert->iObject . "&key=" . $sKey);
-                sendMailTemplate($this->_oModule->_oConfig->CNF['EMAIL_INVITATION'], 0, $iProfileId, array(
-                    'InviterUrl' => BxDolProfile::getInstance($iSender)->getUrl(),
-                    'InviterDisplayName' => BxDolProfile::getInstance($iSender)->getDisplayName(),
-                    'EntryUrl' => $sEntryUrl,
-                    'EntryTitle' => $oAlert->aExtras['entry_title'],
-                ), BX_EMAIL_NOTIFY);
+                if ($this->_oModule->_oDb->getInviteByInvited($iProfileId, $oAlert->iSender) == 0){
+                    $oKeys = BxDolKey::getInstance();
+                    $iKeyLifetime = $CNF["INVITES_KEYS_LIFETIME"];
+                    $sKey = $oKeys->getNewKey(false, $iKeyLifetime);
+                    $this->_oModule->_oDb->insertInvite($sKey, $oAlert->iSender, $iSender, $iProfileId);
+                    $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $oAlert->iObject . "&key=" . $sKey);
+                    sendMailTemplate($this->_oModule->_oConfig->CNF['EMAIL_INVITATION'], 0, $iProfileId, array(
+                        'InviterUrl' => BxDolProfile::getInstance($iSender)->getUrl(),
+                        'InviterDisplayName' => BxDolProfile::getInstance($iSender)->getDisplayName(),
+                        'EntryUrl' => $sEntryUrl,
+                        'EntryTitle' => $oAlert->aExtras['entry_title'],
+                    ), BX_EMAIL_NOTIFY);
+                }
             }
         }
         else{

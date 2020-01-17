@@ -76,6 +76,7 @@
 	<string name="_bx_events_acl_action_delete_profile"><![CDATA[Удалить событие]]></string>
 	<string name="_bx_events_acl_action_view_profile"><![CDATA[Просмотреть событие]]></string>
 	<string name="_bx_events_acl_action_edit_any_profile"><![CDATA[Редактировать любое событие]]></string>
+	<string name="_bx_events_acl_action_delete_invites"><![CDATA[Удалять приглашения]]></string>
 
 	<string name="_bx_events_page_title_sys_joined_entries"><![CDATA[События профиля]]></string>
 	<string name="_bx_events_page_title_joined_entries"><![CDATA[События профиля]]></string>
@@ -153,6 +154,8 @@
     <string name="_bx_events_page_block_title_fans_link"><![CDATA[Придут на <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_fans"><![CDATA[Придут]]></string>
     <string name="_bx_events_page_block_title_system_fans"><![CDATA[Придут]]></string>
+	<string name="_bx_events_page_block_title_fans_invites"><![CDATA[Invites]]></string>
+    <string name="_bx_events_page_block_title_system_invites"><![CDATA[Invites]]></string>
     <string name="_bx_events_page_block_title_subscribers_link"><![CDATA[Заинтересованы в <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_subscribers"><![CDATA[Заинтересованы]]></string>
     <string name="_bx_events_page_block_title_system_subscribers"><![CDATA[Заинтересованы]]></string>
@@ -165,6 +168,7 @@
     <string name="_bx_events_page_block_title_system_manage_administration"><![CDATA[Управление всеми событиями]]></string>
     <string name="_bx_events_page_block_title_manage"><![CDATA[Управление]]></string>
     <string name="_bx_events_page_block_title_top_profiles"><![CDATA[Популярные события]]></string>
+	<string name="_bx_events_page_block_title_joined_profiles"><![CDATA[Мои события]]></string>
     <string name="_bx_events_page_block_title_past_profiles"><![CDATA[Прошедшие события]]></string>
     <string name="_bx_events_page_block_title_entry_all_actions"><![CDATA[Все действия]]></string>
     <string name="_bx_events_page_block_title_entry_social_sharing"><![CDATA[Поделиться]]></string>
@@ -265,6 +269,8 @@
     <string name="_bx_events_menu_item_title_entries_recent"><![CDATA[Новые]]></string>
     <string name="_bx_events_menu_item_title_system_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_events_menu_item_title_entries_search"><![CDATA[Поиск]]></string>
+	<string name="_bx_events_menu_item_title_system_entries_joined"><![CDATA[Участие]]></string>
+    <string name="_bx_events_menu_item_title_entries_joined"><![CDATA[Участие]]></string>
     <string name="_bx_events_menu_item_title_system_entries_manage"><![CDATA[Управление]]></string>
     <string name="_bx_events_menu_item_title_entries_manage"><![CDATA[Управление]]></string>
     <string name="_bx_events_menu_item_title_system_entries_home"><![CDATA[События]]></string>
@@ -316,6 +322,12 @@
     <string name="_bx_events_txt_from_admins"><![CDATA[Из админов]]></string>
     <string name="_bx_events_txt_private_group"><![CDATA[Приватная группа]]></string>
     <string name="_bx_events_txt_from_time_to_time"><![CDATA[{0} - {1}]]></string>
+	<string name="_bx_events_txt_invite_popup_text"><![CDATA[Вы были приглашены на это собыите.  Нажмите кнопку ниже чтобы принять приглашение.]]></string>
+    <string name="_bx_events_txt_invite_popup_title"><![CDATA[Приглашение на собыите]]></string>
+    <string name="_bx_events_txt_invite_popup_button_accept"><![CDATA[Принять]]></string>
+    <string name="_bx_events_txt_invite_popup_button_decline"><![CDATA[Отклонить]]></string>
+    <string name="_bx_events_txt_invite_popup_error_invitation_absent"><![CDATA[Извините, произошла ошибка. Вы не можете присоединиться к этому событию. Приглашение устарело или удалено.]]></string>
+    <string name="_bx_events_txt_invite_popup_error_invitation_wrong_user"><![CDATA[Извините, произошла ошибка. Вы не можете присоединиться к этому событию. Приглашение адресовано не Вам.]]></string>
 
 	<string name="_bx_events_alert_action_fan_added"><![CDATA[присоединение нового участника]]></string>
     <string name="_bx_events_txt_ntfs_fan_added"><![CDATA[У события <b class="bx-ntfs-content-profile">{owner_name}</b> новый участник <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>

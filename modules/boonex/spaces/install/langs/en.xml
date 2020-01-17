@@ -52,6 +52,7 @@
 	<string name="_bx_spaces_acl_action_delete_profile"><![CDATA[Delete Space]]></string>
 	<string name="_bx_spaces_acl_action_view_profile"><![CDATA[View Space]]></string>
 	<string name="_bx_spaces_acl_action_edit_any_profile"><![CDATA[Edit Any Space]]></string>
+  <string name="_bx_spaces_acl_action_delete_invites"><![CDATA[Delete Invites]]></string>
 	
 	<string name="_bx_spaces_page_title_sys_joined_entries"><![CDATA[Profile Spaces]]></string>
 	<string name="_bx_spaces_page_title_joined_entries"><![CDATA[Profile Spaces]]></string>
@@ -118,6 +119,8 @@
 	<string name="_bx_spaces_page_block_title_fans_link"><![CDATA[Members of <a href="{profile_link}">{display_name}</a>]]></string>
 	<string name="_bx_spaces_page_block_title_fans"><![CDATA[Members]]></string>
 	<string name="_bx_spaces_page_block_title_system_fans"><![CDATA[Members]]></string>
+  <string name="_bx_spaces_page_block_title_fans_invites"><![CDATA[Invites]]></string>
+  <string name="_bx_spaces_page_block_title_system_invites"><![CDATA[Invites]]></string>
         <string name="_bx_spaces_page_block_title_profile_location"><![CDATA[Location]]></string>
 	<string name="_bx_spaces_page_block_title_profile_comments"><![CDATA[Comments]]></string>
 	<string name="_bx_spaces_page_block_title_profile_comments_link"><![CDATA[Comments to <a href="{entry_link}">{title}</a>]]></string>
@@ -128,6 +131,7 @@
 	<string name="_bx_spaces_page_block_title_system_manage_administration"><![CDATA[Manage All Spaces]]></string>
 	<string name="_bx_spaces_page_block_title_manage"><![CDATA[Manage Spaces]]></string>
 	<string name="_bx_spaces_page_block_title_top_profiles"><![CDATA[Top Spaces]]></string>
+  <string name="_bx_spaces_page_block_title_joined_profiles"><![CDATA[Joined Spaces]]></string>
         <string name="_bx_spaces_page_block_title_entry_all_actions"><![CDATA[All Actions]]></string>
 	<string name="_bx_spaces_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
 	<string name="_bx_spaces_page_block_title_categories"><![CDATA[Spaces Categories]]></string>
@@ -220,6 +224,8 @@
 	<string name="_bx_spaces_menu_item_title_entries_recent"><![CDATA[New]]></string>
 	<string name="_bx_spaces_menu_item_title_system_entries_search"><![CDATA[Search]]></string>
 	<string name="_bx_spaces_menu_item_title_entries_search"><![CDATA[Search]]></string>
+  <string name="_bx_spaces_menu_item_title_system_entries_joined"><![CDATA[Joined]]></string>
+  <string name="_bx_spaces_menu_item_title_entries_joined"><![CDATA[Joined]]></string>
 	<string name="_bx_spaces_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
 	<string name="_bx_spaces_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
 	<string name="_bx_spaces_menu_item_title_system_entries_home"><![CDATA[Spaces]]></string>
@@ -266,6 +272,12 @@
 	<string name="_bx_spaces_txt_to_admins"><![CDATA[To Admins]]></string>
 	<string name="_bx_spaces_txt_from_admins"><![CDATA[From Admins]]></string>
 	<string name="_bx_spaces_txt_private_space"><![CDATA[Private space]]></string>
+  <string name="_bx_spaces_txt_invite_popup_text"><![CDATA[You have been invited to a space. Click the button below to accept the invitation.]]></string>
+  <string name="_bx_spaces_txt_invite_popup_title"><![CDATA[Invitation to a space]]></string>
+  <string name="_bx_spaces_txt_invite_popup_button_accept"><![CDATA[Accept]]></string>
+  <string name="_bx_spaces_txt_invite_popup_button_decline"><![CDATA[Decline]]></string>
+  <string name="_bx_spaces_txt_invite_popup_error_invitation_absent"><![CDATA[Sorry, an error has occurred. You can not join this space. The invitation is expired or deleted.]]></string>
+  <string name="_bx_spaces_txt_invite_popup_error_invitation_wrong_user"><![CDATA[Sorry, an error has occurred. You can not join this space. This invitation cannot be used by you.]]></string>
 	
 	<string name="_bx_spaces_alert_action_fan_added"><![CDATA[member joined]]></string>
 	<string name="_bx_spaces_txt_ntfs_fan_added"><![CDATA[Space <b class="bx-ntfs-content-profile">{owner_name}</b> has got a member <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>

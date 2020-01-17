@@ -225,6 +225,15 @@ CREATE TABLE IF NOT EXISTS `bx_events_scores_track` (
   KEY `vote` (`object_id`, `author_nip`)
 );
 
+CREATE TABLE IF NOT EXISTS `bx_events_invites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `key` varchar(128) NOT NULL default '0',
+  `group_profile_id` int(11) NOT NULL default '0',
+  `author_profile_id` int(11) NOT NULL default '0',
+  `invited_profile_id` int(11) NOT NULL default '0',
+  `added` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`)
+);
 
 -- STORAGES & TRANSCODERS
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
