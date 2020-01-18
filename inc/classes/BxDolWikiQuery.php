@@ -52,12 +52,12 @@ class BxDolWikiQuery extends BxDolDb
         }
 
         // get latest revision for specific language
-        $aRow = $this->getRow("SELECT `content`, `unsafe` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `language` = :lang $sWhere ORDER BY `revision` DESC LIMIT 1", $aBind);
+        $aRow = $this->getRow("SELECT `content`, `unsafe`, `added` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `language` = :lang $sWhere ORDER BY `revision` DESC LIMIT 1", $aBind);
 
         // if translation isn't found for specific language then get latest revision for main language 
         if (!$aRow) {
             unset($aBind['lang']);
-            $aRow = $this->getRow("SELECT `content`, `unsafe` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `main_language` = 1 $sWhere ORDER BY `revision` DESC LIMIT 1", $aBind);
+            $aRow = $this->getRow("SELECT `content`, `unsafe`, `added` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `main_language` = 1 $sWhere ORDER BY `revision` DESC LIMIT 1", $aBind);
         }
 
         return $aRow ? $aRow : false;

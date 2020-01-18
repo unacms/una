@@ -403,7 +403,7 @@ class BxBasePage extends BxDolPage
             $sContent = bx_process_macros($sContent);
         }
 
-        $s = '<div class="bx-page-wiki-container">' . $sContent . '</div>';
+        $s = '<div id="bx-page-wiki-container-' . $aBlock['id'] . '" class="bx-page-wiki-container">' . $sContent . '</div>';
         $s = $this->_replaceMarkers($s);
         $s = bx_process_macros($s);
         return $s;

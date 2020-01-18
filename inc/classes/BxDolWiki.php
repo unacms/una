@@ -116,28 +116,16 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
     {
         if (!$sLang)
             $sLang = bx_lang_name();
-        $a = $this->_oQuery->getBlockContent ($iBlockId, $sLang);
+        $aWikiVer = $this->_oQuery->getBlockContent ($iBlockId, $sLang);
 
         require_once(BX_DIRECTORY_PATH_PLUGINS . "parsedown/Parsedown.php");
         $oParsedown = new Parsedown();
-        $oParsedown->setSafeMode($a['unsafe'] ? false : true);
-        $s = $oParsedown->text($a['content']);
+        $oParsedown->setSafeMode($aWikiVer['unsafe'] ? false : true);
+        $s = $oParsedown->text($aWikiVer['content']);
 
-        $s = $this->addControls($iBlockId, $s);
+        $sControls = BxDolService::call('system', 'wiki_controls', array($this, $aWikiVer, $iBlockId), 'TemplServiceWiki');
 
-        return $s;
-    }
-
-    /**
-     * Add controls for edit, delete, translate, history, etc content
-     * @param $iBlockId block ID
-     * @param $sLang optional language name
-     * @return block content
-     */
-    public function addControls ($iBlockId, $s)
-    {
-        $sControl = "<div>TODO: wiki - controls here. On left - Edit, Delete version, Delete block, Translate, History. On right - Last modified time and List of missing and outdated translations. History and Last modified time should be controlled by regular menu privacy, while other actions should have custom privacy for particular wiki object.</div>";
-        return $s . $sControl;
+        return $s . $sControls;
     }
 
     /**
@@ -151,14 +139,25 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         if (isAdmin())
             return true;
 
+        if ('history' == $sType)
+            return true;
+
         $aTypes = array(
             'add' => 'allow_add_for_levels',
             'edit' => 'allow_edit_for_levels',
-            'delete' => 'allow_delete_for_levels',
+            'delete-version' => 'allow_delete_for_levels',
+            'delete-block' => 'allow_delete_for_levels',
             'translate' => 'allow_translate_for_levels',
+            'history' => true,
             'unsafe' => 'allow_unsafe_for_levels',
         );
-        if (!isset($aTypes[$sType]) || !isset($this->_aObject[$aTypes[$sType]]))
+        if (!isset($aTypes[$sType]))
+            return false;
+
+        if (true === $aTypes[$sType] || false === $aTypes[$sType])
+            return $aTypes[$sType];
+
+        if (!isset($this->_aObject[$aTypes[$sType]]))
             return false;
 
         $oAcl = BxDolAcl::getInstance();

@@ -3785,7 +3785,8 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_social_sharing', '_sys_menu_title_social_sharing', 'sys_social_sharing', 'system', 23, 0, 1, 'BxTemplMenuSocialSharing', ''),
 ('sys_create_post', '_sys_menu_title_create_post', 'sys_add_content_links', 'system', 15, 0, 1, 'BxTemplMenuCreatePost', ''),
 ('sys_add_relation', '_sys_menu_title_add_relation', '', 'system', 6, 0, 1, 'BxTemplMenuAddRelation', ''),
-('sys_vote_reactions_do', '_sys_menu_title_vote_reactions_do', '', 'system', 3, 0, 1, 'BxTemplVoteReactionsMenuDo', '');
+('sys_vote_reactions_do', '_sys_menu_title_vote_reactions_do', '', 'system', 3, 0, 1, 'BxTemplVoteReactionsMenuDo', ''),
+('sys_wiki', '_sys_menu_title_wiki', 'sys_wiki', 'system', 9, 0, 1, 'BxTemplMenuWiki', '');
 
 CREATE TABLE IF NOT EXISTS `sys_menu_sets` (
   `set_name` varchar(64) NOT NULL,
@@ -3817,6 +3818,7 @@ INSERT INTO `sys_menu_sets` (`set_name`, `module`, `title`, `deletable`) VALUES
 ('sys_switch_language', 'system', '_sys_menu_set_title_switch_language', 0),
 ('sys_switch_template', 'system', '_sys_menu_set_title_switch_template', 0),
 ('sys_social_sharing', 'system', '_sys_menu_set_title_sys_social_sharing', 0);
+('sys_wiki', 'system', '_sys_menu_set_title_sys_wiki', 0);
 
 CREATE TABLE IF NOT EXISTS `sys_menu_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -3940,6 +3942,14 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- profile stats
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
 ('sys_profile_stats', 'system', 'profile-stats-profile', '_sys_menu_item_title_system_profile', '_sys_menu_item_title_profile', '{member_url}', '', '', 'user', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:27:"get_menu_addon_profile_edit";s:6:"params";a:0:{}s:5:"class";s:20:"TemplServiceProfiles";}', '', 2147483646, 1, 0, 0);
+
+-- wiki menu
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `editable`, `order`) VALUES 
+('sys_wiki', 'system', 'edit', '', '_sys_menu_item_title_wiki_edit', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 1, 1),
+('sys_wiki', 'system', 'delete-version', '', '_sys_menu_item_title_wiki_delete_version', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 1, 2),
+('sys_wiki', 'system', 'delete-block', '', '_sys_menu_item_title_wiki_delete_block', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 1, 3),
+('sys_wiki', 'system', 'translate', '', '_sys_menu_item_title_wiki_translate', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 1, 4),
+('sys_wiki', 'system', 'history', '', '_sys_menu_item_title_wiki_history', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 1, 5);
 
 -- --------------------------------------------------------
 
