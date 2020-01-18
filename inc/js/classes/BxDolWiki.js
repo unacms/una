@@ -32,7 +32,13 @@ BxDolWiki.prototype.bindEvents = function () {
 };
 
 BxDolWiki.prototype.onEdit = function () {
-    console.log("onEdit2:" + this._sObject);
+
+    var sActionUrl = sUrlRoot + 'r.php?_q=wiki-action/edit';
+    $.getJSON(sActionUrl, {
+        block_id: this._oOptions.block_id
+    }, function (data) {
+        alert(JSON.stringify(data));
+    });
 };
 
 BxDolWiki.prototype.onDeleteVersion = function () {

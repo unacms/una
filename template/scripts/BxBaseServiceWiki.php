@@ -68,6 +68,40 @@ class BxBaseServiceWiki extends BxDol
      * @page service Service Calls
      * @section bx_system_general System Services 
      * @subsection bx_system_general-wiki Wiki
+     * @subsubsection bx_system_general-wiki_action wiki_action
+     * 
+     * @code bx_srv('system', 'wiki_action', [...], 'TemplServiceWiki'); @endcode
+     * 
+     * Perform WIKI action.
+     * @param $sUri categories object name
+     * 
+     * @see BxBaseServiceWiki::serviceWikiAction
+     */
+    /** 
+     * @ref bx_system_general-wiki_action "wiki_action"
+     */
+    public function serviceWikiAction ($sWikiObjectUri, $sAction)
+    {
+        $oWiki = BxDolWiki::getObjectInstanceByUri($sWikiObjectUri);
+        if (!$oWiki) {
+            echoJson(array('code' => 1, 'msg' => _t('_sys_wiki_error_missing_wiki_object', $sWikiObjectUri)));
+            return;
+        }
+
+        $sMethod = 'action' . bx_gen_method_name($sAction, array('-'));
+        if (!method_exists($oWiki, $sMethod) || !$oWiki->isAllowed($sAction)) {
+            echoJson(array('code' => 2, 'msg' => _t('_sys_wiki_error_action_not_allowed', $sAction, $sWikiObjectUri)));
+            return;
+        }
+        
+        $a = $oWiki->$sMethod();
+        echoJson($a);
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-wiki Wiki
      * @subsubsection bx_system_general-wiki_page wiki_page
      * 
      * @code bx_srv('system', 'wiki_page', ["index"], 'TemplServiceWiki'); @endcode
@@ -97,7 +131,9 @@ class BxBaseServiceWiki extends BxDol
             'block_id' => $sBlockId,
             'menu' => $oMenu->getCode(),
             'info' => bx_time_js($aWikiVer['added']), // 'TODO: On right - Last modified time and List of missing and outdated translations. History and Last modified time should be controlled by regular menu privacy, while other actions should have custom privacy for particular wiki object',
-            'options' => json_encode(array()),
+            'options' => json_encode(array(
+                'block_id' => $sBlockId,
+            )),
         ));
     }
 

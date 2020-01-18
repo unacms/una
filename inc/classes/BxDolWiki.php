@@ -163,6 +163,11 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         $oAcl = BxDolAcl::getInstance();
         return $oAcl->isMemberLevelInSet($this->_aObject[$aTypes[$sType]], $iProfileId); 
     }
+
+    public function actionEdit ()
+    {
+        return array('code' => 0, 'msg' => "TODO: Success! block = [" . bx_get('block_id') . "]");
+    }
 }
 
 /** @} */
