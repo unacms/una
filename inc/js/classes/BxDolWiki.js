@@ -11,6 +11,7 @@ function BxDolWiki (sObject, eContainer, oOptions) {
     this._oOptions = $.extend({}, oDefault, oOptions);
     this._sObject = sObject;
     this._eCont = eContainer;
+    this._sActionUrl = sUrlRoot + 'r.php?_q=' + this._oOptions.wiki_action_uri + '-action/';
     this.bindEvents();
 }
 
@@ -33,12 +34,10 @@ BxDolWiki.prototype.bindEvents = function () {
 
 BxDolWiki.prototype.onEdit = function () {
 
-    var sActionUrl = sUrlRoot + 'r.php?_q=wiki-action/edit';
-    $.getJSON(sActionUrl, {
+    var sActionUrl = bx_append_url_params(this._sActionUrl + 'edit', {
         block_id: this._oOptions.block_id
-    }, function (data) {
-        alert(JSON.stringify(data));
     });
+    $(window).dolPopupAjax({url: sActionUrl});
 };
 
 BxDolWiki.prototype.onDeleteVersion = function () {

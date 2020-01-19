@@ -1,0 +1,17 @@
+<div id="bx-wiki-form-__block_id__" class="bx-wiki-form">
+    __form__
+</div>
+<script>
+    $(document).ready(function () {
+        $("#bx-wiki-form-__block_id__ form").ajaxForm({
+            url: sUrlRoot + 'r.php?_q=__wiki_action_uri__-action/edit',
+            beforeSubmit: function (formData, jqForm, options) {
+                bx_loading($("#bx-wiki-form-__block_id__ form"), true);
+            },
+            success: function (data) {
+                $("#bx-wiki-form-__block_id__").parent().html(data);
+                // $(".bx-popup-active").dolPopupHide();
+            }
+        });
+    });
+</script>

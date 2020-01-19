@@ -2275,6 +2275,13 @@
 	<string name="_sys_form_unsubscribe_input_submit"><![CDATA[Выполнить]]></string>
 	<string name="_sys_form_err_not_unique_value"><![CDATA[Поле должно иметь уникальное значение]]></string>
 	<string name="_sys_form_txt_select_file"><![CDATA[Выбрать файл]]></string>
+    <string name="_sys_form_wiki"><![CDATA[Вики]]></string>
+    <string name="_sys_form_display_wiki_edit"><![CDATA[Вики: редактирование]]></string>
+	<string name="_sys_form_wiki_input_caption_block_id"><![CDATA[Идентификатор блока]]></string>
+	<string name="_sys_form_wiki_input_caption_lang"><![CDATA[Язык]]></string>
+	<string name="_sys_form_wiki_input_caption_content"><![CDATA[Содержимое]]></string>
+	<string name="_sys_form_wiki_input_caption_notes"><![CDATA[Заметки]]></string>
+	<string name="_sys_form_wiki_input_caption_submit"><![CDATA[Сохранить]]></string>
 	<string name="_sys_format_size_b"><![CDATA[{0} байт]]></string>
 	<string name="_sys_format_size_gb"><![CDATA[{0} ГБ]]></string>
 	<string name="_sys_format_size_kb"><![CDATA[{0} КБ]]></string>

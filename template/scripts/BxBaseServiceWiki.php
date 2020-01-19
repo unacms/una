@@ -89,13 +89,16 @@ class BxBaseServiceWiki extends BxDol
         }
 
         $sMethod = 'action' . bx_gen_method_name($sAction, array('-'));
-        if (!method_exists($oWiki, $sMethod) || !$oWiki->isAllowed($sAction)) {
+        if (!method_exists($oWiki, $sMethod) || !$oWiki->isAllowed($sAction)) {            
             echoJson(array('code' => 2, 'msg' => _t('_sys_wiki_error_action_not_allowed', $sAction, $sWikiObjectUri)));
             return;
         }
         
-        $a = $oWiki->$sMethod();
-        echoJson($a);
+        $mixed = $oWiki->$sMethod();
+        if (is_array($mixed))
+            echoJson($mixed);
+        else
+            echo $mixed;
     }
 
     /**
@@ -133,6 +136,7 @@ class BxBaseServiceWiki extends BxDol
             'info' => bx_time_js($aWikiVer['added']), // 'TODO: On right - Last modified time and List of missing and outdated translations. History and Last modified time should be controlled by regular menu privacy, while other actions should have custom privacy for particular wiki object',
             'options' => json_encode(array(
                 'block_id' => $sBlockId,
+                'wiki_action_uri' => $oWikiObject->getWikiUri(),
             )),
         ));
     }

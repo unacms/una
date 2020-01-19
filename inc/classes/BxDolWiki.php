@@ -107,6 +107,14 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
+     * Get wiki URi
+     */
+    public function getWikiUri ()
+    {
+        return $this->_aObject['uri'];
+    }
+
+    /**
      * Get WIKI block content
      * @param $iBlockId block ID
      * @param $sLang optional language name
@@ -166,7 +174,42 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
 
     public function actionEdit ()
     {
-        return array('code' => 0, 'msg' => "TODO: Success! block = [" . bx_get('block_id') . "]");
+        $aWikiVer = $this->_oQuery->getBlockContent ((int)bx_get('block_id'), bx_lang_name());
+        unset($aWikiVer['notes']);
+        if (!$aWikiVer)
+            $aWikiVer = array('block_id' => (int)bx_get('block_id'));
+
+        $oForm = BxDolForm::getObjectInstance('sys_wiki', 'sys_wiki_edit');
+        if (!$oForm)
+            return _t('_sys_txt_error_occured');
+        $oForm->initChecker($aWikiVer);
+        if (!$oForm->isSubmittedAndValid()) {
+            return BxDolTemplate::getInstance()->parseHtmlByName('wiki_form.html', array(
+                'form' => $oForm->getCode(),
+                'block_id' => (int)bx_get('block_id'),
+                'wiki_action_uri' => $this->getWikiUri(),
+            ));
+        } 
+        else {
+            $aWikiVer = $this->_oQuery->getBlockContent ((int)bx_get('block_id'), $oForm->getCleanValue('lang'));
+
+            $sRev = $aWikiVer && $oForm->getCleanValue('lang') == $aWikiVer['lang'] ? $aWikiVer['revision'] + 1 : 1;
+
+            $bMainLang = 0;
+            if ($aWikiVer && $oForm->getCleanValue('lang') == $aWikiVer['lang'])
+                $bMainLang = $aWikiVer['main_lang'];
+            elseif (!$aWikiVer)
+                $bMainLang = 1;
+
+            $sId =  $oForm->insert(array(
+                'added' => time(), 
+                'revision' => $sRev,
+                'main_lang' => $bMainLang, 
+                'profile_id' => bx_get_logged_profile_id(),
+                'unsafe' => $this->isAllowed('unsafe') ? 1 : 0,
+            ));
+            return "Success [$sId] (TODO: wiki close popup)";
+        }
     }
 }
 
