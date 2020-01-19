@@ -3817,7 +3817,7 @@ INSERT INTO `sys_menu_sets` (`set_name`, `module`, `title`, `deletable`) VALUES
 ('sys_cmts_item_meta', 'system', '_sys_menu_set_title_cmts_item_meta', 0),
 ('sys_switch_language', 'system', '_sys_menu_set_title_switch_language', 0),
 ('sys_switch_template', 'system', '_sys_menu_set_title_switch_template', 0),
-('sys_social_sharing', 'system', '_sys_menu_set_title_sys_social_sharing', 0);
+('sys_social_sharing', 'system', '_sys_menu_set_title_sys_social_sharing', 0),
 ('sys_wiki', 'system', '_sys_menu_set_title_sys_wiki', 0);
 
 CREATE TABLE IF NOT EXISTS `sys_menu_items` (
