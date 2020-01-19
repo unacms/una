@@ -4919,7 +4919,7 @@ CREATE TABLE IF NOT EXISTS `sys_pages_wiki_blocks` (
   `notes` varchar(255) NOT NULL,
   `added` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `block_lang_rev` (`block_id`,`language`,`revision`)
+  UNIQUE KEY `block_lang_rev` (`block_id`,`lang`,`revision`)
 );
 
 -- --------------------------------------------------------
