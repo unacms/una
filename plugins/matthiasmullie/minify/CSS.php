@@ -217,6 +217,8 @@ class CSS extends Minify
             // grab referenced file & minify it (which may include importing
             // yet other @import statements recursively)
             $minifier = new static($importPath);
+            $minifier->setMaxImportSize($this->maxImportSize);
+            $minifier->setImportExtensions($this->importExtensions);
             $importContent = $minifier->execute($source, $parents);
 
             // check if this is only valid for certain media
@@ -305,10 +307,11 @@ class CSS extends Minify
              */
             $this->extractStrings();
             $this->stripComments();
+            $this->extractCalcs();
             $css = $this->replace($css);
 
             $css = $this->stripWhitespace($css);
-            $css = $this->shortenHex($css);
+            $css = $this->shortenColors($css);
             $css = $this->shortenZeroes($css);
             $css = $this->shortenFontWeights($css);
             $css = $this->stripEmptyTags($css);
@@ -479,12 +482,16 @@ class CSS extends Minify
      *
      * @return string
      */
-    protected function shortenHex($content)
+    protected function shortenColors($content)
     {
-        $content = preg_replace('/(?<=[: ])#([0-9a-z])\\1([0-9a-z])\\2([0-9a-z])\\3(?=[; }])/i', '#$1$2$3', $content);
+        $content = preg_replace('/(?<=[: ])#([0-9a-z])\\1([0-9a-z])\\2([0-9a-z])\\3(?:([0-9a-z])\\4)?(?=[; }])/i', '#$1$2$3$4', $content);
 
-        // we can shorten some even more by replacing them with their color name
+        // remove alpha channel if it's pointless...
+        $content = preg_replace('/(?<=[: ])#([0-9a-z]{6})ff?(?=[; }])/i', '#$1', $content);
+        $content = preg_replace('/(?<=[: ])#([0-9a-z]{3})f?(?=[; }])/i', '#$1', $content);
+
         $colors = array(
+            // we can shorten some even more by replacing them with their color name
             '#F0FFFF' => 'azure',
             '#F5F5DC' => 'beige',
             '#A52A2A' => 'brown',
@@ -512,10 +519,13 @@ class CSS extends Minify
             '#FF6347' => 'tomato',
             '#EE82EE' => 'violet',
             '#F5DEB3' => 'wheat',
+            // or the other way around
+            'WHITE' => '#fff',
+            'BLACK' => '#000',
         );
 
         return preg_replace_callback(
-            '/(?<=[: ])('.implode(array_keys($colors), '|').')(?=[; }])/i',
+            '/(?<=[: ])('.implode('|', array_keys($colors)).')(?=[; }])/i',
             function ($match) use ($colors) {
                 return $colors[strtoupper($match[0])];
             },
@@ -557,11 +567,7 @@ class CSS extends Minify
         // `5px - 0px` is valid, but `5px - 0` is not
         // `10px * 0` is valid (equates to 0), and so is `10 * 0px`, but
         // `10 * 0` is invalid
-        // best to just leave `calc()`s alone, even if they could be optimized
-        // (which is a whole other undertaking, where units & order of
-        // operations all need to be considered...)
-        $calcs = $this->findCalcs($content);
-        $content = str_replace($calcs, array_keys($calcs), $content);
+        // we've extracted calcs earlier, so we don't need to worry about this
 
         // reusable bits of code throughout these regexes:
         // before & after are used to make sure we don't match lose unintended
@@ -598,9 +604,6 @@ class CSS extends Minify
         $content = preg_replace('/flex:([0-9]+\s[0-9]+\s)0([;\}])/', 'flex:${1}0%${2}', $content);
         $content = preg_replace('/flex-basis:0([;\}])/', 'flex-basis:0%${1}', $content);
 
-        // restore `calc()` expressions
-        $content = str_replace(array_keys($calcs), $calcs, $content);
-
         return $content;
     }
 
@@ -624,6 +627,17 @@ class CSS extends Minify
      */
     protected function stripComments()
     {
+        // PHP only supports $this inside anonymous functions since 5.4
+        $minifier = $this;
+        $callback = function ($match) use ($minifier) {
+            $count = count($minifier->extracted);
+            $placeholder = '/*'.$count.'*/';
+            $minifier->extracted[$placeholder] = $match[0];
+
+            return $placeholder;
+        };
+        $this->registerPattern('/\n?\/\*(!|.*?@license|.*?@preserve).*?\*\/\n?/s', $callback);
+
         $this->registerPattern('/\/\*.*?\*\//s', '');
     }
 
@@ -646,8 +660,8 @@ class CSS extends Minify
         // remove whitespace around meta characters
         // inspired by stackoverflow.com/questions/15195750/minify-compress-css-with-regex
         $content = preg_replace('/\s*([\*$~^|]?+=|[{};,>~]|!important\b)\s*/', '$1', $content);
-        $content = preg_replace('/([\[(:])\s+/', '$1', $content);
-        $content = preg_replace('/\s+([\]\)])/', '$1', $content);
+        $content = preg_replace('/([\[(:>\+])\s+/', '$1', $content);
+        $content = preg_replace('/\s+([\]\)>\+])/', '$1', $content);
         $content = preg_replace('/\s+(:)(?![^\}]*\{)/', '$1', $content);
 
         // whitespace around + and - can only be stripped inside some pseudo-
@@ -664,18 +678,13 @@ class CSS extends Minify
     }
 
     /**
-     * Find all `calc()` occurrences.
-     *
-     * @param string $content The CSS content to find `calc()`s in.
-     *
-     * @return string[]
+     * Replace all `calc()` occurrences.
      */
-    protected function findCalcs($content)
+    protected function extractCalcs()
     {
-        $results = array();
-        preg_match_all('/calc(\(.+?)(?=$|;|calc\()/', $content, $matches, PREG_SET_ORDER);
-
-        foreach ($matches as $match) {
+        // PHP only supports $this inside anonymous functions since 5.4
+        $minifier = $this;
+        $callback = function ($match) use ($minifier) {
             $length = strlen($match[1]);
             $expr = '';
             $opened = 0;
@@ -689,11 +698,17 @@ class CSS extends Minify
                     break;
                 }
             }
+            $rest = str_replace($expr, '', $match[1]);
+            $expr = trim(substr($expr, 1, -1));
 
-            $results['calc('.count($results).')'] = 'calc'.$expr;
-        }
+            $count = count($minifier->extracted);
+            $placeholder = 'calc('.$count.')';
+            $minifier->extracted[$placeholder] = 'calc('.$expr.')';
 
-        return $results;
+            return $placeholder.$rest;
+        };
+
+        $this->registerPattern('/calc(\(.+?)(?=$|;|calc\()/', $callback);
     }
 
     /**

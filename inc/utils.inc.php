@@ -113,9 +113,6 @@ function bx_process_input ($mixedData, $iDataType = BX_DATA_TEXT, $mixedParams =
         return $mixedData;
     }
 
-    if (get_magic_quotes_gpc() && $isCheckMagicQuotes)
-        $mixedData = stripslashes($mixedData);
-
     switch ($iDataType) {
     case BX_DATA_INT:
         return filter_var(trim($mixedData), FILTER_VALIDATE_INT);
@@ -1054,7 +1051,7 @@ function bx_parse_html_tag ($sContent, $sTag, $sAttrNameName, $sAttrNameValue, $
 function return_bytes($val)
 {
     $val = trim($val);
-    $last = strtolower($val{strlen($val)-1});
+    $last = strtolower($val[strlen($val)-1]);
     $val = (int)$val;
     switch($last) {
         // The 'G' modifier is available since PHP 5.1.0
@@ -1082,7 +1079,7 @@ function genRndPwd($iLength = 8, $bSpecialCharacters = true)
 
     for($i = 0; $i < $iLength; $i++) {
         $x = mt_rand(0, strlen($sChars) -1);
-        $sPassword .= $sChars{$x};
+        $sPassword .= $sChars[$x];
     }
 
     return $sPassword;
