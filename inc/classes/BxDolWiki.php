@@ -191,24 +191,34 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
             ));
         } 
         else {
+            // get previous revision with priority for current language
             $aWikiVer = $this->_oQuery->getBlockContent ((int)bx_get('block_id'), $oForm->getCleanValue('lang'));
 
+            // increase revision for particular language or start with first revision
             $sRev = $aWikiVer && $oForm->getCleanValue('lang') == $aWikiVer['lang'] ? $aWikiVer['revision'] + 1 : 1;
 
+            // detect main language flag
             $bMainLang = 0;
-            if ($aWikiVer && $oForm->getCleanValue('lang') == $aWikiVer['lang'])
+            if ($aWikiVer && $oForm->getCleanValue('lang') == $aWikiVer['lang']) // when revision is increased (language matches) - copy this flag from previous revision
                 $bMainLang = $aWikiVer['main_lang'];
-            elseif (!$aWikiVer)
+            elseif (!$aWikiVer) // when it's first revision and no translations - start with 1st revision
                 $bMainLang = 1;
+
+            // detect 'unsafe' flag
+            $bUnsafe = 0;
+            if ($aWikiVer) // 
+                $bUnsafe = $aWikiVer['unsafe'];
+            elseif (!$aWikiVer)
+                $bUnsafe = $this->isAllowed('unsafe') ? 1 : 0;
 
             $sId =  $oForm->insert(array(
                 'added' => time(), 
                 'revision' => $sRev,
                 'main_lang' => $bMainLang, 
                 'profile_id' => bx_get_logged_profile_id(),
-                'unsafe' => $this->isAllowed('unsafe') ? 1 : 0,
+                'unsafe' => $bUnsafe,
             ));
-            return "Success [$sId] (TODO: wiki close popup)";
+            return array('code' => 0, 'action' => 'Reload', 'block_id' => $aWikiVer['block_id']);
         }
     }
 }

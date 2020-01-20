@@ -42,7 +42,7 @@ class BxDolWikiQuery extends BxDolDb
         return $aObject;
     }
 
-    public function getBlockContent ($iBlockId, $sLang, $iRevision = false)
+    public function getBlockContent ($iBlockId, $sLang, $iRevision = false, $bAutoMainLang = true)
     {
         $sWhere = '';
         $aBind = array('block' => $iBlockId, 'lang' => $sLang);
@@ -55,7 +55,7 @@ class BxDolWikiQuery extends BxDolDb
         $aRow = $this->getRow("SELECT `block_id`, `revision`, `lang`, `main_lang`, `content`, `unsafe`, `notes`, `added` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `lang` = :lang $sWhere ORDER BY `revision` DESC LIMIT 1", $aBind);
 
         // if translation isn't found for specific language then get latest revision for main language 
-        if (!$aRow) {
+        if ($bAutoMainLang && !$aRow) {
             unset($aBind['lang']);
             $aRow = $this->getRow("SELECT `block_id`, `revision`, `lang`, `main_lang`, `content`, `unsafe`, `notes`, `added` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `main_lang` = 1 $sWhere ORDER BY `revision` DESC LIMIT 1", $aBind);
         }

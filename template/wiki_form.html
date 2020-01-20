@@ -9,8 +9,13 @@
                 bx_loading($("#bx-wiki-form-__block_id__ form"), true);
             },
             success: function (data) {
-                $("#bx-wiki-form-__block_id__").parent().html(data);
-                // $(".bx-popup-active").dolPopupHide();
+                if ('{' == data[0]) {
+                    var oResponce = JSON.parse(data);
+                    window.glBxDolWiki__block_id__.processResponce(oResponce);
+                }
+                else {
+                    $("#bx-wiki-form-__block_id__").parent().html(data);
+                }
             }
         });
     });

@@ -4,3 +4,12 @@
 .bx-wiki-controls-info {
     float:right;
 }
+.bx-wiki-form {
+    width:600px;
+}
+.bx-media-phone .bx-wiki-form {
+    width:auto;
+}
+.bx-wiki-form form textarea[name=content] {
+    height:16rem;
+}

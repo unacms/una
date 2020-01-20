@@ -16,9 +16,10 @@ class BxBaseFormWiki extends BxTemplFormView
     {
         parent::__construct($aInfo, $oTemplate);
 
-        if (isset($this->aInputs['lang'])) {
+        if (isset($this->aInputs['lang']))
             $this->aInputs['lang']['values'] = BxDolLanguages::getInstance()->getLanguages(false, false);
-        }
+        if (isset($this->aInputs['content']))
+            $this->aInputs['content']['code'] = true;
     }
 
 }
