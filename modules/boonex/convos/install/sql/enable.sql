@@ -144,7 +144,7 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionEntryDelete = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_convos', 'view entry', NULL, '_bx_cnv_acl_action_view_entry', '', 1, 0);
+('bx_convos', 'view entry', NULL, '_bx_cnv_acl_action_view_entry', '', 0, 0);
 SET @iIdActionEntryView = LAST_INSERT_ID();
 
 
