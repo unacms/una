@@ -4919,7 +4919,7 @@ INSERT INTO `sys_objects_wiki` (`object`, `uri`, `title`, `module`, `allow_add_f
 
 
 CREATE TABLE IF NOT EXISTS `sys_pages_wiki_blocks` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `block_id` int(11) NOT NULL,
   `revision` int(11) NOT NULL,
   `lang` varchar(5) NOT NULL,
@@ -4939,7 +4939,7 @@ CREATE TABLE IF NOT EXISTS `sys_pages_wiki_blocks` (
 -- Rewrite Rules
 --
 CREATE TABLE IF NOT EXISTS `sys_rewrite_rules` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `preg` varchar(255) NOT NULL,
   `service` varchar(255) NOT NULL,
   `active` tinyint(4) NOT NULL DEFAULT '1',
