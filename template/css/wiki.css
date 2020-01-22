@@ -13,3 +13,8 @@
 .bx-wiki-form form textarea[name=content] {
     height:16rem;
 }
+.bx-wiki-content {
+    max-height:10rem;
+    overflow:auto;
+    margin:0;
+}

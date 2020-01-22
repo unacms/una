@@ -84,13 +84,13 @@ class BxBaseServiceWiki extends BxDol
     {
         $oWiki = BxDolWiki::getObjectInstanceByUri($sWikiObjectUri);
         if (!$oWiki) {
-            echoJson(array('code' => 1, 'msg' => _t('_sys_wiki_error_missing_wiki_object', $sWikiObjectUri)));
+            echoJson(array('code' => 1, 'actions' => 'ShowMsg', 'msg' => _t('_sys_wiki_error_missing_wiki_object', $sWikiObjectUri)));
             return;
         }
 
         $sMethod = 'action' . bx_gen_method_name($sAction, array('-'));
         if (!method_exists($oWiki, $sMethod) || !$oWiki->isAllowed($sAction)) {            
-            echoJson(array('code' => 2, 'msg' => _t('_sys_wiki_error_action_not_allowed', $sAction, $sWikiObjectUri)));
+            echoJson(array('code' => 2, 'actions' => 'ShowMsg', 'msg' => _t('_sys_wiki_error_action_not_allowed', $sAction, $sWikiObjectUri)));
             return;
         }
         

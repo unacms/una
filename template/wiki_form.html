@@ -4,7 +4,7 @@
 <script>
     $(document).ready(function () {
         $("#bx-wiki-form-__block_id__ form").ajaxForm({
-            url: sUrlRoot + 'r.php?_q=__wiki_action_uri__-action/edit',
+            url: sUrlRoot + 'r.php?_q=__wiki_action_uri__-action/__action__',
             beforeSubmit: function (formData, $form, options) {
                 bx_loading($("#bx-wiki-form-__block_id__ form"), true);
                 formData.push({name: 'translations', value: JSON.stringify(window.glBxDolWiki__block_id__.getTranslations())});

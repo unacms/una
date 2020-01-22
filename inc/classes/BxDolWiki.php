@@ -153,10 +153,10 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         $aTypes = array(
             'add' => 'allow_add_for_levels',
             'edit' => 'allow_edit_for_levels',
+            'translate' => 'allow_translate_for_levels',
             'delete-version' => 'allow_delete_for_levels',
             'delete-block' => 'allow_delete_for_levels',
             'get-traaslation' => 'allow_translate_for_levels',
-            'translate' => 'allow_translate_for_levels',
             'history' => true,
             'unsafe' => 'allow_unsafe_for_levels',
         );
@@ -170,35 +170,59 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
             return false;
 
         $oAcl = BxDolAcl::getInstance();
-        return $oAcl->isMemberLevelInSet($this->_aObject[$aTypes[$sType]], $iProfileId); 
+        $bResult = $oAcl->isMemberLevelInSet($this->_aObject[$aTypes[$sType]], $iProfileId); 
+        if ($bResult && 'translate' == $sType) {
+            $aLangs = BxDolLanguages::getInstance()->getLanguages(false, true);
+            return count($aLangs) > 1;
+        }
+        return $bResult;
     }
 
     public function actionGetTranslation ()
     {
         $aWikiVer = $this->_oQuery->getBlockContent ((int)bx_get('block_id'), bx_get('lang'), false, false);
         if (!$aWikiVer)
-            return array('code' => 1, 'msg' => 'no translation was found');
+            return array('code' => 1, 'actions' => 'ShowMsg', 'msg' => 'no translation was found');
         else
             return array('code' => 0, 'lang' => $aWikiVer['lang'], 'content' => $aWikiVer['content'], 'block_id' => $aWikiVer['block_id']);
     }
 
-    public function actionEdit ()
+    public function actionTranslate ()
+    {
+        return $this->actionEdit (true);
+    }
+
+    public function actionEdit ($bTranslate = false)
     {
         $iBlockId = (int)bx_get('block_id');
+        $sMainLangLabel = '';
+        $aWikiVerMain = array();
+        $sLangForTranslate = '';
+        $aLangsForInput = $this->getLangsForInput ($iBlockId, $bTranslate, $sMainLangLabel, $aWikiVerMain, $sLangForTranslate);
 
         // get latest revision for block with current lang
-        $aWikiVer = $this->_oQuery->getBlockContent ($iBlockId, bx_lang_name());
+        if ($bTranslate) {
+            $aWikiVer = $this->_oQuery->getBlockContent ($iBlockId, $sLangForTranslate, false, false);
+        }
+        else {
+            $aWikiVer = $this->_oQuery->getBlockContent ($iBlockId, bx_lang_name());
+        }
+
         unset($aWikiVer['notes']); // unset notes since we need this field empty in the form
         if (!$aWikiVer) // check for new block, so initialize with default values
             $aWikiVer = array('block_id' => $iBlockId);
 
         // init form object
-        $oForm = BxDolForm::getObjectInstance('sys_wiki', 'sys_wiki_edit');
+        $oForm = BxDolForm::getObjectInstance('sys_wiki', $bTranslate ? 'sys_wiki_translate' : 'sys_wiki_edit');
         if (!$oForm)
             return _t('_sys_txt_error_occured');
 
         if (isset($oForm->aInputs['lang']))
-            $oForm->aInputs['lang']['values'] = $this->getLangsForInput ($aWikiVer['block_id']);
+            $oForm->aInputs['lang']['values'] = $aLangsForInput;
+        if (isset($oForm->aInputs['content_main']) && $sMainLangLabel) {
+            $oForm->aInputs['content_main']['caption'] = $sMainLangLabel;
+            $oForm->aInputs['content_main']['content'] = $aWikiVerMain ? BxDolTemplate::getInstance()->parseHtmlByName('wiki_content.html', array('content' => $aWikiVerMain['content'])) : '';
+        }
 
         $oForm->initChecker($aWikiVer);
         if (!$oForm->isSubmittedAndValid()) {
@@ -207,6 +231,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
                 'form' => $oForm->getCode(),
                 'block_id' => $iBlockId,
                 'wiki_action_uri' => $this->getWikiUri(),
+                'action' => $bTranslate ? 'translate' : 'edit',
             ));
         } 
         else {
@@ -215,19 +240,21 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
             // get previous revision with priority for current language
             $aWikiVer = $this->_oQuery->getBlockContent ($iBlockId, $sLang);
 
-            $sRev = $this->getFieldRev ($oForm, $sLang, $aWikiVer);
             $bMainLang = $this->getFieldMainLangFlag ($oForm, $sLang, $aWikiVer);
+            $sRev = $this->getFieldRev ($oForm, $sLang, $aWikiVer);
             $bUnsafe = $this->getFieldUnsafeFlag ($oForm, $sLang, $aWikiVer);
 
             // insert new revision
             $iTime = time();
-            $sId =  $oForm->insert(array(
-                'added' => $iTime, 
-                'revision' => $sRev,
-                'main_lang' => $bMainLang, 
-                'profile_id' => bx_get_logged_profile_id(),
-                'unsafe' => $bUnsafe,
-            ));
+            if (!$bMainLang || ($bMainLang && $this->isAllowed('edit'))) {
+                $sId = $oForm->insert(array(
+                    'added' => $iTime, 
+                    'revision' => $sRev,
+                    'main_lang' => $bMainLang, 
+                    'profile_id' => bx_get_logged_profile_id(),
+                    'unsafe' => $bUnsafe,
+                ));
+            }
 
             // process translations if available
             if (($sTranslations = bx_get('translations')) && ($aTranslations = json_decode($sTranslations, true))) {
@@ -238,20 +265,22 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
                     // get previous revision with priority for current language
                     $aWikiVer = $this->_oQuery->getBlockContent ($iBlockId, $sLang);
 
-                    $sRev = $this->getFieldRev ($oForm, $sLang, $aWikiVer);
                     $bMainLang = $this->getFieldMainLangFlag ($oForm, $sLang, $aWikiVer);
+                    $sRev = $this->getFieldRev ($oForm, $sLang, $aWikiVer);
                     $bUnsafe = $this->getFieldUnsafeFlag ($oForm, $sLang, $aWikiVer);
 
                     // insert new revision
-                    $sId =  $oForm->insert(array(
-                        'added' => $iTime, 
-                        'revision' => $sRev,
-                        'main_lang' => $bMainLang, 
-                        'profile_id' => bx_get_logged_profile_id(),
-                        'unsafe' => $bUnsafe,
-                        'lang' => $sLang,
-                        'content' => $sContent,
-                    ));
+                    if (!$bMainLang || ($bMainLang && $this->isAllowed('edit'))) {
+                        $sId =  $oForm->insert(array(
+                            'added' => $iTime, 
+                            'revision' => $sRev,
+                            'main_lang' => $bMainLang, 
+                            'profile_id' => bx_get_logged_profile_id(),
+                            'unsafe' => $bUnsafe,
+                            'lang' => $sLang,
+                            'content' => $sContent,
+                        ));
+                    }
                 }
             }
 
@@ -282,14 +311,14 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
             return $this->isAllowed('unsafe') ? 1 : 0; // in other cases - check permissions
     }
 
-    protected function getLangsForInput ($iBlockId)
+    protected function getLangsForInput ($iBlockId, $bTranslateForm, &$sMainLangLabel, &$aWikiVerMain, &$sLangForTranslate)
     {
         // get main lang update time
         $aWikiVerMain = $this->_oQuery->getBlockContent ($iBlockId, 'neverhood');
         $iUpdatedMainLang = $aWikiVerMain ? $aWikiVerMain['added'] : 0;
 
         // generate values for radio set
-        $aLangs = BxDolLanguages::getInstance()->getLanguages(false, false);
+        $aLangs = BxDolLanguages::getInstance()->getLanguages(false, true);
         foreach ($aLangs as $sKey => $sLang) {
             $aWikiVer = $this->_oQuery->getBlockContent ($iBlockId, $sKey, false, false);
             $sMainLang = $aWikiVer && $aWikiVer['main_lang'] ? '★' : '';
@@ -298,6 +327,17 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
                 $aLangs[$sKey] = _t('_sys_wiki_lang_mask_warn', $sLang, $sMainLang, $sComment);
             else
                 $aLangs[$sKey] = _t('_sys_wiki_lang_mask', $sLang, $sMainLang, $sComment);
+
+
+            if ($bTranslateForm && !$aWikiVer['main_lang'] && !$sLangForTranslate) {
+                $sLangForTranslate = $sKey;
+            }
+
+            if ($bTranslateForm && $aWikiVer['main_lang']) {
+                $sMainLangLabel = $aLangs[$sKey];
+                unset($aLangs[$sKey]);
+                continue;
+            }            
         }
         return $aLangs;
     }

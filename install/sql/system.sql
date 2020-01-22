@@ -3083,7 +3083,8 @@ INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `v
 ('sys_review_edit', 'system', 'sys_review', '_sys_form_review_display_edit', 0),
 ('sys_report_post', 'system', 'sys_report', '_sys_form_display_report_post', 0),
 ('sys_privacy_group_custom_manage', 'system', 'sys_privacy_group_custom', '_sys_form_display_ps_gc_manage', 0),
-('sys_wiki_edit', 'system', 'sys_wiki', '_sys_form_display_wiki_edit', 0);
+('sys_wiki_edit', 'system', 'sys_wiki', '_sys_form_display_wiki_edit', 0),
+('sys_wiki_translate', 'system', 'sys_wiki', '_sys_form_display_wiki_translate', 0);
 
 
 CREATE TABLE IF NOT EXISTS `sys_form_inputs` (
@@ -3204,6 +3205,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 
 ('sys_wiki', 'system', 'block_id', '', '', 0, 'hidden', '', '_sys_form_wiki_input_caption_block_id', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('sys_wiki', 'system', 'lang', '', '', 0, 'radio_set', '', '_sys_form_wiki_input_caption_lang', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
+('sys_wiki', 'system', 'content_main', '', '', 0, 'custom', '', '_sys_form_wiki_input_caption_content_main', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('sys_wiki', 'system', 'content', '', '', 0, 'textarea', '', '_sys_form_wiki_input_caption_content', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('sys_wiki', 'system', 'notes', '', '', 0, 'text', '', '_sys_form_wiki_input_caption_notes', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('sys_wiki', 'system', 'do_submit', '_sys_submit', '', 0, 'submit', '_sys_form_wiki_input_caption_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
@@ -3353,7 +3355,16 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_wiki_edit', 'notes', 2147483647, 1, 4),
 ('sys_wiki_edit', 'do_submit', 2147483647, 1, 5),
 ('sys_wiki_edit', 'close', 2147483647, 1, 6),
-('sys_wiki_edit', 'buttons', 2147483647, 1, 7);
+('sys_wiki_edit', 'buttons', 2147483647, 1, 7),
+
+('sys_wiki_translate', 'block_id', 2147483647, 1, 1),
+('sys_wiki_translate', 'content_main', 2147483647, 1, 2),
+('sys_wiki_translate', 'lang', 2147483647, 1, 3),
+('sys_wiki_translate', 'content', 2147483647, 1, 4),
+('sys_wiki_translate', 'notes', 2147483647, 1, 5),
+('sys_wiki_translate', 'do_submit', 2147483647, 1, 6),
+('sys_wiki_translate', 'close', 2147483647, 1, 7),
+('sys_wiki_translate', 'buttons', 2147483647, 1, 8);
 
 
 CREATE TABLE `sys_form_pre_lists` (

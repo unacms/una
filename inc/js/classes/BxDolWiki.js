@@ -40,10 +40,14 @@ BxDolWiki.prototype.removePopup = function (iBlockId) {
     $("#bx-wiki-form-" + iBlockId).parents(".bx-popup-wrapper").remove(); 
 }
 
-BxDolWiki.prototype.onEdit = function () {
+BxDolWiki.prototype.onTranslate = function () {
+    this.onEdit('translate');
+};
+
+BxDolWiki.prototype.onEdit = function (sAction) {
     
     var self = this;
-    var sActionUrl = bx_append_url_params(this._sActionUrl + 'edit', {
+    var sActionUrl = bx_append_url_params(this._sActionUrl + ('undefined' === typeof(sAction) ? 'edit' : sAction), {
         block_id: this._oOptions.block_id
     });
 
@@ -109,10 +113,6 @@ BxDolWiki.prototype.onHistory = function () {
     console.log("onHistory:" + this._sObject);
 };
 
-BxDolWiki.prototype.onTranslate = function () {
-    console.log("onTranslate:" + this._sObject);
-};
-
 BxDolWiki.prototype.processResponce = function (oResponce) {
     var self = this;
 
@@ -128,6 +128,10 @@ BxDolWiki.prototype.processResponce = function (oResponce) {
                 self['action' + this](oResponce);
         });
     }
+}
+
+BxDolWiki.prototype.actionShowMsg = function (oResponce) {
+    alert(oResponce.msg);
 }
 
 BxDolWiki.prototype.actionClosePopup = function (oResponce) {

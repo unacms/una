@@ -2277,10 +2277,12 @@
 	<string name="_sys_form_txt_select_file"><![CDATA[Выбрать файл]]></string>
     <string name="_sys_form_wiki"><![CDATA[Вики]]></string>
     <string name="_sys_form_display_wiki_edit"><![CDATA[Вики: редактирование]]></string>
+    <string name="_sys_form_display_wiki_translate"><![CDATA[Вики: перевод]]></string>
 	<string name="_sys_form_wiki_input_caption_block_id"><![CDATA[Идентификатор блока]]></string>
 	<string name="_sys_form_wiki_input_caption_lang"><![CDATA[Язык]]></string>
     <string name="_sys_form_wiki_input_caption_lang_info"><![CDATA[★ - основной язык, красным помечен отсутствующий или устаревший перевод]]></string>
 	<string name="_sys_form_wiki_input_caption_content"><![CDATA[Содержимое]]></string>
+    <string name="_sys_form_wiki_input_caption_content_main"><![CDATA[Основное содержимое]]></string>
 	<string name="_sys_form_wiki_input_caption_notes"><![CDATA[Заметки]]></string>
 	<string name="_sys_form_wiki_input_caption_submit"><![CDATA[Сохранить]]></string>
 	<string name="_sys_format_size_b"><![CDATA[{0} байт]]></string>
@@ -3091,8 +3093,8 @@
 	<string name="_sys_wiki_error_page_exists"><![CDATA[Страница с таким именем ({0}) уже существует]]></string>
     <string name="_sys_wiki_error_missing_wiki_object"><![CDATA[Вики объект ({0}) не найден]]></string>
     <string name="_sys_wiki_error_action_not_allowed"><![CDATA[Не разрешенное действие ({0}) для вики объекта ({1})]]></string>
-    <string name="_sys_wiki_lang_mask"><![CDATA[{0} {1} - {2}]]></string>
-    <string name="_sys_wiki_lang_mask_warn"><![CDATA[{0} {1} - <span style="color:red;">{2}</span>]]></string>
+    <string name="_sys_wiki_lang_mask"><![CDATA[{0} {1} <span class="bx-def-font-grayed bx-def-font-small">{2}</span>]]></string>
+    <string name="_sys_wiki_lang_mask_warn"><![CDATA[{0} {1} <span class="bx-def-font-small" style="color:red;">{2}</span>]]></string>
     <string name="_sys_wiki_lang_missing"><![CDATA[отсутствует]]></string>
 
 </resources>
