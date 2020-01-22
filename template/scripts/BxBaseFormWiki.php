@@ -22,6 +22,14 @@ class BxBaseFormWiki extends BxTemplFormView
             $this->aInputs['content']['code'] = true;
     }
 
+    function genLabel(&$aInput)
+    {
+        if (isset($aInput['label']) && $aInput['label'] && 'lang' == $aInput['name']) {
+            $sInputID = $this->getInputId($aInput);
+            return '<label for="' . $sInputID . '">' . $aInput['label'] . '</label>';
+        }
+        return parent::genLabel($aInput);
+    }
 }
 
 /** @} */

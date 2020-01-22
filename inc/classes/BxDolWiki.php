@@ -155,6 +155,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
             'edit' => 'allow_edit_for_levels',
             'delete-version' => 'allow_delete_for_levels',
             'delete-block' => 'allow_delete_for_levels',
+            'get-traaslation' => 'allow_translate_for_levels',
             'translate' => 'allow_translate_for_levels',
             'history' => true,
             'unsafe' => 'allow_unsafe_for_levels',
@@ -172,54 +173,133 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         return $oAcl->isMemberLevelInSet($this->_aObject[$aTypes[$sType]], $iProfileId); 
     }
 
+    public function actionGetTranslation ()
+    {
+        $aWikiVer = $this->_oQuery->getBlockContent ((int)bx_get('block_id'), bx_get('lang'), false, false);
+        if (!$aWikiVer)
+            return array('code' => 1, 'msg' => 'no translation was found');
+        else
+            return array('code' => 0, 'lang' => $aWikiVer['lang'], 'content' => $aWikiVer['content'], 'block_id' => $aWikiVer['block_id']);
+    }
+
     public function actionEdit ()
     {
-        $aWikiVer = $this->_oQuery->getBlockContent ((int)bx_get('block_id'), bx_lang_name());
-        unset($aWikiVer['notes']);
-        if (!$aWikiVer)
-            $aWikiVer = array('block_id' => (int)bx_get('block_id'));
+        $iBlockId = (int)bx_get('block_id');
 
+        // get latest revision for block with current lang
+        $aWikiVer = $this->_oQuery->getBlockContent ($iBlockId, bx_lang_name());
+        unset($aWikiVer['notes']); // unset notes since we need this field empty in the form
+        if (!$aWikiVer) // check for new block, so initialize with default values
+            $aWikiVer = array('block_id' => $iBlockId);
+
+        // init form object
         $oForm = BxDolForm::getObjectInstance('sys_wiki', 'sys_wiki_edit');
         if (!$oForm)
             return _t('_sys_txt_error_occured');
+
+        if (isset($oForm->aInputs['lang']))
+            $oForm->aInputs['lang']['values'] = $this->getLangsForInput ($aWikiVer['block_id']);
+
         $oForm->initChecker($aWikiVer);
         if (!$oForm->isSubmittedAndValid()) {
+            // display form
             return BxDolTemplate::getInstance()->parseHtmlByName('wiki_form.html', array(
                 'form' => $oForm->getCode(),
-                'block_id' => (int)bx_get('block_id'),
+                'block_id' => $iBlockId,
                 'wiki_action_uri' => $this->getWikiUri(),
             ));
         } 
         else {
+            $sLang = $oForm->getCleanValue('lang');
+
             // get previous revision with priority for current language
-            $aWikiVer = $this->_oQuery->getBlockContent ((int)bx_get('block_id'), $oForm->getCleanValue('lang'));
+            $aWikiVer = $this->_oQuery->getBlockContent ($iBlockId, $sLang);
 
-            // increase revision for particular language or start with first revision
-            $sRev = $aWikiVer && $oForm->getCleanValue('lang') == $aWikiVer['lang'] ? $aWikiVer['revision'] + 1 : 1;
+            $sRev = $this->getFieldRev ($oForm, $sLang, $aWikiVer);
+            $bMainLang = $this->getFieldMainLangFlag ($oForm, $sLang, $aWikiVer);
+            $bUnsafe = $this->getFieldUnsafeFlag ($oForm, $sLang, $aWikiVer);
 
-            // detect main language flag
-            $bMainLang = 0;
-            if ($aWikiVer && $oForm->getCleanValue('lang') == $aWikiVer['lang']) // when revision is increased (language matches) - copy this flag from previous revision
-                $bMainLang = $aWikiVer['main_lang'];
-            elseif (!$aWikiVer) // when it's first revision and no translations - start with 1st revision
-                $bMainLang = 1;
-
-            // detect 'unsafe' flag
-            $bUnsafe = 0;
-            if ($aWikiVer) // 
-                $bUnsafe = $aWikiVer['unsafe'];
-            elseif (!$aWikiVer)
-                $bUnsafe = $this->isAllowed('unsafe') ? 1 : 0;
-
+            // insert new revision
+            $iTime = time();
             $sId =  $oForm->insert(array(
-                'added' => time(), 
+                'added' => $iTime, 
                 'revision' => $sRev,
                 'main_lang' => $bMainLang, 
                 'profile_id' => bx_get_logged_profile_id(),
                 'unsafe' => $bUnsafe,
             ));
-            return array('code' => 0, 'action' => 'Reload', 'block_id' => $aWikiVer['block_id']);
+
+            // process translations if available
+            if (($sTranslations = bx_get('translations')) && ($aTranslations = json_decode($sTranslations, true))) {
+                foreach ($aTranslations as $sLang => $sContent) {
+                    if ($sLang == $oForm->getCleanValue('lang'))
+                        continue;
+
+                    // get previous revision with priority for current language
+                    $aWikiVer = $this->_oQuery->getBlockContent ($iBlockId, $sLang);
+
+                    $sRev = $this->getFieldRev ($oForm, $sLang, $aWikiVer);
+                    $bMainLang = $this->getFieldMainLangFlag ($oForm, $sLang, $aWikiVer);
+                    $bUnsafe = $this->getFieldUnsafeFlag ($oForm, $sLang, $aWikiVer);
+
+                    // insert new revision
+                    $sId =  $oForm->insert(array(
+                        'added' => $iTime, 
+                        'revision' => $sRev,
+                        'main_lang' => $bMainLang, 
+                        'profile_id' => bx_get_logged_profile_id(),
+                        'unsafe' => $bUnsafe,
+                        'lang' => $sLang,
+                        'content' => $sContent,
+                    ));
+                }
+            }
+
+            return array('code' => 0, 'actions' => array('Reload', 'ClosePopup'), 'block_id' => $aWikiVer['block_id']);
         }
+    }
+
+    protected function getFieldRev ($oForm, $sLang, $aWikiVer) {
+        // increase revision for particular language or start with first revision
+        return $aWikiVer && $sLang == $aWikiVer['lang'] ? $aWikiVer['revision'] + 1 : 1;
+    }
+
+    protected function getFieldMainLangFlag ($oForm, $sLang, $aWikiVer) {
+        // detect main language flag
+        if ($aWikiVer && $sLang == $aWikiVer['lang']) 
+            return $aWikiVer['main_lang']; // when revision is increased (language matches) - copy this flag from previous revision
+        elseif (!$aWikiVer) 
+            return 1; // when it's first revision and no translations - start as main language
+        else
+            return 0;
+    }
+
+    protected function getFieldUnsafeFlag ($oForm, $sLang, $aWikiVer) {
+
+        if ($aWikiVer && $sLang == $aWikiVer['lang'] && !$aWikiVer['unsafe'])
+            return 0; // copy 'unsafe' from previous revision only when unsafe = 0
+        else
+            return $this->isAllowed('unsafe') ? 1 : 0; // in other cases - check permissions
+    }
+
+    protected function getLangsForInput ($iBlockId)
+    {
+        // get main lang update time
+        $aWikiVerMain = $this->_oQuery->getBlockContent ($iBlockId, 'neverhood');
+        $iUpdatedMainLang = $aWikiVerMain ? $aWikiVerMain['added'] : 0;
+
+        // generate values for radio set
+        $aLangs = BxDolLanguages::getInstance()->getLanguages(false, false);
+        foreach ($aLangs as $sKey => $sLang) {
+            $aWikiVer = $this->_oQuery->getBlockContent ($iBlockId, $sKey, false, false);
+            $sMainLang = $aWikiVer && $aWikiVer['main_lang'] ? '★' : '';
+            $sComment = !$aWikiVer ? _t('_sys_wiki_lang_missing') : bx_time_js($aWikiVer['added']);
+            if (!$aWikiVer || $iUpdatedMainLang > $aWikiVer['added'])
+                $aLangs[$sKey] = _t('_sys_wiki_lang_mask_warn', $sLang, $sMainLang, $sComment);
+            else
+                $aLangs[$sKey] = _t('_sys_wiki_lang_mask', $sLang, $sMainLang, $sComment);
+        }
+        return $aLangs;
     }
 }
 

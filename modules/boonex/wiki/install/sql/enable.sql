@@ -2,7 +2,7 @@
 -- Wiki object
 
 INSERT INTO `sys_objects_wiki` (`object`, `uri`, `title`, `module`, `allow_add_for_levels`, `allow_edit_for_levels`, `allow_delete_for_levels`, `allow_translate_for_levels`, `allow_unsafe_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('bx_wiki', 'wiki', '_bx_wiki_object_title', 'system', 192, 192, 192, 192, 192, '', '');
+('bx_wiki', 'wiki', '_bx_wiki_object_title', 'system', 192, 192, 192, 192, 0, '', '');
 
 -- Permalinks
 

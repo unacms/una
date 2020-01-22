@@ -136,6 +136,7 @@ class BxBaseServiceWiki extends BxDol
             'info' => bx_time_js($aWikiVer['added']), // 'TODO: On right - Last modified time and List of missing and outdated translations. History and Last modified time should be controlled by regular menu privacy, while other actions should have custom privacy for particular wiki object',
             'options' => json_encode(array(
                 'block_id' => $sBlockId,
+                'lang' => $aWikiVer['lang'],
                 'wiki_action_uri' => $oWikiObject->getWikiUri(),
             )),
         ));

@@ -12,7 +12,9 @@ function BxDolWiki (sObject, eContainer, oOptions) {
     this._sObject = sObject;
     this._eCont = eContainer;
     this._sActionUrl = sUrlRoot + 'r.php?_q=' + this._oOptions.wiki_action_uri + '-action/';
-    this.bindEvents();
+    this._sCurrentLang = this._oOptions['lang'];
+    this._oTranslations = {};
+    this.bindEvents();    
 }
 
 BxDolWiki.prototype.bindEvents = function () {
@@ -39,7 +41,8 @@ BxDolWiki.prototype.removePopup = function (iBlockId) {
 }
 
 BxDolWiki.prototype.onEdit = function () {
-
+    
+    var self = this;
     var sActionUrl = bx_append_url_params(this._sActionUrl + 'edit', {
         block_id: this._oOptions.block_id
     });
@@ -49,6 +52,49 @@ BxDolWiki.prototype.onEdit = function () {
 
     // show new popup
     $(window).dolPopupAjax({url: sActionUrl});
+};
+
+BxDolWiki.prototype.getTranslations = function () {
+    return this._oTranslations;
+}
+
+BxDolWiki.prototype.loadingForm = function (b) {
+    bx_loading($('#bx-form-element-content'), b);
+    var eForm = $("#bx-wiki-form-" + this._oOptions.block_id);
+    if (b)
+        $(eForm).find("textarea[name=content]").val('');
+    $(eForm).find("textarea[name=content],input[name=lang],button[type=submit]").prop('disabled', b);
+}
+
+BxDolWiki.prototype.onChangeLangSelector = function (e) {
+    var self = this;
+    var eContent = $("#bx-wiki-form-" + this._oOptions.block_id + " textarea[name=content]");
+    var sLangNew = $(e).val();
+
+    // save current translation
+    this._oTranslations[this._sCurrentLang] = eContent.val();
+
+    if ('undefined' === typeof(this._oTranslations[sLangNew])) {
+        // no saved translation was found - get from server
+        self.loadingForm(true);
+        var sUrl = bx_append_url_params(sUrlRoot + 'r.php?_q=' + this._oOptions.wiki_action_uri + '-action/get-translation', {
+            block_id: this._oOptions.block_id,
+            lang: sLangNew,
+        });
+        $.getJSON(sUrl, function (oData) {
+            if ('undefined' !== typeof(oData.content))
+                eContent.val(oData.content);
+            // save current language
+            self._sCurrentLang = sLangNew;
+            self.loadingForm(false);
+        });
+    } 
+    else {
+        // saved translation was found - switch to it immediately
+        eContent.val(this._oTranslations[sLangNew]);
+        // save current language
+        this._sCurrentLang = sLangNew;
+    }
 };
 
 BxDolWiki.prototype.onDeleteVersion = function () {
@@ -68,13 +114,23 @@ BxDolWiki.prototype.onTranslate = function () {
 };
 
 BxDolWiki.prototype.processResponce = function (oResponce) {
-    if ('undefined' === typeof(oResponce.action))
-        return;    
-    if ('function' == typeof(this['action' + oResponce.action]))
-        this['action' + oResponce.action](oResponce);
+    var self = this;
+
+    if ('undefined' === typeof(oResponce.actions))
+        return;
+
+    if ('string' === typeof(oResponce.actions))
+        oResponce.actions = [oResponce.actions];
+
+    if ('object' === typeof(oResponce.actions)) {
+        $.each(oResponce.actions, function () {
+            if ('function' == typeof(self['action' + this]))
+                self['action' + this](oResponce);
+        });
+    }
 }
 
-BxDolWiki.prototype.actionReload = function (oResponce) {
+BxDolWiki.prototype.actionClosePopup = function (oResponce) {
     var self = this;
     if ($(".bx-popup-active").size())
         $(".bx-popup-active").dolPopupHide({onHide:function (){
@@ -82,6 +138,8 @@ BxDolWiki.prototype.actionReload = function (oResponce) {
         }})
     else
         this.removePopup();
+}
+BxDolWiki.prototype.actionReload = function (oResponce) {
     loadDynamicBlock(oResponce.block_id, document.location.href);
 }
 
