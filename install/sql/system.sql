@@ -4923,7 +4923,7 @@ CREATE TABLE IF NOT EXISTS `sys_pages_wiki_blocks` (
   `block_id` int(11) NOT NULL,
   `revision` int(11) NOT NULL,
   `lang` varchar(5) NOT NULL,
-  `main_language` tinyint(4) NOT NULL DEFAULT '0',
+  `main_lang` tinyint(4) NOT NULL DEFAULT '0',
   `profile_id` int(10) UNSIGNED NOT NULL,
   `content` mediumtext NOT NULL,
   `unsafe` tinyint(4) NOT NULL DEFAULT '0',
