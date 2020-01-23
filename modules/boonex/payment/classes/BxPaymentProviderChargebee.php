@@ -278,80 +278,93 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
         return $this->_iMode == CBEE_MODE_LIVE ? $this->getOption('live_api_key') : $this->getOption('test_api_key');
     }
 
-	protected function _processEvent()
-	{
-    	$sInput = @file_get_contents("php://input");
-		$aEvent = json_decode($sInput, true);
-		if(empty($aEvent) || !is_array($aEvent)) 
-			return 404;
+    protected function _processEvent()
+    {
+        $sInput = @file_get_contents("php://input");
+        $aEvent = json_decode($sInput, true);
+        if(empty($aEvent) || !is_array($aEvent)) 
+            return 404;
 
-		$sType = $aEvent['event_type'];
-		if(!in_array($sType, array('payment_succeeded', ' payment_refunded', 'subscription_cancelled')))
-			return 200;
+        $sType = $aEvent['event_type'];
+        if(!in_array($sType, array('payment_succeeded', ' payment_refunded', 'subscription_cancelled')))
+            return 200;
 
-		$this->log('Webhooks: ' . (!empty($sType) ? $sType : ''));
-		$this->log($aEvent);
+        $this->log('Webhooks: ' . (!empty($sType) ? $sType : ''));
+        $this->log($aEvent);
 
-		$sMethod = '_processEvent' . bx_gen_method_name($sType, array('.', '_', '-'));
-    	if(!method_exists($this, $sMethod))
-    		return 200;
+        $sMethod = '_processEvent' . bx_gen_method_name($sType, array('.', '_', '-'));
+        if(!method_exists($this, $sMethod))
+            return 200;
 
-    	return $this->$sMethod($aEvent) ? 200 : 403;
+        return $this->$sMethod($aEvent) ? 200 : 403;
     }
 
-	protected function _processEventPaymentSucceeded(&$aEvent)
-	{
-		$mixedResult = $this->_getData($aEvent, true);
-		if($mixedResult === false)
-			return false;
+    protected function _processEventPaymentSucceeded(&$aEvent)
+    {
+        $mixedResult = $this->_getDataTransaction($aEvent, 'success');
+        if($mixedResult === false)
+            return false;
 
-		list($aPending, $aTransaction) = $mixedResult;
+        list($aPending, $aTransaction) = $mixedResult;
 
-		$fTransactionAmount = (float)$aTransaction['amount'] / 100;
-		$sTransactionCurrency = strtoupper($aTransaction['currency_code']);
-		if($this->_bCheckAmount && ((float)$aPending['amount'] != $fTransactionAmount || strcasecmp($this->_oModule->_oConfig->getDefaultCurrencyCode(), $sTransactionCurrency) !== 0))
-			return false;
+        $fTransactionAmount = (float)$aTransaction['amount'] / 100;
+        $sTransactionCurrency = strtoupper($aTransaction['currency_code']);
+        if($this->_bCheckAmount && ((float)$aPending['amount'] != $fTransactionAmount || strcasecmp($this->_oModule->_oConfig->getDefaultCurrencyCode(), $sTransactionCurrency) !== 0))
+            return false;
 
         if($aPending['type'] == BX_PAYMENT_TYPE_RECURRING)
             $this->_oModule->updateSubscription($aPending, array(
                 'paid' => 1
             ));
 
-		return $this->_oModule->registerPayment($aPending);
-	}
+        return $this->_oModule->registerPayment($aPending);
+    }
 
-	protected function _processEventPaymentRefunded(&$aEvent)
-	{
-		$mixedResult = $this->_getData($aEvent);
-		if($mixedResult === false)
-			return false;
+    protected function _processEventPaymentRefunded(&$aEvent)
+    {
+        $mixedResult = $this->_getDataTransaction($aEvent);
+        if($mixedResult === false)
+            return false;
 
-		list($aPending) = $mixedResult;
-		return $this->_oModule->refundPayment($aPending);
-	}
+        list($aPending) = $mixedResult;
+        return $this->_oModule->refundPayment($aPending);
+    }
 
-	protected function _processEventSubscriptionCancelled(&$aEvent)
-	{
-		$mixedResult = $this->_getData($aEvent);
-		if($mixedResult === false)
-			return false;
+    protected function _processEventSubscriptionCancelled(&$aEvent)
+    {
+        $mixedResult = $this->_getDataSubscription($aEvent);
+        if($mixedResult === false)
+            return false;
 
-		list($aPending) = $mixedResult;
-		return $this->_oModule->cancelSubscription($aPending);
-	}
+        list($aPending) = $mixedResult;
+        return $this->_oModule->cancelSubscription($aPending);
+    }
 
-	protected function _getData(&$aEvent, $bWithStatusCheck = false)
-	{
-		$aTransaction = $aEvent['content']['transaction'];
-		if(empty($aTransaction) || ($bWithStatusCheck && $aTransaction['status'] != 'success'))
-			return false;
+    protected function _getDataTransaction(&$aEvent, $sWithStatusCheck = '')
+    {
+        $aTransaction = $aEvent['content']['transaction'];
+        if(empty($aTransaction) || (!empty($sWithStatusCheck) && $aTransaction['status'] != $sWithStatusCheck))
+            return false;
 
-		$aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'order', 'order' => $aTransaction['subscription_id']));
-		if(empty($aPending) || !is_array($aPending))
-			return false;
+        $aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'order', 'order' => $aTransaction['subscription_id']));
+        if(empty($aPending) || !is_array($aPending))
+            return false;
 
-		return array($aPending, $aTransaction);
-	}
+        return array($aPending, $aTransaction);
+    }
+
+    protected function _getDataSubscription(&$aEvent, $sWithStatusCheck = '')
+    {
+        $aSubscription = $aEvent['content']['subscription'];
+        if(empty($aSubscription) || (!empty($sWithStatusCheck) && $aSubscription['status'] != $sWithStatusCheck))
+            return false;
+
+        $aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'order', 'order' => $aSubscription['id']));
+        if(empty($aPending) || !is_array($aPending))
+            return false;
+
+        return array($aPending, $aSubscription);
+    }
 }
 
 /** @} */
