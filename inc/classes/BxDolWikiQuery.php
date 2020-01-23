@@ -68,6 +68,12 @@ class BxDolWikiQuery extends BxDolDb
         $aBind = array('block' => $iBlockId, 'lang' => $sLang);
         return $this->getAll("SELECT `block_id`, `lang`, `revision`, `profile_id`, `notes`, `added` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `lang` = :lang ORDER BY `revision` DESC", $aBind);
     }
+
+    public function deleteRevisions ($iBlockId, $sLang, $aRevisions)
+    {
+        $aBind = array('block' => $iBlockId, 'lang' => $sLang);
+        return $this->query("DELETE FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `lang` = :lang AND `revision` IN(" . $this->implode_escape($aRevisions) . ")", $aBind);
+    }
 }
 
 /** @} */

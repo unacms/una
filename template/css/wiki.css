@@ -5,7 +5,7 @@
     float:right;
 }
 .bx-wiki-form {
-    width:600px;
+    width:37.5rem;
 }
 .bx-media-phone .bx-wiki-form {
     width:auto;
@@ -21,9 +21,19 @@
 .bx-wiki-history-title {
     margin:0;
 }
+.bx-wiki-del-rev {
+    width:100%;
+}
+.bx-wiki-history {
+    max-width:37.5rem;
+}
+.bx-wiki-del-rev,
 .bx-wiki-history {
     border-collapse:collapse;
 }
+.bx-wiki-del-rev-cell-profile,
+.bx-wiki-del-rev-cell-time,
+.bx-wiki-del-rev-cell-rev,
 .bx-wiki-history-cell-profile,
 .bx-wiki-history-cell-time,
 .bx-wiki-history-cell-rev {

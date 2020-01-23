@@ -3098,5 +3098,6 @@
     <string name="_sys_wiki_lang_mask"><![CDATA[{0} {1} <span class="bx-def-font-grayed bx-def-font-small">{2}</span>]]></string>
     <string name="_sys_wiki_lang_mask_warn"><![CDATA[{0} {1} <span class="bx-def-font-small" style="color:red;">{2}</span>]]></string>
     <string name="_sys_wiki_lang_missing"><![CDATA[отсутствует]]></string>
+    <string name="_sys_wiki_revisions_deleted"><![CDATA[{0} ревизий было удалено]]></string>
 
 </resources>

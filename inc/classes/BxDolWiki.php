@@ -189,24 +189,88 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
             return array('code' => 0, 'lang' => $aWikiVer['lang'], 'content' => $aWikiVer['content'], 'block_id' => $aWikiVer['block_id']);
     }
 
+    public function actionDeleteVersion ()
+    {
+        $iBlockId = (int)bx_get('block_id');
+        $sLang = bx_lang_name();
+        $oLang = BxDolLanguages::getInstance();
+
+        $aVars = $this->getVarsForHistory($iBlockId, $sLang);
+        $aVars['select_all'] = _t('_Select_all');
+
+        $aForm = array(
+            'form_attrs' => array(
+                'name' => 'bx-wiki-del-rev',
+                'method' => 'post',
+            ),
+            'params' => array (
+                'db' => array(
+                    'submit_name' => 'do_submit',
+                ),
+            ),
+            'inputs' => array(
+                'block_id' => array(
+                    'type' => 'hidden',
+                    'name' => 'block_id',
+                    'value' => $iBlockId,
+                ),
+                'lang' => array(
+                    'type' => 'hidden',
+                    'name' => 'lang',
+                    'value' => $sLang,
+                ),
+                'revision' => array(
+                    'type' => 'custom',
+                    'name' => 'revision',
+                    'caption' => '',
+                    'content' => BxDolTemplate::getInstance()->parseHtmlByName('wiki_delete_version.html', $aVars),
+                ),
+                'buttons' => array(
+                    'type' => 'input_set',
+                    array(
+                        'type' => 'submit',
+                        'name' => 'do_submit',
+                        'value' => _t('_Submit'),
+                    ),
+                    array(
+                        'type' => 'reset',
+                        'name' => 'close',
+                        'value' => _t('_sys_close'),
+                        'attrs' => array(
+                            'onclick' => "$('.bx-popup-applied:visible').dolPopupHide();",
+                            'class' => "bx-def-margin-sec-left",
+                        ),
+                    ),
+                ),
+            ),
+        );
+
+        $oForm = new BxTemplFormView ($aForm);
+        $oForm->initChecker();
+
+        if ($oForm->isSubmittedAndValid ()) {
+            $i = $this->_oQuery->deleteRevisions ($iBlockId, $sLang, bx_get('revision'));
+            return array('code' => 0, 'actions' => array('Reload', 'ClosePopup', 'ShowMsg'), 'block_id' => $iBlockId, 'msg' => _t('_sys_wiki_revisions_deleted', $i));
+        }
+        else {
+            return BxDolTemplate::getInstance()->parseHtmlByName('wiki_form.html', array(
+                'form' => $oForm->getCode(),
+                'block_id' => $iBlockId,
+                'wiki_action_uri' => $this->getWikiUri(),
+                'action' => 'delete-version',
+            ));
+        }
+    }
+
     public function actionHistory ()
     {
         $iBlockId = (int)bx_get('block_id');
         $sLang = bx_lang_name();
         $oLang = BxDolLanguages::getInstance();
 
-        $a = $this->_oQuery->getBlockHistory($iBlockId, $sLang);
-
-        $aVars = array('lang' => $oLang->getLangTitle($oLang->getLangId($sLang)), 'bx_repeat:revisions' => array());
-        foreach ($a as $r) {
-            $oProfile = BxDolProfile::getInstanceMagic($r['profile_id']);
-            list($sPageLink, $aPageParams) = bx_get_base_url_popup(array($r['block_id'].'rev' => $r['revision']));
-            $r['author_url'] = $oProfile->getUrl();
-            $r['author_name'] = $oProfile->getDisplayName();
-            $r['timejs'] = bx_time_js($r['added']);
-            $r['rev_url'] = bx_append_url_params($sPageLink, $aPageParams);
-            $aVars['bx_repeat:revisions'][] = $r;
-        }
+        $aVars = $this->getVarsForHistory($iBlockId, $sLang);
+        $aVars['lang'] = $oLang->getLangTitle($oLang->getLangId($sLang));
+        $aVars['close'] = _t('_sys_close');
         return BxDolTemplate::getInstance()->parseHtmlByName('wiki_history.html', $aVars);
     }
 
@@ -363,6 +427,25 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
             }            
         }
         return $aLangs;
+    }
+
+    public function getVarsForHistory ($iBlockId, $sLang)
+    {
+        $a = $this->_oQuery->getBlockHistory($iBlockId, $sLang);
+
+        $aVars = array(
+            'bx_repeat:revisions' => array()
+        );
+        foreach ($a as $r) {
+            $oProfile = BxDolProfile::getInstanceMagic($r['profile_id']);
+            list($sPageLink, $aPageParams) = bx_get_base_url_popup(array($r['block_id'].'rev' => $r['revision']));
+            $r['author_url'] = $oProfile->getUrl();
+            $r['author_name'] = $oProfile->getDisplayName();
+            $r['timejs'] = bx_time_js($r['added']);
+            $r['rev_url'] = BxDolPermalinks::getInstance()->permalink(bx_append_url_params($sPageLink, $aPageParams));
+            $aVars['bx_repeat:revisions'][] = $r;
+        }
+        return $aVars;
     }
 }
 

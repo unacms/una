@@ -38,6 +38,8 @@ BxDolWiki.prototype.removePopup = function (iBlockId) {
     if ('undefined' === typeof(iBlockId))
         iBlockId = this._oOptions.block_id;
     $("#bx-wiki-form-" + iBlockId).parents(".bx-popup-wrapper").remove(); 
+    $(".bx-wiki-history").parents(".bx-popup-wrapper").remove();
+    $(".bx-wiki-del-rev").parents(".bx-popup-wrapper").remove();
 }
 
 BxDolWiki.prototype.getTranslations = function () {
@@ -92,7 +94,7 @@ BxDolWiki.prototype.onEdit = function () {
 };
 
 BxDolWiki.prototype.onDeleteVersion = function () {
-    console.log("onDeleteVersion:" + this._sObject);
+    this.popup('delete-version');
 };
 
 BxDolWiki.prototype.onDeleteBlock = function () {
