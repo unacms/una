@@ -453,6 +453,9 @@ class BxNtfsModule extends BxBaseModNotificationsModule
         $aSettings = &$aNotification['settings'];
 
         $sSubject = !empty($aSettings['subject']) ? $aSettings['subject'] : _t('_bx_ntfs_push_new_event_subject', getParam('site_title'));
+        
+        bx_alert($this->_aModule['name'], 'before_send_notification_push', 0, 0, array('profile_id' => $oProfile->id(), 'account_id' => $oAccount->id(), 'content' => &$aContent, 'setting' => &$aSettings, 'subject' => &$sSubject));
+   
         return BxDolPush::getInstance()->send($oProfile->id(), array(
             'contents' => array(
                 'en' => $aContent['message']
