@@ -40,24 +40,6 @@ BxDolWiki.prototype.removePopup = function (iBlockId) {
     $("#bx-wiki-form-" + iBlockId).parents(".bx-popup-wrapper").remove(); 
 }
 
-BxDolWiki.prototype.onTranslate = function () {
-    this.onEdit('translate');
-};
-
-BxDolWiki.prototype.onEdit = function (sAction) {
-    
-    var self = this;
-    var sActionUrl = bx_append_url_params(this._sActionUrl + ('undefined' === typeof(sAction) ? 'edit' : sAction), {
-        block_id: this._oOptions.block_id
-    });
-
-    // remove previous popup
-    this.removePopup();
-
-    // show new popup
-    $(window).dolPopupAjax({url: sActionUrl});
-};
-
 BxDolWiki.prototype.getTranslations = function () {
     return this._oTranslations;
 }
@@ -101,6 +83,14 @@ BxDolWiki.prototype.onChangeLangSelector = function (e) {
     }
 };
 
+BxDolWiki.prototype.onTranslate = function () {
+    this.popup('translate');
+};
+
+BxDolWiki.prototype.onEdit = function () {
+    this.popup('edit');
+};
+
 BxDolWiki.prototype.onDeleteVersion = function () {
     console.log("onDeleteVersion:" + this._sObject);
 };
@@ -110,7 +100,7 @@ BxDolWiki.prototype.onDeleteBlock = function () {
 };
 
 BxDolWiki.prototype.onHistory = function () {
-    console.log("onHistory:" + this._sObject);
+    this.popup('history');
 };
 
 BxDolWiki.prototype.processResponce = function (oResponce) {
@@ -146,5 +136,19 @@ BxDolWiki.prototype.actionClosePopup = function (oResponce) {
 BxDolWiki.prototype.actionReload = function (oResponce) {
     loadDynamicBlock(oResponce.block_id, document.location.href);
 }
+
+BxDolWiki.prototype.popup = function (sAction) {
+    
+    var self = this;
+    var sActionUrl = bx_append_url_params(this._sActionUrl + sAction, {
+        block_id: this._oOptions.block_id
+    });
+
+    // remove previous popup
+    this.removePopup();
+
+    // show new popup
+    $(window).dolPopupAjax({url: sActionUrl});
+};
 
 /** @} */

@@ -52,15 +52,21 @@ class BxDolWikiQuery extends BxDolDb
         }
 
         // get latest revision for specific language
-        $aRow = $this->getRow("SELECT `block_id`, `revision`, `lang`, `main_lang`, `content`, `unsafe`, `notes`, `added` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `lang` = :lang $sWhere ORDER BY `revision` DESC LIMIT 1", $aBind);
+        $aRow = $this->getRow("SELECT `block_id`, `revision`, `profile_id`, `lang`, `main_lang`, `content`, `unsafe`, `notes`, `added` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `lang` = :lang $sWhere ORDER BY `revision` DESC LIMIT 1", $aBind);
 
         // if translation isn't found for specific language then get latest revision for main language 
         if ($bAutoMainLang && !$aRow) {
             unset($aBind['lang']);
-            $aRow = $this->getRow("SELECT `block_id`, `revision`, `lang`, `main_lang`, `content`, `unsafe`, `notes`, `added` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `main_lang` = 1 $sWhere ORDER BY `revision` DESC LIMIT 1", $aBind);
+            $aRow = $this->getRow("SELECT `block_id`, `revision`, `profile_id`, `lang`, `main_lang`, `content`, `unsafe`, `notes`, `added` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `main_lang` = 1 $sWhere ORDER BY `revision` DESC LIMIT 1", $aBind);
         }
 
         return $aRow ? $aRow : false;
+    }
+
+    public function getBlockHistory ($iBlockId, $sLang)
+    {
+        $aBind = array('block' => $iBlockId, 'lang' => $sLang);
+        return $this->getAll("SELECT `block_id`, `lang`, `revision`, `profile_id`, `notes`, `added` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `lang` = :lang ORDER BY `revision` DESC", $aBind);
     }
 }
 

@@ -399,7 +399,7 @@ class BxBasePage extends BxDolPage
             $sContent = _t('_sys_wiki_error_missing_wiki_object', $this->_aObject['module']);
         } 
         else {
-            $sContent = $oWiki->getBlockContent($aBlock['id']);
+            $sContent = $oWiki->getBlockContent($aBlock['id'], false, (int)bx_get($aBlock['id'].'rev') ? (int)bx_get($aBlock['id'].'rev') : false);
             $sContent = bx_process_macros($sContent);
         }
 

@@ -120,18 +120,22 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
      * @param $sLang optional language name
      * @return block content
      */
-    public function getBlockContent ($iBlockId, $sLang = false)
+    public function getBlockContent ($iBlockId, $sLang = false, $iRevision = false)
     {
         if (!$sLang)
             $sLang = bx_lang_name();
-        $aWikiVer = $this->_oQuery->getBlockContent ($iBlockId, $sLang);
+        $aWikiVer = $this->_oQuery->getBlockContent ($iBlockId, $sLang, $iRevision);
+        if (!$aWikiVer) {
+            return _t('_sys_wiki_error_no_rev', $iRevision, $sLang);
+        }
+        $aWikiLatest = $this->_oQuery->getBlockContent ($iBlockId, $sLang);
 
         require_once(BX_DIRECTORY_PATH_PLUGINS . "parsedown/Parsedown.php");
         $oParsedown = new Parsedown();
         $oParsedown->setSafeMode($aWikiVer['unsafe'] ? false : true);
         $s = $oParsedown->text($aWikiVer['content']);
 
-        $sControls = BxDolService::call('system', 'wiki_controls', array($this, $aWikiVer, $iBlockId), 'TemplServiceWiki');
+        $sControls = BxDolService::call('system', 'wiki_controls', array($this, $aWikiVer, $aWikiLatest, $iBlockId), 'TemplServiceWiki');
 
         return $s . $sControls;
     }
@@ -144,10 +148,13 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
      */
     public function isAllowed ($sType, $iProfileId = false)
     {
-        if (isAdmin())
-            return true;
+        if ('translate' == $sType) {
+            $aLangs = BxDolLanguages::getInstance()->getLanguages(false, true);
+            if (count($aLangs) < 2)
+                return false;
+        }
 
-        if ('history' == $sType)
+        if (isAdmin())
             return true;
 
         $aTypes = array(
@@ -170,12 +177,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
             return false;
 
         $oAcl = BxDolAcl::getInstance();
-        $bResult = $oAcl->isMemberLevelInSet($this->_aObject[$aTypes[$sType]], $iProfileId); 
-        if ($bResult && 'translate' == $sType) {
-            $aLangs = BxDolLanguages::getInstance()->getLanguages(false, true);
-            return count($aLangs) > 1;
-        }
-        return $bResult;
+        return $oAcl->isMemberLevelInSet($this->_aObject[$aTypes[$sType]], $iProfileId);
     }
 
     public function actionGetTranslation ()
@@ -185,6 +187,27 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
             return array('code' => 1, 'actions' => 'ShowMsg', 'msg' => 'no translation was found');
         else
             return array('code' => 0, 'lang' => $aWikiVer['lang'], 'content' => $aWikiVer['content'], 'block_id' => $aWikiVer['block_id']);
+    }
+
+    public function actionHistory ()
+    {
+        $iBlockId = (int)bx_get('block_id');
+        $sLang = bx_lang_name();
+        $oLang = BxDolLanguages::getInstance();
+
+        $a = $this->_oQuery->getBlockHistory($iBlockId, $sLang);
+
+        $aVars = array('lang' => $oLang->getLangTitle($oLang->getLangId($sLang)), 'bx_repeat:revisions' => array());
+        foreach ($a as $r) {
+            $oProfile = BxDolProfile::getInstanceMagic($r['profile_id']);
+            list($sPageLink, $aPageParams) = bx_get_base_url_popup(array($r['block_id'].'rev' => $r['revision']));
+            $r['author_url'] = $oProfile->getUrl();
+            $r['author_name'] = $oProfile->getDisplayName();
+            $r['timejs'] = bx_time_js($r['added']);
+            $r['rev_url'] = bx_append_url_params($sPageLink, $aPageParams);
+            $aVars['bx_repeat:revisions'][] = $r;
+        }
+        return BxDolTemplate::getInstance()->parseHtmlByName('wiki_history.html', $aVars);
     }
 
     public function actionTranslate ()

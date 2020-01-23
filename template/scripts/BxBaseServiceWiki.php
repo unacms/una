@@ -119,7 +119,7 @@ class BxBaseServiceWiki extends BxDol
     /** 
      * @ref bx_system_general-wiki_page "wiki_page"
      */
-    public function serviceWikiControls ($oWikiObject, $aWikiVer, $sBlockId)
+    public function serviceWikiControls ($oWikiObject, $aWikiVer, $aWikiVerLatest, $sBlockId)
     {
         $this->_addCssJs ();
     
@@ -128,12 +128,21 @@ class BxBaseServiceWiki extends BxDol
 
         $oMenu->setMenuObject($oWikiObject);
 
+        if ($aWikiVerLatest['revision'] == $aWikiVer['revision']) {
+            $sInfo = bx_time_js($aWikiVer['added']);
+        } 
+        else {
+            $oProfile = BxDolProfile::getInstanceMagic($aWikiVer['profile_id']);
+            $sInfo = _t('_sys_wiki_view_rev', $aWikiVer['revision'], $oProfile->getUrl(), $oProfile->getDisplayName(), bx_time_js($aWikiVer['added']));
+        }
+
         $o = BxDolTemplate::getInstance();        
         return $o->parseHtmlByName('wiki_controls.html', array(
             'obj' => $oWikiObject->getObjectName(),
             'block_id' => $sBlockId,
             'menu' => $oMenu->getCode(),
-            'info' => bx_time_js($aWikiVer['added']), // 'TODO: On right - Last modified time and List of missing and outdated translations. History and Last modified time should be controlled by regular menu privacy, while other actions should have custom privacy for particular wiki object',
+            // 'TODO: On right - Last modified time and List of missing and outdated translations. History and Last modified time should be controlled by regular menu privacy, while other actions should have custom privacy for particular wiki object',
+            'info' => $sInfo,
             'options' => json_encode(array(
                 'block_id' => $sBlockId,
                 'lang' => $aWikiVer['lang'],

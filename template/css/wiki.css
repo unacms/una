@@ -18,3 +18,14 @@
     overflow:auto;
     margin:0;
 }
+.bx-wiki-history-title {
+    margin:0;
+}
+.bx-wiki-history {
+    border-collapse:collapse;
+}
+.bx-wiki-history-cell-profile,
+.bx-wiki-history-cell-time,
+.bx-wiki-history-cell-rev {
+    text-align:center;
+}
