@@ -758,7 +758,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
     {
         $iUserId = (int)$this->getProfileId();
 
-        $aItemInfo = $this->callGetCartItem((int)$aItem['module_id'], array($aItem['item_id']));
+        $aItemInfo = $this->callGetCartItem((int)$aItem['module_id'], array($aItem['item_id'], isset($aItem['custom']) ? $aItem['custom'] : array()));
         if(empty($aItemInfo))
             return false;
 
@@ -806,7 +806,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
         return $aCheckResult[CHECK_ACTION_MESSAGE];
     }
 
-    public function checkData($iClientId, $iSellerId, $iModuleId, $iItemId, $iItemCount)
+    public function checkData($iClientId, $iSellerId, $iModuleId, $iItemId, $iItemCount, $aCustom = array())
     {
     	$CNF = &$this->_oConfig->CNF;
 
@@ -819,7 +819,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
             return array('code' => 2, 'eval' => 'window.open("' . $sLoginUrl . '", "_self");');
         }
 
-        $mixedResult = $this->isAllowedPurchase(array('module_id' => $iModuleId, 'item_id' => $iItemId));
+        $mixedResult = $this->isAllowedPurchase(array('module_id' => $iModuleId, 'item_id' => $iItemId, 'custom' => $aCustom));
         if($mixedResult !== true) {
             if(is_string($mixedResult) && !empty($mixedResult))
                 return array('code' => 2, 'message' => $mixedResult);

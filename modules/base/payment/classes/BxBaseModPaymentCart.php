@@ -196,19 +196,45 @@ class BxBaseModPaymentCart extends BxDol
         return $iCount;
     }
 
-	protected function _parseByVendor($iUserId)
-    {
-        $sItems = $this->_oModule->_oDb->getCartItems($iUserId);
-        return $this->_reparseBy($this->_oModule->_oConfig->descriptorsM2A($sItems), 'vendor_id');
+    protected function _parseByVendor($iUserId)
+    {                            
+        $aCart = $this->_oModule->_oDb->getCartContent($iUserId);
+        if(empty($aCart['items']))
+            return array();
+
+        $aResult = $this->_reparseBy($this->_oModule->_oConfig->descriptorsM2A($aCart['items']), 'vendor_id');
+        if(empty($aCart['customs']))
+            return $aResult;
+
+        $aCartCustoms = unserialize($aCart['customs']);
+
+        foreach($aResult as $iVendor => $aItems)
+            foreach($aItems as $iIndex => $aItem)
+                $aResult[$iVendor][$iIndex]['custom'] = $this->_oModule->_oConfig->pullCustom($aItem, $aCartCustoms);
+
+        return $aResult;
     }
 
     protected function _parseByModule($iUserId)
     {
-        $sItems = $this->_oModule->_oDb->getCartItems($iUserId);
-        return $this->_reparseBy($this->_oModule->_oConfig->descriptorsM2A($sItems), 'module_id');
+        $aCart = $this->_oModule->_oDb->getCartContent($iUserId);
+        if(empty($aCart['items']))
+            return array();
+
+        $aResult = $this->_reparseBy($this->_oModule->_oConfig->descriptorsM2A($aCart['items']), 'module_id');
+        if(empty($aCart['customs']))
+            return $aResult;
+
+        $aCartCustoms = unserialize($aCart['customs']);
+
+        foreach($aResult as $iModule => $aItems)
+            foreach($aItems as $iIndex => $aItem)
+                $aResult[$iModule][$iIndex]['custom'] = $this->_oModule->_oConfig->pullCustom($aItem, $aCartCustoms);
+
+        return $aResult;
     }
 
-	protected function _reparseBy($aItems, $sKey)
+    protected function _reparseBy($aItems, $sKey)
     {
         $aResult = array();
         foreach($aItems as $aItem)

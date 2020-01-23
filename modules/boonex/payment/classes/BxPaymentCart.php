@@ -162,7 +162,7 @@ class BxPaymentCart extends BxBaseModPaymentCart
     	$iModuleId = $this->_oModule->_oConfig->getModuleId($mixedModuleId);
     	$iClientId = $this->_oModule->getProfileId();
 
-    	$mixedResult = $this->_oModule->checkData($iClientId, $iSellerId, $iModuleId, $iItemId, $iItemCount);
+    	$mixedResult = $this->_oModule->checkData($iClientId, $iSellerId, $iModuleId, $iItemId, $iItemCount, $aCustom);
     	if($mixedResult !== true)
     		return $mixedResult;
 
@@ -176,10 +176,11 @@ class BxPaymentCart extends BxBaseModPaymentCart
         $sCiDsc = $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId));
         if(strpos($sCartItems, $sCiDsc) !== false)
             $sCartItems = preg_replace_callback(
-            	"/" . $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId, '([0-9])+')) . "/", 
-            	create_function('$aMatches', 'return ' . $this->_oModule->_oConfig->descriptorA2S(array("'" . $iSellerId, $iModuleId, $iItemId, "' . (\$aMatches[1] + " . $iItemCount . ")")) . ';'),
+                "/" . $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId, '([0-9])+')) . "/", function($aMatches) use($iSellerId, $iModuleId, $iItemId, $iItemCount) {
+                    return $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId, $aMatches[1] + $iItemCount));
+                },
             	$sCartItems
-			);
+            );
         else {
             $sCartItem = $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId, $iItemCount));
             $sCartItems = empty($sCartItems) ? $sCartItem : $sCartItems . $this->_oModule->_oConfig->getDivider('DIVIDER_DESCRIPTORS') . $sCartItem;
@@ -298,7 +299,7 @@ class BxPaymentCart extends BxBaseModPaymentCart
         $fItemsPrice = 0;
         $aItemsInfo = array();
         foreach($aItems as $aItem) {
-            $aItemInfo = $this->_oModule->callGetCartItem((int)$aItem['module_id'], array($aItem['item_id']));
+            $aItemInfo = $this->_oModule->callGetCartItem((int)$aItem['module_id'], array($aItem['item_id'], isset($aItem['custom']) ? $aItem['custom'] : array()));
             if(empty($aItemInfo) || !is_array($aItemInfo)) {
                 if($bTypeSingle) {
                     $sCartItems = $this->_oModule->_oDb->getCartItems($iClientId);
