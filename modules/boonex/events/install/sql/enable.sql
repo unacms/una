@@ -106,7 +106,8 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_events_fans', 1, 'bx_events', '_bx_events_page_block_title_system_fans', '_bx_events_page_block_title_fans_link', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_events";s:6:"method";s:10:"fans_table";}', 0, 0, 1, 1),
-('bx_events_fans', 1, 'bx_events', '_bx_events_page_block_title_system_subscribers', '_bx_events_page_block_title_subscribers_link', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:19:"subscribed_me_table";s:5:"class";s:23:"TemplServiceConnections";}', 0, 0, 1, 2);
+('bx_events_fans', 1, 'bx_events', '_bx_events_page_block_title_system_subscribers', '_bx_events_page_block_title_subscribers_link', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:19:"subscribed_me_table";s:5:"class";s:23:"TemplServiceConnections";}', 0, 0, 1, 2),
+('bx_events_fans', 1, 'bx_events', '_bx_events_page_block_title_system_invites', '_bx_events_page_block_title_fans_invites', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_events";s:6:"method";s:13:"invites_table";}', 0, 0, 1, 3);
 
 -- PAGE: view entry comments
 
@@ -168,6 +169,15 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 ('bx_events_search', 1, 'bx_events', '_bx_events_page_block_title_search_results', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_results";s:6:"params";a:1:{i:0;a:2:{s:6:"object";s:9:"bx_events";s:10:"show_empty";b:1;}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 1, 2),
 ('bx_events_search', 1, 'bx_events', '_bx_events_page_block_title_search_form_cmts', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:8:"get_form";s:6:"params";a:1:{i:0;a:1:{s:6:"object";s:14:"bx_events_cmts";}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 0, 3),
 ('bx_events_search', 1, 'bx_events', '_bx_events_page_block_title_search_results_cmts', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_results";s:6:"params";a:1:{i:0;a:2:{s:6:"object";s:14:"bx_events_cmts";s:10:"show_empty";b:1;}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 0, 4);
+
+-- PAGE: joined profiles
+
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_joined_events', '_bx_events_page_title_sys_joined', '_bx_events_page_title_joined', 'bx_events', 5, 2147483647, 1, 'events-joined', 'page.php?i=events-joined', '', '', '', 0, 1, 0, 'BxEventsPageBrowse', 'modules/boonex/events/classes/BxEventsPageBrowse.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
+('bx_joined_events', 1, 'bx_events', '_bx_events_page_block_title_joined_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:21:"browse_joined_entries";s:6:"params";a:2:{i:0;s:12:"{profile_id}";i:1;b:1;}}', 0, 1, 0);
+
 
 -- PAGE: module manage own
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -318,7 +328,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_events_submenu', 'bx_events', 'events-past', '_bx_events_menu_item_title_system_entries_past', '_bx_events_menu_item_title_entries_past', 'page.php?i=events-past', '', '', '', '', 2147483647, 1, 1, 3),
 ('bx_events_submenu', 'bx_events', 'events-calendar', '_bx_events_menu_item_title_system_calendar', '_bx_events_menu_item_title_calendar', 'page.php?i=events-calendar', '', '', '', '', 2147483647, 1, 1, 4),
 ('bx_events_submenu', 'bx_events', 'events-search', '_bx_events_menu_item_title_system_entries_search', '_bx_events_menu_item_title_entries_search', 'page.php?i=events-search', '', '', '', '', 2147483647, 1, 1, 5),
-('bx_events_submenu', 'bx_events', 'events-manage', '_bx_events_menu_item_title_system_entries_manage', '_bx_events_menu_item_title_entries_manage', 'page.php?i=events-manage', '', '', '', '', 2147483646, 1, 1, 6);
+('bx_events_submenu', 'bx_events', 'events-joined', '_bx_events_menu_item_title_system_entries_joined', '_bx_events_menu_item_title_entries_joined', 'page.php?i=events-joined', '', '', '', '', 2147483647, 1, 1, 6),
+('bx_events_submenu', 'bx_events', 'events-manage', '_bx_events_menu_item_title_system_entries_manage', '_bx_events_menu_item_title_entries_manage', 'page.php?i=events-manage', '', '', '', '', 2147483646, 1, 1, 7);
 
 -- MENU: view submenu
 
@@ -403,6 +414,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 ('bx_events', 'edit any entry', NULL, '_bx_events_acl_action_edit_any_profile', '', 1, 3);
 SET @iIdActionProfileEditAny = LAST_INSERT_ID();
 
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_events', 'delete invites', NULL, '_bx_events_acl_action_delete_invites', '', 1, 3);
+SET @iIdActionProfileDeleteInvites = LAST_INSERT_ID();
+
 SET @iUnauthenticated = 1;
 SET @iAccount = 2;
 SET @iStandard = 3;
@@ -445,7 +460,11 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 
 -- any profile edit
 (@iModerator, @iIdActionProfileEditAny),
-(@iAdministrator, @iIdActionProfileEditAny);
+(@iAdministrator, @iIdActionProfileEditAny),
+
+-- any invites edit
+(@iModerator, @iIdActionProfileDeleteInvites),
+(@iAdministrator, @iIdActionProfileDeleteInvites);
 
 -- METATAGS
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
@@ -488,6 +507,18 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('bx_events_fans', 'single', 'to_admins', '_bx_events_txt_to_admins', '', 0, 20),
 ('bx_events_fans', 'single', 'from_admins', '_bx_events_txt_from_admins', '', 0, 30),
 ('bx_events_fans', 'single', 'delete', '', 'remove', 1, 40);
+
+-- GRID: invites
+INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `responsive`, `override_class_name`, `override_class_file`) VALUES
+('bx_events_invites', 'Sql', 'SELECT `bx_events_invites`.`id`, `bx_events_invites`.`invited_profile_id`, `bx_events_invites`.`added`, `bx_events_invites`.`author_profile_id` FROM `sys_profiles` AS `p` INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` = `p`.`account_id`) INNER JOIN `bx_events_invites` ON `bx_events_invites`.`invited_profile_id` = `p`.`id` ', 'bx_events_invites', 'id', 'bx_events_invites`.`added', '', '', 10, NULL, 'start', '', 'name,email', '', 'auto', '', '', 2147483647, 0, 'BxEventsGridInvites', 'modules/boonex/events/classes/BxEventsGridInvites.php');
+
+INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
+('bx_events_invites', 'name', '_sys_name', '33%', '', 10),
+('bx_events_invites', 'added', '_sys_added', '33%', '', 20),
+('bx_events_invites', 'actions', '', '34%', '', 30);
+
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
+('bx_events_invites', 'single', 'delete', '', 'remove', 1, 10);
 
 -- GRIDS: administration
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES

@@ -23,8 +23,6 @@ class BxDolBadgesQuery extends BxDolDb
 
     public function getData($aParams = array(), &$aItems = false)
     {
-        $CNF = &$this->_oConfig->CNF;
-
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
 
         $sSelectClause = "`sc`.*";

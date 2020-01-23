@@ -9,7 +9,7 @@ DELETE FROM `sys_permalinks` WHERE `standard` = 'r.php?_q=wiki/' AND `permalink`
 
 -- Rewrite rules
 
-DELETE FROM `sys_rewrite_rules` WHERE `preg` = '^wiki/(.*)$';
+DELETE FROM `sys_rewrite_rules` WHERE `preg` = '^wiki/(.*)$' OR `preg` = '^wiki-action/(.*)$';
 
 -- Menu
 

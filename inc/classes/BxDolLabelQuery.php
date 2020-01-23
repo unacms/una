@@ -23,8 +23,6 @@ class BxDolLabelQuery extends BxDolDb
 
     public function getLabels($aParams = array())
     {
-        $CNF = &$this->_oConfig->CNF;
-
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
 
         $sSelectClause = "`tl`.*";

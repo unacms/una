@@ -1560,8 +1560,7 @@ BLAH;
     /**
      * Generate Label Element
      *
-     * @param  string $sLabel   Text of the Label
-     * @param  string $sInputID Dependant Input Element ID
+     * @param  string $aInput   input array
      * @return string HTML code
      */
     function genLabel(&$aInput)
@@ -1569,12 +1568,9 @@ BLAH;
         if (!isset($aInput['label']) or empty($aInput['label']))
             return '';
 
-        $sLabel   = $aInput['label'];
         $sInputID = $this->getInputId($aInput);
 
-        $sRet = '<label for="' . $sInputID . '">' . bx_process_output($sLabel) . '</label>';
-
-        return $sRet;
+        return '<label for="' . $sInputID . '">' . bx_process_output($aInput['label']) . '</label>';
     }
 
     function genInfoIcon($sInfo)

@@ -72,10 +72,11 @@
     <string name="_bx_events_form_input_repeat_day_of_week"><![CDATA[Repeat day of week]]></string>
     <string name="_bx_events_form_input_stop_repeating"><![CDATA[Stop repeating]]></string>
 
-	<string name="_bx_events_acl_action_create_profile"><![CDATA[Create Event]]></string>
-	<string name="_bx_events_acl_action_delete_profile"><![CDATA[Delete Event]]></string>
+  <string name="_bx_events_acl_action_create_profile"><![CDATA[Create Event]]></string>
+  <string name="_bx_events_acl_action_delete_profile"><![CDATA[Delete Event]]></string>
 	<string name="_bx_events_acl_action_view_profile"><![CDATA[View Event]]></string>
 	<string name="_bx_events_acl_action_edit_any_profile"><![CDATA[Edit Any Event]]></string>
+  <string name="_bx_events_acl_action_delete_invites"><![CDATA[Delete Invites]]></string>
 
 	<string name="_bx_events_page_title_sys_joined_entries"><![CDATA[Profile Events]]></string>
 	<string name="_bx_events_page_title_joined_entries"><![CDATA[Profile Events]]></string>
@@ -153,6 +154,8 @@
     <string name="_bx_events_page_block_title_fans_link"><![CDATA[Going to <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_fans"><![CDATA[Going]]></string>
     <string name="_bx_events_page_block_title_system_fans"><![CDATA[Going]]></string>
+    <string name="_bx_events_page_block_title_fans_invites"><![CDATA[Приглашения]]></string>
+    <string name="_bx_events_page_block_title_system_invites"><![CDATA[Приглашения]]></string>
     <string name="_bx_events_page_block_title_subscribers_link"><![CDATA[Interested in <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_subscribers"><![CDATA[Interested]]></string>
     <string name="_bx_events_page_block_title_system_subscribers"><![CDATA[Interested]]></string>
@@ -165,6 +168,7 @@
     <string name="_bx_events_page_block_title_system_manage_administration"><![CDATA[Manage All Events]]></string>
     <string name="_bx_events_page_block_title_manage"><![CDATA[Manage Events]]></string>
     <string name="_bx_events_page_block_title_top_profiles"><![CDATA[Top Events]]></string>
+    <string name="_bx_events_page_block_title_joined_profiles"><![CDATA[Joined Events]]></string>
     <string name="_bx_events_page_block_title_past_profiles"><![CDATA[Past Events]]></string>
     <string name="_bx_events_page_block_title_entry_all_actions"><![CDATA[All Actions]]></string>
     <string name="_bx_events_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
@@ -264,6 +268,8 @@
     <string name="_bx_events_menu_item_title_entries_recent"><![CDATA[New]]></string>
     <string name="_bx_events_menu_item_title_system_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_events_menu_item_title_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_events_menu_item_title_system_entries_joined"><![CDATA[Joined]]></string>
+    <string name="_bx_events_menu_item_title_entries_joined"><![CDATA[Joined]]></string>
     <string name="_bx_events_menu_item_title_system_entries_manage"><![CDATA[Manage]]></string>
     <string name="_bx_events_menu_item_title_entries_manage"><![CDATA[Manage]]></string>
     <string name="_bx_events_menu_item_title_system_entries_home"><![CDATA[Events]]></string>
@@ -315,6 +321,12 @@
     <string name="_bx_events_txt_from_admins"><![CDATA[From Admins]]></string>
     <string name="_bx_events_txt_private_group"><![CDATA[Private event]]></string>
     <string name="_bx_events_txt_from_time_to_time"><![CDATA[{0} - {1}]]></string>
+    <string name="_bx_events_txt_invite_popup_text"><![CDATA[You have been invited to a event. Click the button below to accept the invitation.]]></string>
+    <string name="_bx_events_txt_invite_popup_title"><![CDATA[Invitation to a event]]></string>
+    <string name="_bx_events_txt_invite_popup_button_accept"><![CDATA[Accept]]></string>
+    <string name="_bx_events_txt_invite_popup_button_decline"><![CDATA[Decline]]></string>
+    <string name="_bx_events_txt_invite_popup_error_invitation_absent"><![CDATA[Sorry, an error has occurred. You can not join this event. The invitation is expired or deleted.]]></string>
+    <string name="_bx_events_txt_invite_popup_error_invitation_wrong_user"><![CDATA[Sorry, an error has occurred. You can not join this event. This invitation cannot be used by you.]]></string>
 
 	<string name="_bx_events_alert_action_fan_added"><![CDATA[member joined]]></string>
     <string name="_bx_events_txt_ntfs_fan_added"><![CDATA[Event <b class="bx-ntfs-content-profile">{owner_name}</b> has got a member <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>

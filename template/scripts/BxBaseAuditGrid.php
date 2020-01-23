@@ -136,8 +136,6 @@ class BxBaseAuditGrid extends BxDolAuditGrid
         if(empty($sFilterName) || empty($aFilterValues))
             return '';
 
-		$CNF = &$this->_oModule->_oConfig->CNF;		
-
 		foreach($aFilterValues as $sKey => $sValue)
 			$aFilterValues[$sKey] = _t($sValue);
 
@@ -149,7 +147,7 @@ class BxBaseAuditGrid extends BxDolAuditGrid
                 'onChange' => 'javascript:' . $this->sJsObject . '.onChangeFilter(this)'
             ),
             'value' => $sFilterValue,
-            'values' => array_merge(array('' => _t($CNF['T']['filter_item_select_one_' . $sFilterName])), $aFilterValues)
+            'values' => $aFilterValues
         );
 
         $oForm = new BxTemplFormView(array());

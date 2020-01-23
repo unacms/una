@@ -38,6 +38,7 @@ class BxEventsConfig extends BxBaseModProfileConfig
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'data',
             'TABLE_ENTRIES_FULLTEXT' => 'search_fields',
             'TABLE_ADMINS' => $aModule['db_prefix'] . 'admins',
+            'TABLE_INVITES' => $aModule['db_prefix'] . 'invites',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -127,11 +128,13 @@ class BxEventsConfig extends BxBaseModProfileConfig
             'OBJECT_GRID_ADMINISTRATION' => 'bx_events_administration',
             'OBJECT_GRID_COMMON' => 'bx_events_common',
             'OBJECT_GRID_CONNECTIONS' => 'bx_events_fans',
+            'OBJECT_GRID_INVITES' => 'bx_events_invites',
             'OBJECT_CONNECTIONS' => 'bx_events_fans',
             'OBJECT_UPLOADERS_COVER' => array('bx_events_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_events_picture_crop'),
             
             'BADGES_AVALIABLE' => true,
+            'INVITES_KEYS_LIFETIME' => 86400,
             'ENABLE_FOR_CONTEXT_IN_MODULES' => array('bx_groups'),
 
             'EMAIL_INVITATION' => 'bx_events_invitation',
@@ -204,18 +207,26 @@ class BxEventsConfig extends BxBaseModProfileConfig
                 'menu_item_title_become_fan' => '_bx_events_menu_item_title_become_fan',
             	'txt_all_entries_by_author' => '_bx_events_page_title_browse_by_author',
                 'txt_all_entries_by_context' => '_bx_events_page_title_browse_by_context',
+                'txt_invitation_popup_title' => '_bx_events_txt_invite_popup_title',
+                'txt_invitation_popup_text' => '_bx_events_txt_invite_popup_text',
+				'txt_invitation_popup_accept_button' => '_bx_events_txt_invite_popup_button_accept',
+				'txt_invitation_popup_decline_button' => '_bx_events_txt_invite_popup_button_decline',
+                'txt_invitation_popup_error_invitation_absent' => '_bx_events_txt_invite_popup_error_invitation_absent',
+				'txt_invitation_popup_error_wrong_user' => '_bx_events_txt_invite_popup_error_invitation_wrong_user',
             ),
 
         );
 
         $this->_aJsClasses = array(
             'entry' => 'BxEventsEntry',
-            'manage_tools' => 'BxEventsManageTools'
+            'manage_tools' => 'BxEventsManageTools',
+            'invite_popup' => 'BxEventsInvitePopup'
         );
 
         $this->_aJsObjects = array(
             'entry' => 'oBxEventsEntry',
-            'manage_tools' => 'oBxEventsManageTools'
+            'manage_tools' => 'oBxEventsManageTools',
+            'invite_popup' => 'oBxEventsInvitePopup'
         );
 
         $this->_aGridObjects = array(

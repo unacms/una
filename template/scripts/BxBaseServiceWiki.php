@@ -12,6 +12,7 @@
  */
 class BxBaseServiceWiki extends BxDol
 {
+    protected $_bJsCssAdded = false;
 
     /**
      * @page service Service Calls
@@ -61,6 +62,104 @@ class BxBaseServiceWiki extends BxDol
             }
         }
 
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-wiki Wiki
+     * @subsubsection bx_system_general-wiki_action wiki_action
+     * 
+     * @code bx_srv('system', 'wiki_action', [...], 'TemplServiceWiki'); @endcode
+     * 
+     * Perform WIKI action.
+     * @param $sUri categories object name
+     * 
+     * @see BxBaseServiceWiki::serviceWikiAction
+     */
+    /** 
+     * @ref bx_system_general-wiki_action "wiki_action"
+     */
+    public function serviceWikiAction ($sWikiObjectUri, $sAction)
+    {
+        $oWiki = BxDolWiki::getObjectInstanceByUri($sWikiObjectUri);
+        if (!$oWiki) {
+            echoJson(array('code' => 1, 'actions' => 'ShowMsg', 'msg' => _t('_sys_wiki_error_missing_wiki_object', $sWikiObjectUri)));
+            return;
+        }
+
+        $sMethod = 'action' . bx_gen_method_name($sAction, array('-'));
+        if (!method_exists($oWiki, $sMethod) || !$oWiki->isAllowed($sAction)) {            
+            echoJson(array('code' => 2, 'actions' => 'ShowMsg', 'msg' => _t('_sys_wiki_error_action_not_allowed', $sAction, $sWikiObjectUri)));
+            return;
+        }
+        
+        $mixed = $oWiki->$sMethod();
+        if (is_array($mixed))
+            echoJson($mixed);
+        else
+            echo $mixed;
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-wiki Wiki
+     * @subsubsection bx_system_general-wiki_page wiki_page
+     * 
+     * @code bx_srv('system', 'wiki_page', ["index"], 'TemplServiceWiki'); @endcode
+     * @code {{~system:wiki_page:TemplServiceWiki["index"]~}} @endcode
+     * 
+     * Add controls for edit, delete, translate, history, etc content
+     * @param $sUri categories object name
+     * 
+     * @see BxBaseServiceWiki::serviceWikiPage
+     * @param $iBlockId block ID
+     */
+    /** 
+     * @ref bx_system_general-wiki_page "wiki_page"
+     */
+    public function serviceWikiControls ($oWikiObject, $aWikiVer, $aWikiVerLatest, $sBlockId)
+    {
+        $this->_addCssJs ();
+    
+        if (!($oMenu = BxDolMenu::getObjectInstance('sys_wiki')))
+            return '';
+
+        $oMenu->setMenuObject($oWikiObject);
+
+        if ($aWikiVerLatest['revision'] == $aWikiVer['revision']) {
+            $sInfo = bx_time_js($aWikiVer['added']);
+        } 
+        else {
+            $oProfile = BxDolProfile::getInstanceMagic($aWikiVer['profile_id']);
+            $sInfo = _t('_sys_wiki_view_rev', $aWikiVer['revision'], $oProfile->getUrl(), $oProfile->getDisplayName(), bx_time_js($aWikiVer['added']));
+        }
+
+        $o = BxDolTemplate::getInstance();        
+        return $o->parseHtmlByName('wiki_controls.html', array(
+            'obj' => $oWikiObject->getObjectName(),
+            'block_id' => $sBlockId,
+            'menu' => $oMenu->getCode(),
+            // 'TODO: On right - Last modified time and List of missing and outdated translations. History and Last modified time should be controlled by regular menu privacy, while other actions should have custom privacy for particular wiki object',
+            'info' => $sInfo,
+            'options' => json_encode(array(
+                'block_id' => $sBlockId,
+                'lang' => $aWikiVer['lang'],
+                'wiki_action_uri' => $oWikiObject->getWikiUri(),
+            )),
+        ));
+    }
+
+    protected function _addCssJs ()
+    {
+        if ($this->_bJsCssAdded)
+            return false;
+
+        $o = BxDolTemplate::getInstance();
+        $o->addCss('wiki.css');
+        $o->addJs('BxDolWiki.js');
+        $this->_bJsCssAdded = true;
     }
 }
 

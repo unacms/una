@@ -53,6 +53,7 @@
 	<string name="_bx_spaces_acl_action_delete_profile"><![CDATA[Удалить пространство]]></string>
 	<string name="_bx_spaces_acl_action_view_profile"><![CDATA[Просмотреть пространство]]></string>
 	<string name="_bx_spaces_acl_action_edit_any_profile"><![CDATA[Редактировать любую пространство]]></string>
+	<string name="_bx_spaces_acl_action_delete_invites"><![CDATA[Удалять приглашения]]></string>
 
 	<string name="_bx_spaces_page_title_sys_joined_entries"><![CDATA[Пространства профиля]]></string>
 	<string name="_bx_spaces_page_title_joined_entries"><![CDATA[Пространства профиля]]></string>
@@ -119,6 +120,8 @@
 	<string name="_bx_spaces_page_block_title_fans_link"><![CDATA[Участники пространства: <a href="{profile_link}">{display_name}</a>]]></string>
 	<string name="_bx_spaces_page_block_title_fans"><![CDATA[Участники]]></string>
 	<string name="_bx_spaces_page_block_title_system_fans"><![CDATA[Участники]]></string>
+	<string name="_bx_spaces_page_block_title_fans_invites"><![CDATA[Приглашения]]></string>
+	<string name="_bx_spaces_page_block_title_system_invites"><![CDATA[Приглашения]]></string>
         <string name="_bx_spaces_page_block_title_profile_location"><![CDATA[Расположение]]></string>
 	<string name="_bx_spaces_page_block_title_profile_comments"><![CDATA[Комментарии]]></string>
     <string name="_bx_spaces_page_block_title_profile_comments_link"><![CDATA[Комментарии к <a href="{entry_link}">{title}</a>]]></string>
@@ -129,6 +132,7 @@
 	<string name="_bx_spaces_page_block_title_system_manage_administration"><![CDATA[Управление всеми пространствами]]></string>
 	<string name="_bx_spaces_page_block_title_manage"><![CDATA[Управление]]></string>
     <string name="_bx_spaces_page_block_title_top_profiles"><![CDATA[Популярные пространства]]></string>
+	<string name="_bx_spaces_page_block_title_joined_profiles"><![CDATA[Мои пространства]]></string>
     <string name="_bx_spaces_page_block_title_entry_all_actions"><![CDATA[Все действия]]></string>
     <string name="_bx_spaces_page_block_title_entry_social_sharing"><![CDATA[Поделиться]]></string>
     <string name="_bx_spaces_page_block_title_categories"><![CDATA[Категории пространств]]></string>
@@ -221,6 +225,8 @@
     <string name="_bx_spaces_menu_item_title_entries_recent"><![CDATA[Новые]]></string>
     <string name="_bx_spaces_menu_item_title_system_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_spaces_menu_item_title_entries_search"><![CDATA[Поиск]]></string>
+	<string name="_bx_spaces_menu_item_title_system_entries_joined"><![CDATA[Участие]]></string>
+	<string name="_bx_spaces_menu_item_title_entries_joined"><![CDATA[Участие]]></string>
     <string name="_bx_spaces_menu_item_title_system_entries_manage"><![CDATA[Управление]]></string>
     <string name="_bx_spaces_menu_item_title_entries_manage"><![CDATA[Управление]]></string>
     <string name="_bx_spaces_menu_item_title_system_entries_home"><![CDATA[Пространства]]></string>
@@ -267,7 +273,13 @@
     <string name="_bx_spaces_txt_to_admins"><![CDATA[В админы]]></string>
     <string name="_bx_spaces_txt_from_admins"><![CDATA[Из админов]]></string>
     <string name="_bx_spaces_txt_private_group"><![CDATA[Приватная пространство]]></string>
-
+	<string name="_bx_spaces_txt_invite_popup_text"><![CDATA[Вы были приглашены в это пространство.  Нажмите кнопку ниже чтобы принять приглашение.]]></string>
+    <string name="_bx_spaces_txt_invite_popup_title"><![CDATA[Приглашение в пространство]]></string>
+    <string name="_bx_spaces_txt_invite_popup_button_accept"><![CDATA[Принять]]></string>
+    <string name="_bx_spaces_txt_invite_popup_button_decline"><![CDATA[Отклонить]]></string>
+    <string name="_bx_spaces_txt_invite_popup_error_invitation_absent"><![CDATA[Извините, произошла ошибка. Вы не можете вступить в это пространство. Приглашение устарело или удалено.]]></string>
+    <string name="_bx_spaces_txt_invite_popup_error_invitation_wrong_user"><![CDATA[Извините, произошла ошибка. Вы не можете вступить в это пространство. Приглашение адресовано не Вам.]]></string>
+	
 	<string name="_bx_spaces_alert_action_fan_added"><![CDATA[присоединение нового участника]]></string>
     <string name="_bx_spaces_txt_ntfs_fan_added"><![CDATA[В пространство <b class="bx-ntfs-content-profile">{owner_name}</b> вступил <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
     <string name="_bx_spaces_alert_action_join_request"><![CDATA[запрос на присоединение к пространству]]></string>

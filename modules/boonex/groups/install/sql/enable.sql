@@ -472,8 +472,9 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 ('bx_groups_invites', 'Sql', 'SELECT `bx_groups_invites`.`id`, `bx_groups_invites`.`invited_profile_id`, `bx_groups_invites`.`added`, `bx_groups_invites`.`author_profile_id` FROM `sys_profiles` AS `p` INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` = `p`.`account_id`) INNER JOIN `bx_groups_invites` ON `bx_groups_invites`.`invited_profile_id` = `p`.`id` ', 'bx_groups_invites', 'id', 'bx_groups_invites`.`added', '', '', 10, NULL, 'start', '', 'name,email', '', 'auto', '', '', 2147483647, 0, 'BxGroupsGridInvites', 'modules/boonex/groups/classes/BxGroupsGridInvites.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
-('bx_groups_invites', 'name', '_sys_name', '50%', '', 10),
-('bx_groups_invites', 'actions', '', '50%', '', 20);
+('bx_groups_invites', 'name', '_sys_name', '33%', '', 10),
+('bx_groups_invites', 'added', '_sys_added', '33%', '', 20),
+('bx_groups_invites', 'actions', '', '34%', '', 30);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
 ('bx_groups_invites', 'single', 'delete', '', 'remove', 1, 10);

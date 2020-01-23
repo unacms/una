@@ -21,6 +21,8 @@ class BxBaseModGroupsGridinvites extends BxTemplGrid
         $this->_oModule = BxDolModule::getInstance($this->_sContentModule);
 
         parent::__construct ($aOptions, $oTemplate);
+        
+        $this->_aQueryAppend['profile_id'] = (int)bx_get('profile_id');
     }
     
     protected function _getCellName ($mixedValue, $sKey, $aField, $aRow)
@@ -30,6 +32,11 @@ class BxBaseModGroupsGridinvites extends BxTemplGrid
             return _t('_sys_txt_error_occured');
 
         return parent::_getCellDefault ($oProfile->getUnit(), $sKey, $aField, $aRow);
+    }
+    
+    protected function _getCellAdded ($mixedValue, $sKey, $aField, $aRow)
+    {
+        return parent::_getCellDefault(bx_time_js($mixedValue), $sKey, $aField, $aRow);
     }
     
     protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())

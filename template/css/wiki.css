@@ -1,0 +1,31 @@
+.bx-wiki-controls-menu {
+    float:left;
+}
+.bx-wiki-controls-info {
+    float:right;
+}
+.bx-wiki-form {
+    width:600px;
+}
+.bx-media-phone .bx-wiki-form {
+    width:auto;
+}
+.bx-wiki-form form textarea[name=content] {
+    height:16rem;
+}
+.bx-wiki-content {
+    max-height:10rem;
+    overflow:auto;
+    margin:0;
+}
+.bx-wiki-history-title {
+    margin:0;
+}
+.bx-wiki-history {
+    border-collapse:collapse;
+}
+.bx-wiki-history-cell-profile,
+.bx-wiki-history-cell-time,
+.bx-wiki-history-cell-rev {
+    text-align:center;
+}

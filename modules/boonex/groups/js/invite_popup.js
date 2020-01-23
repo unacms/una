@@ -44,7 +44,6 @@ BxGroupsInvitePopup.prototype.onClickAccept = function () {
 
 BxGroupsInvitePopup.prototype.onClickDecline = function () {
     var $this = this;
-    console.log(06);
     $.getJSON($this._sActionsUrl + 'ProcessInvite/' + $this._sKey + '/' + $this._iGroupProfileId + '/0/', function () {
         location.href = $this._sDeclineUrl
     });

@@ -104,6 +104,7 @@ BxDolUploaderSimple.prototype.onBeforeUpload = function (params) {
         
     this._isUploadsInProgress = true;
     this._lockPageFromLeaving();
+    this._clearErrors();
 }
 
 BxDolUploaderSimple.prototype.onProgress = function (params) {
@@ -334,6 +335,7 @@ function BxDolUploaderHTML5 (sUploaderObject, sStorageObject, sUniqId, options) 
 
     this.onBeforeUpload = function (params) {
         this._isUploadsInProgress = true;
+        this._clearErrors();
     }
 
     this.onProgress = function (params) {

@@ -2275,6 +2275,16 @@
 	<string name="_sys_form_unsubscribe_input_submit"><![CDATA[Выполнить]]></string>
 	<string name="_sys_form_err_not_unique_value"><![CDATA[Поле должно иметь уникальное значение]]></string>
 	<string name="_sys_form_txt_select_file"><![CDATA[Выбрать файл]]></string>
+    <string name="_sys_form_wiki"><![CDATA[Вики]]></string>
+    <string name="_sys_form_display_wiki_edit"><![CDATA[Вики: редактирование]]></string>
+    <string name="_sys_form_display_wiki_translate"><![CDATA[Вики: перевод]]></string>
+	<string name="_sys_form_wiki_input_caption_block_id"><![CDATA[Идентификатор блока]]></string>
+	<string name="_sys_form_wiki_input_caption_lang"><![CDATA[Язык]]></string>
+    <string name="_sys_form_wiki_input_caption_lang_info"><![CDATA[★ - основной язык, красным помечен отсутствующий или устаревший перевод]]></string>
+	<string name="_sys_form_wiki_input_caption_content"><![CDATA[Содержимое]]></string>
+    <string name="_sys_form_wiki_input_caption_content_main"><![CDATA[Основное содержимое]]></string>
+	<string name="_sys_form_wiki_input_caption_notes"><![CDATA[Заметки]]></string>
+	<string name="_sys_form_wiki_input_caption_submit"><![CDATA[Сохранить]]></string>
 	<string name="_sys_format_size_b"><![CDATA[{0} байт]]></string>
 	<string name="_sys_format_size_gb"><![CDATA[{0} ГБ]]></string>
 	<string name="_sys_format_size_kb"><![CDATA[{0} КБ]]></string>
@@ -2616,7 +2626,14 @@
 	<string name="_sys_menu_title_switch_language_inline"><![CDATA[Переключатель языка (встроенный)]]></string>
 	<string name="_sys_menu_title_switch_template"><![CDATA[Переключить тему]]></string>
 	<string name="_sys_menu_title_snippet_meta"><![CDATA[Мета информация в карточке]]></string>
-        <string name="_sys_menu_title_vote_reactions_do"><![CDATA[Отреагировать - Меню]]></string>
+    <string name="_sys_menu_title_vote_reactions_do"><![CDATA[Отреагировать - Меню]]></string>
+  <string name="_sys_menu_title_wiki"><![CDATA[Вики]]></string>
+  <string name="_sys_menu_set_title_sys_wiki"><![CDATA[Вики]]></string>
+  <string name="_sys_menu_item_title_wiki_edit"><![CDATA[Редактировать]]></string>
+  <string name="_sys_menu_item_title_wiki_delete_version"><![CDATA[Удалить версию]]></string>
+  <string name="_sys_menu_item_title_wiki_delete_block"><![CDATA[Удалить блок]]></string>
+  <string name="_sys_menu_item_title_wiki_translate"><![CDATA[Перевести]]></string>
+  <string name="_sys_menu_item_title_wiki_history"><![CDATA[История]]></string>
   <string name="_sys_menu_dashboard_manage_tools_addon_counter1_caption_default"><![CDATA[спрятано]]></string>
   <string name="_sys_menu_dashboard_manage_tools_addon_counter1_caption_profile_default"><![CDATA[неодобрено]]></string>
   <string name="_sys_menu_dashboard_manage_tools_addon_counter2_caption_default"><![CDATA[жалоб]]></string>
@@ -2630,6 +2647,7 @@
 	<string name="_sys_mobile_search"><![CDATA[Поиск]]></string>
 	<string name="_sys_mobile_status"><![CDATA[Статус]]></string>
     <string name="_sys_name"><![CDATA[Имя]]></string>
+    <string name="_sys_added"><![CDATA[Добавлено]]></string>
     <string name="_sys_next"><![CDATA[Ещё]]></string>
     <string name="_sys_notification_account"><![CDATA[Аккаунты, созданные за последние 24 часа:]]></string>
     <string name="_sys_not_available"><![CDATA[н/д]]></string>
@@ -3073,6 +3091,12 @@
   <string name="_sys_javascript_requred"><![CDATA[Для корректной работы нужен включенный JavaScript! Пожалуйста, включите его в барузере!]]></string>
 	<string name="_sys_wiki_system_title"><![CDATA[Системная Вики]]></string>
 	<string name="_sys_wiki_error_page_exists"><![CDATA[Страница с таким именем ({0}) уже существует]]></string>
+    <string name="_sys_wiki_error_no_rev"><![CDATA[Ревизия {0} для {1} языка не существует]]></string>
     <string name="_sys_wiki_error_missing_wiki_object"><![CDATA[Вики объект ({0}) не найден]]></string>
+    <string name="_sys_wiki_error_action_not_allowed"><![CDATA[Не разрешенное действие ({0}) для вики объекта ({1})]]></string>
+    <string name="_sys_wiki_view_rev"><![CDATA[Версия <b>{0}</b> от <a href="{1}">{2}</a>, {3}]]></string>
+    <string name="_sys_wiki_lang_mask"><![CDATA[{0} {1} <span class="bx-def-font-grayed bx-def-font-small">{2}</span>]]></string>
+    <string name="_sys_wiki_lang_mask_warn"><![CDATA[{0} {1} <span class="bx-def-font-small" style="color:red;">{2}</span>]]></string>
+    <string name="_sys_wiki_lang_missing"><![CDATA[отсутствует]]></string>
 
 </resources>

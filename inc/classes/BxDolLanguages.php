@@ -103,6 +103,11 @@ class BxDolLanguages extends BxDolFactory implements iBxDolSingleton
         return $this->oDb->getLanguageName($iLangId);
     }
 
+    function getLangTitle($iLangId)
+    {
+        return $this->oDb->getLanguageTitle($iLangId);
+    }
+
     function getLangFlag($sLang = '')
     {
         if (!$sLang)
