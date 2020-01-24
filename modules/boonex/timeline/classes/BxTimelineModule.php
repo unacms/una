@@ -3484,12 +3484,75 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $iUserId = (int)$iUserId;
         return parent::getUserInfo($iUserId);
     }
-    
+
     public function getUserInfoWithBadges($iUserId = 0)
     {
         $iLoggedId = $this->getUserId();
         $iUserId = (int)$iUserId;
         return parent::getUserInfoWithBadges($iUserId);
+    }
+
+    public function getEventImages($iEventId)
+    {
+        $aPhotos = $this->_oDb->getMedia(BX_TIMELINE_MEDIA_PHOTO, $iEventId);
+        if(empty($aPhotos) || !is_array($aPhotos))
+            return array();
+
+        $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_view'));
+        $oTranscoderMedium = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_medium'));
+        $oTranscoderBig = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_big'));
+
+        $aResult = array();
+        foreach($aPhotos as $iPhotoId) {
+            $sPhotoSrc = $oTranscoder->getFileUrl($iPhotoId);
+            $sPhotoSrcMedium = $oTranscoderMedium->getFileUrl($iPhotoId);
+            $sPhotoSrcBig = $oTranscoderBig->getFileUrl($iPhotoId);
+            if(empty($sPhotoSrcMedium) && !empty($sPhotoSrc))
+                $sPhotoSrcMedium = $sPhotoSrc;
+            if(empty($sPhotoSrcBig) && !empty($sPhotoSrcMedium))
+                $sPhotoSrcBig = $sPhotoSrcMedium;
+
+            $aResult[] = array(
+                'id' => $iPhotoId,
+                'src' => $sPhotoSrc,
+                'src_medium' => $sPhotoSrcMedium,
+                'src_orig' => $sPhotoSrcBig,
+            );
+        }
+
+        return $aResult;
+    }
+
+    public function getEventVideos($iEventId)
+    {
+        $aVideos = $this->_oDb->getMedia(BX_TIMELINE_MEDIA_VIDEO, $iEventId);
+        if(empty($aVideos) || !is_array($aVideos))
+            return array();
+
+        $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->getObject('storage_videos'));
+
+        $oTranscoderPoster = BxDolTranscoderVideo::getObjectInstance($this->_oConfig->getObject('transcoder_videos_poster'));
+        $oTranscoderMp4 = BxDolTranscoderVideo::getObjectInstance($this->_oConfig->getObject('transcoder_videos_mp4'));
+        $oTranscoderMp4Hd = BxDolTranscoderVideo::getObjectInstance($this->_oConfig->getObject('transcoder_videos_mp4_hd'));
+
+        $aResult = array();
+        foreach($aVideos as $iVideoId) {
+            $sVideoUrl = $oStorage->getFileUrlById($iVideoId);
+            $aVideoSize = $oTranscoderMp4Hd->getVideoSize($sVideoUrl);
+
+            $sVideoUrlHd = '';
+            if(!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] >= 720)
+                $sVideoUrlHd = $oTranscoderMp4Hd->getFileUrl($iVideoId);
+
+            $aResult[$iVideoId] = array(
+                'id' => $iVideoId,
+                'src_poster' => $oTranscoderPoster->getFileUrl($iVideoId),
+                'src_mp4' => $oTranscoderMp4->getFileUrl($iVideoId),
+                'src_mp4_hd' => $sVideoUrlHd,
+            );
+        }
+
+        return $aResult;
     }
 
     /**
@@ -3625,7 +3688,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
     	$CNF = &$this->_oConfig->CNF;
 
-    	$sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
+        $iId = (int)$aContentInfo[$CNF['FIELD_ID']];
+    	$sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iId);
 
         $sText = ''; 
         if(isset($aContentInfo['content'])){
@@ -3639,7 +3703,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         if(!empty($CNF['OBJECT_METATAGS']) && !empty($sText)) {
             $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
-            $sText = $oMetatags->metaParse($aContentInfo[$CNF['FIELD_ID']], $sText);
+            $sText = $oMetatags->metaParse($iId, $sText);
         }
 
         return array(
@@ -3650,7 +3714,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'title' => '',
             'text' => $sText,
             'images' => array(),
-            'videos' => array()
+            'images_attach' => $this->getEventImages($iId),
+            'videos' => array(),
+            'videos_attach' => $this->getEventVideos($iId),
+            'files' => array(),
+            'files_attach' => array()
         );
     }
 
