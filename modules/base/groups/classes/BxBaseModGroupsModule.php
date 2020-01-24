@@ -711,22 +711,24 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         $iContentId = $oProfile->getContentId();
         $sModule = $oProfile->getModule();
         $oModule = BxDolModule::getInstance($sModule);
-        $CNF = $oModule->_oConfig->CNF;
+        if ($oModule->_oConfig){
+            $CNF = $oModule->_oConfig->CNF;
         
-        $aContentInfo = BxDolRequest::serviceExists($sModule, 'get_all') ? BxDolService::call($sModule, 'get_all', array(array('type' => 'id', 'id' => $iContentId))) : array();
+            $aContentInfo = BxDolRequest::serviceExists($sModule, 'get_all') ? BxDolService::call($sModule, 'get_all', array(array('type' => 'id', 'id' => $iContentId))) : array();
         
-        $AuditParams = array(
-            'content_title' => (isset($CNF['FIELD_TITLE']) && isset($aContentInfo[$CNF['FIELD_TITLE']])) ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
-            'context_profile_id' => $iGroupProfileId,
-            'context_profile_title' => BxDolProfile::getInstance($iGroupProfileId)->getDisplayName()
-        );
+            $AuditParams = array(
+                'content_title' => (isset($CNF['FIELD_TITLE']) && isset($aContentInfo[$CNF['FIELD_TITLE']])) ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
+                'context_profile_id' => $iGroupProfileId,
+                'context_profile_title' => BxDolProfile::getInstance($iGroupProfileId)->getDisplayName()
+            );
         
-        bx_audit(
-            $iContentId, 
-            $sModule, 
-            $sAction,  
-            $AuditParams
-        );
+            bx_audit(
+                $iContentId, 
+                $sModule, 
+                $sAction,  
+                $AuditParams
+            );
+        }
     }
     
     protected function _checkAllowedConnect (&$aDataEntry, $isPerformAction, $sObjConnection, $isMutual, $isInvertResult, $isSwap = false)
