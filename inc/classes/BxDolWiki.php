@@ -124,18 +124,29 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
     {
         if (!$sLang)
             $sLang = bx_lang_name();
+
+        $s = '';
+        $sControls = '';
         $aWikiVer = $this->_oQuery->getBlockContent ($iBlockId, $sLang, $iRevision);
-        if (!$aWikiVer) {
-            return _t('_sys_wiki_error_no_rev', $iRevision, $sLang);
-        }
         $aWikiLatest = $this->_oQuery->getBlockContent ($iBlockId, $sLang);
+        if ($aWikiVer) {             
+            require_once(BX_DIRECTORY_PATH_PLUGINS . "parsedown/Parsedown.php");
+            $oParsedown = new Parsedown();
+            $oParsedown->setSafeMode($aWikiVer['unsafe'] ? false : true);
+            $s = $oParsedown->text($aWikiVer['content']);
+        }
 
-        require_once(BX_DIRECTORY_PATH_PLUGINS . "parsedown/Parsedown.php");
-        $oParsedown = new Parsedown();
-        $oParsedown->setSafeMode($aWikiVer['unsafe'] ? false : true);
-        $s = $oParsedown->text($aWikiVer['content']);
+        if (!$aWikiVer && $aWikiLatest) {
+            return _t('_sys_wiki_error_no_rev', $iRevision ? $iRevision : 0, $sLang);
+        }
 
-        $sControls = BxDolService::call('system', 'wiki_controls', array($this, $aWikiVer, $aWikiLatest, $iBlockId), 'TemplServiceWiki');
+        if (!$aWikiVer && !$aWikiLatest && $this->isAllowed('edit')) {
+            $s = _t('_sys_wiki_error_no_revs');
+        }
+
+        if ($aWikiVer || (!$aWikiVer && $this->isAllowed('edit'))) {
+            $sControls = BxDolService::call('system', 'wiki_controls', array($this, $aWikiVer, $aWikiLatest, $iBlockId), 'TemplServiceWiki');
+        }
 
         return $s . $sControls;
     }
@@ -197,6 +208,12 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
 
         $aVars = $this->getVarsForHistory($iBlockId, $sLang);
         $aVars['select_all'] = _t('_Select_all');
+
+        if (!$aVars['bx_repeat:revisions'])
+            return BxDolTemplate::getInstance()->parseHtmlByName('wiki_msg.html', array(
+                'close' => _t('_sys_close'),
+                'msg' => _t('_sys_wiki_error_no_revs'),
+            ));
 
         $aForm = array(
             'form_attrs' => array(
@@ -262,6 +279,18 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         }
     }
 
+    public function actionDeleteBlock ()
+    {
+        $iBlockId = (int)bx_get('block_id');
+
+        $oQueryPageBuilder = new BxDolStudioBuilderPageQuery();
+        if (!$oQueryPageBuilder->deleteBlocks(array('type' => 'by_id', 'value' => $iBlockId)))
+            return array('code' => 3, 'actions' => array('ShowMsg'), 'block_id' => $iBlockId, 'msg' => _t('_sys_txt_error_occured'));
+
+        $this->_oQuery->deleteAllRevisions($iBlockId);
+
+        return array('code' => 0, 'actions' => array('Reload', 'ShowMsg'), 'block_id' => $iBlockId, 'msg' => _t('_sys_wiki_block_deleted'));
+    }
     public function actionHistory ()
     {
         $iBlockId = (int)bx_get('block_id');
@@ -271,6 +300,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         $aVars = $this->getVarsForHistory($iBlockId, $sLang);
         $aVars['lang'] = $oLang->getLangTitle($oLang->getLangId($sLang));
         $aVars['close'] = _t('_sys_close');
+        $aVars['msg'] = $aVars['bx_repeat:revisions'] ? '' : _t('_sys_wiki_error_no_revs');
         return BxDolTemplate::getInstance()->parseHtmlByName('wiki_history.html', $aVars);
     }
 
@@ -286,6 +316,13 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         $aWikiVerMain = array();
         $sLangForTranslate = '';
         $aLangsForInput = $this->getLangsForInput ($iBlockId, $bTranslate, $sMainLangLabel, $aWikiVerMain, $sLangForTranslate);
+
+        // don't allow to translate empty blocks
+        if (!$aWikiVerMain && $bTranslate)
+            return BxDolTemplate::getInstance()->parseHtmlByName('wiki_msg.html', array(
+                'close' => _t('_sys_close'),
+                'msg' => _t('_sys_wiki_error_no_revs'),
+            ));
 
         // get latest revision for block with current lang
         if ($bTranslate) {

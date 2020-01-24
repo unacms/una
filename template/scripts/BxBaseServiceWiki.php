@@ -128,10 +128,11 @@ class BxBaseServiceWiki extends BxDol
 
         $oMenu->setMenuObject($oWikiObject);
 
-        if ($aWikiVerLatest['revision'] == $aWikiVer['revision']) {
+        $sInfo = '';
+        if ($aWikiVer && $aWikiVerLatest['revision'] == $aWikiVer['revision']) {
             $sInfo = bx_time_js($aWikiVer['added']);
         } 
-        else {
+        elseif ($aWikiVer) {
             $oProfile = BxDolProfile::getInstanceMagic($aWikiVer['profile_id']);
             $sInfo = _t('_sys_wiki_view_rev', $aWikiVer['revision'], $oProfile->getUrl(), $oProfile->getDisplayName(), bx_time_js($aWikiVer['added']));
         }
@@ -147,6 +148,7 @@ class BxBaseServiceWiki extends BxDol
                 'block_id' => $sBlockId,
                 'lang' => $aWikiVer['lang'],
                 'wiki_action_uri' => $oWikiObject->getWikiUri(),
+                't_confirm_block_deletion' => _t('_sys_wiki_confirm_block_deletion'),
             )),
         ));
     }

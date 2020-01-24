@@ -265,7 +265,8 @@ class BxBasePage extends BxDolPage
      */
     protected function _getBlockOnlyCode ($iBlockId)
     {
-        $aBlock = $this->_oQuery->getPageBlock((int)$iBlockId);
+        if (!($aBlock = $this->_oQuery->getPageBlock((int)$iBlockId)))
+            return '';
         return $this->_getBlockCode($aBlock);
     }
 
