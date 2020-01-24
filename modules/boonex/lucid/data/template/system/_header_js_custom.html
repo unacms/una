@@ -102,5 +102,14 @@
             });
         }
         /*--- Dropdown Menu: END ---*/
+
+        setTimeout(function () {
+            if ($('.bx-base-pofile-cover-image').length) {
+                var h = $('.bx-base-pofile-cover-image').height();
+                if ($("html, body").scrollTop() < h) {
+                    $("html, body").animate({ scrollTop: h + "px" }, 'slow');
+                }
+            }
+        }, 500);
     });
 </script>
