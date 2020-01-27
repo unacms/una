@@ -170,6 +170,16 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         return 0;
     }
 
+    public function a2s($a)
+    {
+        return base64_encode(serialize($a));
+    }
+
+    public function s2a($s)
+    {
+        return unserialize(base64_decode($s));
+    }
+            
     public function descriptorA2S($a) 
     {
     	return implode($this->getDivider('DIVIDER_DESCRIPTOR'), $a);
@@ -188,7 +198,7 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
      */
     public function descriptorsM2A($mixed)
     {
-        $aResult = array();
+        $aResults = array();
 
         if(is_string($mixed))
            $aItems = explode($this->getDivider('DIVIDER_DESCRIPTORS'), $mixed);
@@ -199,10 +209,15 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
 
         foreach($aItems as $sItem) {
             $aItem = $this->descriptorS2A($sItem);
-            $aResult[] = array('vendor_id' => $aItem[0], 'module_id' => $aItem[1], 'item_id' => $aItem[2], 'item_count' => $aItem[3]);
+
+            $aResult = array('vendor_id' => $aItem[0], 'module_id' => $aItem[1], 'item_id' => $aItem[2], 'item_count' => $aItem[3]);
+            if(isset($aItem[4]))
+                $aResult['item_addons'] = $aItem[4];
+
+            $aResults[] = $aResult;
         }
 
-        return $aResult;
+        return $aResults;
     }
 
     public function putCustom($mDsc, $aCustom, &$aCustoms)
@@ -241,7 +256,7 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         return $aResult;
     }
 
-	public function http2https($s)
+    public function http2https($s)
     {
     	if(strncmp($s, 'https://', 8) === 0)
     		return $s;

@@ -194,47 +194,16 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
      */
     public function serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect = '', $aCustom = array())
     {
-    	$CNF = &$this->_oModule->_oConfig->CNF;
-
-    	$iClientId = $this->_oModule->getProfileId();
-
-    	$mixedResult = $this->_oModule->checkData($iClientId, $iSellerId, $iModuleId, $iItemId, $iItemCount);
-    	if($mixedResult !== true)
-    		return $mixedResult;
-
-        $aSellerProviders = $this->_oModule->_oDb->getVendorInfoProvidersRecurring($iSellerId);
-        if(empty($aSellerProviders))
-            return array('code' => 5, 'message' => _t($CNF['T']['ERR_NOT_ACCEPT_PAYMENTS']));
-
-        $aCartItem = array($iSellerId, $iModuleId, $iItemId, $iItemCount);
-        $sCartItem = $this->_oModule->_oConfig->descriptorA2S($aCartItem);
-
-		if(empty($sSellerProvider)) {
-			$sId = $this->_oModule->_oConfig->getHtmlIds('cart', 'providers_select') . BX_PAYMENT_TYPE_RECURRING;
-			$sTitle = _t($CNF['T']['POPUP_PROVIDERS_SELECT']);
-			return array('popup' => array(
-				'html' => BxTemplStudioFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->displayProvidersSelector($aCartItem, $aSellerProviders, $sRedirect, $aCustom)), 
-				'options' => array('closeOnOuterClick' => true)
-			));
-		}
-
-		$aCustoms = array();
-		$this->_oModule->_oConfig->putCustom($aCartItem, $aCustom, $aCustoms);
-
-        $mixedResult = $this->_oModule->serviceInitializeCheckout(BX_PAYMENT_TYPE_RECURRING, $iSellerId, $aSellerProviders[$sSellerProvider]['name'], array($sCartItem), $sRedirect, $aCustoms);
-        if(is_string($mixedResult))
-        	return array('code' => 6, 'message' => _t($mixedResult));
-
-		return $mixedResult;
+        return $this->serviceSubscribeWithAddons($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount, array(), $sRedirect, $aCustom);
     }
-
+    
     /**
      * @page service Service Calls
      * @section bx_payment Payment
      * @subsection bx_payment-purchase_processing Purchase Processing
-     * @subsubsection bx_payment-subscribe subscribe
+     * @subsubsection bx_payment-subscribe_with_addons subscribe_with_addons
      * 
-     * @code bx_srv('bx_payment', 'subscribe', [...], 'Subscriptions'); @endcode
+     * @code bx_srv('bx_payment', 'subscribe_with_addons', [...], 'Subscriptions'); @endcode
      * 
      * Initialize subscription for specified item.
      *
@@ -243,13 +212,68 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
      * @param $iModuleId integer value with module ID.
      * @param $iItemId integer value with item ID.
      * @param $iItemCount integer value with a number of items for purchasing. It's equal to 1 in case of subscription.
+     * @param $aItemAddons (optional) array with attached addons.
      * @param $sRedirect (optional) string value with redirect URL, if it's needed. 
      * @return an array with special format which describes the result of operation.
      * 
-     * @see BxPaymentSubscriptions::serviceSubscribe
+     * @see BxPaymentSubscriptions::serviceSubscribeWithAddons
      */
     /** 
-     * @ref bx_payment-subscribe "subscribe"
+     * @ref bx_payment-subscribe_with_addons "subscribe_with_addons"
+     */
+    public function serviceSubscribeWithAddons($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount, $sItemAddons = '', $sRedirect = '', $aCustom = array())
+    {
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+
+    	$iClientId = $this->_oModule->getProfileId();
+
+    	$mixedResult = $this->_oModule->checkData($iClientId, $iSellerId, $iModuleId, $iItemId, $iItemCount);
+    	if($mixedResult !== true)
+            return $mixedResult;
+
+        $aSellerProviders = $this->_oModule->_oDb->getVendorInfoProvidersRecurring($iSellerId);
+        if(empty($aSellerProviders))
+            return array('code' => 5, 'message' => _t($CNF['T']['ERR_NOT_ACCEPT_PAYMENTS']));
+
+        $aCartItem = array($iSellerId, $iModuleId, $iItemId, $iItemCount, $sItemAddons);
+
+        if(empty($sSellerProvider)) {
+            $sId = $this->_oModule->_oConfig->getHtmlIds('cart', 'providers_select') . BX_PAYMENT_TYPE_RECURRING;
+            $sTitle = _t($CNF['T']['POPUP_PROVIDERS_SELECT']);
+            return array('popup' => array(
+                'html' => BxTemplStudioFunctions::getInstance()->popupBox($sId, $sTitle, $this->_oModule->_oTemplate->displayProvidersSelector($aCartItem, $aSellerProviders, $sRedirect, $aCustom)), 
+                'options' => array('closeOnOuterClick' => true)
+            ));
+        }
+
+        $aCustoms = array();
+        $this->_oModule->_oConfig->putCustom($aCartItem, $aCustom, $aCustoms);
+
+        $sCartItem = $this->_oModule->_oConfig->descriptorA2S($aCartItem);
+        $mixedResult = $this->_oModule->serviceInitializeCheckout(BX_PAYMENT_TYPE_RECURRING, $iSellerId, $aSellerProviders[$sSellerProvider]['name'], array($sCartItem), $sRedirect, $aCustoms);
+        if(is_string($mixedResult))
+            return array('code' => 6, 'message' => _t($mixedResult));
+
+        return $mixedResult;
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-purchase_processing Purchase Processing
+     * @subsubsection bx_payment-send_subscription_expiration_letters send_subscription_expiration_letters
+     * 
+     * @code bx_srv('bx_payment', 'send_subscription_expiration_letters', [...], 'Subscriptions'); @endcode
+     * 
+     * Send subscription expiration letters.
+     *
+     * @param $iPendingId integer value with pending transaction ID.
+     * @param $sOrderId string value with order ID.
+     * 
+     * @see BxPaymentSubscriptions::serviceSendSubscriptionExpirationLetters
+     */
+    /** 
+     * @ref bx_payment-send_subscription_expiration_letters "send_subscription_expiration_letters"
      */
     public function serviceSendSubscriptionExpirationLetters($iPendingId, $sOrderId)
     {

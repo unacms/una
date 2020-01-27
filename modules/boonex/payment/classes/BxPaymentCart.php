@@ -299,7 +299,10 @@ class BxPaymentCart extends BxBaseModPaymentCart
         $fItemsPrice = 0;
         $aItemsInfo = array();
         foreach($aItems as $aItem) {
-            $aItemInfo = $this->_oModule->callGetCartItem((int)$aItem['module_id'], array($aItem['item_id'], isset($aItem['custom']) ? $aItem['custom'] : array()));
+            $aCustom = isset($aItem['custom']) ? $aItem['custom'] : array();
+
+            //--- Get item main info
+            $aItemInfo = $this->_oModule->callGetCartItem((int)$aItem['module_id'], array($aItem['item_id'], $aCustom));
             if(empty($aItemInfo) || !is_array($aItemInfo)) {
                 if($bTypeSingle) {
                     $sCartItems = $this->_oModule->_oDb->getCartItems($iClientId);
@@ -313,21 +316,49 @@ class BxPaymentCart extends BxBaseModPaymentCart
             $aItemInfo['module_id'] = (int)$aItem['module_id'];
             $aItemInfo['quantity'] = (int)$aItem['item_count'];
 
-            $iItemsCount += $aItem['item_count'];
-            $fItemsPrice += $aItem['item_count'] * $this->_oModule->_oConfig->getPrice($sType, $aItemInfo);
+            //--- Get item addons' info
+            $aItemAddons = array();
+            if(!empty($aItem['item_addons'])) {
+                $aAddons = $this->_oModule->_oConfig->s2a($aItem['item_addons']);
+                foreach($aAddons as $sAddon) {
+                    if(isset($aItemAddons[$sAddon])) {
+                        $aItemAddons[$sAddon]['quantity'] += 1;
+                        continue;
+                    }
+
+                    $aAddonInfo = $this->_oModule->callGetCartItem((int)$aItem['module_id'], array($sAddon, $aCustom));
+                    if(empty($aAddonInfo) || !is_array($aAddonInfo))
+                        continue;
+
+                    $aAddonInfo['module_id'] = (int)$aItem['module_id'];
+                    $aAddonInfo['quantity'] = 1;
+
+                    $aItemAddons[$sAddon] = $aAddonInfo;
+                }
+            }
+
+            $aItemInfo['addons'] = $aItemAddons;
             $aItemsInfo[] = $aItemInfo;
+
+            //--- Update items' summary
+            $fAddonsPrice = 0;
+            foreach($aItemInfo['addons'] as $aAddonInfo)
+                $fAddonsPrice += $aAddonInfo['quantity'] * $this->_oModule->_oConfig->getPrice($sType, $aAddonInfo);
+
+            $iItemsCount += $aItemInfo['quantity'];
+            $fItemsPrice += $aItemInfo['quantity'] * ($this->_oModule->_oConfig->getPrice($sType, $aItemInfo) + $fAddonsPrice);
         }
 
         $aSeller = $this->_oModule->getVendorInfo((int)$iSellerId);
         return array(
-        	'client_id' => $iClientId,
+            'client_id' => $iClientId,
             'vendor_id' => $aSeller['id'],
             'vendor_name' => $aSeller['name'],
-        	'vendor_link' => $aSeller['link'],
+            'vendor_link' => $aSeller['link'],
             'vendor_icon' => $aSeller['icon'],
-        	'vendor_thumb' => $aSeller['thumb'],
-        	'vendor_avatar' => $aSeller['avatar'],
-        	'vendor_unit' => $aSeller['unit'],
+            'vendor_thumb' => $aSeller['thumb'],
+            'vendor_avatar' => $aSeller['avatar'],
+            'vendor_unit' => $aSeller['unit'],
             'vendor_currency_code' => $aSeller['currency_code'],
             'vendor_currency_sign' => $aSeller['currency_sign'],
             'items_count' => $iItemsCount,

@@ -15,29 +15,39 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
 {
     function __construct($aConfig)
     {
-    	$this->MODULE = 'bx_payment';
+        $this->MODULE = 'bx_payment';
 
         parent::__construct($aConfig);
 
         $this->_aIncludeJs = array(
-        	'https://js.chargebee.com/v2/chargebee.js',
-        	'main.js',
-        	'chargebee_v3.js'
+            'https://js.chargebee.com/v2/chargebee.js',
+            'main.js',
+            'chargebee_v3.js'
         );
 
         $this->_aIncludeCss = array(
-        	'chargebee_v3.css'
+            'chargebee_v3.css'
         );
     }
 
-    public function actionGetHostedPage($iClientId, $iVendorId, $sItemName)
+    public function actionGetHostedPage($iClientId, $iVendorId, $sItemName, $sItemAddons = '')
     {
         $this->setOptionsByVendor($iVendorId);
 
+        $aItem = array('name' => $sItemName);
+        if(!empty($sItemAddons)) {
+            $aItemAddons = $this->_oModule->_oConfig->s2a($sItemAddons);
+
+            foreach($aItemAddons as $sItemAddon)
+                $aItem['addons'][] = array(
+                    'id' => $sItemAddon
+                );
+        }
         $aClient = $this->_oModule->getProfileInfo($iClientId);
-	    $oPage = $this->createHostedPage(array('name' => $sItemName), $aClient);
-		if($oPage === false)
-		    return echoJson(array());
+
+        $oPage = $this->createHostedPage($aItem, $aClient);
+        if($oPage === false)
+            return echoJson(array());
 
         header('Content-type: text/html; charset=utf-8');
         echo $oPage->toJson();
@@ -208,42 +218,42 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
 
     public function getButtonRecurring($iClientId, $iVendorId, $aParams = array())
     {
-		return $this->_getButton(BX_PAYMENT_TYPE_RECURRING, $iClientId, $iVendorId, $aParams);
+        return $this->_getButton(BX_PAYMENT_TYPE_RECURRING, $iClientId, $iVendorId, $aParams);
     }
 
     protected function _getButton($sType, $iClientId, $iVendorId, $aParams = array())
     {
-    	$sSite = '';
-    	bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_button', 0, $iClientId, array(
-			'type' => &$sType, 
-			'site' => &$sSite,
-    	    'params' => &$aParams
-		));
+        $sSite = '';
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_button', 0, $iClientId, array(
+            'type' => &$sType, 
+            'site' => &$sSite,
+            'params' => &$aParams
+        ));
 
-    	return $this->_oModule->_oTemplate->parseHtmlByName('cbee_v3_button_' . $sType . '.html', array(
-    		'type' => $sType,
-    	    'link' => 'javascript:void(0)',
-    		'caption' => _t($this->_sLangsPrefix . 'cbee_txt_checkout_with_' . $sType, $this->_sCaption),
-    		'js_object' => $this->_oModule->_oConfig->getJsObject($this->_sName),
-    		'js_code' => $this->_oModule->_oTemplate->getJsCode($this->_sName, array_merge(array(
-	    		'sProvider' => $this->_sName,
-	    		'sSite' => !empty($sSite) ? $sSite : $this->_getSite(),
-    	        'iClientId' => $iClientId
-	    	), $aParams))
-    	));
+        return $this->_oModule->_oTemplate->parseHtmlByName('cbee_v3_button_' . $sType . '.html', array(
+            'type' => $sType,
+            'link' => 'javascript:void(0)',
+            'caption' => _t($this->_sLangsPrefix . 'cbee_txt_checkout_with_' . $sType, $this->_sCaption),
+            'js_object' => $this->_oModule->_oConfig->getJsObject($this->_sName),
+            'js_code' => $this->_oModule->_oTemplate->getJsCode($this->_sName, array_merge(array(
+                'sProvider' => $this->_sName,
+                'sSite' => !empty($sSite) ? $sSite : $this->_getSite(),
+                'iClientId' => $iClientId
+            ), $aParams))
+        ));
     }
 
     public function getMenuItemsActionsRecurring($iClientId, $iVendorId, $aParams = array())
     {
-    	if(empty($aParams['id']))
-    		return array();
+        if(empty($aParams['id']))
+            return array();
 
-    	$sPrefix = 'bx-payment-strp-';
-    	$sJsObject = $this->_oModule->_oConfig->getJsObject($this->_sName);
+        $sPrefix = 'bx-payment-strp-';
+        $sJsObject = $this->_oModule->_oConfig->getJsObject($this->_sName);
 
-    	return array(
-   			array('id' => $sPrefix . 'manager', 'name' => $sPrefix . 'manager', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => "javascript:return " . $sJsObject . ".manage(this, '" . $aParams['id'] . "')", 'target' => '_self', 'title' => _t('_bx_payment_cbee_menu_item_title_manager'))
-    	);
+        return array(
+            array('id' => $sPrefix . 'manager', 'name' => $sPrefix . 'manager', 'class' => '', 'link' => 'javascript:void(0)', 'onclick' => "javascript:return " . $sJsObject . ".manage(this, '" . $aParams['id'] . "')", 'target' => '_self', 'title' => _t('_bx_payment_cbee_menu_item_title_manager'))
+        );
     }
 }
 

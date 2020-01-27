@@ -262,8 +262,15 @@ class BxPaymentDb extends BxBaseModPaymentDb
     public function insertOrderPending($iClientId, $sType, $sProvider, $aCartInfo, $aCustom = array())
     {
         $sItems = "";
-        foreach($aCartInfo['items'] as $aItem)
+        foreach($aCartInfo['items'] as $aItem) {
             $sItems .= $this->_oConfig->descriptorA2S(array($aCartInfo['vendor_id'], $aItem['module_id'], $aItem['id'], $aItem['quantity'])) . ':';
+
+            if(empty($aItem['addons']) || !is_array($aItem['addons']))
+                continue;
+
+            foreach($aItem['addons'] as $sAddon => $aAddon)
+                $sItems .= $this->_oConfig->descriptorA2S(array($aCartInfo['vendor_id'], $aAddon['module_id'], $aAddon['id'], $aAddon['quantity'])) . ':';
+        }
 
         return (int)$this->query("INSERT INTO `" . $this->_sPrefix . "transactions_pending` SET `client_id`=:client_id, `seller_id`=:seller_id, `type`=:type, `provider`=:provider, `items`=:items, `customs`=:customs, `amount`=:amount, `date`=UNIX_TIMESTAMP()", array(
             'client_id' => $iClientId,

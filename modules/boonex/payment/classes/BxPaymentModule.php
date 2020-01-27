@@ -183,13 +183,33 @@ class BxPaymentModule extends BxBaseModPaymentModule
 		return $bResult;
     }
 
+    /** 
+     * @deprecated since version 11.0.0
+     * 
+     * @see BxPaymentModule::serviceIsProviderOptions
+     */
+    public function serviceIsPaymentProvider($iVendorId, $sVendorProvider, $sPaymentType = '')
+    {
+    	return $this->serviceIsProviderOptions($iVendorId, $sVendorProvider, $sPaymentType);
+    }
+
+    /** 
+     * @deprecated since version 11.0.0
+     * 
+     * @see BxPaymentModule::serviceGetProviderOptions
+     */
+    public function serviceGetPaymentProvider($iVendorId, $sVendorProvider, $sPaymentType = '')
+    {
+    	return $this->serviceGetProviderOptions($iVendorId, $sVendorProvider, $sPaymentType);
+    }
+
     /**
      * @page service Service Calls
      * @section bx_payment Payment
      * @subsection bx_payment-purchase_processing Purchase Processing
-     * @subsubsection bx_payment-is_payment_provider is_payment_provider
+     * @subsubsection bx_payment-is_provider_options is_provider_options
      * 
-     * @code bx_srv('bx_payment', 'is_payment_provider', [...]); @endcode
+     * @code bx_srv('bx_payment', 'is_provider_options', [...]); @endcode
      * 
      * Check whether the specified vendor has configured the specified payment provider or not.
      *
@@ -198,14 +218,14 @@ class BxPaymentModule extends BxBaseModPaymentModule
      * @param $sPaymentType (optional) string value with payment type. If specified then the vendor will be checked for having the payment provider of the requested type.
      * @return boolean value determining the result of checking.
      * 
-     * @see BxPaymentModule::serviceIsPaymentProvider
+     * @see BxPaymentModule::serviceIsProviderOptions
      */
     /** 
-     * @ref bx_payment-is_payment_provider "is_payment_provider"
+     * @ref bx_payment-is_provider_options "is_provider_options"
      */
-    public function serviceIsPaymentProvider($iVendorId, $sVendorProvider, $sPaymentType = '')
+    public function serviceIsProviderOptions($iVendorId, $sVendorProvider, $sPaymentType = '')
     {
-    	$aProvider = $this->serviceGetPaymentProvider($iVendorId, $sVendorProvider, $sPaymentType);
+    	$aProvider = $this->serviceGetProviderOptions($iVendorId, $sVendorProvider, $sPaymentType);
     	return $aProvider !== false;
     }
 
@@ -213,9 +233,9 @@ class BxPaymentModule extends BxBaseModPaymentModule
      * @page service Service Calls
      * @section bx_payment Payment
      * @subsection bx_payment-purchase_processing Purchase Processing
-     * @subsubsection bx_payment-get_payment_provider get_payment_provider
+     * @subsubsection bx_payment-get_provider_options get_provider_options
      * 
-     * @code bx_srv('bx_payment', 'is_payment_provider', [...]); @endcode
+     * @code bx_srv('bx_payment', 'get_provider_options', [...]); @endcode
      * 
      * Get configuration settings for the payment provider entered by the specified vendor.
      *
@@ -224,25 +244,25 @@ class BxPaymentModule extends BxBaseModPaymentModule
      * @param $sPaymentType (optional) string value with payment type. If specified then the vendor will be checked for having the payment provider of the requested type.
      * @return an array with special format describing the payment provider or false value if something is wrong.
      * 
-     * @see BxPaymentModule::serviceGetPaymentProvider
+     * @see BxPaymentModule::serviceGetProviderOptions
      */
     /** 
-     * @ref bx_payment-get_payment_provider "get_payment_provider"
+     * @ref bx_payment-get_provider_options "get_provider_options"
      */
-    public function serviceGetPaymentProvider($iVendorId, $sVendorProvider, $sPaymentType = '')
+    public function serviceGetProviderOptions($iVendorId, $sVendorProvider, $sPaymentType = '')
     {
     	$aProviders = array();
     	switch($sPaymentType) {
-    		case BX_PAYMENT_TYPE_SINGLE:
-    			$aProviders = $this->_oDb->getVendorInfoProvidersSingle($iVendorId);
-    			break;
+            case BX_PAYMENT_TYPE_SINGLE:
+                $aProviders = $this->_oDb->getVendorInfoProvidersSingle($iVendorId);
+                break;
 
-    		case BX_PAYMENT_TYPE_RECURRING:
-    			$aProviders = $this->_oDb->getVendorInfoProvidersRecurring($iVendorId);
-    			break;
+            case BX_PAYMENT_TYPE_RECURRING:
+                $aProviders = $this->_oDb->getVendorInfoProvidersRecurring($iVendorId);
+                break;
 
-    		default:
-    			$aProviders = $this->_oDb->getVendorInfoProviders($iVendorId);
+            default:
+                $aProviders = $this->_oDb->getVendorInfoProviders($iVendorId);
     	}
 
     	return !empty($aProviders) && !empty($aProviders[$sVendorProvider]) && is_array(($aProviders[$sVendorProvider])) ? $aProviders[$sVendorProvider] : false;
@@ -406,7 +426,14 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
     	$iItemCount = bx_process_input(bx_get('item_count'), BX_DATA_INT);
     	if(empty($iItemCount))
-    		$iItemCount = 1;
+            $iItemCount = 1;
+
+        $sItemAddons = array();
+        if(bx_get('item_addons') !== false) {
+            $sItemAddons = bx_process_input(bx_get('item_addons'));
+            if(is_array($sItemAddons))
+                $sItemAddons = $this->_oConfig->a2s($sItemAddons);
+        }
 
         $sRedirect = bx_process_input(bx_get('redirect'));
         $sCustom = bx_process_input(bx_get('custom'));
@@ -418,8 +445,8 @@ class BxPaymentModule extends BxBaseModPaymentModule
                 $aCustom = array();
         }
 
-        $aResult = $this->getObjectSubscriptions()->serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect, $aCustom);
-		echoJson($aResult);
+        $aResult = $this->getObjectSubscriptions()->serviceSubscribeWithAddons($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount, $sItemAddons, $sRedirect, $aCustom);
+        echoJson($aResult);
     }
 
     public function actionSubscriptionGetDetails($iId)
@@ -559,64 +586,69 @@ class BxPaymentModule extends BxBaseModPaymentModule
     /** 
      * @ref bx_payment-initialize_checkout "initialize_checkout"
      */
-	public function serviceInitializeCheckout($sType, $iSellerId, $sProvider, $aItems = array(), $sRedirect = '', $aCustoms = array())
-	{
-	    $bTypeSingle = $sType == BX_PAYMENT_TYPE_SINGLE;
-	    $bTypeRecurring = $sType == BX_PAYMENT_TYPE_RECURRING;
+    public function serviceInitializeCheckout($sType, $iSellerId, $sProvider, $aItems = array(), $sRedirect = '', $aCustoms = array())
+    {
+        $bTypeSingle = $sType == BX_PAYMENT_TYPE_SINGLE;
+        $bTypeRecurring = $sType == BX_PAYMENT_TYPE_RECURRING;
 
-		if(!is_array($aItems))
-			$aItems = array($aItems);
+        if(!is_array($aItems))
+            $aItems = array($aItems);
 
-		$iSellerId = (int)$iSellerId;
+        $iSellerId = (int)$iSellerId;
         if($iSellerId == BX_PAYMENT_EMPTY_ID)
             return $this->_sLangsPrefix . 'err_unknown_vendor';
 
-		$oProvider = $this->getObjectProvider($sProvider, $iSellerId);
+        $oProvider = $this->getObjectProvider($sProvider, $iSellerId);
         if($oProvider === false || !$oProvider->isActive())
-        	return $this->_sLangsPrefix . 'err_incorrect_provider';
+            return $this->_sLangsPrefix . 'err_incorrect_provider';
 
         $aInfo = $this->getObjectCart()->getInfo($sType, $this->_iUserId, $iSellerId, $aItems);
         if(empty($aInfo) || $aInfo['vendor_id'] == BX_PAYMENT_EMPTY_ID || empty($aInfo['items']))
             return $this->_sLangsPrefix . 'err_empty_order';
-            
-		/*
-		 * Process FREE (price = 0) items for LOGGED IN members
-		 * WITHOUT processing via payment provider.
-		 * Note. This section isn't used for now!
-		 */
-		$bProcessedFree = false;
-		$sKeyPriceSingle = $this->_oConfig->getKey('KEY_ARRAY_PRICE_SINGLE');
-		$sKeyPriceRecurring = $this->_oConfig->getKey('KEY_ARRAY_PRICE_RECURRING');
-		foreach($aInfo['items'] as $iIndex => $aItem) {
-		    if((int)$aInfo['client_id'] == 0)
-		        continue;
+
+        /*
+         * Process FREE (price = 0) items for LOGGED IN members
+         * WITHOUT processing via payment provider.
+         * Note. This section isn't used for now!
+         */
+        $bProcessedFree = false;
+        $sKeyPriceSingle = $this->_oConfig->getKey('KEY_ARRAY_PRICE_SINGLE');
+        $sKeyPriceRecurring = $this->_oConfig->getKey('KEY_ARRAY_PRICE_RECURRING');
+        foreach($aInfo['items'] as $iIndex => $aItem) {
+            if((int)$aInfo['client_id'] == 0)
+                continue;
 
             //--- For Single time payments.
-			if($bTypeSingle && (float)$aItem[$sKeyPriceSingle] == 0) {
-			    $aCart = $this->_oDb->getCartContent($aInfo['client_id']);
-			    $aCartCustoms = !empty($aCart['customs']) ? unserialize($aCart['customs']) : array();
+            if($bTypeSingle && (float)$aItem[$sKeyPriceSingle] == 0) {
+                $aCart = $this->_oDb->getCartContent($aInfo['client_id']);
+                $aCartCustoms = !empty($aCart['customs']) ? unserialize($aCart['customs']) : array();
 
-			    $aCartItem = array($aInfo['vendor_id'], $aItem['module_id'], $aItem['id'], $aItem['quantity']);
-			    $aCartItemCustom = $this->_oConfig->pullCustom($aCartItem, $aCartCustoms);
+                $aCartItem = array($aInfo['vendor_id'], $aItem['module_id'], $aItem['id'], $aItem['quantity']);
+                $aCartItemCustom = $this->_oConfig->pullCustom($aCartItem, $aCartCustoms);
 
-				$aItemInfo = $this->callRegisterCartItem((int)$aItem['module_id'], array($aInfo['client_id'], $aInfo['vendor_id'], $aItem['id'], $aItem['quantity'], $this->_oConfig->getLicense(), $aCartItemCustom));
-	            if(is_array($aItemInfo) && !empty($aItemInfo))
-	            	$bProcessedFree = true;
+                $aItemInfo = $this->callRegisterCartItem((int)$aItem['module_id'], array($aInfo['client_id'], $aInfo['vendor_id'], $aItem['id'], $aItem['quantity'], $this->_oConfig->getLicense(), $aCartItemCustom));
+                if(!empty($aItemInfo) && is_array($aItemInfo)) {
+                    if(!empty($aItemInfo['addons']) && is_array($aItemInfo['addons']))
+                        foreach($aItemInfo['addons'] as $sAddon => $aAddon)
+                            $this->callRegisterCartItem((int)$aAddon['module_id'], array($aInfo['client_id'], $aInfo['vendor_id'], $aAddon['id'], $aAddon['quantity'], $this->_oConfig->getLicense(), $aCartItemCustom));
 
-	            $aInfo['items_count'] -= 1;
-	            unset($aInfo['items'][$iIndex]);
+                    $bProcessedFree = true;
+                }
 
-	            $aCart['items'] = trim(preg_replace("'" . $this->_oConfig->descriptorA2S($aCartItem) . ":?'", "", $aCart['items']), ":");
-	            $this->_oDb->setCartItems($aInfo['client_id'], $aCart['items'], $aCartCustoms);
-			}
+                $aInfo['items_count'] -= 1;
+                unset($aInfo['items'][$iIndex]);
 
-			//--- For Recurring payments.
-			if($bTypeRecurring && (float)$aItem[$sKeyPriceRecurring] == 0) {
-			    //TODO: Process FREE subscription here, if such situation will be possible.
-			}
-		}
+                $aCart['items'] = trim(preg_replace("'" . $this->_oConfig->descriptorA2S($aCartItem) . ":?'", "", $aCart['items']), ":");
+                $this->_oDb->setCartItems($aInfo['client_id'], $aCart['items'], $aCartCustoms);
+            }
 
-		if(empty($aInfo['items']))
+            //--- For Recurring payments.
+            if($bTypeRecurring && (float)$aItem[$sKeyPriceRecurring] == 0) {
+                //TODO: Process FREE subscription here, if such situation will be possible.
+            }
+        }
+
+        if(empty($aInfo['items']))
             return $this->_sLangsPrefix . ($bProcessedFree ? 'msg_successfully_processed_free' : 'err_empty_order');
 
         if($bTypeSingle && (empty($aCustoms) || !is_array($aCustoms))) {

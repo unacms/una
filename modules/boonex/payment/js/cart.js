@@ -9,62 +9,66 @@
  */
 
 function BxPaymentCart(oOptions) {
-	this.init(oOptions);
+    this.init(oOptions);
 }
 
 BxPaymentCart.prototype = new BxPaymentMain();
 
 BxPaymentCart.prototype.init = function(oOptions) {
-	if($.isEmptyObject(oOptions))
-		return;
+    if($.isEmptyObject(oOptions))
+        return;
 
-	this._sActionsUrl = oOptions.sActionUrl;
+    this._sActionsUrl = oOptions.sActionUrl;
     this._sObjName = oOptions.sObjName == undefined ? 'oPmtCart' : oOptions.sObjName;
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'fade' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
 };
 
 BxPaymentCart.prototype.addToCart = function(iSellerId, iModuleId, iItemId, iItemCount, iRedirect, sCustom) {
-	var $this = this;
+    var $this = this;
     var oDate = new Date();
 
     var sRedirect = '';
     if(typeof iRedirect == 'number' && parseInt(iRedirect) > 0)
-    	sRedirect = sUrlRoot + 'cart.php?seller_id=' + iSellerId;
-	else if(typeof iRedirect == 'string' && iRedirect.length > 0)
-		sRedirect = iRedirect;
+        sRedirect = sUrlRoot + 'cart.php?seller_id=' + iSellerId;
+    else if(typeof iRedirect == 'string' && iRedirect.length > 0)
+            sRedirect = iRedirect;
 
     $.post(
         this._sActionsUrl + 'add_to_cart/' + iSellerId + '/' + iModuleId + '/' + iItemId + '/' + iItemCount + '/',
         {
-        	custom: sCustom ? sCustom : '',
+            custom: sCustom ? sCustom : '',
             _t:oDate.getTime()
         },
         function(oData) {
-        	if(sRedirect)
-        		oData.redirect = sRedirect;
+            if(sRedirect)
+                oData.redirect = sRedirect;
 
-        	processJsonData(oData);
+            processJsonData(oData);
         },
         'json'
     );
 };
 
 BxPaymentCart.prototype.onCartContinue = function(oData) {
-	if (!oData || oData.link == undefined)
-		return;
+    if (!oData || oData.link == undefined)
+        return;
 
-	location.href = oData.link;
+    location.href = oData.link;
 };
 
 BxPaymentCart.prototype.onCartCheckout = function(oData) {
-	if (!oData || oData.link == undefined)
-		return;
+    if (!oData || oData.link == undefined)
+        return;
 
-	location.href = oData.link;
+    location.href = oData.link;
 };
 
 BxPaymentCart.prototype.subscribe = function(iSellerId, sSellerProvider, iModuleId, iItemId, iItemCount, sRedirect, sCustom) {
+    this.subscribeWithAddons(iSellerId, sSellerProvider, iModuleId, iItemId, iItemCount, '', sRedirect, sCustom);
+};
+
+BxPaymentCart.prototype.subscribeWithAddons = function(iSellerId, sSellerProvider, iModuleId, iItemId, iItemCount, sItemAddons, sRedirect, sCustom) {
     var $this = this;
     var oDate = new Date();
 
@@ -74,6 +78,7 @@ BxPaymentCart.prototype.subscribe = function(iSellerId, sSellerProvider, iModule
     	module_id: iModuleId,
     	item_id: iItemId,
     	item_count: 1,
+        item_addons: sItemAddons,
     	redirect: sRedirect ? sRedirect : '',
     	custom: sCustom ? sCustom : '',
     	_t: oDate.getTime()
@@ -86,7 +91,7 @@ BxPaymentCart.prototype.subscribe = function(iSellerId, sSellerProvider, iModule
         this._sActionsUrl + 'subscribe_json/',
         oParams,
         function(oData){
-        	processJsonData(oData);
+            processJsonData(oData);
         },
         'json'
     );

@@ -127,13 +127,37 @@ class BxBaseModPaymentModule extends BxBaseModGeneralModule
     /** 
      * @ref bx_base_payment-get_option "get_option"
      */
-	public function serviceGetOption($sOption)
+    public function serviceGetOption($sOption)
     {
     	$sMethod = 'get' . bx_gen_method_name($sOption);
     	if(method_exists($this->_oConfig, $sMethod))
     		return $this->_oConfig->$sMethod();
 
     	return $this->_oDb->getParam($this->_oConfig->getPrefix('options') . $sOption);
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_base_payment Base Payment
+     * @subsection bx_base_payment-other Other
+     * @subsubsection bx_base_payment-get_provider get_provider
+     * 
+     * @code bx_srv('bx_payment', 'get_provider', [...]); @endcode
+     * 
+     * Get payment provider object by its name and vendor ID. 
+     *
+     * @param $sProvider string value with provider name. 
+     * @param $mixedVendorId mixed value with vendor ID.
+     * @return provider object, instance of BxBaseModPaymentProvider.
+     * 
+     * @see BxBaseModPaymentModule::serviceGetProvider
+     */
+    /** 
+     * @ref bx_base_payment-get_provider "get_provider"
+     */
+    public function serviceGetProvider($sProvider, $mixedVendorId = BX_PAYMENT_EMPTY_ID)
+    {
+        return $this->getObjectProvider($sProvider, $mixedVendorId);
     }
 
     /**

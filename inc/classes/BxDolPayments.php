@@ -70,25 +70,54 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
         return BxDolService::call($this->_sActive, 'is_accepting_payments', $aSrvParams);
     }
 
-	public function isPaymentProvider($iVendorId, $sVendorProvider, $sPaymentType = '')
+    /**
+     * @deprecated since version 11.0.0
+     * 
+     * @see BxDolPayments::isProviderOptions
+     */
+    public function isPaymentProvider($iVendorId, $sVendorProvider, $sPaymentType = '')
     {
-    	if(empty($this->_sActive) || !BxDolRequest::serviceExists($this->_sActive, 'is_payment_provider'))
-    		return false;
-
-    	$aSrvParams = array($iVendorId, $sVendorProvider, $sPaymentType);
-        return BxDolService::call($this->_sActive, 'is_payment_provider', $aSrvParams);
+    	return $this->isProviderOptions($iVendorId, $sVendorProvider);
     }
 
-	public function getPaymentProvider($iVendorId, $sVendorProvider, $sPaymentType = '')
+    /**
+     * @deprecated since version 11.0.0
+     * 
+     * @see BxDolPayments::getProviderOptions
+     */
+    public function getPaymentProvider($iVendorId, $sVendorProvider, $sPaymentType = '')
     {
-    	if(empty($this->_sActive) || !BxDolRequest::serviceExists($this->_sActive, 'get_payment_provider'))
-    		return false;
-
-    	$aSrvParams = array($iVendorId, $sVendorProvider, $sPaymentType);
-        return BxDolService::call($this->_sActive, 'get_payment_provider', $aSrvParams);
+    	return $this->getProviderOptions($iVendorId, $sVendorProvider, $sPaymentType);
     }
 
-	public function getPayments()
+    public function isProviderOptions($iVendorId, $sVendorProvider, $sPaymentType = '')
+    {
+        if(empty($this->_sActive) || !BxDolRequest::serviceExists($this->_sActive, 'is_provider_options'))
+            return false;
+
+        $aSrvParams = array($iVendorId, $sVendorProvider, $sPaymentType);
+        return BxDolService::call($this->_sActive, 'is_provider_options', $aSrvParams);
+    }
+
+    public function getProvider($sProvider, $mixedVendorId = BX_PAYMENT_EMPTY_ID)
+    {
+        if(empty($this->_sActive) || !BxDolRequest::serviceExists($this->_sActive, 'get_provider'))
+            return false;
+
+        $aSrvParams = array($sProvider, $mixedVendorId);
+        return BxDolService::call($this->_sActive, 'get_provider', $aSrvParams);
+    }
+
+    public function getProviderOptions($iVendorId, $sVendorProvider, $sPaymentType = '')
+    {
+        if(empty($this->_sActive) || !BxDolRequest::serviceExists($this->_sActive, 'get_provider_options'))
+            return false;
+
+        $aSrvParams = array($iVendorId, $sVendorProvider, $sPaymentType);
+        return BxDolService::call($this->_sActive, 'get_provider_options', $aSrvParams);
+    }
+
+    public function getPayments()
     {
         $aPayments = array(
 			'' => _t('_Select_one')

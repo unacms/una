@@ -48,20 +48,20 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
     {
     	$aItem = array_shift($aCartInfo['items']);
     	if(empty($aItem) || !is_array($aItem))
-    		return $this->_sLangsPrefix . 'err_empty_items';
+            return $this->_sLangsPrefix . 'err_empty_items';
 
-		$aClient = $this->_oModule->getProfileInfo();
-		$aVendor = $this->_oModule->getProfileInfo($aCartInfo['vendor_id']);
+        $aClient = $this->_oModule->getProfileInfo();
+        $aVendor = $this->_oModule->getProfileInfo($aCartInfo['vendor_id']);
 
-		$oPage = $this->createHostedPage($aItem, $aClient, $aVendor, $iPendingId);
-		if($oPage === false)
-			return $this->_sLangsPrefix . 'err_cannot_perform';
+        $oPage = $this->createHostedPage($aItem, $aClient, $aVendor, $iPendingId);
+        if($oPage === false)
+            return $this->_sLangsPrefix . 'err_cannot_perform';
 
-		return array(
-			'code' => 0,
-			'eval' => $this->_oModule->_oConfig->getJsObject('cart') . '.onSubscribeSubmit(oData);',
-			'redirect' => $oPage->url
-		);
+        return array(
+            'code' => 0,
+            'eval' => $this->_oModule->_oConfig->getJsObject('cart') . '.onSubscribeSubmit(oData);',
+            'redirect' => $oPage->url
+        );
     }
 
     public function finalizeCheckout(&$aData)
@@ -116,113 +116,214 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
         return $this->deleteSubscription($sSubscriptionId);
     }
 
-	public function createHostedPage($aItem, $aClient, $aVendor = array(), $iPendingId = 0) {
-		$oPage = false;
+    public function createHostedPage($aItem, $aClient, $aVendor = array(), $iPendingId = 0)
+    {
+        $oPage = false;
 
-		try {
-			$aPage = array(
-                            'embed' => false, //--- Note. 'embed' should be disabled to allow payments via PayPal
-                            'subscription' => array(
-                                    'planId' => $aItem['name']
-                            ), 
-                            'customer' => array(
-                                    'email' => $aClient['email'],
-                                    'firstName' => $aClient['name']
-                            ), 
-			);
+        try {
+            $aPage = array(
+                'embed' => false, //--- Note. 'embed' should be disabled to allow payments via PayPal
+                'subscription' => array(
+                    'planId' => $aItem['name']
+                ),
+                'customer' => array(
+                    'email' => $aClient['email'],
+                    'firstName' => $aClient['name']
+                ), 
+            );
 
-			if(!empty($aVendor) && is_array($aVendor) && !empty($aVendor))
+            if(!empty($aItem['addons']) && is_array($aItem['addons']))
+                $aPage['addons'] = $aItem['addons'];
+
+            if(!empty($aVendor) && is_array($aVendor) && !empty($aVendor))
                 $aPage['redirectUrl'] = bx_append_url_params($this->getReturnDataUrl($aVendor['id']), array(
-					'pending_id' => $iPendingId
-				));
+                    'pending_id' => $iPendingId
+                ));
 
-			ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
-			$oResult = ChargeBee_HostedPage::checkoutNew($aPage);
-			$oPage = $oResult->hostedPage();
-		}
-		catch (Exception $oException) {
-			$iError = $oException->getCode();
-			$sError = $oException->getMessage();
+            ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
+            $oResult = ChargeBee_HostedPage::checkoutNew($aPage);
 
-			$this->log('Create Hosted Page Error: ' . $sError . '(' . $iError . ')');
+            $oPage = $oResult->hostedPage();
+        }
+        catch (Exception $oException) {
+            $iError = $oException->getCode();
+            $sError = $oException->getMessage();
 
-			return false;
-		}
+            $this->log('Create Hosted Page Error: ' . $sError . '(' . $iError . ')');
 
-		return $oPage;
-	}
+            return false;
+        }
 
-	public function retreiveHostedPage($sPageId) {
-		$oPage = null;
+        return $oPage;
+    }
 
-		try {
-			ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
-			$oResult = ChargeBee_HostedPage::retrieve($sPageId);
+    public function retreiveHostedPage($sPageId)
+    {
+        $oPage = null;
 
-			$oPage = $oResult->hostedPage();
-		}
-		catch (Exception $oException) {
-			$iError = $oException->getCode();
-			$sError = $oException->getMessage();
+        try {
+            ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
+            $oResult = ChargeBee_HostedPage::retrieve($sPageId);
 
-			$this->log('Retrieve Hosted Page Error: ' . $sError . '(' . $iError . ')');
+            $oPage = $oResult->hostedPage();
+        }
+        catch (Exception $oException) {
+            $iError = $oException->getCode();
+            $sError = $oException->getMessage();
 
-			return false;
-		}
+            $this->log('Retrieve Hosted Page Error: ' . $sError . '(' . $iError . ')');
 
-		return $oPage;
-	}
+            return false;
+        }
 
-	public function retrieveSubscription($sSubscriptionId)
-	{
-		$oSubscription = null;
+        return $oPage;
+    }
 
-		try {
-			ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
-			$oResult = ChargeBee_Subscription::retrieve($sSubscriptionId);
+    public function retrieveSubscription($sSubscriptionId)
+    {
+        $oSubscription = null;
 
-			$oSubscription = $oResult->subscription();
-			if($oSubscription->id != $sSubscriptionId)
-				return false;
-		}
-		catch (Exception $oException) {
-			$iError = $oException->getCode();
-			$sError = $oException->getMessage();
+        try {
+            ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
+            $oResult = ChargeBee_Subscription::retrieve($sSubscriptionId);
 
-			$this->log('Retrieve Subscription Error: ' . $sError . '(' . $iError . ')');
-
-			return false;
-		}
-
-		return $oSubscription;
-	}
-
-	public function deleteSubscription($sSubscriptionId)
-	{
-            try {
-                ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
-                $oResult = ChargeBee_Subscription::cancel($sSubscriptionId);
-
-                $oSubscription = $oResult->subscription();
-                if($oSubscription->status != 'cancelled')
-                    return false;
-            }
-            catch (Exception $oException) {
-                $aError = $oException->getJsonBody();
-
-                $this->log('Delete Subscription Error: ' . $aError['error']['message']);
-                $this->log($aError);
-
+            $oSubscription = $oResult->subscription();
+            if($oSubscription->id != $sSubscriptionId)
                 return false;
-            }
+        }
+        catch (Exception $oException) {
+            $iError = $oException->getCode();
+            $sError = $oException->getMessage();
 
-            bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_cancel_subscription', 0, false, array(
-                'subscription_id' => $sSubscriptionId,
-                'subscription_object' => &$oSubscription
-            ));
+            $this->log('Retrieve Subscription Error: ' . $sError . '(' . $iError . ')');
 
-            return true;
-	}
+            return false;
+        }
+
+        return $oSubscription;
+    }
+
+    public function getSubscription($iPendingId, $sCustomerId, $sSubscriptionId)
+    {
+        $oSubscription = $this->retrieveSubscription($sSubscriptionId);
+        if($oSubscription === false)
+            return array();
+
+        $sStatus = $oSubscription->status;
+        $sStatus = isset($this->_aSbsStatuses[$sStatus]) ? $this->_aSbsStatuses[$sStatus] : BX_PAYMENT_SBS_STATUS_UNKNOWN;
+
+        return array(
+            'status' => $sStatus,
+            'created' => $oSubscription->createdAt,
+            'started' => $oSubscription->startedAt,
+            'trial_start' => $oSubscription->trialStart,
+            'trial_end' => $oSubscription->trialEnd,
+            'cperiod_start' => $oSubscription->currentTermStart,
+            'cperiod_end' => $oSubscription->currentTermEnd,
+        );
+    }
+    
+    public function deleteSubscription($sSubscriptionId)
+    {
+        try {
+            ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
+            $oResult = ChargeBee_Subscription::cancel($sSubscriptionId);
+
+            $oSubscription = $oResult->subscription();
+            if($oSubscription->status != 'cancelled')
+                return false;
+        }
+        catch (Exception $oException) {
+            $aError = $oException->getJsonBody();
+
+            $this->log('Delete Subscription Error: ' . $aError['error']['message']);
+            $this->log($aError);
+
+            return false;
+        }
+
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_cancel_subscription', 0, false, array(
+            'subscription_id' => $sSubscriptionId,
+            'subscription_object' => &$oSubscription
+        ));
+
+        return true;
+    }
+
+    public function retrieveAddons($sStatus = 'active', $iLimit = 0)
+    {
+        $aAddons = array();
+
+        try {
+            $aParams = array();
+            if(!empty($sStatus))
+                $aParams['status[is]'] = $sStatus;
+            if(!empty($iLimit))
+                $aParams['limit'] = $iLimit;
+            
+            ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
+            $oResults = ChargeBee_Addon::all($aParams);
+
+            foreach($oResults as $oResult)
+                $aAddons[] = $oResult->addon();
+        }
+        catch (Exception $oException) {
+            $iError = $oException->getCode();
+            $sError = $oException->getMessage();
+
+            $this->log('Retrieve Addons Error: ' . $sError . '(' . $iError . ')');
+
+            return false;
+        }
+
+        return $aAddons;
+    }
+
+    public function getAddons($sStatus = 'active', $iLimit = 0)
+    {
+        $aAddons = $this->retrieveAddons($sStatus, $iLimit);
+        if(empty($aAddons) || !is_array($aAddons))
+            return array();
+
+        $aResult = array();
+        foreach($aAddons as $oAddon)
+            $aResult[] = $oAddon->getValues();
+
+        return $aResult;
+    }
+
+    public function retrieveAddon($sId)
+    {
+        $oAddon = null;
+
+        try {
+            ChargeBee_Environment::configure($this->_getSite(), $this->_getApiKey());
+            $oResult = ChargeBee_Addon::retrieve($sId);
+
+            $oAddon = $oResult->addon();
+            if($oAddon->id != $sId)
+                return false;
+        }
+        catch (Exception $oException) {
+            $iError = $oException->getCode();
+            $sError = $oException->getMessage();
+
+            $this->log('Retrieve Addon Error: ' . $sError . '(' . $iError . ')');
+
+            return false;
+        }
+
+        return $oAddon;
+    }
+
+    public function getAddon($sId)
+    {
+        $oAddon = $this->retrieveAddon($sId);
+        if($oAddon === false)
+            return array();
+
+        return $oAddon->getValues();
+    }
 
     public function retrieveCustomer($sCustomerId)
     {
@@ -248,25 +349,7 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
         return $oCustomer;
     }
 
-    public function getSubscription($iPendingId, $sCustomerId, $sSubscriptionId)
-    {
-        $oSubscription = $this->retrieveSubscription($sSubscriptionId);
-        if($oSubscription === false)
-            return array();
 
-        $sStatus = $oSubscription->status;
-        $sStatus = isset($this->_aSbsStatuses[$sStatus]) ? $this->_aSbsStatuses[$sStatus] : BX_PAYMENT_SBS_STATUS_UNKNOWN;
-
-        return array(
-            'status' => $sStatus,
-            'created' => $oSubscription->createdAt,
-            'started' => $oSubscription->startedAt,
-            'trial_start' => $oSubscription->trialStart,
-            'trial_end' => $oSubscription->trialEnd,
-            'cperiod_start' => $oSubscription->currentTermStart,
-            'cperiod_end' => $oSubscription->currentTermEnd,
-        );
-    }
 
     protected function _getSite()
     {
