@@ -337,6 +337,8 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
             $aWikiVer = array('block_id' => $iBlockId);
             if ($bTranslate)
                 $aWikiVer['lang'] = $sLangForTranslate;
+            else
+                $aWikiVer['lang'] = bx_lang_name();
         }
 
         // init form object
