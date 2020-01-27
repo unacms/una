@@ -156,7 +156,7 @@ class BxAclModule extends BxDolModule
      * 
      * Get an array with level's description. Is used in Shopping Cart in payments processing module.
      * 
-     * @param $iItemId level's ID.
+     * @param $mixedItemId level's ID or Unique Name.
      * @return an array with level's description. Empty array is returned if something is wrong.
      * 
      * @see BxAclModule::serviceGetCartItem
@@ -164,18 +164,22 @@ class BxAclModule extends BxDolModule
     /** 
      * @ref bx_acl-get_cart_item "get_cart_item"
      */
-    public function serviceGetCartItem($iItemId)
+    public function serviceGetCartItem($mixedItemId)
     {
-    	$CNF = &$this->_oConfig->CNF;
+        $CNF = &$this->_oConfig->CNF;
 
-        if(!$iItemId)
-			return array();
+        if(!$mixedItemId)
+            return array();
 
-		$aItem = $this->_oDb->getPrices(array('type' => 'by_id_full', 'value' => $iItemId));
+        if(is_numeric($mixedItemId))
+            $aItem = $this->_oDb->getPrices(array('type' => 'by_id_full', 'value' => (int)$mixedItemId));
+        else 
+            $aItem = $this->_oDb->getPrices(array('type' => 'by_name_full', 'value' => $mixedItemId));
+
         if(empty($aItem) || !is_array($aItem))
-			return array();
+            return array();
 
-		return array (
+        return array (
             'id' => $aItem['id'],
             'author_id' => $this->_oConfig->getOwner(),
             'name' => $aItem['name'],

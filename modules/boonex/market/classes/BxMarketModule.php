@@ -711,7 +711,7 @@ class BxMarketModule extends BxBaseModTextModule
      * 
      * Get an array with prodict's description. Is used in Shopping Cart in payments processing module.
      * 
-     * @param $iItemId product's ID.
+     * @param $mixedItemId product's ID or Unique Name.
      * @return an array with prodict's description. Empty array is returned if something is wrong.
      * 
      * @see BxMarketModule::serviceGetCartItem
@@ -719,14 +719,18 @@ class BxMarketModule extends BxBaseModTextModule
     /** 
      * @ref bx_market-get_cart_item "get_cart_item"
      */
-    public function serviceGetCartItem($iItemId)
+    public function serviceGetCartItem($mixedItemId)
     {
     	$CNF = &$this->_oConfig->CNF;
 
-        if(!$iItemId)
+        if(!$mixedItemId)
             return array();
 
-        $aItem = $this->_oDb->getContentInfoById($iItemId);
+        if(is_numeric($mixedItemId))
+            $aItem = $this->_oDb->getContentInfoById((int)$mixedItemId);
+        else
+            $aItem = $this->_oDb->getContentInfoByName($mixedItemId);
+
         if(empty($aItem) || !is_array($aItem))
             return array();
 

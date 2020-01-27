@@ -104,16 +104,16 @@ class BxAclDb extends BxDolModuleDb
             case 'by_id':
                 $aMethod['name'] = 'getRow';
                 $aMethod['params'][1] = array(
-                	'id' => $aParams['value']
+                    'id' => $aParams['value']
                 );
 
                 $sWhereClause .= "AND `tap`.`id`=:id";
                 break;
 
-			case 'by_id_full':
+            case 'by_id_full':
                 $aMethod['name'] = 'getRow';
                 $aMethod['params'][1] = array(
-                	'id' => $aParams['value']
+                    'id' => $aParams['value']
                 );
 
                 $sSelectClause .= ", `tal`.`Name` AS `level_name`, `tal`.`Description` AS `level_description`";
@@ -121,9 +121,20 @@ class BxAclDb extends BxDolModuleDb
                 $sWhereClause .= "AND `tap`.`id`=:id";
                 break;
 
+            case 'by_name_full':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                    'name' => $aParams['value']
+                );
+
+                $sSelectClause .= ", `tal`.`Name` AS `level_name`, `tal`.`Description` AS `level_description`";
+                $sJoinClause .= "LEFT JOIN `sys_acl_levels` AS `tal` ON `tap`.`level_id`=`tal`.`ID`";
+                $sWhereClause .= "AND `tap`.`name`=:name";
+                break;
+
             case 'by_level_id':
             	$aMethod['params'][1] = array(
-                	'level_id' => $aParams['value']
+                    'level_id' => $aParams['value']
                 );
 
                 $sWhereClause .= "AND `tap`.`level_id`=:level_id";
@@ -132,9 +143,9 @@ class BxAclDb extends BxDolModuleDb
             case 'by_level_id_duration':
                 $aMethod['name'] = 'getRow';
                 $aMethod['params'][1] = array(
-                	'level_id' => $aParams['level_id'],
-                	'period' => $aParams['period'],
-                	'period_unit' => $aParams['period_unit'],
+                    'level_id' => $aParams['level_id'],
+                    'period' => $aParams['period'],
+                    'period_unit' => $aParams['period_unit'],
                 );
 
                 $sWhereClause .= "AND `tap`.`level_id`=:level_id AND `tap`.`period`=:period AND `tap`.`period_unit`=:period_unit";
