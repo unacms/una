@@ -42,6 +42,14 @@ class BxDolWikiQuery extends BxDolDb
         return $aObject;
     }
 
+    /**
+     * Get wiki block
+     * @param $iBlockId block ID
+     * @param $sLang 2 letters language code
+     * @param $iRevision [optional, default false] revision number, if false get latest revision for then given lan
+     * @param $bAutoMainLang [optional, default true] automatically load wiki block for main language if translation for gived language doesn't exist
+     * @return array with wiki block info
+     */
     public function getBlockContent ($iBlockId, $sLang, $iRevision = false, $bAutoMainLang = true)
     {
         $sWhere = '';
@@ -72,7 +80,22 @@ class BxDolWikiQuery extends BxDolDb
     public function deleteRevisions ($iBlockId, $sLang, $aRevisions)
     {
         $aBind = array('block' => $iBlockId, 'lang' => $sLang);
-        return $this->query("DELETE FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `lang` = :lang AND `revision` IN(" . $this->implode_escape($aRevisions) . ")", $aBind);
+        $i = $this->query("DELETE FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `lang` = :lang AND `revision` IN(" . $this->implode_escape($aRevisions) . ")", $aBind);
+        if ($i) { 
+            // check if main language revisions was deleted
+            $aRow = $this->getOne("SELECT `block_id` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `main_lang` = 1 LIMIT 1", array('block' => $iBlockId));
+            if (!$aRow) {
+                // if main lang was deleted then mark latest translation from any lang as main
+                $this->query("UPDATE `sys_pages_wiki_blocks` SET `main_lang` = 1 WHERE `block_id` = :block ORDER BY `added` DESC LIMIT 1", array('block' => $iBlockId));
+            }
+        }
+        return $i;
+    }
+
+    public function deleteAllRevisions ($iBlockId)
+    {
+        $aBind = array('block' => $iBlockId);
+        return $this->query("DELETE FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block", $aBind);
     }
 }
 

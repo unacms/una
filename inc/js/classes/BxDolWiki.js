@@ -98,7 +98,13 @@ BxDolWiki.prototype.onDeleteVersion = function () {
 };
 
 BxDolWiki.prototype.onDeleteBlock = function () {
-    console.log("onDeleteBlock:" + this._sObject);
+    if (!confirm(this._oOptions.t_confirm_block_deletion))
+        return;
+
+    var self = this;
+    $.post(this._sActionUrl + 'delete-block', {block_id: this._oOptions.block_id}, function (oData) {
+        self.processResponce(oData);
+    }, 'json');
 };
 
 BxDolWiki.prototype.onHistory = function () {
@@ -143,14 +149,15 @@ BxDolWiki.prototype.popup = function (sAction) {
     
     var self = this;
     var sActionUrl = bx_append_url_params(this._sActionUrl + sAction, {
-        block_id: this._oOptions.block_id
+        block_id: this._oOptions.block_id,
+        lang: this._sCurrentLang,
     });
 
     // remove previous popup
     this.removePopup();
 
     // show new popup
-    $(window).dolPopupAjax({url: sActionUrl});
+    $(window).dolPopupAjax({url: sActionUrl, closeOnOuterClick: false});
 };
 
 /** @} */

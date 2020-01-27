@@ -2281,6 +2281,7 @@
 	<string name="_sys_form_wiki_input_caption_block_id"><![CDATA[Идентификатор блока]]></string>
 	<string name="_sys_form_wiki_input_caption_lang"><![CDATA[Язык]]></string>
     <string name="_sys_form_wiki_input_caption_lang_info"><![CDATA[★ - основной язык, красным помечен отсутствующий или устаревший перевод]]></string>
+    <string name="_sys_form_wiki_input_caption_lang_err"><![CDATA[Пожалуйста выберите значение]]></string>
 	<string name="_sys_form_wiki_input_caption_content"><![CDATA[Содержимое]]></string>
     <string name="_sys_form_wiki_input_caption_content_main"><![CDATA[Основное содержимое]]></string>
 	<string name="_sys_form_wiki_input_caption_notes"><![CDATA[Заметки]]></string>
@@ -3092,6 +3093,7 @@
 	<string name="_sys_wiki_system_title"><![CDATA[Системная Вики]]></string>
 	<string name="_sys_wiki_error_page_exists"><![CDATA[Страница с таким именем ({0}) уже существует]]></string>
     <string name="_sys_wiki_error_no_rev"><![CDATA[Ревизия {0} для {1} языка не существует]]></string>
+    <string name="_sys_wiki_error_no_revs"><![CDATA[Нет ревизий для данного блока]]></string>
     <string name="_sys_wiki_error_missing_wiki_object"><![CDATA[Вики объект ({0}) не найден]]></string>
     <string name="_sys_wiki_error_action_not_allowed"><![CDATA[Не разрешенное действие ({0}) для вики объекта ({1})]]></string>
     <string name="_sys_wiki_view_rev"><![CDATA[Версия <b>{0}</b> от <a href="{1}">{2}</a>, {3}]]></string>
@@ -3099,5 +3101,7 @@
     <string name="_sys_wiki_lang_mask_warn"><![CDATA[{0} {1} <span class="bx-def-font-small" style="color:red;">{2}</span>]]></string>
     <string name="_sys_wiki_lang_missing"><![CDATA[отсутствует]]></string>
     <string name="_sys_wiki_revisions_deleted"><![CDATA[{0} ревизий было удалено]]></string>
+    <string name="_sys_wiki_confirm_block_deletion"><![CDATA[Подтвердите удаление блока со всей историей и переводами?]]></string>
+    <string name="_sys_wiki_block_deleted"><![CDATA[Блок был успешно удален]]></string>
 
 </resources>

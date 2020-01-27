@@ -414,8 +414,8 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
                 $sWhereClause = "AND `tpb`.`object`=:object ";
                 break;
 
-            case 'all':
-                break;
+            default:
+                return false;
         }
 
         $sSql = "DELETE FROM `tpb` USING `sys_pages_blocks` AS `tpb` WHERE 1 " . $sWhereClause;

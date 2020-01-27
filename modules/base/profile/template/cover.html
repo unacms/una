@@ -41,17 +41,15 @@
     __picture_popup__
 </div>
 <script>
-    var oThumb = $('.bx-base-pofile-cover .bx-base-pofile-cover-thumb img');
-    var oCover = $('.bx-base-pofile-cover .bx-base-pofile-cover-image img');
-
-    var oSource = null;
-    if(oThumb.length > 0)
-        oSource = oThumb;
-    else if(oCover.length > 0)
-        oSource = oCover;
-
-    if(oSource)
-        oSource.ready(function() {
-            window.scrollTo(0, oCover.offset().top + oCover.height() - $('.bx-header').height()- 135);
-        });
+    setTimeout(function () {
+        var sPath = '.bx-base-pofile-cover-wrapper .bx-base-pofile-unit-thumb';
+        console.log($(sPath).length);
+        console.log($(sPath).offset().top);
+        if ($(sPath).length) {
+            var body = $("html, body");
+            if (body.scrollTop() == 0) {
+                body.animate({ scrollTop: $(sPath).offset().top + "px" }, 'slow');
+            }
+        }
+    }, 500);
 </script>
