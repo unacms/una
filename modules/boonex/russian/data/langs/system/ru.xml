@@ -2281,6 +2281,7 @@
 	<string name="_sys_form_wiki_input_caption_block_id"><![CDATA[Идентификатор блока]]></string>
 	<string name="_sys_form_wiki_input_caption_lang"><![CDATA[Язык]]></string>
     <string name="_sys_form_wiki_input_caption_lang_info"><![CDATA[★ - основной язык, красным помечен отсутствующий или устаревший перевод]]></string>
+    <string name="_sys_form_wiki_input_caption_lang_err"><![CDATA[Пожалуйста выберите значение]]></string>
 	<string name="_sys_form_wiki_input_caption_content"><![CDATA[Содержимое]]></string>
     <string name="_sys_form_wiki_input_caption_content_main"><![CDATA[Основное содержимое]]></string>
 	<string name="_sys_form_wiki_input_caption_notes"><![CDATA[Заметки]]></string>

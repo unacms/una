@@ -3973,11 +3973,11 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 -- wiki menu
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `editable`, `order`) VALUES 
-('sys_wiki', 'system', 'edit', '', '_sys_menu_item_title_wiki_edit', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 1, 1),
-('sys_wiki', 'system', 'delete-version', '', '_sys_menu_item_title_wiki_delete_version', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 1, 2),
-('sys_wiki', 'system', 'delete-block', '', '_sys_menu_item_title_wiki_delete_block', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 1, 3),
-('sys_wiki', 'system', 'translate', '', '_sys_menu_item_title_wiki_translate', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 1, 4),
-('sys_wiki', 'system', 'history', '', '_sys_menu_item_title_wiki_history', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 1, 5);
+('sys_wiki', 'system', 'edit', '', '_sys_menu_item_title_wiki_edit', '', '', '', '', '', '', 0, 2147483646, '', 1, 0, 1, 1),
+('sys_wiki', 'system', 'delete-version', '', '_sys_menu_item_title_wiki_delete_version', '', '', '', '', '', '', 0, 2147483646, '', 1, 0, 1, 2),
+('sys_wiki', 'system', 'delete-block', '', '_sys_menu_item_title_wiki_delete_block', '', '', '', '', '', '', 0, 2147483646, '', 1, 0, 1, 3),
+('sys_wiki', 'system', 'translate', '', '_sys_menu_item_title_wiki_translate', '', '', '', '', '', '', 0, 2147483646, '', 1, 0, 1, 4),
+('sys_wiki', 'system', 'history', '', '_sys_menu_item_title_wiki_history', '', '', '', '', '', '', 0, 2147483646, '', 1, 0, 1, 5);
 
 -- --------------------------------------------------------
 
@@ -4915,7 +4915,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_wiki` (
 );
 
 INSERT INTO `sys_objects_wiki` (`object`, `uri`, `title`, `module`, `allow_add_for_levels`, `allow_edit_for_levels`, `allow_delete_for_levels`, `allow_translate_for_levels`, `allow_unsafe_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('system', '', '_sys_wiki_system_title', 'system', 0, 0, 0, 0, 0, '', '');
+('system', 'sys', '_sys_wiki_system_title', 'system', 0, 0, 0, 0, 0, '', '');
 
 
 CREATE TABLE IF NOT EXISTS `sys_pages_wiki_blocks` (
@@ -4945,6 +4945,9 @@ CREATE TABLE IF NOT EXISTS `sys_rewrite_rules` (
   `active` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 );
+
+INSERT INTO `sys_rewrite_rules` (`preg`, `service`, `active`) VALUES
+('^sys-action/(.*)$', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"wiki_action";s:6:"params";a:2:{i:0;s:3:"sys";i:1;s:3:"{1}";}s:5:"class";s:16:"TemplServiceWiki";}', '1');
 
 -- --------------------------------------------------------
 

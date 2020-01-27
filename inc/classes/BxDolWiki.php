@@ -333,8 +333,11 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         }
 
         unset($aWikiVer['notes']); // unset notes since we need this field empty in the form
-        if (!$aWikiVer) // check for new block, so initialize with default values
+        if (!$aWikiVer) { // check for new block, so initialize with default values
             $aWikiVer = array('block_id' => $iBlockId);
+            if ($bTranslate)
+                $aWikiVer['lang'] = $sLangForTranslate;
+        }
 
         // init form object
         $oForm = BxDolForm::getObjectInstance('sys_wiki', $bTranslate ? 'sys_wiki_translate' : 'sys_wiki_edit');
@@ -368,9 +371,9 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
             $sRev = $this->getFieldRev ($oForm, $sLang, $aWikiVer);
             $bUnsafe = $this->getFieldUnsafeFlag ($oForm, $sLang, $aWikiVer);
 
-            // insert new revision
+            // insert new revision (main lang is NOT allowed for translations)
             $iTime = time();
-            if (!$bMainLang || ($bMainLang && $this->isAllowed('edit'))) {
+            if ((!$bMainLang || ($bMainLang && $this->isAllowed('edit'))) && $this->isContentChanged($iBlockId, $sLang, $oForm->getCleanValue('content'))) {
                 $sId = $oForm->insert(array(
                     'added' => $iTime, 
                     'revision' => $sRev,
@@ -393,8 +396,8 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
                     $sRev = $this->getFieldRev ($oForm, $sLang, $aWikiVer);
                     $bUnsafe = $this->getFieldUnsafeFlag ($oForm, $sLang, $aWikiVer);
 
-                    // insert new revision
-                    if (!$bMainLang || ($bMainLang && $this->isAllowed('edit'))) {
+                    // insert new revision (main lang is NOT allowed for translations)
+                    if ((!$bMainLang || ($bMainLang && $this->isAllowed('edit'))) && $this->isContentChanged($iBlockId, $sLang, $sContent)) {
                         $sId =  $oForm->insert(array(
                             'added' => $iTime, 
                             'revision' => $sRev,
@@ -410,6 +413,18 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
 
             return array('code' => 0, 'actions' => array('Reload', 'ClosePopup'), 'block_id' => $aWikiVer['block_id']);
         }
+    }
+
+    protected function isContentChanged ($iBlockId, $sLang, $sContent)
+    {
+        if (!$sContent) // don't allow revisions with empty content
+            return false;
+
+        $aWikiVer = $this->_oQuery->getBlockContent ($iBlockId, $sLang, false, false);
+        if (!$aWikiVer) // when no previous revision available
+            return true;
+
+        return $sContent != $aWikiVer['content'];
     }
 
     protected function getFieldRev ($oForm, $sLang, $aWikiVer) {

@@ -149,7 +149,8 @@ BxDolWiki.prototype.popup = function (sAction) {
     
     var self = this;
     var sActionUrl = bx_append_url_params(this._sActionUrl + sAction, {
-        block_id: this._oOptions.block_id
+        block_id: this._oOptions.block_id,
+        lang: this._sCurrentLang,
     });
 
     // remove previous popup
