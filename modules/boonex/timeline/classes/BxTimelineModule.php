@@ -2954,11 +2954,14 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $oCmts->addCssJs();
 
         $bResult = true;
-        if(!empty($aEvent['owner_id']) && ($oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id'])) !== false) {
-            if($oProfileOwner->checkAllowedPostInProfile() !== CHECK_ACTION_RESULT_ALLOWED)
-                return false;
+        if(!empty($aEvent['owner_id']) && $this->_oConfig->isCommon($aEvent['type'], $aEvent['action'])) {
+            $oProfileOwner = BxDolProfile::getInstance($aEvent['owner_id']);
+            if($oProfileOwner !== false) {
+                if($oProfileOwner->checkAllowedPostInProfile() !== CHECK_ACTION_RESULT_ALLOWED)
+                    return false;
 
-            bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_comment', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
+                bx_alert($oProfileOwner->getModule(), $this->_oConfig->getUri() . '_comment', $oProfileOwner->id(), (int)$this->getUserId(), array('result' => &$bResult));
+            }
         }
 
         return $bResult;
