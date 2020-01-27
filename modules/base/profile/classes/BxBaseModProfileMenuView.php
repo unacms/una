@@ -33,6 +33,8 @@ class BxBaseModProfileMenuView extends BxTemplMenuMoreAuto
 
         $CNF = $this->_oModule->_oConfig->CNF;
 
+        $this->_aHtmlIds['main'] = 'bx-menu-main-submenu';
+
         $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
         if(empty($iContentId) && bx_get('profile_id') !== false)
             $iContentId = BxDolProfile::getInstance(bx_process_input(bx_get('profile_id'), BX_DATA_INT))->getContentId();
