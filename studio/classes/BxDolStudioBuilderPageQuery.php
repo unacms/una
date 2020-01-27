@@ -396,7 +396,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
     {
     	$aBindings = array();
         $sWhereClause = "";
-
+        $aBlockIds = array();
         switch($aParams['type']) {
             case 'by_id':
             	$aBindings = array(
@@ -404,6 +404,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
                 );
 
                 $sWhereClause = "AND `tpb`.`id`=:id ";
+                $aBlockIds[] = $aParams['value'];
                 break;
 
             case 'by_object':
@@ -412,6 +413,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
                 );
 
                 $sWhereClause = "AND `tpb`.`object`=:object ";
+                $aBlockIds = $this->getColumn("SELECT `id` FROM `sys_pages_blocks` AS `tpb` WHERE 1 " . $sWhereClause, $aBindings);
                 break;
 
             default:
@@ -419,7 +421,10 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
         }
 
         $sSql = "DELETE FROM `tpb` USING `sys_pages_blocks` AS `tpb` WHERE 1 " . $sWhereClause;
-        return (int)$this->query($sSql, $aBindings) > 0;
+        $b = ((int)$this->query($sSql, $aBindings) > 0);
+        if ($b && $aBlockIds)
+            BxDolWikiQuery::deleteAllRevisions($aBlockIds);
+        return $b;
     }
 
     function resetBlocksByPage($sObject, $iCellId)

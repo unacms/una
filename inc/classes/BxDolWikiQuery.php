@@ -92,10 +92,12 @@ class BxDolWikiQuery extends BxDolDb
         return $i;
     }
 
-    public function deleteAllRevisions ($iBlockId)
+    public static function deleteAllRevisions ($mixedBlockIds)
     {
-        $aBind = array('block' => $iBlockId);
-        return $this->query("DELETE FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block", $aBind);
+        $oDb = BxDolDb::getInstance();
+        if (!is_array($mixedBlockIds))
+            $mixedBlockId = array($mixedBlockIds);
+        return $oDb->query("DELETE FROM `sys_pages_wiki_blocks` WHERE `block_id` IN(" . $oDb->implode_escape($mixedBlockIds) . ")");
     }
 }
 

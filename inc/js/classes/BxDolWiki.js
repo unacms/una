@@ -60,7 +60,8 @@ BxDolWiki.prototype.onChangeLangSelector = function (e) {
     var sLangNew = $(e).val();
 
     // save current translation
-    this._oTranslations[this._sCurrentLang] = eContent.val();
+    if (null !== this._sCurrentLang)
+        this._oTranslations[this._sCurrentLang] = eContent.val();
 
     if ('undefined' === typeof(this._oTranslations[sLangNew])) {
         // no saved translation was found - get from server
