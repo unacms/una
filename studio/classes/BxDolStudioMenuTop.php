@@ -76,9 +76,7 @@ class BxDolStudioMenuTop extends BxDol
         if(!empty($aHistory) && is_array($aHistory))
             $this->aItems[BX_DOL_STUDIO_MT_LEFT]['menu_items'] = bx_array_insert_before(array_reverse($aHistory), $this->aItems[BX_DOL_STUDIO_MT_LEFT]['menu_items'], 'site');
 
-        $aMatch = array();
-        $iResult = preg_match("/^(https?:\/\/)?(.*)\/$/", BX_DOL_URL_ROOT, $aMatch);
-        $this->aItems[BX_DOL_STUDIO_MT_CENTER] = $iResult ? $aMatch[2] : '';
+        $this->aItems[BX_DOL_STUDIO_MT_CENTER] = bx_idn_to_utf8(BX_DOL_URL_ROOT, true);
 
         $this->aItems[BX_DOL_STUDIO_MT_RIGHT] = array(
             'template' => 'menu_top_toolbar.html',

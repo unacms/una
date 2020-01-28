@@ -1897,4 +1897,34 @@ function bx_is_dynamic_request ()
     return bx_get('dynamic') || (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 'XMLHttpRequest' == $_SERVER['HTTP_X_REQUESTED_WITH']);
 }
 
+function bx_idn_to_utf8($sUrl, $bReturnDomain = false)
+{
+    return bx_idn_to('idn_to_utf8', $sUrl, $bReturnDomain);
+}
+
+function bx_idn_to_ascii($sUrl, $bReturnDomain = false)
+{
+    return bx_idn_to('idn_to_ascii', $sUrl, $bReturnDomain);
+}
+
+function bx_idn_to($sMethod, $sUrl, $bReturnDomain = false)
+{
+    $aUrl = parse_url($sUrl);
+    if($aUrl === false)
+        return $sUrl;
+
+    $sResult = $aUrl['host'];
+    if(function_exists($sMethod))
+        $sResult = $sMethod($sResult);
+
+    if($bReturnDomain)
+        return $sResult;
+
+    $sResult = (!empty($aUrl['scheme']) ? $aUrl['scheme'] . '://' : '' ) . $sResult;
+    $sResult = $sResult . (!empty($aUrl['path']) ? $aUrl['path'] : '');
+    $sResult = $sResult . (!empty($aUrl['query']) ? '?' . $aUrl['query'] : '');
+
+    return $sResult;
+}
+
 /** @} */
