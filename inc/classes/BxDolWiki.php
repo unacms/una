@@ -279,6 +279,37 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         }
     }
 
+    public function actionAdd ()
+    {
+        $iCellId = (int)bx_get('cell_id');
+        $sPage = bx_get('page');
+        $oPage = BxDolPage::getObjectInstance($sPage);
+        if (!$oPage)
+            return array('code' => 4, 'actions' => array('ShowMsg'), 'msg' => _t('_sys_txt_error_occured'));
+
+        if ($this->_aObject['module'] != $oPage->getModule())
+            return array('code' => 5, 'actions' => array('ShowMsg'), 'msg' => _t('_sys_txt_access_denied'));
+
+        $aBlock = array(
+            'object' => $sPage,
+            'cell_id' => $iCellId,
+            'module' => $this->_aObject['module'],
+            'title_system' => '',
+            'title' => '',
+            'designbox_id' => 0, // TODO: add to params
+            'visible_for_levels' => 2147483647, 
+            'type' => 'wiki',
+            'deletable' => 1,
+            'copyable' => 0,
+            'active' => 1,
+        );
+        $oQueryPageBuilder = new BxDolStudioBuilderPageQuery();
+        if (!($iBlockId = $oQueryPageBuilder->insertBlock($aBlock)))
+            return array('code' => 6, 'actions' => array('ShowMsg'), 'msg' => _t('_sys_txt_error_occured'));
+
+        return array('code' => 0, 'block_id' => $iBlockId, 'cell_id' => $iCellId);
+    }
+
     public function actionDeleteBlock ()
     {
         $iBlockId = (int)bx_get('block_id');
@@ -289,7 +320,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
 
         $this->_oQuery->deleteAllRevisions($iBlockId);
 
-        return array('code' => 0, 'actions' => array('Reload', 'ShowMsg'), 'block_id' => $iBlockId, 'msg' => _t('_sys_wiki_block_deleted'));
+        return array('code' => 0, 'actions' => array('DeleteBlock', 'ShowMsg'), 'block_id' => $iBlockId, 'msg' => _t('_sys_wiki_block_deleted'));
     }
     public function actionHistory ()
     {
