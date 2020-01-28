@@ -39,3 +39,7 @@
 .bx-wiki-history-cell-rev {
     text-align:center;
 }
+.bx-wiki-add-block {
+    border:1px dashed #aaa; 
+    text-align:center;
+}

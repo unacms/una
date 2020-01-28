@@ -73,7 +73,7 @@ class BxBaseServiceWiki extends BxDol
      * @code bx_srv('system', 'wiki_action', [...], 'TemplServiceWiki'); @endcode
      * 
      * Perform WIKI action.
-     * @param $sUri categories object name
+     * @param $sWikiObjectUri wiki object URI
      * 
      * @see BxBaseServiceWiki::serviceWikiAction
      */
@@ -105,19 +105,14 @@ class BxBaseServiceWiki extends BxDol
      * @page service Service Calls
      * @section bx_system_general System Services 
      * @subsection bx_system_general-wiki Wiki
-     * @subsubsection bx_system_general-wiki_page wiki_page
+     * @subsubsection bx_system_general-wiki_controls wiki_controls
      * 
-     * @code bx_srv('system', 'wiki_page', ["index"], 'TemplServiceWiki'); @endcode
-     * @code {{~system:wiki_page:TemplServiceWiki["index"]~}} @endcode
+     * Get wiki block controls panel
      * 
-     * Add controls for edit, delete, translate, history, etc content
-     * @param $sUri categories object name
-     * 
-     * @see BxBaseServiceWiki::serviceWikiPage
-     * @param $iBlockId block ID
+     * @see BxBaseServiceWiki::serviceWikiControls
      */
     /** 
-     * @ref bx_system_general-wiki_page "wiki_page"
+     * @ref bx_system_general-wiki_controls "wiki_controls"
      */
     public function serviceWikiControls ($oWikiObject, $aWikiVer, $aWikiVerLatest, $sBlockId)
     {
@@ -150,6 +145,35 @@ class BxBaseServiceWiki extends BxDol
                 'wiki_action_uri' => $oWikiObject->getWikiUri(),
                 't_confirm_block_deletion' => _t('_sys_wiki_confirm_block_deletion'),
             )),
+        ));
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-wiki Wiki
+     * @subsubsection bx_system_general-wiki_add_block wiki_add_block
+     * 
+     * Get "add wiki block" panel
+     * 
+     * @see BxBaseServiceWiki::serviceWikiAddBlock
+     */
+    /** 
+     * @ref bx_system_general-wiki_add_block "wiki_add_block"
+     */
+    public function serviceWikiAddBlock ($oWikiObject, $sPageObject, $sCellId)
+    {
+        $this->_addCssJs ();
+        if (!preg_match("/cell_(\d+)/", $sCellId, $aMatches))
+            return '';
+        $iCellId = $aMatches[1];
+
+        $o = BxDolTemplate::getInstance();        
+        return $o->parseHtmlByName('wiki_add_block.html', array(
+            'add_block' => _t('_sys_wiki_add_block'),
+            'page' => $sPageObject,
+            'cell_id' => $iCellId,
+            'action_uri' => $oWikiObject->getWikiUri(),
         ));
     }
 

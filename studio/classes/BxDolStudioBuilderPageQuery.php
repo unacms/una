@@ -383,7 +383,9 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
         $aFields['order'] = $this->getBlockOrderMax($aFields['object']) + 1;
 
         $sSql = "INSERT INTO `sys_pages_blocks` SET " . $this->arrayToSQL($aFields);
-        return (int)$this->query($sSql) > 0;
+        if (!$this->query($sSql))
+            return false;
+        return $this->lastId();
     }
 
     function updateBlock($iId, $aFields)

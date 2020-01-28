@@ -3123,5 +3123,6 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_wiki_revisions_deleted"><![CDATA[{0} revisions were deleted]]></string>
     <string name="_sys_wiki_confirm_block_deletion"><![CDATA[Are you sure you want to permanently delete this block with all revisions and translations?]]></string>
     <string name="_sys_wiki_block_deleted"><![CDATA[Block was successfully deleted]]></string>
+    <string name="_sys_wiki_add_block"><![CDATA[Add Block]]></string>
 	
 </resources>

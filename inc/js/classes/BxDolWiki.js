@@ -99,13 +99,12 @@ BxDolWiki.prototype.onDeleteVersion = function () {
 };
 
 BxDolWiki.prototype.onDeleteBlock = function () {
-    if (!confirm(this._oOptions.t_confirm_block_deletion))
-        return;
-
     var self = this;
-    $.post(this._sActionUrl + 'delete-block', {block_id: this._oOptions.block_id}, function (oData) {
-        self.processResponce(oData);
-    }, 'json');
+    bx_confirm(this._oOptions.t_confirm_block_deletion, function () {
+        $.post(self._sActionUrl + 'delete-block', {block_id: self._oOptions.block_id}, function (oData) {
+            self.processResponce(oData);
+        }, 'json');
+    });
 };
 
 BxDolWiki.prototype.onHistory = function () {
@@ -130,7 +129,7 @@ BxDolWiki.prototype.processResponce = function (oResponce) {
 }
 
 BxDolWiki.prototype.actionShowMsg = function (oResponce) {
-    alert(oResponce.msg);
+    bx_alert(oResponce.msg);
 }
 
 BxDolWiki.prototype.actionClosePopup = function (oResponce) {
@@ -144,6 +143,10 @@ BxDolWiki.prototype.actionClosePopup = function (oResponce) {
 }
 BxDolWiki.prototype.actionReload = function (oResponce) {
     loadDynamicBlock(oResponce.block_id, document.location.href);
+}
+
+BxDolWiki.prototype.actionDeleteBlock = function (oResponce) {
+    $('#bx-page-block-' + oResponce.block_id).remove();
 }
 
 BxDolWiki.prototype.popup = function (sAction) {
@@ -160,5 +163,22 @@ BxDolWiki.prototype.popup = function (sAction) {
     // show new popup
     $(window).dolPopupAjax({url: sActionUrl, closeOnOuterClick: false});
 };
+
+function bx_wiki_add_block(e, sPage, iCellId, sActionUri) {
+    var sActionUrl = sUrlRoot + 'r.php?_q=' + sActionUri + '-action/';
+    bx_loading($(e), true);
+    $.post(sActionUrl + 'add', {page: sPage, cell_id: iCellId}, function (oData) {
+        bx_loading($(e), false);
+        if ('undefined' !== typeof(oData.code)) {
+            if (0 == oData.code) {
+                $(e).parents('.bx-wiki-add-block').before('<div class="bx-page-block-container bx-def-padding-sec-topbottom" id="bx-page-block-' + oData.block_id + '">');
+                loadDynamicBlock(oData.block_id, document.location.href);
+            }
+            else {
+                bx_alert(oData.msg);
+            }
+        }
+    }, 'json');
+}
 
 /** @} */

@@ -3103,5 +3103,6 @@
     <string name="_sys_wiki_revisions_deleted"><![CDATA[{0} ревизий было удалено]]></string>
     <string name="_sys_wiki_confirm_block_deletion"><![CDATA[Подтвердите удаление блока со всей историей и переводами?]]></string>
     <string name="_sys_wiki_block_deleted"><![CDATA[Блок был успешно удален]]></string>
+    <string name="_sys_wiki_add_block"><![CDATA[Добавить блок]]></string>
 
 </resources>
