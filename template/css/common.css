@@ -385,7 +385,7 @@ body > .bx-popup-wrapper {
 }
 
 .bx-popup-full-screen .bx-popup .bx-popup-close-wrapper {
-	display:block !important;
+    display: flex !important;
 }
 
 /* --------------- notification boxes */
