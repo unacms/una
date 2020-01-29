@@ -3201,7 +3201,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
         $sError = '_sys_txt_access_denied';
 
-        $aContentInfo = $this->_oTemplate->getDataCached($aContentInfo);
+        $aContentInfo = array_merge($aContentInfo, $this->_oTemplate->getDataCached($aContentInfo));
         if($aContentInfo === false)
             return _t($sError);
 
