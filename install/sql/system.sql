@@ -3204,7 +3204,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('sys_privacy_group_custom', 'system', 'do_cancel', '_sys_form_ps_gc_input_caption_do_cancel', '', 0, 'button', '_sys_form_ps_gc_input_caption_system_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0),
 
 ('sys_wiki', 'system', 'block_id', '', '', 0, 'hidden', '', '_sys_form_wiki_input_caption_block_id', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
-('sys_wiki', 'system', 'lang', '', '', 0, 'radio_set', '', '_sys_form_wiki_input_caption_lang', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
+('sys_wiki', 'system', 'language', '', '', 0, 'radio_set', '', '_sys_form_wiki_input_caption_lang', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('sys_wiki', 'system', 'content_main', '', '', 0, 'custom', '', '_sys_form_wiki_input_caption_content_main', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('sys_wiki', 'system', 'content', '', '', 0, 'textarea', '', '_sys_form_wiki_input_caption_content', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('sys_wiki', 'system', 'notes', '', '', 0, 'text', '', '_sys_form_wiki_input_caption_notes', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
@@ -3350,7 +3350,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_privacy_group_custom_manage', 'do_cancel', 2147483647, 1, 10),
 
 ('sys_wiki_edit', 'block_id', 2147483647, 1, 1),
-('sys_wiki_edit', 'lang', 2147483647, 1, 2),
+('sys_wiki_edit', 'language', 2147483647, 1, 2),
 ('sys_wiki_edit', 'content', 2147483647, 1, 3),
 ('sys_wiki_edit', 'notes', 2147483647, 1, 4),
 ('sys_wiki_edit', 'do_submit', 2147483647, 1, 5),
@@ -3359,7 +3359,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 
 ('sys_wiki_translate', 'block_id', 2147483647, 1, 1),
 ('sys_wiki_translate', 'content_main', 2147483647, 1, 2),
-('sys_wiki_translate', 'lang', 2147483647, 1, 3),
+('sys_wiki_translate', 'language', 2147483647, 1, 3),
 ('sys_wiki_translate', 'content', 2147483647, 1, 4),
 ('sys_wiki_translate', 'notes', 2147483647, 1, 5),
 ('sys_wiki_translate', 'do_submit', 2147483647, 1, 6),
@@ -4922,7 +4922,7 @@ CREATE TABLE IF NOT EXISTS `sys_pages_wiki_blocks` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `block_id` int(11) NOT NULL,
   `revision` int(11) NOT NULL,
-  `lang` varchar(5) NOT NULL,
+  `language` varchar(5) NOT NULL,
   `main_lang` tinyint(4) NOT NULL DEFAULT '0',
   `profile_id` int(10) UNSIGNED NOT NULL,
   `content` mediumtext NOT NULL,
@@ -4930,7 +4930,7 @@ CREATE TABLE IF NOT EXISTS `sys_pages_wiki_blocks` (
   `notes` varchar(255) NOT NULL,
   `added` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `block_lang_rev` (`block_id`,`lang`,`revision`)
+  UNIQUE KEY `block_lang_rev` (`block_id`,`language`,`revision`)
 );
 
 -- --------------------------------------------------------

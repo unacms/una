@@ -193,11 +193,11 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
 
     public function actionGetTranslation ()
     {
-        $aWikiVer = $this->_oQuery->getBlockContent ((int)bx_get('block_id'), bx_get('lang'), false, false);
+        $aWikiVer = $this->_oQuery->getBlockContent ((int)bx_get('block_id'), bx_get('language'), false, false);
         if (!$aWikiVer)
             return array('code' => 1, 'actions' => 'ShowMsg', 'msg' => 'no translation was found');
         else
-            return array('code' => 0, 'lang' => $aWikiVer['lang'], 'content' => $aWikiVer['content'], 'block_id' => $aWikiVer['block_id']);
+            return array('code' => 0, 'language' => $aWikiVer['language'], 'content' => $aWikiVer['content'], 'block_id' => $aWikiVer['block_id']);
     }
 
     public function actionDeleteVersion ()
@@ -231,9 +231,9 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
                     'name' => 'block_id',
                     'value' => $iBlockId,
                 ),
-                'lang' => array(
+                'language' => array(
                     'type' => 'hidden',
-                    'name' => 'lang',
+                    'name' => 'language',
                     'value' => $sLang,
                 ),
                 'revision' => array(
@@ -329,7 +329,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         $oLang = BxDolLanguages::getInstance();
 
         $aVars = $this->getVarsForHistory($iBlockId, $sLang);
-        $aVars['lang'] = $oLang->getLangTitle($oLang->getLangId($sLang));
+        $aVars['language'] = $oLang->getLangTitle($oLang->getLangId($sLang));
         $aVars['close'] = _t('_sys_close');
         $aVars['msg'] = $aVars['bx_repeat:revisions'] ? '' : _t('_sys_wiki_error_no_revs');
         return BxDolTemplate::getInstance()->parseHtmlByName('wiki_history.html', $aVars);
@@ -367,9 +367,9 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         if (!$aWikiVer) { // check for new block, so initialize with default values
             $aWikiVer = array('block_id' => $iBlockId);
             if ($bTranslate)
-                $aWikiVer['lang'] = $sLangForTranslate;
+                $aWikiVer['language'] = $sLangForTranslate;
             else
-                $aWikiVer['lang'] = bx_lang_name();
+                $aWikiVer['language'] = bx_lang_name();
         }
 
         // init form object
@@ -377,8 +377,8 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         if (!$oForm)
             return _t('_sys_txt_error_occured');
 
-        if (isset($oForm->aInputs['lang']))
-            $oForm->aInputs['lang']['values'] = $aLangsForInput;
+        if (isset($oForm->aInputs['language']))
+            $oForm->aInputs['language']['values'] = $aLangsForInput;
         if (isset($oForm->aInputs['content_main']) && $sMainLangLabel) {
             $oForm->aInputs['content_main']['caption'] = $sMainLangLabel;
             $oForm->aInputs['content_main']['content'] = $aWikiVerMain ? BxDolTemplate::getInstance()->parseHtmlByName('wiki_content.html', array('content' => $aWikiVerMain['content'])) : '';
@@ -395,7 +395,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
             ));
         } 
         else {
-            $sLang = $oForm->getCleanValue('lang');
+            $sLang = $oForm->getCleanValue('language');
 
             // get previous revision with priority for current language
             $aWikiVer = $this->_oQuery->getBlockContent ($iBlockId, $sLang);
@@ -419,7 +419,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
             // process translations if available
             if (($sTranslations = bx_get('translations')) && ($aTranslations = json_decode($sTranslations, true))) {
                 foreach ($aTranslations as $sLang => $sContent) {
-                    if ($sLang == $oForm->getCleanValue('lang'))
+                    if ($sLang == $oForm->getCleanValue('language'))
                         continue;
 
                     // get previous revision with priority for current language
@@ -437,14 +437,14 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
                             'main_lang' => $bMainLang, 
                             'profile_id' => bx_get_logged_profile_id(),
                             'unsafe' => $bUnsafe,
-                            'lang' => $sLang,
+                            'language' => $sLang,
                             'content' => $sContent,
                         ));
                     }
                 }
             }
 
-            return array('code' => 0, 'actions' => array('Reload', 'ClosePopup'), 'block_id' => $aWikiVer['block_id']);
+            return array('code' => 0, 'actions' => array('Reload', 'ClosePopup'), 'block_id' => $iBlockId);
         }
     }
 
@@ -462,12 +462,12 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
 
     protected function getFieldRev ($oForm, $sLang, $aWikiVer) {
         // increase revision for particular language or start with first revision
-        return $aWikiVer && $sLang == $aWikiVer['lang'] ? $aWikiVer['revision'] + 1 : 1;
+        return $aWikiVer && $sLang == $aWikiVer['language'] ? $aWikiVer['revision'] + 1 : 1;
     }
 
     protected function getFieldMainLangFlag ($oForm, $sLang, $aWikiVer) {
         // detect main language flag
-        if ($aWikiVer && $sLang == $aWikiVer['lang']) 
+        if ($aWikiVer && $sLang == $aWikiVer['language']) 
             return $aWikiVer['main_lang']; // when revision is increased (language matches) - copy this flag from previous revision
         elseif (!$aWikiVer) 
             return 1; // when it's first revision and no translations - start as main language
@@ -477,7 +477,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
 
     protected function getFieldUnsafeFlag ($oForm, $sLang, $aWikiVer) {
 
-        if ($aWikiVer && $sLang == $aWikiVer['lang'] && !$aWikiVer['unsafe'])
+        if ($aWikiVer && $sLang == $aWikiVer['language'] && !$aWikiVer['unsafe'])
             return 0; // copy 'unsafe' from previous revision only when unsafe = 0
         else
             return $this->isAllowed('unsafe') ? 1 : 0; // in other cases - check permissions

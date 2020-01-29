@@ -141,7 +141,7 @@ class BxBaseServiceWiki extends BxDol
             'info' => $sInfo,
             'options' => json_encode(array(
                 'block_id' => $sBlockId,
-                'lang' => isset($aWikiVer['lang']) ? $aWikiVer['lang'] : bx_lang_name(),
+                'language' => isset($aWikiVer['language']) ? $aWikiVer['language'] : bx_lang_name(),
                 'wiki_action_uri' => $oWikiObject->getWikiUri(),
                 't_confirm_block_deletion' => _t('_sys_wiki_confirm_block_deletion'),
             )),
