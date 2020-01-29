@@ -16,15 +16,15 @@ class BxBaseFormWiki extends BxTemplFormView
     {
         parent::__construct($aInfo, $oTemplate);
 
-        if (isset($this->aInputs['lang']))
-            $this->aInputs['lang']['values'] = BxDolLanguages::getInstance()->getLanguages(false, true);
+        if (isset($this->aInputs['language']))
+            $this->aInputs['language']['values'] = BxDolLanguages::getInstance()->getLanguages(false, true);
         if (isset($this->aInputs['content']))
             $this->aInputs['content']['code'] = true;
     }
 
     function genLabel(&$aInput)
     {
-        if (isset($aInput['label']) && $aInput['label'] && ('lang' == $aInput['name'] || 'content_main' == $aInput['name'])) {
+        if (isset($aInput['label']) && $aInput['label'] && ('language' == $aInput['name'] || 'content_main' == $aInput['name'])) {
             $sInputID = $this->getInputId($aInput);
             return '<label for="' . $sInputID . '">' . $aInput['label'] . '</label>';
         }

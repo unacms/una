@@ -12,7 +12,7 @@ function BxDolWiki (sObject, eContainer, oOptions) {
     this._sObject = sObject;
     this._eCont = eContainer;
     this._sActionUrl = sUrlRoot + 'r.php?_q=' + this._oOptions.wiki_action_uri + '-action/';
-    this._sCurrentLang = this._oOptions['lang'];
+    this._sCurrentLang = this._oOptions['language'];
     this._oTranslations = {};
     this.bindEvents();    
 }
@@ -51,7 +51,7 @@ BxDolWiki.prototype.loadingForm = function (b) {
     var eForm = $("#bx-wiki-form-" + this._oOptions.block_id);
     if (b)
         $(eForm).find("textarea[name=content]").val('');
-    $(eForm).find("textarea[name=content],input[name=lang],button[type=submit]").prop('disabled', b);
+    $(eForm).find("textarea[name=content],input[name=language],button[type=submit]").prop('disabled', b);
 }
 
 BxDolWiki.prototype.onChangeLangSelector = function (e) {
@@ -68,7 +68,7 @@ BxDolWiki.prototype.onChangeLangSelector = function (e) {
         self.loadingForm(true);
         var sUrl = bx_append_url_params(sUrlRoot + 'r.php?_q=' + this._oOptions.wiki_action_uri + '-action/get-translation', {
             block_id: this._oOptions.block_id,
-            lang: sLangNew,
+            language: sLangNew,
         });
         $.getJSON(sUrl, function (oData) {
             if ('undefined' !== typeof(oData.content))
@@ -154,7 +154,7 @@ BxDolWiki.prototype.popup = function (sAction) {
     var self = this;
     var sActionUrl = bx_append_url_params(this._sActionUrl + sAction, {
         block_id: this._oOptions.block_id,
-        lang: this._sCurrentLang,
+        language: this._sCurrentLang,
     });
 
     // remove previous popup

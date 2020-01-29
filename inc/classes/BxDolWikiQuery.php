@@ -53,19 +53,19 @@ class BxDolWikiQuery extends BxDolDb
     public function getBlockContent ($iBlockId, $sLang, $iRevision = false, $bAutoMainLang = true)
     {
         $sWhere = '';
-        $aBind = array('block' => $iBlockId, 'lang' => $sLang);
+        $aBind = array('block' => $iBlockId, 'language' => $sLang);
         if (false !== $iRevision) {
             $sWhere = " AND `revision` = :rev";
             $aBind['rev'] = $iRevision;
         }
 
         // get latest revision for specific language
-        $aRow = $this->getRow("SELECT `block_id`, `revision`, `profile_id`, `lang`, `main_lang`, `content`, `unsafe`, `notes`, `added` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `lang` = :lang $sWhere ORDER BY `revision` DESC LIMIT 1", $aBind);
+        $aRow = $this->getRow("SELECT `block_id`, `revision`, `profile_id`, `language`, `main_lang`, `content`, `unsafe`, `notes`, `added` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `language` = :language $sWhere ORDER BY `revision` DESC LIMIT 1", $aBind);
 
         // if translation isn't found for specific language then get latest revision for main language 
         if ($bAutoMainLang && !$aRow) {
-            unset($aBind['lang']);
-            $aRow = $this->getRow("SELECT `block_id`, `revision`, `profile_id`, `lang`, `main_lang`, `content`, `unsafe`, `notes`, `added` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `main_lang` = 1 $sWhere ORDER BY `revision` DESC LIMIT 1", $aBind);
+            unset($aBind['language']);
+            $aRow = $this->getRow("SELECT `block_id`, `revision`, `profile_id`, `language`, `main_lang`, `content`, `unsafe`, `notes`, `added` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `main_lang` = 1 $sWhere ORDER BY `revision` DESC LIMIT 1", $aBind);
         }
 
         return $aRow ? $aRow : false;
@@ -73,14 +73,14 @@ class BxDolWikiQuery extends BxDolDb
 
     public function getBlockHistory ($iBlockId, $sLang)
     {
-        $aBind = array('block' => $iBlockId, 'lang' => $sLang);
-        return $this->getAll("SELECT `block_id`, `lang`, `revision`, `profile_id`, `notes`, `added` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `lang` = :lang ORDER BY `revision` DESC", $aBind);
+        $aBind = array('block' => $iBlockId, 'language' => $sLang);
+        return $this->getAll("SELECT `block_id`, `language`, `revision`, `profile_id`, `notes`, `added` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `language` = :language ORDER BY `revision` DESC", $aBind);
     }
 
     public function deleteRevisions ($iBlockId, $sLang, $aRevisions)
     {
-        $aBind = array('block' => $iBlockId, 'lang' => $sLang);
-        $i = $this->query("DELETE FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `lang` = :lang AND `revision` IN(" . $this->implode_escape($aRevisions) . ")", $aBind);
+        $aBind = array('block' => $iBlockId, 'language' => $sLang);
+        $i = $this->query("DELETE FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `language` = :language AND `revision` IN(" . $this->implode_escape($aRevisions) . ")", $aBind);
         if ($i) { 
             // check if main language revisions was deleted
             $aRow = $this->getOne("SELECT `block_id` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `main_lang` = 1 LIMIT 1", array('block' => $iBlockId));
