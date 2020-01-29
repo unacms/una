@@ -354,6 +354,9 @@ div.bx-account-unit-online {
     display: -webkit-flex;
     display: flex;
 }
+.sys-cpf-submenu-cnt ul.bx-menu-submenu-more-auto {
+    line-height: normal;
+}
 .sys-cpf-submenu-cnt ul li {
     border-radius: 0;
 
