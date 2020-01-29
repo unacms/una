@@ -27,4 +27,6 @@ tests/vendor
 tests/composer.phar
 samples/img/*
 modules/boonex/ether
+modules/boonex/market_api
+modules/boonex/una_mods
 modules/vendor
