@@ -296,23 +296,35 @@ body > .bx-popup-wrapper {
 
 .bx-popup-element-close:hover,
 .bx-popup-element-close {
-    position:absolute;
-    top:0;
-    right:0;
-    text-decoration:none;
-    line-height:1.8rem;
+    position: absolute;
+    width: 1.5rem;
+    height: 1.5rem;
+    top: 0;
+    right: 0;
+    text-decoration: none;
+    line-height: 1.5rem;
+    font-size: 1.875rem !important;
 }
 
 .bx-popup-slide-wrapper {
-	width:100%;
+    width:100%;
 
-	background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.9);
 }
-
 .bx-popup-slide-wrapper li {
     text-align:right;
 }
 
+.bx-popup-trans-wrapper .bx-popup-close-wrapper {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: flex-end;
+    justify-content: flex-end;
+}
+.bx-popup-trans-wrapper .bx-popup-close-wrapper .bx-popup-element-close {
+    position: relative;
+    line-height: 1.2rem;
+}
 .bx-popup-image-wrapper .bx-popup-close-wrapper,
 .bx-popup-image-wrapper .bx-popup-element-close {
     display:none;
