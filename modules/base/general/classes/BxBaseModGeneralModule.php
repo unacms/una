@@ -71,13 +71,6 @@ class BxBaseModGeneralModule extends BxDolModule
     }
 
     // ====== SERVICE METHODS
-
-    public function serviceIsSafeService($s)
-    {
-        $sService = bx_gen_method_name($s);
-        $aSafeServices = $this->serviceGetSafeServices();
-        return isset($aSafeServices[$sService]);
-    }
     
     public function serviceIsBadgesAvaliable()
     {
