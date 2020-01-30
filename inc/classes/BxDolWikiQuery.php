@@ -92,6 +92,11 @@ class BxDolWikiQuery extends BxDolDb
         return $i;
     }
 
+    public function getPages ()
+    {
+        return $this->getAll("SELECT `title`, `uri` FROM `sys_objects_page` WHERE `module` = ?", array($this->_aObject['module']));
+    }
+
     public function insertPage ($sUri, $sUrl, $sTitleLangKey, $iType = 1, $iLayoutId = 5, $iVisibleForLevels = 2147483647, $sClass = 'BxTemplPageWiki')
     {
         $b = $this->query('INSERT INTO `sys_objects_page` SET

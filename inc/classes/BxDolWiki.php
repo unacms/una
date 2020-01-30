@@ -152,6 +152,26 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         return $s . $sControls;
     }
 
+    public function getContents ()
+    {
+        if (!($a = $this->_oQuery->getPages()))
+            return '';
+
+        $aVars = array('bx_repeat:pages' => array());
+        foreach ($a as $r) {
+            $sUrl = BX_DOL_URL_ROOT . 'r.php?_q=' . $this->_aObject['uri'] . '/' . $r['uri'];
+            $sUrl = BxDolPermalinks::getInstance()->permalink($sUrl);
+            $aVars['bx_repeat:pages'][] = array(
+                'url' => $sUrl,
+                'title' => _t($r['title']),
+            );
+        }
+        usort($aVars['bx_repeat:pages'], function ($r1, $r2) {
+            return strcmp($r1['title'], $r2['title']);
+        });
+        return BxDolTemplate::getInstance()->parseHtmlByName('wiki_contents.html', $aVars);
+    }
+
     /**
      * Check if partucular action is allowed
      * @param $sType action type: add, edit, delete, translate

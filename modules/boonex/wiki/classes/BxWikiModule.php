@@ -15,6 +15,38 @@ class BxWikiModule extends BxDolModule
     {
         parent::__construct($aModule);
     }
+
+    public function serviceGetSafeServices()
+    {
+        return array (
+            'Contents' => '',
+        );
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_wiki Wiki
+     * @subsection bx_wiki-browse Browse
+     * @subsubsection bx_wiki-contents contents
+     * 
+     * @code bx_srv('bx_wiki', 'contents'); @endcode
+     * 
+     * Wiki contents - list of pages
+     * @code {{~bx_wiki:contents~}} @endcode
+     *
+     * @see BxWikiModule::serviceContents
+     */
+    /** 
+     * @ref bx_wiki-contents "contents"
+     */
+    public function serviceContents ()
+    {
+        if (!($oWiki = BxDolWiki::getObjectInstance($this->getName())))
+            return '';
+        
+        return $oWiki->getContents();
+    }
+
 }
 
 /** @} */
