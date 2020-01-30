@@ -92,6 +92,41 @@ class BxDolWikiQuery extends BxDolDb
         return $i;
     }
 
+    public function insertPage ($sUri, $sUrl, $sTitleLangKey, $iType = 1, $iLayoutId = 5, $iVisibleForLevels = 2147483647, $sClass = 'BxTemplPageWiki')
+    {
+        $b = $this->query('INSERT INTO `sys_objects_page` SET
+            `object` = :obj,
+            `uri` = :uri,
+            `title` = :title,
+            `module` = :module,
+            `cover` = :cover,
+            `type_id` = :type,
+            `layout_id` = :layout,
+            `visible_for_levels` = :levels, 
+            `visible_for_levels_editable` = 1,
+            `url` = :url,
+            `cache_lifetime` = 0,
+            `cache_editable` = 1,
+            `deletable` = 1,
+            `override_class_name` = :class
+        ', array(
+            'obj' => $this->_aObject['module'] . '_' . str_replace('-', '_', $sUri),
+            'uri' => $sUri,
+            'title' => $sTitleLangKey,
+            'module' => $this->_aObject['module'],
+            'cover' => 0,
+            'type' => $iType,
+            'layout' => $iLayoutId,
+            'levels' => $iVisibleForLevels,
+            'url' => $sUrl,
+            'class' => $sClass,
+        ));
+        if (!$b)
+            return false;
+
+        return $this->lastId();
+    }
+
     public static function deleteAllRevisions ($mixedBlockIds)
     {
         $oDb = BxDolDb::getInstance();

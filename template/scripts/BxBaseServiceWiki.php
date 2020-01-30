@@ -49,11 +49,21 @@ class BxBaseServiceWiki extends BxDol
 
             if ($oWiki->isAllowed('add')) {
                 $oPage = BxDolPage::getObjectInstanceByURI($sUri);
-                if ($oPage) {
-                    $oTemplate = BxDolTemplate::getInstance();
+                $oTemplate = BxDolTemplate::getInstance();
+                if ($oPage) {                    
                     $oTemplate->displayErrorOccured(_t("_sys_wiki_error_page_exists", bx_process_output($sUri)));
                 } else {
-                    echo "TODO: wiki - suggest to create page with specified URI. Display form where user can enter title(text input), text(plain textrea), languale (selectbox with currect site languages with current one pre-selected), revision comments (text input), title - will be page and first block title, text - will be content for first block. Default layout is page with one column and block without borders and title.";
+                    $this->_addCssJs (true);
+                    $s = $oTemplate->parseHtmlByName('wiki_create_page.html', array(
+                        'page_uri' => bx_process_output($sUri),
+                        'action_uri' => $oWiki->getWikiUri(),
+                        'create_page' => _t('_sys_wiki_add_page'),
+                        'text' => _t('_sys_wiki_add_page_text'),
+                    ));
+                    $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
+                    $oTemplate->setPageHeader (_t('_sys_wiki_add_page'));
+                    $oTemplate->setPageContent ('page_main_code', $s);
+                    $oTemplate->getPageCode();
                 }
             } 
             else {
@@ -137,7 +147,6 @@ class BxBaseServiceWiki extends BxDol
             'obj' => $oWikiObject->getObjectName(),
             'block_id' => $sBlockId,
             'menu' => $oMenu->getCode(),
-            // 'TODO: On right - Last modified time and List of missing and outdated translations. History and Last modified time should be controlled by regular menu privacy, while other actions should have custom privacy for particular wiki object',
             'info' => $sInfo,
             'options' => json_encode(array(
                 'block_id' => $sBlockId,
@@ -202,7 +211,7 @@ class BxBaseServiceWiki extends BxDol
         return $a;
     }
 
-    protected function _addCssJs ()
+    protected function _addCssJs ($bAddPage = false)
     {
         if ($this->_bJsCssAdded)
             return false;
@@ -210,6 +219,8 @@ class BxBaseServiceWiki extends BxDol
         $o = BxDolTemplate::getInstance();
         $o->addCss('wiki.css');
         $o->addJs('BxDolWiki.js');
+        if ($bAddPage)
+            $o->addJs('studio/js/|forms.js');
         $this->_bJsCssAdded = true;
     }
 }

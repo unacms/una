@@ -47,6 +47,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
 {
     protected $_sObject;
     protected $_aObject;
+    protected $_sLangCateg = 'Wiki';
 
     /**
      * Constructor
@@ -170,6 +171,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
 
         $aTypes = array(
             'add' => 'allow_add_for_levels',
+            'add-page' => 'allow_add_for_levels',
             'edit' => 'allow_edit_for_levels',
             'translate' => 'allow_translate_for_levels',
             'delete-version' => 'allow_delete_for_levels',
@@ -279,13 +281,125 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         }
     }
 
+    public function actionAddPage ()
+    {
+        // validate page URI
+        $sPageUri = strtolower(bx_get('page'));
+        if (!preg_match("/^[a-z0-9_-]+$/", $sPageUri))
+            return _t('_sys_wiki_error_incorrect_page_uri', bx_process_output($sPageUri));
+
+        // check if such page exist
+        $oPage1 = BxDolPage::getObjectInstanceByUri($sPageUri);
+        $oPage2 = BxDolPage::getObjectInstance($this->_aObject['module'] . str_replace('-', '_', $sPageUri));
+        if ($oPage1 || $oPage2)
+            return _t('_sys_wiki_error_page_exists', bx_process_output($sPageUri));
+
+        // get lang category where translations will be added
+        $oLang = BxDolStudioLanguagesUtils::getInstance();
+        $iLangCat = $oLang->getLanguageCategory($this->_sLangCateg);
+        if (!$iLangCat)
+            return _t('_sys_wiki_error_occured', 9);
+
+        // set default values for the form
+        $aValues = array();
+        $aLangs = $oLang->getLanguages(false, true);
+        foreach ($aLangs as $sKey => $sLang)
+            $aValues[$sKey] = ucfirst($sPageUri);
+
+        // init form
+        $aForm = array(
+            'form_attrs' => array(
+                'name' => 'bx-wiki-create-page',
+                'method' => 'post',
+            ),
+            'params' => array (
+                'db' => array(
+                    'submit_name' => 'do_submit',
+                ),
+            ),
+            'inputs' => array(
+                'page' => array(
+                    'type' => 'hidden',
+                    'name' => 'page',
+                    'value' => $sPageUri,
+                ),
+                'title' => array(
+                    'type' => 'text_translatable',
+                    'name' => 'title',
+                    'caption' => _t('_adm_bp_txt_page_title'),
+                    'info' => _t('_adm_bp_dsc_page_title'),
+                    'value' => '',
+                    'values' => $aValues,
+                    'required' => '1',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                    'checker' => array (
+                        'func' => 'LengthTranslatable',
+                        'params' => array(3,100, 'title'),
+                        'error' => _t('_adm_bp_err_page_title'),
+                    ),
+                ),
+                'buttons' => array(
+                    'type' => 'input_set',
+                    array(
+                        'type' => 'submit',
+                        'name' => 'do_submit',
+                        'value' => _t('_Submit'),
+                    ),
+                    array(
+                        'type' => 'reset',
+                        'name' => 'close',
+                        'value' => _t('_sys_close'),
+                        'attrs' => array(
+                            'onclick' => "$('.bx-popup-applied:visible').dolPopupHide();",
+                            'class' => "bx-def-margin-sec-left",
+                        ),
+                    ),
+                ),
+            ),
+        );
+
+        $oForm = new BxTemplStudioFormView ($aForm);
+        $oForm->initChecker();
+
+        if ($oForm->isSubmittedAndValid ()) {
+
+            // insert page
+            $sLangKey = '_' . $this->_aObject['module'] . '_' . str_replace('-', '_', $sPageUri) . '_' . time();
+            $sUrl = 'r.php?_q=' . $this->_aObject['uri'] . '/' . $sPageUri;
+            $iPageId = $this->_oQuery->insertPage ($sPageUri, $sUrl, $sLangKey);
+            if (!$iPageId)
+                return array('code' => 10, 'actions' => array('ShowMsg'), 'msg' => _t('_sys_wiki_error_occured', 10));
+
+            // insert translations
+            $aLangs = $oLang->getLanguages(true, true);
+            foreach ($aLangs as $iLangId => $sLangTitle) {
+                $sLang = $oLang->getLangName($iLangId);
+                if (!($sVal = $oForm->getCleanValue('title-' . $sLang)))
+                    continue;
+                $oLang->addLanguageString($sLangKey, $sVal, $iLangId, $iLangCat);
+            }
+
+            return array('code' => 0, 'url' => BxDolPermalinks::getInstance()->permalink($sUrl));
+        }
+        else {
+            // display form
+            return BxDolTemplate::getInstance()->parseHtmlByName('wiki_create_page_form.html', array(
+                'form' => $oForm->getCode(),
+                'wiki_action_uri' => $this->getWikiUri(),
+                'action' => 'add-page',
+            ));
+        }
+    }
+
     public function actionAdd ()
     {
         $iCellId = (int)bx_get('cell_id');
         $sPage = bx_get('page');
         $oPage = BxDolPage::getObjectInstance($sPage);
         if (!$oPage)
-            return array('code' => 4, 'actions' => array('ShowMsg'), 'msg' => _t('_sys_txt_error_occured'));
+            return array('code' => 4, 'actions' => array('ShowMsg'), 'msg' => _t('_sys_wiki_error_occured', 4));
 
         if ($this->_aObject['module'] != $oPage->getModule())
             return array('code' => 5, 'actions' => array('ShowMsg'), 'msg' => _t('_sys_txt_access_denied'));
@@ -306,7 +420,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         );
         $oQueryPageBuilder = new BxDolStudioBuilderPageQuery();
         if (!($iBlockId = $oQueryPageBuilder->insertBlock($aBlock)))
-            return array('code' => 6, 'actions' => array('ShowMsg'), 'msg' => _t('_sys_txt_error_occured'));
+            return array('code' => 6, 'actions' => array('ShowMsg'), 'msg' => _t('_sys_wiki_error_occured', 6));
 
         return array('code' => 0, 'block_id' => $iBlockId, 'cell_id' => $iCellId);
     }
@@ -317,7 +431,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
 
         $oQueryPageBuilder = new BxDolStudioBuilderPageQuery();
         if (!$oQueryPageBuilder->deleteBlocks(array('type' => 'by_id', 'value' => $iBlockId)))
-            return array('code' => 3, 'actions' => array('ShowMsg'), 'block_id' => $iBlockId, 'msg' => _t('_sys_txt_error_occured'));
+            return array('code' => 3, 'actions' => array('ShowMsg'), 'block_id' => $iBlockId, 'msg' => _t('_sys_wiki_error_occured', 3));
 
         $this->_oQuery->deleteAllRevisions($iBlockId);
 
@@ -376,7 +490,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         // init form object
         $oForm = BxDolForm::getObjectInstance('sys_wiki', $bTranslate ? 'sys_wiki_translate' : 'sys_wiki_edit');
         if (!$oForm)
-            return _t('_sys_txt_error_occured');
+            return _t('_sys_wiki_error_occured', 12);
 
         if (isset($oForm->aInputs['language']))
             $oForm->aInputs['language']['values'] = $aLangsForInput;
