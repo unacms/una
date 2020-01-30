@@ -39,9 +39,15 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
             $aItemAddons = $this->_oModule->_oConfig->s2a($sItemAddons);
 
             foreach($aItemAddons as $sItemAddon)
-                $aItem['addons'][] = array(
-                    'id' => $sItemAddon
-                );
+                if(!isset($aItem['addons'][$sItemAddon]))
+                    $aItem['addons'][$sItemAddon] = array(
+                        'id' => $sItemAddon,
+                        'quantity' => 1
+                    );
+                else 
+                    $aItem['addons'][$sItemAddon]['quantity'] += 1;
+
+            $aItem['addons'] = array_values($aItem['addons']);
         }
         $aClient = $this->_oModule->getProfileInfo($iClientId);
 

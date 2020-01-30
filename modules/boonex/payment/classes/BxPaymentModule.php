@@ -14,8 +14,6 @@ define('BX_PAYMENT_ORDERS_TYPE_PROCESSED', 'processed');
 define('BX_PAYMENT_ORDERS_TYPE_SUBSCRIPTION', 'subscription');
 define('BX_PAYMENT_ORDERS_TYPE_HISTORY', 'history');
 
-define('BX_PAYMENT_EMPTY_ID', 0);
-
 define('BX_PAYMENT_RESULT_SUCCESS', 0);
 
 define('BX_PAYMENT_SBS_STATUS_SCHEDULED', 'scheduled');

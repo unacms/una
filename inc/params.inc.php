@@ -51,9 +51,11 @@ if (!defined('BX_DOL_MODULE_TYPE_MODULE')) {
     define('BX_DOL_MODULE_TYPE_TEMPLATE', 'template');
 }
 
-//--- Payment types ---//
+//--- Payment settings ---//
 define('BX_PAYMENT_TYPE_SINGLE', 'single');
 define('BX_PAYMENT_TYPE_RECURRING', 'recurring');
+
+define('BX_PAYMENT_EMPTY_ID', 0);
 
 //--- Studio settings ---//
 define('BX_DOL_STUDIO_FOLDER', 'studio');
