@@ -43,3 +43,10 @@
     border:1px dashed #aaa; 
     text-align:center;
 }
+.bx-wiki-create-page {
+    text-align:center;
+}
+.bx-wiki-create-page button {
+    float:none;
+    display:inline-block;
+}
