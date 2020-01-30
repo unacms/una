@@ -177,6 +177,31 @@ class BxBaseServiceWiki extends BxDol
         ));
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-wiki Wiki
+     * @subsubsection bx_system_general-get_design_boxes get_design_boxes
+     * 
+     * Get "design boxes" array
+     * 
+     * @see BxBaseServiceWiki::serviceGetDesignBoxes
+     */
+    /** 
+     * @ref bx_system_general-get_design_boxes "get_design_boxes"
+     */
+    public function serviceGetDesignBoxes ()
+    {
+        $o = new BxDolStudioBuilderPageQuery();
+        $aItems = array();
+        if (!$o->getDesignBoxes(array('type' => 'all'), $aItems, false))
+            return array();
+        $a = array();
+        foreach($aItems as $r)
+            $a[$r['id']] = _t($r['title']);
+        return $a;
+    }
+
     protected function _addCssJs ()
     {
         if ($this->_bJsCssAdded)

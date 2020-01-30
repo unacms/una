@@ -290,13 +290,14 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         if ($this->_aObject['module'] != $oPage->getModule())
             return array('code' => 5, 'actions' => array('ShowMsg'), 'msg' => _t('_sys_txt_access_denied'));
 
+        $iDesignBox = getParam($this->_aObject['module'] . '_design_box');
         $aBlock = array(
             'object' => $sPage,
             'cell_id' => $iCellId,
             'module' => $this->_aObject['module'],
             'title_system' => '',
             'title' => '',
-            'designbox_id' => 0, // TODO: add to params
+            'designbox_id' => false === $iDesignBox ? 0 : $iDesignBox,
             'visible_for_levels' => 2147483647, 
             'type' => 'wiki',
             'deletable' => 1,

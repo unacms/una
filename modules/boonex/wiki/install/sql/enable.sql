@@ -1,4 +1,18 @@
 
+-- Settings
+
+SET @iTypeOrder = (SELECT MAX(`order`) FROM `sys_options_types` WHERE `group` = 'modules');
+INSERT INTO `sys_options_types`(`group`, `name`, `caption`, `icon`, `order`) VALUES 
+('modules', 'bx_wiki', '_bx_wiki', 'bx_wiki@modules/boonex/wiki/|std-icon.svg', IF(ISNULL(@iTypeOrder), 1, @iTypeOrder + 1));
+SET @iTypeId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
+VALUES (@iTypeId, 'bx_wiki', '_bx_wiki', 1);
+SET @iCategId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
+('bx_wiki_design_box', '0', @iCategId, '_bx_wiki_option_design_box', 'select', '', '', '', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:16:"get_design_boxes";s:5:"class";s:16:"TemplServiceWiki";}', 10);
+
 -- Wiki object
 
 INSERT INTO `sys_objects_wiki` (`object`, `uri`, `title`, `module`, `allow_add_for_levels`, `allow_edit_for_levels`, `allow_delete_for_levels`, `allow_translate_for_levels`, `allow_unsafe_for_levels`, `override_class_name`, `override_class_file`) VALUES
