@@ -7,13 +7,13 @@ INSERT INTO `sys_objects_page` (`object`, `uri`, `title_system`, `title`, `modul
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `hidden_on`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
 ('bx_wiki_home', 1, 'bx_wiki', '', '_bx_wiki_block_contents', 0, 2147483647, '0', 'wiki', '', 0, 1, 1, 1);
 SET @iBlockId = LAST_INSERT_ID();
-INSERT INTO `sys_pages_wiki_blocks` (`block_id`, `revision`, `lang`, `main_lang`, `profile_id`, `content`, `notes`, `added`) VALUES
+INSERT INTO `sys_pages_wiki_blocks` (`block_id`, `revision`, `language`, `main_lang`, `profile_id`, `content`, `notes`, `added`) VALUES
 (@iBlockId, 1, 'en', 1, 0, '# Contents\r\n\r\n{{~bx_wiki:contents~}}', 'Initial version', UNIX_TIMESTAMP());
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `hidden_on`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
 ('bx_wiki_home', 2, 'bx_wiki', '', '_bx_wiki_block_home', 0, 2147483647, '0', 'wiki', '', 0, 1, 1, 1);
 SET @iBlockId = LAST_INSERT_ID();
-INSERT INTO `sys_pages_wiki_blocks` (`block_id`, `revision`, `lang`, `main_lang`, `profile_id`, `content`, `notes`, `added`) VALUES
+INSERT INTO `sys_pages_wiki_blocks` (`block_id`, `revision`, `language`, `main_lang`, `profile_id`, `content`, `notes`, `added`) VALUES
 (@iBlockId, 1, 'en', 1, 0, '# Wiki Home\r\n\r\nInsert **your content** here', 'Initial version', UNIX_TIMESTAMP());
 
 
