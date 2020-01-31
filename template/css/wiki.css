@@ -28,15 +28,13 @@
     max-width:37.5rem;
 }
 .bx-wiki-del-rev,
+.bx-wiki-translations,
 .bx-wiki-history {
     border-collapse:collapse;
 }
-.bx-wiki-del-rev-cell-profile,
-.bx-wiki-del-rev-cell-time,
-.bx-wiki-del-rev-cell-rev,
-.bx-wiki-history-cell-profile,
-.bx-wiki-history-cell-time,
-.bx-wiki-history-cell-rev {
+.bx-wiki-cell-profile,
+.bx-wiki-cell-time,
+.bx-wiki-cell-rev {
     text-align:center;
 }
 .bx-wiki-add-block {
@@ -49,4 +47,9 @@
 .bx-wiki-create-page button {
     float:none;
     display:inline-block;
+}
+.bx-wiki-trans {
+    -webkit-transition: background-color 1500ms linear;
+    -ms-transition: background-color 1500ms linear;
+    transition: background-color 1500ms linear;
 }

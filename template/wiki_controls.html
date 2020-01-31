@@ -4,4 +4,14 @@
 </div>
 <script>
     window.glBxDolWiki__block_id__ = new BxDolWiki('__obj__', $('#bx-page-wiki-container-__block_id__'), __options__);
+    if (location.hash.length) {
+        var e = $('#' + location.hash.substr(1));
+        e.css('background-color', 'yellow');
+        setTimeout(function () {
+            e.addClass('bx-wiki-trans');
+            setTimeout(function () {
+                e.css('background-color', 'transparent');
+            }, 1500);
+        }, 100);
+    }
 </script>

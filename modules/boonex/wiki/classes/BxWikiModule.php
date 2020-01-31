@@ -20,19 +20,21 @@ class BxWikiModule extends BxDolModule
     {
         return array (
             'Contents' => '',
+            'MissingTranslations' => '',
+            'OutdatedTranslations' => '',
         );
     }
 
     /**
      * @page service Service Calls
      * @section bx_wiki Wiki
-     * @subsection bx_wiki-browse Browse
+     * @subsection bx_wiki-macros Macros
      * @subsubsection bx_wiki-contents contents
      * 
      * @code bx_srv('bx_wiki', 'contents'); @endcode
+     * @code {{~bx_wiki:contents~}} @endcode
      * 
      * Wiki contents - list of pages
-     * @code {{~bx_wiki:contents~}} @endcode
      *
      * @see BxWikiModule::serviceContents
      */
@@ -47,6 +49,55 @@ class BxWikiModule extends BxDolModule
         return $oWiki->getContents();
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_wiki Wiki
+     * @subsection bx_wiki-macros Macros
+     * @subsubsection bx_wiki-missing_translations missing_translations
+     * 
+     * @code bx_srv('bx_wiki', 'missing_translations'); @endcode
+     * @code {{~bx_wiki:missing_translations["ru"]~}} @endcode
+     * 
+     * Get list of blocks with missing translations
+     * @param $sLang language to get missing translations for
+     *
+     * @see BxWikiModule::serviceMissingTranslations
+     */
+    /** 
+     * @ref bx_wiki-missing_translations "missing_translations"
+     */
+    public function serviceMissingTranslations ($sLang)
+    {
+        if (!($oWiki = BxDolWiki::getObjectInstance($this->getName())))
+            return '';
+        
+        return $oWiki->getMissingTranslations($sLang);
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_wiki Wiki
+     * @subsection bx_wiki-macros Macros
+     * @subsubsection bx_wiki-outdated_translations outdated_translations
+     * 
+     * @code bx_srv('bx_wiki', 'outdated_translations'); @endcode
+     * @code {{~bx_wiki:outdated_translations["ru"]~}} @endcode
+     * 
+     * Get list of blocks with outdated translations
+     * @param $sLang language to get outdated translations for
+     *
+     * @see BxWikiModule::serviceOutdatedTranslations
+     */
+    /** 
+     * @ref bx_wiki-outdated_translations "outdated_translations"
+     */
+    public function serviceOutdatedTranslations ($sLang)
+    {
+        if (!($oWiki = BxDolWiki::getObjectInstance($this->getName())))
+            return '';
+        
+        return $oWiki->getOutdatedTranslations($sLang);
+    }
 }
 
 /** @} */

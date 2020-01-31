@@ -142,7 +142,8 @@ BxDolWiki.prototype.actionClosePopup = function (oResponce) {
         this.removePopup();
 }
 BxDolWiki.prototype.actionReload = function (oResponce) {
-    loadDynamicBlock(oResponce.block_id, document.location.href);
+    var l = document.location;
+    loadDynamicBlock(oResponce.block_id, l.hash.length ? l.href.replace(l.hash, '') : l.href);
 }
 
 BxDolWiki.prototype.actionDeleteBlock = function (oResponce) {

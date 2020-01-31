@@ -51,16 +51,20 @@ class BxDolWikiQuery extends BxDolDb
      * @return array with wiki block info
      */
     public function getBlockContent ($iBlockId, $sLang, $iRevision = false, $bAutoMainLang = true)
-    {
+    {        
         $sWhere = '';
-        $aBind = array('block' => $iBlockId, 'language' => $sLang);
-        if (false !== $iRevision) {
-            $sWhere = " AND `revision` = :rev";
-            $aBind['rev'] = $iRevision;
-        }
+        $aRow = false;
+        $aBind = array('block' => $iBlockId);
+        if (false !== $sLang) {            
+            $aBind['language'] = $sLang;
+            if (false !== $iRevision) {
+                $sWhere = " AND `revision` = :rev";
+                $aBind['rev'] = $iRevision;
+            }
 
-        // get latest revision for specific language
-        $aRow = $this->getRow("SELECT `block_id`, `revision`, `profile_id`, `language`, `main_lang`, `content`, `unsafe`, `notes`, `added` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `language` = :language $sWhere ORDER BY `revision` DESC LIMIT 1", $aBind);
+            // get latest revision for specific language
+            $aRow = $this->getRow("SELECT `block_id`, `revision`, `profile_id`, `language`, `main_lang`, `content`, `unsafe`, `notes`, `added` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `language` = :language $sWhere ORDER BY `revision` DESC LIMIT 1", $aBind);
+        }
 
         // if translation isn't found for specific language then get latest revision for main language 
         if ($bAutoMainLang && !$aRow) {
@@ -77,6 +81,31 @@ class BxDolWikiQuery extends BxDolDb
         return $this->getAll("SELECT `block_id`, `language`, `revision`, `profile_id`, `notes`, `added` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block AND `language` = :language ORDER BY `revision` DESC", $aBind);
     }
 
+    public function getBlocksWithMissingTranslations ($sLang)
+    {
+        $aBind = array('lang' => $sLang, 'module' => $this->_aObject['module']);
+        return $this->getColumn("
+            SELECT `wo`.`block_id`
+            FROM `sys_pages_wiki_blocks` AS `wo`
+            INNER JOIN `sys_pages_blocks` AS `b` ON (`wo`.`block_id` = `b`.`id` AND `b`.`module` = :module)
+            LEFT JOIN `sys_pages_wiki_blocks` AS `wt` ON (`wo`.`block_id` = `wt`.`block_id` AND `wt`.`language` = :lang AND `wt`.`main_lang` != 1)            
+            WHERE `wo`.`main_lang` = 1 AND `wo`.`language` != :lang AND `wt`.`block_id` IS NULL
+            GROUP BY `wo`.`block_id`", $aBind);
+    }
+
+    public function getBlocksWithOutdatedTranslations ($sLang)
+    {
+        $aBind = array('lang' => $sLang, 'module' => $this->_aObject['module']);
+        return $this->getColumn("
+            SELECT `wo`.`block_id`
+            FROM `sys_pages_wiki_blocks` AS `wo`
+            INNER JOIN `sys_pages_blocks` AS `b` ON (`wo`.`block_id` = `b`.`id` AND `b`.`module` = :module)
+            INNER JOIN `sys_pages_wiki_blocks` AS `wt` ON (`wo`.`block_id` = `wt`.`block_id` AND `wt`.`language` = :lang AND `wt`.`main_lang` != 1)
+            WHERE `wo`.`main_lang` = 1 AND `wo`.`language` != :lang
+            GROUP BY `wo`.`block_id`
+            HAVING MAX(`wt`.`added`) < MAX(`wo`.`added`)", $aBind);
+    }
+
     public function deleteRevisions ($iBlockId, $sLang, $aRevisions)
     {
         $aBind = array('block' => $iBlockId, 'language' => $sLang);
@@ -90,6 +119,11 @@ class BxDolWikiQuery extends BxDolDb
             }
         }
         return $i;
+    }
+
+    public function getPageByBlockId ($iBlockId)
+    {
+        return $this->getRow("SELECT `p`.`title`, `p`.`uri` FROM `sys_objects_page` AS `p` INNER JOIN `sys_pages_blocks` AS `b` ON (`p`.`object` = `b`.`object` AND `b`.`id` = ? AND `p`.`module` = ?) LIMIT 1", array($iBlockId, $this->_aObject['module']));
     }
 
     public function getPages ()

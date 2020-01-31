@@ -2280,10 +2280,10 @@
     <string name="_sys_form_display_wiki_translate"><![CDATA[Вики: перевод]]></string>
 	<string name="_sys_form_wiki_input_caption_block_id"><![CDATA[Идентификатор блока]]></string>
 	<string name="_sys_form_wiki_input_caption_lang"><![CDATA[Язык]]></string>
-    <string name="_sys_form_wiki_input_caption_lang_info"><![CDATA[★ - основной язык, красным помечен отсутствующий или устаревший перевод]]></string>
+    <string name="_sys_form_wiki_input_caption_lang_info"><![CDATA[★ - основной(оригинальный) язык, красным помечен отсутствующий или устаревший перевод]]></string>
     <string name="_sys_form_wiki_input_caption_lang_err"><![CDATA[Пожалуйста выберите значение]]></string>
 	<string name="_sys_form_wiki_input_caption_content"><![CDATA[Содержимое]]></string>
-    <string name="_sys_form_wiki_input_caption_content_main"><![CDATA[Основное содержимое]]></string>
+    <string name="_sys_form_wiki_input_caption_content_main"><![CDATA[Основное(оригинальное) содержимое]]></string>
 	<string name="_sys_form_wiki_input_caption_notes"><![CDATA[Заметки]]></string>
 	<string name="_sys_form_wiki_input_caption_submit"><![CDATA[Сохранить]]></string>
 	<string name="_sys_format_size_b"><![CDATA[{0} байт]]></string>
@@ -3097,6 +3097,7 @@
     <string name="_sys_wiki_error_missing_wiki_object"><![CDATA[Вики объект ({0}) не найден]]></string>
     <string name="_sys_wiki_error_action_not_allowed"><![CDATA[Не разрешенное действие ({0}) для вики объекта ({1})]]></string>
     <string name="_sys_wiki_error_incorrect_page_uri"><![CDATA["{0}" - неправильная ссылка на страницу]]></string>
+    <string name="_sys_wiki_error_no_such_lang"><![CDATA[Нет такого языка]]></string>
     <string name="_sys_wiki_error_occured"><![CDATA[Ошибка (код:{0})]]></string>
     <string name="_sys_wiki_view_rev"><![CDATA[Версия <b>{0}</b> от <a href="{1}">{2}</a>, {3}]]></string>
     <string name="_sys_wiki_lang_mask"><![CDATA[{0} {1} <span class="bx-def-font-grayed bx-def-font-small">{2}</span>]]></string>
@@ -3108,4 +3109,12 @@
     <string name="_sys_wiki_add_block"><![CDATA[Добавить блок]]></string>
 	<string name="_sys_wiki_add_page"><![CDATA[Добавить страницу]]></string>
 	<string name="_sys_wiki_add_page_text"><![CDATA[Такой вики страницы не существует.]]></string>
+	<string name="_sys_wiki_no_missing_translations"><![CDATA[Все переводы на {0} язык присутствуют.]]></string>
+	<string name="_sys_wiki_all_translations_up_to_date"><![CDATA[Все переводы на {0} язык обновлены.]]></string>
+    <string name="_sys_wiki_title_title"><![CDATA[Страница]]></string>
+    <string name="_sys_wiki_title_lang_missing"><![CDATA[Отсут. язык]]></string>
+    <string name="_sys_wiki_title_author"><![CDATA[{0} автор]]></string>
+    <string name="_sys_wiki_title_content"><![CDATA[{0} содержимое]]></string>
+    <string name="_sys_wiki_title_time"><![CDATA[{0} обновлен]]></string>
+    <string name="_sys_wiki_orig"><![CDATA[Ориг.]]></string>
 </resources>

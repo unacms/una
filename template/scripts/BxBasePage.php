@@ -401,7 +401,6 @@ class BxBasePage extends BxDolPage
         } 
         else {
             $sContent = $oWiki->getBlockContent($aBlock['id'], false, (int)bx_get($aBlock['id'].'rev') ? (int)bx_get($aBlock['id'].'rev') : false);
-            $sContent = bx_process_macros($sContent);
         }
 
         $s = '<div id="bx-page-wiki-container-' . $aBlock['id'] . '" class="bx-page-wiki-container">' . $sContent . '</div>';
