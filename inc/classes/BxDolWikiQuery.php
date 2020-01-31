@@ -126,9 +126,14 @@ class BxDolWikiQuery extends BxDolDb
         return $this->getRow("SELECT `p`.`title`, `p`.`uri` FROM `sys_objects_page` AS `p` INNER JOIN `sys_pages_blocks` AS `b` ON (`p`.`object` = `b`.`object` AND `b`.`id` = ? AND `p`.`module` = ?) LIMIT 1", array($iBlockId, $this->_aObject['module']));
     }
 
-    public function getPages ()
+    public function getPages ($aAllExceptSpecified = array(), $aOnlySpecified = array())
     {
-        return $this->getAll("SELECT `title`, `uri` FROM `sys_objects_page` WHERE `module` = ?", array($this->_aObject['module']));
+        $sWhere = '';
+        if ($aOnlySpecified)
+            $sWhere = " AND `uri` IN(" . $this->implode_escape($aOnlySpecified) . ")";
+        elseif ($aAllExceptSpecified)
+            $sWhere = " AND `uri` NOT IN(" . $this->implode_escape($aAllExceptSpecified) . ")";
+        return $this->getAll("SELECT `title`, `uri`, `object` FROM `sys_objects_page` WHERE `module` = ?" . $sWhere, array($this->_aObject['module']));
     }
 
     public function insertPage ($sUri, $sUrl, $sTitleLangKey, $iType = 1, $iLayoutId = 5, $iVisibleForLevels = 2147483647, $sClass = 'BxTemplPageWiki')

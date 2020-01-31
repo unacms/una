@@ -270,6 +270,11 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         return true;
     }
 
+    public function isVisiblePage ()
+    {
+        return $this->_isVisiblePage($this->_aObject);
+    }
+
     /**
      * Replace provided markers in a string
      * @param $mixed string or array to replace markers in

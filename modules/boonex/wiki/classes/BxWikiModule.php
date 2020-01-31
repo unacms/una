@@ -35,18 +35,20 @@ class BxWikiModule extends BxDolModule
      * @code {{~bx_wiki:contents~}} @endcode
      * 
      * Wiki contents - list of pages
+     * @param $sAllExceptSpecified optional comma separated list of URIs of pages to filter out
+     * @param $sOnlySpecified optional comma separated list of URIs of pages to show only
      *
      * @see BxWikiModule::serviceContents
      */
     /** 
      * @ref bx_wiki-contents "contents"
      */
-    public function serviceContents ()
+    public function serviceContents ($sAllExceptSpecified = '', $sOnlySpecified = '')
     {
         if (!($oWiki = BxDolWiki::getObjectInstance($this->getName())))
             return '';
         
-        return $oWiki->getContents();
+        return $oWiki->getContents($sAllExceptSpecified, $sOnlySpecified);
     }
 
     /**

@@ -155,13 +155,18 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
     /**
      * Generate wiki contents - list of all wiki pages
      */
-    public function getContents ()
+    public function getContents ($sAllExceptSpecified = '', $sOnlySpecified = '')
     {
-        if (!($a = $this->_oQuery->getPages()))
+        $aAllExceptSpecified = $sAllExceptSpecified ? explode(',', $sAllExceptSpecified) : array();
+        $aOnlySpecified = $sOnlySpecified ? explode(',', $sOnlySpecified) : array();
+        if (!($a = $this->_oQuery->getPages($aAllExceptSpecified, $aOnlySpecified)))
             return '';
 
         $aVars = array('bx_repeat:pages' => array());
         foreach ($a as $r) {
+            $oPage = BxDolPage::getObjectInstance($r['object']);
+            if (!$oPage->isVisiblePage())
+                continue;
             $sUrl = $this->getPageUrl($r['uri']);
             $aVars['bx_repeat:pages'][] = array(
                 'url' => $sUrl,

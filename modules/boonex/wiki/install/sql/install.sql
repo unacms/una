@@ -8,7 +8,13 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 ('bx_wiki_home', 1, 'bx_wiki', '', '_bx_wiki_block_contents', 0, 2147483647, '0', 'wiki', '', 0, 1, 1, 1);
 SET @iBlockId = LAST_INSERT_ID();
 INSERT INTO `sys_pages_wiki_blocks` (`block_id`, `revision`, `language`, `main_lang`, `profile_id`, `content`, `notes`, `added`) VALUES
-(@iBlockId, 1, 'en', 1, 0, '# Contents\r\n\r\n{{~bx_wiki:contents~}}', 'Initial version', UNIX_TIMESTAMP());
+(@iBlockId, 1, 'en', 1, 0, '# Contents\r\n\r\n{{~bx_wiki:contents["wiki-missing-translations,wiki-outdated-translations"]~}}', 'Initial version', UNIX_TIMESTAMP());
+
+INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `hidden_on`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
+('bx_wiki_home', 1, 'bx_wiki', '', '_bx_wiki_block_administration', 0, 192, '0', 'wiki', '', 0, 1, 1, 2);
+SET @iBlockId = LAST_INSERT_ID();
+INSERT INTO `sys_pages_wiki_blocks` (`block_id`, `revision`, `language`, `main_lang`, `profile_id`, `content`, `notes`, `added`) VALUES
+(@iBlockId, 1, 'en', 1, 0, '# Administration\r\n\r\n{{~bx_wiki:contents["","wiki-missing-translations,wiki-outdated-translations"]~}}', 'Initial version', UNIX_TIMESTAMP());
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `hidden_on`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
 ('bx_wiki_home', 2, 'bx_wiki', '', '_bx_wiki_block_home', 0, 2147483647, '0', 'wiki', '', 0, 1, 1, 1);
@@ -16,6 +22,27 @@ SET @iBlockId = LAST_INSERT_ID();
 INSERT INTO `sys_pages_wiki_blocks` (`block_id`, `revision`, `language`, `main_lang`, `profile_id`, `content`, `notes`, `added`) VALUES
 (@iBlockId, 1, 'en', 1, 0, '# Wiki Home\r\n\r\nInsert **your content** here', 'Initial version', UNIX_TIMESTAMP());
 
+-- Wiki missing translations page
+
+INSERT INTO `sys_objects_page` (`object`, `uri`, `title_system`, `title`, `module`, `cover`, `cover_image`, `type_id`, `layout_id`, `submenu`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES
+('bx_wiki_missing_translations', 'wiki-missing-translations', '', '_bx_wiki_page_missing_translations', 'bx_wiki', 0, 0, 1, 5, '', 192, 1, 'r.php?_q=wiki/wiki-missing-translations', '', '', '', 0, 1, 0, 'BxTemplPageWiki', '');
+
+INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `hidden_on`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
+('bx_wiki_missing_translations', 1, 'bx_wiki', '', '_bx_wiki_block_missing_translations', 0, 192, '0', 'wiki', '', 0, 1, 1, 1);
+SET @iBlockId = LAST_INSERT_ID();
+INSERT INTO `sys_pages_wiki_blocks` (`block_id`, `revision`, `language`, `main_lang`, `profile_id`, `content`, `notes`, `added`) VALUES
+(@iBlockId, 1, 'en', 1, 0, '### Missing translations for English:\r\n\r\n{{~bx_wiki:missing_translations["en"]~}}', 'Initial version', UNIX_TIMESTAMP());
+
+-- Wiki outdated translations page
+
+INSERT INTO `sys_objects_page` (`object`, `uri`, `title_system`, `title`, `module`, `cover`, `cover_image`, `type_id`, `layout_id`, `submenu`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES
+('bx_wiki_outdated_translations', 'wiki-outdated-translations', '', '_bx_wiki_page_outdated_translations', 'bx_wiki', 0, 0, 1, 5, '', 192, 1, 'r.php?_q=wiki/wiki-outdated-translations', '', '', '', 0, 1, 0, 'BxTemplPageWiki', '');
+
+INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `hidden_on`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
+('bx_wiki_outdated_translations', 1, 'bx_wiki', '', '_bx_wiki_block_outdated_translations', 0, 192, '0', 'wiki', '', 0, 1, 1, 1);
+SET @iBlockId = LAST_INSERT_ID();
+INSERT INTO `sys_pages_wiki_blocks` (`block_id`, `revision`, `language`, `main_lang`, `profile_id`, `content`, `notes`, `added`) VALUES
+(@iBlockId, 1, 'en', 1, 0, '### Outdated translations for English:\r\n\r\n{{~bx_wiki:outdated_translations["en"]~}}', 'Initial version', UNIX_TIMESTAMP());
 
 -- Studio page and widget
 

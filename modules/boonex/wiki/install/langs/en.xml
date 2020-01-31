@@ -5,6 +5,12 @@
     <string name="_bx_wiki_object_title"><![CDATA[Wiki]]></string>
     <string name="_bx_wiki_page_home"><![CDATA[Wiki Home]]></string>
     <string name="_bx_wiki_block_home"><![CDATA[Wiki Home]]></string>
+    <string name="_bx_wiki_block_contents"><![CDATA[Contents]]></string>
+    <string name="_bx_wiki_block_administration"><![CDATA[Administration]]></string>
+    <string name="_bx_wiki_page_missing_translations"><![CDATA[Missing Translations]]></string>
+    <string name="_bx_wiki_block_missing_translations"><![CDATA[Missing Translations]]></string>
+    <string name="_bx_wiki_page_outdated_translations"><![CDATA[Outdated Translations]]></string>
+    <string name="_bx_wiki_block_outdated_translations"><![CDATA[Outdated Translations]]></string>
     <string name="_bx_wiki_menu_item_title_system_home"><![CDATA[Wiki]]></string>
     <string name="_bx_wiki_option_design_box"><![CDATA[Default design box for new block]]></string>
 </resources>
