@@ -86,7 +86,7 @@ define('BX_CMT_USAGE_DEFAULT', BX_CMT_USAGE_BLOCK);
  * @code
  * $o = new BxTemplCmts('value of ObjectName field', $iYourEntryId);
  * if ($o->isEnabled())
- *     echo $o->getCommentsFirst ();
+ *     echo $o->getCommentsBlock ();
  * @endcode
  *
  * Please note that you never need to use BxDolCmts class directly, use BxTemplCmts instead.
@@ -809,9 +809,11 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     public function isViewAllowed ($isPerformAction = false)
     {
-        $mixedResult = BxDolService::call($this->_aSystem['module'], 'check_allowed_comments_view', array($this->getId(), $this->getSystemName()));
-        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
-            return $mixedResult;
+        if (BxDolRequest::serviceExists($this->_aSystem['module'], 'check_allowed_comments_view')) {
+            $mixedResult = BxDolService::call($this->_aSystem['module'], 'check_allowed_comments_view', array($this->getId(), $this->getSystemName()));
+            if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+                return $mixedResult;
+        }
 
         return CHECK_ACTION_RESULT_ALLOWED;
     }
@@ -872,9 +874,11 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
 
     public function isPostAllowed ($isPerformAction = false)
     {
-        $mixedResult = BxDolService::call($this->_aSystem['module'], 'check_allowed_comments_post', array($this->getId(), $this->getSystemName()));
-        if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
-            return false;
+        if (BxDolRequest::serviceExists($this->_aSystem['module'], 'check_allowed_comments_post')) {
+            $mixedResult = BxDolService::call($this->_aSystem['module'], 'check_allowed_comments_post', array($this->getId(), $this->getSystemName()));
+            if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+                return false;
+        }
 
         return $this->checkAction ('comments post', $isPerformAction);
     }
@@ -1553,7 +1557,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     {
         $sModule = $this->_aSystem['module'];
         $oModule = BxDolModule::getInstance($sModule);
-        $CNF = $oModule->_oConfig->CNF;
+        $CNF = isset($oModule->_oConfig->CNF) ? $oModule->_oConfig->CNF : array();
 
         $aContentInfo = BxDolRequest::serviceExists($sModule, 'get_all') ? BxDolService::call($sModule, 'get_all', array(array('type' => 'id', 'id' => $this->getId()))) : array();
         $iContextId = 0;
