@@ -472,3 +472,10 @@ video.bx-player-embed {
     width:100vw;
     height:100vh;
 }
+
+/* --------------- Search */
+
+.bx-sys-search-results-pages {
+    text-align:left;
+    line-height:150%;
+}

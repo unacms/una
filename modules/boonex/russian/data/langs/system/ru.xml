@@ -2655,6 +2655,7 @@
     <string name="_sys_not_specified"><![CDATA[Не указано]]></string>
     <string name="_sys_on"><![CDATA[вкл.]]></string>
     <string name="_sys_off"><![CDATA[выкл.]]></string>
+    <string name="_sys_pages"><![CDATA[Страницы]]></string>
 	<string name="_sys_page_block_title_about"><![CDATA[Об...]]></string>
 	<string name="_sys_page_block_title_account_profile_create"><![CDATA[Создать профиль...]]></string>
 	<string name="_sys_page_block_title_account_profile_switcher"><![CDATA[Использовать сайт как ...]]></string>

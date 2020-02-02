@@ -199,13 +199,19 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
         if(!$iPermissions)
             return false;
 
-        if(false === $iProfileId) {
-            $oProfile = BxDolProfile::getInstance();
-            $iProfileId = $oProfile ? $oProfile->id() : 0;
-        }
+        return ($iPermissions & $this->getMemberLevelBit($iProfileId));
+    }
+
+    /**
+     * Get user's membership level bit for bitwise operarions
+     */
+    public function getMemberLevelBit($iProfileId = 0)
+    {
+        if (!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
 
         $aACL = $this->getMemberMembershipInfo($iProfileId);
-        return ($iPermissions & pow(2, $aACL['id'] - 1));
+        return pow(2, $aACL['id'] - 1);
     }
 
     /**
