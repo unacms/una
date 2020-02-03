@@ -818,6 +818,12 @@ class BxDolSearchResult implements iBxDolReplaceable
                    $sFieldTable = isset($aValue['table']) ? $aValue['table'] : $this->aCurrent['table'];
                    $sqlCondition = "`{$sFieldTable}`.`{$aValue['field']}` ";
                    switch ($aValue['operator']) {
+                       case 'empty value':
+                            $sqlCondition .= " = '' ";
+                            break;
+                       case 'not empty value':
+                            $sqlCondition .= " != '' ";
+                            break;
                        case 'nothing':
                             $sqlCondition = " 0 ";
                             break;
