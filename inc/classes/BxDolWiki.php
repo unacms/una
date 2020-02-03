@@ -679,8 +679,23 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
                 }
             }
 
+            // update indexing data
+            $this->updateBlockIndexingData($iBlockId);
+
             return array('code' => 0, 'actions' => array('Reload', 'ClosePopup'), 'block_id' => $iBlockId);
         }
+    }
+
+    protected function updateBlockIndexingData($iBlockId)
+    {
+        if (!($aLangs = $this->_oQuery->getBlockLangs ($iBlockId)))
+            return false;
+        $sText = '';
+        foreach ($aLangs as $sLang) {
+            $aWikiVer = $this->_oQuery->getBlockContent ($iBlockId, $sLang, false, false);
+            $sText .= trim(strip_tags($aWikiVer['content'])) . ' ';
+        }
+        return $this->_oQuery->updateBlockIndexingData ($iBlockId, $sText);
     }
 
     protected function getPageUrl ($sPageUri, $bPermalink = true, $bAddRootUrl = true)

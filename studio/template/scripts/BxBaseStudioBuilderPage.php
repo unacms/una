@@ -575,6 +575,9 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                         $aBlock['content'] = implode($this->sParamsDivider, array($iImageId, $sImageAlign));
                 }
 
+                // add indexing data
+                $aBlock = array_merge($aBlock, $this->getIndexingDataForBlock($aBlock['type'], $aBlock['content']));
+
                 if(!$this->oDb->insertBlock($aBlock)) {
                     if($sContentKey != "")
                         $oLanguage->deleteLanguageString($sContentKey);
@@ -786,7 +789,10 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         if($oForm->isSubmittedAndValid()) {
             $this->onSaveBlock($oForm, $aBlock);
 
-            if($oForm->update($iId) !== false)
+            // add indexing data
+            $aBlockAddon = $this->getIndexingDataForBlock($aBlock['type'], $oForm->getCleanValue('content'));
+
+            if($oForm->update($iId, $aBlockAddon) !== false)
                 return array('eval' => $sJsObject . '.onEditBlock(oData)');
             else
                 return array('msg' => _t('_adm_bp_err_block_edit'));
@@ -1787,6 +1793,19 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         $aTmplParams['menu'] = $oMenu->getCode();
 
         return $aTmplParams;
+    }
+
+    protected function getIndexingDataForBlock($sType, $sContent)
+    {
+        $aBlock = array();   
+        switch($sType) {
+            case BX_DOL_STUDIO_BP_BLOCK_HTML:
+            case BX_DOL_STUDIO_BP_BLOCK_RAW:
+                $aBlock['text'] = trim(strip_tags($sContent));
+                $aBlock['text_updated'] = time();
+                break;
+        }
+        return $aBlock;
     }
 }
 
