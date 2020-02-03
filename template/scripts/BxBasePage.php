@@ -209,7 +209,7 @@ class BxBasePage extends BxDolPage
      */
     public function getBlockTitle ($aBlock)
     {
-        return $this->_replaceMarkers(_t($aBlock['title']));
+        return $this->_replaceMarkers(_t($aBlock['title']), array('block_id' => $aBlock['id']));
     }
 
     /**
@@ -372,7 +372,7 @@ class BxBasePage extends BxDolPage
     protected function _getBlockRaw ($aBlock)
     {
         $s = '<div class="bx-page-raw-container">' . BxDolTemplate::getInstance()->parseHtmlByContent($aBlock['content'], array()) . '</div>';
-        $s = $this->_replaceMarkers($s);
+        $s = $this->_replaceMarkers($s, array('block_id' => $aBlock['id']));
         $s = bx_process_macros($s);
         return $s;
     }
@@ -384,7 +384,7 @@ class BxBasePage extends BxDolPage
     protected function _getBlockHtml ($aBlock)
     {
         $s = '<div class="bx-page-html-container">' . $aBlock['content'] . '</div>';
-        $s = $this->_replaceMarkers($s);
+        $s = $this->_replaceMarkers($s, array('block_id' => $aBlock['id']));
         $s = bx_process_macros($s);
         return $s;
     }
@@ -401,11 +401,10 @@ class BxBasePage extends BxDolPage
         } 
         else {
             $sContent = $oWiki->getBlockContent($aBlock['id'], false, (int)bx_get($aBlock['id'].'rev') ? (int)bx_get($aBlock['id'].'rev') : false);
-            $sContent = bx_process_macros($sContent);
         }
 
         $s = '<div id="bx-page-wiki-container-' . $aBlock['id'] . '" class="bx-page-wiki-container">' . $sContent . '</div>';
-        $s = $this->_replaceMarkers($s);
+        $s = $this->_replaceMarkers($s, array('block_id' => $aBlock['id']));
         $s = bx_process_macros($s);
         return $s;
     }
@@ -417,7 +416,7 @@ class BxBasePage extends BxDolPage
     protected function _getBlockLang ($aBlock)
     {
         $s = '<div class="bx-page-lang-container">' . _t(trim($aBlock['content'])) . '</div>';
-        $s = $this->_replaceMarkers($s);
+        $s = $this->_replaceMarkers($s, array('block_id' => $aBlock['id']));
         $s = bx_process_macros($s);
         return $s;
     }

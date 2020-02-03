@@ -29,6 +29,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return array(
             'GetCreatePostForm' => 'BxBaseServices',
             'KeywordSearch' => 'BxBaseServices',
+            'Cmts' => 'BxBaseServices',
 
             'CreateAccountForm' => 'BxBaseServiceAccount',
             'ForgotPassword' => 'BxBaseServiceAccount',
@@ -317,6 +318,33 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return $oSearch->response();
     }
     
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-general General
+     * @subsubsection bx_system_general-cmts cmts
+     * 
+     * @code bx_srv('system', 'cmts', ["sys_blocks", 1], 'TemplServices'); @endcode
+     * 
+     * @code {{~system:cmts:TemplServices["sys_blocks", 1]~}} @endcode
+     * 
+     * Comments block
+     * @param $sObject - comments object name
+     * @param $sId - content id assiciated tith the comments
+     * 
+     * @see BxBaseServices::serviceCmts
+     */
+    /** 
+     * @ref bx_system_general-cmts "cmts"
+     */
+    public function serviceCmts ($sObject, $sId)
+    {
+        $o = BxDolCmts::getObjectInstance($sObject, $sId);
+        if (!$o || !$o->isEnabled())
+            return '';
+        return $o->getCommentsBlock(array(), array('in_designbox' => false, 'show_empty' => true));
+    }
+
     public function _serviceProfileFunc ($sFunc, $iContentId, $aParams = array())
     {
         if (!$iContentId)

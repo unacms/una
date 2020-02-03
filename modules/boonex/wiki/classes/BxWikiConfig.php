@@ -9,11 +9,22 @@
  * @{
  */
 
-class BxWikiConfig extends BxDolModuleConfig
+class BxWikiConfig extends BxBaseModGeneralConfig
 {
     function __construct($aModule)
     {
         parent::__construct($aModule);
+
+        $this->CNF = array_merge($this->CNF, array (
+
+            // module icon
+            'ICON' => 'fab wikipedia-w',
+
+            // some language keys
+            'T' => array (
+                'txt_sample_single' => '_bx_wiki_txt_sample_single',
+            ),
+        ));
     }
 }
 

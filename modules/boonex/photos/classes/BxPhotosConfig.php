@@ -152,7 +152,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
                 'txt_media_exif_aperture' => '_bx_photos_txt_aperture',
                 'txt_media_exif_shutter_speed' => '_bx_photos_txt_shutter_speed',
                 'txt_media_exif_shutter_speed_value' => '_bx_photos_txt_shutter_speed_value',
-                'txt_media_exif_iso' => '_bx_photos_txt_album_iso',
+                'txt_media_exif_iso' => '_bx_photos_txt_iso',
             ),
         );
 

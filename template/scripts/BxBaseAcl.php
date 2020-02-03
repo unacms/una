@@ -29,9 +29,10 @@ class BxBaseAcl extends BxDolAcl
 
 		
 		$aCheck = checkActionModule($iLoggedProfileId, 'show membership private info', 'system', false);
+		$oProfile = BxDolProfile::getInstance($iLoggedProfileId);
 		
         $aTmplVarsPrivateInfo = array();
-        $bTmplVarsPrivateInfo = ((BxDolProfile::getInstance($iProfileId)->getAccountId() == BxDolProfile::getInstance($iLoggedProfileId)->getAccountId() || $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED) && !empty($aLevel['date_starts']));
+        $bTmplVarsPrivateInfo = ($oProfile && (BxDolProfile::getInstance($iProfileId)->getAccountId() == $oProfile->getAccountId() || $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED) && !empty($aLevel['date_starts']));
         if($bTmplVarsPrivateInfo)
             $aTmplVarsPrivateInfo = array(
                 'date_start' => bx_time_js($aLevel['date_starts']),

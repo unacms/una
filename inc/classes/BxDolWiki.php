@@ -153,6 +153,126 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
     }
 
     /**
+     * Generate wiki contents - list of all wiki pages
+     */
+    public function getContents ($sAllExceptSpecified = '', $sOnlySpecified = '')
+    {
+        $aAllExceptSpecified = $sAllExceptSpecified ? explode(',', $sAllExceptSpecified) : array();
+        $aOnlySpecified = $sOnlySpecified ? explode(',', $sOnlySpecified) : array();
+        if (!($a = $this->_oQuery->getPages($aAllExceptSpecified, $aOnlySpecified)))
+            return '';
+
+        $aVars = array('bx_repeat:pages' => array());
+        foreach ($a as $r) {
+            $oPage = BxDolPage::getObjectInstance($r['object']);
+            if (!$oPage->isVisiblePage())
+                continue;
+            $sUrl = $this->getPageUrl($r['uri']);
+            $aVars['bx_repeat:pages'][] = array(
+                'url' => $sUrl,
+                'title' => _t($r['title']),
+            );
+        }
+        usort($aVars['bx_repeat:pages'], function ($r1, $r2) {
+            return strcmp($r1['title'], $r2['title']);
+        });
+        return BxDolTemplate::getInstance()->parseHtmlByName('wiki_contents.html', $aVars);
+    }
+
+    /**
+     * Generate list of wiki blocks with missing translations for the given language
+     */
+    public function getMissingTranslations ($sLang = false)
+    {
+        if (!$sLang)
+            $sLang = bx_lang_name();
+
+        if (!$this->isAllowed('edit') && !$this->isAllowed('translate') || !preg_match("/^[a-z]+$/", $sLang))
+            return _t('_sys_txt_access_denied');
+
+        if (!BxDolLanguages::getInstance()->getLangId($sLang))
+            return _t('_sys_wiki_error_no_such_lang');
+
+        $a = $this->_oQuery->getBlocksWithMissingTranslations($sLang);
+        if (!$a)
+            return _t('_sys_wiki_no_missing_translations', $sLang);
+
+        $aVars = array(
+            'title_title' => _t('_sys_wiki_title_title'),
+            'title_lang' => _t('_sys_wiki_title_lang_missing'),
+            'title_author' => _t('_sys_wiki_title_author', _t('_sys_wiki_orig')),
+            'title_content' => _t('_sys_wiki_title_content', _t('_sys_wiki_orig')),
+            'title_time' => _t('_sys_wiki_title_time', _t('_sys_wiki_orig')),
+            'bx_repeat:blocks' => array()
+        );
+        foreach ($a as $iBlockId) {
+            $aWikiVerMain = $this->_oQuery->getBlockContent ($iBlockId, false);
+            $aPage = $this->_oQuery->getPageByBlockId($iBlockId);
+            $sUrl = $this->getPageUrl($aPage['uri']) . '#bx-page-wiki-container-' . $iBlockId;
+            $oProfile = BxDolProfile::getInstanceMagic($aWikiVerMain['profile_id']);
+
+            $aVars['bx_repeat:blocks'][] = array(
+                'author_url' => $oProfile->getUrl(),
+                'author_name' => $oProfile->getDisplayName(),
+                'url' => $sUrl,
+                'lang' => $sLang,
+                'title' => _t($aPage['title']),
+                'content' => strmaxtextlen($aWikiVerMain['content']),
+                'timejs' => bx_time_js($aWikiVerMain['added']),
+            );
+        }
+        return BxDolTemplate::getInstance()->parseHtmlByName('wiki_translations_missing.html', $aVars);
+    }
+
+    /**
+     * Generate list of wiki blocks with outdated translations for the given language
+     */
+    public function getOutdatedTranslations ($sLang = false)
+    {
+        if (!$sLang)
+            $sLang = bx_lang_name();
+
+        if (!$this->isAllowed('edit') && !$this->isAllowed('translate') || !preg_match("/^[a-z]+$/", $sLang))
+            return _t('_sys_txt_access_denied');
+
+        if (!BxDolLanguages::getInstance()->getLangId($sLang))
+            return _t('_sys_wiki_error_no_such_lang');
+
+        $aVars = array(
+            'title_title' => _t('_sys_wiki_title_title'),
+            'title_lang' => _t('_sys_wiki_title_lang_outated'),
+            'title_author' => _t('_sys_wiki_title_author', _t('_sys_wiki_orig')),
+            'title_content' => _t('_sys_wiki_title_content', _t('_sys_wiki_orig')),
+            'title_time_main' => _t('_sys_wiki_title_time', _t('_sys_wiki_orig')),
+            'title_time' => _t('_sys_wiki_title_time', '"'.$sLang.'"'),
+            'bx_repeat:blocks' => array()
+        );
+        $a = $this->_oQuery->getBlocksWithOutdatedTranslations($sLang);
+        if (!$a)
+            return _t('_sys_wiki_all_translations_up_to_date', $sLang);
+
+        foreach ($a as $iBlockId) {
+            $aWikiVer = $this->_oQuery->getBlockContent ($iBlockId, $sLang, false, false);
+            $aWikiVerMain = $this->_oQuery->getBlockContent ($iBlockId, false);
+            $aPage = $this->_oQuery->getPageByBlockId($iBlockId);
+            $sUrl = $this->getPageUrl($aPage['uri']) . '#bx-page-wiki-container-' . $iBlockId;
+            $oProfile = BxDolProfile::getInstanceMagic($aWikiVerMain['profile_id']);
+
+            $aVars['bx_repeat:blocks'][] = array(
+                'author_url' => $oProfile->getUrl(),
+                'author_name' => $oProfile->getDisplayName(),
+                'url' => $sUrl,
+                'lang' => $sLang,
+                'title' => _t($aPage['title']),
+                'content' => strmaxtextlen($aWikiVerMain['content']),                
+                'timejs_main' => bx_time_js($aWikiVerMain['added']),
+                'timejs' => bx_time_js($aWikiVer['added']),
+            );
+        }
+        return BxDolTemplate::getInstance()->parseHtmlByName('wiki_translations_outdated.html', $aVars);
+    }
+
+    /**
      * Check if partucular action is allowed
      * @param $sType action type: add, edit, delete, translate
      * @param $sProfileId profile to check, if not provided then current profile is used
@@ -367,7 +487,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
 
             // insert page
             $sLangKey = '_' . $this->_aObject['module'] . '_' . str_replace('-', '_', $sPageUri) . '_' . time();
-            $sUrl = 'r.php?_q=' . $this->_aObject['uri'] . '/' . $sPageUri;
+            $sUrl = $this->getPageUrl($sPageUri, false, false);
             $iPageId = $this->_oQuery->insertPage ($sPageUri, $sUrl, $sLangKey);
             if (!$iPageId)
                 return array('code' => 10, 'actions' => array('ShowMsg'), 'msg' => _t('_sys_wiki_error_occured', 10));
@@ -563,6 +683,12 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
         }
     }
 
+    protected function getPageUrl ($sPageUri, $bPermalink = true, $bAddRootUrl = true)
+    {
+        $sUrl = ($bAddRootUrl ? BX_DOL_URL_ROOT : '') . 'r.php?_q=' . $this->_aObject['uri'] . '/' . $sPageUri;
+        return $bPermalink ? BxDolPermalinks::getInstance()->permalink($sUrl) : $sUrl;
+    }
+
     protected function isContentChanged ($iBlockId, $sLang, $sContent)
     {
         if (!$sContent) // don't allow revisions with empty content
@@ -627,7 +753,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
             }            
         }
         return $aLangs;
-    }
+    }    
 
     public function getVarsForHistory ($iBlockId, $sLang)
     {
