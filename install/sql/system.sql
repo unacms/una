@@ -3208,7 +3208,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 
 ('sys_wiki', 'system', 'block_id', '', '', 0, 'hidden', '', '_sys_form_wiki_input_caption_block_id', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('sys_wiki', 'system', 'language', '', '', 0, 'radio_set', '', '_sys_form_wiki_input_caption_lang', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
-('sys_wiki', 'system', 'content_main', '', '', 0, 'custom', '', '_sys_form_wiki_input_caption_content_main', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('sys_wiki', 'system', 'content_main', '', '', 0, 'custom', '', '_sys_form_wiki_input_caption_content_main', '_sys_form_wiki_input_caption_content_info', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('sys_wiki', 'system', 'content', '', '', 0, 'textarea', '', '_sys_form_wiki_input_caption_content', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('sys_wiki', 'system', 'notes', '', '', 0, 'text', '', '_sys_form_wiki_input_caption_notes', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('sys_wiki', 'system', 'do_submit', '_sys_submit', '', 0, 'submit', '_sys_form_wiki_input_caption_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
