@@ -168,9 +168,10 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
             if (!$oPage->isVisiblePage())
                 continue;
             $sUrl = $this->getPageUrl($r['uri']);
+            $sTitle = _t($r['title']);
             $aVars['bx_repeat:pages'][] = array(
                 'url' => $sUrl,
-                'title' => _t($r['title']),
+                'title' => $sTitle ? $sTitle : _t('_Empty'),
             );
         }
         usort($aVars['bx_repeat:pages'], function ($r1, $r2) {
