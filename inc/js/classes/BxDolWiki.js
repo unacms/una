@@ -14,11 +14,11 @@ function BxDolWiki (sObject, eContainer, oOptions) {
     this._sActionUrl = sUrlRoot + 'r.php?_q=' + this._oOptions.wiki_action_uri + '-action/';
     this._sCurrentLang = this._oOptions['language'];
     this._oTranslations = {};
-    this.bindEvents();    
 }
 
 BxDolWiki.prototype.bindEvents = function () {
     var self = this;
+    var e = $('#bx-popup-ajax-wrapper-bx-wiki-menu-' + this._oOptions.block_id);
     var oEvents = {
         "edit": "onEdit",
         "delete-version": "onDeleteVersion",
@@ -27,7 +27,8 @@ BxDolWiki.prototype.bindEvents = function () {
         "history": "onHistory",
     }
     $.each(oEvents, function (sSel, sFunc) {
-        $(self._eCont).find(".bx-wiki-controls-menu a." + sSel).on('click', {wiki_obj:self}, function() {
+        e.find(".bx-menu-item a." + sSel).on('click', {wiki_obj:self}, function() {
+            $(".bx-popup-active").dolPopupHide(); // close menu popup
             BxDolWiki.prototype[sFunc].apply(self);
             return false;
         });
@@ -87,10 +88,14 @@ BxDolWiki.prototype.onChangeLangSelector = function (e) {
 };
 
 BxDolWiki.prototype.onTranslate = function () {
+    this._sCurrentLang = this._oOptions['language'];
+    this._oTranslations = {};
     this.popup('translate');
 };
 
 BxDolWiki.prototype.onEdit = function () {
+    this._sCurrentLang = this._oOptions['language'];
+    this._oTranslations = {};
     this.popup('edit');
 };
 

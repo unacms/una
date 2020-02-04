@@ -2283,6 +2283,7 @@
     <string name="_sys_form_wiki_input_caption_lang_info"><![CDATA[★ - основной(оригинальный) язык, красным помечен отсутствующий или устаревший перевод]]></string>
     <string name="_sys_form_wiki_input_caption_lang_err"><![CDATA[Пожалуйста выберите значение]]></string>
 	<string name="_sys_form_wiki_input_caption_content"><![CDATA[Содержимое]]></string>
+    <string name="_sys_form_wiki_input_caption_content_info"><![CDATA[Можно использовать маркдаун cинтаксис и макросы.]]></string>
     <string name="_sys_form_wiki_input_caption_content_main"><![CDATA[Основное(оригинальное) содержимое]]></string>
 	<string name="_sys_form_wiki_input_caption_notes"><![CDATA[Заметки]]></string>
 	<string name="_sys_form_wiki_input_caption_submit"><![CDATA[Сохранить]]></string>

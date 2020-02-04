@@ -1,8 +1,19 @@
-.bx-wiki-controls-menu {
+.bx-wiki-controls-info {
     float:left;
 }
-.bx-wiki-controls-info {
+.bx-wiki-controls-menu {
     float:right;
+}
+.bx-wiki-controls-menu i.sys-icon {
+    text-align: center;
+    width: 1.5rem;
+    border-radius: 0.75rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    font-weight: 400;
 }
 .bx-wiki-form {
     width:37.5rem;
