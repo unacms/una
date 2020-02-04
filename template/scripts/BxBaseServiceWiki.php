@@ -148,6 +148,13 @@ class BxBaseServiceWiki extends BxDol
                 'wiki_action_uri' => $oWikiObject->getWikiUri(),
                 't_confirm_block_deletion' => _t('_sys_wiki_confirm_block_deletion'),
             )),
+            'bx_if:menu' => array(
+                'condition' => $oWikiObject->isAllowed('history'),
+                'content' => array(
+                    'obj' => $oWikiObject->getObjectName(),
+                    'block_id' => $sBlockId,
+                ),
+            ),
         ));
     }
 

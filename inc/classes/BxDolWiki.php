@@ -297,7 +297,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
             'delete-version' => 'allow_delete_for_levels',
             'delete-block' => 'allow_delete_for_levels',
             'get-traaslation' => 'allow_translate_for_levels',
-            'history' => true,
+            'history' => isLogged(),
             'unsafe' => 'allow_unsafe_for_levels',
         );
         if (!isset($aTypes[$sType]))
