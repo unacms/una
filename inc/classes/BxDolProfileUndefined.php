@@ -116,6 +116,14 @@ class BxDolProfileUndefined extends BxDolFactory implements iBxDolSingleton, iBx
             'title' => $this->getDisplayName()
         ), $aTemplateVars));
     }
+    
+    /**
+     * Get badges
+     */
+    public function getBadges()
+    {
+        return "";
+    }
 
     /**
      * Check whether a profile has real image uploaded by user.
