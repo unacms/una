@@ -128,11 +128,6 @@ class BxBaseServiceWiki extends BxDol
     {
         $this->_addCssJs ();
     
-        if (!($oMenu = BxDolMenu::getObjectInstance('sys_wiki')))
-            return '';
-
-        $oMenu->setMenuObject($oWikiObject);
-
         $sInfo = '';
         if ($aWikiVer && $aWikiVerLatest['revision'] == $aWikiVer['revision']) {
             $sInfo = bx_time_js($aWikiVer['added']);
@@ -146,7 +141,6 @@ class BxBaseServiceWiki extends BxDol
         return $o->parseHtmlByName('wiki_controls.html', array(
             'obj' => $oWikiObject->getObjectName(),
             'block_id' => $sBlockId,
-            'menu' => $oMenu->getCode(),
             'info' => $sInfo,
             'options' => json_encode(array(
                 'block_id' => $sBlockId,
