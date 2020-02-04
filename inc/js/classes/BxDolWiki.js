@@ -88,10 +88,14 @@ BxDolWiki.prototype.onChangeLangSelector = function (e) {
 };
 
 BxDolWiki.prototype.onTranslate = function () {
+    this._sCurrentLang = this._oOptions['language'];
+    this._oTranslations = {};
     this.popup('translate');
 };
 
 BxDolWiki.prototype.onEdit = function () {
+    this._sCurrentLang = this._oOptions['language'];
+    this._oTranslations = {};
     this.popup('edit');
 };
 
