@@ -168,9 +168,10 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
             if (!$oPage->isVisiblePage())
                 continue;
             $sUrl = $this->getPageUrl($r['uri']);
+            $sTitle = _t($r['title']);
             $aVars['bx_repeat:pages'][] = array(
                 'url' => $sUrl,
-                'title' => _t($r['title']),
+                'title' => $sTitle ? $sTitle : _t('_Empty'),
             );
         }
         usort($aVars['bx_repeat:pages'], function ($r1, $r2) {
@@ -297,7 +298,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
             'delete-version' => 'allow_delete_for_levels',
             'delete-block' => 'allow_delete_for_levels',
             'get-traaslation' => 'allow_translate_for_levels',
-            'history' => true,
+            'history' => isLogged(),
             'unsafe' => 'allow_unsafe_for_levels',
         );
         if (!isset($aTypes[$sType]))
@@ -679,8 +680,23 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
                 }
             }
 
+            // update indexing data
+            $this->updateBlockIndexingData($iBlockId);
+
             return array('code' => 0, 'actions' => array('Reload', 'ClosePopup'), 'block_id' => $iBlockId);
         }
+    }
+
+    protected function updateBlockIndexingData($iBlockId)
+    {
+        if (!($aLangs = $this->_oQuery->getBlockLangs ($iBlockId)))
+            return false;
+        $sText = '';
+        foreach ($aLangs as $sLang) {
+            $aWikiVer = $this->_oQuery->getBlockContent ($iBlockId, $sLang, false, false);
+            $sText .= trim(strip_tags($aWikiVer['content'])) . ' ';
+        }
+        return $this->_oQuery->updateBlockIndexingData ($iBlockId, $sText);
     }
 
     protected function getPageUrl ($sPageUri, $bPermalink = true, $bAddRootUrl = true)

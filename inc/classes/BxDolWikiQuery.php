@@ -75,6 +75,16 @@ class BxDolWikiQuery extends BxDolDb
         return $aRow ? $aRow : false;
     }
 
+    public function getBlockLangs ($iBlockId)
+    {
+        return $this->getColumn("SELECT `language` FROM `sys_pages_wiki_blocks` WHERE `block_id` = :block GROUP BY `language`", array('block' => $iBlockId));
+    }
+
+    public function updateBlockIndexingData ($iBlockId, $sText)
+    {
+        return $this->query("UPDATE `sys_pages_blocks` SET `text` = :text, `text_updated` = :updated WHERE `id` = :id", array('text' => $sText, 'updated' => time(), 'id' => $iBlockId));
+    }
+
     public function getBlockHistory ($iBlockId, $sLang)
     {
         $aBind = array('block' => $iBlockId, 'language' => $sLang);

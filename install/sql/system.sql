@@ -3207,9 +3207,9 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('sys_privacy_group_custom', 'system', 'do_cancel', '_sys_form_ps_gc_input_caption_do_cancel', '', 0, 'button', '_sys_form_ps_gc_input_caption_system_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0),
 
 ('sys_wiki', 'system', 'block_id', '', '', 0, 'hidden', '', '_sys_form_wiki_input_caption_block_id', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
-('sys_wiki', 'system', 'language', '', '', 0, 'radio_set', '', '_sys_form_wiki_input_caption_lang', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
+('sys_wiki', 'system', 'language', '', '', 0, 'radio_set', '', '_sys_form_wiki_input_caption_lang', '_sys_form_wiki_input_caption_lang_info', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('sys_wiki', 'system', 'content_main', '', '', 0, 'custom', '', '_sys_form_wiki_input_caption_content_main', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('sys_wiki', 'system', 'content', '', '', 0, 'textarea', '', '_sys_form_wiki_input_caption_content', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
+('sys_wiki', 'system', 'content', '', '', 0, 'textarea', '', '_sys_form_wiki_input_caption_content', '_sys_form_wiki_input_caption_content_info', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('sys_wiki', 'system', 'notes', '', '', 0, 'text', '', '_sys_form_wiki_input_caption_notes', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('sys_wiki', 'system', 'do_submit', '_sys_submit', '', 0, 'submit', '_sys_form_wiki_input_caption_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_wiki', 'system', 'close', '_sys_close', '', 0, 'reset', '_sys_form_wiki_input_caption_close', '', '', 0, 0, 0, 'a:2:{s:7:\"onclick\";s:46:\"$(\'.bx-popup-applied:visible\').dolPopupHide();\";s:5:\"class\";s:22:\"bx-def-margin-sec-left\";}', '', '', '', '', '', '', '', 1, 0),
@@ -3817,7 +3817,7 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_create_post', '_sys_menu_title_create_post', 'sys_add_content_links', 'system', 15, 0, 1, 'BxTemplMenuCreatePost', ''),
 ('sys_add_relation', '_sys_menu_title_add_relation', '', 'system', 6, 0, 1, 'BxTemplMenuAddRelation', ''),
 ('sys_vote_reactions_do', '_sys_menu_title_vote_reactions_do', '', 'system', 3, 0, 1, 'BxTemplVoteReactionsMenuDo', ''),
-('sys_wiki', '_sys_menu_title_wiki', 'sys_wiki', 'system', 9, 0, 1, 'BxTemplMenuWiki', '');
+('sys_wiki', '_sys_menu_title_wiki', 'sys_wiki', 'system', 6, 0, 1, 'BxTemplMenuWiki', '');
 
 CREATE TABLE IF NOT EXISTS `sys_menu_sets` (
   `set_name` varchar(64) NOT NULL,
@@ -3976,11 +3976,11 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 -- wiki menu
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `editable`, `order`) VALUES 
-('sys_wiki', 'system', 'edit', '', '_sys_menu_item_title_wiki_edit', '', '', '', '', '', '', 0, 2147483646, '', 1, 0, 1, 1),
-('sys_wiki', 'system', 'delete-version', '', '_sys_menu_item_title_wiki_delete_version', '', '', '', '', '', '', 0, 2147483646, '', 1, 0, 1, 2),
-('sys_wiki', 'system', 'delete-block', '', '_sys_menu_item_title_wiki_delete_block', '', '', '', '', '', '', 0, 2147483646, '', 1, 0, 1, 3),
-('sys_wiki', 'system', 'translate', '', '_sys_menu_item_title_wiki_translate', '', '', '', '', '', '', 0, 2147483646, '', 1, 0, 1, 4),
-('sys_wiki', 'system', 'history', '', '_sys_menu_item_title_wiki_history', '', '', '', '', '', '', 0, 2147483646, '', 1, 0, 1, 5);
+('sys_wiki', 'system', 'edit', '', '_sys_menu_item_title_wiki_edit', '', '', '', 'edit', '', '', 0, 2147483646, '', 1, 0, 1, 1),
+('sys_wiki', 'system', 'delete-version', '', '_sys_menu_item_title_wiki_delete_version', '', '', '', 'times', '', '', 0, 2147483646, '', 1, 0, 1, 2),
+('sys_wiki', 'system', 'delete-block', '', '_sys_menu_item_title_wiki_delete_block', '', '', '', 'times-circle', '', '', 0, 2147483646, '', 1, 0, 1, 3),
+('sys_wiki', 'system', 'translate', '', '_sys_menu_item_title_wiki_translate', '', '', '', 'language', '', '', 0, 2147483646, '', 1, 0, 1, 4),
+('sys_wiki', 'system', 'history', '', '_sys_menu_item_title_wiki_history', '', '', '', 'history', '', '', 0, 2147483646, '', 1, 0, 1, 5);
 
 -- --------------------------------------------------------
 

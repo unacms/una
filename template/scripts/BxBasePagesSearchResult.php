@@ -22,6 +22,7 @@ class BxBasePagesSearchResult extends BxTemplSearchResult
             'searchFields' => array('text'),
             'restriction' => array(
                 'visible_for_levels' => array('value' => '', 'field' => 'visible_for_levels', 'operator' => '&'),
+                'url' => array('value' => 'n/a', 'field' => 'url', 'operator' => 'not empty value', 'table' => 'sys_objects_page'),
             ),
             'join' => array(
                 'albums' => array(

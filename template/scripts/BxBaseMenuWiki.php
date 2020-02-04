@@ -13,15 +13,25 @@
 class BxBaseMenuWiki extends BxTemplMenu
 {
     protected $_oWikiObject;
+    protected $_iBlockId;
 
     public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject, $oTemplate);
+        if ($sWikiObj = bx_get('wiki_obj')) {
+            $oWiki = BxDolWiki::getObjectInstance($sWikiObj);
+            if ($oWiki) {
+                $this->_oWikiObject = $oWiki;
+                $this->_iBlockId = (int)bx_get('block_id');
+            }
+        }
     }
 
-    public function setMenuObject($o)
+    public function getCode ()
     {
-        $this->_oWikiObject = $o;
+        $s = parent::getCode ();
+        $s .= '<script>window.glBxDolWiki' . $this->_iBlockId . '.bindEvents();</script>';
+        return $s;
     }
 
     /**

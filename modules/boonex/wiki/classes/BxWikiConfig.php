@@ -18,7 +18,7 @@ class BxWikiConfig extends BxBaseModGeneralConfig
         $this->CNF = array_merge($this->CNF, array (
 
             // module icon
-            'ICON' => 'fab wikipedia-w',
+            'ICON' => 'far file-word',
 
             // some language keys
             'T' => array (
