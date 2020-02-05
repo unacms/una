@@ -12,7 +12,7 @@ SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 ('bx_froala_icons_template', 'svg', @iCategId, '_bx_froala_option_icons_template', 'select', 'svg,font_awesome_5,text', '', '', 5),
-('bx_froala_option_plugins', 'emoticons,embedly,draggable,fullscreen,image,link,html', @iCategId, '_bx_froala_option_plugins', 'digit', '', '', '', 10),
+('bx_froala_option_plugins', 'emoticons,embedly,draggable,fullscreen,image,link', @iCategId, '_bx_froala_option_plugins', 'digit', '', '', '', 10),
 
 ('bx_froala_option_toolbar_mini', "{'moreText': {'buttons': ['bold', 'italic', 'underline','quote'],'buttonsVisible': 2},'moreRich': {'buttons': ['insertLink', 'insertImage','emoticons', 'embedly'],'buttonsVisible': 2},'moreMisc': {'buttons': ['undo', 'redo', 'fullscreen'],'align': 'right','buttonsVisible': 0}}", @iCategId, '_bx_froala_option_toolbar_mini', 'digit', '', '', '', 20),
 ('bx_froala_option_toolbar_mini_mobile', "{'moreText': {'buttons': ['bold', 'italic', 'underline','quote'],'buttonsVisible': 0},'moreRich': {'buttons': ['insertLink', 'insertImage','emoticons', 'embedly'],'buttonsVisible': 0},'moreMisc': {'buttons': ['undo', 'redo', 'fullscreen'],'align': 'right','buttonsVisible': 0}}", @iCategId, '_bx_froala_option_toolbar_mini_mobile', 'digit', '', '', '', 21),
