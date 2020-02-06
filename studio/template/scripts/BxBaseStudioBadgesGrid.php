@@ -335,7 +335,7 @@ class BxBaseStudioBadgesGrid extends BxDolStudioBadgesGrid
                     'caption' => _t('_adm_form_txt_badges_text'),
                     'info' => '',
                     'value' => isset($aBadge['text']) ? $aBadge['text'] : '',
-                    'required' => '1',
+                    'required' => '0',
                     'db' => array (
                         'pass' => 'Xss',
                     )
@@ -346,7 +346,7 @@ class BxBaseStudioBadgesGrid extends BxDolStudioBadgesGrid
                     'caption' => _t('_adm_form_txt_badges_color'),
                     'info' => '',
                     'value' => isset($aBadge['color']) ? $aBadge['color'] : '',
-                    'required' => '1',
+                    'required' => '0',
                     'db' => array (
                         'pass' => 'Xss',
                     )
@@ -369,7 +369,7 @@ class BxBaseStudioBadgesGrid extends BxDolStudioBadgesGrid
                     'caption' => _t('_adm_form_txt_badges_icon'),
                     'info' => _t('_adm_form_dsc_badges_icon'),
                     'value' => '',
-                    'required' => '1',
+                    'required' => '0',
                     'db' => array (
                         'pass' => 'Xss',
                     )
