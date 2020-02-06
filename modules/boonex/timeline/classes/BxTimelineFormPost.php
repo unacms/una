@@ -38,7 +38,7 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
     	$sResult = parent::getCode($bDynamicMode);
 
     	return $this->_oModule->_oTemplate->parseHtmlByContent($sResult, array(
-    		'attachments_menu' => $this->_oModule->getAttachmentsMenuObject()->getCode()
+            'attachments_menu' => $this->_oModule->getAttachmentsMenuObject()->getCode()
     	));
     }
 
@@ -52,22 +52,6 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
 
         if(isset($CNF['FIELD_ANONYMOUS']) && isset($this->aInputs[$CNF['FIELD_ANONYMOUS']]) && isset($aValues[$CNF['FIELD_OBJECT_ID']]))
             $this->aInputs[$CNF['FIELD_ANONYMOUS']]['checked'] = $aValues[$CNF['FIELD_OBJECT_ID']] < 0;
-
-        $sKey = 'FIELD_OBJECT_PRIVACY_VIEW';
-        if(isset($CNF[$sKey]) && isset($this->aInputs[$CNF[$sKey]]) && $oPrivacy = BxDolPrivacy::getObjectInstance($this->_oModule->_oConfig->getObject('privacy_view'))) {
-            $sField = $CNF[$sKey];
-
-            $iContentId = !empty($aValues[$CNF['FIELD_ID']]) ? (int)$aValues[$CNF['FIELD_ID']] : 0;
-            $iProfileId = !empty($iContentId) ? (int)$this->getContentOwnerProfileId($iContentId) : bx_get_logged_profile_id();
-            $iGroupId = !empty($aValues[$sField]) ? $aValues[$sField] : 0;
-
-            if(!isset($this->aInputs[$sField]['content']))
-                $this->aInputs[$sField]['content'] = '';
-
-            $this->aInputs[$sField]['content'] .= $oPrivacy->loadGroupCustom($iProfileId, $iContentId, $iGroupId, array(
-                'form' => $this->getId()
-            ));
-        }
 
         parent::initChecker ($aValues, $aSpecificValues);
     }
@@ -165,8 +149,9 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
             $this->aInputs['text']['attrs']['id'] = $this->_oModule->_oConfig->getHtmlIds('post', 'textarea') . time();
         }
 
-        if(isset($this->aInputs['object_privacy_view']))
-            $this->aInputs['object_privacy_view'] = $this->_updateFieldObjectPrivacyView($this->aInputs['object_privacy_view']);
+        $aPrivacyFields = $this->_getPrivacyFields();
+        foreach($aPrivacyFields as $sFieldKey => $sObject)
+            $this->_initPrivacyField($sFieldKey, $sObject);
 
         if(isset($this->aInputs['link']))
             $this->aInputs['link']['content'] = $this->_oModule->_oTemplate->getAttachLinkField($iUserId);
@@ -219,43 +204,75 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
         $this->_bVisibilityAutoselect = $bVisibilityAutoselect;
     }
 
-    protected function _updateFieldObjectPrivacyView($aInput)
+    protected function _getPrivacyFields()
     {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $aFields = array(
+            'FIELD_OBJECT_PRIVACY_VIEW' => 'OBJECT_PRIVACY_VIEW'
+        );
+
+        if(isset($CNF['PRIVACY_FIELD_TO_OBJECT']) && is_array($CNF['PRIVACY_FIELD_TO_OBJECT']))
+            $aFields = $CNF['PRIVACY_FIELD_TO_OBJECT'];
+
+        return $aFields;
+    }
+
+    /**
+     * The method inherited from BxBaseModGeneralFormEntry class is disabled
+     * because own variant (method BxTimelineFormPost::_initPrivacyField) is
+     * used instead.
+     */
+    protected function _preparePrivacyField($sFieldKey, $sObject)
+    {
+        return;
+    }
+
+    protected function _initPrivacyField($sFieldKey, $sObject)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!isset($CNF[$sFieldKey]) || !isset($this->aInputs[$CNF[$sFieldKey]]) || !isset($CNF[$sObject]))
+            return;
+
+        $sField = $CNF[$sFieldKey];
+                
     	$iUserId = $this->_oModule->getUserId();
         $iOwnerId = $this->_oModule->getOwnerId();
 
-        $aInput = array_merge($aInput, BxDolPrivacy::getGroupChooser($this->_oModule->_oConfig->getObject('privacy_view'), 0, array(
-            'title' => _t('_bx_timeline_form_post_input_object_privacy_view')
+        $this->aInputs[$sField] = array_merge($this->aInputs[$sField], BxDolPrivacy::getGroupChooser($CNF[$sObject], 0, array(
+            'title' => _t($CNF['T']['form_input_title_' . $sField]),
+            'dynamic_mode' => $this->_bDynamicMode
         )));
 
         //--- Show field as is when 'Autoselect' is disabled.
         if(!$this->_bVisibilityAutoselect)
-            return $aInput;
+            return;
 
         //--- Show default privacy groups and followed contexts on Account (Profile + Connections) post form.
         if($this->_bAccountMode)
-            return $aInput;
+            return;
 
         //--- Preselect Context and hide privacy selector when posting in some context (profile, group, space, etc).
         if($this->_bProfileMode && $iOwnerId != $iUserId) {
-            $aInput['type'] = 'hidden';
-	    $aInput['value'] = -$iOwnerId;
+            $this->aInputs[$sField]['type'] = 'hidden';
+	    $this->aInputs[$sField]['value'] = -$iOwnerId;
 
-            return $aInput;
+            return;
         }
 
         $bProfileModeOwner = $this->_bProfileMode && $iOwnerId == $iUserId;
         if($this->_bPublicMode || $bProfileModeOwner) {
             $iGc = 0;
             $iKeyGh = false;
-            foreach($aInput['values'] as $iKey => $aValue) {
+            foreach($this->aInputs[$sField]['values'] as $iKey => $aValue) {
                 if(isset($aValue['type']) && in_array($aValue['type'], array('group_header', 'group_end'))) {
                     if($iKeyGh !== false && $iGc == 0) {
-                        unset($aInput['values'][$iKeyGh]);
+                        unset($this->aInputs[$sField]['values'][$iKeyGh]);
                         $iKeyGh = false;
 
                         if($aValue['type'] == 'group_end')
-                            unset($aInput['values'][$iKey]);
+                            unset($this->aInputs[$sField]['values'][$iKey]);
                     }
 
                     if($aValue['type'] == 'group_header') {
@@ -278,11 +295,34 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
                     continue;
                 }
 
-                unset($aInput['values'][$iKey]);
+                unset($this->aInputs[$sField]['values'][$iKey]);
             }
         }
+    }
+    
+    protected function _preloadPrivacyField($sFieldKey, $sObject, $aValues)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
 
-        return $aInput;
+        if(!isset($CNF[$sFieldKey]) || !isset($this->aInputs[$CNF[$sFieldKey]]) || !isset($CNF[$sObject]))
+            return;
+
+        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF[$sObject]);
+        if(!$oPrivacy) 
+            return;
+
+        $sField = $CNF[$sFieldKey];
+
+        $iContentId = !empty($aValues[$CNF['FIELD_ID']]) ? (int)$aValues[$CNF['FIELD_ID']] : 0;
+        $iProfileId = !empty($iContentId) ? (int)$this->getContentOwnerProfileId($iContentId) : bx_get_logged_profile_id();
+        $iGroupId = !empty($aValues[$sField]) ? $aValues[$sField] : 0;
+
+        if(!isset($this->aInputs[$sField]['content']))
+            $this->aInputs[$sField]['content'] = '';
+
+        $this->aInputs[$sField]['content'] .= $oPrivacy->loadGroupCustom($iProfileId, $iContentId, $iGroupId, array(
+            'form' => $this->getId()
+        ));
     }
 }
 
