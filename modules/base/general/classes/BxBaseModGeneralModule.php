@@ -1994,7 +1994,7 @@ class BxBaseModGeneralModule extends BxDolModule
         $CNF = &$this->_oConfig->CNF;
 
         if(empty($CNF['OBJECT_METATAGS'])) 
-            return;
+            return false;
 
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
 
@@ -2002,7 +2002,7 @@ class BxBaseModGeneralModule extends BxDolModule
         $bFldStatusAdmin = isset($CNF['FIELD_STATUS_ADMIN']);
         $bContentInfo = $aContentInfo && (!$bFldStatus || ($bFldStatus && $aContentInfo[$CNF['FIELD_STATUS']] == 'active')) && (!$bFldStatusAdmin || ($bFldStatusAdmin && $aContentInfo[$CNF['FIELD_STATUS_ADMIN']] == 'active'));
         if(!$bContentInfo)
-            return;
+            return false;
 
         $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
         $oMetatags->metaAddAuto($iContentId, $aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']);
@@ -2021,6 +2021,8 @@ class BxBaseModGeneralModule extends BxDolModule
                 foreach ($aLabels as $sLabel)
                     $oMetatags->keywordsAddOne($iContentId, $sLabel, false);
         }
+        
+        return true;
     }
 
     public function processMetasEdit($iContentId, $oForm)
@@ -2028,7 +2030,7 @@ class BxBaseModGeneralModule extends BxDolModule
         $CNF = &$this->_oConfig->CNF;
 
         if(empty($CNF['OBJECT_METATAGS']))
-            return;
+            return false;
 
         $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
 
@@ -2036,7 +2038,7 @@ class BxBaseModGeneralModule extends BxDolModule
         $bFldStatusAdmin = isset($CNF['FIELD_STATUS_ADMIN']);
         $bContentInfo = $aContentInfo && (!$bFldStatus || ($bFldStatus && $aContentInfo[$CNF['FIELD_STATUS']] == 'active')) && (!$bFldStatusAdmin || ($bFldStatusAdmin && $aContentInfo[$CNF['FIELD_STATUS_ADMIN']] == 'active'));
         if(!$bContentInfo)
-            return;
+            return false;
 
         $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
         $oMetatags->metaAddAuto($iContentId, $aContentInfo, $CNF, $CNF['OBJECT_FORM_ENTRY_DISPLAY_EDIT']);
@@ -2055,6 +2057,8 @@ class BxBaseModGeneralModule extends BxDolModule
                 foreach ($aLabels as $sLabel)
                     $oMetatags->keywordsAddOne($iContentId, $sLabel, false);
         }
+
+        return true;
     }
 
     public function getEntryImageData($aContentInfo, $sField = 'FIELD_THUMB', $aTranscoders = array())

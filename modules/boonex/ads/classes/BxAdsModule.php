@@ -283,6 +283,40 @@ class BxAdsModule extends BxBaseModTextModule
     /**
      * Common methods.
      */
+    public function processMetasAdd($iContentId)
+    {
+        if(!parent::processMetasAdd($iContentId))
+            return false;
+
+        $CNF = &$this->_oConfig->CNF;
+
+        $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+
+        $aCategoryTypes = $this->_oDb->getCategoryTypes(array('type' => 'all'));
+        foreach($aCategoryTypes as $aCategoryType)
+            $oMetatags->metaAddAuto($iContentId, $aContentInfo, $CNF, $aCategoryType['display_add']);
+
+        return true;
+    }
+
+    public function processMetasEdit($iContentId, $oForm)
+    {
+        if(!parent::processMetasEdit($iContentId, $oForm))
+            return false;
+        
+        $CNF = &$this->_oConfig->CNF;
+
+        $oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS']);
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        
+        $aCategoryTypes = $this->_oDb->getCategoryTypes(array('type' => 'all'));
+        foreach($aCategoryTypes as $aCategoryType)
+            $oMetatags->metaAddAuto($iContentId, $aContentInfo, $CNF, $aCategoryType['display_edit']);
+
+        return true;
+    }
+
     public function getCategoryDisplay($sDisplayType, $iCategory = 0)
     {
         if(empty($iCategory) && bx_get('category') !== false)
