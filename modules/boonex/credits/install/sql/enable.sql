@@ -169,14 +169,14 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_credits_history_administration', 'second_pid', '_bx_credits_grid_column_title_htr_second_pid', '15%', 0, '', '', 3),
 ('bx_credits_history_administration', 'amount', '_bx_credits_grid_column_title_htr_amount', '10%', 1, '', '', 4),
 ('bx_credits_history_administration', 'order', '_bx_credits_grid_column_title_htr_order', '15%', 0, '16', '', 5),
-('bx_credits_history_administration', 'info', '_bx_credits_grid_column_title_htr_info', '20%', 0, '24', '', 6),
+('bx_credits_history_administration', 'info', '_bx_credits_grid_column_title_htr_info', '20%', 1, '24', '', 6),
 ('bx_credits_history_administration', 'date', '_bx_credits_grid_column_title_htr_date', '15%', 0, '', '', 7),
 
 ('bx_credits_history_common', 'direction', '_bx_credits_grid_column_title_htr_direction', '10%', 0, '', '', 1),
 ('bx_credits_history_common', 'second_pid', '_bx_credits_grid_column_title_htr_pid', '25%', 0, '', '', 2),
 ('bx_credits_history_common', 'amount', '_bx_credits_grid_column_title_htr_amount', '15%', 1, '', '', 3),
 ('bx_credits_history_common', 'order', '_bx_credits_grid_column_title_htr_order', '15%', 0, '16', '', 4),
-('bx_credits_history_common', 'info', '_bx_credits_grid_column_title_htr_info', '20%', 0, '32', '', 5),
+('bx_credits_history_common', 'info', '_bx_credits_grid_column_title_htr_info', '20%', 1, '32', '', 5),
 ('bx_credits_history_common', 'date', '_bx_credits_grid_column_title_htr_date', '15%', 0, '', '', 6);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES

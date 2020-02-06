@@ -50,7 +50,7 @@ class BxCreditsModule extends BxBaseModGeneralModule
             return echoJson(array('code' => 3, 'msg' => _t('_bx_credits_err_low_balance')));
 
         $sOrder = $this->_oConfig->getOrder();
-        $sInfo = _t('_bx_credits_txt_history_info_checkout');
+        $sInfo = '_bx_credits_txt_history_info_checkout';
         $sData = serialize(array(
             'conversion' => $this->_oConfig->getConversionRateUse(),
             'precision' => $this->_oConfig->getPrecision()
@@ -567,7 +567,7 @@ class BxCreditsModule extends BxBaseModGeneralModule
     public function serviceUpdateProfileBalance($iFirstPid, $fAmount, $iSecondPid = 0, $sOrder = '', $sInfo = '')
     {
         if(empty($sInfo))
-            $sInfo = _t('_bx_credits_txt_history_info_service');
+            $sInfo = '_bx_credits_txt_history_info_service';
 
         return $this->updateProfileBalance($iFirstPid, $iSecondPid, $fAmount, $sOrder, $sInfo);
     }
@@ -665,7 +665,7 @@ class BxCreditsModule extends BxBaseModGeneralModule
         if(!$oProfile)
             return array('code' => 1, 'msg' => '_bx_credits_err_profile_not_found');
 
-        $sInfo = _t('_bx_credits_txt_history_info_grant');
+        $sInfo = '_bx_credits_txt_history_info_grant';
         if(!$this->updateProfileBalance($iProfileId, 0, $fAmount, '', $sInfo))
             return array('code' => 2, 'msg' => '_bx_credits_err_cannot_update_balance');
 
@@ -744,7 +744,7 @@ class BxCreditsModule extends BxBaseModGeneralModule
         if($fAmount > $fBalance)
             return array('code' => 2, 'msg' => '_bx_credits_err_low_balance');
 
-        $sInfo = _t('_bx_credits_txt_history_info_withdraw');
+        $sInfo = '_bx_credits_txt_history_info_withdraw';
         if(!$this->updateProfileBalance($iProfileId, 0, -$fAmount, '', $sInfo))
             return array('code' => 3, 'msg' => '_bx_credits_err_cannot_update_balance');
 
@@ -790,7 +790,7 @@ class BxCreditsModule extends BxBaseModGeneralModule
         if(!$this->_oDb->{$sAction . 'Order'}($iClientId, $iItemId, $iItemCount, $sOrder, $sLicense, $sType, $sDuration, $iTrial))
             return array();
 
-        $sInfo = _t('_bx_credits_txt_history_info_purchase');
+        $sInfo = '_bx_credits_txt_history_info_purchase';
         $fAmount = (float)$aBundle[$CNF['FIELD_AMOUNT']] + (float)$aBundle[$CNF['FIELD_BONUS']];
         if(!$this->updateProfileBalance($iClientId, 0, $fAmount, '', $sInfo))
             return array();
