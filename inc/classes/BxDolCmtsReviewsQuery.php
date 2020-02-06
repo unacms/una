@@ -38,9 +38,10 @@ class BxDolCmtsReviewsQuery extends BxDolCmtsQuery
     public function getReviewsStats ($iId, $iCmtVParentId = -1, $iAuthorId = 0, $sFilter = '')
     {
     	$aBindings = array(
+            'cmt_parent_id' => 0,
             'cmt_object_id' => $iId
     	);
-        $sWhereClause = " AND `{$this->_sTable}`.`cmt_object_id` = :cmt_object_id";
+        $sWhereClause = " AND `{$this->_sTable}`.`cmt_parent_id` = :cmt_parent_id AND `{$this->_sTable}`.`cmt_object_id` = :cmt_object_id";
 
         if((int)$iCmtVParentId >= 0) {
             $aBindings['cmt_vparent_id'] = $iCmtVParentId;

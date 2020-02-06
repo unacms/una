@@ -163,13 +163,15 @@ class BxDolCmtsReviews extends BxTemplCmts
 
     protected function _triggerComment()
     {
-        $mixedResult = parent::_triggerComment();
-        if($mixedResult === false)
-            return $mixedResult;
+        if(!$this->_aSystem['trigger_table'])
+            return false;
 
         $iId = $this->getId();
+        if(!$iId)
+            return false;
+
         $aStats = $this->_oQuery->getReviewsStats($iId);
-        return $this->_oQuery->updateTriggerTableAvg($iId, (float)$aStats['avg']);
+        return $this->_oQuery->updateTriggerTable($iId, (int)$aStats['count']) !== false && $this->_oQuery->updateTriggerTableAvg($iId, (float)$aStats['avg']) !== false;
     }
 }
 
