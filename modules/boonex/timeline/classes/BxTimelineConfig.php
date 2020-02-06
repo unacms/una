@@ -115,6 +115,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'OBJECT_REACTIONS' => $this->_sName . '_reactions',
             'OBJECT_SCORES' => $this->_sName,
             'OBJECT_REPORTS' => $this->_sName,
+            'OBJECT_PRIVACY_VIEW' => $this->_sName . '_privacy_view',
 
             // some language keys
             'T' => array (
@@ -132,6 +133,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
                 'txt_sample_with_media' => '_bx_timeline_txt_sample_with_media',
                 'grid_action_err_delete' => '_bx_timeline_grid_action_err_delete', 
                 'grid_txt_account_manager' => '_bx_timeline_grid_txt_account_manager',
+                'form_input_title_object_privacy_view' => '_bx_timeline_form_post_input_object_privacy_view',
                 'option_vap_off' => '_bx_timeline_option_videos_autoplay_off',
                 'option_vap_on_mute' => '_bx_timeline_option_videos_autoplay_on_mute',
                 'option_vap_on' => '_bx_timeline_option_videos_autoplay_on',
@@ -163,6 +165,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'reaction' => $this->CNF['OBJECT_REACTIONS'],
             'score' => $this->CNF['OBJECT_SCORES'],
             'report' => $this->CNF['OBJECT_REPORTS'],
+            'privacy_view' => $this->CNF['OBJECT_PRIVACY_VIEW'],
             'metatags' => $this->_sName,
 
             'storage_photos' => $this->CNF['OBJECT_STORAGE'],
