@@ -791,7 +791,7 @@ class BxCreditsModule extends BxBaseModGeneralModule
             return array();
 
         $sInfo = '_bx_credits_txt_history_info_purchase';
-        $fAmount = (float)$aBundle[$CNF['FIELD_AMOUNT']] + (float)$aBundle[$CNF['FIELD_BONUS']];
+        $fAmount = ((float)$aBundle[$CNF['FIELD_AMOUNT']] + (float)$aBundle[$CNF['FIELD_BONUS']]) * $iItemCount;
         if(!$this->updateProfileBalance($iClientId, 0, $fAmount, '', $sInfo))
             return array();
 
