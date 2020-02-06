@@ -16,7 +16,8 @@ class BxBaseCmtsReviews extends BxDolCmtsReviews
     {
         parent::__construct($sSystem, $iId, $iInit, $oTemplate);
 
-        $this->_sTmplNameItem = 'review.html';
+        $this->_sTmplNameItemContent = 'review_content.html';
+
         $this->_sJsObjClass = 'BxDolCmtsReviews';
     }
 
