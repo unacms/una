@@ -684,8 +684,8 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 
 -- COMMENTS
 INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Html`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
-('bx_ads', 'bx_ads', 'bx_ads_cmts', 1, 5000, 1000, 3, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-post&id={object_id}', '', 'bx_ads_entries', 'id', 'author', 'title', 'comments', '', ''),
-('bx_ads_reviews', 'bx_ads', 'bx_ads_reviews', 1, 5000, 1000, 3, 5, 3, 'tail', 1, 'bottom', 1, 0, 1, -3, 1, 'cmt', 'page.php?i=view-post&id={object_id}', '', 'bx_ads_entries', 'id', 'author', 'title', 'reviews', 'BxTemplCmtsReviews', '');
+('bx_ads', 'bx_ads', 'bx_ads_cmts', 1, 5000, 1000, 3, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-ad&id={object_id}', '', 'bx_ads_entries', 'id', 'author', 'title', 'comments', '', ''),
+('bx_ads_reviews', 'bx_ads', 'bx_ads_reviews', 1, 5000, 1000, 3, 5, 3, 'tail', 1, 'bottom', 1, 0, 1, -3, 1, 'cmt', 'page.php?i=view-ad&id={object_id}', '', 'bx_ads_entries', 'id', 'author', 'title', 'reviews', 'BxTemplCmtsReviews', '');
 
 -- VOTES
 INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
@@ -699,7 +699,7 @@ INSERT INTO `sys_objects_score` (`name`, `module`, `table_main`, `table_track`, 
 
 -- REPORTS
 INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_ads', 'bx_ads_reports', 'bx_ads_reports_track', '1', 'page.php?i=view-post&id={object_id}', 'bx_ads_entries', 'id', 'author', 'reports', '', '');
+('bx_ads', 'bx_ads_reports', 'bx_ads_reports_track', '1', 'page.php?i=view-ad&id={object_id}', 'bx_ads_entries', 'id', 'author', 'reports', '', '');
 
 -- VIEWS
 INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
@@ -707,11 +707,11 @@ INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigg
 
 -- FAFORITES
 INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `is_on`, `is_undo`, `is_public`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_ads', 'bx_ads_favorites_track', '1', '1', '1', 'page.php?i=view-post&id={object_id}', 'bx_ads_entries', 'id', 'author', 'favorites', '', '');
+('bx_ads', 'bx_ads_favorites_track', '1', '1', '1', 'page.php?i=view-ad&id={object_id}', 'bx_ads_entries', 'id', 'author', 'favorites', '', '');
 
 -- FEATURED
 INSERT INTO `sys_objects_feature` (`name`, `is_on`, `is_undo`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_flag`, `class_name`, `class_file`) VALUES 
-('bx_ads', '1', '1', 'page.php?i=view-post&id={object_id}', 'bx_ads_entries', 'id', 'author', 'featured', '', '');
+('bx_ads', '1', '1', 'page.php?i=view-ad&id={object_id}', 'bx_ads_entries', 'id', 'author', 'featured', '', '');
 
 -- CONTENT INFO
 INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_action_add`, `alert_action_update`, `alert_action_delete`, `class_name`, `class_file`) VALUES
