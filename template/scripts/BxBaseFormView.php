@@ -1178,9 +1178,12 @@ BLAH;
 
     protected function genCustomViewRowValueLabels ($aInput)
     {        
-        if (empty($aInput['value']) || !is_array($aInput['value']) || !($oMetatags = BxDolMetatags::getObjectInstance($aInput['meta_object'])) || !$oMetatags->keywordsIsEnabled())
+        if (empty($aInput['value']) || !($oMetatags = BxDolMetatags::getObjectInstance($aInput['meta_object'])) || !$oMetatags->keywordsIsEnabled())
             return null;
-
+        
+        if (!empty($aInput['value']) && !is_array($aInput['value']))
+            $aInput['value'] = unserialize($aInput['value']);
+        
         $s = ''; 
         foreach ($aInput['value'] as $sLabel)
             $s .= '<a href="' . $oMetatags->keywordsGetHashTagUrl($sLabel, $aInput['content_id']) . '"><b class="val bx-def-color-bg-hl bx-def-round-corners">' . trim($sLabel) . '</b></a>';
@@ -1200,6 +1203,9 @@ BLAH;
 
         $aInput['type'] = 'select_multiple bx-form-select-labels';
         $aInput['values'] = $aValues;
+        
+        if (!empty($aInput['value'])  && !is_array($aInput['value']))
+            $aInput['value'] = unserialize($aInput['value']);
 
         return $this->genInputSelectMultiple($aInput);
     }
@@ -1508,8 +1514,10 @@ BLAH;
         }
 
         if ($isManualInput) {
-            $aInput['type'] = 'text';
+            $aAttrs = empty($aInput['attrs']) ? array() : $aInput['attrs'];
+			$aInput['type'] = 'text';
             $aInput['attrs']['id'] = $sIdInput;
+			$aInput['attrs'] = array_merge($aAttrs, $aInput['attrs']);
             $aVars['input'] = $this->genInputStandard($aInput);
         } 
         else {
@@ -1521,6 +1529,18 @@ BLAH;
         }
 
         return $this->oTemplate->parseHtmlByName('form_field_location.html', $aVars);
+    }
+    
+    public function setLocationVals ($aInput, $aVals)
+    {
+        $this->_aSpecificValues[$aInput['name'] . '_lat'] = $aVals['lat'];
+		$this->_aSpecificValues[$aInput['name'] . '_lng'] = $aVals['lng'];
+		$this->_aSpecificValues[$aInput['name'] . '_country'] = $aVals['country'];
+		$this->_aSpecificValues[$aInput['name'] . '_state'] = $aVals['state'];
+		$this->_aSpecificValues[$aInput['name'] . '_city'] = $aVals['city'];
+		$this->_aSpecificValues[$aInput['name'] . '_zip'] = $aVals['zip'];
+		$this->_aSpecificValues[$aInput['name'] . '_street'] = $aVals['street'];
+		$this->_aSpecificValues[$aInput['name'] . '_street_number'] = $aVals['street_number'];
     }
     
     function genInputPassword(&$aInput)
