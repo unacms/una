@@ -141,8 +141,8 @@
     <!-- Menus -->
     <string name="_bx_timeline_menu_title_view"><![CDATA[Просмотр]]></string>
     <string name="_bx_timeline_menu_set_title_view"><![CDATA[Просмотр]]></string>
-    <string name="_bx_timeline_menu_item_title_system_news"><![CDATA[Новости]]></string>
-    <string name="_bx_timeline_menu_item_title_news"><![CDATA[Новости]]></string>
+    <string name="_bx_timeline_menu_item_title_system_channels"><![CDATA[Каналы]]></string>
+    <string name="_bx_timeline_menu_item_title_channels"><![CDATA[Каналы]]></string>
     <string name="_bx_timeline_menu_item_title_system_feed"><![CDATA[Хроника]]></string>
     <string name="_bx_timeline_menu_item_title_feed"><![CDATA[Хроника]]></string>
     <string name="_bx_timeline_menu_item_title_system_public"><![CDATA[Публичное]]></string>

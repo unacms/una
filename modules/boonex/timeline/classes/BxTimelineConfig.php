@@ -145,7 +145,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_aTypeToFormDisplay = array(
             BX_BASE_MOD_NTFS_TYPE_OWNER => 'form_display_post_add_profile',
             BX_BASE_MOD_NTFS_TYPE_PUBLIC => 'form_display_post_add_public',
-            BX_TIMELINE_TYPE_NEWS => 'form_display_post_add',
+            BX_TIMELINE_TYPE_CHANNELS => 'form_display_post_add',
             BX_TIMELINE_TYPE_FEED => 'form_display_post_add',
             BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS => 'form_display_post_add'
         );

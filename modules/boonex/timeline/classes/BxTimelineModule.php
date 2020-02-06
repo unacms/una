@@ -14,7 +14,7 @@ bx_import('BxBaseModNotificationsModule');
 
 define('BX_TIMELINE_TYPE_ITEM', 'view_item');
 define('BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS', 'owner_and_connections');
-define('BX_TIMELINE_TYPE_NEWS', 'news'); //--- Followed channels only.
+define('BX_TIMELINE_TYPE_CHANNELS', 'channels'); //--- Followed channels only.
 define('BX_TIMELINE_TYPE_FEED', 'feed'); //--- Owner and folloved contexts excluding channels.
 define('BX_TIMELINE_TYPE_HOT', 'hot'); //--- Aggrigated hot content.
 define('BX_TIMELINE_TYPE_DEFAULT', BX_BASE_MOD_NTFS_TYPE_OWNER);

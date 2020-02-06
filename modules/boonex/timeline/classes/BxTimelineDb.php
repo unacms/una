@@ -450,7 +450,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                         $aMethod['params'][2]['context_id'] = 0;
                         break;
 
-                    case BX_TIMELINE_TYPE_NEWS:
+                    case BX_TIMELINE_TYPE_CHANNELS:
                     case BX_TIMELINE_TYPE_FEED:
                     case BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS:
                         $aMethod['params'][2]['context_id'] = $aParams['profile_id'];
@@ -633,13 +633,13 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
             case 'list':
                 list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause) = parent::_getSqlPartsEvents($aParams);
-                if(in_array($aParams['type'], array(BX_TIMELINE_TYPE_NEWS, BX_TIMELINE_TYPE_FEED, BX_BASE_MOD_NTFS_TYPE_CONNECTIONS, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS)))
+                if(in_array($aParams['type'], array(BX_TIMELINE_TYPE_CHANNELS, BX_TIMELINE_TYPE_FEED, BX_BASE_MOD_NTFS_TYPE_CONNECTIONS, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS)))
                     $sSelectClause  = "DISTINCT " . $sSelectClause;
                 break;
 
             case 'list_from':
                 list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause) = parent::_getSqlPartsEvents(array_merge($aParams, array('browse' => 'list')));
-                if(in_array($aParams['type'], array(BX_TIMELINE_TYPE_NEWS, BX_TIMELINE_TYPE_FEED, BX_BASE_MOD_NTFS_TYPE_CONNECTIONS, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS)))
+                if(in_array($aParams['type'], array(BX_TIMELINE_TYPE_CHANNELS, BX_TIMELINE_TYPE_FEED, BX_BASE_MOD_NTFS_TYPE_CONNECTIONS, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS)))
                     $sSelectClause  = "DISTINCT " . $sSelectClause;
                 
                 $sSqlFrom = $this->prepareAsString("AND `{$this->_sTable}`.`id`<=? ", $aParams['from']);
@@ -672,7 +672,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
                     case BX_BASE_MOD_NTFS_TYPE_PUBLIC:
                     case BX_BASE_MOD_NTFS_TYPE_CONNECTIONS:
-                    case BX_TIMELINE_TYPE_NEWS:
+                    case BX_TIMELINE_TYPE_CHANNELS:
                     case BX_TIMELINE_TYPE_FEED:
                     case BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS:
                         $sOrderClause = "`{$this->_sTable}`.`sticked` DESC, ";
@@ -804,7 +804,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 break;
 
             //--- Feed: Profile Connections to Channel contexts only
-            case BX_TIMELINE_TYPE_NEWS:
+            case BX_TIMELINE_TYPE_CHANNELS:
                 if(empty($aParams['owner_id']))
                     break;
 

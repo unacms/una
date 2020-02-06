@@ -141,8 +141,8 @@
     <!-- Menus -->
     <string name="_bx_timeline_menu_title_view"><![CDATA[View]]></string>
     <string name="_bx_timeline_menu_set_title_view"><![CDATA[View]]></string>
-    <string name="_bx_timeline_menu_item_title_system_news"><![CDATA[News]]></string>
-    <string name="_bx_timeline_menu_item_title_news"><![CDATA[News]]></string>
+    <string name="_bx_timeline_menu_item_title_system_channels"><![CDATA[Channels]]></string>
+    <string name="_bx_timeline_menu_item_title_channels"><![CDATA[Channels]]></string>
     <string name="_bx_timeline_menu_item_title_system_feed"><![CDATA[Feed]]></string>
     <string name="_bx_timeline_menu_item_title_feed"><![CDATA[Feed]]></string>
     <string name="_bx_timeline_menu_item_title_system_public"><![CDATA[Public]]></string>
