@@ -260,12 +260,18 @@ BxTimelineView.prototype.changeView = function(oLink, sType)
 {
     var oViews = $(this._getHtmlId('views_content', this._oRequestParams, {with_type: false})); 
 
+    var oViewBefore = $(this._getHtmlId('main', this._oRequestParams));
+    if(!oViewBefore.length)
+        oViewBefore = oViews.children(':visible');
+
     this._oRequestParams.start = 0;
     this._oRequestParams.type = sType;
 
     var sView = this._getHtmlId('main', this._oRequestParams);
     if(oViews.find(sView).length !== 0) {
-        oViews.children(':visible').hide().siblings(sView).show();
+        oViewBefore.hide();
+        oViews.find(sView).show();
+
         return;
     }
 
@@ -287,7 +293,8 @@ BxTimelineView.prototype.changeView = function(oLink, sType)
             var oContent = $(oResponse.content);
             oContent.filter(sView).bxProcessHtml().hide();
 
-            oViews.append(oContent).children(':visible').hide().siblings(sView).show();
+            oViewBefore.hide();
+            oViews.append(oContent).find(sView).show();
         },
         'json'
     );
