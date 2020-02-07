@@ -69,6 +69,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     public function getAddedJs($sType = '', $bDynamic = false)
     {
         $aJs = array(
+            'autosize.min.js',
             'jquery.anim.js',
             'main.js',
         );
@@ -76,7 +77,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             case 'view':
                 $aJs = array_merge($aJs, array(
                     'jquery.ba-resize.min.js',
-                    'autosize.min.js',
                     'masonry.pkgd.min.js',
                     'flickity/flickity.pkgd.min.js',
                     'embedly-player.min.js',
