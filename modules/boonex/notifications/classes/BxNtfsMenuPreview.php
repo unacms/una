@@ -49,7 +49,7 @@ class BxNtfsMenuPreview extends BxTemplMenuCustom
 
     public function getCode ()
     {
-        return $this->_oTemplate->getCss(true) . $this->_oTemplate->parseHtmlByName('menu_preview.html', array(
+        return $this->_oTemplate->getAddedCss('', true) . $this->_oTemplate->parseHtmlByName('menu_preview.html', array(
             'content' => parent::getCode()
         ));
     }
