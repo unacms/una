@@ -11,12 +11,12 @@
 
 class BxBaseModNotificationsTemplate extends BxBaseModGeneralTemplate
 {
-	function __construct(&$oConfig, &$oDb)
+    function __construct(&$oConfig, &$oDb)
     {
         parent::__construct($oConfig, $oDb);
     }
 
-    public function getCss($bDynamic = false)
+    public function getAddedCss($sType = '', $bDynamic = false)
     {
         $mixedResult = $this->addCss(array(
             'view.css',
@@ -28,10 +28,10 @@ class BxBaseModNotificationsTemplate extends BxBaseModGeneralTemplate
             return $mixedResult; 
     }
 
-    public function getJs($bDynamic = false)
+    public function getAddedJs($sType = '', $bDynamic = false)
     {
         $mixedResult = $this->addJs(array(
-        	'jquery.anim.js',
+            'jquery.anim.js',
             'main.js',
             'view.js',
         ), $bDynamic);
@@ -40,24 +40,23 @@ class BxBaseModNotificationsTemplate extends BxBaseModGeneralTemplate
             return $mixedResult; 
     }
 
-	public function getCssJs($bDynamic = false)
+    public function getCssJs($sType = '', $bDynamic = false)
     {
-        return $this->getCss($bDynamic) . $this->getJs($bDynamic);
+        return $this->getAddedCss($sType, $bDynamic) . $this->getAddedJs($sType, $bDynamic);
     }
 
-	public function getJsCode($sType, $aParams = array(), $bWrap = true)
+    public function getJsCode($sType, $aParams = array(), $bWrap = true, $bDynamic = false)
     {
         $oModule = $this->getModule();
 
         $aParams = array_merge(array(
-        	'iOwnerId' => $oModule->_iOwnerId,
+            'iOwnerId' => $oModule->_iOwnerId,
             'sAnimationEffect' => $this->_oConfig->getAnimationEffect(),
             'iAnimationSpeed' => $this->_oConfig->getAnimationSpeed(),
             'aHtmlIds' => $this->_oConfig->getHtmlIds($sType)
         ), $aParams);
 
-        $this->getCssJs();
-        return parent::getJsCode($sType, $aParams, $bWrap);
+        return $this->getCssJs($sType, $bDynamic) . parent::getJsCode($sType, $aParams, $bWrap);
     }
     
     public function getUnit(&$aEvent, $aBrowseParams = array())
@@ -65,7 +64,7 @@ class BxBaseModNotificationsTemplate extends BxBaseModGeneralTemplate
     	return '';
     }
 
-	function unit($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html')
+    function unit($aData, $isCheckPrivateContent = true, $sTemplateName = 'unit.html')
     {
     	$this->getCssJs();
 

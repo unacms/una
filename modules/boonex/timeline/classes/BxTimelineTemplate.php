@@ -38,44 +38,68 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         self::$_sMemoryCacheItemsKeyMask = "%s_%d";
     }
 
-    public function getCss($bDynamic = false)
+    public function getAddedCss($sType = '', $bDynamic = false)
     {
-        $mixedResult = parent::getCss($bDynamic);
-        $mixedResult .= $this->addCss(array(
-            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css',
-            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'emoji/css/|emoji.css',
-            'jquery-ui/jquery-ui.css',
-            'cmts.css',
-            'post.css',
-            'repost.css',
-        ), $bDynamic);
+        $aCss = array();
+        switch($sType) {
+            case 'view':
+                $aCss = array(
+                    BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flickity/|flickity.css',
+                    'cmts.css',
+                    'view.css',
+                    'view-media-tablet.css',
+                    'view-media-desktop.css',
+                    'repost.css',
+                );
+                break;
 
+            case 'post':
+                if($this->_oConfig->isEmoji())
+                    $aCss[] = BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'emoji/css/|emoji.css';
+
+                $aCss[] = 'post.css';
+                break;
+        }
+
+        $mixedResult = $this->addCss($aCss, $bDynamic);
         if($bDynamic)
             return $mixedResult; 
     }
 
-    public function getJs($bDynamic = false)
+    public function getAddedJs($sType = '', $bDynamic = false)
     {
-        $mixedResult = parent::getJs($bDynamic);
-        $mixedResult .= $this->addJs(array(
-            'jquery-ui/jquery-ui.custom.min.js',
-            'jquery-ui/jquery.ui.datepicker.min.js',
-            'jquery.form.min.js',
-            'jquery.ba-resize.min.js',
-            'autosize.min.js',
-            'masonry.pkgd.min.js',
-            'flickity/flickity.pkgd.min.js',
-            'embedly-player.min.js',
-            'BxDolCmts.js',            
-            'post.js',
-            'repost.js',
-        ), $bDynamic);
+        $aJs = array(
+            'jquery.anim.js',
+            'main.js',
+        );
+        switch($sType) {
+            case 'view':
+                $aJs = array_merge($aJs, array(
+                    'jquery.ba-resize.min.js',
+                    'autosize.min.js',
+                    'masonry.pkgd.min.js',
+                    'flickity/flickity.pkgd.min.js',
+                    'embedly-player.min.js',
+                    'BxDolCmts.js',
+                    'view.js',
+                    'repost.js',
+                ));
+                break;
 
+            case 'post':
+                $aJs = array_merge($aJs, array(
+                    'jquery.form.min.js',
+                    'post.js',
+                ));
+                break;
+        }
+
+        $mixedResult = $this->addJs($aJs, $bDynamic);
         if($bDynamic)
             return $mixedResult; 
     }
 
-    public function getJsCode($sType, $aParams = array(), $bWrap = true)
+    public function getJsCode($sType, $aParams = array(), $bWrap = true, $bDynamic = false)
     {
         $oModule = $this->getModule();
 
@@ -84,18 +108,19 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'iInfScrollAutoPreloads' => $this->_oConfig->getAutoPreloads()
         ), $aParams);
 
-        return parent::getJsCode($sType, $aParams, $bWrap);
+        return parent::getJsCode($sType, $aParams, $bWrap, $bDynamic);
     }
 
-    public function getJsCodePost($iOwnerId, $aParams = array())
+    public function getJsCodePost($iOwnerId, $aParams = array(), $bWrap = true, $bDynamic = false)
     {
         return $this->getJsCode('post', array(
+            'bEmoji' => $this->_oConfig->isEmoji(),
             'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
             'oRequestParams' => array_merge(array(
                 'type' => isset($aParams['type']) ? $aParams['type'] : BX_TIMELINE_TYPE_DEFAULT, 
                 'owner_id' => $iOwnerId
             ), $aParams)
-        ));
+        ), $bWrap, $bDynamic);
     }
 
     public function getPostBlock($iOwnerId, $aParams = array())
@@ -865,18 +890,18 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($bDynamicMode) {
             $sJsObject = $this->_oConfig->getJsObject('repost');
 
-			$sCode = "var " . $sJsObject . " = null; 
-			$.getScript('" . bx_js_string($this->getJsUrl('main.js'), BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
-				$.getScript('" . bx_js_string($this->getJsUrl('repost.js'), BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
-    				bx_get_style('" . bx_js_string($this->getCssUrl('repost.css'), BX_ESCAPE_STR_APOS) . "');
-    				" . $sCode . "
-				});
-        	}); ";
+            $sCode = "var " . $sJsObject . " = null; 
+            $.getScript('" . bx_js_string($this->getJsUrl('main.js'), BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
+                $.getScript('" . bx_js_string($this->getJsUrl('repost.js'), BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
+                    bx_get_style('" . bx_js_string($this->getCssUrl('repost.css'), BX_ESCAPE_STR_APOS) . "');
+                    " . $sCode . "
+                });
+            }); ";
         }
         else {
-        	$sCode = "var " . $sCode;
+            $sCode = "var " . $sCode;
 
-        	$this->addCss(array('repost.css'));
+            $this->addCss(array('repost.css'));
             $this->addJs(array('main.js', 'repost.js'));
         }
 

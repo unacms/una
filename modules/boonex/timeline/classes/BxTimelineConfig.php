@@ -418,6 +418,15 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         return $this->_bHot;
     }
 
+    public function isEmoji()
+    {
+        $oMenu = BxDolMenu::getObjectInstance($this->getObject('menu_post_attachments'));
+        if(!$oMenu)
+            return false;
+
+        return $oMenu->isMenuItem('add-emoji');
+    }
+
     public function isEditorToolbar()
     {
     	return $this->_bEditorToolbar;

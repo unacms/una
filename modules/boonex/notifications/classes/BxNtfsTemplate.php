@@ -21,11 +21,11 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
     public function getInclude($bIncludeCss = true, $mixedIncludeJs = false)
     {
         if($bIncludeCss)
-            $this->getCss();
+            $this->getAddedCss();
 
         $sResult = '';
         if(is_string($mixedIncludeJs) && !empty($mixedIncludeJs)) {
-            $this->getJs();
+            $this->getAddedJs();
             
             $sResult = $this->getJsCode($mixedIncludeJs);
         }

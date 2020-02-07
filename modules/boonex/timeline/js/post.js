@@ -15,6 +15,7 @@ function BxTimelinePost(oOptions) {
     this._iOwnerId = oOptions.iOwnerId == undefined ? 0 : parseInt(oOptions.iOwnerId);
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'slide' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
+    this._bEmoji = oOptions.bEmoji == undefined ? false : oOptions.bEmoji;
     this._sVideosAutoplay = oOptions.sVideosAutoplay == undefined ? 'off' : oOptions.sVideosAutoplay;
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
@@ -28,21 +29,22 @@ function BxTimelinePost(oOptions) {
     if (typeof window.glOnInitEditor === 'undefined')
         window.glOnInitEditor = [];
 
-    window.glOnInitEditor.push(function (sEditorSelector) {
-        var sBaseUrl = sUrlRoot + 'plugins_public/emoji/js/';
-        if ('undefined' === typeof(EmojiPicker)) {
-            bx_get_scripts([
-                sBaseUrl + 'util.js', 
-                sBaseUrl + 'config.js',
-                sBaseUrl + 'emoji-picker.js', 
-                sBaseUrl + 'jquery.emojiarea.js'
-            ], function() {
-                $this.initEmoji(sEditorSelector)
-            });
-        }
-        else
-            $this.initEmoji(sEditorSelector);
-    });
+    if(this._bEmoji)
+        window.glOnInitEditor.push(function (sEditorSelector) {
+            var sBaseUrl = sUrlRoot + 'plugins_public/emoji/js/';
+            if ('undefined' === typeof(EmojiPicker)) {
+                bx_get_scripts([
+                    sBaseUrl + 'util.js', 
+                    sBaseUrl + 'config.js',
+                    sBaseUrl + 'emoji-picker.js', 
+                    sBaseUrl + 'jquery.emojiarea.js'
+                ], function() {
+                    $this.initEmoji(sEditorSelector)
+                });
+            }
+            else
+                $this.initEmoji(sEditorSelector);
+        });
 
     $(document).ready(function () {
         var oPost = $($this.sIdPost + ' form');
@@ -60,6 +62,9 @@ BxTimelinePost.prototype = new BxTimelineMain();
 
 BxTimelinePost.prototype.initEmoji = function(sEditorSelector)
 {
+    if(!this._bEmoji)
+        return;
+
     var oLink = $(sEditorSelector).parents('form:first').find('a.add-emoji');
 
     var oEmojiConf = {
