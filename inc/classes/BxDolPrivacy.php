@@ -163,7 +163,7 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
             $sTitle = _t(!empty($sTitle) ? $sTitle : '_' . $sName);
         }
 
-        $bDynamicMode = isset($aParams['dynamic_mode']) ? (bool)$aParams['dynamic_mode'] : false;
+        $bDynamicMode = (isset($aParams['dynamic_mode']) && (bool)$aParams['dynamic_mode'] === true) || bx_is_dynamic_request();
         return array(
             'type' => 'select',
             'name' => $sName,
@@ -181,10 +181,31 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
             'db' => array(
                 'pass' => 'Int'
             ),
-            'content' => $oPrivacy->getJsScript($bDynamicMode)
+            'content' => $oPrivacy->addCssJs($bDynamicMode)
         );
     }
 
+    public static function initGroupChooser($sObject, $iOwnerId = 0, $aParams = array())
+    {
+        $sResult = '';
+
+        $oPrivacy = BxDolPrivacy::getObjectInstance($sObject);
+        if(empty($oPrivacy))
+            return $sResult;
+
+        $iOwnerId = !empty($iOwnerId) ? (int)$iOwnerId : bx_get_logged_profile_id();
+        $iContentId = !empty($aParams['content_id']) ? (int)$aParams['content_id'] : 0;
+        $iGroupId = !empty($aParams['group_id']) ? (int)$aParams['group_id'] : 0;
+        $bDynamicMode = (isset($aParams['dynamic_mode']) && (bool)$aParams['dynamic_mode'] === true) || bx_is_dynamic_request();
+
+        $sJsCodeAdd = '';
+        if($oPrivacy->isGroupsCustom())
+            $sJsCodeAdd = $oPrivacy->getLoadGroupCustom($iOwnerId, $iContentId, $iGroupId, isset($aParams['html_ids']) ? $aParams['html_ids'] : array());
+
+        return $oPrivacy->getJsScript($sJsCodeAdd, $bDynamicMode);
+    }
+    
+            
     public function actionLoadGroupCustom()
     {
         $iProfileId = (int)bx_get('profile_id');
@@ -253,22 +274,19 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         echoJson($aResult);
     }
 
-    public function loadGroupCustom($iProfileId, $iContentId, $iGroupId, $aHtmlIds)
-    {
-        return $this->_oTemplate->_wrapInTagJsCode($this->getJsObjectName() . ".loadGroupCustom(" . json_encode(array(
-            'iProfileId' => $iProfileId,
-            'iContentId' => $iContentId,
-            'iGroupId' => $iGroupId,
-            'aHtmlIds' => $aHtmlIds
-        )) . ");");
-    }
-
     public function getGroupSettings($iGroup)
     {
         if(empty($this->_aGroupsSettings[$iGroup]) || !is_array($this->_aGroupsSettings[$iGroup]))
             return false;
 
         return $this->_aGroupsSettings[$iGroup];
+    }
+
+    public function isGroupsCustom()
+    {
+        $aGroups = $this->_oDb->getGroupsBy(array('type' => 'active_list'));
+
+        return in_array(BX_DOL_PG_FRIENDS_SELECTED, $aGroups) || in_array(BX_DOL_PG_RELATIONS_SELECTED, $aGroups);                
     }
 
     public function getGroupCustom($aParams)
@@ -305,10 +323,11 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
             'object' => $this->_sObject
         ));
 
-        if(!empty($aGroupCustom) && is_array($aGroupCustom) && $aGroupCustom['group_id'] != $iGroupId)
+        if(!empty($aGroupCustom) && is_array($aGroupCustom) && $aGroupCustom['group_id'] != $iGroupId) {
             $this->deleteGroupCustom(array('id' => $aGroupCustom['id']));
 
-        return $this->associateGroupCustomWithContent($iProfileId, $iContentId, $iGroupId);
+            $this->associateGroupCustomWithContent($iProfileId, $iContentId, $iGroupId);
+        }
     }
 
     public function deleteGroupCustomByContentId($iContentId)
@@ -338,11 +357,11 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
 
     public function addAclGroups($aValues, $iOwnerId, $aParams)
     {
-		$aCheck = checkActionModule($iOwnerId, 'show membership levels in privacy groups', 'system', false);
-		if($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
-			return $aValues;
-        
-		$aLevels = BxDolAcl::getInstance()->getMemberships(false, true, true, true);
+        $aCheck = checkActionModule($iOwnerId, 'show membership levels in privacy groups', 'system', false);
+        if($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
+            return $aValues;
+
+        $aLevels = BxDolAcl::getInstance()->getMemberships(false, true, true, true);
         if(empty($aLevels) || !is_array($aLevels))
             return $aValues;
 

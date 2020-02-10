@@ -484,7 +484,8 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         if(!isset($CNF[$sField]) || !isset($this->aInputs[$CNF[$sField]]) || !isset($CNF[$sObject]))
             return;
 
-        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF[$sObject]);
+        $sPrivacy = $CNF[$sObject];
+        $oPrivacy = BxDolPrivacy::getObjectInstance($sPrivacy);
         if(!$oPrivacy) 
             return;
 
@@ -494,9 +495,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
                 $aSave[0][$k] = $a;
         }, array(&$aSave));
 
-        $aGroupChooser = $oPrivacy->getGroupChooser($CNF[$sObject], 0, array(
-            'dynamic_mode' => $this->_bDynamicMode
-        ));
+        $aGroupChooser = $oPrivacy->getGroupChooser($sPrivacy);
 
         $this->aInputs[$CNF[$sField]] = array_merge($this->aInputs[$CNF[$sField]], $aGroupChooser, $aSave);
     }
@@ -508,7 +507,8 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         if(!isset($CNF[$sField]) || !isset($this->aInputs[$CNF[$sField]]) || !isset($CNF[$sObject]))
             return;
 
-        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF[$sObject]);
+        $sPrivacy = $CNF[$sObject];
+        $oPrivacy = BxDolPrivacy::getObjectInstance($sPrivacy);
         if(!$oPrivacy) 
             return;
 
@@ -520,8 +520,12 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         if(!isset($this->aInputs[$sKey]['content']))
             $this->aInputs[$sKey]['content'] = '';
 
-        $this->aInputs[$sKey]['content'] .= $oPrivacy->loadGroupCustom($iProfileId, $iContentId, $iGroupId, array(
-            'form' => $this->getId()
+        $this->aInputs[$sKey]['content'] .= $oPrivacy->initGroupChooser($sPrivacy, $iProfileId, array(
+            'content_id' => $iContentId,
+            'group_id' => $iGroupId,
+            'html_ids' => array(
+                'form' => $this->getId()
+            )
         ));
     }
 }

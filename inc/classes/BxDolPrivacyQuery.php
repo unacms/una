@@ -20,7 +20,8 @@ class BxDolPrivacyQuery extends BxDolDb
 
     protected $_sCacheGroup;
     protected $_sCacheGroupFriends;
-    protected $_sCacheGroupsActive;
+    protected $_sCacheGroupsActVis;
+    protected $_sCacheGroupsActVisList;
 
     protected $_sCacheTestedObject;
 
@@ -35,6 +36,7 @@ class BxDolPrivacyQuery extends BxDolDb
         $this->_sCacheGroup = 'sys_privacy_group_';
         $this->_sCacheGroupFriends = 'sys_privacy_group_friends_';
         $this->_sCacheGroupsActVis = 'sys_privacy_group_act_vis';
+        $this->_sCacheGroupsActVisList = 'sys_privacy_group_act_vis_list';
 
         $this->_sCacheTestedObject = 'sys_privacy_tested_object_';
     }
@@ -77,6 +79,9 @@ class BxDolPrivacyQuery extends BxDolDb
 
     function getGroupsBy($aParams)
     {
+        $sSelectClause = "`id`, `title`, `check`, `active`";
+        $sWhereClause = "";
+
         switch($aParams['type']) {
             case 'id':
                 $sCacheFunction = 'fromCache';
@@ -91,13 +96,18 @@ class BxDolPrivacyQuery extends BxDolDb
                 $sMethod = 'getAll';
                 $sWhereClause = "`active`='1' AND `visible`='1'";
                 break;
+
+            case 'active_list':
+                $sCacheFunction = 'fromMemory';
+                $sCacheName = $this->_sCacheGroupsActVisList;
+                $sMethod = 'getColumn';
+                $sSelectClause = "`id`";
+                $sWhereClause = "`active`='1' AND `visible`='1'";
+                break;
         }
 
         $sSql = "SELECT
-                   `id`,
-                   `title`,
-                   `check`,
-                   `active`
+                    " . $sSelectClause . "
                 FROM `sys_privacy_groups`
                 WHERE " . $sWhereClause;
 

@@ -48,29 +48,49 @@ class BxBasePrivacy extends BxDolPrivacy
      *
      * @return string
      */
-    public function getJsScript($bDynamicMode = false)
+    public function getJsScript($sCodeAdd = '', $bDynamicMode = false)
     {
-        $aParams = array(
+        $sCode = $this->_sJsObjName . " = new " . $this->_sJsObjClass . "(" . json_encode(array(
             'sObject' => $this->_sObject,
             'sObjName' => $this->_sJsObjName,
             'sRootUrl' => BX_DOL_URL_ROOT,
             'aGroupSettings' => $this->_aGroupsSettings,
             'aHtmlIds' => $this->_aHtmlIds
-        );
+        )) . ");" . $sCodeAdd;
 
-        return $this->addCssJs($bDynamicMode) . $this->_oTemplate->_wrapInTagJsCode("if(window['" . $this->_sJsObjName . "'] == undefined) var " . $this->_sJsObjName . " = new " . $this->_sJsObjClass . "(" . json_encode($aParams) . ");");
+        if($bDynamicMode) {
+            $sCode = "var " . $this->_sJsObjName . " = null;
+            if(typeof(jQuery.ui.core) == 'undefined')
+                $.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('jquery-ui/jquery.ui.core.min.js'), BX_ESCAPE_STR_APOS) . "');
+            if(typeof(jQuery.ui.widget) == 'undefined')
+                $.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('jquery-ui/jquery.ui.widget.min.js'), BX_ESCAPE_STR_APOS) . "');
+            if(typeof(jQuery.ui.menu) == 'undefined')
+                $.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('jquery-ui/jquery.ui.menu.min.js'), BX_ESCAPE_STR_APOS) . "');
+            if(typeof(jQuery.ui.autocomplete) == 'undefined')
+                $.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('jquery-ui/jquery.ui.autocomplete.min.js'), BX_ESCAPE_STR_APOS) . "');
+            if(window['" . $this->_sJsObjName . "'] === null)
+                $.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('BxDolPrivacy.js'), BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
+                    " . $sCode . "
+                });";
+        }
+        else
+            $sCode = "if(window['" . $this->_sJsObjName . "'] == undefined) var " . $sCode;
+
+        return $this->addCssJs($bDynamicMode) . $this->_oTemplate->_wrapInTagJsCode($sCode);
     }
 
     public function addCssJs($bDynamicMode = false)
     {
         $sInclude = '';
 
-        $sInclude .= $this->_oTemplate->addJs(array(
-            'jquery-ui/jquery-ui.custom.min.js',
-            'jquery-ui/jquery.ui.widget.min.js', 
-            'jquery-ui/jquery.ui.autocomplete.min.js', 
-            'BxDolPrivacy.js'
-        ), $bDynamicMode);
+        if(!$bDynamicMode)
+            $this->_oTemplate->addJs(array(
+                'jquery-ui/jquery.ui.core.min.js',
+                'jquery-ui/jquery.ui.widget.min.js',
+                'jquery-ui/jquery.ui.menu.min.js',
+                'jquery-ui/jquery.ui.autocomplete.min.js', 
+                'BxDolPrivacy.js'
+            ));
 
         $sInclude .= $this->_oTemplate->addCss(array(
             'forms.css', 
@@ -141,6 +161,16 @@ class BxBasePrivacy extends BxDolPrivacy
             'eval' => $sJsObject . '.onSelectGroup(oData);', 
             'content' => $oForm->getElementGroupCustom()
         ));
+    }
+
+    protected function getLoadGroupCustom($iProfileId, $iContentId, $iGroupId, $aHtmlIds)
+    {
+        return $this->_sJsObjName . ".loadGroupCustom(" . json_encode(array(
+            'iProfileId' => $iProfileId,
+            'iContentId' => $iContentId,
+            'iGroupId' => $iGroupId,
+            'aHtmlIds' => $aHtmlIds
+        )) . ");";
     }
 }
 

@@ -307,7 +307,8 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
         if(!isset($CNF[$sFieldKey]) || !isset($this->aInputs[$CNF[$sFieldKey]]) || !isset($CNF[$sObject]))
             return;
 
-        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF[$sObject]);
+        $sPrivacy = $CNF[$sObject];
+        $oPrivacy = BxDolPrivacy::getObjectInstance($sPrivacy);
         if(!$oPrivacy) 
             return;
 
@@ -320,8 +321,12 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
         if(!isset($this->aInputs[$sField]['content']))
             $this->aInputs[$sField]['content'] = '';
 
-        $this->aInputs[$sField]['content'] .= $oPrivacy->loadGroupCustom($iProfileId, $iContentId, $iGroupId, array(
-            'form' => $this->getId()
+        $this->aInputs[$sField]['content'] .= $oPrivacy->initGroupChooser($sPrivacy, $iProfileId, array(
+            'content_id' => $iContentId,
+            'group_id' => $iGroupId,
+            'html_ids' => array(
+                'form' => $this->getId()
+            )
         ));
     }
 }
