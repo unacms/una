@@ -88,6 +88,11 @@ div.bx-vote div.bx-vote-counter-holder {
 	font-size: 1.5rem;
 }
 
+.bx-vote-reactions .bx-vote-element-holder a.bx-vote-do-vote {
+    position: relative;
+    display: inline-block;
+}
+
 .bx-vote-reactions .bx-vote-counter-holder.bx-btn-border {
     border-width: 0px;
 }
