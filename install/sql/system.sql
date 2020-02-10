@@ -781,31 +781,31 @@ SET @iIdActionShowMembershipPrivateInfo = LAST_INSERT_ID();
 
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_wiki', 'wiki add block', NULL, '_sys_acl_action_add_block', '', 0, 1);
+('system', 'wiki add block', NULL, '_sys_acl_action_add_block', '', 0, 1);
 SET @iIdActionWikiAddBlock = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_wiki', 'wiki edit block', NULL, '_sys_acl_action_edit_block', '', 0, 0);
+('system', 'wiki edit block', NULL, '_sys_acl_action_edit_block', '', 0, 0);
 SET @iIdActionWikiEditBlock = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_wiki', 'wiki translate block', NULL, '_sys_acl_action_translate_block', '', 0, 0);
+('system', 'wiki translate block', NULL, '_sys_acl_action_translate_block', '', 0, 0);
 SET @iIdActionWikiTranslateBlock = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_wiki', 'wiki delete version', NULL, '_sys_acl_action_delete_version', '', 0, 1);
+('system', 'wiki delete version', NULL, '_sys_acl_action_delete_version', '', 0, 1);
 SET @iIdActionWikiDeleteVersion = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_wiki', 'wiki delete block', NULL, '_sys_acl_action_delete_block', '', 0, 1);
+('system', 'wiki delete block', NULL, '_sys_acl_action_delete_block', '', 0, 1);
 SET @iIdActionWikiDeleteBlock = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_wiki', 'wiki history', NULL, '_sys_acl_action_history', '', 0, 0);
+('system', 'wiki history', NULL, '_sys_acl_action_history', '', 0, 0);
 SET @iIdActionWikiHistory = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
-('bx_wiki', 'wiki unsafe', NULL, '_sys_acl_action_unsafe', '', 0, 0);
+('system', 'wiki unsafe', NULL, '_sys_acl_action_unsafe', '', 0, 0);
 SET @iIdActionWikiUnsafe = LAST_INSERT_ID();
 
 
