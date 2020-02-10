@@ -12,7 +12,7 @@
  *
  * It's possble to create different WIKI object which will different URLs, Menus and permissions.
  * For example it's possible to create 
- * http://example.com/wiki/somepageshere and http://example.com/cocs/anotherpageshere
+ * http://example.com/wiki/somepageshere and http://example.com/docs/anotherpageshere
  *
  * @section wiki_create Creating the WIKI object:
  *
@@ -21,12 +21,9 @@
  *
  * - object: name of the WIKI object, this name will be user in URL as well, 
  *          for example, 'wiki' will have URLs like this: http://example.com/wiki/somepageshere
+ * - uri: wiki module URI
  * - title: title of the WIKI, for example, documentation, help, tutorial
  * - module: module name WIKI object belongs to
- * - allow_add_for_levels: allow to add pages and blocks for this member levels
- * - allow_edit_for_levels: allow to edit block for this member levels
- * - allow_delete_for_levels: allow to delet pages and blocks for this member levels
- * - allow_translate_for_levels: allow to add translations for this member levels
  * - override_class_name: user defined class name 
  * - override_class_file: the location of the user defined class, leave it empty if class is located in system folders.
  *
@@ -281,37 +278,48 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
      */
     public function isAllowed ($sType, $iProfileId = false)
     {
+        // translate isn't allowed when only one language on the site
         if ('translate' == $sType) {
             $aLangs = BxDolLanguages::getInstance()->getLanguages(false, true);
             if (count($aLangs) < 2)
                 return false;
         }
 
+        // add page isn't implemented for the system
+        if ('add-page' == $sType && 'system' == $this->_aObject['module'])
+            return false;
+
+        // any action is allowed for admin(operator)
         if (isAdmin())
             return true;
 
+        // map 'action' to 'acl action'
         $aTypes = array(
-            'add' => 'allow_add_for_levels',
-            'add-page' => 'allow_add_for_levels',
-            'edit' => 'allow_edit_for_levels',
-            'translate' => 'allow_translate_for_levels',
-            'delete-version' => 'allow_delete_for_levels',
-            'delete-block' => 'allow_delete_for_levels',
-            'get-traaslation' => 'allow_translate_for_levels',
-            'history' => isLogged(),
-            'unsafe' => 'allow_unsafe_for_levels',
+            'add-page' => 'add page',
+            'add' => 'add block',
+            'edit' => 'edit block',
+            'translate' => 'translate block',
+            'delete-version' => 'delete version',
+            'delete-block' => 'delete block',
+            'get-traaslation' => 'translate block',
+            'history' => 'history',
+            'unsafe' => 'unsafe',
         );
+
+        // not listed actions aren't allowed
         if (!isset($aTypes[$sType]))
             return false;
 
+        // hardcoded actions (not implemented for now)
         if (true === $aTypes[$sType] || false === $aTypes[$sType])
             return $aTypes[$sType];
 
-        if (!isset($this->_aObject[$aTypes[$sType]]))
-            return false;
-
-        $oAcl = BxDolAcl::getInstance();
-        return $oAcl->isMemberLevelInSet($this->_aObject[$aTypes[$sType]], $iProfileId);
+        // all system actions starts with 'wiki '
+        $sAction = ('system' == $this->_aObject['module'] ? 'wiki ' : '') . $aTypes[$sType];
+        if (!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+        $aCheck = checkActionModule($iProfileId, $sAction, $this->_aObject['module']);
+        return $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED;
     }
 
     public function actionGetTranslation ()

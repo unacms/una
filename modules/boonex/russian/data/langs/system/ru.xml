@@ -1753,6 +1753,13 @@
         <string name="_sys_acl_action_vote_view_voters"><![CDATA[Просматривать проголосовавших]]></string>
 	<string name="_sys_acl_action_report"><![CDATA[Жаловаться]]></string>
 	<string name="_sys_acl_action_report_view"><![CDATA[Просматривать жалобы]]></string>
+	<string name="_sys_acl_action_add_block"><![CDATA[Вики: добавление блока]]></string>
+	<string name="_sys_acl_action_edit_block"><![CDATA[Вики: редактирование блока]]></string>
+	<string name="_sys_acl_action_translate_block"><![CDATA[Вики: перевод блока]]></string>
+	<string name="_sys_acl_action_delete_version"><![CDATA[Вики: удаление версии]]></string>
+	<string name="_sys_acl_action_delete_block"><![CDATA[Вики: удаление блока]]></string>
+	<string name="_sys_acl_action_history"><![CDATA[Вики: просмотр истории]]></string>
+	<string name="_sys_acl_action_unsafe"><![CDATA[Вики: разрешить HTML]]></string>
 	<string name="_sys_acl_start"><![CDATA[Начало: ]]></string>
 	<string name="_sys_acl_expire"><![CDATA[Окончание: ]]></string>
 	<string name="_sys_acl_expire_never"><![CDATA[никогда]]></string>

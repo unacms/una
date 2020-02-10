@@ -14,4 +14,12 @@
     <string name="_bx_wiki_block_outdated_translations"><![CDATA[Устаревшие переводы]]></string>
     <string name="_bx_wiki_menu_item_title_system_home"><![CDATA[Вики]]></string>
     <string name="_bx_wiki_option_design_box"><![CDATA[Дизайн для вики блока по умолчанию]]></string>
+	<string name="_bx_wiki_acl_action_add_page"><![CDATA[Добавление страницы]]></string>
+	<string name="_bx_wiki_acl_action_add_block"><![CDATA[Добавление блока]]></string>
+	<string name="_bx_wiki_acl_action_edit_block"><![CDATA[Редактирование блока]]></string>
+	<string name="_bx_wiki_acl_action_translate_block"><![CDATA[Перевод блока]]></string>
+	<string name="_bx_wiki_acl_action_delete_version"><![CDATA[Удаление версии]]></string>
+	<string name="_bx_wiki_acl_action_delete_block"><![CDATA[Удаление блока]]></string>
+	<string name="_bx_wiki_acl_action_history"><![CDATA[Просмотр истории]]></string>
+	<string name="_bx_wiki_acl_action_unsafe"><![CDATA[Разрешить HTML]]></string>
 </resources>

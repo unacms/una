@@ -1744,7 +1744,9 @@
 	<string name="_sys_acl_action_not_allowed_before"><![CDATA[Your current membership ({2}) will allow you to '{1}' {6}.]]></string>
     <string name="_sys_acl_action_pending"><![CDATA[You are currently not an active member. Please, ask the site <a href="mailto:{7}">administrator</a> to make you an active member so you would be able to <b>{1}</b>.]]></string>
 	<string name="_sys_acl_action_post_links"><![CDATA[Post links]]></string>
-	<string name="_sys_acl_action_post_links_desc"><![CDATA[Post links in text and textarea form fields]]></string>    
+	<string name="_sys_acl_action_post_links_desc"><![CDATA[Post links in text and textarea form fields]]></string>
+	<string name="_sys_acl_action_use_macros"><![CDATA[Use Macros]]></string>
+    <string name="_sys_acl_action_use_macros_desc"><![CDATA[Use special constructions to insert dynamic content almost anywhere]]></string>
 	<string name="_sys_acl_action_set_acl_level"><![CDATA[Set membership level]]></string>
 	<string name="_sys_acl_action_set_acl_level_desc"><![CDATA[Set membership level for profiles]]></string>
   <string name="_sys_acl_action_show_membership_levels_in_privacy_groups"><![CDATA[Show membership levels in privacy groups]]></string>
@@ -1765,6 +1767,13 @@
         <string name="_sys_acl_action_vote_view_voters"><![CDATA[View voters]]></string>
 	<string name="_sys_acl_action_report"><![CDATA[Report]]></string>
 	<string name="_sys_acl_action_report_view"><![CDATA[View reports]]></string>
+	<string name="_sys_acl_action_add_block"><![CDATA[Wiki: Add Block]]></string>
+	<string name="_sys_acl_action_edit_block"><![CDATA[Wiki: Edit Block]]></string>
+	<string name="_sys_acl_action_translate_block"><![CDATA[Wiki: Translate Block]]></string>
+	<string name="_sys_acl_action_delete_version"><![CDATA[Wiki: Delete Version]]></string>
+	<string name="_sys_acl_action_delete_block"><![CDATA[Wiki: Delete Block]]></string>
+	<string name="_sys_acl_action_history"><![CDATA[Wiki: History]]></string>
+	<string name="_sys_acl_action_unsafe"><![CDATA[Wiki: Unsafe HTML]]></string>
 	<string name="_sys_acl_start"><![CDATA[Start: ]]></string>
 	<string name="_sys_acl_expire"><![CDATA[Expire: ]]></string>
 	<string name="_sys_acl_expire_never"><![CDATA[never]]></string>
