@@ -47,6 +47,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'FIELD_TEXT_ID' => 'discussion-text',
             'FIELD_TEXT_COMMENTS' => 'text_comments',
             'FIELD_CATEGORY' => 'cat',
+            'FIELD_MULTICAT' => 'multicat',
             'FIELD_LR_AUTHOR' => 'lr_profile_id',
             'FIELD_LR_ADDED' => 'lr_timestamp',
             'FIELD_LR_COMMENT_ID' => 'lr_comment_id',
@@ -64,6 +65,10 @@ class BxForumConfig extends BxBaseModTextConfig
             'FIELD_ANONYMOUS' => 'anonymous',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 
+             // some params
+            'PARAM_MULTICAT_ENABLED' => true,
+            'PARAM_MULTICAT_AUTO_ACTIVATION_FOR_CATEGORIES' => 'bx_forum_auto_activation_for_categories',
+            
             // page URIs
             'URI_VIEW_ENTRY' => 'view-discussion',
             'URI_AUTHOR_ENTRIES' => 'discussions-author',
@@ -174,14 +179,16 @@ class BxForumConfig extends BxBaseModTextConfig
         	'main' => 'BxForumMain',
         	'entry' => 'BxForumEntry',
         	'manage_tools' => 'BxForumManageTools',
-        	'studio' => 'BxForumStudio'
+        	'studio' => 'BxForumStudio',
+            'categories' => 'BxForumCategories'
         );
 
         $this->_aJsObjects = array(
         	'main' => 'oBxForumMain',
         	'entry' => 'oBxForumEntry',
         	'manage_tools' => 'oBxForumManageTools',
-        	'studio' => 'oBxForumStudio'
+        	'studio' => 'oBxForumStudio',
+            'categories' => 'oBxForumCategories'
         );
 
         $this->_aGridObjects = array(
