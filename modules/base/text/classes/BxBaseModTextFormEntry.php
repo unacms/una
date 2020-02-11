@@ -84,7 +84,39 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
 
         parent::initChecker ($aValues, $aSpecificValues);
     }
-
+    
+    public function insert ($aValsToAdd = array(), $isIgnore = false)
+    {
+        $CNF = $this->_oModule->_oConfig->CNF;
+        $bMulticatEnabled = $this->_isMulticatEnabled();
+        
+        if ($bMulticatEnabled)
+            $this->processMulticatBefore($CNF['FIELD_MULTICAT'], $aValsToAdd);
+        
+        $iContentId = parent::insert($aValsToAdd, $isIgnore);
+        
+        if(!empty($iContentId)){
+            if ($bMulticatEnabled)
+                $this->processMulticatAfter($CNF['FIELD_MULTICAT'], $iContentId);
+        }
+        return $iContentId;
+    }
+    
+    function update ($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
+    {
+        $CNF = $this->_oModule->_oConfig->CNF;
+        $bMulticatEnabled = $this->_isMulticatEnabled();
+        
+        if ($bMulticatEnabled)
+            $this->processMulticatBefore($CNF['FIELD_MULTICAT'], $aValsToAdd);
+        
+        $iResult = parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
+        
+        if ($bMulticatEnabled)
+            $this->processMulticatAfter($CNF['FIELD_MULTICAT'], $iContentId);
+        return $iResult;
+    }
+    
     protected function genCustomInputAttachments ($aInput)
     {
         return '__attachments_menu__';
@@ -283,6 +315,12 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
             'editor_id' => isset($CNF['FIELD_TEXT_ID']) ? $CNF['FIELD_TEXT_ID'] : ''
     	);
     }
+    
+    protected function _isMulticatEnabled(){
+        $CNF = $this->_oModule->_oConfig->CNF;
+        return isset($CNF['PARAM_MULTICAT_ENABLED']) && $CNF['PARAM_MULTICAT_ENABLED'] === true && isset($CNF['FIELD_MULTICAT']);
+    }
+
 }
 
 /** @} */
