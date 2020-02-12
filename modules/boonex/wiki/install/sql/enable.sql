@@ -15,8 +15,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 
 -- Wiki object
 
-INSERT INTO `sys_objects_wiki` (`object`, `uri`, `title`, `module`, `allow_add_for_levels`, `allow_edit_for_levels`, `allow_delete_for_levels`, `allow_translate_for_levels`, `allow_unsafe_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('bx_wiki', 'wiki', '_bx_wiki_object_title', 'bx_wiki', 192, 192, 192, 192, 0, '', '');
+INSERT INTO `sys_objects_wiki` (`object`, `uri`, `title`, `module`, `override_class_name`, `override_class_file`) VALUES
+('bx_wiki', 'wiki', '_bx_wiki_object_title', 'bx_wiki', '', '');
 
 -- Permalinks
 
@@ -40,3 +40,71 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 SET @iHomepageMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_homepage' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('sys_homepage', 'bx_wiki', 'wiki-home', '', '_bx_wiki_menu_item_title_system_home', 'r.php?_q=wiki/wiki-home', '', '', 'far file-word', '', 2147483647, 1, 1, IFNULL(@iHomepageMenuOrder, 0) + 1);
+
+-- ACL
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_wiki', 'add page', NULL, '_bx_wiki_acl_action_add_page', '', 0, 1);
+SET @iIdActionAddPage = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_wiki', 'add block', NULL, '_bx_wiki_acl_action_add_block', '', 0, 1);
+SET @iIdActionAddBlock = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_wiki', 'edit block', NULL, '_bx_wiki_acl_action_edit_block', '', 0, 0);
+SET @iIdActionEditBlock = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_wiki', 'translate block', NULL, '_bx_wiki_acl_action_translate_block', '', 0, 0);
+SET @iIdActionTranslateBlock = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_wiki', 'delete version', NULL, '_bx_wiki_acl_action_delete_version', '', 0, 1);
+SET @iIdActionDeleteVersion = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_wiki', 'delete block', NULL, '_bx_wiki_acl_action_delete_block', '', 0, 1);
+SET @iIdActionDeleteBlock = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_wiki', 'history', NULL, '_bx_wiki_acl_action_history', '', 0, 0);
+SET @iIdActionHistory = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_wiki', 'unsafe', NULL, '_bx_wiki_acl_action_unsafe', '', 0, 0);
+SET @iIdActionUnsafe = LAST_INSERT_ID();
+
+SET @iModerator = 7;
+SET @iAdministrator = 8;
+
+INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
+
+-- add page
+(@iModerator, @iIdActionAddPage),
+(@iAdministrator, @iIdActionAddPage),
+
+-- add block
+(@iModerator, @iIdActionAddBlock),
+(@iAdministrator, @iIdActionAddBlock),
+
+-- edit block
+(@iModerator, @iIdActionEditBlock),
+(@iAdministrator, @iIdActionEditBlock),
+
+-- translate block
+(@iModerator, @iIdActionTranslateBlock),
+(@iAdministrator, @iIdActionTranslateBlock),
+
+-- delete version
+(@iModerator, @iIdActionDeleteVersion),
+(@iAdministrator, @iIdActionDeleteVersion),
+
+-- delete block
+(@iModerator, @iIdActionDeleteBlock),
+(@iAdministrator, @iIdActionDeleteBlock),
+
+-- history
+(@iModerator, @iIdActionHistory),
+(@iAdministrator, @iIdActionHistory);
+

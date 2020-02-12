@@ -779,6 +779,37 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 ('system', 'show membership private info', NULL, '_sys_acl_action_show_membership_private_info', '_sys_acl_action_show_membership_private_info_desc', 0, 0);
 SET @iIdActionShowMembershipPrivateInfo = LAST_INSERT_ID();
 
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'wiki add block', NULL, '_sys_acl_action_add_block', '', 0, 1);
+SET @iIdActionWikiAddBlock = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'wiki edit block', NULL, '_sys_acl_action_edit_block', '', 0, 0);
+SET @iIdActionWikiEditBlock = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'wiki translate block', NULL, '_sys_acl_action_translate_block', '', 0, 0);
+SET @iIdActionWikiTranslateBlock = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'wiki delete version', NULL, '_sys_acl_action_delete_version', '', 0, 1);
+SET @iIdActionWikiDeleteVersion = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'wiki delete block', NULL, '_sys_acl_action_delete_block', '', 0, 1);
+SET @iIdActionWikiDeleteBlock = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'wiki history', NULL, '_sys_acl_action_history', '', 0, 0);
+SET @iIdActionWikiHistory = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'wiki unsafe', NULL, '_sys_acl_action_unsafe', '', 0, 0);
+SET @iIdActionWikiUnsafe = LAST_INSERT_ID();
+
+
+
 CREATE TABLE `sys_acl_actions_track` (
   `IDAction` int(10) unsigned NOT NULL DEFAULT '0',
   `IDMember` int(10) unsigned NOT NULL default '0',
@@ -4909,11 +4940,6 @@ CREATE TABLE IF NOT EXISTS `sys_objects_wiki` (
   `uri` varchar(32) NOT NULL,
   `title` varchar(255) NOT NULL,
   `module` varchar(32) NOT NULL,
-  `allow_add_for_levels` int(11) NOT NULL DEFAULT '2147483647',
-  `allow_edit_for_levels` int(11) NOT NULL DEFAULT '2147483647',
-  `allow_delete_for_levels` int(11) NOT NULL DEFAULT '2147483647',
-  `allow_translate_for_levels` int(11) NOT NULL DEFAULT '2147483647',
-  `allow_unsafe_for_levels` int(11) NOT NULL DEFAULT '2147483647',
   `override_class_name` varchar(255) NOT NULL,
   `override_class_file` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
@@ -4921,8 +4947,8 @@ CREATE TABLE IF NOT EXISTS `sys_objects_wiki` (
   UNIQUE KEY `uri` (`uri`)
 );
 
-INSERT INTO `sys_objects_wiki` (`object`, `uri`, `title`, `module`, `allow_add_for_levels`, `allow_edit_for_levels`, `allow_delete_for_levels`, `allow_translate_for_levels`, `allow_unsafe_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('system', 'sys', '_sys_wiki_system_title', 'system', 0, 0, 0, 0, 0, '', '');
+INSERT INTO `sys_objects_wiki` (`object`, `uri`, `title`, `module`, `override_class_name`, `override_class_file`) VALUES
+('system', 'sys', '_sys_wiki_system_title', 'system', '', '');
 
 
 CREATE TABLE IF NOT EXISTS `sys_pages_wiki_blocks` (

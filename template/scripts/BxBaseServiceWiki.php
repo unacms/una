@@ -47,7 +47,7 @@ class BxBaseServiceWiki extends BxDol
 
         } else {
 
-            if ($oWiki->isAllowed('add')) {
+            if ($oWiki->isAllowed('add-page')) {
                 $oPage = BxDolPage::getObjectInstanceByURI($sUri);
                 $oTemplate = BxDolTemplate::getInstance();
                 if ($oPage) {                    

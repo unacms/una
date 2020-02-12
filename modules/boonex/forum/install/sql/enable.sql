@@ -18,7 +18,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_forum_per_page_index', '6', @iCategId, '_bx_forum_option_per_page_index', 'digit', '', '', '', 11),
 ('bx_forum_per_page_profile', '6', @iCategId, '_bx_forum_option_per_page_profile', 'digit', '', '', '', 12),
 ('bx_forum_rss_num', '10', @iCategId, '_bx_forum_option_rss_num', 'digit', '', '', '', 20),
-('bx_forum_searchable_fields', 'title,text,text_comments', @iCategId, '_bx_forum_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:21:"get_searchable_fields";}', 30);
+('bx_forum_searchable_fields', 'title,text,text_comments', @iCategId, '_bx_forum_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:21:"get_searchable_fields";}', 30),
+('bx_forum_auto_activation_for_categories', 'on', @iCategId, '_bx_posts_option_auto_activation_for_categories', 'checkbox', '', '', '', 35);
 -- ('bx_forum_autosubscribe_created', '', @iCategId, '_bx_forum_option_autosubscribe_created', 'checkbox', '', '', '', 40),
 -- ('bx_forum_autosubscribe_replied', '', @iCategId, '_bx_forum_option_autosubscribe_replied', 'checkbox', '', '', '', 41),
 
@@ -140,7 +141,8 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_forum_home', 1, @sName, '', '_bx_forum_page_block_title_featured_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:15:"browse_featured";s:6:"params";a:4:{i:0;s:5:"table";i:1;b:0;i:2;b:1;i:3;b:0;}}', 0, 1, 1, 0),
 ('bx_forum_home', 1, @sName, '', '_bx_forum_page_block_title_latest_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_forum";s:6:"method";s:13:"browse_latest";s:6:"params";a:1:{i:0;s:5:"table";}}', 0, 1, 1, 1),
 ('bx_forum_home', 2, @sName, '', '_bx_forum_page_block_title_cats', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"categories_list";s:6:"params";a:2:{i:0;s:13:"bx_forum_cats";i:1;a:1:{s:10:"show_empty";b:1;}}s:5:"class";s:20:"TemplServiceCategory";}', 0, 1, 1, 0),
-('bx_forum_home', 2, @sName, '', '_bx_forum_page_block_title_popular_keywords', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:14:"keywords_cloud";s:6:"params";a:2:{i:0;s:8:"bx_forum";i:1;s:8:"bx_forum";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 1, 1, 1);
+('bx_forum_home', 2, @sName, '', '_bx_forum_page_block_title_popular_keywords', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:14:"keywords_cloud";s:6:"params";a:2:{i:0;s:8:"bx_forum";i:1;s:8:"bx_forum";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 1, 1, 1),
+('bx_forum_home', 2, @sName, '_bx_forum_page_block_title_sys_multicats', '_bx_forum_page_block_title_multicats', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:8:"bx_forum";s:6:"method";s:21:"categories_multi_list";}', 0, 1, 0, 2);
 
 -- PAGE: module search
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
