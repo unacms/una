@@ -123,13 +123,6 @@ class BxNtfsDb extends BxBaseModNotificationsDb
                 break;
         }
 
-        $sJoinClause .= " INNER JOIN `{$this->_sTableSettings}` ON `{$this->_sTableHandlers}`.`id`=`{$this->_sTableSettings}`.`handler_id` AND `{$this->_sTableSettings}`.`delivery`='" . BX_BASE_MOD_NTFS_DTYPE_SITE . "' AND `{$this->_sTableSettings}`.`active`='1'";
-
-        $sJoinClauseS2U = " LEFT JOIN `{$this->_sTableSettings2Users}` ON `{$this->_sTableSettings}`.`id`=`{$this->_sTableSettings2Users}`.`setting_id` ";
-        if(!empty($aParams['owner_id']))
-            $sJoinClauseS2U = $this->prepareAsString($sJoinClauseS2U . "AND `{$this->_sTableSettings2Users}`.`user_id`=? ", $aParams['owner_id']);
-        $sJoinClause .= $sJoinClauseS2U;
-
         return array($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);
     }
 
@@ -160,13 +153,24 @@ class BxNtfsDb extends BxBaseModNotificationsDb
         //--- Check type
         if(!empty($aParams['owner_id']))
             switch($aParams['type']) {
+                /*
+                 * Note. It isn't used for now and outdated.
+                 */
                 case BX_BASE_MOD_NTFS_TYPE_OWNER:
                     $sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`owner_id`=? ", $aParams['owner_id']);
                     break;
 
                 case BX_BASE_MOD_NTFS_TYPE_OBJECT_OWNER:
+                    $sJoinClause .= $this->prepareAsString(" INNER JOIN `{$this->_sTableSettings}` ON `{$this->_sTableHandlers}`.`id`=`{$this->_sTableSettings}`.`handler_id` AND `{$this->_sTableSettings}`.`delivery`='" . BX_BASE_MOD_NTFS_DTYPE_SITE . "' AND `{$this->_sTableSettings}`.`active`='1' AND `{$this->_sTableSettings}`.`type`=?", BX_NTFS_STYPE_PERSONAL);
+
+                    $sJoinClauseS2U = " LEFT JOIN `{$this->_sTableSettings2Users}` ON `{$this->_sTableSettings}`.`id`=`{$this->_sTableSettings2Users}`.`setting_id` ";
+                    if(!empty($aParams['owner_id']))
+                        $sJoinClauseS2U .= $this->prepareAsString("AND `{$this->_sTableSettings2Users}`.`user_id`=? ", $aParams['owner_id']);
+                    $sJoinClauseS2U .= "AND (ISNULL(`{$this->_sTableSettings2Users}`.`active`) OR `{$this->_sTableSettings2Users}`.`active`='1') ";
+
+                    $sJoinClause .= $sJoinClauseS2U;
+
                     $sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`owner_id`<>`{$this->_sTable}`.`object_owner_id` AND ((`{$this->_sTable}`.`owner_id`=? AND `{$this->_sTable}`.`object_privacy_view`<0 AND `{$this->_sTable}`.`owner_id`=ABS(`{$this->_sTable}`.`object_privacy_view`)) OR `{$this->_sTable}`.`object_owner_id`=?) ", $aParams['owner_id'], $aParams['owner_id']);
-                    $sWhereClause .= $this->prepareAsString("AND `{$this->_sTableSettings}`.`type`=? AND `{$this->_sTableSettings}`.`active`='1' AND (ISNULL(`{$this->_sTableSettings2Users}`.`active`) OR `{$this->_sTableSettings2Users}`.`active`='1') ", BX_NTFS_STYPE_PERSONAL);
                     break;
 
                 case BX_BASE_MOD_NTFS_TYPE_CONNECTIONS:
@@ -181,7 +185,14 @@ class BxNtfsDb extends BxBaseModNotificationsDb
                         $sWhereClause .= "AND `{$this->_sTable}`.`date` > " . $aQueryParts['fields']['added'];
 
                     list($aModulesProfiles, $aModulesContexts) = $this->_oConfig->getProfileBasedModules();
-                    $sWhereClause .= $this->prepareAsString("AND ((`{$this->_sTableSettings}`.`type`=? AND `tsp`.`type` IN (" . $this->implode_escape($aModulesProfiles) . ")) || (`{$this->_sTableSettings}`.`type`=? AND `tsp`.`type` IN (" . $this->implode_escape($aModulesContexts) . "))) AND `{$this->_sTableSettings}`.`active`='1' AND (ISNULL(`{$this->_sTableSettings2Users}`.`active`) OR `{$this->_sTableSettings2Users}`.`active`='1') ", BX_NTFS_STYPE_FOLLOW_MEMBER, BX_NTFS_STYPE_FOLLOW_CONTEXT);
+                    $sJoinClause .= $this->prepareAsString(" INNER JOIN `{$this->_sTableSettings}` ON `{$this->_sTableHandlers}`.`id`=`{$this->_sTableSettings}`.`handler_id` AND `{$this->_sTableSettings}`.`delivery`='" . BX_BASE_MOD_NTFS_DTYPE_SITE . "' AND `{$this->_sTableSettings}`.`active`='1' AND ((`{$this->_sTableSettings}`.`type`=? AND `tsp`.`type` IN (" . $this->implode_escape($aModulesProfiles) . ")) || (`{$this->_sTableSettings}`.`type`=? AND `tsp`.`type` IN (" . $this->implode_escape($aModulesContexts) . ")))", BX_NTFS_STYPE_FOLLOW_MEMBER, BX_NTFS_STYPE_FOLLOW_CONTEXT);
+
+                    $sJoinClauseS2U = " LEFT JOIN `{$this->_sTableSettings2Users}` ON `{$this->_sTableSettings}`.`id`=`{$this->_sTableSettings2Users}`.`setting_id` ";
+                    if(!empty($aParams['owner_id']))
+                        $sJoinClauseS2U .= $this->prepareAsString("AND `{$this->_sTableSettings2Users}`.`user_id`=? ", $aParams['owner_id']);
+                    $sJoinClauseS2U .= "AND (ISNULL(`{$this->_sTableSettings2Users}`.`active`) OR `{$this->_sTableSettings2Users}`.`active`='1') ";
+
+                    $sJoinClause .= $sJoinClauseS2U;
                     break;
 
                 case BX_NTFS_TYPE_OBJECT_OWNER_AND_CONNECTIONS:
@@ -194,7 +205,6 @@ class BxNtfsDb extends BxBaseModNotificationsDb
                      * owned by the requested profile.
                      */
                     $sWhereClauseObjectOwner = $this->prepareAsString("`{$this->_sTable}`.`owner_id` <> `{$this->_sTable}`.`object_owner_id` AND ((`{$this->_sTable}`.`owner_id`=? AND `{$this->_sTable}`.`object_privacy_view`<0 AND `{$this->_sTable}`.`owner_id`=ABS(`{$this->_sTable}`.`object_privacy_view`)) OR `{$this->_sTable}`.`object_owner_id`=?) ", $aParams['owner_id'], $aParams['owner_id']);
-                    $sWhereClauseObjectOwner .= $this->prepareAsString("AND `{$this->_sTableSettings}`.`type`=?", BX_NTFS_STYPE_PERSONAL);
 
                     /**
                      * 'follow' notifications are taken by connection with `owner_id`
@@ -209,12 +219,19 @@ class BxNtfsDb extends BxBaseModNotificationsDb
                         $sWhereClauseConnections = "NOT ISNULL(`c`.`content`) ";
                         if(!empty($aQueryParts['fields']['added']))
                             $sWhereClauseConnections .= "AND `{$this->_sTable}`.`date` > `" . $aQueryParts['fields']['added']['table_alias'] . "`.`" . $aQueryParts['fields']['added']['name'] . "` ";
-
-                        list($aModulesProfiles, $aModulesContexts) = $this->_oConfig->getProfileBasedModules();
-                        $sWhereClauseConnections .= $this->prepareAsString("AND ((`{$this->_sTableSettings}`.`type`=? AND `tsp`.`type` IN (" . $this->implode_escape($aModulesProfiles) . ")) || (`{$this->_sTableSettings}`.`type`=? AND `tsp`.`type` IN (" . $this->implode_escape($aModulesContexts) . "))) ", BX_NTFS_STYPE_FOLLOW_MEMBER, BX_NTFS_STYPE_FOLLOW_CONTEXT);
                     }
 
-                    $sWhereClause .= "AND ((" . $sWhereClauseObjectOwner . ") || (" . $sWhereClauseConnections . ")) AND `{$this->_sTableSettings}`.`active`='1' AND (ISNULL(`{$this->_sTableSettings2Users}`.`active`) OR `{$this->_sTableSettings2Users}`.`active`='1') ";
+                    list($aModulesProfiles, $aModulesContexts) = $this->_oConfig->getProfileBasedModules();
+                    $sJoinClause .= $this->prepareAsString(" INNER JOIN `{$this->_sTableSettings}` ON `{$this->_sTableHandlers}`.`id`=`{$this->_sTableSettings}`.`handler_id` AND `{$this->_sTableSettings}`.`delivery`='" . BX_BASE_MOD_NTFS_DTYPE_SITE . "' AND `{$this->_sTableSettings}`.`active`='1' AND (`{$this->_sTableSettings}`.`type`=? OR ((`{$this->_sTableSettings}`.`type`=? AND `tsp`.`type` IN (" . $this->implode_escape($aModulesProfiles) . ")) || (`{$this->_sTableSettings}`.`type`=? AND `tsp`.`type` IN (" . $this->implode_escape($aModulesContexts) . "))))", BX_NTFS_STYPE_PERSONAL, BX_NTFS_STYPE_FOLLOW_MEMBER, BX_NTFS_STYPE_FOLLOW_CONTEXT);
+
+                    $sJoinClauseS2U = " LEFT JOIN `{$this->_sTableSettings2Users}` ON `{$this->_sTableSettings}`.`id`=`{$this->_sTableSettings2Users}`.`setting_id` ";
+                    if(!empty($aParams['owner_id']))
+                        $sJoinClauseS2U .= $this->prepareAsString("AND `{$this->_sTableSettings2Users}`.`user_id`=? ", $aParams['owner_id']);
+                    $sJoinClauseS2U .= "AND (ISNULL(`{$this->_sTableSettings2Users}`.`active`) OR `{$this->_sTableSettings2Users}`.`active`='1') ";
+
+                    $sJoinClause .= $sJoinClauseS2U;
+
+                    $sWhereClause .= "AND ((" . $sWhereClauseObjectOwner . ") || (" . $sWhereClauseConnections . ")) ";
                     break;
             }
 
