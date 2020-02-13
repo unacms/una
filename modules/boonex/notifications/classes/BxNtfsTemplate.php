@@ -375,7 +375,11 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
 
     protected function _parseContentLangKey($sLangKey, &$aEvent)
     {
-        return $this->parseHtmlByContent(_t($sLangKey), $aEvent['content'], array('{', '}'));
+        $aExclude = array(
+            'settings' => 1
+        );
+
+        return $this->parseHtmlByContent(_t($sLangKey), array_diff_key($aEvent['content'], $aExclude), array('{', '}'));
     }
 
     protected function _getContentLink(&$aEvent)
