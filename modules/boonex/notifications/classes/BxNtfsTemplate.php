@@ -376,6 +376,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
     protected function _parseContentLangKey($sLangKey, &$aEvent)
     {
         $aExclude = array(
+            'lang_key' => 1,
             'settings' => 1
         );
 
