@@ -39,6 +39,9 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 -- ACL
 
+DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matrix` WHERE `sys_acl_matrix`.`IDAction` = `sys_acl_actions`.`ID` AND `sys_acl_actions`.`Module` = 'system' AND `sys_acl_actions`.`Name` IN('set badge', 'use macros', 'switch to any profile', 'show membership levels in privacy groups', 'show membership private info', 'wiki add block', 'wiki edit block', 'wiki translate block', 'wiki delete version', 'wiki delete block', 'wiki history', 'wiki unsafe');
+DELETE FROM `sys_acl_actions` WHERE `Module` = 'system' AND `Name` IN('set badge', 'use macros', 'switch to any profile', 'show membership levels in privacy groups', 'show membership private info', 'wiki add block', 'wiki edit block', 'wiki translate block', 'wiki delete version', 'wiki delete block', 'wiki history', 'wiki unsafe');
+
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('system', 'set badge', NULL, '_sys_acl_action_set_badge', '_sys_acl_action_set_badge_desc', 0, 3);
 SET @iIdActionSetBadge = LAST_INSERT_ID();
@@ -268,7 +271,7 @@ UPDATE `sys_objects_menu` SET `template_id` = 23 WHERE `template_id` = 18;
 UPDATE `sys_objects_menu` SET `template_id` = 7 WHERE `object` = 'sys_site' AND `template_id` = 14;
 UPDATE `sys_objects_menu` SET `template_id` = 7 WHERE `object` = 'sys_homepage' AND `template_id` = 14;
 UPDATE `sys_objects_menu` SET `template_id` = 7 WHERE `object` = 'sys_add_content' AND `template_id` = 14;
-UPDATE `sys_objects_menu` SET `template_id` = 15 WHERE `object` = 'sys_create_post' AND `template_id` = 18;
+UPDATE `sys_objects_menu` SET `template_id` = 15 WHERE `object` = 'sys_create_post' AND `template_id` = 22;
 
 DELETE FROM `sys_objects_menu` WHERE `object` IN('sys_set_badges', 'sys_vote_reactions_do', 'sys_wiki');
 INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
