@@ -1,0 +1,105 @@
+/*--- General ---*/
+div.bx-grid-header div.bx-form-element-wrapper {
+    position: relative;
+    float: left;
+    width: 165px;
+}
+
+/*--- Forms page -> Add/Edit Form block ---*/
+div.bx-form-add-form {}
+div.bx-form-add-form-cnt {}
+
+/*--- Displays page -> Add/Edit Display block ---*/
+div.bx-form-add-display {}
+div.bx-form-add-display-cnt {}
+
+/*--- Displays page -> Panel Top style ---*/
+div.bx-grid-header div#bx-form-element-module,
+div.bx-grid-header div#bx-form-element-form,
+div.bx-grid-header div#bx-form-element-list {
+    margin-right: 20px;
+}
+div.bx-grid-header div#bx-form-element-form,
+div.bx-grid-header div#bx-form-element-display,
+div.bx-grid-header div#bx-form-element-module,
+div.bx-grid-header div#bx-form-element-list,
+div.bx-grid-header div#bx-form-element-keyword {
+    margin-top: 0px;
+}
+
+/*--- Fields page -> Panel Top style ---*/
+div.bx-grid-header div.bx-form-element-wrapper {
+    position: relative;
+    float: left;
+}
+div.bx-grid-header div#bx-form-element-display {
+    margin-right: 20px;
+}
+
+/*--- Fields page -> Add/Edit Field block style ---*/
+div#bx-form-element-type .bx-menu-ver li {
+	position: relative;
+	float: left;
+	width: 50%;
+}
+div#bx-form-element-type .bx-menu-ver .bx-def-hr {
+	display: none;
+}
+div#bx-form-element-info textarea.bx-form-input-textarea {
+	height: 53px;
+}
+div.bx-badge-item-icon-preview img {
+    max-width: 128px;
+    max-height: 128px;
+}
+div.bx-badge {
+	display: flex;
+    align-items:center;
+	text-align: center;
+    background:#ff0000;
+    color:#fff;	
+	width: 150px;
+	vertical-align: middle;
+	height: 1.25rem;
+	line-height: 1.25rem;
+	padding: 0 0.5rem ;
+	border-radius: 1em;
+	white-space: nowrap; 
+	text-overflow: ellipsis; 
+    overflow: hidden;
+}
+img.bx-badge-icon {
+    width: 14px;
+    height: 14px;
+}
+div.bx-badge img{
+
+	margin-right: 0.5rem;
+}
+div.bx-badge span{
+	text-overflow: ellipsis; 
+    overflow: hidden;
+}
+div.bx-badge .sys-icon{
+	color:#fff;
+	margin-right: 0.5rem;
+}
+div.bx-badge.bx-badge-compact{
+	width: 1.25rem;
+	text-align: center;
+}
+div.bx-badge.bx-badge-compact .sys-icon{
+	width: 1.25rem;
+}
+div.bx-badge.bx-badge-compact .sys-icon,
+div.bx-badge.bx-badge-compact img{
+    margin:0px auto;
+}
+
+/*--- Pre Lists page -> Add/Edit Form block ---*/
+div.bx-form-add-list {}
+div.bx-form-add-list-cnt {}
+
+/*--- Pre Values page -> Add/Edit Form block ---*/
+div.bx-form-add-value {}
+div.bx-form-add-value-cnt {}

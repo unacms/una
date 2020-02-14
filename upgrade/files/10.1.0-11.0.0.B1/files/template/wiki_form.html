@@ -1,0 +1,28 @@
+<div id="bx-wiki-form-__block_id__" class="bx-wiki-form">
+    __form__
+</div>
+<script>
+    $(document).ready(function () {
+        $("#bx-wiki-form-__block_id__ form").ajaxForm({
+            url: sUrlRoot + 'r.php?_q=__wiki_action_uri__-action/__action__',
+            beforeSubmit: function (formData, $form, options) {
+                bx_loading($("#bx-wiki-form-__block_id__ form"), true);
+                formData.push({name: 'translations', value: JSON.stringify(window.glBxDolWiki__block_id__.getTranslations())});
+            },
+            success: function (data) {
+                if ('{' == data[0]) {
+                    var oResponce = JSON.parse(data);
+                    window.glBxDolWiki__block_id__.processResponce(oResponce);
+                }
+                else {
+                    $("#bx-wiki-form-__block_id__").parent().html(data).bxProcessHtml();
+                }
+            }
+        });
+
+        $("#bx-wiki-form-__block_id__ input[name=language]").change(function() {
+            window.glBxDolWiki__block_id__.onChangeLangSelector(this);
+            return false;
+        });
+    });
+</script>
