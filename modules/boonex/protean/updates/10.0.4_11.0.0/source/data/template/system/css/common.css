@@ -1,0 +1,18 @@
+@import url(../../../../../../../template/css/common.css);
+
+a {
+    -webkit-transition: color .1s ease;
+    transition: color .1s ease;
+}
+
+/* --- Buttons --- */
+.bx-btn i,
+.bx-btn u {
+    vertical-align: top !important;
+}
+
+/* --- Loading indicator --- */
+.bx-loading-ajax-btn {
+    margin-left: 10px;
+}
+    
