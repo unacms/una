@@ -117,10 +117,6 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iAdministrator, @iIdActionShowMembershipPrivateInfo);
 
 
--- `sys_accounts` table structure
-
-ALTER TABLE  `sys_accounts` CHANGE  `reffered`  `referred` VARCHAR( 255 ) NOT NULL;
-
 -- Search objects
 
 DELETE FROM `sys_objects_search` WHERE `ObjectName` = 'sys_pages';
@@ -459,6 +455,10 @@ INSERT INTO `sys_preloader`(`module`, `type`, `content`, `active`, `order`) VALU
 
 -- Studio Widgets
 
+DELETE FROM `tp`, `tw`, `tpw`
+USING `sys_std_pages` AS `tp`, `sys_std_widgets` AS `tw`, `sys_std_pages_widgets` AS `tpw`
+WHERE `tp`.`id` = `tw`.`page_id` AND `tw`.`id` = `tpw`.`widget_id` AND `tp`.`name` IN('audit', 'badges');
+
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 (3, 'audit', '_adm_page_cpt_audit', '_adm_page_cpt_audit', 'wi-audit.svg');
 SET @iIdAudit = LAST_INSERT_ID();
@@ -476,6 +476,25 @@ INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iId
 INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
 (@iIdBadges, 'system', '{url_studio}badges.php', '', 'wi-badges.svg', '_adm_wgt_cpt_badges', '', '');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 11);
+
+-- default bot profile
+
+SET @iAccountIdBot = (SELECT `id` FROM `sys_accounts` WHERE `name` = 'Robot' AND `password` = 'una1100');
+DELETE FROM `sys_accounts` WHERE `id` = @iAccountIdBot;
+DELETE FROM `sys_profiles` WHERE `account_id` = @iAccountIdBot;
+
+
+INSERT INTO `sys_accounts` (`name`, `profile_id`, `email`, `email_confirmed`, `receive_updates`, `receive_news`, `password`, `salt`, `role`, `added`) VALUES 
+('Robot', 0, '', 0, 0, 0, 'una1100', '', 3, UNIX_TIMESTAMP());
+
+SET @iAccountIdBot = LAST_INSERT_ID();
+
+INSERT INTO `sys_profiles` (`account_id`, `type`, `content_id`, `status`) VALUES
+(@iAccountIdBot, 'system', @iAccountIdBot, 'active');
+
+SET @iProfileIdBot = LAST_INSERT_ID();
+
+UPDATE `sys_options` SET `VALUE` = @iProfileIdBot WHERE `Name` = 'sys_profile_bot';
 
 -- Last step is to update current version
 

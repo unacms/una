@@ -1,5 +1,9 @@
 <?php
 
+    if ($this->oDb->isFieldExists('sys_accounts', 'reffered'))
+        $this->oDb->query("ALTER TABLE  `sys_accounts` CHANGE  `reffered`  `referred` VARCHAR( 255 ) NOT NULL");
+
+
     if (!$this->oDb->isFieldExists('sys_pages_blocks', 'text'))
         $this->oDb->query("ALTER TABLE `sys_pages_blocks` ADD `text` mediumtext NOT NULL AFTER `content`");
 
