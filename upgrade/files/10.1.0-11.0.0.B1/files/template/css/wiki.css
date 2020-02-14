@@ -1,0 +1,66 @@
+.bx-wiki-controls-info {
+    float:left;
+}
+.bx-wiki-controls-menu {
+    float:right;
+}
+.bx-wiki-controls-menu i.sys-icon {
+    text-align: center;
+    width: 1.5rem;
+    border-radius: 0.75rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    font-weight: 400;
+}
+.bx-wiki-form {
+    width:37.5rem;
+}
+.bx-media-phone .bx-wiki-form {
+    width:auto;
+}
+.bx-wiki-form form textarea[name=content] {
+    height:16rem;
+}
+.bx-wiki-content {
+    max-height:10rem;
+    overflow:auto;
+    margin:0;
+}
+.bx-wiki-history-title {
+    margin:0;
+}
+.bx-wiki-del-rev {
+    width:100%;
+}
+.bx-wiki-history {
+    max-width:37.5rem;
+}
+.bx-wiki-del-rev,
+.bx-wiki-translations,
+.bx-wiki-history {
+    border-collapse:collapse;
+}
+.bx-wiki-cell-profile,
+.bx-wiki-cell-time,
+.bx-wiki-cell-rev {
+    text-align:center;
+}
+.bx-wiki-add-block {
+    border:1px dashed #aaa; 
+    text-align:center;
+}
+.bx-wiki-create-page {
+    text-align:center;
+}
+.bx-wiki-create-page button {
+    float:none;
+    display:inline-block;
+}
+.bx-wiki-trans {
+    -webkit-transition: background-color 1500ms linear;
+    -ms-transition: background-color 1500ms linear;
+    transition: background-color 1500ms linear;
+}

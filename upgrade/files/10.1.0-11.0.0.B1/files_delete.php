@@ -1,6 +1,7 @@
 <?php
 
 $aFilesDelete = array(
+    'inc/classes/BxDolGridConnectionsin.php',
     'plugins_public/cubiq-add-to-homescreen',
     'template/images/cover-homepage.png',
     'template/images/cover.jpg',
