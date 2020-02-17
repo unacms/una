@@ -3,29 +3,19 @@ SET @sName = 'bx_timeline';
 
 -- PAGES
 DELETE FROM `sys_pages_blocks` WHERE `object`='sys_dashboard' AND `title_system` IN ('_bx_timeline_page_block_title_system_views_timeline', '_bx_timeline_page_block_title_system_views_outline');
-SET @iPBCellDashboard = 2;
-SET @iPBOrderDashboard = 1;
+SET @iPBCellDashboard = 1;
+SET @iPBOrderDashboard = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_pages_blocks` WHERE `object` = 'sys_dashboard' AND `cell_id` = @iPBCellDashboard ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
 ('sys_dashboard', @iPBCellDashboard, 'bx_timeline', '_bx_timeline_page_block_title_system_views_timeline', '_bx_timeline_page_block_title_views_timeline', 3, 2147483644, 'service', 'a:3:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:24:"get_block_views_timeline";s:6:"params";a:1:{i:0;s:4:"feed";}}', 0, 0, 0, @iPBOrderDashboard + 1),
 ('sys_dashboard', @iPBCellDashboard, 'bx_timeline', '_bx_timeline_page_block_title_system_views_outline', '_bx_timeline_page_block_title_views_outline', 3, 2147483644, 'service', 'a:3:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:23:"get_block_views_outline";s:6:"params";a:1:{i:0;s:4:"feed";}}', 0, 0, 0, @iPBOrderDashboard + 2);
 
-UPDATE `sys_pages_blocks` SET `visible_for_levels`='2147483644', `active`='0' WHERE `object`='sys_home' AND `module`=@sName AND `title_system`='_bx_timeline_page_block_title_system_post_home';
-UPDATE `sys_pages_blocks` SET `active`='0' WHERE `object`='sys_home' AND `module`=@sName AND `title_system`='_bx_timeline_page_block_title_system_view_home';
-UPDATE `sys_pages_blocks` SET `active`='0' WHERE `object`='sys_home' AND `module`=@sName AND `title_system`='_bx_timeline_page_block_title_system_view_home_outline';
-
+UPDATE `sys_pages_blocks` SET `visible_for_levels`='2147483644' WHERE `object`='sys_home' AND `module`=@sName AND `title_system`='_bx_timeline_page_block_title_system_post_home';
 
 DELETE FROM `sys_pages_blocks` WHERE `object`='sys_home' AND `title_system` IN ('_bx_timeline_page_block_title_system_views_timeline');
-SET @iPBCellHome = 3;
+SET @iPBCellHome = 1;
 SET @iPBOrderHome = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_pages_blocks` WHERE `object` = 'sys_home' AND `cell_id` = @iPBCellHome ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('sys_home', @iPBCellHome, 'bx_timeline', '_bx_timeline_page_block_title_system_views_timeline', '_bx_timeline_page_block_title_views_timeline', 3, 2147483644, 'service', 'a:3:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:24:"get_block_views_timeline";s:6:"params";a:1:{i:0;s:4:"feed";}}', 0, 0, 1, @iPBOrderHome + 2);
-
-
-DELETE FROM `sys_pages_blocks` WHERE `object`='sys_home' AND `title_system` IN ('_bx_timeline_page_block_title_system_view_home_outline');
-SET @iPBCellHome = 4;
-SET @iPBOrderHome = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_pages_blocks` WHERE `object` = 'sys_home' AND `cell_id` = @iPBCellHome ORDER BY `order` DESC LIMIT 1);
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('sys_home', @iPBCellHome, 'bx_timeline', '_bx_timeline_page_block_title_system_view_home_outline', '_bx_timeline_page_block_title_view_home_outline', 0, 1, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:27:"get_block_view_home_outline";}', 0, 0, 1, @iPBOrderHome + 1);
+('sys_home', @iPBCellHome, 'bx_timeline', '_bx_timeline_page_block_title_system_views_timeline', '_bx_timeline_page_block_title_views_timeline', 3, 2147483644, 'service', 'a:3:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:24:"get_block_views_timeline";s:6:"params";a:1:{i:0;s:4:"feed";}}', 0, 0, 0, @iPBOrderHome + 1);
 
 DELETE FROM `sys_pages_blocks` WHERE `object`='' AND `module`='bx_timeline' AND `title_system` IN ('_bx_timeline_page_block_title_system_views_timeline', '_bx_timeline_page_block_title_system_views_outline', '_bx_timeline_page_block_title_system_view_home', '_bx_timeline_page_block_title_system_view_home_outline', '_bx_timeline_page_block_title_system_view_account', '_bx_timeline_page_block_title_system_view_account_outline');
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = '' AND `cell_id` = 0 ORDER BY `order` DESC LIMIT 1);
