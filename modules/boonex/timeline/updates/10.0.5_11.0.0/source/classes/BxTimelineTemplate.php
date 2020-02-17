@@ -2237,10 +2237,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($sDisplay == BX_TIMELINE_ML_SHOWCASE)
             $bAttachFirst = isset($mixedLayout['first']) && $mixedLayout['first'] === true;
 
-        $iImageFirst = reset($aImages)['id'];
+        $aImageFirst = reset($aImages);
+        $iImageFirst = isset($aImageFirst['id']) ? (int)$aImageFirst['id'] : 0;
+
         foreach($aImages as $aImage) {
             $sImageSrcKeyCur = $sImageSrcKey;
-            if($bAttachFirst && $aImage['id'] == $iImageFirst)
+            if($bAttachFirst && isset($aImage['id']) && (int)$aImage['id'] == $iImageFirst)
                 $sImageSrcKeyCur = $sImageSrcKeyBig;
 
             $sImageSrc = !empty($aImage[$sImageSrcKeyCur]) ? $aImage[$sImageSrcKeyCur] : $aImage[$sImageSrcKeyDefault];
