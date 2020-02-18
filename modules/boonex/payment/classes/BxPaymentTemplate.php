@@ -210,16 +210,21 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         return 'Details would be here';
     }
 
-	public function displayBlockOrders($sType, $iSellerId)
+    public function displayBlockOrders($sType, $iSellerId)
     {
-    	$oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getObject('grid_' . $sType));
+        $sGrid = $this->_oConfig->getObject('grid_' . $sType);
+        $oGrid = BxDolGrid::getObjectInstance($sGrid);
         if(!$oGrid || empty($iSellerId))
             return MsgBox(_t($this->_sLangsPrefix . 'msg_no_results'));
 
-		$oGrid->addQueryParam('seller_id', $iSellerId);
+        $oGrid->addQueryParam('seller_id', $iSellerId);
 
-		$this->addJsCssOrders();
-        return $this->displayJsCode($sType) . $oGrid->getCode();
+        $this->addJsCssOrders();
+        return $this->displayJsCode($sType, array(
+            'sObjNameGrid' => $sGrid,
+            'sParamsDivider' => $this->_oConfig->getDivider('DIVIDER_GRID_FILTERS'),
+            'sTextSearchInput' => _t('_sys_grid_search')
+        )) . $oGrid->getCode();
     }
 
     public function displayOrder($sType, $iId)

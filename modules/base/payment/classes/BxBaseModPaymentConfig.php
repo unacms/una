@@ -34,6 +34,7 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
 
             'DIVIDER_DESCRIPTOR' => '_',
             'DIVIDER_DESCRIPTORS' => ':',
+            'DIVIDER_GRID_FILTERS' => '#-#',
         ));
 
         $this->_aPrefixes = array(

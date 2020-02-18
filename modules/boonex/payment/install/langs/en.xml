@@ -274,6 +274,9 @@
 	<string name="_bx_payment_txt_no"><![CDATA[No]]></string>
         <string name="_bx_payment_txt_unsubscribe_yes"><![CDATA[Cancel automatically]]></string>
         <string name="_bx_payment_txt_unsubscribe_no"><![CDATA[Do not cancel]]></string>
+        <string name="_bx_payment_txt_all_clients"><![CDATA[All Clients]]></string>
+        <string name="_bx_payment_txt_all_modules"><![CDATA[All Modules]]></string>
+        <string name="_bx_payment_txt_all_items"><![CDATA[All Items]]></string>
 
         <!-- Credits payment provider -->
 	<string name="_bx_payment_cdt_cpt"><![CDATA[Credits]]></string>

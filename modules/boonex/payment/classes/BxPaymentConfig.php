@@ -263,6 +263,16 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
 
         return 'https://' . bx_ltrim_str($s, 'http://');
     }
+
+    public function sortByColumn($sColumn, &$aValues)
+    {
+        return usort($aValues, function($aV1, $aV2) use ($sColumn) {
+            if($aV1[$sColumn] == $aV2[$sColumn])
+                return 0;
+
+            return $aV1[$sColumn] < $aV2[$sColumn] ? -1 : 1;
+        });
+    }
 }
 
 /** @} */

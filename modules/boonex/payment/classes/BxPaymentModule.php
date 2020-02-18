@@ -95,17 +95,17 @@ class BxPaymentModule extends BxBaseModPaymentModule
         $this->_iUserId = $this->getProfileId();
 
         $this->_aOrderTypes = array(
-        	BX_PAYMENT_ORDERS_TYPE_PENDING, 
-        	BX_PAYMENT_ORDERS_TYPE_PROCESSED, 
-        	BX_PAYMENT_ORDERS_TYPE_SUBSCRIPTION, 
-        	BX_PAYMENT_ORDERS_TYPE_HISTORY
+            BX_PAYMENT_ORDERS_TYPE_PENDING, 
+            BX_PAYMENT_ORDERS_TYPE_PROCESSED, 
+            BX_PAYMENT_ORDERS_TYPE_SUBSCRIPTION, 
+            BX_PAYMENT_ORDERS_TYPE_HISTORY
         );
     }
 
     /**
      * Manage Orders Methods
      */
-	public function actionGetClients()
+    public function actionGetClients()
     {
         $sTerm = bx_get('term');
 
@@ -119,11 +119,28 @@ class BxPaymentModule extends BxBaseModPaymentModule
     	$iSellerId = $this->getProfileId();
         $aItems = $this->callGetCartItems((int)$iModuleId, array($iSellerId));
 
-		echoJson(array(
-			'code' => 0, 
-		 	'eval' => $this->_oConfig->getJsObject('processed') . '.onSelectModule(oData);', 
-			'data' => $this->_oTemplate->displayItems($sType, $aItems)
-		));
+        echoJson(array(
+            'code' => 0, 
+            'eval' => $this->_oConfig->getJsObject('processed') . '.onSelectModule(oData);', 
+            'data' => $this->_oTemplate->displayItems($sType, $aItems)
+        ));
+    }
+
+    public function actionGetFilterValuesItem($iSellerId, $iModuleId)
+    {
+        $sItems = '<option value="">' . _t('_bx_payment_txt_all_items') . '</option>';
+
+        if(empty($iSellerId) || empty($iModuleId))
+            return echoJson(array('code' => 1, 'content' => $sItems));
+
+        $aItems = $this->callGetCartItems((int)$iModuleId, array($iSellerId));
+
+        $this->_oConfig->sortByColumn('title', $aItems);
+
+        foreach($aItems as $aItem)
+            $sItems .= '<option value="' . $aItem['id'] . '">' . $aItem['title'] . '</option>';
+
+        echoJson(array('code' => 0, 'content' => $sItems));
     }
 
     public function serviceGetSafeServices()
