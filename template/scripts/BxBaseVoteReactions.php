@@ -393,6 +393,9 @@ class BxBaseVoteReactions extends BxDolVoteReactions
         $aMenuItems = array();
         $aTmplVarsLists = array();
         foreach ($aReactions as $sReaction) {
+            if($sReaction == $this->_sDefault)
+                continue;
+
             $bSummary = $sReaction == 'summary';
 
             $sName = $this->_sStylePrefix . '-' . $sReaction;
