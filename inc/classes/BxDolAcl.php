@@ -748,6 +748,8 @@ function checkActionModule($iProfileId, $sActionName, $sModuleName, $bPerformAct
     $oACL = BxDolAcl::getInstance();
 
     $iActionId = $oACL->getMembershipActionId($sActionName, $sModuleName);
+    if (!$iActionId)
+        bx_trigger_error("Unknown action: '$sActionName' in module '$sModuleName'", 1);
 
     return $oACL->checkAction($iProfileId, $iActionId, $bPerformAction);
 }
