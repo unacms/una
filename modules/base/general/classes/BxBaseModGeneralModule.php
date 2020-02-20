@@ -1813,7 +1813,7 @@ class BxBaseModGeneralModule extends BxDolModule
         $CNF = &$this->_oConfig->CNF;
 
         // moderator and owner always have access
-        if (!empty($iProfileId) && (abs($aDataEntry[$CNF['FIELD_AUTHOR']]) == (int)$iProfileId || $this->_isModerator($isPerformAction)))
+        if (!empty($iProfileId) && (abs($aDataEntry[$CNF['FIELD_AUTHOR']]) == (int)$iProfileId || $this->_isModeratorForProfile($isPerformAction, $iProfileId)))
             return CHECK_ACTION_RESULT_ALLOWED;
 
         // check ACL
@@ -1934,14 +1934,25 @@ class BxBaseModGeneralModule extends BxDolModule
      */
     public function checkAllowedEditAnyEntry ($isPerformAction = false)
     {
-    	$aCheck = checkActionModule($this->_iProfileId, 'edit any entry', $this->getName(), $isPerformAction);
+    	return $this->checkAllowedEditAnyEntryForProfile($isPerformAction, $this->_iProfileId);
+    }
+    
+    /**
+     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make strict(===) checking.
+     */
+    public function checkAllowedEditAnyEntryForProfile ($isPerformAction = false, $iProfileId = false)
+    {
+        if(!$iProfileId)
+            $iProfileId = $this->_iProfileId;
+
+    	$aCheck = checkActionModule($iProfileId, 'edit any entry', $this->getName(), $isPerformAction);
     	if($aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
     		return CHECK_ACTION_RESULT_ALLOWED;
 
     	return _t('_sys_txt_access_denied');
     }
 
-	/**
+    /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make "true === " checking.
      */
     public function checkAllowedCommentsView ($aContentInfo, $isPerformAction = false)
@@ -2196,9 +2207,14 @@ class BxBaseModGeneralModule extends BxDolModule
 
     public function _isModerator ($isPerformAction = false)
     {
-        return CHECK_ACTION_RESULT_ALLOWED === $this->checkAllowedEditAnyEntry ($isPerformAction);
+        return $this->_isModeratorForProfile($isPerformAction, $this->_iProfileId);
     }
-    
+
+    public function _isModeratorForProfile($isPerformAction = false, $iProfileId = false)
+    {
+        return CHECK_ACTION_RESULT_ALLOWED === $this->checkAllowedEditAnyEntryForProfile ($isPerformAction, $iProfileId);
+    }
+
     public function _prepareAuditParams($aContentInfo, $bIsSaveData = true, $aOverrideAuditParams  = array())
     {
         $CNF = &$this->_oConfig->CNF;
