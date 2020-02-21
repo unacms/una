@@ -138,7 +138,7 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 -- PAGE: entries in context
 
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_events_context', 'events-context', '_bx_events_page_title_sys_entries_in_context', '_bx_events_page_title_entries_in_context', 'bx_events', 5, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxEventsPageJoinedEntries', 'modules/boonex/events/classes/BxEventsPageJoinedEntries.php');
+('bx_events_context', 'events-context', '_bx_events_page_title_sys_entries_in_context', '_bx_events_page_title_entries_in_context', 'bx_events', 5, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxEventsPageEntriesInContext', 'modules/boonex/events/classes/BxEventsPageEntriesInContext.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_events_context', 1, 'bx_events', '_bx_events_page_block_title_sys_entries_in_context', '_bx_events_page_block_title_entries_in_context', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:14:\"browse_context\";}', 0, 0, 1, 1),
