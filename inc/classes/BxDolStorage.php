@@ -716,7 +716,7 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
     {
         if ($isCheckAllAccountProfiles && ($oProfile = BxDolProfile::getInstance($iProfileId))) {
             $oAccount = $oProfile->getAccountObject();
-            $aProfiles = $oAccount->getProfilesIds(false);
+            $aProfiles = $oAccount->getProfilesIds(false, false);
             return $this->_oDb->getGhosts($aProfiles, $iContentId, $isAdmin);
         }
         
