@@ -135,7 +135,7 @@ class BxBaseAccountForms extends BxDolProfileForms
 
     }
 
-    public function onAccountCreated ($iAccountId, $isSetPendingApproval, $iAction = BX_PROFILE_ACTION_MANUAL)
+    public function onAccountCreated ($iAccountId, $isSetPendingApproval, $iAction = BX_PROFILE_ACTION_MANUAL, $bNeedToLogin = true)
     {
         // alert
         bx_alert('account', 'add', $iAccountId, 0);
@@ -159,7 +159,8 @@ class BxBaseAccountForms extends BxDolProfileForms
         bx_alert('account', 'added', $iAccountId);
 
         // login to the created account automatically
-        bx_login($iAccountId);
+        if ($bNeedToLogin)
+            bx_login($iAccountId);
 
         return $iProfileId;
     }
