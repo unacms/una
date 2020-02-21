@@ -521,6 +521,9 @@ div.cmt-mood-buttons a:hover {
 div.cmt-mood-buttons i.cmt-mood-star {
     color: transparent;
 }
+.cmt-meta .bx-badge-compact {
+    display: inline-block;
+}
 
 /*--- Rating Block Styles ---*/
 .cmts-box-rating div.cmt-mood i.cmt-mood-star,

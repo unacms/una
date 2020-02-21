@@ -43,18 +43,18 @@ class BxBaseCmtsMenuUnitMeta extends BxTemplMenuUnitMeta
 
     protected function _getMenuItemAuthor($aItem)
     {
-        list($sAuthorName, $sAuthorLink, $sAuthorIcon, $sAuthorUnit) = $this->_oCmts->getAuthorInfo($this->_aCmt['cmt_author_id']);
-
+        list($sAuthorName, $sAuthorLink, $sAuthorIcon, $sAuthorUnit, $sAuthorBadges) = $this->_oCmts->getAuthorInfo($this->_aCmt['cmt_author_id']);
+    
         if(!empty($sAuthorLink))
             return $this->getUnitMetaItemLink($sAuthorName, array(
                 'href' => $sAuthorLink,
                 'class' => $this->_sStylePrefix . '-username',
                 'title' => bx_html_attribute($sAuthorName),
-            ));
+            )). $sAuthorBadges;
         else
             return $this->getUnitMetaItemText($sAuthorName, array(
                 'class' => $this->_sStylePrefix . '-username'
-            ));
+            )). $sAuthorBadges;
     }
     
     protected function _getMenuItemDate($aItem)
