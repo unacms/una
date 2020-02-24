@@ -31,6 +31,13 @@ class BxBaseAuditServices extends BxDol
         );
     }
     
+    public function serviceGetMemberships()
+    {
+        $aLevels = BxDolAcl::getInstance()->getMemberships(false, false, true, false);
+        unset($aLevels[MEMBERSHIP_ID_NON_MEMBER]);
+        return $aLevels;
+    }
+    
     /**
      * Comment vote for Notifications module
      */
