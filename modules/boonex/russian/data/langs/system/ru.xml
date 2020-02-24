@@ -1741,8 +1741,8 @@
   <string name="_sys_acl_action_show_membership_private_info_desc"><![CDATA[Показывать конфиденциальную информацию о членстве]]></string>
   <string name="_sys_acl_action_set_badge"><![CDATA[Назначение бейджей]]></string>
   <string name="_sys_acl_action_set_badge_desc"><![CDATA[Назначение бейджей для контента]]></string>
-  <string name="_sys_acl_action_switch_to_any_profile"><![CDATA[Switch to any profile]]></string>
-  <string name="_sys_acl_action_switch_to_any_profile"><![CDATA[Allow switch to any profile]]></string>
+  <string name="_sys_acl_action_switch_to_any_profile"><![CDATA[Переключиться на любой профиль]]></string>
+  <string name="_sys_acl_action_switch_to_any_profile_desc"><![CDATA[Разрешать переключаться на любой профиль]]></string>
         <string name="_sys_acl_action_set_acl_as_privacy"><![CDATA[Использовать уровень членства в настройках приватности]]></string>
 	<string name="_sys_acl_action_set_acl_as_privacy_desc"><![CDATA[Использовать уровень членства в настройках приватности в формах добавления контента]]></string>
 	<string name="_sys_acl_action_suspended"><![CDATA[Вы не можете '{1}', потому что Ваш профайл заблокирован. Если Вы не знаете, почему, постарайтесь связаться с <a href="mailto:{7}">администратором</a>.]]></string>
