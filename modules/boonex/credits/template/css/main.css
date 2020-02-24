@@ -29,6 +29,13 @@
     width: 33%;
 }
 
+.bx-media-phone .bx-credits-bundle-wrp {
+    -webkit-flex-basis: 100%;
+    flex-basis: 100%;
+
+    width: 100%;
+}
+
 .bx-credits-bundle {
     position: relative;
     width: 100%;
