@@ -32,16 +32,16 @@ BxPaymentCart.prototype.addToCart = function(iSellerId, iModuleId, iItemId, iIte
     if(typeof iRedirect == 'number' && parseInt(iRedirect) > 0)
         sRedirect = sUrlRoot + 'cart.php?seller_id=' + iSellerId;
     else if(typeof iRedirect == 'string' && iRedirect.length > 0)
-            sRedirect = iRedirect;
+        sRedirect = iRedirect;
 
     $.post(
         this._sActionsUrl + 'add_to_cart/' + iSellerId + '/' + iModuleId + '/' + iItemId + '/' + iItemCount + '/',
         {
             custom: sCustom ? sCustom : '',
-            _t:oDate.getTime()
+            _t: oDate.getTime()
         },
         function(oData) {
-            if(sRedirect)
+            if(oData && oData.code == 0 && sRedirect)
                 oData.redirect = sRedirect;
 
             processJsonData(oData);
