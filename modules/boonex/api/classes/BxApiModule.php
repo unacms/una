@@ -51,7 +51,7 @@ class BxApiModule extends BxDolModule
 
     /**
      * @page public_api API Public
-     * @section public_api_api_get_page /m/oauth2/com/get_page?uri=about
+     * @section public_api_api_get_page /m/oauth2/com/get_page
      * 
      * Get page with cells and blocks as array
      * 
