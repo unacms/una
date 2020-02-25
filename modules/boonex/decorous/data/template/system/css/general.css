@@ -9,6 +9,9 @@
     margin-left: 0px;
     text-align: left;
 }
+.bx-form-input-wrapper-password > A {
+    line-height: 2rem !important;
+}
 
 /*--- Main Page Content ---*/
 .cd-main-content-wrp {
