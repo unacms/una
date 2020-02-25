@@ -179,7 +179,7 @@ class BxOAuthModule extends BxDolModule
      *    "error_description":"long error description here"
      * }
      * @endcode
-     */     
+     */
     function actionToken ()
     {
         $this->initOAuth(bx_get('client_id'));
@@ -188,6 +188,45 @@ class BxOAuthModule extends BxDolModule
         $this->_oServer->handleTokenRequest(OAuth2\Request::createFromGlobals())->send();
     }
 
+    /**
+     * Authenicated or public call to the "API" module
+     */
+    function actionCom ($sMethod)
+    {
+        if (!$this->_oAPI) {
+            bx_import('API', $this->_aModule);
+            $this->_oAPI = new BxOAuthAPI($this);
+        }
+
+        $bPublic = $this->_oAPI->isPublicAPI('bx_api', $sMethod);
+        if ($bPublic) {
+            $this->_oAPI->com($sMethod, array(), $bPublic);
+        }
+        else {
+            $this->initOAuth($this->getClientIdFromAccessTokenHeader());
+
+            // Handle a request to a resource and authenticate the access token
+            if (!$this->_oServer->verifyResourceRequest(OAuth2\Request::createFromGlobals())) {
+                $this->_oServer->getResponse()->send();
+                return;
+            }
+
+            $aToken = $this->_oServer->getAccessTokenData(OAuth2\Request::createFromGlobals());
+
+            $aScope = explode(',', $this->_oAPI->aAction2Scope[$sAction]);
+            $aScopeToken = explode(',', $aToken['scope']);
+            if (!array_intersect($aScopeToken, $aScope)) {
+                $this->_oAPI->errorOutput(403, 'insufficient_scope', 'The request requires higher privileges than provided by the access token');
+                return;
+            }
+
+            $this->_oAPI->com($sMethod, $aToken);
+        }
+    }
+
+    /**
+     * Authenicated call to the API
+     */
     function actionApi ($sAction)
     {
         $this->initOAuth($this->getClientIdFromAccessTokenHeader());
@@ -205,7 +244,7 @@ class BxOAuthModule extends BxDolModule
             $this->_oAPI = new BxOAuthAPI($this);
         }
 
-        if (!$sAction || !method_exists($this->_oAPI, $sAction) || 0 === strcasecmp('errorOutput', $sAction) || 0 === strcasecmp('output', $sAction)) {
+        if (!$sAction || !method_exists($this->_oAPI, $sAction) || in_array($sAction, $this->_oAPI->aExceptionsAPI)) {
             $this->_oAPI->errorOutput(404, 'not_found', 'No such API endpoint available');
             return;
         }

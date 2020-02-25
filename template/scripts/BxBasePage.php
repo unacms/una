@@ -213,6 +213,41 @@ class BxBasePage extends BxDolPage
     }
 
     /**
+     * Get page array with all cells and blocks
+     */
+    public function getPage ()
+    {
+        return array(
+            'id' => $this->_aObject['id'],
+            'title' => $this->_getPageTitle(),
+            'uri' => $this->_aObject['uri'],
+            'module' => $this->getModule (),
+            'type' => $this->getType (),
+            'layout' => $this->_aObject['layout_id'],
+            'elements' => $this->getPageBlocks (),
+        );
+    }
+
+    public function getPageBlocks ()
+    {
+        $aFieldsUnset = array('cell_id', 'active', 'copyable', 'deletable', 'object', 'text', 'text_updated', 'title_system', 'visible_for_levels');
+        $aCells = $this->_oQuery->getPageBlocks();
+        foreach ($aCells as $sKey => $aCell) {
+            foreach ($aCell as $i => $aBlock) {
+                if (!$this->_isVisibleBlock($aBlock))
+                    unset($aCells[$sKey][$i]);
+
+                $sFunc = '_getBlock' . ucfirst($aBlock['type']);
+                $aCells[$sKey][$i]['content'] = method_exists($this, $sFunc) ? $this->$sFunc($aBlock) : $aBlock['content'];
+                $aCells[$sKey][$i]['title'] = $this->getBlockTitle($aBlock);
+                foreach ($aFieldsUnset as $s)
+                    unset($aCells[$sKey][$i][$s]);
+            }
+        }
+        return $aCells;
+    }
+
+    /**
      * Get page code vars
      * @return string
      */
