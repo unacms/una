@@ -6,19 +6,36 @@ INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_att
 ('bx_accounts_account', @sName, '_sys_form_account', '', '', 'do_submit', 'sys_accounts', 'id', '', '', 'a:1:{s:14:"checker_helper";s:31:"BxAccntFormAccountCheckerHelper";}', 0, 1, 'BxAccntFormAccount', 'modules/boonex/accounts/classes/BxAccntFormAccount.php');
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
-('bx_accounts_account_settings_email', @sName, 'bx_accounts_account', '_sys_form_display_account_settings_email', 0);
+('bx_accounts_account_settings_email', @sName, 'bx_accounts_account', '_sys_form_display_account_settings_email', 0),
+('bx_accounts_account_create', @sName, 'bx_accounts_account', '_sys_form_display_account_create', 0);
 
 INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
 ('bx_accounts_account', @sName, 'email', '', '', 0, 'text', '_sys_form_login_input_caption_system_email', '_sys_form_account_input_email', '', 1, 0, 0, '', '', '', 'Email', '', '_sys_form_account_input_email_error', 'Xss', '', 0, 0),
 ('bx_accounts_account', @sName, 'receive_updates', '1', '', 1, 'switcher', '_sys_form_login_input_caption_system_receive_updates', '_sys_form_account_input_receive_updates', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('bx_accounts_account', @sName, 'receive_news', '1', '', 1, 'switcher', '_sys_form_login_input_caption_system_receive_news', '_sys_form_account_input_receive_news', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
-('bx_accounts_account', @sName, 'do_submit', '_sys_form_account_input_submit', '', 0, 'submit', '_sys_form_login_input_caption_system_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
+('bx_accounts_account', @sName, 'do_submit', '_sys_form_account_input_submit', '', 0, 'submit', '_sys_form_login_input_caption_system_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_accounts_account', @sName, 'name', '', '', 0, 'text', '_sys_form_login_input_caption_system_name', '_sys_form_account_input_name', '', 1, 0, 0, '', '', '', 'Avail', '', '_sys_form_account_input_name_error', 'Xss', '', 1, 0),
+('bx_accounts_account', @sName, 'password', '', '', 0, 'password', '_sys_form_login_input_caption_system_password', '_sys_form_account_input_password', '', 1, 0, 0, '', '', '', 'Preg', 'a:1:{s:4:"preg";s:38:"~^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}~";}', '_sys_form_account_input_password_error', '', '', 0, 0),
+('bx_accounts_account', @sName, 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_accounts_account', @sName, 'do_cancel', '_adm_btn_cancel_submit', '', 0, 'button', '_adm_btn_cancel_submit', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0),
+('bx_accounts_account', @sName, 'email_confirmed', '1', '', 1, 'switcher', '_bx_accnt_form_login_input_caption_system_email_confirmed', '_bx_accnt_form_account_input_email_confirmed', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0);
+
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
 ('bx_accounts_account_settings_email', 'email', 2147483647, 1, 1),
 ('bx_accounts_account_settings_email', 'receive_updates', 2147483647, 1, 2),
 ('bx_accounts_account_settings_email', 'receive_news', 2147483647, 1, 3),
-('bx_accounts_account_settings_email', 'do_submit', 2147483647, 1, 4);
+('bx_accounts_account_settings_email', 'controls', 2147483647, 1, 4),
+('bx_accounts_account_settings_email', 'do_submit', 2147483647, 1, 5),
+('bx_accounts_account_settings_email', 'do_cancel', 2147483647, 1, 6),
+
+('bx_accounts_account_create', 'name', 2147483647, 1, 1),
+('bx_accounts_account_create', 'email', 2147483647, 1, 2),
+('bx_accounts_account_create', 'password', 2147483647, 1, 3),
+('bx_accounts_account_create', 'email_confirmed', 2147483647, 1, 4),
+('bx_accounts_account_create', 'controls', 2147483647, 1, 5),
+('bx_accounts_account_create', 'do_submit', 2147483647, 1, 6),
+('bx_accounts_account_create', 'do_cancel', 2147483647, 1, 7);
 
 
 -- STUDIO PAGE & WIDGET

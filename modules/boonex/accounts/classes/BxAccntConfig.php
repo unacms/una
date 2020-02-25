@@ -28,6 +28,7 @@ class BxAccntConfig extends BxBaseModGeneralConfig
 	        // objects
 	        'OBJECT_FORM_ACCOUNT' => 'bx_accounts_account',
             'OBJECT_FORM_ACCOUNT_DISPLAY_SETTINGS_EMAIL' => 'bx_accounts_account_settings_email',
+            'OBJECT_FORM_ACCOUNT_DISPLAY_CREATE' => 'bx_accounts_account_create',
 	        'OBJECT_MENU_MANAGE_TOOLS' => 'bx_accounts_menu_manage_tools', //manage menu in content administration tools
         	'OBJECT_GRID_ADMINISTRATION' => 'bx_accounts_administration',
         	'OBJECT_GRID_MODERATION' => 'bx_accounts_moderation',

@@ -148,7 +148,75 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
                 'action' => $sAction
             )));
 
-            echoJson(array('popup' => array('html' => $sContent, 'options' => array())));
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
+        }
+    }
+    
+    public function performActionAdd()
+    {
+      
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        $sAction = 'add';
+        $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ACCOUNT'], $CNF['OBJECT_FORM_ACCOUNT_DISPLAY_CREATE']);
+        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction;
+        $oForm->initChecker();
+
+        if($oForm->isSubmittedAndValid()) {
+           
+            $iAccountId = $oForm->insert();
+            
+            if (!$iAccountId) {
+                $aRes = array('msg' => _t('_sys_txt_error_account_insert'));
+            }
+            else{
+                $aRes = array('grid' => $this->getCode(false), 'blink' => $iAccountId);
+                
+                $oBxTemplAccountForms = new BxTemplAccountForms();
+                
+                $iProfileId = $oBxTemplAccountForms->onAccountCreated($iAccountId, $oForm->isSetPendingApproval(), BX_PROFILE_ACTION_MANUAL, false);
+
+                // perform action
+                BxDolAccount::isAllowedCreate ($iProfileId, true);
+                
+                // check
+                $aModulesProfile = array(); 
+                $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules', 'active' => 1));
+                foreach($aModules as $aModule) {
+                    $oModule = BxDolModule::getInstance($aModule['name']);
+                    if($oModule instanceof iBxDolProfileService && BxDolService::call($aModule['name'], 'act_as_profile') === true)
+                        $aModulesProfile[] = $aModule;
+                }
+
+                $sDefaultProfileType = getParam('sys_account_default_profile_type');
+                if(count($aModulesProfile) == 1)
+                    $sProfileModule = $aModulesProfile[0]['name'];
+                else if(!empty($sDefaultProfileType)) 
+                    $sProfileModule = $sDefaultProfileType;
+
+                if (getParam('sys_account_auto_profile_creation') && !empty($sProfileModule)) {
+                    $oAccount = BxDolAccount::getInstance($iAccountId);
+                    $aProfileInfo = BxDolService::call($sProfileModule, 'prepare_fields', array(array(
+                        'author' => $iProfileId,
+                        'name' => $oAccount->getDisplayName(),
+                    )));
+                    
+                    $a = BxDolService::call($sProfileModule, 'entity_add', array($iProfileId, $aProfileInfo));
+                    if (isset($a['content']['profile_id']) && (int)$a['content']['profile_id'] > 0){
+                        BxDolAcl::getInstance()->setMembership((int)$a['content']['profile_id'], MEMBERSHIP_ID_STANDARD);
+                    }
+                    echoJson($aRes);
+                }
+            }
+        }
+        else {
+            $sContent = BxTemplStudioFunctions::getInstance()->popupBox('bx-account-edit-email-popup', _t('_bx_accounts_form_display_account_create_popup'), $this->_oModule->_oTemplate->parseHtmlByName('create.html', array(
+                'form_id' => $oForm->id,
+                'form' => $oForm->getCode(true),
+                'object' => $this->_sObject,
+                'action' => $sAction
+            )));
+
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
         }
     }
     
