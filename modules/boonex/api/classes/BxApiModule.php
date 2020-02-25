@@ -56,7 +56,7 @@ class BxApiModule extends BxDolModule
      * Get page with cells and blocks as array
      * 
      * **HTTP Method:** 
-     * `POST`
+     * `GET`
      *
      * **Request params:**
      * - `uri` - page URI
