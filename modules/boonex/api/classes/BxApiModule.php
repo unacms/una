@@ -115,6 +115,66 @@ class BxApiModule extends BxDolModule
 
         return $oPage->getPage ();
     }
+
+    /**
+     * @page public_api API Public
+     * @section public_api_api_delete_page /m/oauth2/com/delete_page
+     * 
+     * Delete page with all blocks
+     * 
+     * **HTTP Method:** 
+     * `POST`
+     *
+     * **Request params:**
+     * - `uri` - page URI
+     *
+     * **Response (success):**
+     * @code
+     * {  
+     *     "code": 200,
+     * }
+     * @endcode
+     *
+     * **Response (error):**
+     * @code
+     * {  
+     *    "error":"short error description here",
+     *    "error_description":"long error description here"
+     * }
+     * @endcode
+     */
+    public function serviceDeletePage()
+    {        
+        $sUri = bx_get('uri');
+        $oPage = BxDolPage::getObjectInstanceByURI($sUri);
+        if (!$oPage) {
+            return array(
+                'code' => 204,
+                'error' => 'No Content',
+                'desc' => 'Such page doesn\'t exist',
+            );
+        }
+
+        if (!isAdmin()) {
+            return array(
+                'code' => 403,
+                'error' => 'Forbidden',
+                'desc' => 'Not enough rights to delete this page',
+            );
+        }
+
+        $oPageBuilder = new BxTemplStudioBuilderPage($oPage->getModule(), $oPage->getName());
+        $mixed = $oPageBuilder->processAction('page_delete');
+        if (is_array($mixed) && (isset($mixed['msg']) || isset($mixed['message']))) {
+            return array(
+                'code' => 500,
+                'error' => 'Internal Error',
+                'desc' => isset($mixed['msg']) ? $mixed['msg'] : $mixed['message'],
+            );
+        }
+
+        return array('code' => 200);
+    }
 }
 
 /** @} */
