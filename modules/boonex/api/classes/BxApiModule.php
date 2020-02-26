@@ -117,16 +117,24 @@ class BxApiModule extends BxDolModule
     }
 
     /**
-     * @page public_api API Public
-     * @section public_api_api_delete_page /m/oauth2/com/delete_page
+     * @page private_api API Private
+     * @section private_api_api_delete_page /m/oauth2/com/delete_page
      * 
      * Delete page with all blocks
      * 
+     * **Scopes:** 
+     * `api`
+     *
      * **HTTP Method:** 
      * `POST`
      *
      * **Request params:**
      * - `uri` - page URI
+     *
+     * **Request header:**
+     * @code
+     * Authorization: Bearer 9802c4a34e1535d8c3b721604ee0e7fb04116c49
+     * @endcode
      *
      * **Response (success):**
      * @code
