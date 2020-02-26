@@ -177,6 +177,18 @@ class BxDolModule extends BxDol
     {
         return array();
     }
+
+    public function serviceIsPublicService($s)
+    {
+        $sService = bx_gen_method_name($s);
+        $aSafeServices = $this->serviceGetPublicServices();
+        return isset($aSafeServices[$sService]);
+    }
+
+    public function serviceGetPublicServices()
+    {
+        return array();
+    }
 }
 
 /** @} */
