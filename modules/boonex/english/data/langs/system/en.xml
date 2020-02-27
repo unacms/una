@@ -1756,7 +1756,7 @@
   <string name="_sys_acl_action_set_badge"><![CDATA[Set badge]]></string>
   <string name="_sys_acl_action_set_badge_desc"><![CDATA[Set badge for content]]></string>
   <string name="_sys_acl_action_switch_to_any_profile"><![CDATA[Switch to any profile]]></string>
-  <string name="_sys_acl_action_switch_to_any_profile"><![CDATA[Allow switch to any profile]]></string>
+  <string name="_sys_acl_action_switch_to_any_profile_desc"><![CDATA[Allow switch to any profile]]></string>
   <string name="_sys_acl_action_set_acl_as_privacy"><![CDATA[Choose membership level as privacy]]></string>
 	<string name="_sys_acl_action_set_acl_as_privacy_desc"><![CDATA[Choose membership level as privacy in add content forms]]></string>
 	<string name="_sys_acl_action_suspended"><![CDATA[You can't '{1}' because your profile was suspended, if you don't know why - try to send message to <a href="mailto:{7}">administrator</a>.]]></string>

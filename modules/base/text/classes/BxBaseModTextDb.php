@@ -326,6 +326,19 @@ class BxBaseModTextDb extends BxBaseModGeneralDb
 
         return $this->query("DELETE FROM `" . $CNF['TABLE_POLLS_ANSWERS'] . "` WHERE `id` IN (" . $this->implode_escape($aAffected) . ")");
     }
+    
+    protected function _getEntriesBySearchIds($aParams, &$aMethod, &$sSelectClause, &$sJoinClause, &$sWhereClause, &$sOrderClause, &$sLimitClause)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if($CNF['FIELD_STATUS'])
+            $sWhereClause .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_STATUS'] . "`='active'";
+        
+        if($CNF['FIELD_STATUS_ADMIN'])
+            $sWhereClause .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_STATUS_ADMIN'] . "`='active'";
+        
+        parent::_getEntriesBySearchIds($aParams, $aMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);        
+    }
 }
 
 /** @} */

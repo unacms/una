@@ -91,6 +91,15 @@ class BxDolStudioBuilderPage extends BxTemplStudioPage
 		exit;
     }
 
+    function processAction($sAction)
+    {
+	    $sMethod = 'action' . $this->getClassName($sAction);
+		if (method_exists($this, $sMethod))
+		    return $this->$sMethod();
+        else
+            return array('code' => 1, 'message' => _t('_adm_bp_err_cannot_process_action'));
+    }
+
     protected function onSaveBlock(&$oForm, &$aBlock)
     {
         $iDesignboxId = (int)str_replace($this->sSelectKeyPrefix, '', $oForm->getCleanValue('designbox_id'));

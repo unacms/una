@@ -16,12 +16,14 @@ class BxOAuthAPI extends BxDol
     protected $_oModule;
     protected $_oDb;
     public $aAction2Scope = array (
-        'me' => 'basic,market,service',
-        'user' => 'basic,market,service',
-        'friends' => 'basic,market,service',
+        'me' => 'basic,market,service,api',
+        'user' => 'basic,market,service,api',
+        'friends' => 'basic,market,service,api',
         'service' => 'service',
         'market' => 'market',
+        'api' => 'api',
     );
+    public $aExceptionsAPI = array ('output', 'errorOutput', 'isPublicAPI');
 
     function __construct($oModule)
     {
@@ -192,6 +194,41 @@ class BxOAuthAPI extends BxDol
 
     /**
      * @page private_api API Private
+     * @section private_api_market /m/oauth2/api/market
+     * 
+     * API service call (com is for command).
+     * 
+     * **Scopes:** 
+     * `api`
+     *
+     * Everything is equivalent to @ref private_api_service, 
+     * only module name parameter can be ommited and 
+     * method is passed as method parameter instead of GET variable
+     */
+    function com($sMethod, $aToken, $bPublic)
+    {
+    	$_GET['key'] = $_POST['key'] = (isset($aToken['client_id']) ? $aToken['client_id'] : '');
+        $_GET['module'] = $_POST['module'] = 'bx_api';
+        $_GET['method'] = $_POST['method'] = $sMethod;
+        $this->service($aToken, $bPublic, true);
+    }
+
+    function isPublicAPI($sModule, $sMethod, $sClass = false)
+    {
+        if (!$sClass)
+            $sClass = 'Module';
+
+        if (!BxDolRequest::serviceExists($sModule, $sMethod, $sClass))
+            return false;
+
+        if (!BxDolRequest::serviceExists($sModule, 'is_public_service', $sClass))
+            return false;
+
+        return BxDolService::call($sModule, 'is_public_service', array($sMethod));
+    }
+
+    /**
+     * @page private_api API Private
      * @section private_api_service /m/oauth2/api/service
      * 
      * Perform system call. 
@@ -199,8 +236,9 @@ class BxOAuthAPI extends BxDol
      * 
      * URL should look like this in case of service API call:
      * @code
-     * http://example.com/m/oauth2/api/service?module=bx_market&method=test&params[]=1&params[]=abc&class=custom_class_name_or_remove_it_if_module_class
+     * http://example.com/m/oauth2/api/service?module=bx_market&method=test&params[]=1&params[]=abc&class=custom_class_name_or_remove_it_if_main_module_class
      * http://example.com/m/oauth2/api/service?module=bx_market&method=test&params=serialized_string_of_params
+     * http://example.com/m/oauth2/api/service?module=bx_market&method=test&params=json_string_of_params
      * @endcode
      *
      * **Scopes:** 
@@ -234,15 +272,17 @@ class BxOAuthAPI extends BxDol
      * @endcode
      * 
      */
-    function service($aToken) 
+    function service($aToken, $bPublic = false, $bOutputResultOnly = false) 
     {
-        if (!($oProfile = BxDolProfile::getInstance($aToken['user_id']))) {
+        if (!$bPublic && !($oProfile = BxDolProfile::getInstance($aToken['user_id']))) {
             $this->errorOutput('404', 'not_found', 'Profile was not found');
             return;
         }
         
-        bx_login($oProfile->getAccountId(), false);
-        check_logged();
+        if (!$bPublic) {
+            bx_login($oProfile->getAccountId(), false);
+            check_logged();
+        }
 
         $sModule = bx_get('module');
         $sMethod = bx_get('method');
@@ -251,6 +291,8 @@ class BxOAuthAPI extends BxDol
             $aParams = array();
         elseif (is_string($aParams) && preg_match('/^a:[\d+]:\{/', $aParams))
             $aParams = @unserialize($aParams);
+        elseif (is_string($aParams) && preg_match('/^\[.*\]$/', $aParams))
+            $aParams = @json_decode($aParams);
         if (!is_array($aParams))
             $aParams = array($aParams);
 
@@ -264,7 +306,12 @@ class BxOAuthAPI extends BxDol
 
         $mixedRet = BxDolService::call($sModule, $sMethod, $aParams, $sClass);
 
-        $this->output(array(
+        if (is_array($mixedRet) && isset($mixedRet['error']) && isset($mixedRet['code'])) {
+            $this->errorOutput($mixedRet['code'], $mixedRet['error'], isset($mixedRet['desc']) ? $mixedRet['desc'] : $mixedRet['error']);
+            return false;
+        }
+
+        $this->output($bOutputResultOnly ? $mixedRet : array(
             'module' => $sModule,
             'method' => $sMethod,
             'data' => $mixedRet,

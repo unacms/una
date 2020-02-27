@@ -80,17 +80,24 @@ class BxBaseModProfileDb extends BxBaseModGeneralDb
     {
         $CNF = &$this->_oConfig->CNF;
 
+       
+        $aMethod['params'][1] = array_merge($aMethod['params'][1], array(
+            'profile_type' => $this->_oConfig->getName()
+        ));  
+        
+        $sJoinClause .= " LEFT JOIN `sys_profiles` AS `tp` ON `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ID'] . "`=`tp`.`content_id` AND `tp`.`type`=:profile_type ";
+        
+        $sWhereClause .= " AND `tp`.`status`='active'";
+        
         if(isset($aParams['search_params']['online'])) {
             $aMethod['params'][1] = array_merge($aMethod['params'][1], array(
-            	'online_type' => $this->_oConfig->getName(),
                 'online_time' => (int)getParam('sys_account_online_time')
             ));
 
             $sJoinClause .= "
-            	LEFT JOIN `sys_profiles` AS `tp` ON `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_ID'] . "`=`tp`.`content_id` AND `tp`.`type`=:online_type 
             	INNER JOIN `sys_accounts` AS `ta` ON `tp`.`account_id`=`ta`.`id` 
             	INNER JOIN `sys_sessions` AS `ts` ON `tp`.`account_id`=`ts`.`user_id` 
-            	";
+                ";
 
             $sWhereClause .= " AND `ta`.`profile_id`=`tp`.`id` AND `ts`.`date` > (UNIX_TIMESTAMP() - 60 * :online_time)";
 
