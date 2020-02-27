@@ -329,9 +329,8 @@ class BxBasePage extends BxDolPage
 
         if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->beginPageBlock(_t($aBlock['title']), $aBlock['id']);
 
-        if ($this->_isVisibleBlock($aBlock)) {
-
-            $sFunc = '_getBlock' . ucfirst($aBlock['type']);
+        $sFunc = '_getBlock' . ucfirst($aBlock['type']);
+        if ($this->_isVisibleBlock($aBlock) && method_exists($this, $sFunc)) {
             $mixedContent = $this->$sFunc($aBlock);
 
             $sTitle = $this->getBlockTitle($aBlock);
