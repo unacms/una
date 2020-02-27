@@ -1355,6 +1355,10 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             	$sResult = 'file-word';
             	break;
 
+            case BX_DOL_STUDIO_BP_BLOCK_CUSTOM:
+                $sResult = 'file';
+            	break;
+
             case BX_DOL_STUDIO_BP_BLOCK_SERVICE:
                 $sResult = $this->getModuleIcon($aBlock['module'], 'page');
                 break;
@@ -1378,6 +1382,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         $aFields = array();
 
         switch($aBlock['type']) {
+            case BX_DOL_STUDIO_BP_BLOCK_CUSTOM:
             case BX_DOL_STUDIO_BP_BLOCK_RAW:
                 $aFields = array(
                     'content' => array(

@@ -19,6 +19,7 @@ define('BX_DOL_STUDIO_BP_BLOCK_IMAGE', 'image');
 define('BX_DOL_STUDIO_BP_BLOCK_LANG', 'lang');
 define('BX_DOL_STUDIO_BP_BLOCK_MENU', 'menu');
 define('BX_DOL_STUDIO_BP_BLOCK_WIKI', 'wiki');
+define('BX_DOL_STUDIO_BP_BLOCK_CUSTOM', 'custom');
 define('BX_DOL_STUDIO_BP_BLOCK_SERVICE', 'service');
 
 class BxDolStudioBuilderPage extends BxTemplStudioPage

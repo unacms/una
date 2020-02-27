@@ -4718,7 +4718,7 @@ CREATE TABLE IF NOT EXISTS `sys_pages_blocks` (
   `designbox_id` int(11) NOT NULL DEFAULT '11',
   `visible_for_levels` int(11) NOT NULL DEFAULT '2147483647',
   `hidden_on` varchar(255) NOT NULL DEFAULT '',
-  `type` enum('raw','html','lang','image','rss','menu','service','wiki') NOT NULL DEFAULT 'raw',
+  `type` enum('raw','html','lang','image','rss','menu','custom','service','wiki') NOT NULL DEFAULT 'raw',
   `content` text NOT NULL,
   `text` mediumtext NOT NULL,
   `text_updated` int(11) NOT NULL,
@@ -4740,6 +4740,7 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 ('', 0, 'skeletons', '_sys_block_type_lang', 11, 2147483647, 'lang', '', 0, 1, 1, 0),
 ('', 0, 'skeletons', '_sys_block_type_menu', 11, 2147483647, 'menu', '', 0, 1, 1, 0),
 ('', 0, 'skeletons', '_sys_block_type_wiki', 11, 2147483647, 'wiki', '', 0, 1, 1, 0),
+('', 0, 'skeletons', '_sys_block_type_custom', 11, 2147483647, 'custom', '', 0, 1, 1, 0),
 ('', 0, 'skeletons', '_sys_block_type_service', 11, 2147483647, 'service', '', 0, 0, 1, 0);
 
 -- service blocks

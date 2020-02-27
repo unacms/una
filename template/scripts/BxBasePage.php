@@ -378,6 +378,18 @@ class BxBasePage extends BxDolPage
     }
 
     /**
+     * Get content for 'custom' block type.
+     * @return string
+     */
+    protected function _getBlockCustom ($aBlock)
+    {
+        $s = '<div class="bx-page-custom-container">' . BxDolTemplate::getInstance()->parseHtmlByContent($aBlock['content'], array()) . '</div>';
+        $s = $this->_replaceMarkers($s, array('block_id' => $aBlock['id']));
+        $s = bx_process_macros($s);
+        return $s;
+    }
+
+    /**
      * Get content for 'html' block type.
      * @return string
      */
