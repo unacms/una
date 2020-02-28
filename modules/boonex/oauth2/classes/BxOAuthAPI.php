@@ -193,27 +193,40 @@ class BxOAuthAPI extends BxDol
     }
 
     /**
-     * @page private_api API Private
-     * @section private_api_market /m/oauth2/api/market
+     * @page public_api API Public
+     * @section public_api_com /m/oauth2/api/com
      * 
-     * API service call (com is for command).
+     * API service call (com is for command). 
+     * The call should be look this:
+     * `/m/oauth2/api/com/[metod-name-here]`
      * 
      * **Scopes:** 
      * `api`
      *
      * Everything is equivalent to @ref private_api_service, 
      * only module name parameter can be ommited and 
-     * method is passed as method parameter instead of GET variable
+     * method is passed as method parameter instead of GET/POST variable
      */
     function com($sMethod, $aToken, $bPublic)
     {
     	$_GET['key'] = $_POST['key'] = (isset($aToken['client_id']) ? $aToken['client_id'] : '');
-        $_GET['module'] = $_POST['module'] = 'bx_api';
+        if (!isset($_GET['module']) && !isset($_POST['module']))
+            $_GET['module'] = $_POST['module'] = 'bx_api';
         $_GET['method'] = $_POST['method'] = $sMethod;
         $this->service($aToken, $bPublic, true);
     }
 
     function isPublicAPI($sModule, $sMethod, $sClass = false)
+    {
+        return $this->_isAPI($sModule, $sMethod, $sClass, 'is_public_service');
+    }
+
+    function isSafeAPI($sModule, $sMethod, $sClass = false)
+    {
+        return $this->_isAPI($sModule, $sMethod, $sClass, 'is_safe_service');
+    }
+
+    protected function _isAPI($sModule, $sMethod, $sClass = false, $sCheckMethod = 'is_safe_service') 
     {
         if (!$sClass)
             $sClass = 'Module';
@@ -221,11 +234,12 @@ class BxOAuthAPI extends BxDol
         if (!BxDolRequest::serviceExists($sModule, $sMethod, $sClass))
             return false;
 
-        if (!BxDolRequest::serviceExists($sModule, 'is_public_service', $sClass))
+        if (!BxDolRequest::serviceExists($sModule, $sCheckMethod, $sClass))
             return false;
 
-        return BxDolService::call($sModule, 'is_public_service', array($sMethod));
+        return BxDolService::call($sModule, $sCheckMethod, array($sMethod));
     }
+    
 
     /**
      * @page private_api API Private

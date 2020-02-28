@@ -233,9 +233,12 @@ class BxBasePage extends BxDolPage
         $aFieldsUnset = array('cell_id', 'active', 'copyable', 'deletable', 'object', 'text', 'text_updated', 'title_system', 'visible_for_levels');
         $aCells = $this->_oQuery->getPageBlocks();
         foreach ($aCells as $sKey => $aCell) {
-            foreach ($aCell as $i => $aBlock) {
+            foreach ($aCell as $i => $aBlock) {                
                 if (!$this->_isVisibleBlock($aBlock))
                     unset($aCells[$sKey][$i]);
+                
+                $this->processPageBlock($aCells[$sKey][$i], true);
+                $aBlock = $aCells[$sKey][$i];
 
                 $sFunc = '_getBlock' . ucfirst($aBlock['type']);
                 $aCells[$sKey][$i]['content'] = method_exists($this, $sFunc) ? $this->$sFunc($aBlock) : $aBlock['content'];
@@ -267,6 +270,8 @@ class BxBasePage extends BxDolPage
         foreach ($aBlocks as $sKey => $aCell) {
             $sCell = '';
             foreach ($aCell as $aBlock) {
+                $this->processPageBlock($aBlock, false);
+
                 $sContentWithBox = $this->_getBlockCode($aBlock);
 
             	$sHiddenOn = '';
@@ -282,6 +287,14 @@ class BxBasePage extends BxDolPage
         }
 
         return $aVars;
+    }
+
+    /**
+     * Process block values, especially if someting need to be overrided 
+     */
+    protected function processPageBlock(&$aBlock, $bApi = false) 
+    {
+
     }
 
     /**
@@ -316,9 +329,8 @@ class BxBasePage extends BxDolPage
 
         if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->beginPageBlock(_t($aBlock['title']), $aBlock['id']);
 
-        if ($this->_isVisibleBlock($aBlock)) {
-
-            $sFunc = '_getBlock' . ucfirst($aBlock['type']);
+        $sFunc = '_getBlock' . ucfirst($aBlock['type']);
+        if ($this->_isVisibleBlock($aBlock) && method_exists($this, $sFunc)) {
             $mixedContent = $this->$sFunc($aBlock);
 
             $sTitle = $this->getBlockTitle($aBlock);

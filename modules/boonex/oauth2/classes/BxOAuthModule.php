@@ -189,7 +189,7 @@ class BxOAuthModule extends BxDolModule
     }
 
     /**
-     * Authenicated or public call to the "API" module
+     * Authenicated or public call to the "safe" and "public" service methods 
      */
     function actionCom ($sMethod)
     {
@@ -198,11 +198,15 @@ class BxOAuthModule extends BxDolModule
             $this->_oAPI = new BxOAuthAPI($this);
         }
 
-        $bPublic = $this->_oAPI->isPublicAPI('bx_api', $sMethod);
+        $bPublic = $this->_oAPI->isPublicAPI(bx_get('module') ? bx_get('module') : 'bx_api', $sMethod);
         if ($bPublic) {
             $this->_oAPI->com($sMethod, array(), $bPublic);
         }
         else {
+            if (!$this->_oAPI->isSafeAPI(bx_get('module') ? bx_get('module') : 'bx_api', $sMethod)) {
+                $this->_oAPI->errorOutput(403, 'access_denied', 'Only "public" and "safe" services can be called, or method doesn\'t exist');
+            }
+
             $this->initOAuth($this->getClientIdFromAccessTokenHeader());
 
             // Handle a request to a resource and authenticate the access token
