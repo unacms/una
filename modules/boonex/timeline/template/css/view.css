@@ -418,7 +418,7 @@ div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li > span {
 }
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-hor.bx-menu-more-auto:not(.bx-menu-submenu-more-auto) li > a,
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-hor.bx-menu-more-auto:not(.bx-menu-submenu-more-auto) li > span {
-    margin-right: 1rem;
+    margin-right: 0.5rem;
 }
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li > span {
     margin-right: 0;
@@ -464,19 +464,18 @@ div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto .bx-pop
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto .bx-popup .bx-menu-custom.bx-menu-submenu-more-auto > li.bx-menu-item  a .sys-action-do-icon > .sys-icon,
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto .bx-popup .bx-menu-custom.bx-menu-submenu-more-auto > li.bx-menu-item  a .bx-menu-item-icon,
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto .bx-popup .bx-menu-custom.bx-menu-submenu-more-auto > li.bx-menu-item  a .bx-menu-item-icon > .sys-icon {
-    width: 1.0rem;
-    height: 1.0rem;
+    width: 1.5rem;
+    height: 1.5rem;
 
     background-color: transparent;
     border-color: transparent;
 
-    line-height: 1.0rem;
+    line-height: 1.5rem;
     font-size: 1.0rem;
 }
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto .bx-popup .bx-menu-custom.bx-menu-submenu-more-auto > li.bx-menu-item  a .sys-action-do-text,
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto .bx-popup .bx-menu-custom.bx-menu-submenu-more-auto > li.bx-menu-item  a .bx-menu-item-title {
-    margin-left: 1.0rem;
-    line-height: 1.5rem;
+    margin-left: 0.5rem;
 }
 
 /*--- Item Style: Timeline ---*/

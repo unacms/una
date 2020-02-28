@@ -16,6 +16,9 @@ div.bx-tl-view div.bx-tl-item .bx-tl-item-cnt {
 div.bx-tl-view div.bx-tl-item div.bx-tl-owner-name {
     line-height: 1rem;
 }
+div.bx-tl-item div.bx-tl-owner-name > * {
+    display: inline-block;
+}
 div.bx-tl-view div.bx-tl-item div.bx-tl-owner-name .bx-tl-hot img {
     display: inline-block;
     vertical-align: sub;
@@ -69,10 +72,6 @@ div.bx-tl-view div.bx-tl-item div.bx-tl-owner-name .bx-tl-timeline-owner-name a.
 }
 	
 /*+++ Item Author +++*/
-.bx-tl-item-owner {
-    padding-left: 1rem;
-    padding-right: 1rem;
-}
 .bx-tl-item-owner-cnt {
     position: relative;
 }
@@ -135,10 +134,12 @@ div.bx-tl-view.bx-tl-view-item div.bx-tl-item-image {
 
 /*+++ Activity and Comments +++*/
 .bx-tl-view div.bx-tl-item div.bx-tl-item-comments-holder .bx-tl-item-comments {
-	margin-top: 0.5rem;
+    margin-top: 1.5rem;
 }
 .bx-tl-view div.bx-tl-item div.bx-tl-item-comments-holder .cmt-reply {
     margin-bottom: 0;
+}
+.bx-tl-view div.bx-tl-item div.bx-tl-item-comments-holder .cmts .cmt-reply {
     padding-bottom: 1.25rem;
 }
 .bx-tl-view div.bx-tl-item div.bx-tl-item-activity .bx-menu-hor {
@@ -175,13 +176,20 @@ div.bx-tl-view.bx-tl-view-item div.bx-tl-item-image {
 	line-height: inherit;
 }
 .bx-tl-view div.bx-tl-item div.bx-tl-item-activity .bx-menu-hor li a {
-    font-size: 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color:  rgba(60, 80, 90, 0.8);
 }
 .bx-tl-view div.bx-tl-item div.bx-tl-item-activity .bx-menu-hor li .sys-icon:not(.bx-vote-star),
 .bx-tl-view div.bx-tl-item div.bx-tl-item-activity .bx-menu-hor li a .sys-icon:not(.bx-vote-star) {
     vertical-align: baseline;
-    color: rgba(0,147,205,1);
+    color: rgba(60, 80, 90, 0.8);
 }
+.bx-tl-view div.bx-tl-item div.bx-tl-item-activity .bx-menu-hor li a:hover,
+.bx-tl-view div.bx-tl-item div.bx-tl-item-activity .bx-menu-hor li a:hover .sys-icon:not(.bx-vote-star) {
+    color: rgba(50, 150, 250, 1);
+}
+
 .bx-tl-view div.bx-tl-item div.bx-tl-item-activity .bx-vote-stars, .bx-vote-stars .bx-vote-do, 
 .bx-tl-view div.bx-tl-item div.bx-tl-item-activity .bx-vote-stars .bx-vote-element-holder, 
 .bx-tl-view div.bx-tl-item div.bx-tl-item-activity .bx-vote-stars .bx-vote-counter-holder {
@@ -204,11 +212,11 @@ div.bx-tl-view.bx-tl-view-item div.bx-tl-item-image {
     color: #ddd;
 }
 .bx-tl-view div.bx-tl-item div.bx-tl-item-activity .bx-menu-hor li a img {
-	display: inline-block;
+    display: inline-block;
     vertical-align: sub;
 
-    width: 1.625rem;
-    height: 1.625rem;
+    width: 2.0rem;
+    height: 2.0rem;
     box-sizing: border-box;
     background-size: contain;
     background-clip: content-box;

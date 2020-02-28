@@ -731,8 +731,8 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
 }
 .bx-menu-main-submenu.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto .bx-popup .bx-menu-item,
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto .bx-popup .bx-menu-item {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
 }
 .bx-menu-main-submenu.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item .sys-icon {
     display: inline-block;
@@ -848,9 +848,9 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
 .bx-menu-ver.bx-menu-object-sys_profile_stats li .sys-icon {
     display: inline-block;
     vertical-align: top;
-    width: 1.0rem;
-    height: 1.0rem;
-    line-height: 1.0rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
     font-size: 1.0rem;
 }
 

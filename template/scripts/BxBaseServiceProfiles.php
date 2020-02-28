@@ -71,19 +71,24 @@ class BxBaseServiceProfiles extends BxDol
 
     public function serviceGetMenuAddonProfileEdit($iProfileId = 0, $sCaption = '')
     {
+        /**
+         * Disabled.
+         */
+        return '';
+
     	if(empty($sCaption))
-    		$sCaption = _t('_Edit');
+            $sCaption = _t('_Edit');
 
-		$oProfile = BxDolProfile::getInstance($iProfileId);
+        $oProfile = BxDolProfile::getInstance($iProfileId);
         if(!$oProfile)
-        	return '';
+            return '';
 
-		$sModule = $oProfile->getModule();
-		$sMethod = 'profile_edit_url';
-		if(!BxDolRequest::serviceExists($sModule, $sMethod))
-			return '';
+        $sModule = $oProfile->getModule();
+        $sMethod = 'profile_edit_url';
+        if(!BxDolRequest::serviceExists($sModule, $sMethod))
+            return '';
 
-		return BxDolTemplate::getInstance()->parseLink(BxDolService::call($sModule, $sMethod, array($oProfile->getContentId())), $sCaption);
+        return BxDolTemplate::getInstance()->parseLink(BxDolService::call($sModule, $sMethod, array($oProfile->getContentId())), $sCaption);
     }
 
     /**
