@@ -112,13 +112,24 @@
 	display: inline-block;
 }
 
-.bx-forum-grid-preview .bx-forum-gp-title,
+.bx-forum-grid-preview .bx-forum-gp-title {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+
+    white-space: nowrap;
+}
+
+.bx-forum-grid-preview .bx-forum-gp-title a {
+    display: inline-block;
+}
+
+.bx-forum-grid-preview .bx-forum-gp-title a,
 .bx-forum-grid-preview .bx-forum-gp-text {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    display: flex;
-    align-items: center;
 }
 
 .bx-forum-grid-preview .bx-forum-gp-title .sys-icon,
