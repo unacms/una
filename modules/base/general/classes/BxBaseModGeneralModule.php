@@ -1804,37 +1804,19 @@ class BxBaseModGeneralModule extends BxDolModule
         
     }
 
-    // ====== PERMISSION METHODS
+    /**
+     * ======
+     * PERMISSION METHODS
+     * ======
+     */
     public function serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction = false, $iProfileId = false)
     {
-        if (!$iProfileId)
-            $iProfileId = $this->_iProfileId;
+        $mixedResult = $this->_serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction, $iProfileId);
 
-        $CNF = &$this->_oConfig->CNF;
-
-        // moderator and owner always have access
-        if (!empty($iProfileId) && (abs($aDataEntry[$CNF['FIELD_AUTHOR']]) == (int)$iProfileId || $this->_isModeratorForProfile($isPerformAction, $iProfileId)))
-            return CHECK_ACTION_RESULT_ALLOWED;
-
-        // check ACL
-        $aCheck = checkActionModule($iProfileId, 'view entry', $this->getName(), $isPerformAction);
-        if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
-            return $aCheck[CHECK_ACTION_MESSAGE];
-
-        // check privacy
-        if (!empty($CNF['OBJECT_PRIVACY_VIEW'])) {
-            $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
-            if ($oPrivacy && !$oPrivacy->check($aDataEntry[$CNF['FIELD_ID']], $iProfileId))
-                return _t('_sys_access_denied_to_private_content');
-        }
-
-        // check alert to allow custom checks
-        $mixedResult = null;
+        // check alert to allow custom checks        
         bx_alert('system', 'check_allowed_view', 0, 0, array('module' => $this->getName(), 'content_info' => $aDataEntry, 'profile_id' => $iProfileId, 'override_result' => &$mixedResult));
-        if($mixedResult !== null)
-            return $mixedResult;
 
-        return CHECK_ACTION_RESULT_ALLOWED;
+        return $mixedResult;
     }
 
     public function checkAllowedSetThumb ($iContentId = 0)
@@ -1960,12 +1942,38 @@ class BxBaseModGeneralModule extends BxDolModule
         return $this->checkAllowedView ($aContentInfo, $isPerformAction);
     }
 
-	/**
+    /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden. So make sure to make "true === " checking.
      */
     public function checkAllowedCommentsPost ($aContentInfo, $isPerformAction = false)
     {
         return $this->checkAllowedView ($aContentInfo, $isPerformAction);
+    }
+
+    protected function _serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction, $iProfileId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$iProfileId)
+            $iProfileId = $this->_iProfileId;
+
+        // moderator and owner always have access
+        if(!empty($iProfileId) && (abs($aDataEntry[$CNF['FIELD_AUTHOR']]) == (int)$iProfileId || $this->_isModeratorForProfile($isPerformAction, $iProfileId)))
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        // check ACL
+        $aCheck = checkActionModule($iProfileId, 'view entry', $this->getName(), $isPerformAction);
+        if($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
+            return $aCheck[CHECK_ACTION_MESSAGE];
+
+        // check privacy
+        if(!empty($CNF['OBJECT_PRIVACY_VIEW'])) {
+            $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_VIEW']);
+            if ($oPrivacy && !$oPrivacy->check($aDataEntry[$CNF['FIELD_ID']], $iProfileId))
+                return _t('_sys_access_denied_to_private_content');
+        }
+
+        return CHECK_ACTION_RESULT_ALLOWED;
     }
 
     public function _serviceBrowse ($sMode, $aParams = false, $iDesignBox = BX_DB_PADDING_DEF, $bDisplayEmptyMsg = false, $bAjaxPaginate = true, $sClassSearchResult = 'SearchResult')
