@@ -154,8 +154,8 @@
     <string name="_bx_events_page_block_title_fans_link"><![CDATA[Going to <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_fans"><![CDATA[Going]]></string>
     <string name="_bx_events_page_block_title_system_fans"><![CDATA[Going]]></string>
-    <string name="_bx_events_page_block_title_fans_invites"><![CDATA[Приглашения]]></string>
-    <string name="_bx_events_page_block_title_system_invites"><![CDATA[Приглашения]]></string>
+    <string name="_bx_events_page_block_title_fans_invites"><![CDATA[Invites]]></string>
+    <string name="_bx_events_page_block_title_system_invites"><![CDATA[Invites]]></string>
     <string name="_bx_events_page_block_title_subscribers_link"><![CDATA[Interested in <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_events_page_block_title_subscribers"><![CDATA[Interested]]></string>
     <string name="_bx_events_page_block_title_system_subscribers"><![CDATA[Interested]]></string>
