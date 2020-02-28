@@ -974,7 +974,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         	$aForm['inputs']['type_id']['values'][] = array('key' => $aType['id'], 'value' => _t($aType['title']));
 
         $aSubmenus = $this->oDb->getSubmenus();
-        $aForm['inputs']['submenu']['values'][] = array('key' => '', 'value' => _t('_sys_please_select'));
+        $aForm['inputs']['submenu']['values'][] = array('key' => '', 'value' => _t('_sys_no_menu'));
         foreach ($aSubmenus as $sObject => $sTitle)
             $aForm['inputs']['submenu']['values'][] = array('key' => $sObject, 'value' => _t($sTitle));
 
