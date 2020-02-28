@@ -175,7 +175,6 @@ li.bx-lcd-mdd-login .bx-lcd-login-form {
   transform: translateX(-50%) translateY(-50%);
   height: 20px;
   width: 2px;
-  background-color: #ffffff;
 }
 .cd-dropdown .cd-close::after {
   -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);
@@ -298,9 +297,6 @@ li.bx-lcd-mdd-login .bx-lcd-login-form {
   overflow: hidden;
 
   white-space: nowrap;
-  font-size: 1.0rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 1);
 }
 
 .cd-dropdown .cd-dropdown-content a .sys-icon, 
@@ -994,7 +990,10 @@ li.bx-lcd-mdd-login .bx-lcd-login-form {
 .has-children > a, .go-back a {
   position: relative;
 }
-.has-children > a::before, .has-children > a::after, .go-back a::before, .go-back a::after {
+.go-back a::before, 
+.go-back a::after,
+.has-children > a::before, 
+.has-children > a::after {
   /* arrow icon in CSS - for element with nested unordered lists */
   content: '';
   position: absolute;
@@ -1003,7 +1002,6 @@ li.bx-lcd-mdd-login .bx-lcd-login-form {
   display: inline-block;
   height: 2px;
   width: 10px;
-  background: #ffffff;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
