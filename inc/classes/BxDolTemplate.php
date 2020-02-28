@@ -1118,7 +1118,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             ));
 
         //--- Use iconic font.
-        return $this->parseIcon($mixedId);
+        return $this->parseIcon($mixedId, $aParams);
     }
 
     /**

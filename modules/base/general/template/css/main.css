@@ -246,7 +246,6 @@ div.bx-badge {
 	display: flex;
     align-items:center;
 	text-align: center;
-    background:#ff0000;
     color:#fff;	
 	max-width: 9rem;
     min-width: 1.25rem;
@@ -275,13 +274,17 @@ div.bx-badge span{
 	text-overflow: ellipsis; 
     overflow: hidden;
 }
-div.bx-badge .sys-icon{
+div.bx-badge:not(.bx-badge-compact-to) .sys-icon{
 	color:#fff;
 	margin-right: 0.5rem;
 }
 div.bx-badge.bx-badge-compact{
 	width: 1.25rem;
 	text-align: center;
+}
+div.bx-badge.bx-badge-compact-to{
+	padding: 0;
+	width: auto;
 }
 div.bx-badge.bx-badge-compact .sys-icon{
 	width: 1.25rem;

@@ -448,11 +448,22 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     public function serviceGetBadge($aBadge, $bIsCompact = false)
     {
         $sClass = '';
+		$sStyleFont = '';
+		$sStyleBg = '';
+		if ($aBadge['color'] == '')
+			$aBadge['color'] = '#ff0000';
+		
         if ($bIsCompact){
             $aBadge['is_icon_only'] = 1;
+			$sClass .= ' bx-badge-compact-to';
+			$sStyleFont = 'color: ' . $aBadge['color'];
         }
+		else{
+			$sStyleBg = 'background-color: ' . $aBadge['color'];
+		}
+		
         if ($aBadge['is_icon_only'] == 1){
-            $sClass = 'bx-badge-compact';
+            $sClass .= ' bx-badge-compact';
         }
         
         return BxDolTemplate::getInstance()->parseHtmlByName('badge.html', array(
@@ -462,10 +473,11 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             ),
             'bx_if:icon' => array(
                 'condition' => $aBadge['icon'] != '',
-                'content' => array('content' => BxDolTemplate::getInstance()->getIcon($aBadge['icon'], array('class' => 'bx-badge-icon'))),
+                'content' => array('content' => BxDolTemplate::getInstance()->getIcon($aBadge['icon'], array('class' => 'bx-badge-icon sys-colored', 'style' => $sStyleFont))),
             ),
             'title' => $aBadge['text'],
-            'style' => $aBadge['color'] != '' ? 'style = "background-color: ' . $aBadge['color'] . '"' : '',
+			'style_font' => $sStyleFont,
+			'style_bg' => $sStyleBg,
             'class' => $sClass,
             )
     	);
