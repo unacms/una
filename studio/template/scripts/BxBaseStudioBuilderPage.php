@@ -290,14 +290,14 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     'name' => 'settings',
                     'content' => $oTemplate->parseHtmlByName('bp_edit_page_form.html', $this->_getTmplVarsPageSettings()),
                 ),
-			)
-		);
+            )
+        );
 
-		$oForm = new BxTemplStudioFormView($aForm);
+        $oForm = new BxTemplStudioFormView($aForm);
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-        	unset($oForm->aInputs['settings']);
+            unset($oForm->aInputs['settings']);
             foreach($this->aPageSettings as $aSetting)
                 $oForm->aInputs = array_merge($oForm->aInputs, $this->{'getSettings' . $this->getClassName($aSetting['name']) . 'Fields'}());
 
@@ -317,7 +317,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             BxDolForm::setSubmittedValue('visible_for_levels', $iVisibleFor, $aForm['form_attrs']['method']);
             unset($oForm->aInputs['visible_for']);
 
-            $iId = (int)$oForm->insert(array('object' => $sObject, 'url' => $this->sPageBaseUrl . $sUri));
+            $iId = (int)$oForm->insert(array('author' => bx_get_logged_profile_id(), 'added' => time(), 'object' => $sObject, 'url' => $this->sPageBaseUrl . $sUri));
             if($iId != 0)
                 return array('eval' => $sJsObject . '.onCreatePage(\'' . $sModule . '\', \'' . $sObject . '\')');
             else

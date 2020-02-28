@@ -4591,6 +4591,8 @@ CREATE TABLE `sys_transcoder_queue_files` (
 
 CREATE TABLE IF NOT EXISTS `sys_objects_page` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `author` int(11) NOT NULL DEFAULT '0',
+  `added` int(11) NOT NULL DEFAULT '0',
   `object` varchar(64) NOT NULL,
   `uri` varchar(255) NOT NULL,
   `title_system` varchar(255) NOT NULL,
