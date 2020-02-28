@@ -630,19 +630,28 @@ class BxBaseCmts extends BxDolCmts
         if($bShowDoCommentAsButton)
             $sClass .= ' bx-btn-height';
 
-        $aCmts = $this->_oQuery->getCommentsBy(array('type' => 'object_id', 'object_id' => $this->getId(), 'order_way' => 'desc', 'start' => 0, 'per_page' => 5));
+        $iCmtsLimit = 5;
+        $aCmts = $this->_oQuery->getCommentsBy(array('type' => 'object_id', 'object_id' => $this->getId(), 'order_way' => 'desc', 'start' => 0, 'per_page' => $iCmtsLimit * 4));
         $aCmts = array_reverse($aCmts);
 
         $aTmplVarsProfiles = array();
         foreach($aCmts as $aCmt) {
-            $oAuthor = BxDolProfile::getInstanceMagic((int)$aCmt['cmt_author_id']);
+            $iAuthor = (int)$aCmt['cmt_author_id'];
+            if(array_key_exists($iAuthor, $aTmplVarsProfiles))
+                continue;
+
+            $oAuthor = BxDolProfile::getInstanceMagic($iAuthor);
             if(!$oAuthor)
                 continue;
-            
-            $aTmplVarsProfiles[] = array(
+
+            $aTmplVarsProfiles[$iAuthor] = array(
                 'icon' => $oAuthor->getUnit(0, array('template' => array('name' => 'unit_wo_info_links', 'size' => 'icon'))) 
             );
+
+            if(count($aTmplVarsProfiles) >= $iCmtsLimit)
+                break;
         }
+        $aTmplVarsProfiles = array_values($aTmplVarsProfiles);
 
         $sHref = !empty($aParams['overwrite_counter_link_href']) ? $aParams['overwrite_counter_link_href'] : $this->getListUrl();
         $sOnclick = '';
