@@ -56,20 +56,21 @@ class BxDolStudioModule extends BxTemplStudioPage
 
     public function init()
     {
+        $this->aModule = $this->oDb->getModuleByName($this->sModule);
+
         $this->checkAction();
 
-        $this->aModule = $this->oDb->getModuleByName($this->sModule);
         if(empty($this->aModule) || !is_array($this->aModule))
             BxDolStudioTemplate::getInstance()->displayPageNotFound();
 
-		$this->sPageRssHelpUrl = $this->aModule['help_url'];
-		$this->sPageRssHelpId = $this->aModule['name'];
+        $this->sPageRssHelpUrl = $this->aModule['help_url'];
+        $this->sPageRssHelpId = $this->aModule['name'];
 
-		$this->addMarkers(array(
-			'module_name' => $this->aModule['name'],
-			'module_uri' => $this->aModule['uri'],
-			'module_title' => $this->aModule['title'],
-		));
+        $this->addMarkers(array(
+            'module_name' => $this->aModule['name'],
+            'module_uri' => $this->aModule['uri'],
+            'module_title' => $this->aModule['title'],
+        ));
 
         $this->addAction(array(
             'type' => 'switcher',
@@ -80,32 +81,37 @@ class BxDolStudioModule extends BxTemplStudioPage
         ), false);
     }
 
-	public function checkAction()
+    public function checkAction()
     {
     	$sAction = bx_get('mod_action');
     	if($sAction === false)
-    		return;
+            return;
 
-		$sAction = bx_process_input($sAction);
+        if(empty($this->aModule) || !is_array($this->aModule)) {
+            echoJson(array('code' => 1, 'message' => _t('_sys_request_page_not_found_cpt')));
+            exit;
+        }
 
-		$aResult = array('code' => 1, 'message' => _t('_adm_mod_err_cannot_process_action'));
-		switch($sAction) {
-			case 'activate':
-				$sValue = bx_process_input(bx_get('mod_value'));
-				if(empty($sValue))
-					break;
+        $sAction = bx_process_input($sAction);
 
-				$aResult = $this->activate($sValue);
-				break;
-		}
+        $aResult = array('code' => 2, 'message' => _t('_adm_mod_err_cannot_process_action'));
+        switch($sAction) {
+            case 'activate':
+                $sValue = bx_process_input(bx_get('mod_value'));
+                if(empty($sValue))
+                    break;
 
-		if(!empty($aResult['message']))
-			$aResult['message'] = BxTemplStudioFunctions::getInstance()->transBox('', BxDolStudioTemplate::getInstance()->parseHtmlByName('mod_action_result.html', array(
-            	'content' => $aResult['message'])
-        	));
+                $aResult = $this->activate($sValue);
+                break;
+        }
 
-		echo json_encode($aResult);
-		exit;
+        if(!empty($aResult['message']))
+            $aResult['message'] = BxTemplStudioFunctions::getInstance()->transBox('', BxDolStudioTemplate::getInstance()->parseHtmlByName('mod_action_result.html', array(
+                'content' => $aResult['message'])
+            ));
+
+        echoJson($aResult);
+        exit;
     }
 
     public function activate($sModule)

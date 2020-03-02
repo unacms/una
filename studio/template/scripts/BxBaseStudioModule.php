@@ -76,7 +76,7 @@ class BxBaseStudioModule extends BxDolStudioModule
         if(!method_exists($this, $sMethod))
             return '';
 
-        if((int)$this->aModule['enabled'] != 1)
+        if(isset($this->aModule['enabled']) && (int)$this->aModule['enabled'] != 1)
             BxDolStudioTemplate::getInstance()->addInjection('injection_bg_style', 'text', ' bx-std-page-bg-empty');
 
         return $this->$sMethod();
