@@ -875,7 +875,7 @@ class BxBaseCmts extends BxDolCmts
 
         $aForm = $this->{'_getForm' . ucfirst($sType)}($iCmtParentId, $aDp);
         if(empty($aForm['form']))
-            return !empty($aForm['msg']) ? MsgBox($aForm['msg']) : '';
+            return !empty($aForm['msg']) && (isLogged() || $iCmtParentId != 0 || $this->getCommentsCount() > 0) ? MsgBox($aForm['msg']) : '';
 
         return $this->_oTemplate->parseHtmlByName('comment_reply_box.html', array(
             'js_object' => $this->_sJsObjName,
