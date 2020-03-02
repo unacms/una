@@ -221,6 +221,8 @@ class BxBasePage extends BxDolPage
             'id' => $this->_aObject['id'],
             'title' => $this->_getPageTitle(),
             'uri' => $this->_aObject['uri'],
+            'author' => $this->_aObject['author'],
+            'added' => $this->_aObject['added'],
             'module' => $this->getModule (),
             'type' => $this->getType (),
             'layout' => $this->_aObject['layout_id'],
