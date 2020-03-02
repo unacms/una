@@ -2743,39 +2743,58 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      * Functions to display pages with errors, messages and so on.
      *
      */
-    function displayAccessDenied ($sMsg = '', $iPage = BX_PAGE_DEFAULT)
+    function displayAccessDenied ($sMsg = '', $iPage = BX_PAGE_DEFAULT, $iDesignBox = BX_DB_PADDING_DEF)
     {
         bx_import('BxDolLanguages');
-        header("HTTP/1.0 403 Forbidden");
-        $this->displayMsg($sMsg ? $sMsg : _t('_Access denied'), false, $iPage);
+        header('HTTP/1.0 403 Forbidden');
+        header('Status: 403 Forbidden');
+        $this->displayMsg($sMsg ? $sMsg : _t('_Access denied'), false, $iPage, $iDesignBox);
     }
-    function displayNoData ($sMsg = '', $iPage = BX_PAGE_DEFAULT)
+
+    function displayNoData ($sMsg = '', $iPage = BX_PAGE_DEFAULT, $iDesignBox = BX_DB_PADDING_DEF)
     {
         bx_import('BxDolLanguages');
-        header("HTTP/1.0 204 No Content");
-        $this->displayMsg($sMsg ? $sMsg : _t('_Empty'), false, $iPage);
+        header('HTTP/1.0 204 No Content');
+        header('Status: 204 No Content');
+        $this->displayMsg($sMsg ? $sMsg : _t('_Empty'), false, $iPage, $iDesignBox);
     }
-    function displayErrorOccured ($sMsg = '', $iPage = BX_PAGE_DEFAULT)
+
+    function displayErrorOccured ($sMsg = '', $iPage = BX_PAGE_DEFAULT, $iDesignBox = BX_DB_PADDING_DEF)
     {
         bx_import('BxDolLanguages');
-        header("HTTP/1.0 500 Internal Server Error");
-        $this->displayMsg($sMsg ? $sMsg : _t('_error occured'), false, $iPage);
+        header('HTTP/1.0 500 Internal Server Error');
+        header('Status: 500 Internal Server Error');
+        $this->displayMsg($sMsg ? $sMsg : _t('_error occured'), false, $iPage, $iDesignBox);
     }
-    function displayPageNotFound ($sMsg = '', $iPage = BX_PAGE_DEFAULT)
+
+    function displayPageNotFound ($sMsg = '', $iPage = BX_PAGE_DEFAULT, $iDesignBox = BX_DB_PADDING_DEF)
     {
         bx_import('BxDolLanguages');
-        header("HTTP/1.0 404 Not Found");
+        header('HTTP/1.0 404 Not Found');
         header('Status: 404 Not Found');
-        $this->displayMsg($sMsg ? $sMsg : _t('_sys_request_page_not_found_cpt'), false, $iPage);
+        $this->displayMsg($sMsg ? $sMsg : _t('_sys_request_page_not_found_cpt'), false, $iPage, $iDesignBox);
     }
-    function displayMsg ($s, $bTranslate = false, $iPage = BX_PAGE_DEFAULT)
+
+    function displayMsg ($s, $bTranslate = false, $iPage = BX_PAGE_DEFAULT, $iDesignBox = BX_DB_PADDING_DEF)
     {
-        $sTitle = $bTranslate ? _t($s) : $s;
+        $bArray = is_array($s);
+
+        $sTitle = $bArray ? $s['title'] : '_Error';
+        $sContent = $bArray ? $s['content'] : $s;
+
+        if($bTranslate) {
+            $sTitle = _t($sTitle);
+            $sContent = _t($sContent);
+        }
+
+        $sContent = MsgBox($sContent);
+        if($iPage == BX_PAGE_DEFAULT)
+            $sContent = DesignBoxContent($sTitle, $sContent, $iDesignBox);
+
         $oTemplate = BxDolTemplate::getInstance();
         $oTemplate->setPageNameIndex ($iPage);
-        $oTemplate->setPageHeader (_t('_Error'));
-        $s = BX_PAGE_DEFAULT == $iPage ? DesignBoxContent(_t('_Error'), MsgBox($sTitle), BX_DB_PADDING_DEF) : MsgBox($sTitle);
-        $oTemplate->setPageContent ('page_main_code', $s);
+        $oTemplate->setPageHeader ($sTitle);
+        $oTemplate->setPageContent ('page_main_code', $sContent);
         $oTemplate->getPageCode();
         exit;
     }

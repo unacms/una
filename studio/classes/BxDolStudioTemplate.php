@@ -149,7 +149,7 @@ class BxDolStudioTemplate extends BxDolTemplate implements iBxDolSingleton
         return $this->parseHtmlByName('breadcrumb.html', array('bx_repeat:items' => $aItems));
     }
 
-    function displayMsg ($s, $bTranslate = false, $iPage = BX_PAGE_DEFAULT)
+    function displayMsg ($s, $bTranslate = false, $iPage = BX_PAGE_DEFAULT, $iDesignBox = BX_DB_PADDING_DEF)
     {
         $sTitle = $bTranslate ? _t($s) : $s;
 

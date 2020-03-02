@@ -171,17 +171,10 @@ class BxDolRequest extends BxDol
     }
     protected static function _error($sType, $sParam1 = '', $sParam2 = '')
     {
-        header('Status: 404 Not Found');
-        header('HTTP/1.0 404 Not Found');
-
-        require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
-        bx_import('BxDolLanguages');
-        $oTemplate = BxDolTemplate::getInstance();
-        $oTemplate->setPageNameIndex(BX_PAGE_DEFAULT);
-        $oTemplate->setPageHeader(_t("_sys_request_" . $sType . "_not_found_cpt"));
-        $oTemplate->setPageContent('page_main_code', DesignBoxContent('', MsgBox(_t("_sys_request_" . $sType . "_not_found_cnt", bx_process_output($sParam1), bx_process_output($sParam2))), BX_DB_PADDING_NO_CAPTION));
-        $oTemplate->getPageCode();
-        exit;
+        BxDolTemplate::getInstance()->displayPageNotFound(array(
+            'title' => _t("_sys_request_" . $sType . "_not_found_cpt"),
+            'content' => _t("_sys_request_" . $sType . "_not_found_cnt", bx_process_output($sParam1), bx_process_output($sParam2))
+        ), BX_PAGE_DEFAULT, BX_DB_PADDING_NO_CAPTION);
     }
 }
 
