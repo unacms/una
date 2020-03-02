@@ -13,7 +13,7 @@ class BxTimelinePrivacy extends BxBaseModNotificationsPrivacy
 {
     protected $_oModule;
 
-	public function __construct ($aOptions, $oTemplate = false)
+    public function __construct ($aOptions, $oTemplate = false)
     {
         parent::__construct ($aOptions, $oTemplate);
 
@@ -22,34 +22,37 @@ class BxTimelinePrivacy extends BxBaseModNotificationsPrivacy
 
     public function addSpaces($aValues, $iOwnerId, $aParams)
     {
-        if (!$this->_aObject['spaces'])
+        if(!$this->_aObject['spaces'])
             return $aValues;
 
-        if (!($oProfile = BxDolProfile::getInstance($iOwnerId)))
+        if(!($oProfile = BxDolProfile::getInstance($iOwnerId)))
             return $aValues;
 
-        if (!($aModules = BxDolModuleQuery::getInstance()->getModules()))
+        if(!($aModules = BxDolModuleQuery::getInstance()->getModules()))
             return $aValues;
-            
-        $oProfileQuery = BxDolProfileQuery::getInstance();
 
         $sConnections = $this->_oModule->_oConfig->getObject('conn_subscriptions');
         $aConnections = BxDolConnection::getObjectInstance($sConnections)->getConnectedContent($iOwnerId);
 
         $aCnnGroups = array();
         foreach($aConnections as $iId) {
-            $aProfileInfo = $oProfileQuery->getInfoById($iId);
-            if(empty($aProfileInfo) || !is_array($aProfileInfo))
+            $oCnnProfile = BxDolProfile::getInstance($iId);
+            if(!$oCnnProfile)
                 continue;
 
-            $aCnnGroups[$aProfileInfo['type']][] = $aProfileInfo['id'];
+            $sCnnProfileModule = $oCnnProfile->getModule();
+            $mixedCheckResult = bx_srv($sCnnProfileModule, 'check_allowed_post_in_profile', array($oCnnProfile->getContentId(), $iOwnerId));
+            if($mixedCheckResult !== CHECK_ACTION_RESULT_ALLOWED)
+                continue;
+
+            $aCnnGroups[$sCnnProfileModule][] = array('key' => -$iId, 'value' => $oCnnProfile->getDisplayName());
         }
 
-        $oProfile = BxDolProfile::getInstance();
+        ksort($aCnnGroups);
         foreach($aCnnGroups as $sCnnGroup => $aCnnGroup) {
             $aValues[] = array('type' => 'group_header', 'value' => mb_strtoupper(_t('_bx_timeline_form_post_input_owner_id_following_group', _t('_' . $sCnnGroup))));
-            foreach($aCnnGroup as $iId)
-                $aValues[] = array('key' => -$iId, 'value' => $oProfile->getDisplayName($iId));
+            if(!empty($aCnnGroup) && is_array($aCnnGroup))
+                $aValues = array_merge($aValues, $aCnnGroup);
             $aValues[] = array('type' => 'group_end');
         }
 
