@@ -171,8 +171,12 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     	if(!isLogged() || ($mixedContextId !== false && !is_numeric($mixedContextId)))
             return '';
 
+        $oProfile = BxDolProfile::getInstance();
+        if(!$oProfile)
+            return '';
+
         if($mixedContextId !== false)
-            $mixedContextId = (int)(!empty($mixedContextId) ? -$mixedContextId : bx_get_logged_profile_id());
+            $mixedContextId = (int)(!empty($mixedContextId) ? -$mixedContextId : $oProfile->id());
 
         $bContext = $mixedContextId !== false;
         if($bContext && ($oContextProfile = BxDolProfile::getInstance(abs($mixedContextId))) !== false)
@@ -180,7 +184,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
                 return '';
 
         $sTitle = _t('_sys_page_block_title_create_post' . (!$bContext ? '_public' : ($mixedContextId < 0 ? '_context' : '')));
-        $sPlaceholder = _t('_sys_txt_create_post_placeholder', BxDolProfile::getInstance()->getDisplayName());
+        $sPlaceholder = _t('_sys_txt_create_post_placeholder', $oProfile->getDisplayName());
 
     	$oMenu = BxDolMenu::getObjectInstance('sys_create_post');
 
@@ -210,7 +214,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'default' => $sDefault,
             'title' => $sTitle,
             'placeholder' => $sPlaceholder,
-            'user_thumb' => BxDolProfile::getInstance()->getUnit(0, array('template' => 'unit_wo_info')),
+            'user_thumb' => $oProfile->getUnit(0, array('template' => 'unit_wo_info')),
             'menu' => $oMenu->getCode(),
             'form' => BxDolService::call($sDefault, 'get_create_post_form', array(array('context_id' => $mixedContextId, 'ajax_mode' => true, 'absolute_action_url' => true, 'custom' => $aCustom))),
             'js_object' => $sJsObject,
