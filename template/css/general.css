@@ -324,7 +324,7 @@ div.bx-account-unit-online {
     position: relative;
     -webkit-flex: 0 1 auto; 
     -ms-flex:  0 1 auto; 
-    flex:  0 1 auto;
+    flex:  1 1 auto;
     line-height: 3.125rem;
 }
 .sys-cpf-title,
@@ -336,7 +336,7 @@ div.bx-account-unit-online {
     -webkit-flex-grow: 3;
     flex-grow: 3;
 
-    max-width: 30%;
+    max-width: 20%;
 
     white-space: nowrap;
     font-size: 1rem;
@@ -348,11 +348,19 @@ div.bx-account-unit-online {
     text-overflow:ellipsis;
 }
 .sys-cpf-submenu {
+    max-width: 80%;
+}
+.bx-media-phone .sys-cpf-title {
+    max-width: 30%;
+}
+.bx-media-phone .sys-cpf-submenu {
     max-width: 70%;
 }
-.sys-cpf-submenu-cnt ul:not(.bx-menu-submenu-more-auto) {
+.sys-cpf-submenu-cnt ul.bx-menu-custom.bx-menu-hor.bx-menu-more-auto:not(.bx-menu-submenu-more-auto) {
     display: -webkit-flex;
     display: flex;
+    -webkit-justify-content: flex-end;
+    justify-content: flex-end;
 }
 .sys-cpf-submenu-cnt ul.bx-menu-submenu-more-auto {
     line-height: normal;
@@ -368,6 +376,7 @@ div.bx-account-unit-online {
     flex:  0 1 auto;
 
     height: 3.125rem;
+    border-bottom: 2px solid transparent;
 
     line-height: 3.125rem;
 }
