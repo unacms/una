@@ -415,7 +415,15 @@ span.cmt span.cmt-counter-holder {
 }
 .cmt-counter div.cmt-counter-icon:first-child,
 .cmt-counter div.bx-base-pofile-unit-wo-info:first-child {
-    margin-left: 0;
+    margin-left: 0 !important;
+}
+.bx-media-phone .cmt-counter div.cmt-counter-icon,
+.bx-media-phone .cmt-counter div.bx-base-pofile-unit-wo-info {
+    margin-left: -1.0rem;
+}
+.bx-media-tablet .bx-layout-column-thin .cmt-counter div.bx-base-pofile-unit-wo-info,
+.bx-media-tablet .bx-layout-column-half .cmt-counter div.bx-base-pofile-unit-wo-info {
+    display: none;
 }
 .cmt-counter div.cmt-counter-icon {
     box-sizing: border-box;

@@ -102,7 +102,6 @@ div.bx-vote div.bx-vote-counter-holder {
 }
 .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound {
     position: relative;
-    padding-left: 8px;
 }
 .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound .bx-vote-counter {
     display: block;
@@ -120,6 +119,14 @@ div.bx-vote div.bx-vote-counter-holder {
     box-sizing: border-box;
 
     margin-left: -0.5rem;
+}
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter:not(.total-count):first-child {
+    margin-left: 0 !important;
+}
+.bx-media-phone .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter:not(.total-count),
+.bx-media-tablet .bx-layout-column-thin .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter:not(.total-count),
+.bx-media-tablet .bx-layout-column-half .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter:not(.total-count) {
+    margin-left: -1.0rem;
 }
 .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter:not(.total-count) span.bx-vote-counter-text {
     display: none;
