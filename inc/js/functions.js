@@ -444,6 +444,9 @@ function bx_menu_slide (sObject, oElement, sPosition, oOptions, oVars) {
     //--- If slider doesn't exists
     else {
     	var oMenuLoading = $('#bx-sliding-menu-loading');
+        if(!oMenuLoading || !oMenuLoading.length)
+            return;
+
     	$('<div id="' + sId + '" style="display:none;">' + oMenuLoading.html() + '</div>').addClass(oMenuLoading.attr('class')).appendTo(oOptions.parent);
 
         var oLoading = $(sIdSel + ' .bx-sliding-menu-loading');
