@@ -780,6 +780,9 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item.bx-base-general-ea-sa .sys-action-element-holder a span:not(.sys-action-do-icon) {
     display: inline;
 }
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-submenu-more-auto .bx-menu-item.bx-base-general-ea-sa .sys-action-element-holder a span.sys-action-do {
+    margin-left: 0px;
+}
 
 /*--- Vertical (Vertical Custom) Menus (in Popup) ---*/
 .bx-popup .bx-menu-custom-ver li a {
