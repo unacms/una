@@ -729,6 +729,10 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
     display: block;
     margin: 0;
 }
+.bx-menu-main-submenu.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto a,
+.bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto a {
+    padding: 0 0.5rem;
+}
 .bx-menu-main-submenu.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto .bx-popup .bx-menu-item,
 .bx-menu-custom.bx-menu-hor.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto .bx-popup .bx-menu-item {
     padding-top: 0.25rem;

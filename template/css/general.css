@@ -336,7 +336,7 @@ div.bx-account-unit-online {
     -webkit-flex-grow: 3;
     flex-grow: 3;
 
-    max-width: 20%;
+    max-width: 30%;
 
     white-space: nowrap;
     font-size: 1rem;
@@ -348,7 +348,7 @@ div.bx-account-unit-online {
     text-overflow:ellipsis;
 }
 .sys-cpf-submenu {
-    max-width: 80%;
+    max-width: 70%;
 }
 .sys-cpf-submenu-cnt ul:not(.bx-menu-submenu-more-auto) {
     display: -webkit-flex;
@@ -374,10 +374,6 @@ div.bx-account-unit-online {
 .sys-cpf-submenu-cnt ul li > span {
     margin: 0;
     padding: 0;
-}
-.sys-cpf-submenu-cnt ul:not(.bx-menu-submenu-more-auto) li.bx-menu-item-more-auto > span {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
 }
 .sys-cpf-submenu-cnt ul li:not(.bx-menu-item-more-auto) a .sys-icon {
     display: none;
