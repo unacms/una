@@ -14,6 +14,47 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
         parent::__construct();
     }
 
+    public function insertPage ($sObj, $sModule, $sUri, $sUrl, $sTitleLangKey, $iType = 1, $iLayoutId = 5, $iVisibleForLevels = 2147483647, $sClass = '', $sClassFile = '')
+    {
+        $b = $this->query('INSERT INTO `sys_objects_page` SET
+            `author` = :author,
+            `added` = :added,
+            `object` = :obj,
+            `uri` = :uri,
+            `title` = :title,
+            `module` = :module,
+            `cover` = :cover,
+            `type_id` = :type,
+            `layout_id` = :layout,
+            `visible_for_levels` = :levels, 
+            `visible_for_levels_editable` = 1,
+            `url` = :url,
+            `cache_lifetime` = 0,
+            `cache_editable` = 1,
+            `deletable` = 1,
+            `override_class_name` = :class,
+            `override_class_file` = :file
+        ', array(
+            'author' => bx_get_logged_profile_id(),
+            'added' => time(),
+            'obj' => $sObj,
+            'uri' => $sUri,
+            'title' => $sTitleLangKey,
+            'module' => $sModule,
+            'cover' => 0,
+            'type' => $iType,
+            'layout' => $iLayoutId,
+            'levels' => $iVisibleForLevels,
+            'url' => $sUrl,
+            'class' => $sClass,
+            'file' => $sClassFile,
+        ));
+        if (!$b)
+            return false;
+
+        return $this->lastId();
+    }
+
     function getPages($aParams, &$aItems, $bReturnCount = true)
     {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));

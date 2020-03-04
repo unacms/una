@@ -419,7 +419,7 @@ class BxDolWiki extends BxDolFactory implements iBxDolFactoryObject
 
         // check if such page exist
         $oPage1 = BxDolPage::getObjectInstanceByUri($sPageUri);
-        $oPage2 = BxDolPage::getObjectInstance($this->_aObject['module'] . str_replace('-', '_', $sPageUri));
+        $oPage2 = BxDolPage::getObjectInstance($this->_aObject['module'] . '_' . str_replace('-', '_', $sPageUri));
         if ($oPage1 || $oPage2)
             return _t('_sys_wiki_error_page_exists', bx_process_output($sPageUri));
 
