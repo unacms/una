@@ -22,7 +22,9 @@ function BxTimelineView(oOptions) {
 
     this._bInfScroll = oOptions.bInfScroll == undefined ? false : oOptions.bInfScroll;
     this._iInfScrollAutoPreloads = oOptions.iInfScrollAutoPreloads == undefined ? 10 : oOptions.iInfScrollAutoPreloads;
-    this._fInfScrollAfter = 0.25; //--- Preload more info when specified portion of Timeline block's content was already scrolled.
+    this._sInfScrollAfter = 'item';
+    this._iInfScrollAfterItem = 2; //--- Preload more info when scroll reached N item from the end of Timeline block.
+    this._fInfScrollAfterPercent = 0.25; //--- Preload more info when specified portion of Timeline block's content was already scrolled.
     this._bInfScrollBusy = false;
     this._iInfScrollPreloads = 1; //--- First portion is loaded with page loading or 'Load More' button click.
 
@@ -176,12 +178,26 @@ BxTimelineView.prototype.initInfiniteScroll = function(oParent)
         return;
 
     $(window).bind('scroll', function(oEvent) {
-        var iParentTop = parseInt(oParent.offset().top);
-        var iParentHeight = parseInt(oParent.height());
+        if($this._bInfScrollBusy || $this._iInfScrollPreloads >= $this._iInfScrollAutoPreloads)
+            return;
+
         var iScrollTop = parseInt($(window).scrollTop());
         var iWindowHeight = $(window).height();
-        if($this._bInfScrollBusy || $this._iInfScrollPreloads >= $this._iInfScrollAutoPreloads || (iScrollTop + iWindowHeight) <= (iParentTop + iParentHeight * $this._fInfScrollAfter))
-            return;
+
+        //--- Auto-scroll by reaching the N item from the end of parent block.
+        if($this._sInfScrollAfter == 'item') {
+            var oItems = oParent.find('.' + $this.sClassItem);
+            if((iScrollTop + iWindowHeight) <= ($(oItems.get(oItems.length - $this._iInfScrollAfterItem)).offset().top))
+                return;
+        }
+
+        //--- Auto-scroll by reaching the percent of parent block's height.
+        if($this._sInfScrollAfter == 'percent') {
+            var iParentTop = parseInt(oParent.offset().top);
+            var iParentHeight = parseInt(oParent.height());
+            if((iScrollTop + iWindowHeight) <= (iParentTop + iParentHeight * $this._fInfScrollAfterPercent))
+                return;
+        }
 
         $this._bInfScrollBusy = true;
         $this._getPage(undefined, $this._oRequestParams.start + $this._oRequestParams.per_page, $this._oRequestParams.per_page, function(oData) {

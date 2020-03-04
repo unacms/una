@@ -573,7 +573,14 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $bEvents = !empty($sEvents);
 
         $sBack = $this->getBack($aParams);
-        $sLoadMore = $this->getLoadMore($aParams, $bNext, $iEvents > 0 && $bEvents);
+
+        $iPerPage = $this->_oConfig->getPerPage();
+        $iPreloads = $this->_oConfig->getAutoPreloads();
+        if(!$this->_oConfig->isInfiniteScroll() || (($aParams['start'] - $iPerPage * ($iPreloads - 1)) % ($iPerPage * $iPreloads) == 0))
+            $sLoadMore = $this->getLoadMore($aParams, $bNext, $iEvents > 0 && $bEvents);
+        else
+            $sLoadMore = $this->getLoadMoreAuto();
+
         $sEmpty = $this->getEmpty($iEvents <= 0 || !$bEvents);
 
         return array($sContent, $sLoadMore, $sBack, $sEmpty, $iFirst);
@@ -686,6 +693,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             )
         );
         return $this->parseHtmlByName('load_more.html', $aTmplVars);
+    }
+
+    public function getLoadMoreAuto()
+    {
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
+
+        return $this->parseHtmlByName('load_more_auto.html', array(
+            'style_prefix' => $sStylePrefix,
+        ));
     }
 
     /**
