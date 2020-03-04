@@ -1,9 +1,5 @@
 @import url(../../../../../../../template/css/general.css);
 
-.bx-form-input-wrapper-password > A {
-    line-height: 2rem !important;
-}
-
 /* --------------- Profile Stats block */
 .bx-profile-stats .bx-profile-stats-cnt {
     padding: 0;
