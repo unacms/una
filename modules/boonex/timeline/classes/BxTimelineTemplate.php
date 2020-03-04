@@ -51,6 +51,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     'view-media-desktop.css',
                     'repost.css',
                 );
+
+                if($this->_oConfig->isJumpTo())
+                    $aCss[] = 'jquery-ui/jquery-ui.css';
                 break;
 
             case 'post':
@@ -84,6 +87,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     'view.js',
                     'repost.js',
                 ));
+
+                if($this->_oConfig->isJumpTo())
+                    $aJs = array_merge($aJs, array(
+                        'jquery-ui/jquery.ui.core.min.js',
+                        'jquery-ui/jquery.ui.datepicker.min.js',
+                    ));
+                    
                 break;
 
             case 'post':
