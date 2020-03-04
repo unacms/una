@@ -2051,7 +2051,7 @@
 	<string name="_sys_et_txt_name_profile_change_status_active"><![CDATA[Статус профиля изменён на Активный]]></string>
 	<string name="_sys_et_txt_name_profile_change_status_pending"><![CDATA[Статус профиля изменён на Ожидающий]]></string>
 	<string name="_sys_et_txt_name_profile_change_status_suspended"><![CDATA[Статус профиля изменён на Заблокированный]]></string>
-  <string name="_sys_et_txt_name_account_change_status_active"><![CDATA[Статус аккаунта изменён на Активный]]></string>
+  <string name="_sys_et_txt_name_account_change_status_activate"><![CDATA[Статус аккаунта изменён на Активный]]></string>
   <string name="_sys_et_txt_name_account_change_status_suspended"><![CDATA[Статус аккаунта изменён на Заблокированный]]></string>
 	<string name="_sys_et_txt_name_system_account"><![CDATA[Новые аккаунты]]></string>
 	<string name="_sys_et_txt_name_system_pruning"><![CDATA[Результат очистки]]></string>
