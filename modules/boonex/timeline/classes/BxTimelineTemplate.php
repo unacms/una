@@ -744,6 +744,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $aCmtsDp['min_post_form'] = $aBrowseParams['cmts_min_post_form'];
 
         $aComments = $oCmts->getCommentsBlock($aCmtsBp, $aCmtsDp);
+        if(empty($aComments) || !is_array($aComments))
+            return '';
+
         return $this->parseHtmlByName('comments.html', array(
             'style_prefix' => $sStylePrefix,
             'id' => $iId,

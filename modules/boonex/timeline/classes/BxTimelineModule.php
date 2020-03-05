@@ -422,6 +422,18 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
     public function actionGetItemBrief()
     {
+        $iEvent = bx_process_input(bx_get('id'), BX_DATA_INT);
+        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iEvent));
+        if(empty($aEvent) || !is_array($aEvent)) {
+            echo MsgBox(_t('_Empty'));
+            return;
+        }
+
+        if(!$this->isAllowedView($aEvent)) {
+            echo MsgBox(_t('_sys_access_denied_to_private_content'));
+            return;
+        }        
+
         echo BxDolPage::getObjectInstance($this->_oConfig->getObject('page_item_brief'), $this->_oTemplate)->getCodeDynamic();
     }
 
