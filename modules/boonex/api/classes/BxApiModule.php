@@ -16,6 +16,14 @@ class BxApiModule extends BxDolModule
         parent::__construct($aModule);
     }
 
+    public function serviceGetSafeServices()
+    {
+        $a = parent::serviceGetSafeServices();
+        return array_merge($a, array (
+            'DeletePage' => '',
+        ));
+    }
+
     public function serviceGetPublicServices()
     {
         $a = parent::serviceGetPublicServices();
@@ -163,7 +171,7 @@ class BxApiModule extends BxDolModule
             );
         }
 
-        if (!isAdmin()) {
+        if (!$oPage->isDeleteAllowed()) {
             return array(
                 'code' => 403,
                 'error' => 'Forbidden',
