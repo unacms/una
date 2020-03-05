@@ -486,6 +486,7 @@ function get_templates_array($bEnabledOnly = true, $bShortInfo = true)
 }
 
 function bx_get_image_exif_and_size($oStorage, $oTranscoder, $iContentId){
+    $sData = '';
     $sExif = '';
     $aExif = false;
     $aPhoto = $oStorage->getFile($iContentId);
