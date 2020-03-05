@@ -60,15 +60,9 @@ class BxOAuthModule extends BxDolModule
         parent::__construct($aModule);        
     }
 
-    public function initOAuth($sClientId)
+    public function checkAllowedOrigins()
     {
-        if ($this->_oStorage)
-            return;        
-
         $aClient = array();
-
-        // check cross origin request
-        
         if (isset($_SERVER['HTTP_ORIGIN']) && parse_url($_SERVER['HTTP_ORIGIN'], PHP_URL_HOST) != parse_url(BX_DOL_URL_ROOT, PHP_URL_HOST)) {
 
             $aClient = $this->_oDb->getClientByAllowedOriginUrl($_SERVER['HTTP_ORIGIN']);
@@ -86,6 +80,17 @@ class BxOAuthModule extends BxDolModule
                 exit(0);
             }            
         }
+        return $aClient;
+    }
+
+    public function initOAuth($sClientId)
+    {
+        if ($this->_oStorage)
+            return;        
+
+        // check cross origin request
+        
+        $aClient = $this->checkAllowedOrigins();
 
         // get the client data if it wasn't set before
         
@@ -200,6 +205,7 @@ class BxOAuthModule extends BxDolModule
 
         $bPublic = $this->_oAPI->isPublicAPI(bx_get('module') ? bx_get('module') : 'bx_api', $sMethod);
         if ($bPublic) {
+            $this->checkAllowedOrigins();
             $this->_oAPI->com($sMethod, array(), $bPublic);
         }
         else {
