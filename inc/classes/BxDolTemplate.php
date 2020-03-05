@@ -2777,9 +2777,10 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
     function displayMsg ($s, $bTranslate = false, $iPage = BX_PAGE_DEFAULT, $iDesignBox = BX_DB_PADDING_DEF)
     {
+        $sError = '_Error';
         $bArray = is_array($s);
 
-        $sTitle = $bArray ? $s['title'] : '_Error';
+        $sTitle = $bArray ? $s['title'] : ($bTranslate ? $sError : _t($sError));
         $sContent = $bArray ? $s['content'] : $s;
 
         if($bTranslate) {
