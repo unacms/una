@@ -1504,7 +1504,7 @@ BLAH;
                 ),
             ),            
         );
-        $aLocationIndexes = array ('lat', 'lng', 'country', 'state', 'city', 'zip', 'street', 'street_number');
+        $aLocationIndexes = self::$LOCATION_INDEXES;
         foreach ($aLocationIndexes as $sKey)
             $aVars[$sKey] = $this->getLocationVal($aInput, $sKey);
         if ($aVars['country']) {

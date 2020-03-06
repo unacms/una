@@ -10,6 +10,7 @@
 define('BX_DOL_FORM_METHOD_GET', 'get');
 define('BX_DOL_FORM_METHOD_POST', 'post');
 define('BX_DOL_FORM_METHOD_SPECIFIC', 'specific');
+define('BX_DOL_FORM_METHOD_DEFAULT', BX_DOL_FORM_METHOD_POST);
 
 define('BX_DATA_LISTS_KEY_PREFIX', '#!');
 define('BX_DATA_VALUES_DEFAULT', 'LKey'); ///< Use default values for data items, @see BxDolForm::getDataItems
@@ -713,6 +714,8 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     static $FUNC_SKIP_DOMAIN_CHECK = array('email' => 1, 'emails' => 1, 'emailexist' => 1, 'emailuniq' => 1, 'emailexistorempty' => 1, 'hostdomain' => 1, 'hostdomainchat' => 1, 'emailorempty' => 1);
     static $FUNC_SKIP_MACROS_CHECK = array();
 
+    static $LOCATION_INDEXES = array ('lat', 'lng', 'country', 'state', 'city', 'zip', 'street', 'street_number');
+
     protected $_aMarkers = array ();
 
     protected $oTemplate;
@@ -746,7 +749,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
         // set default method
         if (!isset($this->aFormAttrs['method']))
-            $this->aFormAttrs['method'] = BX_DOL_FORM_METHOD_POST;
+            $this->aFormAttrs['method'] = BX_DOL_FORM_METHOD_DEFAULT;
 
         // set default action
         if (!isset($this->aFormAttrs['action']))
@@ -1256,12 +1259,6 @@ class BxDolFormChecker
                 continue;
             }
 
-            // special check for location field
-            if ('location' == $aInputs[$k]['type'] && $val && !BxDolForm::getSubmittedValue($a['name'] . '_country', $this->_sFormMethod, $this->_aSpecificValues)) {
-                $aInputs[$k]['value'] = '';
-                $val = '';
-            }
-
             $sCheckFunction = array($oChecker, 'check' . bx_gen_method_name($a['checker']['func']));
 
             if (is_callable($sCheckFunction))
@@ -1501,6 +1498,26 @@ class BxDolFormCheckerHelper
         }
         return $s ? true : false;
     }
+
+    static public function checkLocation($s, $sName, $sMethod = BX_DOL_FORM_METHOD_DEFAULT, $bAll = false)
+    {
+        if(!self::checkAvail($s))
+            return false;
+
+        $aIndexes = BxDolForm::$LOCATION_INDEXES;
+        foreach($aIndexes as $sIndex) {
+            $sValue = BxDolForm::getSubmittedValue($sName . '_' . $sIndex, $sMethod);
+            $bValue = self::checkAvail($sValue);
+
+            if($bAll && !$bValue)
+                return false;
+            if(!$bAll && $bValue)
+                return true;
+        }
+
+        return $bAll ? true : false;
+    }
+
     static public function checkEmailOrEmpty($s)
     {
         if (empty($s))

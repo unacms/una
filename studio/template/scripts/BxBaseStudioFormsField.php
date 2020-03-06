@@ -843,6 +843,12 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
 
             if(isset($oForm->aInputs['checker_params_required']))
                 $aCheckerParams['required'] = $oForm->getCleanValue('checker_params_required');
+
+            switch($sCheckerFunc) {
+                case 'location':
+                    $aCheckerParams['name'] = $oForm->getCleanValue('name');
+                    break;
+            }
         }
 
         unset($oForm->aInputs['checker_params_length_min'], $oForm->aInputs['checker_params_length_max'], $oForm->aInputs['checker_params_preg'], $oForm->aInputs['checker_params_required']);
@@ -1852,8 +1858,8 @@ class BxBaseStudioFormsFieldCaptcha extends BxBaseStudioFormsFieldText
     protected $sDbPass = '';
 
     public function init()
-	{
-		parent::init();
+    {
+        parent::init();
 
         $this->aParams['table_alter'] = false;
 
@@ -1882,12 +1888,12 @@ class BxBaseStudioFormsFieldCaptcha extends BxBaseStudioFormsFieldText
 class BxBaseStudioFormsFieldLocation extends BxBaseStudioFormsFieldText
 {
     protected $sType = 'location';
-    protected $aCheckFunctions = array('avail');
+    protected $aCheckFunctions = array('location');
     protected $sDbPass = '';
 
     public function init()
-	{
-		parent::init();
+    {
+        parent::init();
 
         $this->aParams['table_alter'] = false;
 

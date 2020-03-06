@@ -821,7 +821,7 @@
 	<string name="_adm_form_txt_field_caption_system"><![CDATA[Системный заголовок]]></string>
 	<string name="_adm_form_txt_field_checked"><![CDATA[Отмечено по умолчанию]]></string>
 	<string name="_adm_form_txt_field_checked_switcher"><![CDATA[Включено по умолчанию]]></string>
-	<string name="_adm_form_txt_field_checker_avail"><![CDATA[Доступность данных (нужно ввести значение) ]]></string>
+	<string name="_adm_form_txt_field_checker_avail"><![CDATA[Доступность данных (нужно ввести значение)]]></string>
 	<string name="_adm_form_txt_field_checker_captcha"><![CDATA[Капча (проверка корректного текста для картинки безопасности)]]></string>
         <string name="_adm_form_txt_field_checker_custom"><![CDATA[Индивидуальная проверка]]></string>
 	<string name="_adm_form_txt_field_checker_date"><![CDATA[Дата (проверка правильного формата даты)]]></string>
@@ -833,6 +833,7 @@
 	<string name="_adm_form_txt_field_checker_func"><![CDATA[Проверить на]]></string>
         <string name="_adm_form_txt_field_checker_func_info_custom"><![CDATA[Заметка. Не рекомендуется редактировать это поле без крайней необходимости.]]></string>
 	<string name="_adm_form_txt_field_checker_length"><![CDATA[Длина данных (ограничить число символов)]]></string>
+        <string name="_adm_form_txt_field_checker_location"><![CDATA[Данные местоположения (проверка корректности данных местоположение)]]></string>
 	<string name="_adm_form_txt_field_checker_no_spam"><![CDATA[Свобода от спама (проверить, чтобы ввод был свободен от спама)]]></string>
 	<string name="_adm_form_txt_field_checker_params_length_max"><![CDATA[Макс. значение]]></string>
 	<string name="_adm_form_txt_field_checker_params_length_min"><![CDATA[Мин. значение]]></string>
@@ -2051,7 +2052,7 @@
 	<string name="_sys_et_txt_name_profile_change_status_active"><![CDATA[Статус профиля изменён на Активный]]></string>
 	<string name="_sys_et_txt_name_profile_change_status_pending"><![CDATA[Статус профиля изменён на Ожидающий]]></string>
 	<string name="_sys_et_txt_name_profile_change_status_suspended"><![CDATA[Статус профиля изменён на Заблокированный]]></string>
-  <string name="_sys_et_txt_name_account_change_status_activate"><![CDATA[Статус аккаунта изменён на Активный]]></string>
+  <string name="_sys_et_txt_name_account_change_status_active"><![CDATA[Статус аккаунта изменён на Активный]]></string>
   <string name="_sys_et_txt_name_account_change_status_suspended"><![CDATA[Статус аккаунта изменён на Заблокированный]]></string>
 	<string name="_sys_et_txt_name_system_account"><![CDATA[Новые аккаунты]]></string>
 	<string name="_sys_et_txt_name_system_pruning"><![CDATA[Результат очистки]]></string>
