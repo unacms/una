@@ -1,5 +1,5 @@
 /*!
- * Font Awesome Free 5.10.1 by @fontawesome - https://fontawesome.com
+ * Font Awesome Free 5.12.1 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 
@@ -41,6 +41,7 @@
 .fab, .sys-icon.fab {
   font-family: 'sys-user-fab';
 }
+
 
 
 
@@ -297,6 +298,9 @@
 .sys-icon.bacon:before, .fa-bacon:before {
   content: "\f7e5"; }
 
+.sys-icon.bahai:before, .fa-bahai:before {
+  content: "\f666"; }
+
 .sys-icon.balance-scale:before, .fa-balance-scale:before {
   content: "\f24e"; }
 
@@ -543,6 +547,9 @@
 .sys-icon.business-time:before, .fa-business-time:before {
   content: "\f64a"; }
 
+.sys-icon.buy-n-large:before, .fa-buy-n-large:before {
+  content: "\f8a6"; }
+
 .sys-icon.buysellads:before, .fa-buysellads:before {
   content: "\f20d"; }
 
@@ -608,6 +615,9 @@
 
 .sys-icon.car-side:before, .fa-car-side:before {
   content: "\f5e4"; }
+
+.sys-icon.caravan:before, .fa-caravan:before {
+  content: "\f8ff"; }
 
 .sys-icon.caret-down:before, .fa-caret-down:before {
   content: "\f0d7"; }
@@ -918,6 +928,9 @@
 .sys-icon.compress:before, .fa-compress:before {
   content: "\f066"; }
 
+.sys-icon.compress-alt:before, .fa-compress-alt:before {
+  content: "\f422"; }
+
 .sys-icon.compress-arrows-alt:before, .fa-compress-arrows-alt:before {
   content: "\f78c"; }
 
@@ -1046,6 +1059,9 @@
 
 .sys-icon.d-and-d-beyond:before, .fa-d-and-d-beyond:before {
   content: "\f6ca"; }
+
+.sys-icon.dailymotion:before, .fa-dailymotion:before {
+  content: "\f952"; }
 
 .sys-icon.dashcube:before, .fa-dashcube:before {
   content: "\f210"; }
@@ -1317,6 +1333,9 @@
 .sys-icon.expand:before, .fa-expand:before {
   content: "\f065"; }
 
+.sys-icon.expand-alt:before, .fa-expand-alt:before {
+  content: "\f424"; }
+
 .sys-icon.expand-arrows-alt:before, .fa-expand-arrows-alt:before {
   content: "\f31e"; }
 
@@ -1481,6 +1500,9 @@
 
 .sys-icon.firefox:before, .fa-firefox:before {
   content: "\f269"; }
+
+.sys-icon.firefox-browser:before, .fa-firefox-browser:before {
+  content: "\f907"; }
 
 .sys-icon.first-aid:before, .fa-first-aid:before {
   content: "\f479"; }
@@ -1902,11 +1924,14 @@
 .sys-icon.hashtag:before, .fa-hashtag:before {
   content: "\f292"; }
 
+.sys-icon.hat-cowboy:before, .fa-hat-cowboy:before {
+  content: "\f8c0"; }
+
+.sys-icon.hat-cowboy-side:before, .fa-hat-cowboy-side:before {
+  content: "\f8c1"; }
+
 .sys-icon.hat-wizard:before, .fa-hat-wizard:before {
   content: "\f6e8"; }
-
-.sys-icon.haykal:before, .fa-haykal:before {
-  content: "\f666"; }
 
 .sys-icon.hdd:before, .fa-hdd:before {
   content: "\f0a0"; }
@@ -2043,6 +2068,9 @@
 .sys-icon.id-card-alt:before, .fa-id-card-alt:before {
   content: "\f47f"; }
 
+.sys-icon.ideal:before, .fa-ideal:before {
+  content: "\f913"; }
+
 .sys-icon.igloo:before, .fa-igloo:before {
   content: "\f7ae"; }
 
@@ -2075,6 +2103,9 @@
 
 .sys-icon.instagram:before, .fa-instagram:before {
   content: "\f16d"; }
+
+.sys-icon.instagram-square:before, .fa-instagram-square:before {
+  content: "\f955"; }
 
 .sys-icon.intercom:before, .fa-intercom:before {
   content: "\f7af"; }
@@ -2382,6 +2413,9 @@
 .sys-icon.maxcdn:before, .fa-maxcdn:before {
   content: "\f136"; }
 
+.sys-icon.mdb:before, .fa-mdb:before {
+  content: "\f8ca"; }
+
 .sys-icon.medal:before, .fa-medal:before {
   content: "\f5a2"; }
 
@@ -2430,6 +2464,9 @@
 .sys-icon.meteor:before, .fa-meteor:before {
   content: "\f753"; }
 
+.sys-icon.microblog:before, .fa-microblog:before {
+  content: "\f91a"; }
+
 .sys-icon.microchip:before, .fa-microchip:before {
   content: "\f2db"; }
 
@@ -2468,6 +2505,9 @@
 
 .sys-icon.mixcloud:before, .fa-mixcloud:before {
   content: "\f289"; }
+
+.sys-icon.mixer:before, .fa-mixer:before {
+  content: "\f956"; }
 
 .sys-icon.mizuni:before, .fa-mizuni:before {
   content: "\f3cc"; }
@@ -2519,6 +2559,9 @@
 
 .sys-icon.mountain:before, .fa-mountain:before {
   content: "\f6fc"; }
+
+.sys-icon.mouse:before, .fa-mouse:before {
+  content: "\f8cc"; }
 
 .sys-icon.mouse-pointer:before, .fa-mouse-pointer:before {
   content: "\f245"; }
@@ -2600,6 +2643,9 @@
 
 .sys-icon.optin-monster:before, .fa-optin-monster:before {
   content: "\f23c"; }
+
+.sys-icon.orcid:before, .fa-orcid:before {
+  content: "\f8d2"; }
 
 .sys-icon.osi:before, .fa-osi:before {
   content: "\f41a"; }
@@ -2762,6 +2808,9 @@
 
 .sys-icon.pied-piper-pp:before, .fa-pied-piper-pp:before {
   content: "\f1a7"; }
+
+.sys-icon.pied-piper-square:before, .fa-pied-piper-square:before {
+  content: "\f91e"; }
 
 .sys-icon.piggy-bank:before, .fa-piggy-bank:before {
   content: "\f4d3"; }
@@ -2942,6 +2991,9 @@
 
 .sys-icon.receipt:before, .fa-receipt:before {
   content: "\f543"; }
+
+.sys-icon.record-vinyl:before, .fa-record-vinyl:before {
+  content: "\f8d9"; }
 
 .sys-icon.recycle:before, .fa-recycle:before {
   content: "\f1b8"; }
@@ -3161,6 +3213,9 @@
 
 .sys-icon.shoe-prints:before, .fa-shoe-prints:before {
   content: "\f54b"; }
+
+.sys-icon.shopify:before, .fa-shopify:before {
+  content: "\f957"; }
 
 .sys-icon.shopping-bag:before, .fa-shopping-bag:before {
   content: "\f290"; }
@@ -3531,6 +3586,9 @@
 .sys-icon.swatchbook:before, .fa-swatchbook:before {
   content: "\f5c3"; }
 
+.sys-icon.swift:before, .fa-swift:before {
+  content: "\f8e1"; }
+
 .sys-icon.swimmer:before, .fa-swimmer:before {
   content: "\f5c4"; }
 
@@ -3729,6 +3787,9 @@
 .sys-icon.traffic-light:before, .fa-traffic-light:before {
   content: "\f637"; }
 
+.sys-icon.trailer:before, .fa-trailer:before {
+  content: "\f941"; }
+
 .sys-icon.train:before, .fa-train:before {
   content: "\f238"; }
 
@@ -3816,6 +3877,9 @@
 .sys-icon.uikit:before, .fa-uikit:before {
   content: "\f403"; }
 
+.sys-icon.umbraco:before, .fa-umbraco:before {
+  content: "\f8e8"; }
+
 .sys-icon.umbrella:before, .fa-umbrella:before {
   content: "\f0e9"; }
 
@@ -3833,6 +3897,9 @@
 
 .sys-icon.uniregistry:before, .fa-uniregistry:before {
   content: "\f404"; }
+
+.sys-icon.unity:before, .fa-unity:before {
+  content: "\f949"; }
 
 .sys-icon.universal-access:before, .fa-universal-access:before {
   content: "\f29a"; }
@@ -4199,4 +4266,3 @@
 
 .sys-icon.zhihu:before, .fa-zhihu:before {
   content: "\f63f"; }
-
