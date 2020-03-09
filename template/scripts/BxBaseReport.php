@@ -271,13 +271,15 @@ class BxBaseReport extends BxDolReport
 		
 		        $oZ = new BxDolAlerts('report', 'do', $iId, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId, 'type' => $sType, 'text' => $sText));
 		        $oZ->alert();
-                
-                bx_audit(
-                    $iObjectId, 
-                    $this->_sSystem, 
-                    '_sys_audit_action_report',  
-                    $this->_prepareAuditParams($iObjectId, array('type' => $sType, 'text' => $sText))
-                );
+                $mixedParams = $this->_prepareAuditParams($iObjectId, array('type' => $sType, 'text' => $sText));
+                if ($mixedParams){
+                    bx_audit(
+                        $iObjectId, 
+                        $this->_sSystem, 
+                        '_sys_audit_action_report',  
+                        $mixedParams
+                    );
+                }
 
 		        $aReport = $this->_oQuery->getReport($iObjectId);
 		        return array(
@@ -343,17 +345,20 @@ class BxBaseReport extends BxDolReport
     {
         $sModule = $this->_sSystem;
         $oModule = BxDolModule::getInstance($sModule);
-        $CNF = $oModule->_oConfig->CNF;
+        
+        if ($oModule){
+            $CNF = $oModule->_oConfig->CNF;
 
-        $aContentInfo = BxDolRequest::serviceExists($sModule, 'get_all') ? BxDolService::call($sModule, 'get_all', array(array('type' => 'id', 'id' => $iObjectId))) : array();
+            $aContentInfo = BxDolRequest::serviceExists($sModule, 'get_all') ? BxDolService::call($sModule, 'get_all', array(array('type' => 'id', 'id' => $iObjectId))) : array();
         
-        $AuditParams = array(
-            'content_title' => isset($CNF['FIELD_TITLE'])  ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
-            'content_info_object' =>  isset($CNF['OBJECT_CONTENT_INFO']) ? $CNF['OBJECT_CONTENT_INFO'] : '',
-            'data' => $aData 
-        );
-        
-        return $AuditParams;
+            $AuditParams = array(
+                'content_title' => isset($CNF['FIELD_TITLE'])  ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
+                'content_info_object' =>  isset($CNF['OBJECT_CONTENT_INFO']) ? $CNF['OBJECT_CONTENT_INFO'] : '',
+                'data' => $aData 
+            );
+            return $AuditParams;
+        }
+        return false;
     }
 }
 

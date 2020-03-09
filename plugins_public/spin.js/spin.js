@@ -1,9 +1,13 @@
-var __assign = this && this.__assign || Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-    return t;
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
 };
 var defaults = {
     lines: 12,
@@ -23,14 +27,12 @@ var defaults = {
     top: '50%',
     left: '50%',
     shadow: '0 0 1px transparent',
-    position: 'absolute'
+    position: 'absolute',
 };
-var Spinner = /** @class */function () {
+var Spinner = /** @class */ (function () {
     function Spinner(opts) {
-        if (opts === void 0) {
-            opts = {};
-        }
-        this.opts = __assign({}, defaults, opts);
+        if (opts === void 0) { opts = {}; }
+        this.opts = __assign(__assign({}, defaults), opts);
     }
     /**
      * Adds the spinner to the given target element. If this instance is already
@@ -48,7 +50,7 @@ var Spinner = /** @class */function () {
             zIndex: this.opts.zIndex,
             left: this.opts.left,
             top: this.opts.top,
-            transform: "scale(" + this.opts.scale + ")"
+            transform: "scale(" + this.opts.scale + ")",
         });
         if (target) {
             target.insertBefore(this.el, target.firstChild || null);
@@ -64,7 +66,8 @@ var Spinner = /** @class */function () {
         if (this.el) {
             if (typeof requestAnimationFrame !== 'undefined') {
                 cancelAnimationFrame(this.animateId);
-            } else {
+            }
+            else {
                 clearTimeout(this.animateId);
             }
             if (this.el.parentNode) {
@@ -75,7 +78,7 @@ var Spinner = /** @class */function () {
         return this;
     };
     return Spinner;
-}();
+}());
 
 /**
  * Sets multiple style properties at once.
@@ -96,11 +99,12 @@ function getColor(color, idx) {
  * Internal method that draws the individual lines.
  */
 function drawLines(el, opts) {
-    var borderRadius = Math.round(opts.corners * opts.width * 500) / 1000 + 'px';
+    var borderRadius = (Math.round(opts.corners * opts.width * 500) / 1000) + 'px';
     var shadow = 'none';
     if (opts.shadow === true) {
         shadow = '0 2px 4px #000'; // default shadow
-    } else if (typeof opts.shadow === 'string') {
+    }
+    else if (typeof opts.shadow === 'string') {
         shadow = opts.shadow;
     }
     var shadows = parseBoxShadow(shadow);
@@ -109,12 +113,12 @@ function drawLines(el, opts) {
         var backgroundLine = css(document.createElement('div'), {
             position: 'absolute',
             top: -opts.width / 2 + "px",
-            width: opts.length + opts.width + 'px',
+            width: (opts.length + opts.width) + 'px',
             height: opts.width + 'px',
             background: getColor(opts.fadeColor, i),
             borderRadius: borderRadius,
             transformOrigin: 'left',
-            transform: "rotate(" + degrees + "deg) translateX(" + opts.radius + "px)"
+            transform: "rotate(" + degrees + "deg) translateX(" + opts.radius + "px)",
         });
         var delay = i * opts.direction / opts.lines / opts.speed;
         delay -= 1 / opts.speed; // so initial animation state will include trail
@@ -124,7 +128,7 @@ function drawLines(el, opts) {
             background: getColor(opts.color, i),
             borderRadius: borderRadius,
             boxShadow: normalizeShadow(shadows, degrees),
-            animation: 1 / opts.speed + "s linear " + delay + "s infinite " + opts.animation
+            animation: 1 / opts.speed + "s linear " + delay + "s infinite " + opts.animation,
         });
         backgroundLine.appendChild(line);
         el.appendChild(backgroundLine);
@@ -158,7 +162,7 @@ function parseBoxShadow(boxShadow) {
             y: y,
             xUnits: xUnits,
             yUnits: yUnits,
-            end: matches[8]
+            end: matches[8],
         });
     }
     return shadows;
@@ -179,5 +183,8 @@ function convertOffset(x, y, degrees) {
     var radians = degrees * Math.PI / 180;
     var sin = Math.sin(radians);
     var cos = Math.cos(radians);
-    return [Math.round((x * cos + y * sin) * 1000) / 1000, Math.round((-x * sin + y * cos) * 1000) / 1000];
+    return [
+        Math.round((x * cos + y * sin) * 1000) / 1000,
+        Math.round((-x * sin + y * cos) * 1000) / 1000,
+    ];
 }
