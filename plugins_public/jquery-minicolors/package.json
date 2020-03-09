@@ -1,6 +1,6 @@
 {
   "name": "@claviska/jquery-minicolors",
-  "version": "2.3.2",
+  "version": "2.3.4",
   "homepage": "https://github.com/claviska/jquery-minicolors",
   "author": "Cory LaViska",
   "description": "jQuery MiniColors Plugin",
@@ -27,5 +27,8 @@
   "bugs": {
     "url": "https://github.com/claviska/jquery-minicolors/issues"
   },
-  "scripts": {}
+  "scripts": {
+    "build": "gulp",
+    "watch": "gulp watch"
+  }
 }
