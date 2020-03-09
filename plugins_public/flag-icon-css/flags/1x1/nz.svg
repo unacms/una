@@ -1,5 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="flag-icon-css-nz" viewBox="0 0 512 512">
   <defs>
+    <clipPath id="c">
+      <path d="M0 0h600v300H0z"/>
+    </clipPath>
+    <clipPath id="d">
+      <path d="M0 0l300 150H0zm300 0h300L300 150zm0 150h300v150zm0 0v150H0z"/>
+    </clipPath>
     <g id="b">
       <g id="a">
         <path d="M0 0v.5L1 0z" transform="translate(0 -.3)"/>
@@ -10,12 +16,6 @@
       <use transform="rotate(-72 0 0)" xlink:href="#a"/>
       <use transform="scale(-1 1) rotate(72)" xlink:href="#a"/>
     </g>
-    <clipPath id="c">
-      <path d="M0 0h600v300H0z"/>
-    </clipPath>
-    <clipPath id="d">
-      <path d="M0 0l300 150H0zm300 0h300L300 150zm0 150h300v150zm0 0v150H0z"/>
-    </clipPath>
   </defs>
   <path fill="#00247d" fill-rule="evenodd" d="M0 0h512v512H0z"/>
   <g transform="translate(-148.7 134.5) scale(.60566)">
