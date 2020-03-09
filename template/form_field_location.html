@@ -16,49 +16,64 @@
 <input type="hidden" name="__name___street_number" value="__street_number__" />
 
 <script>
-
     var oBxLocationHashMap = {
-        '__name___lat': '',
-        '__name___lng': '',
-        '__name___city': 'locality',
-        '__name___state': 'administrative_area_level_1',
-        '__name___country': 'country',
-        '__name___zip': 'postal_code',
-        '__name___street': 'route',
-        '__name___street_number': 'street_number'
+        lat: {html: '__name___lat', api: '', done: false},
+        lng: {html: '__name___lng', api: '', done: false},
+        city: {html: '__name___city', api: ['locality', 'sublocality', 'sublocality_level_1', 'postal_town'], done: false},
+        state: {html: '__name___state', api: ['administrative_area_level_1', 'administrative_area_level_2'], done: false},
+        country: {html: '__name___country', api: ['country'], done: false},
+        zip: {html: '__name___zip', api: ['postal_code'], done: false},
+        street: {html: '__name___street', api: ['route'], done: false},
+        street_number: {html: '__name___street_number', api: ['street_number'], done: false}
     };
 
-    var bx_location_reset = function () {
-        for (sKey in oBxLocationHashMap)
-            $('[name="' + sKey + '"]').val('');
+    var bx_location_reset = function() {
+        for(sKey in oBxLocationHashMap)
+            $('[name="' + oBxLocationHashMap[sKey].html + '"]').val('');
     };
 
-    var bx_location_process_address = function (o) {
-        var i, sKey, sCountry, sCity;
+    var bx_location_process_address = function(oApi) {
+        var sCountry, sCity;
 
-        for (i in o) {
-            for (sKey in oBxLocationHashMap) {
+        for(var sKey in oBxLocationHashMap) {
+            oBxLocationHashMap[sKey].done = false;
 
-                var sName = oBxLocationHashMap[sKey];
-                
-                if ('locality' == sName && -1 == o[i].types.indexOf(sName))
-                    sName = 'postal_town';
-                
-                if ('administrative_area_level_1' == sName && -1 == o[i].types.indexOf(sName))
-                    sName = 'administrative_area_level_2';
+            var oMapItem = oBxLocationHashMap[sKey];
+            if(!oMapItem.api)
+                continue;
 
-                if (o[i].types.indexOf(sName) > -1) {
-                    var sIndex = 'route' == sName || 'locality' == sName ? 'long_name' : 'short_name';
-                    $('[name="' + sKey + '"]').val(o[i][sIndex]);
+            for(var i in oMapItem.api) {
+                if(oMapItem.done)
+                    break;
+
+                for(var j in oApi) {
+                    if(oApi[j].types.indexOf(oMapItem.api[i]) === -1) 
+                        continue;
+
+                    var sIndex = 'short_name';
+                    switch(sKey) {
+                        case 'country':
+                            sCountry = oApi[j].long_name;
+                            break;
+
+                        case 'city':
+                            sIndex = 'long_name';
+                            sCity = oApi[j].short_name;
+                            break;
+
+                        case 'street':
+                            sIndex = 'long_name';
+                            break;
+                    }
+
+                    $('[name="' + oMapItem.html + '"]').val(oApi[j][sIndex]);
+
+                    oMapItem.done = true;
                 }
-                
-                if (o[i].types.indexOf('locality') > -1)
-                    sCity = o[i].short_name;
-                else if (o[i].types.indexOf('country') > -1)
-                    sCountry = o[i].long_name;
             }
         }
-        if ('undefined' != typeof(sCity) && sCity.length)
+
+        if(typeof(sCity) != 'undefined' && sCity.length)
             $('#__id_status__').html(sCity + ", " + sCountry);
         else
             $('#__id_status__').html(sCountry);
@@ -83,9 +98,9 @@
     $('input[name=__name__][type=checkbox]').on('change', function () {
 
         var callbackOnLocationReset = function (error) {
-            var sKey;
-            for (sKey in oBxLocationHashMap) 
-                $('[name="' + sKey + '"]').val('');
+            for(var sKey in oBxLocationHashMap) 
+                $('[name="' + oBxLocationHashMap[sKey].html + '"]').val('');
+
             $('#__id_status__').html("<bx_text_js:_sys_location_undefined />");
         }
 
@@ -174,4 +189,3 @@
     });
 
 </script>
-
