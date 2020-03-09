@@ -1868,6 +1868,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sStylePrefix = $this->_oConfig->getPrefix('style');
 
         $bViewItem = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_ITEM;
+        $bViewSearch = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_SEARCH;
 
         //--- Process Raw ---//
         $sRaw = isset($aContent['raw']) ? $aContent['raw'] : '';
@@ -1947,10 +1948,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             }
 
         /*
-         * View Item page should use Gallery layout.
+         * View Item page and Snippet in Search Results should use Gallery layout.
          */
         $sAttachmentsLayout = $this->_oConfig->getAttachmentsLayout();
-        if($bViewItem)
+        if($bViewItem || $bViewSearch)
             $sAttachmentsLayout = BX_TIMELINE_ML_GALLERY;
 
         $iAttachmentsTotal = 0;
