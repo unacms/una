@@ -598,7 +598,7 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
 
     public function checkRelations($iOwnerId, $iViewerId)
     {
-        return BxDolConnection::getObjectInstance('sys_profiles_relations')->isConnected($aObject['owner_id'], $iViewerId, true);
+        return BxDolConnection::getObjectInstance('sys_profiles_relations')->isConnected($iOwnerId, $iViewerId, true);
     }
 
     public function checkRelationsSelectedByObject($aObject, $iViewerId)
