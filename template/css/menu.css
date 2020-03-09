@@ -469,8 +469,8 @@ ul.bx-menu-floating-blocks {
     display:block;
     height:32px;
     height:2rem;
-    margin:16px 0 3px 0;
-    margin:1rem 0 0.2rem 0;
+    margin:16px 0 8px 0;
+    margin:1rem 0 0.5rem 0;
 }
 
 .bx-menu-floating-blocks li img,
