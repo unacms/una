@@ -457,6 +457,9 @@ div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto > li.bx
     padding: 0;
     white-space: nowrap;
 }
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto > li.bx-menu-item.bx-menu-item-more-auto a {
+    padding: 0;
+}
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto .bx-popup .bx-menu-custom.bx-menu-submenu-more-auto > li.bx-menu-item  a > span {
     margin-left: 0;
 }
