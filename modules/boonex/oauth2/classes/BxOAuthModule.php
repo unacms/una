@@ -119,12 +119,6 @@ class BxOAuthModule extends BxDolModule
             'scope_table'  => 'bx_oauth_scopes',
             'public_key_table'  => '',
         );
-        if (in_array('refresh_token', $aGrantTypes)) {
-            $aConfig['refresh_token'] = '';
-            $aConfig['always_issue_new_refresh_token'] = true;
-            $aConfig['unset_refresh_token_after_use'] = false;
-        }        
-        
         $this->_oStorage = new BxOAuthUserCredentialsStorage(BxDolDb::getLink(), $aConfig);
 
         $this->_oServer = new OAuth2\Server($this->_oStorage, array(
@@ -148,7 +142,10 @@ class BxOAuthModule extends BxDolModule
 
         // Add the "Refresh Token" grant type
         if (in_array('refresh_token', $aGrantTypes))
-            $this->_oServer->addGrantType(new OAuth2\GrantType\RefreshToken($this->_oStorage));
+            $this->_oServer->addGrantType(new OAuth2\GrantType\RefreshToken($this->_oStorage, array(
+                'always_issue_new_refresh_token' => true,
+                // 'unset_refresh_token_after_use' => false,
+            )));
     }    
 
     /**
