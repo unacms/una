@@ -208,6 +208,7 @@ class BxOAuthModule extends BxDolModule
         else {
             if (!$this->_oAPI->isSafeAPI(bx_get('module') ? bx_get('module') : 'bx_api', $sMethod)) {
                 $this->_oAPI->errorOutput(403, 'access_denied', 'Only "public" and "safe" services can be called, or method doesn\'t exist');
+                return;
             }
 
             $this->initOAuth($this->getClientIdFromAccessTokenHeader());
