@@ -45,9 +45,9 @@ class BxPaymentProviderRecurly extends BxBaseModPaymentProvider implements iBxBa
         $this->_bCheckAmount = false; // Disabled for easier processing of discounted subscriptions.
     }
 
-    public function setOptions($aOptions)
+    public function initOptions($aOptions)
     {
-    	parent::setOptions($aOptions);
+    	parent::initOptions($aOptions);
 
     	$this->_iMode = (int)$this->getOption('mode');
     }

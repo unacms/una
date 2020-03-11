@@ -44,40 +44,43 @@ class BxPaymentDb extends BxBaseModPaymentDb
         return $this->getAll($sQuery);
     }
 
-	public function getProviders($aParams = array())
+    public function getProviders($aParams = array())
     {
     	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
 
         $sWhereClause = "";
         if(!empty($aParams['type']))
 	        switch($aParams['type']) {
-	        	case 'by_name':
-	        		$aMethod['name'] = 'getRow';
-	        		$aMethod['params'][1] = array(
-	                	'name' => $aParams['name']
-	                );
-	
-	        		$sWhereClause = " AND `tp`.`name`=:name";
-	        		break;
-	
-				case 'for_single':
-					$aMethod['name'] = 'getAllWithKey';
-					$aMethod['params'][1] = 'name';
-	
-					$sWhereClause = " AND `tp`.`for_single`='1'";
-	        		break;
-	
-				case 'for_recurring':
-					$aMethod['name'] = 'getAllWithKey';
-					$aMethod['params'][1] = 'name';
-	
-					$sWhereClause = " AND `tp`.`for_recurring`='1'";
-	        		break;
+                    case 'by_name':
+                        $aMethod['name'] = 'getRow';
+                        $aMethod['params'][1] = array(
+                            'name' => $aParams['name']
+                        );
 
-	        	case 'all':
-					$aMethod['name'] = 'getAllWithKey';
-					$aMethod['params'][1] = 'name';
-	        		break;
+                        $sWhereClause = " AND `tp`.`name`=:name";
+                        break;
+
+                    case 'for_single':
+                        $aMethod['name'] = 'getAllWithKey';
+                        $aMethod['params'][1] = 'name';
+
+                        $sWhereClause = " AND `tp`.`for_single`='1'";
+                        break;
+
+                    case 'for_recurring':
+                        $aMethod['name'] = 'getAllWithKey';
+                        $aMethod['params'][1] = 'name';
+
+                        $sWhereClause = " AND `tp`.`for_recurring`='1'";
+                        break;
+
+                    case 'all':
+                        $aMethod['name'] = 'getAllWithKey';
+                        $aMethod['params'][1] = 'name';
+
+                        if(!empty($aParams['active'])) 
+                            $sWhereClause = " AND `tp`.`active`='1'";
+                        break;
 	        }          
 
         $aMethod['params'][0] = "SELECT
@@ -93,6 +96,30 @@ class BxPaymentDb extends BxBaseModPaymentDb
                 `tp`.`class_file` AS `class_file`
             FROM `" . $this->_sPrefix . "providers` AS `tp`
             WHERE 1" . $sWhereClause;
+
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+
+    public function getOption($aParams)
+    {
+        $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+
+        $sSelectClause = "`tpo`.*";
+        $sJoinClause = $sWhereClause = "";
+        if(!empty($aParams['type']))
+	        switch($aParams['type']) {
+                    case 'by_pid_and_name':
+                        $aMethod['name'] = 'getRow';
+                        $aMethod['params'][1] = array(
+                            'provider_id' => $aParams['provider_id'],
+                            'name' => $aParams['name'],
+                        );
+
+                        $sWhereClause = " AND `tpo`.`provider_id`=:provider_id AND `tpo`.`name`=:name";
+                        break;
+                }
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . $this->_sPrefix . "providers_options` AS `tpo` " . $sJoinClause . " WHERE 1" . $sWhereClause;
 
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }

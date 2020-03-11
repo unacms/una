@@ -70,9 +70,9 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
         \Stripe\Stripe::setApiKey($this->_getSecretKey());
     }
 
-    public function setOptions($aOptions)
+    public function initOptions($aOptions)
     {
-    	parent::setOptions($aOptions);
+    	parent::initOptions($aOptions);
 
     	$this->_iMode = (int)$this->getOption('mode');
     	$this->_bCheckAmount = $this->getOption('check_amount') == 'on';

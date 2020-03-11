@@ -27,9 +27,13 @@ class BxBaseModPaymentProvider extends BxDol
     protected $_sName;
     protected $_sCaption;
     protected $_sPrefix;
+
+    protected $_iVendor;
     protected $_aOptions;
+
     protected $_bUseSsl;
     protected $_bRedirectOnResult;
+
     protected $_sLogFile;
 
     /**
@@ -58,12 +62,16 @@ class BxBaseModPaymentProvider extends BxDol
 
         $this->_aSbsStatuses = array();
 
+        $this->_iVendor = 0;
+        if(!empty($aConfig['vendor']))
+            $this->_iVendor = (int)$aConfig['vendor'];
+
         $this->_aOptions = array();
         if(!empty($aConfig['options']) && is_array($aConfig['options']))
-            $this->setOptions($aConfig['options']);
+            $this->initOptions($aConfig['options']);
     }
 
-    public function setOptions($aOptions)
+    public function initOptions($aOptions)
     {
     	$this->_aOptions = $aOptions;
 
@@ -73,11 +81,13 @@ class BxBaseModPaymentProvider extends BxDol
     	 */
     }
 
-    public function setOptionsByVendor($iVendorId)
+    public function initOptionsByVendor($iVendorId)
     {
-        $aOptions = $this->_oModule->_oDb->getOptions((int)$iVendorId, $this->_iId);
+        $this->_iVendor = (int)$iVendorId;
+
+        $aOptions = $this->_oModule->_oDb->getOptions($this->_iVendor, $this->_iId);
         if(!empty($aOptions) && is_array($aOptions))
-	        $this->setOptions($aOptions);
+            $this->initOptions($aOptions);
     }
 
     public function isActive()
@@ -93,20 +103,39 @@ class BxBaseModPaymentProvider extends BxDol
     public function getOption($sName)
     {
     	if(substr($sName, 0, strlen($this->_sPrefix)) != $this->_sPrefix)
-    		$sName = $this->_sPrefix . $sName;
+            $sName = $this->_sPrefix . $sName;
 
         return isset($this->_aOptions[$sName]) ? $this->_aOptions[$sName]['value'] : '';
     }
 
-	public function getReturnUrl($aParams = array())
+    public function setOption($sName, $mixedValue, $bSave = false)
     {
-		return $this->_oModule->_oConfig->getUrl('URL_RETURN', $aParams, $this->_bUseSsl);
+    	if(substr($sName, 0, strlen($this->_sPrefix)) != $this->_sPrefix)
+            $sName = $this->_sPrefix . $sName;
+
+        if(empty($this->_aOptions[$sName]) || !is_array($this->_aOptions[$sName]))
+            $this->_aOptions[$sName] = array('name' => $sName, 'value' => '');
+
+        $this->_aOptions[$sName]['value'] = $mixedValue;   
+
+        if($bSave && !empty($this->_iVendor)) {
+            $aOption = $this->_oModule->_oDb->getOption(array('type' => 'by_pid_and_name', 'provider_id' => $this->_iId, 'name' => $sName));
+            if(!empty($aOption) && is_array($aOption))
+                $this->_oModule->_oDb->updateOption($this->_iVendor, $aOption['id'], $mixedValue);
+        }
+
+        return true;
+    }
+
+    public function getReturnUrl($aParams = array())
+    {
+        return $this->_oModule->_oConfig->getUrl('URL_RETURN', $aParams, $this->_bUseSsl);
     }
 
     public function getReturnDataUrl($iVendorId, $aParams = array())
     {
     	$sUrl = $this->_oModule->_oConfig->getUrl('URL_RETURN_DATA', array(), $this->_bUseSsl) . $this->_sName . '/' . $iVendorId;
-		return bx_append_url_params($sUrl, $aParams);
+        return bx_append_url_params($sUrl, $aParams);
     }
 
     public function getNotifyUrl($iVendorId, $aParams = array())

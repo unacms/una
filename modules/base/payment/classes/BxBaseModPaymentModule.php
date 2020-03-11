@@ -255,22 +255,24 @@ class BxBaseModPaymentModule extends BxBaseModGeneralModule
         return $GLOBALS['bxDolClasses'][$sClassName];
     }
 
-	public function getObjectProvider($sProvider, $mixedVendorId = BX_PAYMENT_EMPTY_ID)
-	{
-		$aProvider = $this->_oDb->getProviders(array('type' => 'by_name', 'name' => $sProvider));
-		if(empty($aProvider) || !is_array($aProvider) || empty($aProvider['class_name']))
-			return false;
+    public function getObjectProvider($sProvider, $mixedVendorId = BX_PAYMENT_EMPTY_ID)
+    {
+        $aProvider = $this->_oDb->getProviders(array('type' => 'by_name', 'name' => $sProvider));
+        if(empty($aProvider) || !is_array($aProvider) || empty($aProvider['class_name']))
+            return false;
 
-		if(is_numeric($mixedVendorId) && (int)$mixedVendorId != BX_PAYMENT_EMPTY_ID)
-			$aProvider['options'] = $this->_oDb->getOptions((int)$mixedVendorId, $aProvider['id']);
+        if(is_numeric($mixedVendorId) && (int)$mixedVendorId != BX_PAYMENT_EMPTY_ID) {
+            $aProvider['vendor'] = (int)$mixedVendorId;
+            $aProvider['options'] = $this->_oDb->getOptions((int)$mixedVendorId, $aProvider['id']);
+        }
 
-		$sClassPath = !empty($aProvider['class_file']) ? BX_DIRECTORY_PATH_ROOT . $aProvider['class_file'] : $this->_oConfig->getClassPath() . $aProvider['class_name'] . '.php';
+        $sClassPath = !empty($aProvider['class_file']) ? BX_DIRECTORY_PATH_ROOT . $aProvider['class_file'] : $this->_oConfig->getClassPath() . $aProvider['class_name'] . '.php';
         if(!file_exists($sClassPath))
-        	return false;
+            return false;
 
         require_once($sClassPath);
         return new $aProvider['class_name']($aProvider);
-	}
+    }
 
     public function callGetPaymentData($mixedModule)
     {

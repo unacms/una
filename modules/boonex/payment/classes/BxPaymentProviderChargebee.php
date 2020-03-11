@@ -35,9 +35,9 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
         );
     }
 
-    public function setOptions($aOptions)
+    public function initOptions($aOptions)
     {
-    	parent::setOptions($aOptions);
+    	parent::initOptions($aOptions);
 
     	$this->_iMode = (int)$this->getOption('mode');
         $this->_bCheckAmount = $this->getOption('check_amount') == 'on';

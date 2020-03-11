@@ -32,7 +32,7 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
 
     public function actionGetHostedPage($iClientId, $iVendorId, $sItemName, $sItemAddons = '')
     {
-        $this->setOptionsByVendor($iVendorId);
+        $this->initOptionsByVendor($iVendorId);
 
         $aItem = array('name' => $sItemName);
         if(!empty($sItemAddons)) {
@@ -68,7 +68,7 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
     	if(empty($aPending) || !is_array($aPending))
     		return echoJson(array());
 
-    	$this->setOptionsByVendor((int)$aPending['seller_id']);
+    	$this->initOptionsByVendor((int)$aPending['seller_id']);
 
     	$aSubscription = $this->_oModule->_oDb->getSubscription(array('type' => 'pending_id', 'pending_id' => $iPendingId));
     	if(empty($aSubscription) || !is_array($aSubscription))
