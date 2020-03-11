@@ -150,7 +150,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
     {
         $sSql = "UPDATE `sys_objects_page` SET `" . implode("`=?, `", array_keys($aFields)) . "`=?  WHERE `id`=?";
         $sSql = call_user_func_array(array($this, 'prepare'), array_merge(array($sSql), array_values($aFields), array($iId)));
-        return $this->query($sSql);
+        return $this->res($sSql);
     }
 
     function deletePages($aParams)
@@ -432,7 +432,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
     function updateBlock($iId, $aFields)
     {
         $sSql = "UPDATE `sys_pages_blocks` SET " . $this->arrayToSQL($aFields) . " WHERE `id`=:id";
-        return $this->query($sSql, array('id' => $iId));
+        return $this->res($sSql, array('id' => $iId));
     }
 
     function deleteBlocks($aParams)

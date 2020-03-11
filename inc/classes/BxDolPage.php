@@ -247,6 +247,11 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         $oTemplate->getPageCode();
     }
 
+    public function getId ()
+    {
+    	return (int)$this->_aObject['id'];
+    }
+
     public function getType ()
     {
     	return (int)$this->_aObject['type_id'];
