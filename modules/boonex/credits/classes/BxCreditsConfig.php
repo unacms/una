@@ -59,6 +59,8 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
             'PARAM_PRECISION' => 'bx_credits_precision',
             'PARAM_CR_USE' => 'bx_credits_conversion_rate_use',
             'PARAM_CR_WITHDRAW' => 'bx_credits_conversion_rate_withdraw',
+            'PARAM_PROVIDER_NAME' => 'credits',
+            'PARAM_PROVIDER_ENABLE' => 'bx_credits_enable_provider',
             'PARAM_CODE' => 'bx_credits_code',
             'PARAM_ICON' => 'bx_credits_icon',
 

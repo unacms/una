@@ -22,8 +22,35 @@ class BxCreditsAlertsResponse extends BxBaseModGeneralAlertsResponse
     {
         parent::response($oAlert);
 
-        if($oAlert->sUnit == 'profile' && $oAlert->sAction == 'delete' && !empty($oAlert->aExtras['delete_with_content']))
-            return BxDolService::call($this->MODULE, 'delete_entities_by_author', array($oAlert->iObject));
+        $sMethod = '_process' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);           	
+        if(!method_exists($this, $sMethod))
+            return;
+
+        return $this->$sMethod($oAlert);        
+    }
+    
+    protected function _processProfileAdd($oAlert)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        
+        $iProfile = (int)$oAlert->iObject;
+        $oProfile = BxDolProfile::getInstance($iProfile);
+        if(!$oProfile)
+            return;
+
+        if(getParam($CNF['PARAM_PROVIDER_ENABLE']) == 'on') {
+            $oProvider = BxDolPayments::getInstance()->getProvider($CNF['PARAM_PROVIDER_NAME'], $iProfile);
+            if($oProvider)
+                $oProvider->setOption('active', 'on', true);
+        }
+    }
+
+    protected function _processProfileDelete($oAlert)
+    {
+        if(empty($oAlert->aExtras['delete_with_content']))
+            return;
+
+        return BxDolService::call($this->MODULE, 'delete_entities_by_author', array($oAlert->iObject));
     }
 }
 

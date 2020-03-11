@@ -11,6 +11,7 @@
     <string name="_bx_credits_option_conversion_rate_withdraw"><![CDATA[Conversion rate to withdraw credits]]></string>
     <string name="_bx_credits_option_code"><![CDATA[Code to prefix amount]]></string>
     <string name="_bx_credits_option_icon"><![CDATA[Icon to prefix amount]]></string>
+    <string name="_bx_credits_enable_provider"><![CDATA[Auto activate 'Credits' provider for all newly created profiles]]></string>
 
 
     <!-- Forms -->

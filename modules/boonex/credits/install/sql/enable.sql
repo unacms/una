@@ -18,7 +18,9 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_credits_conversion_rate_withdraw', '1.0', @iCategId, '_bx_credits_option_conversion_rate_withdraw', 'digit', '', '', '', 12),
 
 ('bx_credits_code', '', @iCategId, '_bx_credits_option_code', 'digit', '', '', '', 20),
-('bx_credits_icon', 'copyright', @iCategId, '_bx_credits_option_icon', 'digit', '', '', '', 21);
+('bx_credits_icon', 'copyright', @iCategId, '_bx_credits_option_icon', 'digit', '', '', '', 21),
+
+('bx_credits_enable_provider', '', @iCategId, '_bx_credits_enable_provider', 'checkbox', '', '', '', 30);
 
 
 -- PAGE: module home
@@ -193,6 +195,7 @@ SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('system', 'save_setting', @iHandler),
+('profile', 'add', @iHandler),
 ('profile', 'delete', @iHandler);
 
 
