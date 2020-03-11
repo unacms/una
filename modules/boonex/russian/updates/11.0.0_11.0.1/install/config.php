@@ -45,6 +45,7 @@ $aConfig = array(
      */
     'language_category' => array(
         array('name' => 'Accounts', 'path' => 'bx_accounts/'),
+        array('name' => 'Credits', 'path' => 'bx_credits/'),
         array('name' => 'Events', 'path' => 'bx_events/'),
         array('name' => 'Timeline', 'path' => 'bx_timeline/'),
         array('name' => 'System', 'path' => 'system/'),
