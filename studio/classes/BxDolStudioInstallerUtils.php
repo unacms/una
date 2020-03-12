@@ -395,16 +395,19 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
     public function checkUpdates($bAuthorizedAccess = false)
     {
+        $sVersion = bx_get_ver();
         $sProducts = $this->getInstalledInfoShort();
 
         if($bAuthorizedAccess)
             return $this->getAccessObject(true)->loadItems(array(
                 'method' => 'browse_updates', 
+                'version' => $sVersion,
                 'products' => $sProducts
             ));
 
         return $this->getAccessObject(false)->load($this->sStoreDataUrlPublic . 'json_browse_updates', array(
             'key' => getParam('sys_oauth_key'),
+            'version' => $sVersion,
             'products' => $sProducts
         ));
     }
