@@ -40,6 +40,7 @@ class BxDolSearch extends BxDol
     protected $aClasses = array(); ///< array of all search classes
     protected $aChoice  = array(); ///< array of current search classes which were choosen in search area
     protected $_bRawProcessing = false; ///< display search results without design box and paginate
+    protected $_bDataProcessing = false; ///< return result as array of data
 
     protected $_bLiveSearch = false;
     protected $_sMetaType = '';
@@ -82,7 +83,7 @@ class BxDolSearch extends BxDol
      */
     public function response ()
     {
-        $sCode = '';
+        $sCode = $this->_bDataProcessing ? array() : '';
 
         $bSingle = count($this->aChoice) == 1;
         foreach ($this->aChoice as $sKey => $aValue) {
@@ -109,7 +110,11 @@ class BxDolSearch extends BxDol
             $oEx->aCurrent = array_merge($oEx->aCurrent, $this->_aCustomCurrentCondition);
             if ($this->_sUnitTemplate)
                 $oEx->setUnitTemplate($this->_sUnitTemplate);
-            $sCode .= $this->_bRawProcessing ? $oEx->processingRaw() : $oEx->processing();
+
+            if ($this->_bDataProcessing)
+                $sCode[$sKey] = $oEx->getSearchData();
+            else
+                $sCode .= $this->_bRawProcessing ? $oEx->processingRaw() : $oEx->processing();
         }
 
         return $sCode;
@@ -183,6 +188,14 @@ class BxDolSearch extends BxDol
     public function setRawProcessing($b)
     {
         $this->_bRawProcessing = $b;
+    }
+
+    /**
+     * Return search result as array of data
+     */ 
+    public function setDataProcessing($b)
+    {
+        $this->_bDataProcessing = $b;
     }
 }
 
