@@ -431,6 +431,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
         $aItem = $this->getAccessObject(false)->load($this->sStoreDataUrlPublic . 'json_download_update', array(
             'key' => getParam('sys_oauth_key'),
+            'version' => bx_get_ver(),
             'product' => base64_encode(serialize(array(
                 'name' => $aModule['name'],
                 'version' => $aModule['version'],
