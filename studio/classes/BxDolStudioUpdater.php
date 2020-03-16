@@ -74,7 +74,7 @@ class BxDolStudioUpdater extends BxDolStudioInstaller
             );
 
         //--- Check version ---//
-        if(version_compare($aModuleInfo['version'], $this->_aConfig['version_from']) != 0)
+        if(version_compare(strtolower($aModuleInfo['version']), strtolower($this->_aConfig['version_from'])) != 0)
             return array_merge($aResult, array(
                 'code' => BX_DOL_STUDIO_IU_RCE_WMV,
                 'message' => $this->_displayResult('check_module_version', false, '_adm_err_modules_wrong_version', $bHtmlResponce),

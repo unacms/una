@@ -617,7 +617,7 @@ class BxBaseStudioStore extends BxDolStudioStore
         $bDownload = ($bFree || $bPurchased) && $bDownloadable;
 
         $bDiscount = !empty($aProduct['discount_single']);
-        $sVersion = $bDownloaded && version_compare($aDownloaded[$sModuleName]['version'], $aProduct['version']) != 0 ? _t('_adm_str_txt_pv_version_mask', $aDownloaded[$sModuleName]['version'], $aProduct['version']) : $aProduct['version'];
+        $sVersion = $bDownloaded && version_compare(strtolower($aDownloaded[$sModuleName]['version']), strtolower($aProduct['version'])) != 0 ? _t('_adm_str_txt_pv_version_mask', $aDownloaded[$sModuleName]['version'], $aProduct['version']) : $aProduct['version'];
 
         $iScreenshots = 0;
         $aScreenshots = array();

@@ -226,7 +226,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
                 continue;
 
             $aUpdate = $this->getConfigUpdate($sPathModule . 'install/config.php', $sPathUpdate . 'install/config.php', $mixedModule);
-            if(empty($aUpdate) || !is_array($aUpdate) || version_compare($aUpdate['module_version'], $aUpdate['version_from']) != 0)
+            if(empty($aUpdate) || !is_array($aUpdate) || version_compare(strtolower($aUpdate['module_version']), strtolower($aUpdate['version_from'])) != 0)
                 continue;
 
             $aResult = $aUpdate;
