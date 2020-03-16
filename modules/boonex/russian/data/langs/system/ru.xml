@@ -1450,6 +1450,7 @@
     <string name="_adm_stg_cpt_option_sys_tinymce_toolbar_full"><![CDATA[TinyMCE кнопки для полного редактора]]></string>
     <string name="_adm_stg_cpt_option_sys_metatags_hashtags_max"><![CDATA[Максимальное число хэш-тагов в одной публикации]]></string>
     <string name="_adm_stg_cpt_option_sys_metatags_mentions_max"><![CDATA[Максимальное число упоминаний кого-либо в одной публикации]]></string>
+    <string name="_adm_stg_cpt_option_sys_hide_post_to_context_for_privacy"><![CDATA[Скрыть из поля "Конфиденциальность" возможность добавления контента в контекст модулей]]></string>
     <string name="_adm_stg_cpt_option_sys_search_keyword_min_len"><![CDATA[Минимальная длина слова в поиске по сайту]]></string>
     <string name="_adm_stg_cpt_option_sys_profile_bot"><![CDATA[Профиль системного бота]]></string>
 	<string name="_adm_stg_cpt_type_system"><![CDATA[Система]]></string>
@@ -2109,7 +2110,7 @@
 	<string name="_sys_form_account_input_email_error"><![CDATA[Введите правильный адрес электронной почты]]></string>
 	<string name="_sys_form_account_input_email_uniq_error"><![CDATA[Этот эл. адрес уже зарегистрирован. Пожалуйста, воспользуйтесь ссылкой <a href="{0}">Забыли пароль?</a>, чтобы восстановить доступ к своему аккаунту.]]></string>
 	<string name="_sys_form_account_input_email_uniq_error_loggedin"><![CDATA[Этот эл. адрес уже кем-то используется.]]></string>
-	<string name="_sys_form_account_input_name"><![CDATA[Имя аккаунта]]></string>
+	<string name="_sys_form_account_input_name"><![CDATA[Имя пользователя]]></string>
 	<string name="_sys_form_account_input_name_error"><![CDATA[Это обязательное поле.]]></string>
 	<string name="_sys_form_account_input_password"><![CDATA[Создать пароль]]></string>
 	<string name="_sys_form_account_input_password_confirm"><![CDATA[Подтвердить пароль]]></string>
@@ -2203,7 +2204,7 @@
 	<string name="_sys_form_login_input_caption_system_do_submit"><![CDATA[Присоединиться]]></string>
 	<string name="_sys_form_login_input_caption_system_email"><![CDATA[Email]]></string>
 	<string name="_sys_form_login_input_caption_system_id"><![CDATA[ID]]></string>
-	<string name="_sys_form_login_input_caption_system_name"><![CDATA[Имя аккаунта]]></string>
+	<string name="_sys_form_login_input_caption_system_name"><![CDATA[Имя пользователя]]></string>
 	<string name="_sys_form_login_input_caption_system_password"><![CDATA[Пароль]]></string>
 	<string name="_sys_form_login_input_caption_system_password_confirm"><![CDATA[Подтвердить пароль]]></string>
 	<string name="_sys_form_login_input_caption_system_password_current"><![CDATA[Текущий пароль]]></string>
@@ -2554,6 +2555,7 @@
     <string name="_sys_menu_item_title_system_sm_country_city"><![CDATA[Страна и город]]></string>
     <string name="_sys_menu_item_title_system_sm_friends"><![CDATA[Друзья]]></string>
     <string name="_sys_menu_item_title_system_sm_members"><![CDATA[Участники]]></string>
+    <string name="_sys_menu_item_title_system_sm_membership"><![CDATA[Членство]]></string>
     <string name="_sys_menu_item_title_system_sm_subscribers"><![CDATA[Подписки]]></string>
 	<string name="_sys_menu_set_title_account_dashboard"><![CDATA[Панель аккаунта]]></string>
 	<string name="_sys_menu_set_title_account_dashboard_manage_tools"><![CDATA[Панель аккаунта - Инструменты управления]]></string>
