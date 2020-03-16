@@ -23,8 +23,9 @@ class BxPhotosFormsEntryHelper extends BxBaseModFilesFormsEntryHelper
     
     public function addDataForm ($sDisplay = false, $sCheckFunction = false)
     {
+        $sKey = 'need_redirect_after_action';
         $mixedContent = $this->addDataFormAction($sDisplay, $sCheckFunction);
-        if (is_array($mixedContent) && $mixedContent['need_redirect_after_action']){
+        if (is_array($mixedContent) && isset($mixedContent[$sKey]) && $mixedContent[$sKey]) {
             $CNF = &$this->_oModule->_oConfig->CNF;
 
             $sUrl = BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id=' . bx_get_logged_profile_id());
@@ -36,7 +37,7 @@ class BxPhotosFormsEntryHelper extends BxBaseModFilesFormsEntryHelper
                 $this->_redirectAndExit($sUrl);
         }
         else {
-                return $mixedContent;
+            return $mixedContent;
         }
     }
     
