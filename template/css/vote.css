@@ -192,6 +192,10 @@ div.bx-vote-by-list div.bx-base-pofile-unit {
     border-bottom-color: #e6f0fa;
     border-bottom-width: 2px;
 }
+.bx-vote-bls-content {
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+}
 .bx-vote-bls-title,
 .bx-vote-bls-submenu {
     -webkit-flex: 0 1 auto; 
@@ -276,6 +280,10 @@ div.bx-vote-by-list div.bx-base-pofile-unit {
 }
 .bx-vote-bls-content .bx-vote-by-list:not(.bx-vote-bl-summary) {
     display: none;
+}
+.bx-vote-bls-content .bx-vote-by-items {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
 }
 .bx-vote-bls-content .bx-vote-by-item {
     position: relative;
