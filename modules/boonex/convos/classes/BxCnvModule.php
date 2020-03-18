@@ -484,6 +484,11 @@ class BxCnvModule extends BxBaseModTextModule
     	return _t('_sys_txt_access_denied');
     }
 
+    public function checkAllowedEditAnyEntryForProfile ($isPerformAction = false, $iProfileId = false)
+    {
+    	return _t('_sys_txt_access_denied');
+    }
+
     public function checkAllowedEdit ($aDataEntry, $isPerformAction = false)
     {       
         if ($aDataEntry[$this->_oConfig->CNF['FIELD_ALLOW_EDIT']] && $this->isCollaborator($aDataEntry, bx_get_logged_profile_id()))
