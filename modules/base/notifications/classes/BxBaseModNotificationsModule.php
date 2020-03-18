@@ -170,7 +170,7 @@ class BxBaseModNotificationsModule extends BxBaseModGeneralModule
      */
     public function getObjectPrivacyView($aData)
     {
-        return is_array($aData) && isset($aData['privacy_view']) ? (int)$aData['privacy_view'] : $this->_oConfig->getPrivacyViewDefault('object');
+        return is_array($aData) && isset($aData['privacy_view']) ? $aData['privacy_view'] : $this->_oConfig->getPrivacyViewDefault('object');
     }
 
     protected function _updateModuleData($sAction, $sModuleUri)
