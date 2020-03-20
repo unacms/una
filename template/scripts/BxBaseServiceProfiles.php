@@ -259,6 +259,11 @@ class BxBaseServiceProfiles extends BxDol
             return strcmp($r1['label'], $r2['label']);
         });
 
+        bx_alert('system', 'profiles_search', 0, 0, array(
+           'term' => $sTerm,
+           'result' => &$a
+        ));
+        
         // return as array
         return array_slice($a, 0, $iLimit);
     }

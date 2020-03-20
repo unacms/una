@@ -520,37 +520,17 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
      */
     public function check($iObjectId, $iViewerId = 0)
     {
-        if(empty($iViewerId))
-            $iViewerId = (int)bx_get_logged_profile_id();
-
         $aObject = $this->getObjectInfo($this->convertActionToField($this->_aObject['action']), $iObjectId);
-        if(empty($aObject) || !is_array($aObject))
-            return false;
-
-        if($aObject['group_id'] == BX_DOL_PG_HIDDEN)
-            return false;
-
-        if(isAdmin() || $iViewerId == $aObject['owner_id'])
-            return true;
-
-        if(strncmp($aObject['group_id'], 'ml', 2) === 0) {
-            $iLevel = (int)substr($aObject['group_id'], 2);
-            return (bool)BxDolAcl::getInstance()->isMemberLevelInSet(array($iLevel), $iViewerId);
-        }
-
-        if($aObject['group_id'] < 0)
-            return $this->checkSpace($aObject, $iViewerId);
-
-        $aGroup = $this->_oDb->getGroupsBy(array('type' => 'id', 'id' => $aObject['group_id']));
-        if(!empty($aGroup) && is_array($aGroup) && (int)$aGroup['active'] == 1 && !empty($aGroup['check'])) {
-            $sCheckMethod = $this->getCheckMethod($aGroup['check']);
-            if(method_exists($this, $sCheckMethod) && $this->$sCheckMethod((substr($sCheckMethod, -8) == 'ByObject' ? $aObject : $aObject['owner_id']), $iViewerId))
-                return true;
-        }
-
-        return $this->isDynamicGroupMember($aObject['group_id'], $aObject['owner_id'], $iViewerId, $iObjectId);
+        $bRv = $this->_check($iObjectId, $iViewerId, $aObject);
+        bx_alert('system', 'check_privacy', 0, 0, array(
+           'object_id' => $iObjectId,
+           'viewer_id' => $iViewerId,
+           'object' => $aObject,
+           'result' => &$bRv
+        ));
+        return $bRv;
     }
-
+    
     public function checkSpace($aObject, $iViewerId)
     {
         $oProfile = BxDolProfile::getInstance(-$aObject['group_id']);
@@ -702,6 +682,45 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
     protected function isSelectGroupCustom($aParams)
     {
         return true;
+    }
+    
+    /**
+     * Check whether the viewer can make requested action.
+     *
+     * @param  integer $iObjectId object ID the action to be performed with.
+     * @param  integer $iViewerId viewer ID.
+     * @return boolean result of operation.
+     */
+    protected function _check($iObjectId, $iViewerId, $aObject)
+    {
+        if(empty($iViewerId))
+            $iViewerId = (int)bx_get_logged_profile_id();
+
+        if(empty($aObject) || !is_array($aObject))
+            return false;
+
+        if($aObject['group_id'] == BX_DOL_PG_HIDDEN)
+            return false;
+
+        if(isAdmin() || $iViewerId == $aObject['owner_id'])
+            return true;
+
+        if(strncmp($aObject['group_id'], 'ml', 2) === 0) {
+            $iLevel = (int)substr($aObject['group_id'], 2);
+            return (bool)BxDolAcl::getInstance()->isMemberLevelInSet(array($iLevel), $iViewerId);
+        }
+
+        if($aObject['group_id'] < 0)
+            return $this->checkSpace($aObject, $iViewerId);
+
+        $aGroup = $this->_oDb->getGroupsBy(array('type' => 'id', 'id' => $aObject['group_id']));
+        if(!empty($aGroup) && is_array($aGroup) && (int)$aGroup['active'] == 1 && !empty($aGroup['check'])) {
+            $sCheckMethod = $this->getCheckMethod($aGroup['check']);
+            if(method_exists($this, $sCheckMethod) && $this->$sCheckMethod((substr($sCheckMethod, -8) == 'ByObject' ? $aObject : $aObject['owner_id']), $iViewerId))
+                return true;
+        }
+
+        return $this->isDynamicGroupMember($aObject['group_id'], $aObject['owner_id'], $iViewerId, $iObjectId);
     }
 }
 
