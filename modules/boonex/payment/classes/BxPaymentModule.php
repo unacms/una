@@ -443,7 +443,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
     	if(empty($iItemCount))
             $iItemCount = 1;
 
-        $sItemAddons = array();
+        $sItemAddons = '';
         if(bx_get('item_addons') !== false) {
             $sItemAddons = bx_process_input(bx_get('item_addons'));
             if(is_array($sItemAddons))
