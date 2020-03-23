@@ -41,7 +41,11 @@ class BxTimelinePrivacy extends BxBaseModNotificationsPrivacy
                 continue;
 
             $sCnnProfileModule = $oCnnProfile->getModule();
-            $mixedCheckResult = bx_srv($sCnnProfileModule, 'check_allowed_post_in_profile', array($oCnnProfile->getContentId(), $iOwnerId));
+            $sCnnProfileMethod = 'check_allowed_post_in_profile';
+            if(!BxDolRequest::serviceExists($sCnnProfileModule, $sCnnProfileMethod))
+                continue;
+
+            $mixedCheckResult = bx_srv($sCnnProfileModule, $sCnnProfileMethod, array($oCnnProfile->getContentId(), $iOwnerId));
             if($mixedCheckResult !== CHECK_ACTION_RESULT_ALLOWED)
                 continue;
 
