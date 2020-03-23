@@ -12,7 +12,8 @@
 <bx_if:key>
 $(document).ready(function () {
     embedly("defaults", {
-        cards: {key: '__key__'}
+        cards: {key: '__key__'},
+		controls: 0
     });
     embedly('on', 'card.resize', function(iframe){
         var $card = $(iframe);
