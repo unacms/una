@@ -146,7 +146,12 @@ EOS;
         ));
 
         $oModule = BxDolModule::getInstance('bx_froala');
-
+        
+        // allow insert any tags for admins 
+        if(BxDolAcl::getInstance()->isMemberLevelInSet(192)) {
+            $this->_sConfCustom .= 'htmlRemoveTags: [],';
+        }
+        
         // initialize editor
         $sInitEditor = $this->_replaceMarkers(self::$CONF_COMMON, array(
             'bx_var_custom_init' => $sCustomInit,
