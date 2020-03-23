@@ -2244,8 +2244,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_login_input_phone_error_not_unique"><![CDATA[This phone is already used by someone.]]></string>
 	<string name="_sys_form_login_input_code_error_invalid"><![CDATA[Wrong verification code. Please, repeat code or <a href="{0}">change the phone number and repeat from the beginning</a>.]]></string>
 	<string name="_sys_form_paceholder_profiles_suggestions"><![CDATA[Type name here...]]></string>
-        <string name="_sys_form_ps_group_custom"><![CDATA[Privacy: Manage custom group]]></string>
-        <string name="_sys_form_display_ps_gc_select"><![CDATA[Privacy: Select custom group display]]></string>
+        <string name="_sys_form_ps_group_custom"><![CDATA[Privacy: Custom group]]></string>
+        <string name="_sys_form_display_ps_gc_manage"><![CDATA[Privacy: Manage custom group display]]></string>
         <string name="_sys_form_ps_gc_input_caption_system_profile_id"><![CDATA[Profile ID]]></string>
         <string name="_sys_form_ps_gc_input_caption_system_content_id"><![CDATA[Content ID]]></string>
         <string name="_sys_form_ps_gc_input_caption_system_object"><![CDATA[Object]]></string>

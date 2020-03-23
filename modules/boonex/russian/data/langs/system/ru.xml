@@ -2232,8 +2232,8 @@
 	<string name="_sys_form_login_input_phone_error_not_unique"><![CDATA[Этот телефон уже кем-то используется]]></string>
 	<string name="_sys_form_login_input_code_error_invalid"><![CDATA[Неправильный код проверки. Пожалуйста, повторите код или  <a href="{0}">измените телефонный номер и начните сначала</a>.]]></string>
 	<string name="_sys_form_paceholder_profiles_suggestions"><![CDATA[Введите имя...]]></string>
-        <string name="_sys_form_ps_group_custom"><![CDATA[Конфиденциальность: Пользовательские группы]]></string>
-        <string name="_sys_form_display_ps_gc_select"><![CDATA[Конфиденциальность: Выбрать пользовательскую группу]]></string>
+        <string name="_sys_form_ps_group_custom"><![CDATA[Конфиденциальность: Пользовательская группа]]></string>
+        <string name="_sys_form_display_ps_gc_manage"><![CDATA[Конфиденциальность: Управлять пользовательской группой]]></string>
         <string name="_sys_form_ps_gc_input_caption_system_profile_id"><![CDATA[ID профиля]]></string>
         <string name="_sys_form_ps_gc_input_caption_system_content_id"><![CDATA[ID контента]]></string>
         <string name="_sys_form_ps_gc_input_caption_system_object"><![CDATA[Объект]]></string>
