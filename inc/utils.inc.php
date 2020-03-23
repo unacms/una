@@ -1916,7 +1916,7 @@ function bx_idn_to($sMethod, $sUrl, $bReturnDomain = false)
 
     $sResult = $aUrl['host'];
     if(function_exists($sMethod))
-        $sResult = $sMethod($sResult, IDNA_DEFAULT, INTL_IDNA_VARIANT_UTS46);
+        $sResult = $sMethod($sResult, IDNA_DEFAULT, (defined('INTL_IDNA_VARIANT_UTS46') ? INTL_IDNA_VARIANT_UTS46 : INTL_IDNA_VARIANT_2003));
 
     if($bReturnDomain)
         return $sResult;
