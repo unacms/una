@@ -128,6 +128,9 @@ class BxDolEmailTemplates extends BxDolFactory implements iBxDolSingleton
     function parseTemplate($sTemplateName, $aTemplateKeys, $iAccountId = 0, $iProfileId = 0)
     {
         $aTemplate = $this->getTemplate($sTemplateName, $iAccountId);
+        
+        bx_alert('system', 'parse_email_template', 0, 0, array('template_name' => &$sTemplateName, 'template_keys' => &$aTemplateKeys, 'account_id' => &$iAccountId, 'profile_id' => &$iProfileId, 'template' => &$aTemplate));
+        
         if (!$aTemplate)
             return false;
         return array(
