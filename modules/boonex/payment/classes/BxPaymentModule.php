@@ -1004,6 +1004,8 @@ class BxPaymentModule extends BxBaseModPaymentModule
 	    ));
 
 	    $this->onSubscriptionUpdate($aPending);
+
+            return true;
 	}
 
 	public function cancelSubscription($mixedPending)
@@ -1016,14 +1018,20 @@ class BxPaymentModule extends BxBaseModPaymentModule
             foreach($aItems as $aItem)
                 $this->callCancelSubscriptionItem((int)$aItem['module_id'], array($aPending['client_id'], $aPending['seller_id'], $aItem['item_id'], $aItem['item_count'], $aPending['order']));
 
+            $aSubscription = $this->_oDb->getSubscription(array('type' => 'pending_id', 'pending_id' => $aPending['id']));
+            if(!empty($aSubscription) && is_array($aSubscription) && !$this->_oDb->deleteSubscription($aSubscription['id'], 'cancel'))
+                return false;
+
             $this->onSubscriptionCancel($aPending);
+
+            return true;
 	}
 
 	public function onPaymentRegisterBefore($aPending, $aResult = array())
 	{
-		//--- 'System' -> 'Before Register Payment' for Alerts Engine ---//
-		bx_alert('system', 'before_register_payment', 0, $aPending['client_id'], array('pending' => $aPending));
-		//--- 'System' -> 'Before Register Payment' for Alerts Engine ---//
+            //--- 'System' -> 'Before Register Payment' for Alerts Engine ---//
+            bx_alert('system', 'before_register_payment', 0, $aPending['client_id'], array('pending' => $aPending));
+            //--- 'System' -> 'Before Register Payment' for Alerts Engine ---//
 	}
 
 	public function onPaymentRegister($aPending, $aResult = array())
@@ -1060,16 +1068,16 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
 	public function onSubscriptionUpdate($aPending, $aResult = array())
 	{
-	    //--- 'System' -> 'Update Subscription' for Alerts Engine ---//
-		bx_alert('system', 'update_subscription', 0, $aPending['client_id'], array('pending' => $aPending));
-		//--- 'System' -> 'Update Subscription' for Alerts Engine ---//
+            //--- 'System' -> 'Update Subscription' for Alerts Engine ---//
+            bx_alert('system', 'update_subscription', 0, $aPending['client_id'], array('pending' => $aPending));
+            //--- 'System' -> 'Update Subscription' for Alerts Engine ---//
 	}
 	
 	public function onSubscriptionCancel($aPending, $aResult = array())
 	{
-		//--- 'System' -> 'Cancel Subscription' for Alerts Engine ---//
-		bx_alert('system', 'cancel_subscription', 0, $aPending['client_id'], array('pending' => $aPending));
-		//--- 'System' -> 'Cancel Subscription' for Alerts Engine ---//
+            //--- 'System' -> 'Cancel Subscription' for Alerts Engine ---//
+            bx_alert('system', 'cancel_subscription', 0, $aPending['client_id'], array('pending' => $aPending));
+            //--- 'System' -> 'Cancel Subscription' for Alerts Engine ---//
 	}
 
     public function setSiteSubmenu($sSubmenu, $sSelModule, $sSelName)
