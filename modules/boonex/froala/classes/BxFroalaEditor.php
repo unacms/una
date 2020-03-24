@@ -148,7 +148,7 @@ EOS;
         $oModule = BxDolModule::getInstance('bx_froala');
         
         // allow insert any tags for admins 
-        if(isAdmin()){
+        if(isAdmin())
             $this->_sConfCustom .= 'htmlRemoveTags: [],';
         
         // initialize editor
