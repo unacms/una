@@ -242,10 +242,7 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
             return false;
         }
 
-        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_cancel_subscription', 0, false, array(
-            'subscription_id' => $sSubscriptionId,
-            'subscription_object' => &$oSubscription
-        ));
+        $this->onDeleteSubscription($sSubscriptionId, $oSubscription->getValues());
 
         return true;
     }
@@ -349,6 +346,13 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
         return $oCustomer;
     }
 
+    public function onDeleteSubscription($sSubscriptionId, $aSubscription)
+    {
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_cancel_subscription', 0, false, array(
+            'subscription_id' => $sSubscriptionId,
+            'subscription_info' => $aSubscription
+        ));
+    }
 
 
     protected function _getSite()
@@ -419,7 +423,9 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
         if($mixedResult === false)
             return false;
 
-        list($aPending) = $mixedResult;
+        list($aPending, $aSubscription) = $mixedResult;
+        $this->onDeleteSubscription($aSubscription['id'], $aSubscription);
+
         return $this->_oModule->cancelSubscription($aPending);
     }
 
