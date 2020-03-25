@@ -32,6 +32,13 @@ class BxPollsTemplate extends BxBaseModTextTemplate
         if(empty($aContentInfo) || !is_array($aContentInfo))
             return;
 
+        /**
+         * Anonymous voting MUST be enabled for Embeded poll,
+         * because a list of voters cannot be correctly displayed
+         * in Embeded iframe.
+         */
+        $aContentInfo[$CNF['FIELD_ANONYMOUS_VOTING']] = 1;
+
         $aBlock = $this->{$oModule->isPerformed((int)$aContentInfo[$CNF['FIELD_ID']]) ? 'entryResults' : 'entrySubentries'}($aContentInfo);
 
         $this->addJs(array('entry.js'));
