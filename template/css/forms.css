@@ -187,17 +187,21 @@
     -o-transition: all 0.2s linear;
     transition: all 0.2s linear;
 }
-.bx-form-input-wrapper-password > A{
-	position: absolute;
-	left:0px;
-	z-index: 1000;
-	height: 2.5rem;
-	line-height: 2.5rem;
-	vertical-align: baseline;
-	margin: 0px 1rem;
+.bx-form-input-wrapper-password > a {
+    position: absolute;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    right:0px;
+    z-index: 1000;
+    height: 100%;
+    margin: 0px 1rem;
 }
-.bx-form-input-wrapper-password INPUT{
-	padding-left: 3rem;
+.bx-form-input-wrapper-password input {
+    padding-right: 3rem;
 }
 
 .bx-form-input-select_multiple,
