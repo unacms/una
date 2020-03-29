@@ -8,7 +8,7 @@
  *
  * @{
  */
-define('BX_MAP_SHOW_IP_2_LOCATION_URL', 'http://freegeoip.net/json/');
+define('BX_MAP_SHOW_IP_2_LOCATION_URL', 'https://freegeoip.app/json/');
 
 class BxMapShowModule extends BxDolModule
 {
