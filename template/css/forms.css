@@ -221,9 +221,14 @@
     margin: 0;
     padding: 7px 3px 7px 3px;
     padding: 0.2rem 0.4rem;
-    
+
     border: 0;
     background-color: transparent;
+}
+.bx-form-input-password:focus {
+    border-color: transparent;
+    outline-color: transparent;
+    box-shadow: none;
 }
 
 .bx-form-input-select_multiple,
