@@ -263,6 +263,12 @@ class BxPaymentCart extends BxBaseModPaymentCart
         $aCart['items'] = trim(preg_replace("'" . $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId, '[0-9]+:?')) . "'", "", $aCart['items']), ":");
         $this->_oModule->_oDb->setCartItems($iClientId, $aCart['items'], $aCartCustom);
 
+        bx_alert($this->getName(), 'delete_from_cart', 0, 0, array(
+            'seller_id' => $iSellerId,
+            'module_id' => $iModuleId,
+            'item_id' => $iItemId,
+        ));
+        
         return array('code' => 0, 'message' => _t($CNF['T']['MSG_ITEM_DELETED']));
     }
 
