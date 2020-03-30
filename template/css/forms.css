@@ -130,7 +130,7 @@
 .bx-form-input-datepicker,
 .bx-form-input-datetime,
 .bx-form-input-textarea,
-.bx-form-input-password,
+.bx-form-input-wrapper-password,
 .bx-form-input-text {
 
     height:40px;
@@ -172,9 +172,9 @@
 .bx-form-input-datepicker:focus,
 .bx-form-input-datetime:focus,
 .bx-form-input-textarea:focus,
-.bx-form-input-password:focus,
-.bx-form-input-text:focus {
-	border-color:#6caa8a;
+.bx-form-input-text:focus,
+.bx-form-input-wrapper-password.bx-form-input-focus {
+    border-color:#6caa8a;
 
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)"; 
     filter: alpha(opacity=100); 
@@ -187,21 +187,43 @@
     -o-transition: all 0.2s linear;
     transition: all 0.2s linear;
 }
+.bx-form-input-wrapper-password {
+    padding: 0 2.125rem 0 0;
+}
 .bx-form-input-wrapper-password > a {
     position: absolute;
+    z-index: 1000;
+    
     display: -webkit-flex;
     display: flex;
     -webkit-align-items: center;
     align-items: center;
     -webkit-justify-content: center;
     justify-content: center;
-    right:0px;
-    z-index: 1000;
+
+    top: 0;
+    right: 0;    
     height: 100%;
-    margin: 0px 1rem;
+
+    margin: 0 0.5rem;
 }
-.bx-form-input-wrapper-password input {
-    padding-right: 3rem;
+.bx-form-input-password {
+    position: relative;
+
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 7px 3px 7px 3px;
+    padding: 0.2rem 0.4rem;
+    
+    border: 0;
+    background-color: transparent;
 }
 
 .bx-form-input-select_multiple,

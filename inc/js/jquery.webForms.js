@@ -116,9 +116,17 @@
         });
 
         if (!$(".bx-form-input-wrapper-password").hasClass("bx-inited")) {
-            $(".bx-form-input-wrapper-password A").on("click", function () {
-                var oIcon = $(this).find("I");
-                var oFld = $(this).parents(".bx-form-input-wrapper-password").find("INPUT");
+            var sClassFocus = "bx-form-input-focus";
+
+            $(".bx-form-input-wrapper-password input").bind('focus', function() {
+                $(this).parents(".bx-form-input-wrapper-password:first").addClass(sClassFocus);
+            }).bind('blur', function() {
+                $(this).parents(".bx-form-input-wrapper-password:first").removeClass(sClassFocus);
+            });
+
+            $(".bx-form-input-wrapper-password a").on("click", function () {
+                var oIcon = $(this).find("i");
+                var oFld = $(this).parents(".bx-form-input-wrapper-password").find("input");
                 if (oIcon.hasClass("eye")) {
                     oIcon.removeClass("eye").addClass("eye-slash");
                     oFld.attr("type", "text");

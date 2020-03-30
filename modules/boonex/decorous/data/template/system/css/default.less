@@ -735,8 +735,8 @@ a.bx-def-font-h3:hover {
 .bx-form-value .bx-form-input-datepicker,
 .bx-form-value .bx-form-input-datetime,
 .bx-form-value .bx-form-input-textarea,
-.bx-form-value .bx-form-input-password,
-.bx-form-value .bx-form-input-text {
+.bx-form-value .bx-form-input-text,
+.bx-form-value .bx-form-input-wrapper-password {
     .box-sizing(@base-input-box-sizing);
 
     border-color: @bx-color-border-form-input;
@@ -755,15 +755,15 @@ a.bx-def-font-h3:hover {
 .bx-form-value .bx-form-input-time,
 .bx-form-value .bx-form-input-datepicker,
 .bx-form-value .bx-form-input-datetime,
-.bx-form-value .bx-form-input-password,
-.bx-form-value .bx-form-input-text {
-	height: @bx-height-form-input;
+.bx-form-value .bx-form-input-text, 
+.bx-form-value .bx-form-input-wrapper-password {
+    height: @bx-height-form-input;
 }
 .bx-form-value .bx-form-input-text.bx-form-input-autotoken b {
     line-height: @bx-height-form-input;
 }
 .bx-form-value .bx-form-input-text.bx-form-input-autotoken b .bx-def-thumb-size {
-	width: @bx-height-form-input;
+    width: @bx-height-form-input;
     height: @bx-height-form-input;
     line-height: @bx-height-form-input;
 }
@@ -774,20 +774,20 @@ a.bx-def-font-h3:hover {
 .bx-form-value .bx-form-input-datepicker:focus,
 .bx-form-value .bx-form-input-datetime:focus,
 .bx-form-value .bx-form-input-textarea:focus,
-.bx-form-value .bx-form-input-password:focus,
-.bx-form-value .bx-form-input-text:focus {
-	border-color: @bx-color-border-form-input-active;
-	background-color: @bx-color-form-input-active;
+.bx-form-value .bx-form-input-text:focus,
+.bx-form-value .bx-form-input-wrapper-password.bx-form-input-focus {
+    border-color: @bx-color-border-form-input-active;
+    background-color: @bx-color-form-input-active;
 }
 .bx-form-value .bx-switcher-cont {
-	border-color: @bx-color-border-form-input;
-	border-width: @bx-border-width-form-input;
+    border-color: @bx-color-border-form-input;
+    border-width: @bx-border-width-form-input;
 
-	background-color: @bx-color-form-input;
+    background-color: @bx-color-form-input;
 
-	-webkit-box-shadow: @bx-shadow-form-input;
-	-moz-box-shadow: @bx-shadow-form-input;
-	box-shadow: @bx-shadow-form-input;
+    -webkit-box-shadow: @bx-shadow-form-input;
+    -moz-box-shadow: @bx-shadow-form-input;
+    box-shadow: @bx-shadow-form-input;
 }
 
 /* button large */

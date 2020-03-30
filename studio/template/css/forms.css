@@ -14,7 +14,7 @@
 .bx-form-value .bx-form-input-datepicker,
 .bx-form-value .bx-form-input-datetime,
 .bx-form-value .bx-form-input-textarea,
-.bx-form-value .bx-form-input-password,
+.bx-form-value .bx-form-input-wrapper-password,
 .bx-form-value .bx-form-input-text {
     height: 36px;
     height: 2.4rem;
@@ -49,8 +49,8 @@
 .bx-form-value .bx-form-input-datepicker:focus,
 .bx-form-value .bx-form-input-datetime:focus,
 .bx-form-value .bx-form-input-textarea:focus,
-.bx-form-value .bx-form-input-password:focus,
-.bx-form-value .bx-form-input-text:focus {
+.bx-form-value .bx-form-input-text:focus,
+.bx-form-value .bx-form-input-wrapper-password.bx-form-input-focus {
     border-color: rgba(136, 143, 153, 1);
     background-color: rgba(255, 255, 255, 1);
 }
