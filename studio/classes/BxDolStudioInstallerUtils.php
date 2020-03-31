@@ -258,6 +258,8 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         $sInstallerClass = $sOperation == 'update' ? 'Updater' : 'Installer';
 
         $aConfig = self::getModuleConfig(BX_DIRECTORY_PATH_MODULES . $sDirectory . $sConfigFile);
+        if(empty($aParams['module_name']) && !empty($aConfig['name']))
+            $aParams['module_name'] = $aConfig['name'];
 
         $sPathInstaller = BX_DIRECTORY_PATH_MODULES . $sDirectory . $sInstallerFile;
         if(empty($aConfig) || !file_exists($sPathInstaller)) {
@@ -265,7 +267,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
             $this->_oLog->write('Operation failed:', $sMessage);
             if($bTransient)
-                $this->emailNotify($sMessage);
+                $this->emailNotify($sMessage, $aParams);
 
             return array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => $sMessage);
         } 
@@ -280,7 +282,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
             $this->_oLog->write('Operation failed:', $aResult['message']);
 
             if($bTransient)
-                $this->emailNotify($aResult['message']);
+                $this->emailNotify($aResult['message'], $aParams);
         }
 
         return array(
@@ -333,6 +335,8 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         }
 
         foreach($aUpdates as $aUpdate) {
+            $aParams['module_name'] = $aUpdate['module_name'];
+
             $aResult = $this->perform($aUpdate['dir'], 'update', $aParams);
             switch((int)$aResult['code']) {
                 case BX_DOL_STUDIO_IU_RC_SUCCESS:
@@ -487,7 +491,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         if($mixedResult !== true) {
             $this->_oLog->write('Operation failed:', $mixedResult);
             if($bTransient)
-                $this->emailNotify($mixedResult);
+                $this->emailNotify($mixedResult, $aParams);
 
             return array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => $mixedResult);
         }
@@ -500,7 +504,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         if($mixedResult !== true) {
             $this->_oLog->write('Operation failed:', $mixedResult);
             if($bTransient)
-                $this->emailNotify($mixedResult);
+                $this->emailNotify($mixedResult, $aParams);
 
             return array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => $mixedResult);
         }
@@ -514,7 +518,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
             return true;
 
         if($bTransient)
-            $this->emailNotify($aResult['message']);
+            $this->emailNotify($aResult['message'], $aParams);
 
         return array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => $aResult['message']);
     }
@@ -697,8 +701,19 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         return false;
     }
 
-    private function emailNotify($sMessage)
+    private function emailNotify($sMessage, $aParams = array())
     {
+        if(!empty($aParams['module_name'])) {
+            $sTitleKey = '_' . $aParams['module_name'];
+            $sTitleValue = _t($sTitleKey);
+            if(strcmp($sTitleKey, $sTitleValue) == 0) {
+                $aModule = BxDolModuleQuery::getInstance()->getModuleByName($aParams['module_name']);
+                $sTitleValue = is_array($aModule) && !empty($aModule['title']) ? $aModule['title'] : $aParams['module_name'];
+            }
+
+            $sMessage = $sTitleValue . ': ' . $sMessage;
+        }
+
     	sendMailTemplateSystem('t_BgOperationFailed', array (
             'conclusion' => strip_tags($sMessage),
         ));
