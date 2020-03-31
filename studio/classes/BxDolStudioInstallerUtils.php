@@ -265,7 +265,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         if(empty($aConfig) || !file_exists($sPathInstaller)) {
             $sMessage = _t('_adm_mod_err_process_operation_failed', $sOperation, $sDirectory);
 
-            $this->_oLog->write('Operation failed:', $sMessage);
+            $this->writeLog($sMessage, $aParams);
             if($bTransient)
                 $this->emailNotify($sMessage, $aParams);
 
@@ -279,7 +279,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         $aResult = $oInstaller->$sOperation($aParams);
 
         if(!$aResult['result']) {
-            $this->_oLog->write('Operation failed:', $aResult['message']);
+            $this->writeLog($aResult['message'], $aParams);
 
             if($bTransient)
                 $this->emailNotify($aResult['message'], $aParams);
@@ -489,7 +489,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
         @unlink($sFilePath);
         if($mixedResult !== true) {
-            $this->_oLog->write('Operation failed:', $mixedResult);
+            $this->writeLog($mixedResult, $aParams);
             if($bTransient)
                 $this->emailNotify($mixedResult, $aParams);
 
@@ -502,7 +502,7 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
 
         @bx_rrmdir($sPackagePath);
         if($mixedResult !== true) {
-            $this->_oLog->write('Operation failed:', $mixedResult);
+            $this->writeLog($mixedResult, $aParams);
             if($bTransient)
                 $this->emailNotify($mixedResult, $aParams);
 
@@ -701,22 +701,31 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
         return false;
     }
 
+    private function writeLog($sMessage, $aParams = array())
+    {
+        $this->_oLog->write('Operation failed:', $this->getModuleTitle($aParams) . $sMessage);
+    }
+
     private function emailNotify($sMessage, $aParams = array())
     {
-        if(!empty($aParams['module_name'])) {
-            $sTitleKey = '_' . $aParams['module_name'];
-            $sTitleValue = _t($sTitleKey);
-            if(strcmp($sTitleKey, $sTitleValue) == 0) {
-                $aModule = BxDolModuleQuery::getInstance()->getModuleByName($aParams['module_name']);
-                $sTitleValue = is_array($aModule) && !empty($aModule['title']) ? $aModule['title'] : $aParams['module_name'];
-            }
+    	sendMailTemplateSystem('t_BgOperationFailed', array (
+            'conclusion' => strip_tags($this->getModuleTitle($aParams) . $sMessage),
+        ));
+    }
 
-            $sMessage = $sTitleValue . ': ' . $sMessage;
+    private function getModuleTitle($aParams = array())
+    {
+        if(empty($aParams['module_name'])) 
+            return '';
+
+        $sTitleKey = '_' . $aParams['module_name'];
+        $sTitleValue = _t($sTitleKey);
+        if(strcmp($sTitleKey, $sTitleValue) == 0) {
+            $aModule = BxDolModuleQuery::getInstance()->getModuleByName($aParams['module_name']);
+            $sTitleValue = is_array($aModule) && !empty($aModule['title']) ? $aModule['title'] : $aParams['module_name'];
         }
 
-    	sendMailTemplateSystem('t_BgOperationFailed', array (
-            'conclusion' => strip_tags($sMessage),
-        ));
+        return $sTitleValue . ': ';
     }
 
     private function emailNotifyModulesUpgrade($sResult, $aData)
