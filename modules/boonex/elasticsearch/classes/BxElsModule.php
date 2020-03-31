@@ -467,6 +467,9 @@ class BxElsModule extends BxBaseModGeneralModule
 
             foreach($aIds as $iId)
                 $this->serviceAdd($iId, $oContentInfo);
+
+            $sClassKey = 'BxDolContentInfo!' . $sType;
+            unset($GLOBALS['bxDolClasses'][$sClassKey]);
         }
 
         return true;
