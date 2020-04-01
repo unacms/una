@@ -239,11 +239,11 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
             exit;
         }
 
-        return $oTemplate->parseHtmlByName('designer.html', array(
+        return MsgBox(_t('_adm_dsg_txt_logo_redefinition')) . $oTemplate->parseHtmlByName('designer.html', array(
             'content' => $this->getBlockCode(array(
-				'items' => $oTemplate->parseHtmlByName('dsr_logo.html', array('logo_iframe_id' => $this->sLogoIframeId, 'form' => $oForm->getCode())),
-			)),
-			'js_content' => $this->getPageJsCode()
+                'items' => $oTemplate->parseHtmlByName('dsr_logo.html', array('logo_iframe_id' => $this->sLogoIframeId, 'form' => $oForm->getCode())),
+            )),
+            'js_content' => $this->getPageJsCode()
         ));
     }
 
