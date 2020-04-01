@@ -161,6 +161,12 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
         $sContent = "";
         if(($bPage = $this->sPage != '') === true) {
+            /**
+             * Reset and deactivate blocks which cannot be seen, 
+             * because of unsuitable cell number to currently selected layout.
+             */
+            $this->oDb->resetBlocksByPage($this->aPageRebuild['object'], $this->aPageRebuild['layout_cells_number'], true);
+
             $aTmplVars = array(
                 'page_id' => 'bx-page-' . $this->aPageRebuild['uri']
             );

@@ -470,10 +470,16 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
         return $b;
     }
 
-    function resetBlocksByPage($sObject, $iCellId)
+    function resetBlocksByPage($sObject, $iCellId, $bDeactivate = false)
     {
-        $sSql = $this->prepare("UPDATE `sys_pages_blocks` SET `cell_id`=? WHERE `object`=? AND `cell_id`>?", $iCellId, $sObject, $iCellId);
-        return $this->query($sSql);
+        $aSetClause = array('cell_id' => $iCellId);
+        if($bDeactivate)
+            $aSetClause['active'] = 0;
+
+        return $this->query("UPDATE `sys_pages_blocks` SET " . $this->arrayToSQL($aSetClause) . " WHERE `object`=:object AND `cell_id`>:cell_id", array(
+            'object' => $sObject,
+            'cell_id' => $iCellId
+        ));
     }
 
     function getBlockOrderMax($sObject, $iCellId = 1)
