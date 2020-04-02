@@ -154,7 +154,7 @@ class BxDolScore extends BxDolObject
 
     public function isPerformed($iObjectId, $iAuthorId, $iAuthorIp = 0)
     {
-        return parent::isPerformed($iObjectId, $iAuthorId) && !$this->_oQuery->isPostTimeoutEnded($iObjectId, $iAuthorIp);        
+        return parent::isPerformed($iObjectId, $iAuthorId) && !$this->_oQuery->isPostTimeoutEnded($iObjectId, $iAuthorId, $iAuthorIp);        
     }
 
 	public function getObjectAuthorId($iObjectId = 0)

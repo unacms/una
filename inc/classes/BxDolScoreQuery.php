@@ -46,16 +46,29 @@ class BxDolScoreQuery extends BxDolObjectQuery
         ));
     }
 
-    public function isPostTimeoutEnded($iObjectId, $sAuthorIp)
+    public function isPostTimeoutEnded($iObjectId, $iAuthorId, $sAuthorIp)
     {
         if($this->_iPostTimeout == 0)
             return true;
 
-        return (int)$this->getOne("SELECT `object_id` FROM `{$this->_sTableTrack}` WHERE `object_id` = :object_id AND `author_nip` = :author_nip AND `date` > :date", array(
+        $aBindings = array(
             'object_id' => $iObjectId,
-            'author_nip' => ip2long($sAuthorIp),
             'date' => time() - $this->_iPostTimeout
-        )) == 0;
+        );
+        $sWhereClause = " AND `object_id` = :object_id AND `date` > :date";
+
+        if(!empty($iAuthorId)) {
+            $aBindings['author_id'] = $iAuthorId;
+
+            $sWhereClause .= " AND `author_id` = :author_id";
+        }
+        else {
+            $aBindings['author_nip'] = ip2long($sAuthorIp);
+
+            $sWhereClause .= " AND `author_nip` = :author_nip";
+        }
+
+        return (int)$this->getOne("SELECT `object_id` FROM `" . $this->_sTableTrack . "` WHERE 1" . $sWhereClause, $aBindings) == 0;
     }
 
     public function getScore($iObjectId)
