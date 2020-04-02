@@ -28,15 +28,29 @@ class BxDolVoteQuery extends BxDolObjectQuery
         $this->_sMethodGetEntry = 'getVote';
     }
 
-    public function isPostTimeoutEnded($iObjectId, $sAuthorIp)
+    public function isPostTimeoutEnded($iObjectId, $iAuthorId, $sAuthorIp)
     {
         if($this->_iPostTimeout == 0)
             return true;
 
-        $iDate = time() - $this->_iPostTimeout;
-        $iAuthorNip = ip2long($sAuthorIp);
-        $sQuery = $this->prepare("SELECT `object_id` FROM `{$this->_sTableTrack}` WHERE `object_id` = ? AND `author_nip` = ? AND `date` > ?", $iObjectId, $iAuthorNip, $iDate);
-        return (int)$this->getOne($sQuery) == 0;
+        $aBindings = array(
+            'object_id' => $iObjectId,
+            'date' => time() - $this->_iPostTimeout
+        );
+        $sWhereClause = " AND `object_id` = :object_id AND `date` > :date";
+
+        if(!empty($iAuthorId)) {
+            $aBindings['author_id'] = $iAuthorId;
+
+            $sWhereClause .= " AND `author_id` = :author_id";
+        }
+        else {
+            $aBindings['author_nip'] = ip2long($sAuthorIp);
+
+            $sWhereClause .= " AND `author_nip` = :author_nip";
+        }
+
+        return (int)$this->getOne("SELECT `object_id` FROM `" . $this->_sTableTrack . "` WHERE 1" . $sWhereClause, $aBindings) == 0;
     }
 
     public function getVote($iObjectId)

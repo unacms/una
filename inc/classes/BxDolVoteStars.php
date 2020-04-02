@@ -25,7 +25,7 @@ class BxDolVoteStars extends BxTemplVote
      */
     protected function _isDuplicate($iObjectId, $iAuthorId, $iAuthorIp, $bVoted)
     {
-        return !$this->_oQuery->isPostTimeoutEnded($iObjectId, $iAuthorIp);
+        return !$this->_oQuery->isPostTimeoutEnded($iObjectId, $iAuthorId, $iAuthorIp);
     }
 }
 
