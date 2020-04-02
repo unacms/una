@@ -759,6 +759,13 @@ div.bx-tl-view-item-comments .cmts .cmt:first-child  {
     padding-top: 0;
 }
 
+div.bx-tl-view-info {
+    position: relative;
+}
+div.bx-tl-view-info .bx-base-pofile-unit {
+    float: none;
+}
+
 /*--- Item Brief Style ---*/
 div.bx-tl-bview-image {
     text-align: center;

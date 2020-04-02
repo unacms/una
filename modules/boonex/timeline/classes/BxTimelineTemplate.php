@@ -363,9 +363,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         list($sAuthorName, $sAuthorUrl, $sAuthorIcon, $sAuthorUnit) = $this->getModule()->getUserInfo($aResult['object_owner_id']);
 
+        $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_post'), $this->_oConfig->getObject('form_display_post_view'), $this);
+        $oForm->initChecker($aEvent);
+
         return $this->parseHtmlByName('block_item_info.html', array(
             'style_prefix' => $this->_oConfig->getPrefix('style'),
-            'author' => $sAuthorUnit
+            'author' => $sAuthorUnit,
+            'fields' => $oForm->getCode()
         ));
     }
 
@@ -1467,7 +1471,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             }
         }
         if(!empty($aBrowseParams['blink']) && in_array($aEvent['id'], $aBrowseParams['blink']))
-			$sClass .= ' ' . $sStylePrefix . '-blink';
+            $sClass .= ' ' . $sStylePrefix . '-blink';
         if($bPinned)
             $sClass .= ' ' . $sStylePrefix . '-pinned';
         if($bSticked)
@@ -1480,6 +1484,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
         $sLocation = $oMetatags->locationsString($aEvent['id']);
  
+        $sFields = '';
+        if(!$bViewItem) {
+            $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_post'), $this->_oConfig->getObject('form_display_post_view'), $this, $aEvent['id']);
+            $oForm->initChecker($aEvent);
+
+            if(!empty($oForm->aInputs) && is_array($oForm->aInputs))
+                $sFields = $oForm->getCode();
+        }
+
         $aTmplVars = array (
             'style_prefix' => $sStylePrefix,
             'js_object' => $sJsObject,
@@ -1542,6 +1555,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             	'content' => array(
                     'style_prefix' => $sStylePrefix,
                     'location' => $sLocation
+            	)
+            ),
+            'bx_if:show_fields' => array(
+                'condition' => !empty($sFields),
+                'content' => array(
+                    'style_prefix' => $sStylePrefix,
+                    'fields' => $sFields
             	)
             ),
             'bx_if:show_menu_item_counters' => array(

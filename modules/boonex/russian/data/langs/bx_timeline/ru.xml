@@ -39,6 +39,7 @@
     <string name="_bx_timeline_form_post_display_add_public"><![CDATA[Написать публичное сообщение]]></string>
     <string name="_bx_timeline_form_post_display_add_profile"><![CDATA[Написать сообщение в профиль]]></string>
     <string name="_bx_timeline_form_post_display_edit"><![CDATA[Изменить сообщение]]></string>
+    <string name="_bx_timeline_form_post_display_view"><![CDATA[Просмотреть сообщение (для индивидуальных полей)]]></string>
     <string name="_bx_timeline_form_post_input_sys_owner_id"><![CDATA[ID владельца]]></string>
     <string name="_bx_timeline_form_post_input_owner_id_own"><![CDATA[Собственный профиль]]></string>
     <string name="_bx_timeline_form_post_input_owner_id_following_group"><![CDATA[{0}]]></string>
