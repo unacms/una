@@ -195,6 +195,36 @@ class BxBaseModPaymentCart extends BxDol
 
         return $iCount;
     }
+    
+    /**
+     * @page service Service Calls
+     * @section bx_base_payment Base Payment
+     * @subsection bx_base_payment-integration Integration
+     * @subsubsection bx_base_payment-get_cart_items get_cart_items
+     * 
+     * @code bx_srv('bx_payment', 'get_cart_items', [...], 'Cart'); @endcode
+     * 
+     * Get array with items shopping cart. 
+     * 
+     * @param $iSellerId integer value with seller ID.
+     * @param $iModuleId integer value with module ID determining a module from which the action was initiated.
+     * @param $iUserId (optional) integer value with user ID. If empty value is provided then currently logged in user will be used.
+     * @return integer value with items count.
+     * 
+     * @see BxBaseModPaymentCart::serviceGetCartItems
+     */
+    /** 
+     * @ref bx_base_payment-get_cart_items "get_cart_items"
+     */
+    public function serviceGetCartItems($iSellerId, $iModuleId, $iUserId = 0)
+    {
+    	$iUserId = !empty($iUserId) ? $iUserId : $this->_oModule->getProfileId();
+        if(empty($iUserId))
+            return 0;
+
+        $aContent = $this->_parseByVendor($iUserId);
+        return $aContent[$iSellerId];
+    }  
 
     protected function _parseByVendor($iUserId)
     {                            
