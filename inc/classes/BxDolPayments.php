@@ -226,6 +226,15 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
 		$aSrvParams = array();
 		return BxDolService::call($this->_sActive, 'get_cart_items_count', $aSrvParams, 'Cart');
     }
+    
+    public function getCartItems($iVendorId, $iModuleId)
+    {
+    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_cart_items', 'Cart'))
+    		return 0;
+
+		$aSrvParams = array($iVendorId, $iModuleId);
+		return BxDolService::call($this->_sActive, 'get_cart_items', $aSrvParams, 'Cart');
+    }
 
     public function getCartItemDescriptor($iVendorId, $iModuleId, $iItemId, $iItemCount)
     {
