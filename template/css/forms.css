@@ -227,7 +227,7 @@
 }
 .bx-form-input-password:focus {
     border-color: transparent;
-    outline-color: transparent;
+    outline: none;
     box-shadow: none;
 }
 
