@@ -3514,6 +3514,26 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return parent::getUserInfoWithBadges($iUserId);
     }
 
+    public function getEventLinks($iEventId)
+    {
+        $aLinks = $this->_oDb->getLinks($iEventId);
+        if(empty($aLinks) || !is_array($aLinks))
+            return array();
+
+        $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_preview'));
+
+        $aResult = array();
+        foreach($aLinks as $aLink)
+            $aResult[] = array(
+                'url' => $aLink['url'],
+                'title' => $aLink['title'],
+                'text' => $aLink['text'],
+                'thumbnail' => (int)$aLink['media_id'] != 0 ? $oTranscoder->getFileUrl($aLink['media_id']) : ''
+            );
+
+        return $aResult;
+    }
+
     public function getEventImages($iEventId)
     {
         $aPhotos = $this->_oDb->getMedia(BX_TIMELINE_MEDIA_PHOTO, $iEventId);
@@ -3735,6 +3755,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             'url' => $sUrl,
             'title' => '',
             'text' => $sText,
+            'links' => $this->getEventLinks($iId),
             'images' => array(),
             'images_attach' => $this->getEventImages($iId),
             'videos' => array(),

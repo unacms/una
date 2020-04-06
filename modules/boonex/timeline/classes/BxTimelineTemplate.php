@@ -2572,18 +2572,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 if(!empty($aEvent['content']))
                     $aResult['content'] = array_merge($aResult['content'], unserialize($aEvent['content']));
 
-                $aLinks = $this->_oDb->getLinks($aEvent['id']);
-                if(!empty($aLinks) && is_array($aLinks))
-                    $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_preview'));
-
-                foreach($aLinks as $aLink)
-                    $aResult['content']['links'][] = array(
-                        'url' => $aLink['url'],
-                        'title' => $aLink['title'],
-                        'text' => $aLink['text'],
-                        'thumbnail' => (int)$aLink['media_id'] != 0 ? $oTranscoder->getFileUrl($aLink['media_id']) : ''
-                    );
-
+                $aResult['content']['links'] = $oModule->getEventLinks($aEvent['id']);
                 $aResult['content']['images_attach'] = $oModule->getEventImages($aEvent['id']);
                 $aResult['content']['videos_attach'] = $oModule->getEventVideos($aEvent['id']);
                 break;
