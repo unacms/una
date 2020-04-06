@@ -131,6 +131,30 @@ class BxBaseModTextPageEntry extends BxBaseModGeneralPageEntry
     {
         return false;
     }
+
+    protected function _getPageMetaDesc()
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $sResult = '';
+        if(isset($CNF['FIELD_TEXT'])) {
+            $sResult = strip_tags($this->_oModule->_oTemplate->getText($this->_aContentInfo, false));
+
+            $iLength = 0;
+            if(!empty($CNF['PARAM_CHARS_SUMMARY']))
+                $iLength = (int)getParam($CNF['PARAM_CHARS_SUMMARY']);
+            if(empty($iLength))
+                $iLength = 240;
+
+            if(mb_strlen($sResult) > $iLength)
+                $sResult = mb_substr($sResult, 0, $iLength);
+        }
+
+        if(empty($sResult))
+            $sResult = $this->_replaceMarkers(_t($this->_aObject['meta_description']));
+
+        return $sResult;
+    }
 }
 
 /** @} */
