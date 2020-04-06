@@ -253,23 +253,31 @@
     	text-decoration: none;
     }
     div.cmts-uploader-file {
-		position: relative;
+        position: relative;
     	float: left;
     }
     div.cmts-uploader-file-preview {
-		overflow: hidden;
+        overflow: hidden;
+    }
+    div.cmts-uploader-file-preview,
+    div.cmts-uploader-file-preview img,
+    div.cmts-uploader-file-title {
+        width: 100px;
+    	width: 6.25rem;
     }
     div.cmts-uploader-file-preview,
     div.cmts-uploader-file-preview img {
-		width: 100px;
-    	width: 6.25rem;
-    	height: 100px;
+        height: 100px;
     	height: 6.25rem;
     }
     div.cmts-uploader-file-preview img {
-		background-position: center center;
-		background-repeat: no-repeat;
-    } 
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+    div.cmts-uploader-file-title {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
     
     /*--- Minified Post Form ---*/
     div.cmt-reply.cmt-reply-min div.cmt-body {
