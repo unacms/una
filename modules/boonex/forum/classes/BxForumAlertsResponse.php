@@ -63,6 +63,11 @@ class BxForumAlertsResponse extends BxBaseModTextAlertsResponse
         }
     }
 
+    protected function processBxForumFilesCmtsFileDeleted($oAlert)
+    {
+        return bx_srv('system', 'alert_response_sys_cmts_images_file_deleted', array($oAlert), 'TemplCmtsServices');
+    }
+
     protected function updateCommentsSummary($iContentId)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;

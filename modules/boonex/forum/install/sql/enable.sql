@@ -565,7 +565,8 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('profile', 'delete', @iHandler),
 (@sName, 'commentPost', @iHandler),
 (@sName, 'commentUpdated', @iHandler),
-(@sName, 'commentRemoved', @iHandler);
+(@sName, 'commentRemoved', @iHandler),
+('bx_forum_files_cmts', 'file_deleted', @iHandler);
 
 
 -- EMAIL TEMPLATES
