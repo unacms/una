@@ -528,7 +528,11 @@ class BxCnvModule extends BxBaseModTextModule
      */
     public function checkAllowedContact($iProfileId, $isPerformAction = false)
     {
-        $mixedResult = BxDolProfile::getInstance($iProfileId)->checkAllowedProfileContact();
+        $oProfile = BxDolProfile::getInstance($iProfileId);
+        if(!$oProfile)
+            return _t('_sys_txt_access_denied');
+
+        $mixedResult = $oProfile->checkAllowedProfileContact();
         if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
             return _t('_sys_txt_access_denied');
 
