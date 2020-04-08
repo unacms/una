@@ -201,6 +201,16 @@ li.bx-lcd-mdd-login .bx-lcd-login-form {
   -moz-transition: -moz-transform 0.5s 0s, visibility 0s 0s;
   transition: transform 0.5s 0s, visibility 0s 0s;
 }
+
+/* 
+ * Note: Currently this menu 
+ * isn't used on Desktop view
+ */
+.bx-media-tablet .cd-dropdown,
+.bx-media-desktop .cd-dropdown {
+    display: none;
+}
+
 @media only screen and (min-width: 768px) {
   .cd-dropdown .cd-close {
     top: 5px;
@@ -208,12 +218,6 @@ li.bx-lcd-mdd-login .bx-lcd-login-form {
 }
 @media only screen and (min-width: 1024px) {
   .cd-dropdown {
-  	/* 
-  	 * Note: Currently this menu 
-  	 * isn't used on Desktop view
-  	 */
-  	display: none;
-
     position: absolute;
     top: calc(100% - 2px);
     /* reset style*/
@@ -936,55 +940,8 @@ li.bx-lcd-mdd-login .bx-lcd-login-form {
   -o-appearance: none;
   appearance: none;
   background-color: rgba(0, 0, 0, 0.1);
-  color: #ffffff;
   border: none;
   border-radius: 0;
-}
-.bx-lcd-mdd-search .bx-page-block-container input[type="text"]::-webkit-input-placeholder {
-  color: #ffffff;
-}
-.bx-lcd-mdd-search .bx-page-block-container input[type="text"]::-moz-placeholder {
-  color: #ffffff;
-}
-.bx-lcd-mdd-search .bx-page-block-container input[type="text"]:-moz-placeholder {
-  color: #ffffff;
-}
-.bx-lcd-mdd-search .bx-page-block-container input[type="text"]:-ms-input-placeholder {
-  color: #ffffff;
-}
-.bx-lcd-mdd-search .bx-page-block-container input[type="text"]:focus {
-  background: #ffffff;
-  color: #111433;
-  outline: none;
-}
-.bx-lcd-mdd-search .bx-page-block-container input[type="text"]:focus::-webkit-input-placeholder {
-  color: rgba(17, 20, 51, 0.4);
-}
-.bx-lcd-mdd-search .bx-page-block-container input[type="text"]:focus::-moz-placeholder {
-  color: rgba(17, 20, 51, 0.4);
-}
-.bx-lcd-mdd-search .bx-page-block-container input[type="text"]:focus:-moz-placeholder {
-  color: rgba(17, 20, 51, 0.4);
-}
-.bx-lcd-mdd-search .bx-page-block-container input[type="text"]:focus:-ms-input-placeholder {
-  color: rgba(17, 20, 51, 0.4);
-}
-@media only screen and (min-width: 1024px) {
-  .bx-lcd-mdd-search .bx-page-block-container input[type="text"] {
-    background-color: #ebebeb;
-  }
-  .bx-lcd-mdd-search .bx-page-block-container input[type="text"]::-webkit-input-placeholder {
-    color: #b3b3b3;
-  }
-  .bx-lcd-mdd-search .bx-page-block-container input[type="text"]::-moz-placeholder {
-    color: #b3b3b3;
-  }
-  .bx-lcd-mdd-search .bx-page-block-container input[type="text"]:-moz-placeholder {
-    color: #b3b3b3;
-  }
-  .bx-lcd-mdd-search .bx-page-block-container input[type="text"]:-ms-input-placeholder {
-    color: #b3b3b3;
-  }
 }
 
 .has-children > a, .go-back a {
