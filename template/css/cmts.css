@@ -131,30 +131,14 @@
     }
 
     /*--- unit meta ---*/
-    .cmt-meta {
+    .cmt-meta.bx-base-general-unit-meta {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         text-align: left;
     }
-    .cmt-meta ul.bx-menu-custom.bx-menu-hor > li > span {
-            margin-right: 0;
-    }
-    .cmt-meta ul.bx-menu-custom li:first-child .cmt-meta-div {
-        display: none;
-    }
-    .cmt-meta ul.bx-menu-custom li .cmt-meta-item,
-    .cmt-meta ul.bx-menu-custom li .cmt-meta-div,
-    .cmt-meta ul.bx-menu-custom li .bx-btn {
-        position: relative;
-        float: none;
-        display: inline-block;
-        vertical-align: middle;
-    }
-    .cmt-meta ul.bx-menu-custom li .cmt-meta-item .cmt-meta-ago,
-    .cmt-meta ul.bx-menu-custom li .cmt-meta-item .cmt-meta-membership {
-        font-size: 12px;
-        font-size: .75rem;
+    .cmt-meta.bx-base-general-unit-meta .bx-menu-custom.bx-menu-hor {
+        margin: 0;
     }
 
     /*--- Comment Body ---*/

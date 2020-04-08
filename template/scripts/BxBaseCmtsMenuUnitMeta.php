@@ -31,7 +31,7 @@ class BxBaseCmtsMenuUnitMeta extends BxTemplMenuUnitMeta
         $this->_aCmtsSystem = $oCmts->getSystemInfo();
         $this->_aCmt = $oCmts->getCommentRow($iCmtId);
 
-        $this->_sStylePrefix = (!empty($this->_aCmtsSystem['root_style_prefix']) ? $this->_aCmtsSystem['root_style_prefix'] : 'cmt') . '-meta';
+        $this->_sStylePrefix = (!empty($this->_aCmtsSystem['root_style_prefix']) ? $this->_aCmtsSystem['root_style_prefix'] : 'cmt') . '-meta bx-base-general-unit-meta';
 
         $this->addMarkers(array(
             'cmt_system' => $this->_oCmts->getSystemName(),
