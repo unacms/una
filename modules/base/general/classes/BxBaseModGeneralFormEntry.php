@@ -445,6 +445,8 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             $aLabels = $this->getCleanValue($CNF[$sKey]);
             if(!empty($aLabels) && is_array($aLabels))
                 $aValsToAdd[$CNF[$sKey]] = serialize($aLabels);
+            else
+                $aValsToAdd[$CNF[$sKey]] = '';
         }
 
         $sKey1 = 'FIELD_LOCATION';
