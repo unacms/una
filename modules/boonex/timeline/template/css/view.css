@@ -250,7 +250,7 @@ div.bx-tl-item.bx-tl-blink div.bx-tl-blink-plate {
 /*--- Item Owner Style ---*/
 div.bx-tl-item div.bx-tl-item-owner {
     position: relative;
-	text-align: left;
+    text-align: left;
 }
 div.bx-tl-item div.bx-tl-owner-avatar {
     position: absolute;
@@ -268,6 +268,14 @@ div.bx-tl-item div.bx-tl-item-owner.bx-tl-io-with-actions div.bx-tl-owner-info {
     margin-right: 4.25rem;
 }
 div.bx-tl-item div.bx-tl-owner-name {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+
     text-overflow: ellipsis;
     overflow: hidden;
 }
@@ -279,6 +287,12 @@ div.bx-tl-item div.bx-tl-owner-name .bx-badge-compact {
 div.bx-tl-item div.bx-tl-owner-name > * {
     vertical-align: middle;
 }
+
+div.bx-tl-item div.bx-tl-owner-name > .bx-tl-on-nl {
+    width: 100%;
+    height: 0;
+}
+
 div.bx-tl-item div.bx-tl-owner-name a.bx-tl-owner-name,
 div.bx-tl-item div.bx-tl-owner-name .bx-tl-timeline-owner-name a.bx-tl-ton-item {
     font-weight: 700;
@@ -295,6 +309,7 @@ div.bx-tl-item div.bx-tl-owner-name .bx-tl-hot .sys-icon {
 div.bx-tl-item div.bx-tl-owner-name .bx-tl-pinned .sys-icon,
 div.bx-tl-item div.bx-tl-owner-name .bx-tl-sticked .sys-icon,
 div.bx-tl-item div.bx-tl-owner-name .bx-tl-hot .sys-icon {
+    display: inline-block;
     cursor: default;
 }
 div.bx-tl-item div.bx-tl-owner-actions {
@@ -321,8 +336,11 @@ div.bx-tl-item div.bx-tl-owner-actions .bx-btn {
     position: relative;
     display: inline-block;
 }
+.bx-tl-item-meta ul.bx-menu-custom.bx-menu-hor > li {
+    vertical-align: top;
+}
 .bx-tl-item-meta ul.bx-menu-custom.bx-menu-hor > li > span {
-        margin-right: 0;
+    margin-right: 0;
 }
 .bx-tl-item-meta ul.bx-menu-custom li:first-child .bx-tl-item-meta-div {
     display: none;
@@ -333,7 +351,7 @@ div.bx-tl-item div.bx-tl-owner-actions .bx-btn {
     position: relative;
     float: none;
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: top;
 }
 
 /*--- Item Content Style ---*/

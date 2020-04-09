@@ -16,7 +16,7 @@
                     <div class="__style_prefix__-owner-info bx-def-thumb-size-min-height bx-def-thumb-size-left-indent">
                         <!-- NOTE: Spaces after and between elements in 'owner-name' DIV are needed for better line folding -->
                         <div class="__style_prefix__-owner-name bx-def-font-middle bx-def-font-grayed">
-                            <a href="__item_owner_url__" class="__style_prefix__-owner-name" title="__item_owner_title__">__item_owner_name__</a> <span> __item_owner_action__ </span> 
+                            <a href="__item_owner_url__" class="__style_prefix__-owner-name" title="__item_owner_title__">__item_owner_name__</a><span>&nbsp;__item_owner_action__&nbsp;</span> 
                             <bx_if:show_timeline_owner>
                                 <span> <bx_text:_bx_timeline_txt_to /> </span> 
                                 <span class="__style_prefix__-timeline-owner-name">
@@ -24,21 +24,22 @@
                                 </span>
                             </bx_if:show_timeline_owner>
                             <bx_if:show_menu_item_meta>
-                                <br /><span class="__style_prefix__-item-meta bx-def-font-grayed">__meta__</span>
+                                <span class="bx-tl-on-nl"></span>
+                                <span class="__style_prefix__-item-meta bx-def-font-grayed">__meta__</span>
                             </bx_if:show_menu_item_meta>
                             <bx_if:show_pinned>
-                                <span class="__style_prefix__-pinned bx-def-margin-thd-left">
-                                    <i class="sys-icon thumbtack bx-def-margin-thd-left" title="<bx_text_attribute:_bx_timeline_txt_pinned />"></i>
+                                <span class="__style_prefix__-pinned bx-def-margin-sec-left">
+                                    <i class="sys-icon thumbtack" title="<bx_text_attribute:_bx_timeline_txt_pinned />"></i>
                                 </span>
                             </bx_if:show_pinned>
                             <bx_if:show_sticked>
-                                <span class="__style_prefix__-sticked bx-def-margin-thd-left">
-                                    <i class="sys-icon thumbtack bx-def-margin-thd-left" title="<bx_text_attribute:_bx_timeline_txt_sticked />"></i>
+                                <span class="__style_prefix__-sticked bx-def-margin-sec-left">
+                                    <i class="sys-icon thumbtack" title="<bx_text_attribute:_bx_timeline_txt_sticked />"></i>
                                 </span>
                             </bx_if:show_sticked>
                             <bx_if:show_hot>
-                                <span class="__style_prefix__-hot bx-def-margin-thd-left">
-                                    <i class="sys-icon fire bx-def-margin-thd-left" title="<bx_text_attribute:_bx_timeline_txt_hot />"></i>
+                                <span class="__style_prefix__-hot bx-def-margin-sec-left">
+                                    <i class="sys-icon fire" title="<bx_text_attribute:_bx_timeline_txt_hot />"></i>
                                 </span>
                             </bx_if:show_hot>
                         </div>
