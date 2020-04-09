@@ -1755,53 +1755,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'menu_item_counters' => $sMenu
         );
     }
-    
-    /*
-    protected function _getTmplVarsReactions(&$aEvent, $aBrowseParams = array())
-    {
-        if(!isset($aEvent['reactions']) || !is_array($aEvent['reactions']) || !isset($aEvent['reactions']['system']))
-            return array();
-
-        $sReactionsSystem = $aEvent['reactions']['system'];
-        $iReactionsObject = $aEvent['reactions']['object_id'];
-        $aReactionsParams = array(
-            'show_counter' => true,
-            'show_counter_style' => 'compound', 
-            'dynamic_mode' => isset($aBrowseParams['dynamic_mode']) && $aBrowseParams['dynamic_mode'] === true
-        );
-
-        $oReactions = $this->getModule()->getReactionObject($sReactionsSystem, $iReactionsObject);
-        if(!$oReactions)
-            return array();
-
-        return array(
-            'style_prefix' => $this->_oConfig->getPrefix('style'),
-            'reactions' => $oReactions->getCounter($aReactionsParams)
-        );
-    }
-
-    protected function _getTmplVarsComments(&$aEvent, $aBrowseParams = array())
-    {
-        if(!isset($aEvent['comments']) || !is_array($aEvent['comments']) || !isset($aEvent['comments']['system']))
-            return array();
-
-        $sCmtsSystem = $aEvent['comments']['system'];
-        $iCmtsObject = $aEvent['comments']['object_id'];
-        $aCmtsParams = array(
-            'show_counter' => true, 
-            'dynamic_mode' => isset($aBrowseParams['dynamic_mode']) && $aBrowseParams['dynamic_mode'] === true
-        );
-
-        $oCmts = $this->getModule()->getCmtsObject($sCmtsSystem, $iCmtsObject);
-        if(!$oCmts)
-            return array();
-
-        return array(
-            'style_prefix' => $this->_oConfig->getPrefix('style'),
-            'comments' => $oCmts->getCounter($aCmtsParams)
-        );
-    }
-     */
 
     protected function _getTmplVarsMenuItemMeta(&$aEvent, $aBrowseParams = array())
     {

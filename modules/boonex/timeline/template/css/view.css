@@ -387,12 +387,17 @@ div.bx-tl-item-text div.bx-tl-content > p:last-child {
     padding-bottom: 0;
 }
 div.bx-tl-item-text div.bx-tl-content.bx-tl-overflow:before {
-    content: '';
+    position: absolute;
     bottom: 0;
     width: 100%;
     height: 20%;
-    position: absolute;
+
+    background: -webkit-linear-gradient(top, transparent, #ffffff);
+    background: -moz-linear-gradient(top, transparent, #ffffff);
+    background: -o-linear-gradient(top, transparent, #ffffff);
     background: linear-gradient(to bottom, transparent, #ffffff);
+
+    content: '';
 }
 div.bx-tl-item-text div.bx-tl-content-show-more {
     position: relative;
