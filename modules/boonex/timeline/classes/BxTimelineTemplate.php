@@ -1806,6 +1806,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     protected function _getTmplVarsMenuItemMeta(&$aEvent, $aBrowseParams = array())
     {
         $oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_meta'));
+        if(!$oMenu)
+            return array();
+
         $oMenu->setEvent($aEvent);
 
         $sMenu = $oMenu->getCode();
