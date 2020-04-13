@@ -51,23 +51,18 @@ class BxBaseModGroupsPageEntry extends BxBaseModProfilePageEntry
             $sKey = bx_get('key');
             $sId = $this->_oModule->getName() . '_popup_invite';
             
-            $aData = $this->_oModule->_oDb->getInviteByKey($sKey,  $this->_oProfile->id());
-            if (!isset($aData['invited_profile_id'])){
-                $sRv = _t($CNF['T']['txt_invitation_popup_error_invitation_absent']);
+            $mixedInvited = $this->_oModule->isInvited($sKey, $this->_oProfile->id());
+            if ($mixedInvited === true){
+                $sRv = $this->_oModule->_oTemplate->parseHtmlByName('popup_invite.html', array(
+                    'popup_id' => $sId,
+					'text' => _t($CNF['T']['txt_invitation_popup_text']),
+					'button_accept' => _t($CNF['T']['txt_invitation_popup_accept_button']),
+					'button_decline' => _t($CNF['T']['txt_invitation_popup_decline_button']),
+						
+                ));
             }
             else{
-                if ($aData['invited_profile_id'] != bx_get_logged_profile_id()){
-                    $sRv = _t($CNF['T']['txt_invitation_popup_error_wrong_user']);
-                }
-                else{
-                    $sRv = $this->_oModule->_oTemplate->parseHtmlByName('popup_invite.html', array(
-                        'popup_id' => $sId,
-						'text' => _t($CNF['T']['txt_invitation_popup_text']),
-						'button_accept' => _t($CNF['T']['txt_invitation_popup_accept_button']),
-						'button_decline' => _t($CNF['T']['txt_invitation_popup_decline_button']),
-						
-                    ));
-                }
+                $sRv = $mixedInvited;
             }
         }
         $this->_oTemplate->addJs(array('invite_popup.js'));
@@ -77,7 +72,7 @@ class BxBaseModGroupsPageEntry extends BxBaseModProfilePageEntry
             'sAcceptUrl' =>  BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $this->_aProfileInfo['content_id']),
             'sDeclineUrl' => BX_DOL_URL_ROOT,
             'iGroupProfileId' => $this->_oProfile->id(),
-        )) .  BxTemplFunctions::getInstance()->popupBox($sId, _t($CNF['T']['txt_invitation_popup_title']), $sRv, true) : '').parent::getCode();
+        )) .  BxTemplFunctions::getInstance()->popupBox($sId, _t($CNF['T']['txt_invitation_popup_title']), $sRv, true) : '') . parent::getCode();
     }
 }
 
