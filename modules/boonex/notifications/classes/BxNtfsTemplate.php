@@ -248,7 +248,7 @@ class BxNtfsTemplate extends BxBaseModNotificationsTemplate
                 'icon_url' => !empty($aContent['owner_icon']) ? $aContent['owner_icon'] : $this->getIconUrl('std-icon.svg'),
                 'content_url' => $this->_getContentLink($aEvent),
                 'content' => is_array($aEvent['content_parsed']) && isset($aEvent['content_parsed']['email']) ? $aEvent['content_parsed']['email'] : $aEvent['content_parsed'],
-                'date' => bx_process_output($aEvent['date'], BX_DATA_DATETIME_TS),
+                'date' => bx_process_output($aEvent['date'], BX_DATA_DATE_TS),
             )),
             'settings' => !empty($aContent['settings']['email']) ? $aContent['settings']['email'] : array()
         );
