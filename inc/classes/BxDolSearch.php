@@ -322,11 +322,12 @@ class BxDolSearchResult implements iBxDolReplaceable
     protected $_bSingleSearch = true;
     protected $_bLiveSearch = false;
     protected $_sMetaType = '';
+    protected $_sMode = '';
     protected $_sCategoryObject = '';
     protected $_aCustomSearchCondition = array();
 
     protected $_aMarkers = array (); ///< markers to replace somewhere, usually title and browse url (defined in custom class)
-
+    
     /**
      * constructor
      * filling identificator field

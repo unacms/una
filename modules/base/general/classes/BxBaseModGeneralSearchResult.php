@@ -20,6 +20,7 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
 
     function __construct($sMode = '', $aParams = array())
     {
+        $this->_sMode = $sMode;
         parent::__construct();
     }
 

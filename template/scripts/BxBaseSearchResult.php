@@ -49,7 +49,7 @@ class BxBaseSearchResult extends BxDolSearchResult
     function displayResultBlock ()
     {
         $sCode = '';
-        bx_alert('simple_search', 'before_get_data', 0, false, array('object' => &$this->aCurrent));
+        bx_alert('simple_search', 'before_get_data', 0, false, array('object' => &$this->aCurrent, 'mode' => $this->_sMode));
         $aData = $this->getSearchData();
         bx_alert('simple_search', 'get_data', 0, false, array('object' => &$this->aCurrent, 'search_results' => &$aData));
         if ($this->aCurrent['paginate']['num'] > 0) {
