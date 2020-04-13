@@ -465,7 +465,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
     public function getCacheItemKey($iId, $sPostfix = '')
     {
-        return $this->getPrefix('cache_item') . $iId . (!empty($sPostfix) ? '_' . $sPostfix : '') . '.php';
+        return $this->getPrefix('cache_item') . $iId . (bx_is_mobile() ? '_m' : '') . '_r' . bx_get_device_pixel_ratio() . '_' . (!empty($sPostfix) ? '_' . $sPostfix : '') . '.php';
     }
 
     public function getPostFormDisplay($sType)
