@@ -191,6 +191,44 @@ class BxOAuthModule extends BxDolModule
     }
 
     /**
+     * @page public_api API Public
+     * @section public_api_token /m/oauth2/revoke
+     * 
+     * Revoke token 
+     * 
+     * **HTTP Method:** 
+     * `POST`
+     *
+     * **Request params:**
+     * - `token` - token to revoke
+     *
+     * **Request header:**
+     * @code
+     * Authorization: Bearer 9802c4a34e1535d8c3b721604ee0e7fb04116c49
+     * @endcode
+     *
+     * **Response (success):**
+     * @code
+     * {  
+     *    "revoked":true,
+     * }
+     * @endcode
+     *
+     * **Response (error):**
+     * @code
+     * {  
+     *    "error":"short error description here",
+     *    "error_description":"long error description here"
+     * }
+     * @endcode
+     */
+    function actionRevoke ()
+    {
+        $this->initOAuth($this->getClientIdFromAccessTokenHeader());
+        $this->_oServer->handleRevokeRequest(OAuth2\Request::createFromGlobals())->send();
+    }
+
+    /**
      * Authenicated or public call to the "safe" and "public" service methods 
      */
     function actionCom ($sMethod)

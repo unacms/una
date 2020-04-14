@@ -598,7 +598,15 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
     public function serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction = false, $iProfileId = false)
     {
-        if ($this->isFan($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $iProfileId))
+        $bInvited = false;
+        if (bx_get('key')){
+            $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->getName());
+            $mixedInvited = $this->isInvited(bx_get('key'), $oGroupProfile->id());
+            if ($mixedInvited === true)
+                $bInvited = true;
+        }
+        
+        if ($this->isFan($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $iProfileId) || $bInvited)
             return CHECK_ACTION_RESULT_ALLOWED;
 
         return parent::serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction, $iProfileId);
@@ -762,6 +770,19 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if (isset($this->_oConfig->CNF['OBJECT_CONNECTIONS']))
             return $oGroupProfile && ($oConnection = BxDolConnection::getObjectInstance($this->_oConfig->CNF['OBJECT_CONNECTIONS'])) && $oConnection->isConnected($iProfileId ? $iProfileId : bx_get_logged_profile_id(), $oGroupProfile->id(), true);
         return false;
+    }
+    
+    public function isInvited ($sKey, $iProfileId) 
+    {
+        $CNF = &$this->_oConfig->CNF;
+        $aData = $this->_oDb->getInviteByKey($sKey,  $iProfileId);
+        if (!isset($aData['invited_profile_id']))
+            return _t($CNF['T']['txt_invitation_popup_error_invitation_absent']);
+        
+        if ($aData['invited_profile_id'] != bx_get_logged_profile_id())
+            return  _t($CNF['T']['txt_invitation_popup_error_wrong_user']);
+        
+        return true;
     }
 
     protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
