@@ -66,7 +66,7 @@ class BxEventsConfig extends BxBaseModProfileConfig
             // page URIs
             'URI_VIEW_ENTRY' => 'view-event-profile',
             'URI_EDIT_ENTRY' => 'edit-event-profile',
-            'URI_ENTRIES_BY_CONTEXT' => 'event-context',
+            'URI_ENTRIES_BY_CONTEXT' => 'events-context',
             'URI_EDIT_COVER' => 'edit-event-cover',
             'URI_JOINED_ENTRIES' => 'joined-events',
             'URI_MANAGE_COMMON' => 'events-manage',
