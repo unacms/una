@@ -32,12 +32,39 @@
             bx_menu_slide_inline('.bx-sliding-menu-main');
     }
 
-    var sMsg = JSON.stringify(__msg__);
-    if ('undefined' !== typeof(window.ReactNativeWebView))
-        window.ReactNativeWebView.postMessage(sMsg);
-    else
-        window.postMessage(sMsg, '*');
+    function bx_mobile_apps_video_terminated (e) {
+        if (typeof window.glBxVideoCallTerminated !== 'undefined' && window.glBxVideoCallTerminated instanceof Array) {
+            for (let i = 0; i < window.glBxVideoCallTerminated.length; i++)
+                if (typeof window.glBxVideoCallTerminated[i] === "function")
+                    window.glBxVideoCallTerminated[i](e);
+        }
+    }
 
+    function bx_mobile_apps_video_joined (e) {
+        if (typeof window.glBxVideoCallJoined !== 'undefined' && window.glBxVideoCallJoined instanceof Array) {
+            for (let i = 0; i < window.glBxVideoCallJoined.length; i++)
+                if (typeof window.glBxVideoCallJoined[i] === "function")
+                    window.glBxVideoCallJoined[i](e);
+        }
+    }
+
+    function bx_mobile_apps_video_will_join (e) {
+        if (typeof window.glBxVideoCallWillJoin !== 'undefined' && window.glBxVideoCallWillJoin instanceof Array) {
+            for (let i = 0; i < window.glBxVideoCallWillJoin.length; i++)
+                if (typeof window.glBxVideoCallWillJoin[i] === "function")
+                    window.glBxVideoCallWillJoin[i](e);
+        }
+    }
+
+    function bx_mobile_apps_post_message (oJSON) {
+        var sMsg = JSON.stringify(oJSON);
+        if ('undefined' !== typeof(window.ReactNativeWebView))
+            window.ReactNativeWebView.postMessage(sMsg);
+        else
+            window.postMessage(sMsg, '*');
+    }
+
+    bx_mobile_apps_post_message (__msg__);
 
     if (window && window.process && window.process.type) { // if run in electron
         const { ipcRenderer, shell } = require('electron')
@@ -88,7 +115,6 @@
             });
         }
 */
-        if ('undefined' !== typeof(window.ReactNativeWebView))
-            window.ReactNativeWebView.postMessage(JSON.stringify({stop_loading: 1}));
+        bx_mobile_apps_post_message({stop_loading: 1});
     });
 </script>

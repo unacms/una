@@ -47,9 +47,15 @@ class BxNexusModule extends BxDolModule
         if ($sCustomStyles = getParam('bx_nexus_option_styles'))
             $s .= "<style>\n" . $sCustomStyles . "\n</style>";
 
+        $oProfile = BxDolProfile::getInstance();
         $s .= $this->_oTemplate->parseHtmlByName('js.html', array(
             'msg' => json_encode(array(
-                'loggedin' => isLogged(),                
+                'loggedin' => isLogged(),
+                'user_info' => isLogged() && $oProfile ? array (
+                    'displayName' => $oProfile->getDisplayName(),
+                    'email' => $oProfile->getAccountObject()->getEmail(),
+                    'avatar' => $oProfile->getAvatar(),
+                ) : false,
                 'bubbles_num' => $iBubbles ? $iBubbles : '',
                 'bubbles' => $aBubbles,
                 'push_tags' => BxDolPush::getTags(),
