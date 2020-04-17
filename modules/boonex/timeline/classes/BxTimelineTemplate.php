@@ -1256,7 +1256,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $aParamsSet = array(
             'type' => $aParams['type'],
-            'context_id' => $aEvent[$CNF['FIELD_OWNER_ID']], 
+            'context_id' => is_array($aEvent[$CNF['FIELD_OWNER_ID']]) ? $aEvent[$CNF['FIELD_OWNER_ID']][0] : $CNF['FIELD_OWNER_ID'],  
             'profile_id' => $iProfileId, 
             'event_id' => $aEvent[$CNF['FIELD_ID']], 
             'date' => $aEvent[$CNF['FIELD_ADDED']]

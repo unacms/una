@@ -55,7 +55,7 @@ function PageCompMainCode()
         $a = bx_srv($aModule['name'], 'get_safe_services');
         if (!$a)
             continue;
-        echo '<h1>' . $aModule['title'] . '</h1>';
+        echo '<h3>' . $aModule['title'] . '</h3>';
         echo '<p>';
         foreach ($a as $sService => $sClass) {
             if ($sClass) {

@@ -241,7 +241,9 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
     public function getDisplayName($iProfileId = 0)
     {
         $aInfo = $this->getInfo($iProfileId);
-        return BxDolService::call($aInfo['type'], 'profile_name', array($aInfo['content_id']));
+        $sDisplayName = BxDolService::call($aInfo['type'], 'profile_name', array($aInfo['content_id']));
+        bx_alert('profile', 'profile_name', $iProfileId, 0, array('info' => $aInfo, 'display_name' => &$sDisplayName));
+        return $sDisplayName;
     }
 
     /**

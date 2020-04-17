@@ -192,7 +192,7 @@ class BxOAuthModule extends BxDolModule
 
     /**
      * @page public_api API Public
-     * @section public_api_token /m/oauth2/revoke
+     * @section public_api_revoke /m/oauth2/revoke
      * 
      * Revoke token 
      * 

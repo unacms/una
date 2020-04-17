@@ -719,7 +719,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         $iContentId = $oProfile->getContentId();
         $sModule = $oProfile->getModule();
         $oModule = BxDolModule::getInstance($sModule);
-        if ($oModule->_oConfig){
+        if ($oProfile->serviceActAsProfile() && $oModule->_oConfig){
             $CNF = $oModule->_oConfig->CNF;
         
             $aContentInfo = BxDolRequest::serviceExists($sModule, 'get_all') ? BxDolService::call($sModule, 'get_all', array(array('type' => 'id', 'id' => $iContentId))) : array();
