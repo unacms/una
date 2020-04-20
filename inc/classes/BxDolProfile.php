@@ -170,7 +170,7 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
      */
     public function isActive($iProfileId = false)
     {
-        return BX_PROFILE_STATUS_ACTIVE == $this->getStatus($iProfileId);
+        return BX_PROFILE_STATUS_ACTIVE == $this->getStatus($iProfileId) && ($this->getAccountObject()->isConfirmed() || !getParam('sys_account_hide_unconfirmed_accounts'));
     }
 
     /**
