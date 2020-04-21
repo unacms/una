@@ -457,9 +457,10 @@ class BxElsModule extends BxBaseModGeneralModule
             return false;
 
         foreach($aTypes as $sType) {
-            $oContentInfo = BxDolContentInfo::getObjectInstance($sType);
+            $oContentInfo = BxDolContentInfo::getObjectInstance($sType);        
             if(!$oContentInfo)
                 continue;
+            $oContentInfo->setIgnoreCacheInServiceCalls(true);
 
             $aIds = $oContentInfo->getAll(array('type' => 'all_ids'));
             if(empty($aIds) || !is_array($aIds))

@@ -1348,6 +1348,7 @@
     <string name="_adm_stg_cpt_option_smart_app_banner_ios_app_id"><![CDATA[Идентификатор iOS прилижения для Smart App Banner]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_activation_letter"><![CDATA[Включить сообщение об активации аккаунта]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_confirmation_type"><![CDATA[Аккаунт подтвержден когда]]></string>
+    <string name="_adm_stg_cpt_option_sys_account_hide_unconfirmed_accounts"><![CDATA[Скрывать профили у неподтвержденных аккаунтов]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_2fa_enable"><![CDATA[Включить двухфакторную аутентификацию]]></string>
     <string name="_adm_stg_cpt_option_sys_account_autoapproval"><![CDATA[Автоматическая активация аккаунта после создания]]></string>
     <string name="_adm_stg_cpt_option_sys_account_auto_profile_creation"><![CDATA[Автоматическое создание профайла из аккаунта]]></string>

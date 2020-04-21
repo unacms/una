@@ -1361,6 +1361,7 @@
     <string name="_adm_stg_cpt_option_smart_app_banner_ios_app_id"><![CDATA[iOS app ID for Smart App Banner]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_activation_letter"><![CDATA[Enable account activation letter]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_confirmation_type"><![CDATA[Account is confirmed when]]></string>
+	<string name="_adm_stg_cpt_option_sys_account_hide_unconfirmed_accounts"><![CDATA[Hide profiles which have unconfirmed account]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_2fa_enable"><![CDATA[Enable 2 Factor Authentication]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_autoapproval"><![CDATA[Automatic account activation after creation]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_auto_profile_creation"><![CDATA[Automatic profile creation from account name]]></string>
