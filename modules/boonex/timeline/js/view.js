@@ -272,7 +272,7 @@ BxTimelineView.prototype.playVideos = function(oEvents, fOffsetStart, fOffsetSto
     });
 };
 
-BxTimelineView.prototype.changeView = function(oLink, sType)
+BxTimelineView.prototype.changeView = function(oLink, sType, oRequestParams)
 {
     var oViews = $(this._getHtmlId('views_content', this._oRequestParams, {with_type: false})); 
 
@@ -293,6 +293,8 @@ BxTimelineView.prototype.changeView = function(oLink, sType)
 
     var $this = this;
     var oData = this._getDefaultData(oLink);
+    if(oRequestParams != undefined)
+        oData = jQuery.extend({}, oData, oRequestParams);
 
     this.loadingIn(oLink, true);
 
