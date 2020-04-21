@@ -458,75 +458,69 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         }
     }
 
-    protected function _getPrivacyFields()
+    protected function _getPrivacyFields($aKeysF2O = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $aFields = array('FIELD_ALLOW_VIEW_TO' => 'OBJECT_PRIVACY_VIEW');
         if(isset($CNF['PRIVACY_FIELD_TO_OBJECT']) && is_array($CNF['PRIVACY_FIELD_TO_OBJECT']))
-            $aFields = $CNF['PRIVACY_FIELD_TO_OBJECT'];
+            return $CNF['PRIVACY_FIELD_TO_OBJECT'];
 
-        return $aFields;
+        if(empty($aKeysF2O))
+            $aKeysF2O = array('FIELD_ALLOW_VIEW_TO' => 'OBJECT_PRIVACY_VIEW');
+
+        $aResult = array();
+        foreach($aKeysF2O as $sKeyField => $sKeyObject) {
+            if(!isset($CNF[$sKeyField]) || !isset($this->aInputs[$CNF[$sKeyField]]) || !isset($CNF[$sKeyObject]))
+                continue;
+
+            $aResult[$CNF[$sKeyField]] = $CNF[$sKeyObject];
+        }
+
+        return $aResult;
     }
 
-    function _addCssJsPrivacyField($sField, $sObject, $bDynamicMode = false)
+    function _addCssJsPrivacyField($sField, $sPrivacyObject, $bDynamicMode = false)
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        if(!isset($CNF[$sField]) || !isset($this->aInputs[$CNF[$sField]]) || !isset($CNF[$sObject]))
-            return;
-
-        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF[$sObject]);
+        $oPrivacy = BxDolPrivacy::getObjectInstance($sPrivacyObject);
         if(!$oPrivacy) 
             return;
 
-        $this->aInputs[$CNF[$sField]]['content'] = $oPrivacy->addCssJs($bDynamicMode) . $this->aInputs[$CNF[$sField]]['content'];
+        $this->aInputs[$sField]['content'] = $oPrivacy->addCssJs($bDynamicMode) . $this->aInputs[$sField]['content'];
     }
 
-    protected function _preparePrivacyField($sField, $sObject)
+    protected function _preparePrivacyField($sField, $sPrivacyObject)
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
-
-        if(!isset($CNF[$sField]) || !isset($this->aInputs[$CNF[$sField]]) || !isset($CNF[$sObject]))
-            return;
-
-        $sPrivacy = $CNF[$sObject];
-        $oPrivacy = BxDolPrivacy::getObjectInstance($sPrivacy);
+        $oPrivacy = BxDolPrivacy::getObjectInstance($sPrivacyObject);
         if(!$oPrivacy) 
             return;
 
         $aSave = array('db' => array('pass' => 'Xss'));
-        array_walk($this->aInputs[$CNF[$sField]], function ($a, $k, $aSave) {
+        array_walk($this->aInputs[$sField], function ($a, $k, $aSave) {
             if (in_array($k, array('info', 'caption', 'value')))
                 $aSave[0][$k] = $a;
         }, array(&$aSave));
 
-        $aGroupChooser = $oPrivacy->getGroupChooser($sPrivacy);
+        $aGroupChooser = $oPrivacy->getGroupChooser($sPrivacyObject);
 
-        $this->aInputs[$CNF[$sField]] = array_merge($this->aInputs[$CNF[$sField]], $aGroupChooser, $aSave);
+        $this->aInputs[$sField] = array_merge($this->aInputs[$sField], $aGroupChooser, $aSave);
     }
 
-    protected function _preloadPrivacyField($sField, $sObject, $aValues)
+    protected function _preloadPrivacyField($sField, $sPrivacyObject, $aValues)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if(!isset($CNF[$sField]) || !isset($this->aInputs[$CNF[$sField]]) || !isset($CNF[$sObject]))
-            return;
-
-        $sPrivacy = $CNF[$sObject];
-        $oPrivacy = BxDolPrivacy::getObjectInstance($sPrivacy);
+        $oPrivacy = BxDolPrivacy::getObjectInstance($sPrivacyObject);
         if(!$oPrivacy) 
             return;
 
         $iContentId = !empty($aValues[$CNF['FIELD_ID']]) ? (int)$aValues[$CNF['FIELD_ID']] : 0;
         $iProfileId = !empty($iContentId) ? (int)$this->getContentOwnerProfileId($iContentId) : bx_get_logged_profile_id();
-        $iGroupId = !empty($aValues[$CNF[$sField]]) ? $aValues[$CNF[$sField]] : 0;
+        $iGroupId = !empty($aValues[$sField]) ? $aValues[$sField] : 0;
 
-        $sKey = $CNF[$sField];
-        if(!isset($this->aInputs[$sKey]['content']))
-            $this->aInputs[$sKey]['content'] = '';
+        if(!isset($this->aInputs[$sField]['content']))
+            $this->aInputs[$sField]['content'] = '';
 
-        $this->aInputs[$sKey]['content'] .= $oPrivacy->initGroupChooser($sPrivacy, $iProfileId, array(
+        $this->aInputs[$sField]['content'] .= $oPrivacy->initGroupChooser($sPrivacyObject, $iProfileId, array(
             'content_id' => $iContentId,
             'group_id' => $iGroupId,
             'html_ids' => array(

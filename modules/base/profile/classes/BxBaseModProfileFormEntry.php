@@ -223,20 +223,16 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
         return CHECK_ACTION_RESULT_ALLOWED == $this->_oModule->checkAllowedEdit ($aDataEntry);        
     }
 
-    protected function _getPrivacyFields()
+    protected function _getPrivacyFields($aKeysF2O = array())
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
+        if(empty($aKeysF2O))
+            $aKeysF2O = array(
+                'FIELD_ALLOW_VIEW_TO' => 'OBJECT_PRIVACY_VIEW',
+                'FIELD_ALLOW_POST_TO' => 'OBJECT_PRIVACY_POST',
+                'FIELD_ALLOW_CONTACT_TO' => 'OBJECT_PRIVACY_CONTACT'
+            );
 
-        $aFields = array(
-            'FIELD_ALLOW_VIEW_TO' => 'OBJECT_PRIVACY_VIEW',
-            'FIELD_ALLOW_POST_TO' => 'OBJECT_PRIVACY_POST',
-            'FIELD_ALLOW_CONTACT_TO' => 'OBJECT_PRIVACY_CONTACT'
-        );
-
-        if(isset($CNF['PRIVACY_FIELD_TO_OBJECT']) && is_array($CNF['PRIVACY_FIELD_TO_OBJECT']))
-            $aFields = $CNF['PRIVACY_FIELD_TO_OBJECT'];
-
-        return $aFields;
+        return parent::_getPrivacyFields($aKeysF2O);
     }
 }
 

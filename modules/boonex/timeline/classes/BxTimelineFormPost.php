@@ -150,8 +150,8 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
         }
 
         $aPrivacyFields = $this->_getPrivacyFields();
-        foreach($aPrivacyFields as $sFieldKey => $sObject)
-            $this->_initPrivacyField($sFieldKey, $sObject);
+        foreach($aPrivacyFields as $sField => $sPrivacyObject)
+            $this->_initPrivacyField($sField, $sPrivacyObject);
 
         if(isset($this->aInputs['link']))
             $this->aInputs['link']['content'] = $this->_oModule->_oTemplate->getAttachLinkField($iUserId);
@@ -204,18 +204,14 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
         $this->_bVisibilityAutoselect = $bVisibilityAutoselect;
     }
 
-    protected function _getPrivacyFields()
+    protected function _getPrivacyFields($aKeysF2O = array())
     {
-        $CNF = &$this->_oModule->_oConfig->CNF;
+        if(empty($aKeysF2O))
+            $aKeysF2O = array(
+                'FIELD_OBJECT_PRIVACY_VIEW' => 'OBJECT_PRIVACY_VIEW'
+            );
 
-        $aFields = array(
-            'FIELD_OBJECT_PRIVACY_VIEW' => 'OBJECT_PRIVACY_VIEW'
-        );
-
-        if(isset($CNF['PRIVACY_FIELD_TO_OBJECT']) && is_array($CNF['PRIVACY_FIELD_TO_OBJECT']))
-            $aFields = $CNF['PRIVACY_FIELD_TO_OBJECT'];
-
-        return $aFields;
+        return parent::_getPrivacyFields($aKeysF2O);
     }
 
     /**
@@ -223,24 +219,19 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
      * because own variant (method BxTimelineFormPost::_initPrivacyField) is
      * used instead.
      */
-    protected function _preparePrivacyField($sFieldKey, $sObject)
+    protected function _preparePrivacyField($sField, $sPrivacyObject)
     {
         return;
     }
 
-    protected function _initPrivacyField($sFieldKey, $sObject)
+    protected function _initPrivacyField($sField, $sPrivacyObject)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if(!isset($CNF[$sFieldKey]) || !isset($this->aInputs[$CNF[$sFieldKey]]) || !isset($CNF[$sObject]))
-            return;
-
-        $sField = $CNF[$sFieldKey];
-                
     	$iUserId = $this->_oModule->getUserId();
         $iOwnerId = $this->_oModule->getOwnerId();
 
-        $this->aInputs[$sField] = array_merge($this->aInputs[$sField], BxDolPrivacy::getGroupChooser($CNF[$sObject], 0, array(
+        $this->aInputs[$sField] = array_merge($this->aInputs[$sField], BxDolPrivacy::getGroupChooser($sPrivacyObject, 0, array(
             'title' => _t($CNF['T']['form_input_title_' . $sField]),
             'dynamic_mode' => $this->_bDynamicMode
         )));
@@ -300,19 +291,13 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
         }
     }
     
-    protected function _preloadPrivacyField($sFieldKey, $sObject, $aValues)
+    protected function _preloadPrivacyField($sField, $sPrivacyObject, $aValues)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        if(!isset($CNF[$sFieldKey]) || !isset($this->aInputs[$CNF[$sFieldKey]]) || !isset($CNF[$sObject]))
-            return;
-
-        $sPrivacy = $CNF[$sObject];
-        $oPrivacy = BxDolPrivacy::getObjectInstance($sPrivacy);
+        $oPrivacy = BxDolPrivacy::getObjectInstance($sPrivacyObject);
         if(!$oPrivacy) 
             return;
-
-        $sField = $CNF[$sFieldKey];
 
         $iContentId = !empty($aValues[$CNF['FIELD_ID']]) ? (int)$aValues[$CNF['FIELD_ID']] : 0;
         $iProfileId = !empty($iContentId) ? (int)$this->getContentOwnerProfileId($iContentId) : bx_get_logged_profile_id();
@@ -321,7 +306,7 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
         if(!isset($this->aInputs[$sField]['content']))
             $this->aInputs[$sField]['content'] = '';
 
-        $this->aInputs[$sField]['content'] .= $oPrivacy->initGroupChooser($sPrivacy, $iProfileId, array(
+        $this->aInputs[$sField]['content'] .= $oPrivacy->initGroupChooser($sPrivacyObject, $iProfileId, array(
             'content_id' => $iContentId,
             'group_id' => $iGroupId,
             'html_ids' => array(
