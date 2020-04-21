@@ -36,6 +36,7 @@ class BxDolContentInfo extends BxDolFactory implements iBxDolFactoryObject
     protected $_sSystem;
     protected $_aSystem;
     protected $_aGrid;
+    protected $_bIgnoreCacheInServiceCalls = false;
 
     protected function __construct($sSystem)
     {
@@ -216,6 +217,11 @@ class BxDolContentInfo extends BxDolFactory implements iBxDolFactoryObject
         $this->_aGrid = $aGrid;
     }
 
+    public function setIgnoreCacheInServiceCalls($b)
+    {
+        $this->_bIgnoreCacheInServiceCalls = $b;
+    }
+
     public function getName()
     {
         return $this->_sSystem;
@@ -296,7 +302,7 @@ class BxDolContentInfo extends BxDolFactory implements iBxDolFactoryObject
         if(!BxDolRequest::serviceExists($this->_sSystem, $sMethod))
             return false;
 
-        return BxDolService::call($this->_sSystem, $sMethod, array_slice(func_get_args(), 1));
+        return BxDolService::call($this->_sSystem, $sMethod, array_slice(func_get_args(), 1), 'Module', $this->_bIgnoreCacheInServiceCalls);
     }
 }
 
