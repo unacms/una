@@ -392,20 +392,48 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
 	function getContentByLevelAsSQLPart($sContentTable, $sContentField, $mixedLevelId)
     {
     	$sJoin = $sWhere = ""; 
+        $iLevelId = !is_array($mixedLevelId) ? $mixedLevelId : 0;
+        if (!$iLevelId && is_array($mixedLevelId) && 1 == count($mixedLevelId)) {
+            $a = array_values($mixedLevelId);
+            $iLevelId = array_shift($a);
+        }
 
-        if(is_array($mixedLevelId))
-            $sWhere .= " AND `tlm`.`IDLevel` IN (" . $this->implode_escape($mixedLevelId) . ")";
-        else
-            $sWhere .= $this->prepareAsString(" AND `tlm`.`IDLevel` = ?", (int)$mixedLevelId);
-		$sWhere .= " AND (`tlm`.`DateStarts` IS NULL OR `tlm`.`DateStarts` <= NOW()) AND (`tlm`.`DateExpires` IS NULL OR `tlm`.`DateExpires` > NOW())";
+        // unconfirmed
+        if (MEMBERSHIP_ID_UNCONFIRMED == $iLevelId) {
+            return array(
+                'where' => " AND `sys_accounts`.`email_confirmed` = 0 ",
+                'join' => '',
+            );
+        }
+        // standard
+        elseif (MEMBERSHIP_ID_STANDARD == $iLevelId) {
 
-		$sJoin .= " INNER JOIN `sys_acl_levels_members` AS `tlm` ON `" . $sContentTable . "`.`" . $sContentField . "`=`tlm`.`IDMember`";
-		$sJoin .= " INNER JOIN `sys_acl_levels` AS `tl` ON `tlm`.`IDLevel`=`tl`.`ID`"; 
+            $sWhere .= " AND (`tlm`.`DateStarts` IS NULL OR `tlm`.`DateStarts` <= NOW()) AND (`tlm`.`DateExpires` IS NULL OR `tlm`.`DateExpires` > NOW()) AND `tlm`.`IDMember` IS NULL AND `sys_accounts`.`email_confirmed` != 0 ";
 
-        return array(
-            'where' => $sWhere,
-        	'join' => $sJoin
-        );
+            $sJoin .= " LEFT JOIN `sys_acl_levels_members` AS `tlm` ON `" . $sContentTable . "`.`" . $sContentField . "`=`tlm`.`IDMember`";
+
+            return array(
+                'where' => $sWhere,
+                'join' => $sJoin
+            );
+        }
+        // other levels
+        else {
+
+            if(is_array($mixedLevelId))
+                $sWhere .= " AND `tlm`.`IDLevel` IN (" . $this->implode_escape($mixedLevelId) . ")";
+            else
+                $sWhere .= $this->prepareAsString(" AND `tlm`.`IDLevel` = ?", (int)$mixedLevelId);
+
+            $sWhere .= " AND (`tlm`.`DateStarts` IS NULL OR `tlm`.`DateStarts` <= NOW()) AND (`tlm`.`DateExpires` IS NULL OR `tlm`.`DateExpires` > NOW()) AND `sys_accounts`.`email_confirmed` != 0 ";
+
+            $sJoin .= " INNER JOIN `sys_acl_levels_members` AS `tlm` ON `" . $sContentTable . "`.`" . $sContentField . "`=`tlm`.`IDMember`";
+
+            return array(
+                'where' => $sWhere,
+                'join' => $sJoin
+            );
+        }
     }
 
     function getProfilesByMembership($mixedLevelId)
