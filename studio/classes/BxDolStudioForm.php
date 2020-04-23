@@ -85,79 +85,124 @@ class BxDolStudioForm extends BxBaseFormView
         return (int)$iId;
     }
 
-	function getCleanValue ($sName)
+    function getCleanValue ($sName)
     {
-		$aResult = parent::getCleanValue($sName);
+        $aResult = parent::getCleanValue($sName);
 
-		$a = isset($this->aInputs[$sName]) ? $this->aInputs[$sName] : false;
-		if($a && !empty($a['reverse']) && !empty($a['values']))
-			$aResult = array_diff(array_keys($a['values']), (is_array($aResult) ? $aResult : array()));
+        $a = isset($this->aInputs[$sName]) ? $this->aInputs[$sName] : false;
+        if($a && !empty($a['reverse']) && !empty($a['values']))
+            $aResult = array_diff(array_keys($a['values']), (is_array($aResult) ? $aResult : array()));
 
-		return $aResult;
+        return $aResult;
     }
 
     protected function processTranslations($sType = 'insert')
     {
+        $bResult = false;
+        foreach($this->aInputs as $sName => $aInput) {
+            if(!in_array($aInput['type'], array('text_translatable', 'textarea_translatable', 'list_translatable')))
+                continue; 
+
+            if($aInput['type'] == 'list_translatable') {
+                $iIndex = (int)$this->getCleanValue($sName . '_ind');
+                for($i = 0; $i < $iIndex; $i++) 
+                    if($this->_processTranslationsByName($sType, $sName . '_' . $i) !== false)
+                        $bResult = true;
+
+                continue;
+            }
+
+            if($this->_processTranslationsByName($sType, $sName) !== false)
+                $bResult = true;
+        }
+
+        return $bResult;
+    }
+
+    protected function _processTranslationsByName($sType, $sName)
+    {
+        $oLanguage = BxDolStudioLanguagesUtils::getInstance();
+
         $aType2Method = array(
             'insert' => 'addLanguageString',
             'update' => 'updateLanguageString'
         );
 
-        $oLanguage = BxDolStudioLanguagesUtils::getInstance();
-
         $bResult = false;
-        foreach($this->aInputs as $sName => $aInput) {
-            if(!in_array($aInput['type'], array('text_translatable', 'textarea_translatable')))
-                continue; 
 
-            $sKey = $this->getCleanValue($sName);
-            if(empty($sKey))
-                continue;
+        $sKey = $this->getCleanValue($sName);
+        if(empty($sKey))
+            return $bResult;
 
-            $aValues = $this->getTranslationsValues($sType, $sName);
-            foreach($aValues as $iLanguageId => $sString)
-                if($oLanguage->{$aType2Method[$sType]}($sKey, $sString, $iLanguageId))
-                    $bResult = true;
-        }
+        $aValues = $this->getTranslationsValues($sType, $sName);
+        foreach($aValues as $iLanguageId => $sString)
+            if($oLanguage->{$aType2Method[$sType]}($sKey, $sString, $iLanguageId))
+                $bResult = true;
 
         return $bResult;
     }
 
     protected function processTranslationsKey($sType = 'insert')
     {
-        $oLanguage = BxDolStudioLanguagesUtils::getInstance();
-
         foreach($this->aInputs as $sName => $aInput) {
-            if(!in_array($aInput['type'], array('text_translatable', 'textarea_translatable'))) 
+            if(!in_array($aInput['type'], array('text_translatable', 'textarea_translatable', 'list_translatable'))) 
                 continue;
 
-            //--- Fill in the Key if some values are available only. 
-            $sKey = '';
-            $sKeyDefault = $this->getCleanValue($sName);
+            if($aInput['type'] == 'list_translatable') {
+                $iIndex = (int)$this->getCleanValue($sName . '_ind');
+                for($i = 0; $i < $iIndex; $i++)
+                    $this->_processTranslationsKeyByName($sType, $sName . '_' . $i);
 
-            $aValues = $this->getTranslationsValues($sType, $sName, true);
-            if(!empty($aValues) && is_array($aValues))
-                $sKey = $this->getTranslationsKey($sType, $sName, $sKeyDefault);
+                continue;
+            }
 
-            //--- Remove Key if it exists but no values for him
-            if(empty($sKey) && !empty($sKeyDefault)) 
-                $oLanguage->deleteLanguageString($sKeyDefault);
-
-            BxDolForm::setSubmittedValue($sName, $sKey, $this->aFormAttrs['method']);
+            $this->_processTranslationsKeyByName($sType, $sName);
         }
     }
 
-    protected function processTranslationsValues ()
+    protected function _processTranslationsKeyByName($sType, $sName)
+    {
+        $oLanguage = BxDolStudioLanguagesUtils::getInstance();
+
+        //--- Fill in the Key if some values are available only. 
+        $sKey = '';
+        $sKeyDefault = $this->getCleanValue($sName);
+
+        $aValues = $this->getTranslationsValues($sType, $sName, true);
+        if(!empty($aValues) && is_array($aValues))
+            $sKey = $this->getTranslationsKey($sType, $sName, $sKeyDefault);
+
+        //--- Remove Key if it exists but no values for him
+        if(empty($sKey) && !empty($sKeyDefault)) 
+            $oLanguage->deleteLanguageString($sKeyDefault);
+
+        BxDolForm::setSubmittedValue($sName, $sKey, $this->aFormAttrs['method']);
+    }
+            
+    protected function processTranslationsValues()
+    {
+        foreach($this->aInputs as $sName => $aInput) {
+            if(!in_array($aInput['type'], array('text_translatable', 'textarea_translatable', 'list_translatable')))
+                continue;
+
+            if($aInput['type'] == 'list_translatable') {
+                $iIndex = (int)$this->getCleanValue($sName . '_ind');
+                for($i = 0; $i < $iIndex; $i++)
+                    $this->_processTranslationsValuesByName($sName . '_' . $i);
+
+                continue;
+            }
+
+            $this->_processTranslationsValuesByName($sName);
+        }
+    }
+
+    protected function _processTranslationsValuesByName($sName)
     {
         $aLanguages = BxDolStudioLanguagesUtils::getInstance()->getLanguages();
 
-        foreach($this->aInputs as $sName => $aInput) {
-            if(!in_array($aInput['type'], array('text_translatable', 'textarea_translatable')))
-                continue;
-
-            foreach($aLanguages as $sLangName => $sLangTitle)
-                $this->aInputs[$sName]['values'][$sLangName] = BxDolForm::getSubmittedValue($sName . '-' . $sLangName, $this->aFormAttrs['method']);
-        }
+        foreach($aLanguages as $sLangName => $sLangTitle)
+            $this->aInputs[$sName]['values'][$sLangName] = BxDolForm::getSubmittedValue($sName . '-' . $sLangName, $this->aFormAttrs['method']);
     }
 
     protected function getTranslationsKey($sType, $sName, $sValue)
