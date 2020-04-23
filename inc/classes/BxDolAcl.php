@@ -137,36 +137,62 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
      */
     public function getContentByLevelAsCondition($sContentField, $mixedLevelId)
     {
-        return array(
-        	'restriction_sql' => ' AND (`tlm`.DateStarts IS NULL OR `tlm`.DateStarts <= NOW()) AND (`tlm`.DateExpires IS NULL OR `tlm`.DateExpires > NOW())',
-            'restriction' => array (
-                'acl_members' => array(
-                    'value' => $mixedLevelId,
-                    'field' => 'IDLevel',
-                    'operator' => is_array($mixedLevelId) ? 'in' : '=',
-                    'table' => 'tlm',
+        $iLevelId = !is_array($mixedLevelId) ? $mixedLevelId : 0;
+        if (!$iLevelId && is_array($mixedLevelId) && 1 == count($mixedLevelId)) {
+            $a = array_values($mixedLevelId);
+            $iLevelId = array_shift($a);
+        }
+
+        // unconfirmed
+        if (MEMBERSHIP_ID_UNCONFIRMED == $iLevelId) {
+            return array(
+                'restriction_sql' => ' AND `sys_accounts`.`email_confirmed` = 0 ',
+                'restriction' => array (),
+                'join' => array (),
+            );
+        }
+        // standard
+        elseif (MEMBERSHIP_ID_STANDARD == $iLevelId) {
+            return array(
+                'restriction_sql' => ' AND (`tlm`.DateStarts IS NULL OR `tlm`.DateStarts <= NOW()) AND (`tlm`.DateExpires IS NULL OR `tlm`.DateExpires > NOW()) AND `tlm`.`IDMember` IS NULL AND `sys_accounts`.`email_confirmed` != 0 ',
+                'restriction' => array (
                 ),
-            ),
-            'join' => array (
-                'acl_members' => array(
-                    'type' => 'INNER',
-                    'table' => 'sys_acl_levels_members',
-                    'table_alias' => 'tlm',
-                    'mainField' => $sContentField,
-                    'onField' => 'IDMember',
-                    'joinFields' => array(),
+                'join' => array (
+                    'acl_members' => array(
+                        'type' => 'LEFT',
+                        'table' => 'sys_acl_levels_members',
+                        'table_alias' => 'tlm',
+                        'mainField' => $sContentField,
+                        'onField' => 'IDMember',
+                        'joinFields' => array(),
+                    ),
                 ),
-                'acl_levels' => array(
-                    'type' => 'INNER',
-                    'table' => 'sys_acl_levels',
-                    'table_alias' => 'tl',
-                    'mainTable' => 'tlm',
-                    'mainField' => 'IDLevel',
-                    'onField' => 'ID',
-                    'joinFields' => array(),
+            );
+        }
+        // other levels
+        else {
+            return array(
+                'restriction_sql' => ' AND (`tlm`.DateStarts IS NULL OR `tlm`.DateStarts <= NOW()) AND (`tlm`.DateExpires IS NULL OR `tlm`.DateExpires > NOW()) AND `sys_accounts`.`email_confirmed` != 0 ',
+                'restriction' => array (
+                    'acl_members' => array(
+                        'value' => $mixedLevelId,
+                        'field' => 'IDLevel',
+                        'operator' => is_array($mixedLevelId) ? 'in' : '=',
+                        'table' => 'tlm',
+                    ),
                 ),
-            ),
-        );
+                'join' => array (
+                    'acl_members' => array(
+                        'type' => 'INNER',
+                        'table' => 'sys_acl_levels_members',
+                        'table_alias' => 'tlm',
+                        'mainField' => $sContentField,
+                        'onField' => 'IDMember',
+                        'joinFields' => array(),
+                    ),
+                ),
+            );
+        }
     }
 
 	/**
