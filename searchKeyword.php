@@ -16,10 +16,10 @@ $sElsName = 'bx_elasticsearch';
 $sElsMethod = 'is_configured';
 if(BxDolRequest::serviceExists($sElsName, $sElsMethod) && BxDolService::call($sElsName, $sElsMethod) && !bx_get('cat') && !bx_get('type')) {
      $oModule = BxDolModule::getInstance($sElsName);
-
      bx_import('Search', $oModule->_aModule);
      $sClass = 'BxElsSearch';
 }
+bx_alert('system', 'search_keyword', 0, 0, array('class' => &$sClass));
 
 $oSearch = new $sClass(bx_get('section'));
 $oSearch->setLiveSearch(bx_get('live_search') ? 1 : 0);
