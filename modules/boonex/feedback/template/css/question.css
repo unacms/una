@@ -2,21 +2,33 @@
 .bx-form-input-answer {
     position: relative;
 }
+.bx-form-input-answer-sample {
+    display: none;
+}
 .bx-form-input-answer-row {
     display: -webkit-flex;
     display: flex;
     -webkit-align-items: center;
     align-items: center;
 }
-.bx-form-input-answer-cell.bx-fi-sc-txt {
+.bx-form-input-answer-row.bx-fi-ar-chb {
+    margin-top: 0.25rem;
+}
+.bx-form-input-answer-row.bx-fi-ar-chb input {
+    margin-left: 0;
+}
+.bx-form-input-answer-cell.bx-fi-ac-txt {
     -webkit-flex: 1 1 auto;
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
 }
-.bx-form-input-answer-cell.bx-fi-sc-btn {
+.bx-form-input-answer-cell.bx-fi-ac-btn {
     -webkit-flex: 0 0 auto;
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
+}
+.bx-form-input-answer-cell.bx-fi-ac-txt .bx-form-input-text {
+    margin-top: 0;
 }
 
 .bx-form-input-answer-add {

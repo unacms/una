@@ -56,7 +56,15 @@ class BxFdbGridQuestions extends BxTemplGrid
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-            if(($iId = $oForm->insert()) !== false) {
+            $iNow = time();
+
+            $aValsToAdd = array(
+                'author' => bx_get_logged_profile_id(),
+                'added' => $iNow,
+                'changed' => $iNow
+            );
+
+            if(($iId = $oForm->insert($aValsToAdd)) !== false) {
                 $this->_oModule->onAddQuestion($iId);
 
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
@@ -102,7 +110,11 @@ class BxFdbGridQuestions extends BxTemplGrid
         $oForm->initChecker($aQuestion);
 
         if($oForm->isSubmittedAndValid()) {
-            if($oForm->update($iId) !== false) {
+            $aValsToAdd = array(
+                'changed' => time()
+            );
+
+            if($oForm->update($iId, $aValsToAdd) !== false) {
                 $this->_oModule->onEditQuestion($iId);
 
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
@@ -125,9 +137,13 @@ class BxFdbGridQuestions extends BxTemplGrid
 
     protected function _delete($mixedId)
     {
+        $aQuestion = $this->_oModule->_oDb->getQuestions(array('type' => 'id', 'id' => $mixedId));
+        if(empty($aQuestion) || !is_array($aQuestion))
+            return false;
+
         $mixedResult = parent::_delete($mixedId);
         if($mixedResult !== false)
-            $this->_oModule->onDeleteQuestion($mixedId);
+            $this->_oModule->onDeleteQuestion($aQuestion);
 
         return $mixedResult;
     }

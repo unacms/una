@@ -34,6 +34,7 @@ class BxFdbConfig extends BxBaseModGeneralConfig
             'FIELD_ANSWERS' => 'answers',
             'FIELD_STATUS_ADMIN' => 'status_admin',
 
+            'FIELD_ANS_ID' => 'id',
             'FIELD_ANS_TITLE' => 'title',
             'FIELD_ANS_IMPORTANT' => 'important',
 

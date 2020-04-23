@@ -301,11 +301,25 @@ class BxFdbModule extends BxBaseModGeneralModule
         bx_alert($this->getName(), 'edited_question', $iId);
     }
 
-    public function onDeleteQuestion($iId)
+    public function onDeleteQuestion($aQuestion)
     {
-        $this->_oDb->deleteAnswer(array('question_id' => $iId));
+        $CNF = &$this->_oConfig->CNF;
 
-        bx_alert($this->getName(), 'deleted_question', $iId);
+        $oLanguage = BxDolStudioLanguagesUtils::getInstance();
+        $oLanguage->deleteLanguageString($aQuestion[$CNF['FIELD_TEXT']]);
+
+        $aAnswers = $this->_oDb->getAnswers(array('type' => 'question_id', 'question_id' => $aQuestion[$CNF['FIELD_ID']]));
+        if(!empty($aAnswers) && is_array($aAnswers))
+            foreach($aAnswers as $aAnswer) {
+                $oLanguage->deleteLanguageString($aAnswer[$CNF['FIELD_ANS_TITLE']]);
+
+                $this->_oDb->deleteAnswer(array('id' => $aAnswer[$CNF['FIELD_ANS_ID']]));
+            }
+
+        bx_alert($this->getName(), 'deleted_question', $aQuestion[$CNF['FIELD_ID']], false, array(
+            'question' => $aQuestion,
+            'answers' => $aAnswers,
+        ));
     }
 
     public function onAddAnswer($iQuestionId, $iAnswerId, $iProfileId = false, $aParams = array())
