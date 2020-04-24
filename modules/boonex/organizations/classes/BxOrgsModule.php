@@ -79,9 +79,9 @@ class BxOrgsModule extends BxBaseModGroupsModule
         $oAccount->updateProfileContextAuto();
     }
 
-    public function checkAllowedCompose (&$aDataEntry, $isPerformAction = false)
+    public function checkAllowedContact($aDataEntry, $isPerformAction = false)
     {
-        return BxBaseModProfileModule::checkAllowedCompose ($aDataEntry, $isPerformAction);
+        return BxBaseModProfileModule::checkAllowedContact($aDataEntry, $isPerformAction);
     }
 }
 

@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `bx_fdb_answers2users` (
 
 -- FORMS
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_feedback_question', 'bx_feedback', '_bx_feedback_form_question', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', 'bx_fdb_questions', 'id', '', '', 'a:1:{i:0;s:9:"do_submit";}', 'a:1:{s:14:"checker_helper";s:30:"BxFdbFormQuestionCheckerHelper";}', 0, 1, 'BxFdbFormQuestion', 'modules/boonex/feedback/classes/BxFdbFormQuestion.php');
+('bx_feedback_question', 'bx_feedback', '_bx_feedback_form_question', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', 'bx_fdb_questions', 'id', '', '', 'a:1:{i:0;s:9:"do_submit";}', 'a:2:{s:7:"checker";s:24:"BxFdbFormQuestionChecker";s:14:"checker_helper";s:30:"BxFdbFormQuestionCheckerHelper";}', 0, 1, 'BxFdbFormQuestion', 'modules/boonex/feedback/classes/BxFdbFormQuestion.php');
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
 ('bx_feedback_question', 'bx_feedback_question_add', 'bx_feedback', 0, '_bx_feedback_form_question_display_add'),
@@ -46,8 +46,8 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 ('bx_feedback_question', 'bx_feedback_question_view', 'bx_feedback', 1, '_bx_feedback_form_question_display_view');
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
-('bx_feedback_question', 'bx_feedback', 'text', '', '', 0, 'textarea', '_bx_feedback_form_question_input_sys_text', '_bx_feedback_form_question_input_text', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_feedback_form_question_input_text_err', 'Xss', '', 1, 0),
-('bx_feedback_question', 'bx_feedback', 'answers', '', '', 0, 'custom', '_bx_feedback_form_question_input_sys_answers', '_bx_feedback_form_question_input_answers', '', 1, 0, 0, '', '', '', 'AvailAnswers', '', '_bx_feedback_form_question_input_answers_err', '', '', 1, 0),
+('bx_feedback_question', 'bx_feedback', 'text', '', '', 0, 'textarea_translatable', '_bx_feedback_form_question_input_sys_text', '_bx_feedback_form_question_input_text', '', 1, 0, 0, '', '', '', 'AvailTranslatable', 'a:1:{i:0;s:4:"text";}', '_bx_feedback_form_question_input_text_err', 'Xss', '', 1, 0),
+('bx_feedback_question', 'bx_feedback', 'answers', '', '', 0, 'list_translatable', '_bx_feedback_form_question_input_sys_answers', '_bx_feedback_form_question_input_answers', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_feedback_question', 'bx_feedback', 'lifetime', '', '', 0, 'text', '_bx_feedback_form_question_input_sys_lifetime', '_bx_feedback_form_question_input_lifetime', '_bx_feedback_form_question_input_lifetime_inf', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_feedback_question', 'bx_feedback', 'allow_view_to', '', '', 0, 'custom', '_bx_feedback_form_question_input_sys_allow_view_to', '_bx_feedback_form_question_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_feedback_question', 'bx_feedback', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_feedback_form_question_input_sys_delete_confirm', '_bx_feedback_form_question_input_delete_confirm', '_bx_feedback_form_question_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_feedback_form_question_input_delete_confirm_error', '', '', 1, 0),

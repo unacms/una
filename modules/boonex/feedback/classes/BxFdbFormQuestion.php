@@ -9,9 +9,48 @@
  * @{
  */
 
-class BxFdbFormQuestionCheckerHelper extends BxDolFormCheckerHelper
+require_once (BX_DOL_DIR_STUDIO_CLASSES . 'BxDolStudioForm.php');
+
+class BxFdbFormQuestionChecker extends BxDolFormChecker
 {
-    static public function checkAvailAnswers ($s)
+    function __construct($sHelper = '')
+    {
+        parent::__construct($sHelper);
+    }
+
+    public function getSubmittedValueAnswers($sKey, $sMethod, &$aSpecificValues = false)
+    {
+        $aValues = array(
+            'ids' => array(), 
+            'vals' => array(), 
+            'imps' => array()
+        );
+
+        $iIndex = (int)BxDolForm::getSubmittedValue($sKey . '_ind', $sMethod, $aSpecificValues);
+
+        for($i = 0; $i < $iIndex; $i++) {
+            $sValue = BxDolForm::getSubmittedValue($sKey . '_' . $i, $sMethod, $aSpecificValues);
+            if($sValue === false)
+                continue;
+
+            $aValues['vals'][$i] = $sValue;
+            
+            $sId = BxDolForm::getSubmittedValue($sKey . '_id_' . $i, $sMethod, $aSpecificValues);
+            if($sId !== false)
+                $aValues['ids'][$i] = $sId;
+
+            $sImp = BxDolForm::getSubmittedValue($sKey . '_imp_' . $i, $sMethod, $aSpecificValues);
+            if($sImp !== false && strcmp($sValue, $sImp) == 0)
+                $aValues['imps'][] = $sImp;
+        }
+
+        return $aValues;
+    }
+}
+
+class BxFdbFormQuestionCheckerHelper extends BxDolStudioFormCheckerHelper
+{
+    static public function checkAvailAnswers ($s, $sName)
     {
         $iCountMin = 2;
 
@@ -27,15 +66,19 @@ class BxFdbFormQuestionCheckerHelper extends BxDolFormCheckerHelper
     }
 }
 
-class BxFdbFormQuestion extends BxBaseModTextFormEntry
+class BxFdbFormQuestion extends BxTemplStudioFormView
 {
+    protected $_sModule;
+    protected $_oModule;
+    
     protected $_sJsObject;
 
     public function __construct($aInfo, $oTemplate = false)
     {
-        $this->MODULE = 'bx_feedback';
-
         parent::__construct($aInfo, $oTemplate);
+
+        $this->_sModule = 'bx_feedback';
+        $this->_oModule = BxDolModule::getInstance($this->_sModule);
 
         $this->_sJsObject = $this->_oModule->_oConfig->getJsObject('question');
     }
@@ -50,18 +93,20 @@ class BxFdbFormQuestion extends BxBaseModTextFormEntry
                 'question_id' => $aValues['id']
             ));
 
-            $this->aInputs[$CNF['FIELD_ANSWERS']] = array_merge($this->aInputs[$CNF['FIELD_ANSWERS']], array(
-                'value' => array(),
-                'value_ids' => array(),
-                'value_imps' => array()
-            ));
+            $aValue = array(
+                'ids' => array(),
+                'vals' => array(),
+                'imps' => array()
+            );
 
-            foreach($aAnswers as $aAnswer) {
-                $this->aInputs[$CNF['FIELD_ANSWERS']]['value'][] = $aAnswer['title'];
-                $this->aInputs[$CNF['FIELD_ANSWERS']]['value_ids'][] = $aAnswer['id'];
+            foreach($aAnswers as $i => $aAnswer) {
+                $aValue['ids'][$i] = $aAnswer['id'];
+                $aValue['vals'][$i] = $aAnswer['title'];
                 if((int)$aAnswer['important'] == 1)
-                    $this->aInputs[$CNF['FIELD_ANSWERS']]['value_imps'][] = $aAnswer['title'];
+                    $aValue['imps'][$i] = true;
             }
+
+            $this->aInputs[$CNF['FIELD_ANSWERS']]['value'] = $aValue;
         }
 
         return parent::initChecker($aValues, $aSpecificValues);
@@ -96,21 +141,21 @@ class BxFdbFormQuestion extends BxBaseModTextFormEntry
         if(!isset($this->aInputs[$sField]))
             return true;
 
-        $aAnswers = $this->getCleanValue($sField);
-        if(empty($aAnswers) || !is_array($aAnswers))
-            return true;
+        $iIndex = (int)$this->getCleanValue($sField . '_ind');
+        for($i = 0; $i < $iIndex; $i++) {
+            $sValue = $this->getCleanValue($sField . '_' . $i);
+            if(empty($sValue) || get_mb_len($sValue) == 0)
+                continue;
 
-        $aAnswersImps = $this->getCleanValue($sField . '_imps');
-        $bAnswersImps = !empty($aAnswersImps) && is_array($aAnswersImps);
+            $sImp = $this->getCleanValue($sField . '_imp_' . $i);
 
-        foreach($aAnswers as $iIndex => $sAnswer)
-            if($sAnswer != '' && get_mb_len($sAnswer) > 0)
-                $this->_oModule->_oDb->insertAnswer(array(
-                    'question_id' => $iContentId,
-                    'title' => bx_process_input($sAnswer),
-                    'important' => $bAnswersImps && in_array($sAnswer, $aAnswersImps) ? 1 : 0,
-                    'order' => $iIndex
-                ));
+            $this->_oModule->_oDb->insertAnswer(array(
+                'question_id' => $iContentId,
+                'title' => bx_process_input($sValue),
+                'important' => !empty($sImp) && $sImp == 'on' ? 1 : 0,
+                'order' => $i
+            ));
+        }
 
         return true;
     }
@@ -122,28 +167,39 @@ class BxFdbFormQuestion extends BxBaseModTextFormEntry
         if(!isset($this->aInputs[$sField]))
             return true;
 
-        $aAnswersValues = $this->getCleanValue($sField);
+        $iIndex = (int)$this->getCleanValue($sField . '_ind');
 
-        $aAnswersIds = $this->getCleanValue($sField . '_ids');
-        if(empty($aAnswersIds) || !is_array($aAnswersIds))
-            $aAnswersIds = array();
+        $aAnswersValues = $aAnswersIds = $aAnswersImps = array();
+        for($i = 0; $i < $iIndex; $i++) {
+            $sValue = $this->getCleanValue($sField . '_' . $i);
+            if(empty($sValue))
+                continue;
 
-        $aAnswersImps = $this->getCleanValue($sField . '_imps');
-        if(empty($aAnswersImps) || !is_array($aAnswersImps))
-            $aAnswersImps = array();
+            $aAnswersValues[$i] = $sValue;
+
+            $iId = $this->getCleanValue($sField . '_id_' . $i);
+            if(!empty($iId))
+                $aAnswersIds[$i] = $iId;
+
+            $sImpName = $sField . '_imp_' . $i;
+            $sImpValue = $this->getCleanValue($sImpName);
+
+            if(!empty($sImpValue) && $sImpValue == 'on')
+                $aAnswersImps[$i] = true;
+        }
 
         //--- Remove deleted
         $aAnswersDb = $this->_oModule->_oDb->getAnswers(array('type' => 'question_id_pairs', 'question_id' => $iContentId));
         $this->_oModule->_oDb->deleteAnswerById(array_diff(array_keys($aAnswersDb), $aAnswersIds));
 
         //--- Update existed and remove empty
-        foreach($aAnswersIds as $iIndex => $iAnswerId) {
-            $sAnswersValue = $aAnswersValues[$iIndex];
+        foreach($aAnswersIds as $i => $iAnswerId) {
+            $sAnswersValue = $aAnswersValues[$i];
 
             if($sAnswersValue != '' && get_mb_len($sAnswersValue) > 0)
                 $this->_oModule->_oDb->updateAnswer(array(
                     'title' => bx_process_input($sAnswersValue), 
-                    'important' => in_array($sAnswersValue, $aAnswersImps) ? 1 : 0
+                    'important' => isset($aAnswersImps[$i]) && $aAnswersImps[$i] === true ? 1 : 0
                 ), array('id' => (int)$iAnswerId));
             else 
                 $this->_oModule->_oDb->deleteAnswer(array('id' => (int)$iAnswerId));
@@ -155,13 +211,12 @@ class BxFdbFormQuestion extends BxBaseModTextFormEntry
         if($iAnswersValues > $iAnswersIds) {
             $iMaxOrder = (int)$this->_oModule->_oDb->getAnswers(array('type' => 'question_id_max_order', 'question_id' => $iContentId));
 
-            $aAnswersValues = array_slice($aAnswersValues, $iAnswersIds);
-            foreach($aAnswersValues as $sAnswersValue)
-                if($sAnswersValue != '' && get_mb_len($sAnswersValue) > 0)
+            for($i = $iAnswersIds; $i < $iAnswersValues; $i++)
+                if($aAnswersValues[$i] != '' && get_mb_len($aAnswersValues[$i]) > 0)
                     $this->_oModule->_oDb->insertAnswer(array(
                         'question_id' => $iContentId,
-                        'title' => bx_process_input($sAnswersValue),
-                        'important' => in_array($sAnswersValue, $aAnswersImps) ? 1 : 0,
+                        'title' => bx_process_input($aAnswersValues[$i]),
+                        'important' => isset($aAnswersImps[$i]) && $aAnswersImps[$i] === true ? 1 : 0,
                         'order' => ++$iMaxOrder
                     ));
         }
@@ -171,79 +226,118 @@ class BxFdbFormQuestion extends BxBaseModTextFormEntry
 
     protected function genCustomInputAnswers(&$aInput)
     {
-        if(!empty($aInput['value']) && is_array($aInput['value'])) {
-            $aAnswersImp = array();
-            if(!empty($aInput['value_imps']) && is_array($aInput['value_imps']))
-                $aAnswersImp = $aInput['value_imps'];
+        $iIndex = 0;
+        $sAnswers = '';
 
-            $aTmplVarsAnswers = array();
-            foreach($aInput['value'] as $iIndex => $sValue) {
-                $sInputText = $this->genCustomInputAnswersText($aInput, $sValue);
-                if(!empty($aInput['value_ids'][$iIndex]))
-                    $sInputText .= $this->genCustomInputAnswersHidden($aInput, (int)$aInput['value_ids'][$iIndex]);
+        if(!empty($aInput['value']) && !empty($aInput['value']['vals']) && is_array($aInput['value']['vals'])) {
+            $aImps = array();
+            if(!empty($aInput['value']['imps']) && is_array($aInput['value']['imps']))
+                $aImps = $aInput['value']['imps'];
 
-                $sInputCheckbox = $this->genCustomInputAnswersCheckbox($aInput, $sValue, in_array($sValue, $aAnswersImp));
-
-                $aTmplVarsAnswers[] = array(
-                    'js_object' => $this->_sJsObject, 
-                    'input_text' => $sInputText,
-                    'input_checkbox' => $sInputCheckbox
-                );
-            }
+            foreach($aInput['value']['vals'] as $i => $sValue)
+                $sAnswers .= $this->_genAnswerSample($aInput, $iIndex++, array(
+                    'value' => $sValue,
+                    'id' => !empty($aInput['value']['ids'][$i]) ? (int)$aInput['value']['ids'][$i] : '',
+                    'checked' => isset($aImps[$i]) && $aImps[$i] === true,
+                ));
         }
-        else {
-            $aAnswer = array(
-                'js_object' => $this->_sJsObject, 
-                'input_text' => $this->genCustomInputAnswersText($aInput),
-                'input_checkbox' => $this->genCustomInputAnswersCheckbox($aInput)
-            );
-
-            $aTmplVarsAnswers = array($aAnswer, $aAnswer);
-        }
+        else
+            for($i = 0; $i < 2; $i++)
+                $sAnswers .= $this->_genAnswerSample($aInput, $iIndex++);
 
         return $this->_oModule->_oTemplate->parseHtmlByName('form_answers.html', array(
-            'bx_repeat:answers' => $aTmplVarsAnswers,
+            'index' => $this->genCustomInputAnswersIndex($aInput, $iIndex),
+            'sample' => $this->_genAnswerSample($aInput, '|x|'),
+            'answers' => $sAnswers,
             'btn_add' => $this->genCustomInputAnswersButton($aInput)
         ));
     }
 
-    protected function genCustomInputAnswersText($aInput, $mixedValue = '')
+    protected function _genAnswerSample($aInput, $iIndex, $aParams = array())
     {
-        $aInput['type'] = 'text';
-        $aInput['name'] .= '[]';
+        $sClass = 'bx-form-input-answer';
+        if(!empty($aParams['class']))
+            $sClass .= ' ' . $aParams['class'];
+
+        $sValue = !empty($aParams['value']) ? $aParams['value'] : '';
+
+        $sInputText = $this->genCustomInputAnswersText($aInput, $iIndex, $sValue);
+        if(!empty($aParams['id']))
+            $sInputText .= $this->genCustomInputAnswersHidden($aInput, $iIndex, $aParams['id']);
+
+        return $this->_oModule->_oTemplate->parseHtmlByName('form_answer.html', array(
+            'js_object' => $this->_sJsObject, 
+            'class' => $sClass,
+            'input_text' => $sInputText,
+            'input_checkbox' => $this->genCustomInputAnswersCheckbox($aInput, $iIndex, 'on', (isset($aParams['checked']) && $aParams['checked'] === true))
+        ));
+    }
+
+    protected function genCustomInputAnswersText($aInput, $iIndex, $mixedValue = '')
+    {
+        $aInput['type'] = 'text_translatable';
+        $aInput['name'] .= '_' . $iIndex;
+        $aInput['caption'] = '';
         $aInput['value'] = $mixedValue;
+        $aInput['db'] = array(
+            'pass' => 'Xss'
+        );
         
         if(!is_array($aInput['attrs']))
             $aInput['attrs'] = array();
 
-        $sJsMethod = 'javascript:' . $this->_sJsObject . '.answerOnType(event)';
+        $sJsMethod = 'javascript:' . $this->_sJsObject . '.answerOnType(event, \'' . $aInput['name'] . '\')';
         $aInput['attrs'] = array_merge($aInput['attrs'], array(
+            'bx-index' => $iIndex,
             'class' => 'bx-def-margin-sec-top-auto',
             'onkeyup' => $sJsMethod,
             'onpaste' => $sJsMethod,
             'onblur' => $sJsMethod
         ));
 
-        return $this->genInput($aInput);
+        return $this->genRow($aInput);
     }
 
-    protected function genCustomInputAnswersCheckbox($aInput, $mixedValue = '', $bChecked = false)
+    protected function genCustomInputAnswersCheckbox($aInput, $iIndex, $mixedValue = '', $bChecked = false)
     {
         $aInput['type'] = 'checkbox';
-        $aInput['name'] .= '_imps[]';
+        $aInput['name'] .= '_imp_' . $iIndex;
         $aInput['caption'] = _t('_bx_feedback_form_question_input_answers_imp');
         $aInput['value'] = $mixedValue;
         $aInput['required'] = 0;
         if($bChecked)
             $aInput['checked'] = 'checked';
 
+        if(!is_array($aInput['attrs']))
+            $aInput['attrs'] = array();
+
+        $aInput['attrs'] = array_merge($aInput['attrs'], array(
+            'bx-index' => $iIndex,
+        ));
+
         return $this->genRow($aInput);
     }
 
-    protected function genCustomInputAnswersHidden($aInput, $mixedValue = '')
+    protected function genCustomInputAnswersHidden($aInput, $iIndex, $mixedValue = '')
     {
         $aInput['type'] = 'hidden';
-        $aInput['name'] .= '_ids[]';
+        $aInput['name'] .= '_id_' . $iIndex;
+        $aInput['value'] = $mixedValue;
+
+        if(!is_array($aInput['attrs']))
+            $aInput['attrs'] = array();
+
+        $aInput['attrs'] = array_merge($aInput['attrs'], array(
+            'bx-index' => $iIndex,
+        ));
+
+        return $this->genInput($aInput);
+    }
+
+    protected function genCustomInputAnswersIndex($aInput, $mixedValue = '')
+    {        
+        $aInput['type'] = 'hidden';
+        $aInput['name'] .= '_ind';
         $aInput['value'] = $mixedValue;
 
         return $this->genInput($aInput);

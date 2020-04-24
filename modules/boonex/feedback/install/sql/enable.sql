@@ -13,7 +13,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_feedback_enable_questions', 'on', @iCategId, '_bx_feedback_option_enable_questions', 'checkbox', '', '', '', 1),
 ('bx_feedback_question_lifetime', '', @iCategId, '_bx_feedback_option_question_lifetime', 'digit', '', '', '', 2),
 
-('bx_feedback_enable_answer_notify_important', 'on', @iCategId, '_bx_feedback_option_answer_notify_important', 'checkbox', '', '', '', 10);
+('bx_feedback_enable_answer_ntf_important_only', 'on', @iCategId, '_bx_feedback_option_answer_ntf_important_only', 'checkbox', '', '', '', 10);
 
 
 -- PAGE: add block on homepage
@@ -36,7 +36,7 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_feedback_questions', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_feedback_questions', 'switcher', '_bx_feedback_grid_question_column_switcher', '5%', 0, '', '', 2),
-('bx_feedback_questions', 'text', '_bx_feedback_grid_question_column_text', '63%', 0, 32, '', 3),
+('bx_feedback_questions', 'text', '_bx_feedback_grid_question_column_text', '63%', 1, 32, '', 3),
 ('bx_feedback_questions', 'added', '_bx_feedback_grid_question_column_title_added', '10%', 0, 16, '', 4),
 ('bx_feedback_questions', 'actions', '', '20%', 0, '', '', 5);
 

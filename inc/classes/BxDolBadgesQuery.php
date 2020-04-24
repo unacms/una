@@ -98,6 +98,14 @@ class BxDolBadgesQuery extends BxDolDb
 
                 $sWhereClause = " AND `sc`.`id` = :id";
                 break;
+            
+            case 'by_module':
+                $aMethod['name'] = 'getAll';
+                $sWhereClause = " AND `sc`.`module` = :module";
+                $aMethod['params'][1] = array(
+                    'module' => $aParams['module']
+                );
+                break;
         }
 
         if(!empty($sGroupClause))

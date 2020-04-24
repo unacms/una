@@ -9,25 +9,19 @@
  * @{
  */
 
-class BxGroupsConfig extends BxBaseModProfileConfig
+class BxGroupsConfig extends BxBaseModGroupsConfig
 {
     function __construct($aModule)
     {
         parent::__construct($aModule);
 
-        $aMenuItems2Methods = array (
+        $this->_aMenuItems2MethodsActions = array_merge($this->_aMenuItems2MethodsActions, array(
             'view-group-profile' => 'checkAllowedView',
             'edit-group-profile' => 'checkAllowedEdit',
             'edit-group-cover' => 'checkAllowedChangeCover',
             'invite-to-group' => 'checkAllowedInvite',
-            'delete-group-profile' => 'checkAllowedDelete',
-            'profile-fan-add' => 'checkAllowedFanAdd',
-            'profile-fan-remove' => 'checkAllowedFanRemove',
-            'profile-subscribe-add' => 'checkAllowedSubscribeAdd',
-            'profile-subscribe-remove' => 'checkAllowedSubscribeRemove',
-            'profile-actions-more' => 'checkAllowedViewMoreMenu',
-            'convos-compose' => 'checkAllowedCompose',
-        );
+            'delete-group-profile' => 'checkAllowedDelete'
+        ));
 
         $this->CNF = array (
 
@@ -149,9 +143,9 @@ class BxGroupsConfig extends BxBaseModProfileConfig
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
-                'bx_groups_view_actions' => $aMenuItems2Methods,
-                'bx_groups_view_actions_more' => $aMenuItems2Methods,
-                'bx_groups_view_actions_all' => $aMenuItems2Methods,
+                'bx_groups_view_actions' => $this->_aMenuItems2MethodsActions,
+                'bx_groups_view_actions_more' => $this->_aMenuItems2MethodsActions,
+                'bx_groups_view_actions_all' => $this->_aMenuItems2MethodsActions,
             ),
 
             // informer messages

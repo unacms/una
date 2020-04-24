@@ -1456,7 +1456,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $bSticked = (int)$aEvent['sticked'] > 0;
         $bPromoted = (int)$aEvent['promoted'] > 0;
 
-        $sClass = $sStylePrefix . '-view-sizer';
+        $sClass = $aEvent['type'] . ' ' . (!empty($aEvent['action']) ? $aEvent['action'] . ' ' : '') . $sStylePrefix . '-view-sizer';
         if($bViewOutline) {
             $sClass = $sStylePrefix . '-grid-item-sizer';
             if($bPinned || $bSticked || $bPromoted) {

@@ -19,11 +19,6 @@ function BxFdbQuestion(oOptions) {
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
 }
 
-BxFdbQuestion.prototype.answerOnType = function(oEvent) {
-    var oText = $(oEvent.target);
-    oText.parents('.bx-form-input-answer:first').find("input[type = 'checkbox']").val(oText.val().trim());
-};
-
 BxFdbQuestion.prototype.answerOnSelect = function(oElement, iQuestion) {
     var $this = this;
 
@@ -47,21 +42,36 @@ BxFdbQuestion.prototype.answerOnSelect = function(oElement, iQuestion) {
     bx_prompt(_t('_bx_feedback_txt_enter_text'), '', fOnOk);
 };
 
+
+/**
+ * Methods for 'Answers' custom field.
+ */
+/*
+BxFdbQuestion.prototype.answerOnType = function(oEvent, sName) {
+    var oParent = $(oEvent.target).parents('.bx-form-input-answer:first');
+    oParent.find("input[type = 'checkbox']").val(oParent.find("input[name = '" + sName + "']").val().trim());
+};
+*/
+
 BxFdbQuestion.prototype.answerAdd = function(oButton, sName) {
-    var oButton = $(oButton);
+    var oField = $(oButton).parents('#bx-form-element-' + sName);
 
-    var oSubentry = oButton.parents('#bx-form-element-' + sName).find('.bx-form-input-answer:first').clone();
-    oSubentry.find("input[type = 'text']").val('');
-    oSubentry.find("input[type = 'checkbox']").val('1').removeAttr('checked');
-    oSubentry.find("input[type = 'hidden']").remove();
+    var oIndex = oField.find("input[type = 'hidden'][name = '" + sName + "_ind']");
+    var iIndex = oIndex.val();
 
-    oButton.parents('.bx-form-input-answer-add:first').before(oSubentry);
+    var sSample = oField.find('.bx-form-input-answer-sample:first').html().replace(/\|x\|/g, iIndex);
+
+    oField.find('.bx-form-input-answer:last').after($(sSample));
+    oIndex.val(parseInt(iIndex) + 1);
 };
 
 BxFdbQuestion.prototype.answerDelete = function(oButton) {
     $(oButton).parents('.bx-form-input-answer:first').remove();
 };
 
+/**
+ * Internal methods.
+ */
 BxFdbQuestion.prototype._getDefaultParams = function() {
     var oDate = new Date();
     return {_t:oDate.getTime()};

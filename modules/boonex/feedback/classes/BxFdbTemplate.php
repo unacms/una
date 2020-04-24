@@ -39,7 +39,7 @@ class BxFdbTemplate extends BxBaseModGeneralTemplate
                 'js_object' => $sJsObject,
                 'id' => $aAnswer['id'],
                 'question_id' => $iQuestion,
-                'title' => bx_process_output($aAnswer['title']),
+                'title' => bx_process_output(_t($aAnswer['title'])),
                 'bx_if:show_checked' => array(
                     'condition' => (int)$aAnswer['checked'] > 0,
                     'content' => array()
@@ -51,7 +51,7 @@ class BxFdbTemplate extends BxBaseModGeneralTemplate
         $this->addJsTranslation(array('_bx_feedback_txt_enter_text'));
         return $this->getJsCode('question') . $this->parseHtmlByName('question.html', array(
             'html_id' => $this->_oConfig->getHtmlIds('question') . $iQuestion,
-            'text' => bx_process_output($aQuestion['text']),
+            'text' => bx_process_output(_t($aQuestion['text'])),
             'bx_repeat:answers' => $aTmplVarsAnswers,
         ));
     }

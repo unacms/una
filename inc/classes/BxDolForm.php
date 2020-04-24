@@ -721,6 +721,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     protected $oTemplate;
 
     protected $_isValid = true;
+    protected $_sChecker;
     protected $_sCheckerHelper;
     protected $_aSpecificValues;
 
@@ -755,6 +756,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
         if (!isset($this->aFormAttrs['action']))
             $this->aFormAttrs['action'] = '';
 
+        $this->_sChecker = isset($this->aParams['checker']) ? $this->aParams['checker'] : 'BxDolFormChecker';
         $this->_sCheckerHelper = isset($this->aParams['checker_helper']) ? $this->aParams['checker_helper'] : '';
     }
 
@@ -802,7 +804,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     {
         $this->_aSpecificValues = $aSpecificValues;
 
-        $oChecker = new BxDolFormChecker($this->_sCheckerHelper);
+        $oChecker = new $this->_sChecker($this->_sCheckerHelper);
         $oChecker->setFormMethod($this->aFormAttrs['method'], $aSpecificValues);
         $oChecker->setFormParams($this->aParams);
         $oChecker->setFieldsCheckForSpam($this->_aFieldsCheckForSpam);
@@ -851,7 +853,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
     function insert ($aValsToAdd = array(), $isIgnore = false)
     {
-        $oChecker = new BxDolFormChecker($this->_sCheckerHelper);
+        $oChecker = new $this->_sChecker($this->_sCheckerHelper);
         $oChecker->setFormMethod($this->aFormAttrs['method'], $this->_aSpecificValues);
         $sSql = $oChecker->dbInsert($this->aParams['db'], $this->aInputs, $aValsToAdd, $isIgnore);
         if (!$sSql)
@@ -864,7 +866,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
     function update ($val, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
     {
-        $oChecker = new BxDolFormChecker($this->_sCheckerHelper);
+        $oChecker = new $this->_sChecker($this->_sCheckerHelper);
         $oChecker->setFormMethod($this->aFormAttrs['method'], $this->_aSpecificValues);
         $sSql = $oChecker->dbUpdate($val, $this->aParams['db'], $this->aInputs, $aValsToAdd, $aTrackTextFieldsChanges);
         if (!$sSql)
@@ -874,7 +876,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
     function delete ($val)
     {
-        $oChecker = new BxDolFormChecker($this->_sCheckerHelper);
+        $oChecker = new $this->_sChecker($this->_sCheckerHelper);
         $oChecker->setFormMethod($this->aFormAttrs['method'], $this->_aSpecificValues);
         $sSql = $oChecker->dbDelete($val, $this->aParams['db'], $this->aInputs);
         if (!$sSql)
@@ -891,7 +893,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
     function getCleanValue ($sName)
     {
-        $oChecker = new BxDolFormChecker($this->_sCheckerHelper);
+        $oChecker = new $this->_sChecker($this->_sCheckerHelper);
         $oChecker->setFormMethod($this->aFormAttrs['method'], $this->_aSpecificValues);
         $a = isset($this->aInputs[$sName]) ? $this->aInputs[$sName] : false;
         if ($a && isset($a['db']['pass']))
@@ -1190,7 +1192,13 @@ class BxDolFormChecker
                         $sSubmitName = $k;
 
             $a['name'] = str_replace('[]', '', $a['name']);
-            $val = BxDolForm::getSubmittedValue($a['name'], $this->_sFormMethod, $this->_aSpecificValues);
+
+            $sMethodGetSubmittedValue = 'getSubmittedValue' . bx_gen_method_name($a['name']);
+            if(method_exists($this, $sMethodGetSubmittedValue))
+                $val = $this->$sMethodGetSubmittedValue($a['name'], $this->_sFormMethod, $this->_aSpecificValues);
+            else
+                $val = BxDolForm::getSubmittedValue($a['name'], $this->_sFormMethod, $this->_aSpecificValues);
+
             if (isset(BxDolForm::$TYPES_FILE[$a['type']]))
                 $val = isset($_FILES[$a['name']]['name']) ? $_FILES[$a['name']]['name'] : '';
 

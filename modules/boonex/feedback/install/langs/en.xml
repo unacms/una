@@ -5,7 +5,7 @@
     <!-- Options -->
     <string name="_bx_feedback_option_enable_questions"><![CDATA[Enable questions]]></string>
     <string name="_bx_feedback_option_question_lifetime"><![CDATA[Default question lifetime (in days).]]></string>
-    <string name="_bx_feedback_option_answer_notify_important"><![CDATA[Notify about 'important' answers only.]]></string>
+    <string name="_bx_feedback_option_answer_ntf_important_only"><![CDATA[Notify about 'important' answers only.]]></string>
 
     <!-- Pages -->
     <string name="_bx_feedback_page_block_title_question"><![CDATA[Question]]></string>

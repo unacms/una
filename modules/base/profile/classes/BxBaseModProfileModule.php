@@ -1286,34 +1286,17 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
      */
     public function serviceCheckAllowedContactForProfile ($aDataEntry, $isPerformAction = false, $iProfileId = false)
     {
-        $CNF = &$this->_oConfig->CNF;
-
-        if(!$iProfileId)
-            $iProfileId = $this->_iProfileId;
-
-        // check is view allowed
-        if(($mixedResult = $this->serviceCheckAllowedViewForProfile($aDataEntry, $isPerformAction, $iProfileId)) !== CHECK_ACTION_RESULT_ALLOWED)
-            return $mixedResult;
-
-        // moderator and owner always have access
-        $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$CNF['FIELD_ID']], $this->getName());
-        if(($oProfile && $oProfile->id() == $iProfileId) || $this->_isModerator($isPerformAction))
-            return CHECK_ACTION_RESULT_ALLOWED;
-
-        // check privacy
-        if(!empty($CNF['OBJECT_PRIVACY_CONTACT'])) {
-            $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_CONTACT']);
-            if($oPrivacy && !$oPrivacy->check($aDataEntry[$CNF['FIELD_ID']], $iProfileId))
-                return _t('_sys_access_denied_to_private_content');
-        }
+        $mixedResult = $this->_serviceCheckAllowedContactForProfile($aDataEntry, $isPerformAction, $iProfileId);
 
         // call alert to allow custom checks
-        $mixedResult = null;
-        bx_alert('system', 'check_allowed_contact', 0, 0, array('module' => $this->getName(), 'content_info' => $aDataEntry, 'profile_id' => $iProfileId, 'override_result' => &$mixedResult));
-        if($mixedResult !== null)
-            return $mixedResult;
+        bx_alert('system', 'check_allowed_contact', 0, 0, array(
+            'module' => $this->getName(), 
+            'content_info' => $aDataEntry, 
+            'profile_id' => $iProfileId, 
+            'override_result' => &$mixedResult
+        ));
 
-        return CHECK_ACTION_RESULT_ALLOWED;
+        return $mixedResult;
     }
 
     public function serviceSetViewProfileCover($oPage, $aProfileInfo)
@@ -1455,18 +1438,13 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return CHECK_ACTION_RESULT_ALLOWED;
     }
 
-	/**
+    /**
+     * @deprecated since version 11.0.1 use BxBaseModProfileModule::checkAllowedCompose instead
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */
     public function checkAllowedCompose (&$aDataEntry, $isPerformAction = false)
     {
-        $CNF = &$this->_oConfig->CNF;
-
-        $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$CNF['FIELD_ID']], $this->getName());
-        if($oProfile && $oProfile->id() == $this->_iProfileId)
-            return _t('_sys_txt_access_denied');
-
-        return $this->checkAllowedView ($aDataEntry, $isPerformAction);
+        return $this->checkAllowedContact($aDataEntry, $isPerformAction);
     }
 
     /**
@@ -1565,6 +1543,32 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     		return false;
 
 		return $oProfile->id() == $iLogged;
+    }
+
+    protected function _serviceCheckAllowedContactForProfile($aDataEntry, $isPerformAction = false, $iProfileId = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$iProfileId)
+            $iProfileId = $this->_iProfileId;
+
+        // check is view allowed
+        if(($mixedResult = $this->serviceCheckAllowedViewForProfile($aDataEntry, $isPerformAction, $iProfileId)) !== CHECK_ACTION_RESULT_ALLOWED)
+            return $mixedResult;
+
+        // moderator and owner always have access
+        $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$CNF['FIELD_ID']], $this->getName());
+        if(($oProfile && $oProfile->id() == $iProfileId) || $this->_isModerator($isPerformAction))
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        // check privacy
+        if(!empty($CNF['OBJECT_PRIVACY_CONTACT'])) {
+            $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_CONTACT']);
+            if($oPrivacy && !$oPrivacy->check($aDataEntry[$CNF['FIELD_ID']], $iProfileId))
+                return _t('_sys_access_denied_to_private_content');
+        }
+
+        return CHECK_ACTION_RESULT_ALLOWED;
     }
 
     // ====== COMMON METHODS
