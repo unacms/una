@@ -13,7 +13,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_feedback_enable_questions', 'on', @iCategId, '_bx_feedback_option_enable_questions', 'checkbox', '', '', '', 1),
 ('bx_feedback_question_lifetime', '', @iCategId, '_bx_feedback_option_question_lifetime', 'digit', '', '', '', 2),
 
-('bx_feedback_enable_answer_notify_important', 'on', @iCategId, '_bx_feedback_option_answer_notify_important', 'checkbox', '', '', '', 10);
+('bx_feedback_enable_answer_ntf_important_only', 'on', @iCategId, '_bx_feedback_option_answer_ntf_important_only', 'checkbox', '', '', '', 10);
 
 
 -- PAGE: add block on homepage

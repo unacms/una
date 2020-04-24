@@ -235,6 +235,25 @@ class BxFdbDb extends BxBaseModGeneralDb
         return $this->query($sSql);
     }
 
+    public function insertAnswer2User($aParamsSet)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($aParamsSet))
+            return false;
+
+        $sSql = "INSERT INTO `" . $CNF['TABLE_ANSWERS2USERS'] . "` SET " . $this->arrayToSQL($aParamsSet);
+        return $this->query($sSql);
+    }
+
+    public function deleteAnswer2User($aParams)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sSql = "DELETE FROM `" . $CNF['TABLE_ANSWERS2USERS'] . "` WHERE " . $this->arrayToSQL($aParams, " AND ");
+        return $this->query($sSql);
+    }
+
     public function isAnswer($iQuestionId, $iProfileId)
     {
         $iAnswer = (int)$this->getAnswers(array(
@@ -250,10 +269,11 @@ class BxFdbDb extends BxBaseModGeneralDb
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $bResult = (int)$this->query("INSERT INTO `" . $CNF['TABLE_ANSWERS2USERS'] . "` SET `answer_id`=:answer_id, `profile_id`=:profile_id, `text`=:text, `added`=UNIX_TIMESTAMP()", array(
+        $bResult = (int)$this->insertAnswer2User(array(
             'answer_id' => $iAnswerId,
             'profile_id' => $iProfileId,
-            'text' => $sText
+            'text' => $sText,
+            'added' => time()
         )) > 0;
 
         if($bResult)
@@ -266,11 +286,11 @@ class BxFdbDb extends BxBaseModGeneralDb
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $bResult = (int)$this->query("DELETE FROM `" . $CNF['TABLE_ANSWERS2USERS'] . "` WHERE `answer_id`=:answer_id AND `profile_id`=:profile_id", array(
+        $bResult = (int)$this->deleteAnswer2User(array(
             'answer_id' => $iAnswerId,
             'profile_id' => $iProfileId
         )) > 0;
-        
+
         if($bResult)
             $this->query("UPDATE `" . $CNF['TABLE_ANSWERS'] . "` SET `votes`=`votes`-1 WHERE `id`=:id", array('id' => $iAnswerId));
 

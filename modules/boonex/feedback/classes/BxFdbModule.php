@@ -149,11 +149,10 @@ class BxFdbModule extends BxBaseModGeneralModule
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $bModeAni = $this->_oConfig->isModeAni();
         $iOwnerId = (int)$aEvent['owner_id'];
 
         $aAnswer = $this->_oDb->getAnswers(array('type' => 'id_for_profile', 'id' => $aEvent['object_id'], 'profile_id' => $iOwnerId));
-        if(empty($aAnswer) || !is_array($aAnswer) || ($bModeAni && (int)$aAnswer[$CNF['FIELD_ANS_IMPORTANT']] == 0))
+        if(empty($aAnswer) || !is_array($aAnswer) || ($this->_oConfig->isModeNio() && (int)$aAnswer[$CNF['FIELD_ANS_IMPORTANT']] == 0))
             return false;
 
         $aQuestion = $this->_oDb->getQuestions(array('type' => 'id', 'id' => $aAnswer['question_id']));
@@ -164,7 +163,7 @@ class BxFdbModule extends BxBaseModGeneralModule
             return false;
 
         //--- Title & Description
-        $sTitle = !empty($aAnswer[$CNF['FIELD_TEXT']]) ? $aAnswer[$CNF['FIELD_TEXT']] : '';
+        $sTitle = !empty($aAnswer[$CNF['FIELD_ANS2USR_TEXT']]) ? $aAnswer[$CNF['FIELD_ANS2USR_TEXT']] : '';
 
         $bCache = true;
         $aContent = $this->_getContentForTimelineAnswer($aEvent, $aQuestion, $aAnswer, $aBrowseParams);
@@ -265,6 +264,9 @@ class BxFdbModule extends BxBaseModGeneralModule
         if(empty($aAnswer) || !is_array($aAnswer))
             return array();
 
+        if($this->_oConfig->isModeNio() && (int)$aAnswer[$CNF['FIELD_ANS_IMPORTANT']] == 0)
+            return array();
+
         $sEntryUrl = BX_DOL_URL_ROOT;
         $sEntryCaption = strmaxtextlen($aQuestion[$CNF['FIELD_TEXT']], 20, '...');
 
@@ -314,6 +316,7 @@ class BxFdbModule extends BxBaseModGeneralModule
                 $oLanguage->deleteLanguageString($aAnswer[$CNF['FIELD_ANS_TITLE']]);
 
                 $this->_oDb->deleteAnswer(array('id' => $aAnswer[$CNF['FIELD_ANS_ID']]));
+                $this->_oDb->deleteAnswer2User(array('answer_id' => $aAnswer[$CNF['FIELD_ANS_ID']]));
             }
 
         bx_alert($this->getName(), 'deleted_question', $aQuestion[$CNF['FIELD_ID']], false, array(
@@ -327,25 +330,23 @@ class BxFdbModule extends BxBaseModGeneralModule
         $CNF = &$this->_oConfig->CNF;
 
         $sModule = $this->getName();
-        $bModeAni = $this->_oConfig->isModeAni();
-
         $aAnswer = $this->_oDb->getAnswers(array('type' => 'id', 'id' => $iAnswerId));
 
-        if(!$bModeAni || (int)$aAnswer[$CNF['FIELD_ANS_IMPORTANT']] > 0) {
-            bx_alert($sModule, 'added_answer', $iAnswerId, $iProfileId, array_merge(array(
-                'object_author_id' => $iProfileId,
-                'question_id' => $iQuestionId, 
-                'data' => $aAnswer['data'], 
-                'votes' => $aAnswer['votes']
-            ), $aParams));
+        bx_alert($sModule, 'added_answer', $iAnswerId, $iProfileId, array_merge(array(
+            'object_author_id' => $iProfileId,
+            'question_id' => $iQuestionId, 
+            'important' => $aAnswer['important'],
+            'data' => $aAnswer['data'], 
+            'votes' => $aAnswer['votes']
+        ), $aParams));
 
-            bx_alert($sModule, 'added_answer_notif', $iQuestionId, $iProfileId, array_merge(array(
-                'object_author_id' => $iProfileId,
-                'subobject_id' => $iAnswerId, 
-                'data' => $aAnswer['data'], 
-                'votes' => $aAnswer['votes']
-            ), $aParams));
-        }
+        bx_alert($sModule, 'added_answer_notif', $iQuestionId, $iProfileId, array_merge(array(
+            'object_author_id' => $iProfileId,
+            'subobject_id' => $iAnswerId, 
+            'important' => $aAnswer['important'],
+            'data' => $aAnswer['data'], 
+            'votes' => $aAnswer['votes']
+        ), $aParams));
     }
 
     public function onDeleteAnswer($iQuestionId, $iAnswerId, $iProfileId = false, $aParams = array())
@@ -353,15 +354,21 @@ class BxFdbModule extends BxBaseModGeneralModule
         $CNF = &$this->_oConfig->CNF;
 
         $sModule = $this->getName();
-        $bModeAni = $this->_oConfig->isModeAni();
-
         $aAnswer = $this->_oDb->getAnswers(array('type' => 'id', 'id' => $iAnswerId));
 
-        if(!$bModeAni || (int)$aAnswer[$CNF['FIELD_ANS_IMPORTANT']] > 0) {
-            bx_alert($sModule, 'deleted_answer', $iAnswerId, $iProfileId, array_merge(array('question_id' => $iQuestionId), $aParams));
+        bx_alert($sModule, 'deleted_answer', $iAnswerId, $iProfileId, array_merge(array(
+            'question_id' => $iQuestionId,
+            'important' => $aAnswer['important'],
+            'data' => $aAnswer['data'], 
+            'votes' => $aAnswer['votes']
+        ), $aParams));
 
-            bx_alert($sModule, 'deleted_answer_notif', $iQuestionId, $iProfileId, array_merge(array('subobject_id' => $iAnswerId), $aParams));
-        }
+        bx_alert($sModule, 'deleted_answer_notif', $iQuestionId, $iProfileId, array_merge(array(
+            'subobject_id' => $iAnswerId,
+            'important' => $aAnswer['important'],
+            'data' => $aAnswer['data'], 
+            'votes' => $aAnswer['votes']
+        ), $aParams));
     }
 
 
@@ -375,7 +382,7 @@ class BxFdbModule extends BxBaseModGeneralModule
     	$sUrl = BX_DOL_URL_ROOT;
 
         //--- Title
-        $sTitle = strmaxtextlen($aQuestion[$CNF['FIELD_TEXT']], 20, '...');
+        $sTitle = strmaxtextlen(_t($aQuestion[$CNF['FIELD_TEXT']]), 20, '...');
 
     	return array(
             'sample' => isset($CNF['T']['txt_sample_question_single_with_article']) ? $CNF['T']['txt_sample_question_single_with_article'] : $CNF['T']['txt_sample_question_single'],
@@ -404,10 +411,10 @@ class BxFdbModule extends BxBaseModGeneralModule
             $sUrl = $oOwnerProfile->getUrl();
 
         //--- Title
-        $sTitle = strmaxtextlen($aQuestion[$CNF['FIELD_TEXT']], 20, '...');
+        $sTitle = strmaxtextlen(_t($aQuestion[$CNF['FIELD_TEXT']]), 20, '...');
 
-        $sTextKey = '_bx_feedback_txt_answer_format' . (empty($aAnswer[$CNF['FIELD_TEXT']]) ? '_wo_comment' : '');
-        $sText = _t($sTextKey, $aAnswer[$CNF['FIELD_ANS_TITLE']], $aAnswer[$CNF['FIELD_TEXT']]); 
+        $sTextKey = '_bx_feedback_txt_answer_format' . (empty($aAnswer[$CNF['FIELD_ANS2USR_TEXT']]) ? '_wo_comment' : '');
+        $sText = _t($sTextKey, _t($aAnswer[$CNF['FIELD_ANS_TITLE']]), $aAnswer[$CNF['FIELD_ANS2USR_TEXT']]); 
 
     	return array(
             'sample' => isset($CNF['T']['txt_sample_answer_single_with_article']) ? $CNF['T']['txt_sample_answer_single_with_article'] : $CNF['T']['txt_sample_answer_single'],

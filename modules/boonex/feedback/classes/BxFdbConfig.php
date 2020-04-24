@@ -38,12 +38,14 @@ class BxFdbConfig extends BxBaseModGeneralConfig
             'FIELD_ANS_TITLE' => 'title',
             'FIELD_ANS_IMPORTANT' => 'important',
 
+            'FIELD_ANS2USR_TEXT' => 'text',
+
             // page URIs
 
             // some params
             'PARAM_QUESTIONS' => 'bx_feedback_enable_questions',
             'PARAM_QUESTION_LIFETIME' => 'bx_feedback_question_lifetime',
-            'PARAM_ANSWER_NOTIFY_IMPORTANT' => 'bx_feedback_enable_answer_notify_important',
+            'PARAM_ANSWER_NTF_IMPORTANT_ONLY' => 'bx_feedback_enable_answer_ntf_important_only',
 
             // objects
             'OBJECT_FORM_QUESTION' => 'bx_feedback_question',
@@ -94,9 +96,9 @@ class BxFdbConfig extends BxBaseModGeneralConfig
     /**
      * Notify about important Answers only.
      */
-    public function isModeAni()
+    public function isModeNio()
     {
-        return getParam($this->CNF['PARAM_ANSWER_NOTIFY_IMPORTANT']) == 'on';
+        return getParam($this->CNF['PARAM_ANSWER_NTF_IMPORTANT_ONLY']) == 'on';
     }
 }
 
