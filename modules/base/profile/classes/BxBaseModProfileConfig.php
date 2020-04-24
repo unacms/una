@@ -27,8 +27,8 @@ class BxBaseModProfileConfig extends BxBaseModGeneralConfig
             'profile-subscribe-remove' => 'checkAllowedSubscribeRemove',
             'profile-actions-more' => 'checkAllowedViewMoreMenu',
             'profile-set-acl-level' => 'checkAllowedSetMembership',
-            'convos-compose' => 'checkAllowedCompose',
-            'messenger' => 'checkAllowedCompose',
+            'convos-compose' => 'checkAllowedContact',
+            'messenger' => 'checkAllowedContact',
         );        
     }
 }

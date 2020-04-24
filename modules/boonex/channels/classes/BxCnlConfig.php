@@ -9,23 +9,19 @@
  * @{
  */
 
-class BxCnlConfig extends BxBaseModProfileConfig
+class BxCnlConfig extends BxBaseModGroupsConfig
 {
     function __construct($aModule)
     {
         parent::__construct($aModule);
 
-        $aMenuItems2Methods = array (
+        $this->_aMenuItems2MethodsActions = array_merge($this->_aMenuItems2MethodsActions, array(
             'view-channel-profile' => 'checkAllowedView',
             'edit-channel-profile' => 'checkAllowedEdit',
             'edit-channel-cover' => 'checkAllowedChangeCover',
             'invite-to-channel' => 'checkAllowedInvite',
             'delete-channel-profile' => 'checkAllowedDelete',
-            'profile-subscribe-add' => 'checkAllowedSubscribeAdd',
-            'profile-subscribe-remove' => 'checkAllowedSubscribeRemove',
-            'profile-actions-more' => 'checkAllowedViewMoreMenu',
-            'convos-compose' => 'checkAllowedCompose',
-        );
+        ));
 
         $this->CNF = array (
 
@@ -122,8 +118,8 @@ class BxCnlConfig extends BxBaseModProfileConfig
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
-                'bx_channels_view_actions' => $aMenuItems2Methods,
-                'bx_channels_view_actions_more' => $aMenuItems2Methods,
+                'bx_channels_view_actions' => $this->_aMenuItems2MethodsActions,
+                'bx_channels_view_actions_more' => $this->_aMenuItems2MethodsActions,
             ),
 
             // informer messages
