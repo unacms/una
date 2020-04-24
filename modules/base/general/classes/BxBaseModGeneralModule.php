@@ -1777,31 +1777,39 @@ class BxBaseModGeneralModule extends BxDolModule
         return $iProfileId;
     }
 	
-	public function serviceGetBadges($iContentId,  $bIsSingle = false, $bIsCompact  = false)
+    public function serviceGetBadges($iContentId,  $bIsSingle = false, $bIsCompact  = false)
     {
-        $oBadges = BxDolBadges::getInstance();
-        $aBadges = $oBadges->getData(
-            array(
-            'type' => ($bIsSingle ? 'by_module&object2_single' : 'by_module&object2'),
-            'module' => $this->_aModule['name'],
-            'object_id' => $iContentId
-            )
-        );
-        
-        if ($bIsSingle && count($aBadges) > 0)
-            return BxDolService::call('system', 'get_badge', array($aBadges[0], $bIsCompact), 'TemplServices');
-        
-        $aBadgesOutput = array();
-        foreach($aBadges as $aBadge) {
-            $aBadgesOutput[] =  array('badge' => BxDolService::call('system', 'get_badge', array($aBadge, $bIsCompact), 'TemplServices'));
-        }
+        $sModule = $this->getName();
 
-        return $this->_oTemplate->parseHtmlByName('badges.html', 
-			array(
-				'bx_repeat:items' => $aBadgesOutput,
-			)
-		);
-        
+        $oBadges = BxDolBadges::getInstance();
+        $aBadges = $oBadges->getData(array(
+            'type' => ($bIsSingle ? 'by_module&object2_single' : 'by_module&object2'),
+            'module' => $sModule,
+            'object_id' => $iContentId
+        ));
+
+        $sResult = false;
+        bx_alert('system', 'get_badges', 0, 0, array(
+            'module' => $sModule, 
+            'content_id' => $iContentId,
+            'is_single' => $bIsSingle,
+            'is_compact' => $bIsCompact,
+            'badges' => $aBadges, 
+            'override_result' => &$sResult
+        ));
+        if($sResult !== false)
+            return $sResult;
+
+        if($bIsSingle && count($aBadges) > 0)
+            return BxDolService::call('system', 'get_badge', array($aBadges[0], $bIsCompact), 'TemplServices');
+
+        $aBadgesOutput = array();
+        foreach($aBadges as $aBadge)
+            $aBadgesOutput[] =  array('badge' => BxDolService::call('system', 'get_badge', array($aBadge, $bIsCompact), 'TemplServices'));
+
+        return $this->_oTemplate->parseHtmlByName('badges.html', array(
+            'bx_repeat:items' => $aBadgesOutput,
+        ));
     }
 
     /**
