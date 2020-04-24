@@ -32,6 +32,17 @@
     box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.2);
 }
 
+/* Badges in unit */
+.bx-base-pofile-unit div.bx-badges-list {
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+
+    padding-top: 0.25rem;
+}
+.bx-base-pofile-unit div.bx-badges-list div.bx-badge:first-child {
+    margin-left: 0;
+}
+
 /* browse unit with cover */
 .bx-base-pofile-unit-cover {
     height: 10.0rem;
