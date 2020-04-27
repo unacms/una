@@ -628,7 +628,7 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
             $iAccountId, 
             'bx_accounts', 
             $sAction,  
-            array('content_title' => $this->getDisplayName(), 'data' => $aData)
+            array('content_title' => $this->getEmail(), 'data' => $aData)
         );
     }
 
