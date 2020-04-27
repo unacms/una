@@ -22,7 +22,7 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
     {
         parent::__construct($oConfig, $oDb);
 
-        $this->_bLetterAvatar = true;
+        $this->_bLetterAvatar = false;
         $this->_iUnitCharsSummary = 50;
 
         $this->_sUnitClassWoCover = $this->_sUnitClass; //--- Save default 'Unit' class (from BxBaseModProfileTemplate) as 'Unit W\O Cover' class here.
