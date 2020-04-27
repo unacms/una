@@ -1552,13 +1552,13 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         if(!$iProfileId)
             $iProfileId = $this->_iProfileId;
 
-        // check is view allowed
-        if(($mixedResult = $this->serviceCheckAllowedViewForProfile($aDataEntry, $isPerformAction, $iProfileId)) !== CHECK_ACTION_RESULT_ALLOWED)
-            return $mixedResult;
-
-        // moderator and owner always have access
+        // cannot contact myself
         $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$CNF['FIELD_ID']], $this->getName());
-        if(($oProfile && $oProfile->id() == $iProfileId) || $this->_isModerator($isPerformAction))
+        if($oProfile && $oProfile->id() == $iProfileId)
+            return _t('_sys_txt_access_denied');
+
+        // moderator always has access
+        if($this->_isModeratorForProfile($isPerformAction, $iProfileId))
             return CHECK_ACTION_RESULT_ALLOWED;
 
         // check privacy

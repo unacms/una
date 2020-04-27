@@ -103,7 +103,8 @@ class BxDolGridConnections extends BxTemplGrid
         if (!$oProfile)
             return _t('_sys_txt_error_occured');
 
-        return parent::_getCellDefault ($oProfile->getUnit(), $sKey, $aField, $aRow);
+        $sBadges = bx_srv($oProfile->getModule(), 'get_badges', array($oProfile->getContentId()));
+        return parent::_getCellDefault($oProfile->getUnit(0, array('template' => array('vars' => array('addon' => $sBadges)))), $sKey, $aField, $aRow);
     }
 
     protected function _getCellInfo ($mixedValue, $sKey, $aField, $aRow)

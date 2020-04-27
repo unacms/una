@@ -211,7 +211,7 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $iProfile = $oProfile->id();
 
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
-        $sTitle = bx_process_output($aData[$CNF['FIELD_NAME']]);
+        $sTitle = bx_process_output($oProfile->getDisplayName());
 
         $sUrlAvatar = $this->urlAvatarBig($aData, false);
         $bUrlAvatar = !empty($sUrlAvatar);
