@@ -131,12 +131,20 @@ p.bx-base-pofile-unit-thumb.bx-def-ava-size {
 }
 
 .bx-base-pofile-unit-title {
+    display: -webkit-flex;
+    display: flex; 
+    -webkit-justify-content:center;
+    justify-content:center;
+    
     text-align:center;
     white-space:nowrap;
     text-overflow:ellipsis;
     overflow:hidden;
-    display: flex; 
-    justify-content:center;
+}
+
+.bx-base-pofile-unit-title > a {
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .bx-base-pofile-unit-info-members {
