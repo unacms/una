@@ -1552,6 +1552,11 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         if(!$iProfileId)
             $iProfileId = $this->_iProfileId;
 
+        // cannot contact myself
+        $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$CNF['FIELD_ID']], $this->getName());
+        if($oProfile && $oProfile->id() == $iProfileId)
+            return _t('_sys_txt_access_denied');
+
         // moderator always has access
         if($this->_isModeratorForProfile($isPerformAction, $iProfileId))
             return CHECK_ACTION_RESULT_ALLOWED;
