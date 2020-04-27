@@ -133,7 +133,16 @@ class BxPhotosModule extends BxBaseModTextModule
     {
         return $iContentId > 0 ? CHECK_ACTION_RESULT_ALLOWED : CHECK_ACTION_RESULT_NOT_ALLOWED;
     }
-    
+
+    protected function _getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams = array())
+    {
+        $aResult = parent::_getContentForTimelinePost($aEvent, $aContentInfo, $aBrowseParams);
+        if(empty($aResult['title'])) 
+            $aResult['title'] = _t('_sys_txt_no_title');
+
+        return $aResult;
+    }
+
     protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {
         $aImages = parent::_getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
