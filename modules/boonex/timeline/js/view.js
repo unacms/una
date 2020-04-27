@@ -31,16 +31,20 @@ function BxTimelineView(oOptions) {
     this._fOutsideOffset = 0.8;
     this._oSaved = {};
 
-    this._oVapPlayers = {};
     this._fVapOffsetStart = 0.8;
     this._fVapOffsetStop = 0.2;
 
     this._bLiveUpdatePaused = false;
 
+    if(typeof window.glBxTimelineVapPlayers === 'undefined')
+        window.glBxTimelineVapPlayers = [];
+
     var $this = this;
     $(document).ready(function() {
     	$this.init();
     });
+
+    
 }
 
 BxTimelineView.prototype = new BxTimelineMain();
@@ -84,16 +88,19 @@ BxTimelineView.prototype.init = function()
         if(this._sVideosAutoplay != 'off') {
             this.initVideosAutoplay(this.oView);
 
+            this.oView.on('hide')
+
             $(window).on('scroll', function() {
-                var oItems = $this.oView.find('.' + $this.sClassItem);
+                if(!$this.oView.is(':visible'))
+                    return;
 
                 if(!window.requestAnimationFrame) 
                     setTimeout(function() {
-                        $this.playVideos(oItems, $this._fVapOffsetStart, $this._fVapOffsetStop);
+                        $this.autoplayVideos($this.oView, $this._fVapOffsetStart, $this._fVapOffsetStop);
                     }, 100);
                 else
                     window.requestAnimationFrame(function() {
-                        $this.playVideos(oItems, $this._fVapOffsetStart, $this._fVapOffsetStop);
+                        $this.autoplayVideos($this.oView, $this._fVapOffsetStart, $this._fVapOffsetStop);
                     });
             });
         }
@@ -216,9 +223,10 @@ BxTimelineView.prototype.initVideosAutoplay = function(oParent)
 
     this.initVideos(oParent);
 
+    var sPrefix = oParent.attr('id');
     oParent.find('iframe').each(function() {
-        var sPlayer = $(this).attr('id');
-        if($this._oVapPlayers[sPlayer])
+        var sPlayer = sPrefix + '_' + $(this).attr('id');
+        if(window.glBxTimelineVapPlayers[sPlayer])
             return;
 
         var oPlayer = new playerjs.Player(this);
@@ -231,7 +239,7 @@ BxTimelineView.prototype.initVideosAutoplay = function(oParent)
         oPlayer.on('ready', fFixHeight);
         oPlayer.on('play', fFixHeight);
 
-        $this._oVapPlayers[sPlayer] = oPlayer;
+        window.glBxTimelineVapPlayers[sPlayer] = oPlayer;
     });
 };
 
@@ -249,16 +257,19 @@ BxTimelineView.prototype.showEvents = function(oEvents, fOffset)
     });
 };
 
-BxTimelineView.prototype.playVideos = function(oEvents, fOffsetStart, fOffsetStop)
+BxTimelineView.prototype.autoplayVideos = function(oView, fOffsetStart, fOffsetStop)
 {
     var $this = this;
 
-    oEvents.each(function() {
+    var oItems = oView.find('.' + this.sClassItem);
+    var sPrefix = oView.attr('id') + '_';
+
+    oItems.each(function() {
         $(this).find('iframe').each(function() {
             var oFrame = $(this);
-            var oPlayer = $this._oVapPlayers[oFrame.attr('id')];
+            var oPlayer = window.glBxTimelineVapPlayers[sPrefix + oFrame.attr('id')];
             if(!oPlayer)
-                    return;
+                return;
 
             var iFrameTop = oFrame.offset().top;
             var iFrameBottom = iFrameTop + oFrame.height();
@@ -272,13 +283,55 @@ BxTimelineView.prototype.playVideos = function(oEvents, fOffsetStart, fOffsetSto
     });
 };
 
+BxTimelineView.prototype.playVideos = function(oView)
+{
+    var $this = this;
+
+    var oItems = oView.find('.' + this.sClassItem);
+    var sPrefix = oView.attr('id') + '_';
+
+    oItems.each(function() {
+        $(this).find('iframe').each(function() {
+            var oFrame = $(this);
+            var oPlayer = window.glBxTimelineVapPlayers[sPrefix + oFrame.attr('id')];
+            if(!oPlayer)
+                return;
+
+            oPlayer.play();
+        });
+    });
+};
+
+BxTimelineView.prototype.pauseVideos = function(oView)
+{
+    var $this = this;
+
+    var oItems = oView.find('.' + this.sClassItem);
+    var sPrefix = oView.attr('id') + '_';
+
+    oItems.each(function() {
+        $(this).find('iframe').each(function() {
+            var oFrame = $(this);
+            var oPlayer = window.glBxTimelineVapPlayers[sPrefix + oFrame.attr('id')];
+            if(!oPlayer)
+                return;
+
+            oPlayer.pause();
+        });
+    });
+};
+
 BxTimelineView.prototype.changeView = function(oLink, sType, oRequestParams)
 {
+    var $this = this;
     var oViews = $(this._getHtmlId('views_content', this._oRequestParams, {with_type: false})); 
 
     var oViewBefore = $(this._getHtmlId('main', this._oRequestParams));
     if(!oViewBefore.length)
         oViewBefore = oViews.children(':visible');
+
+    if(this._sVideosAutoplay != 'off')
+        this.pauseVideos(oViewBefore);
 
     this._oRequestParams.start = 0;
     this._oRequestParams.type = sType;
@@ -291,7 +344,6 @@ BxTimelineView.prototype.changeView = function(oLink, sType, oRequestParams)
         return;
     }
 
-    var $this = this;
     var oData = this._getDefaultData(oLink);
     if(oRequestParams != undefined)
         oData = jQuery.extend({}, oData, oRequestParams);
