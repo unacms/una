@@ -7,9 +7,9 @@
 
 var oFilePondDefaultSettings = {
     allowReorder: true,
-    imageEditEditor: Doka.create({
+    /*imageEditEditor: Doka.create({
         utils: ['crop', 'filter', 'color']
-    }),
+    }),*/
     labelIdle: '<span class="filepond--label-action"><bx_text:_bx_media_uploader_filepond_labelIdle /></span>',
     labelInvalidField: '<bx_text:_bx_media_uploader_filepond_labelInvalidField />',
     labelFileWaitingForSize: '<bx_text:_bx_media_uploader_filepond_labelFileWaitingForSize />',
