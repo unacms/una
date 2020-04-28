@@ -199,7 +199,6 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
                         'author' => $iProfileId,
                         'name' => $oAccount->getDisplayName(),
                     )));
-                    
                     $a = BxDolService::call($sProfileModule, 'entity_add', array($iProfileId, $aProfileInfo));
                     if (isset($a['content']['profile_id']) && (int)$a['content']['profile_id'] > 0){
                         BxDolAcl::getInstance()->setMembership((int)$a['content']['profile_id'], MEMBERSHIP_ID_STANDARD);
@@ -456,7 +455,14 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
         $mixedValue = !empty($mixedValue) ? bx_time_js($mixedValue) : _t('_sys_not_available');
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
-    }    
+    } 
+    
+    protected function _getCellAdded($mixedValue, $sKey, $aField, $aRow)
+    {
+        $mixedValue = !empty($mixedValue) ? bx_time_js($mixedValue) : _t('_sys_not_available');
+
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    } 
     
     protected function _getCellIsConfirmed($mixedValue, $sKey, $aField, $aRow)
     {
