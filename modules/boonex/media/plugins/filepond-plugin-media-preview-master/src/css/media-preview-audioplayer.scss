@@ -1,0 +1,55 @@
+.filepond--media-preview {
+    audio {
+        display: none;
+    }
+
+    .audioplayer {
+        width: calc(100% - 1.4em);
+        margin: 2.3em auto auto;
+    }
+
+    .playpausebtn {
+        margin-top: .3em;
+        margin-right: .3em;
+        height: 25px;
+        width: 25px;
+        border-radius: 25px;
+        border: none;
+        background-repeat: no-repeat;
+        background-position: center;
+        float: left;
+        outline: none;
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgba(#000, .5);
+        }
+    }
+
+    .play {
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAyElEQVQ4T9XUsWoCQRRG4XPaFL5SfIy8gKYKBCysrax8Ahs7qzQ2qVIFOwsrsbEWLEK6EBFGBrIQhN2d3dnGgalm+Jh7789Ix8uOPe4YDCH0gZ66atKW0pJDCE/AEngDXtRjCpwCRucbGANzNVTBqWBhfAJDdV+GNgWj8wtM41bPt3AbsDB2f69d/0dzwC0wUDe54A8wAWbqJbfkD+BZPeQO5QsYqYu6LKb0MIb7VT3VYfG8CnwEHtT3FKi4c8e/TZMyk3LYFrwCgMdHFbRDKS8AAAAASUVORK5CYII=');
+    }
+
+    .pause {
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAh0lEQVQ4T+2UsQkCURBE30PLMbAMMResQrAPsQ0TK9AqDKxGZeTLD74aGNwlhzfZssvADDMrPcOe+RggYZIJcG2s2KinMidZAvu6u6uzT8u+JCeZArfmcKUeK+EaONTdQy23bxgJX8aPHvIHsSnVuzTx36rn2pQFsGuqN//ZlK7vbIDvq6vkJ9yteBXzecYbAAAAAElFTkSuQmCC');
+    }
+
+    .timeline {
+        width: calc(100% - 2.5em);
+        height:3px;
+        margin-top: 1em;
+        float: left;
+        border-radius: 15px;
+        background: rgba(#fff, .3);
+
+    }
+
+    .playhead {
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        margin-top: -5px;
+        background: rgba(#fff, 1);
+
+    }
+}

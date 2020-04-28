@@ -1,0 +1,37 @@
+.filepond--root {
+  /* layout*/
+  box-sizing: border-box;
+  position: relative;
+  margin-bottom: 1em;
+  /* base font size for whole component */
+  font-size: 1rem;
+  /* base line height */
+  line-height: normal;
+  /* up uses default system font family */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  /* will increase font weight a bit on Safari */
+  font-weight: 450;
+  text-align: left;
+  text-rendering: optimizeLegibility;
+  direction: ltr;
+  contain: layout style size; }
+  .filepond--root * {
+    box-sizing: inherit;
+    line-height: inherit; }
+  .filepond--root *:not(text) {
+    font-size: inherit; }
+  .filepond--root[data-disabled] {
+    pointer-events: none; }
+    .filepond--root[data-disabled] .filepond--list-scroller {
+      pointer-events: all; }
+    .filepond--root[data-disabled] .filepond--list {
+      pointer-events: none; }
+
+/**
+ * Root element children layout
+ */
+.filepond--root .filepond--drop-label {
+  min-height: 4.75em; }
+.filepond--root .filepond--list-scroller {
+  margin-top: 1em;
+  margin-bottom: 1em; }

@@ -1,0 +1,44 @@
+.filepond--root[data-style-panel-layout~='integrated'] {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  margin: 0; }
+.filepond--root[data-style-panel-layout~='circle'] .filepond--panel-root, .filepond--root[data-style-panel-layout~='integrated'] .filepond--panel-root {
+  border-radius: 0; }
+  .filepond--root[data-style-panel-layout~='circle'] .filepond--panel-root > *, .filepond--root[data-style-panel-layout~='integrated'] .filepond--panel-root > * {
+    display: none; }
+.filepond--root[data-style-panel-layout~='circle'] .filepond--drop-label, .filepond--root[data-style-panel-layout~='integrated'] .filepond--drop-label {
+  bottom: 0;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 7; }
+.filepond--root[data-style-panel-layout~='circle'] .filepond--item-panel, .filepond--root[data-style-panel-layout~='integrated'] .filepond--item-panel {
+  display: none; }
+.filepond--root[data-style-panel-layout~='compact'] .filepond--list-scroller, .filepond--root[data-style-panel-layout~='integrated'] .filepond--list-scroller {
+  overflow: hidden;
+  height: 100%;
+  margin-top: 0;
+  margin-bottom: 0; }
+.filepond--root[data-style-panel-layout~='compact'] .filepond--list, .filepond--root[data-style-panel-layout~='integrated'] .filepond--list {
+  left: 0;
+  right: 0;
+  height: 100%; }
+.filepond--root[data-style-panel-layout~='compact'] .filepond--item, .filepond--root[data-style-panel-layout~='integrated'] .filepond--item {
+  margin: 0; }
+.filepond--root[data-style-panel-layout~='compact'] .filepond--file-wrapper, .filepond--root[data-style-panel-layout~='integrated'] .filepond--file-wrapper {
+  height: 100%; }
+.filepond--root[data-style-panel-layout~='compact'] .filepond--drop-label, .filepond--root[data-style-panel-layout~='integrated'] .filepond--drop-label {
+  z-index: 7; }
+.filepond--root[data-style-panel-layout~='circle'] {
+  border-radius: 99999rem;
+  overflow: hidden; }
+  .filepond--root[data-style-panel-layout~='circle'] > .filepond--panel {
+    border-radius: inherit; }
+    .filepond--root[data-style-panel-layout~='circle'] > .filepond--panel > * {
+      display: none; }
+  .filepond--root[data-style-panel-layout~='circle'] .filepond--file-info {
+    display: none; }
+  .filepond--root[data-style-panel-layout~='circle'] .filepond--file-status {
+    display: none; }

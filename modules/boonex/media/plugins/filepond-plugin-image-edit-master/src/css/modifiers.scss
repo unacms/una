@@ -1,0 +1,12 @@
+.filepond--root {
+
+    &[data-style-panel-layout~='circle'] {
+        
+        .filepond--action-edit-item {
+            opacity:1 !important;
+            visibility: visible !important;
+        }
+
+    }
+
+}

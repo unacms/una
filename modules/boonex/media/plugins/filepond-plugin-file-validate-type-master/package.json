@@ -1,0 +1,44 @@
+{
+    "name": "filepond-plugin-file-validate-type",
+    "version": "1.2.5",
+    "description": "File Type Validation Plugin for FilePond",
+    "license": "MIT",
+    "author": {
+        "name": "PQINA",
+        "url": "https://pqina.nl/"
+    },
+    "homepage": "https://pqina.nl/filepond/",
+    "repository": "pqina/filepond-plugin-file-validate-type",
+    "main": "dist/filepond-plugin-file-validate-type.js",
+    "browser": "dist/filepond-plugin-file-validate-type.js",
+    "module": "dist/filepond-plugin-file-validate-type.esm.js",
+    "browserslist": [
+        "last 1 version and not Explorer 10",
+        "Explorer 11",
+        "iOS >= 9",
+        "Android >= 4.4"
+    ],
+    "files": [
+        "dist",
+        "types/*.d.ts"
+    ],
+    "types": "types/index.d.ts",
+    "scripts": {
+        "start": "npx rollup -c -w",
+        "build": "npx rollup -c"
+    },
+    "peerDependencies": {
+        "filepond": ">=1.x <5.x"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.4.0",
+        "@babel/preset-env": "^7.4.2",
+        "rollup": "^1.7.0",
+        "rollup-plugin-babel": "^4.3.2",
+        "rollup-plugin-commonjs": "^9.2.1",
+        "rollup-plugin-license": "^0.8.1",
+        "rollup-plugin-node-resolve": "^4.0.1",
+        "rollup-plugin-prettier": "^0.6.0",
+        "rollup-plugin-terser": "^4.0.4"
+    }
+}

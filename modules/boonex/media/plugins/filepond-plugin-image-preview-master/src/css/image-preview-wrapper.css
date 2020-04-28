@@ -1,0 +1,11 @@
+.filepond--image-preview-wrapper {
+  user-select: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 100%;
+  margin: 0;
+  border-radius: 0.45em;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.01); }

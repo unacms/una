@@ -1,0 +1,50 @@
+{
+    "name": "filepond-plugin-media-preview",
+    "version": "1.0.4",
+    "description": "Media preview Plugin for FilePond",
+    "license": "MIT",
+    "author": {
+        "name": "Niels Boogaard"
+    },
+    "repository": "nielsboogaard/filepond-plugin-media-preview",
+    "main": "dist/filepond-plugin-media-preview.js",
+    "browser": "dist/filepond-plugin-media-preview.js",
+    "module": "dist/filepond-plugin-media-preview.esm.js",
+    "browserslist": [
+        "last 1 version and not Explorer 10",
+        "Explorer 11",
+        "iOS >= 9",
+        "Android >= 4.4"
+    ],
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "start": "npx rollup -c -w",
+        "build": "npm run scripts | npm run styles | npm run copy",
+        "scripts": "npx rollup -c",
+        "styles": "npm run styles:pretty && npm run styles:nano",
+        "styles:pretty": "cat src/css/* | npx node-sass | npx postcss --no-map --use autoprefixer | npx prettier --single-quote --parser css | node banner-cli.js FilePondPluginmediaPreview > dist/filepond-plugin-media-preview.css",
+        "styles:nano": "cat src/css/* | npx node-sass | npx postcss --no-map --use autoprefixer --use cssnano | node banner-cli.js FilePondPluginmediaPreview > dist/filepond-plugin-media-preview.min.css",
+        "copy": "cp -r src/images/ dist/images"
+    },
+    "peerDependencies": {
+        "filepond": ">=4.x <5.x"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.7.5",
+        "@babel/preset-env": "^7.7.6",
+        "autoprefixer": "^9.7.3",
+        "cssnano": "^4.1.10",
+        "node-sass": "^4.13.0",
+        "postcss-cli": "^6.1.3",
+        "prettier": "^1.19.1",
+        "rollup": "^1.27.10",
+        "rollup-plugin-babel": "^4.3.3",
+        "rollup-plugin-commonjs": "^10.1.0",
+        "rollup-plugin-license": "^0.13.0",
+        "rollup-plugin-node-resolve": "^5.2.0",
+        "rollup-plugin-prettier": "^0.6.0",
+        "rollup-plugin-terser": "^5.1.3"
+    }
+}

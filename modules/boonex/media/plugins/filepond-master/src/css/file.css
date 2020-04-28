@@ -1,0 +1,95 @@
+.filepond--file {
+  position: static;
+  display: flex;
+  height: 100%;
+  align-items: flex-start;
+  padding: 0.5625em 0.5625em;
+  color: #fff;
+  border-radius: 0.5em; }
+  .filepond--file .filepond--file-status {
+    margin-left: auto;
+    margin-right: 2.25em; }
+  .filepond--file .filepond--processing-complete-indicator {
+    pointer-events: none;
+    user-select: none;
+    z-index: 3; }
+  .filepond--file .filepond--processing-complete-indicator,
+  .filepond--file .filepond--progress-indicator,
+  .filepond--file .filepond--file-action-button {
+    position: absolute; }
+  .filepond--file [data-align*='left'] {
+    left: 0.5625em; }
+  .filepond--file [data-align*='right'] {
+    right: 0.5625em; }
+  .filepond--file [data-align*='center'] {
+    left: calc(50% - .8125em); }
+  .filepond--file [data-align*='bottom'] {
+    bottom: 1.125em; }
+  .filepond--file [data-align='center'] {
+    top: calc(50% - .8125em); }
+  .filepond--file .filepond--progress-indicator {
+    margin-top: .1875em; }
+    .filepond--file .filepond--progress-indicator[data-align*='right'] {
+      margin-right: .1875em; }
+    .filepond--file .filepond--progress-indicator[data-align*='left'] {
+      margin-left: .1875em; }
+
+[data-filepond-item-state='cancelled'] .filepond--file-info,
+[data-filepond-item-state*='invalid'] .filepond--file-info,
+[data-filepond-item-state*='error'] .filepond--file-info {
+  margin-right: 2.25em; }
+
+[data-filepond-item-state='processing-complete'] .filepond--action-revert-item-processing svg {
+  animation: fall 0.5s 0.125s linear both; }
+[data-filepond-item-state='processing-complete'] .filepond--file-status-sub {
+  opacity: .5; }
+[data-filepond-item-state='processing-complete'] .filepond--processing-complete-indicator:not([style*=hidden]) ~ .filepond--file-status .filepond--file-status-sub {
+  opacity: 0; }
+[data-filepond-item-state='processing-complete'] .filepond--file-info-sub {
+  opacity: 0; }
+[data-filepond-item-state='processing-complete'] .filepond--action-revert-item-processing ~ .filepond--file-info .filepond--file-info-sub {
+  opacity: .5; }
+
+[data-filepond-item-state*='invalid'] .filepond--panel,
+[data-filepond-item-state*='invalid'] .filepond--file-wrapper,
+[data-filepond-item-state*='error'] .filepond--panel,
+[data-filepond-item-state*='error'] .filepond--file-wrapper {
+  animation: shake 0.65s linear both; }
+
+[data-filepond-item-state*='busy'] .filepond--progress-indicator svg {
+  animation: spin 1s linear infinite; }
+
+/**
+ * States
+ */
+@keyframes spin {
+  0% {
+    transform: rotateZ(0deg); }
+  100% {
+    transform: rotateZ(360deg); } }
+@keyframes shake {
+  10%,
+    90% {
+    transform: translateX(-0.0625em); }
+  20%,
+    80% {
+    transform: translateX(0.125em); }
+  30%,
+    50%,
+    70% {
+    transform: translateX(-0.25em); }
+  40%,
+    60% {
+    transform: translateX(0.25em); } }
+@keyframes fall {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+    animation-timing-function: ease-out; }
+  70% {
+    opacity: 1;
+    transform: scale(1.1);
+    animation-timing-function: ease-in-out; }
+  100% {
+    transform: scale(1);
+    animation-timing-function: ease-out; } }

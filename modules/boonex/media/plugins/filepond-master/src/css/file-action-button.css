@@ -1,0 +1,47 @@
+/* Hard to override styles */
+.filepond--file-action-button.filepond--file-action-button {
+  font-size: 1em;
+  width: 1.625em;
+  height: 1.625em;
+  font-family: inherit;
+  line-height: inherit;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  will-change: transform, opacity; }
+  .filepond--file-action-button.filepond--file-action-button span {
+    position: absolute;
+    overflow: hidden;
+    height: 1px;
+    width: 1px;
+    padding: 0;
+    border: 0;
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(50%);
+    white-space: nowrap; }
+  .filepond--file-action-button.filepond--file-action-button svg {
+    width: 100%;
+    height: 100%; }
+  .filepond--file-action-button.filepond--file-action-button::after {
+    position: absolute;
+    left: -.75em;
+    right: -.75em;
+    top: -.75em;
+    bottom: -.75em;
+    content: ''; }
+
+/* Soft styles */
+.filepond--file-action-button {
+  cursor: auto;
+  color: #fff;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  background-image: none;
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  transition: box-shadow 0.25s ease-in; }
+  .filepond--file-action-button:hover, .filepond--file-action-button:focus {
+    box-shadow: 0 0 0 0.125em rgba(255, 255, 255, 0.9); }
+  .filepond--file-action-button[disabled] {
+    color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(0, 0, 0, 0.25); }

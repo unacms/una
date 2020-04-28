@@ -1,0 +1,43 @@
+.filepond--image-preview-overlay {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    min-height: 5rem;
+    max-height: 7rem;
+    margin: 0;
+    opacity: 0;
+    z-index: 2;
+    pointer-events: none;
+    user-select: none;
+
+    svg {
+        width: 100%;
+        height: auto;
+        color: inherit;
+        max-height: inherit;
+    }
+}
+
+.filepond--image-preview-overlay-idle {
+    mix-blend-mode: multiply;
+    color:rgba(40, 40, 40, .85);
+}
+
+.filepond--image-preview-overlay-success {
+    mix-blend-mode: normal;
+    color: rgba(54, 151, 99, 1);
+}
+
+.filepond--image-preview-overlay-failure {
+    mix-blend-mode: normal;
+    color: rgba(196, 78, 71, 1);
+}
+
+// disable for Safari as mix-blend-mode causes the overflow:hidden of the parent container to not work
+@supports (-webkit-marquee-repetition: infinite) and (object-fit: fill) {
+    .filepond--image-preview-overlay-idle {
+        mix-blend-mode: normal;
+    }
+}

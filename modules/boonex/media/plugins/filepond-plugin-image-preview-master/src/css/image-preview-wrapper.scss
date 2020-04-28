@@ -1,0 +1,19 @@
+.filepond--image-preview-wrapper {
+    // no interaction
+    user-select: none;
+
+    // have preview fill up all available space
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height:100%;
+    margin: 0;
+
+    // radius is .05em less to prevent the panel background color from shining through
+    border-radius: 0.45em;
+    overflow: hidden;
+
+    // this seems to prevent Chrome from redrawing this layer constantly
+    background: rgba(0, 0, 0, 0.01);
+}
