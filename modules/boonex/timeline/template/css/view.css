@@ -424,9 +424,6 @@ div.bx-tl-item div.bx-tl-item-image {
 }
 
 /*--- Item Activity (Actions and Manage are different menus) ---*/
-div.bx-tl-item div.bx-tl-item-activity {
-    overflow: hidden;
-}
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom:not(.bx-menu-submenu-more-auto) {
     position: relative;
     display: -webkit-flex;

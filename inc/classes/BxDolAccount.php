@@ -90,27 +90,36 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
      */
     public function isConfirmed($iAccountId = false)
     {
+        $iId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
+
+        $a = $this->getInfo($iId);
+
+        $bResult = false;
         $sConfirmationType = getParam('sys_account_confirmation_type');
-        if ($sConfirmationType == BX_ACCOUNT_CONFIRMATION_NONE) 
-            return true;
-        
-        $a = $this->getInfo((int)$iAccountId);
-        
-        switch ($sConfirmationType) {
+        switch($sConfirmationType) {
+            case BX_ACCOUNT_CONFIRMATION_NONE:
+                $bResult = true;
+                break;
+
             case BX_ACCOUNT_CONFIRMATION_EMAIL:
-                if ($a['email_confirmed'])
-                    return true;
+                if($a['email_confirmed'])
+                    $bResult = true;
                 break;
+
             case BX_ACCOUNT_CONFIRMATION_PHONE:
-                if ($a['phone_confirmed'])
-                    return true;
+                if($a['phone_confirmed'])
+                    $bResult = true;
                 break;
+
             case BX_ACCOUNT_CONFIRMATION_EMAIL_PHONE:
-                if ($a['email_confirmed'] && $a['phone_confirmed'])
-                    return true;
+                if($a['email_confirmed'] && $a['phone_confirmed'])
+                    $bResult = true;
                 break;
         }
-        return false;
+
+        bx_alert('account', 'is_confirmed', $iId, false, array('type' => $sConfirmationType, 'override_result' => &$bResult));
+
+        return $bResult;
     }
     
     public function getCurrentConfirmationStatusValue($iAccountId = false)
@@ -127,23 +136,43 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
         }
         return BX_ACCOUNT_CONFIRMATION_NONE;
     }
-    
+
     public function isConfirmedEmail($iAccountId = false)
     {
-        if (!self::isNeedConfirmEmail())
-            return true;
-        $a = $this->getInfo((int)$iAccountId);
-        return $a['email_confirmed'] ? true : false;
+        $iId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
+
+        $bResult = false;
+        if(self::isNeedConfirmEmail()) {
+            $a = $this->getInfo($iId);
+
+            $bResult = $a['email_confirmed'] ? true : false;
+        }
+        else 
+            $bResult = true;
+
+        bx_alert('account', 'is_confirmed_email', $iId, false, array('override_result' => &$bResult));
+
+        return $bResult;
     }
-    
+
     public function isConfirmedPhone($iAccountId = false)
     {
-        if (!self::isNeedConfirmPhone())
-            return true;
-        $a = $this->getInfo((int)$iAccountId);
-        return $a['phone_confirmed'] ? true : false;
+        $iId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
+
+        $bResult = false;        
+        if(self::isNeedConfirmPhone()) {
+            $a = $this->getInfo((int)$iAccountId);
+
+            $bResult = $a['phone_confirmed'] ? true : false;
+        }
+        else
+            $bResult = true;
+
+        bx_alert('account', 'is_confirmed_phone', $iId, false, array('override_result' => &$bResult));
+
+        return $bResult;
     }
-    
+
     static public function isNeedConfirmEmail()
     {
         if (getParam('sys_account_confirmation_type') == BX_ACCOUNT_CONFIRMATION_EMAIL || getParam('sys_account_confirmation_type') == BX_ACCOUNT_CONFIRMATION_EMAIL_PHONE) 

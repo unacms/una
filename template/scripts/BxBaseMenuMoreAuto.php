@@ -43,8 +43,14 @@ class BxBaseMenuMoreAuto extends BxTemplMenu
     {
         $sResult = parent::getCode();
 
-        if($this->_isMoreAuto())
+        if($this->_isMoreAuto()) {
             $this->_oTemplate->addJs(array('BxDolMenuMoreAuto.js'));
+
+            if(!empty($sResult))
+                $sResult = $this->_oTemplate->parseHtmlByName('menu_more_auto.html', array(
+                    'menu' => $sResult
+                ));
+        }
 
         return $sResult;
     }
