@@ -118,7 +118,7 @@ BxDolMenuMoreAuto.prototype._moveToSubmenu = function(oMenu, oItemMore, oItemMor
 
     if(oItemMoreSubmenu.find('li').length)
         oItemMore.show(function() {
-            oMenu.addClass($this._sClassReady);
+            oMenu.addClass($this._sClassReady).parents('.bx-menu-more-auto-wrapper:first').css('overflow', 'visible');
         });
 };
 
