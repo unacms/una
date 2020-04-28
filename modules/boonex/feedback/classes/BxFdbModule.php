@@ -44,6 +44,15 @@ class BxFdbModule extends BxBaseModGeneralModule
         ));
     }
 
+    public function serviceGetInfoAnswer ($iContentId)
+    {
+        $aAnswer = $this->_oDb->getAnswers(array('type' => 'id', 'id' => $iContentId));
+        if(empty($aAnswer) || !is_array($aAnswer))
+            return array();
+
+        return $aAnswer;
+    }
+
     public function serviceGetBlockQuestion()
     {
         $iProfileId = bx_get_logged_profile_id();
