@@ -14,6 +14,7 @@ function BxDolMenuMoreAuto(options)
 
     this._sKeyWidth = 'bx-mma-width';
 
+    this._sClassReady = 'bx-mma-ready';
     this._sClassItem = '.bx-menu-item';
     this._sClassItemMore = this._sClassItem + '.bx-menu-item-more-auto';
     this._sClassItemMoreSubmenu = '.bx-menu-submenu-more-auto';
@@ -116,8 +117,9 @@ BxDolMenuMoreAuto.prototype._moveToSubmenu = function(oMenu, oItemMore, oItemMor
     });
 
     if(oItemMoreSubmenu.find('li').length)
-        oItemMore.show();
-   
+        oItemMore.show(function() {
+            oMenu.addClass($this._sClassReady);
+        });
 };
 
 BxDolMenuMoreAuto.prototype._moveFromSubmenu = function(oMenu, oItemMore, oItemMoreSubmenu, iParent, iMenu)
