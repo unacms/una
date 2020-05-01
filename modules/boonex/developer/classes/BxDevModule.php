@@ -41,54 +41,64 @@ class BxDevModule extends BxDolModule
         return $this->aTools;
     }
 
-    public function actionResetHash($sType) {
+    public function actionResetHash($sType, $sModule = '') {
     	$oDb = bx_instance('BxDolStudioInstallerQuery');
 
     	$sResult = '';
     	switch ($sType) {
     		case 'system':
-    			$oHasher = bx_instance('BxDolInstallerHasher');
+                    $oHasher = bx_instance('BxDolInstallerHasher');
 
-    			$oDb->deleteModuleTrackFiles(BX_SYSTEM_MODULE_ID);
+                    $oDb->deleteModuleTrackFiles(BX_SYSTEM_MODULE_ID);
 
-    			$sResult = _t('_bx_dev_hash_' . ($oHasher->hashSystemFiles() ? 'msg' : 'err') . '_reset_hash_system');    			
-    			break;
+                    $sResult = _t('_bx_dev_hash_' . ($oHasher->hashSystemFiles() ? 'msg' : 'err') . '_reset_hash_system');    			
+                    break;
 
     		case 'modules':
-				$aModules = BxDolModuleQuery::getInstance()->getModules();
+                    $oModuleQuery = BxDolModuleQuery::getInstance();
+                    if(!empty($sModule)) {
+                        $aNames = strpos($sModule, ',') !== false ? explode(',', $sModule) : array($sModule);
 
-				$aTmplVarsModules = array();
-				foreach($aModules as $aModule) {
-					if($aModule['name'] == 'system')
-						continue;
+                        $aModule = array();
+                        foreach($aNames as $aName)
+                            $aModules[] = $oModuleQuery->getModuleByName($aName);
+                    }
+                    else
+                        $aModules = $oModuleQuery->getModules();
 
-					$aConfig = BxDolInstallerUtils::getModuleConfig($aModule);
-					$sPathInstaller = BX_DIRECTORY_PATH_MODULES . $aModule['path'] . 'install/installer.php';
-					if(empty($aConfig) || !file_exists($sPathInstaller))
-						continue;
+                    $aTmplVarsModules = array();
+                    if(!empty($aModules) && is_array($aModules))
+                        foreach($aModules as $aModule) {
+                            if($aModule['name'] == 'system')
+                                continue;
 
-					require_once($sPathInstaller);
+                            $aConfig = BxDolInstallerUtils::getModuleConfig($aModule);
+                            $sPathInstaller = BX_DIRECTORY_PATH_MODULES . $aModule['path'] . 'install/installer.php';
+                            if(empty($aConfig) || !file_exists($sPathInstaller))
+                                continue;
 
-					$sClassName = $aConfig['class_prefix'] . 'Installer';
-					$oInstaller = new $sClassName($aConfig);
+                            require_once($sPathInstaller);
 
-					$oDb->deleteModuleTrackFiles($aModule['id']);
+                            $sClassName = $aConfig['class_prefix'] . 'Installer';
+                            $oInstaller = new $sClassName($aConfig);
 
-					$aFiles = array();
-				    $oInstaller->hashFiles(BX_DIRECTORY_PATH_ROOT . 'modules/' . $aModule['path'], $aFiles);
-					foreach($aFiles as $aFile)
-				    	$oDb->insertModuleTrack($aModule['id'], $aFile);
+                            $oDb->deleteModuleTrackFiles($aModule['id']);
 
-					$aTmplVarsModules[] = array(
-						'module' => $aModule['title'],
-						'files' => count($aFiles)
-					);
-				}
+                            $aFiles = array();
+                            $oInstaller->hashFiles(BX_DIRECTORY_PATH_ROOT . 'modules/' . $aModule['path'], $aFiles);
+                            foreach($aFiles as $aFile)
+                                $oDb->insertModuleTrack($aModule['id'], $aFile);
 
-				$sResult = $this->_oTemplate->parseHtmlByName('hash_modules.html', array(
-					'bx_repeat:modules' => $aTmplVarsModules
-				));
-				break;
+                            $aTmplVarsModules[] = array(
+                                'module' => $aModule['title'],
+                                'files' => count($aFiles)
+                            );
+                        }
+
+                        $sResult = $this->_oTemplate->parseHtmlByName('hash_modules.html', array(
+                            'bx_repeat:modules' => $aTmplVarsModules
+                        ));
+                        break;
     	}
 
     	echo $sResult;
