@@ -33,13 +33,13 @@
 <script>
 var oObj__uploader_instance_name__;
 $(function(){
-    var oStat__uploader_instance_name__
-    var oSett__uploader_instance_name__ = Object.assign(
+    var oStatus___uploader_instance_name__;
+    var oSettings___uploader_instance_name__ = Object.assign(
         oFilePondDefaultSettings, 
         {
             allowMultiple: __filepond_multiple__,
             onprocessfiles : (formData) => {
-                eval(oStat__uploader_instance_name__);
+                eval(oStatus___uploader_instance_name__);
             },
             server: {
                 process: (fieldName, file, metadata, load, error, progress, abort) => {
@@ -63,7 +63,7 @@ $(function(){
                     request.onload = function(res) {
                         if (request.status >= 200 && request.status < 300) {
                             load("__uploader_instance_name__");
-                            oStat__uploader_instance_name__ = jQuery(request.responseText).text();
+                            oStatus___uploader_instance_name__ = jQuery(request.responseText).text();
                         }
                         else {
                             error('<bx_text:_bx_media_uploader_filepond_labelFileLoadError />');
@@ -77,7 +77,7 @@ $(function(){
 
     oObj__uploader_instance_name__ = FilePond.create(
         document.querySelector('#__form_container_id__ input[type="file"]'),
-        oSett__uploader_instance_name__
+        oSettings___uploader_instance_name__
     );
 });
 
