@@ -439,9 +439,11 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if ($sResult = $this->onDataDeleteAfter ($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $oProfile))
             return $sResult;
 
-        // create an alert
-        bx_alert($this->_oModule->getName(), 'deleted', $aContentInfo[$CNF['FIELD_ID']]);
-
+		// create an alert
+        bx_alert($this->_oModule->getName(), 'deleted', $aContentInfo[$CNF['FIELD_ID']], false, array(
+            'content' => &$aContentInfo
+        ));
+		
         return '';
     }
 
