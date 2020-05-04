@@ -277,6 +277,48 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
         return (int)$this->getOne($sSql);
     }
 
+    public function getProfileQuota($iProfileId)
+    {
+        if (!$iProfileId) // for guests and storages without owner don't count per-user quota
+            return array('current_size' => 0, 'current_number' => 0, 'quota_size' => 0, 'quota_number' => 0, 'max_file_size' => 0);
+
+        $sQuery = $this->prepare("SELECT `current_size`, `current_number`, 0 as `quota_size`, 0 as `quota_number`, 0 as `max_file_size` FROM `sys_storage_user_quotas` WHERE `profile_id` = ?", $iProfileId);
+        $a = $this->getRow($sQuery);
+        if (!is_array($a) || !$a)
+            $a = array ('current_size' => 0, 'current_number' => 0, 'quota_size' => 0, 'quota_number' => 0, 'max_file_size' => 0);
+
+        // get quota_number and quota_size from user's acl/membership
+        $aMembershipInfo = BxDolAcl::getInstance()->getMemberMembershipInfo($iProfileId);
+        if ($aMembershipInfo) {
+            if (isset($aMembershipInfo['quota_size']))
+                $a['quota_size'] = $aMembershipInfo['quota_size'];
+            if (isset($aMembershipInfo['quota_number']))
+                $a['quota_number'] = $aMembershipInfo['quota_number'];
+            if (isset($aMembershipInfo['quota_max_file_size']))
+                $a['max_file_size'] = $aMembershipInfo['quota_max_file_size'];
+        }
+
+        return $a;
+    }
+
+    public function updateProfileQuota($iProfileId, $iSize, $iNumber = 1)
+    {
+        if (!$iProfileId) // for guests and storages without owner don't update per-user quota
+            return true;
+
+        $iTime = time();
+        $sQuery = $this->prepare("
+            INSERT INTO `sys_storage_user_quotas`
+            SET `profile_id` = ?, `current_size` = `current_size` + ?, `current_number` = `current_number` + ?, `ts` = ?
+            ON DUPLICATE KEY UPDATE `current_size` = `current_size` + ?, `current_number` = `current_number` + ?, `ts` = ?",
+            $iProfileId, $iSize, $iNumber, $iTime, $iSize, $iNumber, $iTime
+        );
+        if ($this->query($sQuery))
+            return true;
+        else
+            return false;
+    }
+
     /**
      * Get profile field by specified field name and value.
      * In most cases it is for internal usage only.

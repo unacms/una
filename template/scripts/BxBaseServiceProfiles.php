@@ -116,6 +116,42 @@ class BxBaseServiceProfiles extends BxDol
 		return BxDolAcl::getInstance()->getProfileMembership($iProfileId);
     }
 
+    public function serviceProfileMembershipStats ($iProfileId = 0)
+    {
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+
+        $sTxtUnlimit = _t('_unlimit');
+        $sTxtFiles = _t('_sys_storage_files');
+        $aQuota = BxDolProfileQuery::getInstance()->getProfileQuota($iProfileId);
+
+        $aTmplVarsStats = array();
+        if(!empty($aQuota['quota_size'])) {
+            $iWidth = (int)round(100 * $aQuota['current_size']/$aQuota['quota_size']);
+            $sPercent = $iWidth . '%';
+        }
+        else {
+            $iWidth = 0;
+            $sPercent = $sTxtUnlimit;
+        }
+        $aTmplVarsStats[] = array('title' => _t('_sys_profile_storage_quota_size'), 'width' => $iWidth, 'value' => _t_format_size($aQuota['current_size']), 'percent' => $sPercent);
+
+        if(!empty($aQuota['quota_number'])) {
+            $iWidth = (int)round(100 * $aQuota['current_number']/$aQuota['quota_number']);
+            $sPercent = $iWidth . '%';
+        }
+        else {
+            $iWidth = 0;
+            $sPercent = $sTxtUnlimit;
+        } 
+        $aTmplVarsStats[] = array('title' => _t('_sys_profile_storage_quota_number'), 'width' => $iWidth, 'value' => $aQuota['current_number'] . ' ' . $sTxtFiles, 'percent' => $sPercent);
+
+        return BxDolTemplate::getInstance()->parseHtmlByName('profile_membership_stats.html', array(
+            'membership' => BxDolAcl::getInstance()->getProfileMembership($iProfileId),
+            'bx_repeat:stat_items' => $aTmplVarsStats
+        ));
+    }
+
     /**
      * @page service Service Calls
      * @section bx_system_general System Services 

@@ -109,6 +109,7 @@
 	<string name="_Times allowed"><![CDATA[Сколько раз разрешено]]></string>
 	<string name="_Title"><![CDATA[Заголовок]]></string>
 	<string name="_To"><![CDATA[кому]]></string>
+        <string name="_unlimit"><![CDATA[unlimit]]></string>
 	<string name="_VIEW_MEMBERSHIP_ACTIONS"><![CDATA[Просмотреть разрешённые действия]]></string>
 	<string name="_View"><![CDATA[Просмотреть]]></string>
 	<string name="_Yes"><![CDATA[Да]]></string>
@@ -2697,6 +2698,7 @@
     <string name="_sys_page_block_title_homepage_menu"><![CDATA[Меню модулей с содержимым]]></string>
     <string name="_sys_page_block_title_homepage_splash"><![CDATA[Заставка]]></string>
 	<string name="_sys_page_block_title_forgot_password"><![CDATA[Забыли пароль]]></string>
+        <string name="_sys_page_block_title_membership_stats"><![CDATA[Лимиты членства]]></string>
 	<string name="_sys_page_block_system_title_login"><![CDATA[Вход с линкой регистрации]]></string>
 	<string name="_sys_page_block_system_title_login_step2"><![CDATA[Вход - шаг 2]]></string>
 	<string name="_sys_page_block_system_title_login_step3"><![CDATA[Вход - шаг 3]]></string>
@@ -2807,6 +2809,8 @@
 	<string name="_sys_profile_status_active"><![CDATA[Активный]]></string>
     <string name="_sys_profile_status_pending"><![CDATA[В ожидании]]></string>
     <string name="_sys_profile_status_suspended"><![CDATA[Заблокированный]]></string>
+    <string name="_sys_profile_storage_quota_size"><![CDATA[Хранилище]]></string>
+        <string name="_sys_profile_storage_quota_number"><![CDATA[Количество файлов]]></string>
 	<string name="_sys_private"><![CDATA[Приватные]]></string>
         <string name="_sys_privacy_groups_acl"><![CDATA[Членство]]></string>
     <string name="_sys_pruning_db"><![CDATA[<h3>Очистка базы данных:</h3>
@@ -2887,6 +2891,7 @@
 	<string name="_sys_storage_err_unlink"><![CDATA[не удалось удалить файл]]></string>
 	<string name="_sys_storage_err_user_quota_exceeded"><![CDATA[квота пользователя превышена]]></string>
 	<string name="_sys_storage_err_wrong_ext"><![CDATA[неправильное расширение файла]]></string>
+        <string name="_sys_storage_files"><![CDATA[файл(ов)]]></string>
 	<string name="_sys_storage_invalid_file"><![CDATA[неправильный файл]]></string>
 	<string name="_sys_storage_restriction_ext_all_allowed"><![CDATA[Ого, разрешены файлы всех типов!]]></string>
 	<string name="_sys_storage_restriction_ext_all_denied"><![CDATA[Извините, добавление файлов любого вида сейчас запрещено.]]></string>
