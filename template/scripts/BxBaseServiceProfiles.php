@@ -121,7 +121,7 @@ class BxBaseServiceProfiles extends BxDol
         if(!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
 
-        $sTxtUnlimit = _t('_unlimit');
+        $sTxtUnlimited = _t('_unlimited');
         $sTxtFiles = _t('_sys_storage_files');
         $aQuota = BxDolProfileQuery::getInstance()->getProfileQuota($iProfileId);
 
@@ -132,7 +132,7 @@ class BxBaseServiceProfiles extends BxDol
         }
         else {
             $iWidth = 0;
-            $sPercent = $sTxtUnlimit;
+            $sPercent = $sTxtUnlimited;
         }
         $aTmplVarsStats[] = array('title' => _t('_sys_profile_storage_quota_size'), 'width' => $iWidth, 'value' => _t_format_size($aQuota['current_size']), 'percent' => $sPercent);
 
@@ -142,7 +142,7 @@ class BxBaseServiceProfiles extends BxDol
         }
         else {
             $iWidth = 0;
-            $sPercent = $sTxtUnlimit;
+            $sPercent = $sTxtUnlimited;
         } 
         $aTmplVarsStats[] = array('title' => _t('_sys_profile_storage_quota_number'), 'width' => $iWidth, 'value' => $aQuota['current_number'] . ' ' . $sTxtFiles, 'percent' => $sPercent);
 

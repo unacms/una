@@ -109,7 +109,7 @@
 	<string name="_Times allowed"><![CDATA[Times allowed]]></string>
 	<string name="_Title"><![CDATA[Title]]></string>
 	<string name="_To"><![CDATA[to]]></string>
-        <string name="_unlimit"><![CDATA[unlimit]]></string>
+        <string name="_unlimited"><![CDATA[unlimited]]></string>
 	<string name="_VIEW_MEMBERSHIP_ACTIONS"><![CDATA[View Allowed Actions]]></string>
 	<string name="_View"><![CDATA[View]]></string>
 	<string name="_Yes"><![CDATA[Yes]]></string>
@@ -1778,8 +1778,8 @@
 	<string name="_sys_acl_action_delete_block"><![CDATA[Wiki: Delete Block]]></string>
 	<string name="_sys_acl_action_history"><![CDATA[Wiki: History]]></string>
 	<string name="_sys_acl_action_unsafe"><![CDATA[Wiki: Unsafe HTML]]></string>
-	<string name="_sys_acl_start"><![CDATA[Start: ]]></string>
-	<string name="_sys_acl_expire"><![CDATA[Expire: ]]></string>
+	<string name="_sys_acl_start"><![CDATA[Started: ]]></string>
+	<string name="_sys_acl_expire"><![CDATA[Expires: ]]></string>
 	<string name="_sys_acl_expire_never"><![CDATA[never]]></string>
 
   <string name="_sys_audit_action_edit_content"><![CDATA[Content edited]]></string>
