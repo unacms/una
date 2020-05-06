@@ -84,8 +84,9 @@ class BxDolFormQuery extends BxDolDb
                 'uri' => $aObject['uri'],
                 'uri_title' => $aObject['uri_title'],
             ),
-            'view_mode' => $aDisplay['view_mode'],
+            'object' => $sObject,
             'display' => $sDisplayName,
+            'view_mode' => $aDisplay['view_mode'],
         );
 
         $aForm['params'] = array_merge_recursive($aDefaultsFormParams, !empty($aAddFormParams) && is_array($aAddFormParams) ? $aAddFormParams : array());
@@ -99,6 +100,7 @@ class BxDolFormQuery extends BxDolDb
 
             // main attributes
             $aInput = array (
+                'id' => $a['id'],
                 'type' => $a['type'],
                 'name' => $a['name'],
                 'caption_system_src' => $a['caption_system'],
@@ -109,6 +111,7 @@ class BxDolFormQuery extends BxDolDb
                 'required' => $a['required'] ? true : false,
             	'unique' => $a['unique'] ? true : false,
                 'collapsed' => $a['collapsed'] ? true : false,
+                'privacy' => $a['privacy'] ? true : false,
                 'html' => $a['html'],
                 'attrs' => $a['attrs'] ? unserialize($a['attrs']) : false,
                 'tr_attrs' => $a['attrs_tr'] ? unserialize($a['attrs_tr']) : false,
@@ -214,6 +217,52 @@ class BxDolFormQuery extends BxDolDb
         return BxDolDb::getInstance()->getOne("SELECT `" . $sField . "` FROM `" . $sTable . "` WHERE `" . $sFieldKey . "`=:field_key LIMIT 1", array(
             'field_key' => $sFieldKeyValue
         ));
+    }
+
+    static public function getInputByName($sObject, $sName)
+    {
+        return BxDolDb::getInstance()->getRow("SELECT * FROM `sys_form_inputs` WHERE `object`=:object AND `name`=:name LIMIT 1", array(
+            'object' => $sObject, 
+            'name' => $sName
+        ));
+    }
+
+    static public function getInputPrivacy($iInputId, $iAuthorId, $sPrivacyField = '')
+    {
+        $sMethod = 'getRow';
+        $sSelectClause = '*';
+
+        if(!empty($sPrivacyField)) {
+            $sMethod = 'getOne';
+            $sSelectClause = '`' . $sPrivacyField . '`';
+        }
+
+        return BxDolDb::getInstance()->$sMethod("SELECT " . $sSelectClause . " FROM `sys_form_inputs_privacy` WHERE `input_id`=:input_id AND `author_id`=:author_id LIMIT 1", array(
+            'input_id' => $iInputId,
+            'author_id' => $iAuthorId,
+        ));
+    }
+
+    static public function setInputPrivacy($iInputId, $iAuthorId, $sPrivacyField, $sPrivacyValue)
+    {
+        $oDb = BxDolDb::getInstance();
+
+        $sTable = 'sys_form_inputs_privacy';
+        $aBindingsSet = array(
+            $sPrivacyField => $sPrivacyValue
+        );
+        $aBindingsWhere = array(
+            'input_id' => $iInputId,
+            'author_id' => $iAuthorId,
+        );
+
+        $bResult = false;
+        if((int)$oDb->getOne("SELECT `id` FROM `" . $sTable . "` WHERE `input_id`=:input_id AND `author_id`=:author_id LIMIT 1", $aBindingsWhere) != 0)
+            $bResult = $oDb->query("UPDATE `" . $sTable . "` SET " . $oDb->arrayToSQL($aBindingsSet) . " WHERE " . $oDb->arrayToSQL($aBindingsWhere, ' AND ')) !== false;
+        else
+            $bResult = (int)$oDb->query("INSERT `" . $sTable . "` SET " . $oDb->arrayToSQL(array_merge($aBindingsSet, $aBindingsWhere))) > 0;
+
+        return $bResult;
     }
 
     public function getFormInputs()

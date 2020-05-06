@@ -21,6 +21,8 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
     {
         parent::__construct($aInfo, $oTemplate);
 
+        $this->_sAuthorKey = 'profile_id';
+
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         if (!empty($CNF['FIELD_PICTURE']) && isset($this->aInputs[$CNF['FIELD_PICTURE']])) {
