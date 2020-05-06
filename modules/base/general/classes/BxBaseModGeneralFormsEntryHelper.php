@@ -135,6 +135,8 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
 
     public function viewDataEntry ($iContentId)
     {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
         // get content data and profile info
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         if (!$aContentInfo)
@@ -143,6 +145,12 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         // check access
         if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->_oModule->checkAllowedView($aContentInfo)))
             return MsgBox($sMsg);
+
+        $oForm = $this->getObjectFormView();
+        $oForm->initChecker($aContentInfo);
+
+        if(!empty($CNF['FIELD_TEXT']) &&  !$oForm->isInputVisible($CNF['FIELD_TEXT']))
+            return '';
 
         return $this->_oModule->_oTemplate->entryText($aContentInfo);
     }
@@ -439,11 +447,11 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if ($sResult = $this->onDataDeleteAfter ($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $oProfile))
             return $sResult;
 
-		// create an alert
+        // create an alert
         bx_alert($this->_oModule->getName(), 'deleted', $aContentInfo[$CNF['FIELD_ID']], false, array(
             'content' => &$aContentInfo
         ));
-		
+
         return '';
     }
 

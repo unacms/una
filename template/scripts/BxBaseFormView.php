@@ -89,6 +89,11 @@ class BxBaseFormView extends BxDolForm
      * CSS files list for form
      */
     protected $_aCss = array();
+
+    protected $_sJsClassName;
+    protected $_sJsObjectName;
+    
+    protected $_aHtmlIds;
     
     /**
      * Constructor
@@ -112,6 +117,141 @@ class BxBaseFormView extends BxDolForm
             $this->_sSectionClose = 'getCloseSectionViewMode';
             $this->_sSectionOpen = 'getOpenSectionViewMode';
         }
+
+        $this->_sJsClassName = 'BxDolForm';
+
+        $sName = !empty($aInfo['params']['display']) ? $aInfo['params']['display'] : '';
+        if(empty($sName) && !empty($aInfo['params']['object']))
+            $sName = $aInfo['params']['object'];
+
+        $this->_sJsObjectName = 'oForm' . bx_gen_method_name($sName, array('_' , '-'));
+
+        $sHtmlId = str_replace(array('_' , ' '), array('-', '-'), $sName);
+        $this->_aHtmlIds = array(
+            'pgc' =>  $sHtmlId . '-pgc-',
+            'pgc_popup' => $sHtmlId . '-pgc-popup-',
+            'pgc_form' => $sHtmlId . '-pgc-form-',
+        );
+    }
+
+    public function performActionChangePrivacyGroup()
+    {
+        $iAuthorId = (int)bx_get_logged_profile_id();
+        if(empty($iAuthorId))
+            return echoJson(array());
+
+        $iInputId = bx_process_input(bx_get('input_id'), BX_DATA_INT);
+        if(empty($iInputId))
+            return echoJson(array());
+
+        $sPrivacyObject = bx_process_input(bx_get('privacy_object'));
+        $sPrivacyField = BxDolPrivacy::getFieldName($sPrivacyObject);
+        if(empty($sPrivacyField))
+            return echoJson(array());
+
+        $sPrivacyGroup = bx_process_input(bx_get($sPrivacyField));
+        if(empty($sPrivacyField))
+            return echoJson(array());
+
+        if(!BxDolFormQuery::setInputPrivacy($iInputId, $iAuthorId, $sPrivacyField, $sPrivacyGroup))
+            return echoJson(array());
+
+        return echoJson(array(
+            'code' => 0,
+            'form_id' => $this->getId(),
+            'chooser_id' => $this->_aHtmlIds['pgc'] . $iInputId,
+            'icon' => $this->_getPrivacyIcon($sPrivacyGroup),
+            'eval' => $this->getJsObjectName() . '.pgcOnSelectGroup(oData);'
+        ));
+    }
+
+    public function performActionGetPrivacyGroupChooser()
+    {
+        $iInputId = bx_process_input(bx_get('input_id'), BX_DATA_INT);
+        $sPrivacyObject = bx_process_input(bx_get('privacy_object'));
+        if(empty($iInputId) || empty($sPrivacyObject))
+            return '';
+
+        $sFormId = $this->_aHtmlIds['pgc_form'] . $iInputId;
+        $aFormActionParams = array();
+        if(!empty($this->aParams['object']) && !empty($this->aParams['display']))
+            $aFormActionParams = array(
+                'o' => $this->aParams['object'], 
+                'd' => $this->aParams['display']
+            );
+        $aFormActionParams['a'] = 'change_privacy_group';
+
+        $iAuthorId = bx_get_logged_profile_id();
+        $mixedPrivacyGroup = $this->_getPrivacyGroup($sPrivacyObject, $iInputId, $iAuthorId);
+
+        $oPrivacy = BxDolPrivacy::getObjectInstance($sPrivacyObject);
+        $aInputPgc = $oPrivacy->getGroupChooser($sPrivacyObject, $iAuthorId);
+        $aInputPgc['value'] = $mixedPrivacyGroup;
+
+        if(!isset($aInputPgc['content']))
+            $aInputPgc['content'] = '';
+        $aInputPgc['content'] .= $oPrivacy->addCssJs(true);
+        $aInputPgc['content'] .= $oPrivacy->initGroupChooser($sPrivacyObject, $iAuthorId, array(
+            'content_id' => $iInputId,
+            'group_id' => $mixedPrivacyGroup,
+            'html_ids' => array(
+                'form' => $sFormId
+            )
+        ));
+        
+        $aFormInfo = array(
+            'form_attrs' => array(
+                'id' => $sFormId,
+                'action' => BX_DOL_URL_ROOT . bx_append_url_params('form.php', $aFormActionParams),
+                'method' => 'post'
+            ),
+            'inputs' => array (
+                'input_id' => array(
+                    'type' => 'hidden',
+                    'name' => 'input_id',
+                    'value' => $iInputId,
+                    'db' => array (
+                        'pass' => 'Int',
+                    ),
+                ),
+                'privacy_object' => array(
+                    'type' => 'hidden',
+                    'name' => 'privacy_object',
+                    'value' => $sPrivacyObject,
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                ),
+                'privacy_group_chooser' => $aInputPgc,
+                'controls' => array(
+                    'name' => 'controls',
+                    'type' => 'input_set',
+                    array(
+                        'type' => 'button',
+                        'name' => 'do_submit',
+                        'value' => _t('_sys_submit'),
+                        'attrs' => array(
+                            'onclick' => "$('#" . $sFormId . "').submit()",
+                        ),
+                    ),
+                    array (
+                        'type' => 'reset',
+                        'name' => 'do_cancel',
+                        'value' => _t('_Cancel'),
+                        'attrs' => array(
+                            'onclick' => "$(this).parents('.bx-popup-applied:visible:first').dolPopupHide()",
+                            'class' => 'bx-def-margin-sec-left',
+                        ),
+                    )
+                )
+            )
+        );
+        $oForm = new BxTemplFormView($aFormInfo);
+
+        echo $this->oTemplate->parseHtmlByName('form_field_privacy_popup.html', array(
+            'form_id' => $oForm->getId(),
+            'form' => $oForm->getCode(true),
+        ));
     }
 
     function setAjaxMode($bAjaxMode)
@@ -162,6 +302,34 @@ class BxBaseFormView extends BxDolForm
         $this->addCssJs();
         $sDynamicCssJs = $this->_processCssJs();
         return $sInclude . $sDynamicCssJs . $this->sCode;
+    }
+
+    public function getJsClassName()
+    {
+        return $this->_sJsClassName;
+    }
+
+    public function getJsObjectName()
+    {
+        return $this->_sJsObjectName;
+    }
+
+    public function getJsScript()
+    {
+        $sJsObjName = $this->getJsObjectName();
+        $sJsObjClass = $this->getJsClassName();
+
+        $sCode = "if(window['" . $sJsObjName . "'] == undefined) var " . $sJsObjName . " = new " . $sJsObjClass . "(" . json_encode(array(
+            'sObjName' => $sJsObjName,
+            'sObject' => isset($this->aParams['object']) ? $this->aParams['object'] : '',
+            'sDisplay' => isset($this->aParams['display']) ? $this->aParams['display'] : '',
+            'sRootUrl' => BX_DOL_URL_ROOT,
+            'aHtmlIds' => array(
+                'pgc_popup' => 'bx-form-input-pgc-popup'
+            ),
+        )) . ");";
+
+        return $this->oTemplate->_wrapInTagJsCode($sCode);
     }
 
     /**
@@ -224,7 +392,7 @@ BLAH;
 BLAH;
         }
 
-        return $sForm;
+        return $this->getJsScript() . $sForm;
     }
 
     /**
@@ -361,6 +529,32 @@ BLAH;
         return $sRow;
     }
 
+    public function isInputVisible($mixedInput)
+    {
+        if(!is_array($mixedInput) && isset($this->aInputs[$mixedInput]))
+            $mixedInput = $this->aInputs[$mixedInput];
+
+        if(empty($mixedInput) || !is_array($mixedInput))
+            $mixedInput = BxDolFormQuery::getInputByName($this->aParams['object'], $mixedInput);
+
+        if(empty($mixedInput) || !is_array($mixedInput))
+            return false;
+
+        if(!empty($mixedInput['privacy']) && !empty($this->_iAuthorId)) {
+            $mixedResult = checkActionModule($this->_iAuthorId, 'set form fields privacy', 'system');
+            if($mixedResult[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED) {
+                $aInputPrivacy = BxDolFormQuery::getInputPrivacy($mixedInput['id'], $this->_iAuthorId);
+                if(!empty($aInputPrivacy) && is_array($aInputPrivacy)) {
+                    $oPrivacy = BxDolPrivacy::getObjectInstance($this->_sPrivacyObjectView);            
+                    if($oPrivacy && !$oPrivacy->check($aInputPrivacy['id']))
+                        return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
     /**
      * Generate single Table Row for view mode
      *
@@ -371,6 +565,9 @@ BLAH;
     {
         if (!isset($aInput['type']))
             $aInput['type'] = false;
+
+        if(!$this->isInputVisible($aInput))
+            return '';
 
         if (!empty($aInput['name'])) {
             $sCustomMethod = 'genCustomRow' . $this->_genMethodName($aInput['name']);
@@ -600,9 +797,22 @@ EOS;
 
     function genWrapperInput($aInput, $sContent)
     {
-        $sAttr = isset($aInput['attrs_wrapper']) && is_array($aInput['attrs_wrapper']) ? bx_convert_array2attrs($aInput['attrs_wrapper']) : '';
+        $sClass = "bx-form-input-wrapper bx-form-input-wrapper-" . $aInput['type'];
+        if(isset($aInput['html']) && $aInput['html'] && $this->isHtmlEditor($aInput['html'], $aInput))
+            $sClass .= ' bx-form-input-wrapper-html';
 
-        return "<div class=\"bx-form-input-wrapper bx-form-input-wrapper-{$aInput['type']}" . ((isset($aInput['html']) && $aInput['html'] && $this->isHtmlEditor($aInput['html'], $aInput)) ? ' bx-form-input-wrapper-html' : '') . "\" $sAttr>$sContent</div>";
+        $sAttrs = "";
+        if(isset($aInput['attrs_wrapper']) && is_array($aInput['attrs_wrapper'])) {
+            if(!empty($aInput['attrs_wrapper']['class'])) {
+                $sClass .= ' ' . trim($aInput['attrs_wrapper']['class']);
+
+                unset($aInput['attrs_wrapper']['class']);
+            }
+
+            $sAttrs = bx_convert_array2attrs($aInput['attrs_wrapper']);
+        }
+
+        return "<div class=\"$sClass\" $sAttrs>$sContent</div>";
     }
 
     /**
@@ -814,6 +1024,9 @@ BLAH;
 
         // create input label
         $sInput .= $this->genLabel($aInput);
+
+        // create input privacy group chooser
+        $sInput .= $this->genPrivacyGroupChooser($aInput);
 
         return $sInput;
     }
@@ -1585,12 +1798,42 @@ BLAH;
      */
     function genLabel(&$aInput)
     {
-        if (!isset($aInput['label']) or empty($aInput['label']))
+        if (!isset($aInput['label']) || empty($aInput['label']))
             return '';
 
         $sInputID = $this->getInputId($aInput);
 
         return '<label for="' . $sInputID . '">' . bx_process_output($aInput['label']) . '</label>';
+    }
+
+    function genPrivacyGroupChooser(&$aInput, $sPrivacyObject = '')
+    {
+        if(!isset($aInput['privacy']) || empty($aInput['privacy']))
+            return '';
+
+        $iAuthorId = bx_get_logged_profile_id();
+        $mixedResult = checkActionModule($iAuthorId, 'set form fields privacy', 'system');
+        if($mixedResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
+            return '';
+
+        if(empty($sPrivacyObject))
+            $sPrivacyObject = $this->_sPrivacyObjectView;
+
+        $iInputId = (int)$aInput['id'];
+        $mixedPrivacyGroup = $this->_getPrivacyGroup($sPrivacyObject, $iInputId, $iAuthorId);
+
+        if(!isset($aInput['attrs_wrapper']['class']))
+            $aInput['attrs_wrapper']['class'] = '';
+        $aInput['attrs_wrapper']['class'] .= ' bx-form-input-wrapper-pgc';
+
+        return $this->oTemplate->parseHtmlByName('form_field_privacy.html', array(
+            'js_object' => $this->getJsObjectName(),
+            'html_id' => $this->_aHtmlIds['pgc'] . $iInputId,
+            'html_id_popup' => $this->_aHtmlIds['pgc_popup'] . $iInputId,
+            'id' => $iInputId,
+            'privacy_object' => $sPrivacyObject,
+            'icon' => $this->_getPrivacyIcon($mixedPrivacyGroup)
+        ));
     }
 
     function genInfoIcon($sInfo)
@@ -1769,6 +2012,7 @@ BLAH;
 
         $this->_addCss('forms.css');
         $this->_addJs('jquery.webForms.js', "'undefined' === typeof($.fn.addWebForms)");
+        $this->_addJs('BxDolForm.js', "true");
 
         self::$_isCssJsAdded = true;
     }

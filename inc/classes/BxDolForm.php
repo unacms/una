@@ -732,6 +732,12 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
     protected $_aFieldsCheckForSpam = array(); ///< additional fields names to check for spam(profanity filter), now only fields with 'textarea' and 'text' are checked for spam, 'textarea' fields are checked for spam and filter for profanity, while 'text' fields are filtetered for profanity only
 
+    
+    protected $_iAuthorId;
+    protected $_sAuthorKey; ///< array key to get author ID from Values array provided in BxDolForm::initChecker.
+    protected $_sPrivacyObjectView;
+    protected $_sPrivacyGroupDefault;
+
     public function __construct ($aInfo, $oTemplate)
     {
         parent::__construct();
@@ -758,6 +764,10 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
         $this->_sChecker = isset($this->aParams['checker']) ? $this->aParams['checker'] : 'BxDolFormChecker';
         $this->_sCheckerHelper = isset($this->aParams['checker_helper']) ? $this->aParams['checker_helper'] : '';
+
+        $this->_sAuthorKey = 'author';
+        $this->_sPrivacyObjectView = 'sys_form_inputs_allow_view_to';
+        $this->_sPrivacyGroupDefault = BX_DOL_PG_ALL;
     }
 
     /**
@@ -824,6 +834,11 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
 
         if ($aValues)
             $oChecker->fillWithValues($this->aInputs, $aValues);
+
+        // init author from provided values if it's available
+
+        if (isset($aValues[$this->_sAuthorKey]))
+            $this->_iAuthorId = (int)$aValues[$this->_sAuthorKey];
 
 
         if ($this->isSubmitted ()) {
@@ -949,6 +964,17 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     function getSpecificValues()
     {
         return $this->_aSpecificValues;
+    }
+
+    function getAuthorId()
+    {
+        return $this->_iAuthorId;
+    }
+
+    function setAuthorId($iAuthorId)
+    {
+        $this->_iAuthorId = (int)$iAuthorId;
+        $this->aParams['params']['author_id'] = $this->_iAuthorId;
     }
 
     public static function getSubmittedValue($sKey, $sMethod, &$aSpecificValues = false)
@@ -1126,6 +1152,37 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
                 $s .= $k . ': ' . $this->aInputs[$k]['error'] . " \n";
         }
         return $s;
+    }
+
+    protected function _getPrivacyIcon($mixedPrivacy)
+    {
+        switch($mixedPrivacy) {
+            case BX_DOL_PG_MEONLY:
+                $sResult = 'lock';
+                break;
+
+            case BX_DOL_PG_ALL:
+                $sResult = 'globe';
+                break;
+
+            default:
+                $sResult = 'user';
+                break;
+        }
+
+        return $sResult;
+    }
+    
+    protected function _getPrivacyGroup($sPrivacyObject, $iInputId, $iAuthorId = false)
+    {
+        if(!$iAuthorId)
+            $iAuthorId = bx_get_logged_profile_id();
+
+        $mixedPrivacyGroup = BxDolFormQuery::getInputPrivacy($iInputId, $iAuthorId, BxDolPrivacy::getFieldName($sPrivacyObject));
+        if(empty($mixedPrivacyGroup))
+            $mixedPrivacyGroup = $this->_sPrivacyGroupDefault;
+
+        return $mixedPrivacyGroup;
     }
 }
 

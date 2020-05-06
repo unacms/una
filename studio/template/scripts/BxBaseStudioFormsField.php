@@ -288,6 +288,10 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                         $aForm['inputs'][$sKey]['checked'] = (int)$this->aField[$sKey];
                         break;
 
+                    case 'privacy':
+                        $aForm['inputs'][$sKey]['checked'] = (int)$this->aField[$sKey];
+                        break;
+
                     case 'checker_func':
                         $sCfValue = strtolower($this->aField[$sKey]);
                         $aForm['inputs'][$sKey]['value'] = $sCfValue;
@@ -981,6 +985,20 @@ class BxBaseStudioFormsFieldBlockHeader extends BxBaseStudioFormsField
                         'pass' => 'Int',
                     )
                 ),
+                'privacy' => array(
+                    'type' => 'switcher',
+                    'name' => 'privacy',
+                    'caption' => _t('_adm_form_txt_field_privacy'),
+                    'info' => _t('_adm_form_dsc_field_privacy'),
+                    'value' => '1',
+                    'required' => '0',
+                    'attrs' => array(
+                        'id' => 'bx-form-field-privacy'
+                    ),
+                    'db' => array (
+                        'pass' => 'Int',
+                    )
+                ),
                 'controls' => array(
                     'name' => 'controls',
                     'type' => 'input_set',
@@ -1116,8 +1134,8 @@ class BxBaseStudioFormsFieldValue extends BxBaseStudioFormsFieldBlockHeader
     protected $sType = 'value';
 
     public function init()
-	{
-		parent::init();
+    {
+        parent::init();
 
         $this->aForm['inputs']['caption']['info'] = _t('_adm_form_dsc_field_caption');
 
