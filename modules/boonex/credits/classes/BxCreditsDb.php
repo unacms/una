@@ -125,7 +125,7 @@ class BxCreditsDb extends BxBaseModGeneralDb
 
         $aMethod['params'][0] = "SELECT
                 " . $sSelectClause . "
-            FROM `" . $CNF['TABLE_ORDERS'] . "` AS `tb`" . $sJoinClause . "
+            FROM `" . $CNF['TABLE_ORDERS'] . "` AS `to`" . $sJoinClause . "
             WHERE 1" . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
 
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
