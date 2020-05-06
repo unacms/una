@@ -2203,6 +2203,8 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         if(is_string($mixedFiles))
             $mixedFiles = array($mixedFiles);
 
+        $iRev = (int)getParam('sys_revision');
+
         $sUpcaseType = ucfirst($sType);
         $sMethodLocate = '_getAbsoluteLocation' . $sUpcaseType;
         $sMethodWrap = '_wrapInTag' . $sUpcaseType;
@@ -2234,7 +2236,9 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             switch($sAction) {
                 case 'add':
                     if($bDynamic)
-                        $sResult .= $this->$sMethodWrap($sUrl);
+                        $sResult .= $this->$sMethodWrap(bx_append_url_params($sUrl, array(
+                            'rev' => $iRev
+                        )));
                     else {
                         $bFound = false;
                         $aSearchIn = $bSystem ? $this->aPage[$sArrayKey] : array_merge($this->aPage[$sType . '_system'], $this->aPage[$sArrayKey]);
