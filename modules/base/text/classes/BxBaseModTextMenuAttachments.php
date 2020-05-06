@@ -33,30 +33,33 @@ class BxBaseModTextMenuAttachments extends BxTemplMenu
         if(!parent::_isVisible($a))
             return false;
 
-        $sUploader = 'js_object_uploader_';
+        $sUploader = '';
         switch ($a['name']) {
             case 'photo_simple':
-                $sUploader .= 'photos_simple';
+                $sUploader = 'photos_simple';
                 break;
             case 'photo_html5':
-                $sUploader .= 'photos_html5';
+                $sUploader = 'photos_html5';
                 break;
             case 'video_simple':
-                $sUploader .= 'videos_simple';
+                $sUploader = 'videos_simple';
                 break;
             case 'video_html5':
-                $sUploader .= 'videos_html5';
+                $sUploader = 'videos_html5';
                 break;
             case 'file_simple':
-                $sUploader .= 'files_simple';
+                $sUploader = 'files_simple';
                 break;
             case 'file_html5':
-                $sUploader .= 'files_html5';
+                $sUploader = 'files_html5';
                 break;
         }
 
-        if(!isset($this->_aMarkers[$sUploader]))
-            return false;
+        if(!empty($sUploader)) {
+            $sUploader = 'js_object_uploader_' . $sUploader;
+            if(!isset($this->_aMarkers[$sUploader]))
+                return false;
+        }
 
         return true;
     }
