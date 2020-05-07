@@ -148,6 +148,24 @@ CREATE TABLE IF NOT EXISTS `bx_posts_cmts` (
   FULLTEXT KEY `search_fields` (`cmt_text`)
 );
 
+CREATE TABLE IF NOT EXISTS `bx_posts_cmts_notes` (
+  `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cmt_parent_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_vparent_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_object_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_author_id` int(11) NOT NULL DEFAULT '0',
+  `cmt_level` int(11) NOT NULL DEFAULT '0',
+  `cmt_text` text NOT NULL,
+  `cmt_mood` tinyint(4) NOT NULL DEFAULT '0',
+  `cmt_rate` int(11) NOT NULL DEFAULT '0',
+  `cmt_rate_count` int(11) NOT NULL DEFAULT '0',
+  `cmt_time` int(11) unsigned NOT NULL DEFAULT '0',
+  `cmt_replies` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`cmt_id`),
+  KEY `cmt_object_id` (`cmt_object_id`,`cmt_parent_id`),
+  FULLTEXT KEY `search_fields` (`cmt_text`)
+);
+
 -- TABLE: votes
 CREATE TABLE IF NOT EXISTS `bx_posts_votes` (
   `object_id` int(11) NOT NULL default '0',
@@ -499,7 +517,8 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 
 -- COMMENTS
 INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Html`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
-('bx_posts', 'bx_posts', 'bx_posts_cmts', 1, 5000, 1000, 3, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-post&id={object_id}', '', 'bx_posts_posts', 'id', 'author', 'title', 'comments', '', '');
+('bx_posts', 'bx_posts', 'bx_posts_cmts', 1, 5000, 1000, 3, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-post&id={object_id}', '', 'bx_posts_posts', 'id', 'author', 'title', 'comments', '', ''),
+('bx_posts_notes', 'bx_posts', 'bx_posts_cmts_notes', 1, 5000, 1000, 3, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-post&id={object_id}', '', 'bx_posts_posts', 'id', 'author', 'title', 'comments', '', '');
 
 -- VOTES
 INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
@@ -512,8 +531,8 @@ INSERT INTO `sys_objects_score` (`name`, `module`, `table_main`, `table_track`, 
 ('bx_posts', 'bx_posts', 'bx_posts_scores', 'bx_posts_scores_track', '604800', '0', 'bx_posts_posts', 'id', 'author', 'score', 'sc_up', 'sc_down', '', '');
 
 -- REPORTS
-INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_posts', 'bx_posts_reports', 'bx_posts_reports_track', '1', 'page.php?i=view-post&id={object_id}', 'bx_posts_posts', 'id', 'author', 'reports', '', '');
+INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, `base_url`, `object_comment`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_posts', 'bx_posts_reports', 'bx_posts_reports_track', '1', 'page.php?i=view-post&id={object_id}', 'bx_posts_notes', 'bx_posts_posts', 'id', 'author', 'reports', '', '');
 
 -- VIEWS
 INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 

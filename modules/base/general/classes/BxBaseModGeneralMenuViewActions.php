@@ -361,6 +361,30 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
     	return array($sResult, $this->_sClassMiSa);
     }
 
+    protected function _getMenuItemNotes($aItem, $aParams = array())
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $sObject = !empty($aParams['object']) ? $aParams['object'] : '';
+        if(empty($sObject) && !empty($CNF['OBJECT_NOTES']))
+            $sObject = $CNF['OBJECT_NOTES'];
+
+        $iId = !empty($aParams['id']) ? (int)$aParams['id'] : '';
+        if(empty($iId))
+            $iId = $this->_iContentId;
+
+        if(!$this->_oModule->_isModerator())
+            return false;
+
+        $this->addMarkers(array(
+            'module' => $this->_oModule->_oConfig->getName(),
+            'module_uri' => $this->_oModule->_oConfig->getUri(),
+            'content_id' => $iId
+        ));
+
+        return true;
+    }
+
     protected function _getMenuItemSocialSharingFacebook($aItem)
     {
         return $this->_getMenuItemByNameSocialSharing($aItem);

@@ -116,6 +116,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'OBJECT_FEATURED' => 'bx_posts',
             'OBJECT_METATAGS' => 'bx_posts',
             'OBJECT_COMMENTS' => 'bx_posts',
+            'OBJECT_NOTES' => 'bx_posts_notes',
             'OBJECT_CATEGORY' => 'bx_posts_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_posts_allow_view_to',
             'OBJECT_FORM_ENTRY' => 'bx_posts',

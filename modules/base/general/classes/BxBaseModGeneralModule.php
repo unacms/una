@@ -47,7 +47,7 @@ class BxBaseModGeneralModule extends BxDolModule
         $aArgs = func_get_args();
         $this->_rss($aArgs);
     }
-    
+
     public function actionGetCreatePostForm()
     {
         $sName = $this->_oConfig->getName();
@@ -68,6 +68,22 @@ class BxBaseModGeneralModule extends BxDolModule
             'module' => $sName,
             'content' => $mixedResponse
     	));
+    }
+
+    public function actionGetNotes()
+    {
+        $CNF = &$this->_oConfig->CNF;
+        if(empty($CNF['OBJECT_NOTES']))
+            return false;
+
+        $iContentId = (int)bx_get('content_id');
+
+        $oCmtsNotes = BxDolCmts::getObjectInstance($CNF['OBJECT_NOTES'], $iContentId, true, $this->_oTemplate);
+        $aCmtsNotes = $oCmtsNotes->getCommentsBlock(array(), array('in_designbox' => false));
+        if(empty($aCmtsNotes) || !is_array($aCmtsNotes))
+            return false;
+
+        echo $aCmtsNotes['content'];
     }
 
     // ====== SERVICE METHODS
