@@ -401,16 +401,16 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
         // unconfirmed
         if (MEMBERSHIP_ID_UNCONFIRMED == $iLevelId) {
             return array(
-                'where' => " AND `sys_accounts`.`email_confirmed` = 0 ",
-                'join' => '',
+                'where' => " AND `cblasp_a`.`email_confirmed` = 0 ",
+                'join' => " INNER JOIN `sys_profiles` AS `cblasp_p` ON (`" . $sContentTable . "`.`" . $sContentField . "`=`cblasp_p`.`id`) INNER JOIN `sys_accounts` AS `cblasp_a` ON (`cblasp_a`.`id`=`cblasp_p`.`account_id`) ",
             );
         }
         // standard
         elseif (MEMBERSHIP_ID_STANDARD == $iLevelId) {
 
-            $sWhere .= " AND (`tlm`.`DateStarts` IS NULL OR `tlm`.`DateStarts` <= NOW()) AND (`tlm`.`DateExpires` IS NULL OR `tlm`.`DateExpires` > NOW()) AND `tlm`.`IDMember` IS NULL AND `sys_accounts`.`email_confirmed` != 0 ";
+            $sWhere .= " AND (`tlm`.`DateStarts` IS NULL OR `tlm`.`DateStarts` <= NOW()) AND (`tlm`.`DateExpires` IS NULL OR `tlm`.`DateExpires` > NOW()) AND `tlm`.`IDMember` IS NULL AND `cblasp_a`.`email_confirmed` != 0 ";
 
-            $sJoin .= " LEFT JOIN `sys_acl_levels_members` AS `tlm` ON `" . $sContentTable . "`.`" . $sContentField . "`=`tlm`.`IDMember`";
+            $sJoin .= " LEFT JOIN `sys_acl_levels_members` AS `tlm` ON `" . $sContentTable . "`.`" . $sContentField . "`=`tlm`.`IDMember` INNER JOIN `sys_profiles` AS `cblasp_p` ON (`" . $sContentTable . "`.`" . $sContentField . "`=`cblasp_p`.`id`) INNER JOIN `sys_accounts` AS `cblasp_a` ON (`cblasp_a`.`id`=`cblasp_p`.`account_id`) ";
 
             return array(
                 'where' => $sWhere,
@@ -425,9 +425,9 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
             else
                 $sWhere .= $this->prepareAsString(" AND `tlm`.`IDLevel` = ?", (int)$mixedLevelId);
 
-            $sWhere .= " AND (`tlm`.`DateStarts` IS NULL OR `tlm`.`DateStarts` <= NOW()) AND (`tlm`.`DateExpires` IS NULL OR `tlm`.`DateExpires` > NOW()) AND `sys_accounts`.`email_confirmed` != 0 ";
+            $sWhere .= " AND (`tlm`.`DateStarts` IS NULL OR `tlm`.`DateStarts` <= NOW()) AND (`tlm`.`DateExpires` IS NULL OR `tlm`.`DateExpires` > NOW()) AND `cblasp_a`.`email_confirmed` != 0 ";
 
-            $sJoin .= " INNER JOIN `sys_acl_levels_members` AS `tlm` ON `" . $sContentTable . "`.`" . $sContentField . "`=`tlm`.`IDMember`";
+            $sJoin .= " INNER JOIN `sys_acl_levels_members` AS `tlm` ON `" . $sContentTable . "`.`" . $sContentField . "`=`tlm`.`IDMember` INNER JOIN `sys_profiles` AS `cblasp_p` ON (`" . $sContentTable . "`.`" . $sContentField . "`=`cblasp_p`.`id`) INNER JOIN `sys_accounts` AS `cblasp_a` ON (`cblasp_a`.`id`=`cblasp_p`.`account_id`) ";
 
             return array(
                 'where' => $sWhere,
