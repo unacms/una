@@ -891,6 +891,73 @@ class BxBaseCmts extends BxDolCmts
         ));
     }
 
+    protected function _getFormAdd($aValues)
+    {
+        $iCmtAuthorId = isset($aValues['cmt_author_id']) ? (int)$aValues['cmt_author_id'] : $this->_getAuthorId();
+        $iCmtParentId = isset($aValues['cmt_parent_id']) ? (int)$aValues['cmt_parent_id'] : 0;
+
+        $oForm = $this->_getForm(BX_CMT_ACTION_POST, $iCmtParentId);
+        $oForm->aFormAttrs['method'] = BX_DOL_FORM_METHOD_SPECIFIC;
+        $oForm->aParams['csrf']['disable'] = true;
+        $oForm->aInputs['cmt_parent_id']['value'] = $iCmtParentId;
+        if(!empty($oForm->aParams['db']['submit_name'])) {            
+            $sSubmitName = false;
+            if(is_array($oForm->aParams['db']['submit_name']))
+                foreach($oForm->aParams['db']['submit_name'] as $sVal) {
+                    if(isset($oForm->aInputs[$sVal])) {
+                        $sSubmitName = $sVal;
+                        break;
+                    }
+                }
+            else
+                $sSubmitName = $oForm->aParams['db']['submit_name'];
+
+            if($sSubmitName && isset($oForm->aInputs[$sSubmitName]))
+                $aValues[$sSubmitName] = $oForm->aInputs[$sSubmitName]['value'];
+        }
+
+        $oForm->initChecker(array(), $aValues);
+        if(!$oForm->isSubmittedAndValid()) 
+            return array('code' => 1, 'message' => '_sys_txt_error_occured');
+
+        $iLevel = 0;
+        $iCmtVisualParentId = 0;
+        if((int)$iCmtParentId > 0) {
+            $aParent = $this->getCommentRow($iCmtParentId);
+
+            $iLevel = (int)$aParent['cmt_level'] + 1;
+            $iCmtVisualParentId = $iLevel > $this->getMaxLevel() ? $aParent['cmt_vparent_id'] : $iCmtParentId;
+        }
+
+        $iCmtId = (int)$oForm->insert(array('cmt_vparent_id' => $iCmtVisualParentId, 'cmt_object_id' => $this->_iId, 'cmt_author_id' => $iCmtAuthorId, 'cmt_level' => $iLevel, 'cmt_time' => time()));
+        if(!$iCmtId) {
+            if(!$oForm->isValid())
+                return array('code' => 1, 'message' => '_sys_txt_error_occured');
+            else
+                return array('code' => 2, 'message' => '_cmt_err_cannot_perform_action');
+        }
+
+        $iCmtUniqId = $this->_oQuery->getUniqId($this->_aSystem['system_id'], $iCmtId, $iCmtAuthorId);
+
+        if($iCmtParentId) {
+            $this->_oQuery->updateRepliesCount($iCmtParentId, 1);
+
+            if(!BxDolModuleQuery::getInstance()->isEnabledByName('bx_notifications'))
+                $this->_sendNotificationEmail($iCmtId, $iCmtParentId);
+        }
+
+        $this->_triggerComment();
+
+        if($this->_sMetatagsObj && ($oMetatags = BxDolMetatags::getObjectInstance($this->_sMetatagsObj)) !== false)
+            $oMetatags->metaAdd($iCmtUniqId, $aValues['cmt_text']);
+
+        $mixedResult = $this->onPostAfter($iCmtId);
+        if($mixedResult === false)
+            return array('code' => 2, 'message' => '_cmt_err_cannot_perform_action');
+
+        return $mixedResult;
+    }
+
     protected function _getFormPost($iCmtParentId = 0, $aDp = array())
     {
         $bCmtParentId = !empty($iCmtParentId);

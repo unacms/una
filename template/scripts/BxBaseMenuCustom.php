@@ -31,16 +31,19 @@ class BxBaseMenuCustom extends BxTemplMenuMoreAuto
             return false;
 
     	$sMethod = '_getMenuItem' . str_replace(' ', '', ucwords(str_replace('-', ' ', $aItem['name'])));
+        $bMethod = method_exists($this, $sMethod);
 
-    	if(!method_exists($this, $sMethod)) {
+        $mixedItem = false;
+        if($bMethod)
+            $mixedItem = $this->$sMethod($aItem);
+
+    	if($mixedItem === true || !$bMethod) {
             $aItem = parent::_getMenuItem($aItem);
             if($aItem === false)
                 return false;
 
             $mixedItem = $this->_getMenuItemDefault($aItem);
     	}
-    	else
-            $mixedItem = $this->$sMethod($aItem);
 
     	if(empty($mixedItem))
             return false;

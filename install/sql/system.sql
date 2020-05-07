@@ -1710,6 +1710,7 @@ CREATE TABLE `sys_objects_report` (
   `table_track` varchar(32) NOT NULL,
   `is_on` tinyint(4) NOT NULL default '1',
   `base_url` varchar(256) NOT NULL default '',
+  `object_comment` varchar(64) NOT NULL,
   `trigger_table` varchar(32) NOT NULL,
   `trigger_field_id` varchar(32) NOT NULL,
   `trigger_field_author` varchar(32) NOT NULL,

@@ -708,6 +708,15 @@ function bx_set_badge (sModule, iContentId, iBadgeId, mixedLoadingElement) {
     }, 'json');
 }
 
+function bx_get_notes(oSource,  sModule, iContentId, oOptions, oVars) {
+    var oOptions = oOptions || {};
+    var oVars = oVars || {};
+
+    var oOptions = $.extend({}, $.fn.dolPopupDefaultOptions, {id: sModule + '_notes_' + iContentId, url: bx_append_url_params('modules/?r=' + sModule + '/get_notes/', $.extend({content_id: iContentId}, oVars))}, oOptions);
+
+    $(window).dolPopupAjax(oOptions);
+}
+
 
 function validateLoginForm(eForm) {
     return true;

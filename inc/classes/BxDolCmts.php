@@ -1189,6 +1189,11 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return array('msg' => _t('_cmt_err_cannot_perform_action'));
     }
 
+    public function add($aValues)
+    {
+        return $this->_getFormAdd($aValues);
+    }
+
     public function actionResumeLiveUpdate()
     {
     	$sKey = $this->getNotificationId();
@@ -1197,7 +1202,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     	BxDolSession::getInstance()->unsetValue($sKey);
     }
 
-	public function actionPauseLiveUpdate()
+    public function actionPauseLiveUpdate()
     {
     	$sKey = $this->getNotificationId();
 

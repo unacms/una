@@ -72,6 +72,8 @@ class BxDolReport extends BxDolObject
 
     protected $_sBaseUrl;
 
+    protected $_sObjectCmts;
+
     protected $_sFormObject;
     protected $_sFormDisplayPost;
 
@@ -93,6 +95,8 @@ class BxDolReport extends BxDolObject
         $this->_sBaseUrl = BxDolPermalinks::getInstance()->permalink($this->_aSystem['base_url']);
         if(get_mb_substr($this->_sBaseUrl, 0, 4) != 'http')
             $this->_sBaseUrl = BX_DOL_URL_ROOT . $this->_sBaseUrl;
+
+        $this->_sObjectCmts = $this->_aSystem['object_comment'];
 
         $this->_sFormObject = 'sys_report';
         $this->_sFormDisplayPost = 'sys_report_post';
@@ -141,6 +145,7 @@ class BxDolReport extends BxDolObject
                     `table_track` AS `table_track`,
                     `is_on` AS `is_on`,
                     `base_url` AS `base_url`,
+                    `object_comment` AS `object_comment`,
                     `trigger_table` AS `trigger_table`,
                     `trigger_field_id` AS `trigger_field_id`,
                     `trigger_field_author` AS `trigger_field_author`,
@@ -183,7 +188,7 @@ class BxDolReport extends BxDolObject
         return echoJson($this->_getReport());
     }
 
-	public function actionGetReportedBy()
+    public function actionGetReportedBy()
     {
         if (!$this->isEnabled())
            return '';
