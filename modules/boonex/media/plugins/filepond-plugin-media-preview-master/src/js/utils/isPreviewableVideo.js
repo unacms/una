@@ -1,1 +1,0 @@
-export const isPreviewableVideo = file => /^video/.test(file.type);
