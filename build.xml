@@ -85,7 +85,10 @@
         <exclude name="plugins_public/**" />
         <exclude name="modules/boonex/sites/**" />
         <exclude name="modules/boonex/membership_pricing/**" />
-        <exclude name="**/updates/**" />
+        <exclude name="modules/boonex/froala/plugins/**" />
+        <exclude name="modules/boonex/media/plugins/**" />
+        <exclude name="modules/boonex/plyr/plugins/**" />
+        <exclude name="**/updates/**" />        
     </fileset>
 
     <!-- ============================================  -->
