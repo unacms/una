@@ -278,6 +278,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_persons_view_actions_all', 'bx_persons', 'favorite', '_sys_menu_item_title_system_va_favorite', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 230),
 ('bx_persons_view_actions_all', 'bx_persons', 'feature', '_sys_menu_item_title_system_va_feature', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 240),
 ('bx_persons_view_actions_all', 'bx_persons', 'report', '_sys_menu_item_title_system_va_report', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 250),
+('bx_persons_view_actions_all', 'bx_persons', 'notes', '_sys_menu_item_title_system_va_notes', '_sys_menu_item_title_va_notes', 'javascript:void(0)', 'javascript:bx_get_notes(this,  ''{module_uri}'', {content_id});', '', 'exclamation-triangle', '', '', 0, 2147483647, '', 1, 0, 280),
 ('bx_persons_view_actions_all', 'bx_persons', 'edit-persons-cover', '_bx_persons_menu_item_title_system_edit_cover', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 400),
 ('bx_persons_view_actions_all', 'bx_persons', 'edit-persons-profile', '_bx_persons_menu_item_title_system_edit_profile', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 410),
 ('bx_persons_view_actions_all', 'bx_persons', 'delete-persons-profile', '_bx_persons_menu_item_title_system_delete_profile', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 420),

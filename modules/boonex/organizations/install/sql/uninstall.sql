@@ -1,6 +1,6 @@
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_organizations_data`, `bx_organizations_pics`, `bx_organizations_pics_resized`, `bx_organizations_cmts`, `bx_organizations_views_track`, `bx_organizations_votes`, `bx_organizations_votes_track`, `bx_organizations_favorites_track`, `bx_organizations_reports`, `bx_organizations_reports_track`, `bx_organizations_meta_keywords`, `bx_organizations_meta_locations`, `bx_organizations_meta_mentions`, `bx_organizations_fans`, `bx_organizations_admins`, `bx_organizations_scores`, `bx_organizations_scores_track`;
+DROP TABLE IF EXISTS `bx_organizations_data`, `bx_organizations_pics`, `bx_organizations_pics_resized`, `bx_organizations_cmts`, `bx_organizations_cmts_notes`, `bx_organizations_views_track`, `bx_organizations_votes`, `bx_organizations_votes_track`, `bx_organizations_favorites_track`, `bx_organizations_reports`, `bx_organizations_reports_track`, `bx_organizations_meta_keywords`, `bx_organizations_meta_locations`, `bx_organizations_meta_mentions`, `bx_organizations_fans`, `bx_organizations_admins`, `bx_organizations_scores`, `bx_organizations_scores_track`;
 
 -- PROFILES
 DELETE FROM sys_profiles WHERE `type` = 'bx_organizations';
@@ -25,7 +25,7 @@ DELETE FROM `sys_form_pre_lists` WHERE `module` = 'bx_organizations';
 DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_organizations_cats');
 
 -- COMMENTS
-DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_organizations';
+DELETE FROM `sys_objects_cmts` WHERE `Name` LIKE 'bx_organizations%';
 
 -- VIEWS
 DELETE FROM `sys_objects_view` WHERE `name` = 'bx_organizations';

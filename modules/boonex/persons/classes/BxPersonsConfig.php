@@ -103,6 +103,7 @@ class BxPersonsConfig extends BxBaseModProfileConfig
             'OBJECT_FAVORITES' => 'bx_persons',
             'OBJECT_FEATURED' => 'bx_persons',
             'OBJECT_COMMENTS' => 'bx_persons',
+            'OBJECT_NOTES' => 'bx_persons_notes',
             'OBJECT_REPORTS' => 'bx_persons',
             'OBJECT_METATAGS' => 'bx_persons',
             'OBJECT_FORM_ENTRY' => 'bx_person',
