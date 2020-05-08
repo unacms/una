@@ -111,6 +111,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'OBJECT_METATAGS_MEDIA' => 'bx_albums_media',
             'OBJECT_METATAGS_MEDIA_CAMERA' => 'bx_albums_media_camera',
             'OBJECT_COMMENTS' => 'bx_albums',
+            'OBJECT_NOTES' => 'bx_albums_notes',
             'OBJECT_COMMENTS_MEDIA' => 'bx_albums_media',
             'OBJECT_PRIVACY_VIEW' => 'bx_albums_allow_view_to',
             'OBJECT_FORM_ENTRY' => 'bx_albums',

@@ -128,6 +128,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'OBJECT_FEATURED' => 'bx_market',
             'OBJECT_METATAGS' => 'bx_market',
             'OBJECT_COMMENTS' => 'bx_market',
+            'OBJECT_NOTES' => 'bx_market_notes',
             'OBJECT_CATEGORY' => 'bx_market_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_market_allow_view_to',
             'OBJECT_PRIVACY_PURCHASE' => 'bx_market_allow_purchase_to',

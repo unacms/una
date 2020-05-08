@@ -93,6 +93,7 @@ class BxPollsConfig extends BxBaseModTextConfig
             'OBJECT_FEATURED' => 'bx_polls',
             'OBJECT_METATAGS' => 'bx_polls',
             'OBJECT_COMMENTS' => 'bx_polls',
+            'OBJECT_NOTES' => 'bx_polls_notes',
             'OBJECT_CATEGORY' => 'bx_polls_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_polls_allow_view_to',
             'OBJECT_FORM_ENTRY' => 'bx_polls',

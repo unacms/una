@@ -26,7 +26,7 @@ DELETE FROM `sys_categories` WHERE `module` = 'bx_posts';
 DELETE FROM `sys_categories2objects` WHERE `module` = 'bx_posts';
 
 -- COMMENTS
-DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_posts';
+DELETE FROM `sys_objects_cmts` WHERE `Name` LIKE 'bx_posts%';
 
 -- VOTES
 DELETE FROM `sys_objects_vote` WHERE `Name` IN ('bx_posts', 'bx_posts_reactions', 'bx_posts_poll_answers');
