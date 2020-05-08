@@ -94,6 +94,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'OBJECT_FAVORITES' => 'bx_events',
             'OBJECT_FEATURED' => 'bx_events',
             'OBJECT_COMMENTS' => 'bx_events',
+            'OBJECT_NOTES' => 'bx_events_notes',
             'OBJECT_REPORTS' => 'bx_events',
             'OBJECT_METATAGS' => 'bx_events',
             'OBJECT_FORM_ENTRY' => 'bx_event',

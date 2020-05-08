@@ -1,6 +1,6 @@
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_events_data`, `bx_events_intervals`, `bx_events_pics`, `bx_events_pics_resized`, `bx_events_cmts`, `bx_events_views_track`, `bx_events_meta_keywords`, `bx_events_meta_locations`, `bx_events_meta_mentions`, `bx_events_fans`, `bx_events_admins`, `bx_events_votes`, `bx_events_votes_track`, `bx_events_reports`, `bx_events_reports_track`, `bx_events_favorites_track`,  `bx_events_scores`, `bx_events_scores_track`, `bx_events_invites`;
+DROP TABLE IF EXISTS `bx_events_data`, `bx_events_intervals`, `bx_events_pics`, `bx_events_pics_resized`, `bx_events_cmts`, `bx_events_cmts_notes`, `bx_events_views_track`, `bx_events_meta_keywords`, `bx_events_meta_locations`, `bx_events_meta_mentions`, `bx_events_fans`, `bx_events_admins`, `bx_events_votes`, `bx_events_votes_track`, `bx_events_reports`, `bx_events_reports_track`, `bx_events_favorites_track`,  `bx_events_scores`, `bx_events_scores_track`, `bx_events_invites`;
 
 -- PROFILES
 DELETE FROM sys_profiles WHERE `type` = 'bx_events';
@@ -25,7 +25,7 @@ DELETE FROM `sys_form_pre_lists` WHERE `module` = 'bx_events';
 DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_events_cats');
 
 -- COMMENTS
-DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_events';
+DELETE FROM `sys_objects_cmts` WHERE `Name` LIKE 'bx_events%';
 
 -- VIEWS
 DELETE FROM `sys_objects_view` WHERE `name` = 'bx_events';
