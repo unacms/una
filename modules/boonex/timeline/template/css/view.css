@@ -392,10 +392,10 @@ div.bx-tl-item-text div.bx-tl-content.bx-tl-overflow:before {
     width: 100%;
     height: 20%;
 
-    background: -webkit-linear-gradient(top, transparent, #ffffff);
-    background: -moz-linear-gradient(top, transparent, #ffffff);
-    background: -o-linear-gradient(top, transparent, #ffffff);
-    background: linear-gradient(to bottom, transparent, #ffffff);
+    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1.0));
+    background: -moz-linear-gradient(top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1.0));
+    background: -o-linear-gradient(top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1.0));
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1.0));
 
     content: '';
 }
