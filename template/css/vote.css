@@ -135,7 +135,9 @@ div.bx-vote div.bx-vote-counter-holder {
 .bx-vote-counter-wrapper-reactions .bx-vote-counter.bx-vc-hidden {
     display: none;
 }
-
+.bx-menu-object-sys_vote_reactions_do li .sys-icon {
+    font-size: 1.5rem;
+}
 
 /*--- Counter Styles ---*/
 .bx-vote-counter .bx-vote-counter-label.bx-def-valign-center .bx-vote-counter-text {
