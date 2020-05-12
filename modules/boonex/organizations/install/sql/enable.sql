@@ -23,7 +23,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `e
 ('bx_organizations_searchable_fields', 'org_name,org_desc', @iCategId, '_bx_orgs_option_searchable_fields', 'list', 'a:2:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:21:"get_searchable_fields";}', '', '', 20),
 ('bx_organizations_public_subscriptions', '', @iCategId, '_bx_orgs_option_public_subscriptions', 'checkbox', '', '', '', 30),
 ('bx_organizations_public_subscribed_me', '', @iCategId, '_bx_orgs_option_public_subscribed_me', 'checkbox', '', '', '', 31),
-('bx_organizations_enable_profile_activation_letter', 'on', @iCategId, '_bx_orgs_option_enable_profile_activation_letter', 'checkbox', '', '', '', 32);
+('bx_organizations_enable_profile_activation_letter', 'on', @iCategId, '_bx_orgs_option_enable_profile_activation_letter', 'checkbox', '', '', '', 32),
+('bx_organizations_auto_activation_for_categories', 'on', @iCategId, '_bx_orgs_option_auto_activation_for_categories', 'checkbox', '', '', '', 35);
 
 -- PAGES
 
@@ -156,10 +157,10 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
 ('bx_organizations_home', 1, 'bx_organizations', '_bx_orgs_page_block_title_featured_profiles', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:15:"browse_featured";s:6:"params";a:1:{i:0;s:7:"gallery";}}', 0, 1, 0),
-('bx_organizations_home', 1, 'bx_organizations', '_bx_orgs_page_block_title_latest_profiles', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:16:\"bx_organizations\";s:6:\"method\";s:22:\"browse_recent_profiles\";s:6:"params";a:1:{i:0;b:1;}}', 0, 1, 1);
+('bx_organizations_home', 1, 'bx_organizations', '_bx_orgs_page_block_title_latest_profiles', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:16:\"bx_organizations\";s:6:\"method\";s:22:\"browse_recent_profiles\";s:6:"params";a:1:{i:0;b:1;}}', 0, 1, 1),
+('bx_organizations_home', 1, 'bx_organizations', '_bx_forum_page_block_title_sys_multicats', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:21:"categories_multi_list";}', 0, 0, 2);
 
 -- PAGE: active profiles
-
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_organizations_active', '_bx_orgs_page_title_sys_active', '_bx_orgs_page_title_active', 'bx_organizations', 5, 2147483647, 1, 'organizations-active', 'page.php?i=organizations-active', '', '', '', 0, 1, 0, 'BxOrgsPageBrowse', 'modules/boonex/organizations/classes/BxOrgsPageBrowse.php');
 
