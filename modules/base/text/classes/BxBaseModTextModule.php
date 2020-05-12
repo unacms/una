@@ -430,45 +430,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         return $iCount;
     }
     
-    /**
-     * @page service Service Calls
-     * @section bx_base_text Base Text
-     * @subsection bx_base_text-page_blocks Page Blocks
-     * @subsubsection bx_base_text-categories_multi_list categories_multi_list
-     * 
-     * @code bx_srv('bx_posts', 'categories_multi_list', [...]); @endcode
-     * 
-     * Display multi-categorories block with number of posts in each category
-     * @param $bDisplayEmptyCats display empty categories
-     * 
-     * @see BxBaseModTextModule::serviceCategoriesMultiList
-     */
-    /** 
-     * @ref bx_base_text-categories_multi_list "categories_multi_list"
-     */
-    public function serviceCategoriesMultiList($bDisplayEmptyCats = true)
-    {
-		$oCategories = BxDolCategories::getInstance();
-        $aCats = $oCategories->getData(array('type' => 'by_module_with_num', 'module' => $this->getName()));
-        $aVars = array('bx_repeat:cats' => array());
-        foreach ($aCats as $oCat) {
-            $sValue = $oCat['value'];
-            $iNum = $oCat['num'];
-            
-            $aVars['bx_repeat:cats'][] = array(
-                'url' => $oCategories->getUrl($this->getName(), $sValue),
-                'name' => _t($sValue),
-                'value' => $sValue,
-                'num' => $iNum,
-            );
-        }
-        
-        if (!$aVars['bx_repeat:cats'])
-            return '';
-
-        return $this->_oTemplate->parseHtmlByName('category_list.html', $aVars);
-    }
-
     // ====== PERMISSION METHODS
 
     /**
