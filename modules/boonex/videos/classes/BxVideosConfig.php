@@ -41,6 +41,7 @@ class BxVideosConfig extends BxBaseModTextConfig
             'FIELD_TEXT' => 'text',
             'FIELD_TEXT_ID' => 'video-text',
             'FIELD_CATEGORY' => 'cat',
+            'FIELD_MULTICAT' => 'multicat',
             'FIELD_DURATION' => 'duration',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_PHOTO' => 'pictures',
@@ -78,6 +79,8 @@ class BxVideosConfig extends BxBaseModTextConfig
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_videos_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_videos_rss_num',
             'PARAM_SEARCHABLE_FIELDS' => 'bx_videos_searchable_fields',
+            'PARAM_MULTICAT_ENABLED' => true,
+            'PARAM_MULTICAT_AUTO_ACTIVATION_FOR_CATEGORIES' => 'bx_videos_auto_activation_for_categories',
 
             // objects
             'OBJECT_STORAGE' => 'bx_videos_photos',
@@ -169,11 +172,13 @@ class BxVideosConfig extends BxBaseModTextConfig
         );
 
         $this->_aJsClasses = array(
-        	'manage_tools' => 'BxVideosManageTools'
+        	'manage_tools' => 'BxVideosManageTools',
+            'categories' => 'BxVideosCategories'
         );
 
         $this->_aJsObjects = array(
-        	'manage_tools' => 'oBxVideosManageTools'
+        	'manage_tools' => 'oBxVideosManageTools',
+            'categories' => 'oBxVideosCategories'
         );
 
         $this->_aGridObjects = array(

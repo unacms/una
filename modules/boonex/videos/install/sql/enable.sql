@@ -16,7 +16,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_videos_per_page_profile', '6', @iCategId, '_bx_videos_option_per_page_profile', 'digit', '', '', '', 12),
 ('bx_videos_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', 15),
 ('bx_videos_rss_num', '10', @iCategId, '_bx_videos_option_rss_num', 'digit', '', '', '', 20),
-('bx_videos_searchable_fields', 'title,text', @iCategId, '_bx_videos_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:21:"get_searchable_fields";}', 30);
+('bx_videos_searchable_fields', 'title,text', @iCategId, '_bx_videos_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:21:"get_searchable_fields";}', 30),
+('bx_videos_auto_activation_for_categories', 'on', @iCategId, '_bx_videos_option_auto_activation_for_categories', 'checkbox', '', '', '', 35);
 
 -- PAGE: create entry
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -112,8 +113,10 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_videos_home', 1, 'bx_videos', '', '_bx_videos_page_block_title_featured_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_videos";s:6:"method";s:15:"browse_featured";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 1, 1, 0),
 ('bx_videos_home', 1, 'bx_videos', '', '_bx_videos_page_block_title_recent_entries_view_extended', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_videos";s:6:"method";s:13:"browse_public";s:6:"params";a:1:{i:0;s:8:"extended";}}', 0, 1, 1, 1),
 ('bx_videos_home', 2, 'bx_videos', '', '_bx_videos_page_block_title_popular_keywords', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:14:"keywords_cloud";s:6:"params";a:2:{i:0;s:9:"bx_videos";i:1;s:9:"bx_videos";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 1, 1, 0),
-('bx_videos_home', 2, 'bx_videos', '', '_bx_videos_page_block_title_cats', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"categories_list";s:6:"params";a:2:{i:0;s:14:"bx_videos_cats";i:1;a:1:{s:10:"show_empty";b:1;}}s:5:"class";s:20:"TemplServiceCategory";}', 0, 1, 1, 1);
+('bx_videos_home', 2, 'bx_videos', '', '_bx_videos_page_block_title_cats', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:15:"categories_list";s:6:"params";a:2:{i:0;s:14:"bx_videos_cats";i:1;a:1:{s:10:"show_empty";b:1;}}s:5:"class";s:20:"TemplServiceCategory";}', 0, 1, 1, 1),
+('bx_videos_home', 2, 'bx_videos', '_bx_videos_page_block_title_sys_multicats', '_bx_videos_page_block_title_multicats', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:21:"categories_multi_list";}', 0, 0, 0, 2);
 
+-- PAGE: active profiles
 -- PAGE: search for entries
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_videos_search', '_bx_videos_page_title_sys_entries_search', '_bx_videos_page_title_entries_search', 'bx_videos', 5, 2147483647, 1, 'videos-search', 'page.php?i=videos-search', '', '', '', 0, 1, 0, 'BxVideosPageBrowse', 'modules/boonex/videos/classes/BxVideosPageBrowse.php');
