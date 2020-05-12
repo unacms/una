@@ -95,7 +95,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'PARAM_REDIRECT_AADD_CUSTOM_URL' => 'bx_organizations_redirect_aadd_custom_url',
             
             'PARAM_MULTICAT_ENABLED' => true,
-            'PARAM_MULTICAT_AUTO_ACTIVATION_FOR_CATEGORIES' => 'bx_forum_auto_activation_for_categories',
+            'PARAM_MULTICAT_AUTO_ACTIVATION_FOR_CATEGORIES' => 'bx_organizations_auto_activation_for_categories',
 
             // objects
             'OBJECT_STORAGE' => 'bx_organizations_pics',
