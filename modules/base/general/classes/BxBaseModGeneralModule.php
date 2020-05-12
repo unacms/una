@@ -1246,6 +1246,39 @@ class BxBaseModGeneralModule extends BxDolModule
             return '';
 	}
     
+    public function serviceBrowseByCategories($sUnitView, $bEmptyMessage, $bAjaxPaginate, $sMode, $iPerPage)
+    {   
+        $CNF = &$this->_oConfig->CNF;
+        $sClassSearchResult ='SearchResult';
+		
+		bx_import($sClassSearchResult, $this->_aModule['name']);
+        $sClass = $this->_aModule['class_prefix'] . $sClassSearchResult;
+        $o = new $sClass($sMode, array('unit_view' => $sUnitView, 'paginate' => array('perPage' => 10, 'start' => 0, 'num' => 11)));
+		$o->setDesignBoxTemplateId(BX_DB_PADDING_DEF);
+        $o->setAjaxPaginate($bAjaxPaginate);
+        $o->setCategoryObject('multi');
+        
+        $aCategoriesOutput = array();
+		$aCategories = BxDolCategories::getInstance()->getData(array('type' => 'by_module_with_num', 'module' => $this->_aModule['name']));
+        
+        foreach($aCategories as $aCategory){
+            if ($aCategory['num'] > 0){
+                $o->setCustomSearchCondition(array('keyword' => $aCategory['value']));
+                $o->setPaginatePerPage(2);
+                if (!$o->isError){
+                    $aResult = $o->processing();
+                    if ($aResult && $aResult['content'] != '')
+                        $aCategoriesOutput[] =  array('name' => _t($aCategory['value']), 'url' => '', 'content' => $aResult['content']);
+                }
+            }
+        }
+
+        return $this->_oTemplate->parseHtmlByName('browse_by_categories.html', array(
+            'bx_repeat:categories' => $aCategoriesOutput,
+        ));
+
+	}
+    
     /**
      * Data for Notifications module
      */

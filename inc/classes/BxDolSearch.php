@@ -957,6 +957,9 @@ class BxDolSearchResult implements iBxDolReplaceable
         //--- Use default value in case of emergency.
         if (empty($iPerPage))
             $iPerPage = BX_DOL_SEARCH_RESULTS_PER_PAGE_DEFAULT;
+        
+        if ($this->iPaginatePerPage != BX_DOL_SEARCH_RESULTS_PER_PAGE_DEFAULT)
+            $iPerPage = $this->iPaginatePerPage;
 
         $this->aCurrent['paginate']['perPage'] = $iPerPage;
             
