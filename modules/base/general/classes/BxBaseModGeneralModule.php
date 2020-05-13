@@ -1246,6 +1246,39 @@ class BxBaseModGeneralModule extends BxDolModule
             return '';
 	}
     
+    public function serviceBrowseByCategories($sUnitView, $bEmptyMessage, $bAjaxPaginate, $sMode, $iPerPage)
+    {   
+        $CNF = &$this->_oConfig->CNF;
+        $sClassSearchResult ='SearchResult';
+		
+		bx_import($sClassSearchResult, $this->_aModule['name']);
+        $sClass = $this->_aModule['class_prefix'] . $sClassSearchResult;
+        $o = new $sClass($sMode, array('unit_view' => $sUnitView, 'paginate' => array('perPage' => 10, 'start' => 0, 'num' => 11)));
+		$o->setDesignBoxTemplateId(BX_DB_PADDING_DEF);
+        $o->setAjaxPaginate($bAjaxPaginate);
+        $o->setCategoryObject('multi');
+        
+        $aCategoriesOutput = array();
+		$aCategories = BxDolCategories::getInstance()->getData(array('type' => 'by_module_with_num', 'module' => $this->_aModule['name']));
+        
+        foreach($aCategories as $aCategory){
+            if ($aCategory['num'] > 0){
+                $o->setCustomSearchCondition(array('keyword' => $aCategory['value']));
+                $o->setPaginatePerPage(2);
+                if (!$o->isError){
+                    $aResult = $o->processing();
+                    if ($aResult && $aResult['content'] != '')
+                        $aCategoriesOutput[] =  array('name' => _t($aCategory['value']), 'url' => '', 'content' => $aResult['content']);
+                }
+            }
+        }
+
+        return $this->_oTemplate->parseHtmlByName('browse_by_categories.html', array(
+            'bx_repeat:categories' => $aCategoriesOutput,
+        ));
+
+	}
+    
     /**
      * Data for Notifications module
      */
@@ -1826,6 +1859,45 @@ class BxBaseModGeneralModule extends BxDolModule
         return $this->_oTemplate->parseHtmlByName('badges.html', array(
             'bx_repeat:items' => $aBadgesOutput,
         ));
+    }
+    
+    /**
+     * @page service Service Calls
+     * @section bx_base_text Base Text
+     * @subsection bx_base_text-page_blocks Page Blocks
+     * @subsubsection bx_base_text-categories_multi_list categories_multi_list
+     * 
+     * @code bx_srv('bx_posts', 'categories_multi_list', [...]); @endcode
+     * 
+     * Display multi-categorories block with number of posts in each category
+     * @param $bDisplayEmptyCats display empty categories
+     * 
+     * @see BxBaseModGeneralModule::serviceCategoriesMultiList
+     */
+    /** 
+     * @ref bx_base_text-categories_multi_list "categories_multi_list"
+     */
+    public function serviceCategoriesMultiList($bDisplayEmptyCats = true)
+    {
+		$oCategories = BxDolCategories::getInstance();
+        $aCats = $oCategories->getData(array('type' => 'by_module_with_num', 'module' => $this->getName()));
+        $aVars = array('bx_repeat:cats' => array());
+        foreach ($aCats as $oCat) {
+            $sValue = $oCat['value'];
+            $iNum = $oCat['num'];
+            
+            $aVars['bx_repeat:cats'][] = array(
+                'url' => $oCategories->getUrl($this->getName(), $sValue),
+                'name' => _t($sValue),
+                'value' => $sValue,
+                'num' => $iNum,
+            );
+        }
+        
+        if (!$aVars['bx_repeat:cats'])
+            return '';
+
+        return $this->_oTemplate->parseHtmlByName('category_list.html', $aVars);
     }
 
     /**

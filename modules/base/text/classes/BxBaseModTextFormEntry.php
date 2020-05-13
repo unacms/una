@@ -40,14 +40,6 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
             $sResult .= ($bDynamicMode ? $sInclude : '') . $this->_oModule->_oTemplate->getJsCode('poll');
         }   
 
-        if(isset($CNF['PARAM_MULTICAT_ENABLED']) && $CNF['PARAM_MULTICAT_ENABLED'] === true) {
-            $sInclude2 = '';
-            $sInclude2 .= $this->_oModule->_oTemplate->addJs(array('categories.js'), $bDynamicMode);
-            $sInclude2 .= $this->_oModule->_oTemplate->addCss(array('categories.css'), $bDynamicMode);
-
-            $sResult .= ($bDynamicMode ? $sInclude2 : '') . $this->_oModule->_oTemplate->getJsCode('categories');
-        }
-
     	return $sResult;
     }
 
@@ -77,44 +69,17 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
                 $this->aInputs[$CNF['FIELD_POLL']]['content_id'] = $aValues['id'];
         }
         
-        if (isset($CNF['FIELD_MULTICAT']) && isset($this->aInputs[$CNF['FIELD_MULTICAT']]) && $CNF['PARAM_MULTICAT_ENABLED']) {
-            if ($bValues)
-                $this->aInputs[$CNF['FIELD_MULTICAT']]['content_id'] = $aValues['id'];
-        }
-
         parent::initChecker ($aValues, $aSpecificValues);
     }
     
     public function insert ($aValsToAdd = array(), $isIgnore = false)
     {
-        $CNF = $this->_oModule->_oConfig->CNF;
-        $bMulticatEnabled = $this->_isMulticatEnabled();
-        
-        if ($bMulticatEnabled)
-            $this->processMulticatBefore($CNF['FIELD_MULTICAT'], $aValsToAdd);
-        
-        $iContentId = parent::insert($aValsToAdd, $isIgnore);
-        
-        if(!empty($iContentId)){
-            if ($bMulticatEnabled)
-                $this->processMulticatAfter($CNF['FIELD_MULTICAT'], $iContentId);
-        }
-        return $iContentId;
+        return parent::insert($aValsToAdd, $isIgnore);
     }
     
     function update ($iContentId, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
     {
-        $CNF = $this->_oModule->_oConfig->CNF;
-        $bMulticatEnabled = $this->_isMulticatEnabled();
-        
-        if ($bMulticatEnabled)
-            $this->processMulticatBefore($CNF['FIELD_MULTICAT'], $aValsToAdd);
-        
-        $iResult = parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
-        
-        if ($bMulticatEnabled)
-            $this->processMulticatAfter($CNF['FIELD_MULTICAT'], $iContentId);
-        return $iResult;
+       return parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
     }
     
     protected function genCustomInputAttachments ($aInput)
@@ -154,144 +119,6 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
 
         return true;
     }
-    
-    /**
-     * 
-     * MultiCategories related methods. 
-     * 
-     */
-    
-    protected function processMulticatBefore($sFieldName, &$aValsToAdd){
-        if (isset($this->aInputs[$sFieldName])){
-            $this->aInputs[$sFieldName]['value'] = array_unique(array_filter($this->aInputs[$sFieldName]['value'], function($sTmp){
-               return trim($sTmp);
-            }));  
-            $aValsToAdd[$sFieldName] = implode(',', $this->aInputs[$sFieldName]['value']);
-        }
-    }
-    
-    protected function processMulticatAfter($sFieldName, $iContentId){
-        $CNF = &$this->_oModule->_oConfig->CNF;
-        $bAutoActivation = (isset($CNF['PARAM_MULTICAT_AUTO_ACTIVATION_FOR_CATEGORIES']) && getParam($CNF['PARAM_MULTICAT_AUTO_ACTIVATION_FOR_CATEGORIES']) == 'on') ? true : false;
-		$oCategories = BxDolCategories::getInstance();
-        if (isset($this->aInputs[$sFieldName])){
-            $oCategories->delete($this->_oModule->getName(), $iContentId);
-            foreach($this->aInputs[$sFieldName]['value'] as  $sValue) {
-                $oCategories->add($this->_oModule->getName(), bx_get_logged_profile_id(), $sValue, $iContentId, $bAutoActivation);
-            }
-        }
-    }
-    
-    protected function genCustomViewRowValueMulticat(&$aInput)
-    {
-		$oCategories = BxDolCategories::getInstance();
-        $aValues = $oCategories->getData(array('type' => 'by_module_and_object', 'module' => $this->_oModule->getName(), 'object_id' => (!empty($aInput['content_id']) ? (int)$aInput['content_id'] : 0 )));
-        if (count($aValues) > 0){
-            $aVars = array('bx_repeat:cats' => array());
-            foreach ($aValues as  $sValue) {
-                $aVars['bx_repeat:cats'][] = array(
-                    'url' => $oCategories->getUrl($this->_oModule->getName(), $sValue),
-                    'name' => _t($sValue),
-                    'bx_if:more' => array(
-                        'condition' => $sValue === end($aValues) ? false : true,
-                        'content' => array('1')
-                    ),
-                );
-            }
-            
-            if (!$aVars['bx_repeat:cats'])
-                return '';
-
-            return $this->_oModule->_oTemplate->parseHtmlByName('category_list_inline.html', $aVars);
-        }
-        return '';
-    }
-    
-    protected function genCustomInputMulticat(&$aInput)
-    {
-        $sJsObject = $this->_oModule->_oConfig->getJsObject('categories');
-		$aValuesForSelect = BxDolCategories::getInstance()->getData(array('type' => 'by_module_and_author', 'module' => $this->_oModule->getName(), 'author' => bx_get_logged_profile_id()));
-   
-        $aSelectedItems = array();
-        if (isset($aInput['value']) && is_array($aInput['value']))
-		    $aInput['value'] = array_filter($aInput['value']);
-        
-        if(!empty($aInput['value'])) {
-            if (!is_array($aInput['value']))
-                $aValues = BxDolCategories::getInstance()->getData(array('type' => 'by_module_and_object', 'module' => $this->_oModule->getName(), 'object_id' => (!empty($aInput['content_id']) ? (int)$aInput['content_id'] : 0 )));
-            else
-                $aValues = $aInput['value'];
-            
-            $aValues = array_filter($aValues);
-            foreach($aValues as $sValue) {
-                if (!array_key_exists($sValue, $aValuesForSelect)){
-                    $aValuesForSelect[$sValue] = array('key' => $sValue, 'value' => $sValue);
-                }
-            }
-            foreach($aValues as $sValue) {
-                $sInput = $this->genCustomInputMulticatSelect($aInput, $aValuesForSelect, $sValue);
-                $aSelectedItems[] = array('js_object' => $sJsObject, 'select_cat' => $sInput);
-            }
-        }
-        else{
-            $aSelectedItems = array(
-                array('js_object' => $sJsObject, 'select_cat' => $this->genCustomInputMulticatSelect($aInput, $aValuesForSelect))
-            );
-        }
-        return $this->_oModule->_oTemplate->parseHtmlByName('form_categories.html', array(
-            'bx_repeat:items' => $aSelectedItems,
-            'js_object' => $sJsObject, 
-            'select_cat' => $this->genCustomInputMulticatSelect($aInput, $aValuesForSelect, -1),
-            'input_cat' => $this->genCustomInputMulticatInput($aInput),
-            'js_object' => $sJsObject,
-            'btn_add' => $this->genCustomInputMulticatButton($aInput),
-            'btn_add_new' => $this->genCustomInputMulticatButtonNew($aInput)
-        ));
-    }
-    
-    protected function genCustomInputMulticatSelect($aInput, $aValues, $mixedValue = '')
-    {
-        foreach($aValues as $sKey => $aValue) {
-            $aValues[$sKey]['value'] = _t($aValue['key']);
-        }
-        $aValues = array_merge(array('1' => array('key' => false, 'value' =>  _t('_sys_please_select'))), $aValues);
-        
-        $aInput['type'] = 'select';
-        $aInput['name'] .= '[]';
-        $aInput['value'] = $mixedValue;
-        $aInput['values'] = $aValues;
-        return $this->genInput($aInput);
-    }
-    
-    protected function genCustomInputMulticatInput($aInput)
-    {
-        $aInput['type'] = 'text';
-        $aInput['name'] .= '[]';
-        $aInput['value'] = '';
-        return $this->genInput($aInput);
-    }
-    
-    protected function genCustomInputMulticatButton($aInput)
-    {
-        $sName = $aInput['name'];
-        $aInput['type'] = 'button';
-        $aInput['name'] .= '_add';
-        $aInput['value'] = _t('_sys_txt_categories_button_caption_add');
-        $aInput['attrs']['class'] = 'bx-def-margin-right bx-def-margin-sec-top';
-        $aInput['attrs']['onclick'] = $this->_oModule->_oConfig->getJsObject('categories') . ".categoryAdd(this, '" . $sName . "');";
-        return $this->genInputButton($aInput);
-    }
-    
-    protected function genCustomInputMulticatButtonNew($aInput)
-    {
-        $sName = $aInput['name'];
-        $aInput['type'] = 'button';
-        $aInput['name'] .= '_add';
-        $aInput['value'] = _t('_sys_txt_categories_button_caption_addnew');
-        $aInput['attrs']['class'] = 'bx-def-margin-sec-top';
-        $aInput['attrs']['onclick'] = $this->_oModule->_oConfig->getJsObject('categories') . ".categoryAddNew(this, '" . $sName . "');";
-        return $this->genInputButton($aInput);
-    }
 
     protected function _getVideoGhostTmplVars($aContentInfo = array())
     {
@@ -315,12 +142,6 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
             'editor_id' => isset($CNF['FIELD_TEXT_ID']) ? $CNF['FIELD_TEXT_ID'] : ''
     	);
     }
-    
-    protected function _isMulticatEnabled(){
-        $CNF = $this->_oModule->_oConfig->CNF;
-        return isset($CNF['PARAM_MULTICAT_ENABLED']) && $CNF['PARAM_MULTICAT_ENABLED'] === true && isset($CNF['FIELD_MULTICAT']);
-    }
-
 }
 
 /** @} */

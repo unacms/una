@@ -30,7 +30,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'profile-fan-remove' => 'checkAllowedFanRemove',
         ));
 
-        $this->CNF = array (
+        $this->CNF = array_merge($this->CNF, array (
 
             // module icon
             'ICON' => 'briefcase col-red2',
@@ -60,6 +60,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'FIELD_LOCATION' => 'location',
             'FIELD_LOCATION_PREFIX' => 'location',
             'FIELD_LABELS' => 'labels',
+            'FIELD_MULTICAT' => 'multicat',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 
             // page URIs
@@ -92,6 +93,9 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'PARAM_PUBLIC_SBSD' => 'bx_organizations_public_subscribed_me',
             'PARAM_REDIRECT_AADD' => 'bx_organizations_redirect_aadd',
             'PARAM_REDIRECT_AADD_CUSTOM_URL' => 'bx_organizations_redirect_aadd_custom_url',
+            
+            'PARAM_MULTICAT_ENABLED' => true,
+            'PARAM_MULTICAT_AUTO_ACTIVATION_FOR_CATEGORIES' => 'bx_organizations_auto_activation_for_categories',
 
             // objects
             'OBJECT_STORAGE' => 'bx_organizations_pics',
@@ -233,14 +237,16 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             	'option_redirect_aadd_last' => '_bx_orgs_option_redirect_aadd_last',
             	'option_redirect_aadd_custom' => '_bx_orgs_option_redirect_aadd_custom'
             ),
-        );
+        ));
 
         $this->_aJsClasses = array(
-        	'manage_tools' => 'BxOrgsManageTools'
+        	'manage_tools' => 'BxOrgsManageTools',
+            'categories' => 'BxDolCategories'
         );
 
         $this->_aJsObjects = array(
-        	'manage_tools' => 'oBxOrgsManageTools'
+        	'manage_tools' => 'oBxOrgsManageTools',
+            'categories' => 'oBxDolCategories'
         );
 
         $this->_aGridObjects = array(

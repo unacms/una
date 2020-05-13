@@ -18,6 +18,10 @@ class BxBaseModProfileConfig extends BxBaseModGeneralConfig
     {
         parent::__construct($aModule);
 
+        $this->CNF = array(
+            'PARAM_MULTICAT_ENABLED' => false,
+        );
+        
         $this->_aMenuItems2MethodsActions = array (
             'profile-friend-add' => 'checkAllowedFriendAdd',
             'profile-friend-remove' => 'checkAllowedFriendRemove',

@@ -17,6 +17,8 @@ define('BX_DATA_VALUES_DEFAULT', 'LKey'); ///< Use default values for data items
 define('BX_DATA_VALUES_ADDITIONAL', 'LKey2'); ///< Use additional values for data items, @see BxDolForm::getDataItems
 define('BX_DATA_VALUES_ALL', 'all'); ///< Return all available info for data items, @see BxDolForm::getDataItems
 
+bx_import('BxDolPrivacy');
+
 /**
  * Forms allows to display forms from data stored in DB tables, before it was possible to display forms from PHP arrays only.
  *

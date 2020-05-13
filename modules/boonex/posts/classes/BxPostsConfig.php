@@ -202,11 +202,13 @@ class BxPostsConfig extends BxBaseModTextConfig
         ));
         
         $this->_aJsClasses = array_merge($this->_aJsClasses, array(
-            'manage_tools' => 'BxPostsManageTools'
+            'manage_tools' => 'BxPostsManageTools',
+            'categories' => 'BxDolCategories'
         ));
 
         $this->_aJsObjects = array_merge($this->_aJsObjects, array(
-            'manage_tools' => 'oBxPostsManageTools'
+            'manage_tools' => 'oBxPostsManageTools',
+             'categories' => 'oBxDolCategories'
         ));
 
         $this->_aGridObjects = array(
