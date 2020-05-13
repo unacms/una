@@ -67,8 +67,13 @@ class BxDolCategoriesQuery extends BxDolDb
 
                 );
                 
+                $oModule = BxDolModule::getInstance($aParams['module']);
+                $CNF = $oModule->_oConfig->CNF;
+                
                 $sSelectClause = "`sc`.`value`, COUNT(`sc`.`id`) as `num`";
                 $sJoinClause = "INNER JOIN `sys_categories2objects` `soc` ON `sc`.`id` =  `soc`.`category_id`";
+                if (isset($CNF['FIELD_STATUS']))
+                    $sJoinClause .= "INNER JOIN `" . $CNF['TABLE_ENTRIES'] . "` `data` ON `soc`.`object_id` =  `data`.`id` AND `data`.`" . $CNF['FIELD_STATUS'] . "` = 'active'";
                 $sWhereClause = " AND `sc`.`status` = 'active' AND `soc`.`module` = :module";
                 $sGroupClause = "`sc`.`id`";
                 $sOrderClause = "`num` DESC";
@@ -116,6 +121,7 @@ class BxDolCategoriesQuery extends BxDolDb
         $aMethod['params'][0] = "SELECT " . $sSelectClause . " 
             FROM `" . $this->_sTableCategories . "` AS `sc`" . $sJoinClause . " 
             WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause;
+        echo $aMethod['params'][0];
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
     
