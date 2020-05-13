@@ -121,7 +121,6 @@ class BxDolCategoriesQuery extends BxDolDb
         $aMethod['params'][0] = "SELECT " . $sSelectClause . " 
             FROM `" . $this->_sTableCategories . "` AS `sc`" . $sJoinClause . " 
             WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause;
-        echo $aMethod['params'][0];
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
     
