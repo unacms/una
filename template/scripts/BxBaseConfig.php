@@ -274,6 +274,11 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton
 
         return $sValue;
     }
+    
+    protected function _setColorRgbaCustom($sKey, $sOpacity, $sDefault = '')
+    {
+        return "rgba(" . $this->_getColorFromRgba($sKey, $sDefault) . ", " . $sOpacity . ")";
+    }
 
     protected function _setGradientLeft($sKey, $sDefault = '')
     {
