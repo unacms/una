@@ -180,7 +180,7 @@ class BxForumConfig extends BxBaseModTextConfig
         	'entry' => 'BxForumEntry',
         	'manage_tools' => 'BxForumManageTools',
         	'studio' => 'BxForumStudio',
-            'categories' => 'BxForumCategories'
+            'categories' => 'BxDolCategories'
         );
 
         $this->_aJsObjects = array(
@@ -188,7 +188,7 @@ class BxForumConfig extends BxBaseModTextConfig
         	'entry' => 'oBxForumEntry',
         	'manage_tools' => 'oBxForumManageTools',
         	'studio' => 'oBxForumStudio',
-            'categories' => 'oBxForumCategories'
+            'categories' => 'oBxDolCategories'
         );
 
         $this->_aGridObjects = array(

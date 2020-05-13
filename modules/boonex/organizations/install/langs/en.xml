@@ -179,8 +179,8 @@
     <string name="_bx_orgs_page_block_title_system_manage_administration"><![CDATA[Manage All Organizations]]></string>
     <string name="_bx_orgs_page_block_title_manage"><![CDATA[Manage Organizations]]></string>
     <string name="_bx_orgs_page_block_title_sys_active_profiles"><![CDATA[Active Organizations]]></string>
-    <string name="_bx_orgs_page_block_title_sys_multicats"><![CDATA[Discussions Categories(Multi)]]></string>
-    <string name="_bx_orgs_page_block_title_multicats"><![CDATA[Discussions Categories]]></string>
+    <string name="_bx_orgs_page_block_title_sys_multicats"><![CDATA[Organizations Categories(Multi)]]></string>
+    <string name="_bx_orgs_page_block_title_multicats"><![CDATA[Organizations Categories]]></string>
     <string name="_bx_orgs_page_block_title_active_profiles"><![CDATA[Active Organizations]]></string>
     <string name="_bx_orgs_page_block_title_online_profiles"><![CDATA[Online Organizations]]></string>
     <string name="_bx_orgs_page_block_title_categories"><![CDATA[Organization categories]]></string>

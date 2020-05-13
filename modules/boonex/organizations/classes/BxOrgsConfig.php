@@ -241,12 +241,12 @@ class BxOrgsConfig extends BxBaseModProfileConfig
 
         $this->_aJsClasses = array(
         	'manage_tools' => 'BxOrgsManageTools',
-            'categories' => 'BxOrgsCategories'
+            'categories' => 'BxDolCategories'
         );
 
         $this->_aJsObjects = array(
         	'manage_tools' => 'oBxOrgsManageTools',
-            'categories' => 'oBxOrgsCategories'
+            'categories' => 'oBxDolCategories'
         );
 
         $this->_aGridObjects = array(
