@@ -2447,6 +2447,20 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $oSearch->getNum();
     }
 
+    public function serviceAdd($aValues)
+    {
+        return $this->getFormPost(array(
+            'values' => $aValues
+        ));
+    }
+
+    public function serviceEdit($iId, $aValues)
+    {
+        return $this->getFormEdit($iId, array(
+            'values' => $aValues
+        ));
+    }
+
     /*
      * COMMON METHODS
      */
@@ -2515,7 +2529,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $iUserId = $this->getUserId();
 
         $oForm = $this->getFormPostObject($aParams);
-        $oForm->initChecker();
+        $aFormInitCheckerParams = array();
+
+        $bValues = !empty($aParams['values']) && is_array($aParams['values']);
+        if($bValues) {
+            $this->_prepareFormForAutoSubmit($oForm, $aParams['values']);
+
+            $aFormInitCheckerParams = array(array(), $aParams['values']);
+            unset($aParams['values']);
+        }
+
+        call_user_func_array(array($oForm, 'initChecker'), $aFormInitCheckerParams);
 
         $bAjaxMode = $oForm->isAjaxMode();
         $bDynamicMode = $bAjaxMode;
@@ -2641,22 +2665,34 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $sFormDisplay = !empty($aParams['form_display']) ? $aParams['form_display'] : 'form_display_post_edit';
         $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject($sFormObject), $this->_oConfig->getObject($sFormDisplay), $this->_oTemplate);
         $oForm->setId($this->_oConfig->getHtmlIds('view', 'edit_form') . $iId);
+        $aFormInitCheckerParams = array();
 
-        $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'edit/' . $iId ;
-        if(!empty($aBrowseParams) && is_array($aBrowseParams))
-            $oForm->aFormAttrs['action'] = $this->_oConfig->addBrowseParams($oForm->aFormAttrs['action'], $aBrowseParams);
+        $bValues = !empty($aParams['values']) && is_array($aParams['values']);
+        if($bValues) {
+            $this->_prepareFormForAutoSubmit($oForm, $aParams['values']);
 
-        foreach($oForm->aInputs[$CNF['FIELD_CONTROLS']] as $mixedIndex => $aInput) {
-            if(!is_numeric($mixedIndex))
-                continue;
+            $aFormInitCheckerParams = array(array(), array_merge($aEvent, $aParams['values']));
+            unset($aParams['values']);
+        }
+        else {
+            $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'edit/' . $iId ;
+            if(!empty($aBrowseParams) && is_array($aBrowseParams))
+                $oForm->aFormAttrs['action'] = $this->_oConfig->addBrowseParams($oForm->aFormAttrs['action'], $aBrowseParams);
 
-            $oForm->aInputs[$CNF['FIELD_CONTROLS']][$mixedIndex]['attrs'] = bx_replace_markers($aInput['attrs'], array(
-                'js_object_view' => $sJsObjectView,
-            	'content_id' => $iId
-            ));
+            foreach($oForm->aInputs[$CNF['FIELD_CONTROLS']] as $mixedIndex => $aInput) {
+                if(!is_numeric($mixedIndex))
+                    continue;
+
+                $oForm->aInputs[$CNF['FIELD_CONTROLS']][$mixedIndex]['attrs'] = bx_replace_markers($aInput['attrs'], array(
+                    'js_object_view' => $sJsObjectView,
+                    'content_id' => $iId
+                ));
+            }
+
+            $aFormInitCheckerParams = array($aEvent);
         }
 
-        $oForm->initChecker($aEvent);
+        call_user_func_array(array($oForm, 'initChecker'), $aFormInitCheckerParams);
         if($oForm->isSubmittedAndValid()) {
             $aContent = array();
 
@@ -3989,6 +4025,48 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     protected function _prepareTextForSave($s)
     {
         return bx_process_input($s, BX_DATA_HTML);
+    }
+
+    protected function _prepareFormForAutoSubmit(&$oForm, &$aValues)
+    {
+        $oForm->aFormAttrs['method'] = BX_DOL_FORM_METHOD_SPECIFIC;
+        $oForm->aParams['csrf']['disable'] = true;
+        if(!empty($oForm->aParams['db']['submit_name'])) {
+            $sSubmitName = $sSubmitValue = false;
+            if(is_array($oForm->aParams['db']['submit_name'])) {
+                foreach ($oForm->aParams['db']['submit_name'] as $sName) {
+                    if(isset($oForm->aInputs[$sName])) {
+                        $sSubmitName = $sName;
+                        $sSubmitValue = $oForm->aInputs[$sName]['value'];
+                        break;
+                    }
+                    else if(isset($oForm->aInputs['controls'])) 
+                        foreach($oForm->aInputs['controls'] as $mixedKey => $mixedInput)
+                            if(is_numeric($mixedKey) && isset($mixedInput['name']) && $mixedInput['name'] == $sName) {
+                                $sSubmitName = $sName;
+                                $sSubmitValue = $mixedInput['value'];
+                                break 2;
+                            }
+                }
+            }
+            else {
+                $sName = $oForm->aParams['db']['submit_name'];
+                if(isset($oForm->aInputs[$sName])) {
+                    $sSubmitName = $sName;
+                    $sSubmitValue = $oForm->aInputs[$sName]['value'];
+                }
+                else if(isset($oForm->aInputs['controls']))
+                    foreach($oForm->aInputs['controls'] as $mixedKey => $mixedInput)
+                        if(is_numeric($mixedKey) && isset($mixedInput['name']) && $mixedInput['name'] == $sName) {
+                            $sSubmitName = $sName;
+                            $sSubmitValue = $mixedInput['value'];
+                            break;
+                        }
+            }
+
+            if($sSubmitName && $sSubmitValue)
+                $aValues[$sSubmitName] = $sSubmitValue;
+        }
     }
 
     protected function _getFieldValue($sField, $iContentId)
