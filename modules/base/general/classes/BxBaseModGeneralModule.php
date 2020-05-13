@@ -1872,7 +1872,7 @@ class BxBaseModGeneralModule extends BxDolModule
      * Display multi-categorories block with number of posts in each category
      * @param $bDisplayEmptyCats display empty categories
      * 
-     * @see BxBaseModTextModule::serviceCategoriesMultiList
+     * @see BxBaseModGeneralModule::serviceCategoriesMultiList
      */
     /** 
      * @ref bx_base_text-categories_multi_list "categories_multi_list"

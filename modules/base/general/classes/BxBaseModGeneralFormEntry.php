@@ -93,7 +93,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 
         if(isset($CNF['PARAM_MULTICAT_ENABLED']) && $CNF['PARAM_MULTICAT_ENABLED'] === true) {
             $sInclude2 = '';
-            $sInclude2 .= $this->_oModule->_oTemplate->addJs(array('categories.js'), $bDynamicMode);
+            $sInclude2 .= $this->_oModule->_oTemplate->addJs(array('BxDolCategories.js'), $bDynamicMode);
             $sInclude2 .= $this->_oModule->_oTemplate->addCss(array('categories.css'), $bDynamicMode);
 
             $sResult .= ($bDynamicMode ? $sInclude2 : '') . $this->_oModule->_oTemplate->getJsCode('categories');
