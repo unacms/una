@@ -443,7 +443,9 @@ div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li > a,
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li > span {
     display: block;
 }
+div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu-hor li > a,
 div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu-hor li > div,
+div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu-hor li > span,
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-hor.bx-menu-more-auto:not(.bx-menu-submenu-more-auto) li > a,
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-hor.bx-menu-more-auto:not(.bx-menu-submenu-more-auto) li > span {
     margin-right: 1.25rem;
