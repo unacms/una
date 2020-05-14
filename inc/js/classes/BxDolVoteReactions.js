@@ -71,42 +71,47 @@ BxDolVoteReactions.prototype.vote = function(oLink, iValue, sReaction, onComplet
 
 BxDolVoteReactions.prototype.onVote = function (oLink, oData, onComplete)
 {
+    var $this = this;
+
     if(oData && oData.code != 0)
         return;
     
     $('#' + this._aHtmlIds['do_popup']).dolPopupHide({});
 
-    oLink = $(oLink);
-    if(!oLink.hasClass(this._sClassDo))
-        oLink = $('#' + this._aHtmlIds['main'] + ' .' + this._sClassDo);
+    oLink = $('.' + this._aHtmlIds['main'] + ' .' + this._sClassDo);
 
     //--- Update Do button.
-    if(oData && oData.label_icon)
-        oLink.find('.sys-action-do-icon .sys-icon').attr('class', 'sys-icon ' + oData.label_icon);
+    oLink.each(function() {
+        if(oData && oData.label_icon)
+            $(this).find('.sys-action-do-icon .sys-icon').attr('class', 'sys-icon ' + oData.label_icon);
 
-    if(oData && oData.label_title) {
-        oLink.attr('title', oData.label_title);
-        oLink.find('.sys-action-do-text').html(oData.label_title);
-    }
+        if(oData && oData.label_title) {
+            $(this).attr('title', oData.label_title);
+            $(this).find('.sys-action-do-text').html(oData.label_title);
+        }
 
-    if(oData && oData.label_click)
-        oLink.attr('onclick', 'javascript:' + oData.label_click)
+        if(oData && oData.label_click)
+            $(this).attr('onclick', 'javascript:' + oData.label_click)
 
-    if(oData && oData.disabled)
-        oLink.removeAttr('onclick').addClass($(oLink).hasClass('bx-btn') ? 'bx-btn-disabled' : 'bx-vote-disabled');
-    else
-        oLink.toggleClass(this._sClassDoVoted);
+        if(oData && oData.disabled)
+            $(this).removeAttr('onclick').addClass($(this).hasClass('bx-btn') ? 'bx-btn-disabled' : 'bx-vote-disabled');
+        else
+            $(this).toggleClass($this._sClassDoVoted);
+    });
 
     //--- Update Counter.
     var oCounter = this._getCounter(oLink);
     if(oCounter && oCounter.length > 0) {
-        oCounter.filter('.' + oData.reaction).html(oData.countf).toggleClass('bx-vc-hidden', !oData.count);
+        oCounter.filter('.' + oData.reaction).each(function() {
+            $(this).html(oData.countf).toggleClass('bx-vc-hidden', !oData.count);            
+        });
 
         //--- Update Total.
-        if(oData.total) {
-            oCounter.parents('.' + this._sSP + '-counter-wrapper:first').toggleClass('bx-vc-hidden', !oData.total.count);
-            oCounter.filter('.total-count').html(oData.total.countf).toggleClass('bx-vc-hidden', !oData.total.count);
-        }
+        if(oData.total)
+            oCounter.filter('.total-count').each(function() {
+                $(this).html(oData.total.countf).toggleClass('bx-vc-hidden', !oData.total.count);
+                $(this).parents('.' + $this._sSP + '-counter-wrapper:first').toggleClass('bx-vc-hidden', !oData.total.count);
+            });
     }
 
     if(typeof onComplete == 'function')
@@ -237,8 +242,8 @@ BxDolVoteReactions.prototype._getCounter = function(oElement)
     var oCounter = BxDolVote.prototype._getCounter.call(this, oElement);
     if(oCounter && oCounter.length > 0)
         return oCounter;
-
-    return $('#' + this._aHtmlIds['counter']).find('.' + this._sSP + '-counter');
+//.parent(':visible')
+    return $('.' + this._aHtmlIds['counter']).find('.' + this._sSP + '-counter');
 };
 
 /** @} */

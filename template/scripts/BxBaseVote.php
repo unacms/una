@@ -235,7 +235,7 @@ class BxBaseVote extends BxDolVote
         return array(
             'style_prefix' => $this->_sStylePrefix,
             'html_id' => $this->_aHtmlIds['main'],
-            'class' => $sClass,
+            'class' => $sClass . ' ' . $this->_aHtmlIds['main'],
             'bx_if:show_vote_data' => array(
                 'condition' => false,
                 'content' => array()
