@@ -21,7 +21,7 @@ class BxBaseModGroupsConfig extends BxBaseModProfileConfig
             'profile-subscribe-add' => 'checkAllowedSubscribeAdd',
             'profile-subscribe-remove' => 'checkAllowedSubscribeRemove',
             'profile-actions-more' => 'checkAllowedViewMoreMenu',
-            'convos-compose' => 'checkAllowedContact',
+            'convos-compose' => 'checkAllowedCompose',
         );
     }
 }
