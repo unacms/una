@@ -471,6 +471,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     public function getPosts($aParams)
     {
+        $bReturnArray = isset($aParams['return_data_type']) && $aParams['return_data_type'] == 'array';
         $bViewTimeline = $aParams['view'] == BX_TIMELINE_VIEW_TIMELINE;
 
         $iStart = $aParams['start'];
@@ -555,7 +556,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         }
 
         $bFirst = true;
-        $sEvents = '';
+        $mixedEvents = $bReturnArray ? array() : '';
         foreach($aEvents as $aEvent) {
             $iEvent = (int)$aEvent['id'];
 
@@ -563,18 +564,27 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             if(empty($sEvent))
                 continue;
 
+            if($bReturnArray) {
+                $mixedEvents[] = $aEvent;
+                continue;
+            }
+
             if($bFirst && $bViewTimeline) {
-                $sEvents .= $this->getDividerToday($aEvent);
+                $mixedEvents .= $this->getDividerToday($aEvent);
 
                 $bFirst = false;
             }
 
-            $sEvents .= $bViewTimeline ? $this->getDivider($iDays, $aEvent) : '';
-            $sEvents .= $sEvent;
+            $mixedEvents .= $bViewTimeline ? $this->getDivider($iDays, $aEvent) : '';
+            $mixedEvents .= $sEvent;
         }
-        $sContent .= $sEvents;
 
-        $bEvents = !empty($sEvents);
+        if($bReturnArray)
+            return $mixedEvents;
+
+        $sContent .= $mixedEvents;
+
+        $bEvents = !empty($mixedEvents);
 
         $sBack = $this->getBack($aParams);
 

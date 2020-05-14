@@ -2447,6 +2447,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $oSearch->getNum();
     }
 
+    public function serviceGet($aParams)
+    {
+        $aParams = $this->_prepareParams($aParams);
+
+        $aParams['return_data_type'] = 'array';
+        return $this->_oTemplate->getPosts($aParams);
+
+    }
+
     public function serviceAdd($aValues)
     {
         return $this->getFormPost(array(
