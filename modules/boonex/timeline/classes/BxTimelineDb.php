@@ -305,9 +305,9 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     {
         $sQuery = "SELECT 
                 `te`.`id` AS `event_id`,
-    			`te`.`date` AS `value`
-    		FROM `" . $this->_sTable . "` AS `te`
-    		WHERE `te`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval)";
+                `te`.`date` AS `value`
+            FROM `" . $this->_sTable . "` AS `te`
+            WHERE (`te`.`system` <> 0 OR `te`.`owner_id` = 0) AND `te`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval)";
 
         return $this->getPairs($sQuery, 'event_id', 'value', array('interval' => $iInterval));
     }
@@ -315,12 +315,12 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     public function getHotTrackByCommentsDate($sModule, $sTableTrack, $iInterval = 24)
     {
         $sQuery = "SELECT 
-    			`te`.`id` as `event_id`,
-    			MAX(`tt`.`cmt_time`) AS `value`
-    		FROM `" . $this->_sTable . "` AS `te`
-    		INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`id`=`tt`.`cmt_object_id` AND `te`.`type`=:module 
-    		WHERE `tt`.`cmt_time` > (UNIX_TIMESTAMP() - 3600 * :interval) 
-    		GROUP BY `te`.`id`";
+                `te`.`id` as `event_id`,
+                MAX(`tt`.`cmt_time`) AS `value`
+            FROM `" . $this->_sTable . "` AS `te`
+            INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`id`=`tt`.`cmt_object_id` AND `te`.`type`=:module 
+            WHERE (`te`.`system` <> 0 OR `te`.`owner_id` = 0) AND `tt`.`cmt_time` > (UNIX_TIMESTAMP() - 3600 * :interval) 
+            GROUP BY `te`.`id`";
 
         return $this->getPairs($sQuery, 'event_id', 'value', array('module' => $sModule, 'interval' => $iInterval));
     }
@@ -328,12 +328,12 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     public function getHotTrackByCommentsDateModule($sModule, $sTableTrack, $iInterval = 24)
     {
         $sQuery = "SELECT 
-    			`te`.`id` as `event_id`,
-    			MAX(`tt`.`cmt_time`) AS `value`
-    		FROM `" . $this->_sTable . "` AS `te`
-    		INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`object_id`=`tt`.`cmt_object_id` AND `te`.`type`=:module 
-    		WHERE `tt`.`cmt_time` > (UNIX_TIMESTAMP() - 3600 * :interval) 
-    		GROUP BY `te`.`object_id`";
+                `te`.`id` as `event_id`,
+                MAX(`tt`.`cmt_time`) AS `value`
+            FROM `" . $this->_sTable . "` AS `te`
+            INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`object_id`=`tt`.`cmt_object_id` AND `te`.`type`=:module 
+            WHERE (`te`.`system` <> 0 OR `te`.`owner_id` = 0) AND `tt`.`cmt_time` > (UNIX_TIMESTAMP() - 3600 * :interval) 
+            GROUP BY `te`.`object_id`";
 
         return $this->getPairs($sQuery, 'event_id', 'value', array('module' => $sModule, 'interval' => $iInterval));
     }
@@ -341,12 +341,12 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     public function getHotTrackByVotesDate($sModule, $sTableTrack, $iInterval = 24)
     {
         $sQuery = "SELECT 
-    			`te`.`id` as `event_id`,
-    			MAX(`tt`.`date`) AS `value`
-    		FROM `" . $this->_sTable . "` AS `te`
-    		INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`id`=`tt`.`object_id` AND `te`.`type`=:module 
-    		WHERE `tt`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval) 
-    		GROUP BY `te`.`id`";
+                `te`.`id` as `event_id`,
+                MAX(`tt`.`date`) AS `value`
+            FROM `" . $this->_sTable . "` AS `te`
+            INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`id`=`tt`.`object_id` AND `te`.`type`=:module 
+            WHERE (`te`.`system` <> 0 OR `te`.`owner_id` = 0) AND `tt`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval) 
+            GROUP BY `te`.`id`";
 
         return $this->getPairs($sQuery, 'event_id', 'value', array('module' => $sModule, 'interval' => $iInterval));
     }
@@ -354,12 +354,12 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     public function getHotTrackByVotesDateModule($sModule, $sTableTrack, $iInterval = 24)
     {
         $sQuery = "SELECT 
-    			`te`.`id` as `event_id`,
-    			MAX(`tt`.`date`) AS `value`
-    		FROM `" . $this->_sTable . "` AS `te`
-    		INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`object_id`=`tt`.`object_id` AND `te`.`type`=:module 
-    		WHERE `tt`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval) 
-    		GROUP BY `te`.`object_id`";
+                `te`.`id` as `event_id`,
+                MAX(`tt`.`date`) AS `value`
+            FROM `" . $this->_sTable . "` AS `te`
+            INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`object_id`=`tt`.`object_id` AND `te`.`type`=:module 
+            WHERE (`te`.`system` <> 0 OR `te`.`owner_id` = 0) AND `tt`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval) 
+            GROUP BY `te`.`object_id`";
 
         return $this->getPairs($sQuery, 'event_id', 'value', array('module' => $sModule, 'interval' => $iInterval));
     }
@@ -370,12 +370,12 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     public function getHotTrackByVotesSum($sModule, $sTableTrack, $iInterval = 24)
     {
         $sQuery = "SELECT 
-    			`te`.`id` as `event_id`,
-    			SUM(`tt`.`value`) AS `value`
-    		FROM `" . $this->_sTable . "` AS `te`
-    		INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`id`=`tt`.`object_id` AND `te`.`type`=:module 
-    		WHERE `tt`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval) 
-    		GROUP BY `te`.`id`";
+                `te`.`id` as `event_id`,
+                SUM(`tt`.`value`) AS `value`
+            FROM `" . $this->_sTable . "` AS `te`
+            INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`id`=`tt`.`object_id` AND `te`.`type`=:module 
+            WHERE (`te`.`system` <> 0 OR `te`.`owner_id` = 0) AND `tt`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval) 
+            GROUP BY `te`.`id`";
 
         return $this->getAll($sQuery, array('module' => $sModule, 'interval' => $iInterval));
     }
@@ -386,12 +386,12 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     public function getHotTrackByVotesSumModule($sModule, $sTableTrack, $iInterval = 24)
     {
         $sQuery = "SELECT 
-    			`te`.`id` as `event_id`,
-    			SUM(`tt`.`value`) AS `value`
-    		FROM `" . $this->_sTable . "` AS `te`
-    		INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`object_id`=`tt`.`object_id` AND `te`.`type`=:module 
-    		WHERE `tt`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval) 
-    		GROUP BY `te`.`object_id`";
+                `te`.`id` as `event_id`,
+                SUM(`tt`.`value`) AS `value`
+            FROM `" . $this->_sTable . "` AS `te`
+            INNER JOIN `" . $sTableTrack . "` AS `tt` ON `te`.`object_id`=`tt`.`object_id` AND `te`.`type`=:module 
+            WHERE (`te`.`system` <> 0 OR `te`.`owner_id` = 0) AND `tt`.`date` > (UNIX_TIMESTAMP() - 3600 * :interval) 
+            GROUP BY `te`.`object_id`";
 
         return $this->getAll($sQuery, array('module' => $sModule, 'interval' => $iInterval));
     }
