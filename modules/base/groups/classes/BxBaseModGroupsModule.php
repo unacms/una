@@ -613,23 +613,14 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     }
 
     /**
-     * @deprecated since version 11.0.1 use BxBaseModGroupsModule::checkAllowedCompose instead
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */
     public function checkAllowedCompose(&$aDataEntry, $isPerformAction = false)
     {
-        return $this->checkAllowedContact($aDataEntry, $isPerformAction);
-    }
-
-    /**
-     * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
-     */
-    public function checkAllowedContact($aDataEntry, $isPerformAction = false)
-    {
         if(!$this->isFan($aDataEntry[$this->_oConfig->CNF['FIELD_ID']]))
             return _t('_sys_txt_access_denied');
 
-        return parent::checkAllowedContact($aDataEntry, $isPerformAction);
+        return parent::checkAllowedCompose ($aDataEntry, $isPerformAction);
     }
 
     /**

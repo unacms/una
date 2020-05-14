@@ -1439,11 +1439,19 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     }
 
     /**
-     * @deprecated since version 11.0.1 use BxBaseModProfileModule::checkAllowedCompose instead
+     * Compose differs from Contact. For example, a user should NOT be able to start conversation (compose) 
+     * with himself but he should be able to view conversation page where he is one of the participants.
+     * 
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */
-    public function checkAllowedCompose (&$aDataEntry, $isPerformAction = false)
+    public function checkAllowedCompose(&$aDataEntry, $isPerformAction = false)
     {
+        $CNF = &$this->_oConfig->CNF;
+
+        $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$CNF['FIELD_ID']], $this->getName());
+        if($oProfile && $oProfile->id() == $this->_iProfileId)
+            return _t('_sys_txt_access_denied');
+
         return $this->checkAllowedContact($aDataEntry, $isPerformAction);
     }
 
@@ -1552,10 +1560,13 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         if(!$iProfileId)
             $iProfileId = $this->_iProfileId;
 
-        // cannot contact myself
+        /*
+         * allow to 'contact myself'. It's needed to allow a user to view conversation page 
+         * where he is one of the participants.
+         */
         $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$CNF['FIELD_ID']], $this->getName());
         if($oProfile && $oProfile->id() == $iProfileId)
-            return _t('_sys_txt_access_denied');
+            return CHECK_ACTION_RESULT_ALLOWED;
 
         // moderator always has access
         if($this->_isModeratorForProfile($isPerformAction, $iProfileId))

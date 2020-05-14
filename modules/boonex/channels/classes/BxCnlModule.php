@@ -464,7 +464,12 @@ class BxCnlModule extends BxBaseModGroupsModule
         }
         return $a;
     }
-    
+
+    public function checkAllowedCompose(&$aDataEntry, $isPerformAction = false)
+    {
+        return _t('_sys_txt_access_denied');
+    }
+
     public function checkAllowedContact($aDataEntry, $isPerformAction = false)
     {
         return _t('_sys_txt_access_denied');
