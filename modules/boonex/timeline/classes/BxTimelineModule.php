@@ -1555,15 +1555,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(!$iItemId)
             return array();
 
-        $aParams = array(
+        $aParams = $this->_prepareParams(array(
             'view' => BX_TIMELINE_VIEW_ITEM, 
             'type' => BX_TIMELINE_TYPE_ITEM
-        );
-        $aParams = $this->_prepareParams($aParams);
+        ));
 
-        return $this->_oTemplate->getItemBlock($iItemId, $aParams);
+        $aItemData = $this->getItemData($iItemId, $aParams);
+        return $this->_oTemplate->getItemBlock($aItemData, $aParams);
     }
-
+    
     public function serviceGetBlockItemContent()
     {
         $iItemId = bx_process_input(bx_get('id'), BX_DATA_INT);
@@ -2473,6 +2473,45 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     /*
      * COMMON METHODS
      */
+    public function getItemData($iId, $aParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(empty($aParams))
+            $aParams = $this->_prepareParams(array(
+                'view' => BX_TIMELINE_VIEW_ITEM, 
+                'type' => BX_TIMELINE_TYPE_ITEM
+            ));
+
+        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
+        if(empty($aEvent))
+            return array('code' => 1, 'content' => _t('_Empty'));
+
+        $iProfile = (int)$aEvent[$CNF['FIELD_OWNER_ID']];
+        if(!empty($iProfile)) {
+            $oProfile = BxDolProfile::getInstance($iProfile);
+            if(!$oProfile)
+                return array('code' => 1, 'content' => _t('_Empty'));
+
+            $mixedResult = $oProfile->checkAllowedProfileView();
+            if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
+                return array('code' => 2, 'content' => $mixedResult);
+        }
+
+        $sContent = $this->_oTemplate->getPost($aEvent, $aParams);
+        if(empty($sContent))
+            return array('code' => 2, 'content' => _t('_Access denied'));
+
+        $sKey = 'allowed_view';
+        if(isset($aEvent[$sKey]) && $aEvent[$sKey] !== CHECK_ACTION_RESULT_ALLOWED) 
+            return array('code' => 2, 'content' => $aEvent[$sKey]);
+
+        if($this->isAllowedView($aEvent) !== true)
+            return array('code' => 2, 'content' => _t('_Access denied'));
+
+        return array('code' => 0, 'content' => $sContent, 'event' => $aEvent);
+    }
+
     public function deleteEvent($aEvent)
     {
     	if(empty($aEvent) || !is_array($aEvent) || !$this->_oDb->deleteEvent(array('id' => (int)$aEvent['id'])))
