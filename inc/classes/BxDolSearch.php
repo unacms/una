@@ -407,13 +407,18 @@ class BxDolSearchResult implements iBxDolReplaceable
     
     public function setCategoriesCondition($sKeyword)
     {
-        $this->aCurrent['join']['multicat'] = array(
+		$this->aCurrent['join']['multicat'] = array(
             'type' => 'INNER',
             'table' => 'sys_categories2objects',
             'mainField' => 'id',
             'onField' => 'object_id',
             'joinFields' => array(),
         );
+		
+		if (isset($this->aCurrent['tableSearch'])){
+			$this->aCurrent['join']['multicat']['mainTable'] = $this->aCurrent['tableSearch'];
+		}
+		
         $this->aCurrent['join']['multicat2'] = array(
            'type' => 'INNER',
            'table' => 'sys_categories',
