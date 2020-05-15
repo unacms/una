@@ -1875,7 +1875,7 @@ class BxBaseModGeneralModule extends BxDolModule
      * @see BxBaseModGeneralModule::serviceCategoriesMultiList
      */
     /** 
-     * @ref bx_base_text-categories_multi_list "categories_multi_list"
+     * @ref bx_base_general-categories_multi_list "categories_multi_list"
      */
     public function serviceCategoriesMultiList($bDisplayEmptyCats = true)
     {
