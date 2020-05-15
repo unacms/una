@@ -12,6 +12,7 @@
 class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 {
     protected static $_aMemoryCacheItems;
+    protected static $_aMemoryCacheItemsData;
     protected static $_sMemoryCacheItemsKeyMask;
 
     protected static $_sTmplContentItemItem;
@@ -35,6 +36,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         parent::init();
 
         self::$_aMemoryCacheItems = array();
+        self::$_aMemoryCacheItemsData = array();
         self::$_sMemoryCacheItemsKeyMask = "%s_%d";
     }
 
@@ -239,34 +241,22 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
-    public function getItemBlock($iId, $aBrowseParams = array())
+    public function getItemBlock($mixedId, $aBrowseParams = array())
     {
         $CNF = $this->_oConfig->CNF;
+        $oModule = $this->getModule();
 
-        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
-        if(empty($aEvent))
+        if(is_numeric($mixedId))
+            $mixedId = $oModule->getItemData($mixedId);
+
+        if(empty($mixedId) || !is_array($mixedId))
             return array('content' => MsgBox(_t('_Empty')), 'designbox_id' => 13);
 
-        $iProfile = (int)$aEvent[$CNF['FIELD_OWNER_ID']];
-        if(!empty($iProfile)) {
-            $oProfile = BxDolProfile::getInstance($iProfile);
-            if(!$oProfile)
-                return array('content' => MsgBox(_t('_Empty')), 'designbox_id' => 13);
+        if($mixedId['code'] != 0)
+            return array('content' => MsgBox($mixedId['content']), 'designbox_id' => 13);
 
-            $mixedResult = $oProfile->checkAllowedProfileView();
-            if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
-                return array('content' => MsgBox($mixedResult), 'designbox_id' => 13);
-        }
-
-        $sContent = $this->getPost($aEvent, $aBrowseParams);
-
-        $sKey = 'allowed_view';
-        if(isset($aEvent[$sKey]) && $aEvent[$sKey] !== CHECK_ACTION_RESULT_ALLOWED) 
-            return array('content' => MsgBox($aEvent[$sKey]), 'designbox_id' => 13);
-
-        $oModule = $this->getModule();
-        if($oModule->isAllowedView($aEvent) !== true)
-            return array('content' => MsgBox(_t('_Access denied')), 'designbox_id' => 13);
+        $aEvent = $mixedId['event'];
+        $sContent = $mixedId['content'];
 
         if(!$this->_oConfig->isSystem($aEvent['type'], $aEvent['action'])) {
             $mixedViews = $oModule->getViewsData($aEvent['views']);
@@ -408,13 +398,18 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $iEventId = (int)$aEvent[$CNF['FIELD_ID']];
 
         $sMemoryCacheItemsKey = sprintf(self::$_sMemoryCacheItemsKeyMask, $aBrowseParams['view'], $iEventId);
-        if(array_key_exists($sMemoryCacheItemsKey, self::$_aMemoryCacheItems))
+        if(array_key_exists($sMemoryCacheItemsKey, self::$_aMemoryCacheItems)) {
+            if(array_key_exists($sMemoryCacheItemsKey, self::$_aMemoryCacheItemsData))
+                $aEvent = self::$_aMemoryCacheItemsData[$sMemoryCacheItemsKey];
+
             return self::$_aMemoryCacheItems[$sMemoryCacheItemsKey];
+        }
 
         /**
          * Add all items in memory cache even if they are empty.
          */
         self::$_aMemoryCacheItems[$sMemoryCacheItemsKey] = '';
+        self::$_aMemoryCacheItemsData[$sMemoryCacheItemsKey] = array();
 
         $oPrivacy = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'));
         if($oPrivacy) {
@@ -465,6 +460,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $sType = !empty($aResult['content_type']) ? $aResult['content_type'] : BX_TIMELINE_PARSE_TYPE_DEFAULT;
         self::$_aMemoryCacheItems[$sMemoryCacheItemsKey] = $this->_getPost($sType, $aEvent, $aBrowseParams);
+        self::$_aMemoryCacheItemsData[$sMemoryCacheItemsKey] = $aEvent;
 
         return self::$_aMemoryCacheItems[$sMemoryCacheItemsKey];
     }

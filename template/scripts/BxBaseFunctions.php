@@ -600,14 +600,14 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
         return $this->_oTemplate->_wrapInTagJsCode($sContent);
     }
 
+    protected function getInjHeaderPopupLoading() 
+    {
+        return $this->transBox('bx-popup-loading', $this->_oTemplate->parsePageByName('popup_loading.html', array()), true);  
+    }
+    
     protected function getInjFooterMenuLoading() 
     {
         return $this->_oTemplate->parsePageByName('menu_loading.html', array());  
-    }
-
-    protected function getInjFooterPopupLoading() 
-    {
-        return $this->transBox('bx-popup-loading', $this->_oTemplate->parsePageByName('popup_loading.html', array()), true);  
     }
 
     protected function getInjFooterPopupMenus() 
