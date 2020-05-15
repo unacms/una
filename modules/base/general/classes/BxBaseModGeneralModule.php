@@ -1863,9 +1863,9 @@ class BxBaseModGeneralModule extends BxDolModule
     
     /**
      * @page service Service Calls
-     * @section bx_base_text Base Text
-     * @subsection bx_base_text-page_blocks Page Blocks
-     * @subsubsection bx_base_text-categories_multi_list categories_multi_list
+     * @section bx_base_general Base Text
+     * @subsection bx_base_general-page_blocks Page Blocks
+     * @subsubsection bx_base_general-categories_multi_list categories_multi_list
      * 
      * @code bx_srv('bx_posts', 'categories_multi_list', [...]); @endcode
      * 
