@@ -733,11 +733,13 @@ function bx_time(sLang, isAutoupdate, sRootSel) {
     var iAutoupdate = 22*60*60; // autoupdate time in realtime if less than 22 hours
     var sSel = 'time';
 
-    if ('undefined' == typeof(sLang)) {
-        sLang = glBxTimeLang;
-    } else {
+    if (typeof(sLang) != 'undefined')
         glBxTimeLang = sLang;
-    }
+    else if(typeof(glBxTimeLang) != 'undefined')
+        sLang = glBxTimeLang;
+
+    if(!sLang)
+        return;
 
     if ('undefined' != typeof(isAutoupdate) && isAutoupdate)
         sSel += '.bx-time-autoupdate';
@@ -964,10 +966,13 @@ function on_copyright_click()
 
 function bx_activate_anim_icons(sColor)
 {
-    if ('undefined' == typeof(sColor))
+    if(typeof(sColor) != 'undefined')
+        glBxAnimIconColor = sColor;
+    else if(typeof(glBxAnimIconColor) != 'undefined')
         sColor = glBxAnimIconColor;
-    else
-       glBxAnimIconColor = sColor;
+
+    if(!sColor)
+        return;
 
     $('.sys-icon-a').not('.marka').each(function () {
         var e = $(this);
