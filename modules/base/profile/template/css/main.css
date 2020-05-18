@@ -43,6 +43,65 @@
     margin-left: 0;
 }
 
+/* browse unit extended */
+.bx-base-pofile-units-wrapper.bx-base-puw-extended {
+    display: block;
+}
+
+.bx-base-pofile-unit-ext h2,
+.bx-base-pofile-unit-ext h1 {
+    margin: 0;
+}
+
+.bx-base-pofile-unit-ext .sys-icon {
+    vertical-align: middle;
+}
+
+.bx-base-pofile-unit-ext .bx-base-pofile-unit-cover {
+    position: relative;
+    height: auto;
+}
+
+.bx-base-pofile-unit-ext .bx-base-pofile-unit-cover img {
+    position: relative;
+    display: block;
+
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.bx-base-pofile-unit-ext .bx-base-pofile-unit-text {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+}
+
+.bx-base-pofile-unit-ext .bx-base-pofile-unit-title,
+.bx-base-pofile-unit-ext .bx-base-pofile-unit-summary {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.bx-base-pofile-unit-ext .bx-base-pofile-unit-title{
+    justify-content: left;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+}
+
+.bx-base-pofile-unit-ext .bx-base-pofile-unit-summary p {
+    margin: 0;
+}
+
+.bx-base-pofile-unit-ext .bx-base-pofile-unit-info {
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
 /* browse unit with cover */
 .bx-base-pofile-unit-cover {
     height: 10.0rem;

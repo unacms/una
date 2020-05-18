@@ -673,17 +673,6 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
         );
     }
 
-    protected function getSummary($aData, $sTitle = '', $sText = '', $sUrl = '')
-    {
-        $CNF = &$this->getModule()->_oConfig->CNF;
-        if(empty($CNF['PARAM_CHARS_SUMMARY']))
-            return '';
-
-        // get summary
-        $sLinkMore = ' <a title="' . bx_html_attribute(_t('_sys_read_more', $sTitle)) . '" href="' . $sUrl . '"><i class="sys-icon ellipsis-h"></i></a>';
-        return  strmaxtextlen($sText, (int)getParam($CNF['PARAM_CHARS_SUMMARY']), $sLinkMore);
-    }
-
     protected function getAttachmentsImagesTranscoders ($sStorage = '')
     {
         $CNF = &$this->getModule()->_oConfig->CNF;

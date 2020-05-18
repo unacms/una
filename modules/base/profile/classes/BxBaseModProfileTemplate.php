@@ -87,11 +87,17 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         $oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->MODULE);
         $iProfile = $oProfile->id();
 
+        // get profile's url
+        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);
+
         // get profile's title
         $sTitle = bx_process_output($aData[$CNF['FIELD_NAME']]);
 
-        // get profile's url
-        $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);
+        $sText = $sSummary = '';
+        if(!empty($CNF['FIELD_TEXT']) && !empty($aData[$CNF['FIELD_TEXT']])) {
+            $sText = $this->getText($aData);
+            $sSummary = $this->getSummary($aData, $sTitle, $sText, $sUrl);
+        }
 
         $sThumbUrl = $bPublicThumb ? $this->_getUnitThumbUrl($sTemplateSize, $aData, false) : '';
         $bThumbUrl = !empty($sThumbUrl);
@@ -122,11 +128,13 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         );
 
         $sCoverUrl = $bPublicCover ? $this->urlCoverUnit($aData, false) : '';
+        $bCoverUrl = !empty($sCoverUrl);
+
         if(empty($sCoverUrl) && ($iCoverId = (int)getParam('sys_unit_cover_profile')) != 0)
             $sCoverUrl = BxDolTranscoder::getObjectInstance(BX_DOL_TRANSCODER_OBJ_COVER_UNIT_PROFILE)->getFileUrlById($iCoverId);
         if(empty($sCoverUrl))
             $sCoverUrl = $this->getImageUrl('cover.svg');
-        
+
         $aTmplVarsMeta = $this->getSnippetMenuVars ($iProfile, $bPublic);
 
         return array_merge(array (
@@ -138,6 +146,12 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
                 'content' => $aTmplVarsThumbnail
             ),
             'cover_url' => $sCoverUrl,
+            'bx_if:show_cover' => array(
+                'condition' => $bCoverUrl,
+                'content' => array(
+                    'cover_url' => $sCoverUrl,
+                )
+            ),
             'content_url' => $bPublic ? $sUrl : 'javascript:void(0);',
             'content_click' => !$bPublic ? 'javascript:bx_alert(' . bx_js_string('"' . _t('_sys_access_denied_to_private_content') . '"') . ');' : '',
             'title' => $sTitle,
@@ -148,7 +162,9 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             'bx_if:meta' => array(
                 'condition' => !empty($aTmplVarsMeta),
                 'content' => $aTmplVarsMeta
-            )
+            ),
+            'text' => $sText,
+            'summary' => $sSummary,
         ), $aTmplVarsThumbnail, $aTemplateVars);
     }
 

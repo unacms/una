@@ -70,6 +70,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'URL_MANAGE_COMMON' => 'page.php?i=events-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=events-administration',
 
+            'PARAM_CHARS_SUMMARY' => 'bx_events_summary_chars',
             'PARAM_NUM_RSS' => 'bx_events_num_rss',
             'PARAM_NUM_CONNECTIONS_QUICK' => 'bx_events_num_connections_quick',
             'PARAM_SEARCHABLE_FIELDS' => 'bx_events_searchable_fields',
