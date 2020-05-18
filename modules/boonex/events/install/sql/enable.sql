@@ -151,7 +151,7 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_events_upcoming', '_bx_events_page_title_sys_upcoming', '_bx_events_page_title_upcoming', 'bx_events', 5, 2147483647, 1, 'events-upcoming', 'page.php?i=events-upcoming', '', '', '', 0, 1, 0, 'BxEventsPageBrowse', 'modules/boonex/events/classes/BxEventsPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_events_upcoming', 1, 'bx_events', '_bx_events_page_block_title_upcoming_profiles', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:24:"browse_upcoming_profiles";s:6:"params";a:1:{i:0;a:1:{s:13:"empty_message";b:1;}}}', 0, 0, 0);
+('bx_events_upcoming', 1, 'bx_events', '_bx_events_page_block_title_upcoming_profiles', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:24:"browse_upcoming_profiles";s:6:"params";a:1:{i:0;a:1:{s:13:"empty_message";b:1;}}}', 0, 1, 0);
 
 -- PAGE: past profiles
 

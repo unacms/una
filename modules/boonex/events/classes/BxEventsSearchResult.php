@@ -174,6 +174,8 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
                 $this->aCurrent['title'] = _t('_bx_events_page_title_browse_upcoming');
                 $this->aCurrent['restriction']['upcoming']['value'] = time();
                 $this->aCurrent['sorting'] = 'upcoming';
+                if(!empty($aParams['per_page']))
+                    $this->aCurrent['paginate']['perPage'] = is_numeric($aParams['per_page']) ? (int)$aParams['per_page'] : (int)getParam($aParams['per_page']);
                 $this->sBrowseUrl = 'page.php?i=events-upcoming';
                 break;
 
