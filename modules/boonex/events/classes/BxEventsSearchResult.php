@@ -30,6 +30,7 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
                 'perofileType' => array('value' => 'bx_events', 'field' => 'type', 'operator' => '='),
                 'owner' => array('value' => '', 'field' => 'author', 'operator' => '=', 'table' => 'bx_events_data'),
                 'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>', 'table' => 'bx_events_data'),
+                'upcoming' => array('value' => '', 'field' => 'date_start', 'operator' => '>', 'table' => 'bx_events_data'),
                 'past' => array('value' => '', 'field' => 'date_end', 'operator' => '<', 'table' => 'bx_events_data'),
             ),
             'join' => array (
@@ -38,7 +39,7 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
                     'table' => 'bx_events_data',
                     'mainField' => 'content_id',
                     'onField' => 'id',
-                    'joinFields' => array('id', 'event_name', 'picture', 'cover', 'added', 'author', 'allow_view_to', 'date_start', 'date_end'),
+                    'joinFields' => array('id', 'event_name', 'event_desc', 'picture', 'cover', 'added', 'author', 'allow_view_to', 'date_start', 'date_end'),
                 ),
                 'account' => array(
                     'type' => 'INNER',
@@ -168,6 +169,14 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
                 $this->sBrowseUrl = 'page.php?i=events-top';
                 break;
 
+            case 'upcoming':
+                $this->aCurrent['rss']['link'] = 'modules/?r=events/rss/' . $sMode;
+                $this->aCurrent['title'] = _t('_bx_events_page_title_browse_upcoming');
+                $this->aCurrent['restriction']['upcoming']['value'] = time();
+                $this->aCurrent['sorting'] = 'upcoming';
+                $this->sBrowseUrl = 'page.php?i=events-upcoming';
+                break;
+
             case 'past':
                 $this->aCurrent['rss']['link'] = 'modules/?r=events/rss/' . $sMode;
                 $this->aCurrent['title'] = _t('_bx_events_page_title_browse_past');
@@ -203,6 +212,8 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
             return array();
         case 'top':
             return array('order' => ' ORDER BY `bx_events_data`.`views` DESC ');
+        case 'upcoming':
+            return array('order' => ' ORDER BY `bx_events_data`.`date_start` ASC, `bx_events_data`.`date_end` ASC ');
         case 'past':
             return array('order' => ' ORDER BY `bx_events_data`.`date_start` DESC, `bx_events_data`.`date_end` DESC ');
         case 'last':

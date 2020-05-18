@@ -9,6 +9,7 @@
 	<string name="_bx_events_option_num_rss"><![CDATA[Количество элементов в ленте RSS]]></string>
     <string name="_bx_events_option_time_format"><![CDATA[Формат времени]]></string>
     <string name="_bx_events_option_short_date_format"><![CDATA[Короткий формат даты]]></string>
+    <string name="_bx_events_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к событию]]></string>
     <string name="_bx_events_option_searchable_fields"><![CDATA[Поля для поиска]]></string>
     <string name="_bx_events_option_public_subscribed_me"><![CDATA[Открытый список заинтересованных пользователей]]></string>
 
@@ -116,6 +117,8 @@
 	<string name="_bx_events_page_title_manage"><![CDATA[Управление]]></string>
 	<string name="_bx_events_page_title_sys_top"><![CDATA[Популярные события]]></string>
     <string name="_bx_events_page_title_top"><![CDATA[Популярные события]]></string>
+    <string name="_bx_events_page_title_sys_upcoming"><![CDATA[Предстоящие события]]></string>
+    <string name="_bx_events_page_title_upcoming"><![CDATA[Предстоящие события]]></string>
     <string name="_bx_events_page_title_sys_past"><![CDATA[Прошедшие события]]></string>
     <string name="_bx_events_page_title_past"><![CDATA[Прошедшие события]]></string>
 	<string name="_bx_events_page_title_sys_calendar"><![CDATA[Календарь событий]]></string>
@@ -168,7 +171,8 @@
     <string name="_bx_events_page_block_title_system_manage_administration"><![CDATA[Управление всеми событиями]]></string>
     <string name="_bx_events_page_block_title_manage"><![CDATA[Управление]]></string>
     <string name="_bx_events_page_block_title_top_profiles"><![CDATA[Популярные события]]></string>
-	<string name="_bx_events_page_block_title_joined_profiles"><![CDATA[Мои события]]></string>
+    <string name="_bx_events_page_block_title_joined_profiles"><![CDATA[Мои события]]></string>
+    <string name="_bx_events_page_block_title_upcoming_profiles"><![CDATA[Предстоящие события]]></string>
     <string name="_bx_events_page_block_title_past_profiles"><![CDATA[Прошедшие события]]></string>
     <string name="_bx_events_page_block_title_entry_all_actions"><![CDATA[Все действия]]></string>
     <string name="_bx_events_page_block_title_entry_social_sharing"><![CDATA[Поделиться]]></string>
@@ -281,6 +285,8 @@
 	<string name="_bx_events_menu_item_title_manage_all"><![CDATA[Все события]]></string>
 	<string name="_bx_events_menu_item_title_system_entries_top"><![CDATA[Популярные]]></string>
     <string name="_bx_events_menu_item_title_entries_top"><![CDATA[Популярные]]></string>
+    <string name="_bx_events_menu_item_title_system_entries_upcoming"><![CDATA[Предстоящие]]></string>
+	<string name="_bx_events_menu_item_title_entries_upcoming"><![CDATA[Предстоящие]]></string>        
     <string name="_bx_events_menu_item_title_system_entries_past"><![CDATA[Прошедшие]]></string>
     <string name="_bx_events_menu_item_title_entries_past"><![CDATA[Прошедшие]]></string>
 	<string name="_bx_events_menu_item_title_system_calendar"><![CDATA[Календарь]]></string>

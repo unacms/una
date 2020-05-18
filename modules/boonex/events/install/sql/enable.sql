@@ -18,6 +18,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `e
 ('bx_events_per_page_browse_recommended', '10', @iCategId, '_sys_option_per_page_browse_recommended', 'digit', '', '', '', 16),
 ('bx_events_time_format', 'H:i', @iCategId, '_bx_events_option_time_format', 'digit', '', '', '', 20),
 ('bx_events_short_date_format', 'j M y', @iCategId, '_bx_events_option_short_date_format', 'digit', '', '', '', 22),
+('bx_events_summary_chars', '700', @iCategId, '_bx_events_option_summary_chars', 'digit', '', '', '', 25),
 ('bx_events_searchable_fields', 'event_name,event_desc', @iCategId, '_bx_events_option_searchable_fields', 'list', 'a:2:{s:6:"module";s:9:"bx_events";s:6:"method";s:21:"get_searchable_fields";}', '', '', 30),
 ('bx_events_public_subscribed_me', 'on', @iCategId, '_bx_events_option_public_subscribed_me', 'checkbox', '', '', '', 40);
 
@@ -143,6 +144,14 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_events_context', 1, 'bx_events', '_bx_events_page_block_title_sys_entries_in_context', '_bx_events_page_block_title_entries_in_context', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_events\";s:6:\"method\";s:14:\"browse_context\";}', 0, 0, 1, 1),
 ('bx_events_context', 1, 'bx_events', '_bx_events_page_block_title_sys_calendar_in_context', '_bx_events_page_block_title_calendar_in_context', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:9:"bx_events";s:6:"method";s:8:"calendar";s:12:"ignore_cache";b:1;s:6:"params";a:1:{i:0;a:1:{s:10:"context_id";s:12:"{profile_id}";}}}', 0, 0, 1, 2);
+
+-- PAGE: upcoming profiles
+
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_events_upcoming', '_bx_events_page_title_sys_upcoming', '_bx_events_page_title_upcoming', 'bx_events', 5, 2147483647, 1, 'events-upcoming', 'page.php?i=events-upcoming', '', '', '', 0, 1, 0, 'BxEventsPageBrowse', 'modules/boonex/events/classes/BxEventsPageBrowse.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
+('bx_events_upcoming', 1, 'bx_events', '_bx_events_page_block_title_upcoming_profiles', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:24:"browse_upcoming_profiles";s:6:"params";a:1:{i:0;a:1:{s:13:"empty_message";b:1;}}}', 0, 0, 0);
 
 -- PAGE: past profiles
 
@@ -326,11 +335,12 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_events_submenu', 'bx_events', 'events-home', '_bx_events_menu_item_title_system_entries_recent', '_bx_events_menu_item_title_entries_recent', 'page.php?i=events-home', '', '', '', '', 2147483647, 1, 1, 1),
 ('bx_events_submenu', 'bx_events', 'events-top', '_bx_events_menu_item_title_system_entries_top', '_bx_events_menu_item_title_entries_top', 'page.php?i=events-top', '', '', '', '', 2147483647, 1, 1, 2),
-('bx_events_submenu', 'bx_events', 'events-past', '_bx_events_menu_item_title_system_entries_past', '_bx_events_menu_item_title_entries_past', 'page.php?i=events-past', '', '', '', '', 2147483647, 1, 1, 3),
-('bx_events_submenu', 'bx_events', 'events-calendar', '_bx_events_menu_item_title_system_calendar', '_bx_events_menu_item_title_calendar', 'page.php?i=events-calendar', '', '', '', '', 2147483647, 1, 1, 4),
-('bx_events_submenu', 'bx_events', 'events-search', '_bx_events_menu_item_title_system_entries_search', '_bx_events_menu_item_title_entries_search', 'page.php?i=events-search', '', '', '', '', 2147483647, 1, 1, 5),
-('bx_events_submenu', 'bx_events', 'events-joined', '_bx_events_menu_item_title_system_entries_joined', '_bx_events_menu_item_title_entries_joined', 'page.php?i=events-joined', '', '', '', '', 2147483647, 1, 1, 6),
-('bx_events_submenu', 'bx_events', 'events-manage', '_bx_events_menu_item_title_system_entries_manage', '_bx_events_menu_item_title_entries_manage', 'page.php?i=events-manage', '', '', '', '', 2147483646, 1, 1, 7);
+('bx_events_submenu', 'bx_events', 'events-upcoming', '_bx_events_menu_item_title_system_entries_upcoming', '_bx_events_menu_item_title_entries_upcoming', 'page.php?i=events-upcoming', '', '', '', '', 2147483647, 1, 1, 3),
+('bx_events_submenu', 'bx_events', 'events-past', '_bx_events_menu_item_title_system_entries_past', '_bx_events_menu_item_title_entries_past', 'page.php?i=events-past', '', '', '', '', 2147483647, 1, 1, 4),
+('bx_events_submenu', 'bx_events', 'events-calendar', '_bx_events_menu_item_title_system_calendar', '_bx_events_menu_item_title_calendar', 'page.php?i=events-calendar', '', '', '', '', 2147483647, 1, 1, 5),
+('bx_events_submenu', 'bx_events', 'events-search', '_bx_events_menu_item_title_system_entries_search', '_bx_events_menu_item_title_entries_search', 'page.php?i=events-search', '', '', '', '', 2147483647, 1, 1, 6),
+('bx_events_submenu', 'bx_events', 'events-joined', '_bx_events_menu_item_title_system_entries_joined', '_bx_events_menu_item_title_entries_joined', 'page.php?i=events-joined', '', '', '', '', 2147483647, 1, 1, 7),
+('bx_events_submenu', 'bx_events', 'events-manage', '_bx_events_menu_item_title_system_entries_manage', '_bx_events_menu_item_title_entries_manage', 'page.php?i=events-manage', '', '', '', '', 2147483646, 1, 1, 8);
 
 -- MENU: view submenu
 

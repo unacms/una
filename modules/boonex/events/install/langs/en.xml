@@ -9,6 +9,7 @@
 	<string name="_bx_events_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
     <string name="_bx_events_option_time_format"><![CDATA[Time format]]></string>
     <string name="_bx_events_option_short_date_format"><![CDATA[Short date format]]></string>
+    <string name="_bx_events_option_summary_chars"><![CDATA[Number of characters in auto-cropped event summary]]></string>
     <string name="_bx_events_option_searchable_fields"><![CDATA[Searchable fields]]></string>
     <string name="_bx_events_option_public_subscribed_me"><![CDATA[Public list of interested members]]></string>
 
@@ -97,6 +98,7 @@
 	<string name="_bx_events_page_title_browse_by_author"><![CDATA[Events of {display_name}]]></string>
 	<string name="_bx_events_page_title_browse_featured"><![CDATA[Featured Events]]></string>
 	<string name="_bx_events_page_title_browse_top"><![CDATA[Top Events]]></string>
+        <string name="_bx_events_page_title_browse_upcoming"><![CDATA[Upcoming Events]]></string>
         <string name="_bx_events_page_title_browse_past"><![CDATA[Past Events]]></string>
 	<string name="_bx_events_page_title_browse_recent"><![CDATA[New Events]]></string>
 	<string name="_bx_events_page_title_browse_connections"><![CDATA[{0} connections]]></string>
@@ -116,6 +118,8 @@
 	<string name="_bx_events_page_title_manage"><![CDATA[Manage Events]]></string>
     <string name="_bx_events_page_title_sys_top"><![CDATA[Top Events]]></string>
     <string name="_bx_events_page_title_top"><![CDATA[Top Events]]></string>
+    <string name="_bx_events_page_title_sys_upcoming"><![CDATA[Upcoming Events]]></string>
+    <string name="_bx_events_page_title_upcoming"><![CDATA[Upcoming Events]]></string>
     <string name="_bx_events_page_title_sys_past"><![CDATA[Past Events]]></string>
     <string name="_bx_events_page_title_past"><![CDATA[Past Events]]></string>
     <string name="_bx_events_page_title_sys_calendar"><![CDATA[Events Calendar]]></string>
@@ -169,6 +173,7 @@
     <string name="_bx_events_page_block_title_manage"><![CDATA[Manage Events]]></string>
     <string name="_bx_events_page_block_title_top_profiles"><![CDATA[Top Events]]></string>
     <string name="_bx_events_page_block_title_joined_profiles"><![CDATA[Joined Events]]></string>
+    <string name="_bx_events_page_block_title_upcoming_profiles"><![CDATA[Upcoming Events]]></string>
     <string name="_bx_events_page_block_title_past_profiles"><![CDATA[Past Events]]></string>
     <string name="_bx_events_page_block_title_entry_all_actions"><![CDATA[All Actions]]></string>
     <string name="_bx_events_page_block_title_entry_social_sharing"><![CDATA[Share]]></string>
@@ -280,6 +285,8 @@
 	<string name="_bx_events_menu_item_title_manage_all"><![CDATA[All Events]]></string>
 	<string name="_bx_events_menu_item_title_system_entries_top"><![CDATA[Top]]></string>
 	<string name="_bx_events_menu_item_title_entries_top"><![CDATA[Top]]></string>
+        <string name="_bx_events_menu_item_title_system_entries_upcoming"><![CDATA[Upcoming]]></string>
+	<string name="_bx_events_menu_item_title_entries_upcoming"><![CDATA[Upcoming]]></string>        
         <string name="_bx_events_menu_item_title_system_entries_past"><![CDATA[Past]]></string>
 	<string name="_bx_events_menu_item_title_entries_past"><![CDATA[Past]]></string>
 	<string name="_bx_events_menu_item_title_system_calendar"><![CDATA[Calendar]]></string>

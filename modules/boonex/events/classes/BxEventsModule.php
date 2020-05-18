@@ -76,6 +76,41 @@ class BxEventsModule extends BxBaseModGroupsModule
      * @page service Service Calls
      * @section bx_events Events
      * @subsection bx_events-browse Browse
+     * @subsubsection bx_events-browse_upcoming_profiles browse_past_profiles
+     * 
+     * @code bx_srv('bx_events', 'browse_upcoming_profiles', [...]); @endcode
+     * 
+     * Browse upcoming events
+     * 
+     * @param $bDisplayEmptyMsg show "empty" message or not if nothing found
+     * @param $bAjaxPaginate use AJAX paginate or not
+     *
+     * @see BxEventsModule::serviceBrowseUpcomingProfiles
+     */
+    /** 
+     * @ref bx_events-browse_upcoming_profiles "browse_upcoming_profiles"
+     */
+    public function serviceBrowseUpcomingProfiles ($aParams = false)
+    {
+        $bDisplayEmptyMsg = false;
+        if(isset($aParams['empty_message'])) {
+            $bEmptyMessage = (bool)$aParams['empty_message'];
+            unset($aParams['empty_message']);
+        }
+
+        $bAjaxPaginate = true;
+        if(isset($aParams['ajax_paginate'])) {
+            $bAjaxPaginate = (bool)$aParams['ajax_paginate'];
+            unset($aParams['ajax_paginate']);
+        }
+
+        return $this->_serviceBrowse ('upcoming', $aParams, BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_events Events
+     * @subsection bx_events-browse Browse
      * @subsubsection bx_events-browse_past_profiles browse_past_profiles
      * 
      * @code bx_srv('bx_events', 'browse_past_profiles', [...]); @endcode
