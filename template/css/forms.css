@@ -142,6 +142,10 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
     padding:7px 3px 7px 3px;
     padding:0.2rem 0.4rem;
 
