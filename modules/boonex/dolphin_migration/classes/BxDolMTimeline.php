@@ -41,31 +41,38 @@ class BxDolMTimeline extends BxDolMData
 	private function getModuleItemInfo($iModuleItemId, $sModule = 'forum')
 	{
         $sTable = '';
+        $sModule = '';
 	    switch($sModule)
 		{
 			case 'events':
 					$sTable = 'bx_events_data';
+                    $sModule = 'bx_events';
 					break;
 			case 'store':
 					$sTable = 'bx_market_products';
+                    $sModule = 'bx_market';
 					break;
 			case 'files':
 					$sTable = 'bx_files_main';
+                    $sModule = 'bx_files';
 					break;
 			case 'polls':
 					$sTable = 'bx_polls_entries';
+                    $sModule = 'bx_polls';
 					break;
 			case 'groups':
-					$sTable = 'bx_groups_data';
+				    $sTable = 'bx_groups_data';
+                    $sModule = 'bx_groups';
 					break;
 			case 'blogs':
 					$sTable = 'bx_posts_posts';
+                    $sModule = 'bx_posts';
 					break;
 		}
 		if (!$sTable)
 			return array();
 		
-		if (!$this -> _oDb -> isFieldExists($sTable, $this -> _sTransferFieldIdent))
+		if ($this->_oDb->isEnabledByName($sModule) && !$this -> _oDb -> isFieldExists($sTable, $this -> _sTransferFieldIdent))
 			return array();
 
 		return $this -> _oDb -> getRow("SELECT * FROM `{$sTable}` WHERE `{$this -> _sTransferFieldIdent}` = :id", array('id' => $iModuleItemId));
