@@ -1374,12 +1374,12 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         if ($this->_isModerator($isPerformAction))
             return CHECK_ACTION_RESULT_ALLOWED;
 
-        // owner (checked by account! not as profile as ususal) always have access
+        // owner (checked by account instead of author!) always have access
         $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->_aModule['name']);
         if (!$oProfile)
             return _t('_sys_txt_error_occured');
 
-        if ($oProfile->getAccountId() == $this->_iAccountId)
+        if ($oProfile->id() == $this->_iProfileId || $oProfile->getAccountId() == $this->_iAccountId)
             return CHECK_ACTION_RESULT_ALLOWED;
 
         return _t('_sys_txt_access_denied');
@@ -1394,12 +1394,12 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         if ($this->_isModerator($isPerformAction))
             return CHECK_ACTION_RESULT_ALLOWED;
 
-        // owner (checked by account! not as profile as ususal) always have access
+        // owner (checked by account instead of author!) always have access
         $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->_aModule['name']);
         if (!$oProfile)
             return _t('_sys_txt_error_occured');
 
-        if ($oProfile->getAccountId() == $this->_iAccountId)
+        if ($oProfile->id() == $this->_iProfileId || $oProfile->getAccountId() == $this->_iAccountId)
             return CHECK_ACTION_RESULT_ALLOWED;
 
         return _t('_sys_txt_access_denied');
@@ -1414,14 +1414,14 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         if ($this->_isModerator($isPerformAction))
             return CHECK_ACTION_RESULT_ALLOWED;
 
-        // check ACL and owner (checked by account! not as profile as ususal)
+        // owner (checked by account instead of author!) always have access
         $aCheck = checkActionModule($this->_iProfileId, 'delete entry', $this->getName(), $isPerformAction);
 
         $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->_aModule['name'], $isPerformAction);
         if (!$oProfile)
             return _t('_sys_txt_error_occured');
 
-        if ($oProfile->getAccountId() == $this->_iAccountId && $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
+        if (($oProfile->id() == $this->_iProfileId || $oProfile->getAccountId() == $this->_iAccountId) && $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
             return CHECK_ACTION_RESULT_ALLOWED;
 
         return _t('_sys_txt_access_denied');
