@@ -230,9 +230,9 @@ class BxDolMData
 		if (!empty($aValues))
 			return $aValues['Value'];
 		
-		$aValues = $this -> _oDb -> getRow("SELECT MAX(`Value`) + 1 as `Value`, MAX(`Order`) + 1 as `Order` FROM `sys_form_pre_values` WHERE `Key` = :cat", array('cat' => $sCategory));
+		$aCateg = $this->_oDb->getRow("SELECT MAX(CONVERT(`Value`, SIGNED INTEGER)) + 1 as `Value`, MAX(`Order`) + 1 as `Order` FROM `sys_form_pre_values` WHERE `Key` = :cat", array('cat' => $sCategory));
         if ($iValue)
-            $aValues['Value'] = $iValue;
+            $aCateg['Value'] = $iValue;
 		
 		$sQuery = $this -> _oDb -> prepare("
 			INSERT INTO `sys_form_pre_values` SET
@@ -240,11 +240,11 @@ class BxDolMData
 				`Value`	= ?,
 				`Order`	= ?,
 				`LKey` = ?,
-				`Data` = ?", $sCategory, $aValues['Value'], $aValues['Order'], "_{$sPrefix}_cat_{$sTitle}", $sData);
+				`Data` = ?", $sCategory, $aCateg['Value'], $aCateg['Order'], "_{$sPrefix}_cat_{$sTitle}", $sData);
 				
 		$this -> _oDb -> query($sQuery);
 		BxDolStudioLanguagesUtils::getInstance() -> addLanguageString("_{$sPrefix}_cat_{$sTitle}", $sName);
-		return $aValues['Value'];
+		return $aCateg['Value'];
 	}
 	/**
 	 *  Transfer fields lists with translations 
