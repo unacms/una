@@ -126,14 +126,13 @@ class BxDolMBlogs extends BxDolMData
        if (!$sPhotoName || $this -> _oDb -> getOne("SELECT `thumb` FROM `{$this -> _sTableWithTransKey}` WHERE `id` = :id", array('id' => $iEntryId)))
 		   return;
 	   
-       $sBlogImgePath = $this -> _oDb -> getExtraParam('root') . 'media' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . "blog" . DIRECTORY_SEPARATOR ."orig_{$sPhotoName}";
-       if($sBlogImgePath)
+       $sBlogImgPath = $this -> _oDb -> getExtraParam('root') . 'media' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . "blog" . DIRECTORY_SEPARATOR ."orig_{$sPhotoName}";
+       if($sBlogImgPath)
 		{
-			$oFileStorage = BxDolStorage::getObjectInstance('bx_posts_files');
-			$iFile = $oFileStorage -> storeFileFromPath($sBlogImgePath, false, $iProfileId, (int)$iEntryId);
+			$oFileStorage = BxDolStorage::getObjectInstance('bx_posts_covers');
+			$iFile = $oFileStorage -> storeFileFromPath($sBlogImgPath, false, $iProfileId, (int)$iEntryId);
 			if ($iFile)
 			{
-				$oFileStorage -> afterUploadCleanup($iFile, $iProfileId);
 				$sQuery = $this -> _oDb -> prepare("UPDATE `{$this -> _sTableWithTransKey}` SET `thumb` = ? WHERE `id` = ?", $iFile, $iEntryId);
 				$this -> _oDb -> query($sQuery);
 			}		
