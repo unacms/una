@@ -94,7 +94,7 @@ class BxEventsModule extends BxBaseModGroupsModule
     {
         $bDisplayEmptyMsg = false;
         if(isset($aParams['empty_message'])) {
-            $bEmptyMessage = (bool)$aParams['empty_message'];
+            $bDisplayEmptyMsg = (bool)$aParams['empty_message'];
             unset($aParams['empty_message']);
         }
 

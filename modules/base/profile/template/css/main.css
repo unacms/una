@@ -46,6 +46,7 @@
 /* browse unit extended */
 .bx-base-pofile-units-wrapper.bx-base-puw-extended {
     display: block;
+    margin: 0;
 }
 
 .bx-base-pofile-unit-ext h2,
