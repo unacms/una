@@ -1510,11 +1510,30 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */
-    public function checkAllowedSubscribeAdd (&$aDataEntry, $isPerformAction = false)
+    public function checkAllowedSubscribeAdd(&$aDataEntry, $isPerformAction = false)
     {
-        if (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->checkAllowedView($aDataEntry)))
+        $mixedResult = $this->_modProfileCheckAllowedSubscribeAdd($aDataEntry, $isPerformAction);
+
+        // call alert to allow custom checks
+        bx_alert('system', 'check_allowed_subscribe_add', 0, 0, array(
+            'module' => $this->getName(), 
+            'content_info' => $aDataEntry, 
+            'profile_id' => bx_get_logged_profile_id(), 
+            'override_result' => &$mixedResult
+        ));
+
+        return $mixedResult;
+    }
+
+    /**
+     * Note. Is mainly needed for internal usage. Access level is 'public' to allow outer calls from alerts.
+     */
+    public function _modProfileCheckAllowedSubscribeAdd(&$aDataEntry, $isPerformAction = false)
+    {
+        if(($sMsg = $this->checkAllowedView($aDataEntry)) !== CHECK_ACTION_RESULT_ALLOWED)
             return $sMsg;
-        return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, 'sys_profiles_subscriptions', false, false);
+
+        return $this->_checkAllowedConnect($aDataEntry, $isPerformAction, 'sys_profiles_subscriptions', false, false);
     }
 
     /**

@@ -68,11 +68,6 @@ class BxSpacesModule extends BxBaseModGroupsModule
         header('Content-Type:text/javascript; charset=utf-8');
         echo(json_encode($a));
     }
-
-    public function checkAllowedSubscribeAdd (&$aDataEntry, $isPerformAction = false)
-    {
-        return parent::_checkAllowedSubscribeAdd ($aDataEntry, $isPerformAction);
-    }
     
     public function getListSpacesForParent ($sTerm, $iContentId, $iLimit)
     {
@@ -99,6 +94,11 @@ class BxSpacesModule extends BxBaseModGroupsModule
             );
         }
         return $aRv;
+    }
+
+    public function _modGroupsCheckAllowedSubscribeAdd(&$aDataEntry, $isPerformAction = false)
+    {
+        return parent::_modProfileCheckAllowedSubscribeAdd($aDataEntry, $isPerformAction);
     }
 }
 
