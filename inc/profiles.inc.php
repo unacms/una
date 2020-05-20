@@ -181,6 +181,11 @@ function bx_check_password($sLogin, $sPassword, $iRole = BX_DOL_ROLE_MEMBER)
         bx_import('BxDolLanguages');
         return _t("_sys_txt_login_error");
     }
+    
+    if ($oAccount->isLocked()){
+        bx_import('BxDolLanguages');
+		return _t("_sys_txt_login_locked", BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password'));
+	}
 
     $aAccountInfo = $oAccount->getInfo();
 
