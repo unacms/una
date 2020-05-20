@@ -699,14 +699,35 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return _t('_sys_txt_access_denied');
     }   
 
-    public function checkAllowedSubscribeAdd (&$aDataEntry, $isPerformAction = false)
+    public function checkAllowedSubscribeAdd(&$aDataEntry, $isPerformAction = false)
     {
-        if (!$this->isFan($aDataEntry[$this->_oConfig->CNF['FIELD_ID']]))
+        $mixedResult = $this->_modGroupsCheckAllowedSubscribeAdd($aDataEntry, $isPerformAction);
+
+        // call alert to allow custom checks
+        bx_alert('system', 'check_allowed_subscribe_add', 0, 0, array(
+            'module' => $this->getName(), 
+            'content_info' => $aDataEntry, 
+            'profile_id' => bx_get_logged_profile_id(), 
+            'override_result' => &$mixedResult
+        ));
+
+        return $mixedResult;
+    }
+
+    /**
+     * Note. Is mainly needed for internal usage. Access level is 'public' to allow outer calls from alerts.
+     */
+    public function _modGroupsCheckAllowedSubscribeAdd(&$aDataEntry, $isPerformAction = false)
+    {
+        if(!$this->isFan($aDataEntry[$this->_oConfig->CNF['FIELD_ID']]))
             return _t('_sys_txt_access_denied');
 
-        return $this->_checkAllowedSubscribeAdd ($aDataEntry, $isPerformAction);
+        return parent::_modProfileCheckAllowedSubscribeAdd($aDataEntry, $isPerformAction);
     }
-    
+
+    /**
+     * @deprecated since version 11.0.3 and can be removed in the next version.
+     */
     public function _checkAllowedSubscribeAdd (&$aDataEntry, $isPerformAction = false)
     {
         return parent::checkAllowedSubscribeAdd ($aDataEntry, $isPerformAction);

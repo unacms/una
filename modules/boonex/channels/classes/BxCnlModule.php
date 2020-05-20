@@ -19,12 +19,12 @@ class BxCnlModule extends BxBaseModGroupsModule
     {
         parent::__construct($aModule);
     }
-   
-    public function checkAllowedSubscribeAdd (&$aDataEntry, $isPerformAction = false)
+
+    public function _modGroupsCheckAllowedSubscribeAdd(&$aDataEntry, $isPerformAction = false)
     {
-        return parent::_checkAllowedSubscribeAdd ($aDataEntry, $isPerformAction);
+        return parent::_modProfileCheckAllowedSubscribeAdd($aDataEntry, $isPerformAction);
     }
-    
+
     /**
      * Process Hash Tag
      * 
