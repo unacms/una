@@ -626,7 +626,22 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     /**
      * @return CHECK_ACTION_RESULT_ALLOWED if access is granted or error message if access is forbidden.
      */
-    public function checkAllowedFanAdd (&$aDataEntry, $isPerformAction = false)
+    public function checkAllowedFanAdd(&$aDataEntry, $isPerformAction = false)
+    {
+        $mixedResult = $this->_modGroupsCheckAllowedFanAdd($aDataEntry, $isPerformAction);
+
+        // call alert to allow custom checks
+        bx_alert('system', 'check_allowed_fan_add', 0, 0, array(
+            'module' => $this->getName(), 
+            'content_info' => $aDataEntry, 
+            'profile_id' => bx_get_logged_profile_id(), 
+            'override_result' => &$mixedResult
+        ));
+
+        return $mixedResult;
+    }
+
+    public function _modGroupsCheckAllowedFanAdd (&$aDataEntry, $isPerformAction = false)
     {
         if ($this->isFan($aDataEntry[$this->_oConfig->CNF['FIELD_ID']]) || !isLogged())
             return _t('_sys_txt_access_denied');
