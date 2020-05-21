@@ -76,7 +76,7 @@ class BxEventsModule extends BxBaseModGroupsModule
      * @page service Service Calls
      * @section bx_events Events
      * @subsection bx_events-browse Browse
-     * @subsubsection bx_events-browse_upcoming_profiles browse_past_profiles
+     * @subsubsection bx_events-browse_upcoming_profiles browse_upcoming_profiles
      * 
      * @code bx_srv('bx_events', 'browse_upcoming_profiles', [...]); @endcode
      * 
@@ -105,6 +105,50 @@ class BxEventsModule extends BxBaseModGroupsModule
         }
 
         return $this->_serviceBrowse ('upcoming', $aParams, BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_events Events
+     * @subsection bx_events-browse Browse
+     * @subsubsection bx_events-browse_upcoming_connected_profiles browse_upcoming_connected_profiles
+     * 
+     * @code bx_srv('bx_events', 'browse_upcoming_connected_profiles', [...]); @endcode
+     * 
+     * Browse upcoming connected (followed) events
+     * 
+     * @param $bDisplayEmptyMsg show "empty" message or not if nothing found
+     * @param $bAjaxPaginate use AJAX paginate or not
+     *
+     * @see BxEventsModule::serviceBrowseUpcomingConnectedProfiles
+     */
+    /** 
+     * @ref bx_events-browse_upcoming_connected_profiles "browse_upcoming_connected_profiles"
+     */
+    public function serviceBrowseUpcomingConnectedProfiles ($aParams = false)
+    {
+        if(!is_array($aParams) || empty($aParams['object']) || empty($aParams['profile']))
+            return '';
+
+        $bDisplayEmptyMsg = false;
+        if(isset($aParams['empty_message'])) {
+            $bDisplayEmptyMsg = (bool)$aParams['empty_message'];
+            unset($aParams['empty_message']);
+        }
+
+        $bAjaxPaginate = true;
+        if(isset($aParams['ajax_paginate'])) {
+            $bAjaxPaginate = (bool)$aParams['ajax_paginate'];
+            unset($aParams['ajax_paginate']);
+        }
+
+        $aDefaults = array(
+            'type' => 'content',
+            'mutual' => false,
+            'profile2' => 0
+        );
+
+        return $this->_serviceBrowse ('upcoming_connected', array_merge($aDefaults, $aParams), BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
     }
 
     /**

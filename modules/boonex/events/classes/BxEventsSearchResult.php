@@ -185,6 +185,25 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
                 $this->sBrowseUrl = 'page.php?i=events-upcoming';
                 break;
 
+            case 'upcoming_connected':
+                if(!$this->_setConnectionsConditions($aParams)) 
+                    break;
+
+                $bProcessConditionsForPrivateContent = false;
+
+                $this->aCurrent['rss']['link'] = 'modules/?r=events/rss/upcoming';
+                $this->aCurrent['title'] = _t('_bx_events_page_title_browse_upcoming');
+                $this->aCurrent['restriction']['upcoming']['value'] = time();
+                if(!empty($aParams['date_start_from']))
+                    $this->aCurrent['restriction']['date_start_from']['value'] = $aParams['date_start_from'];
+                if(!empty($aParams['date_start_to']))
+                    $this->aCurrent['restriction']['date_start_to']['value'] = $aParams['date_start_to'];
+                $this->aCurrent['sorting'] = 'upcoming';
+                if(!empty($aParams['per_page']))
+                    $this->aCurrent['paginate']['perPage'] = is_numeric($aParams['per_page']) ? (int)$aParams['per_page'] : (int)getParam($aParams['per_page']);
+                $this->sBrowseUrl = 'page.php?i=events-upcoming';
+                break;
+
             case 'past':
                 $this->aCurrent['rss']['link'] = 'modules/?r=events/rss/' . $sMode;
                 $this->aCurrent['title'] = _t('_bx_events_page_title_browse_past');
