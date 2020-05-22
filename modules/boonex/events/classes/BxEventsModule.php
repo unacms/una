@@ -68,7 +68,7 @@ class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarServ
         $CNF = &$this->_oConfig->CNF;
         $oConn = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']);
         $aData = $oConn->getConnectedContent($iProfileId);
-        $aData2 = array();
+        $aData2 = array(0);
         foreach($aData as $iProfileId2){
             $oProfile = BxDolProfile::getInstance($iProfileId2);
             array_push($aData2, $oProfile->getContentId());
