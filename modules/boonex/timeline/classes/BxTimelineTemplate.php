@@ -2028,6 +2028,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             if($iAttachmentsTotal > $iAttachmentsShow)
                 $aTmplVarsAttachments[$iAttachmentsShow - 1]['item'] .= $this->parseHtmlByName('attach_more.html', array(
                     'style_prefix' => $sStylePrefix,
+                    'link' => $this->_oConfig->getItemViewUrl($aEvent),
                     'more' => $iAttachmentsTotal - $iAttachmentsShow
                 ));
         }
