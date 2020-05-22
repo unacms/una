@@ -1,0 +1,384 @@
+<?php defined('BX_DOL') or die('hack attempt');
+/**
+ * Copyright (c) UNA, Inc - https://una.io
+ * MIT License - https://opensource.org/licenses/MIT 
+ * @defgroup    Tasks Tasks
+ * @ingroup     UnaModules
+ *
+ * @{
+ */
+
+/**
+ * Tasks module
+ */
+class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService 
+{
+    function __construct(&$aModule)
+    {
+        parent::__construct($aModule);
+
+        $CNF = &$this->_oConfig->CNF;
+        $this->_aSearchableNamesExcept = array_merge($this->_aSearchableNamesExcept, array(
+            $CNF['FIELD_PUBLISHED'],
+            $CNF['FIELD_DISABLE_COMMENTS']
+        ));
+    }
+	
+	/**
+    * Action methods
+    */
+	
+	
+    /**
+     * Get possible recipients for start conversation form
+     */
+    public function actionAjaxGetInitialMembers ()
+    {
+        $sTerm = bx_get('term');
+
+        $a = BxDolService::call('system', 'profiles_search', array($sTerm), 'TemplServiceProfiles');
+
+        header('Content-Type:text/javascript; charset=utf-8');
+        echo(json_encode($a));
+    }
+          
+    public function actionSetCompleted($iTaskId, $iValue)
+    {
+		$CNF = &$this->_oConfig->CNF;
+		$this->_oDb->updateEntriesBy(array($CNF['FIELD_COMPLETED'] => $iValue), array($CNF['FIELD_ID'] => (int)$iTaskId));
+		echo 'ok';
+	}
+	
+	public function actionSetFilterValue($iListId, $sValue)
+	{
+		$CNF = &$this->_oConfig->CNF;
+		$aTmp = array();
+		if (isset($_COOKIE[$CNF['COOKIE_SETTING_KEY']]))
+			$aTmp =	json_decode($_COOKIE[$CNF['COOKIE_SETTING_KEY']], true);
+			
+		$aUrl = parse_url(BX_DOL_URL_ROOT);
+		$sPath = isset($aUrl['path']) && !empty($aUrl['path']) ? $aUrl['path'] : '/';
+		if ($sValue != '')
+			$aTmp[$iListId] = $sValue;
+		else
+			unset($aTmp[$iListId]);
+        setcookie($CNF['COOKIE_SETTING_KEY'], json_encode($aTmp), time() + 60*60*24*365, $sPath);
+	}
+	
+	public function actionProcessTaskListForm($iContextId, $iId)
+    {
+		$CNF = &$this->_oConfig->CNF;
+		$oForm = null;
+		$sPopupTitle = "";
+		$aContentInfo = array();
+		if ($iId == 0){
+			$oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_LIST_ENTRY'], $CNF['OBJECT_FORM_LIST_ENTRY_DISPLAY_ADD']);
+			$sPopupTitle = _t('_bx_tasks_form_list_entry_display_add');
+		}
+		else{
+			$oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_LIST_ENTRY'], $CNF['OBJECT_FORM_LIST_ENTRY_DISPLAY_EDIT']);
+			$aContentInfo = $this->_oDb->getList($iId);
+			$sPopupTitle = _t('_bx_tasks_form_list_entry_display_edit');
+		}
+		
+		$oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'process_task_list_form/' . $iContextId . '/' . $iId . '/';
+		if (!$oForm)
+            return '';
+		
+		$oForm->initChecker($aContentInfo, array());
+		
+        if($oForm->isSubmittedAndValid()) {
+			if ($iId == 0){
+				$aValsToAdd['context_id'] = $iContextId;
+				$iId = $oForm->insert($aValsToAdd);
+			}
+			else{
+				$iId = $oForm->update($iId);
+			}
+
+			return echoJson(array(
+				 'eval' => $this->_oConfig->getJsObject('tasks') . '.reloadData(oData)',
+			));
+        }
+        else {	
+			$sContent = $this->_oTemplate->parseHtmlByName('popup_form.html', array(
+				'form_id' => $oForm->getId(),
+				'form' => $oForm->getCode(true)
+			));
+																	 
+			if (!$oForm->isSubmitted()){
+				echo $sContent;
+				return;
+			}
+			
+            return echoJson(array('form' => $sContent, 'form_id' => $oForm->getId()));;
+        }
+	}
+	
+	public function actionProcessTaskForm($iContextId, $iListId)
+    {
+		$CNF = &$this->_oConfig->CNF;
+		$oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_ENTRY'], $CNF['OBJECT_FORM_ENTRY_DISPLAY_ADD']);
+		
+		$oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'process_task_form/' . $iContextId . '/' . $iListId . '/';
+		if (!$oForm)
+            return '';
+		
+		$oForm->initChecker();
+		
+        if($oForm->isSubmittedAndValid()) {
+			$aValsToAdd[$CNF['FIELD_ALLOW_VIEW_TO']] = $iContextId;
+			$aValsToAdd[$CNF['FIELD_TASKLIST']] = $iListId;
+			$iId = $oForm->insert($aValsToAdd);
+			return echoJson(array(
+				 'eval' => $this->_oConfig->getJsObject('tasks') . '.reloadData(oData)',
+			));
+        }
+        else {	
+			$sContent = $this->_oTemplate->parseHtmlByName('popup_form.html', array(
+				'form_id' => $oForm->getId(),
+				'form' => $oForm->getCode(true)
+			));
+																	 
+			if (!$oForm->isSubmitted()){
+				echo $sContent;
+				return;
+			}
+            return echoJson(array('form' => $sContent, 'form_id' => $oForm->getId()));;
+        }
+	}
+	
+	public function actionCalendarData()
+    {
+        // check permissions
+        $aSQLPart = array();
+        $iContextId = (int)bx_get('context_id');
+		
+		$oPrivacy = BxDolPrivacy::getObjectInstance($this->_oConfig->CNF['OBJECT_PRIVACY_VIEW']);
+		
+		if($iContextId){
+			$aSQLPart = $oPrivacy ? $oPrivacy->getContentByGroupAsSQLPart(- $iContextId) : array();
+		}
+        // get entries
+        $aEntries = $this->_oDb->getEntriesByDate(bx_get('start'), bx_get('end'), bx_get('event'), $aSQLPart);
+        
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($aEntries);
+    }
+	
+    /**
+     * Entry task for Timeline module
+     */
+    public function serviceGetTimelinePost($aEvent, $aBrowseParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aResult = parent::serviceGetTimelinePost($aEvent, $aBrowseParams);
+        if(empty($aResult) || !is_array($aResult) || empty($aResult['date']))
+            return $aResult;
+
+        $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);
+        if($aContentInfo[$CNF['FIELD_PUBLISHED']] > $aResult['date'])
+            $aResult['date'] = $aContentInfo[$CNF['FIELD_PUBLISHED']];
+
+        return $aResult;
+    }
+
+	public function serviceIsCompleted($iContentId)
+	{
+		$CNF = &$this->_oConfig->CNF;
+		$aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        return $aContentInfo[$CNF['FIELD_COMPLETED']] ? false: true;
+    }
+	
+	
+	public function serviceEntityAssignments($iContentId = 0, $bAsArray = false)
+	{
+		if (!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if (!$iContentId)
+            return false;
+
+		$mixedResult = BxDolConnection::getObjectInstance($this->_oConfig->CNF['OBJECT_CONNECTION'])->getConnectedContent($iContentId);
+        if(!$bAsArray) {
+			$s = '';
+            foreach ($mixedResult as $mixedProfile) {
+				$bProfile = is_array($mixedProfile);
+
+				$oProfile = BxDolProfile::getInstance($bProfile ? (int)$mixedProfile['id'] : (int)$mixedProfile);
+				if(!$oProfile)
+					continue;
+
+				$aUnitParams = array('template' => array('name' => 'unit', 'size' => 'thumb'));
+
+				if($bProfile && is_array($mixedProfile['info']))
+					$aUnitParams['template']['vars'] = $mixedProfile['info'];
+
+				$s .= $oProfile->getUnit(0, $aUnitParams);
+			}
+			$mixedResult = $s;
+			
+            if (!$mixedResult)
+                return MsgBox(_t('_sys_txt_empty'));
+        }
+
+        return $mixedResult;
+    }
+	
+	public function serviceIsUncompleted($iContentId)
+    {
+		$CNF = &$this->_oConfig->CNF;
+		$aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        return $aContentInfo[$CNF['FIELD_COMPLETED']] ? true : false;
+    }
+
+	
+    public function serviceCheckAllowedCommentsTask($iContentId, $sObjectComments) 
+    {
+        $CNF = &$this->_oConfig->CNF;
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if ($aContentInfo[$CNF['FIELD_DISABLE_COMMENTS']] == 1)
+            return false;
+
+        return parent::serviceCheckAllowedCommentsTask($iContentId, $sObjectComments);
+    }
+	
+	public function serviceCheckAllowedCommentsView($iContentId, $sObjectComments) 
+    {
+        $CNF = &$this->_oConfig->CNF;
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if ($aContentInfo[$CNF['FIELD_DISABLE_COMMENTS']] == 1)
+            return false;
+
+        return parent::serviceCheckAllowedCommentsView($iContentId, $sObjectComments);
+    }
+	
+	/**
+     * @page service Service Calls
+     * @section bx_tasks Tasks
+     * @subsection bx_tasks-page_blocks Page Blocks
+     * @subsubsection bx_tasks-calendar calendar
+     * 
+     * @code bx_srv('bx_tasks', 'calendar', [...]); @endcode
+     * 
+     * Shows tasks calendar baced on die date
+     * 
+     * @param $aData additional data to point which events to show, leave empty to show all events, specify event's ID in 'event' array key to show calendar for one event only, specify context's ID in 'context_id' array key to show calendar for one context events only. If only one event is specified then it will show calendar only if it's repeating event.
+     * @param $sTemplate template to use to show calendar, or leave empty for default template, possible options: calendar.html, calendar_compact.html
+     * @return HTML string with calendar to display on the site, all necessary CSS and JS files are automatically added to the HEAD section of the site HTML. On error empty string is returned.
+     *
+     * @see BxTasksModule::serviceCalendar
+     */
+    /** 
+     * @ref bx_tasks-calendar "calendar"
+     */
+    public function serviceCalendar($aData = array(), $sTemplate = 'calendar.html')
+    {
+        $o = new BxTemplCalendar(array(
+            'eventSources' => array (
+                bx_append_url_params(BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'calendar_data', $aData),
+            ),
+        ), $this->_oTemplate);
+        return $o->display($sTemplate);
+    }
+	
+	public function serviceGetCalendarEntries($iProfileId)
+    {
+		$CNF = &$this->_oConfig->CNF;
+        $oConn = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION']);
+        $aData = $oConn->getConnectedInitiators($iProfileId);
+		$aData2 = array(0);
+        foreach($aData as $iProfileId2){
+            $oProfile = BxDolProfile::getInstance($iProfileId2);
+            array_push($aData2, $oProfile->getContentId());
+        }
+        $aSQLPart['where'] = " AND " . $CNF['TABLE_ENTRIES'] . ".`" . $CNF['FIELD_ID'] . "` IN(" . implode(',', $aData2) . ")";
+        return $this->_oDb->getEntriesByDate(bx_get('start'), bx_get('end'), null, $aSQLPart);
+	}
+	
+	public function serviceBrowseContext ($iProfileId = 0, $aParams = array())
+    {
+		if(!$iProfileId)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+        if(!$iProfileId)
+            return '';
+        return $this->serviceBrowseTasks (-$iProfileId, $aParams);
+    }
+	
+	public function serviceBrowseTasks ($iContextId = 0, $aParams = array())
+    {
+		$CNF = &$this->_oConfig->CNF;
+		
+		$this->_oTemplate->addCssJs();
+		$aVars = array();
+		$aLists = $this->_oDb->getLists($iContextId);
+		$aListsVars = array();
+		
+		$oConn = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION']);
+		
+		$aFilterValues = array();
+		if (isset($_COOKIE[$CNF['COOKIE_SETTING_KEY']]))
+			$aFilterValues =	json_decode($_COOKIE[$CNF['COOKIE_SETTING_KEY']], true);
+		
+		foreach($aLists as $aList) {
+			$aTasks = $this->_oDb->getTasks($iContextId, $aList['id']);
+			$aTasksVars = array();
+			foreach($aTasks as $aTask) {
+				$aMembers = $oConn->getConnectedContent($aTask[$CNF['FIELD_ID']]);
+				$aMembersVars = array();
+				foreach($aMembers as $iMember) {
+					$oProfile = BxDolProfile::getInstance($iMember);
+					$aMembersVars[] = array('info' => $oProfile->getUnit(0, array('template' => 'unit_wo_info')));
+				}
+				$aTasksVars[] = array(
+					'id' => $aTask[$CNF['FIELD_ID']],
+					'title' => $aTask[$CNF['FIELD_TITLE']],
+					'created' => bx_time_js($aTask[$CNF['FIELD_ADDED']]),
+					'checked' => $aTask[$CNF['FIELD_COMPLETED']] == 1 ? 'checked' : '',
+					'class' => $aTask[$CNF['FIELD_COMPLETED']] == 1 ? 'completed' : 'uncompleted',
+					'due' => $aTask[$CNF['FIELD_DUEDATE']] > 0 ? bx_time_js($aTask[$CNF['FIELD_DUEDATE']]) : '',
+					'bx_repeat:members' => $aMembersVars,
+					'badges' => $this->serviceGetBadges($aTask[$CNF['FIELD_ID']], true),
+					'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aTask[$CNF['FIELD_ID']]),
+					'object' => $this->_oConfig->getJsObject('tasks')
+				);
+			}
+			$sClass = $sCompleted = $sUncompleted = "";
+			if (isset($aFilterValues[$aList[$CNF['FIELD_ID']]])){
+				$sClass = $aFilterValues[$aList[$CNF['FIELD_ID']]];
+				if ($sClass == 'completed')
+					$sCompleted= 'selected';
+				if ($sClass == 'uncompleted')
+					$sUncompleted= 'selected';
+			}
+			$aListsVars[] = array(
+				'title' => $aList[$CNF['FIELD_TITLE']],
+				'id' => $aList['id'],
+				'bx_repeat:tasks' =>  $aTasksVars,
+				'context_id' => $iContextId,
+				'list_id' => $aList[$CNF['FIELD_ID']],
+				'object' => $this->_oConfig->getJsObject('tasks'),
+				'class' => $sClass,
+				'completed' => $sCompleted,
+				'uncompleted' => $sUncompleted,
+			);
+		}
+		
+		$aVars = array(
+			'bx_repeat:task_lists' => $aListsVars,
+			'context_id' => $iContextId,
+			'object' => $this->_oConfig->getJsObject('tasks')
+		);
+		
+		$this->_oTemplate->addJs(array(
+			'jquery-ui/jquery.ui.widget.min.js',
+    		'jquery-ui/jquery.ui.menu.min.js', 
+    		'jquery-ui/jquery.ui.autocomplete.min.js',
+			'jquery-ui/jquery.ui.core.min.js',
+			'tasks.js',
+    	));
+		return $this->_oTemplate->getJsCode('tasks') . $this->_oTemplate->parseHtmlByName('browse_tasks.html', $aVars);
+    }
+}
+
+/** @} */
