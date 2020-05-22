@@ -730,6 +730,9 @@ div.bx-tl-item-attachments.bx-tl-ia-showcase .bx-tl-item-more {
     background-color: rgba(0, 0, 0, 0.7);
 
     font-size: 2.5rem;
+}
+div.bx-tl-item-attachments.bx-tl-ia-showcase .bx-tl-item-more,
+div.bx-tl-item-attachments.bx-tl-ia-showcase .bx-tl-item-more a {
     color: #ffffff;
 }
 
