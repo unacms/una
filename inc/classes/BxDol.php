@@ -282,4 +282,12 @@ interface iBxDolContentInfoService
     public function serviceGetSearchableFieldsExtended($aInputsAdd = array());
     public function serviceGetSearchResultExtended($aParams, $iStart = 0, $iPerPage = 0);
 }
+
+/**
+ * Calendar info services module interface, module class must implement get_calendar_entries service to be compliant with Calendar interface
+ */
+interface iBxDolCalendarService 
+{
+    public function serviceGetCalendarEntries ($iContentId);
+}
 /** @} */
