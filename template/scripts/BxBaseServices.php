@@ -187,6 +187,8 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         $sPlaceholder = _t('_sys_txt_create_post_placeholder', $oProfile->getDisplayName());
 
     	$oMenu = BxDolMenu::getObjectInstance('sys_create_post');
+        if(!$oMenu)
+            return '';
 
     	$aMenuItems = $oMenu->getMenuItems();
     	if(empty($aMenuItems) || !is_array($aMenuItems))
