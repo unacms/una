@@ -1,0 +1,68 @@
+@import url(../../../../base/text/template/css/main.css);
+
+.bx-tasks-tasklist-title {
+    font-weight: bold;
+}
+.bx-task-due-date {
+    color: red;
+}
+.bx-tasks-members .bx-base-pofile-unit-wo-info {
+    width: 2rem;
+    height: 2rem;
+	display: inline-block;   
+}
+.bx-tasks-members .bx-def-thumb-size{
+	width: 2rem;
+    height: 2rem;
+	 font-size: 1rem;
+}
+.bx-tasks-members div.bx-base-pofile-unit-wo-info {
+    margin-left: -1rem;
+}
+.bx-tasks-tasklist-actions{
+	float:right;
+}
+.bx-tasks-task-checkbox{
+    display: inline-block;
+	height: 24px;
+}
+.bx-tasks-task-checkbox input[type=checkbox] {
+        display:none;
+}
+.bx-tasks-task-checkbox  input[type=checkbox] + label{
+	background:url("/modules/boonex/tasks/template/images/check-circle1.svg") #FFFFFF;
+	height: 24px;
+	width: 24px;
+	display:inline-block;
+	padding: 0;
+	cursor: pointer;
+}
+
+.bx-tasks-task-checkbox input[type=checkbox]:checked + label{
+	background:url("/modules/boonex/tasks/template/images/check-circle.svg") #FFFFFF;
+	height: 24px;
+	width: 24px;
+	display:inline-block;
+	padding: 0;
+}
+.bx-tasks-task{
+	display: flex;
+	flex-grow: 1;
+	align-items: center;
+}
+.bx-tasks-members{
+	flex-grow: 2;
+	text-align: right;
+}
+.bx-tasks-task .bx-badge, .bx-tasks-task .bx-badges-list{
+	display: inline-block;
+}
+.bx-tasks-tasklist-filter-completed .bx-tasks-task-uncompleted{
+	display: none;
+}
+.bx-tasks-tasklist-filter-uncompleted .bx-tasks-task-completed{
+	display: none;
+}
+.ui-autocomplete{
+	z-index: 10000 !important;
+}

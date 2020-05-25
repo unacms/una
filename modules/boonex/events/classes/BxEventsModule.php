@@ -12,7 +12,7 @@
 /**
  * Events profiles module.
  */
-class BxEventsModule extends BxBaseModGroupsModule
+class BxEventsModule extends BxBaseModGroupsModule implements iBxDolCalendarService 
 {
     function __construct(&$aModule)
     {
@@ -62,6 +62,20 @@ class BxEventsModule extends BxBaseModGroupsModule
         header('Content-Type: application/json; charset=utf-8');
         echo json_encode($aEntries);
     }
+    
+    public function serviceGetCalendarEntries($iProfileId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        $oConn = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']);
+        $aData = $oConn->getConnectedContent($iProfileId);
+        $aData2 = array(0);
+        foreach($aData as $iProfileId2){
+            $oProfile = BxDolProfile::getInstance($iProfileId2);
+            array_push($aData2, $oProfile->getContentId());
+        }
+        $aSQLPart['where'] = " AND `bx_events_data`.`id` IN(" . implode(',', $aData2) . ")";
+        return $this->_oDb->getEntriesByDate(bx_get('start'), bx_get('end'), null, $aSQLPart);
+	}
 
     public function serviceGetSafeServices()
     {

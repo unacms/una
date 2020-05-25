@@ -61,6 +61,27 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         header('Content-Type: application/json; charset=utf-8');
         echo json_encode($aResult);
     }
+	
+	public function actionProfileCalendarData()
+    {
+		$iProfileId = (int)bx_get('profile_id');
+        $aEntries = array();
+		$BxDolModuleQuery = BxDolModuleQuery::getInstance();
+        $aModules = $BxDolModuleQuery->getModulesBy(array('type' => 'modules', 'active' => 1));
+        foreach($aModules as $aModule){
+			$sModuleName = $aModule['name'];
+            $oModule = BxDolModule::getInstance($sModuleName);
+            if($oModule instanceof iBxDolCalendarService){
+				if(BxDolRequest::serviceExists($sModuleName, 'get_calendar_entries')){
+					$aEntries2 = BxDolService::call($sModuleName, 'get_calendar_entries', array($iProfileId));
+					$aEntries = array_merge($aEntries, $aEntries2);
+				}
+            }
+        }
+		
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($aEntries);
+    }
 
     // ====== SERVICE METHODS
 
@@ -143,6 +164,38 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         return $aResult;
     }
 
+	
+	/**
+     * @page service Service Calls
+     * @section bx_base_profile Base Profile
+     * @subsection bx_base_profile-general General
+     * @subsubsection bx_base_profile-entity_calendar entity_calendar
+     * 
+     * @code bx_srv('bx_persons', 'entity_calendar', [...]); @endcode
+     * 
+     * Get calendar block
+     * @param $iContentId content ID
+     * 
+     * @see BxBaseModProfileModule::serviceEntityCalendar
+     */
+    /** 
+     * @ref bx_base_profile-entity_calendar "entity_calendar"
+     */
+	public function serviceEntityCalendar($iContentId = 0, $sTemplate = 'calendar.html')
+    {
+		$iContentId = $this->_getContent($iContentId, false);
+        $oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->_oConfig->getName());
+        if($oProfile){
+			$o = new BxTemplCalendar(array(
+				'eventSources' => array (
+					bx_append_url_params(BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'profile_calendar_data', array('profile_id' => $oProfile->id())),
+				),
+        	), $this->_oTemplate);
+        	return $o->display($sTemplate);			     
+		}
+		return '';	
+    }
+	
 	public function servicePrivateProfileMsg()
     {
         $mixedContent = $this->_getContent();
