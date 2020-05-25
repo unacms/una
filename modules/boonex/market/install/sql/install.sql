@@ -370,7 +370,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_market', 'bx_market', 'name', '', '', 0, 'text', '_bx_market_form_entry_input_sys_name', '_bx_market_form_entry_input_name', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_market_form_entry_input_name_err', 'Xss', '', 1, 0),
 ('bx_market', 'bx_market', 'cat', '', '#!bx_market_cats', 0, 'select', '_bx_market_form_entry_input_sys_cat', '_bx_market_form_entry_input_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_market_form_entry_input_cat_err', 'Xss', '', 1, 0),
 ('bx_market', 'bx_market', 'price_single', '', '', 0, 'text', '_bx_market_form_entry_input_sys_price_single', '_bx_market_form_entry_input_price_single', '_bx_market_form_entry_input_price_single_inf', 0, 0, 0, '', '', '', '', '', '', 'Float', '', 1, 0),
-('bx_market', 'bx_market', 'price_recurring', '', '#!bx_market_prices', 0, 'select', '_bx_market_form_entry_input_sys_price_recurring', '_bx_market_form_entry_input_price_recurring', '_bx_market_form_entry_input_price_recurring_inf', 0, 0, 0, '', '', '', '', '', '', 'Float', '', 1, 0),
+('bx_market', 'bx_market', 'price_recurring', '', '', 0, 'text', '_bx_market_form_entry_input_sys_price_recurring', '_bx_market_form_entry_input_price_recurring', '_bx_market_form_entry_input_price_recurring_inf', 0, 0, 0, '', '', '', '', '', '', 'Float', '', 1, 0),
 ('bx_market', 'bx_market', 'duration_recurring', 'month', '#!bx_market_durations', 0, 'select', '_bx_market_form_entry_input_sys_duration_recurring', '_bx_market_form_entry_input_duration_recurring', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_market', 'bx_market', 'trial_recurring', '', '', 0, 'text', '_bx_market_form_entry_input_sys_trial_recurring', '_bx_market_form_entry_input_trial_recurring', '_bx_market_form_entry_input_trial_recurring_inf', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_market', 'bx_market', 'added', '', '', 0, 'datetime', '_bx_market_form_entry_input_sys_added', '_bx_market_form_entry_input_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
@@ -470,7 +470,6 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 -- PRE-VALUES
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
 ('bx_market_cats', '_bx_market_pre_lists_cats', 'bx_market', '0'),
-('bx_market_prices', '_bx_market_pre_lists_prices', 'bx_market', '0'),
 ('bx_market_durations', '_bx_market_pre_lists_durations', 'bx_market', '0');
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
@@ -514,13 +513,6 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('bx_market_cats', '37', 37, '_bx_market_cat_tools', ''),
 ('bx_market_cats', '38', 38, '_bx_market_cat_translations', ''),
 ('bx_market_cats', '39', 39, '_bx_market_cat_video', ''),
-
-('bx_market_prices', '0', 0, '_bx_market_cat_price_0', ''),
-('bx_market_prices', '1', 1, '_bx_market_cat_price_1', ''),
-('bx_market_prices', '2', 2, '_bx_market_cat_price_2', ''),
-('bx_market_prices', '3', 3, '_bx_market_cat_price_3', ''),
-('bx_market_prices', '4', 4, '_bx_market_cat_price_4', ''),
-('bx_market_prices', '5', 5, '_bx_market_cat_price_5', ''),
 
 ('bx_market_durations', 'day', 1, '_bx_market_cat_duration_day', ''),
 ('bx_market_durations', 'week', 2, '_bx_market_cat_duration_week', ''),

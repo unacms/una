@@ -396,14 +396,6 @@
     <string name="_bx_market_cat_translations"><![CDATA[Переводы]]></string>
     <string name="_bx_market_cat_video"><![CDATA[Видео]]></string>
 
-    <string name="_bx_market_pre_lists_prices"><![CDATA[Цены]]></string>
-    <string name="_bx_market_cat_price_0"><![CDATA[Нет]]></string>
-    <string name="_bx_market_cat_price_1"><![CDATA[1]]></string>
-    <string name="_bx_market_cat_price_2"><![CDATA[2]]></string>
-    <string name="_bx_market_cat_price_3"><![CDATA[3]]></string>
-    <string name="_bx_market_cat_price_4"><![CDATA[4]]></string>
-    <string name="_bx_market_cat_price_5"><![CDATA[5]]></string>
-
 	<string name="_bx_market_pre_lists_durations"><![CDATA[Продолжительность]]></string>
 	<string name="_bx_market_cat_duration_day"><![CDATA[ежедневно]]></string>
 	<string name="_bx_market_cat_duration_week"><![CDATA[еженедельно]]></string>
