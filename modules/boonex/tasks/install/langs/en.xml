@@ -307,6 +307,8 @@
     <string name="_bx_tasks_txt_all_entries_by"><![CDATA[{0} tasks]]></string>
     <string name="_bx_tasks_txt_sample_single"><![CDATA[task]]></string>
     <string name="_bx_tasks_txt_sample_single_with_article"><![CDATA[a task]]></string>
+	<string name="_bx_tasks_txt_action_completed"><![CDATA[completed]]></string>
+	<string name="_bx_tasks_txt_action_reopened"><![CDATA[reopened]]></string>
     <string name="_bx_tasks_txt_sample_comment_single"><![CDATA[comment to task]]></string>
     <string name="_bx_tasks_txt_sample_vote_single"><![CDATA[vote to task]]></string>
     <string name="_bx_tasks_txt_sample_reaction_single"><![CDATA['{0}' reaction to task]]></string>

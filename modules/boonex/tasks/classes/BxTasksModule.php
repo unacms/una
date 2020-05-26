@@ -42,10 +42,18 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
         echo(json_encode($a));
     }
           
-    public function actionSetCompleted($iTaskId, $iValue)
+    public function actionSetCompleted($iContentId, $iValue)
     {
 		$CNF = &$this->_oConfig->CNF;
-		$this->_oDb->updateEntriesBy(array($CNF['FIELD_COMPLETED'] => $iValue), array($CNF['FIELD_ID'] => (int)$iTaskId));
+		$this->_oDb->updateEntriesBy(array($CNF['FIELD_COMPLETED'] => $iValue), array($CNF['FIELD_ID'] => (int)$iContentId));
+		$sActionName = 'completed';
+		if ($iValue == '0')
+			$sActionName = 'reopened';
+		
+		$aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        $aParams = $this->_alertParams($aContentInfo);
+		
+		bx_alert($this->getName(), $sActionName, $iContentId, $aContentInfo[$CNF['FIELD_AUTHOR']], $aParams);
 		echo 'ok';
 	}
 	
@@ -129,7 +137,9 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
         if($oForm->isSubmittedAndValid()) {
 			$aValsToAdd[$CNF['FIELD_ALLOW_VIEW_TO']] = $iContextId;
 			$aValsToAdd[$CNF['FIELD_TASKLIST']] = $iListId;
-			$iId = $oForm->insert($aValsToAdd);
+			$iContentId = $oForm->insert($aValsToAdd);
+			$this->onPublished($iContentId);
+			
 			return echoJson(array(
 				 'eval' => $this->_oConfig->getJsObject('tasks') . '.reloadData(oData)',
 			));
@@ -166,6 +176,30 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
         echo json_encode($aEntries);
     }
 	
+	/**
+     * Data for Timeline module
+     */
+    public function serviceGetTimelineData()
+    {
+    	$sModule = $this->_aModule['name'];
+        return array(
+            'handlers' => array(
+                array('group' => $sModule . '_object', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'added', 'module_name' => $sModule, 'module_method' => 'get_timeline_post', 'module_class' => 'Module', 'groupable' => 0, 'group_by' => ''),
+				array('group' => $sModule . '_completed', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'completed', 'module_name' => $sModule, 'module_method' => 'get_timeline_completed', 'module_class' => 'Module',  'groupable' => 0, 'group_by' => ''),
+				array('group' => $sModule . '_reopened', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'reopened', 'module_name' => $sModule, 'module_method' => 'get_timeline_reopened', 'module_class' => 'Module',  'groupable' => 0, 'group_by' => ''),
+                array('group' => $sModule . '_object', 'type' => 'update', 'alert_unit' => $sModule, 'alert_action' => 'edited'),
+                array('group' => $sModule . '_object', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'deleted'),
+            ),
+            'alerts' => array(
+                array('unit' => $sModule, 'action' => 'added'),
+				array('unit' => $sModule, 'action' => 'completed'),
+				array('unit' => $sModule, 'action' => 'reopened'),
+                array('unit' => $sModule, 'action' => 'edited'),
+                array('unit' => $sModule, 'action' => 'deleted'),
+            )
+        );
+    }
+	
     /**
      * Entry task for Timeline module
      */
@@ -176,11 +210,39 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
         $aResult = parent::serviceGetTimelinePost($aEvent, $aBrowseParams);
         if(empty($aResult) || !is_array($aResult) || empty($aResult['date']))
             return $aResult;
-
         $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);
         if($aContentInfo[$CNF['FIELD_PUBLISHED']] > $aResult['date'])
             $aResult['date'] = $aContentInfo[$CNF['FIELD_PUBLISHED']];
+        return $aResult;
+    }
+	
+	public function serviceGetTimelineCompleted($aEvent, $aBrowseParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
 
+        $aResult = parent::serviceGetTimelinePost($aEvent, $aBrowseParams);
+		$aResult['sample_action'] = $aResult['content']['sample_action'] = _t('_bx_tasks_txt_action_completed');
+        if(empty($aResult) || !is_array($aResult) || empty($aResult['date']))
+            return $aResult;
+		
+        $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);
+        if($aContentInfo[$CNF['FIELD_PUBLISHED']] > $aResult['date'])
+            $aResult['date'] = $aContentInfo[$CNF['FIELD_PUBLISHED']];
+        return $aResult;
+    }
+	
+	public function serviceGetTimelineReopened($aEvent, $aBrowseParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aResult = parent::serviceGetTimelinePost($aEvent, $aBrowseParams);
+		$aResult['sample_action'] = $aResult['content']['sample_action'] = _t('_bx_tasks_txt_action_reopened');
+        if(empty($aResult) || !is_array($aResult) || empty($aResult['date']))
+            return $aResult;
+		
+        $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);
+        if($aContentInfo[$CNF['FIELD_PUBLISHED']] > $aResult['date'])
+            $aResult['date'] = $aContentInfo[$CNF['FIELD_PUBLISHED']];
         return $aResult;
     }
 

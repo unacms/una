@@ -28,6 +28,9 @@ class BxOrgsAlertsResponse extends BxBaseModGroupsAlertsResponse
 
     protected function processAccountCheckSwitchContext(&$oAlert)
     {
+        if ($oAlert->aExtras['override_result'])
+            return;
+        
         $iProfile = (int)$oAlert->aExtras['switch_to_profile'];
         $oProfile = BxDolProfile::getInstance($iProfile);
         if(!$oProfile || $oProfile->getModule() != $this->_oModule->_oConfig->getName())
