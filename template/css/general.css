@@ -394,9 +394,6 @@ div.bx-account-unit-online {
 .sys-cpf-submenu-cnt ul li.bx-menu-tab-active {
     border-bottom: 2px solid #364f6b;
 }
-.sys-cpf-submenu-cnt ul li.bx-menu-tab-active > span {
-    font-weight: bold;
-}
 .sys-cpf-form {
     position: relative;
 }

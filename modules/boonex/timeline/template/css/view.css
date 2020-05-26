@@ -98,9 +98,6 @@
 .bx-tl-v-submenu-cnt ul li.bx-menu-inter-act {
     border-bottom-color: #364f6b;
 }
-.bx-tl-v-submenu-cnt ul li.bx-menu-inter-act > div {
-    font-weight: bold;
-}
 .bx-tl-v-submenu-item .bx-cnc-psi-icon,
 .bx-tl-v-submenu-item .bx-cnc-psi-icon img {
     width: 1.5rem;
