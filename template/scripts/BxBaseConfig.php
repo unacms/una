@@ -277,18 +277,30 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton
     
     protected function _setColorRgbaCustom($sKey, $sOpacity, $sDefault = '')
     {
-        return "rgba(" . $this->_getColorFromRgba($sKey, $sDefault) . ", " . $sOpacity . ")";
+        $sDefaultColor = $sDefault;
+        if(strpos($sDefaultColor, 'rgba') !== false)
+            $sDefaultColor = $this->_getColorFromRgba($sDefault);
+
+        return "rgba(" . $this->_getColorFromRgba($sKey, $sDefaultColor) . ", " . $sOpacity . ")";
     }
 
     protected function _setGradientLeft($sKey, $sDefault = '')
     {
-        $sValue = $this->_getColorFromRgba($sKey, $sDefault);
+        $sDefaultColor = $sDefault;
+        if(strpos($sDefaultColor, 'rgba') !== false)
+            $sDefaultColor = $this->_getColorFromRgba($sDefault);
+
+        $sValue = $this->_getColorFromRgba($sKey, $sDefaultColor);
         return "linear-gradient(to right, rgba(" . $sValue . ", 1) 0%, rgba(" . $sValue . ", 0) 100%)";
     }
     
     protected function _setGradientRight($sKey, $sDefault = '')
     {
-        $sValue = $this->_getColorFromRgba($sKey, $sDefault);
+        $sDefaultColor = $sDefault;
+        if(strpos($sDefaultColor, 'rgba') !== false)
+            $sDefaultColor = $this->_getColorFromRgba($sDefault);
+
+        $sValue = $this->_getColorFromRgba($sKey, $sDefaultColor);
         return "linear-gradient(to right, rgba(" . $sValue . ", 0) 0%, rgba(" . $sValue . ", 1) 100%)";
     }
     
