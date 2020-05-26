@@ -704,8 +704,8 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         $CNF = &$this->_oConfig->CNF;
 
         $bDynamic = isset($aBrowseParams['dynamic_mode']) && (bool)$aBrowseParams['dynamic_mode'] === true;
-
-        $aPolls = $this->_oDb->getPolls(array('type' => 'content_id', 'content_id' => (int)$aContentInfo[$CNF['FIELD_ID']]));
+		if(!empty($CNF['PARAM_POLL_ENABLED']) && $CNF['PARAM_POLL_ENABLED'] == true)
+        	$aPolls = $this->_oDb->getPolls(array('type' => 'content_id', 'content_id' => (int)$aContentInfo[$CNF['FIELD_ID']]));
         if(!empty($aPolls) && is_array($aPolls)) {
             $sInclude = $this->_oTemplate->addCss(array('polls.css'), $bDynamic);
 
@@ -721,7 +721,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
                 $aResult['_cache'] = false;
  */
         }
-
         return $aResult;
     }
 
