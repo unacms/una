@@ -1447,9 +1447,9 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     public function unregisterTranscoders()
     {}
 
-    public function serviceGetSearchResultExtended($aParams, $iStart = 0, $iPerPage = 0)
+    public function serviceGetSearchResultExtended($aParams, $iStart = 0, $iPerPage = 0, $bFilterMode = false)
     {
-        if(empty($aParams) || !is_array($aParams))
+        if((empty($aParams) || !is_array($aParams)) && !$bFilterMode)
             return array();
 
         return $this->_oQuery->getCommentsBy(array('type' => 'search_ids', 'search_params' => $aParams, 'start' => $iStart, 'per_page' => $iPerPage));
