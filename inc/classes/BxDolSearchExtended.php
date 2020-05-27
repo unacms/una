@@ -57,6 +57,7 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
     protected $_sObject;
     protected $_aObject;
 
+    protected $_bFilterMode;
 
     /**
      * Constructor
@@ -70,6 +71,10 @@ class BxDolSearchExtended extends BxDolFactory implements iBxDolFactoryObject
 
         $this->_sObject = $aObject['object'];
         $this->_aObject = $aObject;
+
+        $this->_bFilterMode = false;
+        if(isset($this->_aObject['filter']))
+            $this->_bFilterMode = (int)$this->_aObject['filter'] != 0;
     }
 
     /**

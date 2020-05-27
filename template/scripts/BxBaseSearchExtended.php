@@ -88,7 +88,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
             $oForm->initChecker(array(), $aParams['cond']);
         }
 
-        if(!$oForm->isSubmittedAndValid()) 
+        if(!$oForm->isSubmittedAndValid() && !$this->_bFilterMode)
             return '';
 
         $oContentInfo = BxDolContentInfo::getObjectInstance($this->_aObject['object_content_info']);
@@ -123,7 +123,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
             }
         }
 
-        if(empty($aParamsSearch) || !is_array($aParamsSearch))
+        if((empty($aParamsSearch) || !is_array($aParamsSearch)) && !$this->_bFilterMode)
             return '';
 
         if (!$iPerPage) {
@@ -134,7 +134,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
         $aResults = false;
         bx_alert('search', 'get_data', 0, false, array('object' => $this->_aObject, 'search_params' => &$aParamsSearch, 'search_results' => &$aResults));
     	if($aResults === false)
-    	    $aResults = $oContentInfo->getSearchResultExtended($aParamsSearch, $iStart, $iPerPage + 1);
+    	    $aResults = $oContentInfo->getSearchResultExtended($aParamsSearch, $iStart, $iPerPage + 1, $this->_bFilterMode);
 
     	if(empty($aResults) || !is_array($aResults))
     	    return '';
@@ -247,7 +247,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
         $aForm['inputs']['search'] = array(
             'type' => 'submit',
             'name' => $sFormSubmit,
-            'value' => _t('_Search')
+            'value' => _t($this->_bFilterMode ? '_Apply' : '_Search')
         );
 
         $sClass = 'BxTemplSearchExtendedForm';

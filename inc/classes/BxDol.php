@@ -280,6 +280,6 @@ interface iBxDolContentInfoService
     public function serviceGetAll ($aParams = array());
 
     public function serviceGetSearchableFieldsExtended($aInputsAdd = array());
-    public function serviceGetSearchResultExtended($aParams, $iStart = 0, $iPerPage = 0);
+    public function serviceGetSearchResultExtended($aParams, $iStart = 0, $iPerPage = 0, $bFilterMode = false);
 }
 /** @} */

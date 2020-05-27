@@ -324,9 +324,9 @@ class BxBaseModGeneralModule extends BxDolModule
         return $aResult;
     }
 
-    public function serviceGetSearchResultExtended($aParams, $iStart = 0, $iPerPage = 0)
+    public function serviceGetSearchResultExtended($aParams, $iStart = 0, $iPerPage = 0, $bFilterMode = false)
     {
-        if(empty($aParams) || !is_array($aParams))
+        if((empty($aParams) || !is_array($aParams)) && !$bFilterMode)
             return array();
 
         return $this->_oDb->getEntriesBy(array('type' => 'search_ids', 'search_params' => $aParams, 'start' => $iStart, 'per_page' => $iPerPage));
