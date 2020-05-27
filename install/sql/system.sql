@@ -1180,6 +1180,7 @@ CREATE TABLE `sys_objects_search_extended` (
   `object_content_info` varchar(64) NOT NULL  default '',
   `module` varchar(32) NOT NULL  default '',
   `title` varchar(255) NOT NULL default '',
+  `filter` tinyint(4) NOT NULL DEFAULT '0',
   `active` tinyint(4) NOT NULL DEFAULT '0',
   `class_name` varchar(32) NOT NULL  default '',
   `class_file` varchar(255) NOT NULL  default '',
