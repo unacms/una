@@ -112,6 +112,17 @@ class BxTasksDb extends BxBaseModTextDb
 
         return $aEntries;
     }
+
+    public function expireEntries()
+    {
+        $CNF = $this->_oConfig->CNF;
+
+        $aResult = $this->getColumn("SELECT `id` FROM `" . $CNF['TABLE_ENTRIES'] . "` WHERE `" . $CNF['FIELD_DUEDATE'] . "` < UNIX_TIMESTAMP()  AND `" . $CNF['FIELD_EXPIRED'] . "` = '0'");
+        if(empty($aResult) || !is_array($aResult))
+            return false;
+
+        return count($aResult) == (int)$this->query("UPDATE `" . $CNF['TABLE_ENTRIES'] . "` SET `" . $CNF['FIELD_EXPIRED'] . "` = '1' WHERE `id` IN (" . $this->implode_escape($aResult) . ")") ? $aResult : false;
+    }
 }
 
 /** @} */

@@ -48,7 +48,8 @@ BxTasksView.prototype.processTask = function (iContextId, iListId) {
     var $this = this;
 	$(window).dolPopupAjax({
         url: $this._sActionsUri + 'process_task_form/' + iContextId + '/' + iListId + '/' ,
-        closeOnOuterClick: false
+        closeOnOuterClick: false,
+        removeOnClose: true
     });   
 }
 

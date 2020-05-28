@@ -23,6 +23,8 @@
     <string name="_bx_tasks_form_entry_input_do_submit"><![CDATA[Submit]]></string>
     <string name="_bx_tasks_form_entry_input_sys_do_publish"><![CDATA[Publish]]></string>
     <string name="_bx_tasks_form_entry_input_do_publish"><![CDATA[Publish]]></string>
+    <string name="_bx_tasks_form_entry_input_sys_do_cancel"><![CDATA[Cancel]]></string>
+    <string name="_bx_tasks_form_entry_input_do_cancel"><![CDATA[Cancel]]></string>
     <string name="_bx_tasks_form_entry_input_sys_title"><![CDATA[Title]]></string>
     <string name="_bx_tasks_form_entry_input_title"><![CDATA[Title]]></string>
     <string name="_bx_tasks_form_entry_input_title_err"><![CDATA[Title is essential. Please, fill in this field]]></string>
@@ -307,8 +309,8 @@
     <string name="_bx_tasks_txt_all_entries_by"><![CDATA[{0} tasks]]></string>
     <string name="_bx_tasks_txt_sample_single"><![CDATA[task]]></string>
     <string name="_bx_tasks_txt_sample_single_with_article"><![CDATA[a task]]></string>
-	<string name="_bx_tasks_txt_action_completed"><![CDATA[completed]]></string>
-	<string name="_bx_tasks_txt_action_reopened"><![CDATA[reopened]]></string>
+    <string name="_bx_tasks_txt_action_completed"><![CDATA[completed]]></string>
+    <string name="_bx_tasks_txt_action_reopened"><![CDATA[reopened]]></string>
     <string name="_bx_tasks_txt_sample_comment_single"><![CDATA[comment to task]]></string>
     <string name="_bx_tasks_txt_sample_vote_single"><![CDATA[vote to task]]></string>
     <string name="_bx_tasks_txt_sample_reaction_single"><![CDATA['{0}' reaction to task]]></string>
@@ -318,10 +320,29 @@
     <string name="_bx_tasks_txt_processing_failed"><![CDATA[Task isn't published because video conversion failed, edit video to fix the issue.]]></string>
     <string name="_bx_tasks_txt_scheduled_awaiting"><![CDATA[Task publishing date is {date_publish_uf}]]></string>
 	
-	<string name="_bx_tasks_txt_new_task_list"><![CDATA[New TaskList]]></string>
-	<string name="_bx_tasks_txt_new_task"><![CDATA[New Task]]></string>
-	<string name="_bx_tasks_txt_filter_all"><![CDATA[All Tasks]]></string>
-	<string name="_bx_tasks_txt_filter_completed"><![CDATA[Completed Tasks]]></string>
-	<string name="_bx_tasks_txt_filter_uncompleted"><![CDATA[Uncompleted Tasks]]></string>
+    <string name="_bx_tasks_txt_new_task_list"><![CDATA[New TaskList]]></string>
+    <string name="_bx_tasks_txt_new_task"><![CDATA[New Task]]></string>
+    <string name="_bx_tasks_txt_filter_all"><![CDATA[All Tasks]]></string>
+    <string name="_bx_tasks_txt_filter_completed"><![CDATA[Completed Tasks]]></string>
+    <string name="_bx_tasks_txt_filter_uncompleted"><![CDATA[Uncompleted Tasks]]></string>
     <string name="_bx_tasks_txt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
+
+    <!-- Notifications -->
+    <string name="_bx_tasks_alert_action_completed_personal"><![CDATA[Complete task]]></string>
+    <string name="_bx_tasks_alert_action_completed_follow_member"><![CDATA[Complete task]]></string>
+    <string name="_bx_tasks_alert_action_completed_follow_context"><![CDATA[Complete task]]></string>
+    <string name="_bx_tasks_alert_action_reopened_personal"><![CDATA[Reopen task]]></string>
+    <string name="_bx_tasks_alert_action_reopened_follow_member"><![CDATA[Reopen task]]></string>
+    <string name="_bx_tasks_alert_action_reopened_follow_context"><![CDATA[Reopen task]]></string>
+    <string name="_bx_tasks_alert_action_expired_personal"><![CDATA[Expire task]]></string>
+    <string name="_bx_tasks_alert_action_assigned_personal"><![CDATA[Assign task]]></string>
+
+    <string name="_bx_tasks_txt_notification_completed"><![CDATA[<b class="bx-ntfs-content-entry">{entry_caption}</b> {entry_sample} was completed]]></string>
+    <string name="_bx_tasks_txt_notification_completed_in_context"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b>'s {entry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b> was completed]]></string>
+    <string name="_bx_tasks_txt_notification_reopened"><![CDATA[<b class="bx-ntfs-content-entry">{entry_caption}</b> {entry_sample} was reopened]]></string>
+    <string name="_bx_tasks_txt_notification_reopened_in_context"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b>'s {entry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b> was reopened]]></string>
+    <string name="_bx_tasks_txt_notification_expired"><![CDATA[<b class="bx-ntfs-content-entry">{entry_caption}</b> {entry_sample} expired]]></string>
+    <string name="_bx_tasks_txt_notification_expired_in_context"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b>'s {entry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b> expired]]></string>
+    <string name="_bx_tasks_txt_notification_assigned"><![CDATA[<b class="bx-ntfs-content-entry">{entry_caption}</b> {entry_sample} was assigned to <b class="bx-ntfs-content-profile">{entry_author_name}</b>]]></string>
+    <string name="_bx_tasks_txt_notification_assigned_in_context"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b>'s {entry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b> was assigned to <b class="bx-ntfs-content-profile">{entry_author_name}</b>]]></string>
 </resources>

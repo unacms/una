@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS `bx_tasks_tasks` (
   `due_date` int(11) NOT NULL,
   `tasks_list` int(11) NOT NULL,	
   `completed` tinyint(4) NOT NULL DEFAULT '0', 
+  `expired` tinyint(4) NOT NULL DEFAULT '0', 
   `allow_view_to` varchar(16) NOT NULL DEFAULT '3',
   `disable_comments` tinyint(4) NOT NULL DEFAULT '0',
   `status` enum('active','awaiting','failed','hidden') NOT NULL DEFAULT 'active',
@@ -360,6 +361,8 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_tasks', 'bx_tasks', 'delete_confirm', 1, '', 0, 'checkbox', '_bx_tasks_form_entry_input_sys_delete_confirm', '_bx_tasks_form_entry_input_delete_confirm', '_bx_tasks_form_entry_input_delete_confirm_info', 1, 0, 0, '', '', '', 'Avail', '', '_bx_tasks_form_entry_input_delete_confirm_error', '', '', 1, 0),
 ('bx_tasks', 'bx_tasks', 'do_publish', '_bx_tasks_form_entry_input_do_publish', '', 0, 'submit', '_bx_tasks_form_entry_input_sys_do_publish', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_tasks', 'bx_tasks', 'do_submit', '_bx_tasks_form_entry_input_do_submit', '', 0, 'submit', '_bx_tasks_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_tasks', 'bx_tasks', 'do_cancel', '_bx_tasks_form_entry_input_do_cancel', '', 0, 'button', '_bx_tasks_form_entry_input_sys_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 1, 0),
+('bx_tasks', 'bx_tasks', 'controls', '', 'do_publish,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_tasks', 'bx_tasks', 'covers', 'a:1:{i:0;s:14:"bx_tasks_html5";}', 'a:2:{s:15:"bx_tasks_simple";s:26:"_sys_uploader_simple_title";s:14:"bx_tasks_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_tasks_form_entry_input_sys_covers', '_bx_tasks_form_entry_input_covers', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_tasks', 'bx_tasks', 'pictures', 'a:1:{i:0;s:21:"bx_tasks_photos_html5";}', 'a:2:{s:22:"bx_tasks_photos_simple";s:26:"_sys_uploader_simple_title";s:21:"bx_tasks_photos_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_tasks_form_entry_input_sys_pictures', '_bx_tasks_form_entry_input_pictures', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_tasks', 'bx_tasks', 'videos', 'a:1:{i:0;s:21:"bx_tasks_videos_html5";}', 'a:2:{s:22:"bx_tasks_videos_simple";s:26:"_sys_uploader_simple_title";s:21:"bx_tasks_videos_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_tasks_form_entry_input_sys_videos', '_bx_tasks_form_entry_input_videos', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
@@ -378,15 +381,15 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_tasks', 'bx_tasks', 'anonymous', '', '', 0, 'switcher', '_sys_form_input_sys_anonymous', '_sys_form_input_anonymous', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_tasks', 'bx_tasks', 'disable_comments', '1', '', 0, 'switcher', '_bx_tasks_form_entry_input_sys_disable_comments', '_bx_tasks_form_entry_input_disable_comments', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0);
 
-
-
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_tasks_entry_add', 'delete_confirm', 2147483647, 0, 1),
 ('bx_tasks_entry_add', 'title', 2147483647, 1, 2),
 ('bx_tasks_entry_add', 'text', 2147483647, 1, 3),
 ('bx_tasks_entry_add', 'initial_members', 192, 1, 4),
 ('bx_tasks_entry_add', 'due_date', 192, 1, 5),
-('bx_tasks_entry_add', 'do_publish', 2147483647, 1, 6),
+('bx_tasks_entry_add', 'controls', 2147483647, 1, 6),
+('bx_tasks_entry_add', 'do_publish', 2147483647, 1, 7),
+('bx_tasks_entry_add', 'do_cancel', 2147483647, 1, 8),
 
 ('bx_tasks_entry_delete', 'delete_confirm', 2147483647, 1, 1),
 ('bx_tasks_entry_delete', 'do_submit', 2147483647, 1, 2),

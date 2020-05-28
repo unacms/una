@@ -24,7 +24,7 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
         ));
     }
 	
-	/**
+    /**
     * Action methods
     */
 	
@@ -44,18 +44,39 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
           
     public function actionSetCompleted($iContentId, $iValue)
     {
-		$CNF = &$this->_oConfig->CNF;
-		$this->_oDb->updateEntriesBy(array($CNF['FIELD_COMPLETED'] => $iValue), array($CNF['FIELD_ID'] => (int)$iContentId));
-		$sActionName = 'completed';
-		if ($iValue == '0')
-			$sActionName = 'reopened';
-		
-		$aContentInfo = $this->_oDb->getContentInfoById($iContentId);
-        $aParams = $this->_alertParams($aContentInfo);
-		
-		bx_alert($this->getName(), $sActionName, $iContentId, $aContentInfo[$CNF['FIELD_AUTHOR']], $aParams);
-		echo 'ok';
-	}
+        $CNF = &$this->_oConfig->CNF;
+
+        $this->_oDb->updateEntriesBy(array($CNF['FIELD_COMPLETED'] => $iValue), array($CNF['FIELD_ID'] => (int)$iContentId));
+
+        $sActionName = 'completed';
+        if($iValue == '0')
+            $sActionName = 'reopened';
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+
+        $iContentAuthor = (int)$aContentInfo[$CNF['FIELD_AUTHOR']];
+        bx_alert($this->getName(), $sActionName, $iContentId, false, array(
+            'object_author_id' => $iContentAuthor,
+            'privacy_view' => $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]
+        ));
+
+        $oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION']);
+        if($oConnection) {
+            $aProfileIds = $oConnection->getConnectedContent($iContentId);
+            if(!empty($aProfileIds) && is_array($aProfileIds))
+                foreach($aProfileIds as $iProfileId) {
+                    if($iProfileId == $iContentAuthor)
+                        continue;
+
+                    bx_alert($this->getName(), $sActionName, $iContentId, false, array(
+                        'object_author_id' => $iProfileId,
+                        'privacy_view' => $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]
+                    ));
+                }
+        }
+
+        echo 'ok';
+    }
 	
 	public function actionSetFilterValue($iListId, $sValue)
 	{
@@ -246,10 +267,89 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
         return $aResult;
     }
 
-	public function serviceIsCompleted($iContentId)
-	{
-		$CNF = &$this->_oConfig->CNF;
-		$aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+    public function serviceGetNotificationsData()
+    {
+        $sModule = $this->_aModule['name'];
+
+        $sEventPrivacy = $sModule . '_allow_view_event_to';
+        if(BxDolPrivacy::getObjectInstance($sEventPrivacy) === false)
+                $sEventPrivacy = '';
+
+        $aResult = parent::serviceGetNotificationsData();
+        $aResult['handlers'] = array_merge($aResult['handlers'], array(
+            array('group' => $sModule . '_completed', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'completed', 'module_name' => $sModule, 'module_method' => 'get_notifications_completed', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
+            array('group' => $sModule . '_reopened', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'reopened', 'module_name' => $sModule, 'module_method' => 'get_notifications_reopened', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
+            array('group' => $sModule . '_expired', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'expired', 'module_name' => $sModule, 'module_method' => 'get_notifications_expired', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
+
+            array('group' => $sModule . '_assign', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'assigned', 'module_name' => $sModule, 'module_method' => 'get_notifications_assigned', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy),
+            array('group' => $sModule . '_assign', 'type' => 'delete', 'alert_unit' => $sModule, 'alert_action' => 'unassigned'),
+        ));
+
+        $aResult['settings'] = array_merge($aResult['settings'], array(
+            array('group' => 'content', 'unit' => $sModule, 'action' => 'completed', 'types' => array('personal', 'follow_member', 'follow_context')),
+            array('group' => 'content', 'unit' => $sModule, 'action' => 'reopened', 'types' => array('personal', 'follow_member', 'follow_context')),
+            array('group' => 'content', 'unit' => $sModule, 'action' => 'expired', 'types' => array('personal')),
+            array('group' => 'content', 'unit' => $sModule, 'action' => 'assigned', 'types' => array('personal')),
+        ));
+
+        $aResult['alerts'] = array_merge($aResult['alerts'], array(
+            array('unit' => $sModule, 'action' => 'completed'),
+            array('unit' => $sModule, 'action' => 'reopened'),
+            array('unit' => $sModule, 'action' => 'expired'),
+
+            array('unit' => $sModule, 'action' => 'assigned'),
+            array('unit' => $sModule, 'action' => 'unassigned'),
+        ));
+
+        return $aResult; 
+    }
+
+    public function serviceGetNotificationsCompleted($aEvent)
+    {
+        return $this->_serviceGetNotificationsByAction($aEvent, 'completed');
+    }
+
+    public function serviceGetNotificationsReopened($aEvent)
+    {
+        return $this->_serviceGetNotificationsByAction($aEvent, 'reopened');
+    }
+
+    public function serviceGetNotificationsExpired($aEvent)
+    {
+        return $this->_serviceGetNotificationsByAction($aEvent, 'expired');
+    }
+
+    public function serviceGetNotificationsAssigned($aEvent)
+    {
+        return $this->_serviceGetNotificationsByAction($aEvent, 'assigned');
+    }
+
+    protected function _serviceGetNotificationsByAction($aEvent, $sAction)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aResult = parent::serviceGetNotificationsPost($aEvent);
+        if(empty($aResult) || !is_array($aResult))
+            return $aResult;
+
+        $aResult['entry_author'] = $aEvent['object_owner_id'];
+        $aResult['entry_author_name'] = '';
+        if(($oAuthor = BxDolProfile::getInstance($aResult['entry_author'])) !== false)
+            $aResult['entry_author_name'] = $oAuthor->getDisplayName();
+
+        $sLangKey = '_bx_tasks_txt_notification_' . $sAction;
+        if((int)$aEvent['object_privacy_view'] < 0)
+            $sLangKey .= '_in_context';
+
+        $aResult['lang_key'] = _t($sLangKey);
+        return $aResult;
+    }
+
+    public function serviceIsCompleted($iContentId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
         return $aContentInfo[$CNF['FIELD_COMPLETED']] ? false: true;
     }
 	
@@ -440,6 +540,29 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
 			'tasks.js',
     	));
 		return $this->_oTemplate->getJsCode('tasks') . $this->_oTemplate->parseHtmlByName('browse_tasks.html', $aVars);
+    }
+
+    /**
+    * Common methods
+    */
+    public function onExpired($iContentId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(!$aContentInfo)
+            return;
+
+        $oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION']);
+        if($oConnection) {
+            $aProfileIds = $oConnection->getConnectedContent($iContentId);
+            if(!empty($aProfileIds) && is_array($aProfileIds))
+                foreach($aProfileIds as $iProfileId)
+                    bx_alert($this->getName(), 'expired', $iContentId, false, array(
+                        'object_author_id' => $iProfileId,
+                        'privacy_view' => $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]
+                    ));
+        }
     }
 }
 

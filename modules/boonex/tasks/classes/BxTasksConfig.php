@@ -28,7 +28,8 @@ class BxTasksConfig extends BxBaseModTextConfig
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'tasks',
-		    'TABLE_LISTS' => $aModule['db_prefix'] . 'lists',
+            'TABLE_LISTS' => $aModule['db_prefix'] . 'lists',
+            'TABLE_POLLS' => '',
             'TABLE_ENTRIES_FULLTEXT' => 'title_text',
 
             // database fields
@@ -54,9 +55,10 @@ class BxTasksConfig extends BxBaseModTextConfig
             'FIELD_STATUS' => 'status',
             'FIELD_STATUS_ADMIN' => 'status_admin',
             'FIELD_LABELS' => 'labels',
-			'FIELD_TASKLIST' => 'tasks_list',
-			'FIELD_DUEDATE' => 'due_date',
-			'FIELD_COMPLETED' => 'completed',
+            'FIELD_TASKLIST' => 'tasks_list',
+            'FIELD_DUEDATE' => 'due_date',
+            'FIELD_EXPIRED' => 'expired',
+            'FIELD_COMPLETED' => 'completed',
             'FIELD_ANONYMOUS' => 'anonymous',
             'FIELD_DISABLE_COMMENTS' => 'disable_comments',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
@@ -65,8 +67,8 @@ class BxTasksConfig extends BxBaseModTextConfig
              // some params
             'PARAM_MULTICAT_ENABLED' => true,
             'PARAM_MULTICAT_AUTO_ACTIVATION_FOR_CATEGORIES' => 'bx_tasks_auto_activation_for_categories',
-			'PARAM_POLL_ENABLED' => false,
-            
+            'PARAM_POLL_ENABLED' => false,
+
             // page URIs
             'URI_VIEW_ENTRY' => 'view-task',
             'URI_AUTHOR_ENTRIES' => 'tasks-author',

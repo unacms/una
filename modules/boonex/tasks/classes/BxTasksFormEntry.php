@@ -203,24 +203,36 @@ class BxTasksFormEntry extends BxBaseModTextFormEntry
     	);
     }
 	
-	protected function _setAssignments($iContentId, $aMembers)
+    protected function _setAssignments($iContentId, $aMembers)
     {
-		$CNF = &$this->_oModule->_oConfig->CNF;
-		$oConn = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION']);
-		
-		$aMembers2 = $oConn->getConnectedContent($iContentId);
-		
-		$aToAdd = array_diff($aMembers, $aMembers2);
-		$aToRemove = array_diff($aMembers2, $aMembers);
-		
-		foreach($aToAdd as $iProfileId){
-			$oConn->actionAdd($iProfileId, $iContentId);
-		}
-		
-		foreach($aToRemove as $iProfileId){
-			$oConn->actionRemove($iProfileId, $iContentId);
-		}
-	}
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        $oConn = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION']);
+
+        $aMembers2 = $oConn->getConnectedContent($iContentId);
+
+        $aToAdd = array_diff($aMembers, $aMembers2);
+        $aToRemove = array_diff($aMembers2, $aMembers);
+
+        $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
+
+        foreach($aToAdd as $iProfileId){
+            $oConn->actionAdd($iProfileId, $iContentId);
+
+            bx_alert($this->MODULE, 'assigned', $iContentId, false, array(
+                'object_author_id' => $iProfileId,
+                'privacy_view' => $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]
+            ));
+        }
+
+        foreach($aToRemove as $iProfileId){
+            $oConn->actionRemove($iProfileId, $iContentId);
+
+            bx_alert($this->MODULE, 'unassigned', $iContentId, false, array(
+                'object_author_id' => $iProfileId,
+                'privacy_view' => $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]
+            ));
+        }
+    }
 	
 	protected function genCustomInputInitialMembers ($aInput)
     {
