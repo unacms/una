@@ -65,17 +65,17 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
     public function serviceProfilePicture ($iContentId)
     {
-        return $this->_serviceProfileFunc('getPicture', $iContentId);
+        return BxDolTemplate::getInstance()->getImageUrl('account-picture.png');
     }
 
     public function serviceProfileAvatar ($iContentId)
     {
-        return $this->_serviceProfileFunc('getAvatar', $iContentId);
+        return BxDolTemplate::getInstance()->getImageUrl('account-avatar.png');
     }
 	
 	public function serviceProfileCover ($iContentId)
     {
-        return $this->_serviceTemplateFunc('urlCover', $iContentId);
+        return '';
     }
 
     public function serviceProfileEditUrl ($iContentId)
