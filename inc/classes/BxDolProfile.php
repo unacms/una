@@ -114,18 +114,18 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
      */
     public static function getInstance($mixedProfileId = false, $bClearCache = false)
     {
-        if (!$mixedProfileId) {
-            $oQuery = BxDolProfileQuery::getInstance();
-            $mixedProfileId = $oQuery->getCurrentProfileByAccount(getLoggedId(), $bClearCache);
-        }
+        $oQuery = BxDolProfileQuery::getInstance();
 
-        $iProfileId = self::getID($mixedProfileId);
-        if (!$iProfileId)
+        if (!$mixedProfileId)
+            $mixedProfileId = $oQuery->getCurrentProfileByAccount(getLoggedId(), $bClearCache);
+
+        $aProfileInfo = $oQuery->getInfoById($mixedProfileId);
+        if (empty($aProfileInfo['id']) || !BxDolModuleDb::getInstance()->isEnabledByName($aProfileInfo['type']))
             return false;
 
-        $sClass = __CLASS__ . '_' . $iProfileId;
+        $sClass = __CLASS__ . '_' . $aProfileInfo['id'];
         if (!isset($GLOBALS['bxDolClasses'][$sClass]))
-            $GLOBALS['bxDolClasses'][$sClass] = new BxDolProfile($iProfileId);
+            $GLOBALS['bxDolClasses'][$sClass] = new BxDolProfile($aProfileInfo['id']);
 
         return $GLOBALS['bxDolClasses'][$sClass];
     }
