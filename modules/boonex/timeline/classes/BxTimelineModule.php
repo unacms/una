@@ -2346,14 +2346,20 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $aParams = $this->_prepareParams($aBrowseParams);
         $aParams = array_merge($aParams, array(
-            'per_page' => 1,
             'filter' => BX_TIMELINE_FILTER_OTHER_VIEWER
         ));
         $aEvents = $this->_oDb->getEvents($aParams);
-        if(empty($aEvents) || !is_array($aEvents) || count($aEvents) != 1)
+        if(empty($aEvents) || !is_array($aEvents))
             return false;
-        
-        $iValueNew = $aEvents[0]['id'];
+
+        foreach($aEvents as $aEvent) {
+            $sContent = $this->_oTemplate->getPost($aEvent, $aParams);
+            if(!empty($sContent)) {
+                $iValueNew = $aEvent['id'];
+                break;
+            }
+        }
+
         if($iValueNew == $iValue)
             return false;
 
