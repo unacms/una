@@ -2139,6 +2139,7 @@
 	<string name="_sys_form_comment_input_caption_cmt_text"><![CDATA[Текст]]></string>
 	<string name="_sys_form_comment_input_caption_system_action"><![CDATA[Действие]]></string>
         <string name="_sys_form_comment_input_caption_system_cmt_author_id"><![CDATA[Автор]]></string>
+        <string name="_sys_form_comment_input_caption_system_cmt_cancel"><![CDATA[Отменить]]></string>
 	<string name="_sys_form_comment_input_caption_system_cmt_id"><![CDATA[Комментировать ID]]></string>
 	<string name="_sys_form_comment_input_caption_system_cmt_image"><![CDATA[Изображение]]></string>
 	<string name="_sys_form_comment_input_caption_system_cmt_parent_id"><![CDATA[Родительский ID]]></string>
@@ -2146,6 +2147,7 @@
 	<string name="_sys_form_comment_input_caption_system_cmt_text"><![CDATA[Текст]]></string>
 	<string name="_sys_form_comment_input_caption_system_id"><![CDATA[ID объекта]]></string>
 	<string name="_sys_form_comment_input_caption_system_sys"><![CDATA[Тип объекта]]></string>
+        <string name="_sys_form_comment_input_cancel"><![CDATA[Отменить]]></string>
 	<string name="_sys_form_comment_input_submit"><![CDATA[Отправить]]></string>
 	<string name="_sys_form_confirm_email"><![CDATA[Подтверждение email-а]]></string>
 	<string name="_sys_form_confirm_email_input_caption_system_code"><![CDATA[Код верификации]]></string>

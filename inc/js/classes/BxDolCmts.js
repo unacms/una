@@ -186,10 +186,11 @@ BxDolCmts.prototype.cmtAfterEditSubmit = function (oCmtForm, oData, onComplete)
         fContinue();
 };
 
-BxDolCmts.prototype.cmtEdit = function(oLink, iCmtId) {
+BxDolCmts.prototype.cmtEdit = function(oLink, iCmtId, bHideMenu) {
     var $this = this;
 
-    $(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide();
+    if(bHideMenu == undefined || bHideMenu)
+        $(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide();
 
     var sContentId = this._sRootId + ' #cmt' + iCmtId + ' .cmt-cont-cnt:first';
     if ($(sContentId + ' > form').length) {

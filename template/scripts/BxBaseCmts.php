@@ -1092,6 +1092,17 @@ class BxBaseCmts extends BxDolCmts
             $oForm->aInputs['cmt_text']['checker']['error'] = _t('_Please enter n1-n2 characters', $iCmtTextMin, $iCmtTextMax);
         }
 
+        if($sAction == BX_CMT_ACTION_EDIT && isset($oForm->aInputs['cmt_controls']))
+            foreach($oForm->aInputs['cmt_controls'] as $mixedKey => $mixedValue) {
+                if(!is_numeric($mixedKey) || empty($mixedValue['name']) || $mixedValue['name'] != 'cmt_cancel')
+                    continue;
+
+                if(!isset($oForm->aInputs['cmt_controls'][$mixedKey]['attrs']))
+                    $oForm->aInputs['cmt_controls'][$mixedKey]['attrs'] = array();
+
+                $oForm->aInputs['cmt_controls'][$mixedKey]['attrs']['onclick'] = $this->_sJsObjName . '.cmtEdit(this, ' . $iId . ', false)';
+            }
+
         return $oForm;
     }
 
