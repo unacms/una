@@ -39,10 +39,10 @@ class BxDolService extends BxDol
      * @param $sClass class to search for service method, by default it is main module class
      * @return service call result
      */
-    public static function call($mixed, $sMethod, $aParams = array(), $sClass = 'Module', $bIgnoreCache = false)
+    public static function call($mixed, $sMethod, $aParams = array(), $sClass = 'Module', $bIgnoreCache = false, $bIgnoreInactive = false)
     {
         $aModule = self::getModule($mixed);
-        if (empty($aModule) || (int)$aModule['enabled'] == 0)
+        if (empty($aModule) || ((int)$aModule['enabled'] == 0 && !$bIgnoreInactive))
             return '';
 
         $sKey = md5($mixed . $sMethod . print_r($aParams, true) . $sClass . bx_get_logged_profile_id());
