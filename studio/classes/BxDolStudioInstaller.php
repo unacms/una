@@ -668,19 +668,19 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         if(!in_array($sOperation, array('install', 'uninstall', 'enable', 'disable'))) 
         	return BX_DOL_STUDIO_INSTALLER_FAILED;
 
-		if(empty($this->_aConfig['relations']) || !is_array($this->_aConfig['relations']))
+        if(empty($this->_aConfig['relations']) || !is_array($this->_aConfig['relations']))
             return BX_DOL_STUDIO_INSTALLER_SUCCESS;
 
-		foreach($this->_aConfig['relations'] as $sModule) {
-			if(!$this->oDb->isModuleByName($sModule))
-				continue;
+        foreach($this->_aConfig['relations'] as $sModule) {
+            if(!$this->oDb->isModuleByName($sModule))
+                continue;
 
-			$aRelation = $this->oDb->getRelationsBy(array('type' => 'module', 'value' => $sModule));
-			if(empty($aRelation) || empty($aRelation['on_' . $sOperation]) || !BxDolRequest::serviceExists($aRelation['module'], $aRelation['on_' . $sOperation]))
-				continue;
+            $aRelation = $this->oDb->getRelationsBy(array('type' => 'module', 'value' => $sModule));
+            if(empty($aRelation) || empty($aRelation['on_' . $sOperation]) || !BxDolRequest::serviceExists($aRelation['module'], $aRelation['on_' . $sOperation]))
+                continue;
 
-			BxDolService::call($aRelation['module'], $aRelation['on_' . $sOperation], array($this->_aConfig['home_uri']));
-		}
+            bx_srv_ii($aRelation['module'], $aRelation['on_' . $sOperation], array($this->_aConfig['home_uri']));
+        }
 
         return BX_DOL_STUDIO_INSTALLER_SUCCESS;
     }
@@ -692,26 +692,26 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
     protected function actionUpdateRelationsForAll($sOperation)
     {
     	if(!in_array($sOperation, array('enable', 'disable'))) 
-        	return BX_DOL_STUDIO_INSTALLER_FAILED;
+            return BX_DOL_STUDIO_INSTALLER_FAILED;
 
         if($sOperation == 'enable')
-        	$this->oDb->insertRelation($this->_aConfig['name'], $this->_aConfig['relation_handlers']);
+            $this->oDb->insertRelation($this->_aConfig['name'], $this->_aConfig['relation_handlers']);
 
-		$aRelation = $this->oDb->getRelationsBy(array('type' => 'module', 'value' => $this->_aConfig['name']));
-		if(empty($aRelation) || empty($aRelation['on_' . $sOperation]))
-			return BX_DOL_STUDIO_INSTALLER_SUCCESS;
+        $aRelation = $this->oDb->getRelationsBy(array('type' => 'module', 'value' => $this->_aConfig['name']));
+        if(empty($aRelation) || empty($aRelation['on_' . $sOperation]))
+                return BX_DOL_STUDIO_INSTALLER_SUCCESS;
 
     	$aModules = $this->oDb->getModulesBy(array('type' => 'all', 'active' => 1));
-	    foreach($aModules as $aModule) {
-	    	$aConfig = self::getModuleConfig($aModule);
-			if(!empty($aConfig['relations']) && is_array($aConfig['relations']) && in_array($this->_aConfig['name'], $aConfig['relations']))
-				BxDolService::call($this->_aConfig['name'], $aRelation['on_' . $sOperation], array($aModule['uri']));
-		}
+        foreach($aModules as $aModule) {
+            $aConfig = self::getModuleConfig($aModule);
+                if(!empty($aConfig['relations']) && is_array($aConfig['relations']) && in_array($this->_aConfig['name'], $aConfig['relations']))
+                    bx_srv_ii($this->_aConfig['name'], $aRelation['on_' . $sOperation], array($aModule['uri']));
+            }
 
-		if($sOperation == 'disable')
-        	$this->oDb->deleteRelation($this->_aConfig['name']);
+        if($sOperation == 'disable')
+            $this->oDb->deleteRelation($this->_aConfig['name']);
 
-		return BX_DOL_STUDIO_INSTALLER_SUCCESS;
+        return BX_DOL_STUDIO_INSTALLER_SUCCESS;
     }
 
 	/**

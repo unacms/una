@@ -1519,9 +1519,25 @@ function bx_alert($sUnit, $sAction, $iObjectId, $iSender = false, $aExtras = arr
  * @param $sClass class to search for service method, by default it is main module class
  * @return service call result
  */
-function bx_srv($mixed, $sMethod, $aParams = array(), $sClass = 'Module', $bIgnoreCache = false)
+function bx_srv($mixed, $sMethod, $aParams = array(), $sClass = 'Module', $bIgnoreCache = false, $bIgnoreInactive = false)
 {
-    return BxDolService::call($mixed, $sMethod, $aParams, $sClass, $bIgnoreCache);
+    return BxDolService::call($mixed, $sMethod, $aParams, $sClass, $bIgnoreCache, $bIgnoreInactive);
+}
+
+/**
+ * Perform serice call in 'Ignore Inactive' mode.
+ */
+function bx_srv_ii($mixed, $sMethod, $aParams = array(), $sClass = 'Module', $bIgnoreCache = false)
+{
+    return BxDolService::call($mixed, $sMethod, $aParams, $sClass, $bIgnoreCache, true);
+}
+
+/**
+ * Perform serice call in 'Ignore Cache' mode.
+ */
+function bx_srv_ic($mixed, $sMethod, $aParams = array(), $sClass = 'Module', $bIgnoreInactive = false)
+{
+    return BxDolService::call($mixed, $sMethod, $aParams, $sClass, true, $bIgnoreInactive);
 }
 
 function bx_replace_markers($mixed, $aMarkers)
