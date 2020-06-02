@@ -3375,8 +3375,8 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_comment_edit', 'cmt_text', 2147483647, 1, 6),
 ('sys_comment_edit', 'cmt_image', 2147483647, 1, 7),
 ('sys_comment_edit', 'cmt_controls', 2147483647, 1, 8),
-('sys_comment_edit', 'cmt_cancel', 2147483647, 1, 9),
-('sys_comment_edit', 'cmt_submit', 2147483647, 1, 10),
+('sys_comment_edit', 'cmt_submit', 2147483647, 1, 9),
+('sys_comment_edit', 'cmt_cancel', 2147483647, 1, 10),
 
 ('sys_review_post', 'sys', 2147483647, 1, 1),
 ('sys_review_post', 'id', 2147483647, 1, 2),
