@@ -27,14 +27,9 @@ class BxTemplMenuToolbar extends BxBaseMenuToolbar
         if($this->_bSiteToolbar && in_array($a['name'], array('search')))
             return false;
 
-        $a = BxTemplMenu::_getMenuItem ($a);
+        $a = parent::_getMenuItem ($a);
         if($a === false)
             return $a;
-
-        $a['bx_if:unit'] = array(
-            'condition' => false,
-            'content' => array()
-        );
 
         $a['class_add_a'] = '';
         switch ($a['name']) {

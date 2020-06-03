@@ -25,9 +25,6 @@
     -webkit-flex-grow: 1; 
     flex-grow: 1;
 
-    margin-left: 0.625rem;
-    margin-right: 0.625rem;
-
     text-align: center;
     overflow: hidden;
 }

@@ -40,18 +40,18 @@ html.bx-media-phone {
 }
 
 .bx-media-phone .bx-page-wrapper.bx-def-padding-sec-leftright {
-	padding-left: 0px;
-	padding-right: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 
 /* general.css */
-
-.bx-media-phone #bx-logo-container {
-    margin:0 6rem 0 6rem;
+.bx-media-phone #bx-toolbar-content .bx-toolbar-item.bx-ti-logo {
+    margin-left: 0.625rem;
+    margin-right: 0.625rem;
 }
 .bx-media-phone #bx-footer-wrapper {
-	height: auto;
+    height: auto;
 }
 
 /* common.css */
