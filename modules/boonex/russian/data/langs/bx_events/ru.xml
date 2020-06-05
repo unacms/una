@@ -318,14 +318,14 @@
     <string name="_bx_events_txt_all_entries_in"><![CDATA[<a href="{0}">Все события в {1} ({2})</a>]]></string>
     <string name="_bx_events_txt_account_suspended"><![CDATA[Это событие заблокировано.]]></string>
     <string name="_bx_events_txt_N_fans"><![CDATA[{0} участников]]></string>
+    <string name="_bx_groups_txt_role"><![CDATA[Роль]]></string>
     <string name="_bx_events_txt_sample_single"><![CDATA[событие]]></string>
     <string name="_bx_events_txt_sample_single_with_article"><![CDATA[событие]]></string>
     <string name="_bx_events_txt_sample_comment_single"><![CDATA[комментарий к событию]]></string>
     <string name="_bx_events_txt_sample_vote_single"><![CDATA[голос за событие]]></string>
     <string name="_bx_events_txt_sample_score_up_single"><![CDATA[голос за событие]]></string>
     <string name="_bx_events_txt_sample_score_down_single"><![CDATA[голос против события]]></string>
-    <string name="_bx_events_txt_to_admins"><![CDATA[В админы]]></string>
-    <string name="_bx_events_txt_from_admins"><![CDATA[Из админов]]></string>
+    <string name="_bx_groups_txt_set_role"><![CDATA[Задать роль]]></string>
     <string name="_bx_events_txt_private_group"><![CDATA[Приватная группа]]></string>
     <string name="_bx_events_txt_from_time_to_time"><![CDATA[{0} - {1}]]></string>
 	<string name="_bx_events_txt_invite_popup_text"><![CDATA[Вы были приглашены на это собыите.  Нажмите кнопку ниже чтобы принять приглашение.]]></string>
@@ -365,6 +365,11 @@
     <string name="_bx_events_cat_Volunteering"><![CDATA[Добровольная работа]]></string>
     <string name="_bx_events_cat_Workshop"><![CDATA[Умелые ручки]]></string>
     <string name="_bx_events_cat_Other"><![CDATA[Другое]]></string>
+
+    <string name="_bx_groups_pre_lists_roles"><![CDATA[Роли в событиях]]></string>
+    <string name="_bx_groups_role_regular"><![CDATA[Обычный]]></string>
+    <string name="_bx_groups_role_administrator"><![CDATA[Администратор]]></string>
+    <string name="_bx_groups_role_moderator"><![CDATA[Модератор]]></string>
 
     <string name="_bx_events_pre_lists_repeat_year"><![CDATA[Повторять: год]]></string>
     <string name="_bx_events_cat_repeat_year_every_year"><![CDATA[Каждый год]]></string>
@@ -449,6 +454,12 @@
     <string name="_bx_events_email_invitation_subject"><![CDATA[Приглашение на событие "{EntryTitle}"]]></string>
     <string name="_bx_events_email_invitation_body"><![CDATA[{email_header}
 <p><a href="{InviterUrl}">{InviterDisplayName}</a> пригласил Вас на событие <a href="{EntryUrl}">{EntryTitle}</a>.</p>
+{email_footer}]]></string>
+
+    <string name="_bx_groups_email_set_role"><![CDATA[Изменение статуса в событии]]></string>
+    <string name="_bx_groups_email_set_role_subject"><![CDATA[Ваш статус в событии был изменен]]></string>
+    <string name="_bx_groups_email_set_role_body"><![CDATA[{email_header}
+<p>Ваш статус в событии <a href="{EntryUrl}">{EntryTitle}</a> был изменен на <b>{Role}</b>.</p>
 {email_footer}]]></string>
 
     <string name="_bx_events_email_reminder"><![CDATA[Напоминание о предстроящем событии]]></string>

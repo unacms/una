@@ -22,7 +22,7 @@ DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_event_add', 'b
 -- PRE-VALUES
 DELETE FROM `sys_form_pre_lists` WHERE `module` = 'bx_events';
 
-DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_events_cats');
+DELETE FROM `sys_form_pre_values` WHERE `Key` LIKE 'bx_events%';
 
 -- COMMENTS
 DELETE FROM `sys_objects_cmts` WHERE `Name` LIKE 'bx_events%';

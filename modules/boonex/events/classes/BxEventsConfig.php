@@ -128,10 +128,11 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'OBJECT_CONNECTIONS' => 'bx_events_fans',
             'OBJECT_UPLOADERS_COVER' => array('bx_events_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_events_picture_crop'),
+            'OBJECT_PRE_LIST_ROLES' => 'bx_events_roles',
             
             'BADGES_AVALIABLE' => true,
             'INVITES_KEYS_LIFETIME' => 86400,
-            'ENABLE_FOR_CONTEXT_IN_MODULES' => array('bx_groups'),
+            'ENABLE_FOR_CONTEXT_IN_MODULES' => array('bx_events'),
 
             'EMAIL_INVITATION' => 'bx_events_invitation',
             'EMAIL_JOIN_REQUEST' => 'bx_events_join_request',
@@ -139,6 +140,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'EMAIL_FAN_BECOME_ADMIN' => 'bx_events_fan_become_admin',
             'EMAIL_ADMIN_BECOME_FAN' => 'bx_events_admin_become_fan',
             'EMAIL_FAN_REMOVE' => 'bx_events_fan_remove',
+            'EMAIL_FAN_SET_ROLE' => 'bx_events_set_role',
             'EMAIL_JOIN_REJECT' => 'bx_events_join_reject',
             'EMAIL_REMINDER' => 'bx_events_reminder',
 
@@ -214,12 +216,14 @@ class BxEventsConfig extends BxBaseModGroupsConfig
         );
 
         $this->_aJsClasses = array(
+            'main' => 'BxEventsMain',
             'entry' => 'BxEventsEntry',
             'manage_tools' => 'BxEventsManageTools',
             'invite_popup' => 'BxEventsInvitePopup'
         );
 
         $this->_aJsObjects = array(
+            'main' => 'oBxEventsMain',
             'entry' => 'oBxEventsEntry',
             'manage_tools' => 'oBxEventsManageTools',
             'invite_popup' => 'oBxEventsInvitePopup'
