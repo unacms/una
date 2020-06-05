@@ -9,6 +9,16 @@
  * @{
  */
 
+define('BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR', 1);
+define('BX_BASE_MOD_GROUPS_ROLE_MODERATOR', 2);
+
+define('BX_BASE_MOD_GROUPS_ACTION_EDIT', 'edit');
+define('BX_BASE_MOD_GROUPS_ACTION_CHANGE_COVER', 'change_cover');
+define('BX_BASE_MOD_GROUPS_ACTION_INVITE', 'invite');
+define('BX_BASE_MOD_GROUPS_ACTION_MANAGE_FANS', 'manage_fans');
+define('BX_BASE_MOD_GROUPS_ACTION_MANAGE_ROLES', 'manage_roles');
+define('BX_BASE_MOD_GROUPS_ACTION_DELETE', 'delete');
+
 /**
  * Groups profiles module.
  */
@@ -54,7 +64,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             $this->_oDb->deleteInviteByKey($sKey, $iGroupProfileId);
         }   
     }
- 
+
     public function serviceGetSearchResultUnit ($iContentId, $sUnitTemplate = '')
     {
         if(empty($sUnitTemplate))
@@ -659,48 +669,121 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, $this->_oConfig->CNF['OBJECT_CONNECTIONS'], false, true, false);
     }
 
-    public function checkAllowedManageAdmins ($mixedDataEntry, $isPerformAction = false)
+    protected function _checkAllowedActionByFan($sAction, $aDataEntry, $iPerformerId = 0)
     {
-        if (is_array($mixedDataEntry)) {
-            $aDataEntry = $mixedDataEntry;
-        }
-        else {
-            $oGroupProfile = BxDolProfile::getInstance((int)$mixedDataEntry);
-            $aDataEntry = $oGroupProfile && $this->getName() == $oGroupProfile->getModule() ? $this->_oDb->getContentInfoById($oGroupProfile->getContentId()) : array();
-        }
+        $CNF = &$this->_oConfig->CNF;
 
-        return parent::checkAllowedEdit ($aDataEntry, $isPerformAction);
-    }
+        $bRoles = $this->_oConfig->isRoles();
+        if(empty($iPerformerId))
+            $iPerformerId = bx_get_logged_profile_id();
 
-    public function checkAllowedEdit ($aDataEntry, $isPerformAction = false)
-    {
-        $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->getName());
-        if ($this->_oDb->isAdmin($oGroupProfile->id(), bx_get_logged_profile_id(), $aDataEntry))
+        $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$CNF['FIELD_ID']], $this->getName());
+        $iGroupProfileId = $oGroupProfile->id();
+
+        if(!$bRoles && $this->_oDb->isAdmin($iGroupProfileId, $iPerformerId, $aDataEntry))
             return CHECK_ACTION_RESULT_ALLOWED;
-        return parent::checkAllowedEdit ($aDataEntry, $isPerformAction);
+
+        if($bRoles && $this->isAllowedActionByRole($sAction, $aDataEntry, $iGroupProfileId, $iPerformerId))
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        return _t('_sys_txt_access_denied');
     }
 
-    public function checkAllowedInvite ($aDataEntry, $isPerformAction = false)
+    public function isAllowedActionByRole($sAction, $aDataEntry, $iGroupProfileId, $iPerformerId)
     {
+        $bResult = false;
+
+        $iRole = $this->_oDb->getRole($iGroupProfileId, $iPerformerId);
+        if(!empty($iRole))
+            switch($sAction) {
+                case BX_BASE_MOD_GROUPS_ACTION_MANAGE_ROLES:
+                    if($iRole == BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR)
+                        $bResult = true;
+                    break;
+
+                default:
+                    $bResult = true;
+            }
+
+        // call alert to allow custom checks
+        bx_alert('system', 'check_allowed_action_by_role', 0, 0, array(
+            'module' => $this->getName(), 
+            'action' => $sAction,
+            'content_info' => $aDataEntry, 
+            'profile_id' => $iPerformerId, 
+            'profile_role' => $iRole,
+            'override_result' => &$bResult
+        ));
+
+        return $bResult;
+    }
+
+    public function checkAllowedManageFans($mixedDataEntry, $isPerformAction = false)
+    {
+        $aDataEntry = array();
+        if(!is_array($mixedDataEntry)) {
+            $oGroupProfile = BxDolProfile::getInstance((int)$mixedDataEntry);
+            if($oGroupProfile && $this->getName() == $oGroupProfile->getModule())
+                $aDataEntry = $this->_oDb->getContentInfoById($oGroupProfile->getContentId());
+        }
+        else
+            $aDataEntry = $mixedDataEntry;
+
+        if($this->_checkAllowedActionByFan(BX_BASE_MOD_GROUPS_ACTION_MANAGE_FANS, $aDataEntry) === CHECK_ACTION_RESULT_ALLOWED)
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        return parent::checkAllowedEdit($aDataEntry, $isPerformAction);
+    }
+
+    public function checkAllowedManageAdmins($mixedDataEntry, $isPerformAction = false)
+    {
+        $aDataEntry = array();
+        if(!is_array($mixedDataEntry)) {
+            $oGroupProfile = BxDolProfile::getInstance((int)$mixedDataEntry);
+            if($oGroupProfile && $this->getName() == $oGroupProfile->getModule())
+                $aDataEntry = $this->_oDb->getContentInfoById($oGroupProfile->getContentId());
+        }
+        else
+            $aDataEntry = $mixedDataEntry;
+
+        if($this->_checkAllowedActionByFan(BX_BASE_MOD_GROUPS_ACTION_MANAGE_ROLES, $aDataEntry) === CHECK_ACTION_RESULT_ALLOWED)
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        return parent::checkAllowedEdit($aDataEntry, $isPerformAction);
+    }
+
+    public function checkAllowedEdit($aDataEntry, $isPerformAction = false)
+    {
+        if($this->_checkAllowedActionByFan(BX_BASE_MOD_GROUPS_ACTION_EDIT, $aDataEntry) === CHECK_ACTION_RESULT_ALLOWED)
+            return CHECK_ACTION_RESULT_ALLOWED;
+
+        return parent::checkAllowedEdit($aDataEntry, $isPerformAction);
+    }
+
+    public function checkAllowedInvite($aDataEntry, $isPerformAction = false)
+    {
+        if($this->_checkAllowedActionByFan(BX_BASE_MOD_GROUPS_ACTION_INVITE, $aDataEntry) === CHECK_ACTION_RESULT_ALLOWED)
+            return CHECK_ACTION_RESULT_ALLOWED;
+
         return $this->checkAllowedEdit ($aDataEntry, $isPerformAction);
     }
     
-    public function checkAllowedChangeCover ($aDataEntry, $isPerformAction = false)
+    public function checkAllowedChangeCover($aDataEntry, $isPerformAction = false)
     {
-        $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->getName());
-        if ($this->_oDb->isAdmin($oGroupProfile->id(), bx_get_logged_profile_id(), $aDataEntry))
+        if($this->_checkAllowedActionByFan(BX_BASE_MOD_GROUPS_ACTION_CHANGE_COVER, $aDataEntry) === CHECK_ACTION_RESULT_ALLOWED)
             return CHECK_ACTION_RESULT_ALLOWED;
-        return parent::checkAllowedChangeCover ($aDataEntry, $isPerformAction);
+
+        return parent::checkAllowedChangeCover($aDataEntry, $isPerformAction);
     }
 
-    public function checkAllowedDelete (&$aDataEntry, $isPerformAction = false)
+    public function checkAllowedDelete(&$aDataEntry, $isPerformAction = false)
     {
-        $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->getName());
-        if ($oGroupProfile && $this->_oDb->isAdmin($oGroupProfile->id(), bx_get_logged_profile_id(), $aDataEntry))
+        if($this->_checkAllowedActionByFan(BX_BASE_MOD_GROUPS_ACTION_DELETE, $aDataEntry) === CHECK_ACTION_RESULT_ALLOWED)
             return CHECK_ACTION_RESULT_ALLOWED;
-        return parent::checkAllowedDelete ($aDataEntry, $isPerformAction);
+
+        return parent::checkAllowedDelete($aDataEntry, $isPerformAction);
     }
-    
+
     public function checkAllowedJoin(&$aDataEntry, $isPerformAction = false)
     {
         if (bx_get('key')){
@@ -819,6 +902,58 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             return  _t($CNF['T']['txt_invitation_popup_error_wrong_user']);
         
         return true;
+    }
+
+    public function setRole($iGroupProfileId, $iFanProfileId, $iRole)
+    {
+        if(($mixedResult = $this->checkAllowedManageAdmins($iGroupProfileId)) !== CHECK_ACTION_RESULT_ALLOWED)
+            return array('code' => 1, 'msg' => $mixedResult);
+
+        if(!$this->_oDb->setRole($iGroupProfileId, $iFanProfileId, $iRole))
+            return array('code' => 2, 'msg' => _t('_error occured'));
+
+        $this->onSetRole($iGroupProfileId, $iFanProfileId, $iRole);
+
+        return array('code' => 0);
+    }
+
+    public function onSetRole($iGroupProfileId, $iFanProfileId, $iRole)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iProfileId = bx_get_logged_profile_id();
+        $oGroupProfile = BxDolProfile::getInstance($iGroupProfileId);
+        $aGroupProfileInfo = $this->_oDb->getContentInfoById((int)$oGroupProfile->getContentId());
+        $aRoles = BxDolFormQuery::getDataItems($CNF['OBJECT_PRE_LIST_ROLES']);
+
+        // notify about admin status
+        if(!empty($CNF['EMAIL_FAN_SET_ROLE']) && $iFanProfileId != $iProfileId)
+            sendMailTemplate($CNF['EMAIL_FAN_SET_ROLE'], 0, $iFanProfileId, array(
+                'EntryUrl' => $oGroupProfile->getUrl(),
+                'EntryTitle' => $oGroupProfile->getDisplayName(),
+                'Role' => $aRoles[$iRole]
+            ), BX_EMAIL_NOTIFY);
+
+        // subscribe advanced group members automatically
+        $oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
+        if($iRole != 0)
+            $oConnection->addConnection($iFanProfileId, $iGroupProfileId);
+        else 
+            $oConnection->removeConnection($iFanProfileId, $iGroupProfileId);
+
+        bx_alert($this->getName(), 'set_role', $aGroupProfileInfo[$CNF['FIELD_ID']], $iGroupProfileId, array(
+            'object_author_id' => $iGroupProfileId,
+            'performer_id' => $iProfileId, 
+            'fan_id' => $iFanProfileId,
+
+            'content' => $aGroupProfileInfo, 
+            'role' => $iRole,
+
+            'group_profile' => $iGroupProfileId, 
+            'profile' => $iProfileId
+        ));
+
+        $this->doAudit($iGroupProfileId, $iFanProfileId, '_sys_audit_action_group_role_changed');
     }
 
     protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())

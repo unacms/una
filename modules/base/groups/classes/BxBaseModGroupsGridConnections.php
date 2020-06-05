@@ -11,9 +11,13 @@
 
 class BxBaseModGroupsGridConnections extends BxDolGridConnections
 {
-    protected $_sContentModule;
-    protected $_iGroupProfileId;
     protected $_oModule;
+    protected $_sContentModule;
+
+    protected $_bRoles;
+    protected $_aRoles;
+
+    protected $_iGroupProfileId;
     protected $_aContentInfo = array();
 
     public function __construct ($aOptions, $oTemplate = false)
@@ -22,32 +26,129 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
         $this->_sObjectConnections = $this->_oModule->_oConfig->CNF['OBJECT_CONNECTIONS'];
 
         parent::__construct ($aOptions, $oTemplate);
-
-        $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
-        if (!$iProfileId)
+        if(!$this->_bInit) 
             return;
 
-        $oProfile = BxDolProfile::getInstance($iProfileId);
-        if (!$oProfile)
-            return;
+        $this->_bRoles = $this->_oModule->_oConfig->isRoles();
+        $this->_aRoles = $this->_oModule->_oConfig->getRoles();
 
-        $aProfileInfo = $oProfile->getInfo();
-        $this->_iGroupProfileId = $oProfile->id();
+        $this->_iGroupProfileId = $this->_oProfile->id();
 
-        $this->_aContentInfo = BxDolService::call($aProfileInfo['type'], 'get_content_info_by_id', array($aProfileInfo['content_id']));
-        if (CHECK_ACTION_RESULT_ALLOWED === $this->_oModule->checkAllowedEdit($this->_aContentInfo) || $oProfile->id() == bx_get_logged_profile_id())
+        $this->_aContentInfo = $this->_oModule->_oDb->getContentInfoById($this->_oProfile->getContentId());
+        if($this->_oModule->checkAllowedEdit($this->_aContentInfo) === CHECK_ACTION_RESULT_ALLOWED || $this->_iGroupProfileId == bx_get_logged_profile_id())
             $this->_bOwner = true;
 
         $aSQLParts = $this->_oConnection->getConnectedInitiatorsAsSQLParts('p', 'id', $this->_iGroupProfileId, $this->_bOwner ? false : true);
         $this->addMarkers(array(
-            'profile_id' => $oProfile->id(),
+            'profile_id' => $this->_iGroupProfileId,
             'join_connections' => $aSQLParts['join'],
             'content_module' => $this->_sContentModule,
         ));
     }
 
+    public function getCode ($isDisplayHeader = true)
+    {
+        $sResult = parent::getCode();
+        if(!$sResult)
+            return $sResult;
+
+        if($this->_bRoles)
+            $sResult .= $this->_oModule->_oTemplate->getJsCode('main', array(
+                'sObjNameGrid' => $this->_sObject,
+            ));
+
+        return $sResult;
+    }
+
+    public function performActionSetRole()
+    {
+        if(!$this->_bRoles)
+            return echoJson(array());
+
+        if($this->_oModule->checkAllowedManageAdmins($this->_iGroupProfileId) !== CHECK_ACTION_RESULT_ALLOWED)
+            return echoJson(array('msg' => _t('_sys_txt_access_denied')));
+
+        list($iId, $iViewedId) = $this->_prepareIds();
+        if(!$iId)
+            return echoJson(array('msg' => _t('_sys_txt_error_occured')));
+
+        $sJsObject = $this->_oModule->_oConfig->getJsObject('main');
+        $sHtmlIdPrefix = str_replace('_', '-', $this->_sContentModule) . '-set-role-';
+
+        $aMenuItems = array();
+        foreach($this->_aRoles as $iRole => $sRole)
+            $aMenuItems[] = array(
+                'id' => $sHtmlIdPrefix . $iRole, 
+                'name' => $sHtmlIdPrefix . $iRole, 
+                'class' => '', 
+                'link' => 'javascript:void(0)', 
+                'onclick' => $sJsObject . '.onClickSetRole(' . $iId . ', ' . $iRole . ')',
+                'target' => '_self', 
+                'title' => $sRole, 
+                'active' => 1
+            );
+
+        if(empty($aMenuItems))
+            return echoJson(array('msg' => _t('_sys_txt_error_occured')));
+
+        $oMenu = new BxTemplMenu(array('template' => 'menu_vertical.html', 'menu_id'=> $sHtmlIdPrefix . 'menu', 'menu_items' => $aMenuItems));
+
+        $iRole = $this->_oModule->_oDb->getRole($this->_iGroupProfileId, $iId);
+        if(!empty($iRole))
+            $oMenu->setSelected('', $sHtmlIdPrefix . $iRole);
+
+        return echoJson(array('popup' => BxTemplFunctions::getInstance()->transBox($sHtmlIdPrefix . 'popup', $oMenu->getCode())));
+    }
+
+    public function performActionSetRoleSubmit()
+    {
+        if(!$this->_bRoles)
+            return echoJson(array());
+
+        if($this->_oModule->checkAllowedManageAdmins($this->_iGroupProfileId) !== CHECK_ACTION_RESULT_ALLOWED)
+            return echoJson(array('msg' => _t('_sys_txt_access_denied')));
+
+        list($iId, $iViewedId) = $this->_prepareIds();
+
+        if(!$iId || bx_get('role') === false)
+            return echoJson(array('msg' => _t('_sys_txt_error_occured')));
+
+        $aResult = $this->_oModule->setRole($this->_iGroupProfileId, $iId, (int)bx_get('role'));
+        if($aResult['code'] != 0)
+            return echoJson(array('msg' => $aResult['msg']));
+
+        echoJson(array('grid' => $this->getCode(false), 'blink' => $iId));
+    }
+
+    protected function _getCellRole($mixedValue, $sKey, $aField, $aRow)
+    {
+        $mixedValue = '';
+
+        $iRole = $this->_oModule->_oDb->getRole($this->_iGroupProfileId, $aRow[$this->_aOptions['field_id']]);
+        if(!empty($iRole) && !empty($this->_aRoles[$iRole])) 
+            $mixedValue = $this->_aRoles[$iRole];
+
+        return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
+    }
+
+    protected function _getActionSetRole ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+        if ($this->_oModule->checkAllowedManageAdmins($this->_iGroupProfileId) !== CHECK_ACTION_RESULT_ALLOWED)
+            return '';
+
+        return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    }
+
+    protected function _getActionSetRoleSubmit ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+        return '';
+    }
+
     protected function _getActionAccept ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
+        if ($this->_oModule->checkAllowedManageFans($this->_iGroupProfileId) !== CHECK_ACTION_RESULT_ALLOWED)
+            return '';
+
         if (isset($aRow[$this->_aOptions['field_id']]))
             $a['attr']['bx_grid_action_data'] = $aRow[$this->_aOptions['field_id']] . ':' . $this->_iGroupProfileId;
 
@@ -56,6 +157,9 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
 
     protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
+        if ($this->_oModule->checkAllowedManageFans($this->_iGroupProfileId) !== CHECK_ACTION_RESULT_ALLOWED)
+            return '';
+
         if (isset($aRow[$this->_aOptions['field_id']]))
             $a['attr']['bx_grid_action_data'] = $aRow[$this->_aOptions['field_id']] . ':' . $this->_iGroupProfileId;
 
@@ -67,7 +171,7 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
         if ($this->_oModule->_oDb->isAdmin($this->_iGroupProfileId, $aRow[$this->_aOptions['field_id']]))
             return '';
 
-        return $this->_getAction_Admins ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+        return $this->_getActionManageAdmins ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
     protected function _getActionFromAdmins ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
@@ -75,15 +179,15 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
         if (!$this->_oModule->_oDb->isAdmin($this->_iGroupProfileId, $aRow[$this->_aOptions['field_id']]))
             return '';
 
-        return $this->_getAction_Admins ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+        return $this->_getActionManageAdmins ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
-    protected function _getAction_Admins ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    protected function _getActionManageAdmins ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         if (!$this->_oConnection->isConnected($aRow[$this->_aOptions['field_id']], $this->_iGroupProfileId, true))
             return '';
 
-        if (CHECK_ACTION_RESULT_ALLOWED !== $this->_oModule->checkAllowedManageAdmins($this->_iGroupProfileId))
+        if ($this->_oModule->checkAllowedManageAdmins($this->_iGroupProfileId) !== CHECK_ACTION_RESULT_ALLOWED)
             return '';
 
         if (isset($aRow[$this->_aOptions['field_id']]))
@@ -174,6 +278,14 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
             return array($iId1, $iId2);
         else
             return array($iId2, $iId1);
+    }
+
+    protected function _addJsCss()
+    {
+        parent::_addJsCss();
+
+        if($this->_bRoles)
+            $this->_oModule->_oTemplate->addJs('main.js');
     }
 }
 

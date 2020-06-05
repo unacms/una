@@ -96,14 +96,57 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
         return $this->getOne($sQuery) ? true : false;
     }
 
+    public function getAdmin ($iGroupProfileId, $iProfileId, $bRoleOnly = false)
+    {
+        $sMethod = 'getRow';
+        $sSelectClause = '*';
+
+        if($bRoleOnly) {
+            $sMethod = 'getOne';
+            $sSelectClause = '`role`';
+        }
+
+        return $this->$sMethod("SELECT " . $sSelectClause . " FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `group_profile_id` = :group_profile_id AND `fan_id` = :fan_id LIMIT 1", array(
+            'group_profile_id' => $iGroupProfileId,
+            'fan_id' => $iProfileId
+        ));
+    }
+
     public function getAdmins ($iGroupProfileId, $iStart = 0, $iLimit = 0)
     {
-		$sQuery = $this->prepare("SELECT `fan_id` FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `group_profile_id` = ?", $iGroupProfileId);
-		if ($iLimit > 0)
+        if ($iLimit > 0)
             $sQuery = $this->prepare("SELECT `fan_id` FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `group_profile_id` = ? LIMIT ?, ?", $iGroupProfileId, $iStart, $iLimit);
+        else
+            $sQuery = $this->prepare("SELECT `fan_id` FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `group_profile_id` = ?", $iGroupProfileId);
+
         return $this->getColumn($sQuery);
     }
-    
+
+    public function getRole ($iGroupProfileId, $iProfileId)
+    {
+        return (int)$this->getOne("SELECT `role` FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `group_profile_id` = :group_profile_id AND `fan_id` = :fan_id LIMIT 1", array(
+            'group_profile_id' => $iGroupProfileId,
+            'fan_id' => $iProfileId
+        ));
+    }
+
+    public function setRole ($iGroupProfileId, $iProfileId, $iRole)
+    {
+        if($iRole == 0)
+            $mixedResult = $this->query("DELETE FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `group_profile_id` = :group_profile_id AND `fan_id` = :fan_id", array(
+                'group_profile_id' => $iGroupProfileId,
+                'fan_id' => $iProfileId,
+            ));
+        else
+            $mixedResult = $this->query("REPLACE INTO `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` SET `group_profile_id` = :group_profile_id, `fan_id` = :fan_id, `role` = :role", array(
+                'group_profile_id' => $iGroupProfileId,
+                'fan_id' => $iProfileId,
+                'role' => $iRole
+            ));
+
+        return !$mixedResult ? false : true;
+    }
+
     public function insertInvite($sKey, $sGroupProfileId, $iAuthorProfileId, $iInvitedProfileId)
     {
         $aBindings = array(

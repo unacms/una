@@ -24,7 +24,7 @@ class BxDolGridConnections extends BxTemplGrid
 
         $this->_aQueryAppendExclude[] = 'join_connections';
 
-        if(($iProfileId = bx_get('profile_id')) !== false)
+        if(($iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT)) !== false)
             $this->setProfile($iProfileId);
     }
 
@@ -33,11 +33,11 @@ class BxDolGridConnections extends BxTemplGrid
         if(!$this->_oProfile)
             return false;
 
-        if ($this->_oProfile->id() == bx_get_logged_profile_id())
+        if($this->_oProfile->id() == bx_get_logged_profile_id())
             $this->_bOwner = true;
 
         $this->_oConnection = BxDolConnection::getObjectInstance($this->_sObjectConnections);
-        if (!$this->_oConnection)
+        if(!$this->_oConnection)
             return false;
 
         $aSQLParts = $this->_oConnection->getConnectedInitiatorsAsSQLParts('p', 'id', $this->_oProfile->id(), $this->_bOwner ? false : true);
@@ -46,6 +46,8 @@ class BxDolGridConnections extends BxTemplGrid
             'profile_id' => $this->_oProfile->id(),
             'join_connections' => $aSQLParts['join']
         ));
+
+        return true;
     }
 
     public function setProfile($iProfileId)

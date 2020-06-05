@@ -1786,6 +1786,7 @@
   <string name="_sys_audit_action_unfeature"><![CDATA[Удален из избранных]]></string>
   <string name="_sys_audit_action_group_to_admins"><![CDATA[Добавлен в администраторы группы]]></string>
   <string name="_sys_audit_action_group_from_admins"><![CDATA[Удален из администраторов группы]]></string>
+  <string name="_sys_audit_action_group_role_changed"><![CDATA[Роль в группе изменена]]></string>
   <string name="_sys_audit_action_group_join_request_accepted"><![CDATA[Запрос принят]]></string>
   <string name="_sys_audit_action_account_change_role_to_3"><![CDATA[Добавлен в операторы]]></string>
   <string name="_sys_audit_action_account_change_role_to_1"><![CDATA[Удален из операторов]]></string>
