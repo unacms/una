@@ -37,6 +37,24 @@ class BxDolStorageQuery extends BxDolDb
         return $oDb->getAll($sQuery);
     }
 
+	static public function getAllGhosts ($aParams)
+    {
+        $oDb = BxDolDb::getInstance();
+        $sQuery = "SELECT * FROM `sys_storage_ghosts` WHERE 2>1 ";
+        if (isset($aParams['profile_id']))
+            $sQuery .= " AND profile_id = :profile_id";
+        if (isset($aParams['object']))
+            $sQuery .= " AND object = :object";
+        if (isset($aParams['content_id']))
+            $sQuery .= " AND content_id = :content_id";
+        if (isset($aParams['sort_field'])){
+			$sQuery .= " ORDER BY `" . $aParams['sort_field'] . "` " . (isset($aParams['sort_direction']) ? $aParams['sort_direction'] : '');
+			unset($aParams['sort_field']);
+			unset($aParams['sort_direction']);
+		}
+        return $oDb->getAll($sQuery, $aParams);
+    }
+
     public function changeStorageEngine ($sEngine)
     {
         $sQuery = $this->prepare("UPDATE `sys_objects_storage` SET `engine` = ? WHERE `object` = ?", $sEngine, $this->_aObject['object']);
