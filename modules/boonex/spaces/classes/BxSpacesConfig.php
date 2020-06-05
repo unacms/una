@@ -126,7 +126,8 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
             'OBJECT_CONNECTIONS' => 'bx_spaces_fans',
             'OBJECT_UPLOADERS_COVER' => array('bx_spaces_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_spaces_picture_crop'),
-            
+            'OBJECT_PRE_LIST_ROLES' => 'bx_spaces_roles',
+
             'BADGES_AVALIABLE' => true,
             'INVITES_KEYS_LIFETIME' => 86400,
 
@@ -135,6 +136,7 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
             'EMAIL_JOIN_CONFIRM' => 'bx_spaces_join_confirm',
             'EMAIL_FAN_BECOME_ADMIN' => 'bx_spaces_fan_become_admin',
             'EMAIL_ADMIN_BECOME_FAN' => 'bx_spaces_admin_become_fan',
+            'EMAIL_FAN_SET_ROLE' => 'bx_spaces_set_role',
             'EMAIL_FAN_REMOVE' => 'bx_spaces_fan_remove',
             'EMAIL_JOIN_REJECT' => 'bx_spaces_join_reject',
 
@@ -205,11 +207,13 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
         );
 
         $this->_aJsClasses = array(
+            'main' => 'BxSpacesMain',
             'manage_tools' => 'BxSpacesManageTools',
             'invite_popup' => 'BxSpacesInvitePopup'
         );
 
         $this->_aJsObjects = array(
+            'main' => 'oBxSpacesMain',
             'manage_tools' => 'oBxSpacesManageTools',
             'invite_popup' => 'oBxSpacesInvitePopup'
         );
@@ -217,7 +221,6 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
         $this->_aGridObjects = array(
             'common' => $this->CNF['OBJECT_GRID_COMMON'],
             'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
-            
         );
     }
 
