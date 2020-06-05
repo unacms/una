@@ -22,7 +22,7 @@ DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_organization_a
 -- PRE-VALUES
 DELETE FROM `sys_form_pre_lists` WHERE `module` = 'bx_organizations';
 
-DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_organizations_cats');
+DELETE FROM `sys_form_pre_values` WHERE `Key` LIKE 'bx_organizations%';
 
 -- COMMENTS
 DELETE FROM `sys_objects_cmts` WHERE `Name` LIKE 'bx_organizations%';

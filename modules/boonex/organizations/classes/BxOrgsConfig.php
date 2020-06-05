@@ -147,6 +147,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'OBJECT_CONNECTIONS' => 'bx_organizations_fans',
             'OBJECT_UPLOADERS_COVER' => array('bx_organizations_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_organizations_picture_crop'),
+            'OBJECT_PRE_LIST_ROLES' => 'bx_organizations_roles',
             
             'BADGES_AVALIABLE' => true,
 
@@ -156,6 +157,7 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'EMAIL_JOIN_CONFIRM' => 'bx_organizations_join_confirm',
             'EMAIL_FAN_BECOME_ADMIN' => 'bx_organizations_fan_become_admin',
             'EMAIL_ADMIN_BECOME_FAN' => 'bx_organizations_admin_become_fan',
+            'EMAIL_FAN_SET_ROLE' => 'bx_organizations_set_role',
             'EMAIL_FAN_REMOVE' => 'bx_organizations_fan_remove',
             'EMAIL_JOIN_REJECT' => 'bx_organizations_join_reject',
 
@@ -240,12 +242,14 @@ class BxOrgsConfig extends BxBaseModProfileConfig
         ));
 
         $this->_aJsClasses = array(
-        	'manage_tools' => 'BxOrgsManageTools',
+            'main' => 'BxOrgsMain',
+            'manage_tools' => 'BxOrgsManageTools',
             'categories' => 'BxDolCategories'
         );
 
         $this->_aJsObjects = array(
-        	'manage_tools' => 'oBxOrgsManageTools',
+            'main' => 'oBxOrgsMain',
+            'manage_tools' => 'oBxOrgsManageTools',
             'categories' => 'oBxDolCategories'
         );
 

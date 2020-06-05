@@ -204,6 +204,7 @@ CREATE TABLE IF NOT EXISTS `bx_organizations_admins` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `group_profile_id` int(10) unsigned NOT NULL,
   `fan_id` int(10) unsigned NOT NULL,
+  `role` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `admin` (`group_profile_id`,`fan_id`)
 );
@@ -382,6 +383,14 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('bx_organizations_cats', '33', 33, '_bx_orgs_cat_Travel', ''),
 ('bx_organizations_cats', '34', 34, '_bx_orgs_cat_University', ''),
 ('bx_organizations_cats', '35', 35, '_bx_orgs_cat_Other', '');
+
+INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
+('bx_organizations_roles', '_bx_orgs_pre_lists_roles', 'bx_organizations', '0');
+
+INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
+('bx_organizations_roles', '0', 1, '_bx_orgs_role_regular', ''),
+('bx_organizations_roles', '1', 2, '_bx_orgs_role_administrator', ''),
+('bx_organizations_roles', '2', 3, '_bx_orgs_role_moderator', '');
 
 -- COMMENTS
 INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Html`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES

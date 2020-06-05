@@ -271,8 +271,6 @@
         <string name="_bx_spaces_txt_sample_score_up_single"><![CDATA[score up vote to space]]></string>
         <string name="_bx_spaces_txt_sample_score_down_single"><![CDATA[score down vote to space]]></string>
         <string name="_bx_spaces_txt_set_role"><![CDATA[Set Role]]></string>
-	<string name="_bx_spaces_txt_to_admins"><![CDATA[To Admins]]></string>
-	<string name="_bx_spaces_txt_from_admins"><![CDATA[From Admins]]></string>
 	<string name="_bx_spaces_txt_private_space"><![CDATA[Private space]]></string>
   <string name="_bx_spaces_txt_invite_popup_text"><![CDATA[You have been invited to a space. Click the button below to accept the invitation.]]></string>
   <string name="_bx_spaces_txt_invite_popup_title"><![CDATA[Invitation to a space]]></string>
@@ -295,7 +293,7 @@
 	<string name="_bx_spaces_cat_Fun"><![CDATA[Fun]]></string>
 	<string name="_bx_spaces_cat_Uncategorised"><![CDATA[Uncategorised]]></string>
 
-    <string name="_bx_spaces_pre_lists_roles"><![CDATA[Group roles]]></string>
+    <string name="_bx_spaces_pre_lists_roles"><![CDATA[Space roles]]></string>
     <string name="_bx_spaces_role_regular"><![CDATA[Regular]]></string>
     <string name="_bx_spaces_role_administrator"><![CDATA[Administrator]]></string>
     <string name="_bx_spaces_role_moderator"><![CDATA[Moderator]]></string>
@@ -336,10 +334,10 @@
 	<p>Your admin status was revoked from <a href="{EntryUrl}">{EntryTitle}</a> space.</p>
 	{email_footer}]]></string>
 
-    <string name="_bx_spaces_email_set_role"><![CDATA[Group member status was changed]]></string>
-    <string name="_bx_spaces_email_set_role_subject"><![CDATA[Your group status was changed]]></string>
+    <string name="_bx_spaces_email_set_role"><![CDATA[Space member status was changed]]></string>
+    <string name="_bx_spaces_email_set_role_subject"><![CDATA[Your space status was changed]]></string>
     <string name="_bx_spaces_email_set_role_body"><![CDATA[{email_header}
-<p>Your status in <a href="{EntryUrl}">{EntryTitle}</a> group was changed to <b>{Role}</b>.</p>
+<p>Your status in <a href="{EntryUrl}">{EntryTitle}</a> space was changed to <b>{Role}</b>.</p>
 {email_footer}]]></string>
 
 	<string name="_bx_spaces_email_invitation"><![CDATA[Invitation to space]]></string>

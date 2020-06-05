@@ -166,6 +166,9 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
         return parent::_getActionDelete ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
+    /**
+     * Note. Methods related to 'To Admin'/'From Admin' functionality can be removed after UNA 12 will be released.
+     */
     protected function _getActionToAdmins ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         if ($this->_oModule->_oDb->isAdmin($this->_iGroupProfileId, $aRow[$this->_aOptions['field_id']]))

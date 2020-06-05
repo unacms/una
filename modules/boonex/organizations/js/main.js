@@ -2,15 +2,15 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    Spaces Spaces
+ * @defgroup    Organizations Organizations
  * @ingroup     UnaModules
  *
  * @{
  */
 
-function BxSpacesMain(oOptions) {
+function BxOrgsMain(oOptions) {
     this._sActionsUrl = oOptions.sActionUrl;
-    this._sObjName = oOptions.sObjName == undefined ? 'oBxSpacesMain' : oOptions.sObjName;
+    this._sObjName = oOptions.sObjName == undefined ? 'oBxOrgsMain' : oOptions.sObjName;
     this._sObjNameGrid = oOptions.sObjNameGrid == undefined ? '' : oOptions.sObjNameGrid;
     
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'fade' : oOptions.sAnimationEffect;
@@ -19,7 +19,7 @@ function BxSpacesMain(oOptions) {
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
 }
 
-BxSpacesMain.prototype.onClickSetRole = function(iFanProfileId, iRole) {
+BxOrgsMain.prototype.onClickSetRole = function(iFanProfileId, iRole) {
     $('.bx-popup-applied:visible').dolPopupHide();
 
     if(glGrids[this._sObjNameGrid] != undefined)

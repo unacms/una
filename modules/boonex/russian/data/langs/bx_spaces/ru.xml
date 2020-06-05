@@ -272,8 +272,6 @@
     <string name="_bx_spaces_txt_sample_score_up_single"><![CDATA[голос за пространство]]></string>
     <string name="_bx_spaces_txt_sample_score_down_single"><![CDATA[голос против пространства]]></string>
     <string name="_bx_spaces_txt_set_role"><![CDATA[Задать роль]]></string>
-    <string name="_bx_spaces_txt_to_admins"><![CDATA[В админы]]></string>
-    <string name="_bx_spaces_txt_from_admins"><![CDATA[Из админов]]></string>
     <string name="_bx_spaces_txt_private_group"><![CDATA[Приватная пространство]]></string>
 	<string name="_bx_spaces_txt_invite_popup_text"><![CDATA[Вы были приглашены в это пространство.  Нажмите кнопку ниже чтобы принять приглашение.]]></string>
     <string name="_bx_spaces_txt_invite_popup_title"><![CDATA[Приглашение в пространство]]></string>
@@ -296,7 +294,7 @@
     <string name="_bx_spaces_cat_Fun"><![CDATA[Юмор]]></string>
     <string name="_bx_spaces_cat_Uncategorised"><![CDATA[Без категории]]></string>
 
-    <string name="_bx_spaces_pre_lists_roles"><![CDATA[Роли в группах]]></string>
+    <string name="_bx_spaces_pre_lists_roles"><![CDATA[Роли в пространствах]]></string>
     <string name="_bx_spaces_role_regular"><![CDATA[Обычный]]></string>
     <string name="_bx_spaces_role_administrator"><![CDATA[Администратор]]></string>
     <string name="_bx_spaces_role_moderator"><![CDATA[Модератор]]></string>
@@ -337,10 +335,10 @@
 <p>Вы были лишены статуса администратора пространства <a href="{EntryUrl}">{EntryTitle}</a></p>
 {email_footer}]]></string>
 
-    <string name="_bx_spaces_email_set_role"><![CDATA[Изменение статуса в группе]]></string>
-    <string name="_bx_spaces_email_set_role_subject"><![CDATA[Ваш статус в группе был изменен]]></string>
+    <string name="_bx_spaces_email_set_role"><![CDATA[Изменение статуса в пространстве]]></string>
+    <string name="_bx_spaces_email_set_role_subject"><![CDATA[Ваш статус в пространстве был изменен]]></string>
     <string name="_bx_spaces_email_set_role_body"><![CDATA[{email_header}
-<p>Ваш статус в группе <a href="{EntryUrl}">{EntryTitle}</a> был изменен на <b>{Role}</b>.</p>
+<p>Ваш статус в пространстве <a href="{EntryUrl}">{EntryTitle}</a> был изменен на <b>{Role}</b>.</p>
 {email_footer}]]></string>
 
     <string name="_bx_spaces_email_invitation"><![CDATA[Приглашение в пространство]]></string>

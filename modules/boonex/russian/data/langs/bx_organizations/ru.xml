@@ -377,6 +377,11 @@
     <string name="_bx_orgs_cat_University"><![CDATA[Преподавание]]></string>
     <string name="_bx_orgs_cat_Other"><![CDATA[Другое]]></string>
 
+    <string name="_bx_orgs_pre_lists_roles"><![CDATA[Роли в организациях]]></string>
+    <string name="_bx_orgs_role_regular"><![CDATA[Обычный]]></string>
+    <string name="_bx_orgs_role_administrator"><![CDATA[Администратор]]></string>
+    <string name="_bx_orgs_role_moderator"><![CDATA[Модератор]]></string>
+
     <string name="_bx_organizations_alert_action_fan_added"><![CDATA[присоединение нового участника]]></string>
     <string name="_bx_organizations_alert_action_join_request"><![CDATA[запрос на присоединение к организации]]></string>
     <string name="_bx_organizations_alert_action_profile_cover_changed"><![CDATA[обложка изменена]]></string>
@@ -397,8 +402,8 @@
     <string name="_bx_orgs_txt_sample_pi_action"><![CDATA[сменила {0}]]></string>
     <string name="_bx_orgs_txt_sample_pi_action_user"><![CDATA[{0} сменила {1}]]></string>
     <string name="_bx_orgs_txt_N_friends"><![CDATA[Друзья: {0}]]></string>
-    <string name="_bx_orgs_txt_to_admins"><![CDATA[В админы]]></string>
-    <string name="_bx_orgs_txt_from_admins"><![CDATA[Из админов]]></string>
+    <string name="_bx_orgs_txt_role"><![CDATA[Роль]]></string>
+    <string name="_bx_orgs_txt_set_role"><![CDATA[Задать роль]]></string>
     <string name="_bx_orgs_txt_private_organization"><![CDATA[Приватная организация]]></string>
     <string name="_bx_orgs_ps_group_title_participants"><![CDATA[Сотрудники]]></string>
 
@@ -441,6 +446,12 @@
     <string name="_bx_orgs_email_admin_become_fan_subject"><![CDATA[Вы были лишены статуса администратора организации]]></string>
     <string name="_bx_orgs_email_admin_become_fan_body"><![CDATA[{email_header}
 <p>Вы были лишены статуса администратора организации <a href="{EntryUrl}">{EntryTitle}</a></p>
+{email_footer}]]></string>
+
+    <string name="_bx_orgs_email_set_role"><![CDATA[Изменение статуса в организации]]></string>
+    <string name="_bx_orgs_email_set_role_subject"><![CDATA[Ваш статус в организации был изменен]]></string>
+    <string name="_bx_orgs_email_set_role_body"><![CDATA[{email_header}
+<p>Ваш статус в организации <a href="{EntryUrl}">{EntryTitle}</a> был изменен на <b>{Role}</b>.</p>
 {email_footer}]]></string>
 
     <string name="_bx_orgs_email_invitation"><![CDATA[Приглашение в организацию]]></string>
