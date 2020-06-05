@@ -27,7 +27,7 @@ DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_group_add', 'b
 
 DELETE FROM `sys_form_pre_lists` WHERE `module` = 'bx_groups';
 
-DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_groups_cats');
+DELETE FROM `sys_form_pre_values` WHERE `Key` LIKE 'bx_groups%';
 
 -- COMMENTS
 DELETE FROM `sys_objects_cmts` WHERE `Name` LIKE 'bx_groups%';

@@ -459,12 +459,13 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
 ('bx_groups_fans', 'name', '_sys_name', '50%', '', 10),
-('bx_groups_fans', 'actions', '', '50%', '', 20);
+('bx_groups_fans', 'role', '_bx_groups_txt_role', '10%', '', 15),
+('bx_groups_fans', 'actions', '', '40%', '', 20);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
 ('bx_groups_fans', 'single', 'accept', '_sys_accept', '', 0, 10),
-('bx_groups_fans', 'single', 'to_admins', '_bx_groups_txt_to_admins', '', 0, 20),
-('bx_groups_fans', 'single', 'from_admins', '_bx_groups_txt_from_admins', '', 0, 30),
+('bx_groups_fans', 'single', 'set_role', '_bx_groups_txt_set_role', '', 0, 20),
+('bx_groups_fans', 'single', 'set_role_submit', '', '', 0, 21),
 ('bx_groups_fans', 'single', 'delete', '', 'remove', 1, 40);
 
 
@@ -555,6 +556,7 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 ('bx_groups', '_bx_groups_email_fan_remove', 'bx_groups_fan_remove', '_bx_groups_email_fan_remove_subject', '_bx_groups_email_fan_remove_body'),
 ('bx_groups', '_bx_groups_email_fan_become_admin', 'bx_groups_fan_become_admin', '_bx_groups_email_fan_become_admin_subject', '_bx_groups_email_fan_become_admin_body'),
 ('bx_groups', '_bx_groups_email_admin_become_fan', 'bx_groups_admin_become_fan', '_bx_groups_email_admin_become_fan_subject', '_bx_groups_email_admin_become_fan_body'),
+('bx_groups', '_bx_groups_email_set_role', 'bx_groups_set_role', '_bx_groups_email_set_role_subject', '_bx_groups_email_set_role_body'),
 ('bx_groups', '_bx_groups_email_invitation', 'bx_groups_invitation', '_bx_groups_email_invitation_subject', '_bx_groups_email_invitation_body');
 
 -- UPLOADERS

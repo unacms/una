@@ -124,6 +124,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'OBJECT_CONNECTIONS' => 'bx_groups_fans',
             'OBJECT_UPLOADERS_COVER' => array('bx_groups_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_groups_picture_crop'),
+            'OBJECT_PRE_LIST_ROLES' => 'bx_groups_roles',
             
             'BADGES_AVALIABLE' => true,
             
@@ -134,6 +135,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'EMAIL_JOIN_CONFIRM' => 'bx_groups_join_confirm',
             'EMAIL_FAN_BECOME_ADMIN' => 'bx_groups_fan_become_admin',
             'EMAIL_ADMIN_BECOME_FAN' => 'bx_groups_admin_become_fan',
+            'EMAIL_FAN_SET_ROLE' => 'bx_groups_set_role',
             'EMAIL_FAN_REMOVE' => 'bx_groups_fan_remove',
             'EMAIL_JOIN_REJECT' => 'bx_groups_join_reject',
 
@@ -204,12 +206,14 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
         );
 
         $this->_aJsClasses = array(
-        	'manage_tools' => 'BxGroupsManageTools',
+            'main' => 'BxGroupsMain',
+            'manage_tools' => 'BxGroupsManageTools',
             'invite_popup' => 'BxGroupsInvitePopup'
         );
 
         $this->_aJsObjects = array(
-        	'manage_tools' => 'oBxGroupsManageTools',
+            'main' => 'oBxGroupsMain',
+            'manage_tools' => 'oBxGroupsManageTools',
             'invite_popup' => 'oBxGroupsInvitePopup'
         );
 
