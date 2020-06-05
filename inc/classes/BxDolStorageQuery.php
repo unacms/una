@@ -47,6 +47,11 @@ class BxDolStorageQuery extends BxDolDb
             $sQuery .= " AND object = :object";
         if (isset($aParams['content_id']))
             $sQuery .= " AND content_id = :content_id";
+        if (isset($aParams['sort_field'])){
+			$sQuery .= " ORDER BY `" . $aParams['sort_field'] . "` " . (isset($aParams['sort_direction']) ? $aParams['sort_direction'] : '');
+			unset($aParams['sort_field']);
+			unset($aParams['sort_direction']);
+		}
         return $oDb->getAll($sQuery, $aParams);
     }
     
