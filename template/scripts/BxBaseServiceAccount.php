@@ -446,6 +446,59 @@ class BxBaseServiceAccount extends BxDol
     }
 
     /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-account Account
+     * @subsubsection bx_system_general-switch_profile switch_profile
+     * 
+     * @code bx_srv('system', 'switch_profile', [123], 'TemplServiceAccount'); @endcode
+     * @code {{~system:switch_profile:TemplServiceAccount:[123]~}} @endcode
+     * 
+     * Switch current user profile. 
+     * User can switch between profiles if multiple profiles are created.
+     * Also it's possible to switch to Organization profile if user is admin of Organization, 
+     * or other module which can `actAsProfile`.
+     * Admin can switch to any prifile by default
+     *
+     * @param $iSwitchToProfileId profile ID to switch to
+     * @return true on success or error message otherwise, so make sue to make strict (===) comparision
+     * 
+     * @see BxBaseServiceAccount::serviceSwitchProfile
+     */
+    /** 
+     * @ref bx_system_general-switch_profile "switch_profile"
+     */
+    public function serviceSwitchProfile($iSwitchToProfileId)
+    {
+        $oProfile = BxDolProfile::getInstance($iSwitchToProfileId);
+        if (!$oProfile) {
+            return _t('_sys_txt_error_occured');
+        }
+
+        $iViewerAccountId = getLoggedId();
+        $iSwitchToAccountId = $oProfile->getAccountId();
+        
+        $iViewerProfileId = bx_get_logged_profile_id();
+        $aCheck = checkActionModule($iViewerProfileId, 'switch to any profile', 'system', false);
+        $bAllowSwitchToAnyProfile = $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED;
+
+        $bCanSwitch = ($iSwitchToAccountId == $iViewerAccountId || $bAllowSwitchToAnyProfile);
+        bx_alert('account', 'check_switch_context', $iSwitchToAccountId, $iViewerProfileId, array('switch_to_profile' => $iSwitchToProfileId, 'viewer_account' => $iViewerAccountId, 'override_result' => &$bCanSwitch));
+
+        if (!$bCanSwitch) {
+            return isset($aCheck[CHECK_ACTION_MESSAGE]) ? $aCheck[CHECK_ACTION_MESSAGE] : _t('_sys_txt_error_occured'); 
+        } 
+
+        $oAccount = BxDolAccount::getInstance();
+        if (!$oAccount->updateProfileContext($iSwitchToProfileId)) {
+            return _t('_sys_txt_error_occured');
+        }
+
+        checkActionModule($iViewerProfileId, 'switch to any profile', 'system', true);
+        return true;
+    }
+
+    /**
      * Reset password procedure
      */
     public function resetPassword()
