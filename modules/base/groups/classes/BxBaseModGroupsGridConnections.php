@@ -146,13 +146,16 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
 
     protected function _getActionAccept ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
+        if ($aRow['mutual'])
+            return '';
+
         if ($this->_oModule->checkAllowedManageFans($this->_iGroupProfileId) !== CHECK_ACTION_RESULT_ALLOWED)
             return '';
 
         if (isset($aRow[$this->_aOptions['field_id']]))
             $a['attr']['bx_grid_action_data'] = $aRow[$this->_aOptions['field_id']] . ':' . $this->_iGroupProfileId;
 
-        return parent::_getActionAccept ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+        return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
     protected function _getActionDelete ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
@@ -163,7 +166,7 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
         if (isset($aRow[$this->_aOptions['field_id']]))
             $a['attr']['bx_grid_action_data'] = $aRow[$this->_aOptions['field_id']] . ':' . $this->_iGroupProfileId;
 
-        return parent::_getActionDelete ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+        return parent::_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
     /**
