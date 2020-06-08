@@ -33,6 +33,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
             'CreateAccountForm' => 'BxBaseServiceAccount',
             'ForgotPassword' => 'BxBaseServiceAccount',
+            'SwitchProfile' => 'BxBaseServiceAccount',
 
             'CategoriesList' => 'BxBaseServiceCategory',
 

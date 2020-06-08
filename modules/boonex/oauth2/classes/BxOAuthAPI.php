@@ -234,10 +234,10 @@ class BxOAuthAPI extends BxDol
         if (!BxDolRequest::serviceExists($sModule, $sMethod, $sClass))
             return false;
 
-        if (!BxDolRequest::serviceExists($sModule, $sCheckMethod, $sClass))
+        if (!BxDolRequest::serviceExists($sModule, $sCheckMethod, 'system' == $sModule ? 'TemplServices' : $sClass))
             return false;
 
-        return BxDolService::call($sModule, $sCheckMethod, array($sMethod));
+        return BxDolService::call($sModule, $sCheckMethod, array($sMethod), 'system' == $sModule ? 'TemplServices' : $sClass);
     }
     
 

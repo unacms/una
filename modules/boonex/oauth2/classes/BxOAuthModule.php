@@ -238,13 +238,13 @@ class BxOAuthModule extends BxDolModule
             $this->_oAPI = new BxOAuthAPI($this);
         }
 
-        $bPublic = $this->_oAPI->isPublicAPI(bx_get('module') ? bx_get('module') : 'bx_api', $sMethod);
+        $bPublic = $this->_oAPI->isPublicAPI(bx_get('module') ? bx_get('module') : 'bx_api', $sMethod, bx_get('class') ? bx_get('class') : false);
         if ($bPublic) {
             $this->checkAllowedOrigins();
             $this->_oAPI->com($sMethod, array(), $bPublic);
         }
         else {
-            if (!$this->_oAPI->isSafeAPI(bx_get('module') ? bx_get('module') : 'bx_api', $sMethod)) {
+            if (!$this->_oAPI->isSafeAPI(bx_get('module') ? bx_get('module') : 'bx_api', $sMethod, bx_get('class') ? bx_get('class') : false)) {
                 $this->_oAPI->errorOutput(403, 'access_denied', 'Only "public" and "safe" services can be called, or method doesn\'t exist');
                 return;
             }
