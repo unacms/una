@@ -78,6 +78,13 @@ class BxOAuthAPI extends BxDol
             return;
         }
 
+        // get current account's profile (it maybe different if user switched to another profile)
+        $oAccount = $oProfile->getAccountObject();
+        if (!($oProfile = BxDolProfile::getInstanceByAccount($oAccount->id()))) {
+            $this->errorOutput('404', 'not_found', 'Profile was not found');
+            return;
+        }
+
         $aClient = $this->_oDb->getClientsBy(array('type' => 'client_id', 'client_id' => $aToken['client_id']));
 
         $aProfile = $this->_prepareProfileArray($oProfile, false);

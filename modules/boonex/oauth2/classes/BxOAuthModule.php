@@ -32,6 +32,16 @@ class BxOAuthUserCredentialsStorage extends OAuth2\Storage\Pdo implements OAuth2
         if (!($oProfile = BxDolProfile::getInstanceByAccount($oAccount->id())))
             return false;
 
+        // don't allow login under another profile
+        if ($oProfile->getAccountId() != $oAccount->id()) {
+            // force switch to own profile
+            if ($oAccount->updateProfileContextAuto())
+                $oProfile = BxDolProfile::getInstanceByAccount($oAccount->id(), true);
+        }
+
+        if (!$oProfile)
+            return false;
+
         return array('user_id' => $oProfile->id());
     }
 
