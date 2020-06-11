@@ -43,7 +43,7 @@ class BxBaseModFilesPrivacy extends BxTemplPrivacy
     public function isDynamicGroupMember($mixedGroupId, $iObjectOwnerId, $iViewerId, $iObjectId)
     {
         $oGroupProfile = BxDolProfile::getInstance($iObjectOwnerId);
-        if (!BxDolService::call($oGroupProfile->getModule(), 'is_group_profile'))
+        if (!$oGroupProfile || !BxDolService::call($oGroupProfile->getModule(), 'is_group_profile'))
             return false;
 
         if ('a' == $mixedGroupId)
