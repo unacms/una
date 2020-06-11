@@ -135,7 +135,18 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         $aGroupContentInfo = $this->_oDb->getContentInfoById($iGroupContentId);
         return $this->_oDb->isAdmin($iGroupProfileId, $iProfileId, $aGroupContentInfo);
     }
-    
+
+    public function serviceGetAdminRole($iGroupProfileId, $iProfileId = false)
+    {
+        if(!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+
+        if(!$this->serviceIsAdmin($iGroupProfileId, $iProfileId))
+            return 0;
+
+        return $this->_oDb->getRole($iGroupProfileId, $iProfileId);
+    }
+
     /**
      * Delete profile from fans and admins tables
      * @param $iProfileId profile id 
@@ -709,6 +720,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         bx_alert('system', 'check_allowed_action_by_role', 0, 0, array(
             'module' => $this->getName(), 
             'action' => $sAction,
+            'content_profile_id' => $iGroupProfileId, 
             'content_info' => $aDataEntry, 
             'profile_id' => $iPerformerId, 
             'profile_role' => $iRole,
