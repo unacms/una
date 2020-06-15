@@ -1792,7 +1792,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function _wrapInTagJs($sFile)
     {
-        return "<script language=\"javascript\" type=\"text/javascript\" src=\"" . $sFile . "\"></script>";
+        return "<script language=\"javascript\" src=\"" . $sFile . "\"></script>";
     }
 
     /**
@@ -1803,7 +1803,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
      */
     function _wrapInTagJsCode($sCode)
     {
-        return "<script language=\"javascript\" type=\"text/javascript\">\n<!--\n" . $sCode . "\n-->\n</script>";
+        return "<script language=\"javascript\">\n<!--\n" . $sCode . "\n-->\n</script>";
     }
 
     /**
@@ -2693,7 +2693,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             $sReturn = substr($sReturn, 0, -1);
         }
 
-        return '<script type="text/javascript" language="javascript">var aDolLang = {' . $sReturn . '};</script>';
+        return '<script language="javascript">var aDolLang = {' . $sReturn . '};</script>';
     }
     /**
      * Process all added options and return them as a string.
@@ -2710,7 +2710,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             $sReturn = substr($sReturn, 0, -1);
         }
 
-        return '<script type="text/javascript" language="javascript">var aDolOptions = {' . $sReturn . '};</script>';
+        return '<script language="javascript">var aDolOptions = {' . $sReturn . '};</script>';
     }
     /**
      * Process all added images and return them as a string.
@@ -2727,7 +2727,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
             $sReturn = substr($sReturn, 0, -1);
         }
 
-        return '<script type="text/javascript" language="javascript">var aDolImages = {' . $sReturn . '};</script>';
+        return '<script language="javascript">var aDolImages = {' . $sReturn . '};</script>';
     }
 
     /**

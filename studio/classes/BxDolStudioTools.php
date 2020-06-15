@@ -157,7 +157,7 @@ EOF;
         $sCacheEnginesTab = $this->GenCacheEnginesTable();
 
         $sBoxContent = <<<EOF
-<script type="text/javascript">
+<script language="javascript">
     <!--
     function switchAdmPage(oLink)
     {
