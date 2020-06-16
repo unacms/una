@@ -57,12 +57,19 @@
 .bx-tasks-task .bx-badge, .bx-tasks-task .bx-badges-list{
 	display: inline-block;
 }
+.bx-tasks-tasklist .bx-tasks-task-completed{
+	display: none;
+}
+.bx-tasks-tasklist-filter-all .bx-tasks-task-completed{
+	display: flex;
+}
 .bx-tasks-tasklist-filter-completed .bx-tasks-task-uncompleted{
 	display: none;
 }
-.bx-tasks-tasklist-filter-uncompleted .bx-tasks-task-completed{
-	display: none;
+.bx-tasks-tasklist-filter-completed .bx-tasks-task-completed{
+	display: flex;
 }
+
 .ui-autocomplete{
 	z-index: 10000 !important;
 }
