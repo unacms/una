@@ -40,7 +40,7 @@ class BxTasksConfig extends BxBaseModTextConfig
             'FIELD_PUBLISHED' => 'published',
             'FIELD_TITLE' => 'title',
             'FIELD_TEXT' => 'text',
-            'FIELD_TEXT_ID' => 'task-text',
+            'FIELD_TEXT_ID' => '',
             'FIELD_CATEGORY' => 'cat',
             'FIELD_MULTICAT' => 'multicat',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',

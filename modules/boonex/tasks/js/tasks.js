@@ -9,6 +9,7 @@
 
 function BxTasksView(oOptions) {
     this._sActionsUri = oOptions.sActionUri;
+	
     var $this = this;
     $(document).ready(function () {
         $this.init();
@@ -28,7 +29,8 @@ BxTasksView.prototype.setCompleted = function (iId, oObj) {
 BxTasksView.prototype.setCompletedByMenu = function (iId, iValue, oObj) {
     var $this = this;
 	$(oObj).addClass('bx-btn-disabled');
-	$this._setCompleted(iId, iValue)
+	$this._setCompleted(iId, iValue);
+	document.location.reload(true);
 }
 
 BxTasksView.prototype._setCompleted = function (iId, iValue) {
@@ -36,15 +38,16 @@ BxTasksView.prototype._setCompleted = function (iId, iValue) {
 	$.getJSON($this._sActionsUri + 'set_completed/' + iId + '/' + iValue + '/', {}, function () {});
 }
 	
-BxTasksView.prototype.processTaskList = function (iContextId, iId) {
+BxTasksView.prototype.processTaskList = function (iContextId, iId, obj) {
     var $this = this;
 	$(window).dolPopupAjax({
         url: $this._sActionsUri + 'process_task_list_form/' + iContextId + '/' + iId + '/' ,
-        closeOnOuterClick: false
+        closeOnOuterClick: false,
+		removeOnClose: true
     });   
 }
 	
-BxTasksView.prototype.processTask = function (iContextId, iListId) {
+BxTasksView.prototype.processTask = function (iContextId, iListId, obj) {
     var $this = this;
 	$(window).dolPopupAjax({
         url: $this._sActionsUri + 'process_task_form/' + iContextId + '/' + iListId + '/' ,
@@ -53,9 +56,10 @@ BxTasksView.prototype.processTask = function (iContextId, iListId) {
     });   
 }
 
-BxTasksView.prototype.reloadData = function (iId, oObj) {
+BxTasksView.prototype.reloadData = function (oData, iContextId) {
 	$(".bx-popup-applied:visible").dolPopupHide();
-	document.location.reload(true);
+	var $this = this;
+	loadDynamicBlockAuto($('.bx-tasks-tasklist-add'), window.location.href )
 }
 
 BxTasksView.prototype.setFilter = function (iListId, object) {

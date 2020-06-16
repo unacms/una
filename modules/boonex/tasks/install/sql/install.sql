@@ -425,15 +425,21 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
 ('bx_tasks_list', 'bx_tasks', 'do_submit', '_bx_tasks_form_list_entry_input_do_submit', '', 0, 'submit', '_bx_tasks_form_list_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_tasks_list', 'bx_tasks', 'title', '', '', 0, 'text', '_bx_tasks_form_list_entry_input_sys_title', '_bx_tasks_form_list_entry_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_tasks_form_list_entry_input_title_err', 'Xss', '', 1, 0);
+('bx_tasks_list', 'bx_tasks', 'title', '', '', 0, 'text', '_bx_tasks_form_list_entry_input_sys_title', '_bx_tasks_form_list_entry_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_tasks_form_list_entry_input_title_err', 'Xss', '', 1, 0),
+('bx_tasks_list', 'bx_tasks', 'do_cancel', '_bx_tasks_form_entry_input_do_cancel', '', 0, 'button', '_bx_tasks_form_entry_input_sys_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 1, 0),
+('bx_tasks_list', 'bx_tasks', 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
 
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_tasks_list_entry_add', 'title', 2147483647, 1, 1),
-('bx_tasks_list_entry_add', 'do_submit', 2147483647, 1, 2),
+('bx_tasks_list_entry_add', 'controls', 2147483647, 1, 2),
+('bx_tasks_list_entry_add', 'do_submit', 2147483647, 1, 3),
+('bx_tasks_list_entry_add', 'do_cancel', 2147483647, 1, 4),
 
 ('bx_tasks_list_entry_edit', 'title', 2147483647, 1, 1),
-('bx_tasks_list_entry_edit', 'do_submit', 2147483647, 1, 2);
+('bx_tasks_list_entry_edit', 'controls', 2147483647, 1, 2),
+('bx_tasks_list_entry_edit', 'do_submit', 2147483647, 1, 3),
+('bx_tasks_list_entry_edit', 'do_cancel', 2147483647, 1, 4);
 
 
 -- PRE-VALUES
