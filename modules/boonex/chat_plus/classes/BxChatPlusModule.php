@@ -72,7 +72,7 @@ class BxChatPlusModule extends BxDolModule
         return <<<EOS
 
 <!-- Start of Helpdesk Livechat Script -->
-<script type="text/javascript">
+<script language="javascript">
 (function(w, d, s, u) {
 	w.RocketChat = function(c) { w.RocketChat._.push(c) }; w.RocketChat._ = []; w.RocketChat.url = u;
 	var h = d.getElementsByTagName(s)[0], j = d.createElement(s);

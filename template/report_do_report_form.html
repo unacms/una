@@ -1,7 +1,7 @@
 <div class="__style_prefix__-do-form">
-	<div class="__style_prefix__-do-form-cnt bx-def-padding">
-		__form__
-        <script type="text/javascript">
+    <div class="__style_prefix__-do-form-cnt bx-def-padding">
+        __form__
+        <script language="javascript">
             $(document).ready(function () {
                 $("#__form_id__").ajaxForm({ 
                     dataType: "json",
@@ -9,7 +9,7 @@
                         bx_loading($("#__form_id__"), true);
                     },
                     success: function (oData) {
-                    	bx_loading($("#__form_id__"), false);
+                        bx_loading($("#__form_id__"), false);
 
                         $(".bx-popup-applied:visible").dolPopupHide();
 
@@ -18,5 +18,5 @@
                 });
             });
         </script>
-	</div>
+    </div>
 </div>

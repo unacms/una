@@ -78,7 +78,7 @@ class BxProfilerTemplate extends BxDolModuleTemplate
             $s .= '</tr>';
         }
         $s .= '</tbody></table>';
-        $s .= '<script type="text/javascript">$(document).ready(function(){ $(\'#'.$sId.'\').tablesorter(); });</script>';
+        $s .= '<script language="javascript">$(document).ready(function(){ $(\'#'.$sId.'\').tablesorter(); });</script>';
         return $s;
     }
 
