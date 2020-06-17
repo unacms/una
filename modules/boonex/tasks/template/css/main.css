@@ -30,7 +30,7 @@
         display:none;
 }
 .bx-tasks-task-checkbox  input[type=checkbox] + label{
-	background:url("/modules/boonex/tasks/template/images/check-circle1.svg") #FFFFFF;
+	background:url("../images/completed.svg") #FFFFFF;
 	height: 24px;
 	width: 24px;
 	display:inline-block;
@@ -39,7 +39,7 @@
 }
 
 .bx-tasks-task-checkbox input[type=checkbox]:checked + label{
-	background:url("/modules/boonex/tasks/template/images/check-circle.svg") #FFFFFF;
+	background:url("../images/uncompleted.svg") #FFFFFF;
 	height: 24px;
 	width: 24px;
 	display:inline-block;
@@ -57,12 +57,22 @@
 .bx-tasks-task .bx-badge, .bx-tasks-task .bx-badges-list{
 	display: inline-block;
 }
+.bx-tasks-tasklist .bx-tasks-task-completed{
+	display: none;
+}
+.bx-tasks-tasklist-filter-all .bx-tasks-task-completed{
+	display: flex;
+}
 .bx-tasks-tasklist-filter-completed .bx-tasks-task-uncompleted{
 	display: none;
 }
-.bx-tasks-tasklist-filter-uncompleted .bx-tasks-task-completed{
-	display: none;
+.bx-tasks-tasklist-filter-completed .bx-tasks-task-completed{
+	display: flex;
 }
+
 .ui-autocomplete{
 	z-index: 10000 !important;
+}
+.bx-media-desktop .bx-tasks-form-cnt{
+	width: 800px;
 }

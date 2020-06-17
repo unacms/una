@@ -126,7 +126,7 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
 			}
 
 			return echoJson(array(
-				 'eval' => $this->_oConfig->getJsObject('tasks') . '.reloadData(oData)',
+				 'eval' => $this->_oConfig->getJsObject('tasks') . '.reloadData(oData, ' . $iContextId . ')',
 			));
         }
         else {	
@@ -162,7 +162,7 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
 			$this->onPublished($iContentId);
 			
 			return echoJson(array(
-				 'eval' => $this->_oConfig->getJsObject('tasks') . '.reloadData(oData)',
+				 'eval' => $this->_oConfig->getJsObject('tasks') . '.reloadData(oData, ' . $iContextId . ')',
 			));
         }
         else {	
@@ -475,12 +475,11 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
 		$aVars = array();
 		$aLists = $this->_oDb->getLists($iContextId);
 		$aListsVars = array();
-		
 		$oConn = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTION']);
 		
 		$aFilterValues = array();
 		if (isset($_COOKIE[$CNF['COOKIE_SETTING_KEY']]))
-			$aFilterValues =	json_decode($_COOKIE[$CNF['COOKIE_SETTING_KEY']], true);
+			$aFilterValues = json_decode($_COOKIE[$CNF['COOKIE_SETTING_KEY']], true);
 		
 		foreach($aLists as $aList) {
 			$aTasks = $this->_oDb->getTasks($iContextId, $aList['id']);
@@ -505,13 +504,13 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
 					'object' => $this->_oConfig->getJsObject('tasks')
 				);
 			}
-			$sClass = $sCompleted = $sUncompleted = "";
+			$sClass = $sCompleted = $sAll = "";
 			if (isset($aFilterValues[$aList[$CNF['FIELD_ID']]])){
 				$sClass = $aFilterValues[$aList[$CNF['FIELD_ID']]];
 				if ($sClass == 'completed')
 					$sCompleted= 'selected';
-				if ($sClass == 'uncompleted')
-					$sUncompleted= 'selected';
+				if ($sClass == 'all')
+					$sAll = 'selected';
 			}
 			$aListsVars[] = array(
 				'title' => $aList[$CNF['FIELD_TITLE']],
@@ -522,7 +521,7 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
 				'object' => $this->_oConfig->getJsObject('tasks'),
 				'class' => $sClass,
 				'completed' => $sCompleted,
-				'uncompleted' => $sUncompleted,
+				'all' => $sAll,
 			);
 		}
 		
@@ -539,9 +538,10 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
 			'jquery-ui/jquery.ui.core.min.js',
 			'tasks.js',
     	));
+		
 		return $this->_oTemplate->getJsCode('tasks') . $this->_oTemplate->parseHtmlByName('browse_tasks.html', $aVars);
     }
-
+	
     /**
     * Common methods
     */

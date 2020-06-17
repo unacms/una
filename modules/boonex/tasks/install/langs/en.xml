@@ -66,8 +66,8 @@
 	
 	<string name="_bx_tasks_form_entry_input_sys_tasks_list"><![CDATA[Task list]]></string>
 	<string name="_bx_tasks_form_entry_input_tasks_list"><![CDATA[Task list]]></string>
-	<string name="_bx_tasks_form_profile_input_sys_initial_members"><![CDATA[Assignment]]></string>
-	<string name="_bx_tasks_form_profile_input_initial_members"><![CDATA[Assignment]]></string>
+	<string name="_bx_tasks_form_profile_input_sys_initial_members"><![CDATA[Assign to]]></string>
+	<string name="_bx_tasks_form_profile_input_initial_members"><![CDATA[Assign to]]></string>
 	<string name="_bx_tasks_form_entry_input_sys_date_due_date"><![CDATA[Due date]]></string>
 	<string name="_bx_tasks_form_entry_input_date_due_date"><![CDATA[Due date]]></string>
 	
