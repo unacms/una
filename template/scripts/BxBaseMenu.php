@@ -169,6 +169,14 @@ class BxBaseMenu extends BxDolMenu
 
         $a['link'] = isset($a['link']) ? $this->_oPermalinks->permalink($a['link']) : 'javascript:void(0);';
         $a['title_attr'] = bx_html_attribute(strip_tags($a['title']));
+
+        $bTmplVarsTarget = !empty($a['target']);
+        $aTmplVarsTarget = $bTmplVarsTarget ? array('target' => $a['target']) : array();
+        $a['bx_if:show_target'] = array(
+            'condition' => $bTmplVarsTarget,
+            'content' => $aTmplVarsTarget,
+        );
+
         $a['bx_if:image'] = array (
             'condition' => (bool)$sIconUrl,
             'content' => array('icon_url' => $sIconUrl),
