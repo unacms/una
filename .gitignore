@@ -31,3 +31,6 @@ modules/boonex/market_api
 modules/boonex/messenger
 modules/boonex/una_mods
 modules/vendor
+
+# Exclude IDE project folder
+/.idea
