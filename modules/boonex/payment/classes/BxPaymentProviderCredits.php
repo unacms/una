@@ -80,6 +80,25 @@ class BxPaymentProviderCredits extends BxBaseModPaymentProvider implements iBxBa
         return $aResult;
     }
 
+    public function getButtonSingle($iClientId, $iVendorId, $aParams = array())
+    {
+        $mixedResult = false;
+        if(empty($aParams['aCartInfo']['items']) || !is_array($aParams['aCartInfo']['items']))
+            return $mixedResult;
+
+        $oModuleQuery = BxDolModuleQuery::getInstance();
+        foreach($aParams['aCartInfo']['items'] as $aItem) {
+            $aModule = $oModuleQuery->getModuleById((int)$aItem['module_id']);
+            if($aModule['name'] != $this->_sModuleCredits)
+                continue;
+
+            $mixedResult = '';
+            break;
+        }
+
+        return $mixedResult;
+    }
+
     protected function _finalizeCheckout(&$aData)
     {
         list($iSellerId, $iPendingId) = $this->_deconstructCustomData($aData['c']);
