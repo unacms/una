@@ -67,7 +67,7 @@ class BxBaseMenuInteractive extends BxTemplMenu
 
             list ($sIcon, $sIconUrl) = $this->_getMenuIcon($a);
 
-			$a['class'] = 'bx-menu-item-inter';
+            $a['class'] = 'bx-menu-item-inter';
             $a['class_wrp_act'] = 'bx-menu-inter-hidden';
             $a['class_wrp_pas'] = '';
             if($this->_isSelected($a)) {
@@ -78,6 +78,14 @@ class BxBaseMenuInteractive extends BxTemplMenu
             $a['link'] = isset($a['link']) ? $this->_oPermalinks->permalink($a['link']) : 'javascript:void(0);';
             $a['title'] = _t($a['title']);
             $a['title_attr'] = isset($a['title_attr']) ? bx_html_attribute($a['title_attr']) : '';
+
+            $bTmplVarsTarget = !empty($a['target']);
+            $aTmplVarsTarget = $bTmplVarsTarget ? array('target' => $a['target']) : array();
+            $a['bx_if:show_target'] = array(
+                'condition' => $bTmplVarsTarget,
+                'content' => $aTmplVarsTarget,
+            );
+
             $a['bx_if:show_divider'] = array (
             	'condition' => $this->_bShowDivider,
                 'content' => array(),
