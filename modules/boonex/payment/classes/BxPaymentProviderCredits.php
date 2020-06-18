@@ -24,7 +24,7 @@ class BxPaymentProviderCredits extends BxBaseModPaymentProvider implements iBxBa
 
         parent::__construct($aConfig);
 
-        $this->_sModuleCredits = 'bx_credits';
+        $this->_sModuleCredits = $this->_oModule->_oConfig->CNF['MODULE_CREDITS'];
     }
 
     public function initializeCheckout($iPendingId, $aCartInfo, $bRecurring = false, $iRecurringDays = 0)
@@ -78,25 +78,6 @@ class BxPaymentProviderCredits extends BxBaseModPaymentProvider implements iBxBa
             ));
 
         return $aResult;
-    }
-
-    public function getButtonSingle($iClientId, $iVendorId, $aParams = array())
-    {
-        $mixedResult = false;
-        if(empty($aParams['aCartInfo']['items']) || !is_array($aParams['aCartInfo']['items']))
-            return $mixedResult;
-
-        $oModuleQuery = BxDolModuleQuery::getInstance();
-        foreach($aParams['aCartInfo']['items'] as $aItem) {
-            $aModule = $oModuleQuery->getModuleById((int)$aItem['module_id']);
-            if($aModule['name'] != $this->_sModuleCredits)
-                continue;
-
-            $mixedResult = '';
-            break;
-        }
-
-        return $mixedResult;
     }
 
     protected function _finalizeCheckout(&$aData)

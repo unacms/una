@@ -76,10 +76,37 @@ class BxPaymentGridCart extends BxBaseModPaymentGridCarts
 
             $iClientId = (int)$this->_aQueryAppend['client_id'];
             $iSellerId = (int)$this->_aQueryAppend['seller_id'];
+            $aCartInfo = $this->_oModule->getObjectCart()->getInfo(BX_PAYMENT_TYPE_SINGLE, $iClientId, $iSellerId);
 
-            $oCart = $this->_oModule->getObjectCart();
+            $bCreditsOnly = $this->_oModule->_oConfig->isCreditsOnly();
+
+            $bPayForCredits = true;
+            if(!empty($aCartInfo['items']) && is_array($aCartInfo['items']))
+                foreach($aCartInfo['items'] as $aItem) {
+                    $aModule = $this->_oModule->_oDb->getModuleById((int)$aItem['module_id']);
+                    if($aModule['name'] != $CNF['MODULE_CREDITS']) {
+                        $bPayForCredits = false;
+                        break;
+                    }
+                }
+
             $aProviders = $this->_oModule->_oDb->getVendorInfoProvidersSingle($iSellerId);
             foreach($aProviders as $aProvider) {
+                $bProviderCredits = $aProvider['name'] == $CNF['OBJECT_PP_CREDITS'];
+
+                /*
+                 * Hide all non-Credits payment providers when 'credits only' mode is enabled 
+                 * and purchasing items aren't credits.
+                 */
+                if($bCreditsOnly && !$bProviderCredits && !$bPayForCredits)
+                    continue;
+
+                /*
+                 * Hide Credits payment provider when paying for credits.
+                 */
+                if($bProviderCredits && $bPayForCredits)
+                    continue;
+
                 $sAction = $this->_getActionDefault($sType, $sActionName, array(
                     'title'=> _t('_bx_payment_grid_action_title_crt_checkout', _t($CNF['T']['TXT_CART_PROVIDER'] . $aProvider['name'])),
                     'icon' => '',
@@ -95,8 +122,6 @@ class BxPaymentGridCart extends BxBaseModPaymentGridCarts
 
                 $oProvider = $this->_oModule->getObjectProvider($aProvider['name'], $iSellerId);
                 if($oProvider !== false && method_exists($oProvider, 'getButtonSingle')) {
-                    $aCartInfo = $oCart->getInfo(BX_PAYMENT_TYPE_SINGLE, $iClientId, $iSellerId);
-
                     $aParams = array(
                         'sObjNameGrid' => $this->getObject(),
                         'aCartInfo' => $aCartInfo,

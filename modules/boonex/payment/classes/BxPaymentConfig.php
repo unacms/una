@@ -11,6 +11,8 @@
 
 class BxPaymentConfig extends BxBaseModPaymentConfig
 {
+    protected $_bCreditsOnly;
+
     function __construct($aModule)
     {
         parent::__construct($aModule);
@@ -36,6 +38,9 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
             'KEY_ARRAY_TRIAL_RECURRING' => 'trial_recurring',
 
             'OBJECT_FORM_PRELISTS_CURRENCIES' => 'bx_payment_currencies',
+            'OBJECT_PP_CREDITS' => 'credits', //Credits payment provider
+
+            'MODULE_CREDITS' => 'bx_credits',
 
             // some language keys
             'T' => array(
@@ -110,6 +115,8 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
             'chargebee_v3' => 'oPaymentProviderChargebeeV3',
             'stripe' => 'oPaymentProviderStripe'
         );
+
+        $this->_bCreditsOnly = false;
     }
 
     public function init(&$oDb)
@@ -121,6 +128,13 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         $aCurrencies = BxDolForm::getDataItems($this->CNF['OBJECT_FORM_PRELISTS_CURRENCIES'], false, BX_DATA_VALUES_ADDITIONAL);
         $this->_sCurrencyCode = (string)$this->_oDb->getParam($sPrefix . 'default_currency_code');
         $this->_sCurrencySign = !empty($this->_sCurrencyCode) && isset($aCurrencies[$this->_sCurrencyCode]) ? $aCurrencies[$this->_sCurrencyCode] : '';
+
+        $this->_bCreditsOnly = $this->_oDb->getParam($sPrefix . 'credits_only') == 'on';
+    }
+
+    public function isCreditsOnly()
+    {
+        return $this->_bCreditsOnly;
     }
 
     public function getPrice($sType, $aItem)
