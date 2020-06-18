@@ -4647,7 +4647,6 @@ CREATE TABLE IF NOT EXISTS `sys_objects_page` (
   `cache_editable` tinyint(4) NOT NULL DEFAULT '1',
   `inj_head` text NOT NULL,
   `inj_footer` text NOT NULL,
-  `meta_description` text NOT NULL,
   `deletable` tinyint(1) NOT NULL,
   `override_class_name` varchar(255) NOT NULL,
   `override_class_file` varchar(255) NOT NULL,
