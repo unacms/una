@@ -133,6 +133,8 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
                 `tp`.`meta_robots` AS `meta_robots`,
                 `tp`.`cache_lifetime` AS `cache_lifetime`,
                 `tp`.`cache_editable` AS `cache_editable`,
+                `tp`.`inj_head` AS `inj_head`,
+                `tp`.`inj_footer` AS `inj_footer`,
                 `tp`.`deletable` AS `deletable`,
                 `tp`.`override_class_name` AS `override_class_name`,
                 `tp`.`override_class_file` AS `override_class_file`" . $sSelectClause . "

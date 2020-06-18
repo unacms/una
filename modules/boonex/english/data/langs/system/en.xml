@@ -473,6 +473,8 @@
 	<string name="_adm_bp_dsc_block_title"><![CDATA[Short name for the block, visible in block header.]]></string>
 	<string name="_adm_bp_dsc_block_visible_for_levels"><![CDATA[Select user levels that can see this block]]></string>
 	<string name="_adm_bp_dsc_page_cache_lifetime"><![CDATA[Store page in cache for this number of seconds]]></string>
+        <string name="_adm_bp_dsc_page_inj_footer"><![CDATA[Just before BODY tag]]></string>
+        <string name="_adm_bp_dsc_page_inj_head"><![CDATA[In HEAD tag]]></string>
 	<string name="_adm_bp_dsc_page_meta_description"><![CDATA[Use 10-50 words to tell search engines what the page is about.]]></string>
 	<string name="_adm_bp_dsc_page_meta_keywords"><![CDATA[Use 5-10 keywords, separated by comma, associated with page content.]]></string>
 	<string name="_adm_bp_dsc_page_meta_robots"><![CDATA[Standard commands for search engine robots. Example: noindex, nofollow.]]></string>
@@ -501,6 +503,7 @@
 	<string name="_adm_bp_err_save"><![CDATA[Cannot save or nothing was changed.]]></string>
 	<string name="_adm_bp_mi_page_cache"><![CDATA[Cache]]></string>
 	<string name="_adm_bp_mi_page_cover"><![CDATA[Cover]]></string>
+        <string name="_adm_bp_mi_page_injections"><![CDATA[Injections]]></string>
 	<string name="_adm_bp_mi_page_layout"><![CDATA[Layout]]></string>
 	<string name="_adm_bp_mi_page_options"><![CDATA[Options]]></string>
 	<string name="_adm_bp_mi_page_seo"><![CDATA[SEO]]></string>
@@ -546,6 +549,8 @@
         <string name="_adm_bp_txt_page_cover_1"><![CDATA[Enabled for all]]></string>
         <string name="_adm_bp_txt_page_cover_2"><![CDATA[Enabled for visitors only]]></string>
         <string name="_adm_bp_txt_page_cover_3"><![CDATA[Enabled for members only]]></string>
+        <string name="_adm_bp_txt_page_inj_footer"><![CDATA[In Footer]]></string>
+        <string name="_adm_bp_txt_page_inj_head"><![CDATA[In Head]]></string>
 	<string name="_adm_bp_txt_page_layout"><![CDATA[Layout]]></string>
 	<string name="_adm_bp_txt_page_layout_empty"><![CDATA[Select Layout...]]></string>
 	<string name="_adm_bp_txt_page_meta_description"><![CDATA[Page (Meta) Description]]></string>

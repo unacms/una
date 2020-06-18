@@ -46,14 +46,15 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         'layout_id' => 'adm-bpl-',
     );
 
-	protected $aPageSettings = array(
-		array('name' => 'options', 'title' => '_adm_bp_mi_page_options', 'active' => 1),
-		array('name' => 'cover', 'title' => '_adm_bp_mi_page_cover', 'active' => 0),
+    protected $aPageSettings = array(
+        array('name' => 'options', 'title' => '_adm_bp_mi_page_options', 'active' => 1),
+        array('name' => 'cover', 'title' => '_adm_bp_mi_page_cover', 'active' => 0),
         array('name' => 'layout', 'title' => '_adm_bp_mi_page_layout', 'active' => 0),
         array('name' => 'visibility', 'title' => '_adm_bp_mi_page_visibility', 'active' => 0),
         array('name' => 'cache', 'title' => '_adm_bp_mi_page_cache', 'active' => 0),
-        array('name' => 'seo', 'title' => '_adm_bp_mi_page_seo', 'active' => 0)
-	);
+        array('name' => 'seo', 'title' => '_adm_bp_mi_page_seo', 'active' => 0),
+        array('name' => 'injections', 'title' => '_adm_bp_mi_page_injections', 'active' => 0)
+    );
 
     function __construct($sType = '', $sPage = '')
     {
@@ -1325,6 +1326,56 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
     protected function getSettingsSeoFields($aPage = array(), $bCreate = true)
     {
     	return $this->getSettingsSeo($aPage, $bCreate, true);
+    }
+
+    protected function getSettingsInjections($aPage = array(), $bCreate = true, $bInputsOnly = false)
+    {
+        $aForm = array(
+            'form_attrs' => array(
+                'id' => 'adm-bp-injections-seo',
+            ),
+            'params' => array (
+                'remove_form' => '1',
+                'csrf' => array(
+                    'disable' => true
+                )
+            ),
+            'inputs' => array (
+                'inj_head' => array(
+                    'type' => 'textarea',
+                    'name' => 'inj_head',
+                    'caption' => _t('_adm_bp_txt_page_inj_head'),
+                    'info' => _t('_adm_bp_dsc_page_inj_head'),
+                    'value' => isset($aPage['inj_head']) ? $aPage['inj_head'] : '',
+                    'code' => 1,
+                    'db' => array (
+                        'pass' => 'XssHtml',
+                    ),
+                ),
+                'inj_footer' => array(
+                    'type' => 'textarea',
+                    'name' => 'inj_footer',
+                    'caption' => _t('_adm_bp_txt_page_inj_footer'),
+                    'info' => _t('_adm_bp_dsc_page_inj_footer'),
+                    'value' => isset($aPage['inj_footer']) ? $aPage['inj_footer'] : '',
+                    'code' => 1,
+                    'db' => array (
+                        'pass' => 'XssHtml',
+                    ),
+                )
+            )
+        );
+
+        if($bInputsOnly)
+            return $aForm['inputs'];
+
+        $oForm = new BxTemplStudioFormView($aForm);
+        return $oForm->getCode();
+    }
+
+    protected function getSettingsInjectionsFields($aPage = array(), $bCreate = true)
+    {
+    	return $this->getSettingsInjections($aPage, $bCreate, true);
     }
 
     protected function getBlockIcon($aBlock)

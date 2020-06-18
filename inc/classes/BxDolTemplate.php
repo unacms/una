@@ -668,6 +668,20 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     }
 
     /**
+     * Set page injections.
+     *
+     * @param array $aInjections name => value injections.
+     */
+    function setPageInjections($aInjections)
+    {
+        if(empty($aInjections) || !is_array($aInjections))
+            return;
+
+        foreach($aInjections as $sName => $sValue)
+            $this->addInjection('injection_' . $sName, 'text', $sValue);
+    }
+    
+    /**
      * Set page content for some variable.
      * @param string $sVar     name of content variable
      * @param string $sContent content for $sVar variable

@@ -243,6 +243,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
 
         $oTemplate->setPageNameIndex (BX_PAGE_DEFAULT);
         $oTemplate->setPageType ($this->getType());
+        $oTemplate->setPageInjections ($this->getInjections());
         $oTemplate->setPageContent ('page_main_code', $this->getCode());
         $oTemplate->getPageCode();
     }
@@ -265,6 +266,17 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     public function getName ()
     {
     	return $this->_sObject;
+    }
+    
+    public function getInjections()
+    {
+        $aResult = array();
+
+        foreach($this->_aObject as $sKey => $sValue)
+            if(strpos($sKey, 'inj_') === 0)
+                $aResult[substr($sKey, 4)] = $sValue;
+
+        return $aResult;
     }
 
     /**
