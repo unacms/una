@@ -147,6 +147,9 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
             return MsgBox($sMsg);
 
         $oForm = $this->getObjectFormView();
+        if (!$oForm)
+            return '';
+
         $oForm->initChecker($aContentInfo);
 
         if(!empty($CNF['FIELD_TEXT']) &&  !$oForm->isInputVisible($CNF['FIELD_TEXT']))
