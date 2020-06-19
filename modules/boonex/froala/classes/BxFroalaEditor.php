@@ -15,6 +15,8 @@
  */
 class BxFroalaEditor extends BxDolEditor
 {
+    protected $_sModule;
+
     /**
      * Common initialization params
      */
@@ -95,6 +97,8 @@ EOS;
     {
         parent::__construct ($aObject);
 
+        $this->_sModule = 'bx_froala';
+
         if ($oTemplate)
             $this->_oTemplate = $oTemplate;
         else
@@ -145,14 +149,14 @@ EOS;
         	'url' => $this->_oTemplate->getCssUrl($sCss)
         ));
 
-        $oModule = BxDolModule::getInstance('bx_froala');
-        
+        $oModule = BxDolModule::getInstance($this->_sModule);
+
         // allow insert any tags for admins 
         if(isAdmin())
             $this->_sConfCustom .= 'htmlRemoveTags: [],';
         
         // initialize editor
-        $sInitEditor = $this->_replaceMarkers(self::$CONF_COMMON, array(
+        $aMarkers = array(
             'bx_var_custom_init' => $sCustomInit,
             'bx_var_custom_conf' => $this->_sConfCustom,
             'bx_var_plugins_path' => bx_js_string(BX_DOL_URL_PLUGINS_PUBLIC, BX_ESCAPE_STR_APOS),
@@ -164,6 +168,13 @@ EOS;
             'bx_var_embedly_key' => bx_js_string(getParam('sys_embedly_api_key'), BX_ESCAPE_STR_APOS),            
             'bx_var_image_upload_url' => $oModule ? BX_DOL_URL_ROOT . $oModule->_oConfig->getBaseUri() . 'upload' : '',
             'bx_var_icons_template' => getParam('bx_froala_icons_template'),
+        );
+        $sInitEditor = $this->_replaceMarkers(self::$CONF_COMMON, $aMarkers);
+
+        bx_alert($this->_sModule, 'init_editor', 0, false, array(
+            'conf_common' => self::$CONF_COMMON,
+            'markers' => $aMarkers,
+            'override_result' => &$sInitEditor
         ));
 
         if ($bDynamicMode) {
