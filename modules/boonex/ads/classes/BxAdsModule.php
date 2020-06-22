@@ -134,6 +134,16 @@ class BxAdsModule extends BxBaseModTextModule
             $aInputsAdd[$CNF['FIELD_CATEGORY']]['values_src'] = BxDolService::getSerializedService($this->_oConfig->getName(), 'get_category_options', array(0));
         }
 
+        if(isset($aInputsAdd[$CNF['FIELD_PRICE']])) {
+            $aInputsAdd[$CNF['FIELD_PRICE']]['search_type'] = 'text_range';
+            $aInputsAdd[$CNF['FIELD_PRICE']]['search_operator'] = 'between';
+        }
+
+        if(isset($aInputsAdd[$CNF['FIELD_YEAR']])) {
+            $aInputsAdd[$CNF['FIELD_YEAR']]['search_type'] = 'text_range';
+            $aInputsAdd[$CNF['FIELD_YEAR']]['search_operator'] = 'between';
+        }
+
         return parent::serviceGetSearchableFieldsExtended($aInputsAdd);
     }
 

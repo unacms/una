@@ -88,12 +88,17 @@ class BxBaseSearchExtendedForm extends BxTemplFormView
     {
         switch($aInput['type'])
         {
+            case 'text_range':
             case 'datepicker_range':
             case 'datetime_range':
                 $bValue = !empty($aInput['value']) && is_array($aInput['value']);
 
                 $aInput['name'] .= '[]';
                 $aInput['type'] = str_replace('_range', '', $aInput['type']);
+
+                if(!isset($aInput['attrs_wrapper']['class']))
+                    $aInput['attrs_wrapper']['class'] = '';
+                $aInput['attrs_wrapper']['class'] .= ' range';
 
                 $aSubInputs = array($aInput, $aInput);
                 foreach($aSubInputs as $iKey => $aSubInput) {
@@ -115,16 +120,16 @@ class BxBaseSearchExtendedForm extends BxTemplFormView
                 if(empty($aInput['value']))
                     $aInput['value'] = $iMin . '-' . $iMax;
 
-				if (!isset($aInput['attrs']['min']) && !isset($aInput['attrs']['max'])){
-					$aAttrs = array('min' => $iMin, 'max' => $iMax, 'step' => 1);
-					if(!empty($aInput['attrs']) && is_array($aInput['attrs']))
-						$aInput['attrs'] = array_merge($aInput['attrs'], $aAttrs);
-					else 
-						$aInput['attrs'] = $aAttrs;
-				}
+                if (!isset($aInput['attrs']['min']) && !isset($aInput['attrs']['max'])){
+                    $aAttrs = array('min' => $iMin, 'max' => $iMax, 'step' => 1);
+                    if(!empty($aInput['attrs']) && is_array($aInput['attrs']))
+                        $aInput['attrs'] = array_merge($aInput['attrs'], $aAttrs);
+                    else 
+                        $aInput['attrs'] = $aAttrs;
+                }
 
                 return $this->genInputStandard($aInput);
-                
+
             case 'location_radius':
                 return $this->genInputLocationRadius($aInput);
         }
@@ -155,13 +160,18 @@ class BxBaseSearchExtendedForm extends BxTemplFormView
         $sValue = bx_get($aInputRadius['name']);
         $aInputRadius['value'] = is_numeric($sValue) ? $sValue : '';
         $aInputRadius['attrs']['placeholder'] = _t('_sys_form_input_location_radius_label');
-        
-        $aVars = array (
+
+        return $this->oTemplate->parseHtmlByName('form_field_location_radius.html', array (
             'location_input' => parent::genInputLocation($aInput),
             'radius_input' => parent::genInputStandard($aInputRadius),
-        );
+        ));
+    }
+
+    function addCssJsCore ()
+    {
+        parent::addCssJsCore();
+
         $this->_addCss('search_extended.css');
-        return $this->oTemplate->parseHtmlByName('form_field_location_radius.html', $aVars);
     }
 }
 

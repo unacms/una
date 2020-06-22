@@ -318,6 +318,9 @@ class BxBaseModGeneralModule extends BxDolModule
                 if(isset($aInput['search_type']))
                     $aField['search_type'] = $aInput['search_type'];
 
+                if(isset($aInput['search_operator']))
+                    $aField['search_operator'] = $aInput['search_operator'];
+
                 $aResult[$aInput['name']] = $aField;
             }
         }
