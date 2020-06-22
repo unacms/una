@@ -274,6 +274,8 @@ class BxAdsDb extends BxBaseModTextDb
 
     protected function _getEntriesBySearchIds($aParams, &$aMethod, &$sSelectClause, &$sJoinClause, &$sWhereClause, &$sOrderClause, &$sLimitClause)
     {
+        $CNF = &$this->_oConfig->CNF;
+
         foreach($aParams['search_params'] as $sSearchParam => $aSearchParam) {
             if($aSearchParam['operator'] != 'between')
                 continue;
@@ -281,8 +283,19 @@ class BxAdsDb extends BxBaseModTextDb
             if(!is_array($aSearchParam['value']) || count($aSearchParam['value']) != 2) 
                 continue;
 
-            foreach($aSearchParam['value'] as $iIndex => $sValue)
-                $aParams['search_params'][$sSearchParam]['value'][$iIndex] = (int)$sValue;
+            foreach($aSearchParam['value'] as $iIndex => $sValue) {
+                switch($sSearchParam) {
+                    case $CNF['FIELD_PRICE']:
+                        $sValue = (float)$sValue;
+                        break;
+
+                    case $CNF['FIELD_YEAR']:
+                        $sValue = (int)$sValue;
+                        break;
+                }
+
+                $aParams['search_params'][$sSearchParam]['value'][$iIndex] = $sValue;
+            }
         }
 
         parent::_getEntriesBySearchIds($aParams, $aMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);
