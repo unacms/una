@@ -46,6 +46,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'FIELD_CATEGORY_VIEW' => 'category_view',
             'FIELD_CATEGORY_SELECT' => 'category_select',
             'FIELD_PRICE' => 'price',
+            'FIELD_YEAR' => 'year',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
             'FIELD_COVER' => 'covers',
             'FIELD_PHOTO' => 'pictures',
