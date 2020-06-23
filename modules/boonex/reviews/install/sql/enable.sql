@@ -18,7 +18,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_reviews_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', 15),
 ('bx_reviews_rss_num', '10', @iCategId, '_bx_reviews_option_rss_num', 'digit', '', '', '', 20),
 ('bx_reviews_searchable_fields', 'title,text', @iCategId, '_bx_reviews_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:10:"bx_reviews";s:6:"method";s:21:"get_searchable_fields";}', 30),
-('bx_reviews_auto_activation_for_categories', 'on', @iCategId, '_bx_reviews_option_auto_activation_for_categories', 'checkbox', '', '', '', 35);
+('bx_reviews_auto_activation_for_categories', 'on', @iCategId, '_bx_reviews_option_auto_activation_for_categories', 'checkbox', '', '', '', 35),
+('bx_reviews_voting_max_stars', '5', @iCategId, '_bx_reviews_option_voting_max_stars', 'digit', '', '', '', 40);
 
 -- PAGE: create entry
 
@@ -55,6 +56,7 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_reviews_view_entry', 2, 'bx_reviews', '', '_bx_reviews_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:"bx_reviews";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 2),
 ('bx_reviews_view_entry', 2, 'bx_reviews', '', '_bx_reviews_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:"bx_reviews";s:6:\"method\";s:13:\"entity_author\";}', 0, 0, 1, 1),
+('bx_reviews_view_entry', 3, 'bx_reviews', '', '_bx_reviews_page_block_title_entry_voting_options', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:"bx_reviews";s:6:\"method\";s:21:\"entity_voting_options\";}', 0, 0, 1, 0),
 ('bx_reviews_view_entry', 3, 'bx_reviews', '_bx_reviews_page_block_title_sys_entry_context', '_bx_reviews_page_block_title_entry_context', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:"bx_reviews";s:6:\"method\";s:14:\"entity_context\";}', 0, 0, 1, 1),
 ('bx_reviews_view_entry', 3, 'bx_reviews', '', '_bx_reviews_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:"bx_reviews";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 1, 2),
 ('bx_reviews_view_entry', 3, 'bx_reviews', '', '_bx_reviews_page_block_title_entry_location', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:"bx_reviews";s:6:\"method\";s:15:\"entity_location\";}', 0, 0, 0, 0),
@@ -438,6 +440,7 @@ INSERT INTO `sys_objects_chart` (`object`, `title`, `table`, `field_date_ts`, `f
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
 ('bx_reviews_administration', 'Sql', 'SELECT * FROM `bx_reviews_reviews` WHERE 1 ', 'bx_reviews_reviews', 'id', 'added', 'status_admin', '', 20, NULL, 'start', '', 'title,text', '', 'like', 'reports', '', 192, 'BxReviewsGridAdministration', 'modules/boonex/reviews/classes/BxReviewsGridAdministration.php'),
+('bx_reviews_voting_options', 'Sql', 'SELECT `id`, `lkey` FROM `bx_reviews_voting_options` WHERE 1 ', 'bx_reviews_voting_options', 'id', 'order', '', 20, NULL, 'start', '', '', '', '', '', '', '', 192, 'BxReviewsGridVotingOptions', 'modules/boonex/reviews/classes/BxReviewsGridVotingOptions.php'),
 ('bx_reviews_common', 'Sql', 'SELECT * FROM `bx_reviews_reviews` WHERE 1 ', 'bx_reviews_reviews', 'id', 'added', 'status', '', 20, NULL, 'start', '', 'title,text', '', 'like', '', '', 2147483647, 'BxReviewsGridCommon', 'modules/boonex/reviews/classes/BxReviewsGridCommon.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
@@ -448,6 +451,9 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_reviews_administration', 'added', '_bx_reviews_grid_column_title_adm_added', '20%', 1, '25', '', 5),
 ('bx_reviews_administration', 'author', '_bx_reviews_grid_column_title_adm_author', '20%', 0, '25', '', 6),
 ('bx_reviews_administration', 'actions', '', '20%', 0, '', '', 7),
+('bx_reviews_voting_options', 'order', '', '5%', 0, '', '', 1),
+('bx_reviews_voting_options', 'lkey', '_bx_reviews_grid_column_title_adm_name', '75%', 1, '', '', 5),
+('bx_reviews_voting_options', 'actions', '', '20%', 0, '', '', 9),
 ('bx_reviews_common', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_reviews_common', 'switcher', '_bx_reviews_grid_column_title_adm_active', '8%', 0, '', '', 2),
 ('bx_reviews_common', 'title', '_bx_reviews_grid_column_title_adm_title', '40%', 0, '35', '', 3),
@@ -461,6 +467,9 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_reviews_administration', 'single', 'delete', '_bx_reviews_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_reviews_administration', 'single', 'settings', '_bx_reviews_grid_action_title_adm_more_actions', 'cog', 1, 0, 3),
 ('bx_reviews_administration', 'single', 'audit_content', '_bx_reviews_grid_action_title_adm_audit_content', 'search', 1, 0, 4),
+('bx_reviews_voting_options', 'single', 'delete', '_bx_reviews_grid_action_title_adm_delete', 'remove', 0, 1, 1),
+('bx_reviews_voting_options', 'single', 'edit', '_bx_reviews_grid_action_title_adm_edit', 'pencil-alt',0, 0, 2),
+('bx_reviews_voting_options', 'independent', 'add', '_bx_reviews_grid_action_title_adm_add', 'plus', 0, 0, 1),
 ('bx_reviews_common', 'bulk', 'delete', '_bx_reviews_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_reviews_common', 'single', 'edit', '_bx_reviews_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
 ('bx_reviews_common', 'single', 'delete', '_bx_reviews_grid_action_title_adm_delete', 'remove', 1, 1, 2),

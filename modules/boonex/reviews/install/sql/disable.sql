@@ -38,9 +38,9 @@ DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_reviews%';
 DELETE FROM `sys_objects_chart` WHERE `object` LIKE 'bx_reviews%';
 
 -- GRIDS
-DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_reviews_administration', 'bx_reviews_common');
-DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_reviews_administration', 'bx_reviews_common');
-DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_reviews_administration', 'bx_reviews_common');
+DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_reviews_administration', 'bx_reviews_common', 'bx_reviews_voting_options');
+DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_reviews_administration', 'bx_reviews_common', 'bx_reviews_voting_options');
+DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_reviews_administration', 'bx_reviews_common', 'bx_reviews_voting_options');
 
 -- UPLOADERS
 DELETE FROM `sys_objects_uploader` WHERE `object` LIKE 'bx_reviews_%';

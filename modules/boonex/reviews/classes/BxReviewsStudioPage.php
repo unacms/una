@@ -20,6 +20,21 @@ class BxReviewsStudioPage extends BxTemplStudioModule
     	$this->_oModule = BxDolModule::getInstance($this->_sModule);
 
         parent::__construct($sModule, $sPage);
+
+        $this->aMenuItems = [
+            ['name' => 'settings', 'icon' => 'cog', 'title' => '_bx_reviews_txt_settings'],
+            ['name' => 'voting_options', 'icon' => 'star', 'title' => '_bx_reviews_txt_voting_options'],
+        ];
+    }
+
+    protected function getVoting_Options()
+    {
+        bx_import('BxTemplGrid');
+        /** @noinspection PhpParamsInspection */
+        $oGrid = BxDolGrid::getObjectInstance('bx_reviews_voting_options', BxDolStudioTemplate::getInstance());
+        if (!$oGrid) die('"bx_reviews_voting_options" grid object is not defined');
+
+        return $oGrid->getCode();
     }
 }
 

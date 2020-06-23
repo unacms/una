@@ -175,6 +175,23 @@ class BxReviewsFormEntry extends BxBaseModTextFormEntry
             'editor_id' => isset($CNF['FIELD_TEXT_ID']) ? $CNF['FIELD_TEXT_ID'] : ''
     	);
     }
+
+    protected function genCustomInputVotingOptions ($aInput)
+    {
+        return $this->_oModule->_oTemplate->getMultiVoting(isset($aInput['value']) ? $aInput['value'] : array(), true);
+    }
+}
+
+class BxReviewsFormEntryCheckerHelper extends BxDolFormCheckerHelper {
+    public function passVotingOptions ($s) {
+        if (!is_array($s))
+            return false;
+        return serialize($s);
+    }
+
+    public function displayVotingOptions ($s) {
+        return unserialize($s);
+    }
 }
 
 /** @} */

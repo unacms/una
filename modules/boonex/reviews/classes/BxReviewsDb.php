@@ -18,6 +18,16 @@ class BxReviewsDb extends BxBaseModTextDb
     {
         parent::__construct($oConfig);
     }
+
+    public function getVotingOptionLKey($iOptionId) {
+        return $this->getOne("SELECT `lkey` FROM `bx_reviews_voting_options` WHERE `id` = :id", [
+            'id' => $iOptionId,
+        ]);
+    }
+
+    public function getVotingOptions() {
+        return $this->getAll("SELECT `id`, `lkey` FROM `bx_reviews_voting_options` ORDER BY `order`");
+    }
 }
 
 /** @} */

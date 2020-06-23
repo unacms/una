@@ -62,6 +62,31 @@ class BxReviewsModule extends BxBaseModTextModule
 
         return parent::serviceCheckAllowedCommentsView($iContentId, $sObjectComments);
     }
+
+
+    /*
+     * Rating block for entry view page
+     **/
+    public function serviceEntityVotingOptions($iContentId = 0) {
+        if (!$iContentId) $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+
+        if ($iContentId) {
+            $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+            $aOptions = !empty($aContentInfo['voting_options']) ? unserialize($aContentInfo['voting_options']) : array();
+            return $this->_oTemplate->getMultiVoting($aOptions, false);
+        }
+        return '';
+    }
+
+     /*
+     * ACTIONS
+     */
+    public function actionGetReviewRatingDetails($iContentId) {
+        $sVoting = $this->serviceEntityVotingOptions($iContentId);
+
+        if (!empty($sVoting))
+            echo PopupBox('bx_reviews_rating', _t('_bx_reviews_txt_rating_details_popup_cpt'), $sVoting);
+    }
 }
 
 /** @} */

@@ -87,6 +87,7 @@ class BxReviewsConfig extends BxBaseModTextConfig
             'PARAM_NUM_RSS' => 'bx_reviews_rss_num',
             'PARAM_SEARCHABLE_FIELDS' => 'bx_reviews_searchable_fields',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_reviews_per_page_browse_showcase',
+            'PARAM_MAX_STARS' => 'bx_reviews_voting_max_stars',
 
             // objects
             'OBJECT_STORAGE' => 'bx_reviews_covers',
@@ -203,12 +204,14 @@ class BxReviewsConfig extends BxBaseModTextConfig
         
         $this->_aJsClasses = array_merge($this->_aJsClasses, array(
             'manage_tools' => 'BxReviewsManageTools',
-            'categories' => 'BxDolCategories'
+            'categories' => 'BxDolCategories',
+            'multi_voting' => 'BxReviewsVoteStars',
         ));
 
         $this->_aJsObjects = array_merge($this->_aJsObjects, array(
             'manage_tools' => 'oBxReviewsManageTools',
-             'categories' => 'oBxDolCategories'
+            'categories' => 'oBxDolCategories',
+            'multi_voting' => 'oBxReviewsVoteStars',
         ));
 
         $this->_aGridObjects = array(

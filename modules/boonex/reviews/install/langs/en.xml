@@ -315,4 +315,22 @@
     <string name="_bx_reviews_txt_poll_answer_vote_do_by"><![CDATA[Voted for]]></string>
     <string name="_bx_reviews_txt_poll_answer_vote_counter"><![CDATA[{0} votes]]></string>
     <string name="_bx_reviews_txt_poll_answer_vote_percent"><![CDATA[({0}%)]]></string>
+
+    <string name="_bx_reviews_txt_settings"><![CDATA[Settings]]></string>
+    <string name="_bx_reviews_txt_voting_options"><![CDATA[Voting Options]]></string>
+    <string name="_bx_reviews_grid_column_title_adm_name"><![CDATA[Option]]></string>
+    <string name="_bx_reviews_form_entry_input_option_name"><![CDATA[Option title]]></string>
+    <string name="_bx_reviews_form_entry_input_option_name_err"><![CDATA[Option title is required and must be at least 3 characters length]]></string>
+    <string name="_bx_reviews_popup_voting_option_title"><![CDATA[Voting Option details]]></string>
+    <string name="_bx_reviews_txt_cancel"><![CDATA[Cancel]]></string>
+    <string name="_bx_reviews_form_entry_input_sys_voting_options"><![CDATA[Voting Options]]></string>
+    <string name="_bx_reviews_form_entry_input_voting_options"><![CDATA[]]></string>
+    <string name="_bx_reviews_option_voting_max_stars"><![CDATA[Max number of stars for a voting option]]></string>
+    <string name="_bx_reviews_page_block_title_entry_voting_options"><![CDATA[Review stars]]></string>
+    <string name="_bx_reviews_txt_rating_details"><![CDATA[Details]]></string>
+    <string name="_bx_reviews_txt_rating_details_popup_cpt"><![CDATA[Rating Details]]></string>
+
+
+
+
 </resources>

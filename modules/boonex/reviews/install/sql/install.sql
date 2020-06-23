@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS `bx_reviews_reviews` (
   `published` int(11) NOT NULL,
   `thumb` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
+  `voting_options` text NOT NULL,
   `cat` int(11) NOT NULL,
   `multicat` text NOT NULL,
   `text` mediumtext NOT NULL,
@@ -330,6 +331,14 @@ CREATE TABLE IF NOT EXISTS `bx_reviews_polls_answers_votes_track` (
   KEY `vote` (`object_id`, `author_nip`)
 );
 
+-- VOTING OPTIONS
+CREATE TABLE IF NOT EXISTS `bx_reviews_voting_options` (
+    `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+    `lkey` varchar(255) NOT NULL DEFAULT '',
+    `order` int(11) NOT NULL,
+    PRIMARY KEY (`id`)
+);
+
 -- STORAGES & TRANSCODERS
 SET @sStorageEngine = (SELECT `value` FROM `sys_options` WHERE `name` = 'sys_storage_default');
 
@@ -380,7 +389,7 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 
 -- FORMS: entry (review)
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_reviews', 'bx_reviews', '_bx_reviews_form_entry', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', 'bx_reviews_reviews', 'id', '', '', 'a:2:{i:0;s:9:"do_submit";i:1;s:10:"do_publish";}', '', 0, 1, 'BxReviewsFormEntry', 'modules/boonex/reviews/classes/BxReviewsFormEntry.php');
+('bx_reviews', 'bx_reviews', '_bx_reviews_form_entry', '', 'a:1:{s:7:"enctype";s:19:"multipart/form-data";}', 'bx_reviews_reviews', 'id', '', '', 'a:2:{i:0;s:9:"do_submit";i:1;s:10:"do_publish";}', 'a:1:{s:14:"checker_helper";s:31:"BxReviewsFormEntryCheckerHelper";}', 0, 1, 'BxReviewsFormEntry', 'modules/boonex/reviews/classes/BxReviewsFormEntry.php');
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
 ('bx_reviews', 'bx_reviews_entry_add', 'bx_reviews', 0, '_bx_reviews_form_entry_display_add'),
@@ -409,7 +418,8 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_reviews', 'bx_reviews', 'attachments', '', '', 0, 'custom', '_bx_reviews_form_entry_input_sys_attachments', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_reviews', 'bx_reviews', 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_reviews', 'bx_reviews', 'anonymous', '', '', 0, 'switcher', '_sys_form_input_sys_anonymous', '_sys_form_input_anonymous', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_reviews', 'bx_reviews', 'disable_comments', '1', '', 0, 'switcher', '_bx_reviews_form_entry_input_sys_disable_comments', '_bx_reviews_form_entry_input_disable_comments', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0);
+('bx_reviews', 'bx_reviews', 'disable_comments', '1', '', 0, 'switcher', '_bx_reviews_form_entry_input_sys_disable_comments', '_bx_reviews_form_entry_input_disable_comments', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
+('bx_reviews', 'bx_reviews', 'voting_options', '', '', 0, 'custom', '_bx_reviews_form_entry_input_sys_voting_options', '_bx_reviews_form_entry_input_voting_options', '', 0, 0, 0, '', '', '', '', '', '', 'VotingOptions', '', 1, 0);
 
 
 
@@ -418,17 +428,18 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_reviews_entry_add', 'title', 2147483647, 1, 2),
 ('bx_reviews_entry_add', 'cat', 2147483647, 1, 3),
 ('bx_reviews_entry_add', 'text', 2147483647, 1, 4),
-('bx_reviews_entry_add', 'attachments', 2147483647, 1, 5),
-('bx_reviews_entry_add', 'pictures', 2147483647, 1, 6),
-('bx_reviews_entry_add', 'videos', 2147483647, 1, 7),
-('bx_reviews_entry_add', 'files', 2147483647, 1, 8),
-('bx_reviews_entry_add', 'polls', 2147483647, 1, 9),
-('bx_reviews_entry_add', 'covers', 2147483647, 1, 10),
-('bx_reviews_entry_add', 'allow_view_to', 2147483647, 1, 11),
-('bx_reviews_entry_add', 'location', 2147483647, 1, 12),
-('bx_reviews_entry_add', 'published', 192, 1, 13),
-('bx_reviews_entry_add', 'disable_comments', 192, 1, 14),
-('bx_reviews_entry_add', 'do_publish', 2147483647, 1, 15),
+('bx_reviews_entry_add', 'voting_options', 2147483647, 1, 5),
+('bx_reviews_entry_add', 'attachments', 2147483647, 1, 6),
+('bx_reviews_entry_add', 'pictures', 2147483647, 1, 7),
+('bx_reviews_entry_add', 'videos', 2147483647, 1, 8),
+('bx_reviews_entry_add', 'files', 2147483647, 1, 9),
+('bx_reviews_entry_add', 'polls', 2147483647, 1, 10),
+('bx_reviews_entry_add', 'covers', 2147483647, 1, 11),
+('bx_reviews_entry_add', 'allow_view_to', 2147483647, 1, 12),
+('bx_reviews_entry_add', 'location', 2147483647, 1, 13),
+('bx_reviews_entry_add', 'published', 192, 0, 14),
+('bx_reviews_entry_add', 'disable_comments', 192, 0, 15),
+('bx_reviews_entry_add', 'do_publish', 2147483647, 1, 16),
 
 ('bx_reviews_entry_delete', 'delete_confirm', 2147483647, 1, 1),
 ('bx_reviews_entry_delete', 'do_submit', 2147483647, 1, 2),
@@ -436,24 +447,25 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_reviews_entry_edit', 'do_publish', 2147483647, 0, 1),
 ('bx_reviews_entry_edit', 'delete_confirm', 2147483647, 0, 2),
 ('bx_reviews_entry_edit', 'title', 2147483647, 1, 3),
-('bx_reviews_entry_edit', 'cat', 2147483647, 1, 4),
-('bx_reviews_entry_edit', 'text', 2147483647, 1, 5),
-('bx_reviews_entry_edit', 'attachments', 2147483647, 1, 6),
-('bx_reviews_entry_edit', 'pictures', 2147483647, 1, 7),
-('bx_reviews_entry_edit', 'videos', 2147483647, 1, 8),
-('bx_reviews_entry_edit', 'files', 2147483647, 1, 9),
-('bx_reviews_entry_edit', 'polls', 2147483647, 1, 10),
-('bx_reviews_entry_edit', 'covers', 2147483647, 1, 11),
-('bx_reviews_entry_edit', 'allow_view_to', 2147483647, 1, 12),
-('bx_reviews_entry_edit', 'location', 2147483647, 1, 13),
-('bx_reviews_entry_edit', 'disable_comments', 192, 1, 14),
-('bx_reviews_entry_edit', 'published', 192, 1, 15),
-('bx_reviews_entry_edit', 'do_submit', 2147483647, 1, 16),
+('bx_reviews_entry_edit', 'voting_options', 2147483647, 1, 4),
+('bx_reviews_entry_edit', 'cat', 2147483647, 1, 5),
+('bx_reviews_entry_edit', 'text', 2147483647, 1, 6),
+('bx_reviews_entry_edit', 'attachments', 2147483647, 1, 7),
+('bx_reviews_entry_edit', 'pictures', 2147483647, 1, 8),
+('bx_reviews_entry_edit', 'videos', 2147483647, 1, 9),
+('bx_reviews_entry_edit', 'files', 2147483647, 1, 10),
+('bx_reviews_entry_edit', 'polls', 2147483647, 1, 11),
+('bx_reviews_entry_edit', 'covers', 2147483647, 1, 12),
+('bx_reviews_entry_edit', 'allow_view_to', 2147483647, 1, 13),
+('bx_reviews_entry_edit', 'location', 2147483647, 1, 14),
+('bx_reviews_entry_edit', 'disable_comments', 192, 0, 15),
+('bx_reviews_entry_edit', 'published', 192, 0, 16),
+('bx_reviews_entry_edit', 'do_submit', 2147483647, 1, 17),
 
 ('bx_reviews_entry_view', 'cat', 2147483647, 1, 1),
 ('bx_reviews_entry_view', 'added', 2147483647, 1, 2),
 ('bx_reviews_entry_view', 'changed', 2147483647, 1, 3),
-('bx_reviews_entry_view', 'published', 192, 1, 4);
+('bx_reviews_entry_view', 'published', 192, 0, 4);
 
 -- FORMS: poll
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
@@ -571,4 +583,3 @@ INSERT INTO `sys_std_widgets` (`page_id`, `module`, `url`, `click`, `icon`, `cap
 (@iPageId, 'bx_reviews', '{url_studio}module.php?name=bx_reviews', '', 'bx_reviews@modules/boonex/reviews/|std-icon.svg', '_bx_reviews', '', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_actions";s:6:"params";a:0:{}s:5:"class";s:18:"TemplStudioModules";}');
 INSERT INTO `sys_std_pages_widgets` (`page_id`, `widget_id`, `order`) VALUES
 (@iParentPageId, LAST_INSERT_ID(), IF(ISNULL(@iParentPageOrder), 1, @iParentPageOrder + 1));
-

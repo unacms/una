@@ -1,1 +1,5 @@
 @import url(../../../../base/text/template/css/main.css);
+
+.bx-reviews-voting-options .bx-def-margin-bottom:last-of-type {
+    margin-bottom: 0px;
+}
