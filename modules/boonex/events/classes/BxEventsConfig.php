@@ -129,7 +129,11 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             
             'BADGES_AVALIABLE' => true,
             'INVITES_KEYS_LIFETIME' => 86400,
+<<<<<<< HEAD
             'ENABLE_FOR_CONTEXT_IN_MODULES' => array('bx_groups'),
+=======
+            'ENABLE_FOR_CONTEXT_IN_MODULES' => array('bx_events'),
+>>>>>>> b21f4dc73... Ticket #2841
 
             'EMAIL_INVITATION' => 'bx_events_invitation',
             'EMAIL_JOIN_REQUEST' => 'bx_events_join_request',
@@ -184,6 +188,8 @@ class BxEventsConfig extends BxBaseModGroupsConfig
                 'menu_item_title_unfriend_reject_request' => '_bx_events_menu_item_title_unfriend_reject_request',
                 'menu_item_title_befriend' => '_bx_events_menu_item_title_befriend',
                 'menu_item_title_unfriend' => '_bx_events_menu_item_title_unfriend',
+                'menu_item_title_subscribe' => '_bx_events_menu_item_title_subscribe',
+                'menu_item_title_unsubscribe' => '_bx_events_menu_item_title_unsubscribe',
             	'grid_action_err_delete' => '_bx_events_grid_action_err_delete',
             	'grid_txt_account_manager' => '_bx_events_grid_txt_account_manager',
 				'filter_item_active' => '_bx_events_grid_filter_item_title_adm_active',
