@@ -391,6 +391,18 @@ class BxDolConnection extends BxDolFactory implements iBxDolFactoryObject
     {
         return $this->_oQuery->getConnectedContent($iInitiator, $isMutual, $iStart, $iLimit, $iOrder);
     }
+    
+    /**
+     * Get connected content IDs for specified type
+     * @param $iInitiator initiator of the connection
+     * @param $sType type of content
+     * @param $isMutual get mutual connections only
+     * @return array of available connections
+     */
+    public function getConnectedContentByType ($iInitiator, $sType, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE)
+    {
+        return $this->_oQuery->getConnectedContentByType($iInitiator, $sType, $isMutual, $iStart, $iLimit, $iOrder);
+    }
 
     /**
      * Get connected initiators IDs
