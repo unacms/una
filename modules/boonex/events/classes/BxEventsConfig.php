@@ -132,7 +132,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             
             'BADGES_AVALIABLE' => true,
             'INVITES_KEYS_LIFETIME' => 86400,
-            'ENABLE_FOR_CONTEXT_IN_MODULES' => array('bx_events'),
+            'ENABLE_FOR_CONTEXT_IN_MODULES' => array('bx_groups', 'bx_spaces'),
 
             'EMAIL_INVITATION' => 'bx_events_invitation',
             'EMAIL_JOIN_REQUEST' => 'bx_events_join_request',
