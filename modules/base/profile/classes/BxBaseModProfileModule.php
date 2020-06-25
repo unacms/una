@@ -492,7 +492,6 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
             else
                 $a = array_merge($a, $o->getConnectedContentByType($iProfileId, $this->getName()));
         }
-        echo  $this->getName().'xxx';
         $a = array_unique($a);
         $aRet = array();
         foreach ($a as $iConnectedProfileId) {
