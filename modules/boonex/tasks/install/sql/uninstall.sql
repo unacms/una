@@ -49,8 +49,6 @@ DELETE FROM `sys_objects_feature` WHERE `name` = 'bx_tasks';
 -- CONTENT INFO
 DELETE FROM `sys_objects_content_info` WHERE `name` IN ('bx_tasks', 'bx_tasks_cmts');
 
-DELETE FROM `sys_content_info_grids` WHERE `object` IN ('bx_tasks');
-
 -- SEARCH EXTENDED
 DELETE FROM `sys_objects_search_extended` WHERE `module` = 'bx_tasks';
 

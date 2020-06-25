@@ -83,14 +83,6 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_tasks_context', 1, 'bx_tasks', '_bx_tasks_page_block_title_sys_entries_in_context', '_bx_tasks_page_block_title_entries_in_context', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_tasks\";s:6:\"method\";s:14:\"browse_context\";}', 0, 0, 1, 1),
 ('bx_tasks_context', 1, 'bx_tasks', '_bx_tasks_page_block_title_sys_calendar_in_context', '_bx_tasks_page_block_title_calendar_in_context', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:8:"bx_tasks";s:6:"method";s:8:"calendar";s:12:"ignore_cache";b:1;s:6:"params";a:1:{i:0;a:1:{s:10:"context_id";s:12:"{profile_id}";}}}', 0, 0, 1, 2);
 
--- PAGE: module manage all
-INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_tasks_administration', '_bx_tasks_page_title_sys_manage_administration', '_bx_tasks_page_title_manage', 'bx_tasks', 5, 192, 1, 'tasks-administration', 'page.php?i=tasks-administration', '', '', '', 0, 1, 0, 'BxTasksPageBrowse', 'modules/boonex/tasks/classes/BxTasksPageBrowse.php');
-
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
-('bx_tasks_administration', 1, 'bx_tasks', '_bx_tasks_page_block_title_system_manage_administration', '_bx_tasks_page_block_title_manage', 11, 192, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_tasks\";s:6:\"method\";s:12:\"manage_tools\";s:6:\"params\";a:1:{i:0;s:14:\"administration\";}}', 0, 1, 0);
-
-
 -- MENU: create task form attachments (link, photo, video, etc)
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -160,11 +152,6 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_tasks_view_submenu', 'bx_tasks', 'view-task', '_bx_tasks_menu_item_title_system_view_entry', '_bx_tasks_menu_item_title_view_entry_submenu_entry', 'page.php?i=view-task&id={content_id}', '', '', '', '', 2147483647, 0, 0, 1),
 ('bx_tasks_view_submenu', 'bx_tasks', 'view-task-comments', '_bx_tasks_menu_item_title_system_view_entry_comments', '_bx_tasks_menu_item_title_view_entry_submenu_comments', 'page.php?i=view-task-comments&id={content_id}', '', '', '', '', 2147483647, 0, 0, 2);
-
--- MENU: dashboard manage tools
-SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_account_dashboard_manage_tools', 'bx_tasks', 'tasks-administration', '_bx_tasks_menu_item_title_system_admt_tasks', '_bx_tasks_menu_item_title_admt_tasks', 'page.php?i=tasks-administration', '', '_self', 'tasks', 'a:2:{s:6:"module";s:8:"bx_tasks";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 192, 1, 0, @iManageMenuOrder + 1);
 
 -- MENU: add menu item to profiles modules (trigger* menu sets are processed separately upon modules enable/disable)
 
@@ -269,27 +256,6 @@ SET @iMaxOrderCharts = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_objects_chart`)
 INSERT INTO `sys_objects_chart` (`object`, `title`, `table`, `field_date_ts`, `field_date_dt`, `field_status`, `query`, `active`, `order`, `class_name`, `class_file`) VALUES
 ('bx_tasks_growth', '_bx_tasks_chart_growth', 'bx_tasks_tasks', 'added', '', 'status,status_admin', '', 1, @iMaxOrderCharts + 1, 'BxDolChartGrowth', ''),
 ('bx_tasks_growth_speed', '_bx_tasks_chart_growth_speed', 'bx_tasks_tasks', 'added', '', 'status,status_admin', '', 1, @iMaxOrderCharts + 2, 'BxDolChartGrowthSpeed', '');
-
--- GRIDS: moderation tools
-INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('bx_tasks_administration', 'Sql', 'SELECT * FROM `bx_tasks_tasks` WHERE 1 ', 'bx_tasks_tasks', 'id', 'added', 'status_admin', '', 20, NULL, 'start', '', 'title,text', '', 'like', 'reports', '', 192, 'BxTasksGridAdministration', 'modules/boonex/tasks/classes/BxTasksGridAdministration.php');
-
-INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
-('bx_tasks_administration', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
-('bx_tasks_administration', 'switcher', '_bx_tasks_grid_column_title_adm_active', '8%', 0, '', '', 2),
-('bx_tasks_administration', 'reports', '_sys_txt_reports_title', '5%', 0, '', '', 3),
-('bx_tasks_administration', 'title', '_bx_tasks_grid_column_title_adm_title', '25%', 0, '25', '', 4),
-('bx_tasks_administration', 'added', '_bx_tasks_grid_column_title_adm_added', '20%', 1, '25', '', 5),
-('bx_tasks_administration', 'author', '_bx_tasks_grid_column_title_adm_author', '20%', 0, '25', '', 6),
-('bx_tasks_administration', 'actions', '', '20%', 0, '', '', 7);
-
-
-INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
-('bx_tasks_administration', 'bulk', 'delete', '_bx_tasks_grid_action_title_adm_delete', '', 0, 1, 1),
-('bx_tasks_administration', 'single', 'edit', '_bx_tasks_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
-('bx_tasks_administration', 'single', 'delete', '_bx_tasks_grid_action_title_adm_delete', 'remove', 1, 1, 2),
-('bx_tasks_administration', 'single', 'settings', '_bx_tasks_grid_action_title_adm_more_actions', 'cog', 1, 0, 3),
-('bx_tasks_administration', 'single', 'audit_content', '_bx_tasks_grid_action_title_adm_audit_content', 'search', 1, 0, 4);
 
 -- UPLOADERS
 
