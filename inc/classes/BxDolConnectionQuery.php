@@ -155,6 +155,17 @@ class BxDolConnectionQuery extends BxDolDb
         	'initiator' => $iInitiator
         ));
     }
+    
+    public function getConnectedContentByType ($iInitiator, $sType, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE)
+    {
+        $sWhere = " AND `c`.`initiator` = :initiator";
+        $sQuery = $this->_getConnectionsQuery($sWhere, 'INNER JOIN `sys_profiles` `p` ON `p`.`id` = `c`.`content` AND `p`.`type` = :type', '`c`.`content`', $isMutual, $iStart, $iLimit, $iOrder);
+       
+        return $this->getColumn($sQuery, array(
+        	'initiator' => $iInitiator,
+            'type' => $sType
+        ));
+    }
 
     public function getConnectedInitiators ($iContent, $isMutual = false, $iStart = 0, $iLimit = BX_CONNECTIONS_LIST_LIMIT, $iOrder = BX_CONNECTIONS_ORDER_NONE)
     {

@@ -24,7 +24,7 @@ class BxPaymentProviderCredits extends BxBaseModPaymentProvider implements iBxBa
 
         parent::__construct($aConfig);
 
-        $this->_sModuleCredits = 'bx_credits';
+        $this->_sModuleCredits = $this->_oModule->_oConfig->CNF['MODULE_CREDITS'];
     }
 
     public function initializeCheckout($iPendingId, $aCartInfo, $bRecurring = false, $iRecurringDays = 0)

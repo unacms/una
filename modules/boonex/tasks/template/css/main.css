@@ -1,8 +1,19 @@
 @import url(../../../../base/text/template/css/main.css);
-
-.bx-tasks-tasklist-title {
-    font-weight: bold;
+.bx-tasks-tasklist .bx-def-color-bg-hl{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center
 }
+.bx-tasks-tasklist-title {
+	font-weight: bold;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: inline-block;
+	max-width: calc(100% - 220px);
+}
+
 .bx-task-due-date {
     color: red;
 }
@@ -19,9 +30,7 @@
 .bx-tasks-members div.bx-base-pofile-unit-wo-info {
     margin-left: -1rem;
 }
-.bx-tasks-tasklist-actions{
-	float:right;
-}
+
 .bx-tasks-task-checkbox{
     display: inline-block;
 	height: 24px;
@@ -47,8 +56,8 @@
 }
 .bx-tasks-task{
 	display: flex;
-	flex-grow: 1;
-	align-items: center;
+	justify-content: space-between;
+	align-items: center
 }
 .bx-tasks-members{
 	flex-grow: 2;
@@ -69,7 +78,16 @@
 .bx-tasks-tasklist-filter-completed .bx-tasks-task-completed{
 	display: flex;
 }
-
+.bx-tasks-tasklist .bx-def-border-bottom:last-child{
+	border: none;
+}
+.bx-tasks-task .bx-tasks-task-name{
+	max-width: 50%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: inline-block;
+}
 .ui-autocomplete{
 	z-index: 10000 !important;
 }

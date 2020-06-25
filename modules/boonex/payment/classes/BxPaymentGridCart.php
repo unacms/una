@@ -72,56 +72,85 @@ class BxPaymentGridCart extends BxBaseModPaymentGridCarts
 
     	$sActions = '';
     	if($sType == 'bulk' && !empty($this->_aQueryAppend['seller_id'])) {
-    		$sActionName = 'checkout';
+            $sActionName = 'checkout';
 
-    		$iClientId = (int)$this->_aQueryAppend['client_id'];
+            $iClientId = (int)$this->_aQueryAppend['client_id'];
             $iSellerId = (int)$this->_aQueryAppend['seller_id'];
+            $aCartInfo = $this->_oModule->getObjectCart()->getInfo(BX_PAYMENT_TYPE_SINGLE, $iClientId, $iSellerId);
 
-            $oCart = $this->_oModule->getObjectCart();
-    		$aProviders = $this->_oModule->_oDb->getVendorInfoProvidersSingle($iSellerId);
-    		foreach($aProviders as $aProvider) {
-				$sAction = $this->_getActionDefault($sType, $sActionName, array(
-					'title'=> _t('_bx_payment_grid_action_title_crt_checkout', _t($CNF['T']['TXT_CART_PROVIDER'] . $aProvider['name'])),
-	    			'icon' => '',
-					'icon_only' => 0,
-	    			'confirm' => 0,
-					'attr' => array(
-						'bx_grid_action_' . $sType => $sActionName,
-						'bx_grid_action_append' => json_encode(array('provider' => $aProvider['name'])),
-						'bx_grid_action_confirm' => 0,
-						'bx_grid_action_reset_paginate' => 0,
-					)
-				), $isSmall, $isDisabled, $aRow);
+            $bCreditsOnly = $this->_oModule->_oConfig->isCreditsOnly();
 
-    			$oProvider = $this->_oModule->getObjectProvider($aProvider['name'], $iSellerId);
-    			if($oProvider !== false && method_exists($oProvider, 'getButtonSingle')) {
-    			    $aParams = array(
-    					'sObjNameGrid' => $this->getObject()
-    				);
+            $bPayForCredits = true;
+            if(!empty($aCartInfo['items']) && is_array($aCartInfo['items']))
+                foreach($aCartInfo['items'] as $aItem) {
+                    $aModule = $this->_oModule->_oDb->getModuleById((int)$aItem['module_id']);
+                    if($aModule['name'] != $CNF['MODULE_CREDITS']) {
+                        $bPayForCredits = false;
+                        break;
+                    }
+                }
 
-    			    $aCartInfo = $oCart->getInfo(BX_PAYMENT_TYPE_SINGLE, $iClientId, $iSellerId);
-    			    if(!empty($aCartInfo['items_price']) && !empty($aCartInfo['items']) && is_array($aCartInfo['items'])) {
-    			        $aTitles = array();
-    			        foreach ($aCartInfo['items'] as $aItem)
-    			            $aTitles[] = $aItem['title'];
-    
-    			        $aParams = array_merge($aParams, array(
-    			            'iAmount' => (int)round(100 * (float)$aCartInfo['items_price']),
-    			        	'sItemTitle' => implode(', ', $aTitles)
-    			        ));
-    			    }
+            $aProviders = $this->_oModule->_oDb->getVendorInfoProvidersSingle($iSellerId);
+            foreach($aProviders as $aProvider) {
+                $bProviderCredits = $aProvider['name'] == $CNF['OBJECT_PP_CREDITS'];
 
-    				$sAction = $oProvider->getButtonSingle($iClientId, $iSellerId, $aParams);
-    			}
+                /*
+                 * Hide all non-Credits payment providers when 'credits only' mode is enabled 
+                 * and purchasing items aren't credits.
+                 */
+                if($bCreditsOnly && !$bProviderCredits && !$bPayForCredits)
+                    continue;
 
-    			$sActions .= $sAction;
-    		}
+                /*
+                 * Hide Credits payment provider when paying for credits.
+                 */
+                if($bProviderCredits && $bPayForCredits)
+                    continue;
+
+                $sAction = $this->_getActionDefault($sType, $sActionName, array(
+                    'title'=> _t('_bx_payment_grid_action_title_crt_checkout', _t($CNF['T']['TXT_CART_PROVIDER'] . $aProvider['name'])),
+                    'icon' => '',
+                    'icon_only' => 0,
+                    'confirm' => 0,
+                    'attr' => array(
+                        'bx_grid_action_' . $sType => $sActionName,
+                        'bx_grid_action_append' => json_encode(array('provider' => $aProvider['name'])),
+                        'bx_grid_action_confirm' => 0,
+                        'bx_grid_action_reset_paginate' => 0,
+                    )
+                ), $isSmall, $isDisabled, $aRow);
+
+                $oProvider = $this->_oModule->getObjectProvider($aProvider['name'], $iSellerId);
+                if($oProvider !== false && method_exists($oProvider, 'getButtonSingle')) {
+                    $aParams = array(
+                        'sObjNameGrid' => $this->getObject(),
+                        'aCartInfo' => $aCartInfo,
+                    );
+
+                    if(!empty($aCartInfo['items_price']) && !empty($aCartInfo['items']) && is_array($aCartInfo['items'])) {
+                        $aTitles = array();
+                        foreach ($aCartInfo['items'] as $aItem)
+                            $aTitles[] = $aItem['title'];
+
+                        $aParams = array_merge($aParams, array(
+                            'iAmount' => (int)round(100 * (float)$aCartInfo['items_price']),
+                            'sItemTitle' => implode(', ', $aTitles)
+                        ));
+                    }
+
+                    $mixedButton = $oProvider->getButtonSingle($iClientId, $iSellerId, $aParams);
+                    if($mixedButton !== false)
+                        $sAction = $mixedButton;
+                }
+
+                $sActions .= $sAction;
+            }
     	}
 
     	return $sActions . parent::_getActions ($sType, $sActionData, $isSmall, $isDisabled, $isPermanentState, $aRow);
     }
 
-	protected function _getDataArray($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    protected function _getDataArray($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
 		if(empty($this->_aQueryAppend['client_id']) || empty($this->_aQueryAppend['seller_id']))
 			return array();

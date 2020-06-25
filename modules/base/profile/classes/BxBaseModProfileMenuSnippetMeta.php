@@ -170,6 +170,8 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
 
     protected function _getMenuItemProfilesSubscriptionsTitle($sAction, &$oConnection)
     {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
         $iProfile = bx_get_logged_profile_id();
         $iContentProfile = $this->_oContentProfile->id();
 
@@ -177,11 +179,11 @@ class BxBaseModProfileMenuSnippetMeta extends BxBaseModGeneralMenuSnippetMeta
         if($oConnection->isConnected($iProfile, $iContentProfile))
             $aResult = array(
                 'add' => '',
-                'remove' => _t('_sys_menu_item_title_sm_unsubscribe'),
+                'remove' => _t(!empty($CNF['T']['menu_item_title_unsubscribe']) ? $CNF['T']['menu_item_title_unsubscribe'] : '_sys_menu_item_title_sm_unsubscribe'),
             );
         else
             $aResult = array(
-                'add' => _t('_sys_menu_item_title_sm_subscribe'),
+                'add' => _t(!empty($CNF['T']['menu_item_title_subscribe']) ? $CNF['T']['menu_item_title_subscribe'] : '_sys_menu_item_title_sm_subscribe'),
                 'remove' => '',
             );
 
