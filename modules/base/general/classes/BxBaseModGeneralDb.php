@@ -83,7 +83,7 @@ class BxBaseModGeneralDb extends BxDolModuleDb
         $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . $CNF['TABLE_ENTRIES'] . "` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
 		return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
-    
+
     public function getEntriesNumByContext ($iProfileId)
     {
         $sQuery = $this->prepare ("SELECT COUNT(*) FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` WHERE `" . $this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO'] . "` = ?", - $iProfileId);

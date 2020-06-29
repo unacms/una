@@ -1,1 +1,23 @@
 @import url(../../../../base/text/template/css/main.css);
+
+.bx-course-controls-1 {
+    float:left;
+}
+
+.bx-course-controls-2 {
+    float:right;
+}
+
+.bx-course-classes .bx-form-input-wrapper-custom {
+    min-height: 1.2rem;
+}
+
+.bx-classes-btn-done {
+    display:none;
+}
+.bx-course-reordering-mode .bx-classes-btn-done {
+    display:block;
+}
+.bx-course-reordering-mode .bx-btn:not(.bx-classes-btn-done) {
+    display:none;
+}

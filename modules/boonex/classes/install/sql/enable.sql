@@ -98,6 +98,10 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_classes_administration', 1, 'bx_classes', '_bx_classes_page_block_title_system_manage_administration', '_bx_classes_page_block_title_manage', 11, 192, 'service', 'a:3:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:12:\"manage_tools\";s:6:\"params\";a:1:{i:0;s:14:\"administration\";}}', 0, 1, 0);
 
+-- PAGES: add page block to profiles modules (trigger* page objects are processed separately upon modules enable/disable)
+SET @iPBCellGroup = 4;
+INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
+('trigger_page_group_view_entry', @iPBCellGroup, 'bx_classes', '_bx_classes_page_block_title_group_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_classes";s:6:"method";s:18:"classes_in_context";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 0, 0);
 
 -- MENU: add to "add content" menu
 

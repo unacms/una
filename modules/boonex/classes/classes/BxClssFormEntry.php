@@ -15,6 +15,7 @@
 class BxClssFormEntry extends BxBaseModTextFormEntry
 {
     protected $_sGhostTemplateCover = 'form_ghost_template_cover.html';
+    protected $_oProfileContext = null;
 	
     public function __construct($aInfo, $oTemplate = false)
     {
@@ -22,6 +23,18 @@ class BxClssFormEntry extends BxBaseModTextFormEntry
         parent::__construct($aInfo, $oTemplate);
 
         $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $iProfileId = (int)bx_get('allow_view_to');
+        if ($iProfileId >= 0)
+            $iProfileId = (int)bx_get('id') ? bx_get('id') : bx_get('profile_id');
+        $iProfileId = abs($iProfileId);
+
+        if ($iProfileId)
+            $this->_oProfileContext = BxDolProfile::getInstance($iProfileId);
+
+        if (isset($this->aInputs[$CNF['FIELD_MODULE']]) && $this->_oProfileContext) {
+            $this->aInputs[$CNF['FIELD_MODULE']]['values'] = $this->_oModule->_oDb->getEntriesModulesByContext($this->_oProfileContext->id(), true);
+        }
 
     	if(isset($CNF['FIELD_COVER']) && isset($this->aInputs[$CNF['FIELD_COVER']])) {
             if($this->_oModule->checkAllowedSetThumb() === CHECK_ACTION_RESULT_ALLOWED) {
@@ -174,6 +187,16 @@ class BxClssFormEntry extends BxBaseModTextFormEntry
             'content_id' => (int)$this->aInputs[$CNF['FIELD_PHOTO']]['content_id'],
             'editor_id' => isset($CNF['FIELD_TEXT_ID']) ? $CNF['FIELD_TEXT_ID'] : ''
     	);
+    }
+
+    function getCode($bDynamicMode = false)
+    {
+        if (!$this->_oProfileContext)
+            return MsgBox(_t('_bx_classes_txt_err_cant_add_class_without_context'));
+
+        // TODO: check permission for adding to context
+
+        return parent::getCode($bDynamicMode);
     }
 }
 
