@@ -208,7 +208,7 @@ class BxClssModule extends BxBaseModTextModule
                 foreach ($aClasses as $aClass) {
                     $sContent .= $this->_oTemplate->parseHtmlByName('classes_class_row.html', array(
                         'id' => $aClass['id'],
-                        'title' => $aClass['title'],
+                        'title' => $aClass['title'] . '(' . ($this->serviceIsClassCompleted($aClass['id']) ? 'completed' : 'not completed') . ')',
                         'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oConfig->CNF['URI_VIEW_ENTRY'] . '&id=' . $aClass['id']),
                     ));
                 }
@@ -242,6 +242,13 @@ class BxClssModule extends BxBaseModTextModule
         ));
     }
 
+    public function serviceIsClassCompleted ($iClassId, $iProfileId = 0)
+    {
+        if (!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+
+        return $this->_oDb->isClassCompleted($iClassId, $iProfileId);
+    }
 }
 
 /** @} */

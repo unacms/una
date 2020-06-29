@@ -24,18 +24,6 @@ class BxClssFormEntry extends BxBaseModTextFormEntry
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $iProfileId = (int)bx_get('allow_view_to');
-        if ($iProfileId >= 0)
-            $iProfileId = (int)bx_get('id') ? bx_get('id') : bx_get('profile_id');
-        $iProfileId = abs($iProfileId);
-
-        if ($iProfileId)
-            $this->_oProfileContext = BxDolProfile::getInstance($iProfileId);
-
-        if (isset($this->aInputs[$CNF['FIELD_MODULE']]) && $this->_oProfileContext) {
-            $this->aInputs[$CNF['FIELD_MODULE']]['values'] = $this->_oModule->_oDb->getEntriesModulesByContext($this->_oProfileContext->id(), true);
-        }
-
     	if(isset($CNF['FIELD_COVER']) && isset($this->aInputs[$CNF['FIELD_COVER']])) {
             if($this->_oModule->checkAllowedSetThumb() === CHECK_ACTION_RESULT_ALLOWED) {
                 $this->aInputs[$CNF['FIELD_COVER']]['storage_object'] = $CNF['OBJECT_STORAGE'];
@@ -111,6 +99,29 @@ class BxClssFormEntry extends BxBaseModTextFormEntry
         }
 
         parent::initChecker ($aValues, $aSpecificValues);
+
+        if (isset($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']])) {
+
+            // try to get context from form POST
+            $iProfileId = (int)bx_get($CNF['FIELD_ALLOW_VIEW_TO']);
+
+            // try to get context from the form saved value (in case of "edit" form)
+            if ($iProfileId >= 0 && $this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]['value'] < 0)
+                $iProfileId = $this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]['value'];
+
+            // try to get context from GET param (in case of "create" form)
+            if ($iProfileId >= 0)
+                $iProfileId = bx_get('profile_id');
+
+            $iProfileId = abs($iProfileId);
+
+            if ($iProfileId)
+                $this->_oProfileContext = BxDolProfile::getInstance($iProfileId);
+
+            if (isset($this->aInputs[$CNF['FIELD_MODULE']]) && $this->_oProfileContext) {
+                $this->aInputs[$CNF['FIELD_MODULE']]['values'] = $this->_oModule->_oDb->getEntriesModulesByContext($this->_oProfileContext->id(), true);
+            }
+        }
     }
 
     public function insert ($aValsToAdd = array(), $isIgnore = false)
@@ -191,7 +202,7 @@ class BxClssFormEntry extends BxBaseModTextFormEntry
 
     function getCode($bDynamicMode = false)
     {
-        if (!$this->_oProfileContext)
+        if (!$this->_bViewMode && !$this->_oProfileContext)
             return MsgBox(_t('_bx_classes_txt_err_cant_add_class_without_context'));
 
         // TODO: check permission for adding to context

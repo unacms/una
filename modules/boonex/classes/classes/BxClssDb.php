@@ -14,6 +14,11 @@
  */
 class BxClssDb extends BxBaseModTextDb
 {
+    protected $_aStatuses = array(
+        1 => 'viewed',
+        2 => 'replied',
+    );
+
     function __construct(&$oConfig)
     {
         parent::__construct($oConfig);
@@ -59,6 +64,51 @@ class BxClssDb extends BxBaseModTextDb
             )) ? 1 : 0);
         }        
         return $iAffected;
+    }
+
+    public function isClassCompleted($iClassId, $iStudentProfileId)
+    {
+        if (!($aContentInfo = $this->getContentInfoById($iClassId)))
+            return false;
+
+        return $this->getClassStatus($iClassId, $iStudentProfileId, (int)$aContentInfo['completed_when']);
+    }
+
+    public function getClassStatus($iClassId, $iStudentProfileId, $mixedStatus)
+    {
+        if (is_numeric($mixedStatus) && is_int($mixedStatus) && isset($this->_aStatuses[$mixedStatus]))
+            $mixedStatus = $this->_aStatuses[$mixedStatus];
+        elseif (!in_array($mixedStatus, $this->_aStatuses, true))
+            return false;
+
+        return $this->getOne("SELECT `$mixedStatus` FROM `bx_classes_statuses` WHERE `class_id` = :class AND `student_profile_id` = :student", array(
+            'class' => $iClassId,
+            'student' => $iStudentProfileId,
+        ));
+    }
+
+    public function updateClassStatus($iClassId, $iStudentProfileId, $sStatus)
+    {
+        if (!in_array($sStatus, $this->_aStatuses))
+            return false;
+
+        if ($this->getOne("SELECT `id` FROM `bx_classes_statuses` WHERE `class_id` = :class AND `student_profile_id` = :student", array(
+            'class' => $iClassId,
+            'student' => $iStudentProfileId,
+        ))) {
+            return $this->res("UPDATE `bx_classes_statuses` SET `$sStatus` = :ts WHERE `class_id` = :class AND `student_profile_id` = :student", array(
+                'ts' => time(),
+                'class' => $iClassId,
+                'student' => $iStudentProfileId,
+            ));
+        }
+        else {
+            return $this->query("INSERT INTO `bx_classes_statuses` SET `class_id` = :class, `student_profile_id` = :student, `$sStatus` = :ts", array(
+                'ts' => time(),
+                'class' => $iClassId,
+                'student' => $iStudentProfileId,
+            ));
+        }
     }
 }
 
