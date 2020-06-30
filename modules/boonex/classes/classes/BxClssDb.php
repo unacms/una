@@ -96,7 +96,7 @@ class BxClssDb extends BxBaseModTextDb
             'class' => $iClassId,
             'student' => $iStudentProfileId,
         ))) {
-            return $this->res("UPDATE `bx_classes_statuses` SET `$sStatus` = :ts WHERE `class_id` = :class AND `student_profile_id` = :student", array(
+            return $this->query("UPDATE `bx_classes_statuses` SET `$sStatus` = :ts WHERE `class_id` = :class AND `student_profile_id` = :student", array(
                 'ts' => time(),
                 'class' => $iClassId,
                 'student' => $iStudentProfileId,
