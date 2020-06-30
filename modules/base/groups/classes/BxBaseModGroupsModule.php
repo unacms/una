@@ -971,6 +971,9 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             $iPerformerId = bx_get_logged_profile_id();
 
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$CNF['FIELD_ID']], $this->getName());
+        if(!$oGroupProfile)
+            return $sAction == BX_BASE_MOD_GROUPS_ACTION_DELETE ? CHECK_ACTION_RESULT_ALLOWED : _t('_sys_txt_not_found');
+
         $iGroupProfileId = $oGroupProfile->id();
 
         if(!$bRoles && $this->_oDb->isAdmin($iGroupProfileId, $iPerformerId, $aDataEntry))

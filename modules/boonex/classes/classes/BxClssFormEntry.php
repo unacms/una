@@ -103,7 +103,7 @@ class BxClssFormEntry extends BxBaseModTextFormEntry
         if (isset($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']])) {
 
             // try to get context from form POST
-            $iProfileId = (int)bx_get($CNF['FIELD_ALLOW_VIEW_TO']);
+            $iProfileId = bx_get($CNF['FIELD_ALLOW_VIEW_TO']);
 
             // try to get context from the form saved value (in case of "edit" form)
             if ($iProfileId >= 0 && $this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]['value'] < 0)
@@ -114,6 +114,8 @@ class BxClssFormEntry extends BxBaseModTextFormEntry
                 $iProfileId = bx_get('profile_id');
 
             $iProfileId = abs($iProfileId);
+            $this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]['value'] = -$iProfileId;
+            $this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]['type'] = 'hidden';
 
             if ($iProfileId)
                 $this->_oProfileContext = BxDolProfile::getInstance($iProfileId);
@@ -151,6 +153,8 @@ class BxClssFormEntry extends BxBaseModTextFormEntry
         }
 
         $aValsToAdd[$CNF['FIELD_STATUS']] = $aValsToAdd[$CNF['FIELD_PUBLISHED']] > $aValsToAdd[$CNF['FIELD_ADDED']] ? 'awaiting' : 'active';
+
+        $aValsToAdd['order'] = $this->_oModule->_oDb->getClassMaxOrder(abs($this->getCleanValue($CNF['FIELD_ALLOW_VIEW_TO'])), $this->getCleanValue($CNF['FIELD_MODULE']));
 
         $iContentId = parent::insert ($aValsToAdd, $isIgnore);
         if(!empty($iContentId)){

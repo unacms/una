@@ -434,8 +434,8 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_classes', 'bx_classes', 'module_id', '', '', 0, 'select', '', '_bx_classes_form_entry_input_module', '', 1, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_classes', 'bx_classes', 'added', '', '', 0, 'datetime', '_bx_classes_form_entry_input_sys_date_added', '_bx_classes_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_classes', 'bx_classes', 'changed', '', '', 0, 'datetime', '_bx_classes_form_entry_input_sys_date_changed', '_bx_classes_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_classes', 'bx_classes', 'start_date', '', '', 0, 'datetime', '', '_bx_classes_form_entry_input_date_start_date', '', 0, 0, 0, '', '', '', '', '', '', 'DateTimeTs', '', 1, 0),
-('bx_classes', 'bx_classes', 'end_date', '', '', 0, 'datetime', '', '_bx_classes_form_entry_input_date_end_date', '', 0, 0, 0, '', '', '', '', '', '', 'DateTimeTs', '', 1, 0),
+('bx_classes', 'bx_classes', 'start_date', '', '', 0, 'datetime', '', '_bx_classes_form_entry_input_date_start_date', '', 0, 0, 0, '', '', '', '', '', '', 'DateTimeUtc', '', 1, 0),
+('bx_classes', 'bx_classes', 'end_date', '', '', 0, 'datetime', '', '_bx_classes_form_entry_input_date_end_date', '', 0, 0, 0, '', '', '', '', '', '', 'DateTimeUtc', '', 1, 0),
 ('bx_classes', 'bx_classes', 'attachments', '', '', 0, 'custom', '_bx_classes_form_entry_input_sys_attachments', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_classes', 'bx_classes', 'labels', '', '', 0, 'custom', '_sys_form_input_sys_labels', '_sys_form_input_labels', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_classes', 'bx_classes', 'anonymous', '', '', 0, 'switcher', '_sys_form_input_sys_anonymous', '_sys_form_input_anonymous', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
@@ -523,8 +523,7 @@ INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUE
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
 ('bx_classes_cmts', '1', 1, '_bx_classes_cmts_disabled', ''),
-('bx_classes_cmts', '2', 2, '_bx_classes_cmts_all_shown', ''),
-('bx_classes_cmts', '3', 3, '_bx_classes_cmts_own_and_admins', '');
+('bx_classes_cmts', '2', 2, '_bx_classes_cmts_all_shown', '');
 
 
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
