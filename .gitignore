@@ -7,7 +7,7 @@ logs/*
 
 # Exclude main config file
 inc/header*
-  
+
 # Exclude OS X folder attributes
 .DS_Store
 .DS_Store?
@@ -33,4 +33,4 @@ modules/boonex/una_mods
 modules/vendor
 
 # Exclude IDE project folder
-/.idea
+.idea
