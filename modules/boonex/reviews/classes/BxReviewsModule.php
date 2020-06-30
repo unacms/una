@@ -47,8 +47,11 @@ class BxReviewsModule extends BxBaseModTextModule
                 continue;
 
             $bActAsProfile = BxDolService::call($aModule['name'], 'act_as_profile');
-            if ($bActAsProfile && $aModule['name'] != 'bx_organizations')
-                continue;
+            if ($bActAsProfile) {
+                $oModule = BxDolModule::getInstance($aModule['name']);
+                if (!isset($oModule->_oConfig->CNF['ALLOW_AS_CONTEXT']) || $oModule->_oConfig->CNF['ALLOW_AS_CONTEXT'] == false)
+                    continue;
+            }
 
             $aValues[$aModule['name']] = $aModule['title'];
         }
