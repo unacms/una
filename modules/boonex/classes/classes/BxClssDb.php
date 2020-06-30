@@ -24,6 +24,30 @@ class BxClssDb extends BxBaseModTextDb
         parent::__construct($oConfig);
     }
 
+    public function getPrevEntry ($iClassId)
+    {        
+        return $this->_getNextPrevEntry($iClassId, 'DESC');
+    }
+
+    public function getNextEntry ($iClassId)
+    {        
+        return $this->_getNextPrevEntry($iClassId, 'ASC');
+    }
+
+    protected function _getNextPrevEntry ($iClassId, $sSorting = 'DESC')
+    {        
+        $aClass = $this->getRow("SELECT `c`.`id`, `c`.`order`, `m`.`order` as `order_module` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `" . $this->_oConfig->CNF['TABLE_MODULES'] . "` AS `m` ON (`m`.`id` = `c`.`module_id`) WHERE `c`.`id` = :class", array('class' => $iClassId));
+        $sQuery = "SELECT `c`.`*`, `m`.`module_title` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `" . $this->_oConfig->CNF['TABLE_MODULES'] . "` AS `m` ON (`m`.`id` = `c`.`module_id`) WHERE `m`.`order` <= :order_module AND `c`.`order` <= :order AND `c`.`id` != :id ORDER BY `m`.`order` DESC, `c`.`order` DESC LIMIT 1";
+        
+        $a = $this->getRow($sQuery, array(
+            'order_module' => $aClass['order_module'], 
+            'order' => $aClass['order'],
+            'id' => $aClass['id'],
+        ));
+
+        return $a;
+    }
+
     public function getEntriesByModule ($iModuleId)
     {
         $sQuery = $this->prepare ("SELECT * FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` WHERE `module_id` = ? ORDER BY `order`", $iModuleId);

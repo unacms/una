@@ -9,7 +9,11 @@
 }
 
 .bx-course-classes .bx-form-input-wrapper-custom {
-    min-height: 1.2rem;
+    min-height:1rem;
+}
+
+html .bx-classes-class-title {
+    line-height:2rem;
 }
 
 .bx-classes-btn-done {
@@ -20,4 +24,8 @@
 }
 .bx-course-reordering-mode .bx-btn:not(.bx-classes-btn-done) {
     display:none;
+}
+
+.bx-classes-class-status-completed a {
+    text-decoration: line-through;
 }
