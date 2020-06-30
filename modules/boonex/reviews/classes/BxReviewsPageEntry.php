@@ -22,10 +22,8 @@ class BxReviewsPageEntry extends BxBaseModTextPageEntry
 
     protected function _setSubmenu($aParams)
     {
-    	parent::_setSubmenu(array_merge($aParams, array(
-    		'title' => '',
-    		'icon' => ''
-    	)));
+        if (empty($aParams)) return;
+    	parent::_setSubmenu($aParams);
     }
 }
 

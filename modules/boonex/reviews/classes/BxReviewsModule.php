@@ -20,9 +20,40 @@ class BxReviewsModule extends BxBaseModTextModule
 
         $CNF = &$this->_oConfig->CNF;
         $this->_aSearchableNamesExcept = array_merge($this->_aSearchableNamesExcept, array(
-            $CNF['FIELD_PUBLISHED'],
             $CNF['FIELD_DISABLE_COMMENTS']
         ));
+    }
+
+    public function serviceGetSearchableFields($aInputsAdd = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aResult = parent::serviceGetSearchableFields($aInputsAdd);
+        unset($aResult[$CNF['FIELD_PRODUCT']]);
+
+        return $aResult;
+    }
+
+    public function serviceGetContextModulesOptions() {
+        if (!($aModules = BxDolModuleQuery::getInstance()->getModules()))
+            return [];
+
+        $aValues = [];
+        foreach ($aModules as $aModule) {
+            if (!$aModule['enabled'])
+                continue;
+
+            if (!BxDolRequest::serviceExists($aModule['name'], 'act_as_profile'))
+                continue;
+
+            $bActAsProfile = BxDolService::call($aModule['name'], 'act_as_profile');
+            if ($bActAsProfile && $aModule['name'] != 'bx_organizations')
+                continue;
+
+            $aValues[$aModule['name']] = $aModule['title'];
+        }
+
+        return $aValues;
     }
 
     /**
@@ -30,15 +61,9 @@ class BxReviewsModule extends BxBaseModTextModule
      */
     public function serviceGetTimelinePost($aEvent, $aBrowseParams = array())
     {
-        $CNF = &$this->_oConfig->CNF;
-
         $aResult = parent::serviceGetTimelinePost($aEvent, $aBrowseParams);
         if(empty($aResult) || !is_array($aResult) || empty($aResult['date']))
             return $aResult;
-
-        $aContentInfo = $this->_oDb->getContentInfoById($aEvent['object_id']);
-        if($aContentInfo[$CNF['FIELD_PUBLISHED']] > $aResult['date'])
-            $aResult['date'] = $aContentInfo[$CNF['FIELD_PUBLISHED']];
 
         return $aResult;
     }
@@ -78,6 +103,15 @@ class BxReviewsModule extends BxBaseModTextModule
         return '';
     }
 
+
+    /*
+     * Reviewed content block for module homepage
+     **/
+    public function serviceBrowseReviewedContent() {
+        if ($this->_oDb->getParam($this->_oConfig->CNF['PARAM_CONTEXT_CONTROL_ENABLE']))
+            return $this->_oTemplate->browseReviewedContent();
+    }
+
      /*
      * ACTIONS
      */
@@ -85,7 +119,40 @@ class BxReviewsModule extends BxBaseModTextModule
         $sVoting = $this->serviceEntityVotingOptions($iContentId);
 
         if (!empty($sVoting))
-            echo PopupBox('bx_reviews_rating', _t('_bx_reviews_txt_rating_details_popup_cpt'), $sVoting);
+            echo BxTemplFunctions::getInstance()->transBox('bx_reviews_rating', DesignBoxContent('',$sVoting, BX_DB_PADDING_CONTENT_ONLY), false);
+    }
+
+    public function actionSuggestProfileForReview ($sTerm, $iLimit = 20)
+    {
+        if (!$sTerm && isset($_GET['term'])) $sTerm = bx_get('term');
+
+        $CNF = &$this->_oConfig->CNF;
+        $sModules = $this->_oDb->getParam($CNF['PARAM_CONTEXT_MODULES_AVAILABLE']);
+
+        $aResult = array();
+        if ($sModules) {
+            $aInstalledModules = BxDolModuleQuery::getInstance()->getModules();
+            $aEnabledModules = [];
+            foreach ($aInstalledModules as $aModule) $aEnabledModules[$aModule['name']] = $aModule['enabled'];
+
+            $aModulesList = explode(',', $sModules);
+            foreach ($aModulesList as $sModulename) {
+                if (!isset($aEnabledModules[$sModulename]) || !$aEnabledModules[$sModulename]) continue;
+                $aResult = array_merge($aResult, BxDolService::call($sModulename, 'profiles_search', array($sTerm, getParam('sys_per_page_search_keyword_single'))));
+            }
+            // sort result
+            usort($aResult, function($r1, $r2) {
+                return strcmp($r1['label'], $r2['label']);
+            });
+        }
+
+        bx_alert('system', 'profiles_search', 0, 0, array(
+           'term' => $sTerm,
+           'result' => &$aResult
+        ));
+
+        header('Content-Type:text/javascript; charset=utf-8');
+        echo json_encode(array_slice($aResult, 0, $iLimit));
     }
 }
 

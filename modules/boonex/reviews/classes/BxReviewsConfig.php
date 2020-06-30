@@ -36,13 +36,16 @@ class BxReviewsConfig extends BxBaseModTextConfig
             'FIELD_AUTHOR' => 'author',
             'FIELD_ADDED' => 'added',
             'FIELD_CHANGED' => 'changed',
-            'FIELD_PUBLISHED' => 'published',
             'FIELD_TITLE' => 'title',
+            'FIELD_PRODUCT' => 'product',
             'FIELD_TEXT' => 'text',
             'FIELD_TEXT_ID' => 'review-text',
+            'FIELD_VOTING_OPTIONS' => 'voting_options',
+            'FIELD_VOTING_AVG' => 'voting_avg',
             'FIELD_CATEGORY' => 'cat',
             'FIELD_MULTICAT' => 'multicat',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
+            'FIELD_REVIEWED_PROFILE' => 'reviewed_profile',
             'FIELD_COVER' => 'covers',
             'FIELD_PHOTO' => 'pictures',
             'FIELD_VIDEO' => 'videos',
@@ -81,13 +84,19 @@ class BxReviewsConfig extends BxBaseModTextConfig
             'URL_MANAGE_COMMON' => 'page.php?i=reviews-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=reviews-administration',
 
+            'URI_SEARCH_PRODUCT' => 'searchKeyword.php?section=bx_reviews_products',
+
             // some params
             'PARAM_CHARS_SUMMARY' => 'bx_reviews_summary_chars',
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_reviews_plain_summary_chars',
+            'PARAM_CHARS_SUMMARY_PLAIN_SHORT' => 'bx_reviews_plain_summary_chars_with_thumb',
             'PARAM_NUM_RSS' => 'bx_reviews_rss_num',
             'PARAM_SEARCHABLE_FIELDS' => 'bx_reviews_searchable_fields',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_reviews_per_page_browse_showcase',
+            'PARAM_PER_PAGE_BROWSE' => 'bx_reviews_per_page_browse',
             'PARAM_MAX_STARS' => 'bx_reviews_voting_max_stars',
+            'PARAM_CONTEXT_CONTROL_ENABLE' => 'bx_reviews_custom_context_chooser',
+            'PARAM_CONTEXT_MODULES_AVAILABLE' => 'bx_reviews_custom_context_chooser_options',
 
             // objects
             'OBJECT_STORAGE' => 'bx_reviews_covers',
@@ -220,6 +229,24 @@ class BxReviewsConfig extends BxBaseModTextConfig
         );
 
         $this->_bAttachmentsInTimeline = true;
+    }
+
+    public function getJsClass($mixedType)
+    {
+        if (is_array($mixedType)) {
+            return parent::getJsClass($mixedType['type']);
+        } else {
+            return parent::getJsClass($mixedType);
+        }
+    }
+
+    public function getJsObject($mixedType)
+    {
+        if (is_array($mixedType)) {
+            return parent::getJsObject($mixedType['type']).$mixedType['id'];
+        } else {
+            return parent::getJsObject($mixedType);
+        }
     }
 }
 

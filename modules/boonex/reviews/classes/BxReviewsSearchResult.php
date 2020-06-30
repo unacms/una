@@ -21,7 +21,7 @@ class BxReviewsSearchResult extends BxBaseModTextSearchResult
             'object_metatags' => 'bx_reviews',
             'title' => _t('_bx_reviews_page_title_browse'),
             'table' => 'bx_reviews_reviews',
-            'ownFields' => array('id', 'title', 'text', 'thumb', 'author', 'added', 'voting_options'),
+            'ownFields' => array('id', 'title', 'text', 'thumb', 'author', 'added', 'voting_avg', 'allow_view_to', 'product'),
             'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
@@ -122,7 +122,24 @@ class BxReviewsSearchResult extends BxBaseModTextSearchResult
 
         $this->processReplaceableMarkers($oProfileAuthor);
 
-        $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
+        // in case we are using a custom control we can't have a private content at all and can have only either public or in context
+        // content which also must be shows publicly
+        if ($this->oModule->_oDb->getParam($CNF['PARAM_CONTEXT_CONTROL_ENABLE'])) {
+            $this->setProcessPrivateContent(true);
+        } else {
+            $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
+        }
+    }
+}
+
+class BxReviewsProductsSearchResult extends BxReviewsSearchResult
+{
+    function __construct($sMode = '', $aParams = array())
+    {
+        parent::__construct($sMode, $aParams);
+
+        $this->aCurrent['searchFields'] = 'product';
+        $this->aCurrent['title'] = _t('_bx_reviews_products');
     }
 }
 

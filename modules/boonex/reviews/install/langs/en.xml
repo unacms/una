@@ -21,8 +21,6 @@
     <string name="_bx_reviews_form_entry_input_author"><![CDATA[Author]]></string>
     <string name="_bx_reviews_form_entry_input_sys_do_submit"><![CDATA[Submit]]></string>
     <string name="_bx_reviews_form_entry_input_do_submit"><![CDATA[Submit]]></string>
-    <string name="_bx_reviews_form_entry_input_sys_do_publish"><![CDATA[Publish]]></string>
-    <string name="_bx_reviews_form_entry_input_do_publish"><![CDATA[Publish]]></string>
     <string name="_bx_reviews_form_entry_input_sys_title"><![CDATA[Title]]></string>
     <string name="_bx_reviews_form_entry_input_title"><![CDATA[Title]]></string>
     <string name="_bx_reviews_form_entry_input_title_err"><![CDATA[Title is essential. Please, fill in this field]]></string>
@@ -56,9 +54,6 @@
     <string name="_bx_reviews_form_entry_input_date_added"><![CDATA[Created]]></string>
     <string name="_bx_reviews_form_entry_input_sys_date_changed"><![CDATA[Updated]]></string>
     <string name="_bx_reviews_form_entry_input_date_changed"><![CDATA[Updated]]></string>
-    <string name="_bx_reviews_form_entry_input_sys_date_published"><![CDATA[Publishing time]]></string>
-    <string name="_bx_reviews_form_entry_input_date_published"><![CDATA[Publishing time]]></string>
-    <string name="_bx_reviews_form_entry_input_date_published_info"><![CDATA[Leave empty to publish immediately.]]></string>
     <string name="_bx_reviews_form_entry_input_sys_attachments"><![CDATA[Attachments]]></string>
     <string name="_bx_reviews_form_entry_input_sys_disable_comments"><![CDATA[Disable comments]]></string>
     <string name="_bx_reviews_form_entry_input_disable_comments"><![CDATA[Disable comments]]></string>
@@ -262,38 +257,45 @@
     <string name="_bx_reviews_search_extended_cmts"><![CDATA[Reviews Comments Search]]></string>
 
     <string name="_bx_reviews_pre_lists_cats"><![CDATA[Review categories]]></string>
-    <string name="_bx_reviews_cat_Animals_Pets"><![CDATA[Animals & Pets]]></string>
-    <string name="_bx_reviews_cat_Architecture"><![CDATA[Architecture]]></string>
-    <string name="_bx_reviews_cat_Art"><![CDATA[Art]]></string>
-    <string name="_bx_reviews_cat_Cars_Motorcycles"><![CDATA[Cars & Motorcycles]]></string>
-    <string name="_bx_reviews_cat_Celebrities"><![CDATA[Celebrities]]></string>
-    <string name="_bx_reviews_cat_Design"><![CDATA[Design]]></string>
-    <string name="_bx_reviews_cat_DIY_Crafts"><![CDATA[DIY & Crafts]]></string>
+    <string name="_bx_reviews_cat_Animals"><![CDATA[Animals]]></string>
+    <string name="_bx_reviews_cat_Appliances_and_Electronics"><![CDATA[Appliances and Electronics]]></string>
+    <string name="_bx_reviews_cat_Arts_and_Fine_Arts"><![CDATA[Arts and Fine Arts]]></string>
+    <string name="_bx_reviews_cat_Astrology"><![CDATA[Astrology]]></string>
+    <string name="_bx_reviews_cat_Auto"><![CDATA[Auto]]></string>
+    <string name="_bx_reviews_cat_Cigarettes_and_Tobacco"><![CDATA[Cigarettes and Tobacco]]></string>
+    <string name="_bx_reviews_cat_Construction_and_Repair"><![CDATA[Construction and Repair]]></string>
+    <string name="_bx_reviews_cat_E_commerce"><![CDATA[E-commerce]]></string>
     <string name="_bx_reviews_cat_Education"><![CDATA[Education]]></string>
-    <string name="_bx_reviews_cat_Film_Music_Books"><![CDATA[Film, Music & Books]]></string>
-    <string name="_bx_reviews_cat_Food_Drink"><![CDATA[Food & Drink]]></string>
-    <string name="_bx_reviews_cat_Gardening"><![CDATA[Gardening]]></string>
-    <string name="_bx_reviews_cat_Geek"><![CDATA[Geek]]></string>
-    <string name="_bx_reviews_cat_Hair_Beauty"><![CDATA[Hair & Beauty]]></string>
-    <string name="_bx_reviews_cat_Health_Fitness"><![CDATA[Health & Fitness]]></string>
-    <string name="_bx_reviews_cat_History"><![CDATA[History]]></string>
-    <string name="_bx_reviews_cat_Holidays_Events"><![CDATA[Holidays & Events]]></string>
-    <string name="_bx_reviews_cat_Home_Decor"><![CDATA[Home Decor]]></string>
-    <string name="_bx_reviews_cat_Humor"><![CDATA[Humor]]></string>
-    <string name="_bx_reviews_cat_Illustrations_Posters"><![CDATA[Illustrations & Posters]]></string>
-    <string name="_bx_reviews_cat_Kids_Parenting"><![CDATA[Kids & Parenting]]></string>
-    <string name="_bx_reviews_cat_Mens_Fashion"><![CDATA[Men's Fashion]]></string>
-    <string name="_bx_reviews_cat_Outdoors"><![CDATA[Outdoors]]></string>
-    <string name="_bx_reviews_cat_Photography"><![CDATA[Photography]]></string>
-    <string name="_bx_reviews_cat_Products"><![CDATA[Products]]></string>
-    <string name="_bx_reviews_cat_Quotes"><![CDATA[Quotes]]></string>
-    <string name="_bx_reviews_cat_Science_Nature"><![CDATA[Science & Nature]]></string>
-    <string name="_bx_reviews_cat_Sports"><![CDATA[Sports]]></string>
-    <string name="_bx_reviews_cat_Tattoos"><![CDATA[Tattoos]]></string>
-    <string name="_bx_reviews_cat_Technology"><![CDATA[Technology]]></string>
+    <string name="_bx_reviews_cat_Entertainment"><![CDATA[Entertainment]]></string>
+    <string name="_bx_reviews_cat_Equipment"><![CDATA[Equipment]]></string>
+    <string name="_bx_reviews_cat_Events"><![CDATA[Events]]></string>
+    <string name="_bx_reviews_cat_Financial_Services"><![CDATA[Financial Services]]></string>
+    <string name="_bx_reviews_cat_Food"><![CDATA[Food]]></string>
+    <string name="_bx_reviews_cat_Furniture_and_Decor"><![CDATA[Furniture and Decor]]></string>
+    <string name="_bx_reviews_cat_Governmental_Organizations_and_Politics"><![CDATA[Governmental Organizations and Politics]]></string>
+    <string name="_bx_reviews_cat_Health_and_Beauty"><![CDATA[Health and Beauty]]></string>
+    <string name="_bx_reviews_cat_Hospitals_Clinics_and_Medical_Centers"><![CDATA[Hospitals, Clinics and Medical Centers]]></string>
+    <string name="_bx_reviews_cat_Household_Services"><![CDATA[Household Services]]></string>
+    <string name="_bx_reviews_cat_Insurance"><![CDATA[Insurance]]></string>
+    <string name="_bx_reviews_cat_IT_Services_and_Solutions"><![CDATA[IT Services and Solutions]]></string>
+    <string name="_bx_reviews_cat_Kids"><![CDATA[Kids]]></string>
+    <string name="_bx_reviews_cat_Liquidators_and_Closeouts"><![CDATA[Liquidators and Closeouts]]></string>
+    <string name="_bx_reviews_cat_Mechanical_Engineering"><![CDATA[Mechanical Engineering]]></string>
+    <string name="_bx_reviews_cat_Media"><![CDATA[Media]]></string>
+    <string name="_bx_reviews_cat_Non_Profit_Organizations"><![CDATA[Non Profit Organizations]]></string>
+    <string name="_bx_reviews_cat_PR_and_Marketing"><![CDATA[PR and Marketing]]></string>
+    <string name="_bx_reviews_cat_Professional_Services"><![CDATA[Professional Services]]></string>
+    <string name="_bx_reviews_cat_Real_Estate"><![CDATA[Real Estate]]></string>
+    <string name="_bx_reviews_cat_Rentals"><![CDATA[Rentals]]></string>
+    <string name="_bx_reviews_cat_Security_and_Protection_Services"><![CDATA[Security and Protection Services]]></string>
+    <string name="_bx_reviews_cat_Service_Centers_and_Repairs"><![CDATA[Service Centers and Repairs]]></string>
+    <string name="_bx_reviews_cat_Sport"><![CDATA[Sport]]></string>
+    <string name="_bx_reviews_cat_Staff"><![CDATA[Staff]]></string>
+    <string name="_bx_reviews_cat_Supermarkets_and_Malls"><![CDATA[Supermarkets and Malls]]></string>
+    <string name="_bx_reviews_cat_Transportation_and_Logistics"><![CDATA[Transportation and Logistics]]></string>
     <string name="_bx_reviews_cat_Travel"><![CDATA[Travel]]></string>
-    <string name="_bx_reviews_cat_Weddings"><![CDATA[Weddings]]></string>
-    <string name="_bx_reviews_cat_Womens_Fashion"><![CDATA[Women's Fashion]]></string>
+    <string name="_bx_reviews_cat_Weapons"><![CDATA[Weapons]]></string>
+    <string name="_bx_reviews_cat_Miscellaneous"><![CDATA[Miscellaneous]]></string>
 
     <string name="_bx_reviews_txt_all_entries_in"><![CDATA[<a href="{0}">All Reviews in {1} ({2})</a>]]></string>
     <string name="_bx_reviews_txt_all_entries_by"><![CDATA[{0} reviews]]></string>
@@ -306,7 +308,6 @@
     <string name="_bx_reviews_txt_sample_score_down_single"><![CDATA[score down vote to review]]></string>
     <string name="_bx_reviews_txt_processing_awaiting"><![CDATA[Scheduled for publishing as soon as video conversion is complete.]]></string>
     <string name="_bx_reviews_txt_processing_failed"><![CDATA[Review isn't published because video conversion failed, edit video to fix the issue.]]></string>
-    <string name="_bx_reviews_txt_scheduled_awaiting"><![CDATA[Review publishing date is {date_publish_uf}]]></string>
 
     <string name="_bx_reviews_txt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
 
@@ -316,6 +317,9 @@
     <string name="_bx_reviews_txt_poll_answer_vote_counter"><![CDATA[{0} votes]]></string>
     <string name="_bx_reviews_txt_poll_answer_vote_percent"><![CDATA[({0}%)]]></string>
 
+    <string name="_bx_reviews_option_voting_max_stars"><![CDATA[Max number of stars for a voting option]]></string>
+    <string name="_bx_reviews_option_custom_context_chooser_enable"><![CDATA[Enable custom field for choosing content for a review]]></string>
+    <string name="_bx_reviews_option_custom_context_chooser_options"><![CDATA[Type of content available for a review]]></string>
     <string name="_bx_reviews_txt_settings"><![CDATA[Settings]]></string>
     <string name="_bx_reviews_txt_voting_options"><![CDATA[Voting Options]]></string>
     <string name="_bx_reviews_grid_column_title_adm_name"><![CDATA[Option]]></string>
@@ -325,12 +329,19 @@
     <string name="_bx_reviews_txt_cancel"><![CDATA[Cancel]]></string>
     <string name="_bx_reviews_form_entry_input_sys_voting_options"><![CDATA[Voting Options]]></string>
     <string name="_bx_reviews_form_entry_input_voting_options"><![CDATA[]]></string>
-    <string name="_bx_reviews_option_voting_max_stars"><![CDATA[Max number of stars for a voting option]]></string>
     <string name="_bx_reviews_page_block_title_entry_voting_options"><![CDATA[Review stars]]></string>
     <string name="_bx_reviews_txt_rating_details"><![CDATA[Details]]></string>
-    <string name="_bx_reviews_txt_rating_details_popup_cpt"><![CDATA[Rating Details]]></string>
-
-
-
+    <string name="_bx_reviews_form_entry_input_sys_reviewed_profile"><![CDATA[Reviewed content]]></string>
+    <string name="_bx_reviews_form_entry_input_reviewed_profile"><![CDATA[Review for]]></string>
+    <string name="_bx_reviews_form_entry_input_sys_product"><![CDATA[Product]]></string>
+    <string name="_bx_reviews_form_entry_input_product"><![CDATA[Product]]></string>
+    <string name="_bx_reviews_products"><![CDATA[Reviewed Products]]></string>
+    <string name="_bx_reviews_option_plain_summary_chars_with_thumb"><![CDATA[Number of characters in plain review description under review's thumb]]></string>
+    <string name="_bx_reviews_txt_related"><![CDATA[Related]]></string>
+    <string name="_bx_reviews_txt_product"><![CDATA[Product]]></string>
+    <string name="_bx_reviews_page_block_title_reviewed_content"><![CDATA[Reviewed content]]></string>
+    <string name="_bx_reviews_txt_reviews_num"><![CDATA[Reviews]]></string>
+    <string name="_bx_reviews_txt_order_by_reviews"><![CDATA[Most reviews]]></string>
+    <string name="_bx_reviews_txt_order_by_rating"><![CDATA[Best overall rating]]></string>
 
 </resources>
