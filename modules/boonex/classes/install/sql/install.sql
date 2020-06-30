@@ -3,14 +3,17 @@ CREATE TABLE IF NOT EXISTS `bx_classes_classes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `author` int(11) NOT NULL,
   `added` int(11) NOT NULL,
-  `changed` int(11) NOT NULL,
+  `changed` int(11) NOT NULL,  
   `published` int(11) NOT NULL,
+  `module_id` int(10) unsigned NOT NULL,
+  `order` int(11) NOT NULL,
   `start_date` int(11) NOT NULL,
   `end_date` int(11) NOT NULL,
   `thumb` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `avail` int(11) NOT NULL,
   `cmts` int(11) NOT NULL,
+  `completed_when` int(11) NOT NULL,
   `text` mediumtext NOT NULL,
   `labels` text NOT NULL,
   `location` text NOT NULL,
@@ -31,6 +34,29 @@ CREATE TABLE IF NOT EXISTS `bx_classes_classes` (
   `status_admin` enum('active','hidden') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `title_text` (`title`,`text`)
+);
+
+-- TABLE: modules
+CREATE TABLE IF NOT EXISTS `bx_classes_modules` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `profile_id` int(10) unsigned NOT NULL,
+  `module_title` varchar(255) NOT NULL,
+  `author` int(11) NOT NULL,
+  `added` int(11) NOT NULL,
+  `changed` int(11) NOT NULL,
+  `order` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- TABLE: status
+CREATE TABLE IF NOT EXISTS `bx_classes_statuses` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `class_id` int(10) unsigned NOT NULL,
+  `student_profile_id` int(11) NOT NULL,
+  `viewed` int(11) NOT NULL,
+  `replied` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE `class_student` (`class_id`,`student_profile_id`)
 );
 
 -- TABLE: storages & transcoders
@@ -404,6 +430,8 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_classes', 'bx_classes', 'title', '', '', 0, 'text', '_bx_classes_form_entry_input_sys_title', '_bx_classes_form_entry_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_classes_form_entry_input_title_err', 'Xss', '', 1, 0),
 ('bx_classes', 'bx_classes', 'avail', '', '#!bx_classes_avail', 0, 'select', '', '_bx_classes_form_entry_input_avail', '', 1, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_classes', 'bx_classes', 'cmts', '', '#!bx_classes_cmts', 0, 'select', '', '_bx_classes_form_entry_input_cmts', '', 1, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
+('bx_classes', 'bx_classes', 'completed_when', '', '#!bx_classes_completed_when', 0, 'select', '', '_bx_classes_form_entry_input_completed_when', '', 1, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
+('bx_classes', 'bx_classes', 'module_id', '', '', 0, 'select', '', '_bx_classes_form_entry_input_module', '', 1, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_classes', 'bx_classes', 'added', '', '', 0, 'datetime', '_bx_classes_form_entry_input_sys_date_added', '_bx_classes_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_classes', 'bx_classes', 'changed', '', '', 0, 'datetime', '_bx_classes_form_entry_input_sys_date_changed', '_bx_classes_form_entry_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_classes', 'bx_classes', 'start_date', '', '', 0, 'datetime', '', '_bx_classes_form_entry_input_date_start_date', '', 0, 0, 0, '', '', '', '', '', '', 'DateTimeTs', '', 1, 0),
@@ -416,42 +444,47 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_classes_entry_add', 'covers', 2147483647, 1, 1),
-('bx_classes_entry_add', 'title', 2147483647, 1, 2),
-('bx_classes_entry_add', 'text', 2147483647, 1, 3),
-('bx_classes_entry_add', 'attachments', 2147483647, 1, 4),
-('bx_classes_entry_add', 'pictures', 2147483647, 1, 5),
-('bx_classes_entry_add', 'videos', 2147483647, 1, 6),
-('bx_classes_entry_add', 'files', 2147483647, 1, 7),
-('bx_classes_entry_add', 'polls', 2147483647, 1, 8),
-('bx_classes_entry_add', 'start_date', 2147483647, 1, 9),
-('bx_classes_entry_add', 'end_date', 2147483647, 1, 10),
-('bx_classes_entry_add', 'avail', 2147483647, 1, 11),
-('bx_classes_entry_add', 'cmts', 2147483647, 1, 12),
-('bx_classes_entry_add', 'allow_view_to', 2147483647, 1, 13),
-('bx_classes_entry_add', 'do_publish', 2147483647, 1, 14),
+('bx_classes_entry_add', 'module_id', 2147483647, 1, 2),
+('bx_classes_entry_add', 'title', 2147483647, 1, 3),
+('bx_classes_entry_add', 'text', 2147483647, 1, 4),
+('bx_classes_entry_add', 'attachments', 2147483647, 1, 5),
+('bx_classes_entry_add', 'pictures', 2147483647, 1, 6),
+('bx_classes_entry_add', 'videos', 2147483647, 1, 7),
+('bx_classes_entry_add', 'files', 2147483647, 1, 8),
+('bx_classes_entry_add', 'polls', 2147483647, 1, 9),
+('bx_classes_entry_add', 'start_date', 2147483647, 1, 10),
+('bx_classes_entry_add', 'end_date', 2147483647, 1, 11),
+('bx_classes_entry_add', 'completed_when', 2147483647, 1, 12),
+('bx_classes_entry_add', 'avail', 2147483647, 1, 13),
+('bx_classes_entry_add', 'cmts', 2147483647, 1, 14),
+('bx_classes_entry_add', 'allow_view_to', 2147483647, 1, 15),
+('bx_classes_entry_add', 'do_publish', 2147483647, 1, 16),
 
 ('bx_classes_entry_delete', 'delete_confirm', 2147483647, 1, 1),
 ('bx_classes_entry_delete', 'do_submit', 2147483647, 1, 2),
 
 ('bx_classes_entry_edit', 'covers', 2147483647, 1, 1),
-('bx_classes_entry_edit', 'title', 2147483647, 1, 2),
-('bx_classes_entry_edit', 'text', 2147483647, 1, 3),
-('bx_classes_entry_edit', 'attachments', 2147483647, 1, 4),
-('bx_classes_entry_edit', 'pictures', 2147483647, 1, 5),
-('bx_classes_entry_edit', 'videos', 2147483647, 1, 6),
-('bx_classes_entry_edit', 'files', 2147483647, 1, 7),
-('bx_classes_entry_edit', 'polls', 2147483647, 1, 8),
-('bx_classes_entry_edit', 'start_date', 2147483647, 1, 9),
-('bx_classes_entry_edit', 'end_date', 2147483647, 1, 10),
-('bx_classes_entry_edit', 'avail', 2147483647, 1, 11),
-('bx_classes_entry_edit', 'cmts', 2147483647, 1, 12),
-('bx_classes_entry_edit', 'allow_view_to', 2147483647, 1, 13),
-('bx_classes_entry_edit', 'do_submit', 2147483647, 1, 14),
+('bx_classes_entry_edit', 'module_id', 2147483647, 1, 2),
+('bx_classes_entry_edit', 'title', 2147483647, 1, 3),
+('bx_classes_entry_edit', 'text', 2147483647, 1, 4),
+('bx_classes_entry_edit', 'attachments', 2147483647, 1, 5),
+('bx_classes_entry_edit', 'pictures', 2147483647, 1, 6),
+('bx_classes_entry_edit', 'videos', 2147483647, 1, 7),
+('bx_classes_entry_edit', 'files', 2147483647, 1, 8),
+('bx_classes_entry_edit', 'polls', 2147483647, 1, 9),
+('bx_classes_entry_edit', 'start_date', 2147483647, 1, 10),
+('bx_classes_entry_edit', 'end_date', 2147483647, 1, 11),
+('bx_classes_entry_edit', 'completed_when', 2147483647, 1, 12),
+('bx_classes_entry_edit', 'avail', 2147483647, 1, 13),
+('bx_classes_entry_edit', 'cmts', 2147483647, 1, 14),
+('bx_classes_entry_edit', 'allow_view_to', 2147483647, 1, 15),
+('bx_classes_entry_edit', 'do_submit', 2147483647, 1, 16),
 
-('bx_classes_entry_view', 'added', 2147483647, 1, 1),
-('bx_classes_entry_view', 'changed', 2147483647, 1, 2),
-('bx_classes_entry_view', 'start_date', 2147483647, 1, 3),
-('bx_classes_entry_view', 'end_date', 2147483647, 1, 4);
+('bx_classes_entry_view', 'module_id', 2147483647, 1, 1),
+('bx_classes_entry_view', 'added', 2147483647, 1, 2),
+('bx_classes_entry_view', 'changed', 2147483647, 1, 3),
+('bx_classes_entry_view', 'start_date', 2147483647, 1, 4),
+('bx_classes_entry_view', 'end_date', 2147483647, 1, 5);
 
 -- FORMS: poll
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
@@ -492,6 +525,14 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('bx_classes_cmts', '1', 1, '_bx_classes_cmts_disabled', ''),
 ('bx_classes_cmts', '2', 2, '_bx_classes_cmts_all_shown', ''),
 ('bx_classes_cmts', '3', 3, '_bx_classes_cmts_own_and_admins', '');
+
+
+INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
+('bx_classes_completed_when', '_bx_classes_pre_lists_completed_when', 'bx_classes', '0');
+
+INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
+('bx_classes_completed_when', '1', 1, '_bx_classes_completed_when_viewed', ''),
+('bx_classes_completed_when', '2', 2, '_bx_classes_completed_when_replied', '');
 
 -- COMMENTS
 INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Html`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES

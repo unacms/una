@@ -516,10 +516,6 @@ INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_ac
 ('bx_tasks', '_bx_tasks', 'bx_tasks', 'added', 'edited', 'deleted', '', ''),
 ('bx_tasks_cmts', '_bx_tasks_cmts', 'bx_tasks', 'commentPost', 'commentUpdated', 'commentRemoved', 'BxDolContentInfoCmts', '');
 
-INSERT INTO `sys_content_info_grids` (`object`, `grid_object`, `grid_field_id`, `condition`, `selection`) VALUES
-('bx_tasks', 'bx_tasks_administration', 'id', '', ''),
-('bx_tasks', 'bx_tasks_common', 'id', '', '');
-
 -- SEARCH EXTENDED
 INSERT INTO `sys_objects_search_extended` (`object`, `object_content_info`, `module`, `title`, `active`, `class_name`, `class_file`) VALUES
 ('bx_tasks', 'bx_tasks', 'bx_tasks', '_bx_tasks_search_extended', 1, '', ''),

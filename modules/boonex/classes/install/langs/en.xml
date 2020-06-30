@@ -61,6 +61,8 @@
     <string name="_bx_classes_form_entry_input_sys_attachments"><![CDATA[Attachments]]></string>
     <string name="_bx_classes_form_entry_input_cmts"><![CDATA[Comments settings]]></string>
     <string name="_bx_classes_form_entry_input_avail"><![CDATA[Availability]]></string>
+    <string name="_bx_classes_form_entry_input_module"><![CDATA[Module]]></string>
+    <string name="_bx_classes_form_entry_input_completed_when"><![CDATA[Class is completed when]]></string>
 
     <string name="_bx_classes_form_poll"><![CDATA[Polls]]></string>
     <string name="_bx_classes_form_poll_display_add"><![CDATA[Add Poll]]></string>
@@ -211,6 +213,10 @@
     <string name="_bx_classes_cmts_all_shown"><![CDATA[All comments are shown]]></string>
     <string name="_bx_classes_cmts_own_and_admins"><![CDATA[Own and admin comments are shown]]></string>
 
+    <string name="_bx_classes_pre_lists_completed_when"><![CDATA[Class is completed when]]></string>
+    <string name="_bx_classes_completed_when_viewed"><![CDATA[Viewed]]></string>
+    <string name="_bx_classes_completed_when_replied"><![CDATA[Replied]]></string>
+
     <string name="_bx_classes_txt_all_entries_in"><![CDATA[<a href="{0}">All Classes in {1} ({2})</a>]]></string>
     <string name="_bx_classes_txt_all_entries_by"><![CDATA[{0} classes]]></string>
     <string name="_bx_classes_txt_sample_single"><![CDATA[class]]></string>
@@ -225,6 +231,7 @@
     <string name="_bx_classes_txt_scheduled_awaiting"><![CDATA[Class publishing date is {date_publish_uf}]]></string>
 
     <string name="_bx_classes_txt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
+    <string name="_bx_classes_txt_err_cant_add_class_without_context"><![CDATA[Class can be added into context only]]></string>
 
     <string name="_bx_classes_txt_poll_view_answers"><![CDATA[poll]]></string>
     <string name="_bx_classes_txt_poll_view_results"><![CDATA[results]]></string>

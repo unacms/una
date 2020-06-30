@@ -488,17 +488,14 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
                 continue;
 
             if (BX_CONNECTIONS_TYPE_MUTUAL == $o->getType())
-                $a = array_merge($a, $o->getConnectedContent($iProfileId, true));
+                $a = array_merge($a, $o->getConnectedContentByType($iProfileId, $this->getName(), true));
             else
-                $a = array_merge($a, $o->getConnectedContent($iProfileId));
+                $a = array_merge($a, $o->getConnectedContentByType($iProfileId, $this->getName()));
         }
-
         $a = array_unique($a);
         $aRet = array();
         foreach ($a as $iConnectedProfileId) {
             if (!($oConnectedProfile = BxDolProfile::getInstance($iConnectedProfileId)))
-                continue;
-            if ($oConnectedProfile->getModule() != $this->getName())
                 continue;
 
             if (CHECK_ACTION_RESULT_ALLOWED === bx_srv($oConnectedProfile->getModule(), 'check_allowed_post_in_profile', array($oConnectedProfile->getContentId(), $iProfileId)))

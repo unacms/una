@@ -29,6 +29,7 @@ class BxClssConfig extends BxBaseModTextConfig
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'classes',
+            'TABLE_MODULES' => $aModule['db_prefix'] . 'modules',
             'TABLE_ENTRIES_FULLTEXT' => 'title_text',
 
             // database fields
@@ -62,6 +63,7 @@ class BxClssConfig extends BxBaseModTextConfig
             'FIELD_ANONYMOUS' => 'anonymous',
             'FIELD_CMTS_SETTINGS' => 'cmts',
             'FIELD_AVAIL_SETTINGS' => 'avail',
+            'FIELD_MODULE' => 'module_id',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
             'FIELDS_DELAYED_PROCESSING' => 'videos', // can be array of fields or comma separated string of field names
 
