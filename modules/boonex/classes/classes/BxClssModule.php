@@ -34,15 +34,18 @@ class BxClssModule extends BxBaseModTextModule
         ));
     }
 
-    public function actionReorderClasses($iProfileId = 0)
+    public function actionReorderClasses($iProfileConextId = 0)
     {
-        $oProfileContext = $iProfileId ? BxDolProfile::getInstance($iProfileId) : null;
+        $oProfileContext = $iProfileConextId ? BxDolProfile::getInstance($iProfileConextId) : null;
         if (!$oProfileContext) {
             echo _t('_sys_txt_error_occured');
             exit;
         }
 
-        // TODO: check permission for reordering
+        if (!$this->serviceIsCourseAdmin($oProfileContext->id())) {
+            echo _t('_sys_txt_access_denied');
+            exit;
+        }
 
         foreach ($_REQUEST as $k => $v) {
             if (0 !== strncmp($k, 'classes_order_', 14))
@@ -55,19 +58,22 @@ class BxClssModule extends BxBaseModTextModule
             if (!$aClassesOrder || !is_array($aClassesOrder))
                 continue;
 
-            $this->_oDb->updateClassesOrder($iProfileId, $iModuleId, $aClassesOrder);
+            $this->_oDb->updateClassesOrder($iProfileConextId, $iModuleId, $aClassesOrder);
         }
     }
 
-    public function actionReorderModules($iProfileId = 0)
+    public function actionReorderModules($iProfileConextId = 0)
     {
-        $oProfileContext = $iProfileId ? BxDolProfile::getInstance($iProfileId) : null;
+        $oProfileContext = $iProfileConextId ? BxDolProfile::getInstance($iProfileConextId) : null;
         if (!$oProfileContext) {
             echo _t('_sys_txt_error_occured');
             exit;
         }
 
-        // TODO: check permission for reordering
+        if (!$this->serviceIsCourseAdmin($oProfileContext->id())) {
+            echo _t('_sys_txt_access_denied');
+            exit;
+        }
 
         $aModulesOrder = bx_get('modules_order');
         if (!$aModulesOrder || !is_array($aModulesOrder)) {
@@ -75,23 +81,26 @@ class BxClssModule extends BxBaseModTextModule
             exit;
         }
 
-        $this->_oDb->updateModulesOrder($iProfileId, $aModulesOrder);
+        $this->_oDb->updateModulesOrder($iProfileConextId, $aModulesOrder);
     }
 
-    public function actionAddModule($iProfileId = 0)
+    public function actionAddModule($iProfileConextId = 0)
     {
-        $oProfileContext = $iProfileId ? BxDolProfile::getInstance($iProfileId) : null;
+        $oProfileContext = $iProfileConextId ? BxDolProfile::getInstance($iProfileConextId) : null;
         if (!$oProfileContext) {
             echoJson(array('action' => 'ShowMsg', 'msg' => _t('_sys_txt_error_occured')));
             exit;
         }
 
-        // TODO: check permission for adding to context
+        if (!$this->serviceIsCourseAdmin($oProfileContext->id())) {
+            echoJson(array('action' => 'ShowMsg', 'msg' => _t('_sys_txt_access_denied')));
+            exit;
+        }
 
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'bx-classes-module-add',
-                'action' => BX_DOL_URL_ROOT . 'modules/index.php?r=classes/add_module/' . $iProfileId,
+                'action' => BX_DOL_URL_ROOT . 'modules/index.php?r=classes/add_module/' . $iProfileConextId,
                 'method' => 'post',
             ),
             'params' => array (
@@ -105,10 +114,10 @@ class BxClssModule extends BxBaseModTextModule
                 'module_title' => array(
                     'type' => 'text',
                     'name' => 'module_title',
-                    'caption' => 'Module title', // TODO: translate
+                    'caption' => _t('_bx_classes_form_entry_input_module_title'),
                     'checker' => array(
                         'func' => 'Avail',
-                        'error' => 'Something must be entered', // TODO: translate
+                        'error' => _t('_bx_classes_form_entry_input_module_title_err'),
                     ),
                     'db' => array('pass' => 'Xss'),
                 ),
@@ -135,11 +144,11 @@ class BxClssModule extends BxBaseModTextModule
         $oForm->initChecker();
         if ($oForm->isSubmittedAndValid()) {
             $iModuleId = $oForm->insert(array(
-                'profile_id' => $iProfileId,
+                'profile_id' => $iProfileConextId,
                 'author' => bx_get_logged_profile_id(),
                 'added' => time(),
                 'changed' => time(),
-                'order' => 123, // TODO: calc max order
+                'order' => $this->_oDb->getModuleMaxOrder ($iProfileConextId),
             ));
             if ($iModuleId) {
                 echoJson(array('action' => 'ReloadLessonsAndClosePopup'));
@@ -151,7 +160,7 @@ class BxClssModule extends BxBaseModTextModule
         else {
             echo $this->_oTemplate->parseHtmlByName('classes_add_module_form.html', array(
                 'form' => $oForm->getCode(),
-                'profile_id' => $iProfileId,
+                'profile_id' => $iProfileConextId,
             ));
         }
     }
@@ -242,31 +251,30 @@ class BxClssModule extends BxBaseModTextModule
                         ++$iCounterAvail;
                         $sStatusClass = 'bx-classes-class-status-avail';
                     }
-                                
+   
+                    $aContent = array (
+                        'title' => bx_process_output($aClass['title']),
+                        'url' => $this->serviceGetLink($aClass['id']),
+                        'tip' => bx_html_attribute($sTip),
+                        'date_created' => bx_time_js($aClass['added']),
+                        'start_date' => $aClass['start_date'] ? _t('_bx_classes_txt_start_x', bx_time_js($aClass['start_date'], BX_FORMAT_DATE_TIME)) : '',
+                        'end_date' => $aClass['end_date'] ? _t('_bx_classes_txt_due_x', bx_time_js($aClass['end_date'], BX_FORMAT_DATE_TIME)) : '',
+                    );
 
                     $sContent .= $this->_oTemplate->parseHtmlByName('classes_class_row.html', array(
                         'id' => $aClass['id'],                        
                         'status' => $sStatusClass,
                         'bx_if:completed' => array(
                             'condition' => 'bx-classes-class-status-completed' == $sStatusClass,
-                            'content' => array (
-                                'title' => bx_process_output($aClass['title']),
-                                'url' => $this->serviceGetLink($aClass['id']),
-                            ),
+                            'content' => $aContent,
                         ),
                         'bx_if:avail' => array(
                             'condition' => 'bx-classes-class-status-avail' == $sStatusClass,
-                            'content' => array (
-                                'title' => bx_process_output($aClass['title']),
-                                'url' => $this->serviceGetLink($aClass['id']),
-                            ),
+                            'content' => $aContent,
                         ),
                         'bx_if:na' => array(
                             'condition' => 'bx-classes-class-status-na' == $sStatusClass,
-                            'content' => array (
-                                'title' => bx_process_output($aClass['title']),
-                                'tip' => bx_html_attribute($sTip),
-                            ),
+                            'content' => $aContent,
                         ),
                     ));
                 }
@@ -300,7 +308,7 @@ class BxClssModule extends BxBaseModTextModule
         return $this->_oTemplate->parseHtmlByName('classes_in_context.html', array(
             'form' => $oForm->getCode(),
             'bx_if:admin' => array(
-                'condition' => isAdmin() || bx_srv($oContextProfile->getModule(), 'is_admin', array($oContextProfile->id(), bx_get_logged_profile_id())),
+                'condition' => isAdmin() || $this->serviceIsCourseAdmin($oContextProfile->id()),
                 'content' => array(
                     'context_profile_id' => $iContextProfileId,
                     'new_class_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-class&profile_id=' . $oContextProfile->id()),
@@ -317,7 +325,18 @@ class BxClssModule extends BxBaseModTextModule
         return $this->_oDb->isClassCompleted($iClassId, $iProfileId);
     }
 
-    public function serviceIsAdmin ($aDataEntry, $iProfileId = 0)
+    public function serviceIsCourseAdmin ($iContextProfileId, $iProfileId = 0)
+    {
+        if (!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+
+        if (!($oProfileContext = BxDolProfile::getInstance($iContextProfileId)))
+            return false;
+        
+        return bx_srv($oProfileContext->getModule(), 'is_admin', array($oProfileContext->id(), $iProfileId));
+    }
+
+    public function serviceIsClassAdmin ($aDataEntry, $iProfileId = 0)
     {
         if (!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
@@ -341,7 +360,7 @@ class BxClssModule extends BxBaseModTextModule
 
     public function serviceCheckAvailabilityForProfile ($aDataEntry, $iProfileId)
     {
-        if (BX_CLASSES_AVAIL_ALWAYS == $aDataEntry['avail'] || isAdmin() || $this->serviceIsAdmin ($aDataEntry, $iProfileId))
+        if (BX_CLASSES_AVAIL_ALWAYS == $aDataEntry['avail'] || isAdmin() || $this->serviceIsClassAdmin ($aDataEntry, $iProfileId))
             return CHECK_ACTION_RESULT_ALLOWED;
 
         // check start date
