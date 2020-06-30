@@ -1,3 +1,19 @@
 <div id="class___id__" class="bx-classes-class bx-def-margin-thd-topbottom">
-    <div class="bx-classes-class-title"><a href="__url__">__title__</a></div>
+    <div class="bx-classes-class-title bx-def-font-h3 __status__">
+        <bx_if:completed>
+            <i class="sys-icon check-circle col-green1-dark sys-colored"></i>
+            <a href="__url__">__title__</a>
+        </bx_if:completed>
+        <bx_if:avail>
+            <i class="sys-icon play-circle col-blue1 sys-colored"></i>
+            <a href="__url__">__title__</a>
+        </bx_if:avail>
+        <bx_if:na>
+            <i class="sys-icon ban col-red1 sys-colored"></i>
+            <b title="__tip__" class="bx-def-font-grayed">
+                __title__ 
+                <i class="sys-icon info-circle"></i>
+            </b>
+        </bx_if:na>
+    </div>
 </div>
