@@ -57,12 +57,14 @@
     <string name="_bx_classes_form_entry_input_sys_date_changed"><![CDATA[Updated]]></string>
     <string name="_bx_classes_form_entry_input_date_changed"><![CDATA[Updated]]></string>
     <string name="_bx_classes_form_entry_input_date_start_date"><![CDATA[Start date]]></string>
-    <string name="_bx_classes_form_entry_input_date_end_date"><![CDATA[End date]]></string>
+    <string name="_bx_classes_form_entry_input_date_end_date"><![CDATA[Due date]]></string>
     <string name="_bx_classes_form_entry_input_sys_attachments"><![CDATA[Attachments]]></string>
     <string name="_bx_classes_form_entry_input_cmts"><![CDATA[Comments settings]]></string>
     <string name="_bx_classes_form_entry_input_avail"><![CDATA[Availability]]></string>
     <string name="_bx_classes_form_entry_input_module"><![CDATA[Module]]></string>
     <string name="_bx_classes_form_entry_input_completed_when"><![CDATA[Class is completed when]]></string>
+    <string name="_bx_classes_form_entry_input_module_title"><![CDATA[Module title]]></string>
+    <string name="_bx_classes_form_entry_input_module_title_err"><![CDATA[Module title is mandatory]]></string>
 
     <string name="_bx_classes_form_poll"><![CDATA[Polls]]></string>
     <string name="_bx_classes_form_poll_display_add"><![CDATA[Add Poll]]></string>
@@ -229,6 +231,8 @@
     <string name="_bx_classes_txt_processing_awaiting"><![CDATA[Scheduled for publishing as soon as video conversion is complete.]]></string>
     <string name="_bx_classes_txt_processing_failed"><![CDATA[Class isn't published because video conversion failed, edit video to fix the issue.]]></string>
     <string name="_bx_classes_txt_scheduled_awaiting"><![CDATA[Class publishing date is {date_publish_uf}]]></string>
+    <string name="_bx_classes_txt_start_x"><![CDATA[start {0}]]></string>
+    <string name="_bx_classes_txt_due_x"><![CDATA[due {0}]]></string>
 
     <string name="_bx_classes_txt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
     <string name="_bx_classes_txt_err_cant_add_class_without_context"><![CDATA[Class can be added into context only]]></string>

@@ -523,8 +523,7 @@ INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUE
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
 ('bx_classes_cmts', '1', 1, '_bx_classes_cmts_disabled', ''),
-('bx_classes_cmts', '2', 2, '_bx_classes_cmts_all_shown', ''),
-('bx_classes_cmts', '3', 3, '_bx_classes_cmts_own_and_admins', '');
+('bx_classes_cmts', '2', 2, '_bx_classes_cmts_all_shown', '');
 
 
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
