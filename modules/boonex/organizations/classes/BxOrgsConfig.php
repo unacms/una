@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxOrgsConfig extends BxBaseModProfileConfig
+class BxOrgsConfig extends BxBaseModGroupsConfig
 {
     function __construct($aModule)
     {
@@ -26,8 +26,12 @@ class BxOrgsConfig extends BxBaseModProfileConfig
             'edit-organization-cover' => 'checkAllowedChangeCover',
             'invite-to-organization' => 'checkAllowedInvite',
             'delete-organization-profile' => 'checkAllowedDelete',
-            'profile-fan-add' => 'checkAllowedFanAdd',
-            'profile-fan-remove' => 'checkAllowedFanRemove',
+            'profile-friend-add' => 'checkAllowedFriendAdd',
+            'profile-friend-remove' => 'checkAllowedFriendRemove',
+            'profile-relation-add' => 'checkAllowedRelationAdd',
+            'profile-relation-remove' => 'checkAllowedRelationRemove',
+            'profile-set-acl-level' => 'checkAllowedSetMembership',
+            'messenger' => 'checkAllowedCompose',
         ));
 
         $this->CNF = array_merge($this->CNF, array (
