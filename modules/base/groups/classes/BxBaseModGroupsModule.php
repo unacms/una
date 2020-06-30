@@ -9,6 +9,7 @@
  * @{
  */
 
+define('BX_BASE_MOD_GROUPS_ROLE_COMMON', 0);
 define('BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR', 1);
 define('BX_BASE_MOD_GROUPS_ROLE_MODERATOR', 2);
 
@@ -18,6 +19,11 @@ define('BX_BASE_MOD_GROUPS_ACTION_INVITE', 'invite');
 define('BX_BASE_MOD_GROUPS_ACTION_MANAGE_FANS', 'manage_fans');
 define('BX_BASE_MOD_GROUPS_ACTION_MANAGE_ROLES', 'manage_roles');
 define('BX_BASE_MOD_GROUPS_ACTION_DELETE', 'delete');
+
+define('BX_BASE_MOD_GROUPS_PERIOD_UNIT_DAY', 'day');
+define('BX_BASE_MOD_GROUPS_PERIOD_UNIT_WEEK', 'week');
+define('BX_BASE_MOD_GROUPS_PERIOD_UNIT_MONTH', 'month');
+define('BX_BASE_MOD_GROUPS_PERIOD_UNIT_YEAR', 'year');
 
 /**
  * Groups profiles module.
@@ -438,6 +444,47 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return $this->_serviceBrowse ('created_entries', array('author' => $iProfileId), BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
     }
     
+    public function serviceEntityPricing($iProfileId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$iProfileId)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+        if(!$iProfileId)
+            return '';
+
+        if(!$this->_oConfig->isPaidJoin())
+            return '';
+
+        if($this->checkAllowedManageAdmins($iProfileId) !== CHECK_ACTION_RESULT_ALLOWED)
+            return MsgBox(_t('_Access denied'));
+
+        $oGrid = BxDolGrid::getObjectInstance($CNF['OBJECT_GRID_PRICES_MANAGE']);
+        if(!$oGrid)
+            return '';
+
+        return $oGrid->getCode();
+    }
+
+    public function serviceEntityJoin($iProfileId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$iProfileId)
+            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
+        if(!$iProfileId)
+            return '';
+
+        if(!$this->_oConfig->isPaidJoin())
+            return '';
+
+        $oGrid = BxDolGrid::getObjectInstance($CNF['OBJECT_GRID_PRICES_VIEW']);
+        if(!$oGrid)
+            return '';
+
+        return $oGrid->getCode();
+    }
+    
     public function serviceEntityInvite ($iContentId = 0, $bErrorMsg = true)
     {
         if (isset($this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_INVITE']))
@@ -471,7 +518,242 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         ));
     }
 
-	/**
+    public function serviceIsPricingAvaliable($iProfileId)
+    {
+        if(!$this->_oConfig->isPaidJoin())
+            return false;
+
+        if($this->checkAllowedManageAdmins($iProfileId) !== CHECK_ACTION_RESULT_ALLOWED)
+            return false;
+
+        return true;
+    }
+
+    public function serviceIsPaidJoinAvaliable($iProfileId)
+    {
+        return $this->isPaidJoinByProfile($iProfileId);
+    }
+
+    public function serviceIsPaidJoinAvaliableByContent($iContentId)
+    {
+        $oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName());
+        if(!$oProfile)
+            return false;
+
+        return $this->isPaidJoinByProfile($oProfile->id());
+    }
+
+    public function serviceIsFreeJoinAvaliable($iProfileId)
+    {
+        return !$this->isPaidJoinByProfile($iProfileId);
+    }
+
+    public function serviceIsFreeJoinAvaliableByContent($iContentId)
+    {
+        $oProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName());
+        if(!$oProfile)
+            return false;
+
+        return !$this->isPaidJoinByProfile($oProfile->id());
+    }
+
+    public function isPaidJoinByProfile($iProfileId)
+    {
+        if(!$this->_oConfig->isPaidJoin())
+            return false;
+
+        $aPrices = $this->_oDb->getPrices(array('type' => 'by_profile_id', 'profile_id' => $iProfileId));
+        if(empty($aPrices) || !is_array($aPrices))
+            return false;
+
+        return true;
+    }
+
+    /**
+     * Integration with Payments.
+     */
+    public function serviceGetPaymentData()
+    {
+        return $this->_aModule;
+    }
+
+    public function serviceGetCartItem($mixedItemId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$mixedItemId)
+            return array();
+
+        if(is_numeric($mixedItemId))
+            $aItem = $this->_oDb->getPrices(array('type' => 'by_id', 'value' => (int)$mixedItemId));
+        else 
+            $aItem = $this->_oDb->getPrices(array('type' => 'by_name', 'value' => $mixedItemId));
+
+        if(empty($aItem) || !is_array($aItem))
+            return array();
+
+        if(!$this->isPaidJoinByProfile($aItem['profile_id']))
+            return array();
+
+        $oGroupProfile = BxDolProfile::getInstance($aItem['profile_id']);
+        if(!$oGroupProfile)
+            return array();
+
+        $aGroupProfile = $this->_oDb->getContentInfoById($oGroupProfile->getContentId());
+        
+        $aRoles = BxDolFormQuery::getDataItems($CNF['OBJECT_PRE_LIST_ROLES']);
+
+        return array (
+            'id' => $aItem['id'],
+            'author_id' => $aGroupProfile[$CNF['FIELD_AUTHOR']],
+            'name' => $aItem['name'],
+            'title' => _t($CNF['T']['txt_cart_item_title'], $oGroupProfile->getDisplayName(), $aRoles[$aItem['role_id']], $aItem['period'], $aItem['period_unit']),
+            'description' => '',
+            'url' => $oGroupProfile->getUrl(),
+            'price_single' => $aItem['price'],
+            'price_recurring' => $aItem['price'],
+            'period_recurring' => $aItem['period'],
+            'period_unit_recurring' => $aItem['period_unit']
+        );
+    }
+
+    public function serviceGetCartItems($iSellerId)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	if(empty($iSellerId))
+    	    return array();
+
+        $sModule = $this->getName();
+        $aRoles = BxDolFormQuery::getDataItems($CNF['OBJECT_PRE_LIST_ROLES']);
+
+        $aGroups = $this->_oDb->getEntriesBy(array('type' => 'author', 'author' => $iSellerId));
+
+        $aResult = array();
+        foreach($aGroups as $aGroup) {
+            $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aGroup[$CNF['FIELD_ID']], $sModule);
+            if(!$oGroupProfile)
+                continue;
+
+            $aPrices = $this->_oDb->getPrices(array('type' => 'by_profile_id', 'profile_id' => $oGroupProfile->id()));
+            if(empty($aPrices) || !is_array($aPrices))
+                continue;
+
+            $sTitle = $oGroupProfile->getDisplayName();
+            $sUrl = $oGroupProfile->getUrl();
+
+            foreach($aPrices as $aPrice)
+                $aResult[] = array(
+                    'id' => $aPrice['id'],
+                    'author_id' => $iSellerId,
+                    'name' => $aPrice['name'],
+                    'title' => _t($CNF['T']['txt_cart_item_title'], $sTitle, $aRoles[$aPrice['role_id']], $aPrice['period'], $aPrice['period_unit']),
+                    'description' => '',
+                    'url' => $sUrl,
+                    'price_single' => $aPrice['price'],
+                    'price_recurring' => $aPrice['price'],
+                    'period_recurring' => $aPrice['period'],
+                    'period_unit_recurring' => $aPrice['period_unit']
+               );
+        }
+
+        return $aResult;
+    }
+
+    public function serviceRegisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
+    {
+        return $this->_serviceRegisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder);
+    }
+
+    public function serviceRegisterSubscriptionItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
+    {
+        return $this->_serviceRegisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder);
+    }
+
+    public function serviceReregisterCartItem($iClientId, $iSellerId, $iItemIdOld, $iItemIdNew, $sOrder)
+    {
+        return $this->_serviceReregisterItem($iClientId, $iSellerId, $iItemIdOld, $iItemIdNew, $sOrder);
+    }
+
+    public function serviceReregisterSubscriptionItem($iClientId, $iSellerId, $iItemIdOld, $iItemIdNew, $sOrder)
+    {
+        return $this->_serviceReregisterItem($iClientId, $iSellerId, $iItemIdOld, $iItemIdNew, $sOrder);
+    }
+
+    public function serviceUnregisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
+    {
+        return $this->_serviceUnregisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder);
+    }
+
+    public function serviceUnregisterSubscriptionItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
+    {
+    	return $this->_serviceUnregisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder); 
+    }
+
+    public function serviceCancelSubscriptionItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder)
+    {
+    	return true;
+    }
+
+    protected function _serviceRegisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+    	$aItem = $this->serviceGetCartItem($iItemId);
+        if(empty($aItem) || !is_array($aItem))
+            return array();
+
+        $aItemInfo = $this->_oDb->getPrices(array('type' => 'by_id', 'value' => $iItemId));
+
+        $mixedPeriod = false;
+        if((int)$aItemInfo['period'] != 0)
+            $mixedPeriod = array(
+                'period' => (int)$aItemInfo['period'], 
+                'period_unit' => $aItemInfo['period_unit'], 
+                'period_reserve' => $CNF['PARAM_RECURRING_RESERVE']
+            );
+
+        if(!$this->setRole($aItemInfo['profile_id'], $iClientId, $aItemInfo['role_id'], $mixedPeriod, $sOrder))
+            return array();
+
+        return $aItem;
+    }
+
+    protected function _serviceReregisterItem($iClientId, $iSellerId, $iItemIdOld, $iItemIdNew, $sOrder)
+    {
+        $aItem = $this->serviceGetCartItem($iItemIdNew);
+        if(empty($aItem) || !is_array($aItem))
+            return array();
+
+        $aItemInfoOld = $this->_oDb->getPrices(array('type' => 'by_id', 'value' => $iItemIdOld));
+        if(empty($aItemInfoOld) || !is_array($aItemInfoOld))
+            return array();
+
+        $aItemInfoNew = $this->_oDb->getPrices(array('type' => 'by_id', 'value' => $iItemIdNew));
+        if(empty($aItemInfoNew) || !is_array($aItemInfoNew))
+            return array();
+
+        if(!$this->unsetRole($aItemInfoOld['profile_id'], $iClientId))
+            return array();
+        
+        $aResult = $this->_serviceRegisterItem($iClientId, $iSellerId, $iItemIdNew, 1, $sOrder);
+        if(empty($aResult) || !is_array($aResult))
+            return array();
+
+    	return $aItem;
+    }
+
+    protected function _serviceUnregisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder)
+    {
+        $aItemInfo = $this->_oDb->getPrices(array('type' => 'by_id', 'value' => $iItemId));
+        if(empty($aItemInfo) || !is_array($aItemInfo))
+            return false;
+
+        return $this->unsetRole($aItemInfo['profile_id'], $iClientId);
+    }
+
+
+    /**
      * Data for Notifications module
      */
     public function serviceGetNotificationsData()
@@ -897,12 +1179,26 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
     
     public function isFan ($iContentId, $iProfileId = false) 
     {
+        $CNF = &$this->_oConfig->CNF;
+
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName());
-        if (isset($this->_oConfig->CNF['OBJECT_CONNECTIONS']))
-            return $oGroupProfile && ($oConnection = BxDolConnection::getObjectInstance($this->_oConfig->CNF['OBJECT_CONNECTIONS'])) && $oConnection->isConnected($iProfileId ? $iProfileId : bx_get_logged_profile_id(), $oGroupProfile->id(), true);
+        if($oGroupProfile && isset($CNF['OBJECT_CONNECTIONS']))
+            return ($oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])) && $oConnection->isConnected($iProfileId ? $iProfileId : bx_get_logged_profile_id(), $oGroupProfile->id(), true);
+
         return false;
     }
-    
+
+    public function isFanByGroupProfileId ($iGroupProfileId, $iProfileId = false) 
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $oGroupProfile = BxDolProfile::getInstance($iGroupProfileId);
+        if($oGroupProfile && isset($CNF['OBJECT_CONNECTIONS']))
+            return ($oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])) && $oConnection->isConnected($iProfileId ? $iProfileId : bx_get_logged_profile_id(), $oGroupProfile->id(), true);
+
+        return false;
+    }
+
     public function isInvited ($sKey, $iProfileId) 
     {
         $CNF = &$this->_oConfig->CNF;
@@ -916,17 +1212,35 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return true;
     }
 
-    public function setRole($iGroupProfileId, $iFanProfileId, $iRole)
+    public function getRole($iGroupProfileId, $iFanProfileId)
     {
-        if(($mixedResult = $this->checkAllowedManageAdmins($iGroupProfileId)) !== CHECK_ACTION_RESULT_ALLOWED)
-            return array('code' => 1, 'msg' => $mixedResult);
+        if(!$this->isFanByGroupProfileId($iGroupProfileId, $iFanProfileId))
+            return false;
 
-        if(!$this->_oDb->setRole($iGroupProfileId, $iFanProfileId, $iRole))
-            return array('code' => 2, 'msg' => _t('_error occured'));
+        return $this->_oDb->getRole($iGroupProfileId, $iFanProfileId);
+    }
+
+    public function setRole($iGroupProfileId, $iFanProfileId, $iRole, $mixedPeriod = false, $sOrder = '')
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!isset($CNF['OBJECT_CONNECTIONS']))
+            return false;
+
+        $oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']);
+        $oGroupProfile = BxDolProfile::getInstance($iGroupProfileId);
+        if(!$oConnection || !$oGroupProfile)
+            return false;
+
+        if(!$oConnection->isConnected($iFanProfileId, $iGroupProfileId, true) && !($oConnection->addConnection($iFanProfileId, $iGroupProfileId) && $oConnection->addConnection($iGroupProfileId, $iFanProfileId)))
+            return false;
+
+        if(!$this->_oDb->setRole($iGroupProfileId, $iFanProfileId, $iRole, $mixedPeriod, $sOrder))
+            return false;
 
         $this->onSetRole($iGroupProfileId, $iFanProfileId, $iRole);
 
-        return array('code' => 0);
+        return true;
     }
 
     public function onSetRole($iGroupProfileId, $iFanProfileId, $iRole)
@@ -946,19 +1260,60 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
                 'Role' => $aRoles[$iRole]
             ), BX_EMAIL_NOTIFY);
 
-        // subscribe advanced group members automatically
-        $oConnection = BxDolConnection::getObjectInstance('sys_profiles_subscriptions');
-        if($iRole != 0)
-            $oConnection->addConnection($iFanProfileId, $iGroupProfileId);
-        else 
-            $oConnection->removeConnection($iFanProfileId, $iGroupProfileId);
-
         bx_alert($this->getName(), 'set_role', $aGroupProfileInfo[$CNF['FIELD_ID']], $iGroupProfileId, array(
             'object_author_id' => $iGroupProfileId,
             'performer_id' => $iProfileId, 
             'fan_id' => $iFanProfileId,
 
             'content' => $aGroupProfileInfo, 
+            'role' => $iRole,
+
+            'group_profile' => $iGroupProfileId, 
+            'profile' => $iProfileId
+        ));
+
+        $this->doAudit($iGroupProfileId, $iFanProfileId, '_sys_audit_action_group_role_changed');
+    }
+
+    public function unsetRole($iGroupProfileId, $iFanProfileId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!isset($CNF['OBJECT_CONNECTIONS']))
+            return false;
+
+        $oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']);
+        $oGroupProfile = BxDolProfile::getInstance($iGroupProfileId);
+        if(!$oConnection || !$oGroupProfile)
+            return false;
+
+        if($oConnection->isConnected($iFanProfileId, $iGroupProfileId, true) && !$oConnection->removeConnection($iFanProfileId, $iGroupProfileId))
+            return false;
+
+        $iRole = $this->_oDb->getRole($iGroupProfileId, $iFanProfileId);
+
+        if(!$this->_oDb->unsetRole($iGroupProfileId, $iFanProfileId))
+            return false;
+
+        $this->onUnsetRole($iGroupProfileId, $iFanProfileId, $iRole);
+
+        return true;
+    }
+
+    public function onUnsetRole($iGroupProfileId, $iFanProfileId, $iRole)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iProfileId = bx_get_logged_profile_id();
+        $oGroupProfile = BxDolProfile::getInstance($iGroupProfileId);
+        $aGroupProfileInfo = $this->_oDb->getContentInfoById((int)$oGroupProfile->getContentId());
+
+        bx_alert($this->getName(), 'set_role', $aGroupProfileInfo[$CNF['FIELD_ID']], $iGroupProfileId, array(
+            'object_author_id' => $iGroupProfileId,
+            'performer_id' => $iProfileId, 
+            'fan_id' => $iFanProfileId,
+
+            'content' => $aGroupProfileInfo,
             'role' => $iRole,
 
             'group_profile' => $iGroupProfileId, 

@@ -51,12 +51,14 @@
     <string name="_feature_err_duplicate_feature"><![CDATA[The item was already added in featured list.]]></string>
     <string name="_feature_err_not_enabled"><![CDATA[The feature is not available right now. Please, try again later.]]></string>
 	<string name="_Female"><![CDATA[Woman]]></string>
+        <string name="_free"><![CDATA[free]]></string>
 	<string name="_From"><![CDATA[From]]></string>
 	<string name="_Header"><![CDATA[Header]]></string>
 	<string name="_Incorrect Captcha"><![CDATA[Incorrect Captcha]]></string>
 	<string name="_Incorrect Email"><![CDATA[Incorrect Email]]></string>
 	<string name="_Info"><![CDATA[Info]]></string>
 	<string name="_Keyword"><![CDATA[Keyword]]></string>
+        <string name="_lifetime"><![CDATA[lifetime]]></string>
 	<string name="_LookinFemale"><![CDATA[Woman]]></string>
 	<string name="_LookinMale"><![CDATA[Man]]></string>
 	<string name="_MEMBERSHIP_EXPIRES_IN_DAYS"><![CDATA[expires: in {0} day(s)]]></string>
@@ -2496,6 +2498,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_sm_unfriend"><![CDATA[Remove friend]]></string>
     <string name="_sys_menu_item_title_sm_unfriend_cancel"><![CDATA[Cancel friend request]]></string>
     <string name="_sys_menu_item_title_sm_unfriend_reject"><![CDATA[Reject friend request]]></string>
+    <string name="_sys_menu_item_title_sm_join_paid"><![CDATA[Pay & Join]]></string>
     <string name="_sys_menu_item_title_sm_join"><![CDATA[Join]]></string>
     <string name="_sys_menu_item_title_sm_join_confirm"><![CDATA[Accept join request]]></string>
     <string name="_sys_menu_item_title_sm_leave"><![CDATA[Leave]]></string>
@@ -2581,6 +2584,7 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_menu_item_title_system_sm_actions"><![CDATA[Actions]]></string>
     <string name="_sys_menu_item_title_system_sm_befriend"><![CDATA[Add Friend]]></string>
     <string name="_sys_menu_item_title_system_sm_unfriend"><![CDATA[Remove Friend]]></string>
+    <string name="_sys_menu_item_title_system_sm_join_paid"><![CDATA[Pay & Join]]></string>
     <string name="_sys_menu_item_title_system_sm_join"><![CDATA[Join]]></string>
     <string name="_sys_menu_item_title_system_sm_leave"><![CDATA[Leave]]></string>
     <string name="_sys_menu_item_title_system_sm_nl"><![CDATA[New Line]]></string>

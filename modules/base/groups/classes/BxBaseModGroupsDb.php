@@ -88,16 +88,28 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
 
     public function isAdmin ($iGroupProfileId, $iFanId, $aDataEntry = array())
     {
-        if (isset($aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']]) && $iFanId == $aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']])
+        $CNF = &$this->_oConfig->CNF;
+
+        if(isset($aDataEntry[$CNF['FIELD_AUTHOR']]) && $iFanId == $aDataEntry[$CNF['FIELD_AUTHOR']])
             return true;
-        if (!isset($this->_oConfig->CNF['TABLE_ADMINS']))
+
+        if(!isset($CNF['TABLE_ADMINS']))
             return false;
-        $sQuery = $this->prepare("SELECT `id` FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `group_profile_id` = ? AND `fan_id` = ?", $iGroupProfileId, $iFanId);
-        return $this->getOne($sQuery) ? true : false;
+
+        $aBindings = array('group_profile_id' => $iGroupProfileId, 'fan_id' => $iFanId);
+        $sWhereClause = " AND `group_profile_id` = :group_profile_id AND `fan_id` = :fan_id";
+        if($this->_oConfig->isPaidJoin()) {
+            $aBindings['role'] = 'BX_BASE_MOD_GROUPS_ROLE_COMMON';
+            $sWhereClause .= " AND `role` <> :role";
+        }
+
+        return $this->getOne("SELECT `id` FROM `" . $CNF['TABLE_ADMINS'] . "` WHERE 1" . $sWhereClause, $aBindings) ? true : false;
     }
 
     public function getAdmin ($iGroupProfileId, $iProfileId, $bRoleOnly = false)
     {
+        $CNF = &$this->_oConfig->CNF;
+
         $sMethod = 'getRow';
         $sSelectClause = '*';
 
@@ -106,45 +118,230 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
             $sSelectClause = '`role`';
         }
 
-        return $this->$sMethod("SELECT " . $sSelectClause . " FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `group_profile_id` = :group_profile_id AND `fan_id` = :fan_id LIMIT 1", array(
-            'group_profile_id' => $iGroupProfileId,
-            'fan_id' => $iProfileId
-        ));
+        $aBindings = array('group_profile_id' => $iGroupProfileId, 'fan_id' => $iProfileId);
+        $sWhereClause = " AND `group_profile_id` = :group_profile_id AND `fan_id` = :fan_id";
+        if($this->_oConfig->isPaidJoin()) {
+            $aBindings['role'] = 'BX_BASE_MOD_GROUPS_ROLE_COMMON';
+            $sWhereClause .= " AND `role` <> :role";
+        }
+
+        return $this->$sMethod("SELECT " . $sSelectClause . " FROM `" . $CNF['TABLE_ADMINS'] . "` WHERE 1" . $sWhereClause . " LIMIT 1", $aBindings);
     }
 
     public function getAdmins ($iGroupProfileId, $iStart = 0, $iLimit = 0)
     {
-        if ($iLimit > 0)
-            $sQuery = $this->prepare("SELECT `fan_id` FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `group_profile_id` = ? LIMIT ?, ?", $iGroupProfileId, $iStart, $iLimit);
-        else
-            $sQuery = $this->prepare("SELECT `fan_id` FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `group_profile_id` = ?", $iGroupProfileId);
+        $CNF = &$this->_oConfig->CNF;
 
-        return $this->getColumn($sQuery);
+        $aBindings = array('group_profile_id' => $iGroupProfileId);
+        $sWhereClause = " AND `group_profile_id` = :group_profile_id";
+        if($this->_oConfig->isPaidJoin()) {
+            $aBindings['role'] = 'BX_BASE_MOD_GROUPS_ROLE_COMMON';
+            $sWhereClause .= " AND `role` <> :role";
+        }
+
+        $sLimitClause = "";
+        if($iLimit > 0)
+            $sLimitClause = " LIMIT " . (int)$iStart . ", " . (int)$iLimit;
+
+        return $this->getColumn("SELECT `fan_id` FROM `" . $CNF['TABLE_ADMINS'] . "` WHERE 1" . $sWhereClause . $sLimitClause, $aBindings);
     }
 
-    public function getRole ($iGroupProfileId, $iProfileId)
+    public function getRole($iGroupProfileId, $iProfileId)
     {
-        return (int)$this->getOne("SELECT `role` FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `group_profile_id` = :group_profile_id AND `fan_id` = :fan_id LIMIT 1", array(
+        return (int)$this->getRoles(array('type' => 'by_gf_id', 'group_profile_id' => $iGroupProfileId, 'fan_id' => $iProfileId, 'role_only' => true));
+    }
+
+    public function getRoles($aParams)
+    {
+        $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+
+        $sSelectClause = "`ta`.*";
+        $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
+
+        switch($aParams['type']) {
+            case 'by_id':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                    'id' => $aParams['value']
+                );
+
+                $sWhereClause = "AND `ta`.`id`=:id";
+                break;
+
+            case 'by_gf_id':
+                $aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = array(
+                    'group_profile_id' => $aParams['group_profile_id'],
+                    'fan_id' => $aParams['fan_id'],
+                );
+
+                $sWhereClause = "AND `group_profile_id` = :group_profile_id AND `fan_id` = :fan_id";
+                $sLimitClause = 1;
+
+                if(!empty($aParams['role_only'])) {
+                    $aMethod['name'] = 'getOne';
+                    $sSelectClause = "`ta`.`role`";
+                }
+                break;
+
+            case 'expired':
+                $sWhereClause .= "AND `ta`.`added` < UNIX_TIMESTAMP() AND `ta`.`expired` <> 0 AND `ta`.`expired` < UNIX_TIMESTAMP()";
+                break;
+        }
+
+        if(!empty($sOrderClause))
+            $sOrderClause = "ORDER BY " . $sOrderClause;
+        
+        if(!empty($sLimitClause))
+            $sLimitClause = "LIMIT " . $sLimitClause;
+
+        $sSql = "SELECT {select} FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` AS `ta` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " {order} {limit}";
+
+        $aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array($sSelectClause, $sOrderClause, $sLimitClause), $sSql);
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+
+    public function updateRoles($aSet, $aWhere)
+    {
+        $sWhereClause = 1;
+        if(!empty($aWhere))
+            $sWhereClause = $this->arrayToSQL($aWhere, ' AND ');
+
+        return (int)$this->query("UPDATE `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` SET " . $this->arrayToSQL($aSet) . " WHERE " . $sWhereClause) > 0;
+    }
+    
+    public function deleteRoles($aWhere)
+    {
+    	if(empty($aWhere))
+            return false;
+
+        return (int)$this->query("DELETE FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE " . $this->arrayToSQL($aWhere, ' AND ')) > 0;
+    }
+
+    public function setRole ($iGroupProfileId, $iProfileId, $iRole, $mixedPeriod = false, $sOrder = '')
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iNow = time();
+
+        $aBindings = array(
             'group_profile_id' => $iGroupProfileId,
-            'fan_id' => $iProfileId
+            'fan_id' => $iProfileId,
+            'role' => $iRole,
+            'order' => $sOrder,
+            'added' => $iNow
+        );
+        $sSetClause = "`group_profile_id` = :group_profile_id, `fan_id` = :fan_id, `role` = :role, `added` = :added";
+
+        $sSetExpired = ""; 
+        if(!empty($mixedPeriod)) {
+            if(is_numeric($mixedPeriod))
+        	$mixedPeriod = array('period' => (int)$mixedPeriod, 'period_unit' => BX_BASE_MOD_GROUPS_PERIOD_UNIT_DAY);
+
+            $aBindings['period'] = (int)$mixedPeriod['period'];
+
+            switch($mixedPeriod['period_unit']) {
+                case BX_BASE_MOD_GROUPS_PERIOD_UNIT_DAY:
+                case BX_BASE_MOD_GROUPS_PERIOD_UNIT_WEEK:
+                    if($mixedPeriod['period_unit'] == BX_BASE_MOD_GROUPS_PERIOD_UNIT_WEEK)
+                        $aBindings['period'] *= 7;
+
+                    $sSetExpired = "DATE_ADD(FROM_UNIXTIME(:added), INTERVAL :period DAY)";
+                    break;
+
+                case BX_BASE_MOD_GROUPS_PERIOD_UNIT_MONTH:
+                    $sSetExpired = "DATE_ADD(FROM_UNIXTIME(:added), INTERVAL :period MONTH)";
+                    break;
+
+                case BX_BASE_MOD_GROUPS_PERIOD_UNIT_YEAR:
+                    $sSetExpired = "DATE_ADD(FROM_UNIXTIME(:added), INTERVAL :period YEAR)";
+                    break;
+            }
+
+            if(!empty($sSetExpired) && !empty($mixedPeriod['period_reserve'])) {
+                $aBindings['reserve'] = (int)$mixedPeriod['period_reserve'];
+
+                $sSetExpired = "DATE_ADD(" . $sSetExpired . ", INTERVAL :reserve DAY)";
+            }
+
+            if(!empty($sSetExpired))
+                $sSetClause .= ", `expired` = UNIX_TIMESTAMP(" . $sSetExpired . ")";
+        }
+
+        return !$this->query("REPLACE INTO `" . $CNF['TABLE_ADMINS'] . "` SET " . $sSetClause, $aBindings) ? false : true;
+    }
+
+    public function unsetRole($iGroupProfileId, $iProfileId)
+    {
+        return $this->deleteRoles(array('group_profile_id' => $iGroupProfileId, 'fan_id' => $iProfileId));
+    }
+
+    public function getPrices($aParams)
+    {
+        $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+
+        $sSelectClause = "`tp`.*";
+        $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
+
+        if(!isset($aParams['order']) || empty($aParams['order']))
+            $sOrderClause = "ORDER BY `tp`.`Order` ASC";
+
+        switch($aParams['type']) {
+            case 'by_id':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                    'id' => $aParams['value']
+                );
+
+                $sWhereClause .= "AND `tp`.`id`=:id";
+                break;
+
+            case 'by_name':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                    'id' => $aParams['value']
+                );
+
+                $sWhereClause .= "AND `tp`.`name`=:name";
+                break;
+
+            case 'by_profile_id':
+            	$aMethod['params'][1] = array(
+                    'profile_id' => $aParams['profile_id']
+                );
+
+                $sWhereClause .= "AND `tp`.`profile_id`=:profile_id";
+                break;
+
+            case 'by_prpp':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                    'profile_id' => $aParams['profile_id'],
+                    'role_id' => $aParams['role_id'],
+                    'period' => $aParams['period'],
+                    'period_unit' => $aParams['period_unit'],
+                );
+
+                $sWhereClause .= "AND `tp`.`profile_id`=:profile_id AND `tp`.`role_id`=:role_id AND `tp`.`period`=:period AND `tp`.`period_unit`=:period_unit";
+                break;
+        }
+
+        $sSql = "SELECT {select} FROM `" . $this->_oConfig->CNF['TABLE_PRICES'] . "` AS `tp` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " {order} {limit}";
+
+        $aMethod['params'][0] = str_replace(array('{select}', '{order}', '{limit}'), array($sSelectClause, $sOrderClause, $sLimitClause), $sSql);
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+
+    public function getPriceOrderMax($iRoleId)
+    {
+        return (int)$this->getOne("SELECT MAX(`order`) FROM `" . $this->_oConfig->CNF['TABLE_PRICES'] . "` WHERE `role_id`=:role_id", array(
+            'role_id' => $iRoleId
         ));
     }
 
-    public function setRole ($iGroupProfileId, $iProfileId, $iRole)
+    public function deletePrices($aWhere)
     {
-        if($iRole == 0)
-            $mixedResult = $this->query("DELETE FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE `group_profile_id` = :group_profile_id AND `fan_id` = :fan_id", array(
-                'group_profile_id' => $iGroupProfileId,
-                'fan_id' => $iProfileId,
-            ));
-        else
-            $mixedResult = $this->query("REPLACE INTO `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` SET `group_profile_id` = :group_profile_id, `fan_id` = :fan_id, `role` = :role", array(
-                'group_profile_id' => $iGroupProfileId,
-                'fan_id' => $iProfileId,
-                'role' => $iRole
-            ));
-
-        return !$mixedResult ? false : true;
+        return (int)$this->query("DELETE FROM `" . $this->_oConfig->CNF['TABLE_PRICES'] . "` WHERE " . $this->arrayToSQL($aWhere, " AND ")) > 0;
     }
 
     public function insertInvite($sKey, $sGroupProfileId, $iAuthorProfileId, $iInvitedProfileId)

@@ -51,7 +51,6 @@ class BxBaseModGeneralDb extends BxDolModuleDb
                 break;
 
             case 'author':
-            	$aMethod['name'] = 'getRow';
                 $aMethod['params'][1]['author'] = (int)$aParams['author'];
 
                 $sWhereClause .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_AUTHOR'] . "` = :author";

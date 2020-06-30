@@ -24,6 +24,11 @@ class BxBaseModGroupsMenuViewActionsAll extends BxBaseModProfileMenuViewActionsA
         return $this->_getMenuItemByNameActions($aItem);
     }
 
+    protected function _getMenuItemProfileFanAddPaid($aItem)
+    {
+        return $this->_getMenuItemByNameActions($aItem);
+    }
+
     protected function _getMenuItemProfileFanRemove($aItem)
     {
         return $this->_getMenuItemByNameActionsMore($aItem);

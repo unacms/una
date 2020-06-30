@@ -26,6 +26,29 @@ class BxBaseModGroupsMenuSnippetMeta extends BxBaseModProfileMenuSnippetMeta
         }
     }
 
+    protected function _getMenuItemJoinPaid($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(!isLogged() || $this->_oModule->checkAllowedFanAdd($this->_aContentInfo) !== CHECK_ACTION_RESULT_ALLOWED)
+            return false;
+
+        $oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']);
+        if(!$oConnection)
+            return false;
+        
+        $sTitle = $this->_getMenuItemConnectionsTitle('add', $oConnection);
+        if(empty($sTitle))
+            return false;
+
+        return $this->getUnitMetaItemButtonSmall(_t('_bx_groups_menu_item_title_pay_and_join'), array(
+            'href' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+                'i' => $CNF['URI_JOIN_ENTRY'],
+                'profile_id' => $this->_oContentProfile->id()
+            ))
+        ));
+    }
+
     protected function _getMenuItemJoin($aItem)
     {
         if (isset($this->_oModule->_oConfig->CNF['OBJECT_CONNECTIONS']))
