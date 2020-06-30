@@ -21,12 +21,22 @@ class BxGroupsMenuViewActionsAll extends BxBaseModGroupsMenuViewActionsAll
         parent::__construct($aObject, $oTemplate);
     }
 
+    protected function _getMenuItemJoinGroupProfile($aItem)
+    {
+        return $this->_getMenuItemByNameActions($aItem);
+    }
+
     protected function _getMenuItemEditGroupCover($aItem)
     {
         return $this->_getMenuItemByNameActionsMore($aItem);
     }
 
     protected function _getMenuItemEditGroupProfile($aItem)
+    {
+        return $this->_getMenuItemByNameActionsMore($aItem);
+    }
+
+    protected function _getMenuItemEditGroupPricing($aItem)
     {
         return $this->_getMenuItemByNameActionsMore($aItem);
     }
