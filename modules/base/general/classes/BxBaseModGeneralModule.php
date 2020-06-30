@@ -1973,6 +1973,22 @@ class BxBaseModGeneralModule extends BxDolModule
         // moderator and owner always have access
         if ($aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']] == $this->_iProfileId || -$aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']] == $this->_iProfileId || $this->_isModerator($isPerformAction))
             return CHECK_ACTION_RESULT_ALLOWED;
+        
+        // check for context's admins 
+        if (isset($this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']) && (int)$aDataEntry[$this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']] < 0){
+            $oProfile = BxDolProfile::getInstance(-(int)$aDataEntry[$this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']]);
+            if ($oProfile){
+                $sModule = $oProfile->getModule();
+                $aEntity = BxDolRequest::serviceExists($sModule, 'get_all') ? BxDolService::call($sModule, 'get_all', array(array('type' => 'id', 'id' => $oProfile->getContentId()))) : array();
+                
+                $oModule = BxDolModule::getInstance($sModule);
+                if(isset($aEntity) && $oModule->checkAllowedEdit($aEntity) === CHECK_ACTION_RESULT_ALLOWED){
+                    return CHECK_ACTION_RESULT_ALLOWED;
+                }
+            }
+        }
+     
+        
         return _t('_sys_txt_access_denied');
     }
 
@@ -1989,6 +2005,20 @@ class BxBaseModGeneralModule extends BxDolModule
         $aCheck = checkActionModule($this->_iProfileId, 'delete entry', $this->getName(), $isPerformAction);
         if (($aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']] == $this->_iProfileId || -$aDataEntry[$this->_oConfig->CNF['FIELD_AUTHOR']] == $this->_iProfileId) && $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED)
             return CHECK_ACTION_RESULT_ALLOWED;
+        
+        // check for context's admins 
+        if (isset($this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']) && (int)$aDataEntry[$this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']] < 0){
+            $oProfile = BxDolProfile::getInstance(-(int)$aDataEntry[$this->_oConfig->CNF['FIELD_ALLOW_VIEW_TO']]);
+            if ($oProfile){
+                $sModule = $oProfile->getModule();
+                $aEntity = BxDolRequest::serviceExists($sModule, 'get_all') ? BxDolService::call($sModule, 'get_all', array(array('type' => 'id', 'id' => $oProfile->getContentId()))) : array();
+                
+                $oModule = BxDolModule::getInstance($sModule);
+                if(isset($aEntity) && $oModule->checkAllowedDelete($aEntity) === CHECK_ACTION_RESULT_ALLOWED){
+                    return CHECK_ACTION_RESULT_ALLOWED;
+                }
+            }
+        }
 
         return _t('_sys_txt_access_denied');
     }
