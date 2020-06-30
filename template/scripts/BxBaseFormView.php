@@ -71,6 +71,11 @@ class BxBaseFormView extends BxDolForm
     protected $_bViewMode = false;
 
     /**
+     * Show or not sections which have no fileds
+     */
+    protected $_bShowEmptySections = false;
+
+    /**
      * Function name for generation close form section HTML.
      */
     protected $_sSectionClose = 'getCloseSection';
@@ -252,6 +257,11 @@ class BxBaseFormView extends BxDolForm
             'form_id' => $oForm->getId(),
             'form' => $oForm->getCode(true),
         ));
+    }
+
+    function setShowEmptySections($b)
+    {
+        $this->_bShowEmptySections = $b;
     }
 
     function setAjaxMode($bAjaxMode)
@@ -450,7 +460,7 @@ BLAH;
         $sFuncGenRow = isset($this->aParams['view_mode']) && $this->aParams['view_mode'] ? 'genViewRow' : 'genRow';
         foreach ($this->aInputs as $aInput) {
             if (!isset($aInput['visible_for_levels']) || self::isVisible($aInput)) {
-                if ('block_header' == $aInput['type']) {
+                if ('block_header' == $aInput['type'] && !$this->_bShowEmptySections) {
                     // don't show section with no fields or with empty fields
                     if ($sContHeader) {                        
                         if ($sContFields)
@@ -644,7 +654,10 @@ EOS;
                 if (empty($aInput['value']) || !$aInput['value'] || '0000-00-00' == $aInput['value'])
                     break;
 
-                $sValue = BxTemplFunctions::getInstance()->{is_numeric($aInput['value']) ? 'timeForJs' : 'timeForJsFullDate'}($aInput['value'], isset($aInput['date_format']) ? $aInput['date_format'] : BX_FORMAT_DATE, true);
+                if (isset($aInput['db']['pass']) && ('DateUtc' == $aInput['db']['pass'] || 'DateTimeUtc' == $aInput['db']['pass']) && !is_numeric($aInput['value'])) 
+                    $sValue = BxTemplFunctions::getInstance()->timeForJsFullDate($aInput['value'] . " Z", isset($aInput['date_format']) ? $aInput['date_format'] : BX_FORMAT_DATE, true);
+                else
+                    $sValue = BxTemplFunctions::getInstance()->{is_numeric($aInput['value']) ? 'timeForJs' : 'timeForJsFullDate'}($aInput['value'], isset($aInput['date_format']) ? $aInput['date_format'] : BX_FORMAT_DATE, true);
             break;
 
             case 'date_time':
@@ -653,7 +666,10 @@ EOS;
                 if(empty($aInput['value']) || !$aInput['value'] || '0000-00-00 00:00:00' == $aInput['value'] || '0000-00-00 00:00' == $aInput['value'])
                     break;
 
-                $sValue = BxTemplFunctions::getInstance()->{is_numeric($aInput['value']) ? 'timeForJs' : 'timeForJsFullDate'}($aInput['value'], isset($aInput['date_format']) ? $aInput['date_format'] : BX_FORMAT_DATE_TIME, true);
+                if (isset($aInput['db']['pass']) && ('DateUtc' == $aInput['db']['pass'] || 'DateTimeUtc' == $aInput['db']['pass']) && !is_numeric($aInput['value'])) 
+                    $sValue = BxTemplFunctions::getInstance()->timeForJsFullDate($aInput['value'] . " Z", isset($aInput['date_format']) ? $aInput['date_format'] : BX_FORMAT_DATE_TIME, true);
+                else
+                    $sValue = BxTemplFunctions::getInstance()->{is_numeric($aInput['value']) ? 'timeForJs' : 'timeForJsFullDate'}($aInput['value'], isset($aInput['date_format']) ? $aInput['date_format'] : BX_FORMAT_DATE_TIME, true);
             break;
 
             case 'checkbox_set':

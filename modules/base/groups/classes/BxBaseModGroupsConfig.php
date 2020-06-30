@@ -11,11 +11,16 @@
 
 class BxBaseModGroupsConfig extends BxBaseModProfileConfig
 {
+    protected $_aHtmlIds;
+
+    protected $_aCurrency;
+
     function __construct($aModule)
     {
         parent::__construct($aModule);
 
         $this->_aMenuItems2MethodsActions = array (
+            'join-group-profile' => 'checkAllowedFanAdd',
             'profile-fan-add' => 'checkAllowedFanAdd',
             'profile-fan-remove' => 'checkAllowedFanRemove',
             'profile-subscribe-add' => 'checkAllowedSubscribeAdd',
@@ -23,6 +28,35 @@ class BxBaseModGroupsConfig extends BxBaseModProfileConfig
             'profile-actions-more' => 'checkAllowedViewMoreMenu',
             'convos-compose' => 'checkAllowedCompose',
         );
+
+        $sHtmlPrefix = str_replace('_', '-', $this->_sName);
+        $this->_aHtmlIds = array(
+            'popup_price' => $sHtmlPrefix . '-popup-price'
+        );
+
+        $oPayments = BxDolPayments::getInstance();
+        $this->_aCurrency = array(
+            'code' => $oPayments->getOption('default_currency_code'),
+            'sign' => $oPayments->getOption('default_currency_sign')
+        );
+    }
+
+    public function getHtmlIds($sKey = '')
+    {
+        if(empty($sKey))
+            return $this->_aHtmlIds;
+
+        return isset($this->_aHtmlIds[$sKey]) ? $this->_aHtmlIds[$sKey] : '';
+    }
+
+    public function getCurrency()
+    {
+    	return $this->_aCurrency;
+    }
+
+    public function isPaidJoin()
+    {
+        return !empty($this->CNF['PARAM_PER_PAID_JOIN']) && getParam($this->CNF['PARAM_PER_PAID_JOIN']) == 'on';
     }
 }
 

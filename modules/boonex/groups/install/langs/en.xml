@@ -8,6 +8,7 @@
 	<string name="_bx_groups_option_per_page_browse"><![CDATA[Number of items per page]]></string>
     <string name="_bx_groups_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
     <string name="_bx_groups_option_searchable_fields"><![CDATA[Searchable fields]]></string>
+    <string name="_bx_groups_option_enable_paid_join"><![CDATA[Enable 'Paid Join']]></string>
 
 	<string name="_bx_groups_form_profile"><![CDATA[Groups]]></string>
 	<string name="_bx_groups_form_profile_display_add"><![CDATA[Add Group]]></string>
@@ -46,6 +47,26 @@
 	<string name="_bx_groups_form_profile_input_delete_confirm_info"><![CDATA[This action can not be undone.]]></string>
 	<string name="_bx_groups_form_profile_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete group.]]></string>
 
+    <string name="_bx_groups_form_price"><![CDATA[Price]]></string>
+    <string name="_bx_groups_form_price_display_add"><![CDATA[Add]]></string>
+    <string name="_bx_groups_form_price_display_edit"><![CDATA[Edit]]></string>
+    <string name="_bx_groups_form_price_input_sys_id"><![CDATA[ID]]></string>
+    <string name="_bx_groups_form_price_input_sys_role_id"><![CDATA[Role ID]]></string>
+    <string name="_bx_groups_form_price_input_sys_period"><![CDATA[Period]]></string>
+    <string name="_bx_groups_form_price_input_period"><![CDATA[Period]]></string>
+    <string name="_bx_groups_form_price_input_inf_period"><![CDATA[Use 0 for lifetime]]></string>
+    <string name="_bx_groups_form_price_input_sys_period_unit"><![CDATA[Period unit]]></string>
+    <string name="_bx_groups_form_price_input_period_unit"><![CDATA[Period unit]]></string>
+    <string name="_bx_groups_form_price_input_inf_period_unit"><![CDATA[Leave empty for lifetime level.]]></string>
+    <string name="_bx_groups_form_price_input_err_period_unit"><![CDATA[You need to select a period unit here.]]></string>
+    <string name="_bx_groups_form_price_input_sys_price"><![CDATA[Price]]></string>
+    <string name="_bx_groups_form_price_input_price"><![CDATA[Price]]></string>
+    <string name="_bx_groups_form_price_input_inf_price"><![CDATA[Use 0 or leave empty to create free level.]]></string>
+    <string name="_bx_groups_form_price_input_sys_do_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_groups_form_price_input_do_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_groups_form_price_input_sys_do_cancel"><![CDATA[Cancel]]></string>
+    <string name="_bx_groups_form_price_input_do_cancel"><![CDATA[Cancel]]></string>
+
 	<string name="_bx_groups_acl_action_create_profile"><![CDATA[Create Group]]></string>
 	<string name="_bx_groups_acl_action_delete_profile"><![CDATA[Delete Group]]></string>
 	<string name="_bx_groups_acl_action_view_profile"><![CDATA[View Group]]></string>
@@ -62,6 +83,8 @@
 	<string name="_bx_groups_page_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
 	<string name="_bx_groups_page_title_sys_delete_profile"><![CDATA[Delete Group]]></string>
 	<string name="_bx_groups_page_title_delete_profile"><![CDATA[Delete Group]]></string>
+        <string name="_bx_groups_page_title_sys_join_profile"><![CDATA[Join Group]]></string>
+	<string name="_bx_groups_page_title_join_profile"><![CDATA[Join Group]]></string>
 	<string name="_bx_groups_page_title_sys_view_profile_closed"><![CDATA[View Closed Group]]></string>
 	<string name="_bx_groups_page_title_sys_view_profile"><![CDATA[View Group]]></string>
 	<string name="_bx_groups_page_title_view_profile"><![CDATA[{display_name}]]></string>
@@ -80,6 +103,8 @@
     <string name="_bx_groups_page_title_profile_comments"><![CDATA[Comments]]></string>
 	<string name="_bx_groups_page_title_sys_profile_info"><![CDATA[Group Info]]></string>
 	<string name="_bx_groups_page_title_profile_info"><![CDATA[Info about {display_name}]]></string>
+        <string name="_bx_groups_page_title_sys_profile_pricing"><![CDATA[Pricing]]></string>
+	<string name="_bx_groups_page_title_profile_pricing"><![CDATA[Pricing]]></string>
 	<string name="_bx_groups_page_title_sys_recent"><![CDATA[New Groups]]></string>
 	<string name="_bx_groups_page_title_recent"><![CDATA[New Groups]]></string>
 	<string name="_bx_groups_page_title_sys_manage"><![CDATA[Manage Own Groups]]></string>
@@ -106,9 +131,13 @@
 	<string name="_bx_groups_page_block_title_edit_profile"><![CDATA[Edit Group]]></string>
 	<string name="_bx_groups_page_block_title_edit_profile_cover"><![CDATA[Edit Cover]]></string>
 	<string name="_bx_groups_page_block_title_delete_profile"><![CDATA[Delete Group]]></string>
+        <string name="_bx_groups_page_block_title_join_profile"><![CDATA[Join Group]]></string>
 	<string name="_bx_groups_page_block_title_profile_info_link"><![CDATA[About <a href="{profile_link}">{display_name}</a>]]></string>
 	<string name="_bx_groups_page_block_title_profile_info"><![CDATA[Info]]></string>
 	<string name="_bx_groups_page_block_title_system_profile_info"><![CDATA[Info]]></string>
+        <string name="_bx_groups_page_block_title_system_profile_pricing"><![CDATA[Pricing]]></string>
+        <string name="_bx_groups_page_block_title_profile_pricing"><![CDATA[Pricing]]></string>
+        <string name="_bx_groups_page_block_title_profile_pricing_link"><![CDATA[Pricing of <a href="{profile_link}">{display_name}</a>]]></string>
 	<string name="_bx_groups_page_block_title_profile_description"><![CDATA[Description]]></string>
 	<string name="_bx_groups_page_block_title_profile_friends_link"><![CDATA[Friends of <a href="{profile_link}">{display_name}</a>]]></string>
 	<string name="_bx_groups_page_block_title_profile_friends"><![CDATA[Friends]]></string>
@@ -169,6 +198,8 @@
     <string name="_bx_groups_menu_item_title_delete_with_content"><![CDATA[Delete With Content]]></string>
     <string name="_bx_groups_menu_item_title_system_edit_cover"><![CDATA[Edit Cover]]></string>
     <string name="_bx_groups_menu_item_title_edit_cover"><![CDATA[Edit Cover]]></string>
+    <string name="_bx_groups_menu_item_title_system_edit_pricing"><![CDATA[Edit Pricing]]></string>
+    <string name="_bx_groups_menu_item_title_edit_pricing"><![CDATA[Edit Pricing]]></string>
     <string name="_bx_groups_menu_item_title_system_edit_profile"><![CDATA[Edit Group]]></string>
     <string name="_bx_groups_menu_item_title_edit_profile"><![CDATA[Edit Group]]></string>
     <string name="_bx_groups_menu_item_title_system_delete_profile"><![CDATA[Delete Group]]></string>
@@ -214,6 +245,9 @@
     <string name="_bx_groups_menu_item_title_leave_group_cancel_request"><![CDATA[Cancel Request]]></string>
     <string name="_bx_groups_menu_item_title_leave_group_reject_request"><![CDATA[Reject Request]]></string>
 
+    <string name="_bx_groups_menu_item_title_system_pay_and_join"><![CDATA[Pay & Join]]></string>
+    <string name="_bx_groups_menu_item_title_pay_and_join"><![CDATA[Pay & Join]]></string>
+
     <string name="_bx_groups_menu_item_title_system_subscribe"><![CDATA[Follow]]></string>
     <string name="_bx_groups_menu_item_title_subscribe"><![CDATA[Follow]]></string>
     <string name="_bx_groups_menu_item_title_system_unsubscribe"><![CDATA[Unfollow]]></string>
@@ -256,8 +290,24 @@
     <string name="_bx_groups_grid_action_title_adm_delete"><![CDATA[Delete]]></string>
     <string name="_bx_groups_grid_action_title_adm_delete_with_content"><![CDATA[Delete With Content]]></string>
     <string name="_bx_groups_grid_action_title_adm_more_actions"><![CDATA[More Actions]]></string>
-	<string name="_bx_groups_grid_action_err_delete"><![CDATA[Cannot delete the selected group(s).]]></string>
-	<string name="_bx_groups_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
+    <string name="_bx_groups_grid_action_err_delete"><![CDATA[Cannot delete the selected group(s).]]></string>
+    <string name="_bx_groups_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
+
+    <string name="_bx_groups_grid_column_title_name"><![CDATA[Name]]></string>
+    <string name="_bx_groups_grid_column_title_role_id"><![CDATA[Role]]></string>
+    <string name="_bx_groups_grid_column_title_period"><![CDATA[Period]]></string>
+    <string name="_bx_groups_grid_column_title_price"><![CDATA[Price]]></string>
+    <string name="_bx_groups_grid_action_title_add"><![CDATA[Add]]></string>
+    <string name="_bx_groups_grid_action_title_edit"><![CDATA[Edit]]></string>
+    <string name="_bx_groups_grid_action_title_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_groups_grid_action_title_buy"><![CDATA[Buy]]></string>
+    <string name="_bx_groups_grid_action_title_buy_title"><![CDATA[One-time payment]]></string>
+    <string name="_bx_groups_grid_action_title_subscribe"><![CDATA[Rent]]></string>
+    <string name="_bx_groups_grid_action_title_subscribe_title"><![CDATA[Subscribe on recurring payments]]></string>
+    <string name="_bx_groups_grid_action_title_choose"><![CDATA[Choose]]></string>
+    <string name="_bx_groups_grid_action_title_choose_title"><![CDATA[Switch to the level for free]]></string>
+    <string name="_bx_groups_popup_title_price_add"><![CDATA[Add Pricing Plan]]></string>
+    <string name="_bx_groups_popup_title_price_edit"><![CDATA[Edit Pricing Plan]]></string>
 
     <string name="_bx_groups_chart_growth"><![CDATA[Groups: Growth]]></string>
     <string name="_bx_groups_chart_growth_speed"><![CDATA[Groups: Growth Speed]]></string>
@@ -269,6 +319,8 @@
     <string name="_bx_groups_txt_account_suspended"><![CDATA[This group is suspended.]]></string>
     <string name="_bx_groups_txt_N_fans"><![CDATA[{0} members]]></string>
     <string name="_bx_groups_txt_role"><![CDATA[Role]]></string>
+    <string name="_bx_groups_txt_role_added"><![CDATA[Added]]></string>
+    <string name="_bx_groups_txt_role_expired"><![CDATA[Expires]]></string>
     <string name="_bx_groups_txt_sample_single"><![CDATA[group]]></string>
     <string name="_bx_groups_txt_sample_single_with_article"><![CDATA[a group]]></string>
     <string name="_bx_groups_txt_sample_comment_single"><![CDATA[comment to group]]></string>
@@ -283,8 +335,14 @@
     <string name="_bx_groups_txt_invite_popup_button_decline"><![CDATA[Decline]]></string>
     <string name="_bx_groups_txt_invite_popup_error_invitation_absent"><![CDATA[Sorry, an error has occurred. You can not join this group. The invitation is expired or deleted.]]></string>
     <string name="_bx_groups_txt_invite_popup_error_invitation_wrong_user"><![CDATA[Sorry, an error has occurred. You can not join this group. This invitation cannot be used by you.]]></string>
+    <string name="_bx_groups_txt_n_unit"><![CDATA[{0} ({1})]]></string>
+    <string name="_bx_groups_txt_cart_item_title"><![CDATA[{0}: {1} ({2} {3})]]></string>
 
-	  <string name="_bx_groups_alert_action_fan_added"><![CDATA[member joined]]></string>
+    <string name="_bx_groups_msg_performed"><![CDATA[The action was successfully performed.]]></string>
+    <string name="_bx_groups_err_price_duplicate"><![CDATA[Similar pricing plan is already exists.]]></string>
+    <string name="_bx_groups_err_cannot_perform"><![CDATA[An error appeared. Please report.]]></string>
+
+    <string name="_bx_groups_alert_action_fan_added"><![CDATA[member joined]]></string>
     <string name="_bx_groups_txt_ntfs_fan_added"><![CDATA[Group <b class="bx-ntfs-content-profile">{owner_name}</b> has got a member <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
     <string name="_bx_groups_alert_action_join_request"><![CDATA[join request]]></string>
     <string name="_bx_groups_txt_ntfs_join_request"><![CDATA[Group <b class="bx-ntfs-content-profile">{owner_name}</b> has a join request from <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
@@ -302,6 +360,12 @@
     <string name="_bx_groups_role_regular"><![CDATA[Regular]]></string>
     <string name="_bx_groups_role_administrator"><![CDATA[Administrator]]></string>
     <string name="_bx_groups_role_moderator"><![CDATA[Moderator]]></string>
+
+    <string name="_bx_groups_pre_lists_period_units"><![CDATA[Billing Interval]]></string>
+    <string name="_bx_groups_period_unit_day"><![CDATA[day]]></string>
+    <string name="_bx_groups_period_unit_week"><![CDATA[week]]></string>
+    <string name="_bx_groups_period_unit_month"><![CDATA[month]]></string>
+    <string name="_bx_groups_period_unit_year"><![CDATA[year]]></string>
 
     <string name="_bx_groups_email_join_request"><![CDATA[Group join request]]></string>
     <string name="_bx_groups_email_join_request_subject"><![CDATA[Request to join your group]]></string>

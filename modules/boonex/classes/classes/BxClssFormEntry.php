@@ -15,6 +15,7 @@
 class BxClssFormEntry extends BxBaseModTextFormEntry
 {
     protected $_sGhostTemplateCover = 'form_ghost_template_cover.html';
+    protected $_oProfileContext = null;
 	
     public function __construct($aInfo, $oTemplate = false)
     {
@@ -98,6 +99,31 @@ class BxClssFormEntry extends BxBaseModTextFormEntry
         }
 
         parent::initChecker ($aValues, $aSpecificValues);
+
+        if (isset($this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']])) {
+
+            // try to get context from form POST
+            $iProfileId = bx_get($CNF['FIELD_ALLOW_VIEW_TO']);
+
+            // try to get context from the form saved value (in case of "edit" form)
+            if ($iProfileId >= 0 && $this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]['value'] < 0)
+                $iProfileId = $this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]['value'];
+
+            // try to get context from GET param (in case of "create" form)
+            if ($iProfileId >= 0)
+                $iProfileId = bx_get('profile_id');
+
+            $iProfileId = abs($iProfileId);
+            $this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]['value'] = -$iProfileId;
+            $this->aInputs[$CNF['FIELD_ALLOW_VIEW_TO']]['type'] = 'hidden';
+
+            if ($iProfileId)
+                $this->_oProfileContext = BxDolProfile::getInstance($iProfileId);
+
+            if (isset($this->aInputs[$CNF['FIELD_MODULE']]) && $this->_oProfileContext) {
+                $this->aInputs[$CNF['FIELD_MODULE']]['values'] = $this->_oModule->_oDb->getEntriesModulesByContext($this->_oProfileContext->id(), true);
+            }
+        }
     }
 
     public function insert ($aValsToAdd = array(), $isIgnore = false)
@@ -127,6 +153,8 @@ class BxClssFormEntry extends BxBaseModTextFormEntry
         }
 
         $aValsToAdd[$CNF['FIELD_STATUS']] = $aValsToAdd[$CNF['FIELD_PUBLISHED']] > $aValsToAdd[$CNF['FIELD_ADDED']] ? 'awaiting' : 'active';
+
+        $aValsToAdd['order'] = $this->_oModule->_oDb->getClassMaxOrder(abs($this->getCleanValue($CNF['FIELD_ALLOW_VIEW_TO'])), $this->getCleanValue($CNF['FIELD_MODULE']));
 
         $iContentId = parent::insert ($aValsToAdd, $isIgnore);
         if(!empty($iContentId)){
@@ -174,6 +202,16 @@ class BxClssFormEntry extends BxBaseModTextFormEntry
             'content_id' => (int)$this->aInputs[$CNF['FIELD_PHOTO']]['content_id'],
             'editor_id' => isset($CNF['FIELD_TEXT_ID']) ? $CNF['FIELD_TEXT_ID'] : ''
     	);
+    }
+
+    function getCode($bDynamicMode = false)
+    {
+        if (!$this->_bViewMode && !$this->_oProfileContext)
+            return MsgBox(_t('_bx_classes_txt_err_cant_add_class_without_context'));
+
+        // TODO: check permission for adding to context
+
+        return parent::getCode($bDynamicMode);
     }
 }
 

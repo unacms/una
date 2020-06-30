@@ -33,6 +33,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'TABLE_ENTRIES_FULLTEXT' => 'search_fields',
             'TABLE_ADMINS' => $aModule['db_prefix'] . 'admins',
             'TABLE_INVITES' => $aModule['db_prefix'] . 'invites',
+            'TABLE_PRICES' => $aModule['db_prefix'] . 'prices',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -59,6 +60,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'URI_VIEW_ENTRY' => 'view-group-profile',
             'URI_EDIT_ENTRY' => 'edit-group-profile',
             'URI_EDIT_COVER' => 'edit-group-cover',
+            'URI_JOIN_ENTRY' => 'join-group-profile',
             'URI_JOINED_ENTRIES' => 'joined-groups',
             'URI_MANAGE_COMMON' => 'groups-manage',
 
@@ -73,6 +75,8 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'PARAM_SEARCHABLE_FIELDS' => 'bx_groups_searchable_fields',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_groups_per_page_browse_showcase',
             'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_groups_per_page_browse_recommended',
+            'PARAM_PER_PAID_JOIN' => 'bx_groups_enable_paid_join',
+            'PARAM_RECURRING_RESERVE' => 3, // 3 days for recurring payment to be registered
 
             // objects
             'OBJECT_STORAGE' => 'bx_groups_pics',
@@ -102,6 +106,9 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT_COVER' => 'bx_group_edit_cover',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_group_delete',
             'OBJECT_FORM_ENTRY_DISPLAY_INVITE' => 'bx_group_invite',
+            'OBJECT_FORM_PRICE' => 'bx_groups_price',
+            'OBJECT_FORM_PRICE_DISPLAY_ADD' => 'bx_groups_price_add',
+            'OBJECT_FORM_PRICE_DISPLAY_EDIT' => 'bx_groups_price_edit',
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_groups_view_actions', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE' => 'bx_groups_view_actions_more', // actions menu on view entry page for "more" popup
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_groups_view_actions_all', // all actions menu on view entry page
@@ -121,10 +128,13 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'OBJECT_GRID_COMMON' => 'bx_groups_common',
             'OBJECT_GRID_CONNECTIONS' => 'bx_groups_fans',
             'OBJECT_GRID_INVITES' => 'bx_groups_invites',
+            'OBJECT_GRID_PRICES_MANAGE' => 'bx_groups_prices_manage',
+            'OBJECT_GRID_PRICES_VIEW' => 'bx_groups_prices_view',
             'OBJECT_CONNECTIONS' => 'bx_groups_fans',
             'OBJECT_UPLOADERS_COVER' => array('bx_groups_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_groups_picture_crop'),
             'OBJECT_PRE_LIST_ROLES' => 'bx_groups_roles',
+            'OBJECT_FORM_PRELISTS_PERIOD_UNITS' => 'bx_groups_period_units',
             
             'BADGES_AVALIABLE' => true,
             
@@ -196,11 +206,17 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
                 'menu_item_title_leave_group' => '_bx_groups_menu_item_title_leave_group',
                 'txt_all_entries_by_author' => '_bx_groups_page_title_browse_by_author',
                 'txt_invitation_popup_title' => '_bx_groups_txt_invite_popup_title',
-				'txt_invitation_popup_text' => '_bx_groups_txt_invite_popup_text',
-				'txt_invitation_popup_accept_button' => '_bx_groups_txt_invite_popup_button_accept',
-				'txt_invitation_popup_decline_button' => '_bx_groups_txt_invite_popup_button_decline',
-				'txt_invitation_popup_error_invitation_absent' => '_bx_groups_txt_invite_popup_error_invitation_absent',
-				'txt_invitation_popup_error_wrong_user' => '_bx_groups_txt_invite_popup_error_invitation_wrong_user',
+                'txt_invitation_popup_text' => '_bx_groups_txt_invite_popup_text',
+                'txt_invitation_popup_accept_button' => '_bx_groups_txt_invite_popup_button_accept',
+                'txt_invitation_popup_decline_button' => '_bx_groups_txt_invite_popup_button_decline',
+                'txt_invitation_popup_error_invitation_absent' => '_bx_groups_txt_invite_popup_error_invitation_absent',
+                'txt_invitation_popup_error_wrong_user' => '_bx_groups_txt_invite_popup_error_invitation_wrong_user',
+                'txt_n_unit' => '_bx_groups_txt_n_unit',
+                'txt_buy_title' => '_bx_groups_grid_action_title_buy_title',
+                'txt_cart_item_title' => '_bx_groups_txt_cart_item_title',
+                'txt_subscribe_title' => '_bx_groups_grid_action_title_subscribe_title',
+                'msg_performed' => '_bx_groups_msg_performed',
+                'err_cannot_perform' => '_bx_groups_err_cannot_perform',
             ),
 
         );
@@ -208,19 +224,20 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
         $this->_aJsClasses = array(
             'main' => 'BxGroupsMain',
             'manage_tools' => 'BxGroupsManageTools',
-            'invite_popup' => 'BxGroupsInvitePopup'
+            'invite_popup' => 'BxGroupsInvitePopup',
+            'prices' => 'BxGroupsPrices'
         );
 
         $this->_aJsObjects = array(
             'main' => 'oBxGroupsMain',
             'manage_tools' => 'oBxGroupsManageTools',
-            'invite_popup' => 'oBxGroupsInvitePopup'
+            'invite_popup' => 'oBxGroupsInvitePopup',
+            'prices' => 'oBxGroupsPrices'
         );
 
         $this->_aGridObjects = array(
-        	'common' => $this->CNF['OBJECT_GRID_COMMON'],
-        	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
-        	
+            'common' => $this->CNF['OBJECT_GRID_COMMON'],
+            'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
         );
     }
 

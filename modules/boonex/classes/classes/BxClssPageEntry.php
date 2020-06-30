@@ -27,6 +27,18 @@ class BxClssPageEntry extends BxBaseModTextPageEntry
     		'icon' => ''
     	)));
     }
+
+    public function getCode ()
+    {
+        $s = parent::getCode ();
+
+        // mark class as viewed
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        if ($this->_aContentInfo && isLogged())
+            $this->_oModule->_oDb->updateClassStatus($this->_aContentInfo[$CNF['FIELD_ID']], bx_get_logged_profile_id(), 'viewed');
+
+        return $s;
+    }
 }
 
 /** @} */

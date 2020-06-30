@@ -51,12 +51,14 @@
     <string name="_feature_err_duplicate_feature"><![CDATA[Данный объект уже добавлен в список продвинутых.]]></string>
     <string name="_feature_err_not_enabled"><![CDATA[Действие не доступно в данный момент. Пожалуйста, попробуйте позднее.]]></string>
 	<string name="_Female"><![CDATA[Женщина]]></string>
+        <string name="_free"><![CDATA[бесплатно]]></string>
 	<string name="_From"><![CDATA[От]]></string>
 	<string name="_Header"><![CDATA[Заголовок]]></string>
 	<string name="_Incorrect Captcha"><![CDATA[Неправильная капча]]></string>
 	<string name="_Incorrect Email"><![CDATA[Введите правильный адрес электронной почты]]></string>
 	<string name="_Info"><![CDATA[Инфо]]></string>
 	<string name="_Keyword"><![CDATA[Ключевое слово]]></string>
+        <string name="_lifetime"><![CDATA[пожизненно]]></string>
 	<string name="_LookinFemale"><![CDATA[Женщина]]></string>
 	<string name="_LookinMale"><![CDATA[Мужчина]]></string>
 	<string name="_MEMBERSHIP_EXPIRES_IN_DAYS"><![CDATA[окончание срока: через {0} дней]]></string>
@@ -2482,6 +2484,7 @@
     <string name="_sys_menu_item_title_sm_unfriend"><![CDATA[Удалить из друзей]]></string>
     <string name="_sys_menu_item_title_sm_unfriend_cancel"><![CDATA[Отменить запрос о дружбе]]></string>
     <string name="_sys_menu_item_title_sm_unfriend_reject"><![CDATA[Отвергнуть запрос о дружбе]]></string>
+    <string name="_sys_menu_item_title_sm_join_paid"><![CDATA[Оплатить и присоединиться]]></string>
     <string name="_sys_menu_item_title_sm_join"><![CDATA[Присоединиться]]></string>
     <string name="_sys_menu_item_title_sm_join_confirm"><![CDATA[Одобрить присоединение]]></string>
     <string name="_sys_menu_item_title_sm_leave"><![CDATA[Покинуть]]></string>
@@ -2566,6 +2569,7 @@
     <string name="_sys_menu_item_title_system_sm_actions"><![CDATA[Действия]]></string>
     <string name="_sys_menu_item_title_system_sm_befriend"><![CDATA[Добавить в друзья]]></string>
     <string name="_sys_menu_item_title_system_sm_unfriend"><![CDATA[Удалить из друзей]]></string>
+    <string name="_sys_menu_item_title_system_sm_join_paid"><![CDATA[Оплатить и присоединиться]]></string>
     <string name="_sys_menu_item_title_system_sm_join"><![CDATA[Присоединиться]]></string>
     <string name="_sys_menu_item_title_system_sm_leave"><![CDATA[Покинуть]]></string>
     <string name="_sys_menu_item_title_system_sm_nl"><![CDATA[Новая строка]]></string>
@@ -3025,6 +3029,7 @@
 	<string name="_sys_txt_login_invalid_role"><![CDATA[Доступ запрещён]]></string>
     <string name="_sys_txt_my_profiles"><![CDATA[Создать новый профайл]]></string>
     <string name="_sys_txt_new_picture"><![CDATA[Новая картинка]]></string>
+    <string name="_sys_txt_not_found"><![CDATA[Не найдено]]></string>
     <string name="_sys_txt_no_picture_uploaded"><![CDATA[Картинка не загружена]]></string>
     <string name="_sys_txt_no_title"><![CDATA[Без заголовка]]></string>
     <string name="_sys_txt_n_by"><![CDATA[{0}]]></string>
