@@ -29,3 +29,13 @@ html .bx-classes-class-title {
 .bx-classes-class-status-completed a {
     text-decoration: line-through;
 }
+
+.bx-course-classes legend .bx-btn {
+    display:inline-block;
+    float:none;
+    vertical-align:top;
+}
+
+.bx-course-classes .handle {
+    cursor:move;
+}

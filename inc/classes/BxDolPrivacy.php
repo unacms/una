@@ -402,13 +402,14 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
                 continue;
 
             $bActAsProfile = BxDolService::call($aModule['name'], 'act_as_profile');
-            if ($bActAsProfile && $bProfileProcessed)
+            $oModule = BxDolModule::getInstance($aModule['name']);
+            
+            if ($bActAsProfile && $bProfileProcessed && (!isset($oModule->_oConfig->CNF['ALLOW_AS_CONTEXT']) || $oModule->_oConfig->CNF['ALLOW_AS_CONTEXT'] == false))
                 continue;
             if ($bActAsProfile)
                 $bProfileProcessed = true;
-
             $a = BxDolService::call($aModule['name'], 'get_participating_profiles', array($oProfile->id()));
-            $aSpaces = array();            
+            $aSpaces = array();       
             foreach ($a as $iProfileId) {
                 if (!($o = BxDolProfile::getInstance($iProfileId)))
                     continue;

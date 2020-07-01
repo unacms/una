@@ -83,6 +83,22 @@ class BxClssDb extends BxBaseModTextDb
         ));
     }
 
+    public function getModule ($iProfileConextId, $iModuleId)
+    {
+        return $this->getRow("SELECT * FROM `" . $this->_oConfig->CNF['TABLE_MODULES'] . "` WHERE `profile_id` = :profile_context AND `id` = :id LIMIT 1", array(
+            'profile_context' => $iProfileConextId,
+            'id' => $iModuleId,
+        ));
+    }
+
+    public function deleteModule ($iProfileConextId, $iModuleId)
+    {
+        return $this->query("DELETE FROM `" . $this->_oConfig->CNF['TABLE_MODULES'] . "` WHERE `profile_id` = :profile_context AND `id` = :id", array(
+            'profile_context' => $iProfileConextId,
+            'id' => $iModuleId,
+        ));
+    }
+
     public function getClassMaxOrder ($iProfileConextId, $iModuleId)
     {
         return $this->getOne("SELECT `order` + 1 FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` WHERE `allow_view_to` = :profile_context AND `module_id` = :module ORDER BY `order` DESC LIMIT 1", array(

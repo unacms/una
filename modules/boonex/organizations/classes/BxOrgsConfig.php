@@ -154,6 +154,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'OBJECT_PRE_LIST_ROLES' => 'bx_organizations_roles',
             
             'BADGES_AVALIABLE' => true,
+            'ALLOW_AS_CONTEXT' => false,
 
             'EMAIL_FRIEND_REQUEST' => 'bx_organizations_friend_request',
             'EMAIL_INVITATION' => 'bx_organizations_invitation',

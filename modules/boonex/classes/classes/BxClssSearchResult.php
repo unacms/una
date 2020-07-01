@@ -21,7 +21,7 @@ class BxClssSearchResult extends BxBaseModTextSearchResult
             'object_metatags' => 'bx_classes',
             'title' => _t('_bx_classes_page_title_browse'),
             'table' => 'bx_classes_classes',
-            'ownFields' => array('id', 'title', 'text', 'thumb', 'author', 'added'),
+            'ownFields' => array('id', 'title', 'text', 'thumb', 'author', 'added', 'avail'),
             'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),

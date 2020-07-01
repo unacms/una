@@ -36,16 +36,7 @@ class BxClssModule extends BxBaseModTextModule
 
     public function actionReorderClasses($iProfileConextId = 0)
     {
-        $oProfileContext = $iProfileConextId ? BxDolProfile::getInstance($iProfileConextId) : null;
-        if (!$oProfileContext) {
-            echo _t('_sys_txt_error_occured');
-            exit;
-        }
-
-        if (!$this->serviceIsCourseAdmin($oProfileContext->id())) {
-            echo _t('_sys_txt_access_denied');
-            exit;
-        }
+        $oProfileContext = $this->_validateActionAndGetContextProfile($iProfileConextId, 'html');
 
         foreach ($_REQUEST as $k => $v) {
             if (0 !== strncmp($k, 'classes_order_', 14))
@@ -64,16 +55,7 @@ class BxClssModule extends BxBaseModTextModule
 
     public function actionReorderModules($iProfileConextId = 0)
     {
-        $oProfileContext = $iProfileConextId ? BxDolProfile::getInstance($iProfileConextId) : null;
-        if (!$oProfileContext) {
-            echo _t('_sys_txt_error_occured');
-            exit;
-        }
-
-        if (!$this->serviceIsCourseAdmin($oProfileContext->id())) {
-            echo _t('_sys_txt_access_denied');
-            exit;
-        }
+        $oProfileContext = $this->_validateActionAndGetContextProfile($iProfileConextId, 'html');
 
         $aModulesOrder = bx_get('modules_order');
         if (!$aModulesOrder || !is_array($aModulesOrder)) {
@@ -84,23 +66,39 @@ class BxClssModule extends BxBaseModTextModule
         $this->_oDb->updateModulesOrder($iProfileConextId, $aModulesOrder);
     }
 
+    public function actionDeleteModule($iProfileConextId = 0, $iModuleId = 0)
+    {
+        $oProfileContext = $this->_validateActionAndGetContextProfile($iProfileConextId, 'html');
+
+        if ($this->_oDb->getEntriesByModule($iModuleId)) {
+            echo _t('_bx_classes_txt_err_modules_with_classes_cannot_be_deleted');
+            exit;
+        }
+
+        if (!$this->_oDb->deleteModule($oProfileContext->id(), $iModuleId))
+            echo _t('_sys_txt_error_occured');
+    }
+
+    public function actionEditModule($iProfileConextId = 0, $iModuleId = 0)
+    {
+        $this->_actionAddEditModule($iProfileConextId, $iModuleId);
+    }
+
     public function actionAddModule($iProfileConextId = 0)
     {
-        $oProfileContext = $iProfileConextId ? BxDolProfile::getInstance($iProfileConextId) : null;
-        if (!$oProfileContext) {
-            echoJson(array('action' => 'ShowMsg', 'msg' => _t('_sys_txt_error_occured')));
-            exit;
-        }
+        $this->_actionAddEditModule($iProfileConextId);
+    }
 
-        if (!$this->serviceIsCourseAdmin($oProfileContext->id())) {
-            echoJson(array('action' => 'ShowMsg', 'msg' => _t('_sys_txt_access_denied')));
-            exit;
-        }
+    protected function _actionAddEditModule($iProfileConextId = 0, $iModuleId = 0)
+    {
+        $oProfileContext = $this->_validateActionAndGetContextProfile($iProfileConextId, 'json');
 
+        $sFormAction = BX_DOL_URL_ROOT . 'modules/index.php?r=classes/';
+        $sFormAction .= $iModuleId ? 'edit_module/' . $iProfileConextId . '/' . $iModuleId : 'add_module/' . $iProfileConextId;
         $aForm = array(
             'form_attrs' => array(
-                'id' => 'bx-classes-module-add',
-                'action' => BX_DOL_URL_ROOT . 'modules/index.php?r=classes/add_module/' . $iProfileConextId,
+                'id' => 'bx-classes-module-form',
+                'action' => $sFormAction,
                 'method' => 'post',
             ),
             'params' => array (
@@ -141,15 +139,28 @@ class BxClssModule extends BxBaseModTextModule
             ),
         );
         $oForm = new BxTemplFormView($aForm);
-        $oForm->initChecker();
+
+        if ($iModuleId && ($aModule = $this->_oDb->getModule($iProfileConextId, $iModuleId)))
+            $oForm->initChecker($aModule);
+        else
+            $oForm->initChecker();
+
         if ($oForm->isSubmittedAndValid()) {
-            $iModuleId = $oForm->insert(array(
-                'profile_id' => $iProfileConextId,
-                'author' => bx_get_logged_profile_id(),
-                'added' => time(),
-                'changed' => time(),
-                'order' => $this->_oDb->getModuleMaxOrder ($iProfileConextId),
-            ));
+
+            if ($iModuleId) {
+                $oForm->update($iModuleId, array(
+                    'changed' => time(),
+                ));
+            } 
+            else {
+                $iModuleId = $oForm->insert(array(
+                    'profile_id' => $iProfileConextId,
+                    'author' => bx_get_logged_profile_id(),
+                    'added' => time(),
+                    'changed' => time(),
+                    'order' => $this->_oDb->getModuleMaxOrder ($iProfileConextId),
+                ));
+            }
             if ($iModuleId) {
                 echoJson(array('action' => 'ReloadLessonsAndClosePopup'));
             }
@@ -160,11 +171,32 @@ class BxClssModule extends BxBaseModTextModule
         else {
             echo $this->_oTemplate->parseHtmlByName('classes_add_module_form.html', array(
                 'form' => $oForm->getCode(),
-                'profile_id' => $iProfileConextId,
+                'context_profile_id' => $iProfileConextId,
             ));
         }
     }
 
+    protected function _validateActionAndGetContextProfile($iProfileConextId = 0, $sFormat = 'json')
+    {
+        $oProfileContext = $iProfileConextId ? BxDolProfile::getInstance($iProfileConextId) : null;
+        if (!$oProfileContext) {
+            if ('json' == $sFormat)
+                echoJson(array('action' => 'ShowMsg', 'msg' => _t('_sys_txt_error_occured')));
+            else
+                echo _t('_sys_txt_error_occured');
+            exit;
+        }
+
+        if (!$this->serviceIsCourseAdmin($oProfileContext->id())) {
+            if ('json' == $sFormat)
+                echoJson(array('action' => 'ShowMsg', 'msg' => _t('_sys_txt_access_denied')));
+            else
+                echo _t('_sys_txt_access_denied');
+            exit;
+        }
+
+        return $oProfileContext;
+    }
     /**
      * Entry post for Timeline module
      */
@@ -305,10 +337,17 @@ class BxClssModule extends BxBaseModTextModule
         $this->_oTemplate->addCss('main.css');
         $this->_oTemplate->addJs('main.js');
 
+        $bAdmin = isAdmin() || $this->serviceIsCourseAdmin($oContextProfile->id());
         return $this->_oTemplate->parseHtmlByName('classes_in_context.html', array(
             'form' => $oForm->getCode(),
+            'bx_if:edit_modules' => array(
+                'condition' => $bAdmin,
+                'content' => array(
+                    'context_profile_id' => $iContextProfileId,
+                ),
+            ),
             'bx_if:admin' => array(
-                'condition' => isAdmin() || $this->serviceIsCourseAdmin($oContextProfile->id()),
+                'condition' => $bAdmin,
                 'content' => array(
                     'context_profile_id' => $iContextProfileId,
                     'new_class_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=create-class&profile_id=' . $oContextProfile->id()),

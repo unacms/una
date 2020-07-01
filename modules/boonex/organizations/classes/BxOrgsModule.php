@@ -45,7 +45,10 @@ class BxOrgsModule extends BxBaseModGroupsModule
      */ 
     public function serviceGetSpaceTitle()
     {
-        return BxBaseModProfileModule::serviceGetSpaceTitle();
+        if (isset($this->_oConfig->CNF['ALLOW_AS_CONTEXT']) && $this->_oConfig->CNF['ALLOW_AS_CONTEXT'] == true)
+            return _t($this->_oConfig->CNF['T']['txt_sample_single']);
+        else
+            return BxBaseModProfileModule::serviceGetSpaceTitle();
     }
     
     /**
@@ -53,8 +56,17 @@ class BxOrgsModule extends BxBaseModGroupsModule
      */ 
     public function serviceGetParticipatingProfiles($iProfileId, $aConnectionObjects = false)
     {
-        if (false === $aConnectionObjects)
-            $aConnectionObjects = array('sys_profiles_friends');
+        if (false === $aConnectionObjects){
+            if (isset($this->_oConfig->CNF['ALLOW_AS_CONTEXT']) && $this->_oConfig->CNF['ALLOW_AS_CONTEXT'] == true){
+                $aConnectionObjects = array('sys_profiles_subscriptions');
+                if (isset($this->_oConfig->CNF['OBJECT_CONNECTIONS'])){
+                    $aConnectionObjects = array($this->_oConfig->CNF['OBJECT_CONNECTIONS'], 'sys_profiles_subscriptions');
+                }
+            }
+            else{
+                $aConnectionObjects = array('sys_profiles_friends');
+            }
+        } 
         return BxBaseModProfileModule::serviceGetParticipatingProfiles($iProfileId, $aConnectionObjects);
     }
     

@@ -4,7 +4,6 @@
 <script>
     $(document).ready(function () {
         $("#bx-classes-add-module-form form").ajaxForm({
-            url: sUrlRoot + 'modules/index.php?r=classes/add_module/__profile_id__',
             beforeSubmit: function (formData, $form, options) {
                 bx_loading($("#bx-classes-add-module-form form"), true);
             },
