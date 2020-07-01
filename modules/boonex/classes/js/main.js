@@ -8,10 +8,29 @@
  * @{
  */
 
-function bx_classes_show_module_add_form(iProfileId)
+function bx_classes_show_module_add_form(iContextProfileId)
 {
-    var sActionUrl = sUrlRoot + 'modules/index.php?r=classes/add_module/' + iProfileId;
+    var sActionUrl = sUrlRoot + 'modules/index.php?r=classes/add_module/' + iContextProfileId;
     $(window).dolPopupAjax({url: sActionUrl, closeOnOuterClick: false});
+}
+
+function bx_classes_show_module_edit_form(iContextProfileId, iModuleId)
+{
+    var sActionUrl = sUrlRoot + 'modules/index.php?r=classes/edit_module/' + iContextProfileId + '/' + iModuleId;
+    $(window).dolPopupAjax({url: sActionUrl, closeOnOuterClick: false});
+}
+
+function bx_classes_delete_module(iContextProfileId, iModuleId)
+{
+    var sActionUrl = sUrlRoot + 'modules/index.php?r=classes/delete_module/' + iContextProfileId + '/' + iModuleId;
+    bx_confirm(_t('_Are_you_sure'), function () {
+        $.post(sActionUrl, function (sData) {
+            if (sData.length)
+                bx_alert(sData);
+            else
+                loadDynamicBlockAuto('.bx-course-controls');
+        });
+    });
 }
 
 function bx_classes_reorder_classes(iProfileId, bEnable)
