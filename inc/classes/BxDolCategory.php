@@ -79,6 +79,9 @@ class BxDolCategory extends BxDolFactory implements iBxDolFactoryObject
     static public function getObjectInstanceByFormAndList($sObjectForm, $sListName)
     {
         $aObject = BxDolCategoryQuery::getCategoryObjectByFormAndList($sObjectForm, $sListName);
+        if(empty($aObject) || !is_array($aObject))
+            return false;
+
         return self::getObjectInstance($aObject['object']);
     }
 
