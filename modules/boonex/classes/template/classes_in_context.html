@@ -14,3 +14,34 @@
 <div class="bx-course-classes">
     __form__
 </div>
+<bx_if:edit_modules>
+<script>    
+    $(document).ready(function () {
+        $('.bx-course-classes .bx-form-section').each(function () {
+            var iModuleId = parseInt($(this).attr('id').replace('module_', ''));
+            var sTmplBtn = $('#bx-classes-tmpl-btn').html();
+            $(this).find('legend').append(sTmplBtn.replace('{icon}', 'pencil-alt').replace('{action}', 'edit').replace('{data}', iModuleId));
+            if (0 == $(this).find('.bx-classes-class').size())
+                $(this).find('legend').append(sTmplBtn.replace('{icon}', 'times').replace('{action}', 'delete').replace('{data}', iModuleId));
+        });
+        $('.bx-course-classes .bx-form-section .bx-classes-module-action').each(function () {
+            $(this).click(function (eve) {
+                eve.stopPropagation();
+                eve.preventDefault();
+                var e = $(this);
+                switch (e.data('action')) {
+                    case 'edit':
+                        bx_classes_show_module_edit_form('__context_profile_id__', e.data('val'));
+                        break;
+                    case 'delete':
+                        bx_classes_delete_module('__context_profile_id__', e.data('val'));
+                        break;
+                }
+            });
+        });
+    });
+</script>
+</bx_if:edit_modules>
+<template id="bx-classes-tmpl-btn">
+    <a href="#" class="bx-btn bx-btn-small bx-classes-module-action" data-action="{action}" data-val="{data}"><i class="sys-icon {icon}"></i></a>
+</template>
