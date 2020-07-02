@@ -304,15 +304,10 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             }
         }
 
-        $sActionsMenu = '';
-        if(empty($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL'])) {
-            $oMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY']);
-            if($oMenu)
-                $sActionsMenu = $oMenu->getCode();
-        }
-        else 
-            $sActionsMenu = $oModule->serviceEntityAllActions();
-        
+        $sActionsMenu = $oModule->serviceEntityAllActions();
+        if(!$sActionsMenu && ($oMenu = BxTemplMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_VIEW_ENTRY'])) !== false)
+            $sActionsMenu = $oMenu->getCode();
+
         // generate html
         $aVars = array (
             'id' => $aData[$CNF['FIELD_ID']],

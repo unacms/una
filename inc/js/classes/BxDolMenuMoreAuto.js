@@ -10,6 +10,7 @@ function BxDolMenuMoreAuto(options)
 {
     this._sObject = options.sObject;
     this._iItemsStatic = undefined == options.iItemsStatic ? 0 : options.iItemsStatic;
+    this._bItemsStaticOnly = undefined == options.bItemsStaticOnly ? 0 : options.bItemsStaticOnly;
     this._aHtmlIds = undefined == options.aHtmlIds ? {} : options.aHtmlIds;  
 
     this._sKeyWidth = 'bx-mma-width';
@@ -19,6 +20,8 @@ function BxDolMenuMoreAuto(options)
     this._sClassItemMore = this._sClassItem + '.bx-menu-item-more-auto';
     this._sClassItemMoreSubmenu = '.bx-menu-submenu-more-auto';
     this._sClassItemStatic = 'bx-menu-item-static';
+
+    this._bStaticMode = this._bItemsStaticOnly && this._iItemsStatic > 0;
 }
 
 BxDolMenuMoreAuto.prototype.init = function() {
@@ -45,21 +48,26 @@ BxDolMenuMoreAuto.prototype.init = function() {
 
     oMenu.css('overflow', 'visible');
 
-    if(iMenu >= iParent)
+    if(iMenu >= iParent || this._bStaticMode)
         this._moveToSubmenu(oMenu, oItemMore, oItemMoreSubmenu, iParent, iItemMore);
 
     //--- Add event handlers ---//
-    $(window).on('resize', function() {
-       $this.update();
-    });
+    if(!this._bStaticMode) {
+        $(window).on('resize', function() {
+           $this.update();
+        });
 
-    oMenu.find(this._sClassItem).on('resize', function() {
-        $this.update(true);
-    });
+        oMenu.find(this._sClassItem).on('resize', function() {
+            $this.update(true);
+        });
+    }
 };
 
 BxDolMenuMoreAuto.prototype.update = function(bForceCalculate)
 {
+    if(this._bStaticMode)
+        return;
+
     var $this = this;
     var oMenu = $('#' + this._aHtmlIds['main']);
     var oItemMore = oMenu.find(this._sClassItemMore);
@@ -102,7 +110,7 @@ BxDolMenuMoreAuto.prototype._moveToSubmenu = function(oMenu, oItemMore, oItemMor
     oMenu.children(this._sClassItem + ':not(' + this._sClassItemMore + ')').each(function() {
         var oItem = $(this);
         var iItem = $this._getWidth(oItem);
-        if((bRelocateOthers || iWidthTotal + iItem > iParent) && !oItem.hasClass($this._sClassItemStatic)) {
+        if(($this._bStaticMode || bRelocateOthers || iWidthTotal + iItem > iParent) && !oItem.hasClass($this._sClassItemStatic)) {
             oItem.addClass('bx-def-color-bg-hl-hover');
 
             if(!oSubmenuItemFirst.length)
