@@ -129,6 +129,20 @@ class BxBaseModGeneralMenuSnippetMeta extends BxTemplMenuUnitMeta
 
         return $this->getUnitMetaItemCustom($oVotes->getElementInline(array('show_counter' => true)));
     }
+    
+    protected function _getMenuItemReactions($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(empty($CNF['OBJECT_REACTIONS']))
+            return false;
+
+        $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_REACTIONS'], $this->_aContentInfo[$CNF['FIELD_ID']]);
+        if(!$oVotes)
+            return false;
+
+        return $this->getUnitMetaItemCustom($oVotes->getElementInline(array('show_counter' => false)));
+    }
 
     protected function _getMenuItemComments($aItem)
     {
