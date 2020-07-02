@@ -26,23 +26,25 @@ class BxClssDb extends BxBaseModTextDb
 
     public function getPrevEntry ($iClassId)
     {        
-        return $this->_getNextPrevEntry($iClassId, 'DESC');
+        return $this->_getNextPrevEntry($iClassId, 'DESC', '<=');
     }
 
     public function getNextEntry ($iClassId)
     {        
-        return $this->_getNextPrevEntry($iClassId, 'ASC');
+        return $this->_getNextPrevEntry($iClassId, 'ASC', '>=');
     }
 
-    protected function _getNextPrevEntry ($iClassId, $sSorting = 'DESC')
+    protected function _getNextPrevEntry ($iClassId, $sSorting = 'DESC', $sOp = '<=')
     {        
-        $aClass = $this->getRow("SELECT `c`.`id`, `c`.`order`, `m`.`order` as `order_module` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `" . $this->_oConfig->CNF['TABLE_MODULES'] . "` AS `m` ON (`m`.`id` = `c`.`module_id`) WHERE `c`.`id` = :class", array('class' => $iClassId));
-        $sQuery = "SELECT `c`.`*`, `m`.`module_title` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `" . $this->_oConfig->CNF['TABLE_MODULES'] . "` AS `m` ON (`m`.`id` = `c`.`module_id`) WHERE `m`.`order` <= :order_module AND `c`.`order` <= :order AND `c`.`id` != :id ORDER BY `m`.`order` DESC, `c`.`order` DESC LIMIT 1";
-        
+        $aClass = $this->getRow("SELECT `c`.`id`, `c`.`order`, `m`.`order` as `order_module`, `allow_view_to` as `context_profile_id` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `" . $this->_oConfig->CNF['TABLE_MODULES'] . "` AS `m` ON (`m`.`id` = `c`.`module_id`) WHERE `c`.`id` = :class", array('class' => $iClassId));
+
+        $sQuery = "SELECT `c`.`*`, `m`.`module_title` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `" . $this->_oConfig->CNF['TABLE_MODULES'] . "` AS `m` ON (`m`.`id` = `c`.`module_id`) WHERE `m`.`order`*1000000 + `c`.`order` $sOp :order_module*1000000 + :order AND `c`.`id` != :id AND `allow_view_to` = :context_profile ORDER BY `m`.`order`*1000000 + `c`.`order` $sSorting LIMIT 1";
+
         $a = $this->getRow($sQuery, array(
             'order_module' => $aClass['order_module'], 
             'order' => $aClass['order'],
             'id' => $aClass['id'],
+            'context_profile' => $aClass['context_profile_id'],
         ));
 
         return $a;
@@ -61,6 +63,12 @@ class BxClssDb extends BxBaseModTextDb
             return $this->getPairs($sQuery, 'id', 'module_title');
         else
             return $this->getAll($sQuery);
+    }
+
+    public function getClassModuleTitleById ($iModuleId)
+    {
+        $sQuery = $this->prepare ("SELECT `module_title` FROM `" . $this->_oConfig->CNF['TABLE_MODULES'] . "` WHERE `id` = ?", $iModuleId);
+        return $this->getOne($sQuery);
     }
 
     public function updateModulesOrder ($iProfileConextId, $aModulesOrder)

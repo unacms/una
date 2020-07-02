@@ -50,7 +50,7 @@ function bx_classes_reorder_classes(iProfileId, bEnable)
                 items:'.bx-classes-class',
                 connectWith: ".bx-form-input-wrapper-custom",
                 handle: '.handle',
-                placeholder: 'bx-classes-placeholder sys-icon arrow-right',
+                placeholder: 'bx-classes-placeholder bx-def-font-h3 sys-icon arrow-right col-green1 sys-colored',
                 forcePlaceholderSize: true, 
                 dropOnEmpty: true,
                 stop: function(oEvent, oUi) {

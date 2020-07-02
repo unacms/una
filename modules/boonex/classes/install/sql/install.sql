@@ -481,10 +481,11 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_classes_entry_edit', 'do_submit', 2147483647, 1, 16),
 
 ('bx_classes_entry_view', 'module_id', 2147483647, 1, 1),
-('bx_classes_entry_view', 'added', 2147483647, 1, 2),
-('bx_classes_entry_view', 'changed', 2147483647, 1, 3),
-('bx_classes_entry_view', 'start_date', 2147483647, 1, 4),
-('bx_classes_entry_view', 'end_date', 2147483647, 1, 5);
+('bx_classes_entry_view', 'completed_when', 2147483647, 1, 2),
+('bx_classes_entry_view', 'added', 2147483647, 1, 3),
+('bx_classes_entry_view', 'changed', 2147483647, 1, 4),
+('bx_classes_entry_view', 'start_date', 2147483647, 1, 5),
+('bx_classes_entry_view', 'end_date', 2147483647, 1, 6);
 
 -- FORMS: poll
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
