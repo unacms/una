@@ -173,6 +173,76 @@ class BxClssDb extends BxBaseModTextDb
             ));
         }
     }
+
+    public function getStudentsInClass($aContentInfo, $iStart = 0, $iLimit = 1000)
+    {
+        if (!$aContentInfo)
+            return array();
+
+        if ($aContentInfo['allow_view_to'] < 0 && $oProfileContext = BxDolProfile::getInstance(abs($aContentInfo['allow_view_to']))) {
+            $oModule = BxDolModule::getInstance($oProfileContext->getModule());
+
+            if ($oModule && isset($oModule->_oConfig->CNF['OBJECT_CONNECTIONS'])) {
+                if (!($o = BxDolConnection::getObjectInstance($oModule->_oConfig->CNF['OBJECT_CONNECTIONS'])))
+                    return array();
+
+                // TODO: remake to use SQL parts
+                if (BX_CONNECTIONS_TYPE_MUTUAL == $o->getType())
+                    $a = $o->getConnectedContent($oProfileContext->id(), true, $iStart, $iLimit);
+                else
+                    $a = $o->getConnectedContent($oProfileContext->id(), false, $iStart, $iLimit);
+            }
+        }
+
+        if ($a && $aContentInfo['allow_view_to'] < 0)
+            $a = $this->_removeCourseAdminsFromProfilesArray(abs($aContentInfo['allow_view_to']), $a); // TODO: remake to add condition to query instead of postfiltering
+
+        return $a;
+    }
+
+    public function getStudentsInClassNotCompleted($aContentInfo, $iStart = 0, $iLimit = 1000)
+    {
+        $aAll = $this->getStudentsInClass($aContentInfo, $iStart, $iLimit);
+        $aCompleted = $this->getStudentsInClassCompleted($aContentInfo, $iStart, $iLimit);
+        return array_diff($aAll, $aCompleted);;
+    }
+
+    public function getStudentsInClassCompleted($aContentInfo, $iStart = 0, $iLimit = 1000)
+    {
+        if (!$aContentInfo)
+            return array();
+
+        $iCompletedWhen = (int)$aContentInfo['completed_when'];
+        if (!isset($this->_aStatuses[$iCompletedWhen]))
+            return array();
+
+        $sCompletedField = $this->_aStatuses[$iCompletedWhen];
+
+        $a = $this->getColumn("SELECT `student_profile_id` FROM `bx_classes_statuses` WHERE `class_id` = :class AND `$sCompletedField` != 0 LIMIT :start, :limit", array(
+            'class' => $aContentInfo['id'],
+            'start' => (int)$iStart,
+            'limit' => (int)$iLimit,
+        ));
+        if (!$a)
+            return array();
+
+        if ($aContentInfo['allow_view_to'] < 0)
+            $a = $this->_removeCourseAdminsFromProfilesArray(abs($aContentInfo['allow_view_to']), $a); // TODO: remake to add condition to query instead of postfiltering
+
+        return $a;
+    }
+
+    protected function _removeCourseAdminsFromProfilesArray($iProfileConextId, $a)
+    {
+        if ($oProfileContext = BxDolProfile::getInstance($iProfileConextId)) {
+            $oModule = BxDolModule::getInstance($oProfileContext->getModule());
+            if ($oModule && method_exists($oModule->_oDb, 'getAdmins')) {
+                $aAdmins = $oModule->_oDb->getAdmins($oProfileContext->id(), 0, 1000);
+                $a = array_diff($a, $aAdmins);
+            }
+        }
+        return $a;
+    }
 }
 
 /** @} */
