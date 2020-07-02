@@ -46,3 +46,7 @@
 .bx-classes-field-view-start-date {
     font-weight:bold;
 }
+
+.bx-classes-tip-icon {
+    cursor:pointer;
+}

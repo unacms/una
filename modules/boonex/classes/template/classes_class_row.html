@@ -16,9 +16,10 @@
         </bx_if:avail>
         <bx_if:na>
             <i class="sys-icon ban col-red1 sys-colored"></i>
-            <b title="__tip__" class="bx-def-font-grayed">
+            <b class="bx-def-font-grayed">
                 __title__ 
-                <i class="sys-icon info-circle"></i>
+                <i class="sys-icon info-circle bx-classes-tip-icon" onclick="bx_alert($(this).next().html())"></i>
+                <template class="bx-classes-tip-html">__tip__</template>
             </b>
             <span class="bx-def-font-small bx-def-font-grayed">__date_created__</span>
             <span class="bx-def-font-small col-green1-dark">__start_date__</span>

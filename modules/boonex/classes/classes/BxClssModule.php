@@ -265,7 +265,7 @@ class BxClssModule extends BxBaseModTextModule
         if ($mixedAvailability !== CHECK_ACTION_RESULT_ALLOWED) {
             if (null !== $iCounterNa) ++$iCounterNa;
             $sStatusClass = 'bx-classes-class-status-na';
-            $sTip = strip_tags($mixedAvailability);
+            $sTip = $mixedAvailability;
         }
         // check if class is completed
         elseif ($this->serviceIsClassCompleted($aClass['id'])) {
@@ -281,7 +281,7 @@ class BxClssModule extends BxBaseModTextModule
         $aContent = array (
             'title' => bx_process_output($aClass['title']),
             'url' => $this->serviceGetLink($aClass['id']),
-            'tip' => bx_html_attribute($sTip),
+            'tip' => $sTip,
             'date_created' => bx_time_js($aClass['added']),
             'start_date' => $aClass['start_date'] ? _t('_bx_classes_txt_start_x', bx_time_js($aClass['start_date'], BX_FORMAT_DATE_TIME)) : '',
             'end_date' => $aClass['end_date'] ? _t('_bx_classes_txt_due_x', bx_time_js($aClass['end_date'], BX_FORMAT_DATE_TIME)) : '',
@@ -362,10 +362,11 @@ class BxClssModule extends BxBaseModTextModule
 
         $this->_oTemplate->addCss('main.css');
         $this->_oTemplate->addJs('main.js');
+        $oForm->addCssJsUi();
 
         $bAdmin = isAdmin() || $this->serviceIsCourseAdmin($oContextProfile->id());
         return $this->_oTemplate->parseHtmlByName('classes_in_context.html', array(
-            'form' => $oForm->getCode(),
+            'form' => $aModules ? $oForm->getCode() : MsgBox(_t('_Empty')),
             'bx_if:edit_modules' => array(
                 'condition' => $bAdmin,
                 'content' => array(

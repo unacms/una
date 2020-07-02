@@ -209,6 +209,9 @@ class BxClssFormEntry extends BxBaseModTextFormEntry
         if (!$this->_bViewMode && !$this->_oProfileContext)
             return MsgBox(_t('_bx_classes_txt_err_cant_add_class_without_context'));
 
+        if (!$this->_bViewMode && isset($this->aInputs['module_id']) && !$this->aInputs['module_id']['values'])
+            return MsgBox(_t('_bx_classes_txt_err_cant_add_class_without_modules'));
+
         // TODO: check permission for adding to context
 
         return parent::getCode($bDynamicMode);
