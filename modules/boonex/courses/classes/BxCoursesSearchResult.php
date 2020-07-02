@@ -37,7 +37,7 @@ class BxCoursesSearchResult extends BxBaseModGroupsSearchResult
                     'table' => 'bx_courses_data',
                     'mainField' => 'content_id',
                     'onField' => 'id',
-                    'joinFields' => array('id', 'group_name', 'group_desc', 'picture', 'cover', 'added', 'author', 'allow_view_to'),
+                    'joinFields' => array('id', 'name', 'desc', 'picture', 'cover', 'added', 'author', 'allow_view_to'),
                 ),
                 'account' => array(
                     'type' => 'INNER',
@@ -198,7 +198,7 @@ class BxCoursesSearchResult extends BxBaseModGroupsSearchResult
     {
         return array(
             'id' => 'id',
-            'group_name' => 'group_name',
+            'name' => 'name',
             'added' => 'added',
             'author' => 'author',
             'picture' => 'picture',
