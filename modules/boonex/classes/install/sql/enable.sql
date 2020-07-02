@@ -54,9 +54,11 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 2),
-('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:13:\"entity_author\";}', 0, 0, 1, 1),
+('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:13:\"entity_author\";}', 0, 0, 0, 1),
 ('bx_classes_view_entry', 3, 'bx_classes', '_bx_classes_page_block_title_sys_entry_context', '_bx_classes_page_block_title_entry_context', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:14:\"entity_context\";}', 0, 0, 1, 1),
 ('bx_classes_view_entry', 3, 'bx_classes', '', '_bx_classes_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 1, 2),
+('bx_classes_view_entry', 3, 'bx_classes', '', '_bx_classes_page_block_title_next_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_classes";s:6:"method";s:10:"next_class";}', 0, 0, 1, 3),
+('bx_classes_view_entry', 3, 'bx_classes', '', '_bx_classes_page_block_title_prev_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_classes";s:6:"method";s:10:"prev_class";}', 0, 0, 0, 4),
 ('bx_classes_view_entry', 3, 'bx_classes', '', '_bx_classes_page_block_title_entry_location', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:15:\"entity_location\";}', 0, 0, 0, 0),
 ('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:18:\"entity_all_actions\";}', 0, 0, 1, 3),
 ('bx_classes_view_entry', 4, 'bx_classes', '', '_bx_classes_page_block_title_entry_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:14:\"entity_actions\";}', 0, 0, 0, 0),

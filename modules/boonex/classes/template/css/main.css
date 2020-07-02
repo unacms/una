@@ -12,8 +12,9 @@
     min-height:1rem;
 }
 
-html .bx-classes-class-title {
-    line-height:2rem;
+.bx-course-classes .bx-classes-placeholder:not(:first-child),
+.bx-course-classes .bx-classes-class:not(:first-child) {
+    margin-top:1rem;
 }
 
 .bx-classes-btn-done {
@@ -38,4 +39,10 @@ html .bx-classes-class-title {
 
 .bx-course-classes .handle {
     cursor:move;
+}
+
+.bx-classes-field-view-module,
+.bx-classes-field-view-end-date,
+.bx-classes-field-view-start-date {
+    font-weight:bold;
 }

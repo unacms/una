@@ -213,6 +213,36 @@ class BxClssFormEntry extends BxBaseModTextFormEntry
 
         return parent::getCode($bDynamicMode);
     }
+
+    protected function genCustomViewRowValueCompletedWhen($aInput)
+    {
+        unset($aInput['values_list_name']);
+        return $aInput['value'] ? '<div class="bx-classes-field-view-completed-when">' . $this->genViewRowValueForSelect($aInput) . '</div>' : '';
+    }
+
+    protected function genCustomViewRowValueModuleId($aInput)
+    {
+        return $aInput['value'] ? '<div class="bx-classes-field-view-module">' . bx_process_output($this->_oModule->_oDb->getClassModuleTitleById ($aInput['value'])) . '</div>' : '';
+    }
+
+    protected function genCustomViewRowValueStartDate($aInput)
+    {
+        return $this->_genCustomViewRowValue($aInput, 'col-green1-dark');
+    }
+
+    protected function genCustomViewRowValueEndDate($aInput)
+    {
+        return $this->_genCustomViewRowValue($aInput, 'col-red1');
+    }
+
+    protected function _genCustomViewRowValue($aInput, $sClassAdd = '')
+    {
+        $sClass = "bx-classes-field-view-" . str_replace('_', '-', $aInput['name']) . ' ' . $sClassAdd;
+        $sClass .= ' ' . $sClassAdd;
+
+        $aInput['name'] .= '!';
+        return '<div class="' . $sClass . '">' . parent::genViewRowValue($aInput) . '</div>';
+    }
 }
 
 /** @} */
