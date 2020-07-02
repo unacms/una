@@ -292,11 +292,6 @@
 
     <string name="_bx_courses_pre_lists_cats"><![CDATA[Course categories]]></string>
     <string name="_bx_courses_cat_General"><![CDATA[General]]></string>
-    <string name="_bx_courses_cat_Business"><![CDATA[Business]]></string>
-    <string name="_bx_courses_cat_Interests"><![CDATA[Interests]]></string>
-    <string name="_bx_courses_cat_Causes"><![CDATA[Causes]]></string>
-    <string name="_bx_courses_cat_Fun"><![CDATA[Fun]]></string>
-    <string name="_bx_courses_cat_Uncategorised"><![CDATA[Uncategorised]]></string>
 
     <string name="_bx_courses_email_join_request"><![CDATA[Course join request]]></string>
     <string name="_bx_courses_email_join_request_subject"><![CDATA[Request to join your course]]></string>

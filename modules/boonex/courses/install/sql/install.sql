@@ -312,12 +312,8 @@ INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUE
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
 ('bx_courses_cats', '', 0, '_sys_please_select', ''),
-('bx_courses_cats', '1', 1, '_bx_courses_cat_General', ''),
-('bx_courses_cats', '2', 2, '_bx_courses_cat_Business', ''),
-('bx_courses_cats', '3', 3, '_bx_courses_cat_Interests', ''),
-('bx_courses_cats', '4', 4, '_bx_courses_cat_Causes', ''),
-('bx_courses_cats', '5', 5, '_bx_courses_cat_Fun', ''),
-('bx_courses_cats', '6', 6, '_bx_courses_cat_Uncategorised', '');
+('bx_courses_cats', '1', 1, '_bx_courses_cat_General', '');
+
 
 -- COMMENTS
 INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Html`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
