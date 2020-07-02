@@ -578,7 +578,7 @@
             oMessage = oAPopup.find('.popup_alert_text');
 
             sDefMessage = oMessage.html();
-            oMessage.html(options.message);
+            oMessage.html(options.message).bxTime();
         }
 
         var oBtnOk = oAPopup.find('.popup_alert_ok');
