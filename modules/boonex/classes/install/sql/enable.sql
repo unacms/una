@@ -106,12 +106,6 @@ SET @iPBCellGroup = 4;
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
 ('trigger_page_group_view_entry', @iPBCellGroup, 'bx_classes', '_bx_classes_page_block_title_group_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_classes";s:6:"method";s:18:"classes_in_context";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 0, 0, 0);
 
--- MENU: add to "add content" menu
-
-SET @iAddMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_add_content_links' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
-INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_add_content_links', 'bx_classes', 'create-class', '_bx_classes_menu_item_title_system_create_entry', '_bx_classes_menu_item_title_create_entry', 'page.php?i=create-class', '', '', 'file-alt col-red3', '', 2147483647, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
-
 -- MENU: create post form attachments (link, photo, video, etc)
 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
