@@ -360,11 +360,13 @@ class BxClssModule extends BxBaseModTextModule
         $oForm = new BxTemplFormView($aForm);
         $oForm->setShowEmptySections(true);
 
+        $bAdmin = isAdmin() || $this->serviceIsCourseAdmin($oContextProfile->id());
+
         $this->_oTemplate->addCss('main.css');
         $this->_oTemplate->addJs('main.js');
-        $oForm->addCssJsUi();
+        if ($bAdmin)
+            $this->_oTemplate->addJs('jquery-ui/jquery-ui.custom.min.js');
 
-        $bAdmin = isAdmin() || $this->serviceIsCourseAdmin($oContextProfile->id());
         return $this->_oTemplate->parseHtmlByName('classes_in_context.html', array(
             'form' => $aModules ? $oForm->getCode() : MsgBox(_t('_Empty')),
             'bx_if:edit_modules' => array(

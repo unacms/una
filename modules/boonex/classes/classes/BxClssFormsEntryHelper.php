@@ -18,6 +18,22 @@ class BxClssFormsEntryHelper extends BxBaseModTextFormsEntryHelper
     {
         parent::__construct($oModule);
     }
+
+    protected function redirectAfterDelete($aContentInfo)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $oProfileContext = BxDolProfile::getInstance(abs($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]));
+        
+        $sUrl = BX_DOL_URL_ROOT;
+        if ($oProfileContext)
+            $sUrl = $oProfileContext->getUrl();
+
+        $this->_redirectAndExit($sUrl, true, array(
+            'account_id' => getLoggedId(),
+            'profile_id' => bx_get_logged_profile_id(),
+        ));
+    }
 }
 
 /** @} */
