@@ -23,7 +23,8 @@ class BxClssFormsEntryHelper extends BxBaseModTextFormsEntryHelper
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $oProfileContext = BxDolProfile::getInstance(abs($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]));
+        if ($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0)
+            $oProfileContext = BxDolProfile::getInstance(abs($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]));
         
         $sUrl = BX_DOL_URL_ROOT;
         if ($oProfileContext)
