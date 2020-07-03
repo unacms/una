@@ -137,6 +137,7 @@
     <string name="_bx_classes_page_block_title_prev_entry"><![CDATA[Previous class]]></string>
     <string name="_bx_classes_page_block_title_entry_students_completed_class"><![CDATA[Passed students]]></string>
     <string name="_bx_classes_page_block_title_entry_students_not_completed_class"><![CDATA[Not passed students]]></string>
+    <string name="_bx_classes_page_block_title_group_entries"><![CDATA[Classes]]></string>
 
     <string name="_bx_classes_menu_title_entry_attachments"><![CDATA[Form Attachments]]></string>
     <string name="_bx_classes_menu_set_title_entry_attachments"><![CDATA[Form Attachments]]></string>

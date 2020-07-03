@@ -38,7 +38,7 @@ class BxClssDb extends BxBaseModTextDb
     {        
         $aClass = $this->getRow("SELECT `c`.`id`, `c`.`order`, `m`.`order` as `order_module`, `allow_view_to` as `context_profile_id` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `" . $this->_oConfig->CNF['TABLE_MODULES'] . "` AS `m` ON (`m`.`id` = `c`.`module_id`) WHERE `c`.`id` = :class", array('class' => $iClassId));
 
-        $sQuery = "SELECT `c`.`*`, `m`.`module_title` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `" . $this->_oConfig->CNF['TABLE_MODULES'] . "` AS `m` ON (`m`.`id` = `c`.`module_id`) WHERE `m`.`order`*1000000 + `c`.`order` $sOp :order_module*1000000 + :order AND `c`.`id` != :id AND `allow_view_to` = :context_profile ORDER BY `m`.`order`*1000000 + `c`.`order` $sSorting LIMIT 1";
+        $sQuery = "SELECT `c`.*, `m`.`module_title` FROM `" . $this->_oConfig->CNF['TABLE_ENTRIES'] . "` AS `c` INNER JOIN `" . $this->_oConfig->CNF['TABLE_MODULES'] . "` AS `m` ON (`m`.`id` = `c`.`module_id`) WHERE `m`.`order`*1000000 + `c`.`order` $sOp :order_module*1000000 + :order AND `c`.`id` != :id AND `allow_view_to` = :context_profile ORDER BY `m`.`order`*1000000 + `c`.`order` $sSorting LIMIT 1";
 
         $a = $this->getRow($sQuery, array(
             'order_module' => $aClass['order_module'], 

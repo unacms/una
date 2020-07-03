@@ -212,7 +212,7 @@ class BxClssFormEntry extends BxBaseModTextFormEntry
         if (!$this->_bViewMode && isset($this->aInputs['module_id']) && !$this->aInputs['module_id']['values'])
             return MsgBox(_t('_bx_classes_txt_err_cant_add_class_without_modules'));
 
-        if (!$this->_oModule->serviceIsCourseAdmin($this->_oProfileContext->id()))
+        if (!$this->_bViewMode && !$this->_oModule->serviceIsCourseAdmin($this->_oProfileContext->id()))
             return MsgBox(_t('_sys_txt_access_denied'));
 
         return parent::getCode($bDynamicMode);
@@ -245,7 +245,8 @@ class BxClssFormEntry extends BxBaseModTextFormEntry
         $sClass .= ' ' . $sClassAdd;
 
         $aInput['name'] .= '!';
-        return '<div class="' . $sClass . '">' . parent::genViewRowValue($aInput) . '</div>';
+        $s = parent::genViewRowValue($aInput);
+        return $aInput['value'] ? '<div class="' . $sClass . '">' . $s . '</div>' : $s;
     }
 }
 
