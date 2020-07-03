@@ -399,7 +399,6 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
             if (in_array($aModule['name'], $aExcludeModules))
                 continue;
 
-            $bActAsProfile = BxDolService::call($aModule['name'], 'act_as_profile');
             $oModule = BxDolModule::getInstance($aModule['name']);
             
             $a = BxDolService::call($aModule['name'], 'get_participating_profiles', array($oProfile->id()));
