@@ -123,7 +123,7 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
             'OBJECT_CONNECTIONS' => 'bx_courses_fans',
             'OBJECT_UPLOADERS_COVER' => array('bx_courses_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_courses_picture_crop'),
-            
+
             'BADGES_AVALIABLE' => true,
             
             'INVITES_KEYS_LIFETIME' => 86400,
@@ -208,7 +208,7 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
         );
 
         $this->_aJsObjects = array(
-        	'manage_tools' => 'oBxCoursesManageTools',
+            'manage_tools' => 'oBxCoursesManageTools',
             'invite_popup' => 'oBxCoursesInvitePopup'
         );
 

@@ -17,6 +17,7 @@ class BxBaseMenuMoreAuto extends BxTemplMenu
 
     protected $_bMoreAuto;
     protected $_iMoreAutoItemsStatic;
+    protected $_bMoreAutoItemsStaticOnly;
     protected $_sJsObjectMoreAuto;
 
     protected $_aHtmlIds;
@@ -30,6 +31,7 @@ class BxBaseMenuMoreAuto extends BxTemplMenu
 
         $this->_bMoreAuto = null;
         $this->_iMoreAutoItemsStatic = 1;
+        $this->_bMoreAutoItemsStaticOnly = false;
         $this->_sJsObjectMoreAuto = 'oMenuMoreAuto' . bx_gen_method_name($this->_sObject);
 
         $sPrefix = str_replace('_', '-', $this->_sObject);
@@ -93,6 +95,7 @@ class BxBaseMenuMoreAuto extends BxTemplMenu
         $aJsParams = array(
             'sObject' => $this->_sObject,
             'iItemsStatic' => $this->_iMoreAutoItemsStatic,
+            'bItemsStaticOnly' => $this->_bMoreAutoItemsStaticOnly ? 1 : 0,
             'aHtmlIds' => $this->_getHtmlIds()
         );
 

@@ -360,11 +360,13 @@ class BxClssModule extends BxBaseModTextModule
         $oForm = new BxTemplFormView($aForm);
         $oForm->setShowEmptySections(true);
 
+        $bAdmin = isAdmin() || $this->serviceIsCourseAdmin($oContextProfile->id());
+
         $this->_oTemplate->addCss('main.css');
         $this->_oTemplate->addJs('main.js');
-        $oForm->addCssJsUi();
+        if ($bAdmin)
+            $this->_oTemplate->addJs('jquery-ui/jquery-ui.custom.min.js');
 
-        $bAdmin = isAdmin() || $this->serviceIsCourseAdmin($oContextProfile->id());
         return $this->_oTemplate->parseHtmlByName('classes_in_context.html', array(
             'form' => $aModules ? $oForm->getCode() : MsgBox(_t('_Empty')),
             'bx_if:edit_modules' => array(
@@ -381,6 +383,52 @@ class BxClssModule extends BxBaseModTextModule
                 ),
             ),
         ));
+    }
+
+    public function serviceBrowseStudentsInClass ($iClassId = 0, $iLimit = 1000, $aAdditionalParams = array())
+    {
+        return $this->_serviceBrowseStudentsInClass ($iClassId, 'getStudentsInClass', $iLimit);
+    }
+
+    public function serviceBrowseStudentsCompletedClass ($iClassId = 0, $iLimit = 1000, $aAdditionalParams = array())
+    {
+        return $this->_serviceBrowseStudentsInClass ($iClassId, 'getStudentsInClassCompleted', $iLimit);
+    }
+
+    public function serviceBrowseStudentsNotCompletedClass ($iClassId = 0, $iLimit = 1000, $aAdditionalParams = array())
+    {
+        return $this->_serviceBrowseStudentsInClass ($iClassId, 'getStudentsInClassNotCompleted', $iLimit);
+    }
+
+    protected function _serviceBrowseStudentsInClass ($iClassId, $sFunc, $iLimit = 1000, $aAdditionalParams = array())
+    {        
+        // set some vars
+        if (!$iClassId)
+            $iClassId = (int)bx_get('id');
+        if (!$iClassId)
+            return '';
+
+        $iLimit = (int)$iLimit;
+        if (!$iLimit)
+            $iLimit = 50;
+
+        $iStart = (int)bx_get('start');
+
+        if (!($aClass = $this->_oDb->getContentInfoById($iClassId)))
+            return '';
+
+        if ($aClass['allow_view_to'] >= 0)
+            return '';
+
+        if (!$this->serviceIsCourseAdmin(abs($aClass['allow_view_to'])))
+            return '';
+
+        // get students array
+        $a = $this->_oDb->$sFunc ($aClass, $iStart, $iLimit + 1);
+        if (!$a)
+            return '';
+
+        return $this->_serviceBrowseQuick($a, $iStart, $iLimit, $aAdditionalParams);
     }
 
     public function serviceIsClassCompleted ($iClassId, $iProfileId = 0)
