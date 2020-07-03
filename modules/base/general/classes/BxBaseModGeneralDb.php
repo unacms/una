@@ -227,11 +227,19 @@ class BxBaseModGeneralDb extends BxDolModuleDb
                     if(!is_array($aSearchParam['value']) || count($aSearchParam['value']) != 2) 
                         break;
 
-                    $sWhereConditions .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $sSearchParam . "` >= :" . $sSearchParam . "_from";
-                    $sWhereConditions .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $sSearchParam . "` <= :" . $sSearchParam . "_to";
+                    list($mixedMin, $mixedMax) = $aSearchParam['value'];
 
-                    $aMethod['params'][1][$sSearchParam . "_from"] = $aSearchParam['value'][0]; 
-                    $aMethod['params'][1][$sSearchParam . "_to"] = $aSearchParam['value'][1]; 
+                    if(!empty($mixedMin)) {
+                        $sWhereConditions .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $sSearchParam . "` >= :" . $sSearchParam . "_from";
+                        
+                        $aMethod['params'][1][$sSearchParam . "_from"] = $mixedMin; 
+                    }
+
+                    if(!empty($mixedMax)) {
+                        $sWhereConditions .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $sSearchParam . "` <= :" . $sSearchParam . "_to";
+
+                        $aMethod['params'][1][$sSearchParam . "_to"] = $mixedMax; 
+                    }
                     break;
 
                 default:
