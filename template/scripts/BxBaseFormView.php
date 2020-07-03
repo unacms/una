@@ -714,7 +714,7 @@ EOS;
         if (!isset($aInput['value']) || !$aInput['value'])
             return null;
         $s = isset($aInput['value']) && isset($aInput['values'][$aInput['value']]) ? $aInput['values'][$aInput['value']] : null;
-        if (isset($aInput['values_list_name'])  && ($oCategory = BxDolCategory::getObjectInstanceByFormAndList($this->aFormAttrs['name'], $aInput['values_list_name'])))
+        if (isset($aInput['values_list_name'])  && ($oCategory = BxDolCategory::getObjectInstanceByFormAndList($this->aFormAttrs['name'], $aInput['values_list_name'])) !== false)
             return $oCategory->getCategoryLink($s, $aInput['value']);
         return $s;
     }

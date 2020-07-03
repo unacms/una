@@ -73,7 +73,6 @@ class BxClssConfig extends BxBaseModTextConfig
             
             // page URIs
             'URI_VIEW_ENTRY' => 'view-class',
-            'URI_AUTHOR_ENTRIES' => 'classes-author',
             'URI_ENTRIES_BY_CONTEXT' => 'classes-context',
             'URI_ADD_ENTRY' => 'create-class',
             'URI_EDIT_ENTRY' => 'edit-class',

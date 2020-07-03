@@ -235,10 +235,80 @@ class BxClssModule extends BxBaseModTextModule
         return parent::serviceCheckAllowedCommentsView($iContentId, $sObjectComments);
     }
 
+    public function serviceNextClass ($iClassId = 0)
+    {
+        return $this->_serviceNextClass ($iClassId, 'getNextEntry');
+    }
+
+    public function servicePrevClass ($iClassId = 0)
+    {
+        return $this->_serviceNextClass ($iClassId, 'getPrevEntry');
+    }
+
+    protected function _serviceNextClass ($iClassId, $sFunc)
+    {
+        if (!$iClassId)
+            $iClassId = (int)bx_get('id');
+
+        if (!($aClass = $this->_oDb->$sFunc ($iClassId)))
+            return '';
+
+        return $this->_getClassRow($aClass);
+    }
+
+    protected function _getClassRow ($aClass, &$iCounterCompleted = null, &$iCounterAvail = null, &$iCounterNa = null)
+    {
+        $sStatusClass = '';
+        // check class availability
+        $mixedAvailability = $this->checkAllowedViewForProfile($aClass, bx_get_logged_profile_id());
+        $sTip = '';
+        if ($mixedAvailability !== CHECK_ACTION_RESULT_ALLOWED) {
+            if (null !== $iCounterNa) ++$iCounterNa;
+            $sStatusClass = 'bx-classes-class-status-na';
+            $sTip = $mixedAvailability;
+        }
+        // check if class is completed
+        elseif ($this->serviceIsClassCompleted($aClass['id'])) {
+            if (null !== $iCounterCompleted) ++$iCounterCompleted;
+            $sStatusClass = 'bx-classes-class-status-completed';
+        }
+        // class is available
+        else {
+            if (null !== $iCounterAvail) ++$iCounterAvail;
+            $sStatusClass = 'bx-classes-class-status-avail';
+        }
+
+        $aContent = array (
+            'title' => bx_process_output($aClass['title']),
+            'url' => $this->serviceGetLink($aClass['id']),
+            'tip' => $sTip,
+            'date_created' => bx_time_js($aClass['added']),
+            'start_date' => $aClass['start_date'] ? _t('_bx_classes_txt_start_x', bx_time_js($aClass['start_date'], BX_FORMAT_DATE_TIME)) : '',
+            'end_date' => $aClass['end_date'] ? _t('_bx_classes_txt_due_x', bx_time_js($aClass['end_date'], BX_FORMAT_DATE_TIME)) : '',
+        );
+
+        return $this->_oTemplate->parseHtmlByName('classes_class_row.html', array(
+            'id' => $aClass['id'],                        
+            'status' => $sStatusClass,
+            'bx_if:completed' => array(
+                'condition' => 'bx-classes-class-status-completed' == $sStatusClass,
+                'content' => $aContent,
+            ),
+            'bx_if:avail' => array(
+                'condition' => 'bx-classes-class-status-avail' == $sStatusClass,
+                'content' => $aContent,
+            ),
+            'bx_if:na' => array(
+                'condition' => 'bx-classes-class-status-na' == $sStatusClass,
+                'content' => $aContent,
+            ),
+        ));
+    }
+
     public function serviceClassesInContext ($iContextProfileId = 0)
     {
         if (!$iContextProfileId)
-            $iContextProfileId = (int)bx_get('id') ? bx_get('id') : bx_get('profile_id');
+            $iContextProfileId = (int)bx_get('profile_id');
 
         if (!($oContextProfile = BxDolProfile::getInstance($iContextProfileId)))
             return MsgBox(_t('_sys_txt_error_occured'));
@@ -264,51 +334,7 @@ class BxClssModule extends BxBaseModTextModule
             $sContent = '';
             if ($aClasses) {
                 foreach ($aClasses as $aClass) {
-                    $sStatusClass = '';
-                    // check class availability
-                    $mixedAvailability = $this->checkAllowedViewForProfile($aClass, bx_get_logged_profile_id());
-                    $sTip = '';
-                    if ($mixedAvailability !== CHECK_ACTION_RESULT_ALLOWED) {
-                        ++$iCounterNa;
-                        $sStatusClass = 'bx-classes-class-status-na';
-                        $sTip = strip_tags($mixedAvailability);
-                    }
-                    // check if class is completed
-                    elseif ($this->serviceIsClassCompleted($aClass['id'])) {
-                        ++$iCounterCompleted;
-                        $sStatusClass = 'bx-classes-class-status-completed';
-                    }
-                    // class is available
-                    else {
-                        ++$iCounterAvail;
-                        $sStatusClass = 'bx-classes-class-status-avail';
-                    }
-   
-                    $aContent = array (
-                        'title' => bx_process_output($aClass['title']),
-                        'url' => $this->serviceGetLink($aClass['id']),
-                        'tip' => bx_html_attribute($sTip),
-                        'date_created' => bx_time_js($aClass['added']),
-                        'start_date' => $aClass['start_date'] ? _t('_bx_classes_txt_start_x', bx_time_js($aClass['start_date'], BX_FORMAT_DATE_TIME)) : '',
-                        'end_date' => $aClass['end_date'] ? _t('_bx_classes_txt_due_x', bx_time_js($aClass['end_date'], BX_FORMAT_DATE_TIME)) : '',
-                    );
-
-                    $sContent .= $this->_oTemplate->parseHtmlByName('classes_class_row.html', array(
-                        'id' => $aClass['id'],                        
-                        'status' => $sStatusClass,
-                        'bx_if:completed' => array(
-                            'condition' => 'bx-classes-class-status-completed' == $sStatusClass,
-                            'content' => $aContent,
-                        ),
-                        'bx_if:avail' => array(
-                            'condition' => 'bx-classes-class-status-avail' == $sStatusClass,
-                            'content' => $aContent,
-                        ),
-                        'bx_if:na' => array(
-                            'condition' => 'bx-classes-class-status-na' == $sStatusClass,
-                            'content' => $aContent,
-                        ),
-                    ));
+                    $sContent .= $this->_getClassRow($aClass, $iCounterCompleted, $iCounterAvail, $iCounterNa);
                 }
             }
 
@@ -334,12 +360,15 @@ class BxClssModule extends BxBaseModTextModule
         $oForm = new BxTemplFormView($aForm);
         $oForm->setShowEmptySections(true);
 
+        $bAdmin = isAdmin() || $this->serviceIsCourseAdmin($oContextProfile->id());
+
         $this->_oTemplate->addCss('main.css');
         $this->_oTemplate->addJs('main.js');
+        if ($bAdmin)
+            $this->_oTemplate->addJs('jquery-ui/jquery-ui.custom.min.js');
 
-        $bAdmin = isAdmin() || $this->serviceIsCourseAdmin($oContextProfile->id());
         return $this->_oTemplate->parseHtmlByName('classes_in_context.html', array(
-            'form' => $oForm->getCode(),
+            'form' => $aModules ? $oForm->getCode() : MsgBox(_t('_Empty')),
             'bx_if:edit_modules' => array(
                 'condition' => $bAdmin,
                 'content' => array(
@@ -354,6 +383,52 @@ class BxClssModule extends BxBaseModTextModule
                 ),
             ),
         ));
+    }
+
+    public function serviceBrowseStudentsInClass ($iClassId = 0, $iLimit = 1000, $aAdditionalParams = array())
+    {
+        return $this->_serviceBrowseStudentsInClass ($iClassId, 'getStudentsInClass', $iLimit);
+    }
+
+    public function serviceBrowseStudentsCompletedClass ($iClassId = 0, $iLimit = 1000, $aAdditionalParams = array())
+    {
+        return $this->_serviceBrowseStudentsInClass ($iClassId, 'getStudentsInClassCompleted', $iLimit);
+    }
+
+    public function serviceBrowseStudentsNotCompletedClass ($iClassId = 0, $iLimit = 1000, $aAdditionalParams = array())
+    {
+        return $this->_serviceBrowseStudentsInClass ($iClassId, 'getStudentsInClassNotCompleted', $iLimit);
+    }
+
+    protected function _serviceBrowseStudentsInClass ($iClassId, $sFunc, $iLimit = 1000, $aAdditionalParams = array())
+    {        
+        // set some vars
+        if (!$iClassId)
+            $iClassId = (int)bx_get('id');
+        if (!$iClassId)
+            return '';
+
+        $iLimit = (int)$iLimit;
+        if (!$iLimit)
+            $iLimit = 50;
+
+        $iStart = (int)bx_get('start');
+
+        if (!($aClass = $this->_oDb->getContentInfoById($iClassId)))
+            return '';
+
+        if ($aClass['allow_view_to'] >= 0)
+            return '';
+
+        if (!$this->serviceIsCourseAdmin(abs($aClass['allow_view_to'])))
+            return '';
+
+        // get students array
+        $a = $this->_oDb->$sFunc ($aClass, $iStart, $iLimit + 1);
+        if (!$a)
+            return '';
+
+        return $this->_serviceBrowseQuick($a, $iStart, $iLimit, $aAdditionalParams);
     }
 
     public function serviceIsClassCompleted ($iClassId, $iProfileId = 0)

@@ -38,6 +38,8 @@ function bx_classes_reorder_classes(iProfileId, bEnable)
     var eCourse = jQuery('.bx-course-classes .bx-form-advanced-wrapper');
     var eSortable = jQuery('.bx-course-classes .bx-form-input-wrapper-custom');
     var sHandle = '<i class="handle sys-icon move bx-def-padding-right"></i>';
+    if (!eSortable.find('.bx-classes-class').size())
+        return;
     if (bEnable) {
         jQuery('.bx-course-classes, .bx-course-controls').addClass('bx-course-reordering-mode');
         if (!eCourse.find('.bx-classes-class-title .handle').size())
@@ -50,7 +52,7 @@ function bx_classes_reorder_classes(iProfileId, bEnable)
                 items:'.bx-classes-class',
                 connectWith: ".bx-form-input-wrapper-custom",
                 handle: '.handle',
-                placeholder: 'bx-classes-placeholder sys-icon arrow-right',
+                placeholder: 'bx-classes-placeholder bx-def-font-h3 sys-icon arrow-right col-green1 sys-colored',
                 forcePlaceholderSize: true, 
                 dropOnEmpty: true,
                 stop: function(oEvent, oUi) {
@@ -75,9 +77,10 @@ function bx_classes_reorder_classes(iProfileId, bEnable)
         glBxClassesSortableClassesInitialized = true;
     }
     else if (!bEnable && 'undefined' !== typeof(glBxClassesSortableClassesInitialized)) {
-        eSortable.sortable('disable');
+        eSortable.sortable('destroy');
         eSortable.find('.bx-classes-class .handle').remove();
         jQuery('.bx-course-classes, .bx-course-controls').removeClass('bx-course-reordering-mode');
+        delete glBxClassesSortableClassesInitialized;
     }
 }
 
@@ -85,6 +88,8 @@ function bx_classes_reorder_modules(iProfileId, bEnable)
 {
     var eCourse = jQuery('.bx-course-classes .bx-form-advanced-wrapper');
     var sHandle = '<i class="handle sys-icon move bx-def-padding-leftright"></i>';
+    if (!eCourse.find('.bx-form-section-wrapper').size())
+        return;
     if (bEnable) {
         jQuery('.bx-course-classes, .bx-course-controls').addClass('bx-course-reordering-mode');
         if (!eCourse.find('legend .handle').size())
@@ -112,9 +117,10 @@ function bx_classes_reorder_modules(iProfileId, bEnable)
         glBxClassesSortableModulesInitialized = true;
     }
     else if (!bEnable && 'undefined' !== typeof(glBxClassesSortableModulesInitialized)) {
-        eCourse.sortable('disable');
+        eCourse.sortable('destroy');
         eCourse.find('legend .handle').remove();
         jQuery('.bx-course-classes, .bx-course-controls').removeClass('bx-course-reordering-mode');
+        delete glBxClassesSortableModulesInitialized;
     }
 }
 

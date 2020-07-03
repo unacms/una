@@ -54,10 +54,14 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 2),
-('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:13:\"entity_author\";}', 0, 0, 1, 1),
+('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:13:\"entity_author\";}', 0, 0, 0, 1),
 ('bx_classes_view_entry', 3, 'bx_classes', '_bx_classes_page_block_title_sys_entry_context', '_bx_classes_page_block_title_entry_context', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:14:\"entity_context\";}', 0, 0, 1, 1),
 ('bx_classes_view_entry', 3, 'bx_classes', '', '_bx_classes_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 1, 2),
-('bx_classes_view_entry', 3, 'bx_classes', '', '_bx_classes_page_block_title_entry_location', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:15:\"entity_location\";}', 0, 0, 0, 0),
+('bx_classes_view_entry', 3, 'bx_classes', '', '_bx_classes_page_block_title_next_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_classes";s:6:"method";s:10:"next_class";}', 0, 0, 1, 3),
+('bx_classes_view_entry', 3, 'bx_classes', '', '_bx_classes_page_block_title_prev_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_classes";s:6:"method";s:10:"prev_class";}', 0, 0, 0, 4),
+('bx_classes_view_entry', 3, 'bx_classes', '', '_bx_classes_page_block_title_entry_location', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:15:\"entity_location\";}', 0, 0, 0, 5),
+('bx_classes_view_entry', 3, 'bx_classes', '', '_bx_classes_page_block_title_entry_students_completed_class', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_classes";s:6:"method";s:31:"browse_students_completed_class";}', 0, 0, 1, 6),
+('bx_classes_view_entry', 3, 'bx_classes', '', '_bx_classes_page_block_title_entry_students_not_completed_class', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_classes";s:6:"method";s:35:"browse_students_not_completed_class";}', 0, 0, 1, 7),
 ('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:18:\"entity_all_actions\";}', 0, 0, 1, 3),
 ('bx_classes_view_entry', 4, 'bx_classes', '', '_bx_classes_page_block_title_entry_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:14:\"entity_actions\";}', 0, 0, 0, 0),
 ('bx_classes_view_entry', 4, 'bx_classes', '', '_bx_classes_page_block_title_entry_social_sharing', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:21:\"entity_social_sharing\";}', 0, 0, 0, 0),
@@ -101,12 +105,6 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 SET @iPBCellGroup = 4;
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
 ('trigger_page_group_view_entry', @iPBCellGroup, 'bx_classes', '_bx_classes_page_block_title_group_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_classes";s:6:"method";s:18:"classes_in_context";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 0, 0, 0);
-
--- MENU: add to "add content" menu
-
-SET @iAddMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_add_content_links' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
-INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('sys_add_content_links', 'bx_classes', 'create-class', '_bx_classes_menu_item_title_system_create_entry', '_bx_classes_menu_item_title_create_entry', 'page.php?i=create-class', '', '', 'file-alt col-red3', '', 2147483647, 1, 1, IFNULL(@iAddMenuOrder, 0) + 1);
 
 -- MENU: create post form attachments (link, photo, video, etc)
 

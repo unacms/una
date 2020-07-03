@@ -133,6 +133,11 @@
     <string name="_bx_classes_page_block_title_entry_info"><![CDATA[Info]]></string>
     <string name="_bx_classes_page_block_title_sys_entry_context"><![CDATA[Classed in]]></string>
     <string name="_bx_classes_page_block_title_entry_context"><![CDATA[Classed in]]></string>
+    <string name="_bx_classes_page_block_title_next_entry"><![CDATA[Next class]]></string>
+    <string name="_bx_classes_page_block_title_prev_entry"><![CDATA[Previous class]]></string>
+    <string name="_bx_classes_page_block_title_entry_students_completed_class"><![CDATA[Passed students]]></string>
+    <string name="_bx_classes_page_block_title_entry_students_not_completed_class"><![CDATA[Not passed students]]></string>
+    <string name="_bx_classes_page_block_title_group_entries"><![CDATA[Classes]]></string>
 
     <string name="_bx_classes_menu_title_entry_attachments"><![CDATA[Form Attachments]]></string>
     <string name="_bx_classes_menu_set_title_entry_attachments"><![CDATA[Form Attachments]]></string>
@@ -233,9 +238,14 @@
     <string name="_bx_classes_txt_scheduled_awaiting"><![CDATA[Class publishing date is {date_publish_uf}]]></string>
     <string name="_bx_classes_txt_start_x"><![CDATA[start {0}]]></string>
     <string name="_bx_classes_txt_due_x"><![CDATA[due {0}]]></string>
+    <string name="_bx_classes_txt_add_class"><![CDATA[Add Class]]></string>
+    <string name="_bx_classes_txt_add_module"><![CDATA[Add Module]]></string>
+    <string name="_bx_classes_txt_reorder_modules"><![CDATA[Rearrange Modules]]></string>
+    <string name="_bx_classes_txt_reorder_classes"><![CDATA[Rearrange Classes]]></string>
 
     <string name="_bx_classes_txt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
     <string name="_bx_classes_txt_err_cant_add_class_without_context"><![CDATA[Class can be added into context only]]></string>
+    <string name="_bx_classes_txt_err_cant_add_class_without_modules"><![CDATA[Please create classes module first]]></string>
     <string name="_bx_classes_txt_err_not_avail_before_start_date"><![CDATA[Class will be available {0}]]></string>
     <string name="_bx_classes_txt_err_not_avail_before_prev_class_completed"><![CDATA[Class will be available after completing previous class - <a href="{0}">{1}</a>]]></string>
     <string name="_bx_classes_txt_err_modules_with_classes_cannot_be_deleted"><![CDATA[Modules with classes can't be deleted]]></string>
