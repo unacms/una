@@ -133,8 +133,11 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
     
     function getContextAddon ($aData, $oProfile)
     {
-        $CNF = &$this->getModule()->_oConfig->CNF;
+        $CNF = &$this->getModule()->_oConfig->CNF; 
         $sUrl = 'page.php?i=' . $CNF['URI_ENTRIES_BY_CONTEXT'] . '&profile_id=' . $oProfile->id();
+        $bActAsProfile = BxDolService::call($oProfile->getModule(), 'act_as_profile');
+        if ($bActAsProfile)
+            $sUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id=' . $oProfile->id();
         $sUrl = BxDolPermalinks::getInstance()->permalink($sUrl);
         return _t($CNF['T']['txt_all_entries_in'], $sUrl, $oProfile->getDisplayName(), $this->getModule()->_oDb->getEntriesNumByContext($oProfile->id()));
     }
@@ -300,7 +303,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
 
         $sName = $oProfile->getDisplayName();
         $sAddon = $sFuncContextAddon ? $this->$sFuncContextAddon($aData, $oProfile) : '';
-        
+        echo $sFuncContextAddon;
         $aVars = array (
             'author_url' => $oProfile->getUrl(),
             'author_thumb_url' => $oProfile->getThumb(),
@@ -315,6 +318,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
                 ),
             ),
         );
+        print_r($aVars);
         return $this->parseHtmlByName($sTemplateName, $aVars);
     }
 
