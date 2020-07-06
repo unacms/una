@@ -79,19 +79,19 @@ class BxClssModule extends BxBaseModTextModule
             echo _t('_sys_txt_error_occured');
     }
 
-    public function actionEditModule($iProfileConextId = 0, $iModuleId = 0)
+    public function actionEditModule($iProfileConextId = 0, $iModuleId = 0, $sFormat = 'json')
     {
-        $this->_actionAddEditModule($iProfileConextId, $iModuleId);
+        $this->_actionAddEditModule($iProfileConextId, $iModuleId, $sFormat);
     }
 
-    public function actionAddModule($iProfileConextId = 0)
+    public function actionAddModule($iProfileConextId = 0, $sFormat = 'json')
     {
-        $this->_actionAddEditModule($iProfileConextId);
+        $this->_actionAddEditModule($iProfileConextId, 0, $sFormat);
     }
 
-    protected function _actionAddEditModule($iProfileConextId = 0, $iModuleId = 0)
+    protected function _actionAddEditModule($iProfileConextId = 0, $iModuleId = 0, $sFormat = 'json')
     {
-        $oProfileContext = $this->_validateActionAndGetContextProfile($iProfileConextId, 'json');
+        $oProfileContext = $this->_validateActionAndGetContextProfile($iProfileConextId, $sFormat);
 
         $sFormAction = BX_DOL_URL_ROOT . 'modules/index.php?r=classes/';
         $sFormAction .= $iModuleId ? 'edit_module/' . $iProfileConextId . '/' . $iModuleId : 'add_module/' . $iProfileConextId;
@@ -187,7 +187,7 @@ class BxClssModule extends BxBaseModTextModule
             exit;
         }
 
-        if (!$this->serviceIsCourseAdmin($oProfileContext->id())) {
+        if (!isAdmin() && !$this->serviceIsCourseAdmin($oProfileContext->id())) {
             if ('json' == $sFormat)
                 echoJson(array('action' => 'ShowMsg', 'msg' => _t('_sys_txt_access_denied')));
             else
@@ -420,7 +420,7 @@ class BxClssModule extends BxBaseModTextModule
         if ($aClass['allow_view_to'] >= 0)
             return '';
 
-        if (!$this->serviceIsCourseAdmin(abs($aClass['allow_view_to'])))
+        if (!isAdmin() && !$this->serviceIsCourseAdmin(abs($aClass['allow_view_to'])))
             return '';
 
         // get students array

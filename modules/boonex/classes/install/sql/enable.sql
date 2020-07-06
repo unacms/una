@@ -53,22 +53,23 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_classes_view_entry', '_bx_classes_page_title_sys_view_entry', '_bx_classes_page_title_view_entry', 'bx_classes', 12, 2147483647, 1, 'view-class', '', '', '', '', 0, 1, 0, 'BxClssPageEntry', 'modules/boonex/classes/classes/BxClssPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 2),
 ('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:13:\"entity_author\";}', 0, 0, 0, 1),
+('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_prev_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_classes";s:6:"method";s:10:"prev_class";}', 0, 0, 1, 2),
+('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 3),
+('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_next_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_classes";s:6:"method";s:10:"next_class";}', 0, 0, 1, 4),
+('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:18:\"entity_all_actions\";}', 0, 0, 1, 5),
+('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:14:\"entity_actions\";}', 0, 0, 0, 6),
+('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_social_sharing', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:21:\"entity_social_sharing\";}', 0, 0, 0, 7),
+('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_attachments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:18:\"entity_attachments\";}', 0, 0, 1, 8),
+('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 1, 9),
+
 ('bx_classes_view_entry', 3, 'bx_classes', '_bx_classes_page_block_title_sys_entry_context', '_bx_classes_page_block_title_entry_context', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:14:\"entity_context\";}', 0, 0, 1, 1),
 ('bx_classes_view_entry', 3, 'bx_classes', '', '_bx_classes_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 1, 2),
-('bx_classes_view_entry', 3, 'bx_classes', '', '_bx_classes_page_block_title_next_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_classes";s:6:"method";s:10:"next_class";}', 0, 0, 1, 3),
-('bx_classes_view_entry', 3, 'bx_classes', '', '_bx_classes_page_block_title_prev_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_classes";s:6:"method";s:10:"prev_class";}', 0, 0, 0, 4),
-('bx_classes_view_entry', 3, 'bx_classes', '', '_bx_classes_page_block_title_entry_location', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:15:\"entity_location\";}', 0, 0, 0, 5),
+('bx_classes_view_entry', 3, 'bx_classes', '', '_bx_classes_page_block_title_entry_location', 3, 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:13:\"locations_map\";s:6:\"params\";a:2:{i:0;s:10:\"bx_classes\";i:1;s:4:\"{id}\";}s:5:\"class\";s:20:\"TemplServiceMetatags\";}', 0, 0, 0, 3),
+('bx_classes_view_entry', 3, 'bx_classes', '', '_bx_classes_page_block_title_entry_location', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:15:\"entity_location\";}', 0, 0, 1, 4),
+('bx_classes_view_entry', 3, 'bx_classes', '', '_bx_classes_page_block_title_entry_polls', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:12:\"entity_polls\";}', 0, 0, 1, 5),
 ('bx_classes_view_entry', 3, 'bx_classes', '', '_bx_classes_page_block_title_entry_students_completed_class', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_classes";s:6:"method";s:31:"browse_students_completed_class";}', 0, 0, 1, 6),
-('bx_classes_view_entry', 3, 'bx_classes', '', '_bx_classes_page_block_title_entry_students_not_completed_class', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_classes";s:6:"method";s:35:"browse_students_not_completed_class";}', 0, 0, 1, 7),
-('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:18:\"entity_all_actions\";}', 0, 0, 1, 3),
-('bx_classes_view_entry', 4, 'bx_classes', '', '_bx_classes_page_block_title_entry_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:14:\"entity_actions\";}', 0, 0, 0, 0),
-('bx_classes_view_entry', 4, 'bx_classes', '', '_bx_classes_page_block_title_entry_social_sharing', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:21:\"entity_social_sharing\";}', 0, 0, 0, 0),
-('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_attachments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:18:\"entity_attachments\";}', 0, 0, 1, 4),
-('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 1, 6),
-('bx_classes_view_entry', 3, 'bx_classes', '', '_bx_classes_page_block_title_entry_location', 3, 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:13:\"locations_map\";s:6:\"params\";a:2:{i:0;s:10:\"bx_classes\";i:1;s:4:\"{id}\";}s:5:\"class\";s:20:\"TemplServiceMetatags\";}', 0, 0, 1, 3),
-('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_polls', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:12:\"entity_polls\";}', 0, 0, 1, 5);
+('bx_classes_view_entry', 3, 'bx_classes', '', '_bx_classes_page_block_title_entry_students_not_completed_class', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_classes";s:6:"method";s:35:"browse_students_not_completed_class";}', 0, 0, 1, 7);
 
 
 -- PAGE: view entry comments

@@ -303,7 +303,6 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
 
         $sName = $oProfile->getDisplayName();
         $sAddon = $sFuncContextAddon ? $this->$sFuncContextAddon($aData, $oProfile) : '';
-        echo $sFuncContextAddon;
         $aVars = array (
             'author_url' => $oProfile->getUrl(),
             'author_thumb_url' => $oProfile->getThumb(),
@@ -318,7 +317,6 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
                 ),
             ),
         );
-        print_r($aVars);
         return $this->parseHtmlByName($sTemplateName, $aVars);
     }
 

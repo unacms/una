@@ -10,7 +10,7 @@
 
 function bx_classes_show_module_add_form(iContextProfileId)
 {
-    var sActionUrl = sUrlRoot + 'modules/index.php?r=classes/add_module/' + iContextProfileId;
+    var sActionUrl = sUrlRoot + 'modules/index.php?r=classes/add_module/' + iContextProfileId + '/html';
     $(window).dolPopupAjax({url: sActionUrl, closeOnOuterClick: false});
 }
 
