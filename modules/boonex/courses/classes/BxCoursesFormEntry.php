@@ -17,7 +17,11 @@ class BxCoursesFormEntry extends BxBaseModGroupsFormEntry
     public function __construct($aInfo, $oTemplate = false)
     {
         $this->MODULE = 'bx_courses';
+
         parent::__construct($aInfo, $oTemplate);
+
+        if(isset($this->aInputs['initial_members']))
+            $this->aInputs['initial_members']['value'] = array();
     }
 }
 

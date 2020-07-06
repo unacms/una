@@ -398,6 +398,38 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
         return $mixedResult;
     }
+    
+    public function serviceFansWithoutAdmins ($iContentId = 0, $bAsArray = false)
+    {
+        if (!$iContentId)
+            $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        if (!$iContentId)
+            return false;
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if (!$aContentInfo)
+            return false;
+
+        if (!($oGroupProfile = BxDolProfile::getInstanceByContentAndType($iContentId, $this->getName())))
+            return false;
+        
+        $CNF = &$this->_oConfig->CNF;
+
+        $aFans = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS'])->getConnectedContent($oGroupProfile->id(), true);
+        if(empty($aFans) || !is_array($aFans))
+            return false;
+
+        $aAdmins = $this->_oDb->getAdmins($oGroupProfile->id());
+        if(!empty($aAdmins) && is_array($aAdmins))
+            $aFans = array_diff($aFans, $aAdmins);
+
+        $iStart = (int)bx_get('start');
+        $iLimit = !empty($CNF['PARAM_NUM_CONNECTIONS_QUICK']) ? getParam($CNF['PARAM_NUM_CONNECTIONS_QUICK']) : 4;
+        if(!$iLimit)
+            $iLimit = 4;
+
+        return $this->_serviceBrowseQuick($aFans, $iStart, $iLimit);
+    }
 
     public function serviceAdmins ($iContentId = 0)
     {

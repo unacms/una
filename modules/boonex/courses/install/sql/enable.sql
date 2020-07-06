@@ -31,17 +31,17 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 -- PAGE: view profile
 
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_courses_view_profile', 'view-course-profile', '_bx_courses_page_title_sys_view_profile', '_bx_courses_page_title_view_profile', 'bx_courses', 10, 2147483647, 1, 'page.php?i=view-course-profile', '', '', '', 0, 1, 0, 'BxCoursesPageEntry', 'modules/boonex/courses/classes/BxCoursesPageEntry.php');
+('bx_courses_view_profile', 'view-course-profile', '_bx_courses_page_title_sys_view_profile', '_bx_courses_page_title_view_profile', 'bx_courses', 12, 2147483647, 1, 'page.php?i=view-course-profile', '', '', '', 0, 1, 0, 'BxCoursesPageEntry', 'modules/boonex/courses/classes/BxCoursesPageEntry.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
 ('bx_courses_view_profile', 1, 'bx_courses', '', '_bx_courses_page_block_title_entry_social_sharing', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:21:"entity_social_sharing";}', 0, 0, 0, 0),
 ('bx_courses_view_profile', 1, 'bx_courses', '', '_bx_courses_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:18:"entity_all_actions";}', 0, 0, 0, 0),
-('bx_courses_view_profile', 2, 'bx_courses', '', '_bx_courses_page_block_title_profile_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:11:"entity_info";}', 0, 0, 1, 0),
+('bx_courses_view_profile', 2, 'bx_courses', '', '_bx_courses_page_block_title_profile_description', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:17:"entity_text_block";}', 0, 0, 1, 0),
 ('bx_courses_view_profile', 3, 'bx_courses', '', '_bx_courses_page_block_title_profile_location', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:15:"entity_location";}', 0, 0, 0, 0),
-('bx_courses_view_profile', 3, 'bx_courses', '', '_bx_courses_page_block_title_fans', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:4:"fans";}', 0, 0, 1, 0),
+('bx_courses_view_profile', 3, 'bx_courses', '', '_bx_courses_page_block_title_profile_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:11:"entity_info";}', 0, 0, 1, 0),
 ('bx_courses_view_profile', 3, 'bx_courses', '', '_bx_courses_page_block_title_admins', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:6:"admins";}', 0, 0, 1, 1),
-('bx_courses_view_profile', 3, 'bx_courses', '', '_bx_courses_page_block_title_profile_location', 3, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"locations_map";s:6:"params";a:2:{i:0;s:10:"bx_courses";i:1;s:12:"{content_id}";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 0, 1, 2),
-('bx_courses_view_profile', 4, 'bx_courses', '', '_bx_courses_page_block_title_profile_description', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:17:"entity_text_block";}', 0, 0, 1, 0),
+('bx_courses_view_profile', 3, 'bx_courses', '', '_bx_courses_page_block_title_fans', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:19:"fans_without_admins";}', 0, 0, 1, 2),
+('bx_courses_view_profile', 3, 'bx_courses', '', '_bx_courses_page_block_title_profile_location', 3, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:13:"locations_map";s:6:"params";a:2:{i:0;s:10:"bx_courses";i:1;s:12:"{content_id}";}s:5:"class";s:20:"TemplServiceMetatags";}', 0, 0, 1, 3),
 ('bx_courses_view_profile', 4, 'bx_courses', '', '_bx_courses_page_block_title_profile_comments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:15:"entity_comments";}', 0, 0, 0, 0);
 
 -- PAGE: view closed profile 
@@ -320,10 +320,10 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_courses_snippet_meta', 'bx_courses', 'tags', '_sys_menu_item_title_system_sm_tags', '_sys_menu_item_title_sm_tags', '', '', '', '', '', 2147483647, 0, 0, 1, 3),
 ('bx_courses_snippet_meta', 'bx_courses', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 2147483647, 0, 0, 1, 4),
 ('bx_courses_snippet_meta', 'bx_courses', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 2147483647, 0, 0, 1, 5),
-('bx_courses_snippet_meta', 'bx_courses', 'members', '_sys_menu_item_title_system_sm_members', '_sys_menu_item_title_sm_members', '', '', '', '', '', 2147483647, 1, 0, 1, 6),
+('bx_courses_snippet_meta', 'bx_courses', 'members', '_bx_courses_menu_item_title_system_sm_members', '_bx_courses_menu_item_title_sm_members', '', '', '', '', '', 2147483647, 1, 0, 1, 6),
 ('bx_courses_snippet_meta', 'bx_courses', 'subscribers', '_sys_menu_item_title_system_sm_subscribers', '_sys_menu_item_title_sm_subscribers', '', '', '', '', '', 2147483647, 0, 0, 1, 7),
 ('bx_courses_snippet_meta', 'bx_courses', 'nl', '_sys_menu_item_title_system_sm_nl', '_sys_menu_item_title_sm_nl', '', '', '', '', '', 2147483647, 1, 0, 1, 8),
-('bx_courses_snippet_meta', 'bx_courses', 'join', '_sys_menu_item_title_system_sm_join', '_sys_menu_item_title_sm_join', '', '', '', '', '', 2147483647, 1, 0, 1, 9),
+('bx_courses_snippet_meta', 'bx_courses', 'join', '_bx_courses_menu_item_title_system_sm_join', '_bx_courses_menu_item_title_sm_join', '', '', '', '', '', 2147483647, 1, 0, 1, 9),
 ('bx_courses_snippet_meta', 'bx_courses', 'leave', '_sys_menu_item_title_system_sm_leave', '_sys_menu_item_title_sm_leave', '', '', '', '', '', 2147483647, 0, 0, 1, 10),
 ('bx_courses_snippet_meta', 'bx_courses', 'subscribe', '_sys_menu_item_title_system_sm_subscribe', '_sys_menu_item_title_sm_subscribe', '', '', '', '', '', 2147483647, 0, 0, 1, 11),
 ('bx_courses_snippet_meta', 'bx_courses', 'unsubscribe', '_sys_menu_item_title_system_sm_unsubscribe', '_sys_menu_item_title_sm_unsubscribe', '', '', '', '', '', 2147483647, 0, 0, 1, 12);
