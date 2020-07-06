@@ -90,7 +90,7 @@ class BxBaseModGroupsMenuSnippetMeta extends BxBaseModProfileMenuSnippetMeta
         if(!$iFriends)
             return false;
 
-        return $this->getUnitMetaItemText(_t('_sys_menu_item_title_sm_members', $iFriends));
+        return $this->getUnitMetaItemText(_t(!empty($aItem['title']) ? $aItem['title'] : '_sys_menu_item_title_sm_members', $iFriends));
     }
 
     protected function _getMenuItemConnectionsTitle($sAction, &$oConnection)
