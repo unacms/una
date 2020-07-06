@@ -217,7 +217,7 @@ class BxClssFormEntry extends BxBaseModTextFormEntry
             if (isset($this->aInputs['module_id']) && !$this->aInputs['module_id']['values'])
                 return MsgBox(_t('_bx_classes_txt_err_cant_add_class_without_modules'));
 
-            if (!$this->_oModule->serviceIsCourseAdmin($this->_oProfileContext->id()))
+            if (!isAdmin() && !$this->_oModule->serviceIsCourseAdmin($this->_oProfileContext->id()))
                 return MsgBox(_t('_sys_txt_access_denied'));
         }
 

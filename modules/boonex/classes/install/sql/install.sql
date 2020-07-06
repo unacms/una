@@ -429,7 +429,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_classes', 'bx_classes', 'text', '', '', 0, 'textarea', '_bx_classes_form_entry_input_sys_text', '_bx_classes_form_entry_input_text', '', 1, 0, 2, '', '', '', 'Avail', '', '_bx_classes_form_entry_input_text_err', 'XssHtml', '', 1, 0),
 ('bx_classes', 'bx_classes', 'title', '', '', 0, 'text', '_bx_classes_form_entry_input_sys_title', '_bx_classes_form_entry_input_title', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_classes_form_entry_input_title_err', 'Xss', '', 1, 0),
 ('bx_classes', 'bx_classes', 'avail', '', '#!bx_classes_avail', 0, 'select', '', '_bx_classes_form_entry_input_avail', '', 1, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
-('bx_classes', 'bx_classes', 'cmts', '', '#!bx_classes_cmts', 0, 'select', '', '_bx_classes_form_entry_input_cmts', '', 1, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
+('bx_classes', 'bx_classes', 'cmts', '2', '#!bx_classes_cmts', 0, 'select', '', '_bx_classes_form_entry_input_cmts', '', 1, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_classes', 'bx_classes', 'completed_when', '', '#!bx_classes_completed_when', 0, 'select', '', '_bx_classes_form_entry_input_completed_when', '', 1, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_classes', 'bx_classes', 'module_id', '', '', 0, 'select', '', '_bx_classes_form_entry_input_module', '', 1, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_classes', 'bx_classes', 'added', '', '', 0, 'datetime', '_bx_classes_form_entry_input_sys_date_added', '_bx_classes_form_entry_input_date_added', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
