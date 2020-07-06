@@ -45,10 +45,11 @@ class BxOrgsModule extends BxBaseModGroupsModule
      */ 
     public function serviceGetSpaceTitle()
     {
-        if (isset($this->_oConfig->CNF['ALLOW_AS_CONTEXT']) && $this->_oConfig->CNF['ALLOW_AS_CONTEXT'] == true)
-            return _t($this->_oConfig->CNF['T']['txt_sample_single']);
-        else
-            return BxBaseModProfileModule::serviceGetSpaceTitle();
+		$aExcludeModules = explode(',', getParam('sys_hide_post_to_context_for_privacy'));
+		if (in_array($this->_aModule['name'], $aExcludeModules))
+              return BxBaseModProfileModule::serviceGetSpaceTitle();
+		else
+			return _t($this->_oConfig->CNF['T']['txt_sample_single']);
     }
     
     /**
@@ -56,15 +57,16 @@ class BxOrgsModule extends BxBaseModGroupsModule
      */ 
     public function serviceGetParticipatingProfiles($iProfileId, $aConnectionObjects = false)
     {
+		$aExcludeModules = explode(',', getParam('sys_hide_post_to_context_for_privacy'));
         if (false === $aConnectionObjects){
-            if (isset($this->_oConfig->CNF['ALLOW_AS_CONTEXT']) && $this->_oConfig->CNF['ALLOW_AS_CONTEXT'] == true){
+			if (in_array($this->_aModule['name'], $aExcludeModules)){
+				$aConnectionObjects = array('sys_profiles_friends');
+            }
+            else{
                 $aConnectionObjects = array('sys_profiles_subscriptions');
                 if (isset($this->_oConfig->CNF['OBJECT_CONNECTIONS'])){
                     $aConnectionObjects = array($this->_oConfig->CNF['OBJECT_CONNECTIONS'], 'sys_profiles_subscriptions');
                 }
-            }
-            else{
-                $aConnectionObjects = array('sys_profiles_friends');
             }
         } 
         return BxBaseModProfileModule::serviceGetParticipatingProfiles($iProfileId, $aConnectionObjects);

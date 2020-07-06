@@ -383,8 +383,6 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
 
         if (!($aModules = BxDolModuleQuery::getInstance()->getModules()))
             return $aValues;
-
-        $bProfileProcessed = true; // don't allow to post to profiles for now
         
         $aExcludeModules = explode(',', getParam('sys_hide_post_to_context_for_privacy'));
         
@@ -401,13 +399,8 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
             if (in_array($aModule['name'], $aExcludeModules))
                 continue;
 
-            $bActAsProfile = BxDolService::call($aModule['name'], 'act_as_profile');
             $oModule = BxDolModule::getInstance($aModule['name']);
             
-            if ($bActAsProfile && $bProfileProcessed && (!isset($oModule->_oConfig->CNF['ALLOW_AS_CONTEXT']) || $oModule->_oConfig->CNF['ALLOW_AS_CONTEXT'] == false))
-                continue;
-            if ($bActAsProfile)
-                $bProfileProcessed = true;
             $a = BxDolService::call($aModule['name'], 'get_participating_profiles', array($oProfile->id()));
             $aSpaces = array();       
             foreach ($a as $iProfileId) {
