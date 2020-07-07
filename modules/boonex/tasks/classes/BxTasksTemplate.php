@@ -29,6 +29,13 @@ class BxTasksTemplate extends BxBaseModTextTemplate
 
         return array($sPhotoGallery, $sPhotoGallery);
     }
+    
+    public function entryText ($aData, $sTemplateName = 'entry-text.html')
+    {
+        $aVars = $this->getTmplVarsText($aData);
+
+        return $this->parseHtmlByName($sTemplateName, $aVars);
+    }
 }
 
 /** @} */

@@ -55,7 +55,7 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_tasks_view_entry', 2, 'bx_tasks', '', '_bx_tasks_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_tasks\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 2),
 ('bx_tasks_view_entry', 2, 'bx_tasks', '', '_bx_tasks_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_tasks\";s:6:\"method\";s:13:\"entity_author\";}', 0, 0, 1, 1),
-('bx_tasks_view_entry', 2, 'bx_tasks', '', '_bx_tasks_page_block_title_entry_assignments', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_tasks\";s:6:\"method\";s:18:\"entity_assignments\";}', 0, 0, 1, 2),
+('bx_tasks_view_entry', 2, 'bx_tasks', '', '_bx_tasks_page_block_title_entry_assignments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_tasks\";s:6:\"method\";s:18:\"entity_assignments\";}', 0, 0, 1, 2),
 ('bx_tasks_view_entry', 3, 'bx_tasks', '_bx_tasks_page_block_title_sys_entry_context', '_bx_tasks_page_block_title_entry_context', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_tasks\";s:6:\"method\";s:14:\"entity_context\";}', 0, 0, 1, 1),
 ('bx_tasks_view_entry', 3, 'bx_tasks', '', '_bx_tasks_page_block_title_entry_info', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_tasks\";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 1, 2),
 ('bx_tasks_view_entry', 2, 'bx_tasks', '', '_bx_tasks_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_tasks\";s:6:\"method\";s:18:\"entity_all_actions\";}', 0, 0, 1, 3),
@@ -107,9 +107,9 @@ INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `templat
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_tasks_view', 'bx_tasks', '_bx_tasks_menu_set_title_view_entry', 0);
 
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_tasks_view', 'bx_tasks', 'edit-task', '_bx_tasks_menu_item_title_system_edit_entry', '_bx_tasks_menu_item_title_edit_entry', 'page.php?i=edit-task&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 1),
-('bx_tasks_view', 'bx_tasks', 'delete-task', '_bx_tasks_menu_item_title_system_delete_entry', '_bx_tasks_menu_item_title_delete_entry', 'page.php?i=delete-task&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 2);
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
+('bx_tasks_view', 'bx_tasks', 'edit-task', '_bx_tasks_menu_item_title_system_edit_entry', '_bx_tasks_menu_item_title_edit_entry', 'page.php?i=edit-task&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 'a:3:{s:6:"module";s:8:"bx_tasks";s:6:"method";s:15:"is_allow_manage";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}', 1, 0, 1),
+('bx_tasks_view', 'bx_tasks', 'delete-task', '_bx_tasks_menu_item_title_system_delete_entry', '_bx_tasks_menu_item_title_delete_entry', 'page.php?i=delete-task&id={content_id}', '', '', 'remove', '', 2147483647, 'a:3:{s:6:"module";s:8:"bx_tasks";s:6:"method";s:15:"is_allow_manage";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}', 1, 0, 2);
 
 
 -- MENU: all actions menu for view entry 
@@ -121,18 +121,16 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_tasks_view_actions', 'bx_tasks', '_sys_menu_set_title_view_actions', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
-('bx_tasks_view_actions', 'bx_tasks', 'edit-task', '_bx_tasks_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 10),
-('bx_tasks_view_actions', 'bx_tasks', 'delete-task', '_bx_tasks_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 20),
+('bx_tasks_view_actions', 'bx_tasks', 'edit-task', '_bx_tasks_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, 'a:3:{s:6:"module";s:8:"bx_tasks";s:6:"method";s:15:"is_allow_manage";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}', 1, 0, 10),
+('bx_tasks_view_actions', 'bx_tasks', 'delete-task', '_bx_tasks_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, 'a:3:{s:6:"module";s:8:"bx_tasks";s:6:"method";s:15:"is_allow_manage";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}', 1, 0, 20),
 ('bx_tasks_view_actions', 'bx_tasks', 'set-completed', '_bx_tasks_menu_item_title_system_set_completed', '_bx_tasks_menu_item_title_set_completed', 'javascript:void(0)', 'javascript:{js_object}.setCompletedByMenu({content_id}, 1, this);', '', 'check', '', '', 0, 2147483647, 'a:3:{s:6:"module";s:8:"bx_tasks";s:6:"method";s:12:"is_completed";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}', 1, 0, 30),
 ('bx_tasks_view_actions', 'bx_tasks', 'set-uncompleted', '_bx_tasks_menu_item_title_system_set_uncompleted', '_bx_tasks_menu_item_title_set_uncompleted', 'javascript:void(0)', 'javascript:{js_object}.setCompletedByMenu({content_id}, 0, this);', '', 'circle', '', '', 0, 2147483647, 'a:3:{s:6:"module";s:8:"bx_tasks";s:6:"method";s:14:"is_uncompleted";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}', 1, 0, 35),
-('bx_tasks_view_actions', 'bx_tasks', 'set-badges', '_sys_menu_item_title_system_set_badges', '_sys_menu_item_title_set_badges', 'javascript:void(0)', 'bx_menu_popup(''sys_set_badges'', window, {}, {module: ''bx_tasks'', content_id: {content_id}});', '', 'check-circle', '', '', 0, 2147483647, 'a:2:{s:6:"module";s:8:"bx_tasks";s:6:"method";s:19:"is_badges_avaliable";}', 1, 0, 40),
+('bx_tasks_view_actions', 'bx_tasks', 'set-badges', '_sys_menu_item_title_system_set_badges', '_sys_menu_item_title_set_badges', 'javascript:void(0)', 'bx_menu_popup(''sys_set_badges'', window, {}, {module: ''bx_tasks'', content_id: {content_id}});', '', 'check-circle', '', '', 0, 2147483647, 'a:3:{s:6:"module";s:8:"bx_tasks";s:6:"method";s:15:"is_allow_badges";s:6:"params";a:1:{i:0;s:12:"{content_id}";}}', 1, 0, 40),
 ('bx_tasks_view_actions', 'bx_tasks', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 200),
 ('bx_tasks_view_actions', 'bx_tasks', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 210),
 ('bx_tasks_view_actions', 'bx_tasks', 'vote', '_sys_menu_item_title_system_va_vote', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 220),
 ('bx_tasks_view_actions', 'bx_tasks', 'reaction', '_sys_menu_item_title_system_va_reaction', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 225),
 ('bx_tasks_view_actions', 'bx_tasks', 'score', '_sys_menu_item_title_system_va_score', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 230),
-('bx_tasks_view_actions', 'bx_tasks', 'favorite', '_sys_menu_item_title_system_va_favorite', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 240),
-('bx_tasks_view_actions', 'bx_tasks', 'feature', '_sys_menu_item_title_system_va_feature', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 250),
 ('bx_tasks_view_actions', 'bx_tasks', 'repost', '_sys_menu_item_title_system_va_repost', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 260),
 ('bx_tasks_view_actions', 'bx_tasks', 'report', '_sys_menu_item_title_system_va_report', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 270),
 ('bx_tasks_view_actions', 'bx_tasks', 'notes', '_sys_menu_item_title_system_va_notes', '_sys_menu_item_title_va_notes', 'javascript:void(0)', 'javascript:bx_get_notes(this,  ''{module_uri}'', {content_id});', '', 'exclamation-triangle', '', '', 0, 2147483647, '', 1, 0, 280),

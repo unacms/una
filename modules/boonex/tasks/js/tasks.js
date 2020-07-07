@@ -8,8 +8,7 @@
  */
 
 function BxTasksView(oOptions) {
-    this._sActionsUri = oOptions.sActionUri;
-	
+    this._oOptions = oOptions
     var $this = this;
     $(document).ready(function () {
         $this.init();
@@ -35,22 +34,31 @@ BxTasksView.prototype.setCompletedByMenu = function (iId, iValue, oObj) {
 
 BxTasksView.prototype._setCompleted = function (iId, iValue) {
 	var $this = this;
-	$.getJSON($this._sActionsUri + 'set_completed/' + iId + '/' + iValue + '/', {}, function () {});
+	$.getJSON($this._oOptions.sActionUri + 'set_completed/' + iId + '/' + iValue + '/', {}, function () { });
 }
 	
 BxTasksView.prototype.processTaskList = function (iContextId, iId, obj) {
     var $this = this;
 	$(window).dolPopupAjax({
-        url: $this._sActionsUri + 'process_task_list_form/' + iContextId + '/' + iId + '/' ,
+	    url: $this._oOptions.sActionUri + 'process_task_list_form/' + iContextId + '/' + iId + '/',
         closeOnOuterClick: false,
 		removeOnClose: true
     });   
+}
+
+BxTasksView.prototype.deleteTaskList = function (iId, iContextId, obj) {
+    var $this = this;
+    bx_confirm($this._oOptions.t_confirm_block_deletion, function () {
+        $.getJSON($this._oOptions.sActionUri + 'delete_task_list/' + iId + '/' + iContextId + '/', {}, function (oData) {
+            $this.reloadData(oData, iContextId)
+        });
+    });
 }
 	
 BxTasksView.prototype.processTask = function (iContextId, iListId, obj) {
     var $this = this;
 	$(window).dolPopupAjax({
-        url: $this._sActionsUri + 'process_task_form/' + iContextId + '/' + iListId + '/' ,
+	    url: $this._oOptions.sActionUri + 'process_task_form/' + iContextId + '/' + iListId + '/',
         closeOnOuterClick: false,
         removeOnClose: true
     });   
@@ -72,7 +80,6 @@ BxTasksView.prototype.setFilter = function (iListId, object) {
 	if (val)
 		$('#bx-tasks-tasklist-' + iListId).addClass('bx-tasks-tasklist-filter-' + val);
   	
-	$.getJSON(this._sActionsUri + 'setFilterValue/' + iListId + '/' + val + '/' , function (oData) {
-	});
+	$.getJSON($this._oOptions.sActionUri + 'setFilterValue/' + iListId + '/' + val + '/', function (oData) {});
 }
 

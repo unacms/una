@@ -33,6 +33,17 @@ class BxTasksDb extends BxBaseModTextDb
         $sQuery = $this->prepare ("SELECT * FROM `" . $CNF['TABLE_LISTS'] . "` WHERE `id` = ?", $iId);
         return $this->getRow($sQuery);
     }
+    
+    public function deleteList ($iId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sQuery = $this->prepare ("DELETE FROM `" . $CNF['TABLE_LISTS'] . "` WHERE `id` = ?", $iId);
+        $this->query($sQuery);
+        
+        $sQuery = $this->prepare ("DELETE FROM `" . $CNF['TABLE_ENTRIES'] . "` WHERE `" . $CNF['FIELD_TASKLIST'] . "` = ?", $iId);
+        $this->query($sQuery);
+    }
 	
 	public function getTasks ($iContextId = 0, $iListId = 0)
     {
