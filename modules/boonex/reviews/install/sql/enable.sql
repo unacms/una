@@ -21,7 +21,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_reviews_searchable_fields', 'title,text', @iCategId, '_bx_reviews_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:10:"bx_reviews";s:6:"method";s:21:"get_searchable_fields";}', 30),
 ('bx_reviews_auto_activation_for_categories', 'on', @iCategId, '_bx_reviews_option_auto_activation_for_categories', 'checkbox', '', '', '', 35),
 ('bx_reviews_voting_max_stars', '5', @iCategId, '_bx_reviews_option_voting_max_stars', 'digit', '', '', '', 40),
-('bx_reviews_custom_context_chooser', '', @iCategId, '_bx_reviews_option_custom_context_chooser_enable', 'checkbox', '', '', '', 45),
+('bx_reviews_custom_context_chooser', 'on', @iCategId, '_bx_reviews_option_custom_context_chooser_enable', 'checkbox', '', '', '', 45),
 ('bx_reviews_custom_context_chooser_options', '', @iCategId, '_bx_reviews_option_custom_context_chooser_options', 'list', '', '', 'a:2:{s:6:"module";s:10:"bx_reviews";s:6:"method";s:27:"get_context_modules_options";}', 50);
 
 -- PAGE: create entry
@@ -116,7 +116,8 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_reviews_author', 1, 'bx_reviews', '', '_bx_reviews_page_block_title_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:"bx_reviews";s:6:\"method\";s:18:\"my_entries_actions\";}', 0, 0, 1, 1),
 ('bx_reviews_author', 1, 'bx_reviews', '_bx_reviews_page_block_title_sys_favorites_of_author', '_bx_reviews_page_block_title_favorites_of_author', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:10:"bx_reviews";s:6:\"method\";s:15:\"browse_favorite\";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 1, 1, 2),
-('bx_reviews_author', 1, 'bx_reviews', '_bx_reviews_page_block_title_sys_entries_of_author', '_bx_reviews_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:"bx_reviews";s:6:\"method\";s:13:\"browse_author\";}', 0, 0, 1, 3);
+('bx_reviews_author', 1, 'bx_reviews', '_bx_reviews_page_block_title_sys_entries_of_author', '_bx_reviews_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:"bx_reviews";s:6:\"method\";s:13:\"browse_author\";}', 0, 0, 1, 3),
+('bx_reviews_author', 1, 'bx_reviews', '_bx_reviews_page_block_title_sys_entries_in_context', '_bx_reviews_page_block_title_entries_in_context', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_reviews\";s:6:\"method\";s:14:\"browse_context\";}', 0, 0, 1, 4);
 
 -- PAGE: entries in context
 

@@ -18,7 +18,7 @@ $aConfig = array(
     'name' => 'bx_reviews',
     'title' => 'Reviews',
     'note' => 'Reviews based on Posts module.',
-    'version' => '11.0.2.DEV',
+    'version' => '11.0.0.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
@@ -120,6 +120,7 @@ $aConfig = array(
     	'process_esearches' => 1,
         'register_transcoders' => 1,
         'clear_db_cache' => 1,
+        'preset_context_chooser_options' => 1,
     ),
     'disable' => array (
         'execute_sql' => 1,

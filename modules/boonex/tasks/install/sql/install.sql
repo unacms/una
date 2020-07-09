@@ -411,8 +411,7 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_tasks_entry_view', 'cat', 2147483647, 1, 1),
 ('bx_tasks_entry_view', 'added', 2147483647, 1, 2),
 ('bx_tasks_entry_view', 'changed', 2147483647, 1, 3),
-('bx_tasks_entry_view', 'due_date', 192, 1, 4),
-('bx_tasks_entry_view', 'published', 192, 1, 5);
+('bx_tasks_entry_view', 'due_date', 192, 1, 4);
 
 
 -- FORMS: entry (tasklist)

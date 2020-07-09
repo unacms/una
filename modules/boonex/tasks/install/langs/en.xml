@@ -326,8 +326,10 @@
     <string name="_bx_tasks_txt_filter_completed"><![CDATA[Completed Tasks]]></string>
     <string name="_bx_tasks_txt_filter_uncompleted"><![CDATA[Uncompleted Tasks]]></string>
     <string name="_bx_tasks_txt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
+    <string name="_bx_tasks_confirm_tasklist_deletion"><![CDATA[You will delete all tasks that are contained in this tasklist. Are you sure?]]></string>
+  
 
-    <!-- Notifications -->
+  <!-- Notifications -->
     <string name="_bx_tasks_alert_action_completed_personal"><![CDATA[Complete task]]></string>
     <string name="_bx_tasks_alert_action_completed_follow_member"><![CDATA[Complete task]]></string>
     <string name="_bx_tasks_alert_action_completed_follow_context"><![CDATA[Complete task]]></string>
