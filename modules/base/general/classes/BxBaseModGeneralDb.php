@@ -57,6 +57,22 @@ class BxBaseModGeneralDb extends BxDolModuleDb
                 $sWhereClause .= " AND `" . $CNF['TABLE_ENTRIES'] . "`.`" . $CNF['FIELD_AUTHOR'] . "` = :author";
                 break;
 
+            case 'conditions':
+                if(empty($aParams['conditions']))
+                    break;
+
+                if(is_array($aParams['conditions']))
+                    $sWhereClause .= $this->arrayToSQL($aParams['conditions'], ' AND ');
+                else if(is_string($aParams['conditions']) && !empty($aParams['bindings']) && is_array($aParams['bindings'])) {
+                    $sWhereClause .= $aParams['conditions'];
+                    
+                    if(!is_array($aMethod['params'][1]))
+                        $aMethod['params'][1] = array();
+
+                    $aMethod['params'][1] = array_merge($aMethod['params'][1], $aParams['bindings']);
+                }
+                break;
+
             case 'search_ids':
                 $this->_getEntriesBySearchIds($aParams, $aMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause);
                 bx_alert('system', 'search_ids', 0, 0, array('module_name' => $this->_oConfig->getName(), 'params' => &$aParams, 'select_clause' => &$sSelectClause, 'join_clause' => &$sJoinClause, 'where_clause' => &$sWhereClause, 'order_clause' => &$sOrderClause, 'limit_clause' => &$sLimitClause));
