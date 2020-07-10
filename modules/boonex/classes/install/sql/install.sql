@@ -517,7 +517,9 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('bx_classes_avail', '1', 1, '_bx_classes_avail_always', ''),
 ('bx_classes_avail', '2', 2, '_bx_classes_avail_prev_class_completed', ''),
 ('bx_classes_avail', '3', 3, '_bx_classes_avail_after_start_date', ''),
-('bx_classes_avail', '4', 4, '_bx_classes_avail_after_start_date_prev_class_completed', '');
+('bx_classes_avail', '4', 4, '_bx_classes_avail_after_start_date_prev_class_completed', ''),
+('bx_classes_avail', '5', 5, '_bx_classes_avail_between_start_end_dates', ''),
+('bx_classes_avail', '6', 6, '_bx_classes_avail_between_start_end_dates_prev_completed', '');
 
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
 ('bx_classes_cmts', '_bx_classes_pre_lists_cmts', 'bx_classes', '0');

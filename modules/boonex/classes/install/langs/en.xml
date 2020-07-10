@@ -214,6 +214,8 @@
     <string name="_bx_classes_avail_prev_class_completed"><![CDATA[When previous class is completed]]></string>
     <string name="_bx_classes_avail_after_start_date"><![CDATA[After start date]]></string>
     <string name="_bx_classes_avail_after_start_date_prev_class_completed"><![CDATA[After start date & previous class is completed]]></string>
+    <string name="_bx_classes_avail_between_start_end_dates"><![CDATA[Between start & due dates]]></string>
+    <string name="_bx_classes_avail_between_start_end_dates_prev_completed"><![CDATA[Between start and due dates & previous class is completed]]></string>
 
     <string name="_bx_classes_pre_lists_cmts"><![CDATA[Comments Settings]]></string>
     <string name="_bx_classes_cmts_disabled"><![CDATA[Disabled]]></string>
@@ -247,6 +249,7 @@
     <string name="_bx_classes_txt_err_cant_add_class_without_context"><![CDATA[Class can be added into context only]]></string>
     <string name="_bx_classes_txt_err_cant_add_class_without_modules"><![CDATA[Please create classes module first]]></string>
     <string name="_bx_classes_txt_err_not_avail_before_start_date"><![CDATA[Class will be available {0}]]></string>
+    <string name="_bx_classes_txt_err_not_avail_after_end_date"><![CDATA[Class isn't available after {0}]]></string>
     <string name="_bx_classes_txt_err_not_avail_before_prev_class_completed"><![CDATA[Class will be available after completing previous class - <a href="{0}">{1}</a>]]></string>
     <string name="_bx_classes_txt_err_modules_with_classes_cannot_be_deleted"><![CDATA[Modules with classes can't be deleted]]></string>
 
