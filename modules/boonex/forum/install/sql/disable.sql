@@ -17,7 +17,7 @@ DELETE FROM `sys_pages_blocks` WHERE `module` = @sName OR `object` LIKE 'bx_foru
 -- MENU
 DELETE FROM `sys_objects_menu` WHERE `module` = @sName;
 DELETE FROM `sys_menu_sets` WHERE `module` = @sName;
-DELETE FROM `sys_menu_items` WHERE `module` = @sName OR `set_name` IN('bx_forum_view', 'bx_forum_view_more', 'bx_forum_view_actions', 'bx_forum_submenu', 'bx_forum_my', 'bx_forum_snippet_meta_main', 'bx_forum_snippet_meta_counters', 'bx_forum_snippet_meta_reply', 'bx_forum_menu_manage_tools');
+DELETE FROM `sys_menu_items` WHERE `module` = @sName OR `set_name` IN('bx_forum_entry_attachments',  'bx_forum_view', 'bx_forum_view_more', 'bx_forum_view_actions', 'bx_forum_submenu', 'bx_forum_my', 'bx_forum_snippet_meta_main', 'bx_forum_snippet_meta_counters', 'bx_forum_snippet_meta_reply', 'bx_forum_menu_manage_tools');
 
 
 -- GRID
@@ -58,8 +58,10 @@ DELETE FROM `sys_statistics` WHERE `name` LIKE 'bx_forum%';
 -- CHARTS
 DELETE FROM `sys_objects_chart` WHERE `object` LIKE 'bx_forum%';
 
+
 -- UPLOADERS
-DELETE FROM `sys_objects_uploader` WHERE `object` IN('bx_forum_simple', 'bx_forum_html5');
+DELETE FROM `sys_objects_uploader` WHERE `object` LIKE 'bx_forum_%';
+
 
 -- ALERTS
 SET @iHandler := (SELECT `id` FROM `sys_alerts_handlers` WHERE `name` = @sName LIMIT 1);

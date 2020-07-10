@@ -1,40 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="en" flag="gb" title="English">
 
-	<string name="_bx_forum"><![CDATA[Discussions]]></string>
-	<string name="_bx_forum_cmts"><![CDATA[Discussions's Comments]]></string>
-        <string name="_bx_forum_reactions"><![CDATA[Discussions's Reactions]]></string>
+    <string name="_bx_forum"><![CDATA[Discussions]]></string>
+    <string name="_bx_forum_cmts"><![CDATA[Discussions's Comments]]></string>
+    <string name="_bx_forum_reactions"><![CDATA[Discussions's Reactions]]></string>
 
-	<string name="_bx_forum_option_summary_chars"><![CDATA[Number of characters in auto-cropped discussion summary]]></string>
-	<string name="_bx_forum_option_plain_summary_chars"><![CDATA[Number of characters in plain discussion description when discussion hasn't thumb]]></string>
-	<string name="_bx_forum_option_per_page_browse"><![CDATA[Number of items per page]]></string>
-	<string name="_bx_forum_option_per_page_index"><![CDATA[Number of items on site home page]]></string>
-	<string name="_bx_forum_option_per_page_profile"><![CDATA[Number of items on profile page]]></string>
-	<string name="_bx_forum_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
-	<string name="_bx_forum_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
-	<string name="_bx_forum_option_autosubscribe_created"><![CDATA[Autosubscribe to newly created discussions]]></string>
-	<string name="_bx_forum_option_autosubscribe_replied"><![CDATA[Autosubscribe to replied discussions]]></string>
-  <string name="_bx_forum_option_auto_activation_for_categories"><![CDATA[Auto-Activation For Categories]]></string>
+    <string name="_bx_forum_option_summary_chars"><![CDATA[Number of characters in auto-cropped discussion summary]]></string>
+    <string name="_bx_forum_option_plain_summary_chars"><![CDATA[Number of characters in plain discussion description when discussion hasn't thumb]]></string>
+    <string name="_bx_forum_option_per_page_browse"><![CDATA[Number of items per page]]></string>
+    <string name="_bx_forum_option_per_page_index"><![CDATA[Number of items on site home page]]></string>
+    <string name="_bx_forum_option_per_page_profile"><![CDATA[Number of items on profile page]]></string>
+    <string name="_bx_forum_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
+    <string name="_bx_forum_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
+    <string name="_bx_forum_option_autosubscribe_created"><![CDATA[Autosubscribe to newly created discussions]]></string>
+    <string name="_bx_forum_option_autosubscribe_replied"><![CDATA[Autosubscribe to replied discussions]]></string>
+    <string name="_bx_forum_option_auto_activation_for_categories"><![CDATA[Auto-Activation For Categories]]></string>
 
-	<string name="_bx_forum_form_entry"><![CDATA[Forum]]></string>
-	<string name="_bx_forum_form_entry_display_add"><![CDATA[New discussion]]></string>
-	<string name="_bx_forum_form_entry_display_delete"><![CDATA[Delete discussion]]></string>
-	<string name="_bx_forum_form_entry_display_edit"><![CDATA[Edit discussion]]></string>
-	<string name="_bx_forum_form_entry_display_view"><![CDATA[View discussion]]></string>
-	<string name="_bx_forum_form_entry_input_author"><![CDATA[Author]]></string>
-	<string name="_bx_forum_form_entry_input_sys_do_submit"><![CDATA[Submit]]></string>
-	<string name="_bx_forum_form_entry_input_do_submit"><![CDATA[Submit]]></string>
-	<string name="_bx_forum_form_entry_input_sys_text"><![CDATA[Text]]></string>
-	<string name="_bx_forum_form_entry_input_text"><![CDATA[Text]]></string>
-	<string name="_bx_forum_form_entry_input_text_err"><![CDATA[Text field can't be empty]]></string>
-        <string name="_bx_forum_form_entry_input_text_comments"><![CDATA[Comments Text]]></string>
-	<string name="_bx_forum_form_entry_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
-	<string name="_bx_forum_form_entry_input_delete_confirm"><![CDATA[I am sure I want to delete this discussion]]></string>
-	<string name="_bx_forum_form_entry_input_delete_confirm_info"><![CDATA[This action can not be undone]]></string>
-	<string name="_bx_forum_form_entry_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete the discussion]]></string>
-	<string name="_bx_forum_form_entry_input_sys_attachments"><![CDATA[Attachments]]></string>
-	<string name="_bx_forum_form_entry_input_attachments"><![CDATA[Attachments]]></string>
-	<string name="_bx_forum_form_entry_input_sys_allow_view_to"><![CDATA[Visibility]]></string>
+    <string name="_bx_forum_form_entry"><![CDATA[Forum]]></string>
+    <string name="_bx_forum_form_entry_display_add"><![CDATA[New discussion]]></string>
+    <string name="_bx_forum_form_entry_display_delete"><![CDATA[Delete discussion]]></string>
+    <string name="_bx_forum_form_entry_display_edit"><![CDATA[Edit discussion]]></string>
+    <string name="_bx_forum_form_entry_display_view"><![CDATA[View discussion]]></string>
+    <string name="_bx_forum_form_entry_input_author"><![CDATA[Author]]></string>
+    <string name="_bx_forum_form_entry_input_sys_do_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_forum_form_entry_input_do_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_forum_form_entry_input_sys_text"><![CDATA[Text]]></string>
+    <string name="_bx_forum_form_entry_input_text"><![CDATA[Text]]></string>
+    <string name="_bx_forum_form_entry_input_text_err"><![CDATA[Text field can't be empty]]></string>
+    <string name="_bx_forum_form_entry_input_text_comments"><![CDATA[Comments Text]]></string>
+    <string name="_bx_forum_form_entry_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
+    <string name="_bx_forum_form_entry_input_delete_confirm"><![CDATA[I am sure I want to delete this discussion]]></string>
+    <string name="_bx_forum_form_entry_input_delete_confirm_info"><![CDATA[This action can not be undone]]></string>
+    <string name="_bx_forum_form_entry_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete the discussion]]></string>
+    <string name="_bx_forum_form_entry_input_sys_attachments"><![CDATA[Attachments]]></string>
+    <string name="_bx_forum_form_entry_input_sys_covers"><![CDATA[Header Image]]></string>
+    <string name="_bx_forum_form_entry_input_covers"><![CDATA[Header Image]]></string>
+    <string name="_bx_forum_form_entry_input_covers_uploader_simple_title"><![CDATA[Upload]]></string>
+    <string name="_bx_forum_form_entry_input_covers_uploader_html5_title"><![CDATA[Upload]]></string>
+    <string name="_bx_forum_form_entry_input_sys_pictures"><![CDATA[Images]]></string>
+    <string name="_bx_forum_form_entry_input_pictures"><![CDATA[]]></string>
+    <string name="_bx_forum_form_entry_input_sys_videos"><![CDATA[Videos]]></string>
+    <string name="_bx_forum_form_entry_input_videos"><![CDATA[]]></string>
+    <string name="_bx_forum_form_entry_input_sys_files"><![CDATA[Files]]></string>
+    <string name="_bx_forum_form_entry_input_files"><![CDATA[]]></string>
+    <string name="_bx_forum_form_entry_input_sys_polls"><![CDATA[Polls]]></string>
+    <string name="_bx_forum_form_entry_input_media"><![CDATA[Media]]></string>
+    <string name="_bx_forum_form_entry_input_sys_allow_view_to"><![CDATA[Visibility]]></string>
     <string name="_bx_forum_form_entry_input_allow_view_to"><![CDATA[Visibility]]></string>
     <string name="_bx_forum_form_entry_input_picture_use_as_thumb"><![CDATA[Header Image]]></string>
     <string name="_bx_forum_form_entry_input_sys_date_added"><![CDATA[Added]]></string>
@@ -50,16 +61,30 @@
     <string name="_bx_forum_form_entry_input_sys_multicat"><![CDATA[Categories]]></string>
     <string name="_bx_forum_form_entry_input_multicat"><![CDATA[Categories]]></string>
     <string name="_bx_forum_form_entry_input_multicat_err"><![CDATA[Please select category]]></string>
+
+    <string name="_bx_forum_form_poll"><![CDATA[Polls]]></string>
+    <string name="_bx_forum_form_poll_display_add"><![CDATA[Add Poll]]></string>
+    <string name="_bx_forum_form_poll_input_sys_text"><![CDATA[Question]]></string>
+    <string name="_bx_forum_form_poll_input_text"><![CDATA[Question]]></string>
+    <string name="_bx_forum_form_poll_input_text_err"><![CDATA[Question is essential. Please, fill in this field]]></string>
+    <string name="_bx_forum_form_poll_input_sys_answers"><![CDATA[Answers]]></string>
+    <string name="_bx_forum_form_poll_input_answers"><![CDATA[Answers]]></string>
+    <string name="_bx_forum_form_poll_input_answers_err"><![CDATA[Poll should have at least 2 non-empty answers.]]></string>
+    <string name="_bx_forum_form_poll_input_answers_add"><![CDATA[Add More]]></string>
+    <string name="_bx_forum_form_poll_input_sys_do_submit"><![CDATA[Add]]></string>
+    <string name="_bx_forum_form_poll_input_do_submit"><![CDATA[Add]]></string>
+    <string name="_bx_forum_form_poll_input_do_cancel"><![CDATA[Close]]></string>
+
     <string name="_bx_forum_form_search"><![CDATA[Search]]></string>
-	<string name="_bx_forum_form_search_display_full"><![CDATA[Full Search]]></string>
-	<string name="_bx_forum_form_search_input_sys_author"><![CDATA[Author]]></string>
-	<string name="_bx_forum_form_search_input_author"><![CDATA[Author]]></string>
-	<string name="_bx_forum_form_search_input_sys_category"><![CDATA[Category]]></string>
-	<string name="_bx_forum_form_search_input_category"><![CDATA[Category]]></string>
-	<string name="_bx_forum_form_search_input_sys_keyword"><![CDATA[Keyword]]></string>
-	<string name="_bx_forum_form_search_input_keyword"><![CDATA[Keyword]]></string>
-	<string name="_bx_forum_form_search_input_do_submit"><![CDATA[Search]]></string>
-	<string name="_bx_forum_form_search_input_sys_do_submit"><![CDATA[Search]]></string>
+    <string name="_bx_forum_form_search_display_full"><![CDATA[Full Search]]></string>
+    <string name="_bx_forum_form_search_input_sys_author"><![CDATA[Author]]></string>
+    <string name="_bx_forum_form_search_input_author"><![CDATA[Author]]></string>
+    <string name="_bx_forum_form_search_input_sys_category"><![CDATA[Category]]></string>
+    <string name="_bx_forum_form_search_input_category"><![CDATA[Category]]></string>
+    <string name="_bx_forum_form_search_input_sys_keyword"><![CDATA[Keyword]]></string>
+    <string name="_bx_forum_form_search_input_keyword"><![CDATA[Keyword]]></string>
+    <string name="_bx_forum_form_search_input_do_submit"><![CDATA[Search]]></string>
+    <string name="_bx_forum_form_search_input_sys_do_submit"><![CDATA[Search]]></string>
 
 	<string name="_bx_forum_acl_action_create_entry"><![CDATA[Create new discussion]]></string>
 	<string name="_bx_forum_acl_action_delete_entry"><![CDATA[Delete discussion]]></string>
@@ -83,6 +108,7 @@
 	<string name="_bx_forum_page_title_view_entry"><![CDATA[{title}]]></string>
 	<string name="_bx_forum_page_block_title_entry_all_actions"><![CDATA[All Actions]]></string>
 	<string name="_bx_forum_page_block_title_entry_attachments"><![CDATA[Attachments]]></string>
+        <string name="_bx_forum_page_block_title_entry_polls"><![CDATA[Polls]]></string>
 	<string name="_bx_forum_page_block_title_entry_text"><![CDATA[Text]]></string>
     <string name="_bx_forum_page_block_title_entry_author"><![CDATA[Author]]></string>
     <string name="_bx_forum_page_block_title_entry_actions"><![CDATA[Actions]]></string>
@@ -173,7 +199,24 @@
     <string name="_bx_forum_page_title_sys_entries_partaken"><![CDATA[Partaken]]></string>
     <string name="_bx_forum_page_title_entries_partaken"><![CDATA[Partaken]]></string>
     <string name="_bx_forum_page_block_title_partaken_entries"><![CDATA[Partaken]]></string>
-    
+
+    <string name="_bx_forum_menu_title_entry_attachments"><![CDATA[Form Attachments]]></string>
+    <string name="_bx_forum_menu_set_title_entry_attachments"><![CDATA[Form Attachments]]></string>
+    <string name="_bx_forum_menu_item_title_system_cpa_photo_simple"><![CDATA[Add Photo (simple)]]></string>
+    <string name="_bx_forum_menu_item_title_cpa_photo_simple"><![CDATA[Add Photo]]></string>
+    <string name="_bx_forum_menu_item_title_system_cpa_photo_html5"><![CDATA[Add Photo (html5)]]></string>
+    <string name="_bx_forum_menu_item_title_cpa_photo_html5"><![CDATA[Add Photos]]></string>
+    <string name="_bx_forum_menu_item_title_system_cpa_video_simple"><![CDATA[Add Video (simple)]]></string>
+    <string name="_bx_forum_menu_item_title_cpa_video_simple"><![CDATA[Add Video]]></string>
+    <string name="_bx_forum_menu_item_title_system_cpa_video_html5"><![CDATA[Add Video (html5)]]></string>
+    <string name="_bx_forum_menu_item_title_cpa_video_html5"><![CDATA[Add Videos]]></string>
+    <string name="_bx_forum_menu_item_title_system_cpa_file_simple"><![CDATA[Add File (simple)]]></string>
+    <string name="_bx_forum_menu_item_title_cpa_file_simple"><![CDATA[Add File]]></string>
+    <string name="_bx_forum_menu_item_title_system_cpa_file_html5"><![CDATA[Add File (html5)]]></string>
+    <string name="_bx_forum_menu_item_title_cpa_file_html5"><![CDATA[Add Files]]></string>
+    <string name="_bx_forum_menu_item_title_system_cpa_poll"><![CDATA[Add Poll]]></string>
+    <string name="_bx_forum_menu_item_title_cpa_poll"><![CDATA[Add Poll]]></string>
+
     <string name="_bx_forum_menu_title_submenu"><![CDATA[Forum Submenu]]></string>
     <string name="_bx_forum_menu_set_title_submenu"><![CDATA[Forum Submenu]]></string>
     <string name="_bx_forum_menu_item_title_system_create_entry"><![CDATA[Discussion]]></string>
@@ -296,6 +339,12 @@
     <string name="_bx_forum_txt_sample_score_down_single"><![CDATA[score down vote to discussion]]></string>
     <string name="_bx_forum_txt_sample_single"><![CDATA[discussion]]></string>
     <string name="_bx_forum_txt_sample_single_with_article"><![CDATA[a discussion]]></string>
+
+    <string name="_bx_forum_txt_poll_view_answers"><![CDATA[poll]]></string>
+    <string name="_bx_forum_txt_poll_view_results"><![CDATA[results]]></string>
+    <string name="_bx_forum_txt_poll_answer_vote_do_by"><![CDATA[Voted for]]></string>
+    <string name="_bx_forum_txt_poll_answer_vote_counter"><![CDATA[{0} votes]]></string>
+    <string name="_bx_forum_txt_poll_answer_vote_percent"><![CDATA[({0}%)]]></string>
 
     <string name="_bx_forum_txt_all_entries_in"><![CDATA[<a href="{0}">All Discussions in {1} ({2})</a>]]></string>
     <string name="_bx_forum_email_new_reply"><![CDATA[New reply]]></string>

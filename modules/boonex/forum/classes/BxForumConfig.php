@@ -28,14 +28,14 @@ class BxForumConfig extends BxBaseModTextConfig
             'delete-discussion' => 'checkAllowedDelete'
         );
 
-        $this->CNF = array (
+        $this->CNF = array_merge($this->CNF, array (
 
             // module icon
             'ICON' => 'far comments col-blue2',
 
             // database tables
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'discussions',
-        	'TABLE_ENTRIES_FULLTEXT' => 'title_text',
+            'TABLE_ENTRIES_FULLTEXT' => 'title_text',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -52,8 +52,13 @@ class BxForumConfig extends BxBaseModTextConfig
             'FIELD_LR_ADDED' => 'lr_timestamp',
             'FIELD_LR_COMMENT_ID' => 'lr_comment_id',
             'FIELD_ALLOW_VIEW_TO' => 'allow_view_to',
-            'FIELD_PHOTO' => 'attachments',
+            'FIELD_COVER' => 'covers',
+            'FIELD_PHOTO' => 'pictures',
+            'FIELD_VIDEO' => 'videos',
+            'FIELD_FILE' => 'files',
+            'FIELD_POLL' => 'polls',
             'FIELD_THUMB' => 'thumb',
+            'FIELD_ATTACHMENTS' => 'attachments',
             'FIELD_VIEWS' => 'views',
             'FIELD_VOTES' => 'votes',
             'FIELD_COMMENTS' => 'comments',
@@ -68,7 +73,7 @@ class BxForumConfig extends BxBaseModTextConfig
              // some params
             'PARAM_MULTICAT_ENABLED' => true,
             'PARAM_MULTICAT_AUTO_ACTIVATION_FOR_CATEGORIES' => 'bx_forum_auto_activation_for_categories',
-            
+
             // page URIs
             'URI_VIEW_ENTRY' => 'view-discussion',
             'URI_AUTHOR_ENTRIES' => 'discussions-author',
@@ -103,13 +108,26 @@ class BxForumConfig extends BxBaseModTextConfig
             'OBJECT_GRID_ADMINISTRATION' => 'bx_forum_administration',
             'OBJECT_GRID_COMMON' => 'bx_forum_common',
             'OBJECT_GRID_CATEGORIES' => 'bx_forum_categories',
-            'OBJECT_STORAGE' => 'bx_forum_files',
-            'OBJECT_STORAGE_CMTS' => 'bx_forum_files_cmts',
+            'OBJECT_STORAGE' => 'bx_forum_covers',
+            'OBJECT_STORAGE_FILES' => 'bx_forum_files',
+            'OBJECT_STORAGE_PHOTOS' => 'bx_forum_photos',
+            'OBJECT_STORAGE_VIDEOS' => 'bx_forum_videos',
+            'OBJECT_STORAGE_CMTS' => 'bx_forum_files_cmts', // for comments
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_forum_preview',
-            'OBJECT_IMAGES_TRANSCODER_PREVIEW_CMTS' => 'bx_forum_preview_cmts',
             'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_forum_gallery',
             'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_forum_cover',
-            'OBJECT_VIDEOS_TRANSCODERS' => array(),
+            'OBJECT_IMAGES_TRANSCODER_PREVIEW_FILES' => 'bx_forum_preview_files',
+            'OBJECT_IMAGES_TRANSCODER_GALLERY_FILES' => 'bx_forum_gallery_files',
+            'OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS' => 'bx_forum_preview_photos',
+            'OBJECT_IMAGES_TRANSCODER_GALLERY_PHOTOS' => 'bx_forum_gallery_photos',
+            'OBJECT_IMAGES_TRANSCODER_PREVIEW_CMTS' => 'bx_forum_preview_cmts', // for comments
+            'OBJECT_VIDEOS_TRANSCODERS' => array(
+                'poster' => 'bx_forum_videos_poster', 
+            	'poster_preview' => 'bx_forum_videos_poster_preview',
+            	'mp4' => 'bx_forum_videos_mp4', 
+            	'mp4_hd' => 'bx_forum_videos_mp4_hd'
+            ),
+            'OBJECT_VIDEO_TRANSCODER_HEIGHT' => '480px',
             'OBJECT_REPORTS' => 'bx_forum',
             'OBJECT_VIEWS' => 'bx_forum',
             'OBJECT_VOTES' => 'bx_forum',
@@ -126,8 +144,11 @@ class BxForumConfig extends BxBaseModTextConfig
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_forum_entry_add',
             'OBJECT_FORM_ENTRY_DISPLAY_EDIT' => 'bx_forum_entry_edit',
             'OBJECT_FORM_ENTRY_DISPLAY_DELETE' => 'bx_forum_entry_delete',
+            'OBJECT_FORM_POLL' => 'bx_forum_poll',
+            'OBJECT_FORM_POLL_DISPLAY_ADD' => 'bx_forum_poll_add',
             'OBJECT_FORM_SEARCH' => 'bx_forum_search',
             'OBJECT_FORM_SEARCH_DISPLAY_FULL' => 'bx_forum_search_full',
+            'OBJECT_MENU_ENTRY_ATTACHMENTS' => 'bx_forum_entry_attachments', // attachments menu in create/edit forms
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY' => 'bx_forum_view', // actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_MORE' => 'bx_forum_view_more', // more actions menu on view entry page
             'OBJECT_MENU_ACTIONS_VIEW_ENTRY_ALL' => 'bx_forum_view_actions', // all actions menu on view entry page
@@ -142,13 +163,13 @@ class BxForumConfig extends BxBaseModTextConfig
             'OBJECT_MENU_SUBMENU_VIEW_ENTRY_MAIN_SELECTION' => 'forum', // first item in view entry submenu from main module submenu
             'OBJECT_UPLOADERS' => array('sys_simple', 'sys_html5'),
             'OBJECT_CONNECTION_SUBSCRIBERS' => 'bx_forum_subscribers',
-            
+
             'BADGES_AVALIABLE' => true,
 
             // menu items which visibility depends on custom visibility checking
             'MENU_ITEM_TO_METHOD' => array (
                 'bx_forum_view' => $aMenuItems2Methods,
-        		'bx_forum_view_more' => $aMenuItems2Methods,
+                'bx_forum_view_more' => $aMenuItems2Methods,
             ),
 
             // some language keys
@@ -171,30 +192,36 @@ class BxForumConfig extends BxBaseModTextConfig
                 'txt_all_entries_in' => '_bx_forum_txt_all_entries_in',
             	'txt_all_entries_by_author' => '_bx_forum_page_title_browse_by_author',
                 'txt_all_entries_by_context' => '_bx_forum_page_title_browse_by_context',
-            	'txt_pict_use_as_thumb' => '_bx_forum_form_entry_input_picture_use_as_thumb'
+            	'txt_pict_use_as_thumb' => '_bx_forum_form_entry_input_picture_use_as_thumb',
+                'txt_poll_form_answers_add' => '_bx_forum_form_poll_input_answers_add',
+                'txt_poll_menu_view_answers' => '_bx_forum_txt_poll_view_answers',
+                'txt_poll_menu_view_results' => '_bx_forum_txt_poll_view_results',
+                'txt_poll_menu_view_' => '_bx_forum_txt_poll_view_',
+                'txt_poll_answer_vote_do_by' => '_bx_forum_txt_poll_answer_vote_do_by',
+                'txt_poll_answer_vote_counter' => '_bx_forum_txt_poll_answer_vote_counter',
+                'txt_poll_answer_vote_percent' => '_bx_forum_txt_poll_answer_vote_percent'
             ),
-        );
+        ));
 
-        $this->_aJsClasses = array(
-        	'main' => 'BxForumMain',
-        	'entry' => 'BxForumEntry',
-        	'manage_tools' => 'BxForumManageTools',
-        	'studio' => 'BxForumStudio',
+        $this->_aJsClasses = array_merge($this->_aJsClasses, array(
+            'main' => 'BxForumMain',
+            'entry' => 'BxForumEntry',
+            'manage_tools' => 'BxForumManageTools',
+            'studio' => 'BxForumStudio',
             'categories' => 'BxDolCategories'
-        );
+        ));
 
-        $this->_aJsObjects = array(
-        	'main' => 'oBxForumMain',
-        	'entry' => 'oBxForumEntry',
-        	'manage_tools' => 'oBxForumManageTools',
-        	'studio' => 'oBxForumStudio',
+        $this->_aJsObjects = array_merge($this->_aJsObjects, array(
+            'main' => 'oBxForumMain',
+            'entry' => 'oBxForumEntry',
+            'manage_tools' => 'oBxForumManageTools',
+            'studio' => 'oBxForumStudio',
             'categories' => 'oBxDolCategories'
-        );
+        ));
 
         $this->_aGridObjects = array(
-        	'common' => $this->CNF['OBJECT_GRID_COMMON'],
-        	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
-        	
+            'common' => $this->CNF['OBJECT_GRID_COMMON'],
+            'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
         );
     }
 }

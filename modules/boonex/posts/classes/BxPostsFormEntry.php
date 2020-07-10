@@ -108,7 +108,7 @@ class BxPostsFormEntry extends BxBaseModTextFormEntry
             $iAdded = 0;
             if(isset($this->aInputs[$CNF['FIELD_ADDED']]))
                 $iAdded = $this->getCleanValue($CNF['FIELD_ADDED']);
-            
+
             if(empty($iAdded))
                  $iAdded = time();
 
@@ -146,7 +146,7 @@ class BxPostsFormEntry extends BxBaseModTextFormEntry
 
             $aValsToAdd[$CNF['FIELD_PUBLISHED']] = $iPublished;
         }
-        
+
         $iResult = parent::update ($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
         $this->processFiles($CNF['FIELD_COVER'], $iContentId, false);   
         return $iResult;

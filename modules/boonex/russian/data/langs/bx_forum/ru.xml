@@ -1,40 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
 
-	<string name="_bx_forum"><![CDATA[Обсуждения]]></string>
-	<string name="_bx_forum_cmts"><![CDATA[Обсуждения - Комментарии]]></string>
-        <string name="_bx_forum_reactions"><![CDATA[Обсуждения - Реакции]]></string>
+    <string name="_bx_forum"><![CDATA[Обсуждения]]></string>
+    <string name="_bx_forum_cmts"><![CDATA[Обсуждения - Комментарии]]></string>
+    <string name="_bx_forum_reactions"><![CDATA[Обсуждения - Реакции]]></string>
 
-	<string name="_bx_forum_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к обсуждению]]></string>
-	<string name="_bx_forum_option_plain_summary_chars"><![CDATA[Количество символов в описании обсуждения при отсутствующей картинке обсуждения]]></string>
-	<string name="_bx_forum_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
-	<string name="_bx_forum_option_per_page_index"><![CDATA[Количество элементов на главной странице сайта]]></string>
-	<string name="_bx_forum_option_per_page_profile"><![CDATA[Количество элементов на странице профиля]]></string>
-	<string name="_bx_forum_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
-	<string name="_bx_forum_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
-	<string name="_bx_forum_option_autosubscribe_created"><![CDATA[Автоподписка на новые обсуждения]]></string>
-	<string name="_bx_forum_option_autosubscribe_replied"><![CDATA[Автоподписка на отвеченные обсуждения]]></string>
-  <string name="_bx_forum_option_auto_activation_for_categories"><![CDATA[Автоактивация для категорий]]></string>
+    <string name="_bx_forum_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к обсуждению]]></string>
+    <string name="_bx_forum_option_plain_summary_chars"><![CDATA[Количество символов в описании обсуждения при отсутствующей картинке обсуждения]]></string>
+    <string name="_bx_forum_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
+    <string name="_bx_forum_option_per_page_index"><![CDATA[Количество элементов на главной странице сайта]]></string>
+    <string name="_bx_forum_option_per_page_profile"><![CDATA[Количество элементов на странице профиля]]></string>
+    <string name="_bx_forum_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
+    <string name="_bx_forum_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
+    <string name="_bx_forum_option_autosubscribe_created"><![CDATA[Автоподписка на новые обсуждения]]></string>
+    <string name="_bx_forum_option_autosubscribe_replied"><![CDATA[Автоподписка на отвеченные обсуждения]]></string>
+    <string name="_bx_forum_option_auto_activation_for_categories"><![CDATA[Автоактивация для категорий]]></string>
 
-	<string name="_bx_forum_form_entry"><![CDATA[Форум]]></string>
-	<string name="_bx_forum_form_entry_display_add"><![CDATA[Создание обсуждения]]></string>
-	<string name="_bx_forum_form_entry_display_delete"><![CDATA[Удаление обсуждения]]></string>
-	<string name="_bx_forum_form_entry_display_edit"><![CDATA[Редактирование обсуждения]]></string>
-	<string name="_bx_forum_form_entry_display_view"><![CDATA[Просмотр обсуждения]]></string>
-	<string name="_bx_forum_form_entry_input_author"><![CDATA[Автор]]></string>
-	<string name="_bx_forum_form_entry_input_sys_do_submit"><![CDATA[Выполнить]]></string>
-	<string name="_bx_forum_form_entry_input_do_submit"><![CDATA[Выполнить]]></string>
-	<string name="_bx_forum_form_entry_input_sys_text"><![CDATA[Текст]]></string>
-	<string name="_bx_forum_form_entry_input_text"><![CDATA[Текст]]></string>
-	<string name="_bx_forum_form_entry_input_text_err"><![CDATA[Поле для текста не может быть пустым]]></string>
-        <string name="_bx_forum_form_entry_input_text_comments"><![CDATA[Текст комментариев]]></string>
-	<string name="_bx_forum_form_entry_input_sys_delete_confirm"><![CDATA[Удалить подтверждение]]></string>
-	<string name="_bx_forum_form_entry_input_delete_confirm"><![CDATA[Я уверен, что хочу удалить это обсуждение]]></string>
-	<string name="_bx_forum_form_entry_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено]]></string>
-	<string name="_bx_forum_form_entry_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте флажок, если действительно хотите удалить обсуждение]]></string>
-	<string name="_bx_forum_form_entry_input_sys_attachments"><![CDATA[Прикрепления]]></string>
-	<string name="_bx_forum_form_entry_input_attachments"><![CDATA[Прикрепления]]></string>
-	<string name="_bx_forum_form_entry_input_sys_allow_view_to"><![CDATA[Видимость]]></string>
+    <string name="_bx_forum_form_entry"><![CDATA[Форум]]></string>
+    <string name="_bx_forum_form_entry_display_add"><![CDATA[Создание обсуждения]]></string>
+    <string name="_bx_forum_form_entry_display_delete"><![CDATA[Удаление обсуждения]]></string>
+    <string name="_bx_forum_form_entry_display_edit"><![CDATA[Редактирование обсуждения]]></string>
+    <string name="_bx_forum_form_entry_display_view"><![CDATA[Просмотр обсуждения]]></string>
+    <string name="_bx_forum_form_entry_input_author"><![CDATA[Автор]]></string>
+    <string name="_bx_forum_form_entry_input_sys_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_forum_form_entry_input_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_forum_form_entry_input_sys_text"><![CDATA[Текст]]></string>
+    <string name="_bx_forum_form_entry_input_text"><![CDATA[Текст]]></string>
+    <string name="_bx_forum_form_entry_input_text_err"><![CDATA[Поле для текста не может быть пустым]]></string>
+    <string name="_bx_forum_form_entry_input_text_comments"><![CDATA[Текст комментариев]]></string>
+    <string name="_bx_forum_form_entry_input_sys_delete_confirm"><![CDATA[Удалить подтверждение]]></string>
+    <string name="_bx_forum_form_entry_input_delete_confirm"><![CDATA[Я уверен, что хочу удалить это обсуждение]]></string>
+    <string name="_bx_forum_form_entry_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено]]></string>
+    <string name="_bx_forum_form_entry_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте флажок, если действительно хотите удалить обсуждение]]></string>
+    <string name="_bx_forum_form_entry_input_sys_attachments"><![CDATA[Прикрепления]]></string>
+    <string name="_bx_forum_form_entry_input_sys_covers"><![CDATA[Изображение заголовка]]></string>
+    <string name="_bx_forum_form_entry_input_covers"><![CDATA[Изображение заголовка]]></string>
+    <string name="_bx_forum_form_entry_input_covers_uploader_simple_title"><![CDATA[Загрузить]]></string>
+    <string name="_bx_forum_form_entry_input_covers_uploader_html5_title"><![CDATA[Загрузить]]></string>
+    <string name="_bx_forum_form_entry_input_sys_pictures"><![CDATA[Изображения]]></string>
+    <string name="_bx_forum_form_entry_input_pictures"><![CDATA[]]></string>
+    <string name="_bx_forum_form_entry_input_sys_videos"><![CDATA[Видео]]></string>
+    <string name="_bx_forum_form_entry_input_videos"><![CDATA[]]></string>
+    <string name="_bx_forum_form_entry_input_sys_files"><![CDATA[Файлы]]></string>
+    <string name="_bx_forum_form_entry_input_files"><![CDATA[]]></string>
+    <string name="_bx_forum_form_entry_input_sys_polls"><![CDATA[Голосования]]></string>
+    <string name="_bx_forum_form_entry_input_sys_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_forum_form_entry_input_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_forum_form_entry_input_picture_use_as_thumb"><![CDATA[Изображение обложки]]></string>
     <string name="_bx_forum_form_entry_input_sys_date_added"><![CDATA[Дата создания]]></string>
@@ -45,21 +55,35 @@
     <string name="_bx_forum_form_entry_input_title"><![CDATA[Тема]]></string>
     <string name="_bx_forum_form_entry_input_title_err"><![CDATA[Необходимо указать тему]]></string>
     <string name="_bx_forum_form_entry_input_sys_cat"><![CDATA[Категория]]></string>
-	<string name="_bx_forum_form_entry_input_cat"><![CDATA[Категория]]></string>
-	<string name="_bx_forum_form_entry_input_cat_err"><![CDATA[Нужно обязательно выбрать категорию]]></string>
-  <string name="_bx_forum_form_entry_input_sys_multicat"><![CDATA[Категории]]></string>
-  <string name="_bx_forum_form_entry_input_multicat"><![CDATA[Категории]]></string>
-  <string name="_bx_forum_form_entry_input_multicat_err"><![CDATA[Нужно обязательно выбрать категории]]></string>
-	<string name="_bx_forum_form_search"><![CDATA[Поиск]]></string>
-	<string name="_bx_forum_form_search_display_full"><![CDATA[Полный поиск]]></string>
-	<string name="_bx_forum_form_search_input_sys_author"><![CDATA[Автор]]></string>
-	<string name="_bx_forum_form_search_input_author"><![CDATA[Автор]]></string>
-	<string name="_bx_forum_form_search_input_sys_category"><![CDATA[Категория]]></string>
-	<string name="_bx_forum_form_search_input_category"><![CDATA[Категория]]></string>
-	<string name="_bx_forum_form_search_input_sys_keyword"><![CDATA[Ключевое слово]]></string>
-	<string name="_bx_forum_form_search_input_keyword"><![CDATA[Ключевое слово]]></string>
-	<string name="_bx_forum_form_search_input_do_submit"><![CDATA[Искать]]></string>
-	<string name="_bx_forum_form_search_input_sys_do_submit"><![CDATA[Искать]]></string>
+    <string name="_bx_forum_form_entry_input_cat"><![CDATA[Категория]]></string>
+    <string name="_bx_forum_form_entry_input_cat_err"><![CDATA[Нужно обязательно выбрать категорию]]></string>
+    <string name="_bx_forum_form_entry_input_sys_multicat"><![CDATA[Категории]]></string>
+    <string name="_bx_forum_form_entry_input_multicat"><![CDATA[Категории]]></string>
+    <string name="_bx_forum_form_entry_input_multicat_err"><![CDATA[Нужно обязательно выбрать категории]]></string>
+
+    <string name="_bx_forum_form_poll"><![CDATA[Голосования]]></string>
+    <string name="_bx_forum_form_poll_display_add"><![CDATA[Добавить голосование]]></string>
+    <string name="_bx_forum_form_poll_input_sys_text"><![CDATA[Вопрос]]></string>
+    <string name="_bx_forum_form_poll_input_text"><![CDATA[Вопрос]]></string>
+    <string name="_bx_forum_form_poll_input_text_err"><![CDATA[Вопрос обязателен. Пожалуйста, заполните это поле]]></string>
+    <string name="_bx_forum_form_poll_input_sys_answers"><![CDATA[Ответы]]></string>
+    <string name="_bx_forum_form_poll_input_answers"><![CDATA[Ответы]]></string>
+    <string name="_bx_forum_form_poll_input_answers_err"><![CDATA[Голосование должно иметь как минимум 2 не пустых ответа.]]></string>
+    <string name="_bx_forum_form_poll_input_answers_add"><![CDATA[Добавить ещё]]></string>    
+    <string name="_bx_forum_form_poll_input_sys_do_submit"><![CDATA[Добавить]]></string>
+    <string name="_bx_forum_form_poll_input_do_submit"><![CDATA[Добавить]]></string>
+    <string name="_bx_forum_form_poll_input_do_cancel"><![CDATA[Закрыть]]></string>
+
+    <string name="_bx_forum_form_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_forum_form_search_display_full"><![CDATA[Полный поиск]]></string>
+    <string name="_bx_forum_form_search_input_sys_author"><![CDATA[Автор]]></string>
+    <string name="_bx_forum_form_search_input_author"><![CDATA[Автор]]></string>
+    <string name="_bx_forum_form_search_input_sys_category"><![CDATA[Категория]]></string>
+    <string name="_bx_forum_form_search_input_category"><![CDATA[Категория]]></string>
+    <string name="_bx_forum_form_search_input_sys_keyword"><![CDATA[Ключевое слово]]></string>
+    <string name="_bx_forum_form_search_input_keyword"><![CDATA[Ключевое слово]]></string>
+    <string name="_bx_forum_form_search_input_do_submit"><![CDATA[Искать]]></string>
+    <string name="_bx_forum_form_search_input_sys_do_submit"><![CDATA[Искать]]></string>
 
 	<string name="_bx_forum_acl_action_create_entry"><![CDATA[Создавать новое обсуждение]]></string>
 	<string name="_bx_forum_acl_action_delete_entry"><![CDATA[Удалить обсуждение]]></string>
@@ -83,6 +107,7 @@
 	<string name="_bx_forum_page_title_view_entry"><![CDATA[{title}]]></string>
 	<string name="_bx_forum_page_block_title_entry_all_actions"><![CDATA[Все действия]]></string>
 	<string name="_bx_forum_page_block_title_entry_attachments"><![CDATA[Прикрепления]]></string>
+        <string name="_bx_forum_page_block_title_entry_polls"><![CDATA[Голосования]]></string>
 	<string name="_bx_forum_page_block_title_entry_text"><![CDATA[Текст]]></string>
     <string name="_bx_forum_page_block_title_entry_author"><![CDATA[Автор]]></string>
     <string name="_bx_forum_page_block_title_entry_actions"><![CDATA[Действия]]></string>
@@ -173,6 +198,23 @@
     <string name="_bx_forum_page_title_sys_entries_partaken"><![CDATA[Отвеченные мной]]></string>
     <string name="_bx_forum_page_title_entries_partaken"><![CDATA[Отвеченные мной]]></string>
     <string name="_bx_forum_page_block_title_partaken_entries"><![CDATA[Отвеченные мной]]></string>
+
+    <string name="_bx_forum_menu_title_entry_attachments"><![CDATA[Форма - Прикрепления]]></string>
+    <string name="_bx_forum_menu_set_title_entry_attachments"><![CDATA[Форма - Прикрепления]]></string>
+    <string name="_bx_forum_menu_item_title_system_cpa_photo_simple"><![CDATA[Добавить фото (один)]]></string>
+    <string name="_bx_forum_menu_item_title_cpa_photo_simple"><![CDATA[Добавить фото]]></string>
+    <string name="_bx_forum_menu_item_title_system_cpa_photo_html5"><![CDATA[Добавить фото (много)]]></string>
+    <string name="_bx_forum_menu_item_title_cpa_photo_html5"><![CDATA[Добавить фото]]></string>
+    <string name="_bx_forum_menu_item_title_system_cpa_video_simple"><![CDATA[Добавить видео (один)]]></string>
+    <string name="_bx_forum_menu_item_title_cpa_video_simple"><![CDATA[Добавить видео]]></string>
+    <string name="_bx_forum_menu_item_title_system_cpa_video_html5"><![CDATA[Добавить видео (много)]]></string>
+    <string name="_bx_forum_menu_item_title_cpa_video_html5"><![CDATA[Добавить видео]]></string>
+    <string name="_bx_forum_menu_item_title_system_cpa_file_simple"><![CDATA[Добавить файл (один)]]></string>
+    <string name="_bx_forum_menu_item_title_cpa_file_simple"><![CDATA[Добавить файл]]></string>
+    <string name="_bx_forum_menu_item_title_system_cpa_file_html5"><![CDATA[Добавить файл (много)]]></string>
+    <string name="_bx_forum_menu_item_title_cpa_file_html5"><![CDATA[Добавить файл]]></string>
+    <string name="_bx_forum_menu_item_title_system_cpa_poll"><![CDATA[Добавить голосование]]></string>
+    <string name="_bx_forum_menu_item_title_cpa_poll"><![CDATA[Добавить голосование]]></string>
 
     <string name="_bx_forum_menu_title_submenu"><![CDATA[Форум - Подменю]]></string>
     <string name="_bx_forum_menu_set_title_submenu"><![CDATA[Форум - Подменю]]></string>
@@ -297,6 +339,12 @@
     <string name="_bx_forum_txt_all_entries_in"><![CDATA[<a href="{0}">Все обсуждения в {1} ({2})</a>]]></string>
     <string name="_bx_forum_txt_sample_single"><![CDATA[обсуждение]]></string>
     <string name="_bx_forum_txt_sample_single_with_article"><![CDATA[обсуждение]]></string>
+
+    <string name="_bx_forum_txt_poll_view_answers"><![CDATA[опрос]]></string>
+    <string name="_bx_forum_txt_poll_view_results"><![CDATA[результаты]]></string>
+    <string name="_bx_forum_txt_poll_answer_vote_do_by"><![CDATA[Проголосовали за]]></string>
+    <string name="_bx_forum_txt_poll_answer_vote_counter"><![CDATA[{0} голосов]]></string>
+    <string name="_bx_forum_txt_poll_answer_vote_percent"><![CDATA[({0}%)]]></string>
 
     <string name="_bx_forum_email_new_reply"><![CDATA[Новый ответ]]></string>
     <string name="_bx_forum_email_new_reply_subject"><![CDATA[Новый ответ в "{PageTitle}" дискуссии]]></string>

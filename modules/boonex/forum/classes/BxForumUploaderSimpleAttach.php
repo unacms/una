@@ -9,7 +9,7 @@
  * @{
  */
 
-class BxForumUploaderHTML5 extends BxBaseModTextUploaderHTML5
+class BxForumUploaderSimpleAttach extends BxBaseModTextUploaderSimpleAttach
 {
     public function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {

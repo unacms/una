@@ -9,14 +9,13 @@
  * @{
  */
 
-class BxForumUploaderSimple extends BxTemplUploaderSimple
+class BxForumUploaderSimple extends BxBaseModTextUploaderSimple
 {
-    protected $_oModule;
-
     public function __construct ($aObject, $sStorageObject, $sUniqId, $oTemplate)
     {
+        $this->_sModule = 'bx_forum';
+
         parent::__construct($aObject, $sStorageObject, $sUniqId, $oTemplate);
-        $this->_oModule = BxDolModule::getInstance('bx_forum');
     }
 
     protected function isAdmin ($iContentId = 0)
