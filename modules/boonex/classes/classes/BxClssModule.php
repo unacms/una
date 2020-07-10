@@ -14,6 +14,8 @@ define('BX_CLASSES_AVAIL_ALWAYS', 1);
 define('BX_CLASSES_AVAIL_PREV_CLASS_COMPLETED', 2);
 define('BX_CLASSES_AVAIL_AFTER_START_DATE', 3);
 define('BX_CLASSES_AVAIL_AFTER_START_DATE_PREV_CLASS_COMPLETED', 4);
+define('BX_CLASSES_AVAIL_BETWEEN_START_END_DATES', 5);
+define('BX_CLASSES_AVAIL_BETWEEN_START_END_DATES_PREV_CLASS_COMPLETED', 6);
 
 /**
  * Classes module
@@ -478,12 +480,20 @@ class BxClssModule extends BxBaseModTextModule
             return CHECK_ACTION_RESULT_ALLOWED;
 
         // check start date
-        if ((BX_CLASSES_AVAIL_AFTER_START_DATE == $aDataEntry['avail'] || BX_CLASSES_AVAIL_AFTER_START_DATE_PREV_CLASS_COMPLETED == $aDataEntry['avail']) && $aDataEntry['start_date'] > time()) {
+        $a = array(BX_CLASSES_AVAIL_AFTER_START_DATE, BX_CLASSES_AVAIL_AFTER_START_DATE_PREV_CLASS_COMPLETED, BX_CLASSES_AVAIL_BETWEEN_START_END_DATES, BX_CLASSES_AVAIL_BETWEEN_START_END_DATES_PREV_CLASS_COMPLETED);
+        if (in_array($aDataEntry['avail'], $a) && $aDataEntry['start_date'] && $aDataEntry['start_date'] > time()) {
             return _t('_bx_classes_txt_err_not_avail_before_start_date', bx_time_js($aDataEntry['start_date'], BX_FORMAT_DATE_TIME, true));
         }
 
+        // check due date
+        $a = array(BX_CLASSES_AVAIL_BETWEEN_START_END_DATES, BX_CLASSES_AVAIL_BETWEEN_START_END_DATES_PREV_CLASS_COMPLETED);
+        if (in_array($aDataEntry['avail'], $a) && $aDataEntry['end_date'] && $aDataEntry['end_date'] < time()) {
+            return _t('_bx_classes_txt_err_not_avail_after_end_date', bx_time_js($aDataEntry['end_date'], BX_FORMAT_DATE_TIME, true));
+        }
+
         // check availability
-        if ((BX_CLASSES_AVAIL_PREV_CLASS_COMPLETED == $aDataEntry['avail'] || BX_CLASSES_AVAIL_AFTER_START_DATE_PREV_CLASS_COMPLETED == $aDataEntry['avail']) && !$this->serviceIsPrevClassCompleted($aDataEntry, $iProfileId)) {
+        $a = array(BX_CLASSES_AVAIL_PREV_CLASS_COMPLETED, BX_CLASSES_AVAIL_AFTER_START_DATE_PREV_CLASS_COMPLETED);
+        if (in_array($aDataEntry['avail'], $a) && !$this->serviceIsPrevClassCompleted($aDataEntry, $iProfileId)) {
             if (!($aPrevClass = $this->_oDb->getPrevEntry ($aDataEntry['id'])))
                 return _t('_sys_txt_error_occured');
             return _t('_bx_classes_txt_err_not_avail_before_prev_class_completed', $this->serviceGetLink($aPrevClass['id']), bx_process_output($aPrevClass['title']));
