@@ -21,6 +21,7 @@ class BxApiModule extends BxDolModule
         $a = parent::serviceGetSafeServices();
         return array_merge($a, array (
             'DeletePage' => '',
+            'ChangeAccountPassword' => '',
         ));
     }
 
@@ -186,6 +187,64 @@ class BxApiModule extends BxDolModule
                 'code' => 500,
                 'error' => 'Internal Error',
                 'desc' => isset($mixed['msg']) ? $mixed['msg'] : $mixed['message'],
+            );
+        }
+
+        return array('code' => 200);
+    }
+    
+    /**
+     * @page private_api API Private
+     * @section private_api_api_change_account_password /m/oauth2/com/change_account_password
+     * 
+     * Change account password
+     * 
+     * **Scopes:** 
+     * `api`
+     *
+     * **HTTP Method:** 
+     * `POST`
+     *
+     * **Request params:**
+     * - `password` - new password
+     *
+     * **Request header:**
+     * @code
+     * Authorization: Bearer 9802c4a34e1535d8c3b721604ee0e7fb04116c49
+     * @endcode
+     *
+     * **Response (success):**
+     * @code
+     * {  
+     *     "code": 200,
+     * }
+     * @endcode
+     *
+     * **Response (error):**
+     * @code
+     * {  
+     *    "error":"short error description here",
+     *    "error_description":"long error description here"
+     * }
+     * @endcode
+     */
+    public function serviceChangeAccountPassword()
+    {        
+        $sPassword = bx_get('password');
+        
+        if ($sPassword == '') {
+            return array(
+                'code' => 204,
+                'error' => 'No Content',
+                'desc' => 'Password can\'t be empty',
+            );
+        }
+        
+        $oAccount = BxDolAccount::getInstance();
+        if (!$oAccount->updatePassword($sPassword)){
+            return array(
+                'code' => 500,
+                'error' => 'Internal Error',
             );
         }
 
