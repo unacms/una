@@ -233,7 +233,24 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
         }
         return false;
     }
-    
+    /**
+     * Change account password
+     * @param  string  $sPassword - new password
+     * @param  int  $iAccountId  - optional account id
+     * @return true on success or false on error
+     */
+    public function updatePassword($sPassword, $iAccountId = false)
+    {
+        $sSalt = genRndSalt();
+        $sPasswordHash = encryptUserPwd($sPassword, $sSalt);
+        $iId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
+        if((int)BxDolAccountQuery::getInstance()->updatePassword($sPasswordHash, $sSalt, $iId) > 0) {
+            bx_alert('account', 'edited', $iId, BxDolAccount::getInstance()->id(), array('action' => 'reset_password'));
+            $this->doAudit($iId, '_sys_audit_action_account_reset_password');
+            return true;
+        }
+        return false;
+    }
     /**
      * Set account phone
      * @param  string  $sPhone - phone number

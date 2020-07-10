@@ -286,14 +286,8 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
         if(!$oAccount)
             return echoJson(array());
 
-        $sPwd = genRndPwd();
-        $sSalt = genRndSalt();
-        $sPasswordHash = encryptUserPwd($sPwd, $sSalt);
-
         $aRes = array();
-        if((int)BxDolAccountQuery::getInstance()->updatePassword($sPasswordHash, $sSalt, $iId) > 0) {
-            bx_alert('account', 'edited', $iId, BxDolAccount::getInstance()->id(), array('action' => 'reset_password'));
-
+        if (BxDolAccount::getInstance()->updatePassword(genRndPwd(), $iId)){
             $sPopupId = $this->_oModule->_oConfig->getHtmlIds('password_popup');
             $sPopupTitle = _t('_bx_accounts_form_display_account_settings_password_popup');
             $sPopupContent = $this->_oModule->_oTemplate->parseHtmlByName('reset_password.html', array(
@@ -304,8 +298,6 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
             ));
 
             $aRes = array('popup' => BxTemplStudioFunctions::getInstance()->popupBox($sPopupId, $sPopupTitle, $sPopupContent));
-            
-            $oAccount->doAudit($iId, '_sys_audit_action_account_reset_password');
         }
         else 
             $aRes = array('msg' => _t('_bx_accnt_grid_action_err_perform'));
