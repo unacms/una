@@ -27,6 +27,32 @@ class BxAdsFormsEntryHelper extends BxBaseModTextFormsEntryHelper
         return parent::getObjectFormAdd($sDisplay);
     }
 
+    public function viewDataEntry ($iContentId)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $mixedResult = parent::viewDataEntry ($iContentId);
+        if(!empty($mixedResult))
+            return $mixedResult;
+
+        $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
+
+        $sDisplay = false;
+        if(!empty($aContentInfo[$CNF['FIELD_CATEGORY']]) && ($sCategoryDisplay = $this->_oModule->getCategoryDisplay('view', $aContentInfo[$CNF['FIELD_CATEGORY']])) !== false)
+            $sDisplay = $sCategoryDisplay;
+
+        $oForm = $this->getObjectFormView($sDisplay);
+        if(!$oForm)
+            return '';
+
+        $oForm->initChecker($aContentInfo);
+
+        if(!empty($CNF['FIELD_TEXT']) &&  !$oForm->isInputVisible($CNF['FIELD_TEXT']))
+            return '';
+
+        return $this->_oModule->_oTemplate->entryText($aContentInfo);
+    }
+
     public function onDataAddAfter($iAccountId, $iContentId)
     {
         $s = parent::onDataAddAfter($iAccountId, $iContentId);
