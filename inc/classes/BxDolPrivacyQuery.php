@@ -172,8 +172,6 @@ class BxDolPrivacyQuery extends BxDolDb
 
     public function getGroupCustom($aParams)
     {
-        $CNF = &$this->_oConfig->CNF;
-
         $sDiv = ',';
     	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
 

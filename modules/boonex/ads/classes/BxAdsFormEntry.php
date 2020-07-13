@@ -92,16 +92,18 @@ class BxAdsFormEntry extends BxBaseModTextFormEntry
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $bValues = $aValues && !empty($aValues['id']);
-        $aContentInfo = $bValues ? $this->_oModule->_oDb->getContentInfoById($aValues['id']) : false;
+        $aContentInfo = array();
+        if($aValues && !empty($aValues['id']))
+            $aContentInfo = $this->_oModule->_oDb->getContentInfoById($aValues['id']);
 
-        $this->_initCategoryFields($aContentInfo[$CNF['FIELD_CATEGORY']]);
+        if(!empty($aContentInfo) && is_array($aContentInfo)) {
+            $this->_initCategoryFields($aContentInfo[$CNF['FIELD_CATEGORY']]);
 
-        if(isset($CNF['FIELD_COVER']) && isset($this->aInputs[$CNF['FIELD_COVER']])) {
-            if($bValues)
-                $this->aInputs[$CNF['FIELD_COVER']]['content_id'] = $aValues['id'];
+            if(isset($CNF['FIELD_COVER']) && isset($this->aInputs[$CNF['FIELD_COVER']])) {
+                $this->aInputs[$CNF['FIELD_COVER']]['content_id'] = $aContentInfo[$CNF['FIELD_ID']];
 
-            $this->aInputs[$CNF['FIELD_COVER']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName($this->_sGhostTemplateCover, $this->_getCoverGhostTmplVars($aContentInfo));
+                $this->aInputs[$CNF['FIELD_COVER']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName($this->_sGhostTemplateCover, $this->_getCoverGhostTmplVars($aContentInfo));
+            }
         }
 
         parent::initChecker ($aValues, $aSpecificValues);
