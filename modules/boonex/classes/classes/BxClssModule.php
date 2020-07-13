@@ -457,6 +457,11 @@ class BxClssModule extends BxBaseModTextModule
         return $this->_serviceBrowseQuick($a, $iStart, $iLimit, $aAdditionalParams);
     }
 
+    public function serviceBrowseNextInContext ($iContextProfileId = 0, $aParams = array())
+    {
+        return $this->_serviceBrowseWithParam ('next_in_context', 'profile_id', $iContextProfileId, $aParams);
+    }
+
     public function serviceIsClassCompleted ($iClassId, $iProfileId = 0)
     {
         if (!$iProfileId)

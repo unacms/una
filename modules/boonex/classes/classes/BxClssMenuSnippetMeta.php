@@ -17,6 +17,30 @@ class BxClssMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
 
         parent::__construct($aObject, $oTemplate);
     }
+
+    protected function _getMenuItemDateStart($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if ($this->_aContentInfo[$CNF['FIELD_START_DATE']])
+            return $this->getUnitMetaItemText(bx_time_js($this->_aContentInfo[$CNF['FIELD_START_DATE']], BX_FORMAT_DATE), array(
+                'class' => 'col-green1-dark',
+            ));
+        else
+            return '';
+    }
+
+    protected function _getMenuItemDateEnd($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if ($this->_aContentInfo[$CNF['FIELD_END_DATE']])
+            return $this->getUnitMetaItemText(bx_time_js($this->_aContentInfo[$CNF['FIELD_END_DATE']], BX_FORMAT_DATE), array(
+                'class' => 'col-red1',
+            ));
+        else
+            return '';
+    }
 }
 
 /** @} */

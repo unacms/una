@@ -138,6 +138,8 @@
     <string name="_bx_classes_page_block_title_entry_students_completed_class"><![CDATA[Passed students]]></string>
     <string name="_bx_classes_page_block_title_entry_students_not_completed_class"><![CDATA[Not passed students]]></string>
     <string name="_bx_classes_page_block_title_group_entries"><![CDATA[Classes]]></string>
+    <string name="_bx_classes_page_block_title_entries_current_classes_in_context"><![CDATA[Current classes]]></string>
+    <string name="_bx_classes_page_block_title_group_entries_current"><![CDATA[Current classes]]></string>
 
     <string name="_bx_classes_menu_title_entry_attachments"><![CDATA[Form Attachments]]></string>
     <string name="_bx_classes_menu_set_title_entry_attachments"><![CDATA[Form Attachments]]></string>
@@ -191,6 +193,8 @@
 	<string name="_bx_classes_menu_item_title_manage_my"><![CDATA[My Classes]]></string>
 	<string name="_bx_classes_menu_item_title_manage_all"><![CDATA[All Classes]]></string>
 	<string name="_bx_classes_menu_item_title_complete_class"><![CDATA[Mark as Completed]]></string>
+	<string name="_bx_classes_menu_item_title_sm_date_start"><![CDATA[Start Date]]></string>
+	<string name="_bx_classes_menu_item_title_sm_date_end"><![CDATA[Due Date]]></string>
 
 	<string name="_bx_classes_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
 	<string name="_bx_classes_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
