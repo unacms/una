@@ -56,8 +56,8 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:13:\"entity_author\";}', 0, 0, 0, 1),
 ('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_prev_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_classes";s:6:"method";s:10:"prev_class";}', 0, 0, 1, 2),
 ('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 3),
-('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_next_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_classes";s:6:"method";s:10:"next_class";}', 0, 0, 1, 4),
-('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:18:\"entity_all_actions\";}', 0, 0, 1, 5),
+('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:18:\"entity_all_actions\";}', 0, 0, 1, 4),
+('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_next_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_classes";s:6:"method";s:10:"next_class";}', 0, 0, 1, 5),
 ('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:14:\"entity_actions\";}', 0, 0, 0, 6),
 ('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_social_sharing', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:21:\"entity_social_sharing\";}', 0, 0, 0, 7),
 ('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_attachments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:18:\"entity_attachments\";}', 0, 0, 1, 8),
@@ -133,8 +133,9 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_classes_view', 'bx_classes', '_bx_classes_menu_set_title_view_entry', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_classes_view', 'bx_classes', 'edit-class', '_bx_classes_menu_item_title_system_edit_entry', '_bx_classes_menu_item_title_edit_entry', 'page.php?i=edit-class&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 1),
-('bx_classes_view', 'bx_classes', 'delete-class', '_bx_classes_menu_item_title_system_delete_entry', '_bx_classes_menu_item_title_delete_entry', 'page.php?i=delete-class&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 2);
+('bx_classes_view', 'bx_classes', 'complete-class', '', '_bx_classes_menu_item_title_complete_class', 'javascript:void(0);', 'bx_classes_mark_as_completed(''{content_id}'');', '', 'check', '', 2147483647, 1, 0, 1),
+('bx_classes_view', 'bx_classes', 'edit-class', '_bx_classes_menu_item_title_system_edit_entry', '_bx_classes_menu_item_title_edit_entry', 'page.php?i=edit-class&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 2),
+('bx_classes_view', 'bx_classes', 'delete-class', '_bx_classes_menu_item_title_system_delete_entry', '_bx_classes_menu_item_title_delete_entry', 'page.php?i=delete-class&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 3);
 
 
 -- MENU: all actions menu for view entry 
@@ -146,6 +147,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_classes_view_actions', 'bx_classes', '_sys_menu_set_title_view_actions', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
+('bx_classes_view_actions', 'bx_classes', 'complete-class', '', '_bx_classes_menu_item_title_complete_class', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 1),
 ('bx_classes_view_actions', 'bx_classes', 'edit-class', '_bx_classes_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 10),
 ('bx_classes_view_actions', 'bx_classes', 'delete-class', '_bx_classes_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 20),
 ('bx_classes_view_actions', 'bx_classes', 'set-badges', '_sys_menu_item_title_system_set_badges', '_sys_menu_item_title_set_badges', 'javascript:void(0)', 'bx_menu_popup(''sys_set_badges'', window, {}, {module: ''bx_classes'', content_id: {content_id}});', '', 'check-circle', '', '', 0, 2147483647, 'a:2:{s:6:"module";s:10:"bx_classes";s:6:"method";s:19:"is_badges_avaliable";}', 1, 0, 40),

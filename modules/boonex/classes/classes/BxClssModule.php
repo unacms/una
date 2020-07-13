@@ -17,6 +17,9 @@ define('BX_CLASSES_AVAIL_AFTER_START_DATE_PREV_CLASS_COMPLETED', 4);
 define('BX_CLASSES_AVAIL_BETWEEN_START_END_DATES', 5);
 define('BX_CLASSES_AVAIL_BETWEEN_START_END_DATES_PREV_CLASS_COMPLETED', 6);
 
+define('BX_CLASSES_COMPLETED_WHEN_VIEWED', 1);
+define('BX_CLASSES_COMPLETED_WHEN_REPLIED', 2);
+
 /**
  * Classes module
  */
@@ -34,6 +37,27 @@ class BxClssModule extends BxBaseModTextModule
             $CNF['FIELD_START_DATE'],
             $CNF['FIELD_END_DATE'],
         ));
+    }
+
+    public function actionMarkClassAsCompleted($iClassId = 0)
+    {
+        $iProfileId = bx_get_logged_profile_id();
+
+        if (!($aClass = $this->_oDb->getContentInfoById($iClassId))) {
+            echo _t('_sys_txt_not_found');
+            return;
+        }
+
+        $mixedMsg = $this->checkAllowedMarkAsCompleted($aClass, $iProfileId);
+        if (CHECK_ACTION_RESULT_ALLOWED !== $mixedMsg) {
+            echo $mixedMsg;
+            return;
+        }
+
+        if (!$this->_oDb->updateClassStatus($iClassId, $iProfileId, 'completed')) {
+            echo _t('_sys_txt_error_occured');
+            return;
+        }
     }
 
     public function actionReorderClasses($iProfileConextId = 0)
@@ -510,6 +534,34 @@ class BxClssModule extends BxBaseModTextModule
             return $this->serviceCheckAvailabilityForProfile ($aDataEntry, $iProfileId);
         else
             return $mixed;
+    }
+
+    public function checkAllowedMarkAsCompleted($aClass, $isPerformAction, $iProfileId = 0)
+    {
+        if (!$iProfileId)
+            $iProfileId = bx_get_logged_profile_id();
+
+        $mixedMsg = $this->checkAllowedViewForProfile($aClass, $iProfileId);
+        if (CHECK_ACTION_RESULT_ALLOWED !== $mixedMsg)
+            return $mixedMsg;
+
+
+        $a = array(
+            BX_CLASSES_COMPLETED_WHEN_VIEWED => '_bx_classes_txt_err_view_class_needed_before_completion',
+            BX_CLASSES_COMPLETED_WHEN_REPLIED => '_bx_classes_txt_err_reply_in_class_needed_before_completion',
+        );
+        if (isset($a[$aClass['completed_when']]) && !$this->_oDb->getClassStatus($aClass['id'], $iProfileId, (int)$aClass['completed_when']))
+            return _t($a[$aClass['completed_when']]);
+
+        return CHECK_ACTION_RESULT_ALLOWED;
+    }
+
+    public function checkAllowedViewMarkAsCompletedButton($aClass, $isPerformAction = false)
+    {
+        if ($this->serviceIsClassCompleted($aClass['id']))
+            return _t('_sys_txt_access_denied');
+        else
+            return CHECK_ACTION_RESULT_ALLOWED;
     }
 }
 

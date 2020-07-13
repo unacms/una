@@ -190,6 +190,7 @@
 	<string name="_bx_classes_menu_item_title_admt_classes"><![CDATA[Classes]]></string>
 	<string name="_bx_classes_menu_item_title_manage_my"><![CDATA[My Classes]]></string>
 	<string name="_bx_classes_menu_item_title_manage_all"><![CDATA[All Classes]]></string>
+	<string name="_bx_classes_menu_item_title_complete_class"><![CDATA[Mark as Completed]]></string>
 
 	<string name="_bx_classes_grid_filter_item_title_adm_select_one_filter1"><![CDATA[All Statuses]]></string>
 	<string name="_bx_classes_grid_filter_item_title_adm_active"><![CDATA[Active]]></string>
@@ -223,8 +224,8 @@
     <string name="_bx_classes_cmts_own_and_admins"><![CDATA[Own and admin comments are shown]]></string>
 
     <string name="_bx_classes_pre_lists_completed_when"><![CDATA[Class is completed when]]></string>
-    <string name="_bx_classes_completed_when_viewed"><![CDATA[Viewed]]></string>
-    <string name="_bx_classes_completed_when_replied"><![CDATA[Replied]]></string>
+    <string name="_bx_classes_completed_when_viewed"><![CDATA[Viewed and marked as completed]]></string>
+    <string name="_bx_classes_completed_when_replied"><![CDATA[Replied and marked as completed]]></string>
 
     <string name="_bx_classes_txt_all_entries_in"><![CDATA[<a href="{0}">All Classes in {1} ({2})</a>]]></string>
     <string name="_bx_classes_txt_all_entries_by"><![CDATA[{0} classes]]></string>
@@ -252,6 +253,8 @@
     <string name="_bx_classes_txt_err_not_avail_after_end_date"><![CDATA[Class isn't available after {0}]]></string>
     <string name="_bx_classes_txt_err_not_avail_before_prev_class_completed"><![CDATA[Class will be available after completing previous class - <a href="{0}">{1}</a>]]></string>
     <string name="_bx_classes_txt_err_modules_with_classes_cannot_be_deleted"><![CDATA[Modules with classes can't be deleted]]></string>
+    <string name="_bx_classes_txt_err_view_class_needed_before_completion"><![CDATA[Class need to be viewed before marking it as completed]]></string>
+    <string name="_bx_classes_txt_err_reply_in_class_needed_before_completion"><![CDATA[Reply in class comments is needed before marking it as completed]]></string>
 
     <string name="_bx_classes_txt_poll_view_answers"><![CDATA[poll]]></string>
     <string name="_bx_classes_txt_poll_view_results"><![CDATA[results]]></string>

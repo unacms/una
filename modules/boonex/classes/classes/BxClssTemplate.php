@@ -30,6 +30,30 @@ class BxClssTemplate extends BxBaseModTextTemplate
 
         return array($sPhotoGallery, $sPhotoGallery);
     }
+
+    public function getTitle($aData, $mixedProcessOutput = BX_DATA_TEXT)
+    {
+        $sTitle = parent::getTitle($aData, $mixedProcessOutput);
+
+        if ($this->_oModule->serviceIsClassCompleted($aData['id'])) {
+            $sStatusClass = 'bx-classes-class-status-completed';
+        }
+        else {
+            $sStatusClass = 'bx-classes-class-status-avail';
+        }
+
+        return $this->parseHtmlByName('classes_class_title.html', array(
+            'status' => $sStatusClass,
+            'bx_if:completed' => array(
+                'condition' => 'bx-classes-class-status-completed' == $sStatusClass,
+                'content' => array('title' => $sTitle),
+            ),
+            'bx_if:avail' => array(
+                'condition' => 'bx-classes-class-status-avail' == $sStatusClass,
+                'content' => array('title' => $sTitle),
+            ),
+        ));
+    }
 }
 
 /** @} */

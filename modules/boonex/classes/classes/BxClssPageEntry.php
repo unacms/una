@@ -30,6 +30,8 @@ class BxClssPageEntry extends BxBaseModTextPageEntry
 
     public function getCode ()
     {
+        $this->_oTemplate->addJs('main.js');
+
         $s = parent::getCode ();
 
         // mark class as viewed

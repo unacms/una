@@ -27,6 +27,7 @@
     display:none;
 }
 
+.bx-classes-class-status-completed b,
 .bx-classes-class-status-completed a {
     text-decoration: line-through;
 }

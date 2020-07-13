@@ -14,7 +14,12 @@
  */
 class BxClssDb extends BxBaseModTextDb
 {
+    /**
+     * Map of IDs from `bx_classes_completed_when` pre-defined values 
+     * to fields in `bx_classes_statuses` table
+     */
     protected $_aStatuses = array(
+        0 => 'completed',
         1 => 'viewed',
         2 => 'replied',
     );
@@ -131,10 +136,7 @@ class BxClssDb extends BxBaseModTextDb
 
     public function isClassCompleted($iClassId, $iStudentProfileId)
     {
-        if (!($aContentInfo = $this->getContentInfoById($iClassId)))
-            return false;
-
-        return $this->getClassStatus($iClassId, $iStudentProfileId, (int)$aContentInfo['completed_when']);
+        return $this->getClassStatus($iClassId, $iStudentProfileId, 'completed');
     }
 
     public function getClassStatus($iClassId, $iStudentProfileId, $mixedStatus)
@@ -212,13 +214,7 @@ class BxClssDb extends BxBaseModTextDb
         if (!$aContentInfo)
             return array();
 
-        $iCompletedWhen = (int)$aContentInfo['completed_when'];
-        if (!isset($this->_aStatuses[$iCompletedWhen]))
-            return array();
-
-        $sCompletedField = $this->_aStatuses[$iCompletedWhen];
-
-        $a = $this->getColumn("SELECT `student_profile_id` FROM `bx_classes_statuses` WHERE `class_id` = :class AND `$sCompletedField` != 0 LIMIT :start, :limit", array(
+        $a = $this->getColumn("SELECT `student_profile_id` FROM `bx_classes_statuses` WHERE `class_id` = :class AND `completed` != 0 LIMIT :start, :limit", array(
             'class' => $aContentInfo['id'],
             'start' => (int)$iStart,
             'limit' => (int)$iLimit,
