@@ -486,7 +486,7 @@ class BxClssModule extends BxBaseModTextModule
         if (!$iProfileId)
             $iProfileId = bx_get_logged_profile_id();
 
-        if (!($oProfileContext = BxDolProfile::getInstance(abs($aDataEntry['allow_view_to']))))
+        if ($aDataEntry['allow_view_to'] >= 0 || !($oProfileContext = BxDolProfile::getInstance(abs($aDataEntry['allow_view_to']))))
             return false;
         
         return bx_srv($oProfileContext->getModule(), 'is_admin', array($oProfileContext->id(), $iProfileId));
