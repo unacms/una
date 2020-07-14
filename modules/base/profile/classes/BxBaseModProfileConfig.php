@@ -50,6 +50,11 @@ class BxBaseModProfileConfig extends BxBaseModGeneralConfig
         return $this->_bRoles;
     }
 
+    public function isMultiRoles()
+    {
+        return !empty($this->CNF['PARAM_MMODE']) && getParam($this->CNF['PARAM_MMODE']) == BX_BASE_MOD_GROUPS_MMODE_MULTI_ROLES;
+    }
+
     public function getRoles()
     {
         if($this->_aRoles === false)

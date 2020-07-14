@@ -8,7 +8,9 @@
 	<string name="_bx_groups_option_per_page_browse"><![CDATA[Number of items per page]]></string>
     <string name="_bx_groups_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
     <string name="_bx_groups_option_searchable_fields"><![CDATA[Searchable fields]]></string>
-    <string name="_bx_groups_option_enable_paid_join"><![CDATA[Enable 'Paid Join']]></string>
+    <string name="_bx_groups_option_members_mode"><![CDATA[Special mode for group members]]></string>
+    <string name="_bx_groups_option_members_mode_multi_roles"><![CDATA[Multi Roles]]></string>
+    <string name="_bx_groups_option_members_mode_paid_join"><![CDATA[Paid Join]]></string>
 
 	<string name="_bx_groups_form_profile"><![CDATA[Groups]]></string>
 	<string name="_bx_groups_form_profile_display_add"><![CDATA[Add Group]]></string>

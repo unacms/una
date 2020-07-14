@@ -75,7 +75,8 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'PARAM_SEARCHABLE_FIELDS' => 'bx_groups_searchable_fields',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_groups_per_page_browse_showcase',
             'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_groups_per_page_browse_recommended',
-            'PARAM_PER_PAID_JOIN' => 'bx_groups_enable_paid_join',
+
+            'PARAM_MMODE' => 'bx_groups_members_mode',
             'PARAM_RECURRING_RESERVE' => 3, // 3 days for recurring payment to be registered
 
             // objects
@@ -185,6 +186,8 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
                 'txt_ntfs_join_request' => '_bx_groups_txt_ntfs_join_request',
                 'txt_ntfs_fan_added' => '_bx_groups_txt_ntfs_fan_added',
                 'txt_ntfs_timeline_post_common' => '_bx_groups_txt_ntfs_timeline_post_common',
+                'option_members_mode_multi_roles' => '_bx_groups_option_members_mode_multi_roles',
+                'option_members_mode_paid_join' => '_bx_groups_option_members_mode_paid_join',
                 'form_field_author' => '_bx_groups_form_entry_input_author',
                 'menu_item_title_befriend_sent' => '_bx_groups_menu_item_title_befriend_sent',
                 'menu_item_title_unfriend_cancel_request' => '_bx_groups_menu_item_title_unfriend_cancel_request',

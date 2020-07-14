@@ -218,28 +218,39 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
         return (int)$this->query("DELETE FROM `" . $this->_oConfig->CNF['TABLE_ADMINS'] . "` WHERE " . $this->arrayToSQL($aWhere, ' AND ')) > 0;
     }
 
-    public function setRole ($iGroupProfileId, $iProfileId, $iRole, $mixedPeriod = false, $sOrder = '')
+    public function setRole ($iGroupProfileId, $iProfileId, $mixedRole, $mixedPeriod = false, $sOrder = '')
     {
         $CNF = &$this->_oConfig->CNF;
 
-        $iNow = time();
+        if($this->_oConfig->isMultiRoles() && is_array($mixedRole)) {
+            if(count($mixedRole) != 1 || current($mixedRole) != 0) {
+                $iProfileRole = 0;
+
+                foreach($mixedRole as $iRole)
+                    $iProfileRole = $iProfileRole | pow(2, ($iRole - 1));
+
+                $mixedRole = $iProfileRole;
+            }
+            else 
+                $mixedRole = 0;
+        }
 
         $aBindings = array(
             'group_profile_id' => $iGroupProfileId,
             'fan_id' => $iProfileId,
-            'role' => $iRole,
-            'order' => $sOrder,
-            'added' => $iNow
+            'role' => $mixedRole,
+            'added' => time()
         );
+
         $sSetClause = "`group_profile_id` = :group_profile_id, `fan_id` = :fan_id, `role` = :role, `added` = :added";
 
-        $sSetExpired = ""; 
         if(!empty($mixedPeriod)) {
             if(is_numeric($mixedPeriod))
         	$mixedPeriod = array('period' => (int)$mixedPeriod, 'period_unit' => BX_BASE_MOD_GROUPS_PERIOD_UNIT_DAY);
 
             $aBindings['period'] = (int)$mixedPeriod['period'];
 
+            $sSetExpired = "";
             switch($mixedPeriod['period_unit']) {
                 case BX_BASE_MOD_GROUPS_PERIOD_UNIT_DAY:
                 case BX_BASE_MOD_GROUPS_PERIOD_UNIT_WEEK:
@@ -266,6 +277,12 @@ class BxBaseModGroupsDb extends BxBaseModProfileDb
 
             if(!empty($sSetExpired))
                 $sSetClause .= ", `expired` = UNIX_TIMESTAMP(" . $sSetExpired . ")";
+        }
+
+        if(!empty($sOrder)) {
+            $aBindings['order'] = $sOrder;
+            
+            $sSetClause .= ", `order` = :order";
         }
 
         return !$this->query("REPLACE INTO `" . $CNF['TABLE_ADMINS'] . "` SET " . $sSetClause, $aBindings) ? false : true;

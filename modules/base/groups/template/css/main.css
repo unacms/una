@@ -22,3 +22,21 @@
 .bx-search-result-block {
     text-align:center;
 }
+
+/*--- Set Role popup ---*/
+.bx-base-group-sr-role-cnt {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+}
+.bx-base-group-sr-role-cnt > * {
+    display: inline-block;
+}
+.bx-base-group-sr-role-cnt > input {
+    margin: 0;
+}
+.bx-base-group-sr-done .bx-btn {
+    display: inline-block;
+    float: none;
+}

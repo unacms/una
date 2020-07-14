@@ -57,6 +57,29 @@ class BxBaseModGroupsTemplate extends BxBaseModProfileTemplate
         return $aVars;
     }
 
+    public function getPopupSetRole($aRoles, $iProfileId, $iProfileRole)
+    {
+        $sJsObject = $this->_oConfig->getJsObject('main');
+        $sHtmlIdPrefix = str_replace('_', '-', $this->_oConfig->getName()) . '-role';
+
+        $aTmplVarsRoles = array();
+        foreach($aRoles as $iRole => $sRole)
+            $aTmplVarsRoles[] = array(
+                'id' => $sHtmlIdPrefix . '-' . $iRole, 
+                'value' => $iRole,
+                'onclick' => $sJsObject . '.onClickSetRoleMulti(this, ' . $iProfileId . ', ' . $iRole . ')',
+                'title' => $sRole, 
+                'bx_if:show_checked' => array(
+                    'condition' => $iRole != 0 && $iProfileRole & (1 << ($iRole - 1)),
+                    'content' => array()
+                )
+            );
+
+        return $this->parseHtmlByName('set_role_popup.html', array(
+            'bx_repeat:roles' => $aTmplVarsRoles
+        ));
+    }
+
     protected function _getUnitClass($aData, $sTemplateName = 'unit.html')
     {
         $sResult = '';

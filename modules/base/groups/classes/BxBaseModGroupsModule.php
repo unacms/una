@@ -9,6 +9,9 @@
  * @{
  */
 
+define('BX_BASE_MOD_GROUPS_MMODE_MULTI_ROLES', 'multi_roles');
+define('BX_BASE_MOD_GROUPS_MMODE_PAID_JOIN', 'paid_join');
+
 define('BX_BASE_MOD_GROUPS_ROLE_COMMON', 0);
 define('BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR', 1);
 define('BX_BASE_MOD_GROUPS_ROLE_MODERATOR', 2);
@@ -69,6 +72,17 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             }
             $this->_oDb->deleteInviteByKey($sKey, $iGroupProfileId);
         }   
+    }
+
+    public function serviceGetOptionsMembersMode()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return array(
+            array('key' => '', 'value' => _t('_None')),
+            array('key' => BX_BASE_MOD_GROUPS_MMODE_MULTI_ROLES, 'value' => _t($CNF['T']['option_members_mode_' . BX_BASE_MOD_GROUPS_MMODE_MULTI_ROLES])),
+            array('key' => BX_BASE_MOD_GROUPS_MMODE_PAID_JOIN, 'value' => _t($CNF['T']['option_members_mode_' . BX_BASE_MOD_GROUPS_MMODE_PAID_JOIN]))
+        );
     }
 
     public function serviceGetSearchResultUnit ($iContentId, $sUnitTemplate = '')
@@ -994,13 +1008,13 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return $this->_checkAllowedConnect ($aDataEntry, $isPerformAction, $this->_oConfig->CNF['OBJECT_CONNECTIONS'], false, true, false);
     }
 
-    protected function _checkAllowedActionByFan($sAction, $aDataEntry, $iPerformerId = 0)
+    protected function _checkAllowedActionByFan($sAction, $aDataEntry, $iProfileId = 0)
     {
         $CNF = &$this->_oConfig->CNF;
 
         $bRoles = $this->_oConfig->isRoles();
-        if(empty($iPerformerId))
-            $iPerformerId = bx_get_logged_profile_id();
+        if(empty($iProfileId))
+            $iProfileId = bx_get_logged_profile_id();
 
         $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$CNF['FIELD_ID']], $this->getName());
         if(!$oGroupProfile)
@@ -1008,24 +1022,32 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
         $iGroupProfileId = $oGroupProfile->id();
 
-        if(!$bRoles && $this->_oDb->isAdmin($iGroupProfileId, $iPerformerId, $aDataEntry))
+        if(!$bRoles && $this->_oDb->isAdmin($iGroupProfileId, $iProfileId, $aDataEntry))
             return CHECK_ACTION_RESULT_ALLOWED;
 
-        if($bRoles && $this->isAllowedActionByRole($sAction, $aDataEntry, $iGroupProfileId, $iPerformerId))
+        if($bRoles && $this->isAllowedActionByRole($sAction, $aDataEntry, $iGroupProfileId, $iProfileId))
             return CHECK_ACTION_RESULT_ALLOWED;
 
         return _t('_sys_txt_access_denied');
     }
 
-    public function isAllowedActionByRole($sAction, $aDataEntry, $iGroupProfileId, $iPerformerId)
+    public function isRole($iProfileRole, $iRole)
+    {
+        if(!$this->_oConfig->isMultiRoles())
+            return $iProfileRole == $iRole;
+        else 
+            return $iProfileRole & (1 << ($iRole - 1));
+    }
+
+    public function isAllowedActionByRole($sAction, $aDataEntry, $iGroupProfileId, $iProfileId)
     {
         $bResult = false;
 
-        $iRole = $this->_oDb->getRole($iGroupProfileId, $iPerformerId);
-        if(!empty($iRole))
+        $iProfileRole = $this->_oDb->getRole($iGroupProfileId, $iProfileId);
+        if(!empty($iProfileRole))
             switch($sAction) {
                 case BX_BASE_MOD_GROUPS_ACTION_MANAGE_ROLES:
-                    if($iRole == BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR)
+                    if($this->isRole($iProfileRole, BX_BASE_MOD_GROUPS_ROLE_ADMINISTRATOR))
                         $bResult = true;
                     break;
 
@@ -1039,8 +1061,8 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             'action' => $sAction,
             'content_profile_id' => $iGroupProfileId, 
             'content_info' => $aDataEntry, 
-            'profile_id' => $iPerformerId, 
-            'profile_role' => $iRole,
+            'profile_id' => $iProfileId, 
+            'profile_role' => $iProfileRole,
             'override_result' => &$bResult
         ));
 
@@ -1255,7 +1277,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return $this->_oDb->getRole($iGroupProfileId, $iFanProfileId);
     }
 
-    public function setRole($iGroupProfileId, $iFanProfileId, $iRole, $mixedPeriod = false, $sOrder = '')
+    public function setRole($iGroupProfileId, $iFanProfileId, $mixedRole, $mixedPeriod = false, $sOrder = '')
     {
         $CNF = &$this->_oConfig->CNF;
 
@@ -1270,15 +1292,15 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         if(!$oConnection->isConnected($iFanProfileId, $iGroupProfileId, true) && !($oConnection->addConnection($iFanProfileId, $iGroupProfileId) && $oConnection->addConnection($iGroupProfileId, $iFanProfileId)))
             return false;
 
-        if(!$this->_oDb->setRole($iGroupProfileId, $iFanProfileId, $iRole, $mixedPeriod, $sOrder))
+        if(!$this->_oDb->setRole($iGroupProfileId, $iFanProfileId, $mixedRole, $mixedPeriod, $sOrder))
             return false;
 
-        $this->onSetRole($iGroupProfileId, $iFanProfileId, $iRole);
+        $this->onSetRole($iGroupProfileId, $iFanProfileId, $mixedRole);
 
         return true;
     }
 
-    public function onSetRole($iGroupProfileId, $iFanProfileId, $iRole)
+    public function onSetRole($iGroupProfileId, $iFanProfileId, $mixedRole)
     {
         $CNF = &$this->_oConfig->CNF;
 
@@ -1292,7 +1314,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             sendMailTemplate($CNF['EMAIL_FAN_SET_ROLE'], 0, $iFanProfileId, array(
                 'EntryUrl' => $oGroupProfile->getUrl(),
                 'EntryTitle' => $oGroupProfile->getDisplayName(),
-                'Role' => $aRoles[$iRole]
+                'Role' => !is_array($mixedRole) ? $aRoles[(int)$mixedRole] : 'TODO: Add List of Roles'
             ), BX_EMAIL_NOTIFY);
 
         bx_alert($this->getName(), 'set_role', $aGroupProfileInfo[$CNF['FIELD_ID']], $iGroupProfileId, array(
@@ -1301,7 +1323,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             'fan_id' => $iFanProfileId,
 
             'content' => $aGroupProfileInfo, 
-            'role' => $iRole,
+            'role' => $mixedRole,
 
             'group_profile' => $iGroupProfileId, 
             'profile' => $iProfileId

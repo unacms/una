@@ -84,32 +84,38 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
         if(!$iId)
             return echoJson(array('msg' => _t('_sys_txt_error_occured')));
 
-        $sJsObject = $this->_oModule->_oConfig->getJsObject('main');
-        $sHtmlIdPrefix = str_replace('_', '-', $this->_sContentModule) . '-set-role-';
-
-        $aMenuItems = array();
-        foreach($this->_aRoles as $iRole => $sRole)
-            $aMenuItems[] = array(
-                'id' => $sHtmlIdPrefix . $iRole, 
-                'name' => $sHtmlIdPrefix . $iRole, 
-                'class' => '', 
-                'link' => 'javascript:void(0)', 
-                'onclick' => $sJsObject . '.onClickSetRole(' . $iId . ', ' . $iRole . ')',
-                'target' => '_self', 
-                'title' => $sRole, 
-                'active' => 1
-            );
-
-        if(empty($aMenuItems))
+        if(empty($this->_aRoles) || !is_array($this->_aRoles))
             return echoJson(array('msg' => _t('_sys_txt_error_occured')));
 
-        $oMenu = new BxTemplMenu(array('template' => 'menu_vertical.html', 'menu_id'=> $sHtmlIdPrefix . 'menu', 'menu_items' => $aMenuItems));
-
         $iRole = $this->_oModule->_oDb->getRole($this->_iGroupProfileId, $iId);
-        if(!empty($iRole))
-            $oMenu->setSelected('', $sHtmlIdPrefix . $iRole);
 
-        return echoJson(array('popup' => BxTemplFunctions::getInstance()->transBox($sHtmlIdPrefix . 'popup', $oMenu->getCode())));
+        if(!$this->_oModule->_oConfig->isMultiRoles()) {
+            $sJsObject = $this->_oModule->_oConfig->getJsObject('main');
+            $sHtmlIdPrefix = str_replace('_', '-', $this->_sContentModule) . '-set-role-';
+
+            $aMenuItems = array();
+            foreach($this->_aRoles as $iRole => $sRole)
+                $aMenuItems[] = array(
+                    'id' => $sHtmlIdPrefix . $iRole, 
+                    'name' => $sHtmlIdPrefix . $iRole, 
+                    'class' => '', 
+                    'link' => 'javascript:void(0)', 
+                    'onclick' => $sJsObject . '.onClickSetRole(' . $iId . ', ' . $iRole . ')',
+                    'target' => '_self', 
+                    'title' => $sRole, 
+                    'active' => 1
+                );            
+
+            $oMenu = new BxTemplMenu(array('template' => 'menu_vertical.html', 'menu_id'=> $sHtmlIdPrefix . 'menu', 'menu_items' => $aMenuItems));
+            if(!empty($iRole))
+                $oMenu->setSelected('', $sHtmlIdPrefix . $iRole);
+
+            $sPopupContent = $oMenu->getCode();
+        }
+        else
+            $sPopupContent = $this->_oModule->_oTemplate->getPopupSetRole($this->_aRoles, $iId, $iRole);
+
+        return echoJson(array('popup' => BxTemplFunctions::getInstance()->transBox(str_replace('_', '-', $this->_sContentModule) . '-set-role-popup', $sPopupContent)));
     }
 
     public function performActionSetRoleSubmit()
@@ -122,10 +128,10 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
 
         list($iId, $iViewedId) = $this->_prepareIds();
 
-        if(!$iId || bx_get('role') === false)
+        if(!$iId)
             return echoJson(array('msg' => _t('_sys_txt_error_occured')));
 
-        if(!$this->_oModule->setRole($this->_iGroupProfileId, $iId, (int)bx_get('role')))
+        if(!$this->_oModule->setRole($this->_iGroupProfileId, $iId, bx_process_input(bx_get('role'), BX_DATA_INT)))
             return echoJson(array('msg' => _t('_error occured')));
 
         echoJson(array('grid' => $this->getCode(false), 'blink' => $iId));
@@ -133,11 +139,22 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
 
     protected function _getCellRole($mixedValue, $sKey, $aField, $aRow)
     {
-        $mixedValue = '';
+        $iProfileRole = $this->_oModule->_oDb->getRole($this->_iGroupProfileId, $aRow[$this->_aOptions['field_id']]);
 
-        $iRole = $this->_oModule->_oDb->getRole($this->_iGroupProfileId, $aRow[$this->_aOptions['field_id']]);
-        if(!empty($iRole) && !empty($this->_aRoles[$iRole])) 
-            $mixedValue = $this->_aRoles[$iRole];
+        if(!empty($iProfileRole) && $this->_oModule->_oConfig->isMultiRoles()) {
+            $aRoles = array();
+            foreach($this->_aRoles as $iRole => $sRole) {
+                if(!$iRole)
+                    continue;
+
+                if($iProfileRole & (1 << ($iRole - 1)))
+                    $aRoles[] = $sRole;
+            }
+
+            $mixedValue = implode(', ', $aRoles);
+        }
+        else 
+            $mixedValue = !empty($this->_aRoles[$iProfileRole]) ? $this->_aRoles[$iProfileRole] : _t('_uknown');
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }

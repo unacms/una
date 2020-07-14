@@ -393,7 +393,7 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('bx_groups_cats', '6', 6, '_bx_groups_cat_Uncategorised', '');
 
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
-('bx_groups_roles', '_bx_groups_pre_lists_roles', 'bx_groups', '0');
+('bx_groups_roles', '_bx_groups_pre_lists_roles', 'bx_groups', '1');
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
 ('bx_groups_roles', '0', 1, '_bx_groups_role_regular', ''),
