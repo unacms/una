@@ -9,6 +9,8 @@
     <string name="_bx_spaces_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
     <string name="_bx_spaces_option_num_rss"><![CDATA[Количество элементов в ленте RSS]]></string>
     <string name="_bx_spaces_option_searchable_fields"><![CDATA[Поля для поиска]]></string>
+    <string name="_bx_spaces_option_members_mode"><![CDATA[Спец. режим для членов пространства]]></string>
+    <string name="_bx_spaces_option_members_mode_multi_roles"><![CDATA[Множественные роли]]></string>
 
     <string name="_bx_spaces_form_profile"><![CDATA[Пространства]]></string>
     <string name="_bx_spaces_form_profile_display_add"><![CDATA[Добавление пространства]]></string>

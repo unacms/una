@@ -76,6 +76,8 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_spaces_per_page_browse_showcase',
             'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_spaces_per_page_browse_recommended',
 
+            'PARAM_MMODE' => 'bx_spaces_members_mode',
+
             // objects
             'OBJECT_STORAGE' => 'bx_spaces_pics',
             'OBJECT_STORAGE_COVER' => 'bx_spaces_pics',
@@ -176,6 +178,7 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
                 'txt_ntfs_join_request' => '_bx_spaces_txt_ntfs_join_request',
                 'txt_ntfs_fan_added' => '_bx_spaces_txt_ntfs_fan_added',
                 'txt_ntfs_timeline_post_common' => '_bx_spaces_txt_ntfs_timeline_post_common',
+                'option_members_mode_multi_roles' => '_bx_spaces_option_members_mode_multi_roles',
                 'form_field_author' => '_bx_spaces_form_entry_input_author',
                 'menu_item_title_befriend_sent' => '_bx_spaces_menu_item_title_befriend_sent',
                 'menu_item_title_unfriend_cancel_request' => '_bx_spaces_menu_item_title_unfriend_cancel_request',

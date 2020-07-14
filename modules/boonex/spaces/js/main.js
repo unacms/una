@@ -26,4 +26,18 @@ BxSpacesMain.prototype.onClickSetRole = function(iFanProfileId, iRole) {
         glGrids[this._sObjNameGrid].actionWithId(iFanProfileId, 'set_role_submit', {role: iRole}, '', false, false);
 };
 
+BxSpacesMain.prototype.onClickSetRoleMulti = function(oElement, iFanProfileId, iRole) {
+    if(!glGrids[this._sObjNameGrid])
+        return;
+
+    var oSiblings = $(oElement).parents('.bx-base-group-sr-role:first').siblings();
+    if(iRole == 0)
+        oSiblings.find('input:checked').removeAttr('checked');
+    else
+        oSiblings.find("input[value = '0']:checked").removeAttr('checked');
+
+    var sRoles = $(oElement).parents('.bx-base-group-sr-roles:first').find('input:checked').serialize();
+    glGrids[this._sObjNameGrid].actionWithId(iFanProfileId, 'set_role_submit', {}, sRoles, false, false);
+};
+
 /** @} */
