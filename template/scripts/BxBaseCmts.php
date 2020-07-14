@@ -279,17 +279,19 @@ class BxBaseCmts extends BxDolCmts
         if((int)$aCmt['cmt_parent_id'] != 0) {
             $aParent = $this->getCommentRow($aCmt['cmt_parent_id']);
 
-            $oProfile = $this->_getAuthorObject($aParent['cmt_author_id']);
-            $sParAuthorName = $oProfile->getDisplayName();
-            $sParAuthorUnit = $oProfile->getUnit(0, array('template' => array('name' => 'unit_wo_info_links', 'size' => 'icon')));
+            if(!empty($aParent) && is_array($aParent)) {
+                $oProfile = $this->_getAuthorObject($aParent['cmt_author_id']);
+                $sParAuthorName = $oProfile->getDisplayName();
+                $sParAuthorUnit = $oProfile->getUnit(0, array('template' => array('name' => 'unit_wo_info_links', 'size' => 'icon')));
 
-            $aTmplReplyTo = array(
-                'style_prefix' => $this->_sStylePrefix,
-                'par_cmt_link' => $this->getItemUrl($aCmt['cmt_parent_id']),
-            	'par_cmt_title' => bx_html_attribute(_t('_in_reply_to_x', $sParAuthorName)),
-                'par_cmt_author' => $sParAuthorName,
-                'par_cmt_author_unit' => $sParAuthorUnit
-            );
+                $aTmplReplyTo = array(
+                    'style_prefix' => $this->_sStylePrefix,
+                    'par_cmt_link' => $this->getItemUrl($aCmt['cmt_parent_id']),
+                    'par_cmt_title' => bx_html_attribute(_t('_in_reply_to_x', $sParAuthorName)),
+                    'par_cmt_author' => $sParAuthorName,
+                    'par_cmt_author_unit' => $sParAuthorUnit
+                );
+            }
         }
 
         $sReplies = '';
@@ -917,14 +919,21 @@ class BxBaseCmts extends BxDolCmts
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
             $iCmtAuthorId = $this->_getAuthorId();
-            $iCmtParentId = $oForm->getCleanValue('cmt_parent_id');
+            $iCmtParentId = (int)$oForm->getCleanValue('cmt_parent_id');
             $sCmtText = $oForm->getCleanValue('cmt_text');
+
+            $aParent = array();
+            if($iCmtParentId > 0) {
+                $aParent = $this->getCommentRow($iCmtParentId);
+                if(empty($aParent) || !is_array($aParent)) {
+                    $iCmtParentId = 0;
+                    $oForm->setSubmittedValue('cmt_parent_id', $iCmtParentId, $oForm->aFormAttrs['method']);
+                }
+            }
 
             $iLevel = 0;
             $iCmtVisualParentId = 0;
-            if((int)$iCmtParentId > 0) {
-                $aParent = $this->getCommentRow($iCmtParentId);
-
+            if($iCmtParentId > 0) {
                 $iLevel = (int)$aParent['cmt_level'] + 1;
                 $iCmtVisualParentId = $iLevel > $this->getMaxLevel() ? $aParent['cmt_vparent_id'] : $iCmtParentId;
             }
@@ -936,7 +945,7 @@ class BxBaseCmts extends BxDolCmts
                 if($this->isAttachImageEnabled())
                     $oForm->processImages($this, 'cmt_image', $iCmtUniqId, $iCmtId, $iCmtAuthorId, true);
 
-                if($iCmtParentId) {
+                if($iCmtParentId > 0) {
                     $this->_oQuery->updateRepliesCount($iCmtParentId, 1);
 
                     if(!BxDolModuleQuery::getInstance()->isEnabledByName('bx_notifications'))
@@ -945,7 +954,7 @@ class BxBaseCmts extends BxDolCmts
 
                 $this->_triggerComment();
 
-                if($bCmtParentId)
+                if($iCmtParentId > 0)
                     $this->isReplyAllowed($iCmtParentId, true);
                 else
                     $this->isPostAllowed(true);
