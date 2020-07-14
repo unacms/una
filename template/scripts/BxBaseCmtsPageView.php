@@ -13,16 +13,21 @@ class BxBaseCmtsPageView extends BxTemplPage
     {
         parent::__construct($aObject, $oTemplate);
         
-        if(empty($sSystem) && ($sSystem = bx_get('sys')) !== false)
-            $sSystem = bx_process_input($sSystem);
+        $sSystem = bx_get('sys');
+        $sSystem = $sSystem !== false ? $sSystem = bx_process_input($sSystem) : '';
 
-        if(empty($iObjectId) && ($iObjectId = bx_get('id')) !== false)
-            $iObjectId = bx_process_input($iObjectId, BX_DATA_INT);
+        $iObjectId = bx_get('id');
+        $iObjectId = $iObjectId !== false ? bx_process_input($iObjectId, BX_DATA_INT) : 0;
 
-        if(empty($iCommentId) && ($iCommentId = bx_get('cmt_id')) !== false)
-            $iCommentId = bx_process_input($iCommentId, BX_DATA_INT);
+        $iCommentId = bx_get('cmt_id');
+        $iCommentId = $iCommentId !== false ? bx_process_input($iCommentId, BX_DATA_INT) : 0;
+
+        if(!$sSystem || !$iObjectId)
+            return;
 
         $oCmts = BxDolCmts::getObjectInstance($sSystem, $iObjectId, true);
+        if(!$oCmts)
+            return;
 
         $sObjectTitle = bx_process_output(strip_tags($oCmts->getObjectTitle($iObjectId)));
         $sObjectUrl = $oCmts->getBaseUrl();
