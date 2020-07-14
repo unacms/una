@@ -143,8 +143,9 @@ class BxReviewsModule extends BxBaseModTextModule
         }
 
         bx_alert('system', 'profiles_search', 0, 0, array(
-           'term' => $sTerm,
-           'result' => &$aResult
+            'term' => $sTerm,
+            'result' => &$aResult,
+            'module' => $this->_aModule['name'],
         ));
 
         header('Content-Type:text/javascript; charset=utf-8');
