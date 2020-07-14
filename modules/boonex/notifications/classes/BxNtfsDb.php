@@ -166,9 +166,9 @@ class BxNtfsDb extends BxBaseModNotificationsDb
                     $sJoinClauseS2U = " LEFT JOIN `{$this->_sTableSettings2Users}` ON `{$this->_sTableSettings}`.`id`=`{$this->_sTableSettings2Users}`.`setting_id` ";
                     if(!empty($aParams['owner_id']))
                         $sJoinClauseS2U .= $this->prepareAsString("AND `{$this->_sTableSettings2Users}`.`user_id`=? ", $aParams['owner_id']);
-                    $sJoinClauseS2U .= "AND (ISNULL(`{$this->_sTableSettings2Users}`.`active`) OR `{$this->_sTableSettings2Users}`.`active`='1') ";
 
                     $sJoinClause .= $sJoinClauseS2U;
+                    $sWhereClause .= "AND (ISNULL(`{$this->_sTableSettings2Users}`.`active`) OR `{$this->_sTableSettings2Users}`.`active`='1') ";
 
                     $sWhereClause .= $this->prepareAsString("AND `{$this->_sTable}`.`owner_id`<>`{$this->_sTable}`.`object_owner_id` AND ((`{$this->_sTable}`.`owner_id`=? AND `{$this->_sTable}`.`object_privacy_view`<0 AND `{$this->_sTable}`.`owner_id`=ABS(`{$this->_sTable}`.`object_privacy_view`)) OR `{$this->_sTable}`.`object_owner_id`=?) ", $aParams['owner_id'], $aParams['owner_id']);
                     break;
@@ -190,9 +190,9 @@ class BxNtfsDb extends BxBaseModNotificationsDb
                     $sJoinClauseS2U = " LEFT JOIN `{$this->_sTableSettings2Users}` ON `{$this->_sTableSettings}`.`id`=`{$this->_sTableSettings2Users}`.`setting_id` ";
                     if(!empty($aParams['owner_id']))
                         $sJoinClauseS2U .= $this->prepareAsString("AND `{$this->_sTableSettings2Users}`.`user_id`=? ", $aParams['owner_id']);
-                    $sJoinClauseS2U .= "AND (ISNULL(`{$this->_sTableSettings2Users}`.`active`) OR `{$this->_sTableSettings2Users}`.`active`='1') ";
 
                     $sJoinClause .= $sJoinClauseS2U;
+                    $sWhereClause .= "AND (ISNULL(`{$this->_sTableSettings2Users}`.`active`) OR `{$this->_sTableSettings2Users}`.`active`='1') ";
                     break;
 
                 case BX_NTFS_TYPE_OBJECT_OWNER_AND_CONNECTIONS:
@@ -227,9 +227,9 @@ class BxNtfsDb extends BxBaseModNotificationsDb
                     $sJoinClauseS2U = " LEFT JOIN `{$this->_sTableSettings2Users}` ON `{$this->_sTableSettings}`.`id`=`{$this->_sTableSettings2Users}`.`setting_id` ";
                     if(!empty($aParams['owner_id']))
                         $sJoinClauseS2U .= $this->prepareAsString("AND `{$this->_sTableSettings2Users}`.`user_id`=? ", $aParams['owner_id']);
-                    $sJoinClauseS2U .= "AND (ISNULL(`{$this->_sTableSettings2Users}`.`active`) OR `{$this->_sTableSettings2Users}`.`active`='1') ";
 
                     $sJoinClause .= $sJoinClauseS2U;
+                    $sWhereClause .= "AND (ISNULL(`{$this->_sTableSettings2Users}`.`active`) OR `{$this->_sTableSettings2Users}`.`active`='1') ";
 
                     $sWhereClause .= "AND ((" . $sWhereClauseObjectOwner . ") || (" . $sWhereClauseConnections . ")) ";
                     break;
