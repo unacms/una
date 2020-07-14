@@ -2113,7 +2113,7 @@ class BxBaseModGeneralModule extends BxDolModule
     	return bx_get_logged_profile_id();
     }
 
-	public function getProfileInfo($iUserId = 0)
+    public function getProfileInfo($iUserId = 0)
     {
         $oProfile = $this->getObjectUser($iUserId);
 
@@ -2122,16 +2122,19 @@ class BxBaseModGeneralModule extends BxDolModule
             $oAccount = $oProfile->getAccountObject();
         $bAccount = !empty($oAccount);
 
+        if(!$bAccount)
+            $oProfile = BxDolProfileUndefined::getInstance();
+
         return array(
-        	'id' => $oProfile->id(),
+            'id' => $oProfile->id(),
             'name' => $oProfile->getDisplayName(),
-        	'email' => $bAccount ? $oAccount->getEmail() : '',
+            'email' => $bAccount ? $oAccount->getEmail() : '',
             'link' => $oProfile->getUrl(),
             'icon' => $oProfile->getIcon(),
-        	'thumb' => $oProfile->getThumb(),
-        	'avatar' => $oProfile->getAvatar(),
+            'thumb' => $oProfile->getThumb(),
+            'avatar' => $oProfile->getAvatar(),
             'unit' => $oProfile->getUnit(),
-        	'active' => $oProfile->isActive(),
+            'active' => $oProfile->isActive(),
         );
     }
     
