@@ -27,7 +27,7 @@ function BxAlbumsMain(oOptions) {
 BxAlbumsMain.prototype.init = function() {
     $('.bx-albums-unit-images').flickity({
         cellSelector: '.bx-albums-unit-image',
-        cellAlign: 'center',
+        cellAlign: 'left',
         imagesLoaded: true,
         wrapAround: true,
         pageDots: false
