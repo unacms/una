@@ -30,6 +30,11 @@ class BxClssMenuViewActions extends BxBaseModTextMenuViewActions
     {
         return $this->_getMenuItemByNameActions($aItem);
     }
+
+    protected function _getMenuItemCompleteClass($aItem)
+    {
+        return $this->_getMenuItemByNameActions($aItem);
+    }
 }
 
 /** @} */

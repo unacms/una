@@ -56,8 +56,8 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_author', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:13:\"entity_author\";}', 0, 0, 0, 1),
 ('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_prev_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_classes";s:6:"method";s:10:"prev_class";}', 0, 0, 1, 2),
 ('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_text', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 3),
-('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_next_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_classes";s:6:"method";s:10:"next_class";}', 0, 0, 1, 4),
-('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:18:\"entity_all_actions\";}', 0, 0, 1, 5),
+('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:18:\"entity_all_actions\";}', 0, 0, 1, 4),
+('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_next_entry', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_classes";s:6:"method";s:10:"next_class";}', 0, 0, 1, 5),
 ('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:14:\"entity_actions\";}', 0, 0, 0, 6),
 ('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_social_sharing', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:21:\"entity_social_sharing\";}', 0, 0, 0, 7),
 ('bx_classes_view_entry', 2, 'bx_classes', '', '_bx_classes_page_block_title_entry_attachments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:10:\"bx_classes\";s:6:\"method\";s:18:\"entity_attachments\";}', 0, 0, 1, 8),
@@ -86,7 +86,8 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 ('bx_classes_context', 'classes-context', '_bx_classes_page_title_sys_entries_in_context', '_bx_classes_page_title_entries_in_context', 'bx_classes', 5, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxClssPageAuthor', 'modules/boonex/classes/classes/BxClssPageAuthor.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_classes_context', 1, 'bx_classes', '_bx_classes_page_block_title_sys_entries_in_context', '_bx_classes_page_block_title_entries_in_context', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_classes";s:6:"method";s:18:"classes_in_context";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 0, 1, 1);
+('bx_classes_context', 1, 'bx_classes', '', '_bx_classes_page_block_title_entries_current_classes_in_context', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_classes";s:6:"method";s:22:"browse_next_in_context";s:6:"params";a:2:{s:18:"context_profile_id";s:12:"{profile_id}";i:0;a:1:{s:13:"empty_message";b:0;}}}', 0, 0, 0, 1),
+('bx_classes_context', 1, 'bx_classes', '_bx_classes_page_block_title_sys_entries_in_context', '_bx_classes_page_block_title_entries_in_context', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_classes";s:6:"method";s:18:"classes_in_context";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 0, 1, 2);
 
 -- PAGE: module manage own
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -105,6 +106,7 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 -- PAGES: add page block to profiles modules (trigger* page objects are processed separately upon modules enable/disable)
 SET @iPBCellGroup = 4;
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
+('trigger_page_group_view_entry', @iPBCellGroup, 'bx_classes', '_bx_classes_page_block_title_group_entries_current', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_classes";s:6:"method";s:22:"browse_next_in_context";s:6:"params";a:2:{s:18:"context_profile_id";s:12:"{profile_id}";i:0;a:1:{s:13:"empty_message";b:0;}}}', 0, 0, 0, 0),
 ('trigger_page_group_view_entry', @iPBCellGroup, 'bx_classes', '_bx_classes_page_block_title_group_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:10:"bx_classes";s:6:"method";s:18:"classes_in_context";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 0, 0, 0);
 
 -- MENU: create post form attachments (link, photo, video, etc)
@@ -133,8 +135,9 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_classes_view', 'bx_classes', '_bx_classes_menu_set_title_view_entry', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('bx_classes_view', 'bx_classes', 'edit-class', '_bx_classes_menu_item_title_system_edit_entry', '_bx_classes_menu_item_title_edit_entry', 'page.php?i=edit-class&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 1),
-('bx_classes_view', 'bx_classes', 'delete-class', '_bx_classes_menu_item_title_system_delete_entry', '_bx_classes_menu_item_title_delete_entry', 'page.php?i=delete-class&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 2);
+('bx_classes_view', 'bx_classes', 'complete-class', '', '_bx_classes_menu_item_title_complete_class', 'javascript:void(0);', 'bx_classes_mark_as_completed(''{content_id}'');', '', 'check', '', 2147483647, 1, 0, 1),
+('bx_classes_view', 'bx_classes', 'edit-class', '_bx_classes_menu_item_title_system_edit_entry', '_bx_classes_menu_item_title_edit_entry', 'page.php?i=edit-class&id={content_id}', '', '', 'pencil-alt', '', 2147483647, 1, 0, 2),
+('bx_classes_view', 'bx_classes', 'delete-class', '_bx_classes_menu_item_title_system_delete_entry', '_bx_classes_menu_item_title_delete_entry', 'page.php?i=delete-class&id={content_id}', '', '', 'remove', '', 2147483647, 1, 0, 3);
 
 
 -- MENU: all actions menu for view entry 
@@ -146,6 +149,7 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_classes_view_actions', 'bx_classes', '_sys_menu_set_title_view_actions', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
+('bx_classes_view_actions', 'bx_classes', 'complete-class', '', '_bx_classes_menu_item_title_complete_class', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 1),
 ('bx_classes_view_actions', 'bx_classes', 'edit-class', '_bx_classes_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 10),
 ('bx_classes_view_actions', 'bx_classes', 'delete-class', '_bx_classes_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 20),
 ('bx_classes_view_actions', 'bx_classes', 'set-badges', '_sys_menu_item_title_system_set_badges', '_sys_menu_item_title_set_badges', 'javascript:void(0)', 'bx_menu_popup(''sys_set_badges'', window, {}, {module: ''bx_classes'', content_id: {content_id}});', '', 'check-circle', '', '', 0, 2147483647, 'a:2:{s:6:"module";s:10:"bx_classes";s:6:"method";s:19:"is_badges_avaliable";}', 1, 0, 40),
@@ -184,11 +188,13 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
 ('bx_classes_snippet_meta', 'bx_classes', 'date', '_sys_menu_item_title_system_sm_date', '_sys_menu_item_title_sm_date', '', '', '', '', '', 2147483647, 1, 0, 1, 1),
-('bx_classes_snippet_meta', 'bx_classes', 'author', '_sys_menu_item_title_system_sm_author', '_sys_menu_item_title_sm_author', '', '', '', '', '', 2147483647, 1, 0, 1, 2),
+('bx_classes_snippet_meta', 'bx_classes', 'author', '_sys_menu_item_title_system_sm_author', '_sys_menu_item_title_sm_author', '', '', '', '', '', 2147483647, 0, 0, 1, 2),
 ('bx_classes_snippet_meta', 'bx_classes', 'category', '_sys_menu_item_title_system_sm_category', '_sys_menu_item_title_sm_category', '', '', '', '', '', 2147483647, 0, 0, 1, 3),
 ('bx_classes_snippet_meta', 'bx_classes', 'tags', '_sys_menu_item_title_system_sm_tags', '_sys_menu_item_title_sm_tags', '', '', '', '', '', 2147483647, 0, 0, 1, 4),
 ('bx_classes_snippet_meta', 'bx_classes', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 2147483647, 0, 0, 1, 5),
-('bx_classes_snippet_meta', 'bx_classes', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 2147483647, 0, 0, 1, 6);
+('bx_classes_snippet_meta', 'bx_classes', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 2147483647, 0, 0, 1, 6),
+('bx_classes_snippet_meta', 'bx_classes', 'date-start', '', '_bx_classes_menu_item_title_sm_date_start', '', '', '', '', '', 2147483647, 1, 0, 1, 7),
+('bx_classes_snippet_meta', 'bx_classes', 'date-end', '', '_bx_classes_menu_item_title_sm_date_end', '', '', '', '', '', 2147483647, 1, 0, 1, 8);
 
 -- MENU: profile stats
 SET @iNotifMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_profile_stats' AND `active` = 1 LIMIT 1);

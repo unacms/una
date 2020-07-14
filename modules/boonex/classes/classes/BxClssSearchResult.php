@@ -21,7 +21,7 @@ class BxClssSearchResult extends BxBaseModTextSearchResult
             'object_metatags' => 'bx_classes',
             'title' => _t('_bx_classes_page_title_browse'),
             'table' => 'bx_classes_classes',
-            'ownFields' => array('id', 'title', 'text', 'thumb', 'author', 'added', 'avail'),
+            'ownFields' => array('id', 'title', 'text', 'thumb', 'author', 'added', 'avail', 'allow_view_to', 'start_date', 'end_date'),
             'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
@@ -62,6 +62,34 @@ class BxClssSearchResult extends BxBaseModTextSearchResult
             case 'author':
                 if(!$this->_updateCurrentForAuthor($sMode, $aParams, $oProfileAuthor))
                     $this->isError = true;
+                break;
+
+            case 'next_in_context':
+                $aParams['per_page'] = 1;
+
+                $this->aCurrent['sorting'] = 'order';
+                $this->aCurrent['restriction']['next_in_context1'] = array(
+                    'field' => $CNF['FIELD_START_DATE'],
+                    'operator' => '<=',
+                    'value' => time(),
+                );
+                $this->aCurrent['restriction']['next_in_context2'] = array(
+                    'field' => $CNF['FIELD_END_DATE'],
+                    'operator' => '>=',
+                    'value' => time(),
+                );
+                $this->aCurrent['join']['modules'] = array(
+                    'type' => 'INNER',
+                    'table' => 'bx_classes_modules',
+                    'mainField' => 'module_id',
+                    'onField' => 'id',
+                    'joinFields' => array(),
+                );
+
+                $aParams['context'] = $aParams['next_in_context'];
+                if(!$this->_updateCurrentForContext($sMode, $aParams, $oProfileAuthor))
+                    $this->isError = true;
+
                 break;
 
             case 'context':
@@ -124,6 +152,16 @@ class BxClssSearchResult extends BxBaseModTextSearchResult
 
         $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
     }
+
+    function getAlterOrder()
+    {
+        $aSql = parent::getAlterOrder();
+        if ('order' == $this->aCurrent['sorting']) {
+            $aSql['order'] = ' ORDER BY `bx_classes_modules`.`order`*1000000 + `bx_classes_classes`.`order` ASC';
+        }
+        return $aSql;
+    }
+
 }
 
 /** @} */

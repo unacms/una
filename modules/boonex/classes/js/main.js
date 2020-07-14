@@ -8,6 +8,17 @@
  * @{
  */
 
+function bx_classes_mark_as_completed (iClassId)
+{
+    var sActionUrl = sUrlRoot + 'modules/index.php?r=classes/mark_class_as_completed/' + iClassId;
+    $.post(sActionUrl, function (sData) {
+        if (sData.length)
+            bx_alert(sData);
+        else
+            document.location.reload();
+    });
+}
+
 function bx_classes_show_module_add_form(iContextProfileId)
 {
     var sActionUrl = sUrlRoot + 'modules/index.php?r=classes/add_module/' + iContextProfileId + '/html';

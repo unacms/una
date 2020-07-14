@@ -55,6 +55,7 @@ CREATE TABLE IF NOT EXISTS `bx_classes_statuses` (
   `student_profile_id` int(11) NOT NULL,
   `viewed` int(11) NOT NULL,
   `replied` int(11) NOT NULL,
+  `completed` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE `class_student` (`class_id`,`student_profile_id`)
 );
