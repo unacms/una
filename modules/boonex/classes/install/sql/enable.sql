@@ -193,8 +193,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_classes_snippet_meta', 'bx_classes', 'tags', '_sys_menu_item_title_system_sm_tags', '_sys_menu_item_title_sm_tags', '', '', '', '', '', 2147483647, 0, 0, 1, 4),
 ('bx_classes_snippet_meta', 'bx_classes', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 2147483647, 0, 0, 1, 5),
 ('bx_classes_snippet_meta', 'bx_classes', 'comments', '_sys_menu_item_title_system_sm_comments', '_sys_menu_item_title_sm_comments', '', '', '', '', '', 2147483647, 0, 0, 1, 6),
-('bx_classes_snippet_meta', 'bx_classes', 'date-start', '', '', '_bx_classes_menu_item_title_sm_date_start', '', '', '', '', 2147483647, 1, 0, 1, 7),
-('bx_classes_snippet_meta', 'bx_classes', 'date-end', '', '', '_bx_classes_menu_item_title_sm_date_end', '', '', '', '', 2147483647, 1, 0, 1, 8);
+('bx_classes_snippet_meta', 'bx_classes', 'date-start', '', '_bx_classes_menu_item_title_sm_date_start', '', '', '', '', '', 2147483647, 1, 0, 1, 7),
+('bx_classes_snippet_meta', 'bx_classes', 'date-end', '', '_bx_classes_menu_item_title_sm_date_end', '', '', '', '', '', 2147483647, 1, 0, 1, 8);
 
 -- MENU: profile stats
 SET @iNotifMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_profile_stats' AND `active` = 1 LIMIT 1);
