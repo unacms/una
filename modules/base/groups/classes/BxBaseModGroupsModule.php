@@ -1031,14 +1031,6 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return _t('_sys_txt_access_denied');
     }
 
-    public function isRole($iProfileRole, $iRole)
-    {
-        if(!$this->_oConfig->isMultiRoles())
-            return $iProfileRole == $iRole;
-        else 
-            return $iProfileRole & (1 << ($iRole - 1));
-    }
-
     public function isAllowedActionByRole($sAction, $aDataEntry, $iGroupProfileId, $iProfileId)
     {
         $bResult = false;
@@ -1058,6 +1050,7 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         // call alert to allow custom checks
         bx_alert('system', 'check_allowed_action_by_role', 0, 0, array(
             'module' => $this->getName(), 
+            'multi_roles' => $this->_oConfig->isMultiRoles(),
             'action' => $sAction,
             'content_profile_id' => $iGroupProfileId, 
             'content_info' => $aDataEntry, 
@@ -1067,6 +1060,19 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         ));
 
         return $bResult;
+    }
+
+    public function isRole($iProfileRole, $iRole)
+    {
+        if(!$this->_oConfig->isMultiRoles())
+            return $iProfileRole == $iRole;
+        else 
+            return $iProfileRole & (1 << ($iRole - 1));
+    }
+
+    public function serviceIsRole($iProfileRole, $iRole)
+    {
+        return $this->isRole($iProfileRole, $iRole);
     }
 
     public function checkAllowedManageFans($mixedDataEntry, $isPerformAction = false)
