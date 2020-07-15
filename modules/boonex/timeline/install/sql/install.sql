@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_events` (
   `type` varchar(255) NOT NULL,
   `action` varchar(255) NOT NULL,
   `object_id` int(11) NOT NULL default '0',
+  `object_owner_id` int(11) NOT NULL default '0',
   `object_privacy_view` varchar(16) NOT NULL default '3',
   `content` text NOT NULL,
   `title` varchar(255) NOT NULL,
