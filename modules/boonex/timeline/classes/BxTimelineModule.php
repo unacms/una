@@ -2999,7 +2999,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if($oProfileOwner && $oProfileOwner->checkAllowedProfileView() !== CHECK_ACTION_RESULT_ALLOWED)
             return false;
 
-        return true;
+        $oPrivacy = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'));
+        if(!$oPrivacy) 
+            return true;
+
+        $oPrivacy->setTableFieldAuthor($this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? 'owner_id' : 'object_id');
+
+        return $oPrivacy->check($aEvent[$CNF['FIELD_ID']]);
     }
 
     public function isAllowedEdit($aEvent, $bPerform = false)
@@ -3303,7 +3309,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
             return $mixedResult;
 
-        return CHECK_ACTION_RESULT_ALLOWED;
+        return $this->checkAllowedView($aContentInfo, $isPerformAction);
     }
 
     public function checkAllowedCommentsPost ($aContentInfo, $isPerformAction = false)
