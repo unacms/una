@@ -2622,6 +2622,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $iId = $oForm->insert(array(
                 'owner_id' => $iOwnerId,
                 'object_id' => $iUserId,
+                'object_owner_id' => $iUserId,
                 'object_privacy_view' => $iObjectPrivacyView,
                 'content' => serialize($aContent),
                 'title' => $sTitle,

@@ -1059,21 +1059,32 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(empty($aResult) || empty($aResult['object_owner_id']) || empty($aResult['content']))
             return false;
 
-        list($sUserName) = $this->getModule()->getUserInfo($aResult['object_owner_id']);
-
         $sSample = !empty($aResult['sample']) ? $aResult['sample'] : '_bx_timeline_txt_sample';
-        if(empty($aEvent['title']) || empty($aEvent['description'])) {
+
+        $aUpdate = array(
+            'object_owner_id' => $aResult['object_owner_id']
+        );
+
+        //--- Update Title if empty.
+        if(empty($aEvent['title'])) {
             $sTitle = !empty($aResult['title']) ? $this->_oConfig->getTitle($aResult['title']) : _t($sSample);
+
+            $aUpdate['title'] = bx_process_input(strip_tags($sTitle));
+        }
+
+        //--- Update Description if empty.
+        if(empty($aEvent['description'])) {
+            list($sUserName) = $this->getModule()->getUserInfo($aResult['object_owner_id']);
 
             $sDescription = !empty($aResult['description']) ? $aResult['description'] : _t('_bx_timeline_txt_user_added_sample', $sUserName, _t($sSample));
             if($sDescription == '' && !empty($aResult['content']['text']))
                 $sDescription = $aResult['content']['text'];
 
-            $this->_oDb->updateEvent(array(
-                'title' => bx_process_input(strip_tags($sTitle)),
-                'description' => bx_process_input(strip_tags($sDescription))
-            ), array('id' => $aEvent['id']));
+            $aUpdate['description'] = bx_process_input(strip_tags($sDescription));
         }
+
+        if(!empty($aUpdate) && is_array($aUpdate)) 
+            $this->_oDb->updateEvent($aUpdate, array('id' => $aEvent['id']));
 
         return $aResult;
     }
