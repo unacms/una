@@ -166,7 +166,7 @@ class BxApiModule extends BxDolModule
         $oPage = BxDolPage::getObjectInstanceByURI($sUri);
         if (!$oPage) {
             return array(
-                'code' => 204,
+                'code' => 404,
                 'error' => 'No Content',
                 'desc' => 'Such page doesn\'t exist',
             );
@@ -234,7 +234,7 @@ class BxApiModule extends BxDolModule
         
         if ($sPassword == '') {
             return array(
-                'code' => 204,
+                'code' => 404,
                 'error' => 'No Content',
                 'desc' => 'Password can\'t be empty',
             );
