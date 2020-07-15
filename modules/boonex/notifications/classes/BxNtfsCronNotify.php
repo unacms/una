@@ -90,10 +90,12 @@ class BxNtfsCronNotify extends BxDolCron
         $aSubscribers = $oConnection->getConnectedInitiators($iOwner);
         if(!empty($aSubscribers) && is_array($aSubscribers)) {
             $oOwner = BxDolProfile::getInstance($iOwner);
-            $sSettingType = bx_srv($oOwner->getModule(), 'act_as_profile') ? BX_NTFS_STYPE_FOLLOW_MEMBER : BX_NTFS_STYPE_FOLLOW_CONTEXT;
+            if(!empty($oOwner)) {
+                $sSettingType = bx_srv($oOwner->getModule(), 'act_as_profile') ? BX_NTFS_STYPE_FOLLOW_MEMBER : BX_NTFS_STYPE_FOLLOW_CONTEXT;
 
-            foreach($aSubscribers as $iSubscriber) 
-                $this->_addRecipient($iSubscriber, $sSettingType, $aRecipients);
+                foreach($aSubscribers as $iSubscriber) 
+                    $this->_addRecipient($iSubscriber, $sSettingType, $aRecipients);
+            }
         }
 
         //--- Get recipients: Content owner.
