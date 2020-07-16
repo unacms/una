@@ -157,6 +157,38 @@ CREATE TABLE IF NOT EXISTS `bx_classes_videos_resized` (
   UNIQUE KEY `remote_id` (`remote_id`)
 );
 
+CREATE TABLE IF NOT EXISTS `bx_classes_sounds` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `profile_id` int(10) unsigned NOT NULL,
+  `remote_id` varchar(128) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `mime_type` varchar(128) NOT NULL,
+  `ext` varchar(32) NOT NULL,
+  `size` bigint(20) NOT NULL,
+  `added` int(11) NOT NULL,
+  `modified` int(11) NOT NULL,
+  `private` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `remote_id` (`remote_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_classes_sounds_resized` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `profile_id` int(10) unsigned NOT NULL,
+  `remote_id` varchar(128) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `mime_type` varchar(128) NOT NULL,
+  `ext` varchar(32) NOT NULL,
+  `size` bigint(20) NOT NULL,
+  `added` int(11) NOT NULL,
+  `modified` int(11) NOT NULL,
+  `private` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `remote_id` (`remote_id`)
+);
+
 -- TABLE: comments
 CREATE TABLE IF NOT EXISTS `bx_classes_cmts` (
   `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -370,6 +402,9 @@ INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `
 ('bx_classes_videos', @sStorageEngine, '', 360, 2592000, 3, 'bx_classes_videos', 'allow-deny', 'avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,qt,divx,xvid,3gp,3g2,webm,mkv,ogv,ogg,rm,rmvb,asf,drc', '', 0, 0, 0, 0, 0, 0),
 ('bx_classes_videos_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_classes_videos_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png,avi,flv,mpg,mpeg,wmv,mp4,m4v,mov,qt,divx,xvid,3gp,3g2,webm,mkv,ogv,ogg,rm,rmvb,asf,drc', '', 0, 0, 0, 0, 0, 0),
 
+('bx_classes_sounds', @sStorageEngine, '', 360, 2592000, 3, 'bx_classes_sounds', 'allow-deny', 'mp3,m4a,m4b,wma,wav,3gp', '', 0, 0, 0, 0, 0, 0),
+('bx_classes_sounds_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_classes_sounds_resized', 'allow-deny', 'mp3,m4a,m4b,wma,wav,3gp', '', 0, 0, 0, 0, 0, 0),
+
 ('bx_classes_files', @sStorageEngine, '', 360, 2592000, 3, 'bx_classes_files', 'deny-allow', '', 'action,apk,app,bat,bin,cmd,com,command,cpl,csh,exe,gadget,inf,ins,inx,ipa,isu,job,jse,ksh,lnk,msc,msi,msp,mst,osx,out,paf,pif,prg,ps1,reg,rgs,run,sct,shb,shs,u3p,vb,vbe,vbs,vbscript,workflow,ws,wsf', 0, 0, 0, 0, 0, 0);
 
 INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`, `source_params`, `private`, `atime_tracking`, `atime_pruning`, `ts`, `override_class_name`, `override_class_file`) VALUES 
@@ -384,6 +419,8 @@ INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`,
 ('bx_classes_videos_poster_preview', 'bx_classes_videos_resized', 'Storage', 'a:1:{s:6:"object";s:17:"bx_classes_videos";}', 'no', '0', '0', '0', 'BxDolTranscoderVideo', ''),
 ('bx_classes_videos_mp4', 'bx_classes_videos_resized', 'Storage', 'a:1:{s:6:"object";s:17:"bx_classes_videos";}', 'no', '0', '0', '0', 'BxDolTranscoderVideo', ''),
 ('bx_classes_videos_mp4_hd', 'bx_classes_videos_resized', 'Storage', 'a:1:{s:6:"object";s:17:"bx_classes_videos";}', 'no', '0', '0', '0', 'BxDolTranscoderVideo', ''),
+
+('bx_classes_sounds_mp3', 'bx_classes_sounds_resized', 'Storage', 'a:1:{s:6:"object";s:17:"bx_classes_sounds";}', 'no', '0', '0', '0', 'BxDolTranscoderAudio', ''),
 
 ('bx_classes_preview_files', 'bx_classes_photos_resized', 'Storage', 'a:1:{s:6:"object";s:16:"bx_classes_files";}', 'no', '1', '2592000', '0', '', ''),
 ('bx_classes_gallery_files', 'bx_classes_photos_resized', 'Storage', 'a:1:{s:6:"object";s:16:"bx_classes_files";}', 'no', '1', '2592000', '0', '', '');
@@ -401,6 +438,8 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 ('bx_classes_videos_poster', 'Poster', 'a:2:{s:1:"h";s:3:"318";s:10:"force_type";s:3:"jpg";}', 0),
 ('bx_classes_videos_mp4', 'Mp4', 'a:2:{s:1:"h";s:3:"318";s:10:"force_type";s:3:"mp4";}', 0),
 ('bx_classes_videos_mp4_hd', 'Mp4', 'a:3:{s:1:"h";s:3:"720";s:13:"video_bitrate";s:4:"1536";s:10:"force_type";s:3:"mp4";}', 0),
+
+('bx_classes_sounds_mp3', 'Mp3', 'a:0:{}', 0),
 
 ('bx_classes_preview_files', 'Resize', 'a:3:{s:1:"w";s:3:"300";s:1:"h";s:3:"200";s:11:"crop_resize";s:1:"1";}', '0'),
 ('bx_classes_gallery_files', 'Resize', 'a:1:{s:1:"w";s:3:"500";}', '0');
@@ -425,6 +464,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_classes', 'bx_classes', 'covers', 'a:1:{i:0;s:16:"bx_classes_html5";}', 'a:2:{s:17:"bx_classes_simple";s:26:"_sys_uploader_simple_title";s:16:"bx_classes_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_classes_form_entry_input_sys_covers', '_bx_classes_form_entry_input_covers', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_classes', 'bx_classes', 'pictures', 'a:1:{i:0;s:23:"bx_classes_photos_html5";}', 'a:2:{s:24:"bx_classes_photos_simple";s:26:"_sys_uploader_simple_title";s:23:"bx_classes_photos_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_classes_form_entry_input_sys_pictures', '_bx_classes_form_entry_input_pictures', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_classes', 'bx_classes', 'videos', 'a:1:{i:0;s:23:"bx_classes_videos_html5";}', 'a:2:{s:24:"bx_classes_videos_simple";s:26:"_sys_uploader_simple_title";s:23:"bx_classes_videos_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_classes_form_entry_input_sys_videos', '_bx_classes_form_entry_input_videos', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_classes', 'bx_classes', 'sounds', 'a:1:{i:0;s:23:"bx_classes_sounds_html5";}', 'a:2:{s:24:"bx_classes_sounds_simple";s:26:"_sys_uploader_simple_title";s:23:"bx_classes_sounds_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_classes_form_entry_input_sys_sounds', '_bx_classes_form_entry_input_sounds', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_classes', 'bx_classes', 'files', 'a:1:{i:0;s:22:"bx_classes_files_html5";}', 'a:2:{s:23:"bx_classes_files_simple";s:26:"_sys_uploader_simple_title";s:22:"bx_classes_files_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_classes_form_entry_input_sys_files', '_bx_classes_form_entry_input_files', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_classes', 'bx_classes', 'polls', '', '', 0, 'custom', '_bx_classes_form_entry_input_sys_polls', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
 ('bx_classes', 'bx_classes', 'text', '', '', 0, 'textarea', '_bx_classes_form_entry_input_sys_text', '_bx_classes_form_entry_input_text', '', 1, 0, 2, '', '', '', 'Avail', '', '_bx_classes_form_entry_input_text_err', 'XssHtml', '', 1, 0),
@@ -451,15 +491,16 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_classes_entry_add', 'attachments', 2147483647, 1, 5),
 ('bx_classes_entry_add', 'pictures', 2147483647, 1, 6),
 ('bx_classes_entry_add', 'videos', 2147483647, 1, 7),
-('bx_classes_entry_add', 'files', 2147483647, 1, 8),
-('bx_classes_entry_add', 'polls', 2147483647, 1, 9),
-('bx_classes_entry_add', 'start_date', 2147483647, 1, 10),
-('bx_classes_entry_add', 'end_date', 2147483647, 1, 11),
-('bx_classes_entry_add', 'completed_when', 2147483647, 1, 12),
-('bx_classes_entry_add', 'avail', 2147483647, 1, 13),
-('bx_classes_entry_add', 'cmts', 2147483647, 1, 14),
-('bx_classes_entry_add', 'allow_view_to', 2147483647, 1, 15),
-('bx_classes_entry_add', 'do_publish', 2147483647, 1, 16),
+('bx_classes_entry_add', 'sounds', 2147483647, 1, 8),
+('bx_classes_entry_add', 'files', 2147483647, 1, 9),
+('bx_classes_entry_add', 'polls', 2147483647, 1, 10),
+('bx_classes_entry_add', 'start_date', 2147483647, 1, 11),
+('bx_classes_entry_add', 'end_date', 2147483647, 1, 12),
+('bx_classes_entry_add', 'completed_when', 2147483647, 1, 13),
+('bx_classes_entry_add', 'avail', 2147483647, 1, 14),
+('bx_classes_entry_add', 'cmts', 2147483647, 1, 15),
+('bx_classes_entry_add', 'allow_view_to', 2147483647, 1, 16),
+('bx_classes_entry_add', 'do_publish', 2147483647, 1, 17),
 
 ('bx_classes_entry_delete', 'delete_confirm', 2147483647, 1, 1),
 ('bx_classes_entry_delete', 'do_submit', 2147483647, 1, 2),
@@ -471,15 +512,16 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_classes_entry_edit', 'attachments', 2147483647, 1, 5),
 ('bx_classes_entry_edit', 'pictures', 2147483647, 1, 6),
 ('bx_classes_entry_edit', 'videos', 2147483647, 1, 7),
-('bx_classes_entry_edit', 'files', 2147483647, 1, 8),
-('bx_classes_entry_edit', 'polls', 2147483647, 1, 9),
-('bx_classes_entry_edit', 'start_date', 2147483647, 1, 10),
-('bx_classes_entry_edit', 'end_date', 2147483647, 1, 11),
-('bx_classes_entry_edit', 'completed_when', 2147483647, 1, 12),
-('bx_classes_entry_edit', 'avail', 2147483647, 1, 13),
-('bx_classes_entry_edit', 'cmts', 2147483647, 1, 14),
-('bx_classes_entry_edit', 'allow_view_to', 2147483647, 1, 15),
-('bx_classes_entry_edit', 'do_submit', 2147483647, 1, 16),
+('bx_classes_entry_edit', 'sounds', 2147483647, 1, 8),
+('bx_classes_entry_edit', 'files', 2147483647, 1, 9),
+('bx_classes_entry_edit', 'polls', 2147483647, 1, 10),
+('bx_classes_entry_edit', 'start_date', 2147483647, 1, 11),
+('bx_classes_entry_edit', 'end_date', 2147483647, 1, 12),
+('bx_classes_entry_edit', 'completed_when', 2147483647, 1, 13),
+('bx_classes_entry_edit', 'avail', 2147483647, 1, 14),
+('bx_classes_entry_edit', 'cmts', 2147483647, 1, 15),
+('bx_classes_entry_edit', 'allow_view_to', 2147483647, 1, 16),
+('bx_classes_entry_edit', 'do_submit', 2147483647, 1, 17),
 
 ('bx_classes_entry_view', 'module_id', 2147483647, 1, 1),
 ('bx_classes_entry_view', 'completed_when', 2147483647, 1, 2),
