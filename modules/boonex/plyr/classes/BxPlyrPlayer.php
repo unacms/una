@@ -29,6 +29,17 @@ class BxPlyrPlayer extends BxDolPlayer
     ';
 
     /**
+     * Standard view initialization params for audio
+     */
+    protected static $CONF_STANDARD_AUDIO = '
+    <div {attrs_wrapper}>
+        <audio {attrs}>
+            {mp3}
+        </audio>
+    </div>
+    ';
+
+    /**
      * Minimal view initialization params
      */
     protected static $CONF_MINI = "";
@@ -57,14 +68,20 @@ class BxPlyrPlayer extends BxDolPlayer
 
     public function getCodeAudio ($iViewMode, $aParams, $bDynamicMode = false)
     {
-        // TODO:
+        $aControls = explode(',', 'play-large,play,progress,current-time,mute,volume,pip,airplay');
+        $aSettings = array();
+        return $this->_getCodePlyr (self::$CONF_STANDARD_AUDIO, 'bx-player-plyr', $aControls, $aSettings, $iViewMode, $aParams, $bDynamicMode);
     }
     
     public function getCodeVideo ($iViewMode, $aParams, $bDynamicMode = false)
     {
-        $sInit = self::$CONF_STANDARD;
-        $sClass = 'bx-player-plyr';
-        
+        $aControls = explode(',', getParam('bx_plyr_option_controls'));
+        $aSettings = explode(',', getParam('bx_plyr_option_settings'));
+        return $this->_getCodePlyr (self::$CONF_STANDARD, 'bx-player-plyr', $aControls, $aSettings, $iViewMode, $aParams, $bDynamicMode);
+    }
+
+    protected function _getCodePlyr ($sInit, $sClass, $aControls, $aSettings, $iViewMode, $aParams, $bDynamicMode = false)
+    {        
         // set visual mode
         switch ($iViewMode) {
         case BX_PLAYER_MINI:
@@ -105,9 +122,11 @@ class BxPlyrPlayer extends BxDolPlayer
         $aTypes = array(
             'webm' => '<source type="video/webm" src="{url}" size="{size}" />',
             'mp4' => '<source type="video/mp4" src="{url}" size="{size}" />',
+            'mp3' => '<source type="audio/mpeg" src="{url}" />',
         );              
         $mp4 = '';
         $webm = '';
+        $mp3 = '';
         foreach ($aTypes as $s => $ss) {
             if (!isset($aParams[$s]))
                 continue;
@@ -135,6 +154,7 @@ class BxPlyrPlayer extends BxDolPlayer
             'attrs_wrapper' => $sAttrsWrapper,
             'webm' => $webm,
             'mp4' => $mp4,
+            'mp3' => $mp3,
             'captions' => isset($aParams['captions']) ? $aParams['captions'] : '',
         ));
 
@@ -142,8 +162,6 @@ class BxPlyrPlayer extends BxDolPlayer
 
         if (!($sFormat = getParam('sys_player_default_format')))
             $sFormat = 'sd';
-        $aControls = explode(',', getParam('bx_plyr_option_controls'));
-        $aSettings = explode(',', getParam('bx_plyr_option_settings'));
         $aOptions = array_merge(array(
             // 'debug' => true,
             'quality' => array('default' => $this->_aSizes[$sFormat]),

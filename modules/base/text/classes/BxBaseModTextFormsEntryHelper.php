@@ -66,6 +66,9 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         if (isset($CNF['FIELD_VIDEO']))
             $oForm->processFiles($CNF['FIELD_VIDEO'], $iContentId, false);
 
+        if (isset($CNF['FIELD_SOUND']))
+            $oForm->processFiles($CNF['FIELD_SOUND'], $iContentId, false);
+
         if (isset($CNF['FIELD_FILE']))
             $oForm->processFiles($CNF['FIELD_FILE'], $iContentId, false);
 
@@ -92,6 +95,9 @@ class BxBaseModTextFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         if(($oForm = $this->getObjectFormAdd()) !== false) {
             if (isset($CNF['FIELD_VIDEO']))
                 $oForm->processFiles($CNF['FIELD_VIDEO'], $iContentId, true);
+
+            if (isset($CNF['FIELD_SOUND']))
+                $oForm->processFiles($CNF['FIELD_SOUND'], $iContentId, true);
 
             if (isset($CNF['FIELD_FILE']))
                 $oForm->processFiles($CNF['FIELD_FILE'], $iContentId, true);

@@ -122,6 +122,24 @@ div.bx-base-general-breadcrumb i {
     overflow: hidden;
 }
 
+.bx-base-general-attachment-sound {
+    position:relative;
+    height:100%;
+}
+.bx-base-general-attachment-sound-file-name,
+.bx-base-general-attachment-sound-player {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+}
+.bx-base-general-attachment-sound-file-name {
+    height:9.25rem;
+}
+.bx-base-general-attachment-sound-player {
+    height:3.25rem;
+}
+
 /* comments item */
 div.bx-base-general-comments div.bx-base-general-comments-element-holder,
 div.bx-base-general-comments div.bx-base-general-comments-counter-holder {
