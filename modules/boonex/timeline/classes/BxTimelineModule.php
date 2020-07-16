@@ -1245,6 +1245,17 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         ));
     }
 
+    public function serviceGetBlockViewsCustom($aParams = array())
+    {
+        $aParams = array_merge(array(
+            'view' => BX_TIMELINE_VIEW_TIMELINE, 
+            'type' => BX_BASE_MOD_NTFS_TYPE_PUBLIC,
+            'owner_id' => 0,
+        ), $aParams);
+
+    	return $this->_serviceGetBlockViews($aParams);
+    }
+
     public function serviceGetBlockViewsTimeline($sType = BX_BASE_MOD_NTFS_TYPE_PUBLIC, $iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
     {
         return $this->_serviceGetBlockViews(array(
