@@ -15,6 +15,7 @@
 class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
 {
     protected $_sGhostTemplateVideo = 'form_ghost_template_video.html';
+    protected $_sGhostTemplateSound = 'form_ghost_template_sound.html';
     protected $_sGhostTemplateFile = 'form_ghost_template_file.html';
 
     public function __construct($aInfo, $oTemplate = false)
@@ -63,6 +64,13 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
                 $this->aInputs[$CNF['FIELD_VIDEO']]['content_id'] = $aValues['id'];
 
             $this->aInputs[$CNF['FIELD_VIDEO']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName($this->_sGhostTemplateVideo, $this->_getVideoGhostTmplVars($aContentInfo));
+        }
+
+        if (isset($CNF['FIELD_SOUND']) && isset($this->aInputs[$CNF['FIELD_SOUND']])) {
+            if ($bValues)
+                $this->aInputs[$CNF['FIELD_SOUND']]['content_id'] = $aValues['id'];
+
+            $this->aInputs[$CNF['FIELD_SOUND']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName($this->_sGhostTemplateSound, $this->_getSoundGhostTmplVars($aContentInfo));
         }
 
         if (isset($CNF['FIELD_FILE']) && isset($this->aInputs[$CNF['FIELD_FILE']])) {
@@ -302,6 +310,18 @@ class BxBaseModTextFormEntry extends BxBaseModGeneralFormEntry
             'content_id' => (int)$this->aInputs[$CNF['FIELD_VIDEO']]['content_id'],
             'editor_id' => isset($CNF['FIELD_TEXT_ID']) ? $CNF['FIELD_TEXT_ID'] : '',
             'embed_url' => BX_DOL_URL_ROOT . $this->_oModule->_oConfig->getBaseUri() . 'file_embed_video/',
+    	);
+    }
+
+    protected function _getSoundGhostTmplVars($aContentInfo = array())
+    {
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+
+    	return array (
+            'name' => $this->aInputs[$CNF['FIELD_SOUND']]['name'],
+            'content_id' => (int)$this->aInputs[$CNF['FIELD_SOUND']]['content_id'],
+            'editor_id' => isset($CNF['FIELD_TEXT_ID']) ? $CNF['FIELD_TEXT_ID'] : '',
+            'embed_url' => BX_DOL_URL_ROOT . $this->_oModule->_oConfig->getBaseUri() . 'file_embed_sound/',
     	);
     }
 

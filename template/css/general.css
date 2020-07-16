@@ -468,8 +468,9 @@ div.bx-account-unit-online {
     display: none;
 }
 
-/* --------------- Author Info */
+/* --------------- Embeds */
 
+audio.bx-player-embed,
 video.bx-player-embed {
     width:100vw;
     height:100vh;
