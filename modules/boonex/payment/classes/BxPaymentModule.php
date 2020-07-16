@@ -744,6 +744,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
             'transactions' => $this->_oDb->getOrderProcessed(array('type' => 'pending_id', 'pending_id' => (int)$aPending['id'])),
             'provider' => $oProvider,
             'message' => &$aResult['message'],
+            'result' => &$aResult,
         ));
 
         if($oProvider->needRedirect()) {
