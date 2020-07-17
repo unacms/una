@@ -157,8 +157,8 @@
 
     <string name="_bx_classes_menu_item_title_system_cpa_sound_simple"><![CDATA[Add Sound (simple)]]></string>
     <string name="_bx_classes_menu_item_title_cpa_sound_simple"><![CDATA[Add Sound]]></string>
-    <string name="_bx_classes_menu_item_title_system_cpa_sound_html5"><![CDATA[Add Video (html5)]]></string>
-    <string name="_bx_classes_menu_item_title_cpa_sound_html5"><![CDATA[Add Video]]></string>
+    <string name="_bx_classes_menu_item_title_system_cpa_sound_html5"><![CDATA[Add Sound (html5)]]></string>
+    <string name="_bx_classes_menu_item_title_cpa_sound_html5"><![CDATA[Add Sound]]></string>
 
     <string name="_bx_classes_menu_item_title_cpa_file_simple"><![CDATA[Add File]]></string>
     <string name="_bx_classes_menu_item_title_system_cpa_file_html5"><![CDATA[Add File (html5)]]></string>
