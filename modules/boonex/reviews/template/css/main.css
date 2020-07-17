@@ -1,9 +1,24 @@
 @import url(../../../../base/text/template/css/main.css);
 
+.bx-review-vertical-flex {
+    display: flex;
+    flex-direction: column;
+}
+.bx-reviews-align-left {
+    text-align: left;
+}
 .bx-review-extra-info,
 .bx-review-rating {
     text-align: left;
     line-height: 2rem;
+}
+
+.bx-review-rating {
+    margin: 0.5rem 0;
+}
+
+.bx-reviews-rating-row {
+    margin-top: auto;
 }
 
 .bx-review-rating * {
