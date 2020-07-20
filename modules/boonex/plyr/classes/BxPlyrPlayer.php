@@ -168,6 +168,7 @@ class BxPlyrPlayer extends BxDolPlayer
             'displayDuration' => false,
             'controls' => $aControls,
             'settings' => $aSettings,
+            'ratio' => '16:9',
         ), $this->_aConfCustom);
         $sInitEditor = "
             glBxPlyr" . mt_rand() . " = new Plyr('#$sId', " . json_encode($aOptions) . ");
