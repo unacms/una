@@ -1534,7 +1534,7 @@ class BxDolFormCheckerHelper
     }
     static public function checkEmail($s)
     {
-        if (false === strpos($s, '@')) // simple check
+        if (false === strpos($s, '@') || strpos($s, '@') != strrpos($s, '@')) // simple check
             return false;
 
         if (!preg_match("/^[\pL\pNd]/u", $s)) // must start with letter or number
