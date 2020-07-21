@@ -162,11 +162,11 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
         if ($bClearCache)
             $this->cleanMemory($sKey);
 
-        $sSql = $this->prepare("SELECT `profile_id` FROM `sys_accounts` WHERE `id` = ? LIMIT 1", $iAccountId);        
+        $sSql = $this->prepare("SELECT `profile_id` FROM `sys_accounts` AS `a` INNER JOIN `sys_profiles` AS `p` ON (`a`.`profile_id` = `p`.`id`) WHERE `a`.`id` = ? LIMIT 1", $iAccountId);
         $iProfileId = $this->fromMemory($sKey, 'getOne', $sSql);
         if (!$iProfileId) {
             $this->cleanMemory($sKey);
-            $sSql = $this->prepare("SELECT `id` FROM `sys_profiles` WHERE `account_id` = ? LIMIT 1", $iAccountId);
+            $sSql = $this->prepare("SELECT `id` FROM `sys_profiles` WHERE `account_id` = ? ORDER BY FIELD(`type`, 'system', 'bx_organizations', 'bx_persons') DESC LIMIT 1", $iAccountId);
             $iProfileId = $this->getOne($sSql);
             if (!$iProfileId)
                 return false;
