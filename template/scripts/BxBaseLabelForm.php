@@ -54,7 +54,7 @@ class BxBaseLabelForm extends BxTemplFormView
 
         return $this->oTemplate->parseHtmlByName('label_select_field.html', array(
             'js_object' => $this->_oObject->getJsObjectName(),
-            'js_code' => $this->_oObject->getJsCode(),
+            'js_code' => $this->_oObject->getJsCodeForm(),
             'html_id' => $sHtmlId,
             'input_labels' => $this->genCustomInputUsernamesSuggestions($aInputLabels)
         ));

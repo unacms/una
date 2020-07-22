@@ -185,6 +185,7 @@
 	<string name="_bx_forum_page_block_title_manage"><![CDATA[Manage]]></string>    
   <string name="_bx_forum_page_block_title_popular_keywords"><![CDATA[Popular Hashtags]]></string>
 	<string name="_bx_forum_page_block_title_cats"><![CDATA[Discussions Categories]]></string>
+        <string name="_bx_forum_page_block_title_browse_labels"><![CDATA[Browse Labels]]></string>
   <string name="_bx_forum_page_block_title_sys_multicats"><![CDATA[Discussions Categories(Multi)]]></string>
   <string name="_bx_forum_page_block_title_multicats"><![CDATA[Discussions Categories]]></string>
 	<string name="_bx_forum_page_block_title_my_entries"><![CDATA[My Discussions]]></string>

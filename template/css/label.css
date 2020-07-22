@@ -30,13 +30,22 @@
     flex-wrap: wrap;
 }
 .sys-labels-level.sys-ll-0 > .sys-labels-list-item {
-    -webkit-flex: 0 0 50%;
-    -ms-flex: 0 0 50%;
-    flex: 0 0 50%;
+    -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
 
-    width: 50%;
     padding-left: 0.25rem;
     padding-right: 0.25rem;
+}
+.sys-labels-list .sys-labels-level.sys-ll-0 > .sys-labels-list-item {
+    -webkit-flex-basis: 50%;
+    flex-basis: 50%;
+
+    width: 50%;
+}
+.bx-media-phone .sys-labels-browse .sys-labels-level.sys-ll-0 > .sys-labels-list-item,
+.bx-layout-column-thin .sys-labels-browse .sys-labels-level.sys-ll-0 > .sys-labels-list-item {
+    min-width: 50%;
 }
 .sys-labels-li-sublist {
     display: none;

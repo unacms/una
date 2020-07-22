@@ -20,7 +20,6 @@ function BxDolLabel(oOptions) {
     this._sClassSublist = 'sys-labels-li-sublist';
 }
 
-// TODO: Continue from here: preload selected.
 BxDolLabel.prototype.selectLabels = function(oElement, aParams)
 {
     var $this = this;

@@ -77,6 +77,27 @@ class BxDolLabel extends BxDolFactory implements iBxDolSingleton
         return $this->_oDb->getLabels($aParams);
     }
 
+    public function getLabelUrl($sKeyword, $mixedSection = false) 
+    {   
+        $sSectionPart = '';
+        if(!empty($mixedSection)) {
+            if (is_array($mixedSection))
+                $sSectionPart = '&section[]=' . implode('&section[]=', $mixedSection);
+            elseif (is_string($mixedSection))
+                $sSectionPart = '&section[]=' . $mixedSection;
+        }
+
+        $sUrl = BX_DOL_URL_ROOT . 'searchKeyword.php?type=keyword&keyword=' . rawurlencode($sKeyword) . $sSectionPart;
+
+        bx_alert('meta_keyword', 'url', 0, false, array(
+           'url' => &$sUrl,
+           'keyword' => $sKeyword,
+           'section' => $mixedSection,
+        ));
+
+        return $sUrl;
+    }
+
     public function onAdd($iId)
     {
         $aLabel = $this->_oDb->getLabels(array('type' => 'id', 'id' => $iId));

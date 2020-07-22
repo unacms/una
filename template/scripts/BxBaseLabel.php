@@ -42,33 +42,49 @@ class BxBaseLabel extends BxDolLabel
         return $this->_sJsObjName;
     }
 
-    public function getJsCode($bDynamicMode = false)
+    public function getJsCodeForm($bDynamicMode = false)
     {
-        $sCode = $this->_sJsObjName . " = new " . $this->_sJsObjClass . "(" . json_encode(array(
+        return $this->getJsCode('form', $bDynamicMode);
+    }
+
+    public function getJsCodeView($bDynamicMode = false)
+    {
+        return $this->getJsCode('view', $bDynamicMode);
+    }
+
+    public function getJsCode($sType, $bDynamicMode = false)
+    {
+        if(!$bDynamicMode && bx_is_dynamic_request())
+            $bDynamicMode = true;
+
+        $sCodeObject = $this->_sJsObjName . " = new " . $this->_sJsObjClass . "(" . json_encode(array(
             'sObjName' => $this->_sJsObjName,
             'sRootUrl' => BX_DOL_URL_ROOT,
             'aHtmlIds' => $this->_aHtmlIds
         )) . ");";
 
         if($bDynamicMode) {
-            $sCode = "var " . $this->_sJsObjName . " = null;
-            if(typeof(jQuery.ui.core) == 'undefined')
-                $.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('jquery-ui/jquery.ui.core.min.js'), BX_ESCAPE_STR_APOS) . "');
-            if(typeof(jQuery.ui.widget) == 'undefined')
-                $.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('jquery-ui/jquery.ui.widget.min.js'), BX_ESCAPE_STR_APOS) . "');
-            if(typeof(jQuery.ui.menu) == 'undefined')
-                $.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('jquery-ui/jquery.ui.menu.min.js'), BX_ESCAPE_STR_APOS) . "');
-            if(typeof(jQuery.ui.autocomplete) == 'undefined')
-                $.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('jquery-ui/jquery.ui.autocomplete.min.js'), BX_ESCAPE_STR_APOS) . "');
-            if(window['" . $this->_sJsObjName . "'] === null)
+            $sCode = "var " . $this->_sJsObjName . " = null;";
+
+            if($sType == 'form')
+                $sCode .= "if(typeof(jQuery.ui.core) == 'undefined')
+                    $.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('jquery-ui/jquery.ui.core.min.js'), BX_ESCAPE_STR_APOS) . "');
+                if(typeof(jQuery.ui.widget) == 'undefined')
+                    $.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('jquery-ui/jquery.ui.widget.min.js'), BX_ESCAPE_STR_APOS) . "');
+                if(typeof(jQuery.ui.menu) == 'undefined')
+                    $.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('jquery-ui/jquery.ui.menu.min.js'), BX_ESCAPE_STR_APOS) . "');
+                if(typeof(jQuery.ui.autocomplete) == 'undefined')
+                    $.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('jquery-ui/jquery.ui.autocomplete.min.js'), BX_ESCAPE_STR_APOS) . "');";
+
+            $sCode .= "if(window['" . $this->_sJsObjName . "'] === null)
                 $.getScript('" . bx_js_string($this->_oTemplate->getJsUrl('BxDolLabel.js'), BX_ESCAPE_STR_APOS) . "', function(data, textStatus, jqxhr) {
-                    " . $sCode . "
+                    " . $sCodeObject . "
                 });";
         }
         else
-            $sCode = "if(window['" . $this->_sJsObjName . "'] == undefined) var " . $sCode;
+            $sCode = "if(window['" . $this->_sJsObjName . "'] == undefined) var " . $sCodeObject;
 
-        return $this->addCssJs($bDynamicMode) . $this->_oTemplate->_wrapInTagJsCode($sCode);
+        return $this->addCssJs($sType, $bDynamicMode) . $this->_oTemplate->_wrapInTagJsCode($sCode);
     }
 
     protected function selectLabels($aValues = array())
@@ -111,12 +127,67 @@ class BxBaseLabel extends BxDolLabel
     }
 
     /**
+     * Get 'Browse Labels' block.
+     */
+    public function getLabelsBrowse($aParams = array())
+    {
+        $bShowEmpty = isset($aParams['show_empty']) ? (bool)$aParams['show_empty'] : false;
+
+        $iParentId = $iLevel = 0;
+        $sContent = $this->_getLabelsBrowse($iParentId, $iLevel);
+
+        if(empty($sContent))
+            return $bShowEmpty ? MsgBox(_t('_Empty')) : '';
+
+        return $this->_oTemplate->parseHtmlByName('label_browse.html', array(
+            'js_code' => $this->getJsCodeView(),
+            'content' => $sContent
+        ));
+    }
+
+    protected function _getLabelsBrowse($iParentId, $iLevel)
+    {
+        $aLabels = $this->getLabels(array('type' => 'parent', 'parent' => $iParentId));
+        if(empty($aLabels) || !is_array($aLabels))
+            return '';
+
+        $sJsObject = $this->getJsObjectName();
+
+        $aTmplVarsLabels = array();
+        foreach($aLabels as $aLabel) {
+            $sSublist = $this->_getLabelsBrowse($aLabel['id'], $iLevel + 1);
+            $bSublist = !empty($sSublist);
+
+            $aTmplVarsLabels[] = array(
+                'href' => $this->getLabelUrl($aLabel['value']),
+                'title' => $aLabel['value'],
+                'bx_if:show_sublist_link' => array(
+                    'condition' => $bSublist,
+                    'content' => array(
+                        'js_object' => $sJsObject,
+                    )
+                ),
+                'bx_if:show_sublist' => array(
+                    'condition' => $bSublist,
+                    'content' => array(
+                        'js_object' => $sJsObject,
+                        'content' => $sSublist
+                    ),
+                )
+            );
+        }
+
+        return $this->_oTemplate->parseHtmlByName('label_browse_level.html', array(
+            'level' => $iLevel,
+            'bx_repeat:labels' => $aTmplVarsLabels
+        ));
+    }
+
+    /**
      * Get 'List' custom form element.
      */
     public function getLabelsList(&$aInput, &$oForm)
     {
-        $sContent = '';
-
         $bOpened = false;
         $iParentId = $iLevel = 0;
         $sContent = $this->_getLabelsList($iParentId, $iLevel, $bOpened, $aInput, $oForm);
@@ -158,6 +229,9 @@ class BxBaseLabel extends BxDolLabel
             $sSublist = $this->_getLabelsList($aLabel['id'], $iLevel + 1, $bSublistOpened, $aInput, $oForm);
             $bSublist = !empty($sSublist);
 
+            if($bSublistOpened)
+                $bOpened = true;
+
             $aTmplVarsLabels[] = array(
                 'checkbox' => $oForm->genInput($aCheckbox),
                 'html_id_label' => $sHtmlId,
@@ -196,21 +270,34 @@ class BxBaseLabel extends BxDolLabel
         ));
     }
 
-    public function addCssJs($bDynamicMode = false)
+    public function addCssJs($sType, $bDynamicMode = false)
     {
-        $sInclude = '';
+        if(!$bDynamicMode && bx_is_dynamic_request())
+            $bDynamicMode = true;
 
-        if(!$bDynamicMode)
+        $sInclude = '';
+        $bTypeForm = $sType == 'form';
+
+        if(!$bDynamicMode) {
+            if($bTypeForm)
+                $this->_oTemplate->addJs(array(
+                    'jquery-ui/jquery.ui.core.min.js',
+                    'jquery-ui/jquery.ui.widget.min.js',
+                    'jquery-ui/jquery.ui.menu.min.js',
+                    'jquery-ui/jquery.ui.autocomplete.min.js'
+                ));
+
             $this->_oTemplate->addJs(array(
-                'jquery-ui/jquery.ui.core.min.js',
-                'jquery-ui/jquery.ui.widget.min.js',
-                'jquery-ui/jquery.ui.menu.min.js',
-                'jquery-ui/jquery.ui.autocomplete.min.js', 
                 'BxDolLabel.js'
             ));
+        }
+
+        if($bTypeForm)
+            $sInclude .= $this->_oTemplate->addCss(array(
+                'forms.css', 
+            ), $bDynamicMode);
 
         $sInclude .= $this->_oTemplate->addCss(array(
-            'forms.css', 
             'label.css'
         ), $bDynamicMode);
 
