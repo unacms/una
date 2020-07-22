@@ -2213,6 +2213,17 @@
     <string name="_sys_form_input_labels"><![CDATA[Метки]]></string>
 	<string name="_sys_form_input_sys_anonymous"><![CDATA[Анонимная публикация]]></string>
 	<string name="_sys_form_input_anonymous"><![CDATA[Анонимная публикация]]></string>
+        <string name="_sys_form_labels"><![CDATA[Метки]]></string>
+        <string name="_sys_form_labels_display_select"><![CDATA[Выбор метки]]></string>
+        <string name="_sys_form_labels_input_caption_system_action"><![CDATA[Действие]]></string>
+        <string name="_sys_form_labels_input_caption_system_search"><![CDATA[Поиск]]></string>
+        <string name="_sys_form_labels_input_caption_search"><![CDATA[Найти]]></string>
+        <string name="_sys_form_labels_input_caption_system_list"><![CDATA[Список]]></string>
+        <string name="_sys_form_labels_input_caption_list"><![CDATA[или выбрать]]></string>
+        <string name="_sys_form_labels_input_caption_do_submit"><![CDATA[Выполнить]]></string>
+        <string name="_sys_form_labels_input_caption_system_do_submit"><![CDATA[Выполнить]]></string>
+        <string name="_sys_form_labels_input_caption_do_cancel"><![CDATA[Отмена]]></string>
+        <string name="_sys_form_labels_input_caption_system_do_cancel"><![CDATA[Отмена]]></string>
 	<string name="_sys_form_login"><![CDATA[Вход]]></string>
 	<string name="_sys_form_login_input_caption_system_agreement"><![CDATA[Соглашение]]></string>
 	<string name="_sys_form_login_input_caption_system_captcha"><![CDATA[Капча]]></string>

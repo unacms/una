@@ -1,0 +1,75 @@
+/*-- Labels Field --*/
+.sys-labels .bx-form-input-text.bx-form-input-autotoken b {
+    padding-left: 0.5rem;
+}
+.sys-labels .bx-form-input-text.bx-form-input-autotoken.bx-form-input-disabled b {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+
+/*-- Labels Search --*/
+.sys-labels-select .bx-form-input-text.bx-form-input-autotoken b {
+    padding-left: 0.5rem;
+}
+
+
+/*-- Labels List --*/
+.sys-labels-level {
+    position: relative;
+    
+    width: 100%;
+}
+.sys-labels-level.sys-ll-0 {
+    position: relative;
+    display: block;
+
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.sys-labels-level.sys-ll-0 > .sys-labels-list-item {
+    -webkit-flex: 0 0 50%;
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+
+    width: 50%;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+}
+.sys-labels-li-sublist {
+    display: none;
+}
+.sys-labels-li-sublist.sys-labels-lis-opened {
+    display: block;
+}
+
+
+/*-- Labels List Item --*/
+.sys-labels-list-item-box {
+    position: relative;
+
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+}
+.sys-labels-list-item-box > * {
+    -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+}
+.sys-labels-li-checbox input {
+    margin: 0;
+}
+.sys-labels-li-title {
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

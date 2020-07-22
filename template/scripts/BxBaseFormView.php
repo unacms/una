@@ -1424,93 +1424,11 @@ BLAH;
 
     protected function genCustomInputLabels ($aInput)
     {
-        $this->addCssJsLabels ();
-        
-        $aValues = array();
-        $oLabel = BxDolLabel::getInstance();
-        $this->_getLabelOptions(0, $oLabel, $aValues, 1, '');
-
-        $aInput['type'] = 'select_multiple bx-form-select-labels';
-        $aInput['values'] = $aValues;
-        
-        if (!empty($aInput['value'])  && !is_array($aInput['value']))
+        if(!empty($aInput['value']) && !is_array($aInput['value']))
             $aInput['value'] = unserialize($aInput['value']);
 
-        return $this->genInputSelectMultiple($aInput);
+        return BxDolLabel::getInstance()->getElementLabels($aInput);
     }
-
-    protected function _getLabelOptions($iParent, &$oLabel, &$aValues, $iLevel = 1, $sParentValue = '')
-    {
-        $aLabels = $oLabel->getLabels(array('type' => 'parent', 'parent' => $iParent));
-        foreach($aLabels as $aLabel) {
-			$aAttrs = array();
-			if ($aLabel['parent'] != 0)
-				$aAttrs = array('data-pup' => $sParentValue);
-			
-			$sClass = 'l' . $iLevel;
-			$aLabels2 = $oLabel->getLabels(array('type' => 'parent', 'parent' =>  $aLabel['id']));
-			if (count($aLabels2) > 0)
-				$sClass .= ' non-leaf';	
-			
-            $aValues[] = array('attrs' => $aAttrs, 'class' => $sClass, 'key' => $aLabel['value'], 'value' => $aLabel['value']);
-			$iLevel2 = $iLevel + 1;
-            $this->_getLabelOptions($aLabel['id'], $oLabel, $aValues, $iLevel2, $aLabel['value']);
-        }
-    }
-
-    /*
-    protected function genCustomInputLabels ($aInput)
-    {
-        // generate currently selected labels
-        $sValue = '';
-        if (!empty($aInput['value']) && is_array($aInput['value'])) {
-            sort($aInput['value'], SORT_LOCALE_STRING);
-            foreach ($aInput['value'] as $sVal) {
-               $sValue .= '<b class="val bx-def-color-bg-hl bx-def-round-corners">' . trim($sVal) . '<input type="hidden" name="' . $aInput['name'] . '[]" value="' . trim($sVal) . '" /></b>';
-            }
-            $sValue = trim($sValue, ',');
-        }
-
-        // generate "following" labels
-        $aFollowingLabels = bx_srv('bx_channels', 'get_following_channels_names', array(bx_get_logged_profile_id()));
-        if (!is_array($aFollowingLabels))
-            $aFollowingLabels = array();
-        $aFollowingLabels = array_intersect($aFollowingLabels, $aInput['values']);
-        $aFollowingLabels = array_diff($aFollowingLabels, !empty($aInput['value']) && is_array($aInput['value']) ? $aInput['value'] : array());
-        $aValues = array_diff($aInput['values'], 
-            !empty($aInput['value']) && is_array($aInput['value']) ? $aInput['value'] : array(), 
-            !empty($aFollowingLabels) && is_array($aFollowingLabels) ? $aFollowingLabels : array());
-
-        $sValues = '';
-        if (!empty($aFollowingLabels)) {
-            sort($aFollowingLabels, SORT_LOCALE_STRING);
-            foreach ($aFollowingLabels as $sVal) {
-               $sValues .= '<b class="val bx-def-color-bg-hl bx-def-round-corners">' . trim($sVal) . '</b>';
-            }
-            if (!empty($aValues))
-                $sValues .= '<a href="#" class="bx-form-input-autotoken-labels-show-more">' . _t('_sys_show_more') . '</a><i class="bx-form-input-autotoken-labels-more">';
-        }
-
-        // generate all possible labels 
-        if (!empty($aValues)) {
-            sort($aValues, SORT_LOCALE_STRING);
-            foreach ($aValues as $sVal) {
-               $sValues .= '<b class="val bx-def-color-bg-hl bx-def-round-corners">' . trim($sVal) . '</b>';
-            }
-            $sValues = trim($sValues, ',');
-        }
-
-        if (!empty($aFollowingLabels) && !empty($aValues))
-            $sValues .= '</i>';
-
-        return $this->oTemplate->parseHtmlByName('form_field_labels.html', array(
-            'id' => $aInput['name'] . time() . mt_rand(0, 100),
-            'name' => $aInput['name'],
-            'value' => $sValue,
-            'values' => $sValues,
-        ));
-    }
-     */
     
     /**
      * Generate Select Element	
@@ -1994,21 +1912,6 @@ BLAH;
         $this->_addJs('jquery-minicolors/jquery.minicolors.min.js', "'undefined' === typeof($.minicolors)");
 
         self::$_isCssJsMinicolorsAdded = true;
-    }
-    
-    function addCssJsLabels ()
-    {
-        if (self::$_isCssJsLabelsAdded)
-            return;       
-        
-        $this->_addJs('select2/js/select2.min.js', "'undefined' === typeof($.fn.select2)");
-        $this->_addJs('select2/js/i18n/' . BxDolLanguages::getInstance()->getCurrentLanguage() . '.js', "true");
-        $this->_addJs('select2/select2-to-tree/select2totree.js', "'undefined' === typeof($.fn.select2ToTree)");
-
-        $this->_addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'select2/css/|select2.min.css');
-        $this->_addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'select2/select2-to-tree/|select2totree.css');
-        
-        self::$_isCssJsLabelsAdded = true;
     }
 
     function addCssJsViewMode ()

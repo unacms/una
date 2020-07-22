@@ -70,6 +70,14 @@ class BxDolLabelQuery extends BxDolDb
                     $sWhereClause .= " AND `tl`.`id` NOT IN(" . $this->implode_escape($aParams['exclude']) . ")";
                 break;
 
+            case 'term':
+                $aMethod['params'][1] = array(
+                    'term' => '%' . $aParams['term'] . '%'
+                );
+
+                $sWhereClause = " AND `tl`.`value` LIKE :term";
+                break;
+
             case 'parent_order':
                 $aMethod['name'] = 'getOne';
                 $aMethod['params'][1] = array(
@@ -92,8 +100,7 @@ class BxDolLabelQuery extends BxDolDb
             WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause;
 
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
-    }
-    
+    }   
 }
 
 /** @} */
