@@ -488,6 +488,7 @@ div.bx-account-unit-online {
 
 /* --------------- Author Info */
 
+audio.bx-player-embed,
 video.bx-player-embed {
     width:100vw;
     height:100vh;
