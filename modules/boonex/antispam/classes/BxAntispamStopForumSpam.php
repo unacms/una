@@ -53,7 +53,7 @@ class BxAntispamStopForumSpam extends BxDol
             return false;
 
         foreach ($this->_aKeys as $k => $b) {
-            if (isset($aResult[$k]) && $aResult[$k]['appears']) {
+            if (isset($aResult[$k]) && isset($aResult[$k]['appears']) && $aResult[$k]['appears']) {
                 $this->onPositiveDetection($sDesc);
                 return true;
             }
