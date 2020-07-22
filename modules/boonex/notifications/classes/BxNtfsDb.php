@@ -325,6 +325,11 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 
         return (int)$this->query("DELETE FROM `" . $this->_sTableQueue . "` WHERE `id` IN (" . $this->implode_escape($mixedId) . ")") > 0;
     }
+    
+    public function cleanEvents($iClearIntervalInDays)
+    {
+        $this->query("DELETE FROM `{$this->_sTable}` WHERE `date` < :date", array('date' => time() - $iClearIntervalInDays * 86400));
+    }   
 }
 
 /** @} */
