@@ -404,7 +404,8 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
                 'content' => array (
                     'sound' => $isSound && $oTranscoderSound && ($oPlayer = BxDolPlayer::getObjectInstance()) ? $this->parseHtmlByName('attachment_sound.html', array(
                         'file_name' => $a['file_name'],
-                        'player' => $oTranscoderSound->isFileReady($a['id']) ? 
+                        'file_url' => $oTranscoderSound ? $oTranscoderSound->getFileUrl($a['id']) : '',
+                        'player' => $oTranscoderSound && $oTranscoderSound->isFileReady($a['id']) ? 
                             $oPlayer->getCodeAudio (BX_PLAYER_STANDARD, array(
                                 'mp3' => $oTranscoderSound->getFileUrl($a['id']),
                             )) : _t('_sys_txt_err_sound_not_transcoded_yet'),
@@ -434,7 +435,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         list($oPlayer, $oStorage, $aContentInfo, $a) = $this->_embedChecks('OBJECT_STORAGE_VIDEOS', $iFileId);
 
         // check if file is really video
-        $aTranscodersVideo = $this->getAttachmentsVideoTranscoders($sStorage);        
+        $aTranscodersVideo = $this->getAttachmentsVideoTranscoders();        
         if (!$aTranscodersVideo || (0 !== strncmp('video/', $a['mime_type'], 6)) || !$aTranscodersVideo['poster']->isMimeTypeSupported($a['mime_type'])) {
             $this->displayErrorOccured('', BX_PAGE_EMBED);
             exit;
