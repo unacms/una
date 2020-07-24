@@ -92,7 +92,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_notifications_events_per_page', '12', @iCategId, '_bx_ntfs_option_events_per_page', 'digit', '', '', '', '', 1),
 ('bx_notifications_events_per_preview', '5', @iCategId, '_bx_ntfs_option_events_per_preview', 'digit', '', '', '', '', 5),
 ('bx_notifications_enable_group_settings', 'on', @iCategId, '_bx_ntfs_option_enable_group_settings', 'checkbox', '', '', '', '', 10), 
-('bx_notifications_delivery_timeout', '120', @iCategId, '_bx_ntfs_option_delivery_timeout', 'digit', '', '', '', '', 20);
+('bx_notifications_delivery_timeout', '120', @iCategId, '_bx_ntfs_option_delivery_timeout', 'digit', '', '', '', '', 20),
+('bx_notifications_clear_interval', '0', @iCategId, '_bx_ntfs_option_clear_interval', 'digit', '', '', '', '', 30);
 
 
 -- PRIVACY 
@@ -160,4 +161,5 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 -- CRON
 INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
 ('bx_notifications_queue', '* * * * *', 'BxNtfsCronQueue', 'modules/boonex/notifications/classes/BxNtfsCronQueue.php', ''),
-('bx_notifications_notify', '* * * * *', 'BxNtfsCronNotify', 'modules/boonex/notifications/classes/BxNtfsCronNotify.php', '');
+('bx_notifications_notify', '* * * * *', 'BxNtfsCronNotify', 'modules/boonex/notifications/classes/BxNtfsCronNotify.php', ''),
+('bx_notifications_clean', '* * * * *', 'BxNtfsCronClean', 'modules/boonex/notifications/classes/BxNtfsCronClean.php', '');
