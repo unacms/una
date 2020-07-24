@@ -176,6 +176,12 @@ div.bx-base-pofile-cover-image {
     max-width: 100%;
     height: 31rem;
 }
+.bx-media-phone div.bx-base-pofile-cover-image {
+    height: 14rem;
+}
+.bx-media-tablet div.bx-base-pofile-cover-image {
+    height: 24rem;
+}
 a.bx-base-pofile-cover-image,
 a.bx-base-pofile-cover-image:hover {
     position:absolute;
