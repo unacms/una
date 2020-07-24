@@ -539,7 +539,10 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
                 $aSave[0][$k] = $a;
         }, array(&$aSave));
 
-        $aGroupChooser = $oPrivacy->getGroupChooser($sPrivacyObject);
+        $aGroupChooser = $oPrivacy->getGroupChooser($sPrivacyObject, 0, array(
+            'object' => $this->aParams['object'],
+            'display' => $this->aParams['display']
+        ));
 
         $this->aInputs[$sField] = array_merge($this->aInputs[$sField], $aGroupChooser, $aSave);
     }

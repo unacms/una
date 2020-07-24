@@ -232,6 +232,8 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
         $iOwnerId = $this->_oModule->getOwnerId();
 
         $this->aInputs[$sField] = array_merge($this->aInputs[$sField], BxDolPrivacy::getGroupChooser($sPrivacyObject, 0, array(
+            'object' => $this->aParams['object'],
+            'display' => $this->aParams['display'],
             'title' => _t($CNF['T']['form_input_title_' . $sField]),
             'dynamic_mode' => $this->_bDynamicMode
         )));
