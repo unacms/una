@@ -18,6 +18,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `e
 ('bx_events_per_page_browse_recommended', '10', @iCategId, '_sys_option_per_page_browse_recommended', 'digit', '', '', '', 16),
 ('bx_events_time_format', 'H:i', @iCategId, '_bx_events_option_time_format', 'digit', '', '', '', 20),
 ('bx_events_short_date_format', 'j M y', @iCategId, '_bx_events_option_short_date_format', 'digit', '', '', '', 22),
+('bx_events_datetime_format', 'j M Y H:i', @iCategId, '_bx_events_option_datetime_format', 'digit', '', '', '', 23),
 ('bx_events_summary_chars', '700', @iCategId, '_bx_events_option_summary_chars', 'digit', '', '', '', 25),
 ('bx_events_searchable_fields', 'event_name,event_desc', @iCategId, '_bx_events_option_searchable_fields', 'list', 'a:2:{s:6:"module";s:9:"bx_events";s:6:"method";s:21:"get_searchable_fields";}', '', '', 30),
 ('bx_events_public_subscribed_me', 'on', @iCategId, '_bx_events_option_public_subscribed_me', 'checkbox', '', '', '', 40);
