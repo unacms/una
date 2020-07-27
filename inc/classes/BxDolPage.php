@@ -152,7 +152,7 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
      * @param $sURI unique page URI
      * @return object instance or false on error
      */
-    static public function getObjectInstanceByURI($sURI = '', $oTemplate = false)
+    static public function getObjectInstanceByURI($sURI = '', $oTemplate = false, $bRedirectCheck = false)
     {
     	if(empty($sURI) && bx_get('i') !== false)
     		$sURI = bx_process_input(bx_get('i'));
@@ -161,6 +161,13 @@ class BxDolPage extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
 			return false;
 
         $sObject = BxDolPageQuery::getPageObjectNameByURI($sURI);
+        if ($bRedirectCheck && !$sObject && '/' == substr($sURI, -1)) {
+            header("HTTP/1.1 301 Moved Permanently");
+            unset($_GET['i']);
+            header ('Location:' . bx_append_url_params(BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . trim($sURI, '/')), $_GET));
+            exit;
+        }
+
         return $sObject ? self::getObjectInstance($sObject, $oTemplate) : false;
     }
 
