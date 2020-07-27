@@ -120,26 +120,14 @@ class BxEventsDb extends BxBaseModGroupsDb
             ", $aBindings);
 
             // prepare variables for each event
-            $sCurrentDay = $oDateIter->format('Y-m-d');
             foreach ($a as $k => $r) {
-                $oDateStart = new DateTime();
-                $oDateStart->setTimestamp($r['date_start']);
-                $oDateStart->setTimezone(new DateTimeZone('UTC'));
-                $oDateEnd = new DateTime();
-                $oDateEnd->setTimestamp($r['date_end']);
-                $oDateEnd->setTimezone(new DateTimeZone('UTC'));
-                $oDuration = $oDateStart->diff($oDateEnd);
+                $oDateStart = new DateTime('@' . $r['date_start']);
+                $oDateEnd = new DateTime('@' . $r['date_end']);
 
-                $sHoursStart = $oDateStart->format('H:i:s');
-
-                $oStart = date_create($sCurrentDay . ' ' . $sHoursStart, new DateTimeZone($r['timezone'] ? $r['timezone'] : 'UTC'));
-                $oEnd = $oStart ? clone($oStart) : null;
-                $oEnd = $oEnd ? $oEnd->add($oDuration) : null;
-
-                $a[$k]['start'] = $oStart ? $oStart->format('c') : 0;
-                $a[$k]['end'] = $oEnd ? $oEnd->format('c') : 0;
-                $a[$k]['start_utc'] = $oStart ? $oStart->getTimestamp() : 0;
-                $a[$k]['end_utc'] = $oEnd ? $oEnd->getTimestamp() : 0;
+                $a[$k]['start'] = $oDateStart ? $oDateStart->format('c') : 0;
+                $a[$k]['end'] = $oDateEnd ? $oDateEnd->format('c') : 0;
+                $a[$k]['start_utc'] = $oDateStart ? $oDateStart->getTimestamp() : 0;
+                $a[$k]['end_utc'] = $oDateEnd ? $oDateEnd->getTimestamp() : 0;
                 $a[$k]['url'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oConfig->CNF['URI_VIEW_ENTRY'] . '&id=' . $r['id']);
             }
 

@@ -14,7 +14,7 @@ bx_import('BxDolLanguages');
 
 check_logged();
 
-$oPage = BxDolPage::getObjectInstanceByURI();
+$oPage = BxDolPage::getObjectInstanceByURI('', false, true);
 if ($oPage) {
 
     $oPage->displayPage();
