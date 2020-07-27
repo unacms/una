@@ -11,7 +11,8 @@ VALUES (@iTypeId, 'bx_nexus_general', '_bx_nexus_adm_stg_cpt_category_general', 
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-('bx_nexus_option_styles', '', @iCategId, '_bx_nexus_option_styles', 'text', '', '', '', 10);
+('bx_nexus_option_styles', '', @iCategId, '_bx_nexus_option_styles', 'text', '', '', '', 10),
+('bx_nexus_option_guest_pages', 'forgot-password,create-account,terms,privacy,contact,about,home', @iCategId, '_bx_nexus_option_guest_pages', 'text', '', '', '', 20);
 
 -- Injections
 
