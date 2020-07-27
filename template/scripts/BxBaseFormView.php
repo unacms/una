@@ -1486,10 +1486,15 @@ BLAH;
 
     function genInputLocation(&$aInput)
     {
+        $aVars = $this->_getInputLocationVars($aInput);
+        return $this->oTemplate->parseHtmlByName('form_field_location.html', $aVars);
+    }
+
+    protected function _getInputLocationVars(&$aInput)
+    {
         $isManualInput = (int)(isset($aInput['manual_input']) && $aInput['manual_input']);
         $sIdStatus = $this->getInputId($aInput) . '_status';
         $sIdInput = $this->getInputId($aInput) . '_location';
-        $sProto = (0 === strncmp('https', BX_DOL_URL_ROOT, 5)) ? 'https' : 'http';
 
         $aVars = array (
             'key' => trim(getParam('sys_maps_api_key')),
@@ -1508,11 +1513,15 @@ BLAH;
                     'id_status' => $sIdStatus,
                     'location_string' => _t('_sys_location_undefined'),
                 ),
-            ),            
+            ),
+            'api_field_name_short' => 'short_name',
+            'api_field_name_long' => 'long_name'
         );
+
         $aLocationIndexes = self::$LOCATION_INDEXES;
         foreach ($aLocationIndexes as $sKey)
             $aVars[$sKey] = $this->getLocationVal($aInput, $sKey);
+
         if ($aVars['country']) {
             $aCountries = BxDolFormQuery::getDataItems('Country');
             $s = ($aVars['street_number'] ? $aVars['street_number'] . ', ' : '') . ($aVars['street'] ? $aVars['street'] . ', ' : '') . ($aVars['city'] ? $aVars['city'] . ', ' : '') . ($aVars['state'] ? $aVars['state'] . ', ' : '') . $aCountries[$aVars['country']];
@@ -1534,7 +1543,7 @@ BLAH;
             $aVars['input'] = $this->genInputSwitcher($aInput);
         }
 
-        return $this->oTemplate->parseHtmlByName('form_field_location.html', $aVars);
+        return $aVars;
     }
     
     public function setLocationVals ($aInput, $aVals)
