@@ -21,6 +21,7 @@ class BxPostsModule extends BxBaseModTextModule
         $CNF = &$this->_oConfig->CNF;
         $this->_aSearchableNamesExcept = array_merge($this->_aSearchableNamesExcept, array(
             $CNF['FIELD_PUBLISHED'],
+            $CNF['FIELD_ANONYMOUS'],
             $CNF['FIELD_DISABLE_COMMENTS']
         ));
     }
