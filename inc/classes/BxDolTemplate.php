@@ -1997,7 +1997,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 						$sFile = basename($aMatches[1]);
 				        $sDirectory = dirname($aMatches[1]);
 
-				        $sRootPath = realpath(BX_DIRECTORY_PATH_ROOT);
+				        $sRootPath = realpath(BX_DIRECTORY_PATH_ROOT) . '/';
 				        $sAbsolutePath = realpath(addslashes($sPath) . $sDirectory) . DIRECTORY_SEPARATOR . $sFile;
 
 				        $sRootPath = str_replace(DIRECTORY_SEPARATOR, '/', $sRootPath);
