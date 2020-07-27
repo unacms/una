@@ -113,8 +113,14 @@ class BxBaseSearchExtended extends BxDolSearchExtended
 
                 switch($oForm->aInputs[$aField['name']]['type']) {
                     case 'location':
+                    case 'location_radius':
                         $aParams['cond'][$aField['name']] = $mixedValue['string'];
-                        $aParams['cond'] = array_merge($aParams['cond'], BxDolMetatags::locationsParseComponents($mixedValue['array'], $aField['name']));
+
+                        $aLocationComponents = BxDolMetatags::locationsParseComponents($mixedValue['array'], $aField['name']);
+                        if($oForm->aInputs[$aField['name']]['type'] == 'location_radius' && count($mixedValue['array']) > count($aLocationComponents))
+                            $aLocationComponents[$aField['name'] . '_rad'] = array_pop($mixedValue['array']);
+
+                        $aParams['cond'] = array_merge($aParams['cond'], $aLocationComponents);
                         break;
 
                     default:
@@ -240,7 +246,7 @@ class BxBaseSearchExtended extends BxDolSearchExtended
                 )
             );
 
-            if(in_array($aField['search_type'], array('location')))
+            if(in_array($aField['search_type'], array('location', 'location_radius')))
                 $aForm['inputs'][$aField['name']]['manual_input'] = true;
         }
 
