@@ -1656,7 +1656,8 @@ BLAH;
                 ),
             ),
             'api_field_name_short' => 'short_name',
-            'api_field_name_long' => 'long_name'
+            'api_field_name_long' => 'long_name',
+            'api_field_name_2_length' => json_encode(array()),
         );
 
         $aLocationIndexes = self::$LOCATION_INDEXES;

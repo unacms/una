@@ -36,6 +36,8 @@
         var sCountry, sCity;
         var sNameShort = '__api_field_name_short__';
         var sNameLong = '__api_field_name_long__';
+        var aName2Lenth = __api_field_name_2_length__;
+        aName2Lenth = jQuery.extend({}, aName2Lenth != undefined ? aName2Lenth : {});
 
         for(var sKey in oBxLocationHashMap) {
             oBxLocationHashMap[sKey].done = false;
@@ -67,6 +69,9 @@
                             sIndex = sNameLong;
                             break;
                     }
+
+                    if(aName2Lenth[sKey] != undefined)
+                        sIndex = aName2Lenth[sKey];
 
                     $('[name="' + oMapItem.html + '"]').val(oApi[j][sIndex]);
 
