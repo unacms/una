@@ -169,6 +169,8 @@ class BxBaseStudioPermissionsLevels extends BxDolStudioPermissionsLevels
             BxDolForm::setSubmittedValue('QuotaMaxFileSize', self::$iBinMB * $fQuotaMaxFileSize, $oForm->aFormAttrs['method']);
 
             if($oForm->update($iId) !== false) {
+                $this->oDb->cleanCache('sys_acl_levels' . $iId);
+
                 $aLevel = array();
                 $this->oDb->getLevels(array('type' => 'by_id', 'value' => (int)$iId), $aLevel, false);
 
