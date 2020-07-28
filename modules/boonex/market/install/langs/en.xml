@@ -38,7 +38,7 @@
 	<string name="_bx_market_form_entry_input_price_single"><![CDATA[Price]]></string>
     <string name="_bx_market_form_entry_input_price_single_inf"><![CDATA[Leave empty to make the product free.]]></string>
     <string name="_bx_market_form_entry_input_sys_price_recurring"><![CDATA[Recurring price]]></string>
-	<string name="_bx_market_form_entry_input_price_recurring"><![CDATA[Price]]></string>
+	<string name="_bx_market_form_entry_input_price_recurring"><![CDATA[Rent]]></string>
     <string name="_bx_market_form_entry_input_price_recurring_inf"><![CDATA[Select 'None' to make the product free.]]></string>
     <string name="_bx_market_form_entry_input_sys_duration_recurring"><![CDATA[Billing period]]></string>
     <string name="_bx_market_form_entry_input_duration_recurring"><![CDATA[Billing period]]></string>

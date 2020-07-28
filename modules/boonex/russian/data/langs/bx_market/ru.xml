@@ -38,7 +38,7 @@
 	<string name="_bx_market_form_entry_input_price_single"><![CDATA[Цена]]></string>
     <string name="_bx_market_form_entry_input_price_single_inf"><![CDATA[Оставьте пустым, чтобы сделать продукт бесплатным.]]></string>
 	<string name="_bx_market_form_entry_input_sys_price_recurring"><![CDATA[Периодические выплаты]]></string>
-	<string name="_bx_market_form_entry_input_price_recurring"><![CDATA[Оплата за период]]></string>
+	<string name="_bx_market_form_entry_input_price_recurring"><![CDATA[Рента]]></string>
     <string name="_bx_market_form_entry_input_price_recurring_inf"><![CDATA[Выберите 'Нет', чтобы сделать продукт бесплатным.]]></string>
 	<string name="_bx_market_form_entry_input_sys_duration_recurring"><![CDATA[Период оплаты]]></string>
     <string name="_bx_market_form_entry_input_duration_recurring"><![CDATA[Период оплаты]]></string>
