@@ -16,6 +16,11 @@ class BxFontAwesomeDb extends BxDolModuleDb
         parent::__construct($oConfig);
     }
 
+    function getActiveFont()
+    {
+        return $this->getOne("SELECT `content` FROM `sys_preloader` WHERE `module` = 'bx_fontawesome' AND `type` = 'css_system' AND `active` = 1 AND `content` IN('fonts-light.css','fonts-duotone.css','fonts-all.css') LIMIT 1");
+    }
+
     function switchFont($sFont)
     {
         $this->query("UPDATE `sys_preloader` SET `active` = :active WHERE `module` = 'bx_fontawesome' AND `type` = 'css_system' AND `content` = 'fonts-light.css'", array('active' => 'light' == $sFont ? 1 : 0));

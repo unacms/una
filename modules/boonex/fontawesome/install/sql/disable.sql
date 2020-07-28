@@ -16,3 +16,7 @@ UPDATE `sys_preloader` SET `active` = 1 WHERE `module` = 'system' AND `type` = '
 
 DELETE FROM `sys_preloader` WHERE `module` = 'bx_fontawesome';
 
+-- Injections
+
+DELETE FROM `sys_injections` WHERE `name` IN('bx_fontawesome');
+
