@@ -194,7 +194,17 @@ class BxBaseModGeneralDb extends BxDolModuleDb
             $sSearchValue = "";
             switch ($aSearchParam['operator']) {
                 case 'like':
-                    $sSearchValue = " LIKE " . $this->escape("%" . preg_replace('/\s+/', '%', $aSearchParam['value']) . "%");
+                    if(is_array($aSearchParam['value'])) {
+                        $sSubCondition = "0";
+                        foreach($aSearchParam['value'] as $sValue)
+                            if(!empty($sValue))
+                                $sSubCondition .= " OR `" . $CNF['TABLE_ENTRIES'] . "`.`" . $sSearchParam . "` LIKE " . $this->_getEbsiLike($sValue);
+
+                        if($sSubCondition != "0")
+                            $sWhereConditions .= " AND (" . $sSubCondition . ")";
+                    }
+                    else
+                        $sSearchValue = " LIKE " . $this->_getEbsiLike($aSearchParam['value']);
                     break;
 
                 case 'in':
@@ -288,6 +298,11 @@ class BxBaseModGeneralDb extends BxDolModuleDb
             $aOrders[] = "`" . (isset($aOrder['table']) ? $aOrder['table'] : $CNF['TABLE_ENTRIES']) . "`.`" . (!empty($aOrder['field']) ? $aOrder['field'] : $CNF['FIELD_ADDED']) . "` " . (!empty($aOrder['direction']) ? strtoupper($aOrder['direction']) : 'DESC');
 
         $sOrderClause .= implode(', ', $aOrders);
+    }
+
+    protected function _getEbsiLike($sValue)
+    {
+        return $this->escape("%" . preg_replace('/\s+/', '%', $sValue) . "%");
     }
 }
 

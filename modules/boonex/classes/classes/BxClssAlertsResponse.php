@@ -19,6 +19,8 @@ class BxClssAlertsResponse extends BxBaseModTextAlertsResponse
 
     public function response($oAlert)
     {
+        parent::response($oAlert);
+
         $CNF = $this->_oModule->_oConfig->CNF;
 
         if ('bx_classes' == $oAlert->sUnit && 'commentPost' == $oAlert->sAction) {

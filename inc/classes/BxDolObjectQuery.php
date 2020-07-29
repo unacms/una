@@ -67,9 +67,21 @@ class BxDolObjectQuery extends BxDolDb
             return array();
 
         return array (
-            'fields' => ", `{$this->_sTableTrack}`.`author_id` as `favorer_id` ",
-            'where' => $this->prepareAsString(" AND `{$this->_sTableTrack}`.`author_id` = ?", $iAuthorId),
+            'fields' => ", `{$this->_sTableTrack}`.`{$this->_sTableTrackFieldAuthor}` as `{$this->_sTableTrackFieldAuthor}` ",
+            'where' => $this->prepareAsString(" AND `{$this->_sTableTrack}`.`{$this->_sTableTrackFieldAuthor}` = ?", $iAuthorId),
             'join' => " LEFT JOIN `{$this->_sTableTrack}` ON (`{$this->_sTableTrack}`.`object_id` = `{$sMainTable}`.`{$sMainField}`) ",
+        );
+    }
+
+    public function getSqlPartsTrackAuthor($sMainTable, $sMainField, $iObjectId = 0)
+    {
+        if(empty($this->_sTableTrack) || empty($sMainTable) || empty($sMainField))
+            return array();
+
+        return array (
+            'fields' => ", `{$this->_sTableTrack}`.`object_id` as `object_id` ",
+            'where' => $this->prepareAsString(" AND `{$this->_sTableTrack}`.`object_id` = ?", $iObjectId),
+            'join' => " LEFT JOIN `{$this->_sTableTrack}` ON (`{$this->_sTableTrack}`.`{$this->_sTableTrackFieldAuthor}` = `{$sMainTable}`.`{$sMainField}`) ",
         );
     }
 

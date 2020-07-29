@@ -34,6 +34,10 @@
 
     var bx_location_process_address = function(oApi) {
         var sCountry, sCity;
+        var sNameShort = '__api_field_name_short__';
+        var sNameLong = '__api_field_name_long__';
+        var aName2Lenth = __api_field_name_2_length__;
+        aName2Lenth = jQuery.extend({}, aName2Lenth != undefined ? aName2Lenth : {});
 
         for(var sKey in oBxLocationHashMap) {
             oBxLocationHashMap[sKey].done = false;
@@ -50,21 +54,24 @@
                     if(oApi[j].types.indexOf(oMapItem.api[i]) === -1) 
                         continue;
 
-                    var sIndex = 'short_name';
+                    var sIndex = sNameShort;
                     switch(sKey) {
                         case 'country':
-                            sCountry = oApi[j].long_name;
+                            sCountry = oApi[j][sNameLong];
                             break;
 
                         case 'city':
-                            sIndex = 'long_name';
-                            sCity = oApi[j].short_name;
+                            sIndex = sNameLong;
+                            sCity = oApi[j][sNameShort];
                             break;
 
                         case 'street':
-                            sIndex = 'long_name';
+                            sIndex = sNameLong;
                             break;
                     }
+
+                    if(aName2Lenth[sKey] != undefined)
+                        sIndex = aName2Lenth[sKey];
 
                     $('[name="' + oMapItem.html + '"]').val(oApi[j][sIndex]);
 

@@ -58,6 +58,11 @@ class BxBaseServiceMetatags extends BxDol
 		return $sResult;
     }
 
+    public function serviceBrowseLabels($aParams = array())
+    {
+        return BxDolLabel::getInstance()->getLabelsBrowse($aParams);
+    }
+
     /**
      * Get location map.
      * @param $sObject metatgs object to get keywords cloud for

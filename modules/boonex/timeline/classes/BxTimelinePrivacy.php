@@ -25,10 +25,7 @@ class BxTimelinePrivacy extends BxBaseModNotificationsPrivacy
         if(!$this->_aObject['spaces'])
             return $aValues;
 
-        if(!($oProfile = BxDolProfile::getInstance($iOwnerId)))
-            return $aValues;
-
-        if(!($aModules = BxDolModuleQuery::getInstance()->getModules()))
+        if(!empty($aParams['display']) && $aParams['display'] != $this->_oModule->_oConfig->getObject('form_display_post_add'))
             return $aValues;
 
         $sConnections = $this->_oModule->_oConfig->getObject('conn_subscriptions');

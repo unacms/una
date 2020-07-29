@@ -50,6 +50,7 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                     'type' => $oAlert->sUnit,
                     'action' => $oAlert->sAction,
                     'object_id' => $oAlert->iObject,
+                    'object_owner_id' => $iObjectAuthorId,
                     'object_privacy_view' => $iObjectPrivacyView,
                     'content' => $sContent,
                     'title' => '',

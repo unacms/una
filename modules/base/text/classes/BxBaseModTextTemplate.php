@@ -48,7 +48,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
     {
         $CNF = &$this->getModule()->_oConfig->CNF;
 
-        $aStoragesKeys = array('OBJECT_STORAGE_PHOTOS', 'OBJECT_STORAGE_VIDEOS', 'OBJECT_STORAGE_FILES');
+        $aStoragesKeys = array('OBJECT_STORAGE_PHOTOS', 'OBJECT_STORAGE_VIDEOS', 'OBJECT_STORAGE_SOUNDS', 'OBJECT_STORAGE_FILES');
 
         $aStorages = array();
         foreach($aStoragesKeys as $sKey)

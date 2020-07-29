@@ -9,6 +9,7 @@
 	<string name="_bx_events_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
     <string name="_bx_events_option_time_format"><![CDATA[Time format]]></string>
     <string name="_bx_events_option_short_date_format"><![CDATA[Short date format]]></string>
+    <string name="_bx_events_option_datetime_format"><![CDATA[Date and time format]]></string>
     <string name="_bx_events_option_summary_chars"><![CDATA[Number of characters in auto-cropped event summary]]></string>
     <string name="_bx_events_option_searchable_fields"><![CDATA[Searchable fields]]></string>
     <string name="_bx_events_option_public_subscribed_me"><![CDATA[Public list of interested members]]></string>

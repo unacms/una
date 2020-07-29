@@ -164,7 +164,7 @@ class BxDolObject extends BxDolFactory implements iBxDolReplaceable
         );
     }
     
-	public function getSqlParts($sMainTable, $sMainField)
+    public function getSqlParts($sMainTable, $sMainField)
     {
         if(!$this->isEnabled())
             return array();
@@ -178,6 +178,14 @@ class BxDolObject extends BxDolFactory implements iBxDolReplaceable
             return array();
 
         return $this->_oQuery->getSqlPartsTrack($sMainTable, $sMainField, $iAuthorId);
+    }
+
+    public function getSqlPartsTrackAuthor($sMainTable, $sMainField, $iObjectId = 0)
+    {
+        if(!$this->isEnabled())
+            return array();
+
+        return $this->_oQuery->getSqlPartsTrackAuthor($sMainTable, $sMainField, $iObjectId);
     }
 
     public function addMarkers($aMarkers)

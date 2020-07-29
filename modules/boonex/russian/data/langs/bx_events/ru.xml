@@ -9,6 +9,7 @@
 	<string name="_bx_events_option_num_rss"><![CDATA[Количество элементов в ленте RSS]]></string>
     <string name="_bx_events_option_time_format"><![CDATA[Формат времени]]></string>
     <string name="_bx_events_option_short_date_format"><![CDATA[Короткий формат даты]]></string>
+    <string name="_bx_events_option_datetime_format"><![CDATA[Формат даты со временем]]></string>
     <string name="_bx_events_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к событию]]></string>
     <string name="_bx_events_option_searchable_fields"><![CDATA[Поля для поиска]]></string>
     <string name="_bx_events_option_public_subscribed_me"><![CDATA[Открытый список заинтересованных пользователей]]></string>

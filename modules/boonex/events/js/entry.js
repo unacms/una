@@ -23,7 +23,8 @@ function BxEventsEntry(oOptions) {
 }
 
 BxEventsEntry.prototype.init = function() {
-    $("[name = 'timezone']").val(moment.tz.guess());
+    if ('UTC' == $("[name = 'timezone']").val())
+        $("[name = 'timezone']").val(moment.tz.guess());
 };
 
 /** @} */

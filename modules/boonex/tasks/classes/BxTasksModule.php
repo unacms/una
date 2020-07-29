@@ -98,7 +98,7 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
 	
 	public function actionProcessTaskListForm($iContextId, $iId)
     {
-        if (!$this->isAllowAdd($iContextId))
+        if (!$this->isAllowAdd(-$iContextId))
             return;
         
 		$CNF = &$this->_oConfig->CNF;
@@ -162,7 +162,7 @@ class BxTasksModule extends BxBaseModTextModule implements iBxDolCalendarService
 	
 	public function actionProcessTaskForm($iContextId, $iListId)
     {
-        if (!$this->isAllowAdd($iContextId))
+        if (!$this->isAllowAdd(-$iContextId))
             return;
         
 		$CNF = &$this->_oConfig->CNF;

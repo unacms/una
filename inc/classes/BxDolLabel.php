@@ -11,11 +11,17 @@ class BxDolLabel extends BxDolFactory implements iBxDolSingleton
 {
     protected $_oDb;
 
+    protected $_sForm;
+    protected $_sFormDisplaySelect;
+
     protected function __construct()
     {
         parent::__construct();
 
         $this->_oDb = new BxDolLabelQuery();
+
+        $this->_sForm= 'sys_labels';
+        $this->_sFormDisplaySelect = 'sys_labels_select';
     }
 
     public function __clone()
@@ -24,17 +30,72 @@ class BxDolLabel extends BxDolFactory implements iBxDolSingleton
             trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
 
-    public static function getInstance()
+    public static function getInstance($oTemplate = false)
     {
         if(!isset($GLOBALS['bxDolClasses'][__CLASS__]))
-            $GLOBALS['bxDolClasses'][__CLASS__] = new BxDolLabel();
+            $GLOBALS['bxDolClasses'][__CLASS__] = new BxTemplLabel($oTemplate);
 
         return $GLOBALS['bxDolClasses'][__CLASS__];
+    }
+
+    public function actionSelectLabels()
+    {
+        return echoJson($this->selectLabels(array(
+            'list' => bx_get('value')
+        )));
+    }
+
+    public function actionLabelsList()
+    {
+        $sTerm = bx_get('term');
+
+        $aLabels = $this->getLabels(array('type' => 'term', 'term' => $sTerm));
+
+        $aResult = array();
+        foreach($aLabels as $aLabel)
+            $aResult[] = array (
+            	'label' => $aLabel['value'], 
+                'value' => $aLabel['value'], 
+            );
+
+        echoJson($aResult);
+    }
+
+    public function getElementLabels($aInput = array())
+    {
+        $oForm = BxDolForm::getObjectInstance($this->_sForm, $this->_sFormDisplaySelect);
+        if(!$oForm)
+            return '';
+
+        $aInput['attrs']['id'] = $this->_aHtmlIds['labels_element'];
+
+        return $oForm->getElementLabels($aInput);
     }
 
     public function getLabels($aParams = array())
     {
         return $this->_oDb->getLabels($aParams);
+    }
+
+    public function getLabelUrl($sKeyword, $mixedSection = false) 
+    {   
+        $sSectionPart = '';
+        if(!empty($mixedSection)) {
+            if (is_array($mixedSection))
+                $sSectionPart = '&section[]=' . implode('&section[]=', $mixedSection);
+            elseif (is_string($mixedSection))
+                $sSectionPart = '&section[]=' . $mixedSection;
+        }
+
+        $sUrl = BX_DOL_URL_ROOT . 'searchKeyword.php?type=keyword&keyword=' . rawurlencode($sKeyword) . $sSectionPart;
+
+        bx_alert('meta_keyword', 'url', 0, false, array(
+           'url' => &$sUrl,
+           'keyword' => $sKeyword,
+           'section' => $mixedSection,
+        ));
+
+        return $sUrl;
     }
 
     public function onAdd($iId)

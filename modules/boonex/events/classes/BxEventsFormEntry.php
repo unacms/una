@@ -121,8 +121,32 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
         return $sJsCode . parent::getCode($bDynamicMode);
     }
 
-    function initChecker ($aValues = array (), $aSpecificValues = array())
+    protected function fixTimezone(&$aValues, $bAdd = true)
     {
+        $sTimezone = 'UTC';
+        if (isset($aValues['timezone']) && $aValues['timezone'])
+            $sTimezone = $aValues['timezone'];
+        elseif (isset($this->aInputs['timezone']['value']) && $this->aInputs['timezone']['value'])
+            $sTimezone = $this->aInputs['timezone']['value'];
+
+        $oTz = new DateTimeZone($sTimezone);
+        $oDateTz = new DateTime("now", $oTz);
+        $iTimeOffset = $oTz->getOffset($oDateTz);
+        $a = array('date_start', 'date_end');
+        foreach ($a as $sField) {
+            if (!isset($aValues[$sField]) && isset($this->aInputs[$sField]['value']) && $this->aInputs[$sField]['value']) {
+                $aValues[$sField] = $this->getCleanValue($sField);
+            }
+            if (isset($aValues[$sField]) && $aValues[$sField] && isset($this->aInputs[$sField]) && isset($this->aInputs[$sField]['db']['pass']) && 'DateTimeTs' == $this->aInputs[$sField]['db']['pass']) {
+                $aValues[$sField] += ($bAdd ? $iTimeOffset : -$iTimeOffset);
+            }
+        }
+    }
+
+    function initChecker ($aValues = array (), $aSpecificValues = array())
+    {        
+        $this->fixTimezone($aValues, true);
+
         if (isset($aValues[$this->_oModule->_oConfig->CNF['FIELD_ID']]))
             $this->_iContentId = $aValues[$this->_oModule->_oConfig->CNF['FIELD_ID']];
         
@@ -192,8 +216,9 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
 
         $iTimeStart = bx_process_input ($this->aInputs['date_start']['value'], isset($this->aInputs['date_start']['date_filter']) ? $this->aInputs['date_start']['date_filter'] : BX_DATA_DATETIME_TS, false, false);
         $iTimeEnd = bx_process_input ($this->aInputs['date_end']['value'], isset($this->aInputs['date_end']['date_filter']) ? $this->aInputs['date_end']['date_filter'] : BX_DATA_DATETIME_TS, false, false);
-        $oDateStart = date_create(date('Y-m-d H:i:s', $iTimeStart), new DateTimeZone($this->aInputs['timezone']['value'] ? $this->aInputs['timezone']['value'] : 'UTC'));
-        $oDateEnd = date_create(date('Y-m-d H:i:s', $iTimeEnd), new DateTimeZone($this->aInputs['timezone']['value'] ? $this->aInputs['timezone']['value'] : 'UTC'));
+
+        $oDateStart = date_create("@$iTimeStart");
+        $oDateEnd = date_create("@$iTimeEnd");
 
         return array('start' => $oDateStart, 'end' => $oDateEnd);
     }
@@ -204,6 +229,7 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
             return '';
 
         $aStartEnd = $this->_getStartEnd();
+
         if ($aStartEnd === false)
             $aInput['value'] = "Timezone, date start & date end fields are required to display this field";
         else if(is_array($aStartEnd) && empty($aStartEnd))
@@ -228,9 +254,9 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
             if(is_array($aStartEnd) && empty($aStartEnd))
                 return null;
 
-            $sFormat = $aStartEnd['start']->format('Y-m-d') == $aStartEnd['end']->format('Y-m-d') ? BX_FORMAT_DATE : BX_FORMAT_DATE_TIME;
+            $sFormat = getParam($aStartEnd['start']->format('Y-m-d') == $aStartEnd['end']->format('Y-m-d') ? 'bx_events_short_date_format' : 'bx_events_datetime_format');
             $oDate = 'date_start' == $aInput['name'] ? $aStartEnd['start'] : $aStartEnd['end'];
-            return bx_time_js ($oDate->getTimestamp(), $sFormat, true);
+            return $oDate->format($sFormat);
         }
         return parent::genViewRowValue($aInput);
     }
@@ -265,6 +291,8 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
 
     public function insert ($aValsToAdd = array(), $isIgnore = false)
     {
+        $this->fixTimezone($aValsToAdd, false);
+
         $iContentId = parent::insert ($aValsToAdd, $isIgnore);
 
         if (isset($this->aInputs['reoccurring']) && is_array($this->aInputs['reoccurring']['ghost_template']) && !isset($this->aInputs['reoccurring']['ghost_template']['inputs'])) {
@@ -278,6 +306,8 @@ class BxEventsFormEntry extends BxBaseModGroupsFormEntry
 
     function update ($val, $aValsToAdd = array(), &$aTrackTextFieldsChanges = null)
     {
+        $this->fixTimezone($aValsToAdd, false);
+
         $iAffectedRows = parent::update($val, $aValsToAdd, $aTrackTextFieldsChanges);
 
         if (isset($this->aInputs['reoccurring']) && is_array($this->aInputs['reoccurring']['ghost_template']) && !isset($this->aInputs['reoccurring']['ghost_template']['inputs'])) {

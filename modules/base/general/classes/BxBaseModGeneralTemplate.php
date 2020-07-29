@@ -351,6 +351,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         $oStorage = BxDolStorage::getObjectInstance($sStorage);
 
         list($oTranscoder, $oTranscoderPreview) = $this->getAttachmentsImagesTranscoders($sStorage);
+        $oTranscoderSound = isset($CNF['OBJECT_SOUNDS_TRANSCODER']) && $CNF['OBJECT_SOUNDS_TRANSCODER'] ? BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_SOUNDS_TRANSCODER']) : null;
         $aTranscodersVideo = $this->getAttachmentsVideoTranscoders($sStorage);
 
         $aGhostFiles = $oStorage->getGhosts ($this->getModule()->serviceGetContentOwnerProfileId($aData[$CNF['FIELD_ID']]), $aData[$CNF['FIELD_ID']]);
@@ -373,6 +374,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
 
             $isImage = $oTranscoder && (0 === strncmp('image/', $a['mime_type'], 6)) && $oTranscoder->isMimeTypeSupported($a['mime_type']); // preview for images, transcoder object for preview must be defined
             $isVideo = $aTranscodersVideo && (0 === strncmp('video/', $a['mime_type'], 6)) && $aTranscodersVideo['poster']->isMimeTypeSupported($a['mime_type']); // preview for videos, transcoder object for video must be defined
+            $isSound = $oTranscoderSound && (0 === strncmp('audio/', $a['mime_type'], 6)) && $oTranscoderSound->isMimeTypeSupported($a['mime_type']); // preview for sounds, transcoder object for sounds must be defined
             $sUrlOriginal = $oStorage->getFileUrlById($a['id']);
             $sImgPopupId = 'bx-messages-atachment-popup-' . $a['id'];
 
@@ -409,9 +411,24 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
                 ),
             );
 
+            // sounds are displayed inline
+            $a['bx_if:sound'] = array (
+                'condition' => $isSound,
+                'content' => array (
+                    'sound' => $isSound && $oTranscoderSound && ($oPlayer = BxDolPlayer::getObjectInstance()) ? $this->parseHtmlByName('attachment_sound.html', array(
+                        'file_name' => $a['file_name'],
+                        'file_url' => $oTranscoderSound ? $oTranscoderSound->getFileUrl($a['id']) : '',
+                        'player' => $oTranscoderSound && $oTranscoderSound->isFileReady($a['id']) ? 
+                            $oPlayer->getCodeAudio (BX_PLAYER_STANDARD, array(
+                                'mp3' => $oTranscoderSound->getFileUrl($a['id']),
+                            )) : _t('_sys_txt_err_sound_not_transcoded_yet'),
+                    )) : '',
+                ),
+            );
+
             // non-images are displayed as text links to original file
             $a['bx_if:not_image'] = array (
-                'condition' => !$isImage && !$isVideo,
+                'condition' => !$isImage && !$isVideo && !$isSound,
                 'content' => array (
                     'url_original' => $sUrlOriginal,
                     'attr_file_name' => bx_html_attribute($a['file_name']),
@@ -427,10 +444,79 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
 
     public function embedVideo($iFileId)
     {
+        $CNF = $this->getModule()->_oConfig->CNF;
+        list($oPlayer, $oStorage, $aContentInfo, $a) = $this->_embedChecks('OBJECT_STORAGE_VIDEOS', $iFileId);
+
+        // check if file is really video
+        $aTranscodersVideo = $this->getAttachmentsVideoTranscoders();        
+        if (!$aTranscodersVideo || (0 !== strncmp('video/', $a['mime_type'], 6)) || !$aTranscodersVideo['poster']->isMimeTypeSupported($a['mime_type'])) {
+            $this->displayErrorOccured('', BX_PAGE_EMBED);
+            exit;
+        }
+
+        // check HD video version
+        $sVideoUrlHd = '';
+        $sVideoUrl = $oStorage->getFileUrlById($a['id']);
+        $aVideoSize = $aTranscodersVideo['mp4_hd']->getVideoSize($sVideoUrl);
+        if (!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] >= 720)
+            $sVideoUrlHd = $aTranscodersVideo['mp4_hd']->getFileUrl($a['id']);
+
+        // generate player code
+        $sCode = $oPlayer->getCodeVideo (BX_PLAYER_EMBED, array(
+            'poster' => $aTranscodersVideo['poster']->getFileUrl($a['id']),
+            'mp4' => array(
+                'sd' => $aTranscodersVideo['mp4']->getFileUrl($a['id']), 
+                'hd' => $sVideoUrlHd
+            ),
+        ));
+
+        // display page
+        $oTemplate = BxDolTemplate::getInstance();
+        $oTemplate->setPageNameIndex (BX_PAGE_EMBED);
+        $oTemplate->setPageHeader ($a['file_name']);
+        $oTemplate->setPageContent ('page_main_code', $sCode);
+        $oTemplate->getPageCode();
+        exit;
+    }
+
+    public function embedSound($iFileId)
+    {
+        $CNF = $this->getModule()->_oConfig->CNF;
+        list($oPlayer, $oStorage, $aContentInfo, $a) = $this->_embedChecks('OBJECT_STORAGE_SOUNDS', $iFileId);
+
+        // check if file is really audio
+        $oTranscoderSound = isset($CNF['OBJECT_SOUNDS_TRANSCODER']) ? BxDolTranscoderImage::getObjectInstance($CNF['OBJECT_SOUNDS_TRANSCODER']) : null;
+        if (!$oTranscoderSound || (0 !== strncmp('audio/', $a['mime_type'], 6)) || !$oTranscoderSound->isMimeTypeSupported($a['mime_type'])) {
+            $this->displayErrorOccured('', BX_PAGE_EMBED);
+            exit;
+        }
+
+        if (!$oTranscoderSound->isFileReady($a['id'])) {
+            $oTranscoderSound->getFileUrl($a['id']); // queue for encoding
+            $this->displayMsg('_sys_txt_err_sound_not_transcoded_yet', true, BX_PAGE_EMBED);
+            exit;
+        }
+
+        // generate player code
+        $sCode = $oPlayer->getCodeAudio (BX_PLAYER_EMBED, array(
+            'mp3' => $oTranscoderSound->getFileUrl($a['id']),
+        ));
+
+        // display page
+        $oTemplate = BxDolTemplate::getInstance();
+        $oTemplate->setPageNameIndex (BX_PAGE_EMBED);
+        $oTemplate->setPageHeader ($a['file_name']);
+        $oTemplate->setPageContent ('page_main_code', $sCode);
+        $oTemplate->getPageCode();
+        exit;
+    }
+
+    protected function _embedChecks($sStorageKey, $iFileId)
+    {
         // general checks
         $oPlayer = BxDolPlayer::getObjectInstance();
         $CNF = $this->getModule()->_oConfig->CNF;
-        $sStorage = isset($CNF['OBJECT_STORAGE_VIDEOS']) ? $CNF['OBJECT_STORAGE_VIDEOS'] : false;
+        $sStorage = isset($CNF[$sStorageKey]) ? $CNF[$sStorageKey] : false;
         if (!$oPlayer || !$sStorage || !($oStorage = BxDolStorage::getObjectInstance($sStorage))) {
             $this->displayErrorOccured('', BX_PAGE_EMBED);
             exit;
@@ -465,36 +551,7 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             exit;
         }
 
-        // check if file is really video
-        $aTranscodersVideo = $this->getAttachmentsVideoTranscoders($sStorage);        
-        if (!$aTranscodersVideo || (0 !== strncmp('video/', $a['mime_type'], 6)) || !$aTranscodersVideo['poster']->isMimeTypeSupported($a['mime_type'])) {
-            $this->displayErrorOccured('', BX_PAGE_EMBED);
-            exit;
-        }
-
-        // check HD video version
-        $sVideoUrlHd = '';
-        $sVideoUrl = $oStorage->getFileUrlById($a['id']);
-        $aVideoSize = $aTranscodersVideo['mp4_hd']->getVideoSize($sVideoUrl);
-        if (!empty($aVideoSize) && is_array($aVideoSize) && (int)$aVideoSize['h'] >= 720)
-            $sVideoUrlHd = $aTranscodersVideo['mp4_hd']->getFileUrl($a['id']);
-
-        // generate player code
-        $sCode = $oPlayer->getCodeVideo (BX_PLAYER_EMBED, array(
-            'poster' => $aTranscodersVideo['poster']->getFileUrl($a['id']),
-            'mp4' => array(
-                'sd' => $aTranscodersVideo['mp4']->getFileUrl($a['id']), 
-                'hd' => $sVideoUrlHd
-            ),
-        ));
-
-        // display page
-        $oTemplate = BxDolTemplate::getInstance();
-        $oTemplate->setPageNameIndex (BX_PAGE_EMBED);
-        $oTemplate->setPageHeader ($a['file_name']);
-        $oTemplate->setPageContent ('page_main_code', $sCode);
-        $oTemplate->getPageCode();
-        exit;
+        return array($oPlayer, $oStorage, $aContentInfo, $a);
     }
 
     public function addCssJs()

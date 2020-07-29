@@ -47,6 +47,8 @@
     <string name="_bx_classes_form_entry_input_pictures"><![CDATA[]]></string>
     <string name="_bx_classes_form_entry_input_sys_videos"><![CDATA[Videos]]></string>
     <string name="_bx_classes_form_entry_input_videos"><![CDATA[]]></string>
+    <string name="_bx_classes_form_entry_input_sys_sounds"><![CDATA[Sounds]]></string>
+    <string name="_bx_classes_form_entry_input_sounds"><![CDATA[]]></string>
     <string name="_bx_classes_form_entry_input_sys_files"><![CDATA[Files]]></string>
     <string name="_bx_classes_form_entry_input_files"><![CDATA[]]></string>
     <string name="_bx_classes_form_entry_input_sys_polls"><![CDATA[Polls]]></string>
@@ -152,6 +154,12 @@
     <string name="_bx_classes_menu_item_title_system_cpa_video_html5"><![CDATA[Add Video (html5)]]></string>
     <string name="_bx_classes_menu_item_title_cpa_video_html5"><![CDATA[Add Videos]]></string>
     <string name="_bx_classes_menu_item_title_system_cpa_file_simple"><![CDATA[Add File (simple)]]></string>
+
+    <string name="_bx_classes_menu_item_title_system_cpa_sound_simple"><![CDATA[Add Sound (simple)]]></string>
+    <string name="_bx_classes_menu_item_title_cpa_sound_simple"><![CDATA[Add Sound]]></string>
+    <string name="_bx_classes_menu_item_title_system_cpa_sound_html5"><![CDATA[Add Sound (html5)]]></string>
+    <string name="_bx_classes_menu_item_title_cpa_sound_html5"><![CDATA[Add Sound]]></string>
+
     <string name="_bx_classes_menu_item_title_cpa_file_simple"><![CDATA[Add File]]></string>
     <string name="_bx_classes_menu_item_title_system_cpa_file_html5"><![CDATA[Add File (html5)]]></string>
     <string name="_bx_classes_menu_item_title_cpa_file_html5"><![CDATA[Add Files]]></string>

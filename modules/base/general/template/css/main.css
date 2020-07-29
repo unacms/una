@@ -111,15 +111,31 @@ div.bx-base-general-breadcrumb i {
     margin:1px;
     text-align: center;
 }
-.bx-base-general-attachments .bx-base-general-attachment
-.bx-base-general-attachments .bx-base-general-attachment img,
 .bx-base-general-attachments .bx-base-general-attachment video {
-    width:18.75rem;
-    height:12.5rem;
+    max-width:100%;
+    max-height:100%;
 }
 .bx-base-general-attachment a div {
     text-overflow: ellipsis;
     overflow: hidden;
+}
+
+.bx-base-general-attachment-sound {
+    position:relative;
+    height:100%;
+}
+.bx-base-general-attachment-sound-file-name,
+.bx-base-general-attachment-sound-player {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+}
+.bx-base-general-attachment-sound-file-name {
+    height:9.25rem;
+}
+.bx-base-general-attachment-sound-player {
+    height:3.25rem;
 }
 
 /* comments item */

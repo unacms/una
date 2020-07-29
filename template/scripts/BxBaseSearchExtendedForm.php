@@ -35,17 +35,18 @@ class BxBaseSearchExtendedForm extends BxTemplFormView
                 'string' => parent::getCleanValue($sName), 
                 'array' => BxDolMetatags::locationsRetrieveFromForm($sName, $this)
             );
-        
-        if($bType && $this->aInputs[$sName]['type'] == 'location_radius'){
-            $aTmp = BxDolMetatags::locationsRetrieveFromForm($sName, $this);   
-            $sValue = bx_get($sName . '_rad');
-            $iValue = is_numeric($sValue) ? (int)$sValue : 0;
-            array_push($aTmp, $iValue);
+
+        //--- Process field with 'Location Radius' type. 
+        if($bType && $this->aInputs[$sName]['type'] == 'location_radius') {
+            $aLocation = BxDolMetatags::locationsRetrieveFromForm($sName, $this);
+            $aLocation[] = (int)$this->getLocationVal($this->aInputs[$sName], 'rad');
+
             return array(
                 'string' => parent::getCleanValue($sName), 
-                'array' => $aTmp
+                'array' => $aLocation
             );
         }
+
         //--- Process field with 'Date Range Age' and 'Date-Time Range Age' type.
         if($bType && in_array($this->aInputs[$sName]['type'], array('datepicker_range_age', 'datetime_range_age'))) {
             $bTypeDateTime = $this->aInputs[$sName]['type'] == 'datetime_range_age';
@@ -157,8 +158,7 @@ class BxBaseSearchExtendedForm extends BxTemplFormView
         $aInputRadius = $aInput;
         $aInputRadius['type'] = 'text';
         $aInputRadius['name'] = $aInputRadius['name'] . '_rad';
-        $sValue = bx_get($aInputRadius['name']);
-        $aInputRadius['value'] = is_numeric($sValue) ? $sValue : '';
+        $aInputRadius['value'] = $this->getLocationVal($aInput, 'rad');
         $aInputRadius['attrs']['placeholder'] = _t('_sys_form_input_location_radius_label');
 
         return $this->oTemplate->parseHtmlByName('form_field_location_radius.html', array (

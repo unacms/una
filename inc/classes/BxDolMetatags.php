@@ -613,7 +613,8 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         $aRet = array();
         $iAdress = count($aAdress);
         for($i = 0; $i < $iAdress; $i++)
-            $aRet[$sPrefix . $aKeys[$i]] = $aAdress[$i];
+            if(isset($aKeys[$i]))
+                $aRet[$sPrefix . $aKeys[$i]] = $aAdress[$i];
 
         return $aRet;
     }

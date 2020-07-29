@@ -96,6 +96,11 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
         $this->_oTemplate->embedVideo($iFileId);
     }
 
+    public function actionFileEmbedSound($iFileId)
+    {
+        $this->_oTemplate->embedSound($iFileId);
+    }
+
     // ====== SERVICE METHODS
 
     public function serviceGetSafeServices()

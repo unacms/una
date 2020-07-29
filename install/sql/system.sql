@@ -3104,6 +3104,7 @@ INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_att
 ('sys_review', 'system', '_sys_form_review', 'cmts.php', 'a:3:{s:2:"id";s:17:"cmt-%s-form-%s-%d";s:4:"name";s:17:"cmt-%s-form-%s-%d";s:5:"class";s:14:"cmt-post-reply";}', 'cmt_submit', '', 'cmt_id', '', '', '', 0, 1, 'BxTemplCmtsReviewsForm', ''),
 ('sys_report', 'system', '_sys_form_report', 'report.php', 'a:3:{s:2:"id";s:0:"";s:4:"name";s:0:"";s:5:"class";s:17:"bx-report-do-form";}', 'submit', '', 'id', '', '', '', 0, 1, '', ''),
 ('sys_privacy_group_custom', 'system', '_sys_form_ps_group_custom', 'privacy.php', '', 'do_submit', 'sys_privacy_groups_custom', 'id', '', '', '', 0, 1, 'BxTemplPrivacyFormGroupCustom', ''),
+('sys_labels', 'system', '_sys_form_labels', 'label.php', '', 'do_submit', '', '', '', '', '', 0, 1, 'BxTemplLabelForm', ''),
 ('sys_wiki', 'system', '_sys_form_wiki', '', '', 'do_submit', 'sys_pages_wiki_blocks', 'id', '', '', '', 0, 1, 'BxTemplFormWiki', '');
 
 CREATE TABLE IF NOT EXISTS `sys_form_displays` (
@@ -3138,6 +3139,7 @@ INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `v
 ('sys_review_edit', 'system', 'sys_review', '_sys_form_review_display_edit', 0),
 ('sys_report_post', 'system', 'sys_report', '_sys_form_display_report_post', 0),
 ('sys_privacy_group_custom_manage', 'system', 'sys_privacy_group_custom', '_sys_form_display_ps_gc_manage', 0),
+('sys_labels_select', 'system', 'sys_labels', '_sys_form_labels_display_select', 0),
 ('sys_wiki_edit', 'system', 'sys_wiki', '_sys_form_display_wiki_edit', 0),
 ('sys_wiki_translate', 'system', 'sys_wiki', '_sys_form_display_wiki_translate', 0);
 
@@ -3260,6 +3262,13 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('sys_privacy_group_custom', 'system', 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_privacy_group_custom', 'system', 'do_submit', '_sys_form_ps_gc_input_caption_do_submit', '', 0, 'submit', '_sys_form_ps_gc_input_caption_system_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_privacy_group_custom', 'system', 'do_cancel', '_sys_form_ps_gc_input_caption_do_cancel', '', 0, 'button', '_sys_form_ps_gc_input_caption_system_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0),
+
+('sys_labels', 'system', 'action', '', '', 0, 'hidden', '_sys_form_labels_input_caption_system_action', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_labels', 'system', 'search', '', '', 0, 'custom', '_sys_form_labels_input_caption_system_search', '_sys_form_labels_input_caption_search', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_labels', 'system', 'list', '', '', 0, 'custom', '_sys_form_labels_input_caption_system_list', '_sys_form_labels_input_caption_list', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_labels', 'system', 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_labels', 'system', 'do_submit', '_sys_form_labels_input_caption_do_submit', '', 0, 'submit', '_sys_form_labels_input_caption_system_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_labels', 'system', 'do_cancel', '_sys_form_labels_input_caption_do_cancel', '', 0, 'button', '_sys_form_labels_input_caption_system_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0),
 
 ('sys_wiki', 'system', 'block_id', '', '', 0, 'hidden', '', '_sys_form_wiki_input_caption_block_id', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('sys_wiki', 'system', 'language', '', '', 0, 'radio_set', '', '_sys_form_wiki_input_caption_lang', '_sys_form_wiki_input_caption_lang_info', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
@@ -3416,6 +3425,13 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_privacy_group_custom_manage', 'controls', 2147483647, 1, 8),
 ('sys_privacy_group_custom_manage', 'do_submit', 2147483647, 1, 9),
 ('sys_privacy_group_custom_manage', 'do_cancel', 2147483647, 1, 10),
+
+('sys_labels_select', 'action', 2147483647, 1, 1),
+('sys_labels_select', 'search', 2147483647, 1, 2),
+('sys_labels_select', 'list', 2147483647, 1, 3),
+('sys_labels_select', 'controls', 2147483647, 1, 4),
+('sys_labels_select', 'do_submit', 2147483647, 1, 5),
+('sys_labels_select', 'do_cancel', 2147483647, 1, 6),
 
 ('sys_wiki_edit', 'block_id', 2147483647, 1, 1),
 ('sys_wiki_edit', 'language', 2147483647, 1, 2),
