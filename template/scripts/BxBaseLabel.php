@@ -95,6 +95,8 @@ class BxBaseLabel extends BxDolLabel
         $oForm->initChecker($aValues);
 
         if($oForm->isSubmittedAndValid()) {
+			$sName = $oForm->getCleanValue('name');
+
             $aLabels = array();
             if(($aLabelsSearch = $oForm->getCleanValue('search')) !== false)
                 $aLabels = array_merge($aLabels, $aLabelsSearch);
@@ -105,6 +107,7 @@ class BxBaseLabel extends BxDolLabel
             $aLabels = array_unique($aLabels);
 
             return array('eval' => $sJsObject . '.onSelectLabels(oData);', 'content' => $this->getElementLabels(array(
+				'name' => $sName,
                 'value' => $aLabels, 
             )));
         }
