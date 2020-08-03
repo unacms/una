@@ -308,7 +308,7 @@ class BxClssModule extends BxBaseModTextModule
             'title' => bx_process_output($aClass['title']),
             'url' => $this->serviceGetLink($aClass['id']),
             'tip' => $sTip,
-            'date_created' => bx_time_js($aClass['added']),
+            'date_created' => $aClass['added'] ? _t('_bx_classes_txt_added_x', bx_time_js($aClass['added'], BX_FORMAT_DATE_TIME)) : '',
             'start_date' => $aClass['start_date'] ? _t('_bx_classes_txt_start_x', bx_time_js($aClass['start_date'], BX_FORMAT_DATE_TIME)) : '',
             'end_date' => $aClass['end_date'] ? _t('_bx_classes_txt_due_x', bx_time_js($aClass['end_date'], BX_FORMAT_DATE_TIME)) : '',
         );
