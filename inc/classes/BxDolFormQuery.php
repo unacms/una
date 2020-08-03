@@ -84,8 +84,9 @@ class BxDolFormQuery extends BxDolDb
                 'uri' => $aObject['uri'],
                 'uri_title' => $aObject['uri_title'],
             ),
-            'view_mode' => $aDisplay['view_mode'],
+            'object' => $sObject,
             'display' => $sDisplayName,
+            'view_mode' => $aDisplay['view_mode'],
         );
 
         $aForm['params'] = array_merge_recursive($aDefaultsFormParams, !empty($aAddFormParams) && is_array($aAddFormParams) ? $aAddFormParams : array());
