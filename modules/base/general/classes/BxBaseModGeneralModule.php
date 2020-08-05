@@ -493,7 +493,7 @@ class BxBaseModGeneralModule extends BxDolModule
      * 
      * @code bx_srv('bx_posts', 'browse_favorite', [...]); @endcode
      * 
-     * Display entries whoch were added to favorite list by some member
+     * Display entries which were added to favorite list by some member
      * @param $iProfileId profile ID
      * @param $aParams additional browse params, see BxBaseModGeneralModule::serviceBrowse
      * 
@@ -519,9 +519,199 @@ class BxBaseModGeneralModule extends BxDolModule
             $bEmptyMessage = (bool)$aParams['empty_message'];
             unset($aParams['empty_message']);
         }
+        
+        if(bx_get('list_id') !== false && !isset($aParams['list_id']))
+            $aParams['list_id'] = (int) bx_get('list_id');
 
         return $this->_serviceBrowse ('favorite', array_merge(array('user' => $oProfile->id()), $aParams), BX_DB_PADDING_DEF, $bEmptyMessage);
     }
+    
+    /**
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-browsing Browsing
+     * @subsubsection bx_base_general-browse_favorite_lists browse_favorite_lists
+     * 
+     * @code bx_srv('bx_posts', 'browse_favorite_lists', [...]); @endcode
+     * 
+     * Display entries which were added to favorite lists grouped by lists by some member
+     * @param $iProfileId profile ID
+     * @param $aParams additional browse params, see BxBaseModGeneralModule::serviceBrowse
+     * 
+     * @see BxBaseModGeneralModule::serviceBrowseFavoriteLists BxBaseModGeneralModule::serviceBrowse
+     */
+    /** 
+     * @ref bx_base_general-browse_favorite_lists "browse_favorite_lists"
+     */
+    public function serviceBrowseFavoriteLists ($iProfileId = 0, $aParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+        
+        $oProfile = null;
+        if((int)$iProfileId)
+            $oProfile = BxDolProfile::getInstance($iProfileId);
+        if(!$oProfile && bx_get('profile_id') !== false)
+            $oProfile = BxDolProfile:: getInstance(bx_process_input(bx_get('profile_id'), BX_DATA_INT));
+        if(!$oProfile)
+            $oProfile = BxDolProfile::getInstance();
+        if(!$oProfile)
+            return '';
+        
+        $iStart = (bx_get('list_start') !== false ? (int)bx_get('list_start') : 0);
+        $iPerPage = (int)getParam($CNF['PARAM_PER_PAGE_FOR_FAVORITES_LISTS']);
+        
+        return $this->_oTemplate->getFavoriteList($oProfile, $iStart, $iPerPage, $aParams);
+    }
+    
+    /**
+     * @page service Service Calls
+     * @section bx_base_general Base General
+     * @subsection bx_base_general-browsing Browsing
+     * @subsubsection bx_base_general-browse_favorite_list_actions browse_favorite_list_actions
+     * 
+     * @code bx_srv('bx_posts', 'browse_favorite_list_actions', [...]); @endcode
+     * 
+     * Display menu actions for favorite lists
+     * 
+     * @see BxBaseModGeneralModule::serviceFavoritesListActions
+     */
+    /** 
+     * @ref bx_base_general-browse_favorite_list_actions "browse_favorite_list_actions"
+     */
+     public function serviceFavoritesListActions(){
+         $iListId = null;
+         if(!bx_get('list_id'))
+             return false;
+         
+         $iListId = (int) bx_get('list_id');
+         
+         $oProfile = null;
+         if(bx_get('profile_id') !== false)
+             $oProfile = BxDolProfile:: getInstance(bx_process_input(bx_get('profile_id'), BX_DATA_INT));
+         if(!$oProfile)
+             return false;
+
+         $CNF = &$this->_oConfig->CNF;
+         $oFavorite = BxDolFavorite::getObjectInstance($CNF['OBJECT_FAVORITES'], 0, true);
+        
+         $aList = $oFavorite->getQueryObject()->getList(array('type' => 'id', 'list_id' => $iListId));
+         
+         if (!$oFavorite->isAllowedEditList($aList['author_id']))
+             return false;
+         
+         if (empty($aList) && $iListId > 0)
+             return false;
+         
+         $aMarkers = array(
+             'js_object' => $oFavorite->getJsObjectName(),
+             'list_id' => $iListId,
+         );
+
+         $oMenu = BxDolMenu::getObjectInstance('sys_favorite_list');
+
+         $oMenu->addMarkers($aMarkers);
+         $sMenu = $oMenu->getCode();
+
+         if(empty($sMenu))
+             return '';
+
+         return $sMenu . $oFavorite->getJsScript();
+     }
+     
+     /**
+    * @page service Service Calls
+    * @section bx_base_general Base General
+    * @subsection bx_base_general-menu Menu
+    * @subsubsection bx_base_general-favorites_list_info favorites_list_info
+    * 
+    * @code bx_srv('bx_posts', 'favorites_list_info', [...]); @endcode
+    * 
+    * Favorites list info
+    * @param $aParams array with additional custom params 
+    *                 which may overwrite some default values
+    * 
+    * @see BxBaseModGeneralModule::serviceFavoritesListInfo
+    */
+    /** 
+    * @ref bx_base_general-favorites_list_info "favorites_list_info"
+    */
+    public function serviceFavoritesListInfo($aParams = array()){
+        $CNF = &$this->_oConfig->CNF;
+        
+        $iListId = null;
+        if(bx_get('list_id') === false)
+            return false;
+        
+        $iListId = (int) bx_get('list_id');
+        
+        $oProfile = null;
+        if(bx_get('profile_id') !== false)
+            $oProfile = BxDolProfile:: getInstance(bx_process_input(bx_get('profile_id'), BX_DATA_INT));
+        
+        if(!$oProfile)
+            return false;
+        
+        $oFavorite = BxDolFavorite::getObjectInstance($CNF['OBJECT_FAVORITES'], 0, true);
+        $aList = $oFavorite->getQueryObject()->getList(array('type' => 'info', 'list_id' => $iListId, 'author_id' => $oProfile->id()));    
+        if (empty($aList))
+            return false;
+    
+        return $this->_oTemplate->getFavoritesListInfo($aList, $oProfile);
+    }
+    
+    /**
+    * @page service Service Calls
+    * @section bx_base_general Base General
+    * @subsection bx_base_general-menu Menu
+    * @subsubsection bx_base_general-favorites_list_social_sharing favorites_list_social_sharing
+    * 
+    * @code bx_srv('bx_posts', 'favorites_list_social_sharing', [...]); @endcode
+    * 
+    * Favorites list social sharing actions
+    * @param $aParams array with additional custom params 
+    *                 which may overwrite some default values
+    * 
+    * @see BxBaseModGeneralModule::serviceFavoritesListSocialSharing
+    */
+    /** 
+    * @ref bx_base_general-favorites_list_social_sharing "favorites_list_social_sharing"
+    */
+    public function serviceFavoritesListSocialSharing($aParams = array()){
+        $iListId = null;
+        if(bx_get('list_id') === false)
+            return false;
+        $iListId = (int) bx_get('list_id');
+         
+        $oProfile = null;
+        if(bx_get('profile_id') !== false)
+            $oProfile = BxDolProfile:: getInstance(bx_process_input(bx_get('profile_id'), BX_DATA_INT));
+        if(!$oProfile)
+            return false;
+
+         $CNF = &$this->_oConfig->CNF;
+         $oFavorite = BxDolFavorite::getObjectInstance($CNF['OBJECT_FAVORITES'], 0, true);
+         $aList = $oFavorite->getQueryObject()->getList(array('type' => 'id', 'list_id' => $iListId));
+         if (empty($aList) && $iListId > 0)
+             return false;
+         
+         $aMarkers = array(
+             'id' => $iListId,
+             'module' => $this->_aModule['name'],
+             'url' => $this->_getFavoriteListUrl($iListId, $oProfile->id()),
+             'title' => $iListId > 0 ? $aList['title'] : _t('_sys_txt_default_favorite_list')
+         );
+
+         $oMenu = BxDolMenu::getObjectInstance('sys_social_sharing');
+         $oMenu->addMarkers($aMarkers);
+         $sMenu = $oMenu->getCode();
+
+         if(empty($sMenu))
+             return '';
+
+         return $this->_oTemplate->parseHtmlByName('entry-share.html', array(
+             'menu' => $sMenu
+         ));
+     }
     
     /**
      * Display entries posted into particular context
@@ -2325,7 +2515,7 @@ class BxBaseModGeneralModule extends BxDolModule
     {
         return getVisitorIP();
     }
-
+    
     public function getUserInfo($iUserId = 0)
     {
         $oProfile = BxDolProfile::getInstanceMagic($iUserId);
@@ -2411,6 +2601,13 @@ class BxBaseModGeneralModule extends BxDolModule
         
         return $AuditParams;
     }
+    
+    public function _getFavoriteListUrl ($iListId, $iProfileId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_FAVORITES_LIST'] . '&profile_id=' . $iProfileId . '&list_id=' . $iListId);
+    }
+    
     
     // ====== PROTECTED METHODS
 
