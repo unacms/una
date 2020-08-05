@@ -43,7 +43,7 @@ class BxVideosPageListEntry extends BxBaseModTextPageBrowse
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_LIST_VIEW']);
-        echo $this->_iListId;
+        
         if ($this->_iListId > 0){
             if (!$oPrivacy->check($this->_iListId)){
                 $this->_oTemplate->displayAccessDenied('');
