@@ -112,12 +112,14 @@ function getHtmlData( elem, url, callback, method , confirmation)
     	fPerform();
 }
 
-function loadDynamicBlockAutoPaginate (e, iStart, iPerPage, sAdditionalUrlParams) {
+function loadDynamicBlockAutoPaginate (e, iStart, iPerPage, sAdditionalUrlParams, sStartParamName, sPerPageParamName) {
 
     sUrl = location.href;
+    sStartParamName = typeof sStartParamName !== 'undefined' ?  sStartParamName : 'start';
+    sPerPageParamName = typeof sPerPageParamName !== 'undefined' ?  sPerPageParamName : 'per_page';
 
     sUrl = sUrl.replace(/start=\d+/, '').replace(/per_page=\d+/, '').replace(/[&\?]+$/, '');
-    sUrl = bx_append_url_params(sUrl, 'start=' + parseInt(iStart) + '&per_page=' + parseInt(iPerPage));
+    sUrl = bx_append_url_params(sUrl, sStartParamName + '=' + parseInt(iStart) + '&' + sPerPageParamName + '=' + parseInt(iPerPage));
     if ('undefined' != typeof(sAdditionalUrlParams))
         sUrl = bx_append_url_params(sUrl, sAdditionalUrlParams);
 

@@ -36,21 +36,76 @@ BxDolFavorite.prototype.toggleByPopup = function(oLink) {
 };
 
 BxDolFavorite.prototype.favorite = function(oLink) {
-	var $this = this;
+    var $this = this;
     var oData = this._getDefaultParams();
     oData['action'] = 'Favorite';
 
-    this._oParent = oLink;
+    this._oParent = $(oLink);
 
     $.get(
     	this._sActionsUrl,
     	oData,
     	function(oData) {
-    		$this.processJson(oData, oLink);
+    	    $this.processJson(oData, this._oParent);
     	},
     	'json'
     );
 };
+
+BxDolFavorite.prototype.showNewList = function () {
+    $("#bx-form-element-title").show();
+    $("#bx-form-element-allow_view_favorite_list_to").show();
+    $("#bx-form-element-new_list").hide();
+}
+
+BxDolFavorite.prototype.cmtDelete = function (obj, list_id) {
+    var $this = this;
+    var oData = this._getDefaultParams();
+    oData['action'] = 'DeleteList';
+    oData['list_id'] = list_id;
+
+    this._oParent = $(oLink);
+
+    $.get(
+    	this._sActionsUrl,
+    	oData,
+    	function (oData) {
+    	    $this.processJson(oData, this._oParent);
+    	},
+    	'json'
+    );
+}
+
+BxDolFavorite.prototype.cmtEdit = function (obj, list_id) {
+    var $this = this;
+    var oData = $this._getDefaultParams();
+    oData['action'] = 'EditList';
+    oData['list_id'] = list_id;
+
+    $.get(
+        $this._sActionsUrl,
+        oData,
+        function (oData) {
+            $this.processJson(oData, $(obj));
+        },
+        'json'
+    );
+}
+
+BxDolFavorite.prototype.onEditFavoriteList = function (oData, oElement) {
+    var $this = this;
+    var fContinue = function() {
+        if(oData && oData.code != 0)
+            return;
+        location.reload();
+    };
+
+    if (oData && oData.msg != undefined && oData.msg.length > 0)
+        bx_alert(oData.msg, fContinue);
+    else
+        fContinue();
+}
+
 
 BxDolFavorite.prototype.onFavorite = function(oData, oElement)
 {
@@ -90,7 +145,7 @@ BxDolFavorite.prototype.processJson = function(oData, oElement) {
 	var fContinue = function() {
 		//--- Show Popup
 	    if(oData && oData.popup != undefined) {
-	    	$('#' + oData.popup_id).remove();
+	        $('#' + oData.popup_id).remove();
 
 	    	$(oData.popup).hide().prependTo('body').dolPopup({
 	    		pointer: {
@@ -111,8 +166,11 @@ BxDolFavorite.prototype.processJson = function(oData, oElement) {
     //--- Show Message
     if(oData && oData.message != undefined)
         bx_alert(oData.message, fContinue);
-    else
-    	fContinue();
+	else
+        if (oData && oData.redirect != undefined)
+            document.location = oData.redirect;
+        else
+    	    fContinue();
 };
 
 BxDolFavorite.prototype._getButtons = function(oElement) {

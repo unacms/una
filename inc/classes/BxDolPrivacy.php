@@ -288,6 +288,11 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
 
         return in_array(BX_DOL_PG_FRIENDS_SELECTED, $aGroups) || in_array(BX_DOL_PG_RELATIONS_SELECTED, $aGroups);                
     }
+        
+    public function getGroupsBy($aParams)
+    {
+        return $this->_oDb->getGroupsBy($aParams);          
+    }
 
     public function getGroupCustom($aParams)
     {

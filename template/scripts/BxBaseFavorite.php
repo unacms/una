@@ -37,7 +37,9 @@ class BxBaseFavorite extends BxDolFavorite
             'main' => 'bx-favorite-' . $sHtmlId,
             'counter' => 'bx-favorite-counter-' . $sHtmlId,
             'do_link' => 'bx-favorite-do-link-' . $sHtmlId,
-            'by_popup' => 'bx-favorite-by-popup-' . $sHtmlId
+            'by_popup' => 'bx-favorite-by-popup-' . $sHtmlId,
+            'do_popup' => 'bx-favorite-do-popup-' . $sHtmlId,
+            'do_form' => 'bx-favorite-do-form-' . $sHtmlId,
         );
 
         $this->_aElementDefaults = array(
@@ -204,6 +206,133 @@ class BxBaseFavorite extends BxDolFavorite
                 )
             )
         ));
+    }
+    
+    protected function _getFavorite()
+    {
+        if (!$this->isEnabled())
+           return array('code' => 1, 'message' => _t('_favorite_err_not_enabled'));
+
+        $iAuthorId = $this->_getAuthorId();
+        $iObjectId = $this->getId();
+        $iObjectAuthorId = $this->_oQuery->getObjectAuthorId($iObjectId);
+        
+        $oForm = $this->_getFormObject($this->_sFormDisplayAdd);
+        $oForm->setId($this->_aHtmlIds['do_form']);
+        $oForm->setName($this->_aHtmlIds['do_form']);
+        $oForm->aParams['db']['table'] = $this->_aSystem['table_track'];
+        $oForm->aInputs['sys']['value'] = $this->_sSystem;
+        $oForm->aInputs['object_id']['value'] = $iObjectId;
+
+        $oForm->aInputs['action']['value'] = 'Favorite';
+        $oForm->aInputs['list']['values'] = $this->_oQuery->getList(array('type' => 'all', 'author_id' => $iAuthorId, 'need_default' => true));
+        $oForm->aInputs['list']['value'] = $this->_oQuery->getList(array('type' => 'object_and_author', 'object_id' => $iObjectId, 'author_id' => $iAuthorId));
+        
+        $oModule = BxDolModule::getInstance($this->_aSystem["name"]);
+        $CNF = $oModule->_oConfig->CNF;    
+       
+        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF["OBJECT_PRIVACY_LIST_VIEW"]);
+        if(!$oPrivacy) 
+            return;
+        
+        $aSave = array('db' => array('pass' => 'Xss'));
+        $aGroupChooser = $oPrivacy->getGroupChooser($CNF["OBJECT_PRIVACY_LIST_VIEW"]);
+        $oForm->aInputs["allow_view_favorite_list_to"] = array_merge($oForm->aInputs["allow_view_favorite_list_to"], $aGroupChooser, $aSave);
+        
+        if($oForm->isSubmittedAndValid()) {
+           
+            $mList = $oForm->getCleanValue('list');
+            $aList = is_array($mList) ? $mList : array();
+            
+            $sTitle = $oForm->getCleanValue('title');
+            if ($sTitle){
+                 $sAllowViewTo = $oForm->getCleanValue('allow_view_favorite_list_to');
+                 $iAddList = $this->_oQuery->addList($iAuthorId, $sTitle, $sAllowViewTo);
+                 array_push($aList, $iAddList);
+            }
+            $this->_oQuery->clearFavorite($iObjectId, $iAuthorId);
+           
+            $bPerformed = count($aList) > 0 ? true: false;
+            
+            foreach($aList as $iList) {
+                $this->_oQuery->doFavorite($iObjectId, $iAuthorId, $iList);
+            }
+            bx_alert($this->_sSystem, 'favorite', $iObjectId, $iAuthorId, array('favorite_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId, 'list_ids' => $aList));
+            bx_alert('favorite', 'do', 0, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId, 'list_ids' => $aList));
+            
+            $aFavorite = $this->_oQuery->getFavorite($iObjectId);
+            
+            return array(
+        	    'eval' => $this->getJsObjectName() . '.onFavorite(oData, oElement)',
+        	    'code' => 0, 
+        	    'count' => $aFavorite['count'],
+        	    'countf' => (int)$aFavorite['count'] > 0 ? $this->_getCounterLabel($aFavorite['count']) : '',
+                'label_icon' => $this->_getIconDoFavorite($bPerformed), 
+                'label_title' => _t($this->_getTitleDoFavorite($bPerformed)), 
+                'disabled' => false
+            );
+        }
+        
+        $sPopupId = $this->_aHtmlIds['do_popup'];
+        $sPopupContent = BxTemplFunctions::getInstance()->transBox($sPopupId, $this->_oTemplate->parseHtmlByName('favorite_do_favorite_popup.html', array(
+            'style_prefix' => $this->_sStylePrefix,
+                'js_object' => $this->getJsObjectName(),
+                'form' => str_replace('{js_object}', $this->getJsObjectName(), $oForm->getCode()),
+                'form_id' => $oForm->id,
+        )));
+
+        return array('popup' => $sPopupContent, 'popup_id' => $sPopupId);
+    }
+    
+    protected function _getEditList($aData)
+    {
+        if (!$this->isEnabled())
+            return array('code' => 1, 'message' => _t('_favorite_err_not_enabled'));
+        
+        $oForm = $this->_getFormObject($this->_sFormDisplayListEdit);
+        $oForm->setId($this->_aHtmlIds['do_form']);
+        $oForm->setName($this->_aHtmlIds['do_form']);
+        $oForm->aParams['db']['table'] = $this->_aSystem['table_track'];
+        $oForm->aInputs['sys']['value'] = $this->_sSystem;
+        $oForm->aInputs['list_id']['value'] = $aData['id'];
+        $oForm->aInputs['object_id']['value'] = 0;
+        $oForm->aInputs['action']['value'] = 'EditList';
+        $oModule = BxDolModule::getInstance($this->_aSystem["name"]);
+        $CNF = $oModule->_oConfig->CNF;    
+        
+        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF["OBJECT_PRIVACY_LIST_VIEW"]);
+        if(!$oPrivacy) 
+            return;
+        
+        $aSave = array('db' => array('pass' => 'Xss'));
+        $aGroupChooser = $oPrivacy->getGroupChooser($CNF["OBJECT_PRIVACY_LIST_VIEW"]);
+        $oForm->aInputs["allow_view_favorite_list_to"] = array_merge($oForm->aInputs["allow_view_favorite_list_to"], $aGroupChooser, $aSave);
+        
+        $oForm->aInputs['title']['value'] = $aData['title'];
+        $oForm->aInputs['allow_view_favorite_list_to']['value'] = $aData['allow_view_favorite_list_to'];
+        //echo 'yyy';
+        if($oForm->isSubmittedAndValid()) {
+            
+            $sTitle = $oForm->getCleanValue('title');
+            if ($sTitle){
+                $sAllowViewTo = $oForm->getCleanValue('allow_view_favorite_list_to');
+                $this->_oQuery->editList($aData['id'], $sTitle, $sAllowViewTo);
+            }
+            return array(
+        	    'eval' => $this->getJsObjectName() . '.onEditFavoriteList(oData, oElement)',
+        	    'code' => 0, 
+            );
+        }
+         
+        $sPopupId = $this->_aHtmlIds['do_popup'];
+        $sPopupContent = BxTemplFunctions::getInstance()->transBox($sPopupId, $this->_oTemplate->parseHtmlByName('favorite_edit_favorite_list.html', array(
+            'style_prefix' => $this->_sStylePrefix,
+                'js_object' => $this->getJsObjectName(),
+                'form' => str_replace('{js_object}', $this->getJsObjectName(), $oForm->getCode()),
+                'form_id' => $oForm->id,
+        )));
+
+        return array('popup' => $sPopupContent, 'popup_id' => $sPopupId);
     }
 
 	protected function _getFavoritedBy()
