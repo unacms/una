@@ -2293,7 +2293,7 @@ If it is not enabled then please consider implement this optimization, since it 
         <string name="_sys_form_ps_gc_input_caption_do_cancel"><![CDATA[Cancel]]></string>
   <string name="_sys_form_favorite"><![CDATA[Favorite]]></string>
   <string name="_sys_form_display_favorite_add"><![CDATA[Add to favorite list]]></string>
-  <string name="_sys_form_display_favorite_list_edit"><![CDATA[Edit to favorite list]]></string>
+  <string name="_sys_form_display_favorite_list_edit"><![CDATA[Edit favorite list]]></string>
   <string name="_sys_form_favorite_input_caption_system_sys"><![CDATA[Object Type]]></string>
   <string name="_sys_form_favorite_input_caption_system_list_id"><![CDATA[List Id]]></string>
   <string name="_sys_form_favorite_input_caption_system_object_id"><![CDATA[Object ID]]></string>
