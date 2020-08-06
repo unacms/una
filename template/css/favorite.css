@@ -68,6 +68,10 @@ div.bx-favorite div.bx-favorite-counter-holder {
 .bx-favorite-do-form .bx-form-input-checkbox_set label{
     white-space: pre;
 }
+.bx-menu-object-sys_favorite_list{
+    float:left;
+    margin-right:1rem !important;
+}
 
 /*--- Counter Styles ---*/
 .bx-favorite-counter-holder .bx-favorite-counter {

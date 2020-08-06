@@ -225,8 +225,16 @@ class BxBaseFavorite extends BxDolFavorite
         $oForm->aInputs['object_id']['value'] = $iObjectId;
 
         $oForm->aInputs['action']['value'] = 'Favorite';
-        $oForm->aInputs['list']['values'] = $this->_oQuery->getList(array('type' => 'all', 'author_id' => $iAuthorId, 'need_default' => true));
+        
+        $aListsValues = array();
+        $aLists = $this->_oQuery->getList(array('type' => 'all', 'author_id' => $iAuthorId, 'need_default' => true));
+        foreach($aLists as $aList) {
+            $aListsValues[$aList['id']] = $aList['title'] . $this->_oTemplate->parseHtmlByName('privacy_icon.html', array('icon' => BxDolPrivacy::getIcon($aList['allow_view_favorite_list_to'])));
+        }
+        $oForm->aInputs['list']['values'] = $aListsValues;
         $oForm->aInputs['list']['value'] = $this->_oQuery->getList(array('type' => 'object_and_author', 'object_id' => $iObjectId, 'author_id' => $iAuthorId));
+        $oForm->aInputs['list']['label_as_html'] = true;
+        
         
         $oModule = BxDolModule::getInstance($this->_aSystem["name"]);
         $CNF = $oModule->_oConfig->CNF;    

@@ -580,7 +580,7 @@ class BxBaseModGeneralModule extends BxDolModule
      */
      public function serviceFavoritesListActions(){
          $iListId = null;
-         if(!bx_get('list_id'))
+         if(bx_get('list_id') === false)
              return false;
          
          $iListId = (int) bx_get('list_id');
@@ -596,26 +596,32 @@ class BxBaseModGeneralModule extends BxDolModule
         
          $aList = $oFavorite->getQueryObject()->getList(array('type' => 'id', 'list_id' => $iListId));
          
-         if (!$oFavorite->isAllowedEditList($aList['author_id']))
-             return false;
-         
-         if (empty($aList) && $iListId > 0)
-             return false;
-         
+         $sRv = '';
+         if ($oFavorite->isAllowedEditList($aList['author_id']) && !empty($aList)){  
+             $aMarkers = array(
+                 'js_object' => $oFavorite->getJsObjectName(),
+                 'list_id' => $iListId,
+             );
+
+             $oMenu = BxDolMenu::getObjectInstance('sys_favorite_list');
+
+             $oMenu->addMarkers($aMarkers);
+             $sMenu = $oMenu->getCode();
+
+             $sRv .= $sMenu . $oFavorite->getJsScript();
+        }
+        
          $aMarkers = array(
-             'js_object' => $oFavorite->getJsObjectName(),
-             'list_id' => $iListId,
-         );
+            'id' => $iListId,
+            'module' => $this->_aModule['name'],
+            'url' => $this->_getFavoriteListUrl($iListId, $oProfile->id()),
+            'title' => $iListId > 0 ? $aList['title'] : _t('_sys_txt_default_favorite_list')
+        );
 
-         $oMenu = BxDolMenu::getObjectInstance('sys_favorite_list');
-
+         $oMenu = BxDolMenu::getObjectInstance('sys_social_sharing');
          $oMenu->addMarkers($aMarkers);
-         $sMenu = $oMenu->getCode();
-
-         if(empty($sMenu))
-             return '';
-
-         return $sMenu . $oFavorite->getJsScript();
+         $sRv .= $sMenu = $oMenu->getCode();
+         return $sRv;
      }
      
      /**
@@ -658,60 +664,6 @@ class BxBaseModGeneralModule extends BxDolModule
     
         return $this->_oTemplate->getFavoritesListInfo($aList, $oProfile);
     }
-    
-    /**
-    * @page service Service Calls
-    * @section bx_base_general Base General
-    * @subsection bx_base_general-menu Menu
-    * @subsubsection bx_base_general-favorites_list_social_sharing favorites_list_social_sharing
-    * 
-    * @code bx_srv('bx_posts', 'favorites_list_social_sharing', [...]); @endcode
-    * 
-    * Favorites list social sharing actions
-    * @param $aParams array with additional custom params 
-    *                 which may overwrite some default values
-    * 
-    * @see BxBaseModGeneralModule::serviceFavoritesListSocialSharing
-    */
-    /** 
-    * @ref bx_base_general-favorites_list_social_sharing "favorites_list_social_sharing"
-    */
-    public function serviceFavoritesListSocialSharing($aParams = array()){
-        $iListId = null;
-        if(bx_get('list_id') === false)
-            return false;
-        $iListId = (int) bx_get('list_id');
-         
-        $oProfile = null;
-        if(bx_get('profile_id') !== false)
-            $oProfile = BxDolProfile:: getInstance(bx_process_input(bx_get('profile_id'), BX_DATA_INT));
-        if(!$oProfile)
-            return false;
-
-         $CNF = &$this->_oConfig->CNF;
-         $oFavorite = BxDolFavorite::getObjectInstance($CNF['OBJECT_FAVORITES'], 0, true);
-         $aList = $oFavorite->getQueryObject()->getList(array('type' => 'id', 'list_id' => $iListId));
-         if (empty($aList) && $iListId > 0)
-             return false;
-         
-         $aMarkers = array(
-             'id' => $iListId,
-             'module' => $this->_aModule['name'],
-             'url' => $this->_getFavoriteListUrl($iListId, $oProfile->id()),
-             'title' => $iListId > 0 ? $aList['title'] : _t('_sys_txt_default_favorite_list')
-         );
-
-         $oMenu = BxDolMenu::getObjectInstance('sys_social_sharing');
-         $oMenu->addMarkers($aMarkers);
-         $sMenu = $oMenu->getCode();
-
-         if(empty($sMenu))
-             return '';
-
-         return $this->_oTemplate->parseHtmlByName('entry-share.html', array(
-             'menu' => $sMenu
-         ));
-     }
     
     /**
      * Display entries posted into particular context

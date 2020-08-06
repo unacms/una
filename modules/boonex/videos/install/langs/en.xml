@@ -121,8 +121,8 @@
     <string name="_bx_videos_page_block_title_popular_entries_view_full"><![CDATA[Popular Videos (Full View)]]></string>
     <string name="_bx_videos_page_block_title_top_entries"><![CDATA[Top Videos]]></string>
     <string name="_bx_videos_page_block_title_updated_entries"><![CDATA[Updated Videos]]></string>
-    <string name="_bx_videos_page_block_title_favorites_entries"><![CDATA[Faforite list {title}]]></string>
-    <string name="_bx_videos_page_block_title_favorites_entries_info"><![CDATA[Favorites List Info]]></string>
+    <string name="_bx_videos_page_block_title_favorites_entries"><![CDATA["{title}" List]]></string>
+    <string name="_bx_videos_page_block_title_favorites_entries_info"><![CDATA[Info]]></string>
     <string name="_bx_videos_page_block_title_favorites_entries_actions"><![CDATA[Favorites List Actions]]></string>
     <string name="_bx_videos_page_block_title_favorites_entries_social_sharing"><![CDATA[Favorites List Social Actions]]></string>
     <string name="_bx_videos_page_title_sys_view_entry_comments"><![CDATA[Video Comments]]></string>

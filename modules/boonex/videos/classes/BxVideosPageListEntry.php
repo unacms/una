@@ -36,6 +36,7 @@ class BxVideosPageListEntry extends BxBaseModTextPageBrowse
         $this->addMarkers(array(
             'title' => $aList['title']
         ));
+        $this->_aObject['title'] = $aList['title'];
     }
     
     public function getCode ()

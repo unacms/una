@@ -205,6 +205,17 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         return $oPrivacy->getJsScript($sJsCodeAdd, $bDynamicMode);
     }
     
+    public static function getIcon($iVisibility)
+    {
+        $aIcons =array(
+           BX_DOL_PG_MEONLY => 'lock',
+           BX_DOL_PG_ALL => 'globe',
+           BX_DOL_PG_FRIENDS => 'user-friends',
+           BX_DOL_PG_FRIENDS => 'user-friends'
+       );
+       return isset($aIcons[$iVisibility]) ? $aIcons[$iVisibility] : 'eye';
+    }
+    
             
     public function actionLoadGroupCustom()
     {

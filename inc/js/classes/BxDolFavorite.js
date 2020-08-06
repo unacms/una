@@ -41,11 +41,11 @@ BxDolFavorite.prototype.favorite = function(oLink) {
     oData['action'] = 'Favorite';
 
     this._oParent = $(oLink);
-
     $.get(
     	this._sActionsUrl,
     	oData,
-    	function(oData) {
+    	function (oData) {
+
     	    $this.processJson(oData, this._oParent);
     	},
     	'json'
@@ -60,20 +60,20 @@ BxDolFavorite.prototype.showNewList = function () {
 
 BxDolFavorite.prototype.cmtDelete = function (obj, list_id) {
     var $this = this;
-    var oData = this._getDefaultParams();
-    oData['action'] = 'DeleteList';
-    oData['list_id'] = list_id;
+    bx_confirm('', function () {
+        var oData = $this._getDefaultParams();
+        oData['action'] = 'DeleteList';
+        oData['list_id'] = list_id;
 
-    this._oParent = $(oLink);
-
-    $.get(
-    	this._sActionsUrl,
-    	oData,
-    	function (oData) {
-    	    $this.processJson(oData, this._oParent);
-    	},
-    	'json'
-    );
+        $.get(
+            this._sActionsUrl,
+            oData,
+            function (oData) {
+                $this.processJson(oData, this._oParent);
+            },
+            'json'
+        );
+    });
 }
 
 BxDolFavorite.prototype.cmtEdit = function (obj, list_id) {

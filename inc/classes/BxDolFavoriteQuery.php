@@ -73,15 +73,13 @@ class BxDolFavoriteQuery extends BxDolObjectQuery
                 break;
             
             case 'all':
-                $sMethod = 'getPairs';
-                $sQ = "SELECT `id`, `title` FROM `{$this->_sTableLists}` WHERE `author_id` = ? ORDER BY `date`";
+                $sMethod = 'getAll';
+                $sQ = "SELECT `id`, `title`, `allow_view_favorite_list_to` FROM `{$this->_sTableLists}` WHERE `author_id` = ? ORDER BY `date`";
                 if (isset($aParams['need_default']) && (bool)$aParams['need_default']){
-                    $sQ = "SELECT 0 `id`, '" . _t('_sys_txt_default_favorite_list') . "' `title` UNION (" . $sQ . ")";
+                    $sQ = "SELECT 0 `id`, '" . _t('_sys_txt_default_favorite_list') . "' `title`, 3 `allow_view_favorite_list_to` UNION (" . $sQ . ")";
                 }
                 
                 $aMethodParams[0] = $this->prepare($sQ, $aParams['author_id']);
-                $aMethodParams[1] = 'id';
-                $aMethodParams[2] = 'title';
                 break;
                 
             case 'active':

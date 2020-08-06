@@ -105,8 +105,7 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
 ('bx_videos_favorites', 2, 'bx_videos', '_bx_videos_page_block_title_favorites_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_videos";s:6:"method";s:15:"browse_favorite";s:6:"params";a:2:{s:10:"profile_id";s:12:"{profile_id}";s:6:"params";a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:0;s:13:"ajax_paginate";b:0;}}}', 0, 1, 1),
 ('bx_videos_favorites', 3, 'bx_videos', '_bx_videos_page_block_title_favorites_entries_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:19:"favorites_list_info";}', 0, 0, 0),
-('bx_videos_favorites', 3, 'bx_videos', '_bx_videos_page_block_title_favorites_entries_actions', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:22:"favorites_list_actions";}', 0, 0, 1),
-('bx_videos_favorites', 3, 'bx_videos', '_bx_videos_page_block_title_favorites_entries_social_sharing', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:29:"favorites_list_social_sharing";}', 0, 0, 2);
+('bx_videos_favorites', 3, 'bx_videos', '_bx_videos_page_block_title_favorites_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_videos";s:6:"method";s:22:"favorites_list_actions";}', 0, 0, 1);
 
 
 -- PAGE: entries in context

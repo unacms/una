@@ -388,7 +388,7 @@ INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigg
 ('bx_videos', 'bx_videos_views_track', '86400', '1', 'bx_videos_entries', 'id', 'author', 'views', '', '');
 
 
--- FAFORITES
+-- FAVORITES
 INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `table_lists`, `is_on`, `is_undo`, `is_public`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
 ('bx_videos', 'bx_videos_favorites_track', 'bx_videos_favorites_lists', '1', '1', '1', 'page.php?i=view-video&id={object_id}', 'bx_videos_entries', 'id', 'author', 'favorites', '', '');
 
