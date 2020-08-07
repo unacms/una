@@ -20,7 +20,7 @@ $sAction = isset($_REQUEST['action']) && preg_match ('/^[A-Za-z_-]+$/', $_REQUES
 
 $oFavorite = BxDolFavorite::getObjectInstance($sSys, $iObjectId, true);
 
-if ($oFavorite && $sSys && $iObjectId && $sAction) {
+if ($oFavorite && $sSys && $sAction) {
     header('Content-Type: text/html; charset=utf-8');
     $sMethod = 'action' . ucfirst($sAction);
     if(method_exists($oFavorite, $sMethod))

@@ -64,9 +64,8 @@ BxDolFavorite.prototype.cmtDelete = function (obj, list_id) {
         var oData = $this._getDefaultParams();
         oData['action'] = 'DeleteList';
         oData['list_id'] = list_id;
-
         $.get(
-            this._sActionsUrl,
+            $this._sActionsUrl,
             oData,
             function (oData) {
                 $this.processJson(oData, this._oParent);
