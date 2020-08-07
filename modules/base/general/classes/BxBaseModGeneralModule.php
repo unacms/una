@@ -597,7 +597,7 @@ class BxBaseModGeneralModule extends BxDolModule
          $aList = $oFavorite->getQueryObject()->getList(array('type' => 'id', 'list_id' => $iListId));
          
          $sRv = '';
-         if ($oFavorite->isAllowedEditList($aList['author_id']) && !empty($aList)){  
+         if (!empty($aList) && $oFavorite->isAllowedEditList($aList['author_id'])){  
              $aMarkers = array(
                  'js_object' => $oFavorite->getJsObjectName(),
                  'list_id' => $iListId,
