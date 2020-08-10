@@ -175,35 +175,35 @@ class BxBaseModNotificationsModule extends BxBaseModGeneralModule
 
     protected function _updateModuleData($sAction, $sModuleUri)
     {
-    	$sMethod = $this->_oConfig->getHandlersMethod();
+        $sMethod = $this->_oConfig->getHandlersMethod();
 
         $aModule = $this->_oDb->getModuleByUri($sModuleUri);
-		if(!BxDolRequest::serviceExists($aModule, $sMethod))
-        	return;
+        if(!BxDolRequest::serviceExists($aModule, $sMethod))
+            return;
 
-		$aData = BxDolService::call($aModule['name'], $sMethod);
-		if(empty($aData) || !is_array($aData))
-        	return;
+        $aData = bx_srv_ii($aModule['name'], $sMethod);
+        if(empty($aData) || !is_array($aData))
+            return;
 
-		switch($sAction) {
-			case 'add_handlers':
-				$this->_oDb->insertData($aData);
-				BxDolAlerts::cacheInvalidate();
+        switch($sAction) {
+            case 'add_handlers':
+                $this->_oDb->insertData($aData);
+                BxDolAlerts::cacheInvalidate();
 
-				$this->_oDb->activateModuleEvents($aData, true);
-				break;
+                $this->_oDb->activateModuleEvents($aData, true);
+                break;
 
-			case 'delete_handlers':
-				$this->_oDb->deleteData($aData);
-				BxDolAlerts::cacheInvalidate();
+            case 'delete_handlers':
+                $this->_oDb->deleteData($aData);
+                BxDolAlerts::cacheInvalidate();
 
-				$this->_oDb->activateModuleEvents($aData, false);
-				break;
+                $this->_oDb->activateModuleEvents($aData, false);
+                break;
 
-			case 'delete_module_events':
-				$this->_oDb->deleteModuleEvents($aData);
-				break;
-		}
+            case 'delete_module_events':
+                $this->_oDb->deleteModuleEvents($aData);
+                break;
+        }
     }
 }
 
