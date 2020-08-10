@@ -481,7 +481,11 @@ function bx_menu_slide (sObject, oElement, sPosition, oOptions, oVars) {
  */
 function bx_menu_slide_inline (sMenu, e, sPosition) {
     var options = options || {};
-    var eSlider = $(sMenu);    
+    var eSlider = $(sMenu);
+
+    if ('undefined' !== typeof (bx_menu_slide_inline_custom)) {
+        return bx_menu_slide_inline_custom(sMenu, e, sPosition);
+    }
 
     if ('undefined' == typeof(e))
         e = eSlider.data('data-control-btn');
