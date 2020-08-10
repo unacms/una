@@ -205,6 +205,17 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         return $oPrivacy->getJsScript($sJsCodeAdd, $bDynamicMode);
     }
     
+    public static function getIcon($iVisibility)
+    {
+        $aIcons =array(
+           BX_DOL_PG_MEONLY => 'lock',
+           BX_DOL_PG_ALL => 'globe',
+           BX_DOL_PG_FRIENDS => 'user-friends',
+           BX_DOL_PG_FRIENDS => 'user-friends'
+       );
+       return isset($aIcons[$iVisibility]) ? $aIcons[$iVisibility] : 'eye';
+    }
+    
             
     public function actionLoadGroupCustom()
     {
@@ -287,6 +298,11 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         $aGroups = $this->_oDb->getGroupsBy(array('type' => 'active_list'));
 
         return in_array(BX_DOL_PG_FRIENDS_SELECTED, $aGroups) || in_array(BX_DOL_PG_RELATIONS_SELECTED, $aGroups);                
+    }
+        
+    public function getGroupsBy($aParams)
+    {
+        return $this->_oDb->getGroupsBy($aParams);          
     }
 
     public function getGroupCustom($aParams)

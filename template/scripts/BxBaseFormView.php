@@ -1607,6 +1607,9 @@ BLAH;
                     'label'   => $sLabel,
                     'attrs'   => !empty($aInput['attrs']) && ('radio_set' == $aInput['type'] || 'checkbox_set' == $aInput['type']) ? $aInput['attrs'] : false,
                 );
+                
+                if (isset($aInput['label_as_html']))
+                    $aNewInput['label_as_html'] = $aInput['label_as_html'];
 
                 $sNewInput  = $this->genInput($aNewInput);
 
@@ -1746,8 +1749,12 @@ BLAH;
             return '';
 
         $sInputID = $this->getInputId($aInput);
-
-        return '<label for="' . $sInputID . '">' . bx_process_output($aInput['label']) . '</label>';
+        
+        $sLabel = bx_process_output($aInput['label']);
+        if (isset($aInput['label_as_html']) && $aInput['label_as_html'] == true)
+            $sLabel = $aInput['label'];
+        
+        return '<label for="' . $sInputID . '">' . $sLabel . '</label>';
     }
 
     function genPrivacyGroupChooser(&$aInput, $sPrivacyObject = '')

@@ -66,6 +66,7 @@ class BxVideosConfig extends BxBaseModTextConfig
             'URI_ADD_ENTRY' => 'create-video',
             'URI_EDIT_ENTRY' => 'edit-video',
             'URI_MANAGE_COMMON' => 'videos-manage',
+            'URI_FAVORITES_LIST' => 'videos-favorites',
 
             'URL_HOME' => 'page.php?i=videos-home',
             'URL_POPULAR' => 'page.php?i=videos-popular',
@@ -81,6 +82,7 @@ class BxVideosConfig extends BxBaseModTextConfig
             'PARAM_SEARCHABLE_FIELDS' => 'bx_videos_searchable_fields',
             'PARAM_MULTICAT_ENABLED' => true,
             'PARAM_MULTICAT_AUTO_ACTIVATION_FOR_CATEGORIES' => 'bx_videos_auto_activation_for_categories',
+            'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_videos_per_page_for_favorites_lists',
 
             // objects
             'OBJECT_STORAGE' => 'bx_videos_photos',
@@ -109,6 +111,7 @@ class BxVideosConfig extends BxBaseModTextConfig
             'OBJECT_COMMENTS' => 'bx_videos',
             'OBJECT_CATEGORY' => 'bx_videos_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_videos_allow_view_to',
+            'OBJECT_PRIVACY_LIST_VIEW' => 'bx_videos_allow_view_favorite_list',
             'OBJECT_FORM_ENTRY' => 'bx_videos',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_videos_entry_view',
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_videos_entry_add',

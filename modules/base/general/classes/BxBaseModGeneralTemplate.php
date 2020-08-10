@@ -243,6 +243,92 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
     		'bx_repeat:info' => $aValues,
     	));
     }
+    
+    public function getFavoriteList($oProfile, $iStart, $iPerPage, $aParams)
+    {
+        $CNF = $this->_oConfig->CNF;
+        
+        $bEmptyMessage = false;
+        if(isset($aParams['empty_message'])) {
+            $bEmptyMessage = (bool)$aParams['empty_message'];
+            unset($aParams['empty_message']);
+        }
+        
+        $oFavorite = BxDolFavorite::getObjectInstance($CNF['OBJECT_FAVORITES'], 0, true);
+        $aListsData = $oFavorite->getQueryObject()->getList(array('type' => 'active', 'author_id' => $oProfile->id(), 'need_default' => true, 'start' => $iStart, 'limit' => $iPerPage + 1));
+        
+        $iNum = count($aListsData);
+        if ($iNum > $iPerPage)
+            $aListsData = array_slice($aListsData, 0, $iPerPage);
+        
+        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_LIST_VIEW']);
+        $aListsTmpl = array();
+        
+        foreach($aListsData as $iListId => $sName) {
+            $aParams['list_id'] = $iListId;
+            if ($oPrivacy->check($iListId) || $iListId == 0){
+                $aTmp = $this->getModule()->_serviceBrowse ('favorite', array_merge(array('user' => $oProfile->id()), $aParams), BX_DB_PADDING_DEF, $bEmptyMessage, false);
+                if ($aTmp && $aTmp['content'] || true){
+                    $aListsTmpl[] = array(
+                        'title' => $sName, 
+                        'content_url' => $this->getModule()->_getFavoriteListUrl($iListId, $oProfile->id()),
+                        'content' => $aTmp['content']
+                    );
+                }
+            }
+            else{
+                $aListsTmpl[] = array(
+                    'title' => 'private list', 
+                    'content_url' => 'javascript:',
+                    'content' => ''
+                );
+            }
+        } 
+        
+        $oPaginate = new BxTemplPaginate(array(
+            'on_change_page' => "return !loadDynamicBlockAutoPaginate(this, '{start}', '{per_page}', " . bx_js_string(json_encode($aParams)) . ", 'list_start', 'list_per_page');",
+            'num' => $iNum,
+            'per_page' => $iPerPage,
+            'start' => $iStart,
+        ));
+        
+        return $this->parseHtmlByName('favorite-lists.html', array('bx_repeat:items' => $aListsTmpl)) . $oPaginate->getSimplePaginate() . $oFavorite->getJsScript();
+    }
+    
+    public function getFavoritesListInfo($aList, $oProfile)
+    {
+        $CNF = $this->_oConfig->CNF;
+        
+        $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_LIST_VIEW']);
+        $sTitle = "";
+        if ($aList['allow_view_favorite_list_to'] < 0){
+            $oProfileContext = BxDolProfile::getInstance(abs($aList['allow_view_favorite_list_to']));
+            $sTitle = $oProfileContext->getDisplayName();
+        }
+        else{
+            if (empty($aList['allow_view_favorite_list_to']))
+                $aList['allow_view_favorite_list_to'] = 3;
+            $aPrivaciInfo = $oPrivacy->getGroupsBy(array('type'=>'id' , 'id'=> $aList['allow_view_favorite_list_to']));
+            $sTitle = _t($aPrivaciInfo['title']);
+        }
+        
+        $aListsTmpl = array();
+        
+        if (!empty($aList['created'])){
+            $aListsTmpl[] = array('title' => _t('_sys_form_favorite_list_title_created'), 'value' => bx_time_js($aList['created']));
+        }
+        
+        $aListsTmpl = array_merge($aListsTmpl, 
+            array(
+                array('title' => _t('_sys_form_favorite_list_title_updated'), 'value' => bx_time_js($aList['updated'])),
+                array('title' => _t('_sys_form_favorite_list_title_count'), 'value' => $aList['count']),
+                array('title' => _t('_sys_form_favorite_list_title_visibility'), 'value' => $sTitle)
+            )
+        );
+        
+        return $this->parseHtmlByName('favorite-list-info.html', array('bx_repeat:items' => $aListsTmpl, 'author' => $oProfile->getUnit()));
+    }
+    
 
     function entryAllActions($sActions)
     {

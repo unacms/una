@@ -190,9 +190,16 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
         $CNF = &$this->oModule->_oConfig->CNF;
         
         $sSystem = '';
+        $iListId = 0;
+        
         if(!empty($aParams['system'])) {
             $sSystem = $aParams['system'];
             unset($aParams['system']);
+        }
+        
+        if(!empty($aParams['list_id'])) {
+            $iListId = $aParams['list_id'];
+            unset($aParams['list_id']);
         }
 
         $oProfileAuthor = BxDolProfile::getInstance((int)$aParams['user']);
@@ -204,7 +211,7 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
         if(!$oFavorite->isPublic() && $iProfileAuthor != bx_get_logged_profile_id()) 
             return false;
 
-        $aConditions = $oFavorite->getConditionsTrack($this->aCurrent['table'], 'id', $iProfileAuthor);
+        $aConditions = $oFavorite->getConditionsTrack($this->aCurrent['table'], 'id', $iProfileAuthor, $iListId);
         if(!empty($aConditions) && is_array($aConditions)) {
             if(empty($this->aCurrent['restriction']) || !is_array($this->aCurrent['restriction']))
                 $this->aCurrent['restriction'] = array();
@@ -214,7 +221,7 @@ class BxBaseModTextSearchResult extends BxBaseModGeneralSearchResult
                 $this->aCurrent['join'] = array();
             $this->aCurrent['join'] = array_merge($this->aCurrent['join'], $aConditions['join']);
         }
-
+        
         $this->sBrowseUrl = 'page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id={profile_id}';
         $this->aCurrent['title'] = _t($CNF['T']['txt_all_entries_by_author']);
         $this->aCurrent['rss']['link'] = 'modules/?r=' . $this->oModule->_oConfig->getUri() . '/rss/' . $sMode . '/' . $iProfileAuthor;
