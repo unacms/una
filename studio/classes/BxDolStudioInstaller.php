@@ -862,7 +862,12 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
                 if(substr($sKey, 0, strlen($sKeyPrefix)) == $sKeyPrefix)
                     unset($GLOBALS[$sKey]);
 
-        return $bResult ? BX_DOL_STUDIO_INSTALLER_SUCCESS : BX_DOL_STUDIO_INSTALLER_FAILED;
+        if(!$bResult) 
+            return BX_DOL_STUDIO_INSTALLER_FAILED;
+
+        bx_alert('system', 'clear_cache', 0, 0, array('type' => 'custom'));
+
+        return BX_DOL_STUDIO_INSTALLER_SUCCESS;
     }
 
     protected function actionClearTemplateCache($sOperation)
