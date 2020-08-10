@@ -110,8 +110,9 @@ BxDolVoteReactions.prototype.onVote = function (oLink, oData, onComplete)
         if(oData.total)
             oCounter.filter('.total-count').each(function() {
                 $(this).html(oData.total.countf).toggleClass('bx-vc-hidden', !oData.total.count);
-                $(this).parents('.' + $this._sSP + '-counter-wrapper:first').toggleClass('bx-vc-hidden', !oData.total.count);
             });
+
+        oCounter.parents('.' + this._sSP + '-counter-wrapper:first').toggleClass('bx-vc-hidden', !oData.count && !oData.total.count);
     }
 
     if(typeof onComplete == 'function')
