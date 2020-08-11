@@ -140,34 +140,44 @@ BxTimelineMain.prototype.initFlickity = function() {
 
     //--- init Flickity for images (may be used in header section)
     $('.' + this.sClassItem + ' .' + this.sClassItemImages + '.' + this.sSP + '-ii-gallery').each(function() {
-        if($(this).find('div.' + $this.sClassItemImage).length <= 1)
-            return;
-
-        $(this).flickity({
-            cellSelector: 'div.' + $this.sClassItemImage,
-            cellAlign: 'left',
-            imagesLoaded: true,
-            wrapAround: true,
-            pageDots: false
-        });
-    });
-
-    //--- init Flickity for videos (may be used in header section)
-    $('.' + this.sClassItem + ' .' + this.sClassItemVideos + '.' + this.sSP + '-iv-gallery').each(function() {
-        if($(this).find('div.' + $this.sClassItemVideo).length <= 1)
+        var sItem = 'div.' + $this.sClassItemImage;
+        if($(this).find(sItem).length <= 1)
             return;
 
         var oCarousel = $(this);
 
         oCarousel.flickity({
-            cellSelector: 'div.' + $this.sClassItemVideo,
+            cellSelector: sItem,
             cellAlign: 'left',
             imagesLoaded: true,
             wrapAround: true,
             pageDots: false
         });
 
-       oCarousel.find('div.' + $this.sClassItemVideo + ' video').each(function() {
+        oCarousel.find(sItem + ' img').each(function() {
+            $(this).load(function() {
+                oCarousel.flickity('resize');
+            });
+        });
+    });
+
+    //--- init Flickity for videos (may be used in header section)
+    $('.' + this.sClassItem + ' .' + this.sClassItemVideos + '.' + this.sSP + '-iv-gallery').each(function() {
+        var sItem = 'div.' + $this.sClassItemVideo;
+        if($(this).find(sItem).length <= 1)
+            return;
+
+        var oCarousel = $(this);
+
+        oCarousel.flickity({
+            cellSelector: sItem,
+            cellAlign: 'left',
+            imagesLoaded: true,
+            wrapAround: true,
+            pageDots: false
+        });
+
+       oCarousel.find(sItem + ' video').each(function() {
            this.addEventListener('loadedmetadata', function() {
                oCarousel.flickity('resize');
            }, true);
@@ -176,20 +186,27 @@ BxTimelineMain.prototype.initFlickity = function() {
 
     //--- init Flickity for attachments (images and video in attachments seation)
     $('.' + this.sClassItem + ' .' + this.sClassItemAttachments + '.' + this.sSP + '-ia-gallery').each(function() {
-        if($(this).find('div.' + $this.sClassItemAttachment).length <= 1)
+        var sItem = 'div.' + $this.sClassItemAttachment;
+        if($(this).find(sItem).length <= 1)
             return;
 
         var oCarousel = $(this);
 
         oCarousel.flickity({
-            cellSelector: 'div.' + $this.sClassItemAttachment,
+            cellSelector: sItem,
             cellAlign: 'left',
             imagesLoaded: true,
             wrapAround: true,
             pageDots: false
         });
 
-       oCarousel.find('div.' + $this.sClassItemAttachment + ' video').each(function() {
+        oCarousel.find(sItem + ' img').each(function() {
+            $(this).load(function() {
+                oCarousel.flickity('resize');
+            });
+        });
+
+       oCarousel.find(sItem + ' video').each(function() {
            this.addEventListener('loadedmetadata', function() {
                oCarousel.flickity('resize');
            }, true);
