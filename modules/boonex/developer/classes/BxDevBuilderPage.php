@@ -405,8 +405,7 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
         if($aBlock['type'] == BX_DOL_STUDIO_BP_BLOCK_SERVICE)
             $aBlock['content'] = BxDevFunctions::unserializeString($aBlock['content']);
 
-        if((int)$aBlock['designbox_id'] != 0)
-            $aBlock['designbox_id'] = $this->sSelectKeyPrefix . $aBlock['designbox_id'];
+        $aBlock['designbox_id'] = $this->sSelectKeyPrefix . $aBlock['designbox_id'];
     }
 
     protected function onSaveBlock(&$oForm, &$aBlock)
