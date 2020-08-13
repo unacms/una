@@ -279,7 +279,6 @@ class BxDolImageResize extends BxDolFactory implements iBxDolSingleton
                         $constraint->aspectRatio();
                         $constraint->upsize();
                     })
-                    ->trim()
                     ->save($sDstImage ? $sDstImage : $sSrcImage, $this->_iJpegQuality);
             }
             chmod($sDstImage ? $sDstImage : $sSrcImage, BX_DOL_FILE_RIGHTS);
