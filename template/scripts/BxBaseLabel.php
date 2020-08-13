@@ -164,6 +164,7 @@ class BxBaseLabel extends BxDolLabel
             $aTmplVarsLabels[] = array(
                 'href' => $this->getLabelUrl($aLabel['value']),
                 'title' => $aLabel['value'],
+                'title_attr' => bx_html_attribute($aLabel['value']),
                 'bx_if:show_sublist_link' => array(
                     'condition' => $bSublist,
                     'content' => array(
@@ -239,6 +240,7 @@ class BxBaseLabel extends BxDolLabel
                 'checkbox' => $oForm->genInput($aCheckbox),
                 'html_id_label' => $sHtmlId,
                 'title' => $aLabel['value'],
+                'title_attr' => bx_html_attribute($aLabel['value']),
                 'bx_if:show_sublist_link' => array(
                     'condition' => $bSublist,
                     'content' => array(
