@@ -798,6 +798,7 @@
 
   <string name="_adm_form_txt_badges_text"><![CDATA[Text]]></string>
   <string name="_adm_form_txt_badges_view"><![CDATA[View]]></string>
+  <string name="_adm_form_txt_badges_fontcolor"><![CDATA[Foreground color]]></string>
   <string name="_adm_form_txt_badges_color"><![CDATA[Background color]]></string>
   <string name="_adm_form_dsc_badges_color"><![CDATA[Background color]]></string>
   <string name="_adm_form_txt_badges_is_icon_only"><![CDATA[Show icon only]]></string>
