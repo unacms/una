@@ -1,4 +1,4 @@
-/*-- Labels Field --*/
+/*-- Labels Form Field --*/
 .sys-labels .bx-form-input-text.bx-form-input-autotoken b {
     padding-left: 0.5rem;
 }
@@ -8,13 +8,13 @@
 }
 
 
-/*-- Labels Search --*/
+/*-- Labels Popup Search --*/
 .sys-labels-select .bx-form-input-text.bx-form-input-autotoken b {
     padding-left: 0.5rem;
 }
 
 
-/*-- Labels List --*/
+/*-- Labels Popup List and Labels Browse  --*/
 .sys-labels-level {
     position: relative;
     
@@ -38,14 +38,20 @@
     padding-right: 0.25rem;
 }
 .sys-labels-list .sys-labels-level.sys-ll-0 > .sys-labels-list-item {
-    -webkit-flex-basis: 50%;
-    flex-basis: 50%;
-
     width: 50%;
 }
 .bx-media-phone .sys-labels-browse .sys-labels-level.sys-ll-0 > .sys-labels-list-item,
 .bx-layout-column-thin .sys-labels-browse .sys-labels-level.sys-ll-0 > .sys-labels-list-item {
-    min-width: 50%;
+    width: 50%;
+}
+.bx-layout-column-half .sys-labels-browse .sys-labels-level.sys-ll-0 > .sys-labels-list-item {
+    width: 33.3%;
+}
+.bx-layout-column-wide .sys-labels-browse .sys-labels-level.sys-ll-0 > .sys-labels-list-item {
+    width: 25%;
+}
+.bx-layout-column-fullwidth .sys-labels-browse .sys-labels-level.sys-ll-0 > .sys-labels-list-item {
+    width: 16.6%;
 }
 .sys-labels-li-sublist {
     display: none;
@@ -67,9 +73,8 @@
     flex-wrap: nowrap;
 }
 .sys-labels-list-item-box > * {
-    -webkit-flex: 0 0 auto;
-    -ms-flex: 0 0 auto;
-    flex: 0 0 auto;
+    -webkit-flex-grow: 0;
+    flex-grow: 0;
 }
 .sys-labels-li-checbox input {
     margin: 0;
