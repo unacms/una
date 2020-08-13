@@ -1686,6 +1686,7 @@ CREATE TABLE `sys_badges` (
   `text` varchar(255) NOT NULL default '',
   `icon` varchar(255) NOT NULL default '',
   `color` varchar(32) NOT NULL default '',
+  `fontcolor` varchar(32) NOT NULL default '',
   `is_icon_only` tinyint(4) NOT NULL default '1',
   PRIMARY KEY (`id`)
 );

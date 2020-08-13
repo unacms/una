@@ -536,7 +536,7 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
            'object_id' => $iObjectId,
            'viewer_id' => $iViewerId,
            'object' => $aObject,
-           'object_provacy' => $this->_aObject,
+           'object_privacy' => $this->_aObject,
            'result' => &$bRv
         ));
         return $bRv;

@@ -33,7 +33,6 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 
             'CreateAccountForm' => 'BxBaseServiceAccount',
             'ForgotPassword' => 'BxBaseServiceAccount',
-            'SwitchProfile' => 'BxBaseServiceAccount',
 
             'CategoriesList' => 'BxBaseServiceCategory',
 
@@ -459,16 +458,14 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
 		$sStyleBg = '';
 		if ($aBadge['color'] == '')
 			$aBadge['color'] = '#ff0000';
-        if ($aBadge['fontcolor'] == '')
-			$aBadge['fontcolor'] = '#ffffff';
 		
         if ($bIsCompact){
             $aBadge['is_icon_only'] = 1;
 			$sClass .= ' bx-badge-compact-to';
-			$sStyleFont = 'color: ' . $aBadge['fontcolor'];
+			$sStyleFont = 'color: ' . $aBadge['color'];
         }
 		else{
-			$sStyleBg = 'background-color: ' . $aBadge['color'] . '; color: ' . $aBadge['fontcolor'];
+			$sStyleBg = 'background-color: ' . $aBadge['color'];
 		}
 		
         if ($aBadge['is_icon_only'] == 1){
