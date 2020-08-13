@@ -40,7 +40,6 @@
 .sys-labels-list .sys-labels-level.sys-ll-0 > .sys-labels-list-item {
     width: 50%;
 }
-.bx-media-phone .sys-labels-browse .sys-labels-level.sys-ll-0 > .sys-labels-list-item,
 .bx-layout-column-thin .sys-labels-browse .sys-labels-level.sys-ll-0 > .sys-labels-list-item {
     width: 50%;
 }
@@ -52,6 +51,9 @@
 }
 .bx-layout-column-fullwidth .sys-labels-browse .sys-labels-level.sys-ll-0 > .sys-labels-list-item {
     width: 16.6%;
+}
+.bx-media-phone .sys-labels-browse .sys-labels-level.sys-ll-0 > .sys-labels-list-item {
+    width: 50%;
 }
 .sys-labels-li-sublist {
     display: none;
