@@ -322,8 +322,8 @@ class BxBaseCmts extends BxDolCmts
         }
 
         $sContent = $this->_getContent($aCmt);
-
-        return $this->_oTemplate->parseHtmlByName($this->_sTmplNameItem, array_merge(array(
+        
+        $sResult = $this->_oTemplate->parseHtmlByName($this->_sTmplNameItem, array_merge(array(
             'system' => $this->_sSystem,
             'style_prefix' => $this->_sStylePrefix,
             'js_object' => $this->_sJsObjName,
@@ -343,6 +343,10 @@ class BxBaseCmts extends BxDolCmts
             'actions' => $sActions,
             'replies' =>  $sReplies,
         ), $this->_getTmplVarsAuthor($aCmt)));
+        
+        bx_alert('system', 'view_comment', $aCmt['cmt_id'], 0, array('comment' => $aCmt, 'system' => $this->_sSystem, 'override_result' => &$sResult));
+        
+        return $sResult;
     }
 
     public function getCommentStructure($iCmtId, $aBp = array(), $aDp = array())
