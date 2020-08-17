@@ -91,9 +91,13 @@ class BxDolObjectQuery extends BxDolDb
         return (int)$this->getOne($sQuery) != 0;
     }
 
-    public function getPerformedBy($iObjectId)
+    public function getPerformedBy($iObjectId, $iStart = 0, $iPerPage = 0)
     {
-        $sQuery = $this->prepare("SELECT `author_id` FROM `{$this->_sTableTrack}` WHERE `object_id` = ?", $iObjectId);
+        $sLimitClause = "";
+        if(!empty($iPerPage))
+            $sLimitClause = $this->prepareAsString(" LIMIT ?, ?", $iStart, $iPerPage);
+
+        $sQuery = $this->prepare("SELECT `author_id` FROM `{$this->_sTableTrack}` WHERE `object_id` = ?" . $sLimitClause, $iObjectId);
         return $this->getColumn($sQuery);
     }
     
