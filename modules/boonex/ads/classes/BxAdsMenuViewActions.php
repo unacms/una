@@ -35,6 +35,14 @@ class BxAdsMenuViewActions extends BxBaseModTextMenuViewActions
     {
         return $this->_getMenuItemByNameActions($aItem);
     }
+    protected function _getMenuItemReview($aItem, $aParams = array())
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        return parent::_getMenuItemComment($aItem, array_merge($aParams, array(
+            'object' => $CNF['OBJECT_REVIEWS']
+        )));
+    }
 }
 
 /** @} */

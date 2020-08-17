@@ -150,7 +150,8 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         $sResult = $oObject->getElementBlock(array(
             'dynamic_mode' => $this->_bDynamicMode,
             'show_do_comment_as_button' => $this->_bShowAsButton,
-            'show_do_comment_label' => $this->_bShowTitle
+            'show_do_comment_label' => $this->_bShowTitle,
+            'show_counter' => false
         ));
         if(empty($sResult))
             return '';

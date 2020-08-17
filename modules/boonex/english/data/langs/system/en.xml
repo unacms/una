@@ -1698,6 +1698,7 @@
         <string name="_cmt_rvw_txt_sample_score_down_single"><![CDATA[score down vote to review]]></string>
         <string name="_cmt_rvw_txt_sample_vote_single"><![CDATA[vote to review]]></string>
         <string name="_cmt_rvw_txt_empty"><![CDATA[No reviews yet]]></string>
+        <string name="_cmt_rvw_txt_do"><![CDATA[Review]]></string>
         <string name="_copyright"><![CDATA[&copy; {0} Company]]></string>
 	<string name="_delete"><![CDATA[delete]]></string>
 	<string name="_error occured"><![CDATA[Error occurred]]></string>

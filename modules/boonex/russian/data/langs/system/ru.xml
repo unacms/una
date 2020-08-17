@@ -1684,6 +1684,7 @@
         <string name="_cmt_rvw_txt_sample_score_down_single"><![CDATA[голос против обзора]]></string>
         <string name="_cmt_rvw_txt_sample_vote_single"><![CDATA[голос за обзор]]></string>
         <string name="_cmt_rvw_txt_empty"><![CDATA[Нет обзоров]]></string>
+        <string name="_cmt_rvw_txt_do"><![CDATA[Обозревать]]></string>
 	<string name="_copyright"><![CDATA[&copy; {0} Компания]]></string>
 	<string name="_delete"><![CDATA[удалить]]></string>
 	<string name="_error occured"><![CDATA[Произошла ошибка]]></string>
