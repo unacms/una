@@ -29,7 +29,7 @@ class BxDolFeatureQuery extends BxDolObjectQuery
         return (int)$this->getObjectFlag($iObjectId) > 0;
     }
 
-    public function getPerformedBy($iObjectId)
+    public function getPerformedBy($iObjectId, $iStart = 0, $iPerPage = 0)
     {
         return array();
     }

@@ -13,6 +13,7 @@
 class BxDolViewQuery extends BxDolObjectQuery
 {
     protected $_iPeriod;
+    protected $_iPerPageDefault;
 
     public function __construct(&$oModule)
     {
@@ -22,6 +23,8 @@ class BxDolViewQuery extends BxDolObjectQuery
 
         $aSystem = $this->_oModule->getSystemInfo();
         $this->_iPeriod = (int)$aSystem['period'];
+
+        $this->_iPerPageDefault = 30;
     }
 
     public function isPerformed($iObjectId, $iAuthorId)
@@ -30,13 +33,19 @@ class BxDolViewQuery extends BxDolObjectQuery
         return (int)$this->getOne($sQuery) > 0;
     }
 
-	public function getPerformedBy($iObjectId)
+    public function getPerformedBy($iObjectId, $iStart = 0, $iPerPage = 0)
     {
-        $sQuery = $this->prepare("SELECT `viewer_id` AS `id`, COUNT(`viewer_id`) AS `count` FROM `{$this->_sTableTrack}` WHERE `object_id`=? GROUP BY `viewer_id` ORDER BY `date` DESC", $iObjectId);
+        $sLimitClause = "";
+        if(empty($iPerPage))
+            $iPerPage = $this->_iPerPageDefault;
+        if(!empty($iPerPage))
+            $sLimitClause = $this->prepareAsString(" LIMIT ?, ?", $iStart, $iPerPage);
+
+        $sQuery = $this->prepare("SELECT `viewer_id` AS `id`, COUNT(`viewer_id`) AS `count` FROM `{$this->_sTableTrack}` WHERE `object_id`=? GROUP BY `viewer_id` ORDER BY `date` DESC" . $sLimitClause, $iObjectId);
         return $this->getAll($sQuery);
     }
 
-	public function getView($iObjectId)
+    public function getView($iObjectId)
     {
         return array('count' => $this->getObjectCount($iObjectId));
     }

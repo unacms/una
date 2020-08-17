@@ -29,7 +29,7 @@ class BxDolReportQuery extends BxDolObjectQuery
         return $aResult;
     }
 
-	public function isPerformed($iObjectId, $iAuthorId)
+    public function isPerformed($iObjectId, $iAuthorId)
     {
     	/*
     	 * 'false' is returned everytime to allow multiple reports for everybody.
@@ -37,13 +37,17 @@ class BxDolReportQuery extends BxDolObjectQuery
         return false;
     }
 
-	public function getPerformedBy($iObjectId)
+    public function getPerformedBy($iObjectId, $iStart = 0, $iPerPage = 0)
     {
-        $sQuery = $this->prepare("SELECT `author_id`, `type`, `text` FROM `{$this->_sTableTrack}` WHERE `object_id`=? ORDER BY `date` DESC", $iObjectId);
+        $sLimitClause = "";
+        if(!empty($iPerPage))
+            $sLimitClause = $this->prepareAsString(" LIMIT ?, ?", $iStart, $iPerPage);
+
+        $sQuery = $this->prepare("SELECT `author_id`, `type`, `text` FROM `{$this->_sTableTrack}` WHERE `object_id`=? ORDER BY `date` DESC" . $sLimitClause, $iObjectId);
         return $this->getAll($sQuery);
     }
 
-	public function getReport($iObjectId)
+    public function getReport($iObjectId)
     {
         $sQuery = $this->prepare("SELECT `count` as `count` FROM {$this->_sTable} WHERE `object_id` = ? LIMIT 1", $iObjectId);
 
