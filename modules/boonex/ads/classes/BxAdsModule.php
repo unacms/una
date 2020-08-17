@@ -119,6 +119,7 @@ class BxAdsModule extends BxBaseModTextModule
 
         $aResult = parent::serviceGetSearchableFields(array_merge($aInputsAdd, $this->_getSearchableFields()));
         unset($aResult[$CNF['FIELD_CATEGORY_VIEW']], $aResult[$CNF['FIELD_CATEGORY_SELECT']]);
+        unset($aResult[$CNF['FIELD_PRICE']], $aResult[$CNF['FIELD_YEAR']]);
 
         return $aResult;
     }
