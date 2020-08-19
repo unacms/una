@@ -550,17 +550,29 @@ BLAH;
         if(empty($mixedInput) || !is_array($mixedInput))
             return false;
 
-        if(!empty($mixedInput['privacy']) && !empty($this->_iAuthorId)) {
-            $mixedResult = checkActionModule($this->_iAuthorId, 'set form fields privacy', 'system');
-            if($mixedResult[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED) {
-                $aInputPrivacy = BxDolFormQuery::getInputPrivacy($mixedInput['id'], $this->_iAuthorId);
-                if(!empty($aInputPrivacy) && is_array($aInputPrivacy)) {
-                    $oPrivacy = BxDolPrivacy::getObjectInstance($this->_sPrivacyObjectView);            
-                    if($oPrivacy && !$oPrivacy->check($aInputPrivacy['id']))
-                        return false;
-                }
-            }
-        }
+        if(!empty($mixedInput['privacy']) && !empty($this->_iAuthorId) && !$this->_isInputVisibleByPrivacy($mixedInput))
+            return false;
+
+        return true;
+    }
+
+    protected function _isInputVisibleByPrivacy($aInput)
+    {
+        $mixedResult = checkActionModule($this->_iAuthorId, 'set form fields privacy', 'system');
+        if($mixedResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
+            return true;            
+
+        $aInputPrivacy = BxDolFormQuery::getInputPrivacy($aInput['id'], $this->_iAuthorId);
+        if(empty($aInputPrivacy) || !is_array($aInputPrivacy))
+            if(BxDolFormQuery::setInputPrivacy($aInput['id'], $this->_iAuthorId, BxDolPrivacy::getFieldName($this->_sPrivacyObjectView), $this->_sPrivacyGroupDefault))
+                $aInputPrivacy = BxDolFormQuery::getInputPrivacy($aInput['id'], $this->_iAuthorId);
+
+        if((empty($aInputPrivacy) || !is_array($aInputPrivacy)) && $this->_sPrivacyGroupDefault != BX_DOL_PG_ALL)
+            return false;
+
+        $oPrivacy = BxDolPrivacy::getObjectInstance($this->_sPrivacyObjectView);            
+        if($oPrivacy && !$oPrivacy->check($aInputPrivacy['id']))
+            return false;
 
         return true;
     }
