@@ -134,6 +134,7 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
                 break;
 
             case 'path_and_uri':
+                $sPostfix .= '_path_and_uri_' . $aParams['path'] . '_' . $aParams['uri'];
             	$aMethod['name'] = 'getRow';
             	$aBindings = array_merge($aBindings, array(
                     'path' => $aParams['path'],
@@ -144,6 +145,7 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
             	break;
 
             case 'all_pairs_name_uri':
+                $sPostfix .= 'all_pairs_name_uri';
             	$aMethod['name'] = 'getPairs';
             	$aMethod['params'][1] = 'name';
             	$aMethod['params'][2] = 'uri';
