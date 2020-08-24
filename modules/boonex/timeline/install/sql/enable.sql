@@ -364,6 +364,12 @@ SET @iHandler := LAST_INSERT_ID();
 
 INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 ('system', 'clear_cache', @iHandler),
+('account', 'confirm', @iHandler),
+('account', 'unconfirm', @iHandler),
+('profile', 'approve', @iHandler),
+('profile', 'disapprove', @iHandler),
+('profile', 'activate', @iHandler),
+('profile', 'suspend', @iHandler),
 ('profile', 'delete', @iHandler),
 
 ('bx_timeline_videos_mp4', 'transcoded', @iHandler);

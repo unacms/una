@@ -2363,6 +2363,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(empty($aEvents) || !is_array($aEvents))
             return false;
 
+        $iValueNew = 0;
         foreach($aEvents as $aEvent) {
             $sContent = $this->_oTemplate->getPost($aEvent, $aParams);
             if(!empty($sContent)) {
