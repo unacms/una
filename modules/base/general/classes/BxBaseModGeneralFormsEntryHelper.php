@@ -176,8 +176,15 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         }
 
         $oForm->initChecker(array(), $aValues);
-        if (!$oForm->isSubmittedAndValid())
-            return array('code' => 2, 'message' => '_sys_txt_error_occured');
+        if (!$oForm->isSubmittedAndValid()) {
+            $aErrors = array();
+            array_walk($oForm->aInputs, function($aInput, $sKey) use (&$aErrors) {
+                if(!empty($aInput['error']))
+                    $aErrors[$sKey] = $aInput['error'];
+            });
+
+            return array('code' => 2, 'message' => '_sys_txt_error_occured', 'errors' => $aErrors);
+        }
 
         // insert data into database
         $aValsToAdd = array ();
