@@ -140,12 +140,46 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
         if(!in_array($oAlert->aExtras['type'], array('all', 'custom')))
             return;
 
+        $this->_clearCache();
+    }
+
+    protected function _processAccountConfirm($oAlert)
+    {
+        $this->_clearCache();
+    }
+
+    protected function _processAccountUnconfirm($oAlert)
+    {
+        $this->_clearCache();
+    }
+
+    protected function _processProfileApprove($oAlert)
+    {
+        $this->_clearCache();
+    }
+
+    protected function _processProfileDisapprove($oAlert)
+    {
+        $this->_clearCache();
+    }
+
+    protected function _processProfileActivate($oAlert)
+    {
+        $this->_clearCache();
+    }
+
+    protected function _processProfileSuspend($oAlert)
+    {
+        $this->_clearCache();
+    }
+
+    protected function _clearCache()
+    {
         //--- Clear item cache.
         $this->_oModule->getCacheItemObject()->removeAllByPrefix($this->_oModule->_oConfig->getPrefix('cache_item'));
 
         //--- Clear feed cache.
         $this->_oModule->_oDb->clearCache();
-                
     }
 
     protected function _processBxTimelineVideosMp4Transcoded($oAlert)
