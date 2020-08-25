@@ -65,6 +65,34 @@ class BxBaseModProfileSearchResult extends BxBaseModGeneralSearchResult
         return $oTranscoder->getFileUrl($a[$sField]);      
     }
 
+    protected function _setAccountConfirmationConditions($aParams)
+    {
+        $sConfirmationType = getParam('sys_account_confirmation_type');
+        $bHideUnconfirmed = getParam('sys_account_hide_unconfirmed_accounts') == 'on';
+        if($sConfirmationType == BX_ACCOUNT_CONFIRMATION_NONE || !$bHideUnconfirmed) 
+            return;
+
+        $this->aCurrent['restriction'] = array_merge($this->aCurrent['restriction'], array(
+            'account_confirmed_email' => array('value' => '', 'field' => 'email_confirmed', 'operator' => '=', 'table' => 'sys_accounts'),
+            'account_confirmed_phone' => array('value' => '', 'field' => 'phone_confirmed', 'operator' => '=', 'table' => 'sys_accounts'),
+        ));
+
+        switch($sConfirmationType) {
+            case BX_ACCOUNT_CONFIRMATION_EMAIL:
+                $this->aCurrent['restriction']['account_confirmed_email']['value'] = 1;
+                break;
+
+            case BX_ACCOUNT_CONFIRMATION_PHONE:
+                $this->aCurrent['restriction']['account_confirmed_phone']['value'] = 1;
+                break;
+
+            case BX_ACCOUNT_CONFIRMATION_EMAIL_PHONE:
+                $this->aCurrent['restriction']['account_confirmed_email']['value'] = 1;
+                $this->aCurrent['restriction']['account_confirmed_phone']['value'] = 1;
+                break;
+        }
+    }
+
     protected function _setConnectionsConditions ($aParams)
     {
         $oConnection = isset($aParams['object']) ? BxDolConnection::getObjectInstance($aParams['object']) : false;
