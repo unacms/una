@@ -12,7 +12,7 @@
 	<string name="_bx_videos_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
 	<string name="_bx_videos_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
   <string name="_bx_videos_option_auto_activation_for_categories"><![CDATA[Auto-Activation For Categories]]></string>
-  <string name="_bx_videos_option_bx_videos_per_page_for_favorites_lists"><![CDATA[Number of favorite lists per page]]></string>
+  <string name="_bx_videos_option_per_page_for_favorites_lists"><![CDATA[Number of favorite lists per page]]></string>
 
   <string name="_bx_videos_form_entry"><![CDATA[Videos]]></string>
 	<string name="_bx_videos_form_entry_display_add"><![CDATA[Add Video]]></string>
