@@ -53,6 +53,9 @@ class BxFilesConfig extends BxBaseModTextConfig
             'FIELD_LABELS' => 'labels',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 			
+            // some params
+            'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_files_per_page_for_favorites_lists',
+            
             // page URIs
             'URI_VIEW_ENTRY' => 'view-file',
             'URI_AUTHOR_ENTRIES' => 'files-author',
@@ -60,6 +63,7 @@ class BxFilesConfig extends BxBaseModTextConfig
             'URI_ADD_ENTRY' => 'create-file',
             'URI_EDIT_ENTRY' => 'edit-file',
             'URI_MANAGE_COMMON' => 'files-manage',
+            'URI_FAVORITES_LIST' => 'files-favorites',
 
             'URL_HOME' => 'page.php?i=files-home',
             'URL_POPULAR' => 'page.php?i=files-popular',
@@ -90,6 +94,7 @@ class BxFilesConfig extends BxBaseModTextConfig
             'OBJECT_COMMENTS' => 'bx_files',
             'OBJECT_CATEGORY' => 'bx_files_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_files_allow_view_to',
+            'OBJECT_PRIVACY_LIST_VIEW' => 'bx_files_allow_view_favorite_list',
             'OBJECT_FORM_ENTRY' => 'bx_files',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_files_entry_view',
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_files_entry_edit',
