@@ -1439,7 +1439,7 @@ BLAH;
         if(!empty($aInput['value']) && !is_array($aInput['value']))
             $aInput['value'] = unserialize($aInput['value']);
 
-        return BxDolLabel::getInstance()->getElementLabels($aInput);
+        return BxDolLabel::getInstance()->getFormElement($aInput);
     }
     
     /**

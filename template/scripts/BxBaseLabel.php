@@ -32,7 +32,7 @@ class BxBaseLabel extends BxDolLabel
         $this->_sJsObjName = 'oBxDolLabel';
 
         $this->_aHtmlIds = array(
-            'labels_element' => 'sys-labels',
+            'labels_element' => 'sys-labels-',
             'labels_select_popup' => 'sys-labels-select-popup',
         );
     }
@@ -95,7 +95,7 @@ class BxBaseLabel extends BxDolLabel
         $oForm->initChecker($aValues);
 
         if($oForm->isSubmittedAndValid()) {
-			$sName = $oForm->getCleanValue('name');
+            $sName = $oForm->getCleanValue('name');
 
             $aLabels = array();
             if(($aLabelsSearch = $oForm->getCleanValue('search')) !== false)
@@ -106,10 +106,12 @@ class BxBaseLabel extends BxDolLabel
 
             $aLabels = array_unique($aLabels);
 
-            return array('eval' => $sJsObject . '.onSelectLabels(oData);', 'content' => $this->getElementLabels(array(
-				'name' => $sName,
-                'value' => $aLabels, 
-            )));
+            $sLabels = '';
+            if(!empty($aLabels) && is_array($aLabels))
+                foreach($aLabels as $sLabel)
+                    $sLabels .= $this->getLabel($sName, $sLabel);
+        
+            return array('eval' => $sJsObject . '.onSelectLabels(oData);', 'name' => $sName, 'content' => $sLabels);
         }
 
         $sContent = BxTemplFunctions::getInstance()->transBox($this->_aHtmlIds['labels_select_popup'], $this->_oTemplate->parseHtmlByName('label_select_popup.html', array(
@@ -124,8 +126,27 @@ class BxBaseLabel extends BxDolLabel
     public function getLabel($sField, $sLabel)
     {
         return $this->_oTemplate->parseHtmlByName('label_select_field_item.html', array(
-            'field' => $sField,
-            'label' => $sLabel
+            'class' => '',
+            'label' => $sLabel,
+            'bx_if:show_input' => array(
+                'condition' => true,
+                'content' => array(
+                    'label' => $sLabel,
+                    'field' => $sField,
+                )
+            )
+        ));
+    }
+
+    public function getLabelPlaceholder($sPlaceholder)
+    {
+        return $this->_oTemplate->parseHtmlByName('label_select_field_item.html', array(
+            'class' => 'val-placeholder',
+            'label' => _t($sPlaceholder),
+            'bx_if:show_input' => array(
+                'condition' => false,
+                'content' => array()
+            )
         ));
     }
 

@@ -62,15 +62,15 @@ class BxDolLabel extends BxDolFactory implements iBxDolSingleton
         echoJson($aResult);
     }
 
-    public function getElementLabels($aInput = array())
+    public function getFormElement($aInput = array())
     {
         $oForm = BxDolForm::getObjectInstance($this->_sForm, $this->_sFormDisplaySelect);
         if(!$oForm)
             return '';
 
-        $aInput['attrs']['id'] = $this->_aHtmlIds['labels_element'];
+        $aInput['attrs']['id'] = $this->_aHtmlIds['labels_element'] . $aInput['name'];
 
-        return $oForm->getElementLabels($aInput);
+        return $oForm->getFormElement($aInput);
     }
 
     public function getLabels($aParams = array())
