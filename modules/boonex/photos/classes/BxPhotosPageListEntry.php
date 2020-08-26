@@ -3,7 +3,7 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    Videos Videos
+ * @defgroup    Photos Photos
  * @ingroup     UnaModules
  *
  * @{
@@ -12,11 +12,11 @@
 /**
  * List entry page
  */
-class BxVideosPageListEntry extends BxBaseModTextPageListEntry
-{
+class BxPhotosPageListEntry extends BxBaseModTextPageListEntry
+{    
     public function __construct($aObject, $oTemplate = false)
     {
-        $this->MODULE = 'bx_videos';
+        $this->MODULE = 'bx_photos';
         parent::__construct($aObject, $oTemplate);
     }
 }
