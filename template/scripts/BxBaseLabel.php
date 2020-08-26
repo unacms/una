@@ -95,6 +95,8 @@ class BxBaseLabel extends BxDolLabel
         $oForm->initChecker($aValues);
 
         if($oForm->isSubmittedAndValid()) {
+			$sName = $oForm->getCleanValue('name');
+
             $aLabels = array();
             if(($aLabelsSearch = $oForm->getCleanValue('search')) !== false)
                 $aLabels = array_merge($aLabels, $aLabelsSearch);
@@ -105,6 +107,7 @@ class BxBaseLabel extends BxDolLabel
             $aLabels = array_unique($aLabels);
 
             return array('eval' => $sJsObject . '.onSelectLabels(oData);', 'content' => $this->getElementLabels(array(
+				'name' => $sName,
                 'value' => $aLabels, 
             )));
         }
@@ -161,6 +164,7 @@ class BxBaseLabel extends BxDolLabel
             $aTmplVarsLabels[] = array(
                 'href' => $this->getLabelUrl($aLabel['value']),
                 'title' => $aLabel['value'],
+                'title_attr' => bx_html_attribute($aLabel['value']),
                 'bx_if:show_sublist_link' => array(
                     'condition' => $bSublist,
                     'content' => array(
@@ -236,6 +240,7 @@ class BxBaseLabel extends BxDolLabel
                 'checkbox' => $oForm->genInput($aCheckbox),
                 'html_id_label' => $sHtmlId,
                 'title' => $aLabel['value'],
+                'title_attr' => bx_html_attribute($aLabel['value']),
                 'bx_if:show_sublist_link' => array(
                     'condition' => $bSublist,
                     'content' => array(

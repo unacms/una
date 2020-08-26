@@ -235,6 +235,7 @@
     <string name="_bx_ads_menu_item_title_edit_entry"><![CDATA[Edit]]></string>
     <string name="_bx_ads_menu_item_title_system_delete_entry"><![CDATA[Delete]]></string>
     <string name="_bx_ads_menu_item_title_delete_entry"><![CDATA[Delete]]></string>
+    <string name="_bx_ads_menu_item_title_system_review_entry"><![CDATA[Review]]></string>
     <string name="_bx_ads_menu_item_title_system_view_entry"><![CDATA[View Ad]]></string>
     <string name="_bx_ads_menu_item_title_system_entries_home"><![CDATA[Ads]]></string>
     <string name="_bx_ads_menu_item_title_entries_home"><![CDATA[Ads]]></string>

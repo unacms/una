@@ -550,17 +550,29 @@ BLAH;
         if(empty($mixedInput) || !is_array($mixedInput))
             return false;
 
-        if(!empty($mixedInput['privacy']) && !empty($this->_iAuthorId)) {
-            $mixedResult = checkActionModule($this->_iAuthorId, 'set form fields privacy', 'system');
-            if($mixedResult[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED) {
-                $aInputPrivacy = BxDolFormQuery::getInputPrivacy($mixedInput['id'], $this->_iAuthorId);
-                if(!empty($aInputPrivacy) && is_array($aInputPrivacy)) {
-                    $oPrivacy = BxDolPrivacy::getObjectInstance($this->_sPrivacyObjectView);            
-                    if($oPrivacy && !$oPrivacy->check($aInputPrivacy['id']))
-                        return false;
-                }
-            }
-        }
+        if(!empty($mixedInput['privacy']) && !empty($this->_iAuthorId) && !$this->_isInputVisibleByPrivacy($mixedInput))
+            return false;
+
+        return true;
+    }
+
+    protected function _isInputVisibleByPrivacy($aInput)
+    {
+        $mixedResult = checkActionModule($this->_iAuthorId, 'set form fields privacy', 'system');
+        if($mixedResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
+            return true;            
+
+        $aInputPrivacy = BxDolFormQuery::getInputPrivacy($aInput['id'], $this->_iAuthorId);
+        if(empty($aInputPrivacy) || !is_array($aInputPrivacy))
+            if(BxDolFormQuery::setInputPrivacy($aInput['id'], $this->_iAuthorId, BxDolPrivacy::getFieldName($this->_sPrivacyObjectView), $this->_sPrivacyGroupDefault))
+                $aInputPrivacy = BxDolFormQuery::getInputPrivacy($aInput['id'], $this->_iAuthorId);
+
+        if((empty($aInputPrivacy) || !is_array($aInputPrivacy)) && $this->_sPrivacyGroupDefault != BX_DOL_PG_ALL)
+            return false;
+
+        $oPrivacy = BxDolPrivacy::getObjectInstance($this->_sPrivacyObjectView);            
+        if($oPrivacy && !$oPrivacy->check($aInputPrivacy['id']))
+            return false;
 
         return true;
     }
@@ -907,9 +919,9 @@ BLAH;
 
 
         if (isset($this->aParams['view_mode']) && $this->aParams['view_mode'])
-            $sLegend = '<legend class="bx-def-padding-left bx-def-padding-sec-right bx-def-font-grayed bx-def-font-h3">' . bx_process_output($aInput['caption']) . (!empty($aInput['info']) ? '<br /><span>' . bx_process_output($aInput['info']) . '</span>' : '') . '</legend>';
+            $sLegend = '<legend class="bx-def-padding-left bx-def-padding-sec-right bx-def-font-grayed bx-def-font-large">' . bx_process_output($aInput['caption']) . (!empty($aInput['info']) ? '<br /><span>' . bx_process_output($aInput['info']) . '</span>' : '') . '</legend>';
         else
-            $sLegend = '<legend class="bx-def-padding-left bx-def-padding-sec-right bx-def-font-grayed bx-def-font-h3"><a href="javascript:void(0);">' . bx_process_output($aInput['caption']) . '</a>' . (!empty($aInput['info']) ? '<br /><span>' . bx_process_output($aInput['info']) . '</span>' : '') . '</legend>';
+            $sLegend = '<legend class="bx-def-padding-left bx-def-padding-sec-right bx-def-font-grayed bx-def-font-large"><a href="javascript:void(0);">' . bx_process_output($aInput['caption']) . '</a>' . (!empty($aInput['info']) ? '<br /><span>' . bx_process_output($aInput['info']) . '</span>' : '') . '</legend>';
 
         $sCode .= $this->{$this->_sSectionOpen}($aAttrs, $sLegend);
 
@@ -1607,6 +1619,9 @@ BLAH;
                     'label'   => $sLabel,
                     'attrs'   => !empty($aInput['attrs']) && ('radio_set' == $aInput['type'] || 'checkbox_set' == $aInput['type']) ? $aInput['attrs'] : false,
                 );
+                
+                if (isset($aInput['label_as_html']))
+                    $aNewInput['label_as_html'] = $aInput['label_as_html'];
 
                 $sNewInput  = $this->genInput($aNewInput);
 
@@ -1746,8 +1761,12 @@ BLAH;
             return '';
 
         $sInputID = $this->getInputId($aInput);
-
-        return '<label for="' . $sInputID . '">' . bx_process_output($aInput['label']) . '</label>';
+        
+        $sLabel = bx_process_output($aInput['label']);
+        if (isset($aInput['label_as_html']) && $aInput['label_as_html'] == true)
+            $sLabel = $aInput['label'];
+        
+        return '<label for="' . $sInputID . '">' . $sLabel . '</label>';
     }
 
     function genPrivacyGroupChooser(&$aInput, $sPrivacyObject = '')

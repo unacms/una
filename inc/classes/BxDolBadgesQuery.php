@@ -46,7 +46,7 @@ class BxDolBadgesQuery extends BxDolDb
               
             case 'by_module&object':
                 $aMethod['name'] = 'getAll';
-                $sSelectClause = "`sc`.`id`, `sc`.`id`, `sc`.`text`, `sc`.`color`, `sc`.`is_icon_only`, `sc`.`icon`, `soc`.`id` AS `badge_id`";
+                $sSelectClause = "`sc`.`id`, `sc`.`id`, `sc`.`text`, `sc`.`color`, `sc`.`fontcolor`, `sc`.`is_icon_only`, `sc`.`icon`, `soc`.`id` AS `badge_id`";
                 $sJoinClause = "LEFT JOIN `sys_badges2objects` `soc` ON `sc`.`id` =  `soc`.`badge_id` AND `soc`.`object_id` = :object_id";
                 $sWhereClause = " AND `sc`.`module` = :module";
                 $aMethod['params'][1] = array(
@@ -57,7 +57,7 @@ class BxDolBadgesQuery extends BxDolDb
                 
             case 'by_module&object2':
                 $aMethod['name'] = 'getAll';
-                $sSelectClause = "`sc`.`id`, `sc`.`id`, `sc`.`text`, `sc`.`color`, `sc`.`is_icon_only`, `sc`.`icon`, `soc`.`id` AS `badge_id`";
+                $sSelectClause = "`sc`.`id`, `sc`.`id`, `sc`.`text`, `sc`.`color`, `sc`.`fontcolor`, `sc`.`is_icon_only`, `sc`.`icon`, `soc`.`id` AS `badge_id`";
                 $sJoinClause = "INNER JOIN `sys_badges2objects` `soc` ON `sc`.`id` =  `soc`.`badge_id` AND `soc`.`object_id` = :object_id";
                 $sWhereClause = " AND `sc`.`module` = :module";
                 $aMethod['params'][1] = array(
@@ -68,7 +68,7 @@ class BxDolBadgesQuery extends BxDolDb
                 
             case 'by_module&object2_single':
                 $aMethod['name'] = 'getAll';
-                $sSelectClause = "`sc`.`id`, `sc`.`id`, `sc`.`text`, `sc`.`color`, `sc`.`is_icon_only`, `sc`.`icon`, `soc`.`id` AS `badge_id`";
+                $sSelectClause = "`sc`.`id`, `sc`.`id`, `sc`.`text`, `sc`.`color`, `sc`.`fontcolor`, `sc`.`is_icon_only`, `sc`.`icon`, `soc`.`id` AS `badge_id`";
                 $sJoinClause = "INNER JOIN `sys_badges2objects` `soc` ON `sc`.`id` =  `soc`.`badge_id` AND `soc`.`object_id` = :object_id";
                 $sWhereClause = " AND `sc`.`module` = :module";
                 $sLimitClause = "LIMIT 0, 1";

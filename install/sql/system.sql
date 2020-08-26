@@ -1686,6 +1686,7 @@ CREATE TABLE `sys_badges` (
   `text` varchar(255) NOT NULL default '',
   `icon` varchar(255) NOT NULL default '',
   `color` varchar(32) NOT NULL default '',
+  `fontcolor` varchar(32) NOT NULL default '',
   `is_icon_only` tinyint(4) NOT NULL default '1',
   PRIMARY KEY (`id`)
 );
@@ -1752,6 +1753,7 @@ CREATE TABLE `sys_objects_favorite` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(64) NOT NULL,
   `table_track` varchar(32) NOT NULL,
+  `table_lists` varchar(32) NOT NULL,
   `is_on` tinyint(4) NOT NULL default '1',
   `is_undo` tinyint(4) NOT NULL default '1',
   `is_public` tinyint(4) NOT NULL default '1',
@@ -3103,6 +3105,7 @@ INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_att
 ('sys_comment', 'system', '_sys_form_comment', 'cmts.php', 'a:3:{s:2:"id";s:17:"cmt-%s-form-%s-%d";s:4:"name";s:17:"cmt-%s-form-%s-%d";s:5:"class";s:14:"cmt-post-reply";}', 'cmt_submit', '', 'cmt_id', '', '', '', 0, 1, 'BxTemplCmtsForm', ''),
 ('sys_review', 'system', '_sys_form_review', 'cmts.php', 'a:3:{s:2:"id";s:17:"cmt-%s-form-%s-%d";s:4:"name";s:17:"cmt-%s-form-%s-%d";s:5:"class";s:14:"cmt-post-reply";}', 'cmt_submit', '', 'cmt_id', '', '', '', 0, 1, 'BxTemplCmtsReviewsForm', ''),
 ('sys_report', 'system', '_sys_form_report', 'report.php', 'a:3:{s:2:"id";s:0:"";s:4:"name";s:0:"";s:5:"class";s:17:"bx-report-do-form";}', 'submit', '', 'id', '', '', '', 0, 1, '', ''),
+('sys_favorite', 'system', '_sys_form_favorite', 'favorite.php', 'a:3:{s:2:"id";s:0:"";s:4:"name";s:0:"";s:5:"class";s:19:"bx-favorite-do-form";}', 'submit', '', 'id', '', '', '', 0, 1, '', ''),
 ('sys_privacy_group_custom', 'system', '_sys_form_ps_group_custom', 'privacy.php', '', 'do_submit', 'sys_privacy_groups_custom', 'id', '', '', '', 0, 1, 'BxTemplPrivacyFormGroupCustom', ''),
 ('sys_labels', 'system', '_sys_form_labels', 'label.php', '', 'do_submit', '', '', '', '', '', 0, 1, 'BxTemplLabelForm', ''),
 ('sys_wiki', 'system', '_sys_form_wiki', '', '', 'do_submit', 'sys_pages_wiki_blocks', 'id', '', '', '', 0, 1, 'BxTemplFormWiki', '');
@@ -3138,6 +3141,8 @@ INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `v
 ('sys_review_post', 'system', 'sys_review', '_sys_form_review_display_post', 0),
 ('sys_review_edit', 'system', 'sys_review', '_sys_form_review_display_edit', 0),
 ('sys_report_post', 'system', 'sys_report', '_sys_form_display_report_post', 0),
+('sys_favorite_add', 'system', 'sys_favorite', '_sys_form_display_favorite_add', 0),
+('sys_favorite_list_edit', 'system', 'sys_favorite', '_sys_form_display_favorite_list_edit', 0),
 ('sys_privacy_group_custom_manage', 'system', 'sys_privacy_group_custom', '_sys_form_display_ps_gc_manage', 0),
 ('sys_labels_select', 'system', 'sys_labels', '_sys_form_labels_display_select', 0),
 ('sys_wiki_edit', 'system', 'sys_wiki', '_sys_form_display_wiki_edit', 0),
@@ -3252,6 +3257,17 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('sys_report', 'system', 'text', '', '', 0, 'textarea', '_sys_form_report_input_caption_system_text', '_sys_form_report_input_caption_text', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('sys_report', 'system', 'submit', '_sys_form_report_input_caption_submit', '', 0, 'submit', '_sys_form_report_input_caption_system_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 
+('sys_favorite', 'system', 'sys', '', '', 0, 'hidden', '_sys_form_favorite_input_caption_system_sys', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_favorite', 'system', 'list_id', '', '', 0, 'hidden', '_sys_form_favorite_input_caption_system_list_id', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_favorite', 'system', 'object_id', '', '', 0, 'hidden', '_sys_form_favorite_input_caption_system_object_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('sys_favorite', 'system', 'action', '', '', 0, 'hidden', '_sys_form_favorite_input_caption_system_action', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('sys_favorite', 'system', 'id', '', '', 0, 'hidden', '_sys_form_favorite_input_caption_system_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('sys_favorite', 'system', 'list', '', '#!sys_report_types', 0, 'checkbox_set', '_sys_form_favorite_input_caption_system_list', '_sys_form_favorite_input_caption_list', '', 1, 0, 0, '', '', '', 'Avail', '', '_Please select value', 'Xss', '', 1, 0),
+('sys_favorite', 'system', 'new_list', '_sys_form_favorite_input_caption_button_new_list', '', 0, 'button', '', '', '', 0, 0, 0, 'a:1:{s:7:"onclick";s:25:"{js_object}.showNewList()";}', '', '', '', '', '', 'Xss', '', 1, 0),
+('sys_favorite', 'system', 'title', '', '', 0, 'text', '_sys_form_favorite_input_caption_system_title', '_sys_form_favorite_input_caption_title', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('sys_favorite', 'system', 'allow_view_favorite_list_to', '', '', 0, 'custom', '_sys_form_favorite_input_caption_system_allow_view_to', '_sys_form_favorite_input_caption_allow_view_to', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
+('sys_favorite', 'system', 'submit', '_sys_form_favorite_input_caption_submit', '', 0, 'submit', '_sys_form_favorite_input_caption_system_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+
 ('sys_privacy_group_custom', 'system', 'profile_id', '', '', 0, 'hidden', '_sys_form_ps_gc_input_caption_system_profile_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('sys_privacy_group_custom', 'system', 'content_id', '', '', 0, 'hidden', '_sys_form_ps_gc_input_caption_system_content_id', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
 ('sys_privacy_group_custom', 'system', 'object', '', '', 0, 'hidden', '_sys_form_ps_gc_input_caption_system_object', '', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
@@ -3263,6 +3279,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('sys_privacy_group_custom', 'system', 'do_submit', '_sys_form_ps_gc_input_caption_do_submit', '', 0, 'submit', '_sys_form_ps_gc_input_caption_system_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_privacy_group_custom', 'system', 'do_cancel', '_sys_form_ps_gc_input_caption_do_cancel', '', 0, 'button', '_sys_form_ps_gc_input_caption_system_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0),
 
+('sys_labels', 'system', 'name', '', '', 0, 'hidden', '_sys_form_labels_input_caption_system_name', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_labels', 'system', 'action', '', '', 0, 'hidden', '_sys_form_labels_input_caption_system_action', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_labels', 'system', 'search', '', '', 0, 'custom', '_sys_form_labels_input_caption_system_search', '_sys_form_labels_input_caption_search', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('sys_labels', 'system', 'list', '', '', 0, 'custom', '_sys_form_labels_input_caption_system_list', '_sys_form_labels_input_caption_list', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
@@ -3415,6 +3432,24 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_report_post', 'text', 2147483647, 1, 6),
 ('sys_report_post', 'submit', 2147483647, 1, 7),
 
+('sys_favorite_add', 'sys', 2147483647, 1, 1),
+('sys_favorite_add', 'object_id', 2147483647, 1, 2),
+('sys_favorite_add', 'action', 2147483647, 1, 3),
+('sys_favorite_add', 'id', 2147483647, 0, 4),
+('sys_favorite_add', 'list', 2147483647, 1, 5),
+('sys_favorite_add', 'new_list', 2147483647, 1, 6),
+('sys_favorite_add', 'title', 2147483647, 1, 7),
+('sys_favorite_add', 'allow_view_favorite_list_to', 2147483647, 1, 8),
+('sys_favorite_add', 'submit', 2147483647, 1, 9),
+
+('sys_favorite_list_edit', 'sys', 2147483647, 1, 1),
+('sys_favorite_list_edit', 'list_id', 2147483647, 1, 2),
+('sys_favorite_list_edit', 'object_id', 2147483647, 1, 3),
+('sys_favorite_list_edit', 'action', 2147483647, 1, 4),
+('sys_favorite_list_edit', 'title', 2147483647, 1, 5),
+('sys_favorite_list_edit', 'allow_view_favorite_list_to', 2147483647, 1, 6),
+('sys_favorite_list_edit', 'submit', 2147483647, 1, 7),
+
 ('sys_privacy_group_custom_manage', 'profile_id', 2147483647, 1, 1),
 ('sys_privacy_group_custom_manage', 'content_id', 2147483647, 1, 2),
 ('sys_privacy_group_custom_manage', 'object', 2147483647, 1, 3),
@@ -3426,12 +3461,13 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_privacy_group_custom_manage', 'do_submit', 2147483647, 1, 9),
 ('sys_privacy_group_custom_manage', 'do_cancel', 2147483647, 1, 10),
 
-('sys_labels_select', 'action', 2147483647, 1, 1),
-('sys_labels_select', 'search', 2147483647, 1, 2),
-('sys_labels_select', 'list', 2147483647, 1, 3),
-('sys_labels_select', 'controls', 2147483647, 1, 4),
-('sys_labels_select', 'do_submit', 2147483647, 1, 5),
-('sys_labels_select', 'do_cancel', 2147483647, 1, 6),
+('sys_labels_select', 'name', 2147483647, 1, 1),
+('sys_labels_select', 'action', 2147483647, 1, 2),
+('sys_labels_select', 'search', 2147483647, 1, 3),
+('sys_labels_select', 'list', 2147483647, 1, 4),
+('sys_labels_select', 'controls', 2147483647, 1, 5),
+('sys_labels_select', 'do_submit', 2147483647, 1, 6),
+('sys_labels_select', 'do_cancel', 2147483647, 1, 7),
 
 ('sys_wiki_edit', 'block_id', 2147483647, 1, 1),
 ('sys_wiki_edit', 'language', 2147483647, 1, 2),
@@ -3898,7 +3934,8 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_create_post', '_sys_menu_title_create_post', 'sys_add_content_links', 'system', 15, 0, 1, 'BxTemplMenuCreatePost', ''),
 ('sys_add_relation', '_sys_menu_title_add_relation', '', 'system', 6, 0, 1, 'BxTemplMenuAddRelation', ''),
 ('sys_vote_reactions_do', '_sys_menu_title_vote_reactions_do', '', 'system', 3, 0, 1, 'BxTemplVoteReactionsMenuDo', ''),
-('sys_wiki', '_sys_menu_title_wiki', 'sys_wiki', 'system', 6, 0, 1, 'BxTemplMenuWiki', '');
+('sys_wiki', '_sys_menu_title_wiki', 'sys_wiki', 'system', 6, 0, 1, 'BxTemplMenuWiki', ''),
+('sys_favorite_list', '_sys_menu_title_favorite_list', 'sys_favorite_list', 'system', 9, 0, 1, '', '');
 
 CREATE TABLE IF NOT EXISTS `sys_menu_sets` (
   `set_name` varchar(64) NOT NULL,
@@ -3930,7 +3967,8 @@ INSERT INTO `sys_menu_sets` (`set_name`, `module`, `title`, `deletable`) VALUES
 ('sys_switch_language', 'system', '_sys_menu_set_title_switch_language', 0),
 ('sys_switch_template', 'system', '_sys_menu_set_title_switch_template', 0),
 ('sys_social_sharing', 'system', '_sys_menu_set_title_sys_social_sharing', 0),
-('sys_wiki', 'system', '_sys_menu_set_title_sys_wiki', 0);
+('sys_wiki', 'system', '_sys_menu_set_title_sys_wiki', 0),
+('sys_favorite_list', 'system', '_sys_menu_set_title_sys_favorite_list', 0);
 
 CREATE TABLE IF NOT EXISTS `sys_menu_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -4062,6 +4100,11 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('sys_wiki', 'system', 'delete-block', '', '_sys_menu_item_title_wiki_delete_block', '', '', '', 'times-circle', '', '', 0, 2147483646, '', 1, 0, 1, 3),
 ('sys_wiki', 'system', 'translate', '', '_sys_menu_item_title_wiki_translate', '', '', '', 'language', '', '', 0, 2147483646, '', 1, 0, 1, 4),
 ('sys_wiki', 'system', 'history', '', '_sys_menu_item_title_wiki_history', '', '', '', 'history', '', '', 0, 2147483646, '', 1, 0, 1, 5);
+
+-- favorite list menu
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `editable`, `order`) VALUES 
+('sys_favorite_list', 'system', 'edit', '', '_sys_menu_item_title_favorite_list_edit', 'javascript:void(0)', 'javascript:{js_object}.cmtEdit(this, {list_id})', '', 'edit', '', '', 0, 2147483646, '', 1, 0, 1, 1),
+('sys_favorite_list', 'system', 'delete', '', '_sys_menu_item_title_wiki_favorite_list_delete', 'javascript:void(0)', 'javascript:{js_object}.cmtDelete(this, {list_id})', '', 'times', '', '', 0, 2147483646, '', 1, 0, 1, 2);
 
 -- --------------------------------------------------------
 

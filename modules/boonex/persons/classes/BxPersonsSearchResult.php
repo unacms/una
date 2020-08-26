@@ -25,12 +25,12 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
             'ownFields' => array(),
             'searchFields' => array(),
             'restriction' => array(
-        		'account_id' => array('value' => '', 'field' => 'account_id', 'operator' => '='),
+                'account_id' => array('value' => '', 'field' => 'account_id', 'operator' => '='),
                 'perofileStatus' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
                 'perofileType' => array('value' => 'bx_persons', 'field' => 'type', 'operator' => '='),
                 'owner' => array('value' => '', 'field' => 'author', 'operator' => '=', 'table' => 'bx_persons_data'),
-        		'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>', 'table' => 'bx_persons_data'),
-        		'online' => array('value' => '', 'field' => 'date', 'operator' => '>', 'table' => 'sys_sessions'),
+                'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>', 'table' => 'bx_persons_data'),
+                'online' => array('value' => '', 'field' => 'date', 'operator' => '>', 'table' => 'sys_sessions'),
             ),
             'join' => array (
                 'profile' => array(
@@ -74,6 +74,8 @@ class BxPersonsSearchResult extends BxBaseModProfileSearchResult
         
         $sSearchFields = getParam($CNF['PARAM_SEARCHABLE_FIELDS']);
         $this->aCurrent['searchFields'] = !empty($sSearchFields) ? explode(',', $sSearchFields) : '';
+
+        $this->_setAccountConfirmationConditions($aParams);
 
         switch ($sMode) {
 

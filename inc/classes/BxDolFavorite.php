@@ -25,6 +25,7 @@ define('BX_DOL_FAVORITE_USAGE_DEFAULT', BX_DOL_FAVORITE_USAGE_BLOCK);
  * @code
  *  `name` - system name, it is better to use unique module prefix here, lowercase and all spaces are underscored
  *  `table_track` - table to track favorites
+ *  `table_lists` - table with lists 
  *  `is_on` - is the system activated
  *  `trigger_table` - table where you need to update favorites field
  *  `trigger_field_id` - table field id to unique determine object
@@ -59,6 +60,10 @@ class BxDolFavorite extends BxDolObject
         $this->_sBaseUrl = BxDolPermalinks::getInstance()->permalink($this->_aSystem['base_url']);
         if(get_mb_substr($this->_sBaseUrl, 0, 4) != 'http')
             $this->_sBaseUrl = BX_DOL_URL_ROOT . $this->_sBaseUrl;
+        
+        $this->_sFormObject = 'sys_favorite';
+        $this->_sFormDisplayAdd = 'sys_favorite_add';
+        $this->_sFormDisplayListEdit = 'sys_favorite_list_edit';
     }
 
    /**
@@ -89,6 +94,22 @@ class BxDolFavorite extends BxDolObject
         return ($GLOBALS['bxDolClasses'][$sKey] = $o);
     }
 
+    public function getConditionsTrack($sMainTable, $sMainField, $iAuthorId = 0, $iListId = 0)
+    {
+        $aConditions = parent::getConditionsTrack($sMainTable, $sMainField, $iAuthorId);
+        if (empty($aConditions) || !isset($this->_aSystem['table_lists']) || $this->_aSystem['table_lists'] == '')
+            return $aConditions;
+        
+        $sTableTrack = isset($this->_aSystem['table_track']) ? $this->_aSystem['table_track'] : '';
+        $aConditions['restriction']['objects_' . $this->_sSystem . '_list'] = array(
+            'value' => $iListId,
+            'field' => 'list_id',
+            'operator' => '=',
+            'table' => $sTableTrack,
+        );
+        return $aConditions;
+    }
+    
     public static function &getSystems()
     {
         $sKey = 'bx_dol_cache_memory_favorite_systems';
@@ -99,6 +120,7 @@ class BxDolFavorite extends BxDolObject
                     `id` as `id`,
                     `name` AS `name`,
                     `table_track` AS `table_track`,
+                    `table_lists` AS `table_lists`,
                     `is_on` AS `is_on`,
                     `is_undo` AS `is_undo`,
                     `is_public` AS `is_public`,
@@ -128,7 +150,43 @@ class BxDolFavorite extends BxDolObject
      */
     public function actionFavorite()
     {
-        return echoJson($this->_doFavorite());
+        return echoJson($this->_getFavorite());
+    }
+    
+    public function actionEditList()
+    {
+        $iListId = null;
+        if(!bx_get('list_id'))
+            return false;
+        
+        $iListId = (int) bx_get('list_id');
+        $aList = $this->_oQuery->getList(array('type' => 'id', 'list_id' => $iListId));
+         
+        if ($this->isAllowedEditList($aList['author_id'])){
+            return echoJson($this->_getEditList($aList));
+        }
+        
+        return false;
+    }
+    
+    public function actionDeleteList()
+    {
+        $iListId = null;
+        if(!bx_get('list_id'))
+            return false;
+        
+        $iListId = (int) bx_get('list_id');
+        $aList = $this->_oQuery->getList(array('type' => 'id', 'list_id' => $iListId));
+        
+        $oModule = BxDolModule::getInstance($this->_aSystem["name"]);
+        $CNF = $oModule->_oConfig->CNF;    
+        
+        if ($this->isAllowedEditList($aList['author_id'])){
+            $this->_oQuery->deleteList($iListId);
+            return echoJson(array('redirect' => BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_AUTHOR_ENTRIES'] . '&profile_id=' . $aList['author_id'])));
+        }
+        
+        return false;
     }
 
 	public function actionGetFavoritedBy()
@@ -151,6 +209,17 @@ class BxDolFavorite extends BxDolObject
             return true;
 
         return $this->checkAction('favorite', $isPerformAction);
+    }
+    
+    public function isAllowedEditList($iAuthorId, $isPerformAction = false)
+    {
+        if(isAdmin())
+            return true;
+        
+        if ($iAuthorId == bx_get_logged_profile_id())
+            return true;
+        
+        return false;
     }
 
 	public function msgErrAllowedFavorite()
@@ -190,48 +259,7 @@ class BxDolFavorite extends BxDolObject
 	/**
      * Internal functions
      */
-	protected function _doFavorite()
-    {
-        if (!$this->isEnabled())
-           return array('code' => 1, 'message' => _t('_favorite_err_not_enabled'));
-
-        $iObjectId = $this->getId();
-        $iObjectAuthorId = $this->_oQuery->getObjectAuthorId($iObjectId);
-        $iAuthorId = $this->_getAuthorId();
-
-        $bUndo = $this->isUndo();
-        $bPerformed = $this->isPerformed($iObjectId, $iAuthorId);
-        $bPerformUndo = $bPerformed && $bUndo ? true : false;
-
-        if(!$bPerformUndo && !$this->isAllowedFavorite())
-            return array('code' => 2, 'message' => $this->msgErrAllowedFavorite());
-
-        if($bPerformed && !$bUndo)
-        	return array('code' => 3, 'message' => _t('_favorite_err_duplicate_favorite'));
-
-        if(!$this->_oQuery->{($bPerformUndo ? 'un' : '') . 'doFavorite'}($iObjectId, $iAuthorId))
-            return array('code' => 4, 'message' => _t('_favorite_err_cannot_perform_action'));
-
-        if(!$bPerformUndo)
-            $this->isAllowedFavorite(true);
-
-        $this->_triggerValue($bPerformUndo ? -1 : 1);
-
-        bx_alert($this->_sSystem, ($bPerformUndo ? 'un' : '') . 'favorite', $iObjectId, $iAuthorId, array('favorite_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId));
-        bx_alert('favorite', ($bPerformUndo ? 'un' : '') . 'do', 0, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId));
-
-        $aFavorite = $this->_oQuery->getFavorite($iObjectId);
-        return array(
-        	'eval' => $this->getJsObjectName() . '.onFavorite(oData, oElement)',
-        	'code' => 0, 
-        	'count' => $aFavorite['count'],
-        	'countf' => (int)$aFavorite['count'] > 0 ? $this->_getCounterLabel($aFavorite['count']) : '',
-            'label_icon' => $this->_getIconDoFavorite(!$bPerformed),
-            'label_title' => _t($this->_getTitleDoFavorite(!$bPerformed)),
-            'disabled' => !$bPerformed && !$bUndo
-        );
-    }
-
+	
     protected function _getIconDoFavorite($bPerformed)
     {
     	return $bPerformed && $this->isUndo() ?  'far fa-bookmark' : 'fas fa-bookmark';
@@ -240,6 +268,11 @@ class BxDolFavorite extends BxDolObject
     protected function _getTitleDoFavorite($bPerformed)
     {
     	return $bPerformed && $this->isUndo() ? '_favorite_do_unfavorite' : '_favorite_do_favorite';
+    }
+    
+    protected function _getFormObject($sDisplayName)
+    {
+        return BxDolForm::getObjectInstance($this->_sFormObject, $sDisplayName);
     }
 }
 

@@ -173,6 +173,16 @@ class BxDolCmtsReviews extends BxTemplCmts
         $aStats = $this->_oQuery->getReviewsStats($iId);
         return $this->_oQuery->updateTriggerTable($iId, (int)$aStats['count']) !== false && $this->_oQuery->updateTriggerTableAvg($iId, (float)$aStats['avg']) !== false;
     }
+
+    protected function _getIconDo()
+    {
+    	return 'far comment-dots';
+    }
+
+    protected function _getTitleDo()
+    {
+    	return '_cmt_rvw_txt_do';
+    }
 }
 
 /** @} */

@@ -20,7 +20,7 @@ function BxDolLabel(oOptions) {
     this._sClassSublist = 'sys-labels-li-sublist';
 }
 
-BxDolLabel.prototype.selectLabels = function(oElement, aParams)
+BxDolLabel.prototype.selectLabels = function(oElement, sName, aParams)
 {
     var $this = this;
 
@@ -29,7 +29,7 @@ BxDolLabel.prototype.selectLabels = function(oElement, aParams)
         aValue.push($(this).val());
     });
 
-    var oData = $.extend({}, $this._getDefaultParams(), {action: 'select_labels', value: aValue}, (aParams || {}));
+    var oData = $.extend({}, $this._getDefaultParams(), {action: 'select_labels', name: sName, value: aValue}, (aParams || {}));
 
     this._loadingInFormElement(oElement, true);
 

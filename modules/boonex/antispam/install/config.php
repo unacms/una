@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_antispam',
     'title' => 'Antispam',
     'note' => 'Antispam tools',
-    'version' => '10.0.1.DEV',
+    'version' => '11.0.1.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 

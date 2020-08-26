@@ -19,7 +19,7 @@ DELETE FROM `sys_menu_items` WHERE `module` = 'bx_photos' OR `set_name` IN('bx_p
 
 
 -- PRIVACY 
-DELETE FROM `sys_objects_privacy` WHERE `object` = 'bx_photos_allow_view_to';
+DELETE FROM `sys_objects_privacy` WHERE `object` IN ('bx_photos_allow_view_to', 'bx_photos_allow_view_favorite_list');
 
 
 -- ACL

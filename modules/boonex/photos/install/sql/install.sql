@@ -212,9 +212,20 @@ CREATE TABLE IF NOT EXISTS `bx_photos_reports_track` (
 CREATE TABLE `bx_photos_favorites_track` (
   `object_id` int(11) NOT NULL default '0',
   `author_id` int(11) NOT NULL default '0',
+  `list_id` int(11) NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
   KEY `id` (`object_id`,`author_id`)
 );
+
+CREATE TABLE `bx_photos_favorites_lists` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `author_id` int(11) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  `allow_view_favorite_list_to` varchar(16) NOT NULL DEFAULT '3',
+   PRIMARY KEY (`id`)
+);
+
 
 -- TABLE: scores
 CREATE TABLE IF NOT EXISTS `bx_photos_scores` (
@@ -349,9 +360,9 @@ INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigg
 ('bx_photos', 'bx_photos_views_track', '86400', '1', 'bx_photos_entries', 'id', 'author', 'views', '', '');
 
 
--- FAFORITES
-INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `is_on`, `is_undo`, `is_public`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_photos', 'bx_photos_favorites_track', '1', '1', '1', 'page.php?i=view-photo&id={object_id}', 'bx_photos_entries', 'id', 'author', 'favorites', '', '');
+-- FAVORITES
+INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `table_lists`, `is_on`, `is_undo`, `is_public`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_photos', 'bx_photos_favorites_track', 'bx_photos_favorites_lists', '1', '1', '1', 'page.php?i=view-photo&id={object_id}', 'bx_photos_entries', 'id', 'author', 'favorites', '', '');
 
 
 -- FEATURED

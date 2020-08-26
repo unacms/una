@@ -251,6 +251,7 @@
     <string name="_bx_classes_txt_processing_awaiting"><![CDATA[Scheduled for publishing as soon as video conversion is complete.]]></string>
     <string name="_bx_classes_txt_processing_failed"><![CDATA[Class isn't published because video conversion failed, edit video to fix the issue.]]></string>
     <string name="_bx_classes_txt_scheduled_awaiting"><![CDATA[Class publishing date is {date_publish_uf}]]></string>
+    <string name="_bx_classes_txt_added_x"><![CDATA[{0}]]></string>
     <string name="_bx_classes_txt_start_x"><![CDATA[start {0}]]></string>
     <string name="_bx_classes_txt_due_x"><![CDATA[due {0}]]></string>
     <string name="_bx_classes_txt_add_class"><![CDATA[Add Class]]></string>

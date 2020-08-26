@@ -112,12 +112,14 @@ function getHtmlData( elem, url, callback, method , confirmation)
     	fPerform();
 }
 
-function loadDynamicBlockAutoPaginate (e, iStart, iPerPage, sAdditionalUrlParams) {
+function loadDynamicBlockAutoPaginate (e, iStart, iPerPage, sAdditionalUrlParams, sStartParamName, sPerPageParamName) {
 
     sUrl = location.href;
+    sStartParamName = typeof sStartParamName !== 'undefined' ?  sStartParamName : 'start';
+    sPerPageParamName = typeof sPerPageParamName !== 'undefined' ?  sPerPageParamName : 'per_page';
 
     sUrl = sUrl.replace(/start=\d+/, '').replace(/per_page=\d+/, '').replace(/[&\?]+$/, '');
-    sUrl = bx_append_url_params(sUrl, 'start=' + parseInt(iStart) + '&per_page=' + parseInt(iPerPage));
+    sUrl = bx_append_url_params(sUrl, sStartParamName + '=' + parseInt(iStart) + '&' + sPerPageParamName + '=' + parseInt(iPerPage));
     if ('undefined' != typeof(sAdditionalUrlParams))
         sUrl = bx_append_url_params(sUrl, sAdditionalUrlParams);
 
@@ -481,7 +483,11 @@ function bx_menu_slide (sObject, oElement, sPosition, oOptions, oVars) {
  */
 function bx_menu_slide_inline (sMenu, e, sPosition) {
     var options = options || {};
-    var eSlider = $(sMenu);    
+    var eSlider = $(sMenu);
+
+    if ('undefined' !== typeof (bx_menu_slide_inline_custom)) {
+        return bx_menu_slide_inline_custom(sMenu, e, sPosition);
+    }
 
     if ('undefined' == typeof(e))
         e = eSlider.data('data-control-btn');

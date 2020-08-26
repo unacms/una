@@ -65,6 +65,7 @@ class BxPostsConfig extends BxBaseModTextConfig
              // some params
             'PARAM_MULTICAT_ENABLED' => true,
             'PARAM_MULTICAT_AUTO_ACTIVATION_FOR_CATEGORIES' => 'bx_posts_auto_activation_for_categories',
+            'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_posts_per_page_for_favorites_lists',
             
             // page URIs
             'URI_VIEW_ENTRY' => 'view-post',
@@ -73,6 +74,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'URI_ADD_ENTRY' => 'create-post',
             'URI_EDIT_ENTRY' => 'edit-post',
             'URI_MANAGE_COMMON' => 'posts-manage',
+            'URI_FAVORITES_LIST' => 'posts-favorites',
 
             'URL_HOME' => 'page.php?i=posts-home',
             'URL_POPULAR' => 'page.php?i=posts-popular',
@@ -119,6 +121,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'OBJECT_NOTES' => 'bx_posts_notes',
             'OBJECT_CATEGORY' => 'bx_posts_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_posts_allow_view_to',
+            'OBJECT_PRIVACY_LIST_VIEW' => 'bx_posts_allow_view_favorite_list',
             'OBJECT_FORM_ENTRY' => 'bx_posts',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_posts_entry_view',
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_posts_entry_add',

@@ -56,6 +56,9 @@ class BxPhotosConfig extends BxBaseModTextConfig
             'FIELD_LOCATION_PREFIX' => 'location',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 			
+            // some params
+            'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_photos_per_page_for_favorites_lists',
+            
             // page URIs
             'URI_VIEW_ENTRY' => 'view-photo',
             'URI_AUTHOR_ENTRIES' => 'photos-author',
@@ -63,6 +66,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
             'URI_ADD_ENTRY' => 'create-photo',
             'URI_EDIT_ENTRY' => 'edit-photo',
             'URI_MANAGE_COMMON' => 'photos-manage',
+            'URI_FAVORITES_LIST' => 'photos-favorites',
 
             'URL_HOME' => 'page.php?i=photos-home',
             'URL_POPULAR' => 'page.php?i=photos-popular',
@@ -95,6 +99,7 @@ class BxPhotosConfig extends BxBaseModTextConfig
             'OBJECT_COMMENTS' => 'bx_photos',
             'OBJECT_CATEGORY' => 'bx_photos_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_photos_allow_view_to',
+            'OBJECT_PRIVACY_LIST_VIEW' => 'bx_photos_allow_view_favorite_list',
             'OBJECT_FORM_ENTRY' => 'bx_photos',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_photos_entry_view',
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_photos_entry_edit',

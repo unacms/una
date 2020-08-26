@@ -12,9 +12,9 @@
  */
 class BxDolScoreQuery extends BxDolObjectQuery
 {
-	protected $_sTriggerFieldScore;
-	protected $_sTriggerFieldCup;
-	protected $_sTriggerFieldCdown;
+    protected $_sTriggerFieldScore;
+    protected $_sTriggerFieldCup;
+    protected $_sTriggerFieldCdown;
 
     protected $_iPostTimeout;
 
@@ -32,17 +32,21 @@ class BxDolScoreQuery extends BxDolObjectQuery
         $this->_sMethodGetEntry = 'getScore';
     }
 
-    public function getPerformedBy($iObjectId)
+    public function getPerformedBy($iObjectId, $iStart = 0, $iPerPage = 0)
     {
+        $sLimitClause = "";
+        if(!empty($iPerPage))
+            $sLimitClause = $this->prepareAsString(" LIMIT ?, ?", $iStart, $iPerPage);
+
         $sQuery = "SELECT 
             	`author_id` AS `id`, 
             	`type` AS `vote_type`, 
             	`date` AS `vote_date` 
-			FROM `{$this->_sTableTrack}` 
-			WHERE `object_id`=:object_id";
+            FROM `{$this->_sTableTrack}` 
+            WHERE `object_id`=:object_id" . $sLimitClause;
 
         return $this->getAll($sQuery, array(
-        	'object_id' => $iObjectId
+            'object_id' => $iObjectId
         ));
     }
 

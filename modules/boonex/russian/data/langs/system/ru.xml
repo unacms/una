@@ -1684,6 +1684,7 @@
         <string name="_cmt_rvw_txt_sample_score_down_single"><![CDATA[голос против обзора]]></string>
         <string name="_cmt_rvw_txt_sample_vote_single"><![CDATA[голос за обзор]]></string>
         <string name="_cmt_rvw_txt_empty"><![CDATA[Нет обзоров]]></string>
+        <string name="_cmt_rvw_txt_do"><![CDATA[Обозревать]]></string>
 	<string name="_copyright"><![CDATA[&copy; {0} Компания]]></string>
 	<string name="_delete"><![CDATA[удалить]]></string>
 	<string name="_error occured"><![CDATA[Произошла ошибка]]></string>
@@ -2215,6 +2216,7 @@
 	<string name="_sys_form_input_anonymous"><![CDATA[Анонимная публикация]]></string>
         <string name="_sys_form_labels"><![CDATA[Метки]]></string>
         <string name="_sys_form_labels_display_select"><![CDATA[Выбор метки]]></string>
+        <string name="_sys_form_labels_input_caption_system_name"><![CDATA[Имя]]></string>
         <string name="_sys_form_labels_input_caption_system_action"><![CDATA[Действие]]></string>
         <string name="_sys_form_labels_input_caption_system_search"><![CDATA[Поиск]]></string>
         <string name="_sys_form_labels_input_caption_search"><![CDATA[Найти]]></string>
@@ -3012,6 +3014,7 @@
 	<string name="_sys_txt_error_entry_is_not_defined"><![CDATA[Запрашиваемый ресурс не существует]]></string>
 	<string name="_sys_txt_error_entry_update"><![CDATA[Ошибка обновления элемента]]></string>
 	<string name="_sys_txt_error_occured"><![CDATA[Произошла ошибка]]></string>
+    <string name="_sys_txt_err_sound_not_transcoded_yet"><![CDATA[Аудиофайл в обработке]]></string>
 	<string name="_sys_txt_forgot_pasword"><![CDATA[Забыли пароль?]]></string>
 	<string name="_sys_txt_forgot_pasword_check_email"><![CDATA[Email отослан, пожалуйста, следуйте инструкциям в нём.]]></string>
 	<string name="_sys_txt_forgot_pasword_check_phone"><![CDATA[SMS отослано, пожалуйста, следуйте инструкциям в нём.]]></string>

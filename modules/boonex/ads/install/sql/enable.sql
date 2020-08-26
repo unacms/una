@@ -221,6 +221,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_ads_view_actions', 'bx_ads', 'interested', '_bx_ads_menu_item_title_system_interested_entry', '', '', '', '', '', '', '', 0, 2147483646, 1, 0, 10),
 ('bx_ads_view_actions', 'bx_ads', 'edit-ad', '_bx_ads_menu_item_title_system_edit_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 20),
 ('bx_ads_view_actions', 'bx_ads', 'delete-ad', '_bx_ads_menu_item_title_system_delete_entry', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 30),
+('bx_ads_view_actions', 'bx_ads', 'review', '_bx_ads_menu_item_title_system_review_entry', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 190),
 ('bx_ads_view_actions', 'bx_ads', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 200),
 ('bx_ads_view_actions', 'bx_ads', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 210),
 ('bx_ads_view_actions', 'bx_ads', 'vote', '_sys_menu_item_title_system_va_vote', '', '', '', '', '', '', '', 0, 2147483647, 0, 0, 220),

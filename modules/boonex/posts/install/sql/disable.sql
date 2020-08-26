@@ -16,7 +16,7 @@ DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_posts';
 DELETE FROM `sys_menu_items` WHERE `module` = 'bx_posts' OR `set_name` IN('bx_posts_create_post_attachments', 'bx_posts_view', 'bx_posts_view_actions', 'bx_posts_submenu', 'bx_posts_view_submenu', 'bx_posts_snippet_meta', 'bx_posts_my', 'bx_posts_menu_manage_tools');
 
 -- PRIVACY 
-DELETE FROM `sys_objects_privacy` WHERE `object` = 'bx_posts_allow_view_to';
+DELETE FROM `sys_objects_privacy` WHERE `object` IN ('bx_posts_allow_view_to', 'bx_posts_allow_view_favorite_list');
 
 -- ACL
 DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matrix` WHERE `sys_acl_matrix`.`IDAction` = `sys_acl_actions`.`ID` AND `sys_acl_actions`.`Module` = 'bx_posts';

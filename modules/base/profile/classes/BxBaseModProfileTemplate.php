@@ -310,6 +310,8 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
         // generate html
         $aVars = array (
+            'module' => $this->_oConfig->getName(),
+
             'id' => $aData[$CNF['FIELD_ID']],
             'content_url' => $sUrl,
             'title' => $sTitle,
