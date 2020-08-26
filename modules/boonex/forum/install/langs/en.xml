@@ -15,6 +15,7 @@
     <string name="_bx_forum_option_autosubscribe_created"><![CDATA[Autosubscribe to newly created discussions]]></string>
     <string name="_bx_forum_option_autosubscribe_replied"><![CDATA[Autosubscribe to replied discussions]]></string>
     <string name="_bx_forum_option_auto_activation_for_categories"><![CDATA[Auto-Activation For Categories]]></string>
+    <string name="_bx_forum_option_per_page_for_favorites_lists"><![CDATA[Number of favorite lists per page]]></string>
 
     <string name="_bx_forum_form_entry"><![CDATA[Forum]]></string>
     <string name="_bx_forum_form_entry_display_add"><![CDATA[New discussion]]></string>
@@ -47,6 +48,7 @@
     <string name="_bx_forum_form_entry_input_media"><![CDATA[Media]]></string>
     <string name="_bx_forum_form_entry_input_sys_allow_view_to"><![CDATA[Visibility]]></string>
     <string name="_bx_forum_form_entry_input_allow_view_to"><![CDATA[Visibility]]></string>
+    <string name="_bx_forum_form_entry_input_allow_view_favorite_list"><![CDATA[Visibility]]></string>
     <string name="_bx_forum_form_entry_input_picture_use_as_thumb"><![CDATA[Header Image]]></string>
     <string name="_bx_forum_form_entry_input_sys_date_added"><![CDATA[Added]]></string>
     <string name="_bx_forum_form_entry_input_date_added"><![CDATA[Added]]></string>
@@ -152,6 +154,8 @@
     <string name="_bx_forum_page_block_title_popular_entries_view_extended"><![CDATA[Popular Discussions (Extended View)]]></string>
     <string name="_bx_forum_page_block_title_popular_entries_view_full"><![CDATA[Popular Discussions (Full View)]]></string>
     <string name="_bx_forum_page_block_title_updated_entries"><![CDATA[Updated Discussions]]></string>
+    <string name="_bx_forum_page_block_title_favorites_entries"><![CDATA["{title}" List]]></string>
+    <string name="_bx_forum_page_block_title_favorites_entries_info"><![CDATA[Info]]></string>
     <string name="_bx_forum_page_title_sys_entries_categories"><![CDATA[Discussions Categories]]></string>
     <string name="_bx_forum_page_title_entries_categories"><![CDATA[Discussions Categories]]></string>
     <string name="_bx_forum_page_block_title_entries_categories"><![CDATA[Discussions Categories]]></string>
@@ -191,6 +195,8 @@
 	<string name="_bx_forum_page_block_title_my_entries"><![CDATA[My Discussions]]></string>
 	<string name="_bx_forum_page_title_sys_entries_search"><![CDATA[Search]]></string>
 	<string name="_bx_forum_page_title_entries_search"><![CDATA[Search]]></string>
+  <string name="_bx_forum_page_title_sys_entries_favorites"><![CDATA[Favorives Discussions]]></string>
+  <string name="_bx_forum_page_title_entries_favorites"><![CDATA[Favorives Discussions]]></string>
 	<string name="_bx_forum_page_block_title_entries_search_form"><![CDATA[Search]]></string>
 	<string name="_bx_forum_page_block_title_entries_search_results"><![CDATA[Search Results]]></string>
 	<string name="_bx_forum_page_block_title_search_form"><![CDATA[Search Form]]></string>

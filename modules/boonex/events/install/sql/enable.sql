@@ -16,6 +16,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `e
 ('bx_events_num_rss', '10', @iCategId, '_bx_events_option_num_rss', 'digit', '', '', '', 12),
 ('bx_events_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', 15),
 ('bx_events_per_page_browse_recommended', '10', @iCategId, '_sys_option_per_page_browse_recommended', 'digit', '', '', '', 16),
+('bx_events_per_page_for_favorites_lists', '5', @iCategId, '_bx_events_option_per_page_for_favorites_lists', 'digit', '', '', '', 17),
 ('bx_events_time_format', 'H:i', @iCategId, '_bx_events_option_time_format', 'digit', '', '', '', 20),
 ('bx_events_short_date_format', 'j M y', @iCategId, '_bx_events_option_short_date_format', 'digit', '', '', '', 22),
 ('bx_events_datetime_format', 'j M Y H:i', @iCategId, '_bx_events_option_datetime_format', 'digit', '', '', '', 23),
@@ -210,8 +211,19 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
 ('bx_events_joined', 1, 'bx_events', '_bx_events_page_block_title_sys_entries_actions', '_bx_events_page_block_title_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_events";s:6:"method";s:18:"my_entries_actions";}', 0, 0, 1, 1),
 ('bx_events_joined', 1, 'bx_events', '_bx_events_page_block_title_sys_entries_of_author', '_bx_events_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_events";s:6:"method";s:22:"browse_created_entries";}', 0, 0, 0, 2),
-('bx_events_joined', 1, 'bx_events', '_bx_events_page_block_title_sys_favorites_of_author', '_bx_events_page_block_title_favorites_of_author', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:15:"browse_favorite";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 1, 1, 3),
+('bx_events_joined', 1, 'bx_events', '_bx_events_page_block_title_sys_favorites_of_author', '_bx_events_page_block_title_favorites_of_author', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:21:"browse_favorite_lists";s:6:"params";a:2:{s:10:"profile_id";s:12:"{profile_id}";s:6:"params";a:3:{s:9:"unit_view";s:8:"showcase";s:13:"empty_message";b:0;s:13:"ajax_paginate";b:0;}}}', 0, 1, 1, 2),
 ('bx_events_joined', 1, 'bx_events', '_bx_events_page_block_title_sys_joined_entries', '_bx_events_page_block_title_joined_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:21:"browse_joined_entries";s:6:"params";a:2:{i:0;i:0;i:1;b:1;}}', 0, 0, 1, 4);
+
+
+-- PAGE: favorites by list
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_events_favorites', '_bx_events_page_title_sys_entries_favorites', '_bx_events_page_title_entries_favorites', 'bx_events', 12, 2147483647, 1, 'events-favorites', 'page.php?i=events-favorites', '', '', '', 0, 1, 0, 'BxEventsPageListEntry', 'modules/boonex/events/classes/BxEventsPageListEntry.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
+('bx_events_favorites', 2, 'bx_events', '_bx_events_page_block_title_favorites_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_events";s:6:"method";s:15:"browse_favorite";s:6:"params";a:2:{s:10:"profile_id";s:12:"{profile_id}";s:6:"params";a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:0;s:13:"ajax_paginate";b:0;}}}', 0, 1, 1),
+('bx_events_favorites', 3, 'bx_events', '_bx_events_page_block_title_favorites_entries_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_events";s:6:"method";s:19:"favorites_list_info";}', 0, 0, 0),
+('bx_events_favorites', 3, 'bx_events', '_bx_events_page_block_title_favorites_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_events";s:6:"method";s:22:"favorites_list_actions";}', 0, 0, 1);
+
 
 -- PAGE: add block to homepage
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = 'sys_home' AND `cell_id` = 1 ORDER BY `order` DESC LIMIT 1);
@@ -593,7 +605,9 @@ INSERT INTO `sys_alerts` (`unit`, `action`, `handler_id`) VALUES
 INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `spaces`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
 ('bx_events_allow_view_to', 'bx_events', 'view', '_bx_events_form_profile_input_allow_view_to', '3', 'bx_groups,bx_spaces', 'bx_events_data', 'id', 'author', 'BxEventsPrivacy', 'modules/boonex/events/classes/BxEventsPrivacy.php'),
 ('bx_events_allow_view_notification_to', 'bx_events', 'view_event', '_bx_events_form_profile_input_allow_view_notification_to', '3', '', 'bx_notifications_events', 'id', 'object_owner_id', 'BxEventsPrivacyNotifications', 'modules/boonex/events/classes/BxEventsPrivacyNotifications.php'),
-('bx_events_allow_post_to', 'bx_events', 'post', '_bx_events_form_profile_input_allow_post_to', 'p', '', 'bx_events_data', 'id', 'author', 'BxEventsPrivacyPost', 'modules/boonex/events/classes/BxEventsPrivacyPost.php');
+('bx_events_allow_post_to', 'bx_events', 'post', '_bx_events_form_profile_input_allow_post_to', 'p', '', 'bx_events_data', 'id', 'author', 'BxEventsPrivacyPost', 'modules/boonex/events/classes/BxEventsPrivacyPost.php'),
+('bx_events_allow_view_favorite_list', 'bx_events', 'view_favorite_list', '_bx_events_form_entry_input_allow_view_favorite_list', '3', '', 'bx_events_favorites_lists', 'id', 'author_id', 'BxEventsPrivacy', 'modules/boonex/events/classes/BxEventsPrivacy.php');
+
 
 -- EMAIL TEMPLATES
 INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `Body`) VALUES

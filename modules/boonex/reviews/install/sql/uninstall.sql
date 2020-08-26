@@ -1,6 +1,6 @@
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_reviews_reviews`, `bx_reviews_covers`, `bx_reviews_files`, `bx_reviews_photos`, `bx_reviews_photos_resized`, `bx_reviews_videos`, `bx_reviews_videos_resized`, `bx_reviews_cmts`, `bx_reviews_cmts_notes`, `bx_reviews_votes`, `bx_reviews_votes_track`, `bx_reviews_reactions`, `bx_reviews_reactions_track`, `bx_reviews_views_track`, `bx_reviews_meta_keywords`, `bx_reviews_meta_locations`, `bx_reviews_meta_mentions`, `bx_reviews_reports`, `bx_reviews_reports_track`, `bx_reviews_favorites_track`, `bx_reviews_scores`, `bx_reviews_scores_track`, `bx_reviews_polls`, `bx_reviews_polls_answers`, `bx_reviews_polls_answers_votes`, `bx_reviews_polls_answers_votes_track`, `bx_reviews_voting_options`;
+DROP TABLE IF EXISTS `bx_reviews_reviews`, `bx_reviews_covers`, `bx_reviews_files`, `bx_reviews_photos`, `bx_reviews_photos_resized`, `bx_reviews_videos`, `bx_reviews_videos_resized`, `bx_reviews_cmts`, `bx_reviews_cmts_notes`, `bx_reviews_votes`, `bx_reviews_votes_track`, `bx_reviews_reactions`, `bx_reviews_reactions_track`, `bx_reviews_views_track`, `bx_reviews_meta_keywords`, `bx_reviews_meta_locations`, `bx_reviews_meta_mentions`, `bx_reviews_reports`, `bx_reviews_reports_track`, `bx_reviews_favorites_track`, `bx_reviews_favorites_lists`, `bx_reviews_scores`, `bx_reviews_scores_track`, `bx_reviews_polls`, `bx_reviews_polls_answers`, `bx_reviews_polls_answers_votes`, `bx_reviews_polls_answers_votes_track`, `bx_reviews_voting_options`;
 
 -- STORAGES & TRANSCODERS
 DELETE FROM `sys_objects_storage` WHERE `object` LIKE 'bx_reviews_%';

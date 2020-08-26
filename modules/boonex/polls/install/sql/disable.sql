@@ -16,7 +16,7 @@ DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_polls';
 DELETE FROM `sys_menu_items` WHERE `module` = 'bx_polls' OR `set_name` IN('bx_polls_view', 'bx_polls_view_actions', 'bx_polls_submenu', 'bx_polls_view_submenu', 'bx_polls_snippet_meta', 'bx_polls_my', 'bx_polls_menu_manage_tools');
 
 -- PRIVACY 
-DELETE FROM `sys_objects_privacy` WHERE `object` = 'bx_polls_allow_view_to';
+DELETE FROM `sys_objects_privacy` WHERE `object` IN ('bx_polls_allow_view_to', 'bx_polls_allow_view_favorite_list');
 
 -- ACL
 DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matrix` WHERE `sys_acl_matrix`.`IDAction` = `sys_acl_actions`.`ID` AND `sys_acl_actions`.`Module` = 'bx_polls';

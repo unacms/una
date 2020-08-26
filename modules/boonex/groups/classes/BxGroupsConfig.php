@@ -63,6 +63,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'URI_JOIN_ENTRY' => 'join-group-profile',
             'URI_JOINED_ENTRIES' => 'joined-groups',
             'URI_MANAGE_COMMON' => 'groups-manage',
+            'URI_FAVORITES_LIST' => 'groups-favorites',
 
             'URL_HOME' => 'page.php?i=groups-home',
             'URL_ENTRY_FANS' => 'page.php?i=group-fans',
@@ -78,6 +79,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
 
             'PARAM_MMODE' => 'bx_groups_members_mode',
             'PARAM_RECURRING_RESERVE' => 3, // 3 days for recurring payment to be registered
+            'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_groups_per_page_for_favorites_lists',
 
             // objects
             'OBJECT_STORAGE' => 'bx_groups_pics',
@@ -123,6 +125,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'OBJECT_PAGE_VIEW_ENTRY' => 'bx_groups_view_profile',
             'OBJECT_PAGE_VIEW_ENTRY_CLOSED' => 'bx_groups_view_profile_closed',
             'OBJECT_PRIVACY_VIEW' => 'bx_groups_allow_view_to',
+            'OBJECT_PRIVACY_LIST_VIEW' => 'bx_groups_allow_view_favorite_list',
             'OBJECT_PRIVACY_VIEW_NOTIFICATION_EVENT' => 'bx_groups_allow_view_notification_to',
             'OBJECT_PRIVACY_POST' => 'bx_groups_allow_post_to',
             'OBJECT_GRID_ADMINISTRATION' => 'bx_groups_administration',

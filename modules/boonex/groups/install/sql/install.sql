@@ -205,9 +205,20 @@ CREATE TABLE IF NOT EXISTS `bx_groups_admins` (
 CREATE TABLE `bx_groups_favorites_track` (
   `object_id` int(11) NOT NULL default '0',
   `author_id` int(11) NOT NULL default '0',
+  `list_id` int(11) NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
   KEY `id` (`object_id`,`author_id`)
 );
+
+CREATE TABLE `bx_groups_favorites_lists` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `author_id` int(11) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  `allow_view_favorite_list_to` varchar(16) NOT NULL DEFAULT '3',
+   PRIMARY KEY (`id`)
+);
+
 
 -- TABLE: scores
 CREATE TABLE IF NOT EXISTS `bx_groups_scores` (
@@ -431,9 +442,9 @@ INSERT INTO `sys_objects_score` (`name`, `module`, `table_main`, `table_track`, 
 INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, `base_url`, `object_comment`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
 ('bx_groups', 'bx_groups_reports', 'bx_groups_reports_track', '1', 'page.php?i=view-group-profile&id={object_id}', 'bx_groups_notes', 'bx_groups_data', 'id', 'author', 'reports', '', '');
 
--- FAFORITES
-INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `is_on`, `is_undo`, `is_public`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_groups', 'bx_groups_favorites_track', '1', '1', '1', 'page.php?i=view-group-profile&id={object_id}', 'bx_groups_data', 'id', 'author', 'favorites', '', '');
+-- FAVORITES
+INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `table_lists`, `is_on`, `is_undo`, `is_public`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_groups', 'bx_groups_favorites_track', 'bx_groups_favorites_lists', '1', '1', '1', 'page.php?i=view-group-profile&id={object_id}', 'bx_groups_data', 'id', 'author', 'favorites', '', '');
 
 -- FEATURED
 INSERT INTO `sys_objects_feature` (`name`, `is_on`, `is_undo`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_flag`, `class_name`, `class_file`) VALUES 

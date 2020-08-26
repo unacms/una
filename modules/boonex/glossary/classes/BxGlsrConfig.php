@@ -48,6 +48,9 @@ class BxGlsrConfig extends BxBaseModTextConfig
             'FIELD_LABELS' => 'labels',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 
+            // some params
+            'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_glossary_per_page_for_favorites_lists',
+            
             // page URIs
             'URI_VIEW_ENTRY' => 'view-glossary',
             'URI_AUTHOR_ENTRIES' => 'glossary-author',
@@ -55,6 +58,7 @@ class BxGlsrConfig extends BxBaseModTextConfig
             'URI_ADD_ENTRY' => 'create-glossary',
             'URI_EDIT_ENTRY' => 'edit-glossary',
             'URI_MANAGE_COMMON' => 'glossary-manage',
+            'URI_FAVORITES_LIST' => 'glossary-favorites',
 
             'URL_HOME' => 'page.php?i=glossary-home',
             'URL_POPULAR' => 'page.php?i=glossary-popular',
@@ -87,6 +91,7 @@ class BxGlsrConfig extends BxBaseModTextConfig
             'OBJECT_COMMENTS' => 'bx_glossary',
             'OBJECT_CATEGORY' => 'bx_glossary_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_glossary_allow_view_to',
+            'OBJECT_PRIVACY_LIST_VIEW' => 'bx_glossary_allow_view_favorite_list',
             'OBJECT_FORM_ENTRY' => 'bx_glossary',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_glossary_entry_view',
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_glossary_entry_add',

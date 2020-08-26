@@ -270,9 +270,20 @@ CREATE TABLE IF NOT EXISTS `bx_reviews_reports_track` (
 CREATE TABLE `bx_reviews_favorites_track` (
   `object_id` int(11) NOT NULL default '0',
   `author_id` int(11) NOT NULL default '0',
+  `list_id` int(11) NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
   KEY `id` (`object_id`,`author_id`)
 );
+
+CREATE TABLE `bx_reviews_favorites_lists` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `author_id` int(11) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  `allow_view_favorite_list_to` varchar(16) NOT NULL DEFAULT '3',
+   PRIMARY KEY (`id`)
+);
+
 
 -- TABLE: scores
 CREATE TABLE IF NOT EXISTS `bx_reviews_scores` (
@@ -560,9 +571,9 @@ INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, 
 INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
 ('bx_reviews', 'bx_reviews_views_track', '86400', '1', 'bx_reviews_reviews', 'id', 'author', 'views', '', '');
 
--- FAFORITES
-INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `is_on`, `is_undo`, `is_public`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_reviews', 'bx_reviews_favorites_track', '1', '1', '1', 'page.php?i=view-review&id={object_id}', 'bx_reviews_reviews', 'id', 'author', 'favorites', '', '');
+-- FAVORITES
+INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `table_lists`, `is_on`, `is_undo`, `is_public`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_reviews', 'bx_reviews_favorites_track', 'bx_reviews_favorites_lists', '1', '1', '1', 'page.php?i=view-review&id={object_id}', 'bx_reviews_reviews', 'id', 'author', 'favorites', '', '');
 
 -- FEATURED
 INSERT INTO `sys_objects_feature` (`name`, `is_on`, `is_undo`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_flag`, `class_name`, `class_file`) VALUES 

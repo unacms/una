@@ -20,6 +20,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `e
 ('bx_organizations_num_rss', '10', @iCategId, '_bx_orgs_option_num_rss', 'digit', '', '', '', 12),
 ('bx_organizations_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', 15),
 ('bx_organizations_per_page_browse_recommended', '10', @iCategId, '_sys_option_per_page_browse_recommended', 'digit', '', '', '', 16),
+('bx_organizations_per_page_for_favorites_lists', '5', @iCategId, '_bx_orgs_option_per_page_for_favorites_lists', 'digit', '', '', '', 17),
 ('bx_organizations_searchable_fields', 'org_name,org_desc', @iCategId, '_bx_orgs_option_searchable_fields', 'list', 'a:2:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:21:"get_searchable_fields";}', '', '', 20),
 ('bx_organizations_public_subscriptions', '', @iCategId, '_bx_orgs_option_public_subscriptions', 'checkbox', '', '', '', 30),
 ('bx_organizations_public_subscribed_me', '', @iCategId, '_bx_orgs_option_public_subscribed_me', 'checkbox', '', '', '', 31),
@@ -126,8 +127,7 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 ('bx_organizations_profile_favorites', 'organization-profile-favorites', '_bx_orgs_page_title_sys_profile_favorites', '_bx_orgs_page_title_profile_favorites', 'bx_organizations', 5, 2147483647, 1, 'page.php?i=organization-profile-favorites', '', '', '', 0, 1, 0, 'BxOrgsPageBrowse', 'modules/boonex/organizations/classes/BxOrgsPageBrowse.php');
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_organizations_profile_favorites', 1, 'bx_organizations', '_bx_orgs_page_block_title_system_profile_favorites', '_bx_orgs_page_block_title_profile_favorites', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:15:"browse_favorite";}', 0, 1, 1, 1);
-
+('bx_organizations_profile_favorites', 1, 'bx_organizations', '_bx_orgs_page_block_title_system_profile_favorites', '_bx_orgs_page_block_title_profile_favorites', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:21:"browse_favorite_lists";s:6:"params";a:2:{s:10:"profile_id";s:12:"{profile_id}";s:6:"params";a:3:{s:9:"unit_view";s:8:"showcase";s:13:"empty_message";b:0;s:13:"ajax_paginate";b:0;}}}', 0, 1, 1, 1);
 -- PAGE: profile subscriptions
 INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_organizations_profile_subscriptions', 'organization-profile-subscriptions', '_bx_orgs_page_title_sys_profile_subscriptions', '_bx_orgs_page_title_profile_subscriptions', 'bx_organizations', 5, 2147483647, 1, 'page.php?i=organization-profile-subscriptions', '', '', '', 0, 1, 0, 'BxOrgsPageEntry', 'modules/boonex/organizations/classes/BxOrgsPageEntry.php');
@@ -205,8 +205,19 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
 ('bx_organizations_joined', 1, 'bx_organizations', '_bx_orgs_page_block_title_sys_entries_actions', '_bx_orgs_page_block_title_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:18:"my_entries_actions";}', 0, 0, 1, 1),
-('bx_organizations_joined', 1, 'bx_organizations', '_bx_orgs_page_block_title_sys_favorites_of_author', '_bx_orgs_page_block_title_favorites_of_author', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:15:"browse_favorite";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 1, 1, 1),
+('bx_organizations_joined', 1, 'bx_organizations', '_bx_orgs_page_block_title_sys_favorites_of_author', '_bx_orgs_page_block_title_favorites_of_author', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:21:"browse_favorite_lists";s:6:"params";a:2:{s:10:"profile_id";s:12:"{profile_id}";s:6:"params";a:3:{s:9:"unit_view";s:8:"showcase";s:13:"empty_message";b:0;s:13:"ajax_paginate";b:0;}}}', 0, 1, 1, 2),
 ('bx_organizations_joined', 1, 'bx_organizations', '_bx_orgs_page_block_title_sys_joined_entries', '_bx_orgs_page_block_title_joined_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:21:"browse_joined_entries";s:6:"params";a:2:{i:0;i:0;i:1;b:1;}}', 0, 0, 1, 2);
+
+
+-- PAGE: favorites by list
+INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_organizations_favorites', '_bx_orgs_page_title_sys_entries_favorites', '_bx_orgs_page_title_entries_favorites', 'bx_organizations', 12, 2147483647, 1, 'organizations-favorites', 'page.php?i=organizations-favorites', '', '', '', 0, 1, 0, 'BxOrgsPageListEntry', 'modules/boonex/organizations/classes/BxOrgsPageListEntry.php');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES 
+('bx_organizations_favorites', 2, 'bx_organizations', '_bx_orgs_page_block_title_favorites_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:15:"browse_favorite";s:6:"params";a:2:{s:10:"profile_id";s:12:"{profile_id}";s:6:"params";a:3:{s:9:"unit_view";s:7:"gallery";s:13:"empty_message";b:0;s:13:"ajax_paginate";b:0;}}}', 0, 1, 1),
+('bx_organizations_favorites', 3, 'bx_organizations', '_bx_orgs_page_block_title_favorites_entries_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:19:"favorites_list_info";}', 0, 0, 0),
+('bx_organizations_favorites', 3, 'bx_organizations', '_bx_orgs_page_block_title_favorites_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:16:"bx_organizations";s:6:"method";s:22:"favorites_list_actions";}', 0, 0, 1);
+
 
 -- PAGE: add block to homepage
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = 'sys_home' AND `cell_id` = 1 ORDER BY `order` DESC LIMIT 1);
@@ -610,7 +621,8 @@ INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `defau
 ('bx_organizations_allow_view_to', 'bx_organizations', 'view', '_bx_orgs_form_profile_input_allow_view_to', '3', '', 'bx_organizations_data', 'id', 'author', 'BxOrgsPrivacy', 'modules/boonex/organizations/classes/BxOrgsPrivacy.php'),
 ('bx_organizations_allow_view_notification_to', 'bx_organizations', 'view_event', '_bx_orgs_form_profile_input_allow_view_notification_to', '3', '', 'bx_notifications_events', 'id', 'object_owner_id', 'BxOrgsPrivacyNotifications', 'modules/boonex/organizations/classes/BxOrgsPrivacyNotifications.php'),
 ('bx_organizations_allow_post_to', 'bx_organizations', 'post', '_bx_orgs_form_profile_input_allow_post_to', '5', '', 'bx_organizations_data', 'id', 'author', 'BxOrgsPrivacyPost', 'modules/boonex/organizations/classes/BxOrgsPrivacyPost.php'),
-('bx_organizations_allow_contact_to', 'bx_organizations', 'contact', '_bx_orgs_form_profile_input_allow_contact_to', '3', '', 'bx_organizations_data', 'id', 'author', 'BxOrgsPrivacyContact', 'modules/boonex/organizations/classes/BxOrgsPrivacyContact.php');
+('bx_organizations_allow_contact_to', 'bx_organizations', 'contact', '_bx_orgs_form_profile_input_allow_contact_to', '3', '', 'bx_organizations_data', 'id', 'author', 'BxOrgsPrivacyContact', 'modules/boonex/organizations/classes/BxOrgsPrivacyContact.php'),
+('bx_organizations_allow_view_favorite_list', 'bx_organizations', 'view_favorite_list', '_bx_orgs_form_entry_input_allow_view_favorite_list', '3', '', 'bx_organizations_favorites_lists', 'id', 'author_id', 'BxOrgsPrivacy', 'modules/boonex/organizations/classes/BxOrgsPrivacy.php');
 
 
 -- EMAIL TEMPLATES

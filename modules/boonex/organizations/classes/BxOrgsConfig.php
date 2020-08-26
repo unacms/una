@@ -77,6 +77,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'URI_JOINED_ENTRIES' => 'joined-organizations',
             'URI_MANAGE_COMMON' => 'organizations-manage',
             'URI_VIEW_SUBSCRIPTIONS' => 'organization-profile-subscriptions',
+            'URI_FAVORITES_LIST' => 'organizations-favorites',
             
             'URL_HOME' => 'page.php?i=organizations-home',
             'URL_CREATE' => 'page.php?i=create-organization-profile',
@@ -100,6 +101,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             
             'PARAM_MULTICAT_ENABLED' => true,
             'PARAM_MULTICAT_AUTO_ACTIVATION_FOR_CATEGORIES' => 'bx_organizations_auto_activation_for_categories',
+            'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_organizations_per_page_for_favorites_lists',
 
             // objects
             'OBJECT_STORAGE' => 'bx_organizations_pics',
@@ -142,6 +144,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'OBJECT_PAGE_VIEW_ENTRY' => 'bx_organizations_view_profile',
             'OBJECT_PAGE_VIEW_ENTRY_CLOSED' => 'bx_organizations_view_profile_closed',
             'OBJECT_PRIVACY_VIEW' => 'bx_organizations_allow_view_to',
+            'OBJECT_PRIVACY_LIST_VIEW' => 'bx_organizations_allow_view_favorite_list',
             'OBJECT_PRIVACY_VIEW_NOTIFICATION_EVENT' => 'bx_organizations_allow_view_notification_to',
             'OBJECT_PRIVACY_POST' => 'bx_organizations_allow_post_to',
             'OBJECT_PRIVACY_CONTACT' => 'bx_organizations_allow_contact_to',

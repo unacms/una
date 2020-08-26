@@ -68,6 +68,7 @@ class BxReviewsConfig extends BxBaseModTextConfig
              // some params
             'PARAM_MULTICAT_ENABLED' => true,
             'PARAM_MULTICAT_AUTO_ACTIVATION_FOR_CATEGORIES' => 'bx_reviews_auto_activation_for_categories',
+            'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_reviews_per_page_for_favorites_lists',
             
             // page URIs
             'URI_VIEW_ENTRY' => 'view-review',
@@ -83,6 +84,7 @@ class BxReviewsConfig extends BxBaseModTextConfig
             'URL_UPDATED' => 'page.php?i=reviews-updated',
             'URL_MANAGE_COMMON' => 'page.php?i=reviews-manage',
             'URL_MANAGE_ADMINISTRATION' => 'page.php?i=reviews-administration',
+            'URI_FAVORITES_LIST' => 'reviews-favorites',
 
             'URI_SEARCH_PRODUCT' => 'searchKeyword.php?section=bx_reviews_products',
 
@@ -129,6 +131,7 @@ class BxReviewsConfig extends BxBaseModTextConfig
             'OBJECT_NOTES' => 'bx_reviews_notes',
             'OBJECT_CATEGORY' => 'bx_reviews_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_reviews_allow_view_to',
+            'OBJECT_PRIVACY_LIST_VIEW' => 'bx_reviews_allow_view_favorite_list',
             'OBJECT_FORM_ENTRY' => 'bx_reviews',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_reviews_entry_view',
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_reviews_entry_add',
