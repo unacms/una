@@ -217,6 +217,41 @@ class BxBaseFavorite extends BxDolFavorite
         $iObjectId = $this->getId();
         $iObjectAuthorId = $this->_oQuery->getObjectAuthorId($iObjectId);
         
+        
+        if (!isset($this->_aSystem['table_lists']) || $this->_aSystem['table_lists'] == ''){
+            $bUndo = $this->isUndo();
+            $bPerformed = $this->isPerformed($iObjectId, $iAuthorId);
+            $bPerformUndo = $bPerformed && $bUndo ? true : false;
+
+            if(!$bPerformUndo && !$this->isAllowedFavorite())
+                return array('code' => 2, 'message' => $this->msgErrAllowedFavorite());
+
+            if($bPerformed && !$bUndo)
+        	    return array('code' => 3, 'message' => _t('_favorite_err_duplicate_favorite'));
+
+            if(!$this->_oQuery->{($bPerformUndo ? 'un' : '') . 'doFavorite'}($iObjectId, $iAuthorId))
+                return array('code' => 4, 'message' => _t('_favorite_err_cannot_perform_action'));
+
+            if(!$bPerformUndo)
+                $this->isAllowedFavorite(true);
+
+            $this->_triggerValue($bPerformUndo ? -1 : 1);
+
+            bx_alert($this->_sSystem, ($bPerformUndo ? 'un' : '') . 'favorite', $iObjectId, $iAuthorId, array('favorite_author_id' => $iAuthorId, 'object_author_id' => $iObjectAuthorId));
+            bx_alert('favorite', ($bPerformUndo ? 'un' : '') . 'do', 0, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId));
+
+            $aFavorite = $this->_oQuery->getFavorite($iObjectId);
+            return array(
+        	    'eval' => $this->getJsObjectName() . '.onFavorite(oData, oElement)',
+        	    'code' => 0, 
+        	    'count' => $aFavorite['count'],
+        	    'countf' => (int)$aFavorite['count'] > 0 ? $this->_getCounterLabel($aFavorite['count']) : '',
+                'label_icon' => $this->_getIconDoFavorite(!$bPerformed),
+                'label_title' => _t($this->_getTitleDoFavorite(!$bPerformed)),
+                'disabled' => !$bPerformed && !$bUndo
+            );
+        }
+        
         $oForm = $this->_getFormObject($this->_sFormDisplayAdd);
         $oForm->setId($this->_aHtmlIds['do_form']);
         $oForm->setName($this->_aHtmlIds['do_form']);

@@ -51,9 +51,23 @@ class BxDolFavoriteQuery extends BxDolObjectQuery
         return (int)$this->query($sQuery) > 0;
     }
     
-    public function doFavorite($iObjectId, $iAuthorId, $iListId)
+    public function doFavorite($iObjectId, $iAuthorId, $iListId = false)
     {
-        $sQuery = $this->prepare("INSERT IGNORE INTO `{$this->_sTableTrack}` SET `object_id` = ?, `author_id` = ?, `date` = ?, `list_id` = ?", $iObjectId, $iAuthorId, time(), $iListId);
+        $sQuery = '';
+        if ($iListId === false)
+            $sQuery = $this->prepare("INSERT IGNORE INTO `{$this->_sTableTrack}` SET `object_id` = ?, `author_id` = ?, `date` = ?", $iObjectId, $iAuthorId, time());
+        else
+            $sQuery = $this->prepare("INSERT IGNORE INTO `{$this->_sTableTrack}` SET `object_id` = ?, `author_id` = ?, `date` = ?, `list_id` = ?", $iObjectId, $iAuthorId, time(), $iListId);
+        return (int)$this->query($sQuery) > 0;
+    }
+    
+    public function undoFavorite($iObjectId, $iAuthorId)
+    {
+        $sQuery = $this->prepare("SELECT `date` FROM `{$this->_sTableTrack}` WHERE `object_id` = ? AND `author_id` = ? LIMIT 1", $iObjectId, $iAuthorId);
+        if((int)$this->getOne($sQuery) == 0)
+        	return true;
+
+        $sQuery = $this->prepare("DELETE FROM `{$this->_sTableTrack}` WHERE `object_id` = ? AND `author_id` = ? LIMIT 1", $iObjectId, $iAuthorId);
         return (int)$this->query($sQuery) > 0;
     }
     
