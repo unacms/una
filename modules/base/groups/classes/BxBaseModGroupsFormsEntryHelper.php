@@ -103,14 +103,27 @@ class BxBaseModGroupsFormsEntryHelper extends BxBaseModProfileFormsEntryHelper
 
     protected function inviteMembers ($oGroupProfile, $aInitialProfiles)
     {
-        if (!$aInitialProfiles)
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if(empty($CNF['OBJECT_CONNECTIONS']) || !$aInitialProfiles)
             return;
 
+        $oConnection = BxDolConnection::getObjectInstance($CNF['OBJECT_CONNECTIONS']);
+        if(!$oConnection)
+            return;
+
+        $iGroupId = $oGroupProfile->id();
+
         // insert invited members, so they will join without confirmation
-        foreach ($aInitialProfiles as $iProfileId) {
-            if (!($oProfile = BxDolProfile::getInstance($iProfileId)))
+        foreach($aInitialProfiles as $iProfileId) {
+            $oProfile = BxDolProfile::getInstance($iProfileId);
+            if(!$oProfile)
                 continue;
-            $this->_oModule->serviceAddMutualConnection ($oGroupProfile->id(), $oProfile->id(), true);            
+
+            if($oConnection->isConnected($iGroupId, $iProfileId, true) || $oConnection->isConnected($iGroupId, $iProfileId))
+                continue;
+
+            $this->_oModule->serviceAddMutualConnection ($iGroupId, $iProfileId, true);            
         }
     }
 
