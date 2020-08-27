@@ -64,6 +64,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'URI_EDIT_COVER' => 'edit-event-cover',
             'URI_JOINED_ENTRIES' => 'joined-events',
             'URI_MANAGE_COMMON' => 'events-manage',
+            'URI_FAVORITES_LIST' => 'events-favorites',
 
             'URL_HOME' => 'page.php?i=events-home',
             'URL_ENTRY_FANS' => 'page.php?i=event-fans',
@@ -77,6 +78,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'PARAM_PUBLIC_SBSD' => 'bx_events_public_subscribed_me',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_events_per_page_browse_showcase',
             'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_events_per_page_browse_recommended',
+            'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_events_per_page_for_favorites_lists',
 
             // objects
             'OBJECT_STORAGE' => 'bx_events_pics',
@@ -119,6 +121,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'OBJECT_PAGE_VIEW_ENTRY' => 'bx_events_view_profile',
             'OBJECT_PAGE_VIEW_ENTRY_CLOSED' => 'bx_events_view_profile_closed',
             'OBJECT_PRIVACY_VIEW' => 'bx_events_allow_view_to',
+            'OBJECT_PRIVACY_LIST_VIEW' => 'bx_events_allow_view_favorite_list',
             'OBJECT_PRIVACY_VIEW_NOTIFICATION_EVENT' => 'bx_events_allow_view_notification_to',
             'OBJECT_PRIVACY_POST' => 'bx_events_allow_post_to',
             'OBJECT_GRID_ADMINISTRATION' => 'bx_events_administration',

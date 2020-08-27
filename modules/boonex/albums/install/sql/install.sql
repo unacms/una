@@ -284,6 +284,7 @@ CREATE TABLE IF NOT EXISTS `bx_albums_reports_track` (
 CREATE TABLE `bx_albums_favorites_track` (
   `object_id` int(11) NOT NULL default '0',
   `author_id` int(11) NOT NULL default '0',
+  `list_id` int(11) NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
   KEY `id` (`object_id`,`author_id`)
 );
@@ -293,6 +294,15 @@ CREATE TABLE `bx_albums_favorites_media_track` (
   `author_id` int(11) NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
   KEY `id` (`object_id`,`author_id`)
+);
+
+CREATE TABLE `bx_albums_favorites_lists` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `author_id` int(11) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  `allow_view_favorite_list_to` varchar(16) NOT NULL DEFAULT '3',
+   PRIMARY KEY (`id`)
 );
 
 -- TABLE: scores
@@ -479,9 +489,9 @@ INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigg
 
 
 -- FAFORITES
-INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `is_on`, `is_undo`, `is_public`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_albums', 'bx_albums_favorites_track', '1', '1', '1', 'page.php?i=view-album&id={object_id}', 'bx_albums_albums', 'id', 'author', 'favorites', '', ''),
-('bx_albums_media', 'bx_albums_favorites_media_track', '1', '1', '1', 'page.php?i=view-album-media&id={object_id}', 'bx_albums_files2albums', 'id', '', 'favorites', '', '');
+INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `table_lists`, `is_on`, `is_undo`, `is_public`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_albums', 'bx_albums_favorites_track', 'bx_albums_favorites_lists', '1', '1', '1', 'page.php?i=view-album&id={object_id}', 'bx_albums_albums', 'id', 'author', 'favorites', '', ''),
+('bx_albums_media', 'bx_albums_favorites_media_track', '', '1', '1', '1', 'page.php?i=view-album-media&id={object_id}', 'bx_albums_files2albums', 'id', 'author', 'favorites', '', '');
 
 
 -- FEATURED

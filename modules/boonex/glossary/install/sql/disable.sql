@@ -16,7 +16,7 @@ DELETE FROM `sys_menu_sets` WHERE `module` = 'bx_glossary';
 DELETE FROM `sys_menu_items` WHERE `module` = 'bx_glossary' OR `set_name` IN('bx_glossary_view', 'bx_glossary_view_actions', 'bx_glossary_submenu', 'bx_glossary_view_submenu', 'bx_glossary_snippet_meta', 'bx_glossary_my', 'bx_glossary_menu_manage_tools');
 
 -- PRIVACY 
-DELETE FROM `sys_objects_privacy` WHERE `object` = 'bx_glossary_allow_view_to';
+DELETE FROM `sys_objects_privacy` WHERE `object` IN ('bx_glossary_allow_view_to', 'bx_glossary_allow_view_favorite_list');
 
 -- ACL
 DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matrix` WHERE `sys_acl_matrix`.`IDAction` = `sys_acl_actions`.`ID` AND `sys_acl_actions`.`Module` = 'bx_glossary';

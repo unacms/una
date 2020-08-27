@@ -55,6 +55,9 @@ class BxPollsConfig extends BxBaseModTextConfig
             'FIELD_LABELS' => 'labels',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
 
+            // some params
+            'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_polls_per_page_for_favorites_lists',
+            
             // page URIs
             'URI_VIEW_ENTRY' => 'view-poll',
             'URI_AUTHOR_ENTRIES' => 'polls-author',
@@ -62,6 +65,7 @@ class BxPollsConfig extends BxBaseModTextConfig
             'URI_ADD_ENTRY' => 'create-poll',
             'URI_EDIT_ENTRY' => 'edit-poll',
             'URI_MANAGE_COMMON' => 'polls-manage',
+            'URI_FAVORITES_LIST' => 'polls-favorites',
 
             'URL_HOME' => 'page.php?i=polls-home',
             'URL_POPULAR' => 'page.php?i=polls-popular',
@@ -96,6 +100,7 @@ class BxPollsConfig extends BxBaseModTextConfig
             'OBJECT_NOTES' => 'bx_polls_notes',
             'OBJECT_CATEGORY' => 'bx_polls_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_polls_allow_view_to',
+            'OBJECT_PRIVACY_LIST_VIEW' => 'bx_polls_allow_view_favorite_list',
             'OBJECT_FORM_ENTRY' => 'bx_polls',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_polls_entry_view',
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_polls_entry_add',

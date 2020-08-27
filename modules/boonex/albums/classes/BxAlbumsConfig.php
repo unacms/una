@@ -64,6 +64,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'URI_ADD_ENTRY' => 'create-album',
             'URI_EDIT_ENTRY' => 'edit-album',
             'URI_MANAGE_COMMON' => 'albums-manage',
+            'URI_FAVORITES_LIST' => 'albums-favorites',
 
             'URL_HOME' => 'page.php?i=albums-home',
             'URL_POPULAR' => 'page.php?i=albums-popular',
@@ -80,6 +81,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_albums_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_albums_rss_num',
             'PARAM_SEARCHABLE_FIELDS' => 'bx_albums_searchable_fields',
+            'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_albums_per_page_for_favorites_lists',
 
             // objects
             'OBJECT_STORAGE' => 'bx_albums_files',
@@ -114,6 +116,7 @@ class BxAlbumsConfig extends BxBaseModTextConfig
             'OBJECT_NOTES' => 'bx_albums_notes',
             'OBJECT_COMMENTS_MEDIA' => 'bx_albums_media',
             'OBJECT_PRIVACY_VIEW' => 'bx_albums_allow_view_to',
+            'OBJECT_PRIVACY_LIST_VIEW' => 'bx_albums_allow_view_favorite_list',
             'OBJECT_FORM_ENTRY' => 'bx_albums',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_albums_entry_view',
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_albums_entry_add',

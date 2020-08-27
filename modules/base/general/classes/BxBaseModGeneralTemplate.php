@@ -256,19 +256,17 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
         
         $oFavorite = BxDolFavorite::getObjectInstance($CNF['OBJECT_FAVORITES'], 0, true);
         $aListsData = $oFavorite->getQueryObject()->getList(array('type' => 'active', 'author_id' => $oProfile->id(), 'need_default' => true, 'start' => $iStart, 'limit' => $iPerPage + 1));
-        
         $iNum = count($aListsData);
         if ($iNum > $iPerPage)
             $aListsData = array_slice($aListsData, 0, $iPerPage);
         
         $oPrivacy = BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_LIST_VIEW']);
         $aListsTmpl = array();
-        
         foreach($aListsData as $iListId => $sName) {
             $aParams['list_id'] = $iListId;
             if ($oPrivacy->check($iListId) || $iListId == 0){
                 $aTmp = $this->getModule()->_serviceBrowse ('favorite', array_merge(array('user' => $oProfile->id()), $aParams), BX_DB_PADDING_DEF, $bEmptyMessage, false);
-                if ($aTmp && $aTmp['content'] || true){
+                if ($aTmp && $aTmp['content']){
                     $aListsTmpl[] = array(
                         'title' => $sName, 
                         'content_url' => $this->getModule()->_getFavoriteListUrl($iListId, $oProfile->id()),
@@ -291,8 +289,10 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
             'per_page' => $iPerPage,
             'start' => $iStart,
         ));
+        if (count($aListsTmpl) > 0)
+            return $this->parseHtmlByName('favorite-lists.html', array('bx_repeat:items' => $aListsTmpl)) . $oPaginate->getSimplePaginate() . $oFavorite->getJsScript();
         
-        return $this->parseHtmlByName('favorite-lists.html', array('bx_repeat:items' => $aListsTmpl)) . $oPaginate->getSimplePaginate() . $oFavorite->getJsScript();
+        return false;
     }
     
     public function getFavoritesListInfo($aList, $oProfile)

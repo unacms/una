@@ -73,6 +73,8 @@ class BxForumConfig extends BxBaseModTextConfig
              // some params
             'PARAM_MULTICAT_ENABLED' => true,
             'PARAM_MULTICAT_AUTO_ACTIVATION_FOR_CATEGORIES' => 'bx_forum_auto_activation_for_categories',
+            'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_forum_per_page_for_favorites_lists',
+
 
             // page URIs
             'URI_VIEW_ENTRY' => 'view-discussion',
@@ -83,6 +85,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'URI_ADD_ENTRY' => 'create-discussion',
             'URI_EDIT_ENTRY' => 'edit-discussion',
             'URI_MANAGE_COMMON' => 'discussions-manage',
+            'URI_FAVORITES_LIST' => 'discussions-favorites',
 
             'URL_HOME' => 'page.php?i=discussions-home',
             'URL_UPDATED' => 'page.php?i=discussions-updated',
@@ -139,6 +142,7 @@ class BxForumConfig extends BxBaseModTextConfig
             'OBJECT_COMMENTS' => 'bx_forum',
             'OBJECT_METATAGS' => 'bx_forum',
             'OBJECT_PRIVACY_VIEW' => 'bx_forum_allow_view_to',
+            'OBJECT_PRIVACY_LIST_VIEW' => 'bx_forum_allow_view_favorite_list',
             'OBJECT_FORM_ENTRY' => 'bx_forum',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_forum_entry_view',
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_forum_entry_add',

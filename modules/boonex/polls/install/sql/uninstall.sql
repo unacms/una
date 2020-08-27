@@ -1,6 +1,6 @@
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_polls_entries`, `bx_polls_subentries`, `bx_polls_files`, `bx_polls_photos_resized`, `bx_polls_cmts`, `bx_polls_cmts_notes`, `bx_polls_votes`, `bx_polls_votes_track`, `bx_polls_votes_subentries`, `bx_polls_votes_subentries_track`, `bx_polls_reactions`, `bx_polls_reactions_track`, `bx_polls_views_track`, `bx_polls_meta_keywords`, `bx_polls_meta_locations`, `bx_polls_meta_mentions`, `bx_polls_reports`, `bx_polls_reports_track`, `bx_polls_favorites_track`, `bx_polls_scores`, `bx_polls_scores_track`;
+DROP TABLE IF EXISTS `bx_polls_entries`, `bx_polls_subentries`, `bx_polls_files`, `bx_polls_photos_resized`, `bx_polls_cmts`, `bx_polls_cmts_notes`, `bx_polls_votes`, `bx_polls_votes_track`, `bx_polls_votes_subentries`, `bx_polls_votes_subentries_track`, `bx_polls_reactions`, `bx_polls_reactions_track`, `bx_polls_views_track`, `bx_polls_meta_keywords`, `bx_polls_meta_locations`, `bx_polls_meta_mentions`, `bx_polls_reports`, `bx_polls_reports_track`, `bx_polls_favorites_track`, `bx_polls_favorites_lists`, `bx_polls_scores`, `bx_polls_scores_track`;
 
 
 -- STORAGES & TRANSCODERS
