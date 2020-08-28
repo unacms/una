@@ -257,7 +257,7 @@ class BxPaymentCart extends BxBaseModPaymentCart
                 if(strpos($sCiDsc, $iSellerId . '_') === 0)
                     unset($aCartCustom[$sCiDsc]);
 
-            $iModuleId = $iItemId = '[0-9]+';
+            $iModuleId = $iItemId = '[0-9\-]+';
         }
 
         $aCart['items'] = trim(preg_replace("'" . $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId, '[0-9]+:?')) . "'", "", $aCart['items']), ":");
