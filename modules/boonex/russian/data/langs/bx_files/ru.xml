@@ -10,7 +10,8 @@
     <string name="_bx_files_option_per_page_profile"><![CDATA[Количество файлов на странице профайла]]></string>
 	<string name="_bx_files_option_rss_num"><![CDATA[Количество файлов в RSS]]></string>
 	<string name="_bx_files_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
-
+  <string name="_bx_files_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
+  
 	<string name="_bx_files_form_upload"><![CDATA[Загрузка файлов]]></string>
 	<string name="_bx_files_form_entry"><![CDATA[Файлы]]></string>
 	<string name="_bx_files_form_entry_display_add"><![CDATA[Добавление файлов]]></string>
@@ -45,6 +46,7 @@
         <string name="_bx_files_form_entry_input_attachments_err"><![CDATA[Файл обязателен. Пожалуйста, загрузите один или более файлов.]]></string>
     <string name="_bx_files_form_entry_input_sys_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_files_form_entry_input_allow_view_to"><![CDATA[Видимость]]></string>
+    <string name="_bx_files_form_entry_input_allow_view_favorite_list"><![CDATA[Видимость]]></string>
     <string name="_bx_files_form_entry_input_picture_use_as_thumb"><![CDATA[Обложка]]></string>
     <string name="_bx_files_form_entry_input_sys_date_added"><![CDATA[Создано]]></string>
     <string name="_bx_files_form_entry_input_date_added"><![CDATA[Создано]]></string>
@@ -131,6 +133,8 @@
 	<string name="_bx_files_page_block_title_group_entries"><![CDATA[Файлы]]></string>
 	<string name="_bx_files_page_title_sys_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_files_page_title_entries_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_files_page_title_sys_entries_favorites"><![CDATA[Избранные файлы]]></string>
+    <string name="_bx_files_page_title_entries_favorites"><![CDATA[Избранные файлы]]></string>
     <string name="_bx_files_page_block_title_search_form"><![CDATA[Форма поиска]]></string>
     <string name="_bx_files_page_block_title_search_results"><![CDATA[Результаты поиска]]></string>
     <string name="_bx_files_page_block_title_search_form_cmts"><![CDATA[Форма поиска комментариев]]></string>
@@ -141,8 +145,10 @@
     <string name="_bx_files_page_block_title_popular_entries_view_showcase"><![CDATA[Популярные файлы]]></string>
     <string name="_bx_files_page_block_title_sys_featured_entries_view_showcase"><![CDATA[Продивнутые файлы (Витринный просмотр)]]></string>
     <string name="_bx_files_page_block_title_featured_entries_view_showcase"><![CDATA[Продивнутые файлы]]></string>
+    <string name="_bx_files_page_block_title_favorites_entries"><![CDATA[Список "{title}"]]></string>
+    <string name="_bx_files_page_block_title_favorites_entries_info"><![CDATA[Информация]]></string>
 
-    <string name="_bx_files_menu_set_title_view_entry"><![CDATA[Действия с файлом]]></string>
+  <string name="_bx_files_menu_set_title_view_entry"><![CDATA[Действия с файлом]]></string>
     <string name="_bx_files_menu_title_view_entry"><![CDATA[Действия с файлом]]></string>
     <string name="_bx_files_menu_title_submenu"><![CDATA[Под-меню файлов]]></string>
     <string name="_bx_files_menu_set_title_submenu"><![CDATA[Под-меню файлов]]></string>

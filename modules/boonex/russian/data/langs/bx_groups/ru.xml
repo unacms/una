@@ -11,6 +11,7 @@
     <string name="_bx_groups_option_members_mode"><![CDATA[Спец. режим для членов группы]]></string>
     <string name="_bx_groups_option_members_mode_multi_roles"><![CDATA[Множественные роли]]></string>
     <string name="_bx_groups_option_members_mode_paid_join"><![CDATA[Платное присоединение]]></string>
+    <string name="_bx_groups_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
 
 	<string name="_bx_groups_form_profile"><![CDATA[Группы]]></string>
 	<string name="_bx_groups_form_profile_display_add"><![CDATA[Добавление группы]]></string>
@@ -48,8 +49,9 @@
 	<string name="_bx_groups_form_profile_input_delete_confirm"><![CDATA[Я уверен, что хочу удалить эту группу]]></string>
 	<string name="_bx_groups_form_profile_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено.]]></string>
 	<string name="_bx_groups_form_profile_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если действительно хотите удалить группу.]]></string>
+  <string name="_bx_groups_form_entry_input_allow_view_favorite_list"><![CDATA[Видимость]]></string>
 
-    <string name="_bx_groups_form_price"><![CDATA[Цена]]></string>
+  <string name="_bx_groups_form_price"><![CDATA[Цена]]></string>
     <string name="_bx_groups_form_price_display_add"><![CDATA[Добавление]]></string>
     <string name="_bx_groups_form_price_display_edit"><![CDATA[Редактирование]]></string>
     <string name="_bx_groups_form_price_input_sys_id"><![CDATA[ID]]></string>
@@ -118,6 +120,8 @@
     <string name="_bx_groups_page_title_invite_to_group"><![CDATA[Пригласить участников в группу]]></string>
     <string name="_bx_groups_page_title_sys_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_groups_page_title_entries_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_posts_page_title_sys_entries_favorites"><![CDATA[Избранные группы]]></string>
+    <string name="_bx_posts_page_title_entries_favorites"><![CDATA[Избранные группы]]></string>
 
     <string name="_bx_groups_page_block_title_sys_entries_actions"><![CDATA[Группы - Действия]]></string>
     <string name="_bx_groups_page_block_title_entries_actions"><![CDATA[Группы - Действия]]></string>
@@ -177,6 +181,8 @@
     <string name="_bx_groups_page_block_title_groups_browse_by_label"><![CDATA[Навигация по меткам]]></string>
     <string name="_bx_groups_page_block_title_sys_labels_breadcrumbs"><![CDATA[Путь по меткам]]></string>
     <string name="_bx_groups_page_block_title_labels_breadcrumbs"><![CDATA[Путь по меткам]]></string>
+    <string name="_bx_groups_page_block_title_favorites_entries"><![CDATA[Список "{title}"]]></string>
+    <string name="_bx_groups_page_block_title_favorites_entries_info"><![CDATA[Информация]]></string>
 
   <string name="_bx_groups_menu_title_submenu"><![CDATA[Группы - Подменю]]></string>
     <string name="_bx_groups_menu_set_title_submenu"><![CDATA[Группы - Подменю]]></string>

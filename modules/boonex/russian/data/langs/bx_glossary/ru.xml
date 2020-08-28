@@ -11,7 +11,8 @@
     <string name="_bx_glossary_option_per_page_profile"><![CDATA[Количество элементов на странице профайла]]></string>
 	<string name="_bx_glossary_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
 	<string name="_bx_glossary_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
-	<string name="_bx_glossary_option_activate_terms_after_creation"><![CDATA[Активировать термин после создания]]></string>  
+	<string name="_bx_glossary_option_activate_terms_after_creation"><![CDATA[Активировать термин после создания]]></string>
+  <string name="_bx_glossary_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
 
 	<string name="_bx_glossary_form_entry"><![CDATA[Глоссарий]]></string>
 	<string name="_bx_glossary_form_entry_display_add"><![CDATA[Добавить термин]]></string>
@@ -41,6 +42,7 @@
 	<string name="_bx_glossary_form_entry_input_pictures"><![CDATA[Картинки]]></string>
     <string name="_bx_glossary_form_entry_input_sys_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_glossary_form_entry_input_allow_view_to"><![CDATA[Видимость]]></string>
+    <string name="_bx_glossary_form_entry_input_allow_view_favorite_list"><![CDATA[Видимость]]></string>
     <string name="_bx_glossary_form_entry_input_picture_use_as_thumb"><![CDATA[Изображение обложки]]></string>
     <string name="_bx_glossary_form_entry_input_sys_date_added"><![CDATA[Создано]]></string>
     <string name="_bx_glossary_form_entry_input_date_added"><![CDATA[Создано]]></string>
@@ -113,6 +115,8 @@
     <string name="_bx_glossary_page_title_sys_entries_of_author"><![CDATA[Глоссарий автора]]></string>
     <string name="_bx_glossary_page_title_entries_of_author"><![CDATA[{display_name} - Глоссарий]]></string>
     <string name="_bx_glossary_page_title_sys_entries_in_context"><![CDATA[Глоссарий в контексте]]></string>
+    <string name="_bx_glossary_page_title_sys_entries_favorites"><![CDATA[Избранные термины]]></string>
+    <string name="_bx_glossary_page_title_entries_favorites"><![CDATA[Избранные термины]]></string>
     <string name="_bx_glossary_page_title_entries_in_context"><![CDATA[Глоссарий в контексте - {display_name}]]></string>
     <string name="_bx_glossary_page_block_title_favorites_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Избранное]]></string>   
     <string name="_bx_glossary_page_block_title_sys_favorites_of_author"><![CDATA[Избранное автора]]></string>
@@ -140,8 +144,10 @@
     <string name="_bx_glossary_page_block_title_featured_entries_view_showcase"><![CDATA[Продвинутые Глоссарий]]></string>
     <string name="_bx_glossary_page_block_title_sys_entry_context"><![CDATA[Опубликовано в]]></string>
     <string name="_bx_glossary_page_block_title_entry_context"><![CDATA[Опубликовано в]]></string>
+    <string name="_bx_glossary_page_block_title_favorites_entries"><![CDATA[Список "{title}"]]></string>
+    <string name="_bx_glossary_page_block_title_favorites_entries_info"><![CDATA[Информация]]></string>
 
-    <string name="_bx_glossary_menu_set_title_view_entry"><![CDATA[Термин - Действия]]></string>
+  <string name="_bx_glossary_menu_set_title_view_entry"><![CDATA[Термин - Действия]]></string>
     <string name="_bx_glossary_menu_title_view_entry"><![CDATA[Термин - Действия]]></string>
     <string name="_bx_glossary_menu_title_submenu"><![CDATA[Глоссарий - Подменю]]></string>
     <string name="_bx_glossary_menu_set_title_submenu"><![CDATA[Глоссарий - Подменю]]></string>
