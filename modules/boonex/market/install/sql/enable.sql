@@ -146,12 +146,8 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_market_author', 1, 'bx_market', '', '_bx_market_page_block_title_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:18:"my_entries_actions";}', 0, 0, 1, 1),
 ('bx_market_author', 1, 'bx_market', '_bx_market_page_block_title_sys_favorites_of_author', '_bx_market_page_block_title_favorites_of_author', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:15:"browse_favorite";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 1, 1, 2),
-<<<<<<< HEAD
 ('bx_market_author', 1, 'bx_market', '_bx_market_page_block_title_sys_entries_of_author', '_bx_market_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:13:"browse_author";}', 0, 0, 1, 3);
-=======
-('bx_market_author', 1, 'bx_market', '_bx_market_page_block_title_sys_entries_of_author', '_bx_market_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_market";s:6:"method";s:13:"browse_author";}', 0, 0, 1, 3),
-('bx_market_author', 1, 'bx_market', '_bx_market_page_block_title_sys_entries_in_context', '_bx_market_page_block_title_entries_in_context', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_market";s:6:"method";s:14:"browse_context";s:6:"params";a:2:{s:10:"profile_id";s:12:"{profile_id}";i:0;a:1:{s:13:"empty_message";b:0;}}}', 0, 0, 1, 4);
->>>>>>> 81abdd5b6... Ticket #2929
+
 
 -- PAGE: licenses administration
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -430,20 +426,11 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 
 -- PRIVACY 
-<<<<<<< HEAD
-INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
-('bx_market_allow_view_to', 'bx_market', 'view', '_bx_market_form_entry_input_allow_view_to', '3', 'bx_market_products', 'id', 'author', '', ''),
-('bx_market_allow_purchase_to', 'bx_market', 'purchase', '_bx_market_form_entry_input_allow_purchase_to', '3', 'bx_market_products', 'id', 'author', '', ''),
-('bx_market_allow_comment_to', 'bx_market', 'comment', '_bx_market_form_entry_input_allow_comment_to', 'c', 'bx_market_products', 'id', 'author', 'BxMarketPrivacy', 'modules/boonex/market/classes/BxMarketPrivacy.php'),
-('bx_market_allow_vote_to', 'bx_market', 'vote', '_bx_market_form_entry_input_allow_vote_to', 'c', 'bx_market_products', 'id', 'author', 'BxMarketPrivacy', 'modules/boonex/market/classes/BxMarketPrivacy.php');
-=======
 INSERT INTO `sys_objects_privacy` (`object`, `module`, `action`, `title`, `default_group`, `spaces`, `table`, `table_field_id`, `table_field_author`, `override_class_name`, `override_class_file`) VALUES
 ('bx_market_allow_view_to', 'bx_market', 'view', '_bx_market_form_entry_input_allow_view_to', '3', 'all', 'bx_market_products', 'id', 'author', '', ''),
 ('bx_market_allow_purchase_to', 'bx_market', 'purchase', '_bx_market_form_entry_input_allow_purchase_to', '3', '', 'bx_market_products', 'id', 'author', '', ''),
 ('bx_market_allow_comment_to', 'bx_market', 'comment', '_bx_market_form_entry_input_allow_comment_to', 'c', '', 'bx_market_products', 'id', 'author', 'BxMarketPrivacy', 'modules/boonex/market/classes/BxMarketPrivacy.php'),
 ('bx_market_allow_vote_to', 'bx_market', 'vote', '_bx_market_form_entry_input_allow_vote_to', 'c', '', 'bx_market_products', 'id', 'author', 'BxMarketPrivacy', 'modules/boonex/market/classes/BxMarketPrivacy.php');
->>>>>>> 81abdd5b6... Ticket #2929
-
 
 
 -- ACL
