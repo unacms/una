@@ -1000,6 +1000,9 @@ class BxMarketModule extends BxBaseModTextModule
         if(empty($aProduct) || !is_array($aProduct))
             return array();
 
+        if(!BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_PURCHASE'])->check((int)$iItemId, $iClientId))
+            return array();
+
         $iTrial = 0;
         $sDuration = '';
         $sAction = 'register';
