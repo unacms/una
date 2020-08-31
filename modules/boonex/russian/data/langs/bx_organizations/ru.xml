@@ -18,6 +18,7 @@
     <string name="_bx_orgs_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
     <string name="_bx_orgs_option_public_subscriptions"><![CDATA[Открытый список подписок]]></string>
     <string name="_bx_orgs_option_public_subscribed_me"><![CDATA[Открытый список подписчиков]]></string>
+    <string name="_bx_orgs_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
 
 	<string name="_bx_orgs_form_profile"><![CDATA[Организации]]></string>
 	<string name="_bx_orgs_form_profile_display_add"><![CDATA[Добавление организации]]></string>
@@ -73,6 +74,7 @@
     <string name="_bx_orgs_form_profile_input_friends_count"><![CDATA[Количество друзей]]></string>
     <string name="_bx_orgs_form_profile_input_sys_followers_count"><![CDATA[Количество подписчиков]]></string>
     <string name="_bx_orgs_form_profile_input_followers_count"><![CDATA[Количество подписчиков]]></string>
+    <string name="_bx_orgs_form_entry_input_allow_view_favorite_list"><![CDATA[Видимость]]></string>
 
 	<string name="_bx_orgs_acl_action_create_profile"><![CDATA[Создать профиль организации]]></string>
 	<string name="_bx_orgs_acl_action_delete_profile"><![CDATA[Удалить профиль организации]]></string>
@@ -132,6 +134,8 @@
     <string name="_bx_orgs_page_title_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_orgs_page_title_sys_joined_entries"><![CDATA[Участие в организациях]]></string>
     <string name="_bx_orgs_page_title_joined_entries"><![CDATA[Участие в организациях]]></string>
+    <string name="_bx_orgs_page_title_sys_entries_favorites"><![CDATA[Избранные организации]]></string>
+    <string name="_bx_orgs_page_title_entries_favorites"><![CDATA[Избранные организации]]></string>
 
     <string name="_bx_orgs_page_block_title_profile_private"><![CDATA[Приватный профиль]]></string>
     <string name="_bx_orgs_page_block_title_choose_type"><![CDATA[Выбрать тип профиля]]></string>
@@ -195,6 +199,8 @@
     <string name="_bx_orgs_page_block_title_recommended_entries_view_showcase"><![CDATA[Рекомендованные организации]]></string>
     <string name="_bx_orgs_page_block_title_sys_active_entries_view_showcase"><![CDATA[Активные организации (Витринный просмотр)]]></string>
     <string name="_bx_orgs_page_block_title_active_entries_view_showcase"><![CDATA[Активные организации]]></string>
+    <string name="_bx_orgs_page_block_title_favorites_entries"><![CDATA[Список "{title}"]]></string>
+    <string name="_bx_orgs_page_block_title_favorites_entries_info"><![CDATA[Информация]]></string>
 
     <string name="_bx_orgs_menu_title_submenu"><![CDATA[Организации - Подменю]]></string>
     <string name="_bx_orgs_menu_set_title_submenu"><![CDATA[Организации - Подменю]]></string>
