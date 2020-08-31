@@ -702,7 +702,7 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         if($aObject['group_id'] == BX_DOL_PG_HIDDEN)
             return false;
 
-        if(isAdmin() || $iViewerId == $aObject['owner_id'])
+        if(isAdmin($iViewerId) || $iViewerId == $aObject['owner_id'])
             return true;
 
         if(strncmp($aObject['group_id'], 'ml', 2) === 0) {

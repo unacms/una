@@ -41,50 +41,56 @@ class BxMarketMenuView extends BxBaseModTextMenuView
 		$bResult = false;
 		switch ($a['name']) {
 			case 'download':
-				if((int)$this->_aContentInfo[$CNF['FIELD_PACKAGE']] == 0) 
-					break;
+                            if((int)$this->_aContentInfo[$CNF['FIELD_PACKAGE']] == 0) 
+                                break;
 
-				$bResult = true;
-				break;
+                            $bResult = true;
+                            break;
 
 			case 'add-to-cart':
-				if((float)$this->_aContentInfo[$CNF['FIELD_PRICE_SINGLE']] == 0) 
-					break;
+                            if((float)$this->_aContentInfo[$CNF['FIELD_PRICE_SINGLE']] == 0) 
+                                break;
 
-				$aJs = $oPayment->getAddToCartJs($this->_aContentInfo['author'], $this->MODULE, $this->_aContentInfo['id'], 1, true);
-				if(empty($aJs) || !is_array($aJs))
-					break;
+                            if(!BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_PURCHASE'])->check((int)$this->_aContentInfo[$CNF['FIELD_ID']]))
+                                break;
 
-				list($sJsCode, $sJsMethod) = $aJs;
-				$aCurrency = $this->_oModule->_oConfig->getCurrency();
+                            $aJs = $oPayment->getAddToCartJs($this->_aContentInfo['author'], $this->MODULE, $this->_aContentInfo['id'], 1, true);
+                            if(empty($aJs) || !is_array($aJs))
+                                break;
 
-				$bResult = true;
-				$this->addMarkers(array(
-					'add_to_cart_title' => _t('_bx_market_menu_item_title_add_to_cart', $aCurrency['sign'], $this->_aContentInfo[$CNF['FIELD_PRICE_SINGLE']]),
-		        	'add_to_cart_onclick' => $sJsMethod
-		        ));
-				break;
+                            list($sJsCode, $sJsMethod) = $aJs;
+                            $aCurrency = $this->_oModule->_oConfig->getCurrency();
+
+                            $bResult = true;
+                            $this->addMarkers(array(
+                                'add_to_cart_title' => _t('_bx_market_menu_item_title_add_to_cart', $aCurrency['sign'], $this->_aContentInfo[$CNF['FIELD_PRICE_SINGLE']]),
+                                'add_to_cart_onclick' => $sJsMethod
+                            ));
+                            break;
 
 			case 'subscribe':
-				if((float)$this->_aContentInfo[$CNF['FIELD_PRICE_RECURRING']] == 0) 
-					break;
+                            if((float)$this->_aContentInfo[$CNF['FIELD_PRICE_RECURRING']] == 0) 
+                                break;
 
-				$aJs = $oPayment->getSubscribeJs($this->_aContentInfo['author'], '', $this->MODULE, $this->_aContentInfo['id'], 1);
-				if(empty($aJs) || !is_array($aJs))
-					break;
+                            if(!BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_PURCHASE'])->check((int)$this->_aContentInfo[$CNF['FIELD_ID']]))
+                                break;
 
-				list($sJsCode, $sJsMethod) = $aJs;
-				$aCurrency = $this->_oModule->_oConfig->getCurrency();
+                            $aJs = $oPayment->getSubscribeJs($this->_aContentInfo['author'], '', $this->MODULE, $this->_aContentInfo['id'], 1);
+                            if(empty($aJs) || !is_array($aJs))
+                                break;
 
-				$bResult = true;
-				$this->addMarkers(array(
-					'subscribe_title' => _t('_bx_market_menu_item_title_subscribe', $aCurrency['sign'], $this->_aContentInfo[$CNF['FIELD_PRICE_RECURRING']], _t('_bx_market_txt_per_' . $this->_aContentInfo[$CNF['FIELD_DURATION_RECURRING']])),
-		        	'subscribe_onclick' => $sJsMethod
-		        )); 
-				break;
+                            list($sJsCode, $sJsMethod) = $aJs;
+                            $aCurrency = $this->_oModule->_oConfig->getCurrency();
+
+                            $bResult = true;
+                            $this->addMarkers(array(
+                                'subscribe_title' => _t('_bx_market_menu_item_title_subscribe', $aCurrency['sign'], $this->_aContentInfo[$CNF['FIELD_PRICE_RECURRING']], _t('_bx_market_txt_per_' . $this->_aContentInfo[$CNF['FIELD_DURATION_RECURRING']])),
+                                'subscribe_onclick' => $sJsMethod
+                            )); 
+                            break;
 
 			default:
-				$bResult = true;
+                            $bResult = true;
 		}
 
 		return $bResult;
