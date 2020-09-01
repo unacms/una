@@ -24,6 +24,10 @@
 	<string name="_bx_acl_form_price_display_edit"><![CDATA[Edit]]></string>
 	<string name="_bx_acl_form_price_input_sys_id"><![CDATA[ID]]></string>
 	<string name="_bx_acl_form_price_input_sys_level_id"><![CDATA[Level ID]]></string>
+        <string name="_bx_acl_form_price_input_sys_name"><![CDATA[Name]]></string>
+	<string name="_bx_acl_form_price_input_name"><![CDATA[Name]]></string>
+	<string name="_bx_acl_form_price_input_inf_name"><![CDATA[Unique value which will be used in back end and API calls]]></string>
+        <string name="_bx_acl_form_price_input_err_name"><![CDATA[You need to enter a unique value here]]></string>
 	<string name="_bx_acl_form_price_input_sys_period"><![CDATA[Period]]></string>
 	<string name="_bx_acl_form_price_input_period"><![CDATA[Period]]></string>
 	<string name="_bx_acl_form_price_input_inf_period"><![CDATA[Use 0 for lifetime]]></string>

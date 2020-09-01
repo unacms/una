@@ -26,9 +26,30 @@ class BxAclModule extends BxDolModule
         $this->_oConfig->init($this->_oDb);
     }
 
-	/**
+    /**
      * ACTION METHODS
      */
+    public function actionCheckName()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+    	$sName = bx_process_input(bx_get('name'));
+    	if(empty($sName))
+            return echoJson(array());
+
+        $sResult = '';
+
+        $iId = (int)bx_get('id');
+        if(!empty($iId)) {
+            $aPrice = $this->_oDb->getPrices(array('type' => 'by_id', 'value' => $iId)); 
+            if(strcmp($sName, $aPrice[$CNF['FIELD_NAME']]) == 0) 
+                $sResult = $sName;
+        }
+
+    	echoJson(array(
+            'name' => !empty($sResult) ? $sResult : $this->_oConfig->getPriceName($sName)
+    	));
+    }
 
     /**
      * SERVICE METHODS
