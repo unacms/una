@@ -245,8 +245,6 @@ class BxMarketConfig extends BxBaseModTextConfig
 
     public function getEntryName($sName)
     {
-        $sName = strtolower($sName);
-
         return uriGenerate($sName, $this->CNF['TABLE_ENTRIES'], $this->CNF['FIELD_NAME']);
     }
 }
