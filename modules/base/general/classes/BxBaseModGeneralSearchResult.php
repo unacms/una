@@ -94,21 +94,19 @@ class BxBaseModGeneralSearchResult extends BxTemplSearchResult
 
         $this->setProcessPrivateContent(false);
     }
-    
+
     function showPagination($bAdmin = false, $bChangePage = true, $bPageReload = true)
     {
-        if ($this->bShowcaseView){
+        if($this->bShowcaseView)
             return '';
-        }
-        else{
-            $sTmp = parent::showPagination ($bAdmin, $bChangePage, $bPageReload);
-            if ($sTmp != '')
-                return '<div class="bx-def-margin-top">' . $sTmp . '</div>';
-            else
-                return '';
-        }
+
+        $sPagination = parent::showPagination ($bAdmin, $bChangePage, $bPageReload);
+        if(empty($sPagination))
+            return '';
+
+        return '<div class="bx-search-result-block-pagination bx-def-margin-top">' . $sPagination . '</div>';
     }
-    
+
     protected function getItemPerPageInShowCase ()
     {
         $iPerPageInShowCase = BX_SYS_PER_PAGE_BROWSE_SHOWCASE;
