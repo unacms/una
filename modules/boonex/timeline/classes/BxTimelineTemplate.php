@@ -1269,18 +1269,17 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'date' => $aEvent[$CNF['FIELD_ADDED']]
         );
 
-        switch ($aParams['type']) {
-            case BX_BASE_MOD_NTFS_TYPE_PUBLIC:
-                $aParamsSet['context_id'] = 0;
-                break;
+        //--- Process Context ID value.
+        if($aParams['type'] == BX_BASE_MOD_NTFS_TYPE_PUBLIC)
+            $aParamsSet['context_id'] = 0;
+        else if(in_array($aParams['type'], array(BX_BASE_MOD_NTFS_TYPE_OWNER, BX_TIMELINE_TYPE_FEED, BX_TIMELINE_TYPE_CHANNELS, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS)))
+            $aParamsSet['context_id'] = $iProfileId;
 
-            case BX_BASE_MOD_NTFS_TYPE_OWNER:
-            case BX_TIMELINE_TYPE_CHANNELS:
-            case BX_TIMELINE_TYPE_FEED:
-            case BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS:
-                $aParamsSet['context_id'] = $iProfileId;
-                break;
-        }
+        //--- Process 'important' flag.
+        if($aParams['type'] == BX_BASE_MOD_NTFS_TYPE_OWNER && (int)$aEvent['pinned'] > 0) 
+            $aParamsSet['important'] = 1;
+        else if(in_array($aParams['type'], array(BX_BASE_MOD_NTFS_TYPE_PUBLIC, BX_BASE_MOD_NTFS_TYPE_CONNECTIONS, BX_TIMELINE_TYPE_FEED, BX_TIMELINE_TYPE_CHANNELS, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS)) && (int)$aEvent['sticked'] > 0)
+            $aParamsSet['important'] = 1;
 
         return $this->_oDb->insertCache($aParamsSet);
     }
