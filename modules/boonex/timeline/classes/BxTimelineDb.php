@@ -465,7 +465,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
         $aMethod['params'][0] = "SELECT " . $sFieldsClause . " 
         FROM `{$this->_sTableCache}` 
-        WHERE 1" . $sWhereClause . " ORDER BY `date` DESC " . $sLimitClause;
+        WHERE 1" . $sWhereClause . " ORDER BY `important` DESC, `date` DESC " . $sLimitClause;
 
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }

@@ -62,6 +62,7 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_cache` (
   `profile_id` int(11) NOT NULL default '0',
   `event_id` int(11) NOT NULL default '0',
   `date` int(11) NOT NULL default '0',
+  `important` tinyint(4) NOT NULL default '0',
   PRIMARY KEY `item` (`type`, `context_id`, `profile_id`, `event_id`)
 );
 
