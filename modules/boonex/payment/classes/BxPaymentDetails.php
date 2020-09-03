@@ -75,7 +75,7 @@ class BxPaymentDetails extends BxBaseModPaymentDetails
         if(empty($aInputs))
             return '';
 
-		$aForm = array(
+        $aForm = array(
             'form_attrs' => array(
                 'id' => 'pmt_details',
                 'name' => 'pmt_details',
@@ -97,11 +97,16 @@ class BxPaymentDetails extends BxBaseModPaymentDetails
             )
         );
 
+        $bSiteAdmin = $this->_oModule->_oConfig->isSiteAdmin();
+
         $bCollapsed = $this->_bCollapseFirst;
         $iProvider = 0;
         $sProvider = "";
         $oProvider = null;
         foreach($aInputs as $aInput) {
+            if((int)$aInput['provider_for_owner_only'] != 0 && !$bSiteAdmin)
+                continue;
+
             if($iProvider != $aInput['provider_id']) {
                 $aForm['inputs']['provider_' . $aInput['provider_id'] . '_begin'] = array(
                     'type' => 'block_header',

@@ -253,6 +253,7 @@
 	<string name="_bx_payment_err_wrong_quantity"><![CDATA[Incorrect quantity specified.]]></string>
 	<string name="_bx_payment_err_already_processed"><![CDATA[This payment has already processed.]]></string>
 	<string name="_bx_payment_err_already_registered"><![CDATA[Subscription with the same data was already registered.]]></string>
+        <string name="_bx_payment_err_not_supported"><![CDATA[Operation isn't supported.]]></string>
 
 	<!-- Other -->
 	<string name="_bx_payment_txt_add_to_cart"><![CDATA[Add to Cart]]></string>
@@ -562,6 +563,23 @@
     <string name="_bx_payment_form_strp_card_input_cancel_sys"><![CDATA[Cancel]]></string>
     <string name="_bx_payment_form_strp_card_input_cancel"><![CDATA[Cancel]]></string>
 
-	<string name="_bx_payment_txt_name_stripe"><![CDATA[Stripe]]></string>
-	<string name="_bx_payment_txt_cart_stripe"><![CDATA[Stripe]]></string>
+    <string name="_bx_payment_txt_name_stripe"><![CDATA[Stripe]]></string>
+    <string name="_bx_payment_txt_cart_stripe"><![CDATA[Stripe]]></string>
+
+    <!-- _bx_payment_aina_mode_live payment provider -->
+    <string name="_bx_payment_aina_cpt"><![CDATA[Apple In-App]]></string>
+    <string name="_bx_payment_aina_dsc"><![CDATA[Apple In-App payment provider]]></string>
+    <string name="_bx_payment_aina_active_cpt"><![CDATA[Active]]></string>
+    <string name="_bx_payment_aina_active_dsc"><![CDATA[Activate(Deactivate) provider.]]></string>
+    <string name="_bx_payment_aina_hidden_cpt"><![CDATA[Hidden]]></string>
+    <string name="_bx_payment_aina_hidden_dsc"><![CDATA[Hide provider if you don't want to accept new payments but already have active subscriptions.]]></string>
+    <string name="_bx_payment_aina_mode_cpt"><![CDATA[Mode]]></string>
+    <string name="_bx_payment_aina_mode_dsc"><![CDATA[Mode to process payments]]></string>
+    <string name="_bx_payment_aina_mode_live"><![CDATA[live]]></string>
+    <string name="_bx_payment_aina_mode_test"><![CDATA[test]]></string>
+    <string name="_bx_payment_aina_notify_url_cpt"><![CDATA[Webhooks URL]]></string>
+    err_not_supported
+    
+    <string name="_bx_payment_txt_name_apple_in_app"><![CDATA[Apple In-App]]></string>
+    <string name="_bx_payment_txt_cart_apple_in_app"><![CDATA[Apple In-App]]></string>
 </resources>
