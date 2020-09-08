@@ -6,8 +6,9 @@
 	z-index: 500;
 }
 #bx-logo-container {
-    margin-left: 0px;
+    margin: 1rem;
     text-align: left;
+	height: auto;
 }
 .bx-form-input-wrapper-password > A {
     line-height: 2rem !important;
@@ -49,10 +50,16 @@
         content: 'tablet';
     }
 }
-@media only screen and (min-width: 1024px) {
-    .cd-main-content .content-wrapper {
+
+@media only screen and (min-width: 1025px) {
+    .cd-main-content .content-wrapper
+	{
         padding-left: 200px;
     }
+	#bx-sliding-menu-search{
+		padding-left: 200px;
+		width:calc(100% - 200px);
+	}
     .cd-main-content::before {
         content: 'desktop';
     }
@@ -108,7 +115,7 @@
 /*--- Sidebar ---*/
 .cd-side-nav {
   position: fixed;
-  z-index: 400;
+  z-index: 600;
   left: 0;
   width: 100%;
   visibility: hidden;
@@ -216,7 +223,7 @@
   }
 }
 
-@media only screen and (min-width: 1024px) {
+@media only screen and (min-width: 1025px) {
   .cd-side-nav {
     width: 200px;
   }
@@ -333,7 +340,7 @@
   }
 }
 
-@media only screen and (min-width: 1024px) {
+@media only screen and (min-width: 1025px) {
   .has-children > ul {
     width: 100%;
     z-index: 1;
@@ -355,4 +362,32 @@
     opacity: 1;
     visibility: visible;
   }
+}
+
+/* profile cover customisation */
+.bx-base-pofile-cover{
+    border: 1px solid rgba(0, 0, 0, 0.1);
+	border-bottom: none;
+}
+.bx-base-pofile-cover-info .bx-base-pofile-cover-thumb{
+	margin: 0px auto;
+    margin-top: -5rem;
+}
+.bx-base-pofile-cover-info .bx-base-profile-cover-title-bages{
+	margin: 0px auto;
+}
+.bx-media-phone .bx-base-pofile-cover-info div.bx-base-pofile-cover-thumb{
+	margin: 0px auto;
+}
+.bx-base-pofile-cover-info .bx-base-pofile-cover-user h1.bx-def-unit-info{
+	    margin-left: 2rem;
+}
+.bx-menu-main-bar ul.bx-menu-main-submenu.bx-menu-more-auto, .bx-base-pofile-cover-actions ul.bx-menu-hor.bx-menu-more-auto{
+	    justify-content: center !important;
+}
+
+/* header */
+.bx-header {
+	-webkit-backdrop-filter: saturate(180%) blur(8px);
+	backdrop-filter: saturate(180%) blur(8px);
 }
