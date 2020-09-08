@@ -28,7 +28,13 @@ class BxAclConfig extends BxBaseModGeneralConfig
         parent::__construct($aModule);
 
         $this->CNF = array (
+            // database tables
             'TABLE_PRICES' => $aModule['db_prefix'] . 'level_prices',
+
+            // database fields
+            'FIELD_ID' => 'id',
+            'FIELD_LEVEL_ID' => 'level_id',
+            'FIELD_NAME' => 'name',
 
             // page URIs
             'URL_ADMINISTRATION' => 'page.php?i=acl-administration',
@@ -58,26 +64,28 @@ class BxAclConfig extends BxBaseModGeneralConfig
 
         $this->_aJsClasses = array(
             'main' => 'BxAclMain',
+            'form' => 'BxAclForm',
             'administration' => 'BxAclAdministration',
         );
         $this->_aJsObjects = array(
             'main' => 'oAclMain',
+            'form' => 'oAclForm',
             'administration' => 'oAclAdministration',
         );
 
         $sHtmlPrefix = str_replace('_', '-', $this->_sName);
         $this->_aHtmlIds = array(
-        	'popup_price' => $sHtmlPrefix . '-popup-price'
+            'popup_price' => $sHtmlPrefix . '-popup-price'
         );
 
-		$oPayments = BxDolPayments::getInstance();
-		$this->_iOwner = (int)$oPayments->getOption('site_admin');
+        $oPayments = BxDolPayments::getInstance();
+        $this->_iOwner = (int)$oPayments->getOption('site_admin');
         $this->_aCurrency = array(
-        	'code' => $oPayments->getOption('default_currency_code'),
-        	'sign' => $oPayments->getOption('default_currency_sign')
+            'code' => $oPayments->getOption('default_currency_code'),
+            'sign' => $oPayments->getOption('default_currency_sign')
         );
 
-		$this->_bExpireNotifyOnce = true;
+        $this->_bExpireNotifyOnce = true;
         $this->_iExpireNotificationDays = 1;
         $this->_iRemoveExpiredFor = 30;
     }
@@ -124,6 +132,11 @@ class BxAclConfig extends BxBaseModGeneralConfig
     public function getCurrency()
     {
     	return $this->_aCurrency;
+    }
+
+    public function getPriceName($sName)
+    {
+        return uriGenerate($sName, $this->CNF['TABLE_PRICES'], $this->CNF['FIELD_NAME']);
     }
 }
 

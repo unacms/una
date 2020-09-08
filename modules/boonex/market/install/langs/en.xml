@@ -13,6 +13,7 @@
 	<string name="_bx_market_option_per_page_profile"><![CDATA[Number of items on profile page]]></string>
 	<string name="_bx_market_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
 	<string name="_bx_market_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
+  <string name="_bx_market_option_per_page_for_favorites_lists"><![CDATA[Number of favorite lists per page]]></string>
 
 	<string name="_bx_market_form_entry"><![CDATA[Product]]></string>
 	<string name="_bx_market_form_entry_display_add"><![CDATA[Add Product]]></string>
@@ -91,6 +92,7 @@
 	<string name="_bx_market_form_entry_input_files_version_from_x_to_y"><![CDATA[{0} to {1}]]></string>
     <string name="_bx_market_form_entry_input_sys_allow_view_to"><![CDATA[Who can view]]></string>
     <string name="_bx_market_form_entry_input_allow_view_to"><![CDATA[Who can view]]></string>
+    <string name="_bx_market_form_entry_input_allow_view_favorite_list"><![CDATA[Visibility]]></string>
     <string name="_bx_market_form_entry_input_sys_allow_purchase_to"><![CDATA[Who can purchase]]></string>
     <string name="_bx_market_form_entry_input_allow_purchase_to"><![CDATA[Who can purchase]]></string>
     <string name="_bx_market_form_entry_input_sys_allow_comment_to"><![CDATA[Who can review]]></string>
@@ -187,6 +189,8 @@
     <string name="_bx_market_page_block_title_updated_entries"><![CDATA[Updated Products]]></string>
     <string name="_bx_market_page_block_title_updated_entries_view_extended"><![CDATA[Updated Products (Extended View)]]></string>
     <string name="_bx_market_page_block_title_updated_entries_view_full"><![CDATA[Updated Products (Full View)]]></string>
+    <string name="_bx_market_page_block_title_favorites_entries"><![CDATA["{title}" List]]></string>
+    <string name="_bx_market_page_block_title_favorites_entries_info"><![CDATA[Info]]></string>
 	<string name="_bx_market_page_block_title_sys_entry_context"><![CDATA[Posted in]]></string>
     <string name="_bx_market_page_block_title_entry_context"><![CDATA[Posted in]]></string>
 	
@@ -229,6 +233,8 @@
     <string name="_bx_market_page_block_title_view_profile"><![CDATA[My Products]]></string>
     <string name="_bx_market_page_title_sys_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_market_page_title_entries_search"><![CDATA[Search]]></string>
+    <string name="_bx_market_page_title_sys_entries_favorites"><![CDATA[Favorives Products]]></string>
+    <string name="_bx_market_page_title_entries_favorites"><![CDATA[Favorives Products]]></string>
     <string name="_bx_market_page_block_title_search_form"><![CDATA[Search Form]]></string>
     <string name="_bx_market_page_block_title_search_results"><![CDATA[Search Results]]></string>
     <string name="_bx_market_page_block_title_search_form_cmts"><![CDATA[Comments Search Form]]></string>

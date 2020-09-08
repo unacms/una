@@ -30,7 +30,7 @@ class BxEventsSearchResult extends BxBaseModGroupsSearchResult
                 'perofileType' => array('value' => 'bx_events', 'field' => 'type', 'operator' => '='),
                 'owner' => array('value' => '', 'field' => 'author', 'operator' => '=', 'table' => 'bx_events_data'),
                 'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>', 'table' => 'bx_events_data'),
-                'upcoming' => array('value' => '', 'field' => 'date_start', 'operator' => '>', 'table' => 'bx_events_data'),
+                'upcoming' => array('value' => '', 'field' => 'date_end', 'operator' => '>', 'table' => 'bx_events_data'),
                 'past' => array('value' => '', 'field' => 'date_end', 'operator' => '<', 'table' => 'bx_events_data'),
                 'date_start_from' => array('value' => '', 'field' => 'date_start', 'operator' => '>=', 'table' => 'bx_events_data'),
                 'date_start_to' => array('value' => '', 'field' => 'date_start', 'operator' => '<=', 'table' => 'bx_events_data'),

@@ -19,7 +19,7 @@ CREATE TABLE `bx_acl_level_prices` (
 
 -- FORMS
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
-('bx_acl_price', @sName, '_bx_acl_form_price', '', '', 'do_submit', 'bx_acl_level_prices', 'id', '', '', '', 0, 1, '', '');
+('bx_acl_price', @sName, '_bx_acl_form_price', '', '', 'do_submit', 'bx_acl_level_prices', 'id', '', '', '', 0, 1, 'BxAclFormPrice', 'modules/boonex/acl/classes/BxAclFormPrice.php');
 
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
 ('bx_acl_price_add', @sName, 'bx_acl_price', '_bx_acl_form_price_display_add', 0),
@@ -28,6 +28,7 @@ INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `v
 INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
 ('bx_acl_price', @sName, 'id', '', '', 0, 'hidden', '_bx_acl_form_price_input_sys_id', '', '', 1, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_acl_price', @sName, 'level_id', '', '', 0, 'hidden', '_bx_acl_form_price_input_sys_level_id', '', '', 1, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
+('bx_acl_price', @sName, 'name', '', '', 0, 'text', '_bx_acl_form_price_input_sys_name', '_bx_acl_form_price_input_name', '_bx_acl_form_price_input_inf_name', 1, 0, 0, '', '', '', 'Avail', '', '_bx_acl_form_price_input_err_name', 'Xss', '', 1, 0),
 ('bx_acl_price', @sName, 'period', '', '', 0, 'text', '_bx_acl_form_price_input_sys_period', '_bx_acl_form_price_input_period', '_bx_acl_form_price_input_inf_period', 1, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
 ('bx_acl_price', @sName, 'period_unit', '', '#!bx_acl_period_units', 0, 'select', '_bx_acl_form_price_input_sys_period_unit', '_bx_acl_form_price_input_period_unit', '_bx_acl_form_price_input_inf_period_unit', 1, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_acl_price', @sName, 'trial', '', '', 0, 'text', '_bx_acl_form_price_input_sys_trial', '_bx_acl_form_price_input_trial', '_bx_acl_form_price_input_inf_trial', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 1, 0),
@@ -39,23 +40,25 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
 ('bx_acl_price_add', 'id', 2147483647, 0, 1),
 ('bx_acl_price_add', 'level_id', 2147483647, 1, 2),
-('bx_acl_price_add', 'price', 2147483647, 1, 3),
-('bx_acl_price_add', 'period', 2147483647, 1, 4),
-('bx_acl_price_add', 'period_unit', 2147483647, 1, 5),
-('bx_acl_price_add', 'trial', 2147483647, 1, 6),
-('bx_acl_price_add', 'controls', 2147483647, 1, 7),
-('bx_acl_price_add', 'do_submit', 2147483647, 1, 8),
-('bx_acl_price_add', 'do_cancel', 2147483647, 1, 9),
+('bx_acl_price_add', 'name', 2147483647, 1, 3),
+('bx_acl_price_add', 'price', 2147483647, 1, 4),
+('bx_acl_price_add', 'period', 2147483647, 1, 5),
+('bx_acl_price_add', 'period_unit', 2147483647, 1, 6),
+('bx_acl_price_add', 'trial', 2147483647, 1, 7),
+('bx_acl_price_add', 'controls', 2147483647, 1, 8),
+('bx_acl_price_add', 'do_submit', 2147483647, 1, 9),
+('bx_acl_price_add', 'do_cancel', 2147483647, 1, 10),
 
 ('bx_acl_price_edit', 'id', 2147483647, 1, 1),
 ('bx_acl_price_edit', 'level_id', 2147483647, 1, 2),
-('bx_acl_price_edit', 'price', 2147483647, 1, 3),
-('bx_acl_price_edit', 'period', 2147483647, 1, 4),
-('bx_acl_price_edit', 'period_unit', 2147483647, 1, 5),
-('bx_acl_price_edit', 'trial', 2147483647, 1, 6),
-('bx_acl_price_edit', 'controls', 2147483647, 1, 7),
-('bx_acl_price_edit', 'do_submit', 2147483647, 1, 8),
-('bx_acl_price_edit', 'do_cancel', 2147483647, 1, 9);
+('bx_acl_price_edit', 'name', 2147483647, 1, 3),
+('bx_acl_price_edit', 'price', 2147483647, 1, 4),
+('bx_acl_price_edit', 'period', 2147483647, 1, 5),
+('bx_acl_price_edit', 'period_unit', 2147483647, 1, 6),
+('bx_acl_price_edit', 'trial', 2147483647, 1, 7),
+('bx_acl_price_edit', 'controls', 2147483647, 1, 8),
+('bx_acl_price_edit', 'do_submit', 2147483647, 1, 9),
+('bx_acl_price_edit', 'do_cancel', 2147483647, 1, 10);
 
 
 -- PRE-VALUES

@@ -31,33 +31,33 @@ BxMarketForm.prototype.checkName = function(sTitleId, sNameId, iId) {
 	var bTitle = sTitle.length != 0;
 
 	if(!bName && !bTitle)
-		return;
+            return;
 
 	var sTitleCheck = '';
 	if(bName)
-		sTitleCheck = sName;
+            sTitleCheck = sName;
 	else if(bTitle) {
-		sTitleCheck = sTitle;
+            sTitleCheck = sTitle;
 
-		sTitle = sTitle.replace(/[^A-Za-z0-9_]/g, '-');
-		sTitle = sTitle.replace(/[-]{2,}/g, '-');
-		oName.val(sTitle.toLowerCase());
+            sTitle = sTitle.replace(/[^A-Za-z0-9_]/g, '-');
+            sTitle = sTitle.replace(/[-]{2,}/g, '-');
+            oName.val(sTitle);
 	}
 
 	jQuery.get(
-		this._sActionsUrl + 'check_name',
-		{
-			title: sTitleCheck,
-			id: iId && parseInt(iId) > 0 ? iId : 0,
-    		_t: oDate.getTime()
-    	},
-    	function(oData) {
-    		if(!oData || oData.name == undefined)
-    			return;
+            this._sActionsUrl + 'check_name',
+            {
+                title: sTitleCheck,
+                id: iId && parseInt(iId) > 0 ? iId : 0,
+                _t: oDate.getTime()
+            },
+            function(oData) {
+                if(!oData || oData.name == undefined)
+                    return;
 
-    		oName.val(oData.name);
-    	},
-    	'json'
+                oName.val(oData.name);
+            },
+            'json'
 	);
 };
 

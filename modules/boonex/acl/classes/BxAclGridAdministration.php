@@ -13,8 +13,8 @@ require_once('BxAclGridLevels.php');
 
 class BxAclGridAdministration extends BxAclGridLevels
 {
-	protected $_sParamsDivider = '#-#';
-	protected $_iLevelId = 0;
+    protected $_sParamsDivider = '#-#';
+    protected $_iLevelId = 0;
 
     public function __construct ($aOptions, $oTemplate = false)
     {
@@ -27,7 +27,7 @@ class BxAclGridAdministration extends BxAclGridLevels
         }
     }
 
-	public function performActionAdd()
+    public function performActionAdd()
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -41,26 +41,23 @@ class BxAclGridAdministration extends BxAclGridLevels
             $this->_iLevelId = (int)bx_get('level_id');
 
     	$oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_PRICE'], $CNF['OBJECT_FORM_PRICE_DISPLAY_ADD']);
-    	$oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&level=' . $this->_iLevelId;
-    	$oForm->aInputs['level_id']['value'] = $this->_iLevelId;
+        $oForm->setAction(BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&level=' . $this->_iLevelId);
+        $oForm->setLevelId($this->_iLevelId);
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
-        	$iLevel = $oForm->getCleanValue('level_id');
-        	$iPeriod = $oForm->getCleanValue('period');
-        	$sPeriodUnit = $oForm->getCleanValue('period_unit');
+            $iLevel = $oForm->getCleanValue('level_id');
+            $iPeriod = $oForm->getCleanValue('period');
+            $sPeriodUnit = $oForm->getCleanValue('period_unit');
 
-        	if(!empty($iPeriod) && empty($sPeriodUnit)) 
-        	    return echoJson(array('msg' => _t('_bx_acl_form_price_input_err_period_unit')));
-        	
+            if(!empty($iPeriod) && empty($sPeriodUnit)) 
+                return echoJson(array('msg' => _t('_bx_acl_form_price_input_err_period_unit')));
+
             $aPrice = $this->_oModule->_oDb->getPrices(array('type' => 'by_level_id_duration', 'level_id' => $iLevel, 'period' => $iPeriod, 'period_unit' => $sPeriodUnit));
             if(!empty($aPrice) && is_array($aPrice))
                 return echoJson(array('msg' => _t('_bx_acl_err_price_duplicate')));
 
-            $aLevel = $this->_oModule->_oDb->getLevels(array('type' => 'by_id', 'value' => $iLevel));
-            $sName = uriGenerate(strtolower(_t($aLevel['name'])) . ' ' . $iPeriod . ' ' . $sPeriodUnit, $CNF['TABLE_PRICES'], 'name');
-
-            $iId = (int)$oForm->insert(array('name' => $sName, 'order' => $this->_oModule->_oDb->getPriceOrderMax($this->_iLevelId) + 1));
+            $iId = (int)$oForm->insert(array('order' => $this->_oModule->_oDb->getPriceOrderMax($this->_iLevelId) + 1));
             if($iId != 0) {
             	//TODO: May be we don't need to have this 'Purchasable' flag at all or at least we shouldn't update it from here.
                 $this->_oModule->_oDb->updateLevels(array('Purchasable' => 'yes'), array('ID' => $this->_iLevelId));
@@ -73,18 +70,18 @@ class BxAclGridAdministration extends BxAclGridLevels
             return;
         }
 
-		bx_import('BxTemplStudioFunctions');
-		$sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->_oModule->_oConfig->getHtmlIds('popup_price'), _t('_bx_acl_popup_title_price_add'), $this->_oModule->_oTemplate->parseHtmlByName('popup_price.html', array(
-			'form_id' => $oForm->aFormAttrs['id'],
-			'form' => $oForm->getCode(true),
-			'object' => $this->_sObject,
-			'action' => $sAction
-		)));
+        bx_import('BxTemplStudioFunctions');
+        $sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->_oModule->_oConfig->getHtmlIds('popup_price'), _t('_bx_acl_popup_title_price_add'), $this->_oModule->_oTemplate->parseHtmlByName('popup_price.html', array(
+            'form_id' => $oForm->aFormAttrs['id'],
+            'form' => $oForm->getCode(true),
+            'object' => $this->_sObject,
+            'action' => $sAction
+        )));
 
-		echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
+        echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false, 'removeOnClose' => true))));
     }
 
-	public function performActionEdit()
+    public function performActionEdit()
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -98,12 +95,12 @@ class BxAclGridAdministration extends BxAclGridLevels
 
         $aItem = $this->_oModule->_oDb->getPrices(array('type' => 'by_id', 'value' => $iId));
         if(!is_array($aItem) || empty($aItem)) {
-        	echoJson(array());
-			exit;
+            echoJson(array());
+            exit;
         }
 
         $oForm = BxDolForm::getObjectInstance($CNF['OBJECT_FORM_PRICE'], $CNF['OBJECT_FORM_PRICE_DISPLAY_EDIT']);
-    	$oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&level=' . $this->_iLevelId;
+        $oForm->setAction(BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction . '&level=' . $this->_iLevelId);
 
         $oForm->initChecker($aItem);
         if($oForm->isSubmittedAndValid()) {
@@ -116,24 +113,24 @@ class BxAclGridAdministration extends BxAclGridLevels
             return;
         }
 
-		bx_import('BxTemplStudioFunctions');
-		$sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->_oModule->_oConfig->getHtmlIds('popup_price'), _t('_bx_acl_popup_title_price_edit'), $this->_oModule->_oTemplate->parseHtmlByName('popup_price.html', array(
-			'form_id' => $oForm->aFormAttrs['id'],
-			'form' => $oForm->getCode(true),
-			'object' => $this->_sObject,
-			'action' => $sAction
-		)));
+        bx_import('BxTemplStudioFunctions');
+        $sContent = BxTemplStudioFunctions::getInstance()->popupBox($this->_oModule->_oConfig->getHtmlIds('popup_price'), _t('_bx_acl_popup_title_price_edit'), $this->_oModule->_oTemplate->parseHtmlByName('popup_price.html', array(
+            'form_id' => $oForm->aFormAttrs['id'],
+            'form' => $oForm->getCode(true),
+            'object' => $this->_sObject,
+            'action' => $sAction
+        )));
 
-		$aRes = array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false)));
+        $aRes = array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false, 'removeOnClose' => true)));
 
-		echoJson($aRes);
+        echoJson($aRes);
     }
 
-	public function performActionDelete()
+    public function performActionDelete()
     {
-    	$CNF = &$this->_oModule->_oConfig->CNF;
+        $CNF = &$this->_oModule->_oConfig->CNF;
 
-    	$aIds = bx_get('ids');
+        $aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) {
             echoJson(array());
             return;
@@ -142,12 +139,12 @@ class BxAclGridAdministration extends BxAclGridLevels
         $iAffected = 0;
         $aIdsAffected = array();
         foreach($aIds as $iId)
-			if($this->_oModule->_oDb->deletePrices(array('id' => $iId))) {
-				$aIdsAffected[] = $iId;
-        		$iAffected++;
-			}
+            if($this->_oModule->_oDb->deletePrices(array('id' => $iId))) {
+                $aIdsAffected[] = $iId;
+                $iAffected++;
+            }
 
-		echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_bx_acl_err_cannot_perform')));
+        echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t('_bx_acl_err_cannot_perform')));
     }
 
     protected function _addJsCss()
@@ -160,7 +157,7 @@ class BxAclGridAdministration extends BxAclGridLevels
         $oForm->addCssJs();
     }
 
-	protected function _getActionAdd ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    protected function _getActionAdd ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         if(empty($this->_iLevelId))
             $isDisabled = true;
@@ -168,7 +165,7 @@ class BxAclGridAdministration extends BxAclGridLevels
         return  parent::_getActionDefault($sType, $sKey, $a, false, $isDisabled, $aRow);
     }
 
-	protected function _getFilterControls()
+    protected function _getFilterControls()
     {
         parent::_getFilterControls();
 
@@ -188,7 +185,7 @@ class BxAclGridAdministration extends BxAclGridLevels
 
         $aLevels = $this->_oModule->_oDb->getLevels(array('type' => 'for_selector'));
         foreach($aLevels as $iId => $sTitle)
-        	$aInputLevels['values'][$iId] = _t($sTitle);
+            $aInputLevels['values'][$iId] = _t($sTitle);
 
         $sContent .=  $oForm->genRow($aInputLevels);
 
@@ -207,12 +204,12 @@ class BxAclGridAdministration extends BxAclGridLevels
         return $sContent;
     }
 
-	protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
         if(empty($this->_iLevelId) && strpos($sFilter, $this->_sParamsDivider) !== false)
             list($this->_iLevelId, $sFilter) = explode($this->_sParamsDivider, $sFilter);
 
-		if(empty($this->_iLevelId))
+        if(empty($this->_iLevelId))
             return array();
 
         $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString("AND `level_id`=? ", $this->_iLevelId);
@@ -220,7 +217,7 @@ class BxAclGridAdministration extends BxAclGridLevels
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);;
     }
 
-	protected function _isVisibleGrid ($a)
+    protected function _isVisibleGrid ($a)
     {
         return isAdmin();
     }

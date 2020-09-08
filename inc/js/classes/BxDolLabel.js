@@ -47,8 +47,15 @@ BxDolLabel.prototype.selectLabels = function(oElement, sName, aParams)
 
 BxDolLabel.prototype.onSelectLabels = function(oData)
 {
-    if(oData.content != undefined)
-        $('#' + this._aHtmlIds['labels_element']).replaceWith(oData.content);
+    if(!oData.name || !oData.content)
+        return;
+
+    var oElement = $('#' + this._aHtmlIds['labels_element'] + oData.name + ' .bx-form-input-labels');
+    if(!oElement.length)
+        return;
+
+    oElement.find('b.val:not(.val-placeholder)').remove();
+    oElement.prepend(oData.content);
 };
 
 BxDolLabel.prototype.showSublist = function(oLink)

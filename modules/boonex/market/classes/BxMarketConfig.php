@@ -81,7 +81,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'FIELD_LABELS' => 'labels',
             'FIELDS_QUICK_SEARCH' => array('title'),
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
-
+            
             // page URIs
             'URI_VIEW_ENTRY' => 'view-product',
             'URI_AUTHOR_ENTRIES' => 'products-author',
@@ -90,6 +90,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'URI_EDIT_ENTRY' => 'edit-product',
             'URI_DOWNLOAD_ENTRY' => 'download-product',
             'URI_MANAGE_COMMON' => 'products-manage',
+            'URI_FAVORITES_LIST' => 'products-favorites',
 
             'URL_HOME' => 'page.php?i=products-home',
             'URL_LATEST' => 'page.php?i=products-latest',
@@ -108,6 +109,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'PARAM_CHARS_SUMMARY_PLAIN' => 'bx_market_plain_summary_chars',
             'PARAM_NUM_RSS' => 'bx_market_rss_num',
             'PARAM_SEARCHABLE_FIELDS' => 'bx_market_searchable_fields',
+            'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_market_per_page_for_favorites_lists',
 
             // objects            
             'OBJECT_STORAGE' => 'bx_market_photos',
@@ -131,6 +133,7 @@ class BxMarketConfig extends BxBaseModTextConfig
             'OBJECT_NOTES' => 'bx_market_notes',
             'OBJECT_CATEGORY' => 'bx_market_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_market_allow_view_to',
+            'OBJECT_PRIVACY_LIST_VIEW' => 'bx_market_allow_view_favorite_list',
             'OBJECT_PRIVACY_PURCHASE' => 'bx_market_allow_purchase_to',
             'OBJECT_PRIVACY_COMMENT' => 'bx_market_allow_comment_to',
             'OBJECT_PRIVACY_VOTE' => 'bx_market_allow_vote_to',
@@ -246,8 +249,6 @@ class BxMarketConfig extends BxBaseModTextConfig
 
     public function getEntryName($sName)
     {
-        $sName = strtolower($sName);
-
         return uriGenerate($sName, $this->CNF['TABLE_ENTRIES'], $this->CNF['FIELD_NAME']);
     }
 }

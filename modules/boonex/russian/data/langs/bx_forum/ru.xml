@@ -15,6 +15,7 @@
     <string name="_bx_forum_option_autosubscribe_created"><![CDATA[Автоподписка на новые обсуждения]]></string>
     <string name="_bx_forum_option_autosubscribe_replied"><![CDATA[Автоподписка на отвеченные обсуждения]]></string>
     <string name="_bx_forum_option_auto_activation_for_categories"><![CDATA[Автоактивация для категорий]]></string>
+    <string name="_bx_forum_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
 
     <string name="_bx_forum_form_entry"><![CDATA[Форум]]></string>
     <string name="_bx_forum_form_entry_display_add"><![CDATA[Создание обсуждения]]></string>
@@ -60,6 +61,7 @@
     <string name="_bx_forum_form_entry_input_sys_multicat"><![CDATA[Категории]]></string>
     <string name="_bx_forum_form_entry_input_multicat"><![CDATA[Категории]]></string>
     <string name="_bx_forum_form_entry_input_multicat_err"><![CDATA[Нужно обязательно выбрать категории]]></string>
+    <string name="_bx_forum_form_entry_input_allow_view_favorite_list"><![CDATA[Видимость]]></string>
 
     <string name="_bx_forum_form_poll"><![CDATA[Голосования]]></string>
     <string name="_bx_forum_form_poll_display_add"><![CDATA[Добавить голосование]]></string>
@@ -189,6 +191,8 @@
     <string name="_bx_forum_page_block_title_my_entries"><![CDATA[Мои обсуждения]]></string>
 	  <string name="_bx_forum_page_title_sys_entries_search"><![CDATA[Поиск]]></string>
 	  <string name="_bx_forum_page_title_entries_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_forum_page_title_sys_entries_favorites"><![CDATA[Избранные обсуждения]]></string>
+    <string name="_bx_forum_page_title_entries_favorites"><![CDATA[Избранные обсуждения]]></string>
 	  <string name="_bx_forum_page_block_title_entries_search_form"><![CDATA[Поиск]]></string>
 	  <string name="_bx_forum_page_block_title_entries_search_results"><![CDATA[Результаты поиска]]></string>
 	  <string name="_bx_forum_page_block_title_search_form"><![CDATA[Форма поиска]]></string>
@@ -198,6 +202,8 @@
     <string name="_bx_forum_page_title_sys_entries_partaken"><![CDATA[Отвеченные мной]]></string>
     <string name="_bx_forum_page_title_entries_partaken"><![CDATA[Отвеченные мной]]></string>
     <string name="_bx_forum_page_block_title_partaken_entries"><![CDATA[Отвеченные мной]]></string>
+    <string name="_bx_forum_page_block_title_favorites_entries"><![CDATA[Список "{title}"]]></string>
+    <string name="_bx_forum_page_block_title_favorites_entries_info"><![CDATA[Информация]]></string>
 
     <string name="_bx_forum_menu_title_entry_attachments"><![CDATA[Форма - Прикрепления]]></string>
     <string name="_bx_forum_menu_set_title_entry_attachments"><![CDATA[Форма - Прикрепления]]></string>

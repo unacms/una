@@ -24,6 +24,10 @@
 	<string name="_bx_acl_form_price_display_edit"><![CDATA[Редактирование]]></string>
 	<string name="_bx_acl_form_price_input_sys_id"><![CDATA[ID]]></string>
 	<string name="_bx_acl_form_price_input_sys_level_id"><![CDATA[ID уровня]]></string>
+        <string name="_bx_acl_form_price_input_sys_name"><![CDATA[Имя]]></string>
+	<string name="_bx_acl_form_price_input_name"><![CDATA[Имя]]></string>
+	<string name="_bx_acl_form_price_input_inf_name"><![CDATA[Уникальное значение, которое будет использоваться в серверной части и API запросах]]></string>
+        <string name="_bx_acl_form_price_input_err_name"><![CDATA[Введите уникальное значение]]></string>
 	<string name="_bx_acl_form_price_input_sys_period"><![CDATA[Период]]></string>
 	<string name="_bx_acl_form_price_input_period"><![CDATA[Период]]></string>
 	<string name="_bx_acl_form_price_input_inf_period"><![CDATA[Используйте 0 для пожизненного]]></string>

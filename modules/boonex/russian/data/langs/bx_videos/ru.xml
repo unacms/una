@@ -11,6 +11,7 @@
     <string name="_bx_videos_option_per_page_profile"><![CDATA[Количество элементов на странице профайла]]></string>
 	<string name="_bx_videos_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
 	<string name="_bx_videos_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
+  <string name="_bx_videos_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
 
 	<string name="_bx_videos_form_entry"><![CDATA[Видео]]></string>
 	<string name="_bx_videos_form_entry_display_add"><![CDATA[Добавить видео]]></string>
@@ -44,6 +45,7 @@
     <string name="_bx_videos_form_entry_input_videos_upload"><![CDATA[Загрузить]]></string>
     <string name="_bx_videos_form_entry_input_sys_allow_view_to"><![CDATA[Видимость]]></string>
     <string name="_bx_videos_form_entry_input_allow_view_to"><![CDATA[Видимость]]></string>
+    <string name="_bx_videos_form_entry_input_allow_view_favorite_list"><![CDATA[Видимость]]></string>
     <string name="_bx_videos_form_entry_input_picture_use_as_thumb"><![CDATA[Изображение постера]]></string>
     <string name="_bx_videos_form_entry_input_picture_use_as_poster"><![CDATA[Изображение постера]]></string>
     <string name="_bx_videos_form_entry_input_sys_date_added"><![CDATA[Создано]]></string>
@@ -118,6 +120,8 @@
     <string name="_bx_videos_page_title_sys_entries_of_author"><![CDATA[Видео автора]]></string>
     <string name="_bx_videos_page_title_entries_of_author"><![CDATA[{display_name} - Видео]]></string>
     <string name="_bx_videos_page_title_sys_entries_in_context"><![CDATA[Видео в контексте]]></string>
+    <string name="_bx_posts_page_title_sys_entries_favorites"><![CDATA[Избранные видео]]></string>
+    <string name="_bx_posts_page_title_entries_favorites"><![CDATA[Избранные видео]]></string>
     <string name="_bx_videos_page_title_entries_in_context"><![CDATA[Видео в контексте - {display_name}]]></string>
     <string name="_bx_videos_page_block_title_favorites_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Избранное]]></string>   
     <string name="_bx_videos_page_block_title_sys_favorites_of_author"><![CDATA[Избранное автора]]></string>
@@ -145,6 +149,8 @@
     <string name="_bx_videos_page_block_title_featured_entries_view_showcase"><![CDATA[Продвинутые Видео]]></string>
     <string name="_bx_videos_page_block_title_sys_entry_context"><![CDATA[Опубликовано в]]></string>
     <string name="_bx_videos_page_block_title_entry_context"><![CDATA[Опубликовано в]]></string>
+    <string name="_bx_videos_page_block_title_favorites_entries"><![CDATA[Список "{title}"]]></string>
+    <string name="_bx_videos_page_block_title_favorites_entries_info"><![CDATA[Информация]]></string>
 
     <string name="_bx_videos_menu_set_title_view_entry"><![CDATA[Видео - Действия]]></string>
     <string name="_bx_videos_menu_title_view_entry"><![CDATA[Видео - Действия]]></string>

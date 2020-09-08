@@ -11,6 +11,7 @@
     <string name="_bx_groups_option_members_mode"><![CDATA[Special mode for group members]]></string>
     <string name="_bx_groups_option_members_mode_multi_roles"><![CDATA[Multi Roles]]></string>
     <string name="_bx_groups_option_members_mode_paid_join"><![CDATA[Paid Join]]></string>
+    <string name="_bx_groups_option_per_page_for_favorites_lists"><![CDATA[Number of favorite lists per page]]></string>
 
 	<string name="_bx_groups_form_profile"><![CDATA[Groups]]></string>
 	<string name="_bx_groups_form_profile_display_add"><![CDATA[Add Group]]></string>
@@ -26,6 +27,7 @@
     <string name="_bx_groups_form_profile_input_join_confirm"><![CDATA[Join confirmation]]></string>
     <string name="_bx_groups_form_profile_input_sys_allow_view_to"><![CDATA[Visible to]]></string>
     <string name="_bx_groups_form_profile_input_allow_view_to"><![CDATA[Visible to]]></string>
+    <string name="_bx_groups_form_entry_input_allow_view_favorite_list"><![CDATA[Visibility]]></string>
     <string name="_bx_groups_form_profile_input_allow_view_to_desc"><![CDATA[Closed - anyone can find the group and see who's in it, only members can see posts. Secret - only members can find the group and see posts.]]></string>
     <string name="_bx_groups_form_profile_input_sys_allow_post_to"><![CDATA[Who can post]]></string>
     <string name="_bx_groups_form_profile_input_allow_post_to"><![CDATA[Who can post]]></string>
@@ -120,9 +122,13 @@
 	<string name="_bx_groups_page_title_invite_to_group"><![CDATA[Invite Members to the Group]]></string>
 	<string name="_bx_groups_page_title_sys_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_groups_page_title_entries_search"><![CDATA[Search]]></string>
+  <string name="_bx_groups_page_title_sys_entries_favorites"><![CDATA[Favorives Groups]]></string>
+  <string name="_bx_groups_page_title_entries_favorites"><![CDATA[Favorives Groups]]></string>
 
     <string name="_bx_groups_page_block_title_sys_entries_actions"><![CDATA[Groups actions]]></string>
     <string name="_bx_groups_page_block_title_entries_actions"><![CDATA[Groups actions]]></string>
+    <string name="_bx_groups_page_block_title_favorites_entries"><![CDATA["{title}" List]]></string>
+    <string name="_bx_groups_page_block_title_favorites_entries_info"><![CDATA[Info]]></string>
     <string name="_bx_groups_page_block_title_sys_entries_of_author"><![CDATA[Groups of author]]></string>
     <string name="_bx_groups_page_block_title_entries_of_author"><![CDATA[Groups by {display_name}]]></string>
 	<string name="_bx_groups_page_block_title_favorites_of_author"><![CDATA[Favorite Groups]]></string>

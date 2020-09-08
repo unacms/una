@@ -156,7 +156,7 @@ class BxAlbumsTemplate extends BxBaseModTextTemplate
                 'object_menu' => $CNF['OBJECT_MENU_ACTIONS_VIEW_MEDIA_UNIT']
             )),
             'bx_if:thumb' => array (
-                'condition' => $aData['file_id'],
+                'condition' => isset($aData['file_id']) && $aData['file_id'],
                 'content' => array (
                     'title' => bx_process_output($aData['title']),
                     'summary_attr' => '',

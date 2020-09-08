@@ -27,6 +27,7 @@ class BxPaymentDb extends BxBaseModPaymentDb
                 `tp`.`caption` AS `provider_caption`,
                 `tp`.`description` AS `provider_description`,
                 `tp`.`option_prefix` AS `provider_option_prefix`,
+                `tp`.`for_owner_only` AS `provider_for_owner_only`,
                 `tpo`.`id` AS `id`,
                 `tpo`.`name` AS `name`,
                 `tpo`.`type` AS `type`,

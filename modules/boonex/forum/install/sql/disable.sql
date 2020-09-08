@@ -32,7 +32,7 @@ DELETE FROM `sys_acl_actions` WHERE `Module` = @sName;
 
 
 -- PRIVACY 
-DELETE FROM `sys_objects_privacy` WHERE `object` IN ('bx_forum_allow_view_to');
+DELETE FROM `sys_objects_privacy` WHERE `object` IN ('bx_forum_allow_view_to', 'bx_forum_allow_view_favorite_list');
 
 
 -- SEARCH

@@ -13,6 +13,7 @@
 	<string name="_bx_market_option_per_page_profile"><![CDATA[Количество элементов на странице профиля]]></string>
 	<string name="_bx_market_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
 	<string name="_bx_market_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
+  <string name="_bx_market_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
 
 	<string name="_bx_market_form_entry"><![CDATA[Продукт]]></string>
 	<string name="_bx_market_form_entry_display_add"><![CDATA[Добавление продукта]]></string>
@@ -107,6 +108,7 @@
     <string name="_bx_market_form_entry_input_subentries"><![CDATA[Подпродукты]]></string>
     <string name="_bx_market_form_entry_input_subentries_inf"><![CDATA[Оставьте поле пустым, если не хотите создавать ассоциацию.]]></string>
     <string name="_bx_market_form_entry_input_subentries_placeholder"><![CDATA[Введите название продукта...]]></string>
+    <string name="_bx_market_form_entry_input_allow_view_favorite_list"><![CDATA[Видимость]]></string>
 
 	<string name="_bx_market_acl_action_create_entry"><![CDATA[Создать продукт]]></string>
 	<string name="_bx_market_acl_action_delete_entry"><![CDATA[Удалить продукт]]></string>
@@ -223,6 +225,8 @@
     <string name="_bx_market_page_block_title_view_profile"><![CDATA[Мои продукты]]></string>
     <string name="_bx_market_page_title_sys_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_market_page_title_entries_search"><![CDATA[Поиск]]></string>
+    <string name="_bx_market_page_title_sys_entries_favorites"><![CDATA[Избранные продукты]]></string>
+    <string name="_bx_market_page_title_entries_favorites"><![CDATA[Избранные продукты]]></string>
     <string name="_bx_market_page_block_title_search_form"><![CDATA[Форма поиска]]></string>
     <string name="_bx_market_page_block_title_search_results"><![CDATA[Результаты поиска]]></string>
     <string name="_bx_market_page_block_title_search_form_cmts"><![CDATA[Форма поиска комментариев]]></string>
@@ -235,6 +239,8 @@
     <string name="_bx_market_page_block_title_featured_entries_view_showcase"><![CDATA[Продвинутые продукты]]></string>
     <string name="_bx_market_page_block_title_sys_entry_context"><![CDATA[Опубликовано в]]></string>
     <string name="_bx_market_page_block_title_entry_context"><![CDATA[Опубликовано в]]></string>
+    <string name="_bx_market_page_block_title_favorites_entries"><![CDATA[Список "{title}"]]></string>
+    <string name="_bx_market_page_block_title_favorites_entries_info"><![CDATA[Информация]]></string>
 
     <string name="_bx_market_menu_set_title_view_entry"><![CDATA[Продукт - Действия]]></string>
     <string name="_bx_market_menu_title_view_entry"><![CDATA[Продукт - Действия]]></string>

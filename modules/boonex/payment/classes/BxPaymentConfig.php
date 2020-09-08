@@ -11,6 +11,7 @@
 
 class BxPaymentConfig extends BxBaseModPaymentConfig
 {
+    protected $_iSiteAdmin;
     protected $_bCreditsOnly;
 
     function __construct($aModule)
@@ -129,7 +130,21 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         $this->_sCurrencyCode = (string)$this->_oDb->getParam($sPrefix . 'default_currency_code');
         $this->_sCurrencySign = !empty($this->_sCurrencyCode) && isset($aCurrencies[$this->_sCurrencyCode]) ? $aCurrencies[$this->_sCurrencyCode] : '';
 
+        $this->_iSiteAdmin = (int)$this->_oDb->getParam($sPrefix . 'site_admin');
         $this->_bCreditsOnly = $this->_oDb->getParam($sPrefix . 'credits_only') == 'on';
+    }
+
+    public function getSiteAdmin()
+    {
+        return $this->_iSiteAdmin;
+    }
+
+    public function isSiteAdmin($iProfileId = 0)
+    {
+        if(empty($iProfileId))
+            $iProfileId = bx_get_logged_profile_id();
+
+        return $iProfileId == $this->_iSiteAdmin;
     }
 
     public function isCreditsOnly()

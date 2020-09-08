@@ -584,11 +584,11 @@
 
 /* auto-siggestion input */
 
-.bx-form-value .bx-form-input-autotoken {
+.bx-form-value .bx-form-input-autotoken:not(.bx-form-input-labels) {
     float:left;
     padding:0px;
     height:auto;
-	box-shadow: none;
+    box-shadow: none;
     min-height: 2.8rem;
 }
 .bx-form-value .bx-form-input-autotoken b {
