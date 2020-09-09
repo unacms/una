@@ -158,24 +158,14 @@ class BxReviewsTemplate extends BxBaseModTextTemplate
             ];
         }
 
-
-
         $aResultExtra = [
             'bx_if:context' => [
                 'condition' => !bx_is_empty_array($aContext),
                 'content' => $aContext,
             ],
-            'bx_if:no_context' => [
-                'condition' => bx_is_empty_array($aContext),
-                'content' => [],
-            ],
             'bx_if:product' => [
                 'condition' => !bx_is_empty_array($aProduct),
                 'content' => $aProduct,
-            ],
-            'bx_if:no_product' => [
-                'condition' => bx_is_empty_array($aProduct),
-                'content' => [],
             ],
             'bx_if:rating' => [
                 'condition' => !empty($aData[$CNF['FIELD_VOTING_AVG']]),
@@ -185,6 +175,15 @@ class BxReviewsTemplate extends BxBaseModTextTemplate
             ],
         ];
 
+        $sText = $this->getText($aData);
+        $sSummaryQuickPlain = isset($CNF['PARAM_CHARS_SUMMARY_PLAIN_SHORT']) && $CNF['PARAM_CHARS_SUMMARY_PLAIN_SHORT'] ? BxTemplFunctions::getInstance()->getStringWithLimitedLength(strip_tags($sText), (int)getParam($CNF['PARAM_CHARS_SUMMARY_PLAIN_SHORT'])) : '';
+
+        $aResult['bx_if:thumb_plus_quick_desc'] = [
+            'condition' => $aResult['bx_if:thumb']['condition'],
+            'content' => [
+                'summary_quick_plain' => $sSummaryQuickPlain,
+            ],
+        ];
 
         return array_merge($aResult, $aResultExtra);
     }
@@ -223,7 +222,12 @@ class BxReviewsTemplate extends BxBaseModTextTemplate
                 'profile_name' => bx_process_output($oProfile->getDisplayName()),
                 'profile_pic' => $oProfile->getPicture(),
                 'reviews' => $aDataRow['reviews_num'],
-                'stars' => $this->getOverallRating(0, $aDataRow['avg_rating'], false),
+                'bx_if:rating' => [
+                    'condition' => $aDataRow['avg_rating'] > 0,
+                    'content' => [
+                        'stars' => $this->getOverallRating(0, $aDataRow['avg_rating'], false),
+                    ],
+                ],
                 'reviews_link' => bx_append_url_params($sReviewsLinkTmpl, ['profile_id' => $aDataRow[$CNF['FIELD_REVIEWED_PROFILE']]]),
             ];
         }

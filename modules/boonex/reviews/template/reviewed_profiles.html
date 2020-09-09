@@ -14,8 +14,10 @@
                     <div class="bx-review-extra-info">
                         <span class="bx-def-font-bold"><bx_text:_bx_reviews_txt_reviews_num />:</span> <a href="__reviews_link__">__reviews__</a>
                     </div>
-                    <div class="bx-def-hr bx-def-margin-top"></div>
-                    <div class="bx-review-rating bx-def-align-center">__stars__</div>
+                    <bx_if:rating>
+                        <div class="bx-def-hr bx-def-margin-top"></div>
+                        <div class="bx-review-rating bx-def-align-center">__stars__</div>
+                    </bx_if:rating>
                 </div>
             </div>
         </div>

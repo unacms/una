@@ -1,11 +1,14 @@
-<script language="javascript">
+<script type="text/javascript" language="javascript">
     function checkMQ() {
         //check if mobile or desktop device
         return window.getComputedStyle(document.querySelector('.cd-main-content'), '::before').getPropertyValue('content').replace(/'/g, "").replace(/"/g, "");
     }
 
     $(document).ready(function () {
-        var mq = checkMQ();
+		var mq = checkMQ();
+		if (mq != 'mobile')
+			$("#bx-logo-container").prependTo("#bx-sliding-menu-sys_site .bx-sliding-menu-main-cnt");
+		
         if(mq == 'mobile') {
             // hide toolbar on scrolldown, show - on scroll up
             new Headroom($('#bx-toolbar').get(0), {

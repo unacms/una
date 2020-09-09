@@ -349,5 +349,6 @@
     <string name="_bx_reviews_txt_reviews_num"><![CDATA[Reviews]]></string>
     <string name="_bx_reviews_txt_order_by_reviews"><![CDATA[Most reviews]]></string>
     <string name="_bx_reviews_txt_order_by_rating"><![CDATA[Best overall rating]]></string>
+    <string name="_bx_reviews_txt_user"><![CDATA[User]]></string>
 
 </resources>

@@ -22,9 +22,9 @@ class BxDecorousModule extends BxBaseModTemplateModule
     {
         if(BxDolTemplate::getInstance()->getCode() != $this->_oConfig->getUri())
             return '';
-
+		
     	$sCss = trim(getParam($this->_oConfig->getName() . '_styles_custom'));
-        return !empty($sCss) ? $this->_oTemplate->_wrapInTagCssCode($sCss) : '';
+        return (!empty($sCss) ? $this->_oTemplate->_wrapInTagCssCode($sCss) : '') . $this->_oTemplate->_wrapInTagJs(BX_DOL_URL_MODULES . 'boonex/decorous/template/js/custom.js');
     }
 }
 
