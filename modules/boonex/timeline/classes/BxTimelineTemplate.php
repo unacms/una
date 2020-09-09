@@ -186,7 +186,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     {
         $oModule = $this->getModule();
 
-        list($sContent, $sLoadMore, $sBack, $sEmpty, $iEvent) = $this->getPosts($aParams);
+        list($sContent, $sLoadMore, $sBack, $sEmpty, $iEvent, $bEventsToLoad) = $this->getPosts($aParams);
 
         //--- Add live update
         $oModule->actionResumeLiveUpdate($aParams['type'], $aParams['owner_id']);
@@ -216,6 +216,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'js_content' => $this->getJsCode('view', array(
                 'sObjName' => $sJsObject,
                 'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
+                'bEventsToLoad' => $bEventsToLoad,
             	'oRequestParams' => $aParams
             ), array(
                 'wrap' => true,
@@ -593,7 +594,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $sEmpty = $this->getEmpty($iEvents <= 0 || !$bEvents);
 
-        return array($sContent, $sLoadMore, $sBack, $sEmpty, $iFirst);
+        return array($sContent, $sLoadMore, $sBack, $sEmpty, $iFirst, $bNext);
     }
 
     public function getEmpty($bVisible)
@@ -712,6 +713,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return $this->parseHtmlByName('load_more_auto.html', array(
             'style_prefix' => $sStylePrefix,
             'visible' => ($aParams['view'] == BX_TIMELINE_VIEW_TIMELINE && $bVisible) || ($aParams['view'] == BX_TIMELINE_VIEW_OUTLINE && $bEnabled && $bVisible) ? 'block' : 'none',
+            'loading' => _t('_bx_timeline_txt_loading' . ($bEnabled ? '' : '_complete'))
         ));
     }
 
