@@ -252,6 +252,7 @@
     <string name="_bx_timeline_txt_to"><![CDATA[to]]></string>
     <string name="_bx_timeline_txt_load_more"><![CDATA[Load More]]></string>
     <string name="_bx_timeline_txt_loading"><![CDATA[Loading...]]></string>
+    <string name="_bx_timeline_txt_loading_complete"><![CDATA[Loading complete]]></string>
     <string name="_bx_timeline_txt_or_jump_to"><![CDATA[... or jump to:]]></string>
     <string name="_bx_timeline_txt_jump_to_n_year"><![CDATA[Jump to {0} year]]></string>
     <string name="_bx_timeline_txt_jump_to_recent"><![CDATA[Jump to recent posts]]></string>

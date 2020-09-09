@@ -252,6 +252,7 @@
     <string name="_bx_timeline_txt_to"><![CDATA[в]]></string>
     <string name="_bx_timeline_txt_load_more"><![CDATA[Загрузить ещё]]></string>
     <string name="_bx_timeline_txt_loading"><![CDATA[Загрузка...]]></string>
+    <string name="_bx_timeline_txt_loading_complete"><![CDATA[Загрузка завершена]]></string>
     <string name="_bx_timeline_txt_or_jump_to"><![CDATA[... или перейти к:]]></string>
     <string name="_bx_timeline_txt_jump_to_n_year"><![CDATA[Перейти к {0} году]]></string>
     <string name="_bx_timeline_txt_jump_to_recent"><![CDATA[Перейти к недавним сообщениям]]></string>

@@ -17,6 +17,7 @@ function BxTimelineView(oOptions) {
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'slide' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
     this._sVideosAutoplay = oOptions.sVideosAutoplay == undefined ? 'off' : oOptions.sVideosAutoplay;
+    this._bEventsToLoad = oOptions.bEventsToLoad == undefined ? false : oOptions.bEventsToLoad;
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
 
@@ -181,7 +182,7 @@ BxTimelineView.prototype.initInfiniteScroll = function(oParent)
 {
     var $this = this;
 
-    if(!this._bInfScroll)
+    if(!this._bInfScroll || !this._bEventsToLoad)
         return;
 
     $(window).bind('scroll', function(oEvent) {
