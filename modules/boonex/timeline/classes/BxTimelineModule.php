@@ -331,14 +331,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     function actionGetPosts()
     {
         $aParams = $this->_prepareParamsGet();
-        list($sItems, $sLoadMore, $sBack, $sEmpty) = $this->_oTemplate->getPosts($aParams);
+        list($sItems, $sLoadMore, $sBack, $sEmpty, $iEvent, $bEventsToLoad) = $this->_oTemplate->getPosts($aParams);
 
         echoJson(array(
             'view' => $aParams['view'],
-            'items' => $sItems, 
+            'items' => $sItems,
             'load_more' => $sLoadMore, 
             'back' => $sBack,
             'empty' => $sEmpty,
+            'events_to_load' => $bEventsToLoad,
             'eval' => $this->_oConfig->getJsObjectView($aParams) . "._onGetPosts(oData)"
         ));
     }
