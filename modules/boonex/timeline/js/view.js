@@ -186,7 +186,7 @@ BxTimelineView.prototype.initInfiniteScroll = function(oParent)
         return;
 
     $(window).bind('scroll', function(oEvent) {
-        if($this._bInfScrollBusy || $this._iInfScrollPreloads >= $this._iInfScrollAutoPreloads)
+        if(!$this._bEventsToLoad || $this._bInfScrollBusy || $this._iInfScrollPreloads >= $this._iInfScrollAutoPreloads)
             return;
 
         var iScrollTop = parseInt($(window).scrollTop());
@@ -209,6 +209,7 @@ BxTimelineView.prototype.initInfiniteScroll = function(oParent)
 
         $this._bInfScrollBusy = true;
         $this._getPage(undefined, $this._oRequestParams.start + $this._oRequestParams.per_page, $this._oRequestParams.per_page, function(oData) {
+            $this._bEventsToLoad = oData.events_to_load;
             $this._iInfScrollPreloads += 1;
             $this._bInfScrollBusy = false;
         });
