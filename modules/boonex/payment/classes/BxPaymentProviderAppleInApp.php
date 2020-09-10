@@ -9,35 +9,18 @@
  * @{
  */
 
-define('ANIA_MODE_LIVE', 1);
-define('ANIA_MODE_TEST', 2);
-
 class BxPaymentProviderAppleInApp extends BxBaseModPaymentProvider implements iBxBaseModPaymentProvider
 {
-    protected $_iMode;
-
     function __construct($aConfig)
     {
     	$this->MODULE = 'bx_payment';
 
         parent::__construct($aConfig);
-
-        $this->_aSbsStatuses = array(
-            'incomplete' => BX_PAYMENT_SBS_STATUS_UNPAID, 
-            'incomplete_expired' => BX_PAYMENT_SBS_STATUS_UNPAID, 
-            'trialing' => BX_PAYMENT_SBS_STATUS_TRIAL, 
-            'active' => BX_PAYMENT_SBS_STATUS_ACTIVE, 
-            'past_due' => BX_PAYMENT_SBS_STATUS_UNPAID,
-            'unpaid' => BX_PAYMENT_SBS_STATUS_UNPAID,
-            'canceled' => BX_PAYMENT_SBS_STATUS_CANCELED,
-        );
     }
 
     public function initOptions($aOptions)
     {
     	parent::initOptions($aOptions);
-
-    	$this->_iMode = (int)$this->getOption('mode');
     }
 
     public function initializeCheckout($iPendingId, $aCartInfo, $sRedirect = '')

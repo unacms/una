@@ -17,6 +17,7 @@ function BxTimelineView(oOptions) {
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'slide' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
     this._sVideosAutoplay = oOptions.sVideosAutoplay == undefined ? 'off' : oOptions.sVideosAutoplay;
+    this._bEventsToLoad = oOptions.bEventsToLoad == undefined ? false : oOptions.bEventsToLoad;
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
 
@@ -181,11 +182,11 @@ BxTimelineView.prototype.initInfiniteScroll = function(oParent)
 {
     var $this = this;
 
-    if(!this._bInfScroll)
+    if(!this._bInfScroll || !this._bEventsToLoad)
         return;
 
     $(window).bind('scroll', function(oEvent) {
-        if($this._bInfScrollBusy || $this._iInfScrollPreloads >= $this._iInfScrollAutoPreloads)
+        if(!$this._bEventsToLoad || $this._bInfScrollBusy || $this._iInfScrollPreloads >= $this._iInfScrollAutoPreloads)
             return;
 
         var iScrollTop = parseInt($(window).scrollTop());
@@ -208,6 +209,7 @@ BxTimelineView.prototype.initInfiniteScroll = function(oParent)
 
         $this._bInfScrollBusy = true;
         $this._getPage(undefined, $this._oRequestParams.start + $this._oRequestParams.per_page, $this._oRequestParams.per_page, function(oData) {
+            $this._bEventsToLoad = oData.events_to_load;
             $this._iInfScrollPreloads += 1;
             $this._bInfScrollBusy = false;
         });

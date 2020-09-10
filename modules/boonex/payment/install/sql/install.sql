@@ -246,11 +246,6 @@ SET @iProviderId = LAST_INSERT_ID();
 INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
 (@iProviderId, 'aina_active', 'checkbox', '_bx_payment_aina_active_cpt', '_bx_payment_aina_active_dsc', '', '', '', '', 1),
 (@iProviderId, 'aina_hidden', 'checkbox', '_bx_payment_aina_hidden_cpt', '_bx_payment_aina_hidden_dsc', '', '', '', '', 2),
-(@iProviderId, 'aina_mode', 'select', '_bx_payment_aina_mode_cpt', '_bx_payment_aina_mode_dsc', '1|_bx_payment_aina_mode_live,2|_bx_payment_aina_mode_test', '', '', '', 3),
--- (@iProviderId, 'aina_live_pub_key', 'text', '_bx_payment_aina_live_pub_key_cpt', '_bx_payment_aina_live_pub_key_dsc', '', '', '', '', 4),
--- (@iProviderId, 'aina_live_sec_key', 'text', '_bx_payment_aina_live_sec_key_cpt', '_bx_payment_aina_live_sec_key_dsc', '', '', '', '', 5),
--- (@iProviderId, 'aina_test_pub_key', 'text', '_bx_payment_aina_test_pub_key_cpt', '_bx_payment_aina_test_pub_key_dsc', '', '', '', '', 6),
--- (@iProviderId, 'aina_test_sec_key', 'text', '_bx_payment_aina_test_sec_key_cpt', '_bx_payment_aina_test_sec_key_dsc', '', '', '', '', 7),
 (@iProviderId, 'aina_notify_url', 'value', '_bx_payment_aina_notify_url_cpt', '', '', '', '', '', 8);
 
 -- GRIDS
