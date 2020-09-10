@@ -567,7 +567,8 @@
 	<string name="_adm_bp_txt_page_uri"><![CDATA[URL]]></string>
 	<string name="_adm_bp_txt_page_url"><![CDATA[Link]]></string>
 	<string name="_adm_bp_txt_page_visible_for_levels"><![CDATA[Select Levels]]></string>
-	<string name="_adm_bp_txt_select_page"><![CDATA[Select Page...]]></string>
+  <string name="_adm_bp_txt_page_sticky_columns"><![CDATA[Enable sticky blocks]]></string>
+  <string name="_adm_bp_txt_select_page"><![CDATA[Select Page...]]></string>
 	<string name="_adm_bp_txt_settings_popup"><![CDATA[Settings]]></string>
 	<string name="_adm_bp_txt_visible_for"><![CDATA[Visible for {0}]]></string>
 	<string name="_adm_bp_wrn_page_delete"><![CDATA[Are you sure you want to delete the page?]]></string>
