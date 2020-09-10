@@ -15,10 +15,8 @@
                 $.each($('.content-wrapper-wrp, .cd-side-nav'), function (index, val) {
                     var iCh = $(this).height();
                     var iWh = $(window).height();
-                    if (iCh > iWh) {
-                        if (iCh - $(window).scrollTop() - $(window).height() < 0) {
-                            $(this).css('position', 'sticky').css('top', -iCh + $(window).height());
-                        }
+                    if (iCh - $(window).scrollTop() - $(window).height() < 0) {
+                        $(this).css('position', 'sticky').css('top', -iCh + $(window).height());
                     }
                 });
             });
