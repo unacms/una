@@ -30,6 +30,9 @@ class BxBasePage extends BxDolPage
             $this->_oTemplate = BxDolTemplate::getInstance();
 
 		$this->_sStorage = 'sys_images';
+        
+        $this->_sJsClassName = 'BxDolPage';
+        $this->_sJsObjectName = 'oBxDolPage';
     }
 
     /**
@@ -128,7 +131,36 @@ class BxBasePage extends BxDolPage
             'page_code' => &$sPageCode,
         ));
 
+        $sPageCode .= $this->getJsScript();
+        
         return $sPageCode;
+    }
+    
+    public function getJsClassName()
+    {
+        return $this->_sJsClassName;
+    }
+
+    public function getJsObjectName()
+    {
+        return $this->_sJsObjectName;
+    }
+    
+    function _wrapInTagJsCode($sCode)
+    {
+        return "<script language=\"javascript\">\n<!--\n" . $sCode . "\n-->\n</script>";
+    }
+
+    public function getJsScript()
+    {
+        $sJsObjName = $this->getJsObjectName();
+        $sJsObjClass = $this->getJsClassName();
+        $sCode = "if(window['" . $sJsObjName . "'] == undefined) var " . $sJsObjName . " = new " . $sJsObjClass . "(" . json_encode(array(
+            'sObjName' => $sJsObjName,
+            'isStickyColumns' => isset($this->_aObject['sticky_columns']) && $this->_aObject['sticky_columns'] == 1
+        )) . ");";
+
+        return $this->_wrapInTagJsCode($sCode);
     }
 
     /**
@@ -360,6 +392,8 @@ class BxBasePage extends BxDolPage
      */
     protected function _addJsCss()
     {
+        $this->_oTemplate->addJs('BxDolPage.js');
+        $this->_oTemplate->addCss('page_sticky.css');
         $this->_oTemplate->addCss('page_layouts.css');
     }
 

@@ -972,9 +972,20 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                         'pass' => 'Xss',
                     ),
                 ),
+                'sticky_columns' => array(
+                    'type' => 'switcher',
+                    'name' => 'sticky_columns',
+                    'caption' => _t('_adm_bp_txt_page_sticky_columns'),
+                    'info' => '',
+                    'value' => '1',
+                    'checked' => isset($aPage['sticky_columns']) && $aPage['sticky_columns'] == 1,
+                    'db' => array (
+                        'pass' => 'Int',
+                    )
+                )
             )
         );
-
+        
         $aTypes = array();
         $this->oDb->getTypes(array('type' => 'all'), $aTypes, false);
         foreach($aTypes as $aType)

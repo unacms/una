@@ -135,6 +135,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
                 `tp`.`cache_editable` AS `cache_editable`,
                 `tp`.`inj_head` AS `inj_head`,
                 `tp`.`inj_footer` AS `inj_footer`,
+                `tp`.`sticky_columns` AS `sticky_columns`,
                 `tp`.`deletable` AS `deletable`,
                 `tp`.`override_class_name` AS `override_class_name`,
                 `tp`.`override_class_file` AS `override_class_file`" . $sSelectClause . "
