@@ -95,6 +95,7 @@
 	<string name="_bx_events_page_title_view_profile"><![CDATA[{display_name}]]></string>
 	<string name="_bx_events_page_title_browse"><![CDATA[События]]></string>
 	<string name="_bx_events_page_title_browse_by_author"><![CDATA[События {display_name}]]></string>
+        <string name="_bx_events_page_title_browse_by_context"><![CDATA[События в {display_name}]]></string>
 	<string name="_bx_events_page_title_browse_featured"><![CDATA[Продвинутые события]]></string>
 	<string name="_bx_events_page_title_browse_top"><![CDATA[Лучшие события]]></string>
         <string name="_bx_events_page_title_browse_past"><![CDATA[Прошедшие события]]></string>

@@ -94,16 +94,6 @@ class BxEventsModule extends BxBaseModGroupsModule
     {
         return $this->_serviceBrowse ('past', false, BX_DB_PADDING_DEF, $bDisplayEmptyMsg, $bAjaxPaginate);
     }
-    
-    public function serviceIsEnableForContext($iProfileId = 0)
-    {
-        if ($iProfileId == 0)
-            return false;
-        $CNF = &$this->_oConfig->CNF;
-        if (in_array(BxDolProfile::getInstance($iProfileId)->getModule(), $CNF['ENABLE_FOR_CONTEXT_IN_MODULES']))
-            return true;
-        return false;
-    }
 
     /**
      * @page service Service Calls
