@@ -77,6 +77,8 @@
 	<string name="_bx_groups_acl_action_edit_any_profile"><![CDATA[Редактировать любую группу]]></string>
 	<string name="_bx_groups_acl_action_delete_invites"><![CDATA[Удалять приглашения]]></string>
 
+        <string name="_bx_groups_page_title_sys_entries_in_context"><![CDATA[Группы в контексте]]></string>
+        <string name="_bx_groups_page_title_entries_in_context"><![CDATA[Группы в {display_name}]]></string>
 	<string name="_bx_groups_page_title_sys_joined_entries"><![CDATA[Группы профиля]]></string>
 	<string name="_bx_groups_page_title_joined_entries"><![CDATA[Группы профиля]]></string>
 	<string name="_bx_groups_page_title_sys_create_profile"><![CDATA[Создать группу]]></string>
@@ -94,6 +96,7 @@
 	<string name="_bx_groups_page_title_view_profile"><![CDATA[{display_name}]]></string>
 	<string name="_bx_groups_page_title_browse"><![CDATA[Группы]]></string>
 	<string name="_bx_groups_page_title_browse_by_author"><![CDATA[Группы {display_name}]]></string>
+        <string name="_bx_groups_page_title_browse_by_context"><![CDATA[Группы в {display_name}]]></string>
 	<string name="_bx_groups_page_title_browse_featured"><![CDATA[Продвинутые группы]]></string>
     <string name="_bx_groups_page_title_browse_top"><![CDATA[Популярные группы]]></string>
 	<string name="_bx_groups_page_title_browse_recent"><![CDATA[Новые группы]]></string>
@@ -127,8 +130,11 @@
     <string name="_bx_groups_page_block_title_entries_actions"><![CDATA[Группы - Действия]]></string>
     <string name="_bx_groups_page_block_title_sys_entries_of_author"><![CDATA[Группы автора]]></string>
     <string name="_bx_groups_page_block_title_entries_of_author"><![CDATA[{display_name} - Группы]]></string>
-	<string name="_bx_groups_page_block_title_favorites_of_author"><![CDATA[Избранные группы]]></string>   
+    <string name="_bx_groups_page_block_title_favorites_of_author"><![CDATA[Избранные группы]]></string>   
     <string name="_bx_groups_page_block_title_sys_favorites_of_author"><![CDATA[Избранные группы]]></string>
+    <string name="_bx_groups_page_block_title_entries_in_context_link"><![CDATA[Группы в <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_groups_page_block_title_entries_in_context"><![CDATA[Группы в контексте]]></string>
+    <string name="_bx_groups_page_block_title_sys_entries_in_context"><![CDATA[Группы в контексте]]></string>
 	<string name="_bx_groups_page_block_title_sys_joined_entries"><![CDATA[Участие в группах]]></string>
 	<string name="_bx_groups_page_block_title_joined_entries"><![CDATA[Участие в группах]]></string>
 	<string name="_bx_groups_page_block_title_create_profile"><![CDATA[Создать группу]]></string>
@@ -146,6 +152,7 @@
 	<string name="_bx_groups_page_block_title_profile_friends_link"><![CDATA[<a href="{profile_link}">{display_name}</a> - Друзья]]></string>
 	<string name="_bx_groups_page_block_title_profile_friends"><![CDATA[Друзья]]></string>
 	<string name="_bx_groups_page_block_title_system_profile_friends"><![CDATA[Друзья]]></string>
+        <string name="_bx_groups_page_block_title_entry_context"><![CDATA[Опубликовано в]]></string>
 	<string name="_bx_groups_page_block_title_admins"><![CDATA[Администраторы]]></string>
 	<string name="_bx_groups_page_block_title_fans_link"><![CDATA[Участники группы: <a href="{profile_link}">{display_name}</a>]]></string>
 	<string name="_bx_groups_page_block_title_fans"><![CDATA[Участники]]></string>
@@ -217,6 +224,8 @@
     <string name="_bx_groups_menu_item_title_create_profile"><![CDATA[Группа]]></string>
     <string name="_bx_groups_menu_item_title_system_view_profile_friends"><![CDATA[Друзья]]></string>
     <string name="_bx_groups_menu_item_title_view_profile_friends"><![CDATA[Друзья]]></string>
+    <string name="_bx_groups_menu_item_title_system_view_entries_in_context"><![CDATA[Группы]]></string>
+    <string name="_bx_groups_menu_item_title_view_entries_in_context"><![CDATA[Группы]]></string>
     <string name="_bx_groups_menu_item_title_system_view_joined_groups"><![CDATA[Группы]]></string>
     <string name="_bx_groups_menu_item_title_view_joined_groups"><![CDATA[Группы]]></string>
     <string name="_bx_groups_menu_item_title_system_view_fans"><![CDATA[Участники]]></string>
@@ -321,6 +330,7 @@
     <string name="_bx_groups_search_extended"><![CDATA[Поиск групп]]></string>
     <string name="_bx_groups_search_extended_cmts"><![CDATA[Поиск комментариев к группам]]></string>
 
+    <string name="_bx_groups_txt_all_entries_in"><![CDATA[<a href="{0}">Все группы в {1} ({2})</a>]]></string>
     <string name="_bx_groups_txt_account_pending"><![CDATA[Эта группа ожидает одобрения. Пожалуйста, дождитесь ее активации.]]></string>
     <string name="_bx_groups_txt_account_suspended"><![CDATA[Эта группа заблокирована.]]></string>
     <string name="_bx_groups_txt_N_fans"><![CDATA[{0} участников]]></string>
