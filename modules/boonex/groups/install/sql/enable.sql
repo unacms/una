@@ -38,9 +38,10 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('bx_groups_view_profile', 1, 'bx_groups', '', '_bx_groups_page_block_title_entry_all_actions', 13, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_groups";s:6:"method";s:18:"entity_all_actions";}', 0, 0, 0, 0),
 ('bx_groups_view_profile', 2, 'bx_groups', '', '_bx_groups_page_block_title_profile_info', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:11:\"entity_info\";}', 0, 0, 1, 0),
 ('bx_groups_view_profile', 3, 'bx_groups', '', '_bx_groups_page_block_title_profile_location', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:15:\"entity_location\";}', 0, 0, 0, 0),
-('bx_groups_view_profile', 3, 'bx_groups', '', '_bx_groups_page_block_title_fans', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:4:\"fans\";}', 0, 0, 1, 0),
-('bx_groups_view_profile', 3, 'bx_groups', '', '_bx_groups_page_block_title_admins', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:6:\"admins\";}', 0, 0, 1, 1),
-('bx_groups_view_profile', 3, 'bx_groups', '', '_bx_groups_page_block_title_profile_location', 3, 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:13:\"locations_map\";s:6:\"params\";a:2:{i:0;s:9:\"bx_groups\";i:1;s:12:\"{content_id}\";}s:5:\"class\";s:20:\"TemplServiceMetatags\";}', 0, 0, 1, 2),
+('bx_groups_view_profile', 3, 'bx_groups', '', '_bx_groups_page_block_title_entry_context', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:14:\"entity_context\";}', 0, 0, 1, 1),
+('bx_groups_view_profile', 3, 'bx_groups', '', '_bx_groups_page_block_title_fans', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:4:\"fans\";}', 0, 0, 1, 2),
+('bx_groups_view_profile', 3, 'bx_groups', '', '_bx_groups_page_block_title_admins', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:6:\"admins\";}', 0, 0, 1, 3),
+('bx_groups_view_profile', 3, 'bx_groups', '', '_bx_groups_page_block_title_profile_location', 3, 2147483647, 'service', 'a:4:{s:6:\"module\";s:6:\"system\";s:6:\"method\";s:13:\"locations_map\";s:6:\"params\";a:2:{i:0;s:9:\"bx_groups\";i:1;s:12:\"{content_id}\";}s:5:\"class\";s:20:\"TemplServiceMetatags\";}', 0, 0, 1, 4),
 ('bx_groups_view_profile', 4, 'bx_groups', '', '_bx_groups_page_block_title_profile_description', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:17:\"entity_text_block\";}', 0, 0, 1, 0),
 ('bx_groups_view_profile', 4, 'bx_groups', '', '_bx_groups_page_block_title_profile_comments', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:9:\"bx_groups\";s:6:\"method\";s:15:\"entity_comments\";}', 0, 0, 0, 0);
 
@@ -137,8 +138,14 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 ('bx_groups_search', 1, 'bx_groups', '_bx_groups_page_block_title_search_form_cmts', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:8:"get_form";s:6:"params";a:1:{i:0;a:1:{s:6:"object";s:14:"bx_groups_cmts";}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 0, 3),
 ('bx_groups_search', 1, 'bx_groups', '_bx_groups_page_block_title_search_results_cmts', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_results";s:6:"params";a:1:{i:0;a:2:{s:6:"object";s:14:"bx_groups_cmts";s:10:"show_empty";b:1;}}s:5:"class";s:27:"TemplSearchExtendedServices";}', 0, 1, 0, 4);
 
--- PAGE: joined profiles
+-- PAGE: entries in context
+INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_groups_context', 'groups-context', '_bx_groups_page_title_sys_entries_in_context', '_bx_groups_page_title_entries_in_context', 'bx_groups', 5, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxGroupsPageEntriesInContext', 'modules/boonex/groups/classes/BxGroupsPageEntriesInContext.php');
 
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_groups_context', 1, 'bx_groups', '_bx_groups_page_block_title_sys_entries_in_context', '_bx_groups_page_block_title_entries_in_context_link', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_groups";s:6:"method";s:14:"browse_context";}', 0, 0, 1, 1);
+
+-- PAGE: joined profiles
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_joined_groups', '_bx_groups_page_title_sys_joined', '_bx_groups_page_title_joined', 'bx_groups', 5, 2147483647, 1, 'groups-joined', 'page.php?i=groups-joined', '', '', '', 0, 1, 0, 'BxGroupsPageBrowse', 'modules/boonex/groups/classes/BxGroupsPageBrowse.php');
 
@@ -175,6 +182,8 @@ SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = 'sys
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
 ('sys_home', 1, 'bx_groups', '', '_bx_groups_page_block_title_latest_profiles', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_groups";s:6:"method";s:22:"browse_recent_profiles";}', 1, 0, 0, IFNULL(@iBlockOrder, 0) + 1),
 ('sys_home', 1, 'bx_groups', '_bx_groups_page_block_title_sys_recommended_entries_view_showcase', '_bx_groups_page_block_title_recommended_entries_view_showcase', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_groups";s:6:"method";s:18:"browse_recommended";}', 1, 0, 0, IFNULL(@iBlockOrder, 0) + 2);
+
+
 -- PAGE: service blocks
 SET @iBlockOrder = (SELECT `order` FROM `sys_pages_blocks` WHERE `object` = '' AND `cell_id` = 0 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
@@ -184,6 +193,13 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 ('', 0, 'bx_groups', '_bx_groups_page_block_title_sys_labels_tree', '_bx_groups_page_block_title_labels_tree', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_groups";s:6:"method";s:15:"get_lables_tree";}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 4),
 ('', 0, 'bx_groups', '_bx_groups_page_block_title_sys_groups_browse_by_label', '_bx_groups_page_block_title_groups_browse_by_label', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_groups";s:6:"method";s:15:"browse_by_label";}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 5),
 ('', 0, 'bx_groups', '_bx_groups_page_block_title_sys_labels_breadcrumbs', '_bx_groups_page_block_title_labels_breadcrumbs', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:9:"bx_groups";s:6:"method";s:22:"get_lables_breadcrumbs";}', 0, 1, 1, IFNULL(@iBlockOrder, 0) + 6);
+
+
+ -- PAGES: add page block to profiles modules (trigger* page objects are processed separately upon modules enable/disable)
+INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`, `active`) VALUES
+('trigger_page_group_view_entry', 4, 'bx_groups', '_bx_groups_page_block_title_entries_in_context', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:9:"bx_groups";s:6:"method";s:14:"browse_context";s:6:"params";a:1:{s:10:"context_id";s:12:"{profile_id}";}}', 0, 0, 1, 0);
+
+
 -- MENU
 
 -- MENU: add to site menu
@@ -247,7 +263,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_groups_view_actions_all', 'bx_groups', 'profile-fan-remove', '_bx_groups_menu_item_title_system_leave_group', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 20),
 ('bx_groups_view_actions_all', 'bx_groups', 'profile-subscribe-add', '_bx_groups_menu_item_title_system_subscribe', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 30),
 ('bx_groups_view_actions_all', 'bx_groups', 'profile-subscribe-remove', '_bx_groups_menu_item_title_system_unsubscribe', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 40),
-('bx_groups_view_actions_all', 'bx_groups', 'profile-set-badges', '_sys_menu_item_title_system_set_badges', '', '', '', '', '', '', '', 0, 192, 'a:2:{s:6:"module";s:9:"bx_events";s:6:"method";s:19:"is_badges_avaliable";}', 1, 0, 50),
+('bx_groups_view_actions_all', 'bx_groups', 'profile-set-badges', '_sys_menu_item_title_system_set_badges', '', '', '', '', '', '', '', 0, 192, 'a:2:{s:6:"module";s:9:"bx_groups";s:6:"method";s:19:"is_badges_avaliable";}', 1, 0, 50),
 ('bx_groups_view_actions_all', 'bx_groups', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 200),
 ('bx_groups_view_actions_all', 'bx_groups', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 210),
 ('bx_groups_view_actions_all', 'bx_groups', 'vote', '_sys_menu_item_title_system_va_vote', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 220),
@@ -350,9 +366,9 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('sys_account_dashboard_manage_tools', 'bx_groups', 'groups-administration', '_bx_groups_menu_item_title_system_admt_groups', '_bx_groups_menu_item_title_admt_groups', 'page.php?i=groups-administration', '', '_self', 'users', 'a:2:{s:6:"module";s:9:"bx_groups";s:6:"method";s:27:"get_menu_addon_manage_tools";}', '', 192, 1, 0, @iManageMenuOrder + 1);
 
 -- MENU: add menu item to profiles modules (trigger* menu sets are processed separately upon modules enable/disable)
-
-INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
-('trigger_profile_view_submenu', 'bx_groups', 'joined-groups', '_bx_groups_menu_item_title_system_view_joined_groups', '_bx_groups_menu_item_title_view_joined_groups', 'page.php?i=joined-groups&profile_id={profile_id}', '', '', 'users col-red2', '', 2147483647, 1, 0, 0);
+INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
+('trigger_profile_view_submenu', 'bx_groups', 'joined-groups', '_bx_groups_menu_item_title_system_view_joined_groups', '_bx_groups_menu_item_title_view_joined_groups', 'page.php?i=joined-groups&profile_id={profile_id}', '', '', 'users col-red2', '', 2147483647, '', 1, 0, 0),
+('trigger_group_view_submenu', 'bx_groups', 'groups-context', '_bx_groups_menu_item_title_system_view_entries_in_context', '_bx_groups_menu_item_title_view_entries_in_context', 'page.php?i=groups-context&profile_id={profile_id}', '', '', 'users col-red2', '', 2147483647, 'a:3:{s:6:"module";s:9:"bx_groups";s:6:"method";s:21:"is_enable_for_context";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 1, 0, 0);
 
 -- ACL
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES

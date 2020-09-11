@@ -84,6 +84,12 @@ class BxGroupsSearchResult extends BxBaseModGroupsSearchResult
                 }
                 break;
 
+            case 'context':
+                $oProfileContext = null;
+                if(!$this->_updateCurrentForContext($sMode, $aParams, $oProfileAuthor))
+                    $this->isError = true;
+                break;
+
             case 'joined_entries':
                 $oJoinedProfile = BxDolProfile::getInstance((int)$aParams['joined_profile']);
                 if (!$oJoinedProfile) {

@@ -52,6 +52,8 @@
 	<string name="_bx_groups_acl_action_edit_any_profile"><![CDATA[Edit Any Group]]></string>
   <string name="_bx_groups_acl_action_delete_invites"><![CDATA[Delete Invites]]></string>
 
+        <string name="_bx_groups_page_title_sys_entries_in_context"><![CDATA[Groups in context]]></string>
+        <string name="_bx_groups_page_title_entries_in_context"><![CDATA[Groups in {display_name}]]></string>
 	<string name="_bx_groups_page_title_sys_joined_entries"><![CDATA[Profile Groups]]></string>
 	<string name="_bx_groups_page_title_joined_entries"><![CDATA[Profile Groups]]></string>
 	<string name="_bx_groups_page_title_sys_create_profile"><![CDATA[Create Group]]></string>
@@ -67,6 +69,7 @@
 	<string name="_bx_groups_page_title_view_profile"><![CDATA[{display_name}]]></string>
 	<string name="_bx_groups_page_title_browse"><![CDATA[Groups]]></string>
 	<string name="_bx_groups_page_title_browse_by_author"><![CDATA[Groups of {display_name}]]></string>
+        <string name="_bx_groups_page_title_browse_by_context"><![CDATA[Groups in {display_name}]]></string>
 	<string name="_bx_groups_page_title_browse_featured"><![CDATA[Featured Groups]]></string>
 	<string name="_bx_groups_page_title_browse_top"><![CDATA[Top Groups]]></string>
 	<string name="_bx_groups_page_title_browse_recent"><![CDATA[New Groups]]></string>
@@ -98,8 +101,11 @@
     <string name="_bx_groups_page_block_title_entries_actions"><![CDATA[Groups actions]]></string>
     <string name="_bx_groups_page_block_title_sys_entries_of_author"><![CDATA[Groups of author]]></string>
     <string name="_bx_groups_page_block_title_entries_of_author"><![CDATA[Groups by {display_name}]]></string>
-	<string name="_bx_groups_page_block_title_favorites_of_author"><![CDATA[Favorite Groups]]></string>
+    <string name="_bx_groups_page_block_title_favorites_of_author"><![CDATA[Favorite Groups]]></string>
     <string name="_bx_groups_page_block_title_sys_favorites_of_author"><![CDATA[Favorite Groups]]></string>
+    <string name="_bx_groups_page_block_title_entries_in_context_link"><![CDATA[Groups in <a href="{profile_link}">{display_name}</a>]]></string>
+    <string name="_bx_groups_page_block_title_entries_in_context"><![CDATA[Groups in context]]></string>
+    <string name="_bx_groups_page_block_title_sys_entries_in_context"><![CDATA[Groups in context]]></string>
 	<string name="_bx_groups_page_block_title_sys_joined_entries"><![CDATA[Joined Groups]]></string>
 	<string name="_bx_groups_page_block_title_joined_entries"><![CDATA[Joined Groups]]></string>
 	<string name="_bx_groups_page_block_title_create_profile"><![CDATA[Create Group]]></string>
@@ -113,6 +119,7 @@
 	<string name="_bx_groups_page_block_title_profile_friends_link"><![CDATA[Friends of <a href="{profile_link}">{display_name}</a>]]></string>
 	<string name="_bx_groups_page_block_title_profile_friends"><![CDATA[Friends]]></string>
 	<string name="_bx_groups_page_block_title_system_profile_friends"><![CDATA[Friends]]></string>
+        <string name="_bx_groups_page_block_title_entry_context"><![CDATA[Posted in]]></string>
 	<string name="_bx_groups_page_block_title_admins"><![CDATA[Administrators]]></string>
 	<string name="_bx_groups_page_block_title_fans_link"><![CDATA[Members of <a href="{profile_link}">{display_name}</a>]]></string>
     <string name="_bx_groups_page_block_title_fans"><![CDATA[Members]]></string>
@@ -181,6 +188,8 @@
     <string name="_bx_groups_menu_item_title_create_profile"><![CDATA[Group]]></string>
     <string name="_bx_groups_menu_item_title_system_view_profile_friends"><![CDATA[Friends]]></string>
     <string name="_bx_groups_menu_item_title_view_profile_friends"><![CDATA[Friends]]></string>
+    <string name="_bx_groups_menu_item_title_system_view_entries_in_context"><![CDATA[Groups]]></string>
+    <string name="_bx_groups_menu_item_title_view_entries_in_context"><![CDATA[Groups]]></string>
     <string name="_bx_groups_menu_item_title_system_view_joined_groups"><![CDATA[Groups]]></string>
     <string name="_bx_groups_menu_item_title_view_joined_groups"><![CDATA[Groups]]></string>
     <string name="_bx_groups_menu_item_title_system_view_fans"><![CDATA[Members]]></string>
@@ -265,6 +274,7 @@
     <string name="_bx_groups_search_extended"><![CDATA[Groups Search]]></string>
     <string name="_bx_groups_search_extended_cmts"><![CDATA[Groups Comments Search]]></string>
 
+    <string name="_bx_groups_txt_all_entries_in"><![CDATA[<a href="{0}">All Groups in {1} ({2})</a>]]></string>
     <string name="_bx_groups_txt_account_pending"><![CDATA[This group is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_groups_txt_account_suspended"><![CDATA[This group is suspended.]]></string>
     <string name="_bx_groups_txt_N_fans"><![CDATA[{0} members]]></string>

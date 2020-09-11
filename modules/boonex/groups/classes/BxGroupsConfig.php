@@ -60,6 +60,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'URI_EDIT_ENTRY' => 'edit-group-profile',
             'URI_EDIT_COVER' => 'edit-group-cover',
             'URI_JOINED_ENTRIES' => 'joined-groups',
+            'URI_ENTRIES_BY_CONTEXT' => 'groups-context',
             'URI_MANAGE_COMMON' => 'groups-manage',
 
             'URL_HOME' => 'page.php?i=groups-home',
@@ -191,7 +192,9 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
                 'menu_item_title_leave_group_cancel_request' => '_bx_groups_menu_item_title_leave_group_cancel_request',
                 'menu_item_title_become_fan' => '_bx_groups_menu_item_title_become_fan',
                 'menu_item_title_leave_group' => '_bx_groups_menu_item_title_leave_group',
+                'txt_all_entries_in' => '_bx_groups_txt_all_entries_in',
                 'txt_all_entries_by_author' => '_bx_groups_page_title_browse_by_author',
+                'txt_all_entries_by_context' => '_bx_groups_page_title_browse_by_context',
                 'txt_invitation_popup_title' => '_bx_groups_txt_invite_popup_title',
 				'txt_invitation_popup_text' => '_bx_groups_txt_invite_popup_text',
 				'txt_invitation_popup_accept_button' => '_bx_groups_txt_invite_popup_button_accept',
