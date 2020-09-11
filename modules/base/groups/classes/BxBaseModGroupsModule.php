@@ -99,6 +99,20 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return true;
     }
 
+    public function serviceIsEnableForContext($iProfileId = 0)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sCnfKey = 'ENABLE_FOR_CONTEXT_IN_MODULES';
+        if(empty($iProfileId) || empty($CNF[$sCnfKey]) || !is_array($CNF[$sCnfKey]))
+            return false;
+
+        if(in_array(BxDolProfile::getInstance($iProfileId)->getModule(), $CNF[$sCnfKey]))
+            return true;
+
+        return false;
+    }
+
     /**
      * check if provided profile is member of the group 
      */ 
