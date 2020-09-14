@@ -20,6 +20,7 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_reviews_per_page_for_favorites_lists', '5', @iCategId, '_bx_reviews_option_per_page_for_favorites_lists', 'digit', '', '', '', 17),
 ('bx_reviews_rss_num', '10', @iCategId, '_bx_reviews_option_rss_num', 'digit', '', '', '', 20),
 ('bx_reviews_searchable_fields', 'title,text', @iCategId, '_bx_reviews_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:10:"bx_reviews";s:6:"method";s:21:"get_searchable_fields";}', 30),
+('bx_reviews_use_galery_as_cover', '', @iCategId, '_bx_reviews_option_use_galery_as_cover', 'checkbox', '', '', '', 32),
 ('bx_reviews_auto_activation_for_categories', 'on', @iCategId, '_bx_reviews_option_auto_activation_for_categories', 'checkbox', '', '', '', 35),
 ('bx_reviews_voting_max_stars', '5', @iCategId, '_bx_reviews_option_voting_max_stars', 'digit', '', '', '', 40),
 ('bx_reviews_custom_context_chooser', 'on', @iCategId, '_bx_reviews_option_custom_context_chooser_enable', 'checkbox', '', '', '', 45),

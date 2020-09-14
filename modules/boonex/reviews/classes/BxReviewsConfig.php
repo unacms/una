@@ -94,6 +94,7 @@ class BxReviewsConfig extends BxBaseModTextConfig
             'PARAM_CHARS_SUMMARY_PLAIN_SHORT' => 'bx_reviews_plain_summary_chars_with_thumb',
             'PARAM_NUM_RSS' => 'bx_reviews_rss_num',
             'PARAM_SEARCHABLE_FIELDS' => 'bx_reviews_searchable_fields',
+            'PARAM_USE_GALERY_AS_COVER' => 'bx_reviews_use_galery_as_cover',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_reviews_per_page_browse_showcase',
             'PARAM_PER_PAGE_BROWSE' => 'bx_reviews_per_page_browse',
             'PARAM_MAX_STARS' => 'bx_reviews_voting_max_stars',

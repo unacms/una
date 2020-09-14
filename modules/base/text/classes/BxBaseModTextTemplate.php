@@ -601,6 +601,22 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
 
         // get thumb url
         list($sPhotoThumb, $sPhotoGallery) = $this->getUnitThumbAndGallery($aData);
+		
+		if ($sPhotoGallery == '' && isset($CNF['PARAM_USE_GALERY_AS_COVER']) && getParam($CNF['PARAM_USE_GALERY_AS_COVER']) == 'on'){
+			if(!empty($CNF['OBJECT_STORAGE_PHOTOS'])){
+				$sStorage = $CNF['OBJECT_STORAGE_PHOTOS'];
+				$oStorage = BxDolStorage::getObjectInstance($sStorage); 
+				list($oTranscoder, $oTranscoderPreview) = $this->getAttachmentsImagesTranscoders($sStorage);
+				$aGhostFiles = $oStorage->getGhosts ($this->getModule()->serviceGetContentOwnerProfileId($aData[$CNF['FIELD_ID']]), $aData[$CNF['FIELD_ID']]);
+				if ($aGhostFiles){
+					foreach ($aGhostFiles as $k => $a) {
+						$sPhotoGallery = $oTranscoder->getFileUrl($a['id']);
+						$sPhotoThumb  = $oTranscoderPreview->getFileUrl($a['id']);
+						break; 
+					}
+				}
+			}
+		}
 
         // get entry url
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']]);
