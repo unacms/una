@@ -241,7 +241,7 @@ class BxBaseModNotificationsDb extends BxBaseModGeneralDb
                     'user_id' => $aParams['user_id']
                 );
 
-                $sSelectClause = "`ts`.`active` AS `active_adm`, IF(NOT ISNULL(`tsu`.`active`), `tsu`.`active`, 1) AS `active_pnl`";
+                $sSelectClause = "`ts`.`active` AS `active_adm`, IF(NOT ISNULL(`tsu`.`active`), `tsu`.`active`, `ts`.`value`) AS `active_pnl`";
                 $sJoinClause = "LEFT JOIN `" . $this->_sTableSettings2Users . "` AS `tsu` ON `ts`.`id`=`tsu`.`setting_id` AND `tsu`.`user_id`=:user_id";
                 $sWhereClause = " AND `ts`.`handler_id`=:handler_id AND `ts`.`delivery`=:delivery AND `ts`.`type`=:type";
                 break;
@@ -335,6 +335,27 @@ class BxBaseModNotificationsDb extends BxBaseModGeneralDb
             'active' => (int)$bActive
         ));
     }
+    
+    public function changeSettingById($sField, $mixedValue, $mixedId)
+    {
+        if(!is_array($mixedId))
+            $mixedId = array($mixedId);
+
+        return $this->query("UPDATE `{$this->_sTableSettings}` SET `" . $sField . "`=:value WHERE `id` IN (" . $this->implode_escape($mixedId) . ")", array(
+            'value' => $mixedValue
+        ));
+    }
+
+    public function changeSettingByIdUser($sField, $mixedValue, $iUserId, $mixedSettingId)
+    {
+        if(!is_array($mixedSettingId))
+            $mixedSettingId = array($mixedSettingId);
+
+        return $this->query("UPDATE `{$this->_sTableSettings2Users}` SET `" . $sField . "`=:value WHERE `user_id`=:user_id AND `setting_id` IN (" . $this->implode_escape($mixedSettingId) . ")", array(
+            'user_id' => $iUserId, 
+            'value' => $mixedValue
+        ));
+    }
 
     public function initSettingUser($iUserId)
     {
@@ -347,7 +368,8 @@ class BxBaseModNotificationsDb extends BxBaseModGeneralDb
 
             $this->insertSettingUser(array(
                 'user_id' => $iUserId,
-                'setting_id' => $aSetting['id']
+                'setting_id' => $aSetting['id'],
+                'active' => $aSetting['value']
             ));
         }
 

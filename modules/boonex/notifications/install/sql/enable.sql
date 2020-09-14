@@ -145,8 +145,9 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_notifications_settings_administration', 'checkbox', '', '1%', 0, '', '', 1),
-('bx_notifications_settings_administration', 'switcher', '', '10%', 0, '', '', 2),
-('bx_notifications_settings_administration', 'title', '_bx_ntfs_grid_column_title_title', '89%', 1, '', '', 10),
+('bx_notifications_settings_administration', 'switcher', '_bx_ntfs_grid_column_title_active', '10%', 0, '', '', 2),
+('bx_notifications_settings_administration', 'title', '_bx_ntfs_grid_column_title_title', '79%', 1, '', '', 10),
+('bx_notifications_settings_administration', 'value', '_bx_ntfs_grid_column_title_value', '10%', 0, '', '', 20),
 
 ('bx_notifications_settings_common', 'checkbox', '', '1%', 0, '', '', 1),
 ('bx_notifications_settings_common', 'switcher', '', '10%', 0, '', '', 2),

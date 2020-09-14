@@ -99,6 +99,8 @@
     <string name="_bx_ntfs_alert_action_connection_added"><![CDATA[добавить связь]]></string>	
 
     <string name="_bx_ntfs_txt_msg_no_results"><![CDATA[Пусто]]></string>
+    <string name="_bx_ntfs_txt_err_nothing_changed"><![CDATA[Ничего не изменилось.]]></string>
+    <string name="_bx_ntfs_txt_err_cannot_perform"><![CDATA[Невозможно выполнить действие.]]></string>
     <string name="_bx_ntfs_txt_object_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> - {entry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
     <string name="_bx_ntfs_txt_object_added_in_context"><![CDATA[<b class="bx-ntfs-content-profile">{object_owner_name}</b> - {entry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b> в <b class="bx-ntfs-content-profile">{owner_name}</b>]]></string>
     <string name="_bx_ntfs_txt_object_publish_failed"><![CDATA[Ошибка при публикации: {entry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
@@ -115,9 +117,11 @@
 <p> </p>
 {email_footer}]]></string>
 
+    <string name="_bx_ntfs_grid_column_title_active"><![CDATA[Включено]]></string>
     <string name="_bx_ntfs_grid_column_title_unit"><![CDATA[Модуль]]></string>
     <string name="_bx_ntfs_grid_column_title_type"><![CDATA[Тип]]></string>
     <string name="_bx_ntfs_grid_column_title_title"><![CDATA[Оповещение]]></string>
     <string name="_bx_ntfs_grid_column_title_title_warning"><![CDATA[Значение данной настройки не корректно. Рекомендуется вкл\выкл настройку и обновить страницу.]]></string>
+    <string name="_bx_ntfs_grid_column_title_value"><![CDATA[Значение по умолчанию]]></string>
     <string name="_bx_ntfs_grid_action_title_deactivate"><![CDATA[Отключить]]></string>
 </resources>

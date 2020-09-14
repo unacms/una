@@ -47,6 +47,7 @@ CREATE TABLE IF NOT EXISTS `bx_notifications_settings` (
   `delivery` enum('site','email','push') NOT NULL DEFAULT 'site',
   `type` enum('personal','follow_member','follow_context','other') NOT NULL DEFAULT 'personal',
   `title` varchar(64) NOT NULL default '',
+  `value` tinyint(4) NOT NULL default '1',
   `active` tinyint(4) NOT NULL default '1',
   `order` int(11) NOT NULL default '0',
   PRIMARY KEY (`id`),

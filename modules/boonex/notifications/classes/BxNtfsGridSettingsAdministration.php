@@ -80,6 +80,29 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
     {
         parent::performActionEnable();
     }
+    
+    public function performActionChangeValue()
+    {
+        $aIds = bx_get('ids');
+        if(empty($aIds) || !is_array($aIds))
+            return echoJson(array());
+
+        $iId = array_shift($aIds);
+        $iValue = $this->_switcherChecked2State((int)bx_get('checked'));
+
+        if(!$this->_bGrouped)
+            $mixedResult = $this->_oModule->_oDb->updateSetting(array('value' => $iValue), array('id' => $iId));
+        else 
+            $mixedResult = $this->_oModule->_changeSettingsValueLike($iId, 'value', $iValue, $this->_bAdministration);
+
+        $aResult = array();
+        if($mixedResult === false)
+            $aResult = array('msg' => _t('_bx_ntfs_txt_err_cannot_perform'));
+        else if((int)$mixedResult == 0)
+            $aResult = array('msg' => _t('_bx_ntfs_txt_err_nothing_changed'));
+
+        return echoJson($aResult);
+    }
 
     protected function _enable ($mixedId, $isChecked)
     {
@@ -97,12 +120,30 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
         return parent::_getFilterControls();
     }
 
-    protected function _getRowHead()
+    protected function _getCellValue($mixedValue, $sKey, $aField, $aRow)
     {
-        if($this->_bGrouped)
-            return '';
+        $sAttr = $this->_convertAttrs(
+            $aField, 'attr_cell',
+            'bx-def-padding-sec-bottom bx-def-padding-sec-top',
+            isset($aField['width']) ? 'width:' . $aField['width'] : false
+        );
 
-        return parent::_getRowHead();
+        $oForm = new BxTemplFormView(array(), $this->_oTemplate);
+        $oForm->addCssJs();
+        $aInput = array(
+            'type' => 'switcher',
+            'name' => $this->_sObject . '_change_value_' . $aRow[$this->_aOptions['field_id']],
+            'caption' => '',
+            'attrs' => array (
+                'bx_grid_action_single' => 'change_value',
+                'bx_grid_action_confirm' => '',
+                'bx_grid_action_data' => $aRow[$this->_aOptions['field_id']],
+            ),
+            'value' => $aRow[$this->_aOptions['field_id']],
+            'checked' => $this->_isSwitcherOn($mixedValue, $sKey, $aField, $aRow),
+        );
+        $sSwitcher = $oForm->genInput($aInput);
+        return '<td ' . $sAttr . '>' . $sSwitcher . '</td>';
     }
 
     protected function _getCellUnit($mixedValue, $sKey, $aField, $aRow)

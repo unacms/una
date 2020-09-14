@@ -99,6 +99,8 @@
     <string name="_bx_ntfs_alert_action_connection_added"><![CDATA[add connection]]></string>
 
     <string name="_bx_ntfs_txt_msg_no_results"><![CDATA[Empty]]></string>
+    <string name="_bx_ntfs_txt_err_nothing_changed"><![CDATA[Nothing was changed.]]></string>
+    <string name="_bx_ntfs_txt_err_cannot_perform"><![CDATA[Cannot perform the action.]]></string>
     <string name="_bx_ntfs_txt_object_added"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> added a {entry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
     <string name="_bx_ntfs_txt_object_added_in_context"><![CDATA[<b class="bx-ntfs-content-profile">{object_owner_name}</b> added a {entry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b> in <b class="bx-ntfs-content-profile">{owner_name}</b>]]></string>
     <string name="_bx_ntfs_txt_object_publish_failed"><![CDATA[Failed to publish your {entry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
@@ -115,9 +117,11 @@
 <p> </p>
 {email_footer}]]></string>
 
+    <string name="_bx_ntfs_grid_column_title_active"><![CDATA[Active]]></string>
     <string name="_bx_ntfs_grid_column_title_unit"><![CDATA[Module]]></string>
     <string name="_bx_ntfs_grid_column_title_type"><![CDATA[Type]]></string>
     <string name="_bx_ntfs_grid_column_title_title"><![CDATA[Notification]]></string>
     <string name="_bx_ntfs_grid_column_title_title_warning"><![CDATA[The setting's value is corrupted. It is recommended to enable/disable it and reload the page.]]></string>
+    <string name="_bx_ntfs_grid_column_title_value"><![CDATA[Default value]]></string>
     <string name="_bx_ntfs_grid_action_title_deactivate"><![CDATA[Deactivate]]></string>
 </resources>
