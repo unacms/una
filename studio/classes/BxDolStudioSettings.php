@@ -306,6 +306,7 @@ class BxDolStudioSettings extends BxTemplStudioPage
             }
         }
 
+        $this->clearCache();
         return $this->getJsResult('_adm_stg_scs_save', true, false, '', $sEvalRenewToken);
     }
 
