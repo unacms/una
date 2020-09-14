@@ -29,6 +29,9 @@ class BxAlbumsMenuViewActionsMedia extends BxAlbumsMenuViewActions
         $this->_iMediaId = (int)$iMediaId;
         $this->_aMediaInfo = $this->_oModule->_oDb->getMediaInfoById($this->_iMediaId);
         if($this->_aMediaInfo) {
+            $this->_sJsObjectMoreAuto .= $this->_iMediaId;
+            $this->_aHtmlIds['main'] .= '-' . $this->_iMediaId;
+
             $this->addMarkers(array('media_id' => (int)$this->_iMediaId));
 
             $this->_iContentId = (int)$this->_aMediaInfo['content_id'];
