@@ -580,10 +580,57 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
 
         return array('form' => $oForm->getCode(), 'form_id' => $oForm->id);
     }
+    
+    public function getEntryImageData($aContentInfo, $sField = 'FIELD_THUMB', $aTranscoders = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+        
+        $mResult = parent::getEntryImageData($aContentInfo, $sField, $aTranscoders);
+        if ($mResult === false &&  isset($CNF['PARAM_USE_GALERY_AS_COVER']) && getParam($CNF['PARAM_USE_GALERY_AS_COVER']) == 'on'){
+            if(!empty($CNF['OBJECT_STORAGE_PHOTOS']) && !empty($CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS'])){
+				$sStorage = $CNF['OBJECT_STORAGE_PHOTOS'];
+				$oStorage = BxDolStorage::getObjectInstance($sStorage); 
+				$aGhostFiles = $oStorage->getGhosts ($this->serviceGetContentOwnerProfileId($aContentInfo[$CNF['FIELD_ID']]), $aContentInfo[$CNF['FIELD_ID']]);
+				if ($aGhostFiles){
+					foreach ($aGhostFiles as $k => $a) {
+                        return array('id' => $a['id'], 'transcoder' => $CNF['OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS']);
+					}
+				}
+                
+			}
+        }
+        
+        return $mResult;
+    }
 
     
     // ====== PROTECTED METHODS
+    
+    protected function _getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+        $aResults = parent::_getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
+        if (count($aResults) == 0 && isset($CNF['PARAM_USE_GALERY_AS_COVER']) && getParam($CNF['PARAM_USE_GALERY_AS_COVER']) == 'on'){
+            $aResults = $this->_getImagesForTimelinePostAttachInner($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
+            if (count($aResults) > 1){
+                $aResults = array_slice($aResults, 0, 1);
+            }
+        }
+        return $aResults;
+    }
+
     protected function _getImagesForTimelinePostAttach($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+        $aTmp = parent::_getImagesForTimelinePost($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
+        $aResults = $this->_getImagesForTimelinePostAttachInner($aEvent, $aContentInfo, $sUrl, $aBrowseParams);
+        if (count($aTmp) == 0 && count($aResults) > 0 && isset($CNF['PARAM_USE_GALERY_AS_COVER']) && getParam($CNF['PARAM_USE_GALERY_AS_COVER']) == 'on'){
+            $aResults = array_slice($aResults, 1);
+        }
+        return $aResults;
+    }
+    
+    protected function _getImagesForTimelinePostAttachInner($aEvent, $aContentInfo, $sUrl, $aBrowseParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
 
@@ -612,7 +659,6 @@ class BxBaseModTextModule extends BxBaseModGeneralModule implements iBxDolConten
                 'src_orig' => $oStorage->getFileUrlById($a['id']),
             );
         }
-
         return $aResults;
     }
 
