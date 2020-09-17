@@ -149,6 +149,8 @@ define('BX_PAGE_TYPE_DEFAULT_WO_HF', 2); ///< clear page, without any headers an
  */
 class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 {
+    protected static $_sColorClassPrefix = 'col-';
+    protected static $_sColorClassPrefixBg = 'bg-col-';
     protected static $_aColors = array(
     	'red1' => array(216, 9, 96), 
     	'red1-dark' => array(194, 7, 86), 
@@ -453,16 +455,42 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         return get_class($this);
     }
 
+    public static function getColorPalette()
+    {
+        $aResult = self::$_aColors;
+
+        bx_alert('system', 'get_color_palette', 0, false, array(
+            'override_result' => &$aResult
+        ));
+
+        if($aResult != self::$_aColors) {
+            $oTemplate = self::getInstance();
+            foreach($aResult as $sName => $aRgb) {
+                $sRgb = 'rgb(' . trim(implode(', ', $aRgb)) . ') !important';
+
+                $oTemplate->addCssStyle('.' . self::$_sColorClassPrefix . $sName, array(
+                    'color' => $sRgb
+                ));
+                $oTemplate->addCssStyle('.' . self::$_sColorClassPrefixBg . $sName, array(
+                    'background-color' => $sRgb
+                ));
+            }
+        }
+
+        return $aResult;
+    }
+
     public static function getColorCode($mixedName = false, $fOpacity = false)
     {
-        $aClasses = array_keys(self::$_aColors);
+        $aPalette = self::getColorPalette();
+        $aClasses = array_keys($aPalette);
 
         if($mixedName === false || (is_string($mixedName) && !is_numeric($mixedName) && !in_array($mixedName, $aClasses)))
             $mixedName = $aClasses[rand(0, count($aClasses) - 1)];
         else if(is_numeric($mixedName))
             $mixedName = $aClasses[(int)$mixedName % count($aClasses)];
 
-        $aColor = self::$_aColors[$mixedName];
+        $aColor = $aPalette[$mixedName];
         if($fOpacity !== false && is_numeric($fOpacity))
             $aColor[] = $fOpacity;
 
@@ -471,7 +499,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
     public static function getColorClass($sType = BX_DOL_COLOR_FT, $sName = '')
     {
-        $aClasses = array_keys(self::$_aColors);
+        $aClasses = array_keys(self::getColorPalette());
 
         if(empty($sName) || !in_array($sName, $aClasses))
             $sName = $aClasses[rand(0, count($aClasses) - 1)];
@@ -479,11 +507,11 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $sPrefix = '';
         switch ($sType) {
             case BX_DOL_COLOR_FT:
-                $sPrefix = 'col-';
+                $sPrefix = self::$_sColorClassPrefix;
                 break;
 
             case BX_DOL_COLOR_BG:
-                $sPrefix = 'bg-col-';
+                $sPrefix = self::$_sColorClassPrefixBg;
                 break;
         }
 
