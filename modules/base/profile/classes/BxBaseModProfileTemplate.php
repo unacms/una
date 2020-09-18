@@ -135,7 +135,9 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         if(empty($sCoverUrl))
             $sCoverUrl = $this->getImageUrl('cover.svg');
 
-        $aTmplVarsMeta = $this->getSnippetMenuVars ($iProfile, $bPublic);
+        $aTmplVarsMeta = array();
+        if(substr($sTemplate, 0, 8) != 'unit_wo_')
+            $aTmplVarsMeta = $this->getSnippetMenuVars ($iProfile, $bPublic);
 
         return array_merge(array (
             'class' => $this->_getUnitClass($aData, $sTemplate),
