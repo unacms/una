@@ -46,25 +46,25 @@ class BxBaseModGroupsPageEntry extends BxBaseModProfilePageEntry
     public function getCode ()
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
+
         $sRv = '';
-        if (bx_get('key')){
-            $sKey = bx_get('key');
+        $sKey = '';
+        if(!empty($CNF['TABLE_INVITES']) && ($sKey = bx_get('key')) !== false) {
             $sId = $this->_oModule->getName() . '_popup_invite';
-            
+
             $mixedInvited = $this->_oModule->isInvited($sKey, $this->_oProfile->id());
-            if ($mixedInvited === true){
+            if ($mixedInvited === true) {
                 $sRv = $this->_oModule->_oTemplate->parseHtmlByName('popup_invite.html', array(
                     'popup_id' => $sId,
-					'text' => _t($CNF['T']['txt_invitation_popup_text']),
-					'button_accept' => _t($CNF['T']['txt_invitation_popup_accept_button']),
-					'button_decline' => _t($CNF['T']['txt_invitation_popup_decline_button']),
-						
+                    'text' => _t($CNF['T']['txt_invitation_popup_text']),
+                    'button_accept' => _t($CNF['T']['txt_invitation_popup_accept_button']),
+                    'button_decline' => _t($CNF['T']['txt_invitation_popup_decline_button']),
                 ));
             }
-            else{
+            else
                 $sRv = $mixedInvited;
-            }
         }
+
         $this->_oTemplate->addJs(array('invite_popup.js'));
         return ($sRv != '' ? $this->_oModule->_oTemplate->getJsCode('invite_popup', array(
             'sPopupId' => $sId,

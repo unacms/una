@@ -126,8 +126,10 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
             $sCoverUrl = BxDolTranscoder::getObjectInstance(BX_DOL_TRANSCODER_OBJ_COVER_UNIT_PROFILE)->getFileUrlById($iCoverId);
         if(empty($sCoverUrl))
             $sCoverUrl = $this->getImageUrl('cover.svg');
-        
-        $aTmplVarsMeta = $this->getSnippetMenuVars ($iProfile, $bPublic);
+
+        $aTmplVarsMeta = array();
+        if(substr($sTemplate, 0, 8) != 'unit_wo_')
+            $aTmplVarsMeta = $this->getSnippetMenuVars ($iProfile, $bPublic);
 
         return array_merge(array (
             'class' => $this->_getUnitClass($aData, $sTemplate),

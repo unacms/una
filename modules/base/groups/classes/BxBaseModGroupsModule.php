@@ -612,14 +612,16 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
     public function serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction = false, $iProfileId = false)
     {
+        $CNF = &$this->_oConfig->CNF;
+
         $bInvited = false;
-        if (bx_get('key')){
-            $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->getName());
+        if(!empty($CNF['TABLE_INVITES']) && bx_get('key')){
+            $oGroupProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$CNF['FIELD_ID']], $this->getName());
             $mixedInvited = $this->isInvited(bx_get('key'), $oGroupProfile->id());
-            if ($mixedInvited === true)
+            if($mixedInvited === true)
                 $bInvited = true;
         }
-        
+
         if ($this->isFan($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $iProfileId) || $bInvited)
             return CHECK_ACTION_RESULT_ALLOWED;
 
