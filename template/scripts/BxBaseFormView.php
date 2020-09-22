@@ -407,14 +407,11 @@ BLAH;
         if (null === $sValue)
             return '';
 
-        $sCaption = isset($aInput['caption']) ? bx_process_output($aInput['caption']) : '';
-
-        return <<<EOS
-            <div class="bx-form-row-view-wrapper bx-form-row-view-wrapper-{$aInput['type']} bx-def-padding-sec-top">
-                <div class="bx-form-row-view-caption">{$sCaption}:</div>
-                <div class="bx-form-row-view-value">{$sValue}</div>
-            </div>
-EOS;
+        return $this->oTemplate->parseHtmlByName('form_view_row.html', array(
+            'type' => $aInput['type'], 
+            'caption' => isset($aInput['caption']) ? bx_process_output($aInput['caption']) : '',
+            'value' => $sValue
+        ));
     }
 
     /**
@@ -585,30 +582,62 @@ EOS;
         $sInput = $this->genInput($aInput);
         if(isset($aInput['error_updated']) && $aInput['error_updated'] === true)
             $sErrorIcon = $this->genErrorIcon(empty($aInput['error']) ? '' : $aInput['error']);
+        if(empty($sErrorIcon)) 
+            $sErrorIcon = '';
 
-        $sCaptionCode = $sCaption ? '<div class="bx-form-caption' . $sClassOneLineCaption . '">' . $sCaption . $sRequired . '</div>' : '';
-        $sInputCode = $this->genWrapperInput($aInput, $sInput);
+        $aTmplVarsRow = array(
+            'bx_if:show_caption' => array(
+                'condition' => !empty($sCaption),
+                'content' => array(
+                    'class_caption' => $sClassOneLineCaption,
+                    'caption' => $sCaption,
+                    'required' => $sRequired
+                )
+            ),
+            'class_value' => $sClassAdd . $sClassOneLineValue,
+            'value' => $this->genWrapperInput($aInput, $sInput),
+            'info' => $sInfoIcon,
+            'error' => $sErrorIcon,
+        );
 
-        if (empty($sInfoIcon)) $sInfoIcon = '';
-        if (empty($sInputCode)) $sInputCode = '';
-        if (empty($sErrorIcon)) $sErrorIcon = '';
-
-        $sValueCode = '<div class="bx-form-value bx-clearfix' . $sClassAdd . $sClassOneLineValue . '">' . $sInputCode . '</div>';
-
-        if ($isOneLine)
-            $sCode = $sValueCode . $sCaptionCode;
-        else
-            $sCode = $sCaptionCode . $sValueCode;
-
-        return '<div ' . $sTrAttrs . '><div class="bx-form-element">' . $sCode . '</div>' . $sInfoIcon . $sErrorIcon . '</div>';
+        return $this->oTemplate->parseHtmlByName('form_row_standard.html', array(
+            'tr_attrs' => $sTrAttrs,
+            'bx_if:show_one_line' => array(
+                'condition' => $isOneLine,
+                'content' => $aTmplVarsRow
+            ),
+            'bx_if:show_lined' => array(
+                'condition' => !$isOneLine,
+                'content' => $aTmplVarsRow
+            ),
+            'info' => $sInfoIcon,
+            'error' => $sErrorIcon
+        ));
     }
-
 
     function genWrapperInput($aInput, $sContent)
     {
-        $sAttr = isset($aInput['attrs_wrapper']) && is_array($aInput['attrs_wrapper']) ? bx_convert_array2attrs($aInput['attrs_wrapper']) : '';
+        $sClass = "";
+        if(isset($aInput['html']) && $aInput['html'] && $this->isHtmlEditor($aInput['html'], $aInput))
+            $sClass .= ' bx-form-input-wrapper-html';
 
-        return "<div class=\"bx-form-input-wrapper bx-form-input-wrapper-{$aInput['type']}" . ((isset($aInput['html']) && $aInput['html'] && $this->isHtmlEditor($aInput['html'], $aInput)) ? ' bx-form-input-wrapper-html' : '') . "\" $sAttr>$sContent</div>";
+        $sAttrs = "";
+        if(isset($aInput['attrs_wrapper']) && is_array($aInput['attrs_wrapper'])) {
+            if(!empty($aInput['attrs_wrapper']['class'])) {
+                $sClass .= ' ' . trim($aInput['attrs_wrapper']['class']);
+
+                unset($aInput['attrs_wrapper']['class']);
+            }
+
+            $sAttrs = bx_convert_array2attrs($aInput['attrs_wrapper']);
+        }
+
+        return $this->oTemplate->parseHtmlByName('form_input_wrapper.html', array(
+            'type' => $aInput['type'],
+            'class' => $sClass,
+            'attrs' => $sAttrs,
+            'content' => $sContent
+        ));
     }
 
     /**
