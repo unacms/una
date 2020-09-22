@@ -123,6 +123,7 @@ class BxReviewsConfig extends BxBaseModTextConfig
             'OBJECT_REPORTS' => 'bx_reviews',
             'OBJECT_VIEWS' => 'bx_reviews',
             'OBJECT_VOTES' => 'bx_reviews',
+            'OBJECT_VOTES_STARS' => 'bx_reviews_stars',
             'OBJECT_REACTIONS' => 'bx_reviews_reactions',
             'OBJECT_SCORES' => 'bx_reviews',
             'OBJECT_FAVORITES' => 'bx_reviews',

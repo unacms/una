@@ -99,6 +99,20 @@ class BxReviewsModule extends BxBaseModTextModule
         return '';
     }
 
+    /*
+     * Stars Rating block for rate by users
+     **/
+    public function serviceEntityRating($iContentId = 0) {
+        if (!$iContentId) $iContentId = bx_process_input(bx_get('id'), BX_DATA_INT);
+
+        if ($iContentId) {
+            $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+            if (!$aContentInfo) return '';
+            return $this->_oTemplate->entryRating($aContentInfo);
+        }
+        return '';
+    }
+
 
     /*
      * Reviewed content block for module homepage
