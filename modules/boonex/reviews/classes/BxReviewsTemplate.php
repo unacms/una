@@ -260,6 +260,23 @@ class BxReviewsTemplate extends BxBaseModTextTemplate
             'menu' => $oMenu,
         ];
     }
+
+    public function entryRating($aData)
+    {
+        $CNF = &$this->getModule()->_oConfig->CNF;
+
+    	$sVotes = '';
+        $oVotes = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES_STARS'], $aData[$CNF['FIELD_ID']]);
+        if($oVotes) {
+			$sVotes = $oVotes->getElementBlock(array('show_counter' => true, 'show_legend' => true));
+			if(!empty($sVotes))
+				$sVotes = $this->parseHtmlByName('entry-rating.html', array(
+		    		'content' => $sVotes,
+		    	));
+        }
+
+    	return $sVotes;
+    }
 }
 
 /** @} */

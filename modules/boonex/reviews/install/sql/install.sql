@@ -16,6 +16,8 @@ CREATE TABLE IF NOT EXISTS `bx_reviews_reviews` (
   `views` int(11) NOT NULL default '0',
   `rate` float NOT NULL default '0',
   `votes` int(11) NOT NULL default '0',
+  `srate` float NOT NULL default '0',
+  `svotes` int(11) NOT NULL default '0',
   `rrate` float NOT NULL default '0',
   `rvotes` int(11) NOT NULL default '0',
   `score` int(11) NOT NULL default '0',
@@ -188,6 +190,25 @@ CREATE TABLE IF NOT EXISTS `bx_reviews_votes_track` (
   PRIMARY KEY (`id`),
   KEY `vote` (`object_id`, `author_nip`)
 );
+
+CREATE TABLE IF NOT EXISTS `bx_reviews_svotes` (
+  `object_id` int(11) NOT NULL default '0',
+  `count` int(11) NOT NULL default '0',
+  `sum` int(11) NOT NULL default '0',
+  UNIQUE KEY `object_id` (`object_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_reviews_svotes_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `author_nip` int(11) unsigned NOT NULL default '0',
+  `value` tinyint(4) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  KEY `vote` (`object_id`, `author_nip`)
+);
+
 
 CREATE TABLE IF NOT EXISTS `bx_reviews_reactions` (
   `object_id` int(11) NOT NULL default '0',
@@ -556,6 +577,7 @@ INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `Char
 -- VOTES
 INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
 ('bx_reviews', 'bx_reviews_votes', 'bx_reviews_votes_track', '604800', '1', '1', '0', '1', 'bx_reviews_reviews', 'id', 'author', 'rate', 'votes', '', ''),
+('bx_reviews_stars', 'bx_reviews_svotes', 'bx_reviews_svotes_track', '604800', '1', '5', '0', '1', 'bx_reviews_reviews', 'id', 'author', 'srate', 'svotes', 'BxReviewsVoteStars', 'modules/boonex/reviews/classes/BxReviewsVoteStars.php'),
 ('bx_reviews_reactions', 'bx_reviews_reactions', 'bx_reviews_reactions_track', '604800', '1', '1', '1', '1', 'bx_reviews_reviews', 'id', 'author', 'rrate', 'rvotes', 'BxTemplVoteReactions', ''),
 ('bx_reviews_poll_answers', 'bx_reviews_polls_answers_votes', 'bx_reviews_polls_answers_votes_track', '604800', '1', '1', '0', '1', 'bx_reviews_polls_answers', 'id', 'author_id', 'rate', 'votes', 'BxReviewsVotePollAnswers', 'modules/boonex/reviews/classes/BxReviewsVotePollAnswers.php');
 
