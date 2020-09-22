@@ -644,8 +644,7 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
             }
         }
 
-        // generate html
-        return array (
+        $aTmplVars = array (
             'class' => $this->_getUnitClass($aData,(isset($aParams['template_name']) ? $aParams['template_name'] : '')),
             'id' => $aData[$CNF['FIELD_ID']],
             'content_url' => $sUrl,
@@ -687,6 +686,12 @@ class BxBaseModTextTemplate extends BxBaseModGeneralTemplate
                 ),
             ),
         );
+
+        if(isset($aParams['template_vars']) && is_array($aParams['template_vars']))
+            $aTmplVars = array_merge($aTmplVars, $aParams['template_vars']);
+
+        // generate html
+        return $aTmplVars;
     }
 
     protected function getAttachmentsImagesTranscoders ($sStorage = '')
