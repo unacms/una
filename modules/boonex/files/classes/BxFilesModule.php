@@ -19,31 +19,6 @@ class BxFilesModule extends BxBaseModTextModule
         parent::__construct($aModule);
     }
 
-    /**
-     * Display entries of the author
-     * @return HTML string
-     */
-    public function serviceBrowseGroupAuthor ($iProfileId = 0, $aParams = array())
-    {
-        if (!$iProfileId)
-            $iProfileId = bx_process_input(bx_get('profile_id'), BX_DATA_INT);
-        if (!$iProfileId)
-            return '';
-        if (!($oGroupProfile = BxDolProfile::getInstance($iProfileId)))
-            return '';
-        if (!BxDolService::call($oGroupProfile->getModule(), 'is_group_profile'))
-            return '';
-
-        $bDisplayEmptyMsg = true;
-        if(isset($aParams['empty_message'])) {
-            $bDisplayEmptyMsg = (bool)$aParams['empty_message'];
-            unset($aParams['empty_message']);
-        }
-
-        return $this->_serviceBrowse ('group_author', array_merge(array('author' => $iProfileId), $aParams), BX_DB_PADDING_DEF, $bDisplayEmptyMsg);
-    }
-
-
     public function serviceIsAllowedAddContentToProfile($iGroupProfileId)
     {
         if (!$iGroupProfileId || !($oProfile = BxDolProfile::getInstance((int)$iGroupProfileId)))

@@ -128,7 +128,6 @@
 	<string name="_bx_files_page_block_title_entry_info"><![CDATA[Информация]]></string>
 	<string name="_bx_files_page_block_title_my_entries"><![CDATA[Мои файлы]]></string>
 	<string name="_bx_files_page_block_title_entry_file_preview"><![CDATA[Предварительный просмотр файла]]></string>
-	<string name="_bx_files_page_block_title_group_entries"><![CDATA[Файлы]]></string>
 	<string name="_bx_files_page_title_sys_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_files_page_title_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_files_page_block_title_search_form"><![CDATA[Форма поиска]]></string>

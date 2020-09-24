@@ -108,17 +108,10 @@ INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module
 
 INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
 ('bx_files_author', 1, 'bx_files', '', '_bx_files_page_block_title_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_files\";s:6:\"method\";s:18:\"my_entries_actions\";}', 0, 0, 1, 1),
-('bx_files_author', 1, 'bx_files', '_bx_files_page_block_title_sys_favorites_of_author', '_bx_files_page_block_title_favorites_of_author', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:8:\"bx_files\";s:6:\"method\";s:15:\"browse_favorite\";s:6:"params";a:1:{i:0;s:12:"{profile_id}";}}', 0, 1, 1, 2),
-('bx_files_author', 1, 'bx_files', '_bx_files_page_block_title_sys_entries_of_author', '_bx_files_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_files\";s:6:\"method\";s:13:\"browse_author\";}', 0, 0, 1, 3);
+('bx_files_author', 1, 'bx_files', '_bx_files_page_block_title_sys_favorites_of_author', '_bx_files_page_block_title_favorites_of_author', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_files";s:6:"method";s:21:"browse_favorite_lists";s:6:"params";a:2:{s:10:"profile_id";s:12:"{profile_id}";s:6:"params";a:3:{s:9:"unit_view";s:8:"showcase";s:13:"empty_message";b:0;s:13:"ajax_paginate";b:0;}}}', 0, 1, 1, 2),
+('bx_files_author', 1, 'bx_files', '_bx_files_page_block_title_sys_entries_of_author', '_bx_files_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_files\";s:6:\"method\";s:13:\"browse_author\";}', 0, 0, 1, 3),
+('bx_files_author', 1, 'bx_files', '_bx_files_page_block_title_sys_entries_in_context', '_bx_files_page_block_title_entries_in_context', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_files";s:6:"method";s:14:"browse_context";s:6:"params";a:2:{s:10:"profile_id";s:12:"{profile_id}";i:0;a:1:{s:13:"empty_message";b:0;}}}', 0, 0, 1, 4);
 
--- PAGE: entries of group
-
-INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
-('bx_files_group', 'group-files', '_bx_files_page_title_sys_entries_of_author', '_bx_files_page_title_entries_of_author', 'bx_files', 5, 2147483647, 1, '', '', '', '', 0, 1, 0, 'BxFilesPageAuthor', 'modules/boonex/files/classes/BxFilesPageAuthor.php');
-
-INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
-('bx_files_group', 1, 'bx_files', '', '_bx_files_page_block_title_entries_actions', 13, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_files\";s:6:\"method\";s:18:\"my_entries_actions\";}', 0, 0, 1, 1),
-('bx_files_group', 1, 'bx_files', '_bx_files_page_block_title_sys_entries_of_author', '_bx_files_page_block_title_entries_of_author', 11, 2147483647, 'service', 'a:2:{s:6:\"module\";s:8:\"bx_files\";s:6:\"method\";s:19:\"browse_group_author\";}', 0, 0, 1, 3);
 
 -- PAGE: entries in context
  INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
@@ -172,8 +165,7 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 SET @iPBCellProfile = 3;
 SET @iPBCellGroup = 4;
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
-('trigger_page_profile_view_entry', @iPBCellProfile, 'bx_files', '_bx_files_page_block_title_my_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_files";s:6:"method";s:13:"browse_author";s:6:"params";a:2:{i:0;s:12:"{profile_id}";i:1;a:2:{s:8:"per_page";s:25:"bx_files_per_page_profile";s:13:"empty_message";b:0;}}}', 0, 0, 0),
-('trigger_page_group_view_entry', @iPBCellGroup, 'bx_files', '_bx_files_page_block_title_group_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_files";s:6:"method";s:19:"browse_group_author";s:6:"params";a:2:{i:0;s:12:"{profile_id}";i:1;a:2:{s:8:"per_page";s:25:"bx_files_per_page_profile";s:13:"empty_message";b:0;}}}', 0, 0, 0);
+('trigger_page_profile_view_entry', @iPBCellProfile, 'bx_files', '_bx_files_page_block_title_my_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_files";s:6:"method";s:13:"browse_author";s:6:"params";a:2:{i:0;s:12:"{profile_id}";i:1;a:2:{s:8:"per_page";s:25:"bx_files_per_page_profile";s:13:"empty_message";b:0;}}}', 0, 0, 0);
 
 -- PAGE: service blocks
 
