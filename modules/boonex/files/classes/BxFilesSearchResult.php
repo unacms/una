@@ -59,12 +59,11 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
         $oProfileAuthor = null;
 
         switch ($sMode) {
-            case 'group_author':
             case 'author':
                 if(!$this->_updateCurrentForAuthor($sMode, $aParams, $oProfileAuthor))
                     $this->isError = true;
                 break;
-                
+
             case 'context':
                 if(!$this->_updateCurrentForContext($sMode, $aParams, $oProfileAuthor))
                     $this->isError = true;
@@ -123,8 +122,7 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
 
         $this->processReplaceableMarkers($oProfileAuthor);
 
-        if ('group_author' != $sMode)
-            $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
+        $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
     }
 }
 
