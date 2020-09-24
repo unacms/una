@@ -291,6 +291,10 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                     case 'privacy':
                         $aForm['inputs'][$sKey]['checked'] = (int)$this->aField[$sKey];
                         break;
+                        
+                    case 'rateable':
+                        $aForm['inputs'][$sKey]['checked'] = (int)$this->aField[$sKey];
+                        break;
 
                     case 'checker_func':
                         $sCfValue = strtolower($this->aField[$sKey]);
@@ -994,6 +998,20 @@ class BxBaseStudioFormsFieldBlockHeader extends BxBaseStudioFormsField
                     'required' => '0',
                     'attrs' => array(
                         'id' => 'bx-form-field-privacy'
+                    ),
+                    'db' => array (
+                        'pass' => 'Int',
+                    )
+                ),
+                'rateable' => array(
+                    'type' => 'switcher',
+                    'name' => 'rateable',
+                    'caption' => _t('_adm_form_txt_field_rateable'),
+                    'info' => _t('_adm_form_dsc_field_rateable'),
+                    'value' => '1',
+                    'required' => '0',
+                    'attrs' => array(
+                        'id' => 'bx-form-field-rateable'
                     ),
                     'db' => array (
                         'pass' => 'Int',
