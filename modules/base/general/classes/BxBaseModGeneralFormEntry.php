@@ -468,13 +468,17 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         if (null === $sValue)
             return '';
         
+        // process rateable fields
         $iId = BxDolFormQuery::getFormField($this->id, $aInput['name'], $this->_iContentId);
-        $oReaction = BxDolVote::getObjectInstance('sys_form_fields_reaction', $iId, true, BxDolTemplate::getInstance());
-        $sReactions = $oReaction->getElementInline(array('show_counter_empty' => true, 'show_counter' => true, 'show_counter_style' => 'compound', 'dynamic_mode' => $this->_bDynamicMode));
+        $sReactions = '';
+        $oReaction = BxDolVote::getObjectInstance($aInput['rateable'], $iId, true, BxDolTemplate::getInstance());
+        if ($oReaction)    
+            $sReactions = $oReaction->getElementInline(array('show_counter_empty' => true, 'show_counter' => true, 'show_counter_style' => 'compound', 'dynamic_mode' => $this->_bDynamicMode));
+        
         return $this->oTemplate->parseHtmlByName('form_view_row.html', array(
             'type' => $aInput['type'], 
             'caption' => isset($aInput['caption']) ? bx_process_output($aInput['caption']) : '',
-            'value' => $sValue . $sReactions
+            'value' => $sValue . $sReactions.$aInput['rateable']
         ));
     }
 
