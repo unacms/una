@@ -733,6 +733,7 @@
 	<string name="_adm_form_dsc_field_html"><![CDATA[Выбрать тип HTML-редактора]]></string>
 	<string name="_adm_form_dsc_field_info"><![CDATA[Введите описание поля (необязательно)]]></string>
         <string name="_adm_form_dsc_field_privacy"><![CDATA[Отметьте, если для данного поля настройки "Конфиденциальности" могут быть изменены]]></string>
+  <string name="_adm_form_dsc_field_rateable"><![CDATA[Добавляет возможность оценки значений]]></string>
 	<string name="_adm_form_dsc_field_required"><![CDATA[Отметьте, если поле должно иметь значение]]></string>
 	<string name="_adm_form_dsc_field_unique"><![CDATA[Отметьте, если поле должно иметь уникальное значение]]></string>
 	<string name="_adm_form_dsc_field_value_button"><![CDATA[Введите заголовок для кнопки]]></string>
@@ -866,6 +867,10 @@
 	<string name="_adm_form_txt_field_name"><![CDATA[Имя]]></string>
 	<string name="_adm_form_txt_field_object"><![CDATA[Форма]]></string>
         <string name="_adm_form_txt_field_privacy"><![CDATA[Конфиденциальность]]></string>
+  <string name="_adm_form_txt_field_rateable"><![CDATA[Оценивать]]></string>
+  <string name="_adm_form_txt_field_rateable_value_non"><![CDATA[Без оценки]]></string>
+  <string name="_adm_form_txt_field_rateable_value_votes"><![CDATA[Использовать лайков]]></string>
+  <string name="_adm_form_txt_field_rateable_value_reactions"><![CDATA[Использовать реакции]]></string>
 	<string name="_adm_form_txt_field_required"><![CDATA[Необходимое]]></string>
 	<string name="_adm_form_txt_field_show_to_popup"><![CDATA[Показывать "{0}" поле формы для: ]]></string>
         <string name="_adm_form_txt_field_type_block_end"><![CDATA[конец блока]]></string>

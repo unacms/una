@@ -266,16 +266,17 @@ class BxDolFormQuery extends BxDolDb
         return $bResult;
     }
     
-    static public function addFormField($sObjectForm, $sFieldName, $iContentId, $iAuthorId)
+    static public function addFormField($sObjectForm, $sFieldName, $iContentId, $iAuthorId, $sModuleName)
     {
         $oDb = BxDolDb::getInstance();
         $aBindings = array(
             'object_form' => $sObjectForm,
             'field_name' => $sFieldName,
             'content_id' => $iContentId,
-            'author_id' => $iAuthorId
+            'author_id' => $iAuthorId,
+            'module' => $sModuleName
         );
-        $oDb->query("INSERT `sys_form_fields_ids` SET `object_form`=:object_form, `field_name`=:field_name, `content_id`=:content_id, `author_id`=:author_id", $aBindings);
+        $oDb->query("INSERT `sys_form_fields_ids` SET `object_form`=:object_form, `field_name`=:field_name, `content_id`=:content_id, `author_id`=:author_id, `module`=:module", $aBindings);
     }
     
     static public function getFormField($sObjectForm, $sFieldName, $iContentId)

@@ -260,7 +260,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         
         foreach($this->aInputs as $aInput) {
             if ($aInput['rateable']){
-                BxDolFormQuery::addFormField($this->id, $aInput['name'], $iContentId, $aValsToAdd[$CNF['FIELD_AUTHOR']]);
+                BxDolFormQuery::addFormField($this->id, $aInput['name'], $iContentId, $aValsToAdd[$CNF['FIELD_AUTHOR']], $this->_oModule->getName());
             }
         }
         
@@ -478,7 +478,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         return $this->oTemplate->parseHtmlByName('form_view_row.html', array(
             'type' => $aInput['type'], 
             'caption' => isset($aInput['caption']) ? bx_process_output($aInput['caption']) : '',
-            'value' => $sValue . $sReactions.$aInput['rateable']
+            'value' => $sValue . $sReactions
         ));
     }
 

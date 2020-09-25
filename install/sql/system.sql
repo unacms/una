@@ -3531,6 +3531,7 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 CREATE TABLE `sys_form_fields_ids` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_form` varchar(64) NOT NULL default '',
+  `module` varchar(32) NOT NULL,
   `field_name` varchar(255) NOT NULL default '',
   `content_id` int(11) NOT NULL DEFAULT '0',
   `author_id` int(10) NOT NULL DEFAULT '0',
@@ -3540,7 +3541,8 @@ CREATE TABLE `sys_form_fields_ids` (
   `rrate` float NOT NULL DEFAULT '0',
   `rvotes` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `system_form_fields_id` (`object_form`, `content_id`, `nested_content_id`)
+  KEY `system_form_fields_id` (`object_form`, `content_id`, `nested_content_id`),
+  KEY `system_form_fields_id_module` (`module`)
 );
 
 CREATE TABLE `sys_form_pre_lists` (
