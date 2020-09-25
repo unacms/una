@@ -292,10 +292,6 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
                         $aForm['inputs'][$sKey]['checked'] = (int)$this->aField[$sKey];
                         break;
                         
-                    case 'rateable':
-                        $aForm['inputs'][$sKey]['checked'] = (int)$this->aField[$sKey];
-                        break;
-
                     case 'checker_func':
                         $sCfValue = strtolower($this->aField[$sKey]);
                         $aForm['inputs'][$sKey]['value'] = $sCfValue;
@@ -1004,17 +1000,21 @@ class BxBaseStudioFormsFieldBlockHeader extends BxBaseStudioFormsField
                     )
                 ),
                 'rateable' => array(
-                    'type' => 'switcher',
+                    'type' => 'select',
                     'name' => 'rateable',
                     'caption' => _t('_adm_form_txt_field_rateable'),
                     'info' => _t('_adm_form_dsc_field_rateable'),
-                    'value' => '1',
+                    'values' => array(
+                		array('key' => '', 'value' => _t('_adm_form_txt_field_rateable_value_non')),
+                        array('key' => 'sys_form_fields_votes', 'value' => _t('_adm_form_txt_field_rateable_value_votes')),
+                        array('key' => 'sys_form_fields_reaction', 'value' => _t('_adm_form_txt_field_rateable_value_reactions'))
+                	),
                     'required' => '0',
                     'attrs' => array(
                         'id' => 'bx-form-field-rateable'
                     ),
                     'db' => array (
-                        'pass' => 'Int',
+                        'pass' => 'Xss',
                     )
                 ),
                 'controls' => array(

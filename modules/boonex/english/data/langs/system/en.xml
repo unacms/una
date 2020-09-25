@@ -873,6 +873,9 @@
 	<string name="_adm_form_txt_field_object"><![CDATA[Form]]></string>
   <string name="_adm_form_txt_field_privacy"><![CDATA[Privacy]]></string>
   <string name="_adm_form_txt_field_rateable"><![CDATA[Rateable]]></string>
+  <string name="_adm_form_txt_field_rateable_value_non"><![CDATA[Non-rateable]]></string>
+  <string name="_adm_form_txt_field_rateable_value_votes"><![CDATA[Use votes]]></string>
+  <string name="_adm_form_txt_field_rateable_value_reactions"><![CDATA[Use reactions]]></string>
   <string name="_adm_form_txt_field_required"><![CDATA[Mandatory]]></string>
 	<string name="_adm_form_txt_field_show_to_popup"><![CDATA[Show "{0}" form field to: ]]></string>
         <string name="_adm_form_txt_field_type_block_end"><![CDATA[block end]]></string>

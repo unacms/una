@@ -181,6 +181,14 @@ class BxDolStudioForm extends BxBaseFormView
             
     protected function processTranslationsValues()
     {
+        //print_r($this->aInputs);
+        foreach($this->aInputs as $sName => $aInput) {
+            if (!isset($aInput['type'])){
+                unset($this->aInputs[$sName]);
+                unset($aInput);
+            }
+        }
+        
         foreach($this->aInputs as $sName => $aInput) {
             if(!in_array($aInput['type'], array('text_translatable', 'textarea_translatable', 'list_translatable')))
                 continue;

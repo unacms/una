@@ -112,7 +112,7 @@ class BxDolFormQuery extends BxDolDb
             	'unique' => $a['unique'] ? true : false,
                 'collapsed' => $a['collapsed'] ? true : false,
                 'privacy' => $a['privacy'] ? true : false,
-                'rateable' => $a['rateable'] ? true : false,
+                'rateable' => $a['rateable'],
                 'html' => $a['html'],
                 'attrs' => $a['attrs'] ? unserialize($a['attrs']) : false,
                 'tr_attrs' => $a['attrs_tr'] ? unserialize($a['attrs_tr']) : false,
