@@ -3129,6 +3129,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_form` (
   `params` text NOT NULL,
   `deletable` tinyint(4) NOT NULL DEFAULT '1',
   `active` tinyint(4) NOT NULL DEFAULT '0',
+  `parent_form`  varchar(64) NOT NULL DEFAULT '',
   `override_class_name` varchar(255) NOT NULL,
   `override_class_file` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),

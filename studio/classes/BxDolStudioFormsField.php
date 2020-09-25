@@ -54,6 +54,7 @@ class BxDolStudioFormsField extends BxDol
         	'value' => array('add' => 1), 
         	'file' => array('add' => 1), 
         	'files' => array('add' => 1),
+            'nested_form' => array('add' => 1), 
         	'captcha' => array('add' => 0),
         	'location' => array('add' => 0), 
         	'custom' => array('add' => 0)

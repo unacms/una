@@ -57,7 +57,18 @@ class BxDolStudioFormsQuery extends BxDolDb
                 $aMethod['params'][2] = 'counter';
                 $sSelectClause = ", COUNT(*) AS `counter`";
                 $sGroupClause = "GROUP BY `tf`.`module`";
-
+                break;
+                
+            case 'nested':
+                $aMethod['name'] = 'getPairs';
+                $aMethod['params'][1] = 'object';
+                $aMethod['params'][2] = 'title';
+                $aMethod['params'][3] = array(
+                	'parent_form' => $aParams['parent_form']
+                );
+                $sWhereClause = "AND `tf`.`parent_form`=:parent_form";
+                break;
+                
             case 'all':
                 break;
         }
