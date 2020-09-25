@@ -19,7 +19,7 @@
 	<string name="_bx_files_form_entry_display_delete"><![CDATA[Удаление файла]]></string>
 	<string name="_bx_files_form_entry_display_view"><![CDATA[Просмотр файла]]></string>
 	<string name="_bx_files_form_entry_input_author"><![CDATA[Автор]]></string>
-	<string name="_bx_files_form_entry_input_sys_profile_id"><![CDATA[ID профайла]]></string>
+        <string name="_bx_files_form_entry_input_sys_profile_id"><![CDATA[ID профайла]]></string>
 	<string name="_bx_files_form_entry_input_sys_do_submit"><![CDATA[Опубликовать]]></string>
 	<string name="_bx_files_form_entry_input_do_submit"><![CDATA[Опубликовать]]></string>
 	<string name="_bx_files_form_entry_input_sys_do_publish"><![CDATA[Опубликовать]]></string>
