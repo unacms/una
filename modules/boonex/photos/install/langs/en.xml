@@ -18,6 +18,7 @@
     <string name="_bx_photos_form_entry_display_edit"><![CDATA[Edit Photo]]></string>
     <string name="_bx_photos_form_entry_display_delete"><![CDATA[Delete Photo]]></string>
     <string name="_bx_photos_form_entry_display_view"><![CDATA[View Photo]]></string>
+    <string name="_bx_photos_form_entry_input_sys_profile_id"><![CDATA[Author]]></string>
     <string name="_bx_photos_form_entry_input_author"><![CDATA[Author]]></string>
     <string name="_bx_photos_form_entry_input_sys_do_submit"><![CDATA[Submit]]></string>
     <string name="_bx_photos_form_entry_input_do_submit"><![CDATA[Submit]]></string>

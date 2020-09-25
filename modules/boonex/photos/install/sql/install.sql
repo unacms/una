@@ -291,13 +291,15 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_photos_upload', 'bx_photos', 'pictures', 'a:1:{i:0;s:15:"bx_photos_html5";}', 'a:2:{s:16:"bx_photos_simple";s:26:"_sys_uploader_simple_title";s:15:"bx_photos_html5";s:25:"_sys_uploader_html5_title";}', 0, 'files', '_bx_photos_form_entry_input_sys_pictures', '_bx_photos_form_entry_input_pictures', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_photos_form_entry_input_pictures_err', '', '', 1, 0),
 ('bx_photos_upload', 'bx_photos', 'cat', '', '#!bx_photos_cats', 0, 'select', '_bx_photos_form_entry_input_sys_cat', '_bx_photos_form_entry_input_cat', '', 1, 0, 0, '', '', '', 'avail', '', '_bx_photos_form_entry_input_cat_err', 'Xss', '', 1, 0),
 ('bx_photos_upload', 'bx_photos', 'allow_view_to', '', '', 0, 'custom', '_bx_photos_form_entry_input_sys_allow_view_to', '_bx_photos_form_entry_input_allow_view_to', '', 1, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
-('bx_photos_upload', 'bx_photos', 'do_submit', '_bx_photos_form_entry_input_do_submit', '', 0, 'submit', '_bx_photos_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0);
+('bx_photos_upload', 'bx_photos', 'do_submit', '_bx_photos_form_entry_input_do_submit', '', 0, 'submit', '_bx_photos_form_entry_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0),
+('bx_photos_upload', 'bx_photos', 'profile_id', '0', '', 0, 'hidden', '_bx_photos_form_entry_input_sys_profile_id', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0);
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
-('bx_photos_entry_upload', 'pictures', 2147483647, 1, 1),
-('bx_photos_entry_upload', 'cat', 2147483647, 1, 2),
-('bx_photos_entry_upload', 'allow_view_to', 2147483647, 1, 3),
-('bx_photos_entry_upload', 'do_submit', 2147483647, 1, 4),
+('bx_photos_entry_upload', 'profile_id', 2147483647, 1, 1),
+('bx_photos_entry_upload', 'pictures', 2147483647, 1, 2),
+('bx_photos_entry_upload', 'cat', 2147483647, 1, 3),
+('bx_photos_entry_upload', 'allow_view_to', 2147483647, 1, 4),
+('bx_photos_entry_upload', 'do_submit', 2147483647, 1, 5),
 
 ('bx_photos_entry_delete', 'delete_confirm', 2147483647, 1, 1),
 ('bx_photos_entry_delete', 'do_submit', 2147483647, 1, 2),
