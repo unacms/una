@@ -18,7 +18,6 @@
     <string name="_bx_photos_form_entry_display_edit"><![CDATA[Редактировать фото]]></string>
     <string name="_bx_photos_form_entry_display_delete"><![CDATA[Удалить фото]]></string>
     <string name="_bx_photos_form_entry_display_view"><![CDATA[Просмотреть фото]]></string>
-    <string name="_bx_photos_form_entry_input_sys_profile_id"><![CDATA[Автор]]></string>
     <string name="_bx_photos_form_entry_input_author"><![CDATA[Автор]]></string>
     <string name="_bx_photos_form_entry_input_sys_do_submit"><![CDATA[Опубликовать]]></string>
     <string name="_bx_photos_form_entry_input_do_submit"><![CDATA[Опубликовать]]></string>
