@@ -260,7 +260,12 @@ class BxBaseServiceLogin extends BxDol
             $sUrlRelocate = $oForm->getCleanValue('relocate');
             if (!$sUrlRelocate || 0 !== strncmp($sUrlRelocate, BX_DOL_URL_ROOT, strlen(BX_DOL_URL_ROOT)))
                 $sUrlRelocate = BX_DOL_ROLE_ADMIN == $oForm->getRole() ? BX_DOL_URL_STUDIO . 'launcher.php' : BX_DOL_URL_ROOT . 'member.php';
-            
+
+            bx_alert('account', 'login_after', $oAccount->id(),  false, array(
+                'account' => $aAccount,
+                'url_relocate' => &$sUrlRelocate               
+            ));
+
             BxDolTemplate::getInstance()->setPageNameIndex (BX_PAGE_TRANSITION);
             BxDolTemplate::getInstance()->setPageHeader (_t('_Please Wait'));
             BxDolTemplate::getInstance()->setPageContent ('page_main_code', MsgBox(_t('_Please Wait')));
