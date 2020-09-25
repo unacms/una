@@ -473,7 +473,7 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         $sReactions = '';
         $oReaction = BxDolVote::getObjectInstance($aInput['rateable'], $iId, true, BxDolTemplate::getInstance());
         if ($oReaction)    
-            $sReactions = $oReaction->getElementInline(array('show_counter_empty' => true, 'show_counter' => true, 'show_counter_style' => 'compound', 'dynamic_mode' => $this->_bDynamicMode));
+            $sReactions = $oReaction->getElementInline(array('show_counter_empty' => true, 'show_counter' => true, 'show_counter_style' => 'simple', 'dynamic_mode' => $this->_bDynamicMode));
         
         return $this->oTemplate->parseHtmlByName('form_view_row.html', array(
             'type' => $aInput['type'], 

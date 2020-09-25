@@ -12,8 +12,9 @@
  */
 class BxDolVoteReactions extends BxTemplVote
 {
-    protected static $_sCounterStyleDivided = 'divided';
-    protected static $_sCounterStyleCompound = 'compound';
+    protected static $_sCounterStyleSimple = 'simple'; // total counter only.
+    protected static $_sCounterStyleDivided = 'divided'; // counters [icon + counter] divided by reactions.
+    protected static $_sCounterStyleCompound = 'compound'; // total counter with a list of reaction icons.
 
     protected $_sMenuDoVote; //--- Do vote (reaction)  menu name.
 

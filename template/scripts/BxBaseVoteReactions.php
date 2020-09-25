@@ -35,7 +35,7 @@ class BxBaseVoteReactions extends BxDolVoteReactions
             'show_do_vote_label' => false,
             'show_counter' => false,
             'show_counter_empty' => true,
-            'show_counter_style' => self::$_sCounterStyleDivided, //--- Alloved styles are 'divided' and 'compound'
+            'show_counter_style' => self::$_sCounterStyleDivided, //--- Alloved styles are 'simple', 'divided' and 'compound'
             'show_legend' => false,
             'show_script' => true
         );
@@ -69,7 +69,7 @@ class BxBaseVoteReactions extends BxDolVoteReactions
         $sJsObject = $this->getJsObjectName();
         $sJsMethod = 'toggleByPopup';
 
-        if(isset($aParams['show_counter_style']) && $aParams['show_counter_style'] == self::$_sCounterStyleCompound)
+        if(isset($aParams['show_counter_style']) && in_array($aParams['show_counter_style'], array(self::$_sCounterStyleCompound, self::$_sCounterStyleSimple)))
             return $sJsObject . '.' . $sJsMethod . '(this)';
 
         $sReaction = !empty($aParams['reaction']) ? $aParams['reaction'] : $this->_sDefault;
@@ -87,6 +87,66 @@ class BxBaseVoteReactions extends BxDolVoteReactions
             $sMethod = $sMethodPrefix . bx_gen_method_name($sDefault);
 
         return $this->$sMethod($aParams);
+    }
+
+    public function _getCounterSimple($aParams = array())
+    {
+        $bDynamicMode = isset($aParams['dynamic_mode']) && (bool)$aParams['dynamic_mode'] === true;
+        $bShowCounterEmpty = isset($aParams['show_counter_empty']) && (bool)$aParams['show_counter_empty'] === true;
+        $bShowScript = !isset($aParams['show_script']) || (bool)$aParams['show_script'] === true;
+
+        $bVote = $this->_isVote();
+        $aVote = $this->_getVote();
+        $aReactions = $this->getReactions();
+
+        $sClass = isset($aParams['class_counter']) ? $aParams['class_counter'] : '';
+        if(isset($aParams['show_do_vote_as_button_small']) && (bool)$aParams['show_do_vote_as_button_small'] === true)
+            $sClass .= ' bx-btn-small-height';
+        else if(isset($aParams['show_do_vote_as_button']) && (bool)$aParams['show_do_vote_as_button'] === true)
+            $sClass .= ' bx-btn-height';
+
+        $aParams['id_counter'] = '';
+
+        $iResultC = $iResultS = 0;
+        foreach($aReactions as $sName) {
+            $iResultC += (int)$aVote['count_' . $sName];
+            $iResultS += (int)$aVote['sum_' . $sName];
+        }
+
+        $aParams = array_merge($aParams, array(
+            'show_counter_active' => false,
+            'show_counter_label_icon' => false,
+            'show_counter_label_text' => true,
+            'class_counter' => ' total-count ' . $sClass,
+            'reaction' => '',
+            'vote' => array(
+                'count' => $iResultC,
+                'sum' => $iResultS,
+                'rate' => $iResultC > 0 ? round($iResultS / $iResultC, 2) : 0,
+            )
+        ));
+
+        return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentCounterWrapper(), array(
+            'html_id' => $this->_aHtmlIds['counter'],
+            'style_prefix' => $this->_sStylePrefix,
+            'class' => $this->_aHtmlIds['counter'] . (!$bVote && !$bShowCounterEmpty ? ' bx-vc-hidden' : ''),
+            'type' => $this->_sType,
+            'style' => self::$_sCounterStyleSimple,
+            'bx_if:show_link' => array(
+                'condition' => true,
+                'content' => array(
+                    'href' => 'javascript:void(0)',
+                    'onclick' => 'javascript:' . $this->getJsClickCounter($aParams),
+                    'title' => bx_html_attribute($this->_getTitleDoBy($aParams)),
+                    'counter' => parent::getCounter(array_merge($aParams, array('show_script' => false))),
+                )
+            ),
+            'bx_if:show_text' => array(
+                'condition' => false,
+                'content' => array()
+            ),
+            'script' => $bShowScript ? $this->getJsScript($aParams) : ''
+        ));
     }
 
     public function _getCounterDivided($aParams = array())

@@ -243,7 +243,7 @@ BxDolVoteReactions.prototype._getCounter = function(oElement)
     var oCounter = BxDolVote.prototype._getCounter.call(this, oElement);
     if(oCounter && oCounter.length > 0)
         return oCounter;
-//.parent(':visible')
+
     return $('.' + this._aHtmlIds['counter']).find('.' + this._sSP + '-counter');
 };
 
