@@ -1051,6 +1051,11 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
         return false;
     }
 
+    public static function onModuleUninstall ($sModuleName)
+    {
+        BxDolFormQuery::removeFormFields($sModuleName);
+    }
+    
     function _initCheckerNestedForms ()
     {
         $isValid = true;

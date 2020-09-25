@@ -938,6 +938,9 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         if($iFiles)
 			$bSetModulePendingUninstall = true;
 
+        // delete forms common data
+        BxDolForm::onModuleUninstall($this->_aConfig['name'], $iFiles);
+        
         // queue for deletion storage files
         if(!empty($this->_aConfig['storages']) && is_array($this->_aConfig['storages']))        
             foreach($this->_aConfig['storages'] as $s)

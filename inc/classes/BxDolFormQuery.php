@@ -307,6 +307,15 @@ class BxDolFormQuery extends BxDolDb
             $oDb->query("DELETE FROM `sys_form_fields_ids` WHERE  `object_form` = :object_form", $aBindings);
         }
     }
+        
+    static public function removeFormFields($sModule)
+    {
+        $oDb = BxDolDb::getInstance();
+        $aBindings = array(
+            'module' => $sModule,
+        );
+        $oDb->query("DELETE FROM `sys_form_fields_ids` WHERE  `module` = :module", $aBindings);
+    }
 
     public function getFormInputs()
     {
