@@ -19,6 +19,9 @@ class BxBaseModFilesFormUpload extends BxBaseModTextFormEntry
         parent::__construct($aInfo, $oTemplate);
 
         $this->_sGhostTemplate = 'form_ghost_template_upload.html';
+
+        if (isset($this->aInputs['profile_id']))
+            $this->aInputs['profile_id']['value'] = bx_get('profile_id');
     }
 
     public function insert ($aValsToAdd = array(), $isIgnore = false)

@@ -19,6 +19,7 @@
 	<string name="_bx_files_form_entry_display_delete"><![CDATA[Delete File]]></string>
 	<string name="_bx_files_form_entry_display_view"><![CDATA[View File]]></string>
 	<string name="_bx_files_form_entry_input_author"><![CDATA[Author]]></string>
+        <string name="_bx_files_form_entry_input_sys_profile_id"><![CDATA[Profile ID]]></string>
 	<string name="_bx_files_form_entry_input_sys_do_submit"><![CDATA[Submit]]></string>
 	<string name="_bx_files_form_entry_input_do_submit"><![CDATA[Submit]]></string>
 	<string name="_bx_files_form_entry_input_sys_do_publish"><![CDATA[Publish]]></string>
