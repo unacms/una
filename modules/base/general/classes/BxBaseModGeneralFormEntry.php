@@ -27,6 +27,8 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
     protected $_sGhostTemplate = 'form_ghost_template.html';
     
     protected $_aTrackFieldsChanges;
+    
+    protected $_iContentId;
 
     public function __construct($aInfo, $oTemplate = false)
     {
@@ -146,6 +148,8 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         
         $bValues = $aValues && !empty($aValues['id']);
         
+        $this->_iContentId = isset($aValues['id']) ? $aValues['id'] : false;
+        
         if (!empty($CNF['FIELD_LOCATION_PREFIX']) && isset($this->aInputs[$CNF['FIELD_LOCATION_PREFIX']]) && isset($aValues[$CNF['FIELD_ID']]) && !empty($CNF['OBJECT_METATAGS']) && ($oMetatags = BxDolMetatags::getObjectInstance($CNF['OBJECT_METATAGS'])) && $oMetatags->locationsIsEnabled())
             $this->aInputs[$CNF['FIELD_LOCATION_PREFIX']]['value'] = $oMetatags->locationsString($aValues[$CNF['FIELD_ID']], false);
 
@@ -251,6 +255,13 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         if(!empty($iContentId)){
             if ($bMulticatEnabled)
                 $this->processMulticatAfter($CNF['FIELD_MULTICAT'], $iContentId);
+        }
+        
+        
+        foreach($this->aInputs as $aInput) {
+            if ($aInput['rateable']){
+                BxDolFormQuery::addFormField($this->id, $aInput['name'], $iContentId, $aValsToAdd[$CNF['FIELD_AUTHOR']]);
+            }
         }
         
         return $iContentId;
@@ -361,6 +372,8 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         }
 
         // delete db record
+        
+        BxDolFormQuery::removeFormField($this->id, $iContentId);
 
         return parent::delete($iContentId);
     }
@@ -443,6 +456,26 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             $s = $this->_oMetatagsObject->metaParse($this->_oMetatagsContentId, $s);
 
         return $s;
+    }
+    
+    function genViewRowWrapped(&$aInput)
+    {
+        if (!$aInput['rateable']){
+            return parent::genViewRowWrapped($aInput);
+        }
+        
+        $sValue = $this->genViewRowValue($aInput);
+        if (null === $sValue)
+            return '';
+        
+        $iId = BxDolFormQuery::getFormField($this->id, $aInput['name'], $this->_iContentId);
+        $oReaction = BxDolVote::getObjectInstance('sys_form_fields_reaction', $iId, true, BxDolTemplate::getInstance());
+        $sReactions = $oReaction->getElementInline(array('show_counter_empty' => true, 'show_counter' => true, 'show_counter_style' => 'compound', 'dynamic_mode' => $this->_bDynamicMode));
+        return $this->oTemplate->parseHtmlByName('form_view_row.html', array(
+            'type' => $aInput['type'], 
+            'caption' => isset($aInput['caption']) ? bx_process_output($aInput['caption']) : '',
+            'value' => $sValue . $sReactions
+        ));
     }
 
     function setMetatagsKeywordsData($iId, $a, $o)

@@ -1240,7 +1240,8 @@ CREATE TABLE `sys_objects_vote` (
 
 INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 
 ('sys_cmts', 'sys_cmts_votes', 'sys_cmts_votes_track', '604800', '1', '1', '0', '1', 'sys_cmts_ids', 'id', 'author_id', 'rate', 'votes', '', ''),
-('sys_cmts_reactions', 'sys_cmts_reactions', 'sys_cmts_reactions_track', '604800', '1', '1', '1', '1', 'sys_cmts_ids', 'id', 'author_id', 'rrate', 'rvotes', 'BxTemplVoteReactions', '');
+('sys_cmts_reactions', 'sys_cmts_reactions', 'sys_cmts_reactions_track', '604800', '1', '1', '1', '1', 'sys_cmts_ids', 'id', 'author_id', 'rrate', 'rvotes', 'BxTemplVoteReactions', ''),
+('sys_form_fields_reaction', 'sys_form_fields_reaction', 'sys_form_fields_reaction_track', '604800', '1', '1', '1', '1', 'sys_form_fields_ids', 'id', 'author_id', 'rrate', 'rvotes', 'BxTemplVoteReactions', '');
 
 -- --------------------------------------------------------
 
@@ -1490,6 +1491,26 @@ CREATE TABLE IF NOT EXISTS `sys_cmts_reactions` (
 );
 
 CREATE TABLE IF NOT EXISTS `sys_cmts_reactions_track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object_id` int(11) NOT NULL default '0',
+  `author_id` int(11) NOT NULL default '0',
+  `author_nip` int(11) unsigned NOT NULL default '0',
+  `reaction` varchar(32) NOT NULL default '',
+  `value` tinyint(4) NOT NULL default '0',
+  `date` int(11) NOT NULL default '0',
+  PRIMARY KEY (`id`),
+  KEY `vote` (`object_id`, `author_nip`)
+);
+
+CREATE TABLE IF NOT EXISTS `sys_form_fields_reaction` (
+  `object_id` int(11) NOT NULL default '0',
+  `reaction` varchar(32) NOT NULL default '',
+  `count` int(11) NOT NULL default '0',
+  `sum` int(11) NOT NULL default '0',
+  UNIQUE KEY `reaction` (`object_id`, `reaction`)
+);
+
+CREATE TABLE IF NOT EXISTS `sys_form_fields_reaction_track` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL default '0',
   `author_id` int(11) NOT NULL default '0',
@@ -3166,6 +3187,7 @@ CREATE TABLE IF NOT EXISTS `sys_form_inputs` (
   `collapsed` tinyint(4) NOT NULL DEFAULT '0',
   `html` tinyint(4) NOT NULL DEFAULT '0',
   `privacy` tinyint(4) NOT NULL DEFAULT '0',
+  `rateable` tinyint(4) NOT NULL DEFAULT '0',
   `attrs` text NOT NULL,
   `attrs_tr` text NOT NULL,
   `attrs_wrapper` text NOT NULL,
@@ -3486,6 +3508,17 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_wiki_translate', 'close', 2147483647, 1, 7),
 ('sys_wiki_translate', 'buttons', 2147483647, 1, 8);
 
+CREATE TABLE `sys_form_fields_ids` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object_form` varchar(64) NOT NULL default '',
+  `field_name` varchar(255) NOT NULL default '',
+  `content_id` int(11) NOT NULL DEFAULT '0',
+  `author_id` int(11) NOT NULL DEFAULT '0',
+  `nested_content_id` int(11) NOT NULL default '0',
+  `rrate` float NOT NULL DEFAULT '0',
+  `rvotes` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+);
 
 CREATE TABLE `sys_form_pre_lists` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -4695,6 +4728,7 @@ CREATE TABLE IF NOT EXISTS `sys_objects_page` (
   `cover_image` int(11) NOT NULL DEFAULT '0',
   `type_id` int(11) NOT NULL DEFAULT '1',
   `layout_id` int(11) NOT NULL,
+  `sticky_columns` tinyint(4) NOT NULL DEFAULT '0',
   `submenu` varchar(64) NOT NULL DEFAULT '',
   `visible_for_levels` int(11) NOT NULL DEFAULT '2147483647',
   `visible_for_levels_editable` tinyint(4) NOT NULL DEFAULT '1',
@@ -4709,7 +4743,6 @@ CREATE TABLE IF NOT EXISTS `sys_objects_page` (
   `deletable` tinyint(1) NOT NULL,
   `override_class_name` varchar(255) NOT NULL,
   `override_class_file` varchar(255) NOT NULL,
-  `sticky_columns` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `object` (`object`),
   UNIQUE KEY `uri` (`uri`(191))

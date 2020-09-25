@@ -112,6 +112,7 @@ class BxDolFormQuery extends BxDolDb
             	'unique' => $a['unique'] ? true : false,
                 'collapsed' => $a['collapsed'] ? true : false,
                 'privacy' => $a['privacy'] ? true : false,
+                'rateable' => $a['rateable'] ? true : false,
                 'html' => $a['html'],
                 'attrs' => $a['attrs'] ? unserialize($a['attrs']) : false,
                 'tr_attrs' => $a['attrs_tr'] ? unserialize($a['attrs_tr']) : false,
@@ -264,13 +265,53 @@ class BxDolFormQuery extends BxDolDb
 
         return $bResult;
     }
+    
+    static public function addFormField($sObjectForm, $sFieldName, $iContentId, $iAuthorId)
+    {
+        $oDb = BxDolDb::getInstance();
+        $aBindings = array(
+            'object_form' => $sObjectForm,
+            'field_name' => $sFieldName,
+            'content_id' => $iContentId,
+            'author_id' => $iAuthorId
+        );
+        $oDb->query("INSERT `sys_form_fields_ids` SET `object_form`=:object_form, `field_name`=:field_name, `content_id`=:content_id, `author_id`=:author_id", $aBindings);
+    }
+    
+    static public function getFormField($sObjectForm, $sFieldName, $iContentId)
+    {
+        $oDb = BxDolDb::getInstance();
+        $aBindings = array(
+            'object_form' => $sObjectForm,
+            'field_name' => $sFieldName,
+            'content_id' => $iContentId
+        );
+        return $oDb->getOne("SELECT `id` FROM `sys_form_fields_ids` WHERE `object_form`=:object_form AND `field_name`=:field_name AND `content_id`=:content_id", $aBindings);
+    }
+    
+    static public function removeFormField($sObjectForm, $iContentId = 0)
+    {
+        $oDb = BxDolDb::getInstance();
+        if ($iContentId > 0){
+            $aBindings = array(
+                'object_form' => $sObjectForm,
+                'content_id' => $iContentId
+            );
+            $oDb->query("DELETE FROM `sys_form_fields_ids` WHERE  `object_form` = :object_form AND `content_id` = :content_id", $aBindings);
+        }
+        else{
+            $aBindings = array(
+                'object_form' => $sObjectForm
+            );
+            $oDb->query("DELETE FROM `sys_form_fields_ids` WHERE  `object_form` = :object_form", $aBindings);
+        }
+    }
 
     public function getFormInputs()
     {
         $sQuery = $this->prepare("SELECT * FROM `sys_form_inputs` WHERE `object` = ? ORDER BY `order` ASC", $this->_aObject['object']);
         return $this->getAll($sQuery);
     }
-
 }
 
 /** @} */
