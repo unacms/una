@@ -1189,7 +1189,7 @@ function bx_get_with_prefix ($sPrefix, $sMethod = false)
 function bx_get_base_url_inline($aParams = array())
 {
     $aBaseLink = parse_url(BX_DOL_URL_ROOT);
-    $sPageLink = (!empty($aBaseLink['scheme']) ? $aBaseLink['scheme'] : 'http') . '://' . $aBaseLink['host'] . $_SERVER['REQUEST_URI'];
+    $sPageLink = (!empty($aBaseLink['scheme']) ? $aBaseLink['scheme'] : 'http') . '://' . $aBaseLink['host'] . (!empty($aBaseLink['port']) ? ':' . $aBaseLink['port'] : '') . $_SERVER['REQUEST_URI'];
 
     list($sPageLink, $aPageParams) = bx_get_base_url($sPageLink);
 
