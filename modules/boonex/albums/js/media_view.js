@@ -9,8 +9,8 @@
  */
 
 Array.prototype.indexOfMediaObject = function (o) {
-    var l = this.length;
-    for (var i=0 ; i < l ; ++i) {
+    var iLength = this.length;
+    for (var i=0 ; i < iLength ; ++i) {
         if (o['media-id'] == this[i]['media-id'])
             return i;
     }
@@ -129,22 +129,26 @@ function bx_albums_open_gallery(eve, e, sContext) {
                 return;
             }
 
-            var l = aItems.length;
+            var iGoTo = -1;
+            var iLength = aItems.length;
 
             if (0 == aItems.indexOfMediaObject(oItemCurrent) && 'undefined' !== typeof(oData.prev.url)) {
                 aItems.unshift(fnConverMedia(oData.prev));
                 if (bFirstLoad)
                     options.index = 1;
                 else
-                    glBxAlbumsGallery.goTo(glBxAlbumsGallery.getCurrentIndex() + 1);
+                    iGoTo = glBxAlbumsGallery.getCurrentIndex() + 1;
             }
     
             if ((aItems.length - 1) == aItems.indexOfMediaObject(oItemCurrent) && 'undefined' !== typeof(oData.next.url))
                 aItems.push(fnConverMedia(oData.next));
 
-            if (!bFirstLoad && l != aItems.length) {
+            if (!bFirstLoad && iLength != aItems.length) {
                 glBxAlbumsGallery.invalidateCurrItems();
                 glBxAlbumsGallery.updateSize(true);
+
+                if(iGoTo >= 0)
+                    glBxAlbumsGallery.goTo(iGoTo);
             }
 
             if (bFirstLoad) {
