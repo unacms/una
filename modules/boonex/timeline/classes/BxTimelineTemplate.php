@@ -2204,9 +2204,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $aTmplVarsActions = array();
         if(!empty($iUser) && !empty($iOwner) && $iUser != $iOwner) {
-            $sConnection = $this->_oConfig->getObject('conn_subscriptions');
-            if(BxDolConnection::getObjectInstance($sConnection)->checkAllowedConnect($iUser, $iOwner) === CHECK_ACTION_RESULT_ALLOWED) {
+            $oOwner = BxDolProfile::getInstance($iOwner);
+            if($oOwner !== false && bx_srv($oOwner->getModule(), 'check_allowed_with_content', array('subscribe_add', $oOwner->getContentId())) === CHECK_ACTION_RESULT_ALLOWED) {
                 $sJsObject = $this->_oConfig->getJsObjectView($aBrowseParams);
+                $sConnection = $this->_oConfig->getObject('conn_subscriptions');
 
                 $sContent = _t('_sys_menu_item_title_sm_subscribe');
                 $aTmplVarsActions[] = array(
