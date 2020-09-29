@@ -20,7 +20,7 @@ class BxMarketMenuView extends BxBaseModTextMenuView
         parent::__construct($aObject, $oTemplate);
 
         $this->addMarkers(array(
-        	'js_object' => $this->_oModule->_oConfig->getJsObject('entry')
+            'js_object' => $this->_oModule->_oConfig->getJsObject('entry')
         ));
     }
 
@@ -33,67 +33,74 @@ class BxMarketMenuView extends BxBaseModTextMenuView
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
-		if(!parent::_isVisible($a))
-			return false;
+        if(!parent::_isVisible($a))
+            return false;
 
-		$oPayment = BxDolPayments::getInstance();
+        $oPayment = BxDolPayments::getInstance();
 
-		$bResult = false;
-		switch ($a['name']) {
-			case 'download':
-                            if((int)$this->_aContentInfo[$CNF['FIELD_PACKAGE']] == 0) 
-                                break;
+        $bResult = false;
+        switch ($a['name']) {
+            case 'download':
+                if((int)$this->_aContentInfo[$CNF['FIELD_PACKAGE']] == 0) 
+                    break;
 
-                            $bResult = true;
-                            break;
+                $bResult = true;
+                break;
 
-			case 'add-to-cart':
-                            if((float)$this->_aContentInfo[$CNF['FIELD_PRICE_SINGLE']] == 0) 
-                                break;
+            case 'add-to-cart':
+                if((float)$this->_aContentInfo[$CNF['FIELD_PRICE_SINGLE']] == 0) 
+                    break;
 
-                            if(!BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_PURCHASE'])->check((int)$this->_aContentInfo[$CNF['FIELD_ID']]))
-                                break;
+                if(!BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_PURCHASE'])->check((int)$this->_aContentInfo[$CNF['FIELD_ID']]))
+                    break;
 
-                            $aJs = $oPayment->getAddToCartJs($this->_aContentInfo['author'], $this->MODULE, $this->_aContentInfo['id'], 1, true);
-                            if(empty($aJs) || !is_array($aJs))
-                                break;
+                $aJs = $oPayment->getAddToCartJs($this->_aContentInfo['author'], $this->MODULE, $this->_aContentInfo['id'], 1, true);
+                if(empty($aJs) || !is_array($aJs))
+                    break;
 
-                            list($sJsCode, $sJsMethod) = $aJs;
-                            $aCurrency = $this->_oModule->_oConfig->getCurrency();
+                list($sJsCode, $sJsMethod) = $aJs;
+                $aCurrency = $this->_oModule->_oConfig->getCurrency();
 
-                            $bResult = true;
-                            $this->addMarkers(array(
-                                'add_to_cart_title' => _t('_bx_market_menu_item_title_add_to_cart', $aCurrency['sign'], $this->_aContentInfo[$CNF['FIELD_PRICE_SINGLE']]),
-                                'add_to_cart_onclick' => $sJsMethod
-                            ));
-                            break;
+                $bResult = true;
+                $this->addMarkers(array(
+                    'add_to_cart_title' => _t('_bx_market_menu_item_title_add_to_cart', $aCurrency['sign'], $this->_aContentInfo[$CNF['FIELD_PRICE_SINGLE']]),
+                    'add_to_cart_onclick' => $sJsMethod
+                ));
+                break;
 
-			case 'subscribe':
-                            if((float)$this->_aContentInfo[$CNF['FIELD_PRICE_RECURRING']] == 0) 
-                                break;
+            case 'subscribe':
+                if((float)$this->_aContentInfo[$CNF['FIELD_PRICE_RECURRING']] == 0) 
+                    break;
 
-                            if(!BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_PURCHASE'])->check((int)$this->_aContentInfo[$CNF['FIELD_ID']]))
-                                break;
+                if(!BxDolPrivacy::getObjectInstance($CNF['OBJECT_PRIVACY_PURCHASE'])->check((int)$this->_aContentInfo[$CNF['FIELD_ID']]))
+                    break;
 
-                            $aJs = $oPayment->getSubscribeJs($this->_aContentInfo['author'], '', $this->MODULE, $this->_aContentInfo['id'], 1);
-                            if(empty($aJs) || !is_array($aJs))
-                                break;
+                /**
+                 * Current version of Credits module 
+                 * doesn't support Subscription payments.
+                 */
+                if($oPayment->isCreditsOnly())
+                    break;
 
-                            list($sJsCode, $sJsMethod) = $aJs;
-                            $aCurrency = $this->_oModule->_oConfig->getCurrency();
+                $aJs = $oPayment->getSubscribeJs($this->_aContentInfo['author'], '', $this->MODULE, $this->_aContentInfo['id'], 1);
+                if(empty($aJs) || !is_array($aJs))
+                    break;
 
-                            $bResult = true;
-                            $this->addMarkers(array(
-                                'subscribe_title' => _t('_bx_market_menu_item_title_subscribe', $aCurrency['sign'], $this->_aContentInfo[$CNF['FIELD_PRICE_RECURRING']], _t('_bx_market_txt_per_' . $this->_aContentInfo[$CNF['FIELD_DURATION_RECURRING']])),
-                                'subscribe_onclick' => $sJsMethod
-                            )); 
-                            break;
+                list($sJsCode, $sJsMethod) = $aJs;
+                $aCurrency = $this->_oModule->_oConfig->getCurrency();
 
-			default:
-                            $bResult = true;
-		}
+                $bResult = true;
+                $this->addMarkers(array(
+                    'subscribe_title' => _t('_bx_market_menu_item_title_subscribe', $aCurrency['sign'], $this->_aContentInfo[$CNF['FIELD_PRICE_RECURRING']], _t('_bx_market_txt_per_' . $this->_aContentInfo[$CNF['FIELD_DURATION_RECURRING']])),
+                    'subscribe_onclick' => $sJsMethod
+                )); 
+                break;
 
-		return $bResult;
+            default:
+                $bResult = true;
+        }
+
+        return $bResult;
     }
 }
 

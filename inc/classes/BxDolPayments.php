@@ -45,18 +45,26 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
     public function isActive()
     {
     	if(empty($this->_sActive))
-    		return false;
+            return false;
 
     	if(!BxDolModuleQuery::getInstance()->isModuleByName($this->_sActive))
-    		return false;
+            return false;
 
     	return true;
     }
 
-	public function getDetailsUrl()
+    public function isCreditsOnly()
+    {
+    	if(empty($this->_sActive) || !BxDolRequest::serviceExists($this->_sActive, 'is_credits_only'))
+            return false;
+
+        return bx_srv($this->_sActive, 'is_credits_only');
+    }
+
+    public function getDetailsUrl()
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_details_url', 'Details'))
-    		return '';
+            return '';
 
     	return BxDolService::call($this->_sActive, 'get_details_url', array(), 'Details');
     }

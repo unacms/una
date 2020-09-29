@@ -141,7 +141,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 
     protected function getUnit ($aData, $aParams = array())
     {
-        $bTmplVarsSectionAuthor = false;
+        $bTmplVarsSectionAuthor = true;
         $bTmplVarsSectionPricing = false;
         $bTmplVarsSectionVoting = true;
 
@@ -170,21 +170,21 @@ class BxMarketTemplate extends BxBaseModTextTemplate
 
             //--- Actions
             $sActions = '';
-        	$oActions = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_SNIPPET']);
-        	if($oActions) {
-        	    $oActions->setContentId($aData[$CNF['FIELD_ID']]);
-        	    $sActions = $oActions->getCode();
-        	}
+            $oActions = BxDolMenu::getObjectInstance($CNF['OBJECT_MENU_ACTIONS_SNIPPET']);
+            if($oActions) {
+                $oActions->setContentId($aData[$CNF['FIELD_ID']]);
+                $sActions = $oActions->getCode();
+            }
 
             $sDate = $this->parseHtmlByName('snippet-date.html', array(
                 'date' => bx_time_js($aData[$CNF['FIELD_ADDED']])
             ));
 
-        	$aTmplVarsSectionAuthor = array(
+            $aTmplVarsSectionAuthor = array(
                 'actions' => $sActions,
                 'author_unit' => $sAuthorUnitShort,
                 'author_width_date' => _t('_bx_market_txt_author_added_product', $sAuthorName, $sDate),
-	        );
+            );
         }
 
         //--- Main Info
@@ -225,66 +225,66 @@ class BxMarketTemplate extends BxBaseModTextTemplate
         $aTmplVarsSectionPricing = array();
         if($bTmplVarsSectionPricing) {
             //--- Price Single
-        	$bTmplVarsSingle = (float)$aData[$CNF['FIELD_PRICE_SINGLE']] != 0;
-        	$aTmplVarsSingle = array();
-        	if($bTmplVarsSingle) {
-        		$aJsSingle = $oPayment->getAddToCartJs($aData[$CNF['FIELD_AUTHOR']], $this->_oConfig->getName(), $aData[$CNF['FIELD_ID']], 1, true);
-        		if(!empty($aJsSingle) && is_array($aJsSingle)) {
-        			list($sJsCode, $sSingleOnclick) = $aJsSingle;
-        			
-    	    		$aTmplVarsSingle = array(
-    	    			'price_single_onclick' => $sSingleOnclick,
-    					'price_single' => _t('_bx_market_txt_price_single', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_SINGLE']])
-    				);
-        		}
-        		else 
-        			$bTmplVarsSingle = false;
-        	}
-    
-        	//--- Price Recurring
-        	$bTmplVarsRecurring = (float)$aData[$CNF['FIELD_PRICE_RECURRING']] != 0;
-        	$aTmplVarsRecurring = array();
-        	if($bTmplVarsRecurring) {
-            	$aJsRecurring = $oPayment->getSubscribeJs($aData[$CNF['FIELD_AUTHOR']], '', $this->_oConfig->getName(), $aData[$CNF['FIELD_ID']], 1);
-            	if(!empty($aJsRecurring) && is_array($aJsRecurring)) {
-    				list($sJsCode, $sRecurringOnclick) = $aJsRecurring;
-    
-    	        	$aTmplVarsRecurring = array(
-    	        		'price_recurring_onclick' => $sRecurringOnclick,
-    					'price_recurring' => _t('_bx_market_txt_price_recurring', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_RECURRING']], _t($CNF['T']['txt_per_' . $aData[$CNF['FIELD_DURATION_RECURRING']] . '_short']))
-    				);
-            	}
-            	else 
-            		$bTmplVarsRecurring = false;
-        	}
+            $bTmplVarsSingle = (float)$aData[$CNF['FIELD_PRICE_SINGLE']] != 0;
+            $aTmplVarsSingle = array();
+            if($bTmplVarsSingle) {
+                $aJsSingle = $oPayment->getAddToCartJs($aData[$CNF['FIELD_AUTHOR']], $this->_oConfig->getName(), $aData[$CNF['FIELD_ID']], 1, true);
+                if(!empty($aJsSingle) && is_array($aJsSingle)) {
+                    list($sJsCode, $sSingleOnclick) = $aJsSingle;
 
-        	$aTmplVarsSectionPricing = array(
-        	    'bx_if:show_single' => array(
-        			'condition' => $bTmplVarsSingle,
-        			'content' => $aTmplVarsSingle
-        		),
-        		'bx_if:show_recurring' => array(
-        			'condition' => $bTmplVarsRecurring,
-        			'content' => $aTmplVarsRecurring
-        		),
-        		'bx_if:show_free' => array(
-        			'condition' => !$bTmplVarsSingle && !$bTmplVarsRecurring,
-        			'content' => array(
-        		        'price_free_href' => $oPermalinks->permalink('page.php?i=' . $CNF['URI_DOWNLOAD_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']])
-        		    )
-        		)
-        	);
+                    $aTmplVarsSingle = array(
+                        'price_single_onclick' => $sSingleOnclick,
+                        'price_single' => _t('_bx_market_txt_price_single', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_SINGLE']])
+                    );
+                }
+                else 
+                    $bTmplVarsSingle = false;
+            }
+
+            //--- Price Recurring
+            $bTmplVarsRecurring = !$oPayment->isCreditsOnly() && (float)$aData[$CNF['FIELD_PRICE_RECURRING']] != 0;
+            $aTmplVarsRecurring = array();
+            if($bTmplVarsRecurring) {
+                $aJsRecurring = $oPayment->getSubscribeJs($aData[$CNF['FIELD_AUTHOR']], '', $this->_oConfig->getName(), $aData[$CNF['FIELD_ID']], 1);
+                if(!empty($aJsRecurring) && is_array($aJsRecurring)) {
+                    list($sJsCode, $sRecurringOnclick) = $aJsRecurring;
+
+                    $aTmplVarsRecurring = array(
+                        'price_recurring_onclick' => $sRecurringOnclick,
+                        'price_recurring' => _t('_bx_market_txt_price_recurring', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_RECURRING']], _t($CNF['T']['txt_per_' . $aData[$CNF['FIELD_DURATION_RECURRING']] . '_short']))
+                    );
+                }
+                else 
+                    $bTmplVarsRecurring = false;
+            }
+
+            $aTmplVarsSectionPricing = array(
+                'bx_if:show_single' => array(
+                    'condition' => $bTmplVarsSingle,
+                    'content' => $aTmplVarsSingle
+                ),
+                'bx_if:show_recurring' => array(
+                    'condition' => $bTmplVarsRecurring,
+                    'content' => $aTmplVarsRecurring
+                ),
+                'bx_if:show_free' => array(
+                    'condition' => !$bTmplVarsSingle && !$bTmplVarsRecurring,
+                    'content' => array(
+                        'price_free_href' => $oPermalinks->permalink('page.php?i=' . $CNF['URI_DOWNLOAD_ENTRY'] . '&id=' . $aData[$CNF['FIELD_ID']])
+                    )
+                )
+            );
         }
 
         $aTmplVarsSectionVoting = array();
         if($bTmplVarsSectionVoting) {
             $sVoting = '';
-        	$oVoting = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $aData[$CNF['FIELD_ID']]);
+            $oVoting = BxDolVote::getObjectInstance($CNF['OBJECT_VOTES'], $aData[$CNF['FIELD_ID']]);
             if($oVoting)
-    			$sVoting = $oVoting->getElementBlock(array('show_counter' => false));
+                $sVoting = $oVoting->getElementBlock(array('show_counter' => false));
 
             $sPricing = "";
-            if((float)$aData[$CNF['FIELD_PRICE_RECURRING']] != 0)
+            if(!$oPayment->isCreditsOnly() && (float)$aData[$CNF['FIELD_PRICE_RECURRING']] != 0)
                 $sPricing = _t('_bx_market_txt_price_recurring_short', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_RECURRING']], _t($CNF['T']['txt_per_' . $aData[$CNF['FIELD_DURATION_RECURRING']] . '_short']));
 
             if(empty($sPricing) && (float)$aData[$CNF['FIELD_PRICE_SINGLE']] != 0)
@@ -297,9 +297,7 @@ class BxMarketTemplate extends BxBaseModTextTemplate
                 'voting' => $sVoting,
                 'pricing' => $sPricing
             );
-            
         }
-
 
     	$aUnit = array_merge($aUnit, array(
     	    'bx_if:show_section_author' => array(
