@@ -17,6 +17,32 @@ function BxCreditsStudio(oOptions) {
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
 }
 
+BxCreditsStudio.prototype.checkBundleName = function(sNameId, iId) {
+    var oDate = new Date();
+
+    var oName = jQuery("[name='" + sNameId + "']");
+    var sName = oName.val();
+
+    if(!sName.length)
+        return;
+
+    jQuery.get(
+        this._sActionsUrl + 'check_bundle_name',
+        {
+            name: sName,
+            id: iId && parseInt(iId) > 0 ? iId : 0,
+            _t: oDate.getTime()
+        },
+        function(oData) {
+            if(!oData || oData.name == undefined)
+                return;
+
+            oName.val(oData.name);
+        },
+        'json'
+    );
+};
+
 BxCreditsStudio.prototype.loadingInButton = function(e, bShow) {
     if($(e).length)
         bx_loading_btn($(e), bShow);

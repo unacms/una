@@ -37,16 +37,6 @@ class BxCreditsGridBundles extends BxTemplGrid
                 'order' => $this->_oModule->_oDb->getBundle(array('type' => 'order_max')) + 1
             );
 
-            $oLanguage = BxDolStudioLanguagesUtils::getInstance();
-            $aLanguages = $oLanguage->getLanguagesExt();
-            $sLanguageCurrent = $oLanguage->getCurrentLangName(false);
-
-            $sTitle = BxDolForm::getSubmittedValue('title-' . $sLanguageCurrent, $oForm->aFormAttrs['method']);
-            $sName = uriGenerate(strtolower($sTitle), $CNF['TABLE_BUNDLES'], 'name', 'cat', '_');
-
-            $aValsToAdd['name'] = $sName;
-            BxDolForm::setSubmittedValue('title', '_bx_credits_txt_bundle_title_' . $sName, $oForm->aFormAttrs['method']);
-
             $iId = (int)$oForm->insert($aValsToAdd);
             if($iId != 0)
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
@@ -63,7 +53,7 @@ class BxCreditsGridBundles extends BxTemplGrid
                 'action' => $sAction
             )));
 
-            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false, 'removeOnClose' => true))));
         }
     }
     
@@ -92,10 +82,7 @@ class BxCreditsGridBundles extends BxTemplGrid
         $oForm->initChecker($aBundle);
 
         if($oForm->isSubmittedAndValid()) {
-            $aValsToAdd = array();
-
-            $iId = (int)$oForm->update($iId);
-            if($iId != 0)
+            if($oForm->update($iId) !== false)
                 $aRes = array('grid' => $this->getCode(false), 'blink' => $iId);
             else
                 $aRes = array('msg' => _t('_bx_credits_txt_err_cannot_perform_action'));
@@ -110,7 +97,7 @@ class BxCreditsGridBundles extends BxTemplGrid
                 'action' => $sAction
             )));
 
-            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
+            echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false, 'removeOnClose' => true))));
         }
     }
 

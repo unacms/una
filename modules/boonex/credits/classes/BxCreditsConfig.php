@@ -193,6 +193,11 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
         return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($this->CNF['URL_HOME']);
     }
 
+    public function getBundleName($sName)
+    {
+        return uriGenerate($sName, $this->CNF['TABLE_BUNDLES'], $this->CNF['FIELD_NAME'], 'cat', '_');
+    }
+
     public function getBundleDescription($aBundle)
     {
         if(empty($aBundle[$this->CNF['FIELD_BONUS']]))
