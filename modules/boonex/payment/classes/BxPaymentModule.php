@@ -160,6 +160,28 @@ class BxPaymentModule extends BxBaseModPaymentModule
      * @page service Service Calls
      * @section bx_payment Payment
      * @subsection bx_payment-purchase_processing Purchase Processing
+     * @subsubsection bx_payment-is_credits_only is_credits_only
+     * 
+     * @code bx_srv('bx_payment', 'is_credits_only'); @endcode
+     * 
+     * Check whether the 'Credits Only' mode is enabled or not.
+     *
+     * @return boolean value determining the result of checking.
+     * 
+     * @see BxPaymentModule::serviceIsCreditsOnly
+     */
+    /** 
+     * @ref bx_payment-is_credits_only "is_credits_only"
+     */
+    public function serviceIsCreditsOnly()
+    {
+        return $this->_oConfig->isCreditsOnly();
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-purchase_processing Purchase Processing
      * @subsubsection bx_payment-is_accepting_payments is_accepting_payments
      * 
      * @code bx_srv('bx_payment', 'is_accepting_payments', [...]); @endcode
