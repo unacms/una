@@ -123,6 +123,7 @@ INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`,
 
 INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES 
 ('bx_credits_bundle', 'bx_credits', 'title', '', '', 0, 'text_translatable', '_bx_credits_form_bundle_input_sys_title', '_bx_credits_form_bundle_input_title', '', 1, 0, 0, '', '', '', 'AvailTranslatable', 'a:1:{i:0;s:5:"title";}', '_bx_credits_form_bundle_input_title_err', 'Xss', '', 1, 0),
+('bx_credits_bundle', 'bx_credits', 'name', '', '', 0, 'text', '_bx_credits_form_bundle_input_sys_name', '_bx_credits_form_bundle_input_name', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_credits_form_bundle_input_name_err', 'Xss', '', 1, 0),
 ('bx_credits_bundle', 'bx_credits', 'amount', '', '', 0, 'text', '_bx_credits_form_bundle_input_sys_amount', '_bx_credits_form_bundle_input_amount', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_credits_form_bundle_input_amount_err', 'Xss', '', 1, 0),
 ('bx_credits_bundle', 'bx_credits', 'bonus', '', '', 0, 'text', '_bx_credits_form_bundle_input_sys_bonus', '_bx_credits_form_bundle_input_bonus', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 1, 0),
 ('bx_credits_bundle', 'bx_credits', 'price', '', '', 0, 'text', '_bx_credits_form_bundle_input_sys_price', '_bx_credits_form_bundle_input_price', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_credits_form_bundle_input_price_err', 'Xss', '', 1, 0),
@@ -131,21 +132,23 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_credits_bundle', 'bx_credits', 'do_cancel', '_bx_credits_form_bundle_input_do_cancel', '', 0, 'button', '_bx_credits_form_bundle_input_sys_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 1, 0);
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
-('bx_credits_bundle_add', 'title', 2147483647, 1, 1),
-('bx_credits_bundle_add', 'amount', 2147483647, 1, 2),
-('bx_credits_bundle_add', 'bonus', 2147483647, 1, 3),
-('bx_credits_bundle_add', 'price', 2147483647, 1, 4),
-('bx_credits_bundle_add', 'controls', 2147483647, 1, 5),
-('bx_credits_bundle_add', 'do_submit', 2147483647, 1, 6),
-('bx_credits_bundle_add', 'do_cancel', 2147483647, 1, 7),
+('bx_credits_bundle_add', 'name', 2147483647, 1, 1),
+('bx_credits_bundle_add', 'title', 2147483647, 1, 2),
+('bx_credits_bundle_add', 'amount', 2147483647, 1, 3),
+('bx_credits_bundle_add', 'bonus', 2147483647, 1, 4),
+('bx_credits_bundle_add', 'price', 2147483647, 1, 5),
+('bx_credits_bundle_add', 'controls', 2147483647, 1, 6),
+('bx_credits_bundle_add', 'do_submit', 2147483647, 1, 7),
+('bx_credits_bundle_add', 'do_cancel', 2147483647, 1, 8),
 
-('bx_credits_bundle_edit', 'title', 2147483647, 1, 1),
-('bx_credits_bundle_edit', 'amount', 2147483647, 1, 2),
-('bx_credits_bundle_edit', 'bonus', 2147483647, 1, 3),
-('bx_credits_bundle_edit', 'price', 2147483647, 1, 4),
-('bx_credits_bundle_edit', 'controls', 2147483647, 1, 5),
-('bx_credits_bundle_edit', 'do_submit', 2147483647, 1, 6),
-('bx_credits_bundle_edit', 'do_cancel', 2147483647, 1, 7);
+('bx_credits_bundle_edit', 'name', 2147483647, 1, 1),
+('bx_credits_bundle_edit', 'title', 2147483647, 1, 2),
+('bx_credits_bundle_edit', 'amount', 2147483647, 1, 3),
+('bx_credits_bundle_edit', 'bonus', 2147483647, 1, 4),
+('bx_credits_bundle_edit', 'price', 2147483647, 1, 5),
+('bx_credits_bundle_edit', 'controls', 2147483647, 1, 6),
+('bx_credits_bundle_edit', 'do_submit', 2147483647, 1, 7),
+('bx_credits_bundle_edit', 'do_cancel', 2147483647, 1, 8);
 
 
 -- STUDIO: page & widget

@@ -32,6 +32,28 @@ class BxCreditsModule extends BxBaseModGeneralModule
         echoJson($a);
     }
 
+    public function actionCheckBundleName()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+    	$sName = bx_process_input(bx_get('name'));
+    	if(empty($sName))
+            return echoJson(array());
+
+        $sResult = '';
+
+        $iId = (int)bx_get('id');
+        if(!empty($iId)) {
+            $aBundle = $this->_oDb->getBundle(array('type' => 'id', 'id' => $iId)); 
+            if(strcmp($sName, $aBundle[$CNF['FIELD_NAME']]) == 0) 
+                $sResult = $sName;
+        }
+
+    	echoJson(array(
+            'name' => !empty($sResult) ? $sResult : $this->_oConfig->getBundleName($sName)
+    	));
+    }
+
     public function actionCheckout()
     {
         $iBuyerId = bx_get_logged_profile_id();
