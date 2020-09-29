@@ -25,7 +25,7 @@ class BxAclGridView extends BxAclGridLevels
         $this->_iOwner = $this->_oModule->_oConfig->getOwner();
         $this->_oPayment = BxDolPayments::getInstance();
         $this->_bTypeSingle = $this->_oPayment->isAcceptingPayments($this->_iOwner, BX_PAYMENT_TYPE_SINGLE);
-        $this->_bTypeRecurring = $this->_oPayment->isAcceptingPayments($this->_iOwner, BX_PAYMENT_TYPE_RECURRING);
+        $this->_bTypeRecurring = !$this->_oPayment->isCreditsOnly() && $this->_oPayment->isAcceptingPayments($this->_iOwner, BX_PAYMENT_TYPE_RECURRING);
     }
 
     public function performActionChoose()
