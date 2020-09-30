@@ -78,6 +78,12 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         $aPrivacyFields = $this->_getPrivacyFields();
         foreach($aPrivacyFields as $sField => $sObject)
             $this->_preparePrivacyField($sField, $sObject);
+        
+        foreach($this->aInputs as $sKey => $aInput) {
+            if ($aInput['type'] == 'nested_form'){
+                $this->genGhostTemplateForInputNestedForm ($this->aInputs[$sKey]);
+            }
+        }
     }
 
     function getCode($bDynamicMode = false)
@@ -102,6 +108,128 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         }
         
         return $sResult;
+    }
+    
+    /**
+     * Nested forms processing
+     */
+    function genInputNestedForm (&$aInput, $sInfo = '', $sError = '')
+    {
+        $sUniqId = genRndPwd (8, false);
+        
+        $aNestedForms = array();
+        if (!$this->isSubmitted()){
+            $aNestedValues = $this->_oModule->_oDb->getNestedBy(array('type' => 'content_id', 'id' => $this->_iContentId, 'key_name' => $aInput['ghost_template']['params']['db']['key']), $aInput['ghost_template']['params']['db']['table']);
+            foreach($aNestedValues as $aNestedValue) {
+                $aNestedValuesRv = array();
+                foreach($aNestedValue as $aNestedKey => $aNestedItem) {
+                    $aNestedValuesRv[$aNestedKey . '[]'] = $aNestedItem;
+                }
+                $oForm = $this->getNestedFormObject($aInput);  
+                $oForm->initChecker($aNestedValuesRv);
+                array_push(
+				    $aNestedForms,
+				    array(
+					    'key_value' => $aNestedValuesRv[$oForm->aParams['db']['key'] . '[]'],
+                        'key_name' => $aInput['name'],
+					    'form_code' => $oForm->genRows(),
+                        'js_instance_name' => 'oBxNestedForm_' . $sUniqId,
+                        'nested_type' => $aInput['name'],
+				    )
+			    );
+            }
+        }
+        else{
+            $aInput['ghost_templates'] = $aInput['ghost_template'];
+            $this->genGhostTemplateForInputNestedForm ($aInput);
+            foreach($aInput['ghost_templates'] as $oForm) {
+                array_push(
+				    $aNestedForms,
+				    array(
+					    'key_value' => $oForm->aInputs[$aInput['name']]['value'],
+                        'key_name' => $aInput['name'],
+					    'form_code' => $oForm->genRows(),
+                        'js_instance_name' => 'oBxNestedForm_' . $sUniqId,
+                        'nested_type' => $aInput['name'],
+				    )
+			    );
+            }
+        }
+
+        return $this->oTemplate->parseHtmlByName('form_field_nested_form.html', array(
+            'bx_repeat:items' => $aNestedForms,
+            'info' => $sInfo,
+            'error' => $sError,
+            'uniq_id' => $sUniqId,
+            'js_instance_name' => 'oBxNestedForm_' . $sUniqId,
+            'options' => json_encode(array(
+                'uniq_id' => $sUniqId,
+                'js_instance_name' => 'oBxNestedForm_' . $sUniqId,
+                'template_ghost' => $this->genGhostTemplate($aInput),
+                'form_name' => $aInput['value'],
+                'action_uri' =>  $this->_oModule->_oConfig->getBaseUri(),
+                'nested_type' => $aInput['name'],
+            )),
+        ));
+    }
+    
+    function genNestedForm (&$aInput)
+    {
+        $sResult = '';
+        $aNestedValues = $this->_oModule->_oDb->getNestedBy(array('type' => 'content_id', 'id' => $this->_iContentId, 'key_name' => $aInput['ghost_template']['params']['db']['key']), $aInput['ghost_template']['params']['db']['table']);
+        foreach($aNestedValues as $aNestedValue) {
+            $sValue = '';
+			$aNestedValuesRv = array();
+            foreach($aNestedValue as $aNestedKey => $aNestedItem) {
+                $aNestedValuesRv[$aNestedKey . '[]'] = $aNestedItem;
+            }
+            $oForm = $this->getNestedFormObject($aInput, true);  
+            $oForm->initChecker($aNestedValuesRv);
+            
+            if ($aInput['rateable']){
+                $sVotes = '';
+                $iId = BxDolFormQuery::getFormField($this->id, $aInput['name'], $this->_iContentId,  $aNestedValuesRv[$oForm->aParams['db']['key'] . '[]']);
+                $oVote = BxDolVote::getObjectInstance($aInput['rateable'], $iId, true, BxDolTemplate::getInstance());
+                if ($oVote)    
+                    $sVotes = $oVote->getElementInline(array('show_counter_empty' => true, 'show_counter' => true, 'show_counter_style' => 'compound', 'dynamic_mode' => $this->_bDynamicMode));
+				$sValue = $this->oTemplate->parseHtmlByName('form_view_rateable_row.html', array(
+					'value' =>  $oForm->getCode(),
+					'rate' => $sVotes
+				));
+            }
+			else{
+				$sValue =  $oForm->getCode();
+			}
+			$sResult .= $this->oTemplate->parseHtmlByName('form_view_nested_row.html', array(
+				'value' =>  $sValue
+			));
+        }
+        return $this->oTemplate->parseHtmlByName('form_view_row.html', array(
+            'type' => $aInput['type'], 
+            'caption' => isset($aInput['caption']) ? bx_process_output($aInput['caption']) : '',
+            'value' => $sResult
+        ));
+    }
+    
+    protected function genGhostTemplateForInputNestedForm (&$aInput)
+    {
+        $oForm = $this->getNestedFormObject($aInput);  
+        $aInput['ghost_template'] = array ( 
+            'params' => array(
+                'nested_form_template' => 'form_field_nested_form_wrapper.html',
+                'db' => array(
+                    'table' => $oForm->aParams['db']['table'],
+                    'key' => $oForm->aParams['db']['key'],
+                    'submit_name' =>  $oForm->aParams['db']['key'],
+                ),
+            ),
+            'inputs' => $oForm->aInputs
+        );
+    }
+    
+    function getNestedFormObject (&$aInput, $bViewMode = false)
+    {
+        return BxDolForm::getObjectInstance($aInput['value'], $aInput['value'] . ($bViewMode ? '_view' : ''));
     }
 
     /**
@@ -253,13 +381,26 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         $iContentId = parent::insert ($aValsToAdd, $isIgnore);
         
         if(!empty($iContentId)){
+            foreach($this->aInputs as $aInput) {
+                if ($aInput['type'] == 'nested_form'){
+			        if (is_array($aInput['ghost_template']) && !isset($aInput['ghost_template']['inputs'])) {
+				        foreach ($aInput['ghost_template'] as $oFormNested) {
+					        $iNestedContentId = $oFormNested->insert(array('item_id' => $iContentId));
+                            if ($aInput['rateable']){
+                                BxDolFormQuery::addFormField($this->id, $aInput['name'], $iContentId, $aValsToAdd[$CNF['FIELD_AUTHOR']], $this->_oModule->getName(), $iNestedContentId);
+                            }
+				        }
+			        }
+                }
+		    }
+            
             if ($bMulticatEnabled)
                 $this->processMulticatAfter($CNF['FIELD_MULTICAT'], $iContentId);
         }
         
         
         foreach($this->aInputs as $aInput) {
-            if ($aInput['rateable']){
+            if ($aInput['rateable'] && $aInput['type'] != 'nested_form'){
                 BxDolFormQuery::addFormField($this->id, $aInput['name'], $iContentId, $aValsToAdd[$CNF['FIELD_AUTHOR']], $this->_oModule->getName());
             }
         }
@@ -297,6 +438,25 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             $this->processMulticatBefore($CNF['FIELD_MULTICAT'], $aValsToAdd);
         
         $mixedResult = parent::update($iContentId, $aValsToAdd, $aTrackTextFieldsChanges);
+        
+        foreach($this->aInputs as $aInput) {
+            if ($aInput['type'] == 'nested_form'){
+                if (is_array($aInput['ghost_template']) && !isset($aInput['ghost_template']['inputs'])) {
+                    foreach ($aInput['ghost_template'] as $oFormNested) {
+                        $iNestedContentId = $oFormNested->aInputs[$aInput['name']]['value'];
+                        if (empty($iNestedContentId)){
+                            $iNestedContentId = $oFormNested->insert(array('item_id' => $iContentId));
+                            if ($aInput['rateable']){
+                                BxDolFormQuery::addFormField($this->id, $aInput['name'], $iContentId, $aContentInfo[$CNF['FIELD_AUTHOR']], $this->_oModule->getName(), $iNestedContentId);
+                            }
+                        }
+                        else{
+                            $oFormNested->update($iNestedContentId, array('item_id' => $iContentId));
+                        }
+                    }
+                }
+            }
+        }
         
         if ($bMulticatEnabled)
             $this->processMulticatAfter($CNF['FIELD_MULTICAT'], $iContentId);
@@ -460,8 +620,9 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
     
     function genViewRowWrapped(&$aInput)
     {
+        $sResult =  parent::genViewRowWrapped($aInput);
         if (!$aInput['rateable']){
-            return parent::genViewRowWrapped($aInput);
+            return $sResult;
         }
         
         $sValue = $this->genViewRowValue($aInput);
@@ -470,16 +631,16 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         
         // process rateable fields
         $iId = BxDolFormQuery::getFormField($this->id, $aInput['name'], $this->_iContentId);
-        $sReactions = '';
-        $oReaction = BxDolVote::getObjectInstance($aInput['rateable'], $iId, true, BxDolTemplate::getInstance());
-        if ($oReaction)    
-            $sReactions = $oReaction->getElementInline(array('show_counter_empty' => true, 'show_counter' => true, 'show_counter_style' => 'simple', 'dynamic_mode' => $this->_bDynamicMode));
-        
-        return $this->oTemplate->parseHtmlByName('form_view_row.html', array(
-            'type' => $aInput['type'], 
-            'caption' => isset($aInput['caption']) ? bx_process_output($aInput['caption']) : '',
-            'value' => $sValue . $sReactions
-        ));
+        $sVote = '';
+        $oVote = BxDolVote::getObjectInstance($aInput['rateable'], $iId, true, BxDolTemplate::getInstance());
+        if ($oVote){
+            $sVote = $oVote->getElementInline(array('show_counter_empty' => true, 'show_counter' => true, 'show_counter_style' => 'compound', 'dynamic_mode' => $this->_bDynamicMode));
+			return $this->oTemplate->parseHtmlByName('form_view_rateable_row.html', array(
+				'value' => $sResult,
+				'rate' => $sVote
+			));
+        }
+		return $sResult;
     }
 
     function setMetatagsKeywordsData($iId, $a, $o)

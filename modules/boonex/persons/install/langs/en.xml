@@ -61,6 +61,8 @@
     <string name="_bx_persons_form_profile_input_profile_status"><![CDATA[Status]]></string>
     <string name="_bx_persons_form_profile_input_sys_profile_ip"><![CDATA[IP]]></string>
     <string name="_bx_persons_form_profile_input_profile_ip"><![CDATA[IP]]></string>
+    <string name="_bx_persons_form_profile_input_sys_skills"><![CDATA[Skills]]></string>
+    <string name="_bx_persons_form_profile_input_skills"><![CDATA[Skills]]></string>
     <string name="_bx_persons_form_profile_input_sys_date_added"><![CDATA[Added]]></string>
     <string name="_bx_persons_form_profile_input_date_added"><![CDATA[Added]]></string>
     <string name="_bx_persons_form_profile_input_sys_date_changed"><![CDATA[Updated]]></string>
@@ -69,6 +71,13 @@
     <string name="_bx_persons_form_profile_input_friends_count"><![CDATA[Friends count]]></string>
     <string name="_bx_persons_form_profile_input_sys_followers_count"><![CDATA[Followers count]]></string>
     <string name="_bx_persons_form_profile_input_followers_count"><![CDATA[Followers count]]></string>
+
+  <string name="_bx_persons_skills_form_profile"><![CDATA[Skills]]></string>
+  <string name="_bx_persons_skills_form_profile_display_add"><![CDATA[Add Skill]]></string>
+  <string name="_bx_persons_skills_form_profile_display_view"><![CDATA[View Skill]]></string>
+  <string name="_bx_persons_skills_form_profile_input_sys_name"><![CDATA[Name]]></string>
+  <string name="_bx_persons_skills_form_profile_input_name"><![CDATA[Name]]></string>
+  <string name="_bx_persons_skills_form_profile_input_name_err"><![CDATA[This information is essential. Please, fill in this field.]]></string>
 
 	<string name="_bx_persons_acl_action_create_profile"><![CDATA[Create Person's Profile]]></string>
 	<string name="_bx_persons_acl_action_delete_profile"><![CDATA[Delete Person's Profile]]></string>

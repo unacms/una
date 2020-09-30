@@ -1,6 +1,6 @@
 
 -- TABLES
-DROP TABLE IF EXISTS `bx_persons_data`,`bx_persons_pictures`, `bx_persons_pictures_resized`, `bx_persons_cmts`, `bx_persons_cmts_notes`, `bx_persons_views_track`, `bx_persons_votes`, `bx_persons_votes_track`, `bx_persons_favorites_track`, `bx_persons_reports`, `bx_persons_reports_track`, `bx_persons_meta_keywords`, `bx_persons_meta_locations`, `bx_persons_meta_mentions`, `bx_persons_scores`, `bx_persons_scores_track`;
+DROP TABLE IF EXISTS `bx_persons_data`,`bx_persons_pictures`, `bx_persons_pictures_resized`, `bx_persons_cmts`, `bx_persons_cmts_notes`, `bx_persons_views_track`, `bx_persons_votes`, `bx_persons_votes_track`, `bx_persons_favorites_track`, `bx_persons_reports`, `bx_persons_reports_track`, `bx_persons_meta_keywords`, `bx_persons_meta_locations`, `bx_persons_meta_mentions`, `bx_persons_scores`, `bx_persons_scores_track`, `bx_persons_skills`;
 
 -- PROFILES
 DELETE FROM sys_profiles WHERE `type` = 'bx_persons';
@@ -17,7 +17,7 @@ DELETE FROM `sys_transcoder_images_files` WHERE `transcoder_object` IN('bx_perso
 DELETE FROM `sys_objects_form` WHERE `module` = 'bx_persons';
 DELETE FROM `sys_form_displays` WHERE `module` = 'bx_persons';
 DELETE FROM `sys_form_inputs` WHERE `module` = 'bx_persons';
-DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_person_add', 'bx_person_delete', 'bx_person_edit', 'bx_person_edit_cover', 'bx_person_view', 'bx_person_view_full');
+DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_person_add', 'bx_person_delete', 'bx_person_edit', 'bx_person_edit_cover', 'bx_person_view', 'bx_person_view_full', 'bx_person_skills', 'bx_person_skills_view');
 
 -- COMMENTS
 DELETE FROM `sys_objects_cmts` WHERE `Name` LIKE 'bx_persons%';
