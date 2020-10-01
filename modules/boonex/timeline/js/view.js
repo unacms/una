@@ -73,18 +73,6 @@ BxTimelineView.prototype.init = function()
         //--- Hide timeline Events which are outside the viewport
         this.hideEvents(oItems, this._fOutsideOffset);
 
-        //--- on scolling, show/animate timeline Events when enter the viewport
-        $(window).on('scroll', function() {
-            if(!window.requestAnimationFrame) 
-                setTimeout(function() {
-                    $this.showEvents(oItems, $this._fOutsideOffset);
-                }, 100);
-            else
-                window.requestAnimationFrame(function() {
-                    $this.showEvents(oItems, $this._fOutsideOffset);
-                });
-        });
-
         //--- Init Video Autoplay
         if(this._sVideosAutoplay != 'off') {
             this.initVideosAutoplay(this.oView);
@@ -147,6 +135,7 @@ BxTimelineView.prototype.init = function()
             this.initVideos(this.oView);
     }
 
+    //--- Init Flickity
     this.initFlickity();
 };
 
@@ -241,7 +230,8 @@ BxTimelineView.prototype.initVideosAutoplay = function(oParent)
 
     this.initVideos(oParent);
 
-    var sPrefix = oParent.attr('id');
+    var sPrefix = oParent.hasClass(this.sClassView) ? oParent.attr('id') : oParent.parents('.' + this.sClassView + ':first').attr('id');
+
     oParent.find('iframe').each(function() {
         var sPlayer = sPrefix + '_' + $(this).attr('id');
         if(window.glBxTimelineVapPlayers[sPlayer])
@@ -266,20 +256,16 @@ BxTimelineView.prototype.loadCards = function()
     var $this = this;
     var oData = this._getDefaultData();
 
-    this.oView.find('.' + this.sClassItem + '.' + this.sClassSample).each(function() {
-        var oItem = $(this);
+    this.oView.find('.' + this.sClassItem + '.' + this.sClassSample).each(function(iIndex, oItem) {
+        var oItem = $(oItem);
         var sItemId = oItem.attr('id');
 
         oData['id'] = parseInt(oItem.attr('bx-id'));
-
-        $this.loadingInItem(oItem, true);
 
         jQuery.get (
             $this._sActionsUrl + 'get_post',
             oData,
             function(oData) {
-                $this.loadingInItem(oItem, false);
-
                 if(!oData.item) {
                     oItem.remove();
                     return;
@@ -294,10 +280,15 @@ BxTimelineView.prototype.loadCards = function()
                         $this.onFindOverflow(oElement);
                     });
 
+                    //--- Hide timeline Events which are outside the viewport
+                    $this.hideEvent(oItem, $this._fOutsideOffset, iIndex, true);
+        
+                    //--- Init Flickity
                     $this.initFlickityByItem(oItem);
 
                     //--- Init Video Autoplay
-                    $this.initVideosAutoplay(oItem);
+                    if(this._sVideosAutoplay != 'off')
+                        $this.initVideosAutoplay(oItem);
                 }
 
                 if($this.bViewOutline)
@@ -306,6 +297,7 @@ BxTimelineView.prototype.loadCards = function()
                             $this.onFindOverflow(oElement);
                         });
 
+                        //--- Init Flickity
                         $this.initFlickityByItem(oItem);
 
                         //--- Init Video Layout
@@ -320,16 +312,55 @@ BxTimelineView.prototype.loadCards = function()
 
 BxTimelineView.prototype.hideEvents = function(oEvents, fOffset)
 {
-    oEvents.each(function(iIndex, oElement) {
-        (iIndex >=3 && $(this).offset().top > $(window).scrollTop() + $(window).height() * fOffset ) && $(this).find('.bx-tl-item-type, .bx-tl-item-cnt').addClass('is-hidden');
+    var $this = this;
+
+    oEvents.each(function(iIndex, oEvent) {
+        $this.hideEvent($(oEvent), fOffset, iIndex, false);
     });
+
+    //--- on scolling, show/animate timeline Events when enter the viewport
+    $(window).on('scroll', function() {
+        if(!window.requestAnimationFrame) 
+            setTimeout(function() {
+                $this.showEvents(oEvents, $this._fOutsideOffset);
+            }, 100);
+        else
+            window.requestAnimationFrame(function() {
+                $this.showEvents(oEvents, $this._fOutsideOffset);
+            });
+    });
+};
+
+BxTimelineView.prototype.hideEvent = function(oEvent, fOffset, iIndex, bInitAutoShow)
+{
+    var $this = this;
+
+    iIndex >=3 && oEvent.offset().top > ($(window).scrollTop() + $(window).height() * fOffset) && oEvent.find('.bx-tl-item-type, .bx-tl-item-cnt').addClass('is-hidden');
+
+    if(bInitAutoShow)
+        $(window).on('scroll', function() {
+            if(!window.requestAnimationFrame) 
+                setTimeout(function() {
+                    $this.showEvent(oEvent, $this._fOutsideOffset);
+                }, 100);
+            else
+                window.requestAnimationFrame(function() {
+                    $this.showEvent(oEvent, $this._fOutsideOffset);
+                });
+        });
 };
 
 BxTimelineView.prototype.showEvents = function(oEvents, fOffset)
 {
+    var $this = this;
     oEvents.each(function() {
-        ( $(this).offset().top <= $(window).scrollTop() + $(window).height() * fOffset && $(this).find('.bx-tl-item-type').hasClass('is-hidden') ) && $(this).find('.bx-tl-item-type, .bx-tl-item-cnt').removeClass('is-hidden').addClass('bounce-in');
+        $this.showEvent($(this), fOffset);
     });
+};
+
+BxTimelineView.prototype.showEvent = function(oEvent, fOffset)
+{
+    oEvent.offset().top <= ($(window).scrollTop() + $(window).height() * fOffset) && oEvent.find('.bx-tl-item-type').hasClass('is-hidden') && oEvent.find('.bx-tl-item-type, .bx-tl-item-cnt').removeClass('is-hidden').addClass('bounce-in');
 };
 
 BxTimelineView.prototype.autoplayVideos = function(oView, fOffsetStart, fOffsetStop)
