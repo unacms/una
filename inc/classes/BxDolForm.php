@@ -708,7 +708,7 @@ bx_import('BxDolPrivacy');
  */
 class BxDolForm extends BxDol implements iBxDolReplaceable
 {
-    static $TYPES_SKIP = array('files' => 1, 'location' => 1);
+    static $TYPES_SKIP = array('files' => 1, 'location' => 1, 'nested_form' => 1);
     static $TYPES_CHECKBOX = array('checkbox' => 1, 'switcher' => 1);
     static $TYPES_TEXT = array('text' => 1, 'textarea' => 1);
     static $TYPES_FILE = array('file' => 1);

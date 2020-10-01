@@ -175,7 +175,50 @@ class BxBaseModGeneralDb extends BxDolModuleDb
 
         return $this->query("ALTER TABLE `" . $CNF['TABLE_ENTRIES'] . "` ADD FULLTEXT `" . $CNF['TABLE_ENTRIES_FULLTEXT'] . "` (" . trim($sFields, ', ') . ")");
     }
+    
+    public function deleteNestedById ($iNestedId, $sTableKey, $sTableName)
+	{
+		return $this->query("DELETE FROM `" . $sTableName . "` WHERE `" . $sTableKey . "` = :item_id", array('item_id' => $iNestedId));
+	}
+	
+	public function getNested ($iContentId, $sTableKey, $sTableName) 
+	{
+		return $this->getAllWithKey("SELECT `" . $sTableName . "`.* FROM `" . $sTableName . "` WHERE `item_id` = :item_id", $sTableKey, array('item_id' => $iContentId));
+	}
+   
+    function getNestedBy($aParams = array(), $sTableName)
+    {
+        $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query', 1 => array()));
+        $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
 
+        $sSelectClause = "`" . $sTableName . "`.*";
+
+        switch($aParams['type']) {
+            case 'id':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1]['id'] = (int)$aParams['id'];
+
+                $sWhereClause .= " AND `" . $sTableName . "`.`" . $aParams['key_name'] . "` = :id";
+                break;
+                
+            case 'content_id':
+                $aMethod['name'] = 'getAllWithKey';
+                $aMethod['params'][2]['id'] = (int)$aParams['id'];
+                $aMethod['params'][1] = $aParams['key_name'];
+                $sWhereClause .= " AND `" . $sTableName . "`.`item_id` = :id";
+                break;
+        }
+
+        if(!empty($sOrderClause))
+            $sOrderClause = 'ORDER BY ' . $sOrderClause;
+
+        if(!empty($sLimitClause))
+            $sLimitClause = 'LIMIT ' . $sLimitClause;
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . $sTableName . "` " . $sJoinClause . " WHERE 1 " . $sWhereClause . " " . $sOrderClause . " " . $sLimitClause;
+		return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+    
     protected function _getEntriesBySearchIds($aParams, &$aMethod, &$sSelectClause, &$sJoinClause, &$sWhereClause, &$sOrderClause, &$sLimitClause)
     {
         $CNF = &$this->_oConfig->CNF;

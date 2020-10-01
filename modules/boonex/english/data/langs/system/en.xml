@@ -758,6 +758,7 @@
 	<string name="_adm_form_err_field_add"><![CDATA[Cannot add new field]]></string>
         <string name="_adm_form_err_field_add_already_exists"><![CDATA[Field with similar name already exists]]></string>
 	<string name="_adm_form_err_field_add_not_allowed"><![CDATA[Fields cannot be added in this form]]></string>
+  <string name="_adm_form_err_field_select_nested_form"><![CDATA[Nested form must be selected.]]></string>
 	<string name="_adm_form_err_field_caption"><![CDATA[A name with at least 3 characters is required.]]></string>
         <string name="_adm_form_err_field_caption_system"><![CDATA[A name with at least 3 characters is required.]]></string>
 	<string name="_adm_form_err_field_checker_error"><![CDATA[You need to enter error message]]></string>
@@ -877,6 +878,7 @@
   <string name="_adm_form_txt_field_rateable_value_votes"><![CDATA[Use votes]]></string>
   <string name="_adm_form_txt_field_rateable_value_reactions"><![CDATA[Use reactions]]></string>
   <string name="_adm_form_txt_field_required"><![CDATA[Mandatory]]></string>
+  <string name="_adm_form_txt_field_select_nested_form"><![CDATA[Select nested form]]></string>
 	<string name="_adm_form_txt_field_show_to_popup"><![CDATA[Show "{0}" form field to: ]]></string>
         <string name="_adm_form_txt_field_type_block_end"><![CDATA[block end]]></string>
 	<string name="_adm_form_txt_field_type_block_header"><![CDATA[block header]]></string>
@@ -914,7 +916,8 @@
 	<string name="_adm_form_txt_field_type_textarea"><![CDATA[textarea]]></string>
         <string name="_adm_form_txt_field_type_time"><![CDATA[time]]></string>
 	<string name="_adm_form_txt_field_type_value"><![CDATA[info]]></string>
-	<string name="_adm_form_txt_field_unique"><![CDATA[Unique]]></string>
+  <string name="_adm_form_txt_field_type_nested_form"><![CDATA[nested form]]></string>
+  <string name="_adm_form_txt_field_unique"><![CDATA[Unique]]></string>
 	<string name="_adm_form_txt_field_value_button"><![CDATA[Title]]></string>
 	<string name="_adm_form_txt_field_value_checkbox"><![CDATA[Value]]></string>
 	<string name="_adm_form_txt_field_value_custom_text"><![CDATA[Custom text]]></string>
@@ -2229,6 +2232,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_input_sys_location"><![CDATA[Location]]></string>
 	<string name="_sys_form_input_location"><![CDATA[Location]]></string>
         <string name="_sys_form_input_location_radius_label"><![CDATA[Radius (in km)]]></string>
+  <string name="_sys_form_input_nested_form_button_add_new_item"><![CDATA[Add new item]]></string>
+  <string name="_sys_form_input_nested_form_button_delete_item"><![CDATA[Delete item]]></string>
 	<string name="_sys_form_input_sys_anonymous"><![CDATA[Post as anonymous]]></string>
 	<string name="_sys_form_input_anonymous"><![CDATA[Post as anonymous]]></string>
         <string name="_sys_form_input_sys_labels"><![CDATA[Labels]]></string>

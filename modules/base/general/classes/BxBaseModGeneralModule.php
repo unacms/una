@@ -85,6 +85,52 @@ class BxBaseModGeneralModule extends BxDolModule
 
         echo $aCmtsNotes['content'];
     }
+    
+    public function actionNested()
+    {
+        $sAction = bx_get('a');
+        $sMethodName = 'subaction' . ucfirst($sAction);
+        if (!method_exists($this, $sMethodName)) {
+            return;
+        }
+        $this->$sMethodName();
+    }
+   
+	public function subactionDelete()
+    {
+        header('Content-type: text/html; charset=utf-8');
+
+        $iNestedId = (int)bx_get('id');
+		$sNestedForm = bx_get('s');
+        
+        $oForm = BxDolForm::getObjectInstance($sNestedForm, $sNestedForm);
+        if (!$oForm){
+            echo _t('_sys_request_page_not_found_cpt');
+            return;
+        }
+
+        $aNested = $this->_oDb->getNestedBy(array('type' => 'id', 'id' => $iNestedId, 'key_name' => $oForm->aParams['db']['key']), $oForm->aParams['db']['table']);
+        if (empty($aNested)){
+            echo _t('_sys_request_page_not_found_cpt');
+            return;
+        }
+        
+        $aContentInfo = $this->_oDb->getContentInfoById ($aNested['item_id']); 
+        if (!$aContentInfo){
+            echo _t('_sys_request_page_not_found_cpt');
+            return;
+        }
+
+        elseif (CHECK_ACTION_RESULT_ALLOWED !== ($sMsg = $this->checkAllowedEdit ($aContentInfo))) {
+            echo $sMsg;
+        } 
+        elseif (!$this->_oDb->deleteNestedById($iNestedId, $oForm->aParams['db']['key'], $oForm->aParams['db']['table'])) {
+            echo _t('_sys_txt_error_occured');
+        } 
+        else {
+            echo 'ok';
+        }
+    }
 
     // ====== SERVICE METHODS
     

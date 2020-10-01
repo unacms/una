@@ -41,6 +41,10 @@ class BxTemplStudioFormsFieldNumber extends BxBaseStudioFormsFieldNumber
 {
 }
 
+class BxTemplStudioFormsFieldNestedForm extends BxBaseStudioFormsFieldNestedForm
+{
+}
+
 class BxTemplStudioFormsFieldTime extends BxBaseStudioFormsFieldTime
 {
 }

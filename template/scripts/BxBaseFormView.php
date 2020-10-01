@@ -502,7 +502,7 @@ BLAH;
             if (method_exists($this, $sCustomMethod))
                 return $this->$sCustomMethod($aInput);
         }
-
+        
         switch ($aInput['type']) {
 
             case 'block_header':
@@ -531,7 +531,7 @@ BLAH;
             case 'checkbox':
                 $sRow = $this->genRowStandard($aInput, true);
             break;
-
+            
             default:
                 $sRow = $this->genRowStandard($aInput);
         }
@@ -605,6 +605,10 @@ BLAH;
 
             case 'block_end':
                 $sRow = $this->genBlockEnd($aInput);
+            break;
+            
+            case 'nested_form':
+                $sRow =  $this->genNestedForm($aInput);
             break;
 
             default:
@@ -1056,6 +1060,10 @@ BLAH;
             case 'location':
                 $sInput = $this->genInputLocation($aInput);
             break;
+            
+            case 'nested_form':
+                $sInput = $this->genInputNestedForm($aInput);
+                break;
 
             case 'value':
                 $sInput = isset($aInput['value']) ? $aInput['value'] : '';
@@ -1661,7 +1669,7 @@ BLAH;
         $aVars = $this->_getInputLocationVars($aInput);
         return $this->oTemplate->parseHtmlByName('form_field_location.html', $aVars);
     }
-
+    
     protected function _getInputLocationVars(&$aInput)
     {
         $isManualInput = (int)(isset($aInput['manual_input']) && $aInput['manual_input']);
@@ -1749,6 +1757,17 @@ BLAH;
             return $this->_aSpecificValues[$s];
         return $this->getCleanValue($s);
     }
+    
+    function genInputNestedForm(&$aInput)
+    {
+        return '';
+    }
+    
+    function genNestedForm(&$aInput)
+    {
+        return '';
+    }
+    
     
     function genInputCaptcha(&$aInput)
     {
@@ -1977,6 +1996,7 @@ BLAH;
         $this->_addCss('forms.css');
         $this->_addJs('jquery.webForms.js', "'undefined' === typeof($.fn.addWebForms)");
         $this->_addJs('BxDolForm.js', "true");
+        $this->_addJs('BxDolNestedForm.js', "BxDolNestedForm");
 
         self::$_isCssJsAdded = true;
     }

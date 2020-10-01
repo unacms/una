@@ -266,7 +266,7 @@ class BxDolFormQuery extends BxDolDb
         return $bResult;
     }
     
-    static public function addFormField($sObjectForm, $sFieldName, $iContentId, $iAuthorId, $sModuleName)
+    static public function addFormField($sObjectForm, $sFieldName, $iContentId, $iAuthorId, $sModuleName, $iNestedContentId = 0)
     {
         $oDb = BxDolDb::getInstance();
         $aBindings = array(
@@ -274,20 +274,22 @@ class BxDolFormQuery extends BxDolDb
             'field_name' => $sFieldName,
             'content_id' => $iContentId,
             'author_id' => $iAuthorId,
-            'module' => $sModuleName
+            'module' => $sModuleName,
+            'nested_content_id' => $iNestedContentId
         );
-        $oDb->query("INSERT `sys_form_fields_ids` SET `object_form`=:object_form, `field_name`=:field_name, `content_id`=:content_id, `author_id`=:author_id, `module`=:module", $aBindings);
+        $oDb->query("INSERT `sys_form_fields_ids` SET `object_form`=:object_form, `field_name`=:field_name, `content_id`=:content_id, `author_id`=:author_id, `module`=:module, nested_content_id=:nested_content_id", $aBindings);
     }
     
-    static public function getFormField($sObjectForm, $sFieldName, $iContentId)
+    static public function getFormField($sObjectForm, $sFieldName, $iContentId, $iNestedContentId = 0)
     {
         $oDb = BxDolDb::getInstance();
         $aBindings = array(
             'object_form' => $sObjectForm,
             'field_name' => $sFieldName,
-            'content_id' => $iContentId
+            'content_id' => $iContentId,
+            'nested_content_id' => $iNestedContentId
         );
-        return $oDb->getOne("SELECT `id` FROM `sys_form_fields_ids` WHERE `object_form`=:object_form AND `field_name`=:field_name AND `content_id`=:content_id", $aBindings);
+        return $oDb->getOne("SELECT `id` FROM `sys_form_fields_ids` WHERE `object_form`=:object_form AND `field_name`=:field_name AND `content_id`=:content_id AND nested_content_id=:nested_content_id", $aBindings);
     }
     
     static public function removeFormField($sObjectForm, $iContentId = 0)

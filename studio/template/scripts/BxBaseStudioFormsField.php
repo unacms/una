@@ -1660,6 +1660,24 @@ class BxBaseStudioFormsFieldNestedForm extends BxBaseStudioFormsField
                         'pass' => 'Int',
                     )
                 ),
+                'rateable' => array(
+                    'type' => 'select',
+                    'name' => 'rateable',
+                    'caption' => _t('_adm_form_txt_field_rateable'),
+                    'info' => _t('_adm_form_dsc_field_rateable'),
+                    'values' => array(
+                		array('key' => '', 'value' => _t('_adm_form_txt_field_rateable_value_non')),
+                        array('key' => 'sys_form_fields_votes', 'value' => _t('_adm_form_txt_field_rateable_value_votes')),
+                        array('key' => 'sys_form_fields_reaction', 'value' => _t('_adm_form_txt_field_rateable_value_reactions'))
+                	),
+                    'required' => '0',
+                    'attrs' => array(
+                        'id' => 'bx-form-field-rateable'
+                    ),
+                    'db' => array (
+                        'pass' => 'Xss',
+                    )
+                ),
                 'controls' => array(
                     'name' => 'controls',
                     'type' => 'input_set',
