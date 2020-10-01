@@ -9,6 +9,8 @@
  */
 
 function BxTimelineView(oOptions) {
+    BxTimelineMain.call(this, oOptions);
+
     this._sActionsUri = oOptions.sActionUri;
     this._sActionsUrl = oOptions.sActionUrl;
     this._sObjName = oOptions.sObjName == undefined ? 'oTimelineView' : oOptions.sObjName;
@@ -29,6 +31,8 @@ function BxTimelineView(oOptions) {
     this._bInfScrollBusy = false;
     this._iInfScrollPreloads = 1; //--- First portion is loaded with page loading or 'Load More' button click.
 
+    this._bDynamicCards = oOptions.bDynamicCards == undefined ? false : oOptions.bDynamicCards;
+
     this._fOutsideOffset = 0.8;
     this._oSaved = {};
 
@@ -40,29 +44,25 @@ function BxTimelineView(oOptions) {
     if(typeof window.glBxTimelineVapPlayers === 'undefined')
         window.glBxTimelineVapPlayers = [];
 
+    this.initView();
+    if(this._bDynamicCards) 
+        this.loadCards();
+
     var $this = this;
     $(document).ready(function() {
     	$this.init();
     });
-
-    
 }
 
-BxTimelineView.prototype = new BxTimelineMain();
+BxTimelineView.prototype = Object.create(BxTimelineMain.prototype);
+BxTimelineView.prototype.constructor = BxTimelineView;
 
 BxTimelineView.prototype.init = function()
 {
     var $this = this;
 
-    this.oView = $(this._getHtmlId('main', this._oRequestParams));
-    if(this.oView.length > 0) {
-        if(this.oView.hasClass(this.sClassView + '-timeline'))
-            this.bViewTimeline = true;
-        else if(this.oView.hasClass(this.sClassView + '-outline'))
-            this.bViewOutline = true;
-        else if(this.oView.hasClass(this.sClassView + '-item'))
-            this.bViewItem = true;
-    }
+    if(!this.oView)
+        this.initView();
 
     if(this.bViewTimeline) {
         var oItems = this.oView.find('.' + this.sClassItem);
@@ -148,6 +148,22 @@ BxTimelineView.prototype.init = function()
     }
 
     this.initFlickity();
+};
+
+BxTimelineView.prototype.initView = function() 
+{   
+    BxTimelineMain.prototype.initView.call(this);
+
+    this.oView = $(this._getHtmlId('main', this._oRequestParams));
+    if(!this.oView.length) 
+        return;
+
+    if(this.oView.hasClass(this.sClassView + '-timeline'))
+        this.bViewTimeline = true;
+    else if(this.oView.hasClass(this.sClassView + '-outline'))
+        this.bViewOutline = true;
+    else if(this.oView.hasClass(this.sClassView + '-item'))
+        this.bViewItem = true;
 };
 
 BxTimelineView.prototype.initJumpTo = function(oParent)
@@ -242,6 +258,63 @@ BxTimelineView.prototype.initVideosAutoplay = function(oParent)
         oPlayer.on('play', fFixHeight);
 
         window.glBxTimelineVapPlayers[sPlayer] = oPlayer;
+    });
+};
+
+BxTimelineView.prototype.loadCards = function()
+{
+    var $this = this;
+    var oData = this._getDefaultData();
+
+    this.oView.find('.' + this.sClassItem + '.' + this.sClassSample).each(function() {
+        var oItem = $(this);
+        var sItemId = oItem.attr('id');
+
+        oData['id'] = parseInt(oItem.attr('bx-id'));
+
+        $this.loadingInItem(oItem, true);
+
+        jQuery.get (
+            $this._sActionsUrl + 'get_post',
+            oData,
+            function(oData) {
+                $this.loadingInItem(oItem, false);
+
+                if(!oData.item) {
+                    oItem.remove();
+                    return;
+                }
+
+                oItem.replaceWith($(oData.item).bxProcessHtml());
+
+                oItem = $this.oView.find('#' + sItemId);
+
+                if($this.bViewTimeline) {
+                    oItem.find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
+                        $this.onFindOverflow(oElement);
+                    });
+
+                    $this.initFlickityByItem(oItem);
+
+                    //--- Init Video Autoplay
+                    $this.initVideosAutoplay(oItem);
+                }
+
+                if($this.bViewOutline)
+                    $this.appendMasonry(oItem, function(oItem) {
+                        oItem.find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
+                            $this.onFindOverflow(oElement);
+                        });
+
+                        $this.initFlickityByItem(oItem);
+
+                        //--- Init Video Layout
+                        if($this._sVideosAutoplay != 'off') 
+                            $this.initVideos(oItem);
+                    });
+            },
+            'json'
+        );
     });
 };
 

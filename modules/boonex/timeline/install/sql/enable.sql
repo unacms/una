@@ -224,38 +224,68 @@ INSERT INTO `sys_options_types`(`group`, `name`, `caption`, `icon`, `order`) VAL
 ('modules', 'bx_timeline', '_bx_timeline', 'bx_timeline@modules/boonex/timeline/|std-icon.svg', IF(ISNULL(@iTypeOrder), 1, @iTypeOrder + 1));
 SET @iTypeId = LAST_INSERT_ID();
 
+-- Category: General
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
-VALUES (@iTypeId, 'bx_timeline', '_bx_timeline', 1);
+VALUES (@iTypeId, 'bx_timeline_general', '_bx_timeline_options_category_general', 1);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
--- View/Browse related settings
-('bx_timeline_enable_edit', 'on', @iCategId, '_bx_timeline_option_enable_edit', 'checkbox', '', '', '', '', 0),
-('bx_timeline_enable_delete', 'on', @iCategId, '_bx_timeline_option_enable_delete', 'checkbox', '', '', '', '', 1),
-('bx_timeline_enable_show_all', '', @iCategId, '_bx_timeline_option_enable_show_all', 'checkbox', '', '', '', '', 5),
-('bx_timeline_enable_count_all_views', '', @iCategId, '_bx_timeline_option_enable_count_all_views', 'checkbox', '', '', '', '', 6),
+('bx_timeline_enable_edit', 'on', @iCategId, '_bx_timeline_option_enable_edit', 'checkbox', '', '', '', '', 1),
+('bx_timeline_enable_delete', 'on', @iCategId, '_bx_timeline_option_enable_delete', 'checkbox', '', '', '', '', 2),
+('bx_timeline_enable_count_all_views', '', @iCategId, '_bx_timeline_option_enable_count_all_views', 'checkbox', '', '', '', '', 3),
+('bx_timeline_events_hide', '', @iCategId, '_bx_timeline_option_events_hide', 'rlist', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:21:"get_actions_checklist";}', 4);
+
+-- Category: Browse
+INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
+VALUES (@iTypeId, 'bx_timeline_browse', '_bx_timeline_options_category_browse', 2);
+SET @iCategId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
+('bx_timeline_enable_show_all', '', @iCategId, '_bx_timeline_option_enable_show_all', 'checkbox', '', '', '', '', 1),
+('bx_timeline_enable_jump_to_switcher', '', @iCategId, '_bx_timeline_option_enable_jump_to_switcher', 'checkbox', '', '', '', '', 2),
+
 ('bx_timeline_events_per_page_profile', '12', @iCategId, '_bx_timeline_option_events_per_page_profile', 'digit', '', '', '', '', 10),
 ('bx_timeline_events_per_page_account', '12', @iCategId, '_bx_timeline_option_events_per_page_account', 'digit', '', '', '', '', 11),
 ('bx_timeline_events_per_page_home', '24', @iCategId, '_bx_timeline_option_events_per_page_home', 'digit', '', '', '', '', 12),
 ('bx_timeline_events_per_page', '24', @iCategId, '_bx_timeline_option_events_per_page', 'digit', '', '', '', '', 13),
-('bx_timeline_enable_infinite_scroll', '', @iCategId, '_bx_timeline_option_enable_infinite_scroll', 'checkbox', '', '', '', '', 15),
-('bx_timeline_events_per_preload', '5', @iCategId, '_bx_timeline_option_events_per_preload', 'digit', '', '', '', '', 16),
-('bx_timeline_auto_preloads', '10', @iCategId, '_bx_timeline_option_auto_preloads', 'digit', '', '', '', '', 17),
-('bx_timeline_rss_length', '5', @iCategId, '_bx_timeline_option_rss_length', 'digit', '', '', '', '', 20),
-('bx_timeline_events_hide', '', @iCategId, '_bx_timeline_option_events_hide', 'rlist', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:21:"get_actions_checklist";}', 30),
-('bx_timeline_videos_autoplay', 'off', @iCategId, '_bx_timeline_option_videos_autoplay', 'select', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:27:"get_options_videos_autoplay";}', 50),
-('bx_timeline_preload_comments', '0', @iCategId, '_bx_timeline_option_preload_comments', 'digit', '', '', '', '', 51),
-('bx_timeline_enable_jump_to_switcher', '', @iCategId, '_bx_timeline_option_enable_jump_to_switcher', 'checkbox', '', '', '', '', 52),
-('bx_timeline_attachments_layout', 'gallery', @iCategId, '_bx_timeline_option_attachments_layout', 'select', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:30:"get_options_attachments_layout";}', 53),
-('bx_timeline_enable_hot', 'on', @iCategId, '_bx_timeline_option_enable_hot', 'checkbox', '', '', '', '', 60),
-('bx_timeline_hot_interval', '48', @iCategId, '_bx_timeline_option_hot_interval', 'digit', '', '', '', '', 61),
-('bx_timeline_enable_cache_item', 'on', @iCategId, '_bx_timeline_option_enable_cache_item', 'checkbox', '', '', '', '', 70),
-('bx_timeline_cache_item_engine', 'File', @iCategId, '_bx_timeline_option_cache_item_engine', 'select', '', '', '', 'File,Memcache,APC,XCache', 71),
-('bx_timeline_cache_item_lifetime', '604800', @iCategId, '_bx_timeline_option_cache_item_lifetime', 'digit', '', '', '', '', 72),
-('bx_timeline_enable_cache_list', 'on', @iCategId, '_bx_timeline_option_enable_cache_list', 'checkbox', '', '', '', '', 73),
+('bx_timeline_rss_length', '5', @iCategId, '_bx_timeline_option_rss_length', 'digit', '', '', '', '', 14),
 
--- Post related settings
-('bx_timeline_enable_editor_toolbar', '', @iCategId, '_bx_timeline_option_enable_editor_toolbar', 'checkbox', '', '', '', '', 100);
+('bx_timeline_enable_infinite_scroll', '', @iCategId, '_bx_timeline_option_enable_infinite_scroll', 'checkbox', '', '', '', '', 20),
+('bx_timeline_events_per_preload', '5', @iCategId, '_bx_timeline_option_events_per_preload', 'digit', '', '', '', '', 21),
+('bx_timeline_auto_preloads', '10', @iCategId, '_bx_timeline_option_auto_preloads', 'digit', '', '', '', '', 22),
+
+('bx_timeline_enable_hot', 'on', @iCategId, '_bx_timeline_option_enable_hot', 'checkbox', '', '', '', '', 30),
+('bx_timeline_hot_interval', '48', @iCategId, '_bx_timeline_option_hot_interval', 'digit', '', '', '', '', 31);
+
+-- Category: Card
+INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
+VALUES (@iTypeId, 'bx_timeline_card', '_bx_timeline_options_category_card', 3);
+SET @iCategId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
+('bx_timeline_enable_dynamic_cards', 'on', @iCategId, '_bx_timeline_option_enable_dynamic_cards', 'checkbox', '', '', '', '', 1),
+('bx_timeline_videos_autoplay', 'off', @iCategId, '_bx_timeline_option_videos_autoplay', 'select', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:27:"get_options_videos_autoplay";}', 2),
+('bx_timeline_preload_comments', '0', @iCategId, '_bx_timeline_option_preload_comments', 'digit', '', '', '', '', 3),
+('bx_timeline_attachments_layout', 'gallery', @iCategId, '_bx_timeline_option_attachments_layout', 'select', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:30:"get_options_attachments_layout";}', 4);
+
+-- Category: Cache
+INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
+VALUES (@iTypeId, 'bx_timeline_cache', '_bx_timeline_options_category_cache', 4);
+SET @iCategId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
+('bx_timeline_enable_cache_item', 'on', @iCategId, '_bx_timeline_option_enable_cache_item', 'checkbox', '', '', '', '', 1),
+('bx_timeline_cache_item_engine', 'File', @iCategId, '_bx_timeline_option_cache_item_engine', 'select', '', '', '', 'File,Memcache,APC,XCache', 2),
+('bx_timeline_cache_item_lifetime', '604800', @iCategId, '_bx_timeline_option_cache_item_lifetime', 'digit', '', '', '', '', 3),
+('bx_timeline_enable_cache_list', 'on', @iCategId, '_bx_timeline_option_enable_cache_list', 'checkbox', '', '', '', '', 4);
+
+-- Category: Post form
+INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
+VALUES (@iTypeId, 'bx_timeline_post', '_bx_timeline_options_category_post', 5);
+SET @iCategId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
+('bx_timeline_enable_editor_toolbar', '', @iCategId, '_bx_timeline_option_enable_editor_toolbar', 'checkbox', '', '', '', '', 1);
 
 
 -- PRIVACY 

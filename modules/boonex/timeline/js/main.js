@@ -19,6 +19,7 @@ function BxTimelineMain() {
     this.sClassMasonry = this.sSP + '-masonry';
     this.sClassItems = this.sSP + '-items';
     this.sClassItem = this.sSP + '-item';
+    this.sClassItemCnt = this.sSP + '-item-cnt';
     this.sClassDividerToday = this.sSP + '-divider-today';
     this.sClassItemContent = this.sSP + '-item-content';
     this.sClassItemComments = this.sSP + '-item-comments-holder';
@@ -28,6 +29,7 @@ function BxTimelineMain() {
     this.sClassItemVideo = this.sSP + '-item-video';
     this.sClassItemAttachments = this.sSP + '-item-attachments';
     this.sClassItemAttachment = this.sSP + '-item-attachment';
+    this.sClassSample = this.sSP + '-sample';
     this.sClassBlink = this.sSP + '-blink';
     this.sClassJumpTo = this.sSP + '-jump-to';
 
@@ -36,6 +38,11 @@ function BxTimelineMain() {
     this.bViewOutline = false;
     this.bViewItem = false;
 }
+
+BxTimelineMain.prototype.initView = function() 
+{
+    //Do some basic initialization here.
+};
 
 BxTimelineMain.prototype.initVideos = function(oParent) {
     oParent.find('iframe').load(function() {
@@ -135,83 +142,112 @@ BxTimelineMain.prototype.reloadMasonry = function() {
     this.oView.find('.' + this.sClassItems).masonry('reloadItems').masonry('layout');
 };
 
+BxTimelineMain.prototype.initFlickityImages = function(oParent) {
+    var sItem = 'div.' + this.sClassItemImage;
+    if(oParent.find(sItem).length <= 1)
+        return;
+
+    var oCarousel = oParent;
+
+    oCarousel.flickity({
+        cellSelector: sItem,
+        cellAlign: 'left',
+        imagesLoaded: true,
+        wrapAround: true,
+        pageDots: false
+    });
+
+    oCarousel.find(sItem + ' img').each(function() {
+        oParent.load(function() {
+            oCarousel.flickity('resize');
+        });
+    });
+};
+
+BxTimelineMain.prototype.initFlickityVideos = function(oParent) {
+    var sItem = 'div.' + this.sClassItemVideo;
+    if(oParent.find(sItem).length <= 1)
+        return;
+
+    var oCarousel = oParent;
+
+    oCarousel.flickity({
+        cellSelector: sItem,
+        cellAlign: 'left',
+        imagesLoaded: true,
+        wrapAround: true,
+        pageDots: false
+    });
+
+   oCarousel.find(sItem + ' video').each(function() {
+       this.addEventListener('loadedmetadata', function() {
+           oCarousel.flickity('resize');
+       }, true);
+   });
+};
+
+BxTimelineMain.prototype.initFlickityAttachments = function(oParent) {
+    var sItem = 'div.' + this.sClassItemAttachment;
+    if(oParent.find(sItem).length <= 1)
+        return;
+
+    var oCarousel = oParent;
+
+    oCarousel.flickity({
+        cellSelector: sItem,
+        cellAlign: 'left',
+        imagesLoaded: true,
+        wrapAround: true,
+        pageDots: false
+    });
+
+    oCarousel.find(sItem + ' img').each(function() {
+        oParent.load(function() {
+            oCarousel.flickity('resize');
+        });
+    });
+
+   oCarousel.find(sItem + ' video').each(function() {
+       this.addEventListener('loadedmetadata', function() {
+           oCarousel.flickity('resize');
+       }, true);
+   });
+};
+
 BxTimelineMain.prototype.initFlickity = function() {
     var $this = this;
 
     //--- init Flickity for images (may be used in header section)
     $('.' + this.sClassItem + ' .' + this.sClassItemImages + '.' + this.sSP + '-ii-gallery').each(function() {
-        var sItem = 'div.' + $this.sClassItemImage;
-        if($(this).find(sItem).length <= 1)
-            return;
-
-        var oCarousel = $(this);
-
-        oCarousel.flickity({
-            cellSelector: sItem,
-            cellAlign: 'left',
-            imagesLoaded: true,
-            wrapAround: true,
-            pageDots: false
-        });
-
-        oCarousel.find(sItem + ' img').each(function() {
-            $(this).load(function() {
-                oCarousel.flickity('resize');
-            });
-        });
+        $this.initFlickityImages($(this));
     });
 
     //--- init Flickity for videos (may be used in header section)
     $('.' + this.sClassItem + ' .' + this.sClassItemVideos + '.' + this.sSP + '-iv-gallery').each(function() {
-        var sItem = 'div.' + $this.sClassItemVideo;
-        if($(this).find(sItem).length <= 1)
-            return;
-
-        var oCarousel = $(this);
-
-        oCarousel.flickity({
-            cellSelector: sItem,
-            cellAlign: 'left',
-            imagesLoaded: true,
-            wrapAround: true,
-            pageDots: false
-        });
-
-       oCarousel.find(sItem + ' video').each(function() {
-           this.addEventListener('loadedmetadata', function() {
-               oCarousel.flickity('resize');
-           }, true);
-       });
+        $this.initFlickityVideos($(this));
     });
 
     //--- init Flickity for attachments (images and video in attachments seation)
     $('.' + this.sClassItem + ' .' + this.sClassItemAttachments + '.' + this.sSP + '-ia-gallery').each(function() {
-        var sItem = 'div.' + $this.sClassItemAttachment;
-        if($(this).find(sItem).length <= 1)
-            return;
-
-        var oCarousel = $(this);
-
-        oCarousel.flickity({
-            cellSelector: sItem,
-            cellAlign: 'left',
-            imagesLoaded: true,
-            wrapAround: true,
-            pageDots: false
-        });
-
-        oCarousel.find(sItem + ' img').each(function() {
-            $(this).load(function() {
-                oCarousel.flickity('resize');
-            });
-        });
-
-       oCarousel.find(sItem + ' video').each(function() {
-           this.addEventListener('loadedmetadata', function() {
-               oCarousel.flickity('resize');
-           }, true);
-       });
+        $this.initFlickityAttachments($(this));
     });
+};
+
+BxTimelineMain.prototype.initFlickityByItem = function(oItem) {
+    //--- init Flickity for images (may be used in header section)
+    var oGalleryImages = $(oItem).find('.' + this.sClassItemImages + '.' + this.sSP + '-ii-gallery');
+    if(oGalleryImages.length > 0)
+        this.initFlickityImages(oGalleryImages);
+
+    //--- init Flickity for videos (may be used in header section)
+    var oGalleryVideos = $(oItem).find('.' + this.sClassItemVideos + '.' + this.sSP + '-iv-gallery');
+    if(oGalleryVideos.length > 0)
+        this.initFlickityVideos(oGalleryVideos);
+
+    //--- init Flickity for attachments (images and video in attachments seation)
+    var oGalleryAttachments = $(oItem).find('.' + this.sClassItemAttachments + '.' + this.sSP + '-ia-gallery');
+    if(oGalleryAttachments.length > 0)
+        this.initFlickityAttachments(oGalleryAttachments);
 };
 
 BxTimelineMain.prototype.onFindOverflow = function(oElement) {
@@ -230,7 +266,7 @@ BxTimelineMain.prototype.loadingInItem = function(e, bShow) {
     if($(e).length)
         oParent = !$(e).hasClass(this.sClassItem) ? $(e).parents('.' + this.sClassItem + ':first') : $(e);
 
-    bx_loading(oParent, bShow);
+    bx_loading(oParent.find('.' + this.sClassItemCnt), bShow);
 };
 
 BxTimelineMain.prototype.loadingInBlock = function(e, bShow) {
