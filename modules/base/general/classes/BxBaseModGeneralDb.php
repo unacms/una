@@ -200,7 +200,7 @@ class BxBaseModGeneralDb extends BxDolModuleDb
                 $aMethod['name'] = 'getAllWithKey';
                 $aMethod['params'][2]['id'] = (int)$aParams['id'];
                 $aMethod['params'][1] = $aParams['key_name'];
-                $sWhereClause .= " AND `" . $sTableName . "`.`item_id` = :id";
+                $sWhereClause .= " AND `" . $sTableName . "`.`content_id` = :id";
                 break;
         }
 
