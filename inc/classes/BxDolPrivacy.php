@@ -696,17 +696,14 @@ class BxDolPrivacy extends BxDolFactory implements iBxDolFactoryObject
         if(empty($iViewerId))
             $iViewerId = (int)bx_get_logged_profile_id();
 
-        $oViewer = BxDolProfile::getInstance($iViewerId);
-        if(!$oViewer)
-            return false;
-
         if(empty($aObject) || !is_array($aObject))
             return false;
 
         if($aObject['group_id'] == BX_DOL_PG_HIDDEN)
             return false;
 
-        if(isAdmin($oViewer->getAccountId()) || $iViewerId == $aObject['owner_id'])
+        $oViewer = BxDolProfile::getInstance($iViewerId);
+        if(($oViewer && isAdmin($oViewer->getAccountId())) || $iViewerId == $aObject['owner_id'])
             return true;
 
         if(strncmp($aObject['group_id'], 'ml', 2) === 0) {
