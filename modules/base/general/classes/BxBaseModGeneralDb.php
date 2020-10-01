@@ -178,12 +178,7 @@ class BxBaseModGeneralDb extends BxDolModuleDb
     
     public function deleteNestedById ($iNestedId, $sTableKey, $sTableName)
 	{
-		return $this->query("DELETE FROM `" . $sTableName . "` WHERE `" . $sTableKey . "` = :item_id", array('item_id' => $iNestedId));
-	}
-	
-	public function getNested ($iContentId, $sTableKey, $sTableName) 
-	{
-		return $this->getAllWithKey("SELECT `" . $sTableName . "`.* FROM `" . $sTableName . "` WHERE `item_id` = :item_id", $sTableKey, array('item_id' => $iContentId));
+		return $this->query("DELETE FROM `" . $sTableName . "` WHERE `" . $sTableKey . "` = :item_id", array('content_id' => $iNestedId));
 	}
    
     function getNestedBy($aParams = array(), $sTableName)
@@ -205,7 +200,7 @@ class BxBaseModGeneralDb extends BxDolModuleDb
                 $aMethod['name'] = 'getAllWithKey';
                 $aMethod['params'][2]['id'] = (int)$aParams['id'];
                 $aMethod['params'][1] = $aParams['key_name'];
-                $sWhereClause .= " AND `" . $sTableName . "`.`item_id` = :id";
+                $sWhereClause .= " AND `" . $sTableName . "`.`content_id` = :id";
                 break;
         }
 
