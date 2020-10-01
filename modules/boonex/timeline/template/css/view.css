@@ -228,6 +228,10 @@ div.bx-tl-item-cnt {
     position: relative;
 }
 
+div.bx-tl-item.bx-tl-sample div.bx-tl-item-cnt {
+    min-height: 5rem;
+}
+
 div.bx-tl-blink-plate {
     position: absolute;
     display: none;

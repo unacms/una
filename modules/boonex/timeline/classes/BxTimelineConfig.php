@@ -34,6 +34,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_iCharsDisplayMinTitle;
     protected $_iCharsDisplayMaxTitle;
 
+    protected $_bDynamicCards;
     protected $_sVideosAutoplay;
     protected $_iPreloadComments;
     protected $_iPreloadCommentsMax;
@@ -319,6 +320,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_iCharsDisplayMinTitle = 32;
         $this->_iCharsDisplayMaxTitle = 64;
 
+        $this->_bDynamicCards = getParam($sOptionPrefix . 'enable_dynamic_cards') == 'on';
+
         $this->_sVideosAutoplay = getParam($sOptionPrefix . 'videos_autoplay');
 
         $this->_iPreloadCommentsMax = 7;
@@ -411,6 +414,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function isCountAllViews()
     {
         return $this->_bCountAllViews;
+    }
+
+    public function isDynamicCards()
+    {
+        return $this->_bDynamicCards;
     }
 
     public function isJumpTo()

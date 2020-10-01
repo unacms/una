@@ -4,6 +4,12 @@
     <string name="_bx_timeline_cmts"><![CDATA[Лента - Комментарии]]></string>
     <string name="_bx_timeline_reactions"><![CDATA[Лента - Реакции]]></string>
 
+    <string name="_bx_timeline_options_category_general"><![CDATA[Общие]]></string>
+    <string name="_bx_timeline_options_category_browse"><![CDATA[Просмотр]]></string>
+    <string name="_bx_timeline_options_category_card"><![CDATA[Карточка]]></string>
+    <string name="_bx_timeline_options_category_cache"><![CDATA[Кэш]]></string>
+    <string name="_bx_timeline_options_category_post"><![CDATA[Создание сообщения]]></string>
+
     <string name="_bx_timeline_option_enable_edit"><![CDATA[Разрешить пользователю изменять собственные сообщения]]></string>
     <string name="_bx_timeline_option_enable_delete"><![CDATA[Разрешить владельцу ленты удалять сообщения]]></string>
     <string name="_bx_timeline_option_enable_show_all"><![CDATA[Показывать все сообщения в 'Общей хронике', включая те, что были написаны в персональных Хрониках]]></string>

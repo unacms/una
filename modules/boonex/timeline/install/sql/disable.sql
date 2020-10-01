@@ -10,11 +10,7 @@ DELETE FROM `sys_menu_items` WHERE `module` = 'bx_timeline' OR `set_name` IN('bx
 
 
 -- SETTINGS
-SET @iTypeId = (SELECT `ID` FROM `sys_options_types` WHERE `name` = 'bx_timeline' LIMIT 1);
-SET @iCategId = (SELECT `ID` FROM `sys_options_categories` WHERE `type_id` = @iTypeId LIMIT 1);
-DELETE FROM `sys_options` WHERE `category_id` = @iCategId;
-DELETE FROM `sys_options_categories` WHERE `type_id` = @iTypeId;
-DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
+DELETE FROM `tot`, `toc`, `to` USING `sys_options_types` AS `tot` LEFT JOIN `sys_options_categories` AS `toc` ON `tot`.`id`=`toc`.`type_id` LEFT JOIN `sys_options` AS `to` ON `toc`.`id`=`to`.`category_id` WHERE `tot`.`name` = 'bx_timeline';
 
 
 -- PRIVACY 
