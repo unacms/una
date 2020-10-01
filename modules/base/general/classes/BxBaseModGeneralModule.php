@@ -115,7 +115,7 @@ class BxBaseModGeneralModule extends BxDolModule
             return;
         }
         
-        $aContentInfo = $this->_oDb->getContentInfoById ($aNested['item_id']); 
+        $aContentInfo = $this->_oDb->getContentInfoById ($aNested['content_id']); 
         if (!$aContentInfo){
             echo _t('_sys_request_page_not_found_cpt');
             return;
