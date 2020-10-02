@@ -29,43 +29,6 @@ class BxBaseLabelForm extends BxTemplFormView
         return parent::initChecker($aValues, $aSpecificValues);
     }
 
-    public function getFormElement($aInput = array())
-    {
-        $sName = !empty($aInput['name']) ? $aInput['name'] : 'labels';
-        $sHtmlId = !empty($aInput['attrs']['id']) ? $aInput['attrs']['id'] : 'bx-form-element-labels';
-
-        $sValue = '';
-        if(!empty($aInput['value']) && is_array($aInput['value']))
-            foreach($aInput['value'] as $sLabel)
-                $sValue .= $this->_oObject->getLabel($sName, $sLabel);
-
-        $sKeyPlaceholder = $aInput['caption_src'] . '_placeholder';
-        if(strcmp($sKeyPlaceholder, _t($sKeyPlaceholder)) != 0)
-            $sValue .= $this->_oObject->getLabelPlaceholder($sKeyPlaceholder);           
-
-        $aInputLabels = array(
-            'type' => 'custom',
-            'name' => $sName,
-            'caption' => '',
-            'value' => $sValue,
-            'ajax_get_suggestions' => BX_DOL_URL_ROOT . bx_append_url_params('label.php', array(
-                'action' => 'labels_list',
-            )),
-            'attrs' => array(
-                'class' => 'bx-form-input-labels',
-                'disabled' => 'disabled'
-            )
-        );
-
-        return $this->oTemplate->parseHtmlByName('label_select_field.html', array(
-            'js_object' => $this->_oObject->getJsObjectName(),
-            'js_code' => $this->_oObject->getJsCodeForm(),
-            'html_id' => $sHtmlId,
-            'name' => $sName,
-            'input_labels' => $this->genCustomInputUsernamesSuggestions($aInputLabels)
-        ));
-    }
-
     protected function genCustomInputSearch($aInput)
     {
         $aInput = array_merge($aInput, array(

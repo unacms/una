@@ -1460,10 +1460,45 @@ BLAH;
 
     protected function genCustomInputLabels ($aInput)
     {
-        if(!empty($aInput['value']) && !is_array($aInput['value']))
-            $aInput['value'] = unserialize($aInput['value']);
+        $oLabel = BxDolLabel::getInstance();
 
-        return BxDolLabel::getInstance()->getFormElement($aInput);
+        $sName = !empty($aInput['name']) ? $aInput['name'] : 'labels';
+
+        $sValue = '';
+        if(!empty($aInput['value'])) {
+            if(!is_array($aInput['value']))
+                $aInput['value'] = unserialize($aInput['value']);
+
+            if(is_array($aInput['value']))
+                foreach($aInput['value'] as $sLabel)
+                    $sValue .= $oLabel->getLabel($sName, $sLabel);
+        }
+
+        $sKeyPlaceholder = $aInput['caption_src'] . '_placeholder';
+        if(strcmp($sKeyPlaceholder, _t($sKeyPlaceholder)) != 0)
+            $sValue .= $oLabel->getLabelPlaceholder($sKeyPlaceholder);           
+
+        $aInputLabels = array(
+            'type' => 'custom',
+            'name' => $sName,
+            'caption' => '',
+            'value' => $sValue,
+            'ajax_get_suggestions' => BX_DOL_URL_ROOT . bx_append_url_params('label.php', array(
+                'action' => 'labels_list',
+            )),
+            'attrs' => array(
+                'class' => 'bx-form-input-labels',
+                'disabled' => 'disabled'
+            )
+        );
+
+        return $this->oTemplate->parseHtmlByName('label_select_field.html', array(
+            'js_object' => $oLabel->getJsObjectName(),
+            'js_code' => $oLabel->getJsCodeForm(),
+            'html_id' => $oLabel->getFormFieldId($aInput),
+            'name' => $sName,
+            'input_labels' => $this->genCustomInputUsernamesSuggestions($aInputLabels)
+        ));
     }
     
     /**
