@@ -1544,7 +1544,9 @@ class BxBaseStudioFormsFieldNestedForm extends BxBaseStudioFormsField
        
         $aFormsData = array();
         $this->oDb->getForms(array('type' => 'nested', 'parent_form' => $this->aParams['object']), $aFormsData, false);
-        
+        foreach($aFormsData as $sKey => $sValue){
+            $aFormsData[$sKey] = _t($sValue);
+        }
 		$this->aForm = array(
             'form_attrs' => array(
                 'id' => '',

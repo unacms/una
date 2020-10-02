@@ -242,7 +242,7 @@ INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_par
 -- FORMS
 INSERT INTO `sys_objects_form`(`object`, `module`, `title`, `action`, `form_attrs`, `table`, `key`, `uri`, `uri_title`, `submit_name`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`, `parent_form`) VALUES 
 ('bx_person', 'bx_persons', '_bx_persons_form_profile', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_persons_data', 'id', '', '', 'do_submit', '', 0, 1, 'BxPersonsFormEntry', 'modules/boonex/persons/classes/BxPersonsFormEntry.php', ''),
-('bx_person_skills', 'bx_persons', '_bx_persons_skills_form_profile', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_persons_skills', 'skills', '', '', 'do_submit', '', 0, 1, '', '', 'bx_person');
+('bx_person_skills', 'bx_persons', '_bx_persons_skills_form_profile', '', 'a:1:{s:7:\"enctype\";s:19:\"multipart/form-data\";}', 'bx_persons_skills', 'skill_id', '', '', 'do_submit', '', 0, 1, '', '', 'bx_person');
 
 INSERT INTO `sys_form_displays`(`object`, `display_name`, `module`, `view_mode`, `title`) VALUES 
 ('bx_person', 'bx_person_add', 'bx_persons', 0, '_bx_persons_form_profile_display_add'),
@@ -276,7 +276,7 @@ INSERT INTO `sys_form_inputs`(`object`, `module`, `name`, `value`, `values`, `ch
 ('bx_person', 'bx_persons', 'changed', '', '', 0, 'datetime', '_bx_persons_form_profile_input_sys_date_changed', '_bx_persons_form_profile_input_date_changed', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0, ''),
 ('bx_person', 'bx_persons', 'friends_count', '', '', 0, 'text', '_bx_persons_form_profile_input_sys_friends_count', '_bx_persons_form_profile_input_friends_count', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0, ''),
 ('bx_person', 'bx_persons', 'followers_count', '', '', 0, 'text', '_bx_persons_form_profile_input_sys_followers_count', '_bx_persons_form_profile_input_followers_count', '', 0, 0, 0, '', '', '', '', '', '', '', '', 1, 0, ''),
-('bx_person_skills', 'bx_persons', 'skill_name[]', '', '', 0, 'text', '_bx_persons_skills_form_profile_input_sys_skill_name', '_bx_persons_skills_form_profile_input_name', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_persons_skills_form_profile_input_name_err', 'Xss', '', 1, 0, '');
+('bx_person_skills', 'bx_persons', 'skill_name[]', '', '', 0, 'text', '_bx_persons_skills_form_profile_input_sys_skill_name', '_bx_persons_skills_form_profile_input_skill_name', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_persons_skills_form_profile_input_skill_name_err', 'Xss', '', 1, 0, '');
 
 INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES 
 ('bx_person_add', 'picture', 2147483647, 1, 1),
@@ -331,8 +331,8 @@ INSERT INTO `sys_form_display_inputs`(`display_name`, `input_name`, `visible_for
 ('bx_person_view_full', 'profile_email', 192, 1, 5),
 ('bx_person_view_full', 'profile_status', 192, 1, 6),
 
-('bx_person_skills', 'name', 2147483647, 1, 1),
-('bx_person_skills_view', 'name', 2147483647, 1, 1);
+('bx_person_skills', 'skill_name[]', 2147483647, 1, 1),
+('bx_person_skills_view', 'skill_name[]', 2147483647, 1, 1);
 
 -- COMMENTS
 INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Html`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
