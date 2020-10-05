@@ -61,7 +61,7 @@ class BxNtfsDb extends BxBaseModNotificationsDb
     public function getEvents($aParams, $bReturnCount = false)
     {
         if($aParams['browse'] != 'list' || $aParams['type'] != BX_NTFS_TYPE_OBJECT_OWNER_AND_CONNECTIONS)
-            return parent::getEvents($aParams, $bReturnCount);
+            return parent::getEvents($aParams);
 
         $bCountOnly = !empty($aParams['count_only']);
 
@@ -101,10 +101,7 @@ class BxNtfsDb extends BxBaseModNotificationsDb
         if($bCountOnly)
             $aEntries = (int)array_sum($aEntries);
 
-        if(!$bReturnCount)
-            return $aEntries;
-
-        return array($aEntries, (int)$this->getOne(str_replace(array('{select}', '{order}', '{limit}'), array("COUNT(*)", "", ""), $sQuery)));
+        return $aEntries;
     }
 
     protected function _getSqlPartsEvents($aParams)

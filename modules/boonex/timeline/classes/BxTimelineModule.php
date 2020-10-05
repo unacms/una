@@ -4210,9 +4210,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         }
 
         $aParams = $this->getParams($sView, $sType, $iProfileId, $iStart, $iPerPage, $sFilter, $aModules);
-        $aData = $this->_oDb->getEvents($aParams, true);
-
-        list($aEvents, $iCount) = $aData;
+        $aEvents = $this->_oDb->getEvents($aParams);
+        $iCount = $this->_oDb->getEvents(array_merge($aParams, array('count' => true)));
 
         if(empty($aEvents) || !is_array($aEvents))
             return array(

@@ -437,7 +437,7 @@ class BxBaseModNotificationsDb extends BxBaseModGeneralDb
         return $this->query($sSql);
     }
 
-    public function getEvents($aParams, $bReturnCount = false)
+    public function getEvents($aParams)
     {
         list($sMethod, $sSelectClause, $sJoinClause, $sWhereClause, $sOrderClause, $sLimitClause) = $this->_getSqlPartsEvents($aParams);
 
@@ -446,11 +446,7 @@ class BxBaseModNotificationsDb extends BxBaseModGeneralDb
             LEFT JOIN `{$this->_sTableHandlers}` ON `{$this->_sTable}`.`type`=`{$this->_sTableHandlers}`.`alert_unit` AND `{$this->_sTable}`.`action`=`{$this->_sTableHandlers}`.`alert_action` " . $sJoinClause . "
             WHERE 1 " . $sWhereClause . " {order} {limit}";
 
-        $aEntries = $this->$sMethod(str_replace(array('{select}', '{order}', '{limit}'), array($sSelectClause, $sOrderClause, $sLimitClause), $sSql));
-        if(!$bReturnCount)
-        	return $aEntries;
-
-        return array($aEntries, (int)$this->getOne(str_replace(array('{select}', '{order}', '{limit}'), array("COUNT(*)", "", ""), $sSql)));
+        return $this->$sMethod(str_replace(array('{select}', '{order}', '{limit}'), array($sSelectClause, $sOrderClause, $sLimitClause), $sSql));
     }
 
     protected function _getSqlPartsEvents($aParams)
