@@ -472,7 +472,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 
-    public function getEvents($aParams, $bReturnCount = false)
+    public function getEvents($aParams)
     {
         list($sMethod, $sSelectClause, $mixedJoinClause, $mixedWhereClause, $sOrderClause, $sLimitClause) = $this->_getSqlPartsEvents($aParams);
 
@@ -513,13 +513,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 'limit' => $sLimitClause
             );
 
-            $aEntries = $this->$sMethod(bx_replace_markers($sSqlMask, $aSqlMarkers));
-
-            return !$bReturnCount ? $aEntries : array($aEntries, (int)$this->getOne(bx_replace_markers($sSqlMask, array_merge($aSqlMarkers, array(
-                'select' => 'COUNT(*)',
-                'order' => '',
-                'limit' => ''
-            )))));
+            return $this->$sMethod(bx_replace_markers($sSqlMask, $aSqlMarkers));
         }
 
         $bJoinAsArray = !empty($mixedJoinClause) && is_array($mixedJoinClause);
@@ -530,7 +524,6 @@ class BxTimelineDb extends BxBaseModNotificationsDb
             $sLimitSubclause = isset($aParams['per_page']) ? 'LIMIT 0, ' . ($aParams['start'] + $aParams['per_page']) : '';
         }
 
-        $iEntries = 0;
         $aSqlParts = array();
         foreach($mixedWhereClause as $sKey => $sValue) {
             $aSqlMarkers = array(
@@ -543,22 +536,12 @@ class BxTimelineDb extends BxBaseModNotificationsDb
             $sSqlPart = bx_replace_markers($sSqlMask, $aSqlMarkers);
 
             $aSqlParts[] = !$bCount ? $sSqlPart : (int)$this->$sMethod($sSqlPart);
-            if(!$bReturnCount)
-                continue;
-
-            $iEntries += (int)$this->getOne(bx_replace_markers($sSqlMask, array_merge($aSqlMarkers, array(
-                'select' => 'COUNT(*)',
-                'order' => '',
-                'limit' => ''
-            ))));
         }
 
-        $aEntries = $bCount ? array_sum($aSqlParts) : $this->$sMethod(bx_replace_markers('(' . implode(') UNION (', $aSqlParts) . ') {order} {limit}', array(
+        return $bCount ? array_sum($aSqlParts) : $this->$sMethod(bx_replace_markers('(' . implode(') UNION (', $aSqlParts) . ') {order} {limit}', array(
             'order' => str_replace('`' . $this->_sTable . '`.', '', $sOrderClause),
             'limit' => str_replace('`' . $this->_sTable . '`.', '', $sLimitClause),
         )));
-
-        return !$bReturnCount ? $aEntries : array($aEntries, $iEntries);
     }
 
     protected function _getFilterAddon($iOwnerId, $sFilter)
