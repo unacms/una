@@ -3358,6 +3358,10 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             $iSenderId = $iObjectAuthorId = (int)$aEvent['object_id'];
         }
 
+        //--- Delete feed cached
+        $this->_oDb->deleteCache(array('context_id' => 0)); //--- Delete cache for Public feed
+        $this->_oDb->deleteCache(array('context_id' => $aEvent[$CNF['FIELD_OWNER_ID']])); //--- Delete cache for old context
+
         //--- Event -> Post/Defer for Alerts Engine ---//
         $sAction = ($aEvent[$CNF['FIELD_STATUS']] == BX_TIMELINE_STATUS_AWAITING ? 'defer' : 'post') . '_' . $sPostType;
         bx_alert($this->_oConfig->getObject('alert'), $sAction, $iContentId, $iSenderId, array(
