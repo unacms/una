@@ -42,6 +42,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
     protected $_bHot;
     protected $_iHotInterval;
+    protected $_aHotList;
 
     protected $_bEditorToolbar;
     protected $_bUnhideRestored;
@@ -155,6 +156,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'language' => '_bx_timeline',
             'option' => 'bx_timeline_',
             'common_post' => 'timeline_common_',
+            'cache_list_hot' => 'bx_timeline_list_hot',
             'cache_item' => 'bx_timeline_item_'
         );
 
@@ -328,6 +330,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
 
         $this->_bHot = getParam($sOptionPrefix . 'enable_hot') == 'on';
         $this->_iHotInterval = (int)getParam($sOptionPrefix . 'hot_interval');
+        $this->_aHotList = $this->_bHot ? $this->_oDb->getHot() : array();
 
         $this->_bEditorToolbar = getParam($sOptionPrefix . 'enable_editor_toolbar') == 'on';
 
@@ -419,6 +422,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         return $this->_bHot;
     }
 
+    public function isHotEvent($iEventId)
+    {
+        return in_array($iEventId, $this->_aHotList);
+    }
+
     public function isEmoji()
     {
         $oMenu = BxDolMenu::getObjectInstance($this->getObject('menu_post_attachments'));
@@ -466,6 +474,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function getCacheItemKey($iId, $sPostfix = '')
     {
         return $this->getPrefix('cache_item') . $iId . (bx_is_mobile() ? '_m' : '') . '_r' . bx_get_device_pixel_ratio() . '_' . (!empty($sPostfix) ? '_' . $sPostfix : '') . '.php';
+    }
+
+    public function getCacheHotKey()
+    {
+        return $this->getPrefix('cache_list_hot');
     }
 
     public function getPostFormDisplay($sType)

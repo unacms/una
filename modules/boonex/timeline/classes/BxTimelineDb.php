@@ -293,11 +293,13 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
     public function getHot()
     {
-        return $this->getColumn("SELECT `event_id` FROM `" . $this->_sTableHotTrack . "`");
+        return $this->fromCache($this->_oConfig->getCacheHotKey(), 'getColumn', "SELECT `event_id` FROM `" . $this->_sTableHotTrack . "`");
     }
 
     public function clearHot()
     {
+        $this->cleanCache($this->_oConfig->getCacheHotKey());
+
         return $this->query("TRUNCATE TABLE `" . $this->_sTableHotTrack . "`");
     }
 

@@ -1553,7 +1553,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             	)
             ),
             'bx_if:show_hot' => array(
-            	'condition' => isset($aBrowseParams['hot']) && is_array($aBrowseParams['hot']) && in_array($aEvent['id'], $aBrowseParams['hot']),
+            	'condition' => $this->_oConfig->isHotEvent($aEvent['id']),
             	'content' => array(
                     'style_prefix' => $sStylePrefix,
             	)
