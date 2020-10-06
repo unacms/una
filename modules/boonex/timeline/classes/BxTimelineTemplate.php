@@ -563,7 +563,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $iFirst = 0;
         $iEvents = count($aEvents);
         if($iEvents > 0)
-            $iFirst = (int)$aEvents[0]['id'];
+            $iFirst = $this->_getFirst($aEvents, $aParams);
         else 
             $sContent .= $bViewTimeline ? $this->getDividerToday() : '';
 
@@ -2569,6 +2569,22 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $this->_preparetDataActions($aEvent, $aResult);
         return $aResult;
+    }
+
+    protected function _getFirst($aEvents, $aParams = array())
+    {
+        $CNF = $this->_oConfig->CNF;
+
+        foreach($aEvents as $aEvent)
+            if((int)$aEvent[$CNF['FIELD_STICKED']] == 0)
+                return (int)$aEvent[$CNF['FIELD_ID']];
+
+        $aParams['start'] += $aParams['per_page'];
+        $aEvents = $this->_getPosts($aParams);
+        if(!empty($aEvents) && is_array($aEvents))
+            return $this->_getFirst($aEvents, $aParams);
+
+        return 0;
     }
 
     protected function _preparetDataActions(&$aEvent, &$aResult)
