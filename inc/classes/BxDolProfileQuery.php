@@ -188,7 +188,7 @@ class BxDolProfileQuery extends BxDolDb implements iBxDolSingleton
     protected function _getDataByField ($sField, $sValue)
     {
         $sSql = $this->prepare("SELECT * FROM `sys_profiles` WHERE `$sField` = ? LIMIT 1", $sValue);
-        return $this->getRow($sSql);
+        return $this->fromMemory('sys_profiles_' . $sField . '_' . $sValue, 'getRow', $sSql);
     }
 
     /**

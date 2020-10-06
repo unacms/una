@@ -70,12 +70,12 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
     function isModule($sUri)
     {
         $sSql = $this->prepare("SELECT `id` FROM `sys_modules` WHERE `uri`=? LIMIT 1", $sUri);
-        return (int)$this->getOne($sSql) > 0;
+        return (int)$this->fromMemory('sys_module_' . $sUri, 'getOne', $sSql) > 0;
     }
     function isModuleByName($sName)
     {
         $sSql = $this->prepare("SELECT `id` FROM `sys_modules` WHERE `name`=? LIMIT 1", $sName);
-        return (int)$this->getOne($sSql) > 0;
+        return (int)$this->fromMemory('sys_module_' . $sName, 'getOne', $sSql) > 0;
     }
     function isModuleParamsUsed($sUri, $sPath, $sPrefixDb, $sPrefixClass)
     {
@@ -85,12 +85,12 @@ class BxDolModuleQuery extends BxDolDb implements iBxDolSingleton
     function isEnabled($sUri)
     {
         $sSql = $this->prepare("SELECT `id` FROM `sys_modules` WHERE `uri`=? AND `enabled`='1' LIMIT 1", $sUri);
-        return (int)$this->getOne($sSql) > 0;
+        return (int)$this->fromMemory('sys_module_enabled_' . $sUri, 'getOne', $sSql) > 0;
     }
     function isEnabledByName($sName)
     {
         $sSql = $this->prepare("SELECT `id` FROM `sys_modules` WHERE `name`=? AND `enabled`='1' LIMIT 1", $sName);
-        return (int)$this->getOne($sSql) > 0;
+        return (int)$this->fromMemory('sys_module_enabled_' . $sName, 'getOne', $sSql) > 0;
     }
     function getModules()
     {

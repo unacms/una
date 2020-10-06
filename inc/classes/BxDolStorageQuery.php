@@ -27,7 +27,7 @@ class BxDolStorageQuery extends BxDolDb
     {
         $oDb = BxDolDb::getInstance();
         $sQuery = $oDb->prepare("SELECT * FROM `sys_objects_storage` WHERE `object` = ?", $sObject);
-        return $oDb->getRow($sQuery);
+        return $oDb->fromCache('sys_objects_storage_' . $sObject, 'getRow', $sQuery);
     }
 
     static public function getStorageObjects ()

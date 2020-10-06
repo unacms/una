@@ -38,12 +38,12 @@ class BxDolFormQuery extends BxDolDb
         $oDb = BxDolDb::getInstance();
 
         $sQuery = $oDb->prepare("SELECT * FROM `sys_objects_form` WHERE `active` = 1 AND `object` = ?", $sObject);
-        $aObject = $oDb->getRow($sQuery);
+        $aObject = $oDb->fromMemory('sys_objects_form_' . $sObject, 'getRow', $sQuery);
         if (!$aObject || !is_array($aObject))
             return false;
 
         $sQuery = $oDb->prepare("SELECT * FROM `sys_form_displays` WHERE `object` = ? AND `display_name` = ?", $sObject, $sDisplayName);
-        $aDisplay = $oDb->getRow($sQuery);
+        $aDisplay = $oDb->fromMemory('sys_form_displays_' . $sObject . '_' . $sDisplayName, 'getRow', $sQuery);
         if (!$aDisplay || !is_array($aDisplay))
             return false;
 
