@@ -176,7 +176,7 @@ class BxPaymentCart extends BxBaseModPaymentCart
         $sCiDsc = $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId));
         if(strpos($sCartItems, $sCiDsc) !== false)
             $sCartItems = preg_replace_callback(
-                "/" . $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId, '([0-9])+')) . "/", function($aMatches) use($iSellerId, $iModuleId, $iItemId, $iItemCount) {
+                "/" . $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId, '([0-9]+)')) . "/", function($aMatches) use($iSellerId, $iModuleId, $iItemId, $iItemCount) {
                     return $this->_oModule->_oConfig->descriptorA2S(array($iSellerId, $iModuleId, $iItemId, $aMatches[1] + $iItemCount));
                 },
             	$sCartItems
