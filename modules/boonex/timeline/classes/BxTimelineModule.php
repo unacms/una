@@ -2350,6 +2350,8 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      */
     public function serviceGetLiveUpdate($aBrowseParams, $iProfileId, $iValue = 0, $iInit = 0)
     {
+        $CNF = &$this->_oConfig->CNF;
+
         $sKey = $this->_oConfig->getLiveUpdateKey($aBrowseParams);
 
         bx_import('BxDolSession');
@@ -2366,11 +2368,15 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $iValueNew = 0;
         foreach($aEvents as $aEvent) {
+            if((int)$aEvent[$CNF['FIELD_STICKED']] != 0)
+                continue;
+
             $sContent = $this->_oTemplate->getPost($aEvent, $aParams);
-            if(!empty($sContent)) {
-                $iValueNew = $aEvent['id'];
-                break;
-            }
+            if(empty($sContent)) 
+                continue;
+
+            $iValueNew = $aEvent['id'];
+            break;
         }
 
         if($iValueNew == $iValue)
@@ -2397,6 +2403,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
      * @code bx_srv('bx_timeline', 'get_live_updates', [...]); @endcode
      * 
      * Get an array with actual Live Update info. Separate live update notification for each new Event.
+     * Note. This method isn't used for now. @see BxTimelineModule::serviceGetLiveUpdate method instead.
      * 
      * Note. This way to display live update notifications isn't used for now. 
      * See BxTimelineModule::serviceGetLiveUpdate method instead.

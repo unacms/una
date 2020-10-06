@@ -85,6 +85,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'FIELD_TITLE' => 'title',
             'FIELD_TEXT' => 'description',
             'FIELD_STATUS' => 'status',
+            'FIELD_STICKED' => 'sticked',
             'FIELD_DATE' => 'date',
             'FIELD_ANONYMOUS' => 'anonymous',
             'FIELD_CONTROLS' => 'controls',
