@@ -4049,9 +4049,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(empty($aParams['blink']) || !is_array($aParams['blink']))
             $aParams['blink'] = array();
 
-        if($this->_oConfig->isHot())
-            $aParams['hot'] = $this->_oDb->getHot();
-
         $aParams = array_merge($aParams, array(
             'browse' => 'list',
             'status' => BX_TIMELINE_STATUS_ACTIVE,
@@ -4094,9 +4091,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $aParams['blink'] = bx_get('blink');
         $aParams['blink'] = $aParams['blink'] !== false ? explode(',', bx_process_input($aParams['blink'], BX_DATA_TEXT)) : array();
-
-        if($this->_oConfig->isHot())
-            $aParams['hot'] = $this->_oDb->getHot();
 
         $aParams = array_merge($aParams, array(
             'browse' => 'list',
