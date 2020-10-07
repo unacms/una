@@ -41,14 +41,19 @@ class BxBaseMenu extends BxDolMenu
         $aVars = $this->_getTemplateVars ();
         if (!empty($aVars['bx_repeat:menu_items'])) {
             $this->_addJsCss();
-            $s = $this->_oTemplate->parseHtmlByName($this->_aObject['template'], $aVars);
+            $s = $this->_getCode($this->_aObject['template'], $aVars);
         }
 
         if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->endMenu($sMenuTitle);
 
         return $s;
     }
-    
+
+    protected function _getCode($sTmplName, $aTmplVars)
+    {
+        return $this->_oTemplate->parseHtmlByName($sTmplName, $aTmplVars);
+    }
+
     public function getCodeItem ($sName)
     {
         if(empty($sName))
