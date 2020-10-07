@@ -10,16 +10,28 @@
 
 class BxBaseMenuCustom extends BxTemplMenuMoreAuto
 {
+    protected static $_sTmplContent;
     protected static $_sTmplContentItem;
 
     public function __construct($aObject, $oTemplate = false)
     {
         parent::__construct($aObject, $oTemplate);
 
+        if(empty(self::$_sTmplContent))
+            self::$_sTmplContent = $this->_oTemplate->getHtml($aObject['template']);
+
         if(empty(self::$_sTmplContentItem))
             self::$_sTmplContentItem = $this->_oTemplate->getHtml('menu_custom_item.html');
 
         $this->_sTmplNameItemMore = 'menu_custom_item_more.html';
+    }
+
+    protected function _getCode($sTmplName, $aTmplVars)
+    {
+        if($sTmplName != $this->_aObject['template'])
+            return parent::_getCode($sTmplName, $aTmplVars);
+
+        return $this->_oTemplate->parseHtmlByContent(self::$_sTmplContent, $aTmplVars);
     }
 
     protected function _getMenuItem ($aItem)
@@ -74,9 +86,9 @@ class BxBaseMenuCustom extends BxTemplMenuMoreAuto
         if($aItem === false)
             return false;
 
-        return $this->_oTemplate->parseHtmlByName($this->_getTmplNameItemMore(), array(
+        return $this->_oTemplate->parseHtmlByContent($this->_getTmplContentItemMore(), array(
             'item' => $this->_getMenuItemDefault($aItem),
-            'popup' => BxTemplFunctions::getInstance()->transBox($this->_aHtmlIds['more_auto_popup'], $this->_oTemplate->parseHtmlByName($this->_getTmplNameItemMorePopup(), array(
+            'popup' => BxTemplFunctions::getInstance()->transBox($this->_aHtmlIds['more_auto_popup'], $this->_oTemplate->parseHtmlByContent($this->_getTmplContentItemMorePopup(), array(
                 'content' => ''
             )), true)
         ));
