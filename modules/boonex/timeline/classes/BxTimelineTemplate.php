@@ -267,7 +267,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             }
         }
 
-        list($sAuthorName) = $oModule->getUserInfo($aEvent['object_owner_id']);
+        $sAuthorName = $oModule->getObjectUser($aEvent['object_owner_id'])->getDisplayName();
 
         $sTitle = $sAuthorName . ' ' . _t($aEvent['sample_action'], _t($aEvent['sample']));
         $sDescription = $aEvent['title'];
@@ -352,7 +352,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if($aResult === false)
             return '';
 
-        list($sAuthorName, $sAuthorUrl, $sAuthorIcon, $sAuthorUnit) = $this->getModule()->getUserInfo($aResult['object_owner_id']);
+        $sAuthorUnit = $this->getModule()->getObjectUser($aResult['object_owner_id'])->getUnit();
 
         $oForm = BxDolForm::getObjectInstance($this->_oConfig->getObject('form_post'), $this->_oConfig->getObject('form_display_post_view'), $this);
         $oForm->initChecker($aEvent);
@@ -898,13 +898,11 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sStylePrefix = $this->_oConfig->getPrefix('style');
 
         $aUserIds = $this->_oDb->getRepostedBy($iId);
-        foreach($aUserIds as $iUserId) {
-            list($sUserName, $sUserUrl, $sUserIcon, $sUserUnit) = $oModule->getUserInfo($iUserId);
+        foreach($aUserIds as $iUserId)
             $aTmplUsers[] = array(
                 'style_prefix' => $sStylePrefix,
-                'user_unit' => $sUserUnit
+                'user_unit' => $oModule->getObjectUser($iUserId)->getUnit()
             );
-        }
 
         if(empty($aTmplUsers))
             $aTmplUsers = MsgBox(_t('_Empty'));
@@ -1077,7 +1075,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         //--- Update Description if empty.
         if(empty($aEvent['description'])) {
-            list($sUserName) = $this->getModule()->getUserInfo($aResult['object_owner_id']);
+            $sUserName = $this->getModule()->getObjectUser($aResult['object_owner_id'])->getDisplayName();
 
             $sDescription = !empty($aResult['description']) ? $aResult['description'] : _t('_bx_timeline_txt_user_added_sample', $sUserName, _t($sSample));
             if($sDescription == '' && !empty($aResult['content']['text']))
@@ -1362,8 +1360,11 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $bViewItem = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_ITEM;
         $bViewOutline = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_OUTLINE;
 
-        list($sAuthorName, $sAuthorUrl, $sAuthorIcon, $sAuthorUnit, $sAuthorUnitShort, $sAuthorBadges) = $oModule->getUserInfoWithBadges($aEvent['object_owner_id']);
-        $bAuthorIcon = !empty($sAuthorIcon);
+        $oAuthor = $oModule->getObjectUser($aEvent['object_owner_id']);
+        $sAuthorName = $oAuthor->getDisplayName(); 
+        $sAuthorUrl = $oAuthor->getUrl();
+        $sAuthorUnit = $oAuthor->getUnit(0, array('template' => 'unit_wo_info'));
+        $sAuthorBadges = $oAuthor->getBadges();
 
         if(($bViewItem || $this->_oConfig->isCountAllViews()) && !empty($aEvent['views']) && is_array($aEvent['views']) && isset($aEvent['views']['system']))
             $oModule->getViewObject($aEvent['views']['system'], $aEvent['views']['object_id'])->doView();
@@ -1431,16 +1432,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'condition' => !empty($aTmplVarsNote),
                 'content' => $aTmplVarsNote
             ),
-            'bx_if:show_owner_icon' => array(
-                'condition' => $bAuthorIcon,
-                'content' => array(
-                    'owner_icon' => $sAuthorIcon
-                )
-            ),
-            'bx_if:show_owner_icon_empty' => array(
-                'condition' => !$bAuthorIcon,
-                'content' => array()
-            ),
             'bx_if:show_owner_actions' => array(
                 'condition' => $bTmplVarsOwnerActions,
                 'content' => $aTmplVarsOwnerActions
@@ -1449,7 +1440,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'item_owner_url' => $sAuthorUrl,
             'item_owner_title' => bx_html_attribute($sAuthorName),
             'item_owner_name' => $sAuthorName .' '. $sAuthorBadges,
-            'item_owner_unit' => $sAuthorUnitShort,
+            'item_owner_unit' => $sAuthorUnit,
             'item_owner_action' => _t($aEvent['sample_action'], _t($aEvent['sample'])),
             'bx_if:show_timeline_owner' => array(
                 'condition' => !empty($aTmplVarsTimelineOwner),
@@ -1511,6 +1502,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'cmts_preload_number' => $iPreloadComments,
                 'cmts_min_post_form' => false
             )));
+
+        
 
         $sVariable = '_sTmplContentItem' . bx_gen_method_name($aBrowseParams['view']);
         if(empty(self::$$sVariable))
@@ -1727,8 +1720,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             if($iOwnerId == 0 || $iOwnerId == $iObjectOwner)
                 continue;
 
-            list($sToName, $sToUrl, $sToThumb, $sToUnit, $sToUnitWoInfo) = $oModule->getUserInfo($iOwnerId);
-            $sToType = $oModule->getObjectUser($iOwnerId)->getModule();
+            $oOwner = $oModule->getObjectUser($iOwnerId);
+            $sToType = $oOwner->getModule();
+            $sToName = $oOwner->getDisplayName();
+            $sToUrl = $oOwner->getUrl();
 
             $aTmplVarsActions = array();
             if(!empty($iUser) && $iUser != $iOwnerId && $oConnection->checkAllowedConnect($iUser, $iOwnerId) === CHECK_ACTION_RESULT_ALLOWED) {
@@ -1746,9 +1741,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'owner_type' => _t('_' . $sToType),
                 'owner_url' => $sToUrl,
                 'owner_username' => $sToName,
-                'owner_thumb' => $sToThumb,
-                'owner_unit' => $sToUnit,
-                'owner_unit_wo_info' => $sToUnitWoInfo,
                 'bx_if:show_timeline_owner_actions' => array(
                     'condition' => !empty($aTmplVarsActions),
                     'content' => array(
@@ -2485,15 +2477,18 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
                 $aResult['content'] = array_merge($aContent, $aReposted['content']);
                 $aResult['content']['parse_type'] = !empty($aReposted['content_type']) ? $aReposted['content_type'] : BX_TIMELINE_PARSE_TYPE_DEFAULT;
+
+                $oObjectOwner = $oModule->getObjectUser($aReposted['object_owner_id']);
                 $aResult['content']['owner_id'] = $aReposted['object_owner_id'];
-                list($aResult['content']['owner_name'], $aResult['content']['owner_url']) = $oModule->getUserInfo($aReposted['object_owner_id']);
+                $aResult['content']['owner_name'] = $oObjectOwner->getDisplayName();
+                $aResult['content']['owner_url'] = $oObjectOwner->getUrl();
 
                 if(!empty($aReposted['sample']))
                     $aResult['content']['sample'] = $aReposted['sample'];
                 if(!empty($aReposted['sample_wo_article']))
                     $aResult['content']['sample'] = $aReposted['sample_wo_article'];
 
-                list($sUserName) = $oModule->getUserInfo($aEvent['object_id']);
+                $sUserName = $oModule->getObjectUser($aEvent['object_id'])->getDisplayName();
                 $aResult['title'] = _t('_bx_timeline_txt_user_repost', $sUserName, _t($aResult['content']['sample']));
                 $aResult['description'] = _t('_bx_timeline_txt_user_reposted_user_sample', $sUserName, $aResult['content']['owner_name'], _t($aResult['content']['sample']));
                 break;
