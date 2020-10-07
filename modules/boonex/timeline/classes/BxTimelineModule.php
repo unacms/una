@@ -489,9 +489,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         switch($sType) {
             case BX_BASE_MOD_NTFS_TYPE_OWNER:
                 $iOwnerId = array_shift($aArgs);
-                list($sUserName) = $this->getUserInfo($iOwnerId);
+                $sOwnerName = $this->getObjectUser($iOwnerId)->getDisplayName();
 
-                $sRssCaption = _t('_bx_timeline_txt_rss_caption', $sUserName);
+                $sRssCaption = _t('_bx_timeline_txt_rss_caption', $sOwnerName);
                 $sRssLink = $this->_oConfig->getViewUrl($iOwnerId);
                 break;
 
@@ -2619,8 +2619,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $bDynamicMode = $bAjaxMode;
 
         if($oForm->isSubmittedAndValid()) {
-            list($sUserName) = $this->getUserInfo($iUserId);
-
             $sType = $oForm->getCleanValue('type');
             $sType = $this->_oConfig->getPrefix('common_post') . $sType;
             BxDolForm::setSubmittedValue('type', $sType, $oForm->aFormAttrs['method']);
@@ -3621,20 +3619,6 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return array($sSystem, $iObjectId, $iCount);
     }
 
-    public function getUserInfo($iUserId = 0)
-    {
-        $iLoggedId = $this->getUserId();
-        $iUserId = (int)$iUserId;
-        return parent::getUserInfo($iUserId);
-    }
-
-    public function getUserInfoWithBadges($iUserId = 0)
-    {
-        $iLoggedId = $this->getUserId();
-        $iUserId = (int)$iUserId;
-        return parent::getUserInfoWithBadges($iUserId);
-    }
-
     public function getEventLinks($iEventId)
     {
         $aLinks = $this->_oDb->getLinks($iEventId);
@@ -3821,7 +3805,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if($mixedResult !== CHECK_ACTION_RESULT_ALLOWED)
             return array('content' => MsgBox($mixedResult));
 
-        list($sUserName) = $this->getUserInfo($aParams['owner_id']);
+        $sUserName = $this->getObjectUser($aParams['owner_id'])->getDisplayName();
 
         $sView = $aParams['view'];
         $sRssUrl = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'rss/' . BX_BASE_MOD_NTFS_TYPE_OWNER . '/' . $this->_iOwnerId . '/';
