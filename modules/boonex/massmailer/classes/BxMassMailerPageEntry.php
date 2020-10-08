@@ -17,8 +17,6 @@ class BxMassMailerPageEntry extends BxTemplPage
     public function __construct($aObject, $oTemplate = false)
     {
         $this->MODULE = 'bx_massmailer';
-        $CNF = &$this->_oModule->_oConfig->CNF;
-        $CNF['TABLE_ENTRIES'] = $CNF['TABLE_CAMPAIGNS'];
         parent::__construct($aObject, $oTemplate);
     }
 }
