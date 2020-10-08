@@ -293,8 +293,16 @@ abstract class BxDolPaginate extends BxDol
                     'lnk_content' => $this->_sViewAllCaption,
                 ),
             ),
-            'btn_prev' => '<a href="' . $sPrevLnkUrl . '" ' . $sPrevLnkClick . ' class="bx-paginate-btn-prev bx-btn' . $sClassAdd . $sPrevClassAdd . '"><i class="sys-icon sys-icon-bigger angle-double-left"></i></a>',
-            'btn_next' => '<a href="' . $sNextLnkUrl . '" ' . $sNextLnkClick . ' class="bx-paginate-btn-next bx-btn' . $sClassAdd . $sNextClassAdd . '"><i class="sys-icon sys-icon-bigger angle-double-right"></i></a>',
+            'btn_prev' => $this->_getButton('prev', array(
+                'class' => $sClassAdd . $sPrevClassAdd,
+                'href' => $sPrevLnkUrl,
+                'onclick' => $sPrevLnkClick,
+            )),
+            'btn_next' => $this->_getButton('next', array(
+                'class' => $sClassAdd . $sNextClassAdd,
+                'href' => $sNextLnkUrl,
+                'onclick' => $sNextLnkClick,
+            )),
             'paginate_class' => $this->_sPaginateClass,
 			'bx_repeat:attrs' => array(
                 array('key' => 'bx-data-start', 'value' => $this->_iStart),
@@ -353,6 +361,15 @@ abstract class BxDolPaginate extends BxDol
         return !empty($this->_sOnChangePage) ? 'onclick="javascript:' . $this->_oTemplate->parseHtmlByContent($this->_sOnChangePage, $aReplacement, array('{', '}')) . '; return false;"' : '';
     }
 
+    protected function _getButtonIconPrev()
+    {
+        return 'angle-double-left';
+    }
+
+    protected function _getButtonIconNext()
+    {
+        return 'angle-double-right';
+    }
 }
 
 /** @} */

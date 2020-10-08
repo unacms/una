@@ -16,6 +16,16 @@ class BxBasePaginate extends BxDolPaginate
     {
         parent::__construct($aParams, $oTemplate);
     }
+
+    protected function _getButton($sName, $aParams)
+    {
+        return $this->_oTemplate->parseHtmlByName('paginate_btn.html', array(
+            'class' => 'bx-paginate-btn bx-paginate-btn-' . $sName . (!empty($aParams['class']) ? $aParams['class'] : ''),
+            'href' => !empty($aParams['href']) ? $aParams['href'] : 'javascript:void(0)',
+            'onclick' => !empty($aParams['onclick']) ? $aParams['onclick'] : '',
+            'icon' => $this->{'_getButtonIcon' . bx_gen_method_name($sName)}()
+        ));
+    }
 }
 
 /** @} */
