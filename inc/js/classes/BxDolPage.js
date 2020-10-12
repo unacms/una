@@ -9,6 +9,7 @@ function BxDolPage(oOptions)
 {
     this._sObjName = oOptions.sObjName == undefined ? 'oBxDolPage' : oOptions.sObjName;
     this._isStickyColumns = oOptions.isStickyColumns == undefined ? false : oOptions.isStickyColumns;
+    this._iLastSc = 0;
     var $this = this;
     $(document).ready(function () {
         $this.init();
@@ -24,17 +25,34 @@ BxDolPage.prototype.init = function () {
 };
 
 BxDolPage.prototype.stickyBlocks = function () {
+    iSc = $(window).scrollTop();
     $.each($('.bx-layout-col'), function (index, val) {
         if ($(this).css('position') == 'sticky') {
             var iCh = $(this).height();
             var iWh = $(window).height();
             if (iCh > iWh) {
                 if (iCh - $(window).scrollTop() - $(window).height() < 0) {
-                    $(this).css('top', -iCh + $(window).height());
+                    var iMinS = (iWh - iCh);
+                    if ($(this).css('top') == '') {
+                        $(this).css('top', iMinS + 'px');
+                    }
+                    else {
+                        var iCurS = new Number($(this).css('top').replace('px', '')) - iSc + this._iLastSc;
+                        if (iCurS > 0) {
+                            $(this).css('top', '0px');
+                        }
+                        if (iCurS < iMinS) {
+                            $(this).css('top', iMinS + 'px');
+                        }
+                        if (iCurS < 0 && iCurS > iMinS) {
+                            $(this).css('top', iCurS + 'px');
+                        }
+                    }
                 }
             }
         }
     });
+    this._iLastSc = iSc <= 0 ? 0 : iSc;
 }
 
 
