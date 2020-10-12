@@ -178,7 +178,7 @@ class BxBaseModGeneralDb extends BxDolModuleDb
     
     public function deleteNestedById ($iNestedId, $sTableKey, $sTableName)
 	{
-		return $this->query("DELETE FROM `" . $sTableName . "` WHERE `" . $sTableKey . "` = :item_id", array('content_id' => $iNestedId));
+		return $this->query("DELETE FROM `" . $sTableName . "` WHERE `" . $sTableKey . "` = :content_id", array('content_id' => $iNestedId));
 	}
    
     function getNestedBy($aParams = array(), $sTableName)
