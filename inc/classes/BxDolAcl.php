@@ -663,7 +663,7 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
         $sProfileEmail = $oProfileQuery->getEmailById($iProfileId);
 
         $aPlus = array(
-            'membership_name' => $sLevelName,
+            'membership_name' => _t($sLevelName),
             'expire_days' => $iLevelExpireDays,
             'page_url' => BxDolRequest::serviceExists('bx_acl', 'get_view_url') ? BxDolService::call('bx_acl', 'get_view_url') : '#'
         );
