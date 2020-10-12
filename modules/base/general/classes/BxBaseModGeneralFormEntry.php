@@ -445,13 +445,13 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
                     foreach ($aInput['ghost_template'] as $oFormNested) {
                         $iNestedContentId = $oFormNested->aInputs[$aInput['name']]['value'];
                         if (empty($iNestedContentId)){
-                            $iNestedContentId = $oFormNested->insert(array('item_id' => $iContentId));
+                            $iNestedContentId = $oFormNested->insert(array('content_id' => $iContentId));
                             if ($aInput['rateable']){
                                 BxDolFormQuery::addFormField($this->id, $aInput['name'], $iContentId, $aContentInfo[$CNF['FIELD_AUTHOR']], $this->_oModule->getName(), $iNestedContentId);
                             }
                         }
                         else{
-                            $oFormNested->update($iNestedContentId, array('item_id' => $iContentId));
+                            $oFormNested->update($iNestedContentId, array('content_id' => $iContentId));
                         }
                     }
                 }
