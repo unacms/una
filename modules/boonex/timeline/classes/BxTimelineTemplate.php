@@ -1264,7 +1264,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $aParamsSet = array(
             'type' => $aParams['type'],
-            'context_id' => is_array($aEvent[$CNF['FIELD_OWNER_ID']]) ? $aEvent[$CNF['FIELD_OWNER_ID']][0] : $CNF['FIELD_OWNER_ID'],  
+            'context_id' => is_array($aEvent[$CNF['FIELD_OWNER_ID']]) ? array_shift($aEvent[$CNF['FIELD_OWNER_ID']]) : $aEvent[$CNF['FIELD_OWNER_ID']],  
             'profile_id' => $iProfileId, 
             'event_id' => $aEvent[$CNF['FIELD_ID']], 
             'date' => $aEvent[$CNF['FIELD_ADDED']]
@@ -1273,7 +1273,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         //--- Process Context ID value.
         if($aParams['type'] == BX_BASE_MOD_NTFS_TYPE_PUBLIC)
             $aParamsSet['context_id'] = 0;
-        else if(in_array($aParams['type'], array(BX_BASE_MOD_NTFS_TYPE_OWNER, BX_TIMELINE_TYPE_FEED, BX_TIMELINE_TYPE_CHANNELS, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS)))
+        else if(in_array($aParams['type'], array(BX_TIMELINE_TYPE_FEED, BX_TIMELINE_TYPE_CHANNELS, BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS)))
             $aParamsSet['context_id'] = $iProfileId;
 
         //--- Process 'important' flag.
