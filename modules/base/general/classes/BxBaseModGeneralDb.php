@@ -229,6 +229,9 @@ class BxBaseModGeneralDb extends BxDolModuleDb
 
         $sWhereConditions = "1";
         foreach($aParams['search_params'] as $sSearchParam => $aSearchParam) {
+            if(empty($aSearchParam['operator']))
+                continue;
+
             $sSearchValue = "";
             switch ($aSearchParam['operator']) {
                 case 'like':
@@ -306,9 +309,6 @@ class BxBaseModGeneralDb extends BxDolModuleDb
                     break;
 
                 default:
-                    if(empty($aSearchParam['operator']))
-                        break;
-
                     $sSearchValue = " " . $aSearchParam['operator'] . " :" . $sSearchParam;
                     $aMethod['params'][1][$sSearchParam] = $aSearchParam['value'];
             }
