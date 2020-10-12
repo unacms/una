@@ -153,9 +153,11 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         // set created profile some default membership
         if ((int)bx_get('level_id') && bx_srv('bx_acl', 'get_prices', [(int)bx_get('level_id'), true]))
             $iAclLevel = (int)bx_get('level_id');
+        else if(isset($CNF['PARAM_DEFAULT_ACL_LEVEL']))
+            $iAclLevel = isAdmin() && getLoggedId() == $iAccountId ? MEMBERSHIP_ID_ADMINISTRATOR : getParam($CNF['PARAM_DEFAULT_ACL_LEVEL']);
         else
-            $iAclLevel = !isset($CNF['PARAM_DEFAULT_ACL_LEVEL']) ? MEMBERSHIP_ID_STANDARD : 
-               (isAdmin() ? MEMBERSHIP_ID_ADMINISTRATOR : getParam($CNF['PARAM_DEFAULT_ACL_LEVEL']));
+            $iAclLevel = MEMBERSHIP_ID_STANDARD;
+
         BxDolAcl::getInstance()->setMembership($iProfileId, $iAclLevel, 0, true);
         
         // process uploaded files
