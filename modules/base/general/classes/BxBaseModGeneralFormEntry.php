@@ -116,16 +116,20 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
     function genInputNestedForm (&$aInput, $sInfo = '', $sError = '')
     {
         $sUniqId = genRndPwd (8, false);
-        
         $aNestedForms = array();
         if (!$this->isSubmitted()){
             $aNestedValues = $this->_oModule->_oDb->getNestedBy(array('type' => 'content_id', 'id' => $this->_iContentId, 'key_name' => $aInput['ghost_template']['params']['db']['key']), $aInput['ghost_template']['params']['db']['table']);
             foreach($aNestedValues as $aNestedValue) {
                 $aNestedValuesRv = array();
-                foreach($aNestedValue as $aNestedKey => $aNestedItem) {
-                    $aNestedValuesRv[$aNestedKey . '[]'] = $aNestedItem;
-                }
                 $oForm = $this->getNestedFormObject($aInput);  
+                
+                foreach($aNestedValue as $aNestedKey => $aNestedItem) {
+                    if ($oForm->aParams['db']['key'] == $aNestedKey)
+                        $aNestedValuesRv[$aNestedKey . '[]'] = $aNestedItem;
+                    else
+                        $aNestedValuesRv[$aNestedKey] = $aNestedItem;
+                }
+                
                 $oForm->initChecker($aNestedValuesRv);
                 array_push(
 				    $aNestedForms,
@@ -180,10 +184,15 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         foreach($aNestedValues as $aNestedValue) {
             $sValue = '';
 			$aNestedValuesRv = array();
+            $oForm = $this->getNestedFormObject($aInput, true);
+            
             foreach($aNestedValue as $aNestedKey => $aNestedItem) {
-                $aNestedValuesRv[$aNestedKey . '[]'] = $aNestedItem;
+                if ($oForm->aParams['db']['key'] == $aNestedKey)
+                    $aNestedValuesRv[$aNestedKey . '[]'] = $aNestedItem;
+                else
+                    $aNestedValuesRv[$aNestedKey] = $aNestedItem;
             }
-            $oForm = $this->getNestedFormObject($aInput, true);  
+              
             $oForm->initChecker($aNestedValuesRv);
             
             if ($aInput['rateable']){
@@ -229,7 +238,13 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
     
     function getNestedFormObject (&$aInput, $bViewMode = false)
     {
-        return BxDolForm::getObjectInstance($aInput['value'], $aInput['value'] . ($bViewMode ? '_view' : ''));
+        $oForm = BxDolForm::getObjectInstance($aInput['value'], $aInput['value'] . ($bViewMode ? '_view' : ''));
+        foreach($oForm->aInputs as $sKey => $aInput2) {
+            $sName = $oForm->aInputs[$sKey]['name'];
+            if (strpos($sName,'[]') === false)
+                $oForm->aInputs[$sKey]['name'] = $sName . '[]';
+        }
+        return $oForm;
     }
 
     /**
