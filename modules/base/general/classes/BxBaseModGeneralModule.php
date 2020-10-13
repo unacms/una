@@ -549,12 +549,12 @@ class BxBaseModGeneralModule extends BxDolModule
      * Add entry using provided fields' values.
      * @return array with result: 'code' is 0 on success or non-zero on error, 'message' is error message in case of error, 'content' is content info array in case of success
      */
-    public function serviceEntityAdd ($iProfile, $aValues)
+    public function serviceEntityAdd ($iProfile, $aValues, $sDisplay = false)
     {
         bx_import('FormsEntryHelper', $this->_aModule);
         $sClass = $this->_aModule['class_prefix'] . 'FormsEntryHelper';
         $oFormsHelper = new $sClass($this);
-        return $oFormsHelper->addData($iProfile, $aValues);
+        return $oFormsHelper->addData($iProfile, $aValues, $sDisplay);
     }
 
 	/**
