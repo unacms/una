@@ -677,7 +677,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings
                     'value' => $mixedValue,
                     'attrs' => $aAttributes,
                     'db' => array (
-                        'pass' => 'DateTimeTs',
+                        'pass' => 'DateTimeUtc',
                     ),
                 );
                 break;
