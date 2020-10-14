@@ -245,15 +245,39 @@ div.bx-tl-item.bx-tl-blink div.bx-tl-blink-plate {
 }
 
 /*--- Item Sample Style ---*/
+div.bx-tl-item.bx-tl-sample div.bx-tl-is {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+}
+div.bx-tl-item.bx-tl-sample div.bx-tl-is.vcenter {
+    -webkit-align-items: center;
+    align-items: center;
+}
+div.bx-tl-item.bx-tl-sample div.bx-tl-is-avatar {
+    -webkit-flex-grow: 0;
+    flex-grow: 0;
+}
+div.bx-tl-item.bx-tl-sample div.bx-tl-is-content {
+    -webkit-flex-grow: 2;
+    flex-grow: 2;
+}
+
+div.bx-tl-item.bx-tl-sample .bx-tl-is-icon,
 div.bx-tl-item.bx-tl-sample .bx-tl-is-title,
+div.bx-tl-item.bx-tl-sample .bx-tl-is-aux > li,
 div.bx-tl-item.bx-tl-sample .bx-tl-is-paragraph > li {
     background: -webkit-gradient(linear,left top,right top,color-stop(25%,#f2f2f2),color-stop(37%,#e6e6e6),color-stop(63%,#f2f2f2));
     background: linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 37%, #f2f2f2 63%);
     background-size: auto;
     background-size: 400% 100%;
 
-    -webkit-animation: ant-skeleton-loading 1.4s ease infinite;
+    -webkit-animation: bx-tl-sample-loading 1.4s ease infinite;
     animation: bx-tl-sample-loading 1.4s ease infinite;
+}
+div.bx-tl-item.bx-tl-sample .bx-tl-is-icon {
+    display: block;
 }
 div.bx-tl-item.bx-tl-sample .bx-tl-is-title {
     width: 100%;
@@ -261,15 +285,28 @@ div.bx-tl-item.bx-tl-sample .bx-tl-is-title {
     margin: 0;
     padding: 0;
 }
+div.bx-tl-item.bx-tl-sample .bx-tl-is-aux,
 div.bx-tl-item.bx-tl-sample .bx-tl-is-paragraph {
-    margin: 1.5rem 0 0 0;
+    margin: 0;
     padding: 0;
 
     list-style: none;
 }
+div.bx-tl-item.bx-tl-sample .bx-tl-is-aux {
+    margin-top: 0.5rem;
+}
+div.bx-tl-item.bx-tl-sample .bx-tl-is-paragraph {
+    margin-top: 1.5rem;
+}
 div.bx-tl-item.bx-tl-sample .bx-tl-is-paragraph + .bx-tl-is-paragraph {
     margin-top: 2.5rem;
     text-align: right;
+}
+div.bx-tl-item.bx-tl-sample .bx-tl-is-aux > li {
+    width: 100%;
+    height: 0.75rem;
+
+    list-style: none;
 }
 div.bx-tl-item.bx-tl-sample .bx-tl-is-paragraph > li {
     width: 100%;
@@ -279,6 +316,9 @@ div.bx-tl-item.bx-tl-sample .bx-tl-is-paragraph > li {
 }
 div.bx-tl-item.bx-tl-sample .bx-tl-is-paragraph + .bx-tl-is-paragraph > li {
     display: inline-block;
+}
+div.bx-tl-item.bx-tl-sample .bx-tl-is-aux > li + li {
+    margin: 0.25rem 0 0 0;
 }
 div.bx-tl-item.bx-tl-sample .bx-tl-is-paragraph > li + li {
     margin: 1.0rem 0 0 0;
