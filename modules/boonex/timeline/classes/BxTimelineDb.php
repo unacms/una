@@ -474,6 +474,10 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
     public function getEvents($aParams)
     {
+        bx_alert($this->_oConfig->getName(), 'get_events_before', 0, 0, array(
+            'params' => &$aParams,
+        ));
+
         list($sMethod, $sSelectClause, $mixedJoinClause, $mixedWhereClause, $sOrderClause, $sLimitClause) = $this->_getSqlPartsEvents($aParams);
 
         $bCount = isset($aParams['count']) && $aParams['count'] === true;
