@@ -200,6 +200,9 @@ class BxDolFeature extends BxDolObject
     {
         $sModule = $this->_aSystem['name'];
         $oModule = BxDolModule::getInstance($sModule);
+        if(!$oModule)
+            return;
+
         $CNF = $oModule->_oConfig->CNF;
 
         $aContentInfo = BxDolRequest::serviceExists($sModule, 'get_all') ? BxDolService::call($sModule, 'get_all', array(array('type' => 'id', 'id' => $this->getId()))) : array();
