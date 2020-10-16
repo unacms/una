@@ -213,11 +213,13 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 				'value' =>  $sValue
 			));
         }
-        return $this->oTemplate->parseHtmlByName('form_view_row.html', array(
-            'type' => $aInput['type'], 
-            'caption' => isset($aInput['caption']) ? bx_process_output($aInput['caption']) : '',
-            'value' => $sResult
-        ));
+        if ($sResult != ''){
+            return $this->oTemplate->parseHtmlByName('form_view_row.html', array(
+                'type' => $aInput['type'], 
+                'caption' => isset($aInput['caption']) ? bx_process_output($aInput['caption']) : '',
+                'value' => $sResult
+            ));
+        }
     }
     
     protected function genGhostTemplateForInputNestedForm (&$aInput)
