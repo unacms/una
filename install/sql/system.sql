@@ -3541,8 +3541,7 @@ CREATE TABLE `sys_form_fields_ids` (
   `rrate` float NOT NULL DEFAULT '0',
   `rvotes` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `system_form_fields_id` (`object_form`, `content_id`, `nested_content_id`),
-  KEY `system_form_fields_id_module` (`module`)
+  KEY `system_form_fields_id` (`object_form`, `content_id`, `nested_content_id`)
 );
 
 CREATE TABLE `sys_form_pre_lists` (

@@ -23,7 +23,8 @@ class BxDolStudioFormsField extends BxDol
     protected $aParams = array();
     protected $aField = array();
     protected $iFieldNameMaxLen;
-
+    protected $aFormObject = array();
+    
     public function __construct($aParams = array(), $aField = array())
     {
         parent::__construct();
@@ -78,6 +79,14 @@ class BxDolStudioFormsField extends BxDol
         );
 
         $this->aParams = $aParams;
+        
+        $this->aFormObject = BxDolFormQuery::getFormObject ($this->aParams['object']); 
+        if ($this->isNested()){
+            $this->aTypes['nested_form']['add'] = 0;
+            $this->aTypes['file']['add'] = 0;
+            $this->aTypes['files']['add'] = 0;
+        }
+       
         $this->aField = $aField;
         $this->iFieldNameMaxLen = 32;
     }
@@ -97,6 +106,11 @@ class BxDolStudioFormsField extends BxDol
         return isset($this->aParams['table']) && !empty($this->aParams['table']);
     }
 
+    public function isNested()
+    {
+        return $this->aFormObject['parent_form'] != '' ? true : false;
+    }
+    
     /**
      * Checks whether the field exists in connected table.
      * @param type $sName - field name

@@ -1066,7 +1066,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
             if (!isset($aInput['ghost_template']))
                 continue;
 
-            if (!(is_array($aInput['ghost_template']) && isset($aInput['ghost_template']['inputs'])) && !(is_object($aInput['ghost_template']) && $aInput['ghost_template'] instanceof BxDolFormNested))
+            if (!(is_array($aInput['ghost_template']) && isset($aInput['ghost_template']['inputs'])) && !(is_object($aInput['ghost_template']) && $aInput['ghost_template'] instanceof BxDolFormNestedGhost))
                 continue;
 
             $sName = $aInput['name'];
@@ -1082,7 +1082,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
                 if (is_object($aInput['ghost_template'])) {
                     $oFormNested = clone($aInput['ghost_template']);
                 } else {
-                    $oFormNested = new BxDolFormNested($aInput['name'], $aInput['ghost_template'], $this->aParams['db']['submit_name'], $this->oTemplate);
+                    $oFormNested = new BxDolFormNestedGhost($aInput['name'], $aInput['ghost_template'], $this->aParams['db']['submit_name'], $this->oTemplate);
                 }
                 if ($iFileId && 0 != $iFileId)
                     $aNestedForms[$iFileId] = $oFormNested;
@@ -1096,7 +1096,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
                 foreach ($oFormNested->aInputs as $r) {
                     $sName = str_replace('[]', '', $r['name']);
                     $aValue = $this->getSubmittedValue($sName, $this->aFormAttrs['method']);
-                    $aSpecificValues[$sName] = $aValue[$i];
+                    $aSpecificValues[$sName] = isset($aValue[$i]) ? $aValue[$i] : '';
                 }
                 $oFormNested->initChecker(array(), $aSpecificValues);
 

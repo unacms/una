@@ -78,11 +78,11 @@
  * file id field is added automatically as hidden input as well.
  *
  *
- * 3. Pass instance of BxDolFormNested class - use BxDolFormNested class or its custom subclass;
+ * 3. Pass instance of BxDolFormNestedGhost class - use BxDolFormNestedGhost class or its custom subclass;
  * to create instance use the same form array as in the previous variant, for example:
  *
  * @code
- * $oFormNested = new BxDolFormNested('attachment', $aFormNested, 'do_submit');
+ * $oFormNested = new BxDolFormNestedGhost('attachment', $aFormNested, 'do_submit');
  * @endcode
  *
  * - 'attachment' is the name of file form field from main form.

@@ -1037,6 +1037,10 @@ class BxBaseStudioFormsFieldBlockHeader extends BxBaseStudioFormsField
                 )
             )
         );
+        
+        if ($this->isNested()){
+            unset($this->aForm['inputs']['rateable']);
+        }
     }
 }
 
