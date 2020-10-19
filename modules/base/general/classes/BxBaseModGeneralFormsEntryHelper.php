@@ -357,6 +357,7 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
                 return MsgBox(_t('_sys_txt_error_entry_update'));
         }
 
+        list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
         $sResult = $this->onDataEditAfter ($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm);
         if ($sResult)
             return $sResult;
