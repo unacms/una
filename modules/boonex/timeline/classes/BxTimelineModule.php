@@ -1603,7 +1603,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         return $this->_oTemplate->getItemBlockComments($iItemId);
     }
-    
+
+    public function serviceGetTimelineRepostAllowedView($aEvent)
+    {
+        return isset($aEvent['content']['allowed_view']) ? $aEvent['content']['allowed_view'] : CHECK_ACTION_RESULT_ALLOWED;
+    }
+
     /**
      * @page service Service Calls
      * @section bx_timeline Timeline
