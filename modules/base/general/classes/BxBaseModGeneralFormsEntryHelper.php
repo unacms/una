@@ -455,6 +455,12 @@ class BxBaseModGeneralFormsEntryHelper extends BxDolProfileForms
         if (!$oForm->delete ($aContentInfo[$CNF['FIELD_ID']], $aContentInfo))
             return _t('_sys_txt_error_entry_delete');
 
+        // remove data from nested forms 
+        $aNestedForms = BxDolFormQuery::getNestedFormObjects($oForm->aParams['object']);
+        foreach ($aNestedForms as $aNestedForm) {
+            BxDolFormQuery::deleteDataFromNestedForm($aNestedForm['table'], $iContentId);
+        }
+        
         if ($sResult = $this->onDataDeleteAfter ($aContentInfo[$CNF['FIELD_ID']], $aContentInfo, $oProfile))
             return $sResult;
 

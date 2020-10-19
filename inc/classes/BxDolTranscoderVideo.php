@@ -209,7 +209,7 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
             @unlink($sFileOut);
         }
 
-        $sCommand = escapeshellcmd(BX_SYSTEM_FFMPEG) . ' -y -i ' . escapeshellarg($sFile) . ' ' . $sOptions . ' ' . escapeshellarg($sFileOut) . ' 2>&1';
+        $sCommand = escapeshellcmd(BX_SYSTEM_FFMPEG) . ' -y ' . $this->_getFfmpegThreadsParams() . ' -i ' . escapeshellarg($sFile) . ' ' . $this->_getFfmpegThreadsParams() . ' ' . $sOptions . ' ' . escapeshellarg($sFileOut) . ' 2>&1';
         $sOutput = `$sCommand`;
         $this->addToLog("\n---\n{$sCommand}\n{$sOutput}\n");
 
@@ -283,6 +283,18 @@ class BxDolTranscoderVideo extends BxDolTranscoder implements iBxDolFactoryObjec
             return  $aParams['w'] . 'x' . round($aParams['w'] / $fRatio / 2) * 2;
 
         return '640x360'; // should never happen
+    }
+
+    protected function _getFfmpegThreadsParams ()
+    {
+        $s = '';
+
+        // optionally limit number of threads
+        if (defined('BX_SYSTEM_FFMPEG_THREAD') && ($iThreads = (int)constant('BX_SYSTEM_FFMPEG_THREAD'))) {
+            $s .= '-threads ' . $iThreads;
+        }
+
+        return $s;
     }
 }
 

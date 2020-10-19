@@ -14,42 +14,30 @@
  */
 class BxDolFormNested extends BxTemplFormView
 {
-    /**
-     * Constructor
-     * @param $sName the name of form field from main form, where this nested form is inserted.
-     * @param $aForm form array, actually only form inout are needed, all other attributes are taken from parent form automatically.
-     * @param $sSubmitName main form submit_name; field name of submit form input to determine if form is submitted or not.
-     * @param $oTemplate optional template object
-     */
-    function __construct($sName, $aForm, $sSubmitName = false, $oTemplate = false)
+    public function __construct ($aInfo, $oTemplate)
     {
-        if (!isset($aForm['params']['nested_form_template']) || !$aForm['params']['nested_form_template'])
-            $aForm['params']['nested_form_template'] = 'uploader_nested_form_wrapper.html';
-
-        $aForm['form_attrs']['id'] = $sName . '_{file_id}';
-        $aForm['form_attrs']['method'] = 'specific';
-        $aForm['params']['remove_form'] = true;
-        $aForm['params']['csrf']['disable'] = true;
-        if ($sSubmitName)
-            $aForm['params']['db']['submit_name'] = $sSubmitName;
-        if (!isset($aForm['inputs'][$sName])) {
-            $aForm['inputs'][$sName] = array(
-                'type' => 'hidden',
-                'name' => $sName . '[]',
-                'value' => '{file_id}',
-            );
-        }
-
-        parent::__construct($aForm, $oTemplate);
+        parent::__construct($aInfo, $oTemplate);
     }
-
-    function genForm()
+    
+    function genInputStandard(&$aInput)
     {
-        $sNestedForm = parent::genForm();
-        $a = array (
-            'nested_form' => $sNestedForm,
-        );
-        return $this->oTemplate->parseHtmlByName($this->aParams['nested_form_template'], $a);
+        if($aInput['type'] != 'checkbox')
+            return parent::genInputStandard($aInput);
+
+        $aInputHidden = $aInput;
+        
+        $aInputHidden['type'] = 'hidden';
+        if (isset($aInput['checked']) and $aInput['checked'])
+            $aInputHidden['value'] = '1';
+        else
+            $aInputHidden['value'] = '0';
+        
+        $sRv = parent::genInputStandard($aInputHidden);
+        $aInput['name'] = 'chk_' . $aInput['name'];
+        $aInput['attrs']['onchange'] = 'BxDolForm.setCheckBoxValue(this)';
+        $sRv .= parent::genInputStandard($aInput);
+   
+        return $sRv;
     }
 }
 

@@ -1498,6 +1498,21 @@ function bx_audit($iContentId, $sContentModule, $sAction, $aParams)
 }
 
 /**
+ * Return module name based on system name
+ * @param string $sSysytemName - system name 
+ */
+function bx_modulename_from_systemname($sSysytemName)
+{
+    $sModule = $sSysytemName;
+    $aTmp = explode('_', $sModule);
+    if (count($aTmp) > 2){
+        unset($aTmp[count($aTmp) - 1]);
+        $sModule = implode('_', $aTmp);
+    }
+    return $sModule;
+}
+
+/**
  * Raise an alert
  * @param string $sUnit - system type
  * @param string $sAction - system action

@@ -57,4 +57,13 @@ BxDolForm.prototype._getDefaultParams = function()
     };
 };
 
+BxDolForm.setCheckBoxValue = function (obj) {
+    var oHidden = $(obj).parent('div').find('INPUT[type=hidden]')
+    var val = 0;
+    if ($(obj).attr("checked") == 'checked') {
+        val = 1;
+    }
+    oHidden.val(val);
+}
+
 /** @} */

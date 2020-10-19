@@ -468,6 +468,9 @@
 	display: flex !important;
 	justify-content: flex-start;
 }
+.bx-form-row-view-ratevalue .bx-form-row-view-value{
+    flex-grow: 2;
+}
 .bx-form-row-view-wrapper-textarea > div {
     vertical-align:top;
 }

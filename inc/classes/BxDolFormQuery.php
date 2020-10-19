@@ -33,6 +33,30 @@ class BxDolFormQuery extends BxDolDb
         $this->_aObject = $aObject;
     }
 
+    static public function getFormObject ($sObject)
+    {
+        $oDb = BxDolDb::getInstance();
+
+        $sQuery = $oDb->prepare("SELECT * FROM `sys_objects_form` WHERE `object` = ?", $sObject);
+        return $oDb->fromMemory('sys_objects_form_' . $sObject, 'getRow', $sQuery);
+    }
+    
+    static public function getNestedFormObjects ($sParentObject)
+    {
+        $oDb = BxDolDb::getInstance();
+
+        $sQuery = $oDb->prepare("SELECT * FROM `sys_objects_form` WHERE `parent_form` = ?", $sParentObject);
+        return $oDb->fromMemory('sys_objects_form_' . $sObject, 'getAll', $sQuery);
+    }
+    
+    static public function deleteDataFromNestedForm ($sTableName, $iContentId)
+    {
+        $oDb = BxDolDb::getInstance();
+
+        $sQuery = $oDb->prepare("DELETE FROM  `" . $sTableName ."`  WHERE `content_id` = ?", $iContentId);
+        $oDb->query($sQuery);
+    }
+    
     static public function getFormArray ($sObject, $sDisplayName)
     {
         $oDb = BxDolDb::getInstance();

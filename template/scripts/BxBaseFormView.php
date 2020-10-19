@@ -1357,19 +1357,19 @@ BLAH;
         if (isset($aInput['ghost_template']) && is_object($aInput['ghost_template'])) { // form is not submitted and ghost template is BxDolFormNested object
 
             $oFormNested = $aInput['ghost_template'];
-            if ($oFormNested instanceof BxDolFormNested)
+            if ($oFormNested instanceof BxDolFormNestedGhost)
                 $sGhostTemplate = $oFormNested->genForm();
 
         } elseif (isset($aInput['ghost_template']) && is_array($aInput['ghost_template']) && isset($aInput['ghost_template']['inputs'])) { // form is not submitted and ghost template is form array
 
-            $oFormNested = new BxDolFormNested($aInput['name'], $aInput['ghost_template'], $this->aParams['db']['submit_name'], $this->oTemplate);
+            $oFormNested = new BxDolFormNestedGhost($aInput['name'], $aInput['ghost_template'], $this->aParams['db']['submit_name'], $this->oTemplate);
             $sGhostTemplate = $oFormNested->getCode();
 
         } elseif (isset($aInput['ghost_template']) && is_array($aInput['ghost_template']) && $aInput['ghost_template']) { // form is submitted and ghost template is array of BxDolFormNested objects
 
             $sGhostTemplate = array ();
             foreach ($aInput['ghost_template'] as $iFileId => $oFormNested)
-                if (is_object($oFormNested) && $oFormNested instanceof BxDolFormNested)
+                if (is_object($oFormNested) && $oFormNested instanceof BxDolFormNestedGhost)
                     $sGhostTemplate[$iFileId] = $oFormNested->genForm();
 
         } elseif (isset($aInput['ghost_template']) && is_string($aInput['ghost_template'])) { // ghost template is just string template, without nested form
