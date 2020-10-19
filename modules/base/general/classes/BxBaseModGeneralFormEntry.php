@@ -196,14 +196,18 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
             $oForm->initChecker($aNestedValuesRv);
             
             if ($aInput['rateable']){
-                $sVotes = '';
+                $sVote = '';
+				$sVoteBtn = '';
                 $iId = BxDolFormQuery::getFormField($this->id, $aInput['name'], $this->_iContentId,  $aNestedValuesRv[$oForm->aParams['db']['key'] . '[]']);
                 $oVote = BxDolVote::getObjectInstance($aInput['rateable'], $iId, true, BxDolTemplate::getInstance());
-                if ($oVote)    
-                    $sVotes = $oVote->getElementInline(array('show_counter_empty' => true, 'show_counter' => true, 'show_counter_style' => 'compound', 'dynamic_mode' => $this->_bDynamicMode));
+                if ($oVote){
+					$sVote = $oVote->getCounter(array('show_counter_empty' => true, 'show_counter' => true, 'show_counter_style' => 'simple', 'dynamic_mode' => $this->_bDynamicMode));
+					$sVoteBtn = $oVote->getElementInline(array('show_counter_empty' => true, 'show_counter' => false, 'show_counter_style' => 'simple', 'dynamic_mode' => $this->_bDynamicMode));
+				}
 				$sValue = $this->oTemplate->parseHtmlByName('form_view_rateable_row.html', array(
 					'value' =>  $oForm->getCode(),
-					'rate' => $sVotes
+					'rate' => $sVote,
+					'rate_btn' => $sVoteBtn
 				));
             }
 			else{
@@ -651,10 +655,12 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         $sVote = '';
         $oVote = BxDolVote::getObjectInstance($aInput['rateable'], $iId, true, BxDolTemplate::getInstance());
         if ($oVote){
-            $sVote = $oVote->getElementInline(array('show_counter_empty' => true, 'show_counter' => true, 'show_counter_style' => 'compound', 'dynamic_mode' => $this->_bDynamicMode));
+            $sVote = $oVote->getCounter(array('show_counter_empty' => true, 'show_counter' => true, 'show_counter_style' => 'simple', 'dynamic_mode' => $this->_bDynamicMode));
+			$sVoteBtn = $oVote->getElementInline(array('show_counter_empty' => true, 'show_counter' => false, 'show_counter_style' => 'simple', 'dynamic_mode' => $this->_bDynamicMode));
 			return $this->oTemplate->parseHtmlByName('form_view_rateable_row.html', array(
 				'value' => $sResult,
-				'rate' => $sVote
+				'rate' => $sVote,
+				'rate_btn' => $sVoteBtn
 			));
         }
 		return $sResult;
