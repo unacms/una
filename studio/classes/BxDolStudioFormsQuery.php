@@ -66,7 +66,11 @@ class BxDolStudioFormsQuery extends BxDolDb
                 $aMethod['params'][3] = array(
                 	'parent_form' => $aParams['parent_form']
                 );
-                $sWhereClause = "AND `tf`.`parent_form`=:parent_form AND `object` NOT IN (SELECT `value` FROM `sys_form_inputs` sfi WHERE `type`='nested_form' AND `object` = :parent_form)";
+                $sSubQuery = "SELECT `value` FROM `sys_form_inputs` sfi WHERE `type`='nested_form' AND `object` = :parent_form ";
+                if (!@empty($aParams['ids'])){
+                    $sSubQuery = "SELECT `value` FROM `sys_form_inputs` sfi WHERE `type`='nested_form' AND `object` = :parent_form AND `name` NOT IN (SELECT `input_name` FROM `sys_form_display_inputs` WHERE `id` IN(" . $aParams['ids'] . "))";
+                }
+                $sWhereClause = "AND `tf`.`parent_form`=:parent_form AND `object` NOT IN (" . $sSubQuery . ")";
                 break;
              
             case 'all':
