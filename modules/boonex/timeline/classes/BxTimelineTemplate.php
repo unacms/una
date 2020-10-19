@@ -501,12 +501,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aEvent['comments'] = $aResult['comments'];
 
         $sKey = 'allowed_view';
-        $aEvent[$sKey] = CHECK_ACTION_RESULT_ALLOWED;
-        if(isset($aResult[$sKey], $aResult[$sKey]['module'], $aResult[$sKey]['method']))
-            $aEvent[$sKey] = BxDolService::call($aResult[$sKey]['module'], $aResult[$sKey]['method'], array($aEvent));
-        else if(($aHandler = $this->_oConfig->getHandler($aEvent)) !== false && BxDolRequest::serviceExists($aHandler['module_name'], 'get_timeline_post_allowed_view'))
-            $aEvent[$sKey] = BxDolService::call($aHandler['module_name'], 'get_timeline_post_allowed_view', array($aEvent));
-
+        $aEvent[$sKey] = $this->_preparePrivacy($sKey, $aEvent, $aResult);
         if(isset($aEvent[$sKey]) && $aEvent[$sKey] !== CHECK_ACTION_RESULT_ALLOWED) 
             return '';
 
@@ -2532,12 +2527,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $aContent = unserialize($aEvent['content']);
 
                 if(!$this->_oConfig->isSystem($aContent['type'] , $aContent['action'])) {
-                    $aReposted = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $aContent['object_id']));
-                    $aReposted = $this->_getCommonData($aReposted, $aBrowseParams);
+                    $aEventReposted = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $aContent['object_id']));
+                    $aReposted = $this->_getCommonData($aEventReposted, $aBrowseParams);
                 } 
                 else {
-                    $aReposted = $this->_oDb->getEvents(array_merge(array('browse' => 'descriptor'), $aContent));
-                    $aReposted = $this->_getSystemData($aReposted, $aBrowseParams);
+                    $aEventReposted = $this->_oDb->getEvents(array_merge(array('browse' => 'descriptor'), $aContent));
+                    $aReposted = $this->_getSystemData($aEventReposted, $aBrowseParams);
                 }
 
                 if(empty($aReposted) || !is_array($aReposted))
@@ -2545,6 +2540,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
                 $aResult['content'] = array_merge($aContent, $aReposted['content']);
                 $aResult['content']['parse_type'] = !empty($aReposted['content_type']) ? $aReposted['content_type'] : BX_TIMELINE_PARSE_TYPE_DEFAULT;
+
+                $sKey = 'allowed_view';
+                $aResult['content'][$sKey] = $this->_preparePrivacy($sKey, $aEventReposted, $aReposted);
 
                 $oObjectOwner = $oModule->getObjectUser($aReposted['object_owner_id']);
                 $aResult['content']['owner_id'] = $aReposted['object_owner_id'];
@@ -2559,6 +2557,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $sUserName = $oModule->getObjectUser($aEvent['object_id'])->getDisplayName();
                 $aResult['title'] = _t('_bx_timeline_txt_user_repost', $sUserName, _t($aResult['content']['sample']));
                 $aResult['description'] = _t('_bx_timeline_txt_user_reposted_user_sample', $sUserName, $aResult['content']['owner_name'], _t($aResult['content']['sample']));
+                $aResult['allowed_view'] = array(
+                    'module' => $this->_oConfig->getName(),
+                    'method' => 'get_timeline_repost_allowed_view',
+                );
                 break;
         }
 
@@ -2646,6 +2648,17 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 		$s = $oMetatags->metaParse($iEventId, $s);
 
         return $s;
+    }
+    
+    protected function _preparePrivacy($sKey, $aEvent, $aEventData)
+    {
+        $iResult = CHECK_ACTION_RESULT_ALLOWED;
+        if(isset($aEventData[$sKey], $aEventData[$sKey]['module'], $aEventData[$sKey]['method']))
+            $iResult = BxDolService::call($aEventData[$sKey]['module'], $aEventData[$sKey]['method'], array($aEvent));
+        else if(($aHandler = $this->_oConfig->getHandler($aEvent)) !== false && BxDolRequest::serviceExists($aHandler['module_name'], 'get_timeline_post_allowed_view'))
+            $iResult = BxDolService::call($aHandler['module_name'], 'get_timeline_post_allowed_view', array($aEvent));
+
+        return $iResult;
     }
 }
 
