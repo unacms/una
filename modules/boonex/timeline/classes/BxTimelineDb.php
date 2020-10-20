@@ -119,35 +119,35 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         else
             $aParams = array('browse' => 'id', 'value' => $iObjectId);
 
-		$aReposted = $this->getEvents($aParams);
-		if($bSystem && (empty($aReposted) || !is_array($aReposted))) {
-			$iOwnerId = 0;
-			$iDate = 0;
-			$sStatus = BX_TIMELINE_STATUS_DELETED;
+        $aReposted = $this->getEvents($aParams);
+        if($bSystem && (empty($aReposted) || !is_array($aReposted))) {
+            $iOwnerId = 0;
+            $iDate = 0;
+            $sStatus = BX_TIMELINE_STATUS_DELETED;
 
-			$mixedResult = $this->_oConfig->getSystemDataByDescriptor($sType, $sAction, $iObjectId);
-			if(is_array($mixedResult)) {
-                            $iOwnerId = !empty($mixedResult['owner_id']) ? (int)$mixedResult['owner_id'] : 0;
-                            $iDate = !empty($mixedResult['date']) ? (int)$mixedResult['date'] : 0;
-                            if($this->_oConfig->isUnhideRestored() && !empty($iOwnerId) && !empty($iDate))
-                                $sStatus = BX_TIMELINE_STATUS_ACTIVE;
-			}
+            $mixedResult = $this->_oConfig->getSystemDataByDescriptor($sType, $sAction, $iObjectId);
+            if(is_array($mixedResult)) {
+                $iOwnerId = !empty($mixedResult['owner_id']) ? (int)$mixedResult['owner_id'] : 0;
+                $iDate = !empty($mixedResult['date']) ? (int)$mixedResult['date'] : 0;
+                if($this->_oConfig->isUnhideRestored() && !empty($iOwnerId) && !empty($iDate))
+                    $sStatus = BX_TIMELINE_STATUS_ACTIVE;
+            }
 
-			$iId = $this->insertEvent(array(
-                            'owner_id' => $iOwnerId,
-                            'type' => $sType,
-                            'action' => $sAction,
-                            'object_id' => $iObjectId,
-                            'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault('object'),
-                            'content' => '',
-                            'title' => '',
-                            'description' => '',
-                            'date' => $iDate,
-                            'status' => $sStatus
-			));
+            $iId = $this->insertEvent(array(
+                'owner_id' => $iOwnerId,
+                'type' => $sType,
+                'action' => $sAction,
+                'object_id' => $iObjectId,
+                'object_privacy_view' => $this->_oConfig->getPrivacyViewDefault('object'),
+                'content' => '',
+                'title' => '',
+                'description' => '',
+                'date' => $iDate,
+                'status' => $sStatus
+            ));
 
-			$aReposted = $this->getEvents(array('browse' => 'id', 'value' => $iId));
-		}
+            $aReposted = $this->getEvents(array('browse' => 'id', 'value' => $iId));
+        }
 
         return $aReposted;
     }
@@ -156,6 +156,13 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     {
         $sQuery = $this->prepare("SELECT `author_id` FROM `{$this->_sTableRepostsTrack}` WHERE `reposted_id`=?", $iRepostedId);
         return $this->getColumn($sQuery);
+    }
+
+    function getReposts($iRepostedId)
+    {
+        return $this->getAll("SELECT * FROM `{$this->_sTableRepostsTrack}` WHERE `reposted_id`=:reposted_id", array(
+            'reposted_id' => $iRepostedId
+        ));
     }
 
     function isReposted($iRepostedId, $iOwnerId, $iAuthorId)

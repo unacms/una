@@ -97,8 +97,17 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                     $this->_oModule->_oDb->deleteCache(array('context_id' => $aParamsSet['owner_id'])); //--- Delete cache for new context
 
                 //--- Delete item cache.
-                $sCacheItemKey = $this->_oModule->_oConfig->getCacheItemKey($aEvent['id']);
-                $this->_oModule->getCacheItemObject()->delData($sCacheItemKey);
+                $oCacheItem = $this->_oModule->getCacheItemObject();
+                $oCacheItem->delData($this->_oModule->_oConfig->getCacheItemKey($aEvent['id']));
+
+                $aReposts = $this->_oModule->_oDb->getReposts($aEvent[$CNF['FIELD_ID']]);
+                foreach($aReposts as $aRepost) {
+                    //--- Delete cache for reposter context
+                    $this->_oModule->_oDb->deleteCache(array('context_id' => $aRepost['author_id']));
+
+                    //--- Delete item cache for repost.
+                    $oCacheItem->delData($this->_oModule->_oConfig->getCacheItemKey($aRepost['event_id']));
+                }
                 break;
 
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_DELETE:
