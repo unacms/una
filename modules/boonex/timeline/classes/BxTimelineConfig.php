@@ -35,6 +35,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_iCharsDisplayMaxTitle;
 
     protected $_bDynamicCards;
+    protected $_bBriefCards;
+    protected $_aBriefCardsTags;
     protected $_sVideosAutoplay;
     protected $_iPreloadComments;
     protected $_iPreloadCommentsMax;
@@ -286,6 +288,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             "meta_description" => "/<meta[\s]+[^>]*?name[\s]?=[\s\"\']+description[\s\"\']+content[\s]?=[\s\"\']+(.*?)[\"\']+.*?>/",
             "url" => "/(([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_!]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?/"
         );
+
+        $this->_aBriefCardsTags = array('a', 'b', 'i');
     }
 
     public function init(&$oDb)
@@ -321,6 +325,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_iCharsDisplayMaxTitle = 64;
 
         $this->_bDynamicCards = getParam($sOptionPrefix . 'enable_dynamic_cards') == 'on';
+        $this->_bBriefCards = getParam($sOptionPrefix . 'enable_brief_cards') == 'on';
 
         $this->_sVideosAutoplay = getParam($sOptionPrefix . 'videos_autoplay');
 
@@ -419,6 +424,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function isDynamicCards()
     {
         return $this->_bDynamicCards;
+    }
+
+    public function isBriefCards()
+    {
+        return $this->_bBriefCards;
     }
 
     public function isJumpTo()
@@ -545,6 +555,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function getCharsDisplayMaxTitle()
     {
         return $this->_iCharsDisplayMaxTitle;
+    }
+
+    public function getBriefCardsTags($bAsString = false)
+    {
+        return !$bAsString ? $this->_aBriefCardsTags : '<' . implode('><', $this->_aBriefCardsTags) . '>';
     }
 
     public function getVideosAutoplay()
