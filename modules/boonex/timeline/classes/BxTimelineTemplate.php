@@ -2642,10 +2642,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     protected function _prepareTextForOutput($s, $iEventId = 0)
     {
+        if($this->_oConfig->isBriefCards())
+            $s = strip_tags($s, $this->_oConfig->getBriefCardsTags(true));
+
     	$s = bx_process_output($s, BX_DATA_HTML);
 
         $oMetatags = BxDolMetatags::getObjectInstance($this->_oConfig->getObject('metatags'));
-		$s = $oMetatags->metaParse($iEventId, $s);
+        $s = $oMetatags->metaParse($iEventId, $s);
 
         return $s;
     }
