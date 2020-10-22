@@ -46,7 +46,7 @@ class BxDolFormQuery extends BxDolDb
         $oDb = BxDolDb::getInstance();
 
         $sQuery = $oDb->prepare("SELECT * FROM `sys_objects_form` WHERE `parent_form` = ?", $sParentObject);
-        return $oDb->fromMemory('sys_objects_form_' . $sObject, 'getAll', $sQuery);
+        return $oDb->fromMemory('sys_objects_form_' . $sParentObject, 'getAll', $sQuery);
     }
     
     static public function deleteDataFromNestedForm ($sTableName, $iContentId)
