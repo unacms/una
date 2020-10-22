@@ -273,7 +273,7 @@
     <string name="_bx_timeline_txt_note_processing_awaiting"><![CDATA[Update will be published as soon as video is converted]]></string>
     <string name="_bx_timeline_txt_note_processing_failed"><![CDATA[Update isn't published because video conversion failed, edit video to fix the issue.]]></string>
     <string name="_bx_timeline_txt_rss_caption"><![CDATA[{0}'s timeline]]></string>
-    <string name="_bx_timeline_txt_added_sample"><![CDATA[added {0}]]></string>
+    <string name="_bx_timeline_txt_added_sample"><![CDATA[Added {0}]]></string>
     <string name="_bx_timeline_txt_user_added_sample"><![CDATA[{0} added {1}]]></string>
     <string name="_bx_timeline_txt_user_repost"><![CDATA[{0}'s repost]]></string>
     <string name="_bx_timeline_txt_user_reposted_user_sample"><![CDATA[{0} reposted {1}'s {2}]]></string>

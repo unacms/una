@@ -1428,6 +1428,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sAuthorUrl = $oAuthor->getUrl();
         $sAuthorUnit = $oAuthor->getUnit(0, array('template' => 'unit_wo_info'));
         $sAuthorBadges = $oAuthor->getBadges();
+        $sAuthorAction = _t($aEvent['sample_action'], _t($aEvent['sample']));
 
         if(($bViewItem || $this->_oConfig->isCountAllViews()) && !empty($aEvent['views']) && is_array($aEvent['views']) && isset($aEvent['views']['system']))
             $oModule->getViewObject($aEvent['views']['system'], $aEvent['views']['object_id'])->doView();
@@ -1437,10 +1438,25 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aTmplVarsMenuItemActions = $this->_getTmplVarsMenuItemActions($aEvent, $aBrowseParams);
         $aTmplVarsMenuItemMeta = $this->_getTmplVarsMenuItemMeta($aEvent, $aBrowseParams);
 
+        $aTmplVarsManage = $this->_getTmplVarsManage($aEvent, $aBrowseParams);
+
+        $bTmplVarsAction = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']);
+        $aTmplVarsAction = array();
+        if($bTmplVarsAction) {
+            $aTmplVarsTimelineOwner = $this->_getTmplVarsTimelineOwner($aEvent);
+
+            $aTmplVarsAction = array(
+                'style_prefix' => $sStylePrefix,
+                'item_owner_action' => $sAuthorAction,
+                'bx_if:show_timeline_owner' => array(
+                    'condition' => !empty($aTmplVarsTimelineOwner),
+                    'content' => $aTmplVarsTimelineOwner
+                ),
+            );
+        }
+
         $aTmplVarsOwnerActions = $this->_getTmplVarsOwnerActions($aEvent, $aBrowseParams);
         $bTmplVarsOwnerActions = !empty($aTmplVarsOwnerActions); 
-
-        $aTmplVarsTimelineOwner = $this->_getTmplVarsTimelineOwner($aEvent);
 
         $bPinned = (int)$aEvent['pinned'] > 0;
         $bSticked = (int)$aEvent['sticked'] > 0;
@@ -1480,7 +1496,11 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $oForm->initChecker($aEvent);
 
             if(!empty($oForm->aInputs) && is_array($oForm->aInputs))
-                $sFields = $oForm->getCode();
+                foreach($oForm->aInputs as $aInput)
+                    if($aInput['type'] != 'hidden' && !empty($aInput['value'])) {
+                        $sFields = $oForm->getCode();
+                        break;
+                    }
         }
 
         $aTmplVars = array (
@@ -1504,11 +1524,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'item_owner_title' => bx_html_attribute($sAuthorName),
             'item_owner_name' => $sAuthorName .' '. $sAuthorBadges,
             'item_owner_unit' => $sAuthorUnit,
-            'item_owner_action' => _t($aEvent['sample_action'], _t($aEvent['sample'])),
-            'bx_if:show_timeline_owner' => array(
-                'condition' => !empty($aTmplVarsTimelineOwner),
-                'content' => $aTmplVarsTimelineOwner
-            ),
             'item_view_url' => $this->_oConfig->getItemViewUrl($aEvent),
             'item_date' => bx_time_js($aEvent['date']),
             'bx_if:show_pinned' => array(
@@ -1529,6 +1544,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     'style_prefix' => $sStylePrefix,
             	)
             ),
+            'bx_if:show_manage' => array(
+                'condition' => !empty($aTmplVarsManage),
+                'content' => $aTmplVarsManage
+            ),
+            'bx_if:show_item_action' => array(
+                'condition' => $bTmplVarsAction,
+                'content' => $aTmplVarsAction
+            ),
+            'content_type' => $sType,
             'content' => is_string($aEvent['content']) ? $aEvent['content'] : $this->_getContent($sType, $aEvent, $aBrowseParams),
             'bx_if:show_location' => array(
             	'condition' => !empty($sLocation),
@@ -1722,6 +1746,35 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'style_prefix' => $this->_oConfig->getPrefix('style'),
             'js_object' => $this->_oConfig->getJsObjectView($aBrowseParams),
             'menu_item_actions' => $sMenu
+        );
+    }
+
+    protected function _getTmplVarsManage(&$aEvent, $aBrowseParams = array())
+    {
+        $oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_actions_all'));
+        if($oMenu)
+            return array();
+        
+        $oMenu = BxDolMenu::getObjectInstance($this->_oConfig->getObject('menu_item_manage'));
+        if(!$oMenu)
+            return array();
+
+        $oMenu->setEvent($aEvent, $aBrowseParams);
+        $oMenu->setDynamicMode(isset($aBrowseParams['dynamic_mode']) && $aBrowseParams['dynamic_mode'] === true);
+        if(!$oMenu->isVisible())
+            return array();
+
+        $sOnclick = "bx_menu_popup('bx_timeline_menu_item_manage', this, {'id':'bx_timeline_menu_item_manage_{content_id}'}, {content_id:{content_id}, name:'{name}', view:'{view}', type:'{type}'});";
+        $sOnclick = bx_replace_markers($sOnclick, array(
+            'content_id' => $aEvent['id'],            
+            'view' => $aBrowseParams['view'],
+            'type' => $aBrowseParams['type'],
+            'name' => $aBrowseParams['name'],
+        ));
+
+        return array(
+            'style_prefix' => $this->_oConfig->getPrefix('style'),
+            'onclick' => $sOnclick
         );
     }
 
@@ -2072,22 +2125,16 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sSample = _t($aContent['sample']);
         $sSampleLink = empty($aContent['url']) ? $sSample : $this->parseLink($aContent['url'], $sSample);
 
-        $sTitle = _t('_bx_timeline_txt_reposted', $sOwnerLink, $sSampleLink);
-        $sText = $this->_getContent($aContent['parse_type'], $aEvent, $aBrowseParams);
+        $sContent = $this->_getContent($aContent['parse_type'], $aEvent, $aBrowseParams);
 
         return array(
-            'bx_if:show_title' => array(
-                'condition' => !empty($sTitle),
-                'content' => array(
-                    'style_prefix' => $sStylePrefix,
-                    'title' => $sTitle,
-                )
-            ),
+            'style_prefix' => $sStylePrefix,
+            'item_owner_action' => _t('_bx_timeline_txt_reposted', $sOwnerLink, $sSampleLink),
             'bx_if:show_content' => array(
-                'condition' => !empty($sText),
+                'condition' => !empty($sContent),
                 'content' => array(
                     'style_prefix' => $sStylePrefix,
-                    'content' => $sText,
+                    'content' => $sContent,
                 )
             )
         );
@@ -2173,6 +2220,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
                 $sContent = _t('_sys_menu_item_title_sm_subscribe');
                 $aTmplVarsActions[] = array(
+                    'style_prefix' => $sStylePrefix,
                     'href' => "javascript:void(0)",
                     'onclick' => "bx_conn_action(this, '" . $sConnection . "', 'add', '" . $iOwner . "', false, function(oData, eElement) {" . $sJsObject . ".onConnect(eElement, oData);})",
                     'title' => bx_html_attribute($sContent),
