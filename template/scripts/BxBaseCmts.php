@@ -629,6 +629,8 @@ class BxBaseCmts extends BxDolCmts
         $bShowDoCommentAsButton = !$bShowDoCommentAsButtonSmall && isset($aParams['show_do_comment_as_button']) && $aParams['show_do_comment_as_button'] == true;
 
         $iCount = (int)$this->getCommentsCountAll();
+        if($iCount == 0 && !$bShowEmpty)
+            return '';
 
         $sClass = $this->_sStylePrefix . '-counter';
         if($bShowDoCommentAsButtonSmall)
@@ -674,7 +676,7 @@ class BxBaseCmts extends BxDolCmts
                     'onclick' => $sOnclick
                 )
             ),
-            'content' => $iCount != 0 || $bShowEmpty ? $this->_getCounterLabel($iCount) : '',
+            'content' => $this->_getCounterLabel($iCount),
             'bx_repeat:profiles' => $aTmplVarsProfiles,
             'bx_if:show_icon' => array(
                 'condition' => $bShowEmpty || !empty($aTmplVarsProfiles),

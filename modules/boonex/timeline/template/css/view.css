@@ -346,21 +346,28 @@ div.bx-tl-item div.bx-tl-item-owner {
     position: relative;
     text-align: left;
 }
+
 div.bx-tl-item div.bx-tl-owner-avatar {
     position: absolute;
     top: 0px;
     left: 0px;
 }
+
 div.bx-tl-item div.bx-tl-owner-info {
     display: -webkit-flex;
     display: flex;
-    -webkit-align-items: center;
-    align-items: center;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+    -webkit-justify-content: center;
+    justify-content: center;
 }
+
 div.bx-tl-item div.bx-tl-item-owner.bx-tl-io-with-actions div.bx-tl-owner-info {
-    margin-right: 68px;
-    margin-right: 4.25rem;
+    margin-right: 2.5rem;
 }
+
 div.bx-tl-item div.bx-tl-owner-name {
     position: relative;
     display: -webkit-flex;
@@ -382,11 +389,6 @@ div.bx-tl-item div.bx-tl-owner-name > * {
     vertical-align: middle;
 }
 
-div.bx-tl-item div.bx-tl-owner-name > .bx-tl-on-nl {
-    width: 100%;
-    height: 0;
-}
-
 div.bx-tl-item div.bx-tl-owner-name a.bx-tl-owner-name,
 div.bx-tl-item div.bx-tl-owner-name .bx-tl-timeline-owner-name a.bx-tl-ton-item {
     font-weight: 700;
@@ -406,17 +408,14 @@ div.bx-tl-item div.bx-tl-owner-name .bx-tl-hot .sys-icon {
     display: inline-block;
     cursor: default;
 }
-div.bx-tl-item div.bx-tl-owner-actions {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-	line-height: 48px;
-	line-height: 3rem;
+
+/*+++ Item Owner Actions Style +++*/
+.bx-tl-owner-actions .bx-tl-oa-div,
+.bx-tl-owner-actions .bx-tl-owner-action {
+    padding: 0 0 0 0.5rem;
 }
-div.bx-tl-item div.bx-tl-owner-actions .bx-btn {
-    display: inline-block;
-	float: none;
-	vertical-align: middle;
+.bx-tl-view.bx-tl-view-outline .bx-tl-owner-actions .bx-tl-oa-div:first-of-type {
+    display: none;
 }
 
 /*--- Item Meta Info Style ---*/
@@ -447,6 +446,39 @@ div.bx-tl-item div.bx-tl-owner-actions .bx-btn {
     display: inline-block;
     vertical-align: top;
 }
+.bx-tl-item-meta .bx-tl-date,
+.bx-tl-item-meta .bx-tl-pinned .sys-icon,
+.bx-tl-item-meta .bx-tl-sticked .sys-icon,
+.bx-tl-item-meta .bx-tl-hot .sys-icon {
+    color: rgba(40, 60, 80, 0.5);
+}
+.bx-tl-item-meta .bx-tl-pinned .sys-icon,
+.bx-tl-item-meta .bx-tl-sticked .sys-icon,
+.bx-tl-item-meta .bx-tl-hot .sys-icon {
+    display: inline-block;
+    cursor: default;
+}
+
+/*--- Item Manage Style ---*/
+.bx-tl-item-manage {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.bx-tl-item-manage a {
+    position: relative;
+    width: 2rem;
+    height: 2rem;
+}
+
+/*--- Item Action Style ---*/
+div.bx-tl-item div.bx-tl-item-action .bx-tl-timeline-owner-name a.bx-tl-ton-item {
+    font-weight: 700;
+}
+div.bx-tl-item div.bx-tl-item-action .bx-tl-timeline-owner-name .bx-tl-ton-div:first-child {
+    display: none;
+}
+
 
 /*--- Item Content Style ---*/
 div.bx-tl-item-content {
@@ -497,14 +529,14 @@ div.bx-tl-item-text div.bx-tl-content-show-more {
     position: relative;
 }
 div.bx-tl-item-text div.bx-tl-content p {
-	margin-top: 10px;
-	margin-top: 0.625rem;
-	margin-bottom: 10px;
-	margin-bottom: 0.625rem;
+    margin-top: 10px;
+    margin-top: 0.625rem;
+    margin-bottom: 10px;
+    margin-bottom: 0.625rem;
 }
 div.bx-tl-item-text div.bx-tl-content img {
-	max-width: 100%;
-	height: auto;
+    max-width: 100%;
+    height: auto;
 }
 
 /*--- Item Images Style ---*/
@@ -518,19 +550,19 @@ div.bx-tl-item div.bx-tl-item-image {
 }
 
 /*--- Item Activity (Actions and Manage are different menus) ---*/
-div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom:not(.bx-menu-submenu-more-auto) {
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-hor {
     position: relative;
     display: -webkit-flex;
     display: flex;
     -webkit-justify-content: flex-start;
     justify-content: flex-start;
 }
-div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom:not(.bx-menu-submenu-more-auto).bx-mma-ready {
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-hor.bx-mma-ready {
     -webkit-justify-content: flex-start;
     justify-content: flex-start;
 }
-div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom:not(.bx-menu-submenu-more-auto)::before,
-div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom:not(.bx-menu-submenu-more-auto)::after {
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-hor::before,
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-hor::after {
     display: none;
 }
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li > a,
@@ -539,9 +571,12 @@ div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li > span {
 }
 div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu-hor li > a,
 div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu-hor li > div,
-div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu-hor li > span,
-div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-hor.bx-menu-more-auto:not(.bx-menu-submenu-more-auto) li > a,
-div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-hor.bx-menu-more-auto:not(.bx-menu-submenu-more-auto) li > span {
+div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu-hor li > span {
+    margin-top: 1.0rem;
+    margin-right: 1.25rem;
+}
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-hor.bx-menu-hor li > a,
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-hor.bx-menu-hor li > span {
     margin-right: 1.25rem;
 }
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li > span {
@@ -557,6 +592,7 @@ div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li > span img {
     background-position: center center;
 }
 
+div.bx-tl-item div.bx-tl-item-manage .bx-menu-item-icon,
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li .sys-action-do-icon,
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li .bx-menu-item-icon {
     box-sizing: border-box;
@@ -576,7 +612,7 @@ div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li .bx-menu-item-icon .sy
     vertical-align: top;
 }
 
-/*--- Item Activity (all actions in one menu) ---*/
+/*--- Item Activity (all actions in one menu) and Item Manage (separate menu) ---*/
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto > li.bx-menu-item {
     padding: 0;
     white-space: nowrap;
@@ -584,9 +620,14 @@ div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto > li.bx
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto > li.bx-menu-item.bx-menu-item-more-auto a {
     padding: 0;
 }
+.bx-popup .bx-menu-custom.bx-menu-custom-ver.bx-menu-object-bx_timeline_menu_item_manage > li.bx-menu-item  a > span,
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto .bx-popup .bx-menu-custom.bx-menu-submenu-more-auto > li.bx-menu-item  a > span {
     margin-left: 0;
 }
+.bx-popup .bx-menu-custom.bx-menu-custom-ver.bx-menu-object-bx_timeline_menu_item_manage > li.bx-menu-item  a .sys-action-do-icon,
+.bx-popup .bx-menu-custom.bx-menu-custom-ver.bx-menu-object-bx_timeline_menu_item_manage > li.bx-menu-item  a .sys-action-do-icon > .sys-icon,
+.bx-popup .bx-menu-custom.bx-menu-custom-ver.bx-menu-object-bx_timeline_menu_item_manage > li.bx-menu-item  a .bx-menu-item-icon,
+.bx-popup .bx-menu-custom.bx-menu-custom-ver.bx-menu-object-bx_timeline_menu_item_manage > li.bx-menu-item  a .bx-menu-item-icon > .sys-icon,
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto .bx-popup .bx-menu-custom.bx-menu-submenu-more-auto > li.bx-menu-item  a .sys-action-do-icon,
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto .bx-popup .bx-menu-custom.bx-menu-submenu-more-auto > li.bx-menu-item  a .sys-action-do-icon > .sys-icon,
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto .bx-popup .bx-menu-custom.bx-menu-submenu-more-auto > li.bx-menu-item  a .bx-menu-item-icon,
@@ -600,9 +641,40 @@ div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto .bx-pop
     line-height: 1.5rem;
     font-size: 1.0rem;
 }
+.bx-popup .bx-menu-custom.bx-menu-custom-ver.bx-menu-object-bx_timeline_menu_item_manage > li.bx-menu-item  a .sys-action-do-text,
+.bx-popup .bx-menu-custom.bx-menu-custom-ver.bx-menu-object-bx_timeline_menu_item_manage > li.bx-menu-item  a .bx-menu-item-title,
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto .bx-popup .bx-menu-custom.bx-menu-submenu-more-auto > li.bx-menu-item  a .sys-action-do-text,
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto .bx-popup .bx-menu-custom.bx-menu-submenu-more-auto > li.bx-menu-item  a .bx-menu-item-title {
     margin-left: 0.5rem;
+}
+
+/*--- Item Activity without Auto-More ---*/
+div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-hor:not(.bx-menu-more-auto),
+div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-hor:not(.bx-menu-more-auto) li {
+    overflow: hidden;
+}
+div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-hor:not(.bx-menu-more-auto) a,
+div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-hor:not(.bx-menu-more-auto) span {
+    display: block;
+    white-space: nowrap;
+}
+div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-hor:not(.bx-menu-more-auto) span.bx-menu-item-icon,
+div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-hor:not(.bx-menu-more-auto) span.sys-action-do-icon {
+    -webkit-flex-shrink: 0;
+    flex-shrink: 0;
+}
+div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-hor:not(.bx-menu-more-auto) .sys-action-element-holder,
+div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-hor:not(.bx-menu-more-auto) .bx-menu-item-title,
+div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-hor:not(.bx-menu-more-auto) .sys-action-do-text {
+    max-width: 100%;
+
+    -webkit-flex-shrink: 1;
+    flex-shrink: 1;
+}
+div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-hor:not(.bx-menu-more-auto) .bx-menu-item-title,
+div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-hor:not(.bx-menu-more-auto) .sys-action-do-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /*--- Item Style: Timeline ---*/
@@ -680,12 +752,12 @@ div.bx-tl-view-outline div.bx-tl-content-show-more a {
 
 /*+++ Item Image +++*/
 div.bx-tl-view-search div.bx-tl-item-images {
-	margin-left: 0px;
-	margin-right: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 div.bx-tl-view-search div.bx-tl-item-image {
-	margin-right: 2px;
-	margin-right: 0.125rem;
+    margin-right: 2px;
+    margin-right: 0.125rem;
 }
 div.bx-tl-view-timeline div.bx-tl-item-image,
 div.bx-tl-view-outline div.bx-tl-item-image,

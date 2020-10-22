@@ -135,11 +135,11 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_timeline_menu_item_actions', 'bx_timeline', 'item-reaction', '_bx_timeline_menu_item_title_system_item_reaction', '', 'javascript:void(0)', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 30),
 ('bx_timeline_menu_item_actions', 'bx_timeline', 'item-score', '_bx_timeline_menu_item_title_system_item_score', '', 'javascript:void(0)', '', '', '', '', '', 0, 2147483647, 0, 0, 1, 40),
 ('bx_timeline_menu_item_actions', 'bx_timeline', 'item-share', '_bx_timeline_menu_item_title_system_item_share', '_bx_timeline_menu_item_title_item_share', 'javascript:void(0)', 'bx_menu_popup(''bx_timeline_menu_item_share'', this, {''id'':''bx_timeline_menu_item_share_{content_id}''}, {content_id:{content_id}, name:''{name}'', view:''{view}'', type:''{type}''});', '', 'share-alt', '', 'bx_timeline_menu_item_share', 1, 2147483647, 1, 0, 1, 50),
-('bx_timeline_menu_item_actions', 'bx_timeline', 'item-more', '_bx_timeline_menu_item_title_system_item_more', '_bx_timeline_menu_item_title_item_more', 'javascript:void(0)', 'bx_menu_popup(''bx_timeline_menu_item_manage'', this, {''id'':''bx_timeline_menu_item_manage_{content_id}''}, {content_id:{content_id}, name:''{name}'', view:''{view}'', type:''{type}''});', '', 'ellipsis-h', '', 'bx_timeline_menu_item_manage', 1, 2147483647, 1, 0, 1, 60);
+('bx_timeline_menu_item_actions', 'bx_timeline', 'item-more', '_bx_timeline_menu_item_title_system_item_more', '_bx_timeline_menu_item_title_item_more', 'javascript:void(0)', 'bx_menu_popup(''bx_timeline_menu_item_manage'', this, {''id'':''bx_timeline_menu_item_manage_{content_id}''}, {content_id:{content_id}, name:''{name}'', view:''{view}'', type:''{type}''});', '', 'ellipsis-v', '', 'bx_timeline_menu_item_manage', 1, 2147483647, 0, 0, 1, 60);
 
 -- MENU: all actions menu for view entry 
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_timeline_menu_item_actions_all', '_bx_timeline_menu_title_item_actions_all', 'bx_timeline_menu_item_actions_all', 'bx_timeline', 15, 0, 1, 'BxTimelineMenuItemActionsAll', 'modules/boonex/timeline/classes/BxTimelineMenuItemActionsAll.php');
+('bx_timeline_menu_item_actions_all', '_bx_timeline_menu_title_item_actions_all', 'bx_timeline_menu_item_actions_all', 'bx_timeline', 15, 0, 0, 'BxTimelineMenuItemActionsAll', 'modules/boonex/timeline/classes/BxTimelineMenuItemActionsAll.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_timeline_menu_item_actions_all', 'bx_timeline', '_bx_timeline_menu_set_title_item_actions_all', 0);
@@ -264,9 +264,10 @@ SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
 ('bx_timeline_enable_dynamic_cards', '', @iCategId, '_bx_timeline_option_enable_dynamic_cards', 'checkbox', '', '', '', '', 1),
-('bx_timeline_videos_autoplay', 'off', @iCategId, '_bx_timeline_option_videos_autoplay', 'select', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:27:"get_options_videos_autoplay";}', 2),
-('bx_timeline_preload_comments', '0', @iCategId, '_bx_timeline_option_preload_comments', 'digit', '', '', '', '', 3),
-('bx_timeline_attachments_layout', 'gallery', @iCategId, '_bx_timeline_option_attachments_layout', 'select', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:30:"get_options_attachments_layout";}', 4);
+('bx_timeline_enable_brief_cards', 'on', @iCategId, '_bx_timeline_option_enable_brief_cards', 'checkbox', '', '', '', '', 2),
+('bx_timeline_videos_autoplay', 'off', @iCategId, '_bx_timeline_option_videos_autoplay', 'select', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:27:"get_options_videos_autoplay";}', 10),
+('bx_timeline_preload_comments', '0', @iCategId, '_bx_timeline_option_preload_comments', 'digit', '', '', '', '', 20),
+('bx_timeline_attachments_layout', 'gallery', @iCategId, '_bx_timeline_option_attachments_layout', 'select', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:30:"get_options_attachments_layout";}', 30);
 
 -- Category: Cache
 INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order`)
