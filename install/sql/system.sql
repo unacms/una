@@ -1819,6 +1819,7 @@ CREATE TABLE `sys_objects_favorite` (
 CREATE TABLE `sys_objects_feature` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(64) NOT NULL,
+  `module` varchar(32) NOT NULL default '',
   `is_on` tinyint(4) NOT NULL default '1',
   `is_undo` tinyint(4) NOT NULL default '1',
   `base_url` varchar(256) NOT NULL default '',
