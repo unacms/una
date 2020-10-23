@@ -401,7 +401,16 @@ class BxMassMailerModule extends BxBaseModGeneralModule
     public function serviceAttributes ()
     {
         $aAttributesParts = array();
-        $aAttributesParts['account'] = array(_t('_bx_massmailer_txt_attribute_global'), array('email' => _t('_bx_massmailer_txt_attribute_email'), 'account_name' => _t('_bx_massmailer_txt_attribute_account_name'), 'account_id' => _t('_bx_massmailer_txt_attribute_account_id'), 'unsubscribe_url' => _t('_bx_massmailer_txt_attribute_unsubscribe_url')));
+        $aAttributesParts['account'] = array(
+            _t('_bx_massmailer_txt_attribute_global'), 
+            array(
+                'email' => _t('_bx_massmailer_txt_attribute_email'), 
+                'account_name' => _t('_bx_massmailer_txt_attribute_account_name'), 
+                'account_id' => _t('_bx_massmailer_txt_attribute_account_id'), 
+                'reset_password_url' => _t('_bx_massmailer_txt_attribute_reset_password_url'),
+                'unsubscribe_url' => _t('_bx_massmailer_txt_attribute_unsubscribe_url')
+            )
+        );
         $BxDolModuleQuery = BxDolModuleQuery::getInstance();
         $aModules = $BxDolModuleQuery->getModulesBy(array('type' => 'modules', 'active' => 1));
         foreach($aModules as $aModule){
@@ -607,22 +616,28 @@ class BxMassMailerModule extends BxBaseModGeneralModule
         $oProfile = BxDolProfile::getInstance($iProfileId);
         if ($oProfile){
             $oAccount = BxDolAccount::getInstance($oProfile->getAccountId());
-            $aMarkers['email'] = $oAccount->getEmail();
+            $sAccountEmail = $oAccount->getEmail();
+
+            $aMarkers['email'] = $sAccountEmail;
             $aMarkers['account_name'] = $oAccount->getDisplayName();
             $aMarkers['account_id'] = $oProfile->getAccountId();
-            $oModule = BxDolModule::getInstance($oProfile->getModule());
-            if (BxDolRequest::serviceExists($oProfile->getModule(), 'get_info')){
-                $aProfileInfo = $oModule->serviceGetInfo($oProfile->getContentId(), false);
-                foreach ($aProfileInfo as $sKey => $sValue){
-                    if (!isset($aMarkers[$sKey]))
-                    $aMarkers[$sKey] = $sValue;
-                }
-            
-                $aMarkers['seen_image_url'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'track/seen/' . $sLetterCode . "/";
-                $aMarkers['unsubscribe_url'] = BX_DOL_URL_ROOT . $oAccount->getUnsubscribeLink(BX_EMAIL_MASS) . "&lhash=" . $sLetterCode;
+
+            $sModule = $oProfile->getModule();
+            if (BxDolRequest::serviceExists($sModule, 'get_info')) {
+                $aProfileInfo = bx_srv($sModule, 'get_info', array($oProfile->getContentId(), false));
+                foreach ($aProfileInfo as $sKey => $sValue)
+                    if(!isset($aMarkers[$sKey]))
+                        $aMarkers[$sKey] = $sValue;
             }
-            
+
+            $aMarkers['seen_image_url'] = BX_DOL_URL_ROOT . $this->_oConfig->getBaseUri() . 'track/seen/' . $sLetterCode . "/";
+            $aMarkers['unsubscribe_url'] = BX_DOL_URL_ROOT . $oAccount->getUnsubscribeLink(BX_EMAIL_MASS) . "&lhash=" . $sLetterCode;
+
+            $aMarkers['reset_password_url'] = '';
+            if(($sResetPasswordUrl = bx_get_reset_password_link($sAccountEmail)) !== false)
+                $aMarkers['reset_password_url'] = $sResetPasswordUrl . "&lhash=" . $sLetterCode;
         }
+
         return $aMarkers;
     }
     

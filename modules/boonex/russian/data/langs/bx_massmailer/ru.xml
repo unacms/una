@@ -126,6 +126,7 @@
   <string name="_bx_massmailer_txt_attribute_email"><![CDATA[Email]]></string>
   <string name="_bx_massmailer_txt_attribute_account_name"><![CDATA[Имя аккаунта]]></string>
   <string name="_bx_massmailer_txt_attribute_account_id"><![CDATA[Аккаунта ID]]></string>
+  <string name="_bx_massmailer_txt_attribute_reset_password_url"><![CDATA[Ссылка для сброса пароля]]></string>
   <string name="_bx_massmailer_txt_attribute_unsubscribe_url"><![CDATA[Ссылка для отписки]]></string>
   <string name="_bx_massmailer_txt_created_title"><![CDATA[Создано]]></string>
   <string name="_bx_massmailer_txt_from_name_title"><![CDATA[От:]]></string>
