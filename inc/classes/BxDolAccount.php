@@ -326,28 +326,42 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
      */
     public function sendConfirmationEmail($iAccountId = false)
     {
-    	$sName = $this->getDisplayName($iAccountId); 
-        $sEmail = $this->getEmail($iAccountId);
+        $iAccountId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
 
         $oKey = BxDolKey::getInstance();
         $sConfirmationCode = $oKey->getNewKey(array('account_id' => $iAccountId));
         $sConfirmationLink = bx_append_url_params(BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-email'), array('code' => urlencode($sConfirmationCode)));
 
-        $aPlus = array(
-        	'name' => $sName,
-        	'email' => $sEmail,
-        	'conf_code' => $sConfirmationCode,
-        	'conf_link' => $sConfirmationLink,
-        	'conf_form_link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-email')
+        $aReplaceVars = array(
+            'name' => $this->getDisplayName($iAccountId),
+            'email' => $this->getEmail($iAccountId),
+            'conf_code' => $sConfirmationCode,
+            'conf_link' => $sConfirmationLink,
+            'conf_form_link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=confirm-email')
         );
 
-        $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_Confirmation', $aPlus);
-        $bRv = $aTemplate && sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_SYSTEM);
-        
-        if($bRv){
+        $bResult = sendMailTemplate('t_Confirmation', $iAccountId, 0, $aReplaceVars, BX_EMAIL_SYSTEM);
+        if($bResult)
             $this->doAudit($iAccountId, '_sys_audit_action_account_resend_confirmation_email');
-        }
-        return $bRv;
+
+        return $bResult;
+    }
+    
+    public function sendResetPasswordEmail($iAccountId = false)
+    {
+        $iAccountId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
+
+        $sEmail = $this->getEmail($iAccountId);
+        $sKey = bx_get_reset_password_key($sEmail);
+
+        $aReplaceVars = array(
+            'name' => $this->getDisplayName($iAccountId),
+            'email' => $sEmail,
+            'key' => $sKey,
+            'forgot_password_url' => bx_get_reset_password_link_by_key($sKey)
+        );
+
+        return sendMailTemplate('t_Forgot', $iAccountId, 0, $aReplaceVars, BX_EMAIL_SYSTEM);
     }
 
     /**

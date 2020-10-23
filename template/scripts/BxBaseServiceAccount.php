@@ -406,13 +406,9 @@ class BxBaseServiceAccount extends BxDol
             $sPhone = $oForm->getCleanValue('phone');
 
             if (isset($oForm->aInputs['email']) &&  $sEmail != '') {
-                $iAccountId = $this->_oAccountQuery->getIdByEmail($sEmail);
+                $oAccount = BxDolAccount::getInstance($this->_oAccountQuery->getIdByEmail($sEmail));
 
-                $aPlus['key'] = bx_get_reset_password_key($sEmail);
-                $aPlus['forgot_password_url'] = bx_get_reset_password_link_by_key($aPlus['key']);
-                $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_Forgot', $aPlus, $iAccountId);
-
-                if(!empty($aTemplate) && is_array($aTemplate) && sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, $aPlus, BX_EMAIL_SYSTEM))
+                if($oAccount && $oAccount->sendResetPasswordEmail())
                     $sResultMsg = MsgBox(_t("_sys_txt_forgot_pasword_check_email"));
                 else
                     $sResultMsg = MsgBox(_t("_sys_txt_forgot_pasword_email_send_failed"));
@@ -424,10 +420,10 @@ class BxBaseServiceAccount extends BxDol
                 $iAccountId = $this->_oAccountQuery->getIdByPhone($sPhone);
                 $aAccountInfo = $this->_oAccountQuery->getInfoById($iAccountId);
 
-                $aPlus['key'] = bx_get_reset_password_key($aAccountInfo['email']);
-                $aPlus['forgot_password_url'] = bx_get_reset_password_link_by_key($aPlus['key']); 
+                $sKey = bx_get_reset_password_key($aAccountInfo['email']);
+                $sForgotPasswordUrl = bx_get_reset_password_link_by_key($sKey); 
 
-                $sSmsText = _t('_sys_txt_forgot_pasword_sms_text', $aPlus['forgot_password_url']);
+                $sSmsText = _t('_sys_txt_forgot_pasword_sms_text', $sForgotPasswordUrl);
 
                 $mixedOverrideResult = null;
                 bx_alert('account', 'before_forgot_password_send_sms', $aAccountInfo['id'], false, array('phone_number' => $sPhone, 'sms_text' => $sSmsText, 'override_result' => &$mixedOverrideResult));
