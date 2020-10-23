@@ -526,8 +526,10 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 (@iCategoryId, 'sys_account_reset_password_key_lifetime', '_adm_stg_cpt_option_sys_account_reset_password_key_lifetime', '259200', 'digit', '', '', '', 30),
 (@iCategoryId, 'sys_account_reset_password_redirect', '_adm_stg_cpt_option_sys_account_reset_password_redirect', 'home', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:35:"get_options_reset_password_redirect";s:5:"class";s:18:"BaseServiceAccount";}', '', '', 31),
-(@iCategoryId, 'sys_account_reset_password_redirect_custom', '_adm_stg_cpt_option_sys_account_reset_password_redirect_custom', '', 'digit', '', '', '', 32);
+(@iCategoryId, 'sys_account_reset_password_redirect_custom', '_adm_stg_cpt_option_sys_account_reset_password_redirect_custom', '', 'digit', '', '', '', 32),
 
+(@iCategoryId, 'sys_account_disable_login_form', '_adm_stg_cpt_option_sys_account_disable_login_form', '', 'checkbox', '', '', '', 34),
+(@iCategoryId, 'sys_account_disable_join_form', '_adm_stg_cpt_option_sys_account_disable_join_form', '', 'checkbox', '', '', '', 35);
 --
 -- CATEGORY: ACL
 --
