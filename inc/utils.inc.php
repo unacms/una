@@ -1135,6 +1135,75 @@ function encryptUserId($sId)
     return sha1(md5($sId) . md5($aAccountInfo['salt']) . BX_DOL_SECRET);
 }
 
+function bx_get_reset_password_key($sValue, $sField = 'email', $iLifetime = 0)
+{
+    if(empty($iLifetime)) {
+        $iLifetime = (int)getParam('sys_account_reset_password_key_lifetime');
+        if(empty($iLifetime)) 
+            $iLifetime = 86400;
+    }
+
+    $oKey = BxDolKey::getInstance();
+    if(!$oKey)
+        return false;
+
+    return $oKey->getNewKey(array($sField => $sValue), $iLifetime);
+}
+
+function bx_get_reset_password_link($sValue, $sField = 'email', $iLifetime = 0)
+{
+    $sKey = bx_get_reset_password_key($sValue, $sField, $iLifetime);
+    if(!$sKey)
+        return false;
+
+    return bx_get_reset_password_link_by_key($sKey);
+}
+
+function bx_get_reset_password_link_by_key($sKey)
+{
+    return BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password', array('key' => $sKey));
+}
+
+function bx_get_reset_password_redirect($iAccountId)
+{
+    $sResult = '';
+    $sRedirect = getParam('sys_account_reset_password_redirect');
+    switch($sRedirect) {
+        case 'home':
+            $sResult = BxDolPermalinks::getInstance()->permalink('page.php?i=home');
+            break;
+        
+        case 'profile':
+        case 'profile_edit':
+            if(empty($iAccountId))
+                break;
+            
+            $oAccount = BxDolAccount::getInstance($iAccountId);
+            if(!$oAccount)
+                break;
+            
+            $aAccountInfo = $oAccount->getInfo();
+            if(empty($aAccountInfo) || !is_array($aAccountInfo) || empty($aAccountInfo['profile_id']))
+                break;
+
+            $oProfile = BxDolProfile::getInstance((int)$aAccountInfo['profile_id']);
+            if(!$oProfile)
+                break;
+
+            $sResult = $oProfile->{'get' . ($sRedirect == 'profile_edit' ? 'Edit' : '') . 'Url'}();
+            break;
+
+        case 'custom':
+            $sResult = getParam('sys_account_reset_password_redirect_custom');
+            break;
+    }
+
+    if(!empty($sResult) && mb_stripos($sResult, BX_DOL_URL_ROOT) !== 0)
+        $sResult = BX_DOL_URL_ROOT . $sResult;
+
+    return $sResult;
+}
+
 function bx_get ($sName, $sMethod = false)
 {
     if (isset($_GET[$sName]) && ('get' == $sMethod || !$sMethod))

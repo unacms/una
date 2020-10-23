@@ -327,6 +327,17 @@ class BxBaseServiceAccount extends BxDol
         exit;
     }
 
+    public function serviceGetOptionsResetPasswordRedirect()
+    {
+        $aResult = array();
+
+        $aChoices = array('home', 'profile', 'profile_edit', 'custom');
+        foreach($aChoices as $sChoice) 
+            $aResult[] = array('key' => $sChoice, 'value' => _t('_adm_stg_cpt_option_value_sys_account_reset_password_redirect_' . $sChoice));
+
+        return $aResult;
+    }
+            
     /**
      * @page service Service Calls
      * @section bx_system_general System Services 
@@ -350,8 +361,8 @@ class BxBaseServiceAccount extends BxDol
             header('Location: ' . BX_DOL_URL_ROOT);
             exit;
         }
-        
-        if (bx_get('key'))
+
+        if (bx_get('key') !== false)
             return $this->resetPassword();
 
         $oForm = BxDolForm::getObjectInstance('sys_forgot_password', 'sys_forgot_password');
@@ -374,13 +385,14 @@ class BxBaseServiceAccount extends BxDol
             $oForm->aInputs['email']['checker']['func'] = 'EmailExist';
             $bNeedCheckEmailAndPhone = false;
         }
+
         if ((BxDolAccount::isNeedConfirmPhone() && BxDolAccount::isNeedConfirmEmail())){
             if (isset($oForm->aInputs['phone']))
                 $oForm->aInputs['phone']['required'] = false;
             if (isset($oForm->aInputs['email']))
                 $oForm->aInputs['email']['required'] = false;
         }
-        
+
         $oForm->initChecker();
 
         $bShowErrorEmptyBoth = false;
@@ -388,60 +400,53 @@ class BxBaseServiceAccount extends BxDol
             $bShowErrorEmptyBoth = true;
             $oForm->setValid(false);
         }
-        
+
         if ($oForm->isSubmittedAndValid()) {
-            $oKey = BxDolKey::getInstance();
-            if (!$oKey) {
-                $sResultMsg = MsgBox(_t("_sys_txt_forgot_pasword_error_occured"));
-            } 
-            else {
-                $sEmail = $oForm->getCleanValue('email');
-                $sPhone = $oForm->getCleanValue('phone');
-                
-                if (isset($oForm->aInputs['email']) &&  $sEmail != '')
-                {
-                    $iAccountId = $this->_oAccountQuery->getIdByEmail($sEmail);
+            $sEmail = $oForm->getCleanValue('email');
+            $sPhone = $oForm->getCleanValue('phone');
 
-                    $aPlus['key'] = $oKey->getNewKey(array('email' => $sEmail));
-                    $aPlus['forgot_password_url'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password', array('key' => $aPlus['key']));
+            if (isset($oForm->aInputs['email']) &&  $sEmail != '') {
+                $iAccountId = $this->_oAccountQuery->getIdByEmail($sEmail);
 
-                    $aTemplate = BxDolEmailTemplates::getInstance() -> parseTemplate('t_Forgot', $aPlus, $iAccountId);
+                $aPlus['key'] = bx_get_reset_password_key($sEmail);
+                $aPlus['forgot_password_url'] = bx_get_reset_password_link_by_key($aPlus['key']);
+                $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate('t_Forgot', $aPlus, $iAccountId);
 
-                    if ($aTemplate && sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, $aPlus, BX_EMAIL_SYSTEM))
-                        $sResultMsg = MsgBox(_t("_sys_txt_forgot_pasword_check_email"));
+                if(!empty($aTemplate) && is_array($aTemplate) && sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, $aPlus, BX_EMAIL_SYSTEM))
+                    $sResultMsg = MsgBox(_t("_sys_txt_forgot_pasword_check_email"));
+                else
+                    $sResultMsg = MsgBox(_t("_sys_txt_forgot_pasword_email_send_failed"));
+
+                $sForm = '';
+            }
+
+            if (isset($oForm->aInputs['phone']) &&  $sPhone != '') {   
+                $iAccountId = $this->_oAccountQuery->getIdByPhone($sPhone);
+                $aAccountInfo = $this->_oAccountQuery->getInfoById($iAccountId);
+
+                $aPlus['key'] = bx_get_reset_password_key($aAccountInfo['email']);
+                $aPlus['forgot_password_url'] = bx_get_reset_password_link_by_key($aPlus['key']); 
+
+                $sSmsText = _t('_sys_txt_forgot_pasword_sms_text', $aPlus['forgot_password_url']);
+
+                $mixedOverrideResult = null;
+                bx_alert('account', 'before_forgot_password_send_sms', $aAccountInfo['id'], false, array('phone_number' => $sPhone, 'sms_text' => $sSmsText, 'override_result' => &$mixedOverrideResult));
+                if ($mixedOverrideResult === null) {
+                    $oTwilio = BxDolTwilio::getInstance();
+                    if($oTwilio->sendSms($sPhone,  $sSmsText))
+                        $sResultMsg = MsgBox(_t("_sys_txt_forgot_pasword_check_phone"));
                     else
-                        $sResultMsg = MsgBox(_t("_sys_txt_forgot_pasword_email_send_failed"));
-
-                    $sForm = '';
+                        $sResultMsg = MsgBox(_t("_sys_txt_forgot_pasword_error_occured"));
                 }
-                
-                if (isset($oForm->aInputs['phone']) &&  $sPhone != ''){   
-                    $iAccountId = $this->_oAccountQuery->getIdByPhone($sPhone);
-                    $aAccountInfo = $this->_oAccountQuery->getInfoById($iAccountId);
-                    
-                    $aPlus['key'] = $oKey->getNewKey(array('email' => $aAccountInfo['email']));
-                    $aPlus['forgot_password_url'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password', array('key' => $aPlus['key']));
 
-                    $sSmsText = _t('_sys_txt_forgot_pasword_sms_text', $aPlus['forgot_password_url']);
-                    
-                    $ret = null;
-                    bx_alert('account', 'before_forgot_password_send_sms', $aAccountInfo['id'], false, array('phone_number' => $sPhone, 'sms_text' => $sSmsText, 'override_result' => &$ret));
-                    if ($ret === null) 
-                    {
-                        $oTwilio = BxDolTwilio::getInstance();
-                        if($oTwilio->sendSms($sPhone,  $sSmsText))
-                            $sResultMsg = MsgBox(_t("_sys_txt_forgot_pasword_check_phone"));
-                        else
-                            $sResultMsg = MsgBox(_t("_sys_txt_forgot_pasword_error_occured"));
-                    }
-                    $sForm = '';
-                }
+                $sForm = '';
             }
         } 
         else {
             $sResultMsg = _t($sCaptionKey);
             $sForm = $oForm->getCode();
         }
+
         return '<div class="bx-def-padding-sec-bottom">' . $sResultMsg . '</div>' . $sForm . ($bShowErrorEmptyBoth ? '<div class="bx-form-warn">' . _t("_sys_form_forgot_password_phone_and_email_empty_error") . '</div>' : '');
     }
 
@@ -505,42 +510,42 @@ class BxBaseServiceAccount extends BxDol
     {
         $sKey = bx_process_input(bx_get('key'));
 
-        // get link to forgot password page for error message
-        $sUrlForgotPassword = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password');
+        $oForm = BxDolForm::getObjectInstance('sys_forgot_password', 'sys_forgot_password_reset');
+        if(!empty($sKey) && isset($oForm->aInputs['key']))
+            $oForm->aInputs['key']['value'] = $sKey;
 
-        // check if key exists
-        $oKey = BxDolKey::getInstance();
-        if (!$oKey || !$oKey->isKeyExists($sKey))
-            return _t("_sys_txt_reset_pasword_error_occured", $sUrlForgotPassword);
+        $oForm->initChecker();
+        if($oForm->isSubmittedAndValid()) {
+            $sErrorUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password');
 
-        // check if key data exists
-        $aData = $oKey->getKeyData($sKey);
-        if (!isset($aData['email']))
-            return _t("_sys_txt_reset_pasword_error_occured", $sUrlForgotPassword);
+            // check if key exists
+            $oKey = BxDolKey::getInstance();
+            $sKey = $oForm->getCleanValue('key');
+            if(!$oKey || !$oKey->isKeyExists($sKey))
+                return MsgBox(_t('_sys_txt_reset_pasword_error_invalid_key', $sErrorUrl));
 
-        // check if account with such email exists
-        $iAccountId = $this->_oAccountQuery->getIdByEmail($aData['email']);
-        if (!$iAccountId)
-            return _t("_sys_txt_reset_pasword_error_occured", $sUrlForgotPassword);
+            // check if key data exists
+            $aKeyData = $oKey->getKeyData($sKey);
+            if(empty($aKeyData['email']))
+                return MsgBox(_t('_sys_txt_reset_pasword_error_invalid_key', $sErrorUrl));
 
-        // generate new password
-        $sPassword = $this->generateUserNewPwd($iAccountId);
+            // check if account with such email exists
+            $iAccountId = $this->_oAccountQuery->getIdByEmail($aKeyData['email']);
+            if(empty($iAccountId))
+                return MsgBox(_t('_sys_txt_reset_pasword_error_not_found', $sErrorUrl));;
 
-        // remove key
-        $oKey->removeKey($sKey);
+            $sPassword = $oForm->getCleanValue('password');
+            $sSalt = genRndSalt();
+            if(!$this->_oAccountQuery->updatePassword(encryptUserPwd($sPassword, $sSalt), $sSalt, $iAccountId))
+                return MsgBox(_t('_sys_txt_reset_pasword_error_occured', $sErrorUrl));;
 
-        // send email with new password and display result message
-        $aPlus = array ('password' => $sPassword);
+            $this->_oAccountQuery->unlockAccount($iAccountId);
+            $oKey->removeKey($sKey);
 
-        $aTemplate = BxDolEmailTemplates::getInstance() -> parseTemplate('t_PasswordReset', $aPlus, $iAccountId);
+            return MsgBox(_t('_sys_txt_reset_pasword_success'), 3) . bx_srv('system', 'login_form_only', array('', bx_get_reset_password_redirect($iAccountId)), 'TemplServiceLogin');
+        }
 
-		$oAccountQuery = BxDolAccountQuery::getInstance();
-		$oAccountQuery->unlockAccount($iAccountId);
-		
-        if ($aTemplate && sendMail($aData['email'], $aTemplate['Subject'], $aTemplate['Body'], 0, $aPlus, BX_EMAIL_SYSTEM))
-            return _t("_sys_txt_reset_pasword_email_sent", $sPassword);
-        else
-            return _t("_sys_txt_reset_pasword_email_send_failed", $sPassword);
+        return $oForm->getCode();
     }
 
     /**

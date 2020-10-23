@@ -1374,8 +1374,15 @@
 	<string name="_adm_stg_cpt_option_sys_account_online_time"><![CDATA[Временные рамки статуса "онлайн" (минуты)]]></string>
     <string name="_adm_stg_err_option_sys_account_online_time"><![CDATA[Вам необходимо ввести значение больше нуля.]]></string>
     <string name="_adm_stg_cpt_option_sys_account_default_profile_type"><![CDATA[Тип профиля по умолчанию]]></string>
-  <string name="_adm_stg_cpt_option_sys_account_limit_profiles_number"><![CDATA[Ограничить число профилей (0 - без ограничений)]]></string>
-  <string name="_adm_stg_cpt_option_sys_account_limit_incorrect_login_attempts"><![CDATA[Количество попыток ввода пароля (0 - без ограничений)]]></string>
+    <string name="_adm_stg_cpt_option_sys_account_limit_profiles_number"><![CDATA[Ограничить число профилей (0 - без ограничений)]]></string>
+    <string name="_adm_stg_cpt_option_sys_account_limit_incorrect_login_attempts"><![CDATA[Количество попыток ввода пароля (0 - без ограничений)]]></string>
+    <string name="_adm_stg_cpt_option_sys_account_reset_password_key_lifetime"><![CDATA[Время жизни ключа для сброса пароля (в секундах)]]></string>
+    <string name="_adm_stg_cpt_option_sys_account_reset_password_redirect"><![CDATA[После сброса пароля перенаправить на]]></string>
+    <string name="_adm_stg_cpt_option_value_sys_account_reset_password_redirect_home"><![CDATA[Главная страница]]></string>
+    <string name="_adm_stg_cpt_option_value_sys_account_reset_password_redirect_profile"><![CDATA[Страница профиля]]></string>
+    <string name="_adm_stg_cpt_option_value_sys_account_reset_password_redirect_profile_edit"><![CDATA[Страница редактирования профиля]]></string>
+    <string name="_adm_stg_cpt_option_value_sys_account_reset_password_redirect_custom"><![CDATA[Пользовательская страница]]></string>
+    <string name="_adm_stg_cpt_option_sys_account_reset_password_redirect_custom"><![CDATA[URL для перенаправления 'Пользовательская страница']]></string>
 	<string name="_adm_stg_cpt_option_sys_acl_expire_notification_days"><![CDATA[За сколько дней до окончания членства оповестить пользователя об окончании (-1 = после окончания)]]></string>
 	<string name="_adm_stg_cpt_option_sys_acl_expire_notify_once"><![CDATA[Оповещать пользователей об окончании членства только одинажды (каждый день в противном случае)]]></string>
 	<string name="_adm_stg_cpt_option_sys_add_nofollow"><![CDATA[Добавить атрибут "nofollow" для внешних ссылок]]></string>
@@ -1992,12 +1999,6 @@
 <p><a href="{page_url}">Обновить моё членство</a>.</p>
 <p> </p>
 {email_footer}]]></string>
-	<string name="_sys_et_txt_body_password_reset"><![CDATA[{email_header}
-<p>Ваш новый пароль:</p>
-<p> </p>
-<p><b>{password}</b></p>
-<p> </p>
-{email_footer}]]></string>
 	<string name="_sys_et_txt_body_profile_change_status_active"><![CDATA[{email_header}
 <p>Данные вашего аккаунта на сайте {site_name}:</p>
 <p> </p>
@@ -2074,7 +2075,6 @@
 	<string name="_sys_et_txt_name_system_forgot"><![CDATA[Сообщение о сбросе пароля]]></string>
 	<string name="_sys_et_txt_name_system_mem_changed"><![CDATA[Сообщение для посылки пользователям, чей уровень членства был изменён]]></string>
 	<string name="_sys_et_txt_name_system_mem_expiration"><![CDATA[Сообщение об истечении срока членства]]></string>
-	<string name="_sys_et_txt_name_system_password_reset"><![CDATA[Сообщение о новом пароле]]></string>
 	<string name="_sys_et_txt_name_profile_change_status_active"><![CDATA[Статус профиля изменён на Активный]]></string>
 	<string name="_sys_et_txt_name_profile_change_status_pending"><![CDATA[Статус профиля изменён на Ожидающий]]></string>
 	<string name="_sys_et_txt_name_profile_change_status_suspended"><![CDATA[Статус профиля изменён на Заблокированный]]></string>
@@ -2095,7 +2095,6 @@
 	<string name="_sys_et_txt_subject_forgot"><![CDATA[Сбросьте свой пароль]]></string>
 	<string name="_sys_et_txt_subject_mem_changed"><![CDATA[Уровень Вашего членства был изменён]]></string>
 	<string name="_sys_et_txt_subject_mem_expiration"><![CDATA[Срок Вашего членства истекает]]></string>
-	<string name="_sys_et_txt_subject_password_reset"><![CDATA[Новый пароль]]></string>
 	<string name="_sys_et_txt_subject_profile_change_status_active"><![CDATA[Профиль активирован]]></string>
 	<string name="_sys_et_txt_subject_profile_change_status_pending"><![CDATA[Профиль в ожидании одобрения]]></string>
 	<string name="_sys_et_txt_subject_profile_change_status_suspended"><![CDATA[Профиль заблокирован]]></string>
@@ -2195,6 +2194,7 @@
 	<string name="_sys_form_display_confirm_phone_set_phone"><![CDATA[Сохраниение телефона]]></string>
 	<string name="_sys_form_display_confirm_phone_confirmation"><![CDATA[Подтверждение телефона]]></string>
 	<string name="_sys_form_display_forgot_password"><![CDATA[Забыли пароль?]]></string>
+        <string name="_sys_form_display_forgot_password_reset"><![CDATA[Сбросить пароль]]></string>
 	<string name="_sys_form_display_login"><![CDATA[Войти]]></string>
 	<string name="_sys_form_display_login_step2"><![CDATA[Войти - шаг 2]]></string>
 	<string name="_sys_form_display_login_step3"><![CDATA[Войти - шаг 3]]></string>
@@ -2208,6 +2208,9 @@
 	<string name="_sys_form_forgot_password_phone_and_email_empty_error"><![CDATA[Нужно ввести либо телефон, либо email]]></string>
 	<string name="_sys_form_forgot_password_input_caption_system_do_submit"><![CDATA[Выполнить]]></string>
 	<string name="_sys_form_forgot_password_input_caption_system_email"><![CDATA[Email]]></string>
+        <string name="_sys_form_forgot_password_input_caption_system_key"><![CDATA[Ключ]]></string>
+        <string name="_sys_form_forgot_password_input_caption_system_password"><![CDATA[Пароль]]></string>
+        <string name="_sys_form_forgot_password_input_caption_password"><![CDATA[Пароль]]></string>
 	<string name="_sys_form_forgot_password_input_email"><![CDATA[Email]]></string>
 	<string name="_sys_form_forgot_password_input_caption_system_phone"><![CDATA[Телефон]]></string>
 	<string name="_sys_form_forgot_password_input_phone"><![CDATA[Телефон]]></string>
@@ -3058,8 +3061,9 @@
     <string name="_sys_txt_n_mutual_friends"><![CDATA[{0} общих друзей]]></string>
     <string name="_sys_txt_one_mutual_friend"><![CDATA[<a href="{0}">{1}</a> общий друг]]></string>
     <string name="_sys_txt_powered_by"><![CDATA[Сделано с помощью UNA - системя для управления сообществами]]></string>
-	<string name="_sys_txt_reset_pasword_email_send_failed"><![CDATA[Ваш новый пароль <b>{0}</b>. Пожалуйста, сохраните его в надёжном месте, так как нам не удалось отослать Вам его по эл. почте. Вы можете его поменять при первом входе в аккаунт.]]></string>
-	<string name="_sys_txt_reset_pasword_email_sent"><![CDATA[Ваш новый пароль - <b>{0}</b> - был отослан Вам по эл. почте. Вы можете его поменять при первом входе в аккаунт.]]></string>
+	<string name="_sys_txt_reset_pasword_success"><![CDATA[Ваш пароль был переустановлен. Вы можете войти в вашу учетную запись.]]></string>
+        <string name="_sys_txt_reset_pasword_error_invalid_key"><![CDATA[Ссылка для сброса пароля устарела или уже использовалась. Пожалуйста <a href="{0}">попытайтесь снова</a>.]]></string>
+        <string name="_sys_txt_reset_pasword_error_not_found"><![CDATA[Аккаунт с указанным email-ом не найден. Пожалуйста <a href="{0}">попытайтесь снова</a>.]]></string>
 	<string name="_sys_txt_reset_pasword_error_occured"><![CDATA[Произошла ошибка, пожалуйста <a href="{0}">попытайтесь снова</a>.]]></string>
         <string name="_sys_txt_splash_btn_join"><![CDATA[Зарегистрироваться]]></string>
 	<string name="_sys_txt_splash_slide01_title"><![CDATA[Узнайте людей, которые разделяют Ваши увлечения]]></string>
