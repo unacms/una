@@ -82,6 +82,14 @@ BxAccntManageTools.prototype.onClickResetPassword = function(iContentId, oLink) 
 	oGrid.actionWithId(iContentId, 'reset_password', oData, '', false, 0);
 };
 
+BxAccntManageTools.prototype.onClickResendRemail = function(iContentId, oLink) {
+	$('.bx-popup-applied:visible').dolPopupHide();
+
+	var oGrid = glGrids[this._sObjNameGrid];
+	var oData = oGrid._checkAppend(oLink, oGrid._getActionDataForReload());
+	oGrid.actionWithId(iContentId, 'resend_remail', oData, '', false, 0);
+};
+
 BxAccntManageTools.prototype.onClickUnlockAccount = function (iContentId, oLink) {
     $('.bx-popup-applied:visible').dolPopupHide();
 
