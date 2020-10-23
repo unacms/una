@@ -162,7 +162,9 @@ class BxBaseServiceLogin extends BxDol
                 $oForm->aInputs['relocate']['value'] = BX_DOL_URL_ROOT;
         }
         
-        $sFormCode = $oForm->getCode();
+        $sFormCode = '';
+        if (!(bool)getParam('sys_account_disable_login_form'))
+            $sFormCode = $oForm->getCode();
 
         BxDolTemplate::getInstance()->addJs(array('jquery.form.min.js'));
         
