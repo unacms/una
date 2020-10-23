@@ -72,7 +72,11 @@ class BxBaseServiceAccount extends BxDol
         if (!isset($aParams['no_auth_buttons']) || false === (bool)$aParams['no_auth_buttons'])
             $sAuth = BxDolService::call('system', 'member_auth_code', array(), 'TemplServiceLogin');
 
-        return $sAuth . $this->_oAccountForms->createAccountForm($aParams) . $sLoginText;
+        $sFormCode = '';
+        if (!(bool)getParam('sys_account_disable_join_form'))
+            $sFormCode = $this->_oAccountForms->createAccountForm($aParams);
+        
+        return $sAuth . $sFormCode . $sLoginText;
     }
 
     public function serviceAccountSettingsEmail ($iAccountId = false)
