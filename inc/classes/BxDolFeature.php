@@ -88,6 +88,7 @@ class BxDolFeature extends BxDolObject
                 SELECT
                     `id` as `id`,
                     `name` AS `name`,
+                    `module` AS `module`,
                     `is_on` AS `is_on`,
                     `is_undo` AS `is_undo`,
                     `base_url` AS `base_url`,
@@ -198,8 +199,7 @@ class BxDolFeature extends BxDolObject
     
     private function _prepareAuditParams()
     {
-        $sModule = bx_modulename_from_systemname($this->_aSystem['name']);
-        $oModule = BxDolModule::getInstance($sModule);
+        $oModule = BxDolModule::getInstance($this->_aSystem['module']);
         if(!$oModule)
             return;
 

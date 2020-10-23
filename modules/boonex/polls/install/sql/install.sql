@@ -400,8 +400,8 @@ INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `table_lists`, `is_on
 
 
 -- FEATURED
-INSERT INTO `sys_objects_feature` (`name`, `is_on`, `is_undo`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_flag`, `class_name`, `class_file`) VALUES 
-('bx_polls', '1', '1', 'page.php?i=view-poll&id={object_id}', 'bx_polls_entries', 'id', 'author', 'featured', '', '');
+INSERT INTO `sys_objects_feature` (`name`, `module`, `is_on`, `is_undo`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_flag`, `class_name`, `class_file`) VALUES 
+('bx_polls', 'bx_polls', '1', '1', 'page.php?i=view-poll&id={object_id}', 'bx_polls_entries', 'id', 'author', 'featured', '', '');
 
 
 -- CONTENT INFO

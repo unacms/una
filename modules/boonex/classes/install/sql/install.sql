@@ -607,8 +607,8 @@ INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `is_on`, `is_undo`, `
 ('bx_classes', 'bx_classes_favorites_track', '1', '1', '1', 'page.php?i=view-class&id={object_id}', 'bx_classes_classes', 'id', 'author', 'favorites', '', '');
 
 -- FEATURED
-INSERT INTO `sys_objects_feature` (`name`, `is_on`, `is_undo`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_flag`, `class_name`, `class_file`) VALUES 
-('bx_classes', '1', '1', 'page.php?i=view-class&id={object_id}', 'bx_classes_classes', 'id', 'author', 'featured', '', '');
+INSERT INTO `sys_objects_feature` (`name`, `module`, `is_on`, `is_undo`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_flag`, `class_name`, `class_file`) VALUES 
+('bx_classes', 'bx_classes', '1', '1', 'page.php?i=view-class&id={object_id}', 'bx_classes_classes', 'id', 'author', 'featured', '', '');
 
 -- CONTENT INFO
 INSERT INTO `sys_objects_content_info` (`name`, `title`, `alert_unit`, `alert_action_add`, `alert_action_update`, `alert_action_delete`, `class_name`, `class_file`) VALUES

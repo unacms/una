@@ -393,8 +393,8 @@ INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `table_lists`, `is_on
 ('bx_videos', 'bx_videos_favorites_track', 'bx_videos_favorites_lists', '1', '1', '1', 'page.php?i=view-video&id={object_id}', 'bx_videos_entries', 'id', 'author', 'favorites', '', '');
 
 -- FEATURED
-INSERT INTO `sys_objects_feature` (`name`, `is_on`, `is_undo`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_flag`, `class_name`, `class_file`) VALUES 
-('bx_videos', '1', '1', 'page.php?i=view-video&id={object_id}', 'bx_videos_entries', 'id', 'author', 'featured', '', '');
+INSERT INTO `sys_objects_feature` (`name`, `module`, `is_on`, `is_undo`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_flag`, `class_name`, `class_file`) VALUES 
+('bx_videos', 'bx_videos', '1', '1', 'page.php?i=view-video&id={object_id}', 'bx_videos_entries', 'id', 'author', 'featured', '', '');
 
 
 -- CONTENT INFO

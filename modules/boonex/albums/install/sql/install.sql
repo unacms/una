@@ -495,9 +495,9 @@ INSERT INTO `sys_objects_favorite` (`name`, `table_track`, `table_lists`, `is_on
 
 
 -- FEATURED
-INSERT INTO `sys_objects_feature` (`name`, `is_on`, `is_undo`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_flag`, `class_name`, `class_file`) VALUES 
-('bx_albums', '1', '1', 'page.php?i=view-album&id={object_id}', 'bx_albums_albums', 'id', 'author', 'featured', '', ''),
-('bx_albums_media', '1', '1', 'page.php?i=view-album-media&id={object_id}', 'bx_albums_files2albums', 'id', '', 'featured', '', '');
+INSERT INTO `sys_objects_feature` (`name`, `module`, `is_on`, `is_undo`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_flag`, `class_name`, `class_file`) VALUES 
+('bx_albums', 'bx_albums', '1', '1', 'page.php?i=view-album&id={object_id}', 'bx_albums_albums', 'id', 'author', 'featured', '', ''),
+('bx_albums_media', 'bx_albums', '1', '1', 'page.php?i=view-album-media&id={object_id}', 'bx_albums_files2albums', 'id', '', 'featured', '', '');
 
 
 -- CONTENT INFO
