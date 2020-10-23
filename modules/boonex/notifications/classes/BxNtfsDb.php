@@ -326,6 +326,7 @@ class BxNtfsDb extends BxBaseModNotificationsDb
     public function cleanEvents($iClearIntervalInDays)
     {
         $this->query("DELETE FROM `{$this->_sTable}` WHERE `date` < :date", array('date' => time() - $iClearIntervalInDays * 86400));
+        $this->query("DELETE FROM `{$this->_sTableEvt2Usr}` WHERE `event_id` NOT IN (SELECT `id` FROM `{$this->_sTable}`)");
     }   
 }
 
