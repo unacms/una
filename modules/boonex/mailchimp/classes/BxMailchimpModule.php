@@ -219,12 +219,14 @@ class BxMailchimpModule extends BxDolModule
         foreach ($aProfilesIds as $iId) {
             if (!($o = BxDolProfile::getInstance($iId)))
                 continue;
+
             $sProfiles .= $o->getDisplayName() . ', ';
         }
         $sProfiles = trim($sProfiles, ', ');
         $sEmail = $oAccount->getEmail();
-		$iAccountId = $oAccount->id();
-		$iProfileId = $oProfile->id();
+        $iAccountId = $oAccount->id();
+        $iProfileId = $oProfile->id();
+
         $aMarkers = array (
             'FNAME' => $oProfile->getDisplayName(),
             'ACCOUNT_ID' => $iAccountId,
@@ -235,10 +237,14 @@ class BxMailchimpModule extends BxDolModule
             'PROFILES' => $sProfiles,
             'PROFILEURL' => $oProfile->getUrl(),
             'IMAGE_URL' => $oProfile->getAvatar(),
+            'RPASS_URL' => ''
         );
-		
-		bx_alert($this->_aModule['name'], 'user_fields', $iAccountId, $iProfileId, array('email' => $sEmail, 'markers' => &$aMarkers));	
-        
+
+        if(($sResetPasswordUrl = bx_get_reset_password_link($sEmail)) !== false)
+            $aMarkers['RPASS_URL'] = $sResetPasswordUrl;
+
+        bx_alert($this->_aModule['name'], 'user_fields', $iAccountId, $iProfileId, array('email' => $sEmail, 'markers' => &$aMarkers));	
+
         return array (
             'email_address' => $oAccount->getEmail(),
             'status' => $aInfoAccount['receive_news'] ? 'subscribed' : 'unsubscribed',            
