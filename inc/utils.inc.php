@@ -314,13 +314,13 @@ function htmlspecialchars_adv( $string )
  */
 function sendMailTemplate($sTemplateName, $iAccountId = 0, $iProfileId = 0, $aReplaceVars = array(), $iEmailType = BX_EMAIL_NOTIFY, $bAddToQueue = false)
 {
-    $oProfile = BxDolProfile::getInstance($iProfileId);
+    $oProfile = $iProfileId ? BxDolProfile::getInstance($iProfileId) : null;
 
     $oAccount = $iAccountId ? BxDolAccount::getInstance($iAccountId) : ($oProfile ? $oProfile->getAccountObject() : null);
 
     $oEmailTemplates = BxDolEmailTemplates::getInstance();
 
-    if (!$oAccount || !$oProfile || !$oEmailTemplates)
+    if (!($oAccount || $oProfile) || !$oEmailTemplates)
         return false;
 
     $aTemplate = $oEmailTemplates->parseTemplate($sTemplateName, $aReplaceVars, $oAccount ? $oAccount->id() : 0, (int)$iProfileId);
