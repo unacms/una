@@ -1,28 +1,25 @@
-.bx_analytics_filters
-{
-    display: -webkit-box;
+.bx_analytics_filters {
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-align: stretch;
     -webkit-align-items: stretch;
     -ms-flex-align: stretch;
     align-items: stretch;
     -webkit-flex-wrap: wrap;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    -webkit-box-pack: start;
-    -ms-flex-pack: start;
-    plex-pack: start;
     -webkit-justify-content: space-between;
     justify-content: space-between;
+}
+
+.bx_analytics_filters .bx-form-element {
+    width: 30%;
 }
 
 .bx_analytics_filters .bx-def-font-inputs{
     position: relative;
     display: inline-block;
     overflow: hidden;
-    width: calc(33% - 1rem);
 }
 
 .bx_analytics_data .bx-def-font-inputs {
