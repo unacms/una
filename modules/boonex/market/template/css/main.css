@@ -54,10 +54,11 @@ div.bx-market-unit-icon {
     left: 0px;
 }
 div.bx-market-unit-icon-empty {
-	background-color: #ffffff;
-	text-align: center;
-	font-size: 32px;
-	font-size: 2rem;
+    background-color: #ffffff;
+    text-align: center;
+    line-height: 3rem;
+    font-size: 32px;
+    font-size: 2rem;
 }
 div.bx-market-unit-icon-empty .sys-icon {
     vertical-align: top;	

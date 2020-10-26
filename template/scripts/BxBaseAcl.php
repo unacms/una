@@ -43,7 +43,7 @@ class BxBaseAcl extends BxDolAcl
         $sContent = $oTemplate->parseHtmlByName('acl_membership.html', array(
             'html_id' => 'sys-acl-profile-' . $iProfileId,
             'level' => _t($aLevel['name']),
-            'thumbnail' => $oTemplate->getImage($aLevelInfo['icon'], array('class' => 'bx-acl-m-thumbnail bx-def-border')),
+            'thumbnail' => $oTemplate->getImage($aLevelInfo['icon'], array('class' => 'bx-acl-m-thumbnail')),
             'bx_if:show_private_info' => array(
                 'condition' => $bTmplVarsPrivateInfo,
                 'content' => $aTmplVarsPrivateInfo
