@@ -44,6 +44,8 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'FIELD_TEXT' => 'event_desc',
             'FIELD_PICTURE' => 'picture',
             'FIELD_COVER' => 'cover',
+            'FIELD_DATE_START' => 'date_start',
+            'FIELD_DATE_END' => 'date_end',
             'FIELD_TIMEZONE' => 'timezone',
             'FIELD_JOIN_CONFIRMATION' => 'join_confirmation',
             'FIELD_REMINDER' => 'reminder',

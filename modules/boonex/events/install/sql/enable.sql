@@ -379,6 +379,8 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_events_snippet_meta', 'bx_events', '_sys_menu_set_title_snippet_meta', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES
+('bx_events_snippet_meta', 'bx_events', 'date-start', '_bx_events_menu_item_title_system_sm_date_start', '_bx_events_menu_item_title_sm_date_start', '', '', '', '', '', 2147483647, 0, 0, 1, 0),
+('bx_events_snippet_meta', 'bx_events', 'date-end', '_bx_events_menu_item_title_system_sm_date_end', '_bx_events_menu_item_title_sm_date_end', '', '', '', '', '', 2147483647, 0, 0, 1, 0),
 ('bx_events_snippet_meta', 'bx_events', 'date', '_sys_menu_item_title_system_sm_date', '_sys_menu_item_title_sm_date', '', '', '', '', '', 2147483647, 0, 0, 1, 1),
 ('bx_events_snippet_meta', 'bx_events', 'tags', '_sys_menu_item_title_system_sm_tags', '_sys_menu_item_title_sm_tags', '', '', '', '', '', 2147483647, 0, 0, 1, 2),
 ('bx_events_snippet_meta', 'bx_events', 'views', '_sys_menu_item_title_system_sm_views', '_sys_menu_item_title_sm_views', '', '', '', '', '', 2147483647, 0, 0, 1, 3),
