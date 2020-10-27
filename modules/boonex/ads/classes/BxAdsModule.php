@@ -61,18 +61,27 @@ class BxAdsModule extends BxBaseModTextModule
         if($this->_oDb->isInterested($iContentId, $iViewer))
             return echoJson(array('msg' => _t('_bx_ads_txt_err_duplicate')));
 
-        if(!$this->_oDb->insertInterested(array('entry_id' => $iContentId, 'profile_id' => $iViewer)))
+        $iInterestId = $this->_oDb->insertInterested(array('entry_id' => $iContentId, 'profile_id' => $iViewer));
+        if(!$iInterestId)
             return echoJson(array('msg' => _t('_bx_ads_txt_err_cannot_perform_action')));
 
-        sendMailTemplate($CNF['ETEMPLATE_INTERESTED'], 0, $iContentAuthor, array(
-            'viewer_name' => $oViewer->getDisplayName(),
-            'viewer_url' => $oViewer->getUrl(),
-            'ad_name' => $aContentInfo[$CNF['FIELD_TITLE']],
-            'ad_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
-                'i' => $CNF['URI_VIEW_ENTRY'], 
-                $CNF['FIELD_ID'] => $iContentId
-            ))
+        bx_alert($this->getName(), 'doInterest', $iContentId, $iViewer, array(
+            'subobject_id' => $iInterestId, 
+            'subobject_author_id' => $iViewer, 
+
+            'object_author_id' => $iContentAuthor
         ));
+
+        if(getParam($CNF['PARAM_USE_IIN']) == 'on')
+            sendMailTemplate($CNF['ETEMPLATE_INTERESTED'], 0, $iContentAuthor, array(
+                'viewer_name' => $oViewer->getDisplayName(),
+                'viewer_url' => $oViewer->getUrl(),
+                'ad_name' => $aContentInfo[$CNF['FIELD_TITLE']],
+                'ad_url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php', array(
+                    'i' => $CNF['URI_VIEW_ENTRY'], 
+                    $CNF['FIELD_ID'] => $iContentId
+                ))
+            ));
 
         return echoJson(array('msg' => _t('_bx_ads_txt_msg_author_notified')));
     }
@@ -290,6 +299,56 @@ class BxAdsModule extends BxBaseModTextModule
         return $aBlock;
     }
 
+    public function serviceGetNotificationsData()
+    {
+        $sModule = $this->_aModule['name'];
+
+        $sEventPrivacy = $sModule . '_allow_view_event_to';
+        if(BxDolPrivacy::getObjectInstance($sEventPrivacy) === false)
+            $sEventPrivacy = '';
+
+        $aResult = parent::serviceGetNotificationsData();
+        $aResult['handlers'] = array_merge($aResult['handlers'], array(
+            array('group' => $sModule . '_interest', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'doInterest', 'module_name' => $sModule, 'module_method' => 'get_notifications_interest', 'module_class' => 'Module', 'module_event_privacy' => $sEventPrivacy)
+        ));
+
+        $aResult['settings'] = array_merge($aResult['settings'], array(
+            array('group' => 'interest', 'unit' => $sModule, 'action' => 'doInterest', 'types' => array('personal'))
+        ));
+
+        $aResult['alerts'] = array_merge($aResult['alerts'], array(
+            array('unit' => $sModule, 'action' => 'doInterest')
+        ));
+
+        return $aResult; 
+    }
+    
+    public function serviceGetNotificationsInterest($aEvent)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+    	$iContentId = (int)$aEvent['object_id'];
+    	$aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return array();
+
+        $iInterestedId = (int)$aEvent['subobject_id'];
+        $aInterestedInfo = $this->_oDb->getInterested(array('type' => 'id', 'id' => $iInterestedId));
+        if(empty($aInterestedInfo) || !is_array($aInterestedInfo))
+            return array();
+
+        $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $iContentId);
+
+        return array(
+            'entry_sample' => $CNF['T']['txt_sample_single'],
+            'entry_url' => $sEntryUrl,
+            'entry_caption' => $aContentInfo[$CNF['FIELD_TITLE']],
+            'entry_author' => $aContentInfo[$CNF['FIELD_AUTHOR']],
+            'subentry_sample' => $CNF['T']['txt_sample_interest_single'],
+            'subentry_url' => '',
+            'lang_key' => '_bx_ads_txt_ntfs_subobject_interested', //may be empty or not specified. In this case the default one from Notification module will be used.
+        );
+    }
 
     /**
      * Common methods.

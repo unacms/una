@@ -11,6 +11,7 @@
     <string name="_bx_ads_option_rss_num"><![CDATA[Количество элементов в ленте RSS]]></string>
     <string name="_bx_ads_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
     <string name="_bx_ads_option_lifetime"><![CDATA[Автоматически деактивировать по истечении (в днях)]]></string>
+    <string name="_bx_ads_option_internal_interested_notification"><![CDATA[Использовать встроенную нотификацию о действии 'Интересно']]></string>
 
     <string name="_bx_ads_form_category"><![CDATA[Категория]]></string>
     <string name="_bx_ads_form_category_display_add"><![CDATA[Добавить категорию]]></string>
@@ -374,6 +375,7 @@
     <string name="_bx_ads_txt_sample_reaction_single"><![CDATA[реакция '{0}' к объявлению]]></string>
     <string name="_bx_ads_txt_sample_score_up_single"><![CDATA[голос за объявление]]></string>
     <string name="_bx_ads_txt_sample_score_down_single"><![CDATA[голос против объявления]]></string>
+    <string name="_bx_ads_txt_sample_interest_single"><![CDATA[проявил интерес к]]></string>
     <string name="_bx_ads_txt_display_title_add"><![CDATA[{0}: Добавить]]></string>
     <string name="_bx_ads_txt_display_title_edit"><![CDATA[{0}: Редактировать]]></string>
     <string name="_bx_ads_txt_display_title_view"><![CDATA[{0}: Просмотреть]]></string>
@@ -391,4 +393,6 @@
     <string name="_bx_ads_txt_poll_answer_vote_do_by"><![CDATA[Проголосовали за]]></string>
     <string name="_bx_ads_txt_poll_answer_vote_counter"><![CDATA[{0} голосов]]></string>
     <string name="_bx_ads_txt_poll_answer_vote_percent"><![CDATA[({0}%)]]></string>
+    
+    <string name="_bx_ads_txt_ntfs_subobject_interested"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> {subentry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
 </resources>

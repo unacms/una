@@ -11,6 +11,7 @@
     <string name="_bx_ads_option_rss_num"><![CDATA[Number of items in RSS feed]]></string>
     <string name="_bx_ads_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
     <string name="_bx_ads_option_lifetime"><![CDATA[Deactivate automatically after (in days)]]></string>
+    <string name="_bx_ads_option_internal_interested_notification"><![CDATA[Use internal notification about Interested action]]></string>
 
     <string name="_bx_ads_form_category"><![CDATA[Category]]></string>
     <string name="_bx_ads_form_category_display_add"><![CDATA[Add Category]]></string>
@@ -374,6 +375,7 @@
     <string name="_bx_ads_txt_sample_reaction_single"><![CDATA['{0}' reaction to ad]]></string>
     <string name="_bx_ads_txt_sample_score_up_single"><![CDATA[score up vote to ad]]></string>
     <string name="_bx_ads_txt_sample_score_down_single"><![CDATA[score down vote to ad]]></string>
+    <string name="_bx_ads_txt_sample_interest_single"><![CDATA[interested in ad]]></string>
     <string name="_bx_ads_txt_display_title_add"><![CDATA[{0}: Add]]></string>
     <string name="_bx_ads_txt_display_title_edit"><![CDATA[{0}: Edit]]></string>
     <string name="_bx_ads_txt_display_title_view"><![CDATA[{0}: View]]></string>
@@ -391,4 +393,6 @@
     <string name="_bx_ads_txt_poll_answer_vote_do_by"><![CDATA[Voted for]]></string>
     <string name="_bx_ads_txt_poll_answer_vote_counter"><![CDATA[{0} votes]]></string>
     <string name="_bx_ads_txt_poll_answer_vote_percent"><![CDATA[({0}%)]]></string>
+
+    <string name="_bx_ads_txt_ntfs_subobject_interested"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> {subentry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b>]]></string>
 </resources>

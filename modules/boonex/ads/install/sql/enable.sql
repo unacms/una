@@ -17,7 +17,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_ads_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', 15),
 ('bx_ads_rss_num', '10', @iCategId, '_bx_ads_option_rss_num', 'digit', '', '', '', 20),
 ('bx_ads_searchable_fields', 'title,text', @iCategId, '_bx_ads_option_searchable_fields', 'list', '', '', 'a:2:{s:6:"module";s:6:"bx_ads";s:6:"method";s:21:"get_searchable_fields";}', 30),
-('bx_ads_lifetime', '30', @iCategId, '_bx_ads_option_lifetime', 'digit', '', '', '', 40);
+('bx_ads_lifetime', '30', @iCategId, '_bx_ads_option_lifetime', 'digit', '', '', '', 40),
+('bx_ads_internal_interested_notification', '', @iCategId, '_bx_ads_option_internal_interested_notification', 'checkbox', '', '', '', 50);
 
 
 -- PAGE: create entry
