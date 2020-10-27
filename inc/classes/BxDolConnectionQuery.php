@@ -249,7 +249,7 @@ class BxDolConnectionQuery extends BxDolDb
             $aBindings['mutual'] = $iMutual;
         }
 
-        $sQuery = $this->prepare("INSERT INTO `" . $this->_sTable . "` SET `initiator` = :initiator, `content` = :content, `added` = :added" . $sMutualField);
+        $sQuery = $this->prepare("INSERT IGNORE INTO `" . $this->_sTable . "` SET `initiator` = :initiator, `content` = :content, `added` = :added" . $sMutualField);
         if (!$this->query($sQuery, array_merge($aBindings, array('initiator' => $iInitiator, 'content' => $iContent, 'added' => time()))))
             return false;
 
