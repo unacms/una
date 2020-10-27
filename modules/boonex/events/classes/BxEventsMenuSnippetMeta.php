@@ -20,6 +20,20 @@ class BxEventsMenuSnippetMeta extends BxBaseModGroupsMenuSnippetMeta
         unset($this->_aConnectionToFunctionCheck['sys_profiles_friends']);
         unset($this->_aConnectionToFunctionTitle['sys_profiles_friends']);
     }
+
+    protected function _getMenuItemDateStart($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        return $this->getUnitMetaItemText(bx_time_js($this->_aContentInfo[$CNF['FIELD_DATE_START']], BX_FORMAT_DATE, true));
+    }
+
+    protected function _getMenuItemDateEnd($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        return $this->getUnitMetaItemText(bx_time_js($this->_aContentInfo[$CNF['FIELD_DATE_END']], BX_FORMAT_DATE, true));
+    }
 }
 
 /** @} */
