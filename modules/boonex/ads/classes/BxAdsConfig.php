@@ -90,6 +90,7 @@ class BxAdsConfig extends BxBaseModTextConfig
             'PARAM_SEARCHABLE_FIELDS' => 'bx_ads_searchable_fields',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_ads_per_page_browse_showcase',
             'PARAM_LIFETIME' => 'bx_ads_lifetime',
+            'PARAM_USE_IIN' => 'bx_ads_internal_interested_notification',
             'PARAM_CATEGORY_LEVEL_MAX' => 1,
 
             // objects
@@ -179,6 +180,7 @@ class BxAdsConfig extends BxBaseModTextConfig
                 'txt_sample_reaction_single' => '_bx_ads_txt_sample_reaction_single',
                 'txt_sample_score_up_single' => '_bx_ads_txt_sample_score_up_single',
                 'txt_sample_score_down_single' => '_bx_ads_txt_sample_score_down_single',
+                'txt_sample_interest_single' => '_bx_ads_txt_sample_interest_single',
                 'form_field_author' => '_bx_ads_form_entry_input_author',
             	'grid_action_err_delete' => '_bx_ads_grid_action_err_delete',
             	'grid_txt_account_manager' => '_bx_ads_grid_txt_account_manager',

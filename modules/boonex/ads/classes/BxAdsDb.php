@@ -255,6 +255,40 @@ class BxAdsDb extends BxBaseModTextDb
         )) > 0;
     }
 
+    public function getInterested($aParams)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+
+        $sSelectClause = "`tit`.*";
+        $sJoinClause = $sWhereClause = $sGroupClause = "";
+        $sOrderClause = "`tit`.`id` ASC";
+
+        switch($aParams['type']) {
+            case 'id':
+                $aMethod['name'] = 'getRow';
+                $aMethod['params'][1] = array(
+                    'id' => $aParams['id']
+                );
+
+                $sWhereClause = " AND `tit`.`id`=:id";
+                break;
+        }
+
+        if(!empty($sGroupClause))
+            $sGroupClause = "GROUP BY " . $sGroupClause;
+
+        if(!empty($sOrderClause))
+            $sOrderClause = "ORDER BY " . $sOrderClause;
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . " 
+            FROM `" . $CNF['TABLE_INTERESTED_TRACK'] . "` AS `tit`" . $sJoinClause . " 
+            WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause;
+
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+    
     public function insertInterested($aParamsSet)
     {
         $CNF = &$this->_oConfig->CNF;
