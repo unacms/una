@@ -78,8 +78,8 @@
 	<string name="_bx_events_acl_action_edit_any_profile"><![CDATA[Edit Any Event]]></string>
   <string name="_bx_events_acl_action_delete_invites"><![CDATA[Delete Invites]]></string>
 
-	<string name="_bx_events_page_title_sys_joined_entries"><![CDATA[Profile Events]]></string>
-	<string name="_bx_events_page_title_joined_entries"><![CDATA[Profile Events]]></string>
+	<string name="_bx_events_page_title_sys_joined"><![CDATA[Profile Events]]></string>
+	<string name="_bx_events_page_title_joined"><![CDATA[Profile Events]]></string>
   <string name="_bx_events_page_title_sys_entries_in_context"><![CDATA[Events in context]]></string>
   <string name="_bx_events_page_title_entries_in_context"><![CDATA[Events in {display_name}]]></string>
 	<string name="_bx_events_page_title_sys_create_profile"><![CDATA[Create Event]]></string>
