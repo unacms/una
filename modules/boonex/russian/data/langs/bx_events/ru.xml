@@ -82,8 +82,8 @@
 	<string name="_bx_events_acl_action_edit_any_profile"><![CDATA[Редактировать любое событие]]></string>
 	<string name="_bx_events_acl_action_delete_invites"><![CDATA[Удалять приглашения]]></string>
 
-	<string name="_bx_events_page_title_sys_joined_entries"><![CDATA[События профиля]]></string>
-	<string name="_bx_events_page_title_joined_entries"><![CDATA[События профиля]]></string>
+	<string name="_bx_events_page_title_sys_joined"><![CDATA[События профиля]]></string>
+	<string name="_bx_events_page_title_joined"><![CDATA[События профиля]]></string>
   <string name="_bx_events_page_title_sys_entries_in_context"><![CDATA[События в контексте]]></string>
   <string name="_bx_events_page_title_entries_in_context"><![CDATA[События в {display_name}]]></string>
 	<string name="_bx_events_page_title_sys_create_profile"><![CDATA[Создать событие]]></string>
