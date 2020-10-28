@@ -1269,6 +1269,9 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         if (!$iProfileId)
             $iProfileId = $this->_iProfileId;
 
+        if(empty($aDataEntry) || !is_array($aDataEntry))
+            return _t('_sys_txt_not_found');
+
         $oProfile = BxDolProfile::getInstanceByContentAndType($aDataEntry[$this->_oConfig->CNF['FIELD_ID']], $this->getName());
         if ($oProfile && $oProfile->id() == $iProfileId)
             return CHECK_ACTION_RESULT_ALLOWED;
@@ -1420,6 +1423,9 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
      */
     public function checkAllowedEdit ($aDataEntry, $isPerformAction = false)
     {
+        if(empty($aDataEntry) || !is_array($aDataEntry))
+            return _t('_sys_txt_not_found');
+
         // moderator always has access
         if ($this->_isModerator($isPerformAction))
             return CHECK_ACTION_RESULT_ALLOWED;

@@ -2274,6 +2274,9 @@ class BxBaseModGeneralModule extends BxDolModule
         if(!$iProfileId)
             $iProfileId = $this->_iProfileId;
 
+        if(empty($aDataEntry) || !is_array($aDataEntry))
+            return _t('_sys_txt_not_found');
+
         // moderator and owner always have access
         if(!empty($iProfileId) && (abs($aDataEntry[$CNF['FIELD_AUTHOR']]) == (int)$iProfileId || $this->_isModeratorForProfile($isPerformAction, $iProfileId)))
             return CHECK_ACTION_RESULT_ALLOWED;
