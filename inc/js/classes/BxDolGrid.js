@@ -131,15 +131,18 @@ BxDolGrid.prototype.blink = function (sId) {
 
 BxDolGrid.prototype.enable = function (sId, isEnable) {
     var e = jQuery('#' + sId);
+    var eSwitch = e.find('.bx-switcher-cont:has([bx_grid_action_single = "enable"])');
     var eActions = e.find('.bx-grid-cell-single-actions-wrapper *[bx_grid_action_single]').not('*[bx_grid_permanent_state]');
 
     if (isEnable) {        
         e.removeClass('bx-grid-table-row-disabled bx-def-font-grayed');
+        eSwitch.removeClass('off').addClass('on');
         eActions.removeClass('bx-btn-disabled');
         if (eActions.length)
             this._bindActionsSingle(e);
     } else {
         eActions.addClass('bx-btn-disabled');
+        eSwitch.removeClass('on').addClass('off');
         e.addClass('bx-grid-table-row-disabled bx-def-font-grayed');        
         if (eActions.length)
             this._unbindActionsSingle(e);
