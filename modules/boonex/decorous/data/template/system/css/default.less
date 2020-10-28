@@ -140,11 +140,11 @@ html.bx-media-phone {
 
 /* body */
 a {
-	color: @bx-color-link-body; 
-	transition: color .3s;
+    color: @bx-color-link-body; 
+    transition: color .3s;
 }
 a:hover {
-	color: @bx-color-link-body-hover; 
+    color: @bx-color-link-body-hover; 
 }
 .sys-icon:not(.sys-colored),
 .sys-icon-a:not(.sys-colored) {
@@ -152,15 +152,15 @@ a:hover {
 }
 a:hover > .sys-icon:not(.sys-colored),
 a:hover > .sys-icon-a:not(.sys-colored) {
-	color: @bx-color-icon-body-hover; 
+    color: @bx-color-icon-body-hover; 
 }
 .sys-icon-a i {
-	.background-color (@bx-color-icon-body) !important;
-	color: @bx-color-icon-body;
+    .background-color (@bx-color-icon-body) !important;
+    color: @bx-color-icon-body;
 }
 a:hover > .sys-icon-a i {
-	.background-color (@bx-color-icon-body-hover) !important;
-	color: @bx-color-icon-body-hover;
+    .background-color (@bx-color-icon-body-hover) !important;
+    color: @bx-color-icon-body-hover;
 }
 
 /* header */
@@ -173,14 +173,14 @@ a:hover > .sys-icon-a i {
     border-bottom-color: @bx-color-border-header;
 }
 .bx-header a {
-	color: @bx-color-link-header; 
+    color: @bx-color-link-header; 
 }
 .bx-header a:hover {
-	color: @bx-color-link-header-hover;
+    color: @bx-color-link-header-hover;
 }
-.bx-header .sys-icon,
-.bx-header .sys-icon-a {
-	color: @bx-color-icon-header; 
+.bx-header .sys-icon:not(.sys-colored),
+.bx-header .sys-icon-a:not(.sys-colored) {
+    color: @bx-color-icon-header; 
 }
 .bx-header .cd-nav-trigger span, 
 .bx-header .cd-nav-trigger span::before, 
@@ -191,7 +191,7 @@ a:hover > .sys-icon-a i {
 }
 .bx-header a:hover .sys-icon,
 .bx-header a:hover .sys-icon-a {
-	color: @bx-color-icon-header-hover; 
+    color: @bx-color-icon-header-hover; 
 }
 .bx-header .cd-nav-trigger.nav-is-visible:hover span {
   background: rgba(255, 255, 255, 0);
@@ -203,13 +203,13 @@ a:hover > .sys-icon-a i {
 .bx-header .cd-nav-trigger.nav-is-visible:hover span::after {
     background: @bx-color-icon-header-hover;
 }
-.bx-header .sys-icon-a i {
-	.background-color (@bx-color-icon-header) !important;
-	color: @bx-color-icon-header;
+.bx-header .sys-icon-a:not(.sys-colored) i {
+    .background-color (@bx-color-icon-header) !important;
+    color: @bx-color-icon-header;
 }
 .bx-header a:hover .sys-icon-a i {
-	.background-color (@bx-color-icon-header-hover) !important;
-	color: @bx-color-icon-header-hover;
+    .background-color (@bx-color-icon-header-hover) !important;
+    color: @bx-color-icon-header-hover;
 }
 
 /* footer */
