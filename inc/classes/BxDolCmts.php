@@ -304,6 +304,17 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         $o = new $sClassName($sSys, $iId, $iInit, $oTemplate);
         return ($GLOBALS['bxDolClasses']['BxDolCmts!' . $sSys . $iId] = $o);
     }
+    
+    /**
+     * get comments object instanse
+     * @param $iUniqId unique comment id
+     * @return null on error, or ready to use class instance
+     */
+    public static function getObjectInstanceByUniqId($iUniqId, $iInit = true, $oTemplate = false)
+    {
+        $aData = BxDolCmtsQuery::getCommentByUniq($iUniqId);
+        return self::getObjectInstance($aData['system_name'], $aData['cmt_object_id']);
+    }
 
     public static function &getSystems ()
     {

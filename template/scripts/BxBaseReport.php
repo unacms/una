@@ -285,8 +285,14 @@ class BxBaseReport extends BxDolReport
                 bx_alert('report', 'do', $iId, $iAuthorId, array('object_system' => $this->_sSystem, 'object_id' => $iObjectId, 'object_author_id' => $iObjectAuthorId, 'type' => $sType, 'text' => $sText));
 
                 $mixedParams = $this->_prepareAuditParams($iObjectId, array('type' => $sType, 'text' => $sText));
-                if($mixedParams)
-                    bx_audit($iObjectId, $this->_sSystem, '_sys_audit_action_report', $mixedParams);
+                
+                if($mixedParams){
+                    $sActionName = $mixedParams['action_name'];
+                    $iAuditObjectId = $mixedParams['object_id'];
+                    unset($mixedParams['action_name']);
+                    unset($mixedParams['object_id']);
+                    bx_audit($iAuditObjectId, $this->_sSystem, $sActionName, $mixedParams);
+                }
 
                 $aReport = $this->_oQuery->getReport($iObjectId);
                 return array(
@@ -351,8 +357,26 @@ class BxBaseReport extends BxDolReport
     private function _prepareAuditParams($iObjectId, $aData)
     {
         $sModule = $this->_sSystem;
-        $oModule = BxDolModule::getInstance($sModule);
+        $sKeyObjectContentInfo = 'OBJECT_CONTENT_INFO';
+        $sActionName = '_sys_audit_action_report';
         
+        if ($this->_sSystem == 'sys_cmts'){
+            $aCommentData = BxDolCmtsQuery::getCommentByUniq($iObjectId);
+            $oComment = BxDolCmts::getObjectInstance($aCommentData['system_name'], $aCommentData['cmt_object_id']);
+            $aComment = $oComment->getCommentSimple($aCommentData['cmt_id']);
+            $aSystem = $oComment->getSystemInfo();
+            
+            $sModule = $aSystem['module'];
+            $aData['comment_id'] = $aCommentData['cmt_id'];
+            $aData['comment_author_id'] = $aComment['cmt_author_id'];
+            $aData['comment_text'] = $aComment['cmt_text'];
+            $iObjectId = $aCommentData['cmt_object_id'];
+            
+            $sKeyObjectContentInfo = 'OBJECT_CMTS_CONTENT_INFO';
+            $sActionName = '_sys_audit_action_report_comment';
+        }
+        
+        $oModule = BxDolModule::getInstance($sModule);
         if ($oModule){
             $CNF = $oModule->_oConfig->CNF;
 
@@ -360,11 +384,15 @@ class BxBaseReport extends BxDolReport
         
             $AuditParams = array(
                 'content_title' => isset($CNF['FIELD_TITLE'])  ? $aContentInfo[$CNF['FIELD_TITLE']] : '',
-                'content_info_object' =>  isset($CNF['OBJECT_CONTENT_INFO']) ? $CNF['OBJECT_CONTENT_INFO'] : '',
-                'data' => $aData 
+                'content_info_object' =>  isset($CNF[$sKeyObjectContentInfo]) ? $CNF[$sKeyObjectContentInfo] : '',
+                'data' => $aData,
+                'action_name' => $sActionName, 
+                'object_id' => $iObjectId 
             );
+            
             return $AuditParams;
         }
+        
         return false;
     }
 }
