@@ -154,9 +154,11 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_notifications_settings_common', 'title', '_bx_ntfs_grid_column_title_title', '89%', 1, '', '', 10);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
-('bx_notifications_settings_administration', 'bulk', 'deactivate', '_bx_ntfs_grid_action_title_deactivate', '', 1, 0),
+('bx_notifications_settings_administration', 'bulk', 'activate', '_bx_ntfs_grid_action_title_activate', '', 1, 1),
+('bx_notifications_settings_administration', 'bulk', 'deactivate', '_bx_ntfs_grid_action_title_deactivate', '', 1, 2),
 
-('bx_notifications_settings_common', 'bulk', 'deactivate', '_bx_ntfs_grid_action_title_deactivate', '', 1, 0);
+('bx_notifications_settings_common', 'bulk', 'activate', '_bx_ntfs_grid_action_title_activate', '', 1, 1),
+('bx_notifications_settings_common', 'bulk', 'deactivate', '_bx_ntfs_grid_action_title_deactivate', '', 1, 2);
 
 
 -- CRON

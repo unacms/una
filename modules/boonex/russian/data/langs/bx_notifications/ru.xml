@@ -123,5 +123,6 @@
     <string name="_bx_ntfs_grid_column_title_title"><![CDATA[Оповещение]]></string>
     <string name="_bx_ntfs_grid_column_title_title_warning"><![CDATA[Значение данной настройки не корректно. Рекомендуется вкл\выкл настройку и обновить страницу.]]></string>
     <string name="_bx_ntfs_grid_column_title_value"><![CDATA[Значение по умолчанию]]></string>
+    <string name="_bx_ntfs_grid_action_title_activate"><![CDATA[Включить]]></string>
     <string name="_bx_ntfs_grid_action_title_deactivate"><![CDATA[Отключить]]></string>
 </resources>

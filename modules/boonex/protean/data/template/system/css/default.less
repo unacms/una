@@ -165,26 +165,26 @@ a:hover > .sys-icon-a i {
     border-bottom-color: @bx-color-border-header;
 }
 .bx-header a {
-	color: @bx-color-link-header; 
+    color: @bx-color-link-header; 
 }
 .bx-header a:hover {
-	color: @bx-color-link-header-hover;
+    color: @bx-color-link-header-hover;
 }
-.bx-header .sys-icon,
-.bx-header .sys-icon-a {
-	color: @bx-color-icon-header; 
+.bx-header .sys-icon:not(.sys-colored),
+.bx-header .sys-icon-a:not(.sys-colored) {
+    color: @bx-color-icon-header; 
 }
 .bx-header a:hover .sys-icon,
 .bx-header a:hover .sys-icon-a {
-	color: @bx-color-icon-header-hover; 
+    color: @bx-color-icon-header-hover; 
 } 
-.bx-header .sys-icon-a i {
-	.background-color (@bx-color-icon-header) !important;
-	color: @bx-color-icon-header;
+.bx-header .sys-icon-a:not(.sys-colored) i {
+    .background-color (@bx-color-icon-header) !important;
+    color: @bx-color-icon-header;
 }
 .bx-header a:hover .sys-icon-a i {
-	.background-color (@bx-color-icon-header-hover) !important;
-	color: @bx-color-icon-header-hover;
+    .background-color (@bx-color-icon-header-hover) !important;
+    color: @bx-color-icon-header-hover;
 }
 
 /* footer */

@@ -50,9 +50,6 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
 
     public function init()
     {
-        if($this->_bGrouped && isset($this->_aOptions['fields']['checkbox']))
-            unset($this->_aOptions['fields']['checkbox']);
-
         if(!$this->_bGrouped && !isset($this->_aOptions['fields']['unit'], $this->_aOptions['fields']['type']))
             $this->_aOptions['fields'] = bx_array_insert_after(array(
                 'unit' => array('title' => _t('_bx_ntfs_grid_column_title_unit'), 'width' => '10%', 'translatable' => 0 ,'chars_limit' => 0),
@@ -76,9 +73,14 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
         $this->_aQueryAppend['delivery_type'] = $this->_sDeliveryType;
     }
 
+    public function performActionActivate()
+    {
+        parent::performActionEnable(1);
+    }
+
     public function performActionDeactivate()
     {
-        parent::performActionEnable();
+        parent::performActionEnable(0);
     }
     
     public function performActionChangeValue()
@@ -110,6 +112,11 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
             return parent::_enable($mixedId, $isChecked);
 
         return $this->_oModule->enableSettingsLike($mixedId, $isChecked, $this->_bAdministration);
+    }
+
+    protected function _isCheckboxDisabled($aRow)
+    {
+        return false;
     }
 
     protected function _getFilterControls()
@@ -179,17 +186,11 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
 
     protected function _getActionActivate($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-    	if($this->_bGrouped)
-            return '';
-
     	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 
     protected function _getActionDeactivate($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-    	if($this->_bGrouped)
-            return '';
-
     	return $this->_getActionDefault ($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
     }
 

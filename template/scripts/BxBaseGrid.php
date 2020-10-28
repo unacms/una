@@ -78,7 +78,7 @@ class BxBaseGrid extends BxDolGrid
         ));
     }
 
-    public function performActionEnable()
+    public function performActionEnable($mixedChecked = null)
     {
         $this->_replaceMarkers ();
 
@@ -88,12 +88,14 @@ class BxBaseGrid extends BxDolGrid
             exit;
         }
 
+        $iChecked = (int)($mixedChecked !== null ? $mixedChecked : bx_get('checked'));
+        
         $aAffectedIds = array ();
         foreach ($aIds as $mixedId)
-            if ($this->_enable($mixedId, (int)bx_get('checked')))
+            if ($this->_enable($mixedId, $iChecked))
                 $aAffectedIds[] = $mixedId;
 
-        $sAction = (int)bx_get('checked') ? 'enable' : 'disable';
+        $sAction = $iChecked ? 'enable' : 'disable';
         echo echoJson(array($sAction => $aAffectedIds));
     }
 
