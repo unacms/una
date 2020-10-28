@@ -185,7 +185,11 @@ class BxForumModule extends BxBaseModTextModule
     	if($sUnitView != 'table')   
         	return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
-        return $this->_serviceBrowseTable(array('type' => $sType), $bShowHeader);
+        return $this->_serviceBrowseTable(array(
+            'type' => $sType,
+            'empty_message' => $bEmptyMessage,
+            'ajax_paginate' => $bAjaxPaginate
+        ), $bShowHeader);
     }
 
     /**
@@ -216,7 +220,11 @@ class BxForumModule extends BxBaseModTextModule
         if($sUnitView != 'table')
             return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
-        return $this->_serviceBrowseTable(array('type' => $sType), $bShowHeader);
+        return $this->_serviceBrowseTable(array(
+            'type' => $sType,
+            'empty_message' => $bEmptyMessage, 
+            'ajax_paginate' => $bAjaxPaginate
+        ), $bShowHeader);
     }
 
     /**
@@ -253,7 +261,8 @@ class BxForumModule extends BxBaseModTextModule
             'grid' => $CNF['OBJECT_GRID_FEATURE'],
             'type' => $sType, 
             'where' => array('fld' => 'featured', 'val' => 0, 'opr' => '<>'),
-            'empty_message' => $bEmptyMessage
+            'empty_message' => $bEmptyMessage,
+            'ajax_paginate' => $bAjaxPaginate
         ), $bShowHeader);
     }
 
@@ -284,7 +293,11 @@ class BxForumModule extends BxBaseModTextModule
         if($sUnitView != 'table')
             return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
-        return $this->_serviceBrowseTable(array('type' => $sType), $bShowHeader);
+        return $this->_serviceBrowseTable(array(
+            'type' => $sType,
+            'empty_message' => $bEmptyMessage,
+            'ajax_paginate' => $bAjaxPaginate
+        ), $bShowHeader);
     }
 
     /**
@@ -314,7 +327,11 @@ class BxForumModule extends BxBaseModTextModule
         if($sUnitView != 'table')
             return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
-        return $this->_serviceBrowseTable(array('type' => $sType), $bShowHeader);
+        return $this->_serviceBrowseTable(array(
+            'type' => $sType,
+            'empty_message' => $bEmptyMessage,
+            'ajax_paginate' => $bAjaxPaginate
+        ), $bShowHeader);
     }
 
     /**
@@ -344,7 +361,11 @@ class BxForumModule extends BxBaseModTextModule
         if($sUnitView != 'table')
             return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
-        return $this->_serviceBrowseTable(array('type' => $sType), $bShowHeader);
+        return $this->_serviceBrowseTable(array(
+            'type' => $sType,
+            'empty_message' => $bEmptyMessage,
+            'ajax_paginate' => $bAjaxPaginate
+        ), $bShowHeader);
     }
 
         /**
@@ -406,7 +427,8 @@ class BxForumModule extends BxBaseModTextModule
             'join' => $aJoin,
             'where' => $aWhere,
             'group_by' => $aGroupBy,
-            'empty_message' => $bEmptyMessage
+            'empty_message' => $bEmptyMessage,
+            'ajax_paginate' => $bAjaxPaginate
         ), $bShowHeader);
     }
 
@@ -441,7 +463,8 @@ class BxForumModule extends BxBaseModTextModule
         return $this->_serviceBrowseTable(array(
             'type' => $sType,
             'per_page' => (int)$this->_oDb->getParam('bx_forum_per_page_index'),
-            'empty_message' => $bEmptyMessage
+            'empty_message' => $bEmptyMessage,
+            'ajax_paginate' => $bAjaxPaginate
         ), $bShowHeader);
     }
 
@@ -478,12 +501,19 @@ class BxForumModule extends BxBaseModTextModule
             unset($aParams['empty_message']);
         }
 
+        $bAjaxPaginate = true;
+        if(isset($aParams['ajax_paginate'])) {
+            $bAjaxPaginate = (bool)$aParams['ajax_paginate'];
+            unset($aParams['ajax_paginate']);
+        }
+
         return $this->_serviceBrowseTable(array(
         	'type' => 'author', 
         	'author' => $iProfileId, 
         	'where' => array('fld' => 'author', 'val' => $iProfileId, 'opr' => '='), 
         	'per_page' => (int)$this->_oDb->getParam('bx_forum_per_page_profile'),
-        	'empty_message' => $bEmptyMessage
+        	'empty_message' => $bEmptyMessage,
+                'ajax_paginate' => $bAjaxPaginate
         ), false);
     }
 
@@ -531,6 +561,12 @@ class BxForumModule extends BxBaseModTextModule
             unset($aParams['empty_message']);
         }
 
+        $bAjaxPaginate = true;
+        if(isset($aParams['ajax_paginate'])) {
+            $bAjaxPaginate = (bool)$aParams['ajax_paginate'];
+            unset($aParams['ajax_paginate']);
+        }
+
         $aConditions = $oFavorite->getConditionsTrack($CNF['TABLE_ENTRIES'], 'id', $iProfileAuthor);
         if(empty($aConditions) || !is_array($aConditions)) 
             return '';
@@ -543,27 +579,28 @@ class BxForumModule extends BxBaseModTextModule
                     'tbl1' => $aCondition['table'],
                     'fld1' => $aCondition['onField'],
                     'tbl2' => $aCondition['mainTable'],
-                	'fld2' => $aCondition['mainField']
+                    'fld2' => $aCondition['mainField']
                 );
 
         $aWhereGroup = array('grp' => true, 'opr' => 'AND', 'cnds' => array());
         if(!empty($aConditions['restriction']))
             foreach($aConditions['restriction'] as $aCondition)
                 $aWhereGroup['cnds'][] = array(
-                	'tbl' => (!empty($aCondition['table']) ? $aCondition['table'] : ''), 
-                	'fld' => $aCondition['field'], 
-                	'val' => $aCondition['value'], 
-                	'opr' => $aCondition['operator']
+                    'tbl' => (!empty($aCondition['table']) ? $aCondition['table'] : ''), 
+                    'fld' => $aCondition['field'], 
+                    'val' => $aCondition['value'], 
+                    'opr' => $aCondition['operator']
                 );
 
         return $this->_serviceBrowseTable(array(
-			'grid' => $CNF['OBJECT_GRID_FAVORITE'],
-        	'type' => 'favorite', 
-        	'author' => $iProfileId, 
+            'grid' => $CNF['OBJECT_GRID_FAVORITE'],
+            'type' => 'favorite', 
+            'author' => $iProfileId, 
             'join' => $aJoinGroup,
-        	'where' => $aWhereGroup, 
-        	'per_page' => (int)$this->_oDb->getParam('bx_forum_per_page_profile'),
-        	'empty_message' => $bEmptyMessage
+            'where' => $aWhereGroup, 
+            'per_page' => (int)$this->_oDb->getParam('bx_forum_per_page_profile'),
+            'empty_message' => $bEmptyMessage,
+            'ajax_paginate' => $bAjaxPaginate
         ), false);
     }
 
@@ -599,7 +636,12 @@ class BxForumModule extends BxBaseModTextModule
         if($sUnitView != 'table')   
             return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
-        return $this->_serviceBrowseTable(array('type' => $sType, 'where' => array('fld' => 'cat', 'val' => $iCategory, 'opr' => '=')), $bShowHeader);
+        return $this->_serviceBrowseTable(array(
+            'type' => $sType, 
+            'where' => array('fld' => 'cat', 'val' => $iCategory, 'opr' => '='),
+            'empty_message' => $bEmptyMessage,
+            'ajax_paginate' => $bAjaxPaginate
+        ), $bShowHeader);
     }
 
     /**
@@ -630,7 +672,12 @@ class BxForumModule extends BxBaseModTextModule
         if($sUnitView != 'table')   
             return $this->_serviceBrowse($sType, $sUnitView ? array('unit_view' => $sUnitView) : false, BX_DB_PADDING_DEF, $bEmptyMessage, $bAjaxPaginate);
 
-        return $this->_serviceBrowseTable(array('type' => $sType, 'where' => $this->_getSearchKeywordDescriptor('#' . $sKeyword)), $bShowHeader);
+        return $this->_serviceBrowseTable(array(
+            'type' => $sType, 
+            'where' => $this->_getSearchKeywordDescriptor('#' . $sKeyword),
+            'empty_message' => $bEmptyMessage,
+            'ajax_paginate' => $bAjaxPaginate
+        ), $bShowHeader);
     }
 
     /**
@@ -678,7 +725,12 @@ class BxForumModule extends BxBaseModTextModule
         if(!empty($sKeyword))
             $aWhereGroupAnd['cnds'][] = $this->_getSearchKeywordDescriptor($sKeyword);
 
-        return $this->_serviceBrowseTable(array('type' => $sType, 'where' => $aWhereGroupAnd), false);
+        return $this->_serviceBrowseTable(array(
+            'type' => $sType, 
+            'where' => $aWhereGroupAnd,
+            'empty_message' => $bEmptyMessage,
+            'ajax_paginate' => $bAjaxPaginate
+        ), false);
     }
 
     /**

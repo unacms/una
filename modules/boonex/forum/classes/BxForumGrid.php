@@ -28,6 +28,17 @@ class BxForumGrid extends BxTemplGrid
 
     public function setBrowseParams($aParams)
     {
+        if(isset($aParams['ajax_paginate'])) {
+            if(!$aParams['ajax_paginate']) {
+                list($sPageLink, $aPageParams) = bx_get_base_url_inline();
+
+                $aPageParams[$this->_aOptions['paginate_get_start']] = '{start}';
+                $this->_aOptions['paginate_url'] = BxDolPermalinks::getInstance()->permalink(bx_append_url_params($sPageLink, $aPageParams));
+            }
+
+            unset($aParams['ajax_paginate']);
+        }
+
         parent::setBrowseParams($aParams);
 
     	$sField = 'added';
