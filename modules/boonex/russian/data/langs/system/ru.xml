@@ -1830,6 +1830,7 @@
   <string name="_sys_audit_action_set_status_disapprove"><![CDATA[Статус: не одобрено]]></string>
   <string name="_sys_audit_action_set_status_suspended"><![CDATA[Статус: приостановлено]]></string>
   <string name="_sys_audit_action_report"><![CDATA[Новая жалоба]]></string>
+  <string name="_sys_audit_action_report_comment"><![CDATA[Новая жалоба на комментарий]]></string>
   <string name="_sys_audit_action_lock"><![CDATA[Заблокировно]]></string>
   <string name="_sys_audit_action_unlock"><![CDATA[Разблокировано]]></string>
   <string name="_sys_audit_action_stick"><![CDATA[Приклеено]]></string>

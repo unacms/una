@@ -1846,6 +1846,7 @@
   <string name="_sys_audit_action_set_status_disapprove"><![CDATA[Disapproved]]></string>
   <string name="_sys_audit_action_set_status_suspended"><![CDATA[Suspended]]></string>
   <string name="_sys_audit_action_report"><![CDATA[Reported]]></string>
+  <string name="_sys_audit_action_report_comment"><![CDATA[Comment Reported]]></string>
   <string name="_sys_audit_action_lock"><![CDATA[Locked]]></string>
   <string name="_sys_audit_action_unlock"><![CDATA[Unlocked]]></string>
   <string name="_sys_audit_action_stick"><![CDATA[Sticked]]></string>

@@ -383,6 +383,24 @@ class BxDolCmtsQuery extends BxDolDb
             LIMIT 1", $this->_oMain->getSystemId(), $iId, $iCmtId);
         return $this->getRow($sQuery);
     }
+    
+    static function getCommentByUniq ($iUnicId)
+    {
+        $oDb = BxDolDb::getInstance();
+        $sQuery = $oDb->prepare("SELECT `table_ids`.`cmt_id`, table_obj.`Name` AS `system_name`, table_obj.`Table` AS `table_name` 
+            FROM `" . BxDolCmts::$sTableIds . "` as `table_ids`  
+            INNER JOIN  `" . BxDolCmts::$sTableSystems . "` as `table_obj` ON  `table_ids`.`system_id` = `table_obj`.`ID`
+            WHERE `table_ids`.`id` = ?
+            LIMIT 1", $iUnicId);
+        $aRow = $oDb->getRow($sQuery);
+        
+        if ($aRow){
+            $sQuery = $oDb->prepare("SELECT `cmt_object_id` FROM `" . $aRow['table_name'] . "` WHERE `cmt_id` = ? LIMIT 1", $aRow['cmt_id']);
+            $aRow['cmt_object_id'] = $oDb->getOne($sQuery);
+        }
+        
+        return $aRow;
+    }
 
     function getCommentSimple ($iId, $iCmtId)
     {
