@@ -53,6 +53,14 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         if(empty($sTemplate))
             $sTemplate = $this->_sUnitDefault;
 
+        $oModule = $this->getModule();
+        if ($oModule->serviceCheckAllowedViewForProfile($aData) !== 0){
+            $sTemplatePrivate = str_replace('.html', '_private.html' , $sTemplate);
+            if($this->parseHtmlByName($sTemplatePrivate, array())){
+                $sTemplate = $sTemplatePrivate;
+            }
+        }
+        
         $aVars = $this->unitVars($aData, $isCheckPrivateContent, $mixedTemplate);
  
         return $this->parseHtmlByName($sTemplate, $aVars);
