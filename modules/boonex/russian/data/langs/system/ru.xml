@@ -1853,7 +1853,6 @@
 	<string name="_sys_audit_header_site_setup"><![CDATA[Настройка сайта]]></string>
 	<string name="_sys_audit_mail_sending"><![CDATA[Посылка почты]]></string>
 	<string name="_sys_audit_msg_apache_module_fail"><![CDATA[Вам нужно установить {0} для Apache]]></string>
-	<string name="_sys_audit_msg_apache_module_undef"><![CDATA[проверьте вручную: apachectl -M 2>&1 | grep {0}]]></string>
 	<string name="_sys_audit_msg_cron_jobs"><![CDATA[<pre class="code">{0}</pre> если Вы не уверены, корректен ли вывод, может понадобиться <a href="#manual_audit">ручной аудит сервера</a>]]></string>
 	<string name="_sys_audit_msg_optimization_fail"><![CDATA[пожалуйста, задействуйте этот кэш в Студии &gt; Настройки &gt; Кэш]]></string>
 	<string name="_sys_audit_msg_optimization_warn"><![CDATA[установка PHP-акселератора ускорит кэширование файлов]]></string>

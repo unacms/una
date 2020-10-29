@@ -1869,7 +1869,6 @@
 	<string name="_sys_audit_header_site_setup"><![CDATA[Site setup]]></string>
 	<string name="_sys_audit_mail_sending"><![CDATA[Mail sending]]></string>
 	<string name="_sys_audit_msg_apache_module_fail"><![CDATA[you will need to install {0} for Apache]]></string>
-	<string name="_sys_audit_msg_apache_module_undef"><![CDATA[try to check manually: apachectl -M 2>&1 | grep {0}]]></string>
 	<string name="_sys_audit_msg_cron_jobs"><![CDATA[<pre class="code">{0}</pre> if you are unsure if output is correct then <a href="#manual_audit">manual server audit</a> may be required]]></string>
 	<string name="_sys_audit_msg_optimization_fail"><![CDATA[please enable this cache in Studio &gt; Settings &gt; Cache]]></string>
 	<string name="_sys_audit_msg_optimization_warn"><![CDATA[installing PHP accelerator will speed-up file cache]]></string>

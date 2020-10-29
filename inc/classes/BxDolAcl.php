@@ -75,6 +75,8 @@ define('MEMBERSHIP_PERIOD_UNIT_YEAR', 'year');
 
 class BxDolAcl extends BxDolFactory implements iBxDolSingleton
 {
+    protected static $_aCacheData = array();
+
     protected $oDb;
 
     protected $_aStandardMemberships = array(
@@ -682,62 +684,69 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
         return $this->oDb->maintenance();
     }
 
-    protected function getMemberMembershipInfoCurrent($iProfileId, $iTime = 0)
+    protected function getMemberMembershipInfoCurrent($iProfileId, $iTime = 0, $bClearCache = 0)
     {
+        $sKey = $iProfileId . '_' . $iTime;
+        if ($bClearCache && isset(self::$_aCacheData[$sName]))
+            unset(self::$_aCacheData[$sKey]);
+        elseif (array_key_exists($sKey, self::$_aCacheData) && !defined('BX_DOL_INSTALL') && !defined('BX_DOL_CRON_EXECUTE'))
+			return self::$_aCacheData[$sKey];
+
         $aMemLevel = false;
 
-        // get profile status
-        $oProfile = BxDolProfile::getInstance($iProfileId);
-        $aProfileInfo = $oProfile ? $oProfile->getInfo() : false;
-        $sProfileStatus = $aProfileInfo ? $aProfileInfo['status'] : false;
-        $sProfileType = $aProfileInfo ? $aProfileInfo['type'] : false;
+        do {
+            // get profile status
+            $oProfile = BxDolProfile::getInstance($iProfileId);
+            $aProfileInfo = $oProfile ? $oProfile->getInfo() : false;
+            $sProfileStatus = $aProfileInfo ? $aProfileInfo['status'] : false;
+            $sProfileType = $aProfileInfo ? $aProfileInfo['type'] : false;
 
-        // account profile
-	    if($sProfileType == 'system') {
-        	$aMemLevel = $this->oDb->getLevelByIdCached(MEMBERSHIP_ID_ACCOUNT);
-        	if (!$aMemLevel)
-                trigger_error ('Standard member level is missing: MEMBERSHIP_ID_ACCOUNT', E_USER_ERROR);
+            // account profile
+            if($sProfileType == 'system') {
+                $aMemLevel = $this->oDb->getLevelByIdCached(MEMBERSHIP_ID_ACCOUNT);
+                if (!$aMemLevel)
+                    trigger_error ('Standard member level is missing: MEMBERSHIP_ID_ACCOUNT', E_USER_ERROR);
+                break;
+            }
 
-        	return $aMemLevel;
-        }
+            // check if account is unconfirmed, every account's profile is unconfirmed if account is unconfirmed
+            $oAccount = $aProfileInfo ? BxDolAccount::getInstance($aProfileInfo['account_id']) : false;
+            if ($oAccount && !$oAccount->isConfirmed()) {
+                $aMemLevel = $this->oDb->getLevelByIdCached(MEMBERSHIP_ID_UNCONFIRMED);
+                if (!$aMemLevel)
+                    trigger_error ('Standard member level is missing: MEMBERSHIP_ID_UNCONFIRMED', E_USER_ERROR);
+                break;
+            }
+            
+            // profile is not active, so return standard memberships according to profile status        
+            if (false === $sProfileStatus || BX_PROFILE_STATUS_ACTIVE != $sProfileStatus) {                
+                if (!isset($this->_aProfileStatus2LevelMap[$sProfileStatus]))
+                    $iLevelId = MEMBERSHIP_ID_NON_MEMBER; // if there is no profile status - then it isn't member
+                else
+                    $iLevelId = $this->_aProfileStatus2LevelMap[$sProfileStatus]; // get member level id which associated with every non-active status
 
-        // check if account is unconfirmed, every account's profile is unconfirmed if account is unconfirmed
-        $oAccount = $aProfileInfo ? BxDolAccount::getInstance($aProfileInfo['account_id']) : false;
-        if ($oAccount && !$oAccount->isConfirmed()) {
-            $aMemLevel = $this->oDb->getLevelByIdCached(MEMBERSHIP_ID_UNCONFIRMED);
-            if (!$aMemLevel)
-                trigger_error ('Standard member level is missing: MEMBERSHIP_ID_UNCONFIRMED', E_USER_ERROR);
+                $aMemLevel = $this->oDb->getLevelByIdCached($iLevelId);
 
-            return $aMemLevel;
-        }
-        
-        // profile is not active, so return standard memberships according to profile status        
-        if (false === $sProfileStatus || BX_PROFILE_STATUS_ACTIVE != $sProfileStatus) {                
-            if (!isset($this->_aProfileStatus2LevelMap[$sProfileStatus]))
-                $iLevelId = MEMBERSHIP_ID_NON_MEMBER; // if there is no profile status - then it isn't member
-            else
-                $iLevelId = $this->_aProfileStatus2LevelMap[$sProfileStatus]; // get member level id which associated with every non-active status
+                if (!$aMemLevel)
+                    trigger_error ('Standard member level is missing: ' . $iLevelId, E_USER_ERROR);
+                break;
+            }
 
-            $aMemLevel = $this->oDb->getLevelByIdCached($iLevelId);
+            // profile is active get memebr level from profile
+            $aMemLevel = $this->oDb->getLevelCurrent((int)$iProfileId, $iTime);
 
-            if (!$aMemLevel)
-                trigger_error ('Standard member level is missing: ' . $iLevelId, E_USER_ERROR);
+            // There are no purchased/assigned memberships for the profile or all of them have expired.
+            // In this case the profile is assumed to have Standard membership.
+            if (!$aMemLevel || is_null($aMemLevel['id'])) {
+                $aMemLevel = $this->oDb->getLevelByIdCached(MEMBERSHIP_ID_STANDARD);
+                if (!$aMemLevel)
+                    trigger_error ('Standard member level is missing: ' . MEMBERSHIP_ID_NON_MEMBER, E_USER_ERROR);
+                break;
+            }
+        } 
+        while (0);
 
-            return $aMemLevel;
-        }
-
-        // profile is active get memebr level from profile
-        $aMemLevel = $this->oDb->getLevelCurrent((int)$iProfileId, $iTime);
-
-        // There are no purchased/assigned memberships for the profile or all of them have expired.
-        // In this case the profile is assumed to have Standard membership.
-        if (!$aMemLevel || is_null($aMemLevel['id'])) {
-            $aMemLevel = $this->oDb->getLevelByIdCached(MEMBERSHIP_ID_STANDARD);
-            if (!$aMemLevel)
-                trigger_error ('Standard member level is missing: ' . MEMBERSHIP_ID_NON_MEMBER, E_USER_ERROR);
-        }
-
-        return $aMemLevel;
+        return (self::$_aCacheData[$sKey] = $aMemLevel);
     }
 
     protected function getMemberMembershipInfoLatest($iProfileId, $iTime = 0)
