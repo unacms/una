@@ -135,7 +135,8 @@
 	<string name="_bx_glossary_page_block_title_popular_keywords"><![CDATA[Популярные хэштеги]]></string>
     <string name="_bx_glossary_page_block_title_cats"><![CDATA[Категории терминов]]></string>
     <string name="_bx_glossary_page_block_title_entry_info"><![CDATA[Инфо]]></string>
-    <string name="_bx_glossary_page_block_title_my_entries"><![CDATA[Мои Глоссарий]]></string>
+    <string name="_bx_glossary_page_block_title_sys_my_entries"><![CDATA[Глоссарий пользователя]]></string>
+    <string name="_bx_glossary_page_block_title_my_entries"><![CDATA[{display_name} - Глоссарий]]></string>
     <string name="_bx_glossary_page_block_title_sys_recent_entries_view_showcase"><![CDATA[[Последние Глоссарий (Витринный просмотр)]]></string>
     <string name="_bx_glossary_page_block_title_recent_entries_view_showcase"><![CDATA[Последние Глоссарий]]></string>
     <string name="_bx_glossary_page_block_title_sys_popular_entries_view_showcase"><![CDATA[[Популярные Глоссарий (Витринный просмотр)]]></string>

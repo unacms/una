@@ -137,7 +137,8 @@
 	<string name="_bx_glossary_page_block_title_popular_keywords"><![CDATA[Popular Hashtags]]></string>
 	<string name="_bx_glossary_page_block_title_cats"><![CDATA[Terms Categories]]></string>
 	<string name="_bx_glossary_page_block_title_entry_info"><![CDATA[Info]]></string>
-	<string name="_bx_glossary_page_block_title_my_entries"><![CDATA[My Terms]]></string>
+    <string name="_bx_glossary_page_block_title_sys_my_entries"><![CDATA[User Terms]]></string>
+    <string name="_bx_glossary_page_block_title_my_entries"><![CDATA[{display_name} Terms]]></string>
     <string name="_bx_glossary_page_block_title_sys_recent_entries_view_showcase"><![CDATA[Latest Terms (Showcase View)]]></string>
     <string name="_bx_glossary_page_block_title_recent_entries_view_showcase"><![CDATA[Latest Terms]]></string>
     <string name="_bx_glossary_page_block_title_sys_popular_entries_view_showcase"><![CDATA[Popular Terms (Showcase View)]]></string>

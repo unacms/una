@@ -222,7 +222,8 @@
     <string name="_bx_market_page_block_title_licenses"><![CDATA[Лицензии]]></string>
     <string name="_bx_market_page_block_title_licenses_note"><![CDATA[Внимание]]></string>
     <string name="_bx_market_page_block_content_licenses_note"><![CDATA[Лицензии приведены только для справки. Нет необходимочти "регистрировыть" их, так как Вы просто можете скачать и установить лицензионные UNA приложения напрямую в Магазине приложений в Студии вашего сайта.]]></string>
-    <string name="_bx_market_page_block_title_view_profile"><![CDATA[Мои продукты]]></string>
+    <string name="_bx_market_page_block_title_sys_view_profile"><![CDATA[Продукты пользователя]]></string>
+    <string name="_bx_market_page_block_title_view_profile"><![CDATA[{display_name} - Продукты]]></string>
     <string name="_bx_market_page_title_sys_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_market_page_title_entries_search"><![CDATA[Поиск]]></string>
     <string name="_bx_market_page_title_sys_entries_favorites"><![CDATA[Избранные продукты]]></string>

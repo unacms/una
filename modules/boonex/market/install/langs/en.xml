@@ -230,7 +230,8 @@
     <string name="_bx_market_page_block_title_licenses"><![CDATA[Licenses]]></string>
     <string name="_bx_market_page_block_title_licenses_note"><![CDATA[Note]]></string>
     <string name="_bx_market_page_block_content_licenses_note"><![CDATA[The licenses are for reference only. There is no need to "register" them, as you can simply download and install licensed UNA apps directly from your site Studio Apps store.]]></string>
-    <string name="_bx_market_page_block_title_view_profile"><![CDATA[My Products]]></string>
+    <string name="_bx_market_page_block_title_sys_view_profile"><![CDATA[User Products]]></string>
+    <string name="_bx_market_page_block_title_view_profile"><![CDATA[{display_name} Products]]></string>
     <string name="_bx_market_page_title_sys_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_market_page_title_entries_search"><![CDATA[Search]]></string>
     <string name="_bx_market_page_title_sys_entries_favorites"><![CDATA[Favorives Products]]></string>

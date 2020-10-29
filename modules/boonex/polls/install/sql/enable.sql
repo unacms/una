@@ -169,8 +169,8 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 
 -- PAGES: add page block to profiles modules (trigger* page objects are processed separately upon modules enable/disable)
 SET @iPBCellProfile = 3;
-INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
-('trigger_page_profile_view_entry', @iPBCellProfile, 'bx_polls', '_bx_polls_page_block_title_my_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_polls";s:6:"method";s:13:"browse_author";s:6:"params";a:2:{i:0;s:12:"{profile_id}";i:1;a:1:{s:13:"empty_message";b:0;}}}}', 0, 0, 0);
+INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
+('trigger_page_profile_view_entry', @iPBCellProfile, 'bx_polls', '_bx_polls_page_block_title_sys_my_entries', '_bx_polls_page_block_title_my_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_polls";s:6:"method";s:13:"browse_author";s:6:"params";a:2:{i:0;s:12:"{profile_id}";i:1;a:1:{s:13:"empty_message";b:0;}}}}', 0, 0, 0);
 
 
 -- PAGE: service blocks

@@ -174,7 +174,8 @@
     <string name="_bx_posts_page_block_title_sys_multicats"><![CDATA[Posts Categories(Multi)]]></string>
     <string name="_bx_posts_page_block_title_multicats"><![CDATA[Posts Categories]]></string>
     <string name="_bx_posts_page_block_title_entry_info"><![CDATA[Info]]></string>
-    <string name="_bx_posts_page_block_title_my_entries"><![CDATA[My Posts]]></string>
+    <string name="_bx_posts_page_block_title_sys_my_entries"><![CDATA[User Posts]]></string>
+    <string name="_bx_posts_page_block_title_my_entries"><![CDATA[{display_name} Posts]]></string>
     <string name="_bx_posts_page_block_title_sys_recent_entries_view_showcase"><![CDATA[Latest Posts (Showcase View)]]></string>
     <string name="_bx_posts_page_block_title_recent_entries_view_showcase"><![CDATA[Latest Posts]]></string>
     <string name="_bx_posts_page_block_title_sys_popular_entries_view_showcase"><![CDATA[Popular Posts (Showcase View)]]></string>
