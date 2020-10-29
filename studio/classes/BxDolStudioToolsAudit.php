@@ -516,6 +516,8 @@ class BxDolStudioToolsAudit extends BxDol
 
     protected function format_output ($mixedVal, $a)
     {
+        if (isset($a['type']) && 'bytes' == $a['type'])
+            return _t_format_size($mixedVal);
         if (isset($a['type']) && 'bool' == $a['type'])
             return $mixedVal ? 'On' : 'Off';
         else
@@ -559,7 +561,7 @@ class BxDolStudioToolsAudit extends BxDol
             if (!$sApachectlPath)
                 $sApachectlPath = trim(`which /usr/local/apache/bin/apache2ctl`);
             if (!$sApachectlPath) {
-                return array('type' => BX_DOL_AUDIT_UNDEF, 'msg' => _t('_sys_audit_msg_apache_module_undef', $sModule));
+                return array('type' => BX_DOL_AUDIT_UNDEF);
             }
             $ret = (boolean)`$sApachectlPath -M 2>&1 | grep $sModule`;
             if (!$ret)
