@@ -235,6 +235,7 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
                     `sys_acl_levels`.`QuotaMaxFileSize` AS `quota_max_file_size`,
                     UNIX_TIMESTAMP(`sys_acl_levels_members`.`DateStarts`) as `date_starts`,
                     UNIX_TIMESTAMP(`sys_acl_levels_members`.`DateExpires`) as `date_expires`,
+                    `sys_acl_levels_members`.`State` AS `state`,
                     `sys_acl_levels_members`.`TransactionID` AS `transaction_id`,
                     `sys_profiles`.`status`
             FROM `sys_acl_levels_members`
@@ -354,6 +355,12 @@ class BxDolAclQuery extends BxDolDb implements iBxDolSingleton
 
             if(!empty($sSetClause))
                 $sSetClause = ", `DateExpires`=" . $sSetClause;
+
+            if(isset($aPeriod['period_trial']) && $aPeriod['period_trial'] === true) {
+                $aBindings['state'] = 'trial';
+
+                $sSetClause .= ", `State`=:state";
+            }
     	}
 
         $sQuery = $this->prepare("INSERT `sys_acl_levels_members` SET `IDMember`=:member_id, `IDLevel`=:level_id, `DateStarts`=FROM_UNIXTIME(:date_starts), `TransactionID`=:transaction_id" . $sSetClause);

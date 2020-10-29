@@ -1059,6 +1059,7 @@ CREATE TABLE `sys_acl_levels_members` (
   `IDLevel` int(10) unsigned NOT NULL DEFAULT '0',
   `DateStarts` datetime NOT NULL default '0000-00-00 00:00:00',
   `DateExpires` datetime default NULL,
+  `State` varchar(16) NOT NULL default '',
   `TransactionID` varchar(16) NOT NULL default '',
   PRIMARY KEY  (`IDMember`,`IDLevel`,`DateStarts`)
 );

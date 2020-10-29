@@ -1762,21 +1762,21 @@
 	<string name="_sys_acl_action_not_allowed"><![CDATA[Ваше текущее членство ({2}) не позволяет '{1}'.]]></string>
 	<string name="_sys_acl_action_not_allowed_after"><![CDATA[Ваше текущее членство ({2}) более не позволяет '{1}' {5}.]]></string>
 	<string name="_sys_acl_action_not_allowed_before"><![CDATA[Ваше текущее членство ({2}) позволит '{1}' {6}.]]></string>
-    <string name="_sys_acl_action_pending"><![CDATA[В данный момент вы неактивный пользователь. Пожалуйста, попросите <a href="mailto:{7}">администратора сайта</a> активировать Вас, чтобы Вы могли <b>{1}</b>.]]></string>
+        <string name="_sys_acl_action_pending"><![CDATA[В данный момент вы неактивный пользователь. Пожалуйста, попросите <a href="mailto:{7}">администратора сайта</a> активировать Вас, чтобы Вы могли <b>{1}</b>.]]></string>
 	<string name="_sys_acl_action_post_links"><![CDATA[Публикация ссылок]]></string>
-    <string name="_sys_acl_action_post_links_desc"><![CDATA[Публикация ссылок в формах]]></string>
+        <string name="_sys_acl_action_post_links_desc"><![CDATA[Публикация ссылок в формах]]></string>
 	<string name="_sys_acl_action_use_macros"><![CDATA[Использовать макросы]]></string>
-    <string name="_sys_acl_action_use_macros_desc"><![CDATA[Использовать специально сконструированный вызов, для вставки динамического контента практически в любой текст]]></string>
+        <string name="_sys_acl_action_use_macros_desc"><![CDATA[Использовать специально сконструированный вызов, для вставки динамического контента практически в любой текст]]></string>
 	<string name="_sys_acl_action_set_acl_level"><![CDATA[Назначить членство]]></string>
 	<string name="_sys_acl_action_set_acl_level_desc"><![CDATA[Назначить членство для профилей]]></string>
-  <string name="_sys_acl_action_show_membership_levels_in_privacy_groups"><![CDATA[Показывать членство в группах конфиденциальности]]></string>
-  <string name="_sys_acl_action_show_membership_levels_in_privacy_groups_desc"><![CDATA[Показывать членство в группах конфиденциальности]]></string>
-  <string name="_sys_acl_action_show_membership_private_info"><![CDATA[Показывать конфиденциальную информацию о членстве]]></string>
-  <string name="_sys_acl_action_show_membership_private_info_desc"><![CDATA[Показывать конфиденциальную информацию о членстве]]></string>
-  <string name="_sys_acl_action_set_badge"><![CDATA[Назначение бейджей]]></string>
-  <string name="_sys_acl_action_set_badge_desc"><![CDATA[Назначение бейджей для контента]]></string>
-  <string name="_sys_acl_action_switch_to_any_profile"><![CDATA[Переключиться на любой профиль]]></string>
-  <string name="_sys_acl_action_switch_to_any_profile_desc"><![CDATA[Разрешать переключаться на любой профиль]]></string>
+        <string name="_sys_acl_action_show_membership_levels_in_privacy_groups"><![CDATA[Показывать членство в группах конфиденциальности]]></string>
+        <string name="_sys_acl_action_show_membership_levels_in_privacy_groups_desc"><![CDATA[Показывать членство в группах конфиденциальности]]></string>
+        <string name="_sys_acl_action_show_membership_private_info"><![CDATA[Показывать конфиденциальную информацию о членстве]]></string>
+        <string name="_sys_acl_action_show_membership_private_info_desc"><![CDATA[Показывать конфиденциальную информацию о членстве]]></string>
+        <string name="_sys_acl_action_set_badge"><![CDATA[Назначение бейджей]]></string>
+        <string name="_sys_acl_action_set_badge_desc"><![CDATA[Назначение бейджей для контента]]></string>
+        <string name="_sys_acl_action_switch_to_any_profile"><![CDATA[Переключиться на любой профиль]]></string>
+        <string name="_sys_acl_action_switch_to_any_profile_desc"><![CDATA[Разрешать переключаться на любой профиль]]></string>
         <string name="_sys_acl_action_set_acl_as_privacy"><![CDATA[Использовать уровень членства в настройках приватности]]></string>
 	<string name="_sys_acl_action_set_acl_as_privacy_desc"><![CDATA[Использовать уровень членства в настройках приватности в формах добавления контента]]></string>
         <string name="_sys_acl_action_set_form_fields_privacy"><![CDATA[Назначение приватности для полей форм]]></string>
@@ -1799,6 +1799,8 @@
 	<string name="_sys_acl_start"><![CDATA[Начало: ]]></string>
 	<string name="_sys_acl_expire"><![CDATA[Окончание: ]]></string>
 	<string name="_sys_acl_expire_never"><![CDATA[никогда]]></string>
+        <string name="_sys_acl_state"><![CDATA[Состояние: ]]></string>
+        <string name="_sys_acl_state_trial"><![CDATA[Пробный]]></string>
 
   <string name="_sys_audit_action_edit_content"><![CDATA[Контент изменен]]></string>
   <string name="_sys_audit_action_add_content"><![CDATA[Контент добавлен]]></string>

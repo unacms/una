@@ -504,7 +504,7 @@ class BxAclModule extends BxDolModule
 
         $aPeriod = array('period' => (int)$aItemInfo['period'], 'period_unit' => $aItemInfo['period_unit']);
         if($sType == BX_ACL_LICENSE_TYPE_RECURRING && (int)$aItemInfo['trial'] > 0 && (int)$aItemInfo['level_id'] != (int)$aMembershipInfo['id'])
-            $aPeriod = array('period' => (int)$aItemInfo['trial'], 'period_unit' => 'day');
+            $aPeriod = array('period' => (int)$aItemInfo['trial'], 'period_unit' => 'day', 'period_trial' => true);
 
         $iReserve = (int)getParam($CNF['PARAM_RECURRING_RESERVE']);
         if(!empty($iReserve))

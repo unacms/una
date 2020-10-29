@@ -36,7 +36,13 @@ class BxBaseAcl extends BxDolAcl
         if($bTmplVarsPrivateInfo)
             $aTmplVarsPrivateInfo = array(
                 'date_start' => bx_time_js($aLevel['date_starts']),
-                'date_expire' => (int)$aLevel['date_expires'] > 0 ? bx_time_js($aLevel['date_expires']) : _t('_sys_acl_expire_never')
+                'date_expire' => (int)$aLevel['date_expires'] > 0 ? bx_time_js($aLevel['date_expires']) : _t('_sys_acl_expire_never'),
+                'bx_if:show_state' => array(
+                    'condition' => !empty($aLevel['state']),
+                    'content' => array(
+                        'state' => _t('_sys_acl_state_' . $aLevel['state'])
+                    )
+                )
             );
 
         $oTemplate = BxDolTemplate::getInstance();

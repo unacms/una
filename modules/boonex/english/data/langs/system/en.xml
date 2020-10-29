@@ -1778,22 +1778,22 @@
 	<string name="_sys_acl_action_not_allowed"><![CDATA[Your current membership ({2}) doesn't allow you to '{1}'.]]></string>
 	<string name="_sys_acl_action_not_allowed_after"><![CDATA[Your current membership ({2}) stopped to allow you to '{1}' {5}.]]></string>
 	<string name="_sys_acl_action_not_allowed_before"><![CDATA[Your current membership ({2}) will allow you to '{1}' {6}.]]></string>
-    <string name="_sys_acl_action_pending"><![CDATA[You are currently not an active member. Please, ask the site <a href="mailto:{7}">administrator</a> to make you an active member so you would be able to <b>{1}</b>.]]></string>
+        <string name="_sys_acl_action_pending"><![CDATA[You are currently not an active member. Please, ask the site <a href="mailto:{7}">administrator</a> to make you an active member so you would be able to <b>{1}</b>.]]></string>
 	<string name="_sys_acl_action_post_links"><![CDATA[Post links]]></string>
 	<string name="_sys_acl_action_post_links_desc"><![CDATA[Post links in text and textarea form fields]]></string>
 	<string name="_sys_acl_action_use_macros"><![CDATA[Use Macros]]></string>
-    <string name="_sys_acl_action_use_macros_desc"><![CDATA[Use special constructions to insert dynamic content almost anywhere]]></string>
+        <string name="_sys_acl_action_use_macros_desc"><![CDATA[Use special constructions to insert dynamic content almost anywhere]]></string>
 	<string name="_sys_acl_action_set_acl_level"><![CDATA[Set membership level]]></string>
 	<string name="_sys_acl_action_set_acl_level_desc"><![CDATA[Set membership level for profiles]]></string>
-  <string name="_sys_acl_action_show_membership_levels_in_privacy_groups"><![CDATA[Show membership levels in privacy groups]]></string>
-  <string name="_sys_acl_action_show_membership_levels_in_privacy_groups_desc"><![CDATA[Show membership levels in privacy groups]]></string>
-  <string name="_sys_acl_action_show_membership_private_info"><![CDATA[Show membership private info]]></string>
-  <string name="_sys_acl_action_show_membership_private_info_desc"><![CDATA[Show membership private info]]></string>
-  <string name="_sys_acl_action_set_badge"><![CDATA[Set badge]]></string>
-  <string name="_sys_acl_action_set_badge_desc"><![CDATA[Set badge for content]]></string>
-  <string name="_sys_acl_action_switch_to_any_profile"><![CDATA[Switch to any profile]]></string>
-  <string name="_sys_acl_action_switch_to_any_profile_desc"><![CDATA[Allow switch to any profile]]></string>
-  <string name="_sys_acl_action_set_acl_as_privacy"><![CDATA[Choose membership level as privacy]]></string>
+        <string name="_sys_acl_action_show_membership_levels_in_privacy_groups"><![CDATA[Show membership levels in privacy groups]]></string>
+        <string name="_sys_acl_action_show_membership_levels_in_privacy_groups_desc"><![CDATA[Show membership levels in privacy groups]]></string>
+        <string name="_sys_acl_action_show_membership_private_info"><![CDATA[Show membership private info]]></string>
+        <string name="_sys_acl_action_show_membership_private_info_desc"><![CDATA[Show membership private info]]></string>
+        <string name="_sys_acl_action_set_badge"><![CDATA[Set badge]]></string>
+        <string name="_sys_acl_action_set_badge_desc"><![CDATA[Set badge for content]]></string>
+        <string name="_sys_acl_action_switch_to_any_profile"><![CDATA[Switch to any profile]]></string>
+        <string name="_sys_acl_action_switch_to_any_profile_desc"><![CDATA[Allow switch to any profile]]></string>
+        <string name="_sys_acl_action_set_acl_as_privacy"><![CDATA[Choose membership level as privacy]]></string>
 	<string name="_sys_acl_action_set_acl_as_privacy_desc"><![CDATA[Choose membership level as privacy in add content forms]]></string>
         <string name="_sys_acl_action_set_form_fields_privacy"><![CDATA[Set form fields privacy]]></string>
 	<string name="_sys_acl_action_set_form_fields_privacy_desc"><![CDATA[Allow to set privacy for form fields]]></string>
@@ -1815,6 +1815,8 @@
 	<string name="_sys_acl_start"><![CDATA[Started: ]]></string>
 	<string name="_sys_acl_expire"><![CDATA[Expires: ]]></string>
 	<string name="_sys_acl_expire_never"><![CDATA[never]]></string>
+        <string name="_sys_acl_state"><![CDATA[State: ]]></string>
+        <string name="_sys_acl_state_trial"><![CDATA[Trial]]></string>
 
   <string name="_sys_audit_action_edit_content"><![CDATA[Content edited]]></string>
   <string name="_sys_audit_action_add_content"><![CDATA[Content added]]></string>
