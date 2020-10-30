@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <resources name="en" flag="gb" title="English">
-
+<resources name="en" flag="gb" title="English">
     <string name="_bx_courses"><![CDATA[Courses]]></string>
     <string name="_bx_courses_cmts"><![CDATA[Courses' Comments]]></string>
 
