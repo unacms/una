@@ -34,7 +34,7 @@ This antispam method scan submitted content for the URLs and check them if any o
     <string name="_bx_antispam_ip_table_status"><![CDATA[IP table mode: {0}]]></string>
     <string name="_bx_antispam_ip_blocked"><![CDATA[IP address is blocked. {0}]]></string>
     <string name="_bx_antispam_spam_detected"><![CDATA[Spam detected. {0}]]></string>
-    <string name="_bx_antispam_submit_false_positive_report"><![CDATA[If you believe that this is a mistake, please submit a false positive report here: {0}]]></string>
+    <string name="_bx_antispam_submit_false_positive_report"><![CDATA[If you think this is a mistake, contact us: {0}]]></string>
 	<string name="_bx_antispam_ip_allow"><![CDATA[Allow]]></string>
 	<string name="_bx_antispam_ip_deny"><![CDATA[Deny]]></string>
 	<string name="_bx_antispam_ip_table"><![CDATA[IP table]]></string>
