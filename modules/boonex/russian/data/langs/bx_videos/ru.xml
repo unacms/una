@@ -120,8 +120,8 @@
     <string name="_bx_videos_page_title_sys_entries_of_author"><![CDATA[Видео автора]]></string>
     <string name="_bx_videos_page_title_entries_of_author"><![CDATA[{display_name} - Видео]]></string>
     <string name="_bx_videos_page_title_sys_entries_in_context"><![CDATA[Видео в контексте]]></string>
-    <string name="_bx_posts_page_title_sys_entries_favorites"><![CDATA[Избранные видео]]></string>
-    <string name="_bx_posts_page_title_entries_favorites"><![CDATA[Избранные видео]]></string>
+    <string name="_bx_videos_page_title_sys_entries_favorites"><![CDATA[Избранные видео]]></string>
+    <string name="_bx_videos_page_title_entries_favorites"><![CDATA[Избранные видео]]></string>
     <string name="_bx_videos_page_title_entries_in_context"><![CDATA[Видео в контексте - {display_name}]]></string>
     <string name="_bx_videos_page_block_title_favorites_of_author"><![CDATA[<a href="{profile_link}">{display_name}</a> - Избранное]]></string>   
     <string name="_bx_videos_page_block_title_sys_favorites_of_author"><![CDATA[Избранное автора]]></string>
