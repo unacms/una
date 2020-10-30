@@ -138,15 +138,16 @@ BxDolFavorite.prototype.onFavorite = function(oData, oElement)
 		fContinue();
 };
 
-BxDolFavorite.prototype.processJson = function(oData, oElement) {
+BxDolFavorite.prototype.processJson = function (oData, oElement)
+{
 	oElement = oElement != undefined ? oElement : this._oParent;
+	var $this = this;
 
 	var fContinue = function() {
 		//--- Show Popup
 	    if(oData && oData.popup != undefined) {
-	        $('#' + oData.popup_id).remove();
-
-	    	$(oData.popup).hide().prependTo('body').dolPopup({
+	        $('.' + $this._sSP + '-do-form').parents(".bx-popup-wrapper").remove();
+	        $(oData.popup).hide().prependTo('body').dolPopup({
 	    		pointer: {
 	    			el: oElement
 	    		},
