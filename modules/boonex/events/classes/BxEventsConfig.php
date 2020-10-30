@@ -81,6 +81,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_events_per_page_browse_showcase',
             'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_events_per_page_browse_recommended',
             'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_events_per_page_for_favorites_lists',
+            'PARAM_USE_IN' => 'bx_events_internal_notifications',
 
             // objects
             'OBJECT_STORAGE' => 'bx_events_pics',
@@ -182,6 +183,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
                 'txt_sample_score_down_single' => '_bx_events_txt_sample_score_down_single',
                 'txt_private_group' => '_bx_events_txt_private_group',
                 'txt_N_fans' => '_bx_events_txt_N_fans',
+                'txt_ntfs_join_invitation' => '_bx_events_txt_ntfs_join_invitation',
                 'txt_ntfs_join_request' => '_bx_events_txt_ntfs_join_request',
                 'txt_ntfs_fan_added' => '_bx_events_txt_ntfs_fan_added',
             	'txt_ntfs_timeline_post_common' => '_bx_events_txt_ntfs_timeline_post_common',
@@ -197,7 +199,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
                 'menu_item_title_unsubscribe' => '_bx_events_menu_item_title_unsubscribe',
             	'grid_action_err_delete' => '_bx_events_grid_action_err_delete',
             	'grid_txt_account_manager' => '_bx_events_grid_txt_account_manager',
-				'filter_item_active' => '_bx_events_grid_filter_item_title_adm_active',
+                'filter_item_active' => '_bx_events_grid_filter_item_title_adm_active',
             	'filter_item_pending' => '_bx_events_grid_filter_item_title_adm_pending',
             	'filter_item_suspended' => '_bx_events_grid_filter_item_title_adm_suspended',
             	'filter_item_select_one_filter1' => '_bx_events_grid_filter_item_title_adm_select_one_filter1',
@@ -214,10 +216,10 @@ class BxEventsConfig extends BxBaseModGroupsConfig
                 'txt_all_entries_by_context' => '_bx_events_page_title_browse_by_context',
                 'txt_invitation_popup_title' => '_bx_events_txt_invite_popup_title',
                 'txt_invitation_popup_text' => '_bx_events_txt_invite_popup_text',
-				'txt_invitation_popup_accept_button' => '_bx_events_txt_invite_popup_button_accept',
-				'txt_invitation_popup_decline_button' => '_bx_events_txt_invite_popup_button_decline',
+                'txt_invitation_popup_accept_button' => '_bx_events_txt_invite_popup_button_accept',
+                'txt_invitation_popup_decline_button' => '_bx_events_txt_invite_popup_button_decline',
                 'txt_invitation_popup_error_invitation_absent' => '_bx_events_txt_invite_popup_error_invitation_absent',
-				'txt_invitation_popup_error_wrong_user' => '_bx_events_txt_invite_popup_error_invitation_wrong_user',
+                'txt_invitation_popup_error_wrong_user' => '_bx_events_txt_invite_popup_error_invitation_wrong_user',
             ),
 
         );

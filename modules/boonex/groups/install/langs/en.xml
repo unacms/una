@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="en" flag="gb" title="English">
+    <string name="_bx_groups"><![CDATA[Groups]]></string>
+    <string name="_bx_groups_cmts"><![CDATA[Groups' Comments]]></string>
 
-	<string name="_bx_groups"><![CDATA[Groups]]></string>
-	<string name="_bx_groups_cmts"><![CDATA[Groups' Comments]]></string>
-
-	<string name="_bx_groups_option_num_connections_quick"><![CDATA[Number of items in friends block]]></string>
-	<string name="_bx_groups_option_per_page_browse"><![CDATA[Number of items per page]]></string>
+    <string name="_bx_groups_option_num_connections_quick"><![CDATA[Number of items in friends block]]></string>
+    <string name="_bx_groups_option_per_page_browse"><![CDATA[Number of items per page]]></string>
     <string name="_bx_groups_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
     <string name="_bx_groups_option_searchable_fields"><![CDATA[Searchable fields]]></string>
     <string name="_bx_groups_option_members_mode"><![CDATA[Special mode for group members]]></string>
     <string name="_bx_groups_option_members_mode_multi_roles"><![CDATA[Multi Roles]]></string>
     <string name="_bx_groups_option_members_mode_paid_join"><![CDATA[Paid Join]]></string>
     <string name="_bx_groups_option_per_page_for_favorites_lists"><![CDATA[Number of favorite lists per page]]></string>
+    <string name="_bx_groups_option_internal_notifications"><![CDATA[Use internal notifications]]></string>
 
-	<string name="_bx_groups_form_profile"><![CDATA[Groups]]></string>
-	<string name="_bx_groups_form_profile_display_add"><![CDATA[Add Group]]></string>
-	<string name="_bx_groups_form_profile_display_edit"><![CDATA[Edit Group]]></string>
-	<string name="_bx_groups_form_profile_display_edit_cover"><![CDATA[Edit Cover]]></string>
-	<string name="_bx_groups_form_profile_display_delete"><![CDATA[Delete Group]]></string>
-	<string name="_bx_groups_form_profile_display_view"><![CDATA[View Group]]></string>
-	<string name="_bx_groups_form_profile_display_view_full"><![CDATA[Full View Group]]></string>
-	<string name="_bx_groups_form_profile_display_invite"><![CDATA[Invite to Group]]></string>
-	<string name="_bx_groups_form_entry_input_author"><![CDATA[Author]]></string>
-	<string name="_bx_groups_form_profile_input_sys_do_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_groups_form_profile"><![CDATA[Groups]]></string>
+    <string name="_bx_groups_form_profile_display_add"><![CDATA[Add Group]]></string>
+    <string name="_bx_groups_form_profile_display_edit"><![CDATA[Edit Group]]></string>
+    <string name="_bx_groups_form_profile_display_edit_cover"><![CDATA[Edit Cover]]></string>
+    <string name="_bx_groups_form_profile_display_delete"><![CDATA[Delete Group]]></string>
+    <string name="_bx_groups_form_profile_display_view"><![CDATA[View Group]]></string>
+    <string name="_bx_groups_form_profile_display_view_full"><![CDATA[Full View Group]]></string>
+    <string name="_bx_groups_form_profile_display_invite"><![CDATA[Invite to Group]]></string>
+    <string name="_bx_groups_form_entry_input_author"><![CDATA[Author]]></string>
+    <string name="_bx_groups_form_profile_input_sys_do_submit"><![CDATA[Submit]]></string>
     <string name="_bx_groups_form_profile_input_sys_join_confirm"><![CDATA[Join confirmation]]></string>
     <string name="_bx_groups_form_profile_input_join_confirm"><![CDATA[Join confirmation]]></string>
     <string name="_bx_groups_form_profile_input_sys_allow_view_to"><![CDATA[Visible to]]></string>
@@ -39,17 +39,17 @@
     <string name="_bx_groups_form_profile_input_sys_group_desc"><![CDATA[Description]]></string>
     <string name="_bx_groups_form_profile_input_group_desc"><![CDATA[Description]]></string>
     <string name="_bx_groups_form_profile_input_sys_group_cat"><![CDATA[Category]]></string>
-	<string name="_bx_groups_form_profile_input_group_cat"><![CDATA[Category]]></string>
+    <string name="_bx_groups_form_profile_input_group_cat"><![CDATA[Category]]></string>
     <string name="_bx_groups_form_profile_input_group_cat_err"><![CDATA[Category field is mandatory]]></string>
-	<string name="_bx_groups_form_profile_input_sys_picture"><![CDATA[Group Picture]]></string>
-	<string name="_bx_groups_form_profile_input_picture"><![CDATA[Upload New Group Picture]]></string>
-	<string name="_bx_groups_form_profile_input_picture_err"><![CDATA[Group picture is mandatory.]]></string>
-	<string name="_bx_groups_form_profile_input_sys_cover"><![CDATA[Cover Picture]]></string>
-	<string name="_bx_groups_form_profile_input_cover"><![CDATA[Upload New Cover Picture]]></string>
-	<string name="_bx_groups_form_profile_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
-	<string name="_bx_groups_form_profile_input_delete_confirm"><![CDATA[I am sure I want to delete this group]]></string>
-	<string name="_bx_groups_form_profile_input_delete_confirm_info"><![CDATA[This action can not be undone.]]></string>
-	<string name="_bx_groups_form_profile_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete group.]]></string>
+    <string name="_bx_groups_form_profile_input_sys_picture"><![CDATA[Group Picture]]></string>
+    <string name="_bx_groups_form_profile_input_picture"><![CDATA[Upload New Group Picture]]></string>
+    <string name="_bx_groups_form_profile_input_picture_err"><![CDATA[Group picture is mandatory.]]></string>
+    <string name="_bx_groups_form_profile_input_sys_cover"><![CDATA[Cover Picture]]></string>
+    <string name="_bx_groups_form_profile_input_cover"><![CDATA[Upload New Cover Picture]]></string>
+    <string name="_bx_groups_form_profile_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
+    <string name="_bx_groups_form_profile_input_delete_confirm"><![CDATA[I am sure I want to delete this group]]></string>
+    <string name="_bx_groups_form_profile_input_delete_confirm_info"><![CDATA[This action can not be undone.]]></string>
+    <string name="_bx_groups_form_profile_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete group.]]></string>
 
     <string name="_bx_groups_form_price"><![CDATA[Price]]></string>
     <string name="_bx_groups_form_price_display_add"><![CDATA[Add]]></string>
@@ -362,7 +362,9 @@
 
     <string name="_bx_groups_alert_action_fan_added"><![CDATA[member joined]]></string>
     <string name="_bx_groups_txt_ntfs_fan_added"><![CDATA[Group <b class="bx-ntfs-content-profile">{owner_name}</b> has got a member <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
+    <string name="_bx_groups_alert_action_join_invitation_notif"><![CDATA[join invitation]]></string>
     <string name="_bx_groups_alert_action_join_request"><![CDATA[join request]]></string>
+    <string name="_bx_groups_txt_ntfs_join_invitation"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> group's representative invites <b class="bx-ntfs-content-entry">{subentry_sample}</b> to join group]]></string>
     <string name="_bx_groups_txt_ntfs_join_request"><![CDATA[Group <b class="bx-ntfs-content-profile">{owner_name}</b> has a join request from <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
     <string name="_bx_groups_txt_ntfs_timeline_post_common"><![CDATA[New post <b class="bx-ntfs-content-entry">{subentry_sample}</b> in <b class="bx-ntfs-content-profile">{owner_name}</b> group timeline]]></string>
 

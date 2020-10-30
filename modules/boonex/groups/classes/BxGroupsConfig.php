@@ -81,6 +81,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
             'PARAM_MMODE' => 'bx_groups_members_mode',
             'PARAM_RECURRING_RESERVE' => 3, // 3 days for recurring payment to be registered
             'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_groups_per_page_for_favorites_lists',
+            'PARAM_USE_IN' => 'bx_groups_internal_notifications',
 
             // objects
             'OBJECT_STORAGE' => 'bx_groups_pics',
@@ -187,6 +188,7 @@ class BxGroupsConfig extends BxBaseModGroupsConfig
                 'txt_sample_score_down_single' => '_bx_groups_txt_sample_score_down_single',
                 'txt_private_group' => '_bx_groups_txt_private_group',
                 'txt_N_fans' => '_bx_groups_txt_N_fans',
+                'txt_ntfs_join_invitation' => '_bx_groups_txt_ntfs_join_invitation',
                 'txt_ntfs_join_request' => '_bx_groups_txt_ntfs_join_request',
                 'txt_ntfs_fan_added' => '_bx_groups_txt_ntfs_fan_added',
                 'txt_ntfs_timeline_post_common' => '_bx_groups_txt_ntfs_timeline_post_common',
