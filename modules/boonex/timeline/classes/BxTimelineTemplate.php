@@ -2266,12 +2266,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         else if(is_array($mixedLayout) && !empty($mixedLayout['layout'])) {
             $sDisplay = $mixedLayout['layout'];
             $sImageSrcKey = 'src';
-            $sImageSrcKeyBig = 'src_orig';
+            $sImageSrcKeyBig = 'src_medium';
         }
         else {
             $sDisplay = BX_TIMELINE_ML_GALLERY;
             $sImageSrcKey = 'src';
-            $sImageSrcKeyBig = 'src_orig';
+            $sImageSrcKeyBig = 'src_medium';
         }
 
         $bAttachFirst = false;
