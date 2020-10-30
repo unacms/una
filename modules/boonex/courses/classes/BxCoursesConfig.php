@@ -73,6 +73,7 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
             'PARAM_SEARCHABLE_FIELDS' => 'bx_courses_searchable_fields',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_courses_per_page_browse_showcase',
             'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_courses_per_page_browse_recommended',
+            'PARAM_USE_IN' => 'bx_courses_internal_notifications',
 
             // objects
             'OBJECT_STORAGE' => 'bx_courses_pics',
@@ -169,6 +170,7 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
                 'txt_sample_score_down_single' => '_bx_courses_txt_sample_score_down_single',
                 'txt_private_group' => '_bx_courses_txt_private_entry',
                 'txt_N_fans' => '_bx_courses_txt_N_fans',
+                'txt_ntfs_join_invitation' => '_bx_courses_txt_ntfs_join_invitation',
                 'txt_ntfs_join_request' => '_bx_courses_txt_ntfs_join_request',
                 'txt_ntfs_fan_added' => '_bx_courses_txt_ntfs_fan_added',
                 'txt_ntfs_timeline_post_common' => '_bx_courses_txt_ntfs_timeline_post_common',

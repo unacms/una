@@ -8,6 +8,7 @@
     <string name="_bx_courses_option_per_page_browse"><![CDATA[Number of items per page]]></string>
     <string name="_bx_courses_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
     <string name="_bx_courses_option_searchable_fields"><![CDATA[Searchable fields]]></string>
+    <string name="_bx_courses_option_internal_notifications"><![CDATA[Use internal notifications]]></string>
 
     <string name="_bx_courses_form_profile"><![CDATA[Courses]]></string>
     <string name="_bx_courses_form_profile_display_add"><![CDATA[Add Course]]></string>
@@ -294,7 +295,9 @@
 
     <string name="_bx_courses_alert_action_fan_added"><![CDATA[member joined]]></string>
     <string name="_bx_courses_txt_ntfs_fan_added"><![CDATA[Course <b class="bx-ntfs-content-profile">{owner_name}</b> has got a member <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
+    <string name="_bx_courses_alert_action_join_invitation_notif"><![CDATA[join invitation]]></string>
     <string name="_bx_courses_alert_action_join_request"><![CDATA[join request]]></string>
+    <string name="_bx_courses_txt_ntfs_join_invitation"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> course's representative invites <b class="bx-ntfs-content-entry">{subentry_sample}</b> to join course]]></string>
     <string name="_bx_courses_txt_ntfs_join_request"><![CDATA[Course <b class="bx-ntfs-content-profile">{owner_name}</b> has a join request from <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
     <string name="_bx_courses_txt_ntfs_timeline_post_common"><![CDATA[New post <b class="bx-ntfs-content-entry">{subentry_sample}</b> in <b class="bx-ntfs-content-profile">{owner_name}</b> course timeline]]></string>
 

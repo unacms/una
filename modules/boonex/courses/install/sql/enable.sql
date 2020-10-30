@@ -16,7 +16,8 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `e
 ('bx_courses_num_rss', '10', @iCategId, '_bx_courses_option_num_rss', 'digit', '', '', '', 12),
 ('bx_courses_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', 15),
 ('bx_courses_per_page_browse_recommended', '10', @iCategId, '_sys_option_per_page_browse_recommended', 'digit', '', '', '', 16),
-('bx_courses_searchable_fields', 'name,desc', @iCategId, '_bx_courses_option_searchable_fields', 'list', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:21:"get_searchable_fields";}', '', '', 30);
+('bx_courses_searchable_fields', 'name,desc', @iCategId, '_bx_courses_option_searchable_fields', 'list', 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:21:"get_searchable_fields";}', '', '', 30),
+('bx_courses_internal_notifications', '', @iCategId, '_bx_courses_option_internal_notifications', 'checkbox', '', '', '', 40);
 
 -- PAGES
 
