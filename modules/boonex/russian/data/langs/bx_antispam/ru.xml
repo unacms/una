@@ -34,7 +34,7 @@ URI DNSBL - это DNSBL, которые перечисляют доменные
     <string name="_bx_antispam_ip_table_status"><![CDATA[IP table режим: {0}]]></string>
     <string name="_bx_antispam_ip_blocked"><![CDATA[IP-адрес заблокирован. {0}]]></string>
     <string name="_bx_antispam_spam_detected"><![CDATA[Обнаружен спам. {0}]]></string>
-    <string name="_bx_antispam_submit_false_positive_report"><![CDATA[Если Вы обнаружили ошибку, пожалуйста, пришлите фальшивый позитивный отчёт здесь: {0}]]></string>
+    <string name="_bx_antispam_submit_false_positive_report"><![CDATA[Если Вы думаете, что это ошибка, пожалуйста обратитесь в поддержку: {0}]]></string>
 	<string name="_bx_antispam_ip_allow"><![CDATA[Разрешить]]></string>
 	<string name="_bx_antispam_ip_deny"><![CDATA[Запретить]]></string>
 	<string name="_bx_antispam_ip_table"><![CDATA[IP таблица]]></string>
