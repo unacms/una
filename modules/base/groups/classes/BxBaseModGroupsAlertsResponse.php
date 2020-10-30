@@ -39,7 +39,9 @@ class BxBaseModGroupsAlertsResponse extends BxBaseModProfileAlertsResponse
         if ($this->MODULE != $oAlert->sUnit)
             return;
 
-        $bUseIn = getParam($CNF['PARAM_USE_IN']) == 'on';
+        $bUseIn = true;
+        if(isset($CNF['PARAM_USE_IN']))
+            $bUseIn = getParam($CNF['PARAM_USE_IN']) == 'on';
 
         // join group events
         switch ($oAlert->sAction) {
