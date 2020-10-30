@@ -1,60 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="en" flag="gb" title="English">
-	<string name="_bx_spaces"><![CDATA[Spaces]]></string>
-	<string name="_bx_spaces_cmts"><![CDATA[Spaces' Comments]]></string>
+    <string name="_bx_spaces"><![CDATA[Spaces]]></string>
+    <string name="_bx_spaces_cmts"><![CDATA[Spaces' Comments]]></string>
 
-        <string name="_bx_spaces_option_enable_multilevel_hierarchy"><![CDATA[Allow multilevel hierarchy (experimental)]]></string>
-	<string name="_bx_spaces_option_num_connections_quick"><![CDATA[Number of items in friends block]]></string>
-	<string name="_bx_spaces_option_per_page_browse"><![CDATA[Number of items per page]]></string>
-	<string name="_bx_spaces_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
-	<string name="_bx_spaces_option_searchable_fields"><![CDATA[Searchable fields]]></string>
-        <string name="_bx_spaces_option_members_mode"><![CDATA[Special mode for space members]]></string>
-        <string name="_bx_spaces_option_members_mode_multi_roles"><![CDATA[Multi Roles]]></string>
+    <string name="_bx_spaces_option_enable_multilevel_hierarchy"><![CDATA[Allow multilevel hierarchy (experimental)]]></string>
+    <string name="_bx_spaces_option_num_connections_quick"><![CDATA[Number of items in friends block]]></string>
+    <string name="_bx_spaces_option_per_page_browse"><![CDATA[Number of items per page]]></string>
+    <string name="_bx_spaces_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
+    <string name="_bx_spaces_option_searchable_fields"><![CDATA[Searchable fields]]></string>
+    <string name="_bx_spaces_option_members_mode"><![CDATA[Special mode for space members]]></string>
+    <string name="_bx_spaces_option_members_mode_multi_roles"><![CDATA[Multi Roles]]></string>
+    <string name="_bx_spaces_option_internal_notifications"><![CDATA[Use internal notifications]]></string>
 
-	<string name="_bx_spaces_form_profile"><![CDATA[Spaces]]></string>
-	<string name="_bx_spaces_form_profile_display_add"><![CDATA[Add Space]]></string>
-	<string name="_bx_spaces_form_profile_display_edit"><![CDATA[Edit Space]]></string>
-	<string name="_bx_spaces_form_profile_display_edit_cover"><![CDATA[Edit Cover]]></string>
-	<string name="_bx_spaces_form_profile_display_delete"><![CDATA[Delete Space]]></string>
-	<string name="_bx_spaces_form_profile_display_view"><![CDATA[View Space]]></string>
-	<string name="_bx_spaces_form_profile_display_view_full"><![CDATA[Full View Space]]></string>
-	<string name="_bx_spaces_form_profile_display_invite"><![CDATA[Invite to Space]]></string>
-	<string name="_bx_spaces_form_entry_input_author"><![CDATA[Author]]></string>
-	<string name="_bx_spaces_form_profile_input_sys_do_submit"><![CDATA[Submit]]></string>
-	<string name="_bx_spaces_form_profile_input_sys_join_confirm"><![CDATA[Join confirmation]]></string>
-	<string name="_bx_spaces_form_profile_input_join_confirm"><![CDATA[Join confirmation]]></string>
-	<string name="_bx_spaces_form_profile_input_sys_allow_view_to"><![CDATA[Visible to]]></string>
-	<string name="_bx_spaces_form_profile_input_allow_view_to"><![CDATA[Visible to]]></string>
-	<string name="_bx_spaces_form_profile_input_allow_view_to_desc"><![CDATA[Closed - anyone can find the space and see who's in it, only members can see posts. Secret - only members can find the space and see posts.]]></string>
-        <string name="_bx_spaces_form_profile_input_sys_allow_post_to"><![CDATA[Who can post]]></string>
-        <string name="_bx_spaces_form_profile_input_allow_post_to"><![CDATA[Who can post]]></string>
-	<string name="_bx_spaces_form_profile_input_sys_initial_members"><![CDATA[Invite Members]]></string>
-	<string name="_bx_spaces_form_profile_input_initial_members"><![CDATA[Invite Members]]></string>
-  <string name="_bx_spaces_form_profile_input_sys_parent_space"><![CDATA[Parent Space]]></string>
-  <string name="_bx_spaces_form_profile_input_parent_space"><![CDATA[Parent Space]]></string>
-  <string name="_bx_spaces_form_profile_input_sys_space_name"><![CDATA[Space Name]]></string>
-	<string name="_bx_spaces_form_profile_input_space_name"><![CDATA[Space Name]]></string>
-	<string name="_bx_spaces_form_profile_input_space_name_err"><![CDATA[This information is essential. Please, fill in this field.]]></string>
-	<string name="_bx_spaces_form_profile_input_sys_space_desc"><![CDATA[Description]]></string>
-	<string name="_bx_spaces_form_profile_input_space_desc"><![CDATA[Description]]></string>
-	<string name="_bx_spaces_form_profile_input_sys_space_cat"><![CDATA[Category]]></string>
-	<string name="_bx_spaces_form_profile_input_space_cat"><![CDATA[Category]]></string>
-	<string name="_bx_spaces_form_profile_input_space_cat_err"><![CDATA[Category field is mandatory]]></string>
-	<string name="_bx_spaces_form_profile_input_sys_picture"><![CDATA[Space Picture]]></string>
-	<string name="_bx_spaces_form_profile_input_picture"><![CDATA[Upload New Space Picture]]></string>
-	<string name="_bx_spaces_form_profile_input_picture_err"><![CDATA[Space picture is mandatory.]]></string>
-	<string name="_bx_spaces_form_profile_input_sys_cover"><![CDATA[Cover Picture]]></string>
-	<string name="_bx_spaces_form_profile_input_cover"><![CDATA[Upload New Cover Picture]]></string>
-	<string name="_bx_spaces_form_profile_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
-	<string name="_bx_spaces_form_profile_input_delete_confirm"><![CDATA[I am sure I want to delete this space]]></string>
-	<string name="_bx_spaces_form_profile_input_delete_confirm_info"><![CDATA[This action can not be undone.]]></string>
-	<string name="_bx_spaces_form_profile_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete space.]]></string>
-	
-	<string name="_bx_spaces_acl_action_create_profile"><![CDATA[Create Space]]></string>
-	<string name="_bx_spaces_acl_action_delete_profile"><![CDATA[Delete Space]]></string>
-	<string name="_bx_spaces_acl_action_view_profile"><![CDATA[View Space]]></string>
-	<string name="_bx_spaces_acl_action_edit_any_profile"><![CDATA[Edit Any Space]]></string>
-  <string name="_bx_spaces_acl_action_delete_invites"><![CDATA[Delete Invites]]></string>
+    <string name="_bx_spaces_form_profile"><![CDATA[Spaces]]></string>
+    <string name="_bx_spaces_form_profile_display_add"><![CDATA[Add Space]]></string>
+    <string name="_bx_spaces_form_profile_display_edit"><![CDATA[Edit Space]]></string>
+    <string name="_bx_spaces_form_profile_display_edit_cover"><![CDATA[Edit Cover]]></string>
+    <string name="_bx_spaces_form_profile_display_delete"><![CDATA[Delete Space]]></string>
+    <string name="_bx_spaces_form_profile_display_view"><![CDATA[View Space]]></string>
+    <string name="_bx_spaces_form_profile_display_view_full"><![CDATA[Full View Space]]></string>
+    <string name="_bx_spaces_form_profile_display_invite"><![CDATA[Invite to Space]]></string>
+    <string name="_bx_spaces_form_entry_input_author"><![CDATA[Author]]></string>
+    <string name="_bx_spaces_form_profile_input_sys_do_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_spaces_form_profile_input_sys_join_confirm"><![CDATA[Join confirmation]]></string>
+    <string name="_bx_spaces_form_profile_input_join_confirm"><![CDATA[Join confirmation]]></string>
+    <string name="_bx_spaces_form_profile_input_sys_allow_view_to"><![CDATA[Visible to]]></string>
+    <string name="_bx_spaces_form_profile_input_allow_view_to"><![CDATA[Visible to]]></string>
+    <string name="_bx_spaces_form_profile_input_allow_view_to_desc"><![CDATA[Closed - anyone can find the space and see who's in it, only members can see posts. Secret - only members can find the space and see posts.]]></string>
+    <string name="_bx_spaces_form_profile_input_sys_allow_post_to"><![CDATA[Who can post]]></string>
+    <string name="_bx_spaces_form_profile_input_allow_post_to"><![CDATA[Who can post]]></string>
+    <string name="_bx_spaces_form_profile_input_sys_initial_members"><![CDATA[Invite Members]]></string>
+    <string name="_bx_spaces_form_profile_input_initial_members"><![CDATA[Invite Members]]></string>
+    <string name="_bx_spaces_form_profile_input_sys_parent_space"><![CDATA[Parent Space]]></string>
+    <string name="_bx_spaces_form_profile_input_parent_space"><![CDATA[Parent Space]]></string>
+    <string name="_bx_spaces_form_profile_input_sys_space_name"><![CDATA[Space Name]]></string>
+    <string name="_bx_spaces_form_profile_input_space_name"><![CDATA[Space Name]]></string>
+    <string name="_bx_spaces_form_profile_input_space_name_err"><![CDATA[This information is essential. Please, fill in this field.]]></string>
+    <string name="_bx_spaces_form_profile_input_sys_space_desc"><![CDATA[Description]]></string>
+    <string name="_bx_spaces_form_profile_input_space_desc"><![CDATA[Description]]></string>
+    <string name="_bx_spaces_form_profile_input_sys_space_cat"><![CDATA[Category]]></string>
+    <string name="_bx_spaces_form_profile_input_space_cat"><![CDATA[Category]]></string>
+    <string name="_bx_spaces_form_profile_input_space_cat_err"><![CDATA[Category field is mandatory]]></string>
+    <string name="_bx_spaces_form_profile_input_sys_picture"><![CDATA[Space Picture]]></string>
+    <string name="_bx_spaces_form_profile_input_picture"><![CDATA[Upload New Space Picture]]></string>
+    <string name="_bx_spaces_form_profile_input_picture_err"><![CDATA[Space picture is mandatory.]]></string>
+    <string name="_bx_spaces_form_profile_input_sys_cover"><![CDATA[Cover Picture]]></string>
+    <string name="_bx_spaces_form_profile_input_cover"><![CDATA[Upload New Cover Picture]]></string>
+    <string name="_bx_spaces_form_profile_input_sys_delete_confirm"><![CDATA[Delete confirmation]]></string>
+    <string name="_bx_spaces_form_profile_input_delete_confirm"><![CDATA[I am sure I want to delete this space]]></string>
+    <string name="_bx_spaces_form_profile_input_delete_confirm_info"><![CDATA[This action can not be undone.]]></string>
+    <string name="_bx_spaces_form_profile_input_delete_confirm_error"><![CDATA[Please check this checkbox if you really want to delete space.]]></string>
+
+    <string name="_bx_spaces_acl_action_create_profile"><![CDATA[Create Space]]></string>
+    <string name="_bx_spaces_acl_action_delete_profile"><![CDATA[Delete Space]]></string>
+    <string name="_bx_spaces_acl_action_view_profile"><![CDATA[View Space]]></string>
+    <string name="_bx_spaces_acl_action_edit_any_profile"><![CDATA[Edit Any Space]]></string>
+    <string name="_bx_spaces_acl_action_delete_invites"><![CDATA[Delete Invites]]></string>
 	
 	<string name="_bx_spaces_page_title_sys_joined_entries"><![CDATA[Profile Spaces]]></string>
 	<string name="_bx_spaces_page_title_joined_entries"><![CDATA[Profile Spaces]]></string>
@@ -261,80 +262,82 @@
 	<string name="_bx_spaces_search_extended"><![CDATA[Spaces Search]]></string>
 	<string name="_bx_spaces_search_extended_cmts"><![CDATA[Spaces Comments Search]]></string>
 
-  <string name="_bx_spaces_err_delete_child_presend"><![CDATA[Cannot delete this space because there are child elements.]]></string>
-	<string name="_bx_spaces_txt_account_pending"><![CDATA[This space is pending approval, please wait until it is activated.]]></string>
-	<string name="_bx_spaces_txt_account_suspended"><![CDATA[This space is suspended.]]></string>
-	<string name="_bx_spaces_txt_N_fans"><![CDATA[{0} members]]></string>
-        <string name="_bx_spaces_txt_role"><![CDATA[Role]]></string>
-	<string name="_bx_spaces_txt_sample_single"><![CDATA[space]]></string>
-	<string name="_bx_spaces_txt_sample_single_with_article"><![CDATA[a space]]></string>
-	<string name="_bx_spaces_txt_sample_comment_single"><![CDATA[comment to space]]></string>
-	<string name="_bx_spaces_txt_sample_vote_single"><![CDATA[vote to space]]></string>
-        <string name="_bx_spaces_txt_sample_score_up_single"><![CDATA[score up vote to space]]></string>
-        <string name="_bx_spaces_txt_sample_score_down_single"><![CDATA[score down vote to space]]></string>
-        <string name="_bx_spaces_txt_set_role"><![CDATA[Set Role]]></string>
-	<string name="_bx_spaces_txt_private_space"><![CDATA[Private space]]></string>
-  <string name="_bx_spaces_txt_invite_popup_text"><![CDATA[You have been invited to a space. Click the button below to accept the invitation.]]></string>
-  <string name="_bx_spaces_txt_invite_popup_title"><![CDATA[Invitation to a space]]></string>
-  <string name="_bx_spaces_txt_invite_popup_button_accept"><![CDATA[Accept]]></string>
-  <string name="_bx_spaces_txt_invite_popup_button_decline"><![CDATA[Decline]]></string>
-  <string name="_bx_spaces_txt_invite_popup_error_invitation_absent"><![CDATA[Sorry, an error has occurred. You can not join this space. The invitation is expired or deleted.]]></string>
-  <string name="_bx_spaces_txt_invite_popup_error_invitation_wrong_user"><![CDATA[Sorry, an error has occurred. You can not join this space. This invitation cannot be used by you.]]></string>
+    <string name="_bx_spaces_err_delete_child_presend"><![CDATA[Cannot delete this space because there are child elements.]]></string>
+    <string name="_bx_spaces_txt_account_pending"><![CDATA[This space is pending approval, please wait until it is activated.]]></string>
+    <string name="_bx_spaces_txt_account_suspended"><![CDATA[This space is suspended.]]></string>
+    <string name="_bx_spaces_txt_N_fans"><![CDATA[{0} members]]></string>
+    <string name="_bx_spaces_txt_role"><![CDATA[Role]]></string>
+    <string name="_bx_spaces_txt_sample_single"><![CDATA[space]]></string>
+    <string name="_bx_spaces_txt_sample_single_with_article"><![CDATA[a space]]></string>
+    <string name="_bx_spaces_txt_sample_comment_single"><![CDATA[comment to space]]></string>
+    <string name="_bx_spaces_txt_sample_vote_single"><![CDATA[vote to space]]></string>
+    <string name="_bx_spaces_txt_sample_score_up_single"><![CDATA[score up vote to space]]></string>
+    <string name="_bx_spaces_txt_sample_score_down_single"><![CDATA[score down vote to space]]></string>
+    <string name="_bx_spaces_txt_set_role"><![CDATA[Set Role]]></string>
+    <string name="_bx_spaces_txt_private_space"><![CDATA[Private space]]></string>
+    <string name="_bx_spaces_txt_invite_popup_text"><![CDATA[You have been invited to a space. Click the button below to accept the invitation.]]></string>
+    <string name="_bx_spaces_txt_invite_popup_title"><![CDATA[Invitation to a space]]></string>
+    <string name="_bx_spaces_txt_invite_popup_button_accept"><![CDATA[Accept]]></string>
+    <string name="_bx_spaces_txt_invite_popup_button_decline"><![CDATA[Decline]]></string>
+    <string name="_bx_spaces_txt_invite_popup_error_invitation_absent"><![CDATA[Sorry, an error has occurred. You can not join this space. The invitation is expired or deleted.]]></string>
+    <string name="_bx_spaces_txt_invite_popup_error_invitation_wrong_user"><![CDATA[Sorry, an error has occurred. You can not join this space. This invitation cannot be used by you.]]></string>
 	
-	<string name="_bx_spaces_alert_action_fan_added"><![CDATA[member joined]]></string>
-	<string name="_bx_spaces_txt_ntfs_fan_added"><![CDATA[Space <b class="bx-ntfs-content-profile">{owner_name}</b> has got a member <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
-	<string name="_bx_spaces_alert_action_join_request"><![CDATA[join request]]></string>
-	<string name="_bx_spaces_txt_ntfs_join_request"><![CDATA[Space <b class="bx-ntfs-content-profile">{owner_name}</b> has a join request from <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
-	<string name="_bx_spaces_txt_ntfs_timeline_post_common"><![CDATA[New post <b class="bx-ntfs-content-entry">{subentry_sample}</b> in <b class="bx-ntfs-content-profile">{owner_name}</b> space timeline]]></string>
-	
-	<string name="_bx_spaces_pre_lists_cats"><![CDATA[Space categories]]></string>
-	<string name="_bx_spaces_cat_General"><![CDATA[General]]></string>
-	<string name="_bx_spaces_cat_Business"><![CDATA[Business]]></string>
-	<string name="_bx_spaces_cat_Interests"><![CDATA[Interests]]></string>
-	<string name="_bx_spaces_cat_Causes"><![CDATA[Causes]]></string>
-	<string name="_bx_spaces_cat_Fun"><![CDATA[Fun]]></string>
-	<string name="_bx_spaces_cat_Uncategorised"><![CDATA[Uncategorised]]></string>
+    <string name="_bx_spaces_alert_action_fan_added"><![CDATA[member joined]]></string>
+    <string name="_bx_spaces_txt_ntfs_fan_added"><![CDATA[Space <b class="bx-ntfs-content-profile">{owner_name}</b> has got a member <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
+    <string name="_bx_spaces_alert_action_join_invitation_notif"><![CDATA[join invitation]]></string>
+    <string name="_bx_spaces_alert_action_join_request"><![CDATA[join request]]></string>
+    <string name="_bx_spaces_txt_ntfs_join_invitation"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b> space's representative invites <b class="bx-ntfs-content-entry">{subentry_sample}</b> to join space]]></string>
+    <string name="_bx_spaces_txt_ntfs_join_request"><![CDATA[Space <b class="bx-ntfs-content-profile">{owner_name}</b> has a join request from <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
+    <string name="_bx_spaces_txt_ntfs_timeline_post_common"><![CDATA[New post <b class="bx-ntfs-content-entry">{subentry_sample}</b> in <b class="bx-ntfs-content-profile">{owner_name}</b> space timeline]]></string>
+
+    <string name="_bx_spaces_pre_lists_cats"><![CDATA[Space categories]]></string>
+    <string name="_bx_spaces_cat_General"><![CDATA[General]]></string>
+    <string name="_bx_spaces_cat_Business"><![CDATA[Business]]></string>
+    <string name="_bx_spaces_cat_Interests"><![CDATA[Interests]]></string>
+    <string name="_bx_spaces_cat_Causes"><![CDATA[Causes]]></string>
+    <string name="_bx_spaces_cat_Fun"><![CDATA[Fun]]></string>
+    <string name="_bx_spaces_cat_Uncategorised"><![CDATA[Uncategorised]]></string>
 
     <string name="_bx_spaces_pre_lists_roles"><![CDATA[Space roles]]></string>
     <string name="_bx_spaces_role_regular"><![CDATA[Regular]]></string>
     <string name="_bx_spaces_role_administrator"><![CDATA[Administrator]]></string>
     <string name="_bx_spaces_role_moderator"><![CDATA[Moderator]]></string>
 
-	<string name="_bx_spaces_email_join_request"><![CDATA[Space join request]]></string>
-	<string name="_bx_spaces_email_join_request_subject"><![CDATA[Request to join your space]]></string>
-	<string name="_bx_spaces_email_join_request_body"><![CDATA[{email_header}
-	<p>New request to join <a href="{EntryUrl}">{EntryTitle}</a> space from <a href="{NewMemberUrl}">{NewMemberDisplayName}</a></p>
-	{email_footer}]]></string>
-	
-	<string name="_bx_spaces_email_join_reject"><![CDATA[Space join request was rejected]]></string>
-	<string name="_bx_spaces_email_join_reject_subject"><![CDATA[Request to join a space was rejected]]></string>
-	<string name="_bx_spaces_email_join_reject_body"><![CDATA[{email_header}
-	<p>Your request to join <a href="{EntryUrl}">{EntryTitle}</a> space was rejected by space admin.</p>
-	{email_footer}]]></string>
-	
-	<string name="_bx_spaces_email_join_confirm"><![CDATA[Space join request was confirmed]]></string>
-	<string name="_bx_spaces_email_join_confirm_subject"><![CDATA[Your request to join a space was confirmed]]></string>
-	<string name="_bx_spaces_email_join_confirm_body"><![CDATA[{email_header}
-	<p>Your request to join <a href="{EntryUrl}">{EntryTitle}</a> space was confirmed by the space admin.</p>
-	{email_footer}]]></string>
-	
-	<string name="_bx_spaces_email_fan_remove"><![CDATA[Profile was removed from space fans]]></string>
-	<string name="_bx_spaces_email_fan_remove_subject"><![CDATA[Your profile was removed from the space]]></string>
-	<string name="_bx_spaces_email_fan_remove_body"><![CDATA[{email_header}
-	<p>Your profile was removed from <a href="{EntryUrl}">{EntryTitle}</a> space by the space admin.</p>
-	{email_footer}]]></string>
-	
-	<string name="_bx_spaces_email_fan_become_admin"><![CDATA[Space admin status was granted]]></string>
-	<string name="_bx_spaces_email_fan_become_admin_subject"><![CDATA[You are a space admin now]]></string>
-	<string name="_bx_spaces_email_fan_become_admin_body"><![CDATA[{email_header}
-	<p>You are an admin of <a href="{EntryUrl}">{EntryTitle}</a> space now.</p>
-	{email_footer}]]></string>
-	
-	<string name="_bx_spaces_email_admin_become_fan"><![CDATA[Space admin status was revoked]]></string>
-	<string name="_bx_spaces_email_admin_become_fan_subject"><![CDATA[Your space admin status was revoked]]></string>
-	<string name="_bx_spaces_email_admin_become_fan_body"><![CDATA[{email_header}
-	<p>Your admin status was revoked from <a href="{EntryUrl}">{EntryTitle}</a> space.</p>
-	{email_footer}]]></string>
+    <string name="_bx_spaces_email_join_request"><![CDATA[Space join request]]></string>
+    <string name="_bx_spaces_email_join_request_subject"><![CDATA[Request to join your space]]></string>
+    <string name="_bx_spaces_email_join_request_body"><![CDATA[{email_header}
+    <p>New request to join <a href="{EntryUrl}">{EntryTitle}</a> space from <a href="{NewMemberUrl}">{NewMemberDisplayName}</a></p>
+    {email_footer}]]></string>
+
+    <string name="_bx_spaces_email_join_reject"><![CDATA[Space join request was rejected]]></string>
+    <string name="_bx_spaces_email_join_reject_subject"><![CDATA[Request to join a space was rejected]]></string>
+    <string name="_bx_spaces_email_join_reject_body"><![CDATA[{email_header}
+    <p>Your request to join <a href="{EntryUrl}">{EntryTitle}</a> space was rejected by space admin.</p>
+    {email_footer}]]></string>
+
+    <string name="_bx_spaces_email_join_confirm"><![CDATA[Space join request was confirmed]]></string>
+    <string name="_bx_spaces_email_join_confirm_subject"><![CDATA[Your request to join a space was confirmed]]></string>
+    <string name="_bx_spaces_email_join_confirm_body"><![CDATA[{email_header}
+    <p>Your request to join <a href="{EntryUrl}">{EntryTitle}</a> space was confirmed by the space admin.</p>
+    {email_footer}]]></string>
+
+    <string name="_bx_spaces_email_fan_remove"><![CDATA[Profile was removed from space fans]]></string>
+    <string name="_bx_spaces_email_fan_remove_subject"><![CDATA[Your profile was removed from the space]]></string>
+    <string name="_bx_spaces_email_fan_remove_body"><![CDATA[{email_header}
+    <p>Your profile was removed from <a href="{EntryUrl}">{EntryTitle}</a> space by the space admin.</p>
+    {email_footer}]]></string>
+
+    <string name="_bx_spaces_email_fan_become_admin"><![CDATA[Space admin status was granted]]></string>
+    <string name="_bx_spaces_email_fan_become_admin_subject"><![CDATA[You are a space admin now]]></string>
+    <string name="_bx_spaces_email_fan_become_admin_body"><![CDATA[{email_header}
+    <p>You are an admin of <a href="{EntryUrl}">{EntryTitle}</a> space now.</p>
+    {email_footer}]]></string>
+
+    <string name="_bx_spaces_email_admin_become_fan"><![CDATA[Space admin status was revoked]]></string>
+    <string name="_bx_spaces_email_admin_become_fan_subject"><![CDATA[Your space admin status was revoked]]></string>
+    <string name="_bx_spaces_email_admin_become_fan_body"><![CDATA[{email_header}
+    <p>Your admin status was revoked from <a href="{EntryUrl}">{EntryTitle}</a> space.</p>
+    {email_footer}]]></string>
 
     <string name="_bx_spaces_email_set_role"><![CDATA[Space member status was changed]]></string>
     <string name="_bx_spaces_email_set_role_subject"><![CDATA[Your space status was changed]]></string>
@@ -342,9 +345,9 @@
 <p>Your status in <a href="{EntryUrl}">{EntryTitle}</a> space was changed to <b>{Role}</b>.</p>
 {email_footer}]]></string>
 
-	<string name="_bx_spaces_email_invitation"><![CDATA[Invitation to space]]></string>
-	<string name="_bx_spaces_email_invitation_subject"><![CDATA[Invitation to "{EntryTitle}" space]]></string>
-	<string name="_bx_spaces_email_invitation_body"><![CDATA[{email_header}
-	<p><a href="{InviterUrl}">{InviterDisplayName}</a> invited you to <a href="{EntryUrl}">{EntryTitle} space</a>.</p>
-	{email_footer}]]></string>
+    <string name="_bx_spaces_email_invitation"><![CDATA[Invitation to space]]></string>
+    <string name="_bx_spaces_email_invitation_subject"><![CDATA[Invitation to "{EntryTitle}" space]]></string>
+    <string name="_bx_spaces_email_invitation_body"><![CDATA[{email_header}
+    <p><a href="{InviterUrl}">{InviterDisplayName}</a> invited you to <a href="{EntryUrl}">{EntryTitle} space</a>.</p>
+    {email_footer}]]></string>
 </resources>

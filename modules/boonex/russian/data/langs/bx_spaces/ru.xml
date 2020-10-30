@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
-
     <string name="_bx_spaces"><![CDATA[Пространства]]></string>
     <string name="_bx_spaces_cmts"><![CDATA[Пространства - Комментарии]]></string>
 
@@ -11,6 +10,7 @@
     <string name="_bx_spaces_option_searchable_fields"><![CDATA[Поля для поиска]]></string>
     <string name="_bx_spaces_option_members_mode"><![CDATA[Спец. режим для членов пространства]]></string>
     <string name="_bx_spaces_option_members_mode_multi_roles"><![CDATA[Множественные роли]]></string>
+    <string name="_bx_spaces_option_internal_notifications"><![CDATA[Использовать встроенную нотификацию]]></string>
 
     <string name="_bx_spaces_form_profile"><![CDATA[Пространства]]></string>
     <string name="_bx_spaces_form_profile_display_add"><![CDATA[Добавление пространства]]></string>
@@ -30,8 +30,8 @@
     <string name="_bx_spaces_form_profile_input_sys_allow_post_to"><![CDATA[Оставлять сообщения в профиле могут]]></string>
     <string name="_bx_spaces_form_profile_input_allow_post_to"><![CDATA[Оставлять сообщения в профиле могут]]></string>
     <string name="_bx_spaces_form_profile_input_sys_initial_members"><![CDATA[Пригласить участников]]></string>
-	<string name="_bx_spaces_form_profile_input_sys_parent_space"><![CDATA[Родительское пространство]]></string>
-  	<string name="_bx_spaces_form_profile_input_parent_space"><![CDATA[Родительское пространство]]></string>
+    <string name="_bx_spaces_form_profile_input_sys_parent_space"><![CDATA[Родительское пространство]]></string>
+    <string name="_bx_spaces_form_profile_input_parent_space"><![CDATA[Родительское пространство]]></string>
     <string name="_bx_spaces_form_profile_input_initial_members"><![CDATA[Пригласить участников]]></string>
     <string name="_bx_spaces_form_profile_input_sys_group_name"><![CDATA[Название пространства]]></string>
     <string name="_bx_spaces_form_profile_input_group_name"><![CDATA[Название пространства]]></string>
@@ -39,17 +39,17 @@
     <string name="_bx_spaces_form_profile_input_sys_group_desc"><![CDATA[Описание]]></string>
     <string name="_bx_spaces_form_profile_input_group_desc"><![CDATA[Описание]]></string>
     <string name="_bx_spaces_form_profile_input_sys_group_cat"><![CDATA[Категория]]></string>
-	<string name="_bx_spaces_form_profile_input_group_cat"><![CDATA[Категория]]></string>
+    <string name="_bx_spaces_form_profile_input_group_cat"><![CDATA[Категория]]></string>
     <string name="_bx_spaces_form_profile_input_group_cat_err"><![CDATA[Поле категории необходимо]]></string>
-	<string name="_bx_spaces_form_profile_input_sys_picture"><![CDATA[Картинка пространства]]></string>
-	<string name="_bx_spaces_form_profile_input_picture"><![CDATA[Загрузить новую картинку пространства]]></string>
-	<string name="_bx_spaces_form_profile_input_picture_err"><![CDATA[Необходима картинка пространства.]]></string>
-	<string name="_bx_spaces_form_profile_input_sys_cover"><![CDATA[Картинка обложки]]></string>
-	<string name="_bx_spaces_form_profile_input_cover"><![CDATA[Загрузить новую картинку обложки]]></string>
-	<string name="_bx_spaces_form_profile_input_sys_delete_confirm"><![CDATA[Подтверждение на удаление]]></string>
-	<string name="_bx_spaces_form_profile_input_delete_confirm"><![CDATA[Я уверен, что хочу удалить эту пространство]]></string>
-	<string name="_bx_spaces_form_profile_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено.]]></string>
-	<string name="_bx_spaces_form_profile_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если действительно хотите удалить пространство.]]></string>
+    <string name="_bx_spaces_form_profile_input_sys_picture"><![CDATA[Картинка пространства]]></string>
+    <string name="_bx_spaces_form_profile_input_picture"><![CDATA[Загрузить новую картинку пространства]]></string>
+    <string name="_bx_spaces_form_profile_input_picture_err"><![CDATA[Необходима картинка пространства.]]></string>
+    <string name="_bx_spaces_form_profile_input_sys_cover"><![CDATA[Картинка обложки]]></string>
+    <string name="_bx_spaces_form_profile_input_cover"><![CDATA[Загрузить новую картинку обложки]]></string>
+    <string name="_bx_spaces_form_profile_input_sys_delete_confirm"><![CDATA[Подтверждение на удаление]]></string>
+    <string name="_bx_spaces_form_profile_input_delete_confirm"><![CDATA[Я уверен, что хочу удалить эту пространство]]></string>
+    <string name="_bx_spaces_form_profile_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено.]]></string>
+    <string name="_bx_spaces_form_profile_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если действительно хотите удалить пространство.]]></string>
 
 	<string name="_bx_spaces_acl_action_create_profile"><![CDATA[Создать пространство]]></string>
 	<string name="_bx_spaces_acl_action_delete_profile"><![CDATA[Удалить пространство]]></string>
@@ -262,7 +262,7 @@
     <string name="_bx_spaces_search_extended"><![CDATA[Поиск пространств]]></string>
     <string name="_bx_spaces_search_extended_cmts"><![CDATA[Поиск комментариев к пространством]]></string>
 
-	<string name="_bx_spaces_err_delete_child_presend"><![CDATA[Невозможно удалить пространство, т.к. оно используется другими в качестве родительского.]]></string>
+    <string name="_bx_spaces_err_delete_child_presend"><![CDATA[Невозможно удалить пространство, т.к. оно используется другими в качестве родительского.]]></string>
     <string name="_bx_spaces_txt_account_pending"><![CDATA[Эта пространство ожидает одобрения. Пожалуйста, дождитесь ее активации.]]></string>
     <string name="_bx_spaces_txt_account_suspended"><![CDATA[Эта пространство заблокирована.]]></string>
     <string name="_bx_spaces_txt_N_fans"><![CDATA[{0} участников]]></string>
@@ -275,16 +275,18 @@
     <string name="_bx_spaces_txt_sample_score_down_single"><![CDATA[голос против пространства]]></string>
     <string name="_bx_spaces_txt_set_role"><![CDATA[Задать роль]]></string>
     <string name="_bx_spaces_txt_private_group"><![CDATA[Приватная пространство]]></string>
-	<string name="_bx_spaces_txt_invite_popup_text"><![CDATA[Вы были приглашены в это пространство.  Нажмите кнопку ниже чтобы принять приглашение.]]></string>
+    <string name="_bx_spaces_txt_invite_popup_text"><![CDATA[Вы были приглашены в это пространство.  Нажмите кнопку ниже чтобы принять приглашение.]]></string>
     <string name="_bx_spaces_txt_invite_popup_title"><![CDATA[Приглашение в пространство]]></string>
     <string name="_bx_spaces_txt_invite_popup_button_accept"><![CDATA[Принять]]></string>
     <string name="_bx_spaces_txt_invite_popup_button_decline"><![CDATA[Отклонить]]></string>
     <string name="_bx_spaces_txt_invite_popup_error_invitation_absent"><![CDATA[Извините, произошла ошибка. Вы не можете вступить в это пространство. Приглашение устарело или удалено.]]></string>
     <string name="_bx_spaces_txt_invite_popup_error_invitation_wrong_user"><![CDATA[Извините, произошла ошибка. Вы не можете вступить в это пространство. Приглашение адресовано не Вам.]]></string>
 	
-	<string name="_bx_spaces_alert_action_fan_added"><![CDATA[присоединение нового участника]]></string>
+    <string name="_bx_spaces_alert_action_fan_added"><![CDATA[присоединение нового участника]]></string>
     <string name="_bx_spaces_txt_ntfs_fan_added"><![CDATA[В пространство <b class="bx-ntfs-content-profile">{owner_name}</b> вступил <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
+    <string name="_bx_spaces_alert_action_join_invitation_notif"><![CDATA[приглашение вступить в группу]]></string>
     <string name="_bx_spaces_alert_action_join_request"><![CDATA[запрос на присоединение к пространству]]></string>
+    <string name="_bx_spaces_txt_ntfs_join_invitation"><![CDATA[Представитель пространства <b class="bx-ntfs-content-profile">{owner_name}</b> пригласил <b class="bx-ntfs-content-entry">{subentry_sample}</b> вступить в пространство]]></string>
     <string name="_bx_spaces_txt_ntfs_join_request"><![CDATA[В пространство <b class="bx-ntfs-content-profile">{owner_name}</b> хочет вступить <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
     <string name="_bx_spaces_txt_ntfs_timeline_post_common"><![CDATA[В пространству <b class="bx-ntfs-content-profile">{owner_name}</b> новая публикация <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
 

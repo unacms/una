@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
+    <string name="_bx_groups"><![CDATA[Группы]]></string>
+    <string name="_bx_groups_cmts"><![CDATA[Группы - Комментарии]]></string>
 
-	<string name="_bx_groups"><![CDATA[Группы]]></string>
-	<string name="_bx_groups_cmts"><![CDATA[Группы - Комментарии]]></string>
-
-	<string name="_bx_groups_option_num_connections_quick"><![CDATA[Количество элементов в блоке друзей]]></string>
-	<string name="_bx_groups_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
+    <string name="_bx_groups_option_num_connections_quick"><![CDATA[Количество элементов в блоке друзей]]></string>
+    <string name="_bx_groups_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
     <string name="_bx_groups_option_num_rss"><![CDATA[Количество элементов в ленте RSS]]></string>
     <string name="_bx_groups_option_searchable_fields"><![CDATA[Поля для поиска]]></string>
     <string name="_bx_groups_option_members_mode"><![CDATA[Спец. режим для членов группы]]></string>
     <string name="_bx_groups_option_members_mode_multi_roles"><![CDATA[Множественные роли]]></string>
     <string name="_bx_groups_option_members_mode_paid_join"><![CDATA[Платное присоединение]]></string>
     <string name="_bx_groups_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
+    <string name="_bx_groups_option_internal_notifications"><![CDATA[Использовать встроенную нотификацию]]></string>
 
-	<string name="_bx_groups_form_profile"><![CDATA[Группы]]></string>
-	<string name="_bx_groups_form_profile_display_add"><![CDATA[Добавление группы]]></string>
-	<string name="_bx_groups_form_profile_display_edit"><![CDATA[Редактирование группы]]></string>
-	<string name="_bx_groups_form_profile_display_edit_cover"><![CDATA[Редактирование обложки]]></string>
-	<string name="_bx_groups_form_profile_display_delete"><![CDATA[Удаление группы]]></string>
-	<string name="_bx_groups_form_profile_display_view"><![CDATA[Просмотр группы]]></string>
+    <string name="_bx_groups_form_profile"><![CDATA[Группы]]></string>
+    <string name="_bx_groups_form_profile_display_add"><![CDATA[Добавление группы]]></string>
+    <string name="_bx_groups_form_profile_display_edit"><![CDATA[Редактирование группы]]></string>
+    <string name="_bx_groups_form_profile_display_edit_cover"><![CDATA[Редактирование обложки]]></string>
+    <string name="_bx_groups_form_profile_display_delete"><![CDATA[Удаление группы]]></string>
+    <string name="_bx_groups_form_profile_display_view"><![CDATA[Просмотр группы]]></string>
     <string name="_bx_groups_form_profile_display_view_full"><![CDATA[Полный просмотр группы]]></string>
     <string name="_bx_groups_form_profile_display_invite"><![CDATA[Приглашение в группу]]></string>
     <string name="_bx_groups_form_entry_input_author"><![CDATA[Автор]]></string>
-	<string name="_bx_groups_form_profile_input_sys_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_groups_form_profile_input_sys_do_submit"><![CDATA[Выполнить]]></string>
     <string name="_bx_groups_form_profile_input_sys_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
     <string name="_bx_groups_form_profile_input_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
     <string name="_bx_groups_form_profile_input_sys_allow_view_to"><![CDATA[Доступена для]]></string>
@@ -38,20 +38,20 @@
     <string name="_bx_groups_form_profile_input_sys_group_desc"><![CDATA[Описание]]></string>
     <string name="_bx_groups_form_profile_input_group_desc"><![CDATA[Описание]]></string>
     <string name="_bx_groups_form_profile_input_sys_group_cat"><![CDATA[Категория]]></string>
-	<string name="_bx_groups_form_profile_input_group_cat"><![CDATA[Категория]]></string>
+    <string name="_bx_groups_form_profile_input_group_cat"><![CDATA[Категория]]></string>
     <string name="_bx_groups_form_profile_input_group_cat_err"><![CDATA[Поле категории необходимо]]></string>
-	<string name="_bx_groups_form_profile_input_sys_picture"><![CDATA[Картинка группы]]></string>
-	<string name="_bx_groups_form_profile_input_picture"><![CDATA[Загрузить новую картинку группы]]></string>
-	<string name="_bx_groups_form_profile_input_picture_err"><![CDATA[Необходима картинка группы.]]></string>
-	<string name="_bx_groups_form_profile_input_sys_cover"><![CDATA[Картинка обложки]]></string>
-	<string name="_bx_groups_form_profile_input_cover"><![CDATA[Загрузить новую картинку обложки]]></string>
-	<string name="_bx_groups_form_profile_input_sys_delete_confirm"><![CDATA[Подтверждение на удаление]]></string>
-	<string name="_bx_groups_form_profile_input_delete_confirm"><![CDATA[Я уверен, что хочу удалить эту группу]]></string>
-	<string name="_bx_groups_form_profile_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено.]]></string>
-	<string name="_bx_groups_form_profile_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если действительно хотите удалить группу.]]></string>
-  <string name="_bx_groups_form_entry_input_allow_view_favorite_list"><![CDATA[Видимость]]></string>
+    <string name="_bx_groups_form_profile_input_sys_picture"><![CDATA[Картинка группы]]></string>
+    <string name="_bx_groups_form_profile_input_picture"><![CDATA[Загрузить новую картинку группы]]></string>
+    <string name="_bx_groups_form_profile_input_picture_err"><![CDATA[Необходима картинка группы.]]></string>
+    <string name="_bx_groups_form_profile_input_sys_cover"><![CDATA[Картинка обложки]]></string>
+    <string name="_bx_groups_form_profile_input_cover"><![CDATA[Загрузить новую картинку обложки]]></string>
+    <string name="_bx_groups_form_profile_input_sys_delete_confirm"><![CDATA[Подтверждение на удаление]]></string>
+    <string name="_bx_groups_form_profile_input_delete_confirm"><![CDATA[Я уверен, что хочу удалить эту группу]]></string>
+    <string name="_bx_groups_form_profile_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено.]]></string>
+    <string name="_bx_groups_form_profile_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если действительно хотите удалить группу.]]></string>
+    <string name="_bx_groups_form_entry_input_allow_view_favorite_list"><![CDATA[Видимость]]></string>
 
-  <string name="_bx_groups_form_price"><![CDATA[Цена]]></string>
+    <string name="_bx_groups_form_price"><![CDATA[Цена]]></string>
     <string name="_bx_groups_form_price_display_add"><![CDATA[Добавление]]></string>
     <string name="_bx_groups_form_price_display_edit"><![CDATA[Редактирование]]></string>
     <string name="_bx_groups_form_price_input_sys_id"><![CDATA[ID]]></string>
@@ -360,7 +360,9 @@
 
     <string name="_bx_groups_alert_action_fan_added"><![CDATA[присоединение нового участника]]></string>
     <string name="_bx_groups_txt_ntfs_fan_added"><![CDATA[В группу <b class="bx-ntfs-content-profile">{owner_name}</b> вступил <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
+    <string name="_bx_groups_alert_action_join_invitation_notif"><![CDATA[приглашение вступить в группу]]></string>
     <string name="_bx_groups_alert_action_join_request"><![CDATA[запрос на присоединение к группе]]></string>
+    <string name="_bx_groups_txt_ntfs_join_invitation"><![CDATA[Представитель группы <b class="bx-ntfs-content-profile">{owner_name}</b> пригласил <b class="bx-ntfs-content-entry">{subentry_sample}</b> вступить в группу]]></string>
     <string name="_bx_groups_txt_ntfs_join_request"><![CDATA[В группу <b class="bx-ntfs-content-profile">{owner_name}</b> хочет вступить <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
     <string name="_bx_groups_txt_ntfs_timeline_post_common"><![CDATA[В группе <b class="bx-ntfs-content-profile">{owner_name}</b> новая публикация <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
 

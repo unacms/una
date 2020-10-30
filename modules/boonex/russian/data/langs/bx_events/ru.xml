@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
+    <string name="_bx_events"><![CDATA[События]]></string>
+    <string name="_bx_events_cmts"><![CDATA[События - Комментарии]]></string>
 
-	<string name="_bx_events"><![CDATA[События]]></string>
-	<string name="_bx_events_cmts"><![CDATA[События - Комментарии]]></string>
-
-	<string name="_bx_events_option_num_connections_quick"><![CDATA[Количество элементов в блоке друзей]]></string>
+    <string name="_bx_events_option_num_connections_quick"><![CDATA[Количество элементов в блоке друзей]]></string>
     <string name="_bx_events_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
-	<string name="_bx_events_option_num_rss"><![CDATA[Количество элементов в ленте RSS]]></string>
+    <string name="_bx_events_option_num_rss"><![CDATA[Количество элементов в ленте RSS]]></string>
     <string name="_bx_events_option_time_format"><![CDATA[Формат времени]]></string>
     <string name="_bx_events_option_short_date_format"><![CDATA[Короткий формат даты]]></string>
     <string name="_bx_events_option_datetime_format"><![CDATA[Формат даты со временем]]></string>
@@ -14,17 +13,18 @@
     <string name="_bx_events_option_searchable_fields"><![CDATA[Поля для поиска]]></string>
     <string name="_bx_events_option_public_subscribed_me"><![CDATA[Открытый список заинтересованных пользователей]]></string>
     <string name="_bx_events_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
+    <string name="_bx_events_option_internal_notifications"><![CDATA[Использовать встроенную нотификацию]]></string>
 
-	<string name="_bx_events_form_profile"><![CDATA[События]]></string>
-	<string name="_bx_events_form_profile_display_add"><![CDATA[Добавление события]]></string>
-	<string name="_bx_events_form_profile_display_edit"><![CDATA[Редактирование события]]></string>
-	<string name="_bx_events_form_profile_display_edit_cover"><![CDATA[Редактирование обложки]]></string>
-	<string name="_bx_events_form_profile_display_delete"><![CDATA[Удаление события]]></string>
-	<string name="_bx_events_form_profile_display_view"><![CDATA[Просмотр события]]></string>
+    <string name="_bx_events_form_profile"><![CDATA[События]]></string>
+    <string name="_bx_events_form_profile_display_add"><![CDATA[Добавление события]]></string>
+    <string name="_bx_events_form_profile_display_edit"><![CDATA[Редактирование события]]></string>
+    <string name="_bx_events_form_profile_display_edit_cover"><![CDATA[Редактирование обложки]]></string>
+    <string name="_bx_events_form_profile_display_delete"><![CDATA[Удаление события]]></string>
+    <string name="_bx_events_form_profile_display_view"><![CDATA[Просмотр события]]></string>
     <string name="_bx_events_form_profile_display_view_full"><![CDATA[Полный просмотр события]]></string>
     <string name="_bx_events_form_profile_display_invite"><![CDATA[Приглашение на событие]]></string>
     <string name="_bx_events_form_profile_input_author"><![CDATA[Автор]]></string>
-	<string name="_bx_events_form_profile_input_sys_do_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_events_form_profile_input_sys_do_submit"><![CDATA[Выполнить]]></string>
     <string name="_bx_events_form_profile_input_sys_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
     <string name="_bx_events_form_profile_input_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
     <string name="_bx_events_form_profile_input_sys_allow_view_to"><![CDATA[Доступено для]]></string>
@@ -40,17 +40,17 @@
     <string name="_bx_events_form_profile_input_sys_event_desc"><![CDATA[Описание]]></string>
     <string name="_bx_events_form_profile_input_event_desc"><![CDATA[Описание]]></string>
     <string name="_bx_events_form_profile_input_sys_event_cat"><![CDATA[Категория]]></string>
-	<string name="_bx_events_form_profile_input_event_cat"><![CDATA[Категория]]></string>
+    <string name="_bx_events_form_profile_input_event_cat"><![CDATA[Категория]]></string>
     <string name="_bx_events_form_profile_input_event_cat_err"><![CDATA[Поле категории обязатаельное]]></string>
-	<string name="_bx_events_form_profile_input_sys_picture"><![CDATA[Картинка события]]></string>
-	<string name="_bx_events_form_profile_input_picture"><![CDATA[Загрузить новую картинку события]]></string>
-	<string name="_bx_events_form_profile_input_picture_err"><![CDATA[Картинка события обязательна]]></string>
-	<string name="_bx_events_form_profile_input_sys_cover"><![CDATA[Картинка обложки]]></string>
-	<string name="_bx_events_form_profile_input_cover"><![CDATA[Загрузить новую картинку обложки]]></string>
-	<string name="_bx_events_form_profile_input_sys_delete_confirm"><![CDATA[Подтверждение на удаление]]></string>
-	<string name="_bx_events_form_profile_input_delete_confirm"><![CDATA[Я уверен, что хочу удалить эту группу]]></string>
-	<string name="_bx_events_form_profile_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено.]]></string>
-	<string name="_bx_events_form_profile_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если действительно хотите удалить группу.]]></string>
+    <string name="_bx_events_form_profile_input_sys_picture"><![CDATA[Картинка события]]></string>
+    <string name="_bx_events_form_profile_input_picture"><![CDATA[Загрузить новую картинку события]]></string>
+    <string name="_bx_events_form_profile_input_picture_err"><![CDATA[Картинка события обязательна]]></string>
+    <string name="_bx_events_form_profile_input_sys_cover"><![CDATA[Картинка обложки]]></string>
+    <string name="_bx_events_form_profile_input_cover"><![CDATA[Загрузить новую картинку обложки]]></string>
+    <string name="_bx_events_form_profile_input_sys_delete_confirm"><![CDATA[Подтверждение на удаление]]></string>
+    <string name="_bx_events_form_profile_input_delete_confirm"><![CDATA[Я уверен, что хочу удалить эту группу]]></string>
+    <string name="_bx_events_form_profile_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено.]]></string>
+    <string name="_bx_events_form_profile_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если действительно хотите удалить группу.]]></string>
     <string name="_bx_events_form_profile_input_sys_reoccurring"><![CDATA[Повторяющееся событие]]></string>
     <string name="_bx_events_form_profile_input_reoccurring"><![CDATA[Повторяющееся событие]]></string>
     <string name="_bx_events_form_profile_input_reoccurring_add_interval"><![CDATA[Добавить повторяющийся интервал]]></string>
@@ -332,26 +332,28 @@
     <string name="_bx_events_txt_all_entries_in"><![CDATA[<a href="{0}">Все события в {1} ({2})</a>]]></string>
     <string name="_bx_events_txt_account_suspended"><![CDATA[Это событие заблокировано.]]></string>
     <string name="_bx_events_txt_N_fans"><![CDATA[{0} участников]]></string>
-    <string name="_bx_groups_txt_role"><![CDATA[Роль]]></string>
+    <string name="_bx_events_txt_role"><![CDATA[Роль]]></string>
     <string name="_bx_events_txt_sample_single"><![CDATA[событие]]></string>
     <string name="_bx_events_txt_sample_single_with_article"><![CDATA[событие]]></string>
     <string name="_bx_events_txt_sample_comment_single"><![CDATA[комментарий к событию]]></string>
     <string name="_bx_events_txt_sample_vote_single"><![CDATA[голос за событие]]></string>
     <string name="_bx_events_txt_sample_score_up_single"><![CDATA[голос за событие]]></string>
     <string name="_bx_events_txt_sample_score_down_single"><![CDATA[голос против события]]></string>
-    <string name="_bx_groups_txt_set_role"><![CDATA[Задать роль]]></string>
+    <string name="_bx_events_txt_set_role"><![CDATA[Задать роль]]></string>
     <string name="_bx_events_txt_private_group"><![CDATA[Приватная группа]]></string>
     <string name="_bx_events_txt_from_time_to_time"><![CDATA[{0} - {1}]]></string>
-	<string name="_bx_events_txt_invite_popup_text"><![CDATA[Вы были приглашены на это собыите.  Нажмите кнопку ниже чтобы принять приглашение.]]></string>
+    <string name="_bx_events_txt_invite_popup_text"><![CDATA[Вы были приглашены на это собыите.  Нажмите кнопку ниже чтобы принять приглашение.]]></string>
     <string name="_bx_events_txt_invite_popup_title"><![CDATA[Приглашение на собыите]]></string>
     <string name="_bx_events_txt_invite_popup_button_accept"><![CDATA[Принять]]></string>
     <string name="_bx_events_txt_invite_popup_button_decline"><![CDATA[Отклонить]]></string>
     <string name="_bx_events_txt_invite_popup_error_invitation_absent"><![CDATA[Извините, произошла ошибка. Вы не можете присоединиться к этому событию. Приглашение устарело или удалено.]]></string>
     <string name="_bx_events_txt_invite_popup_error_invitation_wrong_user"><![CDATA[Извините, произошла ошибка. Вы не можете присоединиться к этому событию. Приглашение адресовано не Вам.]]></string>
 
-	<string name="_bx_events_alert_action_fan_added"><![CDATA[присоединение нового участника]]></string>
+    <string name="_bx_events_alert_action_fan_added"><![CDATA[присоединение нового участника]]></string>
     <string name="_bx_events_txt_ntfs_fan_added"><![CDATA[У события <b class="bx-ntfs-content-profile">{owner_name}</b> новый участник <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
+    <string name="_bx_events_alert_action_join_invitation_notif"><![CDATA[приглашение вступить в группу]]></string>
     <string name="_bx_events_alert_action_join_request"><![CDATA[запрос на присоединение к событию]]></string>
+    <string name="_bx_events_txt_ntfs_join_invitation"><![CDATA[Представитель события <b class="bx-ntfs-content-profile">{owner_name}</b> пригласил <b class="bx-ntfs-content-entry">{subentry_sample}</b> присоединиться к событию]]></string>
     <string name="_bx_events_txt_ntfs_join_request"><![CDATA[У события <b class="bx-ntfs-content-profile">{owner_name}</b> новый запрос на присоединение от <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
     <string name="_bx_events_txt_ntfs_timeline_post_common"><![CDATA[В событии <b class="bx-ntfs-content-profile">{owner_name}</b> новая публикация <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
 
@@ -380,10 +382,10 @@
     <string name="_bx_events_cat_Workshop"><![CDATA[Умелые ручки]]></string>
     <string name="_bx_events_cat_Other"><![CDATA[Другое]]></string>
 
-    <string name="_bx_groups_pre_lists_roles"><![CDATA[Роли в событиях]]></string>
-    <string name="_bx_groups_role_regular"><![CDATA[Обычный]]></string>
-    <string name="_bx_groups_role_administrator"><![CDATA[Администратор]]></string>
-    <string name="_bx_groups_role_moderator"><![CDATA[Модератор]]></string>
+    <string name="_bx_events_pre_lists_roles"><![CDATA[Роли в событиях]]></string>
+    <string name="_bx_events_role_regular"><![CDATA[Обычный]]></string>
+    <string name="_bx_events_role_administrator"><![CDATA[Администратор]]></string>
+    <string name="_bx_events_role_moderator"><![CDATA[Модератор]]></string>
 
     <string name="_bx_events_pre_lists_repeat_year"><![CDATA[Повторять: год]]></string>
     <string name="_bx_events_cat_repeat_year_every_year"><![CDATA[Каждый год]]></string>
@@ -470,9 +472,9 @@
 <p><a href="{InviterUrl}">{InviterDisplayName}</a> пригласил Вас на событие <a href="{EntryUrl}">{EntryTitle}</a>.</p>
 {email_footer}]]></string>
 
-    <string name="_bx_groups_email_set_role"><![CDATA[Изменение статуса в событии]]></string>
-    <string name="_bx_groups_email_set_role_subject"><![CDATA[Ваш статус в событии был изменен]]></string>
-    <string name="_bx_groups_email_set_role_body"><![CDATA[{email_header}
+    <string name="_bx_events_email_set_role"><![CDATA[Изменение статуса в событии]]></string>
+    <string name="_bx_events_email_set_role_subject"><![CDATA[Ваш статус в событии был изменен]]></string>
+    <string name="_bx_events_email_set_role_body"><![CDATA[{email_header}
 <p>Ваш статус в событии <a href="{EntryUrl}">{EntryTitle}</a> был изменен на <b>{Role}</b>.</p>
 {email_footer}]]></string>
 

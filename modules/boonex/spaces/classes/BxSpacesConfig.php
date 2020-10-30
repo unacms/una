@@ -77,6 +77,7 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
             'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_spaces_per_page_browse_recommended',
 
             'PARAM_MMODE' => 'bx_spaces_members_mode',
+            'PARAM_USE_IN' => 'bx_spaces_internal_notifications',
 
             // objects
             'OBJECT_STORAGE' => 'bx_spaces_pics',
@@ -175,6 +176,7 @@ class BxSpacesConfig extends BxBaseModGroupsConfig
                 'txt_sample_score_down_single' => '_bx_spaces_txt_sample_score_down_single',
                 'txt_private_group' => '_bx_spaces_txt_private_space',
                 'txt_N_fans' => '_bx_spaces_txt_N_fans',
+                'txt_ntfs_join_invitation' => '_bx_spaces_txt_ntfs_join_invitation',
                 'txt_ntfs_join_request' => '_bx_spaces_txt_ntfs_join_request',
                 'txt_ntfs_fan_added' => '_bx_spaces_txt_ntfs_fan_added',
                 'txt_ntfs_timeline_post_common' => '_bx_spaces_txt_ntfs_timeline_post_common',

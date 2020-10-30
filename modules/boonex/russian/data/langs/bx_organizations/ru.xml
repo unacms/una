@@ -1,33 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources name="ru" flag="ru" title="Russian">
-	<string name="_bx_orgs"><![CDATA[Организации]]></string>
-	<string name="_bx_organizations"><![CDATA[Организации]]></string>
-	<string name="_bx_orgs_cmts"><![CDATA[Организации - Комментарии]]></string>
+    <string name="_bx_orgs"><![CDATA[Организации]]></string>
+    <string name="_bx_organizations"><![CDATA[Организации]]></string>
+    <string name="_bx_orgs_cmts"><![CDATA[Организации - Комментарии]]></string>
 
-	<string name="_bx_orgs_option_autoapproval"><![CDATA[Автоматически активировать все организации после создания]]></string>
-	<string name="_bx_orgs_option_default_acl_level"><![CDATA[Уровень, назначаемый созданному профилю организации по умолчанию]]></string>
-  <string name="_bx_orgs_option_enable_profile_activation_letter"><![CDATA[Включить письмо об активации профиля]]></string>
-	<string name="_bx_orgs_option_redirect_aadd"><![CDATA[После создания организации перенаправить на]]></string>
+    <string name="_bx_orgs_option_autoapproval"><![CDATA[Автоматически активировать все организации после создания]]></string>
+    <string name="_bx_orgs_option_default_acl_level"><![CDATA[Уровень, назначаемый созданному профилю организации по умолчанию]]></string>
+    <string name="_bx_orgs_option_enable_profile_activation_letter"><![CDATA[Включить письмо об активации профиля]]></string>
+    <string name="_bx_orgs_option_redirect_aadd"><![CDATA[После создания организации перенаправить на]]></string>
     <string name="_bx_orgs_option_redirect_aadd_profile"><![CDATA[Страница организации]]></string>
     <string name="_bx_orgs_option_redirect_aadd_last"><![CDATA[Предыдущая страница]]></string>
     <string name="_bx_orgs_option_redirect_aadd_custom"><![CDATA[Пользовательская страница]]></string>
     <string name="_bx_orgs_option_redirect_aadd_custom_url"><![CDATA[URL для перенаправления 'Пользовательская страница']]></string>
-	<string name="_bx_orgs_option_num_connections_quick"><![CDATA[Количество элементов в блоке друзей]]></string>
-	<string name="_bx_orgs_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
+    <string name="_bx_orgs_option_num_connections_quick"><![CDATA[Количество элементов в блоке друзей]]></string>
+    <string name="_bx_orgs_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
     <string name="_bx_orgs_option_num_rss"><![CDATA[Количество элементов в ленте RSS]]></string>
     <string name="_bx_orgs_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
     <string name="_bx_orgs_option_public_subscriptions"><![CDATA[Открытый список подписок]]></string>
     <string name="_bx_orgs_option_public_subscribed_me"><![CDATA[Открытый список подписчиков]]></string>
     <string name="_bx_orgs_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
+    <string name="_bx_orgs_option_internal_notifications"><![CDATA[Использовать встроенную нотификацию]]></string>
 
-	<string name="_bx_orgs_form_profile"><![CDATA[Организации]]></string>
-	<string name="_bx_orgs_form_profile_display_add"><![CDATA[Добавление организации]]></string>
-	<string name="_bx_orgs_form_profile_display_edit"><![CDATA[Редактирование организации]]></string>
-	<string name="_bx_orgs_form_profile_display_edit_cover"><![CDATA[Редактирование обложки]]></string>
-	<string name="_bx_orgs_form_profile_display_delete"><![CDATA[Удаление организации]]></string>
-	<string name="_bx_orgs_form_profile_display_view"><![CDATA[Просмотр организации]]></string>
-	<string name="_bx_orgs_form_profile_display_view_full"><![CDATA[Полный просмотр организации]]></string>
-	<string name="_bx_orgs_form_profile_display_invite"><![CDATA[Приглашение в организацию]]></string>
+    <string name="_bx_orgs_form_profile"><![CDATA[Организации]]></string>
+    <string name="_bx_orgs_form_profile_display_add"><![CDATA[Добавление организации]]></string>
+    <string name="_bx_orgs_form_profile_display_edit"><![CDATA[Редактирование организации]]></string>
+    <string name="_bx_orgs_form_profile_display_edit_cover"><![CDATA[Редактирование обложки]]></string>
+    <string name="_bx_orgs_form_profile_display_delete"><![CDATA[Удаление организации]]></string>
+    <string name="_bx_orgs_form_profile_display_view"><![CDATA[Просмотр организации]]></string>
+    <string name="_bx_orgs_form_profile_display_view_full"><![CDATA[Полный просмотр организации]]></string>
+    <string name="_bx_orgs_form_profile_display_invite"><![CDATA[Приглашение в организацию]]></string>
     <string name="_bx_orgs_form_profile_input_sys_do_submit"><![CDATA[Выполнить]]></string>
     <string name="_bx_orgs_form_profile_input_sys_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
     <string name="_bx_orgs_form_profile_input_join_confirm"><![CDATA[Подтверждение регистрации]]></string>
@@ -47,20 +48,20 @@
     <string name="_bx_orgs_form_profile_input_sys_org_desc"><![CDATA[Описание]]></string>
     <string name="_bx_orgs_form_profile_input_org_desc"><![CDATA[Описание]]></string>
     <string name="_bx_orgs_form_profile_input_sys_org_cat"><![CDATA[Категория]]></string>
-	<string name="_bx_orgs_form_profile_input_org_cat"><![CDATA[Категория]]></string>
+    <string name="_bx_orgs_form_profile_input_org_cat"><![CDATA[Категория]]></string>
     <string name="_bx_orgs_form_profile_input_org_cat_err"><![CDATA[Поле категории необходимо]]></string>
-	<string name="_bx_orgs_form_profile_input_sys_picture"><![CDATA[Картинка профиля]]></string>
-	<string name="_bx_orgs_form_profile_input_picture"><![CDATA[Загрузить новую картинку профиля]]></string>
-	<string name="_bx_orgs_form_profile_input_picture_err"><![CDATA[Необходима картинка профиля.]]></string>
-	<string name="_bx_orgs_form_profile_input_picture_search"><![CDATA[С картинкой профиля]]></string>
+    <string name="_bx_orgs_form_profile_input_sys_picture"><![CDATA[Картинка профиля]]></string>
+    <string name="_bx_orgs_form_profile_input_picture"><![CDATA[Загрузить новую картинку профиля]]></string>
+    <string name="_bx_orgs_form_profile_input_picture_err"><![CDATA[Необходима картинка профиля.]]></string>
+    <string name="_bx_orgs_form_profile_input_picture_search"><![CDATA[С картинкой профиля]]></string>
     <string name="_bx_orgs_form_profile_input_online_search"><![CDATA[В сети]]></string>
-	<string name="_bx_orgs_form_profile_input_sys_cover"><![CDATA[Картинка обложки]]></string>
-	<string name="_bx_orgs_form_profile_input_cover"><![CDATA[Загрузить новую картинку обложки]]></string>
-	<string name="_bx_orgs_form_profile_input_sys_delete_confirm"><![CDATA[Удалить подтверждение]]></string>
-	<string name="_bx_orgs_form_profile_input_delete_confirm"><![CDATA[Я уверен, что хочу удалить этот профиль]]></string>
-	<string name="_bx_orgs_form_profile_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено.]]></string>
-	<string name="_bx_orgs_form_profile_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если действительно хотите удалить свой профиль.]]></string>
-	<string name="_bx_orgs_form_profile_input_sys_profile_email"><![CDATA[Email]]></string>
+    <string name="_bx_orgs_form_profile_input_sys_cover"><![CDATA[Картинка обложки]]></string>
+    <string name="_bx_orgs_form_profile_input_cover"><![CDATA[Загрузить новую картинку обложки]]></string>
+    <string name="_bx_orgs_form_profile_input_sys_delete_confirm"><![CDATA[Удалить подтверждение]]></string>
+    <string name="_bx_orgs_form_profile_input_delete_confirm"><![CDATA[Я уверен, что хочу удалить этот профиль]]></string>
+    <string name="_bx_orgs_form_profile_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено.]]></string>
+    <string name="_bx_orgs_form_profile_input_delete_confirm_error"><![CDATA[Пожалуйста, отметьте этот флажок, если действительно хотите удалить свой профиль.]]></string>
+    <string name="_bx_orgs_form_profile_input_sys_profile_email"><![CDATA[Email]]></string>
     <string name="_bx_orgs_form_profile_input_profile_email"><![CDATA[Email]]></string>
     <string name="_bx_orgs_form_profile_input_sys_profile_status"><![CDATA[Статус]]></string>
     <string name="_bx_orgs_form_profile_input_profile_status"><![CDATA[Статус]]></string>
@@ -389,10 +390,12 @@
     <string name="_bx_orgs_role_moderator"><![CDATA[Модератор]]></string>
 
     <string name="_bx_organizations_alert_action_fan_added"><![CDATA[присоединение нового участника]]></string>
+    <string name="_bx_organizations_alert_action_join_invitation_notif"><![CDATA[приглашение вступить в группу]]></string>
     <string name="_bx_organizations_alert_action_join_request"><![CDATA[запрос на присоединение к организации]]></string>
     <string name="_bx_organizations_alert_action_profile_cover_changed"><![CDATA[обложка изменена]]></string>
     <string name="_bx_organizations_alert_action_profile_picture_changed"><![CDATA[картинка изменена]]></string>
     <string name="_bx_orgs_txt_ntfs_fan_added"><![CDATA[В организацию <b class="bx-ntfs-content-profile">{owner_name}</b> вступил <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
+    <string name="_bx_orgs_txt_ntfs_join_invitation"><![CDATA[Представитель организации <b class="bx-ntfs-content-profile">{owner_name}</b> пригласил <b class="bx-ntfs-content-entry">{subentry_sample}</b> вступить в организацию]]></string>
     <string name="_bx_orgs_txt_ntfs_join_request"><![CDATA[В организацию <b class="bx-ntfs-content-profile">{owner_name}</b> хочет вступить <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
     <string name="_bx_orgs_txt_ntfs_timeline_post_common"><![CDATA[В организации <b class="bx-ntfs-content-profile">{owner_name}</b> новая публикация <b class="bx-ntfs-content-entry">{subentry_sample}</b>]]></string>
 
