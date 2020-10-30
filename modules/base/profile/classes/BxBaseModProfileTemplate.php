@@ -52,7 +52,13 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
         list($sTemplate) = is_array($mixedTemplate) ? $mixedTemplate : array($mixedTemplate);
         if(empty($sTemplate))
             $sTemplate = $this->_sUnitDefault;
-
+        
+        /**
+         * Allow use separate template for private profiles. 
+         * These templates will be used if privacy field "Visible to" don't allow to view content.
+         * To use them you need to create a template with a postfix "_private" and put it in specified module
+         * Example: "unit_private.html" for "unit.html" or "unit_wo_links_private.html" for "unit_wo_links.html"
+         */ 
         $oModule = $this->getModule();
         if ($oModule->serviceCheckAllowedViewForProfile($aData) !== 0){
             $sTemplatePrivate = str_replace('.html', '_private.html' , $sTemplate);
