@@ -39,17 +39,24 @@ class BxBaseModGroupsAlertsResponse extends BxBaseModProfileAlertsResponse
         if ($this->MODULE != $oAlert->sUnit)
             return;
 
+        $bUseIn = getParam($CNF['PARAM_USE_IN']) == 'on';
+
         // join group events
         switch ($oAlert->sAction) {
-        case 'join_invitation':
-            $this->sendMailInvitation($oAlert, $oAlert->aExtras['profile'], bx_get_logged_profile_id());
-            break;
-        case 'join_request':
-            $this->sendMailJoinRequest($oAlert, $oAlert->aExtras['profile'], bx_get_logged_profile_id());
-            break;
-        case 'join_request_accepted':
-            $this->sendMailJoinRequestAccepted($oAlert, $oAlert->aExtras['profile'], bx_get_logged_profile_id());
-            break;
+            case 'join_invitation':
+                if($bUseIn)
+                    $this->sendMailInvitation($oAlert, $oAlert->aExtras['profile'], bx_get_logged_profile_id());
+                break;
+
+            case 'join_request':
+                if($bUseIn)
+                    $this->sendMailJoinRequest($oAlert, $oAlert->aExtras['profile'], bx_get_logged_profile_id());
+                break;
+
+            case 'join_request_accepted':
+                if($bUseIn)
+                    $this->sendMailJoinRequestAccepted($oAlert, $oAlert->aExtras['profile'], bx_get_logged_profile_id());
+                break;
         }
     }
 

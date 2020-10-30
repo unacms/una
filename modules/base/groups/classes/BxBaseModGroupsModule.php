@@ -304,10 +304,27 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         $sEntryUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_VIEW_ENTRY'] . '&id=' . $aContentInfo[$CNF['FIELD_ID']]);
 
         // send invitation to the group 
+        $sModule = $this->getName();
         if ($bSendInviteOnly && !$oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id()) && !$oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId) && bx_get_logged_profile_id() != $iProfileId) {
+            bx_alert($sModule, 'join_invitation', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array(
+                'content' => $aContentInfo, 
+                'entry_title' => $sEntryTitle, 
+                'entry_url' => $sEntryUrl, 
+                'group_profile' => $iGroupProfileId, 
+                'profile' => $iProfileId, 
+                'notification_subobject_id' => $iProfileId, 
+                'object_author_id' => $iGroupProfileId
+            ));
 
-            bx_alert($this->getName(), 'join_invitation', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array('content' => $aContentInfo, 'entry_title' => $sEntryTitle, 'entry_url' => $sEntryUrl, 'group_profile' => $iGroupProfileId, 'profile' => $iProfileId, 'notification_subobject_id' => $iProfileId, 'object_author_id' => $iGroupProfileId));
-
+            /**
+             * 'Invitation Received' alert for Notifications module.
+             * Note. It's essential to use Recipient ($iInitiatorId) in 'object_author_id' parameter. 
+             * In this case notification will be received by Recipient profile.
+             */
+            bx_alert($sModule, 'join_invitation_notif', $aContentInfo[$CNF['FIELD_ID']], $iGroupProfileId, array(
+                'object_author_id' => $iInitiatorId, 
+                'privacy_view' => isset($aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']]) ? $aContentInfo[$CNF['FIELD_ALLOW_VIEW_TO']] : 3, 
+            ));
         }
         // send notification to group's admins that new connection is pending confirmation 
         elseif (!$bSendInviteOnly && $oConnection->isConnected((int)$iInitiatorId, $oGroupProfile->id()) && !$oConnection->isConnected($oGroupProfile->id(), (int)$iInitiatorId) && $aContentInfo['join_confirmation']) {
@@ -835,6 +852,8 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
                 array('group' => $sModule . '_fan_added', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'fan_added', 'module_name' => $sModule, 'module_method' => 'get_notifications_fan_added', 'module_class' => 'Module'),
 
+                array('group' => $sModule . '_join_invitation', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'join_invitation_notif', 'module_name' => $sModule, 'module_method' => 'get_notifications_join_invitation', 'module_class' => 'Module'),
+                
                 array('group' => $sModule . '_join_request', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'join_request', 'module_name' => $sModule, 'module_method' => 'get_notifications_join_request', 'module_class' => 'Module', 'module_event_privacy' => $this->_oConfig->CNF['OBJECT_PRIVACY_VIEW_NOTIFICATION_EVENT']),
                 
                 array('group' => $sModule . '_timeline_post_common', 'type' => 'insert', 'alert_unit' => $sModule, 'alert_action' => 'timeline_post_common', 'module_name' => $sModule, 'module_method' => 'get_notifications_timeline_post_common', 'module_class' => 'Module'),
@@ -847,6 +866,8 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
                 array('group' => 'score_down', 'unit' => $sModule, 'action' => 'doVoteDown', 'types' => $aSettingsTypes),
                 
                 array('group' => 'fan', 'unit' => $sModule, 'action' => 'fan_added', 'types' => $aSettingsTypes),
+
+                array('group' => 'invite', 'unit' => $sModule, 'action' => 'join_invitation_notif', 'types' => array('personal')),
 
                 array('group' => 'join', 'unit' => $sModule, 'action' => 'join_request', 'types' => $aSettingsTypes),
 
@@ -861,10 +882,53 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
 
                 array('unit' => $sModule, 'action' => 'fan_added'),
 
+                array('unit' => $sModule, 'action' => 'join_invitation_notif'),
+
                 array('unit' => $sModule, 'action' => 'join_request'),
 
                 array('unit' => $sModule, 'action' => 'timeline_post_common'),
             )
+        );
+    }
+
+    /**
+     * Notification about new invitation to join the group
+     */
+    public function serviceGetNotificationsJoinInvitation($aEvent)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $iContentId = (int)$aEvent['object_id'];
+        $oGroupProfile = BxDolProfile::getInstanceByContentAndType((int)$iContentId, $this->getName());
+        if(!$oGroupProfile)
+            return array();
+
+        $aContentInfo = $this->_oDb->getContentInfoById($iContentId);
+        if(empty($aContentInfo) || !is_array($aContentInfo))
+            return array();
+
+        /*
+         * It's essential that 'object_owner_id' contains invited member profile id.
+         */
+        $oProfile = BxDolProfile::getInstance((int)$aEvent['object_owner_id']);
+        if(!$oProfile)
+            return array();
+
+        /*
+         * Note. Group Profile URL is used for both Entry and Subentry URLs, 
+         * because Subentry URL has higher display priority and notification
+         * should be linked to Group Profile (Group Profile -> Members tab) 
+         * instead of Personal Profile of invited member.
+         */
+        $sEntryUrl = $oGroupProfile->getUrl();
+
+        return array(
+            'entry_sample' => $CNF['T']['txt_sample_single'],
+            'entry_url' => $sEntryUrl,
+            'entry_caption' => $oGroupProfile->getDisplayName(),
+            'subentry_sample' => $oProfile->getDisplayName(),
+            'subentry_url' => $sEntryUrl,
+            'lang_key' => $this->_oConfig->CNF['T']['txt_ntfs_join_invitation']
         );
     }
 
