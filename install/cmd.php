@@ -35,6 +35,9 @@ class BxDolInstallCmd
             'server_doc_root' => str_replace('/install', '/', $aPathInfo['dirname']),
             // form data below
             'site_config' => true,
+            'db_host' => 'localhost',
+            'db_port' => '',
+            'db_sock' => '',
             'db_name' => 'test',
             'db_user' => 'root',
             'db_password' => 'root',
