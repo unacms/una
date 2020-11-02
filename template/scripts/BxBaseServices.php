@@ -292,7 +292,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     /** 
      * @ref bx_system_general-keyword_search "keyword_search"
      */
-    public function serviceKeywordSearch ($sSection, $aCondition, $sTemplate = '', $iStart = 0, $iPerPage = 0, $bLiveSearch = 0)
+    public function serviceKeywordSearch ($sSection, $aCondition, $sTemplate = '', $iStart = 0, $iPerPage = 0, $bLiveSearch = 0, $bPaginate = false)
     {
         if (!$sSection || !isset($aCondition['keyword']))
             return '';
@@ -313,7 +313,8 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         $oSearch->setMetaType(isset($aCondition['meta_type']) ? $aCondition['meta_type'] : '');
         $oSearch->setCategoryObject(isset($aCondition['cat']) ? $aCondition['cat'] : '');
         $oSearch->setCustomSearchCondition($aCondition);
-        $oSearch->setRawProcessing(true);
+        if (!$bPaginate)
+            $oSearch->setRawProcessing(true);
         $oSearch->setCustomCurrentCondition(array(
             'paginate' => array (
                 'start' => $iStart,

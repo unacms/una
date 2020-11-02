@@ -132,7 +132,7 @@ BxDolUploaderSimple.prototype.cancelAll = function () {
 }
 
 BxDolUploaderSimple.prototype.restoreGhosts = function () {
-    var sUrl = this._getUrlWithStandardParams() + '&img_trans=' + this._sImagesTranscoder + '&a=restore_ghosts&f=json' + '&c=' + this._iContentId + '&_t=' + (new Date());
+    var sUrl = this._getUrlWithStandardParams() + '&img_trans=' + this._sImagesTranscoder + '&a=restore_ghosts&f=json' + '&c=' + this._iContentId + '&_t=' + escape(new Date());
     var $this = this;
 
     bx_loading(this._sResultContainerId, true);
@@ -172,7 +172,7 @@ BxDolUploaderSimple.prototype.deleteGhost = function (iFileId) {
     var sFileContainerId = $this._getFileContainerId(iFileId);
     bx_loading(sFileContainerId, true);
 
-    $.post(sUrl, {_t: new Date()}, function (sMsg) {
+    $.post(sUrl, {_t: escape(new Date())}, function (sMsg) {
         bx_loading(sFileContainerId, false);
         if ('ok' == sMsg) {
             $('#' + sFileContainerId).slideUp('slow', function () {
