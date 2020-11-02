@@ -16,6 +16,8 @@
     <string name="_bx_orgs_option_per_page_browse"><![CDATA[Number of items per page]]></string>
     <string name="_bx_orgs_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
     <string name="_bx_orgs_option_searchable_fields"><![CDATA[Searchable fields for keyword search]]></string>
+    <string name="_bx_orgs_option_members_mode"><![CDATA[Special mode for organization members]]></string>
+    <string name="_bx_orgs_option_members_mode_multi_roles"><![CDATA[Multi Roles]]></string>
     <string name="_bx_orgs_option_public_subscriptions"><![CDATA[Public following list]]></string>
     <string name="_bx_orgs_option_public_subscribed_me"><![CDATA[Public followers list]]></string>
     <string name="_bx_orgs_option_auto_activation_for_categories"><![CDATA[Auto-Activation For Categories]]></string>

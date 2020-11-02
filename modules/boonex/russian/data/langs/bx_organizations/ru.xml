@@ -16,6 +16,8 @@
     <string name="_bx_orgs_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
     <string name="_bx_orgs_option_num_rss"><![CDATA[Количество элементов в ленте RSS]]></string>
     <string name="_bx_orgs_option_searchable_fields"><![CDATA[Поля для поиска по ключевому слову]]></string>
+    <string name="_bx_orgs_option_members_mode"><![CDATA[Спец. режим для членов организации]]></string>
+    <string name="_bx_orgs_option_members_mode_multi_roles"><![CDATA[Множественные роли]]></string>
     <string name="_bx_orgs_option_public_subscriptions"><![CDATA[Открытый список подписок]]></string>
     <string name="_bx_orgs_option_public_subscribed_me"><![CDATA[Открытый список подписчиков]]></string>
     <string name="_bx_orgs_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
