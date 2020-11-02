@@ -569,6 +569,10 @@ div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li > a,
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li > span {
     display: block;
 }
+div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu-hor {
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap
+}
 div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu-hor li > a,
 div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu-hor li > div,
 div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu-hor li > span {
@@ -612,7 +616,7 @@ div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li .bx-menu-item-icon .sy
     vertical-align: top;
 }
 
-/*--- Item Activity (all actions in one menu) and Item Manage (separate menu) ---*/
+/*--- Item Activity (with Auto-More - all actions in one menu) and Item Manage (separate menu) ---*/
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto > li.bx-menu-item {
     padding: 0;
     white-space: nowrap;
