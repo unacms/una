@@ -1607,6 +1607,9 @@ class BxDolFormCheckerHelper
         if (!preg_match("/@[\pL\pNd\.\-]+$/u", $s)) // validate domain
             return false;
 
+        if (!getParam('sys_account_allow_plus_in_email') && false !== strpos($s, '+'))
+            return false;
+
         $s = str_replace(array('@', '.', '-', '+', '_'), '', $s); // allowed symbols
         if (preg_match("/[^\pL^\pNd]/u", $s)) // check for undesirable chars
             return false;
