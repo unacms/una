@@ -1,18 +1,24 @@
 
 /* common styles */
+.bx-layout-row.bx-lr-dump {
+    display: block;
+}
+.bx-layout-row.bx-lr-dump .adm-bp-cell.bx-def-border {
+    border-style: dashed;
+}
 
 .bx-layout-col {
     float:left;
 }
 
-/* layout 1 column */
 
+/* layout 1 column */
 .bx-layout-1-column-column1 {
     float:none;
 }
 
-/* layout 3 columns */
 
+/* layout 3 columns */
 .bx-layout-3-columns-column3,
 .bx-layout-3-columns-column1 {
     width:33.3%;
@@ -21,8 +27,8 @@
     width:33.4%;
 }
 
-/* layout bar content bar */
 
+/* layout bar content bar */
 .bx-layout-bcb-bar1,
 .bx-layout-bcb-bar2 {
     width:25.0%;
@@ -31,15 +37,15 @@
     width:50.0%;
 }
 
-/* layout 2 columns */
 
+/* layout 2 columns */
 .bx-layout-2-columns-column1,
 .bx-layout-2-columns-column2 {
     width:50%;
 }
 
-/* layout bar left */
 
+/* layout bar left */
 .bx-layout-bar-left-bar {
     width:34%;
 }
@@ -48,8 +54,8 @@
     width:66%;
 }
 
-/* layout bar right */
 
+/* layout bar right */
 .bx-layout-bar-right-bar {
     width:34%;
 }

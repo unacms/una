@@ -475,7 +475,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
 
     function resetBlocksByPage($sObject, $iCellId, $bDeactivate = false)
     {
-        $aSetClause = array('cell_id' => $iCellId);
+        $aSetClause = array('cell_id' => 0);
         if($bDeactivate)
             $aSetClause['active'] = 0;
 

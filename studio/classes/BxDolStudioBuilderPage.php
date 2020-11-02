@@ -57,38 +57,38 @@ class BxDolStudioBuilderPage extends BxTemplStudioPage
     function init()
     {
         if(($sAction = bx_get('bp_action')) === false) 
-        	return;
+            return;
 
-		$sAction = bx_process_input($sAction);
+        $sAction = bx_process_input($sAction);
 
-		$aResult = array('code' => 1, 'message' => _t('_adm_bp_err_cannot_process_action'));
-		switch($sAction) {
-			case 'reorder':
-				if(empty($this->aPageRebuild) || !is_array($this->aPageRebuild))
-					break;
+        $aResult = array('code' => 1, 'message' => _t('_adm_bp_err_cannot_process_action'));
+        switch($sAction) {
+            case 'reorder':
+                if(empty($this->aPageRebuild) || !is_array($this->aPageRebuild))
+                    break;
 
-				$bResult = false;
-				for($i = 1; $i <= $this->aPageRebuild['layout_cells_number']; $i++) {
-					$aItems = bx_get('bp_items_' . $i);
-					$iItems = count($aItems);
+                $bResult = false;
+                for($i = 0; $i <= $this->aPageRebuild['layout_cells_number']; $i++) {
+                    $aItems = bx_get('bp_items_' . $i);
+                    $iItems = count($aItems);
 
-					for($j = 0; $j < $iItems; $j++)
-					$bResult |= $this->oDb->updateBlock((int)$aItems[$j], array(
-						'cell_id' => $i,
-						'order' => $j
-					));
-				}
-				$aResult = $bResult ? array('code' => 0, 'message' => _t('_adm_bp_scs_save')) : array('code' => 1, 'message' => _t('_adm_bp_err_nothing_changed'));
-				break;
+                    for($j = 0; $j < $iItems; $j++)
+                        $bResult |= $this->oDb->updateBlock((int)$aItems[$j], array(
+                            'cell_id' => $i,
+                            'order' => $j
+                        ));
+                }
+                $aResult = $bResult ? array('code' => 0, 'message' => _t('_adm_bp_scs_save')) : array('code' => 1, 'message' => _t('_adm_bp_err_nothing_changed'));
+                break;
 
-			default:
-				$sMethod = 'action' . $this->getClassName($sAction);
-				if(method_exists($this, $sMethod))
-			    	$aResult = $this->$sMethod();
-		}
+            default:
+                $sMethod = 'action' . $this->getClassName($sAction);
+                if(method_exists($this, $sMethod))
+                    $aResult = $this->$sMethod();
+        }
 
-		echo json_encode($aResult);
-		exit;
+        echo json_encode($aResult);
+        exit;
     }
 
     function processAction($sAction)

@@ -163,22 +163,26 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         $sContent = "";
         if(($bPage = $this->sPage != '') === true) {
             /**
-             * Reset and deactivate blocks which cannot be seen, 
+             * Reset (move to hidden sell) blocks which cannot be seen, 
              * because of unsuitable cell number to currently selected layout.
              */
-            $this->oDb->resetBlocksByPage($this->aPageRebuild['object'], $this->aPageRebuild['layout_cells_number'], true);
+            $this->oDb->resetBlocksByPage($this->aPageRebuild['object'], $this->aPageRebuild['layout_cells_number']);
 
             $aTmplVars = array(
-                'page_id' => 'bx-page-' . $this->aPageRebuild['uri']
+                'page_id' => 'bx-page-' . $this->aPageRebuild['uri'],
+                'bx_if:show_layout_row_dump' => array(
+                    'condition' => true,
+                    'content' => array()
+                )
             );
-            for($i = 1; $i <= $this->aPageRebuild['layout_cells_number']; $i++) {
+            for($i = 0; $i <= $this->aPageRebuild['layout_cells_number']; $i++) {
                 $aBlocks = array();
                 $this->oDb->getBlocks(array('type' => 'by_object_cell', 'object' => $this->aPageRebuild['object'], 'cell' => $i), $aBlocks, false);
 
                 $aTmplVarsCell = array('id' => $i, 'bx_repeat:blocks' => array());
                 foreach($aBlocks as $aBlock) {
-                	$sTitle = !empty($aBlock['title_system']) ? _t($aBlock['title_system']) : $oPage->getBlockTitle($aBlock);
-                	list($sIcon, $sIconUrl) = $this->getBlockIcon($aBlock);
+                    $sTitle = !empty($aBlock['title_system']) ? _t($aBlock['title_system']) : $oPage->getBlockTitle($aBlock);
+                    list($sIcon, $sIconUrl) = $this->getBlockIcon($aBlock);
 
                     $aTmplVarsCell['bx_repeat:blocks'][] = array(
                         'html_id' => $this->aHtmlIds['block_id'] . $aBlock['id'],
@@ -198,13 +202,13 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                             'content' => array()
                         ),
                         'bx_if:image' => array (
-			                'condition' => (bool)$sIconUrl,
-			                'content' => array('icon_url' => $sIconUrl),
-			            ),
-						'bx_if:icon' => array (
-			                'condition' => (bool)$sIcon,
-			                'content' => array('icon' => $sIcon),
-			            ),
+                            'condition' => (bool)$sIconUrl,
+                            'content' => array('icon_url' => $sIconUrl),
+                        ),
+                        'bx_if:icon' => array (
+                            'condition' => (bool)$sIcon,
+                            'content' => array('icon' => $sIcon),
+                        ),
                         'module' => $this->getModuleTitle($aBlock['module']),
                         'visible_for' => _t('_adm_bp_txt_visible_for', BxDolStudioUtils::getVisibilityTitle($aBlock['visible_for_levels'])),
                         'bx_if:show_checkbox' => array(
@@ -218,7 +222,11 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                     );
                 }
 
-                $aTmplVars['cell_' . $i] = $oTemplate->parseHtmlByName('bp_cell.html', $aTmplVarsCell);
+                $sCell = $oTemplate->parseHtmlByName('bp_cell.html', $aTmplVarsCell);
+                if($i == 0)
+                    $aTmplVars['bx_if:show_layout_row_dump']['content']['cell_' . $i] = $sCell;
+                else
+                    $aTmplVars['cell_' . $i] = $sCell;
             }
 
             $sContent = $oTemplate->parseHtmlByName($this->aPageRebuild['layout_template'], $aTmplVars);
@@ -235,13 +243,13 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             'html_ids' => json_encode($this->aHtmlIds),
             'languahes' => json_encode($aLanguages),
             'content' => $this->getBlockCode(array(
-				'items' => $sContent
-			))
+                'items' => $sContent
+            ))
         );
 
         $oTemplate->addJsTranslation(array(
-        	'_adm_bp_wrn_page_delete',
-        	'_adm_bp_wrn_page_block_delete'
+            '_adm_bp_wrn_page_delete',
+            '_adm_bp_wrn_page_block_delete'
         ));
         return $oTemplate->parseHtmlByName('builder_page.html', $aTmplVars);
     }

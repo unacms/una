@@ -299,6 +299,10 @@ class BxBasePage extends BxDolPage
 
         $aVars = array (
             'page_id' => 'bx-page-' . $this->_aObject['uri'],
+            'bx_if:show_layout_row_dump' => array(
+                'condition' => false,
+                'content' => array()
+            )
         );
         $aBlocks = $this->_oQuery->getPageBlocks();
         foreach ($aBlocks as $sKey => $aCell) {
