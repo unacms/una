@@ -276,12 +276,14 @@
     <string name="_bx_courses_txt_account_pending"><![CDATA[This course is pending approval, please wait until it is activated.]]></string>
     <string name="_bx_courses_txt_account_suspended"><![CDATA[This course is suspended.]]></string>
     <string name="_bx_courses_txt_N_fans"><![CDATA[{0} students]]></string>
+    <string name="_bx_courses_txt_role"><![CDATA[Role]]></string>
     <string name="_bx_courses_txt_sample_single"><![CDATA[course]]></string>
     <string name="_bx_courses_txt_sample_single_with_article"><![CDATA[a course]]></string>
     <string name="_bx_courses_txt_sample_comment_single"><![CDATA[comment to course]]></string>
     <string name="_bx_courses_txt_sample_vote_single"><![CDATA[vote to course]]></string>
     <string name="_bx_courses_txt_sample_score_up_single"><![CDATA[score up vote to course]]></string>
     <string name="_bx_courses_txt_sample_score_down_single"><![CDATA[score down vote to course]]></string>
+    <string name="_bx_courses_txt_set_role"><![CDATA[Set Role]]></string>
     <string name="_bx_courses_txt_to_admins"><![CDATA[To Instructors]]></string>
     <string name="_bx_courses_txt_from_admins"><![CDATA[From Instructors]]></string>
     <string name="_bx_courses_txt_private_entry"><![CDATA[Private course]]></string>
@@ -302,6 +304,11 @@
 
     <string name="_bx_courses_pre_lists_cats"><![CDATA[Course categories]]></string>
     <string name="_bx_courses_cat_General"><![CDATA[General]]></string>
+
+    <string name="_bx_courses_pre_lists_roles"><![CDATA[Course roles]]></string>
+    <string name="_bx_courses_role_regular"><![CDATA[Student]]></string>
+    <string name="_bx_courses_role_administrator"><![CDATA[Instructor]]></string>
+    <string name="_bx_courses_role_moderator"><![CDATA[Assistant]]></string>
 
     <string name="_bx_courses_email_join_request"><![CDATA[Course join request]]></string>
     <string name="_bx_courses_email_join_request_subject"><![CDATA[Request to join your course]]></string>
@@ -327,21 +334,27 @@
 <p>Your profile was removed from <a href="{EntryUrl}">{EntryTitle}</a> course by the course admin.</p>
 {email_footer}]]></string>
 
-    <string name="_bx_courses_email_fan_become_admin"><![CDATA[Course admin status was granted]]></string>
-    <string name="_bx_courses_email_fan_become_admin_subject"><![CDATA[You are a course admin now]]></string>
+    <string name="_bx_courses_email_fan_become_admin"><![CDATA[Course instructor status was granted]]></string>
+    <string name="_bx_courses_email_fan_become_admin_subject"><![CDATA[You are a course instructor now]]></string>
     <string name="_bx_courses_email_fan_become_admin_body"><![CDATA[{email_header}
-<p>You are an admin of <a href="{EntryUrl}">{EntryTitle}</a> course now.</p>
+<p>You are an instructor of <a href="{EntryUrl}">{EntryTitle}</a> course now.</p>
 {email_footer}]]></string>
 
-    <string name="_bx_courses_email_admin_become_fan"><![CDATA[Course admin status was revoked]]></string>
-    <string name="_bx_courses_email_admin_become_fan_subject"><![CDATA[Your course admin status was revoked]]></string>
+    <string name="_bx_courses_email_admin_become_fan"><![CDATA[Course instructor status was revoked]]></string>
+    <string name="_bx_courses_email_admin_become_fan_subject"><![CDATA[Your course instructor status was revoked]]></string>
     <string name="_bx_courses_email_admin_become_fan_body"><![CDATA[{email_header}
-<p>Your admin status was revoked from <a href="{EntryUrl}">{EntryTitle}</a> course.</p>
+<p>Your instructor status was revoked from <a href="{EntryUrl}">{EntryTitle}</a> course.</p>
 {email_footer}]]></string>
 
     <string name="_bx_courses_email_invitation"><![CDATA[Invitation to course]]></string>
     <string name="_bx_courses_email_invitation_subject"><![CDATA[Invitation to "{EntryTitle}" course]]></string>
     <string name="_bx_courses_email_invitation_body"><![CDATA[{email_header}
 <p><a href="{InviterUrl}">{InviterDisplayName}</a> invited you to <a href="{EntryUrl}">{EntryTitle} course</a>.</p>
+{email_footer}]]></string>
+
+    <string name="_bx_courses_email_set_role"><![CDATA[Course member status was changed]]></string>
+    <string name="_bx_courses_email_set_role_subject"><![CDATA[Your course status was changed]]></string>
+    <string name="_bx_courses_email_set_role_body"><![CDATA[{email_header}
+<p>Your status in <a href="{EntryUrl}">{EntryTitle}</a> course was changed to <b>{Role}</b>.</p>
 {email_footer}]]></string>
 </resources>

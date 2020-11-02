@@ -248,7 +248,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_courses_view_actions_all', 'bx_courses', 'profile-fan-remove', '_bx_courses_menu_item_title_system_leave_entry', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 20),
 ('bx_courses_view_actions_all', 'bx_courses', 'profile-subscribe-add', '_bx_courses_menu_item_title_system_subscribe', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 30),
 ('bx_courses_view_actions_all', 'bx_courses', 'profile-subscribe-remove', '_bx_courses_menu_item_title_system_unsubscribe', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 40),
-('bx_courses_view_actions_all', 'bx_courses', 'profile-set-badges', '_sys_menu_item_title_system_set_badges', '', '', '', '', '', '', '', 0, 192, 'a:2:{s:6:"module";s:9:"bx_events";s:6:"method";s:19:"is_badges_avaliable";}', 1, 0, 50),
+('bx_courses_view_actions_all', 'bx_courses', 'profile-set-badges', '_sys_menu_item_title_system_set_badges', '', '', '', '', '', '', '', 0, 192, 'a:2:{s:6:"module";s:10:"bx_courses";s:6:"method";s:19:"is_badges_avaliable";}', 1, 0, 50),
 ('bx_courses_view_actions_all', 'bx_courses', 'comment', '_sys_menu_item_title_system_va_comment', '', '', '', '', '', '', '', 0, 2147483647, '', 0, 0, 200),
 ('bx_courses_view_actions_all', 'bx_courses', 'view', '_sys_menu_item_title_system_va_view', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 210),
 ('bx_courses_view_actions_all', 'bx_courses', 'vote', '_sys_menu_item_title_system_va_vote', '', '', '', '', '', '', '', 0, 2147483647, '', 1, 0, 220),
@@ -459,12 +459,13 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `order`) VALUES
 ('bx_courses_fans', 'name', '_sys_name', '50%', '', 10),
-('bx_courses_fans', 'actions', '', '50%', '', 20);
+('bx_courses_fans', 'role', '_bx_courses_txt_role', '10%', '', 15),
+('bx_courses_fans', 'actions', '', '40%', '', 20);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `confirm`, `order`) VALUES
 ('bx_courses_fans', 'single', 'accept', '_sys_accept', '', 0, 10),
-('bx_courses_fans', 'single', 'to_admins', '_bx_courses_txt_to_admins', '', 0, 20),
-('bx_courses_fans', 'single', 'from_admins', '_bx_courses_txt_from_admins', '', 0, 30),
+('bx_courses_fans', 'single', 'set_role', '_bx_courses_txt_set_role', '', 0, 20),
+('bx_courses_fans', 'single', 'set_role_submit', '', '', 0, 21),
 ('bx_courses_fans', 'single', 'delete', '', 'remove', 1, 40);
 
 
@@ -555,6 +556,7 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 ('bx_courses', '_bx_courses_email_fan_remove', 'bx_courses_fan_remove', '_bx_courses_email_fan_remove_subject', '_bx_courses_email_fan_remove_body'),
 ('bx_courses', '_bx_courses_email_fan_become_admin', 'bx_courses_fan_become_admin', '_bx_courses_email_fan_become_admin_subject', '_bx_courses_email_fan_become_admin_body'),
 ('bx_courses', '_bx_courses_email_admin_become_fan', 'bx_courses_admin_become_fan', '_bx_courses_email_admin_become_fan_subject', '_bx_courses_email_admin_become_fan_body'),
+('bx_courses', '_bx_courses_email_set_role', 'bx_courses_set_role', '_bx_courses_email_set_role_subject', '_bx_courses_email_set_role_body'),
 ('bx_courses', '_bx_courses_email_invitation', 'bx_courses_invitation', '_bx_courses_email_invitation_subject', '_bx_courses_email_invitation_body');
 
 -- UPLOADERS

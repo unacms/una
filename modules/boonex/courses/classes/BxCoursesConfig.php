@@ -124,6 +124,7 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
             'OBJECT_CONNECTIONS' => 'bx_courses_fans',
             'OBJECT_UPLOADERS_COVER' => array('bx_courses_cover_crop'),
             'OBJECT_UPLOADERS_PICTURE' => array('bx_courses_picture_crop'),
+            'OBJECT_PRE_LIST_ROLES' => 'bx_courses_roles',
 
             'BADGES_AVALIABLE' => true,
             
@@ -135,6 +136,7 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
             'EMAIL_FAN_BECOME_ADMIN' => 'bx_courses_fan_become_admin',
             'EMAIL_ADMIN_BECOME_FAN' => 'bx_courses_admin_become_fan',
             'EMAIL_FAN_REMOVE' => 'bx_courses_fan_remove',
+            'EMAIL_FAN_SET_ROLE' => 'bx_courses_set_role',
             'EMAIL_JOIN_REJECT' => 'bx_courses_join_reject',
 
             'TRIGGER_MENU_PROFILE_VIEW_SUBMENU' => 'trigger_group_view_submenu',
@@ -205,11 +207,13 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
         );
 
         $this->_aJsClasses = array(
+            'main' => 'BxCoursesMain',
             'manage_tools' => 'BxCoursesManageTools',
             'invite_popup' => 'BxCoursesInvitePopup'
         );
 
         $this->_aJsObjects = array(
+            'main' => 'oBxCoursesMain',
             'manage_tools' => 'oBxCoursesManageTools',
             'invite_popup' => 'oBxCoursesInvitePopup'
         );

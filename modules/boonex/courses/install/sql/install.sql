@@ -175,6 +175,7 @@ CREATE TABLE IF NOT EXISTS `bx_courses_admins` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `group_profile_id` int(10) unsigned NOT NULL,
   `fan_id` int(10) unsigned NOT NULL,
+  `role` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `admin` (`group_profile_id`,`fan_id`)
 );
@@ -314,6 +315,13 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('bx_courses_cats', '', 0, '_sys_please_select', ''),
 ('bx_courses_cats', '1', 1, '_bx_courses_cat_General', '');
 
+INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
+('bx_courses_roles', '_bx_courses_pre_lists_roles', 'bx_courses', '0');
+
+INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
+('bx_courses_roles', '0', 1, '_bx_courses_role_regular', ''),
+('bx_courses_roles', '1', 2, '_bx_courses_role_administrator', ''),
+('bx_courses_roles', '2', 3, '_bx_courses_role_moderator', '');
 
 -- COMMENTS
 INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Html`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES

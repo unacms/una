@@ -94,15 +94,15 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
             $sHtmlIdPrefix = str_replace('_', '-', $this->_sContentModule) . '-set-role-';
 
             $aMenuItems = array();
-            foreach($this->_aRoles as $iRole => $sRole)
+            foreach($this->_aRoles as $iRoleId => $sRoleTitle)
                 $aMenuItems[] = array(
-                    'id' => $sHtmlIdPrefix . $iRole, 
-                    'name' => $sHtmlIdPrefix . $iRole, 
+                    'id' => $sHtmlIdPrefix . $iRoleId, 
+                    'name' => $sHtmlIdPrefix . $iRoleId, 
                     'class' => '', 
                     'link' => 'javascript:void(0)', 
-                    'onclick' => $sJsObject . '.onClickSetRole(' . $iId . ', ' . $iRole . ')',
+                    'onclick' => $sJsObject . '.onClickSetRole(' . $iId . ', ' . $iRoleId . ')',
                     'target' => '_self', 
-                    'title' => $sRole, 
+                    'title' => $sRoleTitle, 
                     'active' => 1
                 );            
 

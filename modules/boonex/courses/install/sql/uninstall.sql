@@ -27,7 +27,7 @@ DELETE FROM `sys_form_display_inputs` WHERE `display_name` IN('bx_course_add', '
 
 DELETE FROM `sys_form_pre_lists` WHERE `module` = 'bx_courses';
 
-DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_courses_cats');
+DELETE FROM `sys_form_pre_values` WHERE `Key` IN('bx_courses_cats', 'bx_courses_roles');
 
 -- COMMENTS
 DELETE FROM `sys_objects_cmts` WHERE `Name` = 'bx_courses';

@@ -276,12 +276,14 @@
     <string name="_bx_courses_txt_account_pending"><![CDATA[Этот курс ожидает одобрения. Пожалуйста, дождитесь его активации.]]></string>
     <string name="_bx_courses_txt_account_suspended"><![CDATA[Этот курс заблокирован.]]></string>
     <string name="_bx_courses_txt_N_fans"><![CDATA[{0} студентов]]></string>
+    <string name="_bx_courses_txt_role"><![CDATA[Роль]]></string>
     <string name="_bx_courses_txt_sample_single"><![CDATA[курс]]></string>
     <string name="_bx_courses_txt_sample_single_with_article"><![CDATA[курс]]></string>
     <string name="_bx_courses_txt_sample_comment_single"><![CDATA[комментарий к курсу]]></string>
     <string name="_bx_courses_txt_sample_vote_single"><![CDATA[голос за курс]]></string>
     <string name="_bx_courses_txt_sample_score_up_single"><![CDATA[голос за курс]]></string>
     <string name="_bx_courses_txt_sample_score_down_single"><![CDATA[голос против курса]]></string>
+    <string name="_bx_courses_txt_set_role"><![CDATA[Задать роль]]></string>
     <string name="_bx_courses_txt_to_admins"><![CDATA[В преподаватели]]></string>
     <string name="_bx_courses_txt_from_admins"><![CDATA[Из преподавателей]]></string>
     <string name="_bx_courses_txt_private_entry"><![CDATA[Приватный курс]]></string>
@@ -302,6 +304,11 @@
 
     <string name="_bx_courses_pre_lists_cats"><![CDATA[Категории курсов]]></string>
     <string name="_bx_courses_cat_General"><![CDATA[Обобщение]]></string>
+
+    <string name="_bx_courses_pre_lists_roles"><![CDATA[Роли на курсах]]></string>
+    <string name="_bx_courses_role_regular"><![CDATA[Студент]]></string>
+    <string name="_bx_courses_role_administrator"><![CDATA[Преподаватель]]></string>
+    <string name="_bx_courses_role_moderator"><![CDATA[Помощник]]></string>
 
     <string name="_bx_courses_email_join_request"><![CDATA[Запрос на присоединение к курсу]]></string>
     <string name="_bx_courses_email_join_request_subject"><![CDATA[Запрос на присоединение к курсу]]></string>
@@ -343,5 +350,11 @@
     <string name="_bx_courses_email_invitation_subject"><![CDATA[Приглашение на курс "{EntryTitle}"]]></string>
     <string name="_bx_courses_email_invitation_body"><![CDATA[{email_header}
 <p><a href="{InviterUrl}">{InviterDisplayName}</a> пригласил Вас на курс <a href="{EntryUrl}">{EntryTitle}</a>.</p>
+{email_footer}]]></string>
+
+    <string name="_bx_courses_email_set_role"><![CDATA[Изменение статуса на курсе]]></string>
+    <string name="_bx_courses_email_set_role_subject"><![CDATA[Ваш статус на курсе был изменен]]></string>
+    <string name="_bx_courses_email_set_role_body"><![CDATA[{email_header}
+<p>Ваш статус на курсе <a href="{EntryUrl}">{EntryTitle}</a> был изменен на <b>{Role}</b>.</p>
 {email_footer}]]></string>
 </resources>
