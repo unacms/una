@@ -1374,6 +1374,7 @@
 	<string name="_adm_stg_cpt_option_sys_account_limit_incorrect_login_attempts"><![CDATA[Max number of logins attempts (0 - no limit)]]></string>
     <string name="_adm_stg_cpt_option_sys_account_disable_login_form"><![CDATA[Disable login form]]></string>
     <string name="_adm_stg_cpt_option_sys_account_disable_join_form"><![CDATA[Disable join form]]></string>
+    <string name="_adm_stg_cpt_option_sys_allow_plus_in_email"><![CDATA[Allow to use plus sign ("+") in email address]]></string>
 	<string name="_adm_stg_cpt_option_sys_acl_expire_notification_days"><![CDATA[Number of days before membership expiration to notify members (-1 = after expiration)]]></string>
 	<string name="_adm_stg_cpt_option_sys_acl_expire_notify_once"><![CDATA[Notify members about membership expiration only once (every day otherwise)]]></string>
 	<string name="_adm_stg_cpt_option_sys_add_nofollow"><![CDATA[Add "nofollow" attribute for external links]]></string>
