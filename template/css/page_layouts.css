@@ -3,7 +3,9 @@
 .bx-layout-row.bx-lr-dump {
     display: block;
 }
-.bx-layout-row.bx-lr-dump .adm-bp-cell.bx-def-border {
+.bx-layout-row.bx-lr-dump .adm-bp-cell {
+    margin-top: 0;
+    margin-bottom: 0;
     border-style: dashed;
 }
 
