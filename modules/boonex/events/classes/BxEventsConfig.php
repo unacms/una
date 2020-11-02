@@ -80,6 +80,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
             'PARAM_PUBLIC_SBSD' => 'bx_events_public_subscribed_me',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_events_per_page_browse_showcase',
             'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_events_per_page_browse_recommended',
+            'PARAM_MMODE' => 'bx_events_members_mode',
             'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_events_per_page_for_favorites_lists',
             'PARAM_USE_IN' => 'bx_events_internal_notifications',
 
@@ -187,6 +188,7 @@ class BxEventsConfig extends BxBaseModGroupsConfig
                 'txt_ntfs_join_request' => '_bx_events_txt_ntfs_join_request',
                 'txt_ntfs_fan_added' => '_bx_events_txt_ntfs_fan_added',
             	'txt_ntfs_timeline_post_common' => '_bx_events_txt_ntfs_timeline_post_common',
+                'option_members_mode_multi_roles' => '_bx_events_option_members_mode_multi_roles',
                 'txt_all_entries_in' => '_bx_events_txt_all_entries_in',
             	'form_field_author' => '_bx_events_form_profile_input_author',
                 'menu_item_title_befriend_sent' => '_bx_events_menu_item_title_befriend_sent',

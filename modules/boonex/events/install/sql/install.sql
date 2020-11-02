@@ -213,6 +213,7 @@ CREATE TABLE IF NOT EXISTS `bx_events_admins` (
   `group_profile_id` int(10) unsigned NOT NULL,
   `fan_id` int(10) unsigned NOT NULL,
   `role` int(10) unsigned NOT NULL default '0',
+  `added` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `admin` (`group_profile_id`,`fan_id`)
 );
@@ -452,7 +453,7 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('bx_events_cats', '11', 11, '_bx_events_cat_Other', '');
 
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
-('bx_events_roles', '_bx_events_pre_lists_roles', 'bx_events', '0');
+('bx_events_roles', '_bx_events_pre_lists_roles', 'bx_events', '1');
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
 ('bx_events_roles', '0', 1, '_bx_events_role_regular', ''),

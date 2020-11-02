@@ -11,6 +11,8 @@
     <string name="_bx_events_option_datetime_format"><![CDATA[Формат даты со временем]]></string>
     <string name="_bx_events_option_summary_chars"><![CDATA[Количество символов в автогенерируемой сводке к событию]]></string>
     <string name="_bx_events_option_searchable_fields"><![CDATA[Поля для поиска]]></string>
+    <string name="_bx_spaces_option_members_mode"><![CDATA[Спец. режим для членов события]]></string>
+    <string name="_bx_spaces_option_members_mode_multi_roles"><![CDATA[Множественные роли]]></string>
     <string name="_bx_events_option_public_subscribed_me"><![CDATA[Открытый список заинтересованных пользователей]]></string>
     <string name="_bx_events_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
     <string name="_bx_events_option_internal_notifications"><![CDATA[Использовать встроенную нотификацию]]></string>
