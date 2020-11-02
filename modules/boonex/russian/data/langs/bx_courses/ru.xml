@@ -7,6 +7,8 @@
     <string name="_bx_courses_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
     <string name="_bx_courses_option_num_rss"><![CDATA[Количество элементов в ленте RSS]]></string>
     <string name="_bx_courses_option_searchable_fields"><![CDATA[Поля для поиска]]></string>
+    <string name="_bx_courses_option_members_mode"><![CDATA[Спец. режим для членов пространства]]></string>
+    <string name="_bx_courses_option_members_mode_multi_roles"><![CDATA[Множественные роли]]></string>
     <string name="_bx_courses_option_internal_notifications"><![CDATA[Использовать встроенную нотификацию]]></string>
 
     <string name="_bx_courses_form_profile"><![CDATA[Курсы]]></string>

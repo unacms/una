@@ -69,10 +69,10 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
 
             'PARAM_NUM_RSS' => 'bx_courses_num_rss',
             'PARAM_NUM_CONNECTIONS_QUICK' => 'bx_courses_num_connections_quick',
-
             'PARAM_SEARCHABLE_FIELDS' => 'bx_courses_searchable_fields',
             'PARAM_PER_PAGE_BROWSE_SHOWCASE' => 'bx_courses_per_page_browse_showcase',
             'PARAM_PER_PAGE_BROWSE_RECOMMENDED' => 'bx_courses_per_page_browse_recommended',
+            'PARAM_MMODE' => 'bx_courses_members_mode',
             'PARAM_USE_IN' => 'bx_courses_internal_notifications',
 
             // objects
@@ -176,6 +176,7 @@ class BxCoursesConfig extends BxBaseModGroupsConfig
                 'txt_ntfs_join_request' => '_bx_courses_txt_ntfs_join_request',
                 'txt_ntfs_fan_added' => '_bx_courses_txt_ntfs_fan_added',
                 'txt_ntfs_timeline_post_common' => '_bx_courses_txt_ntfs_timeline_post_common',
+                'option_members_mode_multi_roles' => '_bx_courses_option_members_mode_multi_roles',
                 'form_field_author' => '_bx_courses_form_entry_input_author',
                 'menu_item_title_befriend_sent' => '_bx_courses_menu_item_title_befriend_sent',
                 'menu_item_title_unfriend_cancel_request' => '_bx_courses_menu_item_title_unfriend_cancel_request',

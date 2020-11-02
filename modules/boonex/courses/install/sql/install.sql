@@ -176,6 +176,7 @@ CREATE TABLE IF NOT EXISTS `bx_courses_admins` (
   `group_profile_id` int(10) unsigned NOT NULL,
   `fan_id` int(10) unsigned NOT NULL,
   `role` int(10) unsigned NOT NULL default '0',
+  `added` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `admin` (`group_profile_id`,`fan_id`)
 );
@@ -316,7 +317,7 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 ('bx_courses_cats', '1', 1, '_bx_courses_cat_General', '');
 
 INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`) VALUES
-('bx_courses_roles', '_bx_courses_pre_lists_roles', 'bx_courses', '0');
+('bx_courses_roles', '_bx_courses_pre_lists_roles', 'bx_courses', '1');
 
 INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALUES
 ('bx_courses_roles', '0', 1, '_bx_courses_role_regular', ''),

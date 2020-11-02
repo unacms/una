@@ -7,6 +7,8 @@
     <string name="_bx_courses_option_per_page_browse"><![CDATA[Number of items per page]]></string>
     <string name="_bx_courses_option_num_rss"><![CDATA[Number of items in RSS feed]]></string>
     <string name="_bx_courses_option_searchable_fields"><![CDATA[Searchable fields]]></string>
+    <string name="_bx_courses_option_members_mode"><![CDATA[Special mode for course members]]></string>
+    <string name="_bx_courses_option_members_mode_multi_roles"><![CDATA[Multi Roles]]></string>
     <string name="_bx_courses_option_internal_notifications"><![CDATA[Use internal notifications]]></string>
 
     <string name="_bx_courses_form_profile"><![CDATA[Courses]]></string>

@@ -81,7 +81,6 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
         return array(
             array('key' => '', 'value' => _t('_None')),
             array('key' => BX_BASE_MOD_GROUPS_MMODE_MULTI_ROLES, 'value' => _t($CNF['T']['option_members_mode_' . BX_BASE_MOD_GROUPS_MMODE_MULTI_ROLES])),
-            array('key' => BX_BASE_MOD_GROUPS_MMODE_PAID_JOIN, 'value' => _t($CNF['T']['option_members_mode_' . BX_BASE_MOD_GROUPS_MMODE_PAID_JOIN]))
         );
     }
 
