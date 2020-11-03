@@ -107,12 +107,22 @@ class BxRemindersModule extends BxBaseModGeneralModule
     /**
      * Permissions methods
      */
-    public function isAllowedView($iUserId, $bPerform = false)
+    protected function _serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction, $iProfileId)
     {
-        if(isAdmin())
+        if(!$iProfileId)
+            $iProfileId = $this->_iProfileId;
+
+        if(empty($aDataEntry) || !is_array($aDataEntry))
+            return _t('_sys_txt_not_found');
+
+        $oProfile = BxDolProfile::getInstance($iProfileId);
+        if(!$oProfile)
+            return _t('_sys_txt_not_found');
+
+        if(isAdmin($oProfile->getAccountId()))
             return CHECK_ACTION_RESULT_ALLOWED;
 
-        $aCheckResult = checkActionModule($iUserId, 'view', $this->getName(), $bPerform);
+        $aCheckResult = checkActionModule($iProfileId, 'view', $this->getName(), $isPerformAction);
         if($aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)
             return $aCheckResult[CHECK_ACTION_MESSAGE];
      
@@ -124,6 +134,10 @@ class BxRemindersModule extends BxBaseModGeneralModule
         return _t('_sys_txt_access_denied');
     }
 
+    public function checkAllowedEditAnyEntryForProfile ($isPerformAction = false, $iProfileId = false)
+    {
+        return _t('_sys_txt_access_denied');
+    }
 
     /**
      * Auxiliary methods

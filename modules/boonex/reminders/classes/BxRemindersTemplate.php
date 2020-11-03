@@ -9,9 +9,6 @@
  * @{
  */
 
-/*
- * Module representation.
- */
 class BxRemindersTemplate extends BxBaseModGeneralTemplate
 {
     function __construct(&$oConfig, &$oDb)

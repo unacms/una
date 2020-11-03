@@ -18,12 +18,12 @@ $aConfig = array(
     'name' => 'bx_reminders',
     'title' => 'Reminders',
     'note' => 'Reminders module.',
-    'version' => '9.0.0',
+    'version' => '11.0.0',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '9.0.x'
+        '11.0.x'
     ),
 
     /**

@@ -51,11 +51,6 @@ class BxRemindersConfig extends BxBaseModGeneralConfig
             'OBJECT_CONNECTIONS_FRD' => 'sys_profiles_friends',
             'OBJECT_CONNECTIONS_SBN' => 'sys_profiles_subscriptions',
 
-            // modules
-            'MODULE' => $this->getName(),
-            'MODULE_PROFILES' => 'bx_organizations',
-            'MODULE_CUSTOMS' => 'bx_abundantmods',
-
             // some language keys
             'T' => array (
                 'txt_sample_single' => '_bx_reminders_txt_sample_single',
@@ -75,15 +70,15 @@ class BxRemindersConfig extends BxBaseModGeneralConfig
         $this->_aHtmlIds = array(
             'main' => $sPrefix . '-main',
         );
-
-        $this->_iSystemProfileId = 2;
     }
 
     public function init(&$oDb) 
     {
         $this->_oDb = &$oDb;
 
-        $this->_iSystemProfileId = (int)$this->_oDb->getParam($this->CNF['PARAM_DELETE_SYSTEM_PROFILE_ID']);
+        $this->_iSystemProfileId = (int)getParam($this->CNF['PARAM_DELETE_SYSTEM_PROFILE_ID']);
+        if(empty($this->_iSystemProfileId))
+            $this->_iSystemProfileId = (int)getParam('sys_profile_bot');
     }
 
     public function getHtmlIds($sKey = '')
@@ -93,7 +88,7 @@ class BxRemindersConfig extends BxBaseModGeneralConfig
 
         return isset($this->_aHtmlIds[$sKey]) ? $this->_aHtmlIds[$sKey] : '';
     }
-    
+
     public function getSystemProfileId()
     {
         return $this->_iSystemProfileId;

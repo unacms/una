@@ -90,12 +90,21 @@ class BxRemindersCron extends BxDolCron
         }
 
         /**
-         * Get all profiles from specified profile based module
+         * Get all profiles from profile based modules
          * and start to show reminders and/or notify about them.
          */
-        $aProfiles = $this->_oModule->_oDb->getProfiles($CNF['MODULE_PROFILES']);
+        $aProfileModules = array();
+        $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules', 'active' => 1));
+        foreach($aModules as $aModule)
+            if(BxDolRequest::serviceExists($aModule['name'], 'act_as_profile') && bx_srv($aModule['name'], 'act_as_profile'))
+                $aProfileModules[] = $aModule['name'];        
+
+        $aProfiles = $this->_oModule->_oDb->getProfiles($aProfileModules);
         foreach($aProfiles as $aProfile) {
             $iProfileId = (int)$aProfile['id'];
+            $oProfile = BxDolProfile::getInstance($iProfileId);
+            if(!$oProfile)
+                continue;
 
             //--- Process personal(related to followed friends) reminders.
             if($bTypesPersonal) {
@@ -105,7 +114,7 @@ class BxRemindersCron extends BxDolCron
                     if(!$oFriend)
                         continue;
 
-                    $aFriend = BxDolService::call($CNF['MODULE_PROFILES'], 'get_content_info_by_id', array($oFriend->getContentId()));
+                    $aFriend = BxDolService::call($oFriend->getModule(), 'get_content_info_by_id', array($oFriend->getContentId()));
                     if(empty($aFriend) || !is_array($aFriend))
                         continue;
 
@@ -184,7 +193,7 @@ class BxRemindersCron extends BxDolCron
                                 if($bNotified && array_key_exists($iExpired, $aEntry['notified']) && in_array($iDays, $aEntry['notified'][$iExpired]))
                                     continue;
 
-                                bx_alert($CNF['MODULE'], 'added', $iEntry, $iFriendId, array(
+                                bx_alert($this->_oModule->getName(), 'added', $iEntry, $iFriendId, array(
                                     'object_author_id' => $iProfileId,
                                     'privacy_view' => BX_DOL_PG_ALL
                                 ));
@@ -255,7 +264,7 @@ class BxRemindersCron extends BxDolCron
                         if($bNotified && array_key_exists($iExpired, $aEntry['notified']) && in_array($iDays, $aEntry['notified'][$iExpired]))
                             continue;
 
-                        bx_alert($CNF['MODULE'], 'added', $iEntry, $iSystemProfileId, array(
+                        bx_alert($this->_oModule->getName(), 'added', $iEntry, $iSystemProfileId, array(
                             'object_author_id' => $iProfileId,
                             'privacy_view' => BX_DOL_PG_ALL
                         ));
@@ -274,25 +283,13 @@ class BxRemindersCron extends BxDolCron
 
     protected function _checkDateBeginBirthday(&$oProfile, &$aProfile, $iDays, $iNowYear, $iNowMonth, $iNowDay)
     {
-        if(!isset($aProfile['date_of_birth']))
+        if(!isset($aProfile['birthday']))
             return false;
 
-        $mResult = $this->_checkDate($oProfile, $aProfile['date_of_birth'], $iDays, $iNowYear, $iNowMonth, $iNowDay);
+        $mResult = $this->_checkDate($oProfile, $aProfile['birthday'], $iDays, $iNowYear, $iNowMonth, $iNowDay);
         if(!$mResult)
             return $mResult;
         
-        return array($mResult);
-    }
-
-    protected function _checkDateBeginMarriage(&$oProfile, &$aProfile, $iDays, $iNowYear, $iNowMonth, $iNowDay)
-    {
-        if(!isset($aProfile['marriage_date']))
-            return false;
-
-        $mResult = $this->_checkDate($oProfile, $aProfile['marriage_date'], $iDays, $iNowYear, $iNowMonth, $iNowDay);
-        if(!$mResult)
-            return $mResult;
-
         return array($mResult);
     }
 
@@ -300,7 +297,16 @@ class BxRemindersCron extends BxDolCron
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $aDates = BxDolService::call($CNF['MODULE_CUSTOMS'], 'get_important_dates', array($oProfile->id()));
+        $aDates = array();
+        bx_alert($this->_oModule->getName(), 'get_important_dates', 0, 0, array(
+            'profile_id' => $oProfile->id(),
+            'profile_content_info' => $aProfile,
+            'days' => $iDays, 
+            'now_year' => $iNowYear, 
+            'now_month' => $iNowMonth,
+            'now_day' => $iNowDay,
+            'override_result' => &$aDates
+        ));
         if(empty($aDates) || !is_array($aDates))
             return false;
 
@@ -313,18 +319,6 @@ class BxRemindersCron extends BxDolCron
             }
 
         return $aResults;
-    }
-
-    protected function _checkDateBeginDeath(&$oProfile, &$aProfile, $iDays, $iNowYear, $iNowMonth, $iNowDay)
-    {
-        if(!isset($aProfile['date_of_death']))
-            return false;
-
-        $mResult = $this->_checkDate($oProfile, $aProfile['date_of_death'], $iDays, $iNowYear, $iNowMonth, $iNowDay);
-        if(!$mResult)
-            return $mResult;
-
-        return array($mResult);
     }
 
     protected function _checkDate(&$oProfile, $sDate, $iDays, $iNowYear, $iNowMonth, $iNowDay)

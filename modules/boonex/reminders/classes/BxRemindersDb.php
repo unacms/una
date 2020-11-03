@@ -19,11 +19,12 @@ class BxRemindersDb extends BxBaseModGeneralDb
         parent::__construct($oConfig);
     }
 
-    public function getProfiles($sProfileType)
+    public function getProfiles($mixedProfileType)
     {
-        return $this->getAll("SELECT `id`, `content_id` FROM `sys_profiles` WHERE `type`=:type", array(
-            'type' => $sProfileType
-        ));
+        if(!is_array($mixedProfileType))
+            $mixedProfileType = array($mixedProfileType);
+
+        return $this->getAll("SELECT `id`, `content_id` FROM `sys_profiles` WHERE `type` IN (" . $this->implode_escape($mixedProfileType) . ")");
     }
 
     public function getType($aParams)

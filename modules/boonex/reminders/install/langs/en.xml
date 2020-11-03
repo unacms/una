@@ -14,49 +14,23 @@
 
     <!-- Different -->
     <string name="_bx_reminders_type_title_birthday"><![CDATA[Birthdays]]></string>
-    <string name="_bx_reminders_type_text_birthday"><![CDATA[<b>{profile_name}</b> birthday is on <b>{date}</b>. Make a Legacy Post for them.]]></string>
-    <string name="_bx_reminders_type_title_marriage"><![CDATA[Marriage]]></string>
-    <string name="_bx_reminders_type_text_marriage"><![CDATA[<b>{profile_name}</b> was married on <b>{date}</b>. Send them a Legacy Question.]]></string>
+    <string name="_bx_reminders_type_text_birthday"><![CDATA[<b>{profile_name}</b> birthday is on <b>{date}</b>. Don't forget to wish a happy birthday.]]></string>
     <string name="_bx_reminders_type_title_anniversary"><![CDATA[Anniversaries]]></string>
-    <string name="_bx_reminders_type_text_anniversary"><![CDATA[<b>{profile_name}</b> celebrates <b>{title}</b> on <b>{date}</b>. Send them a Legacy Question.]]></string>
-    <string name="_bx_reminders_type_title_death"><![CDATA[Date of Passing]]></string>
-    <string name="_bx_reminders_type_text_death"><![CDATA[Make a Post to Remember <b>{profile_name}</b>]]></string>
+    <string name="_bx_reminders_type_text_anniversary"><![CDATA[<b>{profile_name}</b> celebrates <b>{title}</b> on <b>{date}</b>. Don't forget to congratulate on the anniversary.]]></string>
 
     <string name="_bx_reminders_type_title_new_year"><![CDATA[New Year]]></string>
     <string name="_bx_reminders_type_text_new_year"><![CDATA[What do you want to do differently this year?]]></string>
-    <string name="_bx_reminders_type_title_mlk_day"><![CDATA[Martin Luther King Jr. Day]]></string>
-    <string name="_bx_reminders_type_text_mlk_day"><![CDATA[When was a time you were challenged to think about race and poverty?]]></string>
     <string name="_bx_reminders_type_title_valentine_day"><![CDATA[Valentine's Day]]></string>
     <string name="_bx_reminders_type_text_valentine_day"><![CDATA[When was the first time you fell in love?]]></string>
-    <string name="_bx_reminders_type_title_start_of_spring"><![CDATA[Start of Spring]]></string>
-    <string name="_bx_reminders_type_text_start_of_spring"><![CDATA[Who do you see growing around you?]]></string>
     <string name="_bx_reminders_type_title_easter"><![CDATA[Easter]]></string>
     <string name="_bx_reminders_type_text_easter"><![CDATA[What role has Jesus played in your life?]]></string>
-    <string name="_bx_reminders_type_title_memorial_day"><![CDATA[Memorial Day]]></string>
-    <string name="_bx_reminders_type_text_memorial_day"><![CDATA[Tell a story from your or your family member sacrifice themselves for someone else's benefit]]></string>
-    <string name="_bx_reminders_type_title_start_of_summer"><![CDATA[Start of Summer]]></string>
-    <string name="_bx_reminders_type_text_start_of_summer"><![CDATA[Make a Legacy Post about your most important vacation]]></string>
-    <string name="_bx_reminders_type_title_4th_july"><![CDATA[July 4th]]></string>
-    <string name="_bx_reminders_type_text_4th_july"><![CDATA[What are the most important virtues in your family?]]></string>
-    <string name="_bx_reminders_type_title_labor_day"><![CDATA[Labor Day]]></string>
-    <string name="_bx_reminders_type_text_labor_day"><![CDATA[Who has the best work ethic in your family and where did they get it?]]></string>
-    <string name="_bx_reminders_type_title_start_of_fall"><![CDATA[Start of Fall]]></string>
-    <string name="_bx_reminders_type_text_start_of_fall"><![CDATA[Who has influenced you and what did they teach you?]]></string>
     <string name="_bx_reminders_type_title_halloween"><![CDATA[Halloween]]></string>
     <string name="_bx_reminders_type_text_halloween"><![CDATA[What is your favorite holiday to celebrate and why?]]></string>
-    <string name="_bx_reminders_type_title_veterans_day"><![CDATA[Veterans Day]]></string>
-    <string name="_bx_reminders_type_text_veterans_day"><![CDATA[Honor a service member by thanking them with Legacy]]></string>
     <string name="_bx_reminders_type_title_thanksgiving"><![CDATA[Thanksgiving]]></string>
-    <string name="_bx_reminders_type_text_thanksgiving"><![CDATA[Who influence are you thankful for?]]></string>
-    <string name="_bx_reminders_type_title_start_of_winter"><![CDATA[Start of Winter]]></string>
-    <string name="_bx_reminders_type_text_start_of_winter"><![CDATA[What is the most important Legacy Post you can do before the end of the year?]]></string>
+    <string name="_bx_reminders_type_text_thanksgiving"><![CDATA[Whose influence are you thankful for?]]></string>
     <string name="_bx_reminders_type_title_christmas"><![CDATA[Christmas]]></string>
-    <string name="_bx_reminders_type_text_christmas"><![CDATA[What is a favorite family tradition and why?]]></string>
+    <string name="_bx_reminders_type_text_christmas"><![CDATA[What is your favorite family tradition and why?]]></string>
 
     <string name="_bx_reminders_txt_sample_single"><![CDATA[reminder]]></string>
     <string name="_bx_reminders_txt_sample_single_with_article"><![CDATA[a reminder]]></string>
-
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
-    <string name=""><![CDATA[]]></string>
 </resources>

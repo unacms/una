@@ -35,25 +35,14 @@ CREATE TABLE IF NOT EXISTS `bx_reminders_types` (
 
 INSERT INTO `bx_reminders_types`(`author`, `added`, `changed`, `name`, `title`, `text`, `link`, `when`, `show`, `notify`, `personal`, `active`, `order`) VALUES
 (0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'birthday', '_bx_reminders_type_title_birthday', '_bx_reminders_type_text_birthday', '', '', 7, '14,7,3', 1, 1, 1),
-(0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'marriage', '_bx_reminders_type_title_marriage', '_bx_reminders_type_text_marriage', '', '', 7, '14,7,3', 1, 1, 2),
-(0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'anniversary', '_bx_reminders_type_title_anniversary', '_bx_reminders_type_text_anniversary', '', '', 7, '14,7,3', 1, 1, 3),
-(0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'death', '_bx_reminders_type_title_death', '_bx_reminders_type_text_death', '', '', 14, '14,7,3', 1, 1, 4),
+(0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'anniversary', '_bx_reminders_type_title_anniversary', '_bx_reminders_type_text_anniversary', '', '', 7, '14,7,3', 1, 1, 2),
 
 (0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'new_year', '_bx_reminders_type_title_new_year', '_bx_reminders_type_text_new_year', '', '12-31', 7, '14,7,3', 0, 1, 10),
-(0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'mlk_day', '_bx_reminders_type_title_mlk_day', '_bx_reminders_type_text_mlk_day', '', '01-21', 7, '14,7,3', 0, 1, 11),
-(0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'valentine_day', '_bx_reminders_type_title_valentine_day', '_bx_reminders_type_text_valentine_day', '', '02-14', 7, '14,7,3', 0, 1, 12),
-(0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'start_of_spring', '_bx_reminders_type_title_start_of_spring', '_bx_reminders_type_text_start_of_spring', '', '03-21', 7, '14,7,3', 0, 1, 13),
-(0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'easter', '_bx_reminders_type_title_easter', '_bx_reminders_type_text_easter', '', '04-21', 7, '14,7,3', 0, 1, 14),
-(0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'memorial_day', '_bx_reminders_type_title_memorial_day', '_bx_reminders_type_text_memorial_day', '', '05-27', 7, '14,7,3', 0, 1, 15),
-(0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'start_of_summer', '_bx_reminders_type_title_start_of_summer', '_bx_reminders_type_text_start_of_summer', '', '06-21', 7, '14,7,3', 0, 1, 16),
-(0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), '4th_july', '_bx_reminders_type_title_4th_july', '_bx_reminders_type_text_4th_july', '', '07-04', 7, '14,7,3', 0, 1, 17),
-(0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'labor_day', '_bx_reminders_type_title_labor_day', '_bx_reminders_type_text_labor_day', '', '09-02', 7, '14,7,3', 0, 1, 18),
-(0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'start_of_fall', '_bx_reminders_type_title_start_of_fall', '_bx_reminders_type_text_start_of_fall', '', '09-21', 7, '14,7,3', 0, 1, 19),
-(0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'halloween', '_bx_reminders_type_title_halloween', '_bx_reminders_type_text_halloween', '', '10-31', 7, '14,7,3', 0, 1, 20),
-(0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'veterans_day', '_bx_reminders_type_title_veterans_day', '_bx_reminders_type_text_veterans_day', '', '11-11', 7, '14,7,3', 0, 1, 21),
-(0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'thanksgiving', '_bx_reminders_type_title_thanksgiving', '_bx_reminders_type_text_thanksgiving', '', '11-28', 7, '14,7,3', 0, 1, 22),
-(0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'start_of_winter', '_bx_reminders_type_title_start_of_winter', '_bx_reminders_type_text_start_of_winter', '', '12-21', 7, '14,7,3', 0, 1, 23),
-(0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'christmas', '_bx_reminders_type_title_christmas', '_bx_reminders_type_text_christmas', '', '12-25', 7, '14,7,3', 0, 1, 24);
+(0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'valentine_day', '_bx_reminders_type_title_valentine_day', '_bx_reminders_type_text_valentine_day', '', '02-14', 7, '14,7,3', 0, 1, 11),
+(0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'easter', '_bx_reminders_type_title_easter', '_bx_reminders_type_text_easter', '', '04-21', 7, '14,7,3', 0, 1, 12),
+(0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'halloween', '_bx_reminders_type_title_halloween', '_bx_reminders_type_text_halloween', '', '10-31', 7, '14,7,3', 0, 1, 13),
+(0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'thanksgiving', '_bx_reminders_type_title_thanksgiving', '_bx_reminders_type_text_thanksgiving', '', '11-28', 7, '14,7,3', 0, 1, 14),
+(0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'christmas', '_bx_reminders_type_title_christmas', '_bx_reminders_type_text_christmas', '', '12-25', 7, '14,7,3', 0, 1, 15);
 
 
 -- STUDIO: page & widget
