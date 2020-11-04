@@ -10,20 +10,45 @@
 
 class BxBaseMenuCustom extends BxTemplMenuMoreAuto
 {
-    protected static $_sTmplContent;
-    protected static $_sTmplContentItem;
+    protected static $_sTmplContentDefault;
+    protected static $_sTmplContentItemDefault;
 
+    protected $_sTmplContent;
+    protected $_sTmplContentItem;
+    
     public function __construct($aObject, $oTemplate = false)
     {
         parent::__construct($aObject, $oTemplate);
 
-        if(empty(self::$_sTmplContent))
-            self::$_sTmplContent = $this->_oTemplate->getHtml($aObject['template']);
+        if(empty(self::$_sTmplContentDefault))
+            self::$_sTmplContentDefault = $this->_oTemplate->getHtml($aObject['template']);
+        $this->_sTmplContent = self::$_sTmplContentDefault;
 
-        if(empty(self::$_sTmplContentItem))
-            self::$_sTmplContentItem = $this->_oTemplate->getHtml('menu_custom_item.html');
+        if(empty(self::$_sTmplContentItemDefault))
+            self::$_sTmplContentItemDefault = $this->_oTemplate->getHtml('menu_custom_item.html');
+        $this->_sTmplContentItem = self::$_sTmplContentItemDefault;
 
         $this->_sTmplNameItemMore = 'menu_custom_item_more.html';
+    }
+
+    public function setTemplateById ($iTemplateId)
+    {
+        $sTemplate = $this->_aObject['template'];
+
+        switch($iTemplateId) {
+            case BX_DB_MENU_TEMPLATE_TABS:
+                $iTemplateId = BX_MENU_TEMPLATE_CUSTOM_HOR;
+                break;
+
+            case BX_DB_MENU_TEMPLATE_POPUP:
+                $iTemplateId = BX_MENU_TEMPLATE_CUSTOM_VER;
+                break;
+        }
+
+        parent::setTemplateById ($iTemplateId);
+
+        if($sTemplate != $this->_aObject['template'])
+            $this->_sTmplContent = $this->_oTemplate->getHtml($this->_aObject['template']);
     }
 
     protected function _getCode($sTmplName, $aTmplVars)
@@ -31,7 +56,7 @@ class BxBaseMenuCustom extends BxTemplMenuMoreAuto
         if($sTmplName != $this->_aObject['template'])
             return parent::_getCode($sTmplName, $aTmplVars);
 
-        return $this->_oTemplate->parseHtmlByContent(self::$_sTmplContent, $aTmplVars);
+        return $this->_oTemplate->parseHtmlByContent($this->_sTmplContent, $aTmplVars);
     }
 
     protected function _getMenuItem ($aItem)
@@ -107,7 +132,7 @@ class BxBaseMenuCustom extends BxTemplMenuMoreAuto
 
     protected function _getTmplContentItem()
     {
-        return self::$_sTmplContentItem;
+        return $this->_sTmplContentItem;
     }
 }
 

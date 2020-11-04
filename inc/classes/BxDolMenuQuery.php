@@ -116,6 +116,12 @@ class BxDolMenuQuery extends BxDolDb
 
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
+    
+    public function getMenuTemplateById($iId, $bFromCache = true)
+    {
+        $sSql = $this->prepare("SELECT * FROM `sys_menu_templates` WHERE `id`=? LIMIT 1", $iId);
+        return $bFromCache ? $this->fromMemory('sys_menu_templates_' . $iId, 'getRow', $sSql) : $this->getRow($sSql);
+    }
 }
 
 /** @} */

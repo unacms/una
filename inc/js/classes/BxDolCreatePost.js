@@ -25,7 +25,7 @@ BxDolCreatePost.prototype.getForm = function (sModuleName, sModuleUri, oElement)
 
     var oTab = $(oElement);
     var sTabActive = 'bx-menu-tab-active';
-    oTab.parents('.sys-cpf-submenu:first').find('li.' + sTabActive).removeClass(sTabActive);
+    oTab.parents('.bx-db-menu:first').find('li.' + sTabActive).removeClass(sTabActive);
     oTab.parents('li:first').addClass(sTabActive);
     oTab.parents('.bx-popup-applied:visible').dolPopupHide();
 

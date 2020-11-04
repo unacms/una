@@ -11,12 +11,11 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
 {
     protected $_oTemplate;
 
+    protected $_sDesignBoxMenuTmplDefault;
+
     protected $_sDesignBoxMenuIcon;
     protected $_sDesignBoxMenuIconType;
     protected $_sDesignBoxMenuClick;
-    protected $_sDesignBoxMenuTmplTabs;
-    protected $_sDesignBoxMenuTmplPopup;
-    
 
     protected function __construct($oTemplate)
     {
@@ -27,11 +26,11 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
 
         $this->_oTemplate = $oTemplate ? $oTemplate : BxDolTemplate::getInstance();
 
+        $this->_sDesignBoxMenuTmplDefault = 'menu_block_submenu_ver.html';
+
         $this->_sDesignBoxMenuIcon = 'chevron';
         $this->_sDesignBoxMenuIconType = 'icon-a';
         $this->_sDesignBoxMenuClick = "bx_menu_slide_inline('#{design_box_menu}', this)";
-        $this->_sDesignBoxMenuTmplTabs = 'menu_block_submenu_hor.html';
-        $this->_sDesignBoxMenuTmplPopup = 'menu_block_submenu_ver.html';
     }
 
     /**
@@ -242,10 +241,8 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
         $sMenu = '';
         if(!empty($mixedMenu)) {
             if(is_string($mixedMenu)) {
-                $oMenu = BxTemplMenu::getObjectInstance($mixedMenu);
-                if($oMenu) {
-                    if($bUseTabs)
-                        $oMenu->setTemplate($this->_sDesignBoxMenuTmplTabs);
+                if(($oMenu = BxTemplMenu::getObjectInstance($mixedMenu)) !== false) {
+                    $oMenu->setTemplateById($bUseTabs ? BX_DB_MENU_TEMPLATE_TABS : BX_DB_MENU_TEMPLATE_POPUP);
 
                     $sMenu = $oMenu->getCode();
                 }
@@ -256,17 +253,18 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
                 if(isset($mixedMenu['template']) && isset($mixedMenu['menu_items']))
                     $aMenu = $mixedMenu;
                 else
-                    $aMenu = array('template' => $this->_sDesignBoxMenuTmplPopup, 'menu_items' => $mixedMenu);
+                    $aMenu = array('template' => $this->_sDesignBoxMenuTmplDefault, 'menu_items' => $mixedMenu);
 
-                if($bUseTabs)
-                    $aMenu['template'] = $this->_sDesignBoxMenuTmplTabs;
+                if(($oMenu = new BxTemplMenu($aMenu, $this->_oTemplate)) !== false) {
+                    $oMenu->setTemplateById($bUseTabs ? BX_DB_MENU_TEMPLATE_TABS : BX_DB_MENU_TEMPLATE_POPUP);
 
-                $oMenu = new BxTemplMenu($aMenu, $this->_oTemplate);
-                $sMenu = $oMenu ? $oMenu->getCode() : '';
+                    $sMenu = $oMenu->getCode();
+                }
+                else
+                    $sMenu = '';
             }
             else if(is_object($mixedMenu) && is_a($mixedMenu, 'BxTemplMenu')) {
-                if($bUseTabs)
-                    $mixedMenu->setTemplate($this->_sDesignBoxMenuTmplTabs);
+                $mixedMenu->setTemplateById($bUseTabs ? BX_DB_MENU_TEMPLATE_TABS : BX_DB_MENU_TEMPLATE_POPUP);
 
                 $sMenu = $mixedMenu->getCode();
             }
