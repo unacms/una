@@ -229,9 +229,20 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
 
-    function getSubmenus()
+    function getSubmenus($mixedTemplateIds = 8)
     {
-        return BxDolDb::getInstance()->getPairs('SELECT `object`, `title` FROM `sys_objects_menu` WHERE `template_id` = 8', 'object', 'title');
+        if(!is_array($mixedTemplateIds))
+            $mixedTemplateIds = array($mixedTemplateIds);
+
+        return BxDolDb::getInstance()->getPairs('SELECT `object`, `title` FROM `sys_objects_menu` WHERE `template_id` IN (' . $this->implode_escape($mixedTemplateIds) . ')', 'object', 'title');
+    }
+
+    function getBlockSubmenus($mixedTemplateIds = array(25, 26))
+    {
+        if(!is_array($mixedTemplateIds))
+            $mixedTemplateIds = array($mixedTemplateIds);
+        
+        return BxDolDb::getInstance()->getPairs('SELECT `object`, `title` FROM `sys_objects_menu` WHERE `template_id` IN (' . $this->implode_escape($mixedTemplateIds) . ')', 'object', 'title');
     }
 
     function getLayouts($aParams, &$aItems, $bReturnCount = true)
@@ -404,6 +415,8 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
                 `tpb`.`title_system` AS `title_system`,
                 `tpb`.`title` AS `title`,
                 `tpb`.`designbox_id` AS `designbox_id`,
+                `tpb`.`submenu` AS `submenu`,
+                `tpb`.`tabs` AS `tabs`,
                 `tpb`.`hidden_on` AS `hidden_on`,
                 `tpb`.`visible_for_levels` AS `visible_for_levels`,
                 `tpb`.`type` AS `type`,

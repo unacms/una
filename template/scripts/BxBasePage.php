@@ -373,17 +373,41 @@ class BxBasePage extends BxDolPage
 
             $sTitle = $this->getBlockTitle($aBlock);
 
-            if (is_array($mixedContent) && !empty($mixedContent['content'])) {
-				$sContentWithBox = $oFunctions->designBoxContent(
-                	isset($mixedContent['title']) ? $mixedContent['title'] : $sTitle,
+            if(is_array($mixedContent) && !empty($mixedContent['content'])) {
+                $aParams = array(
+                    isset($mixedContent['title']) ? $mixedContent['title'] : $sTitle,
                     $mixedContent['content'],
-                    isset($mixedContent['designbox_id']) ? $mixedContent['designbox_id'] : $aBlock['designbox_id'],
-                    isset($mixedContent['menu']) ? $mixedContent['menu'] : false
-				);
-            } 
-            elseif (is_string($mixedContent) && !empty($mixedContent)) {                    
-                $sContentWithBox = $oFunctions->designBoxContent($sTitle, $mixedContent, $aBlock['designbox_id']);
+                    isset($mixedContent['designbox_id']) ? $mixedContent['designbox_id'] : $aBlock['designbox_id']
+                );
+
+                $mixedMenu = false;
+                if(isset($mixedContent['menu']))
+                    $mixedMenu = $mixedContent['menu'];
+                else if(!empty($aBlock['submenu']))
+                    $mixedMenu = $aBlock['submenu'];
+                $aParams[] = $mixedMenu;
+
+                if(isset($mixedContent['buttons']))
+                    $aParams[] = $mixedContent['buttons'];
+                else if($mixedMenu)
+                    $aParams[] = (int)$aBlock['tabs'] == 1 ? true : array();
             }
+            else if(is_string($mixedContent) && !empty($mixedContent)) {
+                $aParams = array(
+                    $sTitle,
+                    $mixedContent,
+                    $aBlock['designbox_id']
+                );
+
+                $mixedMenu = !empty($aBlock['submenu']) ? $aBlock['submenu'] : false;
+                $aParams[] = $mixedMenu;
+
+                if($mixedMenu)
+                    $aParams[] = (int)$aBlock['tabs'] == 1 ? true : array();
+            }
+
+            if(!empty($aParams))
+                $sContentWithBox = call_user_func_array(array($oFunctions, 'designBoxContent'), $aParams);
         }
 
         if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->endPageBlock($aBlock['id'], $sContentWithBox ? false : true, false );

@@ -225,6 +225,11 @@ class BxDolMenu extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
     	return $bVisible;
     }
 
+    public function setTemplate ($sTemplate)
+    {
+        $this->_aObject['template'] = $sTemplate;
+    }
+
     /**
      * Set selected menu item for current menu object only.
      * @param $sModule menu item module to set as selected

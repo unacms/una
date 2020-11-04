@@ -111,10 +111,12 @@ class BxPollsTemplate extends BxBaseModTextTemplate
         $aTmplVars = parent::getTmplVarsText($aData);
         $aTmplVars = array_merge($aTmplVars, array(
             'menu' => BxTemplFunctions::getInstance()->designBoxMenu($oMenu, array(
-                'menu' => array(
-                    'id' => $sMenuId, 
-                    'class' => $sMenu, 
-                    'onclick' => "bx_menu_slide_inline('#" . $sMenuId . "', this, $(this).parents('.bx-db-menu:first'))"
+                array(
+                    'menu' => array(
+                        'id' => $sMenuId, 
+                        'class' => $sMenu, 
+                        'onclick' => "bx_menu_slide_inline('#" . $sMenuId . "', this, $(this).parents('.bx-db-menu:first'))"
+                    )
                 )
             )),
             'bx_if:show_subentries' => array(

@@ -536,6 +536,8 @@
 	<string name="_adm_bp_txt_block_hidden_on_desktop"><![CDATA[desktop]]></string>
         <string name="_adm_bp_txt_block_hidden_on_mobile"><![CDATA[mobile app]]></string>
 	<string name="_adm_bp_txt_block_selected"><![CDATA[blocks selected]]></string>
+        <string name="_adm_bp_txt_block_submenu"><![CDATA[Block submenu]]></string>
+        <string name="_adm_bp_txt_block_tabs"><![CDATA[Use 'tabs' based block submenu]]></string>
 	<string name="_adm_bp_txt_block_title"><![CDATA[Title]]></string>
 	<string name="_adm_bp_txt_block_visible_for"><![CDATA[Visible For]]></string>
 	<string name="_adm_bp_txt_block_visible_for_all"><![CDATA[Anyone]]></string>
@@ -2675,6 +2677,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_menu_set_title_toolbar_member"><![CDATA[Toolbar Member]]></string>
 	<string name="_sys_menu_set_title_toolbar_site"><![CDATA[Toolbar Site]]></string>
 	<string name="_sys_menu_set_title_snippet_meta"><![CDATA[Snippet Meta Info]]></string>
+        <string name="_sys_menu_template_title_block_submenu_hor"><![CDATA[Horizontal Block Submenu]]></string>
+        <string name="_sys_menu_template_title_block_submenu_ver"><![CDATA[Vertical Block Submenu]]></string>
 	<string name="_sys_menu_template_title_buttons_hor"><![CDATA[Horizontal Buttons]]></string>
         <string name="_sys_menu_template_title_buttons_icon_hor"><![CDATA[Horizontal Buttons (icons only)]]></string>
 	<string name="_sys_menu_template_title_buttons_ver"><![CDATA[Vertical Buttons]]></string>

@@ -638,7 +638,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         if(empty($aBlock) || !is_array($aBlock))
             return array('msg' => _t('_adm_bp_err_block_not_found'));
 
-		bx_import('BxDolStudioUtils');
+        bx_import('BxDolStudioUtils');
         $aForm = array(
             'form_attrs' => array(
                 'id' => 'adm-bp-block-edit',
@@ -697,6 +697,28 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                         'params' => array(),
                         'error' => _t('_adm_bp_err_block_designbox'),
                     ),
+                ),
+                'submenu' => array(
+                    'type' => 'select',
+                    'name' => 'submenu',
+                    'caption' => _t('_adm_bp_txt_block_submenu'),
+                    'info' => '',
+                    'value' => isset($aBlock['submenu']) ? $aBlock['submenu'] : '',
+                    'required' => '0',
+                    'db' => array (
+                        'pass' => 'Xss',
+                    ),
+                ),
+                'tabs' => array(
+                    'type' => 'switcher',
+                    'name' => 'tabs',
+                    'caption' => _t('_adm_bp_txt_block_tabs'),
+                    'info' => '',
+                    'value' => '1',
+                    'checked' => $aBlock['tabs'] == '1',
+                    'db' => array (
+                        'pass' => 'Int',
+                    )
                 ),
                 'hidden_on' => array(
                     'type' => 'select_multiple',
@@ -782,6 +804,11 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         $this->oDb->getDesignBoxes(array('type' => 'ordered'), $aDBoxes, false);
         foreach($aDBoxes as $aDBox)
             $aForm['inputs']['designbox_id']['values'][] = array('key' => $this->sSelectKeyPrefix . $aDBox['id'], 'value' => _t($aDBox['title']));
+
+        $aSubmenus = $this->oDb->getBlockSubmenus();
+        $aForm['inputs']['submenu']['values'][] = array('key' => '', 'value' => _t('_sys_no_menu'));
+        foreach ($aSubmenus as $sObject => $sTitle)
+            $aForm['inputs']['submenu']['values'][] = array('key' => $sObject, 'value' => _t($sTitle));
 
         BxDolStudioUtils::getVisibilityValues($aBlock['visible_for_levels'], $aForm['inputs']['visible_for_levels']['values'], $aForm['inputs']['visible_for_levels']['value']);
 

@@ -10,7 +10,13 @@
 class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
 {
     protected $_oTemplate;
-    protected $_sDesignBoxIcon = 'chevron';
+
+    protected $_sDesignBoxMenuIcon;
+    protected $_sDesignBoxMenuIconType;
+    protected $_sDesignBoxMenuClick;
+    protected $_sDesignBoxMenuTmplTabs;
+    protected $_sDesignBoxMenuTmplPopup;
+    
 
     protected function __construct($oTemplate)
     {
@@ -20,6 +26,12 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
         parent::__construct();
 
         $this->_oTemplate = $oTemplate ? $oTemplate : BxDolTemplate::getInstance();
+
+        $this->_sDesignBoxMenuIcon = 'chevron';
+        $this->_sDesignBoxMenuIconType = 'icon-a';
+        $this->_sDesignBoxMenuClick = "bx_menu_slide_inline('#{design_box_menu}', this)";
+        $this->_sDesignBoxMenuTmplTabs = 'menu_block_submenu_hor.html';
+        $this->_sDesignBoxMenuTmplPopup = 'menu_block_submenu_ver.html';
     }
 
     /**
@@ -201,6 +213,9 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
      *      - object: instance of BxTemplMenu class
      *      - string: menu object identifier
      *      - array: array of menu links to create menu from
+     * @param $mixedButtons - design box menu representation, it can be:
+     *      - false: design box menu will be used as horizontal menu (tabs)
+     *      - array: array of menu links to create menu from. If empty array is used and 'design box menu' isn't empty, then 'design box menu' will be added as one of menu items automatically. If non-empty array is used and 'design box menu' isn't empty then it should be added as one of menu items. Use array('menu' => 1) to define menu item for 'design box menu'.
      * @return string
      *
      * @see BX_DB_CONTENT_ONLY
@@ -211,87 +226,155 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
      * @see BX_DB_PADDING_DEF
      * @see BX_DB_PADDING_NO_CAPTION
      */
-    function designBoxContent ($sTitle, $sContent, $iTemplateNum = BX_DB_DEF, $mixedMenu = false)
+    function designBoxContent ($sTitle, $sContent, $iTemplateNum = BX_DB_DEF, $mixedMenu = false, $mixedButtons = array())
     {
         return $this->_oTemplate->parseHtmlByName('designbox_' . (int)$iTemplateNum . '.html', array(
             'title' => $sTitle,
             'designbox_content' => $sContent,
-            'caption_item' => $this->designBoxMenu ($mixedMenu, array (array('menu' => 1))),
+            'caption_item' => $this->designBoxMenu($mixedMenu, $mixedButtons),
         ));
     }
 
-    function designBoxMenu ($mixedMenu, $aButtons = array ())
+    function designBoxMenu ($mixedMenu, $mixedButtons = array())
     {
-        $sCode = '';
-        $aButtonMenu = false;
-        if ($mixedMenu) {
+        $bUseTabs = is_bool($mixedButtons) && $mixedButtons === true;
 
-            $sMenu = '';
-
-            if (is_string($mixedMenu)) {
-
+        $sMenu = '';
+        if(!empty($mixedMenu)) {
+            if(is_string($mixedMenu)) {
                 $oMenu = BxTemplMenu::getObjectInstance($mixedMenu);
-                $sMenu = $oMenu ? $oMenu->getCode () : $mixedMenu;
+                if($oMenu) {
+                    if($bUseTabs)
+                        $oMenu->setTemplate($this->_sDesignBoxMenuTmplTabs);
 
-            } elseif (is_object($mixedMenu) && is_a($mixedMenu, 'BxTemplMenu')) {
-
-                $sMenu = $mixedMenu->getCode();
-
-            } elseif (is_array($mixedMenu)) {
-
-                if (isset($mixedMenu['template']) && isset($mixedMenu['menu_items']))
+                    $sMenu = $oMenu->getCode();
+                }
+                else
+                    $sMenu = $mixedMenu;
+            } 
+            else if(is_array($mixedMenu)) {
+                if(isset($mixedMenu['template']) && isset($mixedMenu['menu_items']))
                     $aMenu = $mixedMenu;
                 else
-                    $aMenu = array ('template' => 'menu_vertical.html', 'menu_items' => $mixedMenu);
+                    $aMenu = array('template' => $this->_sDesignBoxMenuTmplPopup, 'menu_items' => $mixedMenu);
+
+                if($bUseTabs)
+                    $aMenu['template'] = $this->_sDesignBoxMenuTmplTabs;
 
                 $oMenu = new BxTemplMenu($aMenu, $this->_oTemplate);
-                $sMenu = $oMenu->getCode ();
+                $sMenu = $oMenu ? $oMenu->getCode() : '';
             }
+            else if(is_object($mixedMenu) && is_a($mixedMenu, 'BxTemplMenu')) {
+                if($bUseTabs)
+                    $mixedMenu->setTemplate($this->_sDesignBoxMenuTmplTabs);
 
-            if ($sMenu) {
-                $bButtonMenu = !empty($aButtons['menu']) && is_array($aButtons['menu']);
-
-                $sId = $bButtonMenu && !empty($aButtons['menu']['id']) ? $aButtons['menu']['id'] : 'bx-menu-db-' . time() . rand(0, PHP_INT_MAX);
-                $sCode .= $this->slideBox($sId, $sMenu, true);
-
-                $aButtonMenu = array('icon-a' => $this->_sDesignBoxIcon, 'onclick' => "bx_menu_slide_inline('#" . $sId . "', this)");
-                if($bButtonMenu) {
-                    $aButtonMenu = array_merge($aButtonMenu, $aButtons['menu']);
-                    $aButtons[] = array('menu' => 1);
-
-                    unset($aButtons['menu']);
-                }
+                $sMenu = $mixedMenu->getCode();
             }
-
         }
+        $bMenu = !empty($sMenu);
 
-        if ($aButtons) {
-            $sCode .= '<div class="bx-db-menu"><div class="bx-db-menu-tab bx-db-menu-tab-btn">';
-            foreach ($aButtons as $aButton) {
-                if (isset($aButton['menu']) && $aButton['menu']) {
-                    if (!$aButtonMenu)
+        $sResult = '';
+        if($bUseTabs && $bMenu)
+            $sResult = $sMenu;
+        else if(is_array($mixedButtons)) {
+            $sPopup = '';
+
+            if($bMenu) {
+                $aButton = array();
+                if(empty($mixedButtons))
+                    list($aButton, $sPopup) = $this->_designBoxMenuButton($sMenu);
+                //--- For backward compatibility
+                else if(!empty($mixedButtons['menu']) && is_array($mixedButtons['menu'])) {
+                    list($aButton, $sPopup) = $this->_designBoxMenuButton($sMenu, $mixedButtons['menu']);
+                    unset($mixedButtons['menu']);
+                }
+
+                if(!empty($aButton))
+                    $mixedButtons[] = $aButton;
+            }
+
+            foreach($mixedButtons as $aButton) {
+                if($bMenu && isset($aButton['menu'])) {
+                    if(is_numeric($aButton['menu']) && (int)$aButton['menu'] == 1)
+                        list($aButton, $sPopup) = $this->_designBoxMenuButton($sMenu);
+                    else if(is_array($aButton['menu']))
+                        list($aButton, $sPopup) = $this->_designBoxMenuButton($sMenu, $aButton['menu']);
+
+                    if(isset($aButton['menu']))
                         continue;
-
-                    $aButton = $aButtonMenu;
                 }
 
-                $aAttrs = array ();
-                if (!empty($aButton['onclick']))
+                $aAttrs = array();
+                if(!empty($aButton['onclick']))
                     $aAttrs['onclick'] = $aButton['onclick'];
-                if (!empty($aButton['class']))
+                if(!empty($aButton['class']))
                     $aAttrs['class'] = $aButton['class'];
-                $sAttrs = bx_convert_array2attrs ($aAttrs, 'bx-def-margin-sec-left');
 
-                $sCode .= '<a href="javascript:void(0);" ' . $sAttrs . '>';
-                $sCode .= !empty($aButton['icon']) ? '<i class="sys-icon ' . $aButton['icon'] . ' bx-def-font-h2"></i>' : '';
-                $sCode .= !empty($aButton['icon-a']) ? '<i class="sys-icon-a" data-rotate="down" data-icon="' . $aButton['icon-a'] . '"></i>' : '';
-                $sCode .= !empty($aButton['title']) ? $aButton['title'] : '';
-                $sCode .= '</a>';
+                $bTmplVarsButtonIcon = !empty($aButton['icon']);
+                $aTmplVarsButtonIcon = !$bTmplVarsButtonIcon ? array() : array(
+                    'icon' => $aButton['icon']
+                );
+
+                $bTmplVarsButtonIconA = !empty($aButton['icon-a']);
+                $aTmplVarsButtonIconA = !$bTmplVarsButtonIconA ? array() : array(
+                    'icon_a' => $aButton['icon-a']
+                );
+
+                $bTmplVarsButtonTitle = !empty($aButton['title']);
+                $aTmplVarsButtonTitle = !$bTmplVarsButtonTitle ? array() : array(
+                    'title' => $aButton['title']
+                );
+
+                $sResult .= $this->_oTemplate->parseHtmlByName('designbox_menu_button.html', array(
+                    'attrs' => bx_convert_array2attrs($aAttrs, 'bx-def-margin-sec-left'),
+                    'bx_if:show_icon' => array(
+                        'condition' => $bTmplVarsButtonIcon,
+                        'content' => $aTmplVarsButtonIcon
+                    ),
+                    'bx_if:show_icon_a' => array(
+                        'condition' => $bTmplVarsButtonIconA,
+                        'content' => $aTmplVarsButtonIconA
+                    ),
+                    'bx_if:show_title' => array(
+                        'condition' => $bTmplVarsButtonTitle,
+                        'content' => $aTmplVarsButtonTitle
+                    )
+                ));
             }
-            $sCode .= '</div></div>';
+
+            $sResult .= $sPopup;
         }
 
-        return $sCode;
+        if(!empty($sResult))
+            $sResult = $this->_oTemplate->parseHtmlByName('designbox_menu.html', array(
+                'content' => $sResult
+            ));
+
+        return $sResult;
+    }
+
+    protected function _designBoxMenuId ()
+    {
+        return 'bx-menu-db-' . time() . rand(0, PHP_INT_MAX);
+    }
+
+    protected function _designBoxMenuButton ($sMenu, $aParams = array())
+    {
+        $sId = $this->_designBoxMenuId();
+        $aButton = array($this->_sDesignBoxMenuIconType => $this->_sDesignBoxMenuIcon, 'onclick' => $this->_sDesignBoxMenuClick);
+
+        if(!empty($aParams)) {
+            if(!empty($aParams['id']))
+                $sId = $aParams['id'];
+
+            $aButton = array_merge($aButton, $aParams);
+        }
+
+        $aButton['onclick'] = bx_replace_markers($aButton['onclick'], array(
+            'design_box_menu' => $sId
+        ));
+
+        return array($aButton, $this->slideBox($sId, $sMenu, true));
     }
 
     /**

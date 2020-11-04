@@ -3961,7 +3961,9 @@ INSERT INTO `sys_menu_templates` (`id`, `template`, `title`, `visible`) VALUES
 (21, 'menu_profile_stats.html', '_sys_menu_template_title_profile_stats', 0),
 (22, 'menu_interactive.html', '_sys_menu_template_title_interactive', 0),
 (23, 'menu_buttons_icon_hor.html', '_sys_menu_template_title_buttons_icon_hor', 1),
-(24, 'menu_floating_blocks_dash.html', '_sys_menu_template_title_floating_blocks_dash', 0);
+(24, 'menu_floating_blocks_dash.html', '_sys_menu_template_title_floating_blocks_dash', 0),
+(25, 'menu_block_submenu_hor.html', '_sys_menu_template_title_block_submenu_hor', 1),
+(26, 'menu_block_submenu_ver.html', '_sys_menu_template_title_block_submenu_ver', 1);
 
 CREATE TABLE IF NOT EXISTS `sys_objects_menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -4889,6 +4891,8 @@ CREATE TABLE IF NOT EXISTS `sys_pages_blocks` (
   `title_system` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
   `designbox_id` int(11) NOT NULL DEFAULT '11',
+  `submenu` varchar(64) NOT NULL DEFAULT '',
+  `tabs` tinyint(4) NOT NULL DEFAULT '0',
   `visible_for_levels` int(11) NOT NULL DEFAULT '2147483647',
   `hidden_on` varchar(255) NOT NULL DEFAULT '',
   `type` enum('raw','html','lang','image','rss','menu','custom','service','wiki') NOT NULL DEFAULT 'raw',

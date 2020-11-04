@@ -536,6 +536,8 @@
 	<string name="_adm_bp_txt_block_hidden_on_desktop"><![CDATA[настольном компьютере]]></string>
         <string name="_adm_bp_txt_block_hidden_on_mobile"><![CDATA[мобильное приложение]]></string>
 	<string name="_adm_bp_txt_block_selected"><![CDATA[блоков выбрано]]></string>
+        <string name="_adm_bp_txt_block_submenu"><![CDATA[Подменю блока]]></string>
+        <string name="_adm_bp_txt_block_tabs"><![CDATA[Использовать подменю блока в виде вкладок]]></string>
 	<string name="_adm_bp_txt_block_title"><![CDATA[Заголовок]]></string>
 	<string name="_adm_bp_txt_block_visible_for"><![CDATA[Видимо для]]></string>
 	<string name="_adm_bp_txt_block_visible_for_all"><![CDATA[Всех]]></string>
@@ -2631,6 +2633,8 @@
 	<string name="_sys_menu_set_title_toolbar_member"><![CDATA[Панель инструментов - Пользователь]]></string>
 	<string name="_sys_menu_set_title_toolbar_site"><![CDATA[Панель инструментов - Сайт]]></string>
 	<string name="_sys_menu_set_title_snippet_meta"><![CDATA[Мета информация в карточке]]></string>
+        <string name="_sys_menu_template_title_block_submenu_hor"><![CDATA[Горизонтальное подменю блолка]]></string>
+        <string name="_sys_menu_template_title_block_submenu_ver"><![CDATA[Вертикальное подменю блолка]]></string>
 	<string name="_sys_menu_template_title_buttons_hor"><![CDATA[Горизонтальные кнопки]]></string>
         <string name="_sys_menu_template_title_buttons_icon_hor"><![CDATA[Горизонтальные кнопки (только иконки)]]></string>
 	<string name="_sys_menu_template_title_buttons_ver"><![CDATA[Вертикальные кнопки]]></string>
