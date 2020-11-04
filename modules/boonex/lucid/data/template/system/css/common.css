@@ -1,5 +1,10 @@
 @import url(../../../../../../../template/css/common.css);
 
+/* --- Design boxes --- */
+.bx-db-container .bx-db-header {
+    height: 40px;
+}
+
 /* --- Buttons --- */
 .bx-btn i,
 .bx-btn u {

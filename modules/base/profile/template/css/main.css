@@ -121,8 +121,8 @@
     text-align:center;
 }
 
-.bx-base-pofile-unit-with-cover .sys-author ul.bx-menu-custom.bx-menu-hor,
-.bx-base-pofile-unit-with-cover .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-hor {
+.bx-base-pofile-unit-with-cover .sys-author ul.bx-menu-custom.bx-menu-custom-hor,
+.bx-base-pofile-unit-with-cover .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor {
     -webkit-justify-content: center;
     justify-content: center;
 }
@@ -397,7 +397,8 @@ a.bx-base-pofile-cover-thumb p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
     -webkit-justify-content: center;
     justify-content: center;
 }
-.bx-base-pofile-cover-actions .bx-menu-hor li.bx-menu-item {
+.bx-base-pofile-cover-actions .bx-menu-hor li.bx-menu-item,
+.bx-base-pofile-cover-actions .bx-menu-custom-hor li.bx-menu-item {
     white-space: nowrap;
 }
 

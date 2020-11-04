@@ -425,14 +425,14 @@ div.bx-tl-item div.bx-tl-owner-name .bx-tl-hot .sys-icon {
     text-overflow: ellipsis;
     text-align: left;
 }
-.bx-tl-item-meta ul.bx-menu-custom.bx-menu-hor {
+.bx-tl-item-meta ul.bx-menu-custom.bx-menu-custom-hor {
     position: relative;
     display: inline-block;
 }
-.bx-tl-item-meta ul.bx-menu-custom.bx-menu-hor > li {
+.bx-tl-item-meta ul.bx-menu-custom.bx-menu-custom-hor > li {
     vertical-align: top;
 }
-.bx-tl-item-meta ul.bx-menu-custom.bx-menu-hor > li > span {
+.bx-tl-item-meta ul.bx-menu-custom.bx-menu-custom-hor > li > span {
     margin-right: 0;
 }
 .bx-tl-item-meta ul.bx-menu-custom li:first-child .bx-tl-item-meta-div {
@@ -550,37 +550,37 @@ div.bx-tl-item div.bx-tl-item-image {
 }
 
 /*--- Item Activity (Actions and Manage are different menus) ---*/
-div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-hor {
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-custom-hor {
     position: relative;
     display: -webkit-flex;
     display: flex;
     -webkit-justify-content: flex-start;
     justify-content: flex-start;
 }
-div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-hor.bx-mma-ready {
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-custom-hor.bx-mma-ready {
     -webkit-justify-content: flex-start;
     justify-content: flex-start;
 }
-div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-hor::before,
-div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-hor::after {
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-custom-hor::before,
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-custom-hor::after {
     display: none;
 }
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li > a,
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li > span {
     display: block;
 }
-div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu-hor {
+div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu-custom-hor {
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap
 }
-div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu-hor li > a,
-div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu-hor li > div,
-div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu-hor li > span {
+div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu-custom-hor li > a,
+div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu-custom-hor li > div,
+div.bx-tl-item div.bx-tl-item-activity.bx-tl-ia-counters .bx-menu-custom.bx-menu-custom-hor li > span {
     margin-top: 1.0rem;
     margin-right: 1.25rem;
 }
-div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-hor.bx-menu-hor li > a,
-div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-hor.bx-menu-hor li > span {
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-custom-hor li > a,
+div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-custom-hor li > span {
     margin-right: 1.25rem;
 }
 div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom li > span {
@@ -653,30 +653,30 @@ div.bx-tl-item div.bx-tl-item-activity .bx-menu-custom.bx-menu-more-auto .bx-pop
 }
 
 /*--- Item Activity without Auto-More ---*/
-div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-hor:not(.bx-menu-more-auto),
-div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-hor:not(.bx-menu-more-auto) li {
+div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-custom-hor:not(.bx-menu-more-auto),
+div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-custom-hor:not(.bx-menu-more-auto) li {
     overflow: hidden;
 }
-div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-hor:not(.bx-menu-more-auto) a,
-div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-hor:not(.bx-menu-more-auto) span {
+div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-custom-hor:not(.bx-menu-more-auto) a,
+div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-custom-hor:not(.bx-menu-more-auto) span {
     display: block;
     white-space: nowrap;
 }
-div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-hor:not(.bx-menu-more-auto) span.bx-menu-item-icon,
-div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-hor:not(.bx-menu-more-auto) span.sys-action-do-icon {
+div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-custom-hor:not(.bx-menu-more-auto) span.bx-menu-item-icon,
+div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-custom-hor:not(.bx-menu-more-auto) span.sys-action-do-icon {
     -webkit-flex-shrink: 0;
     flex-shrink: 0;
 }
-div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-hor:not(.bx-menu-more-auto) .sys-action-element-holder,
-div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-hor:not(.bx-menu-more-auto) .bx-menu-item-title,
-div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-hor:not(.bx-menu-more-auto) .sys-action-do-text {
+div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-custom-hor:not(.bx-menu-more-auto) .sys-action-element-holder,
+div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-custom-hor:not(.bx-menu-more-auto) .bx-menu-item-title,
+div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-custom-hor:not(.bx-menu-more-auto) .sys-action-do-text {
     max-width: 100%;
 
     -webkit-flex-shrink: 1;
     flex-shrink: 1;
 }
-div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-hor:not(.bx-menu-more-auto) .bx-menu-item-title,
-div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-hor:not(.bx-menu-more-auto) .sys-action-do-text {
+div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-custom-hor:not(.bx-menu-more-auto) .bx-menu-item-title,
+div.bx-tl-item div.bx-tl-item-activity:not(.bx-tl-ia-counters) .bx-menu-custom.bx-menu-custom-hor:not(.bx-menu-more-auto) .sys-action-do-text {
     overflow: hidden;
     text-overflow: ellipsis;
 }

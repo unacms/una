@@ -374,7 +374,7 @@ div.bx-account-unit-online {
 .bx-media-phone .sys-cpf-submenu {
     max-width: 70%;
 }
-.sys-cpf-submenu-cnt ul.bx-menu-custom.bx-menu-hor.bx-menu-more-auto:not(.bx-menu-submenu-more-auto) {
+.sys-cpf-submenu-cnt ul.bx-menu-custom.bx-menu-custom-hor.bx-menu-more-auto:not(.bx-menu-submenu-more-auto) {
     display: -webkit-flex;
     display: flex;
     -webkit-justify-content: flex-end;
@@ -406,7 +406,7 @@ div.bx-account-unit-online {
     display: none;
 }
 .sys-cpf-submenu-cnt ul li:not(.bx-menu-item-more-auto) a span,
-.sys-cpf-submenu-cnt ul.bx-menu-custom.bx-menu-ver.bx-menu-submenu-more-auto li:not(.bx-menu-item-more-auto) a span {
+.sys-cpf-submenu-cnt ul.bx-menu-custom.bx-menu-custom-ver.bx-menu-submenu-more-auto li:not(.bx-menu-item-more-auto) a span {
     margin: 0;
 }
 .sys-cpf-submenu-cnt ul li.bx-menu-tab-active {
@@ -442,11 +442,11 @@ div.bx-account-unit-online {
 	max-width: 9.375rem;
 }
 .sys-cpf-close {
-	position: absolute;
-	display: none;
+    position: absolute;
+    display: none;
 
-	right: 1.25rem;
-	bottom: 1.25rem;
+    right: 0;
+    bottom: 0;
 }
 
 
@@ -469,20 +469,20 @@ div.bx-account-unit-online {
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
 }
-.sys-author-profile ul.bx-menu-custom.bx-menu-hor {
+.sys-author-profile ul.bx-menu-custom.bx-menu-custom-hor {
     line-height: 0.625rem;
 }
-.sys-author-profile ul.bx-menu-custom.bx-menu-hor > li.bx-menu-item-nl {
+.sys-author-profile ul.bx-menu-custom.bx-menu-custom-hor > li.bx-menu-item-nl {
     width: 100%;
 }
-.sys-author-profile .bx-menu-custom.bx-menu-hor > li > span {
+.sys-author-profile .bx-menu-custom.bx-menu-custom-hor > li > span {
     margin-right: 0;
 }
-.sys-author-profile .bx-menu-custom.bx-menu-hor > li > span.bx-base-profile-unit-meta-item.bx-def-padding-thd-leftright {
+.sys-author-profile .bx-menu-custom.bx-menu-custom-hor > li > span.bx-base-profile-unit-meta-item.bx-def-padding-thd-leftright {
     padding-left: 0;
     padding-right: 0.5rem;
 }
-.sys-author-profile .bx-menu-custom.bx-menu-hor > li:first-child .bx-base-general-unit-meta-div {
+.sys-author-profile .bx-menu-custom.bx-menu-custom-hor > li:first-child .bx-base-general-unit-meta-div {
     display: none;
 }
 

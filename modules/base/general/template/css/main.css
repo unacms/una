@@ -167,8 +167,8 @@ div.bx-base-general-comments div.bx-base-general-comments-counter-holder {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.sys-author ul.bx-menu-custom.bx-menu-hor,
-.bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-hor {
+.sys-author ul.bx-menu-custom.bx-menu-custom-hor,
+.bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor {
     position: relative;
     display: -webkit-flex;
     display: flex;
@@ -181,26 +181,26 @@ div.bx-base-general-comments div.bx-base-general-comments-counter-holder {
 
     margin: 0.1rem 0 0.2rem 0;
 }
-.sys-author ul.bx-menu-custom.bx-menu-hor > li,
-.bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-hor > li {
+.sys-author ul.bx-menu-custom.bx-menu-custom-hor > li,
+.bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor > li {
     -webkit-flex: 0 1 auto; 
     -ms-flex:  0 1 auto; 
     flex: 0 1 auto;
 
     white-space: nowrap;
 }
-.sys-author ul.bx-menu-custom.bx-menu-hor > li.bx-menu-item-nl,
-.bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-hor > li.bx-menu-item-nl {
+.sys-author ul.bx-menu-custom.bx-menu-custom-hor > li.bx-menu-item-nl,
+.bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor > li.bx-menu-item-nl {
     display: none;
     width: 100%;
     height: 0.5rem;
 }
-.bx-base-pofile-unit-with-cover .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-hor > li.bx-menu-item-nl {
+.bx-base-pofile-unit-with-cover .bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor > li.bx-menu-item-nl {
     display: block;
 }
 
-.sys-author ul.bx-menu-custom.bx-menu-hor > li > span,
-.bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-hor > li > span {
+.sys-author ul.bx-menu-custom.bx-menu-custom-hor > li > span,
+.bx-base-general-unit-meta ul.bx-menu-custom.bx-menu-custom-hor > li > span {
     margin-left: 0;
     margin-right: 0;
 }
