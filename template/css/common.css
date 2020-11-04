@@ -200,17 +200,22 @@ div.mce-fullscreen {
     white-space: nowrap;
 }
 .bx-db-menu ul.bx-menu-hor > li,
-.bx-db-menu ul.bx-menu-custom:not(.bx-menu-submenu-more-auto) > li {
+.bx-db-menu ul.bx-menu-custom.bx-menu-custom-hor > li {
     -webkit-flex: 0 1 auto; 
     -ms-flex:  0 1 auto; 
     flex:  0 1 auto;
 
     height: 2.5rem;
+    padding: 0 0.5rem;
+
     border-bottom: 1px solid transparent;
 
     line-height: 2.5rem;
 }
-.bx-db-menu ul li > span {
+.bx-db-menu ul.bx-menu-custom.bx-menu-custom-hor > li {
+    display: block;
+}
+.bx-db-menu .bx-menu-custom.bx-menu-custom-hor > li > span {
     margin: 0;
     padding: 0;
 }
@@ -219,6 +224,7 @@ div.mce-fullscreen {
 }
 
 /*--- Block menu with Auto-More ---*/
+.bx-db-menu ul.bx-menu-custom.bx-menu-custom-hor,
 .bx-db-menu ul.bx-menu-custom.bx-menu-custom-hor.bx-menu-more-auto:not(.bx-menu-submenu-more-auto) {
     display: -webkit-flex;
     display: flex;

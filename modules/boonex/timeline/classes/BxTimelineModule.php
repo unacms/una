@@ -3750,9 +3750,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         $this->_iOwnerId = $aParams['owner_id'];
 
-        return array(
-            'content' => $this->_oTemplate->getViewsBlock($aParams)
-        );
+        return $this->_oTemplate->getViewsBlock($aParams);
     }
 
     protected function _serviceGetBlockViewHome($aBrowseParams = array())

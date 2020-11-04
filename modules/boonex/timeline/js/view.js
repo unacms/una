@@ -442,6 +442,11 @@ BxTimelineView.prototype.changeView = function(oLink, sType, oRequestParams)
     this._oRequestParams.start = 0;
     this._oRequestParams.type = sType;
 
+    var oTab = $(oLink);
+    var sTabActive = 'bx-menu-tab-active';
+    oTab.parents('.bx-db-menu:first').find('li.' + sTabActive).removeClass(sTabActive);
+    oTab.parents('li:first').addClass(sTabActive);
+
     var sView = this._getHtmlId('main', this._oRequestParams);
     if(oViews.find(sView).length !== 0) {
         oViewBefore.hide();

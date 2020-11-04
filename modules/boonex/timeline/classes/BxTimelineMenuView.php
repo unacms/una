@@ -12,7 +12,7 @@
 /**
  * View block menu.
  */
-class BxTimelineMenuView extends BxTemplMenuInteractive
+class BxTimelineMenuView extends BxTemplMenuCustom
 {
     protected $_oModule;
 
