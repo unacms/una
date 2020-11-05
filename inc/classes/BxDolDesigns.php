@@ -50,40 +50,44 @@ class BxDolDesigns extends BxDolFactory implements iBxDolSingleton
 
     	$aDesign = BxDolModuleQuery::getInstance()->getModuleByUri($this->sDesign);
     	if(!empty($aDesign) && is_array($aDesign))
-    		$this->oDesign = BxDolModule::getInstance($aDesign['name']);
+            $this->oDesign = BxDolModule::getInstance($aDesign['name']);
 
     	//--- Init site's logo params.
     	if($this->oDesign instanceof BxDolModule && method_exists($this->oDesign->_oConfig, 'getLogoParams'))
-    		list(
-    			$this->aParams['logo'], 
-    			$this->aParams['logo_alt'], 
-    			$this->aParams['logo_width'], 
-    			$this->aParams['logo_height']
-    		) = $this->oDesign->_oConfig->getLogoParams();
+            list(
+                $this->aParams['logo'], 
+                $this->aParams['logo_alt'], 
+                $this->aParams['logo_width'], 
+                $this->aParams['logo_height']
+            ) = $this->oDesign->_oConfig->getLogoParams();
     }
 
     public function getSiteLogo()
     {
     	return $this->getSiteLogoParam('logo');
     }
-	public function getSiteLogoAlt()
+
+    public function getSiteLogoAlt()
     {
     	return $this->getSiteLogoParam('logo_alt');
     }
-	public function getSiteLogoWidth()
+
+    public function getSiteLogoWidth()
     {
-    	return $this->getSiteLogoParam('logo_width');
+    	return $this->getSiteLogoParam('logo_width', !$this->oDesign->_oConfig->getLogo());
     }
-	public function getSiteLogoHeight()
+
+    public function getSiteLogoHeight()
     {
-    	return $this->getSiteLogoParam('logo_height');
+    	return $this->getSiteLogoParam('logo_height', !$this->oDesign->_oConfig->getLogo());
     }
-    protected function getSiteLogoParam($sName)
+
+    protected function getSiteLogoParam($sName, $bGetSystem = false)
     {
-    	if(!empty($this->aParams[$sName])) {
-    		$sResult = getParam($this->aParams[$sName]);
-    		if(!empty($sResult))
-    			return $sResult;
+    	if(!empty($this->aParams[$sName]) && !$bGetSystem) {
+            $sResult = getParam($this->aParams[$sName]);
+            if(!empty($sResult))
+                return $sResult;
     	}
 
     	return getParam('sys_site_' . $sName);

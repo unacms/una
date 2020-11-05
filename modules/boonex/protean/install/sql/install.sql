@@ -42,7 +42,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_header_bg_image_size'), '_bx_protean_stg_cpt_option_header_bg_image_size', 'cover', 'select', 'auto,cover,contain', '', '', 7),
 (@iCategoryId, CONCAT(@sName, '_site_logo'), '_bx_protean_stg_cpt_option_site_logo', '', 'image', '', '', '', 8),
 (@iCategoryId, CONCAT(@sName, '_site_logo_alt'), '_bx_protean_stg_cpt_option_site_logo_alt', '', 'text', '', '', '', 9),
-(@iCategoryId, CONCAT(@sName, '_site_logo_width'), '_bx_protean_stg_cpt_option_site_logo_width', '240', 'digit', '', '', '', 0),
+(@iCategoryId, CONCAT(@sName, '_site_logo_width'), '_bx_protean_stg_cpt_option_site_logo_width', '240', 'digit', '', '', '', 10),
 (@iCategoryId, CONCAT(@sName, '_site_logo_height'), '_bx_protean_stg_cpt_option_site_logo_height', '48', 'digit', '', '', '', 11),
 (@iCategoryId, CONCAT(@sName, '_header_border_color'), '_bx_protean_stg_cpt_option_header_border_color', 'rgba(0, 0, 0, 0.2)', 'rgba', '', '', '', 12),
 (@iCategoryId, CONCAT(@sName, '_header_border_size'), '_bx_protean_stg_cpt_option_header_border_size', '1px', 'digit', '', '', '', 13),
