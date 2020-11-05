@@ -186,6 +186,49 @@ BxDolCmts.prototype.cmtAfterEditSubmit = function (oCmtForm, oData, onComplete)
         fContinue();
 };
 
+BxDolCmts.prototype.cmtPin = function(oLink, iCmtId, iWay, bHideMenu) {
+    var $this = this;
+
+    if(bHideMenu == undefined || bHideMenu)
+        $(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide();
+
+    var oParams = this._getDefaultActions();
+    oParams['action'] = 'Pin';
+    oParams['Cmt'] = iCmtId;
+    oParams['way'] = iWay;
+
+    var oCmt = $(this._sRootId + ' #cmt' + iCmtId);
+    this._loadingInBlock(oCmt, true);
+
+    jQuery.post (
+        this._sActionsUrl,
+        oParams,
+        function (oData) {
+            var fContinue = function() {
+                if(oData && oData.parent_id != undefined) {
+                    $this._getCmts(oLink, {
+                        CmtParent: oData.parent_id,
+                        CmtBrowse: $this._sBrowseType,
+                        CmtFilter: $this._sBrowseFilter,
+                        CmtDisplay: $this._sDisplayType
+                    }, function(sListId, sContent) {
+                        $this._loadingInBlock(oCmt, false);
+
+                        $this._sDisplayType = $this._sDisplayType;
+                        $this._cmtsReplaceContent($(sListId), sContent);
+                    });
+            	}
+            };
+
+            if(oData && oData.msg != undefined)
+                bx_alert(oData.msg, fContinue);
+            else
+                fContinue();
+        },
+        'json'
+    );
+};
+
 BxDolCmts.prototype.cmtEdit = function(oLink, iCmtId, bHideMenu) {
     var $this = this;
 

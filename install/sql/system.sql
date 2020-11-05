@@ -747,6 +747,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionCmtRemoveAll = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('system', 'comments pin', NULL, '_sys_acl_action_comments_pin', '', 1, 3);
+SET @iIdActionCmtPin = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('system', 'create account', NULL, '_sys_acl_action_create_account', '_sys_acl_action_create_account_desc', 0, 2147483646);
 SET @iIdActionAccountCreate = LAST_INSERT_ID();
 
@@ -951,6 +955,10 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 -- comments remove all
 (@iModerator, @iIdActionCmtRemoveAll),
 (@iAdministrator, @iIdActionCmtRemoveAll),
+
+-- comments pin
+(@iModerator, @iIdActionCmtPin),
+(@iAdministrator, @iIdActionCmtPin),
 
 -- account create
 (@iUnauthenticated, @iIdActionAccountCreate),
@@ -4136,6 +4144,8 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 -- comment manage menu
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
+('sys_cmts_item_manage', 'system', 'item-pin', '_sys_menu_item_title_system_cmts_item_pin', '_sys_menu_item_title_cmts_item_pin', 'javascript:void(0)', 'javascript:{js_object}.cmtPin(this, {content_id}, 1)', '_self', 'thumbtack', '', 2147483647, 1, 0, 0),
+('sys_cmts_item_manage', 'system', 'item-unpin', '_sys_menu_item_title_system_cmts_item_unpin', '_sys_menu_item_title_cmts_item_unpin', 'javascript:void(0)', 'javascript:{js_object}.cmtPin(this, {content_id}, 0)', '_self', 'thumbtack', '', 2147483647, 1, 0, 0),
 ('sys_cmts_item_manage', 'system', 'item-report', '_sys_menu_item_title_system_cmts_item_report', '', 'javascript:void(0)', '', '', '', '', 2147483647, 1, 0, 0),
 ('sys_cmts_item_manage', 'system', 'item-edit', '_sys_menu_item_title_system_cmts_item_edit', '_sys_menu_item_title_cmts_item_edit', 'javascript:void(0)', 'javascript:{js_object}.cmtEdit(this, {content_id})', '_self', 'pencil-alt', '', 2147483647, 1, 0, 0),
 ('sys_cmts_item_manage', 'system', 'item-delete', '_sys_menu_item_title_system_cmts_item_delete', '_sys_menu_item_title_cmts_item_delete', 'javascript:void(0)', 'javascript:{js_object}.cmtRemove(this, {content_id})', '_self', 'remove', '', 2147483647, 1, 0, 0);
@@ -4147,7 +4157,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('sys_cmts_item_actions', 'system', 'item-score', '_sys_menu_item_title_system_cmts_item_score', '_sys_menu_item_title_cmts_item_score', 'javascript:void(0)', '', '', '', '', '', 0, 2147483647, 0, 0, 1, 2),
 ('sys_cmts_item_actions', 'system', 'item-reply', '_sys_menu_item_title_system_cmts_item_reply', '_sys_menu_item_title_cmts_item_reply', 'javascript:void(0)', 'javascript:{reply_onclick}', '_self', 'reply', '', '', 0, 2147483647, 1, 0, 1, 3),
 ('sys_cmts_item_actions', 'system', 'item-quote', '_sys_menu_item_title_system_cmts_item_quote', '_sys_menu_item_title_cmts_item_quote', 'javascript:void(0)', 'javascript:{quote_onclick}', '_self', 'quote-right', '', '', 0, 2147483647, 1, 0, 1, 4),
-('sys_cmts_item_actions', 'system', 'item-more', '_sys_menu_item_title_system_cmts_item_more', '_sys_menu_item_title_cmts_item_more', 'javascript:void(0)', 'bx_menu_popup(''sys_cmts_item_manage'', this, {''id'':''sys_cmts_item_manage_{cmt_system}_{cmt_id}''}, {cmt_system:''{cmt_system}'', cmt_object_id:{cmt_object_id}, cmt_id:{cmt_id}});', '', 'ellipsis-h', '', 'sys_cmts_item_manage', 1, 2147483647, 1, 0, 1, 5);
+('sys_cmts_item_actions', 'system', 'item-more', '_sys_menu_item_title_system_cmts_item_more', '_sys_menu_item_title_cmts_item_more', 'javascript:void(0)', 'bx_menu_popup(''sys_cmts_item_manage'', this, {''id'':''sys_cmts_item_manage_{cmt_system}_{cmt_id}'', ''removeOnClose'':1}, {cmt_system:''{cmt_system}'', cmt_object_id:{cmt_object_id}, cmt_id:{cmt_id}});', '', 'ellipsis-h', '', 'sys_cmts_item_manage', 1, 2147483647, 1, 0, 1, 5);
 
 -- comment meta info menu
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 

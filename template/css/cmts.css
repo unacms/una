@@ -98,6 +98,9 @@
         white-space: nowrap;
         overflow: hidden;
     }
+    div.cmt-head > span {
+        vertical-align: middle;
+    }
     span.cmt-reply-to a {
         text-decoration: none;
     }
@@ -131,6 +134,8 @@
 
     /*--- unit meta ---*/
     .cmt-meta.bx-base-general-unit-meta {
+        display: inline-block;
+
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;

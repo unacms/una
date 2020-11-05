@@ -925,6 +925,38 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         return $this->msgErrReplyAllowed ();
     }
 
+    public function isPinAllowed ($aCmt, $isPerformAction = false)
+    {
+        if((int)$aCmt['cmt_pinned'] != 0)
+            return false;
+
+        if(isAdmin())
+            return true;
+        
+        return $this->checkAction ('comments pin', $isPerformAction);
+    }
+
+    public function msgErrPinAllowed ()
+    {
+        return $this->checkActionErrorMsg('comments pin');
+    }
+
+    public function isUnpinAllowed ($aCmt, $isPerformAction = false)
+    {
+        if((int)$aCmt['cmt_pinned'] == 0)
+            return false;
+
+        if(isAdmin())
+            return true;
+        
+        return $this->checkAction ('comments pin', $isPerformAction);
+    }
+
+    public function msgErrUnpinAllowed ()
+    {
+        return $this->checkActionErrorMsg('comments pin');
+    }
+
     public function isEditAllowed ($aCmt, $isPerformAction = false)
     {
         if(isAdmin())
@@ -986,6 +1018,36 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     /**
      * Actions functions
      */
+    public function actionPin ()
+    {
+        if (!$this->isEnabled())
+            return echoJson(array());
+
+        $iCmtId = 0;
+        if(bx_get('Cmt') !== false)
+            $iCmtId = bx_process_input(bx_get('Cmt'), BX_DATA_INT);
+
+        $aCmt = $this->getCommentRow($iCmtId);
+        if(empty($aCmt) || !is_array($aCmt))
+            return echoJson(array());
+
+        $iWay = 0;
+        if(bx_get('way') !== false)
+            $iWay = bx_process_input(bx_get('way'), BX_DATA_INT);
+
+        if(!$this->_oQuery->updateComments(array('cmt_pinned' => $iWay ? time() : 0), array('cmt_id' => $iCmtId)))
+            return echoJson(array());
+
+        $aBp = $aDp = array();
+        $this->_getParams($aBp, $aDp);
+        $this->_prepareParams($aBp, $aDp);
+
+        echoJson(array(
+            'parent_id' => $aCmt['cmt_parent_id'],
+            'per_view' => $aBp['per_view']
+        ));
+    }
+    
     public function actionGetFormPost ()
     {
         if (!$this->isEnabled())

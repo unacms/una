@@ -1700,6 +1700,7 @@
 	<string name="_cmt_txt_link_reply"><![CDATA[Reply]]></string>
         <string name="_cmt_txt_added_sample"><![CDATA[added a new comment]]></string>
 	<string name="_cmt_txt_or"><![CDATA[or]]></string>
+        <string name="_cmt_txt_pinned"><![CDATA[Pinned comment]]></string>
 	<string name="_cmt_txt_sample_comment_single"><![CDATA[comment]]></string>
         <string name="_cmt_txt_sample_reaction_single"><![CDATA['{0}' reaction to comment]]></string>
 	<string name="_cmt_txt_sample_reply_to"><![CDATA[reply to comment]]></string>
@@ -1764,6 +1765,7 @@
 	<string name="_sys_acl_action_chart_view_desc"><![CDATA[View statistical charts]]></string>
 	<string name="_sys_acl_action_comments_edit_all"><![CDATA[Comments Edit All]]></string>
 	<string name="_sys_acl_action_comments_edit_own"><![CDATA[Comments Edit Own]]></string>
+        <string name="_sys_acl_action_comments_pin"><![CDATA[Comments Pin]]></string>
 	<string name="_sys_acl_action_comments_post"><![CDATA[Comments Post]]></string>
 	<string name="_sys_acl_action_comments_remove_all"><![CDATA[Comments Remove All]]></string>
 	<string name="_sys_acl_action_comments_remove_own"><![CDATA[Comments Remove Own]]></string>
@@ -2525,6 +2527,8 @@ If it is not enabled then please consider implement this optimization, since it 
   <string name="_sys_menu_item_title_audit_administration"><![CDATA[Audit]]></string>
 	<string name="_sys_menu_item_title_cmts_item_delete"><![CDATA[Delete]]></string>
 	<string name="_sys_menu_item_title_cmts_item_edit"><![CDATA[Edit]]></string>
+        <string name="_sys_menu_item_title_cmts_item_pin"><![CDATA[Pin]]></string>
+        <string name="_sys_menu_item_title_cmts_item_unpin"><![CDATA[Unpin]]></string>
         <string name="_sys_menu_item_title_cmts_item_quote"><![CDATA[]]></string>
         <string name="_sys_menu_item_title_cmts_item_reaction"><![CDATA[]]></string>
 	<string name="_sys_menu_item_title_cmts_item_reply"><![CDATA[]]></string>
@@ -2594,6 +2598,8 @@ If it is not enabled then please consider implement this optimization, since it 
   <string name="_sys_menu_item_title_system_audit_administration"><![CDATA[Audit]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_delete"><![CDATA[Delete]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_edit"><![CDATA[Edit]]></string>
+        <string name="_sys_menu_item_title_system_cmts_item_pin"><![CDATA[Pin]]></string>
+        <string name="_sys_menu_item_title_system_cmts_item_unpin"><![CDATA[Unpin]]></string>
         <string name="_sys_menu_item_title_system_cmts_item_quote"><![CDATA[Quote]]></string>
         <string name="_sys_menu_item_title_system_cmts_item_reaction"><![CDATA[Reaction]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_reply"><![CDATA[Reply]]></string>

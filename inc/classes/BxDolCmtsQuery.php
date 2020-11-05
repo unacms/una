@@ -185,13 +185,13 @@ class BxDolCmtsQuery extends BxDolDb
             $sJoin .= ' ' . $aQueryParts['join'];
         }
 
-        $sOrder = " ORDER BY `{$this->_sTable}`.`cmt_time` ASC";
+        $sOrder = " ORDER BY `{$this->_sTable}`.`cmt_pinned` DESC, `{$this->_sTable}`.`cmt_time` ASC";
         if(isset($aOrder['by']) && isset($aOrder['way'])) {
             $aOrder['way'] = strtoupper(in_array($aOrder['way'], array(BX_CMT_ORDER_WAY_ASC, BX_CMT_ORDER_WAY_DESC)) ? $aOrder['way'] : BX_CMT_ORDER_WAY_ASC);
 
             switch($aOrder['by']) {
                 case BX_CMT_ORDER_BY_DATE:
-                    $sOrder = " ORDER BY `{$this->_sTable}`.`cmt_time` " . $aOrder['way'];
+                    $sOrder = " ORDER BY `{$this->_sTable}`.`cmt_pinned` DESC, `{$this->_sTable}`.`cmt_time` " . $aOrder['way'];
                     break;
 
                 case BX_CMT_ORDER_BY_POPULAR:
@@ -207,7 +207,7 @@ class BxDolCmtsQuery extends BxDolDb
                     if (count($aSortFields) == 0)
                         array_push($aSortFields, '`' . $this->_sTable . '`.`id`');
                     
-                    $sOrder = " ORDER BY " . implode($aOrder['way'] . ', ', $aSortFields) . " " . $aOrder['way'];
+                    $sOrder = " ORDER BY `{$this->_sTable}`.`cmt_pinned` DESC, " . implode($aOrder['way'] . ', ', $aSortFields) . " " . $aOrder['way'];
                     break;
             }
         }
@@ -484,6 +484,14 @@ class BxDolCmtsQuery extends BxDolDb
         }
 
         return $this->query("DELETE FROM `{$this->_sTableFiles2Entries}` WHERE 1" . $sWhereAddon, $aBindings);
+    }
+
+    function updateComments($aSetClause, $aWhereClause)
+    {
+        if(empty($aSetClause) || empty($aWhereClause))
+            return;
+
+        return (int)$this->query("UPDATE `{$this->_sTable}` SET " . $this->arrayToSQL($aSetClause) . " WHERE " . $this->arrayToSQL($aWhereClause)) > 0;
     }
 
     function updateRepliesCount($iCmtId, $iCount)

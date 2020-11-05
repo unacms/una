@@ -149,6 +149,7 @@ CREATE TABLE IF NOT EXISTS `bx_reviews_cmts` (
   `cmt_rate_count` int(11) NOT NULL DEFAULT '0',
   `cmt_time` int(11) unsigned NOT NULL DEFAULT '0',
   `cmt_replies` int(11) NOT NULL DEFAULT '0',
+  `cmt_pinned` int(11) NOT NULL default '0',
   PRIMARY KEY (`cmt_id`),
   KEY `cmt_object_id` (`cmt_object_id`,`cmt_parent_id`),
   FULLTEXT KEY `search_fields` (`cmt_text`)
@@ -167,6 +168,7 @@ CREATE TABLE IF NOT EXISTS `bx_reviews_cmts_notes` (
   `cmt_rate_count` int(11) NOT NULL DEFAULT '0',
   `cmt_time` int(11) unsigned NOT NULL DEFAULT '0',
   `cmt_replies` int(11) NOT NULL DEFAULT '0',
+  `cmt_pinned` int(11) NOT NULL default '0',
   PRIMARY KEY (`cmt_id`),
   KEY `cmt_object_id` (`cmt_object_id`,`cmt_parent_id`),
   FULLTEXT KEY `search_fields` (`cmt_text`)

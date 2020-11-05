@@ -322,7 +322,7 @@ class BxBaseCmts extends BxDolCmts
         }
 
         $sContent = $this->_getContent($aCmt);
-        
+
         $sResult = $this->_oTemplate->parseHtmlByName($this->_sTmplNameItem, array_merge(array(
             'system' => $this->_sSystem,
             'style_prefix' => $this->_sStylePrefix,
@@ -338,6 +338,12 @@ class BxBaseCmts extends BxDolCmts
             'bx_if:meta' => array(
                 'condition' => !empty($aTmplVarsMeta),
                 'content' => $aTmplVarsMeta
+            ),
+            'bx_if:show_pinned' => array(
+                'condition' => (int)$aCmt['cmt_pinned'] > 0,
+                'content' => array(
+                    'style_prefix' => $this->_sStylePrefix,
+                )
             ),
             'content' => $sContent,
             'actions' => $sActions,

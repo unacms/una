@@ -1683,6 +1683,7 @@
 	<string name="_cmt_txt_link_reply"><![CDATA[Ответить]]></string>
         <string name="_cmt_txt_added_sample"><![CDATA[добавил новый комментарий]]></string>
 	<string name="_cmt_txt_or"><![CDATA[или]]></string>
+        <string name="_cmt_txt_pinned"><![CDATA[Закрепленный комментарий]]></string>
 	<string name="_cmt_txt_sample_comment_single"><![CDATA[комментарий]]></string>
         <string name="_cmt_txt_sample_reaction_single"><![CDATA[реакция '{0}' к комментарию]]></string>
 	<string name="_cmt_txt_sample_reply_to"><![CDATA[ответ на комментарий]]></string>
@@ -1747,6 +1748,7 @@
     <string name="_sys_acl_action_chart_view_desc"><![CDATA[Просматривать статистические диаграммы]]></string>
 	<string name="_sys_acl_action_comments_edit_all"><![CDATA[Комментарии - Редактировать Все]]></string>
 	<string name="_sys_acl_action_comments_edit_own"><![CDATA[Комментарии - Редактировать Свои]]></string>
+        <string name="_sys_acl_action_comments_pin"><![CDATA[Комментарии - Закреплять]]></string>
 	<string name="_sys_acl_action_comments_post"><![CDATA[Комментарии - Размещать]]></string>
 	<string name="_sys_acl_action_comments_remove_all"><![CDATA[Комментарии - Удалить Все]]></string>
 	<string name="_sys_acl_action_comments_remove_own"><![CDATA[Комментарии - Удалить Собственные]]></string>
@@ -2482,6 +2484,8 @@
   <string name="_sys_menu_item_title_audit_administration"><![CDATA[Аудит]]></string>
 	<string name="_sys_menu_item_title_cmts_item_delete"><![CDATA[Удалить]]></string>
 	<string name="_sys_menu_item_title_cmts_item_edit"><![CDATA[Редактировать]]></string>
+        <string name="_sys_menu_item_title_cmts_item_pin"><![CDATA[Закрепить]]></string>
+        <string name="_sys_menu_item_title_cmts_item_unpin"><![CDATA[Открепить]]></string>
         <string name="_sys_menu_item_title_cmts_item_quote"><![CDATA[]]></string>
         <string name="_sys_menu_item_title_cmts_item_reaction"><![CDATA[]]></string>
 	<string name="_sys_menu_item_title_cmts_item_reply"><![CDATA[]]></string>
@@ -2550,6 +2554,8 @@
   <string name="_sys_menu_item_title_system_audit_administration"><![CDATA[Аудит]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_delete"><![CDATA[Удалить]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_edit"><![CDATA[Редактировать]]></string>
+        <string name="_sys_menu_item_title_system_cmts_item_pin"><![CDATA[Закрепить]]></string>
+        <string name="_sys_menu_item_title_system_cmts_item_unpin"><![CDATA[Открепить]]></string>
         <string name="_sys_menu_item_title_system_cmts_item_quote"><![CDATA[Цитировать]]></string>
         <string name="_sys_menu_item_title_system_cmts_item_reaction"><![CDATA[Реагировать]]></string>
 	<string name="_sys_menu_item_title_system_cmts_item_reply"><![CDATA[Ответить]]></string>

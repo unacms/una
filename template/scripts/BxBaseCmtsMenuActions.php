@@ -140,6 +140,18 @@ class BxBaseCmtsMenuActions extends BxTemplMenuCustom
                     $aCheckFuncParams = array($this->_aCmt);
                 break;
 
+            case 'item-pin':
+                $sCheckFuncName = 'isPinAllowed';
+                if(!empty($this->_aCmt))
+                    $aCheckFuncParams = array($this->_aCmt);
+                break;
+
+            case 'item-unpin':
+                $sCheckFuncName = 'isUnpinAllowed';
+                if(!empty($this->_aCmt))
+                    $aCheckFuncParams = array($this->_aCmt);
+                break;
+
             case 'item-edit':
                 $sCheckFuncName = 'isEditAllowed';
                 if(!empty($this->_aCmt))
