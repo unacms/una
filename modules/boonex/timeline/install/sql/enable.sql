@@ -81,7 +81,7 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 
 -- MENU: Feeds
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_timeline_menu_view', '_bx_timeline_menu_title_view', 'bx_timeline_menu_view', 'bx_timeline', 22, 0, 1, 'BxTimelineMenuView', 'modules/boonex/timeline/classes/BxTimelineMenuView.php');
+('bx_timeline_menu_view', '_bx_timeline_menu_title_view', 'bx_timeline_menu_view', 'bx_timeline', 15, 0, 1, 'BxTimelineMenuView', 'modules/boonex/timeline/classes/BxTimelineMenuView.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_timeline_menu_view', 'bx_timeline', '_bx_timeline_menu_set_title_view', 0);
