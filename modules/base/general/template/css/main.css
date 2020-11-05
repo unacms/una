@@ -23,7 +23,7 @@ div.bx-base-general-breadcrumb i {
 
 
 /* view entry: actions */
-.bx-base-general-entity-actions ul.bx-menu-hor {
+.bx-base-general-entity-actions ul.bx-menu-custom-hor {
     position: relative;
     display: -webkit-flex;
     display: flex;
@@ -34,38 +34,38 @@ div.bx-base-general-breadcrumb i {
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
 }
-.bx-base-general-entity-actions ul.bx-menu-hor.bx-menu-more-auto {
+.bx-base-general-entity-actions ul.bx-menu-custom-hor.bx-menu-more-auto {
     -webkit-flex-wrap: nowrap;
     flex-wrap: nowrap;
 }
-.bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item {
+.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item {
     white-space: nowrap;
 }
-.bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item .cmt-element-holder,
-.bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item .cmt-counter-holder,
-.bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item .bx-view-element-holder,
-.bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item .bx-view-counter-holder,
-.bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item .bx-vote-element-holder, 
-.bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item .bx-vote-counter-holder, 
-.bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item .bx-score-element-holder, 
-.bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item .bx-score-counter-holder, 
-.bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item .bx-favorite-element-holder,
-.bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item .bx-favorite-counter-holder,
-.bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item .bx-report-element-holder,
-.bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item .bx-report-counter-holder,
-.bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item .bx-tl-repost-element-holder,
-.bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item .bx-tl-repost-counter-holder {
+.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item .cmt-element-holder,
+.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item .cmt-counter-holder,
+.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item .bx-view-element-holder,
+.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item .bx-view-counter-holder,
+.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item .bx-vote-element-holder, 
+.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item .bx-vote-counter-holder, 
+.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item .bx-score-element-holder, 
+.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item .bx-score-counter-holder, 
+.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item .bx-favorite-element-holder,
+.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item .bx-favorite-counter-holder,
+.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item .bx-report-element-holder,
+.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item .bx-report-counter-holder,
+.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item .bx-tl-repost-element-holder,
+.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item .bx-tl-repost-counter-holder {
     float: none;
     display: inline-block;
     vertical-align: top;
 }
-.bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item .cmt-counter-holder,
-.bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item .bx-view-counter-holder,
-.bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item .bx-vote-counter-holder, 
-.bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item .bx-score-counter-holder, 
-.bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item .bx-favorite-counter-holder,
-.bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item .bx-report-counter-holder,
-.bx-base-general-entity-actions .bx-menu-hor li.bx-menu-item .bx-tl-repost-counter-holder {
+.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item .cmt-counter-holder,
+.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item .bx-view-counter-holder,
+.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item .bx-vote-counter-holder, 
+.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item .bx-score-counter-holder, 
+.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item .bx-favorite-counter-holder,
+.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item .bx-report-counter-holder,
+.bx-base-general-entity-actions .bx-menu-custom-hor li.bx-menu-item .bx-tl-repost-counter-holder {
     line-height: normal;
 }
 .bx-base-general-entity-actions .cmt,
