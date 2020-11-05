@@ -11,6 +11,7 @@
 class BxBaseStudioForms extends BxDolStudioForms
 {
     protected $sSubpageUrl;
+    protected $aMenuItems;
     protected $aGridObjects;
 
     function __construct($sPage = '')
@@ -18,6 +19,18 @@ class BxBaseStudioForms extends BxDolStudioForms
         parent::__construct($sPage);
 
         $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'builder_forms.php?page=';
+
+        $this->aMenuItems = array(
+            BX_DOL_STUDIO_FORM_TYPE_FORMS => array('icon' => 'list-alt'),
+            BX_DOL_STUDIO_FORM_TYPE_DISPLAYS => array('icon' => 'desktop'),
+            BX_DOL_STUDIO_FORM_TYPE_FIELDS => array('icon' => 'check-square'),
+            BX_DOL_STUDIO_FORM_TYPE_PRE_LISTS => array('icon' => 'align-justify'),
+            BX_DOL_STUDIO_FORM_TYPE_PRE_VALUES => array('icon' => 'indent'),
+            BX_DOL_STUDIO_FORM_TYPE_SEARCH_FORMS => array('icon' => 'search'),
+            BX_DOL_STUDIO_FORM_TYPE_SEARCH_FIELDS => array('icon' => 'check-square'),
+            BX_DOL_STUDIO_FORM_TYPE_LABELS => array('icon' => 'tags'),
+            BX_DOL_STUDIO_FORM_TYPE_CATEGORIES => array('icon' => 'folder'),
+        );
 
         $this->aGridObjects = array(
             'forms' => 'sys_studio_forms',
@@ -52,18 +65,7 @@ class BxBaseStudioForms extends BxDolStudioForms
         $sJsObject = $this->getPageJsObject();
 
         $aMenu = array();
-        $aMenuItems = array(
-            BX_DOL_STUDIO_FORM_TYPE_FORMS => array('icon' => 'list-alt'),
-            BX_DOL_STUDIO_FORM_TYPE_DISPLAYS => array('icon' => 'desktop'),
-            BX_DOL_STUDIO_FORM_TYPE_FIELDS => array('icon' => 'check-square'),
-            BX_DOL_STUDIO_FORM_TYPE_PRE_LISTS => array('icon' => 'align-justify'),
-            BX_DOL_STUDIO_FORM_TYPE_PRE_VALUES => array('icon' => 'indent'),
-            BX_DOL_STUDIO_FORM_TYPE_SEARCH_FORMS => array('icon' => 'search'),
-            BX_DOL_STUDIO_FORM_TYPE_SEARCH_FIELDS => array('icon' => 'check-square'),
-            BX_DOL_STUDIO_FORM_TYPE_LABELS => array('icon' => 'tags'),
-            BX_DOL_STUDIO_FORM_TYPE_CATEGORIES => array('icon' => 'folder'),
-        );
-        foreach($aMenuItems as $sMenuItem => $aItem)
+        foreach($this->aMenuItems as $sMenuItem => $aItem)
             $aMenu[] = array(
                 'name' => $sMenuItem,
                 'icon' => $aItem['icon'], 'mi-form-' . $sMenuItem . '.png',
