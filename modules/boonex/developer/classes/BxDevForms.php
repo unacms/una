@@ -22,18 +22,23 @@ class BxDevForms extends BxTemplStudioForms
         $this->aParams = $aParams;
         $this->sSubpageUrl = $this->aParams['url'] . '&form_page=';
 
+        unset(
+            $this->aMenuItems[BX_DOL_STUDIO_FORM_TYPE_LABELS],
+            $this->aMenuItems[BX_DOL_STUDIO_FORM_TYPE_CATEGORIES]
+        );
+
         $this->oModule = BxDolModule::getInstance('bx_developer');
 
         $this->aGridObjects = array(
-        	'forms' => $this->oModule->_oConfig->getObject('grid_forms'),
-	        'displays' => $this->oModule->_oConfig->getObject('grid_forms_displays'),
-	        'fields' => $this->oModule->_oConfig->getObject('grid_forms_fields'),
+            'forms' => $this->oModule->_oConfig->getObject('grid_forms'),
+            'displays' => $this->oModule->_oConfig->getObject('grid_forms_displays'),
+            'fields' => $this->oModule->_oConfig->getObject('grid_forms_fields'),
 
-	        'pre_lists' => $this->oModule->_oConfig->getObject('grid_forms_pre_lists'),
-	        'pre_values' => $this->oModule->_oConfig->getObject('grid_forms_pre_values'),
+            'pre_lists' => $this->oModule->_oConfig->getObject('grid_forms_pre_lists'),
+            'pre_values' => $this->oModule->_oConfig->getObject('grid_forms_pre_values'),
 
-        	'search_forms' => $this->oModule->_oConfig->getObject('grid_search_forms'),
-	        'search_fields' => $this->oModule->_oConfig->getObject('grid_search_forms_fields'),
+            'search_forms' => $this->oModule->_oConfig->getObject('grid_search_forms'),
+            'search_fields' => $this->oModule->_oConfig->getObject('grid_search_forms_fields'),
         );
 
         $this->oModule->_oTemplate->addStudioCss(array('forms.css'));
