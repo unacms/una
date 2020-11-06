@@ -229,6 +229,11 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
         return (int)$this->getOne("SELECT FOUND_ROWS()");
     }
 
+    function getContentPlaceholders()
+    {
+        return $this->getPairs('SELECT `id`, `title` FROM `sys_pages_content_placeholders` ORDER BY `order`', 'id', 'title');
+    }
+
     function getSubmenus($mixedTemplateIds = 8)
     {
         if(!is_array($mixedTemplateIds))
@@ -415,6 +420,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
                 `tpb`.`title_system` AS `title_system`,
                 `tpb`.`title` AS `title`,
                 `tpb`.`designbox_id` AS `designbox_id`,
+                `tpb`.`async` AS `async`,
                 `tpb`.`submenu` AS `submenu`,
                 `tpb`.`tabs` AS `tabs`,
                 `tpb`.`hidden_on` AS `hidden_on`,

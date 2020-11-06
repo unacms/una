@@ -512,6 +512,7 @@
 	<string name="_adm_bp_mi_page_visibility"><![CDATA[Видимость]]></string>
 	<string name="_adm_bp_scs_save"><![CDATA[Изменения успешно сохранены]]></string>
 	<string name="_adm_bp_txt_block_active"><![CDATA[Активный]]></string>
+    <string name="_adm_bp_txt_block_async"><![CDATA[Асинхронный режим]]></string>
 	<string name="_adm_bp_txt_block_content_attachments_html"><![CDATA[Вложения]]></string>
 	<string name="_adm_bp_txt_block_content_image_align"><![CDATA[Выравнивание]]></string>
 	<string name="_adm_bp_txt_block_content_image_align_center"><![CDATA[по центру]]></string>
@@ -2728,11 +2729,14 @@
     <string name="_sys_next"><![CDATA[Ещё]]></string>
     <string name="_sys_notification_account"><![CDATA[Аккаунты, созданные за последние 24 часа:]]></string>
     <string name="_sys_no_menu"><![CDATA[Меню отсутствует]]></string>
+    <string name="_sys_no_async"><![CDATA[Асинхронный режим выключен]]></string>
     <string name="_sys_not_available"><![CDATA[н/д]]></string>
     <string name="_sys_not_specified"><![CDATA[Не указано]]></string>
     <string name="_sys_on"><![CDATA[вкл.]]></string>
     <string name="_sys_off"><![CDATA[выкл.]]></string>
     <string name="_sys_pages"><![CDATA[Страницы]]></string>
+    <string name="_sys_page_content_ph_loading_indicator"><![CDATA[С индикатором загрузки]]></string>
+    <string name="_sys_page_content_ph_timeline"><![CDATA[С заполнителем в виде ленты]]></string>
 	<string name="_sys_page_block_title_about"><![CDATA[Об...]]></string>
 	<string name="_sys_page_block_title_account_profile_create"><![CDATA[Создать профиль...]]></string>
 	<string name="_sys_page_block_title_account_profile_switcher"><![CDATA[Использовать сайт как ...]]></string>
