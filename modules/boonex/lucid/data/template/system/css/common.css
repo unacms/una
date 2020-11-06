@@ -5,6 +5,12 @@
     height: 40px;
 }
 
+/*--- Design Boxes Menu ---*/
+.bx-db-menu ul.bx-menu-hor li.bx-menu-tab-active,
+.bx-db-menu ul.bx-menu-custom.bx-menu-custom-hor li.bx-menu-tab-active {
+    border-bottom: 1px solid #364f6b;
+}
+
 /* --- Buttons --- */
 .bx-btn i,
 .bx-btn u {
