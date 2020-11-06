@@ -225,6 +225,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 
     protected $aPage;
     protected $aPageContent;
+    protected $aPageSnapshot = array();
 
     protected $_oTemplateConfig;
     protected $_oTemplateFunctions;
@@ -448,6 +449,66 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
            $aResult[0] = $aResult[0][0];
 
         return $aResult;
+    }
+
+    public function getIncludedUrls($sType)
+    {
+        if (!isset($this->aPage[$sType]))
+            return array();
+        $a = array();
+        foreach ($this->aPage[$sType] as $r)
+            $a[] = $r['url'];
+        return $a;
+    }
+
+    /**
+     * Remember current state of aPage variable with all css, js, etc
+     */
+    public function collectingStart()
+    {
+        $this->aPageSnapshot = $this->aPage;
+    }
+
+    /**
+     * Get difference for non-system css and js files from previously remembered state as ready HTML code, 
+     * additionally filter out css and js from $aExcludeCss and $aExcludeJs arrays
+     */
+    public function collectingEndGetCode($aExcludeCss = array(), $aExcludeJs = array())
+    {
+        $aPageSave = $this->aPage; // save current state to restore later
+
+        // filter funcs
+        $fFilterCss = function ($a) use ($aExcludeCss) {
+            if (in_array($a['url'], $aExcludeCss))
+                return false;
+            foreach ($this->aPageSnapshot['css_compiled'] as $r)
+                if ($r['url'] == $a['url'])
+                    return false;
+            return true;
+        };
+        $fFilterJs = function ($a) use ($aExcludeJs) {
+            if (in_array($a['url'], $aExcludeJs))
+                return false;
+            foreach ($this->aPageSnapshot['js_compiled'] as $r)
+                if ($r['url'] == $a['url'])
+                    return false;
+            return true;
+        };    
+
+        // diff aPageSnapshot and aPage and output only newly added css/js
+        $this->aPage['css_compiled'] = array_filter($this->aPage['css_compiled'], $fFilterCss);
+        $this->aPage['js_compiled'] = array_filter($this->aPage['js_compiled'], $fFilterJs);
+
+        // return js/css
+        $sRet = '';
+        $sRet .= $this->includeFiles('css');
+        $sRet .= $this->includeFiles('js');
+
+        // restore original state
+        $this->aPageSnapshot = array();
+        $this->aPage = $aPageSave; 
+
+        return $sRet;
     }
 
     public function getClassName()
@@ -1527,6 +1588,12 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 break;
 			case 'system_js_requred':
                 $sRet = _t('_sys_javascript_requred');
+                break;
+            case 'included_css':
+                $sRet = json_encode($this->getIncludedUrls('css_compiled'));
+                break;
+            case 'included_js':
+                $sRet = json_encode($this->getIncludedUrls('js_compiled'));
                 break;
             default:
                 $sRet = ($sTemplAdd = BxTemplFunctions::getInstance()->TemplPageAddComponent($sKey)) !== false ? $sTemplAdd : $aKeyWrappers['left'] . $sKey . $aKeyWrappers['right'];

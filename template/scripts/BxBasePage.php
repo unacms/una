@@ -41,6 +41,8 @@ class BxBasePage extends BxDolPage
      */ 
     public function getCodeDynamic ()
     {
+        // TODO: remake to use use collect* template methods
+
         $oTemplate = BxDolTemplate::getInstance();
 
         // get js&css before the page code is generated
@@ -92,7 +94,16 @@ class BxBasePage extends BxDolPage
             ));
 
             header( 'Content-type:text/html;charset=utf-8' );
-            echo $this->_getBlockOnlyCode($iBlockId);
+
+            BxDolTemplate::getInstance()->collectingStart();
+
+            $s = $this->_getBlockOnlyCode($iBlockId);
+
+            $sCss = bx_get('includedCss');
+            $sJs = bx_get('includedJs');
+            echo BxDolTemplate::getInstance()->collectingEndGetCode($sCss ? json_decode($sCss) : array(), $sJs ? json_decode($sJs) : array());
+
+            echo $s;
             exit;
         }
 
@@ -245,6 +256,17 @@ class BxBasePage extends BxDolPage
     }
 
     /**
+     * Get code to load block asyncroniously
+     * @param $aBlock block code
+     * @param $iAsync if greater than 0 the it defines loading indicator for the block
+     * @return HTML code string
+     */
+    public function getBlockAsyncCode($aBlock, $iAsync)
+    {
+        return $this->_oTemplate->parseHtmlByName('block_async_' . $iAsync . '.html', $aBlock);
+    }
+
+    /**
      * Get page array with all cells and blocks
      */
     public function getPage ()
@@ -310,7 +332,7 @@ class BxBasePage extends BxDolPage
             foreach ($aCell as $aBlock) {
                 $this->processPageBlock($aBlock, false);
 
-                $sContentWithBox = $this->_getBlockCode($aBlock);
+                $sContentWithBox = $this->_getBlockCode($aBlock, $aBlock['async']);
 
             	$sHiddenOn = '';
                 if(!empty($aBlock['hidden_on']))
@@ -353,14 +375,14 @@ class BxBasePage extends BxDolPage
     {
         if (!($aBlock = $this->_oQuery->getPageBlock((int)$iBlockId)))
             return '';
-        return $this->_getBlockCode($aBlock);
+        return $this->_getBlockCode($aBlock, 0);
     }
 
     /**
      * Get block code.
      * @return string
      */
-    protected function _getBlockCode($aBlock)
+    protected function _getBlockCode($aBlock, $iAsync = 0)
     {
         $sContentWithBox = '';
         $oFunctions = $this->_oTemplate->getTemplateFunctions();
@@ -368,7 +390,17 @@ class BxBasePage extends BxDolPage
         if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->beginPageBlock(_t($aBlock['title']), $aBlock['id']);
 
         $sFunc = '_getBlock' . ucfirst($aBlock['type']);
-        if ($this->_isVisibleBlock($aBlock) && method_exists($this, $sFunc)) {
+        $bBlockVisible = $this->_isVisibleBlock($aBlock);
+        if ($iAsync && $bBlockVisible) {    
+            $sContent = $this->getBlockAsyncCode($aBlock, $iAsync);
+            $aParams = array(
+                $this->getBlockTitle($aBlock),
+                $sContent,
+                $aBlock['designbox_id']
+            );
+            $sContentWithBox = call_user_func_array(array($oFunctions, 'designBoxContent'), $aParams);
+        } 
+        elseif ($bBlockVisible && method_exists($this, $sFunc)) {
             $mixedContent = $this->$sFunc($aBlock);
 
             $sTitle = $this->getBlockTitle($aBlock);
