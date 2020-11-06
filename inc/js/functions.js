@@ -61,7 +61,7 @@ function processJsonData(oData) {
 		fContinue(oData);
 };
 
-function getHtmlData( elem, url, callback, method , confirmation)
+function getHtmlData( elem, url, callback, method, confirmation, values, loading)
 {
     var fPerform = function() {
 		// in most cases it is element ID, in other cases - object of jQuery
@@ -74,21 +74,25 @@ function getHtmlData( elem, url, callback, method , confirmation)
 
 		$block.css('position', 'relative'); // set temporarily for displaying "loading icon"
 
-		bx_loading_content($block, true);
-		var $loadingDiv = $block.find('.bx-loading-ajax');
+        if (typeof loading == undefined || loading) {
+    		bx_loading_content($block, true);
+	    	var $loadingDiv = $block.find('.bx-loading-ajax');
 
-		var iLeftOff = parseInt(($block.innerWidth() / 2.0) - ($loadingDiv.outerWidth()  / 2.0));
-		var iTopOff  = parseInt(($block.innerHeight() / 2.0) - ($loadingDiv.outerHeight()));
-		if (iTopOff<0) iTopOff = 0;
+    		var iLeftOff = parseInt(($block.innerWidth() / 2.0) - ($loadingDiv.outerWidth()  / 2.0));
+	    	var iTopOff  = parseInt(($block.innerHeight() / 2.0) - ($loadingDiv.outerHeight()));
+		    if (iTopOff<0) iTopOff = 0;
 
-		$loadingDiv.css({
-		    position: 'absolute',
-		    left: iLeftOff,
-		    top:  iTopOff
-		});
+    		$loadingDiv.css({
+	    	    position: 'absolute',
+		        left: iLeftOff,
+    		    top:  iTopOff
+	    	});
+        }
 
 		if (undefined != method && (method == 'post' || method == 'POST')) {
-		    $.post(url, function(data) {
+            if (typeof values == 'undefined')
+                values = {};
+		    $.post(url, values, function(data) {
 		        $block.html(data);
 		        $block.css('position', blockPos).bxProcessHtml();
 
