@@ -57,6 +57,13 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 }
         }
     }
+    
+    public function updateStatusAdmin($iContentId, $isActive)
+    {
+        $CNF = $this->_oConfig->CNF;
+        $sQuery = $this->prepare("UPDATE `" . $CNF['TABLE_ENTRIES'] . "` SET `active` = ? WHERE `" . $CNF['FIELD_ID'] . "` = ?", $isActive ? '1' : '0', $iContentId);
+        return $this->query($sQuery);
+    }
 
     public function activateModuleEvents($aData, $bActivate = true)
     {
