@@ -254,6 +254,22 @@ class BxDolStudioForm extends BxBaseFormView
 
 class BxDolStudioFormCheckerHelper extends BxDolFormCheckerHelper
 {
+    static public function checkSegment ($s, $mValMin, $mValMax)
+    {
+        if(is_array($s)) {
+            foreach($s as $mVal) {
+                $mVal = (float)$mVal;
+                if($mVal < $mValMin || $mVal > $mValMax)
+                    return false;
+            }
+
+            return true;
+        }
+
+        $mVal = (float)$s;
+        return $mVal >= $mValMin && $mVal <= $mValMax ? true : false;
+    }
+
     function checkAvailTranslatable($sVal, $aName, $sMethod = BX_DOL_STUDIO_METHOD_DEFAULT, $bAll = true)
     {
         if(empty($sMethod) || empty($aName))
