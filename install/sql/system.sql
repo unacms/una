@@ -291,50 +291,50 @@ SET @iTypeId = LAST_INSERT_ID();
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'hidden', '_adm_stg_cpt_category_hidden', 1, 0);
 SET @iCategoryId = LAST_INSERT_ID();
 
-INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, 'sys_cron_time', '_adm_stg_cpt_option_sys_cron_time', '0', 'digit', '', '', '', 2),
-(@iCategoryId, 'sys_install_time', '_adm_stg_cpt_option_sys_install_time', '0', 'digit', '', '', '', 3),
-(@iCategoryId, 'sys_upgrade_channel', '_adm_stg_cpt_option_sys_upgrade_channel', 'stable', 'select', 'stable,beta', '', '', 4),
-(@iCategoryId, 'sys_revision', '_adm_stg_cpt_option_sys_revision', '0', 'digit', '', '', '', 5),
-(@iCategoryId, 'sys_eq_time', '_adm_stg_cpt_option_sys_eq_time', '0', 'digit', '', '', '', 6),
-(@iCategoryId, 'sys_push_queue_time', '_adm_stg_cpt_option_sys_push_queue_time', '0', 'digit', '', '', '', 7),
+INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_params`, `check_error`, `order`) VALUES
+(@iCategoryId, 'sys_cron_time', '_adm_stg_cpt_option_sys_cron_time', '0', 'digit', '', '', '', '', 2),
+(@iCategoryId, 'sys_install_time', '_adm_stg_cpt_option_sys_install_time', '0', 'digit', '', '', '', '', 3),
+(@iCategoryId, 'sys_upgrade_channel', '_adm_stg_cpt_option_sys_upgrade_channel', 'stable', 'select', 'stable,beta', '', '', '', 4),
+(@iCategoryId, 'sys_revision', '_adm_stg_cpt_option_sys_revision', '0', 'digit', '', '', '', '', 5),
+(@iCategoryId, 'sys_eq_time', '_adm_stg_cpt_option_sys_eq_time', '0', 'digit', '', '', '', '', 6),
+(@iCategoryId, 'sys_push_queue_time', '_adm_stg_cpt_option_sys_push_queue_time', '0', 'digit', '', '', '', '', 7),
 
-(@iCategoryId, 'sys_ftp_login', '_adm_stg_cpt_option_sys_ftp_login', '', 'digit', '', '', '', 10),
-(@iCategoryId, 'sys_ftp_password', '_adm_stg_cpt_option_sys_ftp_password', '', 'digit', '', '', '', 11),
-(@iCategoryId, 'sys_ftp_dir', '_adm_stg_cpt_option_sys_ftp_dir', '', 'digit', '', '', '', 12),
+(@iCategoryId, 'sys_ftp_login', '_adm_stg_cpt_option_sys_ftp_login', '', 'digit', '', '', '', '', 10),
+(@iCategoryId, 'sys_ftp_password', '_adm_stg_cpt_option_sys_ftp_password', '', 'digit', '', '', '', '', 11),
+(@iCategoryId, 'sys_ftp_dir', '_adm_stg_cpt_option_sys_ftp_dir', '', 'digit', '', '', '', '', 12),
 
-(@iCategoryId, 'sys_template_cache_image_enable', '_adm_stg_cpt_option_sys_template_cache_image_enable', '', 'checkbox', '', '', '', 20),
-(@iCategoryId, 'sys_template_cache_image_max_size', '_adm_stg_cpt_option_sys_template_cache_image_max_size', '5', 'digit', '', '', '', 21),
+(@iCategoryId, 'sys_template_cache_image_enable', '_adm_stg_cpt_option_sys_template_cache_image_enable', '', 'checkbox', '', '', '', '', 20),
+(@iCategoryId, 'sys_template_cache_image_max_size', '_adm_stg_cpt_option_sys_template_cache_image_max_size', '5', 'digit', '', 'Segment', 'a:2:{s:3:"min";i:1;s:3:"max";i:10;}', '_adm_stg_cpt_option_sys_template_cache_image_max_size_err', 21),
 
-(@iCategoryId, 'sys_email_attachable_email_templates', '_adm_stg_cpt_option_sys_email_attachable_email_templates', '', 'digit', '', '', '', 31),
+(@iCategoryId, 'sys_email_attachable_email_templates', '_adm_stg_cpt_option_sys_email_attachable_email_templates', '', 'digit', '', '', '', '', 31),
 
-(@iCategoryId, 'sys_redirect_after_account_added', '_adm_stg_cpt_option_sys_redirect_after_account_added', 'page.php?i=account-profile-switcher&register=1', 'digit', '', '', '', 40),
-(@iCategoryId, 'sys_redirect_after_email_confirmation', '_adm_stg_cpt_option_sys_redirect_after_email_confirmation', '', 'digit', '', '', '', 41),
+(@iCategoryId, 'sys_redirect_after_account_added', '_adm_stg_cpt_option_sys_redirect_after_account_added', 'page.php?i=account-profile-switcher&register=1', 'digit', '', '', '', '', 40),
+(@iCategoryId, 'sys_redirect_after_email_confirmation', '_adm_stg_cpt_option_sys_redirect_after_email_confirmation', '', 'digit', '', '', '', '', 41),
 
-(@iCategoryId, 'sys_editor_default', '_adm_stg_cpt_option_sys_editor_default', 'sys_tinymce', 'digit', '', '', '', 50),
-(@iCategoryId, 'sys_captcha_default', '_adm_stg_cpt_option_sys_captcha_default', 'sys_recaptcha_new', 'digit', '', '', '', 51),
-(@iCategoryId, 'sys_player_default', '_adm_stg_cpt_option_sys_player_default', 'sys_html5', 'digit', '', '', '', 55),
-(@iCategoryId, 'sys_player_default_format', '_adm_stg_cpt_option_sys_player_default_quality', 'sd', 'select', 'sd,hd', '', '', 56),
+(@iCategoryId, 'sys_editor_default', '_adm_stg_cpt_option_sys_editor_default', 'sys_tinymce', 'digit', '', '', '', '', 50),
+(@iCategoryId, 'sys_captcha_default', '_adm_stg_cpt_option_sys_captcha_default', 'sys_recaptcha_new', 'digit', '', '', '', '', 51),
+(@iCategoryId, 'sys_player_default', '_adm_stg_cpt_option_sys_player_default', 'sys_html5', 'digit', '', '', '', '', 55),
+(@iCategoryId, 'sys_player_default_format', '_adm_stg_cpt_option_sys_player_default_quality', 'sd', 'select', 'sd,hd', '', '', '', 56),
 
-(@iCategoryId, 'sys_live_updates_interval', '_adm_stg_cpt_option_sys_live_updates_interval', '10000', 'digit', '', '', '', 60),
+(@iCategoryId, 'sys_live_updates_interval', '_adm_stg_cpt_option_sys_live_updates_interval', '10000', 'digit', '', '', '', '', 60),
 
-(@iCategoryId, 'sys_tinymce_plugins_mini', '_adm_stg_cpt_option_sys_tinymce_plugins_mini', 'autolink,image,link,lists,paste,fullscreen', 'digit', '', '', '', 70),
-(@iCategoryId, 'sys_tinymce_toolbar_mini', '_adm_stg_cpt_option_sys_tinymce_toolbar_mini', 'bold italic underline removeformat | bullist numlist | alignleft aligncenter alignright | blockquote | link unlink image | fullscreen', 'digit', '', '', '', 71),
-(@iCategoryId, 'sys_tinymce_plugins_standard', '_adm_stg_cpt_option_sys_tinymce_plugins_standard', 'advlist,autolink,autosave,code,hr,image,link,lists,media,paste,fullscreen', 'digit', '', '', '', 73),
-(@iCategoryId, 'sys_tinymce_toolbar_standard', '_adm_stg_cpt_option_sys_tinymce_toolbar_standard', 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | fullscreen', 'digit', '', '', '', 74),
-(@iCategoryId, 'sys_tinymce_plugins_full', '_adm_stg_cpt_option_sys_tinymce_plugins_full', 'advlist,anchor,autolink,autoresize,autosave,charmap,code,emoticons,hr,image,link,lists,media,nonbreaking,pagebreak,preview,paste,save,searchreplace,table,textcolor,visualblocks,fullscreen', 'digit', '', '', '', 76),
-(@iCategoryId, 'sys_tinymce_toolbar_full', '_adm_stg_cpt_option_sys_tinymce_toolbar_full', 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image, preview media | forecolor emoticons | fullscreen', 'digit', '', '', '', 77),
+(@iCategoryId, 'sys_tinymce_plugins_mini', '_adm_stg_cpt_option_sys_tinymce_plugins_mini', 'autolink,image,link,lists,paste,fullscreen', 'digit', '', '', '', '', 70),
+(@iCategoryId, 'sys_tinymce_toolbar_mini', '_adm_stg_cpt_option_sys_tinymce_toolbar_mini', 'bold italic underline removeformat | bullist numlist | alignleft aligncenter alignright | blockquote | link unlink image | fullscreen', 'digit', '', '', '', '', 71),
+(@iCategoryId, 'sys_tinymce_plugins_standard', '_adm_stg_cpt_option_sys_tinymce_plugins_standard', 'advlist,autolink,autosave,code,hr,image,link,lists,media,paste,fullscreen', 'digit', '', '', '', '', 73),
+(@iCategoryId, 'sys_tinymce_toolbar_standard', '_adm_stg_cpt_option_sys_tinymce_toolbar_standard', 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | fullscreen', 'digit', '', '', '', '', 74),
+(@iCategoryId, 'sys_tinymce_plugins_full', '_adm_stg_cpt_option_sys_tinymce_plugins_full', 'advlist,anchor,autolink,autoresize,autosave,charmap,code,emoticons,hr,image,link,lists,media,nonbreaking,pagebreak,preview,paste,save,searchreplace,table,textcolor,visualblocks,fullscreen', 'digit', '', '', '', '', 76),
+(@iCategoryId, 'sys_tinymce_toolbar_full', '_adm_stg_cpt_option_sys_tinymce_toolbar_full', 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image, preview media | forecolor emoticons | fullscreen', 'digit', '', '', '', '', 77),
 
-(@iCategoryId, 'sys_search_keyword_min_len', '_adm_stg_cpt_option_sys_search_keyword_min_len', '1', 'digit', '', '', '', 80),
+(@iCategoryId, 'sys_search_keyword_min_len', '_adm_stg_cpt_option_sys_search_keyword_min_len', '1', 'digit', '', '', '', '', 80),
 
-(@iCategoryId, 'sys_relations', '_adm_stg_cpt_option_sys_relations', '', 'list', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:21:"get_options_relations";s:6:"params";a:0:{}s:5:"class";s:13:"TemplServices";}', '', '', 90),
+(@iCategoryId, 'sys_relations', '_adm_stg_cpt_option_sys_relations', '', 'list', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:21:"get_options_relations";s:6:"params";a:0:{}s:5:"class";s:13:"TemplServices";}', '', '', '', 90),
 
-(@iCategoryId, 'enable_gd', '_adm_stg_cpt_option_enable_gd', 'on', 'checkbox', '', '', '', 100),
-(@iCategoryId, 'sys_transcoder_queue_storage', '_adm_stg_cpt_option_sys_transcoder_queue_storage', '', 'checkbox', '', '', '', 105),
+(@iCategoryId, 'enable_gd', '_adm_stg_cpt_option_enable_gd', 'on', 'checkbox', '', '', '', '', 100),
+(@iCategoryId, 'sys_transcoder_queue_storage', '_adm_stg_cpt_option_sys_transcoder_queue_storage', '', 'checkbox', '', '', '', '', 105),
 
-(@iCategoryId, 'sys_session_lifetime_in_min', '_adm_stg_cpt_option_sys_session_lifetime_in_min', '129600', 'digit', '', '', '', 110),
+(@iCategoryId, 'sys_session_lifetime_in_min', '_adm_stg_cpt_option_sys_session_lifetime_in_min', '129600', 'digit', '', '', '', '', 110),
 
-(@iCategoryId, 'sys_account_activation_letter', '_adm_stg_cpt_option_sys_account_activation_letter', '', 'checkbox', '', '', '', 120);
+(@iCategoryId, 'sys_account_activation_letter', '_adm_stg_cpt_option_sys_account_activation_letter', '', 'checkbox', '', '', '', '', 120);
 
 --
 -- CATEGORY (HIDDEN): System
