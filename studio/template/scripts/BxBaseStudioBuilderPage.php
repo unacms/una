@@ -698,6 +698,17 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
                         'error' => _t('_adm_bp_err_block_designbox'),
                     ),
                 ),
+                'async' => array(
+                    'type' => 'select',
+                    'name' => 'async',
+                    'caption' => _t('_adm_bp_txt_block_async'),
+                    'info' => '',
+                    'value' => isset($aBlock['async']) ? $aBlock['async'] : 0,
+                    'required' => '0',
+                    'db' => array (
+                        'pass' => 'Int',
+                    ),
+                ),
                 'submenu' => array(
                     'type' => 'select',
                     'name' => 'submenu',
@@ -804,6 +815,11 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         $this->oDb->getDesignBoxes(array('type' => 'ordered'), $aDBoxes, false);
         foreach($aDBoxes as $aDBox)
             $aForm['inputs']['designbox_id']['values'][] = array('key' => $this->sSelectKeyPrefix . $aDBox['id'], 'value' => _t($aDBox['title']));
+
+        $aContentPlaceholders = $this->oDb->getContentPlaceholders();
+        $aForm['inputs']['async']['values'][] = array('key' => 0, 'value' => _t('_sys_no_async'));
+        foreach ($aContentPlaceholders as $iId => $sTitle)
+            $aForm['inputs']['async']['values'][] = array('key' => $iId, 'value' => _t($sTitle));
 
         $aSubmenus = $this->oDb->getBlockSubmenus();
         $aForm['inputs']['submenu']['values'][] = array('key' => '', 'value' => _t('_sys_no_menu'));
