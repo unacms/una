@@ -127,6 +127,16 @@ class BxBaseModGeneralDb extends BxDolModuleDb
         return $this->query("UPDATE `" . $CNF['TABLE_ENTRIES'] . "` SET " . $this->arrayToSQL($aParamsSet) . " WHERE " . $this->arrayToSQL($aParamsWhere, " AND "));
     }
 
+    public function updateStatusAdmin($iContentId, $isActive)
+    {
+        $CNF = $this->_oConfig->CNF;
+        if (!isset($CNF['FIELD_STATUS_ADMIN']))
+            return false;
+        
+        $sQuery = $this->prepare("UPDATE `" . $CNF['TABLE_ENTRIES'] . "` SET `" . $CNF['FIELD_STATUS_ADMIN'] . "` = ? WHERE `" . $CNF['FIELD_ID'] . "` = ?", $isActive ? 'active' : 'hidden', $iContentId);
+        return $this->query($sQuery);
+    }
+    
     public function publishEntries()
     {
         $CNF = $this->_oConfig->CNF;
