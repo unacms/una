@@ -488,28 +488,29 @@ class BxBaseStudioStore extends BxDolStudioStore
         $aProducts = $this->loadDownloaded();
 
         //--- Prepare modules.
+        $bCacheImage = getParam('sys_template_cache_image_enable') == 'on';
         foreach($aProducts['modules'] as $aModule) {
-        	$sIcon = BxDolStudioUtils::getModuleIcon($aModule, 'store');
-        	$bIcon = strpos($sIcon, '.') !== false;
+            $sIcon = BxDolStudioUtils::getModuleIcon($aModule, 'store');
+            $bIcon = ($bCacheImage && substr($sIcon, 0, 10) == 'data:image') || strpos($sIcon, '.') !== false;
 
-        	$bInstalled = $aModule['installed'];
-        	$bQueued = !$bInstalled && $this->oDb->isQueued('action', $aModule['dir']);
+            $bInstalled = $aModule['installed'];
+            $bQueued = !$bInstalled && $this->oDb->isQueued('action', $aModule['dir']);
 
             $sModules .= $oTemplate->parseHtmlByName('str_product_v1.html', array(
                 'js_object' => $sJsObject,
              	'name' => $aModule['name'],
             	'bx_if:no_icon' => array (
-	                'condition' => !$bIcon,
-	                'content' => array(
-            			'icon' => $sIcon
-            		),
-	            ),
+                    'condition' => !$bIcon,
+                    'content' => array(
+                            'icon' => $sIcon
+                    ),
+                ),
                 'bx_if:icon' => array (
-	                'condition' => $bIcon,
-	                'content' => array(
-	                	'icon_url' => $sIcon,
-	            	),
-	            ),
+                    'condition' => $bIcon,
+                    'content' => array(
+                            'icon_url' => $sIcon,
+                    ),
+                ),
                 'title' => $aModule['title'],
                 'vendor' => $aModule['vendor'],
                 'version' => $aModule['version'],
@@ -531,24 +532,24 @@ class BxBaseStudioStore extends BxDolStudioStore
 
         //--- Prepare updates.
         foreach($aProducts['updates'] as $aUpdate) {
-        	$sIcon = BxDolStudioUtils::getModuleIcon(array('type' => $aUpdate['module_type'], 'name' => $aUpdate['module_name'], 'dir' => $aUpdate['module_dir']), 'store');
-        	$bIcon = strpos($sIcon, '.') !== false;
+            $sIcon = BxDolStudioUtils::getModuleIcon(array('type' => $aUpdate['module_type'], 'name' => $aUpdate['module_name'], 'dir' => $aUpdate['module_dir']), 'store');
+            $bIcon = ($bCacheImage && substr($sIcon, 0, 10) == 'data:image') || strpos($sIcon, '.') !== false;
 
             $sUpdates .= $oTemplate->parseHtmlByName('str_update_v1.html', array(
                 'js_object' => $sJsObject,
             	'name' => $aUpdate['module_name'],
             	'bx_if:no_icon' => array (
-	                'condition' => !$bIcon,
-	                'content' => array(
-            			'icon' => $sIcon
-            		),
-	            ),
+                    'condition' => !$bIcon,
+                    'content' => array(
+                        'icon' => $sIcon
+                    ),
+                ),
                 'bx_if:icon' => array (
-	                'condition' => $bIcon,
-	                'content' => array(
-	                	'icon_url' => $sIcon,
-	            	),
-	            ),
+                    'condition' => $bIcon,
+                    'content' => array(
+                        'icon_url' => $sIcon,
+                    ),
+                ),
                 'title' => $aUpdate['title'],
                 'vendor' => $aUpdate['vendor'],
                 'versions' => _t('_adm_str_txt_update_from_to', $aUpdate['version_from'], $aUpdate['version_to']),
@@ -557,26 +558,26 @@ class BxBaseStudioStore extends BxDolStudioStore
         }
 
         if(!empty($sModules))
-        	$sContent .= $this->getBlockCode(array(
-				'caption' => '_adm_block_cpt_downloaded_modules',
-				'items' => $oTemplate->parseHtmlByName('str_products.html', array(
-		            'list' => $sModules,
-		            'paginate' => ''
-		        )),
-			));
+            $sContent .= $this->getBlockCode(array(
+                'caption' => '_adm_block_cpt_downloaded_modules',
+                'items' => $oTemplate->parseHtmlByName('str_products.html', array(
+                    'list' => $sModules,
+                    'paginate' => ''
+                )),
+            ));
 
         if(!empty($sUpdates))
             $sContent .= $this->getBlockCode(array(
-				'caption' => '_adm_block_cpt_downloaded_updates',
-				'items' => $oTemplate->parseHtmlByName('str_products.html', array(
-		            'list' => $sUpdates,
-		            'paginate' => ''
-		        )),
-			));
+                'caption' => '_adm_block_cpt_downloaded_updates',
+                'items' => $oTemplate->parseHtmlByName('str_products.html', array(
+                    'list' => $sUpdates,
+                    'paginate' => ''
+                )),
+            ));
 
         return $oTemplate->parseHtmlByName('store.html', array(
             'js_object' => $sJsObject,
-        	'content' => $sContent
+            'content' => $sContent
         ));
     }
 
