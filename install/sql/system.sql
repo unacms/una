@@ -4895,19 +4895,21 @@ INSERT INTO `sys_pages_design_boxes` (`id`, `title`, `template`, `order`) VALUES
 
 
 CREATE TABLE IF NOT EXISTS `sys_pages_content_placeholders` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `module` varchar(32) NOT NULL,
   `title` varchar(255) NOT NULL,
-  `order` int(11) NOT NULL
+  `template` varchar(255) NOT NULL,
+  `order` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 );
 
-INSERT INTO `sys_pages_content_placeholders` (`id`, `title`, `order`) VALUES
-(1, '_sys_page_content_ph_loading_indicator', 1),
-(2, '_sys_page_content_ph_text', 2),
-(3, '_sys_page_content_ph_image', 3),
-(100, '_sys_page_content_ph_timeline', 100),
-(110, '_sys_page_content_ph_profile_units', 110),
-(120, '_sys_page_content_ph_text_units_list', 120),
-(130, '_sys_page_content_ph_text_units_gallery', 130);
+INSERT INTO `sys_pages_content_placeholders` (`id`, `module`, `title`, `template`, `order`) VALUES
+(1, 'system', '_sys_page_content_ph_loading_indicator', 'block_async_loading_indicator.html', 1),
+(2, 'system', '_sys_page_content_ph_text', 'block_async_text.html', 2),
+(3, 'system', '_sys_page_content_ph_image', 'block_async_image.html', 3),
+(100, 'system', '_sys_page_content_ph_profile_units', 'block_async_profile_units.html', 100),
+(110, 'system', '_sys_page_content_ph_text_units_list', 'block_async_text_units_list.html', 110),
+(120, 'system', '_sys_page_content_ph_text_units_gallery', 'block_async_text_units_gallery.html', 120);
 
 
 
