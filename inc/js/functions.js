@@ -74,7 +74,7 @@ function getHtmlData( elem, url, callback, method, confirmation, values, loading
 
 		$block.css('position', 'relative'); // set temporarily for displaying "loading icon"
 
-        if (typeof loading == undefined || loading) {
+        if ('undefined' === typeof(loading) || loading) {
     		bx_loading_content($block, true);
 	    	var $loadingDiv = $block.find('.bx-loading-ajax');
 

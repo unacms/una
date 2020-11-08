@@ -4902,7 +4902,12 @@ CREATE TABLE IF NOT EXISTS `sys_pages_content_placeholders` (
 
 INSERT INTO `sys_pages_content_placeholders` (`id`, `title`, `order`) VALUES
 (1, '_sys_page_content_ph_loading_indicator', 1),
-(2, '_sys_page_content_ph_timeline', 2);
+(2, '_sys_page_content_ph_text', 2),
+(3, '_sys_page_content_ph_image', 3),
+(100, '_sys_page_content_ph_timeline', 100),
+(110, '_sys_page_content_ph_profile_units', 110),
+(120, '_sys_page_content_ph_text_units_list', 120),
+(130, '_sys_page_content_ph_text_units_gallery', 130);
 
 
 

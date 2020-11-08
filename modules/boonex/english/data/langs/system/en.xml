@@ -2786,7 +2786,12 @@ If it is not enabled then please consider implement this optimization, since it 
     <string name="_sys_off"><![CDATA[off]]></string>
     <string name="_sys_pages"><![CDATA[Pages]]></string>
     <string name="_sys_page_content_ph_loading_indicator"><![CDATA[With loading indicator]]></string>
+    <string name="_sys_page_content_ph_text"><![CDATA[With text placeholder]]></string>
+    <string name="_sys_page_content_ph_image"><![CDATA[With image placeholder]]></string>
     <string name="_sys_page_content_ph_timeline"><![CDATA[With timeline placeholder]]></string>
+    <string name="_sys_page_content_ph_profile_units"><![CDATA[With profile units placeholder]]></string>
+    <string name="_sys_page_content_ph_text_units_list"><![CDATA[With text units list placeholder]]></string>
+    <string name="_sys_page_content_ph_text_units_gallery"><![CDATA[With text units gallery placeholder]]></string>
 	<string name="_sys_page_block_title_about"><![CDATA[About]]></string>
 	<string name="_sys_page_block_title_account_profile_create"><![CDATA[Create a profile...]]></string>
 	<string name="_sys_page_block_title_account_profile_switcher"><![CDATA[Use site as ...]]></string>
