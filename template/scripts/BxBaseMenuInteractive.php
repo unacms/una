@@ -79,12 +79,7 @@ class BxBaseMenuInteractive extends BxTemplMenu
             $a['title'] = _t($a['title']);
             $a['title_attr'] = isset($a['title_attr']) ? bx_html_attribute($a['title_attr']) : '';
 
-            $bTmplVarsTarget = !empty($a['target']);
-            $aTmplVarsTarget = $bTmplVarsTarget ? array('target' => $a['target']) : array();
-            $a['bx_if:show_target'] = array(
-                'condition' => $bTmplVarsTarget,
-                'content' => $aTmplVarsTarget,
-            );
+            $a['attrs'] = $this->_getMenuAttrs($a);
 
             $a['bx_if:show_divider'] = array (
             	'condition' => $this->_bShowDivider,

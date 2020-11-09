@@ -175,12 +175,7 @@ class BxBaseMenu extends BxDolMenu
         $a['link'] = isset($a['link']) ? $this->_oPermalinks->permalink($a['link']) : 'javascript:void(0);';
         $a['title_attr'] = bx_html_attribute(strip_tags($a['title']));
 
-        $bTmplVarsTarget = !empty($a['target']);
-        $aTmplVarsTarget = $bTmplVarsTarget ? array('target' => $a['target']) : array();
-        $a['bx_if:show_target'] = array(
-            'condition' => $bTmplVarsTarget,
-            'content' => $aTmplVarsTarget,
-        );
+        $a['attrs'] = $this->_getMenuAttrs($a);
 
         $a['bx_if:image'] = array (
             'condition' => (bool)$sIconUrl,
@@ -244,6 +239,18 @@ class BxBaseMenu extends BxDolMenu
             return '';
 
         return BxDolService::callSerialized($aMenuItem['addon'], $this->_aMarkers);
+    }
+    
+    protected function _getMenuAttrs ($aMenuItem)
+    {
+        $sAttrs = '';
+        if(!empty($aMenuItem['target']))
+            $sAttrs .= ' target="' . $aMenuItem['target'] . '"';
+
+        if($this->_bAddNoFollow && !empty($aMenuItem['link']) && preg_match('@^https?://@', $aMenuItem['link']) && strncmp($aMenuItem['link'], BX_DOL_URL_ROOT, strlen(BX_DOL_URL_ROOT)) !== 0)
+            $sAttrs .= ' rel="noreferrer"';
+
+        return $sAttrs;
     }
 
     /**
