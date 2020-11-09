@@ -298,7 +298,7 @@ class BxBaseReport extends BxDolReport
                 
                 $iBlockContentAfter = (int)getParam('sys_security_block_content_after_n_reports');
                 if ($iBlockContentAfter > 0 && $aReport['count'] >= $iBlockContentAfter){
-                    $oModule = BxDolModule::getInstance($this->_sSystem);
+                    $oModule = BxDolModule::getInstance($this->_aSystem['module_name']);
                     if(!$oModule)
                         return;
                     

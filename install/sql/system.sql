@@ -1767,6 +1767,7 @@ CREATE TABLE `sys_badges2objects` (
 CREATE TABLE `sys_objects_report` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(64) NOT NULL,
+  `module` varchar(32) NOT NULL default '',
   `table_main` varchar(32) NOT NULL,
   `table_track` varchar(32) NOT NULL,
   `is_on` tinyint(4) NOT NULL default '1',
@@ -1781,8 +1782,8 @@ CREATE TABLE `sys_objects_report` (
   PRIMARY KEY  (`id`)
 );
 
-INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('sys_cmts', 'sys_cmts_reports', 'sys_cmts_reports_track', '1', '', 'sys_cmts_ids', 'id', 'author_id', 'reports',  '', '');
+INSERT INTO `sys_objects_report` (`name`, `module`, `table_main`, `table_track`, `is_on`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('sys_cmts', 'system', 'sys_cmts_reports', 'sys_cmts_reports_track', '1', '', 'sys_cmts_ids', 'id', 'author_id', 'reports',  '', '');
 
 
 -- --------------------------------------------------------
