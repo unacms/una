@@ -48,16 +48,19 @@ if (isset($_POST['ID'])) { // login form is submitted
 
     } 
     elseif ($bLoginSuccess) {
-        if (getParam('sys_account_activation_2fa_enable') == 'on' && getParam('sys_twilio_gate_sid') != '' && getParam('sys_twilio_gate_token') != '' && getParam('sys_twilio_gate_from_number') != ''){
+        $sId = trim($oForm->getCleanValue('ID'));
+        $oAccount = BxDolAccount::getInstance($sId);
+        $aAccountInfo = $oAccount->getInfo();
+        if (
+            (getParam('sys_account_activation_2fa_enable') == 'on' && getParam('sys_twilio_gate_sid') != '' && getParam('sys_twilio_gate_token') != '' && getParam('sys_twilio_gate_from_number') != '') 
+            && (getParam('sys_account_activation_2fa_lifetime') == 0 || (time() - $aAccountInfo['logged'] > getParam('sys_account_activation_2fa_lifetime')))){
             $oSession = BxDolSession::getInstance();
             $oSession->setValue(BX_ACCOUNT_SESSION_KEY_FOR_2FA_LOGIN_ACCOUNT_ID, trim($oForm->getCleanValue('ID')));
             $oSession->setValue(BX_ACCOUNT_SESSION_KEY_FOR_2FA_LOGIN_IS_REMEMBER, ($oForm->getCleanValue('rememberMe') ? true : false));
             header('Location: ' . BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=login-step2'));
         }
         else{
-    	    $sId = trim($oForm->getCleanValue('ID'));
-
-            $oAccount = BxDolAccount::getInstance($sId);
+    	   
             $aAccount = bx_login($oAccount->id(), ($oForm->getCleanValue('rememberMe') ? true : false));
 
             $sUrlRelocate = $oForm->getCleanValue('relocate');
