@@ -147,6 +147,8 @@
     <string name="_bx_timeline_page_block_title_system_manage_administration"><![CDATA[Manage All]]></string>
     <string name="_bx_timeline_page_block_title_manage"><![CDATA[Manage]]></string>
 
+    <string name="_bx_timeline_page_content_ph_timeline"><![CDATA[Timeline: with timeline placeholder]]></string>
+
     <!-- Menus -->
     <string name="_bx_timeline_menu_title_view"><![CDATA[View]]></string>
     <string name="_bx_timeline_menu_set_title_view"><![CDATA[View]]></string>

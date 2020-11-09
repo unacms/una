@@ -105,6 +105,11 @@ class BxDolPageQuery extends BxDolDb
         return $this->getOne($sQuery);
     }
 
+    public function getPageBlockContentPlaceholder($iId)
+    {
+        $sQuery = $this->prepare("SELECT `id`, `module`, `template` FROM `sys_pages_content_placeholders` WHERE `id` = ?", $iId);
+        return $this->getRow($sQuery);
+    }
 }
 
 /** @} */

@@ -1,3 +1,9 @@
+
+-- CONTENT PLACEHOLDERS
+SET @iCPHOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_pages_content_placeholders` ORDER BY `order` DESC LIMIT 1);
+INSERT INTO `sys_pages_content_placeholders` (`module`, `title`, `template`, `order`) VALUES
+('bx_timeline', '_bx_timeline_page_content_ph_timeline', 'block_async_timeline.html', @iCPHOrder + 1);
+
 -- PAGES & BLOCKS
 INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `uri`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
 ('bx_timeline_view', '_bx_timeline_page_title_sys_view', '_bx_timeline_page_title_view', 'bx_timeline', 5, 2147483647, 1, 'timeline-view', 'page.php?i=timeline-view', '', '', '', 0, 1, 0, 'BxTimelinePageView', 'modules/boonex/timeline/classes/BxTimelinePageView.php'),

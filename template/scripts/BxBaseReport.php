@@ -295,6 +295,16 @@ class BxBaseReport extends BxDolReport
                 }
 
                 $aReport = $this->_oQuery->getReport($iObjectId);
+                
+                $iBlockContentAfter = (int)getParam('sys_security_block_content_after_n_reports');
+                if ($iBlockContentAfter > 0 && $aReport['count'] >= $iBlockContentAfter){
+                    $oModule = BxDolModule::getInstance($this->_sSystem);
+                    if(!$oModule)
+                        return;
+                    
+                    $oModule = $oModule->_oDb->updateStatusAdmin($iObjectId, false);
+                }
+                
                 return array(
                         'eval' => $this->getJsObjectName() . '.onReport(oData, oElement)',
                         'code' => 0,

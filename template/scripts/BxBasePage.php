@@ -263,7 +263,17 @@ class BxBasePage extends BxDolPage
      */
     public function getBlockAsyncCode($aBlock, $iAsync)
     {
-        return $this->_oTemplate->parseHtmlByName('block_async_' . $iAsync . '.html', $aBlock);
+        $aContentPlaceholder = $this->_oQuery->getPageBlockContentPlaceholder($iAsync);
+        if (!$aContentPlaceholder)
+            return _t('_sys_txt_error_occured');
+        $oTemplate = $this->_oTemplate;
+        if ('system' != $aContentPlaceholder['module']) {
+            $oModule = BxDolModule::getInstance($aContentPlaceholder['module']);
+            if (!$oModule)
+                return _t('_sys_txt_error_occured');
+            $oTemplate = $oModule->_oTemplate;
+        }
+        return $oTemplate->parseHtmlByName($aContentPlaceholder['template'], $aBlock);
     }
 
     /**

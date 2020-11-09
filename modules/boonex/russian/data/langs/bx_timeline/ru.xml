@@ -147,6 +147,8 @@
     <string name="_bx_timeline_page_block_title_system_manage_administration"><![CDATA[Управление всеми событями ленты]]></string>
     <string name="_bx_timeline_page_block_title_manage"><![CDATA[Управление]]></string>
 
+    <string name="_bx_timeline_page_content_ph_timeline"><![CDATA[Лента: c заполнителем в виде ленты]]></string>
+
     <!-- Menus -->
     <string name="_bx_timeline_menu_title_view"><![CDATA[Просмотр]]></string>
     <string name="_bx_timeline_menu_set_title_view"><![CDATA[Просмотр]]></string>
