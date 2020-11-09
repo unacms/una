@@ -2739,6 +2739,7 @@
     <string name="_sys_page_content_ph_loading_indicator"><![CDATA[С индикатором загрузки]]></string>
     <string name="_sys_page_content_ph_text"><![CDATA[С заполнителем в виде текста]]></string>
     <string name="_sys_page_content_ph_image"><![CDATA[С заполнителем в виде картинки]]></string>
+    <string name="_sys_page_content_ph_create_post"><![CDATA[С заполнителем в виде создания поста]]></string>
     <string name="_sys_page_content_ph_profile_units"><![CDATA[С заполнителем в виде профайлов]]></string>
     <string name="_sys_page_content_ph_text_units_list"><![CDATA[С заполнителем в виде списка текстовых блоков]]></string>
     <string name="_sys_page_content_ph_text_units_gallery"><![CDATA[С заполнителем в виде галереи текстовых блоков]]></string>

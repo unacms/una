@@ -57,9 +57,11 @@ BxDolMenuMoreAuto.prototype.init = function() {
            $this.update();
         });
 
-        oMenu.find(this._sClassItem).on('resize', function() {
-            $this.update(true);
-        });
+        setTimeout(function () {
+            oMenu.find(this._sClassItem).on('resize', function() {
+                $this.update(true);
+            });
+        }, 200);
     }
 };
 
