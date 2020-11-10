@@ -210,9 +210,12 @@ ul.bx-menu-toolbar li a .bx-menu-item-addon {
 
 /*--- Submenu ---*/
 .bx-menu-main-bar-wrapper .bx-menu-main-submenu-wrp {
-	position: relative;
-	overflow-x: auto;
+    position: relative;
+
     -webkit-overflow-scrolling: touch;
+}
+.bx-menu-main-bar-wrapper .bx-menu-main-bar:not(.bx-menu-more-auto) .bx-menu-main-submenu-wrp {
+    overflow-x: auto;
 }
 .bx-menu-main-bar-wrapper .bx-menu-main-submenu-group {
 	position: relative;

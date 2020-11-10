@@ -356,7 +356,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 -- MENU: module sub-menu
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
-('bx_market_submenu', '_bx_market_menu_title_submenu', 'bx_market_submenu', 'bx_market', 8, 0, 1, '', '');
+('bx_market_submenu', '_bx_market_menu_title_submenu', 'bx_market_submenu', 'bx_market', 18, 0, 1, 'BxMarketMenuSubmenu', 'modules/boonex/market/classes/BxMarketMenuSubmenu.php');
 
 INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES 
 ('bx_market_submenu', 'bx_market', '_bx_market_menu_set_title_submenu', 0);
@@ -370,7 +370,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_market_submenu', 'bx_market', 'products-updated', '_bx_market_menu_item_title_system_entries_updated', '_bx_market_menu_item_title_entries_updated', 'page.php?i=products-updated', '', '', '', '', 2147483647, 1, 1, 6),
 ('bx_market_submenu', 'bx_market', 'products-categories', '_bx_market_menu_item_title_system_entries_categories', '_bx_market_menu_item_title_entries_categories', 'page.php?i=products-categories', '', '', '', '', 2147483647, 1, 1, 7),
 ('bx_market_submenu', 'bx_market', 'products-search', '_bx_market_menu_item_title_system_entries_search', '_bx_market_menu_item_title_entries_search', 'page.php?i=products-search', '', '', '', '', 2147483647, 1, 1, 8),
-('bx_market_submenu', 'bx_market', 'products-manage', '_bx_market_menu_item_title_system_entries_manage', '_bx_market_menu_item_title_entries_manage', 'page.php?i=products-manage', '', '', '', '', 2147483646, 1, 1, 9);
+('bx_market_submenu', 'bx_market', 'products-manage', '_bx_market_menu_item_title_system_entries_manage', '_bx_market_menu_item_title_entries_manage', 'page.php?i=products-manage', '', '', '', '', 2147483646, 1, 1, 9),
+('bx_market_submenu', 'bx_market', 'more-auto', '_sys_menu_item_title_system_more_auto', '_sys_menu_item_title_more_auto', 'javascript:void(0)', '', '', '', '', 2147483647, 1, 0, 9999);
 
 -- MENU: sub-menu for view entry
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 

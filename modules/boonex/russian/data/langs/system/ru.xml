@@ -2663,6 +2663,7 @@
 	<string name="_sys_menu_template_title_interactive_vertical"><![CDATA[Интерактивные вертикальные ссылки]]></string>
 	<string name="_sys_menu_template_title_empty"><![CDATA[Пустое меню]]></string>
 	<string name="_sys_menu_template_title_main_submenu"><![CDATA[Навигация по сайту - Подменю]]></string>
+        <string name="_sys_menu_template_title_main_submenu_more_auto"><![CDATA[Навигация по сайту - Подменю (перестраиваемое)]]></string>
 	<string name="_sys_menu_template_title_toolbar"><![CDATA[Панель инструментов - Кнопки]]></string>
 	<string name="_sys_menu_template_title_ver"><![CDATA[Вертикальные ссылки]]></string>
 	<string name="_sys_menu_template_title_ver_lite"><![CDATA[Вертикальные ссылки (облегчённые)]]></string>

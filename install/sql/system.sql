@@ -3969,6 +3969,7 @@ INSERT INTO `sys_menu_templates` (`id`, `template`, `title`, `visible`) VALUES
 (15, 'menu_custom_hor.html', '_sys_menu_template_title_custom_hor', 0),
 (16, 'menu_buttons_ver.html', '_sys_menu_template_title_buttons_ver', 1),
 (17, 'menu_inline_sbtn.html', '_sys_menu_template_title_inline_sbtn', 1),
+(18, 'menu_main_submenu_more_auto.html', '_sys_menu_template_title_main_submenu_more_auto', 8),
 (19, 'menu_floating_blocks_wide.html', '_sys_menu_template_title_floating_blocks_wide', 0),
 (20, 'menu_custom_ver.html', '_sys_menu_template_title_custom_ver', 0),
 (21, 'menu_profile_stats.html', '_sys_menu_template_title_profile_stats', 0),

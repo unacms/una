@@ -94,6 +94,7 @@ class BxBaseMenuSubmenu extends BxTemplMenu
 
         $this->_addJsCss();
         return $this->_oTemplate->parseHtmlByName('menu_main_submenu_bar.html', array(
+            'class' => $oMenuSubmenu->getTemplateId() == BX_MENU_TEMPLATE_SUBMENU_MORE_AUTO ? 'bx-menu-more-auto' : '',
             'code' => $sCode
         ));
     }

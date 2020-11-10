@@ -160,10 +160,14 @@
 }
 
 .bx-menu-main-bar {
-    text-align:center;
-    overflow-x:auto;
+    text-align: center;
+
     -webkit-overflow-scrolling: touch;
 }
+.bx-menu-main-bar:not(.bx-menu-more-auto) {
+    overflow-x: auto;
+}
+
 
 /* --------------- content */
 

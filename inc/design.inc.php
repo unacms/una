@@ -66,6 +66,12 @@ define('BX_FORMAT_TIME', 'sys_format_time'); ///< time format identifier for use
 define('BX_FORMAT_DATE_TIME', 'sys_format_datetime'); ///< datetime format identifier for use in @see bx_time_js function
 
 /*
+ * Menu template IDs for page submenus
+ */
+define('BX_MENU_TEMPLATE_SUBMENU', 8);
+define('BX_MENU_TEMPLATE_SUBMENU_MORE_AUTO', 18);
+
+/*
  * Menu template IDs for Custom menu
  */
 define('BX_MENU_TEMPLATE_CUSTOM_HOR', 15);

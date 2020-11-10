@@ -36,7 +36,7 @@
 }
 
 /*--- Page Submenu bar ---*/
-.bx-menu-main-bar {
+.bx-menu-main-bar:not(.bx-menu-more-auto) {
     overflow: hidden;
 }
 
