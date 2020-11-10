@@ -17,7 +17,7 @@ class BxBaseStudioPermissionsActions extends BxDolStudioPermissionsActions
         $this->_aOptions['actions_single']['options']['attr']['title'] = _t('_adm_prm_btn_actions_options');
     }
 
-    public function performActionEnable()
+    public function performActionEnable($mixedChecked = null)
     {
         $aIds = bx_get('ids');
         $bEnable = (int)bx_get('checked');
