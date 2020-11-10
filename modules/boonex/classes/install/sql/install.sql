@@ -595,8 +595,8 @@ INSERT INTO `sys_objects_score` (`name`, `module`, `table_main`, `table_track`, 
 ('bx_classes', 'bx_classes', 'bx_classes_scores', 'bx_classes_scores_track', '604800', '0', 'bx_classes_classes', 'id', 'author', 'score', 'sc_up', 'sc_down', '', '');
 
 -- REPORTS
-INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, `base_url`, `object_comment`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_classes', 'bx_classes_reports', 'bx_classes_reports_track', '1', 'page.php?i=view-class&id={object_id}', 'bx_classes_notes', 'bx_classes_classes', 'id', 'author', 'reports', '', '');
+INSERT INTO `sys_objects_report` (`name`, `module`, `table_main`, `table_track`, `is_on`, `base_url`, `object_comment`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_classes', 'bx_classes', 'bx_classes_reports', 'bx_classes_reports_track', '1', 'page.php?i=view-class&id={object_id}', 'bx_classes_notes', 'bx_classes_classes', 'id', 'author', 'reports', '', '');
 
 -- VIEWS
 INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 

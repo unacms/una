@@ -543,8 +543,8 @@ INSERT INTO `sys_objects_score` (`name`, `module`, `table_main`, `table_track`, 
 ('bx_posts', 'bx_posts', 'bx_posts_scores', 'bx_posts_scores_track', '604800', '0', 'bx_posts_posts', 'id', 'author', 'score', 'sc_up', 'sc_down', '', '');
 
 -- REPORTS
-INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, `base_url`, `object_comment`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_posts', 'bx_posts_reports', 'bx_posts_reports_track', '1', 'page.php?i=view-post&id={object_id}', 'bx_posts_notes', 'bx_posts_posts', 'id', 'author', 'reports', '', '');
+INSERT INTO `sys_objects_report` (`name`, `module`, `table_main`, `table_track`, `is_on`, `base_url`, `object_comment`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_posts', 'bx_posts', 'bx_posts_reports', 'bx_posts_reports_track', '1', 'page.php?i=view-post&id={object_id}', 'bx_posts_notes', 'bx_posts_posts', 'id', 'author', 'reports', '', '');
 
 -- VIEWS
 INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 

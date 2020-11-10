@@ -141,6 +141,7 @@ class BxDolReport extends BxDolObject
                 SELECT
                     `id` as `id`,
                     `name` AS `name`,
+                    `module` AS `module_name`,
                     `table_main` AS `table_main`,
                     `table_track` AS `table_track`,
                     `is_on` AS `is_on`,

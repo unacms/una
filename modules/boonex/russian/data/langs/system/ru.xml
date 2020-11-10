@@ -1373,6 +1373,7 @@
 	<string name="_adm_stg_cpt_option_sys_account_confirmation_type"><![CDATA[Аккаунт подтвержден когда]]></string>
     <string name="_adm_stg_cpt_option_sys_account_hide_unconfirmed_accounts"><![CDATA[Скрывать профили у неподтвержденных аккаунтов]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_2fa_enable"><![CDATA[Включить двухфакторную аутентификацию]]></string>
+  <string name="_adm_stg_cpt_option_sys_account_2fa_lifetime"><![CDATA[Срок жизни 2FA кода, в секундах (0 - отправлять код при каждой авторизации)]]></string>
     <string name="_adm_stg_cpt_option_sys_account_autoapproval"><![CDATA[Автоматическая активация аккаунта после создания]]></string>
     <string name="_adm_stg_cpt_option_sys_account_auto_profile_creation"><![CDATA[Автоматическое создание профайла из аккаунта]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_online_time"><![CDATA[Временные рамки статуса "онлайн" (минуты)]]></string>
@@ -2147,6 +2148,7 @@
 	<string name="_sys_form_account_input_email_error"><![CDATA[Введите правильный адрес электронной почты]]></string>
 	<string name="_sys_form_account_input_email_uniq_error"><![CDATA[Этот эл. адрес уже зарегистрирован. Пожалуйста, воспользуйтесь ссылкой <a href="{0}">Забыли пароль?</a>, чтобы восстановить доступ к своему аккаунту.]]></string>
 	<string name="_sys_form_account_input_email_uniq_error_loggedin"><![CDATA[Этот эл. адрес уже кем-то используется.]]></string>
+  <string name="_sys_form_account_input_phone_uniq_error_loggedin"><![CDATA[Этот номер телефона уже кем-то используется.]]></string>
 	<string name="_sys_form_account_input_name"><![CDATA[Имя пользователя]]></string>
 	<string name="_sys_form_account_input_name_error"><![CDATA[Это обязательное поле.]]></string>
 	<string name="_sys_form_account_input_password"><![CDATA[Создать пароль]]></string>
@@ -2254,7 +2256,7 @@
 	<string name="_sys_form_login_input_caption_system_captcha"><![CDATA[Капча]]></string>
 	<string name="_sys_form_login_input_caption_system_checkcode"><![CDATA[Выполнить]]></string>
 	<string name="_sys_form_login_input_caption_system_code"><![CDATA[Код из SMS]]></string>
-	<string name="_sys_form_login_input_caption_system_back"><![CDATA[<a href="javascript:history.back()">Отправить новый код</a>]]></string>
+	<string name="_sys_form_login_input_caption_system_back"><![CDATA[Отправить SMS ещё раз]]></string>
 	<string name="_sys_form_login_input_caption_system_delete_confirm"><![CDATA[Подтвердить удаление]]></string>
 	<string name="_sys_form_login_input_caption_system_delete_content"><![CDATA[Удалить с контентом]]></string>
 	<string name="_sys_form_login_input_caption_system_do_submit"><![CDATA[Присоединиться]]></string>
@@ -2275,7 +2277,7 @@
 	<string name="_sys_form_login_input_caption_system_submit_text"><![CDATA[Текст отправки]]></string>
 	<string name="_sys_form_login_input_checkcode"><![CDATA[Выполнить]]></string>
 	<string name="_sys_form_login_input_code"><![CDATA[Код из SMS]]></string>
-	<string name="_sys_form_login_input_back"><![CDATA[<a href="javascript:history.back()">Отправить новый код</a>]]></string>
+	<string name="_sys_form_login_input_back"><![CDATA[Вы не получили SMS? <a href="javascript:history.back()">Отправить SMS ещё раз</a>]]></string>
 	<string name="_sys_form_login_input_email"><![CDATA[Email]]></string>
 	<string name="_sys_form_login_input_password"><![CDATA[Пароль]]></string>
 	<string name="_sys_form_login_input_phone"><![CDATA[Телефон]]></string>

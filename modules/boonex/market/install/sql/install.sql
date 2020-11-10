@@ -564,8 +564,8 @@ INSERT INTO `sys_objects_score` (`name`, `module`, `table_main`, `table_track`, 
 ('bx_market', 'bx_market', 'bx_market_scores', 'bx_market_scores_track', '604800', '0', 'bx_market_products', 'id', 'author', 'score', 'sc_up', 'sc_down', 'BxMarketScore', 'modules/boonex/market/classes/BxMarketScore.php');
 
 -- REPORTS
-INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, `base_url`, `object_comment`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('bx_market', 'bx_market_reports', 'bx_market_reports_track', '1', 'page.php?i=view-product&id={object_id}', 'bx_market_notes', 'bx_market_products', 'id', 'author', 'reports', '', '');
+INSERT INTO `sys_objects_report` (`name`, `module`, `table_main`, `table_track`, `is_on`, `base_url`, `object_comment`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('bx_market', 'bx_market', 'bx_market_reports', 'bx_market_reports_track', '1', 'page.php?i=view-product&id={object_id}', 'bx_market_notes', 'bx_market_products', 'id', 'author', 'reports', '', '');
 
 -- VIEWS
 INSERT INTO `sys_objects_view` (`name`, `table_track`, `period`, `is_on`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 

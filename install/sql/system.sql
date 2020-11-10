@@ -519,6 +519,7 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_account_autoapproval', '_adm_stg_cpt_option_sys_account_autoapproval', 'on', 'checkbox', '', '', '', 10),
 (@iCategoryId, 'sys_account_confirmation_type', '_adm_stg_cpt_option_sys_account_confirmation_type', 'email', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:22:"get_confirmation_types";s:5:"class";s:18:"BaseServiceAccount";}', '', '', 12),
 (@iCategoryId, 'sys_account_activation_2fa_enable', '_adm_stg_cpt_option_sys_account_2fa_enable', '', 'checkbox', '', '', '', 13),
+(@iCategoryId, 'sys_account_activation_2fa_lifetime', '_adm_stg_cpt_option_sys_account_2fa_lifetime', '0', 'digit', '', '', '', 14),
 (@iCategoryId, 'sys_account_auto_profile_creation', '_adm_stg_cpt_option_sys_account_auto_profile_creation', 'on', 'checkbox', '', '', '', 15),
 (@iCategoryId, 'sys_account_hide_unconfirmed_accounts', '_adm_stg_cpt_option_sys_account_hide_unconfirmed_accounts', 'on', 'checkbox', '', '', '', 17),
 (@iCategoryId, 'sys_account_default_profile_type', '_adm_stg_cpt_option_sys_account_default_profile_type', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:17:"get_profile_types";s:5:"class";s:20:"TemplServiceProfiles";}', '', '', 20),
@@ -1766,6 +1767,7 @@ CREATE TABLE `sys_badges2objects` (
 CREATE TABLE `sys_objects_report` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(64) NOT NULL,
+  `module` varchar(32) NOT NULL default '',
   `table_main` varchar(32) NOT NULL,
   `table_track` varchar(32) NOT NULL,
   `is_on` tinyint(4) NOT NULL default '1',
@@ -1780,8 +1782,8 @@ CREATE TABLE `sys_objects_report` (
   PRIMARY KEY  (`id`)
 );
 
-INSERT INTO `sys_objects_report` (`name`, `table_main`, `table_track`, `is_on`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
-('sys_cmts', 'sys_cmts_reports', 'sys_cmts_reports_track', '1', '', 'sys_cmts_ids', 'id', 'author_id', 'reports',  '', '');
+INSERT INTO `sys_objects_report` (`name`, `module`, `table_main`, `table_track`, `is_on`, `base_url`, `trigger_table`, `trigger_field_id`, `trigger_field_author`, `trigger_field_count`, `class_name`, `class_file`) VALUES 
+('sys_cmts', 'system', 'sys_cmts_reports', 'sys_cmts_reports_track', '1', '', 'sys_cmts_ids', 'id', 'author_id', 'reports',  '', '');
 
 
 -- --------------------------------------------------------
@@ -3257,6 +3259,7 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('sys_login', 'system', 'do_sendsms', '_sys_form_login_input_sendsms', '', 0, 'submit', '_sys_form_login_input_caption_system_sendsms', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 
 ('sys_account', 'system', 'email', '', '', 0, 'text', '_sys_form_login_input_caption_system_email', '_sys_form_account_input_email', '', 1, 0, 0, '', '', '', 'EmailUniq', '', '_sys_form_account_input_email_error', 'Xss', '', 0, 0),
+('sys_account', 'system', 'phone', '', '', 0, 'text', '_sys_form_login_input_caption_system_phone', '_sys_form_login_input_phone', '_sys_form_login_input_phone_info', 1, 0, 0, '', '', '', 'PhoneExist', '', '_sys_form_login_input_phone_error_format', 'Xss', '', 1, 0),
 ('sys_account', 'system', 'password', '', '', 0, 'password', '_sys_form_login_input_caption_system_password', '_sys_form_account_input_password', '', 1, 0, 0, '', '', '', 'Preg', 'a:1:{s:4:"preg";s:38:"~^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}~";}', '_sys_form_account_input_password_error', '', '', 0, 0),
 ('sys_account', 'system', 'password_confirm', '', '', 0, 'password', '_sys_form_login_input_caption_system_password_confirm', '_sys_form_account_input_password_confirm', '', 1, 0, 0, '', '', '', 'PasswordConfirm', '', '_sys_form_account_input_password_confirm_error', '', '', 0, 0),
 ('sys_account', 'system', 'do_submit', '_sys_form_account_input_submit', '', 0, 'submit', '_sys_form_login_input_caption_system_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
@@ -3394,16 +3397,17 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('sys_login_step2', 'relocate', 2147483647, 1, 3),
 
 ('sys_login_step3', 'code', 2147483647, 1, 1),
-('sys_login_step3', 'back', 2147483647, 1, 2),
-('sys_login_step3', 'do_checkcode', 2147483647, 1, 3),
+('sys_login_step3', 'do_checkcode', 2147483647, 1, 2),
+('sys_login_step3', 'back', 2147483647, 1, 3),
 ('sys_login_step3', 'relocate', 2147483647, 1, 4),
 
 ('sys_account_create', 'name', 2147483647, 1, 1),
 ('sys_account_create', 'email', 2147483647, 1, 2),
-('sys_account_create', 'password', 2147483647, 1, 3),
-('sys_account_create', 'receive_news', 2147483647, 1, 4),
-('sys_account_create', 'do_submit', 2147483647, 1, 5),
-('sys_account_create', 'agreement', 2147483647, 1, 6),
+('sys_account_create', 'phone', 2147483647, 0, 3),
+('sys_account_create', 'password', 2147483647, 1, 4),
+('sys_account_create', 'receive_news', 2147483647, 1, 5),
+('sys_account_create', 'do_submit', 2147483647, 1, 6),
+('sys_account_create', 'agreement', 2147483647, 1, 7),
 
 ('sys_account_settings_email', 'email', 2147483647, 1, 1),
 ('sys_account_settings_email', 'password_current', 2147483647, 1, 2),

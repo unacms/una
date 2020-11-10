@@ -38,6 +38,19 @@ class BxFormAccountCheckerHelper extends BxDolFormCheckerHelper
 		
 		return $aInfo['password'] == $sPassCheck;
     }
+    
+    /**
+     * Check if phone is exists.
+     */
+    function checkPhoneExist ($s)
+    {
+        $s = trim($s);
+        if(!preg_match("/^\+[0-9\s]*$/", $s)) {
+            return _t('_sys_form_forgot_password_phone_error_format');
+        }
+
+        return BxDolAccountQuery::getInstance()->getIdByPhone($s) ? _t('_sys_form_account_input_phone_uniq_error_loggedin') : true;
+    }
 
     /**
      * Check if email is uniq.

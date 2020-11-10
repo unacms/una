@@ -1390,6 +1390,7 @@
 	<string name="_adm_stg_cpt_option_sys_account_confirmation_type"><![CDATA[Account is confirmed when]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_hide_unconfirmed_accounts"><![CDATA[Hide profiles which have unconfirmed account]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_2fa_enable"><![CDATA[Enable 2 Factor Authentication]]></string>
+  <string name="_adm_stg_cpt_option_sys_account_2fa_lifetime"><![CDATA[2FA code lifetime, in seconds (0 - send code upon each login)]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_autoapproval"><![CDATA[Automatic account activation after creation]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_auto_profile_creation"><![CDATA[Automatic profile creation from account name]]></string>
 	<string name="_adm_stg_cpt_option_sys_account_online_time"><![CDATA[Online status timeframe (minutes)]]></string>
@@ -2163,6 +2164,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_account_input_email_error"><![CDATA[Email is not valid]]></string>
 	<string name="_sys_form_account_input_email_uniq_error"><![CDATA[This email address is already registered. Please, use <a href="{0}">Forgot password</a> to restore access to your account.]]></string>
 	<string name="_sys_form_account_input_email_uniq_error_loggedin"><![CDATA[This email is already used by someone.]]></string>
+  <string name="_sys_form_account_input_phone_uniq_error_loggedin"><![CDATA[This phone number is already used by someone.]]></string>
 	<string name="_sys_form_account_input_name"><![CDATA[Account name]]></string>
 	<string name="_sys_form_account_input_name_error"><![CDATA[This is a required field.]]></string>
 	<string name="_sys_form_account_input_password"><![CDATA[Create a password]]></string>
@@ -2272,7 +2274,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_login_input_caption_system_captcha"><![CDATA[Captcha]]></string>
 	<string name="_sys_form_login_input_caption_system_checkcode"><![CDATA[Submit]]></string>
 	<string name="_sys_form_login_input_caption_system_code"><![CDATA[Code from SMS]]></string>
-	<string name="_sys_form_login_input_caption_system_back"><![CDATA[<a href="javascript:history.back()">Send new code</a>]]></string>
+	<string name="_sys_form_login_input_caption_system_back"><![CDATA[Resend SMS code]]></string>
 	<string name="_sys_form_login_input_caption_system_delete_confirm"><![CDATA[Confirm Delete]]></string>
 	<string name="_sys_form_login_input_caption_system_delete_content"><![CDATA[Delete with Content]]></string>
 	<string name="_sys_form_login_input_caption_system_do_submit"><![CDATA[Sign up]]></string>
@@ -2292,7 +2294,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_login_input_caption_system_submit"><![CDATA[Submit]]></string>
 	<string name="_sys_form_login_input_caption_system_submit_text"><![CDATA[Submit Text]]></string>
 	<string name="_sys_form_login_input_code"><![CDATA[Code from SMS]]></string>
-	<string name="_sys_form_login_input_back"><![CDATA[<a href="javascript:history.back()">Send new code</a>]]></string>
+	<string name="_sys_form_login_input_back"><![CDATA[You didn't receive an SMS? <a href="/page/login-step2">Send SMS again</a>.]]></string>
 	<string name="_sys_form_login_input_checkcode"><![CDATA[Submit]]></string>
 	<string name="_sys_form_login_input_email"><![CDATA[Email]]></string>
 	<string name="_sys_form_login_input_password"><![CDATA[Password]]></string>
