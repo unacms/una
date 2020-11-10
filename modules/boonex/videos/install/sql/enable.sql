@@ -177,7 +177,7 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `t
 ('', 0, 'bx_videos', '_bx_videos_page_block_title_sys_by_categoriers_entries_view_showcase', '_bx_videos_page_block_title_by_categoriers_entries_view_showcase', 11, 2147483647, 'service', 'a:3:{s:6:\"module\";s:9:\"bx_videos\";s:6:\"method\";s:20:\"browse_by_categories\";s:6:\"params\";a:5:{s:9:\"unit_view\";s:8:\"showcase\";s:13:\"empty_message\";b:0;s:13:\"ajax_paginate\";b:0;s:6:\"browse\";s:7:\"popular\";s:12:\"per_category\";i:3;}}', 0, 1, IFNULL(@iBlockOrder, 0) + 10);
 
 -- MENU: add to site menu
-SET @iSiteMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_site' AND `active` = 1 ORDER BY `order` DESC LIMIT 1);
+SET @iSiteMenuOrder = (SELECT `order` FROM `sys_menu_items` WHERE `set_name` = 'sys_site' AND `active` = 1 AND `order` < 9999 ORDER BY `order` DESC LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('sys_site', 'bx_videos', 'videos-home', '_bx_videos_menu_item_title_system_entries_home', '_bx_videos_menu_item_title_entries_home', 'page.php?i=videos-home', '', '', 'film col-gray', 'bx_videos_submenu', 2147483647, 1, 1, IFNULL(@iSiteMenuOrder, 0) + 1);
 

@@ -8,9 +8,9 @@
  */
 
 /**
- * @see BxDolMenu
+ * @see BxTemplMenuMoreAuto
  */
-class BxTemplMenuSite extends BxTemplMenu
+class BxTemplMenuSite extends BxTemplMenuMoreAuto
 {
     protected $_bSiteMenu;
     protected $_bSiteMenuSubmenu;
@@ -36,10 +36,10 @@ class BxTemplMenuSite extends BxTemplMenu
     }
 
     protected function _getMenuItem ($a)
-	{
-	    $aResult = parent::_getMenuItem($a);
-	    if(empty($aResult) || !is_array($aResult))
-	        return $aResult;
+    {
+        $aResult = parent::_getMenuItem($a);
+        if(empty($aResult) || !is_array($aResult))
+            return $aResult;
 
         $aTmplVarsSubmenu = array();
         $bTmplVarsSubmenu = $this->_bSiteMenu && $this->_bSiteMenuSubmenu && !empty($aResult['submenu_object']) && (int)$aResult['submenu_popup'] == 1;
@@ -50,22 +50,35 @@ class BxTemplMenuSite extends BxTemplMenu
         }
 
         $aResult['bx_if:show_arrow'] = array (
-        	'condition' => false && $bTmplVarsSubmenu,
-			'content' => array(),
+            'condition' => false && $bTmplVarsSubmenu,
+            'content' => array(),
         );
 
         $aResult['bx_if:show_line'] = array (
-        	'condition' => true,
-			'content' => array(),
+            'condition' => true,
+            'content' => array(),
         );
 
         $aResult['bx_if:show_submenu'] = array (
-			'condition' => $bTmplVarsSubmenu,
-			'content' => $aTmplVarsSubmenu,
-		);
+            'condition' => $bTmplVarsSubmenu,
+            'content' => $aTmplVarsSubmenu,
+        );
 
-		return $aResult;
-	}
+        return $aResult;
+    }
+
+    protected function _getJsCodeMoreAuto()
+    {
+        $sJsObject = $this->_getJsObjectMoreAuto();
+        $aJsParams = array(
+            'sObject' => $this->_sObject,
+            'iItemsStatic' => $this->_iMoreAutoItemsStatic,
+            'bItemsStaticOnly' => $this->_bMoreAutoItemsStaticOnly ? 1 : 0,
+            'aHtmlIds' => $this->_getHtmlIds()
+        );
+
+        return $this->_oTemplate->_wrapInTagJsCode("if(!" . $sJsObject . ") {var " . $sJsObject . " = new BxDolMenuMoreAuto(" . json_encode($aJsParams) . "); $(document).ready(function(){" . $sJsObject . ".init();});}");
+    }
 }
 
 /** @} */

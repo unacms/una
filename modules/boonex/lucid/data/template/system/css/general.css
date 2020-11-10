@@ -18,35 +18,21 @@
 }
 
 /*---Toolbar ---*/
+.bx-toolbar-content {
+    position: relative;
+}
+.bx-toolbar-content::before,
+.bx-toolbar-content::after {
+    display: none;
+}
+.bx-toolbar-content .bx-toolbar-item {
+    display: inline-block;
+}
 .bx-toolbar-content .bx-toolbar-item.bx-ti-menu {
-	height: 100%;
+    margin: 0;
+    padding: 0 1.25rem;
 
-	margin: 0px 20px;
-	margin: 0px 1.25rem;
-
-	overflow-x: auto;
-	overflow-y: hidden;
-
-	-webkit-overflow-scrolling: touch;
-}
-#bx-toolbar-content .bx-toolbar-item.bx-ti-menu::-webkit-scrollbar {
-    width: 12px;
-}
-#bx-toolbar-content .bx-toolbar-item.bx-ti-menu::-webkit-scrollbar-track {
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    
-    background-color: rgba(0, 0, 0, 0.4); 
-}
-#bx-toolbar-content .bx-toolbar-item.bx-ti-menu::-webkit-scrollbar-thumb {
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-
-    background: rgba(255, 255, 255, 0.9); 
-    -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.5); 
-}
-#bx-toolbar-content .bx-toolbar-item.bx-ti-menu::-webkit-scrollbar-thumb:window-inactive {
-    background: rgba(255, 255, 255, 0.4); 
+    -webkit-overflow-scrolling: touch;
 }
 
 /*--- Page Submenu bar ---*/

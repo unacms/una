@@ -22,6 +22,7 @@ function BxDolMenuMoreAuto(options)
     this._sClassItemStatic = 'bx-menu-item-static';
 
     this._bStaticMode = this._bItemsStaticOnly && this._iItemsStatic > 0;
+    this._bTrackContainerResize = false;
 }
 
 BxDolMenuMoreAuto.prototype.init = function() {
@@ -57,11 +58,12 @@ BxDolMenuMoreAuto.prototype.init = function() {
            $this.update();
         });
 
-        setTimeout(function () {
-            oMenu.find(this._sClassItem).on('resize', function() {
-                $this.update(true);
-            });
-        }, 200);
+        if(this._bTrackContainerResize)
+            setTimeout(function () {
+                oMenu.find(this._sClassItem).on('resize', function() {
+                    $this.update(true);
+                });
+            }, 200);
     }
 };
 

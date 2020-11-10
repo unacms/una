@@ -8,7 +8,7 @@
 
 /*--- Main (Top) Menu ---*/
 #bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site {
-	display: block;
+    display: block;
     white-space: normal;
 }
 
@@ -16,7 +16,7 @@
     display: block;
     width: auto;
     height: auto;
-    margin: 0px 0.25rem;
+    margin: 0;
 }
 
 #bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site > li > a {
@@ -24,7 +24,7 @@
 }
 
 #bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site li:hover {
-	opacity: 1.0;
+    opacity: 1.0;
 }
 	
 
@@ -104,14 +104,12 @@
 @media only screen and (min-width: 720px) {
     #bx-sliding-menu-sys_site.bx-sliding-smenu-main {
         position: relative;
-        height: 100%;
-        overflow-x: auto;
+        height: 2.125rem;
     }
 
     #bx-sliding-menu-sys_site.bx-sliding-smenu-main .bx-sliding-menu-main-cnt {
-    	position: relative;
-        display: inline-block;
-    	height: 100%;
+    	position: absolute;
+    	width: 100%;
     }
 
     #bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site {
@@ -127,7 +125,7 @@
 
     #bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site li {
         position: relative;
-    	display: inline-block;
+    	display: block;
 
     	height: 2.125rem;
         border: 1px solid transparent;
