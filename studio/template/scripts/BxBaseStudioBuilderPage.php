@@ -818,8 +818,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
         $aContentPlaceholders = $this->oDb->getContentPlaceholders();
         $aForm['inputs']['async']['values'][] = array('key' => 0, 'value' => _t('_sys_no_async'));
-        foreach ($aContentPlaceholders as $iId => $sTitle)
-            $aForm['inputs']['async']['values'][] = array('key' => $iId, 'value' => _t($sTitle));
+        foreach ($aContentPlaceholders as $iKey => $sTitle)
+            $aForm['inputs']['async']['values'][] = array('key' => $iKey, 'value' => _t($sTitle));
 
         $aSubmenus = $this->oDb->getBlockSubmenus();
         $aForm['inputs']['submenu']['values'][] = array('key' => '', 'value' => _t('_sys_no_menu'));
