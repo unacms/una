@@ -79,6 +79,7 @@
 
     <string name="_bx_timeline_form_attach_link"><![CDATA[Прикрепить ссылку]]></string>
     <string name="_bx_timeline_form_attach_link_display_add"><![CDATA[Прикрепить ссылку]]></string>
+    <string name="_bx_timeline_form_attach_link_input_sys_event_id"><![CDATA[ID события]]></string>
     <string name="_bx_timeline_form_attach_link_input_sys_url"><![CDATA[Url]]></string>
     <string name="_bx_timeline_form_attach_link_input_url"><![CDATA[Добавить ссылку]]></string>
     <string name="_bx_timeline_form_attach_link_input_url_err"><![CDATA[Необходима правильная ссылка. Пожалуйста, заполните это поле.]]></string>

@@ -1022,12 +1022,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return $sResult;
     }
 
-    public function getAttachLinkForm()
+    public function getAttachLinkForm($iEventId = 0)
     {
         $sStylePrefix = $this->_oConfig->getPrefix('style');
         $sJsObject = $this->_oConfig->getJsObject('post');
 
-        $aForm = $this->getModule()->getFormAttachLink();
+        $aForm = $this->getModule()->getFormAttachLink($iEventId);
 
         return $this->parseHtmlByName('attach_link_form.html', array(
             'style_prefix' => $sStylePrefix,
@@ -1037,18 +1037,21 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         ));
     }
 
-    public function getAttachLinkField($iUserId)
+    public function getAttachLinkField($iUserId, $iEventId = 0)
     {
         $sStylePrefix = $this->_oConfig->getPrefix('style');
 
-        $aLinks = $this->_oDb->getUnusedLinks($iUserId);
+        if(!$iEventId)
+            $aLinks = $this->_oDb->getUnusedLinks($iUserId);
+        else
+            $aLinks = $this->_oDb->getLinks($iEventId);
 
         $sLinks = '';
         foreach($aLinks as $aLink)
             $sLinks .= $this->getAttachLinkItem($iUserId, $aLink);
 
         return $this->parseHtmlByName('attach_link_form_field.html', array(
-            'html_id' => $this->_oConfig->getHtmlIds('post', 'attach_link_form_field'),
+            'html_id' => $this->_oConfig->getHtmlIds('post', 'attach_link_form_field') . $iEventId,
             'style_prefix' => $sStylePrefix,
             'links' => $sLinks
         ));
@@ -1056,7 +1059,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
     public function getAttachLinkItem($iUserId, $mixedLink)
     {
-        $aLink = is_array($mixedLink) ? $mixedLink : $this->_oDb->getUnusedLinks($iUserId, (int)$mixedLink);
+        $aLink = is_array($mixedLink) ? $mixedLink : $this->_oDb->getLinksBy(array('type' => 'id', 'id' => (int)$mixedLink, 'profile_id' => $iUserId));
         if(empty($aLink) || !is_array($aLink))
             return '';
 

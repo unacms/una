@@ -55,6 +55,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_sTranscoderObjectView;
     protected $_aPhotoUploaders;
     protected $_aVideoUploaders;
+    protected $_aItemToUploader;
 
     protected $_sMenuItemManage;
     protected $_sMenuItemActions;
@@ -87,6 +88,10 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'FIELD_PUBLISHED' => 'published',
             'FIELD_TITLE' => 'title',
             'FIELD_TEXT' => 'description',
+            'FIELD_ATTACHMENTS' => 'attachments',
+            'FIELD_LINK' => 'link',
+            'FIELD_PHOTO' => 'photo',
+            'FIELD_VIDEO' => 'video',
             'FIELD_STATUS' => 'status',
             'FIELD_STICKED' => 'sticked',
             'FIELD_DATE' => 'date',
@@ -111,6 +116,10 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             	'mp4' => 'bx_timeline_videos_mp4', 
             	'mp4_hd' => 'bx_timeline_videos_mp4_hd'
             ),
+            'OBJECT_UPLOADER_PHOTO_SIMPLE' => $this->_sName . '_simple_photo',
+            'OBJECT_UPLOADER_PHOTO_HTML5' => $this->_sName . '_html5_photo',
+            'OBJECT_UPLOADER_VIDEO_SIMPLE' => $this->_sName . '_simple_video',
+            'OBJECT_UPLOADER_VIDEO_HTML5' => $this->_sName . '_html5_video',
             'OBJECT_GRID_ADMINISTRATION' => $this->_sName . '_administration',
             'OBJECT_MENU_ENTRY_ATTACHMENTS' => $this->_sName . '_menu_post_attachments',
             'OBJECT_METATAGS' => $this->_sName,
@@ -207,8 +216,15 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_aHandlerDescriptor = array('module_name' => '', 'module_method' => '', 'module_class' => '', 'groupable' => '', 'group_by' => '');
         $this->_sHandlersMethod = 'get_timeline_data';
 
-        $this->_aPhotoUploaders = array($this->_sName . '_simple_photo');
-        $this->_aVideoUploaders = array($this->_sName . '_simple_video');
+        $this->_aPhotoUploaders = array($this->CNF['OBJECT_UPLOADER_PHOTO_SIMPLE']);
+        $this->_aVideoUploaders = array($this->CNF['OBJECT_UPLOADER_VIDEO_SIMPLE']);
+
+        $this->_aItemToUploader = array(
+            'add-photo-simple' => $this->CNF['OBJECT_UPLOADER_PHOTO_SIMPLE'],
+            'add-photo-html5' => $this->CNF['OBJECT_UPLOADER_PHOTO_HTML5'],
+            'add-video-simple' => $this->CNF['OBJECT_UPLOADER_VIDEO_SIMPLE'],
+            'add-video-html5' => $this->CNF['OBJECT_UPLOADER_VIDEO_HTML5'],
+        );
 
         $this->_bJsMode = false;
         $this->_aJsClasses = array(
@@ -245,7 +261,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             ),
             'post' => array(
                 'attach_link_popup' =>  $sHp . '-attach-link-popup',
-                'attach_link_form_field' => $sHp . '-attach-link-form_field',
+                'attach_link_form_field' => $sHp . '-attach-link-form-field-',
                 'attach_link_item' => $sHp . '-attach-link-item-',
                 'textarea' => $sHp . '-textarea-',
 
@@ -508,11 +524,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         return $this->_aTypeToFormDisplay[$sType];
     }
 
-    public function getUploaders($sType)
+    public function getUploaders($sField)
     {
         $aResult = array();
 
-        switch($sType) {
+        switch($sField) {
             case 'photo':
                 $aResult = $this->_aPhotoUploaders;
                 break;
@@ -522,6 +538,14 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         }
 
         return $aResult;
+    }
+
+    public function getUploaderByMenuItem($sMenuItem)
+    {
+        if(!isset($this->_aItemToUploader[$sMenuItem]))
+            return false;
+    
+        return $this->_aItemToUploader[$sMenuItem];
     }
 
     public function getPerPage($sType = 'default')

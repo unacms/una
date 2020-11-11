@@ -433,11 +433,15 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_timeline_post_edit', 'action', 2147483647, 1, 2),
 ('bx_timeline_post_edit', 'owner_id', 2147483647, 1, 3),
 ('bx_timeline_post_edit', 'text', 2147483647, 1, 4),
-('bx_timeline_post_edit', 'published', 192, 1, 5),
-('bx_timeline_post_edit', 'location', 2147483647, 1, 6),
-('bx_timeline_post_edit', 'controls', 2147483647, 1, 7),
-('bx_timeline_post_edit', 'tlb_do_submit', 2147483647, 1, 8),
-('bx_timeline_post_edit', 'tlb_do_cancel', 2147483647, 1, 9);
+('bx_timeline_post_edit', 'attachments', 2147483647, 1, 5),
+('bx_timeline_post_edit', 'published', 192, 1, 6),
+('bx_timeline_post_edit', 'location', 2147483647, 1, 7),
+('bx_timeline_post_edit', 'link', 2147483647, 1, 8),
+('bx_timeline_post_edit', 'photo', 2147483647, 1, 9),
+('bx_timeline_post_edit', 'video', 2147483647, 1, 10),
+('bx_timeline_post_edit', 'controls', 2147483647, 1, 11),
+('bx_timeline_post_edit', 'tlb_do_submit', 2147483647, 1, 12),
+('bx_timeline_post_edit', 'tlb_do_cancel', 2147483647, 1, 13);
 
 -- Forms -> Attach link
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
@@ -447,16 +451,18 @@ INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `v
 ('bx_timeline_attach_link_add', @sName, 'bx_timeline_attach_link', '_bx_timeline_form_attach_link_display_add', 0);
 
 INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `checked`, `type`, `caption_system`, `caption`, `info`, `required`, `collapsed`, `html`, `attrs`, `attrs_tr`, `attrs_wrapper`, `checker_func`, `checker_params`, `checker_error`, `db_pass`, `db_params`, `editable`, `deletable`) VALUES
+('bx_timeline_attach_link', @sName, 'event_id', '0', '', 0, 'hidden', '_bx_timeline_form_attach_link_input_sys_event_id', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_timeline_attach_link', @sName, 'url', '', '', 0, 'text', '_bx_timeline_form_attach_link_input_sys_url', '_bx_timeline_form_attach_link_input_url', '', 0, 0, 0, '', '', '', 'Preg', 'a:1:{s:4:"preg";s:0:"";}', '_bx_timeline_form_attach_link_input_url_err', '', '', 0, 0),
 ('bx_timeline_attach_link', @sName, 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_timeline_attach_link', @sName, 'do_submit', '_bx_timeline_form_attach_link_input_do_submit', '', 0, 'submit', '_bx_timeline_form_attach_link_input_sys_do_submit', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_timeline_attach_link', @sName, 'do_cancel', '_bx_timeline_form_attach_link_input_do_cancel', '', 0, 'button', '_bx_timeline_form_attach_link_input_do_cancel', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0);
 
 INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_for_levels`, `active`, `order`) VALUES
-('bx_timeline_attach_link_add', 'url', 2147483647, 1, 1),
-('bx_timeline_attach_link_add', 'controls', 2147483647, 1, 2),
-('bx_timeline_attach_link_add', 'do_submit', 2147483647, 1, 3),
-('bx_timeline_attach_link_add', 'do_cancel', 2147483647, 1, 4);
+('bx_timeline_attach_link_add', 'event_id', 2147483647, 1, 1),
+('bx_timeline_attach_link_add', 'url', 2147483647, 1, 2),
+('bx_timeline_attach_link_add', 'controls', 2147483647, 1, 3),
+('bx_timeline_attach_link_add', 'do_submit', 2147483647, 1, 4),
+('bx_timeline_attach_link_add', 'do_cancel', 2147483647, 1, 5);
 
 
 -- COMMENTS

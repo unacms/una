@@ -191,8 +191,12 @@ BxTimelinePost.prototype.afterFormAttachLinkSubmit = function (oForm, oData)
             if(!$.trim(oData.item).length)
                 return;
 
+            var iEventId = 0;
+            if(oData && oData.event_id != undefined)
+                iEventId = parseInt(oData.event_id);
+
             var oItem = $(oData.item).hide();
-            $('#' + $this._aHtmlIds['attach_link_form_field']).prepend(oItem).find('#' + oItem.attr('id')).bx_anim('show', $this._sAnimationEffect, $this._sAnimationSpeed);
+            $('#' + $this._aHtmlIds['attach_link_form_field'] + iEventId).prepend(oItem).find('#' + oItem.attr('id')).bx_anim('show', $this._sAnimationEffect, $this._sAnimationSpeed);
 
             return;
         }
@@ -279,9 +283,10 @@ BxTimelinePost.prototype.addAttachLink = function(oElement, sUrl)
     );
 };
 
-BxTimelinePost.prototype.showAttachLink = function(oLink)
+BxTimelinePost.prototype.showAttachLink = function(oLink, iEventId)
 {
-    var oData = this._getDefaultData();    
+    var oData = this._getDefaultData();
+    oData['event_id'] = iEventId;
 
     $(window).dolPopupAjax({
         id: {value: this._aHtmlIds['attach_link_popup'], force: true},

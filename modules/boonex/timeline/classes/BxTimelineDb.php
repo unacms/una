@@ -26,6 +26,9 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     function __construct(&$oConfig)
     {
         parent::__construct($oConfig);
+
+        $CNF = &$this->_oConfig->CNF;
+
         $this->_sTableCache = $this->_sPrefix . 'cache';
 
         $this->_sTableEvent2User = $this->_sPrefix . 'events2users';
@@ -33,12 +36,12 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         $this->_sTableHotTrack = $this->_sPrefix . 'hot_track';
 
         $this->_aTablesMedia = array(
-        	BX_TIMELINE_MEDIA_PHOTO => $this->_sPrefix . 'photos',
-        	BX_TIMELINE_MEDIA_VIDEO => $this->_sPrefix . 'videos' 
+            $CNF['FIELD_PHOTO'] => $this->_sPrefix . 'photos',
+            $CNF['FIELD_VIDEO'] => $this->_sPrefix . 'videos' 
         );
         $this->_aTablesMedia2Events = array(
-        	BX_TIMELINE_MEDIA_PHOTO => $this->_sPrefix . 'photos2events',
-        	BX_TIMELINE_MEDIA_VIDEO => $this->_sPrefix . 'videos2events'
+            $CNF['FIELD_PHOTO'] => $this->_sPrefix . 'photos2events',
+            $CNF['FIELD_VIDEO'] => $this->_sPrefix . 'videos2events'
         );
     }
 
@@ -186,18 +189,17 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     //--- Photo uploader related methods ---//
     public function saveMedia($sType, $iEventId, $iItemId)
     {
-    	$sTable = $this->_aTablesMedia2Events[$sType];
-
-        $sQuery = $this->prepare("INSERT INTO `" . $sTable . "` SET `event_id`=?, `media_id`=?", $iEventId, $iItemId);
-        return (int)$this->query($sQuery) > 0;
+        return (int)$this->query("INSERT INTO `" . $this->_aTablesMedia2Events[$sType] . "` SET `event_id`=:event_id, `media_id`=:media_id", array(
+            'event_id' => $iEventId,
+            'media_id' => $iItemId
+        )) > 0;
     }
 
     public function deleteMedia($sType, $iEventId)
     {
-    	$sTable = $this->_aTablesMedia2Events[$sType];
-
-        $sQuery = $this->prepare("DELETE FROM `" . $sTable . "` WHERE `event_id` = ?", $iEventId);
-        return (int)$this->query($sQuery) > 0;
+        return (int)$this->query("DELETE FROM `" . $this->_aTablesMedia2Events[$sType] . "` WHERE `event_id`=:event_id", array(
+            'event_id' => $iEventId
+        )) > 0;
     }
 
     public function getMedia($sType, $iEventId, $iOffset = 0)
@@ -229,35 +231,12 @@ class BxTimelineDb extends BxBaseModNotificationsDb
     }
 
     //--- Link attach related methods ---//
-    public function getUnusedLinks($iUserId, $iLinkId = 0)
+    public function getUnusedLinks($iUserId)
     {
-        $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
-        $aMethod['params'][1] = array(
-			'profile_id' => $iUserId
-		);
-
-        $sWhereAddon = '';
-        if(!empty($iLinkId)) {
-            $aMethod['name'] = 'getRow';
-            $aMethod['params'][1]['id'] = $iLinkId;
-
-            $sWhereAddon = " AND `tl`.`id`=:id";
-        }
-
-        $aMethod['params'][0] = "SELECT
-                `tl`.`id` AS `id`,
-                `tl`.`profile_id` AS `profile_id`,
-                `tl`.`media_id` AS `media_id`,
-                `tl`.`url` AS `url`,
-                `tl`.`title` AS `title`,
-                `tl`.`text` AS `text`,
-                `tl`.`added` AS `added`
-            FROM `" . $this->_sPrefix . "links` AS `tl`
-            LEFT JOIN `" . $this->_sPrefix . "links2events` AS `tle` ON `tl`.`id`=`tle`.`link_id`
-            WHERE `tl`.`profile_id`=:profile_id AND ISNULL(`tle`.`event_id`)" . $sWhereAddon . "
-            ORDER BY `tl`.`added` DESC";
-
-        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);;
+        return $this->getLinksBy(array(
+            'type' => 'unused',
+            'profile_id' => $iUserId
+        ));
     }
 
     public function deleteUnusedLinks($iUserId, $iLinkId = 0)
@@ -278,31 +257,89 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
     public function saveLink($iEventId, $iLinkId)
     {
-        $sQuery = $this->prepare("INSERT INTO `" . $this->_sPrefix . "links2events` SET `event_id`=?, `link_id`=?", $iEventId, $iLinkId);
-        return (int)$this->query($sQuery) > 0;
+        $aBindings = array(
+            'event_id' => $iEventId,
+            'link_id' => $iLinkId
+        );
+
+        $iId = $this->getOne("SELECT `id` FROM `" . $this->_sPrefix . "links2events` WHERE `event_id`=:event_id AND `link_id`=:link_id LIMIT 1", $aBindings);
+        if(!empty($iId))
+            return true;
+
+        return (int)$this->query("INSERT INTO `" . $this->_sPrefix . "links2events` SET `event_id`=:event_id, `link_id`=:link_id", $aBindings) > 0;
+    }
+
+    public function deleteLink($iId)
+    {
+        return (int)$this->query("DELETE FROM `tl`, `tle` USING `" . $this->_sPrefix . "links` AS `tl` LEFT JOIN `" . $this->_sPrefix . "links2events` AS `tle` ON `tl`.`id`=`tle`.`link_id` WHERE `tl`.`id` = :id", array(
+            'id' => $iId
+        )) > 0;
     }
 
     public function deleteLinks($iEventId)
     {
-        $sQuery = $this->prepare("DELETE FROM `tl`, `tle` USING `" . $this->_sPrefix . "links` AS `tl` LEFT JOIN `" . $this->_sPrefix . "links2events` AS `tle` ON `tl`.`id`=`tle`.`link_id` WHERE `tle`.`event_id` = ?", $iEventId);
-        return (int)$this->query($sQuery) > 0;
+        return (int)$this->query("DELETE FROM `tl`, `tle` USING `" . $this->_sPrefix . "links` AS `tl` LEFT JOIN `" . $this->_sPrefix . "links2events` AS `tle` ON `tl`.`id`=`tle`.`link_id` WHERE `tle`.`event_id` = :event_id", array(
+            'event_id' => $iEventId
+        )) > 0;
     }
 
     public function getLinks($iEventId)
     {
-        $sQuery = $this->prepare("SELECT
-                `tl`.`id` AS `id`,
-                `tl`.`profile_id` AS `profile_id`,
-                `tl`.`media_id` AS `media_id`,
-                `tl`.`url` AS `url`,
-                `tl`.`title` AS `title`,
-                `tl`.`text` AS `text`,
-                `tl`.`added` AS `added`
-            FROM `" . $this->_sPrefix . "links` AS `tl`
-            LEFT JOIN `" . $this->_sPrefix . "links2events` AS `tle` ON `tl`.`id`=`tle`.`link_id`
-            WHERE `tle`.`event_id`=?", $iEventId);
+        return $this->getLinksBy(array('type' => 'event_id', 'event_id' => $iEventId));
+    }
 
-        return $this->getAll($sQuery);
+    public function getLinksBy($aParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+
+    	$sSelectClause = "`tl`.*";
+    	$sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
+        switch($aParams['type']) {
+            case 'id':
+            	$aMethod['name'] = 'getRow';
+            	$aMethod['params'][1] = array(
+                    'id' => $aParams['id']
+                );
+
+                $sWhereClause = " AND `tl`.`id`=:id";
+
+                if(!empty($aParams['profile_id'])) {
+                    $aMethod['params'][1]['profile_id'] = $aParams['profile_id'];
+
+                    $sWhereClause .= " AND `tl`.`profile_id`=:profile_id";
+                }
+                break;
+
+            case 'event_id':
+            	$aMethod['params'][1] = array(
+                    'event_id' => $aParams['event_id']
+                );
+
+                $sJoinClause = "LEFT JOIN `" . $this->_sPrefix . "links2events` AS `tle` ON `tl`.`id`=`tle`.`link_id`";
+                $sWhereClause = " AND `tle`.`event_id`=:event_id";
+                break;
+
+            case 'unused':
+                $aMethod['params'][1] = array(
+                    'profile_id' => $aParams['profile_id']
+                );
+
+                $sJoinClause = "LEFT JOIN `" . $this->_sPrefix . "links2events` AS `tle` ON `tl`.`id`=`tle`.`link_id`";
+                $sWhereClause = " AND `tl`.`profile_id`=:profile_id AND ISNULL(`tle`.`event_id`)";
+                $sOrderClause = "`tl`.`added` DESC";
+                break;
+        }
+
+        $sOrderClause = !empty($sOrderClause) ? "ORDER BY " . $sOrderClause : $sOrderClause;
+        $sLimitClause = !empty($sLimitClause) ? "LIMIT " . $sLimitClause : $sLimitClause;
+
+        $aMethod['params'][0] = "SELECT
+                " . $sSelectClause . "
+            FROM `" . $this->_sPrefix . "links` AS `tl` " . $sJoinClause . "
+            WHERE 1" . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
+
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 
     public function getHot()

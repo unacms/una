@@ -20,31 +20,53 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
 
     protected $_bVisibilityAutoselect;
 
+    protected $_aUploadersInfo;
+
     public function __construct($aInfo, $oTemplate = false)
     {
         $this->MODULE = 'bx_timeline';
 
         parent::__construct($aInfo, $oTemplate);
 
+        $this->_sGhostTemplate = 'uploader_nfw.html';
+
         $this->_bAccountMode = isset($this->aParams['display']) && $this->aParams['display'] == $this->_oModule->_oConfig->getObject('form_display_post_add');
         $this->_bPublicMode = isset($this->aParams['display']) && $this->aParams['display'] == $this->_oModule->_oConfig->getObject('form_display_post_add_public');
         $this->_bProfileMode = isset($this->aParams['display']) && $this->aParams['display'] == $this->_oModule->_oConfig->getObject('form_display_post_add_profile');
 
         $this->_bVisibilityAutoselect = true;
-    }
 
-    public function getCode($bDynamicMode = false)
-    {
-    	$sResult = parent::getCode($bDynamicMode);
-
-    	return $this->_oModule->_oTemplate->parseHtmlByContent($sResult, array(
-            'attachments_menu' => $this->_oModule->getAttachmentsMenuObject()->getCode()
-    	));
+        $this->_aUploadersInfo = array();
     }
 
     function initChecker($aValues = array (), $aSpecificValues = array())
     {
         $CNF = &$this->_oModule->_oConfig->CNF;
+        
+        $iUserId = $this->_oModule->getUserId();
+        $bValueId = $aValues && !empty($aValues['id']);
+        $iValueId = $bValueId ? (int)$aValues['id'] : 0;
+
+        if(isset($this->aInputs[$CNF['FIELD_ATTACHMENTS']])) {
+            $oMenu = $this->_oModule->getAttachmentsMenuObject();
+            $oMenu->setEventById($iValueId);
+            $oMenu->setUploadersInfo($this->_aUploadersInfo);
+
+            $this->aInputs['attachments']['content'] = $oMenu->getCode();
+        }
+
+        if(isset($this->aInputs[$CNF['FIELD_LINK']]))
+            $this->aInputs[$CNF['FIELD_LINK']]['content'] = $this->_oModule->_oTemplate->getAttachLinkField($iUserId, $iValueId);
+
+        if(isset($CNF['FIELD_VIDEO']) && isset($this->aInputs[$CNF['FIELD_VIDEO']])) {
+            $aContentInfo = false;
+            if($bValueId) {
+                $aContentInfo = $this->_oModule->_oDb->getContentInfoById ($iValueId);
+                $this->aInputs[$CNF['FIELD_VIDEO']]['content_id'] = $iValueId;
+            }
+
+            $this->aInputs[$CNF['FIELD_VIDEO']]['ghost_template'] = $this->_oModule->_oTemplate->parseHtmlByName($this->_sGhostTemplate, $this->_getVideoGhostTmplVars($aContentInfo));
+        }
 
         if($this->aParams['display'] == $this->_oModule->_oConfig->getObject('form_display_post_edit') && isset($CNF['FIELD_PUBLISHED']) && isset($this->aInputs[$CNF['FIELD_PUBLISHED']]))
             if(isset($aValues[$CNF['FIELD_STATUS']]) && in_array($aValues[$CNF['FIELD_STATUS']], array(BX_TIMELINE_STATUS_ACTIVE, BX_TIMELINE_STATUS_HIDDEN)))
@@ -135,6 +157,8 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
 
     public function init()
     {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
         $iUserId = $this->_oModule->getUserId();
         $iOwnerId = $this->_oModule->getOwnerId();
 
@@ -153,47 +177,47 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
         foreach($aPrivacyFields as $sField => $sPrivacyObject)
             $this->_initPrivacyField($sField, $sPrivacyObject);
 
-        if(isset($this->aInputs['link']))
-            $this->aInputs['link']['content'] = $this->_oModule->_oTemplate->getAttachLinkField($iUserId);
+        if(isset($this->aInputs[$CNF['FIELD_PHOTO']])) {
+            $sStorage = $this->_oModule->_oConfig->getObject('storage_photos');
+            $sUploadersId = genRndPwd(8, false);
+            $aUploaders = !empty($this->aInputs[$CNF['FIELD_PHOTO']]['value']) ? unserialize($this->aInputs[$CNF['FIELD_PHOTO']]['value']) : $this->_oModule->_oConfig->getUploaders($CNF['FIELD_PHOTO']);
 
-        if(isset($this->aInputs['photo'])) {
-            $aFormNested = array(
-                'params' =>array(
-                    'nested_form_template' => 'uploader_nfw.html'
-                ),
-                'inputs' => array(),
-            );
+            foreach($aUploaders as $sUploader)
+                $this->_aUploadersInfo[$sUploader] = array(
+                    'id' => $sUploadersId, 
+                    'js_object' => BxDolUploader::getObjectInstance($sUploader, $sStorage, $sUploadersId)->getNameJsInstanceUploader()
+                );
 
-            $oFormNested = new BxDolFormNestedGhost('photo', $aFormNested, 'tlb_do_submit', $this->_oModule->_oTemplate);
-
-            $this->aInputs['photo']['storage_object'] = $this->_oModule->_oConfig->getObject('storage_photos');
-            $this->aInputs['photo']['images_transcoder'] = $this->_oModule->_oConfig->getObject('transcoder_photos_preview');
-            $this->aInputs['photo']['uploaders'] = !empty($this->aInputs['photo']['value']) ? unserialize($this->aInputs['photo']['value']) : $this->_oModule->_oConfig->getUploaders('photo');
-            $this->aInputs['photo']['upload_buttons_titles'] = array('Simple' => 'camera');
-            $this->aInputs['photo']['multiple'] = true;
-            $this->aInputs['photo']['ghost_template'] = $oFormNested;
+            $this->aInputs[$CNF['FIELD_PHOTO']]['storage_object'] = $sStorage;
+            $this->aInputs[$CNF['FIELD_PHOTO']]['images_transcoder'] = $this->_oModule->_oConfig->getObject('transcoder_photos_preview');
+            $this->aInputs[$CNF['FIELD_PHOTO']]['uploaders_id'] = $sUploadersId;
+            $this->aInputs[$CNF['FIELD_PHOTO']]['uploaders'] = $aUploaders;
+            $this->aInputs[$CNF['FIELD_PHOTO']]['upload_buttons_titles'] = array('Simple' => 'camera');
+            $this->aInputs[$CNF['FIELD_PHOTO']]['multiple'] = true;
+            $this->aInputs[$CNF['FIELD_PHOTO']]['content_id'] = 0;
+            $this->aInputs[$CNF['FIELD_PHOTO']]['ghost_template'] = '';
         }
 
-        if(isset($this->aInputs['video'])) {
-            $aFormNested = array(
-                'params' =>array(
-                    'nested_form_template' => 'uploader_nfw.html'
-                ),
-                'inputs' => array(),
-            );
+        if(isset($this->aInputs[$CNF['FIELD_VIDEO']])) {
+            $sStorage = $this->_oModule->_oConfig->getObject('storage_videos');
+            $sUploadersId = genRndPwd(8, false);
+            $aUploaders = !empty($this->aInputs[$CNF['FIELD_VIDEO']]['value']) ? unserialize($this->aInputs[$CNF['FIELD_VIDEO']]['value']) : $this->_oModule->_oConfig->getUploaders($CNF['FIELD_VIDEO']);
 
-            $oFormNested = new BxDolFormNestedGhost('video', $aFormNested, 'tlb_do_submit', $this->_oModule->_oTemplate);
+            foreach($aUploaders as $sUploader)
+                $this->_aUploadersInfo[$sUploader] = array(
+                    'id' => $sUploadersId, 
+                    'js_object' => BxDolUploader::getObjectInstance($sUploader, $sStorage, $sUploadersId)->getNameJsInstanceUploader()
+                );
 
-            $this->aInputs['video']['storage_object'] = $this->_oModule->_oConfig->getObject('storage_videos');
-            $this->aInputs['video']['images_transcoder'] = $this->_oModule->_oConfig->getObject('transcoder_videos_poster');
-            $this->aInputs['video']['uploaders'] = !empty($this->aInputs['video']['value']) ? unserialize($this->aInputs['video']['value']) : $this->_oModule->_oConfig->getUploaders('video');
-            $this->aInputs['video']['upload_buttons_titles'] = array('Simple' => 'video');
-            $this->aInputs['video']['multiple'] = true;
-            $this->aInputs['video']['ghost_template'] = $oFormNested;
+            $this->aInputs[$CNF['FIELD_VIDEO']]['storage_object'] = $sStorage;
+            $this->aInputs[$CNF['FIELD_VIDEO']]['images_transcoder'] = $this->_oModule->_oConfig->getObject('transcoder_videos_poster');
+            $this->aInputs[$CNF['FIELD_VIDEO']]['uploaders_id'] = $sUploadersId;
+            $this->aInputs[$CNF['FIELD_VIDEO']]['uploaders'] = $aUploaders;
+            $this->aInputs[$CNF['FIELD_VIDEO']]['upload_buttons_titles'] = array('Simple' => 'video');
+            $this->aInputs[$CNF['FIELD_VIDEO']]['multiple'] = true;
+            $this->aInputs[$CNF['FIELD_VIDEO']]['content_id'] = 0;
+            $this->aInputs[$CNF['FIELD_VIDEO']]['ghost_template'] = '';
         }
-
-        if(isset($this->aInputs['attachments']))
-            $this->aInputs['attachments']['content'] = '__attachments_menu__';
 
         if (isset($this->_oModule->_oConfig->CNF['FIELD_LOCATION_PREFIX']) && isset($this->aInputs[$this->_oModule->_oConfig->CNF['FIELD_LOCATION_PREFIX']]))
             $this->aInputs[$this->_oModule->_oConfig->CNF['FIELD_LOCATION_PREFIX']]['manual_input'] = false;
@@ -315,6 +339,16 @@ class BxTimelineFormPost extends BxBaseModGeneralFormEntry
                 'form' => $this->getId()
             )
         ));
+    }
+
+    protected function _getVideoGhostTmplVars($aContentInfo = array())
+    {
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+
+    	return array (
+            'name' => $this->aInputs[$CNF['FIELD_VIDEO']]['name'],
+            'content_id' => (int)$this->aInputs[$CNF['FIELD_VIDEO']]['content_id'],
+        );
     }
 }
 

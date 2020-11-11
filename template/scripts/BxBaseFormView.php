@@ -1313,7 +1313,8 @@ BLAH;
      */
     function genInputFiles(&$aInput, $sInfo = '', $sError = '')
     {
-        $sUniqId = genRndPwd (8, false);
+        $sUniqId = !empty($aInput['uploaders_id']) ? $aInput['uploaders_id'] : genRndPwd (8, false);
+
         $sUploaders = '';
         $oUploader = null;
         foreach ($aInput['uploaders'] as $sUploaderObject) {

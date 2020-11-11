@@ -1159,6 +1159,8 @@ BxTimelineView.prototype._onGetPost = function(oData)
     this.oView.find(sItem).find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight(this.sSP + '-overflow', function(oElement) {
         $this.onFindOverflow(oElement);
     });
+
+    this.initFlickity();
 };
 
 BxTimelineView.prototype._markPost = function(oLink, iId, iWay, sAction)

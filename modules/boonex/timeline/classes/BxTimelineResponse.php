@@ -203,7 +203,7 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
         if(!isset($CNF['FIELD_STATUS']))
             return;
 
-        $aMedia = $this->_oModule->_oDb->getMediaById(BX_TIMELINE_MEDIA_VIDEO, $iMediaId);
+        $aMedia = $this->_oModule->_oDb->getMediaById($CNF['FIELD_VIDEO'], $iMediaId);
         if(empty($aMedia) || !is_array($aMedia))
             return;
 
@@ -238,7 +238,7 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
             return;
 
         $oTranscoder = BxDolTranscoder::getObjectInstance($CNF['OBJECT_VIDEOS_TRANSCODERS']['mp4']);
-        $aMediasToCheck = $this->_oModule->_oDb->getMedia(BX_TIMELINE_MEDIA_VIDEO, $iContentId);
+        $aMediasToCheck = $this->_oModule->_oDb->getMedia($CNF['FIELD_VIDEO'], $iContentId);
         foreach($aMediasToCheck as $iMediaToCheck)
             if(!$oTranscoder->isFileReady($iMediaToCheck))
                 return;
