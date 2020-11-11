@@ -17,6 +17,7 @@ class BxBaseMenu extends BxDolMenu
 {
     protected $_oTemplate;
     protected $_aOptionalParams = array('target' => '', 'onclick' => '');
+    protected $_bDisplayAddons = false;
 
     public function __construct ($aObject, $oTemplate)
     {
@@ -153,13 +154,15 @@ class BxBaseMenu extends BxDolMenu
 
         $a = $this->_replaceMarkers($a);
 
-        $mixedAddon = $this->_getMenuAddon($a);
-        if(!is_array($mixedAddon))
-            $this->addMarkers(array('addon' => $mixedAddon));
-        else
-            $this->addMarkers($mixedAddon);
+        if ($this->_bDisplayAddons) {
+            $mixedAddon = $this->_getMenuAddon($a);
+            if(!is_array($mixedAddon))
+                $this->addMarkers(array('addon' => $mixedAddon));
+            else
+                $this->addMarkers($mixedAddon);
 
-        $a = $this->_replaceMarkers($a);
+            $a = $this->_replaceMarkers($a);
+        }
 
         list ($sIcon, $sIconUrl, $sIconA) = $this->_getMenuIcon($a);
 
@@ -197,9 +200,9 @@ class BxBaseMenu extends BxDolMenu
             ),
         );
 
-        $aTmplVarsAddon = $this->_getTmplVarsAddon($mixedAddon, $a);
+        $aTmplVarsAddon = $this->_bDisplayAddons ? $this->_getTmplVarsAddon($mixedAddon, $a) : array();
         $a['bx_if:addon'] = array (
-            'condition' => !empty($aTmplVarsAddon['addon']),
+            'condition' => $this->_bDisplayAddons && !empty($aTmplVarsAddon['addon']),
             'content' => $aTmplVarsAddon
         );
 

@@ -30,6 +30,8 @@ BxDolLiveUpdates.prototype.init = function() {
 		this.destroy();
 
     $(document).ready(function() {
+        $this.perform(); // make first call straight away to load addons for menus
+
     	$this._iHandler = setInterval(function() {
     		$this.perform();
     	}, $this._iInterval);
