@@ -156,11 +156,15 @@ class BxBaseMenu extends BxDolMenu
 
         if ($this->_bDisplayAddons) {
             $mixedAddon = $this->_getMenuAddon($a);
-            if(!is_array($mixedAddon))
+            if (!is_array($mixedAddon)) {
                 $this->addMarkers(array('addon' => $mixedAddon));
-            else
-                $this->addMarkers($mixedAddon);
+                $a = $this->_replaceMarkers($a);
+            }
+        }
 
+        $aMarkers = $this->_getMenuMarkers($a);
+        if ($aMarkers && is_array($aMarkers)) {
+            $this->addMarkers($aMarkers);
             $a = $this->_replaceMarkers($a);
         }
 
@@ -200,7 +204,7 @@ class BxBaseMenu extends BxDolMenu
             ),
         );
 
-        $aTmplVarsAddon = $this->_bDisplayAddons ? $this->_getTmplVarsAddon($mixedAddon, $a) : array();
+        $aTmplVarsAddon = $this->_bDisplayAddons ? $this->_getTmplVarsAddon($mixedAddon, $a) : array('addon' => '', 'addonf' => '');
         $a['bx_if:addon'] = array (
             'condition' => $this->_bDisplayAddons && !empty($aTmplVarsAddon['addon']),
             'content' => $aTmplVarsAddon
@@ -244,6 +248,14 @@ class BxBaseMenu extends BxDolMenu
         return BxDolService::callSerialized($aMenuItem['addon'], $this->_aMarkers);
     }
     
+    protected function _getMenuMarkers ($aMenuItem)
+    {
+        if (empty($aMenuItem['markers']))
+            return '';
+
+        return BxDolService::callSerialized($aMenuItem['markers'], $this->_aMarkers);
+    }
+
     protected function _getMenuAttrs ($aMenuItem)
     {
         $sAttrs = '';

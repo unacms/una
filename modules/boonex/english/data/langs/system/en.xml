@@ -2823,6 +2823,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_block_title_homepage_menu"><![CDATA[Content modules menu]]></string>
         <string name="_sys_page_block_title_homepage_splash"><![CDATA[Splash]]></string>
 	<string name="_sys_page_block_title_forgot_password"><![CDATA[Forgot Password]]></string>
+  <string name="_sys_page_block_title_search_keyword_form"><![CDATA[Search Form]]></string>
+  <string name="_sys_page_block_title_search_keyword_result"><![CDATA[Search Result]]></string>
         <string name="_sys_page_block_title_membership_stats"><![CDATA[Membership Limits]]></string>
 	<string name="_sys_page_block_system_title_login"><![CDATA[Log in with Sign up link]]></string>
 	<string name="_sys_page_block_system_title_login_step2"><![CDATA[Log in - step2]]></string>
@@ -2884,6 +2886,8 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_page_title_system_create_account"><![CDATA[Sign up]]></string>
 	<string name="_sys_page_title_system_dashboard"><![CDATA[Dashboard]]></string>
 	<string name="_sys_page_title_system_forgot_password"><![CDATA[Forgot Password]]></string>
+  <string name="_sys_page_title_system_search_keyword"><![CDATA[Search by Keyword]]></string
+  <string name="_sys_page_title_search_keyword"><![CDATA[Search by Keyword]]></string>
 	<string name="_sys_page_title_system_home"><![CDATA[Homepage]]></string>
 	<string name="_sys_page_title_system_login"><![CDATA[Log in]]></string>
 	<string name="_sys_page_title_system_login_step2"><![CDATA[Log in - step 2]]></string>

@@ -2774,6 +2774,8 @@
     <string name="_sys_page_block_title_homepage_menu"><![CDATA[Меню модулей с содержимым]]></string>
     <string name="_sys_page_block_title_homepage_splash"><![CDATA[Заставка]]></string>
 	<string name="_sys_page_block_title_forgot_password"><![CDATA[Забыли пароль]]></string>
+  <string name="_sys_page_block_title_search_keyword_form"><![CDATA[Форма поиска]]></string>
+  <string name="_sys_page_block_title_search_keyword_result"><![CDATA[Результаты поиска]]></string>
         <string name="_sys_page_block_title_membership_stats"><![CDATA[Лимиты членства]]></string>
 	<string name="_sys_page_block_system_title_login"><![CDATA[Вход с линкой регистрации]]></string>
 	<string name="_sys_page_block_system_title_login_step2"><![CDATA[Вход - шаг 2]]></string>
@@ -2835,6 +2837,8 @@
 	<string name="_sys_page_title_system_create_account"><![CDATA[Присоединиться]]></string>
 	<string name="_sys_page_title_system_dashboard"><![CDATA[Панель]]></string>
 	<string name="_sys_page_title_system_forgot_password"><![CDATA[Забыли пароль]]></string>
+  <string name="_sys_page_title_system_search_keyword"><![CDATA[Поиск по ключевым словам]]></string>
+  <string name="_sys_page_title_search_keyword"><![CDATA[Поиск по ключевым словам]]></string
 	<string name="_sys_page_title_system_home"><![CDATA[Домашняя страница]]></string>
 	<string name="_sys_page_title_system_login"><![CDATA[Вход]]></string>
 	<string name="_sys_page_title_system_login_step2"><![CDATA[Вход - шаг2]]></string>
