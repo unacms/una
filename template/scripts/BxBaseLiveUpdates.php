@@ -32,13 +32,18 @@ class BxBaseLiveUpdates extends BxDolLiveUpdates
          * Load and cache(if it's needed) default(system) 
          * live updates for current user.
          */ 
-        //$aCached = $this->_getCachedData();
+        $aCached = $this->_getCachedData();
+
+        /* tmp fix for #3002 */
+        foreach ($aCached as $sName => $a)
+            if (!in_array($sName, $this->_aSystemsTransient))
+                $aCached[$sName] = 0;
 
         $aParams = array_merge(array(
             'sActionsUrl' => BX_DOL_URL_ROOT . 'live_updates.php',
             'sObjName' => $this->_sJsObject,
             'iInterval' => $this->_iInterval,
-            'aSystemsActive' => /*array_intersect_key($aCached, */array_flip($this->_aSystemsActive)/*)*/,
+            'aSystemsActive' => array_intersect_key($aCached, array_flip($this->_aSystemsActive)),
             'aSystemsTransient' => array_flip($this->_aSystemsTransient),
             'bServerRequesting' => !empty($this->_aSystems),
             'sHash' => base64_encode($this->_sCacheKey),
