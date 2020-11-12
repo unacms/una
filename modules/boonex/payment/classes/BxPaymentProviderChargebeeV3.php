@@ -222,13 +222,39 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
         return '';
     }
 
+    public function getButtonSingleJs($iClientId, $iVendorId, $aParams = array())
+    {
+        return array();
+    }
+
     public function getButtonRecurring($iClientId, $iVendorId, $aParams = array())
     {
         return $this->_getButton(BX_PAYMENT_TYPE_RECURRING, $iClientId, $iVendorId, $aParams);
     }
 
+    public function getButtonRecurringJs($iClientId, $iVendorId, $aParams = array())
+    {
+        return $this->_getButtonJs(BX_PAYMENT_TYPE_RECURRING, $iClientId, $iVendorId, $aParams);
+    }
+
     protected function _getButton($sType, $iClientId, $iVendorId, $aParams = array())
     {
+        list($sJsCode, $sJsMethod) = $this->_getButtonJs($sType, $iClientId, $iVendorId, $aParams);        
+
+        return $this->_oModule->_oTemplate->parseHtmlByName('cbee_v3_button_' . $sType . '.html', array(
+            'type' => $sType,
+            'link' => 'javascript:void(0)',
+            'caption' => _t($this->_sLangsPrefix . 'cbee_txt_checkout_with_' . $sType, $this->_sCaption),
+            'onclick' => $sJsMethod,
+            'js_object' => $this->_oModule->_oConfig->getJsObject($this->_sName),
+            'js_code' => $sJsCode
+        ));
+    }
+    
+    protected function _getButtonJs($sType, $iClientId, $iVendorId, $aParams = array())
+    {
+        $sJsObject = $this->_oModule->_oConfig->getJsObject($this->_sName);
+
         $sSite = '';
         bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_button', 0, $iClientId, array(
             'type' => &$sType, 
@@ -236,17 +262,24 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
             'params' => &$aParams
         ));
 
-        return $this->_oModule->_oTemplate->parseHtmlByName('cbee_v3_button_' . $sType . '.html', array(
-            'type' => $sType,
-            'link' => 'javascript:void(0)',
-            'caption' => _t($this->_sLangsPrefix . 'cbee_txt_checkout_with_' . $sType, $this->_sCaption),
-            'js_object' => $this->_oModule->_oConfig->getJsObject($this->_sName),
-            'js_code' => $this->_oModule->_oTemplate->getJsCode($this->_sName, array_merge(array(
-                'sProvider' => $this->_sName,
-                'sSite' => !empty($sSite) ? $sSite : $this->_getSite(),
-                'iClientId' => $iClientId
-            ), $aParams))
-        ));
+        $sJsMethod = '';
+        switch($sType) {
+            case BX_PAYMENT_TYPE_SINGLE:
+                /**
+                 * Single time payments aren't available with Chargebee.
+                 */
+                break;
+
+            case BX_PAYMENT_TYPE_RECURRING:
+                $sJsMethod = $sJsObject . '.subscribe(this)';
+                break;
+        }
+
+        return array($this->_oModule->_oTemplate->getJsCode($this->_sName, array_merge(array(
+            'sProvider' => $this->_sName,
+            'sSite' => !empty($sSite) ? $sSite : $this->_getSite(),
+            'iClientId' => $iClientId
+        ), $aParams)), $sJsMethod);
     }
 
     public function getMenuItemsActionsRecurring($iClientId, $iVendorId, $aParams = array())

@@ -111,11 +111,44 @@ class BxBaseModPaymentSubscriptions extends BxDol
      */
     public function serviceGetSubscribeJs($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1, $sRedirect = '', $aCustom = array())
     {
-		$iModuleId = $this->_oModule->_oConfig->getModuleId($mixedModuleId);
+        $iModuleId = $this->_oModule->_oConfig->getModuleId($mixedModuleId);
         if(empty($iModuleId))
             return '';
 
         return $this->_oModule->_oTemplate->displaySubscribeJs($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect, $aCustom);
+    }
+    
+    /**
+     * @page service Service Calls
+     * @section bx_base_payment Base Payment
+     * @subsection bx_base_payment-integration Integration
+     * @subsubsection bx_base_payment-get_subscribe_js get_subscribe_js
+     * 
+     * @code bx_srv('bx_payment', 'get_subscribe_js', [...], 'Subscriptions'); @endcode
+     * 
+     * Get JavaScript code to use in OnClick attributes of HTML elements.
+     *
+     * @param $iVendor integer value with vendor ID.
+     * @param $sVendorProvider string value with a name of payment provider to be used for processing.
+     * @param $mixedModuleId mixed value (ID, Name or URI) determining a module from which the action was initiated.
+     * @param $iItemId integer value with item ID.
+     * @param $iItemCount (optional) integer value with a number of items for purchasing. It's equal to 1 in case of subscription.
+     * @param $sItemAddons (optional) string with attached addons.
+     * @param $sRedirect (optional) string value with redirect URL, if it's needed.
+     * @return string with JavaScript code.
+     * 
+     * @see BxBaseModPaymentSubscriptions::serviceGetSubscribeJs
+     */
+    /** 
+     * @ref bx_base_payment-get_subscribe_js "get_subscribe_js"
+     */
+    public function serviceGetSubscribeJsWithAddons($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1, $sItemAddons = '', $sRedirect = '', $aCustom = array())
+    {
+        $iModuleId = $this->_oModule->_oConfig->getModuleId($mixedModuleId);
+        if(empty($iModuleId))
+            return '';
+
+        return $this->_oModule->_oTemplate->displaySubscribeJsWithAddons($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount, $sItemAddons, $sRedirect, $aCustom);
     }
 
     /**

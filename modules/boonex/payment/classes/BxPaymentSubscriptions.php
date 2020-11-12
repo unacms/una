@@ -194,7 +194,7 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
      */
     public function serviceSubscribe($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect = '', $aCustom = array())
     {
-        return $this->serviceSubscribeWithAddons($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount, array(), $sRedirect, $aCustom);
+        return $this->serviceSubscribeWithAddons($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount, '', $sRedirect, $aCustom);
     }
     
     /**
@@ -212,7 +212,7 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
      * @param $iModuleId integer value with module ID.
      * @param $iItemId integer value with item ID.
      * @param $iItemCount integer value with a number of items for purchasing. It's equal to 1 in case of subscription.
-     * @param $aItemAddons (optional) array with attached addons.
+     * @param $sItemAddons (optional) string with attached addons.
      * @param $sRedirect (optional) string value with redirect URL, if it's needed. 
      * @return an array with special format which describes the result of operation.
      * 

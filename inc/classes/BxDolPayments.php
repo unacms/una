@@ -66,7 +66,7 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_details_url', 'Details'))
             return '';
 
-    	return BxDolService::call($this->_sActive, 'get_details_url', array(), 'Details');
+    	return bx_srv($this->_sActive, 'get_details_url', array(), 'Details');
     }
 
     public function isAcceptingPayments($iVendorId, $sPaymentType = '')
@@ -75,7 +75,7 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
     		return false;
 
     	$aSrvParams = array($iVendorId, $sPaymentType);
-        return BxDolService::call($this->_sActive, 'is_accepting_payments', $aSrvParams);
+        return bx_srv($this->_sActive, 'is_accepting_payments', $aSrvParams);
     }
 
     /**
@@ -104,7 +104,7 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
             return false;
 
         $aSrvParams = array($iVendorId, $sVendorProvider, $sPaymentType);
-        return BxDolService::call($this->_sActive, 'is_provider_options', $aSrvParams);
+        return bx_srv($this->_sActive, 'is_provider_options', $aSrvParams);
     }
 
     public function getProvider($sProvider, $mixedVendorId = BX_PAYMENT_EMPTY_ID)
@@ -113,7 +113,7 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
             return false;
 
         $aSrvParams = array($sProvider, $mixedVendorId);
-        return BxDolService::call($this->_sActive, 'get_provider', $aSrvParams);
+        return bx_srv($this->_sActive, 'get_provider', $aSrvParams);
     }
 
     public function getProviderOptions($iVendorId, $sVendorProvider, $sPaymentType = '')
@@ -122,7 +122,7 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
             return false;
 
         $aSrvParams = array($iVendorId, $sVendorProvider, $sPaymentType);
-        return BxDolService::call($this->_sActive, 'get_provider_options', $aSrvParams);
+        return bx_srv($this->_sActive, 'get_provider_options', $aSrvParams);
     }
 
     public function getPayments()
@@ -143,9 +143,9 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
     public function updateDependentModules($sModule = 'all', $bInstall = true)
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'update_dependent_modules'))
-    		return;
+            return;
 
-		BxDolService::call($this->_sActive, 'update_dependent_modules', array($sModule, $bInstall));
+        bx_srv($this->_sActive, 'update_dependent_modules', array($sModule, $bInstall));
     }
 
     public function getProvidersCart($iVendorId)
@@ -154,15 +154,15 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
     		return array();
 
     	$aSrvParams = array($iVendorId);
-        return BxDolService::call($this->_sActive, 'get_providers_cart', $aSrvParams);
+        return bx_srv($this->_sActive, 'get_providers_cart', $aSrvParams);
     }
 
-	public function getOption($sOption)
+    public function getOption($sOption)
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_option'))
-    		return '';
+            return '';
 
-    	return BxDolService::call($this->_sActive, 'get_option', array($sOption));
+    	return bx_srv($this->_sActive, 'get_option', array($sOption));
     }
 
     public function getOrdersUrl()
@@ -170,7 +170,7 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_orders_url', 'Orders'))
             return '';
 
-    	return BxDolService::call($this->_sActive, 'get_orders_url', array(), 'Orders');
+    	return bx_srv($this->_sActive, 'get_orders_url', array(), 'Orders');
     }
 
     public function getOrdersCount($sType)
@@ -179,7 +179,7 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
             return array();
 
         $aSrvParams = array($sType);
-        return BxDolService::call($this->_sActive, 'get_orders_count', $aSrvParams, 'Orders');
+        return bx_srv($this->_sActive, 'get_orders_count', $aSrvParams, 'Orders');
     }
 
     public function getOrdersInfo($aConditions)
@@ -188,7 +188,7 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
             return array();
 
         $aSrvParams = array($aConditions);
-        return BxDolService::call($this->_sActive, 'get_orders_info', $aSrvParams, 'Orders');
+        return bx_srv($this->_sActive, 'get_orders_info', $aSrvParams, 'Orders');
     }
 
     public function getPendingOrdersInfo($aConditions)
@@ -197,7 +197,7 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
             return array();
 
         $aSrvParams = array($aConditions);
-        return BxDolService::call($this->_sActive, 'get_pending_orders_info', $aSrvParams, 'Orders');
+        return bx_srv($this->_sActive, 'get_pending_orders_info', $aSrvParams, 'Orders');
     }
 
     public function getSubscriptionOrdersInfo($aConditions)
@@ -206,7 +206,7 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
             return array();
 
         $aSrvParams = array($aConditions);
-        return BxDolService::call($this->_sActive, 'get_subscription_orders_info', $aSrvParams, 'Subscriptions');
+        return bx_srv($this->_sActive, 'get_subscription_orders_info', $aSrvParams, 'Subscriptions');
     }
 
     public function getSubscriptionsInfo($aConditions, $bCheckInProvider = false)
@@ -215,7 +215,7 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
             return array();
 
         $aSrvParams = array($aConditions, $bCheckInProvider);
-        return BxDolService::call($this->_sActive, 'get_subscriptions_info', $aSrvParams, 'Subscriptions');
+        return bx_srv($this->_sActive, 'get_subscriptions_info', $aSrvParams, 'Subscriptions');
     }
 
     public function getCartUrl($iVendor = 0)
@@ -223,34 +223,34 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_cart_url', 'Cart'))
     		return '';
 
-    	return BxDolService::call($this->_sActive, 'get_cart_url', array($iVendor), 'Cart');
+    	return bx_srv($this->_sActive, 'get_cart_url', array($iVendor), 'Cart');
     }
 
     public function getCartItemsCount()
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_cart_items_count', 'Cart'))
-    		return 0;
+            return 0;
 
-		$aSrvParams = array();
-		return BxDolService::call($this->_sActive, 'get_cart_items_count', $aSrvParams, 'Cart');
+        $aSrvParams = array();
+        return bx_srv($this->_sActive, 'get_cart_items_count', $aSrvParams, 'Cart');
     }
     
     public function getCartItems($iVendorId, $iModuleId)
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_cart_items', 'Cart'))
-    		return 0;
+            return 0;
 
-		$aSrvParams = array($iVendorId, $iModuleId);
-		return BxDolService::call($this->_sActive, 'get_cart_items', $aSrvParams, 'Cart');
+        $aSrvParams = array($iVendorId, $iModuleId);
+        return bx_srv($this->_sActive, 'get_cart_items', $aSrvParams, 'Cart');
     }
 
     public function getCartItemDescriptor($iVendorId, $iModuleId, $iItemId, $iItemCount)
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_cart_item_descriptor', 'Cart'))
-    		return '';
+            return '';
 
     	$aSrvParams = array($iVendorId, $iModuleId, $iItemId, $iItemCount);
-		return BxDolService::call($this->_sActive, 'get_cart_item_descriptor', $aSrvParams, 'Cart');
+        return bx_srv($this->_sActive, 'get_cart_item_descriptor', $aSrvParams, 'Cart');
     }
 
     /**
@@ -259,10 +259,10 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
     public function getCartJs($sType = '', $iVendorId = 0)
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_cart_js', 'Cart'))
-			return '';
+            return '';
 
-		$aSrvParams = array($sType, $iVendorId);
-		return BxDolService::call($this->_sActive, 'get_cart_js', $aSrvParams, 'Cart');
+        $aSrvParams = array($sType, $iVendorId);
+        return bx_srv($this->_sActive, 'get_cart_js', $aSrvParams, 'Cart');
     }
 
     /**
@@ -271,10 +271,10 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
 	public function addToCart($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $aCustom = array())
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'add_to_cart', 'Cart'))
-			return array();
+            return array();
 
-		$aSrvParams = array($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $aCustom);
-		return BxDolService::call($this->_sActive, 'add_to_cart', $aSrvParams, 'Cart');
+        $aSrvParams = array($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $aCustom);
+        return bx_srv($this->_sActive, 'add_to_cart', $aSrvParams, 'Cart');
     }
 
     /**
@@ -283,10 +283,10 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
     public function getAddToCartJs($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect = false, $aCustom = array())
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_add_to_cart_js', 'Cart'))
-			return array();
+            return array();
 
-		$aSrvParams = array($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect, $aCustom);
-		return BxDolService::call($this->_sActive, 'get_add_to_cart_js', $aSrvParams, 'Cart');
+        $aSrvParams = array($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect, $aCustom);
+        return bx_srv($this->_sActive, 'get_add_to_cart_js', $aSrvParams, 'Cart');
     }
 
     /**
@@ -294,39 +294,51 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
      */
     public function getAddToCartLink($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect = false, $aCustom = array())
     {
-		if(!BxDolRequest::serviceExists($this->_sActive, 'get_add_to_cart_link', 'Cart'))
-			return '';
+        if(!BxDolRequest::serviceExists($this->_sActive, 'get_add_to_cart_link', 'Cart'))
+            return '';
 
-		$aSrvParams = array($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect, $aCustom);
-		return BxDolService::call($this->_sActive, 'get_add_to_cart_link', $aSrvParams, 'Cart');
+        $aSrvParams = array($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect, $aCustom);
+        return bx_srv($this->_sActive, 'get_add_to_cart_link', $aSrvParams, 'Cart');
     }
 
     public function getSubscriptionsUrl()
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_subscriptions_url', 'Subscriptions'))
-    		return '';
+            return '';
 
-    	return BxDolService::call($this->_sActive, 'get_subscriptions_url', array(), 'Subscriptions');
+    	return bx_srv($this->_sActive, 'get_subscriptions_url', array(), 'Subscriptions');
     }
 
-	public function getSubscribeUrl($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1)
+    public function getSubscribeUrl($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1)
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_subscribe_url', 'Subscriptions'))
-    		return '';
+            return '';
 
-    	return BxDolService::call($this->_sActive, 'get_subscribe_url', array($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount), 'Subscriptions');
+    	return bx_srv($this->_sActive, 'get_subscribe_url', array($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount), 'Subscriptions');
     }
 
-	/**
+    /**
      * Returns "Subscribe" JavaScript code to use in onclick attribute.
      */
     public function getSubscribeJs($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1, $sRedirect = '', $aCustom = array())
     {
     	if(!BxDolRequest::serviceExists($this->_sActive, 'get_subscribe_js', 'Subscriptions'))
-			return array();
+            return array();
 
-		$aSrvParams = array($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount, $sRedirect, $aCustom);
-		return BxDolService::call($this->_sActive, 'get_subscribe_js', $aSrvParams, 'Subscriptions');
+        $aSrvParams = array($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount, $sRedirect, $aCustom);
+        return bx_srv($this->_sActive, 'get_subscribe_js', $aSrvParams, 'Subscriptions');
+    }
+
+    /**
+     * Returns "Subscribe" JavaScript code to use in onclick attribute.
+     */
+    public function getSubscribeJsWithAddons($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1, $sItemAddons = '', $sRedirect = '', $aCustom = array())
+    {
+    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_subscribe_js_with_addons', 'Subscriptions'))
+            return array();
+
+        $aSrvParams = array($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount, $sItemAddons, $sRedirect, $aCustom);
+        return bx_srv($this->_sActive, 'get_subscribe_js_with_addons', $aSrvParams, 'Subscriptions');
     }
 
     /**
@@ -338,7 +350,7 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
             return '';
 
         $aSrvParams = array($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount, $sRedirect, $aCustom);
-        return BxDolService::call($this->_sActive, 'get_subscribe_link', $aSrvParams, 'Subscriptions');
+        return bx_srv($this->_sActive, 'get_subscribe_link', $aSrvParams, 'Subscriptions');
     }
 
     public function sendSubscriptionExpirationLetters($iPendingId, $sOrderId)
@@ -347,7 +359,7 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
             return '';
 
         $aSrvParams = array($iPendingId, $sOrderId);
-        return BxDolService::call($this->_sActive, 'send_subscription_expiration_letters', $aSrvParams, 'Subscriptions');
+        return bx_srv($this->_sActive, 'send_subscription_expiration_letters', $aSrvParams, 'Subscriptions');
     }
 
     public function initializeCheckout($iVendorId, $sProvider, $aItems = array())
@@ -356,7 +368,7 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
             return '';
 
         $aSrvParams = array($iVendorId, $sProvider, $aItems);
-        return BxDolService::call($this->_sActive, 'initialize_checkout', $aSrvParams);
+        return bx_srv($this->_sActive, 'initialize_checkout', $aSrvParams);
     }
 
     /**
@@ -368,7 +380,7 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
             return '';
 
         $aSrvParams = array($sOrderId);
-        return BxDolService::call($this->_sActive, 'prolong_subscription', $aSrvParams);
+        return bx_srv($this->_sActive, 'prolong_subscription', $aSrvParams);
     }
 
     public function generateLicense()
@@ -377,7 +389,7 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
             return '';
 
         $aSrvParams = array();
-        return BxDolService::call($this->_sActive, 'generate_license', $aSrvParams, 'Module', true);
+        return bx_srv($this->_sActive, 'generate_license', $aSrvParams, 'Module', true);
     }
 }
 

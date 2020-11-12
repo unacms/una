@@ -398,8 +398,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
      */
     public function actionDeleteFromCart($iSellerId, $iModuleId, $iItemId)
     {
-        $aResult = $this->getObjectCart()->serviceDeleteFromCart($iSellerId, $iModuleId, $iItemId);
-        echoJson($aResult);
+        echoJson($this->getObjectCart()->serviceDeleteFromCart($iSellerId, $iModuleId, $iItemId));
     }
 
     /**
@@ -407,11 +406,10 @@ class BxPaymentModule extends BxBaseModPaymentModule
      */
     public function actionEmptyCart($iSellerId)
     {
-        $aResult = $this->getObjectCart()->serviceDeleteFromCart($iSellerId);
-		echoJson($aResult);
+        echoJson($this->getObjectCart()->serviceDeleteFromCart($iSellerId));
     }
 
-	public function actionSubscribe()
+    public function actionSubscribe()
     {
     	$iSellerId = bx_process_input(bx_get('seller_id'), BX_DATA_INT);
     	$sSellerProvider = bx_process_input(bx_get('seller_provider'));
@@ -482,32 +480,27 @@ class BxPaymentModule extends BxBaseModPaymentModule
                 $aCustom = array();
         }
 
-        $aResult = $this->getObjectSubscriptions()->serviceSubscribeWithAddons($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount, $sItemAddons, $sRedirect, $aCustom);
-        echoJson($aResult);
+        echoJson($this->getObjectSubscriptions()->serviceSubscribeWithAddons($iSellerId, $sSellerProvider, $iModuleId, $iItemId, $iItemCount, $sItemAddons, $sRedirect, $aCustom));
     }
 
     public function actionSubscriptionGetDetails($iId)
     {
-        $aResult = $this->_oTemplate->displaySubscriptionGetDetails($iId);
-		echoJson($aResult);
+        echoJson($this->_oTemplate->displaySubscriptionGetDetails($iId));
     }
 
     public function actionSubscriptionChangeDetails($iId)
     {
-        $aResult = $this->_oTemplate->displaySubscriptionChangeDetails($iId);
-		echoJson($aResult);
+        echoJson($this->_oTemplate->displaySubscriptionChangeDetails($iId));
     }
 
     public function actionSubscriptionGetBilling($iId)
     {
-        $aResult = $this->_oTemplate->displaySubscriptionGetBilling($iId);
-		echoJson($aResult);
+        echoJson($this->_oTemplate->displaySubscriptionGetBilling($iId));
     }
 
     public function actionSubscriptionChangeBilling($iId)
     {
-        $aResult = $this->_oTemplate->displaySubscriptionChangeBilling($iId);
-		echoJson($aResult);
+        echoJson($this->_oTemplate->displaySubscriptionChangeBilling($iId));
     }
 
     public function actionSubscriptionCancelation($iId)
@@ -581,7 +574,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
     /**
      * Payment Processing Methods
      */
-	public function actionInitializeCheckout($sType)
+    public function actionInitializeCheckout($sType)
     {
     	if(!$this->isLogged())
             return $this->_oTemplate->displayPageCodeError($this->_sLangsPrefix . 'err_required_login');
@@ -1002,106 +995,106 @@ class BxPaymentModule extends BxBaseModPaymentModule
         return $bResult;
     }
 
-	public function registerSubscription($aPending, $aParams = array())
-	{
-		if($this->_oDb->isSubscriptionByPending($aPending['id']))
-			return false;
+    public function registerSubscription($aPending, $aParams = array())
+    {
+            if($this->_oDb->isSubscriptionByPending($aPending['id']))
+                    return false;
 
-		$aSubscription = array(
-	        'pending_id' => $aPending['id'],
-	        'customer_id' => $aParams['customer_id'],
-	        'subscription_id' => $aParams['subscription_id']
-	    );
-	    if(!$this->_oDb->insertSubscription($aSubscription))
-	    	return false;
+            $aSubscription = array(
+            'pending_id' => $aPending['id'],
+            'customer_id' => $aParams['customer_id'],
+            'subscription_id' => $aParams['subscription_id']
+        );
+        if(!$this->_oDb->insertSubscription($aSubscription))
+            return false;
 
-	    $this->onSubscriptionCreate($aPending);
+        $this->onSubscriptionCreate($aPending);
 
-	    return true;
-	}
+        return true;
+    }
 
-	public function updateSubscription($aPending, $aParams = array())
-	{
-	    $this->_oDb->updateSubscription($aParams, array(
-	        'pending_id' => $aPending['id']
-	    ));
+    public function updateSubscription($aPending, $aParams = array())
+    {
+        $this->_oDb->updateSubscription($aParams, array(
+            'pending_id' => $aPending['id']
+        ));
 
-	    $this->onSubscriptionUpdate($aPending);
+        $this->onSubscriptionUpdate($aPending);
 
-            return true;
-	}
+        return true;
+    }
 
-	public function cancelSubscription($mixedPending)
-	{
-            $aPending = is_array($mixedPending) ? $mixedPending : $this->_oDb->getOrderPending(array('type' => 'id', 'id' => (int)$mixedPending));
-            if(empty($aPending) || !is_array($aPending) || $aPending['type'] != BX_PAYMENT_TYPE_RECURRING)
-    		return false;
+    public function cancelSubscription($mixedPending)
+    {
+        $aPending = is_array($mixedPending) ? $mixedPending : $this->_oDb->getOrderPending(array('type' => 'id', 'id' => (int)$mixedPending));
+        if(empty($aPending) || !is_array($aPending) || $aPending['type'] != BX_PAYMENT_TYPE_RECURRING)
+            return false;
 
-            $aItems = $this->_oConfig->descriptorsM2A($aPending['items']);
-            foreach($aItems as $aItem)
-                $this->callCancelSubscriptionItem((int)$aItem['module_id'], array($aPending['client_id'], $aPending['seller_id'], $aItem['item_id'], $aItem['item_count'], $aPending['order']));
+        $aItems = $this->_oConfig->descriptorsM2A($aPending['items']);
+        foreach($aItems as $aItem)
+            $this->callCancelSubscriptionItem((int)$aItem['module_id'], array($aPending['client_id'], $aPending['seller_id'], $aItem['item_id'], $aItem['item_count'], $aPending['order']));
 
-            $aSubscription = $this->_oDb->getSubscription(array('type' => 'pending_id', 'pending_id' => $aPending['id']));
-            if(!empty($aSubscription) && is_array($aSubscription) && !$this->_oDb->deleteSubscription($aSubscription['id'], 'cancel'))
-                return false;
+        $aSubscription = $this->_oDb->getSubscription(array('type' => 'pending_id', 'pending_id' => $aPending['id']));
+        if(!empty($aSubscription) && is_array($aSubscription) && !$this->_oDb->deleteSubscription($aSubscription['id'], 'cancel'))
+            return false;
 
-            $this->onSubscriptionCancel($aPending);
+        $this->onSubscriptionCancel($aPending);
 
-            return true;
-	}
+        return true;
+    }
 
-	public function onPaymentRegisterBefore($aPending, $aResult = array())
-	{
-            //--- 'System' -> 'Before Register Payment' for Alerts Engine ---//
-            bx_alert('system', 'before_register_payment', 0, $aPending['client_id'], array('pending' => $aPending));
-            //--- 'System' -> 'Before Register Payment' for Alerts Engine ---//
-	}
+    public function onPaymentRegisterBefore($aPending, $aResult = array())
+    {
+        //--- 'System' -> 'Before Register Payment' for Alerts Engine ---//
+        bx_alert('system', 'before_register_payment', 0, $aPending['client_id'], array('pending' => $aPending));
+        //--- 'System' -> 'Before Register Payment' for Alerts Engine ---//
+    }
 
-	public function onPaymentRegister($aPending, $aResult = array())
-	{
-	    $bTypeSingle = $aPending['type'] == BX_PAYMENT_TYPE_SINGLE;
+    public function onPaymentRegister($aPending, $aResult = array())
+    {
+        $bTypeSingle = $aPending['type'] == BX_PAYMENT_TYPE_SINGLE;
 
-	    if($bTypeSingle) {
-    	    $aItems = $this->_oConfig->descriptorsM2A($aPending['items']);
-            foreach($aItems as $aItem)
-                $this->isAllowedPurchase(array('module_id' => $aItem['module_id'], 'item_id' => $aItem['item_id']), true);
-	    }
+        if($bTypeSingle) {
+        $aItems = $this->_oConfig->descriptorsM2A($aPending['items']);
+        foreach($aItems as $aItem)
+            $this->isAllowedPurchase(array('module_id' => $aItem['module_id'], 'item_id' => $aItem['item_id']), true);
+        }
 
-            //--- 'System' -> 'Register Payment' for Alerts Engine ---//
-            bx_alert('system', 'register_payment', 0, $aPending['client_id'], array('pending' => $aPending));
-            //--- 'System' -> 'Register Payment' for Alerts Engine ---//
-	}
+        //--- 'System' -> 'Register Payment' for Alerts Engine ---//
+        bx_alert('system', 'register_payment', 0, $aPending['client_id'], array('pending' => $aPending));
+        //--- 'System' -> 'Register Payment' for Alerts Engine ---//
+    }
 
-	public function onPaymentRefund($aPending, $aResult = array())
-	{
-            //--- 'System' -> 'Refund Payment' for Alerts Engine ---//
-            bx_alert('system', 'refund_payment', 0, $aPending['client_id'], array('pending' => $aPending));
-            //--- 'System' -> 'Refund Payment' for Alerts Engine ---//
-	}
+    public function onPaymentRefund($aPending, $aResult = array())
+    {
+        //--- 'System' -> 'Refund Payment' for Alerts Engine ---//
+        bx_alert('system', 'refund_payment', 0, $aPending['client_id'], array('pending' => $aPending));
+        //--- 'System' -> 'Refund Payment' for Alerts Engine ---//
+    }
 
-	public function onSubscriptionCreate($aPending, $aResult = array())
-	{
-	    $aItems = $this->_oConfig->descriptorsM2A($aPending['items']);
-	    $this->isAllowedPurchase(array('module_id' => $aItems[0]['module_id'], 'item_id' => $aItems[0]['item_id']), true);
+    public function onSubscriptionCreate($aPending, $aResult = array())
+    {
+        $aItems = $this->_oConfig->descriptorsM2A($aPending['items']);
+        $this->isAllowedPurchase(array('module_id' => $aItems[0]['module_id'], 'item_id' => $aItems[0]['item_id']), true);
 
-            //--- 'System' -> 'Create Subscription' for Alerts Engine ---//
-            bx_alert('system', 'create_subscription', 0, $aPending['client_id'], array('pending' => $aPending));
-            //--- 'System' -> 'Create Subscription' for Alerts Engine ---//
-	}
+        //--- 'System' -> 'Create Subscription' for Alerts Engine ---//
+        bx_alert('system', 'create_subscription', 0, $aPending['client_id'], array('pending' => $aPending));
+        //--- 'System' -> 'Create Subscription' for Alerts Engine ---//
+    }
 
-	public function onSubscriptionUpdate($aPending, $aResult = array())
-	{
-            //--- 'System' -> 'Update Subscription' for Alerts Engine ---//
-            bx_alert('system', 'update_subscription', 0, $aPending['client_id'], array('pending' => $aPending));
-            //--- 'System' -> 'Update Subscription' for Alerts Engine ---//
-	}
-	
-	public function onSubscriptionCancel($aPending, $aResult = array())
-	{
-            //--- 'System' -> 'Cancel Subscription' for Alerts Engine ---//
-            bx_alert('system', 'cancel_subscription', 0, $aPending['client_id'], array('pending' => $aPending));
-            //--- 'System' -> 'Cancel Subscription' for Alerts Engine ---//
-	}
+    public function onSubscriptionUpdate($aPending, $aResult = array())
+    {
+        //--- 'System' -> 'Update Subscription' for Alerts Engine ---//
+        bx_alert('system', 'update_subscription', 0, $aPending['client_id'], array('pending' => $aPending));
+        //--- 'System' -> 'Update Subscription' for Alerts Engine ---//
+    }
+
+    public function onSubscriptionCancel($aPending, $aResult = array())
+    {
+        //--- 'System' -> 'Cancel Subscription' for Alerts Engine ---//
+        bx_alert('system', 'cancel_subscription', 0, $aPending['client_id'], array('pending' => $aPending));
+        //--- 'System' -> 'Cancel Subscription' for Alerts Engine ---//
+    }
 
     public function setSiteSubmenu($sSubmenu, $sSelModule, $sSelName)
     {
@@ -1116,6 +1109,50 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
         $oSiteSubmenu->setObjectSubmenu($sModuleSubmenu);
         $oModuleSubmenu->setSelected($sSelModule, $sSelName);
+    }
+
+    public function getProviderButtonJs($aCartItem, $aProvider, $sRedirect = '', $aCustom = array())
+    {
+        $aButtonJs = array();
+        $iClientId = $this->getProfileId();
+
+        $sItemAddons = '';
+        if(count($aCartItem) == 5)
+            $sItemAddons = array_pop($aCartItem);
+
+        list($iSellerId, $iModuleId, $iItemId, $iItemCount) = $aCartItem;
+
+        $oProvider = $this->getObjectProvider($aProvider['name'], $iSellerId);
+        if($oProvider !== false && method_exists($oProvider, 'getButtonRecurring')) {
+            $aParams = array(
+                'sObjNameCart' => $this->_oConfig->getJsObject('cart'),
+                'iSellerId' => $iSellerId,
+                'iModuleId' => $iModuleId,
+                'iItemId' => $iItemId,
+                'iItemCount' => $iItemCount,
+                'sItemAddons' => $sItemAddons,
+                'sRedirect' => $sRedirect,
+                'sCustom' => base64_encode(serialize($aCustom))
+            );
+
+            $aCartInfo = $this->getObjectCart()->getInfo(BX_PAYMENT_TYPE_RECURRING, $iClientId, $iSellerId, $this->_oConfig->descriptorA2S($aCartItem));
+            if(!empty($aCartInfo['items_price']) && !empty($aCartInfo['items']) && is_array($aCartInfo['items'])) {
+                $aItem = array_shift($aCartInfo['items']);
+
+                $aParams = array_merge($aParams, array(
+                    'iAmount' => (int)round(100 * (float)$aCartInfo['items_price']),
+                    'sItemName' => $aItem['name'],
+                    'sItemTitle' => $aItem['title']
+                ));
+            }
+
+            $aButtonJs = $oProvider->getButtonRecurringJs($iClientId, $iSellerId, $aParams);
+        }
+
+        if(empty($aButtonJs) || !is_array($aButtonJs))
+            $aButtonJs = $this->getObjectSubscriptions()->serviceGetSubscribeJs($iSellerId, $aProvider['name'], $iModuleId, $iItemId, $iItemCount, $sRedirect, $aCustom);
+
+        return $aButtonJs;
     }
 }
 
