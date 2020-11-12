@@ -14,10 +14,19 @@
  */
 class BxMarketMenuView extends BxBaseModTextMenuView
 {
+    /**
+     * Array with check_sum => JS_code pairs of all JS codes 
+     * which should be added to the page.
+     */
+    protected $_aJsCodes;
+
     public function __construct($aObject, $oTemplate = false)
     {
         $this->MODULE = 'bx_market';
+
         parent::__construct($aObject, $oTemplate);
+
+        $this->_aJsCodes = array();
 
         $this->addMarkers(array(
             'js_object' => $this->_oModule->_oConfig->getJsObject('entry')
@@ -26,7 +35,15 @@ class BxMarketMenuView extends BxBaseModTextMenuView
 
     public function getCode ()
     {
-    	return parent::getCode() . BxDolPayments::getInstance()->getCartJs();
+    	return parent::getCode() . $this->getJsCode();
+    }
+
+    public function getJsCode()
+    {
+        if(empty($this->_aJsCodes) || !is_array($this->_aJsCodes))
+            return '';
+
+        return implode('', $this->_aJsCodes);
     }
 
     protected function _isVisible ($a)
@@ -59,6 +76,11 @@ class BxMarketMenuView extends BxBaseModTextMenuView
                     break;
 
                 list($sJsCode, $sJsMethod) = $aJs;
+
+                $sJsCodeCheckSum = md5($sJsCode);
+                if(!isset($this->_aJsCodes[$sJsCodeCheckSum]))
+                    $this->_aJsCodes[$sJsCodeCheckSum] = $sJsCode;
+
                 $aCurrency = $this->_oModule->_oConfig->getCurrency();
 
                 $bResult = true;
@@ -87,6 +109,11 @@ class BxMarketMenuView extends BxBaseModTextMenuView
                     break;
 
                 list($sJsCode, $sJsMethod) = $aJs;
+
+                $sJsCodeCheckSum = md5($sJsCode);
+                if(!isset($this->_aJsCodes[$sJsCodeCheckSum]))
+                    $this->_aJsCodes[$sJsCodeCheckSum] = $sJsCode;
+
                 $aCurrency = $this->_oModule->_oConfig->getCurrency();
 
                 $bResult = true;
