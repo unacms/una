@@ -344,7 +344,8 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_payment_grid_sbs_list_my', 'single', 'actions', '_bx_payment_grid_action_title_sbs_actions', 'cog', 1, 0, 2),
 
 ('bx_payment_grid_sbs_list_all', 'single', 'view_order', '_bx_payment_grid_action_title_sbs_view_order', 'ellipsis-h', 1, 0, 1),
-('bx_payment_grid_sbs_list_all', 'single', 'cancel', '_bx_payment_grid_action_title_sbs_cancel', 'times', 1, 1, 2),
+('bx_payment_grid_sbs_list_all', 'single', 'cancel', '_bx_payment_grid_action_title_sbs_cancel', 'ban', 1, 1, 2),
+('bx_payment_grid_sbs_list_all', 'single', 'delete', '_bx_payment_grid_action_title_sbs_delete', 'times', 1, 1, 3),
 
 ('bx_payment_grid_sbs_history', 'single', 'view_order', '_bx_payment_grid_action_title_sbs_view_order', 'ellipsis-h', 1, 0, 1),
 
