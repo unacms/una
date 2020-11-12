@@ -72,7 +72,9 @@ li.bx-lcd-mdd-login .bx-lcd-login-form {
     display: list-item;
     text-align: -webkit-match-parent;
 }
-
+.cd-dropdown li.bx-menu-item-cd-more-auto {
+    display: none;
+}
 
 /*--- Main Components ---*/
 .cd-dropdown h2,
