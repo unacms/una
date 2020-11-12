@@ -4073,6 +4073,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu_items` (
   `target` varchar(255) NOT NULL,
   `icon` varchar(255) NOT NULL,
   `addon` text NOT NULL,
+  `markers` text NOT NULL,
   `submenu_object` varchar(64) NOT NULL,
   `submenu_popup` tinyint(4) NOT NULL DEFAULT '0',
   `visible_for_levels` int(11) NOT NULL DEFAULT '2147483647',
