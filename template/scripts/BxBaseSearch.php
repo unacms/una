@@ -25,7 +25,7 @@ class BxBaseSearch extends BxDolSearch
         $this->_oTemplate = $oTemplate ? $oTemplate : BxDolTemplate::getInstance();
     }
 
-    public function getForm($iDesignBoxTemplate = BX_DB_PADDING_DEF, $sTitle = false)
+    public function getForm($iDesignBoxTemplate = BX_DB_PADDING_DEF, $sTitle = false, $bOnlyForm = false)
     {
         if ($this->_sMetaType || $this->_sCategoryObject)
             return '';
@@ -108,7 +108,9 @@ class BxBaseSearch extends BxDolSearch
             $o = new BxTemplPaginate(array());
             $o->addCssJs();
         }
-
+        if ($bOnlyForm)
+            return $sForm;
+        
         return '<div class="bx-page-block-container bx-def-padding-sec-topbottom bx-clearfix">' . DesignBoxContent($sTitle, $sForm, $iDesignBoxTemplate) . '</div>';
     }
 

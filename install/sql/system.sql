@@ -4835,7 +4835,8 @@ INSERT INTO `sys_objects_page` (`object`, `uri`, `title_system`, `title`, `modul
 ('sys_std_dashboard', '', '_sys_page_title_system_studio_dashboard', '_sys_page_title_studio_dashboard', 'system', 1, 4, '', 2147483647, 1, '', '', '', '', 0, 1, 0, '', '', 0),
 ('sys_cmts_view' ,'cmts-view', '', '_cmt_page_view_header', 'system', 1, 5, '', 2147483647, 1, 'page.php?i=cmts-view', '', '', '', 0, 1, 0, 'BxTemplCmtsPageView', '', 0),
 ('sys_cmts_administration' ,'cmts-administration', '_sys_page_title_system_cmts_administration', '_sys_page_title_cmts_administration', 'system', 1, 5, '', 192, 1, 'page.php?i=cmts-administration', '', '', '', 0, 1, 0, '', '', 0),
-('sys_audit' ,'audit-administration', '_sys_page_title_system_audit_administration', '_sys_page_title_audit_administration', 'system', 1, 5, '', 192, 1, 'page.php?i=audit-administration', '', '', '', 0, 1, 0, '', '', 0);
+('sys_audit' ,'audit-administration', '_sys_page_title_system_audit_administration', '_sys_page_title_audit_administration', 'system', 1, 5, '', 192, 1, 'page.php?i=audit-administration', '', '', '', 0, 1, 0, '', '', 0),
+('sys_search_keyword', 'search-keyword', '_sys_page_title_system_search_keyword', '_sys_page_title_search_keyword', 'system', 1, 5, '', 2147483647, 1, 'searchKeyword.php', '', '', '', 0, 1, 0, '', '', 0);
 
 
 CREATE TABLE IF NOT EXISTS `sys_pages_types` (
@@ -5032,6 +5033,8 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 
 ('sys_audit', 1, 'system', '_sys_page_block_title_system_audit_administration', '_sys_page_block_title_audit_administration', 11, 0, 0, 192, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:12:"manage_tools";s:6:"params";a:1:{i:0;s:14:"administration";}s:5:"class";s:18:"TemplAuditServices";}', 0, 1, 1, 1),
 
+('sys_search_keyword', 1, 'system', '', '_sys_page_block_title_search_keyword_form', 13, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:19:"search_keyword_form";s:6:"params";a:0:{}s:5:"class";s:13:"TemplServices";}', 0, 1, 1, 1),
+('sys_search_keyword', 1, 'system', '', '_sys_page_block_title_search_keyword_result', 13, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:21:"search_keyword_result";s:6:"params";a:0:{}s:5:"class";s:13:"TemplServices";}', 0, 1, 1, 1),
 -- studio dashboard blocks
 ('sys_std_dashboard', 1, 'system', '', '_sys_page_block_title_std_dash_version', 11, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:17:"get_block_version";s:6:"params";a:0:{}s:5:"class";s:20:"TemplStudioDashboard";}', 0, 0, 1, 1),
 

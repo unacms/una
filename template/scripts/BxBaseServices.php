@@ -332,6 +332,55 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
      * @page service Service Calls
      * @section bx_system_general System Services 
      * @subsection bx_system_general-general General
+     * @subsubsection bx_system_general-keyword_search keyword_search
+     * 
+     * @code bx_srv('system', 'search_keyword_form', 'TemplServices'); @endcode
+     * 
+     * Block with Search by Keywords Form
+     *  
+     * @see BxBaseServices::serviceSearchKeywordForm
+     */
+    /** 
+     * @ref bx_system_general-keyword_search "keyword_search"
+     */
+    public function serviceSearchKeywordForm ()
+    {
+        return $this->_getSearchObject()->getForm(BX_DB_PADDING_DEF, false, true);
+    }
+    
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-general General
+     * @subsubsection bx_system_general-keyword_search keyword_search
+     * 
+     * @code bx_srv('system', 'search_keyword_result', 'TemplServices'); @endcode
+     * 
+     * Block with Search by Keywords Results
+     *  
+     * @see BxBaseServices::serviceSearchKeywordResult
+     */
+    /** 
+     * @ref bx_system_general-keyword_search "keyword_search"
+     */
+    public function serviceSearchKeywordResult ()
+    {
+        $oSearch = $this->_getSearchObject();
+        
+        $sCode = '';
+        if (bx_get('keyword') !== false) {
+            $sCode = $oSearch->response();
+            if (!$sCode)
+                $sCode = $oSearch->getEmptyResult();
+        }
+
+        return $sCode;
+    }
+    
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-general General
      * @subsubsection bx_system_general-cmts cmts
      * 
      * @code bx_srv('system', 'cmts', ["sys_blocks", 1], 'TemplServices'); @endcode
@@ -493,6 +542,26 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             'class' => $sClass,
             )
     	);
+    }
+    
+    private function _getSearchObject()
+    {
+        $sClass = 'BxTemplSearch';
+        $sElsName = 'bx_elasticsearch';
+        $sElsMethod = 'is_configured';
+        if(BxDolRequest::serviceExists($sElsName, $sElsMethod) && BxDolService::call($sElsName, $sElsMethod) && !bx_get('cat') && !bx_get('type')) {
+            $oModule = BxDolModule::getInstance($sElsName);
+            bx_import('Search', $oModule->_aModule);
+            $sClass = 'BxElsSearch';
+        }
+        bx_alert('system', 'search_keyword', 0, 0, array('class' => &$sClass));
+
+        $oSearch = new $sClass(bx_get('section'));
+        $oSearch->setLiveSearch(bx_get('live_search') ? 1 : 0);
+        $oSearch->setMetaType(bx_process_input(bx_get('type')));
+        $oSearch->setCategoryObject(bx_process_input(bx_get('cat')));
+
+        return $oSearch;
     }
 }
 
