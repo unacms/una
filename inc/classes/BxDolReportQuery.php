@@ -70,6 +70,15 @@ class BxDolReportQuery extends BxDolObjectQuery
 
         return (int)$this->query($sQuery) != 0;
     }
+    
+    public function clearReports($iObjectId)
+    {
+        $sQuery = $this->prepare("DELETE FROM `{$this->_sTable}` WHERE `object_id` = ?", $iObjectId);
+        $this->query($sQuery);
+        
+        $sQuery = $this->prepare("DELETE FROM `{$this->_sTableTrack}` WHERE `object_id` = ?", $iObjectId);
+        $this->query($sQuery);
+    }
 }
 
 /** @} */

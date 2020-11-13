@@ -189,6 +189,11 @@ class BxDolReport extends BxDolObject
         return echoJson($this->_getReport());
     }
 
+    public function actionClearReport()
+    {
+       $this->_oQuery->clearReports($this->getId());
+    }
+    
     public function actionGetReportedBy()
     {
         if (!$this->isEnabled())
