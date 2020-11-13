@@ -21,6 +21,16 @@ class BxMarketMenuViewActions extends BxBaseModTextMenuViewActions
         parent::__construct($aObject, $oTemplate);
     }
 
+    public function getCode ()
+    {
+        $sCode = parent::getCode();
+
+        if(!empty($this->_oMenuActions))
+            $sCode .= $this->_oMenuActions->getJsCode();
+
+    	return $sCode;
+    }
+    
     protected function _getMenuItemDownload($aItem)
     {
         return $this->_getMenuItemByNameActions($aItem);

@@ -79,7 +79,7 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
     	$this->_bUseSsl = $this->getOption('ssl') == 'on';
     }
 
-	public function addJsCss()
+    public function addJsCss()
     {
     	if(!$this->isActive())
     		return;
@@ -230,9 +230,23 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
             return '';
 
     	return $this->_getButton(BX_PAYMENT_TYPE_SINGLE, $iClientId, $iVendorId, array_merge($aParams, array(
-			'sVendorName' => _t($this->_sLangsPrefix . 'txt_payment_to', $aCartInfo['vendor_name']),
-			'sVendorCurrency' => $aCartInfo['vendor_currency_code'],
-			'sVendorIcon' => $aCartInfo['vendor_avatar'],
+            'sVendorName' => _t($this->_sLangsPrefix . 'txt_payment_to', $aCartInfo['vendor_name']),
+            'sVendorCurrency' => $aCartInfo['vendor_currency_code'],
+            'sVendorIcon' => $aCartInfo['vendor_avatar'],
+    	)));
+    }
+
+    public function getButtonSingleJs($iClientId, $iVendorId, $aParams = array())
+    {
+        $aItems = array();
+        $aCartInfo = $this->_oModule->getObjectCart()->getInfo(BX_PAYMENT_TYPE_SINGLE, $iClientId, (int)$iVendorId, $aItems);
+        if(empty($aCartInfo) || !is_array($aCartInfo))
+            return '';
+
+    	return $this->_getButtonJs(BX_PAYMENT_TYPE_SINGLE, $iClientId, $iVendorId, array_merge($aParams, array(
+            'sVendorName' => _t($this->_sLangsPrefix . 'txt_payment_to', $aCartInfo['vendor_name']),
+            'sVendorCurrency' => $aCartInfo['vendor_currency_code'],
+            'sVendorIcon' => $aCartInfo['vendor_avatar'],
     	)));
     }
 
@@ -240,11 +254,22 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
     {
     	$aVendor = $this->_oModule->getVendorInfo((int)$iVendorId);
 
-		return $this->_getButton(BX_PAYMENT_TYPE_RECURRING, $iClientId, $iVendorId, array_merge($aParams, array(
-			'sVendorName' => _t($this->_sLangsPrefix . 'txt_payment_to', $aVendor['name']),
-			'sVendorCurrency' => $aVendor['currency_code'],
-			'sVendorIcon' => $aVendor['avatar'],
-		)));
+        return $this->_getButton(BX_PAYMENT_TYPE_RECURRING, $iClientId, $iVendorId, array_merge($aParams, array(
+            'sVendorName' => _t($this->_sLangsPrefix . 'txt_payment_to', $aVendor['name']),
+            'sVendorCurrency' => $aVendor['currency_code'],
+            'sVendorIcon' => $aVendor['avatar'],
+        )));
+    }
+    
+    public function getButtonRecurringJs($iClientId, $iVendorId, $aParams = array())
+    {
+    	$aVendor = $this->_oModule->getVendorInfo((int)$iVendorId);
+
+        return $this->_getButtonJs(BX_PAYMENT_TYPE_RECURRING, $iClientId, $iVendorId, array_merge($aParams, array(
+            'sVendorName' => _t($this->_sLangsPrefix . 'txt_payment_to', $aVendor['name']),
+            'sVendorCurrency' => $aVendor['currency_code'],
+            'sVendorIcon' => $aVendor['avatar'],
+        )));
     }
 
     public function getMenuItemsActionsRecurring($iClientId, $iVendorId, $aParams = array())
@@ -347,7 +372,7 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 
         return $this->_oModule->_oTemplate->parseHtmlByName('strp_billing_recurring.html', array(
             'brand' => $aCard['brand'],
-        	'origin' => $aCard['country'],
+            'origin' => $aCard['country'],
             'type' => $aCard['funding'],
             'number' => _t('_bx_payment_strp_txt_card_number_mask', $aCard['last4']),
             'expires' => _t('_bx_payment_strp_txt_card_expires_mask', $aCard['exp_month'], $aCard['exp_year']),
@@ -911,32 +936,50 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 
     protected function _getButton($sType, $iClientId, $iVendorId, $aParams = array())
     {
-    	$sClientEmail = '';
-    	if(!empty($iClientId)) {
-    		$oClient = BxDolProfile::getInstance($iClientId);
-    		if($oClient)
-    			$sClientEmail = $oClient->getAccountObject()->getEmail();
-    	}
-
-    	$sPublicKey = '';
-    	bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_button', 0, $iClientId, array(
-			'type' => &$sType, 
-			'public_key' => &$sPublicKey
-		));
+        list($sJsCode, $sJsMethod) = $this->_getButtonJs($sType, $iClientId, $iVendorId, $aParams);
 
     	return $this->_oModule->_oTemplate->parseHtmlByName('strp_button_' . $sType . '.html', array(
-    		'type' => $sType,
-    		'caption' => _t($this->_sLangsPrefix . 'strp_txt_checkout_with_' . $sType, $this->_sCaption),
-    		'js_object' => $this->_oModule->_oConfig->getJsObject($this->_sName),
-    		'js_code' => $this->_oModule->_oTemplate->getJsCode($this->_sName, array_merge(array(
-	    		'sProvider' => $this->_sName,
-	    		'sPublicKey' => !empty($sPublicKey) ? $sPublicKey : $this->_getPublicKey(),
-	    		'sVendorName' => '',
-	    		'sVendorCurrency' => '',
-	    		'sVendorIcon' => '',
-	    		'sClientEmail' => $sClientEmail,
-	    	), $aParams))
+            'type' => $sType,
+            'caption' => _t($this->_sLangsPrefix . 'strp_txt_checkout_with_' . $sType, $this->_sCaption),  
+            'onclick' => $sJsMethod,
+            'js_object' => $this->_oModule->_oConfig->getJsObject($this->_sName),
+            'js_code' => $sJsCode,
     	));
+    }
+
+    protected function _getButtonJs($sType, $iClientId, $iVendorId, $aParams = array())
+    {
+        $sJsObject = $this->_oModule->_oConfig->getJsObject($this->_sName);
+
+        $sClientEmail = '';
+    	if(!empty($iClientId) && ($oClient = BxDolProfile::getInstance($iClientId)) !== false)
+            $sClientEmail = $oClient->getAccountObject()->getEmail();
+
+        $sPublicKey = '';
+    	bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_get_button', 0, $iClientId, array(
+            'type' => &$sType, 
+            'public_key' => &$sPublicKey
+        ));
+
+        $sJsMethod = '';
+        switch($sType) {
+            case BX_PAYMENT_TYPE_SINGLE:
+                $sJsMethod = $sJsObject . '.checkout(this)';
+                break;
+
+            case BX_PAYMENT_TYPE_RECURRING:
+                $sJsMethod = $sJsObject . '.subscribe(this)';
+                break;
+        }
+
+        return array($this->_oModule->_oTemplate->getJsCode($this->_sName, array_merge(array(
+            'sProvider' => $this->_sName,
+            'sPublicKey' => !empty($sPublicKey) ? $sPublicKey : $this->_getPublicKey(),
+            'sVendorName' => '',
+            'sVendorCurrency' => '',
+            'sVendorIcon' => '',
+            'sClientEmail' => $sClientEmail,
+        ), $aParams)), $sJsMethod);
     }
 }
 

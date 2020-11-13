@@ -28,17 +28,17 @@ class BxPaymentGridSbsAdministration extends BxBaseModPaymentGridOrders
     {
     	$aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) 
-        	return echoJson(array());
+            return echoJson(array());
 
-		$oSubscriptions = $this->_oModule->getObjectSubscriptions();
+        $oSubscriptions = $this->_oModule->getObjectSubscriptions();
 
-		$iAffected = 0;
-		$aAffected = array();
-		foreach($aIds as $iId)
-			if($oSubscriptions->cancel($iId)) {
-				$aAffected[] = $iId;
+        $iAffected = 0;
+        $aAffected = array();
+        foreach($aIds as $iId)
+            if($oSubscriptions->cancel($iId)) {
+                $aAffected[] = $iId;
             	$iAffected++;
-			}
+            }
 
         echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aAffected) : array('msg' => _t($this->_sLangsPrefix . 'err_cannot_perform')));
     }
@@ -73,6 +73,7 @@ class BxPaymentGridSbsAdministration extends BxBaseModPaymentGridOrders
         $aStates = array(0 => 'no', 1 => 'yes');
         return parent::_getCellDefault(_t('_bx_payment_txt_' . $aStates[(int)$mixedValue]), $sKey, $aField, $aRow);
     }
+
     protected function _addJsCss()
     {
         parent::_addJsCss();
@@ -82,6 +83,15 @@ class BxPaymentGridSbsAdministration extends BxBaseModPaymentGridOrders
             '_bx_payment_txt_unsubscribe_yes',
             '_bx_payment_txt_unsubscribe_no'
         ));
+    }
+
+    protected function _delete ($mixedId)
+    {
+        $aSubscription = $this->_oModule->_oDb->getSubscription(array('type' => 'pending_id', 'pending_id' => $mixedId));
+        if(empty($aSubscription) || !is_array($aSubscription))
+            return false;
+
+        return $this->_oModule->_oDb->deleteSubscription($aSubscription['id'], 'delete');
     }
 }
 

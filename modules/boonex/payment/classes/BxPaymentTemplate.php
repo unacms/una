@@ -82,44 +82,57 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
     {
         $this->addJsCssCart(BX_PAYMENT_TYPE_SINGLE, $iVendorId);
         return $this->parseHtmlByName('add_to_cart.html', array(
-        	'js_object' => $this->_oConfig->getJsObject('cart'),
-        	'js_content' => $this->displayJsCode('cart'),
-        	'txt_add_to_cart' => _t($this->_sLangsPrefix . 'txt_add_to_cart'),
+            'js_object' => $this->_oConfig->getJsObject('cart'),
+            'js_content' => $this->displayJsCode('cart'),
+            'txt_add_to_cart' => _t($this->_sLangsPrefix . 'txt_add_to_cart'),
             'vendor_id' => $iVendorId,
             'module_id' => $iModuleId,
             'item_id' => $iItemId,
             'item_count' => $iItemCount,
             'need_redirect' => (int)$bNeedRedirect,
-        	'custom' => !empty($aCustom) && is_array($aCustom) ? base64_encode(serialize($aCustom)) : ''
+            'custom' => !empty($aCustom) && is_array($aCustom) ? base64_encode(serialize($aCustom)) : ''
         ));
     }
 
-	public function displaySubscribeJs($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount = 1, $sRedirect = '', $aCustom = array())
+    public function displaySubscribeJs($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount = 1, $sRedirect = '', $aCustom = array())
     {
-        $sJsCode = $this->displayCartJs(BX_PAYMENT_TYPE_RECURRING, $iVendorId);
-        $sJsMethod = $this->parseHtmlByName('subscribe_js.html', array(
-            'js_object' => $this->_oConfig->getJsObject('cart'),
-            'vendor_id' => $iVendorId,
-        	'vendor_provider' => $sVendorProvider,
-            'module_id' => $iModuleId,
-            'item_id' => $iItemId,
-            'item_count' => $iItemCount,
-            'redirect' => !empty($sRedirect) ? $sRedirect : '',
-            'custom' => !empty($aCustom) && is_array($aCustom) ? base64_encode(serialize($aCustom)) : ''
-        ));
+        return $this->displaySubscribeJsWithAddons($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount, '', $sRedirect, $aCustom);
+    }
 
-        return array($sJsCode, $sJsMethod);
+    public function displaySubscribeJsWithAddons($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount = 1, $sItemAddons = '', $sRedirect = '', $aCustom = array())
+    {
+        $aSellerProviders = $this->_oDb->getVendorInfoProvidersRecurring($iVendorId);
+        if(empty($sVendorProvider) && count($aSellerProviders) == 1) {
+            $aCartItem = array($iVendorId, $iModuleId, $iItemId, $iItemCount, $sItemAddons);
+
+            $this->addJsCssCart(BX_PAYMENT_TYPE_RECURRING, $iVendorId);
+            return $this->getModule()->getProviderButtonJs($aCartItem, array_shift($aSellerProviders), $sRedirect, $aCustom);
+        }
+
+        return array(
+            $this->displayCartJs(BX_PAYMENT_TYPE_RECURRING, $iVendorId),
+            $this->parseHtmlByName('subscribe_js.html', array(
+                'js_object' => $this->_oConfig->getJsObject('cart'),
+                'vendor_id' => $iVendorId,
+                'vendor_provider' => $sVendorProvider,
+                'module_id' => $iModuleId,
+                'item_id' => $iItemId,
+                'item_count' => $iItemCount,
+                'redirect' => !empty($sRedirect) ? $sRedirect : '',
+                'custom' => !empty($aCustom) && is_array($aCustom) ? base64_encode(serialize($aCustom)) : ''
+            ))
+        );
     }
 
     public function displaySubscribeLink($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount = 1, $sRedirect = '', $aCustom = array())
     {
         $this->addJsCssCart(BX_PAYMENT_TYPE_RECURRING, $iVendorId);
         return $this->parseHtmlByName('subscribe.html', array(
-        	'js_object' => $this->_oConfig->getJsObject('cart'),
-        	'js_content' => $this->displayJsCode('cart'),
-        	'txt_add_to_cart' => _t($this->_sLangsPrefix . 'txt_subscribe'),
+            'js_object' => $this->_oConfig->getJsObject('cart'),
+            'js_content' => $this->displayJsCode('cart'),
+            'txt_add_to_cart' => _t($this->_sLangsPrefix . 'txt_subscribe'),
             'vendor_id' => $iVendorId,
-        	'vendor_provider' => $sVendorProvider,
+            'vendor_provider' => $sVendorProvider,
             'module_id' => $iModuleId,
             'item_id' => $iItemId,
             'item_count' => $iItemCount,
@@ -349,64 +362,22 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
     public function displayProvidersSelector($aCartItem, $aProviders, $sRedirect = '', $aCustom = array())
     {
     	$oModule = $this->getModule();
-    	$iClientId = $oModule->getProfileId();
-
-        $oCart = $oModule->getObjectCart();
-        $oSubscriptions = $oModule->getObjectSubscriptions();
-
-        $sItemAddons = '';
-        if(count($aCartItem) == 5)
-            $sItemAddons = array_pop($aCartItem);
-
-        list($iSellerId, $iModuleId, $iItemId, $iItemCount) = $aCartItem;
 
         $aTmplVarsProviders = array();
         foreach($aProviders as $sProvider => $aProvider) {
-            $sButton = '';
-
-            $oProvider = $oModule->getObjectProvider($sProvider, $iSellerId);
-            if($oProvider !== false && method_exists($oProvider, 'getButtonRecurring')) {
-                $aParams = array(
-                    'sObjNameCart' => $oModule->_oConfig->getJsObject('cart'),
-                    'iSellerId' => $iSellerId,
-                    'iModuleId' => $iModuleId,
-                    'iItemId' => $iItemId,
-                    'iItemCount' => $iItemCount,
-                    'sItemAddons' => $sItemAddons,
-                    'sRedirect' => $sRedirect,
-                    'sCustom' => base64_encode(serialize($aCustom))
-                );
-
-                $aCartInfo = $oCart->getInfo(BX_PAYMENT_TYPE_RECURRING, $iClientId, $iSellerId, $this->_oConfig->descriptorA2S($aCartItem));
-                if(!empty($aCartInfo['items_price']) && !empty($aCartInfo['items']) && is_array($aCartInfo['items'])) {
-                    $aItem = array_shift($aCartInfo['items']);
-
-                    $aParams = array_merge($aParams, array(
-                        'iAmount' => (int)round(100 * (float)$aCartInfo['items_price']),
-                        'sItemName' => $aItem['name'],
-                        'sItemTitle' => $aItem['title']
-                    ));
-                }
-
-                $sButton = $oProvider->getButtonRecurring($iClientId, $iSellerId, $aParams);
-            }
-
-            if(empty($sButton)) {
-                list($sJsCode, $sJsOnclick) = $oSubscriptions->serviceGetSubscribeJs($iSellerId, $aProvider['name'], $iModuleId, $iItemId, $iItemCount, $sRedirect, $aCustom);
-
-                $sButton = $this->parsePageByName('providers_select_button.html', array(
-                    'onclick' => $sJsOnclick,
-                    'title' => _t('_bx_payment_txt_checkout_with', _t($aProvider['caption']))
-                ));
-            }
+            list($sJsCode, $sJsOnclick) = $oModule->getProviderButtonJs($aCartItem, $aProvider, $sRedirect, $aCustom);
 
             $aTmplVarsProviders[] = array(
-                'button' => $sButton
+                'button' => $this->parseHtmlByName('providers_select_button.html', array(
+                    'onclick' => $sJsOnclick,
+                    'title' => _t('_bx_payment_txt_checkout_with', _t($aProvider['caption'])),
+                    'js_code' => $sJsCode
+                ))
             );
         }
 
         return $this->parseHtmlByName('providers_select.html', array(
-                'bx_repeat:providers' => $aTmplVarsProviders
+            'bx_repeat:providers' => $aTmplVarsProviders
         ));
     }
 
