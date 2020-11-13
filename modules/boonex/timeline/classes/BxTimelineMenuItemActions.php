@@ -312,6 +312,10 @@ class BxTimelineMenuItemActions extends BxTemplMenuCustom
                 $sCheckFuncName = 'isAllowedReport';
                 break;
 
+            case 'item-mute':
+                $sCheckFuncName = 'isAllowedMute';
+                break;
+
             case 'item-more':
             	$sCheckFuncName = 'isAllowedMore';
             	break;

@@ -667,6 +667,34 @@ BxTimelineView.prototype.promotePost = function(oLink, iId, iWay)
     );
 };
 
+BxTimelineView.prototype.muteAuthor = function(oLink, iId)
+{
+    var $this = this;
+    var oData = this._getDefaultData();
+    oData['id'] = iId;
+
+    $(oLink).parents('.bx-popup-applied:first:visible').dolPopupHide({
+        onHide: function(oPopup) {
+            $(oPopup).remove();
+        }
+    });
+
+    var oLoadingContainer = $(this._getHtmlId('item', this._oRequestParams, {whole: false}) + iId);
+
+    this.loadingInItem(oLoadingContainer, true);
+
+    $.post(
+        this._sActionsUrl + 'mute/',
+        oData,
+        function(oData) {
+            $this.loadingInItem(oLoadingContainer, false);
+
+            processJsonData(oData);
+        },
+        'json'
+    );
+};
+
 BxTimelineView.prototype.initFormEdit = function(sFormId)
 {
     var $this = this;

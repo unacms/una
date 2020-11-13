@@ -40,7 +40,9 @@ class BxDolSessionQuery extends BxDolDb
     	$sSet = !empty($aSet) ? $this->arrayToSQL($aSet) . ", " : "";
     	$sSet .= "`date`=UNIX_TIMESTAMP()";
 
-        return (int)$this->query("UPDATE `" . $this->sTable . "` SET " . $sSet . " WHERE `id`=:id", array('id' => $sId)) > 0;
+        $iRet = (int)$this->query("UPDATE `" . $this->sTable . "` SET " . $sSet . " WHERE `id`=:id", array('id' => $sId)) > 0;
+        $this->setReadOnlyMode(true);
+        return $iRet;
     }
     function delete($sId)
     {

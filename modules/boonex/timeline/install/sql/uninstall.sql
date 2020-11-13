@@ -2,6 +2,8 @@ SET @sName = 'bx_timeline';
 
 DROP TABLE IF EXISTS `bx_timeline_events`, `bx_timeline_handlers`, `bx_timeline_cache`;
 
+DROP TABLE IF EXISTS `bx_timeline_mute`;
+
 DROP TABLE IF EXISTS `bx_timeline_photos`, `bx_timeline_photos_processed`, `bx_timeline_photos2events`;
 
 DROP TABLE IF EXISTS `bx_timeline_videos`, `bx_timeline_videos_processed`, `bx_timeline_videos2events`;

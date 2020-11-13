@@ -37,12 +37,17 @@ DELETE FROM `sys_alerts_handlers` WHERE `id` = @iHandlerId LIMIT 1;
 DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_timeline', 'bx_timeline_cmts');
 
 -- GRIDS
-DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_timeline_administration');
-DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_timeline_administration');
-DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_timeline_administration');
+DELETE FROM `sys_objects_grid` WHERE `object` IN ('bx_timeline_mute', 'bx_timeline_administration');
+DELETE FROM `sys_grid_fields` WHERE `object` IN ('bx_timeline_mute', 'bx_timeline_administration');
+DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_timeline_mute', 'bx_timeline_administration');
+
 
 -- METATAGS
 DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_timeline';
+
+
+-- CONNECTIONS
+DELETE FROM `sys_objects_connection` WHERE `object` = 'bx_timeline_mute';
 
 
 -- EMAIL TEMPLATES

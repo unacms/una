@@ -459,7 +459,9 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         if(empty($aParamsSet))
             return false;
 
-        return (int)$this->query("REPLACE INTO `{$this->_sTableCache}` SET " . $this->arrayToSQL($aParamsSet)) > 0;
+        $iRet = (int)$this->query("REPLACE INTO `{$this->_sTableCache}` SET " . $this->arrayToSQL($aParamsSet)) > 0;
+        $this->setReadOnlyMode(true);
+        return $iRet;
     }
 
     public function deleteCache($aParamsWhere)
@@ -746,6 +748,18 @@ class BxTimelineDb extends BxBaseModNotificationsDb
             $sWhereClauseHidden = !empty($aHidden) && is_array($aHidden) ? "AND `" . $this->_sTableHandlers . "`.`id` NOT IN (" . $this->implode_escape($aHidden) . ") " : "";
         }
 
+        //--- Apply mute filter
+        $sWhereClauseMuted = "";
+        $oConnection = BxDolConnection::getObjectInstance($this->_oConfig->getObject('connection_mute'));
+        if($oConnection) {
+            $aMuted = $oConnection->getConnectedContent(bx_get_logged_profile_id());
+            if(!empty($aMuted) && is_array($aMuted)) {
+                $sMuted = "NOT IN (". $this->implode_escape($aMuted) . ")";
+
+                $sWhereClauseMuted = "AND `{$this->_sTable}`.`owner_id` $sMuted AND `{$this->_sTable}`.`object_owner_id` $sMuted ";
+            }
+        }
+
         //--- Apply unpublished (date in future) filter
         $sWhereClauseUnpublished = $this->prepareAsString("AND IF(`{$this->_sTable}`.`system`='0' AND `{$this->_sTable}`.`object_id` = ?, 1, `{$this->_sTable}`.`date` <= UNIX_TIMESTAMP()) ", bx_get_logged_profile_id());
 
@@ -950,6 +964,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
             'where_clause_timeline' => &$sWhereClauseTimeline,
             'where_clause_modules' => &$sWhereClauseModules,
             'where_clause_hidden' => &$sWhereClauseHidden,
+            'where_clause_muted' => &$sWhereClauseMuted,
             'where_clause_unpublished' => &$sWhereClauseUnpublished,
             'where_subclause' => &$mixedWhereSubclause
         ));
@@ -959,6 +974,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         $mixedWhereClause .= $sWhereClauseTimeline;
         $mixedWhereClause .= $sWhereClauseModules;
         $mixedWhereClause .= $sWhereClauseHidden;
+        $mixedWhereClause .= $sWhereClauseMuted;
         $mixedWhereClause .= $sWhereClauseUnpublished;
 
         if(!empty($mixedWhereSubclause)) {
