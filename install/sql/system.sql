@@ -5035,7 +5035,7 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 ('sys_audit', 1, 'system', '_sys_page_block_title_system_audit_administration', '_sys_page_block_title_audit_administration', 11, 0, 0, 192, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:12:"manage_tools";s:6:"params";a:1:{i:0;s:14:"administration";}s:5:"class";s:18:"TemplAuditServices";}', 0, 1, 1, 1),
 
 ('sys_search_keyword', 1, 'system', '', '_sys_page_block_title_search_keyword_form', 13, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:19:"search_keyword_form";s:6:"params";a:0:{}s:5:"class";s:13:"TemplServices";}', 0, 1, 1, 1),
-('sys_search_keyword', 1, 'system', '', '_sys_page_block_title_search_keyword_result', 13, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:21:"search_keyword_result";s:6:"params";a:0:{}s:5:"class";s:13:"TemplServices";}', 0, 1, 1, 1),
+('sys_search_keyword', 1, 'system', '', '_sys_page_block_title_search_keyword_result', 0, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:21:"search_keyword_result";s:6:"params";a:0:{}s:5:"class";s:13:"TemplServices";}', 0, 1, 1, 1),
 -- studio dashboard blocks
 ('sys_std_dashboard', 1, 'system', '', '_sys_page_block_title_std_dash_version', 11, 0, 0, 2147483647, 'service', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:17:"get_block_version";s:6:"params";a:0:{}s:5:"class";s:20:"TemplStudioDashboard";}', 0, 0, 1, 1),
 
