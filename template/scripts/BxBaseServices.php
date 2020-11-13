@@ -372,6 +372,8 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             $sCode = $oSearch->response();
             if (!$sCode)
                 $sCode = $oSearch->getEmptyResult();
+            else
+                $sCode = '<div class="bx-def-margin-sec-top-neg">' . $sCode . '</div>';
         }
 
         return $sCode;
