@@ -121,6 +121,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'OBJECT_UPLOADER_VIDEO_SIMPLE' => $this->_sName . '_simple_video',
             'OBJECT_UPLOADER_VIDEO_HTML5' => $this->_sName . '_html5_video',
             'OBJECT_GRID_ADMINISTRATION' => $this->_sName . '_administration',
+            'OBJECT_GRID_MUTE' => $this->_sName . '_mute',
             'OBJECT_MENU_ENTRY_ATTACHMENTS' => $this->_sName . '_menu_post_attachments',
             'OBJECT_METATAGS' => $this->_sName,
             'OBJECT_COMMENTS' => $this->_sName,
@@ -130,6 +131,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'OBJECT_SCORES' => $this->_sName,
             'OBJECT_REPORTS' => $this->_sName,
             'OBJECT_PRIVACY_VIEW' => $this->_sName . '_privacy_view',
+            'OBJECT_CONNECTIONS_MUTE' => $this->_sName . '_mute',
 
             // some language keys
             'T' => array (
@@ -210,7 +212,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'form_display_post_add_profile' => $this->_sName . '_post_add_profile',
             'form_display_post_edit' => $this->_sName . '_post_edit',
             'form_display_post_view' => $this->_sName . '_post_view',
-            'form_display_attach_link_add' => $this->_sName . '_attach_link_add'
+            'form_display_attach_link_add' => $this->_sName . '_attach_link_add',
+
+            'grid_mute' => $this->CNF['OBJECT_GRID_MUTE'],
+
+            'connection_mute' => $this->CNF['OBJECT_CONNECTIONS_MUTE'],
         ));
 
         $this->_aHandlerDescriptor = array('module_name' => '', 'module_method' => '', 'module_class' => '', 'groupable' => '', 'group_by' => '');

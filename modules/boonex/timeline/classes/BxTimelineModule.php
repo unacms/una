@@ -223,6 +223,38 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         ));
     }
 
+    function actionMute()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $this->_iOwnerId = bx_process_input(bx_get('owner_id'), BX_DATA_INT);
+
+        $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
+        $aEvent = $this->_oDb->getEvents(array('browse' => 'id', 'value' => $iId));
+
+        $mixedAllowed = $this->isAllowedMute($aEvent, true);
+        if($mixedAllowed !== true)
+            return echoJson(array('code' => 1, 'message' => strip_tags($mixedAllowed)));
+
+        $iAuthor = (int)$aEvent[$CNF['FIELD_OWNER_ID']];
+        if(!$this->_oConfig->isSystem($aEvent['type'], $aEvent['action']))
+            $iAuthor = (int)$aEvent[$CNF['FIELD_OBJECT_ID']];
+
+        if(!$this->getConnectionMuteObject()->addConnection($this->_iProfileId, $iAuthor))
+            return echoJson(array('code' => 2));
+
+        $this->_oDb->deleteCache(array('context_id' => 0)); //--- Delete cache for Public feed
+        $this->_oDb->deleteCache(array('context_id' => $this->_iOwnerId)); //--- Delete cache for context
+
+        bx_alert($this->_oConfig->getObject('alert'), 'muted', $iAuthor, $this->_iProfileId, array(
+            'owner_id' => $aEvent['owner_id'],
+            'object_id' => $aEvent['object_id'],
+            'object_author_id' => $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) ? $aEvent['owner_id'] : $aEvent['object_id']
+        ));
+
+        echoJson(array('code' => 0, 'message' => _t('_bx_timeline_txt_msg_performed_action'), 'reload' => 1));
+    }
+
     function actionDelete()
     {
         $iId = bx_process_input(bx_get('id'), BX_DATA_INT);
@@ -1426,7 +1458,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     /** 
      * @ref bx_timeline-get_block_view_hot_outline "get_block_view_hot_outline"
      */
-	public function serviceGetBlockViewHotOutline($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
+    public function serviceGetBlockViewHotOutline($iProfileId = 0, $iStart = -1, $iPerPage = -1, $iTimeline = -1, $sFilter = '', $aModules = array())
     {
         return $this->_serviceGetBlockViewHot(array(
             'view' => BX_TIMELINE_VIEW_OUTLINE, 
@@ -1606,6 +1638,19 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $this->_oTemplate->getItemBlockComments($iItemId);
     }
 
+    public function serviceGetBlockMuted($iProfileId = 0)
+    {
+        if($iProfileId == 0)
+            $iProfileId = $this->_iProfileId;
+
+        $oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getObject('grid_mute'));
+        if(!$oGrid)
+            return MsgBox('_Empty');
+
+        $oGrid->setProfile($iProfileId);
+        return $oGrid->getCode();
+    }
+    
     public function serviceGetTimelineRepostAllowedView($aEvent)
     {
         return isset($aEvent['content']['allowed_view']) ? $aEvent['content']['allowed_view'] : CHECK_ACTION_RESULT_ALLOWED;
@@ -2480,6 +2525,31 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $oSearch->getNum();
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_timeline Accounts
+     * @subsection bx_timeline-other Other
+     * @subsubsection bx_timeline-get_menu_addon_profile_stats get_menu_addon_profile_stats
+     * 
+     * @code bx_srv('bx_timeline', 'get_menu_addon_profile_stats', [...]); @endcode
+     * 
+     * Get number of 'muted' events for currently logged in user. User End -> Profile Stats.
+     *
+     * @return integer number of 'muted' events
+     * 
+     * @see BxTimelineModule::serviceGetMenuAddonProfileStats
+     */
+    /** 
+     * @ref bx_timeline-get_menu_addon_profile_stats "get_menu_addon_profile_stats"
+     */
+    public function serviceGetMenuAddonProfileStats($iProfileId = 0)
+    {
+        if(empty($iProfileId))
+            $iProfileId = $this->_iProfileId;
+
+        return $this->getConnectionMuteObject()->getConnectedContentCount($iProfileId);
+    }
+
     public function serviceGet($aParams)
     {
         $aParams = $this->_prepareParams($aParams);
@@ -2971,6 +3041,11 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $oCacheEngine;
     }
 
+    public function getConnectionMuteObject()
+    {
+        return BxDolConnection::getObjectInstance($this->_oConfig->getObject('connection_mute'));
+    }
+
     //--- Check permissions methods ---//
     public function serviceCheckAllowedViewForProfile ($aDataEntry, $isPerformAction = false, $iProfileId = false)
     {
@@ -3272,6 +3347,31 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
     }
 
+    public function isAllowedMute($aEvent, $bPerform = false)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        if($aEvent[$CNF['FIELD_OWNER_ID']] != $this->_iProfileId)
+            return false;
+
+        $iAuthor = (int)$aEvent[$CNF['FIELD_OWNER_ID']];
+        if(!$this->_oConfig->isSystem($aEvent['type'], $aEvent['action']))
+            $iAuthor = (int)$aEvent[$CNF['FIELD_OBJECT_ID']];
+
+        if($this->_iProfileId == $iAuthor || $this->getConnectionMuteObject()->isConnected($this->_iProfileId, $iAuthor))
+            return false;
+
+        return $this->_isAllowedMute($bPerform);
+    }
+
+    public function isAllowedUnmute($iAuthor, $bPerform = false)
+    {
+    	if(!$this->getConnectionMuteObject()->isConnected($this->_iProfileId, $iAuthor))
+            return false;
+
+        return $this->_isAllowedMute($bPerform);
+    }
+
     /**
      * Pin - "Pin here" - pin the post on Profile Timeline for profile owner.
      * Can be done by profile owner for himself or by admin for profile owner to see.
@@ -3326,7 +3426,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         return $this->_isAllowedPromote($aEvent, $bPerform);
     }
 
-	public function isAllowedUnpromote($aEvent, $bPerform = false)
+    public function isAllowedUnpromote($aEvent, $bPerform = false)
     {
     	if((int)$aEvent['promoted'] == 0)
     		return false;
@@ -3921,7 +4021,19 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         );
     }
 
-	protected function _isAllowedPin($aEvent, $bPerform = false)
+    protected function _isAllowedMute($bPerform = false)
+    {
+    	if($this->_iProfileId == 0)
+            return false;
+
+        if(isAdmin())
+           return true;
+
+        $aCheckResult = checkActionModule($this->_iProfileId, 'mute', $this->getName(), $bPerform);
+        return $aCheckResult[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED ? $aCheckResult[CHECK_ACTION_MESSAGE] : true;
+    }
+
+    protected function _isAllowedPin($aEvent, $bPerform = false)
     {
     	$iUserId = (int)$this->getUserId();
     	if($iUserId == 0)

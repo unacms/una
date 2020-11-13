@@ -66,6 +66,18 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_cache` (
   PRIMARY KEY `item` (`type`, `context_id`, `profile_id`, `event_id`)
 );
 
+-- TABLE: mute
+CREATE TABLE IF NOT EXISTS `bx_timeline_mute` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `initiator` int(11) NOT NULL,
+  `content` int(11) NOT NULL,
+  `mutual` tinyint(4) NOT NULL,
+  `added` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `initiator` (`initiator`,`content`),
+  KEY `content` (`content`)
+);
+
 -- TABLES: STORAGES, TRANSCODERS, UPLOADERS
 CREATE TABLE IF NOT EXISTS `bx_timeline_photos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

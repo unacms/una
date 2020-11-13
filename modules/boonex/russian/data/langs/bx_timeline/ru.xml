@@ -145,8 +145,13 @@
     <string name="_bx_timeline_page_block_title_system_view_hot_outline"><![CDATA[Хроника 'горячих' новостей (сводка)]]></string>
     <string name="_bx_timeline_page_block_title_view_hot_outline"><![CDATA[Хроника 'горячих' новостей]]></string>
     <string name="_bx_timeline_page_block_title_browse_cmts"><![CDATA[Хроника новостей - Комментарии]]></string>
+
+    <string name="_bx_timeline_page_title_sys_manage"><![CDATA[Управление]]></string>
+    <string name="_bx_timeline_page_title_manage"><![CDATA[Управление лентой]]></string>
+    <string name="_bx_timeline_page_block_title_system_manage"><![CDATA[Управление]]></string>
     <string name="_bx_timeline_page_block_title_system_manage_administration"><![CDATA[Управление всеми событями ленты]]></string>
     <string name="_bx_timeline_page_block_title_manage"><![CDATA[Управление]]></string>
+    <string name="_bx_timeline_page_block_title_muted"><![CDATA[Отключенные]]></string>
 
     <string name="_bx_timeline_page_content_ph_timeline"><![CDATA[Лента: c заполнителем в виде ленты]]></string>
 
@@ -196,6 +201,8 @@
     <string name="_bx_timeline_menu_item_title_item_delete"><![CDATA[{delete_title}]]></string>
     <string name="_bx_timeline_menu_item_title_item_delete_common"><![CDATA[Удалить]]></string>  
     <string name="_bx_timeline_menu_item_title_item_delete_system"><![CDATA[Скрыть из хроник]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_mute"><![CDATA[Отключить автора]]></string>
+    <string name="_bx_timeline_menu_item_title_item_mute"><![CDATA[Отключить автора]]></string>
 
     <string name="_bx_timeline_menu_title_item_actions"><![CDATA[Элемент - Действия]]></string>
     <string name="_bx_timeline_menu_set_title_item_actions"><![CDATA[Элемент - Действия]]></string>
@@ -233,6 +240,9 @@
     <string name="_bx_timeline_menu_item_title_create_entry"><![CDATA[Статус]]></string>
     <string name="_bx_timeline_menu_item_title_system_view_timeline_view"><![CDATA[Лента]]></string>
     <string name="_bx_timeline_menu_item_title_view_timeline_view"><![CDATA[Лента]]></string>
+
+    <string name="_bx_timeline_menu_item_title_system_manage_my_timeline"><![CDATA[Лента]]></string>
+    <string name="_bx_timeline_menu_item_title_manage_my_timeline"><![CDATA[Лента]]></string>
 
     <string name="_bx_timeline_grid_column_title_adm_active"><![CDATA[Активные]]></string>
     <string name="_bx_timeline_grid_column_title_adm_description"><![CDATA[Событие]]></string>

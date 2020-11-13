@@ -95,9 +95,11 @@
     <string name="_bx_timeline_acl_action_vote"><![CDATA[Vote]]></string>
     <string name="_bx_timeline_acl_action_repost"><![CDATA[Repost]]></string>
     <string name="_bx_timeline_acl_action_send"><![CDATA[Send]]></string>
+    <string name="_bx_timeline_acl_action_mute"><![CDATA[Mute Author]]></string>
     <string name="_bx_timeline_acl_action_pin"><![CDATA['Pin here' Any Post]]></string>
     <string name="_bx_timeline_acl_action_stick"><![CDATA['Pin for all' Any Post]]></string>
     <string name="_bx_timeline_acl_action_promote"><![CDATA[Promote Any Post]]></string>
+
 
     <!-- Pages -->
     <string name="_bx_timeline_page_title_sys_view"><![CDATA[Profile Feed]]></string>
@@ -145,8 +147,13 @@
     <string name="_bx_timeline_page_block_title_system_view_hot_outline"><![CDATA[Hot Feed (Outline)]]></string>
     <string name="_bx_timeline_page_block_title_view_hot_outline"><![CDATA[Hot Feed]]></string>
     <string name="_bx_timeline_page_block_title_browse_cmts"><![CDATA[Feeds' Comments]]></string>
+
+    <string name="_bx_timeline_page_title_sys_manage"><![CDATA[Manage]]></string>
+    <string name="_bx_timeline_page_title_manage"><![CDATA[Manage Timeline]]></string>
+    <string name="_bx_timeline_page_block_title_system_manage"><![CDATA[Manage]]></string>
     <string name="_bx_timeline_page_block_title_system_manage_administration"><![CDATA[Manage All]]></string>
     <string name="_bx_timeline_page_block_title_manage"><![CDATA[Manage]]></string>
+    <string name="_bx_timeline_page_block_title_muted"><![CDATA[Muted]]></string>
 
     <string name="_bx_timeline_page_content_ph_timeline"><![CDATA[Timeline: with timeline placeholder]]></string>
 
@@ -196,6 +203,8 @@
     <string name="_bx_timeline_menu_item_title_item_delete"><![CDATA[{delete_title}]]></string>
     <string name="_bx_timeline_menu_item_title_item_delete_common"><![CDATA[Delete]]></string>
     <string name="_bx_timeline_menu_item_title_item_delete_system"><![CDATA[Hide from feeds]]></string>
+    <string name="_bx_timeline_menu_item_title_system_item_mute"><![CDATA[Mute Author]]></string>
+    <string name="_bx_timeline_menu_item_title_item_mute"><![CDATA[Mute Author]]></string>
 
     <string name="_bx_timeline_menu_title_item_actions"><![CDATA[Item Actions]]></string>
     <string name="_bx_timeline_menu_set_title_item_actions"><![CDATA[Item Actions]]></string>
@@ -233,6 +242,9 @@
     <string name="_bx_timeline_menu_item_title_create_entry"><![CDATA[Update]]></string>
     <string name="_bx_timeline_menu_item_title_system_view_timeline_view"><![CDATA[Timeline]]></string>
     <string name="_bx_timeline_menu_item_title_view_timeline_view"><![CDATA[Timeline]]></string>
+
+    <string name="_bx_timeline_menu_item_title_system_manage_my_timeline"><![CDATA[Timeline]]></string>
+    <string name="_bx_timeline_menu_item_title_manage_my_timeline"><![CDATA[Timeline]]></string>
 
     <string name="_bx_timeline_grid_column_title_adm_active"><![CDATA[Active]]></string>
     <string name="_bx_timeline_grid_column_title_adm_description"><![CDATA[Event]]></string>

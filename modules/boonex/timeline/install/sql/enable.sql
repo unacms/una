@@ -11,7 +11,9 @@ INSERT INTO `sys_objects_page`(`object`, `title_system`, `title`, `module`, `lay
 ('bx_timeline_view_hot', '_bx_timeline_page_title_sys_view_hot', '_bx_timeline_page_title_view_hot', 'bx_timeline', 5, 2147483647, 1, 'timeline-view-hot', 'page.php?i=timeline-view-hot', '', '', '', 0, 1, 0, '', ''),
 
 ('bx_timeline_item', '_bx_timeline_page_title_sys_item', '_bx_timeline_page_title_item', 'bx_timeline', 2, 2147483647, 1, 'item', 'page.php?i=item', '', '', '', 0, 1, 0, 'BxTimelinePageViewItem', 'modules/boonex/timeline/classes/BxTimelinePageViewItem.php'),
-('bx_timeline_item_brief', '_bx_timeline_page_title_sys_item_brief', '_bx_timeline_page_title_item_brief', 'bx_timeline', 2, 2147483647, 1, 'item-quick', 'page.php?i=item-quick', '', '', '', 0, 1, 0, 'BxTimelinePageViewItem', 'modules/boonex/timeline/classes/BxTimelinePageViewItem.php');
+('bx_timeline_item_brief', '_bx_timeline_page_title_sys_item_brief', '_bx_timeline_page_title_item_brief', 'bx_timeline', 2, 2147483647, 1, 'item-quick', 'page.php?i=item-quick', '', '', '', 0, 1, 0, 'BxTimelinePageViewItem', 'modules/boonex/timeline/classes/BxTimelinePageViewItem.php'),
+
+('bx_timeline_manage', '_bx_timeline_page_title_sys_manage', '_bx_timeline_page_title_manage', 'bx_timeline', 5, 2147483647, 1, 'timeline-manage', 'page.php?i=timeline-manage', '', '', '', 0, 1, 0, '', '');
 
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES
 ('bx_timeline_view', 1, 'bx_timeline', '_bx_timeline_page_block_title_system_post_profile', '_bx_timeline_page_block_title_post_profile', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:14:"get_block_post";}', 0, 0, 1, 1),
@@ -31,7 +33,9 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `
 
 ('bx_timeline_item_brief', 1, 'bx_timeline', '', '_bx_timeline_page_block_title_item_content', 0, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:22:"get_block_item_content";}', 0, 0, 1, 1),
 ('bx_timeline_item_brief', 2, 'bx_timeline', '', '_bx_timeline_page_block_title_item_info', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:19:"get_block_item_info";}', 0, 0, 1, 1),
-('bx_timeline_item_brief', 2, 'bx_timeline', '', '_bx_timeline_page_block_title_item_comments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:23:"get_block_item_comments";}', 0, 0, 1, 2);
+('bx_timeline_item_brief', 2, 'bx_timeline', '', '_bx_timeline_page_block_title_item_comments', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:23:"get_block_item_comments";}', 0, 0, 1, 2),
+
+('bx_timeline_manage', 1, 'bx_timeline', '', '_bx_timeline_page_block_title_muted', 11, 2147483647, 'service', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:15:"get_block_muted";}', 0, 0, 1, 1);
 
 
 -- PAGES: add page block on dashboard
@@ -124,8 +128,9 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_timeline_menu_item_manage', 'bx_timeline', 'item-promote', '_bx_timeline_menu_item_title_system_item_promote', '_bx_timeline_menu_item_title_item_promote', 'javascript:void(0)', 'javascript:{js_object_view}.promotePost(this, {content_id}, 1)', '_self', 'certificate ', '', 2147483647, 1, 0, 4),
 ('bx_timeline_menu_item_manage', 'bx_timeline', 'item-unpromote', '_bx_timeline_menu_item_title_system_item_unpromote', '_bx_timeline_menu_item_title_item_unpromote', 'javascript:void(0)', 'javascript:{js_object_view}.promotePost(this, {content_id}, 0)', '_self', 'certificate', '', 2147483647, 1, 0, 5),
 ('bx_timeline_menu_item_manage', 'bx_timeline', 'item-report', '_bx_timeline_menu_item_title_system_item_report', '', 'javascript:void(0)', '', '', '', '', 2147483647, 1, 0, 6),
-('bx_timeline_menu_item_manage', 'bx_timeline', 'item-edit', '_bx_timeline_menu_item_title_system_item_edit', '_bx_timeline_menu_item_title_item_edit', 'javascript:void(0)', 'javascript:{js_object_view}.editPost(this, {content_id})', '_self', 'pencil-alt', '', 2147483647, 1, 0, 7),
-('bx_timeline_menu_item_manage', 'bx_timeline', 'item-delete', '_bx_timeline_menu_item_title_system_item_delete', '_bx_timeline_menu_item_title_item_delete', 'javascript:void(0)', 'javascript:{js_object_view}.deletePost(this, {content_id})', '_self', 'remove', '', 2147483647, 1, 0, 8);
+('bx_timeline_menu_item_manage', 'bx_timeline', 'item-mute', '_bx_timeline_menu_item_title_system_item_mute', '_bx_timeline_menu_item_title_item_mute', 'javascript:void(0)', 'javascript:{js_object_view}.muteAuthor(this, {content_id})', '_self', 'user-slash', '', 2147483647, 1, 0, 7),
+('bx_timeline_menu_item_manage', 'bx_timeline', 'item-edit', '_bx_timeline_menu_item_title_system_item_edit', '_bx_timeline_menu_item_title_item_edit', 'javascript:void(0)', 'javascript:{js_object_view}.editPost(this, {content_id})', '_self', 'pencil-alt', '', 2147483647, 1, 0, 8),
+('bx_timeline_menu_item_manage', 'bx_timeline', 'item-delete', '_bx_timeline_menu_item_title_system_item_delete', '_bx_timeline_menu_item_title_item_delete', 'javascript:void(0)', 'javascript:{js_object_view}.deletePost(this, {content_id})', '_self', 'remove', '', 2147483647, 1, 0, 9);
 
 -- MENU: Item Actions (Comment, Vote, Share, Report, etc)
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -164,6 +169,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-promote', '_bx_timeline_menu_item_title_system_item_promote', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 140),
 ('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-unpromote', '_bx_timeline_menu_item_title_system_item_unpromote', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 150),
 ('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-report', '_bx_timeline_menu_item_title_system_item_report', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 160),
+('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-mute', '_bx_timeline_menu_item_title_system_item_mute', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 165),
 ('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-edit', '_bx_timeline_menu_item_title_system_item_edit', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 170),
 ('bx_timeline_menu_item_actions_all', 'bx_timeline', 'item-delete', '_bx_timeline_menu_item_title_system_item_delete', '', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 180),
 ('bx_timeline_menu_item_actions_all', 'bx_timeline', 'more-auto', '_sys_menu_item_title_system_va_more_auto', '_sys_menu_item_title_va_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', '', 0, 2147483647, 1, 0, 1, 9999);
@@ -218,6 +224,11 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('trigger_profile_view_submenu', 'bx_timeline', 'timeline-view', '_bx_timeline_menu_item_title_system_view_timeline_view', '_bx_timeline_menu_item_title_view_timeline_view', 'page.php?i=timeline-view&profile_id={profile_id}', '', '', 'far clock col-green1', '', 2147483647, 1, 0, 0),
 ('trigger_group_view_submenu', 'bx_timeline', 'timeline-view', '_bx_timeline_menu_item_title_system_view_timeline_view', '_bx_timeline_menu_item_title_view_timeline_view', 'page.php?i=timeline-view&profile_id={profile_id}', '', '', 'far clock col-green1', '', 2147483647, 1, 0, 0);
+
+-- MENU: profile stats
+SET @iPStatsMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name` = 'sys_profile_stats' AND `active` = 1 LIMIT 1);
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
+('sys_profile_stats', 'bx_timeline', 'profile-stats-manage-timeline', '_bx_timeline_menu_item_title_system_manage_my_timeline', '_bx_timeline_menu_item_title_manage_my_timeline', 'page.php?i=timeline-manage', '', '_self', 'far clock col-green1', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:28:"get_menu_addon_profile_stats";}', '', 2147483646, 1, 0, @iPStatsMenuOrder + 2);
 
 -- MENU: dashboard manage tools
 SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);
@@ -326,6 +337,10 @@ INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`,
 SET @iIdActionSend = LAST_INSERT_ID();
 
 INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
+('bx_timeline', 'mute', NULL, '_bx_timeline_acl_action_mute', '', 1, 3);
+SET @iIdActionMute = LAST_INSERT_ID();
+
+INSERT INTO `sys_acl_actions` (`Module`, `Name`, `AdditionalParamName`, `Title`, `Desc`, `Countable`, `DisabledForLevels`) VALUES
 ('bx_timeline', 'pin', NULL, '_bx_timeline_acl_action_pin', '', 1, 3);
 SET @iIdActionPin = LAST_INSERT_ID();
 
@@ -381,6 +396,12 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 (@iAdministrator, @iIdActionSend),
 (@iPremium, @iIdActionSend),
 
+-- mute
+(@iStandard, @iIdActionMute),
+(@iModerator, @iIdActionMute),
+(@iAdministrator, @iIdActionMute),
+(@iPremium, @iIdActionMute),
+
 -- pin any post
 (@iModerator, @iIdActionPin),
 (@iAdministrator, @iIdActionPin),
@@ -419,6 +440,18 @@ INSERT INTO `sys_objects_search` (`ObjectName`, `Title`, `Order`, `ClassName`, `
 ('bx_timeline_cmts', '_bx_timeline_cmts', @iSearchOrder + 2, 'BxTimelineCmtsSearchResult', 'modules/boonex/timeline/classes/BxTimelineCmtsSearchResult.php');
 
 
+-- GRIDS: connection mute
+INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `responsive`, `override_class_name`, `override_class_file`) VALUES
+('bx_timeline_mute', 'Sql', 'SELECT `p`.`id`, `c`.`added`, `c`.`mutual` FROM `sys_profiles` AS `p` INNER JOIN `sys_accounts` AS `a` ON (`a`.`id` = `p`.`account_id`) {join_connections}', 'sys_profiles', 'id', 'c`.`added', '', '', 10, NULL, 'start', '', 'name,email', '', 'auto', '', '', 2147483647, 0, 'BxTimelineGridMute', 'modules/boonex/timeline/classes/BxTimelineGridMute.php');
+
+INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `params`, `hidden_on`, `order`) VALUES
+('bx_timeline_mute', 'name', '_sys_name', '60%', '', '', 1),
+('bx_timeline_mute', 'info', '', '20%', '', '1', 2),
+('bx_timeline_mute', 'actions', '', '20%', '', '', 3);
+
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
+('bx_timeline_mute', 'single', 'delete', '', 'remove', 0, 1, 2);
+
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
 ('bx_timeline_administration', 'Sql', 'SELECT * FROM `bx_timeline_events` WHERE 1 AND `active`=''1'' ', 'bx_timeline_events', 'id', 'date', 'status', '', 20, NULL, 'start', '', 'title,description', '', 'like', 'reports', '', 192, 'BxTimelineGridAdministration', 'modules/boonex/timeline/classes/BxTimelineGridAdministration.php');
@@ -437,9 +470,15 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_timeline_administration', 'single', 'delete', '_bx_timeline_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_timeline_administration', 'single', 'audit_content', '_bx_timeline_grid_action_title_adm_audit_content', 'search', 1, 0, 4);
 
+
 -- METATAGS
 INSERT INTO `sys_objects_metatags` (`object`, `table_keywords`, `table_locations`, `table_mentions`, `override_class_name`, `override_class_file`) VALUES
 ('bx_timeline', 'bx_timeline_meta_keywords', 'bx_timeline_meta_locations', 'bx_timeline_meta_mentions', '', '');
+
+
+-- CONNECTIONS
+INSERT INTO `sys_objects_connection` (`object`, `table`, `type`, `override_class_name`, `override_class_file`) VALUES
+('bx_timeline_mute', 'bx_timeline_mute', 'one-way', '', '');
 
 
 -- EMAIL TEMPLATES
