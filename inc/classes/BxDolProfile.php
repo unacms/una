@@ -526,6 +526,10 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
      */
     public function suspend($iAction, $iProfileId = 0, $bSendEmailNotification = true)
     {
+        //moderators shouldn't be able to suspend other moderators and admins
+        if (BxDolAcl::getInstance()->isMemberLevelInSet(array(MEMBERSHIP_ID_MODERATOR), bx_get_logged_profile_id()) && BxDolAcl::getInstance()->isMemberLevelInSet(array(MEMBERSHIP_ID_MODERATOR, MEMBERSHIP_ID_ADMINISTRATOR), $iProfileId))
+            return false;
+        
         return $this->changeStatus(BX_PROFILE_STATUS_SUSPENDED, 'suspend', $iAction, $iProfileId, $bSendEmailNotification);
     }
 
