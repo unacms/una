@@ -157,7 +157,7 @@ function check_logged()
     $bLogged = false;
     foreach ($aAccTypes as $iRole => $sValue) {
         if ($GLOBALS['logged'][$sValue] = ($sID && !bx_check_login($sID, $sPassword, $iRole))) {
-            BxDolSession::getInstance()->start();
+            BxDolSession::getInstance();
             $bLogged = true;
             break;
         }

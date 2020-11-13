@@ -94,7 +94,9 @@ class BxDolTranscoderQuery extends BxDolDb
     {
         $iTime = time();
         $sQuery = $this->prepare("UPDATE {$this->_sTableFiles} SET `atime` = ? WHERE `transcoder_object` = ? AND `handler` = ? LIMIT 1", $iTime, $this->_aObject['object'], (string)$mixedHandler);
-        return $this->res($sQuery);
+        $mixedRes = $this->res($sQuery);
+        $this->setReadOnlyMode(true);
+        return $mixedRes;
     }
 
     public function deleteFileTraces($iFileId)
