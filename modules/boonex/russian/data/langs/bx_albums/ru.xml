@@ -240,6 +240,7 @@
     <string name="_bx_albums_grid_column_title_adm_author"><![CDATA[Автор]]></string>
     <string name="_bx_albums_grid_action_title_adm_edit"><![CDATA[Редактировать]]></string>
     <string name="_bx_albums_grid_action_title_adm_delete"><![CDATA[Удалить]]></string>
+    <string name="_bx_albums_grid_action_title_adm_clear_reports"><![CDATA[Очистить жалобы]]></string>
     <string name="_bx_albums_grid_action_title_adm_more_actions"><![CDATA[Больше действий]]></string>
     <string name="_bx_albums_grid_action_title_adm_audit_content"><![CDATA[Аудит действий]]></string>
     <string name="_bx_albums_grid_action_err_delete"><![CDATA[Невозможно удалить выбранный(ные) альбом(ы).]]></string>

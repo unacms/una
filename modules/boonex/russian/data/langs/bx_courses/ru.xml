@@ -263,6 +263,7 @@
     <string name="_bx_courses_grid_column_title_adm_account"><![CDATA[Аккаунт]]></string>
     <string name="_bx_courses_grid_action_title_adm_audit_context"><![CDATA[Аудит действий в контексте]]></string>
     <string name="_bx_courses_grid_action_title_adm_audit_content"><![CDATA[Аудит действий над контентом]]></string>
+    <string name="_bx_courses_grid_action_title_adm_clear_reports"><![CDATA[Очистить жалобы]]></string>
     <string name="_bx_courses_grid_action_title_adm_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_courses_grid_action_title_adm_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
     <string name="_bx_courses_grid_action_title_adm_more_actions"><![CDATA[Дополнительные действия]]></string>
