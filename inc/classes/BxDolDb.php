@@ -34,6 +34,9 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
     	BX_DB_ERR_ESCAPE => 'Escape string error'
     );
 
+    protected static $_bReadOnlyMode = true;
+    protected static $_bMultuServersMode = false;
+
 	protected $_bPdoPersistent;
 	protected $_iPdoFetchType;
 	protected $_iPdoErrorMode;
@@ -138,6 +141,40 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
     	return self::$_rLink;
     }
 
+    public function setReadOnlyMode($b)
+    {
+        if ($b == self::$_bReadOnlyMode)
+            return;
+        self::$_bReadOnlyMode = $b;
+        if (self::$_bMultuServersMode) {
+            $this->disconnect();
+            $this->connect();
+        }
+    }
+
+    protected function balancer()
+    {
+        // regular mode - one DB server
+        if (!is_array($this->_sHost))
+            return array($this->_sHost, $this->_sPort, $this->_sSocket, $this->_sUser, $this->_sPassword, $this->_sDbname);
+
+        $iServersNum = count($this->_sHost);
+        if ($iServersNum > 1)
+            self::$_bMultuServersMode = true;
+
+        // in read/write mode always use first server, which should be always master (also check for regular mode but with array with 1 item)        
+        if (!self::$_bReadOnlyMode || 1 == $iServersNum)
+            $i = 0;
+        // in case of 2 servers - always use second server, in read only mode
+        elseif (2 == $iServersNum)
+            $i = 1;
+        // when there are more that 2 servers, randomly select read only server
+        else
+            $i = rand(1, $iServersNum-1);
+            
+        return array($this->_sHost[$i], $this->_sPort[$i], $this->_sSocket[$i], $this->_sUser[$i], $this->_sPassword[$i], $this->_sDbname[$i]);
+    }
+
     /**
      * connect to database with appointed parameters
      */
@@ -146,13 +183,15 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
     	if(self::$_rLink)
     		return;
 
-    	try {
-	    	$sDsn = "mysql:host=" . $this->_sHost . ";";
-	   		$sDsn .= $this->_sPort ? "port=" . $this->_sPort . ";" : "";
-	   		$sDsn .= $this->_sSocket ? "unix_socket=" . $this->_sSocket . ";" : "";
-	    	$sDsn .= "dbname=" . $this->_sDbname . ";charset=" . $this->_sCharset;
+        list ($sHost, $sPort, $sSocket, $sUser, $sPassword, $sDBName) = $this->balancer();
 
-	        self::$_rLink = new PDO($sDsn, $this->_sUser, $this->_sPassword, array(
+    	try {   
+	    	$sDsn = "mysql:host=" . $sHost . ";";
+	   		$sDsn .= $sPort ? "port=" . $sPort . ";" : "";
+	   		$sDsn .= $sSocket ? "unix_socket=" . $sSocket . ";" : "";
+	    	$sDsn .= "dbname=" . $sDBName . ";charset=" . $this->_sCharset;
+
+	        self::$_rLink = new PDO($sDsn, $sUser, $sPassword, array(
 				PDO::ATTR_ERRMODE => $this->_iPdoErrorMode,
 				PDO::ATTR_DEFAULT_FETCH_MODE => $this->_iPdoFetchType,
 				PDO::ATTR_PERSISTENT => $this->_bPdoPersistent
@@ -973,6 +1012,9 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
     	if(!self::$_rLink)
     		return false;
 
+        if (self::$_bMultuServersMode && (0 != strncasecmp(ltrim($sQuery, " \t\n\r(\0\x0B"), 'SELECT', 6)))
+            $this->setReadOnlyMode(false);
+
         $aArgs = func_get_args();
         $sQuery = array_shift($aArgs);
 
@@ -1217,9 +1259,9 @@ class BxDolDb extends BxDolFactory implements iBxDolSingleton
         
 		if(!empty($aError['trace'])) {
             $sBackTrace = print_r($aError['trace'], true);
-            if (defined ('BX_DATABASE_USER'))
+            if (defined ('BX_DATABASE_USER') && !is_array(BX_DATABASE_USER))
                 $sBackTrace = str_replace('[_sUser:protected] => ' . BX_DATABASE_USER, '[_sUser:protected] => *****', $sBackTrace);
-            if (defined ('BX_DATABASE_PASS'))
+            if (defined ('BX_DATABASE_PASS') && !is_array(BX_DATABASE_PASS))
                 $sBackTrace = str_replace('[_sPassword:protected] => ' . BX_DATABASE_PASS, '[_sPassword:protected] => *****', $sBackTrace);
 
 			$sOutput .= '<div><b>Debug backtrace:</b></div><div style="overflow:scroll;height:300px;border:1px solid gray;"><pre>' . htmlspecialchars_adv($sBackTrace) . '</pre></div>';

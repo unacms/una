@@ -415,6 +415,8 @@ class BxBasePage extends BxDolPage
 
             $sTitle = $this->getBlockTitle($aBlock);
 
+            $this->_oQuery->setReadOnlyMode(true);
+
             if(is_array($mixedContent) && !empty($mixedContent['content'])) {
                 $aParams = array(
                     isset($mixedContent['title']) ? $mixedContent['title'] : $sTitle,

@@ -459,7 +459,9 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         if(empty($aParamsSet))
             return false;
 
-        return (int)$this->query("REPLACE INTO `{$this->_sTableCache}` SET " . $this->arrayToSQL($aParamsSet)) > 0;
+        $iRet = (int)$this->query("REPLACE INTO `{$this->_sTableCache}` SET " . $this->arrayToSQL($aParamsSet)) > 0;
+        $this->setReadOnlyMode(true);
+        return $iRet;
     }
 
     public function deleteCache($aParamsWhere)

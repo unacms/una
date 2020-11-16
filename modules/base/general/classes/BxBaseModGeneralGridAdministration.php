@@ -65,6 +65,30 @@ class BxBaseModGeneralGridAdministration extends BxTemplGrid
         echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['grid_action_err_delete'])));
     }
     
+    public function performActionClearReports($aParams = array())
+    {
+    	$CNF = &$this->_oModule->_oConfig->CNF;
+
+        $iAffected = 0;
+        $aIds = bx_get('ids');
+        if(!$aIds || !is_array($aIds)) {
+            echoJson(array());
+            exit;
+        }
+
+        $aIdsAffected = array ();
+        foreach($aIds as $iId) {
+            if (isset($CNF['OBJECT_REPORTS'])){
+                $oReport = BxDolReport::getObjectInstance($CNF['OBJECT_REPORTS'], $iId);
+                $oReport->actionClearReport();
+                $aIdsAffected[] = $iId;
+                $iAffected++;
+            }
+        }
+
+        echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['grid_action_err_clear_reports'])));
+    }
+
     protected function _getActionAuditContent($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
         if (!getParam('sys_audit_enable') || getParam('sys_audit_acl_levels') == '')
