@@ -344,7 +344,8 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES 
 ('bx_courses_menu_manage_tools', 'bx_courses', 'delete', '_bx_courses_menu_item_title_system_delete', '_bx_courses_menu_item_title_delete', 'javascript:void(0)', 'javascript:{js_object}.onClickDelete({content_id});', '_self', 'far trash-alt', '', 2147483647, 1, 0, 1),
-('bx_courses_menu_manage_tools', 'bx_courses', 'delete-with-content', '_bx_courses_menu_item_title_system_delete_with_content', '_bx_courses_menu_item_title_delete_with_content', 'javascript:void(0)', 'javascript:{js_object}.onClickDeleteWithContent({content_id});', '_self', 'far trash-alt', '', 2147483647, 1, 0, 2);
+('bx_courses_menu_manage_tools', 'bx_courses', 'delete-with-content', '_bx_courses_menu_item_title_system_delete_with_content', '_bx_courses_menu_item_title_delete_with_content', 'javascript:void(0)', 'javascript:{js_object}.onClickDeleteWithContent({content_id});', '_self', 'far trash-alt', '', 2147483647, 1, 0, 2),
+('bx_courses_menu_manage_tools', 'bx_courses', 'clear-reports', '_bx_courses_menu_item_title_system_clear_reports', '_bx_courses_menu_item_title_clear_reports', 'javascript:void(0)', 'javascript:{js_object}.onClickClearReports({content_id});', '_self', 'eraser', '', 2147483647, 1, 0, 3);
 
 -- MENU: dashboard manage tools
 SET @iManageMenuOrder = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_dashboard_manage_tools' LIMIT 1);
@@ -505,6 +506,7 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_courses_administration', 'bulk', 'delete', '_bx_courses_grid_action_title_adm_delete', '', 0, 1, 2),
 ('bx_courses_administration', 'bulk', 'delete_with_content', '_bx_courses_grid_action_title_adm_delete_with_content', '', 0, 1, 3),
+('bx_courses_administration', 'bulk', 'clear_reports', '_bx_classes_grid_action_title_adm_clear_reports', '', 0, 1, 4),
 ('bx_courses_administration', 'single', 'settings', '_bx_courses_grid_action_title_adm_more_actions', 'cog', 1, 0, 2),
 ('bx_courses_administration', 'single', 'audit_content', '_bx_courses_grid_action_title_adm_audit_content', 'search', 1, 0, 3),
 ('bx_courses_administration', 'single', 'audit_context', '_bx_courses_grid_action_title_adm_audit_context', 'search-location', 1, 0, 4),
