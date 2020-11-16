@@ -5167,7 +5167,7 @@ CREATE TABLE `sys_objects_logs` (
   `active` tinyint(4) NOT NULL DEFAULT '1',
   `class_name` varchar(255) NOT NULL,
   `class_file` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 );
 
 INSERT INTO `sys_objects_logs` (`object`, `module`, `logs_storage`, `title`, `active`, `class_name`, `class_file`) VALUES
