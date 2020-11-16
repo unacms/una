@@ -2035,4 +2035,17 @@ function bx_get_device_pixel_ratio()
     return $iRatio;
 }
 
+/**
+ * Log to logs object
+ * @param $sObject - logs object
+ * @param $mixed - string or array to log
+ */
+function bx_log($sObject, $mixed)
+{
+    if ($o = BxDolLogs::getObjectInstance($sObject))
+        return $o->add($mixed);
+    else
+        return false;
+}
+
 /** @} */

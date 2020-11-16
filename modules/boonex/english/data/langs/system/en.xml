@@ -1508,6 +1508,7 @@
 	<string name="_adm_stg_cpt_option_sys_hide_post_to_context_for_privacy"><![CDATA[Hide post to context for modules in Privacy field]]></string>
     <string name="_adm_stg_cpt_option_sys_search_keyword_min_len"><![CDATA[Keyword min length in site search]]></string>
     <string name="_adm_stg_cpt_option_sys_profile_bot"><![CDATA[System bot profile]]></string>
+    <string name="_adm_stg_cpt_option_sys_logs_storage_default"><![CDATA[Default logs storage]]></string>
 	<string name="_adm_stg_cpt_type_system"><![CDATA[System]]></string>
 	<string name="_adm_stg_scs_save"><![CDATA[Settings were successfully saved]]></string>
 	<string name="_adm_stg_err_save_error_message"><![CDATA[Error in '{0}': {1}]]></string>
@@ -2502,6 +2503,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_location_determining"><![CDATA[Determining location...]]></string>
 	<string name="_sys_location_geolocation_not_supported_by_browser"><![CDATA[Geolocation is not supported by this browser]]></string>
 	<string name="_sys_location_undefined"><![CDATA[Location off]]></string>
+	<string name="_sys_log_db_err"><![CDATA[System: DB error log]]></string>
     <string name="_sys_macros_malformed"><![CDATA[Error: malformed macros]]></string>
     <string name="_sys_macros_unsafe"><![CDATA[Error: unsafe macros]]></string>
     <string name="_sys_macros_output_not_displayable"><![CDATA[Error: output isn't displayable]]></string>

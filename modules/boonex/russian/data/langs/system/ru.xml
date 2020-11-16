@@ -1491,6 +1491,7 @@
     <string name="_adm_stg_cpt_option_sys_hide_post_to_context_for_privacy"><![CDATA[Скрыть из поля "Конфиденциальность" возможность добавления контента в контекст модулей]]></string>
     <string name="_adm_stg_cpt_option_sys_search_keyword_min_len"><![CDATA[Минимальная длина слова в поиске по сайту]]></string>
     <string name="_adm_stg_cpt_option_sys_profile_bot"><![CDATA[Профиль системного бота]]></string>
+    <string name="_adm_stg_cpt_option_sys_logs_storage_default"><![CDATA[Система логирования по умолчанию]]></string>
 	<string name="_adm_stg_cpt_type_system"><![CDATA[Система]]></string>
 	<string name="_adm_stg_scs_save"><![CDATA[Настройки удачно сохранены]]></string>
 	<string name="_adm_stg_err_save_error_message"><![CDATA[Ошибка в '{0}': {1}]]></string>
@@ -2459,6 +2460,7 @@
 	<string name="_sys_location_determining"><![CDATA[Определение местоположения...]]></string>
 	<string name="_sys_location_geolocation_not_supported_by_browser"><![CDATA[Геолокация не поддерживается этим браузером]]></string>
 	<string name="_sys_location_undefined"><![CDATA[Отключить местоположение]]></string>
+    <string name="_sys_log_db_err"><![CDATA[Система: логирование ошибок БД]]></string>
     <string name="_sys_macros_malformed"><![CDATA[Ошибка: некорректный макрос]]></string>
     <string name="_sys_macros_unsafe"><![CDATA[Ошибка: небезопасный макрос]]></string>
     <string name="_sys_macros_output_not_displayable"><![CDATA[Ошибка: некорректный вывод макроса]]></string>
