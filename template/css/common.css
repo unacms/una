@@ -851,3 +851,9 @@ input.bx-btn {
 	line-height: 24px;
 	line-height: 1.5rem;
 }
+
+/* --------------- search */
+
+.bx-page-block-container .bx-search-results:first-child {
+     padding-top:0; 
+}
