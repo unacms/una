@@ -3351,7 +3351,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     {
         $CNF = &$this->_oConfig->CNF;
 
-        if($aEvent[$CNF['FIELD_OWNER_ID']] != $this->_iProfileId)
+        if(!empty($aEvent[$CNF['FIELD_OWNER_ID']]) && $aEvent[$CNF['FIELD_OWNER_ID']] != $this->_iProfileId)
             return false;
 
         $iAuthor = (int)$aEvent[$CNF['FIELD_OWNER_ID']];
