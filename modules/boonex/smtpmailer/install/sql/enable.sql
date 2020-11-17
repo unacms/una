@@ -22,6 +22,11 @@ INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `c
 ('bx_smtp_from_name', '', @iCategId, '_bx_smtp_option_from_name', 'digit', '', '', 80, ''),
 ('bx_smtp_from_email', '', @iCategId, '_bx_smtp_option_from_email', 'digit', '', '', 90, '');
 
+-- logs
+
+INSERT INTO `sys_objects_logs` (`object`, `module`, `logs_storage`, `title`, `active`, `class_name`, `class_file`) VALUES
+('bx_smtp_mailer', 'system', 'Auto', '_bx_smtp_mailer_log', 1, '', '');
+
 -- alerts
 
 INSERT INTO `sys_alerts_handlers` (`name`, `class`, `file`, `service_call`) VALUES 
