@@ -34,8 +34,6 @@ class BxBaseModPaymentProvider extends BxDol
     protected $_bUseSsl;
     protected $_bRedirectOnResult;
 
-    protected $_sLogFile;
-
     /**
      * Is needed to translate status received from Payment Provider 
      * to internal one. 
@@ -57,8 +55,6 @@ class BxBaseModPaymentProvider extends BxDol
         $this->_sName = $aConfig['name'];
         $this->_sCaption = _t($aConfig['caption']);
         $this->_sPrefix = $aConfig['option_prefix'];
-
-        $this->_sLogFile = BX_DIRECTORY_PATH_LOGS . 'bx_pp_' . $this->_sName . '.log';
 
         $this->_aSbsStatuses = array();
 
@@ -188,24 +184,12 @@ class BxBaseModPaymentProvider extends BxDol
 	 */
 	protected function log($sContents)
 	{
-		try {
-			if($this->_sLogFile != '')
-				$file = $this->_sLogFile;
-	    	else 
-				$file = dirname(__FILE__) . '/bx_pp_' . $this->_sName . '.log';
-	
-			file_put_contents($file, date('m-d H:i:s').": ", FILE_APPEND);
-	
-			if (is_array($sContents))
-				$sContents = var_export($sContents, true);	
-			else if (is_object($sContents))
-				$sContents = json_encode($sContents);
-	
-			file_put_contents($file, $sContents."\n", FILE_APPEND);
-	  	} 
-	  	catch (Exception $e) {
-			echo 'Error: ' . $e->getMessage();
-	  	}
+		if (is_array($sContents))
+			$sContents = var_export($sContents, true);	
+		else if (is_object($sContents))
+			$sContents = json_encode($sContents);
+		
+		bx_log('bx_pp_' . $this->_sName, $sContents);
 	}
 }
 

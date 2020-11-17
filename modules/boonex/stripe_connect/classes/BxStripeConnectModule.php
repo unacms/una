@@ -502,23 +502,12 @@ class BxStripeConnectModule extends BxBaseModConnectModule
 
 	protected function _log($sContents)
 	{
-		try {
-			$sFile = $this->_oConfig->getLogFile();
-			if(empty($sFile))
-				$sFile = dirname(__FILE__) . "/bx_stripe_connect.log";
-	
-			file_put_contents($sFile, date('m-d H:i:s') . ": ", FILE_APPEND);
-	
-			if (is_array($sContents))
-				$sContents = var_export($sContents, true);	
-			else if (is_object($sContents))
-				$sContents = json_encode($sContents);
-	
-			file_put_contents($sFile, $sContents . "\n", FILE_APPEND);
-	  	} 
-	  	catch (Exception $oException) {
-			echo "Error: " . $oException->getMessage();
-	  	}
+		if (is_array($sContents))
+			$sContents = var_export($sContents, true);	
+		else if (is_object($sContents))
+			$sContents = json_encode($sContents);
+		
+		bx_log('bx_elasticsearch', $sContents);
 	}
 }
 

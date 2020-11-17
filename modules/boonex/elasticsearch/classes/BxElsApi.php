@@ -238,15 +238,13 @@ class BxElsApi extends BxDol
     {
         if (!defined('BX_ELASTICSEARCH_LOG') || !constant('BX_ELASTICSEARCH_LOG'))
             return;
-        $fn = BX_DIRECTORY_PATH_ROOT . "logs/elasticsearch.log";
-        $f = @fopen ($fn, 'a');
-        if (!$f)
-            return;
-        if (is_array($mixed))
-            fwrite ($f, date(DATE_RFC822) . "\n" . print_r($mixed, true) . "\n");
-        else
-            fwrite ($f, date(DATE_RFC822) . "\t" . $mixed . "\n");
-        fclose ($f);
+        
+		if (is_array($mixed))
+			$mixed = var_export($mixed, true);	
+		else if (is_object($mixed))
+			$mixed = json_encode($mixed);
+		
+		bx_log('bx_elasticsearch', $mixed);
     }
 }
 
