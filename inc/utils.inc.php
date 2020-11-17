@@ -547,16 +547,9 @@ function echoDbg( $what, $desc = '' )
     echo "</pre>\n";
 }
 
-function echoDbgLog($mWhat, $sDesc = '', $sFileName = 'debug.log')
+function echoDbgLog($mWhat, $sDesc = 'unused', $sFileName = 'unused')
 {
-    $sCont =
-        '--- ' . date('r') . ' (' . BX_DOL_START . ") ---\n" .
-        $sDesc . "\n" .
-        print_r($mWhat, true) . "\n\n\n";
-
-    $rFile = fopen(BX_DIRECTORY_PATH_LOGS . $sFileName, 'a');
-    fwrite($rFile, $sCont);
-    fclose($rFile);
+    bx_log('sys_debug', $mWhat);
 }
 
 function dbgTiming($sStartMicrotime)

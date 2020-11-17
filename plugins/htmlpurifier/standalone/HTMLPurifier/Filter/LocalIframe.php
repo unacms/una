@@ -16,12 +16,10 @@ class HTMLPurifier_Filter_LocalIframe extends HTMLPurifier_Filter
                     $iHeight = $height[1];
                     $sDolUrl = preg_quote(BX_DOL_URL_ROOT);
                     $sIframeUrl = '';
-echoDbgLog($sItem);
                     if (preg_match("#({$sDolUrl}[a-zA-Z0-9_=\-\?\&\/]+)#", $sItem, $aMatches))
                         $sIframeUrl = $aMatches[1];
                     if (preg_match("#src=\"(((?!//)(?![a-z]+://)(?![a-z]+://))[a-zA-Z0-9_=\-\?\&\/]+)#", $sItem, $aMatches))
                         $sIframeUrl = $aMatches[1];
-echoDbgLog($sIframeUrl);
                     if ($sIframeUrl)
                         $sHtml = str_replace($aResult[0][$key], '<img class="LocalIframe" width="' . $iWidth . '" height="' . $iHeight . '" src="' . $sIframeUrl . '">', $sHtml);                    
                 }
