@@ -1627,6 +1627,23 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
 
 		return $oProfile->id() == $iLogged;
     }
+    
+    public function isAllowDeleteOrDisable($iActorProfileId, $iTargetProfileId)
+    {
+        if (BxDolAcl::getInstance()->isMemberLevelInSet(array(MEMBERSHIP_ID_MODERATOR), $iActorProfileId) && BxDolAcl::getInstance()->isMemberLevelInSet(array(MEMBERSHIP_ID_MODERATOR, MEMBERSHIP_ID_ADMINISTRATOR), $iTargetProfileId))
+            return false;
+        
+        return true;    
+    }
+    
+    public function getProfileObject($iContentId)
+    {
+    	$oProfile = BxDolProfile::getInstanceByContentAndType((int)$iContentId, $this->_oConfig->getName());
+        if (!$oProfile) 
+            $oProfile = BxDolProfileUndefined::getInstance();
+
+        return $oProfile;
+    }
 
     protected function _serviceCheckAllowedContactForProfile($aDataEntry, $isPerformAction = false, $iProfileId = false)
     {

@@ -39,7 +39,10 @@ class BxBaseModProfileMenuManageTools extends BxBaseModGeneralMenuManageTools
             case 'delete-with-content':
             	if($this->_oModule->checkMyself($this->_iContentId))
             		return false;
-
+                $oProfile = $this->_oModule->getProfileObject(($this->_iContentId));
+                if (!$this->_oModule->isAllowDeleteOrDisable(bx_get_logged_profile_id(), $oProfile->id()))
+                    return false;
+                
                 $sCheckFuncName = 'checkAllowedDelete';
                 break;
         }
