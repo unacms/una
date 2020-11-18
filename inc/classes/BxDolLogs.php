@@ -112,11 +112,30 @@ class BxDolLogs extends BxDolFactory implements iBxDolFactoryObject
     /**
      * Get logs from current logs storage
      * @param $iLines number of lines from the tail to return
-     * @return array of strings
+     * @param $sFilter filter lines by keyword
+     * @return array of strings or false on error
      */
-    public function get($iLines = 30)
+    public function get($iLines = 30, $sFilter = '')
     {
-        return $this->_oLogsStorage->add($this, $mixed);
+        if (!$this->_oLogsStorage->isGetAvail())
+            return false;
+        return $this->_oLogsStorage->get($this, $iLines, $sFilter);
+    }
+
+    /**
+     * Check if filtering supported in `get` method
+     */
+    public function isFilterAvail()
+    {
+        return $this->_oLogsStorage->isFilterAvail();
+    }
+
+    /**
+     * Check if `get` method available
+     */
+    public function isGetAvail()
+    {
+        return $this->_oLogsStorage->isGetAvail();
     }
 }
 
