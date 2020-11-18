@@ -1,9 +1,10 @@
 SET @sName = 'bx_stripe_connect';
 
-
 -- TABLES
 DROP TABLE IF EXISTS `bx_stripe_connect_accounts`;
 
+-- Logs Objects
+DELETE FROM `sys_objects_logs` WHERE `module` = @sName;
 
 -- Studio page and widget
 DELETE FROM `tp`, `tw`, `tpw`

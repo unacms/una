@@ -16,6 +16,10 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_elasticsearch_manage_index', 'type', 2147483647, 1, 2),
 ('bx_elasticsearch_manage_index', 'do_submit', 2147483647, 1, 3);
 
+-- Logs Objects
+INSERT INTO `sys_objects_logs` (`object`, `module`, `logs_storage`, `title`, `active`, `class_name`, `class_file`) VALUES
+('bx_elasticsearch', 'bx_elasticsearch', 'Auto', '_bx_elasticsearch_log', 1, '', '');
+
 
 -- Studio page and widget
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES

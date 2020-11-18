@@ -1,3 +1,6 @@
+-- Logs Objects
+INSERT INTO `sys_objects_logs` (`object`, `module`, `logs_storage`, `title`, `active`, `class_name`, `class_file`) VALUES
+('bx_profiler', 'bx_profiler', 'Auto', '_bx_profiler_log', 1, '', '');
 
 -- Studio page and widget.
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES

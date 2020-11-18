@@ -15,6 +15,9 @@ CREATE TABLE `bx_stripe_connect_accounts` (
   UNIQUE KEY `user_id` (`user_id`)
 );
 
+-- Logs Objects
+INSERT INTO `sys_objects_logs` (`object`, `module`, `logs_storage`, `title`, `active`, `class_name`, `class_file`) VALUES
+('bx_stripe_connect', 'bx_stripe_connect', 'Auto', '_bx_stripe_connect_log', 1, '', '');
 
 -- Studio page and widget
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES

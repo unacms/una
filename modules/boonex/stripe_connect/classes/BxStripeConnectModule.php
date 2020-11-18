@@ -507,7 +507,7 @@ class BxStripeConnectModule extends BxBaseModConnectModule
 		else if (is_object($sContents))
 			$sContents = json_encode($sContents);
 		
-		bx_log('bx_elasticsearch', $sContents);
+		bx_log('bx_stripe_connect', $sContents);
 	}
 }
 

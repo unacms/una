@@ -189,7 +189,7 @@ class BxBaseModPaymentProvider extends BxDol
 		else if (is_object($sContents))
 			$sContents = json_encode($sContents);
 		
-		bx_log('bx_pp_' . $this->_sName, $sContents);
+		bx_log('sys_payments', '[' . $this->_sName . '] ' . $sContents);
 	}
 }
 

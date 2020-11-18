@@ -5173,7 +5173,8 @@ CREATE TABLE `sys_objects_logs` (
 INSERT INTO `sys_objects_logs` (`object`, `module`, `logs_storage`, `title`, `active`, `class_name`, `class_file`) VALUES
 ('sys_debug', 'system', 'Auto', '_sys_log_debug', 1, '', ''),
 ('sys_twilio', 'system', 'Auto', '_sys_log_twilio', 1, '', ''),
-('sys_push', 'system', 'Auto', '_sys_log_push', 1, '', '');
+('sys_push', 'system', 'Auto', '_sys_log_push', 1, '', ''),
+('sys_payments', 'system', 'Auto', '_sys_log_payments', 1, '', '');
 
 
 -- --------------------------------------------------------
