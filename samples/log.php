@@ -31,11 +31,16 @@ function PageCompMainCode()
     ob_start();
 
     $ret = null;
-    // if ($o = BxDolLogs::getObjectInstance('sys_db_err'))
-    //    $ret = $o->add('Hello world!');
-    $ret = bx_log('sys_db_err', 'Hello world3!');
+    if ($o = BxDolLogs::getObjectInstance('sys_db_err'))
+        $ret = $o->add('Hello world!');
+    // $ret = bx_log('sys_db_err', 'Hello world!');
 
     var_dump($ret);
+
+    if ($o->isGetAvail())
+        echoDbg($o->get(30, 'world3'));
+    else
+        echo 'get logs n/a';
 
     return DesignBoxContent("Logs", ob_get_clean(), BX_DB_PADDING_DEF);
 }
