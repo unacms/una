@@ -48,7 +48,7 @@
     <string name="_bx_orgs_form_profile_input_initial_members"><![CDATA[Invite Members]]></string>
     <string name="_bx_orgs_form_profile_input_sys_org_name"><![CDATA[Organization Name]]></string>
     <string name="_bx_orgs_form_profile_input_org_name"><![CDATA[Organization Name]]></string>
-    <string name="_bx_orgs_form_profile_input_org_name_err"><![CDATA[This information is essential. Please, fill in this field.]]></string>
+    <string name="_bx_orgs_form_profile_input_org_name_err"><![CDATA[Profile name is mandatory and and cannot start with @]]></string>
     <string name="_bx_orgs_form_profile_input_sys_org_desc"><![CDATA[Description]]></string>
     <string name="_bx_orgs_form_profile_input_org_desc"><![CDATA[Description]]></string>
     <string name="_bx_orgs_form_profile_input_sys_org_cat"><![CDATA[Category]]></string>
