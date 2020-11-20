@@ -11,9 +11,48 @@
 
 class BxFilesSearchResult extends BxBaseModTextSearchResult
 {
+    protected $sOrderParamName = 'order';
+    protected $sBookmarksParamName = 'bookmarks';
+    protected $sSortingParamName = 'sorting';
+    protected $sCurrentView;
+    protected $bFileManagerMode = false;
+    protected $iFileManagerUploadTo = 0;
+
     function __construct($sMode = '', $aParams = array())
     {
+        $aParams['unit_views'] = [
+            'extended' => 'unit.html',
+            'gallery' => 'unit_gallery.html',
+            'full' => 'unit_full.html',
+            'showcase' => 'unit_showcase.html',
+            'table' => 'unit_simple_row.html',
+        ];
+
+        //Enble filemanager (toolbar, table files layout, dynamic menus, folders support) only for author/context blocks.
+        if (($sMode == 'author' || $sMode == 'context')) {
+            $this->bFileManagerMode = true;
+            $this->setUnitParams(['show_inline_menu' => true]);
+        }
+
         parent::__construct($sMode, $aParams);
+
+        $this->sCurrentView = array_flip($aParams['unit_views'])[$this->sUnitTemplate];
+
+        $this->aGetParams = array_merge($this->aGetParams, [
+            $this->sOrderParamName,
+            $this->sBookmarksParamName,
+            $this->sSortingParamName,
+            $this->sUnitViewParamName,
+        ]);
+
+
+        $this->aSortingOptions = [
+            'name',
+            'date',
+            'type',
+            'author',
+        ];
+
 
         $this->aCurrent = array(
             'name' => 'bx_files',
@@ -121,8 +160,217 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
         }
 
         $this->processReplaceableMarkers($oProfileAuthor);
-
         $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
+
+        if ($this->bFileManagerMode) {
+            if (bx_get($this->sBookmarksParamName))
+                $this->addConditionsForBookmarks($CNF);
+
+            $this->aCurrent['sorting'] = 'name';
+            if (bx_get($this->sSortingParamName)) $this->aCurrent['sorting'] = bx_get($this->sSortingParamName);
+
+            if ($this->aCurrent['sorting'] == 'type')
+                $this->addConditionsForMimeType($CNF);
+
+            $this->removeContainerClass('bx-def-margin-sec-lefttopright-neg');
+
+            $this->iFileManagerUploadTo = $oProfileAuthor->id();
+        }
+    }
+
+    protected function addConditionsForBookmarks(&$CNF) {
+        if(empty($this->aCurrent['join']) || !is_array($this->aCurrent['join'])) $this->aCurrent['join'] = [];
+
+        $this->aCurrent['join'] = array_merge($this->aCurrent['join'], [
+            'bookmarks' => [
+                'type' => 'INNER',
+                'table' => $CNF['TABLE_BOOKMARKS'],
+                'mainTable' => $CNF['TABLE_ENTRIES'],
+                'mainField' => $CNF['FIELD_ID'],
+                'onField' => $CNF['FIELD_BOOKMARKS_ID'],
+                'joinFields' => array($CNF['FIELD_BOOKMARKS_PROFILE']),
+            ],
+        ]);
+
+        $this->aCurrent['restriction']['bookmarks'] = [
+            'value' => bx_get_logged_profile_id(),
+            'field' => $CNF['FIELD_BOOKMARKS_PROFILE'],
+            'operator' => '=',
+            'table' => $CNF['TABLE_BOOKMARKS'],
+        ];
+    }
+
+    protected function addConditionsForMimeType(&$CNF) {
+        if(empty($this->aCurrent['join']) || !is_array($this->aCurrent['join'])) $this->aCurrent['join'] = [];
+
+        $this->aCurrent['join'] = array_merge($this->aCurrent['join'], [
+            'files' => [
+                'type' => 'INNER',
+                'table' => $CNF['TABLE_FILES'],
+                'mainTable' => $CNF['TABLE_ENTRIES'],
+                'mainField' => $CNF['FIELD_ID'],
+                'onField' => $CNF['FIELD_ID'],
+                'joinFields' => array($CNF['FIELD_MIME_TYPE']),
+            ],
+        ]);
+    }
+
+    public function addCustomParts() {
+        if ($this->_bLiveSearch) return;
+
+        if (!$this->bFileManagerMode) return;
+
+        return $this->showBrowseToolbar([
+            'aRequestParams' => [
+                'unit_view_param' => $this->sUnitViewParamName,
+                'bookmarks_param' => $this->sBookmarksParamName,
+                'sorting_param' => $this->sSortingParamName,
+                'keyword_param' => 'keyword',
+            ],
+
+            'layout' => $this->sCurrentView,
+            'bookmarks' => intval(bx_get($this->sBookmarksParamName)),
+            'sorting' => $this->aCurrent['sorting'],
+            'sorting_options' => $this->aSortingOptions,
+            'keyword' => bx_get('keyword') ? bx_get('keyword') : '',
+        ]);
+    }
+
+    function processing ()
+    {
+        $sCode = parent::processing();
+        if (!$this->aCurrent['paginate']['num'] && bx_is_dynamic_request() && $this->bFileManagerMode) {
+            //to show toolbar in case of empty results
+            $sCode = $this->displaySearchBox($this->addCustomParts().MsgBox(_t('_Empty')));
+        }
+        return $sCode;
+    }
+
+    function showPagination($bAdmin = false, $bChangePage = true, $bPageReload = true)
+    {
+        $aAdditionalParams = [
+            $this->sUnitViewParamName => $this->sCurrentView,
+            $this->sBookmarksParamName => intval(bx_get($this->sBookmarksParamName)),
+            $this->sSortingParamName => $this->aCurrent['sorting'],
+        ];
+        $sPageUrl = $this->getCurrentUrl($aAdditionalParams, false);
+        $sOnClick = $this->getCurrentOnclick($aAdditionalParams, false);
+
+        $oPaginate = new BxTemplPaginate([
+            'page_url' => $sPageUrl,
+            'on_change_page' => $sOnClick,
+            'num' => $this->aCurrent['paginate']['num'],
+            'per_page' => $this->aCurrent['paginate']['perPage'],
+            'start' => $this->aCurrent['paginate']['start'],
+        ]);
+
+        return $sOnClick ? $oPaginate->getSimplePaginate() : $oPaginate->getPaginate();
+    }
+
+    function getAlterOrder() {
+        if (in_array($this->aCurrent['sorting'], $this->aSortingOptions)) {
+            $CNF = &$this->oModule->_oConfig->CNF;
+
+            $aSql = array();
+            switch ($this->aCurrent['sorting']) {
+                case 'name':
+                    $aSql['order'] = ' ORDER BY `'.$CNF['TABLE_ENTRIES'].'`.`'.$CNF['FIELD_TITLE'].'` ASC';
+                    break;
+                case 'date':
+                    $aSql['order'] = ' ORDER BY `'.$CNF['TABLE_ENTRIES'].'`.`'.$CNF['FIELD_ID'].'` DESC';
+                    break;
+                case 'author':
+                    $aSql['order'] = ' ORDER BY `'.$CNF['TABLE_ENTRIES'].'`.`'.$CNF['FIELD_AUTHOR'].'` ASC, `'.$CNF['TABLE_ENTRIES'].'`.`'.$CNF['FIELD_TITLE'].'` ASC';
+                    break;
+                case 'type':
+                    $aSql['order'] = ' ORDER BY `'.$CNF['TABLE_FILES'].'`.`'.$CNF['FIELD_MIME_TYPE'].'` ASC, `'.$CNF['TABLE_ENTRIES'].'`.`'.$CNF['FIELD_TITLE'].'` ASC';
+                    break;
+            }
+            return $aSql;
+        } else {
+            return parent::getAlterOrder();
+        }
+
+    }
+
+    public function showBrowseToolbar($aParams) {
+        $aSortingOptions = [];
+        if (isset($aParams['sorting_options'])) {
+            foreach ($aParams['sorting_options'] as $sSorting) {
+                $aSortingOptions[$sSorting] = _t('_bx_files_toolbar_sorting_' . $sSorting);
+            }
+        }
+
+        $sUniqueIdent = mt_rand();
+        $aParams['unique_ident'] = $sUniqueIdent;
+
+        $this->oModule->_oTemplate->addJs('toolbar_tools.js');
+
+        $sJsCode = $this->oModule->_oTemplate->getJsCode(['type' => 'toolbar_tools', 'uniq' => $sUniqueIdent], $aParams);
+        $sJsObject = $this->oModule->_oConfig->getJsObject(['type' => 'toolbar_tools', 'uniq' => $sUniqueIdent]);
+
+        $oForm = new BxTemplFormView([], $this->oModule->_oTemplate);
+        $aInputSorting = [
+            'type' => 'select',
+            'name' => 'sorting',
+            'value' => $aParams['sorting'],
+            'values' => $aSortingOptions,
+            'attrs' => [
+                'onchange' => $sJsObject.'.setSorting(this.value);',
+            ],
+        ];
+
+        $aInputFilter = [
+            'type' => 'text',
+            'name' => 'keyword',
+            'value' => $aParams['keyword'],
+            'attrs' => [
+                'placeholder' => _t('_sys_search_placeholder'),
+                'onkeyup' => $sJsObject.'.onChangeFilter(this);',
+                'onpaste' => $sJsObject.'.onChangeFilter(this);',
+            ],
+        ];
+
+        return $this->oModule->_oTemplate->parseHtmlByName('files_browser_toolbar.html', [
+            'js_object' => $sJsObject,
+            'js_code' => $sJsCode,
+            'unique_ident' => $sUniqueIdent,
+            'sorting_dropdown' => $oForm->genRowStandard($aInputSorting),
+            'filter_box' => $oForm->genRowStandard($aInputFilter),
+            'bx_if:upload_visible' => [
+                'condition' => $this->oModule->serviceIsAllowedAddContentToProfile($this->iFileManagerUploadTo),
+                'content' => [],
+            ],
+            'bx_if:bookmarks_visible' => [
+                'condition' => isLogged(),
+                'content' => [
+                    'js_object' => $sJsObject,
+                    'bookmark_enabled' => $aParams['bookmarks'] ? 'fas' : 'far',
+                ],
+            ],
+            'bx_if:table_layout_btn' => [
+                'condition' => $aParams['layout'] == 'table',
+                'content' => [
+                    'js_object' => $sJsObject,
+                    'unit_view_param' => $aParams['aRequestParams']['unit_view_param'],
+                ],
+            ],
+            'bx_if:gallery_layout_btn' => [
+                'condition' => $aParams['layout'] == 'gallery',
+                'content' => [
+                    'js_object' => $sJsObject,
+                    'unit_view_param' => $aParams['aRequestParams']['unit_view_param'],
+                ],
+            ],
+            'bx_if:select_all_checkbox' => [
+                'condition' => $aParams['layout'] == 'table',
+                'content' => [
+                    'js_object' => $sJsObject,
+                    'unique_ident' => $sUniqueIdent,
+                ],
+            ],
+            'bx_repeat:sorting_options' => $aSortingOptions,
+        ]);
     }
 }
 

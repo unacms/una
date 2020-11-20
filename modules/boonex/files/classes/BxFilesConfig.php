@@ -30,6 +30,7 @@ class BxFilesConfig extends BxBaseModTextConfig
             'TABLE_ENTRIES' => $aModule['db_prefix'] . 'main',
             'TABLE_ENTRIES_FULLTEXT' => 'search_fields',
             'TABLE_FILES' => $aModule['db_prefix'] . 'files',
+            'TABLE_BOOKMARKS' => $aModule['db_prefix'] . 'bookmarks',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -52,6 +53,9 @@ class BxFilesConfig extends BxBaseModTextConfig
             'FIELD_LOCATION_PREFIX' => 'location',
             'FIELD_LABELS' => 'labels',
             'FIELDS_WITH_KEYWORDS' => 'auto', // can be 'auto', array of fields or comma separated string of field names, works only when OBJECT_METATAGS is specified
+            'FIELD_BOOKMARKS_ID' => 'object_id',
+            'FIELD_BOOKMARKS_PROFILE' => 'profile_id',
+            'FIELD_MIME_TYPE' => 'mime_type',
 			
             // some params
             'PARAM_PER_PAGE_FOR_FAVORITES_LISTS' => 'bx_files_per_page_for_favorites_lists',
@@ -77,6 +81,7 @@ class BxFilesConfig extends BxBaseModTextConfig
             'PARAM_CHARS_SUMMARY_PLAIN' => '',
             'PARAM_NUM_RSS' => 'bx_files_rss_num',
             'PARAM_SEARCHABLE_FIELDS' => 'bx_files_searchable_fields',
+            'PARAM_LINK_TO_PREVIEW' => 'bx_files_show_link_to_preview',
 
             // objects
             'OBJECT_STORAGE' => 'bx_files_files',
@@ -146,11 +151,13 @@ class BxFilesConfig extends BxBaseModTextConfig
         );
 
         $this->_aJsClasses = array(
-        	'manage_tools' => 'BxFilesManageTools'
+        	'manage_tools' => 'BxFilesManageTools',
+            'toolbar_tools' => 'BxFilesBrowserTools',
         );
 
         $this->_aJsObjects = array(
-        	'manage_tools' => 'oBxFilesManageTools'
+        	'manage_tools' => 'oBxFilesManageTools',
+            'toolbar_tools' => 'oBxFilesBrowserTools',
         );
 
         $this->_aGridObjects = array(
@@ -158,6 +165,24 @@ class BxFilesConfig extends BxBaseModTextConfig
         	'administration' => $this->CNF['OBJECT_GRID_ADMINISTRATION'],
         	
         );
+    }
+
+    public function getJsClass($mixedType)
+    {
+        if (is_array($mixedType)) {
+            return parent::getJsClass($mixedType['type']);
+        } else {
+            return parent::getJsClass($mixedType);
+        }
+    }
+
+    public function getJsObject($mixedType)
+    {
+        if (is_array($mixedType)) {
+            return parent::getJsObject($mixedType['type']).$mixedType['uniq'];
+        } else {
+            return parent::getJsObject($mixedType);
+        }
     }
 }
 
