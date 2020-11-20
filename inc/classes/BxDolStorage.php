@@ -44,12 +44,13 @@ define('BX_DOL_STORAGE_ERR_SITE_QUOTA_EXCEEDED', 1007); ///< site quota exceeded
 define('BX_DOL_STORAGE_ERR_ENGINE_ADD', 1008); ///< some other error during file adding occured, related to particular storage engine
 
 define('BX_DOL_STORAGE_ERR_FILE_NOT_FOUND', 2001); ///< file not found
-define('BX_DOL_STORAGE_ERR_UNLINK', 2002); ///< file deletiotion failed
+define('BX_DOL_STORAGE_ERR_UNLINK', 2002); ///< file deletion failed
 
 define('BX_DOL_STORAGE_ERR_DB', 5001); ///< database error
 define('BX_DOL_STORAGE_ERR_FILESYSTEM_PERM', 5002); ///< filesystem permissions error
 define('BX_DOL_STORAGE_ERR_PERMISSION_DENIED', 5003); ///< permission denied
 define('BX_DOL_STORAGE_ERR_ENGINE_GET', 5004); ///< some other error during file getting occured, related to particular storage engine
+define('BX_DOL_STORAGE_ERR_NOT_IMPLEMENTED', 5005); ///< this feature isn't implemented in storage engine
 
 define('BX_DOL_STORAGE_DEFAULT_MIME_TYPE', 'octet/stream'); ///< default mime type if it is not find by extension
 
@@ -317,6 +318,11 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
     	return $this->_aObject['object'];
     }
 
+    public function getObjectData()
+    {
+    	return $this->_aObject;
+    }
+
     /**
      * Get error code from the last occured error
      * @return error code
@@ -351,6 +357,7 @@ abstract class BxDolStorage extends BxDolFactory implements iBxDolFactoryObject
             5002 => '_sys_storage_err_filesystem_perm',
             5003 => '_sys_storage_err_permission_denied',
             5004 => '_sys_storage_err_engine_get',
+            5005 => '_sys_storage_err_not_implemented',
         );
         return _t($a[$this->_iErrorCode]);
     }

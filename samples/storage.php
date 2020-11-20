@@ -57,9 +57,13 @@ function PageCompMainCode()
 
     $iProfileId = 123;
     BxDolStorage::pruning(); // pruning is needed to clear expired security tokens, you can call it on cron when your server is not busy
-    $oStorage = BxDolStorage::getObjectInstance('sample');
+    $oStorage = BxDolStorage::getObjectInstance('sys_files');
 
-    echo '<pre>reloadMimeTypesFromFile: [' . $oStorage->reloadMimeTypesFromFile(/*'/Users/alex/mime.types'*/'/etc/apache2/mime.types') . ']</pre>';
+    $aStorageObject = $oStorage->getObjectData();
+    echo "<b>Engine: " . $aStorageObject['engine'] . '</b><br />';
+    echo "<b>Endpoint: " . getParam('sys_storage_s3_endpoint') . '</b><br />';
+
+    // echo '<pre>reloadMimeTypesFromFile: [' . $oStorage->reloadMimeTypesFromFile(/*'/Users/alex/mime.types'*/'/etc/apache2/mime.types') . ']</pre>';
 
     if (isset($_POST['add'])) {
         $iId = $oStorage->storeFileFromForm($_FILES['file'], true, $iProfileId);
@@ -94,7 +98,7 @@ function PageCompMainCode()
     $a = $oStorage->getFilesAll();
     echo "<h2>Files List:</h2> <hr />";
     foreach ($a as $r)
-        echo $r['file_name'] . '(private:[' . $oStorage->isFilePrivate($r['id']) . ']) : <img src="' . $oStorage->getFileUrlById($r['id']) . '" /> <hr />';
+        echo $r['file_name'] . '(private:[' . $oStorage->isFilePrivate($r['id']) . ']) : <img src="' . $oStorage->getFileUrlById($r['id']) . '" style="max-width:150px;" /> <hr />';
 
     echo '<form method="POST">';
     foreach ($a as $r)

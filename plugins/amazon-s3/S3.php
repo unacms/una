@@ -1182,8 +1182,9 @@ class S3
 		$expires = self::__getTime() + $lifetime;
 		$uri = str_replace(array('%2F', '%2B'), array('/', '+'), rawurlencode($uri));
 		return sprintf(($https ? 'https' : 'http').'://%s/%s?AWSAccessKeyId=%s&Expires=%u&Signature=%s',
-		$hostBucket ? $bucket : $bucket.'.s3.amazonaws.com', $uri, self::$__accessKey, $expires,
+		
 		// $hostBucket ? $bucket : self::$endpoint.'/'.$bucket, $uri, self::$__accessKey, $expires,
+        $hostBucket ? $bucket : $bucket . '.' . self::$endpoint, $uri, self::$__accessKey, $expires,
 		urlencode(self::__getHash("GET\n\n\n{$expires}\n/{$bucket}/{$uri}")));
 	}
 
@@ -2355,7 +2356,7 @@ final class S3Request
 			elseif ($header == 'Content-Type')
 				$this->response->headers['type'] = $value;
 			elseif ($header == 'ETag')
-				$this->response->headers['hash'] = $value{0} == '"' ? substr($value, 1, -1) : $value;
+				$this->response->headers['hash'] = $value[0] == '"' ? substr($value, 1, -1) : $value;
 			elseif (preg_match('/^x-amz-meta-.*$/', $header))
 				$this->response->headers[$header] = $value;
 		}

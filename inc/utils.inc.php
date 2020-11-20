@@ -779,6 +779,11 @@ function bx_autoload($sClassName)
 {
     if (0 === strncmp($sClassName, 'BxDol', 5) || 0 === strncmp($sClassName, 'BxBase', 6) || 0 === strncmp($sClassName, 'BxTempl', 7))
         bx_import($sClassName);
+    else {
+        if (0 === strpos($sClassName, 'Akeeba\Engine\Postproc\Connector\S3v4')) {
+            require_once(BX_DIRECTORY_PATH_PLUGINS . 'akeeba-s3/src' . str_replace('\\', '/', substr($sClassName, 37)) . '.php');
+        }
+    }
 }
 
 /**
