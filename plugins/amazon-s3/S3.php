@@ -2252,7 +2252,7 @@ final class S3Request
 
 		// Parse body into XML
 		if ($this->response->error === false && isset($this->response->headers['type']) &&
-		$this->response->headers['type'] == 'application/xml' && isset($this->response->body))
+		0 === strpos($this->response->headers['type'], 'application/xml') && isset($this->response->body))
 		{
 			$this->response->body = simplexml_load_string($this->response->body);
 
