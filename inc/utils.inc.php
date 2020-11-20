@@ -1334,7 +1334,7 @@ function bx_append_url_params ($sUrl, $mixedParams)
     if (!$mixedParams)
         return $sUrl;
 
-    $sParams = false == strpos($sUrl, '?') ? '?' : '&';
+    $sParams = false === strpos($sUrl, '?') ? '?' : '&';
 
     if (is_array($mixedParams)) {
         foreach($mixedParams as $sKey => $sValue) {
