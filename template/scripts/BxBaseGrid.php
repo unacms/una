@@ -41,7 +41,7 @@ class BxBaseGrid extends BxDolGrid
     {
         require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
-        echoJson(array('grid' => $this->getCode(false)));
+        echoJson(array('grid' => $this->getCode(false), 'total_count' => $this->_iTotalCount));
     }
 
     public function performActionReorder()
@@ -119,62 +119,67 @@ class BxBaseGrid extends BxDolGrid
         $sOrderField = bx_unicode_urldecode(bx_process_input(bx_get($this->_aOptions['order_get_field'])));
         $sOrderDir = 0 === strcasecmp('desc', bx_get($this->_aOptions['order_get_dir'])) ? 'DESC' : 'ASC';
 
-        if ($this->_aOptions['paginate_get_start'])
-            $iStart = (int)bx_get($this->_aOptions['paginate_get_start']);
-        else
-            $iStart = 0;
-
-        if ($this->_aOptions['paginate_get_per_page'] && (int)bx_get($this->_aOptions['paginate_get_per_page']) > 0)
-            $iPerPage = (int)bx_get($this->_aOptions['paginate_get_per_page']);
-        elseif ($this->_aOptions['paginate_per_page'])
-            $iPerPage = (int)$this->_aOptions['paginate_per_page'];
-        else
-            $iPerPage = 10;
-
-        if ($this->_aOptions['paginate_get_start']) {
-
-            $aData = $this->_getData ($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage + 1);
-
-            $sPageUrl = false;
-            if (!empty($this->_aOptions['paginate_url'])) {
-
-                $sPageUrl = $this->_aOptions['paginate_url'];
-
-                $aParamsAppend = array();
-                if ($sFilter) {
-                    $aParamsAppend['filter'] = bx_process_input(bx_get($this->_aOptions['filter_get']));
-                }
-                if ($sOrderField) {
-                    $aParamsAppend['order_field'] = bx_process_input(bx_get($this->_aOptions['order_get_field']));
-                    $aParamsAppend['order_dir'] = bx_process_input(bx_get($this->_aOptions['order_get_dir']));
-                }
-                if ($aParamsAppend)
-                    $sPageUrl = bx_append_url_params($sPageUrl, $aParamsAppend);
-            }
-
-            $aPaginateParams = array(
-                'start' => $iStart,
-                'per_page' => $iPerPage,
-                'page_url' =>  $sPageUrl ? $sPageUrl : "javascript:glGrids." . $this->_sObject . ".reload('{start}'); void(0);",
-            );
-
-            $oPaginate = new BxTemplPaginate($aPaginateParams, $this->_oTemplate);
-            $oPaginate->setNumFromDataArray($aData);
-
-            if (isset($this->_aOptions['paginate_simple']) && false !== $this->_aOptions['paginate_simple'])
-                $sPaginate = $oPaginate->getSimplePaginate($this->_aOptions['paginate_simple']);
+       
+            if ($this->_aOptions['paginate_get_start'])
+                $iStart = (int)bx_get($this->_aOptions['paginate_get_start']);
             else
-                $sPaginate = $oPaginate->getPaginate();
+                $iStart = 0;
 
-        } else {
+            if ($this->_aOptions['paginate_get_per_page'] && (int)bx_get($this->_aOptions['paginate_get_per_page']) > 0)
+                $iPerPage = (int)bx_get($this->_aOptions['paginate_get_per_page']);
+            elseif ($this->_aOptions['paginate_per_page'])
+                $iPerPage = (int)$this->_aOptions['paginate_per_page'];
+            else
+                $iPerPage = 10;
+            
+        if (!$isDisplayHeader){
+            if ($this->_aOptions['paginate_get_start']) {
 
-            $aData = $this->_getData ($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
+                $aData = $this->_getData ($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage + 1);
 
-        }
+                $sPageUrl = false;
+                if (!empty($this->_aOptions['paginate_url'])) {
+
+                    $sPageUrl = $this->_aOptions['paginate_url'];
+
+                    $aParamsAppend = array();
+                    if ($sFilter) {
+                        $aParamsAppend['filter'] = bx_process_input(bx_get($this->_aOptions['filter_get']));
+                    }
+                    if ($sOrderField) {
+                        $aParamsAppend['order_field'] = bx_process_input(bx_get($this->_aOptions['order_get_field']));
+                        $aParamsAppend['order_dir'] = bx_process_input(bx_get($this->_aOptions['order_get_dir']));
+                    }
+                    if ($aParamsAppend)
+                        $sPageUrl = bx_append_url_params($sPageUrl, $aParamsAppend);
+                }
+
+                $aPaginateParams = array(
+                    'start' => $iStart,
+                    'per_page' => $iPerPage,
+                    'page_url' =>  $sPageUrl ? $sPageUrl : "javascript:glGrids." . $this->_sObject . ".reload('{start}'); void(0);",
+                );
+
+                $oPaginate = new BxTemplPaginate($aPaginateParams, $this->_oTemplate);
+                $oPaginate->setNumFromDataArray($aData);
+
+                if (isset($this->_aOptions['paginate_simple']) && false !== $this->_aOptions['paginate_simple'])
+                    $sPaginate = $oPaginate->getSimplePaginate($this->_aOptions['paginate_simple']);
+                else
+                    $sPaginate = $oPaginate->getPaginate();
+
+            } else {
+
+                $aData = $this->_getData ($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
+
+            }
+        
 
         if((empty($aData) || !is_array($aData)) && isset($this->_aBrowseParams['empty_message']) && !(bool)$this->_aBrowseParams['empty_message'])
             return '';
 
+        }
+        
         $sPopupOptions = '{}';
         if (!empty($this->_aPopupOptions) && is_array($this->_aPopupOptions))
             $sPopupOptions = json_encode($this->_aPopupOptions);
@@ -251,6 +256,12 @@ class BxBaseGrid extends BxDolGrid
                         'condition' => !empty($this->_aOptions['filter_fields']) || !empty($this->_aOptions['filter_fields_translatable']),
                         'content' => array(
                             'controls' => $this->_getFilterControls(),
+                        ),
+                    ),
+                    'bx_if:counter' => array (
+                        'condition' => $this->_aOptions['show_total_count'] == 1,
+                        'content' => array(
+                            'counter' => $this->_iTotalCount,
                         ),
                     ),
                 ),

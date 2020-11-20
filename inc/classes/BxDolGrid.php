@@ -248,6 +248,7 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
 
     protected $_aBrowseParams;
     protected $_sDefaultSortingOrder = 'ASC';
+    protected $_iTotalCount = 0;
 
     /**
      * Constructor
@@ -336,7 +337,7 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         $sFunc = '_getData' . $this->_aOptions['source_type'];
         return $this->$sFunc($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
-
+    
     protected function _getDataArray ($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
         if ($this->_aOptions['source'] && !is_array($this->_aOptions['source'])) {
@@ -389,7 +390,11 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         } else {
             $aSourceOrdered = &$aSource;
         }
-
+        
+        // calculate total records count
+        if ($this->_aOptions['show_total_count'] == 1){
+            $this->_iTotalCount =  count($aSourceOrdered);
+        }
         return array_slice($aSourceOrdered, $iStart, $iPerPage, true);
     }
 
@@ -397,7 +402,6 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
    {
         $oDb = BxDolDb::getInstance();
         $sQuery = $this->_aOptions['source'];
-
         if (false === stripos($sQuery, ' WHERE '))
             $sQuery .= " WHERE 1 ";
 
@@ -413,6 +417,12 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         // add order
         $sQuery .= $this->_getDataSqlOrderClause ($sOrderByFilter, $sOrderField, $sOrderDir);
 
+        // calculate total records count
+        if ($this->_aOptions['show_total_count'] == 1){
+            $sQueryCount = "SELECT COUNT(*) " . substr($sQuery, strpos($sQuery, " FROM" ));
+            $this->_iTotalCount =  $oDb->getOne($sQueryCount);
+        }
+        
         $sQuery = $sQuery . $oDb->prepareAsString(' LIMIT ?, ?', $iStart, $iPerPage);
         return $oDb->getAll($sQuery);
     }

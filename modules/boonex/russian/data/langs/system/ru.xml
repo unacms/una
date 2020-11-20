@@ -2364,6 +2364,7 @@
 	<string name="_sys_grid_confirmation"><![CDATA[Вы уверены?]]></string>
 	<string name="_sys_grid_delete_failed"><![CDATA[Удалить ошибочные]]></string>
 	<string name="_sys_grid_search"><![CDATA[Поиск...]]></string>
+  <string name="_sys_grid_total_count"><![CDATA[Всего записей:]]></string>
   <string name="_sys_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 	<string name="_sys_inst_conf_desc"><![CDATA[{0}{1}<br />Пример: {2}]]></string>
 	<string name="_sys_inst_conf_desc_admin_email"><![CDATA[Администратор - email.]]></string>
