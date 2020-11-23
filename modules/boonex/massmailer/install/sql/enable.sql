@@ -70,7 +70,7 @@ INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `tit
 
 -- GRIDS: campaigns administration
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
-('bx_massmailer_campaigns', 'Sql', 'SELECT * FROM `bx_massmailer_campaigns` WHERE 1 ', 'bx_massmailer_campaigns', 'id', 'added', '', '', 20, NULL, 'start', '', 'title', '', 'like', '', '', 128, 'BxMassMailerGridCampaigns', 'modules/boonex/massmailer/classes/BxMassMailerGridCampaigns.php');
+('bx_massmailer_campaigns', 'Sql', 'SELECT * FROM `bx_massmailer_campaigns` WHERE 1 ', 'bx_massmailer_campaigns', 'id', 'added', '', '', 20, NULL, 'start', '', 'title', '', 'like', '', '', 2147483647, 'BxMassMailerGridCampaigns', 'modules/boonex/massmailer/classes/BxMassMailerGridCampaigns.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_massmailer_campaigns', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
