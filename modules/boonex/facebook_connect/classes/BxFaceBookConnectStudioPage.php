@@ -21,6 +21,13 @@ class BxFaceBookConnectStudioPage extends BxTemplStudioModule
         );
     }
     
+    function getSettings ()
+    {
+        $s = parent::getSettings ();
+        $oModule = BxDolModule::getInstance('bx_facebook');         
+        return $oModule->serviceLastError(false) . $s;
+    }
+
     function getHelp ()
     {
         $oModule = BxDolModule::getInstance('bx_facebook'); 
