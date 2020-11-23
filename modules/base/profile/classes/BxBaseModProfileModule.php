@@ -13,6 +13,11 @@ define('BX_DOL_PROFILE_REDIRECT_PROFILE', 'profile');
 define('BX_DOL_PROFILE_REDIRECT_LAST', 'last');
 define('BX_DOL_PROFILE_REDIRECT_CUSTOM', 'custom');
 
+define('BX_DOL_PROFILE_ACTIVATE_ALWAYS', 'on');
+define('BX_DOL_PROFILE_ACTIVATE_NEVER', 'off');
+define('BX_DOL_PROFILE_ACTIVATE_ADD', 'add');
+define('BX_DOL_PROFILE_ACTIVATE_EDIT', 'edit');
+
 /**
  * Base class for profile modules.
  */
@@ -109,6 +114,18 @@ class BxBaseModProfileModule extends BxBaseModGeneralModule implements iBxDolCon
         $aChoices = array(BX_DOL_PROFILE_REDIRECT_PROFILE, BX_DOL_PROFILE_REDIRECT_LAST, BX_DOL_PROFILE_REDIRECT_CUSTOM);
         foreach($aChoices as $sChoice) 
             $aResult[] = array('key' => $sChoice, 'value' => _t($CNF['T']['option_redirect_aadd_' . $sChoice]));
+
+        return $aResult;
+    }
+    
+    public function serviceGetOptionsActivation()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aResult = array();
+        $aChoices = array(BX_DOL_PROFILE_ACTIVATE_ALWAYS, BX_DOL_PROFILE_ACTIVATE_NEVER, BX_DOL_PROFILE_ACTIVATE_ADD, BX_DOL_PROFILE_ACTIVATE_EDIT);
+        foreach($aChoices as $sChoice) 
+            $aResult[] = array('key' => $sChoice, 'value' => _t($CNF['T']['option_activation_' . $sChoice]));
 
         return $aResult;
     }
