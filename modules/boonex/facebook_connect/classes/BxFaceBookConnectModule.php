@@ -36,14 +36,20 @@ class BxFaceBookConnectModule extends BxBaseModConnectModule
         // Create our Application instance.
         $this -> oFacebook = null;
 
-        if ($this -> _oConfig -> mApiID) {
+        if ($this -> _oConfig -> mApiID && $this -> _oConfig -> mApiSecret) {
             if (!isset($_SESSION))
                 session_start();
-            $this -> oFacebook = new Facebook\Facebook(array(
-                'app_id'  => $this -> _oConfig -> mApiID,
-                'app_secret' => $this -> _oConfig -> mApiSecret,
-                'default_graph_version' => 'v2.4',  
-            ));
+
+            try {
+                $this -> oFacebook = new Facebook\Facebook(array(
+                    'app_id'  => $this -> _oConfig -> mApiID,
+                    'app_secret' => $this -> _oConfig -> mApiSecret,
+                    'default_graph_version' => 'v2.4',  
+                ));
+            }
+            catch (Exception $e) {
+                $this->_setLastError($e->getMessage());
+            }
         }
     }
 
@@ -153,9 +159,9 @@ class BxFaceBookConnectModule extends BxBaseModConnectModule
         $this -> _oTemplate -> dislayPageError();
     }
 
-    function serviceLastError()
+    function serviceLastError($bShowEmpty = true)
     {
-        return MsgBox($this->sLastError ? $this->sLastError : _t('_Empty'));
+        return $this->sLastError ? MsgBox($this->sLastError) : ($bShowEmpty ? MsgBox(_t('_Empty')): '');
     }
 
     /**
