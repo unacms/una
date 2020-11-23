@@ -119,66 +119,59 @@ class BxBaseGrid extends BxDolGrid
         $sOrderField = bx_unicode_urldecode(bx_process_input(bx_get($this->_aOptions['order_get_field'])));
         $sOrderDir = 0 === strcasecmp('desc', bx_get($this->_aOptions['order_get_dir'])) ? 'DESC' : 'ASC';
 
-       
-            if ($this->_aOptions['paginate_get_start'])
-                $iStart = (int)bx_get($this->_aOptions['paginate_get_start']);
-            else
-                $iStart = 0;
+        if ($this->_aOptions['paginate_get_start'])
+            $iStart = (int)bx_get($this->_aOptions['paginate_get_start']);
+        else
+            $iStart = 0;
 
-            if ($this->_aOptions['paginate_get_per_page'] && (int)bx_get($this->_aOptions['paginate_get_per_page']) > 0)
-                $iPerPage = (int)bx_get($this->_aOptions['paginate_get_per_page']);
-            elseif ($this->_aOptions['paginate_per_page'])
-                $iPerPage = (int)$this->_aOptions['paginate_per_page'];
-            else
-                $iPerPage = 10;
+        if ($this->_aOptions['paginate_get_per_page'] && (int)bx_get($this->_aOptions['paginate_get_per_page']) > 0)
+            $iPerPage = (int)bx_get($this->_aOptions['paginate_get_per_page']);
+        elseif ($this->_aOptions['paginate_per_page'])
+            $iPerPage = (int)$this->_aOptions['paginate_per_page'];
+        else
+            $iPerPage = 10;
             
-        if (!$isDisplayHeader){
-            if ($this->_aOptions['paginate_get_start']) {
 
-                $aData = $this->_getData ($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage + 1);
+        if ($this->_aOptions['paginate_get_start']) {
 
-                $sPageUrl = false;
-                if (!empty($this->_aOptions['paginate_url'])) {
+            $aData = $this->_getData ($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage + 1);
 
-                    $sPageUrl = $this->_aOptions['paginate_url'];
+            $sPageUrl = false;
+            if (!empty($this->_aOptions['paginate_url'])) {
 
-                    $aParamsAppend = array();
-                    if ($sFilter) {
-                        $aParamsAppend['filter'] = bx_process_input(bx_get($this->_aOptions['filter_get']));
-                    }
-                    if ($sOrderField) {
-                        $aParamsAppend['order_field'] = bx_process_input(bx_get($this->_aOptions['order_get_field']));
-                        $aParamsAppend['order_dir'] = bx_process_input(bx_get($this->_aOptions['order_get_dir']));
-                    }
-                    if ($aParamsAppend)
-                        $sPageUrl = bx_append_url_params($sPageUrl, $aParamsAppend);
+                $sPageUrl = $this->_aOptions['paginate_url'];
+
+                $aParamsAppend = array();
+                if ($sFilter) {
+                    $aParamsAppend['filter'] = bx_process_input(bx_get($this->_aOptions['filter_get']));
                 }
-
-                $aPaginateParams = array(
-                    'start' => $iStart,
-                    'per_page' => $iPerPage,
-                    'page_url' =>  $sPageUrl ? $sPageUrl : "javascript:glGrids." . $this->_sObject . ".reload('{start}'); void(0);",
-                );
-
-                $oPaginate = new BxTemplPaginate($aPaginateParams, $this->_oTemplate);
-                $oPaginate->setNumFromDataArray($aData);
-
-                if (isset($this->_aOptions['paginate_simple']) && false !== $this->_aOptions['paginate_simple'])
-                    $sPaginate = $oPaginate->getSimplePaginate($this->_aOptions['paginate_simple']);
-                else
-                    $sPaginate = $oPaginate->getPaginate();
-
-            } else {
-
-                $aData = $this->_getData ($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
-
+                if ($sOrderField) {
+                    $aParamsAppend['order_field'] = bx_process_input(bx_get($this->_aOptions['order_get_field']));
+                    $aParamsAppend['order_dir'] = bx_process_input(bx_get($this->_aOptions['order_get_dir']));
+                }
+                if ($aParamsAppend)
+                    $sPageUrl = bx_append_url_params($sPageUrl, $aParamsAppend);
             }
-        
+
+            $aPaginateParams = array(
+                'start' => $iStart,
+                'per_page' => $iPerPage,
+                'page_url' =>  $sPageUrl ? $sPageUrl : "javascript:glGrids." . $this->_sObject . ".reload('{start}'); void(0);",
+            );
+
+            $oPaginate = new BxTemplPaginate($aPaginateParams, $this->_oTemplate);
+            $oPaginate->setNumFromDataArray($aData);
+
+            if (isset($this->_aOptions['paginate_simple']) && false !== $this->_aOptions['paginate_simple'])
+                $sPaginate = $oPaginate->getSimplePaginate($this->_aOptions['paginate_simple']);
+            else
+                $sPaginate = $oPaginate->getPaginate();
+        } else {
+            $aData = $this->_getData ($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
+        }
 
         if((empty($aData) || !is_array($aData)) && isset($this->_aBrowseParams['empty_message']) && !(bool)$this->_aBrowseParams['empty_message'])
             return '';
-
-        }
         
         $sPopupOptions = '{}';
         if (!empty($this->_aPopupOptions) && is_array($this->_aPopupOptions))
