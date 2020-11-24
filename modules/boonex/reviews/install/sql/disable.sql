@@ -23,7 +23,7 @@ DELETE `sys_acl_actions`, `sys_acl_matrix` FROM `sys_acl_actions`, `sys_acl_matr
 DELETE FROM `sys_acl_actions` WHERE `Module` = 'bx_reviews';
 
 -- SEARCH
-DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_reviews', 'bx_reviews_cmts');
+DELETE FROM `sys_objects_search` WHERE `ObjectName` IN ('bx_reviews', 'bx_reviews_products', 'bx_reviews_cmts');
 
 -- METATAGS
 DELETE FROM `sys_objects_metatags` WHERE `object` = 'bx_reviews';
