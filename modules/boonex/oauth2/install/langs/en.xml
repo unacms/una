@@ -21,4 +21,6 @@ Specify the following "Main UNA Site URL" on the client sites:<br />
 
 	<string name="_bx_oauth_adm_stg_cpt_type"><![CDATA[OAuth2 Server]]></string>
 	<string name="_bx_oauth_adm_stg_cpt_category_general"><![CDATA[General]]></string>
+	<string name="_bx_oauth_adm_stg_opt_refresh_token_lifetime"><![CDATA[Refresh token lifetime (in seconds)]]></string>
+	<string name="_bx_oauth_adm_stg_opt_always_issue_new_refresh_token"><![CDATA[Always issue new refresh token]]></string>
 </resources>
