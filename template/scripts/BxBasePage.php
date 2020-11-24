@@ -124,14 +124,26 @@ class BxBasePage extends BxDolPage
         else {
             $oCache = $this->_getPageCacheObject();
             $sKey = $this->_getPageCacheKey();
+            $sKeyCssJs = $sKey . 'cssjs';
 
             $mixedRet = $oCache->getData($sKey, $this->_aObject['cache_lifetime']);
+            $aRetCssJs = $oCache->getData($sKeyCssJs, $this->_aObject['cache_lifetime']);
 
-            if ($mixedRet !== null) {
-                $sPageCode = $mixedRet;
+            if ($mixedRet !== null && $aRetCssJs !== null) {
+                BxDolTemplate::getInstance()->collectingStart();                
+                BxDolTemplate::getInstance()->collectingInject($aRetCssJs['css'], $aRetCssJs['js']);
+                $sPageCode = BxDolTemplate::getInstance()->collectingEndGetCode();
+                $sPageCode .= $mixedRet;
             } else {
+
+                BxDolTemplate::getInstance()->collectingStart();
+
                 $sPageCode = $this->_getPageCode();
+
+                $aPageCssJs = BxDolTemplate::getInstance()->collectingEndGetCode(array(), array(), 'array');
+
                 $oCache->setData($sKey, $sPageCode, $this->_aObject['cache_lifetime']);
+                $oCache->setData($sKeyCssJs, $aPageCssJs, $this->_aObject['cache_lifetime']);
             }
         }
         
