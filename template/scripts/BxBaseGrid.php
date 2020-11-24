@@ -254,7 +254,7 @@ class BxBaseGrid extends BxDolGrid
                     'bx_if:counter' => array (
                         'condition' => $this->_aOptions['show_total_count'] == 1,
                         'content' => array(
-                            'counter' => $this->_iTotalCount,
+                            'counter' => _t('_sys_grid_total_count', $this->_iTotalCount),
                         ),
                     ),
                 ),
