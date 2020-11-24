@@ -1,15 +1,16 @@
 <div id="__id__"></div>
 <script>
     var oDefaults = {
-			header: {
+			headerToolbar: {
+				initialView: 'dayGridMonth',
 				left: 'prev,next today',
 				center: 'title',
-				right: 'month,basicWeek,basicDay' 
+				right: 'dayGridDay,dayGridWeek,dayGridMonth' 
 			},
             navLinks: true, // can click day/week names to navigate views
-            eventLimit: true, // allow "more" link when too many events
-            eventLimitClick: 'day'
     };
     var oOptions = __options__;    
-    $('#__id__').fullCalendar($.extend({}, oDefaults, oOptions));
+	document.addEventListener('DOMContentLoaded', function() {
+        new FullCalendar.Calendar(document.getElementById('__id__'), $.extend({}, oDefaults, oOptions)).render();
+	});
 </script>

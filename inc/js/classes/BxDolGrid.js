@@ -34,8 +34,6 @@ function BxDolGrid (sObject, oOptions) {
 
     if (this._sOrderField.length)
         this.setSorting (this._sOrderField, this._sOrderDir, true);
-
-    this.reload(0);
 }
 
 BxDolGrid.prototype.resetSorting = function (sField, sDir) {

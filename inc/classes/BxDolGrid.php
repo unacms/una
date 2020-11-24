@@ -414,19 +414,24 @@ class BxDolGrid extends BxDolFactory implements iBxDolFactoryObject, iBxDolRepla
         $sOrderByFilter = '';
         $sQuery .= $this->_getDataSqlWhereClause($sFilter, $sOrderByFilter);
 
-        // add order
-        $sQuery .= $this->_getDataSqlOrderClause ($sOrderByFilter, $sOrderField, $sOrderDir);
-
         // calculate total records count
         if ($this->_aOptions['show_total_count'] == 1){
-            $sQueryCount = "SELECT COUNT(*) " . substr($sQuery, strpos($sQuery, " FROM" ));
-            $this->_iTotalCount =  $oDb->getOne($sQueryCount);
+             $this->_iTotalCount = $this->_getDataSqCounter($sQuery, $sFilter);
         }
+        
+        // add order
+        $sQuery .= $this->_getDataSqlOrderClause ($sOrderByFilter, $sOrderField, $sOrderDir);
         
         $sQuery = $sQuery . $oDb->prepareAsString(' LIMIT ?, ?', $iStart, $iPerPage);
         return $oDb->getAll($sQuery);
     }
 
+    protected function _getDataSqCounter($sQuery, $sFilter)
+    {
+        $oDb = BxDolDb::getInstance();
+        return $oDb->getOne("SELECT COUNT(*) " . substr($sQuery, strpos($sQuery, " FROM" )));
+    }
+   
     protected function _getDataSqlWhereClause($sFilter, &$sOrderByFilter)
     {
         if(!$sFilter || (empty($this->_aOptions['filter_fields']) && empty($this->_aOptions['filter_fields_translatable']))) 

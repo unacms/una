@@ -28,8 +28,9 @@ INSERT INTO `sys_options_categories` (`type_id`, `name`, `caption`, `order` )
 VALUES (@iTypeId, 'bx_oauth_general', '_bx_oauth_adm_stg_cpt_category_general', 1);
 SET @iCategId = LAST_INSERT_ID();
 
--- INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `order`, `extra`) VALUES
--- ('bx_oauth2_on', '', @iCategId, 'Enable OAuth2 Server', 'checkbox', '', '', '10', '');
+INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `order`, `extra`) VALUES
+('bx_oauth2_refresh_token_lifetime', '7776000', @iCategId, '_bx_oauth_adm_stg_opt_refresh_token_lifetime', 'digit', '', '', '10', ''),
+('bx_oauth2_always_issue_new_refresh_token', 'on', @iCategId, '_bx_oauth_adm_stg_opt_always_issue_new_refresh_token', 'checkbox', '', '', '20', '');
 
 -- Pages
 

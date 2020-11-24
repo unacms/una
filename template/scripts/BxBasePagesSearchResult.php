@@ -71,8 +71,13 @@ class BxBasePagesSearchResult extends BxTemplSearchResult
                 $sIcon = $CNF['ICON'];
         }
         $sUrl = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($aData['url']);
+        
+        $sTitle = _t($aData['title']);
+        if (preg_match ('/{.*?}/', $sTitle))
+            return '';
+        
         $aVars = array(
-            'title' => _t($aData['title']),
+            'title' => $sTitle,
             'content_url' => $sUrl,
             'updated' => $aData['updated_max'] ? bx_time_js($aData['updated_max']) : '',
             'ts' => $aData['updated_max'],

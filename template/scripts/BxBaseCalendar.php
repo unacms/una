@@ -29,7 +29,7 @@ class BxBaseCalendar extends BxDolCalendar
         $oConfig = BxTemplConfig::getInstance();
         
         $aOptionsDefault = array(
-            'timezone' => 'local',
+            'timeZone' => 'local',
             'eventColor' => $oConfig->aLessConfig['bx-color-active'],
             'eventTextColor' => $oConfig->aLessConfig['bx-font-color-default'],
         );

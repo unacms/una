@@ -21,11 +21,12 @@ class BxOAuthStudioPage extends BxTemplStudioModule
 
         $this->aMenuItems = array(
             array('name' => 'settings', 'icon' => 'cogs', 'title' => '_adm_lmi_cpt_settings'),
+            array('name' => 'keys', 'icon' => 'key', 'title' => '_adm_lmi_cpt_keys'),
             array('name' => 'help', 'icon' => 'question', 'title' => '_bx_oauth_help'),
         );
     }
 
-    function getSettings ()
+    function getKeys ()
     {
     	$this->oModule->_oTemplate->addStudioJs(array('BxDolGrid.js'));
     	$this->oModule->_oTemplate->addStudioCss(array('grid.css'));
