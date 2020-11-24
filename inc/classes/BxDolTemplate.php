@@ -469,11 +469,23 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $this->aPageSnapshot = $this->aPage;
     }
 
+    public function collectingInject($aCss, $aJs)
+    {
+        $a = array('css' => 'aCss', 'js' => 'aJs');
+        foreach ($a as $s => $sVar) {
+            if (empty($$sVar))
+                continue;
+            $sKey = $s . '_compiled';
+            foreach ($$sVar as $r)
+                $this->aPage[$sKey][] = $r;
+        }
+    }
+
     /**
      * Get difference for non-system css and js files from previously remembered state as ready HTML code, 
      * additionally filter out css and js from $aExcludeCss and $aExcludeJs arrays
      */
-    public function collectingEndGetCode($aExcludeCss = array(), $aExcludeJs = array())
+    public function collectingEndGetCode($aExcludeCss = array(), $aExcludeJs = array(), $sFormat = 'html')
     {
         $aPageSave = $this->aPage; // save current state to restore later
 
@@ -500,15 +512,23 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         $this->aPage['js_compiled'] = array_filter($this->aPage['js_compiled'], $fFilterJs);
 
         // return js/css
-        $sRet = '';
-        $sRet .= $this->includeFiles('css');
-        $sRet .= $this->includeFiles('js');
+        $mixedRet = '';
+        if ('html' == $sFormat) {
+            $mixedRet .= $this->includeFiles('css');
+            $mixedRet .= $this->includeFiles('js');
+        }
+        else {
+            $mixedRet = array(
+                'css' => $this->aPage['css_compiled'],
+                'js' => $this->aPage['js_compiled'],
+            );
+        }
 
         // restore original state
         $this->aPageSnapshot = array();
         $this->aPage = $aPageSave; 
 
-        return $sRet;
+        return $mixedRet;
     }
 
     public function getClassName()

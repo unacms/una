@@ -52,7 +52,7 @@ switch ($sAction) {
     case 'restore_ghosts':
         header('Content-type: text/html; charset=utf-8');
         $sImagesTranscoder = bx_process_input(bx_get('img_trans'));
-        echo $oUploader->getGhosts(bx_get_logged_profile_id(), $sFormat, $sImagesTranscoder, $iContentId);
+        echo $oUploader->getGhosts((int)bx_get_logged_profile_id(), $sFormat, $sImagesTranscoder, $iContentId);
         break;
 
     case 'delete':
