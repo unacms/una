@@ -52,7 +52,11 @@ class BxDolLogsStorageFolder extends BxDolFactory implements iBxDolSingleton
 
         $s = $this->formatLogString($oObject, $mixed);
 
-        return file_put_contents($sFile, $s, FILE_APPEND) ? true : false;
+        $bNewFile = !file_exists($sFile);
+        $bRet = file_put_contents($sFile, $s, FILE_APPEND) ? true : false;
+        if ($bNewFile && $bRet)
+            chmod($sFile, BX_DOL_FILE_RIGHTS);
+        return $bRet;
     }
 
     protected function formatLogString($oObject, $mixed, $bIncludeObjectName = false)
