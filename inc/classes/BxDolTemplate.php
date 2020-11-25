@@ -1123,8 +1123,17 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 <meta name="geo.position" content="' . $this->aPage['location']['lat'] . ';' . $this->aPage['location']['lng'] . '" />
                 <meta name="geo.region" content="' . bx_html_attribute($this->aPage['location']['country']) . '" />';
 
-
-        // facebook / twitter
+        // set cover image as meta[image] value
+		if (empty($this->aPage['image'])){
+			$oPage = BxDolPage::getObjectInstanceByURI();
+			$aCover = $oPage->getPageCoverImage();
+			if ($aCover){
+				$oCover = BxDolCover::getInstance($this);
+				$this->aPage['image'] =  $oCover->getCoverImageUrl($aCover);
+			}
+		}	
+		
+		// facebook / twitter
         $bPageImage = !empty($this->aPage['image']);
         $sRet .= '<meta name="twitter:card" content="' . ($bPageImage ? 'summary_large_image' : 'summary') . '" />';
         if ($bPageImage)

@@ -260,6 +260,8 @@ class BxBaseModProfileTemplate extends BxBaseModGeneralTemplate
 
         if(!$sUrlCover)
             $sUrlCover = $this->getImageUrl('cover.svg');
+		else
+			BxDolTemplate::getInstance()->addPageMetaImage($sUrlCover);
         
         $sUrlCoverChange = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $CNF['URI_EDIT_COVER'] . '&id=' . $aData[$CNF['FIELD_ID']]);
 
