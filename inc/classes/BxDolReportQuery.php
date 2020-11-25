@@ -78,6 +78,9 @@ class BxDolReportQuery extends BxDolObjectQuery
         
         $sQuery = $this->prepare("DELETE FROM `{$this->_sTableTrack}` WHERE `object_id` = ?", $iObjectId);
         $this->query($sQuery);
+        
+        $sQuery = $this->prepare("UPDATE `{$this->_sTriggerTable}` SET `{$this->_sTriggerFieldCount}` = 0 WHERE `{$this->_sTriggerFieldId}` = ?", $iObjectId);
+        $this->query($sQuery);
     }
 }
 
