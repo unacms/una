@@ -10,36 +10,48 @@
 
 class BxBaseStudioModules extends BxDolStudioModules
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
-    function getCss()
+
+    public function getCss()
     {
-        return array('modules.css');
+        return array('settings.css', 'module.css');
     }
-    function getJs()
+
+    public function getJs()
     {
-        return array('jquery.anim.js', 'page.js', 'modules.js');
+        return array('jquery.anim.js', 'page.js', 'settings.js', 'module.js');
     }
-    function getJsCode()
+
+    public function getJsClass()
     {
-        return BxDolStudioTemplate::getInstance()->parseHtmlByName($this->sTemplPrefix . '_js.html', array(
-            'js_object' => $this->sJsObject
+        return $this->sJsClass;
+    }
+
+    public function getJsObject()
+    {
+        return $this->sJsObject;
+    }
+
+    public function getJsCode($aParams = array(), $mixedWrap = true)
+    {
+        $sJsObject = $this->getJsObject();
+        $sJsClass = $this->getJsClass();
+
+        $aParams = array_merge(array(
+            'sActionUrl' => BX_DOL_URL_STUDIO . $this->sActionUri,
+            'sActionsPrefix' => $this->sParamPrefix,
+        ), $aParams);
+
+        $sContent = bx_replace_markers("var {object} = new {class}({params});", array(
+            'object' => $sJsObject, 
+            'class' => $sJsClass,
+            'params' => json_encode($aParams)
         ));
-    }
-    protected function getPopupConfirm($iWidgetId, &$aModule)
-    {
-        return BxDolStudioTemplate::getInstance()->parseHtmlByName($this->sTemplPrefix . '_confirm.html', array(
-            'content' => _t('_adm_' . $this->sLangPrefix . '_cnf_uninstall', $aModule['title']),
-            'click' => $this->sJsObject . ".uninstall(" . $iWidgetId . ", '" . $aModule['name'] . "', 1)"
-        ));
-    }
-    protected function getPopupResult($sMessage)
-    {
-        return BxDolStudioTemplate::getInstance()->parseHtmlByName($this->sTemplPrefix . '_action_result.html', array(
-            'content' => $sMessage)
-        );
+
+        return ($mixedWrap === true || (is_array($mixedWrap) && isset($mixedWrap['wrap']) && $mixedWrap['wrap'] === true)) ? BxDolStudioTemplate::getInstance()->_wrapInTagJsCode($sContent) : $sContent;
     }
 }
 

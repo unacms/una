@@ -14,9 +14,9 @@ class BxDevStudioPage extends BxTemplStudioModule
     protected $oModule;
     protected $sUrl;
 
-    function __construct($sModule = "", $sPage = "")
+    function __construct($sModule, $mixedPageName, $sPage = "")
     {
-        parent::__construct($sModule, $sPage);
+        parent::__construct($sModule, $mixedPageName, $sPage);
 
         $this->oModule = BxDolModule::getInstance($this->sModule);
 
@@ -43,7 +43,12 @@ class BxDevStudioPage extends BxTemplStudioModule
     {
         $oContent = new BxTemplStudioSettings('system', 'hidden');
 
-        return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent);
+        if(($mixedResult = $oContent->checkAction()) !== false) {
+            echoJson($mixedResult);
+            exit;
+        }
+
+        return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent, 'getFormCode');
     }
 
     protected function getForms()
@@ -51,12 +56,16 @@ class BxDevStudioPage extends BxTemplStudioModule
         $sPage = bx_get('form_page');
         $sPage = $sPage !== false ? bx_process_input($sPage) : '';
 
-		bx_import('Forms', $this->aModule);
+        bx_import('Forms', $this->aModule);
         $oContent = new BxDevForms(array(
             'page' => $sPage,
             'url' => sprintf($this->sUrl, $this->sModule, BX_DEV_TOOLS_FORMS),
         ));
-		$oContent->init();
+
+        if(($mixedResult = $oContent->checkAction()) !== false) {
+            echoJson($mixedResult);
+            exit;
+        }
 
         return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent);
     }
@@ -71,7 +80,11 @@ class BxDevStudioPage extends BxTemplStudioModule
             'page' => $sPage,
             'url' => sprintf($this->sUrl, $this->sModule, BX_DEV_TOOLS_NAVIGATION),
         ));
-		$oContent->init();
+
+        if(($mixedResult = $oContent->checkAction()) !== false) {
+            echoJson($mixedResult);
+            exit;
+        }
 
         return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent);
     }
@@ -90,7 +103,11 @@ class BxDevStudioPage extends BxTemplStudioModule
             'page' => $sPage,
             'url' => sprintf($this->sUrl, $this->sModule, BX_DEV_TOOLS_PAGES),
         ));
-        $oContent->init();
+
+        if(($mixedResult = $oContent->checkAction()) !== false) {
+            echoJson($mixedResult);
+            exit;
+        }
 
         return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent);
     }
@@ -108,7 +125,11 @@ class BxDevStudioPage extends BxTemplStudioModule
             'page' => $sPage,
             'url' => sprintf($this->sUrl, $this->sModule, BX_DEV_TOOLS_POLYGLOT),
         ));
-        $oContent->init();
+
+        if(($mixedResult = $oContent->checkAction()) !== false) {
+            echoJson($mixedResult);
+            exit;
+        }
 
         return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent);
     }
@@ -123,7 +144,11 @@ class BxDevStudioPage extends BxTemplStudioModule
             'page' => $sPage,
             'url' => sprintf($this->sUrl, $this->sModule, BX_DEV_TOOLS_PERMISSIONS),
         ));
-        $oContent->init();
+
+        if(($mixedResult = $oContent->checkAction()) !== false) {
+            echoJson($mixedResult);
+            exit;
+        }
 
         return $this->oModule->_oTemplate->displayPageContent($this->sPage, $oContent);
     }

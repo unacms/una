@@ -16,14 +16,14 @@ class BxElsStudioPage extends BxTemplStudioModule
 	protected $_sModule;
 	protected $_oModule;
 
-    function __construct($sModule = "", $sPage = "")
+    function __construct($sModule, $mixedPageName, $sPage = "")
     {
     	$this->_sModule = 'bx_elasticsearch';
     	$this->_oModule = BxDolModule::getInstance($this->_sModule);
 
-        parent::__construct($sModule, $sPage);
+        parent::__construct($sModule, $mixedPageName, $sPage);
 
-        $this->aMenuItems[] = array('name' => BX_DOL_STUDIO_MOD_TYPE_MANAGE, 'icon' => 'wrench', 'title' => '_bx_elasticsearch_lmi_cpt_manage');
+        $this->aMenuItems[BX_DOL_STUDIO_MOD_TYPE_MANAGE] = array('name' => BX_DOL_STUDIO_MOD_TYPE_MANAGE, 'icon' => 'wrench', 'title' => '_bx_elasticsearch_lmi_cpt_manage');
 
         $this->_oModule->_oTemplate->addStudioJs(array('jquery.anim.js', 'jquery.form.min.js', 'manage.js'));
     }

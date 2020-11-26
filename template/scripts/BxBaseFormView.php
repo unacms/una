@@ -324,7 +324,7 @@ class BxBaseFormView extends BxDolForm
         return $this->_sJsObjectName;
     }
 
-    public function getJsScript()
+    public function getJsScript($bWrap = false)
     {
         $sJsObjName = $this->getJsObjectName();
         $sJsObjClass = $this->getJsClassName();
@@ -339,7 +339,7 @@ class BxBaseFormView extends BxDolForm
             ),
         )) . ");";
 
-        return $this->oTemplate->_wrapInTagJsCode($sCode);
+        return $bWrap ? $this->oTemplate->_wrapInTagJsCode($sCode) : $sCode;
     }
 
     /**
@@ -384,6 +384,10 @@ BLAH;
 			        });
 BLAH;
 
+            $sJsCodeDynamic = '';
+            if($this->_bDynamicMode)
+                $sJsCodeDynamic = 'function() {' . $this->getJsScript() . '}';
+
             $sForm = <<<BLAH
                 $sHtmlBefore
                 <form $sFormAttrs>
@@ -394,7 +398,7 @@ BLAH;
                 </form>
                 <script>
                     $(document).ready(function() {
-                        $(this).addWebForms();
+                        $(this).addWebForms($sJsCodeDynamic);
                     });
                     $sAjaxFormJs
                 </script>
@@ -402,7 +406,10 @@ BLAH;
 BLAH;
         }
 
-        return $this->getJsScript() . $sForm;
+        if(!$this->_bDynamicMode)
+            $sForm = $this->getJsScript(true) . $sForm;
+
+        return $sForm;
     }
 
     /**
@@ -2031,8 +2038,7 @@ BLAH;
 
         $this->_addCss('forms.css');
         $this->_addJs('jquery.webForms.js', "'undefined' === typeof($.fn.addWebForms)");
-        $this->_addJs('BxDolForm.js', "true");
-        $this->_addJs('BxDolNestedForm.js', "BxDolNestedForm");
+        $this->_addJs(array('BxDolForm.js', 'BxDolNestedForm.js'), "true");
 
         self::$_isCssJsAdded = true;
     }

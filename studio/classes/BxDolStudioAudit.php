@@ -12,7 +12,7 @@ define('BX_DOL_STUDIO_AUD_TYPE_SETTINGS', 'settings');
 
 define('BX_DOL_STUDIO_AUD_TYPE_DEFAULT', BX_DOL_STUDIO_AUD_TYPE_GENERAL);
 
-class BxDolStudioAudit extends BxTemplStudioPage
+class BxDolStudioAudit extends BxTemplStudioWidget
 {
     protected $sPage;
 
@@ -25,14 +25,20 @@ class BxDolStudioAudit extends BxTemplStudioPage
             $this->sPage = $sPage;
     }
 
-    public function init()
+    public function checkAction()
     {
-        if(($sAction = bx_get('pgt_action')) === false) 
-        	return;
+        $sAction = bx_get('adt_action');
+    	if($sAction === false)
+            return false;
 
-		$sAction = bx_process_input($sAction);
-        
-		exit;
+        $sAction = bx_process_input($sAction);
+
+        $aResult = array('code' => 1, 'message' => _t('_adm_err_operation_failed'));
+        switch($sAction) {
+            
+        }
+
+        return $aResult;
     }
 }
 

@@ -14,13 +14,10 @@ class BxBaseStudioLanguages extends BxDolStudioLanguages
     {
         parent::__construct();
     }
-    function getCss()
-    {
-        return array('languages.css');
-    }
+
     function getJs()
     {
-        return array('jquery.anim.js', 'page.js', 'languages.js');
+        return array_merge(parent::getJs(), array('language.js'));
     }
 }
 

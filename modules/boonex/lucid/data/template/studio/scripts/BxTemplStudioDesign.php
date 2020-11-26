@@ -11,9 +11,9 @@ defined('BX_DOL') or die('hack attempt');
 
 class BxTemplStudioDesign extends BxBaseStudioDesign
 {
-    function __construct($sTemplate = "", $sPage = "")
+    function __construct($sModule, $mixedPageName, $sPage = "")
     {
-        parent::__construct($sTemplate, $sPage);
+        parent::__construct($sModule, $mixedPageName, $sPage);
     }
 }
 /** @} */

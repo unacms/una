@@ -13,12 +13,14 @@ class BxDolStudioLanguages extends BxTemplStudioModules
     {
         parent::__construct();
 
-        $this->oDb = new BxDolStudioLanguagesQuery();
-
-        $this->sJsObject = 'oBxDolStudioLanguages';
         $this->sLangPrefix = 'lang';
-        $this->sTemplPrefix = 'lang';
         $this->sParamPrefix = 'lang';
+
+        $this->sActionUri = 'language.php';
+        $this->sJsClass = 'BxDolStudioLanguage';
+        $this->sJsObject = 'oBxDolStudioLanguage';
+
+        $this->_oDb = new BxDolStudioLanguagesQuery();
     }
 }
 

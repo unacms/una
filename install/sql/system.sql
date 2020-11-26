@@ -4,7 +4,7 @@
 
 -- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `sys_keys`, `sys_objects_editor`, `sys_objects_player`, `sys_objects_embeds`, `sys_objects_file_handlers`, `sys_objects_captcha`, `sys_objects_cmts`, `sys_cmts_images`, `sys_cmts_images_preview`, `sys_cmts_images2entries`, `sys_cmts_ids`, `sys_cmts_meta_keywords`, `sys_cmts_meta_mentions`, `sys_cmts_votes`, `sys_cmts_votes_track`, `sys_cmts_reactions`, `sys_cmts_reactions_track`, `sys_cmts_reports`, `sys_cmts_reports_track`, `sys_cmts_scores`, `sys_cmts_scores_track`, `sys_email_templates`, `sys_queue_push`, `sys_queue_email`, `sys_options`, sys_options_types, `sys_options_categories`, `sys_options_mixes`, `sys_options_mixes2options`,  `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_rss`, `sys_objects_search`, `sys_objects_search_extended`, `sys_search_extended_fields`, `sys_statistics`, `sys_audit`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_modules_relations`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_privacy_groups_custom`, `sys_privacy_groups_custom_members`, `sys_objects_auths`, `sys_objects_score`, `sys_objects_vote`, `sys_objects_report`, `sys_objects_view`, `sys_objects_favorite`, `sys_objects_feature`, `sys_objects_chart`, `sys_objects_content_info`, `sys_content_info_grids`, `sys_cron_jobs`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_deletions`, `sys_storage_mime_types`, `sys_objects_transcoder`, `sys_transcoder_images_files`, `sys_transcoder_videos_files`, `sys_transcoder_audio_files`, `sys_transcoder_filters`, `sys_transcoder_queue`, `sys_transcoder_queue_files`, `sys_accounts`, `sys_profiles`, `sys_objects_form`, `sys_form_displays`, `sys_form_inputs`, `sys_form_inputs_privacy`, `sys_form_display_inputs`, `sys_form_pre_lists`, `sys_form_pre_values`, `sys_menu_templates`, `sys_objects_menu`, `sys_menu_sets`, `sys_menu_items`, `sys_objects_grid`, `sys_grid_fields`, `sys_grid_actions`, `sys_objects_connection`, `sys_profiles_conn_relations`, `sys_profiles_conn_subscriptions`, `sys_profiles_conn_friends`, `sys_objects_page`, `sys_pages_types`, `sys_pages_layouts`, `sys_pages_design_boxes`, `sys_pages_content_placeholders`, `sys_pages_blocks`, `sys_labels`, `sys_objects_metatags`, `sys_objects_category`, `sys_objects_live_updates`, `sys_objects_payments`, `sys_files`, `sys_images`, `sys_images_custom`, `sys_images_resized`, `sys_rewrite_rules`, `sys_preloader`, `sys_std_pages`, `sys_std_widgets`, `sys_std_pages_widgets`, `sys_categories`, `sys_categories2objects`, `sys_objects_wiki`, `sys_pages_wiki_blocks`, `sys_badges`, `sys_badges2objects`, `sys_form_fields_reaction`, `sys_form_fields_reaction_track`, `sys_form_fields_votes`, `sys_form_fields_votes_track`, `sys_form_fields_ids`;
+DROP TABLE IF EXISTS `sys_keys`, `sys_objects_editor`, `sys_objects_player`, `sys_objects_embeds`, `sys_objects_file_handlers`, `sys_objects_captcha`, `sys_objects_cmts`, `sys_cmts_images`, `sys_cmts_images_preview`, `sys_cmts_images2entries`, `sys_cmts_ids`, `sys_cmts_meta_keywords`, `sys_cmts_meta_mentions`, `sys_cmts_votes`, `sys_cmts_votes_track`, `sys_cmts_reactions`, `sys_cmts_reactions_track`, `sys_cmts_reports`, `sys_cmts_reports_track`, `sys_cmts_scores`, `sys_cmts_scores_track`, `sys_email_templates`, `sys_queue_push`, `sys_queue_email`, `sys_options`, sys_options_types, `sys_options_categories`, `sys_options_mixes`, `sys_options_mixes2options`,  `sys_localization_categories`, `sys_localization_keys`, `sys_localization_languages`, `sys_localization_strings`, `sys_acl_actions`, `sys_acl_actions_track`, `sys_acl_matrix`, `sys_acl_levels`, `sys_sessions`, `sys_acl_levels_members`, `sys_objects_rss`, `sys_objects_search`, `sys_objects_search_extended`, `sys_search_extended_fields`, `sys_statistics`, `sys_audit`, `sys_alerts`, `sys_alerts_handlers`, `sys_injections`, `sys_injections_admin`, `sys_modules`, `sys_modules_file_tracks`, `sys_modules_relations`, `sys_permalinks`, `sys_objects_privacy`, `sys_privacy_defaults`, `sys_privacy_groups`, `sys_privacy_groups_custom`, `sys_privacy_groups_custom_members`, `sys_objects_auths`, `sys_objects_score`, `sys_objects_vote`, `sys_objects_report`, `sys_objects_view`, `sys_objects_favorite`, `sys_objects_feature`, `sys_objects_chart`, `sys_objects_content_info`, `sys_content_info_grids`, `sys_cron_jobs`, `sys_objects_storage`, `sys_objects_uploader`, `sys_storage_user_quotas`, `sys_storage_tokens`, `sys_storage_ghosts`, `sys_storage_deletions`, `sys_storage_mime_types`, `sys_objects_transcoder`, `sys_transcoder_images_files`, `sys_transcoder_videos_files`, `sys_transcoder_audio_files`, `sys_transcoder_filters`, `sys_transcoder_queue`, `sys_transcoder_queue_files`, `sys_accounts`, `sys_profiles`, `sys_objects_form`, `sys_form_displays`, `sys_form_inputs`, `sys_form_inputs_privacy`, `sys_form_display_inputs`, `sys_form_pre_lists`, `sys_form_pre_values`, `sys_menu_templates`, `sys_objects_menu`, `sys_menu_sets`, `sys_menu_items`, `sys_objects_grid`, `sys_grid_fields`, `sys_grid_actions`, `sys_objects_connection`, `sys_profiles_conn_relations`, `sys_profiles_conn_subscriptions`, `sys_profiles_conn_friends`, `sys_objects_page`, `sys_pages_types`, `sys_pages_layouts`, `sys_pages_design_boxes`, `sys_pages_content_placeholders`, `sys_pages_blocks`, `sys_labels`, `sys_objects_metatags`, `sys_objects_category`, `sys_objects_live_updates`, `sys_objects_payments`, `sys_files`, `sys_images`, `sys_images_custom`, `sys_images_resized`, `sys_rewrite_rules`, `sys_preloader`, `sys_std_roles`, `sys_std_roles_actions`, `sys_std_roles_actions2roles`, `sys_std_roles_members`, `sys_std_pages`, `sys_std_widgets`, `sys_std_pages_widgets`, `sys_categories`, `sys_categories2objects`, `sys_objects_wiki`, `sys_pages_wiki_blocks`, `sys_badges`, `sys_badges2objects`, `sys_form_fields_reaction`, `sys_form_fields_reaction_track`, `sys_form_fields_votes`, `sys_form_fields_votes_track`, `sys_form_fields_ids`;
 
 ALTER DATABASE DEFAULT CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci';
 SET NAMES 'utf8mb4' COLLATE 'utf8mb4_unicode_ci';
@@ -1014,7 +1014,6 @@ INSERT INTO `sys_acl_matrix` (`IDLevel`, `IDAction`) VALUES
 -- show membership private info
 (@iModerator, @iIdActionShowMembershipPrivateInfo),
 (@iAdministrator, @iIdActionShowMembershipPrivateInfo);
-
 
 CREATE TABLE `sys_acl_levels` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -3593,7 +3592,9 @@ INSERT INTO `sys_form_pre_lists`(`key`, `title`, `module`, `use_for_sets`, `exte
 ('Language', '_adm_form_txt_pre_lists_language', 'system', '0', '1'),
 ('sys_report_types', '_sys_pre_lists_report_types', 'system', '0', '0'),
 ('sys_vote_reactions', '_sys_pre_lists_vote_reactions', 'system', '0', '0'),
-('sys_relations', '_sys_pre_lists_relations', 'system', '0', '1');
+('sys_relations', '_sys_pre_lists_relations', 'system', '0', '1'),
+
+('sys_studio_widget_types', '_sys_pre_lists_studio_widget_types', 'system', '0', '0');
 
 
 CREATE TABLE `sys_form_pre_values` (
@@ -3941,6 +3942,17 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`, `Dat
 ('sys_relations', '7', 7, '_sys_pre_lists_relations_brother', '', 'a:2:{i:0;s:1:"7";i:1;s:1:"8";}'),
 ('sys_relations', '8', 8, '_sys_pre_lists_relations_sister', '', 'a:2:{i:0;s:1:"7";i:1;s:1:"8";}');
 
+INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`, `Data`) VALUES
+('sys_studio_widget_types', '', 1, '_sys_pre_lists_studio_widget_types_library', '', 'a:1:{s:4:"icon";s:15:"lmi-library.svg";}'),
+('sys_studio_widget_types', 'appearance', 2, '_sys_pre_lists_studio_widget_types_appearance', '', 'a:1:{s:4:"icon";s:18:"lmi-appearance.svg";}'),
+('sys_studio_widget_types', 'structure', 3, '_sys_pre_lists_studio_widget_types_structure', '', 'a:1:{s:4:"icon";s:17:"lmi-structure.svg";}'),
+('sys_studio_widget_types', 'content', 4, '_sys_pre_lists_studio_widget_types_content', '', 'a:1:{s:4:"icon";s:15:"lmi-content.svg";}'),
+('sys_studio_widget_types', 'users', 5, '_sys_pre_lists_studio_widget_types_users', '', 'a:1:{s:4:"icon";s:13:"lmi-users.svg";}'),
+('sys_studio_widget_types', 'configuration', 6, '_sys_pre_lists_studio_widget_types_configuration', '', 'a:1:{s:4:"icon";s:21:"lmi-configuration.svg";}'),
+('sys_studio_widget_types', 'extensions', 7, '_sys_pre_lists_studio_widget_types_extensions', '', 'a:1:{s:4:"icon";s:18:"lmi-extensions.svg";}'),
+('sys_studio_widget_types', 'integrations', 8, '_sys_pre_lists_studio_widget_types_integrations', '', 'a:1:{s:4:"icon";s:20:"lmi-integrations.svg";}'),
+('sys_studio_widget_types', 'favorites', 9, '_sys_pre_lists_studio_widget_types_favorites', '', 'a:1:{s:4:"icon";s:17:"lmi-favorites.svg";}');
+
 -- --------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `sys_menu_templates` (
@@ -4026,7 +4038,10 @@ INSERT INTO `sys_objects_menu` (`object`, `title`, `set_name`, `module`, `templa
 ('sys_add_relation', '_sys_menu_title_add_relation', '', 'system', 6, 0, 1, 'BxTemplMenuAddRelation', ''),
 ('sys_vote_reactions_do', '_sys_menu_title_vote_reactions_do', '', 'system', 3, 0, 1, 'BxTemplVoteReactionsMenuDo', ''),
 ('sys_wiki', '_sys_menu_title_wiki', 'sys_wiki', 'system', 6, 0, 1, 'BxTemplMenuWiki', ''),
-('sys_favorite_list', '_sys_menu_title_favorite_list', 'sys_favorite_list', 'system', 9, 0, 1, '', '');
+('sys_favorite_list', '_sys_menu_title_favorite_list', 'sys_favorite_list', 'system', 9, 0, 1, '', ''),
+
+('sys_studio_account_popup', '_sys_menu_title_studio_account_popup', 'sys_studio_account_popup', 'system', 4, 0, 1, 'BxTemplStudioMenuAccountPopup', '');
+
 
 CREATE TABLE IF NOT EXISTS `sys_menu_sets` (
   `set_name` varchar(64) NOT NULL,
@@ -4059,7 +4074,9 @@ INSERT INTO `sys_menu_sets` (`set_name`, `module`, `title`, `deletable`) VALUES
 ('sys_switch_template', 'system', '_sys_menu_set_title_switch_template', 0),
 ('sys_social_sharing', 'system', '_sys_menu_set_title_sys_social_sharing', 0),
 ('sys_wiki', 'system', '_sys_menu_set_title_sys_wiki', 0),
-('sys_favorite_list', 'system', '_sys_menu_set_title_sys_favorite_list', 0);
+('sys_favorite_list', 'system', '_sys_menu_set_title_sys_favorite_list', 0),
+
+('sys_studio_account_popup', 'system', '_sys_menu_set_title_studio_account_popup', 0);
 
 CREATE TABLE IF NOT EXISTS `sys_menu_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -4201,6 +4218,13 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('sys_favorite_list', 'system', 'edit', '', '_sys_menu_item_title_favorite_list_edit', 'javascript:void(0)', 'javascript:{js_object}.cmtEdit(this, {list_id})', '', 'edit', '', '', 0, 2147483646, '', 1, 0, 1, 1),
 ('sys_favorite_list', 'system', 'delete', '', '_sys_menu_item_title_wiki_favorite_list_delete', 'javascript:void(0)', 'javascript:{js_object}.cmtDelete(this, {list_id})', '', 'times', '', '', 0, 2147483646, '', 1, 0, 1, 2);
 
+-- studio: account menu
+INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES
+('sys_studio_account_popup', 'system', 'account', '_sys_menu_item_title_system_sa_account', '_sys_menu_item_title_sa_account', '{member_url}', '', '', 'user', '', 2147483647, 1, 0, 0, 1),
+('sys_studio_account_popup', 'system', 'edit', '_sys_menu_item_title_system_sa_edit', '_sys_menu_item_title_sa_edit', 'javascript:void(0)', '{js_object}.clickEdit(this);', '', 'magic', '', 2147483647, 1, 0, 0, 2),
+('sys_studio_account_popup', 'system', 'featured', '_sys_menu_item_title_system_sa_featured', '_sys_menu_item_title_sa_featured', 'javascript:void(0)', '{js_object}.clickFeatured(this);', '', 'star', '', 2147483647, 1, 0, 0, 3),
+('sys_studio_account_popup', 'system', 'language', '_sys_menu_item_title_system_sa_language', '_sys_menu_item_title_sa_language', 'javascript:void(0)', 'bx_menu_popup(''sys_switch_language_popup'', this);', '', 'language', '', 2147483647, 1, 0, 0, 4),
+('sys_studio_account_popup', 'system', 'logout', '_sys_menu_item_title_system_sa_logout', '_sys_menu_item_title_sa_logout', '{url_root}logout.php', '{js_object}.clickLogout(this);', '', 'sign-out-alt', '', 2147483647, 1, 0, 0, 5);
 -- --------------------------------------------------------
 
 
@@ -4239,6 +4263,9 @@ CREATE TABLE IF NOT EXISTS `sys_objects_grid` (
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `override_class_name`, `override_class_file`) VALUES
 ('sys_studio_lang_keys', 'Sql', 'SELECT `tlk`.`ID` AS `id`, `tlk`.`Key` AS `key`, `tlc`.`Name` AS `module`, `tls`.`String` AS `string` FROM `sys_localization_keys` AS `tlk` LEFT JOIN `sys_localization_categories` AS `tlc` ON `tlk`.`IDCategory`=`tlc`.`ID` LEFT JOIN `sys_localization_strings` AS `tls` ON `tlk`.`ID`=`tls`.`IDKey` WHERE `tls`.`IDLanguage`=\'%d\'', 'sys_localization_keys', 'id', '', '', '', 20, NULL, 'start', '', 'key,string', '', 'like', 'key,module,string', '', 'BxTemplStudioPolyglotKeys', ''),
 ('sys_studio_lang_etemplates', 'Sql', 'SELECT * FROM `sys_email_templates` WHERE 1 ', 'sys_email_templates', 'ID', '', '', '', 20, NULL, 'start', '', 'Module', 'NameSystem,Subject,Body', 'auto', 'Module', 'NameSystem', 'BxTemplStudioPolyglotEtemplates', ''),
+
+('sys_studio_roles', 'Sql', 'SELECT * FROM `sys_std_roles` WHERE 1 ', 'sys_std_roles', 'id', 'order', 'active', '', 100, NULL, 'start', '', 'name', 'title,description', 'auto', '', '', 'BxTemplStudioRolesLevels', ''),
+('sys_studio_roles_actions', 'Sql', 'SELECT *, ''0'' AS `active` FROM `sys_std_roles_actions` WHERE 1 ', 'sys_std_roles_actions', 'id', '', 'active', '', 20, NULL, 'start', '', 'name', 'title,description', 'auto', '', '', 'BxTemplStudioRolesActions', ''),
 
 ('sys_studio_acl', 'Sql', 'SELECT * FROM `sys_acl_levels` WHERE 1 ', 'sys_acl_levels', 'ID', 'Order', 'Active', '', 100, NULL, 'start', '', 'Description', 'Name', 'auto', '', '', 'BxTemplStudioPermissionsLevels', ''),
 ('sys_studio_acl_actions', 'Sql', 'SELECT *, ''0'' AS `Active` FROM `sys_acl_actions` WHERE 1 ', 'sys_acl_actions', 'ID', '', 'Active', '', 20, NULL, 'start', '', 'Module,Name', 'Title,Desc', 'auto', 'Module,Name', 'Title,Desc', 'BxTemplStudioPermissionsActions', ''),
@@ -4288,6 +4315,17 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('sys_studio_lang_etemplates', 'NameSystem', '_adm_pgt_txt_etemplates_gl_name_system', '60%', 1, '58', '', 1),
 ('sys_studio_lang_etemplates', 'Module', '_adm_pgt_txt_etemplates_gl_module', '20%', 0, '18', '', 2),
 ('sys_studio_lang_etemplates', 'actions', '', '20%', 0, '', '', 3),
+
+('sys_studio_roles', 'order', '', '1%', 0, 0, '', 1),
+('sys_studio_roles', 'switcher', '', '5%', 0, 0, '', 2),
+('sys_studio_roles', 'title', '_adm_rl_txt_title', '24%', 1, 0, '', 3),
+('sys_studio_roles', 'description', '_adm_rl_txt_description', '35%', 1, 32, '', 4),
+('sys_studio_roles', 'actions_list', '_adm_rl_txt_actions', '15%', 0, 0, '', 5),
+('sys_studio_roles', 'actions', '', '20%', 0, 0, '', 6),
+
+('sys_studio_roles_actions', 'switcher', '', '10%', 0, 0, '', 1),
+('sys_studio_roles_actions', 'title', '_adm_rl_txt_title', '40%', 1, 32, '', 2),
+('sys_studio_roles_actions', 'description', '_adm_rl_txt_description', '50%', 1, 48, '', 3),
 
 ('sys_studio_acl', 'Order', '', '1%', 0, '', '', 1),
 ('sys_studio_acl', 'switcher', '_adm_prm_txt_enable', '5%', 0, '', '', 2),
@@ -4485,6 +4523,11 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `conf
 ('sys_badges_administration', 'single', 'delete', '', 'remove', 1, 2),
 ('sys_badges_administration', 'single', 'delete_icon', '', '', 1, 3),
 ('sys_badges_administration', 'independent', 'add', '_adm_form_btn_badges_add', '', 0, 1);
+
+INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
+('sys_studio_roles', 'independent', 'add', '_adm_rl_btn_role_add', '', 0, 0, 1),
+('sys_studio_roles', 'single', 'edit', '_adm_rl_btn_role_edit', 'pencil-alt', 1, 0, 1),
+('sys_studio_roles', 'single', 'delete', '_adm_rl_btn_role_delete', 'remove', 1, 1, 2);
 
 -- GRIDS: moderation tools
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES
@@ -5280,6 +5323,160 @@ INSERT INTO `sys_preloader`(`module`, `type`, `content`, `active`, `order`) VALU
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sys_std_roles`
+--
+CREATE TABLE `sys_std_roles` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL default '',
+  `title` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL default '',
+  `active` tinyint(4) NOT NULL DEFAULT '1',
+  `order` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `name` (`name`),
+  FULLTEXT KEY `searchable` (`title`, `description`)
+);
+
+INSERT INTO `sys_std_roles` (`id`, `name`, `title`, `description`, `active`, `order`) VALUES
+(1, 'master', '_adm_rl_txt_role_master', '_adm_rl_txt_role_master_dsc', 1, 1),
+(2, 'operator', '_adm_rl_txt_role_operator', '_adm_rl_txt_role_operator_dsc', 1, 2),
+(3, 'appearance', '_adm_rl_txt_role_appearance', '_adm_rl_txt_role_appearance_dsc', 1, 3),
+(4, 'structure', '_adm_rl_txt_role_structure', '_adm_rl_txt_role_structure_dsc', 1, 4),
+(5, 'content', '_adm_rl_txt_role_content', '_adm_rl_txt_role_content_dsc', 1, 5),
+(6, 'users', '_adm_rl_txt_role_users', '_adm_rl_txt_role_users_dsc', 1, 6),
+(7, 'configuration', '_adm_rl_txt_role_configuration', '_adm_rl_txt_role_configuration_dsc', 1, 7),
+(8, 'extensions', '_adm_rl_txt_role_extensions', '_adm_rl_txt_role_extensions_dsc', 1, 8),
+(9, 'integrations', '_adm_rl_txt_role_integrations', '_adm_rl_txt_role_integrations_dsc', 1, 9);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sys_std_roles_actions`
+--
+CREATE TABLE `sys_std_roles_actions` (  
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL default '',
+  `title` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  PRIMARY KEY  (`id`),
+  FULLTEXT KEY `searchable` (`title`, `description`)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sys_std_roles_actions2roles`
+--
+CREATE TABLE `sys_std_roles_actions2roles` (  
+  `role_id` int(11) unsigned NOT NULL default '0',
+  `action_id` int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`role_id`, `action_id`)
+);
+
+INSERT INTO `sys_std_roles_actions` (`name`, `title`, `description`) VALUES
+('manage roles', '_adm_rl_txt_action_manage_roles', '_adm_rl_txt_action_manage_roles_dsc');
+SET @iIdActionManageRoles = LAST_INSERT_ID();
+
+INSERT INTO `sys_std_roles_actions` (`name`, `title`, `description`) VALUES
+('manage apps', '_adm_rl_txt_action_manage_apps', '_adm_rl_txt_action_manage_apps_dsc');
+SET @iIdActionManageApps = LAST_INSERT_ID();
+
+INSERT INTO `sys_std_roles_actions` (`name`, `title`, `description`) VALUES
+('use appearance', '_adm_rl_txt_action_use_appearance', '_adm_rl_txt_action_use_appearance_dsc');
+SET @iIdActionUseAppearance = LAST_INSERT_ID();
+
+INSERT INTO `sys_std_roles_actions` (`name`, `title`, `description`) VALUES
+('use structure', '_adm_rl_txt_action_use_structure', '_adm_rl_txt_action_use_structure_dsc');
+SET @iIdActionUseStructure = LAST_INSERT_ID();
+
+INSERT INTO `sys_std_roles_actions` (`name`, `title`, `description`) VALUES
+('use content', '_adm_rl_txt_action_use_content', '_adm_rl_txt_action_use_content_dsc');
+SET @iIdActionUseContent = LAST_INSERT_ID();
+
+INSERT INTO `sys_std_roles_actions` (`name`, `title`, `description`) VALUES
+('use users', '_adm_rl_txt_action_use_users', '_adm_rl_txt_action_use_users_dsc');
+SET @iIdActionUseUsers = LAST_INSERT_ID();
+
+INSERT INTO `sys_std_roles_actions` (`name`, `title`, `description`) VALUES
+('use configuration', '_adm_rl_txt_action_use_configuration', '_adm_rl_txt_action_use_configuration_dsc');
+SET @iIdActionUseConfiguration = LAST_INSERT_ID();
+
+INSERT INTO `sys_std_roles_actions` (`name`, `title`, `description`) VALUES
+('use extensions', '_adm_rl_txt_action_use_extensions', '_adm_rl_txt_action_use_extensions_dsc');
+SET @iIdActionUseExtensions = LAST_INSERT_ID();
+
+INSERT INTO `sys_std_roles_actions` (`name`, `title`, `description`) VALUES
+('use integrations', '_adm_rl_txt_action_use_integrations', '_adm_rl_txt_action_use_integrations_dsc');
+SET @iIdActionUseIntegrations = LAST_INSERT_ID();
+
+SET @iMaster = 1;
+SET @iOperator = 2;
+SET @iAppearance = 3;
+SET @iStructure = 4;
+SET @iContent = 5;
+SET @iUsers = 6;
+SET @iConfiguration = 7;
+SET @iExtensions = 8;
+SET @iIntegrations = 9;
+
+INSERT INTO `sys_std_roles_actions2roles` (`role_id`, `action_id`) VALUES
+
+-- manage roles
+(@iMaster, @iIdActionManageRoles),
+(@iMaster, @iIdActionManageApps),
+
+-- use appearance
+(@iMaster, @iIdActionUseAppearance),
+(@iOperator, @iIdActionUseAppearance),
+(@iAppearance, @iIdActionUseAppearance),
+
+-- use structure
+(@iMaster, @iIdActionUseStructure),
+(@iOperator, @iIdActionUseStructure),
+(@iStructure, @iIdActionUseStructure),
+
+-- use content
+(@iMaster, @iIdActionUseContent),
+(@iOperator, @iIdActionUseContent),
+(@iContent, @iIdActionUseContent),
+
+-- use users
+(@iMaster, @iIdActionUseUsers),
+(@iOperator, @iIdActionUseUsers),
+(@iUsers, @iIdActionUseUsers),
+
+-- use configuration
+(@iMaster, @iIdActionUseConfiguration),
+(@iOperator, @iIdActionUseConfiguration),
+(@iConfiguration, @iIdActionUseConfiguration),
+
+-- use extensions
+(@iMaster, @iIdActionUseExtensions),
+(@iOperator, @iIdActionUseExtensions),
+(@iExtensions, @iIdActionUseExtensions),
+
+-- use integrations
+(@iMaster, @iIdActionUseIntegrations),
+(@iOperator, @iIdActionUseIntegrations),
+(@iIntegrations, @iIdActionUseIntegrations);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sys_std_roles_members`
+--
+
+CREATE TABLE `sys_std_roles_members` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `account_id` int(11) unsigned NOT NULL default '0',
+  `role` int(11) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `account` (`account_id`)
+);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sys_std_pages`
 --
 CREATE TABLE `sys_std_pages` (
@@ -5302,15 +5499,26 @@ CREATE TABLE `sys_std_widgets` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `page_id` varchar(255) NOT NULL default '',
   `module` varchar(32) NOT NULL default '',
+  `type` varchar(32) NOT NULL default '',
   `url` varchar(255) NOT NULL default '',
   `click` text NOT NULL default '',
   `icon` varchar(255) NOT NULL default '',
   `caption` varchar(255) NOT NULL default '',
   `cnt_notices` text NOT NULL default '',
   `cnt_actions` text NOT NULL default '',
-  `bookmark` tinyint(4) unsigned NOT NULL default '0',
+  `featured` tinyint(4) unsigned NOT NULL default '0',
   PRIMARY KEY (`ID`),
   UNIQUE KEY `widget-page` (`id`, `page_id`(187))
+);
+
+--
+-- Table structure for table `sys_std_widgets_bookmarks`
+--
+CREATE TABLE `sys_std_widgets_bookmarks` (
+  `widget_id` int(11) unsigned NOT NULL default '0',
+  `profile_id` int(11) unsigned NOT NULL default '0',
+  `bookmark` tinyint(4) unsigned NOT NULL default '0',
+  UNIQUE KEY `bookmark` (`widget_id`, `profile_id`)
 );
 
 -- --------------------------------------------------------
@@ -5332,7 +5540,7 @@ CREATE TABLE `sys_std_pages_widgets` (
 -- Dumping data for table `sys_std_pages`
 --
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
-(0, 'home', '_adm_page_cpt_home', '_adm_page_cpt_home', '');
+(3, 'home', '_adm_page_cpt_home', '_adm_page_cpt_home', '');
 SET @iIdHome = LAST_INSERT_ID();
 
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
@@ -5372,6 +5580,10 @@ INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 SET @iIdBuilderPermissions = LAST_INSERT_ID();
 
 INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
+(3, 'builder_roles', '_adm_page_cpt_builder_roles', '_adm_page_cpt_builder_roles', 'wi-bld-roles.svg');
+SET @iIdBuilderRoles = LAST_INSERT_ID();
+
+INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 (3, 'storages', '_adm_page_cpt_storages', '_adm_page_cpt_storages', 'wi-storages.svg');
 SET @iIdManagerStorages = LAST_INSERT_ID();
 
@@ -5387,74 +5599,78 @@ SET @iIdBadges = LAST_INSERT_ID();
 -- Dumping data for table `sys_std_widgets` and `sys_std_pages_widgets`
 -- Home Page
 --
-INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(@iIdSettings, 'system', '{url_studio}settings.php', '', 'wi-settings.svg', '_adm_wgt_cpt_settings', '', '');
+INSERT INTO `sys_std_widgets`(`page_id`, `module`, `type`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
+(@iIdSettings, 'system', 'configuration', '{url_studio}settings.php', '', 'wi-settings.svg', '_adm_wgt_cpt_settings', '', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_actions";s:6:"params";a:0:{}s:5:"class";s:18:"TemplStudioModules";}');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 3);
 
-INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(@iIdStore, 'system', '{url_studio}store.php', '', 'wi-store.svg', '_adm_wgt_cpt_store', '', '');
+INSERT INTO `sys_std_widgets`(`page_id`, `module`, `type`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
+(@iIdStore, 'system', 'extensions', '{url_studio}store.php', '', 'wi-store.svg', '_adm_wgt_cpt_store', '', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_actions";s:6:"params";a:0:{}s:5:"class";s:18:"TemplStudioModules";}');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 2);
 
-INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(@iIdDashboard, 'system', '{url_studio}dashboard.php', '', 'wi-dashboard.svg', '_adm_wgt_cpt_dashboard', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:18:"get_widget_notices";s:6:"params";a:0:{}s:5:"class";s:20:"TemplStudioDashboard";}', '');
+INSERT INTO `sys_std_widgets`(`page_id`, `module`, `type`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`, `favorite`) VALUES
+(@iIdDashboard, 'system', '', '{url_studio}dashboard.php', '', 'wi-dashboard.svg', '_adm_wgt_cpt_dashboard', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:18:"get_widget_notices";s:6:"params";a:0:{}s:5:"class";s:20:"TemplStudioDashboard";}', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_actions";s:6:"params";a:0:{}s:5:"class";s:18:"TemplStudioModules";}', 1);
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 1);
 
 
 --
 -- Templates Page
 --
-INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(@iIdDesigner, 'system', '{url_studio}designer.php', '', 'wi-designer.svg', '_adm_wgt_cpt_designer', '', '');
+INSERT INTO `sys_std_widgets`(`page_id`, `module`, `type`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
+(@iIdDesigner, 'system', 'appearance', '{url_studio}designer.php', '', 'wi-designer.svg', '_adm_wgt_cpt_designer', '', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_actions";s:6:"params";a:0:{}s:5:"class";s:18:"TemplStudioModules";}');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 6);
 
 
 --
 -- Languages Page
 --
-INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(@iIdPolyglot, 'system', '{url_studio}polyglot.php', '', 'wi-polyglot.svg', '_adm_wgt_cpt_polyglot', '', '');
+INSERT INTO `sys_std_widgets`(`page_id`, `module`, `type`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
+(@iIdPolyglot, 'system', 'appearance', '{url_studio}polyglot.php', '', 'wi-polyglot.svg', '_adm_wgt_cpt_polyglot', '', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_actions";s:6:"params";a:0:{}s:5:"class";s:18:"TemplStudioModules";}');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 5);
 
 
 --
 -- Builders Page
 --
-INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(@iIdBuilderPages, 'system', '{url_studio}builder_page.php', '', 'wi-bld-pages.svg', '_adm_wgt_cpt_builder_pages', '', '');
+INSERT INTO `sys_std_widgets`(`page_id`, `module`, `type`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
+(@iIdBuilderPages, 'system', 'structure', '{url_studio}builder_page.php', '', 'wi-bld-pages.svg', '_adm_wgt_cpt_builder_pages', '', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_actions";s:6:"params";a:0:{}s:5:"class";s:18:"TemplStudioModules";}');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 7);
 
-INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(@iIdBuilderMenus, 'system', '{url_studio}builder_menu.php', '', 'wi-bld-navigation.svg', '_adm_wgt_cpt_builder_menus', '', '');
+INSERT INTO `sys_std_widgets`(`page_id`, `module`, `type`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
+(@iIdBuilderMenus, 'system', 'structure', '{url_studio}builder_menu.php', '', 'wi-bld-navigation.svg', '_adm_wgt_cpt_builder_menus', '', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_actions";s:6:"params";a:0:{}s:5:"class";s:18:"TemplStudioModules";}');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 8);
 
-INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(@iIdBuilderForms, 'system', '{url_studio}builder_forms.php', '', 'wi-bld-forms.svg', '_adm_wgt_cpt_builder_forms', '', '');
+INSERT INTO `sys_std_widgets`(`page_id`, `module`, `type`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
+(@iIdBuilderForms, 'system', 'structure', '{url_studio}builder_forms.php', '', 'wi-bld-forms.svg', '_adm_wgt_cpt_builder_forms', '', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_actions";s:6:"params";a:0:{}s:5:"class";s:18:"TemplStudioModules";}');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 9);
 
-INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(@iIdBuilderPermissions, 'system', '{url_studio}builder_permissions.php', '', 'wi-bld-permissions.svg', '_adm_wgt_cpt_builder_permissions', '', '');
+INSERT INTO `sys_std_widgets`(`page_id`, `module`, `type`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
+(@iIdBuilderPermissions, 'system', 'configuration', '{url_studio}builder_permissions.php', '', 'wi-bld-permissions.svg', '_adm_wgt_cpt_builder_permissions', '', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_actions";s:6:"params";a:0:{}s:5:"class";s:18:"TemplStudioModules";}');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 10);
+
+INSERT INTO `sys_std_widgets`(`page_id`, `module`, `type`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
+(@iIdBuilderRoles, 'system', 'configuration', '{url_studio}builder_roles.php', '', 'wi-bld-roles.svg', '_adm_wgt_cpt_builder_roles', '', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_actions";s:6:"params";a:0:{}s:5:"class";s:18:"TemplStudioModules";}');
+INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 11);
 
 
 --
 -- Storages Page
 --
-INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(@iIdManagerStorages, 'system', '{url_studio}storages.php', '', 'wi-storages.svg', '_adm_wgt_cpt_storages', '', '');
+INSERT INTO `sys_std_widgets`(`page_id`, `module`, `type`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
+(@iIdManagerStorages, 'system', 'content', '{url_studio}storages.php', '', 'wi-storages.svg', '_adm_wgt_cpt_storages', '', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_actions";s:6:"params";a:0:{}s:5:"class";s:18:"TemplStudioModules";}');
 INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 4);
 
 
 --
 -- Audit Page
 --
-INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(@iIdAudit, 'system', '{url_studio}audit.php', '', 'wi-audit.svg', '_adm_wgt_cpt_audit', '', '');
-INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 11);
+INSERT INTO `sys_std_widgets`(`page_id`, `module`, `type`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
+(@iIdAudit, 'system', '{url_studio}audit.php', 'extensions', 'wi-audit.svg', '_adm_wgt_cpt_audit', '', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_actions";s:6:"params";a:0:{}s:5:"class";s:18:"TemplStudioModules";}');
+INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 12);
 
 
 --
 -- Badges Page
 --
-INSERT INTO `sys_std_widgets`(`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
-(@iIdBadges, 'system', '{url_studio}badges.php', '', 'wi-badges.svg', '_adm_wgt_cpt_badges', '', '');
-INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 11);
+INSERT INTO `sys_std_widgets`(`page_id`, `module`, `type`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`) VALUES
+(@iIdBadges, 'system', '{url_studio}badges.php', 'structure', 'wi-badges.svg', '_adm_wgt_cpt_badges', '', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_actions";s:6:"params";a:0:{}s:5:"class";s:18:"TemplStudioModules";}');
+INSERT INTO `sys_std_pages_widgets`(`page_id`, `widget_id`, `order`) VALUES(@iIdHome, LAST_INSERT_ID(), 13);

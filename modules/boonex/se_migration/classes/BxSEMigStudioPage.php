@@ -13,22 +13,22 @@ define('BX_SEMIG_STUDIO_TRANSFER', 'config');
 
 class BxSEMigStudioPage extends BxTemplStudioModule
 {    
-	protected $_oModule;	
-	
-	function __construct($sModule = "", $sPage = "")
+    protected $_oModule;	
+
+    function __construct($sModule, $mixedPageName, $sPage = "")
     {
-		$this -> MODULE = 'bx_se_migration';
-		parent::__construct($sModule, $sPage);
-	
-		$this -> _oModule = BxDolModule::getInstance($sModule);			
-		
-		$this->aMenuItems = array(
-            array('name' => 'settings', 'icon' => 'cogs', 'title' => '_bx_se_migration_cpt_settings'),
-            array('name' => 'config', 'icon' => 'exchange-alt', 'title' => '_bx_se_migration_cpt_transfer_data'),
+        $this -> MODULE = 'bx_se_migration';
+        parent::__construct($sModule, $mixedPageName, $sPage);
+
+        $this -> _oModule = BxDolModule::getInstance($sModule);			
+
+        $this->aMenuItems = array(
+            'settings' => array('name' => 'settings', 'icon' => 'cogs', 'title' => '_bx_se_migration_cpt_settings'),
+            'config' => array('name' => 'config', 'icon' => 'exchange-alt', 'title' => '_bx_se_migration_cpt_transfer_data'),
         );	
-		
-		$this -> _oModule -> _oTemplate -> addStudioJs(array('jquery-ui/jquery-ui.custom.min.js', 'transfer.js', 'BxDolGrid.js'));
-		$this -> _oModule -> _oTemplate -> addStudioCss(array('main.css'));	
+
+        $this -> _oModule -> _oTemplate -> addStudioJs(array('jquery-ui/jquery-ui.custom.min.js', 'transfer.js', 'BxDolGrid.js'));
+        $this -> _oModule -> _oTemplate -> addStudioCss(array('main.css'));	
      } 
 	
 	public function saveData($sPath){

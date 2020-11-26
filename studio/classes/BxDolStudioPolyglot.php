@@ -14,7 +14,7 @@ define('BX_DOL_STUDIO_PGT_TYPE_ETEMPLATES_HF', 'etemplates_hf');
 
 define('BX_DOL_STUDIO_PGT_TYPE_DEFAULT', BX_DOL_STUDIO_PGT_TYPE_SETTINGS);
 
-class BxDolStudioPolyglot extends BxTemplStudioPage
+class BxDolStudioPolyglot extends BxTemplStudioWidget
 {
     protected $sPage;
 
@@ -29,62 +29,62 @@ class BxDolStudioPolyglot extends BxTemplStudioPage
             $this->sPage = $sPage;
     }
 
-    public function init()
+    public function checkAction()
     {
-        if(($sAction = bx_get('pgt_action')) === false) 
-        	return;
+        $sAction = bx_get('pgt_action');
+    	if($sAction === false)
+            return false;
 
-		$sAction = bx_process_input($sAction);
+        $sAction = bx_process_input($sAction);
 
-		$oLanguages = BxDolStudioLanguagesUtils::getInstance();
+        $oLanguages = BxDolStudioLanguagesUtils::getInstance();
 
-		$aResult = array('code' => 1, 'message' => _t('_adm_pgt_err_cannot_process_action'));
-		switch($sAction) {
-			case 'get-page-by-type':
-				$sValue = bx_process_input(bx_get('pgt_value'));
-				if(empty($sValue))
-					break;
+        $aResult = array('code' => 1, 'message' => _t('_adm_pgt_err_cannot_process_action'));
+        switch($sAction) {
+            case 'get-page-by-type':
+                $sValue = bx_process_input(bx_get('pgt_value'));
+                if(empty($sValue))
+                        break;
 
-				$this->sPage = $sValue;
-				$aResult = array('code' => 0, 'content' => $this->getPageCode());
-				break;
+                $this->sPage = $sValue;
+                $aResult = array('code' => 0, 'content' => $this->getPageCode());
+                break;
 
-			/*
-			 * Available URL params:
-			 * pgt_action = recompile - action name
-			 * pgt_language - ID or name(en, ru, etc) of language.
-			 */
-			case 'recompile':
-				$sLanguage = bx_process_input(bx_get('pgt_language'));
+            /*
+             * Available URL params:
+             * pgt_action = recompile - action name
+             * pgt_language - ID or name(en, ru, etc) of language.
+             */
+            case 'recompile':
+                $sLanguage = bx_process_input(bx_get('pgt_language'));
 
-				if($oLanguages->compileLanguage($sLanguage))
-					$aResult = array('code' => 0, 'content' => _t('_adm_pgt_scs_recompiled'));
-				else
-					$aResult = array('code' => 2, 'content' => _t('_adm_pgt_err_cannot_recompile_lang'));
-				break;
+                if($oLanguages->compileLanguage($sLanguage))
+                        $aResult = array('code' => 0, 'content' => _t('_adm_pgt_scs_recompiled'));
+                else
+                        $aResult = array('code' => 2, 'content' => _t('_adm_pgt_err_cannot_recompile_lang'));
+                break;
 
-			/*
-			 * Available URL params:
-			 * pgt_action = restore - action name
-			 * pgt_language - ID or name(en, ru, etc) of language.
-			 * pgt_module - ID or Module Uri (@see sys_modules table). Leave empty for 'System' language file.
-			 */
-			case 'restore':
-				$sLanguage = bx_process_input(bx_get('pgt_language'));
-				$sModule = bx_process_input(bx_get('pgt_module'));
+            /*
+             * Available URL params:
+             * pgt_action = restore - action name
+             * pgt_language - ID or name(en, ru, etc) of language.
+             * pgt_module - ID or Module Uri (@see sys_modules table). Leave empty for 'System' language file.
+             */
+            case 'restore':
+                $sLanguage = bx_process_input(bx_get('pgt_language'));
+                $sModule = bx_process_input(bx_get('pgt_module'));
 
-				if($oLanguages->restoreLanguage($sLanguage, $sModule))
-					$aResult = array('code' => 0, 'content' => _t('_adm_pgt_scs_restored'));
-				else
-					$aResult = array('code' => 2, 'content' => _t('_adm_pgt_err_cannot_restore_lang'));
-				break;
-		}
+                if($oLanguages->restoreLanguage($sLanguage, $sModule))
+                        $aResult = array('code' => 0, 'content' => _t('_adm_pgt_scs_restored'));
+                else
+                        $aResult = array('code' => 2, 'content' => _t('_adm_pgt_err_cannot_restore_lang'));
+                break;
+        }
 
-		echo json_encode($aResult);
-		exit;
+        return $aResult;
     }
 
-	public function submitEtemplatesHf(&$oForm)
+    public function submitEtemplatesHf(&$oForm)
     {
         $sUnsubscribe = "{unsubscribe}";
         $sHeader = $oForm->getCleanValue('et_hf_header');

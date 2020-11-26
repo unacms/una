@@ -13,11 +13,11 @@ define('BX_DOL_STUDIO_MOD_TYPE_QUOTES', 'quotes');
 
 class BxQuoteOfDayStudioPage extends BxTemplStudioModule
 {
-    function __construct($sModule = "", $sPage = "")
+    function __construct($sModule, $mixedPageName, $sPage = "")
     {
-        parent::__construct($sModule, $sPage);
-        $oPermalink = BxDolPermalinks::getInstance();
-        $this->aMenuItems[] = array('name' => BX_DOL_STUDIO_MOD_TYPE_QUOTES , 'icon' => 'bars', 'title' => '_bx_quoteofday_lmi_cpt_quotes', 'link' => BX_DOL_URL_ROOT . $oPermalink->permalink('page.php?i=quoteofday-manage'));
+        parent::__construct($sModule, $mixedPageName, $sPage);
+
+        $this->aMenuItems[BX_DOL_STUDIO_MOD_TYPE_QUOTES] = array('name' => BX_DOL_STUDIO_MOD_TYPE_QUOTES , 'icon' => 'bars', 'title' => '_bx_quoteofday_lmi_cpt_quotes', 'link' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=quoteofday-manage'));
     }
 }
 

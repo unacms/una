@@ -23,8 +23,13 @@ bx_require_authentication(true);
 $oPage = new BxTemplStudioWidgets('builders');
 
 $oTemplate = BxDolStudioTemplate::getInstance();
+
+$sPageCode = $oPage->getPageCode();
+if($sPageCode === false)
+    $oTemplate->displayMsg(($sError = $oPage->getError(false)) !== false ? $sError : '_sys_txt_error_occured', true);
+
 $oTemplate->setPageNameIndex($oPage->getPageIndex());
 $oTemplate->setPageHeader($oPage->getPageHeader());
-$oTemplate->setPageContent('page_main_code', $oPage->getPageCode());
+$oTemplate->setPageContent('page_main_code', $sPageCode);
 $oTemplate->getPageCode();
 /** @} */

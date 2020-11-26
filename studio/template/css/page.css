@@ -1,4 +1,20 @@
 /**
+ * Page breadcrumb
+ */
+.bx-menu-breadcrumb li:first-child {
+    display: none;
+}
+
+.bx-menu-breadcrumb li a {
+    margin: 0;
+}
+.bx-menu-breadcrumb li a span {
+    font-size: 1rem;
+    font-weight: normal;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/**
  * Inlined Blocks Styles
  */
 div.bx-std-blocks-line {

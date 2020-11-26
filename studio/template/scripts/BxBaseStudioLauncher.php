@@ -8,6 +8,7 @@
  * @{
  */
 
+define('BX_DOL_STUDIO_LAUNCHER_JS_CLASS', 'BxDolStudioLauncher');
 define('BX_DOL_STUDIO_LAUNCHER_JS_OBJECT', 'oBxDolStudioLauncher');
 
 class BxBaseStudioLauncher extends BxDolStudioLauncher
@@ -17,14 +18,21 @@ class BxBaseStudioLauncher extends BxDolStudioLauncher
     public function __construct()
     {
         parent::__construct();
+
+        $this->sPageUrl = BX_DOL_URL_STUDIO . 'launcher.php';
     }
 
-    public function getPageIndex()
+    public function getPageCss()
     {
-        if(!is_array($this->aPage || empty($this->aPage)))
-            return BX_PAGE_DEFAULT;
+        $aCss = array(
+            'launcher.css',
+            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flag-icon-css/css/|flag-icon.min.css',
+            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'shepherd/css/|shepherd-theme-' . $this->_sTourTheme . '.css',
+        );
+        foreach($this->aIncludes as $sName => $oInclude)
+            $aCss = array_merge($aCss, $oInclude->getCss());
 
-        return !empty($this->aPage[$this->sPageSelected]) ? $this->aPage[$this->sPageSelected]->getPageIndex() : BX_PAGE_DEFAULT;
+        return array_merge(parent::getPageCss(), $aCss);
     }
 
     public function getPageJs()
@@ -47,28 +55,28 @@ class BxBaseStudioLauncher extends BxDolStudioLauncher
         return $aJs;
     }
 
+    public function getPageJsClass()
+    {
+        return BX_DOL_STUDIO_LAUNCHER_JS_CLASS;
+    }
+
     public function getPageJsObject()
     {
         return BX_DOL_STUDIO_LAUNCHER_JS_OBJECT;
     }
 
-    public function getPageCss()
+    public function getPageJsCode($aOptions = array(), $bWrap = true)
     {
-        $aCss = array(
-            'launcher.css',
-            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'flag-icon-css/css/|flag-icon.min.css',
-            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'shepherd/css/|shepherd-theme-' . $this->_sTourTheme . '.css',
-        );
-        foreach($this->aIncludes as $sName => $oInclude)
-            $aCss = array_merge($aCss, $oInclude->getCss());
-
-        return $aCss;
+        return parent::getPageJsCode(array_merge($aOptions, array(
+            'sActionUrl' => $this->sPageUrl
+        )), $bWrap);
     }
 
-    public function getPageCode($bHidden = false)
+    public function getPageCode()
     {
-        if(empty($this->aPage) || !is_array($this->aPage))
-            return '';
+        $sResult = parent::getPageCode();
+        if($sResult === false)
+            return false;
 
         $oTemplate = BxDolStudioTemplate::getInstance();
 
@@ -76,16 +84,82 @@ class BxBaseStudioLauncher extends BxDolStudioLauncher
         foreach($this->aIncludes as $sName => $oInclude)
             $sIncludes .= $oInclude->getJsCode();
 
-        $s = $oTemplate->parseHtmlByName('launcher.html', array(
+        $sResult = $oTemplate->parseHtmlByName('launcher.html', array(
             'js_object' => $this->getPageJsObject(),
+            'js_code' => $this->getPageJsCode(),
             'includes' => $sIncludes,
-            'items' => parent::getPageCode($bHidden),
+            'items' => $sResult,
         ));
 
         if (getParam('site_tour_studio') == 'on')
-            $s .= $oTemplate->parseHtmlByName('launcher_tour.html', array('tour_theme' => $this->_sTourTheme));
+            $sResult .= $oTemplate->parseHtmlByName('launcher_tour.html', array('tour_theme' => $this->_sTourTheme));
 
-        return $s;
+        $oTemplate->addInjection('injection_body_style', 'text', ' bx-std-page-launcher');
+        return $sResult;
+    }
+
+    public function getPopupBrowser()
+    {
+        $iAccountId = getLoggedId();
+
+        $oUtils = BxDolStudioRolesUtils::getInstance();
+        $oTemplate = BxDolStudioTemplate::getInstance();
+
+        $aTypes = parent::getPageTypes();
+        
+        $sSelected = reset($aTypes)['Value'];
+        $aMarkers = array();
+
+        $aMenuItems = array();
+        $aTmplVarsTypes = array();
+        foreach($aTypes as $sType => $aType) {
+            if(!$oUtils->isActionAllowed('use ' . $sType, $iAccountId))
+                continue;
+
+            $aTypeData = unserialize($aType['Data']);
+
+            //--- Menu
+            $aMenuItems[] = array(
+                'name' => $sType,
+                'title' => _t($aType['LKey']),
+                'link' => 'javascript:void(0)',
+                'onclick' => $this->getPageJsObject() . '.browserChangeType(this, \'' . $sType . '\')',
+                'icon' => !empty($aTypeData['icon']) ? $aTypeData['icon'] : '',
+                'selected' => $sType == $sSelected
+            );
+
+            //--- Conetent
+            $aTmplVarsTypes[] = array(
+                'type' => $sType, 
+                'class' => $sType == $sSelected ? 'bx-std-lbw-active' : '',
+                'widgets' => $this->getWidgets($this->aPage['name'], $this->oDb->getWidgets(array(
+                    'type' => 'by_page_id', 
+                    'value' => $this->aPage['id'], 
+                    'wtype' => $sType != BX_DOL_STUDIO_WTYPE_DEFAULT ? $sType : ''
+                )))
+            );
+        }
+
+        $oMenu = new BxTemplStudioMenu(array('template' => 'menu_launcher_browser.html', 'menu_items' => $aMenuItems));
+        if(!empty($aMarkers))
+            $oMenu->addMarkers($aMarkers);
+
+        $sName = 'bx-std-launcher-browser';
+        $sContent = $oTemplate->parseHtmlByName('launcher_browser.html', array(
+            'logo' => BxTemplStudioFunctions::getInstance()->getLogo(),
+            'menu' => $oMenu->getCode(),
+            'bx_repeat:types' => $aTmplVarsTypes
+        ));
+
+        return array(
+            'html' => BxTemplStudioFunctions::getInstance()->transBox($sName, $sContent),
+            'options' => array(
+                'closeOnOuterClick' => true,
+                'pointer' => array(
+                    'el' => '.bx-menu-breadcrumb .bx-menu-bc-home',
+                )
+            )
+        );
     }
 
     public function serviceGetCacheUpdater()

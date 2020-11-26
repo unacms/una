@@ -15,17 +15,17 @@ define('BX_DOL_STUDIO_MOD_TYPE_ACCOUNTS', 'accounts');
 
 class BxStripeConnectStudioPage extends BxTemplStudioModule
 {
-	protected $_sModule;
-	protected $_oModule;
+    protected $_sModule;
+    protected $_oModule;
 
-    function __construct($sModule = "", $sPage = "")
+    function __construct($sModule, $mixedPageName, $sPage = "")
     {
-        parent::__construct($sModule, $sPage);
+        parent::__construct($sModule, $mixedPageName, $sPage);
 
         $this->_sModule = 'bx_stripe_connect';
     	$this->_oModule = BxDolModule::getInstance($this->_sModule);
 
-        $this->aMenuItems[] = array('name' => BX_DOL_STUDIO_MOD_TYPE_ACCOUNTS, 'icon' => 'users', 'title' => '_bx_stripe_connect_menu_item_title_accounts');
+        $this->aMenuItems[BX_DOL_STUDIO_MOD_TYPE_ACCOUNTS] = array('name' => BX_DOL_STUDIO_MOD_TYPE_ACCOUNTS, 'icon' => 'users', 'title' => '_bx_stripe_connect_menu_item_title_accounts');
     }
 
     protected function getSettings()
@@ -33,11 +33,11 @@ class BxStripeConnectStudioPage extends BxTemplStudioModule
         $oPage = new BxStripeConnectStudioSettings($this->sModule);
 
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('module.html', array(
-            'content' => $oPage->getPageCode(),
+            'content' => $oPage->getFormCode(),
         ));
     }
 
-	protected function getAccounts()
+    protected function getAccounts()
     {
         $oGrid = BxDolGrid::getObjectInstance($this->_oModule->_oConfig->CNF['OBJECT_GRID_ACCOUNTS'], BxDolStudioTemplate::getInstance());
         if(!$oGrid)

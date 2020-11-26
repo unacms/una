@@ -11,9 +11,9 @@ defined('BX_DOL') or die('hack attempt');
 
 class BxTemplStudioLanguage extends BxBaseStudioLanguage
 {
-    function __construct($sLanguage="", $sPage = "")
+    function __construct($sModule, $mixedPageName, $sPage = "")
     {
-        parent::__construct($sLanguage, $sPage);
+        parent::__construct($sModule, $mixedPageName, $sPage);
     }
 }
 /** @} */

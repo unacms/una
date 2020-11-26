@@ -62,13 +62,17 @@ class BxBaseStudioAudit extends BxDolStudioAudit
         return parent::getPageMenu($aMenu);
     }
 
-    function getPageCode($bHidden = false)
+    function getPageCode()
     {
+        $sResult = parent::getPageCode();
+        if($sResult === false)
+            return false;
+
         $sMethod = 'get' . bx_gen_method_name($this->sPage);
         if(!method_exists($this, $sMethod))
             return '';
 
-        return $this->$sMethod();
+        return $sResult . $this->$sMethod();
     }
     
     protected function getGeneral()
@@ -79,9 +83,10 @@ class BxBaseStudioAudit extends BxDolStudioAudit
     protected function getSettings()
     {
         $oPage = new BxTemplStudioSettings(BX_DOL_STUDIO_STG_TYPE_SYSTEM, BX_DOL_STUDIO_STG_CATEGORY_AUDIT);
+        
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('audit.html', array(
-            'content' => $oPage->getPageCode(),
-        	'js_content' => ''
+            'content' => $oPage->getFormCode(),
+            'js_content' => ''
         ));
     }
 
@@ -96,11 +101,11 @@ class BxBaseStudioAudit extends BxDolStudioAudit
         //$oForm = new BxTemplStudioFormView(array());
         $oTemplate->addCss('grid.css');
         $oTemplate->addJsTranslation(array('_sys_grid_search'));
-      
+
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('audit.html', array(
             'content' => $this->getBlockCode(array(
-				'items' =>$oGrid->getCode()
-			)),
+                'items' =>$oGrid->getCode()
+            )),
             'js_content' => ''
         ));
     }

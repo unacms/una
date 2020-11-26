@@ -75,13 +75,17 @@ class BxBaseStudioStore extends BxDolStudioStore
         return parent::getPageMenu($aMenu, $aMarkers);
     }
 
-    function getPageCode($bHidden = false)
+    function getPageCode()
     {
+        $sResult = parent::getPageCode();
+        if($sResult === false)
+            return false;
+
         $sMethod = 'get' . ucfirst($this->sPage) . 'List';
         if(!method_exists($this, $sMethod))
             return '';
 
-        return $this->$sMethod();
+        return $sResult . $this->$sMethod();
     }
 
     function getPageContent()

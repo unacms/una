@@ -7,71 +7,68 @@
  * @{
  */
 
-class BxDolStudioModules extends BxDol
+class BxDolStudioModules extends BxDol implements iBxDolSingleton
 {
-    protected $sJsObject;
     protected $sLangPrefix;
-    protected $sTemplPrefix;
+    protected $sParamPrefix;
 
-    function __construct()
+    protected $sActionUri;
+    protected $sJsClass;
+    protected $sJsObject;
+
+    protected $_oDb;
+
+    public function __construct()
     {
         parent::__construct();
 
-        $this->oDb = new BxDolStudioModulesQuery();
-        $this->sJsObject = 'oBxDolStudioModules';
         $this->sLangPrefix = 'mod';
-        $this->sTemplPrefix = 'mod';
         $this->sParamPrefix = 'mod';
+
+        $this->sActionUri = 'module.php';
+        $this->sJsClass = 'BxDolStudioModule';
+        $this->sJsObject = 'oBxDolStudioModule';
+
+        $this->_oDb = new BxDolStudioModulesQuery();
     }
 
-    function serviceGetActions($aWidget)
+    public static function getInstance()
     {
-        return array(
+        $sClass = get_called_class();
+        $sParent = str_replace('Templ', 'Dol', $sClass);
+
+        if(!isset($GLOBALS['bxDolClasses'][$sParent]))
+            $GLOBALS['bxDolClasses'][$sParent] = new $sClass();
+
+        return $GLOBALS['bxDolClasses'][$sParent];
+    }
+
+    public function serviceGetActions($aWidget)
+    {
+        $sJsObject = $this->getJsObject();
+
+        $aResult = array(
             array (
-                'caption' => _t('_adm_txt_uninstall'),
+                'name' => 'settings',
+                'caption' => _t('_adm_txt_settings'),
                 'link' => '',
-                'click' => $this->sJsObject . ".uninstall(" . $aWidget['id'] . ", '" . $aWidget['page_name'] . "', 0)",
-                'icon' => 'times'
+                'click' => $sJsObject . ".settings('" . $aWidget['page_name'] . "', " . $aWidget['id'] . ")",
+                'icon' => 'cog',
+                'check_func' => ''
             )
         );
-    }
 
-    function processActions()
-    {
-        if(($sAction = bx_get($this->sParamPrefix . '_action')) !== false) {
-            $sAction = bx_process_input($sAction);
+        if(!BxDolModuleQuery::getInstance()->isEnabledByName($aWidget['module']))
+            $aResult[] = array (
+                'name' => 'uninstall',
+                'caption' => _t('_adm_txt_uninstall'),
+                'link' => '',
+                'click' => $sJsObject . ".uninstall('" . $aWidget['page_name'] . "', " . $aWidget['id'] . ", 0)",
+                'icon' => 'times',
+                'check_func' => 'is_disabled'
+            );
 
-            $aResult = array('code' => 1, 'message' => _t('_adm_' . $this->sLangPrefix . '_err_cannot_process_action'));
-            switch($sAction) {
-                case 'uninstall':
-                    $sPageName = bx_process_input(bx_get($this->sParamPrefix . '_page_name'));
-                    if(empty($sPageName))
-                        break;
-
-                    $aModule = BxDolModuleQuery::getInstance()->getModuleByName($sPageName);
-                    if(empty($aModule) || !is_array($aModule))
-                        break;
-
-                    if(($iWidgetId = (int)bx_get($this->sParamPrefix . '_widget_id')) != 0 && (int)bx_get($this->sParamPrefix . '_confirmed') != 1) {
-                        $aResult['message'] = $this->getPopupConfirm($iWidgetId, $aModule);
-                        break;
-                    }
-
-                    $aResult = BxDolStudioInstallerUtils::getInstance()->perform($aModule['path'], 'uninstall', array('html_response' => true));
-                    if(!empty($aResult['message']))
-                        $aResult['message'] = $this->getPopupResult($aResult['message']);
-
-                    if($aResult['code'] == BX_DOL_STUDIO_IU_RC_SUCCESS)
-                        BxTemplStudioMenuTop::historyDelete($sPageName);
-                    break;
-            }
-
-            if(!empty($aResult['message']))
-                $aResult['message'] = BxTemplStudioFunctions::getInstance()->transBox('', $aResult['message']);
-
-            echo json_encode($aResult);
-            exit;
-        }
+        return $aResult;
     }
 }
 

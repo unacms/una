@@ -17,7 +17,7 @@ define('BX_DOL_STUDIO_DSG_TYPE_SETTINGS', 'settings');
 
 define('BX_DOL_STUDIO_DSG_TYPE_DEFAULT', 'general');
 
-class BxDolStudioDesigner extends BxTemplStudioPage
+class BxDolStudioDesigner extends BxTemplStudioWidget
 {
     protected $sPage;
 
@@ -40,26 +40,26 @@ class BxDolStudioDesigner extends BxTemplStudioPage
         if(is_string($sPage) && !empty($sPage))
             $this->sPage = $sPage;
 
-		$this->sManageUrl = BX_DOL_URL_STUDIO . 'designer.php';
+        $this->sManageUrl = BX_DOL_URL_STUDIO . 'designer.php';
 
-		$this->sParamLogo = 'sys_site_logo';
-		$this->sParamLogoAlt = 'sys_site_logo_alt';
-		$this->sParamLogoWidth = 'sys_site_logo_width';
-		$this->sParamLogoHeight = 'sys_site_logo_height';
+        $this->sParamLogo = 'sys_site_logo';
+        $this->sParamLogoAlt = 'sys_site_logo_alt';
+        $this->sParamLogoWidth = 'sys_site_logo_width';
+        $this->sParamLogoHeight = 'sys_site_logo_height';
 
-		$this->aCovers = array(
-        	'cover_common' => array(
-        		'setting' => 'sys_site_cover_common',
-		        'transcoder' => BX_DOL_TRANSCODER_OBJ_COVER,
-        		'title' => '_adm_dsg_txt_cover_common', 
-        		'template' => 'dsr_cover_preview_page.html'
-		    ),
-			'cover_unit_profile' => array(
-				'setting' => 'sys_unit_cover_profile',
-		    	'transcoder' => BX_DOL_TRANSCODER_OBJ_COVER_UNIT_PROFILE, 
-				'title' => '_adm_dsg_txt_cover_unit_profile', 
-				'template' => 'dsr_cover_preview_unit_profile.html'
-		    )
+        $this->aCovers = array(
+            'cover_common' => array(
+                'setting' => 'sys_site_cover_common',
+                'transcoder' => BX_DOL_TRANSCODER_OBJ_COVER,
+                'title' => '_adm_dsg_txt_cover_common', 
+                'template' => 'dsr_cover_preview_page.html'
+            ),
+            'cover_unit_profile' => array(
+                'setting' => 'sys_unit_cover_profile',
+                'transcoder' => BX_DOL_TRANSCODER_OBJ_COVER_UNIT_PROFILE, 
+                'title' => '_adm_dsg_txt_cover_unit_profile', 
+                'template' => 'dsr_cover_preview_unit_profile.html'
+            )
         );
     }
 
@@ -67,53 +67,55 @@ class BxDolStudioDesigner extends BxTemplStudioPage
     {
     	$sAction = bx_get('dsg_action');
     	if($sAction === false)
-    		return;
+            return false;
 
     	$sAction = bx_process_input($sAction);
 
-		$aResult = array('code' => 1, 'message' => _t('_adm_dsg_err_cannot_process_action'));
-		switch($sAction) {
-			case 'delete_logo':
-				$aResult = array('code' => 0, 'message' => '');
-				if(!$this->deleteLogo())
-					$aResult = array('code' => 2, 'message' => _t('_adm_dsg_err_remove_old_logo'));
-				break;
+        $aResult = array('code' => 1, 'message' => _t('_adm_dsg_err_cannot_process_action'));
+        switch($sAction) {
+            case 'delete_logo':
+                $aResult = array('code' => 0, 'message' => '');
+                if(!$this->deleteLogo())
+                    $aResult = array('code' => 2, 'message' => _t('_adm_dsg_err_remove_old_logo'));
+                break;
 
-			case 'delete_cover':
-				$sValue = bx_process_input(bx_get('dsg_value'));
+            case 'delete_cover':
+                $sValue = bx_process_input(bx_get('dsg_value'));
 
-				$aResult = array('code' => 0, 'message' => '');
-				if(empty($sValue) || !$this->deleteCover($sValue))
-					$aResult = array('code' => 2, 'message' => _t('_adm_dsg_err_remove_old_cover'));
-				break;
+                $aResult = array('code' => 0, 'message' => '');
+                if(empty($sValue) || !$this->deleteCover($sValue))
+                    $aResult = array('code' => 2, 'message' => _t('_adm_dsg_err_remove_old_cover'));
+                break;
 
-			case 'make_default':
-				$aResult = array('code' => 0, 'message' => '');
-				if(!$this->makeDefault())
-					$aResult = array('code' => 2, 'message' => _t('_adm_dsg_err_make_default'));
-				break;
+            case 'make_default':
+                $aResult = array('code' => 0, 'message' => '');
+                if(!$this->makeDefault())
+                    $aResult = array('code' => 2, 'message' => _t('_adm_dsg_err_make_default'));
+                break;
 
-			case 'get-page-by-type':
-				$sValue = bx_process_input(bx_get('dsg_value'));
-				if(empty($sValue))
-					break;
+            case 'get-page-by-type':
+                $sValue = bx_process_input(bx_get('dsg_value'));
+                if(empty($sValue))
+                    break;
 
-				$this->sPage = $sValue;
-				$aResult = array('code' => 0, 'content' => $this->getPageCode());
-				break;
-		}
+                $this->sPage = $sValue;
+                $aResult = array('code' => 0, 'content' => $this->getPageCode());
+                break;
+        }
 
-		echo json_encode($aResult);
-		exit;
+        return $aResult;
     }
-	function setManageUrl($sUrl)
-	{
-		$this->sManageUrl = $sUrl;
-	}
-	function setLogoParams($aParams)
-	{
-		list($this->sParamLogo, $this->sParamLogoAlt, $this->sParamLogoWidth, $this->sParamLogoHeight) = $aParams;
-	}
+
+    function setManageUrl($sUrl)
+    {
+        $this->sManageUrl = $sUrl;
+    }
+
+    function setLogoParams($aParams)
+    {
+        list($this->sParamLogo, $this->sParamLogoAlt, $this->sParamLogoWidth, $this->sParamLogoHeight) = $aParams;
+    }
+
     function makeDefault()
     {
         $sValue = bx_get('dsg_value');
