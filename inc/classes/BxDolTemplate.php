@@ -1124,9 +1124,8 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 <meta name="geo.region" content="' . bx_html_attribute($this->aPage['location']['country']) . '" />';
 
         // set cover image as meta[image] value
-		if (empty($this->aPage['image'])){
-			$oPage = BxDolPage::getObjectInstanceByURI();
-			$aCover = $oPage->getPageCoverImage();
+		if (empty($this->aPage['image']) && ($oPage = BxDolPage::getObjectInstanceByURI()) !== false){
+            $aCover = $oPage->getPageCoverImage();
 			if ($aCover){
 				$oCover = BxDolCover::getInstance($this);
 				$this->aPage['image'] =  $oCover->getCoverImageUrl($aCover);
