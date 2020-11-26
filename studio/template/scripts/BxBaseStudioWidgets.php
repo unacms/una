@@ -49,12 +49,17 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets
         if($sResult === false)
             return false;
 
+        $aWidgetsParams = array(
+            'featured' => $this->isFeatured(),
+            'notices' => $this->aWidgetsNotices
+        );
+
         if(!$this->bPageMultiple)
-            return $this->wrapWidgets($this->aPage['name'], $this->getWidgets($this->aPage['name'], $this->aWidgets));
+            return $this->wrapWidgets($this->aPage['name'], $this->getWidgets($this->aPage['name'], $this->aWidgets, $aWidgetsParams));
 
         $sContent = "";
         foreach($this->aWidgets as $sPage => $aWidgets)
-            $sContent .= $this->wrapWidgets($sPage, $this->getWidgets($sPage, $aWidgets), $sPage != $this->sPageSelected);
+            $sContent .= $this->wrapWidgets($sPage, $this->getWidgets($sPage, $aWidgets, $aWidgetsParams), $sPage != $this->sPageSelected);
 
         return $sContent;
     }
@@ -109,13 +114,13 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets
         ));
     }
 
-    protected function getWidgets($sPage, $aWidgets)
+    protected function getWidgets($sPage, $aWidgets, $aParams = array())
     {
         $oFunction = BxTemplStudioFunctions::getInstance();
 
         $aTmplVars = array();
         foreach($aWidgets as $aWidget) {
-            $sWidget = $oFunction->getWidget($aWidget, $this->aWidgetsNotices);
+            $sWidget = $oFunction->getWidget($aWidget, $aParams);
             if(empty($sWidget))
                 continue;
 

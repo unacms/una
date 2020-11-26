@@ -42,34 +42,28 @@ div.bx-std-launcher {
  */
 div.bx-std-widgets-wrp {
     position: relative;
-    float: left;
     top: 0px;
     width: 100%;
 }
-div.bx-std-widgets-center {
-    position: relative;
-    float: left;
-    left: 50%;
-}
 div.bx-std-widgets {
     position: relative;
-    float: left;
-    left: -50%;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: center;
+    justify-content: center;
 }
 div.bx-std-widgets-highlight {
     background-color: red;
 }
 div.bx-std-widget {
     position: relative;
-    float: left;
     padding: 24px;
 }
 div.bx-std-widget-empty {
     width: 96px;
     height: 128px;
-}
-div.bx-std-widget-nl {
-    clear: both;
 }
 
 .bx-std-widget-dragging {
@@ -316,6 +310,10 @@ body.shepherd-active .bx-std-widget-cont.shepherd-enabled {
     color: rgba(255, 255, 255, 0.85);
 }
 
+.bx-std-launcher-browser .bx-std-lb-content {
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+}
 .bx-std-lb-widgets {
     position: relative;
     display: none;
@@ -325,7 +323,15 @@ body.shepherd-active .bx-std-widget-cont.shepherd-enabled {
 .bx-std-lb-widgets.bx-std-lbw-active {
     display: block;
 }
-
+.bx-std-lb-widgets-cnt {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
 .bx-std-launcher-browser .bx-std-widget-icon {
     width: 4rem;
     height: 4rem;

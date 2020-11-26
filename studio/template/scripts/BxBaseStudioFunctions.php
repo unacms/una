@@ -60,16 +60,22 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
         $oTemplate->getPageCode();
     }
 
-    public function getWidget($mixedWidget, $aNotices = array())
+    public function getWidget($mixedWidget, $aParams = array())
     {
         $oTemplate = BxDolStudioTemplate::getInstance();
+
+        $bFeatured = isset($aParams['featured']) && $aParams['featured'] === true;
+
+        $aNotices = array();
+        if(!empty($aParams['notices']) && is_array($aParams['notices']))
+            $aNotices = $aParams['notices'];           
 
         $aMarkers = array(
             'url_root' => BX_DOL_URL_ROOT,
             'url_studio' => BX_DOL_URL_STUDIO,
             'url_studio_icons' => BX_DOL_URL_STUDIO_BASE . 'images/icons/'
         );
-        
+
         if(!is_array($mixedWidget)) 
             $mixedWidget = BxDolStudioWidgetsQuery::getInstance()->getWidgets(array('type' => 'by_id', 'value' => (int)$mixedWidget));
 
@@ -163,7 +169,7 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
             'caption' => _t($mixedWidget['caption']),
             'widget_disabled_class' => !$bEnabled ? 'bx-std-widget-icon-disabled' : '',
             'widget_featured_class' => (int)$mixedWidget['featured'] == 1 ? 'bx-std-widget-icon-featured' : '',
-            'widget_styles' => isset($_COOKIE['bx_studio_featured']) && (int)$_COOKIE['bx_studio_featured'] == 1 && (int)$mixedWidget['featured'] != 1 ? 'display:none;' : ''
+            'widget_styles' => $bFeatured && (int)$mixedWidget['featured'] != 1 ? 'display:none;' : ''
         ));
     }
 

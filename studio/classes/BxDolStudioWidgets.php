@@ -15,6 +15,7 @@ define('BX_DOL_STUDIO_WTYPE_DEFAULT', 'library');
 class BxDolStudioWidgets extends BxTemplStudioPage
 {
     protected $sCacheKeyNotices = 'std_widgets_notices';
+    protected $sCookieKeyFeatured = 'bx_studio_featured';
 
     protected $_sType;
 
@@ -46,6 +47,14 @@ class BxDolStudioWidgets extends BxTemplStudioPage
         $oCache = $this->oDb->getDbCacheObject();
         $sCacheKey = $this->oDb->genDbCacheKey($this->sCacheKeyNotices);
         $this->aWidgetsNotices = $oCache->getData($sCacheKey);
+    }
+
+    /**
+     * Checks whether 'Featured Only' mode is enabled or not.
+     */
+    public function isFeatured()
+    {
+        return isset($_COOKIE[$this->sCookieKeyFeatured]) && (int)$_COOKIE[$this->sCookieKeyFeatured] == 1;
     }
 
     public function updateCache()
