@@ -505,6 +505,10 @@ video.bx-player-embed {
     line-height:150%;
 }
 
+.bx-page-block-container .bx-search-results:first-child {
+     padding-top:0; 
+}
+
 /* --------------- Content loader placeholder */
 
 @-webkit-keyframes bxPlaceHolderShimmer {

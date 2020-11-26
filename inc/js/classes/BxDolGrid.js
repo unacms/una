@@ -246,6 +246,7 @@ BxDolGrid.prototype.processJson = function (oData, sAction, isDisableLoading) {
             $('#' + $this._sIdContainer).html($(oData.grid).find('#' + $this._sIdContainer).html());
             var sFooter = $(oData.grid).find('.bx-grid-footer').size() ? $(oData.grid).find('.bx-grid-footer').html() : '';
             $('#' + $this._sIdWrapper).find('.bx-grid-footer').html(sFooter);
+            $('#' + $this._sIdWrapper).find('.bx-grid-header-controls-counter-value').html(oData.total_count);
             $this._onDataReloaded(true);
         }
     	if (oData && undefined != oData.blink) {

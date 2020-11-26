@@ -547,16 +547,9 @@ function echoDbg( $what, $desc = '' )
     echo "</pre>\n";
 }
 
-function echoDbgLog($mWhat, $sDesc = '', $sFileName = 'debug.log')
+function echoDbgLog($mWhat, $sDesc = 'unused', $sFileName = 'unused')
 {
-    $sCont =
-        '--- ' . date('r') . ' (' . BX_DOL_START . ") ---\n" .
-        $sDesc . "\n" .
-        print_r($mWhat, true) . "\n\n\n";
-
-    $rFile = fopen(BX_DIRECTORY_PATH_LOGS . $sFileName, 'a');
-    fwrite($rFile, $sCont);
-    fclose($rFile);
+    bx_log('sys_debug', $mWhat);
 }
 
 function dbgTiming($sStartMicrotime)
@@ -786,6 +779,11 @@ function bx_autoload($sClassName)
 {
     if (0 === strncmp($sClassName, 'BxDol', 5) || 0 === strncmp($sClassName, 'BxBase', 6) || 0 === strncmp($sClassName, 'BxTempl', 7))
         bx_import($sClassName);
+    else {
+        if (0 === strpos($sClassName, 'Akeeba\Engine\Postproc\Connector\S3v4')) {
+            require_once(BX_DIRECTORY_PATH_PLUGINS . 'akeeba-s3/src' . str_replace('\\', '/', substr($sClassName, 37)) . '.php');
+        }
+    }
 }
 
 /**
@@ -1336,7 +1334,7 @@ function bx_append_url_params ($sUrl, $mixedParams)
     if (!$mixedParams)
         return $sUrl;
 
-    $sParams = false == strpos($sUrl, '?') ? '?' : '&';
+    $sParams = false === strpos($sUrl, '?') ? '?' : '&';
 
     if (is_array($mixedParams)) {
         foreach($mixedParams as $sKey => $sValue) {
@@ -2033,6 +2031,19 @@ function bx_get_device_pixel_ratio()
         $iRatio = 2;
 
     return $iRatio;
+}
+
+/**
+ * Log to logs object
+ * @param $sObject - logs object
+ * @param $mixed - string or array to log
+ */
+function bx_log($sObject, $mixed)
+{
+    if ($o = BxDolLogs::getObjectInstance($sObject))
+        return $o->add($mixed);
+    else
+        return false;
 }
 
 /** @} */

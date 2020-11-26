@@ -1546,6 +1546,10 @@
 	<string name="_adm_stg_cpt_option_sys_storage_s3_bucket"><![CDATA[AWS bucket]]></string>
 	<string name="_adm_stg_cpt_option_sys_storage_s3_domain"><![CDATA[AWS custom domain (require custom DNS setup)]]></string>
 	<string name="_adm_stg_cpt_option_sys_storage_s3_secret_key"><![CDATA[AWS secret key]]></string>
+	<string name="_adm_stg_cpt_option_sys_storage_s3_endpoint"><![CDATA[Endpoint (specify if other than Amazon, such as storage.googleapis.com, s3.wasabisys.com)]]></string>
+	<string name="_adm_stg_cpt_option_sys_storage_s3_sig_ver"><![CDATA[Signature version (only S3v4 storage supports v4)]]></string>
+	<string name="_adm_stg_cpt_option_sys_storage_s3_region"><![CDATA[Region (for signature v4 only)]]></string>
+
 	<string name="_adm_stg_cpt_option_sys_template_cache_image_enable"><![CDATA[Enable cache for images]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_image_max_size"><![CDATA[Cached image max size (in Kb)]]></string>
         <string name="_adm_stg_cpt_option_sys_template_cache_image_max_size_err"><![CDATA[Use non-empty value less or equal to 10kb. Big values make no sense.]]></string>
@@ -1572,6 +1576,7 @@
 	<string name="_adm_stg_cpt_option_sys_hide_post_to_context_for_privacy"><![CDATA[Hide post to context for modules in Privacy field]]></string>
     <string name="_adm_stg_cpt_option_sys_search_keyword_min_len"><![CDATA[Keyword min length in site search]]></string>
     <string name="_adm_stg_cpt_option_sys_profile_bot"><![CDATA[System bot profile]]></string>
+    <string name="_adm_stg_cpt_option_sys_logs_storage_default"><![CDATA[Default logs storage]]></string>
 	<string name="_adm_stg_cpt_type_system"><![CDATA[System]]></string>
 	<string name="_adm_stg_scs_save"><![CDATA[Settings were successfully saved]]></string>
 	<string name="_adm_stg_err_save_error_message"><![CDATA[Error in '{0}': {1}]]></string>
@@ -2230,7 +2235,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_form_account_input_email_uniq_error_loggedin"><![CDATA[This email is already used by someone.]]></string>
   <string name="_sys_form_account_input_phone_uniq_error_loggedin"><![CDATA[This phone number is already used by someone.]]></string>
 	<string name="_sys_form_account_input_name"><![CDATA[Account name]]></string>
-	<string name="_sys_form_account_input_name_error"><![CDATA[This is a required field.]]></string>
+	<string name="_sys_form_account_input_name_error"><![CDATA[Account name is mandatory and and cannot start with @]]></string>
 	<string name="_sys_form_account_input_password"><![CDATA[Create a password]]></string>
 	<string name="_sys_form_account_input_password_confirm"><![CDATA[Confirm a password]]></string>
 	<string name="_sys_form_account_input_password_confirm_error"><![CDATA[Password confirmation failed]]></string>
@@ -2470,6 +2475,7 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_grid_confirmation"><![CDATA[Are you sure?]]></string>
 	<string name="_sys_grid_delete_failed"><![CDATA[Delete failed]]></string>
   <string name="_sys_grid_search"><![CDATA[Search...]]></string>
+  <string name="_sys_grid_total_count"><![CDATA[Сount: {0}]]></string>
   <string name="_sys_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 	<string name="_sys_inst_conf_desc"><![CDATA[{0}{1}<br />Example: {2}]]></string>
 	<string name="_sys_inst_conf_desc_admin_email"><![CDATA[Admin user e-mail address.]]></string>
@@ -2566,6 +2572,10 @@ If it is not enabled then please consider implement this optimization, since it 
 	<string name="_sys_location_determining"><![CDATA[Determining location...]]></string>
 	<string name="_sys_location_geolocation_not_supported_by_browser"><![CDATA[Geolocation is not supported by this browser]]></string>
 	<string name="_sys_location_undefined"><![CDATA[Location off]]></string>
+	<string name="_sys_log_debug"><![CDATA[System: debug]]></string>
+    <string name="_sys_log_twilio"><![CDATA[System: Twilio]]></string>
+    <string name="_sys_log_push"><![CDATA[System: PUSH]]></string>
+	<string name="_sys_log_payments"><![CDATA[System: Payments]]></string>
     <string name="_sys_macros_malformed"><![CDATA[Error: malformed macros]]></string>
     <string name="_sys_macros_unsafe"><![CDATA[Error: unsafe macros]]></string>
     <string name="_sys_macros_output_not_displayable"><![CDATA[Error: output isn't displayable]]></string>

@@ -10,8 +10,6 @@
 if (!defined('CURL_SSLVERSION_TLSv1'))
     define('CURL_SSLVERSION_TLSv1', 1);
 
-require_once(BX_DIRECTORY_PATH_PLUGINS . 'amazon-s3/S3.php');
-
 /**
  * File storage in Amazon S3.
  * @see BxDolStorage
@@ -21,6 +19,7 @@ class BxDolStorageS3 extends BxDolStorage
     protected $_s3;
     protected $_sBucket;
     protected $_sDomain;
+    protected $_sEndpoint;
     protected $_bSSL;
     protected $_bReducedRedundancy;
 
@@ -31,14 +30,25 @@ class BxDolStorageS3 extends BxDolStorage
     {
         parent::__construct($aObject);
 
-        $sAccessKey = getParam('sys_storage_s3_access_key');
-        $sSecretKey = getParam('sys_storage_s3_secret_key');
-        $this->_s3 = new S3($sAccessKey, $sSecretKey);
+        $this->_bSSL = (isset($this->_aParams['ssl']) && $this->_aParams['ssl']) || (!isset($this->_aParams['ssl']) && strncmp(BX_DOL_URL_ROOT, 'https://', 8) === 0) ? true : false;
+
+        $this->_sEndpoint = getParam('sys_storage_s3_endpoint');
         $this->_sBucket = getParam('sys_storage_s3_bucket');
         $this->_sDomain = getParam('sys_storage_s3_domain');
-
-        $this->_bSSL = (isset($this->_aParams['ssl']) && $this->_aParams['ssl']) || (!isset($this->_aParams['ssl']) && strncmp(BX_DOL_URL_ROOT, 'https://', 8) === 0) ? true : false;
         $this->_bReducedRedundancy = isset($this->_aParams['reduced_redundancy']) && $this->_aParams['reduced_redundancy'] ? true : false;
+
+        $this->init($aObject);
+    }
+
+    protected function init ($aObject)
+    {
+        require_once(BX_DIRECTORY_PATH_PLUGINS . 'amazon-s3/S3.php');
+        $this->_s3 = new S3(
+            getParam('sys_storage_s3_access_key'), 
+            getParam('sys_storage_s3_secret_key'), 
+            $this->_bSSL, 
+            $this->_sEndpoint ? $this->_sEndpoint : 's3.amazonaws.com'
+        );
     }
 
     /**
@@ -163,14 +173,11 @@ class BxDolStorageS3 extends BxDolStorage
 
     // ----------------
 
-    protected function addFileToEngine($sTmpFile, $sLocalId, $sName, $isPrivate, $iProfileId)
+    protected function generateHeaders($sFileName, $isPrivate, $sMimeType = '')
     {
-        $sMimeType = $this->getMimeTypeByFileName($sName);
-        $sExt = $this->getFileExt($sName);
-        $sPath = $this->genPath($sLocalId, $this->_aObject['levels']);
-        $sRemoteNamePath = $sPath . $sLocalId . ($sExt ? '.' . $sExt : '');
+        if (!$sMimeType)
+            $sMimeType = $this->getMimeTypeByFileName($sFileName);
 
-        $aMetaHeaders = array();
         $aRequestHeaders = array (
             "Content-Type"  => $sMimeType,
         );
@@ -179,6 +186,18 @@ class BxDolStorageS3 extends BxDolStorage
                 "Cache-Control" => "max-age=" . ($isPrivate && $this->_iCacheControl > $this->_aObject['token_life'] ? $this->_aObject['token_life'] : $this->_iCacheControl),
             ));
         }
+    
+        return $aRequestHeaders;
+    }
+
+    protected function addFileToEngine($sTmpFile, $sLocalId, $sName, $isPrivate, $iProfileId)
+    {
+        $sMimeType = $this->getMimeTypeByFileName($sName);
+        $sExt = $this->getFileExt($sName);
+        $sPath = $this->genPath($sLocalId, $this->_aObject['levels']);
+        $sRemoteNamePath = $sPath . $sLocalId . ($sExt ? '.' . $sExt : '');
+        $aRequestHeaders = $this->generateHeaders($sName, $isPrivate);
+        $aMetaHeaders = array();
 
         $sStorageClass = $this->_bReducedRedundancy ? S3::STORAGE_CLASS_RRS : S3::STORAGE_CLASS_STANDARD;
         $sACL = $isPrivate ? S3::ACL_AUTHENTICATED_READ : S3::ACL_PUBLIC_READ;
@@ -216,7 +235,7 @@ class BxDolStorageS3 extends BxDolStorage
     protected function getObjectBaseUrl ($isPrivate = false)
     {
         $sProto = $this->_bSSL ? 'https://' : 'http://';
-        return $sProto . $this->_sBucket . '.s3.amazonaws.com/' . $this->getObjectBaseDir($isPrivate);
+        return $sProto . $this->_sBucket . '.' . ($this->_sEndpoint ? $this->_sEndpoint : 's3.amazonaws.com'). '/' . $this->getObjectBaseDir($isPrivate);
     }
 }
 

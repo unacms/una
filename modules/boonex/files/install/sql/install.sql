@@ -87,6 +87,13 @@ CREATE TABLE IF NOT EXISTS `bx_files_cmts` (
   FULLTEXT KEY `search_fields` (`cmt_text`)
 );
 
+-- TABLE: bookmarks
+CREATE TABLE IF NOT EXISTS `bx_files_bookmarks` (
+  `object_id` int(11) NOT NULL default '0',
+  `profile_id` int(11) NOT NULL default '0',
+  PRIMARY KEY (`object_id`, `profile_id`)
+);
+
 -- TABLE: votes
 CREATE TABLE IF NOT EXISTS `bx_files_votes` (
   `object_id` int(11) NOT NULL default '0',

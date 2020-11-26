@@ -59,4 +59,11 @@ BxGroupsManageTools.prototype.onClickDeleteWithContent = function(iContentId) {
 	glGrids[this._sObjNameGrid].actionWithId(iContentId, 'delete_with_content', {}, '', false, 1);
 };
 
+BxGroupsManageTools.prototype.onClickClearReports = function (iContentId) {
+    $('.bx-popup-applied:visible').dolPopupHide();
+
+    glGrids[this._sObjNameGrid].actionWithId(iContentId, 'clear_reports', {}, '', false, 1);
+};
+
+
 /** @} */

@@ -70,9 +70,7 @@ class BxDolTwilio extends BxDolFactory implements iBxDolSingleton
     
     private function writeLog($sString)
 	{
-		$sFile = BX_DIRECTORY_PATH_LOGS . '/bx_twilio.log';   
-		file_put_contents($sFile, date('m-d-Y H:i:s').": ", FILE_APPEND);            
-		file_put_contents($sFile, $sString."\n", FILE_APPEND);
+        bx_log('sys_twilio', $sString);
 	}
 }
 

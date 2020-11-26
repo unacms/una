@@ -58,7 +58,7 @@ class BxMassMailerModule extends BxBaseModGeneralModule
     
     public function actionGetReportsData($sReportName, $sReportType, $sDateFrom, $sDateTo, $sSegment)
     {
-        if(!BxDolAcl::getInstance()->isMemberLevelInSet(128))
+        if($this->checkAllowed() !== CHECK_ACTION_RESULT_ALLOWED)
             return '';
         
         header('Content-Type: application/json');
@@ -341,6 +341,9 @@ class BxMassMailerModule extends BxBaseModGeneralModule
      */
     public function serviceTotalSubscribers ()
     {
+        if($this->checkAllowed() !== CHECK_ACTION_RESULT_ALLOWED)
+            return '';
+        
         return $this->_oTemplate->getTotalSubscribers();
     }
     
@@ -537,7 +540,7 @@ class BxMassMailerModule extends BxBaseModGeneralModule
         return $this->_oDb->getAccountsByTerms($sTerms);
     }
     
-    private function checkAllowed($isPerformAction = false)
+    public function checkAllowed($isPerformAction = false)
     {
         $aCheck = checkActionModule($this->_iProfileId, 'use massmailer', $this->getName(), $isPerformAction);
         if ($aCheck[CHECK_ACTION_RESULT] !== CHECK_ACTION_RESULT_ALLOWED)

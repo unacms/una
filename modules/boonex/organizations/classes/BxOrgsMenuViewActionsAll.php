@@ -38,7 +38,7 @@ class BxOrgsMenuViewActionsAll extends BxBaseModGroupsMenuViewActionsAll
 
     protected function _getMenuItemDeleteOrganizationProfile($aItem)
     {
-        return $this->_getMenuItemByNameActionsMore($aItem);
+        return $this->_getMenuItemByNameActionDelete($aItem);
     }
 
     protected function _getMenuItemDeleteOrganizationAccount($aItem)

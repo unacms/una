@@ -484,10 +484,12 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_reviews_administration', 'bulk', 'delete', '_bx_reviews_grid_action_title_adm_delete', '', 0, 1, 1),
+('bx_reviews_administration', 'bulk', 'clear_reports', '_bx_reviews_grid_action_title_adm_clear_reports', '', 0, 1, 2),
 ('bx_reviews_administration', 'single', 'edit', '_bx_reviews_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
 ('bx_reviews_administration', 'single', 'delete', '_bx_reviews_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_reviews_administration', 'single', 'settings', '_bx_reviews_grid_action_title_adm_more_actions', 'cog', 1, 0, 3),
 ('bx_reviews_administration', 'single', 'audit_content', '_bx_reviews_grid_action_title_adm_audit_content', 'search', 1, 0, 4),
+('bx_reviews_administration', 'single', 'clear_reports', '_bx_reviews_grid_action_title_adm_clear_reports', 'eraser', 1, 0, 5),
 ('bx_reviews_voting_options', 'single', 'delete', '_bx_reviews_grid_action_title_adm_delete', 'remove', 0, 1, 1),
 ('bx_reviews_voting_options', 'single', 'edit', '_bx_reviews_grid_action_title_adm_edit', 'pencil-alt',0, 0, 2),
 ('bx_reviews_voting_options', 'independent', 'add', '_bx_reviews_grid_action_title_adm_add', 'plus', 0, 0, 1),

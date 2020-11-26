@@ -74,6 +74,9 @@ class BxBaseModTextGridAdministration extends BxBaseModGeneralGridAdministration
         if((int)$aField['chars_limit'] > 0)
             $sTitle = strmaxtextlen($sTitle, (int)$aField['chars_limit']);
 
+        if ($sTitle == '')
+            $sTitle = _t('_sys_txt_no_title');
+        
         return parent::_getCellDefault($this->_getEntryLink($sTitle, $aRow), $sKey, $aField, $aRow);
     }
 

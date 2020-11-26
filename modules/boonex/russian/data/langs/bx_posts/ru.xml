@@ -48,6 +48,8 @@
     <string name="_bx_posts_form_entry_input_pictures"><![CDATA[]]></string>
     <string name="_bx_posts_form_entry_input_sys_videos"><![CDATA[Видео]]></string>
     <string name="_bx_posts_form_entry_input_videos"><![CDATA[]]></string>
+    <string name="_bx_posts_form_entry_input_sys_sounds"><![CDATA[Аудиофайлы]]></string>
+    <string name="_bx_posts_form_entry_input_sounds"><![CDATA[]]></string>
     <string name="_bx_posts_form_entry_input_sys_files"><![CDATA[Файлы]]></string>
     <string name="_bx_posts_form_entry_input_files"><![CDATA[]]></string>
     <string name="_bx_posts_form_entry_input_sys_polls"><![CDATA[Голосования]]></string>
@@ -192,6 +194,11 @@
     <string name="_bx_posts_menu_item_title_system_cpa_poll"><![CDATA[Добавить голосование]]></string>
     <string name="_bx_posts_menu_item_title_cpa_poll"><![CDATA[Добавить голосование]]></string>
 
+    <string name="_bx_posts_menu_item_title_system_cpa_sound_simple"><![CDATA[Добавить аудиофайл (один)]]></string>
+    <string name="_bx_posts_menu_item_title_cpa_sound_simple"><![CDATA[Добавить аудиофайл]]></string>
+    <string name="_bx_posts_menu_item_title_system_cpa_sound_html5"><![CDATA[Добавить аудиофайл (много)]]></string>
+    <string name="_bx_posts_menu_item_title_cpa_sound_html5"><![CDATA[Добавить аудиофайл]]></string>
+
     <string name="_bx_posts_menu_set_title_view_entry"><![CDATA[Публикация - Действия]]></string>
     <string name="_bx_posts_menu_title_view_entry"><![CDATA[Публикация - Действия]]></string>
     <string name="_bx_posts_menu_title_submenu"><![CDATA[Публикации - Подменю]]></string>
@@ -250,6 +257,7 @@
     <string name="_bx_posts_grid_action_title_adm_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_posts_grid_action_title_adm_more_actions"><![CDATA[Дополнительные действия]]></string>
     <string name="_bx_posts_grid_action_title_adm_audit_content"><![CDATA[Аудит действий]]></string>
+    <string name="_bx_posts_grid_action_title_adm_clear_reports"><![CDATA[Очистить жалобы]]></string>
     <string name="_bx_posts_grid_action_err_delete"><![CDATA[Невозможно удалить выбранную(ные) публикацию(ции).]]></string>
     <string name="_bx_posts_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 

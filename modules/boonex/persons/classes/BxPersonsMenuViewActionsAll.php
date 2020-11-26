@@ -33,7 +33,7 @@ class BxPersonsMenuViewActionsAll extends BxBaseModProfileMenuViewActionsAll
 
     protected function _getMenuItemDeletePersonsProfile($aItem)
     {
-        return $this->_getMenuItemByNameActionsMore($aItem);
+        return $this->_getMenuItemByNameActionDelete($aItem);
     }
 
     protected function _getMenuItemDeletePersonsAccount($aItem)

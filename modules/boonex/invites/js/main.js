@@ -62,7 +62,7 @@ BxInvMain.prototype.showLinkPopup = function(oElement) {
         				opacity: .7
                     },
                     onShow: function () {
-                    	oClipboard = new Clipboard('#' + $this._aHtmlIds['link_popup'] + ' .bx-btn[name = "clipboard"]', {
+                    	oClipboard = new ClipboardJS('#' + $this._aHtmlIds['link_popup'] + ' .bx-btn[name = "clipboard"]', {
                     	    target: function(oTrigger) {
                     	        return $('#' + sPopupId).find('[name = "link"]').get(0);
                     	    }

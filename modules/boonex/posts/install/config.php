@@ -63,6 +63,7 @@ $aConfig = array(
         'bx_posts_covers',
     	'bx_posts_photos',
         'bx_posts_videos',
+        'bx_classes_sounds',
         'bx_posts_files'
     ),
 
@@ -81,6 +82,8 @@ $aConfig = array(
         'bx_posts_videos_poster_preview',
         'bx_posts_videos_mp4',
         'bx_posts_videos_mp4_hd',
+        
+        'bx_classes_sounds_mp3',
 
         'bx_posts_preview_files',
         'bx_posts_gallery_files'

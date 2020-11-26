@@ -9,7 +9,7 @@ function BxAccntMain(oOptions) {
 BxAccntMain.prototype.copyToClipboard = function(oElement) {
     var $this = this;
 
-    oClipboard = new Clipboard('#' + this._aHtmlIds['password_button'], {
+    oClipboard = new ClipboardJS('#' + this._aHtmlIds['password_button'], {
 	    target: function(oTrigger) {
 	        return $('#' + $this._aHtmlIds['password_text']).get(0);
 	    }

@@ -45,4 +45,5 @@
 	<string name="_bx_stripe_connect_msg_connected"><![CDATA[Вы были успешно присоединены.]]></string>
 	<string name="_bx_stripe_connect_wrn_disconnect"><![CDATA[Вы уверены, что хотите отсоединиться?]]></string>
 	<string name="_bx_stripe_connect_err_perform"><![CDATA[Не удается выполнить действие. Пожалуйста сообщите.]]></string>
+	<string name="_bx_stripe_connect_log"><![CDATA[Stripe Connect]]></string>
 </resources>

@@ -163,7 +163,7 @@ class BxDolPush extends BxDolFactory implements iBxDolSingleton
         $oResult = @json_decode($sResult, true);
         if(isset($oResult['errors'])){
             foreach($oResult['errors'] as $sError) {  
-                file_put_contents(BX_DIRECTORY_PATH_LOGS . '/bx_push.log', date('m-d-Y H:i:s') . ": " . "Error:" . $sError . " Message:" . json_encode($aMessage) . "\n", FILE_APPEND);            
+                bx_log('sys_push', $sError . " Message:" . json_encode($aMessage));
             }
         }
 

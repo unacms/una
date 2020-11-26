@@ -198,12 +198,7 @@ class BxSMTPModule extends BxDolModule
 
     function log ($s)
     {
-        $fn = BX_DIRECTORY_PATH_ROOT . "logs/smtp_mailer.log";
-        $f = @fopen ($fn, 'a');
-        if (!$f)
-            return;
-        fwrite ($f, date(DATE_RFC822) . "\t" . $s . "\n");
-        fclose ($f);
+        bx_log('bx_smtp_mailer', $s);
     }
 }
 

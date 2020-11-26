@@ -1,0 +1,43 @@
+<div class="bx-def-padding-sec-leftright bx-def-border-bottom bx-files-border-thick bx-files-browser-toolbar bx-clearfix" id="bx-files-browser-toolbar-__unique_ident__">
+    <bx_if:upload_visible>
+    <div class="bx-files-toolbar-controls-group">
+        <button class="bx-btn" onclick="bx_alert('TODO'); return false;"><i class="sys-icon upload"></i>&nbsp;Upload</button>
+        <button class="bx-btn" onclick="bx_alert('TODO'); return false;"><i class="sys-icon plus"></i>&nbsp;Add Folder</button>
+    </div>
+    </bx_if:upload_visible>
+
+    <div class="bx-files-toolbar-controls-group">
+        <bx_if:table_layout_btn>
+            <button class="bx-btn bx-btn-disabled" title="<bx_text:_bx_files_toolbar_view_table />"><i class="sys-icon list"></i></button>
+            <button class="bx-btn" onclick="__js_object__.setView('gallery');" title="<bx_text:_bx_files_toolbar_view_gallery />"><i class="sys-icon th-large"></i></button>
+        </bx_if:table_layout_btn>
+        <bx_if:gallery_layout_btn>
+            <button class="bx-btn" onclick="__js_object__.setView('table');"  title="<bx_text:_bx_files_toolbar_view_table />"><i class="sys-icon list"></i></button>
+            <button class="bx-btn bx-btn-disabled" title="<bx_text:_bx_files_toolbar_view_gallery />"><i class="sys-icon th-large"></i></button>
+        </bx_if:gallery_layout_btn>
+    </div>
+
+    <bx_if:bookmarks_visible>
+    <div class="bx-files-toolbar-controls-group">
+        <button class="bx-btn" onclick="__js_object__.toggleBookmarks();" title="<bx_text:_bx_files_toolbar_view_bookmarks />"><i class="sys-icon __bookmark_enabled__ star"></i></button>
+    </div>
+    </bx_if:bookmarks_visible>
+
+    <div class="bx-files-toolbar-controls-group">
+        __sorting_dropdown__
+        __filter_box__
+    </div>
+</div>
+
+<div class="bx-files-toolbar-spacer"></div>
+
+<bx_if:select_all_checkbox>
+<div class="bx-def-padding-sec bx-files-text-unit-simple-row">
+    <div>
+        <input type="checkbox" class="bx-def-font-inputs bx-form-input-checkbox bx-def-margin-right" id="bx-files-browser-select-all-__unique_ident__" onchange="__js_object__.onSelectAll(this);" />
+        <label for="bx-files-browser-select-all-__unique_ident__"><bx_text:_Select_all /></label>
+    </div>
+</div>
+</bx_if:select_all_checkbox>
+
+__js_code__

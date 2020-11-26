@@ -1570,6 +1570,16 @@ class BxDolFormCheckerHelper
         }
         return $s ? true : false;
     }
+    static public function checkProfileName($s)
+    {
+        if (!self::checkAvail($s))
+            return false;
+        
+        if (self::checkPreg ($s, '#^@.+$#')){
+            return false;
+        }
+        return true;
+    }
 
     static public function checkLocation($s, $sName, $sMethod = BX_DOL_FORM_METHOD_DEFAULT, $bAll = false)
     {

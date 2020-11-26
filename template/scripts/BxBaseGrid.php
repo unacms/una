@@ -41,7 +41,7 @@ class BxBaseGrid extends BxDolGrid
     {
         require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
-        echoJson(array('grid' => $this->getCode(false)));
+        echoJson(array('grid' => $this->getCode(false), 'total_count' => $this->_iTotalCount));
     }
 
     public function performActionReorder()
@@ -130,6 +130,7 @@ class BxBaseGrid extends BxDolGrid
             $iPerPage = (int)$this->_aOptions['paginate_per_page'];
         else
             $iPerPage = 10;
+            
 
         if ($this->_aOptions['paginate_get_start']) {
 
@@ -165,16 +166,13 @@ class BxBaseGrid extends BxDolGrid
                 $sPaginate = $oPaginate->getSimplePaginate($this->_aOptions['paginate_simple']);
             else
                 $sPaginate = $oPaginate->getPaginate();
-
         } else {
-
             $aData = $this->_getData ($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
-
         }
 
         if((empty($aData) || !is_array($aData)) && isset($this->_aBrowseParams['empty_message']) && !(bool)$this->_aBrowseParams['empty_message'])
             return '';
-
+        
         $sPopupOptions = '{}';
         if (!empty($this->_aPopupOptions) && is_array($this->_aPopupOptions))
             $sPopupOptions = json_encode($this->_aPopupOptions);
@@ -251,6 +249,12 @@ class BxBaseGrid extends BxDolGrid
                         'condition' => !empty($this->_aOptions['filter_fields']) || !empty($this->_aOptions['filter_fields_translatable']),
                         'content' => array(
                             'controls' => $this->_getFilterControls(),
+                        ),
+                    ),
+                    'bx_if:counter' => array (
+                        'condition' => $this->_aOptions['show_total_count'] == 1,
+                        'content' => array(
+                            'counter' => _t('_sys_grid_total_count', $this->_iTotalCount),
                         ),
                     ),
                 ),

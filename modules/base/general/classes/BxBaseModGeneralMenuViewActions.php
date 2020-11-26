@@ -446,6 +446,15 @@ class BxBaseModGeneralMenuViewActions extends BxTemplMenuCustom
         return $this->_getMenuItemDefault($aItem);
     }
 
+    protected function _getMenuItemByNameActionDelete($aItem)
+    {
+        $oProfile = $this->_oModule->getProfileObject(($this->_iContentId));
+        if (!$this->_oModule->isAllowDeleteOrDisable(bx_get_logged_profile_id(), $oProfile->id()))
+            return false;
+        
+        return $this->_getMenuItemByNameActionsMore($aItem);
+    }
+    
     protected function _getMenuItemByNameActionsMore($aItem)
     {
         $CNF = &$this->_oModule->_oConfig->CNF;

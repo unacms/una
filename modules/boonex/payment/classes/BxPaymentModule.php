@@ -692,6 +692,14 @@ class BxPaymentModule extends BxBaseModPaymentModule
                 $this->_oConfig->putCustom($sCartItem, $aCartItemCustom, $aCustoms);
             }
         }
+        
+        bx_alert($this->getName(), 'before_pending', 0, bx_get_logged_profile_id(), array(
+            'client_id' => $this->_iUserId,
+            'type' => &$sType,
+            'provider' => &$sProvider,
+            'cart_info' => &$aInfo,
+			'custom' => &$aCustoms,
+        ));
 
         $iPendingId = $this->_oDb->insertOrderPending($this->_iUserId, $sType, $sProvider, $aInfo, $aCustoms);
         if(empty($iPendingId))

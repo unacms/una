@@ -25,6 +25,11 @@ class BxFilesFormEntry extends BxBaseModFilesFormEntry
         parent::_associalFileWithContent($oStorage, $iFileId, $iProfileId, $iContentId, $sPictureField);
         $this->_oModule->_oDb->updateFileId($iContentId, $iFileId);
     }
+
+    public function delete ($iContentId, $aContentInfo = array()) {
+        $this->_oModule->_oDb->deleteFileBookmarks($iContentId);
+        return parent::delete ($iContentId, $aContentInfo);
+    }
 }
 
 /** @} */

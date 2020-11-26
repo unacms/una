@@ -198,6 +198,130 @@ class BxFilesModule extends BxBaseModTextModule
             array('id' => $aFile['id'], 'url' => $sUrl, 'src' => $sPhotoThumb),
         );
     }
+
+    public function actionBookmark($iContentId) {
+        if (!$this->isLogged()) return;
+
+        $aData = $this->_oDb->getContentInfoById((int)$iContentId);
+        if (!$aData) return;
+
+        $this->_oDb->bookmarkFile((int)$iContentId, bx_get_logged_profile_id());
+    }
+
+    public function actionEntryPreview($iContentId) {
+        $aData = $this->_oDb->getContentInfoById((int)$iContentId);
+
+        $sJsCss = '';
+
+        $sPreviewCode = $this->_serviceTemplateFunc ('entryFilePreview', $iContentId);
+
+        // various init scripts could be there, which fail to work properly
+        // because of a fact that it is inside a popup which is at the moment is hidden
+        // so we need a way to postpone that initialization
+        $aScripts = [];
+        $sPreviewCode = preg_replace_callback('/<script>(.*)<\/script>/s', function($aMatch) use (&$aScripts) {
+            $aScripts[] = ['code' => $aMatch[1]];
+            return '';
+        }, $sPreviewCode);
+
+        // if there is a script then most likely it is a text + codemirror initialization, so include it here.
+        if ($aScripts) {
+            $sJsCss .= $this->_oTemplate->addJs('codemirror/codemirror-ext.min.js', true);
+            $sJsCss .= $this->_oTemplate->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'codemirror/|codemirror.css', true);
+        }
+
+        $sJsCss .= $this->_oTemplate->addCss('file_handler.css', true);
+
+        $sPopupCode = $this->_oTemplate->parseHtmlByName('entry-popup.html', [
+            'content' => $sPreviewCode,
+            'bx_repeat:init_scripts' => $aScripts,
+        ]);
+
+        echoJson([
+            'popup' => [
+                'html' => PopupBox('bx-files-popup', bx_process_output($aData['title']), $sJsCss.$sPopupCode),
+                'options' => [
+                    'onShow' => 'bx_files_popup_init()',
+                ],
+            ],
+        ]);
+    }
+
+    public function actionEntryInfo($iContentId) {
+        $aData = $this->_oDb->getContentInfoById((int)$iContentId);
+
+        echoJson([
+            'popup' => [
+                'html' => PopupBox('bx-files-popup', bx_process_output($aData['title']), $this->_oTemplate->entryInfoPopup($aData)),
+            ],
+        ]);
+    }
+
+    public function actionEntryEditTitle($iContentId) {
+        $iContentId = intval($iContentId);
+        $aData = $this->_oDb->getContentInfoById($iContentId);
+
+        $CNF = &$this->_oConfig->CNF;
+
+        if (!$aData) {
+            echoJson(['message' => _t('_bx_files_txt_error')]);
+            exit;
+        }
+
+        if ($aData[$CNF['FIELD_AUTHOR']] != bx_get_logged_profile_id()) {
+            echoJson(['message' => _t('_bx_files_txt_permission_denied')]);
+            exit;
+        }
+
+        if (isset($_POST['title'])) {
+            if ($sNewTitle = bx_get('title')) {
+                $this->_oDb->updateEntryTitle($iContentId, $sNewTitle);
+                $aData = $this->_oDb->getContentInfoById($iContentId);
+                echo bx_process_output($aData[$CNF['FIELD_TITLE']]);
+            }
+            exit;
+        }
+
+        $sActionUrl = BX_DOL_URL_ROOT.$this->_oConfig->getBaseUri();
+        echoJson([
+            'eval' => "bx_prompt('"._t('_bx_files_form_entry_input_title')."', '".bx_js_string($aData[$CNF['FIELD_TITLE']])."', function(val) {                
+                $.post('{$sActionUrl}entry_edit_title/{$iContentId}', {title: val.getValue()}, function(sTitle) {
+                    if (sTitle)
+                        $('.bx-file-entry[file_id=".$aData[$CNF['FIELD_ID']]."] .bx-files-filename a').html(sTitle);
+                });                
+            })",
+        ]);
+    }
+
+    public function actionEntryDelete($iContentId) {
+        $iContentId = intval($iContentId);
+        $aData = $this->_oDb->getContentInfoById($iContentId);
+
+        $CNF = &$this->_oConfig->CNF;
+
+        if (!$aData) {
+            echoJson(['message' => _t('_bx_files_txt_error')]);
+            exit;
+        }
+
+        if ($aData[$CNF['FIELD_AUTHOR']] != bx_get_logged_profile_id()) {
+            echoJson(['message' => _t('_bx_files_txt_permission_denied')]);
+            exit;
+        }
+
+        $this->serviceDeleteEntity($iContentId);
+
+        echoJson([
+            'eval' => "
+                $('.bx-file-entry[file_id={$iContentId}]').fadeOut();
+            ",
+        ]);
+    }
+
+    public function serviceDeleteEntitiesByAuthor ($iProfileId) {
+        $this->_oDb->deleteProfileBookmarks($iProfileId);
+        return parent::serviceDeleteEntitiesByAuthor ($iProfileId);
+    }
 }
 
 /** @} */

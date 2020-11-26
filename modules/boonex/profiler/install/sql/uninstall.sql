@@ -1,3 +1,5 @@
+-- Logs Objects
+DELETE FROM `sys_objects_logs` WHERE `module` = 'bx_profiler';
 
 -- studio page and widget
 DELETE FROM `tp`, `tw`, `tpw`

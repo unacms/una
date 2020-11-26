@@ -208,6 +208,7 @@
     <string name="_bx_polls_grid_action_title_adm_delete"><![CDATA[Delete]]></string>
     <string name="_bx_polls_grid_action_title_adm_more_actions"><![CDATA[More Actions]]></string>
     <string name="_bx_polls_grid_action_title_adm_audit_content"><![CDATA[Audit actions]]></string>
+    <string name="_bx_polls_grid_action_title_adm_clear_reports"><![CDATA[Clear reports]]></string>
     <string name="_bx_polls_grid_action_err_delete"><![CDATA[Cannot delete the selected poll(s).]]></string>
     <string name="_bx_polls_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 

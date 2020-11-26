@@ -449,10 +449,12 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_glossary_administration', 'bulk', 'delete', '_bx_glossary_grid_action_title_adm_delete', '', 0, 1, 1),
+('bx_glossary_administration', 'bulk', 'clear_reports', '_bx_glossary_grid_action_title_adm_clear_reports', '', 0, 1, 2),
 ('bx_glossary_administration', 'single', 'edit', '_bx_glossary_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
 ('bx_glossary_administration', 'single', 'delete', '_bx_glossary_grid_action_title_adm_delete', 'remove', 1, 1, 2),
 ('bx_glossary_administration', 'single', 'settings', '_bx_glossary_grid_action_title_adm_more_actions', 'cog', 1, 0, 3),
 ('bx_glossary_administration', 'single', 'audit_content', '_bx_glossary_grid_action_title_adm_audit_content', 'search', 1, 0, 4),
+('bx_glossary_administration', 'single', 'clear_reports', '_bx_glossary_grid_action_title_adm_clear_reports', 'eraser', 1, 0, 5),
 ('bx_glossary_common', 'bulk', 'delete', '_bx_glossary_grid_action_title_adm_delete', '', 0, 1, 1),
 ('bx_glossary_common', 'single', 'edit', '_bx_glossary_grid_action_title_adm_edit', 'pencil-alt', 1, 0, 1),
 ('bx_glossary_common', 'single', 'delete', '_bx_glossary_grid_action_title_adm_delete', 'remove', 1, 1, 2),

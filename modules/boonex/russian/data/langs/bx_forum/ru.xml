@@ -306,6 +306,7 @@
     <string name="_bx_forum_grid_column_title_visible_for_levels"><![CDATA[Видимо для]]></string>
     <string name="_bx_forum_grid_action_title_adm_edit"><![CDATA[Редактировать]]></string>
     <string name="_bx_forum_grid_action_title_adm_delete"><![CDATA[Удалить]]></string>
+    <string name="_bx_forum_grid_action_title_adm_clear_reports"><![CDATA[Очистить жалобы]]></string>
     <string name="_bx_forum_grid_action_title_adm_more_actions"><![CDATA[Дополнительные действия]]></string>
     <string name="_bx_forum_grid_action_title_adm_audit_content"><![CDATA[Аудит действий]]></string>
     <string name="_bx_forum_grid_action_title_add"><![CDATA[Новое сообщение]]></string>

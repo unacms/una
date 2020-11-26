@@ -46,7 +46,7 @@
     <string name="_bx_orgs_form_profile_input_initial_members"><![CDATA[Пригласить участников]]></string>
     <string name="_bx_orgs_form_profile_input_sys_org_name"><![CDATA[Название организации]]></string>
     <string name="_bx_orgs_form_profile_input_org_name"><![CDATA[Название организации]]></string>
-    <string name="_bx_orgs_form_profile_input_org_name_err"><![CDATA[Эта информация необходима. Пожалуйста, заполните это поле.]]></string>
+    <string name="_bx_orgs_form_profile_input_org_name_err"><![CDATA[Имя профиля обязательно для заполнения и не должно начинаться с @.]]></string>
     <string name="_bx_orgs_form_profile_input_sys_org_desc"><![CDATA[Описание]]></string>
     <string name="_bx_orgs_form_profile_input_org_desc"><![CDATA[Описание]]></string>
     <string name="_bx_orgs_form_profile_input_sys_org_cat"><![CDATA[Категория]]></string>
@@ -222,6 +222,8 @@
     <string name="_bx_orgs_menu_item_title_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_orgs_menu_item_title_system_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
     <string name="_bx_orgs_menu_item_title_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
+    <string name="_bx_orgs_menu_item_title_system_clear_reports"><![CDATA[Очистить жалобы]]></string>
+    <string name="_bx_orgs_menu_item_title_clear_reports"><![CDATA[Очистить жалобы]]></string>
     <string name="_bx_orgs_menu_item_title_system_edit_cover"><![CDATA[Редактировать обложку]]></string>
     <string name="_bx_orgs_menu_item_title_edit_cover"><![CDATA[Редактировать обложку]]></string>
     <string name="_bx_orgs_menu_item_title_system_edit_profile"><![CDATA[Редактировать организацию]]></string>
@@ -331,6 +333,7 @@
     <string name="_bx_orgs_grid_column_title_adm_account"><![CDATA[Аккаунт]]></string>
     <string name="_bx_orgs_grid_action_title_adm_delete"><![CDATA[Удалить]]></string>
     <string name="_bx_orgs_grid_action_title_adm_delete_with_content"><![CDATA[Удалить вместе с содержимым]]></string>
+    <string name="_bx_orgs_grid_action_title_adm_clear_reports"><![CDATA[Очистить жалобы]]></string>
     <string name="_bx_orgs_grid_action_title_adm_set_acl_level"><![CDATA[Назначить членство]]></string>
     <string name="_bx_orgs_grid_action_title_adm_more_actions"><![CDATA[Дополнительные действия]]></string>
     <string name="_bx_orgs_grid_action_title_adm_audit_content"><![CDATA[Аудит действий над профилем]]></string>

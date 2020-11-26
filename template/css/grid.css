@@ -40,6 +40,10 @@
     float:left;
 }
 
+.bx-grid-header-controls-counter {
+    float:left;
+}
+
 .bx-media-phone div.bx-grid-header div.bx-form-element-wrapper{
     float:none;
 }

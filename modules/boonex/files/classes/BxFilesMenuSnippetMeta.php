@@ -17,6 +17,13 @@ class BxFilesMenuSnippetMeta extends BxBaseModTextMenuSnippetMeta
 
         parent::__construct($aObject, $oTemplate);
     }
+
+    protected function _getMenuItemSize($aItem)
+    {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+        $aFile = $this->_oModule->getContentFile($this->_aContentInfo);
+        return $this->getUnitMetaItemText(_t_format_size($aFile['size']));
+    }
 }
 
 /** @} */

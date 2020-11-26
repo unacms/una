@@ -166,6 +166,8 @@
 	<string name="_bx_spaces_menu_item_title_delete"><![CDATA[Delete]]></string>
 	<string name="_bx_spaces_menu_item_title_system_delete_with_content"><![CDATA[Delete With Content]]></string>
 	<string name="_bx_spaces_menu_item_title_delete_with_content"><![CDATA[Delete With Content]]></string>
+  <string name="_bx_spaces_menu_item_title_system_clear_reports"><![CDATA[Clear reports]]></string>
+  <string name="_bx_spaces_menu_item_title_clear_reports"><![CDATA[Clear reports]]></string>
 	<string name="_bx_spaces_menu_item_title_system_edit_cover"><![CDATA[Edit Cover]]></string>
 	<string name="_bx_spaces_menu_item_title_edit_cover"><![CDATA[Edit Cover]]></string>
 	<string name="_bx_spaces_menu_item_title_system_edit_profile"><![CDATA[Edit Space]]></string>
@@ -253,6 +255,7 @@
 	<string name="_bx_spaces_grid_action_title_adm_more_actions"><![CDATA[More Actions]]></string>
   <string name="_bx_spaces_grid_action_title_adm_audit_context"><![CDATA[Audit actions in context]]></string>
   <string name="_bx_spaces_grid_action_title_adm_audit_content"><![CDATA[Audit actions with content]]></string>
+  <string name="_bx_spaces_grid_action_title_adm_clear_reports"><![CDATA[Clear reports]]></string>
 	<string name="_bx_spaces_grid_action_err_delete"><![CDATA[Cannot delete the selected space(s).]]></string>
 	<string name="_bx_spaces_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 	

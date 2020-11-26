@@ -51,5 +51,6 @@
     <string name="_bx_smtp_option_allow_selfsigned"><![CDATA[Allow self-signed certificates]]></string>
     <string name="_bx_smtp_option_from_name"><![CDATA['From' name of the message]]></string>
     <string name="_bx_smtp_option_from_email"><![CDATA[Override default sender email address]]></string>
+    <string name="_bx_smtp_mailer_log"><![CDATA[SMTP Mailer: sending errors]]></string>
 </resources>
 

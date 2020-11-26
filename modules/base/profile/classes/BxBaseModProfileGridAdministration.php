@@ -167,6 +167,15 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
         return  $this->_getFilterSelectOne($this->_sFilter1Name, $this->_sFilter1Value, $this->_aFilter1Values) . $this->_getSearchInput();
     }
 
+    protected function _getCellSwitcher ($mixedValue, $sKey, $aField, $aRow)
+    {
+        if (isset($aRow['profile_id']))
+            if (!$this->_oModule->isAllowDeleteOrDisable(bx_get_logged_profile_id(), $aRow['profile_id']))
+                return parent::_getCellDefault('', $sKey, $aField, $aRow);    
+        
+        return parent::_getCellSwitcher ($mixedValue, $sKey, $aField, $aRow);
+    }
+    
     protected function _getCellFullname($mixedValue, $sKey, $aField, $aRow)
     {
     	$oProfile = $this->_getProfileObject($aRow['id']);
@@ -201,11 +210,7 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
 
     protected function _getProfileObject($iId)
     {
-    	$oProfile = BxDolProfile::getInstanceByContentAndType((int)$iId, $this->_oModule->_oConfig->getName());
-        if (!$oProfile) 
-            $oProfile = BxDolProfileUndefined::getInstance();
-
-        return $oProfile;
+        return $this->_oModule->getProfileObject($iId);
     }
 
     protected function _getProfileId($iId)
@@ -215,11 +220,15 @@ class BxBaseModProfileGridAdministration extends BxBaseModGeneralGridAdministrat
 
 	protected function _doDelete($iId, $aParams = array())
     {
+        $oProfile = $this->_getProfileObject($iId);
+        
+        if (!$this->_oModule->isAllowDeleteOrDisable(bx_get_logged_profile_id(), $oProfile->id()))
+            return false;
+        
     	if($this->_oModule->checkMyself($iId))
     		return false;
 
     	if(isset($aParams['with_content']) && $aParams['with_content'] === true) {
-    		$oProfile = $this->_getProfileObject($iId);
 
     		if($oProfile instanceof BxDolProfileUndefined)
     			return false;

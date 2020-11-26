@@ -14,7 +14,7 @@
  */
 class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 {
-    protected $_bAutoApproval = false;
+    protected $_sAutoApproval = false;
 
     public function __construct($oModule)
     {
@@ -22,19 +22,27 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
-        $bAutoApproval = isset($CNF['PARAM_AUTOAPPROVAL']) ? (bool)getParam($CNF['PARAM_AUTOAPPROVAL']) : true;
+        $sAutoApproval = isset($CNF['PARAM_AUTOAPPROVAL']) ? getParam($CNF['PARAM_AUTOAPPROVAL']) : BX_DOL_PROFILE_ACTIVATE_ALWAYS;
         $bAdministrator = BxDolAcl::getInstance()->isMemberLevelInSet(array(MEMBERSHIP_ID_ADMINISTRATOR));
-        $this->setAutoApproval(isAdmin() || $bAdministrator || $bAutoApproval);
+        if (isAdmin() || $bAdministrator)
+            $sAutoApproval = BX_DOL_PROFILE_ACTIVATE_ALWAYS;
+        $this->setAutoApproval($sAutoApproval);
     }
 
-    public function isAutoApproval()
+    public function isAutoApproval($sAction = BX_DOL_PROFILE_ACTIVATE_ALWAYS)
     {
-        return $this->_bAutoApproval;
+        if ($this->_sAutoApproval == BX_DOL_PROFILE_ACTIVATE_ALWAYS || $this->_sAutoApproval == $sAction)
+            return true;
+        
+        return false;
     }
-
-    public function setAutoApproval($b)
+    
+    public function setAutoApproval($mValue)
     {
-        return ($this->_bAutoApproval = $b);
+        if ($mValue === true)
+            $mValue = BX_DOL_PROFILE_ACTIVATE_ALWAYS;
+        
+        return ($this->_sAutoApproval = $mValue);
     }
 
     protected function _getProfileAndContentData ($iContentId)
@@ -93,7 +101,7 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
 
         $sStatus = $oProfile->getStatus();
-        if (!$this->isAutoApproval() && BX_PROFILE_STATUS_ACTIVE == $sStatus)
+        if (!$this->isAutoApproval(BX_DOL_PROFILE_ACTIVATE_EDIT) && BX_PROFILE_STATUS_ACTIVE == $sStatus)
             $aTrackTextFieldsChanges = array ();
     }
 
@@ -111,7 +119,7 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 
         // change profile to 'pending' only if profile is 'active'
         $sStatus = $oProfile->getStatus();
-        if (!$this->isAutoApproval() && BX_PROFILE_STATUS_ACTIVE == $sStatus && !empty($aTrackTextFieldsChanges['changed_fields']))
+        if (!$this->isAutoApproval(BX_DOL_PROFILE_ACTIVATE_EDIT) && BX_PROFILE_STATUS_ACTIVE == $sStatus && !empty($aTrackTextFieldsChanges['changed_fields']))
             $oProfile->disapprove(BX_PROFILE_ACTION_AUTO, 0, $this->_oModule->serviceActAsProfile());
 
         // process uploaded files
@@ -147,7 +155,7 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 
         // approve profile if auto-approval is enabled and profile status is 'pending'
         $sStatus = $oProfile->getStatus();
-        if ($sStatus == BX_PROFILE_STATUS_PENDING && $this->isAutoApproval())
+        if ($sStatus == BX_PROFILE_STATUS_PENDING && $this->isAutoApproval(BX_DOL_PROFILE_ACTIVATE_ADD))
             $oProfile->approve(BX_PROFILE_ACTION_AUTO, 0, $this->_oModule->serviceActAsProfile() && $this->_oModule->serviceIsEnableProfileActivationLetter());
 
         // set created profile some default membership

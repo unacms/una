@@ -46,4 +46,5 @@
 	<string name="_bx_stripe_connect_wrn_disconnect"><![CDATA[Are you sure you want to disconnect?]]></string>
 	<string name="_bx_stripe_connect_err_perform"><![CDATA[Cannot perform the action. Please report.]]></string>
 	<string name="_bx_stripe_connect_txt_keys_usage"><![CDATA[<b>Note</b>. You should use these <b>Public</b> and <b>Secret</b> keys in configuration settings of your Stripe account <a href="{0}">here</a>.]]></string>
+  <string name="_bx_stripe_connect_log"><![CDATA[Stripe Connect]]></string>
 </resources>

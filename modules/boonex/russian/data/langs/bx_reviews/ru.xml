@@ -250,6 +250,7 @@
     <string name="_bx_reviews_grid_column_title_adm_active"><![CDATA[Активные]]></string>
     <string name="_bx_reviews_grid_column_title_adm_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_reviews_grid_action_title_adm_audit_content"><![CDATA[Аудит действий]]></string>
+    <string name="_bx_reviews_grid_action_title_adm_clear_reports"><![CDATA[Очистить жалобы]]></string>
     <string name="_bx_reviews_grid_column_title_adm_added"><![CDATA[Добавленные]]></string>
     <string name="_bx_reviews_grid_column_title_adm_author"><![CDATA[Автор]]></string>
     <string name="_bx_reviews_grid_action_title_adm_add"><![CDATA[Добавить]]></string>

@@ -134,11 +134,7 @@ class BxProfiler extends BxDol
 
     function _appendToLog ($s)
     {
-        $f = fopen ( BX_DIRECTORY_PATH_ROOT . 'logs/bx_profiler.log', 'a');
-        if (!$f)
-            return;
-        fwrite($f, $s);
-        fclose($f);
+		bx_log('bx_profiler', $s);
     }
 
     function logSqlQuery ($iTime, $aSqlQuery, &$oStmt)

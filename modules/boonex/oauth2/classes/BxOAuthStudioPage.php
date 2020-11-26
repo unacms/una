@@ -13,19 +13,20 @@ class BxOAuthStudioPage extends BxTemplStudioModule
 {
     protected $oModule;
 
-    function __construct($sModule, $mixedPageName, $sPage = "")
+    function __construct($sModule = "", $sPage = "")
     {
-        parent::__construct($sModule, $mixedPageName, $sPage);
+        parent::__construct($sModule, $sPage);
 
         $this->oModule = BxDolModule::getInstance('bx_oauth');
 
         $this->aMenuItems = array(
-            'settings' => array('name' => 'settings', 'icon' => 'cogs', 'title' => '_adm_lmi_cpt_settings'),
-            'help' => array('name' => 'help', 'icon' => 'question', 'title' => '_bx_oauth_help'),
+            array('name' => 'settings', 'icon' => 'cogs', 'title' => '_adm_lmi_cpt_settings'),
+            array('name' => 'keys', 'icon' => 'key', 'title' => '_adm_lmi_cpt_keys'),
+            array('name' => 'help', 'icon' => 'question', 'title' => '_bx_oauth_help'),
         );
     }
 
-    function getSettings ()
+    function getKeys ()
     {
     	$this->oModule->_oTemplate->addStudioJs(array('BxDolGrid.js'));
     	$this->oModule->_oTemplate->addStudioCss(array('grid.css'));

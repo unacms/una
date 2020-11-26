@@ -19,8 +19,6 @@ class BxStripeConnectConfig extends BxBaseModConnectConfig
     protected $_sApiPublicKey;
     protected $_sApiSecretKey;
 
-	protected $_sLogFile;
-
     function __construct($aModule)
     {
         parent::__construct($aModule);
@@ -68,8 +66,6 @@ class BxStripeConnectConfig extends BxBaseModConnectConfig
         $this->_aJsObjects = array(
         	'main' => 'oStripeConnectMain',
         );
-
-        $this->_sLogFile = BX_DIRECTORY_PATH_LOGS . 'bx_stripe_connect.log';
     }
 
     public function init(&$oDb)
@@ -139,11 +135,6 @@ class BxStripeConnectConfig extends BxBaseModConnectConfig
         }
 
         return $iResult;
-    }
-
-    public function getLogFile()
-    {
-    	return $this->_sLogFile;
     }
 }
 
