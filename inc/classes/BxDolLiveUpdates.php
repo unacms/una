@@ -189,9 +189,14 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
     {
     	return array(
             $this->_oCacheObject,
-            $this->_oQuery->genDbCacheKey($this->{'_sCacheKey' . ucfirst($sType)}),
+            $this->_getCacheKey($sType),
             $this->_iCacheTTL
     	);
+    }
+
+    protected function _getCacheKey($sType)
+    {
+        return $this->_oQuery->genDbCacheKey($this->{'_sCacheKey' . ucfirst($sType)});
     }
 
     protected function _getCached($sType)
@@ -199,27 +204,27 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
         list($oCache, $sCacheKey, $iCacheTtl) = $this->_getCacheInfo($sType);
 
         $aCached = $oCache->getData($sCacheKey, $iCacheTtl);
-        if(empty($aCached[$sType])) {
+        if(empty($aCached)) {
             switch($sType) {
                 case 'systems':
-                    $aCached[$sType] = $this->_oQuery->getSystems();
+                    $aCached = $this->_oQuery->getSystems();
                     break;
 
                 case 'data':
-                    if(!isset($aCached[$sType]))
-                        $aCached[$sType] = array();
+                    if(empty($aCached))
+                        $aCached = array();
 
                     $aRequested = $this->_getRequestedData();
                     foreach($this->_aSystems as $sName => $aSystem)
-                        $aCached[$sType][$sName] = !empty($aRequested[$sName]['count']) ? (int)$aRequested[$sName]['count'] : 0;
+                        $aCached[$sName] = !empty($aRequested[$sName]['count']) ? (int)$aRequested[$sName]['count'] : 0;
                     break;
             }
 
-            if(!empty($aCached[$sType]))
-                    $oCache->setData($sCacheKey, $aCached, $iCacheTtl);
+            if(!empty($aCached))
+                $oCache->setData($sCacheKey, $aCached, $iCacheTtl);
         }
 
-        return $aCached[$sType];
+        return $aCached;
     }
 
     protected function _getCachedSystems()
@@ -238,9 +243,8 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
 
     protected function _clearCached()
     {
-        list($oCache, $sCacheKey, $iCacheTtl) = $this->_getCacheInfo();
-
-        $oCache->delData($sCacheKey);
+        $this->_oCacheObject->delData($this->_getCacheKey('systems'));
+        $this->_oCacheObject->delData($this->_getCacheKey('data'));
     }
 
     protected function _updateCached($sType, $aData)
