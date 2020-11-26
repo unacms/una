@@ -32,7 +32,8 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
     protected $_iInterval;
 
     protected $_oCacheObject;
-    protected $_sCacheKey;
+    protected $_sCacheKeySystems;
+    protected $_sCacheKeyData;
     protected $_iCacheTTL;
 
     protected $_sJsClass;
@@ -40,6 +41,9 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
 
     protected function __construct()
     {
+        if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
+            trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
+
         parent::__construct();
 
         /**
@@ -56,7 +60,8 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
         $this->_iInterval = (int)$this->_oQuery->getParam('sys_live_updates_interval');
         
         $this->_oCacheObject = $this->_oQuery->getDbCacheObject();
-        $this->_sCacheKey = 'sys_live_updates_' . $this->_iProfileId;
+        $this->_sCacheKeySystems = 'sys_live_updates_systems';
+        $this->_sCacheKeyData = 'sys_live_updates_data_' . $this->_iProfileId;
         $this->_iCacheTTL = 86400;
 
         $this->_sJsClass = 'BxDolLiveUpdates';
@@ -65,6 +70,12 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
     	$this->_aSystems = $this->_getCachedSystems();
     	$this->_aSystemsActive = array_keys($this->_aSystems);
     	$this->_aSystemsTransient = array();
+    }
+
+    public function __clone()
+    {
+        if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
+            trigger_error('Clone is not allowed for the class: ' . get_class($this), E_USER_ERROR);
     }
 
     /**
@@ -89,7 +100,7 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
 
         $mixedCacheKey = bx_get('hash');
         if($mixedCacheKey !== false)
-            $this->_sCacheKey = base64_decode(bx_process_input($mixedCacheKey));
+            $this->_sCacheKeySystems = $this->_decodeHash(bx_process_input($mixedCacheKey));
 
         $mixedSystemsActive = bx_get('systems_active');
         if($mixedSystemsActive !== false)
@@ -143,7 +154,7 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
             return false;
 
         if(empty($this->_aSystemsTransient))
-            $this->_sCacheKey .= $this->_getPageId();
+            $this->_sCacheKeySystems .= $this->_getPageId();
 
         if(!in_array($sName, $this->_aSystemsTransient))
             $this->_aSystemsTransient[] = $sName;
@@ -174,18 +185,18 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
         return true;
     }
 
-    protected function _getCacheInfo()
+    protected function _getCacheInfo($sType)
     {
     	return array(
             $this->_oCacheObject,
-            $this->_oQuery->genDbCacheKey($this->_sCacheKey),
+            $this->_oQuery->genDbCacheKey($this->{'_sCacheKey' . ucfirst($sType)}),
             $this->_iCacheTTL
     	);
     }
 
     protected function _getCached($sType)
     {
-        list($oCache, $sCacheKey, $iCacheTtl) = $this->_getCacheInfo();
+        list($oCache, $sCacheKey, $iCacheTtl) = $this->_getCacheInfo($sType);
 
         $aCached = $oCache->getData($sCacheKey, $iCacheTtl);
         if(empty($aCached[$sType])) {
@@ -232,12 +243,12 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
         $oCache->delData($sCacheKey);
     }
 
-    protected function _updateCached($sKey, $aData)
+    protected function _updateCached($sType, $aData)
     {
-    	list($oCache, $sCacheKey, $iCacheTtl) = $this->_getCacheInfo();
+    	list($oCache, $sCacheKey, $iCacheTtl) = $this->_getCacheInfo($sType);
 
     	$aCached = $oCache->getData($sCacheKey, $iCacheTtl);
-    	$aCached[$sKey] = $aData;
+    	$aCached[$sType] = $aData;
 
     	$oCache->setData($sCacheKey, $aCached, $iCacheTtl);
     }
@@ -282,7 +293,17 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
         parse_str($_SERVER['QUERY_STRING'], $aPageParams);
         $aPageParams = array_diff_assoc($aPageParams, array('start', 'per_page', 'order', 'filter'));
 
-        return '_' . md5(bx_append_url_params($_SERVER['PHP_SELF'], $aPageParams));
+        return '_' . $this->_iProfileId . '_' . md5(bx_append_url_params($_SERVER['PHP_SELF'], $aPageParams));
+    }
+
+    protected function _encodeHash()
+    {
+        return base64_encode($this->_sCacheKeySystems);
+    }
+
+    protected function _decodeHash($sHash)
+    {
+        return base64_decode($sHash);
     }
 }
 
