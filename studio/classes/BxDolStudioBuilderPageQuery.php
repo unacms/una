@@ -55,7 +55,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
         return $this->lastId();
     }
 
-    function getPages($aParams, &$aItems, $bReturnCount = true)
+    function getPages($aParams)
     {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sGroupClause = $sOrderClause = $sLimitClause = "";
@@ -113,7 +113,7 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
                 break;
         }
 
-        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
+        $aMethod['params'][0] = "SELECT 
                 `tp`.`id` AS `id`,
                 `tp`.`object` AS `object`,
                 `tp`.`uri` AS `uri`,
@@ -141,12 +141,8 @@ class BxDolStudioBuilderPageQuery extends BxDolStudioPageQuery
                 `tp`.`override_class_file` AS `override_class_file`" . $sSelectClause . "
             FROM `sys_objects_page` AS `tp` " . $sJoinClause . "
             WHERE 1 " . $sWhereClause . " " . $sGroupClause . " " . $sOrderClause . " " . $sLimitClause;
-        $aItems = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
 
-        if(!$bReturnCount)
-            return !empty($aItems);
-
-        return (int)$this->getOne("SELECT FOUND_ROWS()");
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 
     function updatePage($iId, $aFields)

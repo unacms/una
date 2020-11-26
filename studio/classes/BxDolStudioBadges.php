@@ -11,7 +11,7 @@ define('BX_DOL_STUDIO_BADGES_TYPE_GENERAL', 'badges');
 
 define('BX_DOL_STUDIO_BADGES_TYPE_DEFAULT', BX_DOL_STUDIO_BADGES_TYPE_GENERAL);
 
-class BxDolStudioBadges extends BxTemplStudioPage
+class BxDolStudioBadges extends BxTemplStudioWidget
 {
     protected $sPage;
 
@@ -24,14 +24,20 @@ class BxDolStudioBadges extends BxTemplStudioPage
             $this->sPage = $sPage;
     }
 
-    public function init()
+    public function checkAction()
     {
-        if(($sAction = bx_get('pgt_action')) === false) 
-        	return;
+        $sAction = bx_get('bdg_action');
+    	if($sAction === false)
+            return false;
 
-		$sAction = bx_process_input($sAction);
-        
-		exit;
+        $sAction = bx_process_input($sAction);
+
+        $aResult = array('code' => 1, 'message' => _t('_adm_err_operation_failed'));
+        switch($sAction) {
+            
+        }
+
+        return $aResult;
     }
 }
 

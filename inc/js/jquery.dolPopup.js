@@ -213,6 +213,9 @@
                 }
 
                 // Don't should popup with pointer if there is no parent. Checking before showing. 
+                if(typeof o.pointer.el == 'string')
+                    o.pointer.el = $(o.pointer.el);
+
                 if($(o.pointer.el).length > 0 && !$.contains(document, o.pointer.el[0])) {
             		$el.remove();
             		return;
@@ -234,6 +237,9 @@
 
                 setTimeout(function () {
                 	// Don't should popup with pointer if there is no parent. Checking after showing.
+                        if(typeof o.pointer.el == 'string')
+                            o.pointer.el = $(o.pointer.el);
+
                 	if($(o.pointer.el).length > 0 && !$.contains(document, o.pointer.el[0])) {
                 		$el.remove();
                 		return;
@@ -768,7 +774,7 @@
             if (o.pointer != false) {                
                 
                 var yOffset = 3;
-                var ePointAt = 'string' == o.pointer.el ? $(o.pointer.el) : o.pointer.el;
+                var ePointAt = typeof o.pointer.el == 'string' ? $(o.pointer.el) : o.pointer.el;
                 if (!ePointAt)
                     ePointAt = $('body');
 

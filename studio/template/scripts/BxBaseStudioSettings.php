@@ -14,18 +14,22 @@ class BxBaseStudioSettings extends BxDolStudioSettings
     {
         parent::__construct($sType, $mixedCategory);
     }
+
     public function getPageCss()
     {
         return array_merge(parent::getPageCss(), array('forms.css', 'settings.css'));
     }
+
     public function getPageJs()
     {
         return array_merge(parent::getPageJs(), array('jquery.form.min.js', 'jquery.webForms.js', 'settings.js'));
     }
+
     public function getPageJsObject()
     {
         return 'oBxDolStudioSettings';
     }
+
     public function getPageMenu($aMenu = array(), $aMarkers = array())
     {
         $aTypes = $aMenu = array();
@@ -47,7 +51,17 @@ class BxBaseStudioSettings extends BxDolStudioSettings
 
         return parent::getPageMenu($aMenu);
     }
+
     public function getPageCode($sCategorySelected = '')
+    {
+        $sResult = parent::getPageCode();
+        if($sResult === false)
+            return false;
+
+        return $sResult . $this->getFormCode();
+    }
+
+    public function getFormCode($sCategorySelected = '')
     {
         $oTemplate = BxDolStudioTemplate::getInstance();
         $sJsObject = $this->getPageJsObject();
@@ -57,26 +71,26 @@ class BxBaseStudioSettings extends BxDolStudioSettings
         if($iCategories > 0)
             $aCategories = array_keys($aCategories);
 
-		$bMix = false;
-		$aOptions2Mixes = array();
-		if($this->bMixes) {
-			if(is_string($this->sCategory))
-        		$aMixesBrowse = array('type' => 'by_type_category', 'mix_type' => $this->sType, 'mix_category' => $this->sCategory, 'active' => 1);
-        	else
-        		$aMixesBrowse = array('type' => 'by_type', 'value' => $this->sType, 'active' => 1);
+        $bMix = false;
+        $aOptions2Mixes = array();
+        if($this->bMixes) {
+            if(is_string($this->sCategory))
+                $aMixesBrowse = array('type' => 'by_type_category', 'mix_type' => $this->sType, 'mix_category' => $this->sCategory, 'active' => 1);
+            else
+                $aMixesBrowse = array('type' => 'by_type', 'value' => $this->sType, 'active' => 1);
 
-        	$aMix = array();
-			$this->oDb->getMixes($aMixesBrowse, $aMix, false);
+            $aMix = array();
+            $this->oDb->getMixes($aMixesBrowse, $aMix, false);
 
-			$this->sMix = BX_DOL_STUDIO_STG_MIX_DEFAULT; 
-			if(!empty($aMix) && is_array($aMix)) {
-				$this->aMix = $aMix;
-				$this->sMix = $aMix['name'];
+            $this->sMix = BX_DOL_STUDIO_STG_MIX_DEFAULT; 
+            if(!empty($aMix) && is_array($aMix)) {
+                $this->aMix = $aMix;
+                $this->sMix = $aMix['name'];
 
-				$bMix = true;
-				$this->oDb->getMixesOptions(array('type' => 'by_mix_id_pair_option_value', 'value' => $this->aMix['id']), $aOptions2Mixes, false);
-			}
-		}
+                $bMix = true;
+                $this->oDb->getMixesOptions(array('type' => 'by_mix_id_pair_option_value', 'value' => $this->aMix['id']), $aOptions2Mixes, false);
+            }
+        }
 
         $bWrap = count($aCategories) > 1;
         $aForm = array(
@@ -101,14 +115,14 @@ class BxBaseStudioSettings extends BxDolStudioSettings
         );
 
         if($bMix)
-        	$aForm['inputs']['mix_id'] = array(
-        		'type' => 'hidden',
-        		'name' => 'mix_id',
-        		'value' => $this->aMix['id'],
-        		'db' => array (
-					'pass' => 'Int',
-				),
-        	);
+            $aForm['inputs']['mix_id'] = array(
+                'type' => 'hidden',
+                'name' => 'mix_id',
+                'value' => $this->aMix['id'],
+                'db' => array (
+                    'pass' => 'Int',
+                ),
+            );
 
         foreach($aCategories as $sCategory) {
             $aFields = array();
@@ -134,6 +148,7 @@ class BxBaseStudioSettings extends BxDolStudioSettings
 
             $aForm['inputs'] = array_merge($aForm['inputs'], $aFields);
         }
+
         $aForm['inputs'] = array_merge(
             $aForm['inputs'],
 
@@ -297,83 +312,83 @@ class BxBaseStudioSettings extends BxDolStudioSettings
                     'type' => 'select',
                     'name' => 'duplicate',
                     'caption' => _t('_adm_stg_txt_mix_duplicate'),
-					'info' => _t('_adm_stg_txt_mix_duplicate_inf'),
-					'values' => array(
-						array('key' => '', 'value' => _t('_None'))
-					),
+                    'info' => _t('_adm_stg_txt_mix_duplicate_inf'),
+                    'values' => array(
+                        array('key' => '', 'value' => _t('_None'))
+                    ),
                     'value' => '',
-				),
-				'controls' => array(
-					'type' => 'input_set',
-	            	array(
-	                    'type' => 'submit',
-	                    'name' => 'save',
-	                    'value' => _t('_adm_btn_settings_save'),
-	                ),
-	                array(
-	                    'type' => 'button',
-	                    'name' => 'cancel',
-	                    'value' => _t('_adm_txt_confirm_cancel'),
-	                	'attrs' => array(
-	                		'class' => 'bx-def-margin-sec-left-auto',
-	                		'onclick' => '$(".bx-popup-applied:visible").dolPopupHide()'
-	                	)
-	                )
-				)
+                ),
+                'controls' => array(
+                    'type' => 'input_set',
+                    array(
+                        'type' => 'submit',
+                        'name' => 'save',
+                        'value' => _t('_adm_btn_settings_save'),
+                    ),
+                    array(
+                        'type' => 'button',
+                        'name' => 'cancel',
+                        'value' => _t('_adm_txt_confirm_cancel'),
+                        'attrs' => array(
+                            'class' => 'bx-def-margin-sec-left-auto',
+                            'onclick' => '$(".bx-popup-applied:visible").dolPopupHide()'
+                        )
+                    )
+                )
             )
         );
 
         if(is_string($this->sCategory))
-    		$aMixesBrowse = array('type' => 'by_type_category', 'mix_type' => $this->sType, 'mix_category' => $this->sCategory);
+            $aMixesBrowse = array('type' => 'by_type_category', 'mix_type' => $this->sType, 'mix_category' => $this->sCategory);
     	else
-    		$aMixesBrowse = array('type' => 'by_type', 'value' => $this->sType);
+            $aMixesBrowse = array('type' => 'by_type', 'value' => $this->sType);
 
         $aMixes = array();
         $this->oDb->getMixes($aMixesBrowse, $aMixes, false);
         foreach($aMixes as $aMix)
-        	$aForm['inputs']['duplicate']['values'][] = array('key' => $aMix['name'], 'value' => $aMix['title']);
+            $aForm['inputs']['duplicate']['values'][] = array('key' => $aMix['name'], 'value' => $aMix['title']);
 
         $oForm = new BxTemplStudioFormView($aForm);
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-        	$iId = $oForm->insert(array(
-        		'type' => $this->sType,
-        		'category' => is_string($this->sCategory) ? $this->sCategory : '',
-        		'name' => $oForm->generateUri()
-        	));
+            $iId = $oForm->insert(array(
+                'type' => $this->sType,
+                'category' => is_string($this->sCategory) ? $this->sCategory : '',
+                'name' => $oForm->generateUri()
+            ));
 
-        	if($iId === false)
-	        	return array('code' => '1', 'message' => _t('_adm_stg_err_cannot_perform'));
+            if($iId === false)
+                return array('code' => '1', 'message' => _t('_adm_stg_err_cannot_perform'));
 
-			$this->oDb->updateMixes(array('active' => 0), array(
-				'type' => $this->sType,
-				'category' => is_string($this->sCategory) ? $this->sCategory : '',
-				'active' => 1
-			));
-			$this->oDb->updateMixes(array('active' => 1), array('id' => $iId));
+            $this->oDb->updateMixes(array('active' => 0), array(
+                'type' => $this->sType,
+                'category' => is_string($this->sCategory) ? $this->sCategory : '',
+                'active' => 1
+            ));
+            $this->oDb->updateMixes(array('active' => 1), array('id' => $iId));
 
-			$aDuplicate = array();
-			$this->oDb->getMixes(array('type' => 'by_name', 'value' => $oForm->getCleanValue('duplicate')), $aDuplicate, false);
-			if(!empty($aDuplicate) && is_array($aDuplicate)) 
-				$this->oDb->duplicateMixesOptions($aDuplicate['id'], $iId);
+            $aDuplicate = array();
+            $this->oDb->getMixes(array('type' => 'by_name', 'value' => $oForm->getCleanValue('duplicate')), $aDuplicate, false);
+            if(!empty($aDuplicate) && is_array($aDuplicate)) 
+                $this->oDb->duplicateMixesOptions($aDuplicate['id'], $iId);
 
             $this->clearCache();
-			return array(
-				'eval' => $sJsObject . '.onMixCreate(oData);'
-			);
+            return array(
+                'eval' => $sJsObject . '.onMixCreate(oData);'
+            );
         }
 
-		return array(
-			'popup' => BxTemplStudioFunctions::getInstance()->popupBox('adm-stg-create-mix-popup', _t('_adm_stg_txt_create_mix_popup'), $oTemplate->parseHtmlByName('stg_create_mix.html', array(
-				'js_object' => $sJsObject,
-				'form_id' => $sForm,
-				'form' => $oForm->getCode(true),
-			)))
-		);
+        return array(
+            'popup' => BxTemplStudioFunctions::getInstance()->popupBox('adm-stg-create-mix-popup', _t('_adm_stg_txt_create_mix_popup'), $oTemplate->parseHtmlByName('stg_create_mix.html', array(
+                'js_object' => $sJsObject,
+                'form_id' => $sForm,
+                'form' => $oForm->getCode(true),
+            )))
+        );
     }
 
-	public function getPopupCodeImportMix()
+    public function getPopupCodeImportMix()
     {
     	$oTemplate = BxDolStudioTemplate::getInstance();
     	$sJsObject = $this->getPageJsObject();
@@ -437,65 +452,65 @@ class BxBaseStudioSettings extends BxDolStudioSettings
         $oForm->initChecker();
 
         if($oForm->isSubmittedAndValid()) {
-        	$sError = _t('_adm_stg_err_cannot_perform');
+            $sError = _t('_adm_stg_err_cannot_perform');
 
-        	$aFile = $_FILES['file'];
-        	if(empty($aFile['tmp_name']))
-        		return array('code' => '1', 'message' => $sError);
+            $aFile = $_FILES['file'];
+            if(empty($aFile['tmp_name']))
+                return array('code' => '1', 'message' => $sError);
 
-			$sFile = $aFile['tmp_name'];
-        	$rHandle = @fopen($sFile, "r");
-        	if(!$rHandle)
-        		return array('code' => '2', 'message' => $sError);
-        	
-			$sContents = fread($rHandle, filesize($sFile));
-			fclose($rHandle);
+            $sFile = $aFile['tmp_name'];
+            $rHandle = @fopen($sFile, "r");
+            if(!$rHandle)
+                return array('code' => '2', 'message' => $sError);
 
-			$aContent = json_decode($sContents, true);
-			if(!is_array($aContent) || empty($aContent['mix']) || empty($aContent['options']))
-				return array('code' => '3', 'message' => $sError);
+            $sContents = fread($rHandle, filesize($sFile));
+            fclose($rHandle);
+
+            $aContent = json_decode($sContents, true);
+            if(!is_array($aContent) || empty($aContent['mix']) || empty($aContent['options']))
+                return array('code' => '3', 'message' => $sError);
 
             $aMix = array();
             $this->oDb->getMixes(array('type' => 'by_name', 'value' => $aContent['mix']['name']), $aMix, false);
             if(!empty($aMix) && is_array($aMix))
                 return array('code' => '4', 'message' => _t('_adm_stg_err_mix_already_exists'));
 
-        	$iId = $oForm->insert(array(
-        		'type' => $aContent['mix']['type'],
-        		'category' => $aContent['mix']['category'],
-        		'name' => $aContent['mix']['name'],
-        		'title' => $aContent['mix']['title']
-        	));
-        	if($iId === false)
-	        	return array('code' => '5', 'message' => $sError); 
+            $iId = $oForm->insert(array(
+                'type' => $aContent['mix']['type'],
+                'category' => $aContent['mix']['category'],
+                'name' => $aContent['mix']['name'],
+                'title' => $aContent['mix']['title']
+            ));
+            if($iId === false)
+                return array('code' => '5', 'message' => $sError); 
 
-			foreach($aContent['options'] as $sKey => $sValue)
-				$this->oDb->insertMixesOptions(array(
-					'option' => $sKey,
-					'mix_id' => $iId,
-					'value' => $sValue
-				));
+            foreach($aContent['options'] as $sKey => $sValue)
+                $this->oDb->insertMixesOptions(array(
+                    'option' => $sKey,
+                    'mix_id' => $iId,
+                    'value' => $sValue
+                ));
 
-			$this->oDb->updateMixes(array('active' => 0), array(
-				'type' => $this->sType,
-				'category' => is_string($this->sCategory) ? $this->sCategory : '',
-				'active' => 1
-			));
-			$this->oDb->updateMixes(array('active' => 1), array('id' => $iId));
+            $this->oDb->updateMixes(array('active' => 0), array(
+                'type' => $this->sType,
+                'category' => is_string($this->sCategory) ? $this->sCategory : '',
+                'active' => 1
+            ));
+            $this->oDb->updateMixes(array('active' => 1), array('id' => $iId));
 
-			$this->clearCache();
-			return array(
-				'eval' => $sJsObject . '.onMixImport(oData);'
-			);
+            $this->clearCache();
+            return array(
+                'eval' => $sJsObject . '.onMixImport(oData);'
+            );
         }
 
-		return array(
-			'popup' => BxTemplStudioFunctions::getInstance()->popupBox('adm-stg-import-mix-popup', _t('_adm_stg_txt_import_mix_popup'), $oTemplate->parseHtmlByName('stg_import_mix.html', array(
-				'js_object' => $sJsObject,
-				'form_id' => $sForm,
-				'form' => $oForm->getCode(true),
-			)))
-		);
+        return array(
+            'popup' => BxTemplStudioFunctions::getInstance()->popupBox('adm-stg-import-mix-popup', _t('_adm_stg_txt_import_mix_popup'), $oTemplate->parseHtmlByName('stg_import_mix.html', array(
+                'js_object' => $sJsObject,
+                'form_id' => $sForm,
+                'form' => $oForm->getCode(true),
+            )))
+        );
     }
 
     protected function header($aCategory, $aFields)
@@ -523,9 +538,9 @@ class BxBaseStudioSettings extends BxDolStudioSettings
 
     	$aAttributes = array();
     	if($this->isReadOnly())
-	    	$aAttributes = array_merge($aAttributes, array(
-	    		'disabled' => 'disabled'
-	    	));
+            $aAttributes = array_merge($aAttributes, array(
+                'disabled' => 'disabled'
+            ));
 
         $aField = array();
         switch($aItem['type']) {
@@ -684,21 +699,22 @@ class BxBaseStudioSettings extends BxDolStudioSettings
         }
         return $aField;
     }
+
     protected function getMenuIcon($sGroup, &$aType)
     {
         if(empty($aType['icon']) || ($sUrl = BxDolStudioTemplate::getInstance()->getIconUrl($aType['icon'])) == "")
             switch($sGroup) {
                 case BX_DOL_STUDIO_STG_GROUP_MODULES:
-                	$aType['icon'] = BxDolStudioUtils::getIconDefault(BX_DOL_MODULE_TYPE_MODULE);
-                	break;
+                    $aType['icon'] = BxDolStudioUtils::getIconDefault(BX_DOL_MODULE_TYPE_MODULE);
+                    break;
 
                 case BX_DOL_STUDIO_STG_GROUP_LANGUAGES:
-                	$aType['icon'] = BxDolStudioUtils::getIconDefault(BX_DOL_MODULE_TYPE_LANGUAGE);
-                	break;
+                    $aType['icon'] = BxDolStudioUtils::getIconDefault(BX_DOL_MODULE_TYPE_LANGUAGE);
+                    break;
 
                 case BX_DOL_STUDIO_STG_GROUP_TEMPLATES:
                     $aType['icon'] = BxDolStudioUtils::getIconDefault(BX_DOL_MODULE_TYPE_TEMPLATE);
-                	break;
+                    break;
             }
 
         return $aType['icon'];

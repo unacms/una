@@ -12,18 +12,18 @@
 class BxReviewsStudioPage extends BxTemplStudioModule
 {
     protected $_sModule;
-	protected $_oModule;
+    protected $_oModule;
     
-    function __construct($sModule = "", $sPage = "")
+    function __construct($sModule, $mixedPageName, $sPage = "")
     {
     	$this->_sModule = 'bx_reviews';
     	$this->_oModule = BxDolModule::getInstance($this->_sModule);
 
-        parent::__construct($sModule, $sPage);
+        parent::__construct($sModule, $mixedPageName, $sPage);
 
         $this->aMenuItems = [
-            ['name' => 'settings', 'icon' => 'cog', 'title' => '_bx_reviews_txt_settings'],
-            ['name' => 'voting_options', 'icon' => 'star', 'title' => '_bx_reviews_txt_voting_options'],
+            'settings' => ['name' => 'settings', 'icon' => 'cog', 'title' => '_bx_reviews_txt_settings'],
+            'voting_options' => ['name' => 'voting_options', 'icon' => 'star', 'title' => '_bx_reviews_txt_voting_options'],
         ];
     }
 

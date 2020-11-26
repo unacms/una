@@ -16,14 +16,14 @@ class BxCreditsStudioPage extends BxTemplStudioModule
     protected $_sModule;
     protected $_oModule;
 
-    function __construct($sModule = "", $sPage = "")
+    function __construct($sModule, $mixedPageName, $sPage = "")
     {
     	$this->_sModule = 'bx_credits';
     	$this->_oModule = BxDolModule::getInstance($this->_sModule);
 
-        parent::__construct($sModule, $sPage);
+        parent::__construct($sModule, $mixedPageName, $sPage);
 
-        $this->aMenuItems[] = array('name' => BX_DOL_STUDIO_MOD_TYPE_BUNDLES, 'icon' => 'archive', 'title' => '_bx_credits_menu_item_title_bundles');
+        $this->aMenuItems[BX_DOL_STUDIO_MOD_TYPE_BUNDLES] = array('name' => BX_DOL_STUDIO_MOD_TYPE_BUNDLES, 'icon' => 'archive', 'title' => '_bx_credits_menu_item_title_bundles');
     }
 
     protected function getSettings()

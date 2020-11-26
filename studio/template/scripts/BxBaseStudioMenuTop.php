@@ -8,22 +8,11 @@
  * @{
  */
 
-class BxBaseStudioMenuTop extends BxDolStudioMenuTop implements iBxDolSingleton
+class BxBaseStudioMenuTop extends BxDolStudioMenuTop
 {
     function __construct()
     {
-        if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
-            trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
-
         parent::__construct();
-    }
-
-    public static function getInstance()
-    {
-        if (!isset($GLOBALS['bxDolClasses']['BxBaseStudioMenuTop']))
-            $GLOBALS['bxDolClasses']['BxBaseStudioMenuTop'] = new BxTemplStudioMenuTop();
-
-        return $GLOBALS['bxDolClasses']['BxBaseStudioMenuTop'];
     }
 
     function getCss()
@@ -54,6 +43,8 @@ class BxBaseStudioMenuTop extends BxDolStudioMenuTop implements iBxDolSingleton
             else if(is_array($mixedItems)) {
                 $oMenu = new BxTemplStudioMenu($mixedItems);
                 $oMenu->addMarkers(array(
+                    'js_object' => $this->getJsObject(),
+                    'url_root' => BX_DOL_URL_ROOT,
                     'url_studio' => BX_DOL_URL_STUDIO
                 ));
 

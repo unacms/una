@@ -58,13 +58,17 @@ class BxBaseStudioNavigation extends BxDolStudioNavigation
 
         return parent::getPageMenu($aMenu);
     }
-    function getPageCode($bHidden = false)
+    function getPageCode()
     {
+        $sResult = parent::getPageCode();
+        if($sResult === false)
+            return false;
+
         $sMethod = 'get' . ucfirst($this->sPage);
         if(!method_exists($this, $sMethod))
             return '';
 
-        return $this->$sMethod();
+        return $sResult . $this->$sMethod();
     }
 
     function actionGetSets()

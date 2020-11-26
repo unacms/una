@@ -8,14 +8,20 @@
 
 (function($) {
 
-    $.fn.addWebForms = function() {
+    $.fn.addWebForms = function(onLoad) {
         if ('undefined' === typeof(glJsLoadOnaddWebForms) || !glJsLoadOnaddWebForms.length) {
             $.fn.processWebForms.apply(this);
+
+            if(typeof onLoad == 'function')
+                onLoad();
         }
         else {
             var $this = this;
             bx_get_scripts(glJsLoadOnaddWebForms, function () {
                 $.fn.processWebForms.apply($this);
+
+                if(typeof onLoad == 'function')
+                    onLoad();
             });
         }
 

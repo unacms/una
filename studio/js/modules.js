@@ -12,43 +12,6 @@ function BxDolStudioModules(oOptions) {
     this.iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
 }
 
-BxDolStudioModules.prototype.uninstall = function(iId, sValue, iConfirm) {
-    var $this = this;
-    var oDate = new Date();
-    var sAction = 'uninstall'; 
-
-    if(!sValue)
-        return false;
-
-    $('.bx-popup-applied:visible').dolPopupHide();
-
-    $.post(
-    	sUrlStudio + 'modules.php',
-    	{
-            mod_action: sAction,
-            mod_page_name: sValue,
-            mod_widget_id: iId,
-            mod_confirmed: parseInt(iConfirm),
-            _t:oDate.getTime()
-    	},
-    	function (oData) {
-            if(oData.message.length > 0)
-                $this.popup(sAction, oData.message);
-
-            if(oData.code == 0) {
-                $('#bx-menu-item-' + sValue).bx_anim('hide', $this.sAnimationEffect, $this.iAnimationSpeed, function() {
-                    $(this).remove();
-                });
-
-                $('#bx-std-widget-' + iId).bx_anim('hide', $this.sAnimationEffect, $this.iAnimationSpeed, function() {
-                    $(this).remove();
-                });
-            }
-    	},
-    	'json'
-    );
-};
-
 BxDolStudioModules.prototype.popup = function(sType, sValue) {
     var sId = 'bx-std-mod-popup-' + sType;
 

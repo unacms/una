@@ -9,6 +9,8 @@ SET @iAccountId = LAST_INSERT_ID();
 INSERT INTO `sys_profiles` (`account_id`, `type`, `content_id`, `status`) VALUES
 (@iAccountId, 'system', @iAccountId, 'active');
 
+INSERT INTO `sys_std_roles_members` (`account_id`, `role`) VALUES
+(@iAccountId, 1);
 
 -- default bot profile
 

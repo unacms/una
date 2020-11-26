@@ -61,11 +61,11 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         parent::__construct($sType, $sPage);
 
         $this->sStorage = BX_DOL_STORAGE_OBJ_IMAGES;
-		$this->sTranscoder = 'sys_builder_page_preview';
-		$this->aUploaders = array('sys_builder_page_simple', 'sys_builder_page_html5');
+        $this->sTranscoder = 'sys_builder_page_preview';
+        $this->aUploaders = array('sys_builder_page_simple', 'sys_builder_page_html5');
 
-		$this->sTranscoderCover = 'sys_cover_preview';
-		$this->aUploadersCover = array('sys_std_crop_cover');
+        $this->sTranscoderCover = 'sys_cover_preview';
+        $this->aUploadersCover = array('sys_std_crop_cover');
 
         $this->sBaseUrl = BX_DOL_URL_STUDIO . 'builder_page.php';
         $this->sTypeUrl = $this->sBaseUrl . '?type=%s';
@@ -76,23 +76,23 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
     {
     	$oTemplate = BxDolStudioTemplate::getInstance();
     	$aUploaders = array_merge($this->aUploaders, $this->aUploadersCover);
-		foreach($aUploaders as $sUploader) {
-			$oUploader = BxDolUploader::getObjectInstance($sUploader, $this->sStorage, '', $oTemplate);
-			if($oUploader)
-				$oUploader->addCssJs();
-		}
+        foreach($aUploaders as $sUploader) {
+            $oUploader = BxDolUploader::getObjectInstance($sUploader, $this->sStorage, '', $oTemplate);
+            if($oUploader)
+                $oUploader->addCssJs();
+        }
 
         return array_merge(parent::getPageCss(), array(
-        	BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'codemirror/|codemirror.css',
-        	'page_layouts.css', 
-        	'builder_page.css'
+            BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'codemirror/|codemirror.css',
+            'page_layouts.css', 
+            'builder_page.css'
         ));
     }
 
     function getPageJs()
     {
         return array_merge(parent::getPageJs(), array(
-        	'codemirror/codemirror.min.js',
+            'codemirror/codemirror.min.js',
             'jquery-ui/jquery.ui.core.min.js',
             'jquery-ui/jquery.ui.widget.min.js',
             'jquery-ui/jquery.ui.mouse.min.js',
@@ -126,7 +126,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
         $aModulesDb = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'type', 'value' => array(BX_DOL_MODULE_TYPE_MODULE, BX_DOL_MODULE_TYPE_TEMPLATE)));
         foreach($aModulesDb as $aModuleDb) {
-        	$sName = $aModuleDb['name'];
+            $sName = $aModuleDb['name'];
 
             if(!empty($aMenuItems[$sName]))
                 $aMenuItems[$sName] = array_merge($aMenuItems[$sName], $aModuleDb);
@@ -135,8 +135,8 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
             $aMenuItems[$sName]['title'] = BxDolStudioUtils::getModuleTitle($sName);
 
-			if(empty($aMenuItems[$sName]['icon']))
-				$aMenuItems[$sName]['icon'] = BxDolStudioUtils::getModuleIcon($aModuleDb, 'menu', false); 
+            if(empty($aMenuItems[$sName]['icon']))
+                $aMenuItems[$sName]['icon'] = BxDolStudioUtils::getModuleIcon($aModuleDb, 'menu', false); 
         }
 
         $aMenu = array();
@@ -152,8 +152,12 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         return parent::getPageMenu($aMenu);
     }
 
-    function getPageCode($bHidden = false)
+    function getPageCode()
     {
+        $sResult = parent::getPageCode();
+        if($sResult === false)
+            return false;
+
         $oPage = BxTemplPage::getObjectInstance($this->sPage);
 
         $oTemplate = BxDolStudioTemplate::getInstance();
@@ -251,7 +255,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             '_adm_bp_wrn_page_delete',
             '_adm_bp_wrn_page_block_delete'
         ));
-        return $oTemplate->parseHtmlByName('builder_page.html', $aTmplVars);
+        return $sResult . $oTemplate->parseHtmlByName('builder_page.html', $aTmplVars);
     }
 
     function getBlockPanelTop($aBlock)
@@ -323,8 +327,7 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
 
             $sUri = $oForm->getCleanValue('uri');
             
-            $aPage = array();
-            $this->oDb->getPages(array('type' => 'by_uri', 'value' => $sUri), $aPage, false);
+            $aPage = $this->oDb->getPages(array('type' => 'by_uri', 'value' => $sUri));
             if(!empty($aPage) && is_array($aPage)) 
             	return array('msg' => _t('_adm_bp_err_page_uri'));
 
@@ -1832,8 +1835,9 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
             )
         );
 
-        $aPages = $aCounter = array();
-        $this->oDb->getPages(array('type' => 'by_module', 'value' => $this->sType), $aPages, false);
+        $aPages = $this->oDb->getPages(array('type' => 'by_module', 'value' => $this->sType));
+
+        $aCounter = array();
         $this->oDb->getBlocks(array('type' => 'counter_by_pages'), $aCounter, false);
         foreach($aPages as $aPage) {
             $sTitle = _t($aPage['title_system']);

@@ -24,15 +24,25 @@ $sName = $sName !== false ? bx_process_input($sName) : '';
 $sPage = bx_get('page');
 $sPage = $sPage !== false ? bx_process_input($sPage) : '';
 
-$oPage = BxDolStudioModule::getObjectInstance($sName, $sPage);
+$oPage = BxTemplStudioModule::getObjectInstance($sName, $sPage);
+
+if(($mixedResult = $oPage->checkAction()) !== false) {
+    echoJson($mixedResult);
+    exit;
+}
 
 $oTemplate = BxDolStudioTemplate::getInstance();
+
+$sPageCode = $oPage->getPageCode();
+if($sPageCode === false)
+    $oTemplate->displayMsg(($sError = $oPage->getError(false)) !== false ? $sError : '_sys_txt_error_occured', true);
+
 $oTemplate->setPageNameIndex($oPage->getPageIndex());
 $oTemplate->setPageHeader($oPage->getPageHeader());
 $oTemplate->setPageContent('page_caption_code', $oPage->getPageCaption());
 $oTemplate->setPageContent('page_attributes', $oPage->getPageAttributes());
 $oTemplate->setPageContent('page_menu_code', $oPage->getPageMenu());
-$oTemplate->setPageContent('page_main_code', $oPage->getPageCode());
+$oTemplate->setPageContent('page_main_code', $sPageCode);
 $oTemplate->addCss($oPage->getPageCss());
 $oTemplate->addJs($oPage->getPageJs());
 $oTemplate->getPageCode();

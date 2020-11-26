@@ -73,13 +73,17 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
         return parent::getPageMenu($aMenu);
     }
 
-    function getPageCode($bHidden = false)
+    function getPageCode()
     {
+        $sResult = parent::getPageCode();
+        if($sResult === false)
+            return false;
+
         $sMethod = 'get' . bx_gen_method_name($this->sPage);
         if(!method_exists($this, $sMethod))
             return '';
 
-        return $this->$sMethod();
+        return $sResult . $this->$sMethod();
     }
 
     protected function getSettings()
@@ -87,8 +91,8 @@ class BxBaseStudioPolyglot extends BxDolStudioPolyglot
         $oPage = new BxTemplStudioSettings(BX_DOL_STUDIO_STG_TYPE_DEFAULT, BX_DOL_STUDIO_STG_CATEGORY_LANGUAGES);
 
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('polyglot.html', array(
-            'content' => $oPage->getPageCode(),
-        	'js_content' => ''
+            'content' => $oPage->getFormCode(),
+            'js_content' => ''
         ));
     }
 

@@ -14,13 +14,10 @@ class BxBaseStudioDesigns extends BxDolStudioDesigns
     {
         parent::__construct();
     }
-    function getCss()
-    {
-        return array('designs.css');
-    }
+
     function getJs()
     {
-        return array('jquery.anim.js', 'page.js', 'designs.js');
+        return array_merge(parent::getJs(), array('design.js'));
     }
 }
 

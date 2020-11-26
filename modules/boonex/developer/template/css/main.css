@@ -1,28 +1,15 @@
 /*--- Overwrite ---*/
-body.bx-dev-page-body-single div.bx-std-page-bg {
-    background-image: url("../images/bx-dev-bg-single.png");
-}
-
-body.bx-dev-page-body-columns div.bx-std-page-bg {
-    background-image: url("../images/bx-dev-bg-columns.png");
-}
-
-body.bx-dev-page-body-single div.bx-std-page-bg-empty,
-body.bx-dev-page-body-columns div.bx-std-page-bg-empty {
-    background-image: url("spacer.gif");
-}
-
 body.bx-dev-page-body-single div.bx-std-page-menu,
 body.bx-dev-page-body-columns div.bx-std-page-menu {
-    width: 67px;
+    -webkit-flex-basis: 67px;
+    flex-basis: 67px;
+
+    background-color: #4c6678;
+    box-shadow: inset -1px 0px 0px rgba(240, 240, 240, 0.2);
 }
 
-body.bx-dev-page-body-single div.bx-std-page-content,
-body.bx-dev-page-body-columns div.bx-std-page-content {
-    margin-left: 67px;
-}
 body.bx-dev-page-body-columns div.bx-std-page-column-cnt {
-	padding: 0px;
+    padding: 0px;
 }
 
 
@@ -72,37 +59,39 @@ div.bx-dev-menu-main div.bx-dev-mm-item img {
 }
 
 div.bx-dev-menu-main div.bx-dev-mm-item i.sys-icon {
-	position: absolute;
-	top: 0px;
+    position: absolute;
+    top: 0px;
     left: 0px;
     width:32px;
-	height: 32px;
+    height: 32px;
 
     color:white;
     font-size:20px;
     text-align:center;
     text-shadow:none;
-	line-height: 32px;
+    line-height: 32px;
 }
 
 /*--- Page Content ---*/
 div.bx-dev-page-columns-cnt {
-    width: 200%;
-}
-div.bx-dev-page-column-wrp {
     position: relative;
-    float: right;
-    width: 50%;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: stretch;
+    align-items: stretch;
 }
-div.bx-dev-page-column {}
-div.bx-dev-page-column-cnt {}
-div.bx-dev-page-menu {
+
+div.bx-dev-page-column.bx-dev-page-menu {
     position: relative;
-    float: left;
+    -webkit-flex: 0 0 230px;
+    flex: 0 0 230px;
     width: 230px;
+    background-color: #ffffff;
 }
-div.bx-dev-page-content {
+
+div.bx-dev-page-column.bx-dev-page-content {
     position: relative;
-    right: 100%;
-    margin-left: 230px;
+    -webkit-flex: 2 1 auto;
+    flex: 2 1 auto;
+    background: #e5e5e5;
 }

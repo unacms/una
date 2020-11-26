@@ -24,6 +24,10 @@ class BxBaseStudioPage extends BxDolStudioPage
             return !empty($this->aPage['index']) ? (int)$this->aPage['index'] : BX_PAGE_DEFAULT;
         else
             return !empty($this->aPage[$this->sPageSelected]['index']) ? (int)$this->aPage[$this->sPageSelected]['index'] : BX_PAGE_DEFAULT;
+
+        $this->aMarkers = array_merge($this->aMarkers, array(
+            'js_object' => $this->getPageJsObject(),
+        ));
     }
 
     public function getPageJs()
@@ -33,12 +37,12 @@ class BxBaseStudioPage extends BxDolStudioPage
 
     public function getPageJsClass()
     {
-        return '';
+        return 'BxDolStudioPage';
     }
 
     public function getPageJsObject()
     {
-        return '';
+        return 'oBxDolStudioPage';
     }
 
     public function getPageJsCode($aOptions = array(), $bWrap = true)
@@ -61,11 +65,13 @@ class BxBaseStudioPage extends BxDolStudioPage
 
     public function getPageCss()
     {
-        $aCss = array('page.css', 'page-media-tablet.css', 'page-media-desktop.css', 'menu_top.css');
-        if((int)$this->aPage['index'] == 3)
-            $aCss[] = 'page_columns.css';
-
-        return $aCss;
+        return array(
+            'page.css', 
+            'page-media-tablet.css', 
+            'page-media-desktop.css', 
+            'page_columns.css',
+            'menu_top.css'
+        );
     }
 
     public function getPageHeader()
@@ -78,64 +84,45 @@ class BxBaseStudioPage extends BxDolStudioPage
 
     public function getPageBreadcrumb()
     {
-        return array();
+        $this->addMarkers(array(
+            'js_object_launcher' => BxTemplStudioLauncher::getInstance()->getPageJsObject()
+        ));
+
+        $aMenuItems = array(
+            'home' => array(
+                'name' => 'home',
+                'icon' => 'bc-home.svg',
+                'link' => 'javascript:void(0)',
+                'onclick' => bx_replace_markers('{js_object_launcher}.browser(this)', $this->aMarkers),
+                'title' => ''
+            )
+        );
+
+        if(!empty($this->aPage['wid_type']))
+            $aMenuItems['type'] = array(
+                'name' => 'type',
+                'icon' => $this->getPageTypeIcon(),
+                'link' => $this->getPageTypeUrl(),
+                'title' => ''
+            );
+
+        $aMenuItems['page'] = array(
+            'name' => 'page',
+            'icon' => $this->aPage['icon'],
+            'link' => $this->getPageUrl(),
+            'title' => _t($this->aPage['caption'])
+        );       
+
+        $oMenu = new BxTemplStudioMenu(array(
+            'template' => 'page_breadcrumb.html',
+            'menu_items' => $aMenuItems
+        ));
+
+        return $oMenu->getCode();
     }
 
     public function getPageCaption()
     {
-        if(empty($this->aPage) || !is_array($this->aPage))
-            return '';
-
-        $this->updateHistory();
-
-        $oTemplate = BxDolStudioTemplate::getInstance();
-        $oFunctions = BxTemplStudioFunctions::getInstance();
-
-        $bActions = false;
-        $sActions = $this->getPageCaptionActions();
-        if(($bActions = strlen($sActions)) > 0)
-            $sActions = $oFunctions->transBox('bx-std-pcap-menu-popup-actions', $sActions, true);
-
-        $bHelp = false;
-        $sHelp = $this->getPageCaptionHelp();
-        if(($bHelp = strlen($sHelp)) > 0)
-            $sHelp = $oFunctions->transBox('bx-std-pcap-menu-popup-help', $sHelp, true);
-
-        $oTemplate->addInjection('injection_header', 'text', $sActions . $sHelp);
-
-        //--- Menu Right ---//
-        $aItemsRight = array();
-
-        if($bActions)
-            $aItemsRight['actions'] = array(
-                'name' => 'actions',
-                'icon' => 'cog',
-                'onclick' => BX_DOL_STUDIO_PAGE_JS_OBJECT . ".togglePopup('actions', this)",
-                'title' => '_adm_txt_show_actions'
-            );
-
-        if($bHelp)
-            $aItemsRight['help'] = array(
-                'name' => 'help',
-                'icon' => 'question-circle',
-                'onclick' => BX_DOL_STUDIO_PAGE_JS_OBJECT . ".togglePopup('help', this)",
-                'title' => '_adm_txt_show_help'
-            );
-
-        $aLanguages = BxDolLanguagesQuery::getInstance()->getLanguages(false, true);
-        if(count($aLanguages) > 1)
-            $aItemsRight['language'] = array(
-                'name' => 'language',
-                'icon' => 'language',
-                'onclick' => "bx_menu_popup('sys_switch_language_popup', this);",
-                'title' => '_adm_tmi_cpt_language'
-            );
-
-        $oTopMenu = BxTemplStudioMenuTop::getInstance();
-        $oTopMenu->setSelected(BX_DOL_STUDIO_MT_LEFT, $this->aPage['name']);
-        $oTopMenu->setContent(BX_DOL_STUDIO_MT_CENTER, _t($this->aPage['caption']));
-        $oTopMenu->setContent(BX_DOL_STUDIO_MT_RIGHT, array('template' => 'menu_top_toolbar.html', 'menu_items' => $aItemsRight));
-
         return '';
     }
 
@@ -144,7 +131,7 @@ class BxBaseStudioPage extends BxDolStudioPage
         return '';
     }
 
-    public function getPageMenu($aMenu, $aMarkers = array())
+    public function getPageMenu($aMenu = array(), $aMarkers = array())
     {
         $oMenu = new BxTemplStudioMenu(array('template' => 'menu_side.html', 'menu_items' => $aMenu));
         if(!empty($aMarkers))
@@ -153,7 +140,14 @@ class BxBaseStudioPage extends BxDolStudioPage
         return $oMenu->getCode();
     }
 
-    public function getPageCode($bHidden = false) {}
+    public function getPageCode() {
+        if(empty($this->aPage) || !is_array($this->aPage)) {
+            $this->setError('_sys_txt_not_found');
+            return false;
+        }
+
+        return '';
+    }
 
     protected function getPageCaptionHelp()
     {
@@ -163,130 +157,6 @@ class BxBaseStudioPage extends BxDolStudioPage
     	$oTemplate->addJsTranslation('_adm_txt_show_help_content_empty');
         return $oTemplate->parseHtmlByName('page_caption_help.html', array(
             'content' => $sContent
-        ));
-    }
-
-    protected function getPageCaptionActions()
-    {
-        if(empty($this->aActions))
-            return "";
-
-        $aForm = array(
-            'form_attrs' => array(
-                'id' => 'adm-page-actions',
-                'name' => 'adm-page-actions',
-                'action' => '',
-                'method' => 'post',
-            ),
-            'params' => array(),
-            'inputs' => array()
-        );
-
-        foreach($this->aActions as $aAction) {
-            $aInput = array(
-                'type' => $aAction['type'],
-                'name' => $aAction['name'],
-                'caption' => _t($aAction['caption'])
-            );
-
-            switch($aAction['type']) {
-                case 'switcher':
-                    $aInput['checked'] = $aAction['checked'];
-                    $aInput['attrs']['onchange'] = $aAction['onchange'];
-                    break;
-
-            }
-
-            $aForm['inputs'][$aInput['name']] = $aInput;
-        }
-
-        $oForm = new BxTemplStudioFormView($aForm);
-
-        return BxDolStudioTemplate::getInstance()->parseHtmlByName('page_caption_actions.html', array('content' => $oForm->getCode()));
-    }
-
-    /**
-     *
-     * Block Methods
-     *
-     */
-    public function getBlocksLine($aBlocks)
-    {
-        $aTmplVarsBlocks = array();
-        foreach ($aBlocks as $aBlock) {
-            $aTmplVarsBlocks[] = array(
-                'content' => $this->getBlockCode($aBlock)
-            ); 
-        }
-
-    	return BxDolStudioTemplate::getInstance()->parseHtmlByName('page_blocks_line.html', array(
-    	    'count' => count($aTmplVarsBlocks),
-    		'bx_repeat:blocks' => $aTmplVarsBlocks
-    	));
-    }
-    public function getBlockCode($aBlock)
-    {
-    	return BxDolStudioTemplate::getInstance()->parseHtmlByName('page_block.html', array(
-    		'caption' => $this->getBlockCaption($aBlock),
-    		'panel_top' => $this->getBlockPanelTop($aBlock),
-    		'items' => !empty($aBlock['items']) ? $aBlock['items'] : '',
-    		'panel_bottom' => $this->getBlockPanelBottom($aBlock)
-    	));
-    }
-
-    public function getBlockCaption($aBlock)
-    {
-        if(empty($aBlock) || !is_array($aBlock) || (empty($aBlock['caption']) && empty($aBlock['actions'])))
-            return '';
-
-        $aTmplActions = array();
-        if(!empty($aBlock['actions']) && is_array($aBlock['actions']))
-            foreach($aBlock['actions'] as $aAction) {
-                $sCaption = is_array($aAction['caption']) ? call_user_func_array('_t', $aAction['caption']) : _t($aAction['caption']);
-
-                $bOnClick = !empty($aAction['onclick']);
-                $aOnClick = $bOnClick ? array('onclick' => $aAction['onclick']) : array();
-
-                $aTmplActions[] = array(
-                    'name' => $aAction['name'],
-                    'url' => $aAction['url'],
-                    'title' => $sCaption,
-                    'bx_if:show_onclick' => array(
-                        'condition' => $bOnClick,
-                        'content' => $aOnClick
-                    ),
-                    'caption' => $sCaption
-                );
-            }
-
-        return BxDolStudioTemplate::getInstance()->parseHtmlByName('block_caption.html', array(
-            'caption' => is_array($aBlock['caption']) ? call_user_func_array('_t', $aBlock['caption']) : _t($aBlock['caption']),
-            'bx_if:show_actions' => array(
-                'condition' => !empty($aTmplActions),
-                'content' => array(
-                    'bx_repeat:actions' => $aTmplActions
-                )
-            ),
-        ));
-    }
-
-    public function getBlockPanelTop($aBlock)
-    {
-        if(empty($aBlock) || !is_array($aBlock) || empty($aBlock['panel_top']))
-            return '';
-
-        return BxDolStudioTemplate::getInstance()->parseHtmlByName('block_panel_top.html', array(
-            'content' => $aBlock['panel_top']
-        ));
-    }
-
-    public function getBlockPanelBottom($aBlock)
-    {
-        if(empty($aBlock) || !is_array($aBlock) || empty($aBlock['panel_bottom']))
-            return '';
-
-        return BxDolStudioTemplate::getInstance()->parseHtmlByName('block_panel_bottom.html', array(
-            'content' => $aBlock['panel_bottom']
         ));
     }
 

@@ -232,7 +232,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             foreach($aFiles as $aFile)
                 $this->oDb->insertModuleTrack($iModuleId, $aFile);
 
-            $this->cleanupMemoryAfterAction($this->_aConfig['home_uri'], $iModuleId);
+            $this->cleanupMemoryAfterAction($this->_aConfig['name'], $this->_aConfig['home_uri'], $iModuleId);
 
             $this->_onInstallAfter();
 
@@ -315,7 +315,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
             $oLanguages->deleteLanguageString($sTitleKey);
             $oLanguages->compileLanguage();
 
-            $this->cleanupMemoryAfterAction($this->_aConfig['home_uri'], $iModuleId);
+            $this->cleanupMemoryAfterAction($this->_aConfig['name'], $this->_aConfig['home_uri'], $iModuleId);
 
             $this->_onUninstallAfter();
 
@@ -402,7 +402,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         if($aResult['result']) {
             $this->oDb->enableModuleByUri($aModule['uri']);
 
-            $this->cleanupMemoryAfterAction($aModule['uri'], $aModule['id']);
+            $this->cleanupMemoryAfterAction($aModule['name'], $aModule['uri'], $aModule['id']);
 
             $this->_onEnableAfter();
 
@@ -482,7 +482,7 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         if($aResult['result']) {
             $this->oDb->disableModuleByUri($aModule['uri']);
 
-            $this->cleanupMemoryAfterAction($aModule['uri'], $aModule['id']);
+            $this->cleanupMemoryAfterAction($aModule['name'], $aModule['uri'], $aModule['id']);
 
             $this->_onDisableAfter();
 
@@ -1068,10 +1068,15 @@ class BxDolStudioInstaller extends BxDolInstallerUtils
         );
     }
 
-    protected function cleanupMemoryAfterAction($sModuleUri, $iModuleId)
+    protected function cleanupMemoryAfterAction($sModuleName, $sModuleUri, $iModuleId)
     {
+        $this->oDb->cleanMemory('sys_modules_' . $sModuleName);
         $this->oDb->cleanMemory('sys_modules_' . $sModuleUri);
         $this->oDb->cleanMemory('sys_modules_' . $iModuleId);
+        $this->oDb->cleanMemory('sys_module_' . $sModuleName);
+        $this->oDb->cleanMemory('sys_module_' . $sModuleUri);
+        $this->oDb->cleanMemory('sys_module_enabled_' . $sModuleName);
+        $this->oDb->cleanMemory('sys_module_enabled_' . $sModuleUri);
         $this->oDb->cleanMemory('sys_modules');
         $this->oDb->cleanMemory('sys_modules_modules');
         $this->oDb->cleanMemory('sys_modules_modules_active');

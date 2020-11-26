@@ -13,12 +13,19 @@ class BxDolStudioDesigns extends BxTemplStudioModules
     {
         parent::__construct();
 
-        $this->oDb = new BxDolStudioDesignsQuery();
-
-        $this->sJsObject = 'oBxDolStudioDesigns';
         $this->sLangPrefix = 'dsn';
-        $this->sTemplPrefix = 'dsn';
         $this->sParamPrefix = 'dsn';
+
+        $this->sActionUri = 'design.php';
+        $this->sJsClass = 'BxDolStudioDesign';
+        $this->sJsObject = 'oBxDolStudioDesign';
+
+        $this->_oDb = new BxDolStudioDesignsQuery();       
+    }
+
+    public function getTemplatesBy($aParams)
+    {
+        return $this->_oDb->getTemplatesBy($aParams);
     }
 }
 
