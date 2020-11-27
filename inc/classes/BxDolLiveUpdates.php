@@ -165,6 +165,7 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
         if(empty($this->_aSystems[$sName])) {
             $this->_aSystems[$sName] = array(
                 'name' => $sName,
+                'init' => 1,
                 'frequency' => $iFrequency,
                 'service_call' => $sServiceCall,
                 'active' => $bActive ? 1 : 0
