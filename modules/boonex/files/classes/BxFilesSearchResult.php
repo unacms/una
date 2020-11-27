@@ -403,6 +403,7 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
                 'button_title' => '',
                 'storage_private' => '0',
                 'images_transcoder' => 'bx_files_preview',
+                'content_id' => 0,
                 'attrs' => bx_convert_array2attrs(['style' => 'display:none;']),
                 'btn_class' => '',
             );
