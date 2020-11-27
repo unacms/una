@@ -13,6 +13,7 @@ SET @iCategId = LAST_INSERT_ID();
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_error`, `extra`, `order`) VALUES
 ('bx_files_summary_chars', '700', @iCategId, '_bx_files_option_summary_chars', 'digit', '', '', '', 1),
 ('bx_files_show_link_to_preview', '', @iCategId, '_bx_files_option_link_to_preview', 'checkbox', '', '', '', 5),
+('bx_files_max_nesting_level', '3', @iCategId, '_bx_files_option_max_nesting_level', 'digit', '', '', '', 6),
 ('bx_files_per_page_browse', '12', @iCategId, '_bx_files_option_per_page_browse', 'digit', '', '', '', 10),
 ('bx_files_per_page_profile', '6', @iCategId, '_bx_files_option_per_page_profile', 'digit', '', '', '', 12),
 ('bx_files_per_page_browse_showcase', '32', @iCategId, '_sys_option_per_page_browse_showcase', 'digit', '', '', '', 15),
@@ -177,7 +178,7 @@ INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title`, `designbo
 SET @iPBCellProfile = 3;
 SET @iPBCellGroup = 4;
 INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `order`) VALUES
-('trigger_page_profile_view_entry', @iPBCellProfile, 'bx_files', '_bx_files_page_block_title_sys_my_entries', '_bx_files_page_block_title_my_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_files";s:6:"method";s:13:"browse_author";s:6:"params";a:2:{i:0;s:12:"{profile_id}";i:1;a:2:{s:8:"per_page";s:25:"bx_files_per_page_profile";s:13:"empty_message";b:0;}}}', 0, 0, 0);
+('trigger_page_profile_view_entry', @iPBCellProfile, 'bx_files', '_bx_files_page_block_title_sys_my_entries', '_bx_files_page_block_title_my_entries', 11, 2147483647, 'service', 'a:3:{s:6:"module";s:8:"bx_files";s:6:"method";s:13:"browse_author";s:6:"params";a:2:{i:0;s:12:"{profile_id}";i:1;a:3:{s:8:"per_page";s:25:"bx_files_per_page_profile";s:13:"empty_message";b:0;s:10:"no_toolbar";b:1;}}}', 0, 0, 0);
 
 -- PAGE: service blocks
 
@@ -260,13 +261,14 @@ INSERT INTO `sys_menu_sets`(`set_name`, `module`, `title`, `deletable`) VALUES
 ('bx_files_view_inline', 'bx_files', '_bx_files_menu_set_title_view_inline', 0);
 
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `order`) VALUES
-('bx_files_view_inline', 'bx_files', 'bookmark', '_bx_files_menu_item_title_system_bookmark', '_bx_files_menu_item_title_bookmark', '', '{js_object}.bookmark({content_id}, this); return false;', '', 'far star', '', 2147483647, 1, 0, 1),
-('bx_files_view_inline', 'bx_files', 'download-file', '_bx_files_menu_item_title_system_download_file', '_bx_files_menu_item_title_download_file', 'modules/?r=files/download/{file_download_token}/{content_id}.{file_ext}', '', '_blank', 'download', '', 2147483647, 1, 0, 2),
-('bx_files_view_inline', 'bx_files', 'delete-file-quick', '_bx_files_menu_item_title_system_delete_entry', '_bx_files_menu_item_title_delete_entry', 'page.php?i=delete-file&id={content_id}', '{js_object}.delete({content_id}); return false;', '', 'remove', '', 2147483647, 1, 0, 3),
-('bx_files_view_inline', 'bx_files', 'move-to', '_bx_files_menu_item_title_system_move_to_entry', '_bx_files_menu_item_title_move_to_entry', '', 'bx_alert(\'TODO\');return false;', '', 'file-export', '', 2147483647, 1, 0, 4),
-('bx_files_view_inline', 'bx_files', 'edit-title', '_bx_files_menu_item_title_system_edit_entry', '_bx_files_menu_item_title_edit_entry', 'page.php?i=edit-file&id={content_id}', '{js_object}.edit({content_id}); return false;', '', 'pencil-alt', '', 2147483647, 1, 0, 5),
-('bx_files_view_inline', 'bx_files', 'preview', '_bx_files_menu_item_title_system_info_entry', '_bx_files_menu_item_title_info_entry', '', '{js_object}.info({content_id}); return false;', '', 'info', '', 2147483647, 1, 0, 6),
-('bx_files_view_inline', 'bx_files', 'report', '_sys_menu_item_title_system_va_report', '', '', '', '', '', '', 2147483647, 1, 0, 7),
+('bx_files_view_inline', 'bx_files', 'favorite', '_sys_menu_item_title_system_va_favorite', '_sys_menu_item_title_va_favorite', '', '', '', '', '', 2147483647, 0, 0, 1),
+('bx_files_view_inline', 'bx_files', 'bookmark', '_bx_files_menu_item_title_system_bookmark', '_bx_files_menu_item_title_bookmark', '', '{js_object}.bookmark({content_id}, this); return false;', '', 'far star', '', 2147483647, 1, 0, 2),
+('bx_files_view_inline', 'bx_files', 'download-file', '_bx_files_menu_item_title_system_download_file', '_bx_files_menu_item_title_download_file', 'modules/?r=files/download/{file_download_token}/{content_id}.{file_ext}', '', '_blank', 'download', '', 2147483647, 1, 0, 3),
+('bx_files_view_inline', 'bx_files', 'delete-file-quick', '_bx_files_menu_item_title_system_delete_entry', '_bx_files_menu_item_title_delete_entry', 'page.php?i=delete-file&id={content_id}', '{js_object}.delete({content_id}); return false;', '', 'remove', '', 2147483647, 1, 0, 4),
+('bx_files_view_inline', 'bx_files', 'move-to', '_bx_files_menu_item_title_system_move_to_entry', '_bx_files_menu_item_title_move_to_entry', '', '{js_object}.moveTo({content_id}); return false;', '', 'file-export', '', 2147483647, 1, 0, 5),
+('bx_files_view_inline', 'bx_files', 'edit-title', '_bx_files_menu_item_title_system_edit_entry', '_bx_files_menu_item_title_edit_entry', 'page.php?i=edit-file&id={content_id}', '{js_object}.edit({content_id}); return false;', '', 'pencil-alt', '', 2147483647, 1, 0, 6),
+('bx_files_view_inline', 'bx_files', 'preview', '_bx_files_menu_item_title_system_info_entry', '_bx_files_menu_item_title_info_entry', '', '{js_object}.info({content_id}); return false;', '', 'info', '', 2147483647, 1, 0, 7),
+('bx_files_view_inline', 'bx_files', 'report', '_sys_menu_item_title_system_va_report', '', '', '', '', '', '', 2147483647, 1, 0, 8),
 ('bx_files_view_inline', 'bx_files', 'more-auto', '_sys_menu_item_title_system_va_more_auto', '_sys_menu_item_title_va_more_auto', 'javascript:void(0)', '', '', 'ellipsis-v', '', 2147483647, 1, 0, 9999);
 
 

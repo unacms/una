@@ -53,10 +53,16 @@ class BxFilesModule extends BxBaseModTextModule
         return _t('_sys_txt_access_denied');
     }
 
-    public function actionDownload($sToken, $iContentId) 
+    public function actionDownload($sToken, $iContentId, $sBulk = '')
     {
         $CNF = $this->_oConfig->CNF;
-        
+
+        $aFilesToDownload = [$iContentId];
+        if (!empty($sBulk)) {
+            $aFilesToDownload = json_decode($sBulk);
+        }
+        $iContentId = reset($aFilesToDownload);
+
         $aData = $this->_oDb->getContentInfoById((int)$iContentId);
         if (!$aData) {
             $this->_oTemplate->displayPageNotFound();
@@ -66,6 +72,18 @@ class BxFilesModule extends BxBaseModTextModule
         if (CHECK_ACTION_RESULT_ALLOWED !== $this->checkAllowedView($aData)) {
             $this->_oTemplate->displayAccessDenied();
             return;
+        }
+
+        if ($aData['type'] == 'folder' || $aFilesToDownload) {
+            $sZipFilePath = $this->prepareFolderForDownloading($aFilesToDownload);
+            if (!$sZipFilePath) {
+                $this->_oTemplate->displayPageNotFound();
+                return;
+            }
+
+            $sFolderName = $this->sanitizeFileName($aData[$CNF['FIELD_TITLE']]).'.zip';
+            bx_smart_readfile($sZipFilePath, $sFolderName, 'application/zip');
+            exit;
         }
 
         $aFile = $this->getContentFile($aData);
@@ -202,10 +220,19 @@ class BxFilesModule extends BxBaseModTextModule
     public function actionBookmark($iContentId) {
         if (!$this->isLogged()) return;
 
-        $aData = $this->_oDb->getContentInfoById((int)$iContentId);
-        if (!$aData) return;
+        $aFilesToBookmark = [];
+        if ($iContentId) $aFilesToBookmark = [$iContentId];
+        elseif (isset($_POST['bulk'])) $aFilesToBookmark = $_POST['bulk'];
 
-        $this->_oDb->bookmarkFile((int)$iContentId, bx_get_logged_profile_id());
+        if ($aFilesToBookmark)
+            foreach ($aFilesToBookmark as $iContentId) {
+                if ($iContentId <= 0) continue;
+
+                $aData = $this->_oDb->getContentInfoById((int)$iContentId);
+                if (!$aData) continue;
+
+                $this->_oDb->bookmarkFile((int)$iContentId, bx_get_logged_profile_id());
+            }
     }
 
     public function actionEntryPreview($iContentId) {
@@ -294,33 +321,276 @@ class BxFilesModule extends BxBaseModTextModule
     }
 
     public function actionEntryDelete($iContentId) {
-        $iContentId = intval($iContentId);
-        $aData = $this->_oDb->getContentInfoById($iContentId);
+        $aFilesToDelete = [];
+        if ($iContentId) $aFilesToDelete = [$iContentId];
+        elseif (isset($_POST['bulk'])) $aFilesToDelete = $_POST['bulk'];
 
-        $CNF = &$this->_oConfig->CNF;
+        if ($aFilesToDelete)
+            foreach ($aFilesToDelete as $iContentId) {
+                $iContentId = intval($iContentId);
+                if ($iContentId <= 0) continue;
+
+                $aData = $this->_oDb->getContentInfoById($iContentId);
+
+                $CNF = &$this->_oConfig->CNF;
+
+                if (!$aData) {
+                    echoJson(['message' => _t('_bx_files_txt_error')]);
+                    exit;
+                }
+
+                if ($aData[$CNF['FIELD_AUTHOR']] != bx_get_logged_profile_id() && !($aData[$CNF['FIELD_ALLOW_VIEW_TO']] < 0 && $this->serviceIsAllowedAddContentToProfile(-$aData[$CNF['FIELD_ALLOW_VIEW_TO']]))) {
+                    echoJson(['message' => _t('_bx_files_txt_permission_denied')]);
+                    exit;
+                }
+
+                $this->serviceDeleteEntity($iContentId);
+            }
+
+        if (!isset($_POST['bulk'])) {
+            echoJson([
+                'eval' => "
+                    $('.bx-file-entry[file_id={$iContentId}]').fadeOut();
+                    $(window).trigger('files_browser.update');
+                ",
+            ]);
+        } else {
+            echoJson([]);
+        }
+    }
+
+    public function actionClearGhosts() {
+        if (!isLogged()) die;
+
+        $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->CNF['OBJECT_STORAGE']);
+        if ($oStorage) {
+            $aFiles = $oStorage->getGhosts(bx_get_logged_profile_id(), 0);
+
+            if ($aFiles) foreach ($aFiles as $aFile) {
+                $oStorage->deleteFile($aFile['id']);
+            }
+        }
+    }
+
+    public function actionUploadCompleted() {
+        $iContext = intval(bx_get('context'));
+        $iFolder = intval(bx_get('folder'));
+
+        if (!isLogged()) {
+            echoJson(['message' => _t('_Access denied')]);
+            exit;
+        }
+
+        if ($this->checkAllowedAdd() != CHECK_ACTION_RESULT_ALLOWED || !$this->serviceIsAllowedAddContentToProfile($iContext)) {
+            echoJson(['message' => _t('_Access denied')]);
+            exit;
+        }
+
+        $oStorage = BxDolStorage::getObjectInstance($this->_oConfig->CNF['OBJECT_STORAGE']);
+        if ($oStorage) {
+            $iAuthorProfile = bx_get_logged_profile_id();
+            $aFiles = $oStorage->getGhosts($iAuthorProfile, 0);
+
+            if ($aFiles) {
+                $aFilesIDs = [];
+                foreach($aFiles as $aFile) {
+                    $aFilesIDs[] = $aFile['id'];
+                    bx_set('title-'.$aFile['id'], $aFile['file_name'], 'post');
+                }
+                bx_set('attachments', $aFilesIDs, 'post');
+
+                $oForm = BxDolForm::getObjectInstance($this->_oConfig->CNF['OBJECT_FORM_ENTRY_UPLOAD'], $this->_oConfig->CNF['OBJECT_FORM_ENTRY_DISPLAY_UPLOAD']);
+                $oForm->aInputs['profile_id']['value'] = $iAuthorProfile;
+                $oForm->aInputs['allow_view_to']['value'] = $iContext == $iAuthorProfile ? 3 : -$iContext;
+
+                $aFiles = $oForm->insert();
+
+                if ($iFolder != 0 && !empty($aFiles))
+                    $this->_oDb->moveFilesToFolder($aFiles, $iFolder);
+            }
+        }
+    }
+
+    public function actionCreateFolder() {
+        $iContext = intval(bx_get('context'));
+        $iFolder = intval(bx_get('current_folder'));
+        $sName = trim(bx_get('name'));
+
+        if (!isLogged()) {
+            echoJson(['message' => _t('_Access denied')]);
+            exit;
+        }
+
+        if ($this->checkAllowedAdd() != CHECK_ACTION_RESULT_ALLOWED || !$this->serviceIsAllowedAddContentToProfile($iContext)) {
+            echoJson(['message' => _t('_Access denied')]);
+            exit;
+        }
+
+        if (!empty($sName)) {
+            $iAuthor = bx_get_logged_profile_id();
+            //in case it is posted to context make the context profile as an author of an entry
+            $this->_oDb->createFolder($iFolder, $iAuthor == $iContext ? $iAuthor : $iContext, $iAuthor == $iContext ? BX_DOL_PG_ALL : -$iContext, $sName);
+        }
+
+        echoJson([]);
+        exit;
+    }
+
+    public function actionMoveFiles() {
+        $iContentId = intval(bx_get('file'));
+
+        $aFilesToMove = [];
+        if ($iContentId) $aFilesToMove = [$iContentId];
+        elseif (isset($_POST['bulk'])) $aFilesToMove = $_POST['bulk'];
+
+        $iContentId = reset($aFilesToMove);
+
+        $aData = $this->_oDb->getContentInfoById($iContentId);
 
         if (!$aData) {
             echoJson(['message' => _t('_bx_files_txt_error')]);
             exit;
         }
 
-        if ($aData[$CNF['FIELD_AUTHOR']] != bx_get_logged_profile_id()) {
-            echoJson(['message' => _t('_bx_files_txt_permission_denied')]);
+        $CNF = &$this->_oConfig->CNF;
+
+        $iContext = $aData[$CNF['FIELD_ALLOW_VIEW_TO']] < 0 ? -$aData[$CNF['FIELD_ALLOW_VIEW_TO']] : $aData[$CNF['FIELD_AUTHOR']];
+
+        if ($this->checkAllowedAdd() != CHECK_ACTION_RESULT_ALLOWED || !$this->serviceIsAllowedAddContentToProfile($iContext)) {
+            echoJson(['message' => _t('_Access denied')]);
             exit;
         }
 
-        $this->serviceDeleteEntity($iContentId);
+        if (isset($_POST['move_to'])) {
+            $iMoveTo = intval(bx_get('move_to'));
+            if ($iMoveTo) {
+                $aDataMoveTo = $this->_oDb->getContentInfoById($iMoveTo);
+                if (!$aDataMoveTo) {
+                    echoJson(['message' => _t('_bx_files_txt_error')]);
+                    exit;
+                }
+
+                $iContextMoveTo = $aDataMoveTo[$CNF['FIELD_ALLOW_VIEW_TO']] < 0 ? -$aDataMoveTo[$CNF['FIELD_ALLOW_VIEW_TO']] : $aDataMoveTo[$CNF['FIELD_AUTHOR']];
+
+                if ($this->checkAllowedAdd() != CHECK_ACTION_RESULT_ALLOWED || !$this->serviceIsAllowedAddContentToProfile($iContextMoveTo)) {
+                    echoJson(['message' => _t('_Access denied')]);
+                    exit;
+                }
+            }
+
+            $this->_oDb->moveFilesToFolder($aFilesToMove, $iMoveTo);
+
+            echoJson([
+                'eval' => "                        
+                    $(window).trigger('files_browser.update');
+                ",
+            ]);
+            exit;
+        }
+
+        $aFolders = $this->_oDb->getFoldersInContext($iContext);
+        if (!$aFolders) {
+            echoJson(['message' => _t('_bx_files_txt_move_to_nowhere')]);
+            exit;
+        }
 
         echoJson([
-            'eval' => "
-                $('.bx-file-entry[file_id={$iContentId}]').fadeOut();
-            ",
+            'popup' => [
+                'html' => PopupBox('bx-files-popup', _t('_bx_files_txt_move_to'), $this->_oTemplate->getJsTree($aFilesToMove, $aFolders)),
+                'options' => [],
+            ],
         ]);
     }
 
     public function serviceDeleteEntitiesByAuthor ($iProfileId) {
         $this->_oDb->deleteProfileBookmarks($iProfileId);
         return parent::serviceDeleteEntitiesByAuthor ($iProfileId);
+    }
+
+    public function serviceDeleteEntity ($iContentId, $sFuncDelete = 'deleteData') {
+        $aData = $this->_oDb->getContentInfoById($iContentId);
+        if ($aData['type'] == 'folder') {
+            $aNestedFiles = $this->_oDb->getFolderFiles($aData[$this->_oConfig->CNF['FIELD_ID']]);
+            if ($aNestedFiles)
+                foreach ($aNestedFiles as $iFile) {
+                    $this->serviceDeleteEntity($iFile);
+                }
+        }
+        parent::serviceDeleteEntity($iContentId, $sFuncDelete);
+    }
+
+    private function prepareFolderForDownloading($aFiles) {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aFilesList = [];
+        foreach ($aFiles as $iFile) {
+            $aData = $this->_oDb->getContentInfoById(intval($iFile));
+            $aFilesList = array_merge($aFilesList, $this->getFolderFiles(intval($iFile), $aData['type'] == 'folder' ? $this->sanitizeFileName($aData['title']).'/' : '/', $aData['type']));
+        }
+        if(!$aFilesList) return false;
+
+        $sZipFile = BX_DIRECTORY_PATH_TMP.'files-folder-'.mt_rand().'.zip';
+        if (file_exists($sZipFile)) @unlink($sZipFile);
+
+        $oZipFile = new ZipArchive();
+        if ($oZipFile->open($sZipFile, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE)) {
+            $oZipFile->setCompressionIndex(0, ZipArchive::CM_STORE);
+
+            foreach ($aFilesList as $aFile) {
+                $sFilePath = BX_DIRECTORY_STORAGE . $CNF['OBJECT_STORAGE'].'/'.$aFile['path'];
+                if (file_exists($sFilePath) && is_readable($sFilePath))
+                    $oZipFile->addFile($sFilePath, $aFile['filename']);
+            }
+
+            $oZipFile->close();
+            return $sZipFile;
+        } else {
+            return false;
+        }
+    }
+
+    private function getFolderFiles($iFile, $sRelPath, $sType) {
+        $aFiles = $this->_oDb->getFolderFilesEx($iFile, $sType);
+        if (!$aFiles) return [];
+
+        $aResult = [];
+        $aUniqueNames = [];
+        foreach ($aFiles as $aFile) {
+            if (CHECK_ACTION_RESULT_ALLOWED !== $this->checkAllowedView($aFile)) continue;
+
+            //in case title has been changed we might have to add extensions manually
+            $aFileInfo = pathinfo($aFile['title']);
+            $sFileBaseName = isset($aFileInfo['filename']) ? $aFileInfo['filename'] : '_';
+            $sFileExt = isset($aFileInfo['extension']) ? $aFileInfo['extension'] : '';
+
+            if (!$sFileExt || $sFileExt != $aFile['ext']) $sFileExt = $aFile['ext'];
+
+            //handle multiple files with the same name
+            $sFilename = $this->sanitizeFileName($sFileBaseName);
+            $iIndex = 1;
+            while (isset($aUniqueNames[$sFilename])) {
+                $sFilename = $this->sanitizeFileName($sFileBaseName.'_'.$iIndex++);
+            }
+            $aUniqueNames[$sFilename] = 1;
+
+            if ($aFile['type'] == 'folder') {
+                $aResult = array_merge($aResult, $this->getFolderFiles($aFile['id'], $sRelPath . $sFilename . '/', 'folder'));
+            } else {
+                $aResult[] = [
+                    'filename' => trim($sRelPath.$sFilename.'.'.$sFileExt, '/'),
+                    'size' => $aFile['size'],
+                    'path' => $aFile['path'],
+                ];
+            }
+        }
+
+        return $aResult;
+    }
+
+    private function sanitizeFileName($sDesiredFilename) {
+        $sDesiredFilename = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '_', $sDesiredFilename);
+        $sDesiredFilename = mb_ereg_replace("([\.]{2,})", '_', $sDesiredFilename);
+        return $sDesiredFilename;
     }
 }
 

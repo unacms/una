@@ -31,6 +31,7 @@ class BxFilesConfig extends BxBaseModTextConfig
             'TABLE_ENTRIES_FULLTEXT' => 'search_fields',
             'TABLE_FILES' => $aModule['db_prefix'] . 'files',
             'TABLE_BOOKMARKS' => $aModule['db_prefix'] . 'bookmarks',
+            'TABLE_FOLDERS' => $aModule['db_prefix'] . 'folders',
 
             // database fields
             'FIELD_ID' => 'id',
@@ -82,6 +83,7 @@ class BxFilesConfig extends BxBaseModTextConfig
             'PARAM_NUM_RSS' => 'bx_files_rss_num',
             'PARAM_SEARCHABLE_FIELDS' => 'bx_files_searchable_fields',
             'PARAM_LINK_TO_PREVIEW' => 'bx_files_show_link_to_preview',
+            'PARAM_MAX_NESTING_LEVEL' => 'bx_files_max_nesting_level',
 
             // objects
             'OBJECT_STORAGE' => 'bx_files_files',
@@ -100,6 +102,8 @@ class BxFilesConfig extends BxBaseModTextConfig
             'OBJECT_CATEGORY' => 'bx_files_cats',
             'OBJECT_PRIVACY_VIEW' => 'bx_files_allow_view_to',
             'OBJECT_PRIVACY_LIST_VIEW' => 'bx_files_allow_view_favorite_list',
+            'OBJECT_FORM_ENTRY_UPLOAD' => 'bx_files_upload',
+            'OBJECT_FORM_ENTRY_DISPLAY_UPLOAD' => 'bx_files_entry_upload',
             'OBJECT_FORM_ENTRY' => 'bx_files',
             'OBJECT_FORM_ENTRY_DISPLAY_VIEW' => 'bx_files_entry_view',
             'OBJECT_FORM_ENTRY_DISPLAY_ADD' => 'bx_files_entry_edit',

@@ -14,6 +14,7 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
     protected $sOrderParamName = 'order';
     protected $sBookmarksParamName = 'bookmarks';
     protected $sSortingParamName = 'sorting';
+    protected $sCurrentFolderParamName = 'folder';
     protected $sCurrentView;
     protected $bFileManagerMode = false;
     protected $iFileManagerUploadTo = 0;
@@ -29,7 +30,7 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
         ];
 
         //Enble filemanager (toolbar, table files layout, dynamic menus, folders support) only for author/context blocks.
-        if (($sMode == 'author' || $sMode == 'context')) {
+        if (($sMode == 'author' || $sMode == 'context') && !isset($aParams['no_toolbar'])) {
             $this->bFileManagerMode = true;
             $this->setUnitParams(['show_inline_menu' => true]);
         }
@@ -43,6 +44,7 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
             $this->sBookmarksParamName,
             $this->sSortingParamName,
             $this->sUnitViewParamName,
+            $this->sCurrentFolderParamName,
         ]);
 
 
@@ -60,13 +62,16 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
             'object_metatags' => 'bx_files',
             'title' => _t('_bx_files_page_title_browse'),
             'table' => 'bx_files_main',
-            'ownFields' => array('id', 'file_id', 'title', 'desc', 'author', 'added'),
+            'ownFields' => array('id', 'file_id', 'title', 'desc', 'author', 'added', 'type', 'parent_folder_id'),
             'searchFields' => array(),
             'restriction' => array(
                 'author' => array('value' => '', 'field' => 'author', 'operator' => '='),
                 'featured' => array('value' => '', 'field' => 'featured', 'operator' => '<>'),
                 'status' => array('value' => 'active', 'field' => 'status', 'operator' => '='),
                 'statusAdmin' => array('value' => 'active', 'field' => 'status_admin', 'operator' => '='),
+                'files_only' => array('value' => 'file', 'field' => 'type', 'operator' => '='),
+                'context_filter' => array('value' => '', 'field' => 'allow_view_to', 'operator' => '>'),
+                'folder' => array('value' => '', 'field' => 'parent_folder_id', 'operator' => '='),
             ),
             'paginate' => array('perPage' => getParam('bx_files_per_page_browse'), 'start' => 0),
             'sorting' => 'last',
@@ -101,6 +106,10 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
             case 'author':
                 if(!$this->_updateCurrentForAuthor($sMode, $aParams, $oProfileAuthor))
                     $this->isError = true;
+                else {
+                    //show only those files/folders which are not posted to some context
+                    $this->aCurrent['restriction']['context_filter']['value'] = 0;
+                }
                 break;
 
             case 'context':
@@ -163,6 +172,9 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
         $this->addConditionsForPrivateContent($CNF, $oProfileAuthor);
 
         if ($this->bFileManagerMode) {
+            $this->addContainerClass('bx-files-with-toolbar');
+
+            unset($this->aCurrent['restriction']['files_only']);
             if (bx_get($this->sBookmarksParamName))
                 $this->addConditionsForBookmarks($CNF);
 
@@ -174,7 +186,26 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
 
             $this->removeContainerClass('bx-def-margin-sec-lefttopright-neg');
 
-            $this->iFileManagerUploadTo = $oProfileAuthor->id();
+            if (!$this->isError) {
+                if ($sMode == 'author' || $oProfileAuthor->id() != bx_get_logged_profile_id())
+                    $this->iFileManagerUploadTo = $oProfileAuthor->id();
+            }
+
+            if ($this->sCurrentView == 'table')
+                $this->removeContainerClass('bx-def-margin-bottom-neg');
+
+
+            $this->aCurrent['restriction']['folder']['value'] = intval(bx_get($this->sCurrentFolderParamName));
+            if ($this->aCurrent['restriction']['folder']['value'] < 0) {
+                //navigate folder top
+                bx_set($this->sCurrentFolderParamName, $this->oModule->_oDb->getParentFolderId(-$this->aCurrent['restriction']['folder']['value']));
+                $this->aCurrent['restriction']['folder']['value'] = bx_get($this->sCurrentFolderParamName);
+            }
+
+            //free up one place for folder up item
+            if ($this->aCurrent['restriction']['folder']['value']) {
+                $this->aCurrent['paginate']['perPage']--;
+            }
         }
     }
 
@@ -220,12 +251,15 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
 
         if (!$this->bFileManagerMode) return;
 
+        $this->oModule->_oTemplate->addCss('main.css');
+
         return $this->showBrowseToolbar([
             'aRequestParams' => [
                 'unit_view_param' => $this->sUnitViewParamName,
                 'bookmarks_param' => $this->sBookmarksParamName,
                 'sorting_param' => $this->sSortingParamName,
                 'keyword_param' => 'keyword',
+                'current_folder' => $this->sCurrentFolderParamName,
             ],
 
             'layout' => $this->sCurrentView,
@@ -233,13 +267,37 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
             'sorting' => $this->aCurrent['sorting'],
             'sorting_options' => $this->aSortingOptions,
             'keyword' => bx_get('keyword') ? bx_get('keyword') : '',
+            'current_folder' => $this->aCurrent['restriction']['folder']['value'],
+            'current_page' => $this->aCurrent['paginate']['start'],
         ]);
+    }
+
+    function getSearchData ()
+    {
+        $CNF = &$this->oModule->_oConfig->CNF;
+
+        $aData = parent::getSearchData();
+
+        if ($this->bFileManagerMode && $this->aCurrent['restriction']['folder']['value']) {
+            $aData = array_merge([0 => [
+                $CNF['FIELD_ID'] => '-1',
+                $CNF['FIELD_FILE_ID'] => '0',
+                $CNF['FIELD_TITLE'] => '..',
+                $CNF['FIELD_AUTHOR'] => 0,
+                $CNF['FIELD_ADDED'] => 0,
+                $CNF['FIELD_ALLOW_VIEW_TO'] => BX_DOL_PG_ALL,
+                'type' => 'folder',
+            ]], $aData);
+            $this->aCurrent['paginate']['num']++;
+        }
+
+        return $aData;
     }
 
     function processing ()
     {
         $sCode = parent::processing();
-        if (!$this->aCurrent['paginate']['num'] && bx_is_dynamic_request() && $this->bFileManagerMode) {
+        if (!$this->aCurrent['paginate']['num']  && $this->bFileManagerMode) {
             //to show toolbar in case of empty results
             $sCode = $this->displaySearchBox($this->addCustomParts().MsgBox(_t('_Empty')));
         }
@@ -252,6 +310,7 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
             $this->sUnitViewParamName => $this->sCurrentView,
             $this->sBookmarksParamName => intval(bx_get($this->sBookmarksParamName)),
             $this->sSortingParamName => $this->aCurrent['sorting'],
+            $this->sCurrentFolderParamName => $this->aCurrent['restriction']['folder']['value'],
         ];
         $sPageUrl = $this->getCurrentUrl($aAdditionalParams, false);
         $sOnClick = $this->getCurrentOnclick($aAdditionalParams, false);
@@ -274,16 +333,16 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
             $aSql = array();
             switch ($this->aCurrent['sorting']) {
                 case 'name':
-                    $aSql['order'] = ' ORDER BY `'.$CNF['TABLE_ENTRIES'].'`.`'.$CNF['FIELD_TITLE'].'` ASC';
+                    $aSql['order'] = ' ORDER BY `'.$CNF['TABLE_ENTRIES'].'`.`type` DESC, `'.$CNF['TABLE_ENTRIES'].'`.`'.$CNF['FIELD_TITLE'].'` ASC';
                     break;
                 case 'date':
-                    $aSql['order'] = ' ORDER BY `'.$CNF['TABLE_ENTRIES'].'`.`'.$CNF['FIELD_ID'].'` DESC';
+                    $aSql['order'] = ' ORDER BY `'.$CNF['TABLE_ENTRIES'].'`.`type` DESC, `'.$CNF['TABLE_ENTRIES'].'`.`'.$CNF['FIELD_ID'].'` DESC';
                     break;
                 case 'author':
-                    $aSql['order'] = ' ORDER BY `'.$CNF['TABLE_ENTRIES'].'`.`'.$CNF['FIELD_AUTHOR'].'` ASC, `'.$CNF['TABLE_ENTRIES'].'`.`'.$CNF['FIELD_TITLE'].'` ASC';
+                    $aSql['order'] = ' ORDER BY `'.$CNF['TABLE_ENTRIES'].'`.`type` DESC, `'.$CNF['TABLE_ENTRIES'].'`.`'.$CNF['FIELD_AUTHOR'].'` ASC, `'.$CNF['TABLE_ENTRIES'].'`.`'.$CNF['FIELD_TITLE'].'` ASC';
                     break;
                 case 'type':
-                    $aSql['order'] = ' ORDER BY `'.$CNF['TABLE_FILES'].'`.`'.$CNF['FIELD_MIME_TYPE'].'` ASC, `'.$CNF['TABLE_ENTRIES'].'`.`'.$CNF['FIELD_TITLE'].'` ASC';
+                    $aSql['order'] = ' ORDER BY `'.$CNF['TABLE_ENTRIES'].'`.`type` DESC, `'.$CNF['TABLE_FILES'].'`.`'.$CNF['FIELD_MIME_TYPE'].'` ASC, `'.$CNF['TABLE_ENTRIES'].'`.`'.$CNF['FIELD_TITLE'].'` ASC';
                     break;
             }
             return $aSql;
@@ -303,11 +362,14 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
 
         $sUniqueIdent = mt_rand();
         $aParams['unique_ident'] = $sUniqueIdent;
+        $aParams['context'] = $this->iFileManagerUploadTo;
 
         $this->oModule->_oTemplate->addJs('toolbar_tools.js');
 
         $sJsCode = $this->oModule->_oTemplate->getJsCode(['type' => 'toolbar_tools', 'uniq' => $sUniqueIdent], $aParams);
         $sJsObject = $this->oModule->_oConfig->getJsObject(['type' => 'toolbar_tools', 'uniq' => $sUniqueIdent]);
+
+        $this->setUnitParams(['toolbar_js_object' => $sJsObject]);
 
         $oForm = new BxTemplFormView([], $this->oModule->_oTemplate);
         $aInputSorting = [
@@ -331,15 +393,75 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
             ],
         ];
 
+        $aUploadButtonParams = [];
+        $bUploadAllowed = $this->oModule->checkAllowedAdd() == CHECK_ACTION_RESULT_ALLOWED && $this->oModule->serviceIsAllowedAddContentToProfile($this->iFileManagerUploadTo);
+        if ($bUploadAllowed) {
+            $sUniqId = genRndPwd (8, false);
+            $oUploader = BxDolUploader::getObjectInstance('bx_files_html5', $this->oModule->_oConfig->CNF['OBJECT_STORAGE'], $sUniqId, $this->oModule->_oTemplate);
+
+            $aUploaderParams = array(
+                'button_title' => '',
+                'storage_private' => '0',
+                'images_transcoder' => 'bx_files_preview',
+                'attrs' => bx_convert_array2attrs(['style' => 'display:none;']),
+                'btn_class' => '',
+            );
+
+            $iMaxNestingLevel = intval(getParam($this->oModule->_oConfig->CNF['PARAM_MAX_NESTING_LEVEL']));
+            $aUploadButtonParams = [
+                'js_object' => $sJsObject,
+                'uploader_code' => $oUploader->getUploaderButton('', true, $aUploaderParams, true),
+                'uploader_js_object' => $oUploader->getNameJsInstanceUploader(),
+                'uploader_click_handler' => $oUploader->getNameJsInstanceUploader() . '.showUploaderForm();',
+                'bx_if:create_folder_allowed' => [
+                    'condition' => $iMaxNestingLevel == 0 || $this->oModule->_oDb->getFolderNestingLevel($this->aCurrent['restriction']['folder']['value']) < $iMaxNestingLevel,
+                    'content' => [
+                        'js_object' => $sJsObject,
+                        'folder_name_message' => _t('_bx_files_txt_folder_name'),
+                    ]
+                ],
+            ];
+        }
+
+        $aFolderPathTmpl = [];
+        $aFolderPath = $this->oModule->_oDb->getFolderPath($this->aCurrent['restriction']['folder']['value']);
+        if ($aFolderPath) {
+            $aFolderPathTmpl[] = [
+                'name' => _t('_bx_files_txt_folder_root'),
+                'folder' => '0',
+                'js_object' => $sJsObject,
+            ];
+
+            foreach ($aFolderPath as $aEntry) {
+                $aFolderPathTmpl[] = [
+                    'name' => strmaxtextlen($aEntry['name'], 20),
+                    'folder' => $aEntry['folder'],
+                    'js_object' => $sJsObject,
+                ];
+            }
+        }
+
+        $aBulkActions = [];
+        $aBulkActions[] = ['js_object' => $sJsObject, 'handler' => 'downloadFiles', 'title' => _t('_bx_files_bulk_action_title_download'), 'icon' => 'download'];
+        if (isLogged()) {
+            $aBulkActions[] = ['js_object' => $sJsObject, 'handler' => 'bookmarkFiles', 'title' => _t('_bx_files_bulk_action_title_bookmark'), 'icon' => 'star'];
+            if ($bUploadAllowed) {
+                $aBulkActions[] = ['js_object' => $sJsObject, 'handler' => 'deleteFiles', 'title' => _t('_bx_files_bulk_action_title_delete'), 'icon' => 'remove'];
+                $aBulkActions[] = ['js_object' => $sJsObject, 'handler' => 'moveFiles', 'title' => _t('_bx_files_bulk_action_title_move_to'), 'icon' => 'file-export'];
+            }
+        }
+
+
         return $this->oModule->_oTemplate->parseHtmlByName('files_browser_toolbar.html', [
             'js_object' => $sJsObject,
             'js_code' => $sJsCode,
             'unique_ident' => $sUniqueIdent,
             'sorting_dropdown' => $oForm->genRowStandard($aInputSorting),
             'filter_box' => $oForm->genRowStandard($aInputFilter),
+            'bx_repeat:folder_path' => $aFolderPathTmpl,
             'bx_if:upload_visible' => [
-                'condition' => $this->oModule->serviceIsAllowedAddContentToProfile($this->iFileManagerUploadTo),
-                'content' => [],
+                'condition' => $bUploadAllowed,
+                'content' => $aUploadButtonParams,
             ],
             'bx_if:bookmarks_visible' => [
                 'condition' => isLogged(),
@@ -370,6 +492,7 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
                 ],
             ],
             'bx_repeat:sorting_options' => $aSortingOptions,
+            'bx_repeat:bulk_actions' => $aBulkActions,
         ]);
     }
 }

@@ -74,6 +74,119 @@ class BxFilesDb extends BxBaseModFilesDb
             'title' => $sNewTitle,
         ]);
     }
+
+    public function createFolder($iParentFolder, $iAuthor, $iContext, $sTitle) {
+        $CNF = &$this->_oConfig->CNF;
+
+        $this->query("
+            INSERT INTO `" . $CNF['TABLE_ENTRIES'] . "` 
+            (`{$CNF['FIELD_AUTHOR']}`, `{$CNF['FIELD_ADDED']}`, `{$CNF['FIELD_CHANGED']}`, `{$CNF['FIELD_TITLE']}`, `data_processed`, `{$CNF['FIELD_ALLOW_VIEW_TO']}`, `type`, `parent_folder_id`)
+            VALUES (:author, :when, :when, :title, 1, :context, 'folder', :parent_folder_id)", [
+                'author' => $iAuthor,
+                'when' => time(),
+                'title' => $sTitle,
+                'context' => $iContext,
+                'parent_folder_id' => $iParentFolder,
+        ]);
+    }
+
+    public function moveFilesToFolder($aFiles, $iFolder) {
+        $CNF = &$this->_oConfig->CNF;
+        $this->query("UPDATE `" . $CNF['TABLE_ENTRIES'] . "` SET `parent_folder_id` = {$iFolder} WHERE `" . $CNF['FIELD_ID'] . "` IN (".implode(',', $aFiles).")");
+    }
+
+    public function getParentFolderId($iFolder) {
+        $CNF = &$this->_oConfig->CNF;
+        return $this->getOne("SELECT `parent_folder_id` FROM `" . $CNF['TABLE_ENTRIES'] . "` WHERE `" . $CNF['FIELD_ID'] . "` = :folder", [
+            'folder' => $iFolder,
+        ]);
+    }
+
+    public function getFolderFiles($iFolder) {
+        $CNF = &$this->_oConfig->CNF;
+        return $this->getColumn("SELECT `{$CNF['FIELD_ID']}` FROM `" . $CNF['TABLE_ENTRIES'] . "` WHERE `parent_folder_id` = :folder", [
+            'folder' => $iFolder,
+        ]);
+    }
+
+    public function getFolderFilesEx($iFile, $sType = 'folder') {
+        $CNF = &$this->_oConfig->CNF;
+        return $this->getAll("
+
+            SELECT `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_ID']}`, `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_AUTHOR']}`, `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_TITLE']}`, `{$CNF['TABLE_ENTRIES']}`.`type`, `{$CNF['TABLE_FILES']}`.`path`, `{$CNF['TABLE_FILES']}`.`ext`, `{$CNF['TABLE_FILES']}`.`size` 
+            FROM `{$CNF['TABLE_ENTRIES']}` 
+            LEFT JOIN `{$CNF['TABLE_FILES']}` ON `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_FILE_ID']}` = `{$CNF['TABLE_FILES']}`.`{$CNF['FIELD_ID']}`
+            WHERE `{$CNF['TABLE_ENTRIES']}`.`".($sType == 'folder' ? 'parent_folder_id' : $CNF['FIELD_ID'])."` = :file
+            
+            ", [
+                'file' => $iFile,
+            ]
+        );
+    }
+
+    public function getFolderNestingLevel($iFolder) {
+        $iLevel = 1;
+
+        while($iParentFolder = $this->getParentFolderId($iFolder)) {
+            $iLevel++;
+            $iFolder = $iParentFolder;
+        }
+
+        return $iLevel;
+    }
+
+    public function getFolderPath($iFolder) {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aPath = [];
+
+        $aFolder = $this->getContentInfoById($iFolder);
+        if (!$aFolder) return $aPath;
+
+        do {
+            $aPath[] = [
+                'folder' => $aFolder[$CNF['FIELD_ID']],
+                'name' => $aFolder[$CNF['FIELD_TITLE']],
+            ];
+
+            if (!$aFolder['parent_folder_id']) break;
+            $aFolder = $this->getContentInfoById($aFolder['parent_folder_id']);
+        } while (true);
+
+        return array_reverse($aPath);
+    }
+
+    public function getFoldersInContext($iContext) {
+        $CNF = &$this->_oConfig->CNF;
+        $sIdent = $iContext > 0 ? $CNF['FIELD_AUTHOR'] : $CNF['FIELD_ALLOW_VIEW_TO'];
+        $aFolders = $this->getAll("SELECT `{$CNF['FIELD_ID']}`, `parent_folder_id`, `{$CNF['FIELD_TITLE']}` FROM `" . $CNF['TABLE_ENTRIES'] . "` WHERE `{$sIdent}` = :context AND `type` = 'folder'", [
+            'context' => $iContext,
+        ]);
+
+        if (!$aFolders) return [];
+
+        return [
+            0 => [
+                $CNF['FIELD_ID'] => 0,
+                $CNF['FIELD_TITLE'] => _t('_bx_files_txt_folder_root'),
+                'subfolders' => $this->getSubfoldersOf($aFolders, 0),
+            ]
+        ];
+    }
+
+    public function getSubfoldersOf(&$aFolders, $iParent) {
+        $CNF = &$this->_oConfig->CNF;
+
+        $aResult = [];
+        foreach ($aFolders as $aFolder) {
+            if ($aFolder['parent_folder_id'] == $iParent) {
+                $aFolder['subfolders'] = $this->getSubfoldersOf($aFolders, $aFolder[$CNF['FIELD_ID']]);
+                $aResult[] = $aFolder;
+            }
+        }
+
+        return $aResult;
+    }
 }
 
 /** @} */

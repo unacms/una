@@ -45,4 +45,8 @@ BxFilesMenuTools.prototype.delete = function(iContentId) {
 	});
 };
 
+BxFilesMenuTools.prototype.moveTo = function(iContentId) {
+    $.post(this._sActionsUrl + 'move_files/', {file: iContentId}, processJsonData, 'json');
+}
+
 /** @} */
