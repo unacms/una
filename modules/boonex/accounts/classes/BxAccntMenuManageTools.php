@@ -41,6 +41,9 @@ class BxAccntMenuManageTools extends BxBaseModGeneralMenuManageTools
             case 'delete-with-content':
                 $sCheckFuncName = 'checkAllowedDelete';
                 break;
+            case 'set-operator-role':
+                $sCheckFuncName = 'checkAllowedSetOperatorRole';
+            	break;
             case 'make-operator':
             	$sCheckFuncName = 'checkAllowedMakeOperator';
             	break;

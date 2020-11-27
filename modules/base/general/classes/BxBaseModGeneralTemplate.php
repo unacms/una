@@ -35,10 +35,19 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
                 $aMaskMarkers = $mixedWrap['mask_markers'];
         }
 
-        $sBaseUri = $this->_oConfig->getBaseUri();
         $sJsClass = $this->_oConfig->getJsClass($sType);
-        $sJsObject = $this->_oConfig->getJsObject($sType);
+        if(!empty($aParams['js_class'])) {
+            $sJsClass = $aParams['js_class'];
+            unset($aParams['js_class']);
+        }
 
+        $sJsObject = $this->_oConfig->getJsObject($sType);
+        if(!empty($aParams['js_object'])) {
+            $sJsObject = $aParams['js_object'];
+            unset($aParams['js_object']);
+        }
+
+        $sBaseUri = $this->_oConfig->getBaseUri();
         $aParams = array_merge(array(
             'sActionUri' => $sBaseUri,
             'sActionUrl' => BX_DOL_URL_ROOT . $sBaseUri,

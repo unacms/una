@@ -90,11 +90,15 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
     }
     function getPageCode($bHidden = false)
     {
+        $sResult = parent::getPageCode();
+        if($sResult === false)
+            return false;
+
         $sMethod = 'get' . ucfirst($this->sPage);
         if(!method_exists($this, $sMethod))
             return '';
 
-        return $this->$sMethod();
+        return $sResult . $this->$sMethod();
     }
 
     protected function getGeneral()
@@ -547,81 +551,81 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 		));
     }
 
-	protected function getInjections()
+    protected function getInjections()
     {
     	$oTemplate = BxDolStudioTemplate::getInstance();
 
-		$aForm = array(
-			'form_attrs' => array(
-				'id' => $this->sInjectionsFormId,
-				'name' => $this->sInjectionsFormId,
-				'action' => BX_DOL_URL_STUDIO . 'designer.php',
-				'method' => 'post',
-				'enctype' => 'multipart/form-data',
-				'target' => $this->sInjectionsIframeId
-			),
-			'params' => array(
-				'db' => array(
-					'table' => '',
-					'key' => '',
-					'uri' => '',
-					'uri_title' => '',
-					'submit_name' => 'save'
-				),
-			),
-			'inputs' => array(
-				'page' => array(
-					'type' => 'hidden',
-					'name' => 'page',
-					'value' => $this->sPage
-				),
-				'sys_head' => array(
+        $aForm = array(
+            'form_attrs' => array(
+                'id' => $this->sInjectionsFormId,
+                'name' => $this->sInjectionsFormId,
+                'action' => BX_DOL_URL_STUDIO . 'designer.php',
+                'method' => 'post',
+                'enctype' => 'multipart/form-data',
+                'target' => $this->sInjectionsIframeId
+            ),
+            'params' => array(
+                'db' => array(
+                    'table' => '',
+                    'key' => '',
+                    'uri' => '',
+                    'uri_title' => '',
+                    'submit_name' => 'save'
+                ),
+            ),
+            'inputs' => array(
+                'page' => array(
+                        'type' => 'hidden',
+                        'name' => 'page',
+                        'value' => $this->sPage
+                ),
+                'sys_head' => array(
                     'type' => 'textarea',
                     'code' => true,
                     'name' => 'sys_head',
-					'caption' => _t('_adm_dsg_txt_inj_head'),
-					'info' => _t('_adm_dsg_txt_inj_head_inf'),
-					'value' => $this->oDb->getOne("SELECT `data` FROM `sys_injections` WHERE `name`='sys_head'"),
-				),
-				'sys_body' => array(
+                    'caption' => _t('_adm_dsg_txt_inj_head'),
+                    'info' => _t('_adm_dsg_txt_inj_head_inf'),
+                    'value' => $this->oDb->getOne("SELECT `data` FROM `sys_injections` WHERE `name`='sys_head'"),
+                ),
+                'sys_body' => array(
                     'type' => 'textarea',
                     'code' => true,
                     'name' => 'sys_body',
-					'caption' => _t('_adm_dsg_txt_inj_body'),
-					'info' => _t('_adm_dsg_txt_inj_body_inf'),
-					'value' => $this->oDb->getOne("SELECT `data` FROM `sys_injections` WHERE `name`='sys_body'"),
-				),
-				'save' => array(
-					'type' => 'submit',
-					'name' => 'save',
-					'value' => _t('_adm_btn_designer_submit'),
-				)
-			)
-		);
+                    'caption' => _t('_adm_dsg_txt_inj_body'),
+                    'info' => _t('_adm_dsg_txt_inj_body_inf'),
+                    'value' => $this->oDb->getOne("SELECT `data` FROM `sys_injections` WHERE `name`='sys_body'"),
+                ),
+                'save' => array(
+                'type' => 'submit',
+                'name' => 'save',
+                'value' => _t('_adm_btn_designer_submit'),
+                )
+            )
+        );
 
-		$oForm = new BxTemplStudioFormView($aForm, $oTemplate);
-		$oForm->initChecker();
+        $oForm = new BxTemplStudioFormView($aForm, $oTemplate);
+        $oForm->initChecker();
 
-		if($oForm->isSubmittedAndValid()) {
-			echo $this->submitInjections($oForm);
-			exit;
-		}
+        if($oForm->isSubmittedAndValid()) {
+            echo $this->submitInjections($oForm);
+            exit;
+        }
 
         $oTemplate->addJs(array('codemirror/codemirror.min.js'));
         $oTemplate->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'codemirror/|codemirror.css');
 
-		return $oTemplate->parseHtmlByName('designer.html', array(
-			'content' => $this->getBlockCode(array(
-				'items' => $oTemplate->parseHtmlByName('dsr_injections.html', array(
-					'warning' => '',
-					'splash_iframe_id' => $this->sInjectionsIframeId, 
-					'form' => $oForm->getCode()
-				)),
-			)),
-			'js_content' => $this->getPageJsCode(array(
-				'sCodeMirror' => 'textarea[name=sys_head],textarea[name=sys_body]'
-			))
-		));
+        return $oTemplate->parseHtmlByName('designer.html', array(
+            'content' => $this->getBlockCode(array(
+                'items' => $oTemplate->parseHtmlByName('dsr_injections.html', array(
+                    'warning' => '',
+                    'splash_iframe_id' => $this->sInjectionsIframeId, 
+                    'form' => $oForm->getCode()
+                )),
+            )),
+            'js_content' => $this->getPageJsCode(array(
+                    'sCodeMirror' => 'textarea[name=sys_head],textarea[name=sys_body]'
+            ))
+        ));
     }
 
     protected function getSettings()
@@ -629,8 +633,8 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
         $oPage = new BxTemplStudioSettings(BX_DOL_STUDIO_STG_TYPE_SYSTEM, BX_DOL_STUDIO_STG_CATEGORY_TEMPLATES);
 
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('designer.html', array(
-            'content' => $oPage->getPageCode(),
-        	'js_content' => $this->getPageJsCode()
+            'content' => $oPage->getFormCode(),
+            'js_content' => $this->getPageJsCode()
         ));
     }
 }

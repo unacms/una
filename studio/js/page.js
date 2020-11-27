@@ -74,27 +74,4 @@ BxDolStudioPage.prototype.togglePopup = function(sName, oLink) {
         $(sId).dolPopup(oPopupOptions);
 };
 
-BxDolStudioPage.prototype.bookmark = function(sPageName, oLink) {
-    var oDate = new Date();
-
-    $.get(
-        this.sActionsUrl,
-        {
-            action: 'page-bookmark',
-            page: sPageName,
-            _t:oDate.getTime()
-        },
-        function(oData) {
-            if(oData.code != 0) {
-                bx_alert(oData.message);
-                return;
-            }
-
-            $(oLink).attr('title', oData.title);
-            $(oLink).find('img').attr('src', oData.icon).attr('title', oData.title);
-        },
-        'json'
-    );
-    return true;
-};
 /** @} */

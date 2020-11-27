@@ -13,16 +13,16 @@ class BxSMTPStudioPage extends BxTemplStudioModule
 {
     protected $oModule;
 
-    function __construct($sModule = "", $sPage = "")
+    function __construct($sModule, $mixedPageName, $sPage = "")
     {
-        parent::__construct($sModule, $sPage);
+        parent::__construct($sModule, $mixedPageName, $sPage);
 
         $this->oModule = BxDolModule::getInstance('bx_smtp');
 
         $this->aMenuItems = array(
-            array('name' => 'settings', 'icon' => 'cogs', 'title' => '_adm_lmi_cpt_settings'),
-            array('name' => 'tester', 'icon' => 'envelope', 'title' => '_bx_smtp_tester'),
-            array('name' => 'help', 'icon' => 'question', 'title' => '_bx_smtp_help'),
+            'settings' => array('name' => 'settings', 'icon' => 'cogs', 'title' => '_adm_lmi_cpt_settings'),
+            'tester' => array('name' => 'tester', 'icon' => 'envelope', 'title' => '_bx_smtp_tester'),
+            'help' => array('name' => 'help', 'icon' => 'question', 'title' => '_bx_smtp_help'),
         );
     }
 

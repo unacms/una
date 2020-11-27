@@ -16,14 +16,14 @@ class BxAdsStudioPage extends BxTemplStudioModule
     protected $_sModule;
     protected $_oModule;
 
-    function __construct($sModule = "", $sPage = "")
+    function __construct($sModule, $mixedPageName, $sPage = "")
     {
     	$this->_sModule = 'bx_ads';
     	$this->_oModule = BxDolModule::getInstance($this->_sModule);
 
-        parent::__construct($sModule, $sPage);
+        parent::__construct($sModule, $mixedPageName, $sPage);
 
-        $this->aMenuItems[] = array('name' => BX_DOL_STUDIO_MOD_TYPE_CATEGORIES, 'icon' => 'bars', 'title' => '_bx_ads_menu_item_title_categories');
+        $this->aMenuItems[BX_DOL_STUDIO_MOD_TYPE_CATEGORIES] = array('name' => BX_DOL_STUDIO_MOD_TYPE_CATEGORIES, 'icon' => 'bars', 'title' => '_bx_ads_menu_item_title_categories');
     }
 
     protected function getCategories()

@@ -34,11 +34,6 @@ class BxBaseLiveUpdates extends BxDolLiveUpdates
          */ 
         $aCached = $this->_getCachedData();
 
-        /* tmp fix for #3002 */
-        foreach ($aCached as $sName => $a)
-            if (!in_array($sName, $this->_aSystemsTransient))
-                $aCached[$sName] = 0;
-
         $aParams = array_merge(array(
             'sActionsUrl' => BX_DOL_URL_ROOT . 'live_updates.php',
             'sObjName' => $this->_sJsObject,
@@ -46,7 +41,7 @@ class BxBaseLiveUpdates extends BxDolLiveUpdates
             'aSystemsActive' => array_intersect_key($aCached, array_flip($this->_aSystemsActive)),
             'aSystemsTransient' => array_flip($this->_aSystemsTransient),
             'bServerRequesting' => !empty($this->_aSystems),
-            'sHash' => base64_encode($this->_sCacheKey),
+            'sHash' => $this->_encodeHash(),
         ), $aParams);
 
         $sContent = "var " . $this->_sJsObject . " = new " . $this->_sJsClass . "(" . json_encode($aParams) . ");";
@@ -67,7 +62,7 @@ class BxBaseLiveUpdates extends BxDolLiveUpdates
      */
     public function add($sName, $iFrequency, $sServiceCall, $bActive = true, $mixedValue = false)
     {
-        $sCacheKey = $this->_sCacheKey;
+        $sCacheKeySystems = $this->_sCacheKeySystems;
 
         if(!$this->_addSystem($sName, $iFrequency, $sServiceCall, $bActive))
             return '';
@@ -84,8 +79,8 @@ class BxBaseLiveUpdates extends BxDolLiveUpdates
     	$this->_addData($sName, $iValue);
 
         $aParams = array('name' => $sName, 'value' => $iValue);
-        if($sCacheKey != $this->_sCacheKey)
-            $aParams['hash'] = base64_encode($this->_sCacheKey);
+        if($sCacheKeySystems != $this->_sCacheKeySystems)
+            $aParams['hash'] = $this->_encodeHash();
 
         $sContent = "if(" . $this->_sJsObject . " != undefined) " . $this->_sJsObject . ".add(" . json_encode($aParams) . ");";
         return BxDolTemplate::getInstance()->_wrapInTagJsCode($sContent);

@@ -590,31 +590,35 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
         if ((is_numeric($mixedPeriod) && (int)$mixedPeriod < 0) || (is_array($mixedPeriod) && (!isset($mixedPeriod['period']) || $mixedPeriod['period'] < 0)))
             return false;
 
+        /*
+         * Make the membership starts after the latest membership expires or starts immediately 
+         * if latest membership is lifetime membership or immediate start was requested.
+         */
         $iDateStarts = time();
-        if (!$bStartsNow) {
-            // Make the membership starts after the latest membership expires or return false if latest membership isn't Standard and is lifetime membership.
-            if(!empty($aMembershipLatest['date_expires']))
-                $iDateStarts = $aMembershipLatest['date_expires'];
-            else if(empty($aMembershipLatest['date_expires']) && $aMembershipLatest['id'] != MEMBERSHIP_ID_STANDARD)
-                return false;
-        }
-        else {
+        if ($bStartsNow || empty($aMembershipLatest['date_expires'])) {
             // Delete any profile's membership level and actions traces
             $this->oDb->deleteLevelByProfileId($iProfileId, true); 
             $this->oDb->clearActionsTracksForMember($iProfileId);
             $this->oDb->cleanMemory('BxDolAclQuery::getLevelCurrent' . $iProfileId . time());
         }
+        else
+            $iDateStarts = $aMembershipLatest['date_expires'];
 
         // set lifetime membership if 0 days is used.
         if(is_numeric($mixedPeriod))
-        	$mixedPeriod = array('period' => (int)$mixedPeriod, 'period_unit' => MEMBERSHIP_PERIOD_UNIT_DAY);
+            $mixedPeriod = array('period' => (int)$mixedPeriod, 'period_unit' => MEMBERSHIP_PERIOD_UNIT_DAY);
 
         if(!$this->oDb->insertLevelByProfileId($iProfileId, $iLevelId, $iDateStarts, $mixedPeriod, $sTransactionId))
            return false;
 
         // raise membership alert
-        $oZ = new BxDolAlerts('profile', 'set_membership', '', $iProfileId, array('mlevel'=> $iLevelId, 'period' => $mixedPeriod['period'], 'period_unit' => $mixedPeriod['period_unit'], 'starts_now' => $bStartsNow, 'txn_id' => $sTransactionId));
-        $oZ->alert();
+        bx_alert('profile', 'set_membership', '', $iProfileId, array(
+            'mlevel'=> $iLevelId, 
+            'period' => $mixedPeriod['period'], 
+            'period_unit' => $mixedPeriod['period_unit'], 
+            'starts_now' => $bStartsNow, 
+            'txn_id' => $sTransactionId
+        ));
 
         // audit
         $aDataForAudit = array();

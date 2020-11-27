@@ -7,11 +7,11 @@
  * @{
  */
 
-class BxDolStudioDashboard extends BxTemplStudioPage
+class BxDolStudioDashboard extends BxTemplStudioWidget
 {
-	protected $aBlocks;
-	protected $aItemsCache;
-	protected $aItemsHTools;
+    protected $aBlocks;
+    protected $aItemsCache;
+    protected $aItemsHTools;
 
     function __construct()
     {

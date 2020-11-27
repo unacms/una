@@ -1123,8 +1123,16 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
                 <meta name="geo.position" content="' . $this->aPage['location']['lat'] . ';' . $this->aPage['location']['lng'] . '" />
                 <meta name="geo.region" content="' . bx_html_attribute($this->aPage['location']['country']) . '" />';
 
-
-        // facebook / twitter
+        // set cover image as meta[image] value
+		if (empty($this->aPage['image']) && ($oPage = BxDolPage::getObjectInstanceByURI()) !== false){
+            $aCover = $oPage->getPageCoverImage();
+			if ($aCover){
+				$oCover = BxDolCover::getInstance($this);
+				$this->aPage['image'] =  $oCover->getCoverImageUrl($aCover);
+			}
+		}	
+		
+		// facebook / twitter
         $bPageImage = !empty($this->aPage['image']);
         $sRet .= '<meta name="twitter:card" content="' . ($bPageImage ? 'summary_large_image' : 'summary') . '" />';
         if ($bPageImage)
@@ -2094,7 +2102,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         		 * Is mainly needed for CSS files which are gotten from LESS compiler.
         		 */
         		$sContent = preg_replace_callback(
-	                "'@import\s+[\'|\"]*\s*" . str_replace("/", "\/", BX_DOL_URL_ROOT) . "([a-zA-Z0-9\.\/_-]+)\s*[\'|\"]*\s*;'", function ($aMatches)  use($oTemplate, $sPath, $aIncluded) {
+	                "'@import\s+[\'|\"]*\s*" . str_replace("/", "\/", BX_DOL_URL_ROOT) . "([a-zA-Z0-9\.\/_-]+)\s*[\'|\"]*\s*;'", function ($aMatches)  use($oTemplate, $sPath, &$aIncluded) {
 	                	return $oTemplate->_compileCss(realpath(BX_DIRECTORY_PATH_ROOT . $aMatches[1]), $aIncluded);
 	                }, $sContent);
 
@@ -2103,7 +2111,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
 				 * Is mainly needed for default CSS files.
 				 */
 	            $sContent = preg_replace_callback(
-	                "'@import\s+url\s*\(\s*[\'|\"]*\s*([a-zA-Z0-9\.\/_-]+)\s*[\'|\"]*\s*\)\s*;'", function ($aMatches)  use($oTemplate, $sPath, $aIncluded) {
+	                "'@import\s+url\s*\(\s*[\'|\"]*\s*([a-zA-Z0-9\.\/_-]+)\s*[\'|\"]*\s*\)\s*;'", function ($aMatches)  use($oTemplate, $sPath, &$aIncluded) {
 	                	return $oTemplate->_compileCss(realpath($sPath . dirname($aMatches[1])) . DIRECTORY_SEPARATOR . basename($aMatches[1]), $aIncluded);
 	                }, $sContent);
 

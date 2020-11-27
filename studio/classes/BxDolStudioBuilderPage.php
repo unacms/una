@@ -22,7 +22,7 @@ define('BX_DOL_STUDIO_BP_BLOCK_WIKI', 'wiki');
 define('BX_DOL_STUDIO_BP_BLOCK_CUSTOM', 'custom');
 define('BX_DOL_STUDIO_BP_BLOCK_SERVICE', 'service');
 
-class BxDolStudioBuilderPage extends BxTemplStudioPage
+class BxDolStudioBuilderPage extends BxTemplStudioWidget
 {
     protected $sType;
     protected $sPage;
@@ -45,8 +45,7 @@ class BxDolStudioBuilderPage extends BxTemplStudioPage
         if(is_string($sPage) && !empty($sPage)) {
             $this->sPage = $sPage;
 
-            $this->aPageRebuild = array();
-            $this->oDb->getPages(array('type' => 'by_object_full', 'value' => $this->sPage), $this->aPageRebuild, false);
+            $this->aPageRebuild = $this->oDb->getPages(array('type' => 'by_object_full', 'value' => $this->sPage));
             if(empty($this->aPageRebuild) || !is_array($this->aPageRebuild)) {
                 $this->sPage = '';
                 $this->aPageRebuild = array();
@@ -54,10 +53,11 @@ class BxDolStudioBuilderPage extends BxTemplStudioPage
         }
     }
 
-    function init()
+    public function checkAction()
     {
-        if(($sAction = bx_get('bp_action')) === false) 
-            return;
+        $sAction = bx_get('bp_action');
+    	if($sAction === false)
+            return false;
 
         $sAction = bx_process_input($sAction);
 
@@ -87,8 +87,7 @@ class BxDolStudioBuilderPage extends BxTemplStudioPage
                     $aResult = $this->$sMethod();
         }
 
-        echo json_encode($aResult);
-        exit;
+        return $aResult;
     }
 
     function processAction($sAction)

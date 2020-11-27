@@ -90,6 +90,7 @@
 
 	<string name="_bx_acl_txt_select_level"><![CDATA[Select level...]]></string>
 	<string name="_bx_acl_txt_cart_item_title"><![CDATA[{0} ({1} {2})]]></string>
+        <string name="_bx_acl_txt_cart_item_title_lifetime"><![CDATA[{0} (lifetime)]]></string>
 	<string name="_bx_acl_txt_upgrade"><![CDATA[Upgrade]]></string>
 	<string name="_bx_acl_txt_manage"><![CDATA[Manage]]></string>
 	<string name="_bx_acl_txt_n_unit"><![CDATA[{0} ({1})]]></string>

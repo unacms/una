@@ -41,8 +41,8 @@ INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 
 SET @iPageId = LAST_INSERT_ID();
 
-INSERT INTO `sys_std_widgets` (`page_id`, `module`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`, `bookmark`) 
-VALUES(@iPageId, @sName, '{url_studio}module.php?name=bx_charts', '', 'bx_charts@modules/boonex/charts/|std-icon.svg', '_bx_charts', '', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_actions";s:6:"params";a:0:{}s:5:"class";s:18:"TemplStudioModules";}', 0);
+INSERT INTO `sys_std_widgets` (`page_id`, `module`, `type`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`, `bookmark`) 
+VALUES(@iPageId, @sName, 'extensions', '{url_studio}module.php?name=bx_charts', '', 'bx_charts@modules/boonex/charts/|std-icon.svg', '_bx_charts', '', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_actions";s:6:"params";a:0:{}s:5:"class";s:18:"TemplStudioModules";}', 0);
 
 SET @iParentPageId = (SELECT `id` FROM `sys_std_pages` WHERE `name` = 'home');
 SET @iParentPageOrder = (SELECT IFNULL(MAX(`order`), 0) + 1 FROM `sys_std_pages_widgets` WHERE `page_id` = @iParentPageId);

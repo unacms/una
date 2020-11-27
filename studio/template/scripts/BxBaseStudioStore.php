@@ -19,7 +19,7 @@ class BxBaseStudioStore extends BxDolStudioStore
 
     function getPageCss()
     {
-        return array_merge(parent::getPageCss(), array('modules.css', 'store.css', 'store-media-tablet.css', 'store-media-desktop.css'));
+        return array_merge(parent::getPageCss(), array('module.css', 'store.css', 'store-media-tablet.css', 'store-media-desktop.css'));
     }
 
     function getPageJs()
@@ -75,13 +75,17 @@ class BxBaseStudioStore extends BxDolStudioStore
         return parent::getPageMenu($aMenu, $aMarkers);
     }
 
-    function getPageCode($bHidden = false)
+    function getPageCode()
     {
+        $sResult = parent::getPageCode();
+        if($sResult === false)
+            return false;
+
         $sMethod = 'get' . ucfirst($this->sPage) . 'List';
         if(!method_exists($this, $sMethod))
             return '';
 
-        return $this->$sMethod();
+        return $sResult . $this->$sMethod();
     }
 
     function getPageContent()

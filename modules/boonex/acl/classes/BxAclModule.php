@@ -200,11 +200,17 @@ class BxAclModule extends BxDolModule
         if(empty($aItem) || !is_array($aItem))
             return array();
 
+        $sTitle = '';
+        if((int)$aItem['period'] == 0)
+            $sTitle = _t('_bx_acl_txt_cart_item_title_lifetime', _t($aItem['level_name']));
+        else
+            $sTitle = _t('_bx_acl_txt_cart_item_title', _t($aItem['level_name']), $aItem['period'], $aItem['period_unit']);
+
         return array (
             'id' => $aItem['id'],
             'author_id' => $this->_oConfig->getOwner(),
             'name' => $aItem['name'],
-            'title' => _t('_bx_acl_txt_cart_item_title', _t($aItem['level_name']), $aItem['period'], $aItem['period_unit']),
+            'title' => $sTitle,
             'description' => _t($aItem['level_description']),
             'url' => BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink($CNF['URL_VIEW']),
             'price_single' => $aItem['price'],

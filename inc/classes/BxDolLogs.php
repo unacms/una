@@ -71,8 +71,15 @@ class BxDolLogs extends BxDolFactory implements iBxDolFactoryObject
             return $GLOBALS['bxDolClasses']['BxDolLogs!' . $sObject];
 
         $aObject = BxDolLogsQuery::getLogsObject($sObject);
-        if(!$aObject || !is_array($aObject) || !$aObject['active'])
+        if($aObject && is_array($aObject) && !$aObject['active'])
             return false;
+        if(!$aObject) {
+            $aObject = array(
+                'object' => $sObject,
+                'module' => 'system',
+                'logs_storage' => getParam('sys_logs_storage_default'),
+            );
+        }
 
         $sClass = 'BxDolLogs';
         if(!empty($aObject['class_name'])) {

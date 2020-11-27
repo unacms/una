@@ -13,16 +13,16 @@ class BxOAuthStudioPage extends BxTemplStudioModule
 {
     protected $oModule;
 
-    function __construct($sModule = "", $sPage = "")
+    function __construct($sModule, $mixedPageName, $sPage = "")
     {
-        parent::__construct($sModule, $sPage);
+        parent::__construct($sModule, $mixedPageName, $sPage);
 
         $this->oModule = BxDolModule::getInstance('bx_oauth');
 
         $this->aMenuItems = array(
-            array('name' => 'settings', 'icon' => 'cogs', 'title' => '_adm_lmi_cpt_settings'),
-            array('name' => 'keys', 'icon' => 'key', 'title' => '_adm_lmi_cpt_keys'),
-            array('name' => 'help', 'icon' => 'question', 'title' => '_bx_oauth_help'),
+            'settings' => array('name' => 'settings', 'icon' => 'cogs', 'title' => '_adm_lmi_cpt_settings'),
+            'keys' => array('name' => 'keys', 'icon' => 'key', 'title' => '_adm_lmi_cpt_keys'),
+            'help' => array('name' => 'help', 'icon' => 'question', 'title' => '_bx_oauth_help'),
         );
     }
 

@@ -74,6 +74,37 @@ class BxAccntTemplate extends BxBaseModGeneralTemplate
 
         return $this->parseHtmlByName('profiles.html', $aTmplVars);
     }
+
+    public function getPopupSetRole($aRoles, $iAccountId, $iAccountRole)
+    {
+        $sJsObject = $this->_oConfig->getJsObject('manage_tools');
+        $sHtmlIdPrefix = str_replace('_', '-', $this->_oConfig->getName()) . '-role';
+
+        $aRoles = array_merge(array(array('id' => 0, 'title' => '_None')), $aRoles);
+
+        $aTmplVarsRoles = array();
+        foreach($aRoles as $aRole) {
+            $iRole = (int)$aRole['id'];
+
+            if($iRole == BX_DOL_STUDIO_ROLE_MASTER)
+                continue;
+
+            $aTmplVarsRoles[] = array(
+                'id' => $sHtmlIdPrefix . '-' . $iRole, 
+                'value' => $iRole,
+                'onclick' => $sJsObject . '.onClickSetOperatorRoleSubmit(this, ' . $iAccountId . ', ' . $iRole . ')',
+                'title' => _t($aRole['title']), 
+                'bx_if:show_checked' => array(
+                    'condition' => $iRole != 0 && $iAccountRole & (1 << ($iRole - 1)),
+                    'content' => array()
+                )
+            );
+        }
+
+        return $this->parseHtmlByName('set_role_popup.html', array(
+            'bx_repeat:roles' => $aTmplVarsRoles
+        ));
+    }
 }
 
 /** @} */

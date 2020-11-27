@@ -19,6 +19,7 @@ class BxDolStudioPage extends BxDol
 
     protected $aPage;
     protected $bPageMultiple;
+    protected $sPageUrl;
     protected $sPageSelected;
 
     protected $sPageRssHelpObject;
@@ -26,14 +27,17 @@ class BxDolStudioPage extends BxDol
     protected $iPageRssHelpLength;
     protected $sPageRssHelpId;
 
-    protected $aActions;
+    protected $_sTypesPreList;
+
     protected $aMarkers;
+
+    protected $sError;
 
     function __construct($mixedPageName)
     {
         parent::__construct();
 
-        $this->oDb = new BxDolStudioPageQuery();
+        $this->oDb = BxDolStudioPageQuery::getInstance();
 
         $this->aPage = array();
         $this->bPageMultiple = false;
@@ -43,19 +47,22 @@ class BxDolStudioPage extends BxDol
         $this->sPageRssHelpUrl = 'http://feed.una.io/?section={page_name}';
         $this->iPageRssHelpLength = 5;
 
-        $this->aActions = array();
-        $this->aMarkers = array();
+        $this->_sTypesPreList = 'sys_studio_widget_types';
+
+        $this->aMarkers = array(
+            'url_root' => BX_DOL_URL_ROOT,
+            'url_studio' => BX_DOL_URL_STUDIO
+        );
+
+        $this->sError = false;
 
         if(is_string($mixedPageName)) {
-            $this->oDb->getPages(array('type' => 'by_page_name_full', 'value' => $mixedPageName), $this->aPage, false);
+            $this->aPage = $this->oDb->getPages(array('type' => 'by_page_name_full', 'value' => $mixedPageName));
             if(empty($this->aPage) || !is_array($this->aPage))
                 return;
-
-            $this->aPage['bookmarked'] = $this->oDb->isBookmarked($this->aPage);
         } 
         else if(is_array($mixedPageName)) {
-            $aPages = array();
-            $this->oDb->getPages(array('type' => 'by_page_names_full', 'value' => array_keys($mixedPageName)), $aPages, false);
+            $aPages = $this->oDb->getPages(array('type' => 'by_page_names_full', 'value' => array_keys($mixedPageName)));
             if(empty($aPages) || !is_array($aPages))
                 return;
 
@@ -64,25 +71,28 @@ class BxDolStudioPage extends BxDol
                 if((int)$mixedPageName[$aPage['name']] == 1)
                     $this->sPageSelected = $aPage['name'];
 
-                $aPage['bookmarked'] = $this->oDb->isBookmarked($aPage);
-
                 $this->aPage[$aPage['name']] = $aPage;
             }
         }
+    }
 
-        if(!$this->bPageMultiple) {
-        	$this->sPageRssHelpId = $this->aPage['name'];
+    public function getPageUrl()
+    {
+        if(empty($this->sPageUrl) && !empty($this->aPage['wid_url']))
+            $this->sPageUrl = $this->aPage['wid_url'];
 
-            $this->addAction(array(
-                'type' => 'switcher',
-                'name' => 'bookmark',
-                'caption' => '_adm_txt_pca_favorite',
-                'checked' => $this->aPage['bookmarked'],
-                'onchange' => "javascript:" . BX_DOL_STUDIO_PAGE_JS_OBJECT . ".bookmark('" . $this->aPage['name'] . "', this)"
-            ));
+        return bx_replace_markers($this->sPageUrl, $this->aMarkers);
+    }
 
-            $this->aMarkers['page_name'] = $this->aPage['name'];
-        }
+    public function getPageTypeUrl()
+    {
+        $sUrl = BxTemplStudioLauncher::getInstance()->getPageUrl();
+        if(empty($this->aPage['wid_type']))
+            return $sUrl;
+
+        return bx_append_url_params($sUrl, array(
+            'type' => $this->aPage['wid_type']
+        ));
     }
 
     public function getRssHelpUrl()
@@ -90,12 +100,26 @@ class BxDolStudioPage extends BxDol
     	return bx_replace_markers($this->sPageRssHelpUrl, $this->aMarkers);
     }
 
-    public function addAction($aAction, $bOnRight = true)
+    public function getPageTypes($bFullInfo = true)    
     {
-        if($bOnRight)
-            $this->aActions[] = $aAction;
-        else
-            $this->aActions = array_merge(array($aAction), $this->aActions);
+        return BxDolFormQuery::getDataItems($this->_sTypesPreList, false, $bFullInfo ? BX_DATA_VALUES_ALL : BX_DATA_VALUES_DEFAULT);
+    }
+
+    public function getPageTypeIcon()
+    {
+        if(empty($this->aPage['wid_type']))
+            return false;
+
+        $sType = $this->aPage['wid_type'];
+        $aTypes = $this->getPageTypes();
+        if(empty($aTypes[$sType]) || empty($aTypes[$sType]['Data']))
+            return false;
+
+        $aTypeData = unserialize($aTypes[$sType]['Data']);
+        if(empty($aTypeData['icon']))
+            return false;
+
+        return $aTypeData['icon'];
     }
 
     /**
@@ -106,26 +130,20 @@ class BxDolStudioPage extends BxDol
     public function addMarkers ($a)
     {
         if(empty($a) || !is_array($a))
-			return false;
+            return false;
 
         $this->aMarkers = array_merge($this->aMarkers, $a);
         return true;
     }
 
-    public function removeActions()
+    public function setError($sError)
     {
-        $this->aActions = array();
+        $this->sError = $sError;
     }
 
-    public function bookmark()
+    public function getError($bToDisplay = true)
     {
-        $bResult = $this->oDb->bookmark($this->aPage);
-        if(!$bResult)
-            return array('code' => 1, 'message' => _t('_adm_err_operation_failed'));
-
-        $oTemplate = BxDolStudioTemplate::getInstance();
-
-        return array('code' => 0, 'message' => _t('_adm_scs_operation_done'));
+        return $bToDisplay ? MsgBox(_t($this->sError)) : $this->sError;
     }
 
     protected function getSystemName($sValue)

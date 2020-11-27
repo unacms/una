@@ -18,13 +18,13 @@ class BxDevTemplate extends BxDolModuleTemplate
         $this->addStudioCss(array('main.css'));
     }
 
-    function displayPageContent($sPage, $oContent)
+    function displayPageContent($sPage, $oContent, $sGetPageCodeMethod = 'getPageCode')
     {
         $this->addStudioCss($oContent->getPageCss(), false, false);
         $this->addStudioJs($oContent->getPageJs(), false, false);
 
         $sMenu = $oContent->getPageMenu();
-        $sContent = $oContent->getPageJsCode() . $oContent->getPageCode();
+        $sContent = $oContent->getPageJsCode() . $oContent->$sGetPageCodeMethod();
         if(in_array($sPage, array(BX_DEV_TOOLS_SETTINGS)) || empty($sMenu)) {
             $this->addStudioInjection('injection_body_style', 'text', ' bx-dev-page-body-single');
             return $sContent;

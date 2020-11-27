@@ -73,6 +73,10 @@ define('BX_DOL_ROLE_GUEST', 0);
 define('BX_DOL_ROLE_MEMBER', 1);
 define('BX_DOL_ROLE_ADMIN', 2);
 
+//--- User Roles in Studio ---//
+define('BX_DOL_STUDIO_ROLE_MASTER', 1);
+define('BX_DOL_STUDIO_ROLE_OPERATOR', 2);
+
 //--- Profile Statuses ---//
 define('BX_PROFILE_STATUS_SUSPENDED', 'suspended'); ///< profile status - suspended, profile is syspended by admin/moderator and usually can't access the site
 define('BX_PROFILE_STATUS_ACTIVE', 'active'); ///< profile status - active, profile is active on the site

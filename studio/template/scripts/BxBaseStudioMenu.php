@@ -15,6 +15,15 @@ class BxBaseStudioMenu extends BxDolStudioMenu
         parent::__construct ($aObject, $oTemplate);
     }
     
+    protected function _getMenuItem ($aItem)
+    {
+        $aItem = parent::_getMenuItem($aItem);
+        if($aItem !== false)
+            $aItem['class'] = isset($aItem['class']) ? $aItem['class'] : '';
+
+        return $aItem;
+    }
+
     /**
      * Check if menu items is selected.
      * @param $a menu item array

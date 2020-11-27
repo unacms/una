@@ -36,6 +36,8 @@
     <string name="_bx_accnt_menu_item_title_make_operator"><![CDATA[Make Operator]]></string>
     <string name="_bx_accnt_menu_item_title_system_unmake_operator"><![CDATA[Unmake Operator]]></string>
     <string name="_bx_accnt_menu_item_title_unmake_operator"><![CDATA[Unmake Operator]]></string>
+    <string name="_bx_accnt_menu_item_title_system_set_operator_role"><![CDATA[Set Operator Role]]></string>
+    <string name="_bx_accnt_menu_item_title_set_operator_role"><![CDATA[Set Operator Role]]></string>
     <string name="_bx_accnt_menu_item_title_system_admt_accounts"><![CDATA[Accounts]]></string>
     <string name="_bx_accnt_menu_item_title_admt_accounts"><![CDATA[Accounts]]></string>
     <string name="_bx_accnt_menu_item_title_manage"><![CDATA[Manage]]></string>

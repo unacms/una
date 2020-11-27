@@ -17,19 +17,12 @@ class BxDolLiveUpdatesQuery extends BxDolDb
         parent::__construct();
     }
 
-	public function getSystems()
+    public function getSystems()
     {
         $sKey = 'bx_dol_cache_memory_live_updates_systems';
 
         if(!isset($GLOBALS[$sKey]))
-            $GLOBALS[$sKey] = BxDolDb::getInstance()->fromCache('sys_objects_live_updates', 'getAllWithKey', '
-                SELECT
-                    `id` as `id`,
-                    `name` AS `name`,
-                    `frequency` AS `frequency`,
-                    `service_call` AS `service_call`,
-                    `active` AS `active`
-                FROM `sys_objects_live_updates`', 'name');
+            $GLOBALS[$sKey] = BxDolDb::getInstance()->fromCache('sys_objects_live_updates', 'getAllWithKey', 'SELECT * FROM `sys_objects_live_updates`', 'name');
 
         return $GLOBALS[$sKey];
     }

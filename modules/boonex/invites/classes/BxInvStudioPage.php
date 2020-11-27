@@ -11,9 +11,9 @@
 
 class BxInvStudioPage extends BxTemplStudioModule
 {
-    function __construct($sModule = "", $sPage = "")
+    function __construct($sModule, $mixedPageName, $sPage = "")
     {
-        parent::__construct($sModule, $sPage);
+        parent::__construct($sModule, $mixedPageName, $sPage);
 
         $oPermalink = BxDolPermalinks::getInstance();
 

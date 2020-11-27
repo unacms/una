@@ -13,25 +13,25 @@
 
 class BxDolMStudioPage extends BxTemplStudioModule
 {    
-	/**
-	 *  @var ref $_oModule main module reference
-	 */
-	protected $_oModule;
+    /**
+     *  @var ref $_oModule main module reference
+     */
+    protected $_oModule;
 	
-	function __construct($sModule = "", $sPage = "")
+    function __construct($sModule, $mixedPageName, $sPage = "")
     {
-		$this -> MODULE = 'bx_dolphin_migration';
-		parent::__construct($sModule, $sPage);
-	
-		$this -> _oModule = BxDolModule::getInstance($sModule);			
-		
-		$this->aMenuItems = array(
-            array('name' => 'settings', 'icon' => 'cogs', 'title' => '_bx_dolphin_migration_cpt_settings'),
-		    array('name' => 'config', 'icon' => 'exchange-alt', 'title' => '_bx_dolphin_migration_cpt_transfer_data')
+        $this -> MODULE = 'bx_dolphin_migration';
+        parent::__construct($sModule, $mixedPageName, $sPage);
+
+        $this -> _oModule = BxDolModule::getInstance($sModule);			
+
+        $this->aMenuItems = array(
+            'settings' => array('name' => 'settings', 'icon' => 'cogs', 'title' => '_bx_dolphin_migration_cpt_settings'),
+            'config' => array('name' => 'config', 'icon' => 'exchange-alt', 'title' => '_bx_dolphin_migration_cpt_transfer_data')
         );	
-		
-		$this -> _oModule -> _oTemplate -> addStudioJs(array('jquery-ui/jquery-ui.custom.min.js', 'transfer.js', 'BxDolGrid.js'));
-		$this -> _oModule -> _oTemplate -> addStudioCss(array('main.css'));	
+
+        $this -> _oModule -> _oTemplate -> addStudioJs(array('jquery-ui/jquery-ui.custom.min.js', 'transfer.js', 'BxDolGrid.js'));
+        $this -> _oModule -> _oTemplate -> addStudioCss(array('main.css'));	
      } 
 	
 	public function saveData($sPath)

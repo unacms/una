@@ -9,21 +9,19 @@
  * @{
  */
 
-define('BX_DOL_STUDIO_MOD_TYPE_MANAGE', 'manage');
-
 class BxAclStudioPage extends BxTemplStudioModule
 {
-    protected $MODULE;
+    protected $_sModule;
     protected $_oModule;
 
-    function __construct($sModule = "", $sPage = "")
+    function __construct($sModule, $mixedPageName, $sPage = "")
     {
-    	$this->MODULE = 'bx_acl';
-    	$this->_oModule = BxDolModule::getInstance($this->MODULE);
+    	$this->_sModule = 'bx_acl';
+    	$this->_oModule = BxDolModule::getInstance($this->_sModule);
 
-        parent::__construct($sModule, $sPage);
+        parent::__construct($sModule, $mixedPageName, $sPage);
 
-        $this->aMenuItems[] = array('name' => BX_DOL_STUDIO_MOD_TYPE_MANAGE, 'icon' => 'wrench', 'title' => '_bx_acl_lmi_cpt_manage');
+        $this->aMenuItems['manage'] = array('name' => 'manage', 'icon' => 'wrench', 'title' => '_bx_acl_lmi_cpt_manage');
     }
 
     protected function getManage()

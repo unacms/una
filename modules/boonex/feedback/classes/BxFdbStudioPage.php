@@ -16,14 +16,14 @@ class BxFdbStudioPage extends BxTemplStudioModule
     protected $_sModule;
     protected $_oModule;
 
-    function __construct($sModule = "", $sPage = "")
+    function __construct($sModule, $mixedPageName, $sPage = "")
     {
     	$this->_sModule = 'bx_feedback';
     	$this->_oModule = BxDolModule::getInstance($this->_sModule);
 
-        parent::__construct($sModule, $sPage);
+        parent::__construct($sModule, $mixedPageName, $sPage);
 
-        $this->aMenuItems[] = array('name' => BX_DOL_STUDIO_MOD_TYPE_QUESTIONS, 'icon' => 'question', 'title' => '_bx_feedback_lmi_cpt_questions');
+        $this->aMenuItems[BX_DOL_STUDIO_MOD_TYPE_QUESTIONS] = array('name' => BX_DOL_STUDIO_MOD_TYPE_QUESTIONS, 'icon' => 'question', 'title' => '_bx_feedback_lmi_cpt_questions');
     }
 
     protected function getQuestions()

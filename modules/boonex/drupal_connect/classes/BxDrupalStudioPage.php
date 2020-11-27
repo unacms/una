@@ -11,13 +11,13 @@
 
 class BxDrupalStudioPage extends BxTemplStudioModule
 {
-    function __construct($sModule = "", $sPage = "")
+    function __construct($sModule, $mixedPageName, $sPage = "")
     {
-        parent::__construct($sModule, $sPage);
+        parent::__construct($sModule, $mixedPageName, $sPage);
 
         $this->aMenuItems = array(
-            array('name' => 'settings', 'icon' => 'cogs', 'title' => '_adm_lmi_cpt_settings'),
-            array('name' => 'help', 'icon' => 'question', 'title' => '_sys_connect_information'),
+            'settings' => array('name' => 'settings', 'icon' => 'cogs', 'title' => '_adm_lmi_cpt_settings'),
+            'help' => array('name' => 'help', 'icon' => 'question', 'title' => '_sys_connect_information'),
         );
     }
 

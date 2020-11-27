@@ -16,10 +16,11 @@ define('BX_DOL_STUDIO_MT_RIGHT', 'right');
 define('BX_DOL_STUDIO_MTB_CIRCLE', 'circ');
 define('BX_DOL_STUDIO_MTB_RECTANGLE', 'rect');
 
-class BxDolStudioMenuTop extends BxDol
+class BxDolStudioMenuTop extends BxDol implements iBxDolSingleton
 {
     public static $sHistorySessionKey = 'sys_studio_history';
     public static $iHistoryLength = 5;
+    public static $iToolbarLength = 10;
 
     protected $aItems;
     protected $aVisible;
@@ -27,6 +28,9 @@ class BxDolStudioMenuTop extends BxDol
 
     public function __construct()
     {
+        if (isset($GLOBALS['bxDolClasses'][get_class($this)]))
+            trigger_error ('Multiple instances are not allowed for the class: ' . get_class($this), E_USER_ERROR);
+
         parent::__construct();
 
         $this->aVisible = array(
@@ -47,82 +51,93 @@ class BxDolStudioMenuTop extends BxDol
             BX_DOL_STUDIO_MT_RIGHT => ''
         );
 
-        $this->aItems[BX_DOL_STUDIO_MT_LEFT] = array(
+        $this->aItems[BX_DOL_STUDIO_MT_LEFT] = BxTemplStudioFunctions::getInstance()->getLogo();
+
+        $this->aItems[BX_DOL_STUDIO_MT_CENTER] = array(
             'template' => 'menu_floating_blocks.html',
             'menu_items' => array(
                 'launcher' => array(
                     'name' => 'launcher',
                     'icon' => 'th',
-                    'link' => BX_DOL_URL_STUDIO,
+                    'link' => '{url_studio}',
                     'title' => '_adm_tmi_cpt_launcher'
-                ),
-                'site' => array(
-                    'name' => 'site',
-                    'icon' => 'home',
-                    'link' => BX_DOL_URL_ROOT,
-                    'title' => '_adm_tmi_cpt_site'
-                ),
-                'logout' => array(
-                    'name' => 'logout',
-                    'icon' => 'sign-out-alt',
-                    'link' => BX_DOL_URL_ROOT . 'logout.php',
-                    'onclick' => $this->getJsObject() . '.clickLogout(this);',
-                    'title' => '_adm_tmi_cpt_logout'
                 )
             )
         );
 
+        //--- Get Featured
+        $aMenuItems = array();
+        $oRolesUtils = BxDolStudioRolesUtils::getInstance();
+        $oWidgetsDb = BxDolStudioWidgetsQuery::getInstance();
+
+        $aFeatured = $oWidgetsDb->getWidgets(array('type' => 'all_featured', 'featured' => 1));
+        foreach($aFeatured as $aItem)
+            if(empty($aItem['type']) || $oRolesUtils->isActionAllowed('use ' . $aItem['type']))
+                $aMenuItems[$aItem['page_name']] = array(
+                    'class' => 'bx-menu-item-static',
+                    'name' => $aItem['page_name'],
+                    'icon' => $aItem['icon'],
+                    'link' => $aItem['url'],
+                    'onclick' => $aItem['click'],
+                    'title' => $aItem['caption']
+                );
+
+        //--- Get Bookmarks
+        $aBookmarks = $oWidgetsDb->getWidgets(array('type' => 'all_bookmarks', 'bookmark' => 1, 'profile_id' => bx_get_logged_profile_id()));
+        foreach($aBookmarks as $aBookmark) {
+            if(array_key_exists($aBookmark['page_name'], $aMenuItems))
+                continue;
+            
+            if(!empty($aBookmark['type']) && !$oRolesUtils->isActionAllowed('use ' . $aBookmark['type']))
+                continue;
+
+            $aMenuItems[$aBookmark['page_name']] = array(
+                'class' => 'bx-menu-item-static',
+                'name' => $aBookmark['page_name'],
+                'icon' => $aBookmark['icon'],
+                'link' => $aBookmark['url'],
+                'onclick' => $aBookmark['click'],
+                'title' => $aBookmark['caption']
+            );
+        }
+
+        //--- Get History
         $aHistory = self::historyGetList();
         if(!empty($aHistory) && is_array($aHistory))
-            $this->aItems[BX_DOL_STUDIO_MT_LEFT]['menu_items'] = bx_array_insert_before(array_reverse($aHistory), $this->aItems[BX_DOL_STUDIO_MT_LEFT]['menu_items'], 'site');
+            foreach($aHistory as $sPageName => $aMenuItem) {
+                if(array_key_exists($sPageName, $aMenuItems))
+                    continue;
 
-        $this->aItems[BX_DOL_STUDIO_MT_CENTER] = bx_idn_to_utf8(BX_DOL_URL_ROOT, true);
+                $aMenuItem['class'] = 'bx-menu-item-dynamic';
+                $aMenuItems[$sPageName] = $aMenuItem;
+            }
 
-        $this->aItems[BX_DOL_STUDIO_MT_RIGHT] = array(
-            'template' => 'menu_top_toolbar.html',
-            'menu_items' => array(
-                'edit' => array(
-                    'name' => 'edit',
-                    'icon' => 'magic',
-                    'onclick' => $this->getJsObject() . '.clickEdit(this);',
-                    'title' => '_adm_tmi_cpt_edit'
-                ),
-                'favorite' => array(
-                    'name' => 'favorite',
-                    'icon' => 'star',
-                    'onclick' => $this->getJsObject() . '.clickFavorite(this);',
-                    'title' => '_adm_tmi_cpt_favorite'
-                ),
-                'extensions' => array(
-                    'name' => 'extensions',
-                    'icon' => 'plus',
-                    'link' => BX_DOL_URL_STUDIO . 'store.php?page=goodies',
-                    'title' => '_adm_tmi_cpt_extensions'
-                ),
-                'tour' => array(
-                    'name' => 'tour',
-                    'icon' => 'question',
-                    'link' => 'javascript:void(0);',
-                    'onclick' => 'glTour.start()',
-                    'title' => '_adm_tmi_cpt_tour'
-                )
-            )
-        );
+        if(!empty($aMenuItems) && is_array($aMenuItems)) {
+            if(count($aMenuItems) > BxTemplStudioMenuTop::$iToolbarLength)
+                $aMenuItems = array_slice($aMenuItems, 0, BxTemplStudioMenuTop::$iToolbarLength);
 
-        $aLanguages = BxDolLanguagesQuery::getInstance()->getLanguages(false, true);
-        if(count($aLanguages) > 1)
-            $this->aItems[BX_DOL_STUDIO_MT_RIGHT]['menu_items']['language'] = array(
-                'name' => 'language',
-                'icon' => 'language',
-                'link' => 'javascript:void(0);',
-                'onclick' => "bx_menu_popup('sys_switch_language_popup', this);",
-                'title' => '_adm_tmi_cpt_language'
-            );
+            $this->aItems[BX_DOL_STUDIO_MT_CENTER]['menu_items'] = bx_array_insert_after($aMenuItems, $this->aItems[BX_DOL_STUDIO_MT_CENTER]['menu_items'], 'launcher');
+        }
+    }
+
+    public static function getInstance()
+    {
+        if (!isset($GLOBALS['bxDolClasses']['BxBaseStudioMenuTop']))
+            $GLOBALS['bxDolClasses']['BxBaseStudioMenuTop'] = new BxTemplStudioMenuTop();
+
+        return $GLOBALS['bxDolClasses']['BxBaseStudioMenuTop'];
     }
 
     public static function historyGetList()
     {
-        return BxDolSession::getInstance()->getValue(self::$sHistorySessionKey);
+        $aHistory = BxDolSession::getInstance()->getValue(self::$sHistorySessionKey);
+        if(empty($aHistory) || !is_array($aHistory))
+            return array();
+
+        if(count($aHistory) > BxTemplStudioMenuTop::$iHistoryLength)
+            $aHistory = array_slice($aHistory, -BxTemplStudioMenuTop::$iHistoryLength);
+
+        return array_reverse($aHistory);
     }
     
     public static function historyAdd($aPage)

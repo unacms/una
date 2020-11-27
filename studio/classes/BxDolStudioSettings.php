@@ -23,7 +23,7 @@ define('BX_DOL_STUDIO_STG_CATEGORY_AUDIT', 'audit');
 define('BX_DOL_STUDIO_STG_MIX_SYSTEM', 'system');
 define('BX_DOL_STUDIO_STG_MIX_DEFAULT', BX_DOL_STUDIO_STG_MIX_SYSTEM);
 
-class BxDolStudioSettings extends BxTemplStudioPage
+class BxDolStudioSettings extends BxTemplStudioWidget
 {
     protected $sType;
     protected $sCategory;
@@ -72,63 +72,64 @@ class BxDolStudioSettings extends BxTemplStudioPage
         $this->sTranscoder = 'sys_custom_images';
 
         $this->sErrorMessage = '';
-
-        //--- Check actions ---//
-        if(($sAction = bx_get('stg_action')) !== false) {
-            $sAction = bx_process_input($sAction);
-
-            $sValue = '';
-            if(bx_get('stg_value') !== false)
-            	$sValue = bx_process_input(bx_get('stg_value'));
-
-            $aResult = array('code' => 0, 'message' => '');
-            if(!empty($sAction)) {
-                switch($sAction) {
-                    case 'select-mix':
-                        $aResult = array_merge($aResult, $this->selectMix($sValue));
-                        break;
-
-                    case 'create-mix':
-                        $aResult = array_merge($aResult, $this->getPopupCodeCreateMix());
-                        break;
-
-                    case 'import-mix':
-                        $aResult = array_merge($aResult, $this->getPopupCodeImportMix());
-                        break;
-
-                    case 'export-mix':
-                        $aResult = array_merge($aResult, $this->exportMix((int)$sValue));
-                        break;
-
-                    case 'download-mix':
-                        $aResult = array_merge($aResult, $this->downloadMix((int)$sValue));
-                        break;
-
-                    case 'publish-mix':
-                        $aResult = array_merge($aResult, $this->publishMix((int)$sValue));
-                        break;
-
-                    case 'hide-mix':
-                        $aResult = array_merge($aResult, $this->hideMix((int)$sValue));
-                        break;
-
-                    case 'delete-mix':
-                        $aResult = array_merge($aResult, $this->deleteMix((int)$sValue));
-                        break;
-
-                    case 'get-page-by-type':
-                        $this->sType = $sValue;
-                        $aResult['content'] = $this->getPageCode();
-                        break;
-                }
-
-                echo json_encode($aResult);
-            }
-            exit;
-        }
     }
 
-	public function enableReadOnly($bReadOnly = true)
+    public function checkAction()
+    {
+        $sAction = bx_get('stg_action');
+    	if($sAction === false)
+            return false;
+
+        $sAction = bx_process_input($sAction);
+
+        $sValue = '';
+        if(bx_get('stg_value') !== false)
+            $sValue = bx_process_input(bx_get('stg_value'));
+
+        $aResult = array('code' => 0, 'message' => '');
+        switch($sAction) {
+            case 'select-mix':
+                $aResult = array_merge($aResult, $this->selectMix($sValue));
+                break;
+
+            case 'create-mix':
+                $aResult = array_merge($aResult, $this->getPopupCodeCreateMix());
+                break;
+
+            case 'import-mix':
+                $aResult = array_merge($aResult, $this->getPopupCodeImportMix());
+                break;
+
+            case 'export-mix':
+                $aResult = array_merge($aResult, $this->exportMix((int)$sValue));
+                break;
+
+            case 'download-mix':
+                $aResult = array_merge($aResult, $this->downloadMix((int)$sValue));
+                break;
+
+            case 'publish-mix':
+                $aResult = array_merge($aResult, $this->publishMix((int)$sValue));
+                break;
+
+            case 'hide-mix':
+                $aResult = array_merge($aResult, $this->hideMix((int)$sValue));
+                break;
+
+            case 'delete-mix':
+                $aResult = array_merge($aResult, $this->deleteMix((int)$sValue));
+                break;
+
+            case 'get-page-by-type':
+                $this->sType = $sValue;
+                $aResult['content'] = $this->getPageCode();
+                break;
+        }
+
+        return $aResult;
+    }
+
+    public function enableReadOnly($bReadOnly = true)
     {
     	$this->bReadOnly = $bReadOnly;
     }

@@ -8,32 +8,32 @@
 
 function BxDolLiveUpdates(oOptions)
 {
-	this._sActionsUrl = oOptions.sActionsUrl == undefined ? sUrlRoot + 'live_updates.php' : oOptions.sActionsUrl;
-	this._sObjName = oOptions.sObjName == undefined ? 'oLiveUpdates' : oOptions.sObjName;
-	this._iInterval = oOptions.iInterval == undefined ? 3000 : oOptions.iInterval;
-	this._aSystemsActive = oOptions.aSystemsActive == undefined ? {} : oOptions.aSystemsActive;
-	this._aSystemsTransient = oOptions.aSystemsTransient == undefined ? {} : oOptions.aSystemsTransient;
-	this._bServerRequesting = oOptions.bServerRequesting == undefined ? false : oOptions.bServerRequesting;
-	this._sHash = oOptions.sHash == undefined ? '' : oOptions.sHash;
+    this._sActionsUrl = oOptions.sActionsUrl == undefined ? sUrlRoot + 'live_updates.php' : oOptions.sActionsUrl;
+    this._sObjName = oOptions.sObjName == undefined ? 'oLiveUpdates' : oOptions.sObjName;
+    this._iInterval = oOptions.iInterval == undefined ? 3000 : oOptions.iInterval;
+    this._aSystemsActive = oOptions.aSystemsActive == undefined ? {} : oOptions.aSystemsActive;
+    this._aSystemsTransient = oOptions.aSystemsTransient == undefined ? {} : oOptions.aSystemsTransient;
+    this._bServerRequesting = oOptions.bServerRequesting == undefined ? false : oOptions.bServerRequesting;
+    this._sHash = oOptions.sHash == undefined ? '' : oOptions.sHash;
 
-	this._iIndex = 0;
-	this._iHandler = 0;
-	this._bBusy = false;
+    this._iIndex = 0;
+    this._iHandler = 0;
+    this._bBusy = false;
 
-	this.init();
+    this.init();
 }
 
 BxDolLiveUpdates.prototype.init = function() {
-	var $this = this;
+    var $this = this;
 
-	if(this._iHandler)
-		this.destroy();
+    if(this._iHandler)
+        this.destroy();
 
     $(document).ready(function() {
         $this.perform(); // make first call straight away to load addons for menus
 
     	$this._iHandler = setInterval(function() {
-    		$this.perform();
+            $this.perform();
     	}, $this._iInterval);
     });
 };

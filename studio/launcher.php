@@ -17,14 +17,27 @@ bx_require_authentication(true);
 
 bx_import('BxTemplStudioMenuTop');
 $oTopMenu = BxTemplStudioMenuTop::getInstance();
-$oTopMenu->setSelected(BX_DOL_STUDIO_MT_LEFT, 'launcher');
+$oTopMenu->setSelected(BX_DOL_STUDIO_MT_CENTER, 'launcher');
 
-$oPage = new BxTemplStudioLauncher();
+$oPage = BxTemplStudioLauncher::getInstance();
+
+if(($mixedResult = $oPage->checkAction()) !== false) {
+    echoJson($mixedResult);
+    exit;
+}
 
 $oTemplate = BxDolStudioTemplate::getInstance();
+
+$sPageCode = $oPage->getPageCode();
+if($sPageCode === false)
+    $oTemplate->displayMsg(($sError = $oPage->getError(false)) !== false ? $sError : '_sys_txt_error_occured', true);
+
 $oTemplate->setPageNameIndex($oPage->getPageIndex());
 $oTemplate->setPageHeader($oPage->getPageHeader());
-$oTemplate->setPageContent('page_main_code', $oPage->getPageCode());
+$oTemplate->setPageContent('page_caption_code', $oPage->getPageCaption());
+$oTemplate->setPageContent('page_attributes', $oPage->getPageAttributes());
+$oTemplate->setPageContent('page_menu_code', $oPage->getPageMenu());
+$oTemplate->setPageContent('page_main_code', $sPageCode);
 $oTemplate->addCss($oPage->getPageCss());
 $oTemplate->addJs($oPage->getPageJs());
 $oTemplate->getPageCode();

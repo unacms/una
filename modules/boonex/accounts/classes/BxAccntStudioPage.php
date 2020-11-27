@@ -14,16 +14,16 @@ define('BX_DOL_STUDIO_MOD_TYPE_MANAGE', 'manage');
 class BxAccntStudioPage extends BxTemplStudioModule
 {
     protected $_sModule;
-	protected $_oModule;
+    protected $_oModule;
 
-    function __construct($sModule = "", $sPage = "")
+    function __construct($sModule, $mixedPageName, $sPage = "")
     {
         $this->sPageDefault = BX_DOL_STUDIO_MOD_TYPE_MANAGE;
 
         $this->_sModule = 'bx_accounts';
     	$this->_oModule = BxDolModule::getInstance($this->_sModule);
 
-        parent::__construct($sModule, $sPage);
+        parent::__construct($sModule, $mixedPageName, $sPage);
 
         $this->aMenuItems = array(
             array('name' => BX_DOL_STUDIO_MOD_TYPE_MANAGE, 'icon' => 'wrench', 'title' => '_bx_accnt_menu_item_title_manage')

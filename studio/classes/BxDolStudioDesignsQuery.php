@@ -14,7 +14,7 @@ class BxDolStudioDesignsQuery extends BxDolStudioPageQuery
         parent::__construct();
     }
 
-    function getTemplatesBy($aParams, &$aItems, $bReturnCount = true)
+    function getTemplatesBy($aParams)
     {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
         $sSelectClause = $sJoinClause = $sWhereClause = $sOrderClause = $sLimitClause = "";
@@ -70,7 +70,7 @@ class BxDolStudioDesignsQuery extends BxDolStudioPageQuery
                 break;
         }
 
-        $aMethod['params'][0] = "SELECT " . ($bReturnCount ? "SQL_CALC_FOUND_ROWS" : "") . "
+        $aMethod['params'][0] = "SELECT 
                 `tm`.`id` AS `id`,
                 `tm`.`name` AS `name`,
                 `tm`.`title` AS `title`,
@@ -78,12 +78,7 @@ class BxDolStudioDesignsQuery extends BxDolStudioPageQuery
             FROM `sys_modules` AS `tm`" . $sJoinClause . "
             WHERE 1 AND `tm`.`type`='" . BX_DOL_MODULE_TYPE_TEMPLATE . "'" . $sWhereClause . "
             ORDER BY" . $sOrderClause . $sLimitClause;
-        $aItems = call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
-
-        if(!$bReturnCount)
-            return !empty($aItems);
-
-        return (int)$this->getOne("SELECT FOUND_ROWS()");
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 }
 

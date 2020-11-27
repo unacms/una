@@ -13,6 +13,8 @@ function BxDolStudioMenuTop(oOptions) {
 }
 
 BxDolStudioMenuTop.prototype.clickEdit = function(oItem) {
+    $('.bx-popup-applied:visible').dolPopupHide();
+
     var oParent = $(oItem).parent();
     if(oParent.hasClass('bx-menu-tab-active')) {
         oParent.removeClass('bx-menu-tab-active');
@@ -24,15 +26,17 @@ BxDolStudioMenuTop.prototype.clickEdit = function(oItem) {
     }
 };
 
-BxDolStudioMenuTop.prototype.clickFavorite = function(oItem) {
+BxDolStudioMenuTop.prototype.clickFeatured = function(oItem) {
+    $('.bx-popup-applied:visible').dolPopupHide();
+
     var oParent = $(oItem).parent();
     if(oParent.hasClass('bx-menu-tab-active')) {
         oParent.removeClass('bx-menu-tab-active');
-        oBxDolStudioLauncher.disableFavorites();
+        oBxDolStudioLauncher.disableFeatured();
     }
     else {
         oParent.addClass('bx-menu-tab-active');
-        oBxDolStudioLauncher.enableFavorites();
+        oBxDolStudioLauncher.enableFeatured();
     }
 };
 

@@ -346,6 +346,48 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
         return echoJson(array('grid' => $this->getCode(false), 'blink' => $aIds));
     }
 
+    public function performActionSetOperatorRole()
+    {
+    	$aIds = bx_get('ids');
+        if(!$aIds || !is_array($aIds))
+            return echoJson(array());
+        
+        $oUtils = BxDolStudioRolesUtils::getInstance();
+
+        $aRoles = $oUtils->getRoles();
+        if(empty($aRoles) || !is_array($aRoles))
+            return echoJson(array('msg' => _t('_sys_txt_error_occured')));
+
+        $iId = (int)array_shift($aIds);
+
+        $sPopupName = str_replace('_', '-', $this->MODULE) . '-set-role-popup';
+        $sPopupContent = $this->_oModule->_oTemplate->getPopupSetRole($aRoles, $iId, $oUtils->getRole($iId));
+
+        return echoJson(array('popup' => array(
+            'html' => BxTemplFunctions::getInstance()->transBox($sPopupName, $sPopupContent),
+            'options' => array(
+                'closeOnOuterClick' => true,
+                'removeOnClose' => true
+            )
+        )));
+    }
+
+    public function performActionSetOperatorRoleSubmit()
+    {
+        $aIds = bx_get('ids');
+        if(!$aIds || !is_array($aIds))
+            return echoJson(array());
+
+        $iId = (int)array_shift($aIds);
+        if(!$iId)
+            return echoJson(array('msg' => _t('_sys_txt_error_occured')));
+
+        if(!BxDolStudioRolesUtils::getInstance()->setRole($iId, bx_process_input(bx_get('role'), BX_DATA_INT)))
+            return echoJson(array('msg' => _t('_error occured')));
+
+        echoJson(array('grid' => $this->getCode(false), 'blink' => $iId));
+    }
+
     public function performActionMakeOperator()
     {
     	$this->_performActionChangeRole(3);
@@ -361,26 +403,30 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
         $CNF = &$this->_oModule->_oConfig->CNF;
 
         $aIds = bx_get('ids');
-        if(!$aIds || !is_array($aIds)) {
-            echoJson(array());
-            return;
-        }
+        if(!$aIds || !is_array($aIds))
+            return echoJson(array());
+
+        $oAccount = BxDolAccount::getInstance();
+        $oUtils = BxDolStudioRolesUtils::getInstance();
 
         $iAffected = 0;
         $aIdsAffected = array();
-        foreach($aIds as $iId)
-            if($this->_oModule->_oDb->updateAccount(array('role' => $iRole), array('id' => $iId))) {
-                $aIdsAffected[] = $iId;
-                $iAffected++;
+        foreach($aIds as $iId) {
+            if(!$this->_oModule->_oDb->updateAccount(array('role' => $iRole), array('id' => $iId))) 
+                continue;
 
-                $oAccount = BxDolAccount::getInstance($iId);
-                $oAccount->doAudit($iId, '_sys_audit_action_account_change_role_to_' . $iRole);
-            }
+            $oUtils->setRole($iId, $iRole == 3 ? BX_DOL_STUDIO_ROLE_OPERATOR : 0);
+
+            $oAccount->doAudit($iId, '_sys_audit_action_account_change_role_to_' . $iRole);
+
+            $aIdsAffected[] = $iId;
+            $iAffected++;
+        }
 
         echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aIdsAffected) : array('msg' => _t($CNF['T']['grid_action_err_perform'])));
     }
 
-	protected function _performActionEnable($isChecked)
+    protected function _performActionEnable($isChecked)
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 

@@ -26,7 +26,12 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
         return $GLOBALS['bxDolClasses']['BxBaseStudioFunctions'];
     }
 
-    function getLoginForm()
+    public function getLogo()
+    {
+        return bx_idn_to_utf8(BX_DOL_URL_ROOT, true);
+    }
+
+    public function getLoginForm()
     {
         $oTemplate = BxDolStudioTemplate::getInstance();
 
@@ -53,6 +58,119 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
         ));
         $oTemplate->setPageContent ('page_main_code', $sHtml);
         $oTemplate->getPageCode();
+    }
+
+    public function getWidget($mixedWidget, $aParams = array())
+    {
+        $oTemplate = BxDolStudioTemplate::getInstance();
+
+        $bFeatured = isset($aParams['featured']) && $aParams['featured'] === true;
+
+        $aNotices = array();
+        if(!empty($aParams['notices']) && is_array($aParams['notices']))
+            $aNotices = $aParams['notices'];           
+
+        $aMarkers = array(
+            'url_root' => BX_DOL_URL_ROOT,
+            'url_studio' => BX_DOL_URL_STUDIO,
+            'url_studio_icons' => BX_DOL_URL_STUDIO_BASE . 'images/icons/'
+        );
+
+        if(!is_array($mixedWidget)) 
+            $mixedWidget = BxDolStudioWidgetsQuery::getInstance()->getWidgets(array('type' => 'by_id', 'value' => (int)$mixedWidget));
+
+        if(!empty($mixedWidget['type']) && !BxDolStudioRolesUtils::getInstance()->isActionAllowed('use ' . $mixedWidget['type']))
+            return '';
+
+        $aTmplVarsActions = array();
+        if(!empty($mixedWidget['cnt_actions'])) {
+            $aService = unserialize($mixedWidget['cnt_actions']);
+            $aActions = BxDolService::call($aService['module'], $aService['method'], array_merge(array($mixedWidget), $aService['params']), $aService['class']);
+
+            foreach($aActions as $iIndex => $aAction) {
+                if(!empty($aAction['check_func'])) {
+                    $sCheckFunc = bx_gen_method_name($aAction['check_func']);
+                    if(method_exists($this, $sCheckFunc) && !$this->$sCheckFunc($mixedWidget))
+                        continue;
+                }
+
+                $sActionIcon = $aAction['icon'];
+                $bActionIcon = strpos($sActionIcon, '.') === false;
+
+                if(!$bActionIcon)
+                    $sActionIcon = $oTemplate->getIconUrl($sActionIcon);
+
+                $sCaption = _t($aAction['caption']);
+                $aTmplVarsActions[] = array(
+                    'name' => !empty($aAction['name']) ? $aAction['name'] : $sPage . '-' . $iIndex,
+                    'caption' => $sCaption,
+                    'url' => !empty($aAction['url']) ? bx_replace_markers($aAction['url'], $aMarkers) : 'javascript:void(0)',
+                    'bx_if:show_click' => array(
+                        'condition' => !empty($aAction['click']),
+                        'content' => array(
+                            'content' => 'javascript:' . $aAction['click'],
+                        )
+                    ),
+                    'bx_if:action_icon' => array (
+                        'condition' => $bActionIcon,
+                        'content' => array('icon' => $sActionIcon, 'caption' => $sCaption),
+                    ),
+                    'bx_if:action_image' => array (
+                        'condition' => !$bActionIcon,
+                        'content' => array('icon_url' => $sActionIcon, 'caption' => $sCaption),
+                    ),
+                );
+            }
+        }
+
+        $sIcon = BxDolStudioUtils::getWidgetIcon($mixedWidget);
+        $bIcon = strpos($sIcon, '.') === false && strcmp(substr($sIcon, 0, 10), 'data:image') != 0;
+
+        $sNotices = !empty($aNotices[$mixedWidget['id']]) ? $aNotices[$mixedWidget['id']] : '';
+
+        $aModule = BxDolModuleQuery::getInstance()->getModuleByName($mixedWidget['module']);
+        $bEnabled = empty($aModule) || !is_array($aModule) || (int)$aModule['enabled'] == 1;
+
+        return $oTemplate->parseHtmlByName('widget.html', array(
+            'id' => $mixedWidget['id'],
+            'url' => !empty($mixedWidget['url']) ? bx_replace_markers($mixedWidget['url'], $aMarkers) : 'javascript:void(0)',
+            'bx_if:show_click_icon' => array(
+                'condition' => !empty($mixedWidget['click']),
+                'content' => array(
+                    'content' => 'javascript:' . $mixedWidget['click'],
+                )
+            ),
+            'bx_if:show_click_link' => array(
+                'condition' => !empty($mixedWidget['click']),
+                'content' => array(
+                    'content' => 'javascript:' . $mixedWidget['click'],
+                )
+            ),
+            'bx_if:show_notice' => array(
+                'condition' => !empty($sNotices),
+                'content' => array(
+                    'content' => $sNotices
+                )
+            ),
+            'bx_if:show_actions' => array(
+                'condition' => !empty($aTmplVarsActions),
+                'content' => array(
+                    'bx_repeat:actions' => $aTmplVarsActions,
+                )
+            ),
+            'bx_if:icon' => array (
+                'condition' => $bIcon,
+                'content' => array('icon' => $sIcon),
+            ),
+            'bx_if:image' => array (
+                'condition' => !$bIcon,
+                'content' => array('icon_url' => $sIcon),
+            ),
+            'caption' => _t($mixedWidget['caption']),
+            'widget_disabled_class' => !$bEnabled ? 'bx-std-widget-icon-disabled' : '',
+            'widget_featured_class' => (int)$mixedWidget['featured'] == 1 ? 'bx-std-widget-icon-featured' : '',
+            'widget_styles' => $bFeatured && (int)$mixedWidget['featured'] != 1 ? 'display:none;' : ''
+        ));
     }
 
     protected function getInjHeadLiveUpdates() 

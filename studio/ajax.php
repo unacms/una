@@ -19,17 +19,9 @@ if (!isAdmin())
 
 $aResult = array();
 switch(bx_get('action')) {
-    case 'page-bookmark':
-        $sPage = bx_process_input(bx_get('page'));
-
-        bx_import('BxDolStudioPage');
-        $oPage = new BxDolStudioPage($sPage);
-
-        $aResult = $oPage->bookmark();
-        break;
-
+    
 }
 
-header('Content-Type:text/javascript');
-echo json_encode($aResult);
+echoJson($aResult)
+
 /** @} */

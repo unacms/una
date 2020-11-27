@@ -41,49 +41,53 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
         return 'oBxDolStudioDashboard';
     }
 
-	function getPageJsCode($aOptions = array(), $bWrap = true)
+    function getPageJsCode($aOptions = array(), $bWrap = true)
     {
     	$sContent = BxDolStudioTemplate::getInstance()->_wrapInTagJs('https://www.google.com/jsapi');
 
         $aOptions = array_merge($aOptions, array(
             'sActionUrl' => BX_DOL_URL_STUDIO . 'dashboard.php',
-        	'sVersion' => '__version__'
+            'sVersion' => '__version__'
         ));
         $sContent .= parent::getPageJsCode($aOptions, $bWrap);
 
-		return $sContent;
+        return $sContent;
     }
 
-    function getPageCode($bHidden = false)
+    function getPageCode()
     {
+        $sResult = parent::getPageCode();
+        if($sResult === false)
+            return false;
+
     	$oPage = BxDolPage::getObjectInstance('sys_std_dashboard', BxDolStudioTemplate::getInstance());
-    	return $oPage->getCode();
+    	return $sResult . $oPage->getCode();
     }
 
-	public function getPageCodeVersionAvailable()
-	{
-		list($sVersionAvailable, $bUpgradeAvailable) = $this->getVersionUpgradeAvailable();
-		if(!$sVersionAvailable && !$bUpgradeAvailable)
-			return '';
+    public function getPageCodeVersionAvailable()
+    {
+        list($sVersionAvailable, $bUpgradeAvailable) = $this->getVersionUpgradeAvailable();
+        if(!$sVersionAvailable && !$bUpgradeAvailable)
+            return '';
 
-    	if($sVersionAvailable !== false)
-    		$sVersionAvailable = _t('_adm_dbd_txt_version_n_available', $sVersionAvailable);
+        if($sVersionAvailable !== false)
+            $sVersionAvailable = _t('_adm_dbd_txt_version_n_available', $sVersionAvailable);
 
-		return BxDolStudioTemplate::getInstance()->parseHtmlByName('dbd_versions_upgrade.html', array(
-			'bx_if:show_version_available' => array(
-        		'condition' => !empty($sVersionAvailable),
-        		'content' => array(
-        			'version_available' => $sVersionAvailable
-        		)
-        	),
-			'bx_if:show_upgrade_available' => array(
-        		'condition' => $bUpgradeAvailable,
-        		'content' => array(
-        			'js_object' => $this->getPageJsObject()
-        		)
-        	)
-		));
-	}
+            return BxDolStudioTemplate::getInstance()->parseHtmlByName('dbd_versions_upgrade.html', array(
+                'bx_if:show_version_available' => array(
+                'condition' => !empty($sVersionAvailable),
+                'content' => array(
+                    'version_available' => $sVersionAvailable
+                )
+            ),
+            'bx_if:show_upgrade_available' => array(
+                'condition' => $bUpgradeAvailable,
+                'content' => array(
+                    'js_object' => $this->getPageJsObject()
+                )
+            )
+        ));
+    }
 
     public function serviceGetWidgetNotices() {
     	$iResult = 0;

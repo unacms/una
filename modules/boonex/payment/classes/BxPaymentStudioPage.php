@@ -14,14 +14,14 @@ class BxPaymentStudioPage extends BxTemplStudioModule
     protected $_sModule;
     protected $_oModule;
 
-    function __construct($sModule = "", $sPage = "")
+    function __construct($sModule, $mixedPageName, $sPage = "")
     {
     	$this->_sModule = 'bx_payment';
     	$this->_oModule = BxDolModule::getInstance($this->_sModule);
 
-        parent::__construct($sModule, $sPage);
+        parent::__construct($sModule, $mixedPageName, $sPage);
 
-        $this->aMenuItems[] = array('name' => 'providers', 'icon' => 'money-bill-alt', 'title' => '_bx_payment_lmi_cpt_providers');
+        $this->aMenuItems['providers'] = array('name' => 'providers', 'icon' => 'money-bill-alt', 'title' => '_bx_payment_lmi_cpt_providers');
     }
 
     protected function getProviders()

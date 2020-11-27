@@ -11,14 +11,14 @@
 class BxTasksStudioPage extends BxTemplStudioModule
 {
     protected $_sModule;
-	protected $_oModule;
+    protected $_oModule;
     
-    function __construct($sModule = "", $sPage = "")
+    function __construct($sModule, $mixedPageName, $sPage = "")
     {
     	$this->_sModule = 'bx_tasks';
     	$this->_oModule = BxDolModule::getInstance($this->_sModule);
 
-        parent::__construct($sModule, $sPage);
+        parent::__construct($sModule, $mixedPageName, $sPage);
     }
 }
 

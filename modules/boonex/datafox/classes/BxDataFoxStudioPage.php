@@ -13,9 +13,9 @@ class BxDataFoxStudioPage extends BxTemplStudioModule
 {
     protected $oModule;
 
-    function __construct($sModule = "", $sPage = "")
+    function __construct($sModule, $mixedPageName, $sPage = "")
     {
-        parent::__construct($sModule, $sPage);
+        parent::__construct($sModule, $mixedPageName, $sPage);
 
         $this->oModule = BxDolModule::getInstance('bx_datafox');
 

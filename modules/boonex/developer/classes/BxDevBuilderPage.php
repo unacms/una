@@ -32,7 +32,7 @@ class BxDevBuilderPage extends BxTemplStudioBuilderPage
 
     function getBlockPanelTop($aBlock)
     {
-         return BxBaseStudioPage::getBlockPanelTop(
+         return BxBaseStudioWidget::getBlockPanelTop(
             array('panel_top' => $this->oModule->_oTemplate->parseHtmlByName('bp_block_panel_top.html', $this->_getTmplVarsBlockPanelTop()))
         );
     }

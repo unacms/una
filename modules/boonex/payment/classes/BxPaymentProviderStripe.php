@@ -950,6 +950,8 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
     protected function _getButtonJs($sType, $iClientId, $iVendorId, $aParams = array())
     {
         $sJsObject = $this->_oModule->_oConfig->getJsObject($this->_sName);
+        if(isset($aParams['iModuleId'], $aParams['iSellerId'], $aParams['iItemId']))
+            $sJsObject .= '_' . md5($aParams['iModuleId'] . '-' . $aParams['iSellerId'] . '-' . $aParams['iItemId']);        
 
         $sClientEmail = '';
     	if(!empty($iClientId) && ($oClient = BxDolProfile::getInstance($iClientId)) !== false)
@@ -973,6 +975,7 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
         }
 
         return array($this->_oModule->_oTemplate->getJsCode($this->_sName, array_merge(array(
+            'js_object' => $sJsObject,
             'sProvider' => $this->_sName,
             'sPublicKey' => !empty($sPublicKey) ? $sPublicKey : $this->_getPublicKey(),
             'sVendorName' => '',

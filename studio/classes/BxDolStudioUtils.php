@@ -56,6 +56,21 @@ class BxDolStudioUtils extends BxDol
 		return $sIcon;
     }
     
+    public static function getWidgetIcon($mixedWidget)
+    {
+        if(!is_array($mixedWidget)) 
+            $mixedWidget = BxDolStudioWidgetsQuery::getInstance()->getWidgets(array('type' => 'by_id', 'value' => (int)$mixedWidget));
+
+        $sUrl = BxDolStudioTemplate::getInstance()->getIconUrl($mixedWidget['icon']);
+        if(empty($sUrl)) {
+            $aModule = BxDolModuleQuery::getInstance()->getModuleByName($mixedWidget['module']);
+            if(!empty($aModule) && is_array($aModule))
+                $sUrl = BxDolStudioUtils::getIconDefault($aModule['type']);
+        }
+
+        return $sUrl;
+    }
+
     public static function getModuleIcon($mixedModule, $sType = 'menu', $bReturnAsUrl = true)
     {
         $aType2Prefix = array('menu' => 'mi', 'page' => 'pi', 'store' => 'si');

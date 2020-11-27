@@ -11,7 +11,7 @@ bx_import('BxDolStudioInstallerUtils');
 
 define('BX_DOL_STUDIO_STR_TYPE_DEFAULT', 'downloaded');
 
-class BxDolStudioStore extends BxTemplStudioPage
+class BxDolStudioStore extends BxTemplStudioWidget
 {
     protected $sPage;
     protected $aContent;
@@ -43,162 +43,166 @@ class BxDolStudioStore extends BxTemplStudioPage
             $this->sPage = $sPage;
 
         $this->initClient();
-
-        //--- Check actions ---//
-        if(($sAction = bx_get('str_action')) !== false) {
-            $sAction = bx_process_input($sAction);
-
-            $aResult = array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_mod_err_cannot_process_action'));
-            switch($sAction) {
-                case 'get-file':
-                    $iFileId = (int)bx_get('str_id');
-                    $aResult = $this->getFile($iFileId);
-                    break;
-
-                case 'get-product':
-                    $sModuleName = bx_process_input(bx_get('str_id'));
-                    $aResult = $this->getProduct($sModuleName);
-                    break;
-
-                case 'get-update':
-                    $sModuleName = bx_process_input(bx_get('str_id'));
-                    $aResult = $this->getUpdate($sModuleName);
-                    break;
-
-                case 'get-update-and-install':
-                    $sModuleName = bx_process_input(bx_get('str_id'));
-                    $aResult = $this->getUpdate($sModuleName, true);
-                    break;
-
-                case 'get-products-by-type':
-                    $this->sPage = bx_process_input(bx_get('str_value'));
-
-                    $sContent = $this->getPageCode();
-                    if(!empty($sContent))
-                        $aResult = array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'content' => $sContent);
-                    else
-                        $aResult = array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_act_err_failed_page_loading'));
-                    break;
-
-                case 'get-products-by-page':
-                    $this->sPage = bx_process_input(bx_get('str_type'));
-
-                    $sContent = $this->getPageContent();
-                    if(!empty($sContent))
-                        $aResult = array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'content' => $sContent);
-                    else
-                        $aResult = array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_act_err_failed_page_loading'));
-                    break;
-
-                case 'add-to-cart':
-                    $iVendor = (int)bx_get('str_vendor');
-                    $iItem = (int)bx_get('str_item');
-                    $iItemCount = 1;
-
-                    if(empty($iVendor) || empty($iItem)) {
-                        $aResult = array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_err_modules_cannot_add_to_cart'));
-                        break;
-                    }
-
-                    BxDolStudioCart::getInstance()->add($iVendor, $iItem, $iItemCount);
-                    $aResult = array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'message' => _t('_adm_msg_modules_success_added_to_cart'));
-                    break;
-
-                case 'delete-from-cart':
-                    $iVendor = (int)bx_get('str_vendor');
-                    $iItem = (int)bx_get('str_item');
-
-                    if(empty($iVendor)) {
-                        $aResult = array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_err_modules_cannot_delete_from_cart'));
-                        break;
-                    }
-
-                    BxDolStudioCart::getInstance()->delete($iVendor, $iItem);
-                    $aResult = array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'message' => '');
-                    break;
-
-                case 'checkout-cart':
-                    $iVendor = (int)bx_get('str_vendor');
-                    if(empty($iVendor)) {
-                        $aResult = array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_err_modules_cannot_checkout_empty_vendor'));
-                        break;
-                    }
-
-                    $sLocation = $this->checkoutCart($iVendor);
-                    $aResult = array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'message' => '', 'redirect' => $sLocation);
-                    break;
-
-				case 'subscribe':
-                    $iVendor = (int)bx_get('str_vendor');
-                    $iItem = (int)bx_get('str_item');
-                    if(empty($iVendor) || empty($iItem)) {
-                        $aResult = array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_err_modules_cannot_subscribe'));
-                        break;
-                    }
-
-                    $sLocation = $this->subscribe($iVendor, $iItem);
-                    $aResult = array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'message' => '', 'redirect' => $sLocation);
-                    break;
-
-                case 'install':
-                    $sValue = bx_process_input(bx_get('str_value'));
-                    if(empty($sValue))
-                        break;
-
-                    $aResult = BxDolStudioInstallerUtils::getInstance()->perform($sValue, 'install', array('auto_enable' => true, 'html_response' => true));
-                    break;
-
-                case 'update':
-                    $sValue = bx_process_input(bx_get('str_value'));
-                    if(empty($sValue))
-                        break;
-
-                    $aResult = BxDolStudioInstallerUtils::getInstance()->perform($sValue, 'update', array('html_response' => true));
-                    break;
-
-                case 'delete':
-                    $sValue = bx_process_input(bx_get('str_value'));
-                    if(empty($sValue))
-                        break;
-
-                    $aResult = BxDolStudioInstallerUtils::getInstance()->perform($sValue, 'delete', array('html_response' => true));
-                    break;
-            }
-
-            if(!empty($aResult['message'])) {
-                $oTemplate = BxDolStudioTemplate::getInstance();
-
-                $aResult['message'] = $oTemplate->parseHtmlByName('popup_chain.html', array(
-                    'html_id' => 'mod_action_result',
-                    'bx_repeat:items' => array(array(
-                        'bx_if:show_as_hidden' => array(
-                            'condition' => false,
-                            'content' => array(),
-                        ),
-                        'item' => $oTemplate->parseHtmlByName('str_notification.html', array(
-                            'content' => $aResult['message']
-                        )),
-                        'bx_if:show_previous' => array(
-                            'condition' => false,
-                            'content' => array(
-                                'onclick_previous' => ''
-                            )
-                        ),
-                        'bx_if:show_close' => array(
-                           'condition' => false,
-                            'content' => array(
-                                'onclick_close' => ''
-                            )
-                        )
-                    ))
-                ));
-            }
-
-            echoJson($aResult);
-            exit;
-        }
     }
 
+    public function checkAction()
+    {
+        $sAction = bx_get('str_action');
+    	if($sAction === false)
+            return false;
+
+        $sAction = bx_process_input($sAction);
+
+        $aResult = array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_mod_err_cannot_process_action'));
+        switch($sAction) {
+            case 'get-file':
+                $iFileId = (int)bx_get('str_id');
+                $aResult = $this->getFile($iFileId);
+                break;
+
+            case 'get-product':
+                $sModuleName = bx_process_input(bx_get('str_id'));
+                $aResult = $this->getProduct($sModuleName);
+                break;
+
+            case 'get-update':
+                $sModuleName = bx_process_input(bx_get('str_id'));
+                $aResult = $this->getUpdate($sModuleName);
+                break;
+
+            case 'get-update-and-install':
+                $sModuleName = bx_process_input(bx_get('str_id'));
+                $aResult = $this->getUpdate($sModuleName, true);
+                break;
+
+            case 'get-products-by-type':
+                $this->sPage = bx_process_input(bx_get('str_value'));
+
+                $sContent = $this->getPageCode();
+                if(!empty($sContent))
+                    $aResult = array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'content' => $sContent);
+                else
+                    $aResult = array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_act_err_failed_page_loading'));
+                break;
+
+            case 'get-products-by-page':
+                $this->sPage = bx_process_input(bx_get('str_type'));
+
+                $sContent = $this->getPageContent();
+                if(!empty($sContent))
+                    $aResult = array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'content' => $sContent);
+                else
+                    $aResult = array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_act_err_failed_page_loading'));
+                break;
+
+            case 'add-to-cart':
+                $iVendor = (int)bx_get('str_vendor');
+                $iItem = (int)bx_get('str_item');
+                $iItemCount = 1;
+
+                if(empty($iVendor) || empty($iItem)) {
+                    $aResult = array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_err_modules_cannot_add_to_cart'));
+                    break;
+                }
+
+                BxDolStudioCart::getInstance()->add($iVendor, $iItem, $iItemCount);
+                $aResult = array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'message' => _t('_adm_msg_modules_success_added_to_cart'));
+                break;
+
+            case 'delete-from-cart':
+                $iVendor = (int)bx_get('str_vendor');
+                $iItem = (int)bx_get('str_item');
+
+                if(empty($iVendor)) {
+                    $aResult = array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_err_modules_cannot_delete_from_cart'));
+                    break;
+                }
+
+                BxDolStudioCart::getInstance()->delete($iVendor, $iItem);
+                $aResult = array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'message' => '');
+                break;
+
+            case 'checkout-cart':
+                $iVendor = (int)bx_get('str_vendor');
+                if(empty($iVendor)) {
+                    $aResult = array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_err_modules_cannot_checkout_empty_vendor'));
+                    break;
+                }
+
+                $sLocation = $this->checkoutCart($iVendor);
+                $aResult = array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'message' => '', 'redirect' => $sLocation);
+                break;
+
+                            case 'subscribe':
+                $iVendor = (int)bx_get('str_vendor');
+                $iItem = (int)bx_get('str_item');
+                if(empty($iVendor) || empty($iItem)) {
+                    $aResult = array('code' => BX_DOL_STUDIO_IU_RC_FAILED, 'message' => _t('_adm_err_modules_cannot_subscribe'));
+                    break;
+                }
+
+                $sLocation = $this->subscribe($iVendor, $iItem);
+                $aResult = array('code' => BX_DOL_STUDIO_IU_RC_SUCCESS, 'message' => '', 'redirect' => $sLocation);
+                break;
+
+            case 'install':
+                $sValue = bx_process_input(bx_get('str_value'));
+                if(empty($sValue))
+                    break;
+
+                $aResult = BxDolStudioInstallerUtils::getInstance()->perform($sValue, 'install', array('auto_enable' => true, 'html_response' => true));
+                break;
+
+            case 'update':
+                $sValue = bx_process_input(bx_get('str_value'));
+                if(empty($sValue))
+                    break;
+
+                $aResult = BxDolStudioInstallerUtils::getInstance()->perform($sValue, 'update', array('html_response' => true));
+                break;
+
+            case 'delete':
+                $sValue = bx_process_input(bx_get('str_value'));
+                if(empty($sValue))
+                    break;
+
+                $aResult = BxDolStudioInstallerUtils::getInstance()->perform($sValue, 'delete', array('html_response' => true));
+                break;
+        }
+
+        if(!empty($aResult['message'])) {
+            $oTemplate = BxDolStudioTemplate::getInstance();
+
+            $aResult['message'] = $oTemplate->parseHtmlByName('popup_chain.html', array(
+                'html_id' => 'mod_action_result',
+                'bx_repeat:items' => array(array(
+                    'bx_if:show_as_hidden' => array(
+                        'condition' => false,
+                        'content' => array(),
+                    ),
+                    'item' => $oTemplate->parseHtmlByName('str_notification.html', array(
+                        'content' => $aResult['message']
+                    )),
+                    'bx_if:show_previous' => array(
+                        'condition' => false,
+                        'content' => array(
+                            'onclick_previous' => ''
+                        )
+                    ),
+                    'bx_if:show_close' => array(
+                       'condition' => false,
+                        'content' => array(
+                            'onclick_close' => ''
+                        )
+                    )
+                ))
+            ));
+        }
+
+        return $aResult;
+    }
+        
+        
     protected function initClient()
     {
         $this->iClient = BxDolStudioOAuth::getAuthorizedClient();
