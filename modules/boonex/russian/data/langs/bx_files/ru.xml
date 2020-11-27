@@ -242,4 +242,47 @@
 
     <string name="_bx_files_privacy_public"><![CDATA[Для всех]]></string>
     <string name="_bx_files_privacy_participants"><![CDATA[Для участников]]></string>
+
+    <string name="_bx_files_menu_title_view_inline"><![CDATA[Встроенное меню]]></string>
+    <string name="_bx_files_menu_set_title_view_inline"><![CDATA[Встроенное меню]]></string>
+    <string name="_bx_files_menu_item_title_system_move_to_entry"><![CDATA[Переместить в...]]></string>
+    <string name="_bx_files_menu_item_title_move_to_entry"><![CDATA[Переместить в...]]></string>
+    <string name="_bx_files_menu_item_title_system_info_entry"><![CDATA[Информация]]></string>
+    <string name="_bx_files_menu_item_title_info_entry"><![CDATA[Информация]]></string>
+    <string name="_bx_files_menu_item_title_system_bookmark"><![CDATA[Сделать закладку]]></string>
+    <string name="_bx_files_menu_item_title_bookmark"><![CDATA[Сделать закладку]]></string>
+
+    <string name="_bx_files_menu_item_title_system_sm_size"><![CDATA[Размер]]></string>
+    <string name="_bx_files_menu_item_title_sm_size"><![CDATA[Размер]]></string>
+
+    <string name="_bx_files_option_link_to_preview"><![CDATA[Открывать предпросмотри при нажатии на файл в контекстных блоках]]></string>
+    <string name="_bx_files_option_max_nesting_level"><![CDATA[Максимальная вложенность папок]]></string>
+
+    <string name="_bx_files_entry_info_size"><![CDATA[Размер]]></string>
+    <string name="_bx_files_entry_info_date"><![CDATA[Дата]]></string>
+    <string name="_bx_files_entry_info_author"><![CDATA[Автор]]></string>
+    <string name="_bx_files_entry_info_context"><![CDATA[Загружен в]]></string>
+
+    <string name="_bx_files_toolbar_view_table"><![CDATA[Табличный вид]]></string>
+    <string name="_bx_files_toolbar_view_gallery"><![CDATA[Галерея]]></string>
+    <string name="_bx_files_toolbar_view_bookmarks"><![CDATA[Файлы в закладках]]></string>
+    <string name="_bx_files_toolbar_sorting_name"><![CDATA[Сортировать по имени]]></string>
+    <string name="_bx_files_toolbar_sorting_date"><![CDATA[Сортировать по дате]]></string>
+    <string name="_bx_files_toolbar_sorting_type"><![CDATA[Сортировать по типу]]></string>
+    <string name="_bx_files_toolbar_sorting_author"><![CDATA[Сортировать по автору]]></string>
+
+    <string name="_bx_files_txt_error"><![CDATA[Файл не наден]]></string>
+    <string name="_bx_files_txt_permission_denied"><![CDATA[Доступ запрещен]]></string>
+    <string name="_bx_files_txt_upload"><![CDATA[Загрузить]]></string>
+    <string name="_bx_files_txt_add_folder"><![CDATA[Добавить папку]]></string>
+    <string name="_bx_files_txt_folder_name"><![CDATA[Имя папки]]></string>
+    <string name="_bx_files_txt_folder_root"><![CDATA[Корень]]></string>
+    <string name="_bx_files_txt_move_to"><![CDATA[Переместить в]]></string>
+    <string name="_bx_files_txt_move_to_nowhere"><![CDATA[Еще не создано ни одной папки]]></string>
+    <string name="_bx_files_txt_move_here"><![CDATA[Переместить сюда?]]></string>
+
+    <string name="_bx_files_bulk_action_title_download"><![CDATA[Скачать]]></string>
+    <string name="_bx_files_bulk_action_title_bookmark"><![CDATA[Сделать закладки]]></string>
+    <string name="_bx_files_bulk_action_title_delete"><![CDATA[Удалить]]></string>
+    <string name="_bx_files_bulk_action_title_move_to"><![CDATA[Переместить в...]]></string>
 </resources>
