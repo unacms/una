@@ -5172,6 +5172,7 @@ CREATE TABLE IF NOT EXISTS `sys_categories2objects` (
 CREATE TABLE `sys_objects_live_updates` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `name` varchar(50) NOT NULL default '',
+  `init` tinyint(4) NOT NULL DEFAULT '0',
   `frequency` tinyint(4) NOT NULL DEFAULT '1',
   `service_call` text NOT NULL default '', 
   `active` tinyint(4) NOT NULL DEFAULT '1',
@@ -5179,9 +5180,9 @@ CREATE TABLE `sys_objects_live_updates` (
   UNIQUE KEY `name` (`name`)
 );
 
-INSERT INTO `sys_objects_live_updates`(`name`, `frequency`, `service_call`, `active`) VALUES
-('sys_payments_cart', 1, 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:21:"get_live_updates_cart";s:6:"params";a:3:{i:0;a:2:{s:11:"menu_object";s:18:"sys_toolbar_member";s:9:"menu_item";s:7:"account";}i:1;a:2:{s:11:"menu_object";s:25:"sys_account_notifications";s:9:"menu_item";s:4:"cart";}i:2;s:7:"{count}";}s:5:"class";s:21:"TemplPaymentsServices";}', 1),
-('sys_payments_orders', 1, 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:23:"get_live_updates_orders";s:6:"params";a:3:{i:0;a:2:{s:11:"menu_object";s:18:"sys_toolbar_member";s:9:"menu_item";s:7:"account";}i:1;a:2:{s:11:"menu_object";s:25:"sys_account_notifications";s:9:"menu_item";s:6:"orders";}i:2;s:7:"{count}";}s:5:"class";s:21:"TemplPaymentsServices";}', 1);
+INSERT INTO `sys_objects_live_updates`(`name`, `init`, `frequency`, `service_call`, `active`) VALUES
+('sys_payments_cart', 0, 1, 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:21:"get_live_updates_cart";s:6:"params";a:3:{i:0;a:2:{s:11:"menu_object";s:18:"sys_toolbar_member";s:9:"menu_item";s:7:"account";}i:1;a:2:{s:11:"menu_object";s:25:"sys_account_notifications";s:9:"menu_item";s:4:"cart";}i:2;s:7:"{count}";}s:5:"class";s:21:"TemplPaymentsServices";}', 1),
+('sys_payments_orders', 0, 1, 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:23:"get_live_updates_orders";s:6:"params";a:3:{i:0;a:2:{s:11:"menu_object";s:18:"sys_toolbar_member";s:9:"menu_item";s:7:"account";}i:1;a:2:{s:11:"menu_object";s:25:"sys_account_notifications";s:9:"menu_item";s:6:"orders";}i:2;s:7:"{count}";}s:5:"class";s:21:"TemplPaymentsServices";}', 1);
 
 -- --------------------------------------------------------
 

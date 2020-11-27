@@ -34,11 +34,6 @@ class BxBaseLiveUpdates extends BxDolLiveUpdates
          */ 
         $aCached = $this->_getCachedData();
 
-        /* tmp fix for #3002 */
-        foreach ($aCached as $sName => $a)
-            if (!in_array($sName, $this->_aSystemsTransient))
-                $aCached[$sName] = 0;
-
         $aParams = array_merge(array(
             'sActionsUrl' => BX_DOL_URL_ROOT . 'live_updates.php',
             'sObjName' => $this->_sJsObject,

@@ -259,10 +259,11 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
 
     protected function _getRequestedData($iIndex = 0, $bIndexCheck = false, $aCachedData = array())
     {
-        $aResult = array();
+        $bInit = !$bIndexCheck && empty($aCachedData);
 
+        $aResult = array();
         foreach($this->_aSystems as $sName => $aSystem) {
-            if(empty($aSystem) || !is_array($aSystem) || (int)$aSystem['active'] != 1)
+            if(empty($aSystem) || !is_array($aSystem) || (int)$aSystem['active'] != 1 || ($bInit && (int)$aSystem['init'] == 0))
                 continue;
 
             if($bIndexCheck && $iIndex % (int)$aSystem['frequency'] != 0)
