@@ -89,7 +89,7 @@ class BxDolMetatagsQuery extends BxDolDb
     public function locationsAdd($mixedContentId, $fLat, $fLng, $sCountryCode, $sState, $sCity, $sZip, $sStreet, $sStreetNumber)
     {
         $this->locationsDelete($mixedContentId);
-        if (!$fLat && !$fLng)
+        if (!$fLat && !$fLng && !$sCountryCode)
             return true;
 
         $sQuery = $this->prepare("INSERT INTO `{$this->_aObject['table_locations']}` SET `object_id` = ?, `lat` = ?, `lng` = ?, `country` = ?, `state` = ?, `city` = ?, `zip` = ?, `street` = ?, `street_number` = ?", $mixedContentId, $fLat, $fLng, $sCountryCode, $sState, $sCity, $sZip, $sStreet, $sStreetNumber);

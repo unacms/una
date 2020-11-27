@@ -1709,96 +1709,16 @@ BLAH;
 
     function genInputLocation(&$aInput)
     {
-        $aVars = $this->_getInputLocationVars($aInput);
-        return $this->oTemplate->parseHtmlByName('form_field_location.html', $aVars);
-    }
-    
-    protected function _getInputLocationVars(&$aInput)
-    {
-        $isManualInput = (int)(isset($aInput['manual_input']) && $aInput['manual_input']);
-        $sIdStatus = $this->getInputId($aInput) . '_status';
-        $sIdInput = $this->getInputId($aInput) . '_location';
+        $o = BxDolLocationField::getObjectInstance('sys_plain');
+        if (!$o)
+            return _t('_sys_txt_error_occured');
 
-        $aVars = array (
-            'key' => trim(getParam('sys_maps_api_key')),
-            'lang' => bx_lang_name(),
-            'name' => $aInput['name'],
-            'id_status' => $sIdStatus,
-            'id_input' => $sIdInput,
-            'manual_input' => $isManualInput,            
-            'bx_if:manual_input' => array(
-                'condition' => $isManualInput,
-                'content' => array(),
-            ),
-            'bx_if:auto_input' => array(
-                'condition' => !$isManualInput,
-                'content' => array(
-                    'id_status' => $sIdStatus,
-                    'location_string' => _t('_sys_location_undefined'),
-                ),
-            ),
-            'api_field_name_short' => 'short_name',
-            'api_field_name_long' => 'long_name',
-            'api_field_name_2_length' => json_encode(array()),
-        );
-
-        $aLocationIndexes = self::$LOCATION_INDEXES;
-        foreach ($aLocationIndexes as $sKey)
-            $aVars[$sKey] = $this->getLocationVal($aInput, $sKey);
-
-        if ($aVars['country']) {
-            $aCountries = BxDolFormQuery::getDataItems('Country');
-            $s = ($aVars['street_number'] ? $aVars['street_number'] . ', ' : '') . ($aVars['street'] ? $aVars['street'] . ', ' : '') . ($aVars['city'] ? $aVars['city'] . ', ' : '') . ($aVars['state'] ? $aVars['state'] . ', ' : '') . $aCountries[$aVars['country']];
-            $aVars['bx_if:auto_input']['content']['location_string'] = $s;
-        }
-
-        if ($isManualInput) {
-            $aAttrs = empty($aInput['attrs']) ? array() : $aInput['attrs'];
-			$aInput['type'] = 'text';
-            $aInput['attrs']['id'] = $sIdInput;
-			$aInput['attrs'] = array_merge($aAttrs, $aInput['attrs']);
-            $aVars['input'] = $this->genInputStandard($aInput);
-        } 
-        else {
-            if ($this->getLocationVal($aInput, 'lat') && $this->getLocationVal($aInput, 'lng'))
-                $aInput['checked'] = true;
-            else
-                $aInput['checked'] = $this->getCleanValue($aInput['name'] . '_lat') && $this->getCleanValue($aInput['name'] . '_lng') ? 1 : 0;
-            $aVars['input'] = $this->genInputSwitcher($aInput);
-        }
-
-        return $aVars;
-    }
-    
-    public function setLocationVals ($aInput, $aVals)
-    {
-        $this->_aSpecificValues[$aInput['name'] . '_lat'] = $aVals['lat'];
-		$this->_aSpecificValues[$aInput['name'] . '_lng'] = $aVals['lng'];
-		$this->_aSpecificValues[$aInput['name'] . '_country'] = $aVals['country'];
-		$this->_aSpecificValues[$aInput['name'] . '_state'] = $aVals['state'];
-		$this->_aSpecificValues[$aInput['name'] . '_city'] = $aVals['city'];
-		$this->_aSpecificValues[$aInput['name'] . '_zip'] = $aVals['zip'];
-		$this->_aSpecificValues[$aInput['name'] . '_street'] = $aVals['street'];
-		$this->_aSpecificValues[$aInput['name'] . '_street_number'] = $aVals['street_number'];
+        return $o->genInputLocation($aInput, $this);
     }
     
     function genInputPassword(&$aInput)
     {
         return $this->oTemplate->parseHtmlByName('form_field_password.html', array('input' => $this->genInputStandard($aInput)));
-    }
-
-    public function setLocationVal ($aInput, $sIndex, $sVal)
-    {
-        $s = $aInput['name'] . '_' . $sIndex;
-        $this->_aSpecificValues[$s] = $sVal;
-    }
-
-    protected function getLocationVal ($aInput, $sIndex) 
-    {
-        $s = $aInput['name'] . '_' . $sIndex;
-        if (isset($this->_aSpecificValues[$s]))
-            return $this->_aSpecificValues[$s];
-        return $this->getCleanValue($s);
     }
     
     function genInputNestedForm(&$aInput)
