@@ -698,7 +698,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         $aCountries = BxDolFormQuery::getDataItems('Country');
         $aLocation = $this->locationGet($iId);
         if(!$aLocation || !$aLocation['country'] || !isset($aCountries[$aLocation['country']])) {
-            if ($aLocation['lat'] || $aLocation['lng'])
+            if (!empty($aLocation['lat']) || !empty($aLocation['lng']))
                 $s = _t('_sys_location_country', $aLocation['lat'] . ', ' . $aLocation['lng']);
             else
                 return '';
