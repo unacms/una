@@ -38,9 +38,11 @@ class BxFilesTemplate extends BxBaseModTextTemplate
     {
         $oModule = $this->getModule();
 
-    	$sResult = $this->checkPrivacy ($aData, $isCheckPrivateContent, $oModule, $sTemplateName);
-    	if($sResult)
-            return $sResult;
+        if ($aData['type'] != 'folder') {
+            $sResult = $this->checkPrivacy($aData, $isCheckPrivateContent, $oModule, $sTemplateName);
+            if ($sResult)
+                return $sResult;
+        }
 
         $CNF = &$oModule->_oConfig->CNF;
 
@@ -57,7 +59,7 @@ class BxFilesTemplate extends BxBaseModTextTemplate
         $aVars['bx_if:no_thumb']['content']['icon'] = $aVars['icon'];
 
 
-        $aVars['bx_if:inline_menu']['condition'] = isset($aParams['show_inline_menu']) && $aParams['show_inline_menu'];
+        $aVars['bx_if:inline_menu']['condition'] = $aData[$CNF['FIELD_ID']] > 0 && isset($aParams['show_inline_menu']) && $aParams['show_inline_menu'];
         $aVars['bx_if:inline_menu']['content'] = [];
         if ($aVars['bx_if:inline_menu']['condition']) {
             bx_import('BxTemplMenu');
@@ -74,10 +76,16 @@ class BxFilesTemplate extends BxBaseModTextTemplate
         if ($oModule->_oDb->getParam($CNF['PARAM_LINK_TO_PREVIEW'])) {
             $sAltContentUrlHandler = '$.get(\'' . BX_DOL_URL_ROOT . $oModule->_oConfig->getBaseUri() . 'entry_preview/' . $aData[$CNF['FIELD_ID']] . '\', processJsonData, \'json\'); return false;';
         }
+
+        if ($aData['type'] == 'folder') {
+            $aVars['bx_if:meta']['condition'] = false;
+            $aVars['bx_if:no_thumb']['content']['icon'] = $aVars['icon'] = 'folder';
+            $sAltContentUrlHandler = "{$aParams['toolbar_js_object']}.folderNavigate({$aData[$CNF['FIELD_ID']]}); return false;";
+        }
+
         $aVars['alt_content_url_handler'] = $sAltContentUrlHandler;
         $aVars['bx_if:no_thumb']['content']['alt_content_url_handler'] = $sAltContentUrlHandler;
         $aVars['bx_if:thumb']['content']['alt_content_url_handler'] = $sAltContentUrlHandler;
-
 
         return $this->parseHtmlByName($sTemplateName, $aVars);
     }
@@ -137,6 +145,11 @@ class BxFilesTemplate extends BxBaseModTextTemplate
             ],
         ];
 
+        if ($aData['type'] == 'folder') {
+            unset($aForm['inputs']['size']);
+            unset($aForm['inputs']['author']);
+        }
+
         if ($aData[$CNF['FIELD_ALLOW_VIEW_TO']] < 0) {
             $oProfile = BxDolProfile::getInstance(-$aData[$CNF['FIELD_ALLOW_VIEW_TO']]);
             if ($oProfile) {
@@ -171,6 +184,35 @@ class BxFilesTemplate extends BxBaseModTextTemplate
         ));
 
         return $aVars;
+    }
+
+    public function getJsTree($aFilesToMove, $aFolders) {
+        $sJsCss = '';
+        $sJsCss .= $this->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'jstree/themes/default/|style.min.css', true);
+        $sJsCss .= $this->addJs(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'jstree/|jstree.min.js', true);
+
+        return $this->parseHtmlByName('folders_tree.html', [
+            'js_css' => $sJsCss,
+            'list' => $this->foldersToList($aFolders, 0),
+            'files' => json_encode($aFilesToMove),
+            'actions_url' => BX_DOL_URL_ROOT.$this->getModule()->_oConfig->getBaseUri(),
+        ]);
+    }
+
+    private function foldersToList($aFolders, $iLevel) {
+        if (!$aFolders) return;
+
+        $sTreeList = '<ul>';
+        foreach ($aFolders as $aFolder) {
+            $sTreeList .=
+                '<li id="bx-files-folder-'.$aFolder['id'].'" '.($iLevel == 0 ? 'class="jstree-open"' : '').' data-jstree=\'{"icon":"sys-icon folder"}\'>'.
+                    bx_process_output($aFolder['title']).
+                    $this->foldersToList($aFolder['subfolders'], $iLevel+1).
+                '</li>';
+        }
+        $sTreeList .= '</ul>';
+
+        return $sTreeList;
     }
 }
 

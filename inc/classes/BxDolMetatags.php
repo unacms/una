@@ -693,18 +693,23 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      */
     public function locationsString($iId, $bHTML = true, $aParams = array())
     {
+        $s = '';
         bx_import('BxDolForm');
         $aCountries = BxDolFormQuery::getDataItems('Country');
         $aLocation = $this->locationGet($iId);
-        if(!$aLocation || !$aLocation['country'] || !isset($aCountries[$aLocation['country']]))
-            return '';
-
-        $s = '';
+        if(!$aLocation || !$aLocation['country'] || !isset($aCountries[$aLocation['country']])) {
+            if (!empty($aLocation['lat']) || !empty($aLocation['lng']))
+                $s = _t('_sys_location_country', $aLocation['lat'] . ', ' . $aLocation['lng']);
+            else
+                return '';
+        }
         
-        $sCountryUrl = '<a href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=location_country&keyword=' . $aLocation['country'] . '">' . $aCountries[$aLocation['country']] . '</a>';
+        if (!$s) {
+            $sCountryUrl = '<a href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=location_country&keyword=' . $aLocation['country'] . '">' . $aCountries[$aLocation['country']] . '</a>';
             
-        if(empty($aLocation['state']) || empty($aLocation['city']) || (isset($aParams['country_only']) && $aParams['country_only']))
-            $s = _t('_sys_location_country', $sCountryUrl);
+            if(empty($aLocation['state']) || empty($aLocation['city']) || (isset($aParams['country_only']) && $aParams['country_only']))
+                $s = _t('_sys_location_country', $sCountryUrl);
+        }
 
         if (!$s) {
             $sCityUrl = '<a href="' . BX_DOL_URL_ROOT . 'searchKeyword.php?type=location_country_city&keyword=' . $aLocation['country'] . '&state=' . rawurlencode($aLocation['state']) . '&city=' . rawurlencode($aLocation['city']) . '">' . $aLocation['city'] . '</a>';

@@ -673,3 +673,27 @@
 .select2-container {
     width:100% !important;
 }
+
+/* Location field */
+
+.bx-form-input-location-country,
+.bx-form-input-location-zip,
+.bx-form-input-location-state,
+.bx-form-input-location-city {
+    width:49%;
+}
+
+.bx-form-input-location-street {
+    width:83%;
+}
+
+.bx-form-input-location-street_number {
+    width:15%;
+}
+
+.bx-form-input-location-street_number,
+.bx-form-input-location-street,
+.bx-form-input-location-state,
+.bx-form-input-location-city {
+    margin-bottom:0.25rem;
+}

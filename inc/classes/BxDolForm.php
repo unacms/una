@@ -932,6 +932,11 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
         return false;
     }
 
+    function getTemplate ()
+    {
+        return $this->oTemplate;
+    }
+
     function getId ()
     {
         return $this->id;
@@ -966,6 +971,11 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     function getSpecificValues()
     {
         return $this->_aSpecificValues;
+    }
+
+    function setSpecificValue($sName, $sVal)
+    {
+        $this->_aSpecificValues[$sName] = $sVal;
     }
 
     function getAuthorId()

@@ -257,6 +257,7 @@
     <string name="_bx_files_menu_item_title_sm_size"><![CDATA[Size]]></string>
 
     <string name="_bx_files_option_link_to_preview"><![CDATA[Link file title to a preview popup instead of a file view page in context blocks]]></string>
+    <string name="_bx_files_option_max_nesting_level"><![CDATA[Folders max nesting level]]></string>
 
     <string name="_bx_files_entry_info_size"><![CDATA[Size]]></string>
     <string name="_bx_files_entry_info_date"><![CDATA[Date]]></string>
@@ -273,4 +274,17 @@
 
     <string name="_bx_files_txt_error"><![CDATA[File not found]]></string>
     <string name="_bx_files_txt_permission_denied"><![CDATA[Permission denied]]></string>
+    <string name="_bx_files_txt_upload"><![CDATA[Upload]]></string>
+    <string name="_bx_files_txt_add_folder"><![CDATA[Add Folder]]></string>
+    <string name="_bx_files_txt_folder_name"><![CDATA[Folder name]]></string>
+    <string name="_bx_files_txt_folder_root"><![CDATA[Root]]></string>
+    <string name="_bx_files_txt_move_to"><![CDATA[Move To]]></string>
+    <string name="_bx_files_txt_move_to_nowhere"><![CDATA[There are no folders created yet]]></string>
+    <string name="_bx_files_txt_move_here"><![CDATA[Move here?]]></string>
+
+    <string name="_bx_files_bulk_action_title_download"><![CDATA[Download]]></string>
+    <string name="_bx_files_bulk_action_title_bookmark"><![CDATA[Bookmark]]></string>
+    <string name="_bx_files_bulk_action_title_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_files_bulk_action_title_move_to"><![CDATA[Move To...]]></string>
+
 </resources>
