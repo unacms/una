@@ -39,19 +39,22 @@ class BxPaymentCart extends BxBaseModPaymentCart
     /** 
      * @ref bx_payment-get_block_carts "get_block_carts"
      */
-	public function serviceGetBlockCarts()
+    public function serviceGetBlockCarts()
     {
     	$CNF = &$this->_oModule->_oConfig->CNF;
 
-    	if(bx_get('seller_id') !== false)
-    		return '';
-
-    	$iUserId = $this->_oModule->getProfileId();
+        $iUserId = $this->_oModule->getProfileId();
         if(empty($iUserId))
             return MsgBox(_t($CNF['T']['ERR_REQUIRED_LOGIN']));
 
+        if($this->_oModule->_oConfig->isSingleSeller())
+            return MsgBox(_t($CNF['T']['MSG_SINGLE_SELLER_MODE'], $this->serviceGetCartUrl()));
+
+    	if(bx_get('seller_id') !== false)
+            return '';
+
         return array(
-        	'content' => $this->_oModule->_oTemplate->displayBlockCarts($iUserId)
+            'content' => $this->_oModule->_oTemplate->displayBlockCarts($iUserId)
         );
     }
 
@@ -72,13 +75,12 @@ class BxPaymentCart extends BxBaseModPaymentCart
     /** 
      * @ref bx_payment-get_block_cart "get_block_cart"
      */
-	public function serviceGetBlockCart()
+    public function serviceGetBlockCart()
     {
-    	// Don't show the block at all if 'seller_id' not exists.
-    	if(bx_get('seller_id') === false)
-    		return '';
+        $CNF = &$this->_oModule->_oConfig->CNF;
 
-    	$CNF = &$this->_oModule->_oConfig->CNF;
+    	if(!$this->_bSingleSeller && bx_get('seller_id') === false)
+            return '';
 
     	$iUserId = $this->_oModule->getProfileId();
         if(empty($iUserId))
@@ -86,16 +88,16 @@ class BxPaymentCart extends BxBaseModPaymentCart
             	'content' => MsgBox(_t($CNF['T']['ERR_REQUIRED_LOGIN']))
             );
 
-    	$iSellerId = bx_process_input(bx_get('seller_id'), BX_DATA_INT);
+    	$iSellerId = !$this->_bSingleSeller ? bx_process_input(bx_get('seller_id'), BX_DATA_INT) : $this->_oModule->_oConfig->getSiteAdmin();
     	if(empty($iSellerId))
-    		return array(
-            	'content' => MsgBox(_t($CNF['T']['ERR_UNKNOWN_VENDOR']))
-    		);
+            return array(
+                'content' => MsgBox(_t($CNF['T']['ERR_UNKNOWN_VENDOR']))
+            );
 
-		$aSeller = $this->_oModule->getProfileInfo($iSellerId);
+        $aSeller = $this->_oModule->getProfileInfo($iSellerId);
         return array(
-        	'title' => _t($CNF['T']['BLOCK_TITLE_CART'], $aSeller['name']),
-        	'content' => $this->_oModule->_oTemplate->displayBlockCart($iUserId, $iSellerId)
+            'title' => _t($CNF['T']['BLOCK_TITLE_CART'], $aSeller['name']),
+            'content' => $this->_oModule->_oTemplate->displayBlockCart($iUserId, $iSellerId)
         );
     }
 
@@ -278,7 +280,6 @@ class BxPaymentCart extends BxBaseModPaymentCart
             return $this->_getInfo($sType, $iUserId, $iSellerId, $this->_oModule->_oConfig->descriptorsM2A($aItems));
 
         $aContent = $this->_parseByVendor($iUserId);
-
         if($iSellerId != BX_PAYMENT_EMPTY_ID)
             return isset($aContent[$iSellerId]) ? $this->_getInfo($sType, $iUserId, $iSellerId, $aContent[$iSellerId]) : array();
 

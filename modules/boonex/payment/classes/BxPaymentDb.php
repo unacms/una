@@ -291,13 +291,13 @@ class BxPaymentDb extends BxBaseModPaymentDb
     {
         $sItems = "";
         foreach($aCartInfo['items'] as $aItem) {
-            $sItems .= $this->_oConfig->descriptorA2S(array($aCartInfo['vendor_id'], $aItem['module_id'], $aItem['id'], $aItem['quantity'])) . ':';
+            $sItems .= $this->_oConfig->descriptorA2S(array($aItem['author_id'], $aItem['module_id'], $aItem['id'], $aItem['quantity'])) . ':';
 
             if(empty($aItem['addons']) || !is_array($aItem['addons']))
                 continue;
 
             foreach($aItem['addons'] as $sAddon => $aAddon)
-                $sItems .= $this->_oConfig->descriptorA2S(array($aCartInfo['vendor_id'], $aAddon['module_id'], $aAddon['id'], $aAddon['quantity'])) . ':';
+                $sItems .= $this->_oConfig->descriptorA2S(array($aAddon['author_id'], $aAddon['module_id'], $aAddon['id'], $aAddon['quantity'])) . ':';
         }
 
         return (int)$this->query("INSERT INTO `" . $this->_sPrefix . "transactions_pending` SET `client_id`=:client_id, `seller_id`=:seller_id, `type`=:type, `provider`=:provider, `items`=:items, `customs`=:customs, `amount`=:amount, `date`=UNIX_TIMESTAMP()", array(
@@ -332,13 +332,13 @@ class BxPaymentDb extends BxBaseModPaymentDb
     {
     	$aMethod = array('name' => 'getRow', 'params' => array(0 => 'query'));
 
-        $sSelectClause = "`tt`.`id`, `tt`.`license`, `ttp`.`type`, `tt`.`client_id`, `tt`.`seller_id`, `tt`.`module_id`, `tt`.`item_id`, `tt`.`item_count`, `tt`.`amount`, `tt`.`date`, `ttp`.`order`, `ttp`.`error_msg`, `ttp`.`provider`";
+        $sSelectClause = "`tt`.`id`, `tt`.`license`, `ttp`.`type`, `tt`.`client_id`, `tt`.`seller_id`, `tt`.`author_id`, `tt`.`module_id`, `tt`.`item_id`, `tt`.`item_count`, `tt`.`amount`, `tt`.`date`, `ttp`.`order`, `ttp`.`error_msg`, `ttp`.`provider`";
         $sWhereClause = "";
 
         switch($aParams['type']) {
             case 'id':
             	$aMethod['params'][1] = array(
-                	'id' => $aParams['id']
+                    'id' => $aParams['id']
                 );
 
                 $sWhereClause = " AND `tt`.`id`=:id";
@@ -412,7 +412,7 @@ class BxPaymentDb extends BxBaseModPaymentDb
         return $this->query("INSERT INTO `" . $this->_sPrefix . "transactions` SET " . $this->arrayToSQL($aValues) . ", `date`=UNIX_TIMESTAMP()");
     }
 
-	public function updateOrderProcessed($iId, $aValues)
+    public function updateOrderProcessed($iId, $aValues)
     {        
         return $this->updateOrdersProcessed($aValues, array('id' => $iId));
     }
@@ -428,7 +428,7 @@ class BxPaymentDb extends BxBaseModPaymentDb
     public function deleteOrderProcessed($mixedId)
     {
     	if(!is_array($mixedId))
-    		$mixedId = array($mixedId);
+            $mixedId = array($mixedId);
 
         return (int)$this->query("DELETE FROM `" . $this->_sPrefix . "transactions` WHERE `id` IN (" . $this->implode_escape($mixedId) . ")") > 0;
     }

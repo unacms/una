@@ -152,20 +152,20 @@ class BxPaymentGridCart extends BxBaseModPaymentGridCarts
 
     protected function _getDataArray($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
-		if(empty($this->_aQueryAppend['client_id']) || empty($this->_aQueryAppend['seller_id']))
-			return array();
+        if(empty($this->_aQueryAppend['client_id']) || empty($this->_aQueryAppend['seller_id']))
+            return array();
 
-		$aCart = $this->_oCart->getInfo(BX_PAYMENT_TYPE_SINGLE, $this->_aQueryAppend['client_id'], $this->_aQueryAppend['seller_id']);
-		if(empty($aCart) || empty($aCart['items']) || !is_array($aCart['items']))
-			return array();
+        $aCart = $this->_oCart->getInfo(BX_PAYMENT_TYPE_SINGLE, $this->_aQueryAppend['client_id'], $this->_aQueryAppend['seller_id']);
+        if(empty($aCart) || empty($aCart['items']) || !is_array($aCart['items']))
+            return array();
 
         $this->_aOptions['source'] = array();
-		foreach($aCart['items'] as $aCartItem) {
-			$aCartItem['descriptor'] = $this->_oModule->_oConfig->descriptorA2S(array($aCart['vendor_id'], $aCartItem['module_id'], $aCartItem['id'], $aCartItem['quantity']));
-			$aCartItem['description'] = strip_tags($aCartItem['description']);
+        foreach($aCart['items'] as $aCartItem) {
+            $aCartItem['descriptor'] = $this->_oModule->_oConfig->descriptorA2S(array($aCartItem['author_id'], $aCartItem['module_id'], $aCartItem['id'], $aCartItem['quantity']));
+            $aCartItem['description'] = strip_tags($aCartItem['description']);
 
-			$this->_aOptions['source'][] = $aCartItem;
-		}
+            $this->_aOptions['source'][] = $aCartItem;
+        }
 
         return parent::_getDataArray($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
@@ -173,8 +173,8 @@ class BxPaymentGridCart extends BxBaseModPaymentGridCarts
     protected function _delete($mixedId)
     {
     	list($iVendorId, $iModuleId, $iItemId) = $this->_oModule->_oConfig->descriptorS2A($mixedId);
-    	if((int)$iVendorId != (int)$this->_aQueryAppend['seller_id'])
-    		return false;
+    	if(!$this->_oModule->isSingleSeller() && (int)$iVendorId != (int)$this->_aQueryAppend['seller_id'])
+            return false;
 
     	return $this->_oCart->serviceDeleteFromCart($iVendorId, $iModuleId, $iItemId);
     }

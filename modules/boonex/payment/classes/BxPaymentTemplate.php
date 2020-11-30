@@ -173,16 +173,16 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         return $this->displayJsCode('cart') . $oGrid->getCode();
     }
 
-	public function displayBlockCart($iClientId, $iSellerId = 0)
+    public function displayBlockCart($iClientId, $iSellerId = 0)
     {
     	$oGrid = BxDolGrid::getObjectInstance($this->_oConfig->getObject('grid_cart'));
         if(!$oGrid || empty($iSellerId))
             return MsgBox(_t($this->_sLangsPrefix . 'msg_no_results'));
 
-		$oGrid->addQueryParam('client_id', $iClientId);
-		$oGrid->addQueryParam('seller_id', $iSellerId);
+        $oGrid->addQueryParam('client_id', $iClientId);
+        $oGrid->addQueryParam('seller_id', $iSellerId);
 
-		$this->addJsCssCart(BX_PAYMENT_TYPE_SINGLE, $iSellerId);
+        $this->addJsCssCart(BX_PAYMENT_TYPE_SINGLE, $iSellerId);
         return $this->displayJsCode('cart') . $oGrid->getCode();
     }
 
@@ -256,16 +256,21 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
                 'license' => $aOrder['license']
             );
 
-        $aResult = array(
-            'txt_client' => _t($this->_sLangsPrefix . 'txt_client'),
+        $bTmplVarsShowSlrAtr = !empty($aOrder['author_id']) && $aOrder['seller_id'] != $aOrder['author_id'];
+
+        $aTmplVarsAuthor = array();
+        if($bTmplVarsShowSlrAtr) {
+            $aAuthor = $oModule->getProfileInfo((int)$aOrder['author_id']);
+
+            $aTmplVarsAuthor = array(
+                'txt_author' => _t($this->_sLangsPrefix . 'txt_author'),
+                'author_name' => $aAuthor['name'],
+                'author_url' => $aAuthor['link'],
+            );
+        }
+
+        $aTmplVarsSeller = array(
             'txt_seller' => _t($this->_sLangsPrefix . 'txt_seller'),
-            'txt_order' => _t($this->_sLangsPrefix . 'txt_order'),
-            'txt_processed_with' => _t($this->_sLangsPrefix . 'txt_processed_with'),
-            'txt_message' => _t($this->_sLangsPrefix . 'txt_message'),
-            'txt_date' => _t($this->_sLangsPrefix . 'txt_date'),
-            'txt_products' => _t($this->_sLangsPrefix . 'txt_products'),
-            'client_name' => $aClient['name'],
-            'client_url' => $aClient['link'],
             'bx_if:show_link' => array(
                 'condition' => !empty($aSeller['link']),
                 'content' => array(
@@ -279,6 +284,21 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
                     'seller_name' => $aSeller['name']
                 )
             ),
+        );
+        
+        $aResult = array_merge(array(
+            'txt_client' => _t($this->_sLangsPrefix . 'txt_client'),
+            'txt_order' => _t($this->_sLangsPrefix . 'txt_order'),
+            'txt_processed_with' => _t($this->_sLangsPrefix . 'txt_processed_with'),
+            'txt_message' => _t($this->_sLangsPrefix . 'txt_message'),
+            'txt_date' => _t($this->_sLangsPrefix . 'txt_date'),
+            'txt_products' => _t($this->_sLangsPrefix . 'txt_products'),
+            'client_name' => $aClient['name'],
+            'client_url' => $aClient['link'],
+            'bx_if:show_seller' => array(
+                'condition' => $bTmplVarsShowSlrAtr,
+                'content' => $aTmplVarsSeller
+            ),
             'bx_if:show_license' => array(
                 'condition' => !empty($aTmplVarsLicense),
                 'content' => $aTmplVarsLicense
@@ -287,8 +307,12 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
             'provider' => _t('_bx_payment_txt_name_' . $aOrder['provider']),
             'error' => $aOrder['error_msg'],
             'date' => bx_time_js($aOrder['date']),
+            'bx_if:show_author' => array(
+                'condition' => $bTmplVarsShowSlrAtr,
+                'content' => $aTmplVarsAuthor
+            ),
             'bx_repeat:items' => array()
-        );
+        ), $aTmplVarsSeller);
 
         if(in_array($sType, array(BX_PAYMENT_ORDERS_TYPE_PENDING, BX_PAYMENT_ORDERS_TYPE_SUBSCRIPTION)))
             $aItems = $this->_oConfig->descriptorsM2A($aOrder['items']);

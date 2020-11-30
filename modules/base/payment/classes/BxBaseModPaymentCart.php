@@ -11,14 +11,23 @@
 
 class BxBaseModPaymentCart extends BxDol
 {
-	protected $MODULE;
-	protected $_oModule;
+    protected $MODULE;
+    protected $_oModule;
 
-	function __construct()
+    protected $_bSingleSeller;
+    protected $_iSingleSeller;
+
+    function __construct()
     {
         parent::__construct();
 
         $this->_oModule = BxDolModule::getInstance($this->MODULE);
+
+        $this->_bSingleSeller = $this->_oModule->_oConfig->isSingleSeller();
+
+        $this->_iSingleSeller = 0;
+        if($this->_bSingleSeller)
+            $this->_iSingleSeller = $this->_oModule->_oConfig->getSiteAdmin();
     }
 
     /**
@@ -39,15 +48,17 @@ class BxBaseModPaymentCart extends BxDol
     /** 
      * @ref bx_base_payment-get_cart_url "get_cart_url"
      */
-	public function serviceGetCartUrl($iVendor = 0)
+    public function serviceGetCartUrl($iVendor = 0)
     {
     	if(!$this->_oModule->isLogged())
             return '';
 
-		if($iVendor == 0)
-    		return $this->_oModule->_oConfig->getUrl('URL_CARTS');
+        if(!$this->_bSingleSeller && $iVendor == 0)
+            return $this->_oModule->_oConfig->getUrl('URL_CARTS');
 
-    	return  bx_append_url_params($this->_oModule->_oConfig->getUrl('URL_CART'), array('seller_id' => $iVendor));
+    	return bx_append_url_params($this->_oModule->_oConfig->getUrl('URL_CART'), array(
+            'seller_id' => !$this->_bSingleSeller ? $iVendor : $this->_oModule->_oConfig->getSiteAdmin()
+        ));
     }
 
     /**
@@ -98,7 +109,7 @@ class BxBaseModPaymentCart extends BxDol
      */
     public function serviceGetAddToCartJs($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect = false, $aCustom = array())
     {
-		$iModuleId = $this->_oModule->_oConfig->getModuleId($mixedModuleId);
+        $iModuleId = $this->_oModule->_oConfig->getModuleId($mixedModuleId);
         if(empty($iModuleId))
             return '';
 
@@ -128,13 +139,13 @@ class BxBaseModPaymentCart extends BxDol
     /** 
      * @ref bx_base_payment-get_add_to_cart_link "get_add_to_cart_link"
      */
-	public function serviceGetAddToCartLink($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect = false, $aCustom = array())
+    public function serviceGetAddToCartLink($iVendorId, $mixedModuleId, $iItemId, $iItemCount, $bNeedRedirect = false, $aCustom = array())
     {
         $iModuleId = $this->_oModule->_oConfig->getModuleId($mixedModuleId);
         if(empty($iModuleId))
             return '';
 
-		return $this->_oModule->_oTemplate->displayAddToCartLink($iVendorId, $iModuleId, $iItemId, $iItemCount, $bNeedRedirect, $aCustom);
+        return $this->_oModule->_oTemplate->displayAddToCartLink($iVendorId, $iModuleId, $iItemId, $iItemCount, $bNeedRedirect, $aCustom);
     }
 
     /**
@@ -160,7 +171,7 @@ class BxBaseModPaymentCart extends BxDol
      */
 	public function serviceGetCartItemDescriptor($iVendorId, $iModuleId, $iItemId, $iItemCount)
 	{
-		return $this->_oModule->_oConfig->descriptorA2S(array($iVendorId, $iModuleId, $iItemId, $iItemCount));
+            return $this->_oModule->_oConfig->descriptorA2S(array($iVendorId, $iModuleId, $iItemId, $iItemCount));
 	}
 
 	/**
@@ -232,7 +243,12 @@ class BxBaseModPaymentCart extends BxDol
         if(empty($aCart['items']))
             return array();
 
-        $aResult = $this->_reparseBy($this->_oModule->_oConfig->descriptorsM2A($aCart['items']), 'vendor_id');
+        $aCartItems = $this->_oModule->_oConfig->descriptorsM2A($aCart['items']);
+        if($this->_bSingleSeller)
+            $aResult = array($this->_iSingleSeller => $aCartItems);
+        else
+            $aResult = $this->_reparseBy($aCartItems, 'vendor_id');
+
         if(empty($aCart['customs']))
             return $aResult;
 

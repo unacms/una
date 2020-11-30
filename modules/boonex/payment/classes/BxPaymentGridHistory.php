@@ -21,12 +21,12 @@ class BxPaymentGridHistory extends BxBaseModPaymentGridOrders
         $this->_sOrdersType = 'history';
     }
 
-	protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
+    protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
     {
-		if(empty($this->_aQueryAppend['client_id']))
-			return array();
+        if(empty($this->_aQueryAppend['client_id']))
+            return array();
 
-		$this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tt`.`client_id`=?", $this->_aQueryAppend['client_id']);
+        $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tt`.`client_id`=?", $this->_aQueryAppend['client_id']);
 
         return parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }

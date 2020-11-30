@@ -11,9 +11,9 @@
 
 class BxBaseModPaymentModule extends BxBaseModGeneralModule
 {
-	protected $_sLangsPrefix;
+    protected $_sLangsPrefix;
 
-	function __construct($aModule)
+    public function __construct($aModule)
     {
         parent::__construct($aModule);
 
@@ -45,7 +45,7 @@ class BxBaseModPaymentModule extends BxBaseModGeneralModule
     /** 
      * @ref bx_base_payment-update_dependent_modules "update_dependent_modules"
      */
-	public function serviceUpdateDependentModules($sModule = 'all', $bInstall = true)
+    public function serviceUpdateDependentModules($sModule = 'all', $bInstall = true)
     {
     	$aModules = $sModule == 'all' ? $this->_oDb->getModulesBy(array('type' => 'modules'), false) : array($this->_oDb->getModuleByName($sModule, false));
 
@@ -178,25 +178,30 @@ class BxBaseModPaymentModule extends BxBaseModGeneralModule
     /** 
      * @ref bx_base_payment-get_providers_cart "get_providers_cart"
      */
-	public function serviceGetProvidersCart($iVendorId)
-	{
-		$aVendorProviders = $this->_oDb->getVendorInfoProvidersSingle($iVendorId);
+    public function serviceGetProvidersCart($iVendorId)
+    {
+        $aVendorProviders = $this->_oDb->getVendorInfoProvidersSingle($iVendorId);
 
-		$aResult = array();
-		foreach($aVendorProviders as $aProvider) {
-			$aProvider['caption_cart'] = _t($this->_sLangsPrefix . 'txt_cart_' . $aProvider['name']);
+        $aResult = array();
+        foreach($aVendorProviders as $aProvider) {
+            $aProvider['caption_cart'] = _t($this->_sLangsPrefix . 'txt_cart_' . $aProvider['name']);
 
-			$aResult[] = $aProvider;
-		}
+            $aResult[] = $aProvider;
+        }
 
-		return $aResult;
-	}
+        return $aResult;
+    }
 
-	public function getVendorInfo($iUserId)
+    public function isSingleSeller()
+    {
+        return $this->_oConfig->isSingleSeller();
+    }
+
+    public function getVendorInfo($iUserId)
     {
         return array_merge($this->getProfileInfo($iUserId), array(
-        	'currency_code' => $this->_oConfig->getDefaultCurrencyCode(),
-			'currency_sign' => $this->_oConfig->getDefaultCurrencySign()
+            'currency_code' => $this->_oConfig->getDefaultCurrencyCode(),
+            'currency_sign' => $this->_oConfig->getDefaultCurrencySign()
         ));
     }
 
@@ -318,7 +323,7 @@ class BxBaseModPaymentModule extends BxBaseModGeneralModule
 		return BxDolService::call($mixedModule, 'unregister_cart_item', $aParams);
     }
 
-	public function callUnregisterSubscriptionItem($mixedModule, $aParams)
+    public function callUnregisterSubscriptionItem($mixedModule, $aParams)
     {
 		return BxDolService::call($mixedModule, 'unregister_subscription_item', $aParams);
     }

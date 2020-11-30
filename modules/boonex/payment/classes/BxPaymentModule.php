@@ -687,46 +687,46 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
             $aCustoms = array();
             foreach($aInfo['items'] as $aItem) {
-                $sCartItem = $this->_oConfig->descriptorA2S(array($aInfo['vendor_id'], $aItem['module_id'], $aItem['id']));
+                $sCartItem = $this->_oConfig->descriptorA2S(array($aItem['author_id'], $aItem['module_id'], $aItem['id']));
                 $aCartItemCustom = $this->_oConfig->getCustom($sCartItem, $aCartCustoms);
                 $this->_oConfig->putCustom($sCartItem, $aCartItemCustom, $aCustoms);
             }
         }
-        
+
         bx_alert($this->getName(), 'before_pending', 0, bx_get_logged_profile_id(), array(
             'client_id' => $this->_iUserId,
             'type' => &$sType,
             'provider' => &$sProvider,
             'cart_info' => &$aInfo,
-			'custom' => &$aCustoms,
+            'custom' => &$aCustoms,
         ));
 
         $iPendingId = $this->_oDb->insertOrderPending($this->_iUserId, $sType, $sProvider, $aInfo, $aCustoms);
         if(empty($iPendingId))
             return $this->_sLangsPrefix . 'err_access_db';
 
-		/*
-		 * Perform Join WITHOUT processing via payment provider
-		 * if a client ISN'T logged in and has only ONE FREE item in the card.
-		 * Note. This section isn't used for now because only a member can purchase!
-		 */
-		if((int)$aInfo['client_id'] == 0 && (int)$aInfo['items_count'] == 1) {
-			reset($aInfo['items']);
-			$aItem = current($aInfo['items']);
+        /*
+         * Perform Join WITHOUT processing via payment provider
+         * if a client ISN'T logged in and has only ONE FREE item in the card.
+         * Note. This section isn't used for now because only a member can purchase!
+         */
+        if((int)$aInfo['client_id'] == 0 && (int)$aInfo['items_count'] == 1) {
+            reset($aInfo['items']);
+            $aItem = current($aInfo['items']);
 
-			if(!empty($aItem) && $this->_oConfig->getPrice($sType, $aItem)) {
-				$this->_oDb->updateOrderPending($iPendingId, array(
-		            'order' => $this->_oConfig->getLicense(),
-		            'error_code' => '1',
-		            'error_msg' => ''
-		        ));
+            if(!empty($aItem) && $this->_oConfig->getPrice($sType, $aItem)) {
+                $this->_oDb->updateOrderPending($iPendingId, array(
+                    'order' => $this->_oConfig->getLicense(),
+                    'error_code' => '1',
+                    'error_msg' => ''
+                ));
 
-				$this->getObjectJoin()->performJoin($iPendingId);
-			}
-		}
+                $this->getObjectJoin()->performJoin($iPendingId);
+            }
+        }
 
-		return $oProvider->initializeCheckout($iPendingId, $aInfo, $sRedirect);
-	}
+        return $oProvider->initializeCheckout($iPendingId, $aInfo, $sRedirect);
+    }
 
     public function actionFinalizeCheckout($sProvider, $mixedVendorId = "")
     {
@@ -775,12 +775,12 @@ class BxPaymentModule extends BxBaseModPaymentModule
             exit;
         }
 
-		if(!empty($aResult['redirect'])) {
-			header('Location: ' . base64_decode(urldecode($aResult['redirect'])));
-			exit;
-		}
+        if(!empty($aResult['redirect'])) {
+            header('Location: ' . base64_decode(urldecode($aResult['redirect'])));
+            exit;
+        }
 
-		$this->_oTemplate->displayPageCodeResponse($aResult['message']);
+        $this->_oTemplate->displayPageCodeResponse($aResult['message']);
     }
 
     public function actionFinalizedCheckout($sProvider, $mixedVendorId = "")
@@ -945,6 +945,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
                 'pending_id' => $aPending['id'],
                 'client_id' => $aPending['client_id'],
                 'seller_id' => $aPending['seller_id'],
+                'author_id' => $aItem['vendor_id'],
                 'module_id' => (int)$aItem['module_id'],
                 'item_id' => (int)$aItem['item_id'],
                 'item_count' => (int)$aItem['item_count'],

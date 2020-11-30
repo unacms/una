@@ -11,10 +11,13 @@
 
 class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
 {
-	protected $_oDb;
+    protected $_oDb;
 
-	protected $_sCurrencySign;
+    protected $_sCurrencySign;
     protected $_sCurrencyCode;
+
+    protected $_iSiteAdmin;
+    protected $_bSingleSeller;
 
     protected $_aPerPage;
     protected $_aHtmlIds;
@@ -76,6 +79,15 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
     public function init(&$oDb)
     {
     	$this->_oDb = $oDb;
+
+        $sPrefix = $this->getPrefix('options');
+
+        $aCurrencies = BxDolForm::getDataItems($this->CNF['OBJECT_FORM_PRELISTS_CURRENCIES'], false, BX_DATA_VALUES_ADDITIONAL);
+        $this->_sCurrencyCode = (string)$this->_oDb->getParam($sPrefix . 'default_currency_code');
+        $this->_sCurrencySign = !empty($this->_sCurrencyCode) && isset($aCurrencies[$this->_sCurrencyCode]) ? $aCurrencies[$this->_sCurrencyCode] : '';
+
+        $this->_iSiteAdmin = (int)$this->_oDb->getParam($sPrefix . 'site_admin');
+        $this->_bSingleSeller = $this->_oDb->getParam($sPrefix . 'single_seller') == 'on';
     }
 
     public function getDefaultCurrencySign()
@@ -88,7 +100,25 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
         return $this->_sCurrencyCode;
     }
 
-	public function getKey($sType)
+    public function getSiteAdmin()
+    {
+        return $this->_iSiteAdmin;
+    }
+
+    public function isSiteAdmin($iProfileId = 0)
+    {
+        if(empty($iProfileId))
+            $iProfileId = bx_get_logged_profile_id();
+
+        return $iProfileId == $this->_iSiteAdmin;
+    }
+
+    public function isSingleSeller()
+    {
+        return $this->_bSingleSeller;
+    }
+
+    public function getKey($sType)
     {
     	$sResult = '';
     	if(empty($sType) || !isset($this->CNF[$sType]))

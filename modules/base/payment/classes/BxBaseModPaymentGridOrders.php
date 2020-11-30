@@ -68,17 +68,17 @@ class BxBaseModPaymentGridOrders extends BxTemplGrid
     {
     	$aIds = bx_get('ids');
         if(!$aIds || !is_array($aIds)) 
-        	return echoJson(array());
+            return echoJson(array());
 
-		$oOrders = $this->_oModule->getObjectOrders();
+        $oOrders = $this->_oModule->getObjectOrders();
 
-		$iAffected = 0;
-		$aAffected = array();
-		foreach($aIds as $iId)
-			if($oOrders->cancel($this->_sOrdersType, $iId)) {
-				$aAffected[] = $iId;
-            	$iAffected++;
-			}
+        $iAffected = 0;
+        $aAffected = array();
+        foreach($aIds as $iId)
+            if($oOrders->cancel($this->_sOrdersType, $iId)) {
+                $aAffected[] = $iId;
+                $iAffected++;
+            }
 
         echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aAffected) : array('msg' => _t($this->_sLangsPrefix . 'err_cannot_perform')));
     }
@@ -98,11 +98,11 @@ class BxBaseModPaymentGridOrders extends BxTemplGrid
         $sTxtUnknown = _t('_uknown');
 
         if(empty($aRow['module_id']) || empty($aRow['item_id']))
-            return $sTxtUnknown;
+            return parent::_getCellDefault($sTxtUnknown, $sKey, $aField, $aRow);
 
         $aItemInfo = $this->_oModule->callGetCartItem((int)$aRow['module_id'], array((int)$aRow['item_id']));
         if(empty($aItemInfo) || !is_array($aItemInfo))
-            return $sTxtUnknown;
+            return parent::_getCellDefault($sTxtUnknown, $sKey, $aField, $aRow);
 
         return parent::_getCellDefault($this->_oModule->_oTemplate->displayLink('link', array(
             'href' => $aItemInfo['url'],

@@ -11,7 +11,6 @@
 
 class BxPaymentConfig extends BxBaseModPaymentConfig
 {
-    protected $_iSiteAdmin;
     protected $_bCreditsOnly;
 
     function __construct($aModule)
@@ -47,6 +46,7 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
             'T' => array(
                 'MSG_ITEM_ADDED' => '_bx_payment_msg_item_added',
                 'MSG_ITEM_DELETED' => '_bx_payment_msg_item_deleted',
+                'MSG_SINGLE_SELLER_MODE' => '_bx_payment_msg_single_seller',
                 'ERR_WRONG_DATA' => '_bx_payment_err_wrong_data',
                 'ERR_REQUIRED_LOGIN' => '_bx_payment_err_required_login',
                 'ERR_NOT_ACCEPT_PAYMENTS' => '_bx_payment_err_not_accept_payments',
@@ -126,25 +126,7 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
 
         $sPrefix = $this->getPrefix('options');
 
-        $aCurrencies = BxDolForm::getDataItems($this->CNF['OBJECT_FORM_PRELISTS_CURRENCIES'], false, BX_DATA_VALUES_ADDITIONAL);
-        $this->_sCurrencyCode = (string)$this->_oDb->getParam($sPrefix . 'default_currency_code');
-        $this->_sCurrencySign = !empty($this->_sCurrencyCode) && isset($aCurrencies[$this->_sCurrencyCode]) ? $aCurrencies[$this->_sCurrencyCode] : '';
-
-        $this->_iSiteAdmin = (int)$this->_oDb->getParam($sPrefix . 'site_admin');
         $this->_bCreditsOnly = $this->_oDb->getParam($sPrefix . 'credits_only') == 'on';
-    }
-
-    public function getSiteAdmin()
-    {
-        return $this->_iSiteAdmin;
-    }
-
-    public function isSiteAdmin($iProfileId = 0)
-    {
-        if(empty($iProfileId))
-            $iProfileId = bx_get_logged_profile_id();
-
-        return $iProfileId == $this->_iSiteAdmin;
     }
 
     public function isCreditsOnly()
@@ -219,7 +201,7 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
     	return explode($this->getDivider('DIVIDER_DESCRIPTOR'), $s);
     }
 
-	/**
+    /**
      * Conver items to array with necessary structure.
      *
      * @param  string/array $mixed - string with cart items divided with (:) or an array of cart items.

@@ -14,7 +14,8 @@ SET @iCategoryId = LAST_INSERT_ID();
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
 ('bx_payment_default_currency_code', 'USD', @iCategoryId, '_bx_payment_option_default_currency_code', 'select', 'Avail', '', '_bx_payment_option_err_default_currency_code', 'a:2:{s:6:"module";s:10:"bx_payment";s:6:"method";s:33:"get_options_default_currency_code";}', 0),
 ('bx_payment_site_admin', '', @iCategoryId, '_bx_payment_option_site_admin', 'select', '', '', '', 'a:2:{s:6:"module";s:10:"bx_payment";s:6:"method";s:22:"get_options_site_admin";}', 1), 
-('bx_payment_credits_only', '', @iCategoryId, '_bx_payment_option_credits_only', 'checkbox', '', '', '', '', 10);
+('bx_payment_credits_only', '', @iCategoryId, '_bx_payment_option_credits_only', 'checkbox', '', '', '', '', 10),
+('bx_payment_single_seller', '', @iCategoryId, '_bx_payment_option_single_seller', 'checkbox', '', '', '', '', 11);
 
 
 -- PAGES & BLOCKS

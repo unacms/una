@@ -127,6 +127,15 @@ class BxPaymentGridProcessed extends BxBaseModPaymentGridOrders
         echoJson(array('popup' => array('html' => $sContent, 'options' => array('closeOnOuterClick' => false))));
     }
 
+    protected function _getActionCancel ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
+    {
+        if(!empty($aRow['seller_id']) && $aRow['seller_id'] != bx_get_logged_profile_id())
+            return '';
+
+        return $this->_getActionDefault($sType, $sKey, $a, $isSmall, $isDisabled, $aRow);
+    }
+            
+            
     protected function _getFilterClients()
     {
         $aIds = $this->_oModule->_oDb->getOrderProcessed(array('type' => 'clients', 'seller_id' => $this->_aQueryAppend['seller_id']));
@@ -197,7 +206,7 @@ class BxPaymentGridProcessed extends BxBaseModPaymentGridOrders
         if(strpos($sFilter, $sParamsDivider) !== false)
             list($iClient, $iModule, $iItem, $sFilter) = explode($sParamsDivider, $sFilter);
 
-        $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tt`.`seller_id`=?", $this->_aQueryAppend['seller_id']);
+        $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND (`tt`.`seller_id`=? OR `tt`.`author_id`=?)", $this->_aQueryAppend['seller_id'], $this->_aQueryAppend['seller_id']);
 
         $iClient = (int)$iClient;
         if($iClient != 0)
