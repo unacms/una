@@ -106,15 +106,14 @@ class BxDolLocationField extends BxDolFactory implements iBxDolFactoryObject
             $sRet = $oForm->getTemplate()->parseHtmlByName('form_field_location_plain_auto.html', $aVars);
         }
         else {
-            // TODO: translations for placeholders
             $aFields = array(
                 'lat' => array('type' => 'hidden'),
                 'lng' => array('type' => 'hidden'),
-                'street_number' => array('type' => 'text', 'ph' => 'Number'),
-                'street' => array('type' => 'text', 'ph' => 'Street'),
-                'city' => array('type' => 'text', 'ph' => 'City / Disctrict'),
-                'state' => array('type' => 'text', 'ph' => 'State / Province'),
-                'zip' => array('type' => 'text', 'ph' => 'Postal Code'),
+                'street_number' => array('type' => 'text', 'ph' => _t('_sys_location_ph_number')),
+                'street' => array('type' => 'text', 'ph' => _t('_sys_location_ph_street')),
+                'city' => array('type' => 'text', 'ph' => _t('_sys_location_ph_city')),
+                'state' => array('type' => 'text', 'ph' => _t('_sys_location_ph_state')),
+                'zip' => array('type' => 'text', 'ph' => _t('_sys_location_ph_zip')),
                 'country' => array('type' => 'select'),
             );
 
