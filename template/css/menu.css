@@ -173,6 +173,11 @@ ul.bx-menu-custom-ver {
 
 /* --------------- main menu */
 
+/*--- Main (Top) menu ---*/
+#bx-sliding-menu-sys_site ul.bx-menu-object-sys_site li.bx-menu-item-more-auto {
+    display: none;
+}
+
 #bx-homepage-menu-sys_homepage {
     text-align:center;
 }
