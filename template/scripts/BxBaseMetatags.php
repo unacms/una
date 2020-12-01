@@ -109,8 +109,7 @@ class BxBaseMetatags extends BxDolMetatags
         if(!$sLocationHtml)
 			return '';
 
-        // TODO: add param for map object
-        $o = BxDolLocationMap::getObjectInstance('sys_google_static',  $this->_oTemplate);
+        $o = BxDolLocationMap::getObjectInstance(getParam('sys_location_map_default'),  $this->_oTemplate);
         if(!$o)
 			return '';
 

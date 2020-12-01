@@ -28,6 +28,15 @@ class BxDolLocationFieldQuery extends BxDolDb
 
         return $aObject;
     }
+
+    static public function getObjects ()
+    {
+        $aObjects = BxDolDb::getInstance()->getAll("SELECT * FROM `sys_objects_location_field`");
+        if(empty($aObjects) || !is_array($aObjects))
+            return array();
+
+        return $aObjects;
+    }
 }
 
 /** @} */

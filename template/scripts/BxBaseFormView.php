@@ -1709,7 +1709,7 @@ BLAH;
 
     function genInputLocation(&$aInput)
     {
-        $o = BxDolLocationField::getObjectInstance('sys_plain');
+        $o = BxDolLocationField::getObjectInstance(getParam('sys_location_field_default'));
         if (!$o)
             return _t('_sys_txt_error_occured');
 

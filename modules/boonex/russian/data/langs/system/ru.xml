@@ -1485,6 +1485,8 @@
     <string name="_adm_stg_cpt_option_sys_install_time"><![CDATA[Дата установки]]></string>
     <string name="_adm_stg_cpt_option_sys_upgrade_channel"><![CDATA[Канал обновлений]]></string>
     <string name="_adm_stg_cpt_option_sys_live_updates_interval"><![CDATA[Интервал обновлений (в миллисекундах)]]></string>
+    <string name="_adm_stg_cpt_option_sys_location_field_default"><![CDATA[Поставщик для поля ввода адреса]]></string>
+    <string name="_adm_stg_cpt_option_sys_location_map_default"><![CDATA[Поставщик для отображения карт]]></string>
     <string name="_adm_stg_cpt_option_sys_maps_api_key"><![CDATA[Ключ Google Maps API]]></string>
     <string name="_adm_stg_cpt_option_sys_embed_default"><![CDATA[Поставщик встраиваемого кода]]></string>
     <string name="_adm_stg_cpt_option_sys_embedly_api_key"><![CDATA[Ключ Embed.ly API (заполните, чтобы использовать вместо Iframely)]]></string>
@@ -2529,6 +2531,9 @@
 	<string name="_sys_location_determining"><![CDATA[Определение местоположения...]]></string>
 	<string name="_sys_location_geolocation_not_supported_by_browser"><![CDATA[Геолокация не поддерживается этим браузером]]></string>
 	<string name="_sys_location_undefined"><![CDATA[Отключить местоположение]]></string>
+	<string name="_sys_location_map_google_static"><![CDATA[Google Maps (статическое изображение)]]></string>
+	<string name="_sys_location_field_google"><![CDATA[Google автозаполнение адресов]]></string>
+	<string name="_sys_location_field_plain"><![CDATA[Простые поля]]></string>
 	<string name="_sys_log_debug"><![CDATA[Система: отладка]]></string>
     <string name="_sys_log_twilio"><![CDATA[Система: Twilio]]></string>
     <string name="_sys_log_push"><![CDATA[Система: PUSH]]></string>
