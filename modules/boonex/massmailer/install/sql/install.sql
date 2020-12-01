@@ -69,7 +69,7 @@ INSERT INTO `sys_std_pages`(`index`, `name`, `header`, `caption`, `icon`) VALUES
 
 SET @iPageId = LAST_INSERT_ID();
 
-INSERT INTO `sys_std_widgets` (`page_id`, `module`, `type`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`, `bookmark`) 
+INSERT INTO `sys_std_widgets` (`page_id`, `module`, `type`, `url`, `click`, `icon`, `caption`, `cnt_notices`, `cnt_actions`, `featured`) 
 VALUES(@iPageId, @sName, 'extensions', '{url_studio}module.php?name=bx_massmailer', '', 'bx_massmailer@modules/boonex/massmailer/|std-icon.svg', '_bx_massmailer', '', 'a:4:{s:6:"module";s:6:"system";s:6:"method";s:11:"get_actions";s:6:"params";a:0:{}s:5:"class";s:18:"TemplStudioModules";}', 0);
 
 SET @iParentPageId = (SELECT `id` FROM `sys_std_pages` WHERE `name` = 'home');
