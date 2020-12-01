@@ -99,23 +99,22 @@ class BxBaseMetatags extends BxDolMetatags
         return $this->_oTemplate->parseHtmlByName('metatags_keywords_cloud.html', $aVars);
     }
 
-	public function getLocationsMap($iId, $sMapSize = '1000x144')
+	public function getLocationsMap($iId, $aParams = array())
     {
+        $aLocation = $this->locationGet($iId);
+        if(!$aLocation)
+            return '';
+
         $sLocationHtml = $this->locationsString($iId);
         if(!$sLocationHtml)
 			return '';
 
-		$sMapKey = trim(getParam('sys_maps_api_key'));
-        $sLocationEncoded = rawurlencode(strip_tags($sLocationHtml));
-        $sProto = (0 === strncmp('https', BX_DOL_URL_ROOT, 5)) ? 'https' : 'http';
-        $iScale = isset($_COOKIE['devicePixelRatio']) && (int)$_COOKIE['devicePixelRatio'] >= 2 ? 2 : 1;
-        $sLang = bx_lang_name();
+        // TODO: add param for map object
+        $o = BxDolLocationMap::getObjectInstance('sys_google_static',  $this->_oTemplate);
+        if(!$o)
+			return '';
 
-        $this->addCssJs();
-        return $this->_oTemplate->parseHtmlByName('metatags_locations_map.html', array (
-            'map_img' => $sProto . '://maps.googleapis.com/maps/api/staticmap?center=' . $sLocationEncoded . '&zoom=7&size=' . $sMapSize . '&maptype=roadmap&markers=size:small%7C' . $sLocationEncoded . '&scale=' . $iScale . '&language=' . $sLang  . ($sMapKey ? '&key=' . $sMapKey : ''),
-            'location_string' => $sLocationHtml,
-        ));
+        return $o->getMapSingle($aLocation, $sLocationHtml, $aParams);
     }
 
     public function addCssJs()

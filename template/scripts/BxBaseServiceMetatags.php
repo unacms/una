@@ -69,9 +69,9 @@ class BxBaseServiceMetatags extends BxDol
      * @param $iId content id
      * @return map HTML string
      */
-    public function serviceLocationsMap($sObject, $iId, $sMapSize = '1000x144')
+    public function serviceLocationsMap($sObject, $iId, $aParams = array())
     {
-        return BxDolMetatags::getObjectInstance($sObject)->getLocationsMap($iId, $sMapSize);
+        return BxDolMetatags::getObjectInstance($sObject)->getLocationsMap($iId, $aParams);
     }
     
 	/**
