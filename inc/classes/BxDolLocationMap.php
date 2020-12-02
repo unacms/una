@@ -17,24 +17,11 @@
  * - class_name: user defined class name which is derived from BxDolLocationField.
  * - class_file: the location of the user defined class, leave it empty if class is located in system folders.
  */
-class BxDolLocationMap extends BxDolFactory implements iBxDolFactoryObject
+class BxDolLocationMap extends BxDolFactoryObject
 {
-	protected $_oDb;
-	protected $_sObject;
-    protected $_aObject;
-    protected $_oTemplate;
-
-    /**
-     * Constructor
-     */
     protected function __construct($aObject, $oTemplate = null)
     {
-        parent::__construct();
-
-        $this->_aObject = $aObject;
-        $this->_sObject = $aObject['object'];
-        $this->_oTemplate = $oTemplate ? $oTemplate : BxDolTemplate::getInstance();
-        $this->_oDb = new BxDolLocationMapQuery($this->_aObject);
+        parent::__construct($aObject, $oTemplate, 'BxDolLocationFieldQuery');
     }
 
    /**
@@ -44,30 +31,7 @@ class BxDolLocationMap extends BxDolFactory implements iBxDolFactoryObject
      */
     public static function getObjectInstance($sObject, $oTemplate = null)
     {
-        if(isset($GLOBALS['bxDolClasses']['BxDolLocationMap!' . $sObject]))
-            return $GLOBALS['bxDolClasses']['BxDolLocationMap!' . $sObject];
-
-        $aObject = BxDolLocationMapQuery::getLocationMapObject($sObject);
-        if (!$aObject || !is_array($aObject))
-            return false;
-
-        $sClass = 'BxDolLocationMap';
-        if(!empty($aObject['class_name'])) {
-            $sClass = $aObject['class_name'];
-            if(!empty($aObject['class_file']))
-                require_once(BX_DIRECTORY_PATH_ROOT . $aObject['class_file']);
-        }        
-
-        $o = new $sClass($aObject, $oTemplate);
-        return ($GLOBALS['bxDolClasses']['BxDolLocationMap!' . $sObject] = $o);
-    }
-
-    /**
-     * Get current object name
-     */
-    public function getObjectName()
-    {
-        return $this->_aObject['object'];
+        return parent::getObjectInstanceByClassNames($sObject, $oTemplate, 'BxDolLocationMap', 'BxDolLocationMapQuery');
     }
 
     /**

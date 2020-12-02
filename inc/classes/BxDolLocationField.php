@@ -17,23 +17,11 @@
  * - class_name: user defined class name which is derived from BxDolLocationField.
  * - class_file: the location of the user defined class, leave it empty if class is located in system folders.
  */
-class BxDolLocationField extends BxDolFactory implements iBxDolFactoryObject
+class BxDolLocationField extends BxDolFactoryObject
 {
-	protected $_oDb;
-	protected $_sObject;
-    protected $_aObject;
-
-    /**
-     * Constructor
-     */
     protected function __construct($aObject)
     {
-        parent::__construct();
-
-        $this->_aObject = $aObject;
-        $this->_sObject = $aObject['object'];
-
-        $this->_oDb = new BxDolLocationFieldQuery($this->_aObject);
+        parent::__construct($aObject, null, 'BxDolLocationFieldQuery');
     }
 
    /**
@@ -43,6 +31,8 @@ class BxDolLocationField extends BxDolFactory implements iBxDolFactoryObject
      */
     public static function getObjectInstance($sObject)
     {
+        return parent::getObjectInstanceByClassNames($sObject, null, 'BxDolLocationField', 'BxDolLocationFieldQuery');
+/*
         if(isset($GLOBALS['bxDolClasses']['BxDolLocationField!' . $sObject]))
             return $GLOBALS['bxDolClasses']['BxDolLocationField!' . $sObject];
 
@@ -59,14 +49,7 @@ class BxDolLocationField extends BxDolFactory implements iBxDolFactoryObject
 
         $o = new $sClass($aObject);
         return ($GLOBALS['bxDolClasses']['BxDolLocationField!' . $sObject] = $o);
-    }
-
-    /**
-     * Get current object name
-     */
-    public function getObjectName()
-    {
-        return $this->_aObject['object'];
+*/
     }
 
     public function genInputLocation (&$aInput, $oForm)
@@ -103,7 +86,7 @@ class BxDolLocationField extends BxDolFactory implements iBxDolFactoryObject
                 'location_string' => $sLocationString,
             );
 
-            $sRet = $oForm->getTemplate()->parseHtmlByName('form_field_location_plain_auto.html', $aVars);
+            $sRet = $oForm->getTemplate()->parseHtmlByName('location_field_plain_auto.html', $aVars);
         }
         else {
             $aFields = array(
