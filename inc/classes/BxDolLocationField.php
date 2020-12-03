@@ -32,24 +32,6 @@ class BxDolLocationField extends BxDolFactoryObject
     public static function getObjectInstance($sObject)
     {
         return parent::getObjectInstanceByClassNames($sObject, null, 'BxDolLocationField', 'BxDolLocationFieldQuery');
-/*
-        if(isset($GLOBALS['bxDolClasses']['BxDolLocationField!' . $sObject]))
-            return $GLOBALS['bxDolClasses']['BxDolLocationField!' . $sObject];
-
-        $aObject = BxDolLocationFieldQuery::getLocationFieldObject($sObject);
-        if (!$aObject || !is_array($aObject))
-            return false;
-
-        $sClass = 'BxDolLocationField';
-        if(!empty($aObject['class_name'])) {
-            $sClass = $aObject['class_name'];
-            if(!empty($aObject['class_file']))
-                require_once(BX_DIRECTORY_PATH_ROOT . $aObject['class_file']);
-        }        
-
-        $o = new $sClass($aObject);
-        return ($GLOBALS['bxDolClasses']['BxDolLocationField!' . $sObject] = $o);
-*/
     }
 
     public function genInputLocation (&$aInput, $oForm)
@@ -100,7 +82,7 @@ class BxDolLocationField extends BxDolFactoryObject
                 'country' => array('type' => 'select'),
             );
 
-            $sRet = '';
+            $sInputs = '';
             foreach ($aFields as $sKey => $a) {
                 $aInputField = $aInput;
                 $aInputField['name'] = $aInput['name'] . '_' . $sKey;
@@ -113,12 +95,16 @@ class BxDolLocationField extends BxDolFactoryObject
                     $aInputField['attrs']['class'] = 'bx-form-input-location-' . $sKey;
                 if ('country' == $sKey) {
                     $aInputField['values'] = BxDolFormQuery::getDataItems('Country');
-                    $sRet .= $oForm->genInputSelect($aInputField);
+                    $sInputs .= $oForm->genInputSelect($aInputField);
                 }
                 else {
-                    $sRet .= $oForm->genInputStandard($aInputField);
+                    $sInputs .= $oForm->genInputStandard($aInputField);
                 }
             }
+            $sRet = $oForm->getTemplate()->parseHtmlByName('location_field_plain.html', array(
+                'name' => $aInput['name'],
+                'inputs' => $sInputs,
+            ));
         }
         return $sRet;
     }

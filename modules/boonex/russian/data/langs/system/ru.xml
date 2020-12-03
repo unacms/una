@@ -2533,12 +2533,15 @@
 	<string name="_sys_location_undefined"><![CDATA[Отключить местоположение]]></string>
 	<string name="_sys_location_map_google_static"><![CDATA[Google Maps (статическое изображение)]]></string>
 	<string name="_sys_location_field_google"><![CDATA[Google автозаполнение адресов]]></string>
-	<string name="_sys_location_field_plain"><![CDATA[Простые поля]]></string>
+	<string name="_sys_location_field_plain"><![CDATA[Простые поля c Nominatim OSM геокодированием]]></string>
     <string name="_sys_location_ph_number"><![CDATA[Номер]]></string>
     <string name="_sys_location_ph_street"><![CDATA[Улица]]></string>
     <string name="_sys_location_ph_city"><![CDATA[Город]]></string>
     <string name="_sys_location_ph_state"><![CDATA[Область]]></string>
     <string name="_sys_location_ph_zip"><![CDATA[Почтовый код]]></string>
+    <string name="_sys_location_status_undef"><![CDATA[Не определено]]></string>
+    <string name="_sys_location_status_ok"><![CDATA[Адрес найден]]></string>
+    <string name="_sys_location_status_fail"><![CDATA[Адрес не найден]]></string>
 	<string name="_sys_log_debug"><![CDATA[Система: отладка]]></string>
     <string name="_sys_log_twilio"><![CDATA[Система: Twilio]]></string>
     <string name="_sys_log_push"><![CDATA[Система: PUSH]]></string>
