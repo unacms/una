@@ -709,3 +709,11 @@
 .bx-form-input-location-copyright {
     float:right;
 }
+
+.bx-form-input-location-auto-cont {
+    display:table;
+}
+.bx-form-input-location-auto-cont > div {
+    display:table-cell;
+    vertical-align:middle;
+}

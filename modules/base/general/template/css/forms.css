@@ -24,12 +24,3 @@
 .bx-base-general-use-as-thumb label {
     vertical-align:middle;
 }
-
-/* location input */
-
-.bx-form-input-location-cont > div {
-    float:left;
-    line-height:1.5rem;
-}
-
-

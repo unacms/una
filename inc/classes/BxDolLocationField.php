@@ -61,12 +61,10 @@ class BxDolLocationField extends BxDolFactoryObject
                 $sLocationString = $aVars['lat'] . ', ' . $aVars['lng'];
             }
 
-            $aVars = array (
-                'name' => $aInput['name'],
-                'input' => $oForm->genInputSwitcher($aInputField),
-                'id_status' => $oForm->getInputId($aInput) . '_status',
-                'location_string' => $sLocationString,
-            );
+            $aVars['name'] = $aInput['name'];
+            $aVars['input'] = $oForm->genInputSwitcher($aInputField);
+            $aVars['id_status'] = $oForm->getInputId($aInput) . '_status';
+            $aVars['location_string'] = $sLocationString;
 
             $sRet = $oForm->getTemplate()->parseHtmlByName('location_field_plain_auto.html', $aVars);
         }
