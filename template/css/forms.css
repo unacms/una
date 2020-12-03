@@ -697,3 +697,15 @@
 .bx-form-input-location-city {
     margin-bottom:0.25rem;
 }
+
+.bx-form-input-location-cont .bx-form-input-location-status-cont {
+    float:none;
+    width:98%;
+    line-height:normal;
+}
+.bx-form-input-location-status {
+    float:left;
+}
+.bx-form-input-location-copyright {
+    float:right;
+}
