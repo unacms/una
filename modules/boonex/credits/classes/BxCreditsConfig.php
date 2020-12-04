@@ -100,12 +100,14 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
         $this->_aJsClasses = array_merge($this->_aJsClasses, array(
             'studio' => 'BxCreditsStudio',
             'checkout' => 'BxCreditsCheckout',
+            'subscribe' => 'BxCreditsSubscribe',
             'withdraw' => 'BxCreditsWithdraw',
         ));
 
         $this->_aJsObjects = array_merge($this->_aJsObjects, array(
             'studio' => 'oBxCreditsStudio',
             'checkout' => 'oBxCreditsCheckout',
+            'subscribe' => 'oBxCreditsSubscribe',
             'withdraw' => 'oBxCreditsWithdraw',
         ));
 
@@ -120,6 +122,8 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
             'withdraw_field_rate' => $sPrefix . '-wff-rate',
             'withdraw_field_amount' => $sPrefix . '-wff-amount',
             'withdraw_field_result' => $sPrefix . '-wff-result',
+
+            'subscribe_popup' =>  $sPrefix . '-subscribe-popup',
         );
 
         $this->_aPrefixes = array(
@@ -216,9 +220,9 @@ class BxCreditsConfig extends BxBaseModGeneralConfig
         return BxDolSession::getInstance()->setValue($this->_sCheckoutSessionKey, $aData);
     }
 
-    public function getOrder()
+    public function getOrder($iLength = 16)
     {
-        return genRndPwd(16, false);
+        return genRndPwd($iLength, false);
     }
 
     /**

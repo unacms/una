@@ -1,10 +1,8 @@
-/*--- Checkout block ---*/
-.bx-credits-checkout {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
+/*--- Subscribe popup ---*/
+.bx-credits-subscribe {
+    position: relative;
 }
-.bx-credits-checkout-cnt {
+.bx-credits-subscribe-cnt {
     position: relative;
     display: -webkit-flex;
     display: flex;
@@ -16,12 +14,12 @@
     height: 100%;
 }
 
-.bx-credits-checkout-box {
+.bx-credits-subscribe-box {
     position: relative;
-    display: inline-block;
+    min-width: 18rem;
 }
 
-.bx-credits-cb-row {
+.bx-credits-sb-row {
     position: relative;
     display: -webkit-flex;
     display: flex;
@@ -31,22 +29,19 @@
     justify-content: space-between;
 }
 
-.bx-credits-cb-item {
-    position: relative;
-    display: inline-block;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-align-items: center;
-    align-items: center;
-    -webkit-justify-content: space-between;
-    justify-content: space-between;
-}
-
-.bx-credits-cbr-actions {
+.bx-credits-sbr-actions {
     text-align: center;
 }
-.bx-credits-cbr-actions .bx-btn {
+
+.bx-credits-sbr-actions .bx-btn {
     display: inline-block;
     float: none;
     width: 80%;
+}
+
+.bx-credits-sb-row.bx-credits-sbr-title,
+.bx-credits-sb-row.bx-credits-sbr-item,
+.bx-credits-sb-row.bx-credits-sbr-actions {
+    -webkit-justify-content: center;
+    justify-content: center;
 }

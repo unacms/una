@@ -135,6 +135,56 @@ class BxCreditsTemplate extends BxBaseModGeneralTemplate
             'js_code' => $oPayment->getCartJs()
         ));
     }
+
+    public function getPopupSubscribe($oBuyer, $oSeller, $aData)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        $bDynamic = bx_is_dynamic_request();
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
+        $sJsObject = $this->_oConfig->getJsObject('subscribe');
+
+        $fRate = $this->_oConfig->getConversionRateUse();
+        $aCurrency = $this->_oConfig->getCurrency();
+
+        $sCurrencySign = $aCurrency['sign'];
+        if(!empty($aData['currency']['sign']))
+            $sCurrencySign = $aData['currency']['sign'];
+
+        $sPeriod = _t('_bx_credits_txt_subscribe_period_unit_' . $aData['period_unit']);
+        if((int)$aData['period'] > 1);
+            $sPeriod = _t('_bx_credits_txt_subscribe_period_mask', $aData['period'], $sPeriod);
+
+        $sInclude = '';
+        $sInclude .= $this->addJs(array('subscribe.js'), $bDynamic);
+        $sInclude .= $this->addCss(array('main.css', 'subscribe.css'), $bDynamic);
+
+        $sContent = ($bDynamic ? $sInclude : '') . $this->parseHtmlByName('subscribe.html', array(
+            'sp' => $sStylePrefix,
+            'jo' => $sJsObject,
+            'title' => _t('_bx_credits_txt_subscribe_for', $oSeller->getDisplayName()),
+            'item_title' => $aData['title'],
+            'amount' => $sCurrencySign . sprintf("%.2f", (float)($aData['amountm'])),
+            'period' => $sPeriod,
+            'bx_if:show_rate' => array(
+                'condition' => $fRate != 1,
+                'content' => array(
+                    'sp' => $sStylePrefix,
+                    'rate' => $fRate,
+                )
+            ),
+            'bx_if:show_trial' => array(
+                'condition' => (int)$aData['trial'] > 0,
+                'content' => array(
+                    'sp' => $sStylePrefix,
+                    'trial' => _t('_bx_credits_txt_subscribe_trial_mask', $aData['trial'], _t('_bx_credits_txt_subscribe_period_unit_day'))
+                )
+            ),
+            'credits' => $this->getModule()->convertC2S($aData['amountc']),
+            'js_code' => $this->getJsCode('subscribe')
+        ));
+
+        return BxTemplFunctions::getInstance()->transBox($this->_oConfig->getHtmlIds('subscribe_popup'), $sContent);
+    }
 }
 
 /** @} */

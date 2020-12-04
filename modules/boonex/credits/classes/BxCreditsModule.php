@@ -94,6 +94,47 @@ class BxCreditsModule extends BxBaseModGeneralModule
         ));
     }
 
+    public function actionSubscribe()
+    {
+        $iBuyerId = bx_get_logged_profile_id();
+        if(!$iBuyerId)
+            return echoJson(array('code' => 1, 'msg' => _t('_bx_credits_err_unknown_buyer')));
+
+        $aData = $this->_oConfig->getCheckoutData();
+        if(empty($aData) || !is_array($aData))
+            return echoJson(array('code' => 2, 'msg' => _t('_bx_credits_err_incorrect_data')));
+
+        $iSellerId = (int)$aData['seller'];
+        $fAmount = (float)$aData['amount'];
+
+        $fBalance = (float)$this->_oDb->getProfile(array('type' => 'balance', 'id' => $iBuyerId));
+        if($fAmount > $fBalance)
+            return echoJson(array('code' => 3, 'msg' => _t('_bx_credits_err_low_balance')));
+
+        $sUnique = $this->_oConfig->getOrder(9);
+        $sCustomer = 'bx_cus_' . $sUnique;
+        $sSubscription = 'bx_sub_' . $sUnique;
+
+        bx_alert($this->getName(), 'subscribe', 0, false, array(
+            'seller' => $iSellerId,
+            'buyer' => $iBuyerId,
+            'amount' => $fAmount, 
+            'trial' => $aData['trial'],
+            'customer' => $sCustomer,
+            'subscription' => $sSubscription
+        ));
+
+        return echoJson(array(
+            'code' => 0,
+            'redirect' => bx_append_url_params($aData['return_data_url'], array(
+                'cs' => $sCustomer, 
+                'sb' => $sSubscription,
+                'tr' => $aData['trial'],
+                'c' => $aData['custom']
+            ))
+        ));
+    }
+
     public function serviceGetSafeServices()
     {
         return array (
@@ -170,6 +211,35 @@ class BxCreditsModule extends BxBaseModGeneralModule
             'return_data_url' => bx_process_input(bx_get('return_data_url')),
         ));
         return $this->_oTemplate->getBlockCheckout($oBuyer, $oSeller, $aData);
+    }
+
+    public function serviceGetPopupSubscribe($aData)
+    {
+        $oBuyer = BxDolProfile::getInstance();
+        if(!$oBuyer)
+            return array('msg' => _t('_bx_credits_err_unknown_buyer'));
+
+        $iSeller = (int)$aData['seller'];
+        $oSeller = BxDolProfile::getInstance($iSeller);
+        if(!$oSeller)
+            return array('msg' => _t('_bx_credits_err_unknown_seller'));
+
+        $fAmountM = (float)$aData['amount'];
+        $fAmountC = $this->_oConfig->convertM2C($fAmountM);
+
+        $aData = array_merge($aData, array(
+            'amountm' => $fAmountM,
+            'amountc' => $fAmountC
+        ));
+
+        $this->_oConfig->setCheckoutData(array(
+            'seller' => $iSeller,
+            'amount' => $fAmountC,
+            'trial' => (int)$aData['trial'] > 0,
+            'custom' => bx_process_input($aData['custom']),
+            'return_data_url' => bx_process_input($aData['return_data_url']),
+        ));
+        return $this->_oTemplate->getPopupSubscribe($oBuyer, $oSeller, $aData);
     }
 
     public function serviceGetMenuItemAddonAmount()
@@ -592,6 +662,21 @@ class BxCreditsModule extends BxBaseModGeneralModule
             $sInfo = '_bx_credits_txt_history_info_service';
 
         return $this->updateProfileBalance($iFirstPid, $iSecondPid, $fAmount, $sOrder, $sInfo);
+    }
+    
+    public function serviceMakePayment($iBuyerPid, $fAmount, $iSellerPid, $sOrder = '')
+    {
+        $sInfo = '_bx_credits_txt_history_info_checkout';
+
+        if(!$this->updateProfileBalance($iBuyerPid, $iSellerPid, -$fAmount, $sOrder, $sInfo))
+            return false;
+
+        if(!$this->updateProfileBalance($iSellerPid, $iBuyerPid, $fAmount, $sOrder, $sInfo)) {
+            $this->updateProfileBalance($iBuyerPid, 0, $fAmount, $sOrder, '_bx_credits_txt_history_info_refund');
+            return false;
+        }
+
+        return true;
     }
 
     /**
