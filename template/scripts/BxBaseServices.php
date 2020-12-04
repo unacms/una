@@ -483,6 +483,28 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return $aResults;
     }
 
+    public function serviceGetOptionsLocationFieldDefault()
+    {
+        $aResults = array();
+
+        $aObjects = BxDolLocationFieldQuery::getObjects();
+        foreach($aObjects as $aObject)
+            $aResults[$aObject['object']] = _t($aObject['title']);
+
+        return $aResults;
+    }
+
+    public function serviceGetOptionsLocationMapDefault()
+    {
+        $aResults = array();
+
+        $aObjects = BxDolLocationMapQuery::getObjects();
+        foreach($aObjects as $aObject)
+            $aResults[$aObject['object']] = _t($aObject['title']);
+
+        return $aResults;
+    }
+
     public function serviceGetOptionsRelations()
     {
         $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules', 'active' => 1));

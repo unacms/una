@@ -7,26 +7,16 @@
  * @{
  */
 
-class BxDolLocationFieldQuery extends BxDolDb
+class BxDolLocationFieldQuery extends BxDolFactoryObjectQuery
 {
-
-    public function __construct($aObject = array())
+    static public function getObject($sObject)
     {
-        parent::__construct();
-        $this->_aObject = $aObject;
+        return parent::getObjectFromTable($sObject, 'sys_objects_location_field');
     }
 
-    static public function getLocationFieldObject($sObject)
+    static public function getObjects ()
     {
-        $oDb = BxDolDb::getInstance();
-
-        $sQuery = $oDb->prepare("SELECT * FROM `sys_objects_location_field` WHERE `object` = ?", $sObject);
-
-        $aObject = $oDb->getRow($sQuery);
-        if(!$aObject || !is_array($aObject))
-            return false;
-
-        return $aObject;
+        return parent::getObjectsFromTable('sys_objects_location_field');
     }
 }
 
