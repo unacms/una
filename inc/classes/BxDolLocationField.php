@@ -65,6 +65,8 @@ class BxDolLocationField extends BxDolFactoryObject
             $aVars['input'] = $oForm->genInputSwitcher($aInputField);
             $aVars['id_status'] = $oForm->getInputId($aInput) . '_status';
             $aVars['location_string'] = $sLocationString;
+            $aVars['nominatim_server'] = $this->getNominatimServer();
+            $aVars['nominatim_email'] = $this->getNominatimEmail();
 
             $sRet = $oForm->getTemplate()->parseHtmlByName('location_field_plain_auto.html', $aVars);
         }
@@ -92,7 +94,9 @@ class BxDolLocationField extends BxDolFactoryObject
                 else
                     $aInputField['attrs']['class'] = 'bx-form-input-location-' . $sKey;
                 if ('country' == $sKey) {
-                    $aInputField['values'] = BxDolFormQuery::getDataItems('Country');
+                    $aCountries = BxDolFormQuery::getDataItems('Country');
+                    array_unshift($aCountries, array('key' => '', 'value' => _t('_None')));
+                    $aInputField['values'] = $aCountries;
                     $sInputs .= $oForm->genInputSelect($aInputField);
                 }
                 else {
@@ -101,6 +105,8 @@ class BxDolLocationField extends BxDolFactoryObject
             }
             $sRet = $oForm->getTemplate()->parseHtmlByName('location_field_plain.html', array(
                 'name' => $aInput['name'],
+                'nominatim_server' => $this->getNominatimServer(),
+                'nominatim_email' => $this->getNominatimEmail(),
                 'inputs' => $sInputs,
             ));
         }
@@ -116,6 +122,16 @@ class BxDolLocationField extends BxDolFactoryObject
             return $aSpecificValues[$s];
 
         return $oForm->getCleanValue($s);
+    }
+
+    protected function getNominatimServer ()
+    {
+        return trim(trim(getParam('sys_nominatim_server')), '/');
+    }
+
+    protected function getNominatimEmail ()
+    {
+        return trim(getParam('sys_nominatim_email'));
     }
 }
 

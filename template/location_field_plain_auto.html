@@ -37,7 +37,7 @@
             }
 
             glBxLocationFieldPlainAutoGeocodingRequest = setTimeout(function () {
-                $.getJSON('https://nominatim.openstreetmap.org/reverse?lat=' + encodeURIComponent(position.coords.latitude) + '&lon=' + encodeURIComponent(position.coords.longitude) + '&format=json&addressdetails=1', function (oResult) {
+                $.getJSON('__nominatim_server__/reverse?lat=' + encodeURIComponent(position.coords.latitude) + '&lon=' + encodeURIComponent(position.coords.longitude) + '&format=json&addressdetails=1&email=__nominatim_email__', function (oResult) {
 
                     glBxLocationFieldPlainAutoGeocodingRequest = false;
 

@@ -434,10 +434,6 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 (@iCategoryId, 'sys_default_payment', '_adm_stg_cpt_option_sys_default_payment', '', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:12:"get_payments";s:5:"class";s:21:"TemplPaymentsServices";}', '', '', 60),
 
-(@iCategoryId, 'sys_location_field_default', '_adm_stg_cpt_option_sys_location_field_default', 'sys_plain', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:34:"get_options_location_field_default";s:5:"class";s:13:"TemplServices";}', '', '', 70),
-(@iCategoryId, 'sys_location_map_default', '_adm_stg_cpt_option_sys_location_map_default', 'sys_google_static', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:32:"get_options_location_map_default";s:5:"class";s:13:"TemplServices";}', '', '', 71),
-(@iCategoryId, 'sys_maps_api_key', '_adm_stg_cpt_option_sys_maps_api_key', '', 'digit', '', '', '', 72),
-
 (@iCategoryId, 'sys_embed_default', '_adm_stg_cpt_option_sys_embed_default', 'sys_embedly', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:25:"get_options_embed_default";s:5:"class";s:13:"TemplServices";}', '', '', 79),
 (@iCategoryId, 'sys_embedly_api_key', '_adm_stg_cpt_option_sys_embedly_api_key', '', 'digit', '', '', '', 80),
 
@@ -592,6 +588,19 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'sys_twilio_gate_token', '_adm_stg_cpt_option_sys_twilio_gate_token', '', 'digit', '', '', '', 2),
 (@iCategoryId, 'sys_twilio_gate_from_number', '_adm_stg_cpt_option_sys_twilio_gate_from_number', '', 'digit', '', '', '', 3);
 
+
+--
+-- CATEGORY: Location
+--
+INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `hidden`, `order`) VALUES (@iTypeId, 'location', '_adm_stg_cpt_category_location', 0, 20);
+SET @iCategoryId = LAST_INSERT_ID();
+
+INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
+(@iCategoryId, 'sys_location_field_default', '_adm_stg_cpt_option_sys_location_field_default', 'sys_plain', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:34:"get_options_location_field_default";s:5:"class";s:13:"TemplServices";}', '', '', 10),
+(@iCategoryId, 'sys_location_map_default', '_adm_stg_cpt_option_sys_location_map_default', 'sys_google_static', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:32:"get_options_location_map_default";s:5:"class";s:13:"TemplServices";}', '', '', 12),
+(@iCategoryId, 'sys_maps_api_key', '_adm_stg_cpt_option_sys_maps_api_key', '', 'digit', '', '', '', 20),
+(@iCategoryId, 'sys_nominatim_server', '_adm_stg_cpt_option_sys_nominatim_server', 'https://nominatim.openstreetmap.org', 'digit', '', '', '', 30),
+(@iCategoryId, 'sys_nominatim_email', '_adm_stg_cpt_option_sys_nominatim_email', '', 'digit', '', '', '', 32);
 
 --
 -- CATEGORY (HIDDEN): Audit

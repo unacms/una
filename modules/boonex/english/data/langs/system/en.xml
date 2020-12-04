@@ -1424,6 +1424,7 @@
 	<string name="_adm_stg_cpt_category_system"><![CDATA[System]]></string>
 	<string name="_adm_stg_cpt_category_templates"><![CDATA[Templates]]></string>
     <string name="_adm_stg_cpt_category_twilio_gate"><![CDATA[Twilio]]></string>
+    <string name="_adm_stg_cpt_category_location"><![CDATA[Location]]></string>
     <string name="_adm_stg_cpt_option_client_image_resize_width"><![CDATA[Image width to resize before upload (0 - disable)]]></string>
     <string name="_adm_stg_cpt_option_client_image_resize_height"><![CDATA[Image height to resize before upload (0 - disable)]]></string>
 	<string name="_adm_stg_cpt_option_currency_code"><![CDATA[Currency code (for checkout system)]]></string>
@@ -1530,6 +1531,8 @@
 	<string name="_adm_stg_cpt_option_sys_twilio_gate_sid"><![CDATA[Account SID]]></string>
 	<string name="_adm_stg_cpt_option_sys_twilio_gate_token"><![CDATA[Auth token]]></string>
 	<string name="_adm_stg_cpt_option_sys_twilio_gate_from_number"><![CDATA[Default 'From' number for SMS]]></string>    
+	<string name="_adm_stg_cpt_option_sys_nominatim_server"><![CDATA[Nominatim server URL]]></string>    
+	<string name="_adm_stg_cpt_option_sys_nominatim_email"><![CDATA[Nominatim email to identify requests]]></string>
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_private"><![CDATA[reCAPTCHA private key]]></string>
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_public"><![CDATA[reCAPTCHA public key]]></string>
 	<string name="_adm_stg_cpt_option_sys_redirect_after_account_added"><![CDATA[Redirect after account creation to]]></string>

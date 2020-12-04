@@ -58,7 +58,7 @@
 
             glBxLocationFieldPlainGeocodingRequest = setTimeout(function () {
                 setLocationStatus('loading');
-                $.getJSON('https://nominatim.openstreetmap.org/search/' + encodeURIComponent(s) + '?format=json&limit=1', function (oResult) {
+                $.getJSON('__nominatim_server__/search/' + encodeURIComponent(s) + '?format=json&limit=1&email=__nominatim_email__', function (oResult) {
                     glBxLocationFieldPlainGeocodingRequest = false;
                     if (('object' === typeof oResult) && oResult.length && ('undefined' !== typeof oResult[0].lat) && ('undefined' !== typeof oResult[0].lon)) {
                         $('input[name="__name___lat"]').val(oResult[0].lat);
