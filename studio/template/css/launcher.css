@@ -295,14 +295,18 @@ body.shepherd-active .bx-std-widget-cont.shepherd-enabled {
 
     box-shadow: inset -1px 0px 0px rgba(240, 240, 240, 0.2)
 }
+
 .bx-std-launcher-browser .bx-std-lb-menu .bx-std-lb-logo {
     padding-left: 1rem;
     line-height: 3.75rem;
-    color: rgba(255, 255, 255, 0.7);
 }
+
+.bx-std-launcher-browser .bx-std-lb-menu .bx-std-lb-logo,
+.bx-std-launcher-browser .bx-std-lb-menu .bx-std-lb-logo a,
 .bx-std-launcher-browser .bx-std-lb-menu div.bx-std-pmen-item a {
     color: rgba(255, 255, 255, 0.7);
 }
+
 .bx-std-launcher-browser .bx-std-lb-menu div.bx-std-pmen-item:hover a,
 .bx-std-launcher-browser .bx-std-lb-menu div.bx-std-pmen-item:hover .sys-icon,
 .bx-std-launcher-browser .bx-std-lb-menu div.bx-std-pmen-item.bx-menu-tab-active a,

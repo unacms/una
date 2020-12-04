@@ -73,12 +73,14 @@ div.bx-dev-menu-main div.bx-dev-mm-item i.sys-icon {
 }
 
 /*--- Page Content ---*/
+.bx-dev-page-body-columns div.bx-std-page-column-cnt,
 div.bx-dev-page-columns-cnt {
     position: relative;
     display: -webkit-flex;
     display: flex;
     -webkit-align-items: stretch;
     align-items: stretch;
+    width: 100%;
 }
 
 div.bx-dev-page-column.bx-dev-page-menu {

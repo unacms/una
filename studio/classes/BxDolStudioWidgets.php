@@ -10,7 +10,7 @@
 define('BX_DOL_STUDIO_WS_ENABLED', 1);
 define('BX_DOL_STUDIO_WS_DISABLED', 2);
 
-define('BX_DOL_STUDIO_WTYPE_DEFAULT', 'library');
+define('BX_DOL_STUDIO_WTYPE_DEFAULT', '');
 
 class BxDolStudioWidgets extends BxTemplStudioPage
 {
