@@ -83,13 +83,12 @@ class BxDolCacheMemcache extends BxDolCache
     }
 
     /**
-     * remove all data from cache by key prefix
+     * It always removes all data, regardless the prefix param
      * @return true on success
      */
     function removeAllByPrefix ($s)
     {
-        // not implemented for current cache
-        return false;
+        return $this->oMemcache->flush();
     }
 }
 
