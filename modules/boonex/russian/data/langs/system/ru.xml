@@ -1407,6 +1407,7 @@
 	<string name="_adm_stg_cpt_category_system"><![CDATA[Система]]></string>
 	<string name="_adm_stg_cpt_category_templates"><![CDATA[Темы]]></string>
     <string name="_adm_stg_cpt_category_twilio_gate"><![CDATA[Twilio]]></string>
+    <string name="_adm_stg_cpt_category_location"><![CDATA[Местоположение]]></string>
     <string name="_adm_stg_cpt_option_client_image_resize_width"><![CDATA[Изменять ширину картинки перед загрузкой (0 - отключить)]]></string>
     <string name="_adm_stg_cpt_option_client_image_resize_height"><![CDATA[Изменять высоту картинки перед загрузкой (0 - отключить)]]></string>    
 	<string name="_adm_stg_cpt_option_currency_code"><![CDATA[Код валюты (для платёжных систем)]]></string>
@@ -1487,6 +1488,8 @@
     <string name="_adm_stg_cpt_option_sys_live_updates_interval"><![CDATA[Интервал обновлений (в миллисекундах)]]></string>
     <string name="_adm_stg_cpt_option_sys_location_field_default"><![CDATA[Поставщик для поля ввода адреса]]></string>
     <string name="_adm_stg_cpt_option_sys_location_map_default"><![CDATA[Поставщик для отображения карт]]></string>
+    <string name="_adm_stg_cpt_option_sys_location_map_zoom_default"><![CDATA[Увеличение карты]]></string>
+    <string name="_adm_stg_cpt_option_sys_location_leaflet_provider"><![CDATA[Поставщик карт для Leaflet]]></string>
     <string name="_adm_stg_cpt_option_sys_maps_api_key"><![CDATA[Ключ Google Maps API]]></string>
     <string name="_adm_stg_cpt_option_sys_embed_default"><![CDATA[Поставщик встраиваемого кода]]></string>
     <string name="_adm_stg_cpt_option_sys_embedly_api_key"><![CDATA[Ключ Embed.ly API (заполните, чтобы использовать вместо Iframely)]]></string>
@@ -1513,6 +1516,8 @@
 	<string name="_adm_stg_cpt_option_sys_twilio_gate_sid"><![CDATA[Account SID]]></string>
 	<string name="_adm_stg_cpt_option_sys_twilio_gate_token"><![CDATA[Auth token]]></string>
 	<string name="_adm_stg_cpt_option_sys_twilio_gate_from_number"><![CDATA[Номер для отправки SMS по умолчанию]]></string>
+	<string name="_adm_stg_cpt_option_sys_nominatim_server"><![CDATA[Nominatim сервер (URL)]]></string>    
+	<string name="_adm_stg_cpt_option_sys_nominatim_email"><![CDATA[Nominatim Email адрес (чтобы идентифицировать запросы)]]></string>
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_private"><![CDATA[reCAPTCHA - приватный ключ]]></string>
 	<string name="_adm_stg_cpt_option_sys_recaptcha_key_public"><![CDATA[reCAPTCHA - публичный ключ]]></string>
 	<string name="_adm_stg_cpt_option_sys_redirect_after_account_added"><![CDATA[Перенаправлять после создания аккаунта на]]></string>
@@ -2532,6 +2537,7 @@
 	<string name="_sys_location_geolocation_not_supported_by_browser"><![CDATA[Геолокация не поддерживается этим браузером]]></string>
 	<string name="_sys_location_undefined"><![CDATA[Отключить местоположение]]></string>
 	<string name="_sys_location_map_google_static"><![CDATA[Google Maps (статическое изображение)]]></string>
+    <string name="_sys_location_map_leaflet"><![CDATA[Leaflet (разные бесплатные поставщики карт)]]></string>
 	<string name="_sys_location_field_google"><![CDATA[Google автозаполнение адресов]]></string>
 	<string name="_sys_location_field_plain"><![CDATA[Простые поля c Nominatim OSM геокодированием]]></string>
     <string name="_sys_location_ph_number"><![CDATA[Номер]]></string>

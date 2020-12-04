@@ -597,10 +597,17 @@ SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, 'sys_location_field_default', '_adm_stg_cpt_option_sys_location_field_default', 'sys_plain', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:34:"get_options_location_field_default";s:5:"class";s:13:"TemplServices";}', '', '', 10),
-(@iCategoryId, 'sys_location_map_default', '_adm_stg_cpt_option_sys_location_map_default', 'sys_google_static', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:32:"get_options_location_map_default";s:5:"class";s:13:"TemplServices";}', '', '', 12),
-(@iCategoryId, 'sys_maps_api_key', '_adm_stg_cpt_option_sys_maps_api_key', '', 'digit', '', '', '', 20),
-(@iCategoryId, 'sys_nominatim_server', '_adm_stg_cpt_option_sys_nominatim_server', 'https://nominatim.openstreetmap.org', 'digit', '', '', '', 30),
-(@iCategoryId, 'sys_nominatim_email', '_adm_stg_cpt_option_sys_nominatim_email', '', 'digit', '', '', '', 32);
+(@iCategoryId, 'sys_location_map_default', '_adm_stg_cpt_option_sys_location_map_default', 'sys_leaflet', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:32:"get_options_location_map_default";s:5:"class";s:13:"TemplServices";}', '', '', 12),
+
+(@iCategoryId, 'sys_location_map_zoom_default', '_adm_stg_cpt_option_sys_location_map_zoom_default', '7', 'digit', '', '', '', 20),
+
+(@iCategoryId, 'sys_maps_api_key', '_adm_stg_cpt_option_sys_maps_api_key', '', 'digit', '', '', '', 30),
+
+(@iCategoryId, 'sys_nominatim_server', '_adm_stg_cpt_option_sys_nominatim_server', 'https://nominatim.openstreetmap.org', 'digit', '', '', '', 40),
+(@iCategoryId, 'sys_nominatim_email', '_adm_stg_cpt_option_sys_nominatim_email', '', 'digit', '', '', '', 42),
+
+(@iCategoryId, 'sys_location_leaflet_provider', '_adm_stg_cpt_option_sys_location_leaflet_provider', 'OpenStreetMap.Mapnik', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:42:"get_options_location_leaflet_get_providers";s:5:"class";s:13:"TemplServices";}', '', '', 50);
+
 
 --
 -- CATEGORY (HIDDEN): Audit
@@ -5273,7 +5280,8 @@ CREATE TABLE `sys_objects_location_map` (
 );
 
 INSERT INTO `sys_objects_location_map` (`object`, `module`, `title`, `class_name`, `class_file`) VALUES
-('sys_google_static', 'system', '_sys_location_map_google_static', 'BxDolLocationMapGoogleStatic', '');
+('sys_google_static', 'system', '_sys_location_map_google_static', 'BxDolLocationMapGoogleStatic', ''),
+('sys_leaflet', 'system', '_sys_location_map_leaflet', 'BxDolLocationMapLeaflet', '');
 
 -- --------------------------------------------------------
 

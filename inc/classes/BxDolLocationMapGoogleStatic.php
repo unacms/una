@@ -22,7 +22,9 @@ class BxDolLocationMapGoogleStatic extends BxDolLocationMap
         if (!empty($aParams['location_map_google_static_size']))
             $sMapSize = $aParams['location_map_google_static_size'];
 
-        $sZoom = '7';    
+        $sZoom = (int)getParam('sys_location_map_zoom_default');
+        if (!$sZoom)
+            $sZoom = '7';
         if (!empty($aParams['location_map_google_static_zoom']))
             $sZoom = $aParams['location_map_google_static_zoom'];
 
