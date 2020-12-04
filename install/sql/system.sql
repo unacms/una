@@ -5254,7 +5254,7 @@ CREATE TABLE `sys_objects_location_field` (
 
 INSERT INTO `sys_objects_location_field` (`object`, `module`, `title`, `class_name`, `class_file`) VALUES
 ('sys_google', 'system', '_sys_location_field_google', 'BxDolLocationFieldGoogle', ''),
-('sys_plain', 'system', '_sys_location_field_plain', 'BxDolLocationField', '');
+('sys_plain', 'system', '_sys_location_field_plain', 'BxDolLocationFieldNominatim', '');
 
 -- --------------------------------------------------------
 
