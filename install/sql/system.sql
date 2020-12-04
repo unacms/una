@@ -597,7 +597,7 @@ SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
 (@iCategoryId, 'sys_location_field_default', '_adm_stg_cpt_option_sys_location_field_default', 'sys_plain', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:34:"get_options_location_field_default";s:5:"class";s:13:"TemplServices";}', '', '', 10),
-(@iCategoryId, 'sys_location_map_default', '_adm_stg_cpt_option_sys_location_map_default', 'sys_google_static', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:32:"get_options_location_map_default";s:5:"class";s:13:"TemplServices";}', '', '', 12),
+(@iCategoryId, 'sys_location_map_default', '_adm_stg_cpt_option_sys_location_map_default', 'sys_leaflet', 'select', 'a:3:{s:6:"module";s:6:"system";s:6:"method";s:32:"get_options_location_map_default";s:5:"class";s:13:"TemplServices";}', '', '', 12),
 
 (@iCategoryId, 'sys_location_map_zoom_default', '_adm_stg_cpt_option_sys_location_map_zoom_default', '7', 'digit', '', '', '', 20),
 
