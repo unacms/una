@@ -11,14 +11,23 @@
 
 class BxBaseModPaymentSubscriptions extends BxDol
 {
-	protected $MODULE;
-	protected $_oModule;
+    protected $MODULE;
+    protected $_oModule;
 
-	function __construct()
+    protected $_bSingleSeller;
+    protected $_iSingleSeller;
+
+    function __construct()
     {
         parent::__construct();
 
         $this->_oModule = BxDolModule::getInstance($this->MODULE);
+
+        $this->_bSingleSeller = $this->_oModule->_oConfig->isSingleSeller();
+
+        $this->_iSingleSeller = 0;
+        if($this->_bSingleSeller)
+            $this->_iSingleSeller = $this->_oModule->_oConfig->getSiteAdmin();
     }
 
     /**
@@ -39,13 +48,13 @@ class BxBaseModPaymentSubscriptions extends BxDol
     /** 
      * @ref bx_base_payment-get_subscriptions_url "get_subscriptions_url"
      */
-	public function serviceGetSubscriptionsUrl($iVendor = 0)
+    public function serviceGetSubscriptionsUrl($iVendor = 0)
     {
     	if(!$this->_oModule->isLogged())
             return '';
 
-		if($iVendor == 0)
-    		return $this->_oModule->_oConfig->getUrl('URL_SUBSCRIPTIONS');
+        if($iVendor == 0)
+            return $this->_oModule->_oConfig->getUrl('URL_SUBSCRIPTIONS');
 
     	return  bx_append_url_params($this->_oModule->_oConfig->getUrl('URL_SUBSCRIPTIONS'), array('seller_id' => $iVendor));
     }
@@ -72,10 +81,13 @@ class BxBaseModPaymentSubscriptions extends BxDol
     /** 
      * @ref bx_base_payment-get_subscribe_url "get_subscribe_url"
      */
-	public function serviceGetSubscribeUrl($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1)
+    public function serviceGetSubscribeUrl($iVendorId, $sVendorProvider, $mixedModuleId, $iItemId, $iItemCount = 1)
     {
     	if(!$this->_oModule->isLogged())
             return '';
+
+        if($this->_bSingleSeller)
+            $iVendorId = $this->_iSingleSeller;
 
     	return  bx_append_url_params($this->_oModule->_oConfig->getUrl('URL_SUBSCRIBE'), array(
     		'seller_id' => $iVendorId,
@@ -115,6 +127,9 @@ class BxBaseModPaymentSubscriptions extends BxDol
         if(empty($iModuleId))
             return '';
 
+        if($this->_bSingleSeller)
+            $iVendorId = $this->_iSingleSeller;
+
         return $this->_oModule->_oTemplate->displaySubscribeJs($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect, $aCustom);
     }
     
@@ -148,6 +163,9 @@ class BxBaseModPaymentSubscriptions extends BxDol
         if(empty($iModuleId))
             return '';
 
+        if($this->_bSingleSeller)
+            $iVendorId = $this->_iSingleSeller;
+
         return $this->_oModule->_oTemplate->displaySubscribeJsWithAddons($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount, $sItemAddons, $sRedirect, $aCustom);
     }
 
@@ -180,7 +198,10 @@ class BxBaseModPaymentSubscriptions extends BxDol
         if(empty($iModuleId))
             return '';
 
-		return $this->_oModule->_oTemplate->displaySubscribeLink($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect, $aCustom);
+        if($this->_bSingleSeller)
+            $iVendorId = $this->_iSingleSeller;
+
+        return $this->_oModule->_oTemplate->displaySubscribeLink($iVendorId, $sVendorProvider, $iModuleId, $iItemId, $iItemCount, $sRedirect, $aCustom);
     }
 }
 

@@ -140,17 +140,35 @@ class BxPaymentGridProcessed extends BxBaseModPaymentGridOrders
     {
         $aIds = $this->_oModule->_oDb->getOrderProcessed(array('type' => 'clients', 'seller_id' => $this->_aQueryAppend['seller_id']));
 
-        $aValues = array(
-            array('key' => '', 'value' => _t('_bx_payment_txt_all_clients'))
-        );
+        $aValues = array();
         foreach($aIds as $iId)
-            if(($oClient = BxDolProfile::getInstanceMagic($iId)) !== false)
+            if(!empty($iId) && ($oClient = BxDolProfile::getInstanceMagic($iId)) !== false)
                 $aValues[] = array('key' => $iId, 'value' => $oClient->getDisplayName());
 
         $this->_oModule->_oConfig->sortByColumn('value', $aValues);
 
         return $this->_getFilterSelectAll('client', array(
-            'values' => $aValues
+            'values' => array_merge(array(
+                array('key' => '', 'value' => _t('_bx_payment_txt_all_clients'))
+            ), $aValues)
+        ));
+    }
+
+    protected function _getFilterAuthors()
+    {
+        $aIds = $this->_oModule->_oDb->getOrderProcessed(array('type' => 'authors', 'seller_id' => $this->_aQueryAppend['seller_id']));
+
+        $aValues = array();
+        foreach($aIds as $iId)
+            if(!empty($iId) && ($oClient = BxDolProfile::getInstanceMagic($iId)) !== false)
+                $aValues[] = array('key' => $iId, 'value' => $oClient->getDisplayName());
+
+        $this->_oModule->_oConfig->sortByColumn('value', $aValues);
+
+        return $this->_getFilterSelectAll('author', array(
+            'values' => array_merge(array(
+                array('key' => '', 'value' => _t('_bx_payment_txt_all_authors'))
+            ), $aValues)
         ));
     }
 
@@ -158,9 +176,7 @@ class BxPaymentGridProcessed extends BxBaseModPaymentGridOrders
     {
         $aModules = $this->_oModule->_oDb->getModules();
         
-        $aValues = array(
-            array('key' => '', 'value' => _t('_bx_payment_txt_all_modules'))
-        );
+        $aValues = array();
         foreach($aModules as $aModule) {
             $sLangKey = '_' . $aModule['name'];
             $sLangValue = _t($sLangKey);
@@ -172,19 +188,19 @@ class BxPaymentGridProcessed extends BxBaseModPaymentGridOrders
 
         return $this->_getFilterSelectAll('module', array(
             'js_onchange' => 'onChangeFilterModule(this, ' . $this->_aQueryAppend['seller_id'] . ')',
-            'values' => $aValues
+            'values' => array_merge(array(
+                array('key' => '', 'value' => _t('_bx_payment_txt_all_modules'))
+            ), $aValues)
         ));
     }
 
     protected function _getFilterItems()
     {
-        $aValues = array(
-            array('key' => '', 'value' => _t('_bx_payment_txt_all_items'))
-        );
-
         return $this->_getFilterSelectAll('item', array(
             'attrs' => array('disabled' => 'disabled'),
-            'values' => $aValues
+            'values' => array(
+                array('key' => '', 'value' => _t('_bx_payment_txt_all_items'))
+            )
         ));
     }
 
@@ -192,7 +208,12 @@ class BxPaymentGridProcessed extends BxBaseModPaymentGridOrders
     {
         parent::_getFilterControls();
 
-        return $this->_getFilterClients() . $this->_getFilterModules() . $this->_getFilterItems() . $this->_getSearchInput();
+        $sResult = $this->_getFilterClients();
+        if($this->_bSingleSeller && $this->_aQueryAppend['seller_id'] == $this->_iSingleSeller)
+            $sResult .= $this->_getFilterAuthors();
+        $sResult .= $this->_getFilterModules() . $this->_getFilterItems() . $this->_getSearchInput();
+
+        return $sResult;
     }
 
     protected function _getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage)
@@ -202,16 +223,25 @@ class BxPaymentGridProcessed extends BxBaseModPaymentGridOrders
 
         $sParamsDivider = $this->_oModule->_oConfig->getDivider('DIVIDER_GRID_FILTERS');
 
-        $iClient = $iModule = $iItem = 0;
-        if(strpos($sFilter, $sParamsDivider) !== false)
-            list($iClient, $iModule, $iItem, $sFilter) = explode($sParamsDivider, $sFilter);
+        $iClient = $iAuthor = $iModule = $iItem = 0;
+        if(strpos($sFilter, $sParamsDivider) !== false) {
+            $aFilters = explode($sParamsDivider, $sFilter);
+            if($this->_bSingleSeller && $this->_aQueryAppend['seller_id'] = $this->_iSingleSeller)
+                list($iClient, $iAuthor, $iModule, $iItem, $sFilter) = $aFilters;
+            else
+                list($iClient, $iModule, $iItem, $sFilter) = $aFilters;
+        }
 
         $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND (`tt`.`seller_id`=? OR `tt`.`author_id`=?)", $this->_aQueryAppend['seller_id'], $this->_aQueryAppend['seller_id']);
 
         $iClient = (int)$iClient;
         if($iClient != 0)
             $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tt`.`client_id`=?", $iClient);
-        
+
+        $iAuthor = (int)$iAuthor;
+        if($iAuthor != 0)
+            $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tt`.`author_id`=?", $iAuthor);
+
         $iModule = (int)$iModule;
         if($iModule != 0)
             $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tt`.`module_id`=?", $iModule);

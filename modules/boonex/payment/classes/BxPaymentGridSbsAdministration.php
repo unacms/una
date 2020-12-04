@@ -67,11 +67,23 @@ class BxPaymentGridSbsAdministration extends BxBaseModPaymentGridOrders
 
         return parent::_getCellDefault($mixedValue, $sKey, $aField, $aRow);
     }
-        
-    protected function _getCellPaid($mixedValue, $sKey, $aField, $aRow)
+
+    protected function _getCellDateAdd($mixedValue, $sKey, $aField, $aRow)
     {
-        $aStates = array(0 => 'no', 1 => 'yes');
-        return parent::_getCellDefault(_t('_bx_payment_txt_' . $aStates[(int)$mixedValue]), $sKey, $aField, $aRow);
+        return $this->_getCellDefaultDateTime($mixedValue, $sKey, $aField, $aRow);
+    }
+    
+    protected function _getCellDateNext($mixedValue, $sKey, $aField, $aRow)
+    {
+        if(empty($mixedValue))
+            return parent::_getCellDefault(_t('_uknown'), $sKey, $aField, $aRow);
+
+        return $this->_getCellDefaultDateTime($mixedValue, $sKey, $aField, $aRow);
+    }
+    
+    protected function _getCellStatus($mixedValue, $sKey, $aField, $aRow)
+    {
+        return parent::_getCellDefault(_t('_bx_payment_txt_status_' . $mixedValue), $sKey, $aField, $aRow);
     }
 
     protected function _addJsCss()

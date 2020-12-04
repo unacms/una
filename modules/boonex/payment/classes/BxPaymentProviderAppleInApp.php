@@ -76,9 +76,7 @@ class BxPaymentProviderAppleInApp extends BxBaseModPaymentProvider implements iB
             return false;
 
         if($aPending['type'] == BX_PAYMENT_TYPE_RECURRING)
-            $this->_oModule->updateSubscription($aPending, array(
-                'paid' => 1
-            ));
+            $this->_oModule->getObjectSubscriptions()->prolong($aPending);
 
         return $this->_oModule->registerPayment($aPending);
     }

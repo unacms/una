@@ -95,9 +95,12 @@
     <string name="_bx_payment_grid_column_title_pdrs_description"><![CDATA[Описание]]></string>
     <string name="_bx_payment_grid_column_title_pdrs_for_visitor"><![CDATA[Для посетителей]]></string>
     <string name="_bx_payment_grid_column_title_pdrs_for_single"><![CDATA[Разовые]]></string>
-    <string name="_bx_payment_grid_column_title_pdrs_for_recurring"><![CDATA[Периодические]]></string>
+    <string name="_bx_payment_grid_column_title_pdrs_for_recurring"><![CDATA[Подписки]]></string>
+    <string name="_bx_payment_grid_column_title_pdrs_single_seller"><![CDATA[Единый продавец]]></string>
+    <string name="_bx_payment_grid_column_title_pdrs_time_tracker"><![CDATA[Счетчик времени]]></string>
     <string name="_bx_payment_grid_column_title_ods_client_id"><![CDATA[Покупатель]]></string>
     <string name="_bx_payment_grid_column_title_ods_seller_id"><![CDATA[Продавец]]></string>
+    <string name="_bx_payment_grid_column_title_ods_author_id"><![CDATA[Автор]]></string>
     <string name="_bx_payment_grid_column_title_ods_transaction"><![CDATA[Транзакция]]></string>
     <string name="_bx_payment_grid_column_title_ods_license"><![CDATA[Лицензия]]></string>
     <string name="_bx_payment_grid_column_title_ods_item"><![CDATA[Продукт]]></string>
@@ -113,8 +116,9 @@
     <string name="_bx_payment_grid_column_title_sbs_amount"><![CDATA[Сумма]]></string>
     <string name="_bx_payment_grid_column_title_sbs_provider"><![CDATA[Поставщик]]></string>
     <string name="_bx_payment_grid_column_title_sbs_date"><![CDATA[Дата]]></string>
-    <string name="_bx_payment_grid_column_title_sbs_date_created"><![CDATA[Дата создания]]></string>
-    <string name="_bx_payment_grid_column_title_sbs_paid"><![CDATA[Оплачено]]></string>
+    <string name="_bx_payment_grid_column_title_sbs_date_add"><![CDATA[Дата создания]]></string>
+    <string name="_bx_payment_grid_column_title_sbs_date_next"><![CDATA[Дата сл. оплаты]]></string>
+    <string name="_bx_payment_grid_column_title_sbs_status"><![CDATA[Статус]]></string>
     <string name="_bx_payment_grid_column_title_crts_vendor_id"><![CDATA[Продавец]]></string>
     <string name="_bx_payment_grid_column_title_crts_items_count"><![CDATA[Количество]]></string>
     <string name="_bx_payment_grid_column_title_crts_items_price"><![CDATA[Цена]]></string>
@@ -188,15 +192,15 @@
     <!-- Predefined Values -->
     <string name="_bx_payment_pre_lists_currencies"><![CDATA[Валюты]]></string>
 
-	<!-- ACL -->
-	<string name="_bx_payment_acl_action_purchase"><![CDATA[Покупать]]></string>
-	<string name="_bx_payment_acl_action_sell"><![CDATA[Продавать]]></string>
-	<string name="_bx_payment_acl_action_manage_any_purchase"><![CDATA[Управлять любыми покупками]]></string>
+    <!-- ACL -->
+    <string name="_bx_payment_acl_action_purchase"><![CDATA[Покупать]]></string>
+    <string name="_bx_payment_acl_action_sell"><![CDATA[Продавать]]></string>
+    <string name="_bx_payment_acl_action_manage_any_purchase"><![CDATA[Управлять любыми покупками]]></string>
 
-	<!-- EMAIL TEMPLATES -->
-	<string name="_bx_payment_et_txt_name_paid_need_join"><![CDATA[Заплатил - присоединяйся.]]></string>
-	<string name="_bx_payment_et_txt_subject_paid_need_join"><![CDATA[Оплата была принята.]]></string>
-	<string name="_bx_payment_et_txt_body_paid_need_join"><![CDATA[{email_header}
+    <!-- EMAIL TEMPLATES -->
+    <string name="_bx_payment_et_txt_name_paid_need_join"><![CDATA[Заплатил - присоединяйся.]]></string>
+    <string name="_bx_payment_et_txt_subject_paid_need_join"><![CDATA[Оплата была принята.]]></string>
+    <string name="_bx_payment_et_txt_body_paid_need_join"><![CDATA[{email_header}
 <p>Привет, {RealName}.</p>
 <p>Ваша оплата была принята. Если вы ещё не заполняли регистрационную форму, то Вы можете сделать это используя следующую ссылку.</p>
 <p><a href="{JoinLink}">Присоединяйтесь</a></p>
@@ -228,57 +232,80 @@
 <p><b>Внимание</b>. Данные, связанные с подпиской, будут удалены в ближайшее время.</p>
 {email_footer}]]></string>
 
-	<!-- MESSAGES, WARNINGS and ERRORS -->
-	<string name="_bx_payment_msg_no_results"><![CDATA[Пусто]]></string>
-	<string name="_bx_payment_msg_redirecting"><![CDATA[Пересылаю... Пожалуйста подождите.]]></string>
-	<string name="_bx_payment_msg_item_added"><![CDATA[Товар был успешно добавлен в вашу корзину.]]></string>
-	<string name="_bx_payment_msg_item_deleted"><![CDATA[Товар был успешно удален из вашей корзины.]]></string>
-	<string name="_bx_payment_msg_successfully_performed"><![CDATA[Действие было успешно выполнено.]]></string>
-	<string name="_bx_payment_msg_successfully_processed_free"><![CDATA[Бесплатный товар был успешно обработан.]]></string>
-	<string name="_bx_payment_msg_cancelation_request_sent"><![CDATA[Запрос на отмену был отправлен. Пожалуйста, ждите.]]></string>
-        <string name="_bx_payment_msg_confirm_cancelation"><![CDATA[Вы уверены, что хотите отменить вашу подписку?]]></string>
-        <string name="_bx_payment_msg_single_seller"><![CDATA[Режим единого продавца активирован. <a href="{0}">Перейти</a> в единую корзину.]]></string>
-	<string name="_bx_payment_err_access_db"><![CDATA[Ошибка обращения к базе данных.]]></string>
-	<string name="_bx_payment_err_cannot_validate"><![CDATA[Не могу присоединиться к удаленному хосту для проверки данных.]]></string>
-	<string name="_bx_payment_err_empty_items"><![CDATA[Товары не выбраны.]]></string>
-	<string name="_bx_payment_err_empty_order"><![CDATA[Заказ пуст.]]></string>
-	<string name="_bx_payment_err_inactive_vendor"><![CDATA[Профиль продавца не активен.]]></string>
-	<string name="_bx_payment_err_incorrect_provider"><![CDATA[Неправильная или недоступная платежная система.]]></string>
-	<string name="_bx_payment_err_not_accept_payments"><![CDATA[Продавец не принимает платежи.]]></string>
-	<string name="_bx_payment_err_nothing_selected"><![CDATA[Вам нужно выбрать как минимум один товар.]]></string>
-	<string name="_bx_payment_err_self_purchase"><![CDATA[Покупка из собственного магазина не возможна.]]></string>
-	<string name="_bx_payment_err_required_login"><![CDATA[Вам нужно войти.]]></string>
-	<string name="_bx_payment_err_unknown_vendor"><![CDATA[Неизвестный продавец.]]></string>
-	<string name="_bx_payment_err_wrong_data"><![CDATA[Неверные входные данные.]]></string>
-	<string name="_bx_payment_err_not_found_pending"><![CDATA[Обрабатываемый заказ не найден.]]></string>
-	<string name="_bx_payment_err_cannot_perform"><![CDATA[Действие не может быть выполнено. Свяжитесь с нами.]]></string>
-	<string name="_bx_payment_err_wrong_quantity"><![CDATA[Указано неправильное количество.]]></string>
-	<string name="_bx_payment_err_already_processed"><![CDATA[Этот платеж уже обработан.]]></string>
-	<string name="_bx_payment_err_already_registered"><![CDATA[Подписка с аналогичными данными уже была зарегистрирована.]]></string>
+    <!-- MESSAGES, WARNINGS and ERRORS -->
+    <string name="_bx_payment_msg_no_results"><![CDATA[Пусто]]></string>
+    <string name="_bx_payment_msg_redirecting"><![CDATA[Пересылаю... Пожалуйста подождите.]]></string>
+    <string name="_bx_payment_msg_item_added"><![CDATA[Товар был успешно добавлен в вашу корзину.]]></string>
+    <string name="_bx_payment_msg_item_deleted"><![CDATA[Товар был успешно удален из вашей корзины.]]></string>
+    <string name="_bx_payment_msg_successfully_performed"><![CDATA[Действие было успешно выполнено.]]></string>
+    <string name="_bx_payment_msg_successfully_processed_free"><![CDATA[Бесплатный товар был успешно обработан.]]></string>
+    <string name="_bx_payment_msg_cancelation_request_sent"><![CDATA[Запрос на отмену был отправлен. Пожалуйста, ждите.]]></string>
+    <string name="_bx_payment_msg_confirm_cancelation"><![CDATA[Вы уверены, что хотите отменить вашу подписку?]]></string>
+    <string name="_bx_payment_msg_single_seller"><![CDATA[Режим единого продавца активирован. <a href="{0}">Перейти</a> в единую корзину.]]></string>
+    <string name="_bx_payment_err_access_db"><![CDATA[Ошибка обращения к базе данных.]]></string>
+    <string name="_bx_payment_err_cannot_validate"><![CDATA[Не могу присоединиться к удаленному хосту для проверки данных.]]></string>
+    <string name="_bx_payment_err_empty_items"><![CDATA[Товары не выбраны.]]></string>
+    <string name="_bx_payment_err_empty_order"><![CDATA[Заказ пуст.]]></string>
+    <string name="_bx_payment_err_inactive_vendor"><![CDATA[Профиль продавца не активен.]]></string>
+    <string name="_bx_payment_err_incorrect_provider"><![CDATA[Неправильная или недоступная платежная система.]]></string>
+    <string name="_bx_payment_err_not_accept_payments"><![CDATA[Продавец не принимает платежи.]]></string>
+    <string name="_bx_payment_err_nothing_selected"><![CDATA[Вам нужно выбрать как минимум один товар.]]></string>
+    <string name="_bx_payment_err_self_purchase"><![CDATA[Покупка из собственного магазина не возможна.]]></string>
+    <string name="_bx_payment_err_required_login"><![CDATA[Вам нужно войти.]]></string>
+    <string name="_bx_payment_err_unknown_vendor"><![CDATA[Неизвестный продавец.]]></string>
+    <string name="_bx_payment_err_wrong_data"><![CDATA[Неверные входные данные.]]></string>
+    <string name="_bx_payment_err_not_found_pending"><![CDATA[Обрабатываемый заказ не найден.]]></string>
+    <string name="_bx_payment_err_cannot_perform"><![CDATA[Действие не может быть выполнено. Свяжитесь с нами.]]></string>
+    <string name="_bx_payment_err_wrong_quantity"><![CDATA[Указано неправильное количество.]]></string>
+    <string name="_bx_payment_err_already_processed"><![CDATA[Этот платеж уже обработан.]]></string>
+    <string name="_bx_payment_err_already_registered"><![CDATA[Подписка с аналогичными данными уже была зарегистрирована.]]></string>
 
-	<!-- Other -->
-	<string name="_bx_payment_txt_add_to_cart"><![CDATA[В корзину]]></string>
-	<string name="_bx_payment_txt_subscribe"><![CDATA[Подписаться]]></string>
-	<string name="_bx_payment_txt_payment_to"><![CDATA[Платеж для {0}]]></string>
-	<string name="_bx_payment_txt_payment_to_for"><![CDATA[Платеж для {0} за:]]></string>
-	<string name="_bx_payment_txt_checkout_to"><![CDATA[Продолжить оплату в пользу {0}]]></string>
-	<string name="_bx_payment_txt_checkout_with"><![CDATA[Заплатить используя {0}]]></string>
-	<string name="_bx_payment_txt_client"><![CDATA[Покупатель]]></string>
-        <string name="_bx_payment_txt_license"><![CDATA[Лицензия]]></string>
-	<string name="_bx_payment_txt_seller"><![CDATA[Продавец]]></string>
-        <string name="_bx_payment_txt_author"><![CDATA[Автор]]></string>
-	<string name="_bx_payment_txt_order"><![CDATA[ID заказа]]></string>
-	<string name="_bx_payment_txt_processed_with"><![CDATA[Обработан используя]]></string>
-	<string name="_bx_payment_txt_message"><![CDATA[Результат]]></string>
-	<string name="_bx_payment_txt_date"><![CDATA[Дата]]></string>
-	<string name="_bx_payment_txt_products"><![CDATA[Продукты]]></string>
-	<string name="_bx_payment_txt_buyer_name_mask"><![CDATA[{0} {1}]]></string>
-	<string name="_bx_payment_txt_none"><![CDATA[нет]]></string>
-	<string name="_bx_payment_txt_name_manual"><![CDATA[Вручную]]></string>
-	<string name="_bx_payment_txt_yes"><![CDATA[Да]]></string>
-        <string name="_bx_payment_txt_no"><![CDATA[Нет]]></string>
-        <string name="_bx_payment_txt_unsubscribe_yes"><![CDATA[Отменить автоматически]]></string>
-        <string name="_bx_payment_txt_unsubscribe_no"><![CDATA[Не отменять]]></string>
+    <!-- Other -->
+    <string name="_bx_payment_txt_add_to_cart"><![CDATA[В корзину]]></string>
+    <string name="_bx_payment_txt_subscribe"><![CDATA[Подписаться]]></string>
+    <string name="_bx_payment_txt_payment_to"><![CDATA[Платеж для {0}]]></string>
+    <string name="_bx_payment_txt_payment_to_for"><![CDATA[Платеж для {0} за:]]></string>
+    <string name="_bx_payment_txt_checkout_to"><![CDATA[Продолжить оплату в пользу {0}]]></string>
+    <string name="_bx_payment_txt_checkout_with"><![CDATA[Заплатить используя {0}]]></string>
+    <string name="_bx_payment_txt_client"><![CDATA[Покупатель]]></string>
+    <string name="_bx_payment_txt_license"><![CDATA[Лицензия]]></string>
+    <string name="_bx_payment_txt_seller"><![CDATA[Продавец]]></string>
+    <string name="_bx_payment_txt_author"><![CDATA[Автор]]></string>
+    <string name="_bx_payment_txt_order"><![CDATA[ID заказа]]></string>
+    <string name="_bx_payment_txt_processed_with"><![CDATA[Обработан используя]]></string>
+    <string name="_bx_payment_txt_message"><![CDATA[Результат]]></string>
+    <string name="_bx_payment_txt_date"><![CDATA[Дата]]></string>
+    <string name="_bx_payment_txt_products"><![CDATA[Продукты]]></string>
+    <string name="_bx_payment_txt_buyer_name_mask"><![CDATA[{0} {1}]]></string>
+    <string name="_bx_payment_txt_none"><![CDATA[нет]]></string>
+    <string name="_bx_payment_txt_name_manual"><![CDATA[Вручную]]></string>
+    <string name="_bx_payment_txt_yes"><![CDATA[Да]]></string>
+    <string name="_bx_payment_txt_no"><![CDATA[Нет]]></string>
+    <string name="_bx_payment_txt_unsubscribe_yes"><![CDATA[Отменить автоматически]]></string>
+    <string name="_bx_payment_txt_unsubscribe_no"><![CDATA[Не отменять]]></string>
+    <string name="_bx_payment_txt_all_authors"><![CDATA[Все авторы]]></string>
+    <string name="_bx_payment_txt_all_clients"><![CDATA[Все клиенты]]></string>
+    <string name="_bx_payment_txt_all_modules"><![CDATA[Все модули]]></string>
+    <string name="_bx_payment_txt_all_items"><![CDATA[Все продукты]]></string>
+    <string name="_bx_payment_txt_status_scheduled"><![CDATA[Запланированно]]></string>
+    <string name="_bx_payment_txt_status_trial"><![CDATA[Пробный]]></string>
+    <string name="_bx_payment_txt_status_active"><![CDATA[Активно]]></string>
+    <string name="_bx_payment_txt_status_unpaid"><![CDATA[Не оплачено]]></string>
+    <string name="_bx_payment_txt_status_paused"><![CDATA[Приостановлено]]></string>
+    <string name="_bx_payment_txt_status_canceled"><![CDATA[Отменено]]></string>
+    <string name="_bx_payment_txt_status_unknown"><![CDATA[Неизвестно]]></string>
+
+
+        <!-- Credits payment provider -->
+	<string name="_bx_payment_cdt_cpt"><![CDATA[Кредиты]]></string>
+	<string name="_bx_payment_cdt_dsc"><![CDATA[Платежная система Кредиты]]></string>
+	<string name="_bx_payment_cdt_active_cpt"><![CDATA[Активировать]]></string>
+	<string name="_bx_payment_cdt_active_dsc"><![CDATA[Активировать(деактивировать) платежную систему.]]></string>
+        <string name="_bx_payment_cdt_msg_charged"><![CDATA[Платеж успешно принят.]]></string>
+        <string name="_bx_payment_cdt_err_not_available"><![CDATA[В данное время оплата Кредитами не доступна.]]></string>
+        <string name="_bx_payment_cdt_err_wrong_transaction"><![CDATA[Не удалось верифицировать транзакцию.]]></string>
+        <string name="_bx_payment_txt_name_credits"><![CDATA[Кредиты]]></string>
+	<string name="_bx_payment_txt_cart_credits"><![CDATA[Кредиты]]></string>
 
 	<!-- PayPal payment provider -->
 	<string name="_bx_payment_pp_cpt"><![CDATA[PayPal]]></string>

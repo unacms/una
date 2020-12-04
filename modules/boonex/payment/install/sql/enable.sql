@@ -161,6 +161,11 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 (@sName, '_bx_payment_et_txt_name_expiration_notification_client', 'bx_payment_expiration_notification_client', '_bx_payment_et_txt_subject_expiration_notification_client', '_bx_payment_et_txt_body_expiration_notification_client');
 
 
+-- CRON
+INSERT INTO `sys_cron_jobs` (`name`, `time`, `class`, `file`, `service_call`) VALUES
+('bx_payment_time_tracker', '* * * * *', 'BxPaymentCronTimeTracker', 'modules/boonex/payment/classes/BxPaymentCronTimeTracker.php', '');
+
+
 -- PAYMENTS
 INSERT INTO `sys_objects_payments` (`object`, `title`, `uri`) VALUES
 (@sName, '_bx_payment', 'payment');

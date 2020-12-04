@@ -16,6 +16,9 @@ class BxBaseModPaymentGridOrders extends BxTemplGrid
 
     protected $_sOrdersType;
 
+    protected $_bSingleSeller;
+    protected $_iSingleSeller;
+
     protected $_sJsObject;
     protected $_sLangsPrefix;
     protected $_sCurrencySign;
@@ -25,6 +28,12 @@ class BxBaseModPaymentGridOrders extends BxTemplGrid
         parent::__construct ($aOptions, $oTemplate);
 
         $this->_oModule = BxDolModule::getInstance($this->MODULE);
+
+        $this->_bSingleSeller = $this->_oModule->_oConfig->isSingleSeller();
+
+        $this->_iSingleSeller = 0;
+        if($this->_bSingleSeller)
+            $this->_iSingleSeller = $this->_oModule->_oConfig->getSiteAdmin();
 
         $this->_sLangsPrefix = $this->_oModule->_oConfig->getPrefix('langs');
         $this->_sCurrencySign = $this->_oModule->_oConfig->getDefaultCurrencySign();
@@ -83,6 +92,17 @@ class BxBaseModPaymentGridOrders extends BxTemplGrid
         echoJson($iAffected ? array('grid' => $this->getCode(false), 'blink' => $aAffected) : array('msg' => _t($this->_sLangsPrefix . 'err_cannot_perform')));
     }
 
+    protected function _getCellHeaderAuthorId ($sKey, $aField)
+    {
+        if(!$this->_bSingleSeller)
+            return '';
+
+        if($this->_aQueryAppend['seller_id'] != $this->_iSingleSeller)
+            $aField['title'] = _t('_bx_payment_grid_column_title_ods_seller_id');
+
+        return parent::_getCellHeaderDefault($sKey, $aField);
+    }
+
     protected function _getCellClientId($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault($this->_oModule->_oTemplate->displayProfileLink($mixedValue), $sKey, $aField, $aRow);
@@ -91,6 +111,21 @@ class BxBaseModPaymentGridOrders extends BxTemplGrid
     protected function _getCellSellerId($mixedValue, $sKey, $aField, $aRow)
     {
         return parent::_getCellDefault($this->_oModule->_oTemplate->displayProfileLink($mixedValue), $sKey, $aField, $aRow);
+    }
+    
+    protected function _getCellAuthorId($mixedValue, $sKey, $aField, $aRow)
+    {
+        if(!$this->_bSingleSeller)
+            return '';
+
+        if($this->_aQueryAppend['seller_id'] != $this->_iSingleSeller)
+            $mixedValue = $aRow['seller_id'];
+        
+        $sResult = '';
+        if(!empty($mixedValue) && is_numeric($mixedValue))
+            $sResult = $this->_oModule->_oTemplate->displayProfileLink($mixedValue);
+
+        return parent::_getCellDefault($sResult, $sKey, $aField, $aRow);
     }
 
     protected function _getCellItem($mixedValue, $sKey, $aField, $aRow)
@@ -118,7 +153,17 @@ class BxBaseModPaymentGridOrders extends BxTemplGrid
 
     protected function _getCellDate($mixedValue, $sKey, $aField, $aRow)
     {
+        return $this->_getCellDefaultDateTime($mixedValue, $sKey, $aField, $aRow);
+    }
+    
+    protected function _getCellDefaultDate($mixedValue, $sKey, $aField, $aRow)
+    {
         return parent::_getCellDefault(bx_time_js($mixedValue, BX_FORMAT_DATE, true), $sKey, $aField, $aRow);
+    }
+
+    protected function _getCellDefaultDateTime($mixedValue, $sKey, $aField, $aRow)
+    {
+        return parent::_getCellDefault(bx_time_js($mixedValue, BX_FORMAT_DATE_TIME, true), $sKey, $aField, $aRow);
     }
 
     protected function _getFilterSelectAll($sName, $aParams = array())

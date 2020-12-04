@@ -12,6 +12,8 @@ CREATE TABLE IF NOT EXISTS `bx_payment_providers` (
   `for_owner_only` tinyint(4) NOT NULL default '0',
   `for_single` tinyint(4) NOT NULL default '0',
   `for_recurring` tinyint(4) NOT NULL default '0',
+  `single_seller` tinyint(4) NOT NULL default '0',
+  `time_tracker` tinyint(4) NOT NULL default '0',
   `active` tinyint(4) NOT NULL default '0',
   `order` tinyint(4) NOT NULL default '0',
   `class_name` varchar(128) NOT NULL default '',
@@ -70,8 +72,13 @@ CREATE TABLE IF NOT EXISTS `bx_payment_subscriptions` (
   `pending_id` int(11) NOT NULL default '0',
   `customer_id` varchar(32) NOT NULL default '',
   `subscription_id` varchar(32) NOT NULL default '',
-  `paid` tinyint(4) NOT NULL default '0',
-  `date` int(11) NOT NULL default '0',
+  `period` int(11) unsigned NOT NULL default '1',
+  `period_unit` varchar(32) NOT NULL default '',
+  `trial` int(11) unsigned NOT NULL default '0',
+  `date_add` int(11) NOT NULL default '0',
+  `date_next` int(11) NOT NULL default '0',
+  `pay_attempts` tinyint(4) NOT NULL default '0',
+  `status` varchar(32) NOT NULL default 'unpaid',
   PRIMARY KEY(`id`),
   UNIQUE KEY `pending_id` (`pending_id`)
 );
@@ -81,8 +88,13 @@ CREATE TABLE IF NOT EXISTS `bx_payment_subscriptions_deleted` (
   `pending_id` int(11) NOT NULL default '0',
   `customer_id` varchar(32) NOT NULL default '',
   `subscription_id` varchar(32) NOT NULL default '',
-  `paid` tinyint(4) NOT NULL default '0',
-  `date` int(11) NOT NULL default '0',
+  `period` int(11) unsigned NOT NULL default '1',
+  `period_unit` varchar(32) NOT NULL default '',
+  `trial` int(11) unsigned NOT NULL default '0',
+  `date_add` int(11) NOT NULL default '0',
+  `date_next` int(11) NOT NULL default '0',
+  `pay_attempts` tinyint(4) NOT NULL default '0',
+  `status` varchar(32) NOT NULL default 'unpaid',
   `reason` varchar(16) NOT NULL default '',
   `deleted` int(11) NOT NULL default '0',
   PRIMARY KEY(`id`),
@@ -115,8 +127,8 @@ CREATE TABLE IF NOT EXISTS `bx_payment_modules` (
 
 
 -- Credits payment provider
-INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `active`, `order`, `class_name`) VALUES
-('credits', '_bx_payment_cdt_cpt', '_bx_payment_cdt_dsc', 'cdt_', 0, 1, 0, 1, 0, 'BxPaymentProviderCredits');
+INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `single_seller`, `time_tracker`, `active`, `order`, `class_name`) VALUES
+('credits', '_bx_payment_cdt_cpt', '_bx_payment_cdt_dsc', 'cdt_', 0, 1, 1, 1, 1, 1, 0, 'BxPaymentProviderCredits');
 SET @iProviderId = LAST_INSERT_ID();
 
 INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
@@ -124,8 +136,8 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 
 
 -- PayPal payment provider
-INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `active`, `order`, `class_name`) VALUES
-('paypal', '_bx_payment_pp_cpt', '_bx_payment_pp_dsc', 'pp_', 1, 1, 0, 1, 1, 'BxPaymentProviderPayPal');
+INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `single_seller`, `active`, `order`, `class_name`) VALUES
+('paypal', '_bx_payment_pp_cpt', '_bx_payment_pp_dsc', 'pp_', 1, 1, 0, 1, 1, 1, 'BxPaymentProviderPayPal');
 SET @iProviderId = LAST_INSERT_ID();
 
 INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
@@ -256,8 +268,8 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 ('bx_payment_grid_carts', 'Array', '', '', 'vendor_id', '', '', '', 20, NULL, 'start', '', '', '', 'like', '', '', 2147483647, 'BxPaymentGridCarts', 'modules/boonex/payment/classes/BxPaymentGridCarts.php'),
 ('bx_payment_grid_cart', 'Array', '', '', 'descriptor', '', '', '', 20, NULL, 'start', '', 'title,description', '', 'like', '', '', 2147483647, 'BxPaymentGridCart', 'modules/boonex/payment/classes/BxPaymentGridCart.php'),
 
-('bx_payment_grid_sbs_list_my', 'Sql', 'SELECT `ttp`.`id` AS `id`, `ttp`.`seller_id` AS `seller_id`, `ts`.`customer_id` AS `customer_id`, `ts`.`subscription_id` AS `subscription_id`, `ttp`.`provider` AS `provider`, `ttp`.`items` AS `items`, `ts`.`date` AS `date` FROM `bx_payment_subscriptions` AS `ts` LEFT JOIN `bx_payment_transactions_pending` AS `ttp` ON `ts`.`pending_id`=`ttp`.`id` WHERE 1 AND `ttp`.`type`=''recurring'' ', 'bx_payment_subscriptions', 'id', 'date', '', '', 100, NULL, 'start', '', 'ts`.`customer_id,ts`.`subscription_id,ts`.`date', '', 'auto', '', '', 2147483647, 'BxPaymentGridSbsList', 'modules/boonex/payment/classes/BxPaymentGridSbsList.php'),
-('bx_payment_grid_sbs_list_all', 'Sql', 'SELECT `ttp`.`id` AS `id`, `ttp`.`client_id` AS `client_id`, `tac`.`email` AS `client_email`, `ttp`.`seller_id` AS `seller_id`, `ts`.`customer_id` AS `customer_id`, `ts`.`subscription_id` AS `subscription_id`, `ttp`.`provider` AS `provider`, `ttp`.`items` AS `items`, `ts`.`paid` AS `paid`, `ts`.`date` AS `date` FROM `bx_payment_subscriptions` AS `ts` LEFT JOIN `bx_payment_transactions_pending` AS `ttp` ON `ts`.`pending_id`=`ttp`.`id` LEFT JOIN `sys_profiles` AS `tpc` ON `ttp`.`client_id`=`tpc`.`id` LEFT JOIN `sys_accounts` AS `tac` ON `tpc`.`account_id`=`tac`.`id` WHERE 1 AND `ttp`.`type`=''recurring'' ', 'bx_payment_subscriptions', 'id', 'date', '', '', 100, NULL, 'start', '', 'tac`.`email,ts`.`customer_id,ts`.`subscription_id,ts`.`date', '', 'auto', '', '', 192, 'BxPaymentGridSbsAdministration', 'modules/boonex/payment/classes/BxPaymentGridSbsAdministration.php'),
+('bx_payment_grid_sbs_list_my', 'Sql', 'SELECT `ttp`.`id` AS `id`, `ttp`.`seller_id` AS `seller_id`, `ts`.`customer_id` AS `customer_id`, `ts`.`subscription_id` AS `subscription_id`, `ttp`.`provider` AS `provider`, `ttp`.`items` AS `items`, `ts`.`date_add` AS `date_add`, `ts`.`date_next` AS `date_next`, `ts`.`status` AS `status` FROM `bx_payment_subscriptions` AS `ts` LEFT JOIN `bx_payment_transactions_pending` AS `ttp` ON `ts`.`pending_id`=`ttp`.`id` WHERE 1 AND `ttp`.`type`=''recurring'' ', 'bx_payment_subscriptions', 'id', 'date_add', '', '', 100, NULL, 'start', '', 'ts`.`customer_id,ts`.`subscription_id,ts`.`date_add', '', 'auto', '', '', 2147483647, 'BxPaymentGridSbsList', 'modules/boonex/payment/classes/BxPaymentGridSbsList.php'),
+('bx_payment_grid_sbs_list_all', 'Sql', 'SELECT `ttp`.`id` AS `id`, `ttp`.`client_id` AS `client_id`, `tac`.`email` AS `client_email`, `ttp`.`seller_id` AS `seller_id`, `ts`.`customer_id` AS `customer_id`, `ts`.`subscription_id` AS `subscription_id`, `ttp`.`provider` AS `provider`, `ttp`.`items` AS `items`, `ts`.`date_add` AS `date_add`, `ts`.`date_next` AS `date_next`, `ts`.`status` AS `status` FROM `bx_payment_subscriptions` AS `ts` LEFT JOIN `bx_payment_transactions_pending` AS `ttp` ON `ts`.`pending_id`=`ttp`.`id` LEFT JOIN `sys_profiles` AS `tpc` ON `ttp`.`client_id`=`tpc`.`id` LEFT JOIN `sys_accounts` AS `tac` ON `tpc`.`account_id`=`tac`.`id` WHERE 1 AND `ttp`.`type`=''recurring'' ', 'bx_payment_subscriptions', 'id', 'date_add', '', '', 100, NULL, 'start', '', 'tac`.`email,ts`.`customer_id,ts`.`subscription_id,ts`.`date', '', 'auto', '', '', 192, 'BxPaymentGridSbsAdministration', 'modules/boonex/payment/classes/BxPaymentGridSbsAdministration.php'),
 ('bx_payment_grid_sbs_history', 'Sql', 'SELECT `tt`.`id` AS `id`, `tt`.`seller_id` AS `seller_id`, `ttp`.`order` AS `transaction`, `tt`.`license` AS `license`, `tt`.`amount` AS `amount`, `tt`.`date` AS `date` FROM `bx_payment_transactions` AS `tt` LEFT JOIN `bx_payment_transactions_pending` AS `ttp` ON `tt`.`pending_id`=`ttp`.`id` WHERE 1 AND `ttp`.`type`=''recurring'' ', 'bx_payment_transactions', 'id', 'date', '', '', 100, NULL, 'start', '', 'ttp`.`order,tt`.`license,tt`.`amount,tt`.`date', '', 'auto', '', '', 2147483647, 'BxPaymentGridSbsHistory', 'modules/boonex/payment/classes/BxPaymentGridSbsHistory.php'),
 
 ('bx_payment_grid_orders_history', 'Sql', 'SELECT `tt`.`id` AS `id`, `tt`.`seller_id` AS `seller_id`, `tt`.`module_id` AS `module_id`, `tt`.`item_id` AS `item_id`, `ttp`.`order` AS `transaction`, `tt`.`license` AS `license`, `tt`.`amount` AS `amount`, `tt`.`date` AS `date` FROM `bx_payment_transactions` AS `tt` LEFT JOIN `bx_payment_transactions_pending` AS `ttp` ON `tt`.`pending_id`=`ttp`.`id` WHERE 1 AND `ttp`.`type`=''single'' ', 'bx_payment_transactions', 'id', 'date', '', '', 100, NULL, 'start', '', 'ttp`.`order,tt`.`license,tt`.`amount,tt`.`date', '', 'auto', '', '', 2147483647, 'BxPaymentGridHistory', 'modules/boonex/payment/classes/BxPaymentGridHistory.php'),
@@ -265,13 +277,15 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 ('bx_payment_grid_orders_pending', 'Sql', 'SELECT `tt`.`id` AS `id`, `tt`.`client_id` AS `client_id`, `tt`.`seller_id` AS `seller_id`, `tt`.`items` AS `items`, `tt`.`amount` AS `amount`, `tt`.`order` AS `transaction`, `tt`.`error_msg` AS `error_msg`, `tt`.`provider` AS `provider`, `tt`.`date` AS `date` FROM `bx_payment_transactions_pending` AS `tt` WHERE 1 AND (ISNULL(`tt`.`order`) OR (NOT ISNULL(`tt`.`order`) AND `tt`.`error_code`<>''0'')) ', 'bx_payment_transactions_pending', 'id', 'date', '', '', 100, NULL, 'start', '', 'tt`.`order,tt`.`amount,tt`.`date', '', 'auto', '', '', 2147483647, 'BxPaymentGridPending', 'modules/boonex/payment/classes/BxPaymentGridPending.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
-('bx_payment_grid_providers', 'order', '', '2%', 0, '', '', 1),
-('bx_payment_grid_providers', 'switcher', '', '8%', 0, '', '', 2),
-('bx_payment_grid_providers', 'caption', '_bx_payment_grid_column_title_pdrs_caption', '25%', 1, '16', '', 3),
-('bx_payment_grid_providers', 'description', '_bx_payment_grid_column_title_pdrs_description', '35%', 1, '32', '', 4),
-('bx_payment_grid_providers', 'for_visitor', '_bx_payment_grid_column_title_pdrs_for_visitor', '10%', 0, '8', '', 5),
-('bx_payment_grid_providers', 'for_single', '_bx_payment_grid_column_title_pdrs_for_single', '10%', 0, '8', '', 6),
-('bx_payment_grid_providers', 'for_recurring', '_bx_payment_grid_column_title_pdrs_for_recurring', '10%', 0, '8', '', 7),
+('bx_payment_grid_providers', 'order', '', '2%', 0, '0', '', 1),
+('bx_payment_grid_providers', 'switcher', '', '8%', 0, '0', '', 2),
+('bx_payment_grid_providers', 'caption', '_bx_payment_grid_column_title_pdrs_caption', '20%', 1, '16', '', 3),
+('bx_payment_grid_providers', 'description', '_bx_payment_grid_column_title_pdrs_description', '30%', 1, '32', '', 4),
+('bx_payment_grid_providers', 'for_visitor', '_bx_payment_grid_column_title_pdrs_for_visitor', '8%', 0, '8', '', 5),
+('bx_payment_grid_providers', 'for_single', '_bx_payment_grid_column_title_pdrs_for_single', '8%', 0, '8', '', 6),
+('bx_payment_grid_providers', 'for_recurring', '_bx_payment_grid_column_title_pdrs_for_recurring', '8%', 0, '8', '', 7),
+('bx_payment_grid_providers', 'single_seller', '_bx_payment_grid_column_title_pdrs_single_seller', '8%', 0, '8', '', 8),
+('bx_payment_grid_providers', 'time_tracker', '_bx_payment_grid_column_title_pdrs_time_tracker', '8%', 0, '8', '', 9),
 
 ('bx_payment_grid_carts', 'checkbox', '', '2%', 0, '', '', 1),
 ('bx_payment_grid_carts', 'vendor_id', '_bx_payment_grid_column_title_crts_vendor_id', '40%', 0, '36', '', 2),
@@ -286,48 +300,52 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_payment_grid_cart', 'price_single', '_bx_payment_grid_column_title_crt_price', '10%', 0, '16', '', 5),
 ('bx_payment_grid_cart', 'actions', '', '18%', 0, '', '', 6),
 
-('bx_payment_grid_sbs_list_my', 'checkbox', '', '2%', 0, '', '', 1),
-('bx_payment_grid_sbs_list_my', 'seller_id', '_bx_payment_grid_column_title_sbs_seller_id', '20%', 0, '24', '', 2),
-('bx_payment_grid_sbs_list_my', 'customer_id', '_bx_payment_grid_column_title_sbs_customer_id', '20%', 0, '24', '', 3),
-('bx_payment_grid_sbs_list_my', 'subscription_id', '_bx_payment_grid_column_title_sbs_subscription_id', '20%', 0, '32', '', 4),
+('bx_payment_grid_sbs_list_my', 'checkbox', '', '2%', 0, '0', '', 1),
+('bx_payment_grid_sbs_list_my', 'seller_id', '_bx_payment_grid_column_title_sbs_seller_id', '16%', 0, '0', '', 2),
+('bx_payment_grid_sbs_list_my', 'customer_id', '_bx_payment_grid_column_title_sbs_customer_id', '10%', 0, '8', '', 3),
+('bx_payment_grid_sbs_list_my', 'subscription_id', '_bx_payment_grid_column_title_sbs_subscription_id', '10%', 0, '0', '', 4),
 ('bx_payment_grid_sbs_list_my', 'provider', '_bx_payment_grid_column_title_sbs_provider', '10%', 0, '16', '', 5),
-('bx_payment_grid_sbs_list_my', 'date', '_bx_payment_grid_column_title_sbs_date_created', '14%', 0, '10', '', 6),
-('bx_payment_grid_sbs_list_my', 'actions', '', '14%', 0, '', '', 7),
+('bx_payment_grid_sbs_list_my', 'date_add', '_bx_payment_grid_column_title_sbs_date_add', '14%', 0, '10', '', 6),
+('bx_payment_grid_sbs_list_my', 'date_next', '_bx_payment_grid_column_title_sbs_date_next', '14%', 0, '10', '', 7),
+('bx_payment_grid_sbs_list_my', 'status', '_bx_payment_grid_column_title_sbs_status', '6%', 0, '8', '', 8),
+('bx_payment_grid_sbs_list_my', 'actions', '', '18%', 0, '0', '', 9),
 
-('bx_payment_grid_sbs_list_all', 'seller_id', '_bx_payment_grid_column_title_sbs_seller_id', '10%', 0, '24', '', 1),
-('bx_payment_grid_sbs_list_all', 'client_id', '_bx_payment_grid_column_title_sbs_client_id', '10%', 0, '24', '', 2),
+('bx_payment_grid_sbs_list_all', 'seller_id', '_bx_payment_grid_column_title_sbs_seller_id', '12%', 0, '0', '', 1),
+('bx_payment_grid_sbs_list_all', 'client_id', '_bx_payment_grid_column_title_sbs_client_id', '12%', 0, '0', '', 2),
 ('bx_payment_grid_sbs_list_all', 'client_email', '_bx_payment_grid_column_title_sbs_client_email', '15%', 0, '24', '', 3),
-('bx_payment_grid_sbs_list_all', 'customer_id', '_bx_payment_grid_column_title_sbs_customer_id', '15%', 0, '18', '', 4),
-('bx_payment_grid_sbs_list_all', 'subscription_id', '_bx_payment_grid_column_title_sbs_subscription_id', '15%', 0, '32', '', 5),
+('bx_payment_grid_sbs_list_all', 'customer_id', '_bx_payment_grid_column_title_sbs_customer_id', '5%', 0, '8', '', 4),
+('bx_payment_grid_sbs_list_all', 'subscription_id', '_bx_payment_grid_column_title_sbs_subscription_id', '5%', 0, '0', '', 5),
 ('bx_payment_grid_sbs_list_all', 'provider', '_bx_payment_grid_column_title_sbs_provider', '5%', 0, '16', '', 6),
-('bx_payment_grid_sbs_list_all', 'paid', '_bx_payment_grid_column_title_sbs_paid', '4%', 0, '4', '', 7),
-('bx_payment_grid_sbs_list_all', 'date', '_bx_payment_grid_column_title_sbs_date_created', '10%', 0, '10', '', 8),
-('bx_payment_grid_sbs_list_all', 'actions', '', '16%', 0, '', '', 9),
+('bx_payment_grid_sbs_list_all', 'date_add', '_bx_payment_grid_column_title_sbs_date_add', '12%', 0, '10', '', 7),
+('bx_payment_grid_sbs_list_all', 'date_next', '_bx_payment_grid_column_title_sbs_date_next', '12%', 0, '10', '', 8),
+('bx_payment_grid_sbs_list_all', 'status', '_bx_payment_grid_column_title_sbs_status', '6%', 0, '8', '', 9),
+('bx_payment_grid_sbs_list_all', 'actions', '', '16%', 0, '0', '', 10),
 
-('bx_payment_grid_sbs_history', 'seller_id', '_bx_payment_grid_column_title_sbs_seller_id', '24%', 0, '20', '', 1),
+('bx_payment_grid_sbs_history', 'seller_id', '_bx_payment_grid_column_title_sbs_seller_id', '24%', 0, '0', '', 1),
 ('bx_payment_grid_sbs_history', 'transaction', '_bx_payment_grid_column_title_sbs_transaction', '22%', 0, '18', '', 2),
 ('bx_payment_grid_sbs_history', 'license', '_bx_payment_grid_column_title_sbs_license', '22%', 0, '18', '', 3),
 ('bx_payment_grid_sbs_history', 'amount', '_bx_payment_grid_column_title_sbs_amount', '10%', 1, '10', '', 4),
 ('bx_payment_grid_sbs_history', 'date', '_bx_payment_grid_column_title_sbs_date', '10%', 0, '10', '', 5),
 ('bx_payment_grid_sbs_history', 'actions', '', '12%', 0, '', '', 6),
 
-('bx_payment_grid_orders_history', 'seller_id', '_bx_payment_grid_column_title_ods_seller_id', '24%', 0, '20', '', 1),
+('bx_payment_grid_orders_history', 'seller_id', '_bx_payment_grid_column_title_ods_seller_id', '24%', 0, '0', '', 1),
 ('bx_payment_grid_orders_history', 'transaction', '_bx_payment_grid_column_title_ods_transaction', '22%', 0, '18', '', 2),
 ('bx_payment_grid_orders_history', 'item', '_bx_payment_grid_column_title_ods_item', '22%', 0, '18', '', 3),
 ('bx_payment_grid_orders_history', 'amount', '_bx_payment_grid_column_title_ods_amount', '10%', 1, '10', '', 4),
 ('bx_payment_grid_orders_history', 'date', '_bx_payment_grid_column_title_ods_date', '10%', 0, '10', '', 5),
 ('bx_payment_grid_orders_history', 'actions', '', '12%', 0, '', '', 6),
 
-('bx_payment_grid_orders_processed', 'checkbox', '', '2%', 0, '', '', 1),
-('bx_payment_grid_orders_processed', 'client_id', '_bx_payment_grid_column_title_ods_client_id', '22%', 0, '18', '', 2),
-('bx_payment_grid_orders_processed', 'transaction', '_bx_payment_grid_column_title_ods_transaction', '20%', 0, '18', '', 3),
-('bx_payment_grid_orders_processed', 'item', '_bx_payment_grid_column_title_ods_item', '20%', 0, '18', '', 4),
-('bx_payment_grid_orders_processed', 'amount', '_bx_payment_grid_column_title_ods_amount', '10%', 1, '10', '', 5),
-('bx_payment_grid_orders_processed', 'date', '_bx_payment_grid_column_title_ods_date', '10%', 0, '10', '', 6),
-('bx_payment_grid_orders_processed', 'actions', '', '16%', 0, '', '', 7),
+('bx_payment_grid_orders_processed', 'checkbox', '', '2%', 0, '0', '', 1),
+('bx_payment_grid_orders_processed', 'client_id', '_bx_payment_grid_column_title_ods_client_id', '16%', 0, '0', '', 2),
+('bx_payment_grid_orders_processed', 'author_id', '_bx_payment_grid_column_title_ods_author_id', '16%', 0, '0', '', 3),
+('bx_payment_grid_orders_processed', 'transaction', '_bx_payment_grid_column_title_ods_transaction', '10%', 0, '8', '', 4),
+('bx_payment_grid_orders_processed', 'item', '_bx_payment_grid_column_title_ods_item', '20%', 0, '', '', 5),
+('bx_payment_grid_orders_processed', 'amount', '_bx_payment_grid_column_title_ods_amount', '10%', 1, '10', '', 6),
+('bx_payment_grid_orders_processed', 'date', '_bx_payment_grid_column_title_ods_date', '10%', 0, '10', '', 7),
+('bx_payment_grid_orders_processed', 'actions', '', '16%', 0, '0', '', 8),
 
 ('bx_payment_grid_orders_pending', 'checkbox', '', '2%', 0, '', '', 1),
-('bx_payment_grid_orders_pending', 'client_id', '_bx_payment_grid_column_title_ods_client_id', '25%', 0, '25', '', 2),
+('bx_payment_grid_orders_pending', 'client_id', '_bx_payment_grid_column_title_ods_client_id', '25%', 0, '0', '', 2),
 ('bx_payment_grid_orders_pending', 'transaction', '_bx_payment_grid_column_title_ods_transaction', '25%', 0, '25', '', 3),
 ('bx_payment_grid_orders_pending', 'amount', '_bx_payment_grid_column_title_ods_amount', '14%', 1, '14', '', 4),
 ('bx_payment_grid_orders_pending', 'date', '_bx_payment_grid_column_title_ods_date', '14%', 0, '14', '', 5),
