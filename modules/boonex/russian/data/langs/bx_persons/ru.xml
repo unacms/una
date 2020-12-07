@@ -4,7 +4,7 @@
 	<string name="_bx_persons"><![CDATA[Персоны]]></string>
 	<string name="_bx_persons_cmts"><![CDATA[Персоны - Комментарии]]></string>
 
-	<string name="_bx_persons_option_autoapproval"><![CDATA[Автоматически активировать всех персон после создания]]></string>
+	<string name="_bx_persons_option_autoapproval"><![CDATA[Автоматически активировать всех персон]]></string>
 	<string name="_bx_persons_option_default_acl_level"><![CDATA[Уровень, по умолчанию назначаемый созданному персональному профилю]]></string>
   <string name="_bx_persons_option_enable_profile_activation_letter"><![CDATA[Включить письмо об активации профиля]]></string>
 	<string name="_bx_persons_option_redirect_aadd"><![CDATA[После создания персонального профиля перенаправить на]]></string>
@@ -12,6 +12,10 @@
     <string name="_bx_persons_option_redirect_aadd_last"><![CDATA[Предыдущая страница]]></string>
     <string name="_bx_persons_option_redirect_aadd_custom"><![CDATA[Пользовательская страница]]></string>
     <string name="_bx_persons_option_redirect_aadd_custom_url"><![CDATA[URL для перенаправления 'Пользовательская страница']]></string>
+    <string name="_bx_persons_option_activation_on"><![CDATA[После создания и после редактирования]]></string>
+    <string name="_bx_persons_option_activation_add"><![CDATA[Только после создания]]></string>
+    <string name="_bx_persons_option_activation_edit"><![CDATA[Только после редактирования]]></string>
+    <string name="_bx_persons_option_activation_off"><![CDATA[Ручная активация]]></string>
 	<string name="_bx_persons_option_num_connections_quick"><![CDATA[Количество элементов в блоке друзей]]></string>
 	<string name="_bx_persons_option_per_page_browse"><![CDATA[Количество элементов на странице]]></string>
     <string name="_bx_persons_option_num_rss"><![CDATA[Количество элементов в ленте RSS]]></string>
