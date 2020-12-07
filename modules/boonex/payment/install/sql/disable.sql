@@ -35,5 +35,9 @@ DELETE FROM `sys_acl_actions` WHERE `Module` = @sName;
 DELETE FROM `sys_email_templates` WHERE `Module` = @sName;
 
 
+-- CRON
+DELETE FROM `sys_cron_jobs` WHERE `name` IN ('bx_payment_time_tracker');
+
+
 -- PAYMENTS
 DELETE FROM `sys_objects_payments` WHERE `object` = @sName;

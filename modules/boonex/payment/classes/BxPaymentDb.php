@@ -381,6 +381,16 @@ class BxPaymentDb extends BxBaseModPaymentDb
                 $sWhereClause = " AND `tt`.`seller_id`=:seller_id";
                 break;
 
+            case 'authors':
+                $aMethod['name'] = 'getColumn';
+                $aMethod['params'][1] = array(
+                    'seller_id' => $aParams['seller_id']
+                );
+
+                $sSelectClause = "DISTINCT `tt`.`author_id`";
+                $sWhereClause = " AND `tt`.`seller_id`=:seller_id";
+                break;
+
             case 'license':
                 $aMethod['name'] = 'getAll';
                 $aMethod['params'][1] = array(
@@ -438,7 +448,7 @@ class BxPaymentDb extends BxBaseModPaymentDb
         return $this->getOrderProcessed($aParams);
     }
 
-	/*
+    /*
      * Subscriptions methods
      */
     public function getOrderSubscription($aParams)
@@ -472,6 +482,20 @@ class BxPaymentDb extends BxBaseModPaymentDb
                 $sJoinClause = "LEFT JOIN `" . $this->_sPrefix . "transactions_pending` AS `ttp` ON `ts`.`pending_id`=`ttp`.`id`";
                 $sWhereClause = " AND " . $this->arrayToSQL($aParams['conditions'], ' AND ');
                 break;
+
+            case 'time_tracker':
+                $aMethod['params'][1] = array(
+                    'status_active' => $aParams['status_active'],
+                    'status_trial' => $aParams['status_trial'],
+                    'status_unpaid' => $aParams['status_unpaid'],
+                    'pay_attempts_max' => $aParams['pay_attempts_max'],
+                    'pay_attempts_interval' => $aParams['pay_attempts_interval']
+                );
+
+                $sSelectClause .= ", `ttp`.`client_id`, `ttp`.`seller_id`, `ttp`.`type`, `ttp`.`provider`, `ttp`.`amount`, `ttp`.`order`";
+                $sJoinClause = "LEFT JOIN `" . $this->_sPrefix . "transactions_pending` AS `ttp` ON `ts`.`pending_id`=`ttp`.`id` INNER JOIN `" . $this->_sPrefix . "providers` AS `tp` ON `ttp`.`provider`=`tp`.`name` AND `tp`.`time_tracker`='1'";
+                $sWhereClause = " AND `ts`.`date_next`<=UNIX_TIMESTAMP() AND (`ts`.`status`=:status_active OR `ts`.`status`=:status_trial OR (`ts`.`status`=:status_unpaid AND `ts`.`pay_attempts`<:pay_attempts_max AND DATE_ADD(FROM_UNIXTIME(`ts`.`date_next`), INTERVAL `ts`.`pay_attempts`*:pay_attempts_interval SECOND)<=NOW()))";
+                break;
         }
 
         $aMethod['params'][0] = "SELECT " . $sSelectClause . " FROM `" . $this->_sPrefix . "subscriptions` AS `ts` " . $sJoinClause . " WHERE 1 " . $sWhereClause . $sLimitClause;
@@ -481,8 +505,8 @@ class BxPaymentDb extends BxBaseModPaymentDb
     public function isSubscriptionByPending($iPending)
     {
     	$aSubscription = $this->getSubscription(array(
-    		'type' => 'pending_id', 
-    		'pending_id' => $iPending
+            'type' => 'pending_id', 
+            'pending_id' => $iPending
     	));
 
     	return !empty($aSubscription) && is_array($aSubscription);
@@ -493,10 +517,14 @@ class BxPaymentDb extends BxBaseModPaymentDb
         if(empty($aValues) || !is_array($aValues))
             return false;
 
-        return (int)$this->query("INSERT INTO `" . $this->_sPrefix . "subscriptions` SET " . $this->arrayToSQL($aValues) . ", `date`=UNIX_TIMESTAMP()") > 0;
+        $sSetClause = $this->arrayToSQL($aValues);
+        if(empty($aValues['date_add']))
+            $sSetClause .= ", `date_add`=UNIX_TIMESTAMP()";
+
+        return (int)$this->query("INSERT INTO `" . $this->_sPrefix . "subscriptions` SET " . $sSetClause) > 0;
     }
 
-	public function updateSubscription($aValues, $aWhere)
+    public function updateSubscription($aValues, $aWhere)
     {
         if(empty($aValues) || !is_array($aValues) || empty($aWhere) || !is_array($aWhere))
             return false;
@@ -507,13 +535,13 @@ class BxPaymentDb extends BxBaseModPaymentDb
     public function deleteSubscription($mixedId, $sReason)
     {
     	if(!is_array($mixedId))
-    		$mixedId = array($mixedId);
+            $mixedId = array($mixedId);
 
         //--- Move to deleted subscriptions table.   
     	$sQuery = "INSERT IGNORE INTO `" . $this->_sPrefix . "subscriptions_deleted` SELECT *, :reason AS `reason`, UNIX_TIMESTAMP() AS `deleted` FROM `" . $this->_sPrefix . "subscriptions` WHERE `id` IN (" . $this->implode_escape($mixedId) . ")";
-		$this->query($sQuery, array(
-		    'reason' => $sReason
-		));
+        $this->query($sQuery, array(
+            'reason' => $sReason
+        ));
 
         return (int)$this->query("DELETE FROM `" . $this->_sPrefix . "subscriptions` WHERE `id` IN (" . $this->implode_escape($mixedId) . ")") > 0;
     }

@@ -93,118 +93,118 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
     	$sToken = bx_process_input(bx_get('token'));
 
     	if(empty($aCartInfo['items']) || !is_array($aCartInfo['items']))
-    		return $this->_sLangsPrefix . 'err_empty_items';
+            return $this->_sLangsPrefix . 'err_empty_items';
 
-		$aClient = $this->_oModule->getProfileInfo();
-		$aVendor = $this->_oModule->getProfileInfo($aCartInfo['vendor_id']);
+        $aClient = $this->_oModule->getProfileInfo();
+        $aVendor = $this->_oModule->getProfileInfo($aCartInfo['vendor_id']);
 
-		$aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
-		if(!empty($aPending['order']) || !empty($aPending['error_code']) || !empty($aPending['error_msg']) || (int)$aPending['processed'] != 0)
+        $aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
+        if(!empty($aPending['order']) || !empty($aPending['error_code']) || !empty($aPending['error_msg']) || (int)$aPending['processed'] != 0)
             return $this->_sLangsPrefix . 'err_already_processed';
 
-		switch($aPending['type']) {
-			case BX_PAYMENT_TYPE_SINGLE:
-				$aCartInfo['items_title'] = '';
-				foreach($aCartInfo['items'] as $aItem)
-		            $aCartInfo['items_title'] .= ' ' . $aItem['title'] . ',';
-				$aCartInfo['items_title'] = trim($aCartInfo['items_title'], ', ');
+        switch($aPending['type']) {
+            case BX_PAYMENT_TYPE_SINGLE:
+                $aCartInfo['items_title'] = '';
+                foreach($aCartInfo['items'] as $aItem)
+                    $aCartInfo['items_title'] .= ' ' . $aItem['title'] . ',';
+                $aCartInfo['items_title'] = trim($aCartInfo['items_title'], ', ');
 
-				$mixedResult = $this->_createCharge($sToken, $iPendingId, $aClient, $aCartInfo);
-				if($mixedResult === false)
-					return $this->_sLangsPrefix . 'err_cannot_perform';
+                $mixedResult = $this->_createCharge($sToken, $iPendingId, $aClient, $aCartInfo);
+                if($mixedResult === false)
+                    return $this->_sLangsPrefix . 'err_cannot_perform';
 
-				header("Location: " . $this->getReturnDataUrl($aVendor['id'], array(
-					'order_id' => $mixedResult['order'],
-					'customer_id' => $mixedResult['customer'], 
-					'pending_id' => $aPending['id'],
-				    'redirect' => $sRedirect
-				)));
-				exit;
+                header("Location: " . $this->getReturnDataUrl($aVendor['id'], array(
+                    'order_id' => $mixedResult['order'],
+                    'customer_id' => $mixedResult['customer'], 
+                    'pending_id' => $aPending['id'],
+                    'redirect' => $sRedirect
+                )));
+                exit;
 
-			case BX_PAYMENT_TYPE_RECURRING:
-				$mixedResult = $this->_createSubscription($sToken, $iPendingId, $aClient, $aCartInfo);
-				if($mixedResult === false)
-					return $this->_sLangsPrefix . 'err_cannot_perform';
+            case BX_PAYMENT_TYPE_RECURRING:
+                $mixedResult = $this->_createSubscription($sToken, $iPendingId, $aClient, $aCartInfo);
+                if($mixedResult === false)
+                    return $this->_sLangsPrefix . 'err_cannot_perform';
 
-				return array(
-					'code' => 0,
-					'eval' => $this->_oModule->_oConfig->getJsObject('cart') . '.onSubscribeSubmit(oData);',
-					'redirect' => $this->getReturnDataUrl($aVendor['id'], array(
-						'order_id' => $mixedResult['order'],
-						'customer_id' => $mixedResult['customer'],
-						'pending_id' => $aPending['id'],
-						'redirect' => $sRedirect
-					))
-				);
-		}
+                return array(
+                    'code' => 0,
+                    'eval' => $this->_oModule->_oConfig->getJsObject('cart') . '.onSubscribeSubmit(oData);',
+                    'redirect' => $this->getReturnDataUrl($aVendor['id'], array(
+                        'order_id' => $mixedResult['order'],
+                        'customer_id' => $mixedResult['customer'],
+                        'pending_id' => $aPending['id'],
+                        'redirect' => $sRedirect
+                    ))
+                );
+        }
     }
 
     public function finalizeCheckout(&$aData)
     {
     	$sOrderId = bx_process_input($aData['order_id']);
     	$sCustomerId = bx_process_input($aData['customer_id']);
-		$iPendingId = bx_process_input($aData['pending_id'], BX_DATA_INT);
+        $iPendingId = bx_process_input($aData['pending_id'], BX_DATA_INT);
         if(empty($iPendingId))
-        	return array('code' => 1, 'message' => $this->_sLangsPrefix . 'err_wrong_data');
+            return array('code' => 1, 'message' => $this->_sLangsPrefix . 'err_wrong_data');
 
         $sRedirect = bx_process_input($aData['redirect']);
 
-		$aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
+        $aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => $iPendingId));
         if(!empty($aPending['order']) || !empty($aPending['error_code']) || !empty($aPending['error_msg']) || (int)$aPending['processed'] != 0)
             return array('code' => 3, 'message' => $this->_sLangsPrefix . 'err_already_processed');
 
-		$aResult = array(
-			'code' => BX_PAYMENT_RESULT_SUCCESS,
-        	'message' => '',
-			'pending_id' => $iPendingId,
-		    'customer_id' => '',
-		    'subscription_id' => '',
-			'client_name' => '',
-			'client_email' => '',
-			'paid' => false,
-			'trial' => false,
-		    'redirect' => $sRedirect
-		);
+        $aResult = array(
+            'code' => BX_PAYMENT_RESULT_SUCCESS,
+            'message' => '',
+            'pending_id' => $iPendingId,
+            'customer_id' => '',
+            'subscription_id' => '',
+            'client_name' => '',
+            'client_email' => '',
+            'paid' => false,
+            'trial' => false,
+            'redirect' => $sRedirect
+        );
 
-		switch($aPending['type']) {
-			case BX_PAYMENT_TYPE_SINGLE:
-			    $oCustomer = $this->_retrieveCustomer(BX_PAYMENT_TYPE_SINGLE, $sCustomerId);
-				$oCharge = $this->_retrieveCharge($sOrderId);
-				if($oCustomer === false || $oCharge === false)
-				    return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
-				
-				$aCustomer = $oCustomer->jsonSerialize();
-				$aCharge = $oCharge->jsonSerialize();
-				if(empty($aCustomer) || !is_array($aCustomer) || empty($aCharge) || !is_array($aCharge))
-					return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
+        switch($aPending['type']) {
+            case BX_PAYMENT_TYPE_SINGLE:
+                $oCustomer = $this->_retrieveCustomer(BX_PAYMENT_TYPE_SINGLE, $sCustomerId);
+                $oCharge = $this->_retrieveCharge($sOrderId);
+                if($oCustomer === false || $oCharge === false)
+                    return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
 
-				$aResult = array_merge($aResult, array(
-					'message' => $this->_sLangsPrefix . 'strp_msg_charged',
-					'client_email' => $aCustomer['email'],
-					'paid' => (bool)$aCharge['paid']
-				));
-				break;
+                $aCustomer = $oCustomer->jsonSerialize();
+                $aCharge = $oCharge->jsonSerialize();
+                if(empty($aCustomer) || !is_array($aCustomer) || empty($aCharge) || !is_array($aCharge))
+                    return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
 
-			case BX_PAYMENT_TYPE_RECURRING:
-			    $oCustomer = $this->_retrieveCustomer(BX_PAYMENT_TYPE_RECURRING, $sCustomerId);
-				$oSubscription = $this->_retrieveSubscription($sCustomerId, $sOrderId);
-				if($oCustomer === false || $oSubscription === false)
-					return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
+                $aResult = array_merge($aResult, array(
+                    'message' => $this->_sLangsPrefix . 'strp_msg_charged',
+                    'client_email' => $aCustomer['email'],
+                    'paid' => (bool)$aCharge['paid']
+                ));
+                break;
 
-				$aCustomer = $oCustomer->jsonSerialize();
-				$aSubscription = $oSubscription->jsonSerialize();
-				if(empty($aCustomer) || !is_array($aCustomer) || empty($aSubscription) || !is_array($aSubscription))
-					return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
+            case BX_PAYMENT_TYPE_RECURRING:
+                $oCustomer = $this->_retrieveCustomer(BX_PAYMENT_TYPE_RECURRING, $sCustomerId);
+                $oSubscription = $this->_retrieveSubscription($sCustomerId, $sOrderId);
+                if($oCustomer === false || $oSubscription === false)
+                    return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
 
-				$aResult = array_merge($aResult, array(
-					'message' => $this->_sLangsPrefix . 'strp_msg_subscribed',
+                $aCustomer = $oCustomer->jsonSerialize();
+                $aSubscription = $oSubscription->jsonSerialize();
+                if(empty($aCustomer) || !is_array($aCustomer) || empty($aSubscription) || !is_array($aSubscription))
+                    return array('code' => 4, 'message' => $this->_sLangsPrefix . 'err_cannot_perform');
+
+                $aResult = array_merge($aResult, array(
+                    'message' => $this->_sLangsPrefix . 'strp_msg_subscribed',
                     'customer_id' => $sCustomerId,
-				    'subscription_id' => $sOrderId,
-					'client_email' => $aCustomer['email'],
-				    'trial' => $aSubscription['status'] == 'trialing'
-				));
-				break;
-		}
+                    'subscription_id' => $sOrderId,
+                    'client_email' => $aCustomer['email'],
+                    'trial' => $aSubscription['status'] == 'trialing'
+                ));
+                break;
+        }
 
         //--- Update pending transaction ---//
         $this->_oModule->_oDb->updateOrderPending($iPendingId, array(
@@ -218,8 +218,8 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
 
     public function notify()
     {
-		$iResult = $this->_processEvent();
-		http_response_code($iResult);
+        $iResult = $this->_processEvent();
+        http_response_code($iResult);
     }
 
     public function getButtonSingle($iClientId, $iVendorId, $aParams = array())
@@ -312,12 +312,12 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
             'plan' => $sName,
             'cost' => _t('_bx_payment_strp_txt_cost_mask', (int)$aSubscription['plan']['amount'] / 100, $aSubscription['plan']['currency'], $aSubscription['plan']['interval']),
             'status' => $aSubscription['status'],
-        	'created' => bx_time_js($aSubscription['created']),
-        	'started' => !empty($aSubscription['start']) ? bx_time_js($aSubscription['start']) : $sNone,
-        	'trial_start' => !empty($aSubscription['trial_start']) ? bx_time_js($aSubscription['trial_start']) : $sNone,
-        	'trial_end' => !empty($aSubscription['trial_end']) ? bx_time_js($aSubscription['trial_end']) : $sNone,
+            'created' => bx_time_js($aSubscription['created']),
+            'started' => !empty($aSubscription['start']) ? bx_time_js($aSubscription['start']) : $sNone,
+            'trial_start' => !empty($aSubscription['trial_start']) ? bx_time_js($aSubscription['trial_start']) : $sNone,
+            'trial_end' => !empty($aSubscription['trial_end']) ? bx_time_js($aSubscription['trial_end']) : $sNone,
             'cperiod_start' => !empty($aSubscription['current_period_start']) ? bx_time_js($aSubscription['current_period_start']) : $sNone,
-        	'cperiod_end' => !empty($aSubscription['current_period_end']) ? bx_time_js($aSubscription['current_period_end']) : $sNone,
+            'cperiod_end' => !empty($aSubscription['current_period_end']) ? bx_time_js($aSubscription['current_period_end']) : $sNone,
         ));
     }
 
@@ -360,7 +360,7 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
         }
 
         return $this->_oModule->_oTemplate->parseHtmlByName('strp_details_change_recuring.html', array(
-        	'object' => $this->_oModule->_oConfig->getJsObject('subscription'),
+            'object' => $this->_oModule->_oConfig->getJsObject('subscription'),
             'form' => $oForm->getCode(),
             'form_id' => $oForm->aFormAttrs['id'],
         ));
@@ -488,393 +488,392 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
         return $oToken->jsonSerialize();
     }
 
-	protected function _createCustomer($sType, $sToken, $aClient)
-	{
-	    $oCustomer = null;
-	    $aCustomer = array(
-			'card' => $sToken,
-			'email' => !empty($aClient['email']) ? $aClient['email'] : ''
-		);
+    protected function _createCustomer($sType, $sToken, $aClient)
+    {
+        $oCustomer = null;
+        $aCustomer = array(
+            'card' => $sToken,
+            'email' => !empty($aClient['email']) ? $aClient['email'] : ''
+        );
 
-	    bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_customer', 0, $aClient['id'], array(
-	    	'type' => $sType,
-			'customer_object' => &$oCustomer, 
-			'customer_params' => &$aCustomer
-		));
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_customer', 0, $aClient['id'], array(
+            'type' => $sType,
+            'customer_object' => &$oCustomer, 
+            'customer_params' => &$aCustomer
+        ));
 
-		try {
-			$this->_oCustomer = !empty($oCustomer) ? $oCustomer : \Stripe\Customer::create($aCustomer);
-		}
-		catch (Exception $oException) {
-			return $this->_processException('Create Customer Error: ', $oException);
-		}
+        try {
+            $this->_oCustomer = !empty($oCustomer) ? $oCustomer : \Stripe\Customer::create($aCustomer);
+        }
+        catch (Exception $oException) {
+            return $this->_processException('Create Customer Error: ', $oException);
+        }
 
-		return $this->_oCustomer->jsonSerialize();
-	}
+        return $this->_oCustomer->jsonSerialize();
+    }
 
-	protected function _retrieveCustomer($sType, $sId)
-	{
-	    $oCustomer = null;
-	    bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_customer', 0, false, array(
-	    	'type' => $sType,
-	    	'customer_id' => &$sId,
-			'customer_object' => &$oCustomer
-		));
+    protected function _retrieveCustomer($sType, $sId)
+    {
+        $oCustomer = null;
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_customer', 0, false, array(
+            'type' => $sType,
+            'customer_id' => &$sId,
+            'customer_object' => &$oCustomer
+        ));
 
-		try {
-		    if(empty($oCustomer))
-			    $oCustomer = \Stripe\Customer::retrieve($sId);
-		}
-		catch (Exception $oException) {
-			return $this->_processException('Retrieve Customer Error: ', $oException);
-		}
+        try {
+            if(empty($oCustomer))
+                $oCustomer = \Stripe\Customer::retrieve($sId);
+        }
+        catch (Exception $oException) {
+            return $this->_processException('Retrieve Customer Error: ', $oException);
+        }
 
-		return $oCustomer;
-	}
+        return $oCustomer;
+    }
 
-        protected function _retrieveProduct($sId)
-	{
-	    $oProduct = null;
-	    bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_product', 0, false, array(
-	    	'product_id' => &$sId,
-                'product_object' => &$oProduct
-            ));
+    protected function _retrieveProduct($sId)
+    {
+        $oProduct = null;
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_product', 0, false, array(
+            'product_id' => &$sId,
+            'product_object' => &$oProduct
+        ));
 
-            if(!empty($oProduct))
-                return $oProduct;
-
-            try {
-                $oProduct = \Stripe\Product::retrieve($sId);
-            }
-            catch (Exception $oException) {
-                return $this->_processException('Retrieve Product Error: ', $oException);
-            }
-
+        if(!empty($oProduct))
             return $oProduct;
-	}
 
-	protected function _createCharge($sToken, $iPendingId, &$aClient, &$aCartInfo) {
-		if(empty($this->_oCustomer))
-			$this->_createCustomer(BX_PAYMENT_TYPE_SINGLE, $sToken, $aClient);
+        try {
+            $oProduct = \Stripe\Product::retrieve($sId);
+        }
+        catch (Exception $oException) {
+            return $this->_processException('Retrieve Product Error: ', $oException);
+        }
 
-		if(empty($this->_oCustomer))
-			return false;
+        return $oProduct;
+    }
 
-		$fAmount = 100 * (float)$aCartInfo['items_price'];
+    protected function _createCharge($sToken, $iPendingId, &$aClient, &$aCartInfo)
+    {
+        if(empty($this->_oCustomer))
+            $this->_createCustomer(BX_PAYMENT_TYPE_SINGLE, $sToken, $aClient);
 
-		$oCharge = null;
-		$aCharge = array(
-			'customer' => $this->_oCustomer->id,
-			'amount' => $fAmount,
-			'currency' => $aCartInfo['vendor_currency_code'],
-			'description' => $aCartInfo['items_title'],
-			'metadata' => array(
-				'vendor' => $aCartInfo['vendor_id'],
-				'client' => $aClient['id'],
-				'product' => $iPendingId,
-				'verification' => $this->_getVerificationCodeCharge($aCartInfo['vendor_id'], $aClient['id'], $fAmount, $aCartInfo['vendor_currency_code'])
-			)
-		);
+        if(empty($this->_oCustomer))
+            return false;
 
-		bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_charge', $iPendingId, false, array(
-			'charge_object' => &$oCharge, 
-			'charge_params' => &$aCharge
-		));
+        $fAmount = 100 * (float)$aCartInfo['items_price'];
 
-		try {
-		    if(empty($oCharge))
-			    $oCharge = \Stripe\Charge::create($aCharge);
-		}
-		catch (Exception $oException) {
-			return $this->_processException('Create Charge Error: ', $oException);
-		}
+        $oCharge = null;
+        $aCharge = array(
+            'customer' => $this->_oCustomer->id,
+            'amount' => $fAmount,
+            'currency' => $aCartInfo['vendor_currency_code'],
+            'description' => $aCartInfo['items_title'],
+            'metadata' => array(
+                'vendor' => $aCartInfo['vendor_id'],
+                'client' => $aClient['id'],
+                'product' => $iPendingId,
+                'verification' => $this->_getVerificationCodeCharge($aCartInfo['vendor_id'], $aClient['id'], $fAmount, $aCartInfo['vendor_currency_code'])
+            )
+        );
 
-		$aResult = $oCharge->jsonSerialize();
-		if(empty($aResult) || !is_array($aResult) || empty($aResult['paid']))
-			return false;
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_charge', $iPendingId, false, array(
+            'charge_object' => &$oCharge, 
+            'charge_params' => &$aCharge
+        ));
 
-		$aMetadata = $aResult['metadata'];
-		if(empty($aMetadata['verification']) || $aMetadata['verification'] != $this->_getVerificationCodeCharge($aCartInfo['vendor_id'], $aClient['id'], $aResult['amount'], $aResult['currency']))
-			return false;
+        try {
+            if(empty($oCharge))
+                $oCharge = \Stripe\Charge::create($aCharge);
+        }
+        catch (Exception $oException) {
+            return $this->_processException('Create Charge Error: ', $oException);
+        }
 
-		return array(
-			'pending' => $iPendingId,
-			'amount' =>(float)$aResult['amount'] / 100,
-			'customer' => $this->_oCustomer->id,
-			'order' => $aResult['id']
-		);
-	}
+        $aResult = $oCharge->jsonSerialize();
+        if(empty($aResult) || !is_array($aResult) || empty($aResult['paid']))
+            return false;
 
-	protected function _retrieveCharge($sId) {
-	    $oCharge = null;
-	    bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_charge', 0, false, array(
-	    	'charge_id' => &$sId,
-			'charge_object' => &$oCharge
-		));
+        $aMetadata = $aResult['metadata'];
+        if(empty($aMetadata['verification']) || $aMetadata['verification'] != $this->_getVerificationCodeCharge($aCartInfo['vendor_id'], $aClient['id'], $aResult['amount'], $aResult['currency']))
+            return false;
 
-		try {
-		    if(empty($oCharge))
-			    $oCharge = \Stripe\Charge::retrieve($sId);
-		}
-		catch (Exception $oException) {
-			return $this->_processException('Retrieve Charge Error: ', $oException);
-		}
+        return array(
+            'pending' => $iPendingId,
+            'amount' =>(float)$aResult['amount'] / 100,
+            'customer' => $this->_oCustomer->id,
+            'order' => $aResult['id']
+        );
+    }
 
-		return $oCharge;
-	}
+    protected function _retrieveCharge($sId) {
+        $oCharge = null;
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_charge', 0, false, array(
+            'charge_id' => &$sId,
+            'charge_object' => &$oCharge
+        ));
 
-	protected function _createSubscription($sToken, $iPendingId, &$aClient, &$aCartInfo)
-	{
-		if(empty($this->_oCustomer))
-			$this->_createCustomer(BX_PAYMENT_TYPE_RECURRING, $sToken, $aClient);
+        try {
+        if(empty($oCharge))
+            $oCharge = \Stripe\Charge::retrieve($sId);
+        }
+        catch (Exception $oException) {
+            return $this->_processException('Retrieve Charge Error: ', $oException);
+        }
 
-		if(empty($this->_oCustomer))
-			return false;
+        return $oCharge;
+    }
 
-		$aItem = array_shift($aCartInfo['items']);
-		if(empty($aItem) || !is_array($aItem))
-			return false;
+    protected function _createSubscription($sToken, $iPendingId, &$aClient, &$aCartInfo)
+    {
+        if(empty($this->_oCustomer))
+            $this->_createCustomer(BX_PAYMENT_TYPE_RECURRING, $sToken, $aClient);
 
-		$iTrial = $this->_oModule->_oConfig->getTrial(BX_PAYMENT_TYPE_RECURRING, $aItem);
-		$bTrial = !empty($iTrial);
+        if(empty($this->_oCustomer))
+            return false;
 
-		$oSubscription = null;
-		$aSubscription = array(
-			'plan' => $aItem['name'],
-			'metadata' => array(
-				'vendor' => $aCartInfo['vendor_id'],
-				'client' => $aClient['id'],
-				'product' => $iPendingId,
-				'verification' => $this->_getVerificationCodeSubscription($aCartInfo['vendor_id'], $aClient['id'], $aItem['name'], $aCartInfo['vendor_currency_code'])
-			)
-		);
+        $aItem = array_shift($aCartInfo['items']);
+        if(empty($aItem) || !is_array($aItem))
+            return false;
 
-		bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_subscription', $iPendingId, false, array(
-		    'customer' => &$this->_oCustomer,
-			'subscription_object' => &$oSubscription, 
-			'subscription_params' => &$aSubscription
-		));
+        $iTrial = $this->_oModule->_oConfig->getTrial(BX_PAYMENT_TYPE_RECURRING, $aItem);
+        $bTrial = !empty($iTrial);
 
-		try {
-             if(empty($oSubscription))
-    			$oSubscription = $this->_oCustomer->subscriptions->create($aSubscription);
-		}
-		catch (Exception $oException) {
-			return $this->_processException('Create Subscription Error: ', $oException);
-		}
+        $oSubscription = null;
+        $aSubscription = array(
+            'plan' => $aItem['name'],
+            'metadata' => array(
+                'vendor' => $aCartInfo['vendor_id'],
+                'client' => $aClient['id'],
+                'product' => $iPendingId,
+                'verification' => $this->_getVerificationCodeSubscription($aCartInfo['vendor_id'], $aClient['id'], $aItem['name'], $aCartInfo['vendor_currency_code'])
+            )
+        );
 
-		$aResult = $oSubscription->jsonSerialize();
-		if(empty($aResult) || !is_array($aResult) || (!$bTrial && $aResult['status'] != 'active') || ($bTrial && !in_array($aResult['status'], array('active', 'trialing'))))
-			return false;
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_create_subscription', $iPendingId, false, array(
+            'customer' => &$this->_oCustomer,
+            'subscription_object' => &$oSubscription, 
+            'subscription_params' => &$aSubscription
+        ));
 
-		$aMetadata = $aResult['metadata'];
-		if(empty($aMetadata['verification']) || $aMetadata['verification'] != $this->_getVerificationCodeSubscription($aCartInfo['vendor_id'], $aClient['id'], $aResult['plan']['id'], $aResult['plan']['currency']))
-			return false;
+        try {
+            if(empty($oSubscription))
+                $oSubscription = $this->_oCustomer->subscriptions->create($aSubscription);
+        }
+        catch (Exception $oException) {
+            return $this->_processException('Create Subscription Error: ', $oException);
+        }
 
-		return array(
-			'pending' => $iPendingId,
-			'amount' =>(float)$aCartInfo['items_price'],
-			'customer' => $this->_oCustomer->id, 
-			'order' => $aResult['id'],
-			'trial' => $bTrial
-		);
-	}
+        $aResult = $oSubscription->jsonSerialize();
+        if(empty($aResult) || !is_array($aResult) || (!$bTrial && $aResult['status'] != 'active') || ($bTrial && !in_array($aResult['status'], array('active', 'trialing'))))
+            return false;
 
-	protected function _retrieveSubscription($sCustomerId, $sSubscriptionId)
-	{
-		try {
-			$oCustomer = $this->_retrieveCustomer(BX_PAYMENT_TYPE_RECURRING, $sCustomerId);
-			$oSubscription = $oCustomer->subscriptions->retrieve($sSubscriptionId);
-		}
-		catch (Exception $oException) {
-			return $this->_processException('Retrieve Subscription Error: ', $oException);
-		}
+        $aMetadata = $aResult['metadata'];
+        if(empty($aMetadata['verification']) || $aMetadata['verification'] != $this->_getVerificationCodeSubscription($aCartInfo['vendor_id'], $aClient['id'], $aResult['plan']['id'], $aResult['plan']['currency']))
+            return false;
 
-		return $oSubscription;
-	}
+        return array(
+            'pending' => $iPendingId,
+            'amount' =>(float)$aCartInfo['items_price'],
+            'customer' => $this->_oCustomer->id, 
+            'order' => $aResult['id'],
+            'trial' => $bTrial
+        );
+    }
 
-	protected function _cancelSubscription($sCustomerId, $sSubscriptionId)
-	{
-	    try {
-	        $oSubscription = $this->_retrieveSubscription($sCustomerId, $sSubscriptionId);
-	        $oSubscription = $oSubscription->cancel();
-	    }
-	    catch (Exception $oException) {
-			return $this->_processException('Cancel Subscription Error: ', $oException);
-		}
+    protected function _retrieveSubscription($sCustomerId, $sSubscriptionId)
+    {
+        try {
+            $oCustomer = $this->_retrieveCustomer(BX_PAYMENT_TYPE_RECURRING, $sCustomerId);
+            $oSubscription = $oCustomer->subscriptions->retrieve($sSubscriptionId);
+        }
+        catch (Exception $oException) {
+            return $this->_processException('Retrieve Subscription Error: ', $oException);
+        }
 
-		bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_cancel_subscription', 0, false, array(
-		    'subscription_id' => $sSubscriptionId,
-			'subscription_object' => &$oSubscription
-		));
+        return $oSubscription;
+    }
 
-		return $oSubscription;
-	}
+    protected function _cancelSubscription($sCustomerId, $sSubscriptionId)
+    {
+        try {
+            $oSubscription = $this->_retrieveSubscription($sCustomerId, $sSubscriptionId);
+            $oSubscription = $oSubscription->cancel();
+        }
+        catch (Exception $oException) {
+                return $this->_processException('Cancel Subscription Error: ', $oException);
+        }
+
+        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_cancel_subscription', 0, false, array(
+            'subscription_id' => $sSubscriptionId,
+            'subscription_object' => &$oSubscription
+        ));
+
+        return $oSubscription;
+    }
 
     protected function _listPlans($iLimit = 100)
-	{
-	    if($iLimit <= 0)
-	        $iLimit = 1;
+    {
+        if($iLimit <= 0)
+            $iLimit = 1;
         if($iLimit > 100)
             $iLimit = 100;
 
-		try {
-			$oPlans = \Stripe\Plan::all(array('limit' => $iLimit));
-		}
-		catch (Exception $oException) {
-			return $this->_processException('List Plans Error: ', $oException);
-		}
+        try {
+            $oPlans = \Stripe\Plan::all(array('limit' => $iLimit));
+        }
+        catch (Exception $oException) {
+            return $this->_processException('List Plans Error: ', $oException);
+        }
 
-		return $oPlans;
-	}
+        return $oPlans;
+    }
 
     protected function _createCard($sType, $sCustomerId, $sToken)
-	{
-		try {
-			$oCard = $this->_retrieveCustomer($sType, $sCustomerId)->sources->create(array(
-            	'source' => $sToken
+    {
+        try {
+            $oCard = $this->_retrieveCustomer($sType, $sCustomerId)->sources->create(array(
+                'source' => $sToken
             ));
-		}
-		catch (Stripe\Error\Base $oException) {
-			return $this->_processException('Create Card Error: ', $oException);
-		}
+        }
+        catch (Stripe\Error\Base $oException) {
+            return $this->_processException('Create Card Error: ', $oException);
+        }
 
-		return $oCard->jsonSerialize();
-	}
+        return $oCard->jsonSerialize();
+    }
 
     protected function _retrieveCard($sCustomerId, $sCardId = '') {
-		try {
-			$oCustomer = \Stripe\Customer::retrieve($sCustomerId);
-			$oCard = $oCustomer->sources->retrieve(!empty($sCardId) ? $sCardId : $oCustomer->default_source);
-		}
-		catch (Exception $oException) {
-			return $this->_processException('Retrieve Card Error: ', $oException);
-		}
+        try {
+            $oCustomer = \Stripe\Customer::retrieve($sCustomerId);
+            $oCard = $oCustomer->sources->retrieve(!empty($sCardId) ? $sCardId : $oCustomer->default_source);
+        }
+        catch (Exception $oException) {
+            return $this->_processException('Retrieve Card Error: ', $oException);
+        }
 
-		return $oCard;
-	}
+        return $oCard;
+    }
 
-	protected function _retrieveCoupon($sId) {
-		try {
-			$oCoupon = \Stripe\Coupon::retrieve($sId);
-		}
-		catch (Exception $oException) {
-			return $this->_processException('Retrieve Coupon Error: ', $oException);
-		}
+    protected function _retrieveCoupon($sId) {
+        try {
+            $oCoupon = \Stripe\Coupon::retrieve($sId);
+        }
+        catch (Exception $oException) {
+            return $this->_processException('Retrieve Coupon Error: ', $oException);
+        }
 
-		return $oCoupon;
-	}
+        return $oCoupon;
+    }
 
-	protected function _retrieveEvent($sId) {
-		try {
-			$oEvent = \Stripe\Event::retrieve($sId);
-		}
-		catch (Exception $oException) {
-			return $this->_processException('Retrieve Event Error: ', $oException);
-		}
+    protected function _retrieveEvent($sId) {
+        try {
+            $oEvent = \Stripe\Event::retrieve($sId);
+        }
+        catch (Exception $oException) {
+            return $this->_processException('Retrieve Event Error: ', $oException);
+        }
 
-		return $oEvent;
-	}
+        return $oEvent;
+    }
 
-	protected function _processEvent()
-	{
-    	$sInput = @file_get_contents("php://input");
-		$aEvent = json_decode($sInput, true);
-		if(empty($aEvent) || !is_array($aEvent)) 
-			return 404;
+    protected function _processEvent()
+    {
+        $sInput = @file_get_contents("php://input");
+        $aEvent = json_decode($sInput, true);
+        if(empty($aEvent) || !is_array($aEvent)) 
+            return 404;
 
-		$sType = $aEvent['type'];
-		if(!in_array($sType, array('invoice.payment_succeeded', 'charge.refunded', 'customer.subscription.deleted')))
-			return 200;
+        $sType = $aEvent['type'];
+        if(!in_array($sType, array('invoice.payment_succeeded', 'charge.refunded', 'customer.subscription.deleted')))
+            return 200;
 
-		$this->log('Webhooks: ' . (!empty($sType) ? $sType : ''));
-		$this->log($aEvent);
+        $this->log('Webhooks: ' . (!empty($sType) ? $sType : ''));
+        $this->log($aEvent);
 
-		$sMethod = '_processEvent' . bx_gen_method_name($sType, array('.', '_', '-'));
+        $sMethod = '_processEvent' . bx_gen_method_name($sType, array('.', '_', '-'));
     	if(!method_exists($this, $sMethod))
-    		return 200;
+            return 200;
 
     	return $this->$sMethod($aEvent) ? 200 : 403;
     }
 
-	protected function _processEventInvoicePaymentSucceeded(&$aEvent)
-	{
-		$mixedResult = $this->_getData($aEvent);
-		if($mixedResult === false)
-			return false;
+    protected function _processEventInvoicePaymentSucceeded(&$aEvent)
+    {
+        $mixedResult = $this->_getData($aEvent);
+        if($mixedResult === false)
+            return false;
 
-		list($aPending, $oCharge) = $mixedResult;
-		if(empty($aPending) || !is_array($aPending) || empty($oCharge))
-			return false;
+        list($aPending, $oCharge) = $mixedResult;
+        if(empty($aPending) || !is_array($aPending) || empty($oCharge))
+            return false;
 
-		$fChargeAmount = (float)$oCharge->amount / 100;
-		$sChargeCurrency = strtoupper($oCharge->currency);
-		if($this->_bCheckAmount && ((float)$aPending['amount'] != $fChargeAmount || strcasecmp($this->_oModule->_oConfig->getDefaultCurrencyCode(), $sChargeCurrency) !== 0))
-			return false;
+        $fChargeAmount = (float)$oCharge->amount / 100;
+        $sChargeCurrency = strtoupper($oCharge->currency);
+        if($this->_bCheckAmount && ((float)$aPending['amount'] != $fChargeAmount || strcasecmp($this->_oModule->_oConfig->getDefaultCurrencyCode(), $sChargeCurrency) !== 0))
+            return false;
 
         if($aPending['type'] == BX_PAYMENT_TYPE_RECURRING)
-            $this->_oModule->updateSubscription($aPending, array(
-                'paid' => 1
-            ));
+            $this->_oModule->getObjectSubscriptions()->prolong($aPending);
 
-		return $this->_oModule->registerPayment($aPending);
-	}
+        return $this->_oModule->registerPayment($aPending);
+    }
 
-	protected function _processEventChargeRefunded(&$aEvent)
-	{
-		$mixedResult = $this->_getData($aEvent);
-		if($mixedResult === false)
-			return false;
+    protected function _processEventChargeRefunded(&$aEvent)
+    {
+        $mixedResult = $this->_getData($aEvent);
+        if($mixedResult === false)
+            return false;
 
-		list($aPending) = $mixedResult;
-		if(empty($aPending) || !is_array($aPending))
-			return false;
+        list($aPending) = $mixedResult;
+        if(empty($aPending) || !is_array($aPending))
+            return false;
 
-		return $this->_oModule->refundPayment($aPending);
-	}
+        return $this->_oModule->refundPayment($aPending);
+    }
 
-	protected function _processEventCustomerSubscriptionDeleted(&$aEvent)
-	{
-		$mixedResult = $this->_getData($aEvent);
-		if($mixedResult === false)
-			return false;
+    protected function _processEventCustomerSubscriptionDeleted(&$aEvent)
+    {
+        $mixedResult = $this->_getData($aEvent);
+        if($mixedResult === false)
+            return false;
 
-		list($aPending) = $mixedResult;
-		if(empty($aPending) || !is_array($aPending))
-			return true;
+        list($aPending) = $mixedResult;
+        if(empty($aPending) || !is_array($aPending))
+            return true;
 
-		return $this->_oModule->cancelSubscription($aPending);
-	}
+        return $this->_oModule->getObjectSubscriptions()->cancelLocal($aPending);
+    }
 
-	protected function _processException($sMessage, &$oException)
-	{
-		$aError = $oException->getJsonBody();
+    protected function _processException($sMessage, &$oException)
+    {
+        $aError = $oException->getJsonBody();
 
-		$sMessage = $aError['error']['message'];
-		if(empty($sMessage))
-			$sMessage = $oException->getMessage();
+        $sMessage = $aError['error']['message'];
+        if(empty($sMessage))
+            $sMessage = $oException->getMessage();
 
-		$this->log($sMessage . $aError['error']['message']);
-		$this->log($aError);
+        $this->log($sMessage . $aError['error']['message']);
+        $this->log($aError);
 
-		return false;
-	}
+        return false;
+    }
 
-	protected function _getData(&$aEvent, $bRetrieve = true)
-	{
-		if($bRetrieve)
-			$oEvent = $this->_retrieveEvent($aEvent['id']);
-		else 
-			$oEvent = \Stripe\Util\Util::convertToStripeObject($aEvent, array());
+    protected function _getData(&$aEvent, $bRetrieve = true)
+    {
+        if($bRetrieve)
+            $oEvent = $this->_retrieveEvent($aEvent['id']);
+        else 
+            $oEvent = \Stripe\Util\Util::convertToStripeObject($aEvent, array());
 
-		if(empty($oEvent))
-			return false;
+        if(empty($oEvent))
+            return false;
 
-		$aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'order', 'order' => $oEvent->data->object->subscription));
-		$oCharge = $this->_retrieveCharge($oEvent->data->object->charge);
+        $aPending = $this->_oModule->_oDb->getOrderPending(array('type' => 'order', 'order' => $oEvent->data->object->subscription));
+        $oCharge = $this->_retrieveCharge($oEvent->data->object->charge);
 
-		return array($aPending, $oCharge);
-	}
+        return array($aPending, $oCharge);
+    }
 
     protected function _getDataChangeDetailsRecurring($iPendingId)
     {
@@ -916,23 +915,23 @@ class BxPaymentProviderStripe extends BxBaseModPaymentProvider implements iBxBas
         return $aResult;
     }
 
-	protected function _getVerificationCodeCharge($iVendorId, $iCustomerId, $fAmount, $sCurrency) {
-		return md5(implode('#-#', array(
-			(int)$iVendorId,
-			(int)$iCustomerId,
-			(float)$fAmount,
-			strtoupper($sCurrency)
-		)));
-	}
+    protected function _getVerificationCodeCharge($iVendorId, $iCustomerId, $fAmount, $sCurrency) {
+        return md5(implode('#-#', array(
+            (int)$iVendorId,
+            (int)$iCustomerId,
+            (float)$fAmount,
+            strtoupper($sCurrency)
+        )));
+    }
 
-	protected function _getVerificationCodeSubscription($iVendorId, $iCustomerId, $sSubscription, $sCurrency) {
-		return md5(implode('#-#', array(
-			(int)$iVendorId,
-			(int)$iCustomerId,
-			strtoupper($sSubscription),
-			strtoupper($sCurrency)
-		)));
-	}
+    protected function _getVerificationCodeSubscription($iVendorId, $iCustomerId, $sSubscription, $sCurrency) {
+        return md5(implode('#-#', array(
+            (int)$iVendorId,
+            (int)$iCustomerId,
+            strtoupper($sSubscription),
+            strtoupper($sCurrency)
+        )));
+    }
 
     protected function _getButton($sType, $iClientId, $iVendorId, $aParams = array())
     {

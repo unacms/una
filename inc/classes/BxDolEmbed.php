@@ -36,23 +36,8 @@
  * @endcode
  *
  */
-class BxDolEmbed extends BxDolFactory implements iBxDolFactoryObject
+class BxDolEmbed extends BxDolFactoryObject
 {
-    protected $_sObject;
-    protected $_aObject;
-
-    /**
-     * Constructor
-     * @param $aObject array of editor options
-     */
-    protected function __construct($aObject)
-    {
-        parent::__construct();
-
-        $this->_sObject = $aObject['object'];
-        $this->_aObject = $aObject;
-    }
-
     /**
      * Get editor object instance by object name
      * @param $sObject object name
@@ -63,31 +48,7 @@ class BxDolEmbed extends BxDolFactory implements iBxDolFactoryObject
         if (!$sObject)
             $sObject = getParam('sys_embed_default');
 
-        if (isset($GLOBALS['bxDolClasses']['BxDolEmbed!'.$sObject]))
-            return $GLOBALS['bxDolClasses']['BxDolEmbed!'.$sObject];
-
-        $aObject = BxDolEmbedQuery::getObject($sObject);
-        if (!$aObject || !is_array($aObject))
-            return false;
-
-        if (empty($aObject['override_class_name']))
-            return false;
-
-        $sClass = $aObject['override_class_name'];
-        if (!empty($aObject['override_class_file']))
-            require_once(BX_DIRECTORY_PATH_ROOT . $aObject['override_class_file']);
-
-        $o = new $sClass($aObject, $oTemplate);
-
-        return ($GLOBALS['bxDolClasses']['BxDolEmbed!'.$sObject] = $o);
-    }
-
-    /**
-     * Get object name
-     */
-    public function getObjectName ()
-    {
-        return $this->_sObject;
+        return parent::getObjectInstanceByClassNames($sObject, $oTemplate, 'BxDolEmbed', 'BxDolEmbedQuery');
     }
 
     /**

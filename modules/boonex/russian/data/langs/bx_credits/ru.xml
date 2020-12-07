@@ -211,6 +211,7 @@
     <string name="_bx_credits_txt_history_info_checkout"><![CDATA[Выплаты между профилями]]></string>
     <string name="_bx_credits_txt_history_info_withdraw"><![CDATA[Снятие по запросу]]></string>
     <string name="_bx_credits_txt_history_info_service"><![CDATA[Искусственно инициированный перевод]]></string>
+    <string name="_bx_credits_txt_history_info_refund"><![CDATA[Возврат средств]]></string>
 
     <string name="_bx_credits_msg_empty_author"><![CDATA['Администратор сайта' не задан. Вам необходимо пометить какой-либо профайл как 'Администратор сайта' в настройках активного на данный момент платежного модуля.]]></string>
     <string name="_bx_credits_msg_action_performed"><![CDATA[Действие было успешно выполнено.]]></string>
@@ -229,6 +230,19 @@
     <string name="_bx_credits_txt_checkout_price_credits"><![CDATA[В кредитах:]]></string>
     <string name="_bx_credits_txt_checkout_rate"><![CDATA[Коэффициент:]]></string>
     <string name="_bx_credits_txt_checkout_qt"><![CDATA[шт.]]></string>
+
+    <!-- Subscribe process -->
+    <string name="_bx_credits_txt_subscribe"><![CDATA[Подписаться]]></string>
+    <string name="_bx_credits_txt_subscribe_for"><![CDATA[Подписаться на:]]></string>
+    <string name="_bx_credits_txt_subscribe_period_mask"><![CDATA[{0} {1}]]></string>
+    <string name="_bx_credits_txt_subscribe_period_unit_year"><![CDATA[гд.]]></string>
+    <string name="_bx_credits_txt_subscribe_period_unit_month"><![CDATA[мес.]]></string>
+    <string name="_bx_credits_txt_subscribe_period_unit_week"><![CDATA[нед.]]></string>
+    <string name="_bx_credits_txt_subscribe_period_unit_day"><![CDATA[дн.]]></string>
+    <string name="_bx_credits_txt_subscribe_period_unit_hour"><![CDATA[ч.]]></string>
+    <string name="_bx_credits_txt_subscribe_period_unit_minute"><![CDATA[мин.]]></string>
+    <string name="_bx_credits_txt_subscribe_trial"><![CDATA[Пробный период:]]></string>
+    <string name="_bx_credits_txt_subscribe_trial_mask"><![CDATA[{0} {1}]]></string>
 
     <string name="_bx_credits_err_unknown_buyer"><![CDATA[Необходимо войти.]]></string>
     <string name="_bx_credits_err_unknown_seller"><![CDATA[Неизвестный продавец.]]></string>

@@ -80,10 +80,12 @@ div.bx-payment-vo-items {
     width: 165px;
 }
 #bx-grid-wrap-bx_payment_grid_orders_processed div.bx-grid-header div#bx-form-element-client,
+#bx-grid-wrap-bx_payment_grid_orders_processed div.bx-grid-header div#bx-form-element-author,
 #bx-grid-wrap-bx_payment_grid_orders_processed div.bx-grid-header div#bx-form-element-module,
 #bx-grid-wrap-bx_payment_grid_orders_processed div.bx-grid-header div#bx-form-element-item {
     margin-right: 20px;
 }
+#bx-grid-wrap-bx_payment_grid_orders_processed div.bx-grid-header div#bx-form-element-author,
 #bx-grid-wrap-bx_payment_grid_orders_processed div.bx-grid-header div#bx-form-element-module,
 #bx-grid-wrap-bx_payment_grid_orders_processed div.bx-grid-header div#bx-form-element-item,
 #bx-grid-wrap-bx_payment_grid_orders_processed div.bx-grid-header div#bx-form-element-keyword {

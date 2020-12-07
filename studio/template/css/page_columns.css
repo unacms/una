@@ -1,4 +1,14 @@
 /*--- 2 columns ---*/
+.bx-std-pc-stretch {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: stretch;
+    align-items: stretch;
+    box-sizing: border-box;
+    width: 100%
+}
+
 div.bx-std-page-columns-cnt {
     position: relative;
     display: -webkit-flex;
@@ -22,6 +32,9 @@ div.bx-std-page-column.bx-std-page-content {
     flex: 2 1 auto;
 
     background: #e5e5e5;
+}
+div.bx-std-page-column.bx-std-page-content div.bx-std-page-column-cnt {
+    width: 100%;
 }
 
 

@@ -36,6 +36,16 @@ class BxBaseModPaymentGridProviders extends BxTemplGrid
         return parent::_getCellDefault($this->_getCellValue($mixedValue), $sKey, $aField, $aRow);
     }
 
+    protected function _getCellSingleSeller($mixedValue, $sKey, $aField, $aRow)
+    {
+        return parent::_getCellDefault($this->_getCellValue($mixedValue), $sKey, $aField, $aRow);
+    }
+
+    protected function _getCellTimeTracker($mixedValue, $sKey, $aField, $aRow)
+    {
+        return parent::_getCellDefault($this->_getCellValue($mixedValue), $sKey, $aField, $aRow);
+    }
+
     protected function _getCellValue($mixedValue)
     {
         return _t((int)$mixedValue != 0 ? '_Yes' : '_No');

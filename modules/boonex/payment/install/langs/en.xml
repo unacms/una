@@ -96,8 +96,11 @@
     <string name="_bx_payment_grid_column_title_pdrs_for_visitor"><![CDATA[For visitors]]></string>
     <string name="_bx_payment_grid_column_title_pdrs_for_single"><![CDATA[One Time]]></string>
     <string name="_bx_payment_grid_column_title_pdrs_for_recurring"><![CDATA[Recurring]]></string>
+    <string name="_bx_payment_grid_column_title_pdrs_single_seller"><![CDATA[Single Seller]]></string>
+    <string name="_bx_payment_grid_column_title_pdrs_time_tracker"><![CDATA[Time Tracker]]></string>
     <string name="_bx_payment_grid_column_title_ods_client_id"><![CDATA[Client]]></string>
     <string name="_bx_payment_grid_column_title_ods_seller_id"><![CDATA[Seller]]></string>
+    <string name="_bx_payment_grid_column_title_ods_author_id"><![CDATA[Author]]></string>
     <string name="_bx_payment_grid_column_title_ods_transaction"><![CDATA[Transaction]]></string>
     <string name="_bx_payment_grid_column_title_ods_license"><![CDATA[License]]></string>
     <string name="_bx_payment_grid_column_title_ods_item"><![CDATA[Product]]></string>
@@ -112,9 +115,10 @@
     <string name="_bx_payment_grid_column_title_sbs_license"><![CDATA[License]]></string>
     <string name="_bx_payment_grid_column_title_sbs_amount"><![CDATA[Amount]]></string>
     <string name="_bx_payment_grid_column_title_sbs_provider"><![CDATA[Provider]]></string>
-    <string name="_bx_payment_grid_column_title_sbs_paid"><![CDATA[Paid]]></string>
+    <string name="_bx_payment_grid_column_title_sbs_status"><![CDATA[Status]]></string>
     <string name="_bx_payment_grid_column_title_sbs_date"><![CDATA[Date]]></string>
-    <string name="_bx_payment_grid_column_title_sbs_date_created"><![CDATA[Created]]></string>
+    <string name="_bx_payment_grid_column_title_sbs_date_add"><![CDATA[Created]]></string>
+    <string name="_bx_payment_grid_column_title_sbs_date_next"><![CDATA[Next Payment]]></string>
     <string name="_bx_payment_grid_column_title_crts_vendor_id"><![CDATA[Vendor]]></string>
     <string name="_bx_payment_grid_column_title_crts_items_count"><![CDATA[Count]]></string>
     <string name="_bx_payment_grid_column_title_crts_items_price"><![CDATA[Price]]></string>
@@ -280,16 +284,25 @@
 	<string name="_bx_payment_txt_no"><![CDATA[No]]></string>
         <string name="_bx_payment_txt_unsubscribe_yes"><![CDATA[Cancel automatically]]></string>
         <string name="_bx_payment_txt_unsubscribe_no"><![CDATA[Do not cancel]]></string>
+        <string name="_bx_payment_txt_all_authors"><![CDATA[All Authors]]></string>
         <string name="_bx_payment_txt_all_clients"><![CDATA[All Clients]]></string>
         <string name="_bx_payment_txt_all_modules"><![CDATA[All Modules]]></string>
         <string name="_bx_payment_txt_all_items"><![CDATA[All Items]]></string>
+        <string name="_bx_payment_txt_status_scheduled"><![CDATA[Scheduled]]></string>
+        <string name="_bx_payment_txt_status_trial"><![CDATA[Trial]]></string>
+        <string name="_bx_payment_txt_status_active"><![CDATA[Active]]></string>
+        <string name="_bx_payment_txt_status_unpaid"><![CDATA[Unpaid]]></string>
+        <string name="_bx_payment_txt_status_paused"><![CDATA[Paused]]></string>
+        <string name="_bx_payment_txt_status_canceled"><![CDATA[Canceled]]></string>
+        <string name="_bx_payment_txt_status_unknown"><![CDATA[Unknown]]></string>
 
         <!-- Credits payment provider -->
 	<string name="_bx_payment_cdt_cpt"><![CDATA[Credits]]></string>
 	<string name="_bx_payment_cdt_dsc"><![CDATA[Credits payment provider]]></string>
 	<string name="_bx_payment_cdt_active_cpt"><![CDATA[Active]]></string>
 	<string name="_bx_payment_cdt_active_dsc"><![CDATA[Activate(Deactivate) provider]]></string>
-        <string name="_bx_payment_cdt_msg_processed"><![CDATA[Payment was successfully processed.]]></string>
+        <string name="_bx_payment_cdt_msg_charged"><![CDATA[Payment was successfully processed.]]></string>
+        <string name="_bx_payment_cdt_msg_subscribed"><![CDATA[Thank you! Subscription created. Please, check your email for further instructions.]]></string>
         <string name="_bx_payment_cdt_err_not_available"><![CDATA[Checkout with Credits isn't available now.]]></string>
         <string name="_bx_payment_cdt_err_wrong_transaction"><![CDATA[Transaction verification failed.]]></string>
         <string name="_bx_payment_txt_name_credits"><![CDATA[Credits]]></string>

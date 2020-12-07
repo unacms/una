@@ -45,6 +45,10 @@ BxPaymentOrders.prototype.onChangeFilter = function(oElement) {
     var bClient = oClient.length > 0;
     var sClient = bClient ? oClient.val() : '';
 
+    var oAuthor = $('#bx-grid-author-' + this._sObjNameGrid);
+    var bAuthor = oAuthor.length > 0;
+    var sAuthor = bAuthor ? oAuthor.val() : '';
+    
     var oModule = $('#bx-grid-module-' + this._sObjNameGrid);
     var bModule = oModule.length > 0;
     var sModule = bModule ? oModule.val() : '';
@@ -62,6 +66,8 @@ BxPaymentOrders.prototype.onChangeFilter = function(oElement) {
         var sValue = '';
         if(bClient)
             sValue += sClient + $this._sParamsDivider;
+        if(bAuthor)
+            sValue += sAuthor + $this._sParamsDivider;
         if(bModule)
             sValue += sModule + $this._sParamsDivider;
         if(bItem)

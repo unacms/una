@@ -21,6 +21,16 @@
     display: inline-block;
 }
 
+.bx-credits-cb-row {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+}
+
 .bx-credits-cb-item {
     position: relative;
     display: inline-block;

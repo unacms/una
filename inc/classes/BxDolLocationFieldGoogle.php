@@ -12,7 +12,7 @@ class BxDolLocationFieldGoogle extends BxDolLocationField
     public function genInputLocation (&$aInput, $oForm)
     {
         $aVars = $this->_getInputLocationVars($aInput, $oForm);
-        return $oForm->getTemplate()->parseHtmlByName('form_field_location_google.html', $aVars);
+        return $oForm->getTemplate()->parseHtmlByName('location_field_google.html', $aVars);
     }
 
     protected function _getInputLocationVars(&$aInput, $oForm)

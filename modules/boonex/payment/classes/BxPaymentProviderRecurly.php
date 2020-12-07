@@ -307,7 +307,7 @@ class BxPaymentProviderRecurly extends BxBaseModPaymentProvider implements iBxBa
 			return false;
 
 		list($aPending) = $mixedResult;
-		return $this->_oModule->cancelSubscription($aPending);
+		return $this->_oModule->getObjectSubscriptions()->cancelLocal($aPending);
 	}
 
 	protected function _getData(&$aEvent, $bWithStatusCheck = false)

@@ -284,8 +284,12 @@ class BxMarketTemplate extends BxBaseModTextTemplate
                 $sVoting = $oVoting->getElementBlock(array('show_counter' => false));
 
             $sPricing = "";
-            if(!$oPayment->isCreditsOnly() && (float)$aData[$CNF['FIELD_PRICE_RECURRING']] != 0)
-                $sPricing = _t('_bx_market_txt_price_recurring_short', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_RECURRING']], _t($CNF['T']['txt_per_' . $aData[$CNF['FIELD_DURATION_RECURRING']] . '_short']));
+            if((float)$aData[$CNF['FIELD_PRICE_RECURRING']] != 0) {
+                $sDuration = 'txt_per_' . $aData[$CNF['FIELD_DURATION_RECURRING']] . '_short';
+                $sDuration = _t(!empty($CNF['T'][$sDuration]) ? $CNF['T'][$sDuration] : '_bx_market_txt_per_' . $aData[$CNF['FIELD_DURATION_RECURRING']] . '_short');
+
+                $sPricing = _t('_bx_market_txt_price_recurring_short', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_RECURRING']], $sDuration);
+            }
 
             if(empty($sPricing) && (float)$aData[$CNF['FIELD_PRICE_SINGLE']] != 0)
                 $sPricing = _t('_bx_market_txt_price_single_short', $this->_aCurrency['sign'], $aData[$CNF['FIELD_PRICE_SINGLE']]);

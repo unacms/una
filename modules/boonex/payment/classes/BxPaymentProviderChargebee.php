@@ -400,9 +400,7 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
             return false;
 
         if($aPending['type'] == BX_PAYMENT_TYPE_RECURRING)
-            $this->_oModule->updateSubscription($aPending, array(
-                'paid' => 1
-            ));
+            $this->_oModule->getObjectSubscriptions()->prolong($aPending);
 
         return $this->_oModule->registerPayment($aPending);
     }
@@ -426,7 +424,7 @@ class BxPaymentProviderChargebee extends BxBaseModPaymentProvider implements iBx
         list($aPending, $aSubscription) = $mixedResult;
         $this->onDeleteSubscription($aSubscription['id'], $aSubscription);
 
-        return $this->_oModule->cancelSubscription($aPending);
+        return $this->_oModule->getObjectSubscriptions()->cancelLocal($aPending);
     }
 
     protected function _getDataTransaction(&$aEvent, $sWithStatusCheck = '')

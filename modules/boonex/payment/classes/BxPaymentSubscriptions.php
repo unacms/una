@@ -323,25 +323,153 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
         }
     }
 
-    public function cancel($iPendingId)
+    public function register($aPending, $aParams = array())
     {
-    	$aSubscription = $this->_oModule->_oDb->getSubscription(array('type' => 'pending_id', 'pending_id' => $iPendingId));
-        if(empty($aSubscription) || !is_array($aSubscription))
-            return true;
-
-        $aOrder = $this->_oModule->_oDb->getOrderSubscription(array('type' => 'id', 'id' => $iPendingId));
-        if(empty($aOrder) || !is_array($aOrder))
+        if($this->_oModule->_oDb->isSubscriptionByPending($aPending['id']) || empty($aPending['items']))
             return false;
 
-        $iSellerId = (int)$aOrder['seller_id'];
-        $oProvider = $this->_oModule->getObjectProvider($aOrder['provider'], $iSellerId);
+        $aInfo = $this->_oModule->getObjectCart()->getInfo(BX_PAYMENT_TYPE_RECURRING, $aPending['client_id'], $aPending['seller_id'], $aPending['items']);
+        if(empty($aInfo['items']) || !is_array($aInfo['items']))
+            return false;
+
+        $aItem = array_shift($aInfo['items']);
+
+        $iPeriod = (int)$aItem['period_recurring'];
+        $iTrial = (int)$aItem['trial_recurring'];
+
+        $oDate = date_create();
+        $iNow = $iNext = date_format($oDate, 'U');
+
+        if($iTrial > 0) {
+            $sInterval = $this->_getInterval($iPeriod, $aItem['period_unit_recurring'], $iTrial);
+            date_add($oDate, new DateInterval($sInterval));
+            $iNext = date_format($oDate, 'U');
+        }       
+
+        $sUnique = genRndPwd(9, false);
+
+        $aSubscription = array(
+            'pending_id' => $aPending['id'],
+            'customer_id' => !empty($aParams['customer_id']) ? $aParams['customer_id'] : 'bx_cus_' . $sUnique,
+            'subscription_id' => !empty($aParams['subscription_id']) ? $aParams['subscription_id'] : 'bx_sub_' . $sUnique,
+            'period' => $iPeriod,
+            'period_unit' => $aItem['period_unit_recurring'],
+            'trial' => $iTrial,
+            'date_add' => $iNow,
+            'date_next' => $iNext,
+            'status' => $iTrial > 0 ? BX_PAYMENT_SBS_STATUS_TRIAL : BX_PAYMENT_SBS_STATUS_UNPAID
+        );
+
+        if(!$this->_oModule->_oDb->insertSubscription($aSubscription))
+            return false;
+
+        $this->_oModule->onSubscriptionCreate($aPending, $aSubscription);
+
+        return true;
+    }
+
+    public function prolong($aPending, $aParams = array())
+    {
+        if(empty($aPending['items']))
+            return false;
+
+        $aSubscription = $this->_oModule->_oDb->getSubscription(array('type' => 'pending_id', 'pending_id' => $aPending['id']));
+        if(empty($aSubscription) || !is_array($aSubscription))
+            return false;
+
+        $aInfo = $this->_oModule->getObjectCart()->getInfo(BX_PAYMENT_TYPE_RECURRING, $aPending['client_id'], $aPending['seller_id'], $aPending['items']);
+        if(empty($aInfo['items']) || !is_array($aInfo['items']))
+            return false;
+
+        $aItem = array_shift($aInfo['items']);
+
+        $sInterval = $this->_getInterval((int)$aItem['period_recurring'], $aItem['period_unit_recurring']);
+
+        $oDate = date_create('@' . $aSubscription['date_next']);
+        date_add($oDate, new DateInterval($sInterval));
+
+        $this->_oModule->_oDb->updateSubscription(array_merge(array(
+            'date_next' => date_format($oDate, 'U'),
+            'pay_attempts' => 0,
+            'status' => BX_PAYMENT_SBS_STATUS_ACTIVE
+        ), $aParams), array(
+            'id' => $aSubscription['id']
+        ));
+
+        $this->_oModule->onSubscriptionProlong($aPending, $aSubscription);
+
+        return true;
+    }
+
+    public function overdue($aPending, $aParams = array())
+    {
+        $aSubscription = $this->_oModule->_oDb->getSubscription(array('type' => 'pending_id', 'pending_id' => $aPending['id']));
+        if(empty($aSubscription) || !is_array($aSubscription))
+            return false;
+
+        $this->_oModule->_oDb->updateSubscription(array_merge(array(
+            'status' => BX_PAYMENT_SBS_STATUS_UNPAID
+        ), $aParams), array(
+            'id' => $aSubscription['id']
+        ));
+
+        $this->_oModule->onSubscriptionOverdue($aPending, $aSubscription);
+
+        return true;
+    }
+
+    public function cancel($iPendingId)
+    {
+        if(!$this->cancelRemote($iPendingId))
+            return false;
+
+        if(!$this->cancelLocal($iPendingId))
+            return false;
+
+        return true;
+    }
+
+    public function cancelRemote($mixedPending)
+    {
+        $aPending = is_array($mixedPending) ? $mixedPending : $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => (int)$mixedPending));
+        if(empty($aPending) || !is_array($aPending) || $aPending['type'] != BX_PAYMENT_TYPE_RECURRING)
+            return false;
+
+        $aSubscription = $this->_oModule->_oDb->getSubscription(array('type' => 'pending_id', 'pending_id' => $aPending['id']));
+        if(empty($aSubscription) || !is_array($aSubscription))
+            return false;
+
+        $iSellerId = (int)$aPending['seller_id'];
+        $oProvider = $this->_oModule->getObjectProvider($aPending['provider'], $iSellerId);
         if($oProvider === false || !$oProvider->isActive())
             return false;
 
-        if(!$oProvider->cancelRecurring($iPendingId, $aSubscription['customer_id'], $aSubscription['subscription_id']))
+        if(!$oProvider->cancelRecurring($aPending['id'], $aSubscription['customer_id'], $aSubscription['subscription_id']))
             return false;
 
-        return $this->_oModule->cancelSubscription($aOrder);
+        return true;
+    }
+
+    public function cancelLocal($mixedPending)
+    {
+        $aPending = is_array($mixedPending) ? $mixedPending : $this->_oModule->_oDb->getOrderPending(array('type' => 'id', 'id' => (int)$mixedPending));
+        if(empty($aPending) || !is_array($aPending) || $aPending['type'] != BX_PAYMENT_TYPE_RECURRING)
+            return false;
+
+        $aSubscription = $this->_oModule->_oDb->getSubscription(array('type' => 'pending_id', 'pending_id' => $aPending['id']));
+        if(empty($aSubscription) || !is_array($aSubscription))
+            return false;
+
+        $aItems = $this->_oModule->_oConfig->descriptorsM2A($aPending['items']);
+        foreach($aItems as $aItem)
+            $this->_oModule->callCancelSubscriptionItem((int)$aItem['module_id'], array($aPending['client_id'], $aPending['seller_id'], $aItem['item_id'], $aItem['item_count'], $aPending['order']));
+
+        if(!$this->_oModule->_oDb->deleteSubscription($aSubscription['id'], 'cancel'))
+            return false;
+
+        $this->_oModule->onSubscriptionCancel($aPending, $aSubscription);
+
+        return true;
     }
 
     protected function _getBlock($sType)
@@ -351,13 +479,13 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
         $sMethod = 'displayBlockSbs' . bx_gen_method_name($sType);
         if(!$this->_oModule->_oTemplate->isMethodExists($sMethod))
             return array(
-        		'content' => MsgBox(_t('_Empty'))
+                'content' => MsgBox(_t('_Empty'))
             );
 
     	$iUserId = $this->_oModule->getProfileId();
         if(empty($iUserId))
             return array(
-        		'content' => MsgBox(_t($CNF['T']['ERR_REQUIRED_LOGIN']))
+                'content' => MsgBox(_t($CNF['T']['ERR_REQUIRED_LOGIN']))
             );
 
         $this->_oModule->setSiteSubmenu('menu_dashboard', 'system', 'dashboard-subscriptions');
@@ -368,9 +496,44 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
             $oBlockSubmenu->setSelected($this->MODULE, 'sbs-' . str_replace('_', '-', $sType));     
 
         return array(
-        	'content' => $this->_oModule->_oTemplate->$sMethod($iUserId),
-        	'menu' => $this->_oModule->_oConfig->getObject('menu_sbs_submenu')
+            'content' => $this->_oModule->_oTemplate->$sMethod($iUserId),
+            'menu' => $this->_oModule->_oConfig->getObject('menu_sbs_submenu')
         );
+    }
+
+    private function _getInterval($iPeriod, $sPeriodUnit, $iTrial = 0)
+    {
+        if(!empty($iTrial))
+            return 'P' . $iTrial . 'D';
+
+        $sInterval = '';
+        switch($sPeriodUnit) {
+            case BX_PAYMENT_SBS_PU_YEAR:
+                $sInterval = 'P' . $iPeriod . 'Y';
+                break;
+
+            case BX_PAYMENT_SBS_PU_MONTH:
+                $sInterval = 'P' . $iPeriod . 'M';
+                break;
+
+            case BX_PAYMENT_SBS_PU_WEEK:
+                $sInterval = 'P' . (7 * $iPeriod) . 'D';
+                break;
+
+            case BX_PAYMENT_SBS_PU_DAY:
+                $sInterval = 'P' . $iPeriod . 'D';
+                break;
+
+            case BX_PAYMENT_SBS_PU_HOUR:
+                $sInterval = 'PT' . $iPeriod . 'H';
+                break;
+
+            case BX_PAYMENT_SBS_PU_MINUTE:
+                $sInterval = 'PT' . $iPeriod . 'I';
+                break;
+        }
+
+        return $sInterval;
     }
 }
 

@@ -50,15 +50,15 @@ class BxBaseModPaymentModule extends BxBaseModGeneralModule
     	$aModules = $sModule == 'all' ? $this->_oDb->getModulesBy(array('type' => 'modules'), false) : array($this->_oDb->getModuleByName($sModule, false));
 
         foreach($aModules as $aModule) {
-        	if(empty($aModule) || empty($aModule['name']))
-        		continue;
+            if(empty($aModule) || empty($aModule['name']))
+                continue;
 
-        	$mixedData = $this->callGetPaymentData($aModule['name']);
-        	if($mixedData === false)
-        		continue;
+            $mixedData = $this->callGetPaymentData($aModule['name']);
+            if($mixedData === false)
+                continue;
 
-			$sMethodName = $bInstall ? 'insertModule' : 'deleteModule';
-			$this->_oDb->$sMethodName($mixedData);
+            $sMethodName = $bInstall ? 'insertModule' : 'deleteModule';
+            $this->_oDb->$sMethodName($mixedData);
         }
     }
 
@@ -320,17 +320,32 @@ class BxBaseModPaymentModule extends BxBaseModGeneralModule
 
     public function callUnregisterCartItem($mixedModule, $aParams)
     {
-		return BxDolService::call($mixedModule, 'unregister_cart_item', $aParams);
+        return BxDolService::call($mixedModule, 'unregister_cart_item', $aParams);
     }
 
     public function callUnregisterSubscriptionItem($mixedModule, $aParams)
     {
-		return BxDolService::call($mixedModule, 'unregister_subscription_item', $aParams);
+        return BxDolService::call($mixedModule, 'unregister_subscription_item', $aParams);
     }
 
     public function callCancelSubscriptionItem($mixedModule, $aParams)
     {
     	return BxDolService::call($mixedModule, 'cancel_subscription_item', $aParams);
+    }
+
+    public function log($mixedContents, $sSection = '', $sTitle = '')
+    {
+        if(is_array($mixedContents))
+            $mixedContents = var_export($mixedContents, true);	
+        else if(is_object($mixedContents))
+            $mixedContents = json_encode($mixedContents);
+
+        if(empty($sSection))
+            $sSection = "Core";
+
+        $sTitle .= "\n";
+
+        bx_log('sys_payments', '[' . $sSection . '] ' . $sTitle . $mixedContents);
     }
 }
 

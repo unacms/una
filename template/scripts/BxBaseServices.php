@@ -505,6 +505,11 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         return $aResults;
     }
 
+    public function serviceGetOptionsLocationLeafletGetProviders()
+    {
+        return BxDolLocationMapLeaflet::getProviders();
+    }
+
     public function serviceGetOptionsRelations()
     {
         $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules', 'active' => 1));

@@ -147,6 +147,7 @@ class BxBaseStudioLauncher extends BxDolStudioLauncher
         $sName = 'bx-std-launcher-browser';
         $sContent = $oTemplate->parseHtmlByName('launcher_browser.html', array(
             'logo' => BxTemplStudioFunctions::getInstance()->getLogo(),
+            'logo_url' => $this->sPageUrl,
             'menu' => $oMenu->getCode(),
             'bx_repeat:types' => $aTmplVarsTypes
         ));

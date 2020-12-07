@@ -211,6 +211,7 @@
     <string name="_bx_credits_txt_history_info_checkout"><![CDATA[Profile to profile checkout]]></string>
     <string name="_bx_credits_txt_history_info_withdraw"><![CDATA[Withdraw by request]]></string>
     <string name="_bx_credits_txt_history_info_service"><![CDATA[Artificially initiated transfer]]></string>
+    <string name="_bx_credits_txt_history_info_refund"><![CDATA[Refund]]></string>
 
     <string name="_bx_credits_msg_empty_author"><![CDATA['Site administrator' is empty. You need to mark some profile as 'Site administrator' in Settings of currently active Payment app.]]></string>
     <string name="_bx_credits_msg_action_performed"><![CDATA[The action was performed successfully.]]></string>
@@ -229,6 +230,19 @@
     <string name="_bx_credits_txt_checkout_price_credits"><![CDATA[In Credits:]]></string>
     <string name="_bx_credits_txt_checkout_rate"><![CDATA[Rate:]]></string>
     <string name="_bx_credits_txt_checkout_qt"><![CDATA[qt.]]></string>
+
+    <!-- Subscribe process -->
+    <string name="_bx_credits_txt_subscribe"><![CDATA[Subscribe]]></string>
+    <string name="_bx_credits_txt_subscribe_for"><![CDATA[Subscribe for:]]></string>    
+    <string name="_bx_credits_txt_subscribe_period_mask"><![CDATA[{0} {1}]]></string>
+    <string name="_bx_credits_txt_subscribe_period_unit_year"><![CDATA[yr.]]></string>
+    <string name="_bx_credits_txt_subscribe_period_unit_month"><![CDATA[mo.]]></string>
+    <string name="_bx_credits_txt_subscribe_period_unit_week"><![CDATA[wk.]]></string>
+    <string name="_bx_credits_txt_subscribe_period_unit_day"><![CDATA[d.]]></string>
+    <string name="_bx_credits_txt_subscribe_period_unit_hour"><![CDATA[hr.]]></string>
+    <string name="_bx_credits_txt_subscribe_period_unit_minute"><![CDATA[min.]]></string>
+    <string name="_bx_credits_txt_subscribe_trial"><![CDATA[Trial:]]></string>
+    <string name="_bx_credits_txt_subscribe_trial_mask"><![CDATA[{0} {1}]]></string>
 
     <string name="_bx_credits_err_unknown_buyer"><![CDATA[Login required.]]></string>
     <string name="_bx_credits_err_unknown_seller"><![CDATA[Unknown seller.]]></string>

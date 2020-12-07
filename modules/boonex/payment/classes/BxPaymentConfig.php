@@ -13,6 +13,9 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
 {
     protected $_bCreditsOnly;
 
+    protected $_iPayAttemptsMax;
+    protected $_iPayAttemptsInterval;
+
     function __construct($aModule)
     {
         parent::__construct($aModule);
@@ -118,6 +121,9 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         );
 
         $this->_bCreditsOnly = false;
+
+        $this->_iPayAttemptsMax = 3;
+        $this->_iPayAttemptsInterval = 86400; //--- in sec
     }
 
     public function init(&$oDb)
@@ -132,6 +138,16 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
     public function isCreditsOnly()
     {
         return $this->_bCreditsOnly;
+    }
+
+    public function getPayAttemptsMax()
+    {
+        return $this->_iPayAttemptsMax;
+    }
+
+    public function getPayAttemptsInterval()
+    {
+        return $this->_iPayAttemptsInterval;
     }
 
     public function getPrice($sType, $aItem)

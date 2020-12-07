@@ -160,6 +160,8 @@ div.bx-std-pmen-item .sys-icon {
 
 div.bx-std-pmen-item.bx-menu-tab-active {
     border-right: 3px solid rgba(24, 144, 255, 1.0);
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
     background-color: rgba(24, 144, 255, 0.2);
 
     font-weight: 600;

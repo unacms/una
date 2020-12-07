@@ -571,6 +571,8 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      */
     public function locationsAdd($iId, $sLatitude, $sLongitude, $sCountryCode, $sState, $sCity, $sZip = '', $sStreet = '', $sStreetNumber = '') 
     {
+        // TODO: if lat & lng aren't defined then perform geocoding automatically, or maybe leverage this on client side ?
+
         return $this->_oQuery->locationsAdd($iId, $sLatitude, $sLongitude, $sCountryCode, $sState, $sCity, $sZip, $sStreet, $sStreetNumber);
     }
 
@@ -693,10 +695,21 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      */
     public function locationsString($iId, $bHTML = true, $aParams = array())
     {
-        $s = '';
-        bx_import('BxDolForm');
-        $aCountries = BxDolFormQuery::getDataItems('Country');
+        bx_import('BxDolForm');        
         $aLocation = $this->locationGet($iId);
+        return $this->locationsStringFromArray($aLocation, $bHTML, $aParams);
+    }
+
+    /**
+     * Get locations string with links
+     * @param $aLocation location array
+     * @return string with links to country and city
+     */
+    public function locationsStringFromArray($aLocation, $bHTML = true, $aParams = array())
+    {
+        $s = '';
+        $aCountries = BxDolFormQuery::getDataItems('Country');
+
         if(!$aLocation || !$aLocation['country'] || !isset($aCountries[$aLocation['country']])) {
             if (!empty($aLocation['lat']) || !empty($aLocation['lng']))
                 $s = _t('_sys_location_country', $aLocation['lat'] . ', ' . $aLocation['lng']);

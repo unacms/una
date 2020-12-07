@@ -173,24 +173,19 @@ class BxBaseModPaymentProvider extends BxDol
     }
 
     /**
-	 *
-	 * Writes $contents to a log file specified in the bp_options file or, if missing,
-	 * defaults to a standard filename of 'bplog.txt'.
-	 *
-	 * @param mixed $contents
-	 * @return
-	 * @throws Exception $e 
-	 *
-	 */
-	protected function log($sContents)
-	{
-		if (is_array($sContents))
-			$sContents = var_export($sContents, true);	
-		else if (is_object($sContents))
-			$sContents = json_encode($sContents);
-		
-		bx_log('sys_payments', '[' . $this->_sName . '] ' . $sContents);
-	}
+     *
+     * Writes $contents to a log file specified in the bp_options file or, if missing,
+     * defaults to a standard filename of 'bplog.txt'.
+     *
+     * @param mixed $contents
+     * @return
+     * @throws Exception $e 
+     *
+     */
+    protected function log($mixedContents)
+    {
+        $this->_oModule->log($mixedContents, $this->_sName);
+    }
 }
 
 /** @} */
