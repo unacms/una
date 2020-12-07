@@ -100,9 +100,12 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 
         list ($oProfile, $aContentInfo) = $this->_getProfileAndContentData($iContentId);
 
-        $sStatus = $oProfile->getStatus();
-        if (!$this->isAutoApproval(BX_DOL_PROFILE_ACTIVATE_EDIT) && BX_PROFILE_STATUS_ACTIVE == $sStatus)
+        $oEditedProfile = BxDolProfile::getInstanceMagic($aContentInfo['profile_id']);
+        
+        $sStatus = $oEditedProfile->getStatus();
+        if (!$this->isAutoApproval(BX_DOL_PROFILE_ACTIVATE_EDIT) && BX_PROFILE_STATUS_ACTIVE == $sStatus){
             $aTrackTextFieldsChanges = array ();
+        }
     }
 
     public function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm)
@@ -122,7 +125,7 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
         $oEditedProfile = BxDolProfile::getInstanceMagic($aContentInfo['profile_id']);
         $sStatus = $oEditedProfile->getStatus();
 
-        if (!$this->isAutoApproval(BX_DOL_PROFILE_ACTIVATE_EDIT) && BX_PROFILE_STATUS_ACTIVE == $sStatus )
+        if (!$this->isAutoApproval(BX_DOL_PROFILE_ACTIVATE_EDIT) && BX_PROFILE_STATUS_ACTIVE == $sStatus && !empty($aTrackTextFieldsChanges['changed_fields']))
             $oEditedProfile->disapprove(BX_PROFILE_ACTION_AUTO, 0, $this->_oModule->serviceActAsProfile());
 
         // process uploaded files
