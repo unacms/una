@@ -56,6 +56,21 @@ BxDolStudioLauncher.prototype.init = function() {
 BxDolStudioLauncher.prototype.browser = function(oLink) {
     var oDate = new Date();
 
+    var oBrowser = $('#bx-std-launcher-browser');
+    if(oBrowser.length > 0) {
+        if(oBrowser.is(':visible'))
+            oBrowser.dolPopupHide();
+        else
+            oBrowser.dolPopup({
+                closeOnOuterClick: true,
+                pointer: {
+                    el: '.bx-menu-breadcrumb .bx-menu-bc-home',
+                }
+            });
+
+        return true;
+    }
+
     $.get(
         this.sActionsUrl,
         {

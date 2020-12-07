@@ -2818,10 +2818,8 @@
     <string name="_sys_menu_set_title_studio_account_popup"><![CDATA[Аккаунт - Всплывающее меню (Студия)]]></string>
     <string name="_sys_menu_item_title_system_sa_account"><![CDATA[Аккаунт]]></string>
     <string name="_sys_menu_item_title_sa_account"><![CDATA[{member_display_name}]]></string>
-    <string name="_sys_menu_item_title_system_sa_edit"><![CDATA[Управление загрузчиком]]></string>
-    <string name="_sys_menu_item_title_sa_edit"><![CDATA[Управление загрузчиком]]></string>
-    <string name="_sys_menu_item_title_system_sa_favorite"><![CDATA[Избранное]]></string>
-    <string name="_sys_menu_item_title_sa_favorite"><![CDATA[Только избранное]]></string>
+    <string name="_sys_menu_item_title_system_sa_edit"><![CDATA[Управление приложениями]]></string>
+    <string name="_sys_menu_item_title_sa_edit"><![CDATA[Управление приложениями]]></string>
     <string name="_sys_menu_item_title_system_sa_language"><![CDATA[Язык]]></string>
     <string name="_sys_menu_item_title_sa_language"><![CDATA[Язык]]></string>
     <string name="_sys_menu_item_title_system_sa_logout"><![CDATA[Выйти]]></string>

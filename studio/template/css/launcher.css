@@ -24,7 +24,6 @@ body.bx-std-bg.bx-std-page-launcher {
     color: rgba(255, 255, 255, 0.85);
 }
 
-
 /**
  * Launcher
  */
@@ -62,8 +61,8 @@ div.bx-std-widget {
     padding: 24px;
 }
 div.bx-std-widget-empty {
-    width: 96px;
-    height: 128px;
+    width: 5.0rem;
+    height: 6.25rem;
 }
 
 .bx-std-widget-dragging {
@@ -76,21 +75,21 @@ div.bx-std-widget-empty {
 .bx-std-widget-icon {
     position: relative;
     top:0px;
-    width: 96px;
-    height: 96px;
+    width: 5.0rem;
+    height: 5.0rem;
 
     background-color:transparent;
 
-    line-height: 96px;
+    line-height: 5.0rem;
 }
 
 .bx-std-widget-icon i.sys-icon {
     position: absolute;
     z-index: 2;
     left: 0px;
-    width: 96px;
+    width: 5.0rem;
 
-    font-size: 64px;
+    font-size: 48px;
     text-align: center;
     text-shadow: none;
     color: white;
@@ -119,8 +118,8 @@ div.bx-std-widget-empty {
     position:relative;
     z-index:2;
 
-    width: 96px;
-    height: 96px;
+    width: 5.0rem;
+    height: 5.0rem;
 
     background-color: transparent;
     background-position:0px 0px;
@@ -226,13 +225,18 @@ div.bx-std-widget-action i.sys-icon {
 }
 div.bx-std-widget-caption {
     position: relative;
-    width: 96px;
-    height: 32px;
-    line-height: 32px;
-    text-align: center; 
+    width: 5.0rem;
+    height: 1.25rem;
+
+    line-height: 1.25rem;
     white-space: nowrap;
-    overflow: hidden;
+    text-align: center; 
     text-overflow: ellipsis;
+    overflow: hidden;
+
+    font-stretch: condensed;
+    font-weight: 500;
+    font-size: 0.75rem;
 }
 div.bx-std-widget-caption-jitter {
     position: absolute;
@@ -267,6 +271,24 @@ body.shepherd-active .bx-std-widget-cont.shepherd-enabled {
 /**
  * Launcher Browser
  */
+#bx-std-launcher-browser{
+    overflow: visible;
+}
+
+#bx-std-launcher-browser::before {
+    position: absolute;
+    display: block;
+    content: '';
+
+    top: -0.125rem;
+    left: 1.5rem;
+    width: 0.5rem;
+    height: 0.5rem;
+
+    background: #001529;
+
+    transform: rotate(45deg);
+}
 .bx-std-launcher-browser {
     position: relative;
     width: 42rem;
@@ -350,3 +372,27 @@ body.shepherd-active .bx-std-widget-cont.shepherd-enabled {
 .bx-std-launcher-browser div.bx-std-widget-caption {
     width: 4rem;
 }
+
+
+/**
+ * Mobile Views
+ */
+.bx-media-tablet .bx-std-page-launcher .bx-std-page-column.bx-std-page-menu,
+.bx-media-phone .bx-std-page-launcher .bx-std-page-column.bx-std-page-menu {
+    -webkit-flex-basis: 3.5rem;
+    flex-basis: 3.5rem;
+    width: 3.5rem;
+}
+
+.bx-media-tablet .bx-std-page-launcher div.bx-std-pmen-item .bx-std-pmen-item-cnt,
+.bx-media-phone .bx-std-page-launcher div.bx-std-pmen-item .bx-std-pmen-item-cnt {
+    padding-left: 3.5rem;
+}
+
+.bx-media-tablet .bx-std-page-launcher div.bx-std-pmen-item a span,
+.bx-media-phone .bx-std-page-launcher div.bx-std-pmen-item a span {
+    display: none;
+}
+
+
+

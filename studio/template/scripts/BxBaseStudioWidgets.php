@@ -96,6 +96,9 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets
             )
         );
 
+        if($this->_sType != BX_DOL_STUDIO_WTYPE_DEFAULT)
+            unset($aItemsRight['menu_items']['tour']);
+
         $oTopMenu = BxTemplStudioMenuTop::getInstance();
         $oTopMenu->setContent(BX_DOL_STUDIO_MT_RIGHT, $aItemsRight);
 

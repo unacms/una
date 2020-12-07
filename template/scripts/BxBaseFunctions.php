@@ -488,7 +488,7 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
         }
 
         if(empty($sImageUrlFav))
-            $sImageUrlFav = $this->_oTemplate->getIconUrl('favicon.png');
+            $sImageUrlFav = $this->_oTemplate->getIconUrl('favicon.svg');
 
         if(empty($sImageUrlFcb))
             $sImageUrlFcb = $this->_oTemplate->getIconUrl('facebook-icon.png');
