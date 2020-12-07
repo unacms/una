@@ -107,8 +107,9 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
 
     public function onDataEditAfter ($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm)
     {
-        if ($s = parent::onDataEditAfter($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm))
+        if ($s = parent::onDataEditAfter($iContentId, $aContentInfo, $aTrackTextFieldsChanges, $oProfile, $oForm)){
             return $s;
+        }
 
         $CNF = &$this->_oModule->_oConfig->CNF;
 
@@ -116,11 +117,13 @@ class BxBaseModProfileFormsEntryHelper extends BxBaseModGeneralFormsEntryHelper
          * Load updated data.
          */
         $aContentInfo = $this->_oModule->_oDb->getContentInfoById($iContentId);
+       
+        // change profile to 'pending' only if profile is 'active' 
+        $oEditedProfile = BxDolProfile::getInstanceMagic($aContentInfo['profile_id']);
+        $sStatus = $oEditedProfile->getStatus();
 
-        // change profile to 'pending' only if profile is 'active'
-        $sStatus = $oProfile->getStatus();
-        if (!$this->isAutoApproval(BX_DOL_PROFILE_ACTIVATE_EDIT) && BX_PROFILE_STATUS_ACTIVE == $sStatus && !empty($aTrackTextFieldsChanges['changed_fields']))
-            $oProfile->disapprove(BX_PROFILE_ACTION_AUTO, 0, $this->_oModule->serviceActAsProfile());
+        if (!$this->isAutoApproval(BX_DOL_PROFILE_ACTIVATE_EDIT) && BX_PROFILE_STATUS_ACTIVE == $sStatus )
+            $oEditedProfile->disapprove(BX_PROFILE_ACTION_AUTO, 0, $this->_oModule->serviceActAsProfile());
 
         // process uploaded files
         if (isset($CNF['FIELD_PICTURE']))
