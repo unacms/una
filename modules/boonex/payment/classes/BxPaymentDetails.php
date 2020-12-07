@@ -13,7 +13,7 @@ bx_import('BxDolForm');
 
 class BxPaymentDetailsFormCheckerHelper extends BxDolFormCheckerHelper
 {
-	function checkHttps ($s)
+    function checkHttps ($s)
     {
         return empty($s) || substr(BX_DOL_URL_ROOT, 0, 5) == 'https';
     }
@@ -21,16 +21,16 @@ class BxPaymentDetailsFormCheckerHelper extends BxDolFormCheckerHelper
 
 class BxPaymentDetails extends BxBaseModPaymentDetails
 {
-	protected $_sLangsPrefix;
+    protected $_sLangsPrefix;
     protected $_bCollapseFirst;
 
     function __construct()
     {
-    	$this->MODULE = 'bx_payment';
+        $this->MODULE = 'bx_payment';
 
-    	parent::__construct();
+        parent::__construct();
 
-    	$this->_sLangsPrefix = $this->_oModule->_oConfig->getPrefix('langs');
+        $this->_sLangsPrefix = $this->_oModule->_oConfig->getPrefix('langs');
         $this->_bCollapseFirst = true;
     }
 
@@ -54,18 +54,18 @@ class BxPaymentDetails extends BxBaseModPaymentDetails
     public function serviceGetBlockDetails($iUserId = BX_PAYMENT_EMPTY_ID)
     {
         if(!$this->_oModule->isLogged())
-			return array(
-        		'content' => MsgBox(_t($this->_sLangsPrefix . 'err_required_login'))
-			);
+            return array(
+                'content' => MsgBox(_t($this->_sLangsPrefix . 'err_required_login'))
+            );
 
         $iUserId = $iUserId != BX_PAYMENT_EMPTY_ID ? $iUserId : $this->_oModule->getProfileId();
 
-		$sContent = $this->getForm($iUserId);
-		if(empty($sContent))
-			$sContent = MsgBox(_t($this->_sLangsPrefix . 'msg_no_results'));
+        $sContent = $this->getForm($iUserId);
+        if(empty($sContent))
+            $sContent = MsgBox(_t($this->_sLangsPrefix . 'msg_no_results'));
 
         return array(
-        	'content' => $sContent
+            'content' => $sContent
         );
     }
 
@@ -98,6 +98,7 @@ class BxPaymentDetails extends BxBaseModPaymentDetails
         );
 
         $bSiteAdmin = $this->_oModule->_oConfig->isSiteAdmin();
+        $bSingleSeller = $this->_oModule->_oConfig->isSingleSeller();
 
         $bCollapsed = $this->_bCollapseFirst;
         $iProvider = 0;
@@ -105,6 +106,9 @@ class BxPaymentDetails extends BxBaseModPaymentDetails
         $oProvider = null;
         foreach($aInputs as $aInput) {
             if((int)$aInput['provider_for_owner_only'] != 0 && !$bSiteAdmin)
+                continue;
+            
+            if((int)$aInput['provider_single_seller'] == 0 && $bSingleSeller)
                 continue;
 
             if($iProvider != $aInput['provider_id']) {
@@ -158,15 +162,15 @@ class BxPaymentDetails extends BxBaseModPaymentDetails
                     $aAddon = array('checked' => $oProvider->getOption($aInput['name']) == 'on');
                     break;
 
-				 case 'value':
-				 	$sName = str_replace($aInput['provider_option_prefix'], '', $aInput['name']);
-				 	if(!in_array($sName, array('return_data_url', 'notify_url')))
-				 		break;
+                case 'value':
+                       $sName = str_replace($aInput['provider_option_prefix'], '', $aInput['name']);
+                       if(!in_array($sName, array('return_data_url', 'notify_url')))
+                            break;
 
-				 	$sMethod = 'get' . bx_gen_method_name($sName);
-				 	if(method_exists($oProvider, $sMethod))
-						$aForm['inputs'][$aInput['name']]['value'] = $oProvider->$sMethod($iUserId);
-				 	break;
+                       $sMethod = 'get' . bx_gen_method_name($sName);
+                       if(method_exists($oProvider, $sMethod))
+                            $aForm['inputs'][$aInput['name']]['value'] = $oProvider->$sMethod($iUserId);
+                       break;
             }
 
             if(!empty($aAddon) && is_array($aAddon))
@@ -194,17 +198,17 @@ class BxPaymentDetails extends BxBaseModPaymentDetails
             }
 
             header('Location: ' . $oForm->aFormAttrs['action']);
+            return;
         }
-        else {
-        	foreach($oForm->aInputs as $aInput)
-        		if(!empty($aInput['error']) && !empty($aInput['attrs']['bx-data-provider'])) {
-        			$sProviderBlock = 'provider_' . (int)$aInput['attrs']['bx-data-provider'] . '_begin';
-        			if(!empty($oForm->aInputs[$sProviderBlock]))
-        				$oForm->aInputs[$sProviderBlock]['collapsed'] = false;
-        		}
 
-			return $oForm->getCode();
-        }
+        foreach($oForm->aInputs as $aInput)
+            if(!empty($aInput['error']) && !empty($aInput['attrs']['bx-data-provider'])) {
+                $sProviderBlock = 'provider_' . (int)$aInput['attrs']['bx-data-provider'] . '_begin';
+                if(!empty($oForm->aInputs[$sProviderBlock]))
+                    $oForm->aInputs[$sProviderBlock]['collapsed'] = false;
+            }
+
+        return $oForm->getCode();
     }
 }
 
