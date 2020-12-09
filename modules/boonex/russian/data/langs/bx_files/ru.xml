@@ -257,6 +257,7 @@
 
     <string name="_bx_files_option_link_to_preview"><![CDATA[Открывать предпросмотри при нажатии на файл в контекстных блоках]]></string>
     <string name="_bx_files_option_max_nesting_level"><![CDATA[Максимальная вложенность папок]]></string>
+    <string name="_bx_files_option_max_bulk_download_size"><![CDATA[Максимальный размер файлов при загрузке группой/папкой (Мб)]]></string>
 
     <string name="_bx_files_entry_info_size"><![CDATA[Размер]]></string>
     <string name="_bx_files_entry_info_date"><![CDATA[Дата]]></string>
@@ -280,6 +281,7 @@
     <string name="_bx_files_txt_move_to"><![CDATA[Переместить в]]></string>
     <string name="_bx_files_txt_move_to_nowhere"><![CDATA[Еще не создано ни одной папки]]></string>
     <string name="_bx_files_txt_move_here"><![CDATA[Переместить сюда?]]></string>
+    <string name="_bx_files_txt_max_size_reached"><![CDATA[Слишком большой архив для загрузки. Максимальый суммарный размер файлов для загрузки {0}.]]></string>
 
     <string name="_bx_files_bulk_action_title_download"><![CDATA[Скачать]]></string>
     <string name="_bx_files_bulk_action_title_bookmark"><![CDATA[Сделать закладки]]></string>

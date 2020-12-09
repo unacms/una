@@ -109,19 +109,29 @@ class BxFilesDb extends BxBaseModFilesDb
         ]);
     }
 
-    public function getFolderFilesEx($iFile, $sType = 'folder') {
+    public function getFolderFilesEx($mFile, $sType = 'folder') {
         $CNF = &$this->_oConfig->CNF;
-        return $this->getAll("
 
+        $sQuery = "
             SELECT `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_ID']}`, `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_AUTHOR']}`, `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_TITLE']}`, `{$CNF['TABLE_ENTRIES']}`.`type`, `{$CNF['TABLE_FILES']}`.`path`, `{$CNF['TABLE_FILES']}`.`ext`, `{$CNF['TABLE_FILES']}`.`size` 
             FROM `{$CNF['TABLE_ENTRIES']}` 
             LEFT JOIN `{$CNF['TABLE_FILES']}` ON `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_FILE_ID']}` = `{$CNF['TABLE_FILES']}`.`{$CNF['FIELD_ID']}`
-            WHERE `{$CNF['TABLE_ENTRIES']}`.`".($sType == 'folder' ? 'parent_folder_id' : $CNF['FIELD_ID'])."` = :file
-            
-            ", [
-                'file' => $iFile,
-            ]
-        );
+        ";
+
+        if ($sType == 'mixed') {
+            if (!is_array($mFile) || empty($mFile)) return false;
+            $aIDs = [];
+            foreach ($mFile as $iFile) $aIDs[] = intval($iFile);
+
+            return $this->getAll($sQuery. "WHERE `{$CNF['TABLE_ENTRIES']}`.`{$CNF['FIELD_ID']}` IN (".implode(',', $aIDs).")");
+        } else {
+            return $this->getAll($sQuery. "
+                WHERE `{$CNF['TABLE_ENTRIES']}`.`".($sType == 'folder' ? 'parent_folder_id' : $CNF['FIELD_ID'])."` = :file                
+                ", [
+                    'file' => $mFile,
+                ]
+            );
+        }
     }
 
     public function getFolderNestingLevel($iFolder) {

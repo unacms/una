@@ -258,6 +258,7 @@
 
     <string name="_bx_files_option_link_to_preview"><![CDATA[Link file title to a preview popup instead of a file view page in context blocks]]></string>
     <string name="_bx_files_option_max_nesting_level"><![CDATA[Folders max nesting level]]></string>
+    <string name="_bx_files_option_max_bulk_download_size"><![CDATA[Max size of files in a bulk/folder download archive (Mb)]]></string>
 
     <string name="_bx_files_entry_info_size"><![CDATA[Size]]></string>
     <string name="_bx_files_entry_info_date"><![CDATA[Date]]></string>
@@ -281,6 +282,7 @@
     <string name="_bx_files_txt_move_to"><![CDATA[Move To]]></string>
     <string name="_bx_files_txt_move_to_nowhere"><![CDATA[There are no folders created yet]]></string>
     <string name="_bx_files_txt_move_here"><![CDATA[Move here?]]></string>
+    <string name="_bx_files_txt_max_size_reached"><![CDATA[Too large archive for downloading. Max overall size of files for bulk downloading is {0}.]]></string>
 
     <string name="_bx_files_bulk_action_title_download"><![CDATA[Download]]></string>
     <string name="_bx_files_bulk_action_title_bookmark"><![CDATA[Bookmark]]></string>
