@@ -493,6 +493,8 @@
 	<!-- Stripe payment provider -->
 	<string name="_bx_payment_strp_cpt"><![CDATA[Stripe]]></string>
 	<string name="_bx_payment_strp_dsc"><![CDATA[Stripe payment provider]]></string>
+        <string name="_bx_payment_strp_v3_cpt"><![CDATA[Stripe]]></string>
+	<string name="_bx_payment_strp_v3_dsc"><![CDATA[Stripe payment provider with 3D Secure authentication for Strong Customer Authentication (SCA) support]]></string>
 	<string name="_bx_payment_strp_active_cpt"><![CDATA[Active]]></string>
 	<string name="_bx_payment_strp_active_dsc"><![CDATA[Activate(Deactivate) provider. Note. It's recommended to use SSL for better payment processing.]]></string>
         <string name="_bx_payment_strp_hidden_cpt"><![CDATA[Hidden]]></string>
@@ -581,6 +583,8 @@
 
     <string name="_bx_payment_txt_name_stripe"><![CDATA[Stripe]]></string>
     <string name="_bx_payment_txt_cart_stripe"><![CDATA[Stripe]]></string>
+    <string name="_bx_payment_txt_name_stripe_v3"><![CDATA[Stripe]]></string>
+    <string name="_bx_payment_txt_cart_stripe_v3"><![CDATA[Stripe]]></string>
 
     <!-- _bx_payment_aina_mode_live payment provider -->
     <string name="_bx_payment_aina_cpt"><![CDATA[Apple In-App]]></string>

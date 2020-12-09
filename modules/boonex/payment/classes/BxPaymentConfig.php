@@ -23,11 +23,16 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         $sBaseUrl = BX_DOL_URL_ROOT . $this->getBaseUri();
 
         $this->CNF = array_merge($this->CNF, array(
+            // module icon
+            'ICON' => 'credit-card col-gray-dark',
+
+            // page URIs
             'URL_JOIN' => 'page.php?i=payment-join',
             'URL_CARTS' => 'page.php?i=payment-carts',
             'URL_CART' => 'page.php?i=payment-cart',
             'URL_CART_CHECKOUT' => $sBaseUrl . 'initialize_checkout/' . BX_PAYMENT_TYPE_SINGLE . '/',
             'URL_SUBSCRIBE' => $sBaseUrl . 'subscribe/',
+            'URL_SUBSCRIBE_JSON' => $sBaseUrl . 'subscribe_json/',
             'URL_SUBSCRIPTIONS' => 'page.php?i=payment-sbs-list-my',
             'URL_HISTORY' => 'page.php?i=payment-history',
             'URL_ORDERS' => 'page.php?i=payment-orders',
@@ -107,7 +112,8 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
             'pending' => 'BxPaymentOrders',
             'processed' => 'BxPaymentOrders',
             'chargebee_v3' => 'BxPaymentProviderChargebeeV3',
-            'stripe' => 'BxPaymentProviderStripe'
+            'stripe' => 'BxPaymentProviderStripe',
+            'stripe_v3' => 'BxPaymentProviderStripeV3'
         );
 
         $this->_aJsObjects = array(
@@ -117,7 +123,8 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
             'pending' => 'oPaymentOrders',
             'processed' => 'oPaymentOrders',
             'chargebee_v3' => 'oPaymentProviderChargebeeV3',
-            'stripe' => 'oPaymentProviderStripe'
+            'stripe' => 'oPaymentProviderStripe',
+            'stripe_v3' => 'oPaymentProviderStripeV3'
         );
 
         $this->_bCreditsOnly = false;

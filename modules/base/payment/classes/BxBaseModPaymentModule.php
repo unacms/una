@@ -345,7 +345,7 @@ class BxBaseModPaymentModule extends BxBaseModGeneralModule
 
         $sTitle .= "\n";
 
-        bx_log('sys_payments', '[' . $sSection . '] ' . $sTitle . $mixedContents);
+        bx_log('sys_payments', ":\n[" . $sSection . "] " . $sTitle . $mixedContents);
     }
 }
 

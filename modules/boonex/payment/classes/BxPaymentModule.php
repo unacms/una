@@ -757,9 +757,16 @@ class BxPaymentModule extends BxBaseModPaymentModule
         $aPending = $this->_oDb->getOrderPending(array('type' => 'id', 'id' => (int)$aResult['pending_id']));
         $bTypeRecurring = $aPending['type'] == BX_PAYMENT_TYPE_RECURRING;
         if($bTypeRecurring) {
+            $sStatus = BX_PAYMENT_SBS_STATUS_UNPAID;
+            if(isset($aResult['paid']) && $aResult['paid'])
+                $sStatus = BX_PAYMENT_SBS_STATUS_ACTIVE;
+            else if(isset($aResult['trial']) && $aResult['trial'])
+                $sStatus = BX_PAYMENT_SBS_STATUS_TRIAL;
+
             $aSubscription = array(
                 'customer_id' => $aResult['customer_id'], 
-                'subscription_id' => $aResult['subscription_id']
+                'subscription_id' => $aResult['subscription_id'],
+                'status' => $sStatus
             );
 
             if(!$this->getObjectSubscriptions()->register($aPending, $aSubscription))
@@ -801,7 +808,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
     {
         $oProvider = $this->getObjectProvider($sProvider, $mixedVendorId);
         if($oProvider === false || !$oProvider->isActive())
-        	return $this->_oTemplate->displayPageCodeError($this->_sLangsPrefix . 'err_incorrect_provider');
+            return $this->_oTemplate->displayPageCodeError($this->_sLangsPrefix . 'err_incorrect_provider');
 
         $aResult = $oProvider->finalizedCheckout();
         $this->_oTemplate->displayPageCodeResponse($aResult['message']);
@@ -816,9 +823,12 @@ class BxPaymentModule extends BxBaseModPaymentModule
         $oProvider->notify();
     }
     
-    public function actionCall($sProvider, $sAction)
+    /**
+     * The method is needed to pass direct action calls to necessary Payment Provider.
+     */
+    public function actionCall($sProvider, $sAction, $mixedVendorId = BX_PAYMENT_EMPTY_ID)
     {
-        $oProvider = $this->getObjectProvider($sProvider);
+        $oProvider = $this->getObjectProvider($sProvider, $mixedVendorId);
         if($oProvider === false)
             BxDolRequest::methodNotFound($sAction, $this->getName());
 

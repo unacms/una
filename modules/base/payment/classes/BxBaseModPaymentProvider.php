@@ -153,6 +153,11 @@ class BxBaseModPaymentProvider extends BxDol
 
     public function finalizedCheckout() {}
 
+    public function isSubscriptionStatus($sStatus, $aSubscription, $sStatusKey = 'status')
+    {
+        return isset($this->_aSbsStatuses[$aSubscription[$sStatusKey]]) && $this->_aSbsStatuses[$aSubscription[$sStatusKey]] == $sStatus;
+    }
+
     public function getSubscription($iPendingId, $sCustomerId, $sSubscriptionId)
     {
         return array();

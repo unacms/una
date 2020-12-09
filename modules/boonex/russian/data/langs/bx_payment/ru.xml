@@ -577,7 +577,9 @@
     <string name="_bx_payment_form_strp_card_input_submit"><![CDATA[Отправить]]></string>
     <string name="_bx_payment_form_strp_card_input_cancel_sys"><![CDATA[Отменить]]></string>
     <string name="_bx_payment_form_strp_card_input_cancel"><![CDATA[Отменить]]></string>
-    
+
     <string name="_bx_payment_txt_name_stripe"><![CDATA[Stripe]]></string>
-	<string name="_bx_payment_txt_cart_stripe"><![CDATA[Stripe]]></string>
+    <string name="_bx_payment_txt_cart_stripe"><![CDATA[Stripe]]></string>
+    <string name="_bx_payment_txt_name_stripe_v3"><![CDATA[Stripe]]></string>
+    <string name="_bx_payment_txt_cart_stripe_v3"><![CDATA[Stripe]]></string>
 </resources>

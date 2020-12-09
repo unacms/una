@@ -357,7 +357,7 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
             'trial' => $iTrial,
             'date_add' => $iNow,
             'date_next' => $iNext,
-            'status' => $iTrial > 0 ? BX_PAYMENT_SBS_STATUS_TRIAL : BX_PAYMENT_SBS_STATUS_UNPAID
+            'status' => !empty($aParams['status']) ? $aParams['status'] : ($iTrial > 0 ? BX_PAYMENT_SBS_STATUS_TRIAL : BX_PAYMENT_SBS_STATUS_UNPAID)
         );
 
         if(!$this->_oModule->_oDb->insertSubscription($aSubscription))
