@@ -61,6 +61,12 @@ class BxFilesModule extends BxBaseModTextModule
         if (!empty($sBulk)) {
             $aFilesToDownload = json_decode($sBulk);
         }
+
+        if (!is_array($aFilesToDownload)) {
+            $this->_oTemplate->displayPageNotFound();
+            return;
+        }
+
         $iContentId = reset($aFilesToDownload);
 
         $aData = $this->_oDb->getContentInfoById((int)$iContentId);
@@ -76,6 +82,11 @@ class BxFilesModule extends BxBaseModTextModule
 
         if ($aData['type'] == 'folder' || $aFilesToDownload) {
             $sZipFilePath = $this->prepareFolderForDownloading($aFilesToDownload);
+            if ($sZipFilePath == -1) {
+                $this->_oTemplate->displayMsg(_t('_bx_files_txt_max_size_reached', _t_format_size(intval(getParam('bx_files_max_bulk_download_size')) * 1024 * 1024)));
+                return;
+            }
+
             if (!$sZipFilePath) {
                 $this->_oTemplate->displayPageNotFound();
                 return;
@@ -522,24 +533,31 @@ class BxFilesModule extends BxBaseModTextModule
     private function prepareFolderForDownloading($aFiles) {
         $CNF = &$this->_oConfig->CNF;
 
-        $aFilesList = [];
-        foreach ($aFiles as $iFile) {
-            $aData = $this->_oDb->getContentInfoById(intval($iFile));
-            $aFilesList = array_merge($aFilesList, $this->getFolderFiles(intval($iFile), $aData['type'] == 'folder' ? $this->sanitizeFileName($aData['title']).'/' : '/', $aData['type']));
-        }
+        $aFilesList = $this->getFolderFiles($aFiles, '/', 'mixed');
         if(!$aFilesList) return false;
+
+        $iMaxSize = intval(getParam('bx_files_max_bulk_download_size')) * 1024 * 1024;
+        if ($iMaxSize) {
+            $iTotalSize = 0;
+            foreach ($aFilesList as $aFile) {
+                $iTotalSize += $aFile['size'];
+            }
+            if ($iTotalSize >= $iMaxSize) return -1;
+        }
 
         $sZipFile = BX_DIRECTORY_PATH_TMP.'files-folder-'.mt_rand().'.zip';
         if (file_exists($sZipFile)) @unlink($sZipFile);
 
         $oZipFile = new ZipArchive();
         if ($oZipFile->open($sZipFile, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE)) {
-            $oZipFile->setCompressionIndex(0, ZipArchive::CM_STORE);
 
+            $iIndex = 0;
             foreach ($aFilesList as $aFile) {
                 $sFilePath = BX_DIRECTORY_STORAGE . $CNF['OBJECT_STORAGE'].'/'.$aFile['path'];
-                if (file_exists($sFilePath) && is_readable($sFilePath))
+                if (file_exists($sFilePath) && is_readable($sFilePath)) {
                     $oZipFile->addFile($sFilePath, $aFile['filename']);
+                    $oZipFile->setCompressionIndex($iIndex++, ZipArchive::CM_STORE);
+                }
             }
 
             $oZipFile->close();
@@ -549,8 +567,8 @@ class BxFilesModule extends BxBaseModTextModule
         }
     }
 
-    private function getFolderFiles($iFile, $sRelPath, $sType) {
-        $aFiles = $this->_oDb->getFolderFilesEx($iFile, $sType);
+    private function getFolderFiles($mFile, $sRelPath, $sType) {
+        $aFiles = $this->_oDb->getFolderFilesEx($mFile, $sType);
         if (!$aFiles) return [];
 
         $aResult = [];

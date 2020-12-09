@@ -253,7 +253,7 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
 
         $this->oModule->_oTemplate->addCss('main.css');
 
-        return $this->showBrowseToolbar([
+        $aParams = [
             'aRequestParams' => [
                 'unit_view_param' => $this->sUnitViewParamName,
                 'bookmarks_param' => $this->sBookmarksParamName,
@@ -269,7 +269,9 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
             'keyword' => bx_get('keyword') ? bx_get('keyword') : '',
             'current_folder' => $this->aCurrent['restriction']['folder']['value'],
             'current_page' => $this->aCurrent['paginate']['start'],
-        ]);
+        ];
+
+        return $this->getBrowseToolbar($aParams);
     }
 
     function getSearchData ()
@@ -352,24 +354,13 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
 
     }
 
-    public function showBrowseToolbar($aParams) {
+    protected function getBrowseToolbarControls(&$aParams, $sJsObject) {
         $aSortingOptions = [];
         if (isset($aParams['sorting_options'])) {
             foreach ($aParams['sorting_options'] as $sSorting) {
                 $aSortingOptions[$sSorting] = _t('_bx_files_toolbar_sorting_' . $sSorting);
             }
         }
-
-        $sUniqueIdent = mt_rand();
-        $aParams['unique_ident'] = $sUniqueIdent;
-        $aParams['context'] = $this->iFileManagerUploadTo;
-
-        $this->oModule->_oTemplate->addJs('toolbar_tools.js');
-
-        $sJsCode = $this->oModule->_oTemplate->getJsCode(['type' => 'toolbar_tools', 'uniq' => $sUniqueIdent], $aParams);
-        $sJsObject = $this->oModule->_oConfig->getJsObject(['type' => 'toolbar_tools', 'uniq' => $sUniqueIdent]);
-
-        $this->setUnitParams(['toolbar_js_object' => $sJsObject]);
 
         $oForm = new BxTemplFormView([], $this->oModule->_oTemplate);
         $aInputSorting = [
@@ -424,24 +415,6 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
             ];
         }
 
-        $aFolderPathTmpl = [];
-        $aFolderPath = $this->oModule->_oDb->getFolderPath($this->aCurrent['restriction']['folder']['value']);
-        if ($aFolderPath) {
-            $aFolderPathTmpl[] = [
-                'name' => _t('_bx_files_txt_folder_root'),
-                'folder' => '0',
-                'js_object' => $sJsObject,
-            ];
-
-            foreach ($aFolderPath as $aEntry) {
-                $aFolderPathTmpl[] = [
-                    'name' => strmaxtextlen($aEntry['name'], 20),
-                    'folder' => $aEntry['folder'],
-                    'js_object' => $sJsObject,
-                ];
-            }
-        }
-
         $aBulkActions = [];
         $aBulkActions[] = ['js_object' => $sJsObject, 'handler' => 'downloadFiles', 'title' => _t('_bx_files_bulk_action_title_download'), 'icon' => 'download'];
         if (isLogged()) {
@@ -452,14 +425,9 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
             }
         }
 
-
-        return $this->oModule->_oTemplate->parseHtmlByName('files_browser_toolbar.html', [
-            'js_object' => $sJsObject,
-            'js_code' => $sJsCode,
-            'unique_ident' => $sUniqueIdent,
+        return [
             'sorting_dropdown' => $oForm->genRowStandard($aInputSorting),
             'filter_box' => $oForm->genRowStandard($aInputFilter),
-            'bx_repeat:folder_path' => $aFolderPathTmpl,
             'bx_if:upload_visible' => [
                 'condition' => $bUploadAllowed,
                 'content' => $aUploadButtonParams,
@@ -485,6 +453,52 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
                     'unit_view_param' => $aParams['aRequestParams']['unit_view_param'],
                 ],
             ],
+            'bx_repeat:sorting_options' => $aSortingOptions,
+            'bx_repeat:bulk_actions' => $aBulkActions,
+        ];
+    }
+
+    protected function getBrowseToolbarBreadcrumbs($sJsObject) {
+        $aFolderPathTmpl = [];
+        $aFolderPath = $this->oModule->_oDb->getFolderPath($this->aCurrent['restriction']['folder']['value']);
+        if ($aFolderPath) {
+            $aFolderPathTmpl[] = [
+                'name' => _t('_bx_files_txt_folder_root'),
+                'folder' => '0',
+                'js_object' => $sJsObject,
+            ];
+
+            foreach ($aFolderPath as $aEntry) {
+                $aFolderPathTmpl[] = [
+                    'name' => strmaxtextlen($aEntry['name'], 20),
+                    'folder' => $aEntry['folder'],
+                    'js_object' => $sJsObject,
+                ];
+            }
+        }
+
+        return $aFolderPathTmpl;
+    }
+
+    protected function getBrowseToolbar(&$aParams) {
+        $this->oModule->_oTemplate->addJs('toolbar_tools.js');
+
+        $sUniqueIdent = mt_rand();
+        $aParams['unique_ident'] = $sUniqueIdent;
+        $aParams['context'] = $this->iFileManagerUploadTo;
+
+        $sJsCode = $this->oModule->_oTemplate->getJsCode(['type' => 'toolbar_tools', 'uniq' => $sUniqueIdent], $aParams);
+        $sJsObject = $this->oModule->_oConfig->getJsObject(['type' => 'toolbar_tools', 'uniq' => $sUniqueIdent]);
+
+        $this->setUnitParams(['toolbar_js_object' => $sJsObject]);
+
+        $aToolbarControls = $this->getBrowseToolbarControls($aParams, $sJsObject);
+
+        return $this->oModule->_oTemplate->parseHtmlByName('files_browser_toolbar.html', array_merge($aToolbarControls, [
+            'js_object' => $sJsObject,
+            'js_code' => $sJsCode,
+            'unique_ident' => $sUniqueIdent,
+            'bx_repeat:folder_path' => $this->getBrowseToolbarBreadcrumbs($sJsObject),
             'bx_if:select_all_checkbox' => [
                 'condition' => $aParams['layout'] == 'table',
                 'content' => [
@@ -492,9 +506,7 @@ class BxFilesSearchResult extends BxBaseModTextSearchResult
                     'unique_ident' => $sUniqueIdent,
                 ],
             ],
-            'bx_repeat:sorting_options' => $aSortingOptions,
-            'bx_repeat:bulk_actions' => $aBulkActions,
-        ]);
+        ]));
     }
 }
 
