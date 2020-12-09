@@ -492,6 +492,8 @@
 	<!-- Stripe payment provider -->
 	<string name="_bx_payment_strp_cpt"><![CDATA[Stripe]]></string>
 	<string name="_bx_payment_strp_dsc"><![CDATA[Платежная система Stripe]]></string>
+        <string name="_bx_payment_strp_v3_cpt"><![CDATA[Stripe]]></string>
+	<string name="_bx_payment_strp_v3_dsc"><![CDATA[Платежная система Stripe с поддержкой '3D Secure' авторизации для Strong Customer Authentication (SCA). Внимание, эта версия не позволяет использовать подписки с пробным периодом.]]></string>
 	<string name="_bx_payment_strp_active_cpt"><![CDATA[Активировать]]></string>
 	<string name="_bx_payment_strp_active_dsc"><![CDATA[Активировать(деактивировать) платежную систему. Внимание. Рекомендуется использовать SSL сертификат для улучшения обработки платежей.]]></string>
         <string name="_bx_payment_strp_hidden_cpt"><![CDATA[Скрыть]]></string>
@@ -519,13 +521,13 @@
 	<string name="_bx_payment_strp_msg_subscribed"><![CDATA[Спасибо! Подписка была создана. Пожалуйста, проверьте ваш емэйл для получения дальнейших инструкций.]]></string>
 	<string name="_bx_payment_strp_msg_details_changed"><![CDATA[Детали подписки были изменены.]]></string>
     <string name="_bx_payment_strp_err_details_changed"><![CDATA[Не могу изменить детали подписки. Перепроверьте данные и попробуйте ещё раз.]]></string>
-	<string name="_bx_payment_strp_msg_billing_changed"><![CDATA[Платежная информация была изменена.]]></string>
+    <string name="_bx_payment_strp_msg_billing_changed"><![CDATA[Платежная информация была изменена.]]></string>
     <string name="_bx_payment_strp_err_billing_changed"><![CDATA[Не могу изменить платежную информацию. Перепроверьте данные и попробуйте ещё раз.]]></string>
-	<string name="_bx_payment_strp_txt_checkout_with_single"><![CDATA[Оплатить через {0}]]></string>
-	<string name="_bx_payment_strp_txt_checkout_with_recurring"><![CDATA[Оплатить через {0}]]></string>
-	<string name="_bx_payment_strp_menu_item_title_details"><![CDATA[Детали]]></string>
-	<string name="_bx_payment_strp_menu_item_title_details_change"><![CDATA[Изменить детали]]></string>
-	<string name="_bx_payment_strp_menu_item_title_billing"><![CDATA[Реквизиты]]></string>
+    <string name="_bx_payment_strp_txt_checkout_with_single"><![CDATA[Оплатить через {0}]]></string>
+    <string name="_bx_payment_strp_txt_checkout_with_recurring"><![CDATA[Оплатить через {0}]]></string>
+    <string name="_bx_payment_strp_menu_item_title_details"><![CDATA[Детали]]></string>
+    <string name="_bx_payment_strp_menu_item_title_details_change"><![CDATA[Изменить детали]]></string>
+    <string name="_bx_payment_strp_menu_item_title_billing"><![CDATA[Реквизиты]]></string>
     <string name="_bx_payment_strp_menu_item_title_billing_change"><![CDATA[Изменить реквизиты]]></string>
     <string name="_bx_payment_strp_txt_plan"><![CDATA[План]]></string>
     <string name="_bx_payment_strp_txt_cost"><![CDATA[Стоимость]]></string>
