@@ -2459,7 +2459,7 @@ class BxBaseModGeneralModule extends BxDolModule
     	return bx_get_logged_profile_id();
     }
 
-    public function getProfileInfo($iUserId = 0)
+    public function getProfileInfo($iUserId = false)
     {
         $oProfile = $this->getObjectUser($iUserId);
 
@@ -2483,12 +2483,11 @@ class BxBaseModGeneralModule extends BxDolModule
             'active' => $oProfile->isActive(),
         );
     }
-    
-    public function getObjectUser($iUserId = 0)
+
+    public function getObjectUser($iUserId = false)
     {
     	bx_import('BxDolProfile');
-        $oProfile = BxDolProfile::getInstanceMagic($iUserId);
-        return $oProfile;
+        return BxDolProfile::getInstanceMagic($iUserId);
     }
 
     public function getObjectFavorite($sSystem = '', $iId = 0)
