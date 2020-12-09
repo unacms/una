@@ -199,7 +199,8 @@ class BxDolFeature extends BxDolObject
     
     private function _prepareAuditParams()
     {
-        $oModule = BxDolModule::getInstance($this->_aSystem['module']);
+        $sModule = $this->_aSystem['module'];
+        $oModule = BxDolModule::getInstance($sModule);
         if(!$oModule)
             return;
 

@@ -103,7 +103,7 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
         if ($mixedProfileId < 0)
             return BxDolProfileAnonymous::getInstance($mixedProfileId);
 
-        if (0 == $mixedProfileId || !($oProfile = self::getInstance($mixedProfileId, $bClearCache)))
+        if (0 === $mixedProfileId || !($oProfile = self::getInstance($mixedProfileId, $bClearCache)))
             return BxDolProfileUndefined::getInstance();
         
         return $oProfile;

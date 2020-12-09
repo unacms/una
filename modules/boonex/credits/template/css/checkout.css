@@ -31,6 +31,11 @@
     justify-content: space-between;
 }
 
+.bx-credits-cb-row.bx-credits-cbr-items {
+    -webkit-flex-direction: column;
+    flex-direction: column;
+}
+
 .bx-credits-cb-item {
     position: relative;
     display: inline-block;
@@ -42,10 +47,13 @@
     justify-content: space-between;
 }
 
-.bx-credits-cbr-actions {
+.bx-credits-cb-row.bx-credits-cbr-actions {
+    -webkit-justify-content: center;
+    justify-content: center;
+
     text-align: center;
 }
-.bx-credits-cbr-actions .bx-btn {
+.bx-credits-cb-row.bx-credits-cbr-actions .bx-btn {
     display: inline-block;
     float: none;
     width: 80%;

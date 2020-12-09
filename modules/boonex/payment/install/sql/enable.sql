@@ -98,7 +98,7 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 -- MENU: account settings menu
 SET @iMoAccountSettings = (SELECT IFNULL(MAX(`order`), 0) FROM `sys_menu_items` WHERE `set_name`='sys_account_settings' AND `order` < 9999 LIMIT 1);
 INSERT INTO `sys_menu_items` (`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES
-('sys_account_settings', 'bx_payment', 'payment-details', '_bx_payment_menu_item_title_system_details', '_bx_payment_menu_item_title_details', 'page.php?i=payment-details', '', '_self', '', '', '', 2147483646, 1, 0, 1, @iMoAccountSettings + 1);
+('sys_account_settings', 'bx_payment', 'payment-details', '_bx_payment_menu_item_title_system_details', '_bx_payment_menu_item_title_details', 'page.php?i=payment-details', '', '_self', 'credit-card col-gray-dark', '', '', 2147483646, 1, 0, 1, @iMoAccountSettings + 1);
 
 
 -- ALERTS
