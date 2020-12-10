@@ -21,8 +21,6 @@ BxPaymentProviderStripeV3.prototype.init = function(oOptions) {
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'fade' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
 
-    this._rHandler = Stripe(oOptions.sPublicKey);
-
     //--- For Single payment
     this._sObjNameGrid = oOptions.sObjNameGrid;
 
@@ -34,6 +32,15 @@ BxPaymentProviderStripeV3.prototype.init = function(oOptions) {
     this._iItemCount  = oOptions.iItemCount;
     this._sRedirect  = oOptions.sRedirect;
     this._sCustom  = oOptions.sCustom;
+
+    var $this = this;
+    if(window.Stripe === undefined) {
+        $.getScript('https://js.stripe.com/v3/', function() {
+            $this._rHandler = Stripe(oOptions.sPublicKey);
+        });
+    }
+    else
+        this._rHandler = Stripe(oOptions.sPublicKey);
 };
 
 BxPaymentProviderStripeV3.prototype.onCartCheckout = function(oData) {

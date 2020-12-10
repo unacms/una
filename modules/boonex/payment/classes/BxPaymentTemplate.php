@@ -49,14 +49,14 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
 
     	$oModule = $this->getModule();
     	if(!empty($iVendorId)) {
-    		$sMethod = 'getVendorInfoProviders' . bx_gen_method_name($sType);
-    		$aProviders = $this->_oDb->$sMethod($iVendorId);
-    		foreach($aProviders as $sProvider => $aProvider)
-				$oModule->getObjectProvider($sProvider, $iVendorId)->addJsCss();
+            $sMethod = 'getVendorInfoProviders' . bx_gen_method_name($sType);
+            $aProviders = $this->_oDb->$sMethod($iVendorId);
+            foreach($aProviders as $sProvider => $aProvider)
+                $oModule->getObjectProvider($sProvider, $iVendorId)->addJsCss();
     	}
     }
 
-	public function displayCartJs($sType = '', $iVendorId = 0)
+    public function displayCartJs($sType = '', $iVendorId = 0)
     {
         $this->addJsCssCart($sType, $iVendorId);
         return $this->displayJsCode('cart');
