@@ -192,12 +192,12 @@ class BxPaymentProviderStripeBasic extends BxBaseModPaymentProvider
             'plan' => $sName,
             'cost' => _t('_bx_payment_strp_txt_cost_mask', (int)$aSubscription['plan']['amount'] / 100, $aSubscription['plan']['currency'], $aSubscription['plan']['interval']),
             'status' => $aSubscription['status'],
-            'created' => bx_time_js($aSubscription['created']),
-            'started' => !empty($aSubscription['start']) ? bx_time_js($aSubscription['start']) : $sNone,
-            'trial_start' => !empty($aSubscription['trial_start']) ? bx_time_js($aSubscription['trial_start']) : $sNone,
-            'trial_end' => !empty($aSubscription['trial_end']) ? bx_time_js($aSubscription['trial_end']) : $sNone,
-            'cperiod_start' => !empty($aSubscription['current_period_start']) ? bx_time_js($aSubscription['current_period_start']) : $sNone,
-            'cperiod_end' => !empty($aSubscription['current_period_end']) ? bx_time_js($aSubscription['current_period_end']) : $sNone,
+            'created' => bx_time_js($aSubscription['created'], BX_FORMAT_DATE_TIME, true),
+            'started' => !empty($aSubscription['start']) ? bx_time_js($aSubscription['start'], BX_FORMAT_DATE_TIME, true) : $sNone,
+            'trial_start' => !empty($aSubscription['trial_start']) ? bx_time_js($aSubscription['trial_start'], BX_FORMAT_DATE_TIME, true) : $sNone,
+            'trial_end' => !empty($aSubscription['trial_end']) ? bx_time_js($aSubscription['trial_end'], BX_FORMAT_DATE_TIME, true) : $sNone,
+            'cperiod_start' => !empty($aSubscription['current_period_start']) ? bx_time_js($aSubscription['current_period_start'], BX_FORMAT_DATE_TIME, true) : $sNone,
+            'cperiod_end' => !empty($aSubscription['current_period_end']) ? bx_time_js($aSubscription['current_period_end'], BX_FORMAT_DATE_TIME, true) : $sNone,
         ));
     }
 

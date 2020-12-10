@@ -306,7 +306,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
             'order' => $aOrder['order'],
             'provider' => _t('_bx_payment_txt_name_' . $aOrder['provider']),
             'error' => $aOrder['error_msg'],
-            'date' => bx_time_js($aOrder['date']),
+            'date' => bx_time_js($aOrder['date'], BX_FORMAT_DATE_TIME, true),
             'bx_if:show_author' => array(
                 'condition' => $bTmplVarsShowSlrAtr,
                 'content' => $aTmplVarsAuthor
