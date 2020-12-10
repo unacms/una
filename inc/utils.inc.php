@@ -903,7 +903,7 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
         $rConnect = curl_init();
 
         curl_setopt($rConnect, CURLOPT_USERAGENT, 'UNA ' . BX_DOL_VERSION);
-        curl_setopt($rConnect, CURLOPT_TIMEOUT, 10);
+        curl_setopt($rConnect, CURLOPT_TIMEOUT, getParam('sys_default_curl_timeout'));
         curl_setopt($rConnect, CURLOPT_URL, $sFileUrl);
         curl_setopt($rConnect, CURLOPT_HEADER, NULL === $sHttpCode ? false : true);
         curl_setopt($rConnect, CURLOPT_RETURNTRANSFER, 1);
