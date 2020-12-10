@@ -18,7 +18,6 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
         parent::__construct($aConfig);
 
         $this->_aIncludeJs = array(
-            'https://js.stripe.com/v3/',
             'stripe_v3.js'
         );
     }
@@ -392,7 +391,8 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
                 break;
         }
 
-        return array($this->_oModule->_oTemplate->getJsCode($this->_sName, array_merge(array(
+        $sJsCode = $this->_oModule->_oTemplate->_wrapInTagJs('https://js.stripe.com/v3/');
+        $sJsCode .= $this->_oModule->_oTemplate->getJsCode($this->_sName, array_merge(array(
             'js_object' => $sJsObject,
             'sProvider' => $this->_sName,
             'sPublicKey' => !empty($sPublicKey) ? $sPublicKey : $this->_getPublicKey(),
@@ -400,7 +400,9 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
             'sVendorCurrency' => '',
             'sVendorIcon' => '',
             'sClientEmail' => $sClientEmail,
-        ), $aParams)), $sJsMethod);
+        ), $aParams));  
+
+        return array($sJsCode, $sJsMethod);
     }
 }
 
