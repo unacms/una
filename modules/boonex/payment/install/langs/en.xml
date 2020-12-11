@@ -494,7 +494,7 @@
 	<string name="_bx_payment_strp_cpt"><![CDATA[Stripe]]></string>
 	<string name="_bx_payment_strp_dsc"><![CDATA[Stripe payment provider]]></string>
         <string name="_bx_payment_strp_v3_cpt"><![CDATA[Stripe]]></string>
-	<string name="_bx_payment_strp_v3_dsc"><![CDATA[Stripe payment provider with 3D Secure authentication for Strong Customer Authentication (SCA) support]]></string>
+	<string name="_bx_payment_strp_v3_dsc"><![CDATA[Stripe payment provider with 3D Secure authentication for Strong Customer Authentication (SCA) support. Note, it doesn't allow to use recurring payments with trial period.]]></string>
 	<string name="_bx_payment_strp_active_cpt"><![CDATA[Active]]></string>
 	<string name="_bx_payment_strp_active_dsc"><![CDATA[Activate(Deactivate) provider. Note. It's recommended to use SSL for better payment processing.]]></string>
         <string name="_bx_payment_strp_hidden_cpt"><![CDATA[Hidden]]></string>

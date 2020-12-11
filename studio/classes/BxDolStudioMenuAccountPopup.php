@@ -12,6 +12,8 @@ class BxDolStudioMenuAccountPopup extends BxTemplStudioMenu
     public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject, $oTemplate);
+
+        $this->_bInlineIcons = true;
     }
 
     protected function _isVisible ($a)
@@ -22,7 +24,6 @@ class BxDolStudioMenuAccountPopup extends BxTemplStudioMenu
         $bResult = false;
         switch ($a['name']) {
             case 'edit':
-            case 'featured':
                 if(!BxDolStudioRolesUtils::getInstance()->isActionAllowed(BX_SRA_MANAGE_APPS))
                     break;
 

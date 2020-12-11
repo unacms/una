@@ -1551,7 +1551,8 @@
 	<string name="_adm_stg_cpt_option_sys_template_cache_minify_css_enable"><![CDATA[Задействовать уменьшение для файлов CSS (кэш должен быть задействован)]]></string>
 	<string name="_adm_stg_cpt_option_sys_template_cache_minify_js_enable"><![CDATA[Задействовать уменьшение для файлов JS (кэш должен быть задействован)]]></string>
 	<string name="_adm_stg_cpt_option_sys_transcoder_queue_storage"><![CDATA[Удалённая раскодировка видео (требуется дополнительная настройка)]]></string>
-  <string name="_adm_stg_cpt_option_sys_session_lifetime_in_min"><![CDATA[Время жизни сессии (в минутах)]]></string>
+	<string name="_adm_stg_cpt_option_sys_session_lifetime_in_min"><![CDATA[Время жизни сессии (в минутах)]]></string>
+	<string name="_adm_stg_cpt_option_sys_default_curl_timeout"><![CDATA[Таймаут для cURL по умолчанию]]></string>
 	<string name="_adm_stg_cpt_option_template"><![CDATA[Основная тема]]></string>
 	<string name="_adm_stg_err_option_template"><![CDATA[Тема не может быть пустой и должна иметь приемлемое название.]]></string>
     <string name="_adm_stg_cpt_option_use_like_operator"><![CDATA[Использовать для поиска оператор LIKE (рекомендуется для небольшого содержимого)]]></string>
@@ -2941,7 +2942,7 @@
 	<string name="_sys_page_title_system_dashboard"><![CDATA[Панель]]></string>
 	<string name="_sys_page_title_system_forgot_password"><![CDATA[Забыли пароль]]></string>
   <string name="_sys_page_title_system_search_keyword"><![CDATA[Поиск по ключевым словам]]></string>
-  <string name="_sys_page_title_search_keyword"><![CDATA[Поиск по ключевым словам]]></string
+  <string name="_sys_page_title_search_keyword"><![CDATA[Поиск по ключевым словам]]></string>
 	<string name="_sys_page_title_system_home"><![CDATA[Домашняя страница]]></string>
 	<string name="_sys_page_title_system_login"><![CDATA[Вход]]></string>
 	<string name="_sys_page_title_system_login_step2"><![CDATA[Вход - шаг2]]></string>
@@ -3281,7 +3282,7 @@
 	<string name="_sys_uploader_record_video_start_button"><![CDATA[Начать запись]]></string>
 	<string name="_sys_uploader_record_video_stop_button"><![CDATA[Прекратить запись]]></string>
 	<string name="_sys_uploader_record_video_mb"><![CDATA[Мб]]></string>
-	<string name="_sys_edit_profile"><![CDATA[Редактировать профиль]]></string>    
+	<string name="_sys_edit_profile"><![CDATA[Редактировать профиль]]></string>
 	<string name="_sys_exit"><![CDATA[Закончить]]></string>    
 	<string name="_sys_warn"><![CDATA[предупреждение]]></string>
 	<string name="_sys_x_days"><![CDATA[{0} дней]]></string>

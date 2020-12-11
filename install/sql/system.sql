@@ -336,7 +336,9 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 
 (@iCategoryId, 'sys_account_activation_letter', '_adm_stg_cpt_option_sys_account_activation_letter', '', 'checkbox', '', '', '', '', 120),
 
-(@iCategoryId, 'sys_logs_storage_default', '_adm_stg_cpt_option_sys_logs_storage_default', 'Folder', 'select', 'Folder,PHPLog,STDErr', '', '', '', 130);
+(@iCategoryId, 'sys_logs_storage_default', '_adm_stg_cpt_option_sys_logs_storage_default', 'Folder', 'select', 'Folder,PHPLog,STDErr', '', '', '', 130),
+
+(@iCategoryId, 'sys_default_curl_timeout', '_adm_stg_cpt_option_sys_default_curl_timeout', '10', 'digit', '', '', '', '', 140);
 
 --
 -- CATEGORY (HIDDEN): System

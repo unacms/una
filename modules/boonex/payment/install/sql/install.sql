@@ -234,7 +234,7 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 
 -- Stripe payment provider
 INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `active`, `order`, `class_name`) VALUES
-('stripe', '_bx_payment_strp_cpt', '_bx_payment_strp_dsc', 'strp_', 1, 1, 1, 0, 60, 'BxPaymentProviderStripe');
+('stripe', '_bx_payment_strp_cpt', '_bx_payment_strp_dsc', 'strp_', 1, 1, 1, 1, 60, 'BxPaymentProviderStripe');
 SET @iProviderId = LAST_INSERT_ID();
 
 INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES

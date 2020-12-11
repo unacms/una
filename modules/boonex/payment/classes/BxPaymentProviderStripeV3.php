@@ -18,7 +18,6 @@ class BxPaymentProviderStripeV3 extends BxPaymentProviderStripeBasic implements 
         parent::__construct($aConfig);
 
         $this->_aIncludeJs = array(
-            'https://js.stripe.com/v3/',
             'stripe_v3.js'
         );
     }

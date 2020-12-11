@@ -188,6 +188,10 @@ class BxBaseMenu extends BxDolMenu
             'condition' => (bool)$sIconUrl,
             'content' => array('icon_url' => $sIconUrl),
         );
+        $a['bx_if:image_inline'] = array (
+            'condition' => false,
+            'content' => array('image' => ''),
+        );
         $a['bx_if:icon'] = array (
             'condition' => (bool)$sIcon,
             'content' => array('icon' => $sIcon),

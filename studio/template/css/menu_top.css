@@ -165,6 +165,14 @@ div.bx-std-menu-top .bx-menu-toolbar li a {
     height: 100%;
 }
 
+div.bx-std-menu-top .bx-menu-toolbar li svg g {
+    opacity: 0.7;
+}
+
+div.bx-std-menu-top .bx-menu-toolbar li:hover svg g {
+    opacity: 0.85;
+}
+
 div.bx-std-menu-top i.sys-icon {
     -webkit-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
@@ -189,12 +197,14 @@ div.bx-std-menu-top-right li.bx-menu-tab-active i.sys-icon {
     width: 0.5rem;
     height: 0.5rem;
 
-    background: #001529;
+    box-shadow: inset 1px 1px 0px rgba(240, 240, 240, 0.2);
+    background-color: #001529;
 
     transform: rotate(45deg);
 }
 #bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup {
-    background: #001529;
+    box-shadow: inset -1px -1px 0px rgba(240, 240, 240, 0.2), inset 1px 1px 0px rgba(240, 240, 240, 0.2);
+    background-color: #001529;
 }
 #bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup-content-indent {
     padding: 0;
@@ -205,6 +215,7 @@ div.bx-std-menu-top-right li.bx-menu-tab-active i.sys-icon {
     margin: 0;
     padding: 0 1rem;
 
+    white-space: nowrap;
     line-height: 2.5rem;
     font-size: 0.875rem;
     font-weight: 400;
@@ -214,6 +225,9 @@ div.bx-std-menu-top-right li.bx-menu-tab-active i.sys-icon {
 #bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup-color-bg li .sys-icon {
     color: rgba(255, 255, 255, 0.7);
 }
+#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup-color-bg li svg g {
+    opacity: 0.7;
+}
 #bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup-color-bg li:hover a,
 #bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup-color-bg li:hover a .sys-icon {
     color: rgba(255, 255, 255, 0.85);
@@ -222,12 +236,7 @@ div.bx-std-menu-top-right li.bx-menu-tab-active i.sys-icon {
     background-color: rgba(24, 144, 255, 0.2);
     box-shadow: inset 3px 0px 0px rgba(24, 144, 255, 1.0);
 }
-
-.bx-menu-object-sys_studio_account_popup li {
-    white-space: nowrap;
-}
-
-.bx-menu-object-sys_studio_account_popup li.bx-menu-tab-active a,
-.bx-menu-object-sys_studio_account_popup li.bx-menu-tab-active a .sys-icon {
-    color: rgba(0, 0, 0, 0.7);
+#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup-color-bg li:hover svg g,
+#bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup-color-bg li.bx-menu-tab-active svg g {
+    opacity: 0.85;
 }

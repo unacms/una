@@ -340,11 +340,11 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
         $oDate = date_create();
         $iNow = $iNext = date_format($oDate, 'U');
 
-        if($iTrial > 0) {
+        if((!empty($aParams['status']) && $aParams['status'] == BX_PAYMENT_SBS_STATUS_ACTIVE) || $iTrial > 0) {
             $sInterval = $this->_getInterval($iPeriod, $aItem['period_unit_recurring'], $iTrial);
             date_add($oDate, new DateInterval($sInterval));
             $iNext = date_format($oDate, 'U');
-        }       
+        }
 
         $sUnique = genRndPwd(9, false);
 
@@ -503,7 +503,7 @@ class BxPaymentSubscriptions extends BxBaseModPaymentSubscriptions
 
     private function _getInterval($iPeriod, $sPeriodUnit, $iTrial = 0)
     {
-        if(!empty($iTrial))
+        if((int)$iTrial > 0)
             return 'P' . $iTrial . 'D';
 
         $sInterval = '';

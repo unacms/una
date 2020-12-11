@@ -49,14 +49,14 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
 
     	$oModule = $this->getModule();
     	if(!empty($iVendorId)) {
-    		$sMethod = 'getVendorInfoProviders' . bx_gen_method_name($sType);
-    		$aProviders = $this->_oDb->$sMethod($iVendorId);
-    		foreach($aProviders as $sProvider => $aProvider)
-				$oModule->getObjectProvider($sProvider, $iVendorId)->addJsCss();
+            $sMethod = 'getVendorInfoProviders' . bx_gen_method_name($sType);
+            $aProviders = $this->_oDb->$sMethod($iVendorId);
+            foreach($aProviders as $sProvider => $aProvider)
+                $oModule->getObjectProvider($sProvider, $iVendorId)->addJsCss();
     	}
     }
 
-	public function displayCartJs($sType = '', $iVendorId = 0)
+    public function displayCartJs($sType = '', $iVendorId = 0)
     {
         $this->addJsCssCart($sType, $iVendorId);
         return $this->displayJsCode('cart');
@@ -306,7 +306,7 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
             'order' => $aOrder['order'],
             'provider' => _t('_bx_payment_txt_name_' . $aOrder['provider']),
             'error' => $aOrder['error_msg'],
-            'date' => bx_time_js($aOrder['date']),
+            'date' => bx_time_js($aOrder['date'], BX_FORMAT_DATE_TIME, true),
             'bx_if:show_author' => array(
                 'condition' => $bTmplVarsShowSlrAtr,
                 'content' => $aTmplVarsAuthor
