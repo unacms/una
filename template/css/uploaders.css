@@ -63,3 +63,35 @@
     padding:0;
     min-height:340px;
 }
+
+
+/* record video uploader */
+
+.bx-uploader-record-video-controls {
+    text-align: center;
+    display: none;
+}
+.bx-uploader-record-video-controls .bx-btn {
+    float: none;
+    display: inline-block;
+}
+
+.bx-uploader-recording-stop {
+    display: none;
+}
+
+.bx-record-video-preview-filesize {
+    text-align: center;
+    margin: 0.2rem 0;
+}
+
+@keyframes bx-uploader-recording-animation {
+    0% {opacity: 0;}
+    50% {opacity: 1;}
+    100% {opacity: 0;}
+}
+.bx-uploader-recording-blinking-circle {
+    animation-name: bx-uploader-recording-animation;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}

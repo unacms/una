@@ -3273,7 +3273,14 @@
 	<string name="_sys_uploader_simple_button_name"><![CDATA[Обычная загрузка]]></string>
 	<string name="_sys_uploader_simple_submit_button"><![CDATA[Загрузить]]></string>
 	<string name="_sys_uploader_simple_title"><![CDATA[Обычная загрузка]]></string>
+	<string name="_sys_uploader_record_video_button_name"><![CDATA[Записать Видео]]></string>
+	<string name="_sys_uploader_record_video_submit_button"><![CDATA[Запись]]></string>
+	<string name="_sys_uploader_record_video_title"><![CDATA[Записать Видео]]></string>
 	<string name="_sys_uploader_upload_canceled"><![CDATA[Очень жаль. Загрузка прервана.]]></string>
+	<string name="_sys_uploader_camera_capture_failed"><![CDATA[Нам не удалось инициализировать вашу камеру.]]></string>
+	<string name="_sys_uploader_record_video_start_button"><![CDATA[Начать запись]]></string>
+	<string name="_sys_uploader_record_video_stop_button"><![CDATA[Прекратить запись]]></string>
+	<string name="_sys_uploader_record_video_mb"><![CDATA[Мб]]></string>
 	<string name="_sys_edit_profile"><![CDATA[Редактировать профиль]]></string>    
 	<string name="_sys_exit"><![CDATA[Закончить]]></string>    
 	<string name="_sys_warn"><![CDATA[предупреждение]]></string>
