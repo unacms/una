@@ -128,7 +128,8 @@ div.bx-std-pmen-item-cnt {
 
 span.bx-std-pmen-item-counter {}
 span.bx-std-pmen-ic-num {}
-div.bx-std-pmen-item img {
+div.bx-std-pmen-item img,
+div.bx-std-pmen-item svg {
     position: absolute;
 
     top: 0.5rem;
@@ -160,6 +161,10 @@ div.bx-std-pmen-item .sys-icon {
     text-align: center;
 }
 
+div.bx-std-pmen-item svg g {
+    opacity: 0.7;
+}
+
 div.bx-std-pmen-item.bx-menu-tab-active {
     background-color: rgba(24, 144, 255, 0.2);
     box-shadow: inset -3px 0px 0px rgba(24, 144, 255, 1.0);
@@ -173,6 +178,11 @@ div.bx-std-pmen-item:hover .sys-icon,
 div.bx-std-pmen-item.bx-menu-tab-active a,
 div.bx-std-pmen-item.bx-menu-tab-active .sys-icon {
     color: #1890ff;
+}
+
+div.bx-std-pmen-item:hover svg g,
+div.bx-std-pmen-item.bx-menu-tab-active svg g {
+    opacity: 0.85;
 }
 
 

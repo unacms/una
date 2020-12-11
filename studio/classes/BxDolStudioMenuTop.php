@@ -58,7 +58,7 @@ class BxDolStudioMenuTop extends BxDol implements iBxDolSingleton
             'menu_items' => array(
                 'launcher' => array(
                     'name' => 'launcher',
-                    'icon' => 'th',
+                    'icon' => 'wi-launcher.svg',
                     'link' => '{url_studio}',
                     'title' => '_adm_tmi_cpt_launcher'
                 )

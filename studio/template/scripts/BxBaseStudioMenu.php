@@ -10,16 +10,39 @@
 
 class BxBaseStudioMenu extends BxDolStudioMenu
 {
+    protected $_bInlineIcons;
+
     public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject, $oTemplate);
+
+        $this->_bInlineIcons = in_array($this->_aObject['template'], array(
+            'menu_side.html', 
+            'menu_top_toolbar.html', 
+            'menu_launcher_browser.html'
+        ));
     }
     
     protected function _getMenuItem ($aItem)
     {
         $aItem = parent::_getMenuItem($aItem);
-        if($aItem !== false)
-            $aItem['class'] = isset($aItem['class']) ? $aItem['class'] : '';
+        if($aItem === false)
+            return $aItem;
+
+        $aItem['class'] = isset($aItem['class']) ? $aItem['class'] : '';
+        if($this->_bInlineIcons && $aItem['bx_if:image']['condition'] && strpos($aItem['bx_if:image']['content']['icon_url'], '.svg') !== false)
+            $aItem = array_merge($aItem, array(
+                'bx_if:image' => array (
+                    'condition' => false,
+                    'content' => array(),
+                ),
+                'bx_if:image_inline' => array (
+                    'condition' => true,
+                    'content' => array(
+                        'image' => bx_file_get_contents($aItem['bx_if:image']['content']['icon_url'])
+                    ),
+                ),
+            ));
 
         return $aItem;
     }
