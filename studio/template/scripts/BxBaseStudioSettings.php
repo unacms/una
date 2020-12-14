@@ -58,7 +58,9 @@ class BxBaseStudioSettings extends BxDolStudioSettings
         if($sResult === false)
             return false;
 
-        return $sResult . $this->getFormCode();
+        return $sResult . $this->getBlockCode(array(
+            'content' => $this->getFormCode()
+        ));
     }
 
     public function getFormCode($sCategorySelected = '')

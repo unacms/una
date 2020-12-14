@@ -23,8 +23,8 @@ class BxBaseStudioConfig extends BxBaseConfig
             'bx-padding-sec' => '20px',
             'bx-padding-thd' => '10px',
 
-            'bx-color-page' => '#fbfcfd',
-            'bx-border-color-layout' => '#cccccc',
+            'bx-color-page' => '#f0f2f5',
+            'bx-border-color-layout' => '#d9d9d9',
 
             'bx-size-widget' => '128px',
             'bx-round-corners-radius-widget' => '32px',

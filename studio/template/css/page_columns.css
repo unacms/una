@@ -40,8 +40,6 @@ div.bx-std-page-column.bx-std-page-content {
     position: relative;
     -webkit-flex: 2 1 auto;
     flex: 2 1 auto;
-
-    background: #e5e5e5;
 }
 div.bx-std-page-column.bx-std-page-content div.bx-std-page-column-cnt {
     width: 100%;

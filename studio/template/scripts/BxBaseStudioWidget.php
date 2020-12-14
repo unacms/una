@@ -132,10 +132,16 @@ class BxBaseStudioWidget extends BxDolStudioWidget
     }
     public function getBlockCode($aBlock)
     {
+        $sContent = '';
+        if(!empty($aBlock['content']))
+            $sContent = $aBlock['content'];
+        else if(!empty($aBlock['items']))
+            $sContent = $aBlock['items'];
+
     	return BxDolStudioTemplate::getInstance()->parseHtmlByName('page_block.html', array(
             'caption' => $this->getBlockCaption($aBlock),
             'panel_top' => $this->getBlockPanelTop($aBlock),
-            'items' => !empty($aBlock['items']) ? $aBlock['items'] : '',
+            'items' => $sContent,
             'panel_bottom' => $this->getBlockPanelBottom($aBlock)
     	));
     }

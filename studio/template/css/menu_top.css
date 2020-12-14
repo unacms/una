@@ -103,6 +103,10 @@ div.bx-std-menu-top .bx-menu-floating-blocks li a {
     text-align: center;
 }
 
+div.bx-std-menu-top .bx-menu-floating-blocks li .bx-mi-icon {
+    margin-top: 0.125rem;
+}
+
 div.bx-std-menu-top .bx-menu-floating-blocks li img,
 div.bx-std-menu-top .bx-menu-floating-blocks li .sys-icon {
     display: inline-block;

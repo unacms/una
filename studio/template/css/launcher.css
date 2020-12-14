@@ -82,7 +82,7 @@ div.bx-std-widget-empty {
 
 .bx-std-widget-icon {
     position: relative;
-    top:0px;
+    top: 0px;
     width: 5.0rem;
     height: 5.0rem;
 
@@ -138,8 +138,8 @@ div.bx-std-widget-icon-jitter {
     position: absolute;
     top: 24px;
     left: 24px;
-    width: 96px;
-    height: 96px;
+    width: 5.0rem;
+    height: 5.0rem;
     z-index: 5;
 
     background-color: transparent;
@@ -148,10 +148,10 @@ div.bx-std-widget-icon-jitter {
 div.bx-std-widget-icon-jitter img {
     position:absolute;
 
-    bottom:-5px;
-    left: 28px;
-    width: 40px;
-    height: 25px;
+    bottom: -0.125rem;
+    left: 1.375rem;
+    width: 2.25rem;
+    height: 1.25rem;
 
     background-color: #fdfeff;
     background-image:url(../images/bx-std-widget-drag.svg);
