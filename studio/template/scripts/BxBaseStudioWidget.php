@@ -9,10 +9,14 @@
  */
 
 class BxBaseStudioWidget extends BxDolStudioWidget
-{
+{    
+    protected $aPageCodeNoWrap;
+
     public function __construct($mixedPageName)
     {
         parent::__construct($mixedPageName);
+
+        $this->aPageCodeNoWrap = array();
     }
 
     public function getPageCss()
@@ -96,9 +100,9 @@ class BxBaseStudioWidget extends BxDolStudioWidget
         return '';
     }
 
-    public function getPageCode()
+    public function getPageCode($sPage = '', $bWrap = true)
     {
-        $sResult = parent::getPageCode();
+        $sResult = parent::getPageCode($sPage, $bWrap);
         if($sResult === false)
             return false;
 
@@ -106,6 +110,29 @@ class BxBaseStudioWidget extends BxDolStudioWidget
             $this->setError('_Access denied');
             return false;
         }
+
+        if(empty($sPage))
+            $sPage = $this->sPage;
+
+        $sMethod = 'get' . bx_gen_method_name($sPage);
+        if(!method_exists($this, $sMethod))
+            return '';
+
+        $mixedContent = $this->$sMethod();
+        if(!$bWrap || in_array($sPage, $this->aPageCodeNoWrap))
+            return $mixedContent;
+
+        if(is_string($mixedContent))
+            $sResult .= $this->getBlockCode(array(
+                'content' => $mixedContent
+            ));
+        else if(is_array($mixedContent))
+            foreach($mixedContent as $sBlock)
+                $sResult .= $this->getBlockCode(array(
+                    'content' => $sBlock
+                ));
+        else if(is_a($mixedContent, 'BxDolPage'))
+            $sResult .= $mixedContent->getCode();
 
         return $sResult . BxTemplStudioLauncher::getInstance()->getPageJsCode(array(
             'bInit' => false

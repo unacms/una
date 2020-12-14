@@ -18,20 +18,20 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
     function getPageCss()
     {
         return array_merge(parent::getPageCss(), array(
-        	'page_layouts.css', 
-        	'dashboard.css',
+            'page_layouts.css', 
+            'dashboard.css',
         ));
     }
 
     function getPageJs()
     {
         return array_merge(parent::getPageJs(), array(
-        	'jquery.anim.js',
-        	'dashboard.js'
+            'jquery.anim.js',
+            'dashboard.js'
         ));
     }
 
-	function getPageJsClass()
+    function getPageJsClass()
     {
         return 'BxDolStudioDashboard';
     }
@@ -54,9 +54,9 @@ class BxBaseStudioDashboard extends BxDolStudioDashboard
         return $sContent;
     }
 
-    function getPageCode()
+    function getPageCode($sPage = '', $bWrap = true)
     {
-        $sResult = parent::getPageCode();
+        $sResult = parent::getPageCode($sPage, $bWrap);
         if($sResult === false)
             return false;
 

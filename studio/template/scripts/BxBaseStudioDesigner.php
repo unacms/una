@@ -19,7 +19,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
     protected $sCoverFormId = 'adm-dsg-cover-form';
     protected $sCoverIframeId = 'adm-dsg-cover-iframe';
     protected $sCoverStorage = BX_DOL_STORAGE_OBJ_IMAGES;
-	protected $sCoverTranscoder = 'sys_cover_preview';
+    protected $sCoverTranscoder = 'sys_cover_preview';
 
     protected $sSplashFormId = 'adm-dsg-splash-form';
     protected $sSplashIframeId = 'adm-dsg-splash-iframe';
@@ -35,7 +35,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
     function __construct($sPage = '')
     {
         parent::__construct($sPage);
-
+                
         $this->aPageCss = array('forms.css', 'designer.css');
         $this->aPageJs = array('settings.js', 'designer.js');
     }
@@ -87,18 +87,6 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
             );
 
         return parent::getPageMenu($aMenu);
-    }
-    function getPageCode($bHidden = false)
-    {
-        $sResult = parent::getPageCode();
-        if($sResult === false)
-            return false;
-
-        $sMethod = 'get' . ucfirst($this->sPage);
-        if(!method_exists($this, $sMethod))
-            return '';
-
-        return $sResult . $this->$sMethod();
     }
 
     protected function getGeneral()
@@ -244,9 +232,7 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
         }
 
         return MsgBox(_t('_adm_dsg_txt_logo_redefinition')) . $oTemplate->parseHtmlByName('designer.html', array(
-            'content' => $this->getBlockCode(array(
-                'items' => $oTemplate->parseHtmlByName('dsr_logo.html', array('logo_iframe_id' => $this->sLogoIframeId, 'form' => $oForm->getCode())),
-            )),
+            'content' => $oTemplate->parseHtmlByName('dsr_logo.html', array('logo_iframe_id' => $this->sLogoIframeId, 'form' => $oForm->getCode())),
             'js_content' => $this->getPageJsCode()
         ));
     }
@@ -350,10 +336,8 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
         }
 
         return $oTemplate->parseHtmlByName('designer.html', array(
-            'content' => $this->getBlockCode(array(
-				'items' => $oTemplate->parseHtmlByName('dsr_icon.html', array('icon_iframe_id' => $this->sIconIframeId, 'form' => $oForm->getCode())),
-			)),
-			'js_content' => $this->getPageJsCode()
+            'content' => $oTemplate->parseHtmlByName('dsr_icon.html', array('icon_iframe_id' => $this->sIconIframeId, 'form' => $oForm->getCode())),
+            'js_content' => $this->getPageJsCode()
         ));
     }
 
@@ -374,45 +358,45 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 
             $aFormInputs[$sCover] = array(
                 'type' => 'files',
-				'name' => $sCover,
-				'storage_object' => $this->sCoverStorage,
-				'images_transcoder' => $this->sCoverTranscoder,
-				'uploaders' => array('sys_std_crop_cover'),
-				'multiple' => false,
-				'content_id' => $aSetting['id'],
-				'ghost_template' => BxDolStudioTemplate::getInstance()->parseHtmlByName('uploader_fgt_cover.html', array(
-					'name' => $sCover,
-				)),
-				'caption' => _t('_adm_dsg_txt_upload_' . $sCover),
-				'db' => array (
+                    'name' => $sCover,
+                    'storage_object' => $this->sCoverStorage,
+                    'images_transcoder' => $this->sCoverTranscoder,
+                    'uploaders' => array('sys_std_crop_cover'),
+                    'multiple' => false,
+                    'content_id' => $aSetting['id'],
+                    'ghost_template' => BxDolStudioTemplate::getInstance()->parseHtmlByName('uploader_fgt_cover.html', array(
+                        'name' => $sCover,
+                    )),
+                    'caption' => _t('_adm_dsg_txt_upload_' . $sCover),
+                    'db' => array (
                     'pass' => 'Int',
                 )
             );
 
-        	if(($iImageId = (int)getParam($aCover['setting'])) == 0)
-        		continue;
+            if(($iImageId = (int)getParam($aCover['setting'])) == 0)
+                continue;
 
-			$sImageUrl = BxDolTranscoderImage::getObjectInstance($aCover['transcoder'])->getFileUrl($iImageId);
+            $sImageUrl = BxDolTranscoderImage::getObjectInstance($aCover['transcoder'])->getFileUrl($iImageId);
             if($sImageUrl === false) {
             	setParam($aCover['setting'], 0);
                 continue;
-			}
+            }
 
-			$aTmplVarsCovers[] = array(
-			    'image_id' => $iImageId,
-			    'content' => $oTemplate->parseHtmlByName($aCover['template'], array(
-			        'js_object' => $sJsObject,
-    				'type' => $sCover,
-    				'caption' => _t($aCover['title']),
-    				'image_id' => $iImageId,
-                    'bx_if:show_bg' => array(
-    					'condition' => !empty($sImageUrl),
-    					'content' => array(
-    						'image_url' => $sImageUrl
-    					)
-    				),
+            $aTmplVarsCovers[] = array(
+                'image_id' => $iImageId,
+                'content' => $oTemplate->parseHtmlByName($aCover['template'], array(
+                    'js_object' => $sJsObject,
+                    'type' => $sCover,
+                    'caption' => _t($aCover['title']),
+                    'image_id' => $iImageId,
+                        'bx_if:show_bg' => array(
+                            'condition' => !empty($sImageUrl),
+                            'content' => array(
+                                'image_url' => $sImageUrl
+                            )
+                    ),
                 ))
-			);
+            );
         }
 
         $aForm = array(
@@ -443,8 +427,8 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
                     'type' => 'custom',
                     'name' => 'preview',
                     'content' => $oTemplate->parseHtmlByName('dsr_cover_preview.html', array(
-                		'bx_repeat:covers' => $aTmplVarsCovers
-                	))
+                        'bx_repeat:covers' => $aTmplVarsCovers
+                    ))
                 ),
 
                 'save' => array(
@@ -467,10 +451,8 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
 
         $this->aPageCss[] = 'cover.css';
         return $oTemplate->parseHtmlByName('designer.html', array(
-            'content' => $this->getBlockCode(array(
-				'items' => $oTemplate->parseHtmlByName('dsr_cover.html', array('iframe_id' => $this->sCoverIframeId, 'form' => $oForm->getCode())),
-			)),
-			'js_content' => $this->getPageJsCode()
+            'content' => $oTemplate->parseHtmlByName('dsr_cover.html', array('iframe_id' => $this->sCoverIframeId, 'form' => $oForm->getCode())),
+            'js_content' => $this->getPageJsCode()
         ));
     }
 
@@ -478,77 +460,75 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
     {
     	$oTemplate = BxDolStudioTemplate::getInstance();
 
-		$aForm = array(
-			'form_attrs' => array(
-				'id' => $this->sSplashFormId,
-				'name' => $this->sSplashFormId,
-				'action' => BX_DOL_URL_STUDIO . 'designer.php',
-				'method' => 'post',
-				'enctype' => 'multipart/form-data',
-				'target' => $this->sSplashIframeId
-			),
-			'params' => array(
-				'db' => array(
-					'table' => '',
-					'key' => '',
-					'uri' => '',
-					'uri_title' => '',
-					'submit_name' => 'save'
-				),
-			),
-			'inputs' => array(
-				'page' => array(
-					'type' => 'hidden',
-					'name' => 'page',
-					'value' => $this->sPage
-				),
-				'enabled' => array(
-					'type' => 'checkbox',
-					'name' => 'enabled',
-					'caption' => _t('_adm_dsg_txt_splash_enabled'),
-					'value' => 'on',
-					'checked' => getParam('sys_site_splash_enabled') == 'on',
-					'db' => array (
+        $aForm = array(
+            'form_attrs' => array(
+                'id' => $this->sSplashFormId,
+                'name' => $this->sSplashFormId,
+                'action' => BX_DOL_URL_STUDIO . 'designer.php',
+                'method' => 'post',
+                'enctype' => 'multipart/form-data',
+                'target' => $this->sSplashIframeId
+            ),
+            'params' => array(
+                'db' => array(
+                    'table' => '',
+                    'key' => '',
+                    'uri' => '',
+                    'uri_title' => '',
+                    'submit_name' => 'save'
+                ),
+            ),
+            'inputs' => array(
+                'page' => array(
+                    'type' => 'hidden',
+                    'name' => 'page',
+                    'value' => $this->sPage
+                ),
+                'enabled' => array(
+                    'type' => 'checkbox',
+                    'name' => 'enabled',
+                    'caption' => _t('_adm_dsg_txt_splash_enabled'),
+                    'value' => 'on',
+                    'checked' => getParam('sys_site_splash_enabled') == 'on',
+                    'db' => array (
                         'pass' => 'Xss',
                     ),
-				),
-				'code' => array(
+                ),
+                'code' => array(
                     'type' => 'textarea',
                     'code' => true,
                     'name' => 'code',
-					'caption' => '',
-					'value' => getParam('sys_site_splash_code'),
-				),
-				'save' => array(
-					'type' => 'submit',
-					'name' => 'save',
-					'value' => _t('_adm_btn_designer_submit'),
-				)
-			)
-		);
+                    'caption' => '',
+                    'value' => getParam('sys_site_splash_code'),
+                ),
+                'save' => array(
+                    'type' => 'submit',
+                    'name' => 'save',
+                    'value' => _t('_adm_btn_designer_submit'),
+                )
+            )
+        );
 
-		$oForm = new BxTemplStudioFormView($aForm, $oTemplate);
-		$oForm->initChecker();
+        $oForm = new BxTemplStudioFormView($aForm, $oTemplate);
+        $oForm->initChecker();
 
-		if($oForm->isSubmittedAndValid()) {
-			echo $this->submitSplash($oForm);
-			exit;
-		}
-		
-		$oTemplate->addJs(array('codemirror/codemirror.min.js'));
+        if($oForm->isSubmittedAndValid()) {
+            echo $this->submitSplash($oForm);
+            exit;
+        }
+
+        $oTemplate->addJs(array('codemirror/codemirror.min.js'));
         $oTemplate->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'codemirror/|codemirror.css');
-		return $oTemplate->parseHtmlByName('designer.html', array(
-			'content' => $this->getBlockCode(array(
-				'items' => $oTemplate->parseHtmlByName('dsr_splash.html', array(
-					'warning' => MsgBox(_t('_adm_dsg_dsc_splash_warning')),
-					'splash_iframe_id' => $this->sSplashIframeId, 
-					'form' => $oForm->getCode()
-				)),
-			)),
-			'js_content' => $this->getPageJsCode(array(
-				'sCodeMirror' => 'textarea[name=code]'
-			)),
-		));
+        return $oTemplate->parseHtmlByName('designer.html', array(
+            'content' => $oTemplate->parseHtmlByName('dsr_splash.html', array(
+                'warning' => MsgBox(_t('_adm_dsg_dsc_splash_warning')),
+                'splash_iframe_id' => $this->sSplashIframeId, 
+                'form' => $oForm->getCode()
+            )),
+            'js_content' => $this->getPageJsCode(array(
+                'sCodeMirror' => 'textarea[name=code]'
+            )),
+        ));
     }
 
     protected function getInjections()
@@ -575,9 +555,9 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
             ),
             'inputs' => array(
                 'page' => array(
-                        'type' => 'hidden',
-                        'name' => 'page',
-                        'value' => $this->sPage
+                    'type' => 'hidden',
+                    'name' => 'page',
+                    'value' => $this->sPage
                 ),
                 'sys_head' => array(
                     'type' => 'textarea',
@@ -615,15 +595,13 @@ class BxBaseStudioDesigner extends BxDolStudioDesigner
         $oTemplate->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'codemirror/|codemirror.css');
 
         return $oTemplate->parseHtmlByName('designer.html', array(
-            'content' => $this->getBlockCode(array(
-                'items' => $oTemplate->parseHtmlByName('dsr_injections.html', array(
-                    'warning' => '',
-                    'splash_iframe_id' => $this->sInjectionsIframeId, 
-                    'form' => $oForm->getCode()
-                )),
+            'content' => $oTemplate->parseHtmlByName('dsr_injections.html', array(
+                'warning' => '',
+                'splash_iframe_id' => $this->sInjectionsIframeId, 
+                'form' => $oForm->getCode()
             )),
             'js_content' => $this->getPageJsCode(array(
-                    'sCodeMirror' => 'textarea[name=sys_head],textarea[name=sys_body]'
+                'sCodeMirror' => 'textarea[name=sys_head],textarea[name=sys_body]'
             ))
         ));
     }

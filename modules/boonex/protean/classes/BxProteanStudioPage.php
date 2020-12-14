@@ -61,7 +61,7 @@ class BxProteanStudioPage extends BxTemplStudioDesign
         $oTemplate->addCss(BX_DIRECTORY_PATH_PLUGINS_PUBLIC . 'codemirror/|codemirror.css');
 
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('design.html', array(
-            'content' => $oPage->getPageCode(),
+            'content' => $oPage->getFormCode(),
             'js_content' => $this->getPageJsCode(array(
                 'sCodeMirror' => "textarea[name='" . $sPrefix . "_styles_custom']"
             ))

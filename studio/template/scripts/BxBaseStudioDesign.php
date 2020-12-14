@@ -45,7 +45,7 @@ class BxBaseStudioDesign extends BxDolStudioDesign
         $oTemplate->addJs($oPage->getPageJs());
         $oTemplate->addCss($oPage->getPageCss());
     	return $oTemplate->parseHtmlByName('design.html', array(
-            'content' => $oPage->getPageCode(),
+            'content' => $oPage->getPageCode(BX_DOL_STUDIO_TEMPL_TYPE_LOGO, false),
             'js_content' => $this->getPageJsCode()
         ));
     }

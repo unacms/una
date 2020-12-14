@@ -16,8 +16,6 @@ class BxBaseStudioModule extends BxDolStudioModule
         BX_DOL_STUDIO_MOD_TYPE_SETTINGS => array('name' => BX_DOL_STUDIO_MOD_TYPE_SETTINGS, 'icon' => 'cogs', 'title' => '_adm_lmi_cpt_settings')
     );
 
-    protected $aPageCodeNoWrap;
-
     protected $sTmplNamePopupSettings;
     protected $sTmplNamePopupConfirmUninstall;
 
@@ -26,8 +24,6 @@ class BxBaseStudioModule extends BxDolStudioModule
         parent::__construct($sModule, $mixedPageName, $sPage);
 
         $this->oHelper = BxTemplStudioModules::getInstance();
-
-        $this->aPageCodeNoWrap = array();
 
         $this->sTmplNamePopupSettings = 'mod_popup_settings.html';
         $this->sTmplNamePopupConfirmUninstall = 'mod_popup_confirm_uninstall.html';
@@ -90,36 +86,6 @@ class BxBaseStudioModule extends BxDolStudioModule
             );
 
         return parent::getPageMenu($aMenu);
-    }
-
-    function getPageCode()
-    {
-        $sResult = parent::getPageCode();
-        if($sResult === false)
-            return false;
-
-        $sMethod = 'get' . ucfirst($this->sPage);
-        if(!method_exists($this, $sMethod))
-            return '';
-
-        $mixedContent = $this->$sMethod();
-        if(in_array($this->sPage, $this->aPageCodeNoWrap))
-            return $mixedContent;
-
-        $sContent = '';
-        if(is_string($mixedContent))
-            $sContent = $this->getBlockCode(array(
-                'content' => $mixedContent
-            ));
-        else if(is_array($mixedContent))
-            foreach($mixedContent as $sBlock)
-                $sContent .= $this->getBlockCode(array(
-                    'content' => $sBlock
-                ));
-        else if(is_a($mixedContent, 'BxDolPage'))
-            $sContent = $mixedContent->getCode();
-
-        return $sResult . $sContent;
     }
 
     protected function getSettings()

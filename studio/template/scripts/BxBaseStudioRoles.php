@@ -51,9 +51,9 @@ class BxBaseStudioRoles extends BxDolStudioRoles
 
         return parent::getPageMenu($aMenu);
     }
-    function getPageCode()
+    function getPageCode($sPage = '', $bWrap = true)
     {
-        $sResult = parent::getPageCode();
+        $sResult = parent::getPageCode($sPage, $bWrap);
         if($sResult === false)
             return false;
 
