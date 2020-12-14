@@ -182,6 +182,7 @@ class BxPollsConfig extends BxBaseModTextConfig
             'snippet_link_subentries' => $sHtmlPrefix . '-snippet-subentries-',
             'snippet_link_results' => $sHtmlPrefix . '-snippet-results-',
             'content' => $sHtmlPrefix . '-content-',
+            'embed' => $sHtmlPrefix . '-content-',
         );
     }
 

@@ -239,6 +239,7 @@ class BxPollsModule extends BxBaseModTextModule
         $aResult['title'] = $this->_oConfig->getTitle($aContentInfo);
         $aResult['text'] = '';
         $aResult['raw'] = ($bDynamic ? $sInclude : '') . $this->_oTemplate->parseHtmlByName('unit_embed.html', array(
+            'html_id' => $this->_oConfig->getHtmlIds('embed') . (int)$aContentInfo[$CNF['FIELD_ID']],
             'embed_url' => BX_DOL_URL_ROOT . bx_append_url_params($this->_oConfig->getBaseUri() . 'embed_entry/', array(
                 'id' => (int)$aContentInfo[$CNF['FIELD_ID']]
             ))
