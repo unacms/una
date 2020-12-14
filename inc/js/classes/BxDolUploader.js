@@ -482,4 +482,149 @@ function BxDolUploaderCrop (sUploaderObject, sStorageObject, sUniqId, options) {
 
 BxDolUploaderCrop.prototype = BxDolUploaderSimple.prototype;
 
+
+/**
+ * Record Video Uploader js class
+ */
+function BxDolUploaderRecordVideo (sUploaderObject, sStorageObject, sUniqId, options) {
+
+    this._video_preview = null;
+    this._camera = null;
+    this._blob = null;
+    this._recorder = null
+
+    this.init(sUploaderObject, sStorageObject, sUniqId, options);
+
+    this.releaseCamera = function() {
+        if (this._camera) {
+            if (this._recorder) {
+                this._recorder.destroy();
+                this._recorder = null;
+            }
+
+            if (typeof this._camera.stop != 'undefined') this._camera.stop();
+            this._camera.getTracks().forEach(function (track) {
+                if (track.readyState == 'live') {
+                    track.stop();
+                }
+            });
+        }
+    }
+
+    this.onClickCancel = function () {
+        this._video_preview.src = this._video_preview.srcObject = null;
+        this._video_preview.removeAttribute('src');
+        this.releaseCamera();
+
+        BxDolUploaderSimple.prototype.onClickCancel.call(this);
+    }
+
+    this.startRecording = function() {
+        $('#' + this._sFormContainerId + ' .bx-uploader-recording-start').hide();
+        $('#' + this._sFormContainerId + ' .bx-uploader-recording-stop').show();
+
+        this._video_preview.controls = false;
+
+        this._recorder = RecordRTC(this._camera, {
+            type: 'video'
+        });
+        this._recorder.startRecording();
+
+        this._video_preview.muted = true;
+        this._video_preview.volume = 0;
+        this._video_preview.srcObject = this._camera;
+    }
+
+    this.stopRecording = function(bSubmitWhenReady) {
+        $('#' + this._sFormContainerId + ' .bx-uploader-recording-start').show();
+        $('#' + this._sFormContainerId + ' .bx-uploader-recording-stop').hide();
+
+        var $this = this;
+        this._recorder.stopRecording(function(){
+            $this._blob = $this._recorder.getBlob();
+            $this.showRecordingPreview();
+
+            $this._recorder.destroy();
+            $this._recorder = null;
+
+            if (bSubmitWhenReady)
+                $this.submitRecording($('#' + $this._sFormContainerId + ' form').get(0));
+        });
+    }
+
+
+    this.onShowPopup = function () {
+        this._blob = null;
+        this._camera = null;
+        this._recorder = null
+        this._video_preview = $('#' + this._sFormContainerId + ' .bx-record-video-preview video').get(0);
+
+
+        var $this = this;
+        navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(function(camera) {
+            $this._camera = camera;
+            $this.showCameraCapture();
+
+            $('#' + $this._sFormContainerId + ' .bx-uploader-recording-start').show();
+            $('#' + $this._sFormContainerId + ' .bx-uploader-recording-stop').hide();
+            $('#' + $this._sFormContainerId + ' .bx-uploader-record-video-controls').show();
+        }).catch(function(error) {
+            $this._showError(_t('_sys_uploader_camera_capture_failed'));
+            $('#' + $this._sFormContainerId + ' .bx-uploader-record-video-controls').hide();
+        });
+    }
+
+    this.showCameraCapture = function() {
+        this._video_preview.muted = true;
+        this._video_preview.volume = 0;
+        this._video_preview.srcObject = this._camera;
+        this._video_preview.removeAttribute('src');
+        this._video_preview.controls = false;
+
+        $('#' + this._sFormContainerId + ' .bx-record-video-preview .bx-record-video-preview-filesize').html('');
+    }
+
+    this.showRecordingPreview = function() {
+        this._video_preview.muted = false;
+        this._video_preview.volume = 1;
+        this._video_preview.src = URL.createObjectURL(this._blob);
+        this._video_preview.srcObject = null;
+        this._video_preview.controls = true;
+
+        var mbytes = (this._blob.size/1024/1024).toFixed(2);
+        $('#' + this._sFormContainerId + ' .bx-record-video-preview .bx-record-video-preview-filesize').html(mbytes + ' ' + _t('_sys_uploader_record_video_mb'));
+    }
+
+    this.submitRecording = function(form) {
+        if (this._recorder) {
+            this.stopRecording(true);
+            return;
+        }
+
+        this.onBeforeUpload(form);
+
+        var data = new FormData(form);
+        if (this._blob != null) data.append("f[]", this._blob, new Date().toISOString() + '.webm');
+
+        var $this = this;
+        $.ajax({
+            url: $(form).attr('action'),
+            type: "POST",
+            data: data,
+            processData: false,
+            contentType: false,
+            success:function(sErrorMsg, textStatus, jqXHR) {
+                $this.onUploadCompleted(sErrorMsg);
+                if (!sErrorMsg.length) {
+                    $this._video_preview.src = $this._video_preview.srcObject = null;
+                    $this._video_preview.removeAttribute('src');
+                    $this.releaseCamera();
+                }
+            },
+        });
+    }
+}
+
+BxDolUploaderRecordVideo.prototype = BxDolUploaderSimple.prototype;
+
 /** @} */
