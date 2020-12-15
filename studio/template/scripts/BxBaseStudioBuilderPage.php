@@ -258,8 +258,6 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         return $sResult . $oTemplate->parseHtmlByName('builder_page.html', $aTmplVars);
     }
 
-//TODO: Continue from here!
-
     function getBlockPanelTop($aBlock)
     {
         return parent::getBlockPanelTop(

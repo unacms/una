@@ -51,18 +51,6 @@ class BxBaseStudioPermissions extends BxDolStudioPermissions
 
         return parent::getPageMenu($aMenu);
     }
-    function getPageCode($sPage = '', $bWrap = true)
-    {
-        $sResult = parent::getPageCode($sPage, $bWrap);
-        if($sResult === false)
-            return false;
-
-        $sMethod = 'get' . ucfirst($this->sPage);
-        if(!method_exists($this, $sMethod))
-            return '';
-
-        return $sResult . $this->$sMethod();
-    }
 
     protected function getLevels()
     {

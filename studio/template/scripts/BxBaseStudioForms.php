@@ -77,19 +77,6 @@ class BxBaseStudioForms extends BxDolStudioForms
         return parent::getPageMenu($aMenu);
     }
 
-    function getPageCode($sPage = '', $bWrap = true)
-    {
-        $sResult = parent::getPageCode($sPage, $bWrap);
-        if($sResult === false)
-            return false;
-
-        $sMethod = 'get' .  $this->getClassName($this->sPage);
-        if(!method_exists($this, $sMethod))
-            return '';
-
-        return $sResult . $this->$sMethod();
-    }
-
     function actionGetForms()
     {
         if(($sModule = bx_get('form_module')) === false)

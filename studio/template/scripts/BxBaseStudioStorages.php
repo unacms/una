@@ -55,19 +55,6 @@ class BxBaseStudioStorages extends BxDolStudioStorages
         return parent::getPageMenu($aMenu);
     }
 
-    function getPageCode($sPage = '', $bWrap = true)
-    {
-        $sResult = parent::getPageCode($sPage, $bWrap);
-        if($sResult === false)
-            return false;
-
-        $sMethod = 'get' . ucfirst($this->sPage);
-        if(!method_exists($this, $sMethod))
-            return '';
-
-        return $sResult . $this->$sMethod();
-    }
-
     protected function getFiles()
     {
         return $this->getGrid(BX_DOL_STUDIO_STRG_TYPE_FILES);
@@ -87,8 +74,8 @@ class BxBaseStudioStorages extends BxDolStudioStorages
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('storages.html', array(
             'js_object' => $this->getPageJsObject(),
             'content' => $this->getBlockCode(array(
-				'items' => $oGrid->getCode()
-			))
+                'items' => $oGrid->getCode()
+            ))
         ));
     }
 }

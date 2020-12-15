@@ -61,19 +61,6 @@ class BxBaseStudioBadges extends BxDolStudioBadges
         return parent::getPageMenu($aMenu);
     }
 
-    function getPageCode($sPage = '', $bWrap = true)
-    {
-        $sResult = parent::getPageCode($sPage, $bWrap);
-        if($sResult === false)
-            return false;
-
-        $sMethod = 'get' . bx_gen_method_name($this->sPage);
-        if(!method_exists($this, $sMethod))
-            return '';
-
-        return $sResult . $this->$sMethod();
-    }
-    
     protected function getBadges()
     {
         return $this->getGrid();
