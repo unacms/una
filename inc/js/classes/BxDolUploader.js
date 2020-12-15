@@ -487,52 +487,75 @@ BxDolUploaderCrop.prototype = BxDolUploaderSimple.prototype;
  * Record Video Uploader js class
  */
 function BxDolUploaderRecordVideo (sUploaderObject, sStorageObject, sUniqId, options) {
-
-    this._video_preview = null;
     this._camera = null;
     this._blob = null;
     this._recorder = null
 
+    this._audio_bitrate = undefined !== options.audio_bitrate ? parseInt(options.audio_bitrate) : 128000;
+    this._video_bitrate = undefined !== options.video_bitrate ? parseInt(options.video_bitrate) : 1000000;
+
     this.init(sUploaderObject, sStorageObject, sUniqId, options);
 
-    this.releaseCamera = function() {
-        if (this._camera) {
-            if (this._recorder) {
-                this._recorder.destroy();
-                this._recorder = null;
-            }
-
-            if (typeof this._camera.stop != 'undefined') this._camera.stop();
-            this._camera.getTracks().forEach(function (track) {
-                if (track.readyState == 'live') {
-                    track.stop();
-                }
-            });
+    this.showUploaderForm = function() {
+        if (typeof MediaRecorder == 'undefined' || !('requestData' in MediaRecorder.prototype)) {
+            bx_alert(_t('_sys_uploader_unsupported_browser'));
+            return;
         }
+
+        BxDolUploaderSimple.prototype.showUploaderForm.call(this);
+    }
+
+    this.onBeforeShowPopup = function() {
+        this._blob = null;
+        this._camera = null;
+        this._recorder = null
+        this._clearErrors();
+
+        $('#bx-upoloader-recording-preview').hide();
+        $('#bx-upoloader-camera-capture').show();
+
+        $('#' + this._sFormContainerId + ' .bx-uploader-record-video-controls').hide();
+    }
+
+    this.onShowPopup = function () {
+        var $this = this;
+        navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(function(camera) {
+            $this._camera = camera;
+            $this.showCameraCapture();
+
+            $('#' + $this._sFormContainerId + ' .bx-uploader-recording-start').show();
+            $('#' + $this._sFormContainerId + ' .bx-uploader-recording-stop').hide();
+            $('#' + $this._sFormContainerId + ' .bx-uploader-record-video-controls').show();
+        }).catch(function(error) {
+            $this._showError(_t('_sys_uploader_camera_capture_failed'));
+        });
     }
 
     this.onClickCancel = function () {
-        this._video_preview.src = this._video_preview.srcObject = null;
-        this._video_preview.removeAttribute('src');
         this.releaseCamera();
 
         BxDolUploaderSimple.prototype.onClickCancel.call(this);
     }
 
     this.startRecording = function() {
+        this._recorder = RecordRTC(this._camera, {
+            type: 'video',
+            audioBitsPerSecond: this._audio_bitrate,
+            videoBitsPerSecond: this._video_bitrate,
+            disableLogs: true
+        });
+
+        if (!this._recorder) {
+            this._showError(_t('_sys_uploader_unsupported_browser'));
+            return;
+        }
+
         $('#' + this._sFormContainerId + ' .bx-uploader-recording-start').hide();
         $('#' + this._sFormContainerId + ' .bx-uploader-recording-stop').show();
 
-        this._video_preview.controls = false;
-
-        this._recorder = RecordRTC(this._camera, {
-            type: 'video'
-        });
         this._recorder.startRecording();
 
-        this._video_preview.muted = true;
-        this._video_preview.volume = 0;
-        this._video_preview.srcObject = this._camera;
+        this.showCameraCapture();
     }
 
     this.stopRecording = function(bSubmitWhenReady) {
@@ -552,44 +575,21 @@ function BxDolUploaderRecordVideo (sUploaderObject, sStorageObject, sUniqId, opt
         });
     }
 
-
-    this.onShowPopup = function () {
-        this._blob = null;
-        this._camera = null;
-        this._recorder = null
-        this._video_preview = $('#' + this._sFormContainerId + ' .bx-record-video-preview video').get(0);
-
-
-        var $this = this;
-        navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(function(camera) {
-            $this._camera = camera;
-            $this.showCameraCapture();
-
-            $('#' + $this._sFormContainerId + ' .bx-uploader-recording-start').show();
-            $('#' + $this._sFormContainerId + ' .bx-uploader-recording-stop').hide();
-            $('#' + $this._sFormContainerId + ' .bx-uploader-record-video-controls').show();
-        }).catch(function(error) {
-            $this._showError(_t('_sys_uploader_camera_capture_failed'));
-            $('#' + $this._sFormContainerId + ' .bx-uploader-record-video-controls').hide();
-        });
-    }
-
     this.showCameraCapture = function() {
-        this._video_preview.muted = true;
-        this._video_preview.volume = 0;
-        this._video_preview.srcObject = this._camera;
-        this._video_preview.removeAttribute('src');
-        this._video_preview.controls = false;
+        var video = $('#bx-upoloader-recording-preview').hide().get(0);
+        if (video.pause !== 'undefined') video.pause();
+        video.removeAttribute('src');
 
+        video = $('#bx-upoloader-camera-capture').show().get(0);
+        video.srcObject = this._camera;
+        video.muted = true;
+        video.volume = 0;
         $('#' + this._sFormContainerId + ' .bx-record-video-preview .bx-record-video-preview-filesize').html('');
     }
 
     this.showRecordingPreview = function() {
-        this._video_preview.muted = false;
-        this._video_preview.volume = 1;
-        this._video_preview.src = URL.createObjectURL(this._blob);
-        this._video_preview.srcObject = null;
-        this._video_preview.controls = true;
+        $('#bx-upoloader-camera-capture').hide();
+        $('#bx-upoloader-recording-preview').show().get(0).src = URL.createObjectURL(this._blob);
 
         var mbytes = (this._blob.size/1024/1024).toFixed(2);
         $('#' + this._sFormContainerId + ' .bx-record-video-preview .bx-record-video-preview-filesize').html(mbytes + ' ' + _t('_sys_uploader_record_video_mb'));
@@ -616,12 +616,31 @@ function BxDolUploaderRecordVideo (sUploaderObject, sStorageObject, sUniqId, opt
             success:function(sErrorMsg, textStatus, jqXHR) {
                 $this.onUploadCompleted(sErrorMsg);
                 if (!sErrorMsg.length) {
-                    $this._video_preview.src = $this._video_preview.srcObject = null;
-                    $this._video_preview.removeAttribute('src');
                     $this.releaseCamera();
                 }
             },
         });
+    }
+
+    this.releaseCamera = function() {
+        //stop playing recorded file
+        var video = $('#bx-upoloader-recording-preview').get(0);
+        if (video.pause != 'undefined') video.pause();
+        video.removeAttribute('src');
+
+        if (this._recorder) {
+            this._recorder.destroy();
+            this._recorder = null;
+        }
+
+        if (this._camera) {
+            if (typeof this._camera.stop != 'undefined') this._camera.stop();
+            this._camera.getTracks().forEach(function (track) {
+                if (track.readyState == 'live') {
+                    track.stop();
+                }
+            });
+        }
     }
 }
 
