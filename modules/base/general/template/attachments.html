@@ -49,8 +49,8 @@
                     
                         e.append('<canvas></canvas>');
                         var eCanvas = e.find('canvas');
-                        eCanvas.width(e.parents('.bx-base-general-attachment').width());
-                        eCanvas.height(e.parents('.bx-base-general-attachment').height());
+                        eCanvas.width(e.parents('.bx-base-general-attachment').innerWidth());
+                        eCanvas.height(e.parents('.bx-base-general-attachment').innerHeight());
                         eCanvas[0].width = iDpx * eCanvas.width();
                         eCanvas[0].height = iDpx * eCanvas.height();
                         var oContext = eCanvas[0].getContext('2d');

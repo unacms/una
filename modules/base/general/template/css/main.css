@@ -119,6 +119,11 @@ div.bx-base-general-breadcrumb i {
     text-overflow: ellipsis;
     overflow: hidden;
 }
+.bx-base-general-attachment a canvas {
+    position:absolute;
+    top:0;
+    left:0;
+}
 
 .bx-base-general-attachment-sound {
     position:relative;
