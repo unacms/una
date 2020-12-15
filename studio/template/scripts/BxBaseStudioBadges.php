@@ -20,9 +20,9 @@ class BxBaseStudioBadges extends BxDolStudioBadges
 
         $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'badges.php?page=';
 
-		$this->aMenuItems = array(
+        $this->aMenuItems = array(
             BX_DOL_STUDIO_BADGES_TYPE_GENERAL => array('icon' => 'user-tag'),
-	    );
+        );
     }
 	
     function getPageCss()
@@ -77,11 +77,9 @@ class BxBaseStudioBadges extends BxDolStudioBadges
         $oForm = new BxTemplStudioFormView(array());
         $oTemplate->addCss('grid.css');
         $oTemplate->addJsTranslation(array('_sys_grid_search'));
-        
+
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('badges.html', array(
-            'content' => $this->getBlockCode(array(
-				'items' =>$oGrid->getCode()
-			)),
+            'content' => $oGrid->getCode(),
             'js_content' => ''
         ));
     }

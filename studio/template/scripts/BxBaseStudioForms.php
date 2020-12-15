@@ -224,9 +224,7 @@ class BxBaseStudioForms extends BxDolStudioForms
 
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('forms.html', array(
             'js_object' => $this->getPageJsObject(),
-            'content' => $this->getBlockCode(array(
-                'items' => $oGrid->getCode()
-            ))
+            'content' => $oGrid->getCode()
         ));
     }
 

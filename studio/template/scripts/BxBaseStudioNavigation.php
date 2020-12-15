@@ -105,9 +105,7 @@ class BxBaseStudioNavigation extends BxDolStudioNavigation
 
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('navigation.html', array(
             'js_object' => $this->getPageJsObject(),
-            'content' => $this->getBlockCode(array(
-				'items' => $oGrid->getCode()
-			))
+            'content' => $oGrid->getCode()
         ));
     }
 }

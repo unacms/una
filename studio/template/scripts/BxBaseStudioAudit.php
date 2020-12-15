@@ -20,10 +20,10 @@ class BxBaseStudioAudit extends BxDolStudioAudit
 
         $this->sSubpageUrl = BX_DOL_URL_STUDIO . 'audit.php?page=';
 
-		$this->aMenuItems = array(
+        $this->aMenuItems = array(
             BX_DOL_STUDIO_AUD_TYPE_GENERAL => array('icon' => 'search'),
             BX_DOL_STUDIO_AUD_TYPE_SETTINGS => array('icon' => 'cogs'),
-	    );
+        );
     }
 	
     function getPageCss()
@@ -90,9 +90,7 @@ class BxBaseStudioAudit extends BxDolStudioAudit
         $oTemplate->addJsTranslation(array('_sys_grid_search'));
 
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('audit.html', array(
-            'content' => $this->getBlockCode(array(
-                'items' =>$oGrid->getCode()
-            )),
+            'content' => $oGrid->getCode(),
             'js_content' => ''
         ));
     }

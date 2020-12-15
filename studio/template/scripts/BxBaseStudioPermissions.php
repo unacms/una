@@ -75,9 +75,7 @@ class BxBaseStudioPermissions extends BxDolStudioPermissions
 
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('permissions.html', array(
             'js_object' => $this->getPageJsObject(),
-            'content' => $this->getBlockCode(array(
-				'items' => $oGrid->getCode()
-        	))
+            'content' => $oGrid->getCode()
         ));
     }
 }
