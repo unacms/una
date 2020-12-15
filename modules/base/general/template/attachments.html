@@ -31,5 +31,48 @@
 		imagesLoaded: true
             });
         }
+
+        // pdf previews
+        if ('undefined' !== typeof(window['pdfjs-dist/build/pdf'])) {
+            $('.bx-base-general-attachment a[href$=".pdf"]').each(function () {
+                var sUrl = $(this).attr('href');
+                var e = $(this);
+                var oPdfjsLib = window['pdfjs-dist/build/pdf'];
+                oPdfjsLib.GlobalWorkerOptions.workerSrc = '__pdfjs_worker_url__';
+
+                var oLoadingTask = pdfjsLib.getDocument(sUrl);
+                oLoadingTask.promise.then(function(pdf) {  
+                    pdf.getPage(1).then(function(page) {
+                        var iDpx = parseInt($.cookie('devicePixelRatio'));
+                        if (iDpx != 2)
+                            iDpx = 1;
+                    
+                        e.append('<canvas></canvas>');
+                        var eCanvas = e.find('canvas');
+                        eCanvas.width(e.parents('.bx-base-general-attachment').width());
+                        eCanvas.height(e.parents('.bx-base-general-attachment').height());
+                        eCanvas[0].width = iDpx * eCanvas.width();
+                        eCanvas[0].height = iDpx * eCanvas.height();
+                        var oContext = eCanvas[0].getContext('2d');
+                        var iWidth = page.getViewport({scale:1.0}).width;
+                        var fScaleW = eCanvas[0].width / page.getViewport({scale:1.0}).width;
+                        var fScaleH = eCanvas[0].height / page.getViewport({scale:1.0}).height;
+                        var fScale = fScaleW < fScaleH ? fScaleW : fScaleH;
+                        var oViewport = page.getViewport({scale: fScale, offsetX: (iDpx*eCanvas.width() - iWidth*fScale)/2});
+
+                        var oRenderContext = {
+                            canvasContext: oContext,
+                            viewport: oViewport,
+                        };
+                        var oRenderTask = page.render(oRenderContext);
+                        oRenderTask.promise.then(function () {
+                            e.find('div').remove();
+                        });
+                    });
+                }, function (err) { 
+                    console.error(err);
+                });
+            });
+        }
     </script>
 </div>
