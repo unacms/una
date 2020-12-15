@@ -41,7 +41,11 @@ class BxBaseGrid extends BxDolGrid
     {
         require_once(BX_DIRECTORY_PATH_INC . "design.inc.php");
 
-        echoJson(array('grid' => $this->getCode(false), 'total_count' => $this->_iTotalCount));
+        echoJson(array(
+            'grid' => $this->getCode(false), 
+            'total_count' => $this->_iTotalCount,
+            'total_count_f' => _t('_sys_grid_total_count', $this->_iTotalCount)
+        ));
     }
 
     public function performActionReorder()

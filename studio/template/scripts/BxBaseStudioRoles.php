@@ -70,9 +70,7 @@ class BxBaseStudioRoles extends BxDolStudioRoles
 
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('roles.html', array(
             'js_object' => $this->getPageJsObject(),
-            'content' => $this->getBlockCode(array(
-                'items' => $oGrid->getCode()
-            ))
+            'content' => $oGrid->getCode()
         ));
     }
 }
