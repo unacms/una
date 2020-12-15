@@ -35,50 +35,72 @@ class BxPaymentProviderAppleInApp extends BxBaseModPaymentProvider implements iB
 
     public function notify()
     {
-        $iResult = $this->_processEvent();
+        $iResult = $this->_processNotification();
         http_response_code($iResult);
     }
     
-    protected function _processEvent()
+    protected function _processNotification()
     {
     	$sInput = @file_get_contents("php://input");
-        $aEvent = json_decode($sInput, true);
-        if(empty($aEvent) || !is_array($aEvent)) 
-                return 404;
+        $aNotification = json_decode($sInput, true);
+        if(empty($aNotification) || !is_array($aNotification)) 
+            return 404;
 
-        $sType = $aEvent['type'];
-        if(!in_array($sType, array('invoice.payment_succeeded', 'charge.refunded', 'customer.subscription.deleted')))
-                return 200;
+        $sType = $aNotification['notification_type'];
+        if(!in_array($sType, array('INITIAL_BUY', 'DID_RENEW', 'REFUND', 'CANCEL')))
+            return 200;
 
-        $this->log('Webhooks: ' . (!empty($sType) ? $sType : ''));
-        $this->log($aEvent);
+        $this->log($aNotification, 'Webhooks: ' . (!empty($sType) ? $sType : ''));
 
-        $sMethod = '_processEvent' . bx_gen_method_name($sType, array('.', '_', '-'));
+        $sMethod = '_processNotification' . bx_gen_method_name(strtolower($sType), array('.', '_', '-'));
     	if(!method_exists($this, $sMethod))
             return 200;
 
-    	return $this->$sMethod($aEvent) ? 200 : 403;
+    	return $this->$sMethod($aNotification) ? 200 : 403;
     }
 
-    protected function _processEventInvoicePaymentSucceeded(&$aEvent)
+    protected function _processNotificationInitialBuy($aNotification)
     {
-        $mixedResult = $this->_getData($aEvent);
-        if($mixedResult === false)
-            return false;
+        $sProduct = $aNotification['auto_renew_product_id'];
 
-        list($aPending, $oCharge) = $mixedResult;
-        if(empty($aPending) || !is_array($aPending) || empty($oCharge))
-            return false;
+        //TODO: We need to create 'Pending Transaction' to register this and all future payments.
 
-        $fChargeAmount = (float)$oCharge->amount / 100;
-        $sChargeCurrency = strtoupper($oCharge->currency);
-        if($this->_bCheckAmount && ((float)$aPending['amount'] != $fChargeAmount || strcasecmp($this->_oModule->_oConfig->getDefaultCurrencyCode(), $sChargeCurrency) !== 0))
-            return false;
+        /*
+        $iPendingId = $this->_oDb->insertOrderPending($this->_iUserId, BX_PAYMENT_TYPE_RECURRING, $this->_sName, array(
+            'author_id' => 0,
+            'module_id' => 0,
+            'id' => 0,
+            'quantity' => 1
+        ));
+         */
+    }
 
+    protected function _processNotificationDidRenew(&$aNotification)
+    {
+        $sProduct = $aNotification['auto_renew_product_id'];
+
+        //TODO: We need to get 'PendingId' to register payment.
+  
+        /*
         if($aPending['type'] == BX_PAYMENT_TYPE_RECURRING)
             $this->_oModule->getObjectSubscriptions()->prolong($aPending);
 
         return $this->_oModule->registerPayment($aPending);
+         */
+    }
+
+    protected function _processNotificationRefund(&$aNotification)
+    {
+        $sProduct = $aNotification['auto_renew_product_id'];
+
+        //TODO: We need to get 'PendingId' to process refund.
+    }
+
+    protected function _processNotificationCancel(&$aNotification)
+    {
+        $sProduct = $aNotification['auto_renew_product_id'];
+
+        //TODO: We need to get 'PendingId' to cancel the subscription.
     }
 }
 
