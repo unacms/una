@@ -240,13 +240,13 @@ BxDolGrid.prototype.action = function (sAction, oData, sData, isDisableLoading, 
 };
 
 BxDolGrid.prototype.processJson = function (oData, sAction, isDisableLoading) {
-	var $this = this;
+    var $this = this;
     var fContinue = function() {
     	if (oData && undefined != oData.grid) {        
             $('#' + $this._sIdContainer).html($(oData.grid).find('#' + $this._sIdContainer).html());
             var sFooter = $(oData.grid).find('.bx-grid-footer').size() ? $(oData.grid).find('.bx-grid-footer').html() : '';
             $('#' + $this._sIdWrapper).find('.bx-grid-footer').html(sFooter);
-            $('#' + $this._sIdWrapper).find('.bx-grid-header-controls-counter-value').html(oData.total_count);
+            $('#' + $this._sIdWrapper).find('.bx-grid-header-controls-counter-value').html(oData.total_count_f);
             $this._onDataReloaded(true);
         }
     	if (oData && undefined != oData.blink) {
