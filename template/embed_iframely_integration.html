@@ -1,7 +1,11 @@
-<script async charset="utf-8" src="//cdn.iframe.ly/embed.js?api_key=__key__"></script>
+<script async charset="utf-8" src="//cdn.iframe.ly/embed.js?api_key=__key__&iframe=card-small"></script>
 <script>
 function bx_embed_link(e)
 {
-    iframely.load(e);
+    window.iframely && iframely.load(e);
+}
+function bx_embed_dom_changed(e)
+{
+    window.iframely && iframely.load();
 }
 </script>

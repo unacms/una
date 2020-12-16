@@ -815,6 +815,9 @@ function bx_time(sLang, isAutoupdate, sRootSel) {
             // process syntax hightlighing
             if ('undefined' !== typeof(Prism) && eElement.size())
                 Prism.highlightAllUnder(eElement[0]);
+
+            // process embeds
+            bx_embed_dom_changed(this);
         }
         if ('undefined' !== typeof(oCallback)) {
             oCallback(eElement);
