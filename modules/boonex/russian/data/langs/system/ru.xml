@@ -2546,7 +2546,7 @@
     <string name="_sys_location_ph_city"><![CDATA[Город]]></string>
     <string name="_sys_location_ph_state"><![CDATA[Область]]></string>
     <string name="_sys_location_ph_zip"><![CDATA[Почтовый код]]></string>
-    <string name="_sys_location_status_undef"><![CDATA[Не определено]]></string>
+    <string name="_sys_location_status_undef"><![CDATA[Адрес не задан]]></string>
     <string name="_sys_location_status_ok"><![CDATA[Адрес найден]]></string>
     <string name="_sys_location_status_fail"><![CDATA[Адрес не найден]]></string>
 	<string name="_sys_log_debug"><![CDATA[Система: отладка]]></string>
