@@ -45,12 +45,20 @@
     justify-content: flex-start;
 }
 .bx-grid-header-controls-filter {
+    margin-bottom: -0.25rem;
+}
+.bx-grid-header-controls-filter div.bx-form-element-wrapper {
+    margin-bottom: 0.25rem;
 }
 .bx-grid-header-controls-counter {
     -webkit-flex-grow: 2;
     flex-grow: 2;
+
+    white-space: nowrap;
 }
-.bx-grid-header-controls-independent {
+.bx-grid-header-controls-independent {}
+.bx-grid-header-controls-independent .bx-btn {
+    white-space: nowrap;
 }
 
 .bx-media-phone .bx-grid-header-cnt {
@@ -60,7 +68,6 @@
 .bx-media-phone div.bx-grid-header div.bx-form-element-wrapper {
     float: none;
     margin-right: 0;
-    margin-bottom: 0.25rem; 
 }
 .bx-media-phone div.bx-grid-header div.bx-form-element-wrapper:last-child {
     margin-bottom: 0; 
