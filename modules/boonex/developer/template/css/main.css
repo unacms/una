@@ -7,7 +7,9 @@ body.bx-dev-page-body-columns div.bx-std-page-menu {
     background-color: #4c6678;
     box-shadow: inset -1px 0px 0px rgba(240, 240, 240, 0.2);
 }
-
+body.bx-dev-page-body-columns div.bx-std-page-column.bx-std-page-content {
+    overflow-x: visible;
+}
 body.bx-dev-page-body-columns div.bx-std-page-column-cnt {
     padding: 0px;
 }
@@ -89,6 +91,11 @@ div.bx-dev-page-column.bx-dev-page-menu {
     flex: 0 0 230px;
     width: 230px;
     background-color: #ffffff;
+}
+div.bx-dev-page-column.bx-dev-page-menu div.bx-dev-page-column-cnt {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
 }
 
 div.bx-dev-page-column.bx-dev-page-content {

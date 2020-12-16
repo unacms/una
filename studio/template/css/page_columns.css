@@ -8,7 +8,6 @@
     box-sizing: border-box;
 }
 
-.bx-std-pc-stretch,
 .bx-std-pc-vstretch {
     width: 100%
 }
@@ -38,8 +37,10 @@ div.bx-std-page-column.bx-std-page-menu div.bx-std-page-column-cnt {
     
 div.bx-std-page-column.bx-std-page-content {
     position: relative;
-    -webkit-flex: 2 1 auto;
-    flex: 2 1 auto;
+    -webkit-flex-grow: 2;
+    flex-grow: 2;
+
+    overflow-x: hidden;
 }
 div.bx-std-page-column.bx-std-page-content div.bx-std-page-column-cnt {
     width: 100%;

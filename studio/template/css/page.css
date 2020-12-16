@@ -66,14 +66,23 @@ div.bx-std-bcap-action-div {
 div.bx-std-bcap-action-div:first-child {
     display: none;
 }
+
 div.bx-std-block-panel-top {}
+div.bx-std-block-panel-top .bx-std-pt-cnt {
+    padding: 1.5rem 1.5rem 0 1.5rem;
+}
+
 div.bx-std-block-content {
     padding: 1.5rem;
 }
 div.bx-std-block-content div.bx-grid-header {
     margin-top: 0px;
 }
+
 div.bx-std-block-panel-bottom {}
+div.bx-std-block-panel-bottom .bx-std-pt-cnt {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+}
 
 
 /**

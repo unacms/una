@@ -18,7 +18,7 @@ class BxDevStudioPage extends BxTemplStudioModule
     {
         parent::__construct($sModule, $mixedPageName, $sPage);
 
-        $this->aPageCodeNoWrap = array('forms', 'navigation', 'pages');
+        $this->aPageCodeNoWrap = array('polyglot', 'forms', 'navigation', 'pages');
 
         $this->oModule = BxDolModule::getInstance($this->sModule);
 
