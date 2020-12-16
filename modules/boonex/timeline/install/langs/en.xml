@@ -236,6 +236,8 @@
     <string name="_bx_timeline_menu_item_title_system_add_video_simple"><![CDATA[Add Video (Simple)]]></string>
     <string name="_bx_timeline_menu_item_title_system_add_video_html5"><![CDATA[Add Video (HTML5)]]></string>
     <string name="_bx_timeline_menu_item_title_add_video"><![CDATA[Add Video]]></string>
+    <string name="_bx_timeline_menu_item_title_system_add_video_record"><![CDATA[Record Video]]></string>
+    <string name="_bx_timeline_menu_item_title_add_video_record"><![CDATA[Record Video]]></string>
     <string name="_bx_timeline_menu_item_title_system_timeline"><![CDATA[Timeline]]></string>
     <string name="_bx_timeline_menu_item_title_timeline"><![CDATA[Timeline]]></string>
     <string name="_bx_timeline_menu_item_title_system_create_entry"><![CDATA[Update]]></string>

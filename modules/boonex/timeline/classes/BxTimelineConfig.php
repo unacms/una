@@ -120,6 +120,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'OBJECT_UPLOADER_PHOTO_HTML5' => $this->_sName . '_html5_photo',
             'OBJECT_UPLOADER_VIDEO_SIMPLE' => $this->_sName . '_simple_video',
             'OBJECT_UPLOADER_VIDEO_HTML5' => $this->_sName . '_html5_video',
+            'OBJECT_UPLOADER_VIDEO_RECORD' => $this->_sName . '_record_video',
             'OBJECT_GRID_ADMINISTRATION' => $this->_sName . '_administration',
             'OBJECT_GRID_MUTE' => $this->_sName . '_mute',
             'OBJECT_MENU_ENTRY_ATTACHMENTS' => $this->_sName . '_menu_post_attachments',
@@ -230,6 +231,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
             'add-photo-html5' => $this->CNF['OBJECT_UPLOADER_PHOTO_HTML5'],
             'add-video-simple' => $this->CNF['OBJECT_UPLOADER_VIDEO_SIMPLE'],
             'add-video-html5' => $this->CNF['OBJECT_UPLOADER_VIDEO_HTML5'],
+            'add-video-record' => $this->CNF['OBJECT_UPLOADER_VIDEO_RECORD'],
         );
 
         $this->_bJsMode = false;
