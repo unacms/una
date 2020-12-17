@@ -817,7 +817,8 @@ function bx_time(sLang, isAutoupdate, sRootSel) {
                 Prism.highlightAllUnder(eElement[0]);
 
             // process embeds
-            bx_embed_dom_changed(this);
+            if ('undefined' !== typeof(bx_embed_dom_changed))
+                bx_embed_dom_changed(this);
         }
         if ('undefined' !== typeof(oCallback)) {
             oCallback(eElement);
