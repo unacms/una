@@ -115,24 +115,22 @@ class BxBaseStudioWidget extends BxDolStudioWidget
             $sPage = $this->sPage;
 
         $sMethod = 'get' . bx_gen_method_name($sPage);
-        if(!method_exists($this, $sMethod))
-            return '';
-
-        $mixedContent = $this->$sMethod();
-        if(!$bWrap || in_array($sPage, $this->aPageCodeNoWrap))
-            return $mixedContent;
-
-        if(is_string($mixedContent))
-            $sResult .= $this->getBlockCode(array(
-                'content' => $mixedContent
-            ));
-        else if(is_array($mixedContent))
-            foreach($mixedContent as $sBlock)
+        if(method_exists($this, $sMethod)) {
+            $mixedContent = $this->$sMethod();
+            if(!$bWrap || in_array($sPage, $this->aPageCodeNoWrap))
+                $sResult .= $mixedContent;
+            else if(is_string($mixedContent))
                 $sResult .= $this->getBlockCode(array(
-                    'content' => $sBlock
+                    'content' => $mixedContent
                 ));
-        else if(is_a($mixedContent, 'BxDolPage'))
-            $sResult .= $mixedContent->getCode();
+            else if(is_array($mixedContent))
+                foreach($mixedContent as $sBlock)
+                    $sResult .= $this->getBlockCode(array(
+                        'content' => $sBlock
+                    ));
+            else if(is_a($mixedContent, 'BxDolPage'))
+                $sResult .= $mixedContent->getCode();
+        }
 
         return $sResult . BxTemplStudioLauncher::getInstance()->getPageJsCode(array(
             'bInit' => false
@@ -298,6 +296,14 @@ class BxBaseStudioWidget extends BxDolStudioWidget
 
         $oForm = new BxTemplStudioFormView($aForm);
         return $oForm->getCode();
+    }
+
+    protected function getPageMenuObject($aMenu = array(), $aMarkers = array())
+    {
+        $oMenu = parent::getPageMenuObject($aMenu, $aMarkers);
+        $oMenu->setInlineIcons(false);
+
+        return $oMenu;
     }
 }
 

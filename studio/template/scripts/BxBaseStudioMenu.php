@@ -23,7 +23,12 @@ class BxBaseStudioMenu extends BxDolStudioMenu
             'page_breadcrumb.html'
         ));
     }
-    
+
+    public function setInlineIcons($bInlineIcons)
+    {
+        $this->_bInlineIcons = $bInlineIcons;
+    }
+
     protected function _getMenuItem ($aItem)
     {
         $aItem = parent::_getMenuItem($aItem);

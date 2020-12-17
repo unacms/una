@@ -133,10 +133,7 @@ class BxBaseStudioPage extends BxDolStudioPage
 
     public function getPageMenu($aMenu = array(), $aMarkers = array())
     {
-        $oMenu = new BxTemplStudioMenu(array('template' => 'menu_side.html', 'menu_items' => $aMenu));
-        if(!empty($aMarkers))
-            $oMenu->addMarkers($aMarkers);
-
+        $oMenu = $this->getPageMenuObject($aMenu, $aMarkers);
         return $oMenu->getCode();
     }
 
@@ -147,6 +144,15 @@ class BxBaseStudioPage extends BxDolStudioPage
         }
 
         return '';
+    }
+
+    protected function getPageMenuObject($aMenu = array(), $aMarkers = array())
+    {
+        $oMenu = new BxTemplStudioMenu(array('template' => 'menu_side.html', 'menu_items' => $aMenu));
+        if(!empty($aMarkers))
+            $oMenu->addMarkers($aMarkers);
+
+        return $oMenu;
     }
 
     protected function getPageCaptionHelp()
