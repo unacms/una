@@ -521,23 +521,24 @@ class BxBaseStudioBuilderPage extends BxDolStudioBuilderPage
         $aModules = BxDolModuleQuery::getInstance()->getModulesBy(array('type' => 'modules'));
         $aModulesWithBlocks = $this->oDb->getModulesWithCopyableBlocks();
         foreach($aModules as $aModule) {
-        	$sName = $aModule['name'];
-        	if(!in_array($sName, $aModulesWithBlocks))
-        		continue;
+            $sName = $aModule['name'];
+            if(!in_array($sName, $aModulesWithBlocks))
+                continue;
 
             if(!empty($aMenu[$sName]))
                 $aMenu[$sName] = array_merge($aMenu[$sName], $aModule);
             else
                 $aMenu[$sName] = $aModule;
 
-			if(empty($aMenu[$sName]['icon']))
-				$aMenu[$sName]['icon'] = BxDolStudioUtils::getModuleIcon($aModule, 'menu', false); 
+            if(empty($aMenu[$sName]['icon']))
+                $aMenu[$sName]['icon'] = BxDolStudioUtils::getModuleIcon($aModule, 'menu', false); 
         }
 
         foreach($aMenu as $sKey => $aItem)
             $aMenu[$sKey]['onclick'] =  $sJsObject . '.onChangeModule(\'' . $aItem['name'] . '\', this);';
 
         $oMenu = new BxTemplStudioMenu(array('template' => 'menu_side.html', 'menu_items' => $aMenu));
+        $oMenu->setInlineIcons(false);
 
         $aTmplParams = array(
             'menu' => $oMenu->getCode(),
