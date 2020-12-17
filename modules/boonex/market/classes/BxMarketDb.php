@@ -28,6 +28,20 @@ class BxMarketDb extends BxBaseModTextDb
         );
     }
 
+    public function getProductsNames ($iVendor = 0, $iLimit = 1000)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sWhere = '';
+        $aBindings = array('limit' => $iLimit);
+        if ($iVendor) {
+            $aBindings['author'] = $iVendor;
+            $sWhere .= "AND `{$CNF['FIELD_AUTHOR']} = :author`";
+        }
+
+        return $this->getColumn("SELECT `{$CNF['FIELD_NAME']}` FROM `{$CNF['TABLE_ENTRIES']}` WHERE (`{$CNF['FIELD_PRICE_SINGLE']}` != '0' OR `{$CNF['FIELD_PRICE_RECURRING']}` != '0') $sWhere LIMIT :limit", $aBindings);
+    }
+    
     public function getContentInfoBy ($aParams)
     {
     	$CNF = &$this->_oConfig->CNF;

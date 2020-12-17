@@ -16,6 +16,12 @@ class BxPaymentDb extends BxBaseModPaymentDb
         parent::__construct($oConfig);
     }
 
+    public function getModulesWithPayments()
+    {
+    	$sQuery = $this->prepare("SELECT `name` FROM `" . $this->_sPrefix . "modules`");
+        return $this->getColumn($sQuery);
+    }
+
     /**
      * Payment details methods
      */

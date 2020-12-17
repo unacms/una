@@ -495,6 +495,30 @@ class BxAclModule extends BxDolModule
         });
     }
     
+    /**
+     * @page service Service Calls
+     * @section bx_acl Paid Levels
+     * @subsection bx_acl-other Other
+     * @subsubsection bx_acl-get_products_names get_products_names
+     * 
+     * @code bx_srv('bx_acl', 'get_products_names', [...]); @endcode
+     * 
+     * Get an array of products names.
+     * 
+     * @param $iVendorId return products of 1 vendor only
+     * @param $iLimit limit the result artay
+     * @return an array of products names
+     * 
+     * @see BxAclModule::serviceGetProductsNames
+     */
+    /** 
+     * @ref bx_acl-get_products_names "get_products_names"
+     */
+	public function serviceGetProductsNames($iVendorId = 0, $iLimit = 1000)
+    {
+    	return $this->_oDb->getProductsNames($iVendorId, $iLimit);
+    }
+
     protected function _serviceRegisterItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense, $sType)
     {
         $CNF = &$this->_oConfig->CNF;

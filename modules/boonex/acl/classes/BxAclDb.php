@@ -20,6 +20,12 @@ class BxAclDb extends BxDolModuleDb
         $this->_oConfig = $oConfig;
     }
 
+    public function getProductsNames ($iVendor = 0, $iLimit = 1000)
+    {
+        $aBindings = array('limit' => $iLimit);
+        return $this->getColumn("SELECT `name` FROM `bx_acl_level_prices` WHERE 1 LIMIT :limit", $aBindings);
+    }
+
 	public function getLevels($aParams, $bReturnCount = false)
     {
         $aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
