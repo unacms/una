@@ -17,6 +17,20 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
         parent::__construct();
     }
 
+    public function serviceIsPublicService($s)
+    {
+        $sService = bx_gen_method_name($s);
+        $aServices = $this->serviceGetPublicServices();
+        return isset($aServices[$sService]);
+    }
+
+    public function serviceGetPublicServices()
+    {
+        return array (
+            'GetProductsNames' => 'BxBaseServices',
+        );
+    }
+
     public function serviceIsSafeService($s)
     {
         $sService = bx_gen_method_name($s);
@@ -28,6 +42,7 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
     {
         return array(
             'GetCreatePostForm' => 'BxBaseServices',
+            'GetProductsNames' => 'BxBaseServices',
             'KeywordSearch' => 'BxBaseServices',
             'Cmts' => 'BxBaseServices',
 
@@ -225,6 +240,35 @@ class BxBaseServices extends BxDol implements iBxDolProfileService
             )),
             'menu' => $oMenu
         );
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services 
+     * @subsection bx_system_general-general General
+     * @subsubsection bx_system_general-get_products_names get_products_names
+     * 
+     * @code bx_srv('system', 'get_products_names', [], 'TemplServices'); 
+     *
+     * @code http://example.com/m/oauth2/com/get_products_names?module=system&class=BaseServices @endcode
+     * @code http://hihi.una.io/modules/?r=oauth2/com/get_products_names&module=system&class=BaseServices @endcode
+     * 
+     * Get an array of products names from all modules with payments functionality.
+     * @param $iVendorId filter products by vendor ID.
+     * @param $iLimit limit number of records from one module.
+     * @return array of products where key id product name and value is module name
+     * 
+     * @see BxBaseServices::serviceGetProductsNames
+     */
+    /** 
+     * @ref bx_system_general-get_products_names "get_products_names"
+     */
+    public function serviceGetProductsNames($iVendorId = 0, $iLimit = 1000)
+    {
+        $o = BxDolPayments::getInstance();
+        if (!$o)
+            return array();
+        return $o->getProductsNames($iVendorId, $iLimit);
     }
 
     /**
