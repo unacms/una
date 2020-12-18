@@ -195,10 +195,7 @@ div.bx-std-widget-actions-cnt {
     flex-direction: column;
 }
 div.bx-std-widget-action {
-    position: relative;
-    float: none;
-    width: 30px;
-    height: 30px;
+    
     margin-top: 0.25rem;
 
     background-color: #fdfeff;
@@ -209,6 +206,15 @@ div.bx-std-widget-action {
 }
 div.bx-std-widget-action:first-child {
     margin-top: 0;
+}
+div.bx-std-widget-action,
+div.bx-std-widget-action > a {
+    position: relative;
+    display: block;
+    float: none;
+
+    width: 30px;
+    height: 30px;
 }
 div.bx-std-widget-action i.sys-icon {
     font-size: 20px;

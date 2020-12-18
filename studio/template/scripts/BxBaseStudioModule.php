@@ -103,12 +103,16 @@ class BxBaseStudioModule extends BxDolStudioModule
         if(empty($sActions))
             return '';
 
-        $sName = 'bx-std-mod-popup-settings-' . $sPage;
+        $sPrefix = 'bx-std-mod-popup-settings';
+        $sName = $sPrefix . '-' . $sPage;
         $sContent = BxDolStudioTemplate::getInstance()->parseHtmlByName($this->sTmplNamePopupSettings, array(
             'content' => $sActions
         ));
 
-        return BxTemplStudioFunctions::getInstance()->transBox($sName, $sContent);
+        return BxTemplStudioFunctions::getInstance()->transBox($sName, array(
+            'wrapper_class' => $sPrefix . '-wrapper',
+            'content' => $sContent
+        ));
     }
 
     protected function getPopupConfirmUninstall($iWidgetId, &$aModule)

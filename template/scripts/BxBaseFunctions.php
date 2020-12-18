@@ -131,14 +131,18 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
     protected function simpleBox($sName, $sContent, $isHiddenByDefault, $isPlaceInCenter, $sTemplate) {
     	$iId = !empty($sName) ? $sName : time();
 
-		$sContent = $this->_oTemplate->parseHtmlByName($sTemplate, array(
+        if(!is_array($sContent))
+            $sContent = array('content' => $sContent);
+
+        $sContent = $this->_oTemplate->parseHtmlByName($sTemplate, array_merge(array(
             'id' => $iId,
+            'wrapper_class' => '',
             'wrapper_style' => $isHiddenByDefault ? 'display:none;' : '',
-            'content' => $sContent
-        ));
+            'content' => ''
+        ), $sContent));
 
         if($isPlaceInCenter)
-        	$sContent = '<div class="login_ajax_wrap">' . $sContent . '</div>';
+            $sContent = '<div class="login_ajax_wrap">' . $sContent . '</div>';
 
         return $sContent;
     }
