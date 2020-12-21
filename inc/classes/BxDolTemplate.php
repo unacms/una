@@ -1407,7 +1407,7 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
         if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->beginTemplate($sName, $sRand = time().rand());
 
         if (($sContent = $this->getCached($sName, $aVariables, $mixedKeyWrapperHtml, $sCheckIn)) !== false) {
-            if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->endTemplate($sName, $sRand, $sRet, true);
+            if (isset($GLOBALS['bx_profiler'])) $GLOBALS['bx_profiler']->endTemplate($sName, $sRand, $sContent, true);
             return $sContent;
         }
 
