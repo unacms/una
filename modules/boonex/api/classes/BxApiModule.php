@@ -22,6 +22,7 @@ class BxApiModule extends BxDolModule
         return array_merge($a, array (
             'DeletePage' => '',
             'ChangeAccountPassword' => '',
+            'SwitchProfile' => ''
         ));
     }
 
@@ -31,6 +32,9 @@ class BxApiModule extends BxDolModule
         return array_merge($a, array (
             'Test' => '',
             'GetPage' => '',
+            'ResetPasswordSendRequest' => '',
+            'ResetPasswordCheckCode' => '',
+            'CreateAccount' => '',
         ));
     }
 
@@ -250,6 +254,354 @@ class BxApiModule extends BxDolModule
 
         return array('code' => 200);
     }
+    
+    /**
+     * @page private_api API Private
+     * @section private_api_api_switch_profile /m/oauth2/com/switch_profile
+     * 
+     * Switch account active profile
+     * 
+     * **Scopes:** 
+     * `api`
+     *
+     * **HTTP Method:** 
+     * `POST`
+     *
+     * **Request params:**
+     * - `profile_id` - profile id
+     *
+     * **Request header:**
+     * @code
+     * Authorization: Bearer 9802c4a34e1535d8c3b721604ee0e7fb04116c49
+     * @endcode
+     *
+     * **Response (success):**
+     * @code
+     * {  
+     *     "code": 200,
+     * }
+     * @endcode
+     *
+     * **Response (error):**
+     * @code
+     * {  
+     *    "error":"short error description here",
+     *    "error_description":"long error description here"
+     * }
+     * @endcode
+     */
+    public function serviceSwitchProfile()
+    {
+        $mixedProfileIdToSwitch = bx_get('profile_id');
+        
+        if ($mixedProfileIdToSwitch == '') {
+            return array(
+                'code' => 404,
+                'error' => 'No Content',
+                'desc' => 'Profile_id can\'t be empty',
+            );
+        }
+        
+		if (bx_get_logged_profile_id() == (int)$mixedProfileIdToSwitch){
+            return array(
+                'code' => 404,
+                'error' => 'Not Allowed',
+                'desc' => 'Requested profile_id equal with current profile_id',
+            );
+		}
+        
+        $mixedRes = bx_srv('system', 'switch_profile', [$mixedProfileIdToSwitch], 'TemplServiceAccount');
+        
+        if (true === $mixedRes) {
+            return array('code' => 200);
+        } 
+        else {
+            return array(
+                'code' => 500,
+                'error' => 'Internal Error',
+                'desc' => $mixedRes,
+            );
+        }
+    }
+    
+    /**
+     * @page public_api API Public
+     * @section public_api_api_reset_password_send_request /m/oauth2/com/reset_password_send_request
+     * 
+     * Send email with reset password code
+     * 
+     * **Scopes:** 
+     * `api`
+     *
+     * **HTTP Method:** 
+     * `POST`
+     *
+     * **Request params:**
+     * - `email` - email address
+     *
+     * **Request header:**
+     * @code
+     * Authorization: Bearer 9802c4a34e1535d8c3b721604ee0e7fb04116c49
+     * @endcode
+     *
+     * **Response (success):**
+     * @code
+     * {  
+     *     "code": 200,
+     * }
+     * @endcode
+     *
+     * **Response (error):**
+     * @code
+     * {  
+     *    "error":"short error description here",
+     *    "error_description":"long error description here"
+     * }
+     * @endcode
+     */
+    public function serviceResetPasswordSendRequest(){
+		$sEmail = bx_get('email');
+        if ($sEmail == ''){
+			return array(
+                'code' => 404,
+                'error' => 'No Content',
+                'desc' => 'Email can\'t be empty',
+            );
+		}
+		
+		$oAccountQuery = BxDolAccountQuery::getInstance();
+		$iAccountId = $oAccountQuery->getIdByEmail($sEmail);
+		if (!$iAccountId){
+			return array(
+                'code' => 404,
+                'error' => 'No Content',
+                'desc' => 'Email is not valid',
+            );
+		}
+		
+		$oKey = BxDolKey::getInstance();
+		$aPlus['key'] = $oKey->getNewKey(array('email' => $sEmail));
+		$aPlus['forgot_password_url'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=forgot-password', array('key' => $aPlus['key']));
+        $aTemplate = BxDolEmailTemplates::getInstance() -> parseTemplate('t_Forgot', $aPlus, $iAccountId);
+        if ($aTemplate && sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, $aPlus, BX_EMAIL_SYSTEM)){
+            return array('code' => 200);
+		}
+		
+		return array(
+            'code' => 500,
+            'error' => 'Internal Error'
+        );
+	}
+    
+    /**
+     * @page public_api API Public
+     * @section public_api_api_reset_password_check_code /m/oauth2/com/reset_password_check_code
+     * 
+     * Check validation code & set new password 
+     * 
+     * **Scopes:** 
+     * `api`
+     *
+     * **HTTP Method:** 
+     * `POST`
+     *
+     * **Request params:**
+     * - `code` - validation code
+     * - `email` - email address
+     *
+     * **Request header:**
+     * @code
+     * Authorization: Bearer 9802c4a34e1535d8c3b721604ee0e7fb04116c49
+     * @endcode
+     *
+     * **Response (success):**
+     * @code
+     * {  
+     *     "code": 200,
+     *     "password" : "[NEW PASSWORD]"
+     * }
+     * @endcode
+     *
+     * **Response (error):**
+     * @code
+     * {  
+     *    "error":"short error description here",
+     *    "error_description":"long error description here"
+     * }
+     * @endcode
+     */
+    public function serviceResetPasswordCheckCode(){
+		$sKey = bx_get('code');
+        
+        if ($sKey == ''){
+			return array(
+                'code' => 404,
+                'error' => 'No Content',
+                'desc' => 'Validation code can\'t be empty',
+            );
+		}
+
+        $oKey = BxDolKey::getInstance();
+        if (!$oKey || !$oKey->isKeyExists($sKey)){
+            return array(
+                'code' => 404,
+                'error' => 'Wrong code',
+                'desc' => 'Validation code is not exist or expired',
+            );
+        }
+        $aData = $oKey->getKeyData($sKey);
+        if (!isset($aData['email'])){
+            return array(
+                'code' => 404,
+                'error' => 'Wrong code',
+                'desc' => 'Validation code is not exist or expired',
+            );
+        }
+
+		$oAccountQuery = BxDolAccountQuery::getInstance();
+        $iAccountId = $oAccountQuery->getIdByEmail($aData['email']);
+        if (!$iAccountId){
+            return array(
+                'code' => 404,
+                'error' => 'Wrong code',
+                'desc' => 'Validation code is not exist or expired',
+            );
+        }
+        
+		$oBxTemplServiceAccount = new BxTemplServiceAccount();
+        $sPassword = $oBxTemplServiceAccount->generateUserNewPwd($iAccountId);
+
+        $oKey->removeKey($sKey);
+
+        $aPlus = array ('password' => $sPassword);
+		
+		$aTemplate = BxDolEmailTemplates::getInstance() -> parseTemplate('t_PasswordReset', $aPlus, $iAccountId);
+
+		$oAccountQuery = BxDolAccountQuery::getInstance();
+		$oAccountQuery->unlockAccount($iAccountId);
+		
+        if ($aTemplate && sendMail($aData['email'], $aTemplate['Subject'], $aTemplate['Body'], 0, $aPlus, BX_EMAIL_SYSTEM)){
+			return array(
+				'code' => 200,
+				'password' => $sPassword,
+			);
+		}
+    }
+    
+    /**
+     * @page public_api API Public
+     * @section public_api_api_create_account /m/oauth2/com/create_account
+     * 
+     * Create account
+     * 
+     * **Scopes:** 
+     * `api`
+     *
+     * **HTTP Method:** 
+     * `POST`
+     *
+     * **Request params:**
+     * - `name` - account name
+     * - `email` - email address
+     * - `password` - password
+     * - `is_confirmed` - email confirmed (true/false)
+     *
+     * **Request header:**
+     * @code
+     * Authorization: Bearer 9802c4a34e1535d8c3b721604ee0e7fb04116c49
+     * @endcode
+     *
+     * **Response (success):**
+     * @code
+     * {  
+     *     "code": 200,
+     *     "profile_id" : "[PROFILE ID]"
+     * }
+     * @endcode
+     *
+     * **Response (error):**
+     * @code
+     * {  
+     *    "error":"short error description here",
+     *    "error_description":"long error description here"
+     * }
+     * @endcode
+     */
+    public function serviceCreateAccount()
+	{
+		
+		$sAccountName = bx_get('name');
+		$sEmail = bx_get('email');
+		$sPassword = bx_get('password');
+		$bEmailConfirmed = bx_get('is_confirmed');
+		
+        if (!($sAccountName && $sEmail && $sPassword)){
+			return array(
+                'code' => 404,
+                'error' => 'No Content',
+                'desc' => 'Account name, email, password code can\'t be empty',
+            );
+		}
+		
+		$oAccQuery = BxDolAccountQuery::getInstance();;
+		$iId = $oAccQuery->getIdByEmail($sEmail);
+		if ($iId > 0){
+			return array(
+                'code' => 404,
+                'error' => 'Already exists',
+                'desc' => 'Account with requested email already exists',
+            );
+		}
+
+		$_POST['name'] = $sAccountName;
+		$_POST['email'] = $sEmail;
+		$_POST['password'] = $sPassword;
+		$_POST['email_confirmed'] = $bEmailConfirmed;
+		$_POST['do_submit'] = 'Submit';
+
+		$oForm = BxDolForm::getObjectInstance('bx_accounts_account', 'bx_accounts_account_create');
+		$oForm->aParams['csrf']['disable'] = true;
+		$oForm->initChecker();
+		
+		if($oForm->isSubmittedAndValid()) {
+			$iAccountId = $oForm->insert();			
+			if (!$iAccountId) {
+				return $this->_error(_t('_sg_wtv_error_account_creation_failed'), 150);
+			}
+
+			$oBxTemplAccountForms = new BxTemplAccountForms();
+
+			$iProfileId = $oBxTemplAccountForms->onAccountCreated($iAccountId, $oForm->isSetPendingApproval(), BX_PROFILE_ACTION_MANUAL, false);
+
+			$sProfileModule = getParam('sys_account_default_profile_type');
+			if (getParam('sys_account_auto_profile_creation') && !empty($sProfileModule)) {
+				$oAccount = BxDolAccount::getInstance($iAccountId);
+				$aProfileInfo = BxDolService::call($sProfileModule, 'prepare_fields', array(array(
+					'author' => $iProfileId,
+					'name' => $oAccount->getDisplayName(),
+					)));
+				$a = BxDolService::call($sProfileModule, 'entity_add', array($iProfileId, $aProfileInfo));
+				if ($a['code'] != 0)
+					return $this->_error($a['message']);
+				$iProfileId = $a['content']['profile_id'];
+			}
+            
+			return array(
+				'code' => 200,
+				'profile_id' => $iProfileId
+			);
+		}
+		else{
+			$s = $oForm->getFormErrors();
+			return array(
+                'code' => 500,
+                'error' => 'Internal Error',
+                'desc' => $s,
+            );
+		}
+		
+	}
+
 }
 
 /** @} */
