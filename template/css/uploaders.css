@@ -80,6 +80,10 @@
     display: none;
 }
 
+#bx-upoloader-recording-preview {
+    display: none;
+}
+
 .bx-record-video-preview-filesize {
     text-align: center;
     margin: 0.2rem 0;

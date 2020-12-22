@@ -96,8 +96,9 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_tasks_entry_attachments', 'bx_tasks', 'photo_html5', '_bx_tasks_menu_item_title_system_cpa_photo_html5', '_bx_tasks_menu_item_title_cpa_photo_html5', 'javascript:void(0)', 'javascript:{js_object_uploader_photos_html5}.showUploaderForm();', '_self', 'camera', '', '', 2147483647, '', 1, 0, 1, 2),
 ('bx_tasks_entry_attachments', 'bx_tasks', 'video_simple', '_bx_tasks_menu_item_title_system_cpa_video_simple', '_bx_tasks_menu_item_title_cpa_video_simple', 'javascript:void(0)', 'javascript:{js_object_uploader_videos_simple}.showUploaderForm();', '_self', 'video', '', '', 2147483647, '', 0, 0, 1, 3),
 ('bx_tasks_entry_attachments', 'bx_tasks', 'video_html5', '_bx_tasks_menu_item_title_system_cpa_video_html5', '_bx_tasks_menu_item_title_cpa_video_html5', 'javascript:void(0)', 'javascript:{js_object_uploader_videos_html5}.showUploaderForm();', '_self', 'video', '', '', 2147483647, '', 1, 0, 1, 4),
-('bx_tasks_entry_attachments', 'bx_tasks', 'file_simple', '_bx_tasks_menu_item_title_system_cpa_file_simple', '_bx_tasks_menu_item_title_cpa_file_simple', 'javascript:void(0)', 'javascript:{js_object_uploader_files_simple}.showUploaderForm();', '_self', 'file', '', '', 2147483647, '', 0, 0, 1, 5),
-('bx_tasks_entry_attachments', 'bx_tasks', 'file_html5', '_bx_tasks_menu_item_title_system_cpa_file_html5', '_bx_tasks_menu_item_title_cpa_file_html5', 'javascript:void(0)', 'javascript:{js_object_uploader_files_html5}.showUploaderForm();', '_self', 'file', '', '', 2147483647, '', 1, 0, 1, 6);
+('bx_tasks_entry_attachments', 'bx_tasks', 'video_record_video', '_bx_tasks_menu_item_title_system_cpa_video_record', '_bx_tasks_menu_item_title_cpa_video_record', 'javascript:void(0)', 'javascript:{js_object_uploader_videos_record_video}.showUploaderForm();', '_self', 'fas circle', '', '', 2147483647, '', 1, 0, 1, 5),
+('bx_tasks_entry_attachments', 'bx_tasks', 'file_simple', '_bx_tasks_menu_item_title_system_cpa_file_simple', '_bx_tasks_menu_item_title_cpa_file_simple', 'javascript:void(0)', 'javascript:{js_object_uploader_files_simple}.showUploaderForm();', '_self', 'file', '', '', 2147483647, '', 0, 0, 1, 6),
+('bx_tasks_entry_attachments', 'bx_tasks', 'file_html5', '_bx_tasks_menu_item_title_system_cpa_file_html5', '_bx_tasks_menu_item_title_cpa_file_html5', 'javascript:void(0)', 'javascript:{js_object_uploader_files_html5}.showUploaderForm();', '_self', 'file', '', '', 2147483647, '', 1, 0, 1, 7);
 
 -- MENU: actions menu for view entry 
 
@@ -260,10 +261,12 @@ INSERT INTO `sys_objects_chart` (`object`, `title`, `table`, `field_date_ts`, `f
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('bx_tasks_simple', 1, 'BxTasksUploaderSimple', 'modules/boonex/tasks/classes/BxTasksUploaderSimple.php'),
 ('bx_tasks_html5', 1, 'BxTasksUploaderHTML5', 'modules/boonex/tasks/classes/BxTasksUploaderHTML5.php'),
+('bx_tasks_record_video', 1, 'BxTasksUploaderRecordVideo', 'modules/boonex/tasks/classes/BxTasksUploaderRecordVideo.php'),
 ('bx_tasks_photos_simple', 1, 'BxTasksUploaderSimpleAttach', 'modules/boonex/tasks/classes/BxTasksUploaderSimpleAttach.php'),
 ('bx_tasks_photos_html5', 1, 'BxTasksUploaderHTML5Attach', 'modules/boonex/tasks/classes/BxTasksUploaderHTML5Attach.php'),
 ('bx_tasks_videos_simple', 1, 'BxTasksUploaderSimpleAttach', 'modules/boonex/tasks/classes/BxTasksUploaderSimpleAttach.php'),
 ('bx_tasks_videos_html5', 1, 'BxTasksUploaderHTML5Attach', 'modules/boonex/tasks/classes/BxTasksUploaderHTML5Attach.php'),
+('bx_tasks_videos_record_video', 1, 'BxTasksUploaderRecordVideoAttach', 'modules/boonex/tasks/classes/BxTasksUploaderRecordVideoAttach.php'),
 ('bx_tasks_files_simple', 1, 'BxTasksUploaderSimpleAttach', 'modules/boonex/tasks/classes/BxTasksUploaderSimpleAttach.php'),
 ('bx_tasks_files_html5', 1, 'BxTasksUploaderHTML5Attach', 'modules/boonex/tasks/classes/BxTasksUploaderHTML5Attach.php');
 

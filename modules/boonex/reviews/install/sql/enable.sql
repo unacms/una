@@ -236,8 +236,9 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_reviews_entry_attachments', 'bx_reviews', 'photo_html5', '_bx_reviews_menu_item_title_system_cpa_photo_html5', '_bx_reviews_menu_item_title_cpa_photo_html5', 'javascript:void(0)', 'javascript:{js_object_uploader_photos_html5}.showUploaderForm();', '_self', 'camera', '', '', 2147483647, '', 1, 0, 1, 2),
 ('bx_reviews_entry_attachments', 'bx_reviews', 'video_simple', '_bx_reviews_menu_item_title_system_cpa_video_simple', '_bx_reviews_menu_item_title_cpa_video_simple', 'javascript:void(0)', 'javascript:{js_object_uploader_videos_simple}.showUploaderForm();', '_self', 'video', '', '', 2147483647, '', 0, 0, 1, 3),
 ('bx_reviews_entry_attachments', 'bx_reviews', 'video_html5', '_bx_reviews_menu_item_title_system_cpa_video_html5', '_bx_reviews_menu_item_title_cpa_video_html5', 'javascript:void(0)', 'javascript:{js_object_uploader_videos_html5}.showUploaderForm();', '_self', 'video', '', '', 2147483647, '', 1, 0, 1, 4),
-('bx_reviews_entry_attachments', 'bx_reviews', 'file_simple', '_bx_reviews_menu_item_title_system_cpa_file_simple', '_bx_reviews_menu_item_title_cpa_file_simple', 'javascript:void(0)', 'javascript:{js_object_uploader_files_simple}.showUploaderForm();', '_self', 'file', '', '', 2147483647, '', 0, 0, 1, 5),
-('bx_reviews_entry_attachments', 'bx_reviews', 'file_html5', '_bx_reviews_menu_item_title_system_cpa_file_html5', '_bx_reviews_menu_item_title_cpa_file_html5', 'javascript:void(0)', 'javascript:{js_object_uploader_files_html5}.showUploaderForm();', '_self', 'file', '', '', 2147483647, '', 1, 0, 1, 6),
+('bx_reviews_entry_attachments', 'bx_reviews', 'video_record_video', '_bx_reviews_menu_item_title_system_cpa_video_record', '_bx_reviews_menu_item_title_cpa_video_record', 'javascript:void(0)', 'javascript:{js_object_uploader_videos_record_video}.showUploaderForm();', '_self', 'fas circle', '', '', 2147483647, '', 1, 0, 1, 5),
+('bx_reviews_entry_attachments', 'bx_reviews', 'file_simple', '_bx_reviews_menu_item_title_system_cpa_file_simple', '_bx_reviews_menu_item_title_cpa_file_simple', 'javascript:void(0)', 'javascript:{js_object_uploader_files_simple}.showUploaderForm();', '_self', 'file', '', '', 2147483647, '', 0, 0, 1, 6),
+('bx_reviews_entry_attachments', 'bx_reviews', 'file_html5', '_bx_reviews_menu_item_title_system_cpa_file_html5', '_bx_reviews_menu_item_title_cpa_file_html5', 'javascript:void(0)', 'javascript:{js_object_uploader_files_html5}.showUploaderForm();', '_self', 'file', '', '', 2147483647, '', 1, 0, 1, 7),
 ('bx_reviews_entry_attachments', 'bx_reviews', 'poll', '_bx_reviews_menu_item_title_system_cpa_poll', '_bx_reviews_menu_item_title_cpa_poll', 'javascript:void(0)', 'javascript:{js_object}.showPollForm(this);', '_self', 'tasks', '', '', 2147483647, '', 1, 0, 1, 7);
 
 -- MENU: actions menu for view entry 
@@ -503,10 +504,12 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('bx_reviews_simple', 1, 'BxReviewsUploaderSimple', 'modules/boonex/reviews/classes/BxReviewsUploaderSimple.php'),
 ('bx_reviews_html5', 1, 'BxReviewsUploaderHTML5', 'modules/boonex/reviews/classes/BxReviewsUploaderHTML5.php'),
+('bx_reviews_record_video', 1, 'BxReviewsUploaderRecordVideo', 'modules/boonex/reviews/classes/BxReviewsUploaderRecordVideo.php'),
 ('bx_reviews_photos_simple', 1, 'BxReviewsUploaderSimpleAttach', 'modules/boonex/reviews/classes/BxReviewsUploaderSimpleAttach.php'),
 ('bx_reviews_photos_html5', 1, 'BxReviewsUploaderHTML5Attach', 'modules/boonex/reviews/classes/BxReviewsUploaderHTML5Attach.php'),
 ('bx_reviews_videos_simple', 1, 'BxReviewsUploaderSimpleAttach', 'modules/boonex/reviews/classes/BxReviewsUploaderSimpleAttach.php'),
 ('bx_reviews_videos_html5', 1, 'BxReviewsUploaderHTML5Attach', 'modules/boonex/reviews/classes/BxReviewsUploaderHTML5Attach.php'),
+('bx_reviews_videos_record_video', 1, 'BxReviewsUploaderRecordVideoAttach', 'modules/boonex/reviews/classes/BxReviewsUploaderRecordVideoAttach.php'),
 ('bx_reviews_files_simple', 1, 'BxReviewsUploaderSimpleAttach', 'modules/boonex/reviews/classes/BxReviewsUploaderSimpleAttach.php'),
 ('bx_reviews_files_html5', 1, 'BxReviewsUploaderHTML5Attach', 'modules/boonex/reviews/classes/BxReviewsUploaderHTML5Attach.php');
 

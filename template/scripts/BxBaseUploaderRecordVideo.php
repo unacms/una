@@ -11,6 +11,9 @@
  * Upload files using WebRTC webcam capture.
  * @see BxDolUploader
  */
+define('BX_UPLOADER_AUDIO_BITRATE', 128000); //128Kbit for audio
+define('BX_UPLOADER_VIDEO_BITRATE', 1000000); //1Mbit for video
+
 class BxBaseUploaderRecordVideo extends BxBaseUploaderSimple
 {
     protected $_sUploaderFormTemplate = 'uploader_form_record_video.html';
@@ -21,9 +24,13 @@ class BxBaseUploaderRecordVideo extends BxBaseUploaderSimple
         $this->_sButtonTemplate = 'uploader_button_record_video.html';
     }
 
-    /**
-     * Get uploader button title
-     */
+    public function getUploaderButton($mixedGhostTemplate, $isMultiple = true, $aParams = array(), $bDynamic = false) {
+        if (!$aParams) $aParams = [];
+        $aParams['audio_bitrate'] = BX_UPLOADER_AUDIO_BITRATE;
+        $aParams['video_bitrate'] = BX_UPLOADER_VIDEO_BITRATE;
+        return parent::getUploaderButton($mixedGhostTemplate, $isMultiple, $aParams, $bDynamic);
+    }
+
     public function getUploaderButtonTitle($mixed = false)
     {
         return _t('_sys_uploader_record_video_button_name');
@@ -34,6 +41,7 @@ class BxBaseUploaderRecordVideo extends BxBaseUploaderSimple
         $sAddon .= $this->_oTemplate->addJsTranslation([
             '_sys_uploader_camera_capture_failed',
             '_sys_uploader_record_video_mb',
+            '_sys_uploader_unsupported_browser',
         ], $bDynamic);
         return parent::addCssJs($bDynamic).($bDynamic ? $sAddon : '');
     }
