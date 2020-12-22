@@ -9,6 +9,8 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryIdAccount, 'sys_account_disable_join_form', '_adm_stg_cpt_option_sys_account_disable_join_form', '', 'checkbox', '', '', '', 42),
 (@iCategoryIdAccount, 'sys_account_allow_plus_in_email', '_adm_stg_cpt_option_sys_allow_plus_in_email', 'on', 'checkbox', '', '', '', 50);
 
+UPDATE `sys_options` SET `value` = '0' WHERE `name` IN('client_image_resize_width', 'client_image_resize_height');
+
 -- Grids
 
 UPDATE `sys_objects_grid` SET `responsive` = 1 WHERE `object` IN('sys_grid_relations', 'sys_grid_related_me');
