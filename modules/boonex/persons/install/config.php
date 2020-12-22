@@ -18,7 +18,7 @@ $aConfig = array(
     'name' => 'bx_persons',
     'title' => 'Persons',
     'note' => 'Basic person profiles functionality.',
-    'version' => '11.0.2.DEV',
+    'version' => '11.0.3.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
