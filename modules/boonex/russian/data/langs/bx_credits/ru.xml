@@ -213,7 +213,7 @@
     <string name="_bx_credits_txt_history_info_service"><![CDATA[Искусственно инициированный перевод]]></string>
     <string name="_bx_credits_txt_history_info_refund"><![CDATA[Возврат средств]]></string>
 
-    <string name="_bx_credits_msg_empty_author"><![CDATA['Администратор сайта' не задан. Вам необходимо пометить какой-либо профайл как 'Администратор сайта' в настройках активного на данный момент платежного модуля.]]></string>
+    <string name="_bx_credits_msg_empty_author"><![CDATA['Главный продавец' не задан. Вам необходимо пометить какой-либо профайл как 'Главный продавец' в настройках активного на данный момент платежного модуля.]]></string>
     <string name="_bx_credits_msg_action_performed"><![CDATA[Действие было успешно выполнено.]]></string>
     <string name="_bx_credits_err_profile_not_found"><![CDATA[Профиль не был найден.]]></string>
     <string name="_bx_credits_err_login_required"><![CDATA[Необходимо войти.]]></string>

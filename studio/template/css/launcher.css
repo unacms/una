@@ -82,7 +82,7 @@ div.bx-std-widget-empty {
 
 .bx-std-widget-icon {
     position: relative;
-    top:0px;
+    top: 0px;
     width: 5.0rem;
     height: 5.0rem;
 
@@ -138,8 +138,8 @@ div.bx-std-widget-icon-jitter {
     position: absolute;
     top: 24px;
     left: 24px;
-    width: 96px;
-    height: 96px;
+    width: 5.0rem;
+    height: 5.0rem;
     z-index: 5;
 
     background-color: transparent;
@@ -148,10 +148,10 @@ div.bx-std-widget-icon-jitter {
 div.bx-std-widget-icon-jitter img {
     position:absolute;
 
-    bottom:-5px;
-    left: 28px;
-    width: 40px;
-    height: 25px;
+    bottom: -0.125rem;
+    left: 1.375rem;
+    width: 2.25rem;
+    height: 1.25rem;
 
     background-color: #fdfeff;
     background-image:url(../images/bx-std-widget-drag.svg);
@@ -195,10 +195,7 @@ div.bx-std-widget-actions-cnt {
     flex-direction: column;
 }
 div.bx-std-widget-action {
-    position: relative;
-    float: none;
-    width: 30px;
-    height: 30px;
+    
     margin-top: 0.25rem;
 
     background-color: #fdfeff;
@@ -210,6 +207,15 @@ div.bx-std-widget-action {
 div.bx-std-widget-action:first-child {
     margin-top: 0;
 }
+div.bx-std-widget-action,
+div.bx-std-widget-action > a {
+    position: relative;
+    display: block;
+    float: none;
+
+    width: 30px;
+    height: 30px;
+}
 div.bx-std-widget-action i.sys-icon {
     font-size: 20px;
     text-shadow: none;
@@ -218,10 +224,10 @@ div.bx-std-widget-action i.sys-icon {
 .bx-std-widget-loading {
     display: none;
     position: absolute;
-    top: 128px;
-    left: 24px;
-    width: 96px;
-    height: 15px;
+    top: 6.75rem;
+    left: 1.5rem;
+    width: 5.0rem;
+    height: 0.75rem;
 
     background-image: url(../images/loading.gif);
     background-repeat: no-repeat;

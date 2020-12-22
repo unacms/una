@@ -22,24 +22,35 @@ div.bx-std-blocks-line {
 }
 div.bx-std-blocks-line .bx-std-block-wrp {
     display: block;
-	float: left;
-	width: 100%;
+    float: left;
+    width: 100%;
 }
 
 
 /**
  * Block Styles
  */
-div.bx-std-block {}
+div.bx-std-block {
+    background-color: rgba(255, 255, 255, 1.0);
+}
 div.bx-std-block-caption {
     position: relative;
-    margin: 0px 0px 10px 0px;
-    border-style: solid;
-    border-width: 0px 0px 1px 0px;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+
+    height: 3.5rem;
+    padding: 0 1.5rem;
+
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
 }
 div.bx-std-bcap-text {
-    line-height: 25px;
-    color: #666666;
+    line-height: 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #262626;
 }
 div.bx-std-bcap-actions {
     position: absolute;
@@ -55,9 +66,30 @@ div.bx-std-bcap-action-div {
 div.bx-std-bcap-action-div:first-child {
     display: none;
 }
+
 div.bx-std-block-panel-top {}
-div.bx-std-block-content {}
+div.bx-std-block-panel-top .bx-std-pt-cnt {
+    padding: 1.5rem 1.5rem 0 1.5rem;
+}
+
+div.bx-std-block-content {
+    padding: 1.5rem;
+}
 div.bx-std-block-content div.bx-grid-header {
     margin-top: 0px;
 }
+
 div.bx-std-block-panel-bottom {}
+div.bx-std-block-panel-bottom .bx-std-pt-cnt {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+}
+
+
+/**
+ * Builder based blocks
+ */
+
+.bx-page-block-container {
+    padding-top: 1.875rem;
+    padding-bottom: 0;
+}

@@ -108,6 +108,7 @@ div.bx-base-general-breadcrumb i {
     margin:-1px;
 }
 .bx-base-general-attachment {
+    position:relative;
     margin:1px;
     text-align: center;
 }
@@ -118,6 +119,11 @@ div.bx-base-general-breadcrumb i {
 .bx-base-general-attachment a div {
     text-overflow: ellipsis;
     overflow: hidden;
+}
+.bx-base-general-attachment a canvas {
+    position:absolute;
+    top:0;
+    left:0;
 }
 
 .bx-base-general-attachment-sound {

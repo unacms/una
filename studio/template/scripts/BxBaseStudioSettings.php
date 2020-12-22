@@ -52,13 +52,15 @@ class BxBaseStudioSettings extends BxDolStudioSettings
         return parent::getPageMenu($aMenu);
     }
 
-    public function getPageCode($sCategorySelected = '')
+    public function getPageCode($sPage = '', $bWrap = true)
     {
-        $sResult = parent::getPageCode();
+        $sResult = parent::getPageCode($sPage, $bWrap);
         if($sResult === false)
             return false;
 
-        return $sResult . $this->getFormCode();
+        return $sResult . $this->getBlockCode(array(
+            'content' => $this->getFormCode()
+        ));
     }
 
     public function getFormCode($sCategorySelected = '')

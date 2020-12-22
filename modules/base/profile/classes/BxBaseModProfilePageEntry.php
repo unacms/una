@@ -68,6 +68,7 @@ class BxBaseModProfilePageEntry extends BxBaseModGeneralPageEntry
             ));
 
         // add replaceable markers
+        $this->addMarkers($this->_aContentInfo);
         $this->addMarkers($this->_aProfileInfo); // every content field can be used as marker
         $this->addMarkers(array('profile_id' => $this->_oProfile->id())); // profile id field
         $this->addMarkers(array('display_name' => $this->_oProfile->getDisplayName())); // profile display name

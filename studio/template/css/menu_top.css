@@ -75,7 +75,21 @@ div.bx-std-menu-top-right {
     width: 100%;
     height: 100%;
 }
+.bx-menu-breadcrumb li.bx-menu-bc-item > a:hover span {
+    color: rgba(255, 255, 255, 0.85);
+}
+.bx-menu-breadcrumb li.bx-menu-bc-item > a img,
+.bx-menu-breadcrumb li.bx-menu-bc-item > a svg {
+    width: 1.625rem;
+    height: 1.625rem;
+}
+.bx-menu-breadcrumb li.bx-menu-bc-item:not(:last-child) > a svg g {
+    opacity: 0.7;
+}
 
+.bx-menu-breadcrumb li.bx-menu-bc-item:not(:last-child) > a:hover svg g {
+    opacity: 0.85;
+}
 
 /*--- Widgets (Center) ---*/
 div.bx-std-menu-top .bx-menu-floating-blocks li {
@@ -101,6 +115,10 @@ div.bx-std-menu-top .bx-menu-floating-blocks li a {
     padding: 0.25rem;
 
     text-align: center;
+}
+
+div.bx-std-menu-top .bx-menu-floating-blocks li .bx-mi-icon {
+    margin-top: 0.125rem;
 }
 
 div.bx-std-menu-top .bx-menu-floating-blocks li img,
@@ -183,10 +201,14 @@ div.bx-std-menu-top-right li.bx-menu-tab-active i.sys-icon {
     text-shadow: 0 0 4px #ffe900;
 }
 
-/*--- Account popup ---*/
+/*--- Account and Settings popups ---*/
+body > .bx-popup-wrapper.bx-std-mod-popup-settings-wrapper,
+#bx-std-pcap-menu-popup-actions,
 #bx-popup-ajax-wrapper-sys_studio_account_popup {
     overflow: visible;
 }
+.bx-std-mod-popup-settings-wrapper::before,
+#bx-std-pcap-menu-popup-actions:before,
 #bx-popup-ajax-wrapper-sys_studio_account_popup::before {
     position: absolute;
     display: block;
@@ -202,10 +224,18 @@ div.bx-std-menu-top-right li.bx-menu-tab-active i.sys-icon {
 
     transform: rotate(45deg);
 }
+.bx-std-mod-popup-settings-wrapper::before,
+#bx-std-pcap-menu-popup-actions:before {
+    right: 0.75rem;
+}
+.bx-std-mod-popup-settings-wrapper .bx-popup,
+#bx-std-pcap-menu-popup-actions .bx-popup,
 #bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup {
     box-shadow: inset -1px -1px 0px rgba(240, 240, 240, 0.2), inset 1px 1px 0px rgba(240, 240, 240, 0.2);
     background-color: #001529;
 }
+.bx-std-mod-popup-settings-wrapper .bx-popup-content-indent,
+#bx-std-pcap-menu-popup-actions .bx-popup-content-indent,
 #bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup-content-indent {
     padding: 0;
 }
@@ -221,6 +251,8 @@ div.bx-std-menu-top-right li.bx-menu-tab-active i.sys-icon {
     font-weight: 400;
     overflow: hidden;
 }
+.bx-std-mod-popup-settings-wrapper,
+#bx-std-pcap-menu-popup-actions .bx-popup-color-bg,
 #bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup-color-bg li a,
 #bx-popup-ajax-wrapper-sys_studio_account_popup .bx-popup-color-bg li .sys-icon {
     color: rgba(255, 255, 255, 0.7);

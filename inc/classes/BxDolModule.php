@@ -169,8 +169,8 @@ class BxDolModule extends BxDol
     public function serviceIsSafeService($s)
     {
         $sService = bx_gen_method_name($s);
-        $aSafeServices = $this->serviceGetSafeServices();
-        return isset($aSafeServices[$sService]);
+        $aServices = $this->serviceGetSafeServices();
+        return isset($aServices[$sService]);
     }
 
     public function serviceGetSafeServices()
@@ -181,8 +181,8 @@ class BxDolModule extends BxDol
     public function serviceIsPublicService($s)
     {
         $sService = bx_gen_method_name($s);
-        $aSafeServices = $this->serviceGetPublicServices();
-        return isset($aSafeServices[$sService]);
+        $aServices = $this->serviceGetPublicServices();
+        return isset($aServices[$sService]);
     }
 
     public function serviceGetPublicServices()

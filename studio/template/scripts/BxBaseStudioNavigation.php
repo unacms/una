@@ -58,18 +58,6 @@ class BxBaseStudioNavigation extends BxDolStudioNavigation
 
         return parent::getPageMenu($aMenu);
     }
-    function getPageCode()
-    {
-        $sResult = parent::getPageCode();
-        if($sResult === false)
-            return false;
-
-        $sMethod = 'get' . ucfirst($this->sPage);
-        if(!method_exists($this, $sMethod))
-            return '';
-
-        return $sResult . $this->$sMethod();
-    }
 
     function actionGetSets()
     {
@@ -117,9 +105,7 @@ class BxBaseStudioNavigation extends BxDolStudioNavigation
 
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('navigation.html', array(
             'js_object' => $this->getPageJsObject(),
-            'content' => $this->getBlockCode(array(
-				'items' => $oGrid->getCode()
-			))
+            'content' => $oGrid->getCode()
         ));
     }
 }

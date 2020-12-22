@@ -9,10 +9,14 @@
  */
 
 class BxBaseStudioWidget extends BxDolStudioWidget
-{
+{    
+    protected $aPageCodeNoWrap;
+
     public function __construct($mixedPageName)
     {
         parent::__construct($mixedPageName);
+
+        $this->aPageCodeNoWrap = array();
     }
 
     public function getPageCss()
@@ -96,15 +100,36 @@ class BxBaseStudioWidget extends BxDolStudioWidget
         return '';
     }
 
-    public function getPageCode()
+    public function getPageCode($sPage = '', $bWrap = true)
     {
-        $sResult = parent::getPageCode();
+        $sResult = parent::getPageCode($sPage, $bWrap);
         if($sResult === false)
             return false;
 
         if(!empty($this->aPage['wid_type']) && !BxDolStudioRolesUtils::getInstance()->isActionAllowed('use ' . $this->aPage['wid_type'])) {
             $this->setError('_Access denied');
             return false;
+        }
+
+        if(empty($sPage))
+            $sPage = $this->sPage;
+
+        $sMethod = 'get' . bx_gen_method_name($sPage);
+        if(method_exists($this, $sMethod)) {
+            $mixedContent = $this->$sMethod();
+            if(!$bWrap || in_array($sPage, $this->aPageCodeNoWrap))
+                $sResult .= $mixedContent;
+            else if(is_string($mixedContent))
+                $sResult .= $this->getBlockCode(array(
+                    'content' => $mixedContent
+                ));
+            else if(is_array($mixedContent))
+                foreach($mixedContent as $sBlock)
+                    $sResult .= $this->getBlockCode(array(
+                        'content' => $sBlock
+                    ));
+            else if(is_a($mixedContent, 'BxDolPage'))
+                $sResult .= $mixedContent->getCode();
         }
 
         return $sResult . BxTemplStudioLauncher::getInstance()->getPageJsCode(array(
@@ -132,10 +157,16 @@ class BxBaseStudioWidget extends BxDolStudioWidget
     }
     public function getBlockCode($aBlock)
     {
+        $sContent = '';
+        if(!empty($aBlock['content']))
+            $sContent = $aBlock['content'];
+        else if(!empty($aBlock['items']))
+            $sContent = $aBlock['items'];
+
     	return BxDolStudioTemplate::getInstance()->parseHtmlByName('page_block.html', array(
             'caption' => $this->getBlockCaption($aBlock),
             'panel_top' => $this->getBlockPanelTop($aBlock),
-            'items' => !empty($aBlock['items']) ? $aBlock['items'] : '',
+            'items' => $sContent,
             'panel_bottom' => $this->getBlockPanelBottom($aBlock)
     	));
     }
@@ -265,6 +296,14 @@ class BxBaseStudioWidget extends BxDolStudioWidget
 
         $oForm = new BxTemplStudioFormView($aForm);
         return $oForm->getCode();
+    }
+
+    protected function getPageMenuObject($aMenu = array(), $aMarkers = array())
+    {
+        $oMenu = parent::getPageMenuObject($aMenu, $aMarkers);
+        $oMenu->setInlineIcons(false);
+
+        return $oMenu;
     }
 }
 

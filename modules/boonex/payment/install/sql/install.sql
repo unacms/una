@@ -278,7 +278,8 @@ SET @iProviderId = LAST_INSERT_ID();
 INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
 (@iProviderId, 'aina_active', 'checkbox', '_bx_payment_aina_active_cpt', '_bx_payment_aina_active_dsc', '', '', '', '', 1),
 (@iProviderId, 'aina_hidden', 'checkbox', '_bx_payment_aina_hidden_cpt', '_bx_payment_aina_hidden_dsc', '', '', '', '', 2),
-(@iProviderId, 'aina_notify_url', 'value', '_bx_payment_aina_notify_url_cpt', '', '', '', '', '', 8);
+(@iProviderId, 'aina_secret', 'text', '_bx_payment_aina_secret_cpt', '_bx_payment_aina_secret_dsc', '', '', '', '', 3),
+(@iProviderId, 'aina_notify_url', 'value', '_bx_payment_aina_notify_url_cpt', '', '', '', '', '', 4);
 
 -- GRIDS
 INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `field_id`, `field_order`, `field_active`, `paginate_url`, `paginate_per_page`, `paginate_simple`, `paginate_get_start`, `paginate_get_per_page`, `filter_fields`, `filter_fields_translatable`, `filter_mode`, `sorting_fields`, `sorting_fields_translatable`, `visible_for_levels`, `override_class_name`, `override_class_file`) VALUES

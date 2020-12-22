@@ -77,19 +77,6 @@ class BxBaseStudioForms extends BxDolStudioForms
         return parent::getPageMenu($aMenu);
     }
 
-    function getPageCode()
-    {
-        $sResult = parent::getPageCode();
-        if($sResult === false)
-            return false;
-
-        $sMethod = 'get' .  $this->getClassName($this->sPage);
-        if(!method_exists($this, $sMethod))
-            return '';
-
-        return $sResult . $this->$sMethod();
-    }
-
     function actionGetForms()
     {
         if(($sModule = bx_get('form_module')) === false)
@@ -237,9 +224,7 @@ class BxBaseStudioForms extends BxDolStudioForms
 
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('forms.html', array(
             'js_object' => $this->getPageJsObject(),
-            'content' => $this->getBlockCode(array(
-                'items' => $oGrid->getCode()
-            ))
+            'content' => $oGrid->getCode()
         ));
     }
 

@@ -12,12 +12,33 @@ function BxPollsEntry(oOptions) {
     this._sActionsUrl = oOptions.sActionUrl;
     this._sObjName = oOptions.sObjName == undefined ? 'oBxPollsEntry' : oOptions.sObjName;
 
+    this._bEmbed = oOptions.bEmbed == undefined ? false : oOptions.bEmbed;
+
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'fade' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
 
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
+    
+    var $this = this;
+    if(this._bEmbed)
+        $(document).ready(function() {
+            $this.resizeEmbed();
+        });
 }
+
+BxPollsEntry.prototype.resizeEmbed = function() {
+    var oEntry = $('.bx-polls-content:last');
+    if(!oEntry || oEntry.length == 0)
+        return;
+
+    var iEntryId = parseInt(oEntry.attr('id').replace(this._aHtmlIds['content'], ''));
+    var iEntryHeight = oEntry.height();
+    if(!iEntryId || !iEntryHeight)
+        return;
+
+    window.parent.$('iframe#' + this._aHtmlIds['embed'] + iEntryId).height(iEntryHeight);
+};
 
 BxPollsEntry.prototype.changeBlockSnippet = function(oLink, sBlock, mixedContent) {
     var $this = this;

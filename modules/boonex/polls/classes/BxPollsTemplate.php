@@ -48,7 +48,9 @@ class BxPollsTemplate extends BxBaseModTextTemplate
         $oTemplate->addCssStyle($CNF['STYLES_POLLS_EMBED_CLASS'], $CNF['STYLES_POLLS_EMBED_CONTENT']);
         $oTemplate->setPageNameIndex(BX_PAGE_EMBED);
         $oTemplate->setPageHeader($this->getTitleAuto($aContentInfo));
-        $oTemplate->setPageContent('page_main_code', $this->getJsCode('entry') . $aBlock['content']);
+        $oTemplate->setPageContent('page_main_code', $this->getJsCode('entry', array(
+            'bEmbed' => true
+        )) . $aBlock['content']);
         $oTemplate->getPageCode();
         exit;
     }

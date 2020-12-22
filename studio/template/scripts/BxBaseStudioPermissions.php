@@ -51,18 +51,6 @@ class BxBaseStudioPermissions extends BxDolStudioPermissions
 
         return parent::getPageMenu($aMenu);
     }
-    function getPageCode()
-    {
-        $sResult = parent::getPageCode();
-        if($sResult === false)
-            return false;
-
-        $sMethod = 'get' . ucfirst($this->sPage);
-        if(!method_exists($this, $sMethod))
-            return '';
-
-        return $sResult . $this->$sMethod();
-    }
 
     protected function getLevels()
     {
@@ -87,9 +75,7 @@ class BxBaseStudioPermissions extends BxDolStudioPermissions
 
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('permissions.html', array(
             'js_object' => $this->getPageJsObject(),
-            'content' => $this->getBlockCode(array(
-				'items' => $oGrid->getCode()
-        	))
+            'content' => $oGrid->getCode()
         ));
     }
 }

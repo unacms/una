@@ -125,6 +125,31 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
         return bx_srv($this->_sActive, 'get_provider_options', $aSrvParams);
     }
 
+    public function getModulesWithPayments()
+    {
+        if(empty($this->_sActive) || !BxDolRequest::serviceExists($this->_sActive, 'get_modules_with_payments'))
+            return false;
+
+        return bx_srv($this->_sActive, 'get_modules_with_payments', array());
+    }
+
+    public function getProductsNames($iVendor = 0, $iLimit = 1000)
+    {
+        $aRet = array();
+        $aModules = $this->getModulesWithPayments();
+        foreach ($aModules as $sModule) {
+            if(!BxDolRequest::serviceExists($sModule, 'get_products_names'))
+                continue;
+            $aKeys = bx_srv($sModule, 'get_products_names', array($iVendor, $iLimit));
+            if (!$aKeys)
+                continue;
+            $aValues = array_fill(0, count($aKeys), $sModule);
+            $aRet = array_merge($aRet, array_combine($aKeys, $aValues));
+        }
+
+        return $aRet;
+    }
+
     public function getPayments()
     {
         $aPayments = array(

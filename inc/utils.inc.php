@@ -895,7 +895,7 @@ function bx_php_string_quot ($mixedInput)
  */
 function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $aHeaders = array(), &$sHttpCode = null, $aBasicAuth = array(), $iTimeout = 0, $aCustomCurlParams = array())
 {
-    if ('post' != $sMethod)
+    if ('post' != $sMethod && 'post-json' != $sMethod)
     	$sFileUrl = bx_append_url_params($sFileUrl, $aParams);
 
     $sResult = '';
@@ -916,9 +916,6 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
         if (!ini_get('open_basedir'))
             curl_setopt($rConnect, CURLOPT_FOLLOWLOCATION, 1);
 
-        if ($aHeaders)
-            curl_setopt($rConnect, CURLOPT_HTTPHEADER, $aHeaders);
-
         if ($aBasicAuth)
             curl_setopt($rConnect, CURLOPT_USERPWD, $aBasicAuth['user'] . ':' . $aBasicAuth['password']);
 
@@ -926,6 +923,14 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
             curl_setopt($rConnect, CURLOPT_POST, true);
             curl_setopt($rConnect, CURLOPT_POSTFIELDS, http_build_query($aParams));
         }
+        elseif ('post-json' == $sMethod) {
+            curl_setopt($rConnect, CURLOPT_POST, true);
+            curl_setopt($rConnect, CURLOPT_POSTFIELDS, json_encode($aParams));
+            $aHeaders[] = 'Content-Type: application/json';
+        }
+
+        if ($aHeaders)
+            curl_setopt($rConnect, CURLOPT_HTTPHEADER, $aHeaders);
 
         $sAllCookies = '';
         foreach($_COOKIE as $sKey=>$sValue){

@@ -51,18 +51,6 @@ class BxBaseStudioRoles extends BxDolStudioRoles
 
         return parent::getPageMenu($aMenu);
     }
-    function getPageCode()
-    {
-        $sResult = parent::getPageCode();
-        if($sResult === false)
-            return false;
-
-        $sMethod = 'get' . ucfirst($this->sPage);
-        if(!method_exists($this, $sMethod))
-            return '';
-
-        return $sResult . $this->$sMethod();
-    }
 
     protected function getRlevels()
     {
@@ -82,9 +70,7 @@ class BxBaseStudioRoles extends BxDolStudioRoles
 
         return BxDolStudioTemplate::getInstance()->parseHtmlByName('roles.html', array(
             'js_object' => $this->getPageJsObject(),
-            'content' => $this->getBlockCode(array(
-                'items' => $oGrid->getCode()
-            ))
+            'content' => $oGrid->getCode()
         ));
     }
 }

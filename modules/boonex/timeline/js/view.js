@@ -472,10 +472,10 @@ BxTimelineView.prototype.changeView = function(oLink, sType, oRequestParams)
                 return;
 
             var oContent = $(oResponse.content);
-            oContent.filter(sView).bxProcessHtml().hide();
+            oContent.filter(sView).hide();
 
             oViewBefore.hide();
-            oViews.append(oContent).find(sView).show();
+            oViews.append(oContent).find(sView).bxProcessHtml().show();
         },
         'json'
     );

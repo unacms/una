@@ -19,10 +19,16 @@ class BxBaseStudioMenu extends BxDolStudioMenu
         $this->_bInlineIcons = in_array($this->_aObject['template'], array(
             'menu_side.html', 
             'menu_top_toolbar.html', 
-            'menu_launcher_browser.html'
+            'menu_launcher_browser.html',
+            'page_breadcrumb.html'
         ));
     }
-    
+
+    public function setInlineIcons($bInlineIcons)
+    {
+        $this->_bInlineIcons = $bInlineIcons;
+    }
+
     protected function _getMenuItem ($aItem)
     {
         $aItem = parent::_getMenuItem($aItem);

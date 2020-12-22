@@ -174,6 +174,28 @@ class BxPaymentModule extends BxBaseModPaymentModule
      * @page service Service Calls
      * @section bx_payment Payment
      * @subsection bx_payment-purchase_processing Purchase Processing
+     * @subsubsection bx_payment-get_modules_with_payments get_modules_with_payments
+     * 
+     * @code bx_srv('bx_payment', 'get_modules_with_payments', []); @endcode
+     * 
+     * Get modules with payments functionality
+     *
+     * @return array with modules names
+     * 
+     * @see BxPaymentModule::serviceGetModulesWithPayments
+     */
+    /** 
+     * @ref bx_payment-get_modules_with_payments "get_modules_with_payments"
+     */
+    public function serviceGetModulesWithPayments()
+    {
+        return $this->_oDb->getModulesWithPayments();
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-purchase_processing Purchase Processing
      * @subsubsection bx_payment-is_credits_only is_credits_only
      * 
      * @code bx_srv('bx_payment', 'is_credits_only'); @endcode

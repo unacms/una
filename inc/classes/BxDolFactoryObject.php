@@ -43,10 +43,10 @@ abstract class BxDolFactoryObject extends BxDolFactory implements iBxDolFactoryO
             return false;
 
         $sClass = $sClassName;
-        if(!empty($aObject['class_name'])) {
-            $sClass = $aObject['class_name'];
-            if(!empty($aObject['class_file']))
-                require_once(BX_DIRECTORY_PATH_ROOT . $aObject['class_file']);
+        if(!empty($aObject['class_name']) || !empty($aObject['override_class_name'])) {
+            $sClass = !empty($aObject['class_name']) ? $aObject['class_name'] : $aObject['override_class_name'];
+            if(!empty($aObject['class_file']) || !empty($aObject['override_class_file']))
+                require_once(BX_DIRECTORY_PATH_ROOT . (!empty($aObject['class_file']) ? $aObject['class_file'] : $aObject['override_class_file']));
         }        
 
         $o = new $sClass($aObject, $oTemplate);

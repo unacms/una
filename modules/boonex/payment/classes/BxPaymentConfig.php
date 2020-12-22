@@ -241,8 +241,8 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         else
             $aItems = array();
 
-        foreach($aItems as $sItem) {
-            $aItem = $this->descriptorS2A($sItem);
+        foreach($aItems as $mixedItem) {
+            $aItem = is_array($mixedItem) ? $mixedItem : $this->descriptorS2A($mixedItem);
 
             $aResult = array('vendor_id' => $aItem[0], 'module_id' => $aItem[1], 'item_id' => $aItem[2], 'item_count' => $aItem[3]);
             if(isset($aItem[4]))

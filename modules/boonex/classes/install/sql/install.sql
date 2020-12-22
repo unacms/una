@@ -203,6 +203,7 @@ CREATE TABLE IF NOT EXISTS `bx_classes_cmts` (
   `cmt_rate_count` int(11) NOT NULL DEFAULT '0',
   `cmt_time` int(11) unsigned NOT NULL DEFAULT '0',
   `cmt_replies` int(11) NOT NULL DEFAULT '0',
+  `cmt_pinned` int(11) NOT NULL default '0',
   PRIMARY KEY (`cmt_id`),
   KEY `cmt_object_id` (`cmt_object_id`,`cmt_parent_id`),
   FULLTEXT KEY `search_fields` (`cmt_text`)
@@ -221,6 +222,7 @@ CREATE TABLE IF NOT EXISTS `bx_classes_cmts_notes` (
   `cmt_rate_count` int(11) NOT NULL DEFAULT '0',
   `cmt_time` int(11) unsigned NOT NULL DEFAULT '0',
   `cmt_replies` int(11) NOT NULL DEFAULT '0',
+  `cmt_pinned` int(11) NOT NULL default '0',
   PRIMARY KEY (`cmt_id`),
   KEY `cmt_object_id` (`cmt_object_id`,`cmt_parent_id`),
   FULLTEXT KEY `search_fields` (`cmt_text`)
@@ -582,7 +584,7 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`) VALU
 -- COMMENTS
 INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Html`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
 ('bx_classes', 'bx_classes', 'bx_classes_cmts', 1, 5000, 1000, 3, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-class&id={object_id}', '', 'bx_classes_classes', 'id', 'author', 'title', 'comments', '', ''),
-('bx_classes_notes', 'bx_classes', 'bx_classes_cmts_notes', 1, 5000, 1000, 3, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-class&id={object_id}', '', 'bx_classes_classes', 'id', 'author', 'title', 'comments', '', '');
+('bx_classes_notes', 'bx_classes', 'bx_classes_cmts_notes', 1, 5000, 1000, 0, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-class&id={object_id}', '', 'bx_classes_classes', 'id', 'author', 'title', 'comments', '', '');
 
 -- VOTES
 INSERT INTO `sys_objects_vote` (`Name`, `TableMain`, `TableTrack`, `PostTimeout`, `MinValue`, `MaxValue`, `IsUndo`, `IsOn`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldRate`, `TriggerFieldRateCount`, `ClassName`, `ClassFile`) VALUES 

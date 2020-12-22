@@ -187,9 +187,9 @@ class BxBaseModPaymentProvider extends BxDol
      * @throws Exception $e 
      *
      */
-    protected function log($mixedContents)
+    protected function log($mixedContents, $sTitle = '')
     {
-        $this->_oModule->log($mixedContents, $this->_sName);
+        $this->_oModule->log($mixedContents, $this->_sName, $sTitle);
     }
 }
 

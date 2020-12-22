@@ -490,6 +490,30 @@ class BxMarketModule extends BxBaseModTextModule
     /**
      * @page service Service Calls
      * @section bx_market Market
+     * @subsection bx_market-browsing Browsing
+     * @subsubsection bx_market-get_products_names get_products_names
+     * 
+     * @code bx_srv('bx_market', 'get_products_names', [...]); @endcode
+     * 
+     * Get an array of products names.
+     * 
+     * @param $iVendorId return products of 1 vendor only
+     * @param $iLimit limit the result artay
+     * @return an array of products names
+     * 
+     * @see BxMarketModule::serviceGetProductsNames
+     */
+    /** 
+     * @ref bx_market-get_products_names "get_products_names"
+     */
+    public function serviceGetProductsNames($iVendorId, $iLimit = 1000)
+    {
+    	return $this->_oDb->getProductsNames($iVendorId, $iLimit);
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_market Market
      * @subsection bx_market-entry Entry
      * @subsubsection bx_market-get_thumbnail get_thumbnail
      * 

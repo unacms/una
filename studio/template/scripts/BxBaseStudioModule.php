@@ -15,7 +15,7 @@ class BxBaseStudioModule extends BxDolStudioModule
     protected $aMenuItems = array(
         BX_DOL_STUDIO_MOD_TYPE_SETTINGS => array('name' => BX_DOL_STUDIO_MOD_TYPE_SETTINGS, 'icon' => 'cogs', 'title' => '_adm_lmi_cpt_settings')
     );
-    
+
     protected $sTmplNamePopupSettings;
     protected $sTmplNamePopupConfirmUninstall;
 
@@ -88,19 +88,6 @@ class BxBaseStudioModule extends BxDolStudioModule
         return parent::getPageMenu($aMenu);
     }
 
-    function getPageCode()
-    {
-        $sResult = parent::getPageCode();
-        if($sResult === false)
-            return false;
-
-        $sMethod = 'get' . ucfirst($this->sPage);
-        if(!method_exists($this, $sMethod))
-            return '';
-
-        return $sResult . $this->$sMethod();
-    }
-
     protected function getSettings()
     {
         $oPage = new BxTemplStudioSettings($this->sModule);
@@ -116,12 +103,16 @@ class BxBaseStudioModule extends BxDolStudioModule
         if(empty($sActions))
             return '';
 
-        $sName = 'bx-std-mod-popup-settings-' . $sPage;
+        $sPrefix = 'bx-std-mod-popup-settings';
+        $sName = $sPrefix . '-' . $sPage;
         $sContent = BxDolStudioTemplate::getInstance()->parseHtmlByName($this->sTmplNamePopupSettings, array(
             'content' => $sActions
         ));
 
-        return BxTemplStudioFunctions::getInstance()->transBox($sName, $sContent);
+        return BxTemplStudioFunctions::getInstance()->transBox($sName, array(
+            'wrapper_class' => $sPrefix . '-wrapper',
+            'content' => $sContent
+        ));
     }
 
     protected function getPopupConfirmUninstall($iWidgetId, &$aModule)

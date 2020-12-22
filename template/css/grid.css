@@ -35,22 +35,42 @@
 .bx-grid-table-wrapper .bx-def-hr {
     margin:0;
 }
-
+.bx-grid-header-cnt {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+}
 .bx-grid-header-controls-filter {
-    float:left;
+    margin-bottom: -0.25rem;
 }
-
+.bx-grid-header-controls-filter div.bx-form-element-wrapper {
+    margin-bottom: 0.25rem;
+}
 .bx-grid-header-controls-counter {
-    float:left;
+    -webkit-flex-grow: 2;
+    flex-grow: 2;
+
+    white-space: nowrap;
+}
+.bx-grid-header-controls-independent {}
+.bx-grid-header-controls-independent .bx-btn {
+    white-space: nowrap;
 }
 
-.bx-media-phone div.bx-grid-header div.bx-form-element-wrapper{
-    float:none;
+.bx-media-phone .bx-grid-header-cnt {
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
 }
-
-.bx-grid-header-controls-independent {
-    float:right;
-    margin-top:0;
+.bx-media-phone div.bx-grid-header div.bx-form-element-wrapper {
+    float: none;
+    margin-right: 0;
+}
+.bx-media-phone div.bx-grid-header div.bx-form-element-wrapper:last-child {
+    margin-bottom: 0; 
 }
 
 .bx-grid-table .bx-grid-table-row-hr td:first-child,

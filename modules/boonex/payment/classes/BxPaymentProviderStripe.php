@@ -248,24 +248,6 @@ class BxPaymentProviderStripe extends BxPaymentProviderStripeBasic implements iB
         );
     }
 
-    protected function _retrieveCharge($sId) {
-        $oCharge = null;
-        bx_alert($this->_oModule->_oConfig->getName(), $this->_sName . '_retrieve_charge', 0, false, array(
-            'charge_id' => &$sId,
-            'charge_object' => &$oCharge
-        ));
-
-        try {
-        if(empty($oCharge))
-            $oCharge = \Stripe\Charge::retrieve($sId);
-        }
-        catch (Exception $oException) {
-            return $this->_processException('Retrieve Charge Error: ', $oException);
-        }
-
-        return $oCharge;
-    }
-
     protected function _createSubscription($sToken, $iPendingId, &$aClient, &$aCartInfo)
     {
         if(empty($this->_oCustomer))
