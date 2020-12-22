@@ -504,7 +504,6 @@ class BxApiModule extends BxDolModule
      * - `name` - account name
      * - `email` - email address
      * - `password` - password
-     * - `is_confirmed` - email confirmed (true/false)
      *
      * **Request header:**
      * @code
@@ -533,7 +532,6 @@ class BxApiModule extends BxDolModule
 		$sAccountName = bx_get('name');
 		$sEmail = bx_get('email');
 		$sPassword = bx_get('password');
-		$bEmailConfirmed = bx_get('is_confirmed');
 		
         if (!($sAccountName && $sEmail && $sPassword)){
 			return array(
@@ -556,7 +554,7 @@ class BxApiModule extends BxDolModule
 		$_POST['name'] = $sAccountName;
 		$_POST['email'] = $sEmail;
 		$_POST['password'] = $sPassword;
-		$_POST['email_confirmed'] = $bEmailConfirmed;
+		$_POST['email_confirmed'] = false;
 		$_POST['do_submit'] = 'Submit';
 
 		$oForm = BxDolForm::getObjectInstance('bx_accounts_account', 'bx_accounts_account_create');
@@ -599,9 +597,7 @@ class BxApiModule extends BxDolModule
                 'desc' => $s,
             );
 		}
-		
 	}
-
 }
 
 /** @} */
