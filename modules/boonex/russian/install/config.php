@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_ru',
     'title' => 'Russian',
     'note' => 'Language file',
-    'version' => '11.0.6.DEV',
+    'version' => '11.0.8.DEV',
     'vendor' => 'Boonex',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 

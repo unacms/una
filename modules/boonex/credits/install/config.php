@@ -18,7 +18,7 @@ $aConfig = array(
     'name' => 'bx_credits',
     'title' => 'Credits',
     'note' => 'Credits module.',
-    'version' => '11.0.3.DEV',
+    'version' => '11.0.4.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
