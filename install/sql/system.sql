@@ -429,8 +429,8 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, 'currency_code', '_adm_stg_cpt_option_currency_code', 'USD', 'select', 'USD,EURO', 'Avail', '_adm_stg_err_option_currency_code', 30),
 (@iCategoryId, 'currency_sign', '_adm_stg_cpt_option_currency_sign', '&#36;', 'digit', '', 'Avail', '_adm_stg_err_option_currency_sign', 31),
 
-(@iCategoryId, 'client_image_resize_width', '_adm_stg_cpt_option_client_image_resize_width', '2048', 'digit', '', '', '', 42),
-(@iCategoryId, 'client_image_resize_height', '_adm_stg_cpt_option_client_image_resize_height', '2048', 'digit', '', '', '', 43),
+(@iCategoryId, 'client_image_resize_width', '_adm_stg_cpt_option_client_image_resize_width', '0', 'digit', '', '', '', 42),
+(@iCategoryId, 'client_image_resize_height', '_adm_stg_cpt_option_client_image_resize_height', '0', 'digit', '', '', '', 43),
 
 (@iCategoryId, 'useLikeOperator', '_adm_stg_cpt_option_use_like_operator', 'on', 'checkbox', '', '', '', 45),
 
