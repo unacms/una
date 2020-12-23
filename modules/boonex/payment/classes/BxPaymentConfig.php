@@ -123,6 +123,11 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
         $this->_sCurrencySign = !empty($this->_sCurrencyCode) && isset($aCurrencies[$this->_sCurrencyCode]) ? $aCurrencies[$this->_sCurrencyCode] : '';
     }
 
+    public function isCreditsOnly()
+    {
+        return false;
+    }
+
     public function getPrice($sType, $aItem)
     {
     	$fPrice = 0;
