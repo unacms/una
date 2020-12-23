@@ -70,7 +70,7 @@ class BxPaymentProviderCredits extends BxBaseModPaymentProvider implements iBxBa
                 return array(
                     'code' => 0,
                     'popup' => array(
-                        'html' =>bx_srv($this->_sModuleCredits, 'get_popup_subscribe', array(array(
+                        'html' => bx_srv($this->_sModuleCredits, 'get_popup_subscribe', array(array(
                             'currency_code' => $aCartInfo['vendor_currency_code'],
                             'currency_sign' => $aCartInfo['vendor_currency_sign'],
                             'seller' => $iSellerId,
@@ -78,7 +78,7 @@ class BxPaymentProviderCredits extends BxBaseModPaymentProvider implements iBxBa
                             'amount' => $aItem['price_recurring'],
                             'period' => $aItem['period_recurring'],
                             'period_unit' => $aItem['period_unit_recurring'],
-                            'trial' => $aItem['trial_recurring'],
+                            'trial' => isset($aItem['trial_recurring']) ? $aItem['trial_recurring'] : 0,
                             'custom' => $sCustomData,
                             'return_data_url' => $sReturnDataUrl,
                         ))),

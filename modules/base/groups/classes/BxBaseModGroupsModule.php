@@ -689,7 +689,8 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
             'price_single' => $aItem['price'],
             'price_recurring' => $aItem['price'],
             'period_recurring' => $aItem['period'],
-            'period_unit_recurring' => $aItem['period_unit']
+            'period_unit_recurring' => $aItem['period_unit'],
+            'trial_recurring' => 0
         );
     }
 
