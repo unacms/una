@@ -38,6 +38,8 @@
  */
 class BxDolEmbed extends BxDolFactoryObject
 {
+    protected $_bCssJsAdded = false;
+
     /**
      * Get editor object instance by object name
      * @param $sObject object name
