@@ -45,9 +45,24 @@ class BxBaseEmbedIframely extends BxDolEmbed
         ));
     }
 
+    public function addProcessLinkMethod ()
+    {
+        return "
+        <script>
+            function bx_embed_link(e)
+            {
+                window.iframely && iframely.load(e);
+            }
+        </script>";
+    }
+
     public function addJsCss ()
     {
+        if ($this->_bCssJsAdded)
+            return '';
+
         $sKey = getParam('sys_iframely_api_key');
+        $this->_bCssJsAdded = true;
 
         return $this->_oTemplate->parseHtmlByName('embed_iframely_integration.html', array(
             'key' => $sKey,

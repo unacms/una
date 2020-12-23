@@ -731,7 +731,7 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
         // Load embed files
         $oEmbed = BxDolEmbed::getObjectInstance(false);
         if ($oEmbed) 
-            return $oEmbed->addJsCss();
+            return $oEmbed->addJsCss() . $oEmbed->addProcessLinkMethod();
 
         return '';
     }

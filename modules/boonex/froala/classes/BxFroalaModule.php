@@ -18,7 +18,7 @@ class BxFroalaModule extends BxDolModule
 
     public function serviceInjection()
     {
-        return "
+        $s = "
         <script>
             var fFroalaAddClass = function (s) {
                 $('.bx-content-description,.cmt-body,.bx-base-text-entity-content,.bx-tl-content').addClass('fr-view');
@@ -31,6 +31,9 @@ class BxFroalaModule extends BxDolModule
 
             fFroalaAddClass();
         </script>";
+
+        $oEmbed = BxDolEmbed::getObjectInstance('sys_embedly');
+        return $oEmbed ? $oEmbed->addJsCss() . $s : $s;
     }
 
     public function actionUpload()
