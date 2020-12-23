@@ -54,7 +54,7 @@ DELETE FROM `sys_grid_actions` WHERE `object` IN ('bx_videos_administration', 'b
 
 
 -- UPLOADERS
-DELETE FROM `sys_objects_uploader` WHERE `object` IN('bx_videos_simple', 'bx_videos_html5');
+DELETE FROM `sys_objects_uploader` WHERE `object` IN('bx_videos_simple', 'bx_videos_html5', 'bx_videos_record_video');
 
 
 -- ALERTS

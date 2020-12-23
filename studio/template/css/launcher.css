@@ -224,10 +224,10 @@ div.bx-std-widget-action i.sys-icon {
 .bx-std-widget-loading {
     display: none;
     position: absolute;
-    top: 128px;
-    left: 24px;
-    width: 96px;
-    height: 15px;
+    top: 6.75rem;
+    left: 1.5rem;
+    width: 5.0rem;
+    height: 0.75rem;
 
     background-image: url(../images/loading.gif);
     background-repeat: no-repeat;

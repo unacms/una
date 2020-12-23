@@ -192,6 +192,8 @@
     <string name="_bx_reviews_menu_item_title_cpa_video_simple"><![CDATA[Add Video]]></string>
     <string name="_bx_reviews_menu_item_title_system_cpa_video_html5"><![CDATA[Add Video (html5)]]></string>
     <string name="_bx_reviews_menu_item_title_cpa_video_html5"><![CDATA[Add Videos]]></string>
+    <string name="_bx_reviews_menu_item_title_system_cpa_video_record"><![CDATA[Record Video]]></string>
+    <string name="_bx_reviews_menu_item_title_cpa_video_record"><![CDATA[Record Video]]></string>
     <string name="_bx_reviews_menu_item_title_system_cpa_file_simple"><![CDATA[Add File (simple)]]></string>
     <string name="_bx_reviews_menu_item_title_cpa_file_simple"><![CDATA[Add File]]></string>
     <string name="_bx_reviews_menu_item_title_system_cpa_file_html5"><![CDATA[Add File (html5)]]></string>

@@ -153,6 +153,8 @@
   <string name="_bx_classes_menu_item_title_system_cpa_video_html5"><![CDATA[Добавить видео (много)]]></string>
   <string name="_bx_classes_menu_item_title_cpa_video_html5"><![CDATA[Добавить видео]]></string>
   <string name="_bx_classes_menu_item_title_system_cpa_file_simple"><![CDATA[Добавить файл (один)]]></string>
+  <string name="_bx_classes_menu_item_title_system_cpa_video_record"><![CDATA[Записать видео]]></string>
+  <string name="_bx_classes_menu_item_title_cpa_video_record"><![CDATA[Записать видео]]></string>
 
   <string name="_bx_classes_menu_item_title_system_cpa_sound_simple"><![CDATA[Добавить звук (один)]]></string>
   <string name="_bx_classes_menu_item_title_cpa_sound_simple"><![CDATA[Добавить звук]]></string>

@@ -122,10 +122,11 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 ('bx_classes_entry_attachments', 'bx_classes', 'photo_html5', '_bx_classes_menu_item_title_system_cpa_photo_html5', '_bx_classes_menu_item_title_cpa_photo_html5', 'javascript:void(0)', 'javascript:{js_object_uploader_photos_html5}.showUploaderForm();', '_self', 'camera', '', '', 2147483647, '', 1, 0, 1, 2),
 ('bx_classes_entry_attachments', 'bx_classes', 'video_simple', '_bx_classes_menu_item_title_system_cpa_video_simple', '_bx_classes_menu_item_title_cpa_video_simple', 'javascript:void(0)', 'javascript:{js_object_uploader_videos_simple}.showUploaderForm();', '_self', 'video', '', '', 2147483647, '', 0, 0, 1, 3),
 ('bx_classes_entry_attachments', 'bx_classes', 'video_html5', '_bx_classes_menu_item_title_system_cpa_video_html5', '_bx_classes_menu_item_title_cpa_video_html5', 'javascript:void(0)', 'javascript:{js_object_uploader_videos_html5}.showUploaderForm();', '_self', 'video', '', '', 2147483647, '', 1, 0, 1, 4),
-('bx_classes_entry_attachments', 'bx_classes', 'sound_simple', '_bx_classes_menu_item_title_system_cpa_sound_simple', '_bx_classes_menu_item_title_cpa_sound_simple', 'javascript:void(0)', 'javascript:{js_object_uploader_sounds_simple}.showUploaderForm();', '_self', 'music', '', '', 2147483647, '', 0, 0, 1, 5),
-('bx_classes_entry_attachments', 'bx_classes', 'sound_html5', '_bx_classes_menu_item_title_system_cpa_sound_html5', '_bx_classes_menu_item_title_cpa_sound_html5', 'javascript:void(0)', 'javascript:{js_object_uploader_sounds_html5}.showUploaderForm();', '_self', 'music', '', '', 2147483647, '', 1, 0, 1, 6),
-('bx_classes_entry_attachments', 'bx_classes', 'file_simple', '_bx_classes_menu_item_title_system_cpa_file_simple', '_bx_classes_menu_item_title_cpa_file_simple', 'javascript:void(0)', 'javascript:{js_object_uploader_files_simple}.showUploaderForm();', '_self', 'file', '', '', 2147483647, '', 0, 0, 1, 7),
-('bx_classes_entry_attachments', 'bx_classes', 'file_html5', '_bx_classes_menu_item_title_system_cpa_file_html5', '_bx_classes_menu_item_title_cpa_file_html5', 'javascript:void(0)', 'javascript:{js_object_uploader_files_html5}.showUploaderForm();', '_self', 'file', '', '', 2147483647, '', 1, 0, 1, 8),
+('bx_classes_entry_attachments', 'bx_classes', 'video_record_video', '_bx_classes_menu_item_title_system_cpa_video_record', '_bx_classes_menu_item_title_cpa_video_record', 'javascript:void(0)', 'javascript:{js_object_uploader_videos_record_video}.showUploaderForm();', '_self', 'fas circle', '', '', 2147483647, '', 1, 0, 1, 5),
+('bx_classes_entry_attachments', 'bx_classes', 'sound_simple', '_bx_classes_menu_item_title_system_cpa_sound_simple', '_bx_classes_menu_item_title_cpa_sound_simple', 'javascript:void(0)', 'javascript:{js_object_uploader_sounds_simple}.showUploaderForm();', '_self', 'music', '', '', 2147483647, '', 0, 0, 1, 6),
+('bx_classes_entry_attachments', 'bx_classes', 'sound_html5', '_bx_classes_menu_item_title_system_cpa_sound_html5', '_bx_classes_menu_item_title_cpa_sound_html5', 'javascript:void(0)', 'javascript:{js_object_uploader_sounds_html5}.showUploaderForm();', '_self', 'music', '', '', 2147483647, '', 1, 0, 1, 7),
+('bx_classes_entry_attachments', 'bx_classes', 'file_simple', '_bx_classes_menu_item_title_system_cpa_file_simple', '_bx_classes_menu_item_title_cpa_file_simple', 'javascript:void(0)', 'javascript:{js_object_uploader_files_simple}.showUploaderForm();', '_self', 'file', '', '', 2147483647, '', 0, 0, 1, 8),
+('bx_classes_entry_attachments', 'bx_classes', 'file_html5', '_bx_classes_menu_item_title_system_cpa_file_html5', '_bx_classes_menu_item_title_cpa_file_html5', 'javascript:void(0)', 'javascript:{js_object_uploader_files_html5}.showUploaderForm();', '_self', 'file', '', '', 2147483647, '', 1, 0, 1, 9),
 ('bx_classes_entry_attachments', 'bx_classes', 'poll', '_bx_classes_menu_item_title_system_cpa_poll', '_bx_classes_menu_item_title_cpa_poll', 'javascript:void(0)', 'javascript:{js_object}.showPollForm(this);', '_self', 'tasks', '', '', 2147483647, '', 1, 0, 1, 9);
 
 -- MENU: actions menu for view entry 
@@ -356,10 +357,12 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 INSERT INTO `sys_objects_uploader` (`object`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('bx_classes_simple', 1, 'BxClssUploaderSimple', 'modules/boonex/classes/classes/BxClssUploaderSimple.php'),
 ('bx_classes_html5', 1, 'BxClssUploaderHTML5', 'modules/boonex/classes/classes/BxClssUploaderHTML5.php'),
+('bx_classes_record_video', 1, 'BxClssUploaderRecordVideo', 'modules/boonex/classes/classes/BxClssUploaderRecordVideo.php'),
 ('bx_classes_photos_simple', 1, 'BxClssUploaderSimpleAttach', 'modules/boonex/classes/classes/BxClssUploaderSimpleAttach.php'),
 ('bx_classes_photos_html5', 1, 'BxClssUploaderHTML5Attach', 'modules/boonex/classes/classes/BxClssUploaderHTML5Attach.php'),
 ('bx_classes_videos_simple', 1, 'BxClssUploaderSimpleAttach', 'modules/boonex/classes/classes/BxClssUploaderSimpleAttach.php'),
 ('bx_classes_videos_html5', 1, 'BxClssUploaderHTML5Attach', 'modules/boonex/classes/classes/BxClssUploaderHTML5Attach.php'),
+('bx_classes_videos_record_video', 1, 'BxClssUploaderRecordVideoAttach', 'modules/boonex/classes/classes/BxClssUploaderRecordVideoAttach.php'),
 ('bx_classes_sounds_simple', 1, 'BxClssUploaderSimpleAttach', 'modules/boonex/classes/classes/BxClssUploaderSimpleAttach.php'),
 ('bx_classes_sounds_html5', 1, 'BxClssUploaderHTML5Attach', 'modules/boonex/classes/classes/BxClssUploaderHTML5Attach.php'),
 ('bx_classes_files_simple', 1, 'BxClssUploaderSimpleAttach', 'modules/boonex/classes/classes/BxClssUploaderSimpleAttach.php'),
