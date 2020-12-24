@@ -27,7 +27,7 @@ class BxReviewsStudioPage extends BxTemplStudioModule
         ];
     }
 
-    protected function getVoting_Options()
+    protected function getVotingOptions()
     {
         bx_import('BxTemplGrid');
         /** @noinspection PhpParamsInspection */
