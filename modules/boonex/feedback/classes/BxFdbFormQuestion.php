@@ -237,6 +237,7 @@ class BxFdbFormQuestion extends BxTemplStudioFormView
             foreach($aInput['value']['vals'] as $i => $sValue)
                 $sAnswers .= $this->_genAnswerSample($aInput, $iIndex++, array(
                     'value' => $sValue,
+                    'values' => !empty($aInput['values']['vals'][$i]) && is_array($aInput['values']['vals'][$i]) ? $aInput['values']['vals'][$i] : '',
                     'id' => !empty($aInput['value']['ids'][$i]) ? (int)$aInput['value']['ids'][$i] : '',
                     'checked' => isset($aImps[$i]) && $aImps[$i] === true,
                 ));
@@ -259,9 +260,10 @@ class BxFdbFormQuestion extends BxTemplStudioFormView
         if(!empty($aParams['class']))
             $sClass .= ' ' . $aParams['class'];
 
-        $sValue = !empty($aParams['value']) ? $aParams['value'] : '';
+        $mixedValue = !empty($aParams['value']) ? $aParams['value'] : '';
+        $mixedValues = !empty($aParams['values']) ? $aParams['values'] : '';
 
-        $sInputText = $this->genCustomInputAnswersText($aInput, $iIndex, $sValue);
+        $sInputText = $this->genCustomInputAnswersText($aInput, $iIndex, $mixedValue, $mixedValues);
         if(!empty($aParams['id']))
             $sInputText .= $this->genCustomInputAnswersHidden($aInput, $iIndex, $aParams['id']);
 
@@ -273,12 +275,13 @@ class BxFdbFormQuestion extends BxTemplStudioFormView
         ));
     }
 
-    protected function genCustomInputAnswersText($aInput, $iIndex, $mixedValue = '')
+    protected function genCustomInputAnswersText($aInput, $iIndex, $mixedValue = '', $mixedValues = '')
     {
         $aInput['type'] = 'text_translatable';
         $aInput['name'] .= '_' . $iIndex;
         $aInput['caption'] = '';
         $aInput['value'] = $mixedValue;
+        $aInput['values'] = $mixedValues;
         $aInput['db'] = array(
             'pass' => 'Xss'
         );
@@ -354,6 +357,12 @@ class BxFdbFormQuestion extends BxTemplStudioFormView
         $aInput['attrs']['onclick'] = $this->_oModule->_oConfig->getJsObject('question') . ".answerAdd(this, '" . $sName . "');";
 
         return $this->genInputButton($aInput);
+    }
+
+    protected function _processTranslationsValuesByNameList($sName, $iIndex)
+    {
+        for($i = 0; $i < $iIndex; $i++)
+            $this->aInputs[$sName]['values']['vals'][$i] = $this->_getTranslationsValuesByName($sName . '_' . $i);
     }
 }
 

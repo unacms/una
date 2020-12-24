@@ -193,24 +193,33 @@ class BxDolStudioForm extends BxBaseFormView
             if(!in_array($aInput['type'], array('text_translatable', 'textarea_translatable', 'list_translatable')))
                 continue;
 
-            if($aInput['type'] == 'list_translatable') {
-                $iIndex = (int)$this->getCleanValue($sName . '_ind');
-                for($i = 0; $i < $iIndex; $i++)
-                    $this->_processTranslationsValuesByName($sName . '_' . $i);
-
-                continue;
-            }
-
-            $this->_processTranslationsValuesByName($sName);
+            if($aInput['type'] == 'list_translatable')
+                $this->_processTranslationsValuesByNameList($sName, (int)$this->getCleanValue($sName . '_ind'));
+            else 
+                $this->_processTranslationsValuesByName($sName);
         }
+    }
+
+    protected function _getTranslationsValuesByName($sName)
+    {
+        $aResults = array();
+
+        $aLanguages = BxDolStudioLanguagesUtils::getInstance()->getLanguages();
+        foreach($aLanguages as $sLangName => $sLangTitle)
+            $aResults[$sLangName] = BxDolForm::getSubmittedValue($sName . '-' . $sLangName, $this->aFormAttrs['method']);
+
+        return $aResults;
     }
 
     protected function _processTranslationsValuesByName($sName)
     {
-        $aLanguages = BxDolStudioLanguagesUtils::getInstance()->getLanguages();
+        $this->aInputs[$sName]['values'] = $this->_getTranslationsValuesByName($sName);
+    }
 
-        foreach($aLanguages as $sLangName => $sLangTitle)
-            $this->aInputs[$sName]['values'][$sLangName] = BxDolForm::getSubmittedValue($sName . '-' . $sLangName, $this->aFormAttrs['method']);
+    protected function _processTranslationsValuesByNameList($sName, $iIndex)
+    {
+        for($i = 0; $i < $iIndex; $i++)
+            $this->aInputs[$sName]['values'][$i] = $this->_getTranslationsValuesByName($sName . '_' . $i);
     }
 
     protected function getTranslationsKey($sType, $sName, $sValue)
