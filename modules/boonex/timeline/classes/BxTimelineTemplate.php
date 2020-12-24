@@ -2640,52 +2640,70 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $oModule = $this->getModule();
 
         $sSystem = $this->_oConfig->getObject('view');
-        if(empty($aResult['views']) && $oModule->getViewObject($sSystem, $aEvent['id']) !== false)
-            $aResult['views'] = array(
-                'system' => $sSystem,
-                'object_id' => $aEvent['id'],
-                'count' => $aEvent['views']
-            );
+        if(empty($aResult['views'])) {
+            $aResult['views'] = array();
+            if($oModule->getViewObject($sSystem, $aEvent['id']) !== false)
+                $aResult['views'] = array(
+                    'system' => $sSystem,
+                    'object_id' => $aEvent['id'],
+                    'count' => $aEvent['views']
+                );
+        }
 
         $sSystem = $this->_oConfig->getObject('vote');
-        if(empty($aResult['votes']) && $oModule->getVoteObject($sSystem, $aEvent['id']) !== false)
-            $aResult['votes'] = array(
-                'system' => $sSystem,
-                'object_id' => $aEvent['id'],
-                'count' => $aEvent['votes']
-            );
+        if(empty($aResult['votes'])) {
+            $aResult['votes'] = array();
+            if($oModule->getVoteObject($sSystem, $aEvent['id']) !== false)
+                $aResult['votes'] = array(
+                    'system' => $sSystem,
+                    'object_id' => $aEvent['id'],
+                    'count' => $aEvent['votes']
+                );
+        }
         
         $sSystem = $this->_oConfig->getObject('reaction');
-        if(empty($aResult['reactions']) && $oModule->getReactionObject($sSystem, $aEvent['id']) !== false)
-            $aResult['reactions'] = array(
-                'system' => $sSystem,
-                'object_id' => $aEvent['id'],
-                'count' => $aEvent['rvotes']
-            );
+        if(empty($aResult['reactions'])) {
+            $aResult['reactions'] = array();
+            if($oModule->getReactionObject($sSystem, $aEvent['id']) !== false)
+                $aResult['reactions'] = array(
+                    'system' => $sSystem,
+                    'object_id' => $aEvent['id'],
+                    'count' => $aEvent['rvotes']
+                );
+        }
 
         $sSystem = $this->_oConfig->getObject('score');
-        if(empty($aResult['scores']) && $oModule->getScoreObject($sSystem, $aEvent['id']) !== false)
-            $aResult['scores'] = array(
-                'system' => $sSystem,
-                'object_id' => $aEvent['id'],
-                'score' => $aEvent['score']
-            );
+        if(empty($aResult['scores'])) {
+            $aResult['scores'] = array();
+            if($oModule->getScoreObject($sSystem, $aEvent['id']) !== false)
+                $aResult['scores'] = array(
+                    'system' => $sSystem,
+                    'object_id' => $aEvent['id'],
+                    'score' => $aEvent['score']
+                );
+        }
 
-		$sSystem = $this->_oConfig->getObject('report');
-        if(empty($aResult['reports']) && $oModule->getReportObject($sSystem, $aEvent['id']) !== false)
-            $aResult['reports'] = array(
-                'system' => $sSystem,
-                'object_id' => $aEvent['id'],
-                'count' => $aEvent['reports']
-            );
+        $sSystem = $this->_oConfig->getObject('report');
+        if(empty($aResult['reports'])) {
+            $aResult['reports'] = array();
+            if($oModule->getReportObject($sSystem, $aEvent['id']) !== false)
+                $aResult['reports'] = array(
+                    'system' => $sSystem,
+                    'object_id' => $aEvent['id'],
+                    'count' => $aEvent['reports']
+                );
+        }
 
         $sSystem = $this->_oConfig->getObject('comment');
-        if(empty($aResult['comments']) && $oModule->getCmtsObject($sSystem, $aEvent['id']) !== false)
-            $aResult['comments'] = array(
-                'system' => $sSystem,
-                'object_id' => $aEvent['id'],
-                'count' => $aEvent['comments']
-            );
+        if(empty($aResult['comments'])) {
+            $aResult['comments'] = array();
+            if($oModule->getCmtsObject($sSystem, $aEvent['id']) !== false)
+                $aResult['comments'] = array(
+                    'system' => $sSystem,
+                    'object_id' => $aEvent['id'],
+                    'count' => $aEvent['comments']
+                );
+        }
     }
 
     protected function _prepareTextForOutput($s, $iEventId = 0)
