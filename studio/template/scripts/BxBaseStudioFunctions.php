@@ -131,6 +131,8 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
         $aModule = BxDolModuleQuery::getInstance()->getModuleByName($mixedWidget['module']);
         $bEnabled = empty($aModule) || !is_array($aModule) || (int)$aModule['enabled'] == 1;
 
+        $sCaption = _t($mixedWidget['caption']);
+        
         return $oTemplate->parseHtmlByName('widget.html', array(
             'id' => $mixedWidget['id'],
             'url' => !empty($mixedWidget['url']) ? bx_replace_markers($mixedWidget['url'], $aMarkers) : 'javascript:void(0)',
@@ -166,7 +168,8 @@ class BxBaseStudioFunctions extends BxBaseFunctions implements iBxDolSingleton
                 'condition' => !$bIcon,
                 'content' => array('icon_url' => $sIcon),
             ),
-            'caption' => _t($mixedWidget['caption']),
+            'caption' => $sCaption,
+            'caption_attr' => bx_html_attribute($sCaption),
             'widget_disabled_class' => !$bEnabled ? 'bx-std-widget-icon-disabled' : '',
             'widget_featured_class' => (int)$mixedWidget['featured'] == 1 ? 'bx-std-widget-icon-featured' : '',
             'widget_styles' => $bFeatured && (int)$mixedWidget['featured'] != 1 ? 'display:none;' : ''
