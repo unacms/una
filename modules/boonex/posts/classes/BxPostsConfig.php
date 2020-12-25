@@ -96,7 +96,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'OBJECT_STORAGE_FILES' => 'bx_posts_files',
             'OBJECT_STORAGE_PHOTOS' => 'bx_posts_photos',
             'OBJECT_STORAGE_VIDEOS' => 'bx_posts_videos',
-            'OBJECT_STORAGE_SOUNDS' => 'bx_classes_sounds',
+            'OBJECT_STORAGE_SOUNDS' => 'bx_posts_sounds',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW' => 'bx_posts_preview',
             'OBJECT_IMAGES_TRANSCODER_GALLERY' => 'bx_posts_gallery',
             'OBJECT_IMAGES_TRANSCODER_COVER' => 'bx_posts_cover',
@@ -104,7 +104,7 @@ class BxPostsConfig extends BxBaseModTextConfig
             'OBJECT_IMAGES_TRANSCODER_GALLERY_FILES' => 'bx_posts_gallery_files',
             'OBJECT_IMAGES_TRANSCODER_PREVIEW_PHOTOS' => 'bx_posts_preview_photos',
             'OBJECT_IMAGES_TRANSCODER_GALLERY_PHOTOS' => 'bx_posts_gallery_photos',
-            'OBJECT_SOUNDS_TRANSCODER' => 'bx_classes_sounds_mp3',
+            'OBJECT_SOUNDS_TRANSCODER' => 'bx_posts_sounds_mp3',
             'OBJECT_VIDEOS_TRANSCODERS' => array(
                 'poster' => 'bx_posts_videos_poster', 
             	'poster_preview' => 'bx_posts_videos_poster_preview',
