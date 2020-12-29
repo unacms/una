@@ -5433,14 +5433,7 @@ CREATE TABLE `sys_std_roles` (
 
 INSERT INTO `sys_std_roles` (`id`, `name`, `title`, `description`, `active`, `order`) VALUES
 (1, 'master', '_adm_rl_txt_role_master', '_adm_rl_txt_role_master_dsc', 1, 1),
-(2, 'operator', '_adm_rl_txt_role_operator', '_adm_rl_txt_role_operator_dsc', 1, 2),
-(3, 'appearance', '_adm_rl_txt_role_appearance', '_adm_rl_txt_role_appearance_dsc', 1, 3),
-(4, 'structure', '_adm_rl_txt_role_structure', '_adm_rl_txt_role_structure_dsc', 1, 4),
-(5, 'content', '_adm_rl_txt_role_content', '_adm_rl_txt_role_content_dsc', 1, 5),
-(6, 'users', '_adm_rl_txt_role_users', '_adm_rl_txt_role_users_dsc', 1, 6),
-(7, 'configuration', '_adm_rl_txt_role_configuration', '_adm_rl_txt_role_configuration_dsc', 1, 7),
-(8, 'extensions', '_adm_rl_txt_role_extensions', '_adm_rl_txt_role_extensions_dsc', 1, 8),
-(9, 'integrations', '_adm_rl_txt_role_integrations', '_adm_rl_txt_role_integrations_dsc', 1, 9);
+(2, 'operator', '_adm_rl_txt_role_operator', '_adm_rl_txt_role_operator_dsc', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -5505,13 +5498,6 @@ SET @iIdActionUseIntegrations = LAST_INSERT_ID();
 
 SET @iMaster = 1;
 SET @iOperator = 2;
-SET @iAppearance = 3;
-SET @iStructure = 4;
-SET @iContent = 5;
-SET @iUsers = 6;
-SET @iConfiguration = 7;
-SET @iExtensions = 8;
-SET @iIntegrations = 9;
 
 INSERT INTO `sys_std_roles_actions2roles` (`role_id`, `action_id`) VALUES
 
@@ -5522,37 +5508,30 @@ INSERT INTO `sys_std_roles_actions2roles` (`role_id`, `action_id`) VALUES
 -- use appearance
 (@iMaster, @iIdActionUseAppearance),
 (@iOperator, @iIdActionUseAppearance),
-(@iAppearance, @iIdActionUseAppearance),
 
 -- use structure
 (@iMaster, @iIdActionUseStructure),
 (@iOperator, @iIdActionUseStructure),
-(@iStructure, @iIdActionUseStructure),
 
 -- use content
 (@iMaster, @iIdActionUseContent),
 (@iOperator, @iIdActionUseContent),
-(@iContent, @iIdActionUseContent),
 
 -- use users
 (@iMaster, @iIdActionUseUsers),
 (@iOperator, @iIdActionUseUsers),
-(@iUsers, @iIdActionUseUsers),
 
 -- use configuration
 (@iMaster, @iIdActionUseConfiguration),
 (@iOperator, @iIdActionUseConfiguration),
-(@iConfiguration, @iIdActionUseConfiguration),
 
 -- use extensions
 (@iMaster, @iIdActionUseExtensions),
 (@iOperator, @iIdActionUseExtensions),
-(@iExtensions, @iIdActionUseExtensions),
 
 -- use integrations
 (@iMaster, @iIdActionUseIntegrations),
-(@iOperator, @iIdActionUseIntegrations),
-(@iIntegrations, @iIdActionUseIntegrations);
+(@iOperator, @iIdActionUseIntegrations);
 
 -- --------------------------------------------------------
 
