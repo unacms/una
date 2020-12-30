@@ -70,7 +70,6 @@ $aConfig = array(
         array('name' => 'Polls', 'path' => 'bx_polls/'),
         array('name' => 'Posts', 'path' => 'bx_posts/'),
         array('name' => 'Boonex Profiler', 'path' => 'bx_profiler/'),
-        array('name' => 'Reviews', 'path' => 'bx_reviews/'),
         array('name' => 'Shopify', 'path' => 'bx_shopify/'),
         array('name' => 'SMTP Mailer', 'path' => 'bx_smtp/'),
         array('name' => 'Snipcart', 'path' => 'bx_snipcart/'),
