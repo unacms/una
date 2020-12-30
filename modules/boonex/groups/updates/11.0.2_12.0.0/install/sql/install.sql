@@ -109,6 +109,8 @@ INSERT INTO `sys_form_pre_values`(`Key`, `Value`, `Order`, `LKey`, `LKey2`, `Dat
 
 
 -- COMMENTS
+UPDATE `sys_objects_cmts` SET `ClassName`='BxGroupsCmts', `ClassFile`='modules/boonex/groups/classes/BxGroupsCmts.php' WHERE `Name`='bx_groups';
+
 DELETE FROM `sys_objects_cmts` WHERE `Name`='bx_groups_notes';
 INSERT INTO `sys_objects_cmts` (`Name`, `Module`, `Table`, `CharsPostMin`, `CharsPostMax`, `CharsDisplayMax`, `Html`, `PerView`, `PerViewReplies`, `BrowseType`, `IsBrowseSwitch`, `PostFormPosition`, `NumberOfLevels`, `IsDisplaySwitch`, `IsRatable`, `ViewingThreshold`, `IsOn`, `RootStylePrefix`, `BaseUrl`, `ObjectVote`, `ObjectScore`, `ObjectReport`, `TriggerTable`, `TriggerFieldId`, `TriggerFieldAuthor`, `TriggerFieldTitle`, `TriggerFieldComments`, `ClassName`, `ClassFile`) VALUES
 ('bx_groups_notes', 'bx_groups', 'bx_groups_cmts_notes', 1, 5000, 1000, 0, 5, 3, 'tail', 1, 'bottom', 1, 1, 1, -3, 1, 'cmt', 'page.php?i=view-post&id={object_id}', '', '', '', 'bx_groups_data', 'id', 'author', 'group_name', 'comments', '', '');
