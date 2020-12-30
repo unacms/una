@@ -759,6 +759,8 @@ function bx_import($sClassName, $mixedModule = array())
     if (0 === strncmp($sClassName, 'BxTempl', 7)) {
         if(0 === strncmp($sClassName, 'BxTemplStudio', 13)) {
             $sPath = BX_DIRECTORY_PATH_MODULES . BxDolStudioTemplate::getInstance()->getPath() . 'data/template/studio/scripts/' . $sClassName . '.php';
+            if (!file_exists($sPath))
+                $sPath = BX_DOL_DIR_STUDIO_BASE . 'scripts_templ/' . $sClassName . '.php';
         } else {
             $sPath = BX_DIRECTORY_PATH_MODULES . BxDolTemplate::getInstance()->getPath() . 'data/template/system/scripts/' . $sClassName . '.php';
         }
