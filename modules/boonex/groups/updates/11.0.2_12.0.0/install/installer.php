@@ -20,7 +20,7 @@ class BxGroupsUpdater extends BxDolStudioUpdater
             if(!$this->oDb->isFieldExists('bx_groups_admins', 'role'))
                 $this->oDb->query("ALTER TABLE `bx_groups_admins` ADD `role` int(10) unsigned NOT NULL default '0' AFTER `fan_id`");
             if(!$this->oDb->isFieldExists('bx_groups_admins', 'order'))
-                $this->oDb->query("ALTER TABLE `bx_groups_admins` ADD order` varchar(32) NOT NULL default '' AFTER `role`");
+                $this->oDb->query("ALTER TABLE `bx_groups_admins` ADD `order` varchar(32) NOT NULL default '' AFTER `role`");
             if(!$this->oDb->isFieldExists('bx_groups_admins', 'added'))
                 $this->oDb->query("ALTER TABLE `bx_groups_admins` ADD `added` int(11) unsigned NOT NULL default '0' AFTER `order`");
             if(!$this->oDb->isFieldExists('bx_groups_admins', 'expired'))
