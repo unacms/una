@@ -73,7 +73,10 @@ INSERT INTO `sys_objects_transcoder` (`object`, `storage_object`, `source_type`,
 ('bx_posts_sounds_mp3', 'bx_posts_sounds_resized', 'Storage', 'a:1:{s:6:"object";s:15:"bx_posts_sounds";}', 'no', '0', '0', '0', 'BxDolTranscoderAudio', '');
 
 UPDATE `sys_transcoder_filters` SET `filter_params`='a:4:{s:1:"w";s:3:"600";s:1:"h";s:3:"600";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}' WHERE `transcoder_object`='bx_posts_gallery_photos' AND `filter`='Resize';
+UPDATE `sys_objects_transcoder` SET `ts`=UNIX_TIMESTAMP() WHERE `object`='bx_posts_gallery_photos';
+
 UPDATE `sys_transcoder_filters` SET `filter_params`='a:4:{s:1:"w";s:3:"600";s:1:"h";s:3:"600";s:13:"square_resize";s:1:"1";s:10:"force_type";s:3:"jpg";}' WHERE `transcoder_object`='bx_posts_gallery_files' AND `filter`='Resize';
+UPDATE `sys_objects_transcoder` SET `ts`=UNIX_TIMESTAMP() WHERE `object`='bx_posts_gallery_files';
 
 DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object`='bx_posts_sounds_mp3' AND `filter`='Mp3';
 INSERT INTO `sys_transcoder_filters` (`transcoder_object`, `filter`, `filter_params`, `order`) VALUES 
