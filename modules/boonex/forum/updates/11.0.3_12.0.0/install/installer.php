@@ -11,6 +11,33 @@ class BxForumUpdater extends BxDolStudioUpdater
         parent::__construct($aConfig);
     }
 
+    public function update($aParams)
+    {
+        /*
+         * Unregister transcoders which the storage will be changed for.
+         */
+        BxDolTranscoderImage::unregisterHandlersArray(array(
+            'bx_forum_preview',
+            'bx_forum_gallery',
+            'bx_forum_cover'
+        ));
+
+        $sStorage = 'bx_forum_files';
+        $aStorage = $this->oDb->getRow("SELECT * FROM `sys_objects_storage` WHERE `object`=:object LIMIT 1", array('object' => $sStorage));
+
+        $aResult = parent::update($aParams);
+        if($aResult['result']) {
+            if($aStorage['engine'] == 'Local') {
+                $sSrc = BX_DIRECTORY_PATH_ROOT . 'storage/bx_forum_files/';
+                $sDst = BX_DIRECTORY_PATH_ROOT . 'storage/bx_forum_covers/';
+                if(file_exists($sSrc))
+                    rename($sSrc, $sDst);
+            }
+        }
+
+        return $aResult;
+    }
+
     public function actionExecuteSql($sOperation)
     {
         if($sOperation == 'install') {
@@ -21,6 +48,8 @@ class BxForumUpdater extends BxDolStudioUpdater
                 $this->oDb->query("UPDATE `sys_objects_storage` SET `object`='bx_forum_covers', `table_files`='bx_forum_covers' WHERE `object`='bx_forum_files'");
 
                 $this->oDb->query("UPDATE `sys_objects_transcoder` SET `source_params`='a:1:{s:6:\"object\";s:15:\"bx_forum_covers\";}' WHERE `object` IN ('bx_forum_preview', 'bx_forum_gallery', 'bx_forum_cover')");
+
+                $this->oDb->query("UPDATE `sys_storage_deletions` SET `object`='bx_forum_covers' WHERE `object`='bx_forum_files'");
 
                 $this->oDb->query("UPDATE `sys_storage_ghosts` SET `object`='bx_forum_covers' WHERE `object`='bx_forum_files'");
             }

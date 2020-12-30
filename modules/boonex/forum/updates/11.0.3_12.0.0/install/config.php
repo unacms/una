@@ -30,12 +30,30 @@ $aConfig = array(
     'class_prefix' => 'BxForum',
 
     /**
+     * Transcoders.
+     */
+    'transcoders' => array(
+        'bx_forum_preview',
+        'bx_forum_gallery',
+        'bx_forum_cover',
+        'bx_forum_preview_photos',
+        'bx_forum_gallery_photos',
+        'bx_forum_videos_poster',
+        'bx_forum_videos_poster_preview',
+        'bx_forum_videos_mp4',
+        'bx_forum_videos_mp4_hd',
+        'bx_forum_preview_files',
+        'bx_forum_gallery_files'
+    ),
+
+    /**
      * Installation/Uninstallation Section.
      */
     'install' => array(
         'execute_sql' => 1,
         'update_files' => 1,
         'update_languages' => 1,
+        'register_transcoders' => 1,
         'clear_db_cache' => 1,
     ),
 
