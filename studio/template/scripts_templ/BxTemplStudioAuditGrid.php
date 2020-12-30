@@ -9,7 +9,7 @@
  */
 defined('BX_DOL') or die('hack attempt');
 
-class BxTemplStudioAudit extends BxBaseStudioAudit
+class BxTemplStudioAuditGrid extends BxBaseStudioAuditGrid
 {
     function __construct($sPage = '')
     {
