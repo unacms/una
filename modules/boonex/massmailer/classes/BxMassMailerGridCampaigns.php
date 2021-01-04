@@ -205,7 +205,7 @@ class BxMassMailerGridCampaigns extends BxTemplGrid
     {
         if (isAdmin() || !isset($a['visible_for_levels']))
             return true;
-        return $this->_oModule->checkAllowed() == CHECK_ACTION_RESULT_ALLOWED ? true : false;
+        return $this->_oModule->checkAllowed() === CHECK_ACTION_RESULT_ALLOWED ? true : false;
     }
 }
 
