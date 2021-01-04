@@ -200,6 +200,13 @@ class BxMassMailerGridCampaigns extends BxTemplGrid
             $oProfile = BxDolProfileUndefined::getInstance();
         return parent::_getCellDefault($oProfile->getDisplayName(), $sKey, $aField, $aRow);
     }
+    
+    protected function _isVisibleGrid ($a)
+    {
+        if (isAdmin() || !isset($a['visible_for_levels']))
+            return true;
+        return $this->_oModule->checkAllowed() == CHECK_ACTION_RESULT_ALLOWED ? true : false;
+    }
 }
 
 /** @} */
