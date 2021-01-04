@@ -17,12 +17,12 @@ $aConfig = array(
     'name' => 'bx_nexus',
     'title' => 'Nexus',
     'note' => 'Nexus - Mobile Apps and Desktop apps connector.',
-    'version' => '11.0.5.DEV',
+    'version' => '12.0.1.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '11.0.x'
+        '12.0.x'
     ),
 
     /**

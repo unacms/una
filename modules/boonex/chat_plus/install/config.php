@@ -17,12 +17,12 @@ $aConfig = array(
     'name' => 'bx_chat_plus',
     'title' => 'RocketChat',
     'note' => 'RocketChat integration.',
-    'version' => '9.0.5.DEV',
+    'version' => '12.0.1.DEV',
     'vendor' => 'BoonEx',
-	'help_url' => 'http://feed.una.io/?section={module_name}',
+    'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '9.0.x'
+        '12.0.x'
     ),
 
     /**

@@ -17,12 +17,12 @@ $aConfig = array(
     'name' => 'bx_contact',
     'title' => 'Contact',
     'note' => 'Contact module.',
-    'version' => '11.0.1.DEV',
+    'version' => '12.0.1.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '11.0.x'
+        '12.0.x'
     ),
 
     /**

@@ -17,12 +17,12 @@ $aConfig = array(
     'name' => 'bx_wiki',
     'title' => 'Wiki',
     'note' => 'Wiki.',
-    'version' => '10.0.0.DEV',
+    'version' => '12.0.1.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '10.1.x'
+        '12.0.x'
     ),
 
     /**

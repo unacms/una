@@ -17,12 +17,12 @@ $aConfig = array(
     'name' => 'bx_googletagman',
     'title' => 'Google Tag Manager',
     'note' => 'Google Tag Manager replaces hard-coded tags that are used for marketing, analytics, and testing on a website, with dynamic tags that are easier to implement and update.',
-    'version' => '11.0.1.DEV',
+    'version' => '12.0.1.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '11.0.x'
+        '12.0.x'
     ),
 
     /**
