@@ -1,0 +1,10 @@
+<div id="bx-dbd-cache" class="bx-dbd-block-content bx-clearfix">
+    <bx_if:show_chart>
+        <div class="bx-dbd-chart bx-def-border"></div>
+
+        <script language="javascript">
+            __js_object__.initChart('cache', __chart_data__);
+        </script>
+    </bx_if:show_chart>
+    <bx_if:show_empty>__message__</bx_if:show_empty>
+</div>

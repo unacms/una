@@ -1,0 +1,12 @@
+<script async charset="utf-8" src="//cdn.iframe.ly/embed.js?api_key=__key__&iframe=card-small"></script>
+<script>
+$(document).ready(function () {
+    if (typeof glOnProcessHtml === 'undefined')
+        glOnProcessHtml = [];
+    if (glOnProcessHtml instanceof Array) {
+        glOnProcessHtml.push(function (e) {
+            window.iframely && iframely.load();
+        });
+    }
+});
+</script>

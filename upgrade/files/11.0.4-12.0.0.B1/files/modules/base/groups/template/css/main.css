@@ -1,0 +1,42 @@
+@import url(../../../../base/profile/template/css/main.css);
+
+.bx-base-group-cover-wrapper .bx-base-pofile-cover-info .bx-def-ava {
+    border-width:0.0625rem;
+    border-radius:0.1875rem;
+    -moz-border-radius:0.1875rem;
+    -webkit-border-radius:0.1875rem;
+}
+
+.bx-base-group-unit .bx-def-unit-img img,
+.bx-base-group-unit .bx-def-unit-img p.bx-base-pofile-unit-thumb,
+.bx-base-groups-unit-wo-info .bx-def-unit-img img,
+.bx-base-groups-unit-wo-info .bx-def-unit-img p.bx-base-pofile-unit-thumb,
+.bx-base-groups-unit-with-cover .bx-def-unit-img img,
+.bx-base-groups-unit-with-cover .bx-def-unit-img p.bx-base-pofile-unit-thumb {
+    border-width:0.0625rem;
+    border-radius:0.1875rem;
+    -moz-border-radius:0.1875rem;
+    -webkit-border-radius:0.1875rem;
+}
+
+.bx-search-result-block {
+    text-align:center;
+}
+
+/*--- Set Role popup ---*/
+.bx-base-group-sr-role-cnt {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+}
+.bx-base-group-sr-role-cnt > * {
+    display: inline-block;
+}
+.bx-base-group-sr-role-cnt > input {
+    margin: 0;
+}
+.bx-base-group-sr-done .bx-btn {
+    display: inline-block;
+    float: none;
+}

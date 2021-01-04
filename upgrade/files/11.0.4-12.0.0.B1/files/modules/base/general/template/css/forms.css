@@ -1,0 +1,26 @@
+
+/* uploader */
+
+.bx-uploader-ghost .bx-base-general-icon-wrapper {
+    float:left;
+}
+
+.bx-uploader-ghost .bx-base-general-icon-wrapper img {
+    max-height:12.5rem;
+}
+
+.bx-uploader-ghost .bx-btn {
+	float: none;
+	display: inline-block;
+	vertical-align: top; 
+}
+
+.bx-base-general-uploader-ghost input.bx-form-input-text,
+.bx-base-general-uploader-ghost select.bx-form-input-select {
+    width:18.75rem;
+}
+
+.bx-base-general-use-as-thumb input,
+.bx-base-general-use-as-thumb label {
+    vertical-align:middle;
+}
