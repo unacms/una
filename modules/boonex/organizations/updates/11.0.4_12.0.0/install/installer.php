@@ -15,7 +15,7 @@ class BxOrgsUpdater extends BxDolStudioUpdater
     {
         if($sOperation == 'install') {
             if(!$this->oDb->isFieldExists('bx_organizations_data', 'multicat'))
-                $this->oDb->query("ALTER TABLE `bx_organizations_data` ADD `multicat` text NOT NULL AFTER `cmt_replies`");
+                $this->oDb->query("ALTER TABLE `bx_organizations_data` ADD `multicat` text NOT NULL AFTER `org_cat`");
 
             if(!$this->oDb->isFieldExists('bx_organizations_cmts', 'cmt_pinned'))
                 $this->oDb->query("ALTER TABLE `bx_organizations_cmts` ADD `cmt_pinned` int(11) NOT NULL default '0' AFTER `cmt_replies`");
