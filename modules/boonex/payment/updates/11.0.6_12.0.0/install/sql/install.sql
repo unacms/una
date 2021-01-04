@@ -3,6 +3,8 @@ SET @sName = 'bx_payment';
 -- TABLES
 UPDATE `bx_payment_providers` SET `for_recurring`='1', `single_seller`='1', `time_tracker`='1' WHERE `name`='credits';
 
+UPDATE `bx_payment_providers` SET `single_seller`='1' WHERE `name`='paypal';
+
 SET @iProviderId = (SELECT `id` FROM `bx_payment_providers` WHERE `name`='stripe_v3' LIMIT 1);
 
 DELETE FROM `bx_payment_providers` WHERE `id`=@iProviderId;

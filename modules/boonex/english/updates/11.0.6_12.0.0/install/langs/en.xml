@@ -153,7 +153,7 @@
 	<string_add name="_sys_form_favorite_list_title_updated"><![CDATA[Updated]]></string_add>
 	<string_add name="_sys_form_favorite_list_title_visibility"><![CDATA[Visibility]]></string_add>
 	<string_add name="_sys_txt_default_favorite_list"><![CDATA[Default]]></string_add>
-	<string_add name="_sys_grid_total_count"><![CDATA[Ñount: {0}]]></string_add>
+	<string_add name="_sys_grid_total_count"><![CDATA[Count: {0}]]></string_add>
 	<string_add name="_sys_location_map_google_static"><![CDATA[Google Maps (Static)]]></string_add>
 	<string_add name="_sys_location_map_leaflet"><![CDATA[Leaflet (various free map providers)]]></string_add>
 	<string_add name="_sys_location_field_google"><![CDATA[Google autocomplete for addresses]]></string_add>

@@ -17,9 +17,9 @@ class BxPaymentUpdater extends BxDolStudioUpdater
             if(!$this->oDb->isFieldExists('bx_payment_providers', 'for_owner_only'))
                 $this->oDb->query("ALTER TABLE `bx_payment_providers` ADD `for_owner_only` tinyint(4) NOT NULL default '0' AFTER `for_visitor`");
             if(!$this->oDb->isFieldExists('bx_payment_providers', 'single_seller'))
-                $this->oDb->query("ALTER TABLE `bx_ads_reviews` ADD `single_seller` tinyint(4) NOT NULL default '0' AFTER `for_recurring`");
+                $this->oDb->query("ALTER TABLE `bx_payment_providers` ADD `single_seller` tinyint(4) NOT NULL default '0' AFTER `for_recurring`");
             if(!$this->oDb->isFieldExists('bx_payment_providers', 'time_tracker'))
-                $this->oDb->query("ALTER TABLE `bx_ads_reviews` ADD `time_tracker` tinyint(4) NOT NULL default '0' AFTER `single_seller`");
+                $this->oDb->query("ALTER TABLE `bx_payment_providers` ADD `time_tracker` tinyint(4) NOT NULL default '0' AFTER `single_seller`");
 
             if(!$this->oDb->isFieldExists('bx_payment_transactions', 'author_id'))
                 $this->oDb->query("ALTER TABLE `bx_payment_transactions` ADD `author_id` int(11) NOT NULL default '0' AFTER `seller_id`");

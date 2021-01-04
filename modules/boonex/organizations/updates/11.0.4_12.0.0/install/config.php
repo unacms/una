@@ -8,8 +8,8 @@ $aConfig = array(
     /**
      * Main Section.
      */
-    'title' => 'Posts',
-    'version_from' => '11.0.2',
+    'title' => 'Organizations',
+    'version_from' => '11.0.4',
     'version_to' => '12.0.0',
     'vendor' => 'BoonEx',
 
@@ -20,21 +20,14 @@ $aConfig = array(
     /**
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
-    'home_dir' => 'boonex/posts/updates/update_11.0.2_12.0.0/',
-    'home_uri' => 'posts_update_1102_1200',
+    'home_dir' => 'boonex/organizations/updates/update_11.0.4_12.0.0/',
+    'home_uri' => 'orgs_update_1104_1200',
 
-    'module_dir' => 'boonex/posts/',
-    'module_uri' => 'posts',
+    'module_dir' => 'boonex/organizations/',
+    'module_uri' => 'orgs',
 
-    'db_prefix' => 'bx_posts_',
-    'class_prefix' => 'BxPosts',
-
-    /**
-     * Transcoders.
-     */
-    'transcoders' => array(
-        'bx_posts_sounds_mp3',
-    ),
+    'db_prefix' => 'bx_organizations_',
+    'class_prefix' => 'BxOrgs',
 
     /**
      * Installation/Uninstallation Section.
@@ -43,19 +36,16 @@ $aConfig = array(
         'execute_sql' => 1,
         'update_files' => 1,
         'update_languages' => 1,
-        'register_transcoders' => 1,
         'clear_db_cache' => 1,
     ),
 
     /**
      * Category for language keys.
      */
-    'language_category' => 'Posts',
+    'language_category' => 'Organizations',
 
     /**
      * Files Section
      */
-    'delete_files' => array(
-        'js/categories.js',
-    ),
+    'delete_files' => array(),
 );

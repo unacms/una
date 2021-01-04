@@ -11,7 +11,7 @@ DELETE FROM `sys_menu_items` WHERE `set_name`='bx_market_view_actions' AND `name
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `markers`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
 ('bx_market_view_actions', 'bx_market', 'notes', '_sys_menu_item_title_system_va_notes', '_sys_menu_item_title_va_notes', 'javascript:void(0)', 'javascript:bx_get_notes(this,  ''{module_uri}'', {content_id});', '', 'exclamation-triangle', '', '', '', 0, 2147483647, '', 1, 0, 280);
 
-UPDATE `sys_objects_menu` SET `template_id`='18' WHERE `object`='bx_market_submenu';
+UPDATE `sys_objects_menu` SET `template_id`='18', `override_class_name`='BxMarketMenuSubmenu', `override_class_file`='modules/boonex/market/classes/BxMarketMenuSubmenu.php' WHERE `object`='bx_market_submenu';
 
 DELETE FROM `sys_menu_items` WHERE `set_name`='bx_market_submenu' AND `name`='more-auto';
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `markers`, `submenu_object`, `visible_for_levels`, `visibility_custom`, `active`, `copyable`, `order`) VALUES 
