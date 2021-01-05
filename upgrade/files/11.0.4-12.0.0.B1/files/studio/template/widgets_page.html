@@ -1,0 +1,12 @@
+<div id="bx-std-widgets-__page__" class="bx-std-widgets-wrp" <bx_if:page_hidden>style="display:none"</bx_if:page_hidden>>
+    <div class="bx-std-widgets">__content__</div>
+</div>
+<script>
+    $(document).ready(function(){
+        $('#bx-std-widgets-__page__ .bx-std-widget-link').bind('click', function() {
+            var eWidget = $(this).parents().filter('.bx-std-widget');
+            eWidget.find('.bx-std-widget-caption').hide();
+            eWidget.find('.bx-std-widget-loading').show();
+        });
+    });
+</script>

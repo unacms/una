@@ -1,0 +1,36 @@
+
+<template class="bx-cont-ph-profile-unit">
+
+
+<div class="bx-base-text-unit bx-base-text-unit-gallery bx-def-gal-unit-size bx-def-padding-sec" style="width:19rem;">
+    <div class="bx-base-text-unit-cnt bx-def-box bx-def-round-corners bx-def-color-bg-box bx-def-box-sizing">
+                <div class="bx-base-text-unit-thumb bx-def-gal-div-size bx-def-round-corners bx-def-font-middle bx-cont-ph">
+                </div>
+        
+        
+        <div class="bx-base-text-unit-text bx-def-padding-leftright bx-def-padding-sec-topbottom bx-def-box-sizing">
+            <div class="bx-base-text-unit-title">
+                <div class="bx-def-font-h2 bx-cont-ph-inline" style="width:14rem;">&nbsp;</div>
+            </div>
+            <div class="bx-base-text-unit-info">
+                <div class="bx-base-general-unit-meta">
+                    <ul id="bx-posts-snippet-meta" class="bx-menu-custom bx-menu-custom-hor bx-menu-hor-inline bx-menu-object-bx_posts_snippet_meta bx-clearfix">
+                        <li class="bx-menu-item bx-menu-item-date"><span class="bx-base-general-unit-meta-item bx-cont-ph-inline" style="width:7rem;">&nbsp;</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</template>
+
+<script>
+    var iBlockID = '__id__';
+    var sTmpl = $('#bx-page-block-' + iBlockID + ' .bx-cont-ph-profile-unit').html();
+    $('#bx-page-block-' + iBlockID + ' .bx-db-content').append(sTmpl + sTmpl + sTmpl);
+    $(document).ready(function () {
+        getHtmlData($('#bx-page-block-' + iBlockID), bx_append_url_params(document.location.href, 'dynamic=tab&pageBlock=' + iBlockID), undefined, 'post', false, {includedCss: JSON.stringify(aIncludedCss), includedJs: JSON.stringify(aIncludedJs)}, false);
+    });
+</script>

@@ -1,0 +1,16 @@
+<div id="bx-dbd-htools" class="bx-dbd-block-content">
+    <bx_if:show_content>
+        <div class="bx-dbd-htools bx-clearfix">
+            <bx_repeat:items>
+                <div class="bx-dbd-htools-item bx-def-margin-sec-bottom">__status__ __msg__</div>
+            </bx_repeat:items>
+        </div>
+    </bx_if:show_content>
+    <bx_if:show_loader>
+        <script language="javascript">
+            $(document).ready(function() {
+                __js_object__.getBlockContent('htools');
+            });
+        </script>
+    </bx_if:show_loader>
+</div>
