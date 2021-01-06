@@ -579,7 +579,8 @@ ul.bx-menu-floating-blocks {
     text-overflow:ellipsis;
     white-space:nowrap;
 }
-.bx-menu-floating-blocks-dash li .bx-menu-floating-blocks-info {
+.bx-menu-floating-blocks-dash li .bx-menu-floating-blocks-info .divider:first-child {
+    display: none;
 }
 
 

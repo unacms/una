@@ -56,8 +56,13 @@ class BxBaseMenuDashboardManageTools extends BxTemplMenu
                     'caption' => $aValues['counter2_caption']
                 )
             ),
-            'total_value' => $aValues['counter3_value'],
-            'total_caption' => $aValues['counter3_caption']     
+            'bx_if:counter3' => array(
+                'condition' => $aValues['counter3_value'] > 0,
+                'content' => array(
+                    'total_value' => $aValues['counter3_value'],
+                    'total_caption' => $aValues['counter3_caption']     
+                )
+            ),
         );
         return array(
             'addon' => (trim($aValues['counter1_value']) != '' || trim($aValues['counter2_value']) != ''),
