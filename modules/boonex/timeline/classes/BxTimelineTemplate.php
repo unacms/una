@@ -83,7 +83,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         switch($sType) {
             case 'view':
                 $aJs = array_merge($aJs, array(
-                    'jquery.ba-resize.min.js',
                     'masonry.pkgd.min.js',
                     'flickity/flickity.pkgd.min.js',
                     'embedly-player.min.js',

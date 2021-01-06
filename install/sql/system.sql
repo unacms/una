@@ -5394,6 +5394,7 @@ INSERT INTO `sys_preloader`(`module`, `type`, `content`, `active`, `order`) VALU
 ('system', 'js_system', 'jquery.dolPopup.js', 1, 22),
 ('system', 'js_system', 'jquery.dolConverLinks.js', 1, 23),
 ('system', 'js_system', 'jquery.anim.js', 1, 24),
+('system', 'js_system', 'jquery.ba-resize.min.js', 1, 25),
 ('system', 'js_system', 'BxDolCmts.js', 1, 30),
 ('system', 'js_system', 'BxDolFavorite.js', 1, 31),
 ('system', 'js_system', 'BxDolFeature.js', 1, 32),
