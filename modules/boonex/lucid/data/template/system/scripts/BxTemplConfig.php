@@ -276,7 +276,7 @@ class BxTemplConfig extends BxBaseConfig
 
         //--- Text
         $this->_aConfig['aLessConfig']['bx-text-align-cover'] = $this->_setAlign($sName . '_cover_text_align');
-        $this->_aConfig['aLessConfig']['bx-text-align-menu-main-items'] = $this->_setAlign($sName . '_menu_main_align_items');
+        $this->_aConfig['aLessConfig']['bx-text-align-menu-main-items'] = $this->_setAlignFlex($sName . '_menu_main_align_items');
 
         //--- Default Fonts
         if($this->_isModule) {

@@ -421,6 +421,22 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton
 
         return $sValue;
     }
+
+    protected function _setAlignFlex($sKey, $sDefault = '')
+    {
+        $sValue = $this->_setAlign($sKey);
+
+        $aToFlex = array(
+            'left' => 'flex-start', 
+            'center' => 'center', 
+            'right' => 'flex-end'
+        );
+
+        if(empty($sDefault))
+            $sDefault = 'flex-start';
+
+        return isset($aToFlex[$sValue]) ? $aToFlex[$sValue] : $sDefault;
+    }
 }
 
 /** @} */
