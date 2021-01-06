@@ -19,6 +19,8 @@ class BxBasePage extends BxDolPage
 
     protected $_sStorage; //--- Storage object for page's images like custom cover, HTML block attachments, etc.
     protected $_oPageCacheObject = null;
+    
+    protected $_bStickyColumns = false;
 
     public function __construct ($aObject, $oTemplate)
     {
@@ -33,6 +35,8 @@ class BxBasePage extends BxDolPage
         
         $this->_sJsClassName = 'BxDolPage';
         $this->_sJsObjectName = 'oBxDolPage';
+        
+        $this->_bStickyColumns = isset($this->_aObject['sticky_columns']) && $this->_aObject['sticky_columns'] == 1;
     }
 
     /**
@@ -180,7 +184,7 @@ class BxBasePage extends BxDolPage
         $sJsObjClass = $this->getJsClassName();
         $sCode = "if(window['" . $sJsObjName . "'] == undefined) var " . $sJsObjName . " = new " . $sJsObjClass . "(" . json_encode(array(
             'sObjName' => $sJsObjName,
-            'isStickyColumns' => isset($this->_aObject['sticky_columns']) && $this->_aObject['sticky_columns'] == 1
+            'isStickyColumns' => $this->_bStickyColumns
         )) . ");";
 
         return $this->_wrapInTagJsCode($sCode);
@@ -477,7 +481,8 @@ class BxBasePage extends BxDolPage
     protected function _addJsCss()
     {
         $this->_oTemplate->addJs('BxDolPage.js');
-        $this->_oTemplate->addCss('page_sticky.css');
+		if ($this->_bStickyColumns)
+        	$this->_oTemplate->addCss('page_sticky.css');
         $this->_oTemplate->addCss('page_layouts.css');
     }
 

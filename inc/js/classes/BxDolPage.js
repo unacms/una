@@ -30,6 +30,14 @@ BxDolPage.prototype.stickyBlocks = function () {
         if ($(this).css('position') == 'sticky') {
             var iCh = $(this).height();
             var iWh = $(window).height();
+
+            if ($('#bx-toolbar').css('position') == 'fixed') {
+                $(this).css('top', $('#bx-content-main').offset().top + 'px');
+            }
+            else {
+                $(this).css('top', '60px');
+            }
+
             if (iCh > iWh) {
                 if (iCh - $(window).scrollTop() - $(window).height() < 0) {
                     var iMinS = (iWh - iCh);
