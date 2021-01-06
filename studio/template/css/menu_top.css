@@ -97,9 +97,13 @@ div.bx-std-menu-top .bx-menu-floating-blocks li {
     height: 4rem;
 }
 
+/*
+ * Vertical divider between static and dynamic menu items.
+ *
 div.bx-std-menu-top .bx-menu-floating-blocks li.bx-menu-item-static + li.bx-menu-item-dynamic {
     border-left: 1px solid rgba(240, 240, 240, 0.2);
 }
+*/
 
 div.bx-std-menu-top .bx-menu-floating-blocks li.bx-def-color-bg-active,
 div.bx-std-menu-top .bx-menu-floating-blocks li.bx-def-color-bg-hl-hover:hover {

@@ -96,7 +96,7 @@ class BxBaseStudioWidgets extends BxDolStudioWidgets
             )
         );
 
-        if($this->_sType != BX_DOL_STUDIO_WTYPE_DEFAULT)
+        if($this->_sType != BX_DOL_STUDIO_WTYPE_DEFAULT || getParam('site_tour_studio') != 'on')
             unset($aItemsRight['menu_items']['tour']);
 
         $oTopMenu = BxTemplStudioMenuTop::getInstance();
