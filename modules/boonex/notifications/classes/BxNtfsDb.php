@@ -237,7 +237,7 @@ class BxNtfsDb extends BxBaseModNotificationsDb
 
     public function getEventsToProcess()
     {
-        $aEvents = $this->getAll("SELECT * FROM `" . $this->_sTable . "` WHERE `id`>:id", array('id' => $this->_oConfig->getProcessedEvent()));
+        $aEvents = $this->getAll("SELECT * FROM `" . $this->_sTable . "` WHERE `id`>:id ORDER BY `id` ASC", array('id' => $this->_oConfig->getProcessedEvent()));
 
         if(!empty($aEvents) && is_array($aEvents)) {
             $aEventEnd = end($aEvents);
@@ -258,6 +258,12 @@ class BxNtfsDb extends BxBaseModNotificationsDb
     	$sWhereClause = $sOrderClause = $sLimitClause = "";
 
         switch($aParams['type']) {
+            case 'count':
+            	$aMethod['name'] = 'getOne';
+
+                $sSelectClause = "COUNT(*)";
+                break;
+
             case 'id':
             	$aMethod['name'] = 'getRow';
             	$aMethod['params'][1] = array(
@@ -268,7 +274,9 @@ class BxNtfsDb extends BxBaseModNotificationsDb
                 break;
 
             case 'all_to_send':
-                $aMethod['params'][1] = array(
+                $aMethod['name'] = 'getAllWithKey';
+                $aMethod['params'][1] = 'id';
+                $aMethod['params'][2] = array(
                     'timeout' => $aParams['timeout']
                 );
 

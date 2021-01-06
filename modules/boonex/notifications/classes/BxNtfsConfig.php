@@ -40,13 +40,19 @@ class BxNtfsConfig extends BxBaseModNotificationsConfig
         parent::__construct($aModule);
 
         $this->CNF = array (
+            // page URIs
             'URL_HOME' => 'page.php?i=notifications-view',
 
+            // some params
+            'PARAM_QUEUE_ADD_THRESHOLD' => 0,
+
+            // objects
             'OBJECT_MENU_SUBMENU' => 'bx_notifications_submenu', // main module submenu
             'OBJECT_MENU_SETTINGS' => 'bx_notifications_settings', // settings submenu
             'OBJECT_GRID_SETTINGS_ADMINISTRATION' => 'bx_notifications_settings_administration',
             'OBJECT_GRID_SETTINGS_COMMON' => 'bx_notifications_settings_common',
 
+            // some language keys
             'T' => array(
                 'setting_personal' => '_bx_ntfs_setting_type_personal',
                 'setting_follow_member' => '_bx_ntfs_setting_type_follow_member',

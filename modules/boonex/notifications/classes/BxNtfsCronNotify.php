@@ -14,6 +14,8 @@ class BxNtfsCronNotify extends BxDolCron
     protected $_sModule;
     protected $_oModule;
 
+    protected $_iAddThreshold;
+
     public function __construct()
     {
     	$this->_sModule = 'bx_notifications';
@@ -22,8 +24,14 @@ class BxNtfsCronNotify extends BxDolCron
         parent::__construct();
     }
 
-    function processing()
+    public function processing()
     {
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        $iCount = (int)$this->_oModule->_oDb->queueGet(array('type' => 'count'));
+        if($iCount > $CNF['PARAM_QUEUE_ADD_THRESHOLD'])
+            return;
+
         $aEvents = $this->_oModule->_oDb->getEventsToProcess();
 
         foreach($aEvents as $aEvent) {

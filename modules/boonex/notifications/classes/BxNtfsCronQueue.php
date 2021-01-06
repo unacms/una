@@ -22,25 +22,26 @@ class BxNtfsCronQueue extends BxDolCron
         parent::__construct();
     }
 
-    function processing()
+    public function processing()
     {
         $iDeliveryTimeout = $this->_oModule->_oConfig->getDeliveryTimeout();
         if($iDeliveryTimeout == 0)
             return;
 
-        $aProcessed = $aSent = array();
         $aItems = $this->_oModule->_oDb->queueGet(array('type' => 'all_to_send', 'timeout' => $iDeliveryTimeout));
+        if(empty($aItems) || !is_array($aItems))
+            return;
+
+        $this->_oModule->_oDb->queueDeleteByIds(array_keys($aItems));
+
+        $aSent = array();
         foreach($aItems as $aItem) {
             $sMethod = 'sendNotification' . bx_gen_method_name($aItem['delivery']);
             $oProfile = BxDolProfile::getInstance($aItem['profile_id']);
 
             if($this->_oModule->$sMethod($oProfile, unserialize($aItem['content'])) !== false)
                 $aSent[] = $aItem['id'];
-
-            $aProcessed[] = $aItem['id'];
         }
-    
-        $this->_oModule->_oDb->queueDeleteByIds($aProcessed);
     }
 }
 
