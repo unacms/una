@@ -51,6 +51,7 @@ div.bx-tl-al-item {
 div.bx-tl-al-item.embed {
     display: inline-block;
     vertical-align: top;
+    width: 50%;
 }
 div.bx-tl-ali-thumbnail img {
     width: 100px;
