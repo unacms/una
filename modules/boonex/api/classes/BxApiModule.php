@@ -430,25 +430,26 @@ class BxApiModule extends BxDolModule
      * }
      * @endcode
      */
-    public function serviceResetPasswordCheckCode(){
-		$sKey = bx_get('code');
-        
-        if ($sKey == ''){
-			return array(
+    public function serviceResetPasswordCheckCode() {
+        $sKey = bx_get('code');
+
+        if ($sKey == '') {
+            return array(
                 'code' => 404,
                 'error' => 'No Content',
                 'desc' => 'Validation code can\'t be empty',
             );
-		}
+        }
 
         $oKey = BxDolKey::getInstance();
-        if (!$oKey || !$oKey->isKeyExists($sKey)){
+        if (!$oKey || !$oKey->isKeyExists($sKey)) {
             return array(
                 'code' => 404,
                 'error' => 'Wrong code',
                 'desc' => 'Validation code is not exist or expired',
             );
         }
+
         $aData = $oKey->getKeyData($sKey);
         if (!isset($aData['email'])){
             return array(
@@ -458,34 +459,32 @@ class BxApiModule extends BxDolModule
             );
         }
 
-		$oAccountQuery = BxDolAccountQuery::getInstance();
+        $oAccountQuery = BxDolAccountQuery::getInstance();
         $iAccountId = $oAccountQuery->getIdByEmail($aData['email']);
-        if (!$iAccountId){
+        if (!$iAccountId) {
             return array(
                 'code' => 404,
                 'error' => 'Wrong code',
                 'desc' => 'Validation code is not exist or expired',
             );
         }
-        
-		$oBxTemplServiceAccount = new BxTemplServiceAccount();
+
+        $oBxTemplServiceAccount = new BxTemplServiceAccount();
         $sPassword = $oBxTemplServiceAccount->generateUserNewPwd($iAccountId);
 
         $oKey->removeKey($sKey);
 
         $aPlus = array ('password' => $sPassword);
-		
-		$aTemplate = BxDolEmailTemplates::getInstance() -> parseTemplate('t_PasswordReset', $aPlus, $iAccountId);
+        $aTemplate = BxDolEmailTemplates::getInstance() -> parseTemplate('bx_api_password_reset', $aPlus, $iAccountId);
 
-		$oAccountQuery = BxDolAccountQuery::getInstance();
-		$oAccountQuery->unlockAccount($iAccountId);
-		
-        if ($aTemplate && sendMail($aData['email'], $aTemplate['Subject'], $aTemplate['Body'], 0, $aPlus, BX_EMAIL_SYSTEM)){
-			return array(
-				'code' => 200,
-				'password' => $sPassword,
-			);
-		}
+        $oAccountQuery->unlockAccount($iAccountId);
+
+        if ($aTemplate && sendMail($aData['email'], $aTemplate['Subject'], $aTemplate['Body'], 0, $aPlus, BX_EMAIL_SYSTEM)) {
+            return array(
+                'code' => 200,
+                'password' => $sPassword,
+            );
+        }
     }
     
     /**
