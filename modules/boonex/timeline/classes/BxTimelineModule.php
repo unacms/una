@@ -2859,7 +2859,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         call_user_func_array(array($oForm, 'initChecker'), $aFormInitCheckerParams);
 
         $bAjaxMode = $oForm->isAjaxMode();
-        $bDynamicMode = $bAjaxMode;
+        $bDynamicMode = $bAjaxMode || bx_is_dynamic_request();
+        
+        $sCodeAdd = '';
+        if($bDynamicMode) {
+            $sCodeAdd .= $this->_oTemplate->getAddedJs('post', $bDynamicMode);
+            $sCodeAdd .= $this->_oTemplate->getJsCode('post', array(), true, $bDynamicMode);
+        }
 
         if($oForm->isSubmittedAndValid()) {
             $aContent = array();
@@ -2905,7 +2911,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
                 $oForm->aInputs['text']['error'] =  _t('_bx_timeline_txt_err_empty_post');
                 $oForm->setValid(false);
 
-            	return $this->_prepareResponse(array('form' => $oForm->getCode($bDynamicMode), 'form_id' => $oForm->id), $bAjaxMode);
+            	return $this->_prepareResponse(array('form' => $sCodeAdd . $oForm->getCode($bDynamicMode), 'form_id' => $oForm->id), $bAjaxMode);
             }
 
             if($oForm->update($iId, $aValsToAdd) === false)
@@ -2935,7 +2941,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
 
         return array(
             'id' => $iId, 
-            'form' => $oForm->getCode($bDynamicMode), 
+            'form' => $sCodeAdd . $oForm->getCode($bDynamicMode), 
             'form_id' => $oForm->id,
             'eval' => $sJsObjectView . '.onEditPost(oData)'
         );

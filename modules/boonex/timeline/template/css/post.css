@@ -44,23 +44,25 @@ div.bx-tl-uploader-file-preview img {
 /*--- Attach Link Form Field Styles ---*/
 div.bx-tl-attach-link-form-field {}
 div.bx-tl-al-item {
-	position: relative;
-	display: inline-block;
-	vertical-align: top;
+    position: relative;
 
-	overflow: hidden;
+    overflow: hidden;
+}
+div.bx-tl-al-item.embed {
+    display: inline-block;
+    vertical-align: top;
 }
 div.bx-tl-ali-thumbnail img {
-	width: 100px;
-	height: 100px;
+    width: 100px;
+    height: 100px;
 }
 div.bx-tl-ali-embed {
-	max-height: 250px;
+    max-height: 250px;
     overflow-y: scroll;
 }
 div.bx-tl-ali-actions .bx-btn {
-	display: inline-block;
-	float: none;
+    display: inline-block;
+    float: none;
 }
 
 /*--- Add Emoji Styles ---*/

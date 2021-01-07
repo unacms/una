@@ -1062,9 +1062,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(empty($aLink) || !is_array($aLink))
             return '';
 
-        $sStylePrefix = $this->_oConfig->getPrefix('style');
-        $sJsObject = $this->_oConfig->getJsObject('post');
         $sLinkIdPrefix = $this->_oConfig->getHtmlIds('post', 'attach_link_item');
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
+        $sClass = $sStylePrefix . '-al-item';
+        $sJsObject = $this->_oConfig->getJsObject('post');
 
         $oEmbed = BxDolEmbed::getObjectInstance();
         $bEmbed = $oEmbed !== false;
@@ -1085,10 +1086,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             if((int)$aLink['media_id'] != 0)
                 $sThumbnail = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_preview'))->getFileUrl($aLink['media_id']);
         }
+        else
+            $sClass .= ' embed';
 
         return $this->parseHtmlByName('attach_link_item.html', array(
             'html_id' => $sLinkIdPrefix . $aLink['id'],
             'style_prefix' => $sStylePrefix,
+            'class' => $sClass,
             'js_object' => $sJsObject,
             'id' => $aLink['id'],
             'bx_if:show_embed_outer' => array(
