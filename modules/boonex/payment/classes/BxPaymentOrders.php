@@ -140,7 +140,7 @@ class BxPaymentOrders extends BxBaseModPaymentOrders
         return $this->_oModule->_oDb->getOrderPending(array('type' => 'mixed', 'conditions' => $aConditions));
     }
 
-	public function addOrder($aData)
+    public function addOrder($aData)
     {
         $iSellerId = isset($aData['seller_id']) ? (int)$aData['seller_id'] : $this->_oModule->getProfileId();
         if($iSellerId == $aData['client_id'])
@@ -157,7 +157,7 @@ class BxPaymentOrders extends BxBaseModPaymentOrders
 
             $aCartInfo['items_price'] += $this->_oModule->_oConfig->getPrice($aData['type'], $aItem) * $aItem['quantity'];
             $aCartInfo['items'][] = array(
-                'vendor_id' => $iSellerId,
+                'author_id' => $iSellerId,
                 'module_id' => $aData['module_id'],
                 'id' => $aItem['id'],
                 'quantity' => $aItem['quantity']
