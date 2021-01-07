@@ -336,7 +336,7 @@ CREATE TABLE IF NOT EXISTS `bx_forum_polls_answers_votes_track` (
 
 -- STORAGES & TRANSCODERS
 INSERT INTO `sys_objects_storage` (`object`, `engine`, `params`, `token_life`, `cache_control`, `levels`, `table_files`, `ext_mode`, `ext_allow`, `ext_deny`, `quota_size`, `current_size`, `quota_number`, `current_number`, `max_file_size`, `ts`) VALUES
-('bx_forum_covers', @sStorageEngine, '', 360, 2592000, 3, 'bx_forum_covers', 'deny-allow', '', 'action,apk,app,bat,bin,cmd,com,command,cpl,csh,exe,gadget,inf,ins,inx,ipa,isu,job,jse,ksh,lnk,msc,msi,msp,mst,osx,out,paf,pif,prg,ps1,reg,rgs,run,sct,shb,shs,u3p,vb,vbe,vbs,vbscript,workflow,ws,wsf', 0, 0, 0, 0, 0, 0),
+('bx_forum_covers', @sStorageEngine, '', 360, 2592000, 3, 'bx_forum_covers', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
 
 ('bx_forum_photos', @sStorageEngine, '', 360, 2592000, 3, 'bx_forum_photos', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
 ('bx_forum_photos_resized', @sStorageEngine, '', 360, 2592000, 3, 'bx_forum_photos_resized', 'allow-deny', 'jpg,jpeg,jpe,gif,png', '', 0, 0, 0, 0, 0, 0),
