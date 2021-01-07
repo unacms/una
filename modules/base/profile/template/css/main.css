@@ -513,6 +513,21 @@ a.bx-base-pofile-cover-thumb p.bx-base-pofile-unit-thumb.bx-def-ava-big-size {
 
     width: calc(16.6%);
 }
+.bx-base-unit-showcase-wrapper.bx-base-puw-showcase-wo-info.flickity-enabled {
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+.bx-base-unit-showcase-wrapper.bx-base-puw-showcase-wo-info.flickity-enabled .flickity-button.previous {
+    left: 0;
+}
+.bx-base-unit-showcase-wrapper.bx-base-puw-showcase-wo-info.flickity-enabled .flickity-button.next {
+    right: 0;
+}
+.bx-base-unit-showcase-wrapper.bx-base-puw-showcase-wo-info.flickity-enabled .bx-base-pofile-unit-wo-info .bx-def-unit-img {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
 /* MEDIA: tablet2 */
 
