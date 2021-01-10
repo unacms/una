@@ -253,7 +253,7 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
     	list($oCache, $sCacheKey, $iCacheTtl) = $this->_getCacheInfo($sType);
 
     	$aCached = $oCache->getData($sCacheKey, $iCacheTtl);
-    	$aCached[$sType] = $aData;
+        $aCached = array_merge($aCached, $aData);
 
     	$oCache->setData($sCacheKey, $aCached, $iCacheTtl);
     }
