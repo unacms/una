@@ -83,6 +83,7 @@
 	<string name="_Period"><![CDATA[Period]]></string>
 	<string name="_Please Wait"><![CDATA[Please Wait]]></string>
 	<string name="_Please enter n1-n2 characters"><![CDATA[Please enter {0}-{1} characters]]></string>
+        <string name="_Please enter characters"><![CDATA[Please enter some number of characters]]></string>
 	<string name="_Please select value"><![CDATA[Please select a value from the list]]></string>
 	<string name="_Preview"><![CDATA[Preview]]></string>
         <string name="_report_comment"><![CDATA[reported as '{0}']]></string>
