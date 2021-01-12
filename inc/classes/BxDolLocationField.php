@@ -50,6 +50,27 @@ class BxDolLocationField extends BxDolFactoryObject
 
         return $oForm->getCleanValue($s);
     }
+
+    public function setLocationVals ($aInput, $aVals, $oForm)
+    {	
+        $oForm->setSpecificValue($aInput['name'] . '_lat', $aVals['lat']);
+        $oForm->setSpecificValue($aInput['name'] . '_lng', $aVals['lng']);
+        $oForm->setSpecificValue($aInput['name'] . '_country', $aVals['country']);
+        $oForm->setSpecificValue($aInput['name'] . '_state', $aVals['state']);
+        $oForm->setSpecificValue($aInput['name'] . '_city', $aVals['city']);
+        $oForm->setSpecificValue($aInput['name'] . '_zip', $aVals['zip']);
+        $oForm->setSpecificValue($aInput['name'] . '_street', $aVals['street']);
+        $oForm->setSpecificValue($aInput['name'] . '_street_number', $aVals['street_number']);
+
+        return true;
+    }
+
+    public function setLocationVal ($aInput, $sIndex, $sVal, $oForm)	
+    {	
+        $s = $aInput['name'] . '_' . $sIndex;
+        $oForm->setSpecificValue($s, $sVal);
+        return true;
+    }
 }
 
 /** @} */

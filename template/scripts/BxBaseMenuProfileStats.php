@@ -16,6 +16,7 @@ class BxBaseMenuProfileStats extends BxTemplMenuAccountNotifications
     public function __construct ($aObject, $oTemplate)
     {
         parent::__construct ($aObject, $oTemplate);
+        $this->_bDisplayAddons = true;
     }
 }
 

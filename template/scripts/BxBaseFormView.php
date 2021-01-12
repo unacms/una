@@ -1716,6 +1716,33 @@ BLAH;
         return $o->genInputLocation($aInput, $this);
     }
     
+    public function setLocationVals ($aInput, $aVals)
+    {
+        $o = BxDolLocationField::getObjectInstance(getParam('sys_location_field_default'));
+        if (!$o)
+            return false;
+
+        return $o->setLocationVals ($aInput, $aVals, $this);
+    }
+
+    public function setLocationVal ($aInput, $sIndex, $sVal)
+    {
+        $o = BxDolLocationField::getObjectInstance(getParam('sys_location_field_default'));
+        if (!$o)
+            return false;
+
+        return $o->setLocationVal ($aInput, $sIndex, $sVal, $this);
+    }
+
+    protected function getLocationVal ($aInput, $sIndex)
+    {
+        $o = BxDolLocationField::getObjectInstance(getParam('sys_location_field_default'));
+        if (!$o)
+            return false;
+
+        return $o->getLocationVal ($aInput, $sIndex, $this);
+    }
+
     function genInputPassword(&$aInput)
     {
         return $this->oTemplate->parseHtmlByName('form_field_password.html', array('input' => $this->genInputStandard($aInput)));

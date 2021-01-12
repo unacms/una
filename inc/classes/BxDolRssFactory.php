@@ -47,12 +47,12 @@ class BxDolRssFactory extends BxDol
     {
         $sRSSLast = '';
         if (isset($aRssData[0]))
-            $sRSSLast = bx_time_utc($aRssData[0][$aFields['DateTimeUTS']]);
+            $sRSSLast = gmdate("D, d M Y H:i:s \G\M\T", (int)$aRssData[0][$aFields['DateTimeUTS']]);
 
         if ($iPID > 0)
             $aPIDOwnerInfo = getProfileInfo($iPID);
 
-        $iUnitLimitChars = 2000;//(int)getParam('max_blog_preview');
+        $iUnitLimitChars = 2000;
         $sUnitRSSFeed = '';
         if ($aRssData) {
             $sTxtReadMore = _t('_Read more');
@@ -62,7 +62,7 @@ class BxDolRssFactory extends BxDol
                 $sUnitGuid = $aUnitInfo[$aFields['Guid']];
 
                 $sUnitTitle = strip_tags($aUnitInfo[$aFields['Title']]);
-                $sUnitDate = bx_time_utc($aUnitInfo[$aFields['DateTimeUTS']]);
+                $sUnitDate = gmdate("D, d M Y H:i:s \G\M\T", $aUnitInfo[$aFields['DateTimeUTS']]);
 
                 $sUnitDesc = '';
                 if(isset($aFields['Desc']) && !empty($aUnitInfo[$aFields['Desc']])) {
@@ -87,13 +87,14 @@ class BxDolRssFactory extends BxDol
 
         if(substr($sMainLink, 0, 7) != 'http://' && substr($sMainLink, 0, 8) != 'https://')
             $sMainLink = BX_DOL_URL_ROOT . $sMainLink;
+        $sMainLink = BxDolPermalinks::getInstance()->permalink($sMainLink);
 
         $sRSSImage = '';
         if ($sImage) {
             $sRSSImage = "<image><url>{$sImage}</url><title>{$sRSSTitle}</title><link>{$sMainLink}</link></image>";
         }
 
-        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?><rss version=\"2.0\"><channel><title>{$sRSSTitle}</title><link><![CDATA[{$sMainLink}]]></link><description>{$sRSSTitle}</description><lastBuildDate>{$sRSSLast}</lastBuildDate>{$sRSSImage}{$sUnitRSSFeed}</channel></rss>";
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?><rss version=\"2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\"><channel><title>{$sRSSTitle}</title><link><![CDATA[{$sMainLink}]]></link><atom:link href=\"{$sMainLink}\" rel=\"self\" type=\"application/rss+xml\" /><description>{$sRSSTitle}</description><lastBuildDate>{$sRSSLast}</lastBuildDate>{$sRSSImage}{$sUnitRSSFeed}</channel></rss>";
     }
 
 }
