@@ -53,6 +53,7 @@
     <string name="_bx_accnt_grid_filter_item_title_adm_suspended"><![CDATA[Suspended]]></string>    
     <string name="_bx_accnt_grid_filter_item_title_adm_unconfirmed"><![CDATA[Unconfirmed]]></string>
     <string name="_bx_accnt_grid_filter_item_title_adm_locked"><![CDATA[Locked]]></string>
+    <string name="_bx_accnt_grid_filter_item_title_adm_without_profile"><![CDATA[Without profile]]></string>
     <string name="_bx_accnt_grid_column_title_adm_active"><![CDATA[Active]]></string>
     <string name="_bx_accnt_grid_column_title_adm_name"><![CDATA[Name]]></string>
     <string name="_bx_accnt_grid_column_title_adm_email"><![CDATA[Email]]></string>
