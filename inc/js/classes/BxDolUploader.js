@@ -72,6 +72,7 @@ BxDolUploaderSimple.prototype.showUploaderForm = function () {
             $('#' + $this._sPopupContainerId + ' .bx-popup-element-close').click(function() {
                 $this.onClickCancel();
             });
+			$("#" + $this._sFormContainerId + " .bx-btn.bx-btn-primary").hide();
             if ('undefined' !== typeof($this.onBeforeShowPopup))
                 $this.onBeforeShowPopup();
         },
