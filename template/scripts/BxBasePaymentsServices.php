@@ -65,6 +65,28 @@ class BxBasePaymentsServices extends BxDol
     	return BxDolPayments::getInstance()->getOrdersCount($sType);
     }
 
+    /**
+     * @page service Service Calls
+     * @section bx_system_general System Services
+     * @subsection bx_system_general-payments Payments
+     * @subsubsection bx_system_general-get_invoices_count get_invoices_count
+     * 
+     * @code bx_srv('system', 'get_invoices_count', ["unpaid"], 'TemplPaymentsServices'); @endcode
+     * @code {{~system:get_invoices_count:TemplPaymentsServices["unpaid"]~}} @endcode
+     * 
+     * Get number of invoices by type for currently logged in profile.
+     * @param $sType type, for example: unpaid
+     * 
+     * @see BxBasePaymentsServices::serviceGetInvoicesCount
+     */
+    /** 
+     * @ref bx_system_general-get_invoices_count "get_invoices_count"
+     */
+    public function serviceGetInvoicesCount($sType)
+    {
+    	return BxDolPayments::getInstance()->getInvoicesCount($sType);
+    }
+
     public function serviceGetLiveUpdatesCart($aMenuItemParent, $aMenuItemChild, $iCount = 0)
     {
         $iCountNew = BxDolPayments::getInstance()->getCartItemsCount();
@@ -100,6 +122,25 @@ class BxBasePaymentsServices extends BxDol
                 'mi_parent' => $aMenuItemParent,
                 'mi_child' => $aMenuItemChild
     		),  // optional, may have some additional data to be passed in JS method provided using 'method' param above.
+    	);
+    }
+    
+    public function serviceGetLiveUpdatesInvoices($aMenuItemParent, $aMenuItemChild, $iCount = 0)
+    {
+        $iCountNew = BxDolPayments::getInstance()->getInvoicesCount('unpaid');
+        if($iCountNew == $iCount)
+            return false;
+
+        return array(
+            'count' => $iCountNew, // required
+            'method' => 'bx_menu_show_live_update(oData)', // required
+            'data' => array(
+                'code' => BxDolTemplate::getInstance()->parseHtmlByTemplateName('menu_item_addon', array(
+                    'content' => '{count}'
+                )),
+                'mi_parent' => $aMenuItemParent,
+                'mi_child' => $aMenuItemChild
+            ),  // optional, may have some additional data to be passed in JS method provided using 'method' param above.
     	);
     }
 }

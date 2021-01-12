@@ -25,16 +25,17 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
     public function addJsCssOrders()
     {
     	$this->addJs(array(
-    		'jquery-ui/jquery.ui.widget.min.js',
-    		'jquery-ui/jquery.ui.menu.min.js', 
-    		'jquery-ui/jquery.ui.autocomplete.min.js', 
-    		'jquery.form.min.js', 
-    		'jquery.anim.js', 
-    		'jquery.webForms.js',
-    		'orders.js'
+            'jquery-ui/jquery.ui.widget.min.js',
+            'jquery-ui/jquery.ui.menu.min.js', 
+            'jquery-ui/jquery.ui.autocomplete.min.js', 
+            'jquery.form.min.js', 
+            'jquery.anim.js', 
+            'jquery.webForms.js',
+            'orders.js'
     	));
     	$this->addCss(array('orders.css'));
     }
+
     public function addJsCssSubscriptions()
     {
         $this->addJs(array('jquery.form.min.js', 'jquery.anim.js', 'jquery.webForms.js', 'main.js', 'subscriptions.js'));
@@ -54,6 +55,11 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
             foreach($aProviders as $sProvider => $aProvider)
                 $oModule->getObjectProvider($sProvider, $iVendorId)->addJsCss();
     	}
+    }
+
+    public function addJsCssInvoices()
+    {
+    	$this->addCss(array('invoices.css'));
     }
 
     public function displayCartJs($sType = '', $iVendorId = 0)
@@ -343,6 +349,17 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         }
 
         return $this->parseHtmlByName('order_' . $sType . '.html', $aResult);
+    }
+
+    public function displayBlockInvoices()
+    {
+        $sGrid = $this->_oConfig->getObject('grid_invoices');
+        $oGrid = BxDolGrid::getObjectInstance($sGrid);
+        if(!$oGrid)
+            return MsgBox(_t($this->_sLangsPrefix . 'msg_no_results'));
+
+        $this->addJsCssInvoices();
+        return $oGrid->getCode();
     }
 
     public function displayItems($sType, $aItems = array())

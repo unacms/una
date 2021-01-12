@@ -21,12 +21,24 @@ class BxPaymentStudioPage extends BxTemplStudioModule
 
         parent::__construct($sModule, $mixedPageName, $sPage);
 
-        $this->aMenuItems['providers'] = array('name' => 'providers', 'icon' => 'money-bill-alt', 'title' => '_bx_payment_lmi_cpt_providers');
+        $this->aMenuItems = array_merge($this->aMenuItems, array(
+            'providers' => array('name' => 'providers', 'icon' => 'money-bill-alt', 'title' => '_bx_payment_lmi_cpt_providers'),
+            'commissions' => array('name' => 'commissions', 'icon' => 'percent', 'title' => '_bx_payment_lmi_cpt_commissions')
+        ));
     }
 
     protected function getProviders()
     {
         $oGrid = BxDolGrid::getObjectInstance($this->_oModule->_oConfig->getObject('grid_providers'), BxDolStudioTemplate::getInstance());
+        if(!$oGrid)
+            return '';
+
+        return $oGrid->getCode();
+    }
+
+    protected function getCommissions()
+    {
+        $oGrid = BxDolGrid::getObjectInstance($this->_oModule->_oConfig->getObject('grid_commissions'), BxDolStudioTemplate::getInstance());
         if(!$oGrid)
             return '';
 

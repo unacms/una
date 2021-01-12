@@ -37,6 +37,13 @@ define('BX_PAYMENT_SBS_PU_DAY', 'day');
 define('BX_PAYMENT_SBS_PU_HOUR', 'hour');
 define('BX_PAYMENT_SBS_PU_MINUTE', 'minute');
 
+/*
+ * Invoice: statuses.
+ */
+define('BX_PAYMENT_INV_STATUS_UNPAID', 'unpaid');
+define('BX_PAYMENT_INV_STATUS_PAID', 'paid');
+define('BX_PAYMENT_INV_STATUS_OVERDUE', 'overdue');
+
 
 /**
  * Payment module by BoonEx
@@ -238,22 +245,22 @@ class BxPaymentModule extends BxBaseModPaymentModule
     	$bResult = false;
 
     	switch($sPaymentType) {
-    		case BX_PAYMENT_TYPE_SINGLE:
-    			$aProvidersCart = $this->_oDb->getVendorInfoProvidersSingle($iVendorId);
-    			$bResult = !empty($aProvidersCart);
-    			break;
+            case BX_PAYMENT_TYPE_SINGLE:
+                $aProvidersCart = $this->_oDb->getVendorInfoProvidersSingle($iVendorId);
+                $bResult = !empty($aProvidersCart);
+                break;
 
-    		case BX_PAYMENT_TYPE_RECURRING:
-    			$aProvidersSubscription = $this->_oDb->getVendorInfoProvidersRecurring($iVendorId);
-    			$bResult = !empty($aProvidersSubscription);
-    			break;
+            case BX_PAYMENT_TYPE_RECURRING:
+                $aProvidersSubscription = $this->_oDb->getVendorInfoProvidersRecurring($iVendorId);
+                $bResult = !empty($aProvidersSubscription);
+                break;
 
-    		default:
-    			$aProviders = $this->_oDb->getVendorInfoProviders($iVendorId);
-    			$bResult = !empty($aProviders);
+            default:
+                $aProviders = $this->_oDb->getVendorInfoProviders($iVendorId);
+                $bResult = !empty($aProviders);
     	}
 
-		return $bResult;
+        return $bResult;
     }
 
     /** 
@@ -408,6 +415,17 @@ class BxPaymentModule extends BxBaseModPaymentModule
         }
 
         return $aResult;
+    }
+
+    public function serviceGetMenuAddonManageTools()
+    {
+        return array(
+            'counter1_value' => (int)$this->_oDb->getInvoices(array('type' => 'status', 'status' => BX_PAYMENT_INV_STATUS_PAID, 'count' => true)), 
+            'counter1_caption' => _t('_bx_payment_menu_item_title_admt_addon_counter1_caption'), 
+            'counter2_value' => (int)$this->_oDb->getInvoices(array('type' => 'status', 'status' => BX_PAYMENT_INV_STATUS_OVERDUE, 'count' => true)), 
+            'counter2_caption' => _t('_bx_payment_menu_item_title_admt_addon_counter2_caption'), 
+            'counter3_value' => (int)$this->_oDb->getInvoices(array('type' => 'all_count'))
+        );
     }
 
     /**
@@ -868,7 +886,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
     public function onProfileDelete($iProfileId)
     {
-		$this->_oDb->onProfileDelete($iProfileId);
+        $this->_oDb->onProfileDelete($iProfileId);
     }
 
     public function isAllowedPurchase($aItem, $bPerform = false)
@@ -918,9 +936,17 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
         $aCheckResult = checkActionModule($iUserId, 'manage any purchase', $this->getName(), $bPerform);
         if($aCheckResult[CHECK_ACTION_RESULT] == CHECK_ACTION_RESULT_ALLOWED)
-			return true;
+            return true;
 
         return $aCheckResult[CHECK_ACTION_MESSAGE];
+    }
+
+    public function isAllowedManageInvoices($bPerform = false)
+    {
+        if(BxDolAcl::getInstance()->isMemberLevelInSet(array(MEMBERSHIP_ID_MODERATOR, MEMBERSHIP_ID_ADMINISTRATOR)) || isAdmin())
+            return true;
+
+        return _t('_sys_txt_access_denied');
     }
 
     public function checkData($iClientId, $iSellerId, $iModuleId, $iItemId, $iItemCount, $aCustom = array())
@@ -1068,6 +1094,136 @@ class BxPaymentModule extends BxBaseModPaymentModule
     public function cancelSubscription($mixedPending)
     {
         return $this->getObjectSubscriptions()->cancelLocal($mixedPending);
+    }
+
+    public function processCommissions()
+    {
+        if(!defined('BX_DOL_CRON_EXECUTE'))
+            return;
+
+        $CNF = &$this->_oConfig->CNF;
+
+        if((int)date('j') == $CNF['PARAM_CMSN_INVOICE_ISSUE_DAY'])
+            $this->_invoicesIssue();
+
+        $this->_invoicesCheck();
+    }
+
+    protected function _invoicesIssue()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sInvoiceNameMask = 'INV-%d-%d-%d';
+
+        $iMonth = date('m');
+        $iYear = date('Y');
+        $iPeriodStart = mktime(0, 0, 0, $iMonth-1, 1, $iYear);
+        $iPeriodEnd = mktime(23, 59, 59, $iMonth, 0, $iYear);
+        $iDateIssue = time();
+        $iDateDue = $iDateIssue + 86400 * $CNF['PARAM_CMSN_INVOICE_LIFETIME'];
+
+        $aCommissionsInfo = array();
+        $aAclLevels = BxDolAcl::getInstance()->getMemberships(false, true, false, true);
+        foreach($aAclLevels as $iAclLevelId => $sAclLevelTitle)
+            $aCommissionsInfo[$iAclLevelId] = $this->_oDb->getCommissions(array('type' => 'acl_id', 'acl_id' => $iAclLevelId));
+
+        $iMainSellerId = $this->_oConfig->getSiteAdmin();
+
+        $aVendors = $this->_oDb->getOrderProcessed(array('type' => 'income', 'period_start' => $iPeriodStart, 'period_end' => $iPeriodEnd));
+        foreach($aVendors as $aVendor) {
+            $iVendorId = (int)$aVendor['id'];
+            if($iVendorId == $iMainSellerId)
+                continue;
+
+            $aInvoice = $this->_oDb->getInvoices(array('type' => 'committent_id', 'committent_id' => $iVendorId, 'period_start' => $iPeriodStart, 'period_end' => $iPeriodEnd));
+            if(!empty($aInvoice) && is_array($aInvoice))
+                continue;
+
+            $aVendorAcl = BxDolAcl::getInstance()->getMemberMembershipInfo($iVendorId);
+            $aCommissions = $aCommissionsInfo[$aVendorAcl['id']];
+
+            $fCommission = 0;
+            foreach($aCommissions as $aCommission) {
+                if((float)$aCommission['percentage'] > 0)
+                    $fCommission += (float)$aVendor['amount'] * (float)$aCommission['percentage'] / 100;
+
+                if((float)$aCommission['installment'] > 0)
+                    $fCommission += (float)$aCommission['installment'];
+            }
+
+            $this->_oDb->insertInvoice(array(
+                'name' => sprintf($sInvoiceNameMask, $iMainSellerId, $iVendorId, $this->_oDb->getInvoices(array(
+                    'type' => 'index', 
+                    'commissionaire_id' => $iMainSellerId, 
+                    'committent_id' => $iVendorId
+                ))),
+                'commissionaire_id' => $iMainSellerId, 
+                'committent_id' => $iVendorId,
+                'amount' => $fCommission,
+                'period_start' => $iPeriodStart,
+                'period_end' => $iPeriodEnd,
+                'date_issue' => $iDateIssue,
+                'date_due' => $iDateDue,
+                'status' => BX_PAYMENT_INV_STATUS_UNPAID
+            ));
+        }
+    }
+
+    protected function _invoicesCheck()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sPrefix = $this->_oConfig->getPrefix('general');
+        $oEmailTemplates = BxDolEmailTemplates::getInstance();
+
+        //--- Process expiring invoices.
+        $aInvoices = $this->_oDb->getInvoices(array('type' => 'expiring'));
+        if(!empty($aInvoices) && is_array($aInvoices))
+            foreach($aInvoices as $aInvoice) {
+                if((int)$aInvoice['ntf_exp'] > 0)
+                    continue;
+
+                $oCommittent = BxDolProfile::getInstance($aInvoice['committent_id']);
+                if(!$oCommittent)
+                    continue;
+
+                $bResult = sendMailTemplate($sPrefix . 'expiring_notification_committent', 0, (int)$aInvoice['committent_id'], array(
+                    'invoice' => $aInvoice['name'],
+                    'days' => $CNF['PARAM_CMSN_INVOICE_EXPIRATION_NOTIFY'],
+                    'period_start' => $this->_oConfig->formatDate($aInvoice['period_start']),
+                    'period_end' => $this->_oConfig->formatDate($aInvoice['period_end']),
+                    'date_issue' => $this->_oConfig->formatDateTime($aInvoice['date_issue']),
+                    'date_due' => $this->_oConfig->formatDateTime($aInvoice['date_due']),
+                ), BX_EMAIL_NOTIFY, true);
+
+                if($bResult)
+                    $this->_oDb->updateInvoice($aInvoice['id'], array('ntf_exp' => 1));
+            }
+
+        //--- Process overdue invoices.
+        $aInvoices = $this->_oDb->getInvoices(array('type' => 'overdue'));
+        if(!empty($aInvoices) && is_array($aInvoices))
+            foreach($aInvoices as $aInvoice) {
+                if((int)$aInvoice['ntf_due'] > 0 && $aInvoice['status'] == BX_PAYMENT_INV_STATUS_OVERDUE)
+                    continue;
+
+                $oCommittent = BxDolProfile::getInstance($aInvoice['committent_id']);
+                if(!$oCommittent)
+                    continue;
+
+                $bResult = sendMailTemplate($sPrefix . 'overdue_notification_committent', 0, (int)$aInvoice['committent_id'], array(
+                    'invoice' => $aInvoice['name'],
+                    'period_start' => $this->_oConfig->formatDate($aInvoice['period_start']),
+                    'period_end' => $this->_oConfig->formatDate($aInvoice['period_end']),
+                    'date_issue' => $this->_oConfig->formatDateTime($aInvoice['date_issue']),
+                    'date_due' => $this->_oConfig->formatDateTime($aInvoice['date_due']),
+                ), BX_EMAIL_NOTIFY, true);
+
+                $this->_oDb->updateInvoice($aInvoice['id'], array(
+                    'status' => BX_PAYMENT_INV_STATUS_OVERDUE, 
+                    'ntf_due' => $bResult ? 1 : 0
+                ));
+            }
     }
 
     public function processTimeTracker()
@@ -1233,6 +1389,220 @@ class BxPaymentModule extends BxBaseModPaymentModule
 
         return $aButtonJs;
     }
+
+    /**
+     * Integration with itslef which is needed to pay an invoice.
+     */
+
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-payments Payments
+     * @subsubsection bx_payment-get_payment_data get_payment_data
+     * 
+     * @code bx_srv('bx_payment', 'get_payment_data', [...]); @endcode
+     * 
+     * Get an array with module's description. Is needed for payments processing module.
+     * 
+     * @return an array with module's description.
+     * 
+     * @see BxPaymentModule::serviceGetPaymentData
+     */
+    /** 
+     * @ref bx_payment-get_payment_data "get_payment_data"
+     */
+    public function serviceGetPaymentData()
+    {
+        return $this->_aModule;
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-payments Payments
+     * @subsubsection bx_payment-get_cart_item get_cart_item
+     * 
+     * @code bx_srv('bx_payment', 'get_cart_item', [...]); @endcode
+     * 
+     * Get an array with prodict's description. Is used in Shopping Cart in payments processing module.
+     * 
+     * @param $mixedItemId product's ID or Unique Name.
+     * @return an array with prodict's description. Empty array is returned if something is wrong.
+     * 
+     * @see BxPaymentModule::serviceGetCartItem
+     */
+    /** 
+     * @ref bx_payment-get_cart_item "get_cart_item"
+     */
+    public function serviceGetCartItem($mixedItemId)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+        if(!$mixedItemId)
+            return array();
+
+        if(is_numeric($mixedItemId))
+            $aItem = $this->_oDb->getInvoices(array('type' => 'id', 'id' => (int)$mixedItemId));
+        else 
+            $aItem = $this->_oDb->getInvoices(array('type' => 'name', 'name' => $mixedItemId));
+
+        if(empty($aItem) || !is_array($aItem))
+            return array();
+
+        $oCommissionaire = BxDolProfile::getInstanceMagic($aItem['commissionaire_id']);
+
+        return array (
+            'id' => $aItem['id'],
+            'author_id' => $aItem['commissionaire_id'],
+            'name' => $aItem['name'],
+            'title' => _t('_bx_payment_txt_invoice_title', $aItem['name'], $oCommissionaire->getDisplayName()),
+            'description' => _t('_bx_payment_txt_invoice_description', bx_process_output($aItem['period_start'], BX_DATA_DATE_TS_UTC), bx_process_output($aItem['period_end'], BX_DATA_DATE_TS_UTC)),
+            'url' => '',
+            'price_single' => $aItem['amount'],
+            'price_recurring' => '',
+            'period_recurring' => 0,
+            'period_unit_recurring' => '',
+            'trial_recurring' => ''
+        );
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-payments Payments
+     * @subsubsection bx_payment-get_cart_items get_cart_items
+     * 
+     * @code bx_srv('bx_payment', 'get_cart_items', [...]); @endcode
+     * 
+     * Get an array with prodicts' descriptions by seller. Is used in Manual Order Processing in payments processing module.
+     * 
+     * @param $iCommissionaireId commissionaire ID.
+     * @return an array with prodicts' descriptions. Empty array is returned if something is wrong or seller doesn't have any products.
+     * 
+     * @see BxPaymentModule::serviceGetCartItems
+     */
+    /** 
+     * @ref bx_payment-get_cart_items "get_cart_items"
+     */
+    public function serviceGetCartItems($iCommissionaireId)
+    {
+    	$CNF = &$this->_oConfig->CNF;
+
+        $iCommissionaireId = (int)$iCommissionaireId;
+        if(empty($iCommissionaireId))
+            return array();
+
+        $sCommissionaireName = BxDolProfile::getInstanceMagic($iCommissionaireId)->getDisplayName();
+
+        $aItems = $this->_oDb->getInvoices(array('type' => 'commissionaire_id', 'commissionaire_id' => $iCommissionaireId));      
+
+        $aResult = array();
+        foreach($aItems as $aItem)
+            $aResult[] = array(
+                'id' => $aItem['id'],
+                'author_id' => $aItem['commissionaire_id'],
+                'name' => $aItem['name'],
+                'title' => _t('_bx_payment_txt_invoice_title', $aItem['name'], $sCommissionaireName),
+                'description' => _t('_bx_payment_txt_invoice_description', bx_process_output($aItem['period_start'], BX_DATA_DATE_TS_UTC), bx_process_output($aItem['period_end'], BX_DATA_DATE_TS_UTC)),
+                'url' => '',
+                'price_single' => $aItem['amount'],
+                'price_recurring' => '',
+                'period_recurring' => 0,
+                'period_unit_recurring' => '',
+                'trial_recurring' => ''
+            );
+
+        return $aResult;
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-payments Payments
+     * @subsubsection bx_payment-register_cart_item register_cart_item
+     * 
+     * @code bx_srv('bx_payment', 'register_cart_item', [...]); @endcode
+     * 
+     * Register a processed single time payment inside the Payment module. Is called with payment processing module after the payment was registered there.
+     * 
+     * @param $iClientId client ID.
+     * @param $iSellerId seller ID
+     * @param $iItemId item ID.
+     * @param $iItemCount the number of purchased items.
+     * @param $sOrder order number received from payment provider (PayPal, Stripe, etc)
+     * @param $sLicense license number genereted with payment processing module for internal usage
+     * @return an array with purchased prodict's description. Empty array is returned if something is wrong.
+     * 
+     * @see BxPaymentModule::serviceRegisterCartItem
+     */
+    /** 
+     * @ref bx_payment-register_cart_item "register_cart_item"
+     */
+    public function serviceRegisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+    	$aItem = $this->serviceGetCartItem($iItemId);
+        if(empty($aItem) || !is_array($aItem))
+            return array();
+
+        if(!$this->_oDb->updateInvoice($iItemId, array('status' => BX_PAYMENT_INV_STATUS_PAID)))
+            return array();
+
+        bx_alert($this->getName(), 'invoice_marked_as_paid', 0, false, array(
+            'product_id' => $iItemId,
+            'profile_id' => $iClientId,
+            'order' => $sOrder,
+            'license' => $sLicense,
+            'type' => BX_PAYMENT_TYPE_SINGLE,
+            'count' => $iItemCount,
+            'duration' => '',
+            'trial' => ''
+        ));
+
+        return $aItem;
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_payment Payment
+     * @subsection bx_payment-payments Payments
+     * @subsubsection bx_payment-unregister_cart_item unregister_cart_item
+     * 
+     * @code bx_srv('bx_payment', 'unregister_cart_item', [...]); @endcode
+     * 
+     * Unregister an earlier processed single time payment inside the Payment module. Is called with payment processing module after the payment was unregistered there.
+     * 
+     * @param $iClientId client ID.
+     * @param $iSellerId seller ID
+     * @param $iItemId item ID.
+     * @param $iItemCount the number of purchased items.
+     * @param $sOrder order number received from payment provider (PayPal, Stripe, etc)
+     * @param $sLicense license number genereted with payment processing module for internal usage
+     * @return boolean value determining where the payment was unregistered or not.
+     * 
+     * @see BxPaymentModule::serviceUnregisterCartItem
+     */
+    /** 
+     * @ref bx_payment-unregister_cart_item "unregister_cart_item"
+     */
+    public function serviceUnregisterCartItem($iClientId, $iSellerId, $iItemId, $iItemCount, $sOrder, $sLicense)
+    {
+        if(!$this->_oDb->updateInvoice($iItemId, array('status' => BX_PAYMENT_INV_STATUS_UNPAID)))
+            return false;
+
+        bx_alert($this->getName(), 'invoice_marked_as_unpaid', 0, false, array(
+            'product_id' => $iItemId,
+            'profile_id' => $iClientId,
+            'order' => $sOrder,
+            'license' => $sLicense,
+            'type' => BX_PAYMENT_TYPE_SINGLE,
+            'count' => $iItemCount
+        ));
+
+    	return true;
+    }
+    
 }
 
 /** @} */

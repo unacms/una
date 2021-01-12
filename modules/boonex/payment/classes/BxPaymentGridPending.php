@@ -36,7 +36,7 @@ class BxPaymentGridPending extends BxBaseModPaymentGridOrders
 
     	$sAction = 'process';
         $sFormObject = $this->_oModule->_oConfig->getObject('form_pendings');
-        $sFormDisplay = $this->_oModule->_oConfig->getObject('display_pendings_process');
+        $sFormDisplay = $this->_oModule->_oConfig->getObject('form_display_pendings_process');
 
         $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->_oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction;

@@ -30,6 +30,14 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
         parent::__construct($aModule);
 
         $this->CNF = array_merge($this->CNF, array(
+            // some params
+            'PARAM_CMSN_INVOICE_ISSUE_DAY' => 12, //the first day of month
+            'PARAM_CMSN_INVOICE_LIFETIME' => 4, //in days
+            'PARAM_CMSN_INVOICE_EXPIRATION_NOTIFY' => 1, //in days, before expiration date
+            'PARAM_CMSN_DATE_FORMAT' => 'd.m.Y',
+            'PARAM_CMSN_DATE_TIME_FORMAT' => 'd.m.Y H:i',
+
+            // objects
             'OBJECT_FORM_PRELISTS_CURRENCIES' => '',
 
             'KEY_SESSION_PENDING' => $this->_sName . '_pending_id',
@@ -49,8 +57,13 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
         $this->_aObjects = array_merge($this->_aObjects, array(
             'form_pendings' => $this->_sName . '_form_pendings',
             'form_processed' => $this->_sName . '_form_processed',
-            'display_pendings_process' => $this->_sName . '_form_pendings_process',
-            'display_processed_add' => $this->_sName . '_form_processed_add',
+            'form_display_pendings_process' => $this->_sName . '_form_pendings_process',
+            'form_display_processed_add' => $this->_sName . '_form_processed_add',
+            'form_commissions' => $this->_sName . '_form_commissions',
+            'form_display_commissions_add' => $this->_sName . '_form_commissions_add',
+            'form_display_commissions_edit' => $this->_sName . '_form_commissions_edit',
+            'form_invoices' => $this->_sName . '_form_invoices',
+            'form_display_invoices_edit' => $this->_sName . '_form_invoices_edit',
 
             'menu_dashboard' => 'sys_account_dashboard',
             'menu_cart_submenu' => $this->_sName . '_menu_cart_submenu',
@@ -62,6 +75,8 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
             'grid_history' => $this->_sName . '_grid_orders_history',
             'grid_processed' => $this->_sName . '_grid_orders_processed',
             'grid_pending' => $this->_sName . '_grid_orders_pending',
+            'grid_commissions' => $this->_sName . '_grid_commissions',
+            'grid_invoices' => $this->_sName . '_grid_invoices',
             'grid_carts' => $this->_sName . '_grid_carts',
             'grid_cart' => $this->_sName . '_grid_cart',
             'grid_sbs_list_my' => $this->_sName . '_grid_sbs_list_my',
@@ -141,7 +156,7 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
     	return $bSsl ? $this->http2https($sResult) : $sResult;
     }
 
-	public function getDivider($sType)
+    public function getDivider($sType)
     {
     	$sResult = '';
     	if(empty($sType) || !isset($this->CNF[$sType]))
@@ -150,7 +165,7 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
         return $this->CNF[$sType];
     }
 
-	public function getPerPage($sType = 'default')
+    public function getPerPage($sType = 'default')
     {
     	if(empty($sType))
             return $this->_aPerPage;
@@ -158,7 +173,7 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
         return isset($this->_aPerPage[$sType]) ? $this->_aPerPage[$sType] : '';
     }
 
-	public function getHtmlIds($sType, $sKey = '')
+    public function getHtmlIds($sType, $sKey = '')
     {
         if(empty($sKey))
             return isset($this->_aHtmlIds[$sType]) ? $this->_aHtmlIds[$sType] : array();
@@ -171,7 +186,7 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
         return $this->_sAnimationEffect;
     }
 
-	public function getAnimationSpeed()
+    public function getAnimationSpeed()
     {
         return $this->_iAnimationSpeed;
     }
@@ -196,6 +211,16 @@ class BxBaseModPaymentConfig extends BxBaseModGeneralConfig
         }
 
         return $sResult;
+    }
+
+    public function formatDate($iTs)
+    {
+        return gmdate($this->CNF['PARAM_CMSN_DATE_FORMAT'], $iTs);
+    }
+
+    public function formatDateTime($iTs)
+    {
+        return gmdate($this->CNF['PARAM_CMSN_DATE_TIME_FORMAT'], $iTs);
     }
 }
 

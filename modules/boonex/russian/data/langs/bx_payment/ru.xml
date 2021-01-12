@@ -55,8 +55,13 @@
     <string name="_bx_payment_page_title_join"><![CDATA[Присоединиться]]></string>
     <string name="_bx_payment_page_block_title_join"><![CDATA[Присоединиться]]></string>
 
+    <string name="_bx_payment_page_title_sys_invoices"><![CDATA[Счета]]></string>
+    <string name="_bx_payment_page_title_invoices"><![CDATA[Счета]]></string>
+    <string name="_bx_payment_page_block_title_invoices"><![CDATA[Счета]]></string>
+
     <!-- MENUS -->
     <string name="_bx_payment_lmi_cpt_providers"><![CDATA[Провайдеры]]></string>
+    <string name="_bx_payment_lmi_cpt_commissions"><![CDATA[Комиссии]]></string>
 
     <string name="_bx_payment_menu_title_orders_submenu"><![CDATA[Подменю заказов]]></string>
     <string name="_bx_payment_menu_set_title_orders_submenu"><![CDATA[Подменю заказов]]></string>
@@ -66,6 +71,10 @@
     <string name="_bx_payment_menu_item_title_orders_pending"><![CDATA[Обрабатываемые]]></string>
     <string name="_bx_payment_menu_item_title_system_details"><![CDATA[Детали платежных систем]]></string>
     <string name="_bx_payment_menu_item_title_details"><![CDATA[Платежные системы]]></string>
+    <string name="_bx_payment_menu_item_title_system_admt_invoices"><![CDATA[Счета]]></string>
+    <string name="_bx_payment_menu_item_title_admt_invoices"><![CDATA[Счета]]></string>
+    <string name="_bx_payment_menu_item_title_admt_addon_counter1_caption"><![CDATA[опл.]]></string>
+    <string name="_bx_payment_menu_item_title_admt_addon_counter2_caption"><![CDATA[задерж.]]></string>
 
     <string name="_bx_payment_menu_title_cart_submenu"><![CDATA[Подменю корзины]]></string>
     <string name="_bx_payment_menu_set_title_cart_submenu"><![CDATA[Подменю корзины]]></string>
@@ -126,6 +135,20 @@
     <string name="_bx_payment_grid_column_title_crt_description"><![CDATA[Описание]]></string>
     <string name="_bx_payment_grid_column_title_crt_quantity"><![CDATA[Количество]]></string>
     <string name="_bx_payment_grid_column_title_crt_price"><![CDATA[Цена]]></string>
+    <string name="_bx_payment_grid_column_title_cms_caption"><![CDATA[Заголовок]]></string>
+    <string name="_bx_payment_grid_column_title_cms_description"><![CDATA[Описание]]></string>
+    <string name="_bx_payment_grid_column_title_cms_acl_id"><![CDATA[Членство]]></string>
+    <string name="_bx_payment_grid_column_title_cms_percentage"><![CDATA[Процент]]></string>
+    <string name="_bx_payment_grid_column_title_cms_installment"><![CDATA[Взнос]]></string>
+    <string name="_bx_payment_grid_column_title_inv_commissionaire_id"><![CDATA[Комиссионер]]></string>
+    <string name="_bx_payment_grid_column_title_inv_committent_id"><![CDATA[Комитент]]></string>
+    <string name="_bx_payment_grid_column_title_inv_name"><![CDATA[Имя]]></string>
+    <string name="_bx_payment_grid_column_title_inv_period_start"><![CDATA[Начало периода]]></string>
+    <string name="_bx_payment_grid_column_title_inv_period_end"><![CDATA[Конец периода]]></string>
+    <string name="_bx_payment_grid_column_title_inv_amount"><![CDATA[Сумма]]></string>
+    <string name="_bx_payment_grid_column_title_inv_date_issue"><![CDATA[Дата выпуска]]></string>
+    <string name="_bx_payment_grid_column_title_inv_date_due"><![CDATA[Срок оплаты]]></string>
+    <string name="_bx_payment_grid_column_title_inv_status"><![CDATA[Статус]]></string>
 
     <string name="_bx_payment_grid_action_title_ods_add"><![CDATA[Добавить вручную]]></string>
     <string name="_bx_payment_grid_action_title_ods_cancel"><![CDATA[Отменить]]></string>
@@ -139,6 +162,12 @@
     <string name="_bx_payment_grid_action_title_crts_continue"><![CDATA[Продолжить оплату]]></string>
     <string name="_bx_payment_grid_action_title_crt_checkout"><![CDATA[Оплатить через {0}]]></string>
     <string name="_bx_payment_grid_action_title_crt_delete"><![CDATA[Удалить]]></string>
+    <string name="_bx_payment_grid_action_title_cms_add"><![CDATA[Добавить]]></string>
+    <string name="_bx_payment_grid_action_title_cms_edit"><![CDATA[Изменить]]></string>
+    <string name="_bx_payment_grid_action_title_cms_delete"><![CDATA[Удалить]]></string>
+    <string name="_bx_payment_grid_action_title_inv_edit"><![CDATA[Изменить]]></string>
+    <string name="_bx_payment_grid_action_title_inv_delete"><![CDATA[Удалить]]></string>
+    <string name="_bx_payment_grid_action_title_inv_pay"><![CDATA[Оплатить]]></string>
 
     <string name="_bx_payment_popup_title_ods_order_subscription_view"><![CDATA[Подписка]]></string>
     <string name="_bx_payment_popup_title_ods_order_subscription_get_details"><![CDATA[Детали подписки]]></string>
@@ -151,6 +180,9 @@
     <string name="_bx_payment_popup_title_ods_order_processed_view"><![CDATA[Обработанный заказ]]></string>
     <string name="_bx_payment_popup_title_ods_order_processed_add"><![CDATA[Добавить вручную]]></string>
     <string name="_bx_payment_popup_title_crd_providers_select"><![CDATA[Выберите платежную систему]]></string>
+    <string name="_bx_payment_popup_title_cms_add"><![CDATA[Добавить комиссию]]></string>
+    <string name="_bx_payment_popup_title_cms_edit"><![CDATA[Изменить комиссию]]></string>
+    <string name="_bx_payment_popup_title_inv_edit"><![CDATA[Изменить счет]]></string>
 
     <!-- FORMS -->
     <string name="_bx_payment_form_cart_input_do_delete"><![CDATA[Удалить]]></string>
@@ -188,6 +220,40 @@
     <string name="_bx_payment_form_processed_input_add_sys"><![CDATA[Добавить]]></string>
     <string name="_bx_payment_form_processed_input_cancel"><![CDATA[Отменить]]></string>
     <string name="_bx_payment_form_processed_input_cancel_sys"><![CDATA[Отменить]]></string>
+
+    <string name="_bx_payment_form_commissions_form"><![CDATA[Форма комиссий]]></string>
+    <string name="_bx_payment_form_commissions_display_add"><![CDATA[Добавить комиссию]]></string>
+    <string name="_bx_payment_form_commissions_display_edit"><![CDATA[Изменить комиссию]]></string>
+    <string name="_bx_payment_form_commissions_input_caption_sys"><![CDATA[Заголовок]]></string>
+    <string name="_bx_payment_form_commissions_input_caption"><![CDATA[Заголовок]]></string>
+    <string name="_bx_payment_form_commissions_input_caption_err"><![CDATA[Это поле необходимо. Пожалуйста, заполните его.]]></string>
+    <string name="_bx_payment_form_commissions_input_description_sys"><![CDATA[Описание]]></string>
+    <string name="_bx_payment_form_commissions_input_description"><![CDATA[Описание]]></string>
+    <string name="_bx_payment_form_commissions_input_acl_id_sys"><![CDATA[Уровень членства]]></string>
+    <string name="_bx_payment_form_commissions_input_acl_id"><![CDATA[Уровень членства]]></string>
+    <string name="_bx_payment_form_commissions_input_percentage_sys"><![CDATA[Процент]]></string>
+    <string name="_bx_payment_form_commissions_input_percentage"><![CDATA[Процент]]></string>
+    <string name="_bx_payment_form_commissions_input_installment_sys"><![CDATA[Взнос]]></string>
+    <string name="_bx_payment_form_commissions_input_installment"><![CDATA[Взнос]]></string>
+    <string name="_bx_payment_form_commissions_input_submit_sys"><![CDATA[Выполнить]]></string>
+    <string name="_bx_payment_form_commissions_input_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_payment_form_commissions_input_cancel_sys"><![CDATA[Отменить]]></string>
+    <string name="_bx_payment_form_commissions_input_cancel"><![CDATA[Отменить]]></string>
+    
+    <string name="_bx_payment_form_invoices_form"><![CDATA[Форма счетов]]></string>
+    <string name="_bx_payment_form_invoices_display_edit"><![CDATA[Изменить счет]]></string>
+    <string name="_bx_payment_form_invoices_input_amount_sys"><![CDATA[Сумма]]></string>
+    <string name="_bx_payment_form_invoices_input_amount"><![CDATA[Сумма]]></string>
+    <string name="_bx_payment_form_invoices_input_amount_err"><![CDATA[Это поле необходимо. Пожалуйста, заполните его.]]></string>
+    <string name="_bx_payment_form_invoices_input_date_due_sys"><![CDATA[Срок оплаты]]></string>
+    <string name="_bx_payment_form_invoices_input_date_due"><![CDATA[Срок оплаты]]></string>
+    <string name="_bx_payment_form_invoices_input_date_due_err"><![CDATA[Это поле необходимо. Пожалуйста, заполните его.]]></string>
+    <string name="_bx_payment_form_invoices_input_status_sys"><![CDATA[Статус]]></string>
+    <string name="_bx_payment_form_invoices_input_status"><![CDATA[Статус]]></string>
+    <string name="_bx_payment_form_invoices_input_submit_sys"><![CDATA[Выполнить]]></string>
+    <string name="_bx_payment_form_invoices_input_submit"><![CDATA[Выполнить]]></string>
+    <string name="_bx_payment_form_invoices_input_cancel_sys"><![CDATA[Отменить]]></string>
+    <string name="_bx_payment_form_invoices_input_cancel"><![CDATA[Отменить]]></string>
 
     <!-- Predefined Values -->
     <string name="_bx_payment_pre_lists_currencies"><![CDATA[Валюты]]></string>
@@ -232,6 +298,22 @@
 <p><b>Внимание</b>. Данные, связанные с подпиской, будут удалены в ближайшее время.</p>
 {email_footer}]]></string>
 
+    <string name="_bx_payment_et_txt_name_expiring_notification_committent"><![CDATA[Уведомление об истечении срока действия счета.]]></string>
+    <string name="_bx_payment_et_txt_subject_expiring_notification_committent"><![CDATA[Уведомление об истечении срока действия счета.]]></string>
+    <string name="_bx_payment_et_txt_body_expiring_notification_committent"><![CDATA[{email_header}
+<p>Привет,</p>
+<p>Срок оплаты вашего счета '{invoice}' закончится через '{days}' день(ей).</p>
+<p>Информация о счете:<br />Начало периода: {period_start}<br />Конец периода: {period_end}<br />Дата выпуска: {date_issue}<br />Срок оплаты: {date_due}</p>
+{email_footer}]]></string>
+
+    <string name="_bx_payment_et_txt_name_overdue_notification_committent"><![CDATA[Уведомление о просроченном счете.]]></string>
+    <string name="_bx_payment_et_txt_subject_overdue_notification_committent"><![CDATA[Уведомление о просроченном счете.]]></string>
+    <string name="_bx_payment_et_txt_body_overdue_notification_committent"><![CDATA[{email_header}
+<p>Привет,</p>
+<p>Оплата вашего счета '{invoice}' просрочена '{date_due}'.</p>
+<p>Информация о счете:<br />Начало периода: {period_start}<br />Конец периода: {period_end}<br />Дата выпуска: {date_issue}<br />Срок оплаты: {date_due}</p>
+{email_footer}]]></string>
+
     <!-- MESSAGES, WARNINGS and ERRORS -->
     <string name="_bx_payment_msg_no_results"><![CDATA[Пусто]]></string>
     <string name="_bx_payment_msg_redirecting"><![CDATA[Пересылаю... Пожалуйста подождите.]]></string>
@@ -259,6 +341,7 @@
     <string name="_bx_payment_err_wrong_quantity"><![CDATA[Указано неправильное количество.]]></string>
     <string name="_bx_payment_err_already_processed"><![CDATA[Этот платеж уже обработан.]]></string>
     <string name="_bx_payment_err_already_registered"><![CDATA[Подписка с аналогичными данными уже была зарегистрирована.]]></string>
+    <string name="_bx_payment_err_not_supported"><![CDATA[Операция не поддерживается.]]></string>
 
     <!-- Other -->
     <string name="_bx_payment_txt_add_to_cart"><![CDATA[В корзину]]></string>
@@ -290,10 +373,14 @@
     <string name="_bx_payment_txt_status_scheduled"><![CDATA[Запланированно]]></string>
     <string name="_bx_payment_txt_status_trial"><![CDATA[Пробный]]></string>
     <string name="_bx_payment_txt_status_active"><![CDATA[Активно]]></string>
+    <string name="_bx_payment_txt_status_paid"><![CDATA[Оплачено]]></string>
     <string name="_bx_payment_txt_status_unpaid"><![CDATA[Не оплачено]]></string>
+    <string name="_bx_payment_txt_status_overdue"><![CDATA[Просрочено]]></string>
     <string name="_bx_payment_txt_status_paused"><![CDATA[Приостановлено]]></string>
     <string name="_bx_payment_txt_status_canceled"><![CDATA[Отменено]]></string>
     <string name="_bx_payment_txt_status_unknown"><![CDATA[Неизвестно]]></string>
+    <string name="_bx_payment_txt_invoice_title"><![CDATA[Счет {0} от {1}]]></string>
+    <string name="_bx_payment_txt_invoice_description"><![CDATA[За период между {0} и {1}]]></string>
 
 
         <!-- Credits payment provider -->

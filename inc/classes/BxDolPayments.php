@@ -9,10 +9,10 @@
 
 class BxDolPayments extends BxDolFactory implements iBxDolSingleton
 {
-	protected $_oDb;
+    protected $_oDb;
 
-	protected $_aObjects;
-	protected $_sActive;
+    protected $_aObjects;
+    protected $_sActive;
 
     protected function __construct()
     {
@@ -24,17 +24,17 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
         $this->_sActive = getParam('sys_default_payment');
     }
 
-	static public function getInstance()
+    static public function getInstance()
     {
         if(!isset($GLOBALS['bxDolClasses']['BxDolPayments']))
-        	$GLOBALS['bxDolClasses']['BxDolPayments'] = new BxDolPayments();
+            $GLOBALS['bxDolClasses']['BxDolPayments'] = new BxDolPayments();
 
-		return $GLOBALS['bxDolClasses']['BxDolPayments'];
+        return $GLOBALS['bxDolClasses']['BxDolPayments'];
     }
 
-	public function setActive($sActive)
+    public function setActive($sActive)
     {
-		$this->_sActive = $sActive;
+        $this->_sActive = $sActive;
     }
 
     public function getActive()
@@ -153,14 +153,14 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
     public function getPayments()
     {
         $aPayments = array(
-			'' => _t('_Select_one')
+            '' => _t('_Select_one')
         );
-		foreach($this->_aObjects as $aObject) {
-			if(empty($aObject) || !is_array($aObject))
-				continue;
+        foreach($this->_aObjects as $aObject) {
+            if(empty($aObject) || !is_array($aObject))
+                continue;
 
-			$aPayments[$aObject['object']] = _t($aObject['title']);
-		}
+            $aPayments[$aObject['object']] = _t($aObject['title']);
+        }
 
         return $aPayments;
     }
@@ -197,7 +197,7 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
 
     	return bx_srv($this->_sActive, 'get_orders_url', array(), 'Orders');
     }
-
+    
     public function getOrdersCount($sType)
     {
         if(!BxDolRequest::serviceExists($this->_sActive, 'get_orders_count', 'Orders'))
@@ -241,6 +241,23 @@ class BxDolPayments extends BxDolFactory implements iBxDolSingleton
 
         $aSrvParams = array($aConditions, $bCheckInProvider);
         return bx_srv($this->_sActive, 'get_subscriptions_info', $aSrvParams, 'Subscriptions');
+    }
+
+    public function getInvoicesUrl()
+    {
+    	if(!BxDolRequest::serviceExists($this->_sActive, 'get_invoices_url', 'Commissions'))
+            return '';
+
+    	return bx_srv($this->_sActive, 'get_invoices_url', array(), 'Commissions');
+    }
+
+    public function getInvoicesCount($sType)
+    {
+        if(!BxDolRequest::serviceExists($this->_sActive, 'get_invoices_count', 'Commissions'))
+            return array();
+
+        $aSrvParams = array($sType);
+        return bx_srv($this->_sActive, 'get_invoices_count', $aSrvParams, 'Commissions');
     }
 
     public function getCartUrl($iVendor = 0)

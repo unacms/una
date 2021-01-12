@@ -55,8 +55,13 @@
     <string name="_bx_payment_page_title_join"><![CDATA[Join]]></string>
     <string name="_bx_payment_page_block_title_join"><![CDATA[Join]]></string>
 
+    <string name="_bx_payment_page_title_sys_invoices"><![CDATA[Invoices]]></string>
+    <string name="_bx_payment_page_title_invoices"><![CDATA[Invoices]]></string>
+    <string name="_bx_payment_page_block_title_invoices"><![CDATA[Invoices]]></string>
+    
     <!-- MENUS -->
     <string name="_bx_payment_lmi_cpt_providers"><![CDATA[Providers]]></string>
+    <string name="_bx_payment_lmi_cpt_commissions"><![CDATA[Commissions]]></string>
 
     <string name="_bx_payment_menu_title_orders_submenu"><![CDATA[Orders Submenu]]></string>
     <string name="_bx_payment_menu_set_title_orders_submenu"><![CDATA[Orders Submenu]]></string>
@@ -66,6 +71,10 @@
     <string name="_bx_payment_menu_item_title_orders_pending"><![CDATA[Pending]]></string>
     <string name="_bx_payment_menu_item_title_system_details"><![CDATA[Payments Details]]></string>
     <string name="_bx_payment_menu_item_title_details"><![CDATA[Payments]]></string>
+    <string name="_bx_payment_menu_item_title_system_admt_invoices"><![CDATA[Invoices]]></string>
+    <string name="_bx_payment_menu_item_title_admt_invoices"><![CDATA[Invoices]]></string>
+    <string name="_bx_payment_menu_item_title_admt_addon_counter1_caption"><![CDATA[paid]]></string>
+    <string name="_bx_payment_menu_item_title_admt_addon_counter2_caption"><![CDATA[overdue]]></string>
 
     <string name="_bx_payment_menu_title_cart_submenu"><![CDATA[Cart Submenu]]></string>
     <string name="_bx_payment_menu_set_title_cart_submenu"><![CDATA[Cart Submenu]]></string>
@@ -126,6 +135,20 @@
     <string name="_bx_payment_grid_column_title_crt_description"><![CDATA[Description]]></string>
     <string name="_bx_payment_grid_column_title_crt_quantity"><![CDATA[Quantity]]></string>
     <string name="_bx_payment_grid_column_title_crt_price"><![CDATA[Price]]></string>
+    <string name="_bx_payment_grid_column_title_cms_caption"><![CDATA[Caption]]></string>
+    <string name="_bx_payment_grid_column_title_cms_description"><![CDATA[Description]]></string>
+    <string name="_bx_payment_grid_column_title_cms_acl_id"><![CDATA[Membership]]></string>
+    <string name="_bx_payment_grid_column_title_cms_percentage"><![CDATA[Percentage]]></string>
+    <string name="_bx_payment_grid_column_title_cms_installment"><![CDATA[Installment]]></string>
+    <string name="_bx_payment_grid_column_title_inv_commissionaire_id"><![CDATA[Commissionaire]]></string>
+    <string name="_bx_payment_grid_column_title_inv_committent_id"><![CDATA[Committent]]></string>
+    <string name="_bx_payment_grid_column_title_inv_name"><![CDATA[Name]]></string>
+    <string name="_bx_payment_grid_column_title_inv_period_start"><![CDATA[Period start]]></string>
+    <string name="_bx_payment_grid_column_title_inv_period_end"><![CDATA[Period end]]></string>
+    <string name="_bx_payment_grid_column_title_inv_amount"><![CDATA[Amount]]></string>
+    <string name="_bx_payment_grid_column_title_inv_date_issue"><![CDATA[Issue date]]></string>
+    <string name="_bx_payment_grid_column_title_inv_date_due"><![CDATA[Due date]]></string>
+    <string name="_bx_payment_grid_column_title_inv_status"><![CDATA[Status]]></string>
 
     <string name="_bx_payment_grid_action_title_ods_add"><![CDATA[Manual Order]]></string>
     <string name="_bx_payment_grid_action_title_ods_cancel"><![CDATA[Cancel]]></string>
@@ -139,55 +162,98 @@
     <string name="_bx_payment_grid_action_title_crts_continue"><![CDATA[Continue to checkout]]></string>
     <string name="_bx_payment_grid_action_title_crt_checkout"><![CDATA[Checkout with {0}]]></string>
     <string name="_bx_payment_grid_action_title_crt_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_payment_grid_action_title_cms_add"><![CDATA[Add]]></string>
+    <string name="_bx_payment_grid_action_title_cms_edit"><![CDATA[Edit]]></string>
+    <string name="_bx_payment_grid_action_title_cms_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_payment_grid_action_title_inv_edit"><![CDATA[Edit]]></string>
+    <string name="_bx_payment_grid_action_title_inv_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_payment_grid_action_title_inv_pay"><![CDATA[Pay]]></string>
 
     <string name="_bx_payment_popup_title_ods_order_subscription_view"><![CDATA[Subscription]]></string>
     <string name="_bx_payment_popup_title_ods_order_subscription_get_details"><![CDATA[Subscription Details]]></string>
     <string name="_bx_payment_popup_title_ods_order_subscription_change_details"><![CDATA[Change Subscription Details]]></string>
     <string name="_bx_payment_popup_title_ods_order_subscription_get_billing"><![CDATA[Billing Information]]></string>
     <string name="_bx_payment_popup_title_ods_order_subscription_change_billing"><![CDATA[Change Billing Information]]></string>
-	<string name="_bx_payment_popup_title_ods_order_history_view"><![CDATA[Order]]></string>
-	<string name="_bx_payment_popup_title_ods_order_pending_view"><![CDATA[Pending Order]]></string>
-	<string name="_bx_payment_popup_title_ods_order_pending_process"><![CDATA[Process Pending Order]]></string>
-	<string name="_bx_payment_popup_title_ods_order_processed_view"><![CDATA[Processed Order]]></string>
-	<string name="_bx_payment_popup_title_ods_order_processed_add"><![CDATA[Manual Order]]></string>
-	<string name="_bx_payment_popup_title_crd_providers_select"><![CDATA[Select Payment Method]]></string>
+    <string name="_bx_payment_popup_title_ods_order_history_view"><![CDATA[Order]]></string>
+    <string name="_bx_payment_popup_title_ods_order_pending_view"><![CDATA[Pending Order]]></string>
+    <string name="_bx_payment_popup_title_ods_order_pending_process"><![CDATA[Process Pending Order]]></string>
+    <string name="_bx_payment_popup_title_ods_order_processed_view"><![CDATA[Processed Order]]></string>
+    <string name="_bx_payment_popup_title_ods_order_processed_add"><![CDATA[Manual Order]]></string>
+    <string name="_bx_payment_popup_title_crd_providers_select"><![CDATA[Select Payment Method]]></string>
+    <string name="_bx_payment_popup_title_cms_add"><![CDATA[Add Commission]]></string>
+    <string name="_bx_payment_popup_title_cms_edit"><![CDATA[Edit Commission]]></string>
+    <string name="_bx_payment_popup_title_inv_edit"><![CDATA[Edit Invoice]]></string>
 
-	<!-- FORMS -->
-	<string name="_bx_payment_form_cart_input_do_delete"><![CDATA[Delete]]></string>
-	<string name="_bx_payment_form_cart_input_do_checkout"><![CDATA[Checkout]]></string>
-	<string name="_bx_payment_form_details_input_do_submit"><![CDATA[Save]]></string>
+    <!-- FORMS -->
+    <string name="_bx_payment_form_cart_input_do_delete"><![CDATA[Delete]]></string>
+    <string name="_bx_payment_form_cart_input_do_checkout"><![CDATA[Checkout]]></string>
+    <string name="_bx_payment_form_details_input_do_submit"><![CDATA[Save]]></string>
 
-	<string name="_bx_payment_form_pendings_form"><![CDATA[Pendings Form]]></string>
-	<string name="_bx_payment_form_processed_form"><![CDATA[Processed Form]]></string>
-	<string name="_bx_payment_form_pendings_display_process"><![CDATA[Process Pending Display]]></string>
-	<string name="_bx_payment_form_processed_display_add"><![CDATA[Add Processed Display]]></string>
-	<string name="_bx_payment_form_pendings_input_id_sys"><![CDATA[ID]]></string>
-	<string name="_bx_payment_form_pendings_input_seller_id_sys"><![CDATA[Seller ID]]></string>
-	<string name="_bx_payment_form_pendings_input_order_sys"><![CDATA[Order]]></string>
-	<string name="_bx_payment_form_pendings_input_order"><![CDATA[Order]]></string>
-	<string name="_bx_payment_form_pendings_input_order_err"><![CDATA[You need to fill in order number here.]]></string>
-	<string name="_bx_payment_form_pendings_input_process_sys"><![CDATA[Process]]></string>
-	<string name="_bx_payment_form_pendings_input_process"><![CDATA[Process]]></string>
-	<string name="_bx_payment_form_pendings_input_cancel_sys"><![CDATA[Cancel]]></string>
-	<string name="_bx_payment_form_pendings_input_cancel"><![CDATA[Cancel]]></string>
-	<string name="_bx_payment_form_processed_input_seller_id_sys"><![CDATA[Seller ID]]></string>
-	<string name="_bx_payment_form_processed_input_client_id_sys"><![CDATA[Client ID]]></string>
-	<string name="_bx_payment_form_processed_input_client_sys"><![CDATA[Client]]></string>
-	<string name="_bx_payment_form_processed_input_client"><![CDATA[Client]]></string>
-	<string name="_bx_payment_form_processed_input_client_err"><![CDATA[You need to enter a name of an existed member here.]]></string>
-	<string name="_bx_payment_form_processed_input_order_sys"><![CDATA[Order]]></string>
-	<string name="_bx_payment_form_processed_input_order"><![CDATA[Order]]></string>
-	<string name="_bx_payment_form_processed_input_order_err"><![CDATA[You need to fill in order number here.]]></string>
-	<string name="_bx_payment_form_processed_input_module_id_sys"><![CDATA[Module]]></string>
-	<string name="_bx_payment_form_processed_input_module_id"><![CDATA[Module]]></string>
-	<string name="_bx_payment_form_processed_input_module_id_err"><![CDATA[You need to select a module here.]]></string>
-	<string name="_bx_payment_form_processed_input_items_sys"><![CDATA[Items]]></string>
-	<string name="_bx_payment_form_processed_input_items"><![CDATA[Items]]></string>
-	<string name="_bx_payment_form_processed_input_items_err"><![CDATA[You need to select at least one item from the list here.]]></string>
-	<string name="_bx_payment_form_processed_input_add"><![CDATA[Add]]></string>
-	<string name="_bx_payment_form_processed_input_add_sys"><![CDATA[Add]]></string>
-	<string name="_bx_payment_form_processed_input_cancel"><![CDATA[Cancel]]></string>
-	<string name="_bx_payment_form_processed_input_cancel_sys"><![CDATA[Cancel]]></string>
+    <string name="_bx_payment_form_pendings_form"><![CDATA[Pendings Form]]></string>
+    <string name="_bx_payment_form_processed_form"><![CDATA[Processed Form]]></string>
+    <string name="_bx_payment_form_pendings_display_process"><![CDATA[Process Pending Display]]></string>
+    <string name="_bx_payment_form_processed_display_add"><![CDATA[Add Processed Display]]></string>
+    <string name="_bx_payment_form_pendings_input_id_sys"><![CDATA[ID]]></string>
+    <string name="_bx_payment_form_pendings_input_seller_id_sys"><![CDATA[Seller ID]]></string>
+    <string name="_bx_payment_form_pendings_input_order_sys"><![CDATA[Order]]></string>
+    <string name="_bx_payment_form_pendings_input_order"><![CDATA[Order]]></string>
+    <string name="_bx_payment_form_pendings_input_order_err"><![CDATA[You need to fill in order number here.]]></string>
+    <string name="_bx_payment_form_pendings_input_process_sys"><![CDATA[Process]]></string>
+    <string name="_bx_payment_form_pendings_input_process"><![CDATA[Process]]></string>
+    <string name="_bx_payment_form_pendings_input_cancel_sys"><![CDATA[Cancel]]></string>
+    <string name="_bx_payment_form_pendings_input_cancel"><![CDATA[Cancel]]></string>
+    <string name="_bx_payment_form_processed_input_seller_id_sys"><![CDATA[Seller ID]]></string>
+    <string name="_bx_payment_form_processed_input_client_id_sys"><![CDATA[Client ID]]></string>
+    <string name="_bx_payment_form_processed_input_client_sys"><![CDATA[Client]]></string>
+    <string name="_bx_payment_form_processed_input_client"><![CDATA[Client]]></string>
+    <string name="_bx_payment_form_processed_input_client_err"><![CDATA[You need to enter a name of an existed member here.]]></string>
+    <string name="_bx_payment_form_processed_input_order_sys"><![CDATA[Order]]></string>
+    <string name="_bx_payment_form_processed_input_order"><![CDATA[Order]]></string>
+    <string name="_bx_payment_form_processed_input_order_err"><![CDATA[You need to fill in order number here.]]></string>
+    <string name="_bx_payment_form_processed_input_module_id_sys"><![CDATA[Module]]></string>
+    <string name="_bx_payment_form_processed_input_module_id"><![CDATA[Module]]></string>
+    <string name="_bx_payment_form_processed_input_module_id_err"><![CDATA[You need to select a module here.]]></string>
+    <string name="_bx_payment_form_processed_input_items_sys"><![CDATA[Items]]></string>
+    <string name="_bx_payment_form_processed_input_items"><![CDATA[Items]]></string>
+    <string name="_bx_payment_form_processed_input_items_err"><![CDATA[You need to select at least one item from the list here.]]></string>
+    <string name="_bx_payment_form_processed_input_add"><![CDATA[Add]]></string>
+    <string name="_bx_payment_form_processed_input_add_sys"><![CDATA[Add]]></string>
+    <string name="_bx_payment_form_processed_input_cancel"><![CDATA[Cancel]]></string>
+    <string name="_bx_payment_form_processed_input_cancel_sys"><![CDATA[Cancel]]></string>
+    
+    <string name="_bx_payment_form_commissions_form"><![CDATA[Commissions Form]]></string>
+    <string name="_bx_payment_form_commissions_display_add"><![CDATA[Add Commission Display]]></string>
+    <string name="_bx_payment_form_commissions_display_edit"><![CDATA[Edit Commission Display]]></string>
+    <string name="_bx_payment_form_commissions_input_caption_sys"><![CDATA[Caption]]></string>
+    <string name="_bx_payment_form_commissions_input_caption"><![CDATA[Caption]]></string>
+    <string name="_bx_payment_form_commissions_input_caption_err"><![CDATA[This field is essential. Please, fill it in.]]></string>
+    <string name="_bx_payment_form_commissions_input_description_sys"><![CDATA[Description]]></string>
+    <string name="_bx_payment_form_commissions_input_description"><![CDATA[Description]]></string>
+    <string name="_bx_payment_form_commissions_input_acl_id_sys"><![CDATA[Membership Level]]></string>
+    <string name="_bx_payment_form_commissions_input_acl_id"><![CDATA[Membership Level]]></string>
+    <string name="_bx_payment_form_commissions_input_percentage_sys"><![CDATA[Percentage]]></string>
+    <string name="_bx_payment_form_commissions_input_percentage"><![CDATA[Percentage]]></string>
+    <string name="_bx_payment_form_commissions_input_installment_sys"><![CDATA[Installment]]></string>
+    <string name="_bx_payment_form_commissions_input_installment"><![CDATA[Installment]]></string>
+    <string name="_bx_payment_form_commissions_input_submit_sys"><![CDATA[Submit]]></string>
+    <string name="_bx_payment_form_commissions_input_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_payment_form_commissions_input_cancel_sys"><![CDATA[Cancel]]></string>
+    <string name="_bx_payment_form_commissions_input_cancel"><![CDATA[Cancel]]></string>
+    
+    <string name="_bx_payment_form_invoices_form"><![CDATA[Invoices Form]]></string>
+    <string name="_bx_payment_form_invoices_display_edit"><![CDATA[Edit Invoice Display]]></string>
+    <string name="_bx_payment_form_invoices_input_amount_sys"><![CDATA[Amount]]></string>
+    <string name="_bx_payment_form_invoices_input_amount"><![CDATA[Amount]]></string>
+    <string name="_bx_payment_form_invoices_input_amount_err"><![CDATA[This field is essential. Please, fill it in.]]></string>
+    <string name="_bx_payment_form_invoices_input_date_due_sys"><![CDATA[Due date]]></string>
+    <string name="_bx_payment_form_invoices_input_date_due"><![CDATA[Due date]]></string>
+    <string name="_bx_payment_form_invoices_input_date_due_err"><![CDATA[This field is essential. Please, fill it in.]]></string>
+    <string name="_bx_payment_form_invoices_input_status_sys"><![CDATA[Status]]></string>
+    <string name="_bx_payment_form_invoices_input_status"><![CDATA[Status]]></string>
+    <string name="_bx_payment_form_invoices_input_submit_sys"><![CDATA[Submit]]></string>
+    <string name="_bx_payment_form_invoices_input_submit"><![CDATA[Submit]]></string>
+    <string name="_bx_payment_form_invoices_input_cancel_sys"><![CDATA[Cancel]]></string>
+    <string name="_bx_payment_form_invoices_input_cancel"><![CDATA[Cancel]]></string>
 
     <!-- Predefined Values -->
     <string name="_bx_payment_pre_lists_currencies"><![CDATA[Currencies]]></string>
@@ -230,6 +296,22 @@
 <p>Your subscription purchased from '{profile_name}' expired.</p>
 <p>Subscription info:<br />ID: {sibscription_id}<br />Customer: {sibscription_customer}<br />Date: {sibscription_date}</p>
 <p><b>Note</b>. An associated data will be removed shortly.</p>
+{email_footer}]]></string>
+
+    <string name="_bx_payment_et_txt_name_expiring_notification_committent"><![CDATA[Invoice expiring notification.]]></string>
+    <string name="_bx_payment_et_txt_subject_expiring_notification_committent"><![CDATA[Invoice expiring notification.]]></string>
+    <string name="_bx_payment_et_txt_body_expiring_notification_committent"><![CDATA[{email_header}
+<p>Hello,</p>
+<p>Your invoice '{invoice}' is expiring in '{days}' day(s).</p>
+<p>Invoice info:<br />Period start: {period_start}<br />Period end: {period_end}<br />Issue date: {date_issue}<br />Due date: {date_due}</p>
+{email_footer}]]></string>
+
+    <string name="_bx_payment_et_txt_name_overdue_notification_committent"><![CDATA[Overdue invoice notification.]]></string>
+    <string name="_bx_payment_et_txt_subject_overdue_notification_committent"><![CDATA[Overdue invoice notification.]]></string>
+    <string name="_bx_payment_et_txt_body_overdue_notification_committent"><![CDATA[{email_header}
+<p>Hello,</p>
+<p>Your invoice '{invoice}' is overdue '{date_due}'.</p>
+<p>Invoice info:<br />Period start: {period_start}<br />Period end: {period_end}<br />Issue date: {date_issue}<br />Due date: {date_due}</p>
 {email_footer}]]></string>
 
 	<!-- MESSAGES, WARNINGS and ERRORS -->
@@ -291,10 +373,14 @@
         <string name="_bx_payment_txt_status_scheduled"><![CDATA[Scheduled]]></string>
         <string name="_bx_payment_txt_status_trial"><![CDATA[Trial]]></string>
         <string name="_bx_payment_txt_status_active"><![CDATA[Active]]></string>
+        <string name="_bx_payment_txt_status_paid"><![CDATA[Paid]]></string>
         <string name="_bx_payment_txt_status_unpaid"><![CDATA[Unpaid]]></string>
+        <string name="_bx_payment_txt_status_overdue"><![CDATA[Overdue]]></string>
         <string name="_bx_payment_txt_status_paused"><![CDATA[Paused]]></string>
         <string name="_bx_payment_txt_status_canceled"><![CDATA[Canceled]]></string>
         <string name="_bx_payment_txt_status_unknown"><![CDATA[Unknown]]></string>
+        <string name="_bx_payment_txt_invoice_title"><![CDATA[Invoice {0} from {1}]]></string>
+        <string name="_bx_payment_txt_invoice_description"><![CDATA[For a period between {0} and {1}]]></string>
 
         <!-- Credits payment provider -->
 	<string name="_bx_payment_cdt_cpt"><![CDATA[Credits]]></string>

@@ -125,6 +125,39 @@ CREATE TABLE IF NOT EXISTS `bx_payment_modules` (
   UNIQUE KEY `uri`(`name`)
 );
 
+INSERT INTO `bx_payment_modules`(`name`) VALUES
+(@sName);
+
+CREATE TABLE IF NOT EXISTS `bx_payment_commissions` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(64) NOT NULL default '',
+  `caption` varchar(128) NOT NULL default '',
+  `description` varchar(128) NOT NULL default '',
+  `acl_id` int(11) NOT NULL default '0',
+  `percentage` float NOT NULL default '0',
+  `installment` float NOT NULL default '0',
+  `active` tinyint(4) NOT NULL default '0',
+  `order` tinyint(4) NOT NULL default '0',
+  PRIMARY KEY(`id`),
+  UNIQUE KEY `name`(`name`)
+);
+
+CREATE TABLE IF NOT EXISTS `bx_payment_invoices` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(64) NOT NULL default '',
+  `commissionaire_id` varchar(32) NOT NULL default '',
+  `committent_id` varchar(32) NOT NULL default '',
+  `amount` float NOT NULL default '0',
+  `period_start` int(11) NOT NULL default '0',
+  `period_end` int(11) NOT NULL default '0',
+  `date_issue` int(11) NOT NULL default '0',
+  `date_due` int(11) NOT NULL default '0',
+  `status` varchar(32) NOT NULL default 'unpaid',
+  `ntf_exp` tinyint(4) NOT NULL default '0',
+  `ntf_due` tinyint(4) NOT NULL default '0',
+  PRIMARY KEY(`id`),
+  UNIQUE KEY `name`(`name`)
+);
 
 -- Credits payment provider
 INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `single_seller`, `time_tracker`, `active`, `order`, `class_name`) VALUES
@@ -294,7 +327,10 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 
 ('bx_payment_grid_orders_history', 'Sql', 'SELECT `tt`.`id` AS `id`, `tt`.`seller_id` AS `seller_id`, `tt`.`module_id` AS `module_id`, `tt`.`item_id` AS `item_id`, `ttp`.`order` AS `transaction`, `tt`.`license` AS `license`, `tt`.`amount` AS `amount`, `tt`.`date` AS `date` FROM `bx_payment_transactions` AS `tt` LEFT JOIN `bx_payment_transactions_pending` AS `ttp` ON `tt`.`pending_id`=`ttp`.`id` WHERE 1 AND `ttp`.`type`=''single'' ', 'bx_payment_transactions', 'id', 'date', '', '', 100, NULL, 'start', '', 'ttp`.`order,tt`.`license,tt`.`amount,tt`.`date', '', 'auto', '', '', 2147483647, 'BxPaymentGridHistory', 'modules/boonex/payment/classes/BxPaymentGridHistory.php'),
 ('bx_payment_grid_orders_processed', 'Sql', 'SELECT `tt`.`id` AS `id`, `tt`.`client_id` AS `client_id`, `tt`.`seller_id` AS `seller_id`, `tt`.`author_id` AS `author_id`, `tt`.`module_id` AS `module_id`, `tt`.`item_id` AS `item_id`, `tt`.`item_count` AS `item_count`, `ttp`.`order` AS `transaction`, `ttp`.`error_msg` AS `error_msg`, `ttp`.`provider` AS `provider`, `tt`.`license` AS `license`, `tt`.`amount` AS `amount`, `tt`.`date` AS `date` FROM `bx_payment_transactions` AS `tt` LEFT JOIN `bx_payment_transactions_pending` AS `ttp` ON `tt`.`pending_id`=`ttp`.`id` WHERE 1 ', 'bx_payment_transactions', 'id', 'date', '', '', 100, NULL, 'start', '', 'ttp`.`order,tt`.`license,tt`.`amount,tt`.`date', '', 'auto', '', '', 2147483647, 'BxPaymentGridProcessed', 'modules/boonex/payment/classes/BxPaymentGridProcessed.php'),
-('bx_payment_grid_orders_pending', 'Sql', 'SELECT `tt`.`id` AS `id`, `tt`.`client_id` AS `client_id`, `tt`.`seller_id` AS `seller_id`, `tt`.`items` AS `items`, `tt`.`amount` AS `amount`, `tt`.`order` AS `transaction`, `tt`.`error_msg` AS `error_msg`, `tt`.`provider` AS `provider`, `tt`.`date` AS `date` FROM `bx_payment_transactions_pending` AS `tt` WHERE 1 AND (ISNULL(`tt`.`order`) OR (NOT ISNULL(`tt`.`order`) AND `tt`.`error_code`<>''0'')) ', 'bx_payment_transactions_pending', 'id', 'date', '', '', 100, NULL, 'start', '', 'tt`.`order,tt`.`amount,tt`.`date', '', 'auto', '', '', 2147483647, 'BxPaymentGridPending', 'modules/boonex/payment/classes/BxPaymentGridPending.php');
+('bx_payment_grid_orders_pending', 'Sql', 'SELECT `tt`.`id` AS `id`, `tt`.`client_id` AS `client_id`, `tt`.`seller_id` AS `seller_id`, `tt`.`items` AS `items`, `tt`.`amount` AS `amount`, `tt`.`order` AS `transaction`, `tt`.`error_msg` AS `error_msg`, `tt`.`provider` AS `provider`, `tt`.`date` AS `date` FROM `bx_payment_transactions_pending` AS `tt` WHERE 1 AND (ISNULL(`tt`.`order`) OR (NOT ISNULL(`tt`.`order`) AND `tt`.`error_code`<>''0'')) ', 'bx_payment_transactions_pending', 'id', 'date', '', '', 100, NULL, 'start', '', 'tt`.`order,tt`.`amount,tt`.`date', '', 'auto', '', '', 2147483647, 'BxPaymentGridPending', 'modules/boonex/payment/classes/BxPaymentGridPending.php'),
+
+('bx_payment_grid_commissions', 'Sql', 'SELECT * FROM `bx_payment_commissions` WHERE 1 ', 'bx_payment_commissions', 'id', 'order', 'active', '', 100, NULL, 'start', '', 'name', 'caption,description', 'auto', '', '', 192, 'BxPaymentGridCommissions', 'modules/boonex/payment/classes/BxPaymentGridCommissions.php'),
+('bx_payment_grid_invoices', 'Sql', 'SELECT * FROM `bx_payment_invoices` WHERE 1 ', 'bx_payment_invoices', 'id', '', '', '', 100, NULL, 'start', '', '', '', 'auto', '', '', 2147483647, 'BxPaymentGridInvoices', 'modules/boonex/payment/classes/BxPaymentGridInvoices.php');
 
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_payment_grid_providers', 'order', '', '2%', 0, '0', '', 1),
@@ -369,7 +405,28 @@ INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable
 ('bx_payment_grid_orders_pending', 'transaction', '_bx_payment_grid_column_title_ods_transaction', '25%', 0, '25', '', 3),
 ('bx_payment_grid_orders_pending', 'amount', '_bx_payment_grid_column_title_ods_amount', '14%', 1, '14', '', 4),
 ('bx_payment_grid_orders_pending', 'date', '_bx_payment_grid_column_title_ods_date', '14%', 0, '14', '', 5),
-('bx_payment_grid_orders_pending', 'actions', '', '20%', 0, '', '', 6);
+('bx_payment_grid_orders_pending', 'actions', '', '20%', 0, '', '', 6),
+
+('bx_payment_grid_commissions', 'order', '', '2%', 0, '0', '', 1),
+('bx_payment_grid_commissions', 'switcher', '', '8%', 0, '0', '', 2),
+('bx_payment_grid_commissions', 'caption', '_bx_payment_grid_column_title_cms_caption', '15%', 1, '16', '', 3),
+('bx_payment_grid_commissions', 'description', '_bx_payment_grid_column_title_cms_description', '20%', 1, '16', '', 4),
+('bx_payment_grid_commissions', 'acl_id', '_bx_payment_grid_column_title_cms_acl_id', '15%', 0, '16', '', 5),
+('bx_payment_grid_commissions', 'percentage', '_bx_payment_grid_column_title_cms_percentage', '10%', 0, '0', '', 6),
+('bx_payment_grid_commissions', 'installment', '_bx_payment_grid_column_title_cms_installment', '10%', 0, '0', '', 7),
+('bx_payment_grid_commissions', 'actions', '', '20%', 0, '0', '', 8),
+
+('bx_payment_grid_invoices', 'checkbox', '', '2%', 0, '0', '', 1),
+('bx_payment_grid_invoices', 'commissionaire_id', '_bx_payment_grid_column_title_inv_commissionaire_id', '10%', 1, '0', '', 2),
+('bx_payment_grid_invoices', 'committent_id', '_bx_payment_grid_column_title_inv_committent_id', '10%', 1, '0', '', 3),
+('bx_payment_grid_invoices', 'name', '_bx_payment_grid_column_title_inv_name', '8%', 1, '0', '', 4),
+('bx_payment_grid_invoices', 'period_start', '_bx_payment_grid_column_title_inv_period_start', '10%', 0, '0', '', 5),
+('bx_payment_grid_invoices', 'period_end', '_bx_payment_grid_column_title_inv_period_end', '10%', 0, '0', '', 6),
+('bx_payment_grid_invoices', 'amount', '_bx_payment_grid_column_title_inv_amount', '6%', 0, '0', '', 7),
+('bx_payment_grid_invoices', 'date_issue', '_bx_payment_grid_column_title_inv_date_issue', '10%', 0, '0', '', 8),
+('bx_payment_grid_invoices', 'date_due', '_bx_payment_grid_column_title_inv_date_due', '10%', 0, '0', '', 9),
+('bx_payment_grid_invoices', 'status', '_bx_payment_grid_column_title_inv_status', '6%', 0, '8', '', 10),
+('bx_payment_grid_invoices', 'actions', '', '18%', 0, '0', '', 11);
 
 INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon_only`, `confirm`, `order`) VALUES
 ('bx_payment_grid_carts', 'bulk', 'delete', '_bx_payment_grid_action_title_crts_delete', '', 0, 1, 1),
@@ -398,15 +455,30 @@ INSERT INTO `sys_grid_actions` (`object`, `type`, `name`, `title`, `icon`, `icon
 ('bx_payment_grid_orders_pending', 'bulk', 'cancel', '_bx_payment_grid_action_title_ods_cancel', '', 0, 1, 1),
 ('bx_payment_grid_orders_pending', 'single', 'view_order', '_bx_payment_grid_action_title_ods_view_order', 'ellipsis-h', 1, 0, 1),
 ('bx_payment_grid_orders_pending', 'single', 'process', '_bx_payment_grid_action_title_ods_process', 'sync', 1, 0, 2),
-('bx_payment_grid_orders_pending', 'single', 'cancel', '_bx_payment_grid_action_title_ods_cancel', 'times', 1, 1, 3);
+('bx_payment_grid_orders_pending', 'single', 'cancel', '_bx_payment_grid_action_title_ods_cancel', 'times', 1, 1, 3),
+
+('bx_payment_grid_commissions', 'independent', 'add', '_bx_payment_grid_action_title_cms_add', '', 0, 0, 1),
+('bx_payment_grid_commissions', 'bulk', 'delete', '_bx_payment_grid_action_title_cms_delete', '', 0, 1, 1),
+('bx_payment_grid_commissions', 'single', 'edit', '_bx_payment_grid_action_title_cms_edit', 'pencil', 1, 0, 1),
+('bx_payment_grid_commissions', 'single', 'delete', '_bx_payment_grid_action_title_cms_delete', 'remove', 1, 1, 2),
+
+('bx_payment_grid_invoices', 'bulk', 'delete', '_bx_payment_grid_action_title_inv_delete', '', 0, 1, 1),
+('bx_payment_grid_invoices', 'single', 'pay', '_bx_payment_grid_action_title_inv_pay', 'credit-card', 1, 0, 1),
+('bx_payment_grid_invoices', 'single', 'edit', '_bx_payment_grid_action_title_inv_edit', 'pencil', 1, 0, 2),
+('bx_payment_grid_invoices', 'single', 'delete', '_bx_payment_grid_action_title_inv_delete', 'remove', 1, 1, 3);
 
 
 -- FORMS
 INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_attrs`, `submit_name`, `table`, `key`, `uri`, `uri_title`, `params`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES
 ('bx_payment_form_pendings', @sName, '_bx_payment_form_pendings_form', '', '', 'do_submit', 'bx_payment_transactions_pending', 'id', '', '', '', 0, 1, 'BxPaymentFormView', 'modules/boonex/payment/classes/BxPaymentFormView.php'),
 ('bx_payment_form_processed', @sName, '_bx_payment_form_processed_form', '', '', 'do_submit', 'bx_payment_transactions', 'id', '', '', '', 0, 1, 'BxPaymentFormView', 'modules/boonex/payment/classes/BxPaymentFormView.php'),
+
+('bx_payment_form_commissions', @sName, '_bx_payment_form_commissions_form', '', '', 'do_submit', 'bx_payment_commissions', 'id', '', '', '', 0, 1, 'BxPaymentFormCommissions', 'modules/boonex/payment/classes/BxPaymentFormCommissions.php'),
+('bx_payment_form_invoices', @sName, '_bx_payment_form_invoices_form', '', '', 'do_submit', 'bx_payment_invoices', 'id', '', '', '', 0, 1, 'BxPaymentFormInvoices', 'modules/boonex/payment/classes/BxPaymentFormInvoices.php'),
+
 -- FORMS: Recurly
 ('bx_payment_form_rcrl_card', @sName, '_bx_payment_form_rcrl_card', '', '', 'do_submit', '', '', '', '', '', 0, 1, '', ''),
+
 -- FORMS: Stripe
 ('bx_payment_form_strp_details', @sName, '_bx_payment_form_strp_details', '', '', 'do_submit', '', '', '', '', '', 0, 1, '', ''),
 ('bx_payment_form_strp_card', @sName, '_bx_payment_form_strp_card', '', '', 'do_submit', '', '', '', '', '', 0, 1, '', '');
@@ -415,8 +487,15 @@ INSERT INTO `sys_objects_form` (`object`, `module`, `title`, `action`, `form_att
 INSERT INTO `sys_form_displays` (`display_name`, `module`, `object`, `title`, `view_mode`) VALUES
 ('bx_payment_form_pendings_process', @sName, 'bx_payment_form_pendings', '_bx_payment_form_pendings_display_process', 0),
 ('bx_payment_form_processed_add', @sName, 'bx_payment_form_processed', '_bx_payment_form_processed_display_add', 0),
+
+('bx_payment_form_commissions_add', @sName, 'bx_payment_form_commissions', '_bx_payment_form_commissions_display_add', 0),
+('bx_payment_form_commissions_edit', @sName, 'bx_payment_form_commissions', '_bx_payment_form_commissions_display_edit', 0),
+
+('bx_payment_form_invoices_edit', @sName, 'bx_payment_form_invoices', '_bx_payment_form_invoices_display_edit', 0),
+
 -- FORMS: Recurly
 ('bx_payment_form_rcrl_card_add', @sName, 'bx_payment_form_rcrl_card', '_bx_payment_form_rcrl_card_display_add', 0),
+
 -- FORMS: Stripe
 ('bx_payment_form_strp_details_edit', @sName, 'bx_payment_form_strp_details', '_bx_payment_form_strp_details_display_edit', 0),
 ('bx_payment_form_strp_card_add', @sName, 'bx_payment_form_strp_card', '_bx_payment_form_strp_card_display_add', 0);
@@ -438,6 +517,22 @@ INSERT INTO `sys_form_inputs` (`object`, `module`, `name`, `value`, `values`, `c
 ('bx_payment_form_processed', @sName, 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_payment_form_processed', @sName, 'do_submit', '_bx_payment_form_processed_input_add', '', 0, 'submit', '_bx_payment_form_processed_input_add_sys', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
 ('bx_payment_form_processed', @sName, 'do_cancel', '_bx_payment_form_processed_input_cancel', '', 0, 'button', '_bx_payment_form_processed_input_cancel_sys', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0),
+
+('bx_payment_form_commissions', @sName, 'caption', '0', '', 0, 'text_translatable', '_bx_payment_form_commissions_input_caption_sys', '_bx_payment_form_commissions_input_caption', '', 1, 0, 0, '', '', '', 'AvailTranslatable', 'a:1:{i:0;s:7:"caption";}', '_bx_payment_form_commissions_input_caption_err', 'Xss', '', 0, 0),
+('bx_payment_form_commissions', @sName, 'description', '0', '', 0, 'textarea_translatable', '_bx_payment_form_commissions_input_description_sys', '_bx_payment_form_commissions_input_description', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('bx_payment_form_commissions', @sName, 'acl_id', '0', '', 0, 'select', '_bx_payment_form_commissions_input_acl_id_sys', '_bx_payment_form_commissions_input_acl_id', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
+('bx_payment_form_commissions', @sName, 'percentage', '0', '', 0, 'text', '_bx_payment_form_commissions_input_percentage_sys', '_bx_payment_form_commissions_input_percentage', '', 0, 0, 0, '', '', '', '', '', '', 'Float', '', 0, 0),
+('bx_payment_form_commissions', @sName, 'installment', '0', '', 0, 'text', '_bx_payment_form_commissions_input_installment_sys', '_bx_payment_form_commissions_input_installment', '', 0, 0, 0, '', '', '', '', '', '', 'Float', '', 0, 0),
+('bx_payment_form_commissions', @sName, 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_payment_form_commissions', @sName, 'do_submit', '_bx_payment_form_commissions_input_submit', '', 0, 'submit', '_bx_payment_form_commissions_input_submit_sys', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_payment_form_commissions', @sName, 'do_cancel', '_bx_payment_form_commissions_input_cancel', '', 0, 'button', '_bx_payment_form_commissions_input_cancel_sys', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0),
+
+('bx_payment_form_invoices', @sName, 'amount', '0', '', 0, 'text', '_bx_payment_form_invoices_input_amount_sys', '_bx_payment_form_invoices_input_amount', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_payment_form_invoices_input_amount_err', 'Float', '', 0, 0),
+('bx_payment_form_invoices', @sName, 'date_due', '', '', 0, 'datepicker', '_bx_payment_form_invoices_input_date_due_sys', '_bx_payment_form_invoices_input_date_due', '', 1, 0, 0, '', '', '', 'Avail', '', '_bx_payment_form_invoices_input_date_due_err', 'DateUtc', '', 0, 0),
+('bx_payment_form_invoices', @sName, 'status', '', '', 0, 'select', '_bx_payment_form_invoices_input_status_sys', '_bx_payment_form_invoices_input_status', '', 0, 0, 0, '', '', '', '', '', '', 'Xss', '', 0, 0),
+('bx_payment_form_invoices', @sName, 'controls', '', 'do_submit,do_cancel', 0, 'input_set', '', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_payment_form_invoices', @sName, 'do_submit', '_bx_payment_form_invoices_input_submit', '', 0, 'submit', '_bx_payment_form_invoices_input_submit_sys', '', '', 0, 0, 0, '', '', '', '', '', '', '', '', 0, 0),
+('bx_payment_form_invoices', @sName, 'do_cancel', '_bx_payment_form_invoices_input_cancel', '', 0, 'button', '_bx_payment_form_invoices_input_cancel_sys', '', '', 0, 0, 0, 'a:2:{s:7:"onclick";s:45:"$(''.bx-popup-applied:visible'').dolPopupHide()";s:5:"class";s:22:"bx-def-margin-sec-left";}', '', '', '', '', '', '', '', 0, 0),
 
 -- FORMS: Recurly
 ('bx_payment_form_rcrl_card', @sName, 'pending_id', '0', '', 0, 'hidden', '_bx_payment_form_rcrl_card_input_pending_id_sys', '', '', 0, 0, 0, '', '', '', '', '', '', 'Int', '', 0, 0),
@@ -484,6 +579,31 @@ INSERT INTO `sys_form_display_inputs` (`display_name`, `input_name`, `visible_fo
 ('bx_payment_form_processed_add', 'controls', 2147483647, 1, 8),
 ('bx_payment_form_processed_add', 'do_submit', 2147483647, 1, 9),
 ('bx_payment_form_processed_add', 'do_cancel', 2147483647, 1, 10),
+
+('bx_payment_form_commissions_add', 'caption', 2147483647, 1, 1),
+('bx_payment_form_commissions_add', 'description', 2147483647, 1, 2),
+('bx_payment_form_commissions_add', 'acl_id', 2147483647, 1, 3),
+('bx_payment_form_commissions_add', 'percentage', 2147483647, 1, 4),
+('bx_payment_form_commissions_add', 'installment', 2147483647, 1, 5),
+('bx_payment_form_commissions_add', 'controls', 2147483647, 1, 6),
+('bx_payment_form_commissions_add', 'do_submit', 2147483647, 1, 7),
+('bx_payment_form_commissions_add', 'do_cancel', 2147483647, 1, 8),
+
+('bx_payment_form_commissions_edit', 'caption', 2147483647, 1, 1),
+('bx_payment_form_commissions_edit', 'description', 2147483647, 1, 2),
+('bx_payment_form_commissions_edit', 'acl_id', 2147483647, 1, 3),
+('bx_payment_form_commissions_edit', 'percentage', 2147483647, 1, 4),
+('bx_payment_form_commissions_edit', 'installment', 2147483647, 1, 5),
+('bx_payment_form_commissions_edit', 'controls', 2147483647, 1, 6),
+('bx_payment_form_commissions_edit', 'do_submit', 2147483647, 1, 7),
+('bx_payment_form_commissions_edit', 'do_cancel', 2147483647, 1, 8),
+
+('bx_payment_form_invoices_edit', 'amount', 2147483647, 1, 1),
+('bx_payment_form_invoices_edit', 'date_due', 2147483647, 1, 2),
+('bx_payment_form_invoices_edit', 'status', 2147483647, 1, 3),
+('bx_payment_form_invoices_edit', 'controls', 2147483647, 1, 4),
+('bx_payment_form_invoices_edit', 'do_submit', 2147483647, 1, 5),
+('bx_payment_form_invoices_edit', 'do_cancel', 2147483647, 1, 6),
 
 -- FORMS: Recurly
 ('bx_payment_form_rcrl_card_add', 'pending_id', 2147483647, 1, 1),

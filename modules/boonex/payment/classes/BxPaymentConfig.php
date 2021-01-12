@@ -26,6 +26,10 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
             // module icon
             'ICON' => 'credit-card col-gray-dark',
 
+            // database tables
+            'TABLE_COMMISSIONS' => $aModule['db_prefix'] . 'commissions',
+            'TABLE_INVOICES' => $aModule['db_prefix'] . 'invoices',
+
             // page URIs
             'URL_JOIN' => 'page.php?i=payment-join',
             'URL_CARTS' => 'page.php?i=payment-carts',
@@ -36,15 +40,17 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
             'URL_SUBSCRIPTIONS' => 'page.php?i=payment-sbs-list-my',
             'URL_HISTORY' => 'page.php?i=payment-history',
             'URL_ORDERS' => 'page.php?i=payment-orders',
+            'URL_INVOICES' => 'page.php?i=payment-invoices',
             'URL_DETAILS' => 'page.php?i=payment-details',
             'URL_RETURN' => 'page.php?i=payment-cart-thank-you',
             'URL_RETURN_DATA' => $sBaseUrl . 'finalize_checkout/',
             'URL_NOTIFY' => $sBaseUrl . 'notify/',
-
+            
             'KEY_ARRAY_PRICE_SINGLE' => 'price_single',
             'KEY_ARRAY_PRICE_RECURRING' => 'price_recurring',
             'KEY_ARRAY_TRIAL_RECURRING' => 'trial_recurring',
 
+            // objects
             'OBJECT_FORM_PRELISTS_CURRENCIES' => 'bx_payment_currencies',
             'OBJECT_PP_CREDITS' => 'credits', //Credits payment provider
 
@@ -97,6 +103,13 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
                 'order_processed_client' => $this->_sName . '-oa-client',
                 'order_processed_items' => $this->_sName . '-oa-items',	
             ),
+            'commission' => array(
+                'popup_add' => $this->_sName . '-commission-popup-add',
+                'popup_edit' => $this->_sName . '-commission-popup-edit',
+            ),
+            'invoice' => array(
+                'popup_edit' => $this->_sName . '-invoice-popup-edit',
+            )
         );
 
         $this->_aPerPage = array(

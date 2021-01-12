@@ -36,7 +36,7 @@ DELETE FROM `sys_email_templates` WHERE `Module` = @sName;
 
 
 -- CRON
-DELETE FROM `sys_cron_jobs` WHERE `name` IN ('bx_payment_time_tracker');
+DELETE FROM `sys_cron_jobs` WHERE `name` IN ('bx_payment_commissions', 'bx_payment_time_tracker');
 
 
 -- PAYMENTS

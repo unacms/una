@@ -340,7 +340,7 @@ class BxPaymentDb extends BxBaseModPaymentDb
     	$aMethod = array('name' => 'getRow', 'params' => array(0 => 'query'));
 
         $sSelectClause = "`tt`.`id`, `tt`.`license`, `ttp`.`type`, `tt`.`client_id`, `tt`.`seller_id`, `tt`.`author_id`, `tt`.`module_id`, `tt`.`item_id`, `tt`.`item_count`, `tt`.`amount`, `tt`.`date`, `ttp`.`order`, `ttp`.`error_msg`, `ttp`.`provider`";
-        $sWhereClause = "";
+        $sWhereClause = $sGroupClause = "";
 
         switch($aParams['type']) {
             case 'id':
@@ -401,10 +401,22 @@ class BxPaymentDb extends BxBaseModPaymentDb
             case 'license':
                 $aMethod['name'] = 'getAll';
                 $aMethod['params'][1] = array(
-                	'license' => $aParams['license']
+                    'license' => $aParams['license']
                 );
 
                 $sWhereClause = " AND `tt`.`license`=:license";
+                break;
+            
+            case 'income':
+                $aMethod['name'] = 'getAll';
+                $aMethod['params'][1] = array(
+                    'period_start' => $aParams['period_start'],
+                    'period_end' => $aParams['period_end']
+                );
+
+                $sSelectClause = '`tt`.`author_id` AS `id`, SUM(`tt`.`amount`) AS `amount`';
+                $sWhereClause = ' AND `tt`.`date`>=:period_start AND `tt`.`date`<=:period_end';
+                $sGroupClause = '`tt`.`author_id`';
                 break;
 
             case 'mixed':
@@ -415,11 +427,14 @@ class BxPaymentDb extends BxBaseModPaymentDb
 
         }
 
+        if(!empty($sGroupClause))
+            $sGroupClause = ' GROUP BY ' . $sGroupClause;
+
         $aMethod['params'][0] = "SELECT
                 " . $sSelectClause . "
             FROM `" . $this->_sPrefix . "transactions` AS `tt`
             LEFT JOIN `" . $this->_sPrefix . "transactions_pending` AS `ttp` ON `tt`.`pending_id`=`ttp`.`id`
-            WHERE 1" . $sWhereClause;
+            WHERE 1" . $sWhereClause . $sGroupClause;
 
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
@@ -561,6 +576,200 @@ class BxPaymentDb extends BxBaseModPaymentDb
 
     	$sQuery = $this->prepare("DELETE FROM `" . $this->_sPrefix . "user_values` WHERE `user_id`=?", $iId);
     	$this->query($sQuery);
+    }
+
+
+    /*
+     * Commissions methods
+     */
+    public function getCommissions($aParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+
+        $sSelectClause = "`tc`.*";
+        $sWhereClause = $sOrderClause = "";
+        if(!empty($aParams['type']))
+            switch($aParams['type']) {
+                case 'max_order':
+                    $aMethod['name'] = 'getOne';
+                    $aMethod['params'][1] = array();
+
+                    $sSelectClause = "IFNULL(MAX(`tc`.`order`), 0)";
+                    break;
+
+                case 'id':
+                    $aMethod['name'] = 'getRow';
+                    $aMethod['params'][1] = array(
+                        'id' => $aParams['id']
+                    );
+
+                    $sWhereClause = " AND `tc`.`id`=:id";
+                    break;
+
+                case 'acl_id':
+                    $aMethod['name'] = 'getAll';
+                    $aMethod['params'][1] = array(
+                        'acl_id' => $aParams['acl_id']
+                    );
+
+                    $sWhereClause = " AND (`tc`.`acl_id`=:acl_id OR `tc`.`acl_id`=0)";
+                    $sOrderClause = "`tc`.`order` ASC";
+                    break;
+
+                case 'all':
+                    if(!empty($aParams['active'])) 
+                        $sWhereClause = " AND `tc`.`active`='1'";
+                    break;
+            }
+
+        if(!empty($sOrderClause))
+            $sOrderClause = " ORDER BY " . $sOrderClause;
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . "
+            FROM `" . $CNF['TABLE_COMMISSIONS'] . "` AS `tc`
+            WHERE 1" . $sWhereClause . $sOrderClause;
+
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+
+    public function getInvoices($aParams = array())
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+    	$aMethod = array('name' => 'getAll', 'params' => array(0 => 'query'));
+
+        $sSelectClause = "`ti`.*";
+        $sWhereClause = "";
+        if(!empty($aParams['type']))
+            switch($aParams['type']) {
+                case 'index':
+                    $aMethod['name'] = 'getOne';
+                    $aMethod['params'][1] = array(
+                        'commissionaire_id' => $aParams['commissionaire_id'],
+                        'committent_id' => $aParams['committent_id'],
+                    );
+
+                    $sSelectClause = "COUNT(`ti`.`id`) + 1";
+                    $sWhereClause = " AND `ti`.`commissionaire_id`=:commissionaire_id AND `ti`.`committent_id`=:committent_id";
+                    break;
+
+                case 'id':
+                    $aMethod['name'] = 'getRow';
+                    $aMethod['params'][1] = array(
+                        'id' => $aParams['id']
+                    );
+
+                    $sWhereClause = " AND `ti`.`id`=:id";
+                    break;
+
+                case 'commissionaire_id':
+                    $aMethod['params'][1] = array(
+                        'commissionaire_id' => $aParams['commissionaire_id']
+                    );
+
+                    $sWhereClause = " AND `ti`.`commissionaire_id`=:commissionaire_id";
+                    break;
+
+                case 'committent_id':
+                    $aMethod['params'][1] = array(
+                        'committent_id' => $aParams['committent_id']
+                    );
+
+                    $sWhereClause = " AND `ti`.`committent_id`=:committent_id";
+
+                    if(!empty($aParams['period_start'])) {
+                        $aMethod['params'][1]['period_start'] = (int)$aParams['period_start'];
+
+                        $sWhereClause .= " AND `ti`.`period_start`=:period_start";
+                    }
+
+                    if(!empty($aParams['period_end'])) {
+                        $aMethod['params'][1]['period_end'] = (int)$aParams['period_end'];
+
+                        $sWhereClause .= " AND `ti`.`period_end`=:period_end";
+                    }
+                    break;
+
+                case 'expiring':
+                    $aMethod['params'][1] = array(
+                        'notify_days' => $CNF['PARAM_CMSN_INVOICE_EXPIRATION_NOTIFY'],
+                        'status' => BX_PAYMENT_INV_STATUS_UNPAID
+                    );
+
+                    $sWhereClause = " AND DATE_SUB(FROM_UNIXTIME(`ti`.`date_due`), INTERVAL :notify_days DAY) < NOW() AND DATE_SUB(FROM_UNIXTIME(`ti`.`date_due`), INTERVAL (:notify_days - 1) DAY) > NOW() AND `ti`.`status`=:status";
+                    break;
+
+                case 'overdue':
+                    $aMethod['params'][1] = array(
+                        'status_unpaid' => BX_PAYMENT_INV_STATUS_UNPAID,
+                        'status_overdue' => BX_PAYMENT_INV_STATUS_OVERDUE
+                    );
+
+                    $sWhereClause = " AND `ti`.`date_due` < UNIX_TIMESTAMP() AND (`ti`.`status`=:status_unpaid OR (`ti`.`status`=:status_overdue AND `ti`.`ntf_due`='0'))";
+                    break;
+
+                case 'status':
+                    $aMethod['params'][1] = array(
+                        'status' => $aParams['status']
+                    );
+
+                    $sWhereClause = " AND `ti`.`status`=:status";
+                    
+                    if(isset($aParams['count']) && $aParams['count'] === true) {
+                        $sSelectClause = "COUNT(`ti`.`id`)";
+                        $aMethod['name'] = 'getOne';
+                    }
+
+                    if(isset($aParams['committent_id'])) {
+                        $aMethod['params'][1]['committent_id'] = $aParams['committent_id'];
+
+                        $sWhereClause .= " AND `ti`.`committent_id`=:committent_id";
+                    }
+                    break;
+
+                case 'all_count':
+                    $sSelectClause = "COUNT(`ti`.`id`)";
+                    $aMethod['name'] = 'getOne';
+                    break;
+                
+                case 'all':
+                    break;
+            }
+
+        $aMethod['params'][0] = "SELECT " . $sSelectClause . "
+            FROM `" . $CNF['TABLE_INVOICES'] . "` AS `ti`
+            WHERE 1" . $sWhereClause;
+
+        return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
+    }
+
+    public function insertInvoice($aValues)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        return $this->query("INSERT INTO `" . $CNF['TABLE_INVOICES'] . "` SET " . $this->arrayToSQL($aValues));
+    }
+
+    public function updateInvoice($mixedId, $aValues)
+    {
+        $CNF = &$this->_oConfig->CNF;
+        
+        if(!is_array($mixedId))
+            $mixedId = array($mixedId);
+
+        return (int)$this->query("UPDATE `" . $CNF['TABLE_INVOICES'] . "` SET " . $this->arrayToSQL($aValues) . " WHERE `id` IN (" . $this->implode_escape($mixedId) . ')') > 0;
+    }
+
+    public function deleteInvoice($mixedId)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+    	if(!is_array($mixedId))
+            $mixedId = array($mixedId);
+
+        return (int)$this->query("DELETE FROM `" . $CNF['TABLE_INVOICES'] . "` WHERE `id` IN (" . $this->implode_escape($mixedId) . ")") > 0;
     }
 }
 

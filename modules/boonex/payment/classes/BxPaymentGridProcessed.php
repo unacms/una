@@ -30,7 +30,7 @@ class BxPaymentGridProcessed extends BxBaseModPaymentGridOrders
         $sJsObject = $this->_oModule->_oConfig->getJsObject('processed');
 
         $sFormObject = $this->_oModule->_oConfig->getObject('form_processed');
-        $sFormDisplay = $this->_oModule->_oConfig->getObject('display_processed_add');
+        $sFormDisplay = $this->_oModule->_oConfig->getObject('form_display_processed_add');
 
         $oForm = BxDolForm::getObjectInstance($sFormObject, $sFormDisplay, $this->_oModule->_oTemplate);
         $oForm->aFormAttrs['action'] = BX_DOL_URL_ROOT . 'grid.php?o=' . $this->_sObject . '&a=' . $sAction;
