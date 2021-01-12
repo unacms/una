@@ -53,6 +53,7 @@
     <string name="_bx_accnt_grid_filter_item_title_adm_suspended"><![CDATA[Приостановленный]]></string>
     <string name="_bx_accnt_grid_filter_item_title_adm_unconfirmed"><![CDATA[Неподтверждённый]]></string>
     <string name="_bx_accnt_grid_filter_item_title_adm_locked"><![CDATA[Заблокированный]]></string>
+    <string name="_bx_accnt_grid_filter_item_title_adm_without_profile"><![CDATA[Без профайлов]]></string>
 
     <string name="_bx_accnt_grid_column_title_adm_active"><![CDATA[Активный]]></string>
     <string name="_bx_accnt_grid_column_title_adm_name"><![CDATA[Имя]]></string>
