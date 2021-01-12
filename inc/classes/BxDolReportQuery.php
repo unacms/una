@@ -29,14 +29,6 @@ class BxDolReportQuery extends BxDolObjectQuery
         return $aResult;
     }
 
-    public function isPerformed($iObjectId, $iAuthorId)
-    {
-    	/*
-    	 * 'false' is returned everytime to allow multiple reports for everybody.
-    	 */
-        return false;
-    }
-
     public function getPerformedBy($iObjectId, $iStart = 0, $iPerPage = 0)
     {
         $sLimitClause = "";
@@ -58,17 +50,26 @@ class BxDolReportQuery extends BxDolObjectQuery
         return $aResult;
     }
 
-	public function putReport($iObjectId)
+    public function putReport($iObjectId, $iAuthorId, $bUndo = false)
     {
         $sQuery = $this->prepare("SELECT `object_id` FROM `{$this->_sTable}` WHERE `object_id` = ? LIMIT 1", $iObjectId);
         $bExists = (int)$this->getOne($sQuery) != 0;
 
+        if(!$bExists && $bUndo)
+            return false;
+
         if(!$bExists)
             $sQuery = $this->prepare("INSERT INTO `{$this->_sTable}` SET `object_id` = ?, `count` = '1'", $iObjectId);
         else
-            $sQuery = $this->prepare("UPDATE `{$this->_sTable}` SET `count` = `count` + 1 WHERE `object_id` = ?", $iObjectId);
+            $sQuery = $this->prepare("UPDATE `{$this->_sTable}` SET `count` = `count` " . ($bUndo ? "-" : "+") . " 1 WHERE `object_id` = ?", $iObjectId);
 
-        return (int)$this->query($sQuery) != 0;
+        if((int)$this->query($sQuery) == 0)
+            return false;
+
+        if($bUndo)
+            return $this->_deleteTrack($iObjectId, $iAuthorId);
+
+        return true;
     }
     
     public function clearReports($iObjectId)
@@ -81,6 +82,18 @@ class BxDolReportQuery extends BxDolObjectQuery
         
         $sQuery = $this->prepare("UPDATE `{$this->_sTriggerTable}` SET `{$this->_sTriggerFieldCount}` = 0 WHERE `{$this->_sTriggerFieldId}` = ?", $iObjectId);
         $this->query($sQuery);
+    }
+
+    protected function _deleteTrack($iObjectId, $iAuthorId)
+    {
+        $sQuery = $this->prepare("SELECT `id` FROM `{$this->_sTableTrack}` WHERE `object_id` = ? AND `author_id` = ? LIMIT 1", $iObjectId, $iAuthorId);
+        $iId = (int)$this->getOne($sQuery);
+
+        $sQuery = $this->prepare("DELETE FROM `{$this->_sTableTrack}` WHERE `id` = ? LIMIT 1", $iId);
+        if((int)$this->query($sQuery) > 0)
+            return $iId;
+
+        return false;
     }
 }
 

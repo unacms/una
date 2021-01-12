@@ -89,6 +89,8 @@
         <string name="_report_comment_with_note"><![CDATA[reported as '{0}' with a note: {1}]]></string>
 	<string name="_report_counter"><![CDATA[{0}]]></string>
 	<string name="_report_do_report"><![CDATA[Report]]></string>
+        <string name="_report_do_unreport"><![CDATA[Cancel report]]></string>
+        <string name="_report_do_unreport_confirm"><![CDATA[Are you sure, you want to cancel your report?]]></string>
 	<string name="_report_do_report_by"><![CDATA[Reported by]]></string>
 	<string name="_report_err_cannot_perform_action"><![CDATA[Cannot perform action.]]></string>
 	<string name="_report_err_duplicate_report"><![CDATA[You already reported this item.]]></string>

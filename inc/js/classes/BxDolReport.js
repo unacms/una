@@ -8,9 +8,9 @@
 
 function BxDolReport(options)
 {
-	this._sObjName = undefined == options.sObjName ? 'oReport' : options.sObjName; // javascript object name, to run current object instance from onTimer
-	this._sSystem = options.sSystem; // current comment system
-	this._iAuthorId = options.iAuthorId; // this comment's author ID.
+    this._sObjName = undefined == options.sObjName ? 'oReport' : options.sObjName; // javascript object name, to run current object instance from onTimer
+    this._sSystem = options.sSystem; // current comment system
+    this._iAuthorId = options.iAuthorId; // this comment's author ID.
     this._iObjId = options.iObjId; // this object id comments
 
     this._sActionsUri = 'report.php';
@@ -18,70 +18,81 @@ function BxDolReport(options)
 
     this._sAnimationEffect = 'fade';
     this._iAnimationSpeed = 'slow';
-    this._sSP = undefined == options.sStylePrefix ? 'bx-report' : options.sStylePrefix;
+    this._sSP = options.sStylePrefix == undefined ? 'bx-report' : options.sStylePrefix;
     this._aHtmlIds = options.aHtmlIds;
+    this._sUnreportConfirm = options.sUnreportConfirm == undefined ? _t('_Are_you_sure') : options.sUnreportConfirm;
 
     this._oParent = null;
 }
 
 BxDolReport.prototype.toggleByPopup = function(oLink) {
-	var $this = this;
+    var $this = this;
     var oData = this._getDefaultParams();
     oData['action'] = 'GetReportedBy';
 
-	$(oLink).dolPopupAjax({
-		id: this._aHtmlIds['by_popup'], 
-		url: bx_append_url_params(this._sActionsUri, oData)
-	});
+    $(oLink).dolPopupAjax({
+        id: this._aHtmlIds['by_popup'], 
+        url: bx_append_url_params(this._sActionsUri, oData)
+    });
 };
 
 BxDolReport.prototype.report = function(oLink) {
-	var $this = this;
-    var oData = this._getDefaultParams();
-    oData['action'] = 'Report';
+    var $this = this;
 
     this._oParent = $(oLink);
 
-    $.get(
-    	this._sActionsUrl,
-    	oData,
-    	function(oData) {
-    		$this.processJson(oData, this._oParent);
-    	},
-    	'json'
-    );
+    var fPerform = function() {
+        var oData = $this._getDefaultParams();
+        oData['action'] = 'Report';
+
+        $.get(
+            $this._sActionsUrl,
+            oData,
+            function(oData) {
+                    $this.processJson(oData, $this._oParent);
+            },
+            'json'
+        );
+    };
+
+    if(this._oParent.hasClass('bx-report-reported'))
+        bx_confirm(this._sUnreportConfirm, fPerform);
+    else 
+    	fPerform();
 };
 
 BxDolReport.prototype.onReport = function(oData, oElement)
 {
-	var $this = this;
-	var fContinue = function() {
-            if(oData && oData.code != 0)
-	        return;
+    var $this = this;
+    var fPerform = function() {
+        if(oData && oData.code != 0)
+            return;
 
-            if(oData && oData.label_icon)
-                $(oElement).find('.sys-action-do-icon .sys-icon').attr('class', 'sys-icon ' + oData.label_icon);
+        $(oElement).toggleClass('bx-report-reported');
 
-            if(oData && oData.label_title) {
-                $(oElement).attr('title', oData.label_title);
-                $(oElement).find('.sys-action-do-text').html(oData.label_title);
-            }
+        if(oData && oData.label_icon)
+            $(oElement).find('.sys-action-do-icon .sys-icon').attr('class', 'sys-icon ' + oData.label_icon);
 
-            if(oData && oData.disabled)
-                $(oElement).removeAttr('onclick').addClass($(oElement).hasClass('bx-btn') ? 'bx-btn-disabled' : 'bx-report-disabled');
+        if(oData && oData.label_title) {
+            $(oElement).attr('title', oData.label_title);
+            $(oElement).find('.sys-action-do-text').html(oData.label_title);
+        }
 
-	    var oCounter = $this._getCounter(oElement);
-	    if(oCounter && oCounter.length > 0) {
-	    	oCounter.html(oData.countf);
+        if(oData && oData.disabled)
+            $(oElement).removeAttr('onclick').addClass($(oElement).hasClass('bx-btn') ? 'bx-btn-disabled' : 'bx-report-disabled');
 
-	    	oCounter.parents('.' + $this._sSP + '-counter-holder:first').bx_anim(oData.count > 0 ? 'show' : 'hide');
-	    }
-	};
+        var oCounter = $this._getCounter(oElement);
+        if(oCounter && oCounter.length > 0) {
+            oCounter.html(oData.countf);
 
-	if(oData && oData.msg != undefined)
-            bx_alert(oData.msg, fContinue);
-	else
-            fContinue();
+            oCounter.parents('.' + $this._sSP + '-counter-holder:first').bx_anim(oData.count > 0 ? 'show' : 'hide');
+        }
+    };
+
+    if(oData && oData.msg != undefined)
+        bx_alert(oData.msg, fPerform);
+    else
+        fPerform();
 };
 
 BxDolReport.prototype.processJson = function(oData, oElement) {

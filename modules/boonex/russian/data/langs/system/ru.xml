@@ -89,6 +89,8 @@
         <string name="_report_comment_with_note"><![CDATA[подал жалобу на '{0}' с пометкой: {1}]]></string>
 	<string name="_report_counter"><![CDATA[{0}]]></string>
 	<string name="_report_do_report"><![CDATA[Пожаловаться]]></string>
+        <string name="_report_do_unreport"><![CDATA[Отменить жалобу]]></string>
+        <string name="_report_do_unreport_confirm"><![CDATA[Вы уверены, что хотите отменить свою жалобу?]]></string>
 	<string name="_report_do_report_by"><![CDATA[Пожаловались]]></string>
 	<string name="_report_err_cannot_perform_action"><![CDATA[Невозможно выполнить действие.]]></string>
 	<string name="_report_err_duplicate_report"><![CDATA[Ваша жалоба уже была принята ранее.]]></string>
