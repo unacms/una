@@ -8,6 +8,8 @@
  * @{
  */
 
+bx_import('BxDolStudioUtils');
+
 class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
 {
     private $sCreateNew = 'sys_create_new';
@@ -33,8 +35,6 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
 
         $oForm->initChecker();
         if($oForm->isSubmittedAndValid()) {
-        	bx_import('BxDolStudioUtils');
-
             $oLanguage = BxDolStudioLanguagesUtils::getInstance();
             $sLanguage = $oLanguage->getCurrentLangName(false);
 
@@ -90,9 +90,7 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
             $this->updateSetFields($oForm);
 
         $oForm->initChecker();
-        if($oForm->isSubmittedAndValid()) {
-			bx_import('BxDolStudioUtils');
-        	
+        if($oForm->isSubmittedAndValid()) {        	
             //--- New Set Creation
             if($oForm->getCleanValue('set_name') == $this->sCreateNew) {
                 $sSetTitleValue = $oForm->getCleanValue('set_title');
@@ -377,9 +375,8 @@ class BxBaseStudioNavigationMenus extends BxDolStudioNavigationMenus
                 $aForm['form_attrs']['id'] .= 'edit';
                 $aForm['inputs']['set_title']['checker']['func'] = 'UniqueSet';
 
-                $iTemplateId = (int)$aForm['inputs']['template_id']['value'];
-                if(!empty($iTemplateId) && !array_key_exists($iTemplateId, $aTemplates))
-                	$aForm['inputs']['template_id']['type'] = 'hidden';
+                if($aMenu['module'] != BX_DOL_STUDIO_MODULE_CUSTOM)
+                    $aForm['inputs']['template_id']['type'] = 'hidden';
 
                 $aForm['inputs']['controls'][0]['value'] = _t('_adm_nav_btn_menus_save');
                 break;
