@@ -149,6 +149,12 @@ div.mce-fullscreen {
     -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
 }
+.bx-db-container.bx-dbc-nopadding .bx-db-header {
+    padding: 0;
+}
+.bx-db-container.bx-dbc-nobg .bx-def-hr {
+    display: none;
+}
 .bx-db-title {
     -webkit-flex: 1 1 auto;
     -ms-flex: 1 1 auto;
@@ -222,6 +228,10 @@ div.mce-fullscreen {
 .bx-db-menu .bx-menu-custom.bx-menu-custom-hor > li > span {
     margin: 0;
     padding: 0;
+}
+.bx-db-menu ul.bx-menu-hor > li a > span,
+.bx-db-menu ul.bx-menu-custom.bx-menu-custom-hor > li a > span {
+    vertical-align: baseline;
 }
 .bx-db-menu ul > li:not(.bx-menu-item-more-auto) a .sys-icon {
     display: none;
