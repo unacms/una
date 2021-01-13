@@ -5,6 +5,7 @@
 
         <!-- Option -->
         <string name="_bx_acl_option_recurring_reserve"><![CDATA[Reserve (in days) to accept and process recurring payment notification]]></string>
+        <string name="_bx_acl_option_recurring_prioritize"><![CDATA[Prioritize recurring payments]]></string>
 
 
 	<!-- Pages -->

@@ -87,7 +87,9 @@ class BxAclGridView extends BxAclGridLevels
 
     protected function _getActionBuy ($sType, $sKey, $a, $isSmall = false, $isDisabled = false, $aRow = array())
     {
-        if((float)$aRow['price'] == 0 || !$this->_bTypeSingle || $this->_bTypeRecurring)
+        $CNF = &$this->_oModule->_oConfig->CNF;
+
+        if((float)$aRow['price'] == 0 || !$this->_bTypeSingle || ($this->_bTypeRecurring && getParam($CNF['PARAM_RECURRING_PRIORITIZE']) == 'on'))
             return '';
 
     	$aJs = $this->_oPayment->getAddToCartJs($this->_iOwner, $this->MODULE, $aRow['id'], 1, true);

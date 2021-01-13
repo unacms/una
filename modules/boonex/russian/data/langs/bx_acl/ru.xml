@@ -5,6 +5,7 @@
 
         <!-- Options -->
         <string name="_bx_acl_option_recurring_reserve"><![CDATA[Резерв (в днях) на принятие и обработку сообщения об оплате подписки.]]></string>
+        <string name="_bx_acl_option_recurring_prioritize"><![CDATA[Отдавать предпочтение подпискам]]></string>
 
 
 	<!-- Pages -->

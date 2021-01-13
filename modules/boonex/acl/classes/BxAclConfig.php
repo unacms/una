@@ -42,6 +42,7 @@ class BxAclConfig extends BxBaseModGeneralConfig
 
             // some params
             'PARAM_RECURRING_RESERVE' => 'bx_acl_recurring_reserve',
+            'PARAM_RECURRING_PRIORITIZE' => 'bx_acl_recurring_prioritize',
 
             // objects 
             'OBJECT_GRID_ADMINISTRATION' => 'bx_acl_administration',
@@ -101,22 +102,22 @@ class BxAclConfig extends BxBaseModGeneralConfig
         $this->_iRemoveExpiredFor = (int)getParam($sOptionPrefix . 'remove_expired_for');
     }
 
-	public function getExpireNotificationDays()
+    public function getExpireNotificationDays()
     {
         return $this->_iExpireNotificationDays;
     }
 
-	public function isExpireNotifyOnce()
+    public function isExpireNotifyOnce()
     {
         return $this->_bExpireNotifyOnce;
     }
 
-	public function getRemoveExpiredFor()
+    public function getRemoveExpiredFor()
     {
         return $this->_iRemoveExpiredFor;
     }
 
-	public function getHtmlIds($sKey = '')
+    public function getHtmlIds($sKey = '')
     {
         if(empty($sKey))
             return $this->_aHtmlIds;
