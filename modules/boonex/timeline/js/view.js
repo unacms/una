@@ -123,6 +123,9 @@ BxTimelineView.prototype.init = function()
 
         //--- Load 'Jump To'
         this.initJumpTo(this.oView);
+
+        //--- Init 'Infinite Scroll'
+        this.initInfiniteScroll(this.oView);
     }
 
     if(this.bViewItem) {
