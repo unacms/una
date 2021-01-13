@@ -24,6 +24,7 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
         $this->_aFilter1Values = array_merge($this->_aFilter1Values, array(
             'unconfirmed' => $CNF['T']['filter_item_unconfirmed'],
             'locked' => $CNF['T']['filter_item_locked'],
+            'without_profile' => $CNF['T']['filter_item_without_profile'],
         ));
 
         $this->_sFilter2Name = 'filter2';
@@ -63,9 +64,13 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
                 case 'locked':
                     $this->_aOptions['source'] .= " AND `ta`.`locked` = 1";
                     break;
+                
+                case 'without_profile':
+                    $this->_aOptions['source'] .= " AND `ta`.`id` NOT IN (SELECT `account_id` FROM `sys_profiles` WHERE `type` <> 'system')";
+                    break;
 
                 default:
-        	    $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tp`.`status`=?", $this->_sFilter1Value);
+        	        $this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `tp`.`status`=?", $this->_sFilter1Value);
             }
 
         if(!empty($this->_sFilter2Value))

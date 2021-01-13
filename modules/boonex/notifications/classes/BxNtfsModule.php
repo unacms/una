@@ -459,7 +459,7 @@ class BxNtfsModule extends BxBaseModNotificationsModule
             $aTemplateMarkers = array_merge($aTemplateMarkers, $aSettings['markers']);              
 
         $aTemplate = null;
-        bx_alert($this->_aModule['name'], 'before_parse_email_template', 0, 0, array('profile_id' => $oProfile->id(), 'account_id' => $oAccount->id(), 'template' => $sTemplate, 'markers' => $aTemplateMarkers, 'override_result' => &$aTemplate));
+        bx_alert($this->_aModule['name'], 'before_parse_email_template', 0, 0, array('profile_id' => $oProfile->id(), 'account_id' => $oAccount->id(), 'template' => $sTemplate, 'markers' => $aTemplateMarkers, 'notification' => $aNotification, 'override_result' => &$aTemplate));
         if (is_null($aTemplate))
             $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate($sTemplate, $aTemplateMarkers, $oAccount->id(), $oProfile->id());
         if(!$aTemplate)

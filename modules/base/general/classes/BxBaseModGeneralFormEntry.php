@@ -482,6 +482,12 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
         if ($bMulticatEnabled)
             $this->processMulticatAfter($CNF['FIELD_MULTICAT'], $iContentId);
         
+		foreach($this->aInputs as $aInput) {
+            if (isset($aInput['rateable']) && $aInput['rateable'] && $aInput['type'] != 'nested_form'){
+                BxDolFormQuery::addFormField($this->id, $aInput['name'], $iContentId, $aContentInfo[$CNF['FIELD_AUTHOR']], $this->_oModule->getName());
+            }
+        }
+		
         if($mixedResult !== false)
             $this->_processTrackFields($iContentId);
 
