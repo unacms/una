@@ -999,7 +999,21 @@ class BxBaseCmts extends BxDolCmts
         if($oForm->isSubmittedAndValid()) {
             $iCmtAuthorId = $this->_getAuthorId();
             $iCmtParentId = (int)$oForm->getCleanValue('cmt_parent_id');
+            
+            //--- Process Text ---//
             $sCmtText = $oForm->getCleanValue('cmt_text');
+            $bCmtText = !empty($sCmtText);
+
+            //--- Process Media ---//
+            $aImageIds = $oForm->getCleanValue('cmt_image');
+            $bImageIds = !empty($aImageIds) && is_array($aImageIds);
+
+            if(!$bCmtText && !$bImageIds) {
+                $oForm->aInputs['cmt_text']['error'] =  _t('_Please enter characters');
+                $oForm->setValid(false);
+
+            	return array('form' => $oForm->getCode($bDynamic), 'form_id' => $oForm->id);
+            }
 
             $aParent = array();
             if($iCmtParentId > 0) {
@@ -1107,10 +1121,12 @@ class BxBaseCmts extends BxDolCmts
             $oForm->aInputs['cmt_text']['html'] = $this->_aSystem['html'];
             $oForm->aInputs['cmt_text']['db']['pass'] = $this->isHtml() ? 'XssHtml' : 'XssMultiline';
 
-            $iCmtTextMin = (int)$this->_aSystem['chars_post_min'];
-            $iCmtTextMax = (int)$this->_aSystem['chars_post_max'];
-            $oForm->aInputs['cmt_text']['checker']['params'] = array($iCmtTextMin, $iCmtTextMax);
-            $oForm->aInputs['cmt_text']['checker']['error'] = _t('_Please enter n1-n2 characters', $iCmtTextMin, $iCmtTextMax);
+            if(isset($oForm->aInputs['cmt_text']['checker']['func']) && strtolower($oForm->aInputs['cmt_text']['checker']['func']) == 'length') {
+                $iCmtTextMin = (int)$this->_aSystem['chars_post_min'];
+                $iCmtTextMax = (int)$this->_aSystem['chars_post_max'];
+                $oForm->aInputs['cmt_text']['checker']['params'] = array($iCmtTextMin, $iCmtTextMax);
+                $oForm->aInputs['cmt_text']['checker']['error'] = _t('_Please enter n1-n2 characters', $iCmtTextMin, $iCmtTextMax);
+            }
         }
 
         if($sAction == BX_CMT_ACTION_EDIT && isset($oForm->aInputs['cmt_controls']))

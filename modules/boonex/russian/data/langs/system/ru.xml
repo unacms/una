@@ -83,12 +83,15 @@
 	<string name="_Period"><![CDATA[Период]]></string>
 	<string name="_Please Wait"><![CDATA[Пожалуйста, подождите]]></string>
 	<string name="_Please enter n1-n2 characters"><![CDATA[Пожалуйста, введите {0}-{1} символов]]></string>
+        <string name="_Please enter characters"><![CDATA[Пожалуйста, введите некоторое количество символов]]></string>
 	<string name="_Please select value"><![CDATA[Пожалуйста, выберите значение из списка]]></string>
 	<string name="_Preview"><![CDATA[Предпросмотр]]></string>
         <string name="_report_comment"><![CDATA[подал жалобу на '{0}']]></string>
         <string name="_report_comment_with_note"><![CDATA[подал жалобу на '{0}' с пометкой: {1}]]></string>
 	<string name="_report_counter"><![CDATA[{0}]]></string>
 	<string name="_report_do_report"><![CDATA[Пожаловаться]]></string>
+        <string name="_report_do_unreport"><![CDATA[Отменить жалобу]]></string>
+        <string name="_report_do_unreport_confirm"><![CDATA[Вы уверены, что хотите отменить свою жалобу?]]></string>
 	<string name="_report_do_report_by"><![CDATA[Пожаловались]]></string>
 	<string name="_report_err_cannot_perform_action"><![CDATA[Невозможно выполнить действие.]]></string>
 	<string name="_report_err_duplicate_report"><![CDATA[Ваша жалоба уже была принята ранее.]]></string>

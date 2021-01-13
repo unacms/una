@@ -70,6 +70,7 @@ class BxDolReport extends BxDolObject
 {
     protected $_oTemplate;
 
+    protected $_bUndo;
     protected $_sBaseUrl;
 
     protected $_sObjectCmts;
@@ -77,6 +78,7 @@ class BxDolReport extends BxDolObject
     protected $_sFormObject;
     protected $_sFormDisplayPost;
 
+    protected $_sTypesPreList;
     protected $_aTypes;
 
     protected function __construct($sSystem, $iId, $iInit = true, $oTemplate = false)
@@ -92,6 +94,8 @@ class BxDolReport extends BxDolObject
         else
             $this->_oTemplate = BxDolTemplate::getInstance();
 
+        $this->_bUndo = true;
+
         $this->_sBaseUrl = BxDolPermalinks::getInstance()->permalink($this->_aSystem['base_url']);
         if(get_mb_substr($this->_sBaseUrl, 0, 4) != 'http')
             $this->_sBaseUrl = BX_DOL_URL_ROOT . $this->_sBaseUrl;
@@ -101,7 +105,13 @@ class BxDolReport extends BxDolObject
         $this->_sFormObject = 'sys_report';
         $this->_sFormDisplayPost = 'sys_report_post';
 
-        $this->_aTypes = array('spam', 'scam', 'fraud', 'nude', 'other');
+        $this->_sTypesPreList = 'sys_report_types';
+
+        $aTypes = BxDolFormQuery::getDataItems($this->_sTypesPreList);
+        if(!empty($aTypes) && is_array($aTypes))
+            $this->_aTypes = array_keys($aTypes);
+        else
+            $this->_aTypes = array('spam', 'scam', 'fraud', 'nude', 'other');
     }
 
     /**
@@ -170,7 +180,12 @@ class BxDolReport extends BxDolObject
     /**
      * Interface functions for outer usage
      */
-	public function getBaseUrl()
+    public function isUndo()
+    {
+        return (int)$this->_bUndo;
+    }
+
+    public function getBaseUrl()
     {
         return $this->_replaceMarkers($this->_sBaseUrl);
     }
@@ -239,15 +254,15 @@ class BxDolReport extends BxDolObject
      */
     protected function _getIconDoReport($bPerformed)
     {
-    	return 'exclamation-circle';
+    	return $bPerformed && $this->isUndo() ? 'exclamation-circle' : 'exclamation-circle';
     }
 
     protected function _getTitleDoReport($bPerformed)
     {
-    	return '_report_do_report';
+    	return $bPerformed && $this->isUndo() ? '_report_do_unreport' : '_report_do_report';
     }
 
-	protected function _getFormObject()
+    protected function _getFormObject()
     {
         return BxDolForm::getObjectInstance($this->_sFormObject, $this->_sFormDisplayPost);
     }
