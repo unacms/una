@@ -36,6 +36,9 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
         $this->_bAdministration = true;      
 
         $this->_bGrouped = $this->_oModule->_oConfig->isSettingsGrouped();
+        if($this->_bGrouped)
+            $this->_aOptions['show_total_count'] = 0;
+
         $this->_sDeliveryType = BX_BASE_MOD_NTFS_DTYPE_SITE;
         $this->_sTitleMask = _t('_bx_ntfs_setting_title_mask', '%s', '%s');
 
@@ -207,7 +210,7 @@ class BxNtfsGridSettingsAdministration extends BxTemplGrid
 
         $aTypes = $this->_oModule->_oConfig->getSettingsTypes();
         foreach($aTypes as $sType) {
-            $this->_aOptions['source'] = $this->_sSource . $this->_oModule->_oDb->prepareAsString(" AND `ts`.`type`=?", $sType) . " GROUP BY `group`";
+            $this->_aOptions['source'] = $this->_sSource . $this->_oModule->_oDb->prepareAsString(" AND `ts`.`type`=?", $sType) . " GROUP BY `ts`.`group`";
 
             $aRows = parent::_getDataSql($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
             if(empty($aRows) || !is_array($aRows)) 
