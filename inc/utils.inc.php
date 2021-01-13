@@ -1586,6 +1586,18 @@ function bx_alert($sUnit, $sAction, $iObjectId, $iSender = false, $aExtras = arr
 }
 
 /**
+ * Check whether serice method exists or not
+ * @param $mixed module name or module id
+ * @param $sMethod service method name in format 'method_name', corresponding class metod is serviceMethodName
+ * @param $sClass class to search for service method, by default it is main module class
+ * @return boolean check result
+ */
+function bx_is_srv($mixedModule, $sMethod, $sClass = "Module")
+{
+    return BxDolRequest::serviceExists($mixedModule, $sMethod, $sClass);
+}
+
+/**
  * Perform serice call
  * @param $mixed module name or module id
  * @param $sMethod service method name in format 'method_name', corresponding class metod is serviceMethodName
