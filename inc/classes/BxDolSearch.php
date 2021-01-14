@@ -739,13 +739,19 @@ class BxDolSearchResult implements iBxDolReplaceable
      */
     function setConditionParams()
     {
+        $this->aCurrent['paginate']['num'] = 0;
+
         // keyword
         $sKeyword = bx_process_input(isset($this->_aCustomSearchCondition['keyword']) ? $this->_aCustomSearchCondition['keyword'] : bx_get('keyword'));
         if ($sKeyword !== false) {
-            $sModule = $this->aCurrent['module_name'];
-            $sMethod = 'act_as_profile';
-            if(substr($sKeyword, 0, 1) == '@' && bx_is_srv($sModule, $sMethod) && bx_srv($sModule, $sMethod))
+            if(substr($sKeyword, 0, 1) == '@') {
+                $sModule = $this->aCurrent['module_name'];
+                $sMethod = 'act_as_profile';
+                if(!bx_is_srv($sModule, $sMethod) || !bx_srv($sModule, $sMethod))
+                    return;
+
                 $sKeyword = substr($sKeyword, 1);
+            }
 
             $this->aCurrent['restriction']['keyword'] = array(
                 'value' => $sKeyword,
@@ -808,11 +814,8 @@ class BxDolSearchResult implements iBxDolReplaceable
 
         $this->setPaginate();
         $iNum = $this->getNum();
-        if ($iNum > 0) {
+        if ($iNum > 0)
             $this->aCurrent['paginate']['num'] = $iNum;
-        } else {
-           $this->aCurrent['paginate']['num'] = 0;
-        }
     }
 
     /**
