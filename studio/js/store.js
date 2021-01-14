@@ -414,33 +414,37 @@ BxDolStudioStore.prototype.changePage = function(sType) {
 };
 
 BxDolStudioStore.prototype.changePagePaginate = function(oButton, sType, mixedValue, iStart, iPerPage) {
-	var oDate = new Date();
-	var $this = this;
+    var oDate = new Date();
+    var $this = this;
 
-	$.get(
-		this.sActionsUrl,
-		{
-			str_action: 'get-products-by-page',
-			str_type: sType,
-			str_value: mixedValue,
-			str_start: iStart,
-			str_per_page: iPerPage,
-			_t:oDate.getTime()
-		},
-		function(oData) {
-			if(oData.code != 0) {
-				$this.showNotification(oData.message);
-				return;
-			}
+    bx_loading_btn(oButton, true);
 
-			$(oButton).parents('.bx-std-block-content:first').bx_anim('hide', $this.sAnimationEffect, $this.iAnimationSpeed, function() {
-				$(this).html(oData.content).bx_anim('show', $this.sAnimationEffect, $this.iAnimationSpeed);
-			});
-		},
-		'json'
-	);
+    $.get(
+        this.sActionsUrl,
+        {
+            str_action: 'get-products-by-page',
+            str_type: sType,
+            str_value: mixedValue,
+            str_start: iStart,
+            str_per_page: iPerPage,
+            _t:oDate.getTime()
+        },
+        function(oData) {
+            bx_loading_btn(oButton, false);
 
-	return true;
+                if(oData.code != 0) {
+                    $this.showNotification(oData.message);
+                    return;
+                }
+
+                $(oButton).parents('.bx-std-block-content:first').bx_anim('hide', $this.sAnimationEffect, $this.iAnimationSpeed, function() {
+                    $(this).html(oData.content).bx_anim('show', $this.sAnimationEffect, $this.iAnimationSpeed);
+                });
+        },
+        'json'
+    );
+
+    return true;
 };
 
 BxDolStudioStore.prototype.showNotification = function(sContent) {

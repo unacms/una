@@ -224,6 +224,7 @@ class BxDolStudioStore extends BxTemplStudioWidget
         $iPerPage = 3;
         $aProducts = array();
 
+        $sVersion = bx_get_ver();
         $oJson = BxDolStudioJson::getInstance();
 
         // Load Featured
@@ -232,7 +233,7 @@ class BxDolStudioStore extends BxTemplStudioWidget
             'actions' => array(
                 array('name' => 'featured', 'caption' => '_adm_action_cpt_see_all', 'url' => $this->getBaseUrl('featured'))
             ),
-            'items' => $oJson->load($this->sStoreDataUrlPublic . 'json_browse_featured', array('start' => 0, 'per_page' => $iPerPage, 'client' => $this->iClient, 'key' => $this->sClientKey))
+            'items' => $oJson->load($this->sStoreDataUrlPublic . 'json_browse_featured', array('start' => 0, 'per_page' => $iPerPage, 'client' => $this->iClient, 'key' => $this->sClientKey, 'version' => $sVersion))
         );
 
         // Load Latest
@@ -241,7 +242,7 @@ class BxDolStudioStore extends BxTemplStudioWidget
             'actions' => array(
                 array('name' => 'latest', 'caption' => '_adm_action_cpt_see_all', 'url' => $this->getBaseUrl('latest'))
             ),
-            'items' => $oJson->load($this->sStoreDataUrlPublic . 'json_browse_latest', array('start' => 0, 'per_page' => $iPerPage, 'client' => $this->iClient, 'key' => $this->sClientKey))
+            'items' => $oJson->load($this->sStoreDataUrlPublic . 'json_browse_latest', array('start' => 0, 'per_page' => $iPerPage, 'client' => $this->iClient, 'key' => $this->sClientKey, 'version' => $sVersion))
         );
 
         // Load Popular
@@ -250,7 +251,7 @@ class BxDolStudioStore extends BxTemplStudioWidget
             'actions' => array(
                 array('name' => 'popular', 'caption' => '_adm_action_cpt_see_all', 'url' => $this->getBaseUrl('popular'))
             ),
-            'items' => $oJson->load($this->sStoreDataUrlPublic . 'json_browse_popular', array('start' => 0, 'per_page' => $iPerPage, 'client' => $this->iClient, 'key' => $this->sClientKey))
+            'items' => $oJson->load($this->sStoreDataUrlPublic . 'json_browse_popular', array('start' => 0, 'per_page' => $iPerPage, 'client' => $this->iClient, 'key' => $this->sClientKey, 'version' => $sVersion))
         );
 
         return $aProducts;
@@ -258,42 +259,99 @@ class BxDolStudioStore extends BxTemplStudioWidget
 
     protected function loadLatest($iStart, $iPerPage)
     {
-        return BxDolStudioJson::getInstance()->load($this->sStoreDataUrlPublic . 'json_browse_latest', array('start' => $iStart, 'per_page' => $iPerPage, 'client' => $this->iClient, 'key' => $this->sClientKey));
+        $sVersion = bx_get_ver();
+
+        return BxDolStudioJson::getInstance()->load($this->sStoreDataUrlPublic . 'json_browse_latest', array(
+            'start' => $iStart, 
+            'per_page' => $iPerPage, 
+            'client' => $this->iClient, 
+            'key' => $this->sClientKey, 
+            'version' => $sVersion
+        ));
     }
 
     protected function loadFeatured($iStart, $iPerPage)
     {
-        return BxDolStudioJson::getInstance()->load($this->sStoreDataUrlPublic . 'json_browse_featured', array('start' => $iStart, 'per_page' => $iPerPage, 'client' => $this->iClient, 'key' => $this->sClientKey));
+        $sVersion = bx_get_ver();
+
+        return BxDolStudioJson::getInstance()->load($this->sStoreDataUrlPublic . 'json_browse_featured', array(
+            'start' => $iStart, 
+            'per_page' => $iPerPage, 
+            'client' => $this->iClient, 
+            'key' => $this->sClientKey, 
+            'version' => $sVersion
+        ));
     }
 
     protected function loadPopular($iStart, $iPerPage)
     {
-        return BxDolStudioJson::getInstance()->load($this->sStoreDataUrlPublic . 'json_browse_popular', array('start' => $iStart, 'per_page' => $iPerPage, 'client' => $this->iClient, 'key' => $this->sClientKey));
+        $sVersion = bx_get_ver();
+
+        return BxDolStudioJson::getInstance()->load($this->sStoreDataUrlPublic . 'json_browse_popular', array(
+            'start' => $iStart, 
+            'per_page' => $iPerPage, 
+            'client' => $this->iClient, 
+            'key' => $this->sClientKey, 
+            'version' => $sVersion
+        ));
     }
 
     protected function loadCategories()
     {
-        return BxDolStudioJson::getInstance()->load($this->sStoreDataUrlPublic . 'json_browse_categories', array('client' => $this->iClient, 'key' => $this->sClientKey));
+        return BxDolStudioJson::getInstance()->load($this->sStoreDataUrlPublic . 'json_browse_categories', array(
+            'client' => $this->iClient, 
+            'key' => $this->sClientKey
+        ));
     }
 
-	protected function loadCategory($iCategory, $iStart, $iPerPage)
+    protected function loadCategory($iCategory, $iStart, $iPerPage)
     {
-        return BxDolStudioJson::getInstance()->load($this->sStoreDataUrlPublic . 'json_browse_by_category', array('value' => $iCategory, 'start' => $iStart, 'per_page' => $iPerPage, 'client' => $this->iClient, 'key' => $this->sClientKey));
+        $sVersion = bx_get_ver();
+
+        return BxDolStudioJson::getInstance()->load($this->sStoreDataUrlPublic . 'json_browse_by_category', array(
+            'value' => $iCategory, 
+            'start' => $iStart, 
+            'per_page' => $iPerPage, 
+            'client' => $this->iClient, 
+            'key' => $this->sClientKey, 
+            'version' => $sVersion
+        ));
     }
 
     protected function loadTags()
     {
-        return BxDolStudioJson::getInstance()->load($this->sStoreDataUrlPublic . 'json_browse_tags', array('client' => $this->iClient, 'key' => $this->sClientKey));
+        return BxDolStudioJson::getInstance()->load($this->sStoreDataUrlPublic . 'json_browse_tags', array(
+            'client' => $this->iClient, 
+            'key' => $this->sClientKey
+        ));
     }
 
     protected function loadTag($sTag, $iStart, $iPerPage)
     {
-        return BxDolStudioJson::getInstance()->load($this->sStoreDataUrlPublic . 'json_browse_by_tag', array('value' => $sTag, 'start' => $iStart, 'per_page' => $iPerPage, 'client' => $this->iClient, 'key' => $this->sClientKey));
+        $sVersion = bx_get_ver();
+
+        return BxDolStudioJson::getInstance()->load($this->sStoreDataUrlPublic . 'json_browse_by_tag', array(
+            'value' => $sTag, 
+            'start' => $iStart, 
+            'per_page' => $iPerPage, 
+            'client' => $this->iClient, 
+            'key' => $this->sClientKey, 
+            'version' => $sVersion
+        ));
     }
 
     protected function loadSearch($sKeyword, $iStart, $iPerPage)
     {
-        return BxDolStudioJson::getInstance()->load($this->sStoreDataUrlPublic . 'json_browse_by_keyword', array('value' => $sKeyword, 'start' => $iStart, 'per_page' => $iPerPage, 'client' => $this->iClient, 'key' => $this->sClientKey));
+        $sVersion = bx_get_ver();
+
+        return BxDolStudioJson::getInstance()->load($this->sStoreDataUrlPublic . 'json_browse_by_keyword', array(
+            'value' => $sKeyword, 
+            'start' => $iStart, 
+            'per_page' => $iPerPage, 
+            'client' => $this->iClient, 
+            'key' => $this->sClientKey, 
+            'version' => $sVersion
+        ));
     }
 
     protected function loadPurchases()

@@ -598,16 +598,45 @@ class BxMarketModule extends BxBaseModTextModule
     	$CNF = &$this->_oConfig->CNF;
 
     	$aFile = $this->_oDb->getFile(array(
-    		'type' => 'file_id_ext', 
-    		'file_id' => $iFileId
+            'type' => 'file_id_ext', 
+            'file_id' => $iFileId
     	));
 
     	if(!empty($aFile) && is_array($aFile)) {
-	    	$oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_FILES']);
-	    	$aFile['file_url'] = $oStorage ? $oStorage->getFileUrlById($iFileId) : '';
+            $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_FILES']);
+            $aFile['file_url'] = $oStorage ? $oStorage->getFileUrlById($iFileId) : '';
     	}
 
     	return $aFile;
+    }
+
+    /**
+     * @page service Service Calls
+     * @section bx_market Market
+     * @subsection bx_market-entry Entry
+     * @subsubsection bx_market-get_files get_files
+     * 
+     * @code bx_srv('bx_market', 'get_files', [...]); @endcode
+     * 
+     * Get an array with files attached to the entry.
+     * 
+     * @param $iEntryId product ID.
+     * @param $sType file type ('version', 'update')
+     * @return an array with files.
+     * 
+     * @see BxMarketModule::serviceGetFiles
+     */
+    /** 
+     * @ref bx_market-get_files "get_files"
+     */
+    public function serviceGetFiles($iEntryId, $sType)
+    {
+    	return $this->_oDb->getFile(array(
+            'type' => 'content_id_and_type', 
+            'content_id' => $iEntryId,
+            'file_type' => $sType,
+            'ordered' => true
+    	));
     }
 
     /**
@@ -629,20 +658,20 @@ class BxMarketModule extends BxBaseModTextModule
     /** 
      * @ref bx_market-get_updates "get_updates"
      */
-	public function serviceGetUpdates($iContentId, $sVersion = '')
+    public function serviceGetUpdates($iContentId, $sVersion = '')
     {
     	$CNF = &$this->_oConfig->CNF;
 
     	$aFile = $this->_oDb->getFile(array(
-    		'type' => 'content_id_and_type', 
-    		'content_id' => $iContentId, 
-    		'file_type' => 'update',
-    		'version' => $sVersion
+            'type' => 'content_id_and_type', 
+            'content_id' => $iContentId, 
+            'file_type' => 'update',
+            'version' => $sVersion
     	));
 
     	if(!empty($aFile) && is_array($aFile)) {
-	    	$oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_FILES']);
-	    	$aFile['file_url'] = $oStorage ? $oStorage->getFileUrlById($aFile['file_id']) : '';
+            $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE_FILES']);
+            $aFile['file_url'] = $oStorage ? $oStorage->getFileUrlById($aFile['file_id']) : '';
     	}
 
     	return $aFile;

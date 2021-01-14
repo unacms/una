@@ -372,11 +372,13 @@ class BxDolStudioInstallerUtils extends BxDolInstallerUtils implements iBxDolSin
     public function checkModules($bAuthorizedAccess = false)
     {
         $iPerPage = 9999; //--- Note. It's essential to load all purchased products at the same time.
+        $sVersion = bx_get_ver();
 
         if($bAuthorizedAccess)
             $aProducts = $this->getAccessObject(true)->loadItems(array(
                 'method' => 'browse_purchased', 
                 'domain' => BX_DOL_URL_ROOT, 
+                'version' => $sVersion,
                 'products' => $this->getInstalledInfoShort(),
                 'per_page' => $iPerPage
             ));

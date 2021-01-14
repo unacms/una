@@ -240,12 +240,12 @@ class BxMarketDb extends BxBaseModTextDb
     	return $this->_getAttachment($this->_oConfig->CNF['TABLE_FILES2ENTRIES'], $aParams);
     }
 
-	public function updateFile($aSet, $aWhere)
+    public function updateFile($aSet, $aWhere)
     {
     	return $this->_updateAttachment($this->_oConfig->CNF['TABLE_FILES2ENTRIES'], $aSet, $aWhere);
     }
 
-	public function associatePhotoWithContent($iContentId, $iFileId, $sTitle)
+    public function associatePhotoWithContent($iContentId, $iFileId, $sTitle)
     {
         $sQuery = $this->prepare ("SELECT MAX(`order`) FROM `" . $this->_oConfig->CNF['TABLE_PHOTOS2ENTRIES'] . "` WHERE `content_id` = ?", $iContentId);
         $iOrder = 1 + (int)$this->getOne($sQuery);
@@ -254,7 +254,7 @@ class BxMarketDb extends BxBaseModTextDb
         return $this->res($sQuery);
     }
 
-	public function deassociatePhotoWithContent($iContentId, $iFileId)
+    public function deassociatePhotoWithContent($iContentId, $iFileId)
     {
     	return $this->_deassociateAttachmentWithContent($this->_oConfig->CNF['TABLE_PHOTOS2ENTRIES'], $iContentId, $iFileId);
     }
@@ -605,7 +605,7 @@ class BxMarketDb extends BxBaseModTextDb
         return $this->query($sQuery, $aBindings) !== false;
     }
 
-	protected function _getAttachment($sTable, $aParams = array())
+    protected function _getAttachment($sTable, $aParams = array())
     {
     	$aMethod = array('name' => 'getRow', 'params' => array(0 => 'query'));
     	
@@ -614,23 +614,23 @@ class BxMarketDb extends BxBaseModTextDb
         switch($aParams['type']) {
             case 'id':
             	$aMethod['params'][1] = array(
-                	'id' => $aParams['id']
+                    'id' => $aParams['id']
                 );
 
                 $sWhereClause = " AND `tfe`.`id`=:id";
                 break;
 
-			case 'file_id':
-				$aMethod['params'][1] = array(
-                	'file_id' => $aParams['file_id']
+            case 'file_id':
+                $aMethod['params'][1] = array(
+                    'file_id' => $aParams['file_id']
                 );
 
                 $sWhereClause = " AND `tfe`.`file_id`=:file_id";
                 break;
 
-			case 'file_id_ext':
-				$aMethod['params'][1] = array(
-                	'file_id' => $aParams['file_id']
+            case 'file_id_ext':
+                $aMethod['params'][1] = array(
+                    'file_id' => $aParams['file_id']
                 );
 
                 $sFieldsClause .= ", `tf`.`file_name`, `tf`.`size` AS `file_size`";
@@ -642,31 +642,31 @@ class BxMarketDb extends BxBaseModTextDb
             case 'content_id':
             	$aMethod['name'] = 'getAll';
             	$aMethod['params'][1] = array(
-                	'content_id' => $aParams['content_id']
+                    'content_id' => $aParams['content_id']
                 );
 
             	$sWhereClause = " AND `tfe`.`content_id`=:content_id";
             	if(!empty($aParams['except']))
-            		$sWhereClause .= " AND `tfe`.`file_id` NOT IN (" . $this->implode_escape($aParams['except']) . ")";
+                    $sWhereClause .= " AND `tfe`.`file_id` NOT IN (" . $this->implode_escape($aParams['except']) . ")";
 
             	break;
 
-			case 'content_id_key_file_id':
-				$aMethod['name'] = 'getAllWithKey';
-				$aMethod['params'][1] = 'file_id';
-				$aMethod['params'][2] = array(
-                	'content_id' => $aParams['content_id']
+            case 'content_id_key_file_id':
+                $aMethod['name'] = 'getAllWithKey';
+                $aMethod['params'][1] = 'file_id';
+                $aMethod['params'][2] = array(
+                    'content_id' => $aParams['content_id']
                 );
 
                 $sWhereClause = " AND `tfe`.`content_id`=:content_id";
                 $sOrderClause = "`tfe`.`type` ASC, `tfe`.`order` DESC";
                 break;
 
-			case 'content_id_and_type':
-				$aMethod['name'] = 'getAll';
+            case 'content_id_and_type':
+                $aMethod['name'] = 'getAll';
             	$aMethod['params'][1] = array(
-                	'content_id' => $aParams['content_id'],
-            		'type' => $aParams['file_type']
+                    'content_id' => $aParams['content_id'],
+                    'type' => $aParams['file_type']
                 );
 
                 $sFieldsClause .= ", `tf`.`file_name`, `tf`.`size` AS `file_size`";
@@ -674,10 +674,14 @@ class BxMarketDb extends BxBaseModTextDb
                 $sWhereClause = " AND `tfe`.`content_id`=:content_id AND `tfe`.`type`=:type";
 
                 if(!empty($aParams['version'])) {
-                	$aMethod['name'] = 'getRow';
-                	$aMethod['params'][1]['version'] = $aParams['version'];
-                	$sWhereClause .= " AND `tfe`.`version`=:version";
+                    $aMethod['name'] = 'getRow';
+                    $aMethod['params'][1]['version'] = $aParams['version'];
+                    $sWhereClause .= " AND `tfe`.`version`=:version";
                 }
+
+                if(isset($aParams['ordered']) && $aParams['ordered'] === true)
+                    $sOrderClause = "`tfe`.`version` ASC";
+
             	break;
         }
 
@@ -688,10 +692,9 @@ class BxMarketDb extends BxBaseModTextDb
             $sLimitClause = " LIMIT " . $sLimitClause;
 
         $aMethod['params'][0] = "SELECT
-        		" . $sFieldsClause . "
+                " . $sFieldsClause . "
             FROM `" . $sTable . "` AS `tfe`" . $sJoinClause . "
             WHERE 1" . $sWhereClause . $sOrderClause . $sLimitClause;
-        //echo   $aMethod['params'][0];
         return call_user_func_array(array($this, $aMethod['name']), $aMethod['params']);
     }
 
