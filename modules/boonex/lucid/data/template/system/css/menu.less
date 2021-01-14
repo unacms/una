@@ -13,10 +13,13 @@
 }
 
 #bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site li {
-    display: block;
     width: auto;
     height: auto;
     margin: 0;
+}
+
+#bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site li:not(.bx-menu-item-more-auto) {
+    display: block;
 }
 
 #bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site > li > a {
@@ -123,11 +126,13 @@
 
     #bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site li {
         position: relative;
-    	display: block;
 
     	height: 2.125rem;
         border: 1px solid transparent;
     	border-radius: 0.5rem;
+    }
+    #bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site li:not(.bx-menu-item-more-auto) {
+        display: block;
     }
     #bx-sliding-menu-sys_site.bx-sliding-smenu-main ul.bx-menu-object-sys_site li > a {
         position: relative;
