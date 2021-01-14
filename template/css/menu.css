@@ -406,26 +406,39 @@ ul.bx-menu-floating-blocks {
     height:128px;
     height:8rem;
 }
+
 .bx-menu-floating-blocks-dash li {
     display: block;
-    width:24.9%;
-    height:3.35rem;
+    width: 24.9%;
+    height: 3.35rem;
+}
+.bx-media-desktop .bx-menu-floating-blocks-dash li {
+    min-width: 14.0rem;
 }
 .bx-media-phone .bx-menu-floating-blocks-dash li {
-    width:49.5%;
+    width: 49.5%;
 }
-
-.bx-media-desktop .bx-menu-floating-blocks-dash{
-	min-width: 222px;
-}
-
-.bx-menu-floating-blocks-dash-item A{
+.bx-menu-floating-blocks-dash-item a {
     display:flex !important;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center
 }
-.bx-menu-floating-blocks-dash-title{
+.bx-menu-floating-blocks-dash-item .bx-menu-floating-blocks-icon {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 1.25rem;
+    background-color: #edf1f7;
+}
+.bx-menu-floating-blocks-dash-title {
     display:flex;
     width:calc(100% - 3rem);
     height:2.35rem;
@@ -551,10 +564,8 @@ ul.bx-menu-floating-blocks {
 }
 
 .bx-menu-floating-blocks-dash li .sys-icon {
-    line-height:2rem;
-    font-size:2rem;
-	width: 2.2rem;
-    display: inline-block;
+    display: block;
+    font-size: 1.2rem;
 }
 
 .bx-menu-floating-blocks-big li .bx-menu-floating-blocks-title,
