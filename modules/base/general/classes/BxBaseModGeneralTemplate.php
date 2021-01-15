@@ -470,10 +470,9 @@ class BxBaseModGeneralTemplate extends BxDolModuleTemplate
 
         $aAttachmnts = array();
         foreach ($aGhostFiles as $k => $a) {
-
-            $isImage = $oTranscoder && (0 === strncmp('image/', $a['mime_type'], 6)) && $oTranscoder->isMimeTypeSupported($a['mime_type']); // preview for images, transcoder object for preview must be defined
-            $isVideo = $aTranscodersVideo && (0 === strncmp('video/', $a['mime_type'], 6)) && $aTranscodersVideo['poster']->isMimeTypeSupported($a['mime_type']); // preview for videos, transcoder object for video must be defined
-            $isSound = $oTranscoderSound && (0 === strncmp('audio/', $a['mime_type'], 6)) && $oTranscoderSound->isMimeTypeSupported($a['mime_type']); // preview for sounds, transcoder object for sounds must be defined
+            $isImage = !empty($CNF['OBJECT_STORAGE_PHOTOS']) && $sStorage == $CNF['OBJECT_STORAGE_PHOTOS'] && $oTranscoder && (0 === strncmp('image/', $a['mime_type'], 6)) && $oTranscoder->isMimeTypeSupported($a['mime_type']); // preview for images, transcoder object for preview must be defined
+            $isVideo = !empty($CNF['OBJECT_STORAGE_VIDEOS']) && $sStorage == $CNF['OBJECT_STORAGE_VIDEOS'] && $aTranscodersVideo && (0 === strncmp('video/', $a['mime_type'], 6)) && $aTranscodersVideo['poster']->isMimeTypeSupported($a['mime_type']); // preview for videos, transcoder object for video must be defined
+            $isSound = !empty($CNF['OBJECT_STORAGE_SOUNDS']) && $sStorage == $CNF['OBJECT_STORAGE_SOUNDS'] && $oTranscoderSound && (0 === strncmp('audio/', $a['mime_type'], 6)) && $oTranscoderSound->isMimeTypeSupported($a['mime_type']); // preview for sounds, transcoder object for sounds must be defined
             $sUrlOriginal = $oStorage->getFileUrlById($a['id']);
             $sImgPopupId = 'bx-messages-atachment-popup-' . $a['id'];
 
