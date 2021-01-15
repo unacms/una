@@ -12,10 +12,12 @@ a {
 	padding-bottom: 0.625rem;
 }
 .bx-db-title {
-	line-height: normal;
+    font-size: 1.25rem;
+    font-weight: bold;
+    line-height: 1.2;
 }
 .bx-db-menu {
-	line-height: normal;
+    line-height: normal;
 }
 
 /* --------------- popup boxes */

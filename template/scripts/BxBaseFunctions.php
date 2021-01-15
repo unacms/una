@@ -28,9 +28,9 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
 
         $this->_sDesignBoxMenuTmplDefault = 'menu_block_submenu_ver.html';
 
-        $this->_sDesignBoxMenuIcon = 'chevron';
-        $this->_sDesignBoxMenuIconType = 'icon-a';
-        $this->_sDesignBoxMenuClick = "bx_menu_slide_inline('#{design_box_menu}', this)";
+        $this->_sDesignBoxMenuIcon = 'ellipsis-v';
+        $this->_sDesignBoxMenuIconType = 'icon';
+        $this->_sDesignBoxMenuClick = "bx_menu_popup_inline('#{design_box_menu}', this)";
     }
 
     /**
@@ -309,8 +309,10 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
                 $aAttrs = array();
                 if(!empty($aButton['onclick']))
                     $aAttrs['onclick'] = $aButton['onclick'];
+                
+                $aAttrs['class'] = 'bx-btn';
                 if(!empty($aButton['class']))
-                    $aAttrs['class'] = $aButton['class'];
+                    $aAttrs['class'] .= ' ' . trim($aButton['class']);
 
                 $bTmplVarsButtonIcon = !empty($aButton['icon']);
                 $aTmplVarsButtonIcon = !$bTmplVarsButtonIcon ? array() : array(
@@ -328,7 +330,7 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
                 );
 
                 $sResult .= $this->_oTemplate->parseHtmlByName('designbox_menu_button.html', array(
-                    'attrs' => bx_convert_array2attrs($aAttrs, 'bx-def-margin-sec-left'),
+                    'attrs' => bx_convert_array2attrs($aAttrs),
                     'bx_if:show_icon' => array(
                         'condition' => $bTmplVarsButtonIcon,
                         'content' => $aTmplVarsButtonIcon
@@ -376,7 +378,11 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
             'design_box_menu' => $sId
         ));
 
-        return array($aButton, $this->slideBox($sId, $sMenu, true));
+        $sMenu = $this->_oTemplate->parseHtmlByName('designbox_menu_popup.html', array(
+            'content' => $sMenu
+        ));
+
+        return array($aButton, $this->transBox($sId, $sMenu, true));
     }
 
     /**

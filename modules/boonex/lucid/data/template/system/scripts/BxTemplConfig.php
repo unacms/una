@@ -77,6 +77,8 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig']['bx-shadow-button-primary'] = $this->_setShadow($sName . '_button_nlp_shadow');
         $this->_aConfig['aLessConfig']['bx-shadow-button-small'] = $this->_setShadow($sName . '_button_sm_shadow');
         $this->_aConfig['aLessConfig']['bx-shadow-button-small-primary'] = $this->_setShadow($sName . '_button_smp_shadow');
+        $this->_aConfig['aLessConfig']['bx-shadow-color-button-click'] = $this->_setShadowCustom(-2, -2, 0, 0, $sName . '_button_nl_font_color_click', 0.08) . ', ' . $this->_setShadowCustom(2, 2, 0, 0, $sName . '_button_nl_font_color_click', 0.08);
+        $this->_aConfig['aLessConfig']['bx-shadow-color-button-primary-click'] = $this->_setShadowCustom(-2, -2, 0, 0, $sName . '_button_nlp_font_color_click', 0.08) . ', ' . $this->_setShadowCustom(2, 2, 0, 0, $sName . '_button_nlp_font_color_click', 0.08);
 
         $this->_aConfig['aLessConfig']['bx-shadow-text-cover'] = $this->_setShadowFont($sName . '_cover_text_shadow');
         $this->_aConfig['aLessConfig']['bx-shadow-font-menu-main'] = $this->_setShadowFont($sName . '_menu_main_font_shadow');
@@ -156,16 +158,22 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig']['bx-color-form-input-active'] = $this->_setColorRgba($sName . '_form_input_bg_color_active', 'rgba(255, 255, 255, 1)');
         $this->_aConfig['aLessConfig']['bx-color-button-large'] = $this->_setColorRgba($sName . '_button_lg_bg_color', 'rgba(108, 170, 138, 1)');
         $this->_aConfig['aLessConfig']['bx-color-button-large-hover'] = $this->_setColorRgba($sName . '_button_lg_bg_color_hover', 'rgba(58, 134, 134, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-button-large-click'] = $this->_setColorRgba($sName . '_button_lg_bg_color_click', 'rgba(58, 134, 134, 1)');
         $this->_aConfig['aLessConfig']['bx-color-button-large-primary'] = $this->_setColorRgba($sName . '_button_lgp_bg_color', 'rgba(108, 170, 138, 1)');
         $this->_aConfig['aLessConfig']['bx-color-button-large-primary-hover'] = $this->_setColorRgba($sName . '_button_lgp_bg_color_hover', 'rgba(58, 134, 134, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-button-large-primary-click'] = $this->_setColorRgba($sName . '_button_lgp_bg_color_click', 'rgba(58, 134, 134, 1)');
         $this->_aConfig['aLessConfig']['bx-color-button'] = $this->_setColorRgba($sName . '_button_nl_bg_color', 'rgba(108, 170, 138, 1)');
         $this->_aConfig['aLessConfig']['bx-color-button-hover'] = $this->_setColorRgba($sName . '_button_nl_bg_color_hover', 'rgba(58, 134, 134, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-button-click'] = $this->_setColorRgba($sName . '_button_nl_bg_color_click', 'rgba(58, 134, 134, 1)');
         $this->_aConfig['aLessConfig']['bx-color-button-primary'] = $this->_setColorRgba($sName . '_button_nlp_bg_color', 'rgba(108, 170, 138, 1)');
         $this->_aConfig['aLessConfig']['bx-color-button-primary-hover'] = $this->_setColorRgba($sName . '_button_nlp_bg_color_hover', 'rgba(58, 134, 134, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-button-primary-click'] = $this->_setColorRgba($sName . '_button_nlp_bg_color_click', 'rgba(58, 134, 134, 1)');
         $this->_aConfig['aLessConfig']['bx-color-button-small'] = $this->_setColorRgba($sName . '_button_sm_bg_color', 'rgba(108, 170, 138, 1)');
         $this->_aConfig['aLessConfig']['bx-color-button-small-hover'] = $this->_setColorRgba($sName . '_button_sm_bg_color_hover', 'rgba(58, 134, 134, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-button-small-click'] = $this->_setColorRgba($sName . '_button_sm_bg_color_click', 'rgba(58, 134, 134, 1)');
         $this->_aConfig['aLessConfig']['bx-color-button-small-primary'] = $this->_setColorRgba($sName . '_button_smp_bg_color', 'rgba(108, 170, 138, 1)');
         $this->_aConfig['aLessConfig']['bx-color-button-small-primary-hover'] = $this->_setColorRgba($sName . '_button_smp_bg_color_hover', 'rgba(58, 134, 134, 1)');
+        $this->_aConfig['aLessConfig']['bx-color-button-small-primary-click'] = $this->_setColorRgba($sName . '_button_smp_bg_color_click', 'rgba(58, 134, 134, 1)');
 
         $this->_aConfig['aLessConfig']['bx-color-font-cover'] = $this->_setColorRgba($sName . '_cover_font_color', 'rgba(255, 255, 255, 1)');
         $this->_aConfig['aLessConfig']['bx-color-font-block-title'] = $this->_setColorRgba($sName . '_block_title_font_color', 'rgba(0, 0, 20, 1)');
@@ -189,16 +197,22 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig']['bx-color-border-form-input-active'] = $this->_setColorRgba($sName . '_form_input_border_color_active', 'rgba(108, 170, 138, 1)');
         $this->_aConfig['aLessConfig']['bx-color-border-button-large'] = $this->_setColorRgba($sName . '_button_lg_border_color', $sDefColBorder);
         $this->_aConfig['aLessConfig']['bx-color-border-button-large-hover'] = $this->_setColorRgba($sName . '_button_lg_border_color_hover', $sDefColBorder);
+        $this->_aConfig['aLessConfig']['bx-color-border-button-large-click'] = $this->_setColorRgba($sName . '_button_lg_border_color_click', $sDefColBorder);
         $this->_aConfig['aLessConfig']['bx-color-border-button-large-primary'] = $this->_setColorRgba($sName . '_button_lgp_border_color', $sDefColBorder);
         $this->_aConfig['aLessConfig']['bx-color-border-button-large-primary-hover'] = $this->_setColorRgba($sName . '_button_lgp_border_color_hover', $sDefColBorder);
+        $this->_aConfig['aLessConfig']['bx-color-border-button-large-primary-click'] = $this->_setColorRgba($sName . '_button_lgp_border_color_click', $sDefColBorder);
         $this->_aConfig['aLessConfig']['bx-color-border-button'] = $this->_setColorRgba($sName . '_button_nl_border_color', $sDefColBorder);
         $this->_aConfig['aLessConfig']['bx-color-border-button-hover'] = $this->_setColorRgba($sName . '_button_nl_border_color_hover', $sDefColBorder);
+        $this->_aConfig['aLessConfig']['bx-color-border-button-click'] = $this->_setColorRgba($sName . '_button_nl_border_color_click', $sDefColBorder);
         $this->_aConfig['aLessConfig']['bx-color-border-button-primary'] = $this->_setColorRgba($sName . '_button_nlp_border_color', $sDefColBorder);
         $this->_aConfig['aLessConfig']['bx-color-border-button-primary-hover'] = $this->_setColorRgba($sName . '_button_nlp_border_color_hover', $sDefColBorder);
+        $this->_aConfig['aLessConfig']['bx-color-border-button-primary-click'] = $this->_setColorRgba($sName . '_button_nlp_border_color_click', $sDefColBorder);
         $this->_aConfig['aLessConfig']['bx-color-border-button-small'] = $this->_setColorRgba($sName . '_button_sm_border_color', $sDefColBorder);
         $this->_aConfig['aLessConfig']['bx-color-border-button-small-hover'] = $this->_setColorRgba($sName . '_button_sm_border_color_hover', $sDefColBorder);
+        $this->_aConfig['aLessConfig']['bx-color-border-button-small-click'] = $this->_setColorRgba($sName . '_button_sm_border_color_click', $sDefColBorder);
         $this->_aConfig['aLessConfig']['bx-color-border-button-small-primary'] = $this->_setColorRgba($sName . '_button_smp_border_color', $sDefColBorder);
         $this->_aConfig['aLessConfig']['bx-color-border-button-small-primary-hover'] = $this->_setColorRgba($sName . '_button_smp_border_color_hover', $sDefColBorder);
+        $this->_aConfig['aLessConfig']['bx-color-border-button-small-primary-click'] = $this->_setColorRgba($sName . '_button_smp_border_color_click', $sDefColBorder);
 
         $this->_aConfig['aLessConfig']['bx-color-icon-header'] = $this->_setColorRgba($sName . '_header_icon_color', 'rgba(255, 255, 255, 1)');
         $this->_aConfig['aLessConfig']['bx-color-icon-header-hover'] = $this->_setColorRgba($sName . '_header_icon_color_hover', 'rgba(255, 255, 255, 1)');
@@ -352,16 +366,22 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig']['bx-font-color-menu-slide-active'] = $this->_setColorRgba($sName . '_menu_slide_font_color_active', 'rgba(0, 0, 0, 1)');
         $this->_aConfig['aLessConfig']['bx-font-color-button-large'] = $this->_setColorRgba($sName . '_button_lg_font_color', 'rgba(255, 255, 255, 1)');
         $this->_aConfig['aLessConfig']['bx-font-color-button-large-hover'] = $this->_setColorRgba($sName . '_button_lg_font_color_hover', 'rgba(255, 255, 255, 1)');
+        $this->_aConfig['aLessConfig']['bx-font-color-button-large-click'] = $this->_setColorRgba($sName . '_button_lg_font_color_click', 'rgba(255, 255, 255, 1)');
         $this->_aConfig['aLessConfig']['bx-font-color-button-large-primary'] = $this->_setColorRgba($sName . '_button_lgp_font_color', 'rgba(255, 255, 255, 1)');
         $this->_aConfig['aLessConfig']['bx-font-color-button-large-primary-hover'] = $this->_setColorRgba($sName . '_button_lgp_font_color_hover', 'rgba(255, 255, 255, 1)');
+        $this->_aConfig['aLessConfig']['bx-font-color-button-large-primary-click'] = $this->_setColorRgba($sName . '_button_lgp_font_color_click', 'rgba(255, 255, 255, 1)');
         $this->_aConfig['aLessConfig']['bx-font-color-button'] = $this->_setColorRgba($sName . '_button_nl_font_color', 'rgba(255, 255, 255, 1)');
         $this->_aConfig['aLessConfig']['bx-font-color-button-hover'] = $this->_setColorRgba($sName . '_button_nl_font_color_hover', 'rgba(255, 255, 255, 1)');
+        $this->_aConfig['aLessConfig']['bx-font-color-button-click'] = $this->_setColorRgba($sName . '_button_nl_font_color_click', 'rgba(255, 255, 255, 1)');
         $this->_aConfig['aLessConfig']['bx-font-color-button-primary'] = $this->_setColorRgba($sName . '_button_nlp_font_color', 'rgba(255, 255, 255, 1)');
         $this->_aConfig['aLessConfig']['bx-font-color-button-primary-hover'] = $this->_setColorRgba($sName . '_button_nlp_font_color_hover', 'rgba(255, 255, 255, 1)');
+        $this->_aConfig['aLessConfig']['bx-font-color-button-primary-click'] = $this->_setColorRgba($sName . '_button_nlp_font_color_click', 'rgba(255, 255, 255, 1)');
         $this->_aConfig['aLessConfig']['bx-font-color-button-small'] = $this->_setColorRgba($sName . '_button_sm_font_color', 'rgba(255, 255, 255, 1)');
         $this->_aConfig['aLessConfig']['bx-font-color-button-small-hover'] = $this->_setColorRgba($sName . '_button_sm_font_color_hover', 'rgba(255, 255, 255, 1)');
+        $this->_aConfig['aLessConfig']['bx-font-color-button-small-click'] = $this->_setColorRgba($sName . '_button_sm_font_color_click', 'rgba(255, 255, 255, 1)');
         $this->_aConfig['aLessConfig']['bx-font-color-button-small-primary'] = $this->_setColorRgba($sName . '_button_smp_font_color', 'rgba(255, 255, 255, 1)');
         $this->_aConfig['aLessConfig']['bx-font-color-button-small-primary-hover'] = $this->_setColorRgba($sName . '_button_smp_font_color_hover', 'rgba(255, 255, 255, 1)');
+        $this->_aConfig['aLessConfig']['bx-font-color-button-small-primary-click'] = $this->_setColorRgba($sName . '_button_smp_font_color_click', 'rgba(255, 255, 255, 1)');
         $this->_aConfig['aLessConfig']['bx-font-color-form-input'] = $this->_setColorRgba($sName . '_form_input_font_color', $sColFontDef);
         $this->_aConfig['aLessConfig']['bx-font-color-default-h1'] = $this->_setColorRgba($sName . '_font_color_default_h1', $sColFontDef);
         $this->_aConfig['aLessConfig']['bx-font-color-grayed-h1'] = $this->_setColorRgba($sName . '_font_color_grayed_h1', $sColFontGrd);

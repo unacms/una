@@ -751,6 +751,9 @@ ul.bx-menu-btns-icon-hor li:last-child .bx-btn {
 .bx-menu-custom.bx-menu-custom-hor.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto {
     display: none;
 }
+.bx-menu-custom-ver .bx-menu-item.bx-menu-item-more-auto {
+    display: none !important;
+}
 .bx-menu-main-submenu.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto > span,
 .bx-menu-custom.bx-menu-custom-hor.bx-menu-more-auto .bx-menu-item.bx-menu-item-more-auto > span {
     display: block;

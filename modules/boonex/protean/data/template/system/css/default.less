@@ -435,13 +435,14 @@ a.bx-def-font-h3:hover {
     background-color: @bx-color-block-title;
 }
 .bx-db-header .bx-db-title {
-	font-family: @bx-font-family-block-title;
-        font-size: @bx-font-size-block-title;
-	font-weight: @bx-font-weight-block-title;
-	color: @bx-color-font-block-title;
+    line-height: 1.2;
+    font-family: @bx-font-family-block-title;
+    font-size: @bx-font-size-block-title;
+    font-weight: @bx-font-weight-block-title;
+    color: @bx-color-font-block-title;
 }
 .bx-db-divider {
-	border-top:@bx-height-block-title-div @bx-border-type @bx-color-block-title-div;
+    border-top:@bx-height-block-title-div @bx-border-type @bx-color-block-title-div;
 }
 
 
@@ -759,9 +760,8 @@ a.bx-def-font-h3:hover {
     box-shadow: @bx-shadow-form-input;
 }
 
-/* button large */
-.bx-btn,
-.bx-btn.bx-btn-primary {
+/* button normal */
+.bx-btn {
     .box-sizing(@base-input-box-sizing);
 
     height: @bx-height-button;
@@ -777,11 +777,38 @@ a.bx-def-font-h3:hover {
     background-clip: padding-box;
 
     text-shadow: @bx-shadow-font-button;
+    text-transform: uppercase;
 
     font-family: @bx-font-family-button;
     font-size: @bx-font-size-button;
     font-weight: @bx-font-weight-button;
     color: @bx-font-color-button;
+}
+.bx-btn.bx-btn-primary {
+    .box-sizing(@base-input-box-sizing);
+
+    height: @bx-height-button-primary;
+    line-height: (@bx-height-button-primary - 0.2);
+
+    .background-color (@bx-color-button-primary);
+
+    border-width: @bx-border-width-button-primary;
+    border-style: solid;
+    border-color: @bx-color-border-button-primary;
+
+    border-radius: @bx-border-radius-button-primary;
+    background-clip: padding-box;
+
+    -webkit-box-shadow: @bx-shadow-button-primary;
+    -moz-box-shadow: @bx-shadow-button-primary;
+    box-shadow: @bx-shadow-button-primary;
+
+    text-shadow: @bx-shadow-font-button-primary;
+
+    font-family: @bx-font-family-button-primary;
+    font-size: @bx-font-size-button-primary;
+    font-weight: @bx-font-weight-button-primary;
+    color: @bx-font-color-button-primary;
 }
 .bx-btn-height {
     height: @bx-height-button;
@@ -792,30 +819,217 @@ a.bx-def-font-h3:hover {
     border-style: solid;
     border-color: transparent;
 }
+.bx-btn-height.bx-btn-primary {
+    height: @bx-height-button-primary;
+    line-height: @bx-height-button-primary;
+}
+.bx-btn-border.bx-btn-primary {
+    border-width: @bx-border-width-button-primary;
+    border-style: solid;
+    border-color: transparent;
+}
 .bx-btn:hover,
-.bx-btn:active,
-.bx-btn.bx-btn-primary:hover,
-.bx-btn.bx-btn-primary:active {
+.bx-btn:active {
     border-width: @bx-border-width-button;
     border-style: solid;
+
+}
+.bx-btn:hover {
     border-color: @bx-color-border-button-hover;
 
     .background-color (@bx-color-button-hover);
 
     color: @bx-font-color-button-hover;
 }
+.bx-btn:active {
+    border-color: @bx-color-border-button-click;
+
+    .background-color (@bx-color-button-click);
+    box-shadow: @bx-shadow-color-button-click; 
+
+    color: @bx-font-color-button-click;
+    
+}
+.bx-btn.bx-btn-primary:hover,
+.bx-btn.bx-btn-primary:active {
+    border-width: @bx-border-width-button-primary;
+    border-style: solid;
+}
+.bx-btn.bx-btn-primary:hover {
+    border-color: @bx-color-border-button-primary-hover;
+
+    .background-color (@bx-color-button-primary-hover);
+
+    color: @bx-font-color-button-primary-hover;
+}
+.bx-btn.bx-btn-primary:active {
+    border-color: @bx-color-border-button-primary-click;
+
+    .background-color (@bx-color-button-primary-click);
+    box-shadow: @bx-shadow-color-button-primary-click;
+
+    color: @bx-font-color-button-primary-click;
+}
+
 .bx-btn .sys-icon:not(.sys-colored) {
     color: @bx-font-color-button;
 }
-.bx-btn:hover .sys-icon:not(.sys-colored),
-.bx-btn:active .sys-icon:not(.sys-colored),
-.bx-btn.bx-btn-primary:hover .sys-icon:not(.sys-colored),
-.bx-btn.bx-btn-primary:active .sys-icon:not(.sys-colored) {
+.bx-btn.bx-btn-primary .sys-icon:not(.sys-colored) {
+    color: @bx-font-color-button-primary;
+}
+.bx-btn:hover .sys-icon:not(.sys-colored) {
     color: @bx-font-color-button-hover;
 }
-.bx-btn .bx-loading-ajax-btn,
-.bx-btn.bx-btn-primary .bx-loading-ajax-btn {
+.bx-btn:active .sys-icon:not(.sys-colored) {
+    color: @bx-font-color-button-click;
+}
+.bx-btn.bx-btn-primary:hover .sys-icon:not(.sys-colored) {
+    color: @bx-font-color-button-primary-hover;
+}
+.bx-btn.bx-btn-primary:active .sys-icon:not(.sys-colored) {
+    color: @bx-font-color-button-primary-click;
+}
+.bx-btn .bx-loading-ajax-btn {
     margin-top: -@bx-border-width-button;
+}
+.bx-btn.bx-btn-primary .bx-loading-ajax-btn {
+    margin-top: -@bx-border-width-button-primary;
+}
+
+/* button large */
+.bx-btn.bx-btn-large {
+    .box-sizing(@base-input-box-sizing);
+
+    height: @bx-height-button-large;
+    line-height: (@bx-height-button-large - 0.1);
+
+    .background-color (@bx-color-button-large);
+
+    border-width: @bx-border-width-button-large;
+    border-style: solid;
+    border-color: @bx-color-border-button-large;
+
+    border-radius: @bx-border-radius-button-large;
+    background-clip: padding-box;
+
+    -webkit-box-shadow: @bx-shadow-button-large;
+    -moz-box-shadow: @bx-shadow-button-large;
+    box-shadow: @bx-shadow-button-large;
+
+    text-shadow: @bx-shadow-font-button-large;
+
+    font-family: @bx-font-family-button-large;
+    font-size: @bx-font-size-button-large;
+    font-weight: @bx-font-weight-button-large;
+    color: @bx-font-color-button-large;
+}
+.bx-btn.bx-btn-large.bx-btn-primary {
+    .box-sizing(@base-input-box-sizing);
+
+    height: @bx-height-button-large;
+    line-height: (@bx-height-button-large - 0.1);
+
+    .background-color (@bx-color-button-large);
+
+    border-width: @bx-border-width-button-large;
+    border-style: solid;
+    border-color: @bx-color-border-button-large;
+
+    border-radius: @bx-border-radius-button-large;
+    background-clip: padding-box;
+
+    -webkit-box-shadow: @bx-shadow-button-large-primary;
+    -moz-box-shadow: @bx-shadow-button-large-primary;
+    box-shadow: @bx-shadow-button-large-primary;
+
+    text-shadow: @bx-shadow-font-button-large;
+
+    font-family: @bx-font-family-button-large;
+    font-size: @bx-font-size-button-large;
+    font-weight: @bx-font-weight-button-large;
+    color: @bx-font-color-button-large;
+}
+.bx-btn-large-height {
+    height: @bx-height-button-large;
+    line-height: (@bx-height-button-large - 0.1);
+}
+.bx-btn-large-height.bx-btn-primary {
+    height: @bx-height-button-large-primary;
+    line-height: @bx-height-button-large-primary;
+}
+.bx-btn-large-border {
+    border-width: @bx-border-width-button-large;
+    border-style: solid;
+    border-color: transparent;
+}
+.bx-btn-large-border.bx-btn-primary {
+    border-width: @bx-border-width-button-large-primary;
+    border-style: solid;
+    border-color: transparent;
+}
+.bx-btn.bx-btn-large:hover,
+.bx-btn.bx-btn-large:active {
+    border-width: @bx-border-width-button-large;
+    border-style: solid;
+}
+.bx-btn.bx-btn-large:hover {
+    border-color: @bx-color-border-button-large-hover;
+
+    .background-color (@bx-color-button-large-hover);
+
+    color: @bx-font-color-button-large-hover;
+}
+.bx-btn.bx-btn-large:active {
+    border-color: @bx-color-border-button-large-click;
+
+    .background-color (@bx-color-button-large-click);
+    box-shadow: @bx-shadow-color-button-click;
+
+    color: @bx-font-color-button-large-click;
+}
+.bx-btn.bx-btn-large.bx-btn-primary:hover,
+.bx-btn.bx-btn-large.bx-btn-primary:active {
+    border-width: @bx-border-width-button-large-primary;
+    border-style: solid;
+}
+.bx-btn.bx-btn-large.bx-btn-primary:hover {
+    border-color: @bx-color-border-button-large-primary-hover;
+
+    .background-color (@bx-color-button-large-primary-hover);
+
+    color: @bx-font-color-button-large-primary-hover;
+}
+.bx-btn.bx-btn-large.bx-btn-primary:active {
+    border-color: @bx-color-border-button-large-primary-click;
+
+    .background-color (@bx-color-button-large-primary-click);
+    box-shadow: @bx-shadow-color-button-primary-click;
+
+    color: @bx-font-color-button-large-primary-click;
+}
+.bx-btn.bx-btn-large .sys-icon {
+    color: @bx-font-color-button-large;
+}
+.bx-btn.bx-btn-large.bx-btn-primary .sys-icon {
+    color: @bx-font-color-button-large-primary;
+}
+.bx-btn.bx-btn-large:hover .sys-icon {
+    color: @bx-font-color-button-large-hover;
+}
+.bx-btn.bx-btn-large:active .sys-icon {
+    color: @bx-font-color-button-large-click;
+}
+.bx-btn.bx-btn-large.bx-btn-primary:hover .sys-icon {
+    color: @bx-font-color-button-large-primary-hover;
+}
+.bx-btn.bx-btn-large.bx-btn-primary:active .sys-icon {
+    color: @bx-font-color-button-large-primary-click;
+}
+.bx-btn.bx-btn-large .bx-loading-ajax-btn {
+    margin-top: -@bx-border-width-button-large;
+}
+.bx-btn.bx-btn-large.bx-btn-primary .bx-loading-ajax-btn {
+    margin-top: -@bx-border-width-button-large-primary;
 }
 
 /* button small */
@@ -834,6 +1048,36 @@ a.bx-def-font-h3:hover {
     border-radius: @bx-border-radius-button-small;
     background-clip: padding-box;
 
+    -webkit-box-shadow: @bx-shadow-button-small;
+    -moz-box-shadow: @bx-shadow-button-small;
+    box-shadow: @bx-shadow-button-small;
+
+    text-shadow: @bx-shadow-font-button-small;
+
+    font-family: @bx-font-family-button-small;
+    font-size: @bx-font-size-button-small;
+    font-weight: @bx-font-weight-button-small;
+    color: @bx-font-color-button-small;
+}
+.bx-btn.bx-btn-small.bx-btn-primary {
+    .box-sizing(@base-input-box-sizing);
+
+    height: @bx-height-button-small;
+    line-height: (@bx-height-button-small - 0.1);
+
+    .background-color (@bx-color-button-small);
+
+    border-width: @bx-border-width-button-small;
+    border-style: solid;
+    border-color: @bx-color-border-button-small;
+
+    border-radius: @bx-border-radius-button-small;
+    background-clip: padding-box;
+
+    -webkit-box-shadow: @bx-shadow-button-small-primary;
+    -moz-box-shadow: @bx-shadow-button-small-primary;
+    box-shadow: @bx-shadow-button-small-primary;
+
     text-shadow: @bx-shadow-font-button-small;
 
     font-family: @bx-font-family-button-small;
@@ -845,8 +1089,17 @@ a.bx-def-font-h3:hover {
     height: @bx-height-button-small;
     line-height: (@bx-height-button-small - 0.1);
 }
+.bx-btn-small-height.bx-btn-primary {
+    height: @bx-height-button-small-primary;
+    line-height: @bx-height-button-small-primary;
+}
 .bx-btn-small-border {
     border-width: @bx-border-width-button-small;
+    border-style: solid;
+    border-color: transparent;
+}
+.bx-btn-small-border.bx-btn-primary {
+    border-width: @bx-border-width-button-small-primary;
     border-style: solid;
     border-color: transparent;
 }
@@ -854,21 +1107,65 @@ a.bx-def-font-h3:hover {
 .bx-btn.bx-btn-small:active {
     border-width: @bx-border-width-button-small;
     border-style: solid;
+}
+.bx-btn.bx-btn-small:hover {
     border-color: @bx-color-border-button-small-hover;
 
     .background-color (@bx-color-button-small-hover);
 
     color: @bx-font-color-button-small-hover;
 }
+.bx-btn.bx-btn-small:active {
+    border-color: @bx-color-border-button-small-click;
+
+    .background-color (@bx-color-button-small-click);
+    box-shadow: @bx-shadow-color-button-click;
+
+    color: @bx-font-color-button-small-click;
+}
+.bx-btn.bx-btn-small.bx-btn-primary:hover,
+.bx-btn.bx-btn-small.bx-btn-primary:active {
+    border-width: @bx-border-width-button-small-primary;
+    border-style: solid;
+}
+.bx-btn.bx-btn-small.bx-btn-primary:hover {
+    border-color: @bx-color-border-button-small-primary-hover;
+
+    .background-color (@bx-color-button-small-primary-hover);
+
+    color: @bx-font-color-button-small-primary-hover;
+}
+.bx-btn.bx-btn-small.bx-btn-primary:active {
+    border-color: @bx-color-border-button-small-primary-click;
+
+    .background-color (@bx-color-button-small-primary-click);
+    box-shadow: @bx-shadow-color-button-primary-click;
+
+    color: @bx-font-color-button-small-primary-click;
+}
 .bx-btn.bx-btn-small .sys-icon {
     color: @bx-font-color-button-small;
 }
-.bx-btn.bx-btn-small:hover .sys-icon,
-.bx-btn.bx-btn-small:active .sys-icon {
+.bx-btn.bx-btn-small.bx-btn-primary .sys-icon {
+    color: @bx-font-color-button-small-primary;
+}
+.bx-btn.bx-btn-small:hover .sys-icon {
     color: @bx-font-color-button-small-hover;
+}
+.bx-btn.bx-btn-small:active .sys-icon {
+    color: @bx-font-color-button-small-click;
+}
+.bx-btn.bx-btn-small.bx-btn-primary:hover .sys-icon {
+    color: @bx-font-color-button-small-primary-hover;
+}
+.bx-btn.bx-btn-small.bx-btn-primary:active .sys-icon {
+    color: @bx-font-color-button-small-primary-click;
 }
 .bx-btn.bx-btn-small .bx-loading-ajax-btn {
     margin-top: -@bx-border-width-button-small;
+}
+.bx-btn.bx-btn-small.bx-btn-primary .bx-loading-ajax-btn {
+    margin-top: -@bx-border-width-button-small-primary;
 }
 
 /* colors */

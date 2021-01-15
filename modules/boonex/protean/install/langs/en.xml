@@ -220,11 +220,14 @@
         <string name="_bx_protean_stg_cpt_option_form_input_editor_skin_unavailable"><![CDATA[Skins are unavailable]]></string>
 
 	<string name="_bx_protean_stg_cpt_category_styles_large_button"><![CDATA[Large Buttons]]></string>
+        <string name="_bx_protean_stg_cpt_category_styles_large_button_primary"><![CDATA[Large Primary Buttons]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_lg_height"><![CDATA[Height]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_lg_bg_color"><![CDATA[Background color]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_lg_bg_color_hover"><![CDATA[On-hover background color]]></string>
+        <string name="_bx_protean_stg_cpt_option_button_lg_bg_color_click"><![CDATA[On-click background color]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_lg_border_color"><![CDATA[Border color]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_lg_border_color_hover"><![CDATA[On-hover border color]]></string>
+        <string name="_bx_protean_stg_cpt_option_button_lg_border_color_click"><![CDATA[On-click border color]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_lg_border_size"><![CDATA[Border size]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_lg_border_radius"><![CDATA[Corners radius]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_lg_shadow"><![CDATA[Shadow]]></string>
@@ -232,15 +235,39 @@
 	<string name="_bx_protean_stg_cpt_option_button_lg_font_size"><![CDATA[Font size]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_lg_font_color"><![CDATA[Font color]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_lg_font_color_hover"><![CDATA[On-hover font color]]></string>
+        <string name="_bx_protean_stg_cpt_option_button_lg_font_color_click"><![CDATA[On-click font color]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_lg_font_shadow"><![CDATA[Font shadow]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_lg_font_weight"><![CDATA[Font weight]]></string>
 
+        <string name="_bx_protean_stg_cpt_category_styles_button"><![CDATA[Normal Buttons]]></string>
+        <string name="_bx_protean_stg_cpt_category_styles_button_primary"><![CDATA[Normal Primary Buttons]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_height"><![CDATA[Height]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_bg_color"><![CDATA[Background color]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_bg_color_hover"><![CDATA[On-hover background color]]></string>
+        <string name="_bx_protean_stg_cpt_option_button_bg_color_click"><![CDATA[On-click background color]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_border_color"><![CDATA[Border color]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_border_color_hover"><![CDATA[On-hover border color]]></string>
+        <string name="_bx_protean_stg_cpt_option_button_border_color_click"><![CDATA[On-click border color]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_border_size"><![CDATA[Border size]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_border_radius"><![CDATA[Corners radius]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_shadow"><![CDATA[Shadow]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_font_family"><![CDATA[Font stack]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_font_size"><![CDATA[Font size]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_font_color"><![CDATA[Font color]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_font_color_hover"><![CDATA[On-hover font color]]></string>
+        <string name="_bx_protean_stg_cpt_option_button_font_color_click"><![CDATA[On-click font color]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_font_shadow"><![CDATA[Font shadow]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_font_weight"><![CDATA[Font weight]]></string>
+
 	<string name="_bx_protean_stg_cpt_category_styles_small_button"><![CDATA[Small Buttons]]></string>
+        <string name="_bx_protean_stg_cpt_category_styles_small_button_primary"><![CDATA[Small Primary Buttons]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_height"><![CDATA[Height]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_bg_color"><![CDATA[Background color]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_bg_color_hover"><![CDATA[On-hover background color]]></string>
+        <string name="_bx_protean_stg_cpt_option_button_sm_bg_color_click"><![CDATA[On-click background color]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_border_color"><![CDATA[Border color]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_border_color_hover"><![CDATA[On-hover border color]]></string>
+        <string name="_bx_protean_stg_cpt_option_button_sm_border_color_click"><![CDATA[On-click border color]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_border_size"><![CDATA[Border size]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_border_radius"><![CDATA[Corners radius]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_shadow"><![CDATA[Shadow]]></string>
@@ -248,6 +275,7 @@
 	<string name="_bx_protean_stg_cpt_option_button_sm_font_size"><![CDATA[Font size]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_font_color"><![CDATA[Font color]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_font_color_hover"><![CDATA[On-hover font color]]></string>
+        <string name="_bx_protean_stg_cpt_option_button_sm_font_color_click"><![CDATA[On-click font color]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_font_shadow"><![CDATA[Font shadow]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_font_weight"><![CDATA[Font weight]]></string>
 

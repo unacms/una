@@ -133,14 +133,14 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_block_border_radius'), '_bx_decorous_stg_cpt_option_block_border_radius', '4px', 'digit', '', '', '', 9),
 (@iCategoryId, CONCAT(@sName, '_block_shadow'), '_bx_decorous_stg_cpt_option_block_shadow', '', 'digit', '', '', '', 10),
 (@iCategoryId, CONCAT(@sName, '_block_title_bg_color'), '_bx_decorous_stg_cpt_option_block_title_bg_color', '', 'rgba', '', '', '', 11),
-(@iCategoryId, CONCAT(@sName, '_block_title_padding'), '_bx_decorous_stg_cpt_option_block_title_padding', '0.5rem 1rem', 'digit', '', '', '', 12),
+(@iCategoryId, CONCAT(@sName, '_block_title_padding'), '_bx_decorous_stg_cpt_option_block_title_padding', '0.75rem 1.0rem', 'digit', '', '', '', 12),
 (@iCategoryId, CONCAT(@sName, '_block_title_border_color'), '_bx_decorous_stg_cpt_option_block_title_border_color', '', 'rgba', '', '', '', 13),
 (@iCategoryId, CONCAT(@sName, '_block_title_border_size'), '_bx_decorous_stg_cpt_option_block_title_border_size', '', 'digit', '', '', '', 14),
 (@iCategoryId, CONCAT(@sName, '_block_title_border_radius'), '_bx_decorous_stg_cpt_option_block_title_border_radius', '4px 4px 0px 0px', 'digit', '', '', '', 15),
 (@iCategoryId, CONCAT(@sName, '_block_title_font_family'), '_bx_decorous_stg_cpt_option_block_title_font_family', '-apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,noto sans,sans-serif', 'digit', '', '', '', 16),
-(@iCategoryId, CONCAT(@sName, '_block_title_font_size'), '_bx_decorous_stg_cpt_option_block_title_font_size', '1rem', 'digit', '', '', '', 17),
+(@iCategoryId, CONCAT(@sName, '_block_title_font_size'), '_bx_decorous_stg_cpt_option_block_title_font_size', '1.25rem', 'digit', '', '', '', 17),
 (@iCategoryId, CONCAT(@sName, '_block_title_font_color'), '_bx_decorous_stg_cpt_option_block_title_font_color', 'rgba(0, 0, 0, 0.85);', 'rgba', '', '', '', 18),
-(@iCategoryId, CONCAT(@sName, '_block_title_font_weight'), '_bx_decorous_stg_cpt_option_block_title_font_weight', '500', 'digit', '', '', '', 19),
+(@iCategoryId, CONCAT(@sName, '_block_title_font_weight'), '_bx_decorous_stg_cpt_option_block_title_font_weight', '700', 'digit', '', '', '', 19),
 (@iCategoryId, CONCAT(@sName, '_block_title_div_height'), '_bx_decorous_stg_cpt_option_block_title_div_height', '1px', 'digit', '', '', '', 20),
 (@iCategoryId, CONCAT(@sName, '_block_title_div_bg_color'), '_bx_decorous_stg_cpt_option_block_title_div_bg_color', 'rgba(240, 240, 240, 1)', 'rgba', '', '', '', 21);
 
@@ -340,11 +340,11 @@ INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `ex
 (@iCategoryId, CONCAT(@sName, '_button_lg_border_radius'), '_bx_decorous_stg_cpt_option_button_lg_border_radius', '4px', 'digit', '', '', '', 7),
 (@iCategoryId, CONCAT(@sName, '_button_lg_shadow'), '_bx_decorous_stg_cpt_option_button_lg_shadow', '0px 2px 0px 0px rgba(0, 0, 0, 0.016)', 'digit', '', '', '', 8),
 (@iCategoryId, CONCAT(@sName, '_button_lg_font_family'), '_bx_decorous_stg_cpt_option_button_lg_font_family', '-apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,noto sans,sans-serif', 'digit', '', '', '', 9),
-(@iCategoryId, CONCAT(@sName, '_button_lg_font_size'), '_bx_decorous_stg_cpt_option_button_lg_font_size', '0.875rem', 'digit', '', '', '', 10),
+(@iCategoryId, CONCAT(@sName, '_button_lg_font_size'), '_bx_decorous_stg_cpt_option_button_lg_font_size', '0.75rem', 'digit', '', '', '', 10),
 (@iCategoryId, CONCAT(@sName, '_button_lg_font_color'), '_bx_decorous_stg_cpt_option_button_lg_font_color', 'rgba(255, 255, 255, 0.9)', 'rgba', '', '', '', 11),
 (@iCategoryId, CONCAT(@sName, '_button_lg_font_color_hover'), '_bx_decorous_stg_cpt_option_button_lg_font_color_hover', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 12),
 (@iCategoryId, CONCAT(@sName, '_button_lg_font_shadow'), '_bx_decorous_stg_cpt_option_button_lg_font_shadow', '0px -1px 0px; rgba(0, 0, 0, 0.12)', 'digit', '', '', '', 13),
-(@iCategoryId, CONCAT(@sName, '_button_lg_font_weight'), '_bx_decorous_stg_cpt_option_button_lg_font_weight', '400', 'digit', '', '', '', 14);
+(@iCategoryId, CONCAT(@sName, '_button_lg_font_weight'), '_bx_decorous_stg_cpt_option_button_lg_font_weight', '600', 'digit', '', '', '', 14);
 
 -- SETTINGS: Decorous template Styles Small Buttons
 INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALUES 
@@ -352,7 +352,7 @@ INSERT INTO `sys_options_categories`(`type_id`, `name`, `caption`, `order`) VALU
 SET @iCategoryId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_error`, `order`) VALUES
-(@iCategoryId, CONCAT(@sName, '_button_sm_height'), '_bx_decorous_stg_cpt_option_button_sm_height', '2rem', 'digit', '', '', '', 1),
+(@iCategoryId, CONCAT(@sName, '_button_sm_height'), '_bx_decorous_stg_cpt_option_button_sm_height', '1.75rem', 'digit', '', '', '', 1),
 (@iCategoryId, CONCAT(@sName, '_button_sm_bg_color'), '_bx_decorous_stg_cpt_option_button_sm_bg_color', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 2),
 (@iCategoryId, CONCAT(@sName, '_button_sm_bg_color_hover'), '_bx_decorous_stg_cpt_option_button_sm_bg_color_hover', 'rgba(255, 255, 255, 1)', 'rgba', '', '', '', 3),
 (@iCategoryId, CONCAT(@sName, '_button_sm_border_color'), '_bx_decorous_stg_cpt_option_button_sm_border_color', 'rgba(217, 217, 217, 1)', 'rgba', '', '', '', 4),

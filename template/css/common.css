@@ -140,17 +140,18 @@ div.mce-fullscreen {
     display: -ms-flexbox;
     display: flex;
 
-    -webkit-box-align: stretch;
-    -webkit-align-items: stretch;
-    -ms-flex-align: stretch;
-    align-items: stretch;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
 
     -webkit-flex-wrap: nowrap;
     -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
 }
 .bx-db-container.bx-dbc-nopadding .bx-db-header {
-    padding: 0;
+    padding-left: 0;
+    padding-right: 0;
 }
 .bx-db-container.bx-dbc-nobg .bx-def-hr {
     display: none;
@@ -160,7 +161,6 @@ div.mce-fullscreen {
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
 
-    line-height: 40px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -172,8 +172,6 @@ div.mce-fullscreen {
     flex: 0 2 auto;
 
     max-width: 80%;
-    
-    line-height:40px;
 }
 
 .bx-media-phone .bx-db-menu {
@@ -218,20 +216,24 @@ div.mce-fullscreen {
     -ms-flex:  0 1 auto; 
     flex:  0 1 auto;
 
-    height: 2.5rem;
     padding: 0 0.5rem;
 
     border-bottom: 1px solid transparent;
-
-    line-height: 2.5rem;
 }
 .bx-db-menu .bx-menu-custom.bx-menu-custom-hor > li > span {
+    display: block;
+
     margin: 0;
     padding: 0;
 }
+.bx-db-menu ul.bx-menu-hor > li a.bx-btn,
+.bx-db-menu ul.bx-menu-custom.bx-menu-custom-hor > li a.bx-btn {
+    display: inline-block;
+    float: none;
+}
 .bx-db-menu ul.bx-menu-hor > li a > span,
 .bx-db-menu ul.bx-menu-custom.bx-menu-custom-hor > li a > span {
-    vertical-align: baseline;
+    vertical-align: middle;
 }
 .bx-db-menu ul > li:not(.bx-menu-item-more-auto) a .sys-icon {
     display: none;
@@ -240,7 +242,8 @@ div.mce-fullscreen {
     line-height: normal;
 }
 .bx-db-menu ul li:not(.bx-menu-item-more-auto) a span,
-.bx-db-menu .bx-popup ul.bx-menu-custom.bx-menu-submenu-more-auto li:not(.bx-menu-item-more-auto) a span {
+.bx-db-menu .bx-popup ul.bx-menu-custom.bx-menu-submenu-more-auto li:not(.bx-menu-item-more-auto) a span,
+.bx-popup .bx-db-menu-popup ul.bx-menu-ver li a > div > span {
     margin: 0;
 }
 .bx-db-menu ul.bx-menu-hor li.bx-menu-tab-active,
@@ -684,24 +687,23 @@ svg .gray .outer .p2 {
 
 .bx-btn {
     position:relative;
-	display:block;	
+    display:block;	
     float:left;
 
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
     box-sizing: border-box;
 
-    height:36px;
-    height:2.2rem;
-    margin:0;
-    padding:0px 12px 0px 12px;
+    height: 2.0rem;
+    margin: 0;
+    padding: 0 1.0rem;
 
     background-color: #6caa8a;
 
     border:none;
-	border-radius:3px;
-	-moz-border-radius:3px;
-	-webkit-border-radius:3px;	
+    border-radius:4px;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;	
 
     -webkit-transition: background-color 0.2s ease-in-out;
     -moz-transition: background-color 0.2s ease-in-out;

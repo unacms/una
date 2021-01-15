@@ -1,10 +1,5 @@
 @import url(../../../../../../../template/css/common.css);
 
-/* --- Design boxes --- */
-.bx-db-container .bx-db-header {
-    height: 40px;
-}
-
 /*--- Design Boxes Menu ---*/
 .bx-db-menu ul.bx-menu-hor li.bx-menu-tab-active,
 .bx-db-menu ul.bx-menu-custom.bx-menu-custom-hor li.bx-menu-tab-active {

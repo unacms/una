@@ -393,6 +393,11 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton
 
         return $sValue;
     }
+    
+    protected function _setShadowCustom($iX, $iY, $iBlur, $iSpread, $sKeyColor, $fOpacity, $sDefault = '')
+    {
+        return $iX . 'px ' . $iY . 'px ' . $iBlur . 'px ' . $iSpread . 'px ' . $this->_setColorRgbaCustom($sKeyColor, 0.08, 'rgba(0, 0, 0, 0.25)');
+    }
 
     protected function _setShadowFont($sKey, $sDefault = '')
     {

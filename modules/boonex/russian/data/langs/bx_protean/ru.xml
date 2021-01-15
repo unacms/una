@@ -220,11 +220,14 @@
         <string name="_bx_protean_stg_cpt_option_form_input_editor_skin_unavailable"><![CDATA[Темы не доступны]]></string>
 
 	<string name="_bx_protean_stg_cpt_category_styles_large_button"><![CDATA[Большие кнопки]]></string>
+        <string name="_bx_protean_stg_cpt_category_styles_large_button_primary"><![CDATA[Большие-главные кнопки]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_lg_height"><![CDATA[Высота]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_lg_bg_color"><![CDATA[Цвет фона]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_lg_bg_color_hover"><![CDATA[Цвет фона при наведении курсора]]></string>
+        <string name="_bx_protean_stg_cpt_option_button_lg_bg_color_click"><![CDATA[Цвет фона при нажатии]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_lg_border_color"><![CDATA[Цвет границы]]></string>
-	<string name="_bx_protean_stg_cpt_option_button_lg_border_color_hover"><![CDATA[Цвет грфницы при наведении курсора]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_lg_border_color_hover"><![CDATA[Цвет границы при наведении курсора]]></string>
+        <string name="_bx_protean_stg_cpt_option_button_lg_border_color_click"><![CDATA[Цвет границы при нажатии]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_lg_border_size"><![CDATA[Размер границы]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_lg_border_radius"><![CDATA[Радиус углов]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_lg_shadow"><![CDATA[Тень]]></string>
@@ -232,15 +235,39 @@
 	<string name="_bx_protean_stg_cpt_option_button_lg_font_size"><![CDATA[Размер шрифта]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_lg_font_color"><![CDATA[Цвет шрифта]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_lg_font_color_hover"><![CDATA[Цвет шрифта при наведении курсора]]></string>
+        <string name="_bx_protean_stg_cpt_option_button_lg_font_color_click"><![CDATA[Цвет шрифта при нажатии]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_lg_font_shadow"><![CDATA[Тень шрифта]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_lg_font_weight"><![CDATA[Насыщенность шрифта]]></string>
+        
+        <string name="_bx_protean_stg_cpt_category_styles_button"><![CDATA[Обычные кнопки]]></string>
+        <string name="_bx_protean_stg_cpt_category_styles_button_primary"><![CDATA[Обычные-главные кнопки]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_height"><![CDATA[Высота]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_bg_color"><![CDATA[Цвет фона]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_bg_color_hover"><![CDATA[Цвет фона при наведении курсора]]></string>
+        <string name="_bx_protean_stg_cpt_option_button_bg_color_click"><![CDATA[Цвет фона при наведении курсора]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_border_color"><![CDATA[Цвет границы]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_border_color_hover"><![CDATA[Цвет границы при наведении курсора]]></string>
+        <string name="_bx_protean_stg_cpt_option_button_border_color_click"><![CDATA[Цвет границы при нажатии]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_border_size"><![CDATA[Размер границы]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_border_radius"><![CDATA[Радиус углов]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_shadow"><![CDATA[Тень]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_font_family"><![CDATA[Набор шрифтов]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_font_size"><![CDATA[Размер шрифта]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_font_color"><![CDATA[Цвет шрифта]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_font_color_hover"><![CDATA[Цвет шрифта при наведении курсора]]></string>
+        <string name="_bx_protean_stg_cpt_option_button_font_color_click"><![CDATA[Цвет шрифта при нажатии]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_font_shadow"><![CDATA[Тень шрифта]]></string>
+	<string name="_bx_protean_stg_cpt_option_button_font_weight"><![CDATA[Насыщенность шрифта]]></string>
 
 	<string name="_bx_protean_stg_cpt_category_styles_small_button"><![CDATA[Маленькие кнопки]]></string>
+        <string name="_bx_protean_stg_cpt_category_styles_small_button_primary"><![CDATA[Маленькие-главные кнопки]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_height"><![CDATA[Высота]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_bg_color"><![CDATA[Цвет фона]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_bg_color_hover"><![CDATA[Цвет фона при наведении курсора]]></string>
+        <string name="_bx_protean_stg_cpt_option_button_sm_bg_color_click"><![CDATA[Цвет фона при нажатии]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_border_color"><![CDATA[Цвет границы]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_border_color_hover"><![CDATA[Цвет границы при наведении курсора]]></string>
+        <string name="_bx_protean_stg_cpt_option_button_sm_border_color_click"><![CDATA[Цвет границы при нажатии]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_border_size"><![CDATA[Размер границы]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_border_radius"><![CDATA[Радиус углов]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_shadow"><![CDATA[Тень]]></string>
@@ -248,6 +275,7 @@
 	<string name="_bx_protean_stg_cpt_option_button_sm_font_size"><![CDATA[Размер шрифта]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_font_color"><![CDATA[Цвет шрифта]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_font_color_hover"><![CDATA[Цвет шрифта при наведении курсора]]></string>
+        <string name="_bx_protean_stg_cpt_option_button_sm_font_color_click"><![CDATA[Цвет шрифта при нажатии]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_font_shadow"><![CDATA[Тень шрифта]]></string>
 	<string name="_bx_protean_stg_cpt_option_button_sm_font_weight"><![CDATA[Насыщенность шрифта]]></string>
 
