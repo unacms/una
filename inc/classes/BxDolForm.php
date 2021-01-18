@@ -1593,9 +1593,6 @@ class BxDolFormCheckerHelper
 
     static public function checkLocation($s, $sName, $sMethod = BX_DOL_FORM_METHOD_DEFAULT, $bAll = false)
     {
-        if(!self::checkAvail($s))
-            return false;
-
         $aIndexes = BxDolForm::$LOCATION_INDEXES;
         foreach($aIndexes as $sIndex) {
             $sValue = BxDolForm::getSubmittedValue($sName . '_' . $sIndex, $sMethod);
