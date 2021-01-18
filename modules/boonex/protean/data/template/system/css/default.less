@@ -765,7 +765,7 @@ a.bx-def-font-h3:hover {
     .box-sizing(@base-input-box-sizing);
 
     height: @bx-height-button;
-    line-height: (@bx-height-button - 0.2);
+    line-height: (@bx-height-button - 0.2 * @bx-border-width-button);
 
     .background-color (@bx-color-button);
 
@@ -788,7 +788,7 @@ a.bx-def-font-h3:hover {
     .box-sizing(@base-input-box-sizing);
 
     height: @bx-height-button-primary;
-    line-height: (@bx-height-button-primary - 0.2);
+    line-height: (@bx-height-button-primary - 0.2 * @bx-border-width-button-primary);
 
     .background-color (@bx-color-button-primary);
 
@@ -812,7 +812,7 @@ a.bx-def-font-h3:hover {
 }
 .bx-btn-height {
     height: @bx-height-button;
-    line-height: (@bx-height-button - 0.2);
+    line-height: @bx-height-button;
 }
 .bx-btn-border {
     border-width: @bx-border-width-button;
@@ -901,7 +901,7 @@ a.bx-def-font-h3:hover {
     .box-sizing(@base-input-box-sizing);
 
     height: @bx-height-button-large;
-    line-height: (@bx-height-button-large - 0.1);
+    line-height: (@bx-height-button-large - 0.2 * @bx-border-width-button-large);
 
     .background-color (@bx-color-button-large);
 
@@ -926,32 +926,32 @@ a.bx-def-font-h3:hover {
 .bx-btn.bx-btn-large.bx-btn-primary {
     .box-sizing(@base-input-box-sizing);
 
-    height: @bx-height-button-large;
-    line-height: (@bx-height-button-large - 0.1);
+    height: @bx-height-button-large-primary;
+    line-height: (@bx-height-button-large-primary - 0.2 * @bx-border-width-button-large-primary);
 
-    .background-color (@bx-color-button-large);
+    .background-color (@bx-color-button-large-primary);
 
-    border-width: @bx-border-width-button-large;
+    border-width: @bx-border-width-button-large-primary;
     border-style: solid;
-    border-color: @bx-color-border-button-large;
+    border-color: @bx-color-border-button-large-primary;
 
-    border-radius: @bx-border-radius-button-large;
+    border-radius: @bx-border-radius-button-large-primary;
     background-clip: padding-box;
 
     -webkit-box-shadow: @bx-shadow-button-large-primary;
     -moz-box-shadow: @bx-shadow-button-large-primary;
     box-shadow: @bx-shadow-button-large-primary;
 
-    text-shadow: @bx-shadow-font-button-large;
+    text-shadow: @bx-shadow-font-button-large-primary;
 
-    font-family: @bx-font-family-button-large;
-    font-size: @bx-font-size-button-large;
-    font-weight: @bx-font-weight-button-large;
-    color: @bx-font-color-button-large;
+    font-family: @bx-font-family-button-large-primary;
+    font-size: @bx-font-size-button-large-primary;
+    font-weight: @bx-font-weight-button-large-primary;
+    color: @bx-font-color-button-large-primary;
 }
 .bx-btn-large-height {
     height: @bx-height-button-large;
-    line-height: (@bx-height-button-large - 0.1);
+    line-height: @bx-height-button-large;
 }
 .bx-btn-large-height.bx-btn-primary {
     height: @bx-height-button-large-primary;
@@ -1037,7 +1037,7 @@ a.bx-def-font-h3:hover {
     .box-sizing(@base-input-box-sizing);
 
     height: @bx-height-button-small;
-    line-height: (@bx-height-button-small - 0.1);
+    line-height: (@bx-height-button-small - 0.2 * @bx-border-width-button-small);
 
     .background-color (@bx-color-button-small);
 
@@ -1062,32 +1062,32 @@ a.bx-def-font-h3:hover {
 .bx-btn.bx-btn-small.bx-btn-primary {
     .box-sizing(@base-input-box-sizing);
 
-    height: @bx-height-button-small;
-    line-height: (@bx-height-button-small - 0.1);
+    height: @bx-height-button-small-primary;
+    line-height: (@bx-height-button-small-primary - 0.2 * @bx-border-width-button-small-primary);
 
-    .background-color (@bx-color-button-small);
+    .background-color (@bx-color-button-small-primary);
 
-    border-width: @bx-border-width-button-small;
+    border-width: @bx-border-width-button-small-primary;
     border-style: solid;
-    border-color: @bx-color-border-button-small;
+    border-color: @bx-color-border-button-small-primary;
 
-    border-radius: @bx-border-radius-button-small;
+    border-radius: @bx-border-radius-button-small-primary;
     background-clip: padding-box;
 
     -webkit-box-shadow: @bx-shadow-button-small-primary;
     -moz-box-shadow: @bx-shadow-button-small-primary;
     box-shadow: @bx-shadow-button-small-primary;
 
-    text-shadow: @bx-shadow-font-button-small;
+    text-shadow: @bx-shadow-font-button-small-primary;
 
-    font-family: @bx-font-family-button-small;
-    font-size: @bx-font-size-button-small;
-    font-weight: @bx-font-weight-button-small;
-    color: @bx-font-color-button-small;
+    font-family: @bx-font-family-button-small-primary;
+    font-size: @bx-font-size-button-small-primary;
+    font-weight: @bx-font-weight-button-small-primary;
+    color: @bx-font-color-button-small-primary;
 }
 .bx-btn-small-height {
     height: @bx-height-button-small;
-    line-height: (@bx-height-button-small - 0.1);
+    line-height: @bx-height-button-small;
 }
 .bx-btn-small-height.bx-btn-primary {
     height: @bx-height-button-small-primary;
