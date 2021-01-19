@@ -240,7 +240,7 @@
     <string name="_bx_lucid_stg_cpt_option_button_border_color"><![CDATA[Цвет границы]]></string>
     <string name="_bx_lucid_stg_cpt_option_button_border_color_hover"><![CDATA[Цвет границы при наведении курсора]]></string>
     <string name="_bx_lucid_stg_cpt_option_button_border_color_click"><![CDATA[Цвет границы при нажатии]]></string>
-    <string name="_bx_lucid_stg_cpt_option_button_border_size"><![CDATA[Размер границы]]></string>
+    <string name="_bx_lucid_stg_cpt_option_button_border_size"><![CDATA[Размер границы (в px)]]></string>
     <string name="_bx_lucid_stg_cpt_option_button_border_radius"><![CDATA[Радиус углов]]></string>
     <string name="_bx_lucid_stg_cpt_option_button_shadow"><![CDATA[Тень]]></string>
     <string name="_bx_lucid_stg_cpt_option_button_font_family"><![CDATA[Шрифт]]></string>

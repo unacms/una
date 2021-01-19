@@ -240,7 +240,7 @@
 	<string name="_bx_lucid_stg_cpt_option_button_border_color"><![CDATA[Border color]]></string>
 	<string name="_bx_lucid_stg_cpt_option_button_border_color_hover"><![CDATA[On-hover border color]]></string>
         <string name="_bx_lucid_stg_cpt_option_button_border_color_click"><![CDATA[On-click border color]]></string>
-	<string name="_bx_lucid_stg_cpt_option_button_border_size"><![CDATA[Border size]]></string>
+	<string name="_bx_lucid_stg_cpt_option_button_border_size"><![CDATA[Border size (in px)]]></string>
 	<string name="_bx_lucid_stg_cpt_option_button_border_radius"><![CDATA[Corners radius]]></string>
 	<string name="_bx_lucid_stg_cpt_option_button_shadow"><![CDATA[Shadow]]></string>
 	<string name="_bx_lucid_stg_cpt_option_button_font_family"><![CDATA[Font stack]]></string>

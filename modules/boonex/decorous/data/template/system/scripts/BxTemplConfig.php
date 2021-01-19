@@ -212,8 +212,8 @@ class BxTemplConfig extends BxBaseConfig
         $this->_aConfig['aLessConfig']['bx-border-width-menu-page'] = $this->_setSize($sName . '_menu_page_border_size');
         $this->_aConfig['aLessConfig']['bx-border-width-menu-slide'] = $this->_setSize($sName . '_menu_slide_border_size');
         $this->_aConfig['aLessConfig']['bx-border-width-form-input'] = $this->_setSize($sName . '_form_input_border_size');
-        $this->_aConfig['aLessConfig']['bx-border-width-button'] = $this->_setSize($sName . '_button_lg_border_size');
-        $this->_aConfig['aLessConfig']['bx-border-width-button-small'] = $this->_setSize($sName . '_button_sm_border_size');
+        $this->_aConfig['aLessConfig']['bx-border-width-button'] = $this->_setSizePx($sName . '_button_lg_border_size');
+        $this->_aConfig['aLessConfig']['bx-border-width-button-small'] = $this->_setSizePx($sName . '_button_sm_border_size');
 
         $this->_aConfig['aLessConfig']['bx-border-radius-block'] = $this->_setSize($sName . '_block_border_radius');
         list(

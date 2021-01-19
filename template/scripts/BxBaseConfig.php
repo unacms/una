@@ -115,18 +115,24 @@ class BxBaseConfig extends BxDol implements iBxDolSingleton
         return $sValue;
     }
 
-    protected function _setSize($sKey, $sDefault = '')
+    protected function _setSize($sKey, $sDefault = '', $sPattern = '')
     {
         if(empty($sDefault))
             $sDefault = '0px';
 
-        $sPattern = "/([0-9\.]+\s*((px)|(rem)|(vh))){1}/";
+        if(empty($sPattern))
+            $sPattern = "/([0-9\.]+\s*((px)|(rem)|(vh))){1}/";
 
         $sValue = trim(getParam($sKey));
         if(!$this->_isModule || empty($sValue) || !preg_match($sPattern, $sValue))
             $sValue = $sDefault;
 
         return $sValue;
+    }
+
+    protected function _setSizePx($sKey, $sDefault = '')
+    {
+        return $this->_setSize($sKey, $sDefault, "/([0-9\.]+\s*(px)){1}/");
     }
 
     protected function _setSizeDivided($sValue)
