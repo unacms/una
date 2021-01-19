@@ -29,7 +29,7 @@ class BxTemplMenuDropdownSite extends BxTemplMenu
             $aResult['onclick'] = '';
             $aResult['class_add'] .= ' has-children';
 
-           // $aTmplVarsSubmenu['bx_repeat:submenu_items'] = BxDolMenu::getObjectInstance($aResult['submenu_object'])->getMenuItems(); 
+            $aTmplVarsSubmenu['bx_repeat:submenu_items'] = BxDolMenu::getObjectInstance($aResult['submenu_object'])->getMenuItems(); 
         }
 
         $aResult['bx_if:show_arrow'] = array (
