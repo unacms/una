@@ -2595,6 +2595,7 @@
     <string name="_sys_menu_item_title_social_sharing_facebook"><![CDATA[Поделиться в Facebook]]></string>
     <string name="_sys_menu_item_title_social_sharing_twitter"><![CDATA[Поделиться в Twitter]]></string>
     <string name="_sys_menu_item_title_social_sharing_pinterest"><![CDATA[Поделиться в Pinterest]]></string>
+    <string name="_sys_menu_item_title_sm_in_reply_to"><![CDATA[В ответ к]]></string>
     <string name="_sys_menu_item_title_sm_author"><![CDATA[Автор]]></string>
     <string name="_sys_menu_item_title_sm_date"><![CDATA[Дата]]></string>
     <string name="_sys_menu_item_title_sm_category"><![CDATA[Категория]]></string>
@@ -2687,6 +2688,7 @@
         <string name="_sys_menu_item_title_system_social_sharing_facebook"><![CDATA[Поделиться в Facebook]]></string>
     <string name="_sys_menu_item_title_system_social_sharing_twitter"><![CDATA[Поделиться в Twitter]]></string>
     <string name="_sys_menu_item_title_system_social_sharing_pinterest"><![CDATA[Поделиться в Pinterest]]></string>
+    <string name="_sys_menu_item_title_system_sm_in_reply_to"><![CDATA[В ответ к]]></string>
     <string name="_sys_menu_item_title_system_sm_author"><![CDATA[Автор]]></string>
     <string name="_sys_menu_item_title_system_sm_date"><![CDATA[Дата]]></string>
     <string name="_sys_menu_item_title_system_sm_category"><![CDATA[Категория]]></string>
