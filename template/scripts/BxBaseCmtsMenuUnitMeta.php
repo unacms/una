@@ -16,6 +16,7 @@ class BxBaseCmtsMenuUnitMeta extends BxTemplMenuUnitMeta
     protected $_oCmts;
     protected $_aCmtsSystem;
     protected $_aCmt;
+    protected $_sCmtStylePrefix;
 
     public function __construct ($aObject, $oTemplate)
     {
@@ -30,8 +31,9 @@ class BxBaseCmtsMenuUnitMeta extends BxTemplMenuUnitMeta
         $this->_oCmts = $oCmts;
         $this->_aCmtsSystem = $oCmts->getSystemInfo();
         $this->_aCmt = $oCmts->getCommentRow($iCmtId);
+        $this->_sCmtStylePrefix = (!empty($this->_aCmtsSystem['root_style_prefix']) ? $this->_aCmtsSystem['root_style_prefix'] : 'cmt');
 
-        $this->_sStylePrefix = (!empty($this->_aCmtsSystem['root_style_prefix']) ? $this->_aCmtsSystem['root_style_prefix'] : 'cmt') . '-meta bx-base-general-unit-meta';
+        $this->_sStylePrefix = $this->_sCmtStylePrefix . '-meta bx-base-general-unit-meta';
 
         $this->addMarkers(array(
             'cmt_system' => $this->_oCmts->getSystemName(),
@@ -41,22 +43,49 @@ class BxBaseCmtsMenuUnitMeta extends BxTemplMenuUnitMeta
         ));
     }
 
+    protected function _getMenuItemInReplyTo($aItem)
+    {
+        if((int)$this->_aCmt['cmt_parent_id'] == 0) 
+            return '';
+
+        $aParent = $this->_oCmts->getCommentRow($this->_aCmt['cmt_parent_id']);
+        if(empty($aParent) || !is_array($aParent))
+            return '';
+
+        $oProfile = BxDolProfile::getInstanceMagic($aParent['cmt_author_id']);
+        $sParAuthorName = $oProfile->getDisplayName();
+        $sParAuthorUnit = $oProfile->getUnit(0, array('template' => array('name' => 'unit_wo_info_links', 'size' => 'icon')));
+
+        $sResult = $this->_oTemplate->parseHtmlByName('comment_reply_to.html', array(
+            'style_prefix' => $this->_sCmtStylePrefix,
+            'par_cmt_link' => $this->_oCmts->getItemUrl($this->_aCmt['cmt_parent_id']),
+            'par_cmt_title' => bx_html_attribute(_t('_in_reply_to_x', $sParAuthorName)),
+            'par_cmt_author' => $sParAuthorName,
+            'par_cmt_author_unit' => $sParAuthorUnit
+        ));
+
+        return $this->getUnitMetaItemCustom($sResult);
+    }
+
     protected function _getMenuItemAuthor($aItem)
     {
         list($sAuthorName, $sAuthorLink, $sAuthorIcon, $sAuthorUnit, $sAuthorBadges) = $this->_oCmts->getAuthorInfo($this->_aCmt['cmt_author_id']);
     
+        $sResult = '';
         if(!empty($sAuthorLink))
-            return $this->getUnitMetaItemLink($sAuthorName, array(
+            $sResult = $this->getUnitMetaItemLink($sAuthorName, array(
                 'href' => $sAuthorLink,
                 'class' => $this->_sStylePrefix . '-username',
                 'title' => bx_html_attribute($sAuthorName),
             )). $sAuthorBadges;
         else
-            return $this->getUnitMetaItemText($sAuthorName, array(
+            $sResult = $this->getUnitMetaItemText($sAuthorName, array(
                 'class' => $this->_sStylePrefix . '-username'
             )). $sAuthorBadges;
+
+        return $sResult;
     }
-    
+
     protected function _getMenuItemDate($aItem)
     {
         $sAgo = bx_time_js($this->_aCmt['cmt_time']);
