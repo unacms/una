@@ -6,9 +6,12 @@
 	z-index: 500;
 }
 #bx-logo-container {
-    margin: 1rem;
+    margin: 0.5rem 1.2rem;
     text-align: left;
 	height: auto;
+}
+#bx-logo-container a {
+	color: #595959;
 }
 .bx-form-input-wrapper-password > A {
     line-height: 2rem !important;
@@ -139,7 +142,7 @@
   font-size: 1rem;
   letter-spacing: .1em;
 }
-.cd-side-nav a {
+.cd-side-nav ul a {
   position: relative;
   color: #ffffff;
   font-size: 1.4rem;
@@ -177,7 +180,7 @@
     /* remove labels on minified version of the sidebar */
     display: none;
   }
-  .cd-side-nav a {
+  .cd-side-nav ul a {
     font-size: 1.2rem;
   }
   .cd-side-nav > ul > li > a {
