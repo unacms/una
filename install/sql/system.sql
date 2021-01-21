@@ -294,7 +294,7 @@ SET @iCategoryId = LAST_INSERT_ID();
 INSERT INTO `sys_options`(`category_id`, `name`, `caption`, `value`, `type`, `extra`, `check`, `check_params`, `check_error`, `order`) VALUES
 (@iCategoryId, 'sys_cron_time', '_adm_stg_cpt_option_sys_cron_time', '0', 'digit', '', '', '', '', 2),
 (@iCategoryId, 'sys_install_time', '_adm_stg_cpt_option_sys_install_time', '0', 'digit', '', '', '', '', 3),
-(@iCategoryId, 'sys_upgrade_channel', '_adm_stg_cpt_option_sys_upgrade_channel', 'stable', 'select', 'stable,beta', '', '', '', 4),
+(@iCategoryId, 'sys_upgrade_channel', '_adm_stg_cpt_option_sys_upgrade_channel', 'beta', 'select', 'stable,beta', '', '', '', 4),
 (@iCategoryId, 'sys_revision', '_adm_stg_cpt_option_sys_revision', '0', 'digit', '', '', '', '', 5),
 (@iCategoryId, 'sys_eq_time', '_adm_stg_cpt_option_sys_eq_time', '0', 'digit', '', '', '', '', 6),
 (@iCategoryId, 'sys_push_queue_time', '_adm_stg_cpt_option_sys_push_queue_time', '0', 'digit', '', '', '', '', 7),
@@ -4214,8 +4214,8 @@ INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `titl
 
 -- comment meta info menu
 INSERT INTO `sys_menu_items`(`set_name`, `module`, `name`, `title_system`, `title`, `link`, `onclick`, `target`, `icon`, `addon`, `submenu_object`, `submenu_popup`, `visible_for_levels`, `active`, `copyable`, `editable`, `order`) VALUES 
-('sys_cmts_item_meta', 'system', 'in-reply-to', '_sys_menu_item_title_system_sm_in_reply_to', '_sys_menu_item_title_sm_in_reply_to', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 0),
-('sys_cmts_item_meta', 'system', 'author', '_sys_menu_item_title_system_sm_author', '_sys_menu_item_title_sm_author', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 1),
+('sys_cmts_item_meta', 'system', 'author', '_sys_menu_item_title_system_sm_author', '_sys_menu_item_title_sm_author', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 0),
+('sys_cmts_item_meta', 'system', 'in-reply-to', '_sys_menu_item_title_system_sm_in_reply_to', '_sys_menu_item_title_sm_in_reply_to', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 1),
 ('sys_cmts_item_meta', 'system', 'date', '_sys_menu_item_title_system_sm_date', '_sys_menu_item_title_sm_date', '', '', '', '', '', '', 0, 2147483647, 1, 0, 1, 2),
 ('sys_cmts_item_meta', 'system', 'membership', '_sys_menu_item_title_system_sm_membership', '_sys_menu_item_title_sm_membership', '', '', '', '', '', '', 0, 2147483647, 0, 0, 1, 3);
 
