@@ -32,7 +32,7 @@ class BxBaseLiveUpdates extends BxDolLiveUpdates
          * Load and cache(if it's needed) default(system) 
          * live updates for current user.
          */ 
-        $aCached = $this->_getCachedData();
+        $aCached = $this->_getCachedData(true);
 
         $aParams = array_merge(array(
             'sActionsUrl' => BX_DOL_URL_ROOT . 'live_updates.php',

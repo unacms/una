@@ -237,9 +237,15 @@ class BxDolLiveUpdates extends BxDolFactory implements iBxDolSingleton
         return $aSystems;
     }
 
-    protected function _getCachedData()
+    protected function _getCachedData($bInit = false)
     {
-    	return $this->_getCached('data');
+        $aData = $this->_getCached('data');
+        if($bInit)
+            foreach($this->_aSystems as $aSystem)
+                if(isset($aData[$aSystem['name']]) && (int)$aSystem['init'] == 0)
+                    $aData[$aSystem['name']] = 0;
+
+    	return $aData;
     }
 
     protected function _clearCached()
