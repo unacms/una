@@ -12,8 +12,8 @@
 }
 .bx-polls-entity-actions .bx-db-menu {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 0.5rem;
+    right: 1rem;
     line-height: normal;
 }
 .bx-polls-entity-actions .bx-db-menu-tab {
@@ -25,7 +25,6 @@
     position: relative;
     display: block;
     margin: 0;
-    padding: 1rem;
 }
 
 .bx-pull-combined-entity-content {

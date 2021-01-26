@@ -117,7 +117,7 @@ class BxPollsTemplate extends BxBaseModTextTemplate
                     'menu' => array(
                         'id' => $sMenuId, 
                         'class' => $sMenu, 
-                        'onclick' => "bx_menu_slide_inline('#" . $sMenuId . "', this, $(this).parents('.bx-db-menu:first'))"
+                        'onclick' => "bx_menu_popup_inline('#" . $sMenuId . "', this)"
                     )
                 )
             )),
