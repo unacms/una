@@ -580,7 +580,7 @@ class BxPaymentModule extends BxBaseModPaymentModule
         $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate($this->_oConfig->getPrefix('general') . 'cancelation_request', array(
             'sibscription_id' => $aSubscription['subscription_id'],
             'sibscription_customer' => $aSubscription['customer_id'],
-            'sibscription_date' => bx_time_js($aSubscription['date'], BX_FORMAT_DATE, true)
+            'sibscription_date' => bx_time_js($aSubscription['date_add'], BX_FORMAT_DATE, true)
         ), 0, (int)$aPending['client_id']);
 
         $sEmail = '';
