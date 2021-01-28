@@ -942,7 +942,7 @@ function bx_file_get_contents($sFileUrl, $aParams = array(), $sMethod = 'get', $
 
         if ($aCustomCurlParams)
             foreach ($aCustomCurlParams as $sName => $mixedValue)
-                curl_setopt($rConnect, constant($sName), $mixedValue);
+                curl_setopt($rConnect, $sName, $mixedValue);
 
         $sResult = curl_exec($rConnect);
 
@@ -1718,7 +1718,7 @@ function bx_check_minimal_requirements ($bShowHttpError = false)
     $aErrors[] = (ini_get('safe_mode') == 0) ? '' : '<b>safe_mode</b> is on (you need to disable it)';
     $aErrors[] = (version_compare(PHP_VERSION, '5.3.0', '<')) ? 'PHP version is too old (please update to <b>PHP 5.3.0</b> at least)' : '';
     $aErrors[] = (!extension_loaded( 'mbstring')) ? '<b>mbstring</b> extension not installed (the script cannot work without it)' : '';
-    $aErrors[] = (ini_get('allow_url_include') == 0) ? '' : '<b>allow_url_include</b> is on (you need to disable it, or your site will be unsafe)';
+    $aErrors[] = (ini_get('allow_url_include') == 0 || version_compare(PHP_VERSION, '8.0.0', '>=')) ? '' : '<b>allow_url_include</b> is on (you need to disable it, or your site will be unsafe)';
 
     $aErrors = array_diff($aErrors, array('')); // delete empty
 

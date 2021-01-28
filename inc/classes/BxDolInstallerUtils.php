@@ -21,7 +21,7 @@ class BxDolInstallerUtils extends BxDolIO
 
     static public function isAllowUrlInclude()
     {
-        if (version_compare(phpversion(), "5.2", ">") == 1) {
+        if (version_compare(phpversion(), "5.2", ">") == 1 && version_compare(phpversion(), "8.0", "<") == 1) {
             $sAllowUrlInclude = ini_get('allow_url_include');
             return !($sAllowUrlInclude == 0);
         };
