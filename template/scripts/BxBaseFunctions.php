@@ -30,7 +30,9 @@ class BxBaseFunctions extends BxDolFactory implements iBxDolSingleton
 
         $this->_sDesignBoxMenuIcon = 'ellipsis-v';
         $this->_sDesignBoxMenuIconType = 'icon';
-        $this->_sDesignBoxMenuClick = "bx_menu_popup_inline('#{design_box_menu}', this)";
+        $this->_sDesignBoxMenuClick = "bx_menu_popup_inline('#{design_box_menu}', this, " . json_encode(array(
+            'moveToDocRoot' => false
+        )) . ")";
     }
 
     /**
