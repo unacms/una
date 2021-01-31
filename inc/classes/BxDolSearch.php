@@ -107,7 +107,7 @@ class BxDolSearch extends BxDol
             $oEx->setCenterContentUnitSelector(false);
             $oEx->setSingleSearch($bSingle);
             $oEx->setCustomSearchCondition($this->_aCustomSearchCondition);
-            $oEx->aCurrent = array_merge($oEx->aCurrent, $this->_aCustomCurrentCondition);
+            $oEx->aCurrent = array_merge_recursive($oEx->aCurrent, $this->_aCustomCurrentCondition);
             if ($this->_sUnitTemplate)
                 $oEx->setUnitTemplate($this->_sUnitTemplate);
 
@@ -405,6 +405,11 @@ class BxDolSearchResult implements iBxDolReplaceable
         $this->_aCustomSearchCondition = $a;
     }
     
+    public function setCustomCurrentCondition($a)
+    {
+        $this->aCurrent = array_merge_recursive($this->aCurrent, $a);
+    }
+
     public function setCategoriesCondition($sKeyword)
     {
 		$this->aCurrent['join']['multicat'] = array(

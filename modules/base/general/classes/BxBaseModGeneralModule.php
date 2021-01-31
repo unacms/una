@@ -479,6 +479,7 @@ class BxBaseModGeneralModule extends BxDolModule
      * @subsubsection bx_base_general-browse browse
      * 
      * @code bx_srv('bx_posts', 'browse', [...]); @endcode
+     * @code {{~bx_posts:browse[{"mode":"author", "params":{"author":"10"}}]~}} @endcode
      * 
      * Universal browse method.
      * @param $aParams custom browse params, possible params are the following:
@@ -494,6 +495,12 @@ class BxBaseModGeneralModule extends BxDolModule
      * @ref bx_base_general-browse "browse"
      */
     public function serviceBrowse ($aParams = array())
+    {
+        unset($aParams['params']['condition']);
+        return $this->serviceBrowseWithCondition ($aParams);
+    }
+
+    public function serviceBrowseWithCondition ($aParams = array())
     {
         $aDefaults = array (
             'mode' => 'recent',
@@ -2309,6 +2316,8 @@ class BxBaseModGeneralModule extends BxDolModule
         $o->setDisplayEmptyMsg($bDisplayEmptyMsg);
         $o->setAjaxPaginate($bAjaxPaginate);
         $o->setUnitParams(array('context' => $sMode));
+        if (isset($aParams['condition']) && is_array($aParams['condition']))
+            $o->setCustomCurrentCondition($aParams['condition']);
 
         if ($o->isError)
             return '';
