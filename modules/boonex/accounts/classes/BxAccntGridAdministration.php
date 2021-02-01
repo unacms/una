@@ -76,6 +76,8 @@ class BxAccntGridAdministration extends BxBaseModProfileGridAdministration
         if(!empty($this->_sFilter2Value))
         	$this->_aOptions['source'] .= $this->_oModule->_oDb->prepareAsString(" AND `ta`.`role` & " . BX_DOL_ROLE_ADMIN ." = " . BX_DOL_ROLE_ADMIN);
 
+        $this->_aOptions['source'] .= " AND `ta`.`email` <> '' ";
+        
         return parent::_getDataSqlInner($sFilter, $sOrderField, $sOrderDir, $iStart, $iPerPage);
     }
     
