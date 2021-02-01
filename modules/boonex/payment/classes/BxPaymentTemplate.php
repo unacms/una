@@ -408,10 +408,15 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
         foreach($aProviders as $sProvider => $aProvider) {
             list($sJsCode, $sJsOnclick) = $oModule->getProviderButtonJs($aCartItem, $aProvider, $sRedirect, $aCustom);
 
+            $sCaptionKey = '_bx_payment_txt_subscribe_' . $aProvider['name'];
+            $sCaptionValue = _t($sCaptionKey);
+            if(strcmp($sCaptionKey, $sCaptionValue) == 0)
+                $sCaptionValue = _t($aProvider['caption']);
+
             $aTmplVarsProviders[] = array(
                 'button' => $this->parseHtmlByName('providers_select_button.html', array(
                     'onclick' => $sJsOnclick,
-                    'title' => _t('_bx_payment_txt_checkout_with', _t($aProvider['caption'])),
+                    'title' => _t('_bx_payment_txt_checkout_with', $sCaptionValue),
                     'js_code' => $sJsCode
                 ))
             );

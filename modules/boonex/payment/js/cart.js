@@ -64,11 +64,11 @@ BxPaymentCart.prototype.onCartCheckout = function(oData) {
     location.href = oData.link;
 };
 
-BxPaymentCart.prototype.subscribe = function(iSellerId, sSellerProvider, iModuleId, iItemId, iItemCount, sRedirect, sCustom) {
-    this.subscribeWithAddons(iSellerId, sSellerProvider, iModuleId, iItemId, iItemCount, '', sRedirect, sCustom);
+BxPaymentCart.prototype.subscribe = function(oLink, iSellerId, sSellerProvider, iModuleId, iItemId, iItemCount, sRedirect, sCustom) {
+    this.subscribeWithAddons(oLink, iSellerId, sSellerProvider, iModuleId, iItemId, iItemCount, '', sRedirect, sCustom);
 };
 
-BxPaymentCart.prototype.subscribeWithAddons = function(iSellerId, sSellerProvider, iModuleId, iItemId, iItemCount, sItemAddons, sRedirect, sCustom) {
+BxPaymentCart.prototype.subscribeWithAddons = function(oLink, iSellerId, sSellerProvider, iModuleId, iItemId, iItemCount, sItemAddons, sRedirect, sCustom) {
     var $this = this;
     var oDate = new Date();
 
@@ -87,10 +87,15 @@ BxPaymentCart.prototype.subscribeWithAddons = function(iSellerId, sSellerProvide
     if(iItemCount != undefined && iItemCount.length > 0)
     	oParams.item_count = parseInt(iItemCount);
 
+    var oLoading = $(oLink).hasClass('bx-btn') ? oLink : null;
+    this.loadingInButton(oLoading, true);
+    
     $.post(
         this._sActionsUrl + 'subscribe_json/',
         oParams,
         function(oData){
+            $this.loadingInButton(oLoading, false);
+
             processJsonData(oData);
         },
         'json'

@@ -717,6 +717,7 @@ class BxDolForm extends BxDol implements iBxDolReplaceable
     static $FUNC_SKIP_MACROS_CHECK = array();
 
     static $LOCATION_INDEXES = array ('lat', 'lng', 'country', 'state', 'city', 'zip', 'street', 'street_number');
+    static $LOCATION_INDEXES_MANDATORY = array ('lat', 'lng');
 
     protected $_aMarkers = array ();
 
@@ -1598,6 +1599,8 @@ class BxDolFormCheckerHelper
             $sValue = BxDolForm::getSubmittedValue($sName . '_' . $sIndex, $sMethod);
             $bValue = self::checkAvail($sValue);
 
+            if(in_array($sIndex, BxDolForm::$LOCATION_INDEXES_MANDATORY) && !$bValue)
+                return false;
             if($bAll && !$bValue)
                 return false;
             if(!$bAll && $bValue)
