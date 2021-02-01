@@ -423,9 +423,44 @@
 	<string name="_bx_payment_pp_err_wrong_verification_status"><![CDATA[Не получен статус верификации.]]></string>
 	<string name="_bx_payment_pp_err_wrong_amount"><![CDATA[Неправильная сумма платежа.]]></string>
 	<string name="_bx_payment_pp_err_wrong_custom_data"><![CDATA[Неправильные пользовательские данные.]]></string>
-	<string name="_bx_payment_pp_msg_verified"><![CDATA[Платеж удачно принят.]]></string>
+	<string name="_bx_payment_pp_msg_verified"><![CDATA[Платеж принят.]]></string>
 	<string name="_bx_payment_txt_name_paypal"><![CDATA[PayPal]]></string>
 	<string name="_bx_payment_txt_cart_paypal"><![CDATA[PayPal]]></string>
+
+        <!-- PayPal API payment provider -->
+	<string name="_bx_payment_pp_api_cpt"><![CDATA[PayPal API]]></string>
+	<string name="_bx_payment_pp_api_dsc"><![CDATA[Платежная система PayPal API (интеграция на основе API)]]></string>
+	<string name="_bx_payment_pp_api_active_cpt"><![CDATA[Активировать]]></string>
+	<string name="_bx_payment_pp_api_active_dsc"><![CDATA[Активировать(деактивировать) платежную систему.]]></string>
+        <string name="_bx_payment_pp_api_hidden_cpt"><![CDATA[Скрыть]]></string>
+	<string name="_bx_payment_pp_api_hidden_dsc"><![CDATA[Платежную систему можно Скрыть, если Вы не хотите принимать новые платежи, но у вас уже есть активные подписки.]]></string>
+	<string name="_bx_payment_pp_api_mode_cpt"><![CDATA[Режим]]></string>
+	<string name="_bx_payment_pp_api_mode_dsc"><![CDATA[Режим обработки платежей]]></string>
+	<string name="_bx_payment_pp_api_mode_live"><![CDATA[рабочий]]></string>
+	<string name="_bx_payment_pp_api_mode_test"><![CDATA[тестовый]]></string>
+        <string name="_bx_payment_pp_api_live_account_cpt"><![CDATA[Учётная запись (рабочая)]]></string>
+        <string name="_bx_payment_pp_api_live_account_dsc"><![CDATA[Email адрес, который используется для получения доступа к счету PayPal.]]></string>
+        <string name="_bx_payment_pp_api_live_client_id_cpt"><![CDATA[Идентификатор клиента (рабочий)]]></string>
+        <string name="_bx_payment_pp_api_live_client_id_dsc"><![CDATA[Часть учетных данных приложения.]]></string>
+        <string name="_bx_payment_pp_api_live_secret_cpt"><![CDATA[Ключ (рабочий)]]></string>
+        <string name="_bx_payment_pp_api_live_secret_dsc"><![CDATA[Часть учетных данных приложения.]]></string>
+        <string name="_bx_payment_pp_api_test_account_cpt"><![CDATA[Учётная запись (тестовая)]]></string>
+        <string name="_bx_payment_pp_api_test_account_dsc"><![CDATA[Email адрес, который используется для получения доступа к счету PayPal.]]></string>
+        <string name="_bx_payment_pp_api_test_client_id_cpt"><![CDATA[Идентификатор клиента (тестовый)]]></string>
+        <string name="_bx_payment_pp_api_test_client_id_dsc"><![CDATA[Часть учетных данных приложения.]]></string>
+        <string name="_bx_payment_pp_api_test_secret_cpt"><![CDATA[Ключ (тестовый)]]></string>
+        <string name="_bx_payment_pp_api_test_secret_dsc"><![CDATA[Часть учетных данных приложения.]]></string>
+        <string name="_bx_payment_pp_api_return_data_url_cpt"><![CDATA[URL для возврата данных]]></string>
+        <string name="_bx_payment_pp_api_notify_url_cpt"><![CDATA[URL для получения webhook-ов]]></string>
+        <string name="_bx_payment_pp_api_err_cannot_capture"><![CDATA[Не удалось завершить оплату.]]></string>
+        <string name="_bx_payment_pp_api_err_no_item"><![CDATA[Объект для создания подписки отсутствует.]]></string>
+        <string name="_bx_payment_pp_api_err_no_subscription"><![CDATA[Данные подписки недоступны или неверны.]]></string>
+        <string name="_bx_payment_pp_api_err_subscription_not_confirmed"><![CDATA[Подписка не подтверждена.]]></string>
+        <string name="_bx_payment_pp_api_msg_captured"><![CDATA[Платеж принят.]]></string>
+        <string name="_bx_payment_pp_api_msg_subscribed"><![CDATA[Спасибо! Подписка была создана. Пожалуйста, проверьте ваш емэйл для получения дальнейших инструкций.]]></string>
+        <string name="_bx_payment_txt_name_paypal_api"><![CDATA[PayPal]]></string>
+	<string name="_bx_payment_txt_cart_paypal_api"><![CDATA[PayPal]]></string>
+        <string name="_bx_payment_txt_subscribe_paypal_api"><![CDATA[PayPal]]></string>
 
 	<!-- 2Checkout payment provider -->
 	<string name="_bx_payment_2co_cpt"><![CDATA[2Checkout]]></string>

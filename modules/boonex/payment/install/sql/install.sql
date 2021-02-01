@@ -182,6 +182,24 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 (@iProviderId, 'pp_sandbox', 'text', '_bx_payment_pp_sandbox_cpt', '_bx_payment_pp_sandbox_dsc', '', '', '', '', 6),
 (@iProviderId, 'pp_return_data_url', 'value', '_bx_payment_pp_return_data_url_cpt', '', '', '', '', '', 7);
 
+-- PayPal API payment provider
+INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `single_seller`, `active`, `order`, `class_name`) VALUES
+('paypal_api', '_bx_payment_pp_api_cpt', '_bx_payment_pp_api_dsc', 'pp_api_', 1, 1, 1, 1, 1, 15, 'BxPaymentProviderPayPalApi');
+SET @iProviderId = LAST_INSERT_ID();
+
+INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
+(@iProviderId, 'pp_api_active', 'checkbox', '_bx_payment_pp_api_active_cpt', '_bx_payment_pp_api_active_dsc', '', '', '', '', 1),
+(@iProviderId, 'pp_api_hidden', 'checkbox', '_bx_payment_pp_api_hidden_cpt', '_bx_payment_pp_api_hidden_dsc', '', '', '', '', 2),
+(@iProviderId, 'pp_api_mode', 'select', '_bx_payment_pp_api_mode_cpt', '_bx_payment_pp_api_mode_dsc', '1|_bx_payment_pp_api_mode_live,2|_bx_payment_pp_api_mode_test', '', '', '', 3),
+(@iProviderId, 'pp_api_live_account', 'text', '_bx_payment_pp_api_live_account_cpt', '_bx_payment_pp_api_live_account_dsc', '', '', '', '', 4),
+(@iProviderId, 'pp_api_live_client_id', 'text', '_bx_payment_pp_api_live_client_id_cpt', '_bx_payment_pp_api_live_client_id_dsc', '', '', '', '', 5),
+(@iProviderId, 'pp_api_live_secret', 'text', '_bx_payment_pp_api_live_secret_cpt', '_bx_payment_pp_api_live_secret_dsc', '', '', '', '', 6),
+(@iProviderId, 'pp_api_test_account', 'text', '_bx_payment_pp_api_test_account_cpt', '_bx_payment_pp_api_test_account_dsc', '', '', '', '', 7),
+(@iProviderId, 'pp_api_test_client_id', 'text', '_bx_payment_pp_api_test_client_id_cpt', '_bx_payment_pp_api_test_client_id_dsc', '', '', '', '', 8),
+(@iProviderId, 'pp_api_test_secret', 'text', '_bx_payment_pp_api_test_secret_cpt', '_bx_payment_pp_api_test_secret_dsc', '', '', '', '', 9),
+(@iProviderId, 'pp_api_return_data_url', 'value', '_bx_payment_pp_api_return_data_url_cpt', '', '', '', '', '', 10),
+(@iProviderId, 'pp_api_notify_url', 'value', '_bx_payment_pp_api_notify_url_cpt', '', '', '', '', '', 11);
+
 
 -- 2Checkout payment provider
 INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `active`, `order`, `class_name`) VALUES
