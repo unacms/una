@@ -679,7 +679,7 @@ function bx_set_acl_level (iProfileId, iAclLevel, mixedLoadingElement) {
         if(typeof(oData.card) == 'object')
             for(var iField in oData.card) {
                 var oCard = $(oData.card[iField]);
-                $('#' + oCard.attr('id')).replaceWith(oCard);
+                $('#' + oCard.attr('id')).replaceWith(oCard.bxTime());
             }
     }, 'json');
 }

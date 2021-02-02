@@ -79,6 +79,7 @@
     <string name="_bx_ntfs_alert_action_join_request_personal"><![CDATA[New join requests]]></string>
     <string name="_bx_ntfs_alert_action_join_request_follow_member"><![CDATA[New join requests]]></string>
     <string name="_bx_ntfs_alert_action_join_request_follow_context"><![CDATA[New join requests]]></string>
+    <string name="_bx_ntfs_alert_action_join_invitation_notif_personal"><![CDATA[New join invitation]]></string>
     <string name="_bx_ntfs_alert_action_timeline_post_common_personal"><![CDATA[New posts on Timeline]]></string>
     <string name="_bx_ntfs_alert_action_timeline_post_common_follow_member"><![CDATA[New posts on Timeline]]></string>
     <string name="_bx_ntfs_alert_action_timeline_post_common_follow_context"><![CDATA[New posts on Timeline]]></string>

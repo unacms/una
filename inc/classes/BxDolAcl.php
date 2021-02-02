@@ -510,23 +510,23 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
      *                           'date_expires'	=> (UNIX timestamp) date/time expires
      *                           )
      */
-    function getMemberMembershipInfo($iProfileId, $iTime = 0)
+    function getMemberMembershipInfo($iProfileId, $iTime = 0, $bClearCache = 0)
     {
-        $aMembershipCurrent = $this->getMemberMembershipInfoCurrent($iProfileId, $iTime);
+        $aMembershipCurrent = $this->getMemberMembershipInfoCurrent($iProfileId, $iTime, $bClearCache);
         if (isset($this->_aStandardMemberships[$aMembershipCurrent['id']]))
             return $aMembershipCurrent;
 
         $aMembership = $aMembershipCurrent;
         do {
             $iDateStarts = $aMembership['date_starts'];
-            $aMembership = $this->getMemberMembershipInfoCurrent($iProfileId, ((int)$iDateStarts < 1 ? 0 : $iDateStarts - 1));
+            $aMembership = $this->getMemberMembershipInfoCurrent($iProfileId, ((int)$iDateStarts < 1 ? 0 : $iDateStarts - 1), $bClearCache);
         }
         while($aMembership['id'] == $aMembershipCurrent['id'] && (int)$aMembership['date_starts']);
 
         $aMembership = $aMembershipCurrent;
         do {
             $iDateExpires = $aMembership['date_expires'];
-            $aMembership = $this->getMemberMembershipInfoCurrent($iProfileId, $iDateExpires);
+            $aMembership = $this->getMemberMembershipInfoCurrent($iProfileId, $iDateExpires, $bClearCache);
         } while($aMembership['id'] == $aMembershipCurrent['id'] && (int)$aMembership['date_expires']);
 
         $aMembershipCurrent['date_starts'] = $iDateStarts;
@@ -691,10 +691,10 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
     protected function getMemberMembershipInfoCurrent($iProfileId, $iTime = 0, $bClearCache = 0)
     {
         $sKey = $iProfileId . '_' . $iTime;
-        if ($bClearCache && isset(self::$_aCacheData[$sName]))
+        if ($bClearCache && isset(self::$_aCacheData[$sKey]))
             unset(self::$_aCacheData[$sKey]);
         elseif (array_key_exists($sKey, self::$_aCacheData) && !defined('BX_DOL_INSTALL') && !defined('BX_DOL_CRON_EXECUTE'))
-			return self::$_aCacheData[$sKey];
+            return self::$_aCacheData[$sKey];
 
         $aMemLevel = false;
 
@@ -753,9 +753,9 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
         return (self::$_aCacheData[$sKey] = $aMemLevel);
     }
 
-    protected function getMemberMembershipInfoLatest($iProfileId, $iTime = 0)
+    protected function getMemberMembershipInfoLatest($iProfileId, $iTime = 0, $bClearCache = 0)
     {
-        $aMembershipCurrent = $this->getMemberMembershipInfoCurrent($iProfileId, $iTime);
+        $aMembershipCurrent = $this->getMemberMembershipInfoCurrent($iProfileId, $iTime, $bClearCache);
         if (isset($this->_aStandardMemberships[$aMembershipCurrent['id']]))
             return $aMembershipCurrent;
 
@@ -765,7 +765,7 @@ class BxDolAcl extends BxDolFactory implements iBxDolSingleton
             if(!isset($aMembership['date_expires']) || (int)$aMembership['date_expires'] == 0)
                 break;
 
-            $aMembership = $this->getMemberMembershipInfoCurrent($iProfileId, $aMembership['date_expires']);
+            $aMembership = $this->getMemberMembershipInfoCurrent($iProfileId, $aMembership['date_expires'], $bClearCache);
         }
 
         return $aMembershipLast;
