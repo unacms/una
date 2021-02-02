@@ -20,17 +20,16 @@ class BxBaseAcl extends BxDolAcl
 
     public function getProfileMembership ($iProfileId)
     {
-    	$aLevel = $this->getMemberMembershipInfo($iProfileId);
+    	$aLevel = $this->getMemberMembershipInfo($iProfileId, 0, true);
     	if(empty($aLevel) || !is_array($aLevel))
             return '';
 
         $iLoggedProfileId = bx_get_logged_profile_id();
         $aLevelInfo = $this->getMembershipInfo($aLevel['id']);
 
-		
-		$aCheck = checkActionModule($iLoggedProfileId, 'show membership private info', 'system', false);
-		$oProfile = BxDolProfile::getInstance($iLoggedProfileId);
-		
+        $aCheck = checkActionModule($iLoggedProfileId, 'show membership private info', 'system', false);
+        $oProfile = BxDolProfile::getInstance($iLoggedProfileId);
+
         $aTmplVarsPrivateInfo = array();
         $bTmplVarsPrivateInfo = ($oProfile && (BxDolProfile::getInstance($iProfileId)->getAccountId() == $oProfile->getAccountId() || $aCheck[CHECK_ACTION_RESULT] === CHECK_ACTION_RESULT_ALLOWED) && !empty($aLevel['date_starts']));
         if($bTmplVarsPrivateInfo)
