@@ -296,7 +296,8 @@ div.bx-badge span{
 	text-overflow: ellipsis; 
     overflow: hidden;
 }
-div.bx-badge:not(.bx-badge-compact-to) .sys-icon{
+div.bx-badge:not(.bx-badge-compact-to) .sys-icon,
+div.bx-badge:not(.bx-badge-compact-to) span{
 	color:#fff;
 	margin-right: 0.5rem;
 }

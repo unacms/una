@@ -137,6 +137,9 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
             if(($iId = $oForm->insert()) === false)
                 return false;
 
+            if ($oForm->getCleanValue('rateable') != '')
+                $this->checkRateableFiledValue($sInputName, $oForm->getCleanValue('module'), $oForm->getCleanValue('object'), $oForm->getCleanValue('value'));
+            
             $this->alterAdd($sFieldName);
             return true;
         } 
@@ -169,6 +172,9 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
             $this->onSubmitField($oForm);
             if($oForm->update((int)$this->aField['id']) === false)
                 return false;
+            
+            if ($oForm->getCleanValue('rateable') != '')
+                $this->checkRateableFiledValue($sInputName, $oForm->getCleanValue('module'), $oForm->getCleanValue('object'), $oForm->getCleanValue('value'));
 
             $sFieldNameOld = $this->aField['name'];
             if($bAlter || strcmp($sFieldNameOld, $sFieldName) !== 0)
@@ -389,6 +395,35 @@ class BxBaseStudioFormsField extends BxDolStudioFormsField
         $aForm['inputs']['controls'][0]['value'] = _t('_adm_form_btn_field_save');
 
         return $aForm;
+    }
+    
+    //--- If field is rateable, check presence in 'sys_form_fields_ids' table, insertation, if not.
+    protected function checkRateableFiledValue($sInputName, $sModuleName, $sFormObject, $sNestedForm)
+    {
+        $oModule = BxDolModule::getInstance($sModuleName);
+        $CNF = $oModule->_oConfig->CNF;
+        
+        $aData = bx_srv($sModuleName, 'get_all');
+        
+        foreach($aData as $aContentInfo){
+            $iContentId = $aContentInfo[$CNF['FIELD_ID']];
+            if ($sNestedForm == ''){
+                $mixedId = BxDolFormQuery::getFormField($sFormObject, $sInputName, $iContentId);
+                if (!$mixedId){
+                    BxDolFormQuery::addFormField($sFormObject, $sInputName, $iContentId, $aContentInfo[$CNF['FIELD_AUTHOR']], $sModuleName);
+                }
+            }
+            else{
+                $aNestedForm = BxDolFormQuery::getFormObject ($sNestedForm); 
+                $aNestedValues = $oModule->_oDb->getNestedBy(array('type' => 'content_id', 'id' => $iContentId, 'key_name' => $aNestedForm['key']), $aNestedForm['table']);
+                foreach($aNestedValues as $aNestedValue){
+                    $mixedId = BxDolFormQuery::getFormField($sFormObject, $sInputName, $iContentId, $aNestedValue[$aNestedForm['key']]);
+                    if (!$mixedId){
+                        BxDolFormQuery::addFormField($sFormObject, $sInputName, $iContentId, $aContentInfo[$CNF['FIELD_AUTHOR']], $sModuleName, $aNestedValue[$aNestedForm['key']]);
+                    }
+                }
+            }
+        }
     }
 
     protected function getFieldTypes($sRelatedTo = '')
