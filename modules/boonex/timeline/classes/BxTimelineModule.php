@@ -409,6 +409,18 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(empty($sUrl))
             return echoJson(array());
 
+        $sHeader = 'Content-Type';
+        $aHeaders = get_headers($sUrl, 1);
+        if(!empty($aHeaders) && is_array($aHeaders) && !empty($aHeaders[$sHeader])) {
+            $mixedContentType = $aHeaders[$sHeader];
+            if(!is_array($mixedContentType))
+                $mixedContentType = array($mixedContentType);
+
+            foreach($mixedContentType as $sContentType)
+                if(strpos($sContentType, 'image') !== false) 
+                    return echoJson(array());
+        }
+
         $iEventId = 0;
         if(bx_get('event_id') !== false)
             $iEventId = (int)bx_get('event_id');
