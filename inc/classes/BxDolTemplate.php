@@ -1650,6 +1650,27 @@ class BxDolTemplate extends BxDolFactory implements iBxDolSingleton
     }
 
     /**
+     * Parse tag <A> using provided HTML template
+     * 
+     * @param string $sName template's file name
+     * @param string $sLink link URL
+     * @param string $sContent link content
+     * @param array $aAttrs an array of key => value pairs
+     */
+    function parseLinkByName($sName, $sLink, $sContent, $aAttrs = array())
+    {
+        $sAttrs = '';
+        foreach($aAttrs as $sKey => $sValue)
+            $sAttrs .= ' ' . $sKey . '="' . bx_html_attribute($sValue) . '"';
+
+        return $this->parseHtmlByName($sName, array(
+            'href' => $sLink,
+            'attrs' => $sAttrs,
+            'content' => $sContent
+        ));
+    }
+
+    /**
      * Parse tag <BUTTON>
      * 
      * @param string $sContent link content

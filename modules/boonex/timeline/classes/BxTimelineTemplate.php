@@ -2303,7 +2303,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             else if(!$bViewItem && !empty($aImage['src_orig']))
                 $aAttrs['onclick'] = 'return ' . $sJsObject . '.showItem(this, \'' . $aEvent['id'] . '\', \'photo\', ' . json_encode(array('src' => base64_encode($aImage['src_orig']))) . ')'; 
 
-            $sImage = $this->parseLink(isset($aImage['url']) ? $aImage['url'] : 'javascript:void(0)', $sImage, $aAttrs);
+            $sImage = $this->parseLinkByName('image_link.html', isset($aImage['url']) ? $aImage['url'] : 'javascript:void(0)', $sImage, $aAttrs);
 
             $aTmplVarsImages[] = array(
                 'style_prefix' => $sStylePrefix,
@@ -2488,7 +2488,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             else if(!$bViewItem && !empty($aFile['src_orig']))
                 $aAttrs['onclick'] = 'return ' . $sJsObject . '.showItem(this, \'' . $aEvent['id'] . '\', \'photo\', ' . json_encode(array('src' => base64_encode($aFile['src_orig']))) . ')'; 
 
-            $sImage = $this->parseLink(isset($aFile['url']) ? $aFile['url'] : 'javascript:void(0)', $sImage, $aAttrs);
+            $sImage = $this->parseLinkByName('file_link.html', isset($aFile['url']) ? $aFile['url'] : 'javascript:void(0)', $sImage, $aAttrs);
 
             $aTmplVarsFiles[] = array(
                 'style_prefix' => $sStylePrefix,
