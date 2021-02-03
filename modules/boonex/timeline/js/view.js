@@ -23,6 +23,7 @@ function BxTimelineView(oOptions) {
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
 
+    this._bInit = oOptions.bInit == undefined ? true : oOptions.bInit;
     this._bInfScroll = oOptions.bInfScroll == undefined ? false : oOptions.bInfScroll;
     this._iInfScrollAutoPreloads = oOptions.iInfScrollAutoPreloads == undefined ? 10 : oOptions.iInfScrollAutoPreloads;
     this._sInfScrollAfter = 'item';
@@ -48,30 +49,30 @@ function BxTimelineView(oOptions) {
     if(this._bDynamicCards) 
         this.loadCards();
 
-    var $this = this;
-    $(document).ready(function() {
-    	$this.init();
-    });
+    if(this._bInit) {
+        var $this = this;
+        $(document).ready(function() {
+            $this.init();
+        });
+    }
 }
 
 BxTimelineView.prototype = Object.create(BxTimelineMain.prototype);
 BxTimelineView.prototype.constructor = BxTimelineView;
 
-BxTimelineView.prototype.init = function()
+BxTimelineView.prototype.init = function(bForceInit)
 {
     var $this = this;
 
-    if(!this.oView)
+    if(!this.oView || bForceInit)
         this.initView();
 
     if(this.bViewTimeline) {
-        var oItems = this.oView.find('.' + this.sClassItem);
-        oItems.find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight(this.sSP + '-overflow', function(oElement) {
-            $this.onFindOverflow(oElement);
-        });
+        //-- Check content to show 'See More'
+        this.initSeeMore(this.oView, true);
 
         //--- Hide timeline Events which are outside the viewport
-        this.hideEvents(oItems, this._fOutsideOffset);
+        this.hideEvents(this.oView.find('.' + this.sClassItem), this._fOutsideOffset);
 
         //--- Init Video Autoplay
         if(this._sVideosAutoplay != 'off') {
@@ -129,6 +130,9 @@ BxTimelineView.prototype.init = function()
     }
 
     if(this.bViewItem) {
+        //-- Check content to show 'See More'
+        this.initSeeMore(this.oView, false);
+        
         this.oView.find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight(this.sSP + '-overflow', function(oElement) {
             $this.onFindOverflow(oElement);
         });
@@ -156,6 +160,19 @@ BxTimelineView.prototype.initView = function()
         this.bViewOutline = true;
     else if(this.oView.hasClass(this.sClassView + '-item'))
         this.bViewItem = true;
+};
+
+BxTimelineView.prototype.initSeeMore = function(oParent, bInItems)
+{
+    var $this = this;
+
+    var oSubParent = oParent;
+    if(bInItems)
+        oSubParent = oParent.find('.' + this.sClassItem);
+
+    oSubParent.find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight(this.sSP + '-overflow', function(oElement) {
+        $this.onFindOverflow(oElement);
+    });
 };
 
 BxTimelineView.prototype.initJumpTo = function(oParent)
@@ -279,9 +296,8 @@ BxTimelineView.prototype.loadCards = function()
                 oItem = $this.oView.find('#' + sItemId);
 
                 if($this.bViewTimeline) {
-                    oItem.find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
-                        $this.onFindOverflow(oElement);
-                    });
+                    //-- Check content to show 'See More'
+                    $this.initSeeMore(oItem, false);
 
                     //--- Hide timeline Events which are outside the viewport
                     $this.hideEvent(oItem, $this._fOutsideOffset, iIndex, true);
@@ -296,9 +312,8 @@ BxTimelineView.prototype.loadCards = function()
 
                 if($this.bViewOutline)
                     $this.appendMasonry(oItem, function(oItem) {
-                        oItem.find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
-                            $this.onFindOverflow(oElement);
-                        });
+                        //-- Check content to show 'See More'
+                        $this.initSeeMore(oItem, false);
 
                         //--- Init Flickity
                         $this.initFlickityByItem(oItem);
@@ -478,7 +493,9 @@ BxTimelineView.prototype.changeView = function(oLink, sType, oRequestParams)
             oContent.filter(sView).hide();
 
             oViewBefore.hide();
-            oViews.append(oContent).find(sView).bxProcessHtml().show();
+            oViews.append(oContent).find(sView).bxProcessHtml().show(function() {
+                $this.init(true);
+            });
         },
         'json'
     );
@@ -1070,10 +1087,12 @@ BxTimelineView.prototype._getPage = function(oElement, iStart, iPerPage, onLoad)
 
         if($this.bViewTimeline)
             $this.oView.find('.' + $this.sClassItems).append($(sItems).hide()).find('.' + $this.sClassItem + ':hidden').bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-                $(this).bxProcessHtml().find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
-                    $this.onFindOverflow(oElement);
-                });
+                $(this).bxProcessHtml();
 
+                //-- Check content to show 'See More'
+                $this.initSeeMore($(this), false);
+
+                //-- Init Flickity
                 $this.initFlickity();
 
                 //--- Init Video Autoplay
@@ -1082,10 +1101,10 @@ BxTimelineView.prototype._getPage = function(oElement, iStart, iPerPage, onLoad)
 
         if($this.bViewOutline)
             $this.appendMasonry($(sItems).bxProcessHtml(), function(oItems) {
-                oItems.find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
-                    $this.onFindOverflow(oElement);
-                });
+                //-- Check content to show 'See More'
+                $this.initSeeMore(oItems, false);
 
+                //-- Init Flickity
                 $this.initFlickity();
 
                 //--- Init Video Layout
