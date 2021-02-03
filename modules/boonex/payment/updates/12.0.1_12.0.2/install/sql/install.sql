@@ -25,6 +25,6 @@ INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `capti
 -- GRIDS
 UPDATE `sys_objects_grid` SET `show_total_count`='0' WHERE `object` IN ('bx_payment_grid_sbs_list_my', 'bx_payment_grid_sbs_list_all', 'bx_payment_grid_sbs_history');
 
-UPDATE `sys_objects_grid` SET `filter_fields`='date_add' WHERE `object`='bx_payment_grid_sbs_list_all';
+UPDATE `sys_objects_grid` SET `filter_fields`='tac`.`email,ts`.`customer_id,ts`.`subscription_id,ts`.`date_add' WHERE `object`='bx_payment_grid_sbs_list_all';
 
 UPDATE `sys_objects_grid` SET `show_total_count`='0' WHERE `object` IN ('bx_payment_grid_orders_history', 'bx_payment_grid_orders_processed', 'bx_payment_grid_orders_pending');
