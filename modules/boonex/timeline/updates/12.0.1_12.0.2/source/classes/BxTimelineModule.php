@@ -309,6 +309,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     function actionGetView()
     {
         $aParams = $this->_prepareParamsGet();
+        $aParams['js_init_view'] = false;
 
         $sConten = $this->_oTemplate->getViewBlock($aParams);
         if(empty($sConten))

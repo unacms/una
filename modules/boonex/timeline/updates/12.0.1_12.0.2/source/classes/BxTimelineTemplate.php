@@ -112,17 +112,16 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             return $mixedResult; 
     }
 
-    public function getJsCode($sType, $aParams = array(), $bWrap = true, $bDynamic = false)
+    public function getJsCodeView($aParams = array(), $bWrap = true, $bDynamic = false)
     {
-        $oModule = $this->getModule();
-
         $aParams = array_merge(array(
+            'bInit' => true,
             'bInfScroll' => $this->_oConfig->isInfiniteScroll(),
             'iInfScrollAutoPreloads' => $this->_oConfig->getAutoPreloads(),
             'bDynamicCards' => $this->_oConfig->isDynamicCards(),
         ), $aParams);
 
-        return parent::getJsCode($sType, $aParams, $bWrap, $bDynamic);
+        return parent::getJsCode('view', $aParams, $bWrap, $bDynamic);
     }
 
     public function getJsCodePost($iOwnerId, $aParams = array(), $bWrap = true, $bDynamic = false)
@@ -190,6 +189,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     {
         $oModule = $this->getModule();
 
+        $bJsInitView = true;
+        if(isset($aParams['js_init_view'])) {
+            $bJsInitView = (bool)$aParams['js_init_view'];
+            unset($aParams['js_init_view']);
+        }
+
         list($sContent, $sLoadMore, $sBack, $sEmpty, $iEvent, $bEventsToLoad) = $this->getPosts($aParams);
 
         //--- Add live update
@@ -217,11 +222,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'load_more' =>  $sLoadMore,
             'show_more' => $this->_getShowMore($aParams),
             'view_image_popup' => $this->_getImagePopup($aParams),
-            'js_content' => $this->getJsCode('view', array(
+            'js_content' => $this->getJsCodeView(array(
                 'sObjName' => $sJsObject,
                 'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
                 'bEventsToLoad' => $bEventsToLoad,
-            	'oRequestParams' => $aParams
+            	'oRequestParams' => $aParams,
+                'bInit' => $bJsInitView
             ), array(
                 'wrap' => true,
                 'mask_markers' => array('object' => $sJsObject)
@@ -240,7 +246,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'view' => $aParams['view'],
             'content' => $sContent,
             'view_image_popup' => $this->_getImagePopup($aParams),
-            'js_content' => $this->getJsCode('view', array(
+            'js_content' => $this->getJsCodeView(array(
             	'oRequestParams' => $aParams
             ))
         ));
@@ -299,7 +305,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'content' => $sContent,
             'show_more' => $this->_getShowMore($aBrowseParams),
             'view_image_popup' => $this->_getImagePopup($aBrowseParams),
-            'js_content' => $this->getJsCode('view', array(
+            'js_content' => $this->getJsCodeView(array(
                 'sObjName' => $sJsObject,
                 'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
                 'sReferrer' => $sReferrer,
