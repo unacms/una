@@ -65,6 +65,10 @@ div.bx-report div.bx-report-counter-holder {
     background-color: #efefef;
 }
 
+.bx-menu-item-more-popup .bx-menu-submenu-more-auto .bx-report .bx-report-element-holder .bx-btn.bx-report-do-report.bx-report-reported:not(.bx-btn-disabled):not(.bx-report-disabled) {
+    background-color: transparent;
+}
+
 .bx-report-button .bx-report-counter-holder,
 .bx-report-button-small .bx-report-counter-holder {
     font-size: 1.5rem;
