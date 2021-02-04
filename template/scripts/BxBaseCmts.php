@@ -610,7 +610,7 @@ class BxBaseCmts extends BxDolCmts
         if(!$bTmplVarsDoComment && !$bTmplVarsCounter)
             return '';
 
-        $sTmplName = $this->{'_getTmplElement' . bx_gen_method_name(!empty($aParams['usage']) ? $aParams['usage'] : BX_DOL_SCORE_USAGE_DEFAULT)}();
+        $sTmplName = $this->{'_getTmplElement' . bx_gen_method_name(!empty($aParams['usage']) ? $aParams['usage'] : BX_CMT_USAGE_DEFAULT)}();
         return $this->_oTemplate->parseHtmlByContent($sTmplName, array(
             'style_prefix' => $this->_sStylePrefix,
             'html_id' => $this->_aHtmlIds['main'],
