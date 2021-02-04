@@ -61,8 +61,7 @@ div.bx-report div.bx-report-counter-holder {
     color: #ddd;
 }
 
-.bx-report .bx-report-element-holder .bx-report-do-report.bx-report-reported:not(.bx-btn-disabled):not(.bx-report-disabled),
-.bx-report .bx-report-element-holder .bx-report-do-report.bx-report-reported:not(.bx-btn-disabled):not(.bx-report-disabled) .sys-icon {
+.bx-report .bx-report-element-holder .bx-btn.bx-report-do-report.bx-report-reported:not(.bx-btn-disabled):not(.bx-report-disabled) {
     background-color: #efefef;
 }
 
