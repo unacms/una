@@ -51,6 +51,8 @@ BxDolMenuMoreAuto.prototype.init = function() {
 
     if(iMenu >= iParent || this._bStaticMode)
         this._moveToSubmenu(oMenu, oItemMore, oItemMoreSubmenu, iParent, iItemMore);
+    else
+        oMenu.parents('.bx-menu-more-auto-wrapper:first').css('overflow', 'visible');
 
     //--- Add event handlers ---//
     if(!this._bStaticMode) {
