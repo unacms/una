@@ -116,6 +116,13 @@ BxDolMenuMoreAuto.prototype._moveToSubmenu = function(oMenu, oItemMore, oItemMor
         var iItem = $this._getWidth(oItem);
         if(($this._bStaticMode || bRelocateOthers || iWidthTotal + iItem > iParent) && !oItem.hasClass($this._sClassItemStatic)) {
             oItem.addClass('bx-def-color-bg-hl-hover');
+            oItem.find('a').each(function() {
+                if($(this).hasClass('bx-btn'))
+                    $(this).removeClass('bx-btn').addClass('!bx-btn');
+
+                if($(this).hasClass('bx-btn-height'))
+                    $(this).removeClass('bx-btn-height').addClass('!bx-btn-height');
+            });
 
             if(!oSubmenuItemFirst.length)
                 oItemMoreSubmenu.append(oItem.detach());
@@ -152,6 +159,13 @@ BxDolMenuMoreAuto.prototype._moveFromSubmenu = function(oMenu, oItemMore, oItemM
         }
 
         oItem.removeClass('bx-def-color-bg-hl-hover');
+        oItem.find('a').each(function() {
+            if($(this).hasClass('!bx-btn'))
+                $(this).removeClass('!bx-btn').addClass('bx-btn');
+
+            if($(this).hasClass('!bx-btn-height'))
+                $(this).removeClass('!bx-btn-height').addClass('bx-btn-height');
+        });
 
         oItemMore.before(oItem.detach());
         iWidthTotal += iItem;

@@ -69,8 +69,8 @@ div.bx-report div.bx-report-counter-holder {
     background-color: transparent;
 }
 
-.bx-report-button .bx-report-counter-holder,
-.bx-report-button-small .bx-report-counter-holder {
+.bx-report-button .bx-report-counter-holder .bx-btn-height,
+.bx-report-button-small .bx-report-counter-holder .bx-btn-height {
     font-size: 1.5rem;
 }
 

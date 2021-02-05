@@ -26,30 +26,30 @@ div.bx-vote div.bx-vote-counter-holder {
 /*----------------------------------*/
 .bx-vote-likes .bx-vote-element-holder,
 .bx-vote-likes .bx-vote-counter-holder {
-	line-height: 20px;
-	line-height: 1.25rem;
+    line-height: 20px;
+    line-height: 1.25rem;
 }
 
 .bx-vote-likes-button .bx-vote-element-holder,
 .bx-vote-likes-button .bx-vote-counter-holder {
-	line-height: 36px;
-	line-height: 2.2rem;
+    line-height: 36px;
+    line-height: 2.2rem;
 }
 
 .bx-vote-likes-button-small .bx-vote-element-holder,
 .bx-vote-likes-button-small .bx-vote-counter-holder {
-	line-height: 24px;
-	line-height: 1.6rem;
+    line-height: 24px;
+    line-height: 1.6rem;
 }
 
 .bx-vote-likes .bx-vote-element-holder .bx-vote-do-vote.bx-vote-disabled,
 .bx-vote-likes .bx-vote-element-holder .bx-vote-do-vote.bx-vote-disabled .sys-icon {
-	color: #ddd;
+    color: #ddd;
 }
 
-.bx-vote-likes-button .bx-vote-counter-holder,
-.bx-vote-likes-button-small .bx-vote-counter-holder {
-	font-size: 1.5rem;
+.bx-vote-likes-button .bx-vote-counter-holder .bx-btn-height,
+.bx-vote-likes-button-small .bx-vote-counter-holder .bx-btn-height {
+    font-size: 1.5rem;
 }
 
 .bx-vote-likes .bx-vote-counter-holder.bx-btn-border {
