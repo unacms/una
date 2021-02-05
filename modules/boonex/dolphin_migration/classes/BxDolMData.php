@@ -400,7 +400,11 @@ class BxDolMData
 		
 		switch($sType)
 		{
-			case 'photos': 
+            case 'photos':
+                            $sCmtsTable = 'bx_photos_cmts';
+                            $sTable = 'bx_photos_cmts';
+                            break;
+		    case 'album_photo':
 							$sCmtsTable = 'bx_photos_cmts';
 							$sTable = 'bx_albums_cmts_media';
 							break;
@@ -614,6 +618,10 @@ class BxDolMData
             return $iDefaultPrivacy ? $this -> getValidPrivacy($iDefaultPrivacy) : $this -> getDefaultPrivacy($iDolProfileId, $sModule, $sAction);
 
         return $this -> getValidPrivacy($iPrivacy);
+    }
+
+    function getFieldType($sFieldName){
+        return $this->_mDb->getOne("SELECT `Type` FROM `sys_profile_fields` WHERE `Name`=:name LIMIT 1", array('name' => $sFieldName));
     }
 }
    

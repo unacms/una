@@ -20,7 +20,8 @@ class BxDolMConfig extends BxBaseModGeneralConfig
 		'bx_poll' => 'polls',
 		'bx_events' => 'events',
 		'bx_groups' => 'groups',		
-		'bx_blogs' => 'blogs'
+		'bx_blogs' => 'blogs',
+		'bx_photos' => 'photos',
 	);
 
     /**
@@ -115,7 +116,7 @@ class BxDolMConfig extends BxBaseModGeneralConfig
 						'bx_events'	=> 'Events'					
 			        ),
                 ),
-				'photos' => array(
+				'photos_albums' => array(
                     'table_name'	=> 'bx_photos_main',	
 					'table_name_albums' => 'sys_albums',
 					'type'				=> 'bx_photos',
@@ -129,7 +130,21 @@ class BxDolMConfig extends BxBaseModGeneralConfig
 						'bx_albums'		=> 'Albums'	
 			        ),
                 ),
-				'videos' => array(
+                'photos' => array(
+                    'table_name'	=> 'bx_photos_main',
+                    'table_name_photos' => 'sys_albums',
+                    'type'				=> 'bx_photos',
+                    'keywords'			=> 'bx_photos_meta_keywords',
+                    'migration_class' => 'BxDolMPhotos',
+                    'dependencies' => array(
+                        'profiles',
+                    ),
+                    'plugins' => array(
+                        'bx_persons'	=> 'Persons',
+                        'bx_photos'		=> 'Photos'
+                    ),
+                ),
+				'videos_albums' => array(
                     'table_name'	=> 'RayVideoFiles',
 					'table_name_albums' => 'sys_albums',
 					'type'				=> 'bx_videos',
@@ -142,7 +157,20 @@ class BxDolMConfig extends BxBaseModGeneralConfig
 						'bx_persons'	=> 'Persons',
 						'bx_albums'		=> 'Albums'	
 			        ),
-                ),				
+                ),
+                'videos' => array(
+                    'table_name'	=> 'RayVideoFiles',
+                    'table_name_videos' => 'sys_albums',
+                    'type'				=> 'bx_videos',
+                    'keywords'			=> 'bx_videos_meta_keywords_media',
+                    'migration_class'   => 'BxDolMVideos',
+                    'dependencies' => array(
+                        'profiles',
+                    ),
+                    'plugins' => array(
+                        'bx_persons'	=> 'Persons'
+                    ),
+                ),
 				'conversations' => array(
 					'table_name'		=> 'sys_messages',					
                     'migration_class'	=> 'BxDolMConv',

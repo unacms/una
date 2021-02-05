@@ -15,14 +15,14 @@ bx_import('BxDolStorage');
 class BxDolMPhotoAlbums extends BxDolMData
 {
 	/**
-	*  @var $_iTransferredAlbums transferred alums number 
+	*  @var $_iTransferredAlbums transferred albums number
 	*/
 	private $_iTransferredAlbums;
     
 	public function __construct(&$oMigrationModule, &$oDb)
 	{
         parent::__construct($oMigrationModule, $oDb);
-		$this -> _sModuleName = 'photos';
+		$this -> _sModuleName = 'photo_albums';
 		$this -> _sTableWithTransKey = 'bx_albums_albums';
     }
 	
@@ -123,10 +123,11 @@ class BxDolMPhotoAlbums extends BxDolMData
 			$iTransferred  = 0;
 			foreach($aResult as $iKey => $aValue)
 			{ 
-				if ($this -> isFileExisted($iProfileId, $aValue['Title'], $aValue['Date'])) 
+				$sFileName = "{$aValue['ID']}.{$aValue['Ext']}";
+			    if ($this -> isFileExisted($iProfileId, $sFileName, $aValue['Date']))
 					continue;
 				
-				$sImagePath = $this -> _sImagePhotoFiles . "{$aValue['ID']}.{$aValue['Ext']}";				
+				$sImagePath = $this -> _sImagePhotoFiles . $sFileName;
 				if (file_exists($sImagePath))
 				{
 					$oStorage = BxDolStorage::getObjectInstance('bx_albums_files');
@@ -138,7 +139,7 @@ class BxDolMPhotoAlbums extends BxDolMData
 						$sQuery = $this -> _oDb -> prepare("INSERT INTO `bx_albums_files2albums` SET `content_id` = ?, `file_id` = ?, `data` = ?, `title` = ?", $iNewAlbumID, $iId, $aValue['Size'], $aValue['Title']);
 						$this -> _oDb -> query($sQuery);
 						
-						$iCmts = $this -> transferComments($iItemId = $this -> _oDb -> lastId(), $aValue['ID']);
+						$iCmts = $this -> transferComments($iItemId = $this -> _oDb -> lastId(), $aValue['ID'], 'album_photo');
 						if ($iCmts)
 							$this -> _oDb -> query("UPDATE `bx_albums_files2albums` SET `comments` = :comments WHERE `id` = :id", array('id' => $iItemId, 'comments' => $iCmts));
 						
