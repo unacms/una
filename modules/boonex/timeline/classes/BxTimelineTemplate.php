@@ -204,15 +204,23 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sModuleMethod = !empty($aParams['get_live_updates']) ? $aParams['get_live_updates'] : 'get_live_update';
         $sService = BxDolService::getSerializedService($sModuleName, $sModuleMethod, array($aParams, $oModule->getUserId(), '{count}', '{init}'));
 
-        $aLiveUpdatesParams = array($this->_oConfig->getLiveUpdateKey($aParams), 1, $sService, true);
+        $aLiveUpdateParams = array($this->_oConfig->getLiveUpdateKey($aParams), 1, $sService, true);
         if($sModuleMethod == 'get_live_update')
-            $aLiveUpdatesParams[] = $iEvent;
+            $aLiveUpdateParams[] = $iEvent;
 
-        $sLiveUpdatesCode = call_user_func_array(array(BxDolLiveUpdates::getInstance(), 'add'), $aLiveUpdatesParams);
+        $sLiveUpdateCode = null;
+        bx_alert($sModuleName, 'add_live_update', 0, 0, array(
+            'browse_params' => $aParams,
+            'live_update_params' => &$aLiveUpdateParams,
+            'override_result' => &$sLiveUpdateCode,
+        ));
+
+        if($sLiveUpdateCode === null)
+            $sLiveUpdateCode = call_user_func_array(array(BxDolLiveUpdates::getInstance(), 'add'), $aLiveUpdateParams);
         //--- Add live update
 
         $sJsObject = $this->_oConfig->getJsObjectView($aParams);
-        return $sLiveUpdatesCode . $this->parseHtmlByName('block_view.html', array(
+        return $sLiveUpdateCode . $this->parseHtmlByName('block_view.html', array(
             'style_prefix' => $this->_oConfig->getPrefix('style'),
             'html_id' => $this->_oConfig->getHtmlIdView('main', $aParams),
             'view' => $aParams['view'],
