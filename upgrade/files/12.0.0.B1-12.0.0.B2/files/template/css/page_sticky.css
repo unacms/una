@@ -1,0 +1,15 @@
+.bx-media-tablet .bx-layout-col.bx-layout-column-thin,
+.bx-media-tablet .bx-layout-col.bx-layout-column-wide,
+.bx-media-tablet .bx-layout-col.bx-layout-column-half,
+.bx-media-desktop .bx-layout-col.bx-layout-column-thin,
+.bx-media-desktop .bx-layout-col.bx-layout-column-wide,
+.bx-media-desktop .bx-layout-col.bx-layout-column-half
+ {
+	position:-webkit-sticky; 
+	position:sticky; 
+	top:0
+}
+
+.bx-toolbar-up{
+	transform: none !important;
+}

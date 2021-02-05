@@ -39,37 +39,37 @@ div.bx-score-by-item .bx-score-bi-vote {
 /*--- Vote Element Styles ---*/
 div.bx-score-element-holder,
 div.bx-score-counter-holder {
-	position: relative;
-	float: left;
+    position: relative;
+    float: left;
 
-	line-height: 20px;
+    line-height: 20px;
     line-height: 1.25rem;
 }
 
 .bx-score-button .bx-score-element-holder,
 .bx-score-button .bx-score-counter-holder {
-	line-height: 36px;
-	line-height: 2.2rem;
+    line-height: 36px;
+    line-height: 2.2rem;
 }
 
 .bx-score-button-small .bx-score-element-holder,
 .bx-score-button-small .bx-score-counter-holder {
-	line-height: 24px;
-	line-height: 1.6rem;
+    line-height: 24px;
+    line-height: 1.6rem;
 }
 
 .bx-score-element-holder .bx-score-do-vote.bx-score-disabled,
 .bx-score-element-holder .bx-score-do-vote.bx-score-disabled .sys-icon {
-	color: #ddd;
+    color: #ddd;
 }
 
 .bx-score:not(.bx-score-button):not(.bx-score-button-small) .bx-score-counter-holder.bx-btn-border {
     border-width: 0px;
 }
 
-.bx-score-button .bx-score-counter-holder,
-.bx-score-button-small .bx-score-counter-holder {
-	font-size: 1.5rem;
+.bx-score-button .bx-score-counter-holder .bx-btn-height,
+.bx-score-button-small .bx-score-counter-holder .bx-btn-height {
+    font-size: 1.5rem;
 }
 
 /*--- Counter Styles ---*/

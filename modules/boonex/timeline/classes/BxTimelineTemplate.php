@@ -112,17 +112,16 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             return $mixedResult; 
     }
 
-    public function getJsCode($sType, $aParams = array(), $bWrap = true, $bDynamic = false)
+    public function getJsCodeView($aParams = array(), $bWrap = true, $bDynamic = false)
     {
-        $oModule = $this->getModule();
-
         $aParams = array_merge(array(
+            'bInit' => true,
             'bInfScroll' => $this->_oConfig->isInfiniteScroll(),
             'iInfScrollAutoPreloads' => $this->_oConfig->getAutoPreloads(),
             'bDynamicCards' => $this->_oConfig->isDynamicCards(),
         ), $aParams);
 
-        return parent::getJsCode($sType, $aParams, $bWrap, $bDynamic);
+        return parent::getJsCode('view', $aParams, $bWrap, $bDynamic);
     }
 
     public function getJsCodePost($iOwnerId, $aParams = array(), $bWrap = true, $bDynamic = false)
@@ -190,6 +189,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     {
         $oModule = $this->getModule();
 
+        $bJsInitView = true;
+        if(isset($aParams['js_init_view'])) {
+            $bJsInitView = (bool)$aParams['js_init_view'];
+            unset($aParams['js_init_view']);
+        }
+
         list($sContent, $sLoadMore, $sBack, $sEmpty, $iEvent, $bEventsToLoad) = $this->getPosts($aParams);
 
         //--- Add live update
@@ -199,15 +204,23 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sModuleMethod = !empty($aParams['get_live_updates']) ? $aParams['get_live_updates'] : 'get_live_update';
         $sService = BxDolService::getSerializedService($sModuleName, $sModuleMethod, array($aParams, $oModule->getUserId(), '{count}', '{init}'));
 
-        $aLiveUpdatesParams = array($this->_oConfig->getLiveUpdateKey($aParams), 1, $sService, true);
+        $aLiveUpdateParams = array($this->_oConfig->getLiveUpdateKey($aParams), 1, $sService, true);
         if($sModuleMethod == 'get_live_update')
-            $aLiveUpdatesParams[] = $iEvent;
+            $aLiveUpdateParams[] = $iEvent;
 
-        $sLiveUpdatesCode = call_user_func_array(array(BxDolLiveUpdates::getInstance(), 'add'), $aLiveUpdatesParams);
+        $sLiveUpdateCode = null;
+        bx_alert($sModuleName, 'add_live_update', 0, 0, array(
+            'browse_params' => $aParams,
+            'live_update_params' => &$aLiveUpdateParams,
+            'override_result' => &$sLiveUpdateCode,
+        ));
+
+        if($sLiveUpdateCode === null)
+            $sLiveUpdateCode = call_user_func_array(array(BxDolLiveUpdates::getInstance(), 'add'), $aLiveUpdateParams);
         //--- Add live update
 
         $sJsObject = $this->_oConfig->getJsObjectView($aParams);
-        return $sLiveUpdatesCode . $this->parseHtmlByName('block_view.html', array(
+        return $sLiveUpdateCode . $this->parseHtmlByName('block_view.html', array(
             'style_prefix' => $this->_oConfig->getPrefix('style'),
             'html_id' => $this->_oConfig->getHtmlIdView('main', $aParams),
             'view' => $aParams['view'],
@@ -217,11 +230,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'load_more' =>  $sLoadMore,
             'show_more' => $this->_getShowMore($aParams),
             'view_image_popup' => $this->_getImagePopup($aParams),
-            'js_content' => $this->getJsCode('view', array(
+            'js_content' => $this->getJsCodeView(array(
                 'sObjName' => $sJsObject,
                 'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
                 'bEventsToLoad' => $bEventsToLoad,
-            	'oRequestParams' => $aParams
+            	'oRequestParams' => $aParams,
+                'bInit' => $bJsInitView
             ), array(
                 'wrap' => true,
                 'mask_markers' => array('object' => $sJsObject)
@@ -240,7 +254,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'view' => $aParams['view'],
             'content' => $sContent,
             'view_image_popup' => $this->_getImagePopup($aParams),
-            'js_content' => $this->getJsCode('view', array(
+            'js_content' => $this->getJsCodeView(array(
             	'oRequestParams' => $aParams
             ))
         ));
@@ -299,7 +313,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'content' => $sContent,
             'show_more' => $this->_getShowMore($aBrowseParams),
             'view_image_popup' => $this->_getImagePopup($aBrowseParams),
-            'js_content' => $this->getJsCode('view', array(
+            'js_content' => $this->getJsCodeView(array(
                 'sObjName' => $sJsObject,
                 'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
                 'sReferrer' => $sReferrer,
@@ -1062,9 +1076,10 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         if(empty($aLink) || !is_array($aLink))
             return '';
 
-        $sStylePrefix = $this->_oConfig->getPrefix('style');
-        $sJsObject = $this->_oConfig->getJsObject('post');
         $sLinkIdPrefix = $this->_oConfig->getHtmlIds('post', 'attach_link_item');
+        $sStylePrefix = $this->_oConfig->getPrefix('style');
+        $sClass = $sStylePrefix . '-al-item';
+        $sJsObject = $this->_oConfig->getJsObject('post');
 
         $oEmbed = BxDolEmbed::getObjectInstance();
         $bEmbed = $oEmbed !== false;
@@ -1085,10 +1100,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             if((int)$aLink['media_id'] != 0)
                 $sThumbnail = BxDolTranscoderImage::getObjectInstance($this->_oConfig->getObject('transcoder_photos_preview'))->getFileUrl($aLink['media_id']);
         }
+        else
+            $sClass .= ' embed';
 
         return $this->parseHtmlByName('attach_link_item.html', array(
             'html_id' => $sLinkIdPrefix . $aLink['id'],
             'style_prefix' => $sStylePrefix,
+            'class' => $sClass,
             'js_object' => $sJsObject,
             'id' => $aLink['id'],
             'bx_if:show_embed_outer' => array(
@@ -2299,7 +2317,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             else if(!$bViewItem && !empty($aImage['src_orig']))
                 $aAttrs['onclick'] = 'return ' . $sJsObject . '.showItem(this, \'' . $aEvent['id'] . '\', \'photo\', ' . json_encode(array('src' => base64_encode($aImage['src_orig']))) . ')'; 
 
-            $sImage = $this->parseLink(isset($aImage['url']) ? $aImage['url'] : 'javascript:void(0)', $sImage, $aAttrs);
+            $sImage = $this->parseLinkByName('image_link.html', isset($aImage['url']) ? $aImage['url'] : 'javascript:void(0)', $sImage, $aAttrs);
 
             $aTmplVarsImages[] = array(
                 'style_prefix' => $sStylePrefix,
@@ -2484,7 +2502,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             else if(!$bViewItem && !empty($aFile['src_orig']))
                 $aAttrs['onclick'] = 'return ' . $sJsObject . '.showItem(this, \'' . $aEvent['id'] . '\', \'photo\', ' . json_encode(array('src' => base64_encode($aFile['src_orig']))) . ')'; 
 
-            $sImage = $this->parseLink(isset($aFile['url']) ? $aFile['url'] : 'javascript:void(0)', $sImage, $aAttrs);
+            $sImage = $this->parseLinkByName('file_link.html', isset($aFile['url']) ? $aFile['url'] : 'javascript:void(0)', $sImage, $aAttrs);
 
             $aTmplVarsFiles[] = array(
                 'style_prefix' => $sStylePrefix,

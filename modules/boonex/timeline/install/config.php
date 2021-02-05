@@ -17,7 +17,7 @@ $aConfig = array(
     'name' => 'bx_timeline',
     'title' => 'Timeline',
     'note' => 'Timeline module.',
-    'version' => '12.0.1.DEV',
+    'version' => '12.0.3.DEV',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 

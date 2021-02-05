@@ -383,8 +383,8 @@ span.cmt span.cmt-counter-holder {
     color: #ddd;
 }
 
-.cmt-button .cmt-counter-holder,
-.cmt-button-small .cmt-counter-holder {
+.cmt-button .cmt-counter-holder .bx-btn-height,
+.cmt-button-small .cmt-counter-holder .bx-btn-height {
     font-size: 1.5rem;
 }
 
@@ -525,6 +525,7 @@ div.cmt-mood-buttons a:hover {
 div.cmt-mood-buttons i.cmt-mood-star {
     color: transparent;
 }
+.cmt-meta .bx-badges-list,
 .cmt-meta .bx-badge-compact {
     display: inline-block;
 }
