@@ -616,7 +616,8 @@ BxTimelineView.prototype.commentItem = function(oLink, sSystem, iId)
 
     var oComments = $(oLink).parents('.' + this.sClassItem + ':first').find('.' + this.sClassItemComments);
     if(oComments.children().length > 0) {
-    	oComments.bx_anim('toggle', this._sAnimationEffect, this._iAnimationSpeed);
+        oComments.bx_anim('toggle', this._sAnimationEffect, this._iAnimationSpeed);
+        $(oLink).parents('.cmt-counter').toggleClass('cmt-counter-opened');
     	return;
     }
 
@@ -634,6 +635,7 @@ BxTimelineView.prototype.commentItem = function(oLink, sSystem, iId)
                 return;
 
             oComments.html($(oData.content).hide()).children(':hidden').bxProcessHtml().bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed);
+            $(oLink).parents('.cmt-counter').toggleClass('cmt-counter-opened');
         },
         'json'
     );
