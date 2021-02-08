@@ -17,3 +17,7 @@ table#bx-grid-table-bx_dolphin_migration_transfers td{
 .bx-form-input-wrapper-input_set > button{
 	margin-right:2rem;
 }
+
+#bx-grid-wrap-bx_dolphin_migration_transfers {
+	margin-top: 1rem;
+}

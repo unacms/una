@@ -6,19 +6,18 @@
 	<string name="_bx_dolphin_migration_cpt_transfer_data"><![CDATA[Data Transfer]]></string>
 	<string name="_bx_dolphin_migration_cpt_put_path"><![CDATA[Define path to the root Dolphin's folder]]></string>  
 	<string name="_bx_dolphin_migration_cpt_save"><![CDATA[Save]]></string>
-	<string name="_bx_dolphin_migration_cpt_update"><![CDATA[Update]]></string>
+	<string name="_bx_dolphin_migration_cpt_update"><![CDATA[Set the path]]></string>
 	<string name="_bx_dolphin_migration_error_data_was_not_set"><![CDATA[Configuration was not defined]]></string>
 	<string name="_bx_dolphin_migration_error_config_file_was_not_found"><![CDATA[Sorry configuration file was not found, please check path to the Dolphin Script!]]></string>
 	<string name="_bx_dolphin_migration_data_was_set"><![CDATA[Dolphin Configuration was successfully set. Go to Data Transfer area to continue!]]></string>
-	<string name="_bx_dolphin_migration_avaialble_modules_to_transfer"><![CDATA[Available content for transfer]]></string>
 	<string name="_bx_dolphin_migration_no_data_to_transfer"><![CDATA[No data to transfer]]></string>  
 	<string name="_bx_dolphin_migration_modules_name"><![CDATA[Data]]></string>  
 	<string name="_bx_dolphin_migration_modules_records_number"><![CDATA[Records number]]></string>  
 	<string name="_bx_dolphin_migration_modules_status"><![CDATA[Status]]></string>
-	<string name="_bx_dolphin_migration_defined_path"><![CDATA[Path to Dolphin script]]></string>
+	<string name="_bx_dolphin_migration_defined_path"><![CDATA[Path to the Dolphin script]]></string>
 	<string name="_bx_dolphin_migration_start_transfer"><![CDATA[Start transfer]]></string>
 	<string name="_bx_dolphin_migration_start_transfer_confirmation"><![CDATA[Please don't reload or close the page during data transferring]]></string>  
-	<string name="_bx_dolphin_migration_reupload_data"><![CDATA[If you update path, all information from table below will be lost, but it will not influence on already transferred data.]]></string>
+	<string name="_bx_dolphin_migration_reupload_data"><![CDATA[If you update the path, all the information from table below will be lost, but it will not influence on already transferred data.]]></string>
 	<string name="_bx_dolphin_migration_already_transfer"><![CDATA[Module {0} already transferred]]></string>
 	<string name="_bx_dolphin_migration_install_before"><![CDATA[Please transfer {0} first!]]></string>
 	<string name="_bx_dolphin_migration_install_plugin"><![CDATA[You need to install {0} plugin(s), before {1} transfer]]></string>
@@ -56,7 +55,7 @@
 	<string name="_bx_dolphin_migration_data_shoutbox"><![CDATA[Shoutbox]]></string>
 	<string name="_bx_dolphin_migration_data_simple_messenger"><![CDATA[Simple messenger]]></string>
 	<string name="_bx_dolphin_migration_data_chat"><![CDATA[Flash Chat]]></string>
-	<string name="_bx_dolphin_migration_data_forum"><![CDATA[Topics, Posts]]></string>
+	<string name="_bx_dolphin_migration_data_forum"><![CDATA[Topicts, Posts]]></string>
 	<string name="_bx_dolphin_migration_data_conversations"><![CDATA[Conversations]]></string>
 	<string name="_bx_dolphin_migration_data_timeline"><![CDATA[Timeline]]></string>
 	<string name="_bx_dolphin_migration_started_migration_blogs"><![CDATA[Blogs Migration was started]]></string>
@@ -118,9 +117,10 @@
 	<string name="_bx_dolphin_migration_remove_profile_content_confirmation"><![CDATA[If you remove profiles, it will remove all transferred profiles' content also. Continue?]]></string>
 	<string name="_bx_dolphin_migration_cpt_overwrite"><![CDATA[If account with the same NickName or Email already exists, then to overwrite its info.
 	<br/><b>This option is useful if you already have account on current version with the same Nickname as in Dolphin. If you enable this option all existed on UNA accounts will be updated using profiles' info from Dolphin and don't forget that info of your current logged member may be also updated and you can be logged out.</b>]]></string>
-	<string name="_bx_dolphin_migration_cpt_clean"><![CDATA[Clean]]></string>
+	<string name="_bx_dolphin_migration_cpt_clean"><![CDATA[Clear]]></string>
 	<string name="_bx_dolphin_migration_cpt_use_nickname"><![CDATA[Use NickName instead of Profile's FullName]]></string>
 	<string name="_bx_dolphin_migration_cpt_empty_albums"><![CDATA[Transfer photo albums even if they are empty]]></string>
 	<string name="_bx_dolphin_migration_cpt_default_privacy"><![CDATA[This privacy group will be set in case if you have not standard privacy groups in Dolphin and transferring item's privacy doesn't exist in UNA]]></string>
-	<string name="_bx_dolphin_migration_cpt_clean_warning"><![CDATA[Path to the Dolphin root and information from table below will be lost, Continue?]]></string>
+	<string name="_bx_dolphin_migration_cpt_clean_warning"><![CDATA[The all data from the table below will be removed. Continue?]]></string>
+	<string name="_bx_dolphin_migration_started_migration_conversations"><![CDATA[Migration has been started]]></string>
 </resources>
