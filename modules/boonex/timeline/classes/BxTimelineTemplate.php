@@ -2314,7 +2314,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $aAttrs = array();
             if(isset($aImage['onclick']))
                 $aAttrs['onclick'] = $aImage['onclick'];
-            else if(!$bViewItem && !empty($aImage['src_orig']))
+            else if(!empty($aImage['src_orig']))
                 $aAttrs['onclick'] = 'return ' . $sJsObject . '.showItem(this, \'' . $aEvent['id'] . '\', \'photo\', ' . json_encode(array('src' => base64_encode($aImage['src_orig']))) . ')'; 
 
             $sImage = $this->parseLinkByName('image_link.html', isset($aImage['url']) ? $aImage['url'] : 'javascript:void(0)', $sImage, $aAttrs);
