@@ -118,7 +118,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'bInit' => true,
             'bInfScroll' => $this->_oConfig->isInfiniteScroll(),
             'iInfScrollAutoPreloads' => $this->_oConfig->getAutoPreloads(),
-            'bDynamicCards' => $this->_oConfig->isDynamicCards(),
         ), $aParams);
 
         return parent::getJsCode('view', $aParams, $bWrap, $bDynamic);
@@ -410,57 +409,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         return $this->getPost($aEvent, $aBrowseParams);
     }
 
-    public function getPostSample($aEvent, $aBrowseParams = array())
-    {
-        $CNF = &$this->_oConfig->CNF;
-
-        $oModule = $this->getModule();
-        $sStylePrefix = $this->_oConfig->getPrefix('style');
-        $sJsObject = $this->_oConfig->getJsObjectView($aBrowseParams);
-
-        $bViewOutline = isset($aBrowseParams['view']) && $aBrowseParams['view'] == BX_TIMELINE_VIEW_OUTLINE;
-
-        $bPinned = (int)$aEvent['pinned'] > 0;
-        $bSticked = (int)$aEvent['sticked'] > 0;
-        $bPromoted = (int)$aEvent['promoted'] > 0;
-
-        $sClass = $aEvent['type'] . ' ' . (!empty($aEvent['action']) ? $aEvent['action'] . ' ' : '') . $sStylePrefix . '-view-sizer';
-        if($bViewOutline) {
-            $sClass = $sStylePrefix . '-grid-item-sizer';
-            if($bPinned || $bSticked || $bPromoted) {
-                $sClass .= ' ' . $sStylePrefix . '-gis';
-                if($bPinned)
-                    $sClass .= '-pnd';
-                if($bSticked)
-                    $sClass .= '-psd';
-                if($bPromoted)
-                    $sClass .= '-pmd';
-            }
-        }
-        if($bPinned)
-            $sClass .= ' ' . $sStylePrefix . '-pinned';
-        if($bSticked)
-            $sClass .= ' ' . $sStylePrefix . '-sticked';
-        if($bPromoted)
-            $sClass .= ' ' . $sStylePrefix . '-promoted';
-
-        $sVariable = '_sTmplContentItem' . bx_gen_method_name($aBrowseParams['view']) . 'Sample';
-        if(empty(self::$$sVariable))
-            self::$$sVariable = $this->getHtml('item_' . $aBrowseParams['view'] . '_sample.html');
-
-        $sTmplCode = self::$$sVariable;
-        $aTmplVars = array(
-            'style_prefix' => $sStylePrefix,
-            'js_object' => $sJsObject,
-            'html_id' => $this->_oConfig->getHtmlIdView('item', $aBrowseParams, array('whole' => false)) . $aEvent['id'],
-            'class' => $sClass,
-            'icon' => !empty($aEvent['icon']) ? $aEvent['icon'] : $CNF['ICON'],
-            'id' => $aEvent['id'],
-        );
-
-        return $this->parseHtmlByContent($sTmplCode, $aTmplVars);
-    }
-
     public function getPost(&$aEvent, $aBrowseParams = array())
     {
         $CNF = &$this->_oConfig->CNF;
@@ -616,16 +564,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             }
         }
 
-        $sMethodGetPost = 'getPost';
-        if($this->_oConfig->isDynamicCards() && in_array($aParams['view'], array(BX_TIMELINE_VIEW_TIMELINE, BX_TIMELINE_VIEW_OUTLINE)) && !$aParams['dynamic_mode'])
-            $sMethodGetPost .=  'Sample';
-
         $bFirst = true;
         $mixedEvents = $bReturnArray ? array() : '';
         foreach($aEvents as $aEvent) {
             $iEvent = (int)$aEvent['id'];
 
-            $sEvent = $this->$sMethodGetPost($aEvent, $aParams);
+            $sEvent = $this->getPost($aEvent, $aParams);
             if(empty($sEvent))
                 continue;
 

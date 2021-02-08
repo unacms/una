@@ -32,8 +32,6 @@ function BxTimelineView(oOptions) {
     this._bInfScrollBusy = false;
     this._iInfScrollPreloads = 1; //--- First portion is loaded with page loading or 'Load More' button click.
 
-    this._bDynamicCards = oOptions.bDynamicCards == undefined ? false : oOptions.bDynamicCards;
-
     this._fOutsideOffset = 0.8;
     this._oSaved = {};
 
@@ -46,8 +44,6 @@ function BxTimelineView(oOptions) {
         window.glBxTimelineVapPlayers = [];
 
     this.initView();
-    if(this._bDynamicCards) 
-        this.loadCards();
 
     if(this._bInit) {
         var $this = this;
@@ -268,63 +264,6 @@ BxTimelineView.prototype.initVideosAutoplay = function(oParent)
         oPlayer.on('play', fFixHeight);
 
         window.glBxTimelineVapPlayers[sPlayer] = oPlayer;
-    });
-};
-
-BxTimelineView.prototype.loadCards = function()
-{
-    var $this = this;
-    var oData = this._getDefaultData();
-
-    this.oView.find('.' + this.sClassItem + '.' + this.sClassSample).each(function(iIndex, oItem) {
-        var oItem = $(oItem);
-        var sItemId = oItem.attr('id');
-
-        oData['id'] = parseInt(oItem.attr('bx-id'));
-
-        jQuery.get (
-            $this._sActionsUrl + 'get_post',
-            oData,
-            function(oData) {
-                if(!oData.item) {
-                    oItem.remove();
-                    return;
-                }
-
-                oItem.replaceWith($(oData.item).bxProcessHtml());
-
-                oItem = $this.oView.find('#' + sItemId);
-
-                if($this.bViewTimeline) {
-                    //-- Check content to show 'See More'
-                    $this.initSeeMore(oItem, false);
-
-                    //--- Hide timeline Events which are outside the viewport
-                    $this.hideEvent(oItem, $this._fOutsideOffset, iIndex, true);
-        
-                    //--- Init Flickity
-                    $this.initFlickityByItem(oItem);
-
-                    //--- Init Video Autoplay
-                    if(this._sVideosAutoplay != 'off')
-                        $this.initVideosAutoplay(oItem);
-                }
-
-                if($this.bViewOutline)
-                    $this.appendMasonry(oItem, function(oItem) {
-                        //-- Check content to show 'See More'
-                        $this.initSeeMore(oItem, false);
-
-                        //--- Init Flickity
-                        $this.initFlickityByItem(oItem);
-
-                        //--- Init Video Layout
-                        if($this._sVideosAutoplay != 'off') 
-                            $this.initVideos(oItem);
-                    });
-            },
-            'json'
-        );
     });
 };
 

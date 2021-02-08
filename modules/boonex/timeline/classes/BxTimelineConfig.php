@@ -34,7 +34,6 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_iCharsDisplayMinTitle;
     protected $_iCharsDisplayMaxTitle;
 
-    protected $_bDynamicCards;
     protected $_bBriefCards;
     protected $_aBriefCardsTags;
     protected $_sVideosAutoplay;
@@ -348,7 +347,6 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_iCharsDisplayMinTitle = 32;
         $this->_iCharsDisplayMaxTitle = 64;
 
-        $this->_bDynamicCards = getParam($sOptionPrefix . 'enable_dynamic_cards') == 'on';
         $this->_bBriefCards = getParam($sOptionPrefix . 'enable_brief_cards') == 'on';
 
         $this->_sVideosAutoplay = getParam($sOptionPrefix . 'videos_autoplay');
@@ -443,11 +441,6 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function isCountAllViews()
     {
         return $this->_bCountAllViews;
-    }
-
-    public function isDynamicCards()
-    {
-        return $this->_bDynamicCards;
     }
 
     public function isBriefCards()

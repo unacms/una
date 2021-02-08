@@ -281,7 +281,6 @@ VALUES (@iTypeId, 'bx_timeline_card', '_bx_timeline_options_category_card', 3);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
-('bx_timeline_enable_dynamic_cards', '', @iCategId, '_bx_timeline_option_enable_dynamic_cards', 'checkbox', '', '', '', '', 1),
 ('bx_timeline_enable_brief_cards', '', @iCategId, '_bx_timeline_option_enable_brief_cards', 'checkbox', '', '', '', '', 2),
 ('bx_timeline_videos_autoplay', 'off', @iCategId, '_bx_timeline_option_videos_autoplay', 'select', '', '', '', 'a:2:{s:6:"module";s:11:"bx_timeline";s:6:"method";s:27:"get_options_videos_autoplay";}', 10),
 ('bx_timeline_preload_comments', '0', @iCategId, '_bx_timeline_option_preload_comments', 'digit', '', '', '', '', 20),
