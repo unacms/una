@@ -153,6 +153,8 @@
     <string name="_bx_timeline_page_block_title_muted"><![CDATA[Отключенные]]></string>
 
     <string name="_bx_timeline_page_content_ph_timeline"><![CDATA[Лента: c заполнителем в виде ленты]]></string>
+    <string name="_bx_timeline_page_content_ph_outline"><![CDATA[Лента: c заполнителем в виде сводки]]></string>
+
 
     <!-- Menus -->
     <string name="_bx_timeline_menu_title_view"><![CDATA[Просмотр]]></string>
