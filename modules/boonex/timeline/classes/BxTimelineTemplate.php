@@ -1401,20 +1401,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
 
         $aTmplVarsManage = $this->_getTmplVarsManage($aEvent, $aBrowseParams);
 
-        $bTmplVarsAction = $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']);
-        $aTmplVarsAction = array();
-        if($bTmplVarsAction) {
-            $aTmplVarsTimelineOwner = $this->_getTmplVarsTimelineOwner($aEvent);
-
-            $aTmplVarsAction = array(
-                'style_prefix' => $sStylePrefix,
-                'item_owner_action' => $sAuthorAction,
-                'bx_if:show_timeline_owner' => array(
-                    'condition' => !empty($aTmplVarsTimelineOwner),
-                    'content' => $aTmplVarsTimelineOwner
-                ),
-            );
-        }
+        $aTmplVarsTimelineOwner = $this->_getTmplVarsTimelineOwner($aEvent);
+        $bTmplVarsTimelineOwner = !empty($aTmplVarsTimelineOwner);
 
         $aTmplVarsOwnerActions = $this->_getTmplVarsOwnerActions($aEvent, $aBrowseParams);
         $bTmplVarsOwnerActions = !empty($aTmplVarsOwnerActions); 
@@ -1510,8 +1498,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'content' => $aTmplVarsManage
             ),
             'bx_if:show_item_action' => array(
-                'condition' => $bTmplVarsAction,
-                'content' => $aTmplVarsAction
+                'condition' => $this->_oConfig->isSystem($aEvent['type'], $aEvent['action']) || $bTmplVarsTimelineOwner,
+                'content' => array(
+                    'style_prefix' => $sStylePrefix,
+                    'item_owner_action' => $sAuthorAction,
+                    'bx_if:show_timeline_owner' => array(
+                        'condition' => $bTmplVarsTimelineOwner,
+                        'content' => $aTmplVarsTimelineOwner
+                    ),
+                )
             ),
             'content_type' => $sType,
             'content' => is_string($aEvent['content']) ? $aEvent['content'] : $this->_getContent($sType, $aEvent, $aBrowseParams),
@@ -1549,9 +1544,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $aTmplVars['comments'] = $this->_getComments($aEvent['comments'], array_merge($aBrowseParams, array(
                 'cmts_preload_number' => $iPreloadComments,
                 'cmts_min_post_form' => false
-            )));
-
-        
+            )));       
 
         $sVariable = '_sTmplContentItem' . bx_gen_method_name($aBrowseParams['view']);
         if(empty(self::$$sVariable))
