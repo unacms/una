@@ -329,7 +329,7 @@
     <string name="_bx_tasks_confirm_tasklist_deletion"><![CDATA[Вы удалите все задания, которые содержатся в этом списке заданий. Вы уверены?]]></string>
   
 
-  <!-- Notifications -->
+    <!-- Notifications -->
     <string name="_bx_tasks_alert_action_completed_personal"><![CDATA[Задание завершено]]></string>
     <string name="_bx_tasks_alert_action_completed_follow_member"><![CDATA[Задание завершено]]></string>
     <string name="_bx_tasks_alert_action_completed_follow_context"><![CDATA[Задание завершено]]></string>
@@ -347,4 +347,8 @@
     <string name="_bx_tasks_txt_notification_expired_in_context"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b>'s {entry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b> устарело]]></string>
     <string name="_bx_tasks_txt_notification_assigned"><![CDATA[<b class="bx-ntfs-content-entry">{entry_caption}</b> {entry_sample} было назначено на <b class="bx-ntfs-content-profile">{entry_author_name}</b>]]></string>
     <string name="_bx_tasks_txt_notification_assigned_in_context"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b>'s {entry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b> было назначено на <b class="bx-ntfs-content-profile">{entry_author_name}</b>]]></string>
+
+    <!-- Timeline -->
+    <string name="_bx_tasks_alert_action_completed"><![CDATA[завершено]]></string>
+    <string name="_bx_tasks_alert_action_reopened"><![CDATA[открыто заново]]></string>
 </resources>

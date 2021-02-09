@@ -331,7 +331,7 @@
     <string name="_bx_tasks_confirm_tasklist_deletion"><![CDATA[You will delete all tasks that are contained in this tasklist. Are you sure?]]></string>
   
 
-  <!-- Notifications -->
+    <!-- Notifications -->
     <string name="_bx_tasks_alert_action_completed_personal"><![CDATA[Complete task]]></string>
     <string name="_bx_tasks_alert_action_completed_follow_member"><![CDATA[Complete task]]></string>
     <string name="_bx_tasks_alert_action_completed_follow_context"><![CDATA[Complete task]]></string>
@@ -349,4 +349,8 @@
     <string name="_bx_tasks_txt_notification_expired_in_context"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b>'s {entry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b> expired]]></string>
     <string name="_bx_tasks_txt_notification_assigned"><![CDATA[<b class="bx-ntfs-content-entry">{entry_caption}</b> {entry_sample} was assigned to <b class="bx-ntfs-content-profile">{entry_author_name}</b>]]></string>
     <string name="_bx_tasks_txt_notification_assigned_in_context"><![CDATA[<b class="bx-ntfs-content-profile">{owner_name}</b>'s {entry_sample} <b class="bx-ntfs-content-entry">{entry_caption}</b> was assigned to <b class="bx-ntfs-content-profile">{entry_author_name}</b>]]></string>
+
+    <!-- Timeline -->
+    <string name="_bx_tasks_alert_action_completed"><![CDATA[completed]]></string>
+    <string name="_bx_tasks_alert_action_reopened"><![CDATA[reopened]]></string>
 </resources>
