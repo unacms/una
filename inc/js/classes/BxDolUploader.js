@@ -551,6 +551,8 @@ function BxDolUploaderRecordVideo (sUploaderObject, sStorageObject, sUniqId, opt
             return;
         }
 
+        $("#" + this._sFormContainerId + " .bx-btn.bx-btn-primary:not(.bx-crop-upload)").hide();
+
         $('#' + this._sFormContainerId + ' .bx-uploader-recording-start').hide();
         $('#' + this._sFormContainerId + ' .bx-uploader-recording-stop').show();
 
@@ -570,6 +572,8 @@ function BxDolUploaderRecordVideo (sUploaderObject, sStorageObject, sUniqId, opt
 
             $this._recorder.destroy();
             $this._recorder = null;
+
+            $("#" + $this._sFormContainerId + " .bx-btn.bx-btn-primary:not(.bx-crop-upload)").show();
 
             if (bSubmitWhenReady)
                 $this.submitRecording($('#' + $this._sFormContainerId + ' form').get(0));
