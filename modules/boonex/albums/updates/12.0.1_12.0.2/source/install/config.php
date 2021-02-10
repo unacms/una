@@ -3,48 +3,48 @@
  * Copyright (c) UNA, Inc - https://una.io
  * MIT License - https://opensource.org/licenses/MIT
  *
- * @defgroup    Timeline Timeline
+ * @defgroup    Albums Albums
  * @ingroup     UnaModules
  *
  * @{
  */
 
 $aConfig = array(
+
     /**
      * Main Section.
      */
     'type' => BX_DOL_MODULE_TYPE_MODULE,
-    'name' => 'bx_timeline',
-    'title' => 'Timeline',
-    'note' => 'Timeline module.',
-    'version' => '12.0.4.DEV',
+    'name' => 'bx_albums',
+    'title' => 'Albums',
+    'note' => 'Photos & videos',
+    'version' => '12.0.2',
     'vendor' => 'BoonEx',
     'help_url' => 'http://feed.una.io/?section={module_name}',
 
     'compatible_with' => array(
-        '12.0.x'
+        '12.0.0'
     ),
 
     /**
      * 'home_dir' and 'home_uri' - should be unique. Don't use spaces in 'home_uri' and the other special chars.
      */
-    'home_dir' => 'boonex/timeline/',
-    'home_uri' => 'timeline',
+    'home_dir' => 'boonex/albums/',
+    'home_uri' => 'albums',
 
-    'db_prefix' => 'bx_timeline_',
-    'class_prefix' => 'BxTimeline',
+    'db_prefix' => 'bx_albums_',
+    'class_prefix' => 'BxAlbums',
 
     /**
      * Category for language keys.
      */
-    'language_category' => 'Timeline',
+    'language_category' => 'Albums',
 
     /**
      * List of page triggers.
      */
     'page_triggers' => array (
-        'trigger_page_profile_view_entry',
-        'trigger_page_group_view_entry',
+    	'trigger_page_profile_view_entry',
     ),
 
     /**
@@ -52,7 +52,7 @@ $aConfig = array(
      */
     'menu_triggers' => array(
     	'trigger_profile_view_submenu',
-    	'trigger_group_view_submenu',
+        'trigger_group_view_submenu',
     ),
 
 	/**
@@ -60,20 +60,31 @@ $aConfig = array(
      * Note. Don't add storage objects used in transcoder objects.
      */
     'storages' => array(
-    	'bx_timeline_photos',
-    	'bx_timeline_videos'
+    	'bx_albums_files'
     ),
 
     /**
      * Transcoders.
      */
     'transcoders' => array(
-    	'bx_timeline_photos_preview',
-    	'bx_timeline_photos_view',
-        'bx_timeline_photos_big',
-    	'bx_timeline_videos_poster',
-    	'bx_timeline_videos_mp4',
-    	'bx_timeline_videos_mp4_hd'
+        'bx_albums_preview',
+        'bx_albums_browse',
+        'bx_albums_big',
+        'bx_albums_video_poster_browse',
+        'bx_albums_video_poster_preview',
+        'bx_albums_video_poster_big',
+        'bx_albums_video_mp4',
+        'bx_albums_video_mp4_hd',
+    ),
+
+    /**
+     * Extended Search Forms.
+     */
+    'esearches' => array(
+        'bx_albums',
+    	'bx_albums_media',
+    	'bx_albums_cmts',
+        'bx_albums_media_cmts'
     ),
 
     /**
@@ -85,25 +96,26 @@ $aConfig = array(
         'clear_db_cache' => 1,
     ),
     'uninstall' => array (
+    	'process_esearches' => 1,
         'execute_sql' => 1,
         'update_languages' => 1,
+    	'update_relations' => 1,
         'clear_db_cache' => 1,
     ),
     'enable' => array(
         'execute_sql' => 1,
-    	'update_relations_for_all' => 1,
     	'update_relations' => 1,
         'clear_db_cache' => 1,
     ),
     'enable_success' => array(
-    	'process_page_triggers' => 1,
-		'process_menu_triggers' => 1,
+        'process_menu_triggers' => 1,
+        'process_page_triggers' => 1,
+    	'process_esearches' => 1,
     	'register_transcoders' => 1,
-    	'clear_db_cache' => 1,
+        'clear_db_cache' => 1,
     ),
     'disable' => array (
         'execute_sql' => 1,
-    	'update_relations_for_all' => 1,
     	'update_relations' => 1,
     	'unregister_transcoders' => 1,
         'clear_db_cache' => 1,
@@ -119,17 +131,13 @@ $aConfig = array(
     'dependencies' => array(),
 
     /**
-     * Relations Section
+     * Connections Section
      */
-    'relation_handlers' => array(
-    	'on_install' => '',
-    	'on_uninstall' => 'delete_module_events',
-	    'on_enable' => 'add_handlers',
-	    'on_disable' => 'delete_handlers',
-    ),
     'relations' => array(
+    	'bx_timeline',
     	'bx_notifications'
-    )
+    ),
+
 );
 
 /** @} */

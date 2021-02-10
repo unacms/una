@@ -1,0 +1,101 @@
+/*--- Comment Voted By ---*/
+div.bx-score-by-list {}
+div.bx-score-by-list-cnt {
+	max-height: 200px;
+	max-height: 12.5rem;
+	min-width: 220px;
+	min-width: 13.75rem;
+	overflow: auto;
+}
+div.bx-score-by-list div.bx-base-pofile-unit {
+	float: none;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+div.bx-score-by-item {
+	display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    -webkit-align-items: center;
+	flex-wrap: nowrap;
+    -webkit-flex-wrap: nowrap;
+}
+div.bx-score-by-item .bx-score-bi-user,
+div.bx-score-by-item .bx-score-bi-info,
+div.bx-score-by-item .bx-score-bi-vote {
+	-webkit-flex: 0 1 auto; 
+    -ms-flex: 0 1 auto; 
+    flex: 0 1 auto;
+}
+div.bx-score-by-item .bx-score-bi-info {
+	-webkit-flex-grow: 3; 
+    flex-grow: 3;
+}
+div.bx-score-by-item .bx-score-bi-vote {
+	width: 1.25rem;
+    height: 1.25rem;
+}
+
+/*--- Vote Element Styles ---*/
+div.bx-score-element-holder,
+div.bx-score-counter-holder {
+    position: relative;
+    float: left;
+
+    line-height: 20px;
+    line-height: 1.25rem;
+}
+
+.bx-score-button .bx-score-element-holder,
+.bx-score-button .bx-score-counter-holder {
+    line-height: 36px;
+    line-height: 2.2rem;
+}
+
+.bx-score-button-small .bx-score-element-holder,
+.bx-score-button-small .bx-score-counter-holder {
+    line-height: 24px;
+    line-height: 1.6rem;
+}
+
+.bx-score-element-holder .bx-score-do-vote.bx-score-disabled,
+.bx-score-element-holder .bx-score-do-vote.bx-score-disabled .sys-icon {
+    color: #ddd;
+}
+
+.bx-score:not(.bx-score-button):not(.bx-score-button-small) .bx-score-counter-holder.bx-btn-border {
+    border-width: 0px;
+}
+
+.bx-score-button .bx-score-counter-holder .bx-btn-height,
+.bx-score-button-small .bx-score-counter-holder .bx-btn-height {
+    font-size: 1.5rem;
+}
+
+/*--- Counter Styles ---*/
+.bx-score-counter .bx-score-counter-label.bx-def-valign-center .bx-score-counter-text {
+    line-height: normal;
+}
+.bx-score-counter span.bx-score-counter-icon {
+    position: relative;
+    box-sizing: border-box;
+
+    width: 2.0rem;
+    height: 2.0rem;
+
+    background-color: rgba(232, 232, 232, 1.0);
+    border: 1px solid #ffffff;
+    border-radius: 1rem;
+
+    line-height: normal;
+    font-size: 1.0rem;
+}
+.bx-score-counter span.bx-score-counter-icon:not(.bx-def-align-center) {
+    display: inline-block;
+
+    line-height: 1.9rem;
+    text-align: center;
+}
+.bx-score-counter span.bx-score-counter-icon .sys-icon {
+    vertical-align: top;
+}

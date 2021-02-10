@@ -28,8 +28,8 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
         $this->sSessionKeyCsrfToken = 'bx_studio_store_csrf_token';
         $this->sSessionKeyCsrfTokenTime = 'bx_studio_store_csrf_token_time';
 
-        $this->sKey = getParam('sys_oauth_key');
-        $this->sSecret = getParam('sys_oauth_secret');
+        $this->sKey = $this->_getCredential('key');
+        $this->sSecret = $this->_getCredential('secret');
         $this->sApiUrl = BX_DOL_MARKET_URL_ROOT . 'm/oauth2/';
         $this->sScope = 'market';
         $this->sPageHandle = BX_DOL_URL_STUDIO . 'store.php?page=goodies';
@@ -155,6 +155,12 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
     	return false;
     }
 
+    protected function _getCredential($sName)
+    {
+        $sResult = getParam('sys_oauth_' . $sName);
+        return $sResult !== false ? trim($sResult) : '';
+    }
+
     protected function _genState()
     {
         $sResult = $this->_genCsrfToken();
@@ -173,7 +179,7 @@ class BxDolStudioOAuthOAuth2 extends BxDolStudioOAuth implements iBxDolSingleton
         return $this->_getStateToken();
     }
 
-	protected function _genCsrfToken()
+    protected function _genCsrfToken()
     {
         if(getParam('sys_security_form_token_enable') != 'on' || defined('BX_DOL_CRON_EXECUTE'))
             return false;
