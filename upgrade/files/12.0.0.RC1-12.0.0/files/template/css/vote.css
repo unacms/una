@@ -1,0 +1,383 @@
+/*--- Voted By ---*/
+div.bx-vote-by-list {}
+div.bx-vote-by-list-cnt {
+    max-height: 200px;
+    max-height: 12.5rem;
+    min-width: 220px;
+    min-width: 13.75rem;
+    overflow: auto;
+}
+div.bx-vote-by-list div.bx-base-pofile-unit {
+    float: none;
+    margin-right: 0px;
+    margin-bottom: 0px;
+}
+
+/*--- Vote Element Styles ---*/
+div.bx-vote div.bx-vote-element-holder,
+div.bx-vote div.bx-vote-counter-holder {
+	position: relative;
+	float: left;
+}
+
+
+/*----------------------------------*/
+/*--- Likes based Element Styles ---*/
+/*----------------------------------*/
+.bx-vote-likes .bx-vote-element-holder,
+.bx-vote-likes .bx-vote-counter-holder {
+    line-height: 20px;
+    line-height: 1.25rem;
+}
+
+.bx-vote-likes-button .bx-vote-element-holder,
+.bx-vote-likes-button .bx-vote-counter-holder {
+    line-height: 36px;
+    line-height: 2.2rem;
+}
+
+.bx-vote-likes-button-small .bx-vote-element-holder,
+.bx-vote-likes-button-small .bx-vote-counter-holder {
+    line-height: 24px;
+    line-height: 1.6rem;
+}
+
+.bx-vote-likes .bx-vote-element-holder .bx-vote-do-vote.bx-vote-disabled,
+.bx-vote-likes .bx-vote-element-holder .bx-vote-do-vote.bx-vote-disabled .sys-icon {
+    color: #ddd;
+}
+
+.bx-vote-likes-button .bx-vote-counter-holder .bx-btn-height,
+.bx-vote-likes-button-small .bx-vote-counter-holder .bx-btn-height {
+    font-size: 1.5rem;
+}
+
+.bx-vote-likes .bx-vote-counter-holder.bx-btn-border {
+    border-width: 0px;
+}
+
+
+/*--------------------------------------*/
+/*--- Reactions based Element Styles ---*/
+/*--------------------------------------*/
+.bx-vote-reactions .bx-vote-element-holder,
+.bx-vote-reactions .bx-vote-counter-holder {
+	line-height: 20px;
+	line-height: 1.25rem;
+}
+
+.bx-vote-reactions-button .bx-vote-element-holder,
+.bx-vote-reactions-button .bx-vote-counter-holder {
+	line-height: 36px;
+	line-height: 2.2rem;
+}
+
+.bx-vote-reactions-button-small .bx-vote-element-holder,
+.bx-vote-reactions-button-small .bx-vote-counter-holder {
+	line-height: 24px;
+	line-height: 1.6rem;
+}
+
+.bx-vote-reactions .bx-vote-element-holder .bx-vote-do-vote.bx-vote-disabled,
+.bx-vote-reactions .bx-vote-element-holder .bx-vote-do-vote.bx-vote-disabled .sys-icon {
+	color: #ddd;
+}
+
+.bx-vote-reactions-button .bx-vote-counter-holder,
+.bx-vote-reactions-button-small .bx-vote-counter-holder {
+	font-size: 1.5rem;
+}
+
+.bx-vote-reactions .bx-vote-element-holder a.bx-vote-do-vote {
+    position: relative;
+    display: inline-block;
+}
+
+.bx-vote-reactions .bx-vote-counter-holder.bx-btn-border {
+    border-width: 0px;
+}
+
+.bx-vote-counter-wrapper-reactions .bx-vote-counter {
+    display: inline-block;
+}
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound {
+    position: relative;
+}
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound .bx-vote-counter {
+    display: block;
+}
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-divided a.bx-vote-counter {
+    margin-right: 0.5rem;
+}
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound a.bx-vote-counter.total-count,
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter.total-count {
+    margin-left: 0.5rem;
+}
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter:not(.total-count) {
+    width: 2.0rem;
+    height: 2.0rem;
+    box-sizing: border-box;
+
+    margin-left: -0.5rem;
+}
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound div.bx-vote-counter-wrapper-cnt {
+    margin-left: 0.5rem;
+}
+.bx-media-phone .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter:not(.total-count),
+.bx-media-tablet .bx-layout-column-thin .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter:not(.total-count),
+.bx-media-tablet .bx-layout-column-half .bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter:not(.total-count) {
+    margin-left: -1.0rem;
+}
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound span.bx-vote-counter:not(.total-count) span.bx-vote-counter-text {
+    display: none;
+}
+.bx-vote-counter-wrapper-reactions.bx-vc-hidden,
+.bx-vote-counter-wrapper-reactions .bx-vote-counter.bx-vc-hidden {
+    display: none;
+}
+.bx-menu-object-sys_vote_reactions_do li .sys-icon {
+    font-size: 1.5rem;
+}
+
+/*--- Counter Styles ---*/
+.bx-vote-counter .bx-vote-counter-label.bx-def-valign-center .bx-vote-counter-text {
+    line-height: normal;
+}
+
+.bx-vote-counter.bx-vote-counter-likes span.bx-vote-counter-icon,
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound .bx-vote-counter.bx-vote-counter-reactions span.bx-vote-counter-icon {
+    position: relative;
+    box-sizing: border-box;
+
+    width: 2.0rem;
+    height: 2.0rem;
+
+    background-color: rgba(232, 232, 232, 1.0);
+    border: 1px solid #ffffff;
+    border-radius: 1rem;
+
+    line-height: normal;
+    font-size: 1.0rem;
+}
+.bx-vote-counter.bx-vote-counter-likes span.bx-vote-counter-icon:not(.bx-def-align-center),
+.bx-vote-counter-wrapper-reactions.bx-vote-counter-wrapper-reactions-compound .bx-vote-counter.bx-vote-counter-reactions span.bx-vote-counter-icon:not(.bx-def-align-center) {
+    display: inline-block;
+
+    line-height: 1.9rem;
+    text-align: center;
+}
+.bx-vote-counter span.bx-vote-counter-icon .sys-icon {
+    vertical-align: top;
+}
+
+
+/*--- Voted By ---*/
+div.bx-vote-by-list {}
+div.bx-vote-by-list-cnt {
+    max-height: 200px;
+    max-height: 12.5rem;
+    min-width: 220px;
+    min-width: 13.75rem;
+    overflow: auto;
+}
+div.bx-vote-by-list div.bx-base-pofile-unit {
+    float: none;
+    margin-right: 0px;
+    margin-bottom: 0px;
+}
+.bx-vote-bls-header {
+    display: -webkit-flex;
+    display: flex;
+
+    margin: -1.25rem -1.25rem 0 -1.25rem;
+    
+    border-bottom-color: #e6f0fa;
+    border-bottom-width: 2px;
+}
+.bx-vote-bls-content {
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+}
+.bx-vote-bls-title,
+.bx-vote-bls-submenu {
+    -webkit-flex: 0 1 auto; 
+    -ms-flex:  0 1 auto; 
+    flex:  0 1 auto;
+    line-height: 3.125rem;
+}
+.bx-vote-bls-title,
+.bx-vote-bls-submenu-cnt,
+.bx-vote-bls-filler {
+    height: 3.125rem;
+}
+.bx-vote-bls-title,
+.bx-vote-bls-filler {
+    -webkit-flex-grow: 3;
+    flex-grow: 3;
+
+    border-bottom: 2px solid rgba(232, 232, 232, 1.0);
+}
+.bx-vote-bls-title {
+    display: none;
+
+    white-space: nowrap;
+    font-size: 1rem;
+    font-weight: 400;
+}
+.bx-vote-bls-submenu {
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    -webkit-overflow-scrolling: touch;
+}
+.bx-vote-bls-submenu-cnt {
+    box-sizing: border-box;
+    padding: 0 0.5rem;
+    border-bottom: 2px solid rgba(232, 232, 232, 1.0);
+}
+.bx-vote-bls-submenu::-webkit-scrollbar {
+    width: 0.5rem;
+}
+.bx-vote-bls-submenu::-webkit-scrollbar-track {
+    -webkit-border-radius: 0.5rem;
+    border-radius: 0.5rem;
+
+    background-color: rgba(0, 0, 0, 0.1); 
+}
+.bx-vote-bls-submenu::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 0.5rem;
+    border-radius: 0.5rem;
+
+    background: rgba(255, 255, 255, 0.9); 
+    -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.5);
+}
+.bx-vote-bls-submenu::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(255, 255, 255, 0.4); 
+}
+.bx-vote-bls-submenu-cnt ul {
+    display: -webkit-flex;
+    display: flex;
+}
+.bx-vote-bls-submenu-cnt ul li {
+    -webkit-flex: 0 1 auto; 
+    -ms-flex:  0 1 auto; 
+    flex:  0 1 auto;
+    box-sizing: border-box;
+    height: 3.125rem;
+
+    border-bottom: 2px solid rgba(232, 232, 232, 1.0);
+    border-radius: 0;
+
+    line-height: 3.125rem;
+    white-space: nowrap;
+}
+.bx-vote-bls-submenu-cnt ul li div {
+    padding: 0 0.625rem;
+}
+.bx-vote-bls-submenu-cnt ul li.bx-menu-inter-act {
+    border-bottom-color: #364f6b;
+}
+.bx-vote-bls-submenu-cnt ul li.bx-menu-inter-act > div {
+    font-weight: bold;
+}
+.bx-vote-bls-content .bx-vote-by-list:not(.bx-vote-bl-summary) {
+    display: none;
+}
+.bx-vote-bls-content .bx-vote-by-items {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+.bx-vote-bls-content .bx-vote-by-item {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    -webkit-align-items: center;
+    align-items: center;
+}
+.bx-vote-bls-content .bx-vote-by-item:first-child {
+    padding-top: 1rem;
+}
+.bx-vote-bls-content .bx-vote-by-item:last-child {
+    padding-bottom: 0;
+}
+
+.bx-vote-bls-content .bx-vote-by-item:before,
+.bx-vote-bls-content .bx-vote-by-item:after {
+    display: none;
+}
+
+
+/*----------------------------------*/
+/*--- Stars based Element Styles ---*/
+/*----------------------------------*/
+.bx-vote-stars,
+.bx-vote-stars .bx-vote-do,
+.bx-vote-stars .bx-vote-element-holder,
+.bx-vote-stars .bx-vote-counter-holder {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+
+    line-height: 16px;
+    line-height: 1rem;
+    font-size: 16px;
+    font-size: 1rem;
+}
+
+.bx-vote-stars .bx-vote-counter-holder {
+    border-width: 0px;
+}
+
+
+/*--- Stars Styles ---*/
+div.bx-vote-element {
+    position: relative;
+    display: inline-block;
+}
+div.bx-vote-underlay {}
+div.bx-vote-slider {
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    left: 0px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.bx-vote-stars .bx-vote-element-holder a.bx-vote-button,
+.bx-vote-stars .bx-vote-element-holder i.bx-vote-star,
+.bx-vote-stars .bx-vote-element-holder span.bx-vote-star {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    height: 16px;
+    width: 16px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+div.bx-vote-underlay i.bx-vote-star,
+div.bx-vote-underlay span.bx-vote-star {
+    color: rgba(255, 204, 102, 1);
+}
+div.bx-vote-slider i.bx-vote-star,
+div.bx-vote-slider span.bx-vote-star,
+div.bx-vote-buttons a:hover i.bx-vote-star,
+div.bx-vote-buttons a:hover span.bx-vote-star {
+    color: rgba(255, 100, 0, 1);
+}
+
+div.bx-vote-buttons {
+    position: absolute;
+    z-index: 2;
+    top: 0px;
+    left: 0px;
+}
+div.bx-vote-buttons a:hover {
+	text-decoration: none;
+}
+div.bx-vote-buttons i.bx-vote-star,
+div.bx-vote-buttons span.bx-vote-star {
+	color: transparent;
+}
