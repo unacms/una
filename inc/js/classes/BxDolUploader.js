@@ -162,6 +162,8 @@ BxDolUploaderSimple.prototype.restoreGhosts = function () {
 
                 oFileContainer.find('.bx-uploader-ghost-preview img').hide().fadeIn(1000);
             });
+
+            $('#' + $this._sResultContainerId).bx_show_more_check_overflow();
         }
     });
 };
@@ -551,8 +553,6 @@ function BxDolUploaderRecordVideo (sUploaderObject, sStorageObject, sUniqId, opt
             return;
         }
 
-        $("#" + this._sFormContainerId + " .bx-btn.bx-btn-primary:not(.bx-crop-upload)").hide();
-
         $('#' + this._sFormContainerId + ' .bx-uploader-recording-start').hide();
         $('#' + this._sFormContainerId + ' .bx-uploader-recording-stop').show();
 
@@ -572,8 +572,6 @@ function BxDolUploaderRecordVideo (sUploaderObject, sStorageObject, sUniqId, opt
 
             $this._recorder.destroy();
             $this._recorder = null;
-
-            $("#" + $this._sFormContainerId + " .bx-btn.bx-btn-primary:not(.bx-crop-upload)").show();
 
             if (bSubmitWhenReady)
                 $this.submitRecording($('#' + $this._sFormContainerId + ' form').get(0));

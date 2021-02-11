@@ -860,3 +860,21 @@ input.bx-btn {
 	line-height: 24px;
 	line-height: 1.5rem;
 }
+
+
+/* --------------- Show More */
+.bx-overflow:before {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 20%;
+
+    content: '';
+}
+
+.bx-show-more {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+
+    text-align: center
+}

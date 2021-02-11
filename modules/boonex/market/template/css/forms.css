@@ -7,9 +7,15 @@
 }
 
 /*--- Uploader Ghost ---*/
+#bx-form-element-files .bx-form-input-files-result {
+    position: relative;
+    max-height: 20rem;
+    overflow: hidden;
+}
+
 .bx-uploader-ghost-header {
-	position: relative;
-	line-height: 1.5rem;
+    position: relative;
+    line-height: 1.5rem;
 }
 
 .bx-uploader-ghost .bx-uploader-ghost-header .sys-icon {

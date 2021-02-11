@@ -92,4 +92,31 @@ $.fn.bx_message_box = function(sMessage, iTimer, onClose) {
     });
 };
 
+$.fn.bx_show_more_check_overflow = function(sClass, onFind) {
+    if(!sClass)
+        sClass = 'bx-overflow';
+
+    return this.each(function() {
+        var oElement = $(this);
+        if(oElement.hasClass(sClass) || oElement.css('overflow') != 'hidden')
+            return;
+
+        if(oElement.prop('scrollHeight') <= oElement.height())
+            return;
+
+        oElement.addClass(sClass);
+        if(typeof onFind === 'function')
+            onFind(oElement);
+        else
+            oElement.after('<div class="bx-show-more bx-def-border-top"><a href="javascript:void(0)" onclick="bx_show_more(this);"><i class="sys-icon angle-double-down"></i></div>');
+    });
+};
+
+function bx_show_more(oLink) {
+    var sClass = 'bx-overflow';
+    var oShowMore = $(oLink).parent();
+
+    oShowMore.siblings('.' + sClass).css('max-height', 'none').removeClass(sClass);
+    oShowMore.remove();
+};
 /** @} */
