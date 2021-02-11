@@ -251,6 +251,12 @@ class BxOAuthModule extends BxDolModule
 
         $bPublic = $this->_oAPI->isPublicAPI(bx_get('module') ? bx_get('module') : 'bx_api', $sMethod, bx_get('class') ? bx_get('class') : false);
         if ($bPublic) {
+
+            if (!$this->_oDb->getClientsBy(array('type' => 'client_id', 'client_id' => bx_get('client_id')))) {
+                $this->_oAPI->errorOutput(403, 'access_denied', '"public" services need valid "client_id" parameter');
+                return;
+            }
+
             $this->checkAllowedOrigins();
             $this->_oAPI->com($sMethod, array(), $bPublic);
         }
