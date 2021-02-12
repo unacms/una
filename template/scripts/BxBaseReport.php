@@ -396,7 +396,7 @@ class BxBaseReport extends BxDolReport
         $sActionName = '_sys_audit_action_report';
         
         if ($this->_sSystem == 'sys_cmts'){
-            $aCommentData = BxDolCmtsQuery::getCommentByUniq($iObjectId);
+            $aCommentData = BxDolCmtsQuery::getInfoByUniqId($iObjectId);
             $oComment = BxDolCmts::getObjectInstance($aCommentData['system_name'], $aCommentData['cmt_object_id']);
             $aComment = $oComment->getCommentSimple($aCommentData['cmt_id']);
             $aSystem = $oComment->getSystemInfo();

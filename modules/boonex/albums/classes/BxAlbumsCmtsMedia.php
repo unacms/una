@@ -11,8 +11,8 @@
 
 class BxAlbumsCmtsMedia extends BxTemplCmts
 {
-	protected $MODULE;
-	protected $_oModule;
+    protected $MODULE;
+    protected $_oModule;
 
     function __construct($sSystem, $iId, $iInit = 1)
     {
@@ -20,6 +20,32 @@ class BxAlbumsCmtsMedia extends BxTemplCmts
     	$this->_oModule = BxDolModule::getInstance($this->MODULE);
 
         parent::__construct($sSystem, $iId, $iInit);
+    }
+
+    public function getObjectTitle ($iObjectId = 0)
+    {
+        $sResult = parent::getObjectTitle($iObjectId);
+        if(empty($sResult))
+            $sResult = _t('_bx_albums_txt_media_title_empty');
+
+        return $sResult;
+    }
+
+    public function getObjectPrivacyView ($iObjectId = 0)
+    {
+        $CNF = $this->_oModule->_oConfig->CNF;
+
+        $iResult = parent::getObjectPrivacyView($iObjectId);
+
+        $aMedia = $this->_oModule->_oDb->getMediaInfoById($this->getId());
+        if(empty($aMedia) || !is_array($aMedia))
+            return $iResult;
+
+        $aAlbum = $this->_oModule->_oDb->getContentInfoById($aMedia['content_id']);
+        if(empty($aAlbum) || !is_array($aAlbum))
+            return $iResult;
+
+        return $aAlbum[$CNF['FIELD_ALLOW_VIEW_TO']];
     }
 
     public function isViewAllowed ($isPerformAction = false)
