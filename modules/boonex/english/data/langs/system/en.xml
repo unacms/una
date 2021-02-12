@@ -1772,11 +1772,13 @@
 	<string name="_cmt_txt_or"><![CDATA[or]]></string>
         <string name="_cmt_txt_pinned"><![CDATA[Pinned comment]]></string>
 	<string name="_cmt_txt_sample_comment_single"><![CDATA[comment]]></string>
+        <string name="_cmt_txt_sample_comment_single_with_article"><![CDATA[a comment]]></string>
         <string name="_cmt_txt_sample_reaction_single"><![CDATA['{0}' reaction to comment]]></string>
 	<string name="_cmt_txt_sample_reply_to"><![CDATA[reply to comment]]></string>
         <string name="_cmt_txt_sample_score_up_single"><![CDATA[score up vote to comment]]></string>
         <string name="_cmt_txt_sample_score_down_single"><![CDATA[score down vote to comment]]></string>
         <string name="_cmt_txt_sample_vote_single"><![CDATA[vote to comment]]></string>
+        <string name="_cmt_txt_added_sample_custom"><![CDATA[Added <a href="{sample_url}">{sample}</a> to <a href="{psample_url}">{psample}</a>]]></string>
 	<string name="_cmt_txt_n_comments"><![CDATA[{0} comments]]></string>
         <string name="_cmt_txt_do"><![CDATA[Comment]]></string>
         <string name="_cmt_txt_counter"><![CDATA[{0}]]></string>

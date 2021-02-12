@@ -125,7 +125,123 @@ class BxBaseCmtsServices extends BxDol
             'content' =>  $oGrid->getCode()
         );
     }
-    
+
+    /**
+     * Comment Added for Timeline module
+     */
+    public function serviceGetTimelinePost($aEvent, $aBrowseParams = array())
+    {
+        $bCache = true;
+
+        $iCmtUniqId = $aEvent['object_id'];
+        $oCmts = BxDolCmts::getObjectInstanceByUniqId($iCmtUniqId);
+        if(!$oCmts)
+            return false;
+
+        $aCmt = BxDolCmtsQuery::getCommentExtendedByUniqId($iCmtUniqId);
+        if(empty($aCmt) || !is_array($aCmt))
+            return false;
+
+        $iCmtId = (int)$aCmt['cmt_id'];
+
+        $iUserId = bx_get_logged_profile_id();
+        $iAuthorId = (int)$aCmt['cmt_author_id'];
+        $iAuthorIdAbs = abs($iAuthorId);
+        if($iAuthorId < 0 && ((is_numeric($aEvent['owner_id']) && $iAuthorIdAbs == (int)$aEvent['owner_id']) || (is_array($aEvent['owner_id']) && in_array($iAuthorIdAbs, $aEvent['owner_id']))) && $iAuthorIdAbs != $iUserId)
+            return false;
+
+        $sCmtUrl = $oCmts->getViewUrl($iCmtId);
+
+        $sSample = '_cmt_txt_sample_comment_single_with_article';
+        $sSampleWoArticle = '_cmt_txt_sample_comment_single';
+        $sAction = '';
+        $sActionCustom = '_cmt_txt_added_sample_custom';
+        $aActionCustomMarkers = array(
+            'sample' => $sSample,
+            'sample_url' => $sCmtUrl,
+            'psample' => strip_tags($oCmts->getObjectTitle()),
+            'psample_url' => $oCmts->getBaseUrl(),
+        );
+
+        $iOwnerId = $iAuthorIdAbs;
+        if(isset($aEvent['object_privacy_view']) && (int)$aEvent['object_privacy_view'] < 0)
+            $iOwnerId = abs($aEvent['object_privacy_view']);
+
+        //--- Votes
+        $aVotes = array();
+        if(($oVotes = $oCmts->getVoteObject($iCmtId)) !== false)
+            $aVotes = array(
+                'system' => $oVotes->getSystemName(),
+                'object_id' => $iCmtId,
+                'count' => $aCmt['votes']
+            );
+        
+        //--- Reactions
+        $aReactions = array();
+        if(($oReactions = $oCmts->getReactionObject($iCmtId)) !== false)
+            $aReactions = array(
+                'system' => $oReactions->getSystemName(),
+                'object_id' => $iCmtId,
+                'count' => $aCmt['rvotes']
+            );
+
+        //--- Scores
+        $aScores = array();
+        if(($oScores = $oCmts->getScoreObject($iCmtId)) !== false)
+            $aScores = array(
+                'system' => $oScores->getSystemName(),
+                'object_id' => $iCmtId,
+                'score' => $aCmt['score']
+            );
+
+        //--- Reports
+        $aReports = array();
+        if(($oReports = $oCmts->getReportObject($iCmtId)) !== false)
+            $aReports = array(
+                'system' => $oReports->getSystemName(),
+                'object_id' => $iCmtId,
+                'count' => $aCmt['reports']
+            );
+
+        return array(
+            '_cache' => $bCache,
+            'owner_id' => $iOwnerId,
+            'object_owner_id' => $iAuthorId,
+            'icon' => 'comments',
+            'sample' => $sSample,
+            'sample_wo_article' => $sSampleWoArticle,
+            'sample_action' => $sAction,
+            'sample_action_custom' => array(
+                'content' => $sActionCustom,
+                'markers' => $aActionCustomMarkers
+            ),
+            'url' => $sCmtUrl,
+            'content' => array(
+                'sample' => $sSample,
+                'sample_wo_article' => $sSampleWoArticle,
+                'sample_action' => $sAction,
+                'url' => $sCmtUrl,
+                'title' => '',
+                'text' => $oCmts->getViewText($aCmt),
+                'images' => array(),
+                'images_attach' => array(),
+                'videos' => array(),
+                'videos_attach' => array(),
+                'files' => array(),
+                'files_attach' => $oCmts->getAttachments($iCmtId)
+            ), //a string to display or array to parse default template before displaying.
+            'date' => $aCmt['cmt_time'],
+            'views' => array(),
+            'votes' => $aVotes,
+            'reactions' => $aReactions,
+            'scores' => $aScores,
+            'reports' => $aReports,
+            'comments' => array(),
+            'title' => !empty($aCmt['cmt_text']) ? $aCmt['cmt_text'] : '', //may be empty.
+            'description' => '' //may be empty.
+        );
+    }
+
     /**
      * Comment vote for Notifications module
      */

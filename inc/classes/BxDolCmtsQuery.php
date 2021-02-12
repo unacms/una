@@ -46,6 +46,93 @@ class BxDolCmtsQuery extends BxDolDb
         parent::__construct();
     }
 
+    public static function getInfoByUniqId($iUniqId)
+    {
+        $oDb = BxDolDb::getInstance();
+
+        $sQuery = "SELECT 
+                `ti`.`cmt_id` AS `cmt_id`, 
+                `to`.`Name` AS `system_name`, 
+                `to`.`Table` AS `table_name` 
+            FROM `" . BxDolCmts::$sTableIds . "` AS `ti` 
+            INNER JOIN  `" . BxDolCmts::$sTableSystems . "` AS `to` ON  `ti`.`system_id` = `to`.`ID`
+            WHERE `ti`.`id` = :uniq_ig 
+            LIMIT 1";
+
+        $aRow = $oDb->getRow($sQuery, array('uniq_ig' => $iUniqId));
+        if(empty($aRow) || !is_array($aRow))
+            return $aRow;
+
+        $aRow['cmt_object_id'] = $oDb->getOne("SELECT `cmt_object_id` FROM `" . $aRow['table_name'] . "` WHERE `cmt_id` = :cmt_id LIMIT 1", array(
+            'cmt_id' => $aRow['cmt_id']
+        ));
+
+        return $aRow;
+    }
+
+    /**
+     * @deprecated since version 12.0.1
+     */
+    public static function getCommentByUniq ($iUnicId)
+    {
+        return self::getInfoByUniqId($iUnicId);
+    }
+
+    public static function getCommentSimpleByUniqId($iUniqId)
+    {
+        $oDb = BxDolDb::getInstance();
+
+        $sQuery = "SELECT 
+                `ti`.`cmt_id` AS `cmt_id`, 
+                `to`.`Table` AS `cmt_table` 
+            FROM `" . BxDolCmts::$sTableIds . "` as `ti` 
+            INNER JOIN  `" . BxDolCmts::$sTableSystems . "` as `to` ON  `ti`.`system_id` = `to`.`ID`
+            WHERE `ti`.`id` = :uniq_ig 
+            LIMIT 1";
+
+        $aData = $oDb->getRow($sQuery, array('uniq_ig' => $iUniqId));
+        if(empty($aData) || !is_array($aData))
+            return array();
+
+        return $oDb->getRow("SELECT * FROM `" . $aData['cmt_table'] . "` WHERE `cmt_id` = :cmt_id LIMIT 1", array(
+            'cmt_id' => $aData['cmt_id']
+        ));
+    }
+
+    public static function getCommentExtendedByUniqId($iUniqId)
+    {
+        $oDb = BxDolDb::getInstance();
+
+        $sQuery = "SELECT 
+                `ti`.`cmt_id` AS `cmt_id`, 
+                `ti`.`system_id` AS `cmt_system_id`, 
+                `to`.`Table` AS `cmt_table` 
+            FROM `" . BxDolCmts::$sTableIds . "` AS `ti` 
+            INNER JOIN  `" . BxDolCmts::$sTableSystems . "` AS `to` ON  `ti`.`system_id` = `to`.`ID`
+            WHERE `ti`.`id` = :uniq_ig 
+            LIMIT 1";
+
+        $aData = $oDb->getRow($sQuery, array('uniq_ig' => $iUniqId));
+        if(empty($aData) || !is_array($aData))
+            return array();
+
+        $sQuery = "SELECT 
+                `tc`.*,
+                `ti`.`rate`, `ti`.`votes`,
+                `ti`.`rrate`, `ti`.`rvotes`,
+                `ti`.`score`, `ti`.`sc_up`, `ti`.`sc_down`,
+                `ti`.`reports` 
+            FROM `" . $aData['cmt_table'] . "` AS `tc`
+            LEFT JOIN `" . BxDolCmts::$sTableIds . "` AS `ti` ON `ti`.`system_id` = :cmt_system_id AND `tc`.`cmt_id` = `ti`.`cmt_id` 
+            WHERE `tc`.`cmt_id` = :cmt_id 
+            LIMIT 1";       
+
+        return $oDb->getRow($sQuery, array(
+            'cmt_id' => $aData['cmt_id'],
+            'cmt_system_id' => $aData['cmt_system_id']
+        ));
+    }
+
     function getTableName ()
     {
         return $this->_sTable;
@@ -383,24 +470,6 @@ class BxDolCmtsQuery extends BxDolDb
             LIMIT 1", $this->_oMain->getSystemId(), $iId, $iCmtId);
         return $this->getRow($sQuery);
     }
-    
-    static function getCommentByUniq ($iUnicId)
-    {
-        $oDb = BxDolDb::getInstance();
-        $sQuery = $oDb->prepare("SELECT `table_ids`.`cmt_id`, table_obj.`Name` AS `system_name`, table_obj.`Table` AS `table_name` 
-            FROM `" . BxDolCmts::$sTableIds . "` as `table_ids`  
-            INNER JOIN  `" . BxDolCmts::$sTableSystems . "` as `table_obj` ON  `table_ids`.`system_id` = `table_obj`.`ID`
-            WHERE `table_ids`.`id` = ?
-            LIMIT 1", $iUnicId);
-        $aRow = $oDb->getRow($sQuery);
-        
-        if ($aRow){
-            $sQuery = $oDb->prepare("SELECT `cmt_object_id` FROM `" . $aRow['table_name'] . "` WHERE `cmt_id` = ? LIMIT 1", $aRow['cmt_id']);
-            $aRow['cmt_object_id'] = $oDb->getOne($sQuery);
-        }
-        
-        return $aRow;
-    }
 
     function getCommentSimple ($iId, $iCmtId)
     {
@@ -576,7 +645,7 @@ class BxDolCmtsQuery extends BxDolDb
         return $this->query ($sQuery);
     }
 
-	function getObjectAuthorId($iId)
+    function getObjectAuthorId($iId)
     {
         $sQuery = $this->prepare("SELECT `{$this->_sTriggerFieldAuthor}` FROM `{$this->_sTriggerTable}` WHERE `{$this->_sTriggerFieldId}` = ? LIMIT 1", $iId);
         return $this->getOne($sQuery);
@@ -587,6 +656,20 @@ class BxDolCmtsQuery extends BxDolDb
         $sQuery = $this->prepare("SELECT `{$this->_sTriggerFieldTitle}` FROM `{$this->_sTriggerTable}` WHERE `{$this->_sTriggerFieldId}` = ? LIMIT 1", $iId);
         return $this->getOne($sQuery);
     }
+
+    function getObjectPrivacyView($iId, $sField = '')
+    {
+        if(empty($sField)) {
+            $sField = 'allow_view_to';
+            if(!$this->isFieldExists($this->_sTriggerTable, $sField))
+                return false;
+        }
+
+        return $this->getOne("SELECT `{$sField}` FROM `{$this->_sTriggerTable}` WHERE `{$this->_sTriggerFieldId}` = :id LIMIT 1", array(
+            'id' => $iId
+        ));
+    }
+    
 
     function updateTriggerTable($iId, $iCount)
     {

@@ -8,6 +8,7 @@
  */
 
 bx_import('BxDolAcl');
+bx_import('BxDolPrivacy');
 
 define('BX_DOL_CMT_TYPE_COMMENT', 'comment');
 define('BX_DOL_CMT_TYPE_REVIEW', 'review');
@@ -313,6 +314,9 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     public static function getObjectInstanceByUniqId($iUniqId, $iInit = true, $oTemplate = false)
     {
         $aData = BxDolCmtsQuery::getCommentByUniq($iUniqId);
+        if(empty($aData) || !is_array($aData))
+            return null;
+
         return self::getObjectInstance($aData['system_name'], $aData['cmt_object_id']);
     }
 
@@ -454,6 +458,17 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         ));
     }
 
+    public function getViewText($mixedItem)
+    {
+        if(!is_array($mixedItem))
+            $mixedItem = $this->getCommentSimple((int)$mixedItem);
+
+        if(empty($mixedItem) || !is_array($mixedItem))
+            return '';
+
+        return $this->_prepareTextForOutput($mixedItem['cmt_text'], (int)$mixedItem['cmt_id']);
+    }
+
     public function getBaseUrl()
     {
         return $this->_replaceMarkers($this->_sBaseUrl);
@@ -485,6 +500,43 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     public function getItemAnchor($iItemId, $bWithHash = false)
     {
         return ($bWithHash ? '#' : '') . sprintf($this->_sItemAnchor, str_replace('_', '-', $this->getSystemName()), $this->getId(), $iItemId);
+    }
+
+    public function getAttachments($iCmtId)
+    {
+        $aResult = array();
+
+        if(!$this->isAttachImageEnabled())
+            return $aResult; 
+
+        $aFiles = $this->_oQuery->getFiles($this->_aSystem['system_id'], $iCmtId);
+        if(empty($aFiles) || !is_array($aFiles)) 
+            return $aResult;
+
+        $oStorage = BxDolStorage::getObjectInstance($this->getStorageObjectName());
+        $oTranscoder = BxDolTranscoderImage::getObjectInstance($this->getTranscoderPreviewName());
+
+        foreach($aFiles as $aFile) {
+            $bImage = $oTranscoder && $oTranscoder->isMimeTypeSupported($aFile['mime_type']);
+
+            $sPreview = '';
+            if($bImage)
+                $sPreview = $oTranscoder->getFileUrl($aFile['image_id']);
+
+            if(!$sPreview)
+                $sPreview = $this->_oTemplate->getIconUrl($oStorage->getIconNameByFileName($aFile['file_name']));
+
+            $sUrl = $oStorage->getFileUrlById($aFile['image_id']);
+
+            $aResult[] = array(
+                'id' => $aFile['image_id'],
+                'src' => $sPreview,
+                'src_orig' => $bImage ? $sUrl : '',
+                'url' => !$bImage ? $sUrl : ''
+            );
+        }
+
+        return $aResult;
     }
 
     public function getConnectionObject($sType)
@@ -642,6 +694,21 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             $sTitle = _t($sTitle);
 
         return $sTitle;
+    }
+    
+    public function getObjectPrivacyView ($iObjectId = 0)
+    {
+        if(empty($iObjectId))
+            $iObjectId = $this->getId();
+
+        $sFieldPrivacyView = '';
+        if(!empty($this->_aSystem['trigger_field_privacy_view']))
+            $sFieldPrivacyView = $this->_aSystem['trigger_field_privacy_view'];
+
+        if(($iPrivacyView = $this->_oQuery->getObjectPrivacyView($iObjectId, $sFieldPrivacyView)) !== false)
+            return $iPrivacyView;
+
+        return BX_DOL_PG_ALL;
     }
 
     public function getCommentsCountAll ($iObjectId = 0)
@@ -1180,7 +1247,8 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             $iObjId = $aCmt['cmt_object_id'];
         }
         $iObjAthrId = $this->getObjectAuthorId($iObjId);
-        
+        $iObjAthrPrivacyView = $this->getObjectPrivacyView($iObjId);
+
         if($aCmt['cmt_replies'] > 0) {
             if(!$this->isModerator())
                 return array('msg' => _t('_Can not delete comments with replies'));
@@ -1194,6 +1262,7 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
         if(!$this->isRemoveAllowed($aCmt))
             return array('msg' => $aCmt['cmt_author_id'] == $iPerformerId ? strip_tags($this->msgErrRemoveAllowed()) : _t('_Access denied'));
 
+        $iCmtUniqId = $this->getCommentUniqId($iCmtId);
         if($this->_oQuery->removeComment($iObjId, $iCmtId, $aCmt['cmt_parent_id'])) {
             $this->_triggerComment();
 
@@ -1208,41 +1277,52 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
             $this->isRemoveAllowed($aCmt, true);
 
             $this->deleteMetaInfo ($iCmtId);
-            
+
             bx_audit(
                $this->getId(), 
                $this->_aSystem['module'], 
                '_sys_audit_action_delete_comment',  
                $this->_prepareAuditParams($iCmtId, array('comment_author_id' => $aCmt['cmt_author_id'], 'comment_text' => $aCmt['cmt_text']))
-           );
+            );
 
             bx_alert($this->_sSystem, 'commentRemoved', $iObjId, $iPerformerId, array(
                 'object_author_id' => $iObjAthrId,
 
                 'comment_id' => $iCmtId, 
-                'comment_author_id' => $aCmt['cmt_author_id']
+                'comment_uniq_id' => $iCmtUniqId,
+                'comment_author_id' => $aCmt['cmt_author_id'],
+
+                'privacy_view' => $iObjAthrPrivacyView,
             ));
 
             bx_alert('comment', 'deleted', $iCmtId, $iPerformerId, array(
                 'object_system' => $this->_sSystem, 
                 'object_id' => $iObjId, 
                 'object_author_id' => $iObjAthrId,
-                
-                'comment_author_id' => $aCmt['cmt_author_id']
+
+                'comment_uniq_id' => $iCmtUniqId,
+                'comment_author_id' => $aCmt['cmt_author_id'],
+                    
+                'privacy_view' => $iObjAthrPrivacyView,
             ));
 
             if(!empty($aCmt['cmt_parent_id'])) {
                 $iCmtPrntId = (int)$aCmt['cmt_parent_id'];
                 $aCmtPrnt = $this->_oQuery->getCommentSimple($iObjId, $iCmtPrntId);
                 if(!empty($aCmtPrnt) && is_array($aCmtPrnt)) {
+                    $iCmtPrntUniqId = $this->getCommentUniqId($iCmtPrntId);
+
                     bx_alert($this->_sSystem, 'replyRemoved', $iCmtPrntId, $iPerformerId, array(
                         'object_id' => $iObjId, 
                         'object_author_id' => $iObjAthrId,
-                        
+
+                        'parent_uniq_id' => $iCmtPrntUniqId,
                         'parent_author_id' => $aCmtPrnt['cmt_author_id'],
                         
                         'comment_id' => $iCmtId, 
                         'comment_author_id' => $aCmt['cmt_author_id'],
+
+                        'privacy_view' => $iObjAthrPrivacyView,
                     ));
 
                     bx_alert('reply', 'deleted', $iCmtId, $iPerformerId, array(
@@ -1251,9 +1331,12 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
                         'object_author_id' => $iObjAthrId,
 
                         'parent_id' => $iCmtPrntId,
+                        'parent_uniq_id' => $iCmtPrntUniqId,
                         'parent_author_id' => $aCmtPrnt['cmt_author_id'],
 
                         'comment_author_id' => $aCmt['cmt_author_id'], 
+
+                        'privacy_view' => $iObjAthrPrivacyView,
                     ));
                 }
             }
@@ -1287,49 +1370,63 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     {
         $iObjId = (int)$this->getId();
         $iObjAthrId = $this->getObjectAuthorId($iObjId);
+        $iObjAthrPrivacyView = $this->getObjectPrivacyView($iObjId);
 
         $aCmt = $this->_oQuery->getCommentSimple($iObjId, $iCmtId);
         if(empty($aCmt) || !is_array($aCmt))
             return false;
 
+        $iCmtUniqId = $this->getCommentUniqId($iCmtId);
         $iCmtPrntId = (int)$aCmt['cmt_parent_id'];
         $iPerformerId = (int)$aCmt['cmt_author_id'];
         bx_alert($this->_sSystem, 'commentPost', $iObjId, $iPerformerId, array(
             'object_author_id' => $iObjAthrId,
 
             'comment_id' => $iCmtId, 
+            'comment_uniq_id' => $iCmtUniqId,
             'comment_author_id' => $aCmt['cmt_author_id'], 
-            'comment_text' => $aCmt['cmt_text']
+            'comment_text' => $aCmt['cmt_text'],
+
+            'privacy_view' => $iObjAthrPrivacyView,
         ));
-        
+
         bx_audit(
-           $this->getId(), 
-           $this->_aSystem['module'], 
-           '_sys_audit_action_add_comment',  
-           $this->_prepareAuditParams($iCmtId, array('comment_author_id' => $aCmt['cmt_author_id'], 'comment_text' => $aCmt['cmt_text']))
-       );
+            $this->getId(), 
+            $this->_aSystem['module'], 
+            '_sys_audit_action_add_comment',  
+            $this->_prepareAuditParams($iCmtId, array('comment_author_id' => $aCmt['cmt_author_id'], 'comment_text' => $aCmt['cmt_text']))
+        );
 
         bx_alert('comment', 'added', $iCmtId, $iPerformerId, array(
             'object_system' => $this->_sSystem, 
             'object_id' => $iObjId, 
             'object_author_id' => $iObjAthrId,
 
+            'comment_uniq_id' => $iCmtUniqId,
             'comment_author_id' => $aCmt['cmt_author_id'], 
-            'comment_text' => $aCmt['cmt_text']
+            'comment_text' => $aCmt['cmt_text'],
+
+            'privacy_view' => $iObjAthrPrivacyView,
         ));
 
         if(!empty($iCmtPrntId)) {
             $aCmtPrnt = $this->_oQuery->getCommentSimple($iObjId, $iCmtPrntId);
             if(!empty($aCmtPrnt) && is_array($aCmtPrnt)) {
+                $iCmtPrntUniqId = $this->getCommentUniqId($iCmtPrntId);
+
                 bx_alert($this->_sSystem, 'replyPost', $iCmtPrntId, $iPerformerId, array(
                     'object_id' => $iObjId, 
                     'object_author_id' => $iObjAthrId,
 
+                    'parent_uniq_id' => $iCmtPrntUniqId,
                     'parent_author_id' => $aCmtPrnt['cmt_author_id'],
 
                     'comment_id' => $iCmtId,
+                    'comment_uniq_id' => $iCmtUniqId,
                     'comment_author_id' => $aCmt['cmt_author_id'], 
-                    'comment_text' => $aCmt['cmt_text']
+                    'comment_text' => $aCmt['cmt_text'],
+
+                    'privacy_view' => $iObjAthrPrivacyView,
                 ));
 
                 bx_alert('comment', 'replied', $iCmtId, $iPerformerId, array(
@@ -1338,10 +1435,14 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
                     'object_author_id' => $iObjAthrId,
 
                     'parent_id' => $iCmtPrntId,
+                    'parent_uniq_id' => $iCmtPrntUniqId,
                     'parent_author_id' => $aCmtPrnt['cmt_author_id'],
 
+                    'comment_uniq_id' => $iCmtUniqId,
                     'comment_author_id' => $aCmt['cmt_author_id'],  
-                    'comment_text' => $aCmt['cmt_text']
+                    'comment_text' => $aCmt['cmt_text'],
+
+                    'privacy_view' => $iObjAthrPrivacyView,
                 ));
             }
         }
@@ -1353,34 +1454,42 @@ class BxDolCmts extends BxDolFactory implements iBxDolReplaceable, iBxDolContent
     {
         $iObjId = (int)$this->getId();
     	$iObjAthrId = $this->getObjectAuthorId($iObjId);
+        $iObjAthrPrivacyView = $this->getObjectPrivacyView($iObjId);
 
     	$aCmt = $this->getCommentRow($iCmtId);
         if(empty($aCmt) || !is_array($aCmt))
             return false;
 
+        $iCmtUniqId = $this->getCommentUniqId($iCmtId);
         $iPerformerId = $this->_getAuthorId();
         bx_alert($this->_sSystem, 'commentUpdated', $iObjId, $iPerformerId, array(
             'object_author_id' => $iObjAthrId,
 
             'comment_id' => $iCmtId, 
+            'comment_uniq_id' => $iCmtUniqId,
             'comment_author_id' => $aCmt['cmt_author_id'], 
-            'comment_text' => $aCmt['cmt_text']        	
+            'comment_text' => $aCmt['cmt_text'],
+
+            'privacy_view' => $iObjAthrPrivacyView,
         ));
-        
+
         bx_audit(
-           $this->getId(), 
-           $this->_aSystem['module'], 
-           '_sys_audit_action_edit_comment',  
-           $this->_prepareAuditParams($iCmtId, array('comment_author_id' => $aCmt['cmt_author_id'], 'comment_text' => $aCmt['cmt_text']))
-       );
+            $this->getId(), 
+            $this->_aSystem['module'], 
+            '_sys_audit_action_edit_comment',  
+            $this->_prepareAuditParams($iCmtId, array('comment_author_id' => $aCmt['cmt_author_id'], 'comment_text' => $aCmt['cmt_text']))
+        );
 
         bx_alert('comment', 'edited', $iCmtId, $iPerformerId, array(
             'object_system' => $this->_sSystem, 
             'object_id' => $iObjId, 
             'object_author_id' => $iObjAthrId,
 
+            'comment_uniq_id' => $iCmtUniqId,
             'comment_author_id' => $aCmt['cmt_author_id'],
-            'comment_text' => $aCmt['cmt_text']
+            'comment_text' => $aCmt['cmt_text'],
+
+            'privacy_view' => $iObjAthrPrivacyView,
         ));
 
         return array('id' => $iCmtId, 'content' => $this->_getContent($aCmt));
