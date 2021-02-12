@@ -43,9 +43,11 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                 if($iObjectPrivacyView < 0)
                     $iOwnerId = abs($iObjectPrivacyView);
 
-                $sContent = !empty($oAlert->aExtras) && is_array($oAlert->aExtras) ? serialize(bx_process_input($oAlert->aExtras)) : '';
+                $sContent = '';
+                if(!empty($oAlert->aExtras) && is_array($oAlert->aExtras))
+                    $sContent = serialize(bx_process_input($oAlert->aExtras));
 
-                $iId = $this->_oModule->_oDb->insertEvent(array(
+                $aEvent = array(
                     'owner_id' => $iOwnerId,
                     'type' => $oAlert->sUnit,
                     'action' => $oAlert->sAction,
@@ -55,8 +57,13 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
                     'content' => $sContent,
                     'title' => '',
                     'description' => ''
-                ));
+                );
 
+                $sMethod = '_prepareEvent' . bx_gen_method_name($oAlert->sUnit . '_' . $oAlert->sAction);
+                if(method_exists($this, $sMethod))
+                    $this->$sMethod($oAlert, $aEvent);
+
+                $iId = $this->_oModule->_oDb->insertEvent($aEvent);
                 if(!empty($iId))
                     $this->_oModule->onPost($iId);
                 break;
@@ -142,6 +149,14 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
             	$this->_oModule->deleteEvent($aEvent);
                 break;
         }
+    }
+
+    protected function _prepareEventCommentAdded($oAlert, &$aEvent)
+    {
+        $aEvent = array_merge($aEvent, array(
+            'object_id' => $oAlert->aExtras['comment_uniq_id'],
+            'object_owner_id' => $oAlert->aExtras['comment_author_id'],
+        ));
     }
 
     protected function _processSystemClearCache($oAlert)

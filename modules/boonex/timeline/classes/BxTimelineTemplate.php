@@ -455,6 +455,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $aEvent['icon'] = !empty($aResult['icon']) ? $aResult['icon'] : '';
         $aEvent['sample'] = !empty($aResult['sample']) ? $aResult['sample'] : '_bx_timeline_txt_sample';
         $aEvent['sample_action'] = !empty($aResult['sample_action']) ? $aResult['sample_action'] : '_bx_timeline_txt_added_sample';
+        if(isset($aResult['sample_action_custom']))
+            $aEvent['sample_action_custom'] = $aResult['sample_action_custom'];
         $aEvent['content'] = $aResult['content'];
         $aEvent['views'] = $aResult['views'];
         $aEvent['votes'] = $aResult['votes'];
@@ -1389,7 +1391,19 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sAuthorUrl = $oAuthor->getUrl();
         $sAuthorUnit = $oAuthor->getUnit(0, array('template' => 'unit_wo_info'));
         $sAuthorBadges = $oAuthor->getBadges();
-        $sAuthorAction = _t($aEvent['sample_action'], _t($aEvent['sample']));
+        $sAuthorAction = '';
+
+        if(!empty($aEvent['sample_action_custom']) && is_array($aEvent['sample_action_custom'])) {
+            $aAuthorAction = $aEvent['sample_action_custom'];
+
+            foreach($aAuthorAction['markers'] as $iIndex => $sMarker)
+                if(get_mb_substr($sMarker, 0, 1) == '_')
+                    $aAuthorAction['markers'][$iIndex] = _t($sMarker);
+
+            $sAuthorAction = bx_replace_markers(_t($aAuthorAction['content']), $aAuthorAction['markers']);
+        }
+        else
+            $sAuthorAction = _t($aEvent['sample_action'], _t($aEvent['sample']));
 
         if(($bViewItem || $this->_oConfig->isCountAllViews()) && !empty($aEvent['views']) && is_array($aEvent['views']) && isset($aEvent['views']['system']))
             $oModule->getViewObject($aEvent['views']['system'], $aEvent['views']['object_id'])->doView();

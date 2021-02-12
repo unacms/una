@@ -54,7 +54,12 @@ CREATE TABLE IF NOT EXISTS `bx_timeline_handlers` (
 INSERT INTO `bx_timeline_handlers`(`group`, `type`, `alert_unit`, `alert_action`, `content`) VALUES
 ('common_post', 'insert', 'timeline_common_post', '', ''),
 ('common_repost', 'insert', 'timeline_common_repost', '', ''),
-('profile', 'delete', 'profile', 'delete', '');
+
+('profile', 'delete', 'profile', 'delete', ''),
+
+('comment', 'insert', 'comment', 'added', 'a:5:{s:11:"module_name";s:6:"system";s:13:"module_method";s:17:"get_timeline_post";s:12:"module_class";s:17:"TemplCmtsServices";s:9:"groupable";i:0;s:8:"group_by";s:0:"";}'),
+('comment', 'update', 'comment', 'edited', ''),
+('comment', 'delete', 'comment', 'deleted', '');
 
 CREATE TABLE IF NOT EXISTS `bx_timeline_cache` (
   `type` varchar(32) NOT NULL default '',
