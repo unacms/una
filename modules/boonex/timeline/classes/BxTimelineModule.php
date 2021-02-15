@@ -315,6 +315,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         if(empty($sConten))
             return echoJson(array());
 
+        if(!empty($aParams['type']))
+            $this->_oConfig->setUserChoice(array('type' => $aParams['type']));
+
         echoJson(array(
             'code' => 0, 
             'content' => $sConten,
@@ -3913,6 +3916,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     protected function _serviceGetBlockViews($aBrowseParams = array())
     {
         $aParams = $this->_prepareParams($aBrowseParams);
+
+        if(($sType = $this->_oConfig->getUserChoice('type')) !== false)
+            $aParams['type'] = $sType;
 
         $this->_iOwnerId = $aParams['owner_id'];
 
