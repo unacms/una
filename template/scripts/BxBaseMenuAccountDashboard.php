@@ -31,16 +31,22 @@ class BxBaseMenuAccountDashboard extends BxTemplMenu
 
         switch ($a['name']) {
             case 'dashboard-subscriptions':
-        		$oPayments = BxDolPayments::getInstance();
-        		if(!$oPayments->isActive())
-        			return false;
-        		break;
+                $oPayments = BxDolPayments::getInstance();
+                if(!$oPayments->isActive())
+                    return false;
+                break;
 
-        	case 'dashboard-orders':
-        		$oPayments = BxDolPayments::getInstance();
-        		if(!$oPayments->isActive())
-        			return false;
-        		break;
+            case 'dashboard-orders':
+                $oPayments = BxDolPayments::getInstance();
+                if(!$oPayments->isActive())
+                    return false;
+                break;
+
+            case 'dashboard-invoices':
+                $oPayments = BxDolPayments::getInstance();
+                if(!$oPayments->isActive())
+                    return false;
+                break;
         }
 
         return true;
