@@ -45,6 +45,19 @@ BxPaymentProviderStripe.prototype.init = function(oOptions) {
     this._sCustom  = oOptions.sCustom;
 };
 
+BxPaymentProviderStripe.prototype.changeAmount = function (iAmount) {
+    this._rHandler = StripeCheckout.configure({
+        key: this._oOptions.sPublicKey,
+        name: this._oOptions.sVendorName,
+        amount: iAmount,
+        currency: this._oOptions.sVendorCurrency,
+        image: this._oOptions.sVendorIcon,
+        locale: 'auto',
+        email: this._oOptions.sClientEmail,
+        description: this._oOptions.sItemTitle == undefined ? '' : this._oOptions.sItemTitle
+    });
+}
+
 BxPaymentProviderStripe.prototype.checkout = function(oLink) {
     oLink = jQuery(oLink);
     if(oLink.hasClass('bx-btn-disabled'))
