@@ -20,6 +20,7 @@ BxPaymentProviderStripe.prototype.init = function(oOptions) {
     this._sObjName = oOptions.sObjName == undefined ? 'oPaymentProviderStripe' : oOptions.sObjName;
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'fade' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
+    this._oOptions = oOptions;
 
     this._rHandler = StripeCheckout.configure({
         key: oOptions.sPublicKey,
@@ -44,6 +45,19 @@ BxPaymentProviderStripe.prototype.init = function(oOptions) {
     this._sRedirect  = oOptions.sRedirect;
     this._sCustom  = oOptions.sCustom;
 };
+
+BxPaymentProviderStripe.prototype.changeAmount = function (iAmount) {
+    this._rHandler = StripeCheckout.configure({
+        key: this._oOptions.sPublicKey,
+        name: this._oOptions.sVendorName,
+        amount: iAmount,
+        currency: this._oOptions.sVendorCurrency,
+        image: this._oOptions.sVendorIcon,
+        locale: 'auto',
+        email: this._oOptions.sClientEmail,
+        description: this._oOptions.sItemTitle == undefined ? '' : this._oOptions.sItemTitle
+    });
+}
 
 BxPaymentProviderStripe.prototype.checkout = function(oLink) {
     oLink = jQuery(oLink);
