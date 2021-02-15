@@ -20,6 +20,7 @@ BxPaymentProviderStripe.prototype.init = function(oOptions) {
     this._sObjName = oOptions.sObjName == undefined ? 'oPaymentProviderStripe' : oOptions.sObjName;
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'fade' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
+    this._oOptions = oOptions;
 
     this._rHandler = StripeCheckout.configure({
         key: oOptions.sPublicKey,
