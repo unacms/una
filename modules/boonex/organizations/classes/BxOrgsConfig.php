@@ -97,6 +97,7 @@ class BxOrgsConfig extends BxBaseModGroupsConfig
             'PARAM_MMODE' => 'bx_organizations_members_mode',
             'PARAM_PUBLIC_SBSN' => 'bx_organizations_public_subscriptions',
             'PARAM_PUBLIC_SBSD' => 'bx_organizations_public_subscribed_me',
+            'PARAM_SBS_WO_JOIN' => 'bx_organizations_enable_subscribe_wo_join',
             'PARAM_REDIRECT_AADD' => 'bx_organizations_redirect_aadd',
             'PARAM_REDIRECT_AADD_CUSTOM_URL' => 'bx_organizations_redirect_aadd_custom_url',
             

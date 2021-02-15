@@ -1254,7 +1254,9 @@ class BxBaseModGroupsModule extends BxBaseModProfileModule
      */
     public function _modGroupsCheckAllowedSubscribeAdd(&$aDataEntry, $isPerformAction = false)
     {
-        if(!$this->isFan($aDataEntry[$this->_oConfig->CNF['FIELD_ID']]))
+        $CNF = &$this->_oConfig->CNF;
+
+        if(!$this->isFan($aDataEntry[$CNF['FIELD_ID']]) && (!isset($CNF['PARAM_SBS_WO_JOIN']) || getParam($CNF['PARAM_SBS_WO_JOIN']) != 'on'))
             return _t('_sys_txt_access_denied');
 
         return parent::_modProfileCheckAllowedSubscribeAdd($aDataEntry, $isPerformAction);
