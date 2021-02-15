@@ -287,6 +287,14 @@ class BxPaymentCart extends BxBaseModPaymentCart
         foreach($aContent as $iSellerId => $aSellerItems)
             $aResult[$iSellerId] = $this->_getInfo($sType, $iUserId, $iSellerId, $aSellerItems);
 
+        bx_alert($this->_oModule->getName(), 'get_cart_info', 0, 0, array(
+           'type' => $sType,
+           'client_id' => $iUserId,
+           'seller_id' => $iSellerId,
+           'items' => $aItems,
+           'override_result' => &$aResult
+       ));
+        
         return $aResult;
     }
 
