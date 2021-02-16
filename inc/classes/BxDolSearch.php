@@ -123,7 +123,7 @@ class BxDolSearch extends BxDol
     public function getEmptyResult ()
     {
         $sKey = _t('_Empty');
-        return DesignBoxContent($sKey, MsgBox($sKey), 1);
+        return DesignBoxContent($sKey, MsgBox($sKey), BX_DB_PADDING_DEF);
     }
 
     protected function getKeyTitlesPairs ()
