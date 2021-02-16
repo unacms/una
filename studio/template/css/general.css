@@ -34,7 +34,7 @@ div.bx-std-page {
     -webkit-flex-direction: column;
     flex-direction: column;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
 }
 div.bx-std-menu-top-wrp {
     -webkit-flex-grow: 0;
