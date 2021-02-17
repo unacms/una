@@ -45,13 +45,15 @@ class BxPaymentConfig extends BxBaseModPaymentConfig
             'URL_RETURN' => 'page.php?i=payment-cart-thank-you',
             'URL_RETURN_DATA' => $sBaseUrl . 'finalize_checkout/',
             'URL_NOTIFY' => $sBaseUrl . 'notify/',
-            
+            'URL_CHECKOUT_OFFLINE' => 'page.php?i=payment-checkout-offline',
+
             'KEY_ARRAY_PRICE_SINGLE' => 'price_single',
             'KEY_ARRAY_PRICE_RECURRING' => 'price_recurring',
             'KEY_ARRAY_TRIAL_RECURRING' => 'trial_recurring',
 
             // objects
             'OBJECT_FORM_PRELISTS_CURRENCIES' => 'bx_payment_currencies',
+            'OBJECT_PP_OFFLINE' => 'offline', //Offline payment provider
             'OBJECT_PP_CREDITS' => 'credits', //Credits payment provider
 
             'MODULE_CREDITS' => 'bx_credits',

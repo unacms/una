@@ -11,7 +11,7 @@ DELETE FROM `sys_options_types` WHERE `id` = @iTypeId;
 
 -- PAGES & BLOCKS
 DELETE FROM `sys_objects_page` WHERE `module` = @sName;
-DELETE FROM `sys_pages_blocks` WHERE `module` = @sName;
+DELETE FROM `sys_pages_blocks` WHERE `module` = @sName OR `object` IN ('bx_payment_join', 'bx_payment_carts', 'bx_payment_cart', 'bx_payment_cart_thank_you', 'bx_payment_history', 'bx_payment_sbs_list_my', 'bx_payment_sbs_list_all', 'bx_payment_sbs_history', 'bx_payment_orders', 'bx_payment_details', 'bx_payment_invoices', 'bx_payment_checkout_offline');
 
 
 -- MENU

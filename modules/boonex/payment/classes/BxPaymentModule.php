@@ -428,6 +428,69 @@ class BxPaymentModule extends BxBaseModPaymentModule
         );
     }
 
+    public function serviceGetBlockCheckoutOffline()
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $oBuyer = BxDolProfile::getInstance();
+        if(!$oBuyer)
+            return MsgBox(_t('_bx_payment_err_required_login'));
+        
+        $iSeller = (int)bx_get('seller');
+        $oSeller = BxDolProfile::getInstance($iSeller);
+        if(!$oSeller)
+            return MsgBox(_t('_bx_payment_err_unknown_vendor'));
+
+        $aData = array(
+            'seller' => $iSeller,
+            'currency' => array(
+                'code' => bx_process_input(bx_get('currency_code')),
+                'sign' => bx_process_input(bx_get('currency_sign')),
+            ),
+            'amount' => (float)bx_get('amount'),
+            'return_url' => bx_process_input(bx_get('return_url')),
+        );
+
+        if(empty($aData['currency']['code']))
+            $aData['currency']['code'] = $this->_oConfig->getDefaultCurrencyCode();
+
+        if(empty($aData['currency']['sign']))
+            $aData['currency']['sign'] = $this->_oConfig->getDefaultCurrencySign();
+
+        $sItems = '';
+        $iItemsCount = (int)bx_get('items_count');
+        for($i = 0; $i < $iItemsCount; $i++) {
+            $aItem = array(
+                'title' => bx_process_input(bx_get('item_title_' . $i)),
+                'quantity' => (int)bx_get('item_quantity_' . $i)
+            );
+
+            $sItems .= _t('_bx_payment_txt_checkout_item', $aItem['title'], $aItem['quantity']);
+            $aData['items'][] = $aItem;
+        }
+
+        $aTemplate = BxDolEmailTemplates::getInstance()->parseTemplate($this->_oConfig->getPrefix('general') . 'checkout_offline', array(
+            'profile_name' => $oBuyer->getDisplayName(),
+            'profile_link' => $oBuyer->getUrl(),
+            'items' => $sItems,
+            'amount' => $aData['currency']['sign'] . sprintf("%.2f", (float)($aData['amount'])),
+            'date' => bx_time_js(time(), BX_FORMAT_DATE, true)
+        ), 0, $iSeller);
+
+        $sEmail = '';
+        $oProvider = $this->getObjectProvider($CNF['OBJECT_PP_OFFLINE'], $iSeller);
+        if($oProvider !== false && $oProvider->isActive())
+            $sEmail = $oProvider->getOption('checkout_email');
+
+        if(empty($sEmail))
+            $sEmail = $oBuyer->getAccountObject()->getEmail();
+
+        if(!sendMail($sEmail, $aTemplate['Subject'], $aTemplate['Body'], 0, array(), BX_EMAIL_SYSTEM))
+            return MsgBox(_t('_bx_payment_err_cannot_perform'));
+
+        return $this->_oTemplate->displayBlockCheckoutOffline($oBuyer, $oSeller, $aData);
+    }
+
     /**
      * Cart Processing Methods
      */

@@ -53,6 +53,13 @@ INSERT INTO `sys_pages_blocks` (`object`, `cell_id`, `module`, `title`, `designb
 
 ('bx_payment_invoices', 1, @sName, '_bx_payment_page_block_title_invoices', 11, 2147483647, 'service', 'a:4:{s:6:"module";s:10:"bx_payment";s:6:"method";s:18:"get_block_invoices";s:6:"params";a:0:{}s:5:"class";s:11:"Commissions";}', 0, 0, 1);
 
+-- PAGE: offline checkout
+INSERT INTO `sys_objects_page`(`object`, `uri`, `title_system`, `title`, `module`, `type_id`, `layout_id`, `visible_for_levels`, `visible_for_levels_editable`, `url`, `meta_description`, `meta_keywords`, `meta_robots`, `cache_lifetime`, `cache_editable`, `deletable`, `override_class_name`, `override_class_file`) VALUES 
+('bx_payment_checkout_offline', 'payment-checkout-offline', '_bx_payment_page_title_sys_checkout_offline', '_bx_payment_page_title_checkout_offline', 'bx_payment', 2, 5, 2147483647, 1, 'page.php?i=payment-checkout-offline', '', '', '', 0, 1, 0, '', '');
+
+INSERT INTO `sys_pages_blocks`(`object`, `cell_id`, `module`, `title_system`, `title`, `designbox_id`, `visible_for_levels`, `type`, `content`, `deletable`, `copyable`, `active`, `order`) VALUES 
+('bx_payment_checkout_offline', 1, 'bx_payment', '_bx_payment_page_block_title_sys_checkout_offline', '_bx_payment_page_block_title_checkout_offline', 0, 2147483647, 'service', 'a:2:{s:6:"module";s:10:"bx_payment";s:6:"method";s:26:"get_block_checkout_offline";}', 0, 0, 1, 0);
+
 
 -- MENU: cart submenu
 INSERT INTO `sys_objects_menu`(`object`, `title`, `set_name`, `module`, `template_id`, `deletable`, `active`, `override_class_name`, `override_class_file`) VALUES 
@@ -169,7 +176,8 @@ INSERT INTO `sys_email_templates` (`Module`, `NameSystem`, `Name`, `Subject`, `B
 (@sName, '_bx_payment_et_txt_name_expiration_notification_seller', 'bx_payment_expiration_notification_seller', '_bx_payment_et_txt_subject_expiration_notification_seller', '_bx_payment_et_txt_body_expiration_notification_seller'),
 (@sName, '_bx_payment_et_txt_name_expiration_notification_client', 'bx_payment_expiration_notification_client', '_bx_payment_et_txt_subject_expiration_notification_client', '_bx_payment_et_txt_body_expiration_notification_client'),
 (@sName, '_bx_payment_et_txt_name_expiring_notification_committent', 'bx_payment_expiring_notification_committent', '_bx_payment_et_txt_subject_expiring_notification_committent', '_bx_payment_et_txt_body_expiring_notification_committent'),
-(@sName, '_bx_payment_et_txt_name_overdue_notification_committent', 'bx_payment_overdue_notification_committent', '_bx_payment_et_txt_subject_overdue_notification_committent', '_bx_payment_et_txt_body_overdue_notification_committent');
+(@sName, '_bx_payment_et_txt_name_overdue_notification_committent', 'bx_payment_overdue_notification_committent', '_bx_payment_et_txt_subject_overdue_notification_committent', '_bx_payment_et_txt_body_overdue_notification_committent'),
+(@sName, '_bx_payment_et_txt_name_checkout_offline', 'bx_payment_checkout_offline', '_bx_payment_et_txt_subject_checkout_offline', '_bx_payment_et_txt_body_checkout_offline');
 
 
 -- CRON

@@ -159,9 +159,19 @@ CREATE TABLE IF NOT EXISTS `bx_payment_invoices` (
   UNIQUE KEY `name`(`name`)
 );
 
+-- Offline payment provider
+INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `single_seller`, `time_tracker`, `active`, `order`, `class_name`) VALUES
+('offline', '_bx_payment_off_cpt', '_bx_payment_off_dsc', 'off_', 0, 1, 0, 0, 0, 1, 0, 'BxPaymentProviderOffline');
+SET @iProviderId = LAST_INSERT_ID();
+
+INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
+(@iProviderId, 'off_active', 'checkbox', '_bx_payment_off_active_cpt', '_bx_payment_off_active_dsc', '', '', '', '', 1),
+(@iProviderId, 'off_checkout_email', 'text', '_bx_payment_off_checkout_email_cpt', '_bx_payment_off_checkout_email_dsc', '', 'EmailOrEmpty', '', '_sys_form_account_input_email_error', 2);
+
+
 -- Credits payment provider
 INSERT INTO `bx_payment_providers`(`name`, `caption`, `description`, `option_prefix`, `for_visitor`, `for_single`, `for_recurring`, `single_seller`, `time_tracker`, `active`, `order`, `class_name`) VALUES
-('credits', '_bx_payment_cdt_cpt', '_bx_payment_cdt_dsc', 'cdt_', 0, 1, 1, 1, 1, 1, 0, 'BxPaymentProviderCredits');
+('credits', '_bx_payment_cdt_cpt', '_bx_payment_cdt_dsc', 'cdt_', 0, 1, 1, 1, 1, 1, 1, 'BxPaymentProviderCredits');
 SET @iProviderId = LAST_INSERT_ID();
 
 INSERT INTO `bx_payment_providers_options`(`provider_id`, `name`, `type`, `caption`, `description`, `extra`, `check_type`, `check_params`, `check_error`, `order`) VALUES
