@@ -221,7 +221,10 @@ class BxDolMData
 	 */
     protected function transferCategory($sName, $sPrefix, $sCategory, $iValue = 0, $sData = '')
 	{
-		if (strpos($sName, ';') !== false)
+		if (!$sName)
+		    return false;
+
+	    if (strpos($sName, ';') !== false)
 			$sName = substr($sName, 0, strpos($sName, ';'));
 		
 		$sTitle = str_replace(' ', '_', $sName);
@@ -412,7 +415,15 @@ class BxDolMData
 							$sCmtsTable = 'bx_photos_cmts_albums';
 							$sTable = 'bx_albums_cmts';
 							break;
+            case 'photo_albums_items':
+                            $sCmtsTable = 'bx_photos_cmts';
+                            $sTable = 'bx_albums_cmts_media';
+                            break;
 			case 'videos': 
+							$sCmtsTable = 'bx_videos_cmts';
+							$sTable = 'bx_videos_cmts';
+							break;
+			case 'video_albums_items':
 							$sCmtsTable = 'bx_videos_cmts';
 							$sTable = 'bx_albums_cmts_media';
 							break;
@@ -474,7 +485,6 @@ class BxDolMData
 										));
 
 				$iLastInsertId = $this -> _oDb -> lastId();
-
 				$this -> addCmtsIds($sTable, $iLastInsertId, $aValue['cmt_rate'], $aValue['cmt_rate_count']);
 				$aCommentsArray[$aValue['cmt_id']] = array(
 																'id' => $iLastInsertId,

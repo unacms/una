@@ -27,7 +27,7 @@ class BxDolMVideoAlbums extends BxDolMData {
 	public function __construct(&$oMigrationModule, &$oDb)
 	{
         parent::__construct($oMigrationModule, $oDb);
-		$this -> _sModuleName = 'videos';
+		$this -> _sModuleName = 'videos_albums';
 		$this -> _sTableWithTransKey = 'bx_albums_albums';
 		$this -> _sVideoFilesPath = $this -> _oDb -> getExtraParam('root') . 'flash' . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . "video" . DIRECTORY_SEPARATOR . "files" . DIRECTORY_SEPARATOR;
     }
@@ -106,7 +106,7 @@ class BxDolMVideoAlbums extends BxDolMData {
 			$this -> _iTransferredAlbums++;
        }        
 
-        $this -> setResultStatus(_t('_bx_dolphin_migration_started_migration_videos_finished', $this -> _iTransferredAlbums, $this -> _iTransferred));
+        $this -> setResultStatus(_t('_bx_dolphin_migration_started_migration_videos_albums_finished', $this -> _iTransferredAlbums, $this -> _iTransferred));
         return BX_MIG_SUCCESSFUL;
     }
    	
@@ -142,7 +142,7 @@ class BxDolMVideoAlbums extends BxDolMData {
 						$sQuery = $this -> _oDb -> prepare("INSERT INTO `bx_albums_files2albums` SET `content_id` = ?, `file_id` = ?, `title` = ?", $iNewAlbumID, $iId, $aValue['Title']);
 						$this -> _oDb -> query($sQuery);
 						
-						$iCmts = $this -> transferComments($iItemId = $this -> _oDb -> lastId(), $aValue['ID'], 'videos');
+						$iCmts = $this -> transferComments($iItemId = $this -> _oDb -> lastId(), $aValue['ID'], 'video_albums_items');
 						if ($iCmts)
 							$this -> _oDb -> query("UPDATE `bx_albums_files2albums` SET `comments` = :comments WHERE `id` = :id", array('id' => $iItemId, 'comments' => $iCmts));
 						

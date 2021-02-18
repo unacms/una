@@ -22,13 +22,13 @@ class BxDolMPhotoAlbums extends BxDolMData
 	public function __construct(&$oMigrationModule, &$oDb)
 	{
         parent::__construct($oMigrationModule, $oDb);
-		$this -> _sModuleName = 'photo_albums';
+		$this -> _sModuleName = 'photos_albums';
 		$this -> _sTableWithTransKey = 'bx_albums_albums';
     }
 	
 	public function getTotalRecords()
 	{
-		$aResult = $this -> _mDb -> getRow("SELECT COUNT(*) as `count`, SUM(`ObjCount`) as `obj` FROM `" . $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['table_name_albums'] ."` WHERE `Type` = 'bx_photos' AND `Uri` <> 'Hidden'");
+        $aResult = $this -> _mDb -> getRow("SELECT COUNT(*) as `count`, SUM(`ObjCount`) as `obj` FROM `" . $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['table_name_albums'] ."` WHERE `Type` = 'bx_photos' AND `Uri` <> 'Hidden'");
 		return !(int)$aResult['count'] && !(int)$aResult['obj'] ? 0 : $aResult;
 	}
     
@@ -103,7 +103,7 @@ class BxDolMPhotoAlbums extends BxDolMData
        }        
 
         // set as finished;
-        $this -> setResultStatus(_t('_bx_dolphin_migration_started_migration_photos_finished', $this -> _iTransferredAlbums, $this -> _iTransferred));
+        $this -> setResultStatus(_t('_bx_dolphin_migration_started_migration_photos_albums_finished', $this -> _iTransferredAlbums, $this -> _iTransferred));
         return BX_MIG_SUCCESSFUL;
     }
    	
@@ -126,11 +126,11 @@ class BxDolMPhotoAlbums extends BxDolMData
 				$sFileName = "{$aValue['ID']}.{$aValue['Ext']}";
 			    if ($this -> isFileExisted($iProfileId, $sFileName, $aValue['Date']))
 					continue;
-				
+
 				$sImagePath = $this -> _sImagePhotoFiles . $sFileName;
 				if (file_exists($sImagePath))
 				{
-					$oStorage = BxDolStorage::getObjectInstance('bx_albums_files');
+				    $oStorage = BxDolStorage::getObjectInstance('bx_albums_files');
 					$iId = $oStorage -> storeFileFromPath($sImagePath, false, $iProfileId, $iNewAlbumID);
 					if ($iId)
 					{ 
@@ -139,7 +139,7 @@ class BxDolMPhotoAlbums extends BxDolMData
 						$sQuery = $this -> _oDb -> prepare("INSERT INTO `bx_albums_files2albums` SET `content_id` = ?, `file_id` = ?, `data` = ?, `title` = ?", $iNewAlbumID, $iId, $aValue['Size'], $aValue['Title']);
 						$this -> _oDb -> query($sQuery);
 						
-						$iCmts = $this -> transferComments($iItemId = $this -> _oDb -> lastId(), $aValue['ID'], 'album_photo');
+						$iCmts = $this -> transferComments($iItemId = $this -> _oDb -> lastId(), $aValue['ID'], 'photo_albums_items');
 						if ($iCmts)
 							$this -> _oDb -> query("UPDATE `bx_albums_files2albums` SET `comments` = :comments WHERE `id` = :id", array('id' => $iItemId, 'comments' => $iCmts));
 						
@@ -168,7 +168,7 @@ class BxDolMPhotoAlbums extends BxDolMData
         return $this -> _oDb -> query($sQuery);
     }
 
-	private function isFileExisted($iAuthor, $sTitle, $iDate){    	
+	private function isFileExisted($iAuthor, $sTitle, $iDate){
     	$sQuery  = $this -> _oDb ->  prepare("SELECT COUNT(*) FROM `bx_albums_files` WHERE `profile_id` = ? AND `file_name` = ? AND `added` = ? LIMIT 1", $iAuthor, $sTitle, $iDate);
         return (bool)$this -> _oDb -> getOne($sQuery);
     }
