@@ -39,6 +39,10 @@ BxPaymentProviderChargebeeV3.prototype.init = function(oOptions) {
 };
 
 BxPaymentProviderChargebeeV3.prototype.subscribe = function(oLink) {
+    return this.subscribeWithAddons(oLink);
+};
+
+BxPaymentProviderChargebeeV3.prototype.subscribeWithAddons = function(oLink, mixedAddons) {
     var $this = this;
     var oDate = new Date();
 
@@ -51,7 +55,10 @@ BxPaymentProviderChargebeeV3.prototype.subscribe = function(oLink) {
     this._rHandler.openCheckout({
         hostedPage: function() {
             return $.post({
-                url: $this._sActionsUrl + 'call/' + $this._sProvider + '/get_hosted_page/' + $this._iClientId + '/' + $this._iSellerId + '/' + $this._sItemName + '/' + $this._sItemAddons + '/',
+                url: $this._sActionsUrl + 'call/' + $this._sProvider + '/get_hosted_page/' + $this._iClientId + '/' + $this._iSellerId + '/' + $this._sItemName + '/',
+                data: {
+                    addons: mixedAddons != undefined ? mixedAddons : $this._sItemAddons
+                }, 
                 dataType: 'json'
             });
         },
