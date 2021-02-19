@@ -45,8 +45,8 @@
 	font-size: 1.5rem;
 }
 
-.bx-tl-post .bx-form-value .bx-form-input-wrapper-textarea {
-	overflow: hidden;
+.bx-tl-post .bx-form-value .bx-form-input-wrapper-textarea:not(.bx-form-input-wrapper-html) {
+    overflow: hidden;
 }
 
 div#bx-timeline-post div#bx-form-element-attachments {
