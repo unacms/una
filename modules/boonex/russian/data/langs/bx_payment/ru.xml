@@ -261,6 +261,8 @@
     <string name="_bx_payment_form_invoices_input_cancel_sys"><![CDATA[Отменить]]></string>
     <string name="_bx_payment_form_invoices_input_cancel"><![CDATA[Отменить]]></string>
 
+    <string name="_bx_payment_form_input_email_err_cor_or_emp"><![CDATA[Используйте правильный адрес электронной почты или оставьте поле пустым.]]></string>
+
     <!-- Predefined Values -->
     <string name="_bx_payment_pre_lists_currencies"><![CDATA[Валюты]]></string>
 
