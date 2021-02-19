@@ -304,6 +304,24 @@ class BxDolMConfig extends BxBaseModGeneralConfig
         $this -> _bTransferEmpty = getParam('bx_dolphin_migration_empty_albums');
         $this -> _bUseNickName = getParam('bx_dolphin_migration_use_nickname');
         $this -> _iDefaultPrivacyGroup = (int)getParam('bx_dolphin_migration_default_privacy');
+        $this -> _bMediaModulesContent = getParam('bx_dolphin_migration_media_modules') == 'on';
+
+        if ($this->_bMediaModulesContent){
+            if ((int)BxDolModuleQuery::getInstance()->isEnabled('photos'))
+                unset($this->_aMigrationModules['photos_albums']);
+            else
+                unset($this->_aMigrationModules['photos']);
+
+            if ((int)BxDolModuleQuery::getInstance()->isEnabled('videos'))
+                unset($this->_aMigrationModules['videos_albums']);
+            else
+                unset($this->_aMigrationModules['videos']);
+        }
+         else
+         {
+             unset($this->_aMigrationModules['photos']);
+             unset($this->_aMigrationModules['videos']);
+         }
 
         parent::__construct($aModule);
 	}

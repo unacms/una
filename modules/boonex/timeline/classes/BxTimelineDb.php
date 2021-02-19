@@ -693,7 +693,7 @@ class BxTimelineDb extends BxBaseModNotificationsDb
 
             switch($aParams['type']) {
                 case BX_TIMELINE_TYPE_HOT:
-                    $sOrderClause = "`{$this->_sTableHotTrack}`.`value` DESC, ";
+                    $sOrderClause = "`{$this->_sTable}`.`sticked` DESC, `{$this->_sTableHotTrack}`.`value` DESC, ";
                     break;
 
                     case BX_BASE_MOD_NTFS_TYPE_PUBLIC:
@@ -766,9 +766,23 @@ class BxTimelineDb extends BxBaseModNotificationsDb
         //--- Check type
         $mixedWhereSubclause = "";
         switch($aParams['type']) {
-            //--- Feed: Hot (Public)
+            //--- Feed: Hot
             case BX_TIMELINE_TYPE_HOT:
-                $mixedJoinClause .= " INNER JOIN `{$this->_sTableHotTrack}` ON `{$this->_sTable}`.`id`=`{$this->_sTableHotTrack}`.`event_id`";
+                //--- Apply privacy filter
+                $aPrivacyGroups = array(BX_DOL_PG_ALL);
+                if(isLogged())
+                    $aPrivacyGroups[] = BX_DOL_PG_MEMBERS;
+
+                $aQueryParts = BxDolPrivacy::getObjectInstance($this->_oConfig->getObject('privacy_view'))->getContentByGroupAsSQLPart($aPrivacyGroups);
+                $mixedWhereClause .= $aQueryParts['where'] . " ";
+
+                //--- Select Hot posts.
+                $mixedJoinClause .= " LEFT JOIN `{$this->_sTableHotTrack}` ON `{$this->_sTable}`.`id`=`{$this->_sTableHotTrack}`.`event_id`";
+                $mixedWhereSubclause = "NOT ISNULL(`{$this->_sTableHotTrack}`.`value`)";
+
+                //--- Select Promoted posts.
+                $mixedWhereSubclause .= " OR `{$this->_sTable}`.`promoted` <> '0'";
+                break;
 
             //--- Feed: Public
             case BX_BASE_MOD_NTFS_TYPE_PUBLIC:

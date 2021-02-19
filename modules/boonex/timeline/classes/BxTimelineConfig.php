@@ -64,6 +64,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_iTimelineVisibilityThreshold;
     protected $_aPregPatterns;
 
+    protected $_sSessionKeyType;
+
     /**
      * Constructor
      */
@@ -313,6 +315,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         );
 
         $this->_aBriefCardsTags = array('a', 'b', 'i');
+
+        $this->_sSessionKeyType = $this->_sName . '_type_';
     }
 
     public function init(&$oDb)
@@ -735,6 +739,32 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function getBrowseParams($sValue)
     {
         return unserialize(base64_decode(urldecode($sValue)));
+    }
+    
+    public function setUserChoice($aChoices = array())
+    {
+        if(!isLogged() || empty($aChoices))
+            return;
+
+        $iUserId = bx_get_logged_profile_id();
+
+        $oSession = BxDolSession::getInstance();
+        foreach($aChoices as $sKey => $mixedValue) {
+            $sField = '_sSessionKey' . bx_gen_method_name($sKey);
+            if(isset($this->$sField) && !empty($mixedValue))
+                $oSession->setValue($this->$sField . $iUserId, $mixedValue);
+        }
+    }
+
+    public function getUserChoice($sKey)
+    {
+        $sField = '_sSessionKey' . bx_gen_method_name($sKey);
+        if(!isLogged() || !isset($this->$sField))
+            return false;
+
+        $iUserId = bx_get_logged_profile_id();
+
+        return BxDolSession::getInstance()->getValue($this->$sField . $iUserId);
     }
 }
 

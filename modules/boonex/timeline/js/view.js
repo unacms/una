@@ -23,7 +23,6 @@ function BxTimelineView(oOptions) {
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
 
-    this._bInit = oOptions.bInit == undefined ? true : oOptions.bInit;
     this._bInfScroll = oOptions.bInfScroll == undefined ? false : oOptions.bInfScroll;
     this._iInfScrollAutoPreloads = oOptions.iInfScrollAutoPreloads == undefined ? 10 : oOptions.iInfScrollAutoPreloads;
     this._sInfScrollAfter = 'item';
@@ -43,14 +42,11 @@ function BxTimelineView(oOptions) {
     if(typeof window.glBxTimelineVapPlayers === 'undefined')
         window.glBxTimelineVapPlayers = [];
 
+    //--- Get currently active 'view'.
     this.initView();
 
-    if(this._bInit) {
-        var $this = this;
-        $(document).ready(function() {
-            $this.init();
-        });
-    }
+    //--- Initialize components on currently active 'view'.
+    this.init();
 }
 
 BxTimelineView.prototype = Object.create(BxTimelineMain.prototype);
@@ -409,6 +405,8 @@ BxTimelineView.prototype.changeView = function(oLink, sType, oRequestParams)
         oViewBefore.hide();
         oViews.find(sView).show();
 
+        this.initView();
+
         return;
     }
 
@@ -432,9 +430,7 @@ BxTimelineView.prototype.changeView = function(oLink, sType, oRequestParams)
             oContent.filter(sView).hide();
 
             oViewBefore.hide();
-            oViews.append(oContent).find(sView).bxProcessHtml().show(function() {
-                $this.init(true);
-            });
+            oViews.append(oContent).find(sView).bxProcessHtml().show();
         },
         'json'
     );

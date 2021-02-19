@@ -4,10 +4,10 @@ function bx_menu_slide_inline_custom (sMenu, e, sPosition) {
 	
 	if ('undefined' == typeof(e))
         e = eSlider.data('data-control-btn');
-	
-    var eIcon = $(e).find('.sys-icon-a');    
 
-	var iRight = $(document).width() - $(e).offset().left - $(e).width();
+    var eIcon = !e ? null : $(e).find('.sys-icon-a');    
+
+	var iRight = !e ? 0 : $(document).width() - $(e).offset().left - $(e).width();
 	if ('#bx-sliding-menu-search' == sMenu)
 		iRight = 0;
 
@@ -39,13 +39,13 @@ function bx_menu_slide_inline_custom (sMenu, e, sPosition) {
     };
 
     var fClose = function () {
-        if (eIcon.length)
+        if (eIcon && eIcon.length)
             (new Marka(eIcon[0])).set(eIcon.attr('data-icon-orig'));
         eSlider.slideUp()
     };
 
     var fOpen = function () {
-        if (eIcon.length) {
+        if (eIcon && eIcon.length) {
             eIcon.attr('data-icon-orig', eIcon.attr('data-icon'));
             (new Marka(eIcon[0])).set('times');
         }

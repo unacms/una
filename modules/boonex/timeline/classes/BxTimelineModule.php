@@ -309,11 +309,13 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     function actionGetView()
     {
         $aParams = $this->_prepareParamsGet();
-        $aParams['js_init_view'] = false;
 
         $sConten = $this->_oTemplate->getViewBlock($aParams);
         if(empty($sConten))
             return echoJson(array());
+
+        if(!empty($aParams['type']))
+            $this->_oConfig->setUserChoice(array('type' => $aParams['type']));
 
         echoJson(array(
             'code' => 0, 
@@ -3913,6 +3915,9 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
     protected function _serviceGetBlockViews($aBrowseParams = array())
     {
         $aParams = $this->_prepareParams($aBrowseParams);
+
+        if(($sType = $this->_oConfig->getUserChoice('type')) !== false)
+            $aParams['type'] = $sType;
 
         $this->_iOwnerId = $aParams['owner_id'];
 

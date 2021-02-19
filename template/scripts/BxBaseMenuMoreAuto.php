@@ -21,6 +21,8 @@ class BxBaseMenuMoreAuto extends BxTemplMenu
     protected $_bMoreAuto;
     protected $_iMoreAutoItemsStatic;
     protected $_bMoreAutoItemsStaticOnly;
+    
+    protected $_sJsClassMoreAuto;
     protected $_sJsObjectMoreAuto;
 
     protected $_aHtmlIds;
@@ -35,6 +37,8 @@ class BxBaseMenuMoreAuto extends BxTemplMenu
         $this->_bMoreAuto = null;
         $this->_iMoreAutoItemsStatic = 1;
         $this->_bMoreAutoItemsStaticOnly = false;
+        
+        $this->_sJsClassMoreAuto = 'BxDolMenuMoreAuto';
         $this->_sJsObjectMoreAuto = 'oMenuMoreAuto' . bx_gen_method_name($this->_sObject);
 
         $sPrefix = str_replace('_', '-', $this->_sObject);
@@ -94,6 +98,7 @@ class BxBaseMenuMoreAuto extends BxTemplMenu
 
     protected function _getJsCodeMoreAuto()
     {
+        $sJsClass = $this->_getJsClassMoreAuto();
         $sJsObject = $this->_getJsObjectMoreAuto();
         $aJsParams = array(
             'sObject' => $this->_sObject,
@@ -102,7 +107,7 @@ class BxBaseMenuMoreAuto extends BxTemplMenu
             'aHtmlIds' => $this->_getHtmlIds()
         );
 
-        return $this->_oTemplate->_wrapInTagJsCode("if(!" . $sJsObject . ") {var " . $sJsObject . " = new BxDolMenuMoreAuto(" . json_encode($aJsParams) . "); " . $sJsObject . ".init();}");
+        return $this->_oTemplate->_wrapInTagJsCode("if(!" . $sJsObject . ") {var " . $sJsObject . " = new " . $sJsClass . "(" . json_encode($aJsParams) . "); " . $sJsObject . ".init();}");
     }
     
     protected function _getMenuItem ($aItem)
@@ -128,6 +133,11 @@ class BxBaseMenuMoreAuto extends BxTemplMenu
     protected function _getHtmlIdMain()
     {
         return $this->_aHtmlIds['main'];
+    }
+
+    protected function _getJsClassMoreAuto()
+    {
+        return $this->_sJsClassMoreAuto;
     }
 
     protected function _getJsObjectMoreAuto()

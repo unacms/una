@@ -31,8 +31,10 @@
 	<string name="_bx_dolphin_migration_started_migration_profile_field_can_not_be_transferred"><![CDATA[Custom Fields can not be transferred]]></string>  
 	<string name="_bx_dolphin_migration_started_migration_blogs"><![CDATA[Blogs Migration was started]]></string>
 	<string name="_bx_dolphin_migration_started_migration_photos"><![CDATA[Photos Migration was started]]></string>
-	<string name="_bx_dolphin_migration_started_migration_photos_finished"><![CDATA[{0} Albums and {1} Photos were transferred]]></string>
-	<string name="_bx_dolphin_migration_started_migration_videos_finished"><![CDATA[{0} Albums and {1} Video files were transferred]]></string>
+	<string name="_bx_dolphin_migration_started_migration_photos_finished"><![CDATA[{0} photos were transferred]]></string>
+	<string name="_bx_dolphin_migration_started_migration_videos_finished"><![CDATA[{0} videos were transferred]]></string>
+	<string name="_bx_dolphin_migration_started_migration_photos_albums_finished"><![CDATA[{0} Albums and {1} Photos were transferred]]></string>
+	<string name="_bx_dolphin_migration_started_migration_videos_albums_finished"><![CDATA[{0} Albums and {1} Video files were transferred]]></string>
 	<string name="_bx_dolphin_migration_started_migration_photos_album_error"><![CDATA[Database Error. Albums can not be created!]]></string>  
 	<string name="_bx_dolphin_migration_started_migration_videos"><![CDATA[Videos Migration was started]]></string>
 	<string name="_bx_dolphin_migration_friends_exports_error"><![CDATA[Database error: Friends can not be transferred]]></string>
@@ -44,8 +46,10 @@
 	<string name="_bx_dolphin_migration_data_profiles"><![CDATA[Profiles]]></string>
 	<string name="_bx_dolphin_migration_data_profile_fields"><![CDATA[Profile Fields]]></string>  
 	<string name="_bx_dolphin_migration_data_blogs"><![CDATA[Blogs]]></string>
-	<string name="_bx_dolphin_migration_data_photos"><![CDATA[Photo Albums, Photos]]></string>
-	<string name="_bx_dolphin_migration_data_videos"><![CDATA[Video Albums, Videos]]></string>
+	<string name="_bx_dolphin_migration_data_photos"><![CDATA[Photos]]></string>
+	<string name="_bx_dolphin_migration_data_videos"><![CDATA[Videos]]></string>
+	<string name="_bx_dolphin_migration_data_photos_albums"><![CDATA[Photo Albums, Photos]]></string>
+	<string name="_bx_dolphin_migration_data_videos_albums"><![CDATA[Video Albums, Videos]]></string>
 	<string name="_bx_dolphin_migration_data_groups"><![CDATA[Groups]]></string>
 	<string name="_bx_dolphin_migration_data_events"><![CDATA[Events]]></string>
 	<string name="_bx_dolphin_migration_data_polls"><![CDATA[Polls]]></string>
@@ -123,4 +127,5 @@
 	<string name="_bx_dolphin_migration_cpt_default_privacy"><![CDATA[This privacy group will be set in case if you have not standard privacy groups in Dolphin and transferring item's privacy doesn't exist in UNA]]></string>
 	<string name="_bx_dolphin_migration_cpt_clean_warning"><![CDATA[The all data from the table below will be removed. Continue?]]></string>
 	<string name="_bx_dolphin_migration_started_migration_conversations"><![CDATA[Migration has been started]]></string>
+	<string name="_bx_dolphin_migration_cpt_media_modules"><![CDATA[Transfer media content to suitable media modules (Dolphin <b>photos</b> to UNA <b>Photos</b> and <b>videos</b> to UNA <b>Videos</b> module). Otherwise photos and videos will be transferred to UNA <b>Albums</b> module.]]></string>
 </resources>

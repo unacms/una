@@ -169,7 +169,7 @@ class BxBaseModProfileFormEntry extends BxBaseModGeneralFormEntry
             return '';
 
         $sStatus = _t('_sys_profile_status_' . $aInput['value']);
-        if(empty($CNF['URL_MANAGE_ADMINISTRATION']) || empty($CNF['FIELD_TITLE']) && !empty($this->aInputs[$CNF['FIELD_TITLE']]['value']))
+        if(empty($CNF['URL_MANAGE_ADMINISTRATION']) || empty($CNF['FIELD_TITLE']) || empty($this->aInputs[$CNF['FIELD_TITLE']]['value']))
             return $sStatus;
 
         return $this->_oModule->_oTemplate->parseHtmlByName('name_link.html', array(

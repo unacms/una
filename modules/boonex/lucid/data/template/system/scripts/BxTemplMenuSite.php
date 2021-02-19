@@ -12,12 +12,20 @@
  */
 class BxTemplMenuSite extends BxTemplMenuMoreAuto
 {
+    protected $_sModule;
+    protected $_oModule;
+    
     protected $_bSiteMenu;
     protected $_bSiteMenuSubmenu;
 
     public function __construct ($aObject, $oTemplate = false)
     {
         parent::__construct ($aObject, $oTemplate);
+
+        $this->_sModule = 'bx_lucid';
+        $this->_oModule = BxDolModule::getInstance($this->_sModule);
+
+        $this->_sJsClassMoreAuto = 'BxLucidMenuMoreAuto';
 
         $this->_bSiteMenu = $this->_sObject == 'sys_site';
         $this->_bSiteMenuSubmenu = false;
@@ -32,6 +40,7 @@ class BxTemplMenuSite extends BxTemplMenuMoreAuto
             $sStyle = '';
         }
 
+        $this->_oModule->_oTemplate->addJs(array('menu_site.js'));
         return '<div id="bx-sliding-menu-' . $this->_sObject . '" class="' . $sClass . ' bx-def-z-index-nav" style="' . $sStyle . '"><div class="bx-sliding-menu-main-cnt">' . parent::getCode() . '</div></div>';
     }
 
@@ -65,19 +74,6 @@ class BxTemplMenuSite extends BxTemplMenuMoreAuto
         );
 
         return $aResult;
-    }
-
-    protected function _getJsCodeMoreAuto()
-    {
-        $sJsObject = $this->_getJsObjectMoreAuto();
-        $aJsParams = array(
-            'sObject' => $this->_sObject,
-            'iItemsStatic' => $this->_iMoreAutoItemsStatic,
-            'bItemsStaticOnly' => $this->_bMoreAutoItemsStaticOnly ? 1 : 0,
-            'aHtmlIds' => $this->_getHtmlIds()
-        );
-
-        return $this->_oTemplate->_wrapInTagJsCode("if(!" . $sJsObject . ") {var " . $sJsObject . " = new BxDolMenuMoreAuto(" . json_encode($aJsParams) . "); $(document).ready(function(){" . $sJsObject . ".init();});}");
     }
 }
 

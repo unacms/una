@@ -115,7 +115,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     public function getJsCodeView($aParams = array(), $bWrap = true, $bDynamic = false)
     {
         $aParams = array_merge(array(
-            'bInit' => true,
             'bInfScroll' => $this->_oConfig->isInfiniteScroll(),
             'iInfScrollAutoPreloads' => $this->_oConfig->getAutoPreloads(),
         ), $aParams);
@@ -188,12 +187,6 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     {
         $oModule = $this->getModule();
 
-        $bJsInitView = true;
-        if(isset($aParams['js_init_view'])) {
-            $bJsInitView = (bool)$aParams['js_init_view'];
-            unset($aParams['js_init_view']);
-        }
-
         list($sContent, $sLoadMore, $sBack, $sEmpty, $iEvent, $bEventsToLoad) = $this->getPosts($aParams);
 
         //--- Add live update
@@ -233,8 +226,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 'sObjName' => $sJsObject,
                 'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
                 'bEventsToLoad' => $bEventsToLoad,
-            	'oRequestParams' => $aParams,
-                'bInit' => $bJsInitView
+            	'oRequestParams' => $aParams
             ), array(
                 'wrap' => true,
                 'mask_markers' => array('object' => $sJsObject)

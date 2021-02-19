@@ -30,13 +30,15 @@ class BxPaymentProviderChargebeeV3 extends BxPaymentProviderChargebee
         );
     }
 
-    public function actionGetHostedPage($iClientId, $iVendorId, $sItemName, $sItemAddons = '')
+    public function actionGetHostedPage($iClientId, $iVendorId, $sItemName)
     {
         $this->initOptionsByVendor($iVendorId);
 
         $aItem = array('name' => $sItemName);
-        if(!empty($sItemAddons)) {
-            $aItemAddons = $this->_oModule->_oConfig->s2a($sItemAddons);
+
+        $mixedItemAddons = bx_process_input(bx_get('addons'));
+        if(!empty($mixedItemAddons)) {
+            $aItemAddons = is_array($mixedItemAddons) ? $mixedItemAddons : $this->_oModule->_oConfig->s2a($mixedItemAddons);
 
             foreach($aItemAddons as $sItemAddon)
                 if(!isset($aItem['addons'][$sItemAddon]))

@@ -62,6 +62,29 @@ class BxPaymentTemplate extends BxBaseModPaymentTemplate
     	$this->addCss(array('invoices.css'));
     }
 
+    public function displayBlockCheckoutOffline($oBuyer, $oSeller, $aData)
+    {
+        $CNF = &$this->_oConfig->CNF;
+
+        $sTxtQt = _t('_bx_payment_txt_checkout_qt');
+
+        $aTmplVarsItems = array();
+        foreach($aData['items'] as $iIndex => $aItem)
+            $aTmplVarsItems[] = array(
+                'item_index' => $iIndex + 1,
+                'item_title' => $aItem['title'],
+                'item_quantity' => $aItem['quantity'] . $sTxtQt
+            );
+
+        $this->addCss(array('checkout.css'));
+        return $this->parseHtmlByName('checkout_offline.html', array(
+            'message' => _t('_bx_credits_txt_checkout_for', $oSeller->getDisplayName()),
+            'bx_repeat:items' => $aTmplVarsItems,
+            'amount' => $aData['currency']['sign'] . sprintf("%.2f", (float)($aData['amount'])),
+            'redirect_url' => $aData['return_url']
+        ));
+    }
+
     public function displayCartJs($sType = '', $iVendorId = 0)
     {
         $this->addJsCssCart($sType, $iVendorId);

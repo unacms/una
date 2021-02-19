@@ -23,11 +23,9 @@ class BxDolMPhotos extends BxDolMData
 	
 	public function getTotalRecords()
 	{
-		$aResult = $this -> _mDb -> getRow("SELECT COUNT(*) as `count`, SUM(`ObjCount`) as `obj` 
+		return $this -> _mDb -> getOne("SELECT SUM(`ObjCount`) 
                                             FROM `" . $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['table_name_photos'] ."` 
                                             WHERE `Type` = 'bx_photos' AND `Uri` <> 'Hidden'");
-
-		return !(int)$aResult['count'] && !(int)$aResult['obj'] ? 0 : $aResult;
 	}
     
 	public function runMigration()
@@ -55,11 +53,10 @@ class BxDolMPhotos extends BxDolMData
 				continue;
 
 			$this -> migratePhoto($aValue['ID'], $iProfileId);
-			$this -> _iTransferredPhotos++;
-       }        
+       }
 
         // set as finished;
-        $this -> setResultStatus(_t('_bx_dolphin_migration_started_migration_photos_finished', 0, $this -> _iTransferred));
+        $this -> setResultStatus(_t('_bx_dolphin_migration_started_migration_photos_finished', $this -> _iTransferred));
         return BX_MIG_SUCCESSFUL;
     }
    	
@@ -129,13 +126,12 @@ class BxDolMPhotos extends BxDolMData
                         $this -> _iTransferred++;
 						$iTransferred++;
 
-                        $this->_oDb->query("UPDATE `bx_photos_entries` SET `thumb`=:thumb WHERE `id`=:id", array('thumb' => $iId, 'id' => $iPhotoId));
-
                         $this->updateExif($iPhotoId, array('thumb' => $iId, 'id' => $iPhotoId));
 						$this->transferTags((int)$aValue['ID'], $iId, $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['type'], $this -> _oConfig -> _aMigrationModules[$this -> _sModuleName]['keywords']);
 						$this->transferFavorites((int)$aValue['ID'], $iId);
+						$this->transferSVotes((int)$aValue['ID'], $iId);
 
-                        $this->_oDb->query("UPDATE `bx_photos_entries` SET `comments` = :comments WHERE `id` = :id", array('id' => $iPhotoId, 'comments' => $this->transferComments($iPhotoId, $aValue['ID'])));
+                        $this->_oDb->query("UPDATE `bx_photos_entries` SET `comments` = :comments, `thumb`=:thumb WHERE `id` = :id", array('id' => $iPhotoId, 'thumb' => $iId, 'comments' => $this->transferComments($iPhotoId, $aValue['ID'])));
 
                     }
 				}
@@ -144,18 +140,28 @@ class BxDolMPhotos extends BxDolMData
 	  return $iTransferred;
    }
 
-    private function transferFavorites($iPhotoId, $iNewID){
-        $aData = $this->_mDb->getRow("SELECT * FROM `bx_photos_favorites` WHERE `ID`=:id LIMIT 1", array('id' => $iPhotoId));
+   private function transferFavorites($iPhotoId, $iNewID){
+      $aData = $this->_mDb->getRow("SELECT * FROM `bx_photos_favorites` WHERE `ID`=:id LIMIT 1", array('id' => $iPhotoId));
+      if (empty($aData))
+          return false;
+
+      $iProfileId = $this->getProfileId((int)$aData['Profile']);
+      if (!$iProfileId)
+          return false;
+
+      $sQuery = $this->_oDb->prepare("INSERT INTO `bx_photos_favorites_track` SET `object_id` = ?, `author_id` = ?, `date` = ?", $iNewID, $iProfileId, ($aData['Date'] ? $aData['Date'] : time()));
+      return $this->_oDb->query($sQuery);
+   }
+
+   private function transferSVotes($iPhotoId, $iNewID){
+        $aData = $this->_mDb->getRow("SELECT * FROM `bx_photos_rating` WHERE `gal_id`=:id LIMIT 1", array('id' => $iPhotoId));
         if (empty($aData))
             return false;
 
-        $iProfileId = $this -> getProfileId((int)$aData['Profile']);
-        if (!$iProfileId)
-            return false;
-
-        $sQuery = $this -> _oDb -> prepare("INSERT INTO `bx_photos_favorites_track` SET `object_id` = ?, `author_id` = ?, `date` = ?", $iNewID, $iProfileId, ($aData['Date'] ? $aData['Date'] : time()));
-        return $this -> _oDb -> query($sQuery);
-    }
+        $sQuery = $this->_oDb->prepare("INSERT INTO `bx_photos_svotes` SET `object_id` = ?, `count` = ?, `sum` = ?", $iNewID, $aData['gal_rating_count'], $aData['gal_rating_sum']);
+        $this->_oDb->query("UPDATE `bx_photos_entries` SET `svotes` = :votes WHERE `id` = :id", array('id' => $iPhotoId, 'votes' => $aData['gal_rating_count']));
+        return $this->_oDb->query($sQuery);
+   }
 
 	public function removeContent()
 	{

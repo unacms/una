@@ -60,7 +60,7 @@ class BxBaseModGroupsGridConnections extends BxDolGridConnections
 
     public function getCode ($isDisplayHeader = true)
     {
-        $sResult = parent::getCode();
+        $sResult = parent::getCode($isDisplayHeader);
         if(!$sResult)
             return $sResult;
 

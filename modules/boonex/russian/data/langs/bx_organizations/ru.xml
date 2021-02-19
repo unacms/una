@@ -24,6 +24,8 @@
     <string name="_bx_orgs_option_members_mode_multi_roles"><![CDATA[Множественные роли]]></string>
     <string name="_bx_orgs_option_public_subscriptions"><![CDATA[Открытый список подписок]]></string>
     <string name="_bx_orgs_option_public_subscribed_me"><![CDATA[Открытый список подписчиков]]></string>
+    <string name="_bx_orgs_option_enable_subscribe_wo_join"><![CDATA[Разрешить подписываться не членам организации]]></string>
+    <string name="_bx_orgs_option_auto_activation_for_categories"><![CDATA[Автоактивация для категорий]]></string>
     <string name="_bx_orgs_option_per_page_for_favorites_lists"><![CDATA[Количество списков избранного на странице]]></string>
     <string name="_bx_orgs_option_internal_notifications"><![CDATA[Использовать встроенную нотификацию]]></string>
 
