@@ -761,6 +761,7 @@
 	<string name="_adm_form_err_field_add"><![CDATA[Невозможно добавить новое поле]]></string>
         <string name="_adm_form_err_field_add_already_exists"><![CDATA[Поле с таким же именем уже существует]]></string>
 	<string name="_adm_form_err_field_add_not_allowed"><![CDATA[Поля не могут быть добавлены в эту форму]]></string>
+  <string name="_adm_form_err_field_select_nested_form"><![CDATA[Вложенная форма должна быть выбрана.]]></string>
         <string name="_adm_form_err_field_caption"><![CDATA[Необходимо имя из как минимум 3 символов.]]></string>
 	<string name="_adm_form_err_field_caption_system"><![CDATA[Необходимо имя из как минимум 3 символов.]]></string>
 	<string name="_adm_form_err_field_checker_error"><![CDATA[Нужно ввести сообщение об ошибке]]></string>
@@ -879,6 +880,7 @@
   <string name="_adm_form_txt_field_rateable_value_votes"><![CDATA[Использовать лайков]]></string>
   <string name="_adm_form_txt_field_rateable_value_reactions"><![CDATA[Использовать реакции]]></string>
 	<string name="_adm_form_txt_field_required"><![CDATA[Необходимое]]></string>
+  <string name="_adm_form_txt_field_select_nested_form"><![CDATA[Выберите вложенную форму]]></string>
 	<string name="_adm_form_txt_field_show_to_popup"><![CDATA[Показывать "{0}" поле формы для: ]]></string>
         <string name="_adm_form_txt_field_type_block_end"><![CDATA[конец блока]]></string>
 	<string name="_adm_form_txt_field_type_block_header"><![CDATA[заголовок блока]]></string>
@@ -917,6 +919,7 @@
         <string name="_adm_form_txt_field_type_time"><![CDATA[время]]></string>
 	<string name="_adm_form_txt_field_type_value"><![CDATA[инфо]]></string>
 	<string name="_adm_form_txt_field_unique"><![CDATA[Уникальное]]></string>
+  <string name="_adm_form_txt_field_type_nested_form"><![CDATA[вложенная форма]]></string>
 	<string name="_adm_form_txt_field_value_button"><![CDATA[Заголовок]]></string>
 	<string name="_adm_form_txt_field_value_checkbox"><![CDATA[Значение]]></string>
 	<string name="_adm_form_txt_field_value_custom_text"><![CDATA[Индивидуальный текст]]></string>
@@ -2302,6 +2305,8 @@
 	<string name="_sys_form_input_sys_location"><![CDATA[Расположение]]></string>
         <string name="_sys_form_input_location"><![CDATA[Местоположение]]></string>
         <string name="_sys_form_input_location_radius_label"><![CDATA[Радиус (в км)]]></string>
+  <string name="_sys_form_input_nested_form_button_add_new_item"><![CDATA[Добавить новый]]></string>
+  <string name="_sys_form_input_nested_form_button_delete_item"><![CDATA[Удалить]]></string>
         <string name="_sys_form_input_sys_anonymous"><![CDATA[Анонимная публикация]]></string>
         <string name="_sys_form_input_anonymous"><![CDATA[Анонимная публикация]]></string>
         <string name="_sys_form_input_sys_labels"><![CDATA[Метки]]></string>
