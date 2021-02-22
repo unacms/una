@@ -27,6 +27,8 @@ class BxBaseCmts extends BxDolCmts
     protected $_aHtmlIds;
 
     protected $_aElementDefaults;
+    
+    protected $_aAclId2Name;
 
     function __construct( $sSystem, $iId, $iInit = true, $oTemplate = false)
     {
@@ -57,6 +59,11 @@ class BxBaseCmts extends BxDolCmts
             'show_counter' => true,
             'show_counter_empty' => false
         );
+
+        $this->_aAclId2Name = array();
+        $aAclLevels = BxDolAcl::getInstance()->getMemberships(false, false, false);
+        foreach($aAclLevels as $iAclId => $sAclName)
+            $this->_aAclId2Name[$iAclId] = str_replace('_', '-', str_replace('_adm_prm_txt_level_', '', $sAclName));
 
         if(empty(self::$_sTmplContentElementBlock))
             self::$_sTmplContentElementBlock = $this->_oTemplate->getHtml('comment_element_block.html');
@@ -263,6 +270,10 @@ class BxBaseCmts extends BxDolCmts
 
         if($aCmt['cmt_author_id'] == $iUserId)
             $sClass .= ' ' . $this->_sStylePrefix . '-mine';
+
+        $aAuthorAcl = BxDolAcl::getInstance()->getMemberMembershipInfo($aCmt['cmt_author_id']);
+        if(!empty($aAuthorAcl) && isset($this->_aAclId2Name[$aAuthorAcl['id']]))
+            $sClass .= ' ' . $this->_sStylePrefix . '-aml-' . $this->_aAclId2Name[$aAuthorAcl['id']];
 
         if(!empty($aDp['blink']) && in_array($aCmt['cmt_id'], $aDp['blink']))
             $sClass .= ' ' . $this->_sStylePrefix . '-blink';

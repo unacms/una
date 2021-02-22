@@ -25,12 +25,18 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     protected static $_sTmplContentTypeRepost;
 
     protected $_bShowTimelineDividers;
+    protected $_aAclId2Name;
 
     function __construct(&$oConfig, &$oDb)
     {
         parent::__construct($oConfig, $oDb);
 
         $this->_bShowTimelineDividers = false;
+
+        $this->_aAclId2Name = array();
+        $aAclLevels = BxDolAcl::getInstance()->getMemberships(false, false, false);
+        foreach($aAclLevels as $iAclId => $sAclName)
+            $this->_aAclId2Name[$iAclId] = str_replace('_', '-', str_replace('_adm_prm_txt_level_', '', $sAclName));
     }
 
     public function init()
@@ -1417,7 +1423,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $bSticked = (int)$aEvent['sticked'] > 0;
         $bPromoted = (int)$aEvent['promoted'] > 0;
 
-        $sClass = $aEvent['type'] . ' ' . (!empty($aEvent['action']) ? $aEvent['action'] . ' ' : '') . $sStylePrefix . '-view-sizer';
+        $sClass = $sStylePrefix . '-view-sizer';
         if($bViewOutline) {
             $sClass = $sStylePrefix . '-grid-item-sizer';
             if($bPinned || $bSticked || $bPromoted) {
@@ -1431,6 +1437,12 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                 $sClass .= '-pmd';
             }
         }
+
+        $sClass .= ' ' . $aEvent['type'] . (!empty($aEvent['action']) ? ' ' . $aEvent['action'] : '');
+        $aAuthorAcl = BxDolAcl::getInstance()->getMemberMembershipInfo($aEvent['object_owner_id']);
+        if(!empty($aAuthorAcl) && isset($this->_aAclId2Name[$aAuthorAcl['id']]))
+            $sClass .= ' ' . $sStylePrefix . '-aml-' . $this->_aAclId2Name[$aAuthorAcl['id']];
+
         if(!empty($aBrowseParams['blink']) && in_array($aEvent['id'], $aBrowseParams['blink']))
             $sClass .= ' ' . $sStylePrefix . '-blink';
         if($bPinned)
