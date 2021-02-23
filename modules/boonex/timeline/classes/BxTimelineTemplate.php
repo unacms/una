@@ -217,7 +217,31 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             $sLiveUpdateCode = call_user_func_array(array(BxDolLiveUpdates::getInstance(), 'add'), $aLiveUpdateParams);
         //--- Add live update
 
+        $sContentBefore = '';
+        $sContentAfter = '';
+
         $sJsObject = $this->_oConfig->getJsObjectView($aParams);
+        $sJsContent = $this->getJsCodeView(array(
+            'sObjName' => $sJsObject,
+            'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
+            'bEventsToLoad' => $bEventsToLoad,
+            'oRequestParams' => $aParams
+        ), array(
+            'wrap' => true,
+            'mask_markers' => array('object' => $sJsObject)
+        )) . $this->getJsCode('repost');
+
+        bx_alert($sModuleName, 'get_view', 0, 0, array(
+            'params' => $aParams,
+            'back' => &$sBack,
+            'empty' => &$sEmpty,
+            'content_before' => &$sContentBefore,
+            'content' => &$sContent,
+            'content_after' => &$sContentAfter,
+            'load_more' => &$sLoadMore,
+            'js_content' => &$sJsContent
+        ));
+
         return $sLiveUpdateCode . $this->parseHtmlByName('block_view.html', array(
             'style_prefix' => $this->_oConfig->getPrefix('style'),
             'html_id' => $this->_oConfig->getHtmlIdView('main', $aParams),
@@ -228,15 +252,7 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
             'load_more' =>  $sLoadMore,
             'show_more' => $this->_getShowMore($aParams),
             'view_image_popup' => $this->_getImagePopup($aParams),
-            'js_content' => $this->getJsCodeView(array(
-                'sObjName' => $sJsObject,
-                'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
-                'bEventsToLoad' => $bEventsToLoad,
-            	'oRequestParams' => $aParams
-            ), array(
-                'wrap' => true,
-                'mask_markers' => array('object' => $sJsObject)
-            )) . $this->getJsCode('repost')
+            'js_content' => $sJsContent
         ));
     }
 

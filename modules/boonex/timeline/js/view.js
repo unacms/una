@@ -380,6 +380,14 @@ BxTimelineView.prototype.pauseVideos = function(oView)
     });
 };
 
+BxTimelineView.prototype.reload = function(oSource)
+{
+    this.loadingInBlock(oSource, true);
+
+    this._oRequestParams.start = 0;
+    this._getPosts(oSource);
+};
+
 BxTimelineView.prototype.changeView = function(oLink, sType, oRequestParams)
 {
     var $this = this;
