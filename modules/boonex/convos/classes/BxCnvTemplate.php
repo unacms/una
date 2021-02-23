@@ -58,6 +58,7 @@ class BxCnvTemplate extends BxBaseModTextTemplate
             ),
         );
         $i = 0;
+        $aCollaborators = array_slice($aCollaborators, 0, 30, true);
         foreach ($aCollaborators as $iProfileId => $iReadComments) {
             $oProfile = BxDolProfile::getInstanceMagic($iProfileId);
 
