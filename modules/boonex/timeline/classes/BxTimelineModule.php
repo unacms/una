@@ -350,14 +350,21 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             return echoJson(array('message' => _t('_bx_timeline_txt_msg_posted')));
         */
 
-        echoJson(array(
+        $aResult = array(
             'id' => $aEvent['id'],
             'name' => $aParams['name'],
             'view' => $aParams['view'],
             'type' => $aParams['type'],
             'item' => $this->_oTemplate->getPost($aEvent, $aParams),
             'eval' => $sJsObject . "._onGetPost(oData)"
+        );
+
+        bx_alert($this->getName(), 'on_get_post', 0, 0, array(
+            'params' => $aParams,
+            'override_result' => &$aResult,
         ));
+
+        echoJson($aResult);
     }
 
     function actionGetPosts()

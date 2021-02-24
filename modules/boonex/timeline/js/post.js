@@ -327,61 +327,65 @@ BxTimelinePost.prototype._onGetPost = function(oData)
         if(!$.trim(oData.item).length) 
             return;
 
-        $this.oView = $($this._getHtmlId('main', oData));
-
-        /*
-         * For backward compatibility.
-         * Current UPF: 'Post to Feed' and Timeline: 'Post to Feed' forms 
-         * should work with an old Account Feed ('Owner and Connections') block.
-         */
-        if(!$this.oView.length && oData['type'] == 'feed') {
-            oData['type'] = 'owner_and_connections';
+        var aTypes = Array.isArray(oData.type) ? oData.type : new Array(oData.type);
+        aTypes.forEach(function(sType) {
+            oData['type'] = sType;
             $this.oView = $($this._getHtmlId('main', oData));
-        }
 
-        var oLoadMore = $this.oView.find('.' + $this.sSP + '-load-more');
-        if(!oLoadMore.is(':visible'))
-            oLoadMore.show();
+            /*
+             * For backward compatibility.
+             * Current UPF: 'Post to Feed' and Timeline: 'Post to Feed' forms 
+             * should work with an old Account Feed ('Owner and Connections') block.
+             */
+            if(!$this.oView.length && oData['type'] == 'feed') {
+                oData['type'] = 'owner_and_connections';
+                $this.oView = $($this._getHtmlId('main', oData));
+            }
 
-        var oEmpty = $this.oView.find('.' + $this.sSP + '-empty');
-        if(oEmpty.is(':visible'))
-            oEmpty.hide();
+            var oLoadMore = $this.oView.find('.' + $this.sSP + '-load-more');
+            if(!oLoadMore.is(':visible'))
+                oLoadMore.show();
 
-        var oContent = $(oData.item).bxProcessHtml();
-        switch(oData.view) {
-            case 'timeline':
-                var oItems = $this.oView.find('.' + $this.sClassItems);
-                var oDivider  = oItems.find('.' + $this.sClassDividerToday);
-                var bDivider = oDivider.length > 0;
+            var oEmpty = $this.oView.find('.' + $this.sSP + '-empty');
+            if(oEmpty.is(':visible'))
+                oEmpty.hide();
 
-                if(bDivider && !oDivider.is(':visible'))
-                    oDivider.show();
+            var oContent = $(oData.item).bxProcessHtml();
+            switch(oData.view) {
+                case 'timeline':
+                    var oItems = $this.oView.find('.' + $this.sClassItems);
+                    var oDivider  = oItems.find('.' + $this.sClassDividerToday);
+                    var bDivider = oDivider.length > 0;
 
-                oContent.hide();
+                    if(bDivider && !oDivider.is(':visible'))
+                        oDivider.show();
 
-                var oItem = bDivider ? oDivider.after(oContent).next('.' + $this.sClassItem + ':hidden') : oContent.prependTo(oItems);
-                oItem.bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
-                    $(this).find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
-                        $this.onFindOverflow(oElement);
+                    oContent.hide();
+
+                    var oItem = bDivider ? oDivider.after(oContent).next('.' + $this.sClassItem + ':hidden') : oContent.prependTo(oItems);
+                    oItem.bx_anim('show', $this._sAnimationEffect, $this._iAnimationSpeed, function() {
+                        $(this).find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
+                            $this.onFindOverflow(oElement);
+                        });
+
+                        $this.initFlickity();
                     });
 
-                    $this.initFlickity();
-                });
+                    if($this._sVideosAutoplay != 'off')
+                        $this.initVideos($this.oView);
+                    break;
 
-                if($this._sVideosAutoplay != 'off')
-                    $this.initVideos($this.oView);
-                break;
+                case 'outline':
+                    $this.prependMasonry(oContent, function(oItems) {
+                        $(oItems).find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
+                            $this.onFindOverflow(oElement);
+                        });
 
-            case 'outline':
-                $this.prependMasonry(oContent, function(oItems) {
-                    $(oItems).find('.bx-tl-item-text .bx-tl-content').checkOverflowHeight($this.sSP + '-overflow', function(oElement) {
-                        $this.onFindOverflow(oElement);
+                        $this.initFlickity();
                     });
-
-                    $this.initFlickity();
-                });
-                break;
-        }
+                    break;
+            }
+        });
     };
 
     if(oData && oData.message != undefined && oData.message.length != 0)
