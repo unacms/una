@@ -382,10 +382,14 @@ BxTimelineView.prototype.pauseVideos = function(oView)
 
 BxTimelineView.prototype.reload = function(oSource)
 {
+    var $this = this;
+
     this.loadingInBlock(oSource, true);
 
     this._oRequestParams.start = 0;
-    this._getPosts(oSource);
+    this._getPosts(oSource, function() {
+        $this.init(true);
+    });
 };
 
 BxTimelineView.prototype.changeView = function(oLink, sType, oRequestParams)
