@@ -311,7 +311,7 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
      */
     public function keywordsAdd($iId, $s) 
     {
-        return $this->_metaAdd($iId, ' ' . strip_tags(str_replace(array('<br>', '<br />', '<hr>', '<hr />', '</p>'), "\n", $s)), '/[\PL\PN]\#(\pL[\pL\pN_]+)/u', 'keywordsDelete', 'keywordsAdd', 'keywordsGet', (int)getParam('sys_metatags_hashtags_max'), 'keyword');
+        return $this->_metaAdd($iId, ' ' . strip_tags(str_replace(array('<br>', '<br />', '<hr>', '<hr />', '</p>'), "\n", $s)), '/[^\pN^\pL]\#(\pL[\pL\pN_]+)/u', 'keywordsDelete', 'keywordsAdd', 'keywordsGet', (int)getParam('sys_metatags_hashtags_max'), 'keyword');
     }
 
     /**
@@ -392,8 +392,13 @@ class BxDolMetatags extends BxDolFactory implements iBxDolFactoryObject
         if (empty($a))
             return $s;
 
-        foreach ($a as $sKeyword)
-            $s = str_ireplace('#' . $sKeyword, '<a class="bx-tag" rel="tag" href="' . $this->keywordsGetHashTagUrl($sKeyword, $iId) . '"><s>#</s><b>' . $sKeyword . '</b></a>', $s);
+        foreach ($a as $sKeyword) {
+            $f = function ($a) use ($sKeyword, $iId) {
+                return $a[1] . '<a class="bx-tag" rel="tag" href="' . $this->keywordsGetHashTagUrl($sKeyword, $iId) . '"><s>#</s><b>' . $sKeyword . '</b></a>';
+            };
+            $s = preg_replace_callback('/([^\pN^\pL])\#(' . preg_quote($sKeyword) . ')/u', $f, $s);
+            $s = preg_replace_callback('/^()\#(' . preg_quote($sKeyword) . ')/u', $f, $s);
+        }
 
         return $s;
     }
