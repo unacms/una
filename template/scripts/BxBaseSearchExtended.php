@@ -22,6 +22,9 @@ class BxBaseSearchExtended extends BxDolSearchExtended
 
     protected $_bJsMode;
 
+    protected $_iAgeMin;
+    protected $_iAgeMax;
+
     public function __construct ($aObject, $oTemplate = null)
     {
         parent::__construct ($aObject);
@@ -39,6 +42,9 @@ class BxBaseSearchExtended extends BxDolSearchExtended
         $this->_oForm = null;
 
         $this->_bJsMode = false;
+
+        $this->_iAgeMin = 1;
+        $this->_iAgeMax = 75;
     }
 
     public function getForm($aParams = array())
@@ -221,18 +227,19 @@ class BxBaseSearchExtended extends BxDolSearchExtended
 
             $aAttrs = array();
 
-            if(in_array($aField['search_type'], array('datepicker_range_age')) && isset($aField['search_value']) && $aField['search_value'] != ''){
-                $aTmp = BxDolService::callSerialized($aField['search_value']);
-                if (isset($aTmp['min']) && isset($aTmp['max'])){
-                    $aField['search_value'] = $aTmp['min'] . '-' . $aTmp['max'];
-                    $aAttrs = array('min' => $aTmp['min'], 'max' => $aTmp['max'], 'step' => 1);
-                }
+            if(in_array($aField['search_type'], array('datepicker_range_age')) && !empty($aField['search_value'])) {
+                $aFieldParams = BxDolService::callSerialized($aField['search_value']);
+                $iMin = isset($aFieldParams['min']) && is_numeric($aFieldParams['min']) ? $aFieldParams['min'] : $this->_iAgeMin;
+                $iMax = isset($aFieldParams['max']) && is_numeric($aFieldParams['max']) ? $aFieldParams['max'] : $this->_iAgeMax;
+
+                $aField['search_value'] = $iMin . '-' . $iMax;
+                $aAttrs = array('min' => $iMin, 'max' => $iMax, 'step' => 1);
             }
-            
-            if(in_array($aField['search_type'], array('datepicker_range')) && isset($aField['search_value']) && $aField['search_value'] != ''){
+
+            if(in_array($aField['search_type'], array('datepicker_range')) && !empty($aField['search_value'])) {
                 $aField['search_value'] = '';
             }
-           
+
             $aForm['inputs'][$aField['name']] = array(
                 'type' => $aField['search_type'],
                 'name' => $aField['name'],

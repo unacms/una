@@ -120,6 +120,23 @@ class BxBaseSearchExtendedForm extends BxTemplFormView
 				
                 if(empty($aInput['value']))
                     $aInput['value'] = $iMin . '-' . $iMax;
+                else if(is_array($aInput['value'])) {
+                    $iCYear = (int)date('Y');
+                    $iCMonth = (int)date('n');
+                    $iCDay = (int)date('j');
+                    
+                    $aRange = array();
+                    foreach($aInput['value'] as $iIndex => $sDate) {
+                        $aDate = explode('-', $sDate);
+
+                        $aRange[$iIndex] = $iCYear - (int)$aDate[0];
+                        if($iCMonth < (int)$aDate[1] || ($iCMonth == (int)$aDate[1] && $iCDay < (int)$aDate[2]))
+                            $aRange[$iIndex] -= 1;
+                    }
+                    sort($aRange);
+
+                    $aInput['value'] = implode('-', $aRange);
+                }
 
                 if (!isset($aInput['attrs']['min']) && !isset($aInput['attrs']['max'])){
                     $aAttrs = array('min' => $iMin, 'max' => $iMax, 'step' => 1);
