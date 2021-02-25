@@ -387,7 +387,9 @@ BxTimelineView.prototype.reload = function(oSource)
     this.loadingInBlock(oSource, true);
 
     this._oRequestParams.start = 0;
-    this._getPosts(oSource, function() {
+    this._getPosts(oSource, function(oData) {
+        processJsonData(oData);
+
         $this.init(true);
     });
 };
