@@ -282,18 +282,16 @@ class BxDolCmtsQuery extends BxDolDb
                     break;
 
                 case BX_CMT_ORDER_BY_POPULAR:
-                    $oVote = $this->_oMain->getVoteObject(0);
-                    $oScore = $this->_oMain->getScoreObject(0);
                     $aSortFields = array();
-                    if($oVote !== false) {
+                    if($this->_oMain->getVoteObject(0) !== false)
                         array_push($aSortFields, '`' . $this->_sTableIds . '`.`votes`');
-                    }
-                    if($oScore !== false) {
+                    if($this->_oMain->getReactionObject(0) !== false)
+                        array_push($aSortFields, '`' . $this->_sTableIds . '`.`rvotes`');
+                    if($this->_oMain->getScoreObject(0) !== false)
                         array_push($aSortFields, '`' . $this->_sTableIds . '`.`score`');
-                    }
-                    if (count($aSortFields) == 0)
+                    if(count($aSortFields) == 0)
                         array_push($aSortFields, '`' . $this->_sTable . '`.`id`');
-                    
+
                     $sOrder = " ORDER BY `{$this->_sTable}`.`cmt_pinned` DESC, " . implode($aOrder['way'] . ', ', $aSortFields) . " " . $aOrder['way'];
                     break;
             }
