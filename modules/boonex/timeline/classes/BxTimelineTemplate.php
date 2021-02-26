@@ -223,6 +223,9 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $sJsObject = $this->_oConfig->getJsObjectView($aParams);
         $sJsContent = $this->getJsCodeView(array(
             'sObjName' => $sJsObject,
+            'sName' => $aParams['name'],
+            'sView' => $aParams['view'],
+            'sType' => $aParams['type'],
             'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
             'bEventsToLoad' => $bEventsToLoad,
             'oRequestParams' => $aParams

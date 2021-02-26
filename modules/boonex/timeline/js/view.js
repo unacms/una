@@ -14,6 +14,9 @@ function BxTimelineView(oOptions) {
     this._sActionsUri = oOptions.sActionUri;
     this._sActionsUrl = oOptions.sActionUrl;
     this._sObjName = oOptions.sObjName == undefined ? 'oTimelineView' : oOptions.sObjName;
+    this._sName = oOptions.sName == undefined ? '' : oOptions.sName;
+    this._sView = oOptions.sView == undefined ? 'timeline' : oOptions.sView;
+    this._sType = oOptions.sType == undefined ? 'public' : oOptions.sType;
     this._iOwnerId = oOptions.iOwnerId == undefined ? 0 : oOptions.iOwnerId;
     this._sReferrer = oOptions.sReferrer == undefined ? '' : oOptions.sReferrer;
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'slide' : oOptions.sAnimationEffect;
@@ -203,6 +206,12 @@ BxTimelineView.prototype.initInfiniteScroll = function(oParent)
         return;
 
     $(window).bind('scroll', function(oEvent) {
+        if(!$this.oView.is(':visible'))
+            return;
+
+        if($this.oView.attr('id') != $this._getHtmlId('main', {name: $this._sName, view: $this._sView, type: $this._sType}, {hash: false}))
+            return;
+
         if(!$this._bEventsToLoad || $this._bInfScrollBusy || $this._iInfScrollPreloads >= $this._iInfScrollAutoPreloads)
             return;
 
