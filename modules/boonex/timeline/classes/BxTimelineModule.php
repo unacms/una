@@ -4116,7 +4116,7 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
         $iUserId = $this->getUserId();
 
         $iEventId = (int)$oForm->getCleanValue('event_id');
-        $sLink = $oForm->getCleanValue('url');
+        $sLink = rtrim($oForm->getCleanValue('url'), '/');
 
         $aMatches = array();
         preg_match($this->_oConfig->getPregPattern('url'), $sLink, $aMatches);
@@ -4149,7 +4149,12 @@ class BxTimelineModule extends BxBaseModNotificationsModule implements iBxDolCon
             if(!empty($oStorage) && !empty($iMediaId))
                 $oStorage->afterUploadCleanup($iMediaId, $iUserId);
 
-            return array('id' => $iId, 'event_id' => $iEventId, 'item' => $this->_oTemplate->getAttachLinkItem($iUserId, $iId));
+            return array(
+                'id' => $iId, 
+                'event_id' => $iEventId, 
+                'url' => $sLink,
+                'item' => $this->_oTemplate->getAttachLinkItem($iUserId, $iId)
+            );
         }
 
         return array('message' => _t('_bx_timeline_txt_err_cannot_perform_action'));

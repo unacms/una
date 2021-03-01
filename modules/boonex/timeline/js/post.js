@@ -16,6 +16,9 @@ function BxTimelinePost(oOptions) {
     this._sAnimationEffect = oOptions.sAnimationEffect == undefined ? 'slide' : oOptions.sAnimationEffect;
     this._iAnimationSpeed = oOptions.iAnimationSpeed == undefined ? 'slow' : oOptions.iAnimationSpeed;
     this._bEmoji = oOptions.bEmoji == undefined ? false : oOptions.bEmoji;
+    this._iLimitAttachLinks = oOptions.iLimitAttachLinks == undefined ? 0 : oOptions.iLimitAttachLinks;
+    this._sLimitAttachLinksErr = oOptions.sLimitAttachLinksErr == undefined ? '' : oOptions.sLimitAttachLinksErr;
+    this._oAttachedLinks = oOptions.oAttachedLinks == undefined ? {} : oOptions.oAttachedLinks;
     this._sVideosAutoplay = oOptions.sVideosAutoplay == undefined ? 'off' : oOptions.sVideosAutoplay;
     this._aHtmlIds = oOptions.aHtmlIds == undefined ? {} : oOptions.aHtmlIds;
     this._oRequestParams = oOptions.oRequestParams == undefined ? {} : oOptions.oRequestParams;
@@ -23,7 +26,6 @@ function BxTimelinePost(oOptions) {
     this._sPregTag = "(<([^>]+bx-tag[^>]+)>)";
     this._sPregMention = "(<([^>]+bx-mention[^>]+)>)";
     this._sPregUrl = "\\b((https?://)|(www\\.))(([0-9a-zA-Z_!~*'().&=+$%-]+:)?[0-9a-zA-Z_!~*'().&=+$%-]+\\@)?(([0-9]{1,3}\\.){3}[0-9]{1,3}|([0-9a-zA-Z_!~*'()-]+\\.)*([0-9a-zA-Z][0-9a-zA-Z-]{0,61})?[0-9a-zA-Z]\\.[a-zA-Z]{2,6})(:[0-9]{1,4})?((/[0-9a-zA-Z_!~*'().;?:\\@&=+$,%#-]+)*/?)";
-    this._oAttachedLinks = {};
 
     var $this = this;
     if (typeof window.glOnInitEditor === 'undefined')
@@ -110,7 +112,7 @@ BxTimelinePost.prototype.initFormPost = function(sFormId)
         oExp = new RegExp($this._sPregUrl , "ig");
         while(aMatch = oExp.exec(sData)) {
             var sUrl = aMatch[0];
-            if(!sUrl.length || $this._oAttachedLinks[sUrl] != undefined)
+            if(!sUrl.length || $this._oAttachedLinks[sUrl] != undefined || ($this._iLimitAttachLinks != 0 && Object.keys($this._oAttachedLinks).length >= $this._iLimitAttachLinks))
                 continue;
 
             //--- Mark that 'attach link' process was started.
@@ -198,6 +200,7 @@ BxTimelinePost.prototype.afterFormAttachLinkSubmit = function (oForm, oData)
             var oItem = $(oData.item).hide();
             $('#' + $this._aHtmlIds['attach_link_form_field'] + iEventId).prepend(oItem).find('#' + oItem.attr('id')).bx_anim('show', $this._sAnimationEffect, $this._sAnimationSpeed);
 
+            $this._oAttachedLinks[oData.url] = oData.id;
             return;
         }
 
@@ -259,7 +262,7 @@ BxTimelinePost.prototype.deleteAttachLink = function(oLink, iId)
 
 BxTimelinePost.prototype.addAttachLink = function(oElement, sUrl)
 {
-    if(!sUrl)
+    if(!sUrl || (this._iLimitAttachLinks != 0 && Object.keys(this._oAttachedLinks).length > this._iLimitAttachLinks))
         return;
 
     var $this = this;
@@ -289,6 +292,11 @@ BxTimelinePost.prototype.addAttachLink = function(oElement, sUrl)
 
 BxTimelinePost.prototype.showAttachLink = function(oLink, iEventId)
 {
+    if(this._iLimitAttachLinks != 0 && Object.keys(this._oAttachedLinks).length >= this._iLimitAttachLinks) {
+        bx_alert(this._sLimitAttachLinksErr);
+        return false;
+    }
+
     var oData = this._getDefaultData();
     oData['event_id'] = iEventId;
 

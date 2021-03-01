@@ -48,6 +48,8 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     protected $_aHotList;
 
     protected $_bEditorToolbar;
+    protected $_iLimitAttachLinks;
+
     protected $_bUnhideRestored;
 
     protected $_sStorageObject;
@@ -370,6 +372,7 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
         $this->_aHotList = $this->_bHot ? $this->_oDb->getHot() : array();
 
         $this->_bEditorToolbar = getParam($sOptionPrefix . 'enable_editor_toolbar') == 'on';
+        $this->_iLimitAttachLinks = (int)getParam($sOptionPrefix . 'limit_attach_links');
 
         $this->_bUnhideRestored = false;
     }
@@ -616,6 +619,11 @@ class BxTimelineConfig extends BxBaseModNotificationsConfig
     public function getHotInterval()
     {
         return $this->_iHotInterval;
+    }
+
+    public function getLimitAttachLinks()
+    {
+        return $this->_iLimitAttachLinks;
     }
 
     public function getRepostDefaults()

@@ -306,7 +306,8 @@ VALUES (@iTypeId, 'bx_timeline_post', '_bx_timeline_options_category_post', 5);
 SET @iCategId = LAST_INSERT_ID();
 
 INSERT INTO `sys_options` (`name`, `value`, `category_id`, `caption`, `type`, `check`, `check_params`, `check_error`, `extra`, `order`) VALUES
-('bx_timeline_enable_editor_toolbar', '', @iCategId, '_bx_timeline_option_enable_editor_toolbar', 'checkbox', '', '', '', '', 1);
+('bx_timeline_enable_editor_toolbar', '', @iCategId, '_bx_timeline_option_enable_editor_toolbar', 'checkbox', '', '', '', '', 1),
+('bx_timeline_limit_attach_links', '0', @iCategId, '_bx_timeline_option_limit_attach_links', 'digit', '', '', '', '', 2);
 
 
 -- PRIVACY 

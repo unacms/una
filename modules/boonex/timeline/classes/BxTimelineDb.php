@@ -321,9 +321,18 @@ class BxTimelineDb extends BxBaseModNotificationsDb
                 break;
 
             case 'unused':
-                $aMethod['params'][1] = array(
+                $aBindings = array(
                     'profile_id' => $aParams['profile_id']
                 );
+
+                if(isset($aParams['short']) && $aParams['short'] === true) {
+                    $aMethod['name'] = 'getPairs';
+                    $aMethod['params'][1] = 'url';
+                    $aMethod['params'][2] = 'id';
+                    $aMethod['params'][3] = $aBindings;
+                }
+                else
+                    $aMethod['params'][1] = $aBindings;
 
                 $sJoinClause = "LEFT JOIN `" . $this->_sPrefix . "links2events` AS `tle` ON `tl`.`id`=`tle`.`link_id`";
                 $sWhereClause = " AND `tl`.`profile_id`=:profile_id AND ISNULL(`tle`.`event_id`)";

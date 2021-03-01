@@ -132,6 +132,13 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
     {
         return $this->getJsCode('post', array(
             'bEmoji' => $this->_oConfig->isEmoji(),
+            'iLimitAttachLinks' => $this->_oConfig->getLimitAttachLinks(),
+            'sLimitAttachLinksErr' => bx_js_string(_t('_bx_timeline_txt_err_attach_links')),
+            'oAttachedLinks' => $this->_oDb->getLinksBy(array(
+                'type' => 'unused', 
+                'profile_id' => $this->getModule()->getUserId(), 
+                'short' => true
+            )),
             'sVideosAutoplay' => $this->_oConfig->getVideosAutoplay(),
             'oRequestParams' => array_merge(array(
                 'type' => isset($aParams['type']) ? $aParams['type'] : BX_TIMELINE_TYPE_DEFAULT, 

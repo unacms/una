@@ -41,6 +41,7 @@
     <string name="_bx_timeline_option_cache_item_lifetime"><![CDATA[Item cache lifetime]]></string>
     <string name="_bx_timeline_option_enable_cache_list"><![CDATA[Enable feed cache]]></string>
     <string name="_bx_timeline_option_enable_editor_toolbar"><![CDATA[Enable post form editor toolbar]]></string>
+    <string name="_bx_timeline_option_limit_attach_links"><![CDATA[Limit number of attached links (0 - no limit)]]></string>
 
     <string name="_bx_timeline_form_post"><![CDATA[Post]]></string>
     <string name="_bx_timeline_form_post_display_add"><![CDATA[Write Post]]></string>
@@ -275,6 +276,7 @@
     <string name="_bx_timeline_grid_action_err_delete"><![CDATA[Cannot delete the selected timeline events(s).]]></string>
     <string name="_bx_timeline_txt_err_cannot_perform_action"><![CDATA[Cannot perform action. Please report.]]></string>
     <string name="_bx_timeline_txt_err_empty_post"><![CDATA[The post is empty.]]></string>
+    <string name="_bx_timeline_txt_err_attach_links"><![CDATA[The maximum allowed number of attached links has been reached.]]></string>
 
     <string name="_bx_timeline_txt_to"><![CDATA[to]]></string>
     <string name="_bx_timeline_txt_load_more"><![CDATA[Load More]]></string>
