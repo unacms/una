@@ -2602,6 +2602,15 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
                     'module' => $this->_oConfig->getName(),
                     'method' => 'get_timeline_repost_allowed_view',
                 );
+
+                if(!$this->_oConfig->isRepostOwnActions()) {
+                    $aResult['views'] = $aReposted['views'];
+                    $aResult['votes'] = $aReposted['votes'];
+                    $aResult['reactions'] = $aReposted['reactions'];
+                    $aResult['scores'] = $aReposted['scores'];
+                    $aResult['reports'] = $aReposted['reports'];
+                    $aResult['comments'] = $aReposted['comments'];
+                }
                 break;
         }
 
