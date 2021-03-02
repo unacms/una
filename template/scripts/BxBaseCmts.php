@@ -140,22 +140,49 @@ class BxBaseCmts extends BxDolCmts
         BxDolLiveUpdates::getInstance()->add($this->_sSystem . '_live_updates_cmts_' . $this->_iId, 1, $sServiceCall);
         //add live update
 
-        $sCaption = _t($this->_aT['block_comments_title'], $this->getCommentsCountAll());
+        $sComments = $this->getComments($aBp, $aDp);
+        $sContentBefore = $this->_getContentBefore();
+        $sContentAfter = $this->_getContentAfter();
+        $sPostFormTop = $this->getFormBoxPost($aBp, array_merge($aDp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_TOP)));
+        $sPostFormBottom = $this->getFormBoxPost($aBp, array_merge($aDp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_BOTTOM)));
+        $sJsContent = $this->getJsScript($aBp, $aDp);
+
+        $sBlockTitle = _t($this->_aT['block_comments_title'], $this->getCommentsCountAll());
+        $sBlockMenu = $this->_getControlsBox();
+
+        bx_alert('system', 'view_comments', 0, 0, array(
+            'object' => $this,
+            'system' => $this->_sSystem,
+            'id' => $this->getId(),
+            'params_browse' => $aBp,
+            'params_display' => $aDp,
+            'post_form_top' => &$sPostFormTop,
+            'content_before' => &$sContentBefore,
+            'comments' => &$sComments,
+            'content_after' => &$sContentAfter,
+            'post_form_bottom'  => &$sPostFormBottom,
+            'js_content' => &$sJsContent,
+            'block_title' => &$sBlockTitle,
+            'block_menu' => &$sBlockMenu,
+        ));
+
         $sContent = $this->_oTemplate->parseHtmlByName('comments_block.html', array(
             'system' => $this->_sSystem,
             'list_anchor' => $this->getListAnchor(),
             'id' => $this->getId(),
-            'comments' => $this->getComments($aBp, $aDp),
-            'post_form_top' => $this->getFormBoxPost($aBp, array_merge($aDp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_TOP))),
-            'post_form_bottom'  => $this->getFormBoxPost($aBp, array_merge($aDp, array('type' => $this->_sDisplayType, 'position' => BX_CMT_PFP_BOTTOM))),
+            'content_before' => $sContentBefore,
+            'comments' => $sComments,
+            'content_after' => $sContentAfter,
+            'post_form_top' => $sPostFormTop,
+            'post_form_bottom'  => $sPostFormBottom,
             'view_image_popup' => $this->_getViewImagePopup(),
-            'script' => $this->getJsScript($aBp, $aDp)
+            'script' => $sJsContent
         ));
 
-        return $aDp['in_designbox'] ? DesignBoxContent($sCaption, $sContent, BX_DB_DEF, $this->_getControlsBox()) : array(
-            'title' => $sCaption,
+        return $aDp['in_designbox'] ? DesignBoxContent($sBlockTitle, $sContent, BX_DB_DEF, $sBlockMenu) : array(
+            'title' => $sBlockTitle,
             'content' => $sContent,
-            'menu' => $this->_getControlsBox(),
+            'menu' => $sBlockMenu,
         );
     }
 
@@ -454,6 +481,11 @@ class BxBaseCmts extends BxDolCmts
         return $this->_getFormEdit($iCmtId, $aDp);
     }
 
+    function getControlsBox()
+    {
+        return $this->_getControlsBox();
+    }
+    
     function getLiveUpdate($iCountOld = 0, $iCountNew = 0)
     {
         $iCount = (int)$iCountNew - (int)$iCountOld;
@@ -761,6 +793,16 @@ class BxBaseCmts extends BxDolCmts
     /**
      * private functions
      */
+    protected function _getContentBefore()
+    {
+        return '';
+    }
+
+    protected function _getContentAfter()
+    {
+        return '';
+    }
+
     protected function _getControlsBox()
     {
         $sDisplay = '';
