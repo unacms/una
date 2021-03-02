@@ -32,7 +32,8 @@ BxDolPage.prototype.stickyBlocks = function () {
             var iWh = $(window).height();
 
             if ($('#bx-toolbar').css('position') == 'fixed') {
-                $(this).css('top', $('#bx-content-main').offset().top + 'px');
+                console.log($('#bx-content-main').offset().top - $('.bx-menu-toolbar-padding').height());
+                $(this).css('top', $('#bx-toolbar').height()+ 'px');
             }
             else {
                 $(this).css('top', '60px');
@@ -47,12 +48,15 @@ BxDolPage.prototype.stickyBlocks = function () {
                     else {
                         var iCurS = new Number($(this).css('top').replace('px', '')) - iSc + this._iLastSc;
                         if (iCurS > 0) {
+                            console.log(2);
                             $(this).css('top', '0px');
                         }
                         if (iCurS < iMinS) {
+                            console.log(3);
                             $(this).css('top', iMinS + 'px');
                         }
                         if (iCurS < 0 && iCurS > iMinS) {
+                            console.log(4);
                             $(this).css('top', iCurS + 'px');
                         }
                     }
