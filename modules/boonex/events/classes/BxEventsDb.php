@@ -81,8 +81,10 @@ class BxEventsDb extends BxBaseModGroupsDb
             $aBindings = array(
                 'timestamp_min' => $oDateMin->getTimestamp(),
                 'timestamp_max' => $oDateMax->getTimestamp(),
-                'timestamp_from' => $oDateFrom->getTimestamp(),
-                'timestamp_to' => $oDateTo->getTimestamp(),
+            );
+            $aBindingsRepeating = array(
+                'timestamp_min' => $oDateMin->getTimestamp(),
+                'timestamp_max' => $oDateMax->getTimestamp(),
                 'year_start' => $oDateFrom->format('Y'),
                 'year' => $oDateIter->format('Y'),
                 'month' => $oDateIter->format('n'),
@@ -90,13 +92,20 @@ class BxEventsDb extends BxBaseModGroupsDb
                 'day_of_month' => $oDateIter->format('j'),
                 'day_of_week' => $oDateIter->format('N'),
             );
-
             $sWhere = isset($aSQLPart['where']) ? $aSQLPart['where'] : '';
             if ((int)$iEventId) {
                 $aBindings['event'] = (int)$iEventId;
+                $aBindingsRepeating['event'] = (int)$iEventId;
                 $sWhere .= " AND `bx_events_data`.`id` = :event ";
             }
-            $a = $this->getAll("SELECT DISTINCT `bx_events_data`.`id`, `bx_events_data`.`event_name` AS `title`, `bx_events_data`.`date_start`, `bx_events_data`.`date_end`, `bx_events_data`.`timezone`, `bx_events_data`.`reminder`
+
+            // search for regular events
+            $a = $this->getAllWithKey("SELECT DISTINCT `bx_events_data`.`id`, `bx_events_data`.`event_name` AS `title`, `bx_events_data`.`date_start`, `bx_events_data`.`date_end`, `bx_events_data`.`timezone`, `bx_events_data`.`reminder`, 0 AS `repeating`
+                FROM `bx_events_data`
+                WHERE `bx_events_data`.`date_start` >= :timestamp_min AND `bx_events_data`.`date_start` <= :timestamp_max $sWhere
+            ", 'id', $aBindings);
+
+            $aRepeating = $this->getAllWithKey("SELECT DISTINCT `bx_events_data`.`id`, `bx_events_data`.`event_name` AS `title`, `bx_events_data`.`date_start`, `bx_events_data`.`date_end`, `bx_events_data`.`timezone`, `bx_events_data`.`reminder`, 1 AS `repeating`
                 FROM `bx_events_data`
                 LEFT JOIN `bx_events_intervals` AS `i` ON (
                     `bx_events_data`.`id` = `i`.`event_id`
@@ -116,16 +125,41 @@ class BxEventsDb extends BxBaseModGroupsDb
                         (0 = `i`.`repeat_day_of_week` OR :day_of_week = `i`.`repeat_day_of_week`)
                     )
                 )
-                WHERE ((`bx_events_data`.`date_start` >= :timestamp_min AND `bx_events_data`.`date_start` <= :timestamp_max AND `i`.`interval_id` IS NULL) OR (`i`.`interval_id` IS NOT NULL)) $sWhere
-            ", $aBindings);
+                WHERE `i`.`interval_id` IS NOT NULL $sWhere
+            ", 'id', $aBindingsRepeating);
 
-            // prepare variables for each event
+            $a = array_merge($aRepeating ? $aRepeating : array(), $a ? $a : array());
+
+            // prepare variables for each event            
             foreach ($a as $k => $r) {
                 $oDateStart = new DateTime('@' . $r['date_start']);
                 $oDateEnd = new DateTime('@' . $r['date_end']);
+                $oDuration = $oDateStart->diff($oDateEnd);
 
-                $a[$k]['start'] = $oDateStart ? $oDateStart->format('c') : 0;
-                $a[$k]['end'] = $oDateEnd ? $oDateEnd->format('c') : 0;
+                if ($r['repeating']) {
+                    // since repeating interval values are stored in specific timezones then we need to convert it
+                    $oTz = new DateTimeZone($r['timezone'] ? $r['timezone'] : 'UTC');
+                    $sHoursStart = $oDateStart->format('H:i:s');
+                    $iSecondsStart = (clone($oDateStart))->setTimezone($oTz)->format('H') * 3600 + $oDateStart->format('i') * 60 +  $oDateStart->format('s');
+                    $iSecondsOffset = $oTz->getOffset($oDateIter);
+
+                    $sCurrentDay = $oDateIter->format('Y-m-d');
+                    if ($iSecondsOffset > 0 && $iSecondsOffset > $iSecondsStart)
+                        $sCurrentDay = (clone($oDateIter))->sub(new DateInterval("P1D"))->format('Y-m-d');
+                    if ($iSecondsOffset < 0 && -$iSecondsOffset > (86400 - $iSecondsStart))
+                        $sCurrentDay = (clone($oDateIter))->add(new DateInterval("P1D"))->format('Y-m-d');
+
+                    $oStart = date_create($sCurrentDay . ' ' . $sHoursStart);
+                    $oEnd = $oStart ? clone($oStart) : null;
+                    $oEnd = $oEnd ? $oEnd->add($oDuration) : null;
+                } 
+                else {
+                    $oStart = $oDateStart;
+                    $oEnd = $oDateEnd;
+                }
+
+                $a[$k]['start'] = $oStart ? $oStart->format('c') : 0;
+                $a[$k]['end'] = $oEnd ? $oEnd->format('c') : 0;
                 $a[$k]['start_utc'] = $oDateStart ? $oDateStart->getTimestamp() : 0;
                 $a[$k]['end_utc'] = $oDateEnd ? $oDateEnd->getTimestamp() : 0;
                 $a[$k]['url'] = BX_DOL_URL_ROOT . BxDolPermalinks::getInstance()->permalink('page.php?i=' . $this->_oConfig->CNF['URI_VIEW_ENTRY'] . '&id=' . $r['id']);
