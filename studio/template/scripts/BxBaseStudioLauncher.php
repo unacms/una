@@ -98,44 +98,44 @@ class BxBaseStudioLauncher extends BxDolStudioLauncher
         return $sResult;
     }
 
-    public function getPopupBrowser()
+    public function getPopupBrowser($sType = '')
     {
         $iAccountId = getLoggedId();
 
         $oUtils = BxDolStudioRolesUtils::getInstance();
         $oTemplate = BxDolStudioTemplate::getInstance();
 
+        $bType = !empty($sType);
         $aTypes = parent::getPageTypes();
-        
-        $sSelected = reset($aTypes)['Value'];
-        $aMarkers = array();
+        $sSelected = $bType ? $sType : reset($aTypes)['Value'];
 
+        $aMarkers = array();
         $aMenuItems = array();
         $aTmplVarsTypes = array();
-        foreach($aTypes as $sType => $aType) {
-            if(!$oUtils->isActionAllowed('use ' . $sType, $iAccountId))
+        foreach($aTypes as $sName => $aType) {
+            if(!$oUtils->isActionAllowed('use ' . $sName, $iAccountId))
                 continue;
 
             $aTypeData = unserialize($aType['Data']);
 
             //--- Menu
             $aMenuItems[] = array(
-                'name' => $sType,
+                'name' => $sName,
                 'title' => _t($aType['LKey']),
                 'link' => 'javascript:void(0)',
-                'onclick' => $this->getPageJsObject() . '.browserChangeType(this, \'' . $sType . '\')',
+                'onclick' => $this->getPageJsObject() . '.browserChangeType(this, \'' . $sName . '\')',
                 'icon' => !empty($aTypeData['icon']) ? $aTypeData['icon'] : '',
-                'selected' => $sType == $sSelected
+                'selected' => $sName == $sSelected
             );
 
             //--- Conetent
             $aTmplVarsTypes[] = array(
-                'type' => $sType, 
-                'class' => $sType == $sSelected ? 'bx-std-lbw-active' : '',
+                'type' => $sName, 
+                'class' => $sName == $sSelected ? 'bx-std-lbw-active' : '',
                 'widgets' => $this->getWidgets($this->aPage['name'], $this->oDb->getWidgets(array(
                     'type' => 'by_page_id', 
                     'value' => $this->aPage['id'], 
-                    'wtype' => $sType != BX_DOL_STUDIO_WTYPE_DEFAULT ? $sType : ''
+                    'wtype' => $sName != BX_DOL_STUDIO_WTYPE_DEFAULT ? $sName : ''
                 )))
             );
         }
@@ -157,7 +157,9 @@ class BxBaseStudioLauncher extends BxDolStudioLauncher
             'options' => array(
                 'closeOnOuterClick' => true,
                 'pointer' => array(
-                    'el' => '.bx-menu-breadcrumb .bx-menu-bc-home',
+                    'el' => '.bx-menu-breadcrumb .bx-menu-bc-' . ($bType ? 'type' : 'home'),
+                    'align' => 'left',
+                    'offset' => '-16 0'
                 )
             )
         );

@@ -84,25 +84,30 @@ class BxBaseStudioPage extends BxDolStudioPage
 
     public function getPageBreadcrumb()
     {
-        $this->addMarkers(array(
-            'js_object_launcher' => BxTemplStudioLauncher::getInstance()->getPageJsObject()
-        ));
+        $bWidgetType = !empty($this->aPage['wid_type']);
+
+        $aMarkers = array('js_object_launcher' => BxTemplStudioLauncher::getInstance()->getPageJsObject());
+        if($bWidgetType)
+            $aMarkers['widget_type'] = $this->aPage['wid_type'];
+
+        $this->addMarkers($aMarkers);
 
         $aMenuItems = array(
             'home' => array(
                 'name' => 'home',
                 'icon' => 'bc-home.svg',
                 'link' => 'javascript:void(0)',
-                'onclick' => bx_replace_markers('{js_object_launcher}.browser(this)', $this->aMarkers),
+                'onclick' => bx_replace_markers('return {js_object_launcher}.browser(this)', $this->aMarkers),
                 'title' => ''
             )
         );
 
-        if(!empty($this->aPage['wid_type']))
+        if($bWidgetType)
             $aMenuItems['type'] = array(
                 'name' => 'type',
                 'icon' => $this->getPageTypeIcon(),
                 'link' => $this->getPageTypeUrl(),
+                'onclick' => bx_replace_markers("return {js_object_launcher}.browser(this, '{widget_type}')", $this->aMarkers),
                 'title' => ''
             );
 

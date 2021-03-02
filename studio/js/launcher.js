@@ -53,28 +53,47 @@ BxDolStudioLauncher.prototype.init = function() {
     });
 };
 
-BxDolStudioLauncher.prototype.browser = function(oLink) {
+BxDolStudioLauncher.prototype.browser = function(oLink, sType) {
+    var $this = this;
     var oDate = new Date();
+
+    if(sType == undefined)
+        sType = '';
 
     var oBrowser = $('#bx-std-launcher-browser');
     if(oBrowser.length > 0) {
-        if(oBrowser.is(':visible'))
-            oBrowser.dolPopupHide();
-        else
+        var fBrowserShow = function() {
             oBrowser.dolPopup({
                 closeOnOuterClick: true,
                 pointer: {
-                    el: '.bx-menu-breadcrumb .bx-menu-bc-home',
+                    el: '.bx-menu-breadcrumb .bx-menu-bc-' + (sType.length > 0 ? 'type' : 'home'),
+                    align: 'left',
+                    offset: '-16 0'
+                },
+                onBeforeShow: function(oPopup) {
+                    $this.browserChangeType(oLink, sType);
+                } 
+            });
+        }
+
+        if(oBrowser.is(':visible'))
+            oBrowser.dolPopupHide({
+                onHide: function() {
+                    if(oBrowser.find('.bx-std-lb-menu .bx-std-pmen-item.bx-std-pmen-item-' + sType + '.bx-menu-tab-active').length == 0)
+                        fBrowserShow();
                 }
             });
+        else
+            fBrowserShow();            
 
-        return true;
+        return false;
     }
 
     $.get(
         this.sActionsUrl,
         {
             action: 'launcher-browser',
+            type: sType,
             _t: oDate.getTime()
         },
         function(oData) {
@@ -82,14 +101,19 @@ BxDolStudioLauncher.prototype.browser = function(oLink) {
         },
         'json'
     );
-    return true;
+
+    return false;
 };
 
 BxDolStudioLauncher.prototype.browserChangeType = function(oLink, sType) {
     var sMenuActive = 'bx-menu-tab-active';
     var sContentActive = 'bx-std-lbw-active';
 
-    $('.bx-std-launcher-browser .bx-std-lb-menu .bx-std-pmen-item.' + sMenuActive).removeClass(sMenuActive).siblings('.bx-std-pmen-item-' + sType).addClass(sMenuActive);
+    var oMenuActive = $('.bx-std-launcher-browser .bx-std-lb-menu .bx-std-pmen-item.' + sMenuActive);
+    if(oMenuActive.hasClass('bx-std-pmen-item-' + sType))
+        return;
+
+    oMenuActive.removeClass(sMenuActive).siblings('.bx-std-pmen-item-' + sType).addClass(sMenuActive);
     $('.bx-std-launcher-browser .bx-std-lb-content .bx-std-lb-widgets.' + sContentActive).removeClass(sContentActive).siblings('.bx-std-lbw-' + sType).addClass(sContentActive);
 };
 

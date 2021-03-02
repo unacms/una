@@ -45,7 +45,9 @@ class BxDolStudioLauncher extends BxTemplStudioWidgets implements iBxDolSingleto
         $aResult = array('code' => 1, 'message' => _t('_adm_err_operation_failed'));
         switch($sAction) {
             case 'launcher-browser':
-                $aResult = array('code' => 0, 'popup' => $this->getPopupBrowser());
+                $sType = bx_process_input(bx_get('type'));
+
+                $aResult = array('code' => 0, 'popup' => $this->getPopupBrowser($sType));
                 break;
 
             case 'launcher-update-cache':
