@@ -16,8 +16,8 @@ class BxDolStudioRssPageHelp extends BxTemplRss
 
     public function getUrl($mixedId)
     {
-    	$oPage = new BxDolStudioPage($mixedId);
-		return $oPage->getRssHelpUrl();
+    	$oPage = new BxTemplStudioWidget($mixedId);
+        return $oPage->getRssHelpUrl();
     }
 }
 
