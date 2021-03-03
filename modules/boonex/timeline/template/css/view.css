@@ -279,7 +279,8 @@ div.bx-tl-item div.bx-tl-owner-name {
     overflow: hidden;
 }
 
-div.bx-tl-item div.bx-tl-owner-name .bx-badge-compact {
+div.bx-tl-item div.bx-tl-owner-name .bx-badge-compact,
+div.bx-tl-item div.bx-tl-owner-name .bx-badges-list{
     display:inline-block;
 }
 

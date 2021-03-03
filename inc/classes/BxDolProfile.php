@@ -273,7 +273,7 @@ class BxDolProfile extends BxDolFactory implements iBxDolProfile
     public function getBadges($iProfileId = 0)
     {
         $aInfo = $this->getInfo($iProfileId);
-        return BxDolService::call($aInfo['type'], 'get_badges', array($aInfo['content_id'], true, true));
+        return BxDolService::call($aInfo['type'], 'get_badges', array($aInfo['content_id'], false, true));
     }
 
 	/**
