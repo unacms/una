@@ -64,10 +64,10 @@ INSERT INTO `sys_objects_grid` (`object`, `source_type`, `source`, `table`, `fie
 INSERT INTO `sys_grid_fields` (`object`, `name`, `title`, `width`, `translatable`, `chars_limit`, `params`, `order`) VALUES
 ('bx_accounts_administration', 'checkbox', '_sys_select', '2%', 0, '', '', 1),
 ('bx_accounts_administration', 'switcher', '_bx_accnt_grid_column_title_adm_active', '6%', 0, '', '', 2),
-('bx_accounts_administration', 'name', '_bx_accnt_grid_column_title_adm_name', '22%', 0, '22', '', 3),
-('bx_accounts_administration', 'email', '_bx_accnt_grid_column_title_adm_email', '22%', 0, '22', '', 4),
+('bx_accounts_administration', 'name', '_bx_accnt_grid_column_title_adm_name', '16%', 0, '16', '', 3),
+('bx_accounts_administration', 'email', '_bx_accnt_grid_column_title_adm_email', '22%', 0, '16', '', 4),
 ('bx_accounts_administration', 'is_confirmed', '_bx_accnt_grid_column_title_adm_is_confirmed', '5%', 0, '', '', 5),
-('bx_accounts_administration', 'profiles', '_bx_accnt_grid_column_title_adm_profiles', '17%', 0, '22', '', 6),
+('bx_accounts_administration', 'profiles', '_bx_accnt_grid_column_title_adm_profiles', '23%', 0, '', '', 6),
 ('bx_accounts_administration', 'logged', '_bx_accnt_grid_column_title_adm_logged', '10%', 0, '15', '', 7),
 ('bx_accounts_administration', 'added', '_bx_accnt_grid_column_title_adm_added', '10%', 0, '15', '', 8),
 ('bx_accounts_administration', 'actions', '', '6%', 0, '', '', 9);
