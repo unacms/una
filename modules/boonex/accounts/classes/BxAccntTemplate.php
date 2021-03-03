@@ -81,23 +81,30 @@ class BxAccntTemplate extends BxBaseModGeneralTemplate
     {
         $sJsObject = $this->_oConfig->getJsObject('manage_tools');
         $sHtmlIdPrefix = str_replace('_', '-', $this->_oConfig->getName()) . '-role';
+        $sMaskOnClick = '%s.onClickSetOperatorRoleSubmit(this, %d, %d)';
 
-        $aRoles = array_merge(array(array('id' => 0, 'title' => '_None')), $aRoles);
+        $aRoles = array_merge(array(array('id' => 0, 'title' => '_bx_accnt_txt_not_operator')), $aRoles);
 
         $aTmplVarsRoles = array();
         foreach($aRoles as $aRole) {
             $iRole = (int)$aRole['id'];
+            $bRole = $iRole != 0;
 
             if($iRole == BX_DOL_STUDIO_ROLE_MASTER)
                 continue;
 
             $aTmplVarsRoles[] = array(
                 'id' => $sHtmlIdPrefix . '-' . $iRole, 
+                'type' => !$bRole ? 'radio' : 'checkbox',
                 'value' => $iRole,
-                'onclick' => $sJsObject . '.onClickSetOperatorRoleSubmit(this, ' . $iAccountId . ', ' . $iRole . ')',
+                'onclick' => sprintf($sMaskOnClick, $sJsObject, $iAccountId, $iRole),
                 'title' => _t($aRole['title']), 
                 'bx_if:show_checked' => array(
-                    'condition' => $iRole != 0 && $iAccountRole & (1 << ($iRole - 1)),
+                    'condition' => ($bRole && $iAccountRole & (1 << ($iRole - 1))) || (!$bRole && $iAccountRole == 0),
+                    'content' => array()
+                ),
+                'bx_if:show_divider' => array(
+                    'condition' => !$bRole,
                     'content' => array()
                 )
             );

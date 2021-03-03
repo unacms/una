@@ -90,4 +90,5 @@
     <string name="_bx_accnt_txt_more"><![CDATA[{0} more]]></string>
     <string name="_bx_accnt_txt_see_more"><![CDATA[See more]]></string>
     <string name="_bx_accnt_txt_copy_to_clipboard"><![CDATA[Copy to Clipboard]]></string>
+    <string name="_bx_accnt_txt_not_operator"><![CDATA[Not an Operator]]></string>
 </resources>
