@@ -525,10 +525,13 @@ class BxBaseModGeneralFormEntry extends BxTemplFormView
 
         // delete associated files
 
-        if (!empty($CNF['OBJECT_STORAGE'])) {
-            $oStorage = BxDolStorage::getObjectInstance($CNF['OBJECT_STORAGE']);
-            if ($oStorage)
-                $oStorage->queueFilesForDeletionFromGhosts($aContentInfo[$CNF['FIELD_AUTHOR']], $iContentId);
+        $a = array('OBJECT_STORAGE', 'OBJECT_STORAGE_FILES', 'OBJECT_STORAGE_PHOTOS', 'OBJECT_STORAGE_VIDEOS', 'OBJECT_STORAGE_SOUNDS');
+        foreach ($a as $k) {
+            if (!empty($CNF[$k])) {
+                $oStorage = BxDolStorage::getObjectInstance($CNF[$k]);
+                if ($oStorage)
+                    $oStorage->queueFilesForDeletionFromGhosts($aContentInfo[$CNF['FIELD_AUTHOR']], $iContentId);
+            }
         }
 
         // delete associated objects data
