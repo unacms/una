@@ -244,8 +244,9 @@ class BxDolAccount extends BxDolFactory implements iBxDolSingleton
         $sSalt = genRndSalt();
         $sPasswordHash = encryptUserPwd($sPassword, $sSalt);
         $iId = (int)$iAccountId ? (int)$iAccountId : $this->_iAccountID;
+        $oAccountSender = BxDolAccount::getInstance();
         if((int)BxDolAccountQuery::getInstance()->updatePassword($sPasswordHash, $sSalt, $iId) > 0) {
-            bx_alert('account', 'edited', $iId, BxDolAccount::getInstance()->id(), array('action' => 'reset_password'));
+            bx_alert('account', 'edited', $iId, $oAccountSender ? $oAccountSender->id() : $iId, array('action' => 'reset_password'));
             $this->doAudit($iId, '_sys_audit_action_account_reset_password');
             return true;
         }
