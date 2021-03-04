@@ -62,8 +62,14 @@
     <string name="_bx_ads_form_entry_input_sys_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_ads_form_entry_input_title"><![CDATA[Заголовок]]></string>
     <string name="_bx_ads_form_entry_input_title_err"><![CDATA[Заголовок обязателен. Пожалуйста, заполните это поле.]]></string>
+    <string name="_bx_ads_form_entry_input_sys_name"><![CDATA[Имя]]></string>
+    <string name="_bx_ads_form_entry_input_name"><![CDATA[Имя]]></string>
+    <string name="_bx_ads_form_entry_input_name_err"><![CDATA[Имя должно быть уникально и будет использоваться для внутренних целей. Пожалуйста, заполните это поле]]></string>
     <string name="_bx_ads_form_entry_input_sys_price"><![CDATA[Цена]]></string>
     <string name="_bx_ads_form_entry_input_price"><![CDATA[Цена]]></string>
+    <string name="_bx_ads_form_entry_input_sys_quantity"><![CDATA[Количество]]></string>
+    <string name="_bx_ads_form_entry_input_quantity"><![CDATA[Количество]]></string>
+    <string name="_bx_ads_form_entry_input_quantity_err"><![CDATA[Количество обязательно. Пожалуйста, заполните это поле.]]></string>
     <string name="_bx_ads_form_entry_input_sys_year"><![CDATA[Год]]></string>
     <string name="_bx_ads_form_entry_input_year"><![CDATA[Год]]></string>
     <string name="_bx_ads_form_entry_input_sys_category"><![CDATA[Категория]]></string>
@@ -74,6 +80,9 @@
     <string name="_bx_ads_form_entry_input_sys_text"><![CDATA[Текст]]></string>
     <string name="_bx_ads_form_entry_input_text"><![CDATA[Текст]]></string>
     <string name="_bx_ads_form_entry_input_text_err"><![CDATA[Поле Текст не может быть пустым.]]></string>
+    <string name="_bx_ads_form_entry_input_sys_notes_purchased"><![CDATA[Примечание к покупке]]></string>
+    <string name="_bx_ads_form_entry_input_notes_purchased"><![CDATA[Примечание к покупке]]></string>
+    <string name="_bx_ads_form_entry_input_notes_purchased_inf"><![CDATA[Будет прикреплено к сообщению электронной почты, которое отправляется покупателю после покупки.]]></string>
     <string name="_bx_ads_form_entry_input_sys_delete_confirm"><![CDATA[Подтверждение удаления]]></string>
     <string name="_bx_ads_form_entry_input_delete_confirm"><![CDATA[Я уверен(а), что хочу удалить это объявление]]></string>
     <string name="_bx_ads_form_entry_input_delete_confirm_info"><![CDATA[Это действие не может быть отменено]]></string>
@@ -207,6 +216,14 @@
     <string name="_bx_ads_page_title_entries_categories"><![CDATA[Категории объявлений]]></string>
     <string name="_bx_ads_page_block_title_entries_by_category"><![CDATA[Объявления]]></string>
     <string name="_bx_ads_page_block_title_entries_by_category_mask"><![CDATA[Объявления в: {0}]]></string>
+    <string name="_bx_ads_page_title_sys_licenses_administration"><![CDATA[Лицензии]]></string>
+    <string name="_bx_ads_page_title_licenses_administration"><![CDATA[Лицензии]]></string>
+    <string name="_bx_ads_page_block_title_licenses_administration"><![CDATA[Лицензии]]></string>
+    <string name="_bx_ads_page_title_sys_licenses"><![CDATA[Лицензии]]></string>
+    <string name="_bx_ads_page_title_licenses"><![CDATA[Лицензии]]></string>
+    <string name="_bx_ads_page_block_title_licenses"><![CDATA[Лицензии]]></string>
+    <string name="_bx_ads_page_block_title_licenses_note"><![CDATA[Внимание]]></string>
+    <string name="_bx_ads_page_block_content_licenses_note"><![CDATA[Лицензии приведены только для справки.]]></string>
 
     <string name="_bx_ads_menu_title_entry_attachments"><![CDATA[Форма - Прикрепления]]></string>
     <string name="_bx_ads_menu_set_title_entry_attachments"><![CDATA[Форма - Прикрепления]]></string>
@@ -235,6 +252,8 @@
     <string name="_bx_ads_menu_item_title_create_entry"><![CDATA[Объявление]]></string>
     <string name="_bx_ads_menu_item_title_system_interested_entry"><![CDATA[Интересно]]></string>
     <string name="_bx_ads_menu_item_title_interested_entry"><![CDATA[Я заинтересован]]></string>
+    <string name="_bx_ads_menu_item_title_system_add_to_cart"><![CDATA[Купить]]></string>
+    <string name="_bx_ads_menu_item_title_add_to_cart"><![CDATA[Купить за {0}{1}]]></string>
     <string name="_bx_ads_menu_item_title_system_edit_entry"><![CDATA[Редактировать]]></string>
     <string name="_bx_ads_menu_item_title_edit_entry"><![CDATA[Редактировать]]></string>
     <string name="_bx_ads_menu_item_title_system_delete_entry"><![CDATA[Удалить]]></string>
@@ -277,6 +296,14 @@
     <string name="_bx_ads_menu_item_title_entries_categories"><![CDATA[Категории]]></string>
     <string name="_bx_ads_menu_item_title_system_sm_price"><![CDATA[Цена]]></string>
     <string name="_bx_ads_menu_item_title_sm_price"><![CDATA[Цена]]></string>
+    <string name="_bx_ads_menu_title_licenses_submenu"><![CDATA[Лицензии - Подменю]]></string>
+    <string name="_bx_ads_menu_set_title_licenses_submenu"><![CDATA[Лицензии - Подменю]]></string>
+    <string name="_bx_ads_menu_item_title_system_ads_licenses_administration"><![CDATA[Все лицензии]]></string>
+    <string name="_bx_ads_menu_item_title_ads_licenses_administration"><![CDATA[Все лицензии]]></string>
+    <string name="_bx_ads_menu_item_title_system_ads_licenses"><![CDATA[Мои лицензии]]></string>
+    <string name="_bx_ads_menu_item_title_ads_licenses"><![CDATA[Мои лицензии]]></string>
+    <string name="_bx_ads_menu_item_title_system_licenses"><![CDATA[Лицензии к объявлениям]]></string>
+    <string name="_bx_ads_menu_item_title_licenses"><![CDATA[Лицензии к объявлениям]]></string>
 
     <string name="_bx_ads_grid_column_title_icon"><![CDATA[Иконка]]></string>
     <string name="_bx_ads_grid_column_title_title"><![CDATA[Заголовок]]></string>
@@ -305,6 +332,13 @@
     <string name="_bx_ads_grid_action_err_delete"><![CDATA[Невозможно удалить выбранное(ные) объявление(ния).]]></string>
     <string name="_bx_ads_grid_txt_account_manager"><![CDATA[Перенаправить в управление аккаунтом.]]></string>
 
+    <string name="_bx_ads_grid_column_title_lcs_profile_id"><![CDATA[Владелец]]></string>
+    <string name="_bx_ads_grid_column_title_lcs_transaction"><![CDATA[Транзакция]]></string>
+    <string name="_bx_ads_grid_column_title_lcs_entry"><![CDATA[Объявление]]></string>
+    <string name="_bx_ads_grid_column_title_lcs_count"><![CDATA[Кол-во]]></string>
+    <string name="_bx_ads_grid_column_title_lcs_license"><![CDATA[Лицензия]]></string>
+    <string name="_bx_ads_grid_column_title_lcs_added"><![CDATA[Дата]]></string>
+    
     <string name="_bx_ads_chart_growth"><![CDATA[Объявления: Развитие]]></string>
     <string name="_bx_ads_chart_growth_speed"><![CDATA[Объявления: Скорость развития]]></string>
 
@@ -369,6 +403,14 @@
 <p><b><a href="{viewer_url}">{viewer_name}</a></b> заинтересован в вашем объявлении <b><a href="{ad_url}">{ad_name}</a></b>.</p>
 {email_footer}]]></string>
 
+    <string name="_bx_ads_et_txt_name_purchased"><![CDATA[Объявление оплачено.]]></string>
+    <string name="_bx_ads_et_txt_subject_purchased"><![CDATA[Вы оплатили {product_name} объявление.]]></string>
+    <string name="_bx_ads_et_txt_body_purchased"><![CDATA[{email_header}
+<p>Здравствуйте, {client_name}.</p>
+<p>Вы оплатили <a href="{entry_url}">{entry_name}</a> объявление ({count} шт.), размещенное <a href="{vendor_url}">{vendor_name}</a>.<br />Ваша лицензия - <b>{license}</b>.</p>
+<p>{notes}</p>
+{email_footer}]]></string>
+
     <string name="_bx_ads_txt_all_entries_in"><![CDATA[<a href="{0}">Все объявления в {1} ({2})</a>]]></string>
     <string name="_bx_ads_txt_all_entries_by"><![CDATA[{0} объявлений]]></string>
     <string name="_bx_ads_txt_sample_single"><![CDATA[объявление]]></string>
@@ -385,6 +427,7 @@
     <string name="_bx_ads_txt_processing_awaiting"><![CDATA[Объявление будет опубликована как только сконвертируется видео.]]></string>
     <string name="_bx_ads_txt_processing_failed"><![CDATA[Объявление не было опубликовано, тк произошла ошибка при конвертации видео. Обновите видео, чтобы решить проблему.]]></string>
     <string name="_bx_ads_txt_free"><![CDATA[Бесплатно]]></string>
+    <string name="_bx_ads_txt_purchased_note"><![CDATA[Свяжитесь с <a href="{0}">{1}</a>, если у вас есть какие-либо вопросы или нужна помощь.]]></string>
 
     <string name="_bx_ads_txt_msg_author_notified"><![CDATA[Рекламодатель был оповещен, что Вы заинтересованы в его объявлении. Пожалуйста ждите.]]></string>
     <string name="_bx_ads_txt_err_your_own"><![CDATA[Вы не можете выполнить действие, т.к. это ваше объявление.]]></string>
