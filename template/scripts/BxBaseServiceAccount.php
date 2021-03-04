@@ -535,9 +535,9 @@ class BxBaseServiceAccount extends BxDol
                 return MsgBox(_t('_sys_txt_reset_pasword_error_not_found', $sErrorUrl));;
 
             $sPassword = $oForm->getCleanValue('password');
-            $sSalt = genRndSalt();
-            if(!$this->_oAccountQuery->updatePassword(encryptUserPwd($sPassword, $sSalt), $sSalt, $iAccountId))
-                return MsgBox(_t('_sys_txt_reset_pasword_error_occured', $sErrorUrl));;
+            $oAccount = BxDolAccount::getInstance($iAccountId);
+            if (!$oAccount || !$oAccount->updatePassword($sPassword))
+                return MsgBox(_t('_sys_txt_reset_pasword_error_occured', $sErrorUrl));
 
             $this->_oAccountQuery->unlockAccount($iAccountId);
             $oKey->removeKey($sKey);
