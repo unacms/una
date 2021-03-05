@@ -34,6 +34,8 @@ class BxTimelineTemplate extends BxBaseModNotificationsTemplate
         $this->_bShowTimelineDividers = false;
 
         $this->_aAclId2Name = array();
+
+        bx_import('BxTemplAcl');
         $aAclLevels = BxDolAcl::getInstance()->getMemberships(false, false, false);
         foreach($aAclLevels as $iAclId => $sAclName)
             $this->_aAclId2Name[$iAclId] = str_replace('_', '-', str_replace('_adm_prm_txt_level_', '', $sAclName));
