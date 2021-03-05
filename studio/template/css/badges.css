@@ -81,7 +81,7 @@ div.bx-badge span{
     overflow: hidden;
 }
 div.bx-badge .sys-icon{
-	color:#fff;
+	color: inherit !important;
 	margin-right: 0.5rem;
 }
 div.bx-badge.bx-badge-compact{

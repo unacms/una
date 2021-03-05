@@ -298,7 +298,7 @@ div.bx-badge span{
 }
 div.bx-badge:not(.bx-badge-compact-to) .sys-icon,
 div.bx-badge:not(.bx-badge-compact-to) span{
-	color:#fff;
+	color: inherit !important;
 	margin-right: 0.5rem;
 }
 div.bx-badge.bx-badge-compact{
