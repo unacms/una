@@ -258,6 +258,7 @@
     <string name="_bx_timeline_grid_action_err_delete"><![CDATA[Невозможно удалить выбранную(ные) событие(я) ленты.]]></string>
     <string name="_bx_timeline_grid_txt_account_manager"><![CDATA[Перенаправить в Управление аккаунтом.]]></string>
 
+    <string name="_bx_timeline_alert_module_comment"><![CDATA[Комментарий]]></string>
     <string name="_bx_timeline_alert_module_timeline_common_post"><![CDATA[Лента (разместить)]]></string>
     <string name="_bx_timeline_alert_module_timeline_common_repost"><![CDATA[Лента (сделать репост)]]></string>
     <string name="_bx_timeline_alert_action_added"><![CDATA[добавить]]></string>

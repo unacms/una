@@ -259,6 +259,7 @@
     <string name="_bx_timeline_grid_action_title_adm_audit_content"><![CDATA[Audit actions]]></string>
     <string name="_bx_timeline_grid_txt_account_manager"><![CDATA[Redirect to manage account.]]></string>
 
+    <string name="_bx_timeline_alert_module_comment"><![CDATA[Comment]]></string>
     <string name="_bx_timeline_alert_module_timeline_common_post"><![CDATA[Timeline (post)]]></string>
     <string name="_bx_timeline_alert_module_timeline_common_repost"><![CDATA[Timeline (repost)]]></string>
     <string name="_bx_timeline_alert_action_added"><![CDATA[add]]></string>

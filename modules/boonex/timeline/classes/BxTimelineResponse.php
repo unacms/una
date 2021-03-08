@@ -37,6 +37,13 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
             return;
 
         $aHandler = $this->_oModule->_oConfig->getHandlers($oAlert->sUnit . '_' . $oAlert->sAction);
+        if(empty($aHandler) || !is_array($aHandler))
+            return;
+
+        $iSilentMode = $this->_getSilentMode($oAlert->aExtras);
+        if(in_array($iSilentMode, array(BX_TIMELINE_SLTMODE_ABSOLUTE)))
+            return;
+
         switch($aHandler['type']) {
             case BX_BASE_MOD_NTFS_HANDLER_TYPE_INSERT:
                 $iOwnerId = abs($oAlert->iSender);
@@ -195,6 +202,14 @@ class BxTimelineResponse extends BxBaseModNotificationsResponse
     protected function _processProfileSuspend($oAlert)
     {
         $this->_clearCache();
+    }
+
+    protected function _getSilentMode($aExtras)
+    {
+        if(isset($aExtras['silent_mode']))
+            return (int)$aExtras['silent_mode'];
+
+        return BX_TIMELINE_SLTMODE_DISABLED;
     }
 
     protected function _clearCache()

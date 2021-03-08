@@ -12,6 +12,20 @@
 bx_import('BxDolAcl');
 bx_import('BxBaseModNotificationsModule');
 
+/**
+ * SLTMODE - Silent mode:
+ * It is needed for alert sending module to tell that the alert should be ignored 
+ * with Timeline module completely or partially. Available values: 
+ * 1. disabled (global, value = 0) - all events are registered;
+ * 2. absolute (global, value = 1) - alert isn't registered which means that event won't appear in timelines at all;
+ * 3. absolute (for Timeline only, value = 21) - the same as global absolute.
+ * 4. partial registration might be added in the future versions.
+ * 
+ * @see BxBaseModNotificationsModule and BxTimelineResponse::response - 'silent_mode' parameter in Alerts Extras array.
+ */
+define('BX_TIMELINE_SLTMODE_DISABLED', 0);
+define('BX_TIMELINE_SLTMODE_ABSOLUTE', 21);
+
 define('BX_TIMELINE_TYPE_ITEM', 'view_item');
 define('BX_TIMELINE_TYPE_OWNER_AND_CONNECTIONS', 'owner_and_connections');
 define('BX_TIMELINE_TYPE_CHANNELS', 'channels'); //--- Followed channels only.
