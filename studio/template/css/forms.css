@@ -35,12 +35,15 @@
 }
 
 .bx-form-value .bx-form-input-textarea {
-    height: 150px;
-    height: 10rem;
+    height: 15rem;
     padding: 0.5rem;
 
     line-height:normal;
-} 
+}
+
+.bx-form-value .bx-form-input-wrapper-textarea .CodeMirror {
+    height: 30rem;
+}
 
 .bx-form-value .bx-form-input-slider:focus,
 .bx-form-value .bx-form-input-doublerange:focus,

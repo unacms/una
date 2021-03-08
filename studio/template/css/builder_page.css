@@ -118,9 +118,6 @@ div.adm-bp-cell div.adm-bpb-info {
 }
 
 /*--- Add Block popup style ---*/
-div#adm-bp-create-block-popup div.bx-popup-width {
-	width: 620px;
-}
 div#adm-bp-create-block-popup div.bx-popup-content {
 	padding-left: 0px;
 	padding-right: 0px; 
@@ -138,8 +135,8 @@ div.adm-bp-create-block-form div.adm-bp-block:first-child {
 }
 div.adm-bp-cbf-left {
 	position: absolute;
-    top: 0px;
-    left: 0px;
+        top: 0px;
+        left: 0px;
 	width: 179px;
 	height: 300px;
 	border-style: solid;
@@ -149,7 +146,7 @@ div.adm-bp-cbf-left {
 div.adm-bp-cbf-left-cnt {}
 div.adm-bp-cbf-right {
 	position: relative;
-	width: 440px;
+	width: 620px;
 	height: 300px;
 	margin-left: 180px;
 	border-style: solid;
@@ -182,10 +179,6 @@ div.bx-popup .bx-uploader-ghost .bx-ug-content input.bx-ug-dimension.bx-form-inp
 }
 
 /*--- Page Settings popups style ---*/
-div#adm-bp-add-popup div.bx-popup-width,
-div#adm-bp-edit-popup div.bx-popup-width {
-    width: 560px;
-}
 div#adm-bp-add-popup div.bx-popup-content,
 div#adm-bp-edit-popup div.bx-popup-content {
     padding-left: 0px;
@@ -211,29 +204,29 @@ div.adm-bp-edit-form div.bx-form-input-wrapper-custom {
 	position: relative;
 }
 div.adm-bp-epf-left {
-	position: absolute;
-	top: 0px;
-	left: 0px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
     width: 179px;
     height: 310px;
-	border-style: solid;
-	border-width: 1px 1px 0px 0px;
+    border-style: solid;
+    border-width: 1px 1px 0px 0px;
     overflow-y: auto; 
 }
 div.adm-bp-epf-left-cnt {}
 div.adm-bp-epf-right {
     position: relative;
-    width: 380px;
+    width: 620px;
     height: 310px;
-	margin-left: 180px;
-	border-style: solid;
-	border-width: 1px 0px 0px 0px;
+    margin-left: 180px;
+    border-style: solid;
+    border-width: 1px 0px 0px 0px;
     overflow-y: auto;
 }
 div.adm-bp-epf-right-cnt {}
 div.adm-bp-epf-controls {
-	border-style: solid;
-	border-width: 1px 0px 0px 0px;
+    border-style: solid;
+    border-width: 1px 0px 0px 0px;
 }
 div#adm-bp-settings-group-layout {
     margin: 0px -10px;
